@@ -81,6 +81,7 @@
 #import "ButtonWithLargerHitArea.h"
 #import "UITableView+RowCount.h"
 #import "AnimatedListMenuView.h"
+#import "AnimatedListMenuView+Internal.h"
 #import "SwipeMenuCollectionCell.h"
 #import "SwipeMenuCollectionCell+Internal.h"
 

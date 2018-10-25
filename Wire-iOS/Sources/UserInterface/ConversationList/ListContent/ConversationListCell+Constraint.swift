@@ -30,7 +30,6 @@ extension UIView {
         ]
 
         NSLayoutConstraint.activate(superviewEdges)
-
     }
 }
 

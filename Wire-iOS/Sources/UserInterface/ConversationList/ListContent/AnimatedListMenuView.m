@@ -18,10 +18,7 @@
 
 
 #import "AnimatedListMenuView.h"
-
-@import PureLayout;
-
-
+#import "AnimatedListMenuView+Internal.h"
 
 @interface DotView : UIView
 
@@ -51,13 +48,6 @@
 
 @interface AnimatedListMenuView ()
 
-@property (nonatomic) DotView *leftDotView;
-@property (nonatomic) DotView *centerDotView;
-@property (nonatomic) DotView *rightDotView;
-@property (nonatomic) BOOL initialConstraintsCreated;
-@property (nonatomic) NSLayoutConstraint *centerToRightDistanceConstraint;
-@property (nonatomic) NSLayoutConstraint *leftToCenterDistanceConstraint;
-
 @end
 
 @implementation AnimatedListMenuView
@@ -66,13 +56,13 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        self.leftDotView = [[DotView alloc] initForAutoLayout];
+        self.leftDotView = [[DotView alloc] init];
         [self addSubview:self.leftDotView];
         
-        self.centerDotView = [[DotView alloc] initForAutoLayout];
+        self.centerDotView = [[DotView alloc] init];
         [self addSubview:self.centerDotView];
         
-        self.rightDotView = [[DotView alloc] initForAutoLayout];
+        self.rightDotView = [[DotView alloc] init];
         [self addSubview:self.rightDotView];
     }
     return self;
@@ -99,30 +89,6 @@
         [UIView animateWithDuration:0.25f animations:^{
             [self layoutIfNeeded];
         }];
-    }
-}
-
-- (void)updateConstraints
-{
-    [super updateConstraints];
-    
-    if (! self.initialConstraintsCreated) {
-        const CGFloat dotWidth = 4;
-        const CGSize dotSize = (CGSize){dotWidth, dotWidth};
-        
-        [self.leftDotView autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
-        [self.centerDotView autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
-        [self.rightDotView autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
-        
-        [self.leftDotView autoSetDimensionsToSize:dotSize];
-        [self.centerDotView autoSetDimensionsToSize:dotSize];
-        [self.rightDotView autoSetDimensionsToSize:dotSize];
-        
-        [self.rightDotView autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:8];
-        self.centerToRightDistanceConstraint = [self.centerDotView autoPinEdge:ALEdgeRight toEdge:ALEdgeLeft ofView:self.rightDotView withOffset:[self centerToRightDistanceForProgress:self.progress]];
-        self.leftToCenterDistanceConstraint = [self.leftDotView autoPinEdge:ALEdgeRight toEdge:ALEdgeLeft ofView:self.centerDotView withOffset:[self leftToCenterDistanceForProgress:self.progress]];
-        
-        self.initialConstraintsCreated = YES;
     }
 }
 
