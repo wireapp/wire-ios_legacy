@@ -44,12 +44,12 @@ class RequestPasswordViewController: UIAlertController {
         let okAction = UIAlertAction(title: okTitle, style: .default) { [unowned controller] (action: UIAlertAction) -> Void in
             if let passwordField = controller.textFields?[0] {
                 let password = passwordField.text ?? ""
-                controller.callback?(Result<String>.success(password))
+                controller.callback?(.success(password))
             }
         }
         
         let cancelAction = UIAlertAction(title: cancelTitle, style: .cancel) { [unowned controller] (action: UIAlertAction) -> Void in
-            controller.callback?(Result<String>.failure(NSError(domain: "\(type(of: controller))", code: 0, userInfo: [NSLocalizedDescriptionKey: "User cancelled input"])))
+            controller.callback?(.failure(NSError(domain: "\(type(of: controller))", code: 0, userInfo: [NSLocalizedDescriptionKey: "User cancelled input"])))
         }
         
         controller.okAction = okAction
