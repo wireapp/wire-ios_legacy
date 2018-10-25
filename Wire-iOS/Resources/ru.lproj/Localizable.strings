@@ -412,12 +412,10 @@
 "content.system.conversation.with_name.participants" = "с";
 
 "content.system.message_timer_changes" = "%@ установил таймер сообщения на %@";
-"content.system.message_timer_changes.you" = "Вы установили таймер сообщения на %@";
-
-"content.system.message_timer.you_part" = "Вы";
+"content.system.message_timer_changes-you" = "Вы установили таймер сообщения на %@";
 
 "content.system.message_timer_off" = "%@ отключил таймер сообщения";
-"content.system.message_timer_off.you" = "Вы отключили таймер сообщения";
+"content.system.message_timer_off-you" = "Вы отключили таймер сообщения";
 
 "content.system.reactivated_device" = "Вы начали использовать %@ снова. Сообщения, отправленные ранее, не будут отображаться здесь.";
 

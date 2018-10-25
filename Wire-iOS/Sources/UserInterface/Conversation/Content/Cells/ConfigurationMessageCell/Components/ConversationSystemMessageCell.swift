@@ -175,3 +175,40 @@ class ConversationCallSystemMessageCellDescription: ConversationMessageCellDescr
         configuration = View.Configuration(icon: viewModel.image(), attributedText: viewModel.attributedTitle(), showLine: false)
     }
 }
+
+class ConversationMessageTimerCellDescription: ConversationMessageCellDescription {
+    typealias View = ConversationSystemMessageCell
+    let configuration: View.Configuration
+
+    var isFullWidth: Bool {
+        return true
+    }
+
+    init(message: ZMConversationMessage, data: ZMSystemMessageData, timer: NSNumber, sender: ZMUser) {
+        let senderText = ConversationSystemMessageCellDescription.senderName(for: message)
+        let timeoutValue = MessageDestructionTimeoutValue(rawValue: timer.doubleValue)
+
+        var updateText: NSAttributedString? = nil
+        let baseAttributes: [NSAttributedString.Key: AnyObject] = [.font: UIFont.mediumFont, .foregroundColor: UIColor.textForeground]
+
+        if timeoutValue == .none {
+            updateText = NSAttributedString(string: "content.system.message_timer_off".localized(pov: sender.pov, args: senderText), attributes: baseAttributes)
+                .adding(font: .mediumSemiboldFont, to: senderText)
+
+        } else if let displayString = timeoutValue.displayString {
+            let timerString = displayString.replacingOccurrences(of: String.breakingSpace, with: String.nonBreakingSpace)
+            updateText = NSAttributedString(string: "content.system.message_timer_changes".localized(pov: sender.pov, args: senderText, timerString), attributes: baseAttributes)
+                .adding(font: .mediumSemiboldFont, to: senderText)
+                .adding(font: .mediumSemiboldFont, to: timerString)
+        }
+
+        let icon = UIImage(for: .hourglass, fontSize: 16, color: UIColor(scheme: .textDimmed))
+        configuration = View.Configuration(icon: icon, attributedText: updateText, showLine: false)
+    }
+
+}
+
+public extension String {
+    static let breakingSpace = " "           // classic whitespace
+    static let nonBreakingSpace = "\u{00A0}" // &#160;
+}

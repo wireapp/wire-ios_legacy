@@ -138,6 +138,14 @@ class ConversationMessageSectionBuilder {
             let senderCell = ConversationSenderMessageCellDescription(sender: sender, showTrash: true)
             section.add(description: senderCell)
 
+        case .messageTimerUpdate:
+            guard let timer = systemMessageData.messageTimer else {
+                fallthrough
+            }
+
+            let timerCell = ConversationMessageTimerCellDescription(message: message, data: systemMessageData, timer: timer, sender: sender)
+            section.add(description: timerCell)
+
         default:
             section.add(description: UnknownMessageCellDescription())
 //            let systemCell = ConversationSystemMessageCellDescription(message: message, data: systemMessageData)

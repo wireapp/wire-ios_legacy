@@ -27,9 +27,6 @@ extension ConversationMessageWindowTableViewAdapter {
         tableView.register(MissingMessagesCell.self, forCellReuseIdentifier: ConversationMissingMessagesCellId)
         tableView.register(ConversationIgnoredDeviceCell.self, forCellReuseIdentifier: ConversationIgnoredDeviceCellId)
         tableView.register(CannotDecryptCell.self, forCellReuseIdentifier: ConversationCannotDecryptCellId)
-        tableView.register(MessageTimerUpdateCell.self, forCellReuseIdentifier: ConversationMessageTimerUpdateCellId)
-
-        tableView.register(MessageDeletedCell.self, forCellReuseIdentifier: ConversationMessageDeletedCellId)
 
         tableView.register(ImageMessageCell.self, forCellReuseIdentifier: ConversationImageCellId)
         tableView.register(FileTransferCell.self, forCellReuseIdentifier: ConversationFileTransferCellId)
@@ -131,10 +128,6 @@ extension ZMConversationMessage {
                 cellIdentifier = ConversationConnectionRequestCellId
             case .connectionUpdate:
                 break
-            case .conversationNameChanged:
-                cellIdentifier = ConversationNameChangedCellId
-            case .missedCall:
-                cellIdentifier = ConversationMissedCallCellId
             case .newClient, .usingNewDevice:
                 cellIdentifier = ConversationNewDeviceCellId
             case .ignoredClient:
@@ -147,12 +140,6 @@ extension ZMConversationMessage {
                 cellIdentifier = ConversationCannotDecryptCellId
             case .participantsAdded, .participantsRemoved, .newConversation, .teamMemberLeave:
                 cellIdentifier = ParticipantsCell.zm_reuseIdentifier
-            case .messageDeletedForEveryone:
-                cellIdentifier = ConversationMessageDeletedCellId
-            case .performedCall:
-                cellIdentifier = ConversationPerformedCallCellId
-            case .messageTimerUpdate:
-                cellIdentifier = ConversationMessageTimerUpdateCellId
             default:
                 break
             }

@@ -412,12 +412,10 @@
 "content.system.conversation.with_name.participants" = "з";
 
 "content.system.message_timer_changes" = "%@ встановив(-ла) таймер повідомлень на %@";
-"content.system.message_timer_changes.you" = "Ви встановили таймер повідомлень на %@";
-
-"content.system.message_timer.you_part" = "Ви";
+"content.system.message_timer_changes-you" = "Ви встановили таймер повідомлень на %@";
 
 "content.system.message_timer_off" = "%@ вимкнув(-ла) таймер повідомлень";
-"content.system.message_timer_off.you" = "Ви вимкнули таймер повідомлень";
+"content.system.message_timer_off-you" = "Ви вимкнули таймер повідомлень";
 
 "content.system.reactivated_device" = "Ви почали використовувати %@ знову. Повідомлення, надіслані поки ви не користувалися ним, не з'являться тут.";
 
