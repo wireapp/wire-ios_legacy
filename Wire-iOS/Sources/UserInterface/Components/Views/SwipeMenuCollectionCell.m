@@ -322,8 +322,9 @@ NSString * const SwipeMenuCollectionCellIDToCloseKey = @"IDToClose";
     }
 
     dispatch_block_t action = ^() {
-        self.visualDrawerOffset = open ? self.drawerWidth : 0;
-        [self checkAndUpdateMaxVisualDrawerOffsetConstraints:self.visualDrawerOffset];
+        self.visualDrawerOffset = 0; //open ? self.drawerWidth : 0;
+//        [self checkAndUpdateMaxVisualDrawerOffsetConstraints:self.visualDrawerOffset];
+        [self disableMaxVisualDrawerOffsetConstraints];
         [self layoutIfNeeded];
     };
 

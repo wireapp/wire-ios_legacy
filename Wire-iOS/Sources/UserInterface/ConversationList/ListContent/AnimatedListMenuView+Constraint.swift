@@ -26,8 +26,6 @@ extension AnimatedListMenuView {
             return
         }
 
-//        self.clipsToBounds = true
-
         let dotWidth: CGFloat = 4
 
         let dotViews = [leftDotView, centerDotView, rightDotView]
@@ -40,7 +38,6 @@ extension AnimatedListMenuView {
         leftToCenterDistanceConstraint = leftDotView.rightAnchor.constraint(equalTo: centerDotView.leftAnchor, constant: leftToCenterDistance(forProgress: progress))
 
         let leftDotLeftConstraint = leftDotView.leftAnchor.constraint(equalTo: self.leftAnchor)
-//        leftDotLeftConstraint.priority = .defaultLow
 
         dotViews.forEach{$0.setDimensions(length: dotWidth)}
 

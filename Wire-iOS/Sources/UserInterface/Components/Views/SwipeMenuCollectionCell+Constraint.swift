@@ -40,7 +40,7 @@ extension SwipeMenuCollectionCell {
 
         /// menu view attachs to content view after reaching max offset
         maxMenuViewToSwipeViewLeftConstraint = menuView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: maxVisualDrawerOffset)
-        maxMenuViewToSwipeViewLeftConstraint.priority = .defaultLow
+//        maxMenuViewToSwipeViewLeftConstraint.priority = .defaultLow
 
         [swipeView, separatorLine, menuView].forEach{$0.translatesAutoresizingMaskIntoConstraints = false}
 
@@ -69,12 +69,18 @@ extension SwipeMenuCollectionCell {
     /// Checks on the @c maxVisualDrawerOffset and switches the prio's of the constraint
     @objc func checkAndUpdateMaxVisualDrawerOffsetConstraints(_ visualDrawerOffset: CGFloat) {
          ///TODO: the condition should be "the 3 dot view did align left edge to super view"
-        if menuView.frame.minX >= maxVisualDrawerOffset {
+//        if visualDrawerOffset >= menuView.frame.maxX {
+//            if menuView.frame.minX >= maxVisualDrawerOffset {
+        if visualDrawerOffset >= menuView.frame.width + maxVisualDrawerOffset {
             menuViewToSwipeViewLeftConstraint.isActive = false
             maxMenuViewToSwipeViewLeftConstraint.isActive = true
         } else {
-            maxMenuViewToSwipeViewLeftConstraint.isActive = false
-            menuViewToSwipeViewLeftConstraint.isActive = true
+            disableMaxVisualDrawerOffsetConstraints()
         }
+    }
+
+    @objc func disableMaxVisualDrawerOffsetConstraints() {
+        maxMenuViewToSwipeViewLeftConstraint.isActive = false
+        menuViewToSwipeViewLeftConstraint.isActive = true
     }
 }
