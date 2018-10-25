@@ -18,7 +18,7 @@
 
 import Foundation
 
-extension NetworkCondition {
+extension NetworkQuality {
     func attributedString(color: UIColor) -> NSAttributedString? {
         switch self {
         case .medium, .poor:
@@ -43,7 +43,7 @@ final class NetworkConditionIndicatorView: UIView, RoundedViewProtocol {
     }
 
     override var intrinsicContentSize: CGSize {
-        return CGSize(width: UIViewNoIntrinsicMetric, height: 32)
+        return CGSize(width: UIView.noIntrinsicMetric, height: 32)
     }
 
     init() {
@@ -64,9 +64,9 @@ final class NetworkConditionIndicatorView: UIView, RoundedViewProtocol {
         fatalError("init(coder:) has not been implemented")
     }
 
-    var networkCondition: NetworkCondition? {
+    var networkQuality: NetworkQuality? {
         didSet {
-            label.attributedText = networkCondition?.attributedString(color: .white)
+            label.attributedText = networkQuality?.attributedString(color: .white)
             layoutIfNeeded()
         }
     }

@@ -28,7 +28,7 @@ protocol VideoGridConfiguration {
     var floatingVideoStream: ParticipantVideoState? { get }
     var videoStreams: [ParticipantVideoState] { get }
     var isMuted: Bool { get }
-    var networkCondition: NetworkCondition { get }
+    var networkQuality: NetworkQuality { get }
 }
 
 // Workaround to make the protocol equatable, it might be possible to conform VideoGridConfiguration
@@ -41,7 +41,7 @@ extension VideoGridConfiguration {
         return floatingVideoStream == other.floatingVideoStream &&
             videoStreams == other.videoStreams &&
             isMuted == other.isMuted &&
-            networkCondition == other.networkCondition
+            networkQuality == other.networkQuality
     }
     
 }
@@ -188,8 +188,8 @@ class VideoGridViewController: UIViewController {
         }
 
         muteIndicatorView.isHidden = !configuration.isMuted
-        networkConditionView.networkCondition = configuration.networkCondition
-        networkConditionView.isHidden = (configuration.networkCondition == .normal)
+        networkConditionView.networkQuality = configuration.networkQuality
+        networkConditionView.isHidden = (configuration.networkQuality == .normal)
         
         // Update grid view axis
         updateGridViewAxis()

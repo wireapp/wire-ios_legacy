@@ -345,7 +345,7 @@ extension CallViewController: ConstantBitRateAudioObserver {
 }
 
 extension CallViewController: NetworkConditionObserver {
-    func callCenterDidChange(networkCondition: NetworkCondition) {
+    func callCenterDidChange(networkQuality: NetworkQuality) {
         updateConfiguration()
     }
 }

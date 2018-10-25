@@ -27,7 +27,7 @@ protocol CallInfoViewControllerInput: CallActionsViewInputType, CallStatusViewIn
     var degradationState: CallDegradationState { get }
     var videoPlaceholderState: CallVideoPlaceholderState { get }
     var disableIdleTimer: Bool { get }
-    var networkCondition: NetworkCondition { get }
+    var networkQuality: NetworkQuality { get }
 }
 
 // Workaround to make the protocol equatable, it might be possible to conform CallInfoConfiguration
@@ -152,7 +152,7 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate, C
         accessoryViewController.configuration = configuration
         backgroundViewController.view.isHidden = configuration.videoPlaceholderState == .hidden
 
-        titleViewLabel.attributedText = configuration.networkCondition.attributedString(color: UIColor.nameColor(for: .brightOrange, variant: .light))
+        titleViewLabel.attributedText = configuration.networkQuality.attributedString(color: UIColor.nameColor(for: .brightOrange, variant: .light))
         titleViewLabel.isHidden = (titleViewLabel.attributedText == nil)
     }
     
