@@ -32,9 +32,9 @@ extension UIViewController {
     }
     
     func requestPassword(_ completion: @escaping (ZMEmailCredentials?)->()) {
-        let passwordRequest = RequestPasswordViewController.requestPasswordController() { (result: Either<String, NSError>) -> () in
+        let passwordRequest = RequestPasswordViewController.requestPasswordController() { (result: Result<String>) -> () in
             switch result {
-            case .left(let passwordString):
+            case .success(let passwordString):
                 if let email = ZMUser.selfUser()?.emailAddress {
                     let newCredentials = ZMEmailCredentials(email: email, password: passwordString)
                     completion(newCredentials)
@@ -44,7 +44,7 @@ extension UIViewController {
                     }
                     completion(nil)
                 }
-            case .right(let error):
+            case .failure(let error):
                 zmLog.error("Error: \(error)")
                 completion(nil)
             }
