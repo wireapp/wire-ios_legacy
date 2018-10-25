@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
 #import "ConversationListCell.h"
 #import "ConversationListCell+Internal.h"
 
@@ -39,7 +38,6 @@
 #import "Wire-Swift.h"
 
 
-static const CGFloat MaxVisualDrawerOffsetRevealDistance = 48;
 static const NSTimeInterval IgnoreOverscrollTimeInterval = 0.005;
 static const NSTimeInterval OverscrollRatio = 2.5;
 

@@ -23,7 +23,6 @@
 #import "Wire-Swift.h"
 
 
-
 NSString * const SwipeMenuCollectionCellCloseDrawerNotification = @"SwipeMenuCollectionCellCloseDrawerNotification";
 NSString * const SwipeMenuCollectionCellIDToCloseKey = @"IDToClose";
 
@@ -88,7 +87,8 @@ NSString * const SwipeMenuCollectionCellIDToCloseKey = @"IDToClose";
     self.hasCreatedSwipeMenuConstraints = NO;
     self.canOpenDrawer = YES;
     self.overscrollFraction = 0.6f;
-    self.maxVisualDrawerOffset = 48;
+    /// When the swipeView is swiped and excesses this offset, the "3 dots" stays at left.
+    self.maxVisualDrawerOffset = MaxVisualDrawerOffsetRevealDistance;
     
     self.swipeView = [[UIView alloc] init];
     self.swipeView.backgroundColor = [UIColor clearColor];
@@ -101,7 +101,7 @@ NSString * const SwipeMenuCollectionCellIDToCloseKey = @"IDToClose";
     self.separatorLine = [[UIView alloc] init];
     self.separatorLine.backgroundColor = [UIColor colorWithWhite:1.0f alpha:0.4f];
     [self.swipeView addSubview:self.separatorLine];
-    self.separatorLine.hidden = self.separatorLineViewDisabled;
+    self.separatorLine.hidden = self.separatorLineViewDisabled; ///NO, YES
     
     self.revealDrawerGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(onDrawerScroll:)];
     self.revealDrawerGestureRecognizer.delegate = self;
@@ -121,7 +121,7 @@ NSString * const SwipeMenuCollectionCellIDToCloseKey = @"IDToClose";
 
 - (void)setSeparatorLineViewDisabled:(BOOL)separatorLineViewDisabled
 {
-    _separatorLineViewDisabled = separatorLineViewDisabled;
+    _separatorLineViewDisabled = separatorLineViewDisabled; /// yes
     self.separatorLine.hidden = separatorLineViewDisabled;
 }
 

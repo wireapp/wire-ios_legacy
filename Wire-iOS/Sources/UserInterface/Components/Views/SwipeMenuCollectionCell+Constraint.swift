@@ -68,7 +68,8 @@ extension SwipeMenuCollectionCell {
 
     /// Checks on the @c maxVisualDrawerOffset and switches the prio's of the constraint
     @objc func checkAndUpdateMaxVisualDrawerOffsetConstraints(_ visualDrawerOffset: CGFloat) {
-        if visualDrawerOffset > maxVisualDrawerOffset {
+         ///TODO: the condition should be "the 3 dot view did align left edge to super view"
+        if menuView.frame.minX >= maxVisualDrawerOffset {
             menuViewToSwipeViewLeftConstraint.isActive = false
             maxMenuViewToSwipeViewLeftConstraint.isActive = true
         } else {
