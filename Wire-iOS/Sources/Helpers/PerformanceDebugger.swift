@@ -41,6 +41,10 @@ import Foundation
 
     /// Starts tracking performance issues.
     @objc static func start() {
+        guard DeveloperMenuState.developerMenuEnabled() else {
+            return
+        }
+
         shared.displayLink.add(to: .main, forMode: .default)
         NotificationCenter.default.addObserver(self, selector: #selector(handleMemoryWarning), name: UIApplication.didReceiveMemoryWarningNotification, object: nil)
     }
