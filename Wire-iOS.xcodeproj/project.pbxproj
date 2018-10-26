@@ -241,6 +241,7 @@
 		5E35F77E218300D400D3F4FE /* ConversationLinkPreviewArticleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E35F77D218300D400D3F4FE /* ConversationLinkPreviewArticleCell.swift */; };
 		5E35F7802183131400D3F4FE /* ConversationYouTubeAttachmentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E35F77F2183131300D3F4FE /* ConversationYouTubeAttachmentCell.swift */; };
 		5E35F7822183186A00D3F4FE /* ViewControllerBasedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E35F7812183186A00D3F4FE /* ViewControllerBasedCell.swift */; };
+		5E35F78421833AF000D3F4FE /* ZMConversationMessage+Sender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E35F78321833AF000D3F4FE /* ZMConversationMessage+Sender.swift */; };
 		5E3A6C22206A3AD500907484 /* ConversationActionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E3A6C21206A3AD500907484 /* ConversationActionController.swift */; };
 		5E3A6C25206A4E4A00907484 /* LocationPreviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E3A6C24206A4E4A00907484 /* LocationPreviewController.swift */; };
 		5E3FB06C206BC7AC0075E910 /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16AACE731C0CAEBD00E62C43 /* TabBar.swift */; };
@@ -1739,6 +1740,7 @@
 		5E35F77D218300D400D3F4FE /* ConversationLinkPreviewArticleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationLinkPreviewArticleCell.swift; sourceTree = "<group>"; };
 		5E35F77F2183131300D3F4FE /* ConversationYouTubeAttachmentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationYouTubeAttachmentCell.swift; sourceTree = "<group>"; };
 		5E35F7812183186A00D3F4FE /* ViewControllerBasedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerBasedCell.swift; sourceTree = "<group>"; };
+		5E35F78321833AF000D3F4FE /* ZMConversationMessage+Sender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ZMConversationMessage+Sender.swift"; sourceTree = "<group>"; };
 		5E3A6C21206A3AD500907484 /* ConversationActionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationActionController.swift; sourceTree = "<group>"; };
 		5E3A6C24206A4E4A00907484 /* LocationPreviewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationPreviewController.swift; sourceTree = "<group>"; };
 		5E3C0C65206B9EE900B0499C /* Tab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab.swift; sourceTree = "<group>"; };
@@ -4585,6 +4587,7 @@
 				BFF8CBDB2126E98300DB0330 /* InteractiveModalTransition.swift */,
 				5EF5C54B209B33E600676405 /* CGSize+AspectRatio.swift */,
 				5EFD4525215A78E800BEE703 /* IndexedListView.swift */,
+				5E35F78321833AF000D3F4FE /* ZMConversationMessage+Sender.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -7817,6 +7820,7 @@
 				D550F57920445AD7009E09DD /* UIAlertController+ConfirmRemovingGuests.swift in Sources */,
 				871BC3601D34F94200DF0793 /* SettingsPropertyFactory.swift in Sources */,
 				BFA2F03B20CAACF900EBE97C /* CallParticipantTimestamps.swift in Sources */,
+				5E35F78421833AF000D3F4FE /* ZMConversationMessage+Sender.swift in Sources */,
 				1648EEED20498E1300CC6B37 /* SearchSectionController.swift in Sources */,
 				879E5E991F0104A6007A88A3 /* UITextView+Autocorrect.swift in Sources */,
 				877798AC205A8EF500898A5E /* ZClientViewController.swift in Sources */,
