@@ -45,7 +45,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 @property (nonatomic, readonly) UILabel *subtitleLabel;
 
 @property (nonatomic, readonly) AudioTrackPlayer *audioTrackPlayer;
-@property (nonatomic, readonly) id<ZMConversationMessage> sourceMessage;
 @property (nonatomic, readonly) BOOL isTrackPlayingInAudioPlayer;
 
 @property (nonatomic) NSObject *artworkObserver;
@@ -63,12 +62,11 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     self.artworkObserver = nil;
 }
 
-- (instancetype)initWithAudioTrackPlayer:(AudioTrackPlayer *)audioTrackPlayer sourceMessage:(id<ZMConversationMessage>)sourceMessage
+- (instancetype)initWithAudioTrackPlayer:(AudioTrackPlayer *)audioTrackPlayer
 {
     self = [super initWithNibName:nil bundle:nil];
     
     if (self) {
-        _sourceMessage = sourceMessage;
         _audioTrackPlayer = audioTrackPlayer;
     }
     

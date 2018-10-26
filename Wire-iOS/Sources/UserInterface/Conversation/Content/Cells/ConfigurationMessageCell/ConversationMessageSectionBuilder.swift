@@ -167,17 +167,24 @@ class ConversationMessageSectionBuilder {
         let textCell = ConversationTextMessageCellDescription(attributedString: messageText)
         section.add(description: textCell)
 
+        guard !message.isObfuscated else {
+            return
+        }
+
         // Link Attachment
         if let attachment = lastKnownLinkAttachment, attachment.type != .none {
             switch attachment.type {
             case .youtubeVideo:
                 let youtubeCell = ConversationYouTubeAttachmentCellDescription(attachment: attachment)
                 section.add(description: youtubeCell)
+            case .soundcloudTrack:
+                let trackCell = ConversationSoundCloudCellDescription<AudioTrackViewController>(message: message, attachment: attachment)
+                section.add(description: trackCell)
+            case .soundcloudSet:
+                let playlistCell = ConversationSoundCloudCellDescription<AudioPlaylistViewController>(message: message, attachment: attachment)
+                section.add(description: playlistCell)
             default:
-                if let viewController = LinkAttachmentViewControllerFactory.sharedInstance().viewController(for: attachment, message: message) {
-                    let attachmentCell = ConversationLinkAttachmentCellDescription(contentViewController: viewController, linkAttachmentType: attachment.type)
-                    section.add(description: attachmentCell)
-                }
+                break
             }
         }
 

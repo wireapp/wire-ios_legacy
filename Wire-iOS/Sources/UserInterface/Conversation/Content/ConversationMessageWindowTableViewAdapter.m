@@ -25,7 +25,6 @@
 #import "NSIndexSet+IndexPaths.h"
 
 // Cells
-#import "TextMessageCell.h"
 #import "ImageMessageCell.h"
 #import "PingCell.h"
 #import "ConnectionRequestCell.h"

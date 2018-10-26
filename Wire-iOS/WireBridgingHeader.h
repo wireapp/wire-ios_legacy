@@ -35,8 +35,6 @@
 #import "ParticipantDeviceHeaderView+Internal.h"
 #import "ConversationCell.h"
 #import "ConversationCell+Private.h"
-#import "TextMessageCell.h"
-#import "TextMessageCell+Internal.h"
 #import "ImageMessageCell.h"
 #import "ImageMessageCell+Internal.h"
 #import "UIViewController+Errors.h"
@@ -201,4 +199,3 @@
 // Media
 #import "MediaPreviewData.h"
 #import "MediaThumbnail.h"
-#import "LinkAttachmentViewControllerFactory.h"

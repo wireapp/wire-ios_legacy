@@ -33,9 +33,10 @@
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil NS_UNAVAILABLE;
-- (instancetype)initWithAudioTrackPlayer:(AudioTrackPlayer *)audioTrackPlayer sourceMessage:(id<ZMConversationMessage>)sourceMessage NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithAudioTrackPlayer:(AudioTrackPlayer *)audioTrackPlayer NS_DESIGNATED_INITIALIZER;
 
 @property (nonatomic) id<AudioPlaylist> audioPlaylist;
 @property (nonatomic) UIImage *providerImage;
+@property (nonatomic) id<ZMConversationMessage> sourceMessage;
 
 @end

@@ -39,7 +39,6 @@
 #import "ConversationContentViewController.h"
 #import "ConversationContentViewController+Scrolling.h"
 #import "TextView.h"
-#import "TextMessageCell.h"
 
 #import "ZClientViewController.h"
 #import "ConversationViewController+ParticipantsPopover.h"

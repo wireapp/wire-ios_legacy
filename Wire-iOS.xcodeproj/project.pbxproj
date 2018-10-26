@@ -81,7 +81,6 @@
 		166264F02178D9A000300F45 /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166264EF2178D9A000300F45 /* MessageCell.swift */; };
 		166264F32179D3CF00300F45 /* SenderCellComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166264F22179D3CF00300F45 /* SenderCellComponent.swift */; };
 		166264F62179E63F00300F45 /* ImageMessageContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166264F52179E63F00300F45 /* ImageMessageContentView.swift */; };
-		166264F82179E6B400300F45 /* TextMessageContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166264F72179E6B400300F45 /* TextMessageContentView.swift */; };
 		166264FA217A17D100300F45 /* NewVideoMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166264F9217A17D100300F45 /* NewVideoMessageCell.swift */; };
 		166264FC217A20CB00300F45 /* NewAudioMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166264FB217A20CB00300F45 /* NewAudioMessageCell.swift */; };
 		166264FE217A22B100300F45 /* NewFileMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166264FD217A22B100300F45 /* NewFileMessageCell.swift */; };
@@ -157,7 +156,6 @@
 		16E2A0A41F6BF0C6005F4DB1 /* AnalyticsCallingTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16E2A0A31F6BF0C6005F4DB1 /* AnalyticsCallingTracker.swift */; };
 		16E2A0A61F6BF233005F4DB1 /* ZMConversation+Calling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16E2A0A51F6BF233005F4DB1 /* ZMConversation+Calling.swift */; };
 		16E311C31A5FEA2B00FF2C9E /* ConversationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 16E311C21A5FEA2B00FF2C9E /* ConversationCell.m */; };
-		16E311C91A5FEAE200FF2C9E /* TextMessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 16E311C81A5FEAE200FF2C9E /* TextMessageCell.m */; };
 		16E311D81A6024F400FF2C9E /* ImageMessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 16E311D71A6024F400FF2C9E /* ImageMessageCell.m */; };
 		16E6C1001A837C0300AA2F32 /* NSIndexSet+IndexPaths.m in Sources */ = {isa = PBXBuildFile; fileRef = 16E6C0FF1A837C0300AA2F32 /* NSIndexSet+IndexPaths.m */; };
 		16EB9B3A1CE1DBB400883FCF /* VideoMessageCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EB9B391CE1DBB400883FCF /* VideoMessageCellTests.swift */; };
@@ -235,13 +233,14 @@
 		5E35F7452180779D00D3F4FE /* ConversationPingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E35F7442180779D00D3F4FE /* ConversationPingCell.swift */; };
 		5E35F7482180A26900D3F4FE /* ConversationTextMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E35F7472180A26900D3F4FE /* ConversationTextMessageCell.swift */; };
 		5E35F7722180B8CD00D3F4FE /* ConversationMessageSectionControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E35F7702180B8C600D3F4FE /* ConversationMessageSectionControllerTests.swift */; };
-		5E35F7742180B98B00D3F4FE /* ConversationLinkAttachmentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E35F7732180B98B00D3F4FE /* ConversationLinkAttachmentCell.swift */; };
+		5E35F7742180B98B00D3F4FE /* ConversationSoundCloudAttachmentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E35F7732180B98B00D3F4FE /* ConversationSoundCloudAttachmentCell.swift */; };
 		5E35F7762181C49100D3F4FE /* ConversationSystemMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E35F7752181C49100D3F4FE /* ConversationSystemMessageCell.swift */; };
 		5E35F7782181D51300D3F4FE /* ConversationIconBasedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E35F7772181D51300D3F4FE /* ConversationIconBasedCell.swift */; };
 		5E35F77A2182112200D3F4FE /* ConversationParticipantsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E35F7792182112200D3F4FE /* ConversationParticipantsCell.swift */; };
 		5E35F77C2182124E00D3F4FE /* PerformanceDebugger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E35F77B2182124E00D3F4FE /* PerformanceDebugger.swift */; };
 		5E35F77E218300D400D3F4FE /* ConversationLinkPreviewArticleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E35F77D218300D400D3F4FE /* ConversationLinkPreviewArticleCell.swift */; };
 		5E35F7802183131400D3F4FE /* ConversationYouTubeAttachmentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E35F77F2183131300D3F4FE /* ConversationYouTubeAttachmentCell.swift */; };
+		5E35F7822183186A00D3F4FE /* ViewControllerBasedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E35F7812183186A00D3F4FE /* ViewControllerBasedCell.swift */; };
 		5E3A6C22206A3AD500907484 /* ConversationActionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E3A6C21206A3AD500907484 /* ConversationActionController.swift */; };
 		5E3A6C25206A4E4A00907484 /* LocationPreviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E3A6C24206A4E4A00907484 /* LocationPreviewController.swift */; };
 		5E3FB06C206BC7AC0075E910 /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16AACE731C0CAEBD00E62C43 /* TabBar.swift */; };
@@ -559,7 +558,6 @@
 		874448831C22FC4000E7B947 /* ConversationNewDeviceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 874448821C22FC4000E7B947 /* ConversationNewDeviceCell.swift */; };
 		8744489C1C22FCE500E7B947 /* LinkAttachment.m in Sources */ = {isa = PBXBuildFile; fileRef = 8744488B1C22FCE500E7B947 /* LinkAttachment.m */; };
 		8744489D1C22FCE500E7B947 /* LinkAttachmentCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 8744488D1C22FCE500E7B947 /* LinkAttachmentCache.m */; };
-		8744489E1C22FCE500E7B947 /* LinkAttachmentViewControllerFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 874448901C22FCE500E7B947 /* LinkAttachmentViewControllerFactory.m */; };
 		8744D5BE1C41D6C2000F8F93 /* SettingsClientViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8744D5BD1C41D6C2000F8F93 /* SettingsClientViewController.swift */; };
 		8745476B1E9E54E600C206E5 /* SelfProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8745476A1E9E54E600C206E5 /* SelfProfileViewController.swift */; };
 		874941CB1DE34DEC006CF32B /* UserConnectionViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87CA886F1DE30AD0004101B6 /* UserConnectionViewTests.swift */; };
@@ -1544,7 +1542,6 @@
 		166264EF2178D9A000300F45 /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
 		166264F22179D3CF00300F45 /* SenderCellComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SenderCellComponent.swift; sourceTree = "<group>"; };
 		166264F52179E63F00300F45 /* ImageMessageContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageMessageContentView.swift; sourceTree = "<group>"; };
-		166264F72179E6B400300F45 /* TextMessageContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextMessageContentView.swift; sourceTree = "<group>"; };
 		166264F9217A17D100300F45 /* NewVideoMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewVideoMessageCell.swift; sourceTree = "<group>"; };
 		166264FB217A20CB00300F45 /* NewAudioMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewAudioMessageCell.swift; sourceTree = "<group>"; };
 		166264FD217A22B100300F45 /* NewFileMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewFileMessageCell.swift; sourceTree = "<group>"; };
@@ -1734,13 +1731,14 @@
 		5E35F7442180779D00D3F4FE /* ConversationPingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationPingCell.swift; sourceTree = "<group>"; };
 		5E35F7472180A26900D3F4FE /* ConversationTextMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationTextMessageCell.swift; sourceTree = "<group>"; };
 		5E35F7702180B8C600D3F4FE /* ConversationMessageSectionControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationMessageSectionControllerTests.swift; sourceTree = "<group>"; };
-		5E35F7732180B98B00D3F4FE /* ConversationLinkAttachmentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationLinkAttachmentCell.swift; sourceTree = "<group>"; };
+		5E35F7732180B98B00D3F4FE /* ConversationSoundCloudAttachmentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationSoundCloudAttachmentCell.swift; sourceTree = "<group>"; };
 		5E35F7752181C49100D3F4FE /* ConversationSystemMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationSystemMessageCell.swift; sourceTree = "<group>"; };
 		5E35F7772181D51300D3F4FE /* ConversationIconBasedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationIconBasedCell.swift; sourceTree = "<group>"; };
 		5E35F7792182112200D3F4FE /* ConversationParticipantsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationParticipantsCell.swift; sourceTree = "<group>"; };
 		5E35F77B2182124E00D3F4FE /* PerformanceDebugger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerformanceDebugger.swift; sourceTree = "<group>"; };
 		5E35F77D218300D400D3F4FE /* ConversationLinkPreviewArticleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationLinkPreviewArticleCell.swift; sourceTree = "<group>"; };
 		5E35F77F2183131300D3F4FE /* ConversationYouTubeAttachmentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationYouTubeAttachmentCell.swift; sourceTree = "<group>"; };
+		5E35F7812183186A00D3F4FE /* ViewControllerBasedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerBasedCell.swift; sourceTree = "<group>"; };
 		5E3A6C21206A3AD500907484 /* ConversationActionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationActionController.swift; sourceTree = "<group>"; };
 		5E3A6C24206A4E4A00907484 /* LocationPreviewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationPreviewController.swift; sourceTree = "<group>"; };
 		5E3C0C65206B9EE900B0499C /* Tab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab.swift; sourceTree = "<group>"; };
@@ -2142,8 +2140,6 @@
 		8744488C1C22FCE500E7B947 /* LinkAttachmentCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LinkAttachmentCache.h; sourceTree = "<group>"; };
 		8744488D1C22FCE500E7B947 /* LinkAttachmentCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LinkAttachmentCache.m; sourceTree = "<group>"; };
 		8744488E1C22FCE500E7B947 /* LinkAttachmentPresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LinkAttachmentPresenter.h; sourceTree = "<group>"; };
-		8744488F1C22FCE500E7B947 /* LinkAttachmentViewControllerFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LinkAttachmentViewControllerFactory.h; sourceTree = "<group>"; };
-		874448901C22FCE500E7B947 /* LinkAttachmentViewControllerFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LinkAttachmentViewControllerFactory.m; sourceTree = "<group>"; };
 		8744D5BD1C41D6C2000F8F93 /* SettingsClientViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsClientViewController.swift; sourceTree = "<group>"; };
 		8745476A1E9E54E600C206E5 /* SelfProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelfProfileViewController.swift; sourceTree = "<group>"; };
 		874941CC1DE458DF006CF32B /* CombinationTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CombinationTest.swift; sourceTree = "<group>"; };
@@ -3363,7 +3359,6 @@
 			isa = PBXGroup;
 			children = (
 				166264F52179E63F00300F45 /* ImageMessageContentView.swift */,
-				166264F72179E6B400300F45 /* TextMessageContentView.swift */,
 			);
 			path = MessageContent;
 			sourceTree = "<group>";
@@ -3800,6 +3795,7 @@
 		5E35F734217F415700D3F4FE /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				5E35F7812183186A00D3F4FE /* ViewControllerBasedCell.swift */,
 				5E35F7772181D51300D3F4FE /* ConversationIconBasedCell.swift */,
 				5E35F735217F417200D3F4FE /* BurstTimestampTableViewCell.swift */,
 				5E35F74021804A9E00D3F4FE /* ConversationSenderMessageCell.swift */,
@@ -3813,8 +3809,8 @@
 			isa = PBXGroup;
 			children = (
 				5E35F7472180A26900D3F4FE /* ConversationTextMessageCell.swift */,
-				5E35F7732180B98B00D3F4FE /* ConversationLinkAttachmentCell.swift */,
 				5E35F77F2183131300D3F4FE /* ConversationYouTubeAttachmentCell.swift */,
+				5E35F7732180B98B00D3F4FE /* ConversationSoundCloudAttachmentCell.swift */,
 				5E35F7792182112200D3F4FE /* ConversationParticipantsCell.swift */,
 				5E35F77D218300D400D3F4FE /* ConversationLinkPreviewArticleCell.swift */,
 			);
@@ -4727,8 +4723,6 @@
 				8744488C1C22FCE500E7B947 /* LinkAttachmentCache.h */,
 				8744488D1C22FCE500E7B947 /* LinkAttachmentCache.m */,
 				8744488E1C22FCE500E7B947 /* LinkAttachmentPresenter.h */,
-				8744488F1C22FCE500E7B947 /* LinkAttachmentViewControllerFactory.h */,
-				874448901C22FCE500E7B947 /* LinkAttachmentViewControllerFactory.m */,
 				16A5FDC42154F53F00AEEBBD /* NSAttributedString+MessageFormatting.swift */,
 				EE8E9266202496C2000F4752 /* NSAttributedString+Down.swift */,
 				872C823D214AA12100236A76 /* NSAttributedString+Mentions.swift */,
@@ -7284,7 +7278,6 @@
 				BF0BDF881DABEF3B003C61DE /* DestructionCountdownView.swift in Sources */,
 				87B8C33F1DF9788B0015EC89 /* BrowserOpening.swift in Sources */,
 				87DCF49F1D34E9E600BB420F /* NSUserDefaults+Location.swift in Sources */,
-				8744489E1C22FCE500E7B947 /* LinkAttachmentViewControllerFactory.m in Sources */,
 				55DD5C341FA236F60082170C /* CallQualityViewController.swift in Sources */,
 				87AEF9351ECF38B0008CB9D9 /* WireStyleKit+Additions.m in Sources */,
 				BFAC71F920A1CC5C002711C4 /* CallInfoConfiguration.swift in Sources */,
@@ -7309,10 +7302,10 @@
 				1682AEC3204840E7003A052A /* SectionCollectionViewController.swift in Sources */,
 				BF86E11B1C245BF9001D9430 /* UserClient+Fingerprint.swift in Sources */,
 				871067411C0DC5570035603B /* SettingsPropertyToggleCellDescriptor.swift in Sources */,
-				166264F82179E6B400300F45 /* TextMessageContentView.swift in Sources */,
 				5E8DA788211C499900360979 /* AuthenticationCoordinator+PreLogin.swift in Sources */,
 				16E2A0A01F6BEDE7005F4DB1 /* ProximityMonitorManager.swift in Sources */,
 				1651F9B81D352B7B00A9FAE8 /* ArticleView.swift in Sources */,
+				5E35F7822183186A00D3F4FE /* ViewControllerBasedCell.swift in Sources */,
 				EF218AC520A9C123004977BF /* SettingsCellDescriptorFactory+DataUsagePermissions.swift in Sources */,
 				87DCF4ED1D34EA4500BB420F /* CollectionViewContainerCell.m in Sources */,
 				871BC35F1D34F94200DF0793 /* SettingsProperty.swift in Sources */,
@@ -7994,7 +7987,6 @@
 				16FB2F6C20C0389800582137 /* Dictionary+Merge.swift in Sources */,
 				87A15FE11E08339500AED79B /* CollectionLinkCell.swift in Sources */,
 				D52F2C20205BE0A600E067C0 /* UIAlertController+ConversationDegraded.swift in Sources */,
-				16E311C91A5FEAE200FF2C9E /* TextMessageCell.m in Sources */,
 				5E3FB06C206BC7AC0075E910 /* TabBar.swift in Sources */,
 				87B8C3411DF9788B0015EC89 /* MapOpening.swift in Sources */,
 				F112C58620497860007C1E8F /* Analytics+Guests.swift in Sources */,
@@ -8031,7 +8023,7 @@
 				871BC0591D34F60700DF0793 /* NSDate+Format.m in Sources */,
 				EF2127121FB9DFE300625A9B /* PhoneSignInViewController.m in Sources */,
 				16829EDF2010D60800F579A0 /* InviteTeamMemberSection.swift in Sources */,
-				5E35F7742180B98B00D3F4FE /* ConversationLinkAttachmentCell.swift in Sources */,
+				5E35F7742180B98B00D3F4FE /* ConversationSoundCloudAttachmentCell.swift in Sources */,
 				8FC85452199245770008B66B /* ConversationContentViewController.m in Sources */,
 				D525426D209363AF001C04C1 /* IconLabelButton.swift in Sources */,
 				871BC0071D34F56300DF0793 /* Application+runDuration.m in Sources */,

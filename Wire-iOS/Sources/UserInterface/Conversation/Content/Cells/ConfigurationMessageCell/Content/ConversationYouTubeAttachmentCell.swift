@@ -18,41 +18,21 @@
 
 import UIKit
 
-class ConversationYouTubeAttachmentCell: UIView, ConversationMessageCell {
+class ConversationYouTubeAttachmentCell: ViewControllerBasedCell<MediaPreviewViewController>, ConversationMessageCell {
 
     struct Configuration {
         let attachment: LinkAttachment
     }
 
-    var isSelected: Bool = false
-    private let mediaPreviewController = MediaPreviewViewController()
-
     // MARK: - Initialization
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        configureSubviews()
-        configureConstraints()
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        configureSubviews()
-        configureConstraints()
-    }
-
-    private func configureSubviews() {
-        addSubview(mediaPreviewController.view)
-    }
-
-    private func configureConstraints() {
-        mediaPreviewController.view.translatesAutoresizingMaskIntoConstraints = false
-        mediaPreviewController.view.fitInSuperview()
+    convenience init() {
+        self.init(viewController: MediaPreviewViewController())
     }
 
     func configure(with object: Configuration) {
-        mediaPreviewController.linkAttachment = object.attachment
-        mediaPreviewController.fetchAttachment()
+        viewController.linkAttachment = object.attachment
+        viewController.fetchAttachment()
     }
 
 }

@@ -102,10 +102,7 @@ extension ZMConversationMessage {
     public func previewView() -> UIView? {
         var cell: ConversationCell
         
-        if isText {
-            cell = TextMessageCell(style: .default, reuseIdentifier: "")
-        }
-        else if isImage {
+        if isImage {
             cell = ImageMessageCell(style: .default, reuseIdentifier: "")
         }
         else if isVideo {
