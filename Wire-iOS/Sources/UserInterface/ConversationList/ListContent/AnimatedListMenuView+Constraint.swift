@@ -31,6 +31,7 @@ extension AnimatedListMenuView {
         let dotViews = [leftDotView, centerDotView, rightDotView]
 
         dotViews.forEach{$0.translatesAutoresizingMaskIntoConstraints = false}
+        self.translatesAutoresizingMaskIntoConstraints = false
 
 
         centerToRightDistanceConstraint = centerDotView.rightAnchor.constraint(equalTo: rightDotView.leftAnchor, constant: centerToRightDistance(forProgress: progress))

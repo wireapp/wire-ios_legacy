@@ -67,6 +67,8 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
                                                    object:nil];
 
         [self setupStyle];
+
+        self.translatesAutoresizingMaskIntoConstraints = NO;
     }
     return self;
 }
