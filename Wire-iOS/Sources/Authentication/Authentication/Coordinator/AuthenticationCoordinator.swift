@@ -649,9 +649,18 @@ extension AuthenticationCoordinator {
      * Manually display the company login flow.
      */
 
+    @objc var canStartCompanyLoginFlow: Bool {
+        switch stateController.currentStep {
+        case .provideCredentials, .createCredentials, .reauthenticate:
+            return true
+        default:
+            return false
+        }
+    }
+    
     @objc func startCompanyLoginFlowIfPossible() {
         switch stateController.currentStep {
-        case .provideCredentials, .createCredentials:
+        case .provideCredentials, .createCredentials, .reauthenticate:
             companyLoginController?.displayLoginCodePrompt()
         default:
             return

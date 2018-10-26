@@ -204,7 +204,7 @@ extension SettingsCellDescriptorFactory {
             isDestructive: false,
             presentationStyle: .navigation,
             presentationAction: {
-                if ZMUser.selfUser().hasValidEmail {
+                if ZMUser.selfUser().hasValidEmail || ZMUser.selfUser()!.usesCompanyLogin {
                     return BackupViewController.init(backupSource: SessionManager.shared!)
                 }
                 else {
