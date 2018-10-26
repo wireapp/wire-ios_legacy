@@ -832,7 +832,7 @@
 		BD979D2E1D8F41E700E8E3CB /* String+WireLocales.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD979D2D1D8F41E700E8E3CB /* String+WireLocales.swift */; };
 		BF02CDC31D79A98000C87D38 /* SavableImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF02CDC21D79A98000C87D38 /* SavableImage.swift */; };
 		BF0515251E390E10000D5C22 /* CopyableLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0515241E390E10000D5C22 /* CopyableLabel.swift */; };
-		BF0555BD1E6D785C00D3E9D4 /* CallCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0555BC1E6D785C00D3E9D4 /* CallCells.swift */; };
+		BF0555BD1E6D785C00D3E9D4 /* CallCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0555BC1E6D785C00D3E9D4 /* CallCellViewModel.swift */; };
 		BF079A3620EF9E6F00B152DD /* ConversationListCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF079A3520EF9E6F00B152DD /* ConversationListCellTests.swift */; };
 		BF0BDF6D1DA6794E003C61DE /* ConversationInputBarViewController+Ephemeral.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0BDF6C1DA6794E003C61DE /* ConversationInputBarViewController+Ephemeral.swift */; };
 		BF0BDF721DA7A9D8003C61DE /* RedactedScript-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BF0BDF711DA7A9D8003C61DE /* RedactedScript-Regular.ttf */; };
@@ -2572,7 +2572,7 @@
 		BD979D2D1D8F41E700E8E3CB /* String+WireLocales.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+WireLocales.swift"; sourceTree = "<group>"; };
 		BF02CDC21D79A98000C87D38 /* SavableImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SavableImage.swift; sourceTree = "<group>"; };
 		BF0515241E390E10000D5C22 /* CopyableLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CopyableLabel.swift; sourceTree = "<group>"; };
-		BF0555BC1E6D785C00D3E9D4 /* CallCells.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallCells.swift; sourceTree = "<group>"; };
+		BF0555BC1E6D785C00D3E9D4 /* CallCellViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallCellViewModel.swift; sourceTree = "<group>"; };
 		BF079A3520EF9E6F00B152DD /* ConversationListCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationListCellTests.swift; sourceTree = "<group>"; };
 		BF0BDF6C1DA6794E003C61DE /* ConversationInputBarViewController+Ephemeral.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConversationInputBarViewController+Ephemeral.swift"; sourceTree = "<group>"; };
 		BF0BDF711DA7A9D8003C61DE /* RedactedScript-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RedactedScript-Regular.ttf"; sourceTree = "<group>"; };
@@ -5578,7 +5578,7 @@
 				8756FE331CEB62F800EF58A6 /* AudioMessageCell.swift */,
 				872334291CD0D8F000CF8B11 /* VideoMessageCell.swift */,
 				BF4D99C81E79AAD400A7B08F /* ParticipantsCell */,
-				BF0555BC1E6D785C00D3E9D4 /* CallCells.swift */,
+				BF0555BC1E6D785C00D3E9D4 /* CallCellViewModel.swift */,
 				160C311E1E4C78480012E4BC /* UnknownMessageCell.swift */,
 				BFC914911D1814AF001F068B /* LocationMessageCell.swift */,
 				87F18BB41E0154C000C69D9B /* FileTransfer */,
@@ -8173,7 +8173,7 @@
 				EFF6DCB4206BE94600437C71 /* SplitViewController+leftView.swift in Sources */,
 				F10F46D420288CEB00261449 /* ConversationCreationController.swift in Sources */,
 				8FC853FF199245770008B66B /* AppDelegate.m in Sources */,
-				BF0555BD1E6D785C00D3E9D4 /* CallCells.swift in Sources */,
+				BF0555BD1E6D785C00D3E9D4 /* CallCellViewModel.swift in Sources */,
 				5EBC343E20EE576600AFB6DF /* UIImage+ImageDownloadCache.swift in Sources */,
 				EF21271B1FB9DFE300625A9B /* TermsOfUseStepViewController.m in Sources */,
 				D525426B2093637D001C04C1 /* IconButton+Factory.swift in Sources */,
