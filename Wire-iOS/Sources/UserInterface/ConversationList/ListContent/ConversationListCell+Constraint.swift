@@ -32,17 +32,29 @@ extension UIView {
         NSLayoutConstraint.activate(constraints)
     }
 
-    func pinEdgesToSuperviewEdges() {
-        guard let superview = self.superview else { return }
+    func topAndBottomEdgesToSuperviewEdges() -> [NSLayoutConstraint] {
+        guard let superview = self.superview else { return [] }
 
-        let superviewEdges = [
+        return [
+            superview.topAnchor.constraint(equalTo: self.topAnchor),
+            superview.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+        ]
+    }
+
+    func edgesToSuperviewEdges() -> [NSLayoutConstraint] {
+        guard let superview = self.superview else { return [] }
+
+        return [
             superview.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             superview.topAnchor.constraint(equalTo: self.topAnchor),
             superview.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             superview.bottomAnchor.constraint(equalTo: self.bottomAnchor)
         ]
+    }
 
-        NSLayoutConstraint.activate(superviewEdges)
+    func pinEdgesToSuperviewEdges() {
+
+        NSLayoutConstraint.activate(edgesToSuperviewEdges())
     }
 }
 
