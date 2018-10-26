@@ -41,15 +41,17 @@ class ConversationTextMessageCell: UIView, ConversationMessageCell {
 
     private func configureSubviews() {
         messageTextView.isEditable = false
-        messageTextView.isSelectable = false
+        messageTextView.isSelectable = true
         messageTextView.backgroundColor = UIColor(scheme: .contentBackground)
         messageTextView.isScrollEnabled = false
-        messageTextView.textContainerInset = .zero
+        messageTextView.textContainerInset = UIEdgeInsets.zero
         messageTextView.textContainer.lineFragmentPadding = 0
         messageTextView.isUserInteractionEnabled = true
         messageTextView.accessibilityIdentifier = "Message"
         messageTextView.accessibilityElementsHidden = false
         messageTextView.dataDetectorTypes = [.link, .address, .phoneNumber, .flightNumber, .calendarEvent, .shipmentTrackingNumber]
+        messageTextView.setContentHuggingPriority(.required, for: .vertical)
+        messageTextView.setContentCompressionResistancePriority(.required, for: .vertical)
 
         addSubview(messageTextView)
     }

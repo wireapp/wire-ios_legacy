@@ -152,8 +152,6 @@ class ConversationMessageSectionBuilder {
 
         default:
             section.add(description: UnknownMessageCellDescription())
-//            let systemCell = ConversationSystemMessageCellDescription(message: message, data: systemMessageData)
-//            section.add(description: systemCell)
         }
     }
 
@@ -178,11 +176,10 @@ class ConversationMessageSectionBuilder {
         }
 
         // Link Preview
-//        if let linkPreview = textMessageData.linkPreview {
-//            // TODO: add link preview
-//        }
-
-
+        if textMessageData.linkPreview != nil {
+           let linkPreviewCell = ConversationLinkPreviewArticleCellDescription(message: message, data: textMessageData)
+            section.add(description: linkPreviewCell)
+        }
     }
 
 }
