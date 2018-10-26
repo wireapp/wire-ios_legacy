@@ -169,9 +169,15 @@ class ConversationMessageSectionBuilder {
 
         // Link Attachment
         if let attachment = lastKnownLinkAttachment, attachment.type != .none {
-            if let viewController = LinkAttachmentViewControllerFactory.sharedInstance().viewController(for: attachment, message: message) {
-                let attachmentCell = ConversationLinkAttachmentCellDescription(contentViewController: viewController, linkAttachmentType: attachment.type)
-                section.add(description: attachmentCell)
+            switch attachment.type {
+            case .youtubeVideo:
+                let youtubeCell = ConversationYouTubeAttachmentCellDescription(attachment: attachment)
+                section.add(description: youtubeCell)
+            default:
+                if let viewController = LinkAttachmentViewControllerFactory.sharedInstance().viewController(for: attachment, message: message) {
+                    let attachmentCell = ConversationLinkAttachmentCellDescription(contentViewController: viewController, linkAttachmentType: attachment.type)
+                    section.add(description: attachmentCell)
+                }
             }
         }
 
