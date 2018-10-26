@@ -63,6 +63,11 @@ import UIKit
         iconView.setContentCompressionResistancePriority(UILayoutPriority.defaultHigh, for: .vertical)
         
         [badgeView, transparentIconView].forEach(addSubview)
+
+        createConstraints()
+    }
+
+    func createConstraints() {
         transparentIconView.translatesAutoresizingMaskIntoConstraints = false
         translatesAutoresizingMaskIntoConstraints = false
 
@@ -76,7 +81,7 @@ import UIKit
 
         expandWidthConstraint = widthAnchor.constraint(greaterThanOrEqualToConstant: defaultViewWidth)
 
-        // collapseWidthConstraint is inactive when init
+        // collapseWidthConstraint is inactive when init, it is toggled in updateCollapseConstraints()
         collapseWidthConstraint = widthAnchor.constraint(equalToConstant: 0)
 
         NSLayoutConstraint.activate([
@@ -89,7 +94,6 @@ import UIKit
             badgeView.edgesToSuperviewEdges() +
             transparentIconView.topAndBottomEdgesToSuperviewEdges()
         )
-
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -151,6 +155,7 @@ import UIKit
 
     func updateCollapseConstraints(isCollapsed: Bool) {
         if isCollapsed {
+            badgeView.updateCollapseConstraints(isCollapsed: isCollapsed)
             expandWidthConstraint.isActive = false
             expandTransparentIconViewWidthConstraint.isActive = false
             collapseWidthConstraint.isActive = true
@@ -158,9 +163,8 @@ import UIKit
             collapseWidthConstraint.isActive = false
             expandWidthConstraint.isActive = true
             expandTransparentIconViewWidthConstraint.isActive = true
+            badgeView.updateCollapseConstraints(isCollapsed: isCollapsed)
         }
-
-        badgeView.updateCollapseConstraints(isCollapsed: isCollapsed)
     }
     
     public func updateForIcon() {

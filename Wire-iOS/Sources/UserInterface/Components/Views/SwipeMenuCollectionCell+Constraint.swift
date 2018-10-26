@@ -33,7 +33,7 @@ extension SwipeMenuCollectionCell {
 
         hasCreatedSwipeMenuConstraints = true
 
-        swipeViewHorizontalConstraint = swipeView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 0)
+        swipeViewHorizontalConstraint = swipeView.leftAnchor.constraint(equalTo: contentView.leftAnchor)
 
         /// menu view attachs to swipeView before reaching max offset
         menuViewToSwipeViewLeftConstraint = menuView.rightAnchor.constraint(equalTo: swipeView.leftAnchor)
@@ -45,8 +45,8 @@ extension SwipeMenuCollectionCell {
 
         let constraints : [NSLayoutConstraint] = [
             swipeViewHorizontalConstraint!,
-            swipeView.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 1.0),
-            swipeView.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 1.0),
+            swipeView.widthAnchor.constraint(equalTo: contentView.widthAnchor),
+            swipeView.heightAnchor.constraint(equalTo: contentView.heightAnchor),
 
             swipeView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
 
