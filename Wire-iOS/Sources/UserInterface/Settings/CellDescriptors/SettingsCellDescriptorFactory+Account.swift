@@ -33,14 +33,17 @@ extension ZMUser {
 extension SettingsCellDescriptorFactory {
 
     func accountGroup() -> SettingsCellDescriptorType {
-        let sections: [SettingsSectionDescriptorType] = [
+        var sections: [SettingsSectionDescriptorType] = [
             infoSection(),
             appearanceSection(),
             personalInformationSection(),
-            conversationsSection(),
-            actionsSection(),
-            signOutSection()
-        ]
+            conversationsSection()]
+        
+        if let user = ZMUser.selfUser(), !user.usesCompanyLogin {
+            sections.append(actionsSection())
+        }
+        
+        sections.append(signOutSection())
 
         return SettingsGroupCellDescriptor(items: sections, title: "self.settings.account_section".localized, icon: .settingsAccount)
     }
@@ -86,7 +89,7 @@ extension SettingsCellDescriptorFactory {
     }
 
     func actionsSection() -> SettingsSectionDescriptorType {
-        var cellDescriptors = [ressetPasswordElement()]
+        var cellDescriptors = [resetPasswordElement()]
         if let selfUser = self.settingsPropertyFactory.selfUser, !selfUser.isTeamMember {
             cellDescriptors.append(deleteAccountButtonElement())
         }
@@ -229,7 +232,7 @@ extension SettingsCellDescriptorFactory {
         return dataUsagePermissionsGroup()
     }
 
-    func ressetPasswordElement() -> SettingsCellDescriptorType {
+    func resetPasswordElement() -> SettingsCellDescriptorType {
         let resetPasswordTitle = "self.settings.password_reset_menu.title".localized
         return SettingsExternalScreenCellDescriptor(title: resetPasswordTitle, isDestructive: false, presentationStyle: .modal, presentationAction: { 
             return BrowserViewController(url: URL.wr_passwordReset.appendingLocaleParameter)
