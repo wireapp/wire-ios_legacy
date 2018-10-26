@@ -17,7 +17,6 @@
 //
 
 import UIKit
-import Cartography
 
 @objcMembers final class ConversationListAccessoryView: UIView {
     var icon: ConversationStatusIcon = .none {
@@ -64,44 +63,32 @@ import Cartography
         iconView.setContentCompressionResistancePriority(UILayoutPriority.defaultHigh, for: .vertical)
         
         [badgeView, transparentIconView].forEach(addSubview)
-        
-        constrain(self, badgeView, transparentIconView) { selfView, badgeView, transparentIconView in
-            badgeView.height == 20
-            badgeView.edges == selfView.edges
-            
-            transparentIconView.leading == selfView.leading ~ 999.0
-            transparentIconView.trailing == selfView.trailing ~ 999.0
-            transparentIconView.top == selfView.top
-            transparentIconView.bottom == selfView.bottom
-            self.expandTransparentIconViewWidthConstraint = transparentIconView.width >= defaultViewWidth
-            
-            self.expandWidthConstraint = selfView.width >= defaultViewWidth
-            self.collapseWidthConstraint = selfView.width == 0
-        }
-        self.collapseWidthConstraint.isActive = false
+        transparentIconView.translatesAutoresizingMaskIntoConstraints = false
+        translatesAutoresizingMaskIntoConstraints = false
 
+        let transparentIconViewLeading = transparentIconView.leadingAnchor.constraint(equalTo: leadingAnchor)
+        transparentIconViewLeading.priority = UILayoutPriority(999.0)
 
-//        let transparentIconViewLeading = transparentIconView.leadingAnchor.constraint(equalTo: leadingAnchor)
-//        transparentIconViewLeading.priority = UILayoutPriority(999.0)
-//
-//        let transparentIconViewTrailing = transparentIconView.trailingAnchor.constraint(equalTo: trailingAnchor)
-//        transparentIconViewTrailing.priority = UILayoutPriority(999.0)
-//
-//        expandTransparentIconViewWidthConstraint = transparentIconView.widthAnchor.constraint(greaterThanOrEqualToConstant: defaultViewWidth)
-//
-//        expandWidthConstraint = widthAnchor.constraint(greaterThanOrEqualToConstant: defaultViewWidth)
-//
-//        // collapseWidthConstraint is inactive when init
-//        collapseWidthConstraint = widthAnchor.constraint(equalToConstant: 0)
-//
-//        NSLayoutConstraint.activate([
-//            badgeView.heightAnchor.constraint(equalToConstant: 20),
-//            transparentIconViewLeading,
-//            transparentIconViewTrailing,
-//            expandTransparentIconViewWidthConstraint,
-//            expandWidthConstraint] +
-//            badgeView.edgesToSuperviewEdges() +
-//            badgeView.topAndBottomEdgesToSuperviewEdges())
+        let transparentIconViewTrailing = transparentIconView.trailingAnchor.constraint(equalTo: trailingAnchor)
+        transparentIconViewTrailing.priority = UILayoutPriority(999.0)
+
+        expandTransparentIconViewWidthConstraint = transparentIconView.widthAnchor.constraint(greaterThanOrEqualToConstant: defaultViewWidth)
+
+        expandWidthConstraint = widthAnchor.constraint(greaterThanOrEqualToConstant: defaultViewWidth)
+
+        // collapseWidthConstraint is inactive when init
+        collapseWidthConstraint = widthAnchor.constraint(equalToConstant: 0)
+
+        NSLayoutConstraint.activate([
+            badgeView.heightAnchor.constraint(equalToConstant: 20),
+            transparentIconViewLeading,
+            transparentIconViewTrailing,
+            expandTransparentIconViewWidthConstraint,
+            expandWidthConstraint
+            ] +
+            badgeView.edgesToSuperviewEdges() +
+            transparentIconView.topAndBottomEdgesToSuperviewEdges()
+        )
 
     }
     
