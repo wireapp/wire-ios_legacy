@@ -50,7 +50,7 @@ extension SettingsCellDescriptorFactory {
     func infoSection() -> SettingsSectionDescriptorType {
         var cellDescriptors = [nameElement(), handleElement()]
         
-        if !ZMUser.selfUser()!.usesCompanyLogin {
+        if let user = ZMUser.selfUser(), !user.usesCompanyLogin {
             if !ZMUser.selfUser().hasTeam || !(ZMUser.selfUser().phoneNumber?.isEmpty ?? true) {
                 cellDescriptors.append(phoneElement())
             }
