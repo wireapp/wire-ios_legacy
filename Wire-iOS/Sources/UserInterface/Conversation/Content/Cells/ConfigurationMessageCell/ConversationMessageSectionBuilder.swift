@@ -82,6 +82,8 @@ class ConversationMessageSectionBuilder {
             addPing(in: section, for: message)
         } else if message.isText {
             addTextMessageAndAttachments(in: section, for: message)
+        } else if message.isLocation {
+            addLocationMessage(in: section, for: message)
         } else if message.isSystem {
             addSystemMessage(in: section, for: message)
         } else {
@@ -193,6 +195,15 @@ class ConversationMessageSectionBuilder {
            let linkPreviewCell = ConversationLinkPreviewArticleCellDescription(message: message, data: textMessageData)
             section.add(description: linkPreviewCell)
         }
+    }
+
+    private static func addLocationMessage(in section: ConversationMessageSectionController, for message: ZMConversationMessage) {
+        guard let locationMessageData = message.locationMessageData else {
+            return
+        }
+
+        let locationCell = ConversationLocationMessageCellDescription(message: message, location: locationMessageData)
+        section.add(description: locationCell)
     }
 
 }

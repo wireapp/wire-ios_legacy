@@ -169,3 +169,4 @@ class ConversationVeritfiedSystemMessageSectionDescription: ConversationMessageC
         configuration = View.Configuration(icon: WireStyleKit.imageOfShieldverified, attributedText: title, showLine: true)
     }
 }
+
