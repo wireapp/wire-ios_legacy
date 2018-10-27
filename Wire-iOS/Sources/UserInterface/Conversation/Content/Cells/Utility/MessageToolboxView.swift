@@ -49,7 +49,8 @@ extension ZMSystemMessageData {
 
     fileprivate func callDurationString() -> String? {
         guard systemMessageType == .performedCall, duration > 0 else { return nil }
-        return  PerformedCallCell.callDurationFormatter.string(from: duration)
+//        return  PerformedCallCell.callDurationFormatter.string(from: duration)
+        return nil
     }
 }
 

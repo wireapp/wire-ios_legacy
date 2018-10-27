@@ -21,11 +21,9 @@ import Foundation
 extension ConversationMessageWindowTableViewAdapter {
     
     @objc func registerTableCellClasses() {
-        tableView.register(ConnectionRequestCell.self, forCellReuseIdentifier: ConversationConnectionRequestCellId)
         tableView.register(ConversationNewDeviceCell.self, forCellReuseIdentifier: ConversationNewDeviceCellId)
         tableView.register(MissingMessagesCell.self, forCellReuseIdentifier: ConversationMissingMessagesCellId)
         tableView.register(ConversationIgnoredDeviceCell.self, forCellReuseIdentifier: ConversationIgnoredDeviceCellId)
-        tableView.register(CannotDecryptCell.self, forCellReuseIdentifier: ConversationCannotDecryptCellId)
 
         tableView.register(ParticipantsCell.self, forCellReuseIdentifier: ParticipantsCell.zm_reuseIdentifier)
 
@@ -72,9 +70,7 @@ extension ZMConversationMessage {
             cellIdentifier = ConversationImageCellId
         } else if isSystem, let systemMessageType = systemMessageData?.systemMessageType {
             switch systemMessageType {
-            case .connectionRequest:
-                cellIdentifier = ConversationConnectionRequestCellId
-            case .connectionUpdate:
+            case .connectionRequest, .connectionUpdate:
                 break
             case .newClient, .usingNewDevice:
                 cellIdentifier = ConversationNewDeviceCellId
@@ -82,8 +78,6 @@ extension ZMConversationMessage {
                 cellIdentifier = ConversationIgnoredDeviceCellId
             case .potentialGap, .reactivatedDevice:
                 cellIdentifier = ConversationMissingMessagesCellId
-            case .decryptionFailed, .decryptionFailed_RemoteIdentityChanged:
-                cellIdentifier = ConversationCannotDecryptCellId
             case .participantsAdded, .participantsRemoved, .newConversation, .teamMemberLeave:
                 cellIdentifier = ParticipantsCell.zm_reuseIdentifier
             default:

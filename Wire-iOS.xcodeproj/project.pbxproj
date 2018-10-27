@@ -422,7 +422,6 @@
 		870C926F1E8D1C7300A10995 /* ConversationListViewModel+Teams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870C926E1E8D1C7300A10995 /* ConversationListViewModel+Teams.swift */; };
 		870C97C31D670C9A00F6FD7D /* NextResponderTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 870C97C21D670C9A00F6FD7D /* NextResponderTextView.m */; };
 		870DC1EB1C92F5CC005C1DB9 /* AVSLogObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 870DC1EA1C92F5CC005C1DB9 /* AVSLogObserver.m */; };
-		870EB7701C60E9B400F274A3 /* CannotDecryptCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870EB76F1C60E9B400F274A3 /* CannotDecryptCell.swift */; };
 		8710673C1C0DC5570035603B /* SettingsButtonCellDescriptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871067361C0DC5570035603B /* SettingsButtonCellDescriptor.swift */; };
 		8710673D1C0DC5570035603B /* SettingsCellDescriptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871067371C0DC5570035603B /* SettingsCellDescriptor.swift */; };
 		8710673E1C0DC5570035603B /* SettingsCellDescriptorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871067381C0DC5570035603B /* SettingsCellDescriptorFactory.swift */; };
@@ -1925,7 +1924,6 @@
 		870C97C41D670CA700F6FD7D /* NextResponderTextView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NextResponderTextView.h; sourceTree = "<group>"; };
 		870DC1E91C92F5CC005C1DB9 /* AVSLogObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AVSLogObserver.h; sourceTree = "<group>"; };
 		870DC1EA1C92F5CC005C1DB9 /* AVSLogObserver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AVSLogObserver.m; sourceTree = "<group>"; };
-		870EB76F1C60E9B400F274A3 /* CannotDecryptCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CannotDecryptCell.swift; sourceTree = "<group>"; };
 		871067361C0DC5570035603B /* SettingsButtonCellDescriptor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsButtonCellDescriptor.swift; sourceTree = "<group>"; };
 		871067371C0DC5570035603B /* SettingsCellDescriptor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsCellDescriptor.swift; sourceTree = "<group>"; };
 		871067381C0DC5570035603B /* SettingsCellDescriptorFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsCellDescriptorFactory.swift; sourceTree = "<group>"; };
@@ -5573,7 +5571,6 @@
 				BFFE94391E782FD70025AD75 /* ConversationRenamedCell.swift */,
 				CEC0FE3A1C4FBF120093BF0D /* ConversationIgnoredDeviceCell.swift */,
 				D5189474204ED04400C095C1 /* ParticipantsInvitePeopleView.swift */,
-				870EB76F1C60E9B400F274A3 /* CannotDecryptCell.swift */,
 				87AD89F61CB5179C002C6EC1 /* FileTransferCell.swift */,
 				8756FE331CEB62F800EF58A6 /* AudioMessageCell.swift */,
 				872334291CD0D8F000CF8B11 /* VideoMessageCell.swift */,
@@ -7667,7 +7664,6 @@
 				872CB8B519E58816006752B4 /* ProfileIncomingConnectionRequestFooterView.m in Sources */,
 				166264EB2174CA5900300F45 /* NewTextMessageCell.swift in Sources */,
 				EFDACABB20FF84B900791207 /* ConversationInputBarViewController+FilesPopover.swift in Sources */,
-				870EB7701C60E9B400F274A3 /* CannotDecryptCell.swift in Sources */,
 				879489E31E5444A20071B2C1 /* NoResultsView.swift in Sources */,
 				5E53B0DC211AB7AC009C7124 /* AuthenticationInterfaceBuilder.swift in Sources */,
 				BF4D99CD1E79AAD400A7B08F /* ParticipantsCellViewModel.swift in Sources */,

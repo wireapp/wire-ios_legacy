@@ -37,6 +37,35 @@ class ConversationSystemMessageCell: ConversationIconBasedCell, ConversationMess
 
 }
 
+class LinkConversationSystemMessageCell: ConversationIconBasedCell, ConversationMessageCell {
+
+    struct Configuration {
+        let icon: UIImage?
+        let attributedText: NSAttributedString?
+        let showLine: Bool
+        let url: URL
+    }
+
+    var lastConfiguration: Configuration?
+
+    // MARK: - Configuration
+
+    func configure(with object: Configuration) {
+        lastConfiguration = object
+        lineView.isHidden = !object.showLine
+        imageView.image = object.icon
+        attributedText = object.attributedText
+    }
+
+    func attributedLabel(_ label: TTTAttributedLabel!, didSelectLinkWith url: URL!) {
+        if let itemURL = lastConfiguration?.url {
+            UIApplication.shared.open(itemURL)
+        }
+    }
+
+}
+
+
 class ConversationRenamedSystemMessageCell: ConversationIconBasedCell, ConversationMessageCell {
 
     struct Configuration {
@@ -170,3 +199,81 @@ class ConversationVeritfiedSystemMessageSectionDescription: ConversationMessageC
     }
 }
 
+class ConversationCannotDecryptSystemMessageCellDescription: ConversationMessageCellDescription {
+    typealias View = LinkConversationSystemMessageCell
+    let configuration: View.Configuration
+
+    static fileprivate let generalErrorURL : URL = URL(string:"action://general-error")!
+    static fileprivate let remoteIDErrorURL : URL = URL(string:"action://remote-id-error")!
+
+    var isFullWidth: Bool {
+        return true
+    }
+
+    init(message: ZMConversationMessage, data: ZMSystemMessageData, sender: ZMUser, remoteIdentityChanged: Bool) {
+        let exclamationColor = UIColor(for: .vividRed)
+        let icon = UIImage(for: .exclamationMark, fontSize: 16, color: exclamationColor)
+        let link: URL = remoteIdentityChanged ? .wr_cannotDecryptNewRemoteIDHelp : .wr_cannotDecryptHelp
+
+        let title = ConversationCannotDecryptSystemMessageCellDescription
+            .makeAttributedString(
+                systemMessage: data,
+                sender: sender,
+                remoteIDChanged:
+                remoteIdentityChanged,
+                link: link
+            )
+
+        configuration = View.Configuration(icon: icon, attributedText: title, showLine: false, url: link)
+    }
+
+    // MARK: - Localization
+
+    private static let BaseLocalizationString = "content.system.cannot_decrypt"
+    private static let IdentityString = ".identity"
+
+    private static func makeAttributedString(systemMessage: ZMSystemMessageData, sender: ZMUser, remoteIDChanged: Bool, link: URL) -> NSAttributedString {
+        let name = localizedWhoPart(sender, remoteIDChanged: remoteIDChanged)
+
+        let why = NSAttributedString(string: localizedWhyPart(remoteIDChanged),
+                                     attributes: [.font: UIFont.mediumFont, .link: link as AnyObject, .foregroundColor: UIColor.textForeground])
+
+        let device : NSAttributedString
+        if DeveloperMenuState.developerMenuEnabled() {
+            device = "\n" + NSAttributedString(string: localizedDevice(systemMessage.clients.first as? UserClient),
+                                               attributes: [.font: UIFont.mediumFont, .foregroundColor: UIColor.textDimmed])
+        } else {
+            device = NSAttributedString()
+        }
+
+        let messageString = NSAttributedString(string: localizedWhatPart(remoteIDChanged, name: name),
+                                               attributes: [.font: UIFont.mediumFont, .foregroundColor: UIColor.textForeground])
+
+        let fullString = messageString + " " + why + device
+        return fullString.addAttributes([.font: UIFont.mediumSemiboldFont], toSubstring:name)
+    }
+
+    private static func localizedWhoPart(_ sender: ZMUser, remoteIDChanged: Bool) -> String {
+        switch (sender.isSelfUser, remoteIDChanged) {
+        case (true, _):
+            return (BaseLocalizationString + (remoteIDChanged ? IdentityString : "") + ".you_part").localized
+        case (false, true):
+            return (BaseLocalizationString + IdentityString + ".otherUser_part").localized(args: sender.displayName)
+        case (false, false):
+            return sender.displayName
+        }
+    }
+
+    private static func localizedWhatPart(_ remoteIDChanged: Bool, name: String) -> String {
+        return (BaseLocalizationString + (remoteIDChanged ? IdentityString : "")).localized(args: name)
+    }
+
+    private static func localizedWhyPart(_ remoteIDChanged: Bool) -> String {
+        return (BaseLocalizationString + (remoteIDChanged ? IdentityString : "")+".why_part").localized
+    }
+
+    private static func localizedDevice(_ device: UserClient?) -> String {
+        return (BaseLocalizationString + ".otherDevice_part").localized(args: device?.remoteIdentifier ?? "-")
+    }
+
+}

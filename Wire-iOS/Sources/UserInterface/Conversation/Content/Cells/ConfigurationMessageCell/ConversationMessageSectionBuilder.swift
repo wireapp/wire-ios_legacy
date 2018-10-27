@@ -120,6 +120,9 @@ class ConversationMessageSectionBuilder {
         }
 
         switch systemMessageData.systemMessageType {
+        case .connectionRequest, .connectionUpdate:
+            break // Deprecated
+
         case .conversationNameChanged:
             guard let newName = systemMessageData.text else {
                 fallthrough
@@ -151,6 +154,14 @@ class ConversationMessageSectionBuilder {
         case .conversationIsSecure:
             let shieldCell = ConversationVeritfiedSystemMessageSectionDescription()
             section.add(description: shieldCell)
+
+        case .decryptionFailed:
+            let decryptionCell = ConversationCannotDecryptSystemMessageCellDescription(message: message, data: systemMessageData, sender: sender, remoteIdentityChanged: false)
+            section.add(description: decryptionCell)
+
+        case .decryptionFailed_RemoteIdentityChanged:
+            let decryptionCell = ConversationCannotDecryptSystemMessageCellDescription(message: message, data: systemMessageData, sender: sender, remoteIdentityChanged: true)
+            section.add(description: decryptionCell)
 
         default:
             section.add(description: UnknownMessageCellDescription())
