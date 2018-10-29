@@ -187,9 +187,7 @@ static const CGFloat BurstContainerExpandedHeight = 40;
     [self.contentView addSubview:self.countdownContainerView];
     
     self.countdownContainerViewHidden = YES;
-    
-    [self createLikeButton];
-    
+
     self.doubleTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didDoubleTapMessage:)];
     self.doubleTapGestureRecognizer.numberOfTapsRequired = 2;
     self.doubleTapGestureRecognizer.delaysTouchesBegan = YES;
@@ -271,9 +269,6 @@ static const CGFloat BurstContainerExpandedHeight = 40;
     [self.toolboxView autoPinEdgeToSuperviewEdge:ALEdgeTrailing];
     [self.toolboxView autoPinEdgeToSuperviewEdge:ALEdgeLeading];
     [self.toolboxView autoPinEdgeToSuperviewEdge:ALEdgeBottom];
-    
-    [self.likeButton autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.toolboxView];
-    [self.likeButton autoAlignAxis:ALAxisVertical toSameAxisOfView:self.authorImageContainer];
 
     const CGFloat inset = UIFont.normalRegularFont.lineHeight / 2;
     
@@ -331,9 +326,7 @@ static const CGFloat BurstContainerExpandedHeight = 40;
     if (layoutProperties.showBurstTimestamp || layoutProperties.showDayBurstTimestamp) {
         [self updateBurstTimestamp];
     }
-    
-    [self configureLikeButtonForMessage:message];
-    
+
     [self updateConstraintConstants];
     [self updateToolboxVisibilityAnimated:NO];
     [self startCountdownAnimationIfNeeded:message];
@@ -550,7 +543,7 @@ static const CGFloat BurstContainerExpandedHeight = 40;
 - (BOOL)updateForMessage:(MessageChangeInfo *)change
 {
     if (change.reactionsChanged) {
-        [self configureLikeButtonForMessage:change.message];
+        [self.toolboxView updateForMessage:change];
     }
     
     if (change.userChangeInfo.nameChanged || change.senderChanged) {
@@ -601,6 +594,11 @@ static const CGFloat BurstContainerExpandedHeight = 40;
 @end
 
 @implementation ConversationCell (MessageToolboxViewDelegate)
+
+- (void)messageToolboxViewDidRequestLike:(MessageToolboxView *)messageToolboxView
+{
+    [self.delegate conversationCell:messageToolboxView didSelectAction:MessageActionLike];
+}
 
 - (void)messageToolboxViewDidSelectLikers:(MessageToolboxView *)messageToolboxView
 {

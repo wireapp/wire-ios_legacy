@@ -20,26 +20,6 @@ import UIKit
 
 public extension ConversationCell {
 
-    @objc public func createLikeButton() {
-        self.likeButton = LikeButton()
-        self.likeButton.translatesAutoresizingMaskIntoConstraints = false
-        self.likeButton.accessibilityIdentifier = "likeButton"
-        self.likeButton.accessibilityLabel = "likeButton"
-        self.likeButton.addTarget(self, action: #selector(ConversationCell.likeMessage(_:)), for: .touchUpInside)
-        self.likeButton.setIcon(.liked, with: .like, for: .normal)
-        self.likeButton.setIconColor(UIColor(scheme: .textDimmed), for: .normal)
-        self.likeButton.setIcon(.liked, with: .like, for: .selected)
-        self.likeButton.setIconColor(UIColor(for: .vividRed), for: .selected)
-        self.likeButton.hitAreaPadding = CGSize(width: 20, height: 20)
-        self.contentView.addSubview(self.likeButton)
-    }
-
-    @objc public func configureLikeButtonForMessage(_ message: ZMConversationMessage?) {
-        let liked = message?.liked ?? false
-
-        self.likeButton?.setSelected(liked, animated: false)
-    }
-
     @objc public func didDoubleTapMessage(_ sender: AnyObject!) {
         self.likeMessage(sender)
     }
