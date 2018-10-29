@@ -54,8 +54,17 @@ class ConversationMessageToolboxCell: UIView, ConversationMessageCell {
 }
 
 class ConversationMessageToolboxCellDescription: ConversationMessageCellDescription {
+    typealias View = ConversationMessageToolboxCell
+    let configuration: View.Configuration
 
-    typealias View = <#type expression#>
+    weak var delegate: ConversationCellDelegate?
 
+    var isFullWidth: Bool {
+        return false
+    }
+
+    init() {
+        configuration = View.Configuration()
+    }
 
 }
