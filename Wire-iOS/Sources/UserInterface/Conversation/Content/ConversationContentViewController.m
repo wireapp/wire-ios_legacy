@@ -466,6 +466,12 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
                 }];
             }
                 break;
+
+            case MessageActionReply:
+            {
+                // TODO: Prepare reply input view
+            }
+                break;
         }
     };
 

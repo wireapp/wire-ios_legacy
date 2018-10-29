@@ -55,7 +55,7 @@ typedef void (^SelectedMenuBlock)(BOOL selected, BOOL animated);
 /// Called on touch up inside event on the user image (@c fromImage)
 - (void)conversationCell:(ConversationCell *)cell userTapped:(id<UserType>)user inView:(UIView *)view frame:(CGRect)frame;
 - (void)conversationCellDidTapResendMessage:(ConversationCell *)cell;
-- (void)conversationCell:(ConversationCell *)cell didSelectAction:(MessageAction)actionId;
+- (void)conversationCell:(UIView *)cell didSelectAction:(MessageAction)actionId;
 - (void)conversationCell:(ConversationCell *)cell didSelectURL:(NSURL *)url;
 - (BOOL)conversationCell:(ConversationCell *)cell shouldBecomeFirstResponderWhenShowMenuWithCellType:(MessageType)messageType;
 - (void)conversationCell:(ConversationCell *)cell didOpenMenuForCellType:(MessageType)messageType;

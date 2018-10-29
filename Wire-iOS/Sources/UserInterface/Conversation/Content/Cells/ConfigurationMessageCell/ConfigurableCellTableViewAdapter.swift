@@ -18,9 +18,10 @@
 
 import Foundation
 
-class ConfigurableCellTableViewAdapter<C: UIView & ConversationMessageCell>: UITableViewCell {
+class ConfigurableCellTableViewAdapter<C: ConversationMessageCellDescription>: UITableViewCell {
     
-    var cellView: C
+    var cellView: C.View
+    var cellDescription: C?
 
     var isFullWidth: Bool = false {
         didSet {
@@ -39,7 +40,7 @@ class ConfigurableCellTableViewAdapter<C: UIView & ConversationMessageCell>: UIT
             preconditionFailure("Missing cell reuseIdentifier")
         }
         
-        self.cellView = C(frame: .zero)
+        self.cellView = C.View(frame: .zero)
         self.cellView.translatesAutoresizingMaskIntoConstraints = false
         
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -57,13 +58,20 @@ class ConfigurableCellTableViewAdapter<C: UIView & ConversationMessageCell>: UIT
         bottom = cellView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8)
         
         NSLayoutConstraint.activate([leading, trailing, top, bottom])
+
+        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(onLongPress))
+        contentView.addGestureRecognizer(longPress)
+
+        let doubleTap = UITapGestureRecognizer(target: self, action: #selector(onDoubleTap))
+        doubleTap.numberOfTapsRequired = 2
+        contentView.addGestureRecognizer(doubleTap)
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(with object: C.Configuration, fullWidth: Bool) {
+    func configure(with object: C.View.Configuration, fullWidth: Bool) {
         cellView.configure(with: object)
         self.isFullWidth = fullWidth
     }
@@ -86,21 +94,47 @@ class ConfigurableCellTableViewAdapter<C: UIView & ConversationMessageCell>: UIT
             self.layoutIfNeeded()
         })
     }
-    
+
+    // MARK: - Menu
+
+    @objc private func onLongPress(_ gestureRecognizer: UILongPressGestureRecognizer) {
+        if gestureRecognizer.state == .began {
+            self.showMenu()
+        }
+    }
+
+    private func showMenu() {
+        // TODO: Create and present menu
+    }
+
+    // MARK: - Double Tap To Like
+
+    @objc private func onDoubleTap(_ gestureRecognizer: UILongPressGestureRecognizer) {
+        if gestureRecognizer.state == .recognized {
+            likeMessage()
+        }
+    }
+
+    private func likeMessage() {
+        cellDescription?.delegate?.conversationCell?(contentView, didSelect: .like)
+    }
+
 }
 
 extension UITableView {
 
     func register<C: ConversationMessageCellDescription>(cell: C.Type) {
         let reuseIdentifier = String(describing: C.View.self)
-        register(ConfigurableCellTableViewAdapter<C.View>.self, forCellReuseIdentifier: reuseIdentifier)
+        register(ConfigurableCellTableViewAdapter<C>.self, forCellReuseIdentifier: reuseIdentifier)
     }
 
-    func dequeueConversationCell<C: ConversationMessageCellDescription>(for type: C.Type, configuration: C.View.Configuration, for indexPath: IndexPath, fullWidth: Bool) -> UITableViewCell {
+    func dequeueConversationCell<C: ConversationMessageCellDescription>(for type: C.Type, description: C, for indexPath: IndexPath) -> UITableViewCell {
         let reuseIdentifier = String(describing: C.View.self)
 
-        let cell = dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as Any as! ConfigurableCellTableViewAdapter<C.View>
-        cell.configure(with: configuration, fullWidth: fullWidth)
+        let cell = dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as Any as! ConfigurableCellTableViewAdapter<C>
+
+        cell.cellDescription = description
+        cell.configure(with: description.configuration, fullWidth: description.isFullWidth)
 
         return cell
     }
