@@ -38,6 +38,8 @@ class UnknownMessageCellDescription: ConversationMessageCellDescription {
     typealias View = CustomMessageView
     let configuration: String
 
+    weak var delegate: ConversationCellDelegate?
+
     var isFullWidth: Bool {
         return false
     }
@@ -52,7 +54,8 @@ extension ZMConversationMessageWindow {
     
     func sectionController(for message: ZMConversationMessage, firstUnreadMessage: ZMConversationMessage?) -> ConversationMessageSectionController {
         let context = self.context(for: message, firstUnreadMessage: firstUnreadMessage)
-        return ConversationMessageSectionBuilder.buildSection(for: message, context: context)
+        let layoutProperties = self.layoutProperties(for: message, firstUnreadMessage: firstUnreadMessage)
+        return ConversationMessageSectionBuilder.buildSection(for: message, context: context, layoutProperties: layoutProperties)
     }
     
     @objc func isPreviousSenderSame(forMessage message: ZMConversationMessage?) -> Bool {

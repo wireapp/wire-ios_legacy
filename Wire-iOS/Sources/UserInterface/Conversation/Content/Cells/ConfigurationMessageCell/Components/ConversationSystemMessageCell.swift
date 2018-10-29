@@ -104,6 +104,8 @@ class ConversationRenamedSystemMessageCellDescription: ConversationMessageCellDe
     typealias View = ConversationRenamedSystemMessageCell
     let configuration: View.Configuration
 
+    weak var delegate: ConversationCellDelegate?
+
     var isFullWidth: Bool {
         return true
     }
@@ -124,6 +126,8 @@ class ConversationRenamedSystemMessageCellDescription: ConversationMessageCellDe
 class ConversationCallSystemMessageCellDescription: ConversationMessageCellDescription {
     typealias View = ConversationSystemMessageCell
     let configuration: View.Configuration
+
+    weak var delegate: ConversationCellDelegate?
 
     var isFullWidth: Bool {
         return true
@@ -147,6 +151,8 @@ class ConversationCallSystemMessageCellDescription: ConversationMessageCellDescr
 class ConversationMessageTimerCellDescription: ConversationMessageCellDescription {
     typealias View = ConversationSystemMessageCell
     let configuration: View.Configuration
+
+    weak var delegate: ConversationCellDelegate?
 
     var isFullWidth: Bool {
         return true
@@ -185,6 +191,8 @@ class ConversationVeritfiedSystemMessageSectionDescription: ConversationMessageC
     typealias View = ConversationSystemMessageCell
     let configuration: View.Configuration
 
+    weak var delegate: ConversationCellDelegate?
+
     var isFullWidth: Bool {
         return true
     }
@@ -205,6 +213,8 @@ class ConversationCannotDecryptSystemMessageCellDescription: ConversationMessage
 
     static fileprivate let generalErrorURL : URL = URL(string:"action://general-error")!
     static fileprivate let remoteIDErrorURL : URL = URL(string:"action://remote-id-error")!
+
+    weak var delegate: ConversationCellDelegate?
 
     var isFullWidth: Bool {
         return true
@@ -277,3 +287,4 @@ class ConversationCannotDecryptSystemMessageCellDescription: ConversationMessage
     }
 
 }
+

@@ -37,6 +37,9 @@ import Foundation
     /// Whether we need to use inverted indices. This is `true` when the table view is upside down.
     @objc var useInvertedIndices = false
 
+    /// The delegate for cells injected by the list adapter.
+    @objc var delegate: ConversationCellDelegate?
+
     /**
      * Adds a cell description to the section.
      * - parameter description: The cell to add to the message section.
@@ -63,6 +66,8 @@ import Foundation
 
     func makeCell(for tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
         let description = cellDescription(at: indexPath.row)
+        description.delegate = self.delegate
+
         let cell = description.makeCell(for: tableView, at: indexPath)
         return cell
     }
@@ -74,7 +79,7 @@ import Foundation
 
     func cellDescription(at row: Int) -> AnyConversationMessageCellDescription {
         if useInvertedIndices {
-            return cellDescriptions[(cellDescriptions.count - 1) - row]
+            return cellDescriptions[(numberOfCells - 1) - row]
         } else {
             return cellDescriptions[row]
         }

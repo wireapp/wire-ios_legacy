@@ -21,12 +21,58 @@ import XCTest
 
 class ConversationMessageSectionControllerTests: XCTestCase {
 
-    func testThatItAddsCellsInCorrectOrder() {
+    // MARK: - Dequeuing
+
+    func testThatItReturnsCellsInCorrectOrder_Normal() {
         // GIVEN
         let section = ConversationMessageSectionController()
+        section.useInvertedIndices = false
 
         // WHEN
-        section
+        section.add(description: MockCellDescription<Bool>())
+        section.add(description: MockCellDescription<String>())
+
+        // THEN
+        let cell1 = section.cellDescription(at: 0)
+        let cell2 = section.cellDescription(at: 1)
+
+        XCTAssertEqual(String(describing: cell1.baseType), "MockCellDescription<Bool>")
+        XCTAssertEqual(String(describing: cell2.baseType), "MockCellDescription<String>")
+    }
+
+    func testThatItReturnsCellsInCorrectOrder_UpsideDown() {
+        // GIVEN
+        let section = ConversationMessageSectionController()
+        section.useInvertedIndices = true
+
+        // WHEN
+        section.add(description: MockCellDescription<Bool>())
+        section.add(description: MockCellDescription<String>())
+
+        // THEN
+        let cell1 = section.cellDescription(at: 0)
+        let cell2 = section.cellDescription(at: 1)
+
+        XCTAssertEqual(String(describing: cell1.baseType), "MockCellDescription<String>")
+        XCTAssertEqual(String(describing: cell2.baseType), "MockCellDescription<Bool>")
+    }
+
+    // MARK: - Configuration
+
+    func testThatItConfiguresCellAfterDequeuing() {
+        // GIVEN
+        let section = ConversationMessageSectionController()
+        let tableView = UITableView()
+
+        section.add(description: MockCellDescription<Any>())
+        section.cellDescriptions[0].register(in: tableView)
+
+        // WHEN
+        let indexPath = IndexPath(row: 0, section: 0)
+        let cell = section.makeCell(for: tableView, at: indexPath) as? ConfigurableCellTableViewAdapter<MockCell>
+
+        // THEN
+        XCTAssertTrue(cell?.cellView.isConfigured == true)
     }
 
 }

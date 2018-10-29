@@ -86,6 +86,8 @@ class ConversationSenderMessageCellDescription: ConversationMessageCellDescripti
     typealias View = ConversationSenderMessageCell
     let configuration: View.Configuration
 
+    weak var delegate: ConversationCellDelegate?
+
     var isFullWidth: Bool {
         return true
     }

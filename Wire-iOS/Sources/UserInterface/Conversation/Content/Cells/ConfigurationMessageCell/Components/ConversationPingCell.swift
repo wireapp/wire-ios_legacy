@@ -37,6 +37,8 @@ class ConversationPingCellDescription: ConversationMessageCellDescription {
     typealias View = ConversationPingCell
     let configuration: ConversationPingCell.Configuration
 
+    weak var delegate: ConversationCellDelegate?
+
     var isFullWidth: Bool {
         return true
     }

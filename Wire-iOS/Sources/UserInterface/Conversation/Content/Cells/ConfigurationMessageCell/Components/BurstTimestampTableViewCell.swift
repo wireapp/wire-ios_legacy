@@ -28,6 +28,8 @@ class BurstTimestampSenderMessageCellDescription: ConversationMessageCellDescrip
     typealias View = BurstTimestampSenderMessageCell
     let configuration: View.Configuration
 
+    weak var delegate: ConversationCellDelegate?
+
     var isFullWidth: Bool {
         return true
     }

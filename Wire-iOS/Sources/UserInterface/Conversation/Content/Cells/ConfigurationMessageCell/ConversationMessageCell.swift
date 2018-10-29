@@ -52,8 +52,26 @@ protocol ConversationMessageCellDescription: class {
     /// Whether the view occupies the entire width of the cell.
     var isFullWidth: Bool { get }
 
+    /// The delegate for the cell.
+    var delegate: ConversationCellDelegate? { get set }
+
     /// The configuration object that will be used to populate the cell.
     var configuration: View.Configuration { get }
+
+    func register(in tableView: UITableView)
+    func makeCell(for tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell
+}
+
+extension ConversationMessageCellDescription {
+
+    func register(in tableView: UITableView) {
+        tableView.register(cell: type(of: self))
+    }
+
+    func makeCell(for tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
+        return tableView.dequeueConversationCell(for: type(of: self), configuration: configuration, for: indexPath, fullWidth: isFullWidth)
+    }
+
 }
 
 /**
@@ -65,14 +83,16 @@ protocol ConversationMessageCellDescription: class {
     private let registrationBlock: (UITableView) -> Void
     private let baseTypeGetter: () -> AnyClass
     private let fullWidthGetter: () -> Bool
+    private let delegateGetter: () -> ConversationCellDelegate?
+    private let delegateSetter: (ConversationCellDelegate?) -> Void
 
     init<T: ConversationMessageCellDescription>(_ description: T) {
         registrationBlock = { tableView in
-            tableView.register(cell: T.self)
+            description.register(in: tableView)
         }
 
         cellGenerator = { tableView, indexPath in
-            return tableView.dequeueConversationCell(for: T.self, configuration: description.configuration, for: indexPath, fullWidth: description.isFullWidth)
+            return description.makeCell(for: tableView, at: indexPath)
         }
 
         baseTypeGetter = {
@@ -82,6 +102,14 @@ protocol ConversationMessageCellDescription: class {
         fullWidthGetter = {
             return description.isFullWidth
         }
+
+        delegateGetter = {
+            return description.delegate
+        }
+
+        delegateSetter = { newValue in
+            description.delegate = newValue
+        }
     }
 
     @objc var baseType: AnyClass {
@@ -90,6 +118,11 @@ protocol ConversationMessageCellDescription: class {
 
     var isFullWidth: Bool {
         return fullWidthGetter()
+    }
+
+    @objc var delegate: ConversationCellDelegate? {
+        get { return delegateGetter() }
+        set { delegateSetter(newValue) }
     }
 
     @objc(registerInTableView:)

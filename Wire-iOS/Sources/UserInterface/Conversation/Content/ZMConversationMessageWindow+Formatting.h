@@ -22,9 +22,12 @@
 
 @class ConversationCellLayoutProperties;
 
+NS_ASSUME_NONNULL_BEGIN
 
 @interface ZMConversationMessageWindow (Formatting)
 
-- (ConversationCellLayoutProperties *)layoutPropertiesForMessage:(id<ZMConversationMessage>)message firstUnreadMessage:(id <ZMConversationMessage>)firstUnreadMessage;
+- (ConversationCellLayoutProperties *)layoutPropertiesForMessage:(id<ZMConversationMessage>)message firstUnreadMessage:(id <ZMConversationMessage> _Nullable)firstUnreadMessage;
 
 @end
+
+NS_ASSUME_NONNULL_END

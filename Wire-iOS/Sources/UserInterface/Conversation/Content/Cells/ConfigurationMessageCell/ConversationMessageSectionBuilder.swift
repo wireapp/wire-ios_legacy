@@ -26,11 +26,19 @@ struct ConversationMessageContext {
     let isFirstUnreadMessage: Bool
 }
 
-
 class ConversationMessageSectionBuilder {
 
-    static func buildSection(for message: ZMConversationMessage, context: ConversationMessageContext) -> ConversationMessageSectionController {
+    static func buildSection(for message: ZMConversationMessage, context: ConversationMessageContext, layoutProperties: ConversationCellLayoutProperties) -> ConversationMessageSectionController {
         let section = ConversationMessageSectionController()
+        configure(section: section, for: message, context: context, layoutProperties: layoutProperties)
+        return section
+    }
+
+    static func configure(section: ConversationMessageSectionController, for message: ZMConversationMessage, context: ConversationMessageContext, layoutProperties: ConversationCellLayoutProperties) {
+        // Fallback to old type
+        if addLegacyContentIfNeeded(in: section, for: message, layoutProperties: layoutProperties) {
+            return
+        }
 
         // Burst timestamp
         addBurstTimestampIfNeeded(in: section, for: message, context: context)
@@ -42,8 +50,54 @@ class ConversationMessageSectionBuilder {
 
         // Content
         addContent(in: section, for: message, context: context)
+    }
 
-        return section
+    private static func addLegacyContentIfNeeded(in section: ConversationMessageSectionController,
+                                                 for message: ZMConversationMessage,
+                                                 layoutProperties: ConversationCellLayoutProperties) -> Bool {
+
+        if message.isVideo {
+            let videoCell = ConversationLegacyCellDescription<VideoMessageCell>(message: message, layoutProperties: layoutProperties)
+            section.add(description: videoCell)
+
+        } else if message.isAudio {
+            let audioCell = ConversationLegacyCellDescription<AudioMessageCell>(message: message, layoutProperties: layoutProperties)
+            section.add(description: audioCell)
+
+        } else if message.isFile {
+            let fileCell = ConversationLegacyCellDescription<FileTransferCell>(message: message, layoutProperties: layoutProperties)
+            section.add(description: fileCell)
+
+        } else if message.isImage {
+            let imageCell = ConversationLegacyCellDescription<ImageMessageCell>(message: message, layoutProperties: layoutProperties)
+            section.add(description: imageCell)
+
+        } else if message.isSystem, let systemMessageType = message.systemMessageData?.systemMessageType {
+            switch systemMessageType {
+            case .newClient, .usingNewDevice:
+                let newClientCell = ConversationLegacyCellDescription<ConversationNewDeviceCell>(message: message, layoutProperties: layoutProperties)
+                section.add(description: newClientCell)
+
+            case .ignoredClient:
+                let ignoredClientCell = ConversationLegacyCellDescription<ConversationIgnoredDeviceCell>(message: message, layoutProperties: layoutProperties)
+                section.add(description: ignoredClientCell)
+
+            case .potentialGap, .reactivatedDevice:
+                let missingMessagesCell = ConversationLegacyCellDescription<MissingMessagesCell>(message: message, layoutProperties: layoutProperties)
+                section.add(description: missingMessagesCell)
+
+            case .participantsAdded, .participantsRemoved, .newConversation, .teamMemberLeave:
+                let participantsCell = ConversationLegacyCellDescription<ParticipantsCell>(message: message, layoutProperties: layoutProperties)
+                section.add(description: participantsCell)
+
+            default:
+                return false
+            }
+        } else {
+            return false
+        }
+
+        return true
     }
 
     private static func addBurstTimestampIfNeeded(in section: ConversationMessageSectionController,

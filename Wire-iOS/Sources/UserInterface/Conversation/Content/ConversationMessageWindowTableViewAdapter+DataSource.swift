@@ -70,8 +70,6 @@ extension ZMConversationMessage {
             cellIdentifier = ConversationImageCellId
         } else if isSystem, let systemMessageType = systemMessageData?.systemMessageType {
             switch systemMessageType {
-            case .connectionRequest, .connectionUpdate:
-                break
             case .newClient, .usingNewDevice:
                 cellIdentifier = ConversationNewDeviceCellId
             case .ignoredClient:

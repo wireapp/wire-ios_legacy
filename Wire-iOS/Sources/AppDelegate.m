@@ -94,7 +94,7 @@ static AppDelegate *sharedAppDelegate = nil;
     // the windows will not receive any info about device orientation.
     self.rootViewController = [[AppRootViewController alloc] init];
 
-    [PerformanceDebugger start];
+    [PerformanceDebugger.shared start];
     return YES;
 }
 

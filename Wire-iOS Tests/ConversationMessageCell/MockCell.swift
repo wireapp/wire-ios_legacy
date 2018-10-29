@@ -17,37 +17,30 @@
 //
 
 import UIKit
+@testable import Wire
 
-class ConversationYouTubeAttachmentCell: ViewControllerBasedCell<MediaPreviewViewController>, ConversationMessageCell {
-
+class MockCell: UIView, ConversationMessageCell {
     struct Configuration {
-        let attachment: LinkAttachment
+        let backgroundColor: UIColor
     }
 
-    // MARK: - Initialization
-
-    convenience init() {
-        self.init(viewController: MediaPreviewViewController())
-    }
+    var isConfigured: Bool  = false
+    var isSelected: Bool = false
 
     func configure(with object: Configuration) {
-        viewController.linkAttachment = object.attachment
-        viewController.fetchAttachment()
+        isConfigured = true
+        backgroundColor = object.backgroundColor
     }
-
 }
 
-class ConversationYouTubeAttachmentCellDescription: ConversationMessageCellDescription {
-    typealias View = ConversationYouTubeAttachmentCell
+class MockCellDescription<T>: ConversationMessageCellDescription {
+    typealias View = MockCell
     let configuration: View.Configuration
 
-    weak var delegate: ConversationCellDelegate?
+    var isFullWidth: Bool = false
 
-    var isFullWidth: Bool {
-        return false
-    }
-
-    init(attachment: LinkAttachment) {
-        configuration = View.Configuration(attachment: attachment)
+    init() {
+        let backgroundColor = UIColor(for: .vividRed)!
+        configuration = View.Configuration(backgroundColor: backgroundColor)
     }
 }

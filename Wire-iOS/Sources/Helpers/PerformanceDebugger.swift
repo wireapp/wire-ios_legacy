@@ -25,7 +25,7 @@ import Foundation
 @objc class PerformanceDebugger: NSObject {
 
     /// The shared debugger.
-    static let shared = PerformanceDebugger()
+    @objc static let shared = PerformanceDebugger()
 
     private let log = ZMSLog(tag: "Performance")
     private var displayLink: CADisplayLink!
@@ -40,12 +40,12 @@ import Foundation
     }
 
     /// Starts tracking performance issues.
-    @objc static func start() {
+    @objc func start() {
         guard DeveloperMenuState.developerMenuEnabled() else {
             return
         }
 
-        shared.displayLink.add(to: .main, forMode: .default)
+        displayLink.add(to: .main, forMode: .default)
         NotificationCenter.default.addObserver(self, selector: #selector(handleMemoryWarning), name: UIApplication.didReceiveMemoryWarningNotification, object: nil)
     }
 

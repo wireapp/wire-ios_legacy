@@ -61,8 +61,8 @@ typedef void (^SelectedMenuBlock)(BOOL selected, BOOL animated);
 - (void)conversationCell:(ConversationCell *)cell didOpenMenuForCellType:(MessageType)messageType;
 - (void)conversationCellDidTapOpenLikers:(ConversationCell *)cell;
 - (BOOL)conversationCellShouldStartDestructionTimer:(ConversationCell *)cell;
-- (void)conversationCell:(ConversationCell *)cell openGuestOptionsFromView:(UIView *)sourceView;
-- (void)conversationCell:(ConversationCell *)cell openParticipantsDetailsWithSelectedUsers:(NSArray <ZMUser *>*)selectedUsers fromView:(UIView *)sourceView;
+- (void)conversationCell:(UIView *)cell openGuestOptionsFromView:(UIView *)sourceView;
+- (void)conversationCell:(UIView *)cell openParticipantsDetailsWithSelectedUsers:(NSArray <ZMUser *>*)selectedUsers fromView:(UIView *)sourceView;
 @end
 
 @interface ConversationCell : UITableViewCell <UserImageViewDelegate>
