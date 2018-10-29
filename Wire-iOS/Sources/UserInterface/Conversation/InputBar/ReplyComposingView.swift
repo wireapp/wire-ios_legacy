@@ -19,7 +19,7 @@
 import Foundation
 
 protocol ReplyComposingViewDelegate: NSObjectProtocol {
-    func removeReply()
+    func composingViewDidCancel(composingView: ReplyComposingView)
 }
 
 final class ReplyComposingView: UIView {
@@ -62,7 +62,7 @@ final class ReplyComposingView: UIView {
         closeButton.setIcon(.X, with: .tiny, for: .normal)
         closeButton.setIconColor(.init(scheme: .iconNormal), for: .normal)
         closeButton.addCallback(for: .touchUpInside) { [weak self] _ in
-            self?.delegate?.removeReply()
+            self?.delegate?.composingViewDidCancel(composingView: self!)
         }
         
         [leftSideView, messagePreviewContainer].forEach(self.addSubview)

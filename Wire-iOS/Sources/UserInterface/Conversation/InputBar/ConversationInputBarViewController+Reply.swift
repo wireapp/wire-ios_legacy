@@ -18,12 +18,19 @@
 
 import Foundation
 
-extension ConversationInputBarViewController {
+extension ConversationInputBarViewController: ReplyComposingViewDelegate {
     
-    @objc(replyToMessage:)
-    func reply(to message: ZMConversationMessage) {
+    @objc(replyToMessage:composingView:)
+    func reply(to message: ZMClientMessage, composingView: ReplyComposingView) {
         self.replyingToMessage = message
+        self.replyComposingView = composingView
+        composingView.delegate = self
         inputBar.textView.becomeFirstResponder()
     }
     
+    func composingViewDidCancel(composingView: ReplyComposingView) {
+        self.replyingToMessage = nil
+        self.replyComposingView = nil
+        composingView.removeFromSuperview()
+    }
 }

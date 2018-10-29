@@ -18,9 +18,9 @@
 
 import Foundation
 
-extension ConversationContentViewController: ReplyComposingViewDelegate {
+extension ConversationContentViewController {
     @objc(createReplyComposingViewForMessage:)
-    func createReplyComposingView(for message: ZMConversationMessage) {
+    func createReplyComposingView(for message: ZMClientMessage) -> ReplyComposingView {
         let replyComposingView = ReplyComposingView(message: message)
         replyComposingView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -32,14 +32,7 @@ extension ConversationContentViewController: ReplyComposingViewDelegate {
             replyComposingView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
             ])
         
-        replyComposingView.delegate = self
-        
-        self.replyComposingView = replyComposingView
+        return replyComposingView
     }
     
-    func removeReply() {
-        // TODO: notify input bar about cancelled composing
-        self.replyComposingView?.removeFromSuperview()
-        self.replyComposingView = nil
-    }
 }

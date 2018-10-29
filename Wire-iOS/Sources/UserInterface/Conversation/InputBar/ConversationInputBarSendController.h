@@ -38,7 +38,7 @@
 
 - (instancetype)initWithConversation:(ZMConversation *)conversation;
 - (void)sendMessageWithImageData:(NSData *)imageData completion:(dispatch_block_t)completionHandler;
-- (void)sendTextMessage:(NSString *)text mentions:(NSArray <Mention *>*)mentions;
+- (void)sendTextMessage:(NSString *)text mentions:(NSArray <Mention *>*)mentions replyingToMessage:(id<ZMConversationMessage>)message;
 - (void)sendTextMessage:(NSString *)text mentions:(NSArray <Mention *>*)mentions withImageData:(NSData *)data;
 
 @end

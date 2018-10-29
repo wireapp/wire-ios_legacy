@@ -585,10 +585,10 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     }
 }
 
-- (void)conversationContentViewController:(ConversationContentViewController *)contentViewController didTriggerReplyingToMessage:(id<ZMConversationMessage>)message
+- (void)conversationContentViewController:(ConversationContentViewController *)contentViewController didTriggerReplyingToMessage:(ZMClientMessage *)message
 {
-    [contentViewController createReplyComposingViewForMessage:message];
-    [self.inputBarController replyToMessage:message];
+    ReplyComposingView *replyComposingView = [contentViewController createReplyComposingViewForMessage:message];
+    [self.inputBarController replyToMessage:message composingView:replyComposingView];
 }
 
 - (BOOL)conversationContentViewController:(ConversationContentViewController *)controller shouldBecomeFirstResponderWhenShowMenuFromCell:(UITableViewCell *)cell
@@ -730,8 +730,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 - (void)conversationInputBarViewControllerDidComposeText:(NSString *)text mentions:(NSArray<Mention *> *)mentions replyingToMessage:(nullable id<ZMConversationMessage>)message
 {
-    // TODO: attach reply if necessary
-    [self.inputBarController.sendController sendTextMessage:text mentions:mentions];
+    [self.inputBarController.sendController sendTextMessage:text mentions:mentions replyingToMessage:message];
 }
 
 - (BOOL)conversationInputBarViewControllerShouldBeginEditing:(ConversationInputBarViewController *)controller isEditingMessage:(BOOL)isEditing
