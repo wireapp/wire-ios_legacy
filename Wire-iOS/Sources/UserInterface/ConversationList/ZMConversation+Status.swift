@@ -29,7 +29,8 @@ enum ConversationStatusIcon: Equatable {
     case unreadPing
     case missedCall
     case mention
-    
+    case reply
+
     case silenced
     
     case playingMedia

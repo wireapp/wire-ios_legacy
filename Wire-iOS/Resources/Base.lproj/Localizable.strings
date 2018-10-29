@@ -149,6 +149,7 @@
 "conversation_list.voiceover.status.typing" = "typing";
 "conversation_list.voiceover.status.ping" = "ping";
 "conversation_list.voiceover.status.mention" = "you are mentioned";
+"conversation_list.voiceover.status.reply" = "reply";
 "conversation_list.voiceover.bottom_bar.archived_button.label" = "archived";
 "conversation_list.voiceover.bottom_bar.archived_button.hint" = "list of archived conversations";
 "conversation_list.voiceover.bottom_bar.contacts_button.label" = "contacts";
