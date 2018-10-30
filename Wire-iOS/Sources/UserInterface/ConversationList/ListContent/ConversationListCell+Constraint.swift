@@ -18,46 +18,6 @@
 
 import Foundation
 
-extension UIView {
-    func setDimensions(length: CGFloat) {
-        setDimensions(width: length, height: length)
-    }
-
-    func setDimensions(width: CGFloat, height: CGFloat) {
-        let constraints = [
-            widthAnchor.constraint(equalToConstant: width),
-            heightAnchor.constraint(equalToConstant: height)
-        ]
-
-        NSLayoutConstraint.activate(constraints)
-    }
-
-    func topAndBottomEdgesToSuperviewEdges() -> [NSLayoutConstraint] {
-        guard let superview = superview else { return [] }
-
-        return [
-            superview.topAnchor.constraint(equalTo: topAnchor),
-            superview.bottomAnchor.constraint(equalTo: bottomAnchor)
-        ]
-    }
-
-    func edgesToSuperviewEdges() -> [NSLayoutConstraint] {
-        guard let superview = superview else { return [] }
-
-        return [
-            superview.leadingAnchor.constraint(equalTo: leadingAnchor),
-            superview.topAnchor.constraint(equalTo: topAnchor),
-            superview.trailingAnchor.constraint(equalTo: trailingAnchor),
-            superview.bottomAnchor.constraint(equalTo: bottomAnchor)
-        ]
-    }
-
-    func pinEdgesToSuperviewEdges() {
-
-        NSLayoutConstraint.activate(edgesToSuperviewEdges())
-    }
-}
-
 extension ConversationListCell {
     override open func updateConstraints() {
         super.updateConstraints()
