@@ -130,14 +130,7 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
 - (void)createConstraints
 {
     [NSLayoutConstraint autoCreateAndInstallConstraints:^{
-        
-        [self.labelsContainer autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:8 relation:NSLayoutRelationGreaterThanOrEqual];
 
-        self.titleOneLineConstraint = [self.titleField autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self];
-        
-        [self.rightAccessory autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
-        [self.rightAccessory autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:16.0];
-        
         [self.lineView autoSetDimension:ALDimensionHeight toSize:UIScreen.hairline];
         [self.lineView autoPinEdgeToSuperviewEdge:ALEdgeBottom];
         [self.lineView autoPinEdge:ALEdgeTrailing toEdge:ALEdgeTrailing ofView:self withOffset:0.0];

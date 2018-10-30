@@ -41,16 +41,17 @@ extension ConversationListItemView {
         constraints +=
             [labelsContainer.topAnchor.constraint(greaterThanOrEqualTo: labelsContainerSuperview.topAnchor, constant: 8),
             labelsContainer.leadingAnchor.constraint(equalTo: leadingAnchor, constant: leftMargin),
-            labelsContainer.trailingAnchor.constraint(equalTo: rightAccessory.leadingAnchor, constant: -8)]
-//            labelsContainer.bottomAnchor.constraint(greaterThanOrEqualTo: labelsContainerSuperview.bottomAnchor, constant: -8)]
-        //
-        //        titleOneLineConstraint = titleField.centerYAnchor.constraint(equalTo:centerYAnchor)
-        //        constraints += [titleOneLineConstraint]
-        //
-        //        constraints += [rightAccessory.centerYAnchor.constraint(equalTo:centerYAnchor),
-        //                        rightAccessory.trailingAnchor.constraint(equalTo:trailingAnchor, constant: -16),
-        //
-        //                        lineView.heightAnchor.constraint(equalToConstant: UIScreen.hairline),
+            labelsContainer.trailingAnchor.constraint(equalTo: rightAccessory.leadingAnchor, constant: -8),
+            labelsContainer.bottomAnchor.constraint(lessThanOrEqualTo: labelsContainerSuperview.bottomAnchor, constant: -8)]
+
+                titleOneLineConstraint =
+                    titleField.centerYAnchor.constraint(equalTo:centerYAnchor)
+                constraints += [titleOneLineConstraint]
+
+                constraints += [rightAccessory.centerYAnchor.constraint(equalTo:centerYAnchor),
+                                rightAccessory.trailingAnchor.constraint(equalTo:trailingAnchor, constant: -16)]
+
+//                                lineView.heightAnchor.constraint(equalToConstant: UIScreen.hairline),
         //                        lineView.bottomAnchor.constraint(equalTo: bottomAnchor),
         //                        lineView.leadingAnchor.constraint(equalTo: titleField.leadingAnchor)
         //        ]
