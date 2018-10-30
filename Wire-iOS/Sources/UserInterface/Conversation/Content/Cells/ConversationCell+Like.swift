@@ -29,7 +29,7 @@ public extension ConversationCell {
         guard message.canBeLiked else { return }
 
         self.likeButton.setSelected(!self.message.liked, animated: true)
-        delegate.conversationCell!(self, didSelect: .like)
+        delegate.conversationCell!(self, didSelect: .like, for: self.message)
     }
 }
 

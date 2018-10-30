@@ -40,6 +40,9 @@ import Foundation
     /// The delegate for cells injected by the list adapter.
     @objc var delegate: ConversationCellDelegate?
 
+    /// The object that controls actions for the cell.
+    @objc var actionController: ConversationCellActionController?
+
     /**
      * Adds a cell description to the section.
      * - parameter description: The cell to add to the message section.

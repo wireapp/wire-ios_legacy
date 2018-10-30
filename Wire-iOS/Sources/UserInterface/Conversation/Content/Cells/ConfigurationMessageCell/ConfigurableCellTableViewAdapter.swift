@@ -97,6 +97,19 @@ class ConfigurableCellTableViewAdapter<C: ConversationMessageCellDescription>: U
 
     // MARK: - Menu
 
+    override var canBecomeFirstResponder: Bool {
+        return true
+    }
+
+    override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+        switch action {
+        case #selector(reply):
+            return true
+        default:
+            return false
+        }
+    }
+
     @objc private func onLongPress(_ gestureRecognizer: UILongPressGestureRecognizer) {
         if gestureRecognizer.state == .began {
             self.showMenu()
@@ -104,7 +117,16 @@ class ConfigurableCellTableViewAdapter<C: ConversationMessageCellDescription>: U
     }
 
     private func showMenu() {
-        // TODO: Create and present menu
+        let menu = UIMenuController.shared
+
+//        self.window?.makeKey()
+//        self.window?.becomeFirstResponder()
+        self.becomeFirstResponder()
+
+        menu.menuItems = [UIMenuItem(title: "Reply", action: #selector(reply))]
+
+        menu.setTargetRect(contentView.bounds, in: self)
+        menu.setMenuVisible(true, animated: true)
     }
 
     // MARK: - Double Tap To Like
@@ -117,6 +139,14 @@ class ConfigurableCellTableViewAdapter<C: ConversationMessageCellDescription>: U
 
     private func likeMessage() {
         cellDescription?.delegate?.conversationCell?(contentView, didSelect: .like)
+    }
+
+    @objc override func copy(_ sender: Any?) {
+        print("COPY")
+    }
+
+    @objc private func reply(_ sender: Any?) {
+        cellDescription?.delegate?.conversationCell?(contentView, didSelect: .reply, for: self.message)
     }
 
 }

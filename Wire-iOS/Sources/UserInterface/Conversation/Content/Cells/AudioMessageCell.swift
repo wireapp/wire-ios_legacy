@@ -183,18 +183,18 @@ import Cartography
     
     @objc public func wr_saveAudio() {
         if self.message.audioCanBeSaved() {
-            self.delegate?.conversationCell?(self, didSelect: .save)
+            self.delegate?.conversationCell?(self, didSelect: .save, for: self.message)
         }
     }
     
     @objc func download(_ sender: Any) {
-        delegate?.conversationCell?(self, didSelect: .download)
+        delegate?.conversationCell?(self, didSelect: .download, for: self.message)
     }
     
 }
 
 extension AudioMessageCell: TransferViewDelegate {
     public func transferView(_ view: TransferView, didSelect action: MessageAction) {
-        self.delegate.conversationCell?(self, didSelect: action)
+        self.delegate.conversationCell?(self, didSelect: action, for: self.message)
     }
 }

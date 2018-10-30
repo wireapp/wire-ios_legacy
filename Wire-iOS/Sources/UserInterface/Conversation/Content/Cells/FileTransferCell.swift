@@ -166,15 +166,15 @@ import Cartography
 
     @objc func open(_ sender: Any) {
         showsMenu = false
-        delegate?.conversationCell?(self, didSelect: .present)
+        delegate?.conversationCell?(self, didSelect: .present, for: self.message)
     }
 
     @objc func save(_ sender: Any) {
-        delegate?.conversationCell?(self, didSelect: .save)
+        delegate?.conversationCell?(self, didSelect: .save, for: self.message)
     }
     
     @objc func download(_ sender: Any) {
-        delegate?.conversationCell?(self, didSelect: .download)
+        delegate?.conversationCell?(self, didSelect: .download, for: self.message)
     }
     
     override public func messageType() -> MessageType {
@@ -184,6 +184,6 @@ import Cartography
 
 extension FileTransferCell: TransferViewDelegate {
     public func transferView(_ view: TransferView, didSelect action: MessageAction) {
-        self.delegate.conversationCell?(self, didSelect: action)
+        self.delegate.conversationCell?(self, didSelect: action, for: self.message)
     }
 }

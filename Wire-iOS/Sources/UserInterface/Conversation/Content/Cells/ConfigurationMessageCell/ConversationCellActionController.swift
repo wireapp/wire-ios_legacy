@@ -28,4 +28,78 @@ class ConversationCellActionController: NSObject {
         self.responder = responder
     }
 
+    // MARK: - List of Actions
+
+    func canPerformAction(selector: Selector) -> Bool {
+        return false
+    }
+
+    func actions() -> [MessageAction] {
+        return []
+    }
+
+    // MARK: - Handler
+
+}
+
+private let MessageActionCancelName = "MessageActionCancel"
+private let MessageActionResendName = "MessageActionResend"
+private let MessageActionDeleteName = "MessageActionDelete"
+private let MessageActionPresentName = "MessageActionPresent"
+private let MessageActionSaveName = "MessageActionSave"
+private let MessageActionCopyName = "MessageActionCopy"
+private let MessageActionEditName = "MessageActionEdit"
+private let MessageActionSketchDrawName = "MessageActionSketchDraw"
+private let MessageActionSketchEmojiName = "MessageActionSketchEmoji"
+private let MessageActionSketchText = "MessageActionSketchText"
+private let MessageActionLikeName = "MessageActionLike"
+private let MessageActionForwardName = "MessageActionForward"
+private let MessageActionShowInConversationName = "MessageActionShowInConversation"
+private let MessageActionDownloadName = "MessageActionDownload"
+private let MessageActionReplyName = "MessageActionReply"
+
+
+extension MessageAction {
+
+    init?(name: String) {
+        switch name {
+        case MessageActionCancelName: self = .cancel
+        case MessageActionResendName: self = .resend
+        case MessageActionDeleteName: self = .delete
+        case MessageActionPresentName: self = .present
+        case MessageActionSaveName: self = .save
+        case MessageActionCopyName: self = .copy
+        case MessageActionEditName: self = .edit
+        case MessageActionSketchDrawName: self = .sketchDraw
+        case MessageActionSketchEmojiName: self = .sketchEmoji
+        case MessageActionSketchText: self = .sketchText
+        case MessageActionLikeName: self = .like
+        case MessageActionForwardName: self = .forward
+        case MessageActionShowInConversationName: self = .showInConversation
+        case MessageActionDownloadName: self = .download
+        case MessageActionReplyName: self = .reply
+        default: return nil
+        }
+    }
+
+    var name: String {
+        switch self {
+        case .cancel: return MessageActionCancelName
+        case .resend: return MessageActionResendName
+        case .delete: return MessageActionDeleteName
+        case .present: return MessageActionPresentName
+        case .save: return MessageActionSaveName
+        case .copy: return MessageActionCopyName
+        case .edit: return MessageActionEditName
+        case .sketchDraw: return MessageActionSketchDrawName
+        case .sketchEmoji: return MessageActionSketchEmojiName
+        case .sketchText: return MessageActionSketchText
+        case .like: return MessageActionLikeName
+        case .forward: return MessageActionForwardName
+        case .showInConversation: return MessageActionShowInConversationName
+        case .download: return MessageActionDownloadName
+        case .reply: return MessageActionReplyName
+        }
+    }
+
 }
