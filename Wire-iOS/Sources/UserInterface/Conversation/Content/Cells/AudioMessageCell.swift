@@ -45,7 +45,7 @@ import Cartography
         var currentElements: [Any] = self.accessibilityElements ?? []
         let contentViewAccessibilityElements: [Any] = self.audioMessageView.accessibilityElements ?? []
         currentElements.append(contentsOf: contentViewAccessibilityElements)
-        currentElements.append(contentsOf: [likeButton, toolboxView])
+        currentElements.append(toolboxView)
         self.accessibilityElements = currentElements
         
         setNeedsLayout()

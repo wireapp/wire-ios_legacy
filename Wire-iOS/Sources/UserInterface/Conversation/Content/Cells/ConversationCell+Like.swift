@@ -27,9 +27,7 @@ public extension ConversationCell {
     @objc public func likeMessage(_ sender: AnyObject!) {
         guard let _ = message else { return }
         guard message.canBeLiked else { return }
-
-        self.likeButton.setSelected(!self.message.liked, animated: true)
-        delegate.conversationCell!(self, didSelect: .like, for: self.message)
+        delegate.conversationCell!(self, didSelect: .like, for: message)
     }
 }
 

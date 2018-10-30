@@ -354,24 +354,24 @@ static const CGFloat ImageToolbarMinimumSize = 192;
 #pragma mark - Actions
 
 - (void)onFullScreenPressed:(id)sender {
-    [self.delegate conversationCell:self didSelectAction:MessageActionPresent];
+    [self.delegate conversationCell:self didSelectAction:MessageActionPresent forMessage:self.message];
 }
 
 - (void)onDrawSketchPressed:(id)sender {
-    [self.delegate conversationCell:self didSelectAction:MessageActionSketchDraw];
+    [self.delegate conversationCell:self didSelectAction:MessageActionSketchDraw forMessage:self.message];
 }
 
 - (void)onEmojiSketchPressed:(id)sender {
-    [self.delegate conversationCell:self didSelectAction:MessageActionSketchEmoji];
+    [self.delegate conversationCell:self didSelectAction:MessageActionSketchEmoji forMessage:self.message];
 }
 
 - (void)onTextSketchPressed:(id)sender {
-    [self.delegate conversationCell:self didSelectAction:MessageActionSketchText];
+    [self.delegate conversationCell:self didSelectAction:MessageActionSketchText forMessage:self.message];
 }
 
 - (void)imageTapped:(id)sender {
     if (!self.message.isObfuscated) {
-        [self.delegate conversationCell:self didSelectAction:MessageActionPresent];
+        [self.delegate conversationCell:self didSelectAction:MessageActionPresent forMessage:self.message];
     }
 }
 
@@ -464,8 +464,8 @@ static const CGFloat ImageToolbarMinimumSize = 192;
 
 - (void)saveImage
 {
-    if ([self.delegate respondsToSelector:@selector(conversationCell:didSelectAction:)]) {
-        [self.delegate conversationCell:self didSelectAction:MessageActionSave];
+    if ([self.delegate respondsToSelector:@selector(conversationCell:didSelectAction:forMessage:)]) {
+        [self.delegate conversationCell:self didSelectAction:MessageActionSave forMessage:self.message];
     }
 }
 

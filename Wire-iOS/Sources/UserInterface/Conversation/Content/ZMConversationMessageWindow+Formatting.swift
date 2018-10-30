@@ -38,6 +38,7 @@ class UnknownMessageCellDescription: ConversationMessageCellDescription {
     typealias View = CustomMessageView
     let configuration: String
 
+    var message: ZMConversationMessage?
     weak var delegate: ConversationCellDelegate?
 
     var isFullWidth: Bool {

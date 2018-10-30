@@ -43,6 +43,9 @@ import Foundation
     /// The object that controls actions for the cell.
     @objc var actionController: ConversationCellActionController?
 
+    /// The message that is being presented.
+    @objc var message: ZMConversationMessage?
+
     /**
      * Adds a cell description to the section.
      * - parameter description: The cell to add to the message section.
@@ -70,6 +73,7 @@ import Foundation
     func makeCell(for tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
         let description = cellDescription(at: indexPath.row)
         description.delegate = self.delegate
+        description.message = self.message
 
         let cell = description.makeCell(for: tableView, at: indexPath)
         return cell

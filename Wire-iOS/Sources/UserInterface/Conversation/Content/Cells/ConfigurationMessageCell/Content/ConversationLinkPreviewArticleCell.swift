@@ -59,6 +59,7 @@ class ConversationLinkPreviewArticleCellDescription: ConversationMessageCellDesc
     typealias View = ConversationLinkPreviewArticleCell
     let configuration: View.Configuration
 
+    var message: ZMConversationMessage?
     weak var delegate: ConversationCellDelegate?
 
     var isFullWidth: Bool {

@@ -41,6 +41,7 @@ class ConversationYouTubeAttachmentCellDescription: ConversationMessageCellDescr
     typealias View = ConversationYouTubeAttachmentCell
     let configuration: View.Configuration
 
+    var message: ZMConversationMessage?
     weak var delegate: ConversationCellDelegate?
 
     var isFullWidth: Bool {

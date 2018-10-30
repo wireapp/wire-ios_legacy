@@ -35,6 +35,7 @@ class ConversationLegacyCellDescription<T: ConversationCell>: ConversationMessag
     typealias View = T
     let configuration: View.Configuration
 
+    var message: ZMConversationMessage?
     weak var delegate: ConversationCellDelegate?
 
     var isFullWidth: Bool {

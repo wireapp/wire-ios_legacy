@@ -37,6 +37,7 @@ class ConversationPingCellDescription: ConversationMessageCellDescription {
     typealias View = ConversationPingCell
     let configuration: ConversationPingCell.Configuration
 
+    var message: ZMConversationMessage?
     weak var delegate: ConversationCellDelegate?
 
     var isFullWidth: Bool {

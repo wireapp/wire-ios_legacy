@@ -52,6 +52,9 @@ protocol ConversationMessageCellDescription: class {
     /// Whether the view occupies the entire width of the cell.
     var isFullWidth: Bool { get }
 
+    /// The message that is displayed.
+    var message: ZMConversationMessage? { get set }
+
     /// The delegate for the cell.
     var delegate: ConversationCellDelegate? { get set }
 
@@ -85,6 +88,8 @@ extension ConversationMessageCellDescription {
     private let fullWidthGetter: () -> Bool
     private let delegateGetter: () -> ConversationCellDelegate?
     private let delegateSetter: (ConversationCellDelegate?) -> Void
+    private let messageGetter: () -> ZMConversationMessage?
+    private let messageSetter: (ZMConversationMessage?) -> Void
 
     init<T: ConversationMessageCellDescription>(_ description: T) {
         registrationBlock = { tableView in
@@ -110,6 +115,14 @@ extension ConversationMessageCellDescription {
         delegateSetter = { newValue in
             description.delegate = newValue
         }
+
+        messageGetter = {
+            return description.message
+        }
+
+        messageSetter = { newValue in
+            description.message = newValue
+        }
     }
 
     @objc var baseType: AnyClass {
@@ -123,6 +136,11 @@ extension ConversationMessageCellDescription {
     @objc var delegate: ConversationCellDelegate? {
         get { return delegateGetter() }
         set { delegateSetter(newValue) }
+    }
+
+    @objc var message: ZMConversationMessage? {
+        get { return messageGetter() }
+        set { messageSetter(newValue) }
     }
 
     @objc(registerInTableView:)

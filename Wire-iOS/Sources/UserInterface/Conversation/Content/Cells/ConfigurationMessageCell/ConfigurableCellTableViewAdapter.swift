@@ -138,7 +138,7 @@ class ConfigurableCellTableViewAdapter<C: ConversationMessageCellDescription>: U
     }
 
     private func likeMessage() {
-        cellDescription?.delegate?.conversationCell?(contentView, didSelect: .like)
+        cellDescription?.delegate?.conversationCell?(contentView, didSelect: .like, for: cellDescription?.message)
     }
 
     @objc override func copy(_ sender: Any?) {
@@ -146,7 +146,7 @@ class ConfigurableCellTableViewAdapter<C: ConversationMessageCellDescription>: U
     }
 
     @objc private func reply(_ sender: Any?) {
-        cellDescription?.delegate?.conversationCell?(contentView, didSelect: .reply, for: self.message)
+        cellDescription?.delegate?.conversationCell?(contentView, didSelect: .reply, for: cellDescription?.message)
     }
 
 }

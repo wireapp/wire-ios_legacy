@@ -57,6 +57,7 @@ class ConversationMessageToolboxCellDescription: ConversationMessageCellDescript
     typealias View = ConversationMessageToolboxCell
     let configuration: View.Configuration
 
+    var message: ZMConversationMessage?
     weak var delegate: ConversationCellDelegate?
 
     var isFullWidth: Bool {

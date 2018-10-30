@@ -39,8 +39,6 @@ public extension ConversationCell {
     @objc func willDisplayInTableView() {
         scheduledTimerForUpdateBurstTimestamp()
 
-        contentView.bringSubviewToFront(likeButton)
-
         if delegate != nil &&
             delegate.responds(to: #selector(ConversationCellDelegate.conversationCellShouldStartDestructionTimer)) &&
             delegate.conversationCellShouldStartDestructionTimer!(self) {

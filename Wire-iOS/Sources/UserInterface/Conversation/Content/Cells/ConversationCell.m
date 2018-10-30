@@ -196,7 +196,7 @@ static const CGFloat BurstContainerExpandedHeight = 40;
     self.contentView.isAccessibilityElement = YES;
     
     NSMutableArray *accessibilityElements = [NSMutableArray arrayWithArray:self.accessibilityElements];
-    [accessibilityElements addObjectsFromArray:@[self.messageContentView, self.authorLabel, self.authorImageView, self.burstTimestampView.unreadDot, self.toolboxView, self.likeButton]];
+    [accessibilityElements addObjectsFromArray:@[self.messageContentView, self.authorLabel, self.authorImageView, self.burstTimestampView.unreadDot, self.toolboxView]];
     self.accessibilityElements = accessibilityElements;
 }
 
@@ -348,10 +348,7 @@ static const CGFloat BurstContainerExpandedHeight = 40;
     if (! [Message shouldShowTimestamp:self.message]) {
         shouldBeVisible = NO;
     }
-    
-    BOOL hideLikeButton = !([Message hasLikers:self.message] || self.selected) && self.layoutProperties.alwaysShowDeliveryState;
-    BOOL showLikeButton = [Message messageCanBeLiked:self.message] && !hideLikeButton;
-    
+
     self.toolboxCollapseConstraint.active = ! shouldBeVisible;
     self.toolboxView.isAccessibilityElement = shouldBeVisible;
 
@@ -363,16 +360,9 @@ static const CGFloat BurstContainerExpandedHeight = 40;
         if (shouldBeVisible) {
             [UIView animateWithDuration:0.35 animations:^{
                 self.toolboxView.alpha = 1;
-            } completion:^(BOOL finished) {
-                if (self.toolboxView.alpha == 1) {
-                    [UIView animateWithDuration:0.15 animations:^{
-                        self.likeButton.alpha = showLikeButton ? 1 : 0;
-                    }];
-                }
             }];
         }
         else {
-            self.likeButton.alpha = 0;
             [UIView animateWithDuration:0.35 animations:^{
                 self.toolboxView.alpha = 0;
             }];
@@ -380,9 +370,7 @@ static const CGFloat BurstContainerExpandedHeight = 40;
     }
     else {
         [self.toolboxView.layer removeAllAnimations];
-        [self.likeButton.layer removeAllAnimations];
         self.toolboxView.alpha = shouldBeVisible ? 1 : 0;
-        self.likeButton.alpha = shouldBeVisible && showLikeButton ? 1 : 0;
     }
 }
 
@@ -502,8 +490,8 @@ static const CGFloat BurstContainerExpandedHeight = 40;
 
 - (void)forward:(id)sender
 {
-    if ([self.delegate respondsToSelector:@selector(conversationCell:didSelectAction:)]) {
-        [self.delegate conversationCell:self didSelectAction:MessageActionForward];
+    if ([self.delegate respondsToSelector:@selector(conversationCell:didSelectAction:forMessage:)]) {
+        [self.delegate conversationCell:self didSelectAction:MessageActionForward forMessage:self.message];
     }
 }
 
@@ -597,7 +585,7 @@ static const CGFloat BurstContainerExpandedHeight = 40;
 
 - (void)messageToolboxViewDidRequestLike:(MessageToolboxView *)messageToolboxView
 {
-    [self.delegate conversationCell:messageToolboxView didSelectAction:MessageActionLike];
+    [self.delegate conversationCell:messageToolboxView didSelectAction:MessageActionLike forMessage:self.message];
 }
 
 - (void)messageToolboxViewDidSelectLikers:(MessageToolboxView *)messageToolboxView
@@ -612,7 +600,7 @@ static const CGFloat BurstContainerExpandedHeight = 40;
 
 - (void)messageToolboxViewDidSelectDelete:(MessageToolboxView *)messageToolboxView
 {
-    [self.delegate conversationCell:self didSelectAction:MessageActionDelete];
+    [self.delegate conversationCell:self didSelectAction:MessageActionDelete forMessage:self.message];
 }
 
 @end

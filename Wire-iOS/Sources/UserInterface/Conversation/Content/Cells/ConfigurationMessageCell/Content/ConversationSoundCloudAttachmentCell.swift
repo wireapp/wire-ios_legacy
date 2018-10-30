@@ -52,6 +52,7 @@ class ConversationSoundCloudCellDescription<Player: PlayerViewControllerProtocol
     typealias View = ConversationSoundCloudAttachmentCell<Player>
     let configuration: View.Configuration
 
+    var message: ZMConversationMessage?
     weak var delegate: ConversationCellDelegate?
 
     var isFullWidth: Bool {

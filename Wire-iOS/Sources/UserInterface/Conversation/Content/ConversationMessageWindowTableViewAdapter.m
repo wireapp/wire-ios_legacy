@@ -119,6 +119,7 @@
     ConversationMessageSectionController *sectionController = [self buildSectionControllerForMessage:message];
     sectionController.useInvertedIndices = YES;
     sectionController.delegate = self.conversationCellDelegate;
+    sectionController.message = message;
 
     [self.sectionControllers setObject:sectionController forKey:message];
 
