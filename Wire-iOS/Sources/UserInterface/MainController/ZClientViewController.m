@@ -379,6 +379,10 @@
     ConversationRootViewController *conversationRootController = nil;
     if ([conversation isEqual:self.currentConversation]) {
         conversationRootController = (ConversationRootViewController *)self.conversationRootViewController;
+        if (message) {
+            [conversationRootController scrollToMessage:message];            
+        }
+        
     } else {
         conversationRootController = [[ConversationRootViewController alloc] initWithConversation:conversation message:message clientViewController:self];
     }
