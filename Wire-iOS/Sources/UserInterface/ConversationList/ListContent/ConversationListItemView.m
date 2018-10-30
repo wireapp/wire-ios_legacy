@@ -108,6 +108,7 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
     [self.subtitleField setContentHuggingPriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisVertical];
     [self.subtitleField setContentHuggingPriority:UILayoutPriorityDefaultLow forAxis:UILayoutConstraintAxisHorizontal];
     [self createConstraints];
+    [self createConstraints2];
 
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(otherConversationListItemDidScroll:)
@@ -130,7 +131,7 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
 {
     [NSLayoutConstraint autoCreateAndInstallConstraints:^{
         
-        [self autoSetDimension:ALDimensionHeight toSize:64.0 relation:NSLayoutRelationGreaterThanOrEqual];
+//        [self autoSetDimension:ALDimensionHeight toSize:64.0 relation:NSLayoutRelationGreaterThanOrEqual];
         CGFloat leftMargin = 64.0;
         [self.avatarContainer autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeTrailing];
         [self.avatarContainer autoPinEdge:ALEdgeTrailing toEdge:ALEdgeLeading ofView:self.titleField];

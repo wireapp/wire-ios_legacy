@@ -30,7 +30,7 @@ class ConversationListCellTests: CoreDataSnapshotTestCase {
         snapshotBackgroundColor = .darkGray
         accentColor = .strongBlue
         ///The cell must higher than 64, otherwise it breaks the constraints.
-        sut = ConversationListCell(frame: CGRect(x: 0, y: 0, width: 375, height: 64))
+        sut = ConversationListCell(frame: CGRect(x: 0, y: 0, width: 375, height: ConversationListItemView.minHeight))
 
     }
     
