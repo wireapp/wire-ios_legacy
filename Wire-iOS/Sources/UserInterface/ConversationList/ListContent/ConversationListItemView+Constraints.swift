@@ -21,42 +21,43 @@ import Foundation
 extension ConversationListItemView {
     static let minHeight: CGFloat = 64
 
-    @objc func createConstraints() {
-        guard let labelsContainerSuperview = labelsContainer.superview else { return }
+    @objc func createConstraints2() {
+//        guard let labelsContainerSuperview = labelsContainer.superview else { return }
 
-        let leftMargin: CGFloat = 64.0
+//        let leftMargin: CGFloat = 64.0
 
         var constraints: [NSLayoutConstraint] = []
-        constraints.append(heightAnchor.constraint(greaterThanOrEqualToConstant: ConversationListItemView.minHeight))
+        constraints += [heightAnchor.constraint(greaterThanOrEqualToConstant: ConversationListItemView.minHeight)]
 
+        
         constraints += avatarContainer.edgesToSuperviewEdges(exclude: .trailing)
-        constraints.append(avatarContainer.trailingAnchor.constraint(equalTo: titleField.leadingAnchor))
-        constraints += avatarContainer.centerInSuperview()
-
-        constraints += titleField.edgesToSuperviewEdges(exclude: .bottom)
-        constraints.append(subtitleField.topAnchor.constraint(equalTo: titleField.bottomAnchor, constant: 2))
-        constraints += subtitleField.edgesToSuperviewEdges(exclude: .top)
-
-        constraints += [labelsContainer.topAnchor.constraint(greaterThanOrEqualTo: labelsContainerSuperview.topAnchor, constant: 8),
-                        labelsContainer.leadingAnchor.constraint(equalTo: leadingAnchor, constant: leftMargin),
-                        labelsContainer.trailingAnchor.constraint(equalTo: rightAccessory.leadingAnchor, constant: -8),
-        labelsContainer.bottomAnchor.constraint(greaterThanOrEqualTo: labelsContainerSuperview.bottomAnchor, constant: 8)]
-
-        titleOneLineConstraint = titleField.centerYAnchor.constraint(equalTo:centerYAnchor)
-        constraints += [titleOneLineConstraint]
-
-        constraints += [rightAccessory.centerYAnchor.constraint(equalTo:centerYAnchor),
-                        rightAccessory.trailingAnchor.constraint(equalTo:trailingAnchor, constant: -16),
-
-                        lineView.heightAnchor.constraint(equalToConstant: UIScreen.hairline),
-                        lineView.bottomAnchor.constraint(equalTo: bottomAnchor),
-                        lineView.leadingAnchor.constraint(equalTo: titleField.leadingAnchor)
-        ]
+        constraints += [avatarContainer.trailingAnchor.constraint(equalTo: titleField.leadingAnchor)]
+        constraints += avatarView.centerInSuperview()
+//
+//        constraints += titleField.edgesToSuperviewEdges(exclude: .bottom)
+//        constraints.append(subtitleField.topAnchor.constraint(equalTo: titleField.bottomAnchor, constant: 2))
+//        constraints += subtitleField.edgesToSuperviewEdges(exclude: .top)
+//
+//        constraints += [labelsContainer.topAnchor.constraint(greaterThanOrEqualTo: labelsContainerSuperview.topAnchor, constant: 8),
+//                        labelsContainer.leadingAnchor.constraint(equalTo: leadingAnchor, constant: leftMargin),
+//                        labelsContainer.trailingAnchor.constraint(equalTo: rightAccessory.leadingAnchor, constant: -8),
+//        labelsContainer.bottomAnchor.constraint(greaterThanOrEqualTo: labelsContainerSuperview.bottomAnchor, constant: 8)]
+//
+//        titleOneLineConstraint = titleField.centerYAnchor.constraint(equalTo:centerYAnchor)
+//        constraints += [titleOneLineConstraint]
+//
+//        constraints += [rightAccessory.centerYAnchor.constraint(equalTo:centerYAnchor),
+//                        rightAccessory.trailingAnchor.constraint(equalTo:trailingAnchor, constant: -16),
+//
+//                        lineView.heightAnchor.constraint(equalToConstant: UIScreen.hairline),
+//                        lineView.bottomAnchor.constraint(equalTo: bottomAnchor),
+//                        lineView.leadingAnchor.constraint(equalTo: titleField.leadingAnchor)
+//        ]
 
         NSLayoutConstraint.activate(constraints)
 
 
         // inactive constraints
-        titleTwoLineConstraint = labelsContainer.centerYAnchor.constraint(equalTo: labelsContainerSuperview.centerYAnchor)
+//        titleTwoLineConstraint = labelsContainer.centerYAnchor.constraint(equalTo: labelsContainerSuperview.centerYAnchor)
     }
 }
