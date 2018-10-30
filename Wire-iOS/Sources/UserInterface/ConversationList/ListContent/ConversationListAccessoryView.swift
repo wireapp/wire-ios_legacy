@@ -192,8 +192,7 @@ import Cartography
             self.transparentIconView.isHidden = false
             self.transparentIconView.image = UIImage(for: .pencil, fontSize: 12.0, color: .white)
             
-        case .unreadMessages(_),
-             .mention:
+        case .unreadMessages(_), .mention:
             self.textLabel.textColor = UIColor(scheme: .textForeground, variant: .light)
             self.badgeView.backgroundColor = UIColor(scheme: .textBackground, variant: .light)
             
