@@ -204,8 +204,7 @@ static CGSize cachedSize = {0, 0};
     CGSize fittingSize = CGSizeMake(collectionViewSize.width, 0);
     
     self.itemView.frame = CGRectMake(0, 0, fittingSize.width, 0);
-    [self.itemView setNeedsLayout];
-    [self.itemView layoutIfNeeded]; ///TODO: breaks constraint, translate this method to swift for log??
+
     CGSize cellSize = [self.itemView systemLayoutSizeFittingSize:fittingSize];
     cellSize.width = collectionViewSize.width;
     cachedSize = cellSize;
