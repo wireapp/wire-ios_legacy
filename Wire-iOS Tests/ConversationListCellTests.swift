@@ -31,7 +31,6 @@ class ConversationListCellTests: CoreDataSnapshotTestCase {
         accentColor = .strongBlue
         ///The cell must higher than 64, otherwise it breaks the constraints.
         sut = ConversationListCell(frame: CGRect(x: 0, y: 0, width: 375, height: ConversationListItemView.minHeight))
-
     }
     
     override func tearDown() {
