@@ -17,7 +17,6 @@
 //
 
 import Foundation
-import Cartography
 
 public class RoundedBadge: UIButton {
     public let containedView: UIView
@@ -32,20 +31,33 @@ public class RoundedBadge: UIButton {
         super.init(frame: .zero)
         
         self.addSubview(containedView)
-        ///TODO: refactoring
-        constrain(self, containedView) { selfView, containedView in
-            leadingConstraint = containedView.leading == selfView.leading + contentInset.left
-            trailingConstraint = containedView.trailing == selfView.trailing - contentInset.right
-            containedView.top == selfView.top + contentInset.top
-            containedView.bottom == selfView.bottom - contentInset.bottom
-            
-            widthGreaterThanHeightConstraint = selfView.width >= selfView.height
-        }
+
+        createConstraints()
 
         updateCollapseConstraints(isCollapsed: true)
 
         self.layer.masksToBounds = true
         updateCornerRadius()
+    }
+
+    func createConstraints(){
+
+        containedView.translatesAutoresizingMaskIntoConstraints = false
+        translatesAutoresizingMaskIntoConstraints = false
+
+        leadingConstraint = containedView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: contentInset.left)
+        trailingConstraint = containedView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -contentInset.right)
+        widthGreaterThanHeightConstraint = widthAnchor.constraint(greaterThanOrEqualTo: heightAnchor)
+
+        NSLayoutConstraint.activate([
+            leadingConstraint,
+            trailingConstraint,
+            widthGreaterThanHeightConstraint,
+
+            containedView.topAnchor.constraint(equalTo: topAnchor, constant: contentInset.top),
+            containedView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -contentInset.bottom),
+
+            ])
     }
 
     func updateCollapseConstraints(isCollapsed: Bool){
