@@ -22,7 +22,7 @@ protocol ReplyComposingViewDelegate: NSObjectProtocol {
     func composingViewDidCancel(composingView: ReplyComposingView)
 }
 
-extension ZMConversationMessage {
+fileprivate extension ZMConversationMessage {
     var accessibilityDescription: String {
         let contentDescriptionText: String
         let senderDescriptionText = self.sender?.displayName(in: self.conversation) ?? ""
