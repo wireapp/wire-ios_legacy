@@ -101,8 +101,12 @@ extension ZMMessage: Shareable {
 extension ZMConversationMessage {
     public func previewView() -> UIView? {
         var cell: ConversationCell
-        
-        if isImage {
+
+        if isText {
+            // TODO: Support previews in new system
+            return ConversationTextMessageCell()
+        }
+        else if isImage {
             cell = ImageMessageCell(style: .default, reuseIdentifier: "")
         }
         else if isVideo {

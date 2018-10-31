@@ -35,11 +35,6 @@ class ConfigurableCellTableViewAdapter<C: ConversationMessageCellDescription>: U
     private var bottom: NSLayoutConstraint!
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        
-        guard let reuseIdentifier = reuseIdentifier else {
-            preconditionFailure("Missing cell reuseIdentifier")
-        }
-        
         self.cellView = C.View(frame: .zero)
         self.cellView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -55,7 +50,7 @@ class ConfigurableCellTableViewAdapter<C: ConversationMessageCellDescription>: U
         leading = cellView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor)
         trailing = cellView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)
         top = cellView.topAnchor.constraint(equalTo: contentView.topAnchor)
-        bottom = cellView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8)
+        bottom = cellView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         
         NSLayoutConstraint.activate([leading, trailing, top, bottom])
 

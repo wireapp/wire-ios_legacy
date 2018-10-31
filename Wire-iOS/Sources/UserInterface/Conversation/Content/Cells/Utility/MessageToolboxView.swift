@@ -163,7 +163,7 @@ extension ZMSystemMessageData {
             likeButton.centerYAnchor.constraint(equalTo: likeButtonContainer.centerYAnchor),
 
             // statusLabel
-            statusLabel.leadingAnchor.constraint(equalTo: likeButtonContainer.leadingAnchor),
+            statusLabel.leadingAnchor.constraint(equalTo: likeButtonContainer.trailingAnchor),
             statusLabel.topAnchor.constraint(equalTo: topAnchor),
             statusLabel.trailingAnchor.constraint(lessThanOrEqualTo: reactionsView.leadingAnchor),
             statusLabel.bottomAnchor.constraint(equalTo: bottomAnchor),
@@ -255,6 +255,7 @@ extension ZMSystemMessageData {
     }
     
     fileprivate func configureLikedState(_ message: ZMConversationMessage) {
+        self.likeButton.isHidden = !message.canBeLiked
         self.reactionsView.likers = message.likers()
     }
     
