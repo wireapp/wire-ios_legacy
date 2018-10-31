@@ -38,6 +38,11 @@ class MockCellDescription<T>: ConversationMessageCellDescription {
     let configuration: View.Configuration
 
     var isFullWidth: Bool = false
+    var supportsActions: Bool = true
+
+    weak var message: ZMConversationMessage?
+    weak var delegate: ConversationCellDelegate?
+    weak var actionController: ConversationCellActionController?
 
     init() {
         let backgroundColor = UIColor(for: .vividRed)!

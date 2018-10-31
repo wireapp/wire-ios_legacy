@@ -95,7 +95,7 @@ class ConversationIconBasedCell: UIView, TTTAttributedLabelDelegate {
             // imageContainer
             containerWidthConstraint,
             imageContainer.leadingAnchor.constraint(equalTo: leadingAnchor),
-            imageContainer.topAnchor.constraint(equalTo: topAnchor),
+            imageContainer.topAnchor.constraint(equalTo: topAnchor, constant: 8),
             imageContainer.heightAnchor.constraint(equalTo: imageView.heightAnchor),
 
             // pingImageView
@@ -106,7 +106,7 @@ class ConversationIconBasedCell: UIView, TTTAttributedLabelDelegate {
 
             // pingLabel
             textLabel.leadingAnchor.constraint(equalTo: imageContainer.trailingAnchor),
-            textLabel.topAnchor.constraint(equalTo: topAnchor),
+            textLabel.topAnchor.constraint(equalTo: topAnchor, constant: 8),
             textLabel.bottomAnchor.constraint(equalTo: imageContainer.bottomAnchor),
             labelTrailingConstraint,
 

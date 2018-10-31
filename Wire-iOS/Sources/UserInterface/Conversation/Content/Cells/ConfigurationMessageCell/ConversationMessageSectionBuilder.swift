@@ -50,6 +50,9 @@ class ConversationMessageSectionBuilder {
 
         // Content
         addContent(in: section, for: message, context: context)
+
+        // Toolbox
+        addToolbox(in: section, for: message)
     }
 
     private static func addLegacyContentIfNeeded(in section: ConversationMessageSectionController,
@@ -143,18 +146,6 @@ class ConversationMessageSectionBuilder {
         } else {
             section.add(description: UnknownMessageCellDescription())
         }
-
-        //        if message.isText {
-        //            return TextMessageCellDescription(message: message, context: context)
-        //        } else if message.isImage {
-        //            return DefaultMessageCellDescription<NewImageMessageCell>(message: message, context: context)
-        //        } else if message.isVideo {
-        //            return DefaultMessageCellDescription<NewVideoMessageCell>(message: message, context: context)
-        //        } else if (message.isAudio) {
-        //            return DefaultMessageCellDescription<NewAudioMessageCell>(message: message, context: context)
-        //        } else if (message.isFile) {
-        //            return DefaultMessageCellDescription<NewFileMessageCell>(message: message, context: context)
-
     }
 
     // MARK: - Content Cells
@@ -269,6 +260,13 @@ class ConversationMessageSectionBuilder {
 
         let locationCell = ConversationLocationMessageCellDescription(message: message, location: locationMessageData)
         section.add(description: locationCell)
+    }
+
+    // MARK: - Toolbox
+
+    private static func addToolbox(in section: ConversationMessageSectionController, for message: ZMConversationMessage) {
+        let toolboxCell = ConversationMessageToolboxCellDescription(message: message)
+        section.add(description: toolboxCell)
     }
 
 }

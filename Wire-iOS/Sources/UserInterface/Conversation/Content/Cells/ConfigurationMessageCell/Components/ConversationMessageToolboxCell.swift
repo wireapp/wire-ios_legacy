@@ -21,7 +21,7 @@ import UIKit
 class ConversationMessageToolboxCell: UIView, ConversationMessageCell {
 
     struct Configuration {
-
+        let message: ZMConversationMessage
     }
 
     let toolboxView = MessageToolboxView()
@@ -48,7 +48,7 @@ class ConversationMessageToolboxCell: UIView, ConversationMessageCell {
     }
 
     func configure(with object: Configuration) {
-    
+        toolboxView.configureForMessage(object.message, forceShowTimestamp: false, animated: false)
     }
 
 }
@@ -69,8 +69,8 @@ class ConversationMessageToolboxCellDescription: ConversationMessageCellDescript
         return false
     }
 
-    init() {
-        configuration = View.Configuration()
+    init(message: ZMConversationMessage) {
+        configuration = View.Configuration(message: message)
     }
 
 }

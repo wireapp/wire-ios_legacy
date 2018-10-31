@@ -726,7 +726,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 
 - (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    ZMMessage *message = [self.messageWindow.messages objectAtIndex:indexPath.row];
+    ZMMessage *message = [self.messageWindow.messages objectAtIndex:indexPath.section];
     NSIndexPath *selectedIndexPath = nil;
     
     if ([message isEqual:self.conversationMessageWindowTableViewAdapter.selectedMessage]) {

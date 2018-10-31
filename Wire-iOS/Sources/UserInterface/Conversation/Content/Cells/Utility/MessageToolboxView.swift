@@ -138,7 +138,7 @@ extension ZMSystemMessageData {
         statusLabel.activeLinkAttributes = [NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue as NSNumber,
                                             NSAttributedString.Key.foregroundColor: UIColor(for: .vividRed).withAlphaComponent(0.5)]
 
-        [likeButton, statusLabel, reactionsView, labelClipView].forEach(addSubview)
+        [likeButtonContainer, likeButton, statusLabel, reactionsView, labelClipView].forEach(addSubview)
     }
     
     private func createConstraints() {

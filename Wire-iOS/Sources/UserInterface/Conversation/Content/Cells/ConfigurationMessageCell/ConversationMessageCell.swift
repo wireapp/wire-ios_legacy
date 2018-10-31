@@ -116,7 +116,6 @@ struct AnyMutableProperty<Value> {
     private let cellGenerator: (UITableView, IndexPath) -> UITableViewCell
     private let registrationBlock: (UITableView) -> Void
     private let baseTypeGetter: () -> AnyClass
-    private let fullWidthGetter: () -> Bool
 
     private let _delegate: AnyMutableProperty<ConversationCellDelegate?>
     private let _message: AnyMutableProperty<ZMConversationMessage?>
@@ -133,10 +132,6 @@ struct AnyMutableProperty<Value> {
 
         baseTypeGetter = {
             return T.self
-        }
-
-        fullWidthGetter = {
-            return description.isFullWidth
         }
 
         _delegate = AnyMutableProperty(description, keyPath: \.delegate)
