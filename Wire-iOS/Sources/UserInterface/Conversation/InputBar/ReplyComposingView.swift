@@ -63,7 +63,7 @@ final class ReplyComposingView: UIView {
     private var observerToken: Any? = nil
     
     init(message: ZMConversationMessage) {
-        require(message.canReplyTo)
+        require(message.canBeQuoted)
         require(message.conversation != nil)
         
         self.message = message

@@ -33,6 +33,10 @@ extension NSAttributedString {
         return defaultMarkdownStyle()
     }()
     
+    static var previewStyle: DownStyle = {
+        return previewMarkdownStyle()
+    }()
+    
     static var linkDataDetector: NSDataDetector? = {
         return try? NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue)
     }()
@@ -47,6 +51,7 @@ extension NSAttributedString {
     @objc
     static func invalidateMarkdownStyle() {
         style = defaultMarkdownStyle()
+        previewStyle = previewMarkdownStyle()
     }
     
     fileprivate static func defaultParagraphStyle() -> NSParagraphStyle {
@@ -58,6 +63,22 @@ extension NSAttributedString {
         return paragraphStyle
     }
     
+    fileprivate static func previewMarkdownStyle() -> DownStyle {
+        let style = DownStyle.preview
+        
+        style.baseFontColor = UIColor(scheme: .textForeground)
+        style.codeColor = style.baseFontColor
+        style.h1Color = style.baseFontColor
+        style.h2Color = style.baseFontColor
+        style.h3Color = style.baseFontColor
+        style.quoteColor = style.baseFontColor
+        
+        style.baseParagraphStyle = paragraphStyle
+        style.listItemPrefixColor = style.baseFontColor.withAlphaComponent(0.64)
+        
+        return style
+    }
+    
     fileprivate static func defaultMarkdownStyle() -> DownStyle {
         let style = DownStyle.normal
         
@@ -67,6 +88,33 @@ extension NSAttributedString {
         style.listItemPrefixColor = style.baseFontColor.withAlphaComponent(0.64)
         
         return style
+    }
+    
+    @objc
+    static func formatForPreview(message: ZMTextMessageData) -> NSAttributedString {
+        var plainText = message.messageText ?? ""
+        
+        // Substitute mentions with text markers
+        let mentionTextObjects = plainText.replaceMentionsWithTextMarkers(mentions: message.mentions)
+        
+        // Perform markdown parsing
+        let markdownText = NSMutableAttributedString.markdown(from: plainText, style: previewStyle)
+        
+        // Highlight mentions using previously inserted text markers
+        markdownText.highlight(mentions: mentionTextObjects)
+        
+        // Remove trailing link if we show a link preview
+        let linkAttachments = markdownText.linksAttachments()
+        
+        // Do emoji substition (but not inside link or mentions)
+        let linkAttachmentRanges = linkAttachments.compactMap { Range<Int>($0.range) }
+        let mentionRanges = mentionTextObjects.compactMap{ $0.range(in: markdownText.string as String)}
+        markdownText.replaceEmoticons(excluding: linkAttachmentRanges + mentionRanges)
+        markdownText.removeTrailingWhitespace()
+        
+        markdownText.removeAttribute(.link, range: NSRange(location: 0, length: markdownText.length))
+        markdownText.addAttribute(.foregroundColor, value: UIColor.textForeground, range: NSRange(location: 0, length: markdownText.length))
+        return markdownText
     }
     
     @objc

@@ -521,6 +521,7 @@
 		873DC9591D4796C100C1C9B0 /* CameraKeyboardViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 873DC9581D4796C100C1C9B0 /* CameraKeyboardViewControllerTests.swift */; };
 		873DC95A1D479A0000C1C9B0 /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 874D0EB01D3E575E003DF418 /* Photos.framework */; };
 		873DC95C1D479A0500C1C9B0 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 873DC95B1D479A0500C1C9B0 /* AVFoundation.framework */; };
+		873F91952189BB3C00E1DBB9 /* MessageReplyPreviewViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 873F91942189BB3C00E1DBB9 /* MessageReplyPreviewViewTests.swift */; };
 		8740205C1BF4CF7E001F2D4C /* AVSStub.m in Sources */ = {isa = PBXBuildFile; fileRef = 8740205A1BF4CF1D001F2D4C /* AVSStub.m */; };
 		8741DB621C1EFE2D00BDB470 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8741DB611C1EFE2D00BDB470 /* CoreLocation.framework */; };
 		8742C2E21E51BD7900329FB6 /* TextSearchInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8742C2E11E51BD7900329FB6 /* TextSearchInputView.swift */; };
@@ -2077,6 +2078,7 @@
 		873C5FE61C10426A00D5132A /* ClientUnregisterInvitationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClientUnregisterInvitationViewController.swift; sourceTree = "<group>"; };
 		873DC9581D4796C100C1C9B0 /* CameraKeyboardViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraKeyboardViewControllerTests.swift; sourceTree = "<group>"; };
 		873DC95B1D479A0500C1C9B0 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		873F91942189BB3C00E1DBB9 /* MessageReplyPreviewViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageReplyPreviewViewTests.swift; sourceTree = "<group>"; };
 		874020571BF4CEA6001F2D4C /* AVSStub.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AVSStub.h; sourceTree = "<group>"; };
 		8740205A1BF4CF1D001F2D4C /* AVSStub.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AVSStub.m; sourceTree = "<group>"; };
 		8741CFAE1A937EDF00A56A63 /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
@@ -5883,6 +5885,7 @@
 				EF5871652166802B00E47E73 /* GroupDetailsViewControllerSnapshotTests.swift */,
 				EFB4FADE216B8C8800700505 /* ProfileDetailsViewControllerSnapshotTests.swift */,
 				EFC0C7F021778FB000380C4B /* SettingsTextCellSnapshotTests.swift */,
+				873F91942189BB3C00E1DBB9 /* MessageReplyPreviewViewTests.swift */,
 			);
 			path = "Wire-iOS Tests";
 			sourceTree = "<group>";
@@ -8095,6 +8098,7 @@
 				FE996D9C2032039100BDE573 /* LandingViewControllerTests.swift in Sources */,
 				876376881E840E9C00B2CCF0 /* ConversationStatusTests.swift in Sources */,
 				EF6251D621395F7F00943708 /* VideoGridViewControllerSnapshotTests.swift in Sources */,
+				873F91952189BB3C00E1DBB9 /* MessageReplyPreviewViewTests.swift in Sources */,
 				87AAE4211E42441B00E1D13A /* FontSchemeTests.swift in Sources */,
 				5EA73D9120D903B90001D106 /* GroupDetailsTimeoutOptionsCellTests.swift in Sources */,
 				8759DB851E6B696C000A832D /* ImageMessageViewTests.swift in Sources */,

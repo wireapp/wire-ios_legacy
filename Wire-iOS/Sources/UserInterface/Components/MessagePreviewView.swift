@@ -19,26 +19,8 @@
 import Foundation
 
 extension ZMConversationMessage {
-    var canReplyTo: Bool {
+    var canBeQuoted: Bool {
         return isText || isImage || isLocation || isFile
-    }
-}
-
-extension NSAttributedString {
-    func settingAllFontSizes(to size: CGFloat) -> NSAttributedString {
-        let copy = self.mutableCopy() as! NSMutableAttributedString
-        
-        self.enumerateAttribute(.font,
-                                in: NSRange(location: 0, length: self.length),
-                                options: []) { (attrValue, range, _) in
-                                    guard let oldFont = attrValue as? UIFont else {
-                                        return
-                                    }
-                                    let newFont = oldFont.withSize(size)
-                                    copy.addAttributes([.font : newFont], range: range)
-        }
-        
-        return copy
     }
 }
 
@@ -59,12 +41,12 @@ extension NSTextAttachment {
 
 extension ZMConversationMessage {
     func replyPreview() -> UIView? {
-        guard self.canReplyTo else {
+        guard self.canBeQuoted else {
             return nil
         }
         
-        if self.isImage {
-            return MessageImagePreviewView(message: self)
+        if self.isImage || self.isVideo {
+            return MessageThumbnailPreviewView(message: self)
         }
         else {
             return MessagePreviewView(message: self)
@@ -73,9 +55,10 @@ extension ZMConversationMessage {
 }
 
 extension UITextView {
-    static func previewTextView() -> UITextView {
+    fileprivate static func previewTextView() -> UITextView {
         let textView = UITextView()
         textView.textContainer.lineBreakMode = .byTruncatingTail
+        textView.textContainer.maximumNumberOfLines = 1
         textView.textContainer.lineFragmentPadding = 0
         textView.isScrollEnabled = false
         textView.textContainerInset = .zero
@@ -87,7 +70,7 @@ extension UITextView {
     }
 }
 
-final class MessageImagePreviewView: UIView {
+final class MessageThumbnailPreviewView: UIView {
     private let senderLabel = UILabel()
     private let contentTextView = UITextView.previewTextView()
     private let imagePreview = UIImageView()
@@ -96,7 +79,7 @@ final class MessageImagePreviewView: UIView {
     let message: ZMConversationMessage
     
     init(message: ZMConversationMessage) {
-        require(message.canReplyTo)
+        require(message.canBeQuoted)
         require(message.conversation != nil)
         self.message = message
         super.init(frame: .zero)
@@ -107,7 +90,11 @@ final class MessageImagePreviewView: UIView {
     }
     
     private func setupMessageObserver() {
-        observerToken = MessageChangeInfo.add(observer: self, for: message, userSession: ZMUserSession.shared()!)
+        if let userSession = ZMUserSession.shared() {
+            observerToken = MessageChangeInfo.add(observer: self,
+                                                  for: message,
+                                                  userSession: userSession)
+        }
     }
     
     private func setupSubviews() {
@@ -149,6 +136,9 @@ final class MessageImagePreviewView: UIView {
     private func updateForMessage() {
         senderLabel.text = message.sender?.displayName(in: message.conversation!)
         
+        let attributes: [NSAttributedString.Key: Any] = [.font: UIFont.smallSemiboldFont,
+                                                         .foregroundColor: UIColor.textForeground]
+        
         if message.isImage {
             let attributes: [NSAttributedString.Key: Any] = [.font: UIFont.smallSemiboldFont,
                                                              .foregroundColor: UIColor.textForeground]
@@ -157,6 +147,15 @@ final class MessageImagePreviewView: UIView {
             contentTextView.attributedText = initialString && attributes
             
             if let data = message.imageMessageData?.imageData {
+                imagePreview.image = UIImage(from: data, withMaxSize: 100)
+            }
+        }
+        else if message.isVideo, let fileMessageData = message.fileMessageData {
+            let imageIcon = NSTextAttachment.textAttachment(for: .videoMessage, with: .textForeground, and: .medium)!
+            let initialString = NSAttributedString(attachment: imageIcon) + "  " + "conversation.input_bar.message_preview.video".localized.localizedUppercase
+            contentTextView.attributedText = initialString && attributes
+            
+            if let data = fileMessageData.previewData {
                 imagePreview.image = UIImage(from: data, withMaxSize: 100)
             }
         }
@@ -170,7 +169,7 @@ final class MessageImagePreviewView: UIView {
     }
 }
 
-extension MessageImagePreviewView: ZMMessageObserver {
+extension MessageThumbnailPreviewView: ZMMessageObserver {
     func messageDidChange(_ changeInfo: MessageChangeInfo) {
         updateForMessage()
     }
@@ -184,7 +183,7 @@ final class MessagePreviewView: UIView {
     let message: ZMConversationMessage
     
     init(message: ZMConversationMessage) {
-        require(message.canReplyTo)
+        require(message.canBeQuoted)
         require(message.conversation != nil)
         self.message = message
         super.init(frame: .zero)
@@ -195,7 +194,11 @@ final class MessagePreviewView: UIView {
     }
     
     private func setupMessageObserver() {
-        observerToken = MessageChangeInfo.add(observer: self, for: message, userSession: ZMUserSession.shared()!)
+        if let userSession = ZMUserSession.shared() {
+            observerToken = MessageChangeInfo.add(observer: self,
+                                                  for: message,
+                                                  userSession: userSession)
+        }
     }
     
     private func setupSubviews() {
@@ -203,7 +206,6 @@ final class MessagePreviewView: UIView {
         
         contentTextView.backgroundColor = .clear
         contentTextView.textColor = .textForeground
-            
         senderLabel.font = .mediumSemiboldFont
         senderLabel.textColor = .textForeground
         
@@ -230,14 +232,17 @@ final class MessagePreviewView: UIView {
         senderLabel.text = message.sender?.displayName(in: message.conversation!)
         let attributes: [NSAttributedString.Key: Any] = [.font: UIFont.smallSemiboldFont,
                                                          .foregroundColor: UIColor.textForeground]
-        let fontSize = 12 * UIFont.wr_preferredContentSizeMultiplier(for: UIApplication.shared.preferredContentSizeCategory)
         
-        if message.isText {
-            let messageText = NSAttributedString.format(message: message.textMessageData!,
-                                                        isObfuscated: message.isObfuscated,
-                                                        linkAttachment: nil)
-            
-            contentTextView.attributedText = messageText.settingAllFontSizes(to: fontSize)
+        if let textMessageData = message.textMessageData {
+            let hasNoText = textMessageData.messageText == nil || textMessageData.messageText!.isEmpty
+            if hasNoText, let linkPreview = textMessageData.linkPreview {
+                let font = UIFont.systemFont(ofSize: 14, contentSizeCategory: .medium, weight: .light)
+                    contentTextView.attributedText = linkPreview.originalURLString && [.font: font,
+                                                                                       .foregroundColor: UIColor.textForeground]
+            }
+            else {
+                contentTextView.attributedText = NSAttributedString.formatForPreview(message: message.textMessageData!)
+            }
         }
         else if let location = message.locationMessageData {
             
@@ -245,13 +250,8 @@ final class MessagePreviewView: UIView {
             let initialString = NSAttributedString(attachment: imageIcon) + "  " + (location.name ?? "conversation.input_bar.message_preview.location".localized).localizedUppercase
             contentTextView.attributedText = initialString && attributes
         }
-        else if message.isVideo {
-            let imageIcon = NSTextAttachment.textAttachment(for: .videoMessage, with: .textForeground, and: .medium)!
-            let initialString = NSAttributedString(attachment: imageIcon) + "  " + "conversation.input_bar.message_preview.video".localized.localizedUppercase
-            contentTextView.attributedText = initialString && attributes
-        }
         else if message.isAudio {
-            let imageIcon = NSTextAttachment.textAttachment(for: .audio, with: .textForeground, and: .medium)!
+            let imageIcon = NSTextAttachment.textAttachment(for: .microphone, with: .textForeground, and: .medium)!
             let initialString = NSAttributedString(attachment: imageIcon) + "  " + "conversation.input_bar.message_preview.audio".localized.localizedUppercase
             contentTextView.attributedText = initialString && attributes
         }

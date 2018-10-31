@@ -75,7 +75,7 @@ class MessagePreviewViewTests: ZMSnapshotTestCase {
         let message = MockMessageFactory.fileTransferMessage()!
         message.backingFileMessageData.mimeType = "video/mp4"
         message.backingFileMessageData.filename = "vacation.mp4"
-        message.backingFileMessageData.imagePreviewData = image(inTestBundleNamed: "unsplash_matterhorn.jpg").jpegData(compressionQuality: 0.9)
+        message.backingFileMessageData.previewData = image(inTestBundleNamed: "unsplash_matterhorn.jpg").jpegData(compressionQuality: 0.9)
         
         let previewView = message.previewView()!
         XCTAssertTrue(waitForGroupsToBeEmpty([defaultImageCache.dispatchGroup]))
