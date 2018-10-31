@@ -208,7 +208,7 @@ extension UserSearchResultsViewController: UICollectionViewDataSource {
         cell.avatarSpacing = UIView.conversationLayoutMargins.left
 
         // hightlight the lowest cell if keyboard is collapsed
-        if isKeyboardCollapsed {
+        if isKeyboardCollapsed || UIDevice.current.userInterfaceIdiom == .pad {
             if indexPath.item == searchResults.count - 1 {
                 cell.backgroundColor = .contentBackground
             } else {
