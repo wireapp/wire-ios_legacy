@@ -18,18 +18,34 @@
 
 import Foundation
 
-class BaseConversationMessageCellDescription<View: ConversationMessageCell & UIView>: ConversationMessageCellDescription {
-    let configuration: View.Configuration
-    let isFullWidth: Bool
-    let supportsActions: Bool
+extension CustomMessageView: ConversationMessageCell {
+    func configure(with object: String) {
+        messageText = object
+    }
+}
+
+/**
+ * A description for a message cell that informs the user a message cannot be rendered.
+ */
+
+class UnknownMessageCellDescription: ConversationMessageCellDescription {
+    typealias View = CustomMessageView
+    let configuration: String
 
     weak var message: ZMConversationMessage?
     weak var delegate: ConversationCellDelegate?
     weak var actionController: ConversationCellActionController?
 
-    init(configuration: View.Configuration, isFullWidth: Bool, supportsActions: Bool) {
-        self.configuration = configuration
-        self.isFullWidth = isFullWidth
-        self.supportsActions = supportsActions
+    var isFullWidth: Bool {
+        return false
     }
+
+    var supportsActions: Bool {
+        return false
+    }
+
+    init() {
+        self.configuration = "content.system.unknown_message.body".localized
+    }
+
 }

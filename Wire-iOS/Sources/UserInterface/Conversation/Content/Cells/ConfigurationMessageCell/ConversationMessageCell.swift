@@ -71,6 +71,8 @@ protocol ConversationMessageCellDescription: class {
     func makeCell(for tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell
 }
 
+// MARK: - Table View Dequeuing
+
 extension ConversationMessageCellDescription {
 
     func register(in tableView: UITableView) {
@@ -82,6 +84,8 @@ extension ConversationMessageCellDescription {
     }
 
 }
+
+// MARK: - Type Erased Container
 
 struct AnyConstantProperty<Value> {
     let getter: () -> Value

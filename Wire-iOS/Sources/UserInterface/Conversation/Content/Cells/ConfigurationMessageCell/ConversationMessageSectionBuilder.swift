@@ -166,43 +166,8 @@ class ConversationMessageSectionBuilder {
     }
 
     private static func addTextMessageAndAttachments(in section: ConversationMessageSectionController, for message: ZMConversationMessage) {
-        guard let textMessageData = message.textMessageData else {
-            return
-        }
-
-        var lastKnownLinkAttachment: LinkAttachment?
-        let messageText = NSAttributedString.format(message: textMessageData, isObfuscated: message.isObfuscated, linkAttachment: &lastKnownLinkAttachment)
-
-        // Text
-        let textCell = ConversationTextMessageCellDescription(attributedString: messageText)
-        section.add(description: textCell)
-
-        guard !message.isObfuscated else {
-            return
-        }
-
-        // Link Attachment
-        if let attachment = lastKnownLinkAttachment, attachment.type != .none {
-            switch attachment.type {
-            case .youtubeVideo:
-                let youtubeCell = ConversationYouTubeAttachmentCellDescription(attachment: attachment)
-                section.add(description: youtubeCell)
-            case .soundcloudTrack:
-                let trackCell = ConversationSoundCloudCellDescription<AudioTrackViewController>(message: message, attachment: attachment)
-                section.add(description: trackCell)
-            case .soundcloudSet:
-                let playlistCell = ConversationSoundCloudCellDescription<AudioPlaylistViewController>(message: message, attachment: attachment)
-                section.add(description: playlistCell)
-            default:
-                break
-            }
-        }
-
-        // Link Preview
-        if textMessageData.linkPreview != nil {
-           let linkPreviewCell = ConversationLinkPreviewArticleCellDescription(message: message, data: textMessageData)
-            section.add(description: linkPreviewCell)
-        }
+        let cells = ConversationTextMessageCellDescription.cells(for: message)
+        section.cellDescriptions.append(contentsOf: cells)
     }
 
     private static func addLocationMessage(in section: ConversationMessageSectionController, for message: ZMConversationMessage) {

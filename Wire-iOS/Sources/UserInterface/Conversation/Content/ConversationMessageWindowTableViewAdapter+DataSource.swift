@@ -18,23 +18,11 @@
 
 import Foundation
 
-extension ConversationMessageWindowTableViewAdapter {
-    
-    @objc func registerTableCellClasses() {
-        tableView.register(ConversationNewDeviceCell.self, forCellReuseIdentifier: ConversationNewDeviceCellId)
-        tableView.register(MissingMessagesCell.self, forCellReuseIdentifier: ConversationMissingMessagesCellId)
-        tableView.register(ConversationIgnoredDeviceCell.self, forCellReuseIdentifier: ConversationIgnoredDeviceCellId)
-
-        tableView.register(ParticipantsCell.self, forCellReuseIdentifier: ParticipantsCell.zm_reuseIdentifier)
-
-        tableView.register(ImageMessageCell.self, forCellReuseIdentifier: ConversationImageCellId)
-        tableView.register(FileTransferCell.self, forCellReuseIdentifier: ConversationFileTransferCellId)
-        tableView.register(VideoMessageCell.self, forCellReuseIdentifier: ConversationVideoMessageCellId)
-        tableView.register(AudioMessageCell.self, forCellReuseIdentifier: ConversationAudioMessageCellId)
-    }
-}
-
 extension ConversationMessageWindowTableViewAdapter: UITableViewDataSource {
+
+    /**
+     * Creates a new section controller for the message, when the adapter cannot find one in the cache.
+     */
 
     @objc(buildSectionControllerForMessage:)
     func buildSectionController(for message: ZMConversationMessage) -> ConversationMessageSectionController {
@@ -53,38 +41,5 @@ extension ConversationMessageWindowTableViewAdapter: UITableViewDataSource {
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let sectionController = self.sectionController(at: indexPath.section, in: tableView)!
         return sectionController.makeCell(for: tableView, at: indexPath)
-    }
-}
-
-extension ZMConversationMessage {
-    var cellIdentifier: String {
-        var cellIdentifier = ConversationUnknownMessageCellId
-
-        if isVideo {
-            cellIdentifier = ConversationVideoMessageCellId
-        } else if isAudio {
-            cellIdentifier = ConversationAudioMessageCellId
-        } else if isFile {
-            cellIdentifier = ConversationFileTransferCellId
-        } else if isImage {
-            cellIdentifier = ConversationImageCellId
-        } else if isSystem, let systemMessageType = systemMessageData?.systemMessageType {
-            switch systemMessageType {
-            case .newClient, .usingNewDevice:
-                cellIdentifier = ConversationNewDeviceCellId
-            case .ignoredClient:
-                cellIdentifier = ConversationIgnoredDeviceCellId
-            case .potentialGap, .reactivatedDevice:
-                cellIdentifier = ConversationMissingMessagesCellId
-            case .participantsAdded, .participantsRemoved, .newConversation, .teamMemberLeave:
-                cellIdentifier = ParticipantsCell.zm_reuseIdentifier
-            default:
-                break
-            }
-        } else {
-            cellIdentifier = ConversationUnknownMessageCellId
-        }
-        
-        return cellIdentifier
     }
 }

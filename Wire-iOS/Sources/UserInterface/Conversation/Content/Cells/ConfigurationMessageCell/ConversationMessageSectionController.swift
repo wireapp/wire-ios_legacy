@@ -29,8 +29,8 @@ import Foundation
  * the view of the message (timestamp, reply, content...) will be displayed as individual cells,
  * to reduce the number of cells that are instanciated at a given time.
  *
- * To achieve this, each section controller is assigned a cell description, that is responsible dequeing
- * the cells from the table or collection view and configure them with a message.
+ * To achieve this, each section controller is assigned a cell description, that is responsible for dequeing
+ * the cells from the table or collection view and configuring them with a message.
  */
 
 @objc class ConversationMessageSectionController: NSObject, ZMMessageObserver {
@@ -115,8 +115,9 @@ import Foundation
 
     // MARK: - Changes
 
+    /// Called when the `message` property is set.
     private func updateMessage(oldValue: ZMConversationMessage?) {
-        precondition(oldValue == nil, "Changing the message is not supported.")
+        precondition(oldValue == nil, "Changing the message is not supported. You can only assign this value once.")
 
         if let newValue = self.message {
             startObservingChanges(for: newValue)

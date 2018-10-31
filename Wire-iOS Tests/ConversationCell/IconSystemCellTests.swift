@@ -26,13 +26,6 @@ final class IconSystemCellTests: ZMSnapshotTestCase {
         snapshotBackgroundColor = .white
     }
 
-    class func legacySystemMessageTypeToClass() -> [ZMSystemMessageType : IconSystemCell.Type]? {
-        return [.newClient: ConversationNewDeviceCell.self,
-                .ignoredClient: ConversationIgnoredDeviceCell.self,
-                .potentialGap: MissingMessagesCell.self,
-                .reactivatedDevice: MissingMessagesCell.self]
-    }
-
     class func wrappedCell(for type: ZMSystemMessageType,
                            users usersCount: Int,
                            clients clientsCount: Int,

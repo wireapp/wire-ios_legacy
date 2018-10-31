@@ -48,8 +48,6 @@
         self.firstUnreadMessage = self.messageWindow.conversation.firstUnreadMessage;
         self.sectionControllers = [[NSCache alloc] init];
         self.actionControllers = [[NSCache alloc] init];
-        
-        [self registerTableCellClasses];
     }
     
     return self;

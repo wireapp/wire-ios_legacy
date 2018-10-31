@@ -28,34 +28,6 @@ struct MessageCellContext {
     
 }
 
-extension CustomMessageView: ConversationMessageCell {
-    func configure(with object: String) {
-        messageText = object
-    }
-}
-
-class UnknownMessageCellDescription: ConversationMessageCellDescription {
-    typealias View = CustomMessageView
-    let configuration: String
-
-    weak var message: ZMConversationMessage?
-    weak var delegate: ConversationCellDelegate? 
-    weak var actionController: ConversationCellActionController?
-
-    var isFullWidth: Bool {
-        return false
-    }
-
-    var supportsActions: Bool {
-        return false
-    }
-
-    init() {
-        self.configuration = "content.system.unknown_message.body".localized
-    }
-
-}
-
 extension ZMConversationMessageWindow {
     
     func sectionController(for message: ZMConversationMessage, firstUnreadMessage: ZMConversationMessage?) -> ConversationMessageSectionController {
