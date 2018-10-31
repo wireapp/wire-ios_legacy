@@ -22,22 +22,55 @@ protocol ReplyComposingViewDelegate: NSObjectProtocol {
     func composingViewDidCancel(composingView: ReplyComposingView)
 }
 
+extension ZMConversationMessage {
+    var accessibilityDescription: String {
+        let contentDescriptionText: String
+        let senderDescriptionText = self.sender?.displayName(in: self.conversation) ?? ""
+        
+        if let textData = textMessageData {
+            contentDescriptionText = textData.messageText ?? ""
+        }
+        else if isImage {
+            contentDescriptionText = "conversation.input_bar.message_preview.accessibility.image_message".localized
+        }
+        else if let locationData = locationMessageData {
+            contentDescriptionText = locationData.name ?? "conversation.input_bar.message_preview.accessibility.location_message".localized
+        }
+        else if isVideo {
+            contentDescriptionText = "conversation.input_bar.message_preview.accessibility.video_message".localized
+        }
+        else if isAudio {
+            contentDescriptionText = "conversation.input_bar.message_preview.accessibility.audio_message".localized
+        }
+        else if let fileData = fileMessageData {
+            contentDescriptionText = String(format: "conversation.input_bar.message_preview.accessibility.file_message".localized, fileData.filename ?? "")
+        }
+        else {
+            contentDescriptionText = "conversation.input_bar.message_preview.accessibility.unknown_message".localized
+        }
+        
+        return String(format: "conversation.input_bar.message_preview.accessibility.message_from".localized, contentDescriptionText, senderDescriptionText)
+    }
+}
+
 final class ReplyComposingView: UIView {
     let message: ZMConversationMessage
     private let closeButton = IconButton()
     private let leftSideView = UIView(frame: .zero)
-    private let messagePreviewContainer = UIView(frame: .zero)
+    private var messagePreviewContainer: ReplyRoundCornersView!
+    private var previewView: UIView!
     weak var delegate: ReplyComposingViewDelegate? = nil
     private var observerToken: Any? = nil
     
     init(message: ZMConversationMessage) {
+        require(message.canReplyTo)
+        require(message.conversation != nil)
+        
         self.message = message
         super.init(frame: .zero)
         
         setupMessageObserver()
-        
         setupSubviews()
-        
         setupConstraints()
     }
     
@@ -49,14 +82,27 @@ final class ReplyComposingView: UIView {
         observerToken = MessageChangeInfo.add(observer: self, for: message, userSession: ZMUserSession.shared()!)
     }
     
+    private func buildAccessibilityLabel() -> String {
+        let messageDescription = message.accessibilityDescription
+        return String(format: "conversation.input_bar.message_preview.accessibility_description".localized, messageDescription)
+    }
+    
     private func setupSubviews() {
+        shouldGroupAccessibilityChildren = true
+        isAccessibilityElement = true
+        accessibilityIdentifier = "replyView"
+        accessibilityLabel = buildAccessibilityLabel()
+        
+        backgroundColor = .init(scheme: .barBackground)
+        
+        previewView = message.replyPreview()!
+        
+        messagePreviewContainer = ReplyRoundCornersView(containedView: previewView)
+        
         leftSideView.translatesAutoresizingMaskIntoConstraints = false
         closeButton.translatesAutoresizingMaskIntoConstraints = false
         messagePreviewContainer.translatesAutoresizingMaskIntoConstraints = false
-        
-        leftSideView.backgroundColor = .init(scheme: .background)
-        messagePreviewContainer.backgroundColor = .red
-        
+                
         closeButton.accessibilityIdentifier = "cancelReply"
         closeButton.accessibilityLabel = "conversation.input_bar.close_reply".localized
         closeButton.setIcon(.X, with: .tiny, for: .normal)
@@ -80,10 +126,10 @@ final class ReplyComposingView: UIView {
             leftSideView.widthAnchor.constraint(equalToConstant: margins.left),
             closeButton.centerXAnchor.constraint(equalTo: leftSideView.centerXAnchor),
             closeButton.topAnchor.constraint(equalTo: leftSideView.topAnchor, constant: 16),
-            messagePreviewContainer.topAnchor.constraint(equalTo: topAnchor),
+            messagePreviewContainer.topAnchor.constraint(equalTo: topAnchor, constant: 12),
             messagePreviewContainer.bottomAnchor.constraint(equalTo: bottomAnchor),
-            messagePreviewContainer.trailingAnchor.constraint(equalTo: trailingAnchor),
             messagePreviewContainer.leadingAnchor.constraint(equalTo: leftSideView.trailingAnchor),
+            messagePreviewContainer.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -margins.right),
             heightAnchor.constraint(greaterThanOrEqualToConstant: 48)
         ]
         
@@ -93,6 +139,9 @@ final class ReplyComposingView: UIView {
 
 extension ReplyComposingView: ZMMessageObserver {
     func messageDidChange(_ changeInfo: MessageChangeInfo) {
-        // TODO: update content view
+        // TODO: observe deletion correctly
+        if changeInfo.message.managedObjectContext == nil || changeInfo.message.isDeleted {
+            self.delegate?.composingViewDidCancel(composingView: self)
+        }
     }
 }

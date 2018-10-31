@@ -128,6 +128,7 @@ import Cartography
         if let message = message, let fileMessageData = message.fileMessageData {
             if let _ = fileMessageData.fileURL {
                 additionalItems += [
+                    .forbiddenInEphemeral(.reply(with: #selector(replyTo(_:)))),
                     .forbiddenInEphemeral(.open(with: #selector(open))),
                     .forbiddenInEphemeral(.save(with: #selector(save))),
                     .forbiddenInEphemeral(.forward(with: #selector(forward)))

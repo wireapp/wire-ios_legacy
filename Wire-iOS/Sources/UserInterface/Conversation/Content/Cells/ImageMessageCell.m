@@ -450,9 +450,11 @@ static const CGFloat ImageToolbarMinimumSize = 192;
     MenuConfigurationProperties *properties = [[MenuConfigurationProperties alloc] init];
     properties.targetRect = self.selectionRect;
     properties.targetView = self.selectionView;
+    UIMenuItem *replyItem = [UIMenuItem replyToWithAction:@selector(replyTo:)];
     UIMenuItem *saveItem = [UIMenuItem saveItemWithAction:@selector(saveImage)];
     UIMenuItem *forwardItem = [UIMenuItem forwardItemWithAction:@selector(forward:)];
     properties.additionalItems = @[
+                                   [AdditionalMenuItem forbiddenInEphemeral:replyItem],
                                    [AdditionalMenuItem forbiddenInEphemeral:saveItem],
                                    [AdditionalMenuItem forbiddenInEphemeral:forwardItem]
                                    ];

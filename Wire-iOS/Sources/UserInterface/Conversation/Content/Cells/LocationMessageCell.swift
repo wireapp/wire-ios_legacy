@@ -194,7 +194,8 @@ public final class LocationMessageCell: ConversationCell {
         properties.targetRect = selectionRect
         properties.targetView = selectionView
         properties.selectedMenuBlock = setSelectedByMenu
-        properties.additionalItems = [.forbiddenInEphemeral(.forward(with: #selector(forward)))]
+        properties.additionalItems = [.forbiddenInEphemeral(.reply(with: #selector(replyTo(_:)))),
+                                      .forbiddenInEphemeral(.forward(with: #selector(forward)))]
         return properties
     }
     
