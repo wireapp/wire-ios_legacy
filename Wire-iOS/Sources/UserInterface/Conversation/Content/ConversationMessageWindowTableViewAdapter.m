@@ -31,6 +31,10 @@
 
 #import "Wire-Swift.h"
 
+@interface ConversationMessageWindowTableViewAdapter (SectionDelegate) <ConversationMessageSectionControllerDelegate>
+
+@end
+
 @implementation ConversationMessageWindowTableViewAdapter
 
 - (instancetype)initWithTableView:(UITableView *)tableView messageWindow:(ZMConversationMessageWindow *)messageWindow
@@ -119,7 +123,8 @@
 
     ConversationMessageSectionController *sectionController = [self buildSectionControllerForMessage:message];
     sectionController.useInvertedIndices = YES;
-    sectionController.delegate = self.conversationCellDelegate;
+    sectionController.cellDelegate = self.conversationCellDelegate;
+    sectionController.sectionDelegate = self;
     sectionController.message = message;
     sectionController.actionController = [self actionControllerForMessage:message];
 
@@ -229,6 +234,21 @@
             self.expandingWindow = NO;
         });
     }
+}
+
+@end
+
+@implementation ConversationMessageWindowTableViewAdapter (SectionDelegate)
+
+- (void)messageSectionController:(ConversationMessageSectionController *)controller didRequestRefreshForMessage:(id<ZMConversationMessage>)message
+{
+    NSInteger section = [self.messageWindow.messages indexOfObject:message];
+
+    if (!section) {
+        return;
+    }
+
+    [self.tableView reloadSections:[[NSIndexSet alloc] initWithIndex:section] withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
 @end

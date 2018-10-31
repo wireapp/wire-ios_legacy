@@ -18,6 +18,10 @@
 
 import Foundation
 
+@objc protocol ConversationMessageSectionControllerDelegate: class {
+    func messageSectionController(_ controller: ConversationMessageSectionController, didRequestRefreshForMessage message: ZMConversationMessage)
+}
+
 /**
  * An object that provides an interface to build list sections for a single message.
  *
@@ -29,7 +33,7 @@ import Foundation
  * the cells from the table or collection view and configure them with a message.
  */
 
-@objc class ConversationMessageSectionController: NSObject {
+@objc class ConversationMessageSectionController: NSObject, ZMMessageObserver {
 
     /// The view descriptor of the section.
     @objc var cellDescriptions: [AnyConversationMessageCellDescription] = []
@@ -37,14 +41,29 @@ import Foundation
     /// Whether we need to use inverted indices. This is `true` when the table view is upside down.
     @objc var useInvertedIndices = false
 
-    /// The delegate for cells injected by the list adapter.
-    @objc var delegate: ConversationCellDelegate?
-
     /// The object that controls actions for the cell.
     @objc var actionController: ConversationCellActionController?
 
     /// The message that is being presented.
-    @objc var message: ZMConversationMessage?
+    @objc var message: ZMConversationMessage? {
+        didSet {
+            updateMessage(oldValue: oldValue)
+        }
+    }
+
+    /// The delegate for cells injected by the list adapter.
+    @objc weak var cellDelegate: ConversationCellDelegate?
+
+    /// The object that receives informations from the section.
+    @objc weak var sectionDelegate: ConversationMessageSectionControllerDelegate?
+
+    private var changeObserver: Any?
+
+    deinit {
+        changeObserver = nil
+    }
+
+    // MARK: - Composition
 
     /**
      * Adds a cell description to the section.
@@ -55,6 +74,7 @@ import Foundation
         cellDescriptions.append(AnyConversationMessageCellDescription(description))
     }
 
+    // MARK: - Data Source
 
     /// The number of child cells in the section that compose the message.
     var numberOfCells: Int {
@@ -72,7 +92,7 @@ import Foundation
 
     func makeCell(for tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
         let description = cellDescription(at: indexPath.row)
-        description.delegate = self.delegate
+        description.delegate = self.cellDelegate
         description.message = self.message
         description.actionController = self.actionController
 
@@ -91,6 +111,24 @@ import Foundation
         } else {
             return cellDescriptions[row]
         }
+    }
+
+    // MARK: - Changes
+
+    private func updateMessage(oldValue: ZMConversationMessage?) {
+        precondition(oldValue == nil, "Changing the message is not supported.")
+
+        if let newValue = self.message {
+            startObservingChanges(for: newValue)
+        }
+    }
+
+    private func startObservingChanges(for message: ZMConversationMessage) {
+        changeObserver = MessageChangeInfo.add(observer: self, for: message, userSession: ZMUserSession.shared()!)
+    }
+
+    func messageDidChange(_ changeInfo: MessageChangeInfo) {
+        sectionDelegate?.messageSectionController(self, didRequestRefreshForMessage: changeInfo.message)
     }
 
 }

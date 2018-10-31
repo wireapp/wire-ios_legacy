@@ -124,7 +124,7 @@ class ConversationMessageSectionBuilder {
             return
         }
 
-        let senderCell = ConversationSenderMessageCellDescription(sender: sender, showTrash: false)
+        let senderCell = ConversationSenderMessageCellDescription(sender: sender, message: message)
         section.add(description: senderCell)
     }
 
@@ -194,7 +194,7 @@ class ConversationMessageSectionBuilder {
             section.add(description: callCell)
 
         case .messageDeletedForEveryone:
-            let senderCell = ConversationSenderMessageCellDescription(sender: sender, showTrash: true)
+            let senderCell = ConversationSenderMessageCellDescription(sender: sender, message: message)
             section.add(description: senderCell)
 
         case .messageTimerUpdate:
