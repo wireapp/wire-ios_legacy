@@ -70,6 +70,7 @@ class UserSearchResultsViewController: UIViewController, KeyboardCollapseObserve
         setupKeyboardObserver()
     }
 
+
     private func setupKeyboardObserver() {
         keyboardObserver = KeyboardBlockObserver { [weak self] info in
             guard let weakSelf = self else { return }
@@ -210,7 +211,7 @@ extension UserSearchResultsViewController: UICollectionViewDataSource {
         // hightlight the lowest cell if keyboard is collapsed
         if isKeyboardCollapsed {
             if indexPath.item == searchResults.count - 1 {
-                cell.backgroundColor = .mentionBestMatchBackground
+                cell.backgroundColor = .cellHighlight
             } else {
                 cell.backgroundColor = .background
             }

@@ -84,7 +84,7 @@ extension UIColor {
         return UIColor(scheme: .contentBackground)
     }
 
-    static var mentionBestMatchBackground: UIColor {
-        return UIColor(scheme: .mentionBestMatchBackground)
+    static var cellHighlight: UIColor {
+        return UIColor(scheme: .cellHighlight)
     }
 }
