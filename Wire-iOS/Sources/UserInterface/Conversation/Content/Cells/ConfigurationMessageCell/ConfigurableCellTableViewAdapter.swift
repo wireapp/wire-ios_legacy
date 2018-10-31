@@ -97,33 +97,37 @@ class ConfigurableCellTableViewAdapter<C: ConversationMessageCellDescription>: U
 
     // MARK: - Menu
 
-    override var canBecomeFirstResponder: Bool {
-        return true
-    }
-
-    override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
-        switch action {
-        case #selector(reply):
-            return true
-        default:
-            return false
-        }
-    }
-
     @objc private func onLongPress(_ gestureRecognizer: UILongPressGestureRecognizer) {
         if gestureRecognizer.state == .began {
             self.showMenu()
         }
     }
 
+    override var canBecomeFirstResponder: Bool {
+        return true
+    }
+
+    override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+        guard let actionController = cellDescription?.actionController else {
+            return false
+        }
+
+        return actionController.canPerformAction(action) == true
+    }
+
+    override func forwardingTarget(for aSelector: Selector!) -> Any? {
+        return cellDescription?.actionController
+    }
+
     private func showMenu() {
+        guard cellDescription?.actionController != nil, cellDescription?.supportsActions == true else {
+            return
+        }
+
         let menu = UIMenuController.shared
+        menu.menuItems = ConversationCellActionController.allMessageActions
 
-//        self.window?.makeKey()
-//        self.window?.becomeFirstResponder()
         self.becomeFirstResponder()
-
-        menu.menuItems = [UIMenuItem(title: "Reply", action: #selector(reply))]
 
         menu.setTargetRect(contentView.bounds, in: self)
         menu.setMenuVisible(true, animated: true)
@@ -137,16 +141,22 @@ class ConfigurableCellTableViewAdapter<C: ConversationMessageCellDescription>: U
         }
     }
 
+    // MARK: - Standard Actions
+
     private func likeMessage() {
-        cellDescription?.delegate?.conversationCell?(contentView, didSelect: .like, for: cellDescription?.message)
+        guard cellDescription?.supportsActions == true else {
+            return
+        }
+
+        cellDescription?.actionController?.likeMessage()
     }
 
-    @objc override func copy(_ sender: Any?) {
-        print("COPY")
+    override func copy(_ sender: Any?) {
+        cellDescription?.actionController?.copyMessage()
     }
 
-    @objc private func reply(_ sender: Any?) {
-        cellDescription?.delegate?.conversationCell?(contentView, didSelect: .reply, for: cellDescription?.message)
+    override func delete(_ sender: Any?) {
+        cellDescription?.actionController?.deleteMessage()
     }
 
 }

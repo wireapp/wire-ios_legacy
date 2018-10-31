@@ -20,6 +20,7 @@
 #import <Foundation/Foundation.h>
 
 #import "WireSyncEngine+iOS.h"
+#import "MessageAction.h"
 
 @protocol ConversationCellDelegate;
 @class ConversationMessageSectionController;
@@ -31,6 +32,8 @@
 @property (nonatomic) id<ZMConversationMessage> selectedMessage;
 @property (nonatomic) id<ZMConversationMessage> editingMessage;
 @property (nonatomic, weak) id<ConversationCellDelegate> conversationCellDelegate;
+@property (nonatomic, weak) id<MessageActionResponder> messageActionResponder;
+
 @property (nonatomic) NSArray<NSString *> *searchQueries;
 
 - (instancetype)initWithTableView:(UITableView *)tableView messageWindow:(ZMConversationMessageWindow *)messageWindow;

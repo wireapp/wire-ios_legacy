@@ -59,14 +59,20 @@ class ConversationLinkPreviewArticleCellDescription: ConversationMessageCellDesc
     typealias View = ConversationLinkPreviewArticleCell
     let configuration: View.Configuration
 
-    var message: ZMConversationMessage?
-    weak var delegate: ConversationCellDelegate?
+    weak var message: ZMConversationMessage?
+    weak var delegate: ConversationCellDelegate? 
+    weak var actionController: ConversationCellActionController?
 
     var isFullWidth: Bool {
         return false
     }
 
+    var supportsActions: Bool {
+        return true
+    }
+
     init(message: ZMConversationMessage, data: ZMTextMessageData) {
         configuration = View.Configuration(textMessageData: data, isObfuscated: message.isObfuscated)
+        actionController = nil
     }
 }

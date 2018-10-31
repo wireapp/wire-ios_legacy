@@ -52,11 +52,17 @@ protocol ConversationMessageCellDescription: class {
     /// Whether the view occupies the entire width of the cell.
     var isFullWidth: Bool { get }
 
+    /// Whether the cell supports actions.
+    var supportsActions: Bool { get }
+
     /// The message that is displayed.
     var message: ZMConversationMessage? { get set }
 
     /// The delegate for the cell.
     var delegate: ConversationCellDelegate? { get set }
+
+    /// The action controller that handles the menu item.
+    var actionController: ConversationCellActionController? { get set }
 
     /// The configuration object that will be used to populate the cell.
     var configuration: View.Configuration { get }
@@ -77,6 +83,31 @@ extension ConversationMessageCellDescription {
 
 }
 
+struct AnyConstantProperty<Value> {
+    let getter: () -> Value
+
+    init<Base>(_ base: Base, keyPath: Swift.KeyPath<Base, Value>) {
+        getter = {
+            return base[keyPath: keyPath]
+        }
+    }
+}
+
+struct AnyMutableProperty<Value> {
+    let getter: () -> Value
+    let setter: (Value) -> Void
+
+    init<Base>(_ base: Base, keyPath: ReferenceWritableKeyPath<Base, Value>) {
+        getter = {
+            return base[keyPath: keyPath]
+        }
+
+        setter = { newValue in
+            base[keyPath: keyPath] = newValue
+        }
+    }
+}
+
 /**
  * A type erased box containing a conversation message cell description.
  */
@@ -86,10 +117,10 @@ extension ConversationMessageCellDescription {
     private let registrationBlock: (UITableView) -> Void
     private let baseTypeGetter: () -> AnyClass
     private let fullWidthGetter: () -> Bool
-    private let delegateGetter: () -> ConversationCellDelegate?
-    private let delegateSetter: (ConversationCellDelegate?) -> Void
-    private let messageGetter: () -> ZMConversationMessage?
-    private let messageSetter: (ZMConversationMessage?) -> Void
+
+    private let _delegate: AnyMutableProperty<ConversationCellDelegate?>
+    private let _message: AnyMutableProperty<ZMConversationMessage?>
+    private let _actionController: AnyMutableProperty<ConversationCellActionController?>
 
     init<T: ConversationMessageCellDescription>(_ description: T) {
         registrationBlock = { tableView in
@@ -108,39 +139,28 @@ extension ConversationMessageCellDescription {
             return description.isFullWidth
         }
 
-        delegateGetter = {
-            return description.delegate
-        }
-
-        delegateSetter = { newValue in
-            description.delegate = newValue
-        }
-
-        messageGetter = {
-            return description.message
-        }
-
-        messageSetter = { newValue in
-            description.message = newValue
-        }
+        _delegate = AnyMutableProperty(description, keyPath: \.delegate)
+        _message = AnyMutableProperty(description, keyPath: \.message)
+        _actionController = AnyMutableProperty(description, keyPath: \.actionController)
     }
 
     @objc var baseType: AnyClass {
         return baseTypeGetter()
     }
 
-    var isFullWidth: Bool {
-        return fullWidthGetter()
-    }
-
     @objc var delegate: ConversationCellDelegate? {
-        get { return delegateGetter() }
-        set { delegateSetter(newValue) }
+        get { return _delegate.getter() }
+        set { _delegate.setter(newValue) }
     }
 
     @objc var message: ZMConversationMessage? {
-        get { return messageGetter() }
-        set { messageSetter(newValue) }
+        get { return _message.getter() }
+        set { _message.setter(newValue) }
+    }
+
+    @objc var actionController: ConversationCellActionController? {
+        get { return _actionController.getter() }
+        set { _actionController.setter(newValue) }
     }
 
     @objc(registerInTableView:)

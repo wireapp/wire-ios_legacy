@@ -105,10 +105,15 @@ class ConversationRenamedSystemMessageCellDescription: ConversationMessageCellDe
     let configuration: View.Configuration
 
     var message: ZMConversationMessage?
-    weak var delegate: ConversationCellDelegate?
+    weak var delegate: ConversationCellDelegate? 
+    weak var actionController: ConversationCellActionController?
 
     var isFullWidth: Bool {
         return true
+    }
+
+    var supportsActions: Bool {
+        return false
     }
 
     init(message: ZMConversationMessage, data: ZMSystemMessageData, sender: ZMUser, newName: String) {
@@ -120,6 +125,7 @@ class ConversationRenamedSystemMessageCellDescription: ConversationMessageCellDe
 
         let conversationName = NSAttributedString(string: newName, attributes: [.font: UIFont.normalSemiboldFont, .foregroundColor: UIColor.textForeground])
         configuration = View.Configuration(attributedText: title, newConversationName: conversationName)
+        actionController = nil
     }
 
 }
@@ -129,10 +135,15 @@ class ConversationCallSystemMessageCellDescription: ConversationMessageCellDescr
     let configuration: View.Configuration
 
     var message: ZMConversationMessage?
-    weak var delegate: ConversationCellDelegate?
+    weak var delegate: ConversationCellDelegate? 
+    weak var actionController: ConversationCellActionController?
 
     var isFullWidth: Bool {
         return true
+    }
+
+    var supportsActions: Bool {
+        return false
     }
 
     init(message: ZMConversationMessage, data: ZMSystemMessageData, missed: Bool) {
@@ -147,6 +158,7 @@ class ConversationCallSystemMessageCellDescription: ConversationMessageCellDescr
         )
 
         configuration = View.Configuration(icon: viewModel.image(), attributedText: viewModel.attributedTitle(), showLine: false)
+        actionController = nil
     }
 }
 
@@ -155,10 +167,15 @@ class ConversationMessageTimerCellDescription: ConversationMessageCellDescriptio
     let configuration: View.Configuration
 
     var message: ZMConversationMessage?
-    weak var delegate: ConversationCellDelegate?
+    weak var delegate: ConversationCellDelegate? 
+    weak var actionController: ConversationCellActionController?
 
     var isFullWidth: Bool {
         return true
+    }
+
+    var supportsActions: Bool {
+        return false
     }
 
     init(message: ZMConversationMessage, data: ZMSystemMessageData, timer: NSNumber, sender: ZMUser) {
@@ -181,6 +198,7 @@ class ConversationMessageTimerCellDescription: ConversationMessageCellDescriptio
 
         let icon = UIImage(for: .hourglass, fontSize: 16, color: UIColor(scheme: .textDimmed))
         configuration = View.Configuration(icon: icon, attributedText: updateText, showLine: false)
+        actionController = nil
     }
 
 }
@@ -195,10 +213,15 @@ class ConversationVeritfiedSystemMessageSectionDescription: ConversationMessageC
     let configuration: View.Configuration
 
     var message: ZMConversationMessage?
-    weak var delegate: ConversationCellDelegate?
+    weak var delegate: ConversationCellDelegate? 
+    weak var actionController: ConversationCellActionController?
 
     var isFullWidth: Bool {
         return true
+    }
+
+    var supportsActions: Bool {
+        return false
     }
 
     init() {
@@ -208,6 +231,7 @@ class ConversationVeritfiedSystemMessageSectionDescription: ConversationMessageC
         )
 
         configuration = View.Configuration(icon: WireStyleKit.imageOfShieldverified, attributedText: title, showLine: true)
+        actionController = nil
     }
 }
 
@@ -220,9 +244,14 @@ class ConversationCannotDecryptSystemMessageCellDescription: ConversationMessage
 
     var message: ZMConversationMessage?
     weak var delegate: ConversationCellDelegate?
+    weak var actionController: ConversationCellActionController?
 
     var isFullWidth: Bool {
         return true
+    }
+
+    var supportsActions: Bool {
+        return false
     }
 
     init(message: ZMConversationMessage, data: ZMSystemMessageData, sender: ZMUser, remoteIdentityChanged: Bool) {
@@ -240,6 +269,7 @@ class ConversationCannotDecryptSystemMessageCellDescription: ConversationMessage
             )
 
         configuration = View.Configuration(icon: icon, attributedText: title, showLine: false, url: link)
+        actionController = nil
     }
 
     // MARK: - Localization

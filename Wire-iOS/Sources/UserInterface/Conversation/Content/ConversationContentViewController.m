@@ -154,6 +154,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     [[ConversationMessageWindowTableViewAdapter alloc] initWithTableView:self.tableView
                                                            messageWindow:self.messageWindow];
     self.conversationMessageWindowTableViewAdapter.conversationCellDelegate = self;
+    self.conversationMessageWindowTableViewAdapter.messageActionResponder = self;
     
     self.messageWindowObserverToken = [MessageWindowChangeInfo addObserver:self forWindow:self.messageWindow];
     

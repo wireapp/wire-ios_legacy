@@ -52,14 +52,20 @@ class ConversationSoundCloudCellDescription<Player: PlayerViewControllerProtocol
     typealias View = ConversationSoundCloudAttachmentCell<Player>
     let configuration: View.Configuration
 
-    var message: ZMConversationMessage?
+    weak var message: ZMConversationMessage?
     weak var delegate: ConversationCellDelegate?
+    weak var actionController: ConversationCellActionController?
 
     var isFullWidth: Bool {
         return true
     }
 
+    var supportsActions: Bool {
+        return true
+    }
+
     init(message: ZMConversationMessage, attachment: LinkAttachment) {
         self.configuration = View.Configuration(attachment: attachment, message: message)
+        actionController = nil
     }
 }

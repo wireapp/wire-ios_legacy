@@ -18,88 +18,57 @@
 
 import UIKit
 
-class ConversationCellActionController: NSObject {
+@objc class ConversationCellActionController: NSObject {
 
-    let message: ZMConversationMessage!
+    let message: ZMConversationMessage
     weak var responder: MessageActionResponder?
 
-    init(message: ZMConversationMessage, responder: MessageActionResponder) {
-        self.message = message
+    @objc init(responder: MessageActionResponder?, message: ZMConversationMessage) {
         self.responder = responder
+        self.message = message
+    }
+
+    // MARK: - Rules
+
+    private let replyPredicate: (ZMConversationMessage) -> Bool = { message in
+        return !message.isSystem && !message.isKnock
     }
 
     // MARK: - List of Actions
 
-    func canPerformAction(selector: Selector) -> Bool {
-        return false
-    }
+    static let allMessageActions: [UIMenuItem] = [
+        UIMenuItem(title: "Reply", action: #selector(ConversationCellActionController.replyToMessage))
+    ]
 
-    func actions() -> [MessageAction] {
-        return []
+    func canPerformAction(_ selector: Selector) -> Bool {
+        switch selector {
+        case #selector(UIResponder.copy(_:)):
+            return !message.isEphemeral
+        case #selector(UIResponder.delete(_:)):
+            return message.canBeDeleted
+        case #selector(ConversationCellActionController.replyToMessage):
+            return message.canBeQuoted
+        default:
+            return false
+        }
     }
 
     // MARK: - Handler
 
-}
-
-private let MessageActionCancelName = "MessageActionCancel"
-private let MessageActionResendName = "MessageActionResend"
-private let MessageActionDeleteName = "MessageActionDelete"
-private let MessageActionPresentName = "MessageActionPresent"
-private let MessageActionSaveName = "MessageActionSave"
-private let MessageActionCopyName = "MessageActionCopy"
-private let MessageActionEditName = "MessageActionEdit"
-private let MessageActionSketchDrawName = "MessageActionSketchDraw"
-private let MessageActionSketchEmojiName = "MessageActionSketchEmoji"
-private let MessageActionSketchText = "MessageActionSketchText"
-private let MessageActionLikeName = "MessageActionLike"
-private let MessageActionForwardName = "MessageActionForward"
-private let MessageActionShowInConversationName = "MessageActionShowInConversation"
-private let MessageActionDownloadName = "MessageActionDownload"
-private let MessageActionReplyName = "MessageActionReply"
-
-
-extension MessageAction {
-
-    init?(name: String) {
-        switch name {
-        case MessageActionCancelName: self = .cancel
-        case MessageActionResendName: self = .resend
-        case MessageActionDeleteName: self = .delete
-        case MessageActionPresentName: self = .present
-        case MessageActionSaveName: self = .save
-        case MessageActionCopyName: self = .copy
-        case MessageActionEditName: self = .edit
-        case MessageActionSketchDrawName: self = .sketchDraw
-        case MessageActionSketchEmojiName: self = .sketchEmoji
-        case MessageActionSketchText: self = .sketchText
-        case MessageActionLikeName: self = .like
-        case MessageActionForwardName: self = .forward
-        case MessageActionShowInConversationName: self = .showInConversation
-        case MessageActionDownloadName: self = .download
-        case MessageActionReplyName: self = .reply
-        default: return nil
-        }
+    @objc func copyMessage() {
+        responder?.wants(toPerform: .reply, for: message)
     }
 
-    var name: String {
-        switch self {
-        case .cancel: return MessageActionCancelName
-        case .resend: return MessageActionResendName
-        case .delete: return MessageActionDeleteName
-        case .present: return MessageActionPresentName
-        case .save: return MessageActionSaveName
-        case .copy: return MessageActionCopyName
-        case .edit: return MessageActionEditName
-        case .sketchDraw: return MessageActionSketchDrawName
-        case .sketchEmoji: return MessageActionSketchEmojiName
-        case .sketchText: return MessageActionSketchText
-        case .like: return MessageActionLikeName
-        case .forward: return MessageActionForwardName
-        case .showInConversation: return MessageActionShowInConversationName
-        case .download: return MessageActionDownloadName
-        case .reply: return MessageActionReplyName
-        }
+    @objc func deleteMessage() {
+        responder?.wants(toPerform: .delete, for: message)
+    }
+
+    @objc func likeMessage() {
+        responder?.wants(toPerform: .like, for: message)
+    }
+
+    @objc func replyToMessage() {
+        responder?.wants(toPerform: .reply, for: message)
     }
 
 }

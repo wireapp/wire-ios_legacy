@@ -162,10 +162,15 @@ class ConversationLocationMessageCellDescription: ConversationMessageCellDescrip
     let configuration: View.Configuration
 
     var message: ZMConversationMessage?
-    weak var delegate: ConversationCellDelegate?
+    weak var delegate: ConversationCellDelegate?     
+    weak var actionController: ConversationCellActionController?
 
     var isFullWidth: Bool {
         return false
+    }
+
+    var supportsActions: Bool {
+        return true
     }
 
     init(message: ZMConversationMessage, location: ZMLocationMessageData) {

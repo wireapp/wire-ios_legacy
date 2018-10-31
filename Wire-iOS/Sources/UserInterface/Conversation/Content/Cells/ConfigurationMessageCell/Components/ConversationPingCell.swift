@@ -37,10 +37,15 @@ class ConversationPingCellDescription: ConversationMessageCellDescription {
     typealias View = ConversationPingCell
     let configuration: ConversationPingCell.Configuration
 
-    var message: ZMConversationMessage?
-    weak var delegate: ConversationCellDelegate?
+    weak var message: ZMConversationMessage?
+    weak var delegate: ConversationCellDelegate? 
+    weak var actionController: ConversationCellActionController?
 
     var isFullWidth: Bool {
+        return true
+    }
+
+    var supportsActions: Bool {
         return true
     }
 
@@ -53,6 +58,7 @@ class ConversationPingCellDescription: ConversationMessageCellDescription {
 
         let pingColor: UIColor = message.isObfuscated ? .accentDimmedFlat : sender.accentColor
         self.configuration = View.Configuration(pingColor: pingColor, pingText: text)
+        actionController = nil
     }
 
 }

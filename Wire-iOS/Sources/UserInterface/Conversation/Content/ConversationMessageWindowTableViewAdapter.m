@@ -43,6 +43,7 @@
         self.messageWindowObserverToken = [MessageWindowChangeInfo addObserver:self forWindow:self.messageWindow];
         self.firstUnreadMessage = self.messageWindow.conversation.firstUnreadMessage;
         self.sectionControllers = [[NSCache alloc] init];
+        self.actionControllers = [[NSCache alloc] init];
         
         [self registerTableCellClasses];
     }
@@ -120,6 +121,7 @@
     sectionController.useInvertedIndices = YES;
     sectionController.delegate = self.conversationCellDelegate;
     sectionController.message = message;
+    sectionController.actionController = [self actionControllerForMessage:message];
 
     [self.sectionControllers setObject:sectionController forKey:message];
 
@@ -128,6 +130,20 @@
     }
 
     return sectionController;
+}
+
+- (ConversationCellActionController *)actionControllerForMessage:(id<ZMConversationMessage>)message
+{
+    ConversationCellActionController *cachedEntry = [self.actionControllers objectForKey:message];
+
+    if (cachedEntry) {
+        return cachedEntry;
+    }
+
+    ConversationCellActionController *actionController = [[ConversationCellActionController alloc] initWithResponder:self.messageActionResponder message:message];
+    [self.actionControllers setObject:actionController forKey:message];
+
+    return actionController;
 }
 
 - (void)registerCellIfNeeded:(AnyConversationMessageCellDescription *)cellDescription inTableView:(UITableView *)tableView

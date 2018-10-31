@@ -67,19 +67,14 @@ class ConversationTextMessageCell: UIView, ConversationMessageCell {
 
 }
 
-class ConversationTextMessageCellDescription: ConversationMessageCellDescription {
-    typealias View = ConversationTextMessageCell
-    let configuration: View.Configuration
-
-    var message: ZMConversationMessage?
-    weak var delegate: ConversationCellDelegate?
-
-    var isFullWidth: Bool {
-        return false
-    }
+class ConversationTextMessageCellDescription: BaseConversationMessageCellDescription<ConversationTextMessageCell> {
 
     init(attributedString: NSAttributedString) {
-        self.configuration = View.Configuration(attributedText: attributedString)
+        super.init(
+            configuration: View.Configuration(attributedText: attributedString),
+            isFullWidth: false,
+            supportsActions: true
+        )
     }
 
 }

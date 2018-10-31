@@ -17,5 +17,12 @@
 //
 
 import Foundation
-import TTTAttributedLabel
 
+extension ZMConversationMessage {
+
+    /// Whether the message can be quoted.
+    var canBeQuoted: Bool {
+        return !isSystem && !isKnock && !isEphemeral
+    }
+
+}

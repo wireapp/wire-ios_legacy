@@ -16,45 +16,20 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import UIKit
+import Foundation
 
-class ConversationYouTubeAttachmentCell: ViewControllerBasedCell<MediaPreviewViewController>, ConversationMessageCell {
-
-    struct Configuration {
-        let attachment: LinkAttachment
-    }
-
-    // MARK: - Initialization
-
-    convenience init() {
-        self.init(viewController: MediaPreviewViewController())
-    }
-
-    func configure(with object: Configuration) {
-        viewController.linkAttachment = object.attachment
-        viewController.fetchAttachment()
-    }
-
-}
-
-class ConversationYouTubeAttachmentCellDescription: ConversationMessageCellDescription {
-    typealias View = ConversationYouTubeAttachmentCell
+class BaseConversationMessageCellDescription<View: ConversationMessageCell & UIView>: ConversationMessageCellDescription {
     let configuration: View.Configuration
+    let isFullWidth: Bool
+    let supportsActions: Bool
 
     weak var message: ZMConversationMessage?
     weak var delegate: ConversationCellDelegate?
     weak var actionController: ConversationCellActionController?
 
-    var isFullWidth: Bool {
-        return false
-    }
-
-    var supportsActions: Bool {
-        return true
-    }
-
-    init(attachment: LinkAttachment) {
-        configuration = View.Configuration(attachment: attachment)
-        actionController = nil
+    init(configuration: View.Configuration, isFullWidth: Bool, supportsActions: Bool) {
+        self.configuration = configuration
+        self.isFullWidth = isFullWidth
+        self.supportsActions = supportsActions
     }
 }

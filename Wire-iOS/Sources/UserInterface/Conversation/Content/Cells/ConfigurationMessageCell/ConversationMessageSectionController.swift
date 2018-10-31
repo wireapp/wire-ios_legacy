@@ -74,6 +74,7 @@ import Foundation
         let description = cellDescription(at: indexPath.row)
         description.delegate = self.delegate
         description.message = self.message
+        description.actionController = self.actionController
 
         let cell = description.makeCell(for: tableView, at: indexPath)
         return cell

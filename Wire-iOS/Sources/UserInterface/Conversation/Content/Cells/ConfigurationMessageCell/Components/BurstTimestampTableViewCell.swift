@@ -28,15 +28,21 @@ class BurstTimestampSenderMessageCellDescription: ConversationMessageCellDescrip
     typealias View = BurstTimestampSenderMessageCell
     let configuration: View.Configuration
 
-    var message: ZMConversationMessage?
+    weak var message: ZMConversationMessage?
     weak var delegate: ConversationCellDelegate?
+    weak var actionController: ConversationCellActionController?
 
     var isFullWidth: Bool {
         return true
     }
 
+    var supportsActions: Bool {
+        return false
+    }
+
     init(message: ZMConversationMessage, context: ConversationMessageContext) {
         self.configuration = View.Configuration(date: message.serverTimestamp ?? Date(), includeDayOfWeek: context.isFirstMessageOfTheDay, showUnreadDot: context.isFirstUnreadMessage)
+        actionController = nil
     }
 
     init(configuration: View.Configuration) {

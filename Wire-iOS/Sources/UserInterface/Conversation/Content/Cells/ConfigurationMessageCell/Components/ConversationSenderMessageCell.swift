@@ -88,12 +88,18 @@ class ConversationSenderMessageCellDescription: ConversationMessageCellDescripti
 
     var message: ZMConversationMessage?
     weak var delegate: ConversationCellDelegate?
+    weak var actionController: ConversationCellActionController?
 
     var isFullWidth: Bool {
         return true
     }
 
+    var supportsActions: Bool {
+        return false
+    }
+
     init(sender: UserType, showTrash: Bool) {
         self.configuration = View.Configuration(user: sender, showTrash: showTrash)
+        actionController = nil
     }
 }
