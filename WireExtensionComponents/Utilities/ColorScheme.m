@@ -83,6 +83,9 @@ NSString * const ColorSchemeColorTokenFieldTextPlaceHolder = @"token-field-text-
 
 NSString * const ColorSchemeColorSelfMentionHighlight = @"self-mention-highlight";
 
+NSString * const ColorSchemeColorReplyLeftBar = @"reply-left-bar";
+NSString * const ColorSchemeColorReplyBorder = @"reply-border";
+
 /// Generates the key name for the accent color that can be used to display the username.
 static NSString * ColorSchemeNameAccentColorForColor(ZMAccentColor color);
 
@@ -287,7 +290,9 @@ static NSString* light(NSString *colorString) {
                                    ColorSchemeColorCellSeparator: graphiteAlpha8,
                                    ColorSchemeColorSearchBarBackground: white,
                                    ColorSchemeColorIconGuest: [backgroundGraphite colorWithAlphaComponent:0.4],
-                                   ColorSchemeColorSelfMentionHighlight: [amber colorWithAlphaComponent:0.48]
+                                   ColorSchemeColorSelfMentionHighlight: [amber colorWithAlphaComponent:0.48],
+                                   ColorSchemeColorReplyLeftBar: [UIColor colorWithWhite:207.0/255.0 alpha:1],
+                                   ColorSchemeColorReplyBorder: [UIColor colorWithWhite:233.0/255.0 alpha:1]
                                    }];
     
     for (ZMAccentColor color = ZMAccentColorMin; color <= ZMAccentColorMax; color++) {
@@ -339,7 +344,9 @@ static NSString* light(NSString *colorString) {
                                   ColorSchemeColorCellSeparator: whiteAlpha8,
                                   ColorSchemeColorSearchBarBackground: whiteAlpha8,
                                   ColorSchemeColorIconGuest: [UIColor colorWithWhite:1.0 alpha:0.64],
-                                  ColorSchemeColorSelfMentionHighlight: [amber colorWithAlphaComponent:0.8]
+                                  ColorSchemeColorSelfMentionHighlight: [amber colorWithAlphaComponent:0.8],
+                                  ColorSchemeColorReplyLeftBar: [UIColor colorWithWhite:150.0/255.0 alpha:1],
+                                  ColorSchemeColorReplyBorder: [UIColor colorWithWhite:114.0/255.0 alpha:1]
                                   }];
 
     for (ZMAccentColor color = ZMAccentColorMin; color <= ZMAccentColorMax; color++) {

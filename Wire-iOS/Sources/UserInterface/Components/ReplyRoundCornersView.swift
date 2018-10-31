@@ -29,16 +29,13 @@ final class ReplyRoundCornersView: UIView {
         setupConstraints()
     }
     
-    static private let borderColor = UIColor(white: 233.0/255.0, alpha: 1.0)
-    static private let leftBarColor = UIColor(white: 207.0/255.0, alpha: 1.0)
-    
     private func setupSubviews() {
         layer.cornerRadius = 8
         layer.borderWidth = 1
-        layer.borderColor = ReplyRoundCornersView.borderColor.cgColor
+        layer.borderColor = UIColor.init(scheme: .replyBorder).cgColor
         layer.masksToBounds = true
         
-        grayBoxView.backgroundColor = ReplyRoundCornersView.leftBarColor
+        grayBoxView.backgroundColor = UIColor.init(scheme: .replyLeftBar)
         
         containedView.translatesAutoresizingMaskIntoConstraints = false
         grayBoxView.translatesAutoresizingMaskIntoConstraints = false
