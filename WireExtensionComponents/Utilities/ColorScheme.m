@@ -243,7 +243,7 @@
 //    UIColor *lightGraphiteAlpha48 = [UIColor wr_colorFromString:@"rgb(141, 152, 159, 0.48)"];
 //    UIColor *lightGraphiteAlpha64 = [UIColor wr_colorFromString:@"rgb(141, 152, 159, 0.64)"];
 //    UIColor *amber = [UIColor wr_colorFromString:@"rgb(254, 191, 2)"];
-//
+
 //    NSMutableDictionary *lightColors = [NSMutableDictionary dictionaryWithDictionary:
 //                                @{ ColorSchemeColorTextForeground: graphite,
 //                                   ColorSchemeColorTextBackground: white,
@@ -290,7 +290,7 @@
 //                                   ColorSchemeColorIconGuest: [backgroundGraphite colorWithAlphaComponent:0.4],
 //                                   ColorSchemeColorSelfMentionHighlight: [amber colorWithAlphaComponent:0.48]
 //                                   }];
-//
+
 //    for (ZMAccentColor color = ZMAccentColorMin; color <= ZMAccentColorMax; color++) {
 //        UIColor *nameAccentColor = [UIColor nameColorForZMAccentColor:color variant:ColorSchemeVariantLight];
 //        [lightColors setObject:nameAccentColor forKey:ColorSchemeNameAccentColorForColor(color)];
@@ -348,8 +348,8 @@
 //        [darkColors setObject:nameAccentColor forKey:ColorSchemeNameAccentColorForColor(color)];
 //    }
 
-    NSMutableDictionary *colors = [NSMutableDictionary dictionary];
-    
+//    NSMutableDictionary *colors =
+
 //    [lightColors enumerateKeysAndObjectsUsingBlock:^(NSString *colorKey, UIColor *color, BOOL *stop) {
 //        [colors setObject:color forKey:light(colorKey)];
 //    }];
@@ -364,7 +364,7 @@
 //        [colors addEntriesFromDictionary:darkColors];
 //    }
 
-    return colors;
+    return [NSMutableDictionary dictionary];;
 }
 
 - (BOOL)brightColor:(UIColor *)color

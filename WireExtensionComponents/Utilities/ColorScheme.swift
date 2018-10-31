@@ -19,9 +19,43 @@
 import Foundation
 import UIKit
 
-enum Colours {
+extension UIColor {
     static var graphite: UIColor = UIColor.wr_color(from: "rgb(51, 55, 58)")
+    static var graphiteAlpha8: UIColor = UIColor.wr_color(from: "rgb(51, 55, 58, 0.08)")
+    static var graphiteAlpha16: UIColor = UIColor.wr_color(from: "rgb(51, 55, 58, 0.16)")
+    static var graphiteAlpha40: UIColor = UIColor.wr_color(from: "rgb(51, 55, 58, 0.4)")
+
+    static var backgroundLightGraphite: UIColor = UIColor.wr_color(from: "rgb(30, 32, 33)")
+
     static var lightGraphite: UIColor = UIColor.wr_color(from: "rgb(141, 152, 159)")
+    static var lightGraphiteAlpha8: UIColor = UIColor.wr_color(from: "rgb(141, 152, 159, 0.08)")
+    static var lightGraphiteAlpha24: UIColor = UIColor.wr_color(from: "rgb(141, 152, 159, 0.24)")
+    static var lightGraphiteAlpha48: UIColor = UIColor.wr_color(from: "rgb(141, 152, 159, 0.48)")
+    static var lightGraphiteAlpha64: UIColor = UIColor.wr_color(from: "rgb(141, 152, 159, 0.64)")
+
+    static var backgroundGraphite: UIColor = UIColor.wr_color(from: "rgb(22, 24, 25)")
+    static var backgroundGraphiteAlpha40: UIColor = UIColor.wr_color(from: "rgb(22, 24, 25, 0.4)")
+
+    static var white97: UIColor = UIColor(white: 0.97, alpha: 1)
+    static var white98: UIColor = UIColor(white: 0.98, alpha: 1)
+
+    static var whiteAlpha8: UIColor = UIColor(white: 1.0, alpha: 0.08)
+    static var whiteAlpha16: UIColor = UIColor(white: 1.0, alpha: 0.16)
+    static var whiteAlpha24: UIColor = UIColor(white: 1.0, alpha: 0.24)
+    static var whiteAlpha40: UIColor = UIColor(white: 1.0, alpha: 0.4)
+    static var whiteAlpha56: UIColor = UIColor(white: 1.0, alpha: 0.56)
+    static var whiteAlpha64: UIColor = UIColor(white: 1.0, alpha: 0.56)
+    static var whiteAlpha80: UIColor = UIColor(white: 1.0, alpha: 0.8)
+
+    static var blackAlpha4: UIColor = UIColor(white: 0.0, alpha: 0.04)
+    static var blackAlpha8: UIColor = UIColor(white: 0.0, alpha: 0.08)
+    static var blackAlpha24: UIColor = UIColor(white: 0.0, alpha: 0.24)
+    static var blackAlpha48: UIColor = UIColor(white: 0.0, alpha: 0.48)
+    static var blackAlpha40: UIColor = UIColor(white: 0.0, alpha: 0.4)
+    static var blackAlpha80: UIColor = UIColor(white: 0.0, alpha: 0.8)
+
+    static var amberAlpha48: UIColor = UIColor.wr_color(from: "rgb(254, 191, 2, 0.8)")
+    static var amberAlpha80: UIColor = UIColor.wr_color(from: "rgb(254, 191, 2, 0.8)")
 }
 
 @objc public enum ColorSchemeColor: Int {
@@ -42,6 +76,7 @@ enum Colours {
     case popUpButtonOverlayShadow
 
     case buttonHighlighted
+    case buttonEmptyText
     case buttonFaded
 
     case tabNormal
@@ -65,8 +100,6 @@ enum Colours {
     case listAvatarInitials
     case audioButtonOverlay
 
-    case nameAccentPrefix
-
     case graphite
     case lightGraphite
 
@@ -81,29 +114,116 @@ enum Colours {
 
 extension UIColor {
     convenience public init(scheme: ColorSchemeColor) {
-        self.init(cgColor: scheme.colorPair.light.cgColor)
+        self.init(cgColor: ColorScheme.default.color(named: scheme).cgColor)
     }
 
     convenience public init(scheme: ColorSchemeColor, variant: ColorSchemeVariant) {
-        switch variant {
-        case .light:
-            self.init(cgColor: scheme.colorPair.light.cgColor)
-        case .dark:
-            self.init(cgColor: scheme.colorPair.dark.cgColor)
-        }
+        self.init(cgColor: ColorScheme.default.color(named: scheme, variant: variant).cgColor)
     }
 
 }
 
-extension ColorSchemeColor {
-    typealias ColourPair = (light: UIColor, dark: UIColor)
+struct ColourPair {
+    let light: UIColor
+    let dark: UIColor
+}
 
-    fileprivate var colorPair: ColourPair  {
+extension ColourPair {
+    init(both color: UIColor) {
+        self.init(light: color, dark: color)
+    }
+}
+
+extension ColorSchemeColor {
+
+    fileprivate func colorPair(accentColor: UIColor) -> ColourPair  {
         switch self {
         case .textForeground:
-            return (light: Colours.graphite, dark: Colours.lightGraphite)
-        default:
-            return (light: .black, dark: .white)
+            return ColourPair(light: .graphite, dark: .white)
+        case .textBackground:
+            return ColourPair(light: .white, dark: .backgroundGraphite)
+        case .textDimmed:
+            return ColourPair(both: .lightGraphite)
+        case .textPlaceholder:
+            return ColourPair(both: .lightGraphiteAlpha64)
+        case .separator:
+            return ColourPair(light: .lightGraphiteAlpha48, dark: .lightGraphiteAlpha24)
+        case .barBackground:
+            return ColourPair(light: .white, dark: .lightGraphite)
+        case .background:
+            return ColourPair(light: .white, dark: .backgroundGraphite)
+        case .contentBackground:
+            return ColourPair(light: .white97, dark: .backgroundGraphite)
+        case .iconNormal:
+            return ColourPair(light: .graphite, dark: .white)
+        case .iconSelected:
+            return ColourPair(light: .white, dark: .black)
+        case .iconHighlighted:
+            return ColourPair(both: .white)
+        case .iconShadow:
+            return ColourPair(light: .blackAlpha8, dark: .blackAlpha24)
+        case .iconHighlight:
+            return ColourPair(light: .white, dark: .whiteAlpha16)
+        case .iconBackgroundSelected:
+            return ColourPair(light: accentColor, dark: .white)
+        case .iconBackgroundSelectedNoAccent:
+            return ColourPair(light: .graphite, dark: .white)
+        case .popUpButtonOverlayShadow:
+            return ColourPair(light: .blackAlpha24, dark: .black)
+        case .buttonHighlighted:
+            return ColourPair(light: .whiteAlpha24, dark: .blackAlpha24)
+        case .buttonEmptyText:
+            return ColourPair(light: accentColor, dark: .white)
+        case .buttonFaded:
+            return ColourPair(light: .graphiteAlpha40, dark: .whiteAlpha40)
+        case .tabNormal:
+            return ColourPair(light: .blackAlpha48, dark: .whiteAlpha56)
+        case .tabSelected:
+            return ColourPair(light: .graphite, dark: .white)
+        case .tabHighlighted:
+            return ColourPair(light: .lightGraphite, dark: .lightGraphiteAlpha48)
+        case .backgroundOverlay:
+            return ColourPair(light: .blackAlpha24, dark: .blackAlpha48)
+        case .backgroundOverlayWithoutPicture:
+            return ColourPair(both: .blackAlpha80)
+        case .avatarBorder:
+            return ColourPair(light: .blackAlpha8, dark: .whiteAlpha16)
+        case .audioButtonOverlay:
+            return ColourPair(both: .lightGraphiteAlpha24)
+        case .placeholderBackground:
+            // TODO: blending
+            // Light                                    ColorSchemeColorPlaceholderBackground: [lightGraphiteAlpha8 removeAlphaByBlendingWithColor:white98],
+            // dark ColorSchemeColorPlaceholderBackground: [lightGraphiteAlpha8 removeAlphaByBlendingWithColor:backgroundGraphite],
+
+            return ColourPair(light: .lightGraphiteAlpha8, dark: .blackAlpha48)
+        case .loadingDotActive:
+            return ColourPair(light: .graphiteAlpha40, dark: .whiteAlpha40)
+        case .loadingDotInactive:
+            return ColourPair(light: .graphiteAlpha16, dark: .whiteAlpha16)
+        case .graphite:
+            return ColourPair(both: .graphite)
+        case .lightGraphite:
+            return ColourPair(both: .lightGraphite)
+        case .paleSeparator:
+            return ColourPair(both: .lightGraphiteAlpha24)
+        case .listAvatarInitials:
+            return ColourPair(both: .blackAlpha40)
+        case .sectionBackground:
+            return ColourPair(both: .clear)
+        case .sectionText:
+            return ColourPair(light: .blackAlpha40, dark: .whiteAlpha40)
+        case .tokenFieldBackground:
+            return ColourPair(light: .blackAlpha4, dark: .whiteAlpha16)
+        case .tokenFieldTextPlaceHolder:
+            return ColourPair(light: .lightGraphite, dark: .whiteAlpha40)
+        case .cellSeparator:
+            return ColourPair(light: .graphiteAlpha8, dark: .whiteAlpha8)
+        case .searchBarBackground:
+            return ColourPair(light: .white, dark: .whiteAlpha8)
+        case .iconGuest:
+            return ColourPair(light: .backgroundGraphiteAlpha40, dark: .whiteAlpha64)
+        case .selfMentionHighlight:
+            return ColourPair(light: .amberAlpha48, dark: .amberAlpha80)
         }
     }
 }
@@ -141,7 +261,7 @@ public extension ColorScheme {
 
     @objc(colorWithName:variant:)
     public func color(named: ColorSchemeColor, variant: ColorSchemeVariant) -> UIColor {
-        let colorPair = named.colorPair
+        let colorPair = named.colorPair(accentColor: .white)
         switch variant {
         case .dark:
             return colorPair.dark
