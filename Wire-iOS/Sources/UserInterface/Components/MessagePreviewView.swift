@@ -35,7 +35,7 @@ extension NSAttributedString {
                                         return
                                     }
                                     let newFont = oldFont.withSize(size)
-                                    copy.setAttributes([.font : newFont], range: range)
+                                    copy.addAttributes([.font : newFont], range: range)
         }
         
         return copy
@@ -114,7 +114,8 @@ final class MessageImagePreviewView: UIView {
         let allViews: [UIView] = [senderLabel, contentTextView, imagePreview]
         
         contentTextView.backgroundColor = .clear
-        
+        contentTextView.textColor = .textForeground
+
         senderLabel.font = .mediumSemiboldFont
         senderLabel.textColor = .textForeground
         
@@ -201,7 +202,8 @@ final class MessagePreviewView: UIView {
         let allViews: [UIView] = [senderLabel, contentTextView]
         
         contentTextView.backgroundColor = .clear
-        
+        contentTextView.textColor = .textForeground
+            
         senderLabel.font = .mediumSemiboldFont
         senderLabel.textColor = .textForeground
         
