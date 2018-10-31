@@ -19,6 +19,8 @@
 import UIKit
 import TTTAttributedLabel
 
+// MARK: - Cells
+
 class ConversationSystemMessageCell: ConversationIconBasedCell, ConversationMessageCell {
 
     struct Configuration {
@@ -65,7 +67,6 @@ class LinkConversationSystemMessageCell: ConversationIconBasedCell, Conversation
 
 }
 
-
 class ConversationRenamedSystemMessageCell: ConversationIconBasedCell, ConversationMessageCell {
 
     struct Configuration {
@@ -99,6 +100,87 @@ class ConversationRenamedSystemMessageCell: ConversationIconBasedCell, Conversat
     }
 
 }
+
+// MARK: - Factory
+
+class ConversationSystemMessageCellDescription {
+
+    static func cells(for message: ZMConversationMessage, layoutProperties: ConversationCellLayoutProperties) -> [AnyConversationMessageCellDescription] {
+        guard let systemMessageData = message.systemMessageData, let sender = message.sender else {
+            preconditionFailure("Invalid system message")
+        }
+
+        switch systemMessageData.systemMessageType {
+        case .connectionRequest, .connectionUpdate:
+            break // Deprecated
+
+        case .conversationNameChanged:
+            guard let newName = systemMessageData.text else {
+                fallthrough
+            }
+
+            let renamedCell = ConversationRenamedSystemMessageCellDescription(message: message, data: systemMessageData, sender: sender, newName: newName)
+            return [AnyConversationMessageCellDescription(renamedCell)]
+
+        case .missedCall:
+            let missedCallCell = ConversationCallSystemMessageCellDescription(message: message, data: systemMessageData, missed: true)
+            return [AnyConversationMessageCellDescription(missedCallCell)]
+
+        case .performedCall:
+            let callCell = ConversationCallSystemMessageCellDescription(message: message, data: systemMessageData, missed: false)
+            return [AnyConversationMessageCellDescription(callCell)]
+
+        case .messageDeletedForEveryone:
+            let senderCell = ConversationSenderMessageCellDescription(sender: sender, message: message)
+            return [AnyConversationMessageCellDescription(senderCell)]
+
+        case .messageTimerUpdate:
+            guard let timer = systemMessageData.messageTimer else {
+                fallthrough
+            }
+
+            let timerCell = ConversationMessageTimerCellDescription(message: message, data: systemMessageData, timer: timer, sender: sender)
+            return [AnyConversationMessageCellDescription(timerCell)]
+
+        case .conversationIsSecure:
+            let shieldCell = ConversationVerifiedSystemMessageSectionDescription()
+            return [AnyConversationMessageCellDescription(shieldCell)]
+
+        case .decryptionFailed:
+            let decryptionCell = ConversationCannotDecryptSystemMessageCellDescription(message: message, data: systemMessageData, sender: sender, remoteIdentityChanged: false)
+            return [AnyConversationMessageCellDescription(decryptionCell)]
+
+        case .decryptionFailed_RemoteIdentityChanged:
+            let decryptionCell = ConversationCannotDecryptSystemMessageCellDescription(message: message, data: systemMessageData, sender: sender, remoteIdentityChanged: true)
+            return [AnyConversationMessageCellDescription(decryptionCell)]
+
+        case .newClient, .usingNewDevice:
+            let newClientCell = ConversationLegacyCellDescription<ConversationNewDeviceCell>(message: message, layoutProperties: layoutProperties)
+            return [AnyConversationMessageCellDescription(newClientCell)]
+
+        case .ignoredClient:
+            let ignoredClientCell = ConversationLegacyCellDescription<ConversationIgnoredDeviceCell>(message: message, layoutProperties: layoutProperties)
+            return [AnyConversationMessageCellDescription(ignoredClientCell)]
+
+        case .potentialGap, .reactivatedDevice:
+            let missingMessagesCell = ConversationLegacyCellDescription<MissingMessagesCell>(message: message, layoutProperties: layoutProperties)
+            return [AnyConversationMessageCellDescription(missingMessagesCell)]
+
+        case .participantsAdded, .participantsRemoved, .newConversation, .teamMemberLeave:
+            let participantsCell = ConversationLegacyCellDescription<ParticipantsCell>(message: message, layoutProperties: layoutProperties)
+            return [AnyConversationMessageCellDescription(participantsCell)]
+
+        default:
+            let unknownMessage = UnknownMessageCellDescription()
+            return [AnyConversationMessageCellDescription(unknownMessage)]
+        }
+
+        return []
+    }
+
+}
+
+// MARK: - Descriptions
 
 class ConversationRenamedSystemMessageCellDescription: ConversationMessageCellDescription {
     typealias View = ConversationRenamedSystemMessageCell
@@ -208,7 +290,7 @@ public extension String {
     static let nonBreakingSpace = "\u{00A0}" // &#160;
 }
 
-class ConversationVeritfiedSystemMessageSectionDescription: ConversationMessageCellDescription {
+class ConversationVerifiedSystemMessageSectionDescription: ConversationMessageCellDescription {
     typealias View = ConversationSystemMessageCell
     let configuration: View.Configuration
 

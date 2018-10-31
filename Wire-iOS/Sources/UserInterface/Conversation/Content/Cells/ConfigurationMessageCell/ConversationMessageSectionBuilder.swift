@@ -49,7 +49,7 @@ class ConversationMessageSectionBuilder {
         // TODO: Reply
 
         // Content
-        addContent(in: section, for: message, context: context)
+        addContent(in: section, for: message, context: context, layoutProperties: layoutProperties)
 
         // Toolbox
         addToolbox(in: section, for: message)
@@ -133,7 +133,8 @@ class ConversationMessageSectionBuilder {
 
     private static func addContent(in section: ConversationMessageSectionController,
                                    for message: ZMConversationMessage,
-                                   context: ConversationMessageContext) {
+                                   context: ConversationMessageContext,
+                                   layoutProperties: ConversationCellLayoutProperties) {
 
         if message.isKnock {
             addPing(in: section, for: message)
@@ -142,7 +143,7 @@ class ConversationMessageSectionBuilder {
         } else if message.isLocation {
             addLocationMessage(in: section, for: message)
         } else if message.isSystem {
-            addSystemMessage(in: section, for: message)
+            addSystemMessage(in: section, for: message, layoutProperties: layoutProperties)
         } else {
             section.add(description: UnknownMessageCellDescription())
         }
@@ -159,58 +160,9 @@ class ConversationMessageSectionBuilder {
         section.add(description: pingCell)
     }
 
-    private static func addSystemMessage(in section: ConversationMessageSectionController, for message: ZMConversationMessage) {
-        guard let systemMessageData = message.systemMessageData, let sender = message.sender else {
-            return
-        }
-
-        switch systemMessageData.systemMessageType {
-        case .connectionRequest, .connectionUpdate:
-            break // Deprecated
-
-        case .conversationNameChanged:
-            guard let newName = systemMessageData.text else {
-                fallthrough
-            }
-
-            let renamedCell = ConversationRenamedSystemMessageCellDescription(message: message, data: systemMessageData, sender: sender, newName: newName)
-            section.add(description: renamedCell)
-
-        case .missedCall:
-            let missedCallCell = ConversationCallSystemMessageCellDescription(message: message, data: systemMessageData, missed: true)
-            section.add(description: missedCallCell)
-
-        case .performedCall:
-            let callCell = ConversationCallSystemMessageCellDescription(message: message, data: systemMessageData, missed: false)
-            section.add(description: callCell)
-
-        case .messageDeletedForEveryone:
-            let senderCell = ConversationSenderMessageCellDescription(sender: sender, message: message)
-            section.add(description: senderCell)
-
-        case .messageTimerUpdate:
-            guard let timer = systemMessageData.messageTimer else {
-                fallthrough
-            }
-
-            let timerCell = ConversationMessageTimerCellDescription(message: message, data: systemMessageData, timer: timer, sender: sender)
-            section.add(description: timerCell)
-
-        case .conversationIsSecure:
-            let shieldCell = ConversationVeritfiedSystemMessageSectionDescription()
-            section.add(description: shieldCell)
-
-        case .decryptionFailed:
-            let decryptionCell = ConversationCannotDecryptSystemMessageCellDescription(message: message, data: systemMessageData, sender: sender, remoteIdentityChanged: false)
-            section.add(description: decryptionCell)
-
-        case .decryptionFailed_RemoteIdentityChanged:
-            let decryptionCell = ConversationCannotDecryptSystemMessageCellDescription(message: message, data: systemMessageData, sender: sender, remoteIdentityChanged: true)
-            section.add(description: decryptionCell)
-
-        default:
-            section.add(description: UnknownMessageCellDescription())
-        }
+    private static func addSystemMessage(in section: ConversationMessageSectionController, for message: ZMConversationMessage, layoutProperties: ConversationCellLayoutProperties) {
+        let cells = ConversationSystemMessageCellDescription.cells(for: message, layoutProperties: layoutProperties)
+        section.cellDescriptions.append(contentsOf: cells)
     }
 
     private static func addTextMessageAndAttachments(in section: ConversationMessageSectionController, for message: ZMConversationMessage) {
