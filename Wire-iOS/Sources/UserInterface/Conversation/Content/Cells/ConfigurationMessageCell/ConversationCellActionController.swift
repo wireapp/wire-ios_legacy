@@ -56,7 +56,7 @@ import UIKit
     // MARK: - Handler
 
     @objc func copyMessage() {
-        responder?.wants(toPerform: .reply, for: message)
+        responder?.wants(toPerform: .copy, for: message)
     }
 
     @objc func deleteMessage() {

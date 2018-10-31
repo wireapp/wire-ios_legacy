@@ -338,7 +338,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
             case MessageActionCancel:
             {
                 [[ZMUserSession sharedSession] enqueueChanges:^{
-                    [cell.message.fileMessageData cancelTransfer];
+                    [message.fileMessageData cancelTransfer];
                 }];
             }
                 break;
@@ -346,7 +346,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
             case MessageActionResend:
             {
                 [[ZMUserSession sharedSession] enqueueChanges:^{
-                    [cell.message resend];
+                    [message resend];
                 }];
             }
                 break;
@@ -356,19 +356,19 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
                 assert([message canBeDeleted]);
                 
                 self.deletionDialogPresenter = [[DeletionDialogPresenter alloc] initWithSourceViewController:self.presentedViewController ?: self];
-                [self.deletionDialogPresenter presentDeletionAlertControllerForMessage:cell.message source:cell completion:^(BOOL deleted) {
+                [self.deletionDialogPresenter presentDeletionAlertControllerForMessage:message source:cell completion:^(BOOL deleted) {
                     if (self.presentedViewController && deleted) {
                         [self.presentedViewController dismissViewControllerAnimated:YES completion:nil];
                     }
                     if (!deleted) {
-                        cell.beingEdited = NO;
+                        // cell.beingEdited = NO;
                     }
                 }];
             }
                 break;
             case MessageActionPresent:
             {
-                self.conversationMessageWindowTableViewAdapter.selectedMessage = cell.message;
+                self.conversationMessageWindowTableViewAdapter.selectedMessage = message;
                 [self presentDetailsForMessageAtIndexPath:[self.tableView indexPathForCell:cell]];
             }
                 break;
@@ -377,7 +377,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
                 if ([Message isImageMessage:message]) {
                     [self saveImageFromMessage:message cell:(ImageMessageCell *)cell];
                 } else {
-                    self.conversationMessageWindowTableViewAdapter.selectedMessage = cell.message;
+                    self.conversationMessageWindowTableViewAdapter.selectedMessage = message;
                     
                     UIView *targetView = nil;
                     
@@ -400,18 +400,18 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
                 break;
             case MessageActionEdit:
             {
-                self.conversationMessageWindowTableViewAdapter.editingMessage = cell.message;
-                [self.delegate conversationContentViewController:self didTriggerEditingMessage:cell.message];
+                self.conversationMessageWindowTableViewAdapter.editingMessage = message;
+                [self.delegate conversationContentViewController:self didTriggerEditingMessage:message];
             }
                 break;
             case MessageActionSketchDraw:
             {
-                [self openSketchForMessage:cell.message inEditMode:CanvasViewControllerEditModeDraw];
+                [self openSketchForMessage:message inEditMode:CanvasViewControllerEditModeDraw];
             }
                 break;
             case MessageActionSketchEmoji:
             {
-                [self openSketchForMessage:cell.message inEditMode:CanvasViewControllerEditModeEmoji];
+                [self openSketchForMessage:message inEditMode:CanvasViewControllerEditModeEmoji];
             }
                 break;
             case MessageActionSketchText:
@@ -421,21 +421,21 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
                 break;
             case MessageActionLike:
             {
-                BOOL liked = ![Message isLikedMessage:cell.message];
+                BOOL liked = ![Message isLikedMessage:message];
                 
                 NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
                 
                 [[ZMUserSession sharedSession] enqueueChanges:^{
-                    [Message setLikedMessage:cell.message liked:liked];
+                    [Message setLikedMessage:message liked:liked];
                     
                     if (liked) {
                         // Deselect if necessary to show list of likers
-                        if (self.conversationMessageWindowTableViewAdapter.selectedMessage == cell.message) {
+                        if (self.conversationMessageWindowTableViewAdapter.selectedMessage == message) {
                             [self tableView:self.tableView willSelectRowAtIndexPath:indexPath];
                         }
                     } else {
                         // Select if necessary to prevent message from collapsing
-                        if (self.conversationMessageWindowTableViewAdapter.selectedMessage != cell.message && ![Message hasReactions:cell.message]) {
+                        if (self.conversationMessageWindowTableViewAdapter.selectedMessage != message && ![Message hasReactions:message]) {
                             [self tableView:self.tableView willSelectRowAtIndexPath:indexPath];
                             [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
                         }
@@ -445,7 +445,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
                 break;
             case MessageActionForward:
             {
-                [self showForwardForMessage:cell.message fromCell:cell];
+                [self showForwardForMessage:message fromCell:cell];
             }
                 break;
             case MessageActionShowInConversation:
@@ -455,15 +455,19 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
                 break;
             case MessageActionCopy:
             {
-                NSData *imageData = cell.message.imageMessageData.imageData;
-                [[UIPasteboard generalPasteboard] setMediaAsset:[[UIImage alloc] initWithData:imageData]];
+                if ([Message isTextMessage:message]) {
+                    [[UIPasteboard generalPasteboard] setString:message.textMessageData.messageText];
+                } else if ([Message isImageMessage:message]) {
+                    NSData *imageData = message.imageMessageData.imageData;
+                    [[UIPasteboard generalPasteboard] setMediaAsset:[[UIImage alloc] initWithData:imageData]];
+                }
             }
                 break;
             
             case MessageActionDownload:
             {
                 [ZMUserSession.sharedSession enqueueChanges:^{
-                    [cell.message.fileMessageData requestFileDownload];
+                    [message.fileMessageData requestFileDownload];
                 }];
             }
                 break;
