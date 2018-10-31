@@ -20,17 +20,6 @@ import XCTest
 @testable import Wire
 
 final class NSMutableAttributedStringReplaceEmojiTests: XCTestCase {
-    
-//
-//    override func setUp() {
-//        super.setUp()
-//        sut = NSAttrString_emojiTests()
-//    }
-//
-//    override func tearDown() {
-//        sut = nil
-//        super.tearDown()
-//    }
 
     func testThatReplaceEmojiCorrectlyWhenTheRangeIsOutOfBound() {
         // GIVEN
