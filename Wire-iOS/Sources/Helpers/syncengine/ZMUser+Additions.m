@@ -33,9 +33,7 @@ ZMUser *BareUserToUser(id bareUser) {
     return user;
 }
 
-
-
-@implementation ZMSearchUser (Additions)
+@implementation ZMSearchUser (AccentColorProvider)
 
 - (UIColor *)accentColor
 {
@@ -45,7 +43,14 @@ ZMUser *BareUserToUser(id bareUser) {
 @end
 
 
+@implementation ZMUser (AccentColorProvider)
 
+- (UIColor *)accentColor
+{
+    return [UIColor colorForZMAccentColor:self.accentColorValue];
+}
+
+@end
 
 @implementation ZMUser (Additions)
 
@@ -58,16 +63,10 @@ ZMUser *BareUserToUser(id bareUser) {
     }
 }
 
-- (UIColor *)accentColor
-{
-    return [UIColor colorForZMAccentColor:self.accentColorValue];
-}
-
 - (UIColor *)nameAccentColor
 {
     return [UIColor nameColorForZMAccentColor:self.accentColorValue variant:[[ColorScheme defaultColorScheme] variant]];
 }
-
 
 /**
  Return self's User object

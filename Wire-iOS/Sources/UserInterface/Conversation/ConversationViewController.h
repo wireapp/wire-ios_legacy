@@ -33,6 +33,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, getter=isFocused) BOOL focused;
 @property (nonatomic, readonly) ConversationCallController *startCallController;
 
+- (void)scrollToMessage:(id<ZMConversationMessage>)message;
+
 @end
 
 NS_ASSUME_NONNULL_END

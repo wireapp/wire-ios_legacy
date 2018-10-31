@@ -232,10 +232,10 @@ extension BaseAccountView: ZMUserObserver {
 @objcMembers public final class PersonalAccountView: BaseAccountView {
     internal let userImageView: AvatarImageView = {
         let avatarImageView = AvatarImageView(frame: .zero)
-        avatarImageView.containerView.backgroundColor = .backgroundLight
+        avatarImageView.container.backgroundColor = .backgroundLight
 
-        avatarImageView.initials.font = .smallSemiboldFont
-        avatarImageView.initials.textColor = .textForegroundLight
+        avatarImageView.initialsFont = .smallSemiboldFont
+        avatarImageView.initialsColor = .textForegroundLight
 
         return avatarImageView
     }()
@@ -283,11 +283,11 @@ extension BaseAccountView: ZMUserObserver {
         super.update()
         self.accessibilityValue = String(format: "conversation_list.header.self_team.accessibility_value".localized, self.account.userName) + " " + accessibilityState
         if let imageData = self.account.imageData {
-            userImageView.imageView.image = UIImage(data: imageData)
+            userImageView.avatar = UIImage(data: imageData).map(AvatarImageView.Avatar.image)
         }
         else {
             let personName = PersonName.person(withName: self.account.userName, schemeTagger: nil)
-            userImageView.initials.text = personName.initials
+            userImageView.avatar = .text(personName.initials)
         }
     }
 }

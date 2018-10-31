@@ -336,6 +336,11 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self updateLeftNavigationBarItems];
 }
 
+- (void)scrollToMessage:(id<ZMConversationMessage>)message
+{
+    [self.contentViewController scrollToMessage:message animated:YES];
+}
+
 #pragma mark - Device orientation
 
 - (BOOL)shouldAutorotate

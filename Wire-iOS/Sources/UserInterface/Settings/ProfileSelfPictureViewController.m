@@ -34,7 +34,6 @@
 #import "ImagePickerConfirmationController.h"
 #import "Analytics.h"
 #import "Constants.h"
-#import "UserImageView.h"
 #import "AppDelegate.h"
 
 #import "Wire-Swift.h"

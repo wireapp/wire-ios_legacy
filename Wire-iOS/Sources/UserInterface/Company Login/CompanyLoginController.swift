@@ -60,7 +60,7 @@ import Foundation
     private static let fallbackURLScheme = "wire-sso"
 
     // Whether performing a company login is supported on the current build.
-    @objc(companyLoginEnabled) static public let isCompanyLoginEnabled = DeveloperMenuState.developerMenuEnabled()
+    @objc(companyLoginEnabled) static public let isCompanyLoginEnabled = true
 
     private var token: Any?
     private var pollingTimer: Timer?
@@ -73,13 +73,12 @@ import Foundation
     /// Create a new `CompanyLoginController` instance using the standard detector and requester.
     @objc(initWithDefaultEnvironment) public convenience init?(withDefaultEnvironment: ()) {
         guard CompanyLoginController.isCompanyLoginEnabled else { return nil } // Disable on public builds
-
-        let environment = ZMBackendEnvironment(userDefaults: .standard)
+        
         let callbackScheme = wr_companyLoginURLScheme()
         requireInternal(nil != callbackScheme, "no valid callback scheme")
 
         let requester = CompanyLoginRequester(
-            backendHost: environment.backendURL.host!,
+            backendHost: BackendEnvironment.shared.backendURL.host!,
             callbackScheme: callbackScheme ?? CompanyLoginController.fallbackURLScheme
         )
         self.init(detector: .shared, requester: requester)

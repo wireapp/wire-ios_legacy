@@ -19,7 +19,6 @@
 
 #import "MentionsCollectionViewController.h"
 #import "WireSyncEngine+iOS.h"
-#import "UserImageView.h"
 #import "MentionsBubbleView.h"
 #import "MentionsCollectionViewCell.h"
 #import "MentionsCollectionView.h"
