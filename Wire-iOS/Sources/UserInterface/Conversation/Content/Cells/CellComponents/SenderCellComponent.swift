@@ -61,7 +61,7 @@ class SenderCellComponent: UIView {
         authorLabel.numberOfLines = 1
 
         avatar.userSession = ZMUserSession.shared()
-        avatar.initials.font = .avatarInitial
+        avatar.initialsFont = .avatarInitial
         avatar.size = .small
         avatar.translatesAutoresizingMaskIntoConstraints = false
         
