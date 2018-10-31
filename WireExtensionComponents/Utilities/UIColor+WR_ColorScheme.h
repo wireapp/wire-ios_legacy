@@ -23,8 +23,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface UIColor (WR_ColorScheme)
 
-+ (UIColor *)wr_colorFromColorScheme:(ColorSchemeColor)colorSchemeColor NS_SWIFT_NAME(init(scheme:));
-+ (UIColor *)wr_colorFromColorScheme:(ColorSchemeColor)colorSchemeColor variant:(enum ColorSchemeVariant)variant NS_SWIFT_NAME(init(scheme:variant:));
++ (UIColor *)wr_colorFromColorScheme:(NSInteger)colorSchemeColor;
++ (UIColor *)wr_colorFromColorScheme:(NSInteger)colorSchemeColor variant:(enum ColorSchemeVariant)variant;
 
 @end
 

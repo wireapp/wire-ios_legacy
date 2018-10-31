@@ -18,26 +18,18 @@
 
 #import "UIColor+WR_ColorScheme.h"
 #import "AccentColorProvider.h"
+#import <WireExtensionComponents/WireExtensionComponents-Swift.h>
 
 @implementation UIColor (WR_ColorScheme)
 
-+ (UIColor *)wr_colorFromColorScheme:(ColorSchemeColor)colorSchemeColor
++ (UIColor *)wr_colorFromColorScheme:(NSInteger)colorSchemeColor
 {
     return [[ColorScheme defaultColorScheme] colorWithName:colorSchemeColor];
 }
 
-+ (UIColor *)wr_colorFromColorScheme:(ColorSchemeColor)colorSchemeColor variant:(ColorSchemeVariant)variant
++ (UIColor *)wr_colorFromColorScheme:(NSInteger)colorSchemeColor variant:(ColorSchemeVariant)variant
 {
     return [[ColorScheme defaultColorScheme] colorWithName:colorSchemeColor variant:variant];
-}
-
-@end
-
-@implementation UIColor (DefaultAccentColor)
-
-+ (UIColor *)defaultAccentColor
-{
-    return [UIColor colorWithRed:0.141 green:0.552 blue:0.827 alpha:0.7];
 }
 
 @end

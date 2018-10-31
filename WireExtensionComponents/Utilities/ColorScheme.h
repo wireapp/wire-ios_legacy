@@ -21,60 +21,60 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-typedef NSString *const ColorSchemeColor NS_STRING_ENUM;
-
-extern ColorSchemeColor ColorSchemeColorTextForeground;
-extern ColorSchemeColor ColorSchemeColorTextBackground;
-extern ColorSchemeColor ColorSchemeColorTextDimmed;
-extern ColorSchemeColor ColorSchemeColorTextPlaceholder;
-
-extern ColorSchemeColor ColorSchemeColorIconNormal;
-extern ColorSchemeColor ColorSchemeColorIconSelected;
-extern ColorSchemeColor ColorSchemeColorIconHighlighted;
-extern ColorSchemeColor ColorSchemeColorIconBackgroundSelected;
-extern ColorSchemeColor ColorSchemeColorIconBackgroundSelectedNoAccent;
-extern ColorSchemeColor ColorSchemeColorIconShadow;
-extern ColorSchemeColor ColorSchemeColorIconHighlight;
-extern ColorSchemeColor ColorSchemeColorIconGuest;
-
-extern ColorSchemeColor ColorSchemeColorPopUpButtonOverlayShadow;
-
-extern ColorSchemeColor ColorSchemeColorButtonHighlighted;
-extern ColorSchemeColor ColorSchemeColorButtonFaded;
-
-extern ColorSchemeColor ColorSchemeColorTabNormal;
-extern ColorSchemeColor ColorSchemeColorTabSelected;
-extern ColorSchemeColor ColorSchemeColorTabHighlighted;
-
-extern ColorSchemeColor ColorSchemeColorBackground;
-extern ColorSchemeColor ColorSchemeColorContentBackground;
-extern ColorSchemeColor ColorSchemeColorBarBackground;
-extern ColorSchemeColor ColorSchemeColorSearchBarBackground;
-extern ColorSchemeColor ColorSchemeColorSeparator;
-extern ColorSchemeColor ColorSchemeColorCellSeparator;
-extern ColorSchemeColor ColorSchemeColorBackgroundOverlay;
-extern ColorSchemeColor ColorSchemeColorBackgroundOverlayWithoutPicture;
-extern ColorSchemeColor ColorSchemeColorPlaceholderBackground;
-extern ColorSchemeColor ColorSchemeColorAvatarBorder;
-extern ColorSchemeColor ColorSchemeColorLoadingDotActive;
-extern ColorSchemeColor ColorSchemeColorLoadingDotInactive;
-
-extern ColorSchemeColor ColorSchemeColorPaleSeparator;
-extern ColorSchemeColor ColorSchemeColorListAvatarInitials;
-extern ColorSchemeColor ColorSchemeColorAudioButtonOverlay;
-
-extern ColorSchemeColor ColorSchemeColorNameAccentPrefix;
-
-extern ColorSchemeColor ColorSchemeColorGraphite;
-extern ColorSchemeColor ColorSchemeColorLightGraphite;
-
-extern ColorSchemeColor ColorSchemeColorSectionBackground;
-extern ColorSchemeColor ColorSchemeColorSectionText;
-
-extern ColorSchemeColor ColorSchemeColorTokenFieldBackground;
-extern ColorSchemeColor ColorSchemeColorTokenFieldTextPlaceHolder;
-
-extern ColorSchemeColor ColorSchemeColorSelfMentionHighlight;
+//typedef NSString *const ColorSchemeColor NS_STRING_ENUM;
+//
+//extern ColorSchemeColor ColorSchemeColorTextForeground;
+//extern ColorSchemeColor ColorSchemeColorTextBackground;
+//extern ColorSchemeColor ColorSchemeColorTextDimmed;
+//extern ColorSchemeColor ColorSchemeColorTextPlaceholder;
+//
+//extern ColorSchemeColor ColorSchemeColorIconNormal;
+//extern ColorSchemeColor ColorSchemeColorIconSelected;
+//extern ColorSchemeColor ColorSchemeColorIconHighlighted;
+//extern ColorSchemeColor ColorSchemeColorIconBackgroundSelected;
+//extern ColorSchemeColor ColorSchemeColorIconBackgroundSelectedNoAccent;
+//extern ColorSchemeColor ColorSchemeColorIconShadow;
+//extern ColorSchemeColor ColorSchemeColorIconHighlight;
+//extern ColorSchemeColor ColorSchemeColorIconGuest;
+//
+//extern ColorSchemeColor ColorSchemeColorPopUpButtonOverlayShadow;
+//
+//extern ColorSchemeColor ColorSchemeColorButtonHighlighted;
+//extern ColorSchemeColor ColorSchemeColorButtonFaded;
+//
+//extern ColorSchemeColor ColorSchemeColorTabNormal;
+//extern ColorSchemeColor ColorSchemeColorTabSelected;
+//extern ColorSchemeColor ColorSchemeColorTabHighlighted;
+//
+//extern ColorSchemeColor ColorSchemeColorBackground;
+//extern ColorSchemeColor ColorSchemeColorContentBackground;
+//extern ColorSchemeColor ColorSchemeColorBarBackground;
+//extern ColorSchemeColor ColorSchemeColorSearchBarBackground;
+//extern ColorSchemeColor ColorSchemeColorSeparator;
+//extern ColorSchemeColor ColorSchemeColorCellSeparator;
+//extern ColorSchemeColor ColorSchemeColorBackgroundOverlay;
+//extern ColorSchemeColor ColorSchemeColorBackgroundOverlayWithoutPicture;
+//extern ColorSchemeColor ColorSchemeColorPlaceholderBackground;
+//extern ColorSchemeColor ColorSchemeColorAvatarBorder;
+//extern ColorSchemeColor ColorSchemeColorLoadingDotActive;
+//extern ColorSchemeColor ColorSchemeColorLoadingDotInactive;
+//
+//extern ColorSchemeColor ColorSchemeColorPaleSeparator;
+//extern ColorSchemeColor ColorSchemeColorListAvatarInitials;
+//extern ColorSchemeColor ColorSchemeColorAudioButtonOverlay;
+//
+//extern ColorSchemeColor ColorSchemeColorNameAccentPrefix;
+//
+//extern ColorSchemeColor ColorSchemeColorGraphite;
+//extern ColorSchemeColor ColorSchemeColorLightGraphite;
+//
+//extern ColorSchemeColor ColorSchemeColorSectionBackground;
+//extern ColorSchemeColor ColorSchemeColorSectionText;
+//
+//extern ColorSchemeColor ColorSchemeColorTokenFieldBackground;
+//extern ColorSchemeColor ColorSchemeColorTokenFieldTextPlaceHolder;
+//
+//extern ColorSchemeColor ColorSchemeColorSelfMentionHighlight;
 
 typedef NS_ENUM(NSUInteger, ColorSchemeVariant) {
     ColorSchemeVariantLight,
@@ -94,10 +94,10 @@ typedef NS_ENUM(NSUInteger, ColorSchemeVariant) {
 + (UIKeyboardAppearance)keyboardAppearanceForVariant:(ColorSchemeVariant)variant;
 + (UIBlurEffectStyle)blurEffectStyleForVariant:(ColorSchemeVariant)variant;
 
-- (UIColor *)colorWithName:(ColorSchemeColor)colorName NS_SWIFT_NAME(color(named:));
-- (UIColor *)colorWithName:(ColorSchemeColor)colorName variant:(ColorSchemeVariant)variant NS_SWIFT_NAME(color(named:variant:));
+//- (UIColor *)colorWithName:(ColorSchemeColor)colorName NS_SWIFT_NAME(color(named:));
+//- (UIColor *)colorWithName:(ColorSchemeColor)colorName variant:(ColorSchemeVariant)variant NS_SWIFT_NAME(color(named:variant:));
 
-- (UIColor *)nameAccentForColor:(ZMAccentColor)color variant:(ColorSchemeVariant)variant;
+//- (UIColor *)nameAccentForColor:(ZMAccentColor)color variant:(ColorSchemeVariant)variant;
 
 - (void)setAccentColor:(UIColor *)accentColor;
 - (BOOL)isCurrentAccentColor:(UIColor *)accentColor;

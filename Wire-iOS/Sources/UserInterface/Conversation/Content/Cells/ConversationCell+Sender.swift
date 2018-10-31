@@ -62,7 +62,7 @@ public extension ConversationCell {
             let name = attributedName(for: .botName, string: name)
             attributedString = name + "  ".attributedString + bot
         } else {
-            let accentColor = ColorScheme.default.nameAccent(for: sender.accentColorValue, variant: ColorScheme.default.variant)
+            let accentColor = ColorScheme.default.nameAccent(for: sender.accentColorValue, variant: .dark)
             attributedString = attributedName(for: .userName(accent: accentColor), string: name)
         }
 
@@ -71,6 +71,7 @@ public extension ConversationCell {
     }
 
     private func attributedName(for kind: TextKind, string: String) -> NSAttributedString {
+//        return NSAttributedString(string: string, attributes: [.foregroundColor : kind.color, .font : kind.font])
         return string.attributedString.addAttributes([.foregroundColor : kind.color, .font : kind.font], toSubstring: string)
     }
 }
