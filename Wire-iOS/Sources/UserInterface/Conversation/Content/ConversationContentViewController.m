@@ -460,6 +460,10 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
                 } else if ([Message isImageMessage:message]) {
                     NSData *imageData = message.imageMessageData.imageData;
                     [[UIPasteboard generalPasteboard] setMediaAsset:[[UIImage alloc] initWithData:imageData]];
+                } else if ([Message isLocationMessage:message]) {
+                    if (message.locationMessageData.name) {
+                        [[UIPasteboard generalPasteboard] setString:message.locationMessageData.name];
+                    }
                 }
             }
                 break;

@@ -43,7 +43,7 @@ import UIKit
     func canPerformAction(_ selector: Selector) -> Bool {
         switch selector {
         case #selector(UIResponder.copy(_:)):
-            return !message.isEphemeral
+            return message.canBeCopied
         case #selector(UIResponder.delete(_:)):
             return message.canBeDeleted
         case #selector(ConversationCellActionController.replyToMessage):

@@ -25,4 +25,9 @@ extension ZMConversationMessage {
         return !isSystem && !isKnock && !isEphemeral
     }
 
+    /// Whether the message can be copied.
+    var canBeCopied: Bool {
+        return !isEphemeral && (isText || isImage || isLocation)
+    }
+
 }
