@@ -210,7 +210,7 @@ extension UserSearchResultsViewController: UICollectionViewDataSource {
         // hightlight the lowest cell if keyboard is collapsed
         if isKeyboardCollapsed {
             if indexPath.item == searchResults.count - 1 {
-                cell.backgroundColor = .contentBackground
+                cell.backgroundColor = .contentBackground ///TODO: snapshot for dark mode
             } else {
                 cell.backgroundColor = .background
             }
