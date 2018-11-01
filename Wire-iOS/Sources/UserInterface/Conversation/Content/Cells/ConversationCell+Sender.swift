@@ -62,7 +62,7 @@ public extension ConversationCell {
             let name = attributedName(for: .botName, string: name)
             attributedString = name + "  ".attributedString + bot
         } else {
-            let accentColor = ColorScheme.default.nameAccent(for: sender.accentColorValue, variant: .dark)
+            let accentColor = ColorScheme.default.nameAccent(for: sender.accentColorValue, variant: ColorScheme.default.variant)
             attributedString = attributedName(for: .userName(accent: accentColor), string: name)
         }
 

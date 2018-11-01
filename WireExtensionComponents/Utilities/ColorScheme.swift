@@ -173,7 +173,7 @@ extension ColorSchemeColor {
         case .separator:
             return ColourPair(light: .lightGraphiteAlpha48, dark: .lightGraphiteAlpha24)
         case .barBackground:
-            return ColourPair(light: .white, dark: .lightGraphite)
+            return ColourPair(light: .white, dark: .backgroundLightGraphite)
         case .background:
             return ColourPair(light: .white, dark: .backgroundGraphite)
         case .contentBackground:
