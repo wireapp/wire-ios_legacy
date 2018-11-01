@@ -115,9 +115,9 @@ extension ZMSystemMessageData {
         statusLabel.lineBreakMode = NSLineBreakMode.byTruncatingMiddle
         statusLabel.numberOfLines = 0
         statusLabel.linkAttributes = [NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue as NSNumber,
-                                      NSAttributedString.Key.foregroundColor: UIColor(for: .vividRed)]
+                                      NSAttributedString.Key.foregroundColor: UIColor(for: .vividRed)!]
         statusLabel.activeLinkAttributes = [NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue as NSNumber,
-                                            NSAttributedString.Key.foregroundColor: UIColor(for: .vividRed).withAlphaComponent(0.5)]
+                                            NSAttributedString.Key.foregroundColor: UIColor(for: .vividRed)!.withAlphaComponent(0.5)]
         
         labelClipView.addSubview(statusLabel)
         

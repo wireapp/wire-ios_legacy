@@ -23,7 +23,7 @@ extension UIColor {
         static let backgroundDim        = UIColor.black.withAlphaComponent(0.6)
         static let contentBackground    = UIColor.white
         static let closeButton          = UIColor(rgb: 0xDAD9DF)
-        static let buttonHighlight      = UIColor(for: .strongBlue).withAlphaComponent(0.5)
+        static let buttonHighlight      = UIColor(for: .strongBlue)!.withAlphaComponent(0.5)
         static let title                = UIColor(rgb: 0x323639)
         static let question             = UIColor.CallQuality.title.withAlphaComponent(0.56)
         static let score                = UIColor(rgb: 0x272A2C)
