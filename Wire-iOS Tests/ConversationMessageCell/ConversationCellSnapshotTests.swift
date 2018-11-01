@@ -20,7 +20,8 @@ import XCTest
 @testable import Wire
 
 /**
- * A base test class for . Use tge
+ * A base test class for section-based messages. Use the section property to build
+ * your layout and call `verifySectionSnapshots` to record and verify the snapshot.
  */
 
 class ConversationCellSnapshotTests: CoreDataSnapshotTestCase {
