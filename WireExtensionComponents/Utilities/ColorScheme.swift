@@ -215,7 +215,7 @@ extension ColorSchemeColor {
         case .audioButtonOverlay:
             return ColourPair(both: .lightGraphiteAlpha24)
         case .placeholderBackground:
-            let light = UIColor.lightGraphite.removeAlphaByBlending(with: .white98)!
+            let light = UIColor.lightGraphiteAlpha8.removeAlphaByBlending(with: .white98)!
             let dark = UIColor.lightGraphiteAlpha8.removeAlphaByBlending(with: .backgroundGraphite)!
             return ColourPair(light: light, dark: dark)
         case .loadingDotActive:
