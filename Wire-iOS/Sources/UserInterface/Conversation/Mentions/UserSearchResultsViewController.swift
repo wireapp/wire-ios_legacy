@@ -33,6 +33,9 @@ import Cartography
 
 @objc protocol UserList {
     var users: [UserType] { get set }
+
+    func selectPreviousUser()
+    func selectNextUser()
 }
 
 class UserSearchResultsViewController: UIViewController, KeyboardCollapseObserver {
@@ -43,6 +46,7 @@ class UserSearchResultsViewController: UIViewController, KeyboardCollapseObserve
     private var collectionViewHeight: NSLayoutConstraint?
     private let rowHeight: CGFloat = 56.0
     private var isKeyboardCollapsedFirstCalled = true
+    private var collectionViewSelectedIndex: Int? = .none
     public private(set) var isKeyboardCollapsed: Bool = true {
         didSet {
             guard oldValue != isKeyboardCollapsed || isKeyboardCollapsedFirstCalled else { return }
@@ -70,6 +74,9 @@ class UserSearchResultsViewController: UIViewController, KeyboardCollapseObserve
         setupKeyboardObserver()
     }
 
+    override var canBecomeFirstResponder: Bool {
+        return true
+    }
 
     private func setupKeyboardObserver() {
         keyboardObserver = KeyboardBlockObserver { [weak self] info in
@@ -144,7 +151,7 @@ class UserSearchResultsViewController: UIViewController, KeyboardCollapseObserve
     }
     
     func show() {
-        self.view.isHidden = false
+        view.isHidden = false
     }
     
     @objc dynamic func keyboardWillChangeFrame(_ notification: Notification) {
@@ -168,10 +175,44 @@ class UserSearchResultsViewController: UIViewController, KeyboardCollapseObserve
 extension UserSearchResultsViewController: Dismissable {
     func dismiss() {
         self.view.isHidden = true
+        collectionViewSelectedIndex = .none
     }
 }
 
 extension UserSearchResultsViewController: UserList {
+    func clampCollectionViewSelectedIndex() {
+        guard var collectionViewSelectedIndex = self.collectionViewSelectedIndex else { return }
+        if collectionViewSelectedIndex >= searchResults.count {
+            collectionViewSelectedIndex = searchResults.count - 1
+        }
+
+        if collectionViewSelectedIndex < 0 {
+            collectionViewSelectedIndex = 0
+        }
+
+        self.collectionViewSelectedIndex = collectionViewSelectedIndex
+    }
+
+    func selectNextUser() {
+        guard let collectionViewSelectedIndex = collectionViewSelectedIndex else { return }
+
+        self.collectionViewSelectedIndex = collectionViewSelectedIndex + 1
+
+        clampCollectionViewSelectedIndex()
+
+        collectionView.reloadData()
+    }
+
+    func selectPreviousUser() {
+        guard let collectionViewSelectedIndex = collectionViewSelectedIndex else { return }
+
+        self.collectionViewSelectedIndex = collectionViewSelectedIndex - 1
+
+        clampCollectionViewSelectedIndex()
+
+        collectionView.reloadData()
+    }
+
     var users: [UserType] {
         set {
             reloadTable(with: newValue.reversed())
@@ -210,7 +251,12 @@ extension UserSearchResultsViewController: UICollectionViewDataSource {
 
         // hightlight the lowest cell if keyboard is collapsed
         if isKeyboardCollapsed || UIDevice.current.userInterfaceIdiom == .pad {
-            if indexPath.item == searchResults.count - 1 {
+
+            if collectionViewSelectedIndex == nil {
+                collectionViewSelectedIndex = searchResults.count - 1
+            }
+
+            if indexPath.item == collectionViewSelectedIndex {
                 cell.backgroundColor = .cellHighlight
             } else {
                 cell.backgroundColor = .background

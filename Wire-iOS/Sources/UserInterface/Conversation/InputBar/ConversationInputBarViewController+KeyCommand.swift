@@ -25,9 +25,6 @@ extension ConversationInputBarViewController {
 
         commands.append(UIKeyCommand(input: "\r", modifierFlags: .command, action: #selector(commandReturnPressed), discoverabilityTitle: "conversation.input_bar.shortcut.send".localized))
 
-        /*/TODO: if mention list exists, select the upper item */
-
-
         if UIDevice.current.userInterfaceIdiom == .pad {
             commands.append(UIKeyCommand(input: "\r", modifierFlags: .shift, action: #selector(shiftReturnPressed), discoverabilityTitle: "conversation.input_bar.shortcut.newline".localized))
         }
@@ -46,11 +43,16 @@ extension ConversationInputBarViewController {
     }
 
     @objc func upArrowPressedForMention() {
-        print("🔼 up")
+        print("🔼 up #user = \(String(describing: mentionsView?.users.count))")
+        ///TODO: select the pervious command
+
+        mentionsView?.selectPreviousUser()
     }
 
     @objc func downArrowPressedForMention() {
         print("🔽 down")
+
+        mentionsView?.selectNextUser()
     }
 
 }
