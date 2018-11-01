@@ -20,6 +20,15 @@ import Foundation
 
 extension ConversationListViewController: PermissionDeniedViewControllerDelegate {}
 
+extension Settings {
+    var pushAlertHappenedMoreThan1DayBefore: Bool {
+        guard let date = self.lastPushAlertDate else {
+            return true
+        }
+        return abs(Float(date.timeIntervalSinceNow)) > 60 * 60 * 24
+    }
+}
+
 extension ConversationListViewController {
 
     @objc func closePushPermissionDialogIfNotNeeded() {
@@ -53,7 +62,7 @@ extension ConversationListViewController {
             return
         }
 
-        let pushAlertHappenedMoreThan1DayBefore: Bool = Settings.shared().lastPushAlertDate == nil || abs(Float(Settings.shared().lastPushAlertDate.timeIntervalSinceNow)) > 60 * 60 * 24
+        let pushAlertHappenedMoreThan1DayBefore: Bool = Settings.shared().pushAlertHappenedMoreThan1DayBefore
 
         if !pushAlertHappenedMoreThan1DayBefore {
             return

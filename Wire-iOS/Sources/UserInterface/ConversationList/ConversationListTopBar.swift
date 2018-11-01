@@ -102,6 +102,12 @@ open class TopBar: UIView {
                 new.leading == selfView.leadingMargin
                 new.centerY == selfView.centerY
             }
+
+            if let middleView = middleView {
+                NSLayoutConstraint.activate([
+                    new.trailingAnchor.constraint(lessThanOrEqualTo: middleView.leadingAnchor, constant: 0)
+                    ])
+            }
         }
     }
     

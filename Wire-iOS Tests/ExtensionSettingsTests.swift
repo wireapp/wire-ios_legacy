@@ -64,5 +64,4 @@ class ExtensionSettingsTests: XCTestCase {
         settings.disableLinkPreviews = false
         XCTAssertFalse(settings.disableLinkPreviews)
     }
-
 }

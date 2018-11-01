@@ -19,7 +19,7 @@
 import XCTest
 @testable import Wire
 
-final class GroupDetailsViewControllerSnapshotTests: CoreDataSnapshotTestCase {
+class GroupDetailsViewControllerSnapshotTests: CoreDataSnapshotTestCase {
     
     var sut: GroupDetailsViewController!
     
@@ -33,13 +33,35 @@ final class GroupDetailsViewControllerSnapshotTests: CoreDataSnapshotTestCase {
         super.tearDown()
     }
 
-    func testForInitState(){
-        verify(view: sut.view)
+    func testForInitState() {
+        teamTest {
+            verify(view: sut.view)
+        }
+    }
+
+    func testForInitState_NoTeam() {
+        nonTeamTest {
+            verify(view: sut.view)
+        }
     }
 
     func testForActionMenu() {
-        sut.detailsView(GroupDetailsFooterView(), performAction: .more)
-
-        verifyAlertController((sut?.actionController?.alertController)!)
+        teamTest {
+            sut.detailsView(GroupDetailsFooterView(), performAction: .more)
+            verifyAlertController((sut?.actionController?.alertController)!)
+        }
+    }
+    
+    func testForInitState_NonTeam() {
+        nonTeamTest {
+            verify(view: self.sut.view)
+        }
+    }
+    
+    func testForActionMenu_NonTeam() {
+        nonTeamTest {
+            sut.detailsView(GroupDetailsFooterView(), performAction: .more)
+            verifyAlertController((sut?.actionController?.alertController)!)
+        }
     }
 }

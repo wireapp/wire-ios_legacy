@@ -21,10 +21,31 @@ import XCTest
 
 final class RegistrationRootViewControllerSnapshotTests: ZMSnapshotTestCase {
 
-    func testForInitStatePhoneRegistration() {
+    override func setUp() {
+        super.setUp()
+        snapshotBackgroundColor = UIColor.black.withAlphaComponent(0.5)
+    }
+
+    func DISABLED_testForInitStatePhoneRegistration() {
         // Given
-        let sut = RegistrationRootViewController()
+        let sut = RegistrationRootViewController(authenticationFlow: .registration)
         
+        // Then
+        verify(view: sut.view)
+    }
+
+    func DISABLED_testForInitStateLogin() {
+        // Given
+        let sut = RegistrationRootViewController(authenticationFlow: .login)
+
+        // Then
+        verify(view: sut.view)
+    }
+
+    func DISABLED_testForInitStateOnlyLogin() {
+        // Given
+        let sut = RegistrationRootViewController(authenticationFlow: .onlyLogin)
+
         // Then
         verify(view: sut.view)
     }

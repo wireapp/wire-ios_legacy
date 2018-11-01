@@ -48,7 +48,8 @@ extension SLComposeServiceViewController {
         }
 
         DispatchQueue.global(qos: .userInitiated).async {
-            guard let attachments = self.extensionContext?.attachments.sorted, let (attachmentType, attachment) = attachments.main else {
+
+            guard let attachments = self.appendLinkFromTextIfNeeded(), let (attachmentType, attachment) = attachments.main else {
                 completeTask(nil, nil)
                 return
             }
@@ -86,6 +87,24 @@ extension SLComposeServiceViewController {
                 }
             }
         }
+    }
+    
+    func appendLinkFromTextIfNeeded() -> [AttachmentType: [NSItemProvider]]? {
+        
+        guard let text = self.contentText,
+            var attachments = self.extensionContext?.attachments else {
+            return nil
+        }
+        
+        let matches = text.URLsInString
+        
+        if let match = matches.first,
+            let item = NSItemProvider(contentsOf: match),
+            attachments.filter(\.hasURL).count == 0 {
+            attachments.append(item)
+        }
+        
+        return attachments.sorted
     }
 
     /**

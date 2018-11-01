@@ -52,5 +52,10 @@
 	</dict>
 	<key>WireGroupId</key>
 	<string>${WIRE_BUNDLE_ID}</string>
+    <key>NSAppTransportSecurity</key>
+    <dict>
+        <key>NSAllowsArbitraryLoads</key>
+        <true/>
+    </dict>
 </dict>
 </plist>

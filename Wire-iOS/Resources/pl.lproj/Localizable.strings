@@ -730,6 +730,8 @@
 "group_details.guest_options_cell.enabled" = "On";
 "group_details.guest_options_cell.disabled" = "Wyłącz";
 "group_details.timeout_options_cell.title" = "Timed messages";
+"group_details.notification_options_cell.title" = "Notifications";
+"group_details.notification_options_cell.description" = "You can be notified about everything (including audio and video calls) or only when you are mentioned.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile
@@ -1250,7 +1252,7 @@
 "registration.devices.active_list_header" = "Aktywne";
 "registration.devices.current_list_header" = "Aktualny";
 "registration.devices.active_list_subtitle" = "Jeśli nie rozpoznajesz urządzenia poniżej, usuń je i zresetuj hasło.";
-"registration.devices.activated_in" = "Aktywowane w";
+"registration.devices.activated"  = "Activated %@";
 "registration.devices.id" = "ID:";
 
 "signin.use_email.label" = "Login with Email";

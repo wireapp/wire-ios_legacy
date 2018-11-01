@@ -33,14 +33,17 @@ extension ZMUser {
 extension SettingsCellDescriptorFactory {
 
     func accountGroup() -> SettingsCellDescriptorType {
-        let sections: [SettingsSectionDescriptorType] = [
+        var sections: [SettingsSectionDescriptorType] = [
             infoSection(),
             appearanceSection(),
             personalInformationSection(),
-            conversationsSection(),
-            actionsSection(),
-            signOutSection()
-        ]
+            conversationsSection()]
+        
+        if let user = ZMUser.selfUser(), !user.usesCompanyLogin {
+            sections.append(actionsSection())
+        }
+        
+        sections.append(signOutSection())
 
         return SettingsGroupCellDescriptor(items: sections, title: "self.settings.account_section".localized, icon: .settingsAccount)
     }
@@ -50,11 +53,13 @@ extension SettingsCellDescriptorFactory {
     func infoSection() -> SettingsSectionDescriptorType {
         var cellDescriptors = [nameElement(), handleElement()]
         
-        if !ZMUser.selfUser().hasTeam || !(ZMUser.selfUser().phoneNumber?.isEmpty ?? true) {
-            cellDescriptors.append(phoneElement())
+        if let user = ZMUser.selfUser(), !user.usesCompanyLogin {
+            if !ZMUser.selfUser().hasTeam || !(ZMUser.selfUser().phoneNumber?.isEmpty ?? true) {
+                cellDescriptors.append(phoneElement())
+            }
+            
+            cellDescriptors.append(emailElement())
         }
-        
-        cellDescriptors.append(emailElement())
         return SettingsSectionDescriptor(
             cellDescriptors: cellDescriptors,
             header: "self.settings.account_details_group.info.title".localized,
@@ -84,7 +89,7 @@ extension SettingsCellDescriptorFactory {
     }
 
     func actionsSection() -> SettingsSectionDescriptorType {
-        var cellDescriptors = [ressetPasswordElement()]
+        var cellDescriptors = [resetPasswordElement()]
         if let selfUser = self.settingsPropertyFactory.selfUser, !selfUser.isTeamMember {
             cellDescriptors.append(deleteAccountButtonElement())
         }
@@ -112,25 +117,15 @@ extension SettingsCellDescriptorFactory {
             isDestructive: false,
             presentationStyle: .navigation,
             presentationAction: { () -> (UIViewController?) in
-             if let email = ZMUser.selfUser().emailAddress, !email.isEmpty {
                 return ChangeEmailViewController()
-             } else {
-                let addEmailController = AddEmailPasswordViewController()
-                addEmailController.showsNavigationBar = false
-                let stepDelegate = DismissStepDelegate()
-                stepDelegate.strongCapture = stepDelegate
-                
-                addEmailController.formStepDelegate = stepDelegate
-                return addEmailController
-            }
-        },
+            },
             previewGenerator: { _ in
                 if let email = ZMUser.selfUser().emailAddress, !email.isEmpty {
                     return SettingsCellPreview.text(email)
                 } else {
                     return SettingsCellPreview.text("self.add_email_password".localized)
                 }
-        },
+            },
             accessoryViewMode: .alwaysHide
         )
     }
@@ -140,19 +135,9 @@ extension SettingsCellDescriptorFactory {
             title: "self.settings.account_section.phone.title".localized,
             isDestructive: false,
             presentationStyle: .navigation,
-            presentationAction: { () -> (UIViewController?) in
-                if let phoneNumber = ZMUser.selfUser().phoneNumber, !phoneNumber.isEmpty {
-                    return ChangePhoneViewController()
-                } else {
-                    let addController = AddPhoneNumberViewController()
-                    addController.showsNavigationBar = false
-                    let stepDelegate = DismissStepDelegate()
-                    stepDelegate.strongCapture = stepDelegate
-                    
-                    addController.formStepDelegate = stepDelegate
-                    return addController
-                }
-        },
+            presentationAction: {
+                return ChangePhoneViewController()
+            },
             previewGenerator: { _ in
                 if let phoneNumber = ZMUser.selfUser().phoneNumber, !phoneNumber.isEmpty {
                     return SettingsCellPreview.text(phoneNumber)
@@ -222,7 +207,7 @@ extension SettingsCellDescriptorFactory {
             isDestructive: false,
             presentationStyle: .navigation,
             presentationAction: {
-                if ZMUser.selfUser().hasValidEmail {
+                if ZMUser.selfUser().hasValidEmail || ZMUser.selfUser()!.usesCompanyLogin {
                     return BackupViewController.init(backupSource: SessionManager.shared!)
                 }
                 else {
@@ -247,7 +232,7 @@ extension SettingsCellDescriptorFactory {
         return dataUsagePermissionsGroup()
     }
 
-    func ressetPasswordElement() -> SettingsCellDescriptorType {
+    func resetPasswordElement() -> SettingsCellDescriptorType {
         let resetPasswordTitle = "self.settings.password_reset_menu.title".localized
         return SettingsExternalScreenCellDescriptor(title: resetPasswordTitle, isDestructive: false, presentationStyle: .modal, presentationAction: { 
             return BrowserViewController(url: URL.wr_passwordReset.appendingLocaleParameter)

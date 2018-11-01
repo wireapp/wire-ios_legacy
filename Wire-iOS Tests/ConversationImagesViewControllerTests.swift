@@ -30,6 +30,9 @@ class ConversationImagesViewControllerTests: CoreDataSnapshotTestCase {
     
     override func setUp() {
         super.setUp()
+
+        MockUser.mockSelf()?.name = "Tarja Turunen"
+
         snapshotBackgroundColor = UIColor.white
     
         let image = self.image(inTestBundleNamed: "unsplash_matterhorn.jpg")

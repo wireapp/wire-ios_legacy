@@ -38,12 +38,17 @@ class ZMUserMentionsTest: XCTestCase {
         
         serviceUser = mockUsers[1]
         serviceUser.isServiceUser = true
+
+        MockUser.setMockSelf(selfUser)
     }
     
     override func tearDown() {
         selfUser = nil
         otherUser = nil
         serviceUser = nil
+
+        MockUser.setMockSelf(nil)
+
         super.tearDown()
     }
     

@@ -25,6 +25,9 @@ class UserSearchResultsViewControllerTests: CoreDataSnapshotTestCase {
     var serviceUser: ZMUser!
     
     override func setUp() {
+        // self user should be a team member and other participants should be guests, in order to show guest icon in the user cells
+        selfUserInTeam = true
+
         super.setUp()
         
         serviceUser = ZMUser.insertNewObject(in: uiMOC)
@@ -35,6 +38,9 @@ class UserSearchResultsViewControllerTests: CoreDataSnapshotTestCase {
         serviceUser.serviceIdentifier = UUID.create().transportString()
         serviceUser.providerIdentifier = UUID.create().transportString()
         uiMOC.saveOrRollback()
+
+        XCTAssert(ZMUser.selfUser().isTeamMember, "selfUser should be a team member to generate snapshots with guest icon")
+
     }
     
     func createSUT() {
@@ -50,6 +56,7 @@ class UserSearchResultsViewControllerTests: CoreDataSnapshotTestCase {
         sut = nil
         serviceUser = nil
         resetColorScheme()
+
         super.tearDown()
     }
     
@@ -76,25 +83,48 @@ class UserSearchResultsViewControllerTests: CoreDataSnapshotTestCase {
         guard let view = sut.view else { XCTFail(); return }
         verify(view: view)
     }
-    
-    func testThatItOverflowsWithTooManyUsers() {
-        createSUT()
+
+    func mockSearchResultUsers(file: StaticString = #file, line: UInt = #line) -> [UserType] {
         var allUsers: [ZMUser] = []
-        
+
         for name in usernames {
             let user = ZMUser.insertNewObject(in: uiMOC)
             user.remoteIdentifier = UUID()
+            user.teamIdentifier = nil
             user.name = name
             user.setHandle(name.lowercased())
             user.accentColorValue = .brightOrange
+            XCTAssertFalse(user.isTeamMember, "user should not be a team member to generate snapshots with guest icon", file: file, line: line)
             uiMOC.saveOrRollback()
             allUsers.append(user)
         }
-        
+
         allUsers.append(selfUser)
-        
-        sut.users = ZMUser.searchForMentions(in: allUsers, with: "")
+
+        return ZMUser.searchForMentions(in: allUsers, with: "")
+    }
+
+
+    func testThatItOverflowsWithTooManyUsers() {
+        createSUT()
+
+        sut.users = mockSearchResultUsers()
         guard let view = sut.view else { XCTFail(); return }
+        verify(view: view)
+    }
+
+    func testThatLowestItemIsNotHighlightedIfKeyboardIsNotCollapsed() {
+        createSUT()
+        sut.users = mockSearchResultUsers()
+        guard let view = sut.view else { XCTFail(); return }
+
+        ///post a mock show keyboard notification
+        NotificationCenter.default.post(name: UIResponder.keyboardWillShowNotification, object: nil, userInfo: [
+            UIResponder.keyboardFrameBeginUserInfoKey: CGRect(x: 0, y: 0, width: 0, height: 0),
+            UIResponder.keyboardFrameEndUserInfoKey: CGRect(x: 0, y: 0, width: 0, height: 100),
+            UIResponder.keyboardAnimationDurationUserInfoKey: TimeInterval(0.0)])
+
+
         verify(view: view)
     }
 

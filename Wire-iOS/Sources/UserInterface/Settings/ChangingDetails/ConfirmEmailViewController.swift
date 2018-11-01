@@ -86,7 +86,7 @@ extension UITableView {
     internal func setupViews() {
         SettingsButtonCell.register(in: tableView)
         
-        title = "self.settings.account_section.email.change.verify.title".localized
+        title = "self.settings.account_section.email.change.verify.title".localized(uppercased: true)
         view.backgroundColor = .clear
         tableView.isScrollEnabled = false
         

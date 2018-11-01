@@ -67,7 +67,7 @@ public class ReactionCell: UICollectionViewCell {
         super.init(frame: frame)
         
         self.userImageView.userSession = ZMUserSession.shared()
-        self.userImageView.initials.font = UIFont.systemFont(ofSize: 11, weight: UIFont.Weight.light)
+        self.userImageView.initialsFont = UIFont.systemFont(ofSize: 11, weight: UIFont.Weight.light)
         
         self.contentView.addSubview(self.userDisplayNameLabel)
         self.contentView.addSubview(self.usernameLabel)

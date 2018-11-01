@@ -18,30 +18,21 @@
 
 
 import UIKit
-import Cartography
 
-@objc protocol ClientUnregisterViewControllerDelegate: NSObjectProtocol {
-    func clientDeletionSucceeded()
-}
-
-
-@objcMembers class ClientUnregisterFlowViewController: FormFlowViewController, FormStepDelegate {
+@objcMembers class ClientUnregisterFlowViewController: UIViewController, AuthenticationCoordinatedViewController {
     var popTransition: PopTransition?
     var pushTransition: PushTransition?
     var rootNavigationController: NavigationController?
-    var backgroundImageView: UIImageView?
-    weak var delegate: ClientUnregisterViewControllerDelegate?
-    var authToken: Any?
-    
+
+    var authenticationCoordinator: AuthenticationCoordinator?
+
     let clients: Array<UserClient>
     let credentials: ZMEmailCredentials?
     
-    required init(clientsList: Array<UserClient>!, delegate: ClientUnregisterViewControllerDelegate, credentials: ZMEmailCredentials?) {
+    required init(clientsList: Array<UserClient>!, credentials: ZMEmailCredentials?) {
         self.clients = clientsList
         self.credentials = credentials
-        self.delegate = delegate
         super.init(nibName: nil, bundle: nil)
-        self.authToken = PostLoginAuthenticationNotification.addObserver(self, userSession: ZMUserSession.shared()!)
     }
     
     required override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -59,12 +50,8 @@ import Cartography
         self.pushTransition = PushTransition()
     
         UIView.performWithoutAnimation {            
-            self.setupBackgroundImageView()
-            
             self.setupNavigationController()
-            
             self.createConstraints()
-            
             self.view?.isOpaque = false
         }
     }
@@ -74,23 +61,22 @@ import Cartography
         
         self.dismiss(animated: animated, completion: nil)
     }
-    
-    fileprivate func setupBackgroundImageView() {
-        let backgroundImageView = UIImageView(image: UIImage(named: "LaunchImage"))
-        self.backgroundImageView = backgroundImageView
-        self.view?.addSubview(backgroundImageView)
+
+    override var prefersStatusBarHidden: Bool {
+        return false
     }
-    
+
     fileprivate func setupNavigationController() {
         let invitationController = ClientUnregisterInvitationViewController()
-        invitationController.formStepDelegate = self
+        invitationController.delegate = self
         invitationController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         
         let rootNavigationController = NavigationController(rootViewController: invitationController)
         rootNavigationController.delegate = self
         rootNavigationController.view.translatesAutoresizingMaskIntoConstraints = false
         rootNavigationController.setNavigationBarHidden(true, animated: false)
-        rootNavigationController.navigationBar.barStyle = UIBarStyle.default
+        rootNavigationController.navigationBar.barStyle = UIBarStyle.black
+        rootNavigationController.navigationBar.isTranslucent = true
         rootNavigationController.navigationBar.tintColor = UIColor.accent()
         rootNavigationController.backButtonEnabled = false
         rootNavigationController.rightButtonEnabled = false
@@ -102,22 +88,57 @@ import Cartography
     }
     
     fileprivate func createConstraints() {
-        if let rootNavigationController = self.rootNavigationController {
-            constrain(self.view, rootNavigationController.view) { selfView, navigationControllerView in
-                navigationControllerView.edges == selfView.edges
-            }
+        guard let rootNavigationController = rootNavigationController else {
+            return
         }
-        
-        if let backgroundImageView = self.backgroundImageView {
-            constrain(self.view, backgroundImageView) { selfView, backgroundImageView in
-                backgroundImageView.edges == selfView.edges
-            }
+
+        rootNavigationController.view.translatesAutoresizingMaskIntoConstraints = true
+
+        let constraints: [NSLayoutConstraint] = [
+            rootNavigationController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            rootNavigationController.view.topAnchor.constraint(equalTo: view.topAnchor),
+            rootNavigationController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            rootNavigationController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ]
+
+        NSLayoutConstraint.activate(constraints)
+    }
+
+}
+
+// MARK: - UINavigationControllerDelegate
+
+extension ClientUnregisterFlowViewController: UINavigationControllerDelegate {
+
+    func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        switch operation {
+        case .pop:
+            return self.popTransition
+        case .push:
+            return self.pushTransition
+        default:
+            return nil
+        }
+    }
+    
+    func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
+        if viewController is ClientListViewController {
+            UIApplication.shared.wr_setStatusBarHidden(!UIScreen.hasNotch, with: animated ? .fade : .none)
+            navigationController.setNavigationBarHidden(false, animated: animated)
+        }
+        else {
+            UIApplication.shared.wr_setStatusBarHidden(true, with: animated ? .fade : .none)
+            navigationController.setNavigationBarHidden(true, animated: animated)
         }
     }
 
-    // MARK: - FormStepDelegate
-    
-    func didCompleteFormStep(_ viewController: UIViewController!) {
+}
+
+// MARK: - ClientUnregisterInvitationViewControllerDelegate
+
+extension ClientUnregisterFlowViewController: ClientUnregisterInvitationViewControllerDelegate {
+
+    func userDidAcceptClientUnregisterInvitation() {
         let clientsListController = ClientListViewController(clientsList: self.clients,
                                                              credentials: self.credentials,
                                                              showTemporary: false,
@@ -132,44 +153,16 @@ import Cartography
             self.rootNavigationController?.pushViewController(clientsListController, animated: true)
         }
     }
-    
-    // MARK: - UINavigationControllerDelegate
-    
-    override func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        switch operation {
-        case .pop:
-            return self.popTransition
-        case .push:
-            return self.pushTransition
-        default:
-            return nil
-        }
-    }
-    
-    override func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
-        if viewController is ClientListViewController {
-            UIApplication.shared.wr_setStatusBarHidden(!UIScreen.hasNotch, with: animated ? .fade : .none)
-            navigationController.setNavigationBarHidden(false, animated: animated)
-        }
-        else {
-            UIApplication.shared.wr_setStatusBarHidden(true, with: animated ? .fade : .none)
-            navigationController.setNavigationBarHidden(true, animated: animated)
-        }
-    }
 
 }
 
-extension ClientUnregisterFlowViewController: PostLoginAuthenticationObserver {
-    func clientRegistrationDidSucceed(accountId : UUID) {
-        self.delegate?.clientDeletionSucceeded()
-    }
-}
+// MARK: - ClientListViewControllerDelegate
 
 extension ClientUnregisterFlowViewController: ClientListViewControllerDelegate {
     func finishedDeleting(_ clientListViewController: ClientListViewController) {
 
         let completion: (() -> Swift.Void)? = { [weak self] in
-            self?.showLoadingView = true
+            self?.authenticationCoordinator?.executeAction(.showLoadingView)
         }
 
         if isIPadRegular() {

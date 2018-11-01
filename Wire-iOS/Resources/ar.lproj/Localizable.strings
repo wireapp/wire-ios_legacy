@@ -730,6 +730,8 @@
 "group_details.guest_options_cell.enabled" = "مفعل";
 "group_details.guest_options_cell.disabled" = "غير مفعل";
 "group_details.timeout_options_cell.title" = "رسال مؤقّتة";
+"group_details.notification_options_cell.title" = "Notifications";
+"group_details.notification_options_cell.description" = "You can be notified about everything (including audio and video calls) or only when you are mentioned.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile
@@ -1250,7 +1252,7 @@
 "registration.devices.active_list_header" = "نشط";
 "registration.devices.current_list_header" = "الحالي";
 "registration.devices.active_list_subtitle" = "إذا كنت لا تتعرف على الجهاز أعلاه، قم بإزالته وإعادة تعيين كلمة المرور الخاصة بك.";
-"registration.devices.activated_in" = "تم تنشيطه في";
+"registration.devices.activated"  = "Activated %@";
 "registration.devices.id" = "المُعرّف:";
 
 "signin.use_email.label" = "Login with Email";

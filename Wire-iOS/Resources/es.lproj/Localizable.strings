@@ -730,6 +730,8 @@
 "group_details.guest_options_cell.enabled" = "On";
 "group_details.guest_options_cell.disabled" = "Desactivar";
 "group_details.timeout_options_cell.title" = "Timed messages";
+"group_details.notification_options_cell.title" = "Notifications";
+"group_details.notification_options_cell.description" = "You can be notified about everything (including audio and video calls) or only when you are mentioned.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile
@@ -1250,7 +1252,7 @@
 "registration.devices.active_list_header" = "Activo";
 "registration.devices.current_list_header" = "Este dispositivo";
 "registration.devices.active_list_subtitle" = "Si no reconoces un dispositivo de la lista, elimínalo y cambia la contraseña de Wire.";
-"registration.devices.activated_in" = "Activado en";
+"registration.devices.activated"  = "Activated %@";
 "registration.devices.id" = "ID:";
 
 "signin.use_email.label" = "Login with Email";

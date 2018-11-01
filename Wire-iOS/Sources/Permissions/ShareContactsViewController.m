@@ -177,7 +177,7 @@
     [AddressBookHelper.sharedHelper requestPermissions:^(BOOL success) {
         if (success) {
             [[AddressBookHelper sharedHelper] startRemoteSearchWithCheckingIfEnoughTimeSinceLast:self.uploadAddressBookImmediately];
-            [self.formStepDelegate didCompleteFormStep:self];
+            [self.delegate shareContactsViewControllerDidFinish:self];
         } else {
             [self displayContactsAccessDeniedMessageAnimated:YES];
         }
@@ -187,7 +187,7 @@
 - (IBAction)shareContactsLater:(id)sender
 {
     [AddressBookHelper sharedHelper].addressBookSearchWasPostponed = YES;
-    [self.formStepDelegate didSkipFormStep:self];
+    [self.delegate shareContactsViewControllerDidSkip:self];
 }
 
 
@@ -196,7 +196,7 @@
 - (void)continueWithoutPermission:(PermissionDeniedViewController *)viewController
 {
     [AddressBookHelper sharedHelper].addressBookSearchWasPostponed = YES;
-    [self.formStepDelegate didSkipFormStep:self];
+    [self.delegate shareContactsViewControllerDidSkip:self];
 }
 
 #pragma mark - UIApplication notifications
@@ -205,7 +205,7 @@
 {
     if ([[AddressBookHelper sharedHelper] isAddressBookAccessGranted]) {
         [[AddressBookHelper sharedHelper] startRemoteSearchWithCheckingIfEnoughTimeSinceLast:YES];
-        [self.formStepDelegate didCompleteFormStep:self];
+        [self.delegate shareContactsViewControllerDidFinish:self];
     }
 }
 

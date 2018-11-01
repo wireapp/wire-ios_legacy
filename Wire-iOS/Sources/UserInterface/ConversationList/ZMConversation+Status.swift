@@ -271,16 +271,24 @@ final internal class CallingMatcher: ConversationStatusMatcher {
     }
     
     func icon(with status: ConversationStatus, conversation: ZMConversation) -> ConversationStatusIcon {
-
-        let state = conversation.voiceChannel?.state
-        switch state {
-        case .incoming(_, false, _)?:
-            return .activeCall(showJoin: true)
-        case .answered?, .established?, .establishedDataChannel?:
-            return .activeCall(showJoin: conversation.mutedMessageTypes != .all)
-        default:
+        return CallingMatcher.icon(for: conversation.voiceChannel?.state, conversation: conversation)
+    }
+    
+    public static func icon(for state: CallState?, conversation: ZMConversation?) -> ConversationStatusIcon {
+        
+        guard let conversation = conversation, let state = state else {
             return .none
         }
+        
+        if case CallState.incoming(video: _, shouldRing: false, degraded: _) = state {
+            return .activeCall(showJoin: true)
+        } else if state.canJoinCall && conversation.mutedMessageTypes != .none {
+            return .activeCall(showJoin: true)
+        } else if state.isCallOngoing {
+            return .activeCall(showJoin: false)
+        }
+        
+        return .none
     }
     
     var combinesWith: [ConversationStatusMatcher] = []
@@ -767,7 +775,7 @@ extension ZMConversation {
             guard let state = voiceChannel?.state else { return false }
             switch state {
             case .none, .terminating: return false
-            case .incoming: return conversationType == .group
+            case .incoming: return true
             default: return true
             }
         }()

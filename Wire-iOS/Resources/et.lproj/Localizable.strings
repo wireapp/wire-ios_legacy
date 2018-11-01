@@ -730,6 +730,8 @@
 "group_details.guest_options_cell.enabled" = "Sees";
 "group_details.guest_options_cell.disabled" = "Väljas";
 "group_details.timeout_options_cell.title" = "Kustuvad sõnumid";
+"group_details.notification_options_cell.title" = "Notifications";
+"group_details.notification_options_cell.description" = "You can be notified about everything (including audio and video calls) or only when you are mentioned.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile
@@ -1250,7 +1252,7 @@
 "registration.devices.active_list_header" = "Aktiivsed";
 "registration.devices.current_list_header" = "Praegune";
 "registration.devices.active_list_subtitle" = "Kui sa mõnda toodud seadmetest ei tunne ära, eemalda see ja muuda oma parool.";
-"registration.devices.activated_in" = "Aktiveeritud";
+"registration.devices.activated"  = "Activated %@";
 "registration.devices.id" = "ID:";
 
 "signin.use_email.label" = "Logi sisse e-posti aadresiga";

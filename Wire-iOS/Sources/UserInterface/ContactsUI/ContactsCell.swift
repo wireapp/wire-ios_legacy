@@ -62,7 +62,7 @@ class ContactsCell: UITableViewCell, SeparatorViewProtocol {
     let avatar: BadgeUserImageView = {
         let badgeUserImageView = BadgeUserImageView()
         badgeUserImageView.userSession = ZMUserSession.shared()
-        badgeUserImageView.initials.font = .avatarInitial
+        badgeUserImageView.initialsFont = .avatarInitial
         badgeUserImageView.size = .small
         badgeUserImageView.translatesAutoresizingMaskIntoConstraints = false
 

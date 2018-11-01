@@ -27,7 +27,7 @@ extension MockMessage {
     }
 }
 
-class CollectionsViewControllerTests: ZMSnapshotTestCase {
+class CollectionsViewControllerTests: CoreDataSnapshotTestCase {
     
     var emptyCollection: AssetCollectionWrapper!
     var imageMessage: ZMConversationMessage!
@@ -44,6 +44,10 @@ class CollectionsViewControllerTests: ZMSnapshotTestCase {
 
     override func setUp() {
         super.setUp()
+
+        MockUser.mockSelf()?.name = "Tarja Turunen"
+        MockUser.mockSelf()?.accentColorValue = .strongBlue
+
         let conversation = MockConversation() as Any as! ZMConversation
         let assetCollection = MockCollection.empty
         let delegate = AssetCollectionMulticastDelegate()

@@ -20,12 +20,19 @@
 import UIKit
 import Cartography
 
-class ClientUnregisterInvitationViewController: RegistrationStepViewController {
+protocol ClientUnregisterInvitationViewControllerDelegate: class {
+    /// Called when the user tapped the button to unregister clients.
+    func userDidAcceptClientUnregisterInvitation()
+}
+
+class ClientUnregisterInvitationViewController: UIViewController {
     var heroLabel : UILabel?
     var subtitleLabel : UILabel?
     var manageDevicesButton : UIButton?
     var signOutButton : UIButton?
     var containerView : UIView?
+
+    weak var delegate: ClientUnregisterInvitationViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -132,9 +139,7 @@ class ClientUnregisterInvitationViewController: RegistrationStepViewController {
     // MARK: - Actions
     
     @objc func openManageDevices(_ sender : UIButton!) {
-        if let formStepDelegate = self.formStepDelegate {
-            formStepDelegate.didCompleteFormStep(self)
-        }
+        delegate?.userDidAcceptClientUnregisterInvitation()
     }
     
     @objc func signOut(_ sender : UIButton!) {
