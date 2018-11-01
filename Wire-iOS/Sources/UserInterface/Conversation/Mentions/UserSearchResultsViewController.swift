@@ -42,7 +42,11 @@ import Cartography
 class UserSearchResultsViewController: UIViewController, KeyboardCollapseObserver {
 
     private let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
-    private var searchResults: [UserType] = []
+    private var searchResults: [UserType] = [] {
+        didSet {
+            collectionViewSelectedIndex = .none
+        }
+    }
     private var query: String = ""
     private var collectionViewHeight: NSLayoutConstraint?
     private let rowHeight: CGFloat = 56.0
