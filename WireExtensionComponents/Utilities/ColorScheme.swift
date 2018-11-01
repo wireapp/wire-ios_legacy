@@ -137,6 +137,15 @@ public extension UIColor {
 }
 
 extension UIColor {
+
+    public static func from(scheme: ColorSchemeColor) -> UIColor {
+        return ColorScheme.default.color(named: scheme)
+    }
+
+    public static func from(scheme: ColorSchemeColor, variant: ColorSchemeVariant) -> UIColor {
+        return ColorScheme.default.color(named: scheme, variant: variant)
+    }
+
     convenience public init(scheme: ColorSchemeColor) {
         self.init(cgColor: ColorScheme.default.color(named: scheme).cgColor)
     }
