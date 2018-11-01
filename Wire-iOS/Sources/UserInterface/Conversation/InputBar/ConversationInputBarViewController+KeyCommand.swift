@@ -43,15 +43,10 @@ extension ConversationInputBarViewController {
     }
 
     @objc func upArrowPressedForMention() {
-        print("🔼 up #user = \(String(describing: mentionsView?.users.count))")
-        ///TODO: select the pervious command
-
         mentionsView?.selectPreviousUser()
     }
 
     @objc func downArrowPressedForMention() {
-        print("🔽 down")
-
         mentionsView?.selectNextUser()
     }
 
