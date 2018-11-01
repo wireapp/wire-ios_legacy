@@ -31,11 +31,13 @@ class ConversationMessageToolboxCell: UIView, ConversationMessageCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureSubviews()
+        configureConstraints()
     }
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         configureSubviews()
+        configureConstraints()
     }
 
     private func configureSubviews() {

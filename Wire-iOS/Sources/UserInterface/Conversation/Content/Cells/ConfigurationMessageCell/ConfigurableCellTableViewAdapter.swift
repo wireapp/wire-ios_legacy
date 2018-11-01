@@ -51,7 +51,8 @@ class ConfigurableCellTableViewAdapter<C: ConversationMessageCellDescription>: U
         trailing = cellView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)
         top = cellView.topAnchor.constraint(equalTo: contentView.topAnchor)
         bottom = cellView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
-        
+        bottom.priority = UILayoutPriority(999)
+
         NSLayoutConstraint.activate([leading, trailing, top, bottom])
 
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(onLongPress))

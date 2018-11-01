@@ -42,31 +42,43 @@ class ConversationCellSnapshotTests: CoreDataSnapshotTestCase {
      */
 
     func verifySectionSnapshots() {
-        let container = UIView()
-        let tableView = UITableView()
+        let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 375, height: 0))
+        tableView.separatorStyle = .none
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 0
 
-        container.backgroundColor = .contentBackground
+        tableView.dataSource = self.section
+        tableView.delegate = self.section
+        section.cellDescriptions.forEach { $0.register(in: tableView) }
 
-        var lastTopAnchor = container.topAnchor
+        tableView.backgroundColor = .contentBackground
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.widthAnchor.constraint(equalToConstant: 375).isActive = true
 
-        for (index, section) in section.cellDescriptions.enumerated() {
-            section.register(in: tableView)
-            let indexPath = IndexPath(row: index, section: 0)
-            let cell = section.makeCell(for: tableView, at: indexPath)
+        tableView.reloadData()
+        tableView.layoutIfNeeded()
+        tableView.bounds = CGRect(x: 0, y: 0, width: 375, height: tableView.contentSize.height)
+        tableView.heightAnchor.constraint(equalToConstant: tableView.contentSize.height).isActive = true
+        tableView.layoutIfNeeded()
+        tableView.updateConstraints()
 
-            container.addSubview(cell)
+        verify(view: tableView)
+    }
 
-            NSLayoutConstraint.activate([
-                cell.leadingAnchor.constraint(equalTo: container.leadingAnchor),
-                cell.topAnchor.constraint(equalTo: lastTopAnchor),
-                cell.trailingAnchor.constraint(equalTo: container.trailingAnchor)
-            ])
+}
 
-            lastTopAnchor = cell.bottomAnchor
-        }
+extension ConversationMessageSectionController: UITableViewDataSource, UITableViewDelegate {
 
-        container.bottomAnchor.constraint(equalTo: lastTopAnchor)
-        verifyInAllPhoneWidths(view: container)
+    public func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.numberOfCells
+    }
+
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        return self.makeCell(for: tableView, at: indexPath)
     }
 
 }

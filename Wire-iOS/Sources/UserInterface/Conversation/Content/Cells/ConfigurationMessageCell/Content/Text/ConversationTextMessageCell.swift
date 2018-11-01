@@ -105,7 +105,7 @@ extension ConversationTextMessageCellDescription {
         cells.append(AnyConversationMessageCellDescription(textCell))
 
         guard !message.isObfuscated else {
-            return
+            return cells
         }
 
         // Link Attachment
