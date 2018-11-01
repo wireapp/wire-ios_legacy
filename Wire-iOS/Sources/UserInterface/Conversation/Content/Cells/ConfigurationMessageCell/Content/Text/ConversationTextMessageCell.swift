@@ -77,7 +77,7 @@ class ConversationTextMessageCellDescription: ConversationMessageCellDescription
     weak var delegate: ConversationCellDelegate?
     weak var actionController: ConversationCellActionController?
 
-    let isFullWidth: Bool  = true
+    let isFullWidth: Bool  = false
     let supportsActions: Bool = true
 
     init(attributedString: NSAttributedString) {
@@ -89,6 +89,12 @@ class ConversationTextMessageCellDescription: ConversationMessageCellDescription
 // MARK: - Factory
 
 extension ConversationTextMessageCellDescription {
+
+    static func preview(for message: ZMConversationMessage) -> ConversationMessageSectionView {
+        let section = ConversationMessageSectionController()
+        section.cellDescriptions.append(contentsOf: self.cells(for: message))
+        return ConversationMessageSectionView(section: section, isPreviewing: true)
+    }
 
     static func cells(for message: ZMConversationMessage) -> [AnyConversationMessageCellDescription] {
         guard let textMessageData = message.textMessageData else {

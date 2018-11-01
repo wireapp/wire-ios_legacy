@@ -63,13 +63,8 @@ class ConversationMessageToolboxCellDescription: ConversationMessageCellDescript
     weak var delegate: ConversationCellDelegate? 
     weak var actionController: ConversationCellActionController?
 
-    var isFullWidth: Bool {
-        return false
-    }
-
-    var supportsActions: Bool {
-        return false
-    }
+    let isFullWidth: Bool = true
+    let supportsActions: Bool = false
 
     init(message: ZMConversationMessage) {
         configuration = View.Configuration(message: message)
