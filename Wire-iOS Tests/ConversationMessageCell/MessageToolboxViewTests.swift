@@ -21,19 +21,16 @@ import XCTest
 
 class MessageToolboxViewTests: CoreDataSnapshotTestCase {
 
+    var message: MockMessage!
     var sut: MessageToolboxView!
-
-    var message: MockMessage {
-        let message = MockMessageFactory.textMessage(withText: "Hello")
-        message?.deliveryState = .sent
-
-        return message!
-    }
 
     override func setUp() {
         super.setUp()
-        recordMode = true
+        message = MockMessageFactory.textMessage(withText: "Hello")
+        message.deliveryState = .sent
+
         sut = MessageToolboxView()
+        sut.frame = CGRect(x: 0, y: 0, width: 375, height: 28)
     }
 
     override func tearDown() {
@@ -41,13 +38,49 @@ class MessageToolboxViewTests: CoreDataSnapshotTestCase {
         super.tearDown()
     }
 
-    func testThatItConfiguresWithOtherLiker() {
+    func testThatItConfiguresWithTimestamp() {
         // GIVEN
         let users = MockUser.mockUsers().filter { !$0.isSelfUser }
         message.backingUsersReaction = [MessageReaction.like.unicodeValue: users]
 
         // WHEN
         sut.configureForMessage(message, forceShowTimestamp: true, animated: false)
+
+        // THEN
+        verify(view: sut)
+    }
+
+    func testThatItConfiguresWithOtherLiker() {
+        // GIVEN
+        let users = MockUser.mockUsers().first(where: { !$0.isSelfUser })!
+        message.backingUsersReaction = [MessageReaction.like.unicodeValue: [users]]
+
+        // WHEN
+        sut.configureForMessage(message, forceShowTimestamp: false, animated: false)
+
+        // THEN
+        verify(view: sut)
+    }
+
+    func testThatItConfiguresWithOtherLikers() {
+        // GIVEN
+        let users = MockUser.mockUsers().filter { !$0.isSelfUser }
+        message.backingUsersReaction = [MessageReaction.like.unicodeValue: users]
+
+        // WHEN
+        sut.configureForMessage(message, forceShowTimestamp: false, animated: false)
+
+        // THEN
+        verify(view: sut)
+    }
+
+    func testThatItConfiguresWithSelfLiker() {
+        // GIVEN
+        let selfUser = (MockUser.mockSelf() as Any) as! ZMUser
+        message.backingUsersReaction = [MessageReaction.like.unicodeValue: [selfUser]]
+
+        // WHEN
+        sut.configureForMessage(message, forceShowTimestamp: false, animated: false)
 
         // THEN
         verify(view: sut)
