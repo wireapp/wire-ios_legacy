@@ -35,7 +35,7 @@ extension ConversationInputBarViewController {
             fatal("Cannot insert best mention")
         }
         
-        let bestSuggestion = mentionsView.users[0]
+        let bestSuggestion = mentionsView.bestSuggestionUser
         insertMention(for: bestSuggestion)
     }
     
