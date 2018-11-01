@@ -21,33 +21,30 @@ import XCTest
 
 class ConversationPingMessageCellTests: ConversationCellSnapshotTests {
 
-//    override func setUp() {
-//        super.setUp()
-//        recordMode = true
-//    }
-//
-//    func testThatItConfiguresMessageForPingSystemMessage_Self_WithTimestamp() {
-//        // GIVEN
-//        let message = self.otherUserConversation.appendKnock()!
-//
-//        // WHEN
-//        let context = ConversationMessageContext(isSameSenderAsPrevious: false, isLastMessageSentBySelfUser: true, isTimeIntervalSinceLastMessageSignificant: true, isFirstMessageOfTheDay: true, isFirstUnreadMessage: true)
-//        ConversationMessageSectionBuilder.configure(section: self.section, for: message, context: context)
-//
-//        // THEN
-//        verifySectionSnapshots()
-//    }
-//
-//    func testThatItConfiguresMessageForSystemMessage_OtherUser_WithTimestamp() {
-//        // GIVEN
-//        let message = self.otherUserConversation.appendKnock()!
-//
-//        // WHEN
-//        let context = ConversationMessageContext(isSameSenderAsPrevious: false, isLastMessageSentBySelfUser: false, isTimeIntervalSinceLastMessageSignificant: true, isFirstMessageOfTheDay: true, isFirstUnreadMessage: true)
-//        ConversationMessageSectionBuilder.configure(section: self.section, for: message, context: context)
-//
-//        // THEN
-//        verifySectionSnapshots()
-//    }
+    func testThatItConfiguresMessageForPingSystemMessage_Self_WithTimestamp() {
+        // GIVEN
+        let message = MockMessageFactory.pingMessage()!
+        message.sender = selfUser
+
+        // WHEN
+        let context = ConversationMessageContext(isSameSenderAsPrevious: false, isLastMessageSentBySelfUser: true, isTimeIntervalSinceLastMessageSignificant: true, isFirstMessageOfTheDay: true, isFirstUnreadMessage: true)
+        ConversationMessageSectionBuilder.configure(section: self.section, for: message, context: context, layoutProperties: ConversationCellLayoutProperties())
+
+        // THEN
+        verifySectionSnapshots()
+    }
+
+    func testThatItConfiguresMessageForSystemMessage_OtherUser_WithTimestamp() {
+        // GIVEN
+        let message = MockMessageFactory.pingMessage()!
+        message.sender = otherUser
+
+        // WHEN
+        let context = ConversationMessageContext(isSameSenderAsPrevious: false, isLastMessageSentBySelfUser: false, isTimeIntervalSinceLastMessageSignificant: true, isFirstMessageOfTheDay: true, isFirstUnreadMessage: true)
+        ConversationMessageSectionBuilder.configure(section: self.section, for: message, context: context, layoutProperties: ConversationCellLayoutProperties())
+
+        // THEN
+        verifySectionSnapshots()
+    }
 
 }
