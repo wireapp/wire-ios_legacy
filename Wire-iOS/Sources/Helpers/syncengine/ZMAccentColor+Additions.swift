@@ -20,9 +20,7 @@ import Foundation
 
 extension ZMAccentColor {    
     var color: UIColor {
-        get {
-            return UIColor(for: self)
-        }
+        return UIColor(for: self) ?? UIColor(for: .strongBlue)!
     }
     
     static func all() -> [ZMAccentColor] {

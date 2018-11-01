@@ -29,9 +29,8 @@ extension UIColor {
 
     @objc (accentColor)
     class func accent() -> UIColor {
-        return UIColor(for: indexedAccentColor())
+        return indexedAccentColor().color
     }
-
 
     @objc static func buttonEmptyText(variant: ColorSchemeVariant) -> UIColor {
         switch variant {

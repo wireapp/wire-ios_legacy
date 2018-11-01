@@ -21,69 +21,6 @@
 #import "UIColor+WAZExtensions.h"
 #import <WireExtensionComponents/WireExtensionComponents-Swift.h>
 
-//NSString * const ColorSchemeColorSeparator = @"separator";
-//NSString * const ColorSchemeColorCellSeparator = @"cell-separator";
-//NSString * const ColorSchemeColorBackground = @"background";
-//NSString * const ColorSchemeColorBarBackground = @"bar-background";
-//NSString * const ColorSchemeColorSearchBarBackground = @"search-bar-background";
-//NSString * const ColorSchemeColorContentBackground = @"content-background";
-//NSString * const ColorSchemeColorBackgroundOverlay = @"background-overlay";
-//NSString * const ColorSchemeColorBackgroundOverlayWithoutPicture = @"background-overlay-without-picture";
-//
-//NSString * const ColorSchemeColorTextForeground = @"text-foreground";
-//NSString * const ColorSchemeColorTextBackground = @"text-background";
-//NSString * const ColorSchemeColorTextDimmed = @"text-dimmed";
-//NSString * const ColorSchemeColorTextPlaceholder = @"text-placeholder";
-//
-//NSString * const ColorSchemeColorIconNormal = @"icon-normal";
-//NSString * const ColorSchemeColorIconSelected = @"icon-selected";
-//NSString * const ColorSchemeColorIconHighlighted = @"icon-highlighted";
-//NSString * const ColorSchemeColorIconBackgroundSelected = @"icon-background-selected";
-//NSString * const ColorSchemeColorIconBackgroundSelectedNoAccent = @"icon-background-selected-no-accent";
-//NSString * const ColorSchemeColorIconGuest = @"icon-guest";
-//
-//NSString * const ColorSchemeColorPopUpButtonOverlayShadow = @"popup-button-overlay-shadow";
-//
-//NSString * const ColorSchemeColorButtonHighlighted = @"button-highlighted";
-//NSString * const ColorSchemeColorButtonEmptyText = @"button-empty-text";
-//NSString * const ColorSchemeColorButtonFaded = @"button-faded";
-//
-//NSString * const ColorSchemeColorIconShadow = @"icon-shadow";
-//NSString * const ColorSchemeColorIconHighlight = @"icon-hightlight";
-//
-//NSString * const ColorSchemeColorTabNormal = @"tab-normal";
-//NSString * const ColorSchemeColorTabSelected = @"tab-selected";
-//NSString * const ColorSchemeColorTabHighlighted = @"tab-highlighted";
-//
-//NSString * const ColorSchemeColorCallBarBackground = @"call-bar-background";
-//NSString * const ColorSchemeColorCallBarSeparator = @"call-bar-separator";
-//
-//NSString * const ColorSchemeColorAvatarBorder = @"avatar-border";
-//NSString * const ColorSchemeColorListAvatarInitials = @"list-avatar-initials";
-//
-//NSString * const ColorSchemeColorContactSectionBackground = @"contact-section-background";
-//
-//NSString * const ColorSchemeColorPlaceholderBackground = @"placeholder-background";
-//NSString * const ColorSchemeColorPaleSeparator = @"separator-pale";
-//
-//NSString * const ColorSchemeColorAudioButtonOverlay = @"audio-button-overlay";
-//
-//NSString * const ColorSchemeColorLoadingDotActive = @"loading-dot-active";
-//NSString * const ColorSchemeColorLoadingDotInactive = @"loading-dot-inactive";
-//
-//NSString * const ColorSchemeColorNameAccentPrefix = @"name-accent";
-//
-//NSString * const ColorSchemeColorGraphite = @"graphite";
-//NSString * const ColorSchemeColorLightGraphite = @"graphite-light";
-//
-//NSString * const ColorSchemeColorSectionBackground = @"section-background";
-//NSString * const ColorSchemeColorSectionText = @"section-text";
-//
-//NSString * const ColorSchemeColorTokenFieldBackground = @"token-field-background";
-//NSString * const ColorSchemeColorTokenFieldTextPlaceHolder = @"token-field-text-placeholder";
-//
-//NSString * const ColorSchemeColorSelfMentionHighlight = @"self-mention-highlight";
-
 /// Generates the key name for the accent color that can be used to display the username.
 //static NSString * ColorSchemeNameAccentColorForColor(ZMAccentColor color);
 //
@@ -136,7 +73,7 @@
     if (self) {
         _variant = ColorSchemeVariantLight;
         _accentColor = [UIColor redColor];
-        [self updateColors];
+//        [self updateColors];
     }
     
     return self;
@@ -165,7 +102,6 @@
 - (void)setAccentColor:(UIColor *)accentColor
 {
     _accentColor = accentColor;
-    [self updateColors];
 }
 
 - (BOOL)isCurrentAccentColor:(UIColor *)accentColor
@@ -176,12 +112,6 @@
 - (void)setVariant:(ColorSchemeVariant)variant
 {
     _variant = variant;
-    [self updateColors];
-}
-
-- (void)updateColors
-{
-    self.colors = [self colorSchemeColorsWithAccentColor:self.accentColor colorSchemeVariant:self.variant];
 }
 
 + (instancetype)defaultColorScheme
@@ -195,25 +125,8 @@
     return defaultColorScheme;
 }
 
-//- (UIColor *)colorWithName:(ColorSchemeColor)colorName
+//- (NSDictionary *)colorSchemeColorsWithAccentColor:(UIColor *)accentColor colorSchemeVariant:(ColorSchemeVariant)variant
 //{
-//    return [self.colors objectForKey:colorName];
-//}
-//
-//- (UIColor *)colorWithName:(ColorSchemeColor)colorName variant:(ColorSchemeVariant)variant
-//{
-//    return [self.colors objectForKey:variant == ColorSchemeVariantLight ? light(colorName) : dark(colorName)];
-//}
-
-//- (UIColor *)nameAccentForColor:(ZMAccentColor)color variant:(ColorSchemeVariant)variant
-//{
-//    NSString *colorName = ColorSchemeNameAccentColorForColor(color);
-//
-//    return [self colorWithName:colorName variant:variant];
-//}
-
-- (NSDictionary *)colorSchemeColorsWithAccentColor:(UIColor *)accentColor colorSchemeVariant:(ColorSchemeVariant)variant
-{
 //    UIColor *clear = [UIColor clearColor];
 //    UIColor *white = [UIColor whiteColor];
 //    UIColor *white97 = [UIColor colorWithWhite:0.97 alpha:1];
@@ -364,8 +277,8 @@
 //        [colors addEntriesFromDictionary:darkColors];
 //    }
 
-    return [NSMutableDictionary dictionary];;
-}
+//    return [NSMutableDictionary dictionary];;
+//}
 
 - (BOOL)brightColor:(UIColor *)color
 {
