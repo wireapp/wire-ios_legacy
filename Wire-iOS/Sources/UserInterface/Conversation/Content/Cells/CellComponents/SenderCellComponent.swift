@@ -62,7 +62,7 @@ class SenderCellComponent: UIView {
 
         avatar.userSession = ZMUserSession.shared()
         avatar.initialsFont = .avatarInitial
-        avatar.size = .small
+        avatar.size = .badge
         avatar.translatesAutoresizingMaskIntoConstraints = false
         
         avatarSpacer.addSubview(avatar)
