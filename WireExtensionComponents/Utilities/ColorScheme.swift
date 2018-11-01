@@ -19,7 +19,7 @@
 import Foundation
 import UIKit
 
-extension UIColor {
+fileprivate extension UIColor {
     static var graphite: UIColor = UIColor.wr_color(from: "rgb(51, 55, 58)")
     static var graphiteAlpha8: UIColor = UIColor.wr_color(from: "rgb(51, 55, 58, 0.08)")
     static var graphiteAlpha16: UIColor = UIColor.wr_color(from: "rgb(51, 55, 58, 0.16)")
@@ -32,6 +32,8 @@ extension UIColor {
     static var lightGraphiteAlpha24: UIColor = UIColor.wr_color(from: "rgb(141, 152, 159, 0.24)")
     static var lightGraphiteAlpha48: UIColor = UIColor.wr_color(from: "rgb(141, 152, 159, 0.48)")
     static var lightGraphiteAlpha64: UIColor = UIColor.wr_color(from: "rgb(141, 152, 159, 0.64)")
+    static var lightGraphiteWhite: UIColor = lightGraphiteAlpha8.removeAlphaByBlending(with: .white98)!
+    static var lightGraphiteDark: UIColor = lightGraphiteAlpha8.removeAlphaByBlending(with: .backgroundGraphite)
 
     static var backgroundGraphite: UIColor = UIColor.wr_color(from: "rgb(22, 24, 25)")
     static var backgroundGraphiteAlpha40: UIColor = UIColor.wr_color(from: "rgb(22, 24, 25, 0.4)")
@@ -56,31 +58,8 @@ extension UIColor {
 
     static var amberAlpha48: UIColor = UIColor.wr_color(from: "rgb(254, 191, 2, 0.48)")
     static var amberAlpha80: UIColor = UIColor.wr_color(from: "rgb(254, 191, 2, 0.8)")
-
 }
 
-public extension UIColor {
-    @objc public convenience init?(for accentColor: ZMAccentColor) {
-        switch accentColor {
-        case .strongBlue:
-            self.init(red: 0.141, green: 0.552, blue: 0.827, alpha: 1)
-        case .strongLimeGreen:
-            self.init(red: 0, green: 0.784, blue: 0, alpha: 1)
-        case .brightYellow:
-            self.init(red: 0.996, green: 0.749, blue: 0.007, alpha: 1)
-        case .vividRed:
-            self.init(red: 1, green: 0.152, blue: 0, alpha: 1)
-        case .brightOrange:
-            self.init(red: 1, green: 0.537, blue: 0, alpha: 1)
-        case .softPink:
-            self.init(red: 0.996, green: 0.368, blue: 0.741, alpha:1)
-        case .violet:
-            self.init(red: 0.615, green: 0, blue: 1, alpha: 1)
-        default:
-            return nil
-        }
-    }
-}
 
 @objc public enum ColorSchemeColor: Int {
     case textForeground
@@ -147,12 +126,12 @@ extension UIColor {
     }
 }
 
-struct ColourPair {
+fileprivate struct ColourPair {
     let light: UIColor
     let dark: UIColor
 }
 
-extension ColourPair {
+fileprivate extension ColourPair {
     init(both color: UIColor) {
         self.init(light: color, dark: color)
     }
@@ -215,9 +194,7 @@ extension ColorSchemeColor {
         case .audioButtonOverlay:
             return ColourPair(both: .lightGraphiteAlpha24)
         case .placeholderBackground:
-            let light = UIColor.lightGraphiteAlpha8.removeAlphaByBlending(with: .white98)!
-            let dark = UIColor.lightGraphiteAlpha8.removeAlphaByBlending(with: .backgroundGraphite)!
-            return ColourPair(light: light, dark: dark)
+            return ColourPair(light: .lightGraphiteWhite, dark: .lightGraphiteDark)
         case .loadingDotActive:
             return ColourPair(light: .graphiteAlpha40, dark: .whiteAlpha40)
         case .loadingDotInactive:
