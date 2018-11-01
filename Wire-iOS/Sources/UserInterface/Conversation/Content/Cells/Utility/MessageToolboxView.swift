@@ -192,16 +192,16 @@ extension ZMSystemMessageData {
         
         self.forceShowTimestamp = forceShowTimestamp
         self.message = message
-        
+
+        self.configureLikedState(message)
+        self.layoutIfNeeded()
+
         if !self.forceShowTimestamp && message.hasReactions() {
-            self.configureLikedState(message)
-            self.layoutIfNeeded()
             showReactionsView(true, animated: animated)
             self.configureReactions(message, animated: animated)
             self.tapGestureRecogniser.isEnabled = true
         }
         else {
-            self.layoutIfNeeded()
             showReactionsView(false, animated: animated)
             self.configureTimestamp(message, animated: animated)
             self.tapGestureRecogniser.isEnabled = false
