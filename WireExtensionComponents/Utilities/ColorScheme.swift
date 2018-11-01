@@ -250,31 +250,6 @@ extension ColorSchemeColor {
     }
 }
 
-fileprivate extension ZMAccentColor {
-    var name: String {
-        switch self {
-        case .undefined:
-            return "undefined"
-        case .strongBlue:
-            return "strong-blue"
-        case .strongLimeGreen:
-            return "strong-lime-green"
-        case .brightYellow:
-            return "bright-yellow"
-        case .vividRed:
-            return "vivid-red"
-        case .brightOrange:
-            return "bright-orange"
-        case .softPink:
-            return "soft-pink"
-        case .violet:
-            return "violet"
-        default:
-            fatalError("Invalid accent color")
-        }
-    }
-}
-
 public extension ColorScheme {
     @objc(colorWithName:)
     public func color(named: ColorSchemeColor) -> UIColor {
