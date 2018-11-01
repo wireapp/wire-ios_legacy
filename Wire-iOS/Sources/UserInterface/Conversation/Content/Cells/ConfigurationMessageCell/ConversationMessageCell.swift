@@ -17,6 +17,7 @@
 //
 
 import UIKit
+import WireUtilities
 
 /**
  * A generic view that displays conversation contents.
@@ -83,33 +84,6 @@ extension ConversationMessageCellDescription {
         return tableView.dequeueConversationCell(for: type(of: self), description: self, for: indexPath)
     }
 
-}
-
-// MARK: - Type Erased Container
-
-struct AnyConstantProperty<Value> {
-    let getter: () -> Value
-
-    init<Base>(_ base: Base, keyPath: Swift.KeyPath<Base, Value>) {
-        getter = {
-            return base[keyPath: keyPath]
-        }
-    }
-}
-
-struct AnyMutableProperty<Value> {
-    let getter: () -> Value
-    let setter: (Value) -> Void
-
-    init<Base>(_ base: Base, keyPath: ReferenceWritableKeyPath<Base, Value>) {
-        getter = {
-            return base[keyPath: keyPath]
-        }
-
-        setter = { newValue in
-            base[keyPath: keyPath] = newValue
-        }
-    }
 }
 
 /**
