@@ -73,6 +73,7 @@ extension ConversationInputBarViewController: UITextViewDelegate {
             return false
         }
 
+        // insert mention if return or tab key is pressed and mention view is visible
         if text.count == 1,
             text.containsCharacters(from: CharacterSet.newlinesAndTabulation),
             canInsertMention,
