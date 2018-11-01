@@ -106,7 +106,7 @@ class SettingsClientViewController: UIViewController,
     func setupFromConversationStyle() {
         view.backgroundColor = .background
         tableView.separatorColor = .separator
-        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor(scheme: .textForeground)]
+        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.from(scheme: .textForeground)]
     }
 
     override func viewWillAppear(_ animated: Bool) {

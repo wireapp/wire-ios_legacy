@@ -66,7 +66,7 @@ final class ConversationOptionsViewController: UIViewController, UITableViewDele
         tableView.separatorStyle = .none
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.backgroundColor = UIColor(scheme: .contentBackground, variant: variant)
+        tableView.backgroundColor = UIColor.from(scheme: .contentBackground, variant: variant)
         if #available(iOS 11.0, *) {
             tableView.contentInsetAdjustmentBehavior = .never
         }

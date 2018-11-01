@@ -21,66 +21,66 @@ import Foundation
 extension UIColor {
 
     static var textDimmed: UIColor {
-        return UIColor(scheme: .textDimmed)
+        return UIColor.from(scheme: .textDimmed)
     }
 
     static var textForeground: UIColor {
-        return UIColor(scheme: .textForeground)
+        return UIColor.from(scheme: .textForeground)
     }
 
     static var textForegroundLight: UIColor {
-        return UIColor(scheme: .textForeground, variant: .light)
+        return UIColor.from(scheme: .textForeground, variant: .light)
     }
 
     static var textForegroundDark: UIColor {
-        return UIColor(scheme: .textForeground, variant: .dark)
+        return UIColor.from(scheme: .textForeground, variant: .dark)
     }
 
     static var textBackground: UIColor {
-        return UIColor(scheme: .textBackground)
+        return UIColor.from(scheme: .textBackground)
     }
 
     static var backgroundLight: UIColor {
-        return UIColor(scheme: .background, variant: .light)
+        return UIColor.from(scheme: .background, variant: .light)
     }
 
     static var backgroundDark: UIColor {
-        return UIColor(scheme: .background, variant: .dark)
+        return UIColor.from(scheme: .background, variant: .dark)
     }
 
     static var background: UIColor {
-        return UIColor(scheme: .background)
+        return UIColor.from(scheme: .background)
     }
 
     static var textPlaceholder: UIColor {
-        return UIColor(scheme: .textPlaceholder)
+        return UIColor.from(scheme: .textPlaceholder)
     }
 
     static var placeholderBackground: UIColor {
-        return UIColor(scheme: .placeholderBackground)
+        return UIColor.from(scheme: .placeholderBackground)
     }
 
     static var separator: UIColor {
-        return UIColor(scheme: .separator)
+        return UIColor.from(scheme: .separator)
     }
 
     static var iconNormal: UIColor {
-        return UIColor(scheme: .iconNormal)
+        return UIColor.from(scheme: .iconNormal)
     }
 
     static var iconNormalDark: UIColor {
-        return UIColor(scheme: .iconNormal, variant: .dark)
+        return UIColor.from(scheme: .iconNormal, variant: .dark)
     }
 
     static var iconHighlighted: UIColor {
-        return UIColor(scheme: .iconHighlighted)
+        return UIColor.from(scheme: .iconHighlighted)
     }
 
     static var iconHighlightedDark: UIColor {
-        return UIColor(scheme: .iconHighlighted, variant: .dark)
+        return UIColor.from(scheme: .iconHighlighted, variant: .dark)
     }
 
     static var contentBackground: UIColor {
-        return UIColor(scheme: .contentBackground)
+        return UIColor.from(scheme: .contentBackground)
     }
 }

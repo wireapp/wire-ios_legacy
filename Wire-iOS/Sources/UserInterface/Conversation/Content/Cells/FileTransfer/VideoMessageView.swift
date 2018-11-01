@@ -55,7 +55,7 @@ import Cartography
 
         self.previewImageView.contentMode = .scaleAspectFill
         self.previewImageView.clipsToBounds = true
-        self.previewImageView.backgroundColor = UIColor(scheme: .placeholderBackground)
+        self.previewImageView.backgroundColor = UIColor.from(scheme: .placeholderBackground)
 
         self.playButton.addTarget(self, action: #selector(VideoMessageView.onActionButtonPressed(_:)), for: .touchUpInside)
         self.playButton.accessibilityIdentifier = "VideoActionButton"
@@ -126,7 +126,7 @@ import Cartography
         
         if (state != .unavailable) {
             updateTimeLabel(withFileMessageData: fileMessageData)
-            self.timeLabel.textColor = UIColor(scheme: .textForeground)
+            self.timeLabel.textColor = UIColor.from(scheme: .textForeground)
             
             fileMessageData.thumbnailImage.fetchImage { [weak self] (image, _) in
                 guard let image = image else { return }
@@ -177,7 +177,7 @@ import Cartography
     
     private func updatePreviewImage(_ image: MediaAsset) {
         previewImageView.setMediaAsset(image) 
-        timeLabel.textColor = UIColor(scheme: .textForeground, variant: .dark)
+        timeLabel.textColor = UIColor.from(scheme: .textForeground, variant: .dark)
         updateVisibleViews()
     }
     

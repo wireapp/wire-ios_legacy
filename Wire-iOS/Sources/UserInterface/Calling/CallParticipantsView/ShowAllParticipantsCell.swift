@@ -90,11 +90,11 @@ class ShowAllParticipantsCell: UICollectionViewCell {
     }
     
     private func configureColors() {
-        let sectionTextColor = UIColor(scheme: .sectionText, variant: variant)
+        let sectionTextColor = UIColor.from(scheme: .sectionText, variant: variant)
         backgroundColor = .clear
-        participantIconView.image = UIImage(for: .person, iconSize: .tiny, color: UIColor(scheme: .textForeground, variant: variant))
+        participantIconView.image = UIImage(for: .person, iconSize: .tiny, color: UIColor.from(scheme: .textForeground, variant: variant))
         accessoryIconView.image = UIImage(for: .disclosureIndicator, iconSize: .like, color: sectionTextColor)
-        titleLabel.textColor = UIColor(scheme: .textForeground, variant: variant)
+        titleLabel.textColor = UIColor.from(scheme: .textForeground, variant: variant)
     }
     
 }
@@ -112,7 +112,7 @@ extension ShowAllParticipantsCell: ParticipantsCellConfigurable {
     func configure(with rowType: ParticipantsRowType, conversation: ZMConversation, showSeparator: Bool) {
         guard case let .showAll(count) = rowType else { preconditionFailure() }
         titleLabel.text = "call.participants.show_all".localized(args: String(count))
-        backgroundColor = .init(scheme: .barBackground)
+        backgroundColor = .from(scheme: .barBackground)
 
     }
 }

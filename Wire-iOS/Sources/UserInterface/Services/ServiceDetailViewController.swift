@@ -140,7 +140,7 @@ final class ServiceDetailViewController: UIViewController {
         self.actionButton.addCallback(for: .touchUpInside, callback: callback(for: actionType, completion: self.completion))
 
         if self.variant.opaque {
-            view.backgroundColor = UIColor(scheme: .background, variant: self.variant.colorScheme)
+            view.backgroundColor = UIColor.from(scheme: .background, variant: self.variant.colorScheme)
         } else {
             view.backgroundColor = .clear
         }

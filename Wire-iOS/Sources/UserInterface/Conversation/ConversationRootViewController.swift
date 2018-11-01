@@ -47,8 +47,8 @@ import Cartography
         navbar.isOpaque = true
         navbar.setBackgroundImage(UIImage(), for: .any, barMetrics: .default)
         navbar.shadowImage = UIImage()
-        navbar.barTintColor = UIColor(scheme: .barBackground)
-        navbar.tintColor = UIColor(scheme: .textForeground)
+        navbar.barTintColor = UIColor.from(scheme: .barBackground)
+        navbar.tintColor = UIColor.from(scheme: .textForeground)
 
         navBarContainer = UINavigationBarContainer(navbar)
 
@@ -74,7 +74,7 @@ import Cartography
             return
         }
 
-        self.view.backgroundColor = UIColor(scheme: .barBackground)
+        self.view.backgroundColor = UIColor.from(scheme: .barBackground)
 
         self.addToSelf(navBarContainer)
         self.view.addSubview(self.contentView)

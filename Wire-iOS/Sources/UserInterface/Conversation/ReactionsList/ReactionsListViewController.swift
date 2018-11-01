@@ -76,7 +76,7 @@ import Cartography
             collectionView.top == topBar.bottom
         }
 
-        view.backgroundColor = UIColor(scheme: .textBackground)
+        view.backgroundColor = UIColor.from(scheme: .textBackground)
     }
     
     override open var supportedInterfaceOrientations : UIInterfaceOrientationMask {

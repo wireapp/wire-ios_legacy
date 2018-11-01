@@ -86,7 +86,7 @@ class UserSearchResultsViewController: UIViewController, KeyboardCollapseObserve
         collectionView.delegate = self
         collectionView.register(UserCell.self, forCellWithReuseIdentifier: UserCell.reuseIdentifier)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.backgroundColor = UIColor(scheme: .barBackground)
+        collectionView.backgroundColor = UIColor.from(scheme: .barBackground)
         
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical

@@ -26,13 +26,13 @@ internal class TextSearchResultCell: UITableViewCell {
     fileprivate let userImageView = UserImageView()
     fileprivate let separatorView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor(scheme: .separator)
+        view.backgroundColor = UIColor.from(scheme: .separator)
         return view
     }()
     fileprivate var observerToken: Any?
     public let resultCountView: RoundedTextBadge = {
         let roundedTextBadge = RoundedTextBadge()
-        roundedTextBadge.backgroundColor = UIColor(scheme: .lightGraphite)
+        roundedTextBadge.backgroundColor = UIColor.from(scheme: .lightGraphite)
 
         return roundedTextBadge
     }()
@@ -156,8 +156,8 @@ internal class TextSearchResultCell: UITableViewCell {
     override func setHighlighted(_ highlighted: Bool, animated: Bool)  {
         super.setHighlighted(highlighted, animated: animated)
         
-        let backgroundColor = UIColor(scheme: .contentBackground)
-        let foregroundColor = UIColor(scheme: .textForeground)
+        let backgroundColor = UIColor.from(scheme: .contentBackground)
+        let foregroundColor = UIColor.from(scheme: .textForeground)
         
         contentView.backgroundColor = highlighted ? backgroundColor.mix(foregroundColor, amount: 0.1) : backgroundColor
     }

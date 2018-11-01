@@ -162,7 +162,7 @@ import Cartography
         self.expandTransparentIconViewWidthConstraint.constant = defaultViewWidth
         self.expandWidthConstraint.constant = defaultViewWidth
         
-        self.textLabel.textColor = UIColor(scheme: .textForeground, variant: .dark)
+        self.textLabel.textColor = UIColor.from(scheme: .textForeground, variant: .dark)
         
         switch self.icon {
         case .none:
@@ -189,14 +189,14 @@ import Cartography
             self.transparentIconView.image = UIImage(for: .pencil, fontSize: 12.0, color: .white)
             
         case .unreadMessages(_), .mention:
-            self.textLabel.textColor = UIColor(scheme: .textForeground, variant: .light)
-            self.badgeView.backgroundColor = UIColor(scheme: .textBackground, variant: .light)
+            self.textLabel.textColor = UIColor.from(scheme: .textForeground, variant: .light)
+            self.badgeView.backgroundColor = UIColor.from(scheme: .textBackground, variant: .light)
             
         case .unreadPing:
-            self.badgeView.backgroundColor = UIColor(scheme: .textBackground, variant: .light)
+            self.badgeView.backgroundColor = UIColor.from(scheme: .textBackground, variant: .light)
 
         case .missedCall:
-            self.badgeView.backgroundColor = UIColor(scheme: .textBackground, variant: .light)
+            self.badgeView.backgroundColor = UIColor.from(scheme: .textBackground, variant: .light)
 
         default:
             self.transparentIconView.image = .none

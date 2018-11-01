@@ -40,8 +40,8 @@ class AnimatedPenView : UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        let iconColor = UIColor(scheme: .textForeground)
-        let backgroundColor = UIColor(scheme: .background)
+        let iconColor = UIColor.from(scheme: .textForeground)
+        let backgroundColor = UIColor.from(scheme: .background)
         
         dots.image = UIImage(for: .typingDots, fontSize: 8, color: iconColor)
         pen.image = UIImage(for: .pencil, fontSize: 8, color: iconColor)

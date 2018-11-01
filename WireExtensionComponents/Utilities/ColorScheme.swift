@@ -145,15 +145,6 @@ extension UIColor {
     public static func from(scheme: ColorSchemeColor, variant: ColorSchemeVariant) -> UIColor {
         return ColorScheme.default.color(named: scheme, variant: variant)
     }
-
-    convenience public init(scheme: ColorSchemeColor) {
-        self.init(cgColor: ColorScheme.default.color(named: scheme).cgColor)
-    }
-
-    convenience public init(scheme: ColorSchemeColor, variant: ColorSchemeVariant) {
-        self.init(cgColor: ColorScheme.default.color(named: scheme, variant: variant).cgColor)
-    }
-
 }
 
 struct ColourPair {

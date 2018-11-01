@@ -25,7 +25,7 @@ import Cartography
     
     let separatorView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor(scheme: .separator, variant: .light)
+        view.backgroundColor = UIColor.from(scheme: .separator, variant: .light)
 
         return view
     }()

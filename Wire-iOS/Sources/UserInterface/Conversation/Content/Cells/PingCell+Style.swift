@@ -22,6 +22,6 @@ extension PingCell {
     @objc func setupStyle() {
         pingFont = .mediumFont
         authorFont = .mediumSemiboldFont
-        pingLabel.textColor = UIColor(scheme: .textForeground)
+        pingLabel.textColor = UIColor.from(scheme: .textForeground)
     }
 }

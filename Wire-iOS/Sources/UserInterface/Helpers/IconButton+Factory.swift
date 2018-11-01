@@ -47,7 +47,7 @@ extension IconButton {
 
     static func sendButton() -> IconButton {
 
-        let sendButtonIconColor = UIColor(scheme: .background, variant: .light)
+        let sendButtonIconColor = UIColor.from(scheme: .background, variant: .light)
 
         let sendButton = IconButton(
             icon: .send,

@@ -167,7 +167,7 @@ import WireExtensionComponents
         obfuscationView.isHidden = !obfuscated
         
         if obfuscated {
-            imageView.image = UIImage(for: .link, iconSize: .tiny, color: UIColor(scheme: .background))
+            imageView.image = UIImage(for: .link, iconSize: .tiny, color: UIColor.from(scheme: .background))
             imageView.contentMode = .center
         } else {
             imageView.image = nil

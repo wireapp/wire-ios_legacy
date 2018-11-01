@@ -70,7 +70,7 @@ extension ZMSystemMessageData {
         let attributedLabel = TTTAttributedLabel(frame: CGRect.zero)
         attributedLabel.font = UIFont.smallSemiboldFont
         attributedLabel.backgroundColor = .clear
-        attributedLabel.textColor = UIColor(scheme: .textDimmed)
+        attributedLabel.textColor = UIColor.from(scheme: .textDimmed)
         attributedLabel.textInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
 
         return attributedLabel

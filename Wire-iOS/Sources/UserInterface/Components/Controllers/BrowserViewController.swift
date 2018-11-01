@@ -32,7 +32,7 @@ import SafariServices
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        preferredControlTintColor = UIColor(scheme: .textForeground, variant: .light)
+        preferredControlTintColor = UIColor.from(scheme: .textForeground, variant: .light)
         delegate = self
     }
 

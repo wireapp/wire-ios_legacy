@@ -47,7 +47,7 @@ final class DraftSendInputAccessoryView: UIView {
     func setupViews() {
         backgroundColor = UIColor.clear
         [sendButton, separator].forEach(addSubview)
-        separator.backgroundColor = UIColor(scheme: .separator)
+        separator.backgroundColor = UIColor.from(scheme: .separator)
 
 
         sendButton.hitAreaPadding = CGSize(width: 30, height: 30)

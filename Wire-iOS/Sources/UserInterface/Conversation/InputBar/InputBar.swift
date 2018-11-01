@@ -135,7 +135,7 @@ private struct InputBarConstants {
     public let markdownView = MarkdownBarView()
     
     public var editingBackgroundColor = UIColor.brightYellow
-    public var barBackgroundColor: UIColor? = UIColor(scheme: .barBackground)
+    public var barBackgroundColor: UIColor? = UIColor.from(scheme: .barBackground)
     public var writingSeparatorColor: UIColor? = .separator
     public var ephemeralColor: UIColor {
         return .accent()
@@ -466,8 +466,8 @@ private struct InputBarConstants {
                 return
             }
             
-            button.setIconColor(UIColor(scheme: .iconNormal), for: .normal)
-            button.setIconColor(UIColor(scheme: .iconHighlighted), for: .highlighted)
+            button.setIconColor(UIColor.from(scheme: .iconNormal), for: .normal)
+            button.setIconColor(UIColor.from(scheme: .iconHighlighted), for: .highlighted)
         }
     }
 

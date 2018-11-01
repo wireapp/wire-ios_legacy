@@ -53,7 +53,7 @@ class ContactsCell: UITableViewCell, SeparatorViewProtocol {
     }
 
     final func contentBackgroundColor(for colorSchemeVariant: ColorSchemeVariant) -> UIColor {
-        return contentBackgroundColor ?? UIColor(scheme: .barBackground, variant: colorSchemeVariant)
+        return contentBackgroundColor ?? UIColor.from(scheme: .barBackground, variant: colorSchemeVariant)
     }
 
     static let boldFont: UIFont = .smallRegularFont
@@ -220,7 +220,7 @@ class ContactsCell: UITableViewCell, SeparatorViewProtocol {
             return
         }
 
-        titleLabel.attributedText = user.nameIncludingAvailability(color: UIColor(scheme: .textForeground, variant: colorSchemeVariant))
+        titleLabel.attributedText = user.nameIncludingAvailability(color: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant))
     }
 
     @objc func actionButtonPressed(sender: Any?) {
@@ -232,12 +232,12 @@ class ContactsCell: UITableViewCell, SeparatorViewProtocol {
 
 extension ContactsCell: Themeable {
     func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
-        separator.backgroundColor = UIColor(scheme: .separator, variant: colorSchemeVariant)
+        separator.backgroundColor = UIColor.from(scheme: .separator, variant: colorSchemeVariant)
 
-        let sectionTextColor = UIColor(scheme: .sectionText, variant: colorSchemeVariant)
+        let sectionTextColor = UIColor.from(scheme: .sectionText, variant: colorSchemeVariant)
         backgroundColor = contentBackgroundColor(for: colorSchemeVariant)
 
-        titleLabel.textColor = UIColor(scheme: .textForeground, variant: colorSchemeVariant)
+        titleLabel.textColor = UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)
         subtitleLabel.textColor = sectionTextColor
 
         updateTitleLabel()

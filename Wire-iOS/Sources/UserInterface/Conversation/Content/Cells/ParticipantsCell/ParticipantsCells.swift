@@ -227,7 +227,7 @@ import TTTAttributedLabel
             boldFont: labelBoldFont,
             largeFont: labelLargeFont,
             textColor: labelTextColor,
-            iconColor: UIColor(scheme: .textDimmed),
+            iconColor: UIColor.from(scheme: .textDimmed),
             message: message
         )
 

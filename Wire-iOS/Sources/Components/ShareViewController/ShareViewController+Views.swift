@@ -48,8 +48,8 @@ extension ShareViewController {
         self.tokenField.textColor = .white
         self.tokenField.clipsToBounds = true
         self.tokenField.layer.cornerRadius = 4
-        self.tokenField.tokenTitleColor = UIColor(scheme: .textForeground, variant: .dark)
-        self.tokenField.tokenSelectedTitleColor = UIColor(scheme: .textForeground, variant: .dark)
+        self.tokenField.tokenTitleColor = UIColor.from(scheme: .textForeground, variant: .dark)
+        self.tokenField.tokenSelectedTitleColor = UIColor.from(scheme: .textForeground, variant: .dark)
         self.tokenField.tokenTitleVerticalAdjustment = 1
         self.tokenField.textView.placeholderTextAlignment = .natural
         self.tokenField.textView.accessibilityIdentifier = "textViewSearch"
@@ -58,7 +58,7 @@ extension ShareViewController {
         self.tokenField.textView.returnKeyType = .done
         self.tokenField.textView.autocorrectionType = .no
         self.tokenField.textView.textContainerInset = UIEdgeInsets(top: 9, left: 40, bottom: 11, right: 12)
-        self.tokenField.textView.backgroundColor = UIColor(scheme: .tokenFieldBackground, variant: .dark)
+        self.tokenField.textView.backgroundColor = UIColor.from(scheme: .tokenFieldBackground, variant: .dark)
         self.tokenField.delegate = self
 
         self.destinationsTableView.backgroundColor = .clear

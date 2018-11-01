@@ -54,7 +54,7 @@ class GroupDetailsRenameCell : UICollectionViewCell {
         verifiedIconView.setContentCompressionResistancePriority(UILayoutPriority.required, for: .horizontal)
         verifiedIconView.accessibilityIdentifier = "img.shield"
         
-        accessoryIconView.image = UIImage(for: .pencil, iconSize: .like, color: UIColor(scheme: .textForeground, variant: variant))
+        accessoryIconView.image = UIImage(for: .pencil, iconSize: .like, color: UIColor.from(scheme: .textForeground, variant: variant))
         accessoryIconView.translatesAutoresizingMaskIntoConstraints = false
         accessoryIconView.contentMode = .scaleAspectFit
         accessoryIconView.setContentHuggingPriority(UILayoutPriority.required, for: .horizontal)
@@ -89,9 +89,9 @@ class GroupDetailsRenameCell : UICollectionViewCell {
     }
     
     private func configureColors() {
-        backgroundColor = UIColor(scheme: .barBackground, variant: variant)
-        accessoryIconView.image = UIImage(for: .pencil, iconSize: .tiny, color: UIColor(scheme: .textForeground, variant: variant))
-        titleTextField.textColor = UIColor(scheme: .textForeground, variant: variant)
+        backgroundColor = UIColor.from(scheme: .barBackground, variant: variant)
+        accessoryIconView.image = UIImage(for: .pencil, iconSize: .tiny, color: UIColor.from(scheme: .textForeground, variant: variant))
+        titleTextField.textColor = UIColor.from(scheme: .textForeground, variant: variant)
     }
     
 }

@@ -22,6 +22,6 @@ extension ProfileDevicesViewController {
     @objc func setupStyle() {
         tableView.separatorColor = .separator
 
-        view.backgroundColor = UIColor(scheme: .contentBackground)
+        view.backgroundColor = UIColor.from(scheme: .contentBackground)
     }
 }

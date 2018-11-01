@@ -50,7 +50,7 @@ class GuestsBarController: UIViewController {
     
     private func setupViews() {
         view.backgroundColor = .clear
-        container.backgroundColor = UIColor(scheme: .lightGraphite, variant: .dark)
+        container.backgroundColor = UIColor.from(scheme: .lightGraphite, variant: .dark)
         container.clipsToBounds = true
         label.font = FontSpec(.small, .semibold).font!
         label.textColor = .white

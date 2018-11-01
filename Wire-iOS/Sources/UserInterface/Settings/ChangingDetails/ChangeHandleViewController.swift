@@ -47,7 +47,7 @@ protocol ChangeHandleTableViewCellDelegate: class {
     let prefixLabel: UILabel = {
         let label = UILabel()
         label.font = .normalSemiboldFont
-        label.textColor = UIColor(scheme: .textDimmed, variant: .dark)
+        label.textColor = UIColor.from(scheme: .textDimmed, variant: .dark)
 
         return label
     }()

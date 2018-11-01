@@ -81,7 +81,7 @@ final class MessageComposeViewController: UIViewController {
     }
 
     private func setupViews() {
-        view.backgroundColor = UIColor(scheme: .background)
+        view.backgroundColor = UIColor.from(scheme: .background)
         [messageTextView, sendButtonView, markdownBarView].forEach(view.addSubview)
         setupInputAccessoryView()
         setupNavigationItem()
@@ -115,12 +115,12 @@ final class MessageComposeViewController: UIViewController {
 
     private func setupNavigationItem() {
         subjectTextField.delegate = self
-        subjectTextField.textColor = UIColor(scheme: .textForeground)
+        subjectTextField.textColor = UIColor.from(scheme: .textForeground)
         subjectTextField.tintColor = .accent()
         subjectTextField.textAlignment = .center
         subjectTextField.font = FontSpec(.medium, .semibold).font!
         let placeholder = "compose.drafts.compose.subject.placeholder".localized.uppercased()
-        subjectTextField.attributedPlaceholder = placeholder && UIColor(scheme: .separator) && FontSpec(.medium, .semibold).font!
+        subjectTextField.attributedPlaceholder = placeholder && UIColor.from(scheme: .separator) && FontSpec(.medium, .semibold).font!
         subjectTextField.bounds = CGRect(x: 0, y: 0, width: 200, height: 44)
         subjectTextField.accessibilityLabel = "subjectTextField"
         subjectTextField.alpha = 0
@@ -151,8 +151,8 @@ final class MessageComposeViewController: UIViewController {
         draftsBackButton.setIcon(.compose, with: .tiny, for: .normal)
         draftsBackButton.frame = CGRect(x: 0, y: 0, width: 40, height: 20)
         draftsBackButton.titleLabel?.font = FontSpec(.medium, .semibold).font
-        draftsBackButton.setIconColor(UIColor(scheme: .textForeground), for: .normal)
-        draftsBackButton.setTitleColor(UIColor(scheme: .separator), for: .normal)
+        draftsBackButton.setIconColor(UIColor.from(scheme: .textForeground), for: .normal)
+        draftsBackButton.setTitleColor(UIColor.from(scheme: .separator), for: .normal)
         draftsBackButton.accessibilityIdentifier = "back"
 
         let count = persistence.numberOfStoredDrafts()

@@ -36,7 +36,7 @@ import Cartography
     public let dismissButton = IconButton()
     public let separatorView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor(scheme: .separator)
+        view.backgroundColor = UIColor.from(scheme: .separator)
         return view
     }()
 

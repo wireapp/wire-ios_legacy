@@ -44,7 +44,7 @@ import UIKit
         alignment = .center
         spacing = 20
         distribution = .fillProportionally
-        label.textColor = UIColor(scheme: .textForeground, variant: .dark)
+        label.textColor = UIColor.from(scheme: .textForeground, variant: .dark)
         label.font = FontSpec(.small, .regular).fontWithoutDynamicType
         [spinner, label].forEach(addArrangedSubview)
     }

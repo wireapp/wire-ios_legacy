@@ -27,7 +27,7 @@ extension ContactsViewController {
         bottomContainerView?.backgroundColor = .background
 
         noContactsLabel?.font = .normalLightFont
-        noContactsLabel?.textColor = UIColor(scheme: .textForeground, variant: .dark)
+        noContactsLabel?.textColor = UIColor.from(scheme: .textForeground, variant: .dark)
     }
 
     override open var preferredStatusBarStyle: UIStatusBarStyle {
