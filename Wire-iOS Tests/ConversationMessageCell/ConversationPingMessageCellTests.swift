@@ -21,6 +21,10 @@ import XCTest
 
 class ConversationPingMessageCellTests: ConversationCellSnapshotTests {
 
+    override func setUp() {
+        super.setUp()
+    }
+
     func testThatItConfiguresMessageForPingSystemMessage_Self_WithTimestamp() {
         // GIVEN
         let message = MockMessageFactory.pingMessage()!

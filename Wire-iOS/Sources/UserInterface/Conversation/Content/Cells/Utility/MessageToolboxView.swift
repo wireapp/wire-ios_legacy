@@ -251,7 +251,7 @@ extension ZMSystemMessageData {
     }
     
     fileprivate func configureLikedState(_ message: ZMConversationMessage) {
-        likeButtonContainer.isHidden = !message.canBeLiked
+        likeButton.isHidden = !message.canBeLiked
         likeButton.setSelected(message.liked, animated: false)
         self.reactionsView.likers = message.likers()
     }
