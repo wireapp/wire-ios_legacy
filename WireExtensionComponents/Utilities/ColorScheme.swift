@@ -44,7 +44,7 @@ extension UIColor {
     static var whiteAlpha24: UIColor = UIColor(white: 1.0, alpha: 0.24)
     static var whiteAlpha40: UIColor = UIColor(white: 1.0, alpha: 0.4)
     static var whiteAlpha56: UIColor = UIColor(white: 1.0, alpha: 0.56)
-    static var whiteAlpha64: UIColor = UIColor(white: 1.0, alpha: 0.56)
+    static var whiteAlpha64: UIColor = UIColor(white: 1.0, alpha: 0.64)
     static var whiteAlpha80: UIColor = UIColor(white: 1.0, alpha: 0.8)
 
     static var blackAlpha4: UIColor = UIColor(white: 0.0, alpha: 0.04)
@@ -54,7 +54,7 @@ extension UIColor {
     static var blackAlpha40: UIColor = UIColor(white: 0.0, alpha: 0.4)
     static var blackAlpha80: UIColor = UIColor(white: 0.0, alpha: 0.8)
 
-    static var amberAlpha48: UIColor = UIColor.wr_color(from: "rgb(254, 191, 2, 0.8)")
+    static var amberAlpha48: UIColor = UIColor.wr_color(from: "rgb(254, 191, 2, 0.48)")
     static var amberAlpha80: UIColor = UIColor.wr_color(from: "rgb(254, 191, 2, 0.8)")
 
 }

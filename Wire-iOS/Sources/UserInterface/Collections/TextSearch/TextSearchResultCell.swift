@@ -32,7 +32,7 @@ internal class TextSearchResultCell: UITableViewCell {
     fileprivate var observerToken: Any?
     public let resultCountView: RoundedTextBadge = {
         let roundedTextBadge = RoundedTextBadge()
-        roundedTextBadge.backgroundColor = UIColor(scheme: .graphite, variant: .light)
+        roundedTextBadge.backgroundColor = UIColor(scheme: .lightGraphite)
 
         return roundedTextBadge
     }()
