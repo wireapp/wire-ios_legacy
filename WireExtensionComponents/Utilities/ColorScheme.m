@@ -58,7 +58,6 @@
 @interface ColorScheme ()
 
 @property (nonatomic) NSDictionary *colors;
-@property (nonatomic) UIColor *accentColor;
 
 @end
 
@@ -73,7 +72,6 @@
     if (self) {
         _variant = ColorSchemeVariantLight;
         _accentColor = [UIColor redColor];
-//        [self updateColors];
     }
     
     return self;

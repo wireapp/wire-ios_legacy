@@ -283,7 +283,7 @@ public extension ColorScheme {
 
     @objc(colorWithName:variant:)
     public func color(named: ColorSchemeColor, variant: ColorSchemeVariant) -> UIColor {
-        let colorPair = named.colorPair(accentColor: .white)
+        let colorPair = named.colorPair(accentColor: accentColor)
         switch variant {
         case .dark:
             return colorPair.dark
