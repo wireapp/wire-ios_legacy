@@ -285,11 +285,6 @@ class ConversationMessageTimerCellDescription: ConversationMessageCellDescriptio
 
 }
 
-public extension String {
-    static let breakingSpace = " "           // classic whitespace
-    static let nonBreakingSpace = "\u{00A0}" // &#160;
-}
-
 class ConversationVerifiedSystemMessageSectionDescription: ConversationMessageCellDescription {
     typealias View = ConversationSystemMessageCell
     let configuration: View.Configuration
