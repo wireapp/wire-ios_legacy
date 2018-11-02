@@ -20,10 +20,6 @@ import Foundation
 
 extension UIColor {
 
-    static var textBackground: UIColor {
-        return UIColor.from(scheme: .textBackground)
-    }
-
     static var backgroundLight: UIColor {
         return UIColor.from(scheme: .background, variant: .light)
     }

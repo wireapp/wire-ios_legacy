@@ -96,7 +96,7 @@ public class ReactionCell: UICollectionViewCell {
     }
 
     func setupStyle() {
-        contentView.backgroundColor = .textBackground
+        contentView.backgroundColor = .from(scheme: .textBackground)
     }
 
     
