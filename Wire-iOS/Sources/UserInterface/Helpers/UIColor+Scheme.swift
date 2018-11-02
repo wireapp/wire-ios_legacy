@@ -20,10 +20,6 @@ import Foundation
 
 extension UIColor {
 
-    static var separator: UIColor {
-        return UIColor.from(scheme: .separator)
-    }
-
     static var iconNormal: UIColor {
         return UIColor.from(scheme: .iconNormal)
     }

@@ -34,7 +34,7 @@ import CoreLocation
         let button = IconButton()
         button.setIcon(.location, with: .tiny, for: [])
         button.borderWidth = 0.5
-        button.setBorderColor(.separator, for: .normal)
+        button.setBorderColor(.from(scheme: .separator), for: .normal)
         button.circular = true
         button.backgroundColor = .from(scheme: .background)
         button.setIconColor(.iconNormal, for: .normal)

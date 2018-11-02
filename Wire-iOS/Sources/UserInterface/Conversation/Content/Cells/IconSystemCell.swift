@@ -95,7 +95,7 @@ open class IconSystemCell: ConversationCell, TTTAttributedLabelDelegate {
         self.leftIconContainer.addSubview(self.leftIconView)
         self.messageContentView.addSubview(self.labelView)
         self.contentView.addSubview(self.lineView)
-        lineView.backgroundColor = .separator
+        lineView.backgroundColor = .from(scheme: .separator)
 
         var accessibilityElements = self.accessibilityElements ?? []
         accessibilityElements.append(contentsOf: [self.labelView, self.leftIconView])

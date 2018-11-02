@@ -44,7 +44,7 @@ import TTTAttributedLabel
     
     let lineView: UIView = {
         let view = UIView()
-        view.backgroundColor = .separator
+        view.backgroundColor = .from(scheme: .separator)
         return view
     }()
     var labelTextColor: UIColor? = .from(scheme: .textForeground)

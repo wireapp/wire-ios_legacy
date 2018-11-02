@@ -34,7 +34,7 @@ import Cartography
     }()
     public let separatorView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor.separator
+        view.backgroundColor = UIColor.from(scheme: .separator)
         return view
     }()
     fileprivate let containerView = UIView()

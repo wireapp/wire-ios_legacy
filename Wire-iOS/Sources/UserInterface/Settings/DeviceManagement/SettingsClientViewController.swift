@@ -105,7 +105,7 @@ class SettingsClientViewController: UIViewController,
 
     func setupFromConversationStyle() {
         view.backgroundColor = .from(scheme: .background)
-        tableView.separatorColor = .separator
+        tableView.separatorColor = .from(scheme: .separator)
         navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.from(scheme: .textForeground)]
     }
 

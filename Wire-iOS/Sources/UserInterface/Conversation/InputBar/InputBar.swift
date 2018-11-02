@@ -136,7 +136,7 @@ private struct InputBarConstants {
     
     public var editingBackgroundColor = UIColor.brightYellow
     public var barBackgroundColor: UIColor? = UIColor.from(scheme: .barBackground)
-    public var writingSeparatorColor: UIColor? = .separator
+    public var writingSeparatorColor: UIColor? = .from(scheme: .separator)
     public var ephemeralColor: UIColor {
         return .accent()
     }

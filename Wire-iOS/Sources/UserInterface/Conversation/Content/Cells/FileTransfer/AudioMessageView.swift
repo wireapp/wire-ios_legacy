@@ -60,7 +60,7 @@ private let zmLog = ZMSLog(tag: "UI")
 
     private let playerProgressView: ProgressView = {
         let progressView = ProgressView()
-        progressView.backgroundColor = .separator
+        progressView.backgroundColor = .from(scheme: .separator)
         progressView.tintColor = .accent()
 
         return progressView
