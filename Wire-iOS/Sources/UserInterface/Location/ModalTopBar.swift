@@ -53,7 +53,7 @@ import Cartography
         showsStatusBar = statusBar
         super.init(frame: CGRect.zero)
         configureViews()
-        backgroundColor = .background
+        backgroundColor = .from(scheme: .background)
 
         createConstraints()
     }

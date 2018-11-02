@@ -24,7 +24,7 @@ extension ContactsViewController {
         titleLabel?.font = .smallLightFont
         titleLabel?.textTransform = .upper
 
-        bottomContainerView?.backgroundColor = .background
+        bottomContainerView?.backgroundColor = .from(scheme: .background)
 
         noContactsLabel?.font = .normalLightFont
         noContactsLabel?.textColor = UIColor.from(scheme: .textForeground, variant: .dark)

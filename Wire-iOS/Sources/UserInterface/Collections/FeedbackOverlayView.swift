@@ -36,7 +36,7 @@ public final class FeedbackOverlayView: UIView {
         addSubview(titleLabel)
         constrainViews()
         alpha = 0.0
-        backgroundColor = .background
+        backgroundColor = .from(scheme: .background)
     }
     
     required public init?(coder aDecoder: NSCoder) {

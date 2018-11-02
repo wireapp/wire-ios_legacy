@@ -213,10 +213,10 @@ extension UserSearchResultsViewController: UICollectionViewDataSource {
             if indexPath.item == searchResults.count - 1 {
                 cell.backgroundColor = .cellHighlight
             } else {
-                cell.backgroundColor = .background
+                cell.backgroundColor = .from(scheme: .background)
             }
         } else {
-            cell.backgroundColor = .background
+            cell.backgroundColor = .from(scheme: .background)
         }
 
         return cell

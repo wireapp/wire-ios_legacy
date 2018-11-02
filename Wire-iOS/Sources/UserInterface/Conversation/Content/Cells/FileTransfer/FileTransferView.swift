@@ -34,7 +34,7 @@ final public class FileTransferView: UIView, TransferView {
     }()
     public let fileEyeView: UIImageView = {
         let imageView = UIImageView()
-        imageView.tintColor = .background
+        imageView.tintColor = .from(scheme: .background)
         return imageView
     }()
 

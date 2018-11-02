@@ -120,13 +120,13 @@ class AnimatedPenView : UIView {
     public let animatedPen = AnimatedPenView()
     public let container: UIView = {
         let view = UIView()
-        view.backgroundColor = .background
+        view.backgroundColor = .from(scheme: .background)
 
         return view
     }()
     public let expandingLine: UIView = {
         let view = UIView()
-        view.backgroundColor = .background
+        view.backgroundColor = .from(scheme: .background)
 
         return view
     }()

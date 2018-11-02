@@ -57,7 +57,7 @@ class GiphyConfirmationViewController: UIViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: closeImage, style: .plain, target: self, action: #selector
             (GiphySearchViewController.onDismiss))
 
-        view.backgroundColor = .background
+        view.backgroundColor = .from(scheme: .background)
     }
     
     required init?(coder aDecoder: NSCoder) {

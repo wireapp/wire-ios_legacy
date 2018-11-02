@@ -171,7 +171,7 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
 
         updateBarsForPreview()
 
-        view.backgroundColor = .background
+        view.backgroundColor = .from(scheme: .background)
     }
     
     private func createPageController() {

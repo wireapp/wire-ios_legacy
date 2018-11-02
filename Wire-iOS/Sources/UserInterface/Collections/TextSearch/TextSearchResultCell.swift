@@ -97,7 +97,7 @@ internal class TextSearchResultCell: UITableViewCell {
             separatorView.height == CGFloat.hairline
         }
 
-        textLabel?.textColor = .background
+        textLabel?.textColor = .from(scheme: .background)
         textLabel?.font = .smallSemiboldFont
     }
     

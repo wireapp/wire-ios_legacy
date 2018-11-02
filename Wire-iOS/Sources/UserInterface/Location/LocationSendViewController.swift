@@ -52,7 +52,7 @@ import Cartography
         configureViews()
         createConstraints()
 
-        view.backgroundColor = .background
+        view.backgroundColor = .from(scheme: .background)
     }
     
     fileprivate func configureViews() {

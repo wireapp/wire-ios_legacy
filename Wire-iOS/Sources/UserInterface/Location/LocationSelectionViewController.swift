@@ -36,7 +36,7 @@ import CoreLocation
         button.borderWidth = 0.5
         button.setBorderColor(.separator, for: .normal)
         button.circular = true
-        button.backgroundColor = .background
+        button.backgroundColor = .from(scheme: .background)
         button.setIconColor(.iconNormal, for: .normal)
         button.setIconColor(.iconHighlighted, for: .highlighted)
 
