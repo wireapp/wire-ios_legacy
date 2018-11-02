@@ -46,7 +46,7 @@
 
 @implementation EmailSignInViewController
 
-@synthesize authenticationCoordinator;
+@synthesize authenticationCoordinator=_authenticationCoordinator;
 
 - (void)viewDidLoad
 {
@@ -186,15 +186,11 @@
 - (void)createButtons
 {
     [self createForgotPasswordButton];
+    [self createCompanyLoginButton];
 
-    NSArray<__kindof UIView *> *buttons;
+    self.companyLoginButton.hidden = !self.canStartCompanyLoginFlow;
 
-    if (self.canStartCompanyLoginFlow) {
-        [self createCompanyLoginButton];
-        buttons = @[self.forgotPasswordButton, self.companyLoginButton];
-    } else {
-        buttons = @[self.forgotPasswordButton];
-    }
+    NSArray<__kindof UIView *> *buttons = @[self.forgotPasswordButton, self.companyLoginButton];
 
     // Stack View
     self.buttonsStackView = [[UIStackView alloc] initWithArrangedSubviews:buttons];
@@ -204,7 +200,6 @@
 
     [self.view addSubview:self.buttonsStackView];
 }
-
 
 - (void)createConstraints
 {
@@ -260,7 +255,19 @@
 
 - (BOOL)canStartCompanyLoginFlow
 {
-    return CompanyLoginController.companyLoginEnabled && !self.hasCompanyLoginCredentials;
+    BOOL coordinatorCanStartFlow = self.authenticationCoordinator != nil &&
+                                   [self.authenticationCoordinator canStartCompanyLoginFlow];
+    
+    return CompanyLoginController.companyLoginEnabled &&
+           !self.hasCompanyLoginCredentials &&
+           coordinatorCanStartFlow;
+}
+
+- (void)setAuthenticationCoordinator:(AuthenticationCoordinator *)authenticationCoordinator
+{
+    _authenticationCoordinator = authenticationCoordinator;
+    
+    self.companyLoginButton.hidden = !self.canStartCompanyLoginFlow;
 }
 
 #pragma mark - User Input

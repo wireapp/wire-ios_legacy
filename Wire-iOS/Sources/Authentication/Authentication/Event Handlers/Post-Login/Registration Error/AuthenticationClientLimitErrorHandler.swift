@@ -31,7 +31,7 @@ class AuthenticationClientLimitErrorHandler: AuthenticationEventHandler {
         let (error, _) = context
 
         // Only handle canNotRegisterMoreClients errors
-        guard context.0.userSessionErrorCode == .canNotRegisterMoreClients else {
+        guard error.userSessionErrorCode == .canNotRegisterMoreClients else {
             return nil
         }
 

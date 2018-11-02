@@ -121,6 +121,11 @@ import Cartography
             return .lightContent
         }
     }
+    
+    @objc (scrollToMessage:)
+    func scroll(to message: ZMConversationMessage) {
+        conversationViewController?.scroll(to: message)
+    }
 }
 
 
