@@ -39,6 +39,10 @@ import WireLinkPreview
     func requestLinkPreviewImageDownload() {
         // no-op
     }
+    
+    func editText(_ text: String, mentions: [Mention], fetchLinkPreview: Bool) {
+        // stub
+    }
 }
 
 @objcMembers class MockSystemMessageData: NSObject, ZMSystemMessageData {

@@ -66,6 +66,11 @@ extension UITextView {
         textView.isEditable = false
         textView.isSelectable = true
         
+        textView.backgroundColor = .clear
+        textView.textColor = .textForeground
+        
+        textView.setContentCompressionResistancePriority(.required, for: .vertical)
+        
         return textView
     }
 }
@@ -100,11 +105,9 @@ final class MessageThumbnailPreviewView: UIView {
     private func setupSubviews() {
         let allViews: [UIView] = [senderLabel, contentTextView, imagePreview]
         
-        contentTextView.backgroundColor = .clear
-        contentTextView.textColor = .textForeground
-
         senderLabel.font = .mediumSemiboldFont
         senderLabel.textColor = .textForeground
+        senderLabel.setContentCompressionResistancePriority(.required, for: .vertical)
         
         imagePreview.clipsToBounds = true
         imagePreview.contentMode = .scaleAspectFill
@@ -204,11 +207,10 @@ final class MessagePreviewView: UIView {
     private func setupSubviews() {
         let allViews: [UIView] = [senderLabel, contentTextView]
         
-        contentTextView.backgroundColor = .clear
-        contentTextView.textColor = .textForeground
         senderLabel.font = .mediumSemiboldFont
         senderLabel.textColor = .textForeground
-        
+        senderLabel.setContentCompressionResistancePriority(.required, for: .vertical)
+
         allViews.forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
         allViews.forEach(self.addSubview)
     }
