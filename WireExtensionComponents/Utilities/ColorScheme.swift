@@ -126,12 +126,12 @@ extension UIColor {
     }
 }
 
-fileprivate struct ColourPair {
+fileprivate struct ColorPair {
     let light: UIColor
     let dark: UIColor
 }
 
-fileprivate extension ColourPair {
+fileprivate extension ColorPair {
     init(both color: UIColor) {
         self.init(light: color, dark: color)
     }
@@ -139,88 +139,88 @@ fileprivate extension ColourPair {
 
 extension ColorSchemeColor {
 
-    fileprivate func colorPair(accentColor: UIColor) -> ColourPair  {
+    fileprivate func colorPair(accentColor: UIColor) -> ColorPair  {
         switch self {
         case .textForeground:
-            return ColourPair(light: .graphite, dark: .white)
+            return ColorPair(light: .graphite, dark: .white)
         case .textBackground:
-            return ColourPair(light: .white, dark: .backgroundGraphite)
+            return ColorPair(light: .white, dark: .backgroundGraphite)
         case .textDimmed:
-            return ColourPair(both: .lightGraphite)
+            return ColorPair(both: .lightGraphite)
         case .textPlaceholder:
-            return ColourPair(both: .lightGraphiteAlpha64)
+            return ColorPair(both: .lightGraphiteAlpha64)
         case .separator:
-            return ColourPair(light: .lightGraphiteAlpha48, dark: .lightGraphiteAlpha24)
+            return ColorPair(light: .lightGraphiteAlpha48, dark: .lightGraphiteAlpha24)
         case .barBackground:
-            return ColourPair(light: .white, dark: .backgroundLightGraphite)
+            return ColorPair(light: .white, dark: .backgroundLightGraphite)
         case .background:
-            return ColourPair(light: .white, dark: .backgroundGraphite)
+            return ColorPair(light: .white, dark: .backgroundGraphite)
         case .contentBackground:
-            return ColourPair(light: .white97, dark: .backgroundGraphite)
+            return ColorPair(light: .white97, dark: .backgroundGraphite)
         case .iconNormal:
-            return ColourPair(light: .graphite, dark: .white)
+            return ColorPair(light: .graphite, dark: .white)
         case .iconSelected:
-            return ColourPair(light: .white, dark: .black)
+            return ColorPair(light: .white, dark: .black)
         case .iconHighlighted:
-            return ColourPair(both: .white)
+            return ColorPair(both: .white)
         case .iconShadow:
-            return ColourPair(light: .blackAlpha8, dark: .blackAlpha24)
+            return ColorPair(light: .blackAlpha8, dark: .blackAlpha24)
         case .iconHighlight:
-            return ColourPair(light: .white, dark: .whiteAlpha16)
+            return ColorPair(light: .white, dark: .whiteAlpha16)
         case .iconBackgroundSelected:
-            return ColourPair(light: accentColor, dark: .white)
+            return ColorPair(light: accentColor, dark: .white)
         case .iconBackgroundSelectedNoAccent:
-            return ColourPair(light: .graphite, dark: .white)
+            return ColorPair(light: .graphite, dark: .white)
         case .popUpButtonOverlayShadow:
-            return ColourPair(light: .blackAlpha24, dark: .black)
+            return ColorPair(light: .blackAlpha24, dark: .black)
         case .buttonHighlighted:
-            return ColourPair(light: .whiteAlpha24, dark: .blackAlpha24)
+            return ColorPair(light: .whiteAlpha24, dark: .blackAlpha24)
         case .buttonEmptyText:
-            return ColourPair(light: accentColor, dark: .white)
+            return ColorPair(light: accentColor, dark: .white)
         case .buttonFaded:
-            return ColourPair(light: .graphiteAlpha40, dark: .whiteAlpha40)
+            return ColorPair(light: .graphiteAlpha40, dark: .whiteAlpha40)
         case .tabNormal:
-            return ColourPair(light: .blackAlpha48, dark: .whiteAlpha56)
+            return ColorPair(light: .blackAlpha48, dark: .whiteAlpha56)
         case .tabSelected:
-            return ColourPair(light: .graphite, dark: .white)
+            return ColorPair(light: .graphite, dark: .white)
         case .tabHighlighted:
-            return ColourPair(light: .lightGraphite, dark: .lightGraphiteAlpha48)
+            return ColorPair(light: .lightGraphite, dark: .lightGraphiteAlpha48)
         case .backgroundOverlay:
-            return ColourPair(light: .blackAlpha24, dark: .blackAlpha48)
+            return ColorPair(light: .blackAlpha24, dark: .blackAlpha48)
         case .backgroundOverlayWithoutPicture:
-            return ColourPair(both: .blackAlpha80)
+            return ColorPair(both: .blackAlpha80)
         case .avatarBorder:
-            return ColourPair(light: .blackAlpha8, dark: .whiteAlpha16)
+            return ColorPair(light: .blackAlpha8, dark: .whiteAlpha16)
         case .audioButtonOverlay:
-            return ColourPair(both: .lightGraphiteAlpha24)
+            return ColorPair(both: .lightGraphiteAlpha24)
         case .placeholderBackground:
-            return ColourPair(light: .lightGraphiteWhite, dark: .lightGraphiteDark)
+            return ColorPair(light: .lightGraphiteWhite, dark: .lightGraphiteDark)
         case .loadingDotActive:
-            return ColourPair(light: .graphiteAlpha40, dark: .whiteAlpha40)
+            return ColorPair(light: .graphiteAlpha40, dark: .whiteAlpha40)
         case .loadingDotInactive:
-            return ColourPair(light: .graphiteAlpha16, dark: .whiteAlpha16)
+            return ColorPair(light: .graphiteAlpha16, dark: .whiteAlpha16)
         case .paleSeparator:
-            return ColourPair(both: .lightGraphiteAlpha24)
+            return ColorPair(both: .lightGraphiteAlpha24)
         case .listAvatarInitials:
-            return ColourPair(both: .blackAlpha40)
+            return ColorPair(both: .blackAlpha40)
         case .sectionBackground:
-            return ColourPair(both: .clear)
+            return ColorPair(both: .clear)
         case .sectionText:
-            return ColourPair(light: .blackAlpha40, dark: .whiteAlpha40)
+            return ColorPair(light: .blackAlpha40, dark: .whiteAlpha40)
         case .tokenFieldBackground:
-            return ColourPair(light: .blackAlpha4, dark: .whiteAlpha16)
+            return ColorPair(light: .blackAlpha4, dark: .whiteAlpha16)
         case .tokenFieldTextPlaceHolder:
-            return ColourPair(light: .lightGraphite, dark: .whiteAlpha40)
+            return ColorPair(light: .lightGraphite, dark: .whiteAlpha40)
         case .cellSeparator:
-            return ColourPair(light: .graphiteAlpha8, dark: .whiteAlpha8)
+            return ColorPair(light: .graphiteAlpha8, dark: .whiteAlpha8)
         case .searchBarBackground:
-            return ColourPair(light: .white, dark: .whiteAlpha8)
+            return ColorPair(light: .white, dark: .whiteAlpha8)
         case .iconGuest:
-            return ColourPair(light: .backgroundGraphiteAlpha40, dark: .whiteAlpha64)
+            return ColorPair(light: .backgroundGraphiteAlpha40, dark: .whiteAlpha64)
         case .selfMentionHighlight:
-            return ColourPair(light: .amberAlpha48, dark: .amberAlpha80)
+            return ColorPair(light: .amberAlpha48, dark: .amberAlpha80)
         case .cellHighlight:
-            return ColourPair(light: .white97, dark: .whiteAlpha16)
+            return ColorPair(light: .white97, dark: .whiteAlpha16)
         }
     }
 }
