@@ -480,6 +480,10 @@ static const CGFloat BurstContainerExpandedHeight = 40;
         return YES;
     }
     
+    if (action == @selector(replyTo:)) {
+        return YES;
+    }
+    
     if (action == @selector(copy:) && self.message.isEphemeral) {
         return NO;
     }
@@ -491,6 +495,13 @@ static const CGFloat BurstContainerExpandedHeight = 40;
 {
     if ([self.delegate respondsToSelector:@selector(conversationCell:didSelectAction:forMessage:)]) {
         [self.delegate conversationCell:self didSelectAction:MessageActionForward forMessage:self.message];
+    }
+}
+
+- (void)replyTo:(id)sender
+{
+    if ([self.delegate respondsToSelector:@selector(conversationCell:didSelectAction:forMessage:)]) {
+        [self.delegate conversationCell:self didSelectAction:MessageActionReply forMessage:self.message];
     }
 }
 

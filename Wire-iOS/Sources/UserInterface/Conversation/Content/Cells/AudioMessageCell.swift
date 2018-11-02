@@ -150,8 +150,10 @@ import Cartography
         
         if let fileMessageData = message.fileMessageData {
             if let _ = fileMessageData.fileURL {
+                additionalItems.append(.forbiddenInEphemeral(.reply(with: #selector(replyTo(_:)))))
                 additionalItems.append(.forbiddenInEphemeral(.forward(with: #selector(forward))))
             }
+            
             
             if fileMessageData.transferState.isOne(of: .uploaded, .failedDownload) {
                 additionalItems.append(.allowedInEphemeral(.download(with: #selector(download))))

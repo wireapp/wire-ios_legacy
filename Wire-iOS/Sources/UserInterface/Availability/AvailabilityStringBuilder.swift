@@ -54,15 +54,8 @@
     }
     
     static func icon(for availability: Availability, with color: UIColor, and size: FontSize) -> NSTextAttachment? {
-        guard availability != .none, let iconType = availability.iconType, let image = UIImage(for: iconType, fontSize: 10, color: color)
+        guard availability != .none, let iconType = availability.iconType
             else { return nil }
-        
-        let attachment = NSTextAttachment()
-        attachment.image = image
-        let ratio = image.size.width / image.size.height
-        let height: CGFloat = 10
-        let verticalOffset : CGFloat = (size == .small) ? -1.0 : 0.0
-        attachment.bounds = CGRect(x: 0, y: verticalOffset, width: height * ratio, height: height)
-        return attachment
+        return NSTextAttachment.textAttachment(for: iconType, with: color, and: size)
     }
 }

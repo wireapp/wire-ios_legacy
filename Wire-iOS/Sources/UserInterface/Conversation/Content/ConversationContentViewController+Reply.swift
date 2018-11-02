@@ -18,16 +18,16 @@
 
 import Foundation
 
-extension ZMConversationMessage {
-
-    /// Whether the message can be quoted.
-    var canBeQuoted: Bool {
-        return !isEphemeral && (isText || isImage || isLocation || isFile)
+extension ConversationContentViewController {
+    @objc(createReplyComposingViewForMessage:)
+    func createReplyComposingView(for message: ZMClientMessage) -> ReplyComposingView {
+        let replyComposingView = ReplyComposingView(message: message)
+        replyComposingView.translatesAutoresizingMaskIntoConstraints = false
+        
+        bottomContainer.addSubview(replyComposingView)
+        replyComposingView.fitInSuperview()
+        
+        return replyComposingView
     }
-
-    /// Whether the message can be copied.
-    var canBeCopied: Bool {
-        return !isEphemeral && (isText || isImage || isLocation)
-    }
-
+    
 }
