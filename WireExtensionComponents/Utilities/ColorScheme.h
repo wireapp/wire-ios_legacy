@@ -76,7 +76,6 @@ extern ColorSchemeColor ColorSchemeColorTokenFieldTextPlaceHolder;
 
 extern ColorSchemeColor ColorSchemeColorSelfMentionHighlight;
 
-extern ColorSchemeColor ColorSchemeColorReplyLeftBar;
 extern ColorSchemeColor ColorSchemeColorReplyBorder;
 
 typedef NS_ENUM(NSUInteger, ColorSchemeVariant) {

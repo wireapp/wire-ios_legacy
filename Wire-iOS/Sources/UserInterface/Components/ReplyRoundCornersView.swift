@@ -35,7 +35,7 @@ final class ReplyRoundCornersView: UIView {
         layer.borderColor = UIColor.init(scheme: .replyBorder).cgColor
         layer.masksToBounds = true
         
-        grayBoxView.backgroundColor = UIColor.init(scheme: .replyLeftBar)
+        grayBoxView.backgroundColor = UIColor.init(scheme: .replyBorder)
         
         containedView.translatesAutoresizingMaskIntoConstraints = false
         grayBoxView.translatesAutoresizingMaskIntoConstraints = false
