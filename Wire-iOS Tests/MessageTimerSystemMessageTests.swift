@@ -20,7 +20,7 @@
 import XCTest
 @testable import Wire
 
-//
+// TODO 2838: - Migrate to new cell system
 //class MessageTimerSystemMessageTests: CoreDataSnapshotTestCase {
 //    
 //    func testThatItRendersMessageTimerSystemMessage_None_Other() {

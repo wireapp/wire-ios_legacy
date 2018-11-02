@@ -361,6 +361,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
                         [self.presentedViewController dismissViewControllerAnimated:YES completion:nil];
                     }
                     if (!deleted) {
+                        // TODO 2838: Support editing
                         // cell.beingEdited = NO;
                     }
                 }];
@@ -648,6 +649,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    // TODO 2838: Support ping animation, ephemeral timer and media playback
 //    if ([cell isKindOfClass:[TextMessageCell class]] || [cell isKindOfClass:[AudioMessageCell class]]) {
 //        ConversationCell *messageCell = (ConversationCell *)cell;
 //        MediaPlaybackManager *mediaPlaybackManager = [AppDelegate sharedAppDelegate].mediaPlaybackManager;
@@ -679,6 +681,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 
 - (void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    // TODO 2838: Support ping animation, ephemeral timer and media playback
 //    if ([cell isKindOfClass:[TextMessageCell class]] || [cell isKindOfClass:[AudioMessageCell class]]) {
 //        ConversationCell *messageCell = (ConversationCell *)cell;
 //        MediaPlaybackManager *mediaPlaybackManager = [AppDelegate sharedAppDelegate].mediaPlaybackManager;

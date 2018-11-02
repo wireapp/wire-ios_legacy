@@ -20,7 +20,8 @@ import XCTest
 @testable import Wire
 import WireLinkPreview
 
-class MessagePreviewViewTests: ZMSnapshotTestCase {
+// TODO 2838: - Migrate to new cell system
+// class MessagePreviewViewTests: ZMSnapshotTestCase {
 //    var sut: UIView!
 //
 //    override func tearDown() {
@@ -82,5 +83,4 @@ class MessagePreviewViewTests: ZMSnapshotTestCase {
 //        
 //        verify(view: previewView)
 //    }
-    
-}
+// }

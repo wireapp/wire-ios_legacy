@@ -18,6 +18,7 @@
 
 @testable import Wire
 
+// TODO 2838: - Migrate to new cell system
 //class TextMessageCellTests: ZMSnapshotTestCase {
 
 //    var sut: TextMessageCell!
