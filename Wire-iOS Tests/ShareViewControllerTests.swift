@@ -40,7 +40,8 @@ class ShareViewControllerTests: CoreDataSnapshotTestCase {
     override var needsCaches: Bool {
         return true
     }
-    
+
+    // TODO 2838: - Replace with new cell design
 //    func testThatItRendersCorrectlyShareViewController_OneLineTextMessage() {
 //        groupConversation.append(text: "This is a text message.")
 //        makeTestForShareViewController()
