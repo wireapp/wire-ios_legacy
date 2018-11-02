@@ -23,10 +23,13 @@ class ConversationLinkPreviewArticleCell: UIView, ConversationMessageCell {
     struct Configuration {
         let textMessageData: ZMTextMessageData
         let isObfuscated: Bool
+        let showImage: Bool
     }
 
-    var isSelected: Bool = false
     private let articleView = ArticleView(withImagePlaceholder: true)
+
+    var isSelected: Bool = false
+    var configuration: Configuration?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -50,7 +53,22 @@ class ConversationLinkPreviewArticleCell: UIView, ConversationMessageCell {
     }
 
     func configure(with object: Configuration) {
+        configuration = object
         articleView.configure(withTextMessageData: object.textMessageData, obfuscated: object.isObfuscated)
+        updateImageLayout(isRegular: self.traitCollection.horizontalSizeClass == .regular)
+    }
+
+    func updateImageLayout(isRegular: Bool) {
+        if configuration?.showImage == true {
+            articleView.imageHeight = isRegular ? 125 : 75
+        } else {
+            articleView.imageHeight = 0
+        }
+    }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        updateImageLayout(isRegular: self.traitCollection.horizontalSizeClass == .regular)
     }
 
 }
@@ -72,7 +90,7 @@ class ConversationLinkPreviewArticleCellDescription: ConversationMessageCellDesc
     }
 
     init(message: ZMConversationMessage, data: ZMTextMessageData) {
-        configuration = View.Configuration(textMessageData: data, isObfuscated: message.isObfuscated)
-        actionController = nil
+        let showImage = data.linkPreviewHasImage
+        configuration = View.Configuration(textMessageData: data, isObfuscated: message.isObfuscated, showImage: showImage)
     }
 }
