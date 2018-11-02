@@ -33,7 +33,7 @@ import Cartography
 
 @objc protocol UserList {
     var users: [UserType] { get set }
-    var bestSuggestionUser: UserType { get }
+    var selectedUser: UserType? { get }
 
     func selectPreviousUser()
     func selectNextUser()
@@ -185,18 +185,27 @@ extension UserSearchResultsViewController: Dismissable {
 }
 
 extension UserSearchResultsViewController: UserList {
-    var bestSuggestionUser: UserType {
+    var selectedUser: UserType? {
+
+        guard searchResults.count > 0 else {
+            return nil
+        }
+
+        clampCollectionViewSelectedIndex()
+
         var index = 0
         if let collectionViewSelectedIndex = collectionViewSelectedIndex {
             index = searchResults.count - 1 - collectionViewSelectedIndex
         }
 
         let bestSuggestion = users[index]
+
         return bestSuggestion
     }
 
     func clampCollectionViewSelectedIndex() {
         guard var collectionViewSelectedIndex = self.collectionViewSelectedIndex else { return }
+
         if collectionViewSelectedIndex >= searchResults.count {
             collectionViewSelectedIndex = searchResults.count - 1
         }
