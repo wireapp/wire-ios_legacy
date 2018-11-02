@@ -143,7 +143,22 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     self.tableView = [[UpsideDownTableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
     [self.view addSubview:self.tableView];
     
-    [self.tableView autoPinEdgesToSuperviewEdges];
+    self.bottomContainer = [[UIView alloc] initWithFrame:CGRectZero];
+    self.bottomContainer.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addSubview:self.bottomContainer];
+
+    [NSLayoutConstraint activateConstraints:@[
+      [self.tableView.topAnchor constraintEqualToAnchor:self.view.topAnchor],
+      [self.tableView.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor],
+      [self.tableView.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor],
+      [self.bottomContainer.topAnchor constraintEqualToAnchor:self.tableView.bottomAnchor],
+      [self.bottomContainer.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor],
+      [self.bottomContainer.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor],
+      [self.bottomContainer.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor],
+    ]];
+    NSLayoutConstraint *heightCollapsingConstraint = [self.bottomContainer.heightAnchor constraintEqualToConstant:0];
+    heightCollapsingConstraint.priority = UILayoutPriorityDefaultHigh;
+    heightCollapsingConstraint.active = YES;
 }
 
 - (void)viewDidLoad

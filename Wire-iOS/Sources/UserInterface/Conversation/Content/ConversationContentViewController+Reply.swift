@@ -24,13 +24,8 @@ extension ConversationContentViewController {
         let replyComposingView = ReplyComposingView(message: message)
         replyComposingView.translatesAutoresizingMaskIntoConstraints = false
         
-        view.addSubview(replyComposingView)
-        
-        NSLayoutConstraint.activate([
-            replyComposingView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            replyComposingView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            replyComposingView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-            ])
+        bottomContainer.addSubview(replyComposingView)
+        replyComposingView.fitInSuperview()
         
         return replyComposingView
     }
