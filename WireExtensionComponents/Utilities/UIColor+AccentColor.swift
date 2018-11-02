@@ -19,6 +19,35 @@
 import Foundation
 
 public extension UIColor {
+
+    static var strongBlue: UIColor  {
+        return UIColor(for: .strongBlue)!
+    }
+
+    static var strongLimeGreen: UIColor  {
+        return UIColor(for: .strongLimeGreen)!
+    }
+
+    static var brightYellow: UIColor  {
+        return UIColor(for: .brightYellow)!
+    }
+
+    static var vividRed: UIColor  {
+        return UIColor(for: .vividRed)!
+    }
+
+    static var brightOrange: UIColor  {
+        return UIColor(for: .brightOrange)!
+    }
+
+    static var softPink: UIColor  {
+        return UIColor(for: .softPink)!
+    }
+
+    static var violet: UIColor  {
+        return UIColor(for: .violet)!
+    }
+
     @objc public convenience init?(for accentColor: ZMAccentColor) {
         switch accentColor {
         case .strongBlue:
