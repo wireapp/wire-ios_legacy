@@ -19,7 +19,8 @@
 import Foundation
 
 /**
- * A view that displays the contents of a.
+ * A view that displays the contents of a conversation message section, when
+ * it is composed of multiple cells.
  */
 
 class ConversationMessageSectionView: UIView, UITableViewDataSource, UITableViewDelegate {
@@ -67,7 +68,7 @@ class ConversationMessageSectionView: UIView, UITableViewDataSource, UITableView
         tableView.reloadData()
     }
 
-    // MARK: - Data Soure
+    // MARK: - Data Source
 
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
