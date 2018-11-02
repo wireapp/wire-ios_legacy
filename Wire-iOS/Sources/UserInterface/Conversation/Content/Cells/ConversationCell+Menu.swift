@@ -88,7 +88,7 @@ public extension ConversationCell {
     
     @objc func deleteMessage(_ sender: Any) {
         beingEdited = true
-        delegate?.conversationCell?(self, didSelect: .delete)
+        delegate?.conversationCell?(self, didSelect: .delete, for: self.message)
     }
 
 }

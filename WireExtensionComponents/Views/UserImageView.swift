@@ -30,6 +30,7 @@ import WireSyncEngine
 
     @objc(UserImageViewSize) public enum Size: Int {
         case tiny = 16
+        case badge = 24
         case small = 32
         case normal = 64
         case big = 320

@@ -412,12 +412,10 @@
 "content.system.conversation.with_name.participants" = "と";
 
 "content.system.message_timer_changes" = "%@ はタイマーメッセージを %@ に設定しました。";
-"content.system.message_timer_changes.you" = "あなたはタイマーメッセージを %@ に設定しました";
-
-"content.system.message_timer.you_part" = "あなた";
+"content.system.message_timer_changes-you" = "あなたはタイマーメッセージを %@ に設定しました";
 
 "content.system.message_timer_off" = "%@ が タイマーメッセージをオフにしました";
-"content.system.message_timer_off.you" = "あなたがタイマーメッセージをオフにしました";
+"content.system.message_timer_off-you" = "あなたがタイマーメッセージをオフにしました";
 
 "content.system.reactivated_device" = "あなたは %@ を再び利用しています。いままでのメッセージはここには表示されません。";
 

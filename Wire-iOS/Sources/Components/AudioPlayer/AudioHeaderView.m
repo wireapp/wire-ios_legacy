@@ -30,9 +30,11 @@
 @property (nonatomic) UILabel *artistLabel;
 @property (nonatomic) UILabel *trackTitleLabel;
 @property (nonatomic) ButtonWithLargerHitArea *providerButton;
-@property (nonatomic) BOOL initialConstraintsCreated;
+@property (nonatomic) UIStackView *textStackView;
 
 @property (nonatomic) NSLayoutConstraint *providerImageContainerWidthConstraint;
+@property (nonatomic) NSLayoutConstraint *textTrailingConstraint;
+
 @end
 
 
@@ -48,48 +50,64 @@
         self.artistLabel.lineBreakMode = NSLineBreakByTruncatingTail;
         self.artistLabel.textColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:ColorSchemeVariantDark];
         self.artistLabel.font = UIFont.smallLightFont;
-        [self addSubview:self.artistLabel];
-        
+
         self.trackTitleLabel = [[UILabel alloc] initForAutoLayout];
         self.trackTitleLabel.lineBreakMode = NSLineBreakByTruncatingMiddle;
         self.trackTitleLabel.textColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:ColorSchemeVariantDark];
         self.trackTitleLabel.font = UIFont.smallSemiboldFont;
-        [self addSubview:self.trackTitleLabel];
-        
+
         self.providerImageContainer = [[UIView alloc] initForAutoLayout];
         [self addSubview:self.providerImageContainer];
         
         self.providerButton = [ButtonWithLargerHitArea buttonWithType:UIButtonTypeCustom];
         self.providerButton.translatesAutoresizingMaskIntoConstraints = NO;
         [self.providerImageContainer addSubview:self.providerButton];
+
+        self.textStackView = [[UIStackView alloc] initWithArrangedSubviews:@[self.artistLabel, self.trackTitleLabel]];
+        self.textStackView.axis = UILayoutConstraintAxisVertical;
+        [self addSubview:self.textStackView];
+
+        [self configureConstraints];
     }
     
     return self;
 }
 
-- (void)updateConstraints
+- (void)configureConstraints
 {
-    if (! self.initialConstraintsCreated) {
-        self.initialConstraintsCreated = YES;
-        
-        [self.providerButton autoCenterInSuperview];
-        [self.providerButton autoPinEdge:ALEdgeTop toEdge:ALEdgeTop ofView:self.artistLabel];
-        [self.providerButton autoSetDimensionsToSize:CGSizeMake(28, 28)];
-        
-        [self.providerImageContainer autoPinEdgeToSuperviewEdge:ALEdgeBottom];
-        [self.providerImageContainer autoPinEdgeToSuperviewEdge:ALEdgeLeft];
-        [self.providerImageContainer autoPinEdgeToSuperviewMargin:ALEdgeTop];
-        [self.providerImageContainer autoPinEdge:ALEdgeRight toEdge:ALEdgeLeft ofView:self.artistLabel];
-        
-        [self.artistLabel autoPinEdgeToSuperviewMargin:ALEdgeLeft];
-        [self.artistLabel autoPinEdgeToSuperviewMargin:ALEdgeRight];
-        
-        [self.trackTitleLabel autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.artistLabel];
-        [self.trackTitleLabel autoPinEdgeToSuperviewMargin:ALEdgeLeft];
-        [self.trackTitleLabel autoPinEdgeToSuperviewMargin:ALEdgeRight];
-    }
-    
-    [super updateConstraints];
+    self.providerImageContainer.translatesAutoresizingMaskIntoConstraints = NO;
+    self.providerButton.translatesAutoresizingMaskIntoConstraints = NO;
+    self.textStackView.translatesAutoresizingMaskIntoConstraints = NO;
+
+    self.providerImageContainerWidthConstraint = [self.providerImageContainer.widthAnchor constraintEqualToConstant:UIView.conversationLayoutMargins.left];
+    self.textTrailingConstraint = [self.textStackView.trailingAnchor constraintEqualToAnchor:self.trailingAnchor constant:-UIView.conversationLayoutMargins.right];
+
+    [NSLayoutConstraint activateConstraints:
+  @[
+    // providerImageContainer
+    self.providerImageContainerWidthConstraint,
+    [self.providerImageContainer.topAnchor constraintEqualToAnchor:self.topAnchor],
+    [self.providerImageContainer.leadingAnchor constraintEqualToAnchor:self.leadingAnchor],
+    [self.providerImageContainer.bottomAnchor constraintEqualToAnchor:self.bottomAnchor],
+
+    // providerButton
+    [self.providerButton.centerXAnchor constraintEqualToAnchor:self.providerImageContainer.centerXAnchor],
+    [self.providerButton.centerYAnchor constraintEqualToAnchor:self.providerImageContainer.centerYAnchor],
+    [self.providerButton.widthAnchor constraintEqualToConstant:28],
+    [self.providerButton.heightAnchor constraintEqualToConstant:28],
+
+    // textStackView
+    [self.textStackView.leadingAnchor constraintEqualToAnchor:self.providerImageContainer.trailingAnchor],
+    [self.textStackView.centerYAnchor constraintEqualToAnchor:self.providerImageContainer.centerYAnchor],
+    self.textTrailingConstraint,
+    ]];
+}
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection
+{
+    [super traitCollectionDidChange:previousTraitCollection];
+    self.providerImageContainerWidthConstraint.constant = UIView.conversationLayoutMargins.left;
+    self.textTrailingConstraint.constant = -UIView.conversationLayoutMargins.right;
 }
 
 @end

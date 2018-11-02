@@ -25,12 +25,15 @@
 #import "NSIndexSet+IndexPaths.h"
 
 // Cells
-#import "TextMessageCell.h"
 #import "ImageMessageCell.h"
 #import "PingCell.h"
 #import "ConnectionRequestCell.h"
 
 #import "Wire-Swift.h"
+
+@interface ConversationMessageWindowTableViewAdapter (SectionDelegate) <ConversationMessageSectionControllerDelegate>
+
+@end
 
 @implementation ConversationMessageWindowTableViewAdapter
 
@@ -43,8 +46,8 @@
         self.messageWindow = messageWindow;
         self.messageWindowObserverToken = [MessageWindowChangeInfo addObserver:self forWindow:self.messageWindow];
         self.firstUnreadMessage = self.messageWindow.conversation.firstUnreadMessage;
-        
-        [self registerTableCellClasses];
+        self.sectionControllers = [[NSCache alloc] init];
+        self.actionControllers = [[NSCache alloc] init];
     }
     
     return self;
@@ -81,17 +84,19 @@
         [self.tableView beginUpdates];
         
         if (change.deletedIndexes.count) {
-            [self.tableView deleteRowsAtIndexPaths:[change.deletedIndexes indexPaths] withRowAnimation:UITableViewRowAnimationFade];
+            for (id<ZMConversationMessage> message in change.deletedObjects) {
+                [self.sectionControllers removeObjectForKey:message];
+            }
+
+            [self.tableView deleteSections:change.deletedIndexes withRowAnimation:UITableViewRowAnimationFade];
         }
         
         if (change.insertedIndexes.count) {
-            [self.tableView insertRowsAtIndexPaths:[change.insertedIndexes indexPaths] withRowAnimation:UITableViewRowAnimationFade];
+            [self.tableView insertSections:change.insertedIndexes withRowAnimation:UITableViewRowAnimationFade];
         }
         
         [change.zm_movedIndexPairs enumerateObjectsUsingBlock:^(ZMMovedIndex *moved, NSUInteger idx, BOOL *stop) {
-            NSIndexPath *from = [NSIndexPath indexPathForRow:moved.from inSection:0];
-            NSIndexPath *to = [NSIndexPath indexPathForRow:moved.to inSection:0];
-            [self.tableView moveRowAtIndexPath:from toIndexPath:to];
+            [self.tableView moveSection:moved.from toSection:moved.to];
         }];
         
         if (change.insertedIndexes.count > 0 || change.deletedIndexes.count > 0 || change.zm_movedIndexPairs.count > 0) {
@@ -103,6 +108,55 @@
         
         [self.tableView endUpdates];
     }
+}
+
+- (ConversationMessageSectionController *)sectionControllerAtIndex:(NSInteger)sectionIndex inTableView:(UITableView *)tableView;
+{
+    id<ZMConversationMessage> message = [self.messageWindow.messages objectAtIndex:sectionIndex];
+    ConversationMessageSectionController *cachedEntry = [self.sectionControllers objectForKey:message];
+
+    if (cachedEntry) {
+        return cachedEntry;
+    }
+
+    ConversationMessageSectionController *sectionController = [self buildSectionControllerForMessage:message];
+    sectionController.useInvertedIndices = YES;
+    sectionController.cellDelegate = self.conversationCellDelegate;
+    sectionController.sectionDelegate = self;
+    sectionController.message = message;
+    sectionController.actionController = [self actionControllerForMessage:message];
+
+    [self.sectionControllers setObject:sectionController forKey:message];
+
+    for (AnyConversationMessageCellDescription *cellDescription in sectionController.cellDescriptions) {
+        [self registerCellIfNeeded:cellDescription inTableView:tableView];
+    }
+
+    return sectionController;
+}
+
+- (ConversationCellActionController *)actionControllerForMessage:(id<ZMConversationMessage>)message
+{
+    ConversationCellActionController *cachedEntry = [self.actionControllers objectForKey:message];
+
+    if (cachedEntry) {
+        return cachedEntry;
+    }
+
+    ConversationCellActionController *actionController = [[ConversationCellActionController alloc] initWithResponder:self.messageActionResponder message:message];
+    [self.actionControllers setObject:actionController forKey:message];
+
+    return actionController;
+}
+
+- (void)registerCellIfNeeded:(AnyConversationMessageCellDescription *)cellDescription inTableView:(UITableView *)tableView
+{
+    if ([self.registeredCells containsObject:cellDescription.baseType]) {
+        return;
+    }
+
+    [cellDescription registerInTableView:tableView];
+    [self.registeredCells addObject:cellDescription.baseType];
 }
 
 - (void)setEditingMessage:(id <ZMConversationMessage>)editingMessage
@@ -178,6 +232,21 @@
             self.expandingWindow = NO;
         });
     }
+}
+
+@end
+
+@implementation ConversationMessageWindowTableViewAdapter (SectionDelegate)
+
+- (void)messageSectionController:(ConversationMessageSectionController *)controller didRequestRefreshForMessage:(id<ZMConversationMessage>)message
+{
+    NSInteger section = [self.messageWindow.messages indexOfObject:message];
+
+    if (!section) {
+        return;
+    }
+
+    [self.tableView reloadSections:[[NSIndexSet alloc] initWithIndex:section] withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
 @end

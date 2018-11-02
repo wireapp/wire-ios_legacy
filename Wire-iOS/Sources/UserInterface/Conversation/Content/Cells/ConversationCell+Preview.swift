@@ -34,7 +34,6 @@ extension ConversationCell {
         }
         
         self.toolboxView.removeFromSuperview()
-        self.likeButton.isHidden = true
         self.isUserInteractionEnabled = false
         self.setSelected(false, animated: false)
         self.contentLayoutMargins = .zero

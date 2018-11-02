@@ -222,6 +222,7 @@
 
 "conversation.status.unsent" = "⚠️ Unsent message";
 "conversation.status.you" = "You";
+"conversation.status.someone" = "Someone";
 "conversation.status.added_multiple" = "People added";
 "conversation.status.you_was_added" = "%@ added you";
 "conversation.status.added_users" = "%@ added %@";
@@ -429,12 +430,10 @@
 "content.system.conversation.with_name.participants" = "with";
 
 "content.system.message_timer_changes" = "%@ set the message timer to %@";
-"content.system.message_timer_changes.you" = "You set the message timer to %@";
-
-"content.system.message_timer.you_part" = "You";
+"content.system.message_timer_changes-you" = "%@ set the message timer to %@";
 
 "content.system.message_timer_off" = "%@ turned off the message timer";
-"content.system.message_timer_off.you" = "You turned off the message timer";
+"content.system.message_timer_off-you" = "%@ turned off the message timer";
 
 "content.system.reactivated_device" = "You started using %@ again. Messages sent in the meantime will not appear here.";
 
