@@ -105,7 +105,8 @@ class UserSearchResultsViewControllerTests: CoreDataSnapshotTestCase {
     }
 
 
-    func testThatItOverflowsWithTooManyUsers() {
+    func testThatItOverflowsWithTooManyUsers_darkMode() {
+        ColorScheme.default.variant = .dark
         createSUT()
 
         sut.users = mockSearchResultUsers()

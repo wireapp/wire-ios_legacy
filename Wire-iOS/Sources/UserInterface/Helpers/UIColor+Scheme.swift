@@ -83,4 +83,8 @@ extension UIColor {
     static var contentBackground: UIColor {
         return UIColor(scheme: .contentBackground)
     }
+
+    static var cellHighlight: UIColor {
+        return UIColor(scheme: .cellHighlight)
+    }
 }
