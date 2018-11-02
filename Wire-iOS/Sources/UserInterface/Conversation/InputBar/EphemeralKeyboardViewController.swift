@@ -49,7 +49,7 @@ public extension ZMConversation {
 
     @objc var disabledTimeoutImage: UIImage? {
         guard let value = self.destructionTimeout else { return nil }
-        return timeoutImage(for: value, withColor: UIColor.from(scheme: .lightGraphite))
+        return timeoutImage(for: value, withColor: .lightGraphite)
     }
     
     private func timeoutImage(for timeout: MessageDestructionTimeoutValue, withColor color: UIColor = UIColor.accent()) -> UIImage? {

@@ -30,7 +30,7 @@ enum CallActionAppearance: Equatable {
     
     var backgroundColorNormal: UIColor {
         switch self {
-        case .light: return UIColor.from(scheme: .lightGraphite).withAlphaComponent(0.08)
+        case .light: return UIColor.lightGraphite.withAlphaComponent(0.08)
         case .dark: return UIColor.white.withAlphaComponent(0.24)
         }
     }

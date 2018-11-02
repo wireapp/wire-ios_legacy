@@ -19,15 +19,15 @@
 import Foundation
 import UIKit
 
-fileprivate extension UIColor {
-    static var graphite: UIColor = UIColor.wr_color(from: "rgb(51, 55, 58)")
+public extension UIColor {
+    @objc static var graphite: UIColor = UIColor.wr_color(from: "rgb(51, 55, 58)")
     static var graphiteAlpha8: UIColor = UIColor.wr_color(from: "rgb(51, 55, 58, 0.08)")
     static var graphiteAlpha16: UIColor = UIColor.wr_color(from: "rgb(51, 55, 58, 0.16)")
     static var graphiteAlpha40: UIColor = UIColor.wr_color(from: "rgb(51, 55, 58, 0.4)")
 
     static var backgroundLightGraphite: UIColor = UIColor.wr_color(from: "rgb(30, 32, 33)")
 
-    static var lightGraphite: UIColor = UIColor.wr_color(from: "rgb(141, 152, 159)")
+    @objc static var lightGraphite: UIColor = UIColor.wr_color(from: "rgb(141, 152, 159)")
     static var lightGraphiteAlpha8: UIColor = UIColor.wr_color(from: "rgb(141, 152, 159, 0.08)")
     static var lightGraphiteAlpha24: UIColor = UIColor.wr_color(from: "rgb(141, 152, 159, 0.24)")
     static var lightGraphiteAlpha48: UIColor = UIColor.wr_color(from: "rgb(141, 152, 159, 0.48)")
@@ -102,9 +102,6 @@ fileprivate extension UIColor {
     case paleSeparator
     case listAvatarInitials
     case audioButtonOverlay
-
-    case graphite
-    case lightGraphite
 
     case sectionBackground
     case sectionText
@@ -200,10 +197,6 @@ extension ColorSchemeColor {
             return ColourPair(light: .graphiteAlpha40, dark: .whiteAlpha40)
         case .loadingDotInactive:
             return ColourPair(light: .graphiteAlpha16, dark: .whiteAlpha16)
-        case .graphite:
-            return ColourPair(both: .graphite)
-        case .lightGraphite:
-            return ColourPair(both: .lightGraphite)
         case .paleSeparator:
             return ColourPair(both: .lightGraphiteAlpha24)
         case .listAvatarInitials:
