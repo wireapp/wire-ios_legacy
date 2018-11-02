@@ -337,6 +337,11 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self updateLeftNavigationBarItems];
 }
 
+- (void)scrollToMessage:(id<ZMConversationMessage>)message
+{
+    [self.contentViewController scrollToMessage:message animated:YES];
+}
+
 #pragma mark - Device orientation
 
 - (BOOL)shouldAutorotate
@@ -758,7 +763,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
             [ZMMessage deleteForEveryone:message];
         } else {
             BOOL fetchLinkPreview = ![[Settings sharedSettings] disableLinkPreviews];
-            NOT_USED([ZMMessage edit:message newText:newText mentions:mentions fetchLinkPreview:fetchLinkPreview]);
+            [message.textMessageData editText:newText mentions:mentions fetchLinkPreview:fetchLinkPreview];
         }
     }];
 }
