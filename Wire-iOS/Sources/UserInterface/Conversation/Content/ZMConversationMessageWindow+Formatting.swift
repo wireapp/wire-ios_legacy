@@ -18,16 +18,6 @@
 
 import Foundation
 
-struct MessageCellContext {
-    
-    let isSameSenderAsPrevious: Bool
-    let isLastMessageSentBySelfUser: Bool
-    let isTimeIntervalSinceLastMessageSignificant: Bool
-    let isFirstMessageOfTheDay: Bool
-    let isFirstUnreadMessage: Bool
-    
-}
-
 extension ZMConversationMessageWindow {
     
     func sectionController(for message: ZMConversationMessage, firstUnreadMessage: ZMConversationMessage?) -> ConversationMessageSectionController {
