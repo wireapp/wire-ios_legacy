@@ -85,6 +85,6 @@ extension UIColor {
     }
 
     static var cellHighlight: UIColor {
-        return UIColor(scheme: .cellHighlight)
+        return UIColor.from(scheme: .cellHighlight)
     }
 }

@@ -113,6 +113,7 @@ fileprivate extension UIColor {
     case tokenFieldTextPlaceHolder
 
     case selfMentionHighlight
+    case cellHighlight
 }
 
 extension UIColor {
@@ -223,6 +224,8 @@ extension ColorSchemeColor {
             return ColourPair(light: .backgroundGraphiteAlpha40, dark: .whiteAlpha64)
         case .selfMentionHighlight:
             return ColourPair(light: .amberAlpha48, dark: .amberAlpha80)
+        case .cellHighlight:
+            return ColourPair(light: .white97, dark: .whiteAlpha16)
         }
     }
 }
