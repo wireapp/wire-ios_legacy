@@ -17,27 +17,22 @@
 //
 
 import Foundation
-import Cartography
 
 public class RoundedBadge: UIButton {
     public let containedView: UIView
-    public var trailingConstraint: NSLayoutConstraint!
+    private var trailingConstraint: NSLayoutConstraint!
+    private var leadingConstraint: NSLayoutConstraint!
     public var widthGreaterThanHeightConstraint: NSLayoutConstraint!
+    private let contentInset: UIEdgeInsets
 
     init(view: UIView, contentInset: UIEdgeInsets = UIEdgeInsets(top: 2, left: 4, bottom: 2, right: 4)) {
+        self.contentInset = contentInset
         containedView = view
         super.init(frame: .zero)
         
         self.addSubview(containedView)
-        
-        constrain(self, containedView) { selfView, containedView in
-            containedView.leading == selfView.leading + contentInset.left
-            trailingConstraint = containedView.trailing == selfView.trailing - contentInset.right
-            containedView.top == selfView.top + contentInset.top
-            containedView.bottom == selfView.bottom - contentInset.bottom
-            
-            widthGreaterThanHeightConstraint = selfView.width >= selfView.height
-        }
+
+        createConstraints()
 
         updateCollapseConstraints(isCollapsed: true)
 
@@ -45,13 +40,35 @@ public class RoundedBadge: UIButton {
         updateCornerRadius()
     }
 
+    func createConstraints(){
+
+        containedView.translatesAutoresizingMaskIntoConstraints = false
+        translatesAutoresizingMaskIntoConstraints = false
+
+        leadingConstraint = containedView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: contentInset.left)
+        trailingConstraint = containedView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -contentInset.right)
+        widthGreaterThanHeightConstraint = widthAnchor.constraint(greaterThanOrEqualTo: heightAnchor)
+
+        NSLayoutConstraint.activate([
+            leadingConstraint,
+            trailingConstraint,
+            widthGreaterThanHeightConstraint,
+
+            containedView.topAnchor.constraint(equalTo: topAnchor, constant: contentInset.top),
+            containedView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -contentInset.bottom),
+
+            ])
+    }
+
     func updateCollapseConstraints(isCollapsed: Bool){
         if isCollapsed {
-            trailingConstraint.isActive = false
             widthGreaterThanHeightConstraint.isActive = false
+            trailingConstraint.constant = 0
+            leadingConstraint.constant = 0
         } else {
-            trailingConstraint.isActive = true
             widthGreaterThanHeightConstraint.isActive = true
+            trailingConstraint.constant = -contentInset.right
+            leadingConstraint.constant = contentInset.left
         }
     }
 

@@ -43,6 +43,7 @@
 #import "ConversationViewController.h"
 #import "ConversationViewController+Private.h"
 #import "ConversationListCell.h"
+#import "ConversationListCell+Internal.h"
 #import "ConversationListItemView.h"
 #import "ConversationListItemView+Internal.h"
 #import "ResizingTextView.h"
@@ -79,6 +80,10 @@
 #import "Button.h"
 #import "ButtonWithLargerHitArea.h"
 #import "UITableView+RowCount.h"
+#import "AnimatedListMenuView.h"
+#import "AnimatedListMenuView+Internal.h"
+#import "SwipeMenuCollectionCell.h"
+#import "SwipeMenuCollectionCell+Internal.h"
 
 // View Controllers
 #import "ProfileDevicesViewController.h"
