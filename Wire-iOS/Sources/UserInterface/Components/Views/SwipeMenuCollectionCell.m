@@ -84,7 +84,6 @@ NSString * const SwipeMenuCollectionCellIDToCloseKey = @"IDToClose";
 
 - (void)setupSwipeMenuCollectionCell
 {
-    self.hasCreatedSwipeMenuConstraints = NO;
     self.canOpenDrawer = YES;
     self.overscrollFraction = 0.6f;
     /// When the swipeView is swiped and excesses this offset, the "3 dots" stays at left.

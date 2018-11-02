@@ -74,7 +74,6 @@ static const NSTimeInterval OverscrollRatio = 2.5;
 
 - (void)setupConversationListCell
 {
-    self.hasCreatedInitialConstraints = NO;
     self.separatorLineViewDisabled = YES;
     self.maxVisualDrawerOffset = MaxVisualDrawerOffsetRevealDistance;
     self.overscrollFraction = CGFLOAT_MAX; // Never overscroll
