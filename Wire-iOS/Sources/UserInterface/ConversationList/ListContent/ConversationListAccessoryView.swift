@@ -129,6 +129,10 @@ import Cartography
             iconView.image = UIImage(for: .mention, fontSize: iconSize, color: .black)
             accessibilityValue = "conversation_list.voiceover.status.mention".localized
             return iconView
+        case .reply:
+            iconView.image = UIImage(for: .reply, fontSize: iconSize, color: .black)
+            accessibilityValue = "conversation_list.voiceover.status.reply".localized
+            return iconView
         case .unreadPing:
             iconView.image = UIImage(for: .ping, fontSize: iconSize, color: .black)
             accessibilityValue = "conversation_list.voiceover.status.ping".localized
@@ -192,10 +196,10 @@ import Cartography
             self.textLabel.textColor = UIColor(scheme: .textForeground, variant: .light)
             self.badgeView.backgroundColor = UIColor(scheme: .textBackground, variant: .light)
             
-        case .unreadPing:
-            self.badgeView.backgroundColor = UIColor(scheme: .textBackground, variant: .light)
+        case .unreadPing,
+             .reply,
+             .missedCall:
 
-        case .missedCall:
             self.badgeView.backgroundColor = UIColor(scheme: .textBackground, variant: .light)
 
         default:
