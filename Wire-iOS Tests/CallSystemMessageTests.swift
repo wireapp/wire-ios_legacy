@@ -104,7 +104,7 @@ class CallSystemMessageTests: CoreDataSnapshotTestCase {
     private func createCell(for systemMessage: ZMSystemMessage, missed: Bool) -> UITableViewCell {
         let description = ConversationCallSystemMessageCellDescription(message: systemMessage, data: systemMessage.systemMessageData!, missed: missed)
 
-        let cell = ConfigurableCellTableViewAdapter<ConversationCallSystemMessageCellDescription>(style: .default, reuseIdentifier: nil)
+        let cell = ConversationMessageCellTableViewAdapter<ConversationCallSystemMessageCellDescription>(style: .default, reuseIdentifier: nil)
         cell.configure(with: description.configuration, fullWidth: description.isFullWidth)
 
         return cell

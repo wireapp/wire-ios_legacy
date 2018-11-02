@@ -78,7 +78,7 @@
 		166264F32179D3CF00300F45 /* SenderCellComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166264F22179D3CF00300F45 /* SenderCellComponent.swift */; };
 		166264F62179E63F00300F45 /* ImageMessageContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166264F52179E63F00300F45 /* ImageMessageContentView.swift */; };
 		16626500217DAC4F00300F45 /* ConversationMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166264FF217DAC4F00300F45 /* ConversationMessageCell.swift */; };
-		16626502217DACBE00300F45 /* ConfigurableCellTableViewAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16626501217DACBE00300F45 /* ConfigurableCellTableViewAdapter.swift */; };
+		16626502217DACBE00300F45 /* ConversationMessageCellTableViewAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16626501217DACBE00300F45 /* ConversationMessageCellTableViewAdapter.swift */; };
 		16626504217DAE7400300F45 /* UIView+ArrangeSubviews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16626503217DAE7400300F45 /* UIView+ArrangeSubviews.swift */; };
 		166390D41DC34CAB00D7BF1C /* ImageToolbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166390D31DC34CAB00D7BF1C /* ImageToolbarView.swift */; };
 		166390D61DC8AC0C00D7BF1C /* String+Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166390D51DC8AC0C00D7BF1C /* String+Image.swift */; };
@@ -1540,7 +1540,7 @@
 		166264F22179D3CF00300F45 /* SenderCellComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SenderCellComponent.swift; sourceTree = "<group>"; };
 		166264F52179E63F00300F45 /* ImageMessageContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageMessageContentView.swift; sourceTree = "<group>"; };
 		166264FF217DAC4F00300F45 /* ConversationMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationMessageCell.swift; sourceTree = "<group>"; };
-		16626501217DACBE00300F45 /* ConfigurableCellTableViewAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurableCellTableViewAdapter.swift; sourceTree = "<group>"; };
+		16626501217DACBE00300F45 /* ConversationMessageCellTableViewAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationMessageCellTableViewAdapter.swift; sourceTree = "<group>"; };
 		16626503217DAE7400300F45 /* UIView+ArrangeSubviews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+ArrangeSubviews.swift"; sourceTree = "<group>"; };
 		166390D31DC34CAB00D7BF1C /* ImageToolbarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageToolbarView.swift; sourceTree = "<group>"; };
 		166390D51DC8AC0C00D7BF1C /* String+Image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Image.swift"; sourceTree = "<group>"; };
@@ -3777,7 +3777,7 @@
 				166264FF217DAC4F00300F45 /* ConversationMessageCell.swift */,
 				5E35F732217F147A00D3F4FE /* ConversationMessageSectionController.swift */,
 				5E35F74221804BDD00D3F4FE /* ConversationMessageSectionBuilder.swift */,
-				16626501217DACBE00300F45 /* ConfigurableCellTableViewAdapter.swift */,
+				16626501217DACBE00300F45 /* ConversationMessageCellTableViewAdapter.swift */,
 				5EBBE96E218783A2008BC1B7 /* ConversationCellActionController.swift */,
 				5E35F7462180A25100D3F4FE /* Content */,
 				5E35F734217F415700D3F4FE /* Components */,
@@ -7503,7 +7503,7 @@
 				871067401C0DC5570035603B /* SettingsPropertyTextValueCellDescriptor.swift in Sources */,
 				8784AE3E1FC2DE5300AAEAB8 /* MediaManagerLoader.swift in Sources */,
 				876EECB31F5078D200E269F3 /* AccountSelectorController.swift in Sources */,
-				16626502217DACBE00300F45 /* ConfigurableCellTableViewAdapter.swift in Sources */,
+				16626502217DACBE00300F45 /* ConversationMessageCellTableViewAdapter.swift in Sources */,
 				161B75C820B6BCB50002B0F7 /* ZMUserSession+Calling.swift in Sources */,
 				871BC2811D34F8F800DF0793 /* NSString+Fingerprint.m in Sources */,
 				5EBBE9782188B85B008BC1B7 /* ZMMessage+Quote.swift in Sources */,

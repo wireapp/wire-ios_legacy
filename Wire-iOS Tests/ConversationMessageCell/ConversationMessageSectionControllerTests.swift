@@ -69,7 +69,7 @@ class ConversationMessageSectionControllerTests: XCTestCase {
 
         // WHEN
         let indexPath = IndexPath(row: 0, section: 0)
-        let cell = section.makeCell(for: tableView, at: indexPath) as? ConfigurableCellTableViewAdapter<MockCellDescription<Any>>
+        let cell = section.makeCell(for: tableView, at: indexPath) as? ConversationMessageCellTableViewAdapter<MockCellDescription<Any>>
 
         // THEN
         XCTAssertTrue(cell?.cellView.isConfigured == true)

@@ -18,7 +18,7 @@
 
 import Foundation
 
-class ConfigurableCellTableViewAdapter<C: ConversationMessageCellDescription>: UITableViewCell {
+class ConversationMessageCellTableViewAdapter<C: ConversationMessageCellDescription>: UITableViewCell {
     
     var cellView: C.View
     var cellDescription: C?
@@ -161,13 +161,13 @@ extension UITableView {
 
     func register<C: ConversationMessageCellDescription>(cell: C.Type) {
         let reuseIdentifier = String(describing: C.View.self)
-        register(ConfigurableCellTableViewAdapter<C>.self, forCellReuseIdentifier: reuseIdentifier)
+        register(ConversationMessageCellTableViewAdapter<C>.self, forCellReuseIdentifier: reuseIdentifier)
     }
 
     func dequeueConversationCell<C: ConversationMessageCellDescription>(for type: C.Type, description: C, for indexPath: IndexPath) -> UITableViewCell {
         let reuseIdentifier = String(describing: C.View.self)
 
-        let cell = dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as Any as! ConfigurableCellTableViewAdapter<C>
+        let cell = dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as Any as! ConversationMessageCellTableViewAdapter<C>
 
         cell.cellDescription = description
         cell.configure(with: description.configuration, fullWidth: description.isFullWidth)
