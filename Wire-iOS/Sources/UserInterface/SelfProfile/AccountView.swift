@@ -232,7 +232,7 @@ extension BaseAccountView: ZMUserObserver {
 @objcMembers public final class PersonalAccountView: BaseAccountView {
     internal let userImageView: AvatarImageView = {
         let avatarImageView = AvatarImageView(frame: .zero)
-        avatarImageView.container.backgroundColor = .backgroundLight
+        avatarImageView.container.backgroundColor = .from(scheme: .background, variant: .light)
 
         avatarImageView.initialsFont = .smallSemiboldFont
         avatarImageView.initialsColor = .from(scheme: .textForeground, variant: .light)
@@ -326,7 +326,7 @@ extension PersonalAccountView {
     func applySmallStyle() {
         initialLabel.font = .smallSemiboldFont
         initialLabel.textColor = .from(scheme: .textForeground, variant: .light)
-        backgroundColor = .backgroundLight
+        backgroundColor = .from(scheme: .background, variant: .light)
     }
     
     init(account: Account) {
