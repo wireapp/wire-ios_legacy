@@ -20,9 +20,8 @@ import Foundation
 
 extension AnimatedListMenuView {
     open override func updateConstraints() {
-        super.updateConstraints()
-
         if initialConstraintsCreated {
+            super.updateConstraints()
             return
         }
 
@@ -56,6 +55,8 @@ extension AnimatedListMenuView {
         NSLayoutConstraint.activate(subviewConstraints)
 
         initialConstraintsCreated = true
+
+        super.updateConstraints()
     }
 
     @objc

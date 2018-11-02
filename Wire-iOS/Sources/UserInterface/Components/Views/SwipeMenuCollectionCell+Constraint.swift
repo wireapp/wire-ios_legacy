@@ -68,15 +68,15 @@ extension SwipeMenuCollectionCell {
     /// Checks on the @c maxVisualDrawerOffset and switches the prio's of the constraint
     @objc func checkAndUpdateMaxVisualDrawerOffsetConstraints(_ visualDrawerOffset: CGFloat) {
         if visualDrawerOffset >= menuView.frame.width + maxVisualDrawerOffset {
-            menuViewToSwipeViewLeftConstraint.isActive = false
-            maxMenuViewToSwipeViewLeftConstraint.isActive = true
+            menuViewToSwipeViewLeftConstraint?.isActive = false
+            maxMenuViewToSwipeViewLeftConstraint?.isActive = true
         } else {
             disableMaxVisualDrawerOffsetConstraints()
         }
     }
 
     @objc func disableMaxVisualDrawerOffsetConstraints() {
-        maxMenuViewToSwipeViewLeftConstraint.isActive = false
-        menuViewToSwipeViewLeftConstraint.isActive = true
+        maxMenuViewToSwipeViewLeftConstraint?.isActive = false
+        menuViewToSwipeViewLeftConstraint?.isActive = true
     }
 }

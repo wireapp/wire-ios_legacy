@@ -20,10 +20,10 @@
 
 @property (nonatomic) BOOL hasCreatedSwipeMenuConstraints;
 
-@property (nonatomic) NSLayoutConstraint *swipeViewHorizontalConstraint;
-@property (nonatomic) NSLayoutConstraint *menuViewToSwipeViewLeftConstraint;
-@property (nonatomic) NSLayoutConstraint *maxMenuViewToSwipeViewLeftConstraint;
+@property (nonatomic, nullable) NSLayoutConstraint *swipeViewHorizontalConstraint;
+@property (nonatomic, nullable) NSLayoutConstraint *menuViewToSwipeViewLeftConstraint;
+@property (nonatomic, nullable) NSLayoutConstraint *maxMenuViewToSwipeViewLeftConstraint;
 
-@property (nonatomic) UIView *separatorLine;
+@property (nonatomic, nonnull) UIView *separatorLine;
 
 @end
