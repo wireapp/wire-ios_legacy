@@ -38,7 +38,7 @@ import CoreLocation
         button.circular = true
         button.backgroundColor = .from(scheme: .background)
         button.setIconColor(.from(scheme: .iconNormal), for: .normal)
-        button.setIconColor(.iconHighlighted, for: .highlighted)
+        button.setIconColor(.from(scheme: .iconHighlighted), for: .highlighted)
 
         return button
     }()
