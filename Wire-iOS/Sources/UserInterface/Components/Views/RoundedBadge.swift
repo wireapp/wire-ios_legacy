@@ -20,8 +20,8 @@ import Foundation
 
 public class RoundedBadge: UIButton {
     public let containedView: UIView
-    public var trailingConstraint: NSLayoutConstraint!
-    public var leadingConstraint: NSLayoutConstraint!
+    private var trailingConstraint: NSLayoutConstraint!
+    private var leadingConstraint: NSLayoutConstraint!
     public var widthGreaterThanHeightConstraint: NSLayoutConstraint!
     private let contentInset: UIEdgeInsets
 
