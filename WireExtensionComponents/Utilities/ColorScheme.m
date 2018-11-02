@@ -21,47 +21,11 @@
 #import "UIColor+WAZExtensions.h"
 #import <WireExtensionComponents/WireExtensionComponents-Swift.h>
 
-/// Generates the key name for the accent color that can be used to display the username.
-//static NSString * ColorSchemeNameAccentColorForColor(ZMAccentColor color);
-//
-//static NSString * ColorSchemeNameAccentColorForColor(ZMAccentColor color) {
-//    static NSArray *colorNames = nil;
-//    
-//    static dispatch_once_t onceToken;
-//    dispatch_once(&onceToken, ^{
-//        // NB! Order of the elements and it's position should be in order with ZMAccentColor enum
-//        colorNames = @[@"undefined",
-//                       @"strong-blue",
-//                       @"strong-lime-green",
-//                       @"bright-yellow",
-//                       @"vivid-red",
-//                       @"bright-orange",
-//                       @"soft-pink",
-//                       @"violet"];
-//    });
-//
-//    assert(color < colorNames.count);
-//    
-//    return [NSString stringWithFormat:@"%@-%@", ColorSchemeColorNameAccentPrefix, colorNames[color]];
-//}
-
-//static NSString* dark(NSString *colorString) {
-//    return [NSString stringWithFormat:@"%@-dark", colorString];
-//}
-//
-//static NSString* light(NSString *colorString) {
-//    return [NSString stringWithFormat:@"%@-light", colorString];
-//}
-
-
-
 @interface ColorScheme ()
 
 @property (nonatomic) NSDictionary *colors;
 
 @end
-
-
 
 @implementation ColorScheme
 
