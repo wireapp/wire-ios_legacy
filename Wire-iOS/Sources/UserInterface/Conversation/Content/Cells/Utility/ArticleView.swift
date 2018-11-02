@@ -32,7 +32,7 @@ import WireExtensionComponents
 
     /// MARK - Styling
     var containerColor: UIColor? = .placeholderBackground
-    var titleTextColor: UIColor? = .textForeground
+    var titleTextColor: UIColor? = .from(scheme: .textForeground)
     var titleFont: UIFont? = .normalSemiboldFont
     var authorTextColor: UIColor? = .textDimmed
     var authorFont: UIFont? = .smallLightFont

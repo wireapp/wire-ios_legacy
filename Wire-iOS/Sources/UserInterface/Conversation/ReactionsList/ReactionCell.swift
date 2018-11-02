@@ -25,7 +25,7 @@ public class ReactionCell: UICollectionViewCell {
     public let userDisplayNameLabel: UILabel = {
         let label = UILabel()
         label.font = .normalFont
-        label.textColor = .textForeground
+        label.textColor = .from(scheme: .textForeground)
 
         return label
     }()

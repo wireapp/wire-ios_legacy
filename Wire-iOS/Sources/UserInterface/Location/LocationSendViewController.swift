@@ -29,7 +29,7 @@ import Cartography
     public let addressLabel: UILabel = {
         let label = UILabel()
         label.font = .normalFont
-        label.textColor = .textForeground
+        label.textColor = .from(scheme: .textForeground)
         return label
     }()
     public let separatorView: UIView = {

@@ -32,7 +32,7 @@ class LocationPreviewController: TintColorCorrectedViewController {
     private let addressLabel = UILabel()
 
     let labelFont = UIFont.normalFont
-    let labelTextColor = UIColor.textForeground
+    let labelTextColor = UIColor.from(scheme: .textForeground)
     let containerColor = UIColor.placeholderBackground
 
     // MARK: - Initialization

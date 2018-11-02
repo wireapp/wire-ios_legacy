@@ -58,7 +58,7 @@ import Cartography
     public let titleLabel: UILabel = {
         let label = UILabel()
         label.font = .smallSemiboldFont
-        label.textColor = .textForeground
+        label.textColor = .from(scheme: .textForeground)
 
         return label
     }()

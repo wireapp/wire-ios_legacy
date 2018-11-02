@@ -71,7 +71,7 @@ public protocol TextSearchInputViewDelegate: class {
         searchInput.backgroundColor = UIColor.from(scheme: .tokenFieldBackground)
         searchInput.textContainerInset = UIEdgeInsets(top: 10, left: 40, bottom: 10, right: 8)
         searchInput.font = .normalFont
-        searchInput.textColor = .textForeground
+        searchInput.textColor = .from(scheme: .textForeground)
         
         placeholderLabel.textAlignment = .natural
         placeholderLabel.isAccessibilityElement = false

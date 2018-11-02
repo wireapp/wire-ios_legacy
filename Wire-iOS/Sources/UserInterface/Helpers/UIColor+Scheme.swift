@@ -24,10 +24,6 @@ extension UIColor {
         return UIColor.from(scheme: .textDimmed)
     }
 
-    static var textForeground: UIColor {
-        return UIColor.from(scheme: .textForeground)
-    }
-
     static var textForegroundLight: UIColor {
         return UIColor.from(scheme: .textForeground, variant: .light)
     }

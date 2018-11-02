@@ -47,7 +47,7 @@ import TTTAttributedLabel
         view.backgroundColor = .separator
         return view
     }()
-    var labelTextColor: UIColor? = .textForeground
+    var labelTextColor: UIColor? = .from(scheme: .textForeground)
     var labelTextBlendedColor: UIColor? = .textDimmed
     var iconColor: UIColor?
 

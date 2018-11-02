@@ -58,7 +58,7 @@ final public class SearchResultLabel: UILabel, Copyable {
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.lineBreakMode = .byTruncatingTail
-        textColor = .textForeground
+        textColor = .from(scheme: .textForeground)
     }
     
     required public init?(coder aDecoder: NSCoder) {

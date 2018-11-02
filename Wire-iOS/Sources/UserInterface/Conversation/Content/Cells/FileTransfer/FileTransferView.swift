@@ -29,7 +29,7 @@ final public class FileTransferView: UIView, TransferView {
     public let bottomLabel = UILabel()
     public let fileTypeIconView: UIImageView = {
         let imageView = UIImageView()
-        imageView.tintColor = .textForeground
+        imageView.tintColor = .from(scheme: .textForeground)
         return imageView
     }()
     public let fileEyeView: UIImageView = {
@@ -41,7 +41,7 @@ final public class FileTransferView: UIView, TransferView {
     private let loadingView = ThreeDotsLoadingView()
     public let actionButton = IconButton()
     
-    public let labelTextColor: UIColor = .textForeground
+    public let labelTextColor: UIColor = .from(scheme: .textForeground)
     public let labelTextBlendedColor: UIColor = .textDimmed
     public let labelFont: UIFont = .smallLightFont
     public let labelBoldFont: UIFont = .smallSemiboldFont

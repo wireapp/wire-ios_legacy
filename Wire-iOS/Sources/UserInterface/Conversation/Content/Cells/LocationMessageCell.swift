@@ -32,7 +32,7 @@ public final class LocationMessageCell: ConversationCell {
     private var recognizer: UITapGestureRecognizer?
     private weak var locationAnnotation: MKPointAnnotation? = nil
     var labelFont: UIFont? = .normalFont
-    var labelTextColor: UIColor? = .textForeground
+    var labelTextColor: UIColor? = .from(scheme: .textForeground)
     var containerColor: UIColor? = .placeholderBackground
     var containerHeightConstraint: NSLayoutConstraint!
     
