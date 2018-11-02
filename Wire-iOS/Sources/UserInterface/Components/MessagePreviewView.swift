@@ -18,12 +18,6 @@
 
 import Foundation
 
-extension ZMConversationMessage {
-    var canBeQuoted: Bool {
-        return isText || isImage || isLocation || isFile
-    }
-}
-
 extension NSTextAttachment {
     static func textAttachment(for icon: ZetaIconType, with color: UIColor, and size: FontSize) -> NSTextAttachment? {
         guard let image = UIImage(for: icon, fontSize: 10, color: color)

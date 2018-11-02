@@ -74,16 +74,16 @@ class CallSystemMessageTests: CoreDataSnapshotTestCase {
 
     // MARK: - Helper
 
-    private func cell(for type: ZMSystemMessageType, fromSelf: Bool, expanded: Bool = false, inGroup: Bool = false) -> IconSystemCell {
+    private func cell(for type: ZMSystemMessageType, fromSelf: Bool, expanded: Bool = false, inGroup: Bool = false) -> UITableViewCell {
         let message = systemMessage(missed: type == .missedCall, in: .insertNewObject(in: uiMOC), from: fromSelf ? selfUser : otherUser, inGroup: inGroup)
-        let cell = createCell(missed: type == .missedCall)
+        let cell = createCell(for: message, missed: type == .missedCall)
         cell.layer.speed = 0
-        if expanded {
-            cell.setSelected(true, animated: false)
-        }
-        let props = ConversationCellLayoutProperties()
 
-        cell.configure(for: message, layoutProperties: props)
+        // TODO: Check for expanded state
+//        if expanded {
+//            cell.setSelected(true, animated: false)
+//        }
+
         return cell
     }
 
@@ -101,12 +101,13 @@ class CallSystemMessageTests: CoreDataSnapshotTestCase {
         }
     }
 
-    private func createCell(missed: Bool) -> IconSystemCell {
-        if missed {
-            return MissedCallCell(style: .default, reuseIdentifier: name)
-        } else {
-            return PerformedCallCell(style: .default, reuseIdentifier: name)
-        }
+    private func createCell(for systemMessage: ZMSystemMessage, missed: Bool) -> UITableViewCell {
+        let description = ConversationCallSystemMessageCellDescription(message: systemMessage, data: systemMessage.systemMessageData!, missed: missed)
+
+        let cell = ConversationMessageCellTableViewAdapter<ConversationCallSystemMessageCellDescription>(style: .default, reuseIdentifier: nil)
+        cell.configure(with: description.configuration, fullWidth: description.isFullWidth)
+
+        return cell
     }
 
 }

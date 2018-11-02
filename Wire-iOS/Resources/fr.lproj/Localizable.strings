@@ -412,12 +412,10 @@
 "content.system.conversation.with_name.participants" = "avec";
 
 "content.system.message_timer_changes" = "%@ a réglé la minuterie sur %@";
-"content.system.message_timer_changes.you" = "Vous avez réglé la minuterie sur %@";
-
-"content.system.message_timer.you_part" = "Vous";
+"content.system.message_timer_changes-you" = "Vous avez réglé la minuterie sur %@";
 
 "content.system.message_timer_off" = "%@ a désactivé les messages éphémères";
-"content.system.message_timer_off.you" = "Vous avez désactivé les messages éphémères";
+"content.system.message_timer_off-you" = "Vous avez désactivé les messages éphémères";
 
 "content.system.reactivated_device" = "Vous avez recommencé à utiliser %@. Les messages envoyés entre-temps n’apparaîtront pas ici.";
 

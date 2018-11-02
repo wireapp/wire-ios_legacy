@@ -46,7 +46,7 @@ public final class VideoMessageCell: ConversationCell {
         var currentElements: [Any] = self.accessibilityElements ?? []
         let contentViewAccessibilityElements: [Any] = self.videoMessageView.accessibilityElements ?? []
         currentElements.append(contentsOf: contentViewAccessibilityElements)
-        currentElements.append(contentsOf: [likeButton, toolboxView])
+        currentElements.append(toolboxView)
         self.accessibilityElements = currentElements
 
         setNeedsLayout()
@@ -202,13 +202,13 @@ public final class VideoMessageCell: ConversationCell {
     }
     
     @objc func download(_ sender: Any) {
-        delegate?.conversationCell?(self, didSelect: .download)
+        delegate?.conversationCell?(self, didSelect: .download, for: self.message)
     }
 }
 
 
 extension VideoMessageCell: TransferViewDelegate {
     public func transferView(_ view: TransferView, didSelect action: MessageAction) {
-        self.delegate.conversationCell?(self, didSelect: action)
+        self.delegate.conversationCell?(self, didSelect: action, for: self.message)
     }
 }

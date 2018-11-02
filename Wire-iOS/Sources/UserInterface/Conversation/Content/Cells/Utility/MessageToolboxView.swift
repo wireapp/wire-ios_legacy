@@ -49,7 +49,8 @@ extension ZMSystemMessageData {
 
     fileprivate func callDurationString() -> String? {
         guard systemMessageType == .performedCall, duration > 0 else { return nil }
-        return  PerformedCallCell.callDurationFormatter.string(from: duration)
+//        return  PerformedCallCell.callDurationFormatter.string(from: duration)
+        return nil
     }
 }
 
@@ -58,6 +59,7 @@ extension ZMSystemMessageData {
     func messageToolboxViewDidSelectLikers(_ messageToolboxView: MessageToolboxView)
     func messageToolboxViewDidSelectResend(_ messageToolboxView: MessageToolboxView)
     func messageToolboxViewDidSelectDelete(_ messageToolboxView: MessageToolboxView)
+    func messageToolboxViewDidRequestLike(_ messageToolboxView: MessageToolboxView)
 }
 
 @objcMembers open class MessageToolboxView: UIView {
@@ -77,9 +79,13 @@ extension ZMSystemMessageData {
     }()
 
     public let reactionsView = ReactionsView()
-    fileprivate let labelClipView = UIView()
     fileprivate var tapGestureRecogniser: UITapGestureRecognizer!
-    
+
+    fileprivate let likeButton = LikeButton()
+    fileprivate let likeButtonContainer = UIView()
+    fileprivate var likeButtonWidth: NSLayoutConstraint!
+    fileprivate var heightConstraint: NSLayoutConstraint!
+
     open weak var delegate: MessageToolboxViewDelegate?
 
     fileprivate var previousLayoutBounds: CGRect = CGRect.zero
@@ -88,7 +94,7 @@ extension ZMSystemMessageData {
     
     fileprivate var forceShowTimestamp: Bool = false
     private var isConfigured: Bool = false
-    
+
     override init(frame: CGRect) {
         
         super.init(frame: frame)
@@ -101,11 +107,17 @@ extension ZMSystemMessageData {
     
     private func setupViews() {
         reactionsView.accessibilityIdentifier = "reactionsView"
-        
-        labelClipView.clipsToBounds = true
-        labelClipView.isAccessibilityElement = true
-        labelClipView.isUserInteractionEnabled = true
-        
+
+        likeButton.translatesAutoresizingMaskIntoConstraints = false
+        likeButton.accessibilityIdentifier = "likeButton"
+        likeButton.accessibilityLabel = "likeButton"
+        likeButton.addTarget(self, action: #selector(requestLike), for: .touchUpInside)
+        likeButton.setIcon(.liked, with: .like, for: .normal)
+        likeButton.setIconColor(UIColor(scheme: .textDimmed), for: .normal)
+        likeButton.setIcon(.liked, with: .like, for: .selected)
+        likeButton.setIconColor(UIColor(for: .vividRed), for: .selected)
+        likeButton.hitAreaPadding = CGSize(width: 20, height: 20)
+
         statusLabel.delegate = self
         statusLabel.extendsLinkTouchArea = true
         statusLabel.isUserInteractionEnabled = true
@@ -114,34 +126,48 @@ extension ZMSystemMessageData {
         statusLabel.accessibilityLabel = "DeliveryStatus"
         statusLabel.lineBreakMode = NSLineBreakMode.byTruncatingMiddle
         statusLabel.numberOfLines = 0
+        statusLabel.setContentHuggingPriority(.defaultLow, for: .vertical)
+        statusLabel.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
         statusLabel.linkAttributes = [NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue as NSNumber,
                                       NSAttributedString.Key.foregroundColor: UIColor(for: .vividRed)]
         statusLabel.activeLinkAttributes = [NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue as NSNumber,
                                             NSAttributedString.Key.foregroundColor: UIColor(for: .vividRed).withAlphaComponent(0.5)]
-        
-        labelClipView.addSubview(statusLabel)
-        
-        [reactionsView, labelClipView].forEach(addSubview)
+
+        [likeButtonContainer, likeButton, statusLabel, reactionsView].forEach(addSubview)
     }
     
     private func createConstraints() {
-        constrain(self, reactionsView, statusLabel, labelClipView) { selfView, reactionsView, statusLabel, labelClipView in
+        likeButtonContainer.translatesAutoresizingMaskIntoConstraints = false
+        likeButton.translatesAutoresizingMaskIntoConstraints = false
+        statusLabel.translatesAutoresizingMaskIntoConstraints = false
+        reactionsView.translatesAutoresizingMaskIntoConstraints = false
 
-            selfView.height >= 28 ~ 750.0
-            
-            labelClipView.leading == selfView.leadingMargin
-            labelClipView.trailing == selfView.trailingMargin
-            labelClipView.top == selfView.top
-            labelClipView.bottom == selfView.bottom
+        heightConstraint = self.heightAnchor.constraint(equalToConstant: 28)
+        heightConstraint.priority = UILayoutPriority(999)
 
-            statusLabel.leading == labelClipView.leading
-            statusLabel.top == labelClipView.top
-            statusLabel.bottom == labelClipView.bottom
-            statusLabel.trailing <= reactionsView.leading
-            
-            reactionsView.trailing == selfView.trailingMargin
-            reactionsView.centerY == selfView.centerY
-        }
+        likeButtonWidth = likeButtonContainer.widthAnchor.constraint(equalToConstant: UIView.conversationLayoutMargins.left)
+
+        NSLayoutConstraint.activate([
+            heightConstraint,
+
+            // likeButton
+            likeButtonWidth,
+            likeButtonContainer.leadingAnchor.constraint(equalTo: leadingAnchor),
+            likeButtonContainer.topAnchor.constraint(equalTo: topAnchor),
+            likeButtonContainer.bottomAnchor.constraint(equalTo: bottomAnchor),
+            likeButton.centerXAnchor.constraint(equalTo: likeButtonContainer.centerXAnchor),
+            likeButton.centerYAnchor.constraint(equalTo: likeButtonContainer.centerYAnchor),
+
+            // statusLabel
+            statusLabel.leadingAnchor.constraint(equalTo: likeButtonContainer.trailingAnchor),
+            statusLabel.topAnchor.constraint(equalTo: topAnchor),
+            statusLabel.trailingAnchor.constraint(equalTo: reactionsView.leadingAnchor, constant: -UIView.conversationLayoutMargins.right),
+            statusLabel.bottomAnchor.constraint(equalTo: bottomAnchor),
+
+            // reactionsView
+            reactionsView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -UIView.conversationLayoutMargins.right),
+            reactionsView.centerYAnchor.constraint(equalTo: centerYAnchor)
+        ])
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -162,19 +188,48 @@ extension ZMSystemMessageData {
         
         self.forceShowTimestamp = forceShowTimestamp
         self.message = message
-        
+
+        self.configureLikedState(message)
+        self.layoutIfNeeded()
+
         if !self.forceShowTimestamp && message.hasReactions() {
-            self.configureLikedState(message)
-            self.layoutIfNeeded()
             showReactionsView(true, animated: animated)
             self.configureReactions(message, animated: animated)
             self.tapGestureRecogniser.isEnabled = true
         }
         else {
-            self.layoutIfNeeded()
             showReactionsView(false, animated: animated)
             self.configureTimestamp(message, animated: animated)
             self.tapGestureRecogniser.isEnabled = false
+        }
+    }
+    
+    func setHidden(_ isHidden: Bool, animated: Bool) {
+
+        let changes = {
+            self.heightConstraint?.constant = isHidden ? 0 : 28
+            self.alpha = isHidden ? 0 : 1
+            self.layoutIfNeeded()
+        }
+
+        if animated {
+            UIView.animate(withDuration: 0.35) {
+                changes()
+            }
+        } else {
+            layer.removeAllAnimations()
+            changes()
+        }
+    }
+
+    @objc private func requestLike() {
+        delegate?.messageToolboxViewDidRequestLike(self)
+    }
+
+    @objc(updateForMessage:)
+    func update(for change: MessageChangeInfo) {
+        if change.reactionsChanged {
+            configureLikedState(change.message)
         }
     }
     
@@ -196,6 +251,8 @@ extension ZMSystemMessageData {
     }
     
     fileprivate func configureLikedState(_ message: ZMConversationMessage) {
+        likeButton.isHidden = !message.canBeLiked
+        likeButton.setSelected(message.liked, animated: false)
         self.reactionsView.likers = message.likers()
     }
     
@@ -238,7 +295,7 @@ extension ZMSystemMessageData {
         let labelSize = CTFramesetterSuggestFrameSizeWithConstraints(framesetter, CFRangeMake(0, likersNamesAttributedString.length), nil, targetSize, nil)
 
         let attributedText: NSAttributedString
-        if labelSize.width > (labelClipView.bounds.width - reactionsView.bounds.width) {
+        if labelSize.width > (statusLabel.bounds.width - reactionsView.bounds.width) {
             let likersCount = String(format: "participants.people.count".localized, likers.count)
             attributedText = likersCount && attributes
         }
