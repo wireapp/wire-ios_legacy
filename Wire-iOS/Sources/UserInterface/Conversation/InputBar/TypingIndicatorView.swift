@@ -113,7 +113,7 @@ class AnimatedPenView : UIView {
     public let nameLabel: UILabel = {
         let label = UILabel()
         label.font = .smallLightFont
-        label.textColor = .textPlaceholder
+        label.textColor = .from(scheme: .textPlaceholder)
 
         return label
     }()

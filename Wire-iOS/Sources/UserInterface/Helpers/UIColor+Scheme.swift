@@ -20,14 +20,6 @@ import Foundation
 
 extension UIColor {
 
-    static var textPlaceholder: UIColor {
-        return UIColor.from(scheme: .textPlaceholder)
-    }
-
-    static var placeholderBackground: UIColor {
-        return UIColor.from(scheme: .placeholderBackground)
-    }
-
     static var separator: UIColor {
         return UIColor.from(scheme: .separator)
     }

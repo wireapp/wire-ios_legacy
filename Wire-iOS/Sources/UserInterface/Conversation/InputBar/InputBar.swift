@@ -140,7 +140,7 @@ private struct InputBarConstants {
     public var ephemeralColor: UIColor {
         return .accent()
     }
-    public var placeholderColor: UIColor? = .textPlaceholder
+    public var placeholderColor: UIColor? = .from(scheme: .textPlaceholder)
     public var textColor: UIColor? = .from(scheme: .textForeground)
 
     fileprivate var rowTopInsetConstraint: NSLayoutConstraint? = nil

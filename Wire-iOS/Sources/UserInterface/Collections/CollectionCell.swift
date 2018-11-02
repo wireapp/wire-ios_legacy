@@ -140,7 +140,7 @@ open class CollectionCell: UICollectionViewCell {
 
     let secureContentsView: UIView = {
         let view = UIView()
-        view.backgroundColor = .placeholderBackground
+        view.backgroundColor = .from(scheme: .placeholderBackground)
 
         return view
     }()

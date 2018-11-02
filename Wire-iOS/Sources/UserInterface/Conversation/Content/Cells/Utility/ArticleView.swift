@@ -31,7 +31,7 @@ import WireExtensionComponents
 @objcMembers class ArticleView: UIView {
 
     /// MARK - Styling
-    var containerColor: UIColor? = .placeholderBackground
+    var containerColor: UIColor? = .from(scheme: .placeholderBackground)
     var titleTextColor: UIColor? = .from(scheme: .textForeground)
     var titleFont: UIFont? = .normalSemiboldFont
     var authorTextColor: UIColor? = .from(scheme: .textDimmed)

@@ -33,7 +33,7 @@ class LocationPreviewController: TintColorCorrectedViewController {
 
     let labelFont = UIFont.normalFont
     let labelTextColor = UIColor.from(scheme: .textForeground)
-    let containerColor = UIColor.placeholderBackground
+    let containerColor = UIColor.from(scheme: .placeholderBackground)
 
     // MARK: - Initialization
 
@@ -41,7 +41,7 @@ class LocationPreviewController: TintColorCorrectedViewController {
         self.message = message
         super.init(nibName: nil, bundle: nil)
         containerView.translatesAutoresizingMaskIntoConstraints = false
-        containerView.backgroundColor = .placeholderBackground
+        containerView.backgroundColor = .from(scheme: .placeholderBackground)
 
         configureViews()
         createConstraints()
