@@ -132,8 +132,8 @@ extension NSMutableAttributedString {
         let allowedIndexSet = IndexSet(integersIn: Range<Int>(wholeRange)!, excluding: excludedRanges)
         
         for range in allowedIndexSet.rangeView {
-            let range = NSRange(location: range.startIndex, length: range.endIndex - range.startIndex - 1)
-            self.mutableString.resolveEmoticonShortcuts(in: range)
+            let convertedRange = NSRange(location: range.startIndex, length: range.endIndex - range.startIndex - 1)
+            self.mutableString.resolveEmoticonShortcuts(in: convertedRange)
         }
     }
     
