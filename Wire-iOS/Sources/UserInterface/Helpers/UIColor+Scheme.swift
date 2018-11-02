@@ -20,10 +20,6 @@ import Foundation
 
 extension UIColor {
 
-    static var iconNormal: UIColor {
-        return UIColor.from(scheme: .iconNormal)
-    }
-
     static var iconNormalDark: UIColor {
         return UIColor.from(scheme: .iconNormal, variant: .dark)
     }

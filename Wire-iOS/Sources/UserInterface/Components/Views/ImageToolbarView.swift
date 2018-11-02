@@ -64,7 +64,7 @@ import Cartography
     }
 
     private func updateButtonStyle() {
-        let normalColor: UIColor = isPlacedOnImage ? .iconNormalDark : .iconNormal
+        let normalColor: UIColor = isPlacedOnImage ? .iconNormalDark : .from(scheme: .iconNormal)
         let highlightedColor: UIColor = isPlacedOnImage ? .iconHighlightedDark : .iconHighlighted
         let selectedColor: UIColor = isPlacedOnImage ? .accentDarken : .accent()
 

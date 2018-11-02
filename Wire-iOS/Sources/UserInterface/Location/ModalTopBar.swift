@@ -65,7 +65,7 @@ import Cartography
     fileprivate func configureViews() {
         [titleLabel, dismissButton, separatorView].forEach(addSubview)
         dismissButton.setIcon(.cancel, with: .tiny, for: [])
-        dismissButton.setIconColor(.iconNormal, for: .normal)
+        dismissButton.setIconColor(.from(scheme: .iconNormal), for: .normal)
         dismissButton.addTarget(self, action: #selector(dismissButtonTapped), for: .touchUpInside)
         dismissButton.hitAreaPadding = CGSize(width: 20, height: 20)
     }
