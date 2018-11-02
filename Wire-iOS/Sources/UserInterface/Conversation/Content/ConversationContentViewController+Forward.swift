@@ -102,10 +102,8 @@ extension ZMConversationMessage {
     public func previewView() -> UIView? {
         var cell: ConversationCell
 
-        if isText {
-            return ConversationTextMessageCellDescription.preview(for: self)
-        }
-        else if isImage {
+        // TODO 2838: Use the quote cell as the preview
+        if isImage {
             cell = ImageMessageCell(style: .default, reuseIdentifier: "")
         }
         else if isVideo {
