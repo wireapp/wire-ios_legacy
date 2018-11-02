@@ -591,8 +591,6 @@
 		877ABB491E8127B200CBCF2B /* BackgroundViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877ABB481E8127B200CBCF2B /* BackgroundViewControllerTests.swift */; };
 		877B07821E3B4C4A0070A6F2 /* ZMConversationMessage+Properties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877B07811E3B4C4A0070A6F2 /* ZMConversationMessage+Properties.swift */; };
 		87831A971E69B5E600DDF3C3 /* ThreeDotsLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87831A961E69B5E600DDF3C3 /* ThreeDotsLoadingView.swift */; };
-		87831A9A1E69B6D000DDF3C3 /* UIColor+WR_ColorScheme.h in Headers */ = {isa = PBXBuildFile; fileRef = 87831A981E69B6D000DDF3C3 /* UIColor+WR_ColorScheme.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		87831A9B1E69B6D000DDF3C3 /* UIColor+WR_ColorScheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 87831A991E69B6D000DDF3C3 /* UIColor+WR_ColorScheme.m */; };
 		8784AE3E1FC2DE5300AAEAB8 /* MediaManagerLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8784AE3D1FC2DE5300AAEAB8 /* MediaManagerLoader.swift */; };
 		8784B6291D89448700AB71BD /* ProfileSelfPictureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8784B6261D89448700AB71BD /* ProfileSelfPictureViewController.m */; };
 		8784B62A1D89448700AB71BD /* UIAlertController+NewSelfClients.m in Sources */ = {isa = PBXBuildFile; fileRef = 8784B6281D89448700AB71BD /* UIAlertController+NewSelfClients.m */; };
@@ -2162,8 +2160,6 @@
 		8781C94E1E2687590024F3F6 /* MessageAction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MessageAction.h; sourceTree = "<group>"; };
 		87831A931E69B2B200DDF3C3 /* ImageNotificationExtensionBridgingHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImageNotificationExtensionBridgingHeader.h; sourceTree = "<group>"; };
 		87831A961E69B5E600DDF3C3 /* ThreeDotsLoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThreeDotsLoadingView.swift; sourceTree = "<group>"; };
-		87831A981E69B6D000DDF3C3 /* UIColor+WR_ColorScheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+WR_ColorScheme.h"; sourceTree = "<group>"; };
-		87831A991E69B6D000DDF3C3 /* UIColor+WR_ColorScheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+WR_ColorScheme.m"; sourceTree = "<group>"; };
 		8784AE3D1FC2DE5300AAEAB8 /* MediaManagerLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaManagerLoader.swift; sourceTree = "<group>"; };
 		8784B6251D89448700AB71BD /* ProfileSelfPictureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileSelfPictureViewController.h; sourceTree = "<group>"; };
 		8784B6261D89448700AB71BD /* ProfileSelfPictureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileSelfPictureViewController.m; sourceTree = "<group>"; };
@@ -3540,8 +3536,6 @@
 				CE8E4FC41DF17CFE0009F437 /* NSString+TextTransform.m */,
 				8784D4581E818AA4007A6867 /* CGFloat+Hairline.swift */,
 				87B7DAEA1E697C11005F5140 /* AccentColorProvider.h */,
-				87831A981E69B6D000DDF3C3 /* UIColor+WR_ColorScheme.h */,
-				87831A991E69B6D000DDF3C3 /* UIColor+WR_ColorScheme.m */,
 				876376891E8413D900B2CCF0 /* RawRepresentable+AllValues.swift */,
 				876CC8981E966C5C00F6BABC /* IteratorProtocol+Histogram.swift */,
 				7CCBE24C1FC72FE500CBD55D /* SharedConstants.swift */,
@@ -6524,7 +6518,6 @@
 				8786071B1D33E3FF00971A19 /* Geometry.h in Headers */,
 				878607211D33E3FF00971A19 /* NetworkStatus.h in Headers */,
 				CE06C93F1DF5C3D900497685 /* AVAsset+VideoConvert.h in Headers */,
-				87831A9A1E69B6D000DDF3C3 /* UIColor+WR_ColorScheme.h in Headers */,
 				1E8C253A1BBC279B00FC373F /* ProgressSpinner.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -7119,7 +7112,6 @@
 				BFB332681E3A2D95003B0CD2 /* ExtensionSettings.swift in Sources */,
 				870533FF1DD6162400A7F822 /* OverflowSeparatorView.swift in Sources */,
 				870534011DD6265100A7F822 /* AttributedStringOperators.swift in Sources */,
-				87831A9B1E69B6D000DDF3C3 /* UIColor+WR_ColorScheme.m in Sources */,
 				5EEFC1A520C01C64007E8A79 /* ContinuousMaskLayer.swift in Sources */,
 				8763768A1E8413D900B2CCF0 /* RawRepresentable+AllValues.swift in Sources */,
 				164A55AD20ECFD7400AE62A6 /* UserImageView.swift in Sources */,

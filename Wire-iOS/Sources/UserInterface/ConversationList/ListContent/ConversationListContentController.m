@@ -32,7 +32,6 @@
 
 #import "ZClientViewController+Internal.h"
 
-#import "UIColor+WR_ColorScheme.h"
 
 #import "ConnectRequestsCell.h"
 #import "ConversationListCell.h"

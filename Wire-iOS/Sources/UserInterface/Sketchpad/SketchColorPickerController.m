@@ -20,7 +20,6 @@
 #import "SketchColorPickerController.h"
 
 #import "SketchColorCollectionViewCell.h"
-#import "UIColor+WR_ColorScheme.h"
 @import PureLayout;
 @import WireExtensionComponents;
 

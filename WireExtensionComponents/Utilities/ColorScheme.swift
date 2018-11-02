@@ -115,10 +115,12 @@ public extension UIColor {
 
 extension UIColor {
 
+    @objc(wr_colorFromColorScheme:)
     public static func from(scheme: ColorSchemeColor) -> UIColor {
         return ColorScheme.default.color(named: scheme)
     }
 
+    @objc(wr_colorFromColorScheme:variant:)
     public static func from(scheme: ColorSchemeColor, variant: ColorSchemeVariant) -> UIColor {
         return ColorScheme.default.color(named: scheme, variant: variant)
     }
