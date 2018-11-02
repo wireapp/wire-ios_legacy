@@ -42,7 +42,7 @@ final public class FileTransferView: UIView, TransferView {
     public let actionButton = IconButton()
     
     public let labelTextColor: UIColor = .from(scheme: .textForeground)
-    public let labelTextBlendedColor: UIColor = .textDimmed
+    public let labelTextBlendedColor: UIColor = .from(scheme: .textDimmed)
     public let labelFont: UIFont = .smallLightFont
     public let labelBoldFont: UIFont = .smallSemiboldFont
 

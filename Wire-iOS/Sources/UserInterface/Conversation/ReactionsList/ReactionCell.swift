@@ -32,7 +32,7 @@ public class ReactionCell: UICollectionViewCell {
     public let usernameLabel: UILabel = {
         let label = UILabel()
         label.font = .smallSemiboldFont
-        label.textColor = .textDimmed
+        label.textColor = .from(scheme: .textDimmed)
 
         return label
     }()

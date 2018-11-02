@@ -34,9 +34,9 @@ import WireExtensionComponents
     var containerColor: UIColor? = .placeholderBackground
     var titleTextColor: UIColor? = .from(scheme: .textForeground)
     var titleFont: UIFont? = .normalSemiboldFont
-    var authorTextColor: UIColor? = .textDimmed
+    var authorTextColor: UIColor? = .from(scheme: .textDimmed)
     var authorFont: UIFont? = .smallLightFont
-    let authorHighlightTextColor = UIColor.textDimmed
+    let authorHighlightTextColor = UIColor.from(scheme: .textDimmed)
     let authorHighlightFont = UIFont.smallSemiboldFont
     
     var imageHeight: CGFloat = 144 {

@@ -33,7 +33,7 @@ open class IconSystemCell: ConversationCell, TTTAttributedLabelDelegate {
     let labelView: UILabel
     
     var labelTextColor: UIColor? = .from(scheme: .textForeground)
-    var labelTextBlendedColor: UIColor? = .textDimmed
+    var labelTextBlendedColor: UIColor? = .from(scheme: .textDimmed)
 
     var lineBaseLineConstraint: NSLayoutConstraint?
 

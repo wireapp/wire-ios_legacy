@@ -20,10 +20,6 @@ import Foundation
 
 extension UIColor {
 
-    static var textDimmed: UIColor {
-        return UIColor.from(scheme: .textDimmed)
-    }
-
     static var textForegroundLight: UIColor {
         return UIColor.from(scheme: .textForeground, variant: .light)
     }

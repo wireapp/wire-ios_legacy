@@ -76,7 +76,7 @@ public protocol TextSearchInputViewDelegate: class {
         placeholderLabel.textAlignment = .natural
         placeholderLabel.isAccessibilityElement = false
         placeholderLabel.font = .smallRegularFont
-        placeholderLabel.textColor = .textDimmed
+        placeholderLabel.textColor = .from(scheme: .textDimmed)
 
         cancelButton.setIcon(.clearInput, with: .tiny, for: .normal)
         cancelButton.addTarget(self, action: #selector(TextSearchInputView.onCancelButtonTouchUpInside(_:)), for: .touchUpInside)
