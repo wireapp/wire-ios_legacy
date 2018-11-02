@@ -16,15 +16,17 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-@interface ConversationListItemView ()
+@interface MenuDotView : UIView
 
-@property (nonatomic) UILabel *titleField;
-@property (nonatomic) UIView *avatarContainer;
-@property (nonatomic) UIView *labelsContainer;
-@property (nonatomic) UILabel *subtitleField;
-@property (nonatomic) UIView *lineView;
+@end
 
-@property (nonatomic) NSLayoutConstraint *titleTwoLineConstraint;
-@property (nonatomic) NSLayoutConstraint *titleOneLineConstraint;
+@interface AnimatedListMenuView ()
+
+@property (nonatomic, nonnull) MenuDotView *leftDotView;
+@property (nonatomic, nonnull) MenuDotView *centerDotView;
+@property (nonatomic, nonnull) MenuDotView *rightDotView;
+@property (nonatomic) BOOL initialConstraintsCreated;
+@property (nonatomic, nonnull) NSLayoutConstraint *centerToRightDistanceConstraint;
+@property (nonatomic, nonnull) NSLayoutConstraint *leftToCenterDistanceConstraint;
 
 @end

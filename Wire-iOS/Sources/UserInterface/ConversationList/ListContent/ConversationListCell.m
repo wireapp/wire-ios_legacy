@@ -16,10 +16,8 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
 #import "ConversationListCell.h"
-
-@import PureLayout;
+#import "ConversationListCell+Internal.h"
 
 #import "ConversationListItemView.h"
 @import WireExtensionComponents;
@@ -40,7 +38,6 @@
 #import "Wire-Swift.h"
 
 
-static const CGFloat MaxVisualDrawerOffsetRevealDistance = 48;
 static const NSTimeInterval IgnoreOverscrollTimeInterval = 0.005;
 static const NSTimeInterval OverscrollRatio = 2.5;
 
@@ -48,11 +45,9 @@ static const NSTimeInterval OverscrollRatio = 2.5;
 @interface ConversationListCell () <AVSMediaManagerClientObserver>
 
 @property (nonatomic) ConversationListItemView *itemView;
-@property (nonatomic) BOOL hasCreatedInitialConstraints;
 
 @property (nonatomic) NSLayoutConstraint *titleBottomMarginConstraint;
 
-@property (nonatomic) AnimatedListMenuView *menuDotsView;
 @property (nonatomic) NSDate *overscrollStartDate;
 
 @property (nonatomic) id typingObserverToken;
@@ -85,14 +80,14 @@ static const NSTimeInterval OverscrollRatio = 2.5;
     self.canOpenDrawer = NO;
     self.clipsToBounds = YES;
     
-    self.itemView = [[ConversationListItemView alloc] initForAutoLayout];
+    self.itemView = [[ConversationListItemView alloc] init];
     
     UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
                                                                                            action:@selector(onRightAccessorySelected:)];
     [self.itemView.rightAccessory addGestureRecognizer:tapGestureRecognizer];
     [self.swipeView addSubview:self.itemView];
 
-    self.menuDotsView = [[AnimatedListMenuView alloc] initForAutoLayout];
+    self.menuDotsView = [[AnimatedListMenuView alloc] init];
     [self.menuView addSubview:self.menuDotsView];
     
     [self setNeedsUpdateConstraints];
@@ -132,22 +127,6 @@ static const NSTimeInterval OverscrollRatio = 2.5;
     } else {
         self.itemView.selected = self.highlighted;
     }
-}
-
-- (void)updateConstraints
-{
-    CGFloat leftMarginConvList = 64;
-    
-    if (! self.hasCreatedInitialConstraints) {
-        self.hasCreatedInitialConstraints = YES;
-        [self.itemView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
-
-        [self.menuDotsView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
-        
-        [self.menuDotsView autoPinEdgeToSuperviewEdge:ALEdgeLeading withInset:leftMarginConvList];
-    }
-
-    [super updateConstraints];
 }
 
 - (void)prepareForReuse
@@ -224,8 +203,7 @@ static CGSize cachedSize = {0, 0};
     CGSize fittingSize = CGSizeMake(collectionViewSize.width, 0);
     
     self.itemView.frame = CGRectMake(0, 0, fittingSize.width, 0);
-    [self.itemView setNeedsLayout];
-    [self.itemView layoutIfNeeded];
+
     CGSize cellSize = [self.itemView systemLayoutSizeFittingSize:fittingSize];
     cellSize.width = collectionViewSize.width;
     cachedSize = cellSize;

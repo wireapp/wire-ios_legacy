@@ -23,6 +23,7 @@
 @class ConversationListItemView;
 @protocol ConversationListCellDelegate;
 
+static const CGFloat MaxVisualDrawerOffsetRevealDistance = 21;
 
 @interface ConversationListCell : SwipeMenuCollectionCell
 
