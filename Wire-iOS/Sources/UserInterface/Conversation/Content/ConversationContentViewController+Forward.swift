@@ -103,8 +103,7 @@ extension ZMConversationMessage {
         var cell: ConversationCell
 
         if isText {
-            // TODO: Support previews in new system
-            return ConversationTextMessageCell()
+            return ConversationTextMessageCellDescription.preview(for: self)
         }
         else if isImage {
             cell = ImageMessageCell(style: .default, reuseIdentifier: "")
