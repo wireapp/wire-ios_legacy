@@ -54,7 +54,7 @@ protocol ChangeHandleTableViewCellDelegate: class {
     let handleTextField: UITextField = {
         let textField = UITextField()
         textField.font = .normalFont
-        textField.textColor = .textForegroundDark
+        textField.textColor = .from(scheme: .textForeground, variant: .dark)
 
         return textField
     }()

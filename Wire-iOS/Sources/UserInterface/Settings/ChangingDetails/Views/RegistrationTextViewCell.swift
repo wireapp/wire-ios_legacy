@@ -29,7 +29,7 @@ final class RegistrationTextFieldCell: UITableViewCell {
         let textField = RegistrationTextField()
 
         textField.font = .normalFont
-        textField.textColor = .textForegroundDark
+        textField.textColor = .from(scheme: .textForeground, variant: .dark)
         textField.backgroundColor = .clear
 
         return textField

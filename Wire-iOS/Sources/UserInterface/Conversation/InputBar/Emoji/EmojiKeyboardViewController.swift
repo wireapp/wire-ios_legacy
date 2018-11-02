@@ -35,7 +35,7 @@ protocol EmojiKeyboardViewControllerDelegate: class {
     let sectionViewController = EmojiSectionViewController(types: EmojiSectionType.all)
     private let backspaceButton: IconButton = {
         let button = IconButton(style: .default)
-        button.setIconColor(.textForegroundDark, for: .normal)
+        button.setIconColor(.from(scheme: .textForeground, variant: .dark), for: .normal)
         button.setIconColor(.iconHighlightedDark, for: .highlighted)
         button.setBackgroundImageColor(.clear, for: .selected)
         button.setBorderColor(.clear, for: .normal)

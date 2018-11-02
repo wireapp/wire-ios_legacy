@@ -235,7 +235,7 @@ extension BaseAccountView: ZMUserObserver {
         avatarImageView.container.backgroundColor = .backgroundLight
 
         avatarImageView.initialsFont = .smallSemiboldFont
-        avatarImageView.initialsColor = .textForegroundLight
+        avatarImageView.initialsColor = .from(scheme: .textForeground, variant: .light)
 
         return avatarImageView
     }()
@@ -325,7 +325,7 @@ extension PersonalAccountView {
 
     func applySmallStyle() {
         initialLabel.font = .smallSemiboldFont
-        initialLabel.textColor = .textForegroundLight
+        initialLabel.textColor = .from(scheme: .textForeground, variant: .light)
         backgroundColor = .backgroundLight
     }
     
