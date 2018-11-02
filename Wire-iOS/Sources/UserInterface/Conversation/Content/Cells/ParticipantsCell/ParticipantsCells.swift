@@ -103,7 +103,7 @@ import TTTAttributedLabel
         
         serviceUserWarningLabel.numberOfLines = 0
         serviceUserWarningLabel.isAccessibilityElement = true
-        serviceUserWarningLabel.textColor = UIColor(for: .vividRed)
+        serviceUserWarningLabel.textColor = .vividRed
         serviceUserWarningLabel.text = "content.system.services.warning".localized
         serviceUserWarningLabel.font = FontSpec(.small, .regular).font
 

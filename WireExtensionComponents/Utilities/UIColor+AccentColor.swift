@@ -18,37 +18,64 @@
 
 import Foundation
 
+public enum AccentColor: Int16, CaseIterable {
+    case strongBlue = 1
+    case strongLimeGreen
+    case brightYellow
+    case vividRed
+    case brightOrange
+    case softPink
+    case violet
+
+    public init?(ZMAccentColor zmAccentColor: ZMAccentColor) {
+        self.init(rawValue: zmAccentColor.rawValue)
+    }
+
+    public var zmAccentColor: ZMAccentColor {
+        return ZMAccentColor(rawValue: self.rawValue)!
+    }
+
+    public static func allSelectable() -> [AccentColor] {
+        return [.strongBlue,
+                .strongLimeGreen,
+                .vividRed,
+                .brightOrange,
+                .softPink,
+                .violet]
+    }
+}
+
 public extension UIColor {
 
     static var strongBlue: UIColor  {
-        return UIColor(for: .strongBlue)!
+        return UIColor(for: .strongBlue)
     }
 
     static var strongLimeGreen: UIColor  {
-        return UIColor(for: .strongLimeGreen)!
+        return UIColor(for: .strongLimeGreen)
     }
 
     static var brightYellow: UIColor  {
-        return UIColor(for: .brightYellow)!
+        return UIColor(for: .brightYellow)
     }
 
     static var vividRed: UIColor  {
-        return UIColor(for: .vividRed)!
+        return UIColor(for: .vividRed)
     }
 
     static var brightOrange: UIColor  {
-        return UIColor(for: .brightOrange)!
+        return UIColor(for: .brightOrange)
     }
 
     static var softPink: UIColor  {
-        return UIColor(for: .softPink)!
+        return UIColor(for: .softPink)
     }
 
     static var violet: UIColor  {
-        return UIColor(for: .violet)!
+        return UIColor(for: .violet)
     }
 
-    @objc public convenience init?(for accentColor: ZMAccentColor) {
+    public convenience init(for accentColor: AccentColor) {
         switch accentColor {
         case .strongBlue:
             self.init(red: 0.141, green: 0.552, blue: 0.827, alpha: 1)
@@ -64,8 +91,12 @@ public extension UIColor {
             self.init(red: 0.996, green: 0.368, blue: 0.741, alpha:1)
         case .violet:
             self.init(red: 0.615, green: 0, blue: 1, alpha: 1)
-        default:
-            return nil
         }
+    }
+
+    @objc(initWithColorForZMAccentColor:)
+    public convenience init(fromZMAccentColor accentColor: ZMAccentColor) {
+        let safeAccentColor = AccentColor(ZMAccentColor: accentColor) ?? .strongBlue
+        self.init(for: safeAccentColor)
     }
 }

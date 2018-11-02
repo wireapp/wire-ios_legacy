@@ -167,7 +167,7 @@ import Ziphy
 
         cell.ziph = ziph
         cell.representation = representation
-        cell.backgroundColor = UIColor(for: ZMUser.pickRandomAccentColor())
+        cell.backgroundColor = UIColor(fromZMAccentColor: ZMUser.pickRandomAccentColor())
         cell.isAccessibilityElement = true
         cell.accessibilityTraits.insert(.image)
         cell.accessibilityLabel = ziph.title

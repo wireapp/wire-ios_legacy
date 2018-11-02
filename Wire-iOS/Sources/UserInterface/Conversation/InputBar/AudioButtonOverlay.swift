@@ -42,7 +42,7 @@ import Cartography
     
     let darkColor = UIColor.from(scheme: .textForeground)
     let brightColor = UIColor.from(scheme: .textBackground)
-    let greenColor = ZMAccentColor.strongLimeGreen.color;
+    let greenColor = UIColor.strongLimeGreen;
     let grayColor = UIColor.from(scheme: .audioButtonOverlay)
     let superviewColor = UIColor.from(scheme: .background)
     

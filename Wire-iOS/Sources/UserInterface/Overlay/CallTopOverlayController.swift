@@ -119,7 +119,7 @@ final class CallTopOverlayController: UIViewController {
         tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(openCall(_:)))
         
         view.clipsToBounds = true
-        view.backgroundColor = UIColor(for: .strongLimeGreen)
+        view.backgroundColor = .strongLimeGreen
         view.accessibilityIdentifier = "OpenOngoingCallButton"
         view.shouldGroupAccessibilityChildren = true
         view.isAccessibilityElement = true

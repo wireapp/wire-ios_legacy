@@ -19,26 +19,18 @@
 import Foundation
 
 extension ZMAccentColor {    
-    var color: UIColor {
-        return UIColor(for: self) ?? UIColor(for: .strongBlue)!
-    }
-    
-    static func all() -> [ZMAccentColor] {
-        return [.strongBlue,
-                .strongLimeGreen,
-                .brightYellow,
-                .vividRed,
-                .brightOrange,
-                .softPink,
-                .violet]
-    }
-    
-    static func allSelectable() -> [ZMAccentColor] {
-        return [.strongBlue,
-                .strongLimeGreen,
-                .vividRed,
-                .brightOrange,
-                .softPink,
-                .violet]
-    }
+//    var color: UIColor {
+//        return UIColor(for: self) ?? UIColor(for: .strongBlue)!
+//    }
+
+//    static func all() -> [ZMAccentColor] {
+//        return [.strongBlue,
+//                .strongLimeGreen,
+//                .brightYellow,
+//                .vividRed,
+//                .brightOrange,
+//                .softPink,
+//                .violet]
+//    }
+
 }

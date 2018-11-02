@@ -56,11 +56,6 @@ static ZMAccentColor overridenAccentColor = ZMAccentColorUndefined;
 	return ZMAccentColorStrongBlue;
 }
 
-+ (UIColor *)colorForZMAccentColor:(ZMAccentColor)accentColor
-{
-    return [[UIColor alloc] initFor:accentColor] ?: [[UIColor alloc] initFor:ZMAccentColorStrongBlue];
-}
-
 + (void)setAccentOverrideColor:(ZMAccentColor)overrideColor
 {
     if (overridenAccentColor == overrideColor) {

@@ -29,7 +29,7 @@ extension UIColor {
 
     @objc (accentColor)
     class func accent() -> UIColor {
-        return indexedAccentColor().color
+        return UIColor(fromZMAccentColor: indexedAccentColor())
     }
 
     @objc static func buttonEmptyText(variant: ColorSchemeVariant) -> UIColor {

@@ -255,7 +255,7 @@ struct HandleChangeState {
 
     fileprivate var attributedFooterTitle: NSAttributedString? {
         let infoText = "self.settings.account_section.handle.change.footer".localized.attributedString && UIColor(white: 1, alpha: 0.4)
-        let alreadyTakenText = "self.settings.account_section.handle.change.footer.unavailable".localized && UIColor(for: .vividRed)!
+        let alreadyTakenText = "self.settings.account_section.handle.change.footer.unavailable".localized && UIColor.vividRed
         let prefix = state.availability == .taken ? alreadyTakenText + "\n\n" : "\n\n".attributedString
         return (prefix + infoText) && footerFont
     }

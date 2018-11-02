@@ -181,7 +181,7 @@ import Cartography
             self.expandWidthConstraint.constant = activeCallWidth
 
         case .activeCall(true): // "Join" button
-            self.badgeView.backgroundColor = ZMAccentColor.strongLimeGreen.color
+            self.badgeView.backgroundColor = .strongLimeGreen
             
         case .typing:
             self.badgeView.isHidden = true

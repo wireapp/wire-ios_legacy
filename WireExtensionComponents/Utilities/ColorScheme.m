@@ -146,8 +146,7 @@
     const CGFloat coefficient = coefficientsArray[accentColor];
     
     UIColor *background = variant == ColorSchemeVariantDark ? [UIColor blackColor] : [UIColor whiteColor];
-    
-    return [background mix:[UIColor colorForZMAccentColor:accentColor] amount:coefficient];
+    return [background mix:[[UIColor alloc] initWithColorForZMAccentColor:accentColor] amount:coefficient];
 }
 
 @end
