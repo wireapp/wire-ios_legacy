@@ -58,7 +58,13 @@ class ConversationTextMessageCell: UIView, ConversationMessageCell {
 
     private func configureConstraints() {
         messageTextView.translatesAutoresizingMaskIntoConstraints = false
-        messageTextView.fitInSuperview()
+
+        NSLayoutConstraint.activate([
+            messageTextView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            messageTextView.topAnchor.constraint(equalTo: topAnchor, constant: 8),
+            messageTextView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            messageTextView.bottomAnchor.constraint(equalTo: bottomAnchor)
+        ])
     }
 
     func configure(with object: Configuration) {
