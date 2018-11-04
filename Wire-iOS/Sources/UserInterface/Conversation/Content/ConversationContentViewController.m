@@ -493,7 +493,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
                 break;
             case MessageActionReply:
             {
-                [self.delegate conversationContentViewController:self didTriggerReplyingToMessage:cell.message];
+                [self.delegate conversationContentViewController:self didTriggerReplyingToMessage:message];
             }
                 break;
         }
@@ -542,7 +542,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     NSIndexPath *firstIndexPath = indexPathsForVisibleRows.firstObject;
     
     if (firstIndexPath) {
-        id<ZMConversationMessage>lastVisibleMessage = [self.messageWindow.messages objectAtIndex:firstIndexPath.row];
+        id<ZMConversationMessage>lastVisibleMessage = [self.messageWindow.messages objectAtIndex:firstIndexPath.section];
         [self.conversation markMessagesAsReadUntil:lastVisibleMessage];
     }
 }

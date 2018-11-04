@@ -544,7 +544,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self.conversation setIsTyping:NO];
     [self.replyComposingView removeFromSuperview];
     self.replyComposingView = nil;
-    self.replyingToMessage = nil;
+    self.quotedMessage = nil;
 }
 
 - (void)setInputBarOverlapsContent:(BOOL)inputBarOverlapsContent
