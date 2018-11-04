@@ -118,7 +118,7 @@ final class MessageThumbnailPreviewView: UIView {
             senderLabel.topAnchor.constraint(equalTo: topAnchor, constant: inset),
             senderLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: inset),
             senderLabel.trailingAnchor.constraint(equalTo: imagePreview.leadingAnchor, constant: inset),
-            contentTextView.topAnchor.constraint(equalTo: senderLabel.bottomAnchor, constant: inset),
+            contentTextView.topAnchor.constraint(equalTo: senderLabel.bottomAnchor, constant: inset / 2),
             contentTextView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: inset),
             contentTextView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -inset),
             contentTextView.trailingAnchor.constraint(equalTo: imagePreview.leadingAnchor, constant: inset),
@@ -131,7 +131,7 @@ final class MessageThumbnailPreviewView: UIView {
     }
     
     private func updateForMessage() {
-        senderLabel.text = message.sender?.displayName(in: message.conversation!)
+        senderLabel.text = message.senderName
         
         let attributes: [NSAttributedString.Key: Any] = [.font: UIFont.smallSemiboldFont,
                                                          .foregroundColor: UIColor.textForeground]
@@ -210,22 +210,22 @@ final class MessagePreviewView: UIView {
     }
     
     private func setupConstraints() {
-        
         let inset: CGFloat = 12
-        
+
         NSLayoutConstraint.activate([
             senderLabel.topAnchor.constraint(equalTo: topAnchor, constant: inset),
             senderLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: inset),
             senderLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -inset),
-            contentTextView.topAnchor.constraint(equalTo: senderLabel.bottomAnchor, constant: inset),
+            contentTextView.topAnchor.constraint(equalTo: senderLabel.bottomAnchor, constant: inset / 2),
             contentTextView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: inset),
             contentTextView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -inset),
             contentTextView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -inset),
-            ])
+        ])
     }
     
     private func updateForMessage() {
-        senderLabel.text = message.sender?.displayName(in: message.conversation!)
+        senderLabel.text = message.senderName
+
         let attributes: [NSAttributedString.Key: Any] = [.font: UIFont.smallSemiboldFont,
                                                          .foregroundColor: UIColor.textForeground]
         
