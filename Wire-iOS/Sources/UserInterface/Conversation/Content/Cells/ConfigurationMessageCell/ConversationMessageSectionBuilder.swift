@@ -46,7 +46,8 @@ class ConversationMessageSectionBuilder {
         // Sender
         addSenderIfNeeded(in: section, for: message, context: context)
 
-        // TODO: Reply
+        // Reply
+        addReplyQuoteIfNeeded(in: section, for: message)
 
         // Content
         addContent(in: section, for: message, context: context, layoutProperties: layoutProperties)
@@ -147,6 +148,18 @@ class ConversationMessageSectionBuilder {
         } else {
             section.add(description: UnknownMessageCellDescription())
         }
+    }
+
+    // MARK: - Replies
+
+    private static func addReplyQuoteIfNeeded(in section: ConversationMessageSectionController, for message: ZMConversationMessage) {
+        guard message.textMessageData?.hasQuote == true else {
+            return
+        }
+
+        let quotedMessage = message.textMessageData?.quote
+        let quoteCell = ConversationReplyCellDescription(quotedMessage: quotedMessage)
+        section.add(description: quoteCell)
     }
 
     // MARK: - Content Cells
