@@ -243,6 +243,8 @@
 		5E4B1387204FE7DA00ED5DF1 /* SystemAnimationCurves.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E4B1386204FE7DA00ED5DF1 /* SystemAnimationCurves.swift */; };
 		5E4B1389204FEFCD00ED5DF1 /* UIColor+CallQuality.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E4B1388204FEFCD00ED5DF1 /* UIColor+CallQuality.swift */; };
 		5E4BC1C0218A0A4300A8682E /* UnknownMessageCellDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E4BC1BF218A0A4300A8682E /* UnknownMessageCellDescription.swift */; };
+		5E4BC1CA218C9F6600A8682E /* ConversationQuoteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E4BC1C9218C9F6600A8682E /* ConversationQuoteCell.swift */; };
+		5E4BC1CC218CA94D00A8682E /* ZMConversationMessage+Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E4BC1CB218CA94D00A8682E /* ZMConversationMessage+Date.swift */; };
 		5E52376220E7E50F00649241 /* ColorTilesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E52376020E7E46600649241 /* ColorTilesViewController.swift */; };
 		5E52376920E7F12B00649241 /* EasingAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E52376820E7F12B00649241 /* EasingAnimation.swift */; };
 		5E52376B20E7F99500649241 /* EasingFunction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E52376A20E7F99500649241 /* EasingFunction.swift */; };
@@ -1746,6 +1748,8 @@
 		5E4B1386204FE7DA00ED5DF1 /* SystemAnimationCurves.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemAnimationCurves.swift; sourceTree = "<group>"; };
 		5E4B1388204FEFCD00ED5DF1 /* UIColor+CallQuality.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+CallQuality.swift"; sourceTree = "<group>"; };
 		5E4BC1BF218A0A4300A8682E /* UnknownMessageCellDescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnknownMessageCellDescription.swift; sourceTree = "<group>"; };
+		5E4BC1C9218C9F6600A8682E /* ConversationQuoteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationQuoteCell.swift; sourceTree = "<group>"; };
+		5E4BC1CB218CA94D00A8682E /* ZMConversationMessage+Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ZMConversationMessage+Date.swift"; sourceTree = "<group>"; };
 		5E52376020E7E46600649241 /* ColorTilesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorTilesViewController.swift; sourceTree = "<group>"; };
 		5E52376820E7F12B00649241 /* EasingAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EasingAnimation.swift; sourceTree = "<group>"; };
 		5E52376A20E7F99500649241 /* EasingFunction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EasingFunction.swift; sourceTree = "<group>"; };
@@ -3848,6 +3852,7 @@
 				5E35F77F2183131300D3F4FE /* ConversationYouTubeAttachmentCell.swift */,
 				5E35F7732180B98B00D3F4FE /* ConversationSoundCloudAttachmentCell.swift */,
 				5E35F77D218300D400D3F4FE /* ConversationLinkPreviewArticleCell.swift */,
+				5E4BC1C9218C9F6600A8682E /* ConversationQuoteCell.swift */,
 			);
 			path = Text;
 			sourceTree = "<group>";
@@ -5378,6 +5383,7 @@
 				BFB5972220E62EB6008720ED /* CancelableItem.swift */,
 				5E936E8E20B590530060E6AA /* UIDevice+Platform.swift */,
 				5E35F77B2182124E00D3F4FE /* PerformanceDebugger.swift */,
+				5E4BC1CB218CA94D00A8682E /* ZMConversationMessage+Date.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -7404,6 +7410,7 @@
 				D503538C207B5DB900CE34A5 /* UIAlertController+RestorePassword.swift in Sources */,
 				871BC35E1D34F94200DF0793 /* NetworkConditionHelper.m in Sources */,
 				879489E51E54500A0071B2C1 /* TextSearchResultsView.swift in Sources */,
+				5E4BC1CA218C9F6600A8682E /* ConversationQuoteCell.swift in Sources */,
 				54FF9E281E813BA500323D2E /* DebugAlert.swift in Sources */,
 				F93D58451D7DA865003AE972 /* ZMConversation+Analytics.swift in Sources */,
 				87AB6DB61D9AB47400ADAD38 /* SettingsStyleNavigationController.swift in Sources */,
@@ -7423,6 +7430,7 @@
 				EF9FC3F12142AEDE00033ED0 /* ColorSchemeController.swift in Sources */,
 				D5168F2A2008F3EF00F8222A /* UIEdgeInsets+Adjusting.swift in Sources */,
 				BFE4185D209B06D600503C7C /* AVSMediaManager+Helper.swift in Sources */,
+				5E4BC1CC218CA94D00A8682E /* ZMConversationMessage+Date.swift in Sources */,
 				5E3FB06E206BC7B40075E910 /* Tab.swift in Sources */,
 				D5189473204D543C00C095C1 /* InitialSyncObserver.swift in Sources */,
 				871BC3611D34F94200DF0793 /* Settings+ColorScheme.m in Sources */,
