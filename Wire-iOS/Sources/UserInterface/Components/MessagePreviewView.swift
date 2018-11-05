@@ -19,16 +19,14 @@
 import Foundation
 
 extension NSTextAttachment {
-    static func textAttachment(for icon: ZetaIconType, with color: UIColor, and size: FontSize) -> NSTextAttachment? {
-        guard let image = UIImage(for: icon, fontSize: 10, color: color)
+    static func textAttachment(for icon: ZetaIconType, with color: UIColor, iconSize: CGFloat = 10, verticalCorrection: CGFloat = 0) -> NSTextAttachment? {
+        guard let image = UIImage(for: icon, fontSize: iconSize, color: color)
             else { return nil }
         
         let attachment = NSTextAttachment()
         attachment.image = image
         let ratio = image.size.width / image.size.height
-        let height: CGFloat = 10
-        let verticalOffset : CGFloat = (size == .small) ? -1.0 : 0.0
-        attachment.bounds = CGRect(x: 0, y: verticalOffset, width: height * ratio, height: height)
+        attachment.bounds = CGRect(x: 0, y: verticalCorrection, width: iconSize * ratio, height: iconSize)
         return attachment
     }
 }
@@ -139,7 +137,7 @@ final class MessageThumbnailPreviewView: UIView {
         if message.isImage {
             let attributes: [NSAttributedString.Key: Any] = [.font: UIFont.smallSemiboldFont,
                                                              .foregroundColor: UIColor.textForeground]
-            let imageIcon = NSTextAttachment.textAttachment(for: .photo, with: .textForeground, and: .medium)!
+            let imageIcon = NSTextAttachment.textAttachment(for: .photo, with: .textForeground)!
             let initialString = NSAttributedString(attachment: imageIcon) + "  " + "conversation.input_bar.message_preview.image".localized.localizedUppercase
             contentTextView.attributedText = initialString && attributes
             
@@ -148,7 +146,7 @@ final class MessageThumbnailPreviewView: UIView {
             }
         }
         else if message.isVideo, let fileMessageData = message.fileMessageData {
-            let imageIcon = NSTextAttachment.textAttachment(for: .videoMessage, with: .textForeground, and: .medium)!
+            let imageIcon = NSTextAttachment.textAttachment(for: .videoMessage, with: .textForeground)!
             let initialString = NSAttributedString(attachment: imageIcon) + "  " + "conversation.input_bar.message_preview.video".localized.localizedUppercase
             contentTextView.attributedText = initialString && attributes
             
@@ -224,10 +222,21 @@ final class MessagePreviewView: UIView {
             ])
     }
     
+    private func editIcon() -> NSAttributedString {
+        if message.updatedAt != nil {
+            return "  " + NSAttributedString(attachment: NSTextAttachment.textAttachment(for: .pencil, with: .textForeground, iconSize: 8)!)
+        }
+        else {
+            return NSAttributedString()
+        }
+    }
+    
     private func updateForMessage() {
-        senderLabel.text = message.sender?.displayName(in: message.conversation!)
+        
         let attributes: [NSAttributedString.Key: Any] = [.font: UIFont.smallSemiboldFont,
                                                          .foregroundColor: UIColor.textForeground]
+        
+        senderLabel.attributedText = ((message.sender?.displayName(in: message.conversation!) ?? "") && attributes) + self.editIcon()
         
         if let textMessageData = message.textMessageData {
             let hasNoText = textMessageData.messageText == nil || textMessageData.messageText!.isEmpty
@@ -242,22 +251,19 @@ final class MessagePreviewView: UIView {
         }
         else if let location = message.locationMessageData {
             
-            let imageIcon = NSTextAttachment.textAttachment(for: .location, with: .textForeground, and: .medium)!
+            let imageIcon = NSTextAttachment.textAttachment(for: .location, with: .textForeground)!
             let initialString = NSAttributedString(attachment: imageIcon) + "  " + (location.name ?? "conversation.input_bar.message_preview.location".localized).localizedUppercase
             contentTextView.attributedText = initialString && attributes
         }
         else if message.isAudio {
-            let imageIcon = NSTextAttachment.textAttachment(for: .microphone, with: .textForeground, and: .medium)!
+            let imageIcon = NSTextAttachment.textAttachment(for: .microphone, with: .textForeground)!
             let initialString = NSAttributedString(attachment: imageIcon) + "  " + "conversation.input_bar.message_preview.audio".localized.localizedUppercase
             contentTextView.attributedText = initialString && attributes
         }
         else if let fileData = message.fileMessageData {
-            let imageIcon = NSTextAttachment.textAttachment(for: .document, with: .textForeground, and: .medium)!
+            let imageIcon = NSTextAttachment.textAttachment(for: .document, with: .textForeground)!
             let initialString = NSAttributedString(attachment: imageIcon) + "  " + (fileData.filename ?? "conversation.input_bar.message_preview.file".localized).localizedUppercase
             contentTextView.attributedText = initialString && attributes
-        }
-        else {
-            fatal("Unknown message for preview: \(message)")
         }
     }
     
@@ -268,7 +274,6 @@ final class MessagePreviewView: UIView {
 
 extension MessagePreviewView: ZMMessageObserver {
     func messageDidChange(_ changeInfo: MessageChangeInfo) {
-        // TODO: Observe text edits correctly
-//        updateForMessage()
+        updateForMessage()
     }
 }
