@@ -226,7 +226,7 @@ class ConversationReplyCellDescription: ConversationMessageCellDescription {
                 let font = UIFont.systemFont(ofSize: 14, contentSizeCategory: .medium, weight: .light)
                 content = .text(linkPreview.originalURLString && [.font: font, .foregroundColor: UIColor.textForeground])
             } else {
-                content = .text(NSAttributedString.formatForPreview(message: message.textMessageData!))
+                content = .text(NSAttributedString.formatForPreview(message: message.textMessageData!, inputMode: false))
             }
 
         case let message? where message.isLocation:

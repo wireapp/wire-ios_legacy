@@ -237,7 +237,7 @@ final class MessagePreviewView: UIView {
                                                                                        .foregroundColor: UIColor.textForeground]
             }
             else {
-                contentTextView.attributedText = NSAttributedString.formatForPreview(message: message.textMessageData!)
+                contentTextView.attributedText = NSAttributedString.formatForPreview(message: message.textMessageData!, inputMode: true)
             }
         }
         else if let location = message.locationMessageData {
