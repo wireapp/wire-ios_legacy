@@ -37,17 +37,31 @@ import UIKit
     // MARK: - List of Actions
 
     static let allMessageActions: [UIMenuItem] = [
-        UIMenuItem(title: "Reply", action: #selector(ConversationCellActionController.replyToMessage))
+        UIMenuItem(title: "Copy", action: #selector(ConversationCellActionController.copyMessage)),
+        UIMenuItem(title: "Save", action: #selector(ConversationCellActionController.saveMessage)),
+        UIMenuItem(title: "Download", action: #selector(ConversationCellActionController.downloadMessage)),
+        UIMenuItem(title: "Like", action: #selector(ConversationCellActionController.likeMessage)),
+        UIMenuItem(title: "Reply", action: #selector(ConversationCellActionController.replyToMessage)),
+        UIMenuItem(title: "Share", action: #selector(ConversationCellActionController.replyToMessage)),
+        UIMenuItem(title: "Delete", action: #selector(ConversationCellActionController.deleteMessage)),
+        UIMenuItem(title: "Resend", action: #selector(ConversationCellActionController.resendMessage)),
+        UIMenuItem(title: "Open", action: #selector(ConversationCellActionController.openMessage))
     ]
 
     func canPerformAction(_ selector: Selector) -> Bool {
         switch selector {
-        case #selector(UIResponder.copy(_:)):
+        case #selector(ConversationCellActionController.copyMessage):
             return message.canBeCopied
-        case #selector(UIResponder.delete(_:)):
+        case #selector(ConversationCellActionController.deleteMessage):
             return message.canBeDeleted
         case #selector(ConversationCellActionController.replyToMessage):
             return message.canBeQuoted
+        case #selector(ConversationCellActionController.likeMessage):
+            return message.canBeLiked
+        case #selector(ConversationCellActionController.saveMessage):
+            return true
+        case #selector(ConversationCellActionController.downloadMessage):
+            return true
         default:
             return false
         }
@@ -59,16 +73,32 @@ import UIKit
         responder?.wants(toPerform: .copy, for: message)
     }
 
-    @objc func deleteMessage() {
-        responder?.wants(toPerform: .delete, for: message)
-    }
-
     @objc func likeMessage() {
         responder?.wants(toPerform: .like, for: message)
     }
 
+    @objc func deleteMessage() {
+        responder?.wants(toPerform: .delete, for: message)
+    }
+
     @objc func replyToMessage() {
         responder?.wants(toPerform: .reply, for: message)
+    }
+
+    @objc func saveMessage() {
+        responder?.wants(toPerform: .save, for: message)
+    }
+
+    @objc func downloadMessage() {
+        responder?.wants(toPerform: .download, for: message)
+    }
+
+    @objc func resendMessage() {
+        responder?.wants(toPerform: .resend, for: message)
+    }
+
+    @objc func openMessage() {
+        responder?.wants(toPerform: .present, for: message)
     }
 
 }

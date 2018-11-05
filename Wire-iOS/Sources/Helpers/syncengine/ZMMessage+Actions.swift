@@ -30,4 +30,16 @@ extension ZMConversationMessage {
         return !isEphemeral && (isText || isImage || isLocation)
     }
 
+    var canBeOpened: Bool {
+        return true
+    }
+
+    var canBeDownloaded: Bool {
+        return true
+    }
+
+    var canBeSaved: Bool {
+        return true
+    }
+
 }
