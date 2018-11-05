@@ -53,11 +53,13 @@ struct ConversationStatus {
     let isBlocked: Bool
     let isSelfAnActiveMember: Bool
     let hasSelfMention: Bool
+    let hasReply: Bool
 }
 
 // Describes the conversation message.
 enum StatusMessageType: Int {
     case mention
+    case reply
     case missedCall
     case knock
     case text
@@ -74,7 +76,7 @@ enum StatusMessageType: Int {
 
 extension StatusMessageType {
     /// Types of statuses that can be included in a status summary.
-    static let summaryTypes: [StatusMessageType] = [.mention, .missedCall, .knock, .text, .link, .image, .location, .audio, .video, .file]
+    static let summaryTypes: [StatusMessageType] = [.mention, .reply, .missedCall, .knock, .text, .link, .image, .location, .audio, .video, .file]
 
     var parentSummaryType: StatusMessageType? {
         switch self {
@@ -95,6 +97,9 @@ extension StatusMessageType {
         if message.isText, let textMessage = message.textMessageData {
             if textMessage.isMentioningSelf {
                 self = .mention
+            }
+            else if message.replies.count > 0 {
+                self = .reply
             }
             else if let _ = textMessage.linkPreview {
                 self = .link
@@ -493,6 +498,8 @@ final internal class NewMessagesMatcher: TypedConversationStatusMatcher {
         
         if status.hasSelfMention {
             return .mention
+        } else if status.hasReply {
+            return .reply
         }
 
         guard let message = status.messagesRequiringAttention.reversed().first(where: {
@@ -506,7 +513,7 @@ final internal class NewMessagesMatcher: TypedConversationStatusMatcher {
                     return false
                 }
             }),
-            let type = StatusMessageType(message: message) else {
+            let type = StatusMessageType(message: message) else { ///TODO: no replay here??
             return .none
         }
         
@@ -746,9 +753,20 @@ extension ZMConversation {
     
     var status: ConversationStatus {
         let isBlocked = self.conversationType == .oneOnOne ? (self.firstActiveParticipantOtherThanSelf()?.isBlocked ?? false) : false
-        
-        var messagesRequiringAttention = self.unreadMessages
-        
+
+        var messagesRequiringAttention: [ZMConversationMessage] = []
+
+        ///TODO: reply should be appended? This code may be not necessary after estimatedUnreadReplyCount is implemented
+        let hasReply: Bool
+        if let message = self.unreadMessages.first as? ZMClientMessage,
+            let quote = message.quote {
+            messagesRequiringAttention.append(quote)
+            hasReply = true
+        } else {
+            hasReply = false
+        }
+        messagesRequiringAttention += unreadMessages
+
         if messagesRequiringAttention.count == 0,
             let lastMessage = self.messages.lastObject as? ZMConversationMessage,
             let systemMessageData = lastMessage.systemMessageData,
@@ -792,7 +810,8 @@ extension ZMConversation {
             isOngoingCall: isOngoingCall,
             isBlocked: isBlocked,
             isSelfAnActiveMember: isSelfAnActiveMember,
-            hasSelfMention: estimatedUnreadSelfMentionCount > 0
+            hasSelfMention: estimatedUnreadSelfMentionCount > 0,
+            hasReply: hasReply ///TODO: wait for DM update
         )
     }
 }

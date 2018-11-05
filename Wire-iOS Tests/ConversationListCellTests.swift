@@ -113,7 +113,23 @@ class ConversationListCellTests: CoreDataSnapshotTestCase {
         // then
         verify(otherUserConversation)
     }
-    
+
+    /// exp
+    func testThatItRendersConversation_TextMessagesThenReply() {
+        // when
+        let message = otherUserConversation.append(text: "Hey there!")
+        (message as! ZMClientMessage).sender = selfUser
+
+        let replyMessage = otherUserConversation.append(text: "reply test", replyingTo: message)
+        (replyMessage as! ZMMessage).sender = otherUser
+
+        ///TODO: key for reply
+//        otherUserConversation.setPrimitiveValue(1, forKey: ZMConversationInternalEstimatedUnreadSelfMentionCountKey)
+
+        // then
+        verify(otherUserConversation)
+    }
+
     func testThatItRendersConversation_MentionThenTextMessages() {
         // when
         let selfMention = Mention(range: NSRange(location: 0, length: 5), user: self.selfUser)
