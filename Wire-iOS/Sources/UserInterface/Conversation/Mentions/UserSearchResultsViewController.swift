@@ -44,7 +44,7 @@ class UserSearchResultsViewController: UIViewController, KeyboardCollapseObserve
     private let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
     private var searchResults: [UserType] = [] {
         didSet {
-            collectionViewSelectedIndex = .none
+            collectionViewSelectedIndex = searchResults.count - 1
         }
     }
     private var query: String = ""
@@ -275,12 +275,8 @@ extension UserSearchResultsViewController: UICollectionViewDataSource {
 
         // hightlight the lowest cell if keyboard is collapsed
         if isKeyboardCollapsed || UIDevice.current.userInterfaceIdiom == .pad {
-            if collectionViewSelectedIndex == nil {
-                collectionViewSelectedIndex = searchResults.count - 1
-            }
-
             if indexPath.item == collectionViewSelectedIndex {
-                cell.backgroundColor = .cellHighlight
+                cell.backgroundColor = .from(scheme: .cellHighlight)
             } else {
                 cell.backgroundColor = .from(scheme: .background)
             }
