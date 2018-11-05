@@ -32,14 +32,14 @@ import UIKit
 
     static let allMessageActions: [UIMenuItem] = [
         UIMenuItem(title: "content.message.copy".localized, action: #selector(ConversationCellActionController.copyMessage)),
-        UIMenuItem(title: "message.menu.edit.title".localized, action: #selector(ConversationCellActionController.editMessage)),
         UIMenuItem(title: "content.message.reply".localized, action: #selector(ConversationCellActionController.quoteMessage)),
-        UIMenuItem(title: "content.message.download".localized, action: #selector(ConversationCellActionController.downloadMessage)),
+        UIMenuItem(title: "message.menu.edit.title".localized, action: #selector(ConversationCellActionController.editMessage)),
+        UIMenuItem(title: "content.message.delete".localized, action: #selector(ConversationCellActionController.deleteMessage)),
         UIMenuItem(title: "content.message.save".localized, action: #selector(ConversationCellActionController.saveMessage)),
+        UIMenuItem(title: "content.message.download".localized, action: #selector(ConversationCellActionController.downloadMessage)),
         UIMenuItem(title: "content.message.forward".localized, action: #selector(ConversationCellActionController.forwardMessage)),
         UIMenuItem(title: "content.message.like".localized, action: #selector(ConversationCellActionController.likeMessage)),
         UIMenuItem(title: "content.message.unlike".localized, action: #selector(ConversationCellActionController.unlikeMessage)),
-        UIMenuItem(title: "content.message.delete".localized, action: #selector(ConversationCellActionController.deleteMessage)),
         UIMenuItem(title: "content.message.resend".localized, action: #selector(ConversationCellActionController.resendMessage))
     ]
 
