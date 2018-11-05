@@ -18,16 +18,22 @@
 
 import Foundation
 
-class ImageMessageContentView: UIView {
+class ImageContentView: UIView {
     
     var imageView = ImageResourceView()
     var imageAspectConstraint: NSLayoutConstraint?
     var imageWidthConstraint: NSLayoutConstraint
     var imageHeightConstraint: NSLayoutConstraint
-    
+
+    let placeholderSize = CGSize(width: 140, height: 140)
+
+    var mediaAsset: MediaAsset? {
+        return imageView.mediaAsset()
+    }
+
     init() {
-        imageWidthConstraint = imageView.widthAnchor.constraint(equalToConstant: 0)
-        imageHeightConstraint = imageView.heightAnchor.constraint(equalToConstant: 0)
+        imageWidthConstraint = imageView.widthAnchor.constraint(equalToConstant: 140)
+        imageHeightConstraint = imageView.heightAnchor.constraint(equalToConstant: 140)
         
         super.init(frame: .zero)
         
@@ -50,14 +56,21 @@ class ImageMessageContentView: UIView {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    func configure(with content: ZMImageMessageData) {
-        imageAspectConstraint.apply({ imageView.removeConstraint($0) })
-        imageAspectConstraint = imageView.heightAnchor.constraint(equalTo: imageView.widthAnchor, multiplier: content.originalSize.height / content.originalSize.width)
-        imageAspectConstraint?.isActive = true
-        imageWidthConstraint.constant = content.originalSize.width
-        imageHeightConstraint.constant = content.originalSize.height
-        imageView.setImageResource(content.image)
+
+    func configure(with resource: ImageResource, completionHandler: (() -> Void)?) {
+        updateAspectRatio(contentSize: placeholderSize)
+        imageView.setImageResource(resource) {
+            self.updateAspectRatio(contentSize: self.imageView.mediaAsset()?.size ?? self.placeholderSize)
+            completionHandler?()
+        }
     }
-    
+
+    private func updateAspectRatio(contentSize: CGSize) {
+        imageAspectConstraint.apply(imageView.removeConstraint)
+        imageAspectConstraint = imageView.heightAnchor.constraint(equalTo: imageView.widthAnchor, multiplier: contentSize.height / contentSize.width)
+        imageAspectConstraint?.isActive = true
+        imageWidthConstraint.constant = contentSize.width
+        imageHeightConstraint.constant = contentSize.height
+    }
+
 }

@@ -493,6 +493,7 @@
 // Reply
 "content.message.reply" = "Reply";
 "content.message.reply.original_timestamp" = "Original message from %@";
+"content.message.reply.broken_message" = "You cannot see this message.";
 
 "content.message.open_link_alert.title" = "Visit Link";
 "content.message.open_link_alert.message" = "This will take you to\n%@";

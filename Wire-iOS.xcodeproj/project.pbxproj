@@ -340,6 +340,7 @@
 		5EC16BAA20EBBF8500955156 /* yt_response_no_items.json in Resources */ = {isa = PBXBuildFile; fileRef = 5EC16BA620EBBF8400955156 /* yt_response_no_items.json */; };
 		5EC16BAB20EBBF8500955156 /* yt_response_valid_video.json in Resources */ = {isa = PBXBuildFile; fileRef = 5EC16BA720EBBF8500955156 /* yt_response_valid_video.json */; };
 		5EC2C58921353FA100C6CE35 /* AuthenticationCoordinator+Teams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC2C58821353FA100C6CE35 /* AuthenticationCoordinator+Teams.swift */; };
+		5EC7C87A219038F6004662AC /* ImageResourceThumbnailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC7C879219038F6004662AC /* ImageResourceThumbnailView.swift */; };
 		5ED26CD320E7D08E00EB9ED4 /* VerticalColumnPositioningContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED26CD120E7CC5900EB9ED4 /* VerticalColumnPositioningContext.swift */; };
 		5ED26CD420E7D08E00EB9ED4 /* VerticalColumnCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E2B13E320E658EC002F27E2 /* VerticalColumnCollectionViewLayout.swift */; };
 		5ED26CD520E7D08E00EB9ED4 /* VerticalColumnPositioning.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED26CCD20E7A53A00EB9ED4 /* VerticalColumnPositioning.swift */; };
@@ -1848,6 +1849,7 @@
 		5EC16BA620EBBF8400955156 /* yt_response_no_items.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = yt_response_no_items.json; sourceTree = "<group>"; };
 		5EC16BA720EBBF8500955156 /* yt_response_valid_video.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = yt_response_valid_video.json; sourceTree = "<group>"; };
 		5EC2C58821353FA100C6CE35 /* AuthenticationCoordinator+Teams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AuthenticationCoordinator+Teams.swift"; sourceTree = "<group>"; };
+		5EC7C879219038F6004662AC /* ImageResourceThumbnailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageResourceThumbnailView.swift; sourceTree = "<group>"; };
 		5ED26CCD20E7A53A00EB9ED4 /* VerticalColumnPositioning.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalColumnPositioning.swift; sourceTree = "<group>"; };
 		5ED26CD120E7CC5900EB9ED4 /* VerticalColumnPositioningContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalColumnPositioningContext.swift; sourceTree = "<group>"; };
 		5EDD2536213FD5C300C0E254 /* SLComposeServiceViewController+Preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SLComposeServiceViewController+Preview.swift"; sourceTree = "<group>"; };
@@ -4620,6 +4622,7 @@
 				5EF5C54B209B33E600676405 /* CGSize+AspectRatio.swift */,
 				5EFD4525215A78E800BEE703 /* IndexedListView.swift */,
 				5E35F78321833AF000D3F4FE /* ZMConversationMessage+Sender.swift */,
+				5EC7C879219038F6004662AC /* ImageResourceThumbnailView.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -7423,6 +7426,7 @@
 				D5168F532010F20B00F8222A /* BlurEffectTransition.swift in Sources */,
 				1671D6D1200CDC380022D289 /* InviteTeamMemberCell.swift in Sources */,
 				D5D65A11207509F300D7F3C3 /* BackupPasswordViewController.swift in Sources */,
+				5EC7C87A219038F6004662AC /* ImageResourceThumbnailView.swift in Sources */,
 				87AC77DB1DE48C01009F6D56 /* Copyable.swift in Sources */,
 				1687ABA820EBB5F30007C240 /* ImageMessageCell+Configure.swift in Sources */,
 				87371C1A1B7355C400807499 /* ConversationListViewController+StartUI.m in Sources */,

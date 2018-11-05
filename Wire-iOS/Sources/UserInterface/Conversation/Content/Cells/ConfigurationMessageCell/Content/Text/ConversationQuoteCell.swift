@@ -18,12 +18,16 @@
 
 import UIKit
 
+protocol ConversationReplyContentViewDelegate: class {
+    func conversationReplyContentViewDidTapOriginalMessage()
+}
+
 class ConversationReplyContentView: UIView {
 
     struct Configuration {
         enum Content {
             case text(NSAttributedString)
-            case imagePreview(ZMConversationMessage, isVideo: Bool)
+            case imagePreview(thumbnail: ImageResource, isVideo: Bool)
         }
 
         let showDetails: Bool
@@ -36,8 +40,11 @@ class ConversationReplyContentView: UIView {
     let senderLabel = UILabel()
     let contentTextView = UITextView()
     let timestampLabel = UILabel()
+    let assetThumbnail = ImageResourceThumbnailView()
 
     let stackView = UIStackView()
+
+    weak var delegate: ConversationReplyContentViewDelegate?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -67,14 +74,18 @@ class ConversationReplyContentView: UIView {
         contentTextView.textContainer.maximumNumberOfLines = 4
         contentTextView.textContainer.lineFragmentPadding = 0
         contentTextView.isScrollEnabled = false
+        contentTextView.isUserInteractionEnabled = false
         contentTextView.textContainerInset = .zero
         contentTextView.isEditable = false
-        contentTextView.isSelectable = true
+        contentTextView.isSelectable = false
         contentTextView.backgroundColor = .clear
         contentTextView.textColor = .textForeground
 
         contentTextView.setContentCompressionResistancePriority(.required, for: .vertical)
         stackView.addArrangedSubview(contentTextView)
+
+        assetThumbnail.setContentCompressionResistancePriority(.required, for: .vertical)
+        stackView.addArrangedSubview(assetThumbnail)
 
         timestampLabel.font = .mediumFont
         timestampLabel.textColor = .textDimmed
@@ -90,7 +101,8 @@ class ConversationReplyContentView: UIView {
             stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 12),
             stackView.topAnchor.constraint(equalTo: topAnchor, constant: 12),
             stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -12)
+            stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -12),
+            assetThumbnail.heightAnchor.constraint(lessThanOrEqualToConstant: 140)
         ])
     }
 
@@ -104,26 +116,41 @@ class ConversationReplyContentView: UIView {
         switch object.content {
         case .text(let attributedContent):
             contentTextView.attributedText = attributedContent
-        case .imagePreview:
-            contentTextView.text = "UNSUPPORTED MESSAGE"
+            contentTextView.isHidden = false
+            assetThumbnail.isHidden = true
+        case .imagePreview(let resource, let isVideo):
+            assetThumbnail.setResource(resource, isVideoPreview: isVideo)
+            assetThumbnail.isHidden = false
+            contentTextView.isHidden = true
         }
     }
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-
-    }
-
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        
+        backgroundColor = .red
     }
 
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        defer {
+            backgroundColor = .clear
+        }
 
+        guard
+            let touchLocation = touches.first?.location(in: self),
+            bounds.contains(touchLocation)
+        else {
+            return
+        }
+
+        delegate?.conversationReplyContentViewDidTapOriginalMessage()
+    }
+
+    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+        backgroundColor = .clear
     }
 
 }
 
-class ConversationReplyCell: UIView, ConversationMessageCell {
+class ConversationReplyCell: UIView, ConversationMessageCell, ConversationReplyContentViewDelegate {
     typealias Configuration = ConversationReplyContentView.Configuration
     var isSelected: Bool = false
 
@@ -143,6 +170,7 @@ class ConversationReplyCell: UIView, ConversationMessageCell {
     }
 
     private func configureSubviews() {
+        contentView.delegate = self
         addSubview(container)
     }
 
@@ -159,6 +187,10 @@ class ConversationReplyCell: UIView, ConversationMessageCell {
 
     func configure(with object: Configuration) {
         contentView.configure(with: object)
+    }
+
+    func conversationReplyContentViewDidTapOriginalMessage() {
+        print(">> Open original message")
     }
 
 }
@@ -205,6 +237,12 @@ class ConversationReplyCellDescription: ConversationMessageCellDescription {
             let initialString = NSAttributedString(attachment: imageIcon) + "  " + "conversation.input_bar.message_preview.audio".localized.localizedUppercase
             content = .text(initialString && attributes)
 
+        case let message? where message.isImage:
+            content = .imagePreview(thumbnail: message.imageMessageData!.image, isVideo: false)
+
+        case let message? where message.isVideo:
+            content = .imagePreview(thumbnail: message.fileMessageData!.thumbnailImage, isVideo: true)
+
         case let message? where message.isFile:
             let fileData = message.fileMessageData!
             let imageIcon = NSTextAttachment.textAttachment(for: .document, with: .textForeground, and: .medium)!
@@ -212,7 +250,8 @@ class ConversationReplyCellDescription: ConversationMessageCellDescription {
             content = .text(initialString && attributes)
 
         default:
-            content = .text(NSAttributedString(string: "You cannot see this message."))
+            let attributes: [NSAttributedString.Key: AnyObject] = [.font: UIFont.mediumFont.italic, .foregroundColor: UIColor.textDimmed]
+            content = .text(NSAttributedString(string: "content.message.reply.broken_message".localized, attributes: attributes))
         }
 
         configuration = View.Configuration(showDetails: !isUnavailable, senderName: senderName, timestamp: timestamp, content: content)
