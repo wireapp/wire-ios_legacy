@@ -69,7 +69,7 @@ class ConversationReplyCellTests: CoreDataSnapshotTestCase {
         verifyInAllPhoneWidths(view: cell)
     }
 
-    func testThatItTruncatesTextAfterFourLines() {
+    func testThatItTruncatesTextAfterFourLines_31() {
         // GIVEN
         let message = MockMessageFactory.textMessage(withText: "@Bruno do we have the latest mockup files ready to go for the annual report? Once we have the copy finalized I would like to drop it in and get this out as quickly as possible. We can also add more lines to the test message if we need.")!
         message.backingTextMessageData?.mentions = [Mention(range: NSRange(location: 0, length: 6), user: otherUser)]
@@ -82,6 +82,45 @@ class ConversationReplyCellTests: CoreDataSnapshotTestCase {
         // THEN
         verifyInAllPhoneWidths(view: cell)
     }
+
+    func testThatItRendersMarkdownWithoutFontChanges_32() {
+        // GIVEN
+        let markdownWithTitle = """
+        # Summary of Today’s Meeting Upcoming due dates:
+        - Jan 4, final copy in review
+        - Jan 15, final layout with copy
+        - Jan 20, release on website
+        """
+
+        let message = MockMessageFactory.textMessage(withText: markdownWithTitle)!
+        message.sender = selfUser
+        message.conversation = otherUserConversation
+
+        // WHEN
+        let cell = makeCell(for: message)
+
+        // THEN
+        verifyInAllPhoneWidths(view: cell)
+    }
+
+    func testThatItRendersMarkdownWithoutFontChanges_NoHeaders_32() {
+        // GIVEN
+        let markdownNoHeaders = """
+        1. Annual report status: We need to get the final copy finished before we can finalize a layout.
+        2. Board meeting: Steph will begin brainstorming for the next project.
+        """
+
+        let message = MockMessageFactory.textMessage(withText: markdownNoHeaders)!
+        message.sender = selfUser
+        message.conversation = otherUserConversation
+
+        // WHEN
+        let cell = makeCell(for: message)
+
+        // THEN
+        verifyInAllPhoneWidths(view: cell)
+    }
+
 
     func testThatItRendersEmojiInLargeFont_33() {
         // GIVEN
