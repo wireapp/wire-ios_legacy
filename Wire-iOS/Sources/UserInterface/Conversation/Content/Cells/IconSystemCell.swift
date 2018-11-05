@@ -32,8 +32,8 @@ open class IconSystemCell: ConversationCell, TTTAttributedLabelDelegate {
 
     let labelView: UILabel
     
-    var labelTextColor: UIColor? = .textForeground
-    var labelTextBlendedColor: UIColor? = .textDimmed
+    var labelTextColor: UIColor? = .from(scheme: .textForeground)
+    var labelTextBlendedColor: UIColor? = .from(scheme: .textDimmed)
 
     var lineBaseLineConstraint: NSLayoutConstraint?
 
@@ -95,7 +95,7 @@ open class IconSystemCell: ConversationCell, TTTAttributedLabelDelegate {
         self.leftIconContainer.addSubview(self.leftIconView)
         self.messageContentView.addSubview(self.labelView)
         self.contentView.addSubview(self.lineView)
-        lineView.backgroundColor = .separator
+        lineView.backgroundColor = .from(scheme: .separator)
 
         var accessibilityElements = self.accessibilityElements ?? []
         accessibilityElements.append(contentsOf: [self.labelView, self.leftIconView])

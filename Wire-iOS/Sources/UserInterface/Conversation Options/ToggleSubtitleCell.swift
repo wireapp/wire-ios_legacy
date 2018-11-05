@@ -74,9 +74,9 @@ final class ToggleSubtitleCell: UITableViewCell, CellConfigurationConfigurable {
     }
     
     private func styleViews() {
-        topContainer.backgroundColor = UIColor(scheme: .barBackground, variant: variant)
-        titleLabel.textColor = UIColor(scheme: .textForeground, variant: variant)
-        subtitleLabel.textColor = UIColor(scheme: .textDimmed, variant: variant)
+        topContainer.backgroundColor = UIColor.from(scheme: .barBackground, variant: variant)
+        titleLabel.textColor = UIColor.from(scheme: .textForeground, variant: variant)
+        subtitleLabel.textColor = UIColor.from(scheme: .textDimmed, variant: variant)
         backgroundColor = .clear
     }
     

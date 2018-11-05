@@ -36,7 +36,7 @@ protocol ColorVariantProvider {
 extension CallStatusViewInputType {
     var overlayBackgroundColor: UIColor {
         switch (isVideoCall, state) {
-        case (false, _): return variant == .light ? UIColor(scheme: .background, variant: .light) : .black
+        case (false, _): return variant == .light ? UIColor.from(scheme: .background, variant: .light) : .black
         case (true, .ringingOutgoing), (true, .ringingIncoming): return UIColor.black.withAlphaComponent(0.4)
         case (true, _): return UIColor.black.withAlphaComponent(0.64)
         }
@@ -120,7 +120,7 @@ final class CallStatusView: UIView {
         bitrateLabel.isHidden = !configuration.isConstantBitRate
 
         [titleLabel, subtitleLabel, bitrateLabel].forEach {
-            $0.textColor = UIColor(scheme: .textForeground, variant: configuration.effectiveColorVariant)
+            $0.textColor = UIColor.from(scheme: .textForeground, variant: configuration.effectiveColorVariant)
         }
 
         accessibilityLabel = stackView.arrangedSubviews.compactMap { $0.accessibilityLabel }.joined(separator: "\n")

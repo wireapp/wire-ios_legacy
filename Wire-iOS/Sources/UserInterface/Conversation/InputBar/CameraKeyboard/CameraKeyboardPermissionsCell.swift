@@ -38,7 +38,7 @@ open class CameraKeyboardPermissionsCell: UICollectionViewCell {
     
     public override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = UIColor(scheme: .graphite)
+        self.backgroundColor = .graphite
         
         cameraIcon.setIcon(.cameraLens, with: .tiny, for: .normal)
         cameraIcon.setIconColor(.white, for: .normal)

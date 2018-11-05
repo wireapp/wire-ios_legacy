@@ -27,7 +27,7 @@ private let IdentityString = ".identity"
     static fileprivate let generalErrorURL : URL = URL(string:"action://general-error")!
     static fileprivate let remoteIDErrorURL : URL = URL(string:"action://remote-id-error")!
 
-    fileprivate let exclamationColor = UIColor(for: .vividRed)
+    fileprivate let exclamationColor = UIColor.vividRed
     
     override func configure(for message: ZMConversationMessage!, layoutProperties: ConversationCellLayoutProperties!) {
         super.configure(for: message, layoutProperties: layoutProperties)

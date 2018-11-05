@@ -155,10 +155,10 @@ public class AddParticipantsViewController: UIViewController {
         collectionView.alwaysBounceVertical = true
 
         confirmButton = IconButton()
-        confirmButton.setIconColor(UIColor(scheme: .iconNormal, variant: .dark), for: .normal)
-        confirmButton.setIconColor(UIColor(scheme: .iconHighlighted, variant: .dark), for: .highlighted)
-        confirmButton.setTitleColor(UIColor(scheme: .iconNormal, variant: .dark), for: .normal)
-        confirmButton.setTitleColor(UIColor(scheme: .iconHighlighted, variant: .dark), for: .highlighted)
+        confirmButton.setIconColor(UIColor.from(scheme: .iconNormal, variant: .dark), for: .normal)
+        confirmButton.setIconColor(UIColor.from(scheme: .iconHighlighted, variant: .dark), for: .highlighted)
+        confirmButton.setTitleColor(UIColor.from(scheme: .iconNormal, variant: .dark), for: .normal)
+        confirmButton.setTitleColor(UIColor.from(scheme: .iconHighlighted, variant: .dark), for: .highlighted)
         confirmButton.titleLabel?.font = FontSpec(.small, .medium).font!
         confirmButton.backgroundColor = UIColor.accent()
         confirmButton.contentHorizontalAlignment = .center
@@ -228,10 +228,10 @@ public class AddParticipantsViewController: UIViewController {
         view.addSubview(searchResultsViewController.view)
         searchResultsViewController.didMove(toParent: self)
         searchResultsViewController.searchResultsView?.emptyResultView = emptyResultView
-        searchResultsViewController.searchResultsView?.backgroundColor = UIColor(scheme: .contentBackground, variant: self.variant)
+        searchResultsViewController.searchResultsView?.backgroundColor = UIColor.from(scheme: .contentBackground, variant: self.variant)
         searchResultsViewController.searchResultsView?.collectionView.accessibilityIdentifier = "add_participants.list"
         
-        view.backgroundColor = UIColor(scheme: .contentBackground, variant: self.variant)
+        view.backgroundColor = UIColor.from(scheme: .contentBackground, variant: self.variant)
         view.addSubview(confirmButton)
         
         createConstraints()

@@ -23,7 +23,6 @@
 #import "UIImage+ImageUtilities.h"
 #import "UIColor+Mixing.h"
 #import "UIControl+Wire.h"
-#import "UIColor+WR_ColorScheme.h"
 #import "Wire-Swift.h"
 
 @interface IconDefinition : NSObject

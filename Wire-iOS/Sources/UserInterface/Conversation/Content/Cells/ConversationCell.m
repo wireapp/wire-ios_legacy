@@ -24,7 +24,6 @@
 
 #import "UIColor+WAZExtensions.h"
 #import "Message+UI.h"
-#import "UIColor+WR_ColorScheme.h"
 #import "Wire-Swift.h"
 #import "AccentColorChangeHandler.h"
 #import "Analytics.h"

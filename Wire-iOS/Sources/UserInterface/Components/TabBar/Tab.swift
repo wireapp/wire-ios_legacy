@@ -54,8 +54,8 @@ class Tab: Button {
     }
     
     private func updateColors() {
-        setTitleColor(UIColor(scheme: .tabNormal, variant: colorSchemeVariant), for: .normal)
-        setTitleColor(UIColor(scheme: .tabSelected, variant: colorSchemeVariant), for: .selected)
-        setTitleColor(UIColor(scheme: .tabHighlighted, variant: colorSchemeVariant), for: .highlighted)
+        setTitleColor(UIColor.from(scheme: .tabNormal, variant: colorSchemeVariant), for: .normal)
+        setTitleColor(UIColor.from(scheme: .tabSelected, variant: colorSchemeVariant), for: .selected)
+        setTitleColor(UIColor.from(scheme: .tabHighlighted, variant: colorSchemeVariant), for: .highlighted)
     }
 }

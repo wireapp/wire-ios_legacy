@@ -24,7 +24,7 @@ import TTTAttributedLabel
 @objcMembers class MissingMessagesCell: IconSystemCell {
     static fileprivate let userClientLink: URL = URL(string: "settings://user-client")!
 
-    fileprivate let exclamationColor = UIColor(for: .vividRed)
+    fileprivate let exclamationColor = UIColor.vividRed
     
     override func configure(for message: ZMConversationMessage!, layoutProperties: ConversationCellLayoutProperties!) {
         super.configure(for: message, layoutProperties: layoutProperties)

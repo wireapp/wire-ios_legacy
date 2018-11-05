@@ -25,7 +25,6 @@
 #import "ProfileViewController.h"
 #import "UIView+PopoverBorder.h"
 #import "ProfilePresenter.h"
-#import "UIColor+WR_ColorScheme.h"
 #import "Wire-Swift.h"
 
 // model

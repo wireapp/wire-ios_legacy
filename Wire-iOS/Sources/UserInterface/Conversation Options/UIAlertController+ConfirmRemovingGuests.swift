@@ -27,7 +27,7 @@ extension UIAlertController {
             preferredStyle: .alert
         )
         controller.addAction(.ok())
-        controller.view.tintColor = UIColor(scheme: .textForeground, variant: .light)
+        controller.view.tintColor = UIColor.from(scheme: .textForeground, variant: .light)
         return controller
     }
     
@@ -54,7 +54,7 @@ extension UIAlertController {
         }
         controller.addAction(removeAction)
         controller.addAction(.cancel { completion(false) })
-        controller.view.tintColor = UIColor(scheme: .textForeground, variant: .light)
+        controller.view.tintColor = UIColor.from(scheme: .textForeground, variant: .light)
         return controller
     }
 }

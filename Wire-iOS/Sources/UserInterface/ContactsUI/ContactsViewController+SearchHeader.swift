@@ -25,7 +25,7 @@ extension ContactsViewController {
         let searchHeaderViewController = SearchHeaderViewController(userSelection: .init(), variant: .dark)
         searchHeaderViewController.delegate = self
         searchHeaderViewController.allowsMultipleSelection = false
-        searchHeaderViewController.view.backgroundColor = UIColor(scheme: .searchBarBackground, variant: .dark)
+        searchHeaderViewController.view.backgroundColor = UIColor.from(scheme: .searchBarBackground, variant: .dark)
 
         addToSelf(searchHeaderViewController)
 

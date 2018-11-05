@@ -19,7 +19,6 @@
 
 #import "StartUIInviteActionBar.h"
 #import "IconButton.h"
-#import "UIColor+WR_ColorScheme.h"
 @import PureLayout;
 @import WireExtensionComponents;
 #import "Wire-Swift.h"

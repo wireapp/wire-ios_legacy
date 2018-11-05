@@ -65,7 +65,7 @@ import Cartography
         let label = UILabel()
         label.accessibilityLabel = "sent on"
         label.font = .smallLightFont
-        label.textColor = .textDimmed
+        label.textColor = .from(scheme: .textDimmed)
 
         return label
     }()

@@ -70,7 +70,7 @@ extension ZMSystemMessageData {
         let attributedLabel = TTTAttributedLabel(frame: CGRect.zero)
         attributedLabel.font = UIFont.smallSemiboldFont
         attributedLabel.backgroundColor = .clear
-        attributedLabel.textColor = UIColor(scheme: .textDimmed)
+        attributedLabel.textColor = UIColor.from(scheme: .textDimmed)
         attributedLabel.textInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
 
         return attributedLabel
@@ -115,9 +115,9 @@ extension ZMSystemMessageData {
         statusLabel.lineBreakMode = NSLineBreakMode.byTruncatingMiddle
         statusLabel.numberOfLines = 0
         statusLabel.linkAttributes = [NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue as NSNumber,
-                                      NSAttributedString.Key.foregroundColor: UIColor(for: .vividRed)]
+                                      NSAttributedString.Key.foregroundColor: UIColor.vividRed]
         statusLabel.activeLinkAttributes = [NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue as NSNumber,
-                                            NSAttributedString.Key.foregroundColor: UIColor(for: .vividRed).withAlphaComponent(0.5)]
+                                            NSAttributedString.Key.foregroundColor: UIColor.vividRed.withAlphaComponent(0.5)]
         
         labelClipView.addSubview(statusLabel)
         

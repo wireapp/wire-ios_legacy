@@ -94,7 +94,7 @@ struct CallCellViewModel {
         super.configure(for: message, layoutProperties: layoutProperties)
         let model = CallCellViewModel(
             icon: .endCall,
-            iconColor: UIColor(for: .vividRed),
+            iconColor: .vividRed,
             systemMessageType: .missedCall,
             font: labelFont,
             boldFont: labelBoldFont,
@@ -138,7 +138,7 @@ class PerformedCallCell: IconSystemCell {
         super.configure(for: message, layoutProperties: layoutProperties)
         let model = CallCellViewModel(
             icon: .callAudio,
-            iconColor: UIColor(for: .strongLimeGreen),
+            iconColor: .strongLimeGreen,
             systemMessageType: .performedCall,
             font: labelFont,
             boldFont: labelBoldFont,

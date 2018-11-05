@@ -24,7 +24,7 @@ import UIKit
     public init() {
         super.init(frame: CGRect.zero)
         
-        backgroundColor = ZMAccentColor.vividRed.color
+        backgroundColor = .vividRed
     }
     
     required init?(coder aDecoder: NSCoder) {

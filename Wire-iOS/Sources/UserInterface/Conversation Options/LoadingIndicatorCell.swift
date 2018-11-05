@@ -39,7 +39,7 @@ final class LoadingIndicatorCell: UITableViewCell, CellConfigurationConfigurable
     }
     
     func configure(with configuration: CellConfiguration, variant: ColorSchemeVariant) {
-        spinner.color = UIColor(scheme: .textForeground, variant: variant)
+        spinner.color = UIColor.from(scheme: .textForeground, variant: variant)
         spinner.isAnimating = false
         spinner.isAnimating = true
     }

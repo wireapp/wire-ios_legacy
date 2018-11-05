@@ -50,7 +50,7 @@ private let zmLog = ZMSLog(tag: "UI")
     private let timeLabel: UILabel = {
         let label = UILabel()
         label.font = (UIFont.smallSemiboldFont).monospaced()
-        label.textColor = .textForeground
+        label.textColor = .from(scheme: .textForeground)
         label.numberOfLines = 1
         label.textAlignment = .center
         label.accessibilityLabel = "AudioTimeLabel"
@@ -60,7 +60,7 @@ private let zmLog = ZMSLog(tag: "UI")
 
     private let playerProgressView: ProgressView = {
         let progressView = ProgressView()
-        progressView.backgroundColor = .separator
+        progressView.backgroundColor = .from(scheme: .separator)
         progressView.tintColor = .accent()
 
         return progressView
@@ -68,7 +68,7 @@ private let zmLog = ZMSLog(tag: "UI")
 
     private let waveformProgressView: WaveformProgressView = {
         let waveformProgressView = WaveformProgressView()
-        waveformProgressView.backgroundColor = .placeholderBackground
+        waveformProgressView.backgroundColor = .from(scheme: .placeholderBackground)
 
         return waveformProgressView
     }()
@@ -93,7 +93,7 @@ private let zmLog = ZMSLog(tag: "UI")
         isPausedForIncomingCall = false
 
         super.init(frame: frame)
-        backgroundColor = .placeholderBackground
+        backgroundColor = .from(scheme: .placeholderBackground)
 
         self.playButton.addTarget(self, action: #selector(AudioMessageView.onActionButtonPressed(_:)), for: .touchUpInside)
         self.playButton.accessibilityLabel = "AudioActionButton"

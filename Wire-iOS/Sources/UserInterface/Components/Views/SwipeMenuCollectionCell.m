@@ -18,10 +18,9 @@
 
 
 #import "SwipeMenuCollectionCell.h"
-@import PureLayout;
+#import "SwipeMenuCollectionCell+Internal.h"
 #import "UIView+RemoveAnimations.h"
 #import "Wire-Swift.h"
-
 
 
 NSString * const SwipeMenuCollectionCellCloseDrawerNotification = @"SwipeMenuCollectionCellCloseDrawerNotification";
@@ -31,9 +30,6 @@ NSString * const SwipeMenuCollectionCellIDToCloseKey = @"IDToClose";
 
 @property (nonatomic) UIView *swipeView;
 @property (nonatomic) UIView *menuView;
-@property (nonatomic) UIView *separatorLine;
-
-@property (nonatomic) BOOL hasCreatedSwipeMenuConstraints;
 
 @property (nonatomic) CGFloat initialDrawerWidth;
 
@@ -45,9 +41,6 @@ NSString * const SwipeMenuCollectionCellIDToCloseKey = @"IDToClose";
 @property (nonatomic) CGFloat userInteractionHorizontalOffset;
 
 @property (nonatomic) UIPanGestureRecognizer *revealDrawerGestureRecognizer;
-@property (nonatomic) NSLayoutConstraint *swipeViewHorizontalConstraint;
-@property (nonatomic) NSLayoutConstraint *menuViewToSwipeViewLeftConstraint;
-@property (nonatomic) NSLayoutConstraint *maxMenuViewToSwipeViewLeftConstraint;
 
 @property (nonatomic) UIImpactFeedbackGenerator *openedFeedbackGenerator;
 
@@ -93,17 +86,18 @@ NSString * const SwipeMenuCollectionCellIDToCloseKey = @"IDToClose";
 {
     self.canOpenDrawer = YES;
     self.overscrollFraction = 0.6f;
-    self.maxVisualDrawerOffset = 48;
+    /// When the swipeView is swiped and excesses this offset, the "3 dots" stays at left.
+    self.maxVisualDrawerOffset = MaxVisualDrawerOffsetRevealDistance;
     
-    self.swipeView = [[UIView alloc] initForAutoLayout];
+    self.swipeView = [[UIView alloc] init];
     self.swipeView.backgroundColor = [UIColor clearColor];
     [self.contentView addSubview:self.swipeView];
 
-    self.menuView = [[UIView alloc] initForAutoLayout];
+    self.menuView = [[UIView alloc] init];
     self.menuView.backgroundColor = [UIColor clearColor];
     [self.contentView addSubview:self.menuView];
     
-    self.separatorLine = [[UIView alloc] initForAutoLayout];
+    self.separatorLine = [[UIView alloc] init];
     self.separatorLine.backgroundColor = [UIColor colorWithWhite:1.0f alpha:0.4f];
     [self.swipeView addSubview:self.separatorLine];
     self.separatorLine.hidden = self.separatorLineViewDisabled;
@@ -128,33 +122,6 @@ NSString * const SwipeMenuCollectionCellIDToCloseKey = @"IDToClose";
 {
     _separatorLineViewDisabled = separatorLineViewDisabled;
     self.separatorLine.hidden = separatorLineViewDisabled;
-}
-
-- (void)updateConstraints
-{
-    if (! self.hasCreatedSwipeMenuConstraints) {
-        self.hasCreatedSwipeMenuConstraints = YES;
-        
-        [self.swipeView autoMatchDimension:ALDimensionWidth toDimension:ALDimensionWidth ofView:self.contentView];
-        [self.swipeView autoMatchDimension:ALDimensionHeight toDimension:ALDimensionHeight ofView:self.contentView];
-        [self.swipeView autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
-        self.swipeViewHorizontalConstraint = [self.swipeView autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self.contentView withOffset:0];
-        
-        [self.separatorLine autoSetDimension:ALDimensionWidth toSize:UIScreen.hairline];
-        [self.separatorLine autoSetDimension:ALDimensionHeight toSize:25.0f];
-        [self.separatorLine autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.swipeView];
-        [self.separatorLine autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:self.menuView];
-        
-        [self.menuView autoPinEdge:ALEdgeTop toEdge:ALEdgeTop ofView:self.swipeView];
-        [self.menuView autoPinEdge:ALEdgeBottom toEdge:ALEdgeBottom ofView:self.swipeView];
-        
-        self.menuViewToSwipeViewLeftConstraint = [self.menuView autoPinEdge:ALEdgeRight toEdge:ALEdgeLeft ofView:self.swipeView];
-        [NSLayoutConstraint autoSetPriority:UILayoutPriorityDefaultLow forConstraints:^{
-            self.maxMenuViewToSwipeViewLeftConstraint = [self.menuView autoPinEdge:ALEdgeRight toEdge:ALEdgeLeft ofView:self withOffset:self.maxVisualDrawerOffset];
-        }];
-    }
-    
-    [super updateConstraints];
 }
 
 - (void)setMaxVisualDrawerOffset:(CGFloat)maxVisualDrawerOffset
@@ -343,19 +310,6 @@ NSString * const SwipeMenuCollectionCellIDToCloseKey = @"IDToClose";
     }
 }
 
-/// Checks on the @c maxVisualDrawerOffset and switches the prio's of the constraint
-- (void)checkAndUpdateMaxVisualDrawerOffsetConstraints:(CGFloat)visualDrawerOffset
-{
-    if (visualDrawerOffset > self.maxVisualDrawerOffset) {
-        self.menuViewToSwipeViewLeftConstraint.active = NO;
-        self.maxMenuViewToSwipeViewLeftConstraint.active = YES;
-    }
-    else {
-        self.menuViewToSwipeViewLeftConstraint.active = YES;
-        self.maxMenuViewToSwipeViewLeftConstraint.active = NO;
-    }
-}
-
 - (void)setDrawerOpen:(BOOL)open animated:(BOOL)animated
 {
     if (open && self.visualDrawerOffset == self.drawerWidth) {
@@ -367,8 +321,7 @@ NSString * const SwipeMenuCollectionCellIDToCloseKey = @"IDToClose";
     }
 
     dispatch_block_t action = ^() {
-        self.visualDrawerOffset = open ? self.drawerWidth : 0;
-        [self checkAndUpdateMaxVisualDrawerOffsetConstraints:self.visualDrawerOffset];
+        self.visualDrawerOffset = 0;
         [self layoutIfNeeded];
     };
 

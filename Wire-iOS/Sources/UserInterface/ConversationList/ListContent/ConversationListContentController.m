@@ -32,7 +32,6 @@
 
 #import "ZClientViewController+Internal.h"
 
-#import "UIColor+WR_ColorScheme.h"
 
 #import "ConnectRequestsCell.h"
 #import "ConversationListCell.h"
@@ -255,7 +254,8 @@ static NSString * const CellReuseIdConversation = @"CellId";
         change.nameChanged ||
         change.unreadCountChanged ||
         change.connectionStateChanged ||
-        change.mutedMessageTypesChanged) {
+        change.mutedMessageTypesChanged ||
+        change.messagesChanged) {
         
         [self updateCellForConversation:change.conversation];
     }

@@ -22,7 +22,6 @@
 #import "WireSyncEngine+iOS.h"
 #import "UIImage+ZetaIconsNeue.h"
 #import "UIColor+WAZExtensions.h"
-#import "UIColor+WR_ColorScheme.h"
 
 @import PureLayout;
 
