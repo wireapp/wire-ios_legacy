@@ -31,13 +31,14 @@ class ConversationReplyContentView: UIView {
         }
 
         let showDetails: Bool
+        let isEdited: Bool
         let senderName: String?
         let timestamp: String?
 
         let content: Content
     }
 
-    let senderLabel = UILabel()
+    let senderComponent = SenderNameCellComponent()
     let contentTextView = UITextView()
     let timestampLabel = UILabel()
     let assetThumbnail = ImageResourceThumbnailView()
@@ -64,11 +65,9 @@ class ConversationReplyContentView: UIView {
         stackView.spacing = 6
         addSubview(stackView)
 
-        senderLabel.font = .mediumSemiboldFont
-        senderLabel.textColor = .textForeground
-        senderLabel.numberOfLines = 1
-        senderLabel.setContentCompressionResistancePriority(.required, for: .vertical)
-        stackView.addArrangedSubview(senderLabel)
+        senderComponent.label.font = .mediumSemiboldFont
+        senderComponent.label.textColor = .textForeground
+        stackView.addArrangedSubview(senderComponent)
 
         contentTextView.textContainer.lineBreakMode = .byTruncatingTail
         contentTextView.textContainer.maximumNumberOfLines = 4
@@ -107,10 +106,11 @@ class ConversationReplyContentView: UIView {
     }
 
     func configure(with object: Configuration) {
-        senderLabel.isHidden = !object.showDetails
+        senderComponent.isHidden = !object.showDetails
         timestampLabel.isHidden = !object.showDetails
 
-        senderLabel.text = object.senderName
+        senderComponent.senderName = object.senderName
+        senderComponent.indicatorIcon = object.isEdited ? UIImage(for: .pencil, iconSize: .messageStatus, color: .iconNormal) : nil
         timestampLabel.text = object.timestamp
 
         switch object.content {
@@ -211,6 +211,7 @@ class ConversationReplyCellDescription: ConversationMessageCellDescription {
 
     init(quotedMessage: ZMConversationMessage?) {
         let isUnavailable = quotedMessage == nil
+        let isEdited = quotedMessage?.updatedAt != nil
         let senderName = quotedMessage?.senderName
         let timestamp = quotedMessage?.formattedOriginalReceivedDate()
 
@@ -257,7 +258,7 @@ class ConversationReplyCellDescription: ConversationMessageCellDescription {
             content = .text(NSAttributedString(string: "content.message.reply.broken_message".localized, attributes: attributes))
         }
 
-        configuration = View.Configuration(showDetails: !isUnavailable, senderName: senderName, timestamp: timestamp, content: content)
+        configuration = View.Configuration(showDetails: !isUnavailable, isEdited: isEdited, senderName: senderName, timestamp: timestamp, content: content)
     }
 
     func makeCell(for tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {

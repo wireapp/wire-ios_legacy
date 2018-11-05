@@ -135,6 +135,21 @@ class ConversationReplyCellTests: CoreDataSnapshotTestCase {
         verifyInAllPhoneWidths(view: cell)
     }
 
+    func testThatItShowsEditBadgeWhenMessageIsEdited_34() {
+        // GIVEN
+        let message = MockMessageFactory.textMessage(withText: "@Bruno is the annual report ready to go?")!
+        message.backingTextMessageData?.mentions = [Mention(range: NSRange(location: 0, length: 6), user: otherUser)]
+        message.sender = selfUser
+        message.conversation = otherUserConversation
+        message.updatedAt = Date()
+
+        // WHEN
+        let cell = makeCell(for: message)
+
+        // THEN
+        verifyInAllPhoneWidths(view: cell)
+    }
+
     // MARK: - Rich content
 
     func testThatItDisplaysLocationMessage_56() {
