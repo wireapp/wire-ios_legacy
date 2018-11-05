@@ -127,7 +127,8 @@ extension ConversationInputBarViewController: UITextViewDelegate {
             let (text, mentions) = textView.preparedText
             self.conversation.draftMessage = DraftMessage(
                 text: text,
-                mentions: mentions
+                mentions: mentions,
+                quote: self.replyingToMessage
             )
         }
     }
