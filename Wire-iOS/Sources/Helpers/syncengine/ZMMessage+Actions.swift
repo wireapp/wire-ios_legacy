@@ -27,12 +27,14 @@ extension ZMConversationMessage {
     
     /// Whether the message can be edited.
     var canBeEdited: Bool {
-        guard let conversation = self.conversation else {
+        guard let conversation = self.conversation,
+              let sender = self.sender else {
             return false
         }
         return !isEphemeral &&
                isText &&
                conversation.isSelfAnActiveMember &&
+               sender.isSelfUser &&
                deliveryState.isOne(of: [.delivered, .sent])
     }
     
@@ -89,12 +91,15 @@ extension ZMConversationMessage {
         }
     }
 
+    /// Wether the message sending failed in the past and we can attempt to resend the message.
     var canBeResent: Bool {
-        guard let conversation = self.conversation else {
+        guard let conversation = self.conversation,
+              let sender = self.sender else {
             return false
         }
         
         return conversation.isSelfAnActiveMember &&
+               sender.isSelfUser &&
                (isText || isImage || isLocation || isFile) &&
                deliveryState == .failedToSend
     }
