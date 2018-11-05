@@ -31,7 +31,7 @@ extension ConversationContentViewController: UIViewControllerPreviewingDelegate 
         let cellLocation = view.convert(location, to: tableView)
 
         guard let cellIndexPath = self.tableView.indexPathForRow(at: cellLocation),
-              let message = self.messageWindow.messages[cellIndexPath.row] as? ZMConversationMessage,
+              let message = self.messageWindow.messages[cellIndexPath.section] as? ZMConversationMessage,
               let cell = tableView.cellForRow(at: cellIndexPath) as? ConversationCell else {
             return .none
         }
