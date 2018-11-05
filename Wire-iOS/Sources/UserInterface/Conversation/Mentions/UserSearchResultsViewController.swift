@@ -44,14 +44,22 @@ class UserSearchResultsViewController: UIViewController, KeyboardCollapseObserve
     private let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
     private var searchResults: [UserType] = [] {
         didSet {
-            collectionViewSelectedIndex = searchResults.count - 1
+            if searchResults.count > 0 {
+                collectionViewSelectedIndex = searchResults.count - 1
+            } else {
+                collectionViewSelectedIndex = .none
+            }
         }
     }
     private var query: String = ""
     private var collectionViewHeight: NSLayoutConstraint?
     private let rowHeight: CGFloat = 56.0
     private var isKeyboardCollapsedFirstCalled = true
-    private var collectionViewSelectedIndex: Int? = .none
+    private var collectionViewSelectedIndex: Int? = .none {
+        didSet {
+            clampCollectionViewSelectedIndex()
+        }
+    }
     public private(set) var isKeyboardCollapsed: Bool = true {
         didSet {
             guard oldValue != isKeyboardCollapsed || isKeyboardCollapsedFirstCalled else { return }
@@ -187,16 +195,11 @@ extension UserSearchResultsViewController: Dismissable {
 extension UserSearchResultsViewController: UserList {
     var selectedUser: UserType? {
 
-        guard searchResults.count > 0 else {
+        guard let collectionViewSelectedIndex = collectionViewSelectedIndex else {
             return nil
         }
 
-        clampCollectionViewSelectedIndex()
-
-        var index = 0
-        if let collectionViewSelectedIndex = collectionViewSelectedIndex {
-            index = searchResults.count - 1 - collectionViewSelectedIndex
-        }
+        let index = searchResults.count - 1 - collectionViewSelectedIndex
 
         let bestSuggestion = users[index]
 
@@ -204,25 +207,15 @@ extension UserSearchResultsViewController: UserList {
     }
 
     func clampCollectionViewSelectedIndex() {
-        guard var collectionViewSelectedIndex = self.collectionViewSelectedIndex else { return }
+        guard let collectionViewSelectedIndex = self.collectionViewSelectedIndex else { return }
 
-        if collectionViewSelectedIndex >= searchResults.count {
-            collectionViewSelectedIndex = searchResults.count - 1
-        }
-
-        if collectionViewSelectedIndex < 0 {
-            collectionViewSelectedIndex = 0
-        }
-
-        self.collectionViewSelectedIndex = collectionViewSelectedIndex
+        self.collectionViewSelectedIndex = min(searchResults.count - 1, max(0, collectionViewSelectedIndex))
     }
 
     func selectNextUser() {
         guard let collectionViewSelectedIndex = collectionViewSelectedIndex else { return }
 
         self.collectionViewSelectedIndex = collectionViewSelectedIndex + 1
-
-        clampCollectionViewSelectedIndex()
 
         collectionView.reloadData()
     }
@@ -231,8 +224,6 @@ extension UserSearchResultsViewController: UserList {
         guard let collectionViewSelectedIndex = collectionViewSelectedIndex else { return }
 
         self.collectionViewSelectedIndex = collectionViewSelectedIndex - 1
-
-        clampCollectionViewSelectedIndex()
 
         collectionView.reloadData()
     }
