@@ -17,3 +17,19 @@
 //
 
 import Foundation
+
+extension Date {
+
+    static func today(at hour: Int, _ minutes: Int) -> Date {
+        let today = Date()
+        let calendar = Calendar.current
+
+        var components = calendar.dateComponents([.era, .year, .month, .day], from: today)
+        components.setValue(hour, for: .hour)
+        components.setValue(minutes, for: .minute)
+        components.setValue(0, for: .second)
+
+        return calendar.date(from: components)!
+    }
+
+}
