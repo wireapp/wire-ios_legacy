@@ -20,26 +20,82 @@ import Foundation
 
 extension ZMConversationMessage {
 
-    /// Whether the message can be quoted.
-    var canBeQuoted: Bool {
-        return !isEphemeral && (isText || isImage || isLocation || isFile)
-    }
-
     /// Whether the message can be copied.
     var canBeCopied: Bool {
         return !isEphemeral && (isText || isImage || isLocation)
     }
-
-    var canBeOpened: Bool {
-        return true
+    
+    /// Whether the message can be edited.
+    var canBeEdited: Bool {
+        guard let conversation = self.conversation else {
+            return false
+        }
+        return !isEphemeral &&
+               isText &&
+               conversation.isSelfAnActiveMember &&
+               deliveryState.isOne(of: [.delivered, .sent])
+    }
+    
+    /// Whether the message can be quoted.
+    var canBeQuoted: Bool {
+        guard let conversation = self.conversation else {
+            return false
+        }
+        return !isEphemeral && conversation.isSelfAnActiveMember && (isText || isImage || isLocation || isFile)
     }
 
+    /// Wether it is possible to download the message content.
     var canBeDownloaded: Bool {
-        return true
+        guard let fileMessageData = self.fileMessageData else {
+            return false
+        }
+        return isFile && fileMessageData.transferState.isOne(of: .uploaded, .failedDownload)
     }
-
+    
+    /// Wether the content of the message can be saved to the disk.
     var canBeSaved: Bool {
-        return true
+        if isEphemeral {
+            return false
+        }
+        
+        if isImage {
+            return true
+        }
+        else if isVideo {
+            return videoCanBeSavedToCameraRoll()
+        }
+        else if isAudio {
+            return audioCanBeSaved()
+        }
+        else if isFile, let fileMessageData = self.fileMessageData {
+            return fileMessageData.fileURL != nil
+        }
+        else {
+            return false
+        }
+    }
+    
+    /// Wether it should be possible to forward given message to another conversation.
+    var canBeForwarded: Bool {
+        if isEphemeral {
+            return false
+        }
+
+        if isFile, let fileMessageData = self.fileMessageData {
+            return fileMessageData.fileURL != nil
+        }
+        else {
+            return (isText || isImage || isLocation || isFile)
+        }
     }
 
+    var canBeResent: Bool {
+        guard let conversation = self.conversation else {
+            return false
+        }
+        
+        return conversation.isSelfAnActiveMember &&
+               (isText || isImage || isLocation || isFile) &&
+               deliveryState == .failedToSend
+    }
 }
