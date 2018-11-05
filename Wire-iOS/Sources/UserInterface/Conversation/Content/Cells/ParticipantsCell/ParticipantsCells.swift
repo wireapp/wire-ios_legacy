@@ -44,11 +44,11 @@ import TTTAttributedLabel
     
     let lineView: UIView = {
         let view = UIView()
-        view.backgroundColor = .separator
+        view.backgroundColor = .from(scheme: .separator)
         return view
     }()
-    var labelTextColor: UIColor? = .textForeground
-    var labelTextBlendedColor: UIColor? = .textDimmed
+    var labelTextColor: UIColor? = .from(scheme: .textForeground)
+    var labelTextBlendedColor: UIColor? = .from(scheme: .textDimmed)
     var iconColor: UIColor?
 
     var labelBoldFont: UIFont? = .mediumSemiboldFont
@@ -103,7 +103,7 @@ import TTTAttributedLabel
         
         serviceUserWarningLabel.numberOfLines = 0
         serviceUserWarningLabel.isAccessibilityElement = true
-        serviceUserWarningLabel.textColor = UIColor(for: .vividRed)
+        serviceUserWarningLabel.textColor = .vividRed
         serviceUserWarningLabel.text = "content.system.services.warning".localized
         serviceUserWarningLabel.font = FontSpec(.small, .regular).font
 
@@ -227,7 +227,7 @@ import TTTAttributedLabel
             boldFont: labelBoldFont,
             largeFont: labelLargeFont,
             textColor: labelTextColor,
-            iconColor: UIColor(scheme: .textDimmed),
+            iconColor: UIColor.from(scheme: .textDimmed),
             message: message
         )
 

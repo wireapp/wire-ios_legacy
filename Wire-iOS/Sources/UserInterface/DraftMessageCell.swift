@@ -43,14 +43,14 @@ final class DraftMessageCell: UITableViewCell {
 
     private func setupViews() {
         titleLabel.font = FontSpec(.normal, .light).font!
-        titleLabel.textColor = UIColor(scheme: .textForeground)
+        titleLabel.textColor = UIColor.from(scheme: .textForeground)
         dateLabel.font = FontSpec(.medium, .regular).font!
-        dateLabel.textColor = UIColor(scheme: .textDimmed)
-        backgroundColor = UIColor(scheme: .background)
+        dateLabel.textColor = UIColor.from(scheme: .textDimmed)
+        backgroundColor = UIColor.from(scheme: .background)
         let selectedView = UIView()
-        selectedView.backgroundColor = UIColor(scheme: .tokenFieldBackground)
+        selectedView.backgroundColor = UIColor.from(scheme: .tokenFieldBackground)
         selectedBackgroundView = selectedView
-        separator.backgroundColor = UIColor(scheme: .separator)
+        separator.backgroundColor = UIColor.from(scheme: .separator)
         [titleLabel, dateLabel, separator].forEach(addSubview)
     }
 

@@ -62,7 +62,7 @@ extension NSAttributedString {
         let style = DownStyle.normal
         
         style.baseFont = UIFont.normalLightFont
-        style.baseFontColor = UIColor(scheme: .textForeground)
+        style.baseFontColor = UIColor.from(scheme: .textForeground)
         style.baseParagraphStyle = paragraphStyle
         style.listItemPrefixColor = style.baseFontColor.withAlphaComponent(0.64)
         
@@ -132,8 +132,8 @@ extension NSMutableAttributedString {
         let allowedIndexSet = IndexSet(integersIn: Range<Int>(wholeRange)!, excluding: excludedRanges)
         
         for range in allowedIndexSet.rangeView {
-            let range = NSRange(location: range.startIndex, length: range.endIndex - range.startIndex)
-            self.mutableString.resolveEmoticonShortcuts(in: range)
+            let convertedRange = NSRange(location: range.startIndex, length: range.endIndex - range.startIndex - 1)
+            self.mutableString.resolveEmoticonShortcuts(in: convertedRange)
         }
     }
     

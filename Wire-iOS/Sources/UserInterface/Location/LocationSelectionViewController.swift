@@ -34,11 +34,11 @@ import CoreLocation
         let button = IconButton()
         button.setIcon(.location, with: .tiny, for: [])
         button.borderWidth = 0.5
-        button.setBorderColor(.separator, for: .normal)
+        button.setBorderColor(.from(scheme: .separator), for: .normal)
         button.circular = true
-        button.backgroundColor = .background
-        button.setIconColor(.iconNormal, for: .normal)
-        button.setIconColor(.iconHighlighted, for: .highlighted)
+        button.backgroundColor = .from(scheme: .background)
+        button.setIconColor(.from(scheme: .iconNormal), for: .normal)
+        button.setIconColor(.from(scheme: .iconHighlighted), for: .highlighted)
 
         return button
     }()

@@ -48,7 +48,7 @@ protocol ParticipantsInvitePeopleViewDelegate: class {
         [titleLabel, inviteButton].forEach(stackView.addArrangedSubview)
         titleLabel.numberOfLines = 0
         titleLabel.text = "content.system.conversation.invite.title".localized
-        titleLabel.textColor = UIColor(scheme: .textForeground)
+        titleLabel.textColor = UIColor.from(scheme: .textForeground)
         titleLabel.font = FontSpec(.medium, .none).font
         
         inviteButton.setTitle("content.system.conversation.invite.button".localized, for: .normal)

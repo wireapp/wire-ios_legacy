@@ -60,7 +60,7 @@ final class ServiceDetailView: UIView {
         
         descriptionTextView.backgroundColor = .clear
         descriptionTextView.textContainerInset = .zero
-        descriptionTextView.textColor = UIColor(scheme: .textForeground, variant: variant)
+        descriptionTextView.textColor = UIColor.from(scheme: .textForeground, variant: variant)
         descriptionTextView.font = FontSpec(.normal, .light).font
         descriptionTextView.isEditable = false
         updateForService()
@@ -113,11 +113,11 @@ final class ServiceView: UIView {
         backgroundColor = .clear
         
         nameLabel.font = FontSpec(.large, .regular).font
-        nameLabel.textColor = UIColor(scheme: .textForeground, variant: variant)
+        nameLabel.textColor = UIColor.from(scheme: .textForeground, variant: variant)
         nameLabel.backgroundColor = .clear
         
         providerLabel.font = FontSpec(.medium, .regular).font
-        providerLabel.textColor = UIColor(scheme: .textForeground, variant: variant)
+        providerLabel.textColor = UIColor.from(scheme: .textForeground, variant: variant)
         providerLabel.backgroundColor = .clear
         updateForService()
     }

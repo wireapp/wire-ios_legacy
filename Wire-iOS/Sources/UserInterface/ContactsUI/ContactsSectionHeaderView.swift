@@ -23,7 +23,7 @@ import Cartography
     let label: UILabel = {
         let label = UILabel()
         label.font = .smallSemiboldFont
-        label.textColor = .textForegroundDark
+        label.textColor = .from(scheme: .textForeground, variant: .dark)
 
         return label
     }()

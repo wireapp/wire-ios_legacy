@@ -36,7 +36,7 @@ final class WaveFormView: UIView {
         }
     }
     
-    var gradientColor: UIColor = UIColor(scheme: .background) {
+    var gradientColor: UIColor = UIColor.from(scheme: .background) {
         didSet {
             updateWaveFormColor()
         }

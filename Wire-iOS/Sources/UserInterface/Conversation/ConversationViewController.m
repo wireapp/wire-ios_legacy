@@ -57,7 +57,6 @@
 #import "UIColor+WAZExtensions.h"
 #import "UIViewController+Errors.h"
 #import "SplitViewController.h"
-#import "UIColor+WR_ColorScheme.h"
 #import "UIResponder+FirstResponder.h"
 
 #import "Wire-Swift.h"

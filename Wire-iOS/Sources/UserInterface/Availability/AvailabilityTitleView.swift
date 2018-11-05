@@ -36,12 +36,12 @@ import WireDataModel
         
         if style == .selfProfile || style == .header {
             let variant = ColorSchemeVariant.dark
-            titleColor = UIColor(scheme: .textForeground, variant: variant)
-            titleColorSelected = UIColor(scheme: .textDimmed, variant: variant)
+            titleColor = UIColor.from(scheme: .textForeground, variant: variant)
+            titleColorSelected = UIColor.from(scheme: .textDimmed, variant: variant)
         } else {
             //otherwise, take the default variant
-            titleColor = UIColor(scheme: .textForeground)
-            titleColorSelected = UIColor(scheme: .textDimmed)
+            titleColor = UIColor.from(scheme: .textForeground)
+            titleColorSelected = UIColor.from(scheme: .textDimmed)
         }
         
         var titleFont : UIFont?

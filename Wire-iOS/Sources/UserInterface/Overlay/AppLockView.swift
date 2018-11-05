@@ -29,7 +29,7 @@ import WireExtensionComponents
     public let authenticateLabel: UILabel = {
         let label = UILabel()
         label.font = .largeThinFont
-        label.textColor = .textForegroundDark
+        label.textColor = .from(scheme: .textForeground, variant: .dark)
 
         return label
     }()

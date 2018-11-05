@@ -29,6 +29,6 @@ extension UILabel {
         self.init(frame: .zero)
         text = key.map { $0.localized }
         font = FontSpec(size, weight).font
-        textColor = UIColor(scheme: color, variant: variant)
+        textColor = UIColor.from(scheme: color, variant: variant)
     }
 }

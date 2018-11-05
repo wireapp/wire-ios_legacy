@@ -168,7 +168,6 @@
 #import "UIImage+ZetaIconsNeue.h"
 #import "UIColor+WAZExtensions.h"
 #import "AccentColorChangeHandler.h"
-#import "UIColor+WR_ColorScheme.h"
 #import "UIApplication+Permissions.h"
 #import "UIView+WR_ExtendedBlockAnimations.h"
 #import "UIView+Zeta.h"

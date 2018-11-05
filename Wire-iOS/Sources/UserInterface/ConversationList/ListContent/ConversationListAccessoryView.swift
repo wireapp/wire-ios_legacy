@@ -177,7 +177,7 @@ import UIKit
         self.expandTransparentIconViewWidthConstraint.constant = defaultViewWidth
         self.expandWidthConstraint.constant = defaultViewWidth
         
-        self.textLabel.textColor = UIColor(scheme: .textForeground, variant: .dark)
+        self.textLabel.textColor = UIColor.from(scheme: .textForeground, variant: .dark)
         
         switch self.icon {
         case .none:
@@ -196,7 +196,7 @@ import UIKit
             self.expandWidthConstraint.constant = activeCallWidth
 
         case .activeCall(true): // "Join" button
-            self.badgeView.backgroundColor = ZMAccentColor.strongLimeGreen.color
+            self.badgeView.backgroundColor = .strongLimeGreen
             
         case .typing:
             self.badgeView.isHidden = true
@@ -204,14 +204,14 @@ import UIKit
             self.transparentIconView.image = UIImage(for: .pencil, fontSize: 12.0, color: .white)
             
         case .unreadMessages(_), .mention:
-            self.textLabel.textColor = UIColor(scheme: .textForeground, variant: .light)
-            self.badgeView.backgroundColor = UIColor(scheme: .textBackground, variant: .light)
+            self.textLabel.textColor = UIColor.from(scheme: .textForeground, variant: .light)
+            self.badgeView.backgroundColor = UIColor.from(scheme: .textBackground, variant: .light)
             
         case .unreadPing:
-            self.badgeView.backgroundColor = UIColor(scheme: .textBackground, variant: .light)
+            self.badgeView.backgroundColor = UIColor.from(scheme: .textBackground, variant: .light)
 
         case .missedCall:
-            self.badgeView.backgroundColor = UIColor(scheme: .textBackground, variant: .light)
+            self.badgeView.backgroundColor = UIColor.from(scheme: .textBackground, variant: .light)
 
         default:
             self.transparentIconView.image = .none

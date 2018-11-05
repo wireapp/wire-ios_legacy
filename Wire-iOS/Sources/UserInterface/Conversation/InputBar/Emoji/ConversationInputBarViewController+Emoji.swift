@@ -44,10 +44,10 @@ extension ConversationInputBarViewController {
         let color: UIColor
         if mode == .emojiInput {
             type = ZetaIconType.text
-            color = UIColor(scheme: .iconNormal)
+            color = UIColor.from(scheme: .iconNormal)
         } else {
             type = ZetaIconType.emoji
-            color = UIColor(scheme: .iconNormal)
+            color = UIColor.from(scheme: .iconNormal)
         }
 
         button.setIconColor(color, for: .normal)

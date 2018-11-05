@@ -252,7 +252,7 @@
         [self.backButton setTitle:title.uppercasedWithCurrentLocale forState:UIControlStateNormal];
 
         if (self.topViewController.preferredStatusBarStyle == UIStatusBarStyleDefault) {
-            self.backButton.tintColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorGraphite];
+            self.backButton.tintColor = [UIColor graphite];
         } else {
             self.backButton.tintColor = [UIColor whiteColor];
         }

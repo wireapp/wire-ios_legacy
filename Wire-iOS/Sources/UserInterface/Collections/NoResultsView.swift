@@ -30,8 +30,8 @@ import Cartography
     }
     
     public var placeholderColor: UIColor {
-        let backgroundColor = UIColor(scheme: .background)
-        let placeholderColor = backgroundColor.mix(UIColor(scheme: .textForeground), amount: 0.16)
+        let backgroundColor = UIColor.from(scheme: .background)
+        let placeholderColor = backgroundColor.mix(UIColor.from(scheme: .textForeground), amount: 0.16)
         return placeholderColor!
     }
     

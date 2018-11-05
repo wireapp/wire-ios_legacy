@@ -23,7 +23,7 @@ final class InviteButton: IconButton {
     init(variant: ColorSchemeVariant = ColorScheme.default.variant) {
         super.init(frame: .zero)
         
-        setTitleColor(UIColor(scheme: .textForeground, variant: variant), for: .normal)
+        setTitleColor(UIColor.from(scheme: .textForeground, variant: variant), for: .normal)
         adjustsTitleWhenHighlighted = true
         setBackgroundImageColor(.init(red: 0.612, green: 0.655, blue: 0.686, alpha: 0.2), for: .normal)
         clipsToBounds = true

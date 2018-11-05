@@ -123,11 +123,11 @@ private let zmLog = ZMSLog(tag: "UI")
             self.audioPreviewView.color = color
         }
         
-        topContainerView.backgroundColor = UIColor(scheme: .background)
-        bottomContainerView.backgroundColor = UIColor(scheme: .background)
+        topContainerView.backgroundColor = UIColor.from(scheme: .background)
+        bottomContainerView.backgroundColor = UIColor.from(scheme: .background)
         
-        topSeparator.backgroundColor = UIColor(scheme: .separator)
-        rightSeparator.backgroundColor = UIColor(scheme: .separator)
+        topSeparator.backgroundColor = UIColor.from(scheme: .separator)
+        rightSeparator.backgroundColor = UIColor.from(scheme: .separator)
         
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(topContainerTapped))
         topContainerView.addGestureRecognizer(tapRecognizer)
@@ -138,15 +138,15 @@ private let zmLog = ZMSLog(tag: "UI")
         
         timeLabel.accessibilityLabel = "audioRecorderTimeLabel"
         timeLabel.font = FontSpec(.small, .none).font!
-        timeLabel.textColor = UIColor(scheme: .textForeground)
+        timeLabel.textColor = UIColor.from(scheme: .textForeground)
         
         topTooltipLabel.text = "conversation.input_bar.audio_message.tooltip.pull_send".localized.uppercased()
         topTooltipLabel.accessibilityLabel = "audioRecorderTopTooltipLabel"
         topTooltipLabel.font = FontSpec(.small, .none).font!
-        topTooltipLabel.textColor = UIColor(scheme: .textDimmed)
+        topTooltipLabel.textColor = UIColor.from(scheme: .textDimmed)
         
         cancelButton.setIcon(.cancel, with: .tiny, for: [])
-        cancelButton.setIconColor(UIColor(scheme: .textForeground), for: .normal)
+        cancelButton.setIconColor(UIColor.from(scheme: .textForeground), for: .normal)
         cancelButton.addTarget(self, action: #selector(cancelButtonPressed(_:)), for: .touchUpInside)
         cancelButton.accessibilityLabel = "audioRecorderCancel"
         updateRecordingState(recordingState)

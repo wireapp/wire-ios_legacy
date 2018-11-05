@@ -54,7 +54,7 @@ final class TextMessageMentionsTests: CoreDataSnapshotTestCase {
         NSAttributedString.invalidateMarkdownStyle()
         NSAttributedString.invalidateParagraphStyle()
 
-        snapshotBackgroundColor = UIColor(scheme: .contentBackground)
+        snapshotBackgroundColor = UIColor.from(scheme: .contentBackground)
         accentColor = .strongBlue
         sut = TextMessageCell(style: .default, reuseIdentifier: name)
         sut.layer.speed = 0

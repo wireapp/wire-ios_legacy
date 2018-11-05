@@ -48,7 +48,6 @@
 #import "Analytics.h"
 #import "AppDelegate.h"
 #import "MediaPlaybackManager.h"
-#import "UIColor+WR_ColorScheme.h"
 #import "MessagePresenter.h"
 #import "UIViewController+WR_Additions.h"
 

@@ -94,7 +94,7 @@ final public class ConversationCreationValues {
         super.viewDidLoad()
         Analytics.shared().tagLinearGroupOpened(with: self.source)
 
-        view.backgroundColor = UIColor(scheme: .contentBackground, variant: colorSchemeVariant)
+        view.backgroundColor = UIColor.from(scheme: .contentBackground, variant: colorSchemeVariant)
         title = "conversation.create.group_name.title".localized.uppercased()
         
         setupNavigationBar()
@@ -123,7 +123,7 @@ final public class ConversationCreationValues {
 
     private func setupViews() {
         mainViewContainer.translatesAutoresizingMaskIntoConstraints = false
-        navigationBarBackgroundView.backgroundColor = UIColor(scheme: .barBackground, variant: colorSchemeVariant)
+        navigationBarBackgroundView.backgroundColor = UIColor.from(scheme: .barBackground, variant: colorSchemeVariant)
         mainViewContainer.addSubview(navigationBarBackgroundView)
         
         textField = SimpleTextField()
@@ -148,7 +148,7 @@ final public class ConversationCreationValues {
         [toggleSubtitleLabel, textFieldSubtitleLabel].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             $0.font = .preferredFont(forTextStyle: .footnote)
-            $0.textColor = UIColor(scheme: .textDimmed)
+            $0.textColor = UIColor.from(scheme: .textDimmed)
         }
         
         toggleSubtitleLabel.text = "conversation.create.toggle.subtitle".localized
@@ -169,7 +169,7 @@ final public class ConversationCreationValues {
     }
 
     private func setupNavigationBar() {
-        self.navigationController?.navigationBar.tintColor = UIColor(scheme: .textForeground, variant: colorSchemeVariant)
+        self.navigationController?.navigationBar.tintColor = UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)
         self.navigationController?.navigationBar.titleTextAttributes = DefaultNavigationBar.titleTextAttributes(for: colorSchemeVariant)
         
         if navigationController?.viewControllers.count ?? 0 <= 1 {

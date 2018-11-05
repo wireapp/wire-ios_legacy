@@ -64,10 +64,10 @@ extension InviteContactsViewController {
         tableView?.sectionIndexBackgroundColor = .clear
         tableView?.sectionIndexColor = .accent()
 
-        bottomContainerSeparatorView?.backgroundColor = UIColor(scheme: .separator, variant: .dark)
-        bottomContainerView?.backgroundColor = UIColor(scheme: .searchBarBackground, variant: .dark)
+        bottomContainerSeparatorView?.backgroundColor = UIColor.from(scheme: .separator, variant: .dark)
+        bottomContainerView?.backgroundColor = UIColor.from(scheme: .searchBarBackground, variant: .dark)
 
-        titleLabel?.textColor = UIColor(scheme: .textForeground, variant: .dark)
+        titleLabel?.textColor = UIColor.from(scheme: .textForeground, variant: .dark)
     }
 
     @objc(inviteUser:fromView:)

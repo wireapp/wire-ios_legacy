@@ -40,11 +40,11 @@ import Cartography
     fileprivate var heightConstraint: NSLayoutConstraint?
     fileprivate var widthConstraint: NSLayoutConstraint?
     
-    let darkColor = UIColor(scheme: .textForeground)
-    let brightColor = UIColor(scheme: .textBackground)
-    let greenColor = ZMAccentColor.strongLimeGreen.color;
-    let grayColor = UIColor(scheme: .audioButtonOverlay)
-    let superviewColor = UIColor(scheme: .background)
+    let darkColor = UIColor.from(scheme: .textForeground)
+    let brightColor = UIColor.from(scheme: .textBackground)
+    let greenColor = UIColor.strongLimeGreen;
+    let grayColor = UIColor.from(scheme: .audioButtonOverlay)
+    let superviewColor = UIColor.from(scheme: .background)
     
     let audioButton = IconButton()
     let playButton = IconButton()

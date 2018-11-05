@@ -41,7 +41,7 @@ final class ConversationCellTests: XCTestCase {
         let sut = ConversationCell(style: .default, reuseIdentifier: nil)
 
         // THEN
-        XCTAssertEqual(sut.burstTimestampView.label.textColor, UIColor(scheme: .textForeground, variant:.light))
+        XCTAssertEqual(sut.burstTimestampView.label.textColor, UIColor.from(scheme: .textForeground, variant:.light))
     }
 
     func testThatBurstTimestampViewColorIsCorrectInDarkTheme() {
@@ -50,7 +50,7 @@ final class ConversationCellTests: XCTestCase {
         let sut = ConversationCell(style: .default, reuseIdentifier: nil)
 
         // THEN
-        XCTAssertEqual(sut.burstTimestampView.label.textColor, UIColor(scheme: .textForeground, variant:.dark))
+        XCTAssertEqual(sut.burstTimestampView.label.textColor, UIColor.from(scheme: .textForeground, variant:.dark))
     }
 
     func testConversationCellIsNotRetainedAfterTimerIsScheduled() {

@@ -57,9 +57,9 @@ public protocol TextSearchInputViewDelegate: class {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        backgroundColor = UIColor(scheme: .barBackground)
+        backgroundColor = UIColor.from(scheme: .barBackground)
         
-        iconView.image = UIImage(for: .search, iconSize: .tiny, color: UIColor(scheme: .textForeground))
+        iconView.image = UIImage(for: .search, iconSize: .tiny, color: UIColor.from(scheme: .textForeground))
         iconView.contentMode = .center
         
         searchInput.delegate = self
@@ -68,22 +68,22 @@ public protocol TextSearchInputViewDelegate: class {
         searchInput.accessibilityIdentifier = "search input"
         searchInput.keyboardAppearance = ColorScheme.default.keyboardAppearance
         searchInput.layer.cornerRadius = 4
-        searchInput.backgroundColor = UIColor(scheme: .tokenFieldBackground)
+        searchInput.backgroundColor = UIColor.from(scheme: .tokenFieldBackground)
         searchInput.textContainerInset = UIEdgeInsets(top: 10, left: 40, bottom: 10, right: 8)
         searchInput.font = .normalFont
-        searchInput.textColor = .textForeground
+        searchInput.textColor = .from(scheme: .textForeground)
         
         placeholderLabel.textAlignment = .natural
         placeholderLabel.isAccessibilityElement = false
         placeholderLabel.font = .smallRegularFont
-        placeholderLabel.textColor = .textDimmed
+        placeholderLabel.textColor = .from(scheme: .textDimmed)
 
         cancelButton.setIcon(.clearInput, with: .tiny, for: .normal)
         cancelButton.addTarget(self, action: #selector(TextSearchInputView.onCancelButtonTouchUpInside(_:)), for: .touchUpInside)
         cancelButton.isHidden = true
         cancelButton.accessibilityIdentifier = "cancel search"
 
-        spinner.color = UIColor(scheme: .textDimmed, variant: .light)
+        spinner.color = UIColor.from(scheme: .textDimmed, variant: .light)
         spinner.iconSize = .tiny
         [iconView, searchInput, cancelButton, placeholderLabel, spinner].forEach(self.addSubview)
 

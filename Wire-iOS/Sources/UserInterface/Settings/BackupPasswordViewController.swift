@@ -89,10 +89,10 @@ final class BackupPasswordViewController: UIViewController {
     }
 
     private func setupViews() {
-        view.backgroundColor = UIColor(scheme: .contentBackground, variant: .light)
+        view.backgroundColor = UIColor.from(scheme: .contentBackground, variant: .light)
         
         subtitleLabel.numberOfLines = 0
-        subtitleLabel.textColor = UIColor(scheme: .textDimmed, variant: .light)
+        subtitleLabel.textColor = UIColor.from(scheme: .textDimmed, variant: .light)
         [passwordView, subtitleLabel].forEach {
             view.addSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
@@ -119,10 +119,10 @@ final class BackupPasswordViewController: UIViewController {
     }
     
     private func setupNavigationBar() {
-        navigationController?.navigationBar.backgroundColor = UIColor(scheme: .barBackground, variant: .light)
-        navigationController?.navigationBar.setBackgroundImage(.singlePixelImage(with: UIColor(scheme: .barBackground, variant: .light)), for: .default)
-        navigationController?.navigationBar.tintColor = UIColor(scheme: .textForeground, variant: .light)
-        navigationController?.navigationBar.barTintColor = UIColor(scheme: .textForeground, variant: .light)
+        navigationController?.navigationBar.backgroundColor = UIColor.from(scheme: .barBackground, variant: .light)
+        navigationController?.navigationBar.setBackgroundImage(.singlePixelImage(with: UIColor.from(scheme: .barBackground, variant: .light)), for: .default)
+        navigationController?.navigationBar.tintColor = UIColor.from(scheme: .textForeground, variant: .light)
+        navigationController?.navigationBar.barTintColor = UIColor.from(scheme: .textForeground, variant: .light)
         navigationController?.navigationBar.titleTextAttributes = DefaultNavigationBar.titleTextAttributes(for: .light)
         
         title = "self.settings.history_backup.password.title".localized.uppercased()
