@@ -55,11 +55,21 @@ class UserSearchResultsViewController: UIViewController, KeyboardCollapseObserve
     private var collectionViewHeight: NSLayoutConstraint?
     private let rowHeight: CGFloat = 56.0
     private var isKeyboardCollapsedFirstCalled = true
-    private var collectionViewSelectedIndex: Int? = .none {
-        didSet {
-            clampCollectionViewSelectedIndex()
+
+    private var _collectionViewSelectedIndex : Int? = .none
+    private var collectionViewSelectedIndex: Int? {
+        get{
+            return _collectionViewSelectedIndex
+        }
+        set{
+            if let newValue = newValue {
+                self._collectionViewSelectedIndex = min(searchResults.count - 1, max(0, newValue))
+            } else {
+                _collectionViewSelectedIndex = newValue
+            }
         }
     }
+    
     public private(set) var isKeyboardCollapsed: Bool = true {
         didSet {
             guard oldValue != isKeyboardCollapsed || isKeyboardCollapsedFirstCalled else { return }
