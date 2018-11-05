@@ -166,7 +166,7 @@ extension UITableView {
         register(ConversationMessageCellTableViewAdapter<C>.self, forCellReuseIdentifier: reuseIdentifier)
     }
 
-    func dequeueConversationCell<C: ConversationMessageCellDescription>(for type: C.Type, description: C, for indexPath: IndexPath) -> UITableViewCell {
+    func dequeueConversationCell<C: ConversationMessageCellDescription>(with description: C, for indexPath: IndexPath) -> ConversationMessageCellTableViewAdapter<C> {
         let reuseIdentifier = String(describing: C.View.self)
 
         let cell = dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as Any as! ConversationMessageCellTableViewAdapter<C>

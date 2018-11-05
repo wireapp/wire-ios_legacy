@@ -126,7 +126,7 @@ class ConversationReplyContentView: UIView {
     }
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        backgroundColor = .red
+        backgroundColor = UIColor(rgb: 0x33373A, alpha: 0.4)
     }
 
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -156,6 +156,9 @@ class ConversationReplyCell: UIView, ConversationMessageCell, ConversationReplyC
 
     let contentView: ConversationReplyContentView
     var container: ReplyRoundCornersView
+
+    weak var delegate: ConversationCellDelegate?
+    weak var message: ZMConversationMessage?
 
     override init(frame: CGRect) {
         contentView = ConversationReplyContentView()
@@ -190,7 +193,7 @@ class ConversationReplyCell: UIView, ConversationMessageCell, ConversationReplyC
     }
 
     func conversationReplyContentViewDidTapOriginalMessage() {
-        print(">> Open original message")
+        delegate?.conversationCell?(self, didSelect: .openQuote, for: message)
     }
 
 }
@@ -255,6 +258,13 @@ class ConversationReplyCellDescription: ConversationMessageCellDescription {
         }
 
         configuration = View.Configuration(showDetails: !isUnavailable, senderName: senderName, timestamp: timestamp, content: content)
+    }
+
+    func makeCell(for tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueConversationCell(with: self, for: indexPath)
+        cell.cellView.delegate = self.delegate
+        cell.cellView.message = self.message
+        return cell
     }
 
 }
