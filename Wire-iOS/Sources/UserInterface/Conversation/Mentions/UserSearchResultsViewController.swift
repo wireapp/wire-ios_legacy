@@ -69,7 +69,7 @@ class UserSearchResultsViewController: UIViewController, KeyboardCollapseObserve
             }
         }
     }
-    
+
     public private(set) var isKeyboardCollapsed: Bool = true {
         didSet {
             guard oldValue != isKeyboardCollapsed || isKeyboardCollapsedFirstCalled else { return }
@@ -214,12 +214,6 @@ extension UserSearchResultsViewController: UserList {
         let bestSuggestion = users[index]
 
         return bestSuggestion
-    }
-
-    func clampCollectionViewSelectedIndex() {
-        guard let collectionViewSelectedIndex = self.collectionViewSelectedIndex else { return }
-
-        self.collectionViewSelectedIndex = min(searchResults.count - 1, max(0, collectionViewSelectedIndex))
     }
 
     func selectNextUser() {
