@@ -321,7 +321,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     
     _searchQueries = searchQueries;
     self.conversationMessageWindowTableViewAdapter.searchQueries = self.searchQueries;
-    [self.conversationMessageWindowTableViewAdapter reconfigureVisibleCellsWithDeletedIndexPaths:nil];
+//    [self.conversationMessageWindowTableViewAdapter reconfigureVisibleCellsWithDeletedIndexPaths:nil]; // TODO jacob what was this achieving?
 }
 
 #pragma mark - Get/set
@@ -750,13 +750,14 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
         
         // If this cell is already selected, deselect it.
         self.conversationMessageWindowTableViewAdapter.selectedMessage  = nil;
+        [self.conversationMessageWindowTableViewAdapter deselectWithIndexPath:indexPath];
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
-        
-        // Make table view to update cells with animation
-        [tableView beginUpdates];
-        [tableView endUpdates];
     } else {
+        if (tableView.indexPathForSelectedRow != nil) {
+            [self.conversationMessageWindowTableViewAdapter deselectWithIndexPath:tableView.indexPathForSelectedRow];
+        }
         self.conversationMessageWindowTableViewAdapter.selectedMessage = message;
+        [self.conversationMessageWindowTableViewAdapter selectWithIndexPath:indexPath];
         selectedIndexPath = indexPath;
     }
     
