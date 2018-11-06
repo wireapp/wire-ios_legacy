@@ -217,7 +217,7 @@ extension UserSearchResultsViewController: UserList {
 
         self.collectionViewSelectedIndex = collectionViewSelectedIndex + 1
 
-        collectionView.reloadData()
+        updateHighlightedItem()
     }
 
     func selectPreviousUser() {
@@ -225,7 +225,15 @@ extension UserSearchResultsViewController: UserList {
 
         self.collectionViewSelectedIndex = collectionViewSelectedIndex - 1
 
+        updateHighlightedItem()
+    }
+
+    func updateHighlightedItem() {
         collectionView.reloadData()
+
+        guard let collectionViewSelectedIndex = collectionViewSelectedIndex else { return }
+
+        collectionView.scrollToItem(at: IndexPath(item: collectionViewSelectedIndex, section: 0), at: .centeredVertically, animated: true)
     }
 
     var users: [UserType] {
