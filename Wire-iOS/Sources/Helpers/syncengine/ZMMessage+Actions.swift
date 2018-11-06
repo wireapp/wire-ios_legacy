@@ -43,7 +43,9 @@ extension ZMConversationMessage {
         guard let conversation = self.conversation else {
             return false
         }
-        return !isEphemeral && conversation.isSelfAnActiveMember && (isText || isImage || isLocation || isFile)
+
+        let isSent = self.deliveryState == .delivered || self.deliveryState == .sent
+        return !isEphemeral && conversation.isSelfAnActiveMember && isSent && (isText || isImage || isLocation || isFile)
     }
 
     /// Wether it is possible to download the message content.
