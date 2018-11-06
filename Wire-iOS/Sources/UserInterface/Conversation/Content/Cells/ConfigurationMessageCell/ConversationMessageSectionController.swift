@@ -298,7 +298,9 @@ extension IndexSet {
     // MARK: - Changes
 
     private func startObservingChanges(for message: ZMConversationMessage) {
-        changeObserver = MessageChangeInfo.add(observer: self, for: message, userSession: ZMUserSession.shared()!)
+        if let userSession = ZMUserSession.shared() {
+            changeObserver = MessageChangeInfo.add(observer: self, for: message, userSession: userSession)
+        }
     }
 
     func messageDidChange(_ changeInfo: MessageChangeInfo) {

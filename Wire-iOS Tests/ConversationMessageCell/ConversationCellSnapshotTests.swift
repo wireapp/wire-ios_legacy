@@ -30,7 +30,6 @@ class ConversationCellSnapshotTests: CoreDataSnapshotTestCase {
 
     override func setUp() {
         super.setUp()
-        section = ConversationMessageSectionController()
     }
 
     override func tearDown() {
