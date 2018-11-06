@@ -54,7 +54,7 @@ struct CallInfoTestFixture {
             variant: .light,
             disableIdleTimer: false,
             cameraType: .front,
-            networkCondition: .normal
+            networkQuality: .normal
         )
     }
 
@@ -76,7 +76,7 @@ struct CallInfoTestFixture {
             variant: .light,
             disableIdleTimer: false,
             cameraType: .front,
-            networkCondition: .normal
+            networkQuality: .normal
         )
     }
 
@@ -98,7 +98,7 @@ struct CallInfoTestFixture {
             variant: .light,
             disableIdleTimer: false,
             cameraType: .front,
-            networkCondition: .normal
+            networkQuality: .normal
         )
     }
 
@@ -120,7 +120,7 @@ struct CallInfoTestFixture {
             variant: .light,
             disableIdleTimer: false,
             cameraType: .front,
-            networkCondition: .normal
+            networkQuality: .normal
         )
     }
 
@@ -142,7 +142,7 @@ struct CallInfoTestFixture {
             variant: .light,
             disableIdleTimer: false,
             cameraType: .front,
-            networkCondition: .normal
+            networkQuality: .normal
         )
     }
 
@@ -164,7 +164,7 @@ struct CallInfoTestFixture {
             variant: .light,
             disableIdleTimer: false,
             cameraType: .front,
-            networkCondition: .normal
+            networkQuality: .normal
         )
     }
 
@@ -186,7 +186,7 @@ struct CallInfoTestFixture {
             variant: .light,
             disableIdleTimer: false,
             cameraType: .front,
-            networkCondition: .normal
+            networkQuality: .normal
         )
     }
 
@@ -208,7 +208,7 @@ struct CallInfoTestFixture {
             variant: .light,
             disableIdleTimer: false,
             cameraType: .front,
-            networkCondition: .poor
+            networkQuality: .poor
         )
     }
 
@@ -232,7 +232,7 @@ struct CallInfoTestFixture {
             variant: .light,
             disableIdleTimer: true,
             cameraType: .front,
-            networkCondition: .normal
+            networkQuality: .normal
         )
     }
 
@@ -254,7 +254,7 @@ struct CallInfoTestFixture {
             variant: .light,
             disableIdleTimer: true,
             cameraType: .front,
-            networkCondition: .normal
+            networkQuality: .normal
         )
     }
 
@@ -276,7 +276,7 @@ struct CallInfoTestFixture {
             variant: .light,
             disableIdleTimer: true,
             cameraType: .front,
-            networkCondition: .normal
+            networkQuality: .normal
         )
     }
 
@@ -298,7 +298,7 @@ struct CallInfoTestFixture {
             variant: .light,
             disableIdleTimer: true,
             cameraType: .front,
-            networkCondition: .normal
+            networkQuality: .normal
         )
     }
 
@@ -320,7 +320,7 @@ struct CallInfoTestFixture {
             variant: .light,
             disableIdleTimer: true,
             cameraType: .front,
-            networkCondition: .normal
+            networkQuality: .normal
         )
     }
 
@@ -342,7 +342,7 @@ struct CallInfoTestFixture {
             variant: .light,
             disableIdleTimer: true,
             cameraType: .front,
-            networkCondition: .normal
+            networkQuality: .normal
         )
     }
 
@@ -364,7 +364,7 @@ struct CallInfoTestFixture {
             variant: .light,
             disableIdleTimer: true,
             cameraType: .front,
-            networkCondition: .normal
+            networkQuality: .normal
         )
     }
 
@@ -388,7 +388,7 @@ struct CallInfoTestFixture {
             variant: .light,
             disableIdleTimer: false,
             cameraType: .front,
-            networkCondition: .normal
+            networkQuality: .normal
         )
     }
 
@@ -410,7 +410,7 @@ struct CallInfoTestFixture {
             variant: .light,
             disableIdleTimer: false,
             cameraType: .front,
-            networkCondition: .normal
+            networkQuality: .normal
         )
     }
 
@@ -432,7 +432,7 @@ struct CallInfoTestFixture {
             variant: .light,
             disableIdleTimer: false,
             cameraType: .front,
-            networkCondition: .normal
+            networkQuality: .normal
         )
     }
 
@@ -454,7 +454,7 @@ struct CallInfoTestFixture {
             variant: .light,
             disableIdleTimer: false,
             cameraType: .front,
-            networkCondition: .normal
+            networkQuality: .normal
         )
     }
 
@@ -476,7 +476,7 @@ struct CallInfoTestFixture {
             variant: .light,
             disableIdleTimer: true,
             cameraType: .front,
-            networkCondition: .normal
+            networkQuality: .normal
         )
     }
 
@@ -498,7 +498,7 @@ struct CallInfoTestFixture {
             variant: .light,
             disableIdleTimer: false,
             cameraType: .front,
-            networkCondition: .normal
+            networkQuality: .normal
         )
     }
 
@@ -520,7 +520,7 @@ struct CallInfoTestFixture {
             variant: .light,
             disableIdleTimer: false,
             cameraType: .front,
-            networkCondition: .normal
+            networkQuality: .normal
         )
     }
 
@@ -544,7 +544,7 @@ struct CallInfoTestFixture {
             variant: .light,
             disableIdleTimer: true,
             cameraType: .front,
-            networkCondition: .normal
+            networkQuality: .normal
         )
     }
 
@@ -566,7 +566,7 @@ struct CallInfoTestFixture {
             variant: .light,
             disableIdleTimer: true,
             cameraType: .front,
-            networkCondition: .normal
+            networkQuality: .normal
         )
     }
 
@@ -588,7 +588,7 @@ struct CallInfoTestFixture {
             variant: .light,
             disableIdleTimer: true,
             cameraType: .front,
-            networkCondition: .normal
+            networkQuality: .normal
         )
     }
 
@@ -610,7 +610,7 @@ struct CallInfoTestFixture {
             variant: .light,
             disableIdleTimer: true,
             cameraType: .front,
-            networkCondition: .poor
+            networkQuality: .poor
         )
     }
 
@@ -632,7 +632,7 @@ struct CallInfoTestFixture {
             variant: .light,
             disableIdleTimer: true,
             cameraType: .front,
-            networkCondition: .normal
+            networkQuality: .normal
         )
     }
 
@@ -655,7 +655,7 @@ struct CallInfoTestFixture {
             variant: .light,
             disableIdleTimer: true,
             cameraType: .front,
-            networkCondition: .normal
+            networkQuality: .normal
         )
     }
 
@@ -678,7 +678,7 @@ struct CallInfoTestFixture {
             variant: .light,
             disableIdleTimer: true,
             cameraType: .front,
-            networkCondition: .normal
+            networkQuality: .normal
         )
     }
 
@@ -701,7 +701,7 @@ struct CallInfoTestFixture {
             variant: .light,
             disableIdleTimer: true,
             cameraType: .front,
-            networkCondition: .normal
+            networkQuality: .normal
         )
     }
 

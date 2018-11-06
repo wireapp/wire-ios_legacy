@@ -26,7 +26,7 @@ final class MockVideoGridConfiguration: VideoGridConfiguration {
 
     var isMuted: Bool = false
 
-    var networkCondition: NetworkCondition = .normal
+    var networkQuality: NetworkQuality = .normal
 }
 
 final class VideoGridViewControllerSnapshotTests: ZMSnapshotTestCase {
@@ -66,10 +66,8 @@ final class VideoGridViewControllerSnapshotTests: ZMSnapshotTestCase {
     }
 
     func testForBadNetwork(){
-        recordMode = true
-        configuration.networkCondition = .poor
+        configuration.networkQuality = .poor
         createSut()
-
 
         sut.isCovered = false
         verify(view: sut.view)

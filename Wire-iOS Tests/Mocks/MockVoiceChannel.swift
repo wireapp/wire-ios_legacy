@@ -29,7 +29,7 @@ class MockVoiceChannel: NSObject, VoiceChannel {
     var mockIsVideoCall: Bool = false
     var mockCallParticipantState: CallParticipantState = .unconnected
     var mockVideoState: VideoState = .stopped
-    var mockNetworkCondition: NetworkCondition = .normal
+    var mockNetworkQuality: NetworkQuality = .normal
 
     required init(conversation: ZMConversation) {
         self.conversation = conversation
@@ -101,8 +101,8 @@ class MockVoiceChannel: NSObject, VoiceChannel {
         
     }
 
-    var networkCondition: NetworkCondition {
-        return mockNetworkCondition
+    var networkQuality: NetworkQuality {
+        return mockNetworkQuality
     }
     
     func setVideoCaptureDevice(_ device: CaptureDevice) throws {}
