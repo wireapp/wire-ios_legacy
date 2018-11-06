@@ -55,7 +55,7 @@ class MockVoiceChannel: NSObject, VoiceChannel {
         return "token"
     }
 
-    func addNetworkConditionObserver(_ observer: NetworkConditionObserver) -> Any {
+    func addNetworkQualityObserver(_ observer: NetworkQualityObserver) -> Any {
         return "token"
     }
     
