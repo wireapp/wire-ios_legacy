@@ -27,6 +27,11 @@ class ConversationReplyCellTests: CoreDataSnapshotTestCase {
         recordMode = true
     }
 
+    override func tearDown() {
+        super.tearDown()
+        defaultImageCache.cache.removeAllObjects()
+    }
+
     // MARK: - Basic Layout
 
     func testThatItRendersShortMessage_30() {
@@ -195,6 +200,7 @@ class ConversationReplyCellTests: CoreDataSnapshotTestCase {
 
         // THEN
         verifyInAllPhoneWidths(view: cell)
+        XCTFail("TODO: Fix wrong image loaded.")
     }
 
     func testThatItDisplaysSquareImage_52() {
@@ -209,6 +215,7 @@ class ConversationReplyCellTests: CoreDataSnapshotTestCase {
 
         // THEN
         verifyInAllPhoneWidths(view: cell)
+        XCTFail("TODO: Fix wrong image loaded.")
     }
 
     func testThatItDisplaysPanoImage_52() {
@@ -223,6 +230,7 @@ class ConversationReplyCellTests: CoreDataSnapshotTestCase {
 
         // THEN
         verifyInAllPhoneWidths(view: cell)
+        XCTFail("TODO: Fix wrong image loaded.")
     }
 
     func testThatItDisplaysVideoMessage_53() {
@@ -319,6 +327,22 @@ class ConversationReplyCellTests: CoreDataSnapshotTestCase {
 
         // WHEN
         let cell = makeCell(for: message)
+
+        // THEN
+        verifyInAllPhoneWidths(view: cell)
+    }
+
+    // MARK: - Highlighting
+
+    func testThatItHighlightsCellOnTouchInside_60() {
+        // GIVEN
+        let message = MockMessageFactory.textMessage(withText: "Message contents")!
+        message.sender = otherUser
+        message.conversation = otherUserConversation
+
+        // WHEN
+        let cell = makeCell(for: message)
+        cell.contentView.touchesBegan([], with: nil)
 
         // THEN
         verifyInAllPhoneWidths(view: cell)
