@@ -211,7 +211,7 @@ class ConversationListCellTests: CoreDataSnapshotTestCase {
 
     func testThatItRendersGroupConversationWithIncomingCall_SilencedExceptMentions() {
         let conversation = createGroupConversation()
-        conversation.mutedMessageTypes = .mentions
+        conversation.mutedMessageTypes = .mentionsAndReplies
         let icon = CallingMatcher.icon(for: .incoming(video: false, shouldRing: true, degraded: false), conversation: conversation)
         verify(conversation: conversation, icon: icon)
     }
@@ -237,7 +237,7 @@ class ConversationListCellTests: CoreDataSnapshotTestCase {
     
     func testThatItRendersOneOnOneConversationWithIncomingCall_SilencedExceptMentions() {
         let conversation = otherUserConversation
-        conversation?.mutedMessageTypes = .mentions
+        conversation?.mutedMessageTypes = .mentionsAndReplies
         let icon = CallingMatcher.icon(for: .incoming(video: false, shouldRing: true, degraded: false), conversation: conversation)
         verify(conversation: conversation, icon: icon)
     }
