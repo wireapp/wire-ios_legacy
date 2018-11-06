@@ -183,6 +183,65 @@ class ConversationReplyCellTests: CoreDataSnapshotTestCase {
         verifyInAllPhoneWidths(view: cell)
     }
 
+    func testThatItDisplaysPortraitImage_52() {
+        // GIVEN
+        let image = self.image(inTestBundleNamed: "unsplash_vertical_pano.jpg")
+        let message = MockMessageFactory.imageMessage(with: image)!
+        message.sender = otherUser
+        message.conversation = otherUserConversation
+
+        // WHEN
+        let cell = makeCell(for: message)
+
+        // THEN
+        verifyInAllPhoneWidths(view: cell)
+    }
+
+    func testThatItDisplaysSquareImage_52() {
+        // GIVEN
+        let image = self.image(inTestBundleNamed: "unsplash_square.jpg")
+        let message = MockMessageFactory.imageMessage(with: image)!
+        message.sender = otherUser
+        message.conversation = otherUserConversation
+
+        // WHEN
+        let cell = makeCell(for: message)
+
+        // THEN
+        verifyInAllPhoneWidths(view: cell)
+    }
+
+    func testThatItDisplaysPanoImage_52() {
+        // GIVEN
+        let image = self.image(inTestBundleNamed: "unsplash_pano.jpg")
+        let message = MockMessageFactory.imageMessage(with: image)!
+        message.sender = otherUser
+        message.conversation = otherUserConversation
+
+        // WHEN
+        let cell = makeCell(for: message)
+
+        // THEN
+        verifyInAllPhoneWidths(view: cell)
+    }
+
+    func testThatItDisplaysVideoMessage_53() {
+        // GIVEN
+        let image = self.image(inTestBundleNamed: "unsplash_square.jpg")
+        let message = MockMessageFactory.fileTransferMessage()!
+        message.backingFileMessageData!.filename = "Video.mp4"
+        message.backingFileMessageData!.mimeType = "video/mp4"
+        message.backingFileMessageData!.previewData = image.jpegData(compressionQuality: 1)
+        message.sender = otherUser
+        message.conversation = otherUserConversation
+
+        // WHEN
+        let cell = makeCell(for: message)
+
+        // THEN
+        verifyInAllPhoneWidths(view: cell)
+    }
+
     func testThatItDisplaysFileMessage_54() {
         // GIVEN
         let message = MockMessageFactory.fileTransferMessage()!
@@ -271,6 +330,7 @@ class ConversationReplyCellTests: CoreDataSnapshotTestCase {
         let cellDescription = ConversationReplyCellDescription(quotedMessage: message)
         let cell = ConversationReplyCell()
         cell.configure(with: cellDescription.configuration)
+        XCTAssertTrue(waitForGroupsToBeEmpty([defaultImageCache.dispatchGroup]))
         return cell
     }
 
