@@ -75,11 +75,6 @@ extension IndexSet {
 
     /// The message that is being presented.
     @objc var message: ZMConversationMessage
-//    @objc var message: ZMConversationMessage? {
-//        didSet {
-//            updateMessage(oldValue: oldValue)
-//        }
-//    }
 
     /// The delegate for cells injected by the list adapter.
     @objc weak var cellDelegate: ConversationCellDelegate?
@@ -111,7 +106,6 @@ extension IndexSet {
         allCellDescriptions.append(toolboxDescription)
         
         cellDescriptions = visibleDescriptions(in: context)
-//        startObservingChanges(for: message)
     }
     
     

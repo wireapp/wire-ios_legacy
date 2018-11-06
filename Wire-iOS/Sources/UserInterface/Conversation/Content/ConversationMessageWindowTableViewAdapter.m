@@ -31,10 +31,6 @@
 
 #import "Wire-Swift.h"
 
-//@interface ConversationMessageWindowTableViewAdapter (SectionDelegate) <ConversationMessageSectionControllerDelegate>
-//
-//@end
-
 @implementation ConversationMessageWindowTableViewAdapter
 
 - (instancetype)initWithTableView:(UITableView *)tableView messageWindow:(ZMConversationMessageWindow *)messageWindow
