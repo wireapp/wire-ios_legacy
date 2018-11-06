@@ -115,7 +115,7 @@ class ConversationSenderMessageCellDescription: ConversationMessageCellDescripti
     }
     
     func visible(in context: ConversationMessageContext, selected: Bool) -> Bool {
-        guard let message = message, !context.isSameSenderAsPrevious, message.sender != nil else {
+        guard let message = message, message.sender != nil else {
             return false
         }
         
@@ -123,6 +123,6 @@ class ConversationSenderMessageCellDescription: ConversationMessageCellDescripti
             return false
         }
         
-        return true
+        return !context.isSameSenderAsPrevious || message.updatedAt != nil
     }
 }
