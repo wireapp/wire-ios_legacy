@@ -30,7 +30,7 @@ enum NotificationResult: CaseIterable {
         case .everything:
             return MutedMessageTypes.none
         case .mentions:
-            return .nonMentions
+            return .regular
         case .nothing:
             return .all
         case .cancel:
