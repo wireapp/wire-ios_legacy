@@ -17,6 +17,7 @@
 //
 
 import XCTest
+import WireLinkPreview
 @testable import Wire
 
 class ConversationReplyCellTests: CoreDataSnapshotTestCase {
@@ -151,6 +152,36 @@ class ConversationReplyCellTests: CoreDataSnapshotTestCase {
     }
 
     // MARK: - Rich content
+
+    func testThatItDisplaysLinkPreviewAsText_51() {
+        // GIVEN
+        let url = "https://invis.io/ZFOMT5KEA3P#/ 326310650_Full-Mess"
+        let message = MockMessageFactory.textMessage(withText: "")!
+        message.backingTextMessageData?.linkPreview = LinkPreview(originalURLString: url, permanentURLString: url, resolvedURLString: url, offset: 0)
+        message.sender = otherUser
+        message.conversation = otherUserConversation
+
+        // WHEN
+        let cell = makeCell(for: message)
+
+        // THEN
+        verifyInAllPhoneWidths(view: cell)
+    }
+
+    func testThatItDisplaysLinkPreviewAsText_WithText_51() {
+        // GIVEN
+        let url = "https://invis.io/ZFOMT5KEA3P#/ 326310650_Full-Mess"
+        let message = MockMessageFactory.textMessage(withText: "There you go!  ")!
+        message.backingTextMessageData?.linkPreview = LinkPreview(originalURLString: url, permanentURLString: url, resolvedURLString: url, offset: 13)
+        message.sender = otherUser
+        message.conversation = otherUserConversation
+
+        // WHEN
+        let cell = makeCell(for: message)
+
+        // THEN
+        verifyInAllPhoneWidths(view: cell)
+    }
 
     func testThatItDisplaysLocationMessage_56() {
         // GIVEN

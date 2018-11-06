@@ -230,15 +230,7 @@ final class MessagePreviewView: UIView {
                                                          .foregroundColor: UIColor.textForeground]
         
         if let textMessageData = message.textMessageData {
-            let hasNoText = textMessageData.messageText == nil || textMessageData.messageText!.isEmpty
-            if hasNoText, let linkPreview = textMessageData.linkPreview {
-                let font = UIFont.systemFont(ofSize: 14, contentSizeCategory: .medium, weight: .light)
-                    contentTextView.attributedText = linkPreview.originalURLString && [.font: font,
-                                                                                       .foregroundColor: UIColor.textForeground]
-            }
-            else {
-                contentTextView.attributedText = NSAttributedString.formatForPreview(message: message.textMessageData!, inputMode: true)
-            }
+            contentTextView.attributedText = NSAttributedString.formatForPreview(message: textMessageData, inputMode: true)
         }
         else if let location = message.locationMessageData {
             

@@ -221,14 +221,8 @@ class ConversationReplyCellDescription: ConversationMessageCellDescription {
 
         switch quotedMessage {
         case let message? where message.isText:
-            let textMessageData = message.textMessageData!
-            let hasNoText = textMessageData.messageText == nil || textMessageData.messageText!.isEmpty
-            if hasNoText, let linkPreview = textMessageData.linkPreview {
-                let font = UIFont.systemFont(ofSize: 14, contentSizeCategory: .medium, weight: .light)
-                content = .text(linkPreview.originalURLString && [.font: font, .foregroundColor: UIColor.textForeground])
-            } else {
-                content = .text(NSAttributedString.formatForPreview(message: message.textMessageData!, inputMode: false))
-            }
+            let data = message.textMessageData!
+            content = .text(NSAttributedString.formatForPreview(message: data, inputMode: false))
 
         case let message? where message.isLocation:
             let location = message.locationMessageData!
