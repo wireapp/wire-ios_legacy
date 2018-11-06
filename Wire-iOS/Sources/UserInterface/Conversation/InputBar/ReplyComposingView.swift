@@ -56,7 +56,7 @@ fileprivate extension ZMConversationMessage {
 
 final class ReplyComposingView: UIView {
     let message: ZMConversationMessage
-    private let closeButton = IconButton()
+    internal let closeButton = IconButton()
     private let leftSideView = UIView(frame: .zero)
     private var messagePreviewContainer: ReplyRoundCornersView!
     private var previewView: UIView!
@@ -81,7 +81,9 @@ final class ReplyComposingView: UIView {
     }
     
     private func setupMessageObserver() {
-        observerToken = MessageChangeInfo.add(observer: self, for: message, userSession: ZMUserSession.shared()!)
+        if let userSession = ZMUserSession.shared() {
+            observerToken = MessageChangeInfo.add(observer: self, for: message, userSession: userSession)
+        }
     }
     
     private func buildAccessibilityLabel() -> String {

@@ -581,6 +581,7 @@
 		8756CA141D2EBE1F002E7CB7 /* LaunchImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8756CA131D2EBE1F002E7CB7 /* LaunchImageViewController.m */; };
 		8756FE341CEB62F800EF58A6 /* AudioMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8756FE331CEB62F800EF58A6 /* AudioMessageCell.swift */; };
 		875753D1211DC61C00A80F5E /* EmptySearchResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 875753D0211DC61C00A80F5E /* EmptySearchResultsView.swift */; };
+		8758CDB92191A7D60031BE0F /* ReplyComposingViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8758CDB82191A7D60031BE0F /* ReplyComposingViewTests.swift */; };
 		8759DB851E6B696C000A832D /* ImageMessageViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8759DB841E6B696C000A832D /* ImageMessageViewTests.swift */; };
 		8759E2C31FC82BDF008E17C9 /* Analytics+Registration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8759E2C21FC82BDF008E17C9 /* Analytics+Registration.swift */; };
 		8759E2C51FC86090008E17C9 /* UIAlertController+TOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8759E2C41FC86090008E17C9 /* UIAlertController+TOS.swift */; };
@@ -2171,6 +2172,7 @@
 		8756CA131D2EBE1F002E7CB7 /* LaunchImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LaunchImageViewController.m; sourceTree = "<group>"; };
 		8756FE331CEB62F800EF58A6 /* AudioMessageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioMessageCell.swift; sourceTree = "<group>"; };
 		875753D0211DC61C00A80F5E /* EmptySearchResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptySearchResultsView.swift; sourceTree = "<group>"; };
+		8758CDB82191A7D60031BE0F /* ReplyComposingViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplyComposingViewTests.swift; sourceTree = "<group>"; };
 		8759DB841E6B696C000A832D /* ImageMessageViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageMessageViewTests.swift; sourceTree = "<group>"; };
 		8759E2C21FC82BDF008E17C9 /* Analytics+Registration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Analytics+Registration.swift"; sourceTree = "<group>"; };
 		8759E2C41FC86090008E17C9 /* UIAlertController+TOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+TOS.swift"; sourceTree = "<group>"; };
@@ -6022,6 +6024,7 @@
 				EFB4FADE216B8C8800700505 /* ProfileDetailsViewControllerSnapshotTests.swift */,
 				EFC0C7F021778FB000380C4B /* SettingsTextCellSnapshotTests.swift */,
 				873F91942189BB3C00E1DBB9 /* MessageReplyPreviewViewTests.swift */,
+				8758CDB82191A7D60031BE0F /* ReplyComposingViewTests.swift */,
 			);
 			path = "Wire-iOS Tests";
 			sourceTree = "<group>";
@@ -8296,6 +8299,7 @@
 				87BEB0E01C734DA60094BFE9 /* MockLoader.m in Sources */,
 				EF883F8C215250B000B440CC /* AddParticipantsViewControllerSnapshotTests.swift in Sources */,
 				EF9C552720D2796A00D94EEB /* EphemeralTimeoutFormatterTests.swift in Sources */,
+				8758CDB92191A7D60031BE0F /* ReplyComposingViewTests.swift in Sources */,
 				87D7E1C520CACA820064C03D /* CallViewControllerTests.swift in Sources */,
 				F127BD5A1E2667170093B2F1 /* MockCollection.swift in Sources */,
 				EF6E3C7E208A0355003F6752 /* MockConversation+factory.swift in Sources */,
