@@ -20,6 +20,7 @@ import Foundation
 
 protocol ReplyComposingViewDelegate: NSObjectProtocol {
     func composingViewDidCancel(composingView: ReplyComposingView)
+    func composingViewWantsToShowMessage(composingView: ReplyComposingView, message: ZMConversationMessage)
 }
 
 fileprivate extension ZMConversationMessage {
@@ -55,7 +56,7 @@ fileprivate extension ZMConversationMessage {
 
 final class ReplyComposingView: UIView {
     let message: ZMConversationMessage
-    private let closeButton = IconButton()
+    internal let closeButton = IconButton()
     private let leftSideView = UIView(frame: .zero)
     private var messagePreviewContainer: ReplyRoundCornersView!
     private var previewView: UIView!
@@ -72,6 +73,7 @@ final class ReplyComposingView: UIView {
         setupMessageObserver()
         setupSubviews()
         setupConstraints()
+        setupGestureRecognizers()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -79,7 +81,9 @@ final class ReplyComposingView: UIView {
     }
     
     private func setupMessageObserver() {
-        observerToken = MessageChangeInfo.add(observer: self, for: message, userSession: ZMUserSession.shared()!)
+        if let userSession = ZMUserSession.shared() {
+            observerToken = MessageChangeInfo.add(observer: self, for: message, userSession: userSession)
+        }
     }
     
     private func buildAccessibilityLabel() -> String {
@@ -96,6 +100,7 @@ final class ReplyComposingView: UIView {
         backgroundColor = .init(scheme: .barBackground)
         
         previewView = message.replyPreview()!
+        previewView.isUserInteractionEnabled = false
         
         messagePreviewContainer = ReplyRoundCornersView(containedView: previewView)
         
@@ -135,12 +140,20 @@ final class ReplyComposingView: UIView {
         
         NSLayoutConstraint.activate(constraints)
     }
+    
+    private func setupGestureRecognizers() {
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(onTap))
+        addGestureRecognizer(tapGestureRecognizer)
+    }
+    
+    @objc func onTap() {
+        self.delegate?.composingViewWantsToShowMessage(composingView: self, message: message)
+    }
 }
 
 extension ReplyComposingView: ZMMessageObserver {
     func messageDidChange(_ changeInfo: MessageChangeInfo) {
-        // TODO: observe deletion correctly
-        if changeInfo.message.managedObjectContext == nil || changeInfo.message.isDeleted {
+        if changeInfo.message.hiddenInConversation != nil {
             self.delegate?.composingViewDidCancel(composingView: self)
         }
     }

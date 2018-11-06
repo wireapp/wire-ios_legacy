@@ -28,26 +28,43 @@ import UIKit
         self.message = message
     }
 
-    // MARK: - Rules
-
-    private let replyPredicate: (ZMConversationMessage) -> Bool = { message in
-        return !message.isSystem && !message.isKnock
-    }
-
     // MARK: - List of Actions
 
     static let allMessageActions: [UIMenuItem] = [
-        UIMenuItem(title: "Reply", action: #selector(ConversationCellActionController.replyToMessage))
+        UIMenuItem(title: "content.message.copy".localized, action: #selector(ConversationCellActionController.copyMessage)),
+        UIMenuItem(title: "content.message.reply".localized, action: #selector(ConversationCellActionController.quoteMessage)),
+        UIMenuItem(title: "message.menu.edit.title".localized, action: #selector(ConversationCellActionController.editMessage)),
+        UIMenuItem(title: "content.message.delete".localized, action: #selector(ConversationCellActionController.deleteMessage)),
+        UIMenuItem(title: "content.message.save".localized, action: #selector(ConversationCellActionController.saveMessage)),
+        UIMenuItem(title: "content.message.download".localized, action: #selector(ConversationCellActionController.downloadMessage)),
+        UIMenuItem(title: "content.message.forward".localized, action: #selector(ConversationCellActionController.forwardMessage)),
+        UIMenuItem(title: "content.message.like".localized, action: #selector(ConversationCellActionController.likeMessage)),
+        UIMenuItem(title: "content.message.unlike".localized, action: #selector(ConversationCellActionController.unlikeMessage)),
+        UIMenuItem(title: "content.message.resend".localized, action: #selector(ConversationCellActionController.resendMessage))
     ]
 
     func canPerformAction(_ selector: Selector) -> Bool {
         switch selector {
-        case #selector(UIResponder.copy(_:)):
+        case #selector(ConversationCellActionController.copyMessage):
             return message.canBeCopied
-        case #selector(UIResponder.delete(_:)):
-            return message.canBeDeleted
-        case #selector(ConversationCellActionController.replyToMessage):
+        case #selector(ConversationCellActionController.editMessage):
+            return message.canBeEdited
+        case #selector(ConversationCellActionController.quoteMessage):
             return message.canBeQuoted
+        case #selector(ConversationCellActionController.downloadMessage):
+            return message.canBeDownloaded
+        case #selector(ConversationCellActionController.saveMessage):
+            return message.canBeSaved
+        case #selector(ConversationCellActionController.forwardMessage):
+            return message.canBeForwarded
+        case #selector(ConversationCellActionController.likeMessage):
+            return message.canBeLiked && !message.liked
+        case #selector(ConversationCellActionController.unlikeMessage):
+            return message.canBeLiked && message.liked
+        case #selector(ConversationCellActionController.deleteMessage):
+            return message.canBeDeleted
+        case #selector(ConversationCellActionController.resendMessage):
+            return message.canBeResent
         default:
             return false
         }
@@ -59,16 +76,40 @@ import UIKit
         responder?.wants(toPerform: .copy, for: message)
     }
 
-    @objc func deleteMessage() {
-        responder?.wants(toPerform: .delete, for: message)
+    @objc func editMessage() {
+        responder?.wants(toPerform: .edit, for: message)
+    }
+    
+    @objc func quoteMessage() {
+        responder?.wants(toPerform: .reply, for: message)
     }
 
+    @objc func downloadMessage() {
+        responder?.wants(toPerform: .download, for: message)
+    }
+    
+    @objc func saveMessage() {
+        responder?.wants(toPerform: .save, for: message)
+    }
+
+    @objc func forwardMessage() {
+        responder?.wants(toPerform: .forward, for: message)
+    }
+    
     @objc func likeMessage() {
         responder?.wants(toPerform: .like, for: message)
     }
-
-    @objc func replyToMessage() {
-        responder?.wants(toPerform: .reply, for: message)
+    
+    @objc func unlikeMessage() {
+        responder?.wants(toPerform: .like, for: message)
+    }
+    
+    @objc func deleteMessage() {
+        responder?.wants(toPerform: .delete, for: message)
+    }
+    
+    @objc func resendMessage() {
+        responder?.wants(toPerform: .resend, for: message)
     }
 
 }

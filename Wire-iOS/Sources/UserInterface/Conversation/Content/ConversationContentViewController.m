@@ -607,8 +607,8 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 
 #pragma mark - Custom UI, utilities
 
-- (void)createMentionsResultsView {
-    
+- (void)createMentionsResultsView
+{    
     self.mentionsSearchResultsViewController = [[UserSearchResultsViewController alloc] init];
     self.mentionsSearchResultsViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
     // delegate here
@@ -631,7 +631,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
         return nil;
     }
     
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:messageIndex inSection:0];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:messageIndex];
     ConversationCell *cell = (ConversationCell *)[self.tableView cellForRowAtIndexPath:indexPath];
     return cell;
 }

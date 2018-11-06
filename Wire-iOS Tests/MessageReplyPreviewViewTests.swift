@@ -176,4 +176,11 @@ class MessageReplyPreviewViewTests: ZMSnapshotTestCase {
         
         verify(view: previewView.prepareForSnapshot())
     }
+    
+    func testDeallocation() {
+        let message = MockMessageFactory.textMessage(withText: "Lorem Ipsum Dolor Sit Amed.")!
+        self.verifyDeallocation {
+            return message.replyPreview()!
+        }
+    }
 }

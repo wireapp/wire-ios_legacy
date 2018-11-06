@@ -226,12 +226,12 @@ class ConversationReplyCellDescription: ConversationMessageCellDescription {
 
         case let message? where message.isLocation:
             let location = message.locationMessageData!
-            let imageIcon = NSTextAttachment.textAttachment(for: .location, with: .textForeground, and: .medium)!
+            let imageIcon = NSTextAttachment.textAttachment(for: .location, with: .textForeground)!
             let initialString = NSAttributedString(attachment: imageIcon) + "  " + (location.name ?? "conversation.input_bar.message_preview.location".localized).localizedUppercase
             content = .text(initialString && attributes)
 
         case let message? where message.isAudio:
-            let imageIcon = NSTextAttachment.textAttachment(for: .microphone, with: .textForeground, and: .medium)!
+            let imageIcon = NSTextAttachment.textAttachment(for: .microphone, with: .textForeground)!
             let initialString = NSAttributedString(attachment: imageIcon) + "  " + "conversation.input_bar.message_preview.audio".localized.localizedUppercase
             content = .text(initialString && attributes)
 
@@ -243,7 +243,7 @@ class ConversationReplyCellDescription: ConversationMessageCellDescription {
 
         case let message? where message.isFile:
             let fileData = message.fileMessageData!
-            let imageIcon = NSTextAttachment.textAttachment(for: .document, with: .textForeground, and: .medium)!
+            let imageIcon = NSTextAttachment.textAttachment(for: .document, with: .textForeground)!
             let initialString = NSAttributedString(attachment: imageIcon) + "  " + (fileData.filename ?? "conversation.input_bar.message_preview.file".localized).localizedUppercase
             content = .text(initialString && attributes)
 
