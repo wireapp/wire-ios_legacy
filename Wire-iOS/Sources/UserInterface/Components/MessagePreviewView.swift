@@ -236,7 +236,7 @@ final class MessagePreviewView: UIView {
         let attributes: [NSAttributedString.Key: Any] = [.font: UIFont.smallSemiboldFont,
                                                          .foregroundColor: UIColor.textForeground]
         
-        senderLabel.attributedText = ((message.sender?.displayName(in: message.conversation!) ?? "") && attributes) + self.editIcon()
+        senderLabel.attributedText = (message.senderName && attributes) + self.editIcon()
         
         if let textMessageData = message.textMessageData {
             let hasNoText = textMessageData.messageText == nil || textMessageData.messageText!.isEmpty
