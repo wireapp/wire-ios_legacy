@@ -56,6 +56,16 @@
     static func icon(for availability: Availability, with color: UIColor, and size: FontSize) -> NSTextAttachment? {
         guard availability != .none, let iconType = availability.iconType
             else { return nil }
-        return NSTextAttachment.textAttachment(for: iconType, with: color, and: size)
+        
+        let verticalCorrection: CGFloat
+        
+        switch size {
+        case .small:
+            verticalCorrection = -1
+        case .medium, .large, .normal:
+            verticalCorrection = 0
+        }
+        
+        return NSTextAttachment.textAttachment(for: iconType, with: color, iconSize: 10, verticalCorrection: verticalCorrection)
     }
 }

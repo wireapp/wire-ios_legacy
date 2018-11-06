@@ -151,8 +151,7 @@ final class ReplyComposingView: UIView {
 
 extension ReplyComposingView: ZMMessageObserver {
     func messageDidChange(_ changeInfo: MessageChangeInfo) {
-        // TODO: observe deletion correctly
-        if changeInfo.message.managedObjectContext == nil || changeInfo.message.isDeleted {
+        if changeInfo.message.hiddenInConversation != nil {
             self.delegate?.composingViewDidCancel(composingView: self)
         }
     }
