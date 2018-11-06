@@ -37,4 +37,12 @@ extension ConversationInputBarViewController: ReplyComposingViewDelegate {
     func composingViewWantsToShowMessage(composingView: ReplyComposingView, message: ZMConversationMessage) {
         self.delegate?.conversationInputBarViewControllerWants?(toShow: message)
     }
+    
+    @objc var isReplyingToMessage: Bool {
+        return replyingToMessage != nil
+    }
+    
+    @objc var isEditingMessage: Bool {
+        return editingMessage != nil
+    }
 }

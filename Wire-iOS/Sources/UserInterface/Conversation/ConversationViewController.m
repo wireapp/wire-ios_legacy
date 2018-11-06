@@ -737,9 +737,9 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self.inputBarController.sendController sendTextMessage:text mentions:mentions replyingToMessage:message];
 }
 
-- (BOOL)conversationInputBarViewControllerShouldBeginEditing:(ConversationInputBarViewController *)controller isEditingMessage:(BOOL)isEditing
+- (BOOL)conversationInputBarViewControllerShouldBeginEditing:(ConversationInputBarViewController *)controller
 {
-    if (! self.contentViewController.isScrolledToBottom && !isEditing) {
+    if (! self.contentViewController.isScrolledToBottom && !controller.isEditingMessage && !controller.isReplyingToMessage) {
         [self.contentViewController scrollToBottomAnimated:YES];
     }
     
