@@ -114,7 +114,7 @@ extension ConversationMessageWindowTableViewAdapter: UITableViewDataSource {
         
         sectionControllers.setObject(sectionController, forKey: message)
         
-        for description in sectionController.visibleCellDescriptions {
+        for description in sectionController.cellDescriptions {
             registerCellIfNeeded(description, in: tableView)
         }
         

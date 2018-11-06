@@ -58,6 +58,11 @@ extension IndexSet {
     @objc var visibleCellDescriptions: [AnyConversationMessageCellDescription] = []
     @objc var cellDescriptions: [AnyConversationMessageCellDescription] = []
     
+    /// The view descriptors in the order in which the tableview displays them.
+    var tableViewVisibleCellDescriptions: [AnyConversationMessageCellDescription] {
+        return useInvertedIndices ? visibleCellDescriptions.reversed() : visibleCellDescriptions
+    }
+    
     var context: ConversationMessageContext
     var layoutProperties: ConversationCellLayoutProperties
 
@@ -236,9 +241,9 @@ extension IndexSet {
         self.context = context
         tableView.beginUpdates()
         
-        let old = ZMOrderedSetState(orderedSet: NSOrderedSet(array: visibleCellDescriptions.map({ $0.baseType }).reversed()))
+        let old = ZMOrderedSetState(orderedSet: NSOrderedSet(array: tableViewVisibleCellDescriptions.map({ $0.baseType })))
         visibleCellDescriptions = visibleDescriptions(in: context)
-        let new = ZMOrderedSetState(orderedSet: NSOrderedSet(array: visibleCellDescriptions.map({ $0.baseType }).reversed()))
+        let new = ZMOrderedSetState(orderedSet: NSOrderedSet(array: tableViewVisibleCellDescriptions.map({ $0.baseType })))
         let change = ZMChangedIndexes(start: old, end: new, updatedState: new, moveType: .nsTableView)
         
         if let deleted = change?.deletedIndexes.indexPaths(in: sectionIndex) {
@@ -251,7 +256,7 @@ extension IndexSet {
         
         tableView.endUpdates()
         
-        for (index, description) in visibleCellDescriptions.reversed().enumerated() {
+        for (index, description) in tableViewVisibleCellDescriptions.enumerated() {
             if let cell = tableView.cellForRow(at: IndexPath(row: index, section: sectionIndex)) {
                 description.configure(cell: cell)
             }
@@ -281,26 +286,13 @@ extension IndexSet {
      */
 
     func makeCell(for tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
-        let description = cellDescription(at: indexPath.row)
+        let description = tableViewVisibleCellDescriptions[indexPath.row]
         description.delegate = self.cellDelegate
         description.message = self.message
         description.actionController = self.actionController
 
         let cell = description.makeCell(for: tableView, at: indexPath)
         return cell
-    }
-
-    /**
-     * Returns the cell description at the specified index, taking the upside down table into account.
-     * - parameter row: The raw row index as specified by the table.
-     */
-
-    func cellDescription(at row: Int) -> AnyConversationMessageCellDescription {
-        if useInvertedIndices {
-            return visibleCellDescriptions[(numberOfCells - 1) - row]
-        } else {
-            return visibleCellDescriptions[row]
-        }
     }
 
     // MARK: - Changes
