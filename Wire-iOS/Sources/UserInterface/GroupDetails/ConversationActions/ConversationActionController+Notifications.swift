@@ -22,7 +22,6 @@ enum NotificationResult: CaseIterable {
     case everything, mentionsAndReplies, nothing, cancel
     
     static var title: String {
-        // TODO: Need to include the conversation name
         return "meta.menu.configure_notification.dialog_message".localized
     }
     
@@ -78,7 +77,8 @@ enum NotificationResult: CaseIterable {
 extension ConversationActionController {
 
     func requestNotificationResult(for conversation: ZMConversation, handler: @escaping (NotificationResult) -> Void) {
-        let controller = UIAlertController(title: NotificationResult.title, message: nil, preferredStyle: .actionSheet)
+        let title = "\(conversation.displayName) • \(NotificationResult.title)"
+        let controller = UIAlertController(title: title, message: nil, preferredStyle: .actionSheet)
         NotificationResult.allCases.map { $0.action(for: conversation, handler: handler) }.forEach(controller.addAction)
         present(controller)
     }
