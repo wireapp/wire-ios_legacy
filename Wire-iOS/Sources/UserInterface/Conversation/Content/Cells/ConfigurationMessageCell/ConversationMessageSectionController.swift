@@ -133,7 +133,7 @@ import Foundation
     }
 
     func messageDidChange(_ changeInfo: MessageChangeInfo) {
-        sectionDelegate?.messageSectionController(self, didRequestRefreshForMessage: changeInfo.message)
+        sectionDelegate?.messageSectionController(self, didRequestRefreshForMessage: self.message!)
     }
 
 }

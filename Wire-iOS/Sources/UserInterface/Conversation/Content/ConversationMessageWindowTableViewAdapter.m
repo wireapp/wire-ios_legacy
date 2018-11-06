@@ -242,10 +242,11 @@
 {
     NSInteger section = [self.messageWindow.messages indexOfObject:message];
 
-    if (!section) {
+    if (section == NSNotFound) {
         return;
     }
 
+    [self.sectionControllers removeObjectForKey:message.nonce];
     [self.tableView reloadSections:[[NSIndexSet alloc] initWithIndex:section] withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
