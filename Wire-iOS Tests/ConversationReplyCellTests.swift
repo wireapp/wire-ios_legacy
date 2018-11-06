@@ -24,7 +24,6 @@ class ConversationReplyCellTests: CoreDataSnapshotTestCase {
 
     override func setUp() {
         super.setUp()
-        recordMode = true
     }
 
     override func tearDown() {
@@ -200,7 +199,6 @@ class ConversationReplyCellTests: CoreDataSnapshotTestCase {
 
         // THEN
         verifyInAllPhoneWidths(view: cell)
-        XCTFail("TODO: Fix wrong image loaded.")
     }
 
     func testThatItDisplaysSquareImage_52() {
@@ -215,7 +213,6 @@ class ConversationReplyCellTests: CoreDataSnapshotTestCase {
 
         // THEN
         verifyInAllPhoneWidths(view: cell)
-        XCTFail("TODO: Fix wrong image loaded.")
     }
 
     func testThatItDisplaysPanoImage_52() {
@@ -230,7 +227,6 @@ class ConversationReplyCellTests: CoreDataSnapshotTestCase {
 
         // THEN
         verifyInAllPhoneWidths(view: cell)
-        XCTFail("TODO: Fix wrong image loaded.")
     }
 
     func testThatItDisplaysVideoMessage_53() {
