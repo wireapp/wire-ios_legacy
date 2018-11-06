@@ -49,7 +49,6 @@ extension ZMConversationMessage {
         let shouldShowDate = fabs(date.timeIntervalSinceReferenceDate - Date().timeIntervalSinceReferenceDate) > oneDayInSeconds
         if shouldShowDate {
             return Message.shortDateTimeFormatter.string(from: date)
-//            return dateString + " " + timeString
         } else {
             return Message.shortTimeFormatter.string(from: date)
         }
@@ -60,7 +59,6 @@ extension ZMSystemMessageData {
 
     func callDurationString() -> String? {
         guard systemMessageType == .performedCall, duration > 0 else { return nil }
-        //        return  PerformedCallCell.callDurationFormatter.string(from: duration)
-        return nil
+        return Message.callDurationFormatter.string(from: duration)
     }
 }
