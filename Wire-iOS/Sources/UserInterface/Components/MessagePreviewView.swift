@@ -146,7 +146,7 @@ final class MessageThumbnailPreviewView: UIView {
             }
         }
         else if message.isVideo, let fileMessageData = message.fileMessageData {
-            let imageIcon = NSTextAttachment.textAttachment(for: .videoMessage, with: .textForeground)!
+            let imageIcon = NSTextAttachment.textAttachment(for: .videoCall, with: .textForeground)!
             let initialString = NSAttributedString(attachment: imageIcon) + "  " + "conversation.input_bar.message_preview.video".localized.localizedUppercase
             contentTextView.attributedText = initialString && attributes
             
