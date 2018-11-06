@@ -102,7 +102,7 @@ public class ShareViewController<D: ShareDestination, S: Shareable>: UIViewContr
     let tokenField = TokenField()
     let bottomSeparatorLine: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor(scheme: .separator)
+        view.backgroundColor = UIColor.from(scheme: .separator)
         return view
     }()
     

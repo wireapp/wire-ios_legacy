@@ -34,20 +34,20 @@ import UIKit
     
     func configure() {
         isTranslucent = false
-        tintColor = UIColor(scheme: .textForeground)
-        barTintColor = UIColor(scheme: .barBackground)
-        setBackgroundImage(UIImage.singlePixelImage(with: UIColor(scheme: .barBackground)), for: .default)
+        tintColor = UIColor.from(scheme: .textForeground)
+        barTintColor = UIColor.from(scheme: .barBackground)
+        setBackgroundImage(UIImage.singlePixelImage(with: UIColor.from(scheme: .barBackground)), for: .default)
         shadowImage = UIImage.singlePixelImage(with: UIColor.clear)
         titleTextAttributes = DefaultNavigationBar.titleTextAttributes(for: ColorScheme.default.variant)
         
         let backIndicatorInsets = UIEdgeInsets(top: 0, left: 4, bottom: 2.5, right: 0)
-        backIndicatorImage = UIImage(for: .backArrow, iconSize: .tiny, color: UIColor(scheme: .textForeground)).withInsets(backIndicatorInsets, backgroundColor: .clear)
+        backIndicatorImage = UIImage(for: .backArrow, iconSize: .tiny, color: UIColor.from(scheme: .textForeground)).withInsets(backIndicatorInsets, backgroundColor: .clear)
         backIndicatorTransitionMaskImage = UIImage(for: .backArrow, iconSize: .tiny, color: .black).withInsets(backIndicatorInsets, backgroundColor: .clear)
     }
     
     static func titleTextAttributes(for variant: ColorSchemeVariant) -> [NSAttributedString.Key : Any] {
         return [.font: UIFont.systemFont(ofSize: 11, weight: UIFont.Weight.semibold),
-                .foregroundColor: UIColor(scheme: .textForeground, variant: variant),
+                .foregroundColor: UIColor.from(scheme: .textForeground, variant: variant),
                 .baselineOffset: 1.0]
     }
     

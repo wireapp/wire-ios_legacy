@@ -48,12 +48,12 @@ final class GroupDetailsFooterView: UIView {
         [addButton, moreButton].forEach {
             addSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
-            $0.setIconColor(UIColor(scheme: .iconNormal), for: .normal)
-            $0.setIconColor(UIColor(scheme: .iconHighlighted), for: .highlighted)
-            $0.setIconColor(UIColor(scheme: .buttonFaded), for: .disabled)
-            $0.setTitleColor(UIColor(scheme: .iconNormal), for: .normal)
-            $0.setTitleColor(UIColor(scheme: .textDimmed), for: .highlighted)
-            $0.setTitleColor(UIColor(scheme: .buttonFaded), for: .disabled)
+            $0.setIconColor(UIColor.from(scheme: .iconNormal), for: .normal)
+            $0.setIconColor(UIColor.from(scheme: .iconHighlighted), for: .highlighted)
+            $0.setIconColor(UIColor.from(scheme: .buttonFaded), for: .disabled)
+            $0.setTitleColor(UIColor.from(scheme: .iconNormal), for: .normal)
+            $0.setTitleColor(UIColor.from(scheme: .textDimmed), for: .highlighted)
+            $0.setTitleColor(UIColor.from(scheme: .buttonFaded), for: .disabled)
             $0.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
         }
         
@@ -62,7 +62,7 @@ final class GroupDetailsFooterView: UIView {
         addButton.setTitle("participants.footer.add_title".localized.uppercased(), for: .normal)
         addButton.titleImageSpacing = 16
         addButton.titleLabel?.font = FontSpec(.small, .regular).font
-        backgroundColor = UIColor(scheme: .barBackground)
+        backgroundColor = UIColor.from(scheme: .barBackground)
         addButton.accessibilityIdentifier = "OtherUserMetaControllerLeftButton"
         moreButton.accessibilityIdentifier = "OtherUserMetaControllerRightButton"
     }

@@ -106,8 +106,8 @@ class SimpleTextField: UITextField, Themeable {
     
     func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
         keyboardAppearance = ColorScheme.keyboardAppearance(for: colorSchemeVariant)
-        textColor = UIColor(scheme: .textForeground, variant: colorSchemeVariant)
-        backgroundColor = UIColor(scheme: .barBackground, variant: colorSchemeVariant)
+        textColor = UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)
+        backgroundColor = UIColor.from(scheme: .barBackground, variant: colorSchemeVariant)
     }
 
     override func textRect(forBounds bounds: CGRect) -> CGRect {

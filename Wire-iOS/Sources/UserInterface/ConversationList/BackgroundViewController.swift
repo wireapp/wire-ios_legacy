@@ -159,7 +159,7 @@ final public class BackgroundViewController: UIViewController {
     }
     
     private func updateForAccentColor() {
-        setBackground(color: user.accentColorValue.color)
+        setBackground(color: UIColor(fromZMAccentColor: user.accentColorValue))
     }
     
     private func updateForColorScheme() {

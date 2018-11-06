@@ -25,6 +25,6 @@ extension ImageMessageCell {
         let showBorder = !isTransparent
 
         fullImageView.layer.borderWidth = showBorder ? UIScreen.hairline : 0
-        fullImageView.layer.borderColor = UIColor(scheme: .cellSeparator).cgColor
+        fullImageView.layer.borderColor = UIColor.from(scheme: .cellSeparator).cgColor
     }
 }

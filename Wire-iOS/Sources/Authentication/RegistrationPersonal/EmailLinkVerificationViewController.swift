@@ -68,7 +68,7 @@ class EmailLinkVerificationViewController: UIViewController, AuthenticationCoord
         resendInstructionsLabel.numberOfLines = 0
         resendInstructionsLabel.textAlignment = .center
         resendInstructionsLabel.font = .normalLightFont
-        resendInstructionsLabel.textColor = UIColor(scheme: .buttonFaded, variant: .dark)
+        resendInstructionsLabel.textColor = UIColor.from(scheme: .buttonFaded, variant: .dark)
         resendInstructionsLabel.text = "registration.verify_email.resend.instructions".localized
         resendInstructionsLabel.translatesAutoresizingMaskIntoConstraints = false
 

@@ -60,9 +60,9 @@ public protocol SearchHeaderViewControllerDelegate : class {
     public override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.backgroundColor = UIColor(scheme: .barBackground, variant: colorSchemeVariant)
+        view.backgroundColor = UIColor.from(scheme: .barBackground, variant: colorSchemeVariant)
 
-        searchIcon.image = UIImage(for: .search, iconSize: .tiny, color: UIColor(scheme: .textForeground, variant: colorSchemeVariant))
+        searchIcon.image = UIImage(for: .search, iconSize: .tiny, color: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant))
         
         clearButton.accessibilityLabel = "clear"
         clearButton.setIcon(.clearInput, with: .tiny, for: .normal)
@@ -71,12 +71,12 @@ public protocol SearchHeaderViewControllerDelegate : class {
         clearButton.isHidden = true
 
         tokenField.layer.cornerRadius = 4
-        tokenField.textColor = UIColor(scheme: .textForeground, variant: colorSchemeVariant)
-        tokenField.tokenTitleColor = UIColor(scheme: .textForeground, variant: colorSchemeVariant)
-        tokenField.tokenSelectedTitleColor = UIColor(scheme: .textForeground, variant: colorSchemeVariant)
+        tokenField.textColor = UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)
+        tokenField.tokenTitleColor = UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)
+        tokenField.tokenSelectedTitleColor = UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)
         tokenField.clipsToBounds = true
-        tokenField.textView.placeholderTextColor = UIColor(scheme: .tokenFieldTextPlaceHolder, variant: colorSchemeVariant)
-        tokenField.textView.backgroundColor = UIColor(scheme: .tokenFieldBackground, variant: colorSchemeVariant)
+        tokenField.textView.placeholderTextColor = UIColor.from(scheme: .tokenFieldTextPlaceHolder, variant: colorSchemeVariant)
+        tokenField.textView.backgroundColor = UIColor.from(scheme: .tokenFieldBackground, variant: colorSchemeVariant)
         tokenField.textView.accessibilityIdentifier = "textViewSearch"
         tokenField.textView.placeholder = "peoplepicker.search_placeholder".localized.uppercased()
         tokenField.textView.keyboardAppearance = ColorScheme.keyboardAppearance(for: colorSchemeVariant)

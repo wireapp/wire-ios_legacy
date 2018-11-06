@@ -24,7 +24,7 @@ class MessageDeletedCell: ConversationCell {
     
     let trashImageView = UIImageView()
     
-    var trashColor: UIColor? = UIColor(scheme: .iconNormal)
+    var trashColor: UIColor? = UIColor.from(scheme: .iconNormal)
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)

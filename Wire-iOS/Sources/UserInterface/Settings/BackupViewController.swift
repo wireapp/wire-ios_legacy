@@ -31,7 +31,7 @@ final class BackupStatusCell: UITableViewCell {
         backgroundColor = .clear
         contentView.backgroundColor = .clear
         
-        let color = UIColor(scheme: .textForeground, variant: .dark)
+        let color = UIColor.from(scheme: .textForeground, variant: .dark)
         
         iconView.image = .imageForRestore(with: color, size: .large)
         iconView.contentMode = .center
@@ -82,7 +82,7 @@ final class BackupActionCell: UITableViewCell {
         
         actionTitleLabel.text = "self.settings.history_backup.action".localized
         actionTitleLabel.font = FontSpec(.normal, .regular).font
-        actionTitleLabel.textColor = UIColor(scheme: .textForeground, variant: .dark)
+        actionTitleLabel.textColor = UIColor.from(scheme: .textForeground, variant: .dark)
     }
     
     required init?(coder aDecoder: NSCoder) {

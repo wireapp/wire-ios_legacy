@@ -24,7 +24,6 @@
 
 #import "RegistrationTextField.h"
 #import "UIImage+ZetaIconsNeue.h"
-#import "UIColor+WR_ColorScheme.h"
 #import "Constants.h"
 #import "Wire-Swift.h"
 

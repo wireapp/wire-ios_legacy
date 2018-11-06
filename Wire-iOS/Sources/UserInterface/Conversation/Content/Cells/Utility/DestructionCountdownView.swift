@@ -46,13 +46,13 @@ import Cartography
         elapsedTimeLayer.isOpaque = false
         remainingTimeLayer.isOpaque = false
 
-        let background = UIColor(scheme: .contentBackground)
+        let background = UIColor.from(scheme: .contentBackground)
 
-        elapsedTimeColor = UIColor(scheme: .lightGraphite)
+        elapsedTimeColor = UIColor.lightGraphite
             .withAlphaComponent(0.24)
             .removeAlphaByBlending(with: background)
 
-        remainingTimeColor = UIColor(scheme: .lightGraphite).withAlphaComponent(0.64).removeAlphaByBlending(with: .white)
+        remainingTimeColor = UIColor.lightGraphite.withAlphaComponent(0.64).removeAlphaByBlending(with: .white)
     }
 
     // MARK: - Layout

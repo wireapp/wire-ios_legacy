@@ -37,7 +37,7 @@ class SketchToolbar : UIView {
         leftButton = unassignedButtons.removeFirst()
         rightButton = unassignedButtons.removeLast()
         centerButtons = unassignedButtons
-        separatorLine.backgroundColor = UIColor(scheme: .separator)
+        separatorLine.backgroundColor = UIColor.from(scheme: .separator)
         
         super.init(frame: CGRect.zero)
         
@@ -51,7 +51,7 @@ class SketchToolbar : UIView {
     }
     
     func setupSubviews() {
-        backgroundColor = UIColor(scheme: .background)
+        backgroundColor = UIColor.from(scheme: .background)
         addSubview(containerView)
         centerButtons.forEach(centerButtonContainer.addSubview)
         [leftButton, centerButtonContainer, rightButton, separatorLine].forEach(containerView.addSubview)

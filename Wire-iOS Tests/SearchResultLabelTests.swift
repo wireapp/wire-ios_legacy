@@ -73,7 +73,7 @@ class SearchResultLabelTests: ZMSnapshotTestCase {
 
             $0.result.layoutForTest()
             let mockBackgroundView = UIView(frame: $0.result.frame)
-            mockBackgroundView.backgroundColor = .background
+            mockBackgroundView.backgroundColor = .from(scheme: .background)
             mockBackgroundView.addSubview($0.result)
 
             self.verify(view: mockBackgroundView, identifier: identifier, file: #file, line: #line)

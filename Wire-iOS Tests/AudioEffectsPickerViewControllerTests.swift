@@ -45,7 +45,7 @@ class AudioEffectsPickerViewControllerTests: ZMSnapshotTestCase {
         
         let container = UIView()
         container.addSubview(self.sut.view)
-        container.backgroundColor = UIColor(scheme: .textForeground, variant: .light)
+        container.backgroundColor = UIColor.from(scheme: .textForeground, variant: .light)
 
         constrain(self.sut.view, container) { view, container in
             container.height == 216

@@ -135,13 +135,13 @@ private struct InputBarConstants {
     public let markdownView = MarkdownBarView()
     
     public var editingBackgroundColor = UIColor.brightYellow
-    public var barBackgroundColor: UIColor? = UIColor(scheme: .barBackground)
-    public var writingSeparatorColor: UIColor? = .separator
+    public var barBackgroundColor: UIColor? = UIColor.from(scheme: .barBackground)
+    public var writingSeparatorColor: UIColor? = .from(scheme: .separator)
     public var ephemeralColor: UIColor {
         return .accent()
     }
-    public var placeholderColor: UIColor? = .textPlaceholder
-    public var textColor: UIColor? = .textForeground
+    public var placeholderColor: UIColor? = .from(scheme: .textPlaceholder)
+    public var textColor: UIColor? = .from(scheme: .textForeground)
 
     fileprivate var rowTopInsetConstraint: NSLayoutConstraint? = nil
     
@@ -466,8 +466,8 @@ private struct InputBarConstants {
                 return
             }
             
-            button.setIconColor(UIColor(scheme: .iconNormal), for: .normal)
-            button.setIconColor(UIColor(scheme: .iconHighlighted), for: .highlighted)
+            button.setIconColor(UIColor.from(scheme: .iconNormal), for: .normal)
+            button.setIconColor(UIColor.from(scheme: .iconHighlighted), for: .highlighted)
         }
     }
 

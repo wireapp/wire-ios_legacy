@@ -57,7 +57,6 @@
 #import "UIColor+WAZExtensions.h"
 #import "UIViewController+Errors.h"
 #import "SplitViewController.h"
-#import "UIColor+WR_ColorScheme.h"
 #import "UIResponder+FirstResponder.h"
 
 #import "Wire-Swift.h"
@@ -335,6 +334,11 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 {
     [super viewDidDisappear:animated];
     [self updateLeftNavigationBarItems];
+}
+
+- (void)scrollToMessage:(id<ZMConversationMessage>)message
+{
+    [self.contentViewController scrollToMessage:message animated:YES];
 }
 
 #pragma mark - Device orientation

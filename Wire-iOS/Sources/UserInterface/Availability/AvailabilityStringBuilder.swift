@@ -33,12 +33,12 @@
 
                 fontSize = .normal
                 if color == nil {
-                    color = UIColor(scheme: .textForeground, variant: .dark)
+                    color = UIColor.from(scheme: .textForeground, variant: .dark)
                 }
             }
             case .participants: do {
                 title = user.displayName.uppercased()
-                color = UIColor(scheme: .textForeground)
+                color = UIColor.from(scheme: .textForeground)
             }
             case .placeholder: do {
                 if availability != .none { //Should use the default placeholder string

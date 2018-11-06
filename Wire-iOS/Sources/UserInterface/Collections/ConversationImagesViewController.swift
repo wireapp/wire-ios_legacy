@@ -51,7 +51,7 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
     let overlay = FeedbackOverlayView()
     let separator: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor(scheme: .separator)
+        view.backgroundColor = UIColor.from(scheme: .separator)
         return view
     }()
     fileprivate let likeButton = IconButton(style: .default)
@@ -129,7 +129,7 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
             let navigationBar = UINavigationBar()
             navigationBar.items = [navigationItem]
             navigationBar.isTranslucent = false
-            navigationBar.barTintColor = UIColor(scheme: .barBackground)
+            navigationBar.barTintColor = UIColor.from(scheme: .barBackground)
 
             navBarContainer = UINavigationBarContainer(navigationBar)
         }
@@ -171,7 +171,7 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
 
         updateBarsForPreview()
 
-        view.backgroundColor = .background
+        view.backgroundColor = .from(scheme: .background)
     }
     
     private func createPageController() {
@@ -280,8 +280,8 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
 
         self.buttonsBar = InputBarButtonsView(buttons: buttons)
         self.buttonsBar.clipsToBounds = true
-        self.buttonsBar.expandRowButton.setIconColor(UIColor(scheme: .textForeground), for: .normal)
-        self.buttonsBar.backgroundColor = UIColor(scheme: .barBackground)
+        self.buttonsBar.expandRowButton.setIconColor(UIColor.from(scheme: .textForeground), for: .normal)
+        self.buttonsBar.backgroundColor = UIColor.from(scheme: .barBackground)
         self.view.addSubview(self.buttonsBar)
         
         self.updateButtonsForMessage()

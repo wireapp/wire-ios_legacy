@@ -20,8 +20,8 @@
 #import "SketchColorPickerController.h"
 
 #import "SketchColorCollectionViewCell.h"
-#import "UIColor+WR_ColorScheme.h"
 @import PureLayout;
+@import WireExtensionComponents;
 
 static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
@@ -73,7 +73,7 @@ static NSUInteger const SketchColorPickerDefaultBrushWidth = 6;
     self.colorsCollectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:flowLayout];
     self.colorsCollectionView.showsHorizontalScrollIndicator = NO;
     self.colorsCollectionView.translatesAutoresizingMaskIntoConstraints = NO;
-    self.colorsCollectionView.backgroundColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorBackground];
+    self.colorsCollectionView.backgroundColor = [UIColor  wr_colorFromColorScheme:ColorSchemeColorBackground];
     [self.view addSubview:self.colorsCollectionView];
     
     [self.colorsCollectionView registerClass:[SketchColorCollectionViewCell class] forCellWithReuseIdentifier:@"SketchColorCollectionViewCell"];

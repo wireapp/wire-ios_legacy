@@ -67,7 +67,6 @@ extension SplitViewController {
                 completionBlock()
             })
         } else {
-            self.view.layoutIfNeeded()
             completionBlock()
         }
     }

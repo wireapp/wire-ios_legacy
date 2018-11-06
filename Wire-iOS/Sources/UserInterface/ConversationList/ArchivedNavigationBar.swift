@@ -25,14 +25,14 @@ import Cartography
     
     let separatorView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor(scheme: .separator, variant: .light)
+        view.backgroundColor = UIColor.from(scheme: .separator, variant: .light)
 
         return view
     }()
 
     let titleLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .textForegroundDark
+        label.textColor = .from(scheme: .textForeground, variant: .dark)
         label.font = .mediumSemiboldFont
 
         return label
@@ -65,7 +65,7 @@ import Cartography
         dismissButton.setIcon(.cancel, with: .tiny, for: [])
         dismissButton.addTarget(self, action: #selector(ArchivedNavigationBar.dismissButtonTapped(_:)), for: .touchUpInside)
         dismissButton.accessibilityIdentifier = "archiveCloseButton"
-        dismissButton.setIconColor(.textForegroundDark, for: .normal)
+        dismissButton.setIconColor(.from(scheme: .textForeground, variant: .dark), for: .normal)
         [titleLabel, dismissButton, separatorView].forEach(addSubview)
     }
     

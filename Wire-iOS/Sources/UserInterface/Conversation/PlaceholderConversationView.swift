@@ -27,7 +27,7 @@ import Cartography
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        self.backgroundColor = UIColor(scheme: .background)
+        self.backgroundColor = UIColor.from(scheme: .background)
         
         let image = WireStyleKit.imageOfShield(color: UIColor(rgb: 0xbac8d1, alpha: 0.24))
         shieldImageView = UIImageView(image: image)

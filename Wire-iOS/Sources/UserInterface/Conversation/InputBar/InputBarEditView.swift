@@ -30,8 +30,8 @@ import Cartography
 @objcMembers public final class InputBarEditView: UIView {
     private static var iconButtonTemplate: IconButton {
         let iconButton = IconButton()
-        iconButton.setIconColor(.iconNormal, for: .normal)
-        iconButton.setIconColor(.iconNormal, for: .normal)
+        iconButton.setIconColor(.from(scheme: .iconNormal), for: .normal)
+        iconButton.setIconColor(.from(scheme: .iconHighlighted), for: .highlighted)
 
         return iconButton
     }

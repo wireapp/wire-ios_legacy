@@ -27,7 +27,7 @@ import Cartography
     
     public let titleLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .textForeground
+        label.textColor = .from(scheme: .textForeground)
         label.font = .mediumSemiboldFont
 
         return label
@@ -36,7 +36,7 @@ import Cartography
     public let dismissButton = IconButton()
     public let separatorView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor(scheme: .separator)
+        view.backgroundColor = UIColor.from(scheme: .separator)
         return view
     }()
 
@@ -53,7 +53,7 @@ import Cartography
         showsStatusBar = statusBar
         super.init(frame: CGRect.zero)
         configureViews()
-        backgroundColor = .background
+        backgroundColor = .from(scheme: .background)
 
         createConstraints()
     }
@@ -65,7 +65,7 @@ import Cartography
     fileprivate func configureViews() {
         [titleLabel, dismissButton, separatorView].forEach(addSubview)
         dismissButton.setIcon(.cancel, with: .tiny, for: [])
-        dismissButton.setIconColor(.iconNormal, for: .normal)
+        dismissButton.setIconColor(.from(scheme: .iconNormal), for: .normal)
         dismissButton.addTarget(self, action: #selector(dismissButtonTapped), for: .touchUpInside)
         dismissButton.hitAreaPadding = CGSize(width: 20, height: 20)
     }

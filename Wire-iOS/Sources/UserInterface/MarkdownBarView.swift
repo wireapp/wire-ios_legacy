@@ -32,7 +32,7 @@ public final class MarkdownBarView: UIView {
     
     private let stackView =  UIStackView()
     private let accentColor: UIColor = UIColor.accent()
-    private let normalColor = UIColor(scheme: .iconNormal)
+    private let normalColor = UIColor.from(scheme: .iconNormal)
     
     public let headerButton         = PopUpIconButton()
     public let boldButton           = IconButton()

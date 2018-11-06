@@ -35,7 +35,7 @@ class TextMessageCellTests: ZMSnapshotTestCase {
 
     override func setUp() {
         super.setUp()
-        snapshotBackgroundColor = UIColor(scheme: .contentBackground)
+        snapshotBackgroundColor = UIColor.from(scheme: .contentBackground)
         accentColor = .strongBlue
         sut = TextMessageCell(style: .default, reuseIdentifier: name)
         sut.layer.speed = 0

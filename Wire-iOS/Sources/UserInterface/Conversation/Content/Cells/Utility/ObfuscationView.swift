@@ -24,7 +24,7 @@ import Foundation
         backgroundColor = .accentDimmedFlat
         self.isOpaque = true
         self.contentMode = .center
-        self.image = UIImage.init(for: icon, iconSize: .tiny, color: UIColor(scheme: .background))
+        self.image = UIImage.init(for: icon, iconSize: .tiny, color: UIColor.from(scheme: .background))
     }
     
     required init(coder: NSCoder) {

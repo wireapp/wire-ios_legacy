@@ -105,8 +105,8 @@ class DetailsCollectionViewCell: SeparatorCollectionViewCell {
 
     override func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
         super.applyColorScheme(colorSchemeVariant)
-        let sectionTextColor = UIColor(scheme: .sectionText, variant: colorSchemeVariant)
-        backgroundColor = UIColor(scheme: .barBackground, variant: colorSchemeVariant)
+        let sectionTextColor = UIColor.from(scheme: .sectionText, variant: colorSchemeVariant)
+        backgroundColor = UIColor.from(scheme: .barBackground, variant: colorSchemeVariant)
         statusLabel.textColor = sectionTextColor
         updateDisabledState()
     }
@@ -158,7 +158,7 @@ class DetailsCollectionViewCell: SeparatorCollectionViewCell {
     }
     
     private func updateDisabledState() {
-        titleLabel.textColor = UIColor(scheme: disabled ? .textPlaceholder : .textForeground, variant: colorSchemeVariant)
+        titleLabel.textColor = UIColor.from(scheme: disabled ? .textPlaceholder : .textForeground, variant: colorSchemeVariant)
     }
 
 }

@@ -95,8 +95,8 @@ class AdaptiveFormViewController: BlueViewController, AuthenticationCoordinatedV
         ]
 
         NSLayoutConstraint.activate([
-            childViewController.view.bottomAnchor.constraint(equalTo: safeBottomAnchor),
-            childViewController.view.topAnchor.constraint(equalTo: safeTopAnchor)
+            childViewController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            childViewController.view.topAnchor.constraint(equalTo: view.topAnchor)
         ])
 
         updateConstraints(usingRegularLayout: traitCollection.horizontalSizeClass == .regular)

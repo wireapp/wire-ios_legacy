@@ -64,13 +64,13 @@ final class DraftListViewController: CoreDataTableViewController<MessageDraft, D
         paragraphStyle.alignment = .center
         paragraphStyle.paragraphSpacing = 4
         let paragraphAttributes = [NSAttributedString.Key.paragraphStyle: paragraphStyle]
-        let color = UIColor(scheme: .textDimmed)
+        let color = UIColor.from(scheme: .textDimmed)
         let title = "compose.drafts.empty.title".localized.uppercased() && FontSpec(.small, .semibold).font!
         let subtitle = "compose.drafts.empty.subtitle".localized.uppercased() && FontSpec(.small, .light).font!
         emptyLabel.attributedText = (title + "\n" + subtitle) && color && paragraphAttributes
         emptyLabel.numberOfLines = 0
         view.addSubview(emptyLabel)
-        view.backgroundColor = UIColor(scheme: .background)
+        view.backgroundColor = UIColor.from(scheme: .background)
 
         constrain(view, emptyLabel) { view, emptyLabel in
             emptyLabel.centerY == view.centerY - 20
@@ -88,7 +88,7 @@ final class DraftListViewController: CoreDataTableViewController<MessageDraft, D
 
     private func setupViews() {
         title = "compose.drafts.title".localized.uppercased()
-        tableView.backgroundColor = UIColor(scheme: .background)
+        tableView.backgroundColor = UIColor.from(scheme: .background)
         navigationItem.rightBarButtonItem = UIBarButtonItem(icon: .X, style: .done, target: self, action: #selector(closeTapped))
         navigationItem.rightBarButtonItem?.accessibilityLabel = "closeButton"
         navigationItem.leftBarButtonItem = UIBarButtonItem(icon: .plus, target: self, action: #selector(newDraftTapped))
