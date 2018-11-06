@@ -19,9 +19,10 @@
 import Foundation
 
 enum NotificationResult: CaseIterable {
-    case everything, mentions, nothing, cancel
+    case everything, mentionsAndReplies, nothing, cancel
     
     static var title: String {
+        // TODO: Need to include the conversation name
         return "meta.menu.configure_notification.dialog_message".localized
     }
     
@@ -29,7 +30,7 @@ enum NotificationResult: CaseIterable {
         switch self {
         case .everything:
             return MutedMessageTypes.none
-        case .mentions:
+        case .mentionsAndReplies:
             return .regular
         case .nothing:
             return .all
@@ -46,7 +47,7 @@ enum NotificationResult: CaseIterable {
         let base = "meta.menu.configure_notification.button_"
         switch self {
         case .everything: return base + "everything"
-        case .mentions: return base + "mentions"
+        case .mentionsAndReplies: return base + "mentions_and_replies"
         case .nothing: return base + "nothing"
         case .cancel: return base + "cancel"
         }

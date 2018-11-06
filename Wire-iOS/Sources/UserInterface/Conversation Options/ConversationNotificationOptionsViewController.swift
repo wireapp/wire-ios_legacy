@@ -166,7 +166,7 @@ extension MutedMessageTypes {
         let base = "meta.menu.configure_notification.button_"
         switch self {
         case .none:         return base + "everything"
-        case .regular:      return base + "mentions"
+        case .regular:      return base + "mentions_and_replies"
         case .all:          return base + "nothing"
         default:            return nil
         }
