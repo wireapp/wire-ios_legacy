@@ -772,6 +772,11 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self.contentViewController didFinishEditingMessage:message];
 }
 
+- (void)conversationInputBarViewControllerWantsToShowMessage:(id<ZMConversationMessage>)message
+{
+    [self scrollToMessage:message];
+}
+
 - (void)conversationInputBarViewControllerEditLastMessage
 {
     [self.contentViewController editLastMessage];
