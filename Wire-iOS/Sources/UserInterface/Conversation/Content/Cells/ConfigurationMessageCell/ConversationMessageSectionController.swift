@@ -58,11 +58,8 @@ extension IndexSet {
     @objc var visibleCellDescriptions: [AnyConversationMessageCellDescription] = []
     @objc var cellDescriptions: [AnyConversationMessageCellDescription] = []
     
-    var toolboxDescription: AnyConversationMessageCellDescription
-    var senderDescription: AnyConversationMessageCellDescription
-    var burstTimestampDescription: AnyConversationMessageCellDescription
-    
     var context: ConversationMessageContext
+    var layoutProperties: ConversationCellLayoutProperties
 
     /// Wheater this section is selected
     @objc var selected: Bool = false
@@ -91,21 +88,15 @@ extension IndexSet {
     init(message: ZMConversationMessage, context: ConversationMessageContext, layoutProperties: ConversationCellLayoutProperties) {
         self.message = message
         self.context = context
-        
-        burstTimestampDescription = AnyConversationMessageCellDescription(BurstTimestampSenderMessageCellDescription(message: message, context: context))
-        toolboxDescription = AnyConversationMessageCellDescription(ConversationMessageToolboxCellDescription(message: message))
-        senderDescription = AnyConversationMessageCellDescription(ConversationSenderMessageCellDescription(sender: message.sender, message: message))
+        self.layoutProperties = layoutProperties
         
         super.init()
         
-        if addLegacyContentIfNeeded(layoutProperties: layoutProperties) { return }
-        
-        cellDescriptions.append(burstTimestampDescription)
-        cellDescriptions.append(senderDescription)
-        addContent(context: context, layoutProperties: layoutProperties)
-        cellDescriptions.append(toolboxDescription)
+        createCellDescriptions(in: context, layoutProperties: layoutProperties)
         
         visibleCellDescriptions = visibleDescriptions(in: context)
+        
+        startObservingChanges(for: message)
     }
     
     
@@ -215,21 +206,39 @@ extension IndexSet {
     
     func didSelect(indexPath: IndexPath, tableView: UITableView) {
         selected = true
-        configure(with: context, at: indexPath.section, in: tableView)
+        configure(in: context, at: indexPath.section, in: tableView)
     }
     
     func didDeselect(indexPath: IndexPath, tableView: UITableView) {
         selected = false
-        configure(with: context, at: indexPath.section, in: tableView)
+        configure(in: context, at: indexPath.section, in: tableView)
     }
     
-    func configure(with context: ConversationMessageContext, at sectionIndex: Int, in tableView: UITableView) {
+    private func createCellDescriptions(in context: ConversationMessageContext, layoutProperties: ConversationCellLayoutProperties) {
+        cellDescriptions.removeAll()
+        
+        let burstTimestampDescription = AnyConversationMessageCellDescription(BurstTimestampSenderMessageCellDescription(message: message, context: context))
+        let toolboxDescription = AnyConversationMessageCellDescription(ConversationMessageToolboxCellDescription(message: message))
+        let senderDescription = AnyConversationMessageCellDescription(ConversationSenderMessageCellDescription(sender: message.sender, message: message))
+        
+        cellDescriptions.append(burstTimestampDescription)
+        cellDescriptions.append(senderDescription)
+        addContent(context: context, layoutProperties: layoutProperties)
+        cellDescriptions.append(toolboxDescription)
+    }
+    
+    func configure(at sectionIndex: Int, in tableView: UITableView) {
+        createCellDescriptions(in: context, layoutProperties: layoutProperties)
+        configure(in: context, at: sectionIndex, in: tableView)
+    }
+    
+    func configure(in context: ConversationMessageContext, at sectionIndex: Int, in tableView: UITableView) {
         self.context = context
         tableView.beginUpdates()
         
-        let old = ZMOrderedSetState(orderedSet: NSOrderedSet(array: visibleCellDescriptions.reversed()))
+        let old = ZMOrderedSetState(orderedSet: NSOrderedSet(array: visibleCellDescriptions.map({ $0.baseType }).reversed()))
         visibleCellDescriptions = visibleDescriptions(in: context)
-        let new = ZMOrderedSetState(orderedSet: NSOrderedSet(array: visibleCellDescriptions.reversed()))
+        let new = ZMOrderedSetState(orderedSet: NSOrderedSet(array: visibleCellDescriptions.map({ $0.baseType }).reversed()))
         let change = ZMChangedIndexes(start: old, end: new, updatedState: new, moveType: .nsTableView)
         
         if let deleted = change?.deletedIndexes.indexPaths(in: sectionIndex) {
@@ -241,45 +250,20 @@ extension IndexSet {
         }
         
         tableView.endUpdates()
-    }
-    
-    func visibleDescriptions(in context: ConversationMessageContext) -> [AnyConversationMessageCellDescription] {
         
-        return cellDescriptions.filter { (description) -> Bool in
-            
-            switch description {
-            case burstTimestampDescription:
-                return isBurstTimestampVisible(in: context)
-            case senderDescription:
-                return isSenderVisible(in: context)
-            case toolboxDescription:
-                return isToolboxVisible(in: context)
-            default:
-                return true
+        for (index, description) in visibleCellDescriptions.reversed().enumerated() {
+            if let cell = tableView.cellForRow(at: IndexPath(row: index, section: sectionIndex)) {
+                description.configure(cell: cell)
             }
         }
     }
     
-    func isBurstTimestampVisible(in context: ConversationMessageContext) -> Bool {
-        return context.isTimeIntervalSinceLastMessageSignificant
+    func visibleDescriptions(in context: ConversationMessageContext) -> [AnyConversationMessageCellDescription] {
+        return cellDescriptions.filter { (description) -> Bool in
+            return description.visible(in: context, selected: selected)
+        }
     }
     
-    func isToolboxVisible(in context: ConversationMessageContext) -> Bool {
-        return selected || context.isLastMessageSentBySelfUser || message.deliveryState == .failedToSend || message.hasReactions()
-    }
-    
-    func isSenderVisible(in context: ConversationMessageContext) -> Bool {
-        guard !context.isSameSenderAsPrevious, message.sender != nil else {
-            return false
-        }
-        
-        guard !message.isKnock, !message.isSystem else {
-            return false
-        }
-        
-        return true
-    }
-
     // MARK: - Data Source
 
     /// The number of child cells in the section that compose the message.

@@ -111,4 +111,16 @@ class ConversationSenderMessageCellDescription: ConversationMessageCellDescripti
         self.configuration = View.Configuration(user: sender, indicatorIcon: icon)
         actionController = nil
     }
+    
+    func visible(in context: ConversationMessageContext, selected: Bool) -> Bool {
+        guard let message = message, !context.isSameSenderAsPrevious, message.sender != nil else {
+            return false
+        }
+        
+        guard !message.isKnock, !message.isSystem else {
+            return false
+        }
+        
+        return true
+    }
 }

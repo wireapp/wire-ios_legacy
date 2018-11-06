@@ -49,7 +49,7 @@ protocol ConversationMessageCell {
 protocol ConversationMessageCellDescription: class {
     /// The view that will be displayed for the cell.
     associatedtype View: ConversationMessageCell & UIView
-
+    
     /// Whether the view occupies the entire width of the cell.
     var isFullWidth: Bool { get }
 
@@ -68,8 +68,20 @@ protocol ConversationMessageCellDescription: class {
     /// The configuration object that will be used to populate the cell.
     var configuration: View.Configuration { get }
 
+    /// Wheater the view should be displayed
+    func visible(in context: ConversationMessageContext, selected: Bool) ->  Bool // TODO jacob move selected into context?
     func register(in tableView: UITableView)
     func makeCell(for tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell
+}
+
+// MARK: - Default implementation
+
+extension ConversationMessageCellDescription {
+    
+    func visible(in context: ConversationMessageContext, selected: Bool) -> Bool {
+        return true
+    }
+    
 }
 
 // MARK: - Table View Dequeuing
@@ -83,7 +95,13 @@ extension ConversationMessageCellDescription {
     func makeCell(for tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
         return tableView.dequeueConversationCell(for: type(of: self), description: self, for: indexPath)
     }
-
+    
+    func configureCell(_ cell: UITableViewCell) {
+        guard let adapterCell = cell as? ConversationMessageCellTableViewAdapter<Self> else { return }
+        
+        adapterCell.cellView.configure(with: self.configuration)
+    }
+    
 }
 
 /**
@@ -93,6 +111,8 @@ extension ConversationMessageCellDescription {
 @objc class AnyConversationMessageCellDescription: NSObject {
     private let cellGenerator: (UITableView, IndexPath) -> UITableViewCell
     private let registrationBlock: (UITableView) -> Void
+    private let visibleBlock: (ConversationMessageContext, Bool) -> Bool
+    private let configureBlock: (UITableViewCell) -> Void
     private let baseTypeGetter: () -> AnyClass
 
     private let _delegate: AnyMutableProperty<ConversationCellDelegate?>
@@ -102,6 +122,14 @@ extension ConversationMessageCellDescription {
     init<T: ConversationMessageCellDescription>(_ description: T) {
         registrationBlock = { tableView in
             description.register(in: tableView)
+        }
+        
+        visibleBlock = { context, selected in
+            return description.visible(in: context, selected: selected)
+        }
+        
+        configureBlock = { cell in
+            description.configureCell(cell)
         }
 
         cellGenerator = { tableView, indexPath in
@@ -134,6 +162,14 @@ extension ConversationMessageCellDescription {
     @objc var actionController: ConversationCellActionController? {
         get { return _actionController.getter() }
         set { _actionController.setter(newValue) }
+    }
+    
+    func visible(in context: ConversationMessageContext, selected: Bool) -> Bool {
+        return visibleBlock(context, selected)
+    }
+    
+    func configure(cell: UITableViewCell) {
+        configureBlock(cell)
     }
 
     @objc(registerInTableView:)

@@ -25,6 +25,7 @@ struct BurstTimestampSenderMessageCellConfiguration {
 }
 
 class BurstTimestampSenderMessageCellDescription: ConversationMessageCellDescription {
+    
     typealias View = BurstTimestampSenderMessageCell
     let configuration: View.Configuration
 
@@ -47,6 +48,10 @@ class BurstTimestampSenderMessageCellDescription: ConversationMessageCellDescrip
 
     init(configuration: View.Configuration) {
         self.configuration = configuration
+    }
+    
+    func visible(in context: ConversationMessageContext, selected: Bool) -> Bool {
+        return context.isTimeIntervalSinceLastMessageSignificant
     }
 }
 

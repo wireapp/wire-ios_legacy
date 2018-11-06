@@ -27,6 +27,7 @@ class ConversationMessageToolboxCell: UIView, ConversationMessageCell {
     let toolboxView = MessageToolboxView()
 
     var isSelected: Bool = false
+    var observerToken: Any?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -65,9 +66,18 @@ class ConversationMessageToolboxCellDescription: ConversationMessageCellDescript
 
     let isFullWidth: Bool = true
     let supportsActions: Bool = false
-
+    
+    func visible(in context: ConversationMessageContext, selected: Bool) -> Bool {
+        guard let message = message else {
+            return false
+        }
+        
+        return selected || context.isLastMessageSentBySelfUser || message.deliveryState == .failedToSend || message.hasReactions()
+    }
+    
     init(message: ZMConversationMessage) {
-        configuration = View.Configuration(message: message)
+        self.message = message
+        self.configuration = View.Configuration(message: message)
     }
 
 }

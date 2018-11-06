@@ -28,7 +28,7 @@ extension ConversationMessageWindowTableViewAdapter: ConversationMessageSectionC
             return
         }
         
-        tableView.reloadSections(IndexSet(integer: section), with: .automatic)
+        controller.configure(at: section, in: tableView)
     }
     
 }
@@ -39,7 +39,7 @@ extension ConversationMessageWindowTableViewAdapter: ZMConversationMessageWindow
         guard let sectionController = self.sectionController(at: index, in: tableView) else { return }
         
         let context = messageWindow.context(for: sectionController.message, firstUnreadMessage: firstUnreadMessage)
-        sectionController.configure(with: context, at: index, in: tableView)
+        sectionController.configure(in: context, at: index, in: tableView)
     }
     
     public func conversationWindowDidChange(_ changeInfo: MessageWindowChangeInfo) {
