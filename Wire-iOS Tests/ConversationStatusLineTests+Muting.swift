@@ -57,7 +57,7 @@ extension ConversationStatusLineTests_Muting {
         // GIVEN
         let sut = self.otherUserConversation!
         appendTextMessage(to: sut)
-        sut.mutedMessageTypes = .nonMentions
+        sut.mutedMessageTypes = .regular
 
         // WHEN
         let status = sut.status.description(for: sut)
@@ -71,7 +71,7 @@ extension ConversationStatusLineTests_Muting {
         let sut = self.otherUserConversation!
         sut.messageDestructionTimeout = .local(100)
         appendMention(to: sut)
-        sut.mutedMessageTypes = .nonMentions
+        sut.mutedMessageTypes = .regular
 
         // WHEN
         let status = sut.status.description(for: sut)
@@ -86,7 +86,7 @@ extension ConversationStatusLineTests_Muting {
         sut.addParticipantIfMissing(createUser(name: "other"))
         sut.messageDestructionTimeout = .local(100)
         appendMention(to: sut)
-        sut.mutedMessageTypes = .nonMentions
+        sut.mutedMessageTypes = .regular
 
         // WHEN
         let status = sut.status.description(for: sut)
@@ -102,7 +102,7 @@ extension ConversationStatusLineTests_Muting {
         for _ in 1...5 {
             appendMention(to: sut)
         }
-        sut.mutedMessageTypes = .nonMentions
+        sut.mutedMessageTypes = .regular
 
         // WHEN
         let status = sut.status.description(for: sut)
@@ -115,7 +115,7 @@ extension ConversationStatusLineTests_Muting {
         // GIVEN
         let sut = self.otherUserConversation!
         appendTextMessage(to: sut)
-        sut.mutedMessageTypes = .nonMentions
+        sut.mutedMessageTypes = .regular
 
         // WHEN
         let status = sut.status.description(for: sut)
@@ -130,7 +130,7 @@ extension ConversationStatusLineTests_Muting {
         for _ in 1...5 {
             appendMention(to: sut)
         }
-        sut.mutedMessageTypes = .nonMentions
+        sut.mutedMessageTypes = .regular
 
         // WHEN
         let status = sut.status.description(for: sut)
@@ -148,7 +148,7 @@ extension ConversationStatusLineTests_Muting {
         for _ in 1...5 {
             appendMention(to: sut)
         }
-        sut.mutedMessageTypes = .nonMentions
+        sut.mutedMessageTypes = .regular
 
         // WHEN
         let status = sut.status.description(for: sut)
