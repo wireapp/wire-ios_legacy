@@ -21,7 +21,7 @@ import UIKit
 class ConversationSenderMessageCell: UIView, ConversationMessageCell {
 
     struct Configuration {
-        let user: UserType
+        let user: UserType?
         let indicatorIcon: UIImage?
     }
 
@@ -44,7 +44,9 @@ class ConversationSenderMessageCell: UIView, ConversationMessageCell {
     }
 
     func configure(with object: Configuration) {
-        senderView.configure(with: object.user)
+        if let user = object.user {
+            senderView.configure(with: user)
+        }
         indicatorImageView.isHidden = object.indicatorIcon == nil
         indicatorImageView.image = object.indicatorIcon
     }
@@ -96,7 +98,7 @@ class ConversationSenderMessageCellDescription: ConversationMessageCellDescripti
         return false
     }
 
-    init(sender: UserType, message: ZMConversationMessage) {
+    init(sender: UserType?, message: ZMConversationMessage) {
         var icon: UIImage? = nil
         let iconColor = UIColor(scheme: .iconNormal)
 

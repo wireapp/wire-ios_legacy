@@ -94,7 +94,7 @@ extension IndexSet {
         
         burstTimestampDescription = AnyConversationMessageCellDescription(BurstTimestampSenderMessageCellDescription(message: message, context: context))
         toolboxDescription = AnyConversationMessageCellDescription(ConversationMessageToolboxCellDescription(message: message))
-        senderDescription = AnyConversationMessageCellDescription(ConversationSenderMessageCellDescription(sender: message.sender!, message: message)) // TODO jacob avoid force unwrap
+        senderDescription = AnyConversationMessageCellDescription(ConversationSenderMessageCellDescription(sender: message.sender, message: message))
         
         super.init()
         
