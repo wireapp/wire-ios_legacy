@@ -155,7 +155,7 @@ class ConversationReplyCellTests: CoreDataSnapshotTestCase {
 
     func testThatItDisplaysLinkPreviewAsText_51() {
         // GIVEN
-        let url = "https://invis.io/ZFOMT5KEA3P#/ 326310650_Full-Mess"
+        let url = "https://apple.com/de/apple-pay"
         let message = MockMessageFactory.textMessage(withText: "")!
         message.backingTextMessageData?.linkPreview = LinkPreview(originalURLString: url, permanentURLString: url, resolvedURLString: url, offset: 0)
         message.sender = otherUser
@@ -170,9 +170,39 @@ class ConversationReplyCellTests: CoreDataSnapshotTestCase {
 
     func testThatItDisplaysLinkPreviewAsText_WithText_51() {
         // GIVEN
-        let url = "https://invis.io/ZFOMT5KEA3P#/ 326310650_Full-Mess"
+        let url = "https://apple.com/de/apple-pay"
         let message = MockMessageFactory.textMessage(withText: "There you go!  ")!
         message.backingTextMessageData?.linkPreview = LinkPreview(originalURLString: url, permanentURLString: url, resolvedURLString: url, offset: 13)
+        message.sender = otherUser
+        message.conversation = otherUserConversation
+
+        // WHEN
+        let cell = makeCell(for: message)
+
+        // THEN
+        verifyInAllPhoneWidths(view: cell)
+    }
+
+    func testThatItDisplaysFileMessage_54() {
+        // GIVEN
+        let message = MockMessageFactory.fileTransferMessage()!
+        message.backingFileMessageData!.filename = "Annual Report.pdf"
+        message.backingFileMessageData!.mimeType = "application/pdf"
+        message.sender = otherUser
+        message.conversation = otherUserConversation
+
+        // WHEN
+        let cell = makeCell(for: message)
+
+        // THEN
+        verifyInAllPhoneWidths(view: cell)
+    }
+
+    func testThatItDisplaysAudioMessage_55() {
+        // GIVEN
+        let message = MockMessageFactory.fileTransferMessage()!
+        message.backingFileMessageData!.filename = "ImportantMessage.m4a"
+        message.backingFileMessageData!.mimeType = "audio/x-m4a"
         message.sender = otherUser
         message.conversation = otherUserConversation
 
@@ -211,6 +241,18 @@ class ConversationReplyCellTests: CoreDataSnapshotTestCase {
         verifyInAllPhoneWidths(view: cell)
     }
 
+    func testThatItDisplaysErrorForUnsupportedMessageType_57() {
+        // GIVEN
+        let message = MockMessageFactory.pingMessage()!
+        message.sender = otherUser
+        message.conversation = otherUserConversation
+
+        // WHEN
+        let cell = makeCell(for: message)
+
+        // THEN
+        verifyInAllPhoneWidths(view: cell)
+    }
 
     // MARK: - Helpers
 

@@ -210,11 +210,11 @@ class ConversationReplyCellDescription: ConversationMessageCellDescription {
     weak var actionController: ConversationCellActionController?
 
     init(quotedMessage: ZMConversationMessage?) {
-        let isUnavailable = quotedMessage == nil
         let isEdited = quotedMessage?.updatedAt != nil
         let senderName = quotedMessage?.senderName
         let timestamp = quotedMessage?.formattedOriginalReceivedDate()
 
+        var isUnavailable = false
         let content: View.Configuration.Content
         let attributes: [NSAttributedString.Key: Any] = [.font: UIFont.smallSemiboldFont,
                                                          .foregroundColor: UIColor.textForeground]
@@ -248,6 +248,7 @@ class ConversationReplyCellDescription: ConversationMessageCellDescription {
             content = .text(initialString && attributes)
 
         default:
+            isUnavailable = true
             let attributes: [NSAttributedString.Key: AnyObject] = [.font: UIFont.mediumFont.italic, .foregroundColor: UIColor.textDimmed]
             content = .text(NSAttributedString(string: "content.message.reply.broken_message".localized, attributes: attributes))
         }
