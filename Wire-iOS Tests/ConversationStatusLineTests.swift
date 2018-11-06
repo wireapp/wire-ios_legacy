@@ -129,7 +129,34 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         // THEN
         XCTAssertEqual(status.string, "test 5")
     }
-    
+
+    func testStatusMissedCallAndUnreadMessagesAndReplies() {
+        // GIVEN
+        let sut = self.otherUserConversation!
+
+        let selfMessage = sut.append(text: "I am a programmer") as! ZMMessage
+        selfMessage.sender = selfUser
+        for _ in 1...3 {
+            (sut.append(text: "Yes, it is true", replyingTo: selfMessage) as! ZMMessage).sender = self.otherUser
+        }
+
+        let otherMessage = ZMSystemMessage(nonce: UUID(), managedObjectContext: uiMOC)
+        otherMessage.sender = self.otherUser
+        otherMessage.systemMessageType = .missedCall
+        sut.sortedAppendMessage(otherMessage)
+        sut.lastReadServerTimeStamp = Date.distantPast
+
+        // insert messages from other
+        for index in 1...2 {
+            (sut.append(text: "test \(index)") as! ZMMessage).sender = self.otherUser
+        }
+
+        // WHEN
+        let status = sut.status.description(for: sut)
+        // THEN
+        XCTAssertEqual(status.string, "3 replies, 1 missed call, 2 messages")
+    }
+
     func testStatusForMultipleTextMessagesInConversationIncludingMention() {
         // GIVEN
         let sut = self.otherUserConversation!
