@@ -97,10 +97,6 @@ class UserSearchResultsViewController: UIViewController, KeyboardCollapseObserve
         setupKeyboardObserver()
     }
 
-    override var canBecomeFirstResponder: Bool {
-        return true
-    }
-
     private func setupKeyboardObserver() {
         keyboardObserver = KeyboardBlockObserver { [weak self] info in
             guard let weakSelf = self else { return }
@@ -206,7 +202,7 @@ extension UserSearchResultsViewController: UserList {
     var selectedUser: UserType? {
 
         guard let collectionViewSelectedIndex = collectionViewSelectedIndex else {
-            return nil
+            return .none
         }
 
         let index = searchResults.count - 1 - collectionViewSelectedIndex
