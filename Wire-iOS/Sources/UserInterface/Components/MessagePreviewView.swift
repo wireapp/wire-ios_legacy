@@ -127,13 +127,22 @@ final class MessageThumbnailPreviewView: UIView {
             imagePreview.heightAnchor.constraint(equalToConstant: 42),
             ])
     }
+
+    private func editIcon() -> NSAttributedString {
+        if message.updatedAt != nil {
+            return "  " + NSAttributedString(attachment: NSTextAttachment.textAttachment(for: .pencil, with: .textForeground, iconSize: 8)!)
+        }
+        else {
+            return NSAttributedString()
+        }
+    }
     
     private func updateForMessage() {
-        senderLabel.text = message.senderName
-        
         let attributes: [NSAttributedString.Key: Any] = [.font: UIFont.smallSemiboldFont,
                                                          .foregroundColor: UIColor.textForeground]
-        
+
+        senderLabel.attributedText = (message.senderName && attributes) + self.editIcon()
+
         if message.isImage {
             let attributes: [NSAttributedString.Key: Any] = [.font: UIFont.smallSemiboldFont,
                                                              .foregroundColor: UIColor.textForeground]
@@ -229,7 +238,7 @@ final class MessagePreviewView: UIView {
             return NSAttributedString()
         }
     }
-    
+
     private func updateForMessage() {
         let attributes: [NSAttributedString.Key: Any] = [.font: UIFont.smallSemiboldFont,
                                                          .foregroundColor: UIColor.textForeground]
