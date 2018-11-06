@@ -321,7 +321,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     
     _searchQueries = searchQueries;
     self.conversationMessageWindowTableViewAdapter.searchQueries = self.searchQueries;
-//    [self.conversationMessageWindowTableViewAdapter reconfigureVisibleCellsWithDeletedIndexPaths:nil]; // TODO jacob what was this achieving?
+    [self.conversationMessageWindowTableViewAdapter reconfigureVisibleSections];
 }
 
 #pragma mark - Get/set

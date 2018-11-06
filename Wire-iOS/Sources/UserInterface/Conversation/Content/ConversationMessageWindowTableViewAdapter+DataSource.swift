@@ -71,22 +71,22 @@ extension ConversationMessageWindowTableViewAdapter: ZMConversationMessageWindow
             
             tableView.endUpdates()
             
-            tableView.beginUpdates()
-            
-            if changeInfo.updatedIndexes.count > 0 {
-                tableView.reloadSections(changeInfo.updatedIndexes, with: .none)
-            }
-            
-            if let indexPathsForVisibleRows = tableView.indexPathsForVisibleRows {
-                var sad = IndexSet(indexPathsForVisibleRows.map({ $0.section }))
-                sad.subtract(changeInfo.updatedIndexes)
-                for (_, section) in sad.enumerated() {
-                    reconfigureSectionController(at: section, tableView: tableView)
-                }
-            }
-            
-            tableView.endUpdates()
+            // Re-evalulate visible cells in all sections, this is necessary because if a message is inserted/moved the
+            // neighbouring messages may no longer want to display sender, toolbox or burst timestamp.
+            reconfigureVisibleSections()
         }
+    }
+    
+    @objc
+    func reconfigureVisibleSections() {
+        tableView.beginUpdates()
+        if let indexPathsForVisibleRows = tableView.indexPathsForVisibleRows {
+            let visibleSections = indexPathsForVisibleRows.map({ $0.section })
+            for section in visibleSections {
+                reconfigureSectionController(at: section, tableView: tableView)
+            }
+        }
+        tableView.endUpdates()
     }
     
 }

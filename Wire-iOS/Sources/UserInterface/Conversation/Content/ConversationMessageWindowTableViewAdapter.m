@@ -91,7 +91,7 @@
 - (void)setEditingMessage:(id <ZMConversationMessage>)editingMessage
 {
     _editingMessage = editingMessage;
-//    [self reconfigureVisibleCellsWithDeletedIndexPaths:nil]; // TODO jacob was was this achieving?
+    [self reconfigureVisibleSections];
 }
 
 - (void)messagesInsideWindow:(ZMConversationMessageWindow *)window didChange:(NSArray<MessageChangeInfo *> *)messageChangeInfos
