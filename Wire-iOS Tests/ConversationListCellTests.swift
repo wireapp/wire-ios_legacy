@@ -114,7 +114,6 @@ class ConversationListCellTests: CoreDataSnapshotTestCase {
         verify(otherUserConversation)
     }
 
-    /// exp
     func testThatItRendersConversation_TextMessagesThenReply() {
         // when
         let message = otherUserConversation.append(text: "Hey there!")
@@ -124,7 +123,8 @@ class ConversationListCellTests: CoreDataSnapshotTestCase {
         (replyMessage as! ZMMessage).sender = otherUser
 
         ///TODO: key for reply
-//        otherUserConversation.setPrimitiveValue(1, forKey: ZMConversationInternalEstimatedUnreadSelfMentionCountKey)
+        otherUserConversation.setPrimitiveValue(1, forKey: ZMConversationInternalEstimatedUnreadCountKey)
+        otherUserConversation.setPrimitiveValue(1, forKey: ZMConversationInternalEstimatedUnreadSelfReplyCountKey)
 
         // then
         verify(otherUserConversation)

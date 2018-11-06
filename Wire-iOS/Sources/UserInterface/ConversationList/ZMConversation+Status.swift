@@ -98,7 +98,7 @@ extension StatusMessageType {
             if textMessage.isMentioningSelf {
                 self = .mention
             }
-            else if message.replies.count > 0 {
+            else if textMessage.isQuotingSelf {
                 self = .reply
             }
             else if let _ = textMessage.linkPreview {
@@ -356,7 +356,8 @@ extension ConversationStatus {
     }
 
     var showingOnlyMentions: Bool {
-        return mutedMessageTypes == .nonMentions
+//        return mutedMessageTypes == .nonMentions
+        return true
     }
 
     var completelyMuted: Bool {
@@ -370,7 +371,7 @@ extension ConversationStatus {
         } else if showingOnlyMentions && !hasSelfMention {
             // Summarize when there is no mention
             return true
-        } else if hasSelfMention {
+        } else if hasSelfMention || hasReply {
             // Summarize if there is at least one mention and another activity that can be inside a summary
             return StatusMessageType.summaryTypes.reduce(into: UInt(0)) { $0 += (messagesRequiringAttentionByType[$1] ?? 0) } > 1
         } else {
@@ -394,6 +395,7 @@ final internal class NewMessagesMatcher: TypedConversationStatusMatcher {
 
     let matchedSummaryTypesDescriptions: [StatusMessageType: String] = [
         .mention:    "mention",
+        .reply:      "reply",
         .missedCall: "missedcall",
         .knock:      "knock",
         .text:       "generic_message"
@@ -401,6 +403,7 @@ final internal class NewMessagesMatcher: TypedConversationStatusMatcher {
 
     let matchedTypesDescriptions: [StatusMessageType: String] = [
         .mention:    "mention",
+        .reply:      "reply",
         .missedCall: "missedcall",
         .knock:      "knock",
         .text:       "text",
@@ -466,6 +469,8 @@ final internal class NewMessagesMatcher: TypedConversationStatusMatcher {
                 var typeSuffix = ".ephemeral"
                 if type == .mention {
                     typeSuffix += status.isGroup ? ".mention.group" : ".mention"
+                } else if type == .reply {
+                    typeSuffix += status.isGroup ? ".reply.group" : ".reply"
                 } else if type == .knock {
                     typeSuffix += status.isGroup ? ".knock.group" : ".knock"
                 } else if status.isGroup {
@@ -754,18 +759,7 @@ extension ZMConversation {
     var status: ConversationStatus {
         let isBlocked = self.conversationType == .oneOnOne ? (self.firstActiveParticipantOtherThanSelf()?.isBlocked ?? false) : false
 
-        var messagesRequiringAttention: [ZMConversationMessage] = []
-
-        ///TODO: reply should be appended? This code may be not necessary after estimatedUnreadReplyCount is implemented
-        let hasReply: Bool
-        if let message = self.unreadMessages.first as? ZMClientMessage,
-            let quote = message.quote {
-            messagesRequiringAttention.append(quote)
-            hasReply = true
-        } else {
-            hasReply = false
-        }
-        messagesRequiringAttention += unreadMessages
+        var messagesRequiringAttention: [ZMConversationMessage] = unreadMessages
 
         if messagesRequiringAttention.count == 0,
             let lastMessage = self.messages.lastObject as? ZMConversationMessage,
@@ -811,7 +805,7 @@ extension ZMConversation {
             isBlocked: isBlocked,
             isSelfAnActiveMember: isSelfAnActiveMember,
             hasSelfMention: estimatedUnreadSelfMentionCount > 0,
-            hasReply: hasReply ///TODO: wait for DM update
+            hasReply: estimatedUnreadSelfReplyCount > 0
         )
     }
 }
