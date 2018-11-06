@@ -107,6 +107,12 @@ extension NSAttributedString {
     static func formatForPreview(message: ZMTextMessageData, inputMode: Bool) -> NSAttributedString {
         var plainText = message.messageText ?? ""
 
+        // Inline the link preview text
+        if let linkPreview = message.linkPreview {
+            let separator = plainText.isEmpty ? "" : " · "
+            plainText.append(separator + linkPreview.originalURLString)
+        }
+
         // Substitute mentions with text markers
         let mentionTextObjects = plainText.replaceMentionsWithTextMarkers(mentions: message.mentions)
         
@@ -124,12 +130,6 @@ extension NSAttributedString {
         let mentionRanges = mentionTextObjects.compactMap{ $0.range(in: markdownText.string as String)}
         markdownText.replaceEmoticons(excluding: linkAttachmentRanges + mentionRanges)
         markdownText.removeTrailingWhitespace()
-
-        // Inline the link preview text
-        if let linkPreview = message.linkPreview {
-            let separator = markdownText.string.isEmpty ? "" : String.breakingSpace
-            markdownText.mutableString.append(separator + linkPreview.originalURLString)
-        }
 
         if !inputMode {
             markdownText.changeFontSizeIfMessageContainsOnlyEmoticons(to: 32)

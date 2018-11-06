@@ -116,7 +116,7 @@ final class MessageThumbnailPreviewView: UIView {
             senderLabel.topAnchor.constraint(equalTo: topAnchor, constant: inset),
             senderLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: inset),
             senderLabel.trailingAnchor.constraint(equalTo: imagePreview.leadingAnchor, constant: inset),
-            contentTextView.topAnchor.constraint(equalTo: senderLabel.bottomAnchor, constant: inset / 2),
+            contentTextView.topAnchor.constraint(equalTo: senderLabel.bottomAnchor, constant: inset),
             contentTextView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: inset),
             contentTextView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -inset),
             contentTextView.trailingAnchor.constraint(equalTo: imagePreview.leadingAnchor, constant: inset),

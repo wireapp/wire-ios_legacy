@@ -175,7 +175,7 @@ class ConversationReplyCellTests: CoreDataSnapshotTestCase {
     func testThatItDisplaysLinkPreviewAsText_WithText_51() {
         // GIVEN
         let url = "https://apple.com/de/apple-pay"
-        let message = MockMessageFactory.textMessage(withText: "There you go!  ")!
+        let message = MockMessageFactory.textMessage(withText: "There you go!")!
         message.backingTextMessageData?.linkPreview = LinkPreview(originalURLString: url, permanentURLString: url, resolvedURLString: url, offset: 13)
         message.sender = otherUser
         message.conversation = otherUserConversation
