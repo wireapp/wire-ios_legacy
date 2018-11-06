@@ -45,7 +45,7 @@ import Cartography
         var currentElements: [Any] = self.accessibilityElements ?? []
         let contentViewAccessibilityElements: [Any] = self.audioMessageView.accessibilityElements ?? []
         currentElements.append(contentsOf: contentViewAccessibilityElements)
-        currentElements.append(contentsOf: [likeButton, toolboxView])
+        currentElements.append(toolboxView)
         self.accessibilityElements = currentElements
         
         setNeedsLayout()
@@ -150,8 +150,10 @@ import Cartography
         
         if let fileMessageData = message.fileMessageData {
             if let _ = fileMessageData.fileURL {
+                additionalItems.append(.forbiddenInEphemeral(.reply(with: #selector(replyTo(_:)))))
                 additionalItems.append(.forbiddenInEphemeral(.forward(with: #selector(forward))))
             }
+            
             
             if fileMessageData.transferState.isOne(of: .uploaded, .failedDownload) {
                 additionalItems.append(.allowedInEphemeral(.download(with: #selector(download))))
@@ -183,18 +185,18 @@ import Cartography
     
     @objc public func wr_saveAudio() {
         if self.message.audioCanBeSaved() {
-            self.delegate?.conversationCell?(self, didSelect: .save)
+            self.delegate?.conversationCell?(self, didSelect: .save, for: self.message)
         }
     }
     
     @objc func download(_ sender: Any) {
-        delegate?.conversationCell?(self, didSelect: .download)
+        delegate?.conversationCell?(self, didSelect: .download, for: self.message)
     }
     
 }
 
 extension AudioMessageCell: TransferViewDelegate {
     public func transferView(_ view: TransferView, didSelect action: MessageAction) {
-        self.delegate.conversationCell?(self, didSelect: action)
+        self.delegate.conversationCell?(self, didSelect: action, for: self.message)
     }
 }

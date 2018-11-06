@@ -53,7 +53,6 @@
 #import "UIViewController+WR_Additions.h"
 
 // Cells
-#import "TextMessageCell.h"
 #import "PingCell.h"
 #import "ImageMessageCell.h"
 
@@ -143,7 +142,22 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     self.tableView = [[UpsideDownTableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
     [self.view addSubview:self.tableView];
     
-    [self.tableView autoPinEdgesToSuperviewEdges];
+    self.bottomContainer = [[UIView alloc] initWithFrame:CGRectZero];
+    self.bottomContainer.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addSubview:self.bottomContainer];
+
+    [NSLayoutConstraint activateConstraints:@[
+      [self.tableView.topAnchor constraintEqualToAnchor:self.view.topAnchor],
+      [self.tableView.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor],
+      [self.tableView.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor],
+      [self.bottomContainer.topAnchor constraintEqualToAnchor:self.tableView.bottomAnchor],
+      [self.bottomContainer.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor],
+      [self.bottomContainer.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor],
+      [self.bottomContainer.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor],
+    ]];
+    NSLayoutConstraint *heightCollapsingConstraint = [self.bottomContainer.heightAnchor constraintEqualToConstant:0];
+    heightCollapsingConstraint.priority = UILayoutPriorityDefaultHigh;
+    heightCollapsingConstraint.active = YES;
 }
 
 - (void)viewDidLoad
@@ -155,6 +169,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     [[ConversationMessageWindowTableViewAdapter alloc] initWithTableView:self.tableView
                                                            messageWindow:self.messageWindow];
     self.conversationMessageWindowTableViewAdapter.conversationCellDelegate = self;
+    self.conversationMessageWindowTableViewAdapter.messageActionResponder = self;
     
     self.messageWindowObserverToken = [MessageWindowChangeInfo addObserver:self forWindow:self.messageWindow];
     
@@ -338,7 +353,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
             case MessageActionCancel:
             {
                 [[ZMUserSession sharedSession] enqueueChanges:^{
-                    [cell.message.fileMessageData cancelTransfer];
+                    [message.fileMessageData cancelTransfer];
                 }];
             }
                 break;
@@ -346,7 +361,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
             case MessageActionResend:
             {
                 [[ZMUserSession sharedSession] enqueueChanges:^{
-                    [cell.message resend];
+                    [message resend];
                 }];
             }
                 break;
@@ -356,19 +371,20 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
                 assert([message canBeDeleted]);
                 
                 self.deletionDialogPresenter = [[DeletionDialogPresenter alloc] initWithSourceViewController:self.presentedViewController ?: self];
-                [self.deletionDialogPresenter presentDeletionAlertControllerForMessage:cell.message source:cell completion:^(BOOL deleted) {
+                [self.deletionDialogPresenter presentDeletionAlertControllerForMessage:message source:cell completion:^(BOOL deleted) {
                     if (self.presentedViewController && deleted) {
                         [self.presentedViewController dismissViewControllerAnimated:YES completion:nil];
                     }
                     if (!deleted) {
-                        cell.beingEdited = NO;
+                        // TODO 2838: Support editing
+                        // cell.beingEdited = NO;
                     }
                 }];
             }
                 break;
             case MessageActionPresent:
             {
-                self.conversationMessageWindowTableViewAdapter.selectedMessage = cell.message;
+                self.conversationMessageWindowTableViewAdapter.selectedMessage = message;
                 [self presentDetailsForMessageAtIndexPath:[self.tableView indexPathForCell:cell]];
             }
                 break;
@@ -377,7 +393,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
                 if ([Message isImageMessage:message]) {
                     [self saveImageFromMessage:message cell:(ImageMessageCell *)cell];
                 } else {
-                    self.conversationMessageWindowTableViewAdapter.selectedMessage = cell.message;
+                    self.conversationMessageWindowTableViewAdapter.selectedMessage = message;
                     
                     UIView *targetView = nil;
                     
@@ -400,18 +416,18 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
                 break;
             case MessageActionEdit:
             {
-                self.conversationMessageWindowTableViewAdapter.editingMessage = cell.message;
-                [self.delegate conversationContentViewController:self didTriggerEditingMessage:cell.message];
+                self.conversationMessageWindowTableViewAdapter.editingMessage = message;
+                [self.delegate conversationContentViewController:self didTriggerEditingMessage:message];
             }
                 break;
             case MessageActionSketchDraw:
             {
-                [self openSketchForMessage:cell.message inEditMode:CanvasViewControllerEditModeDraw];
+                [self openSketchForMessage:message inEditMode:CanvasViewControllerEditModeDraw];
             }
                 break;
             case MessageActionSketchEmoji:
             {
-                [self openSketchForMessage:cell.message inEditMode:CanvasViewControllerEditModeEmoji];
+                [self openSketchForMessage:message inEditMode:CanvasViewControllerEditModeEmoji];
             }
                 break;
             case MessageActionSketchText:
@@ -421,21 +437,21 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
                 break;
             case MessageActionLike:
             {
-                BOOL liked = ![Message isLikedMessage:cell.message];
+                BOOL liked = ![Message isLikedMessage:message];
                 
                 NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
                 
                 [[ZMUserSession sharedSession] enqueueChanges:^{
-                    [Message setLikedMessage:cell.message liked:liked];
+                    [Message setLikedMessage:message liked:liked];
                     
                     if (liked) {
                         // Deselect if necessary to show list of likers
-                        if (self.conversationMessageWindowTableViewAdapter.selectedMessage == cell.message) {
+                        if (self.conversationMessageWindowTableViewAdapter.selectedMessage == message) {
                             [self tableView:self.tableView willSelectRowAtIndexPath:indexPath];
                         }
                     } else {
                         // Select if necessary to prevent message from collapsing
-                        if (self.conversationMessageWindowTableViewAdapter.selectedMessage != cell.message && ![Message hasReactions:cell.message]) {
+                        if (self.conversationMessageWindowTableViewAdapter.selectedMessage != message && ![Message hasReactions:message]) {
                             [self tableView:self.tableView willSelectRowAtIndexPath:indexPath];
                             [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
                         }
@@ -445,7 +461,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
                 break;
             case MessageActionForward:
             {
-                [self showForwardForMessage:cell.message fromCell:cell];
+                [self showForwardForMessage:message fromCell:cell];
             }
                 break;
             case MessageActionShowInConversation:
@@ -455,16 +471,29 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
                 break;
             case MessageActionCopy:
             {
-                NSData *imageData = cell.message.imageMessageData.imageData;
-                [[UIPasteboard generalPasteboard] setMediaAsset:[[UIImage alloc] initWithData:imageData]];
+                if ([Message isTextMessage:message]) {
+                    [[UIPasteboard generalPasteboard] setString:message.textMessageData.messageText];
+                } else if ([Message isImageMessage:message]) {
+                    NSData *imageData = message.imageMessageData.imageData;
+                    [[UIPasteboard generalPasteboard] setMediaAsset:[[UIImage alloc] initWithData:imageData]];
+                } else if ([Message isLocationMessage:message]) {
+                    if (message.locationMessageData.name) {
+                        [[UIPasteboard generalPasteboard] setString:message.locationMessageData.name];
+                    }
+                }
             }
                 break;
             
             case MessageActionDownload:
             {
                 [ZMUserSession.sharedSession enqueueChanges:^{
-                    [cell.message.fileMessageData requestFileDownload];
+                    [message.fileMessageData requestFileDownload];
                 }];
+            }
+                break;
+            case MessageActionReply:
+            {
+                [self.delegate conversationContentViewController:self didTriggerReplyingToMessage:message];
             }
                 break;
         }
@@ -568,8 +597,8 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 
 #pragma mark - Custom UI, utilities
 
-- (void) createMentionsResultsView {
-    
+- (void)createMentionsResultsView
+{    
     self.mentionsSearchResultsViewController = [[UserSearchResultsViewController alloc] init];
     self.mentionsSearchResultsViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
     // delegate here
@@ -592,7 +621,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
         return nil;
     }
     
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:messageIndex inSection:0];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:messageIndex];
     ConversationCell *cell = (ConversationCell *)[self.tableView cellForRowAtIndexPath:indexPath];
     return cell;
 }
@@ -634,15 +663,16 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if ([cell isKindOfClass:[TextMessageCell class]] || [cell isKindOfClass:[AudioMessageCell class]]) {
-        ConversationCell *messageCell = (ConversationCell *)cell;
-        MediaPlaybackManager *mediaPlaybackManager = [AppDelegate sharedAppDelegate].mediaPlaybackManager;
-        
-        if (mediaPlaybackManager.activeMediaPlayer != nil && mediaPlaybackManager.activeMediaPlayer.sourceMessage == messageCell.message) {
-            [self.delegate conversationContentViewController:self willDisplayActiveMediaPlayerForMessage:messageCell.message];
-        }
-    }
-    
+    // TODO 2838: Support ping animation, ephemeral timer and media playback
+//    if ([cell isKindOfClass:[TextMessageCell class]] || [cell isKindOfClass:[AudioMessageCell class]]) {
+//        ConversationCell *messageCell = (ConversationCell *)cell;
+//        MediaPlaybackManager *mediaPlaybackManager = [AppDelegate sharedAppDelegate].mediaPlaybackManager;
+//
+//        if (mediaPlaybackManager.activeMediaPlayer != nil && mediaPlaybackManager.activeMediaPlayer.sourceMessage == messageCell.message) {
+//            [self.delegate conversationContentViewController:self willDisplayActiveMediaPlayerForMessage:messageCell.message];
+//        }
+//    }
+
     ConversationCell *conversationCell = nil;
     if ([cell isKindOfClass:ConversationCell.class]) {
         conversationCell = (ConversationCell *)cell;
@@ -665,14 +695,15 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 
 - (void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if ([cell isKindOfClass:[TextMessageCell class]] || [cell isKindOfClass:[AudioMessageCell class]]) {
-        ConversationCell *messageCell = (ConversationCell *)cell;
-        MediaPlaybackManager *mediaPlaybackManager = [AppDelegate sharedAppDelegate].mediaPlaybackManager;
-        if (mediaPlaybackManager.activeMediaPlayer != nil && mediaPlaybackManager.activeMediaPlayer.sourceMessage == messageCell.message) {
-            [self.delegate conversationContentViewController:self didEndDisplayingActiveMediaPlayerForMessage:messageCell.message];
-        }
-    }
-    
+    // TODO 2838: Support ping animation, ephemeral timer and media playback
+//    if ([cell isKindOfClass:[TextMessageCell class]] || [cell isKindOfClass:[AudioMessageCell class]]) {
+//        ConversationCell *messageCell = (ConversationCell *)cell;
+//        MediaPlaybackManager *mediaPlaybackManager = [AppDelegate sharedAppDelegate].mediaPlaybackManager;
+//        if (mediaPlaybackManager.activeMediaPlayer != nil && mediaPlaybackManager.activeMediaPlayer.sourceMessage == messageCell.message) {
+//            [self.delegate conversationContentViewController:self didEndDisplayingActiveMediaPlayerForMessage:messageCell.message];
+//        }
+//    }
+
     ConversationCell *conversationCell = nil;
     if ([cell isKindOfClass:ConversationCell.class]) {
         conversationCell = (ConversationCell *)cell;
@@ -712,7 +743,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 
 - (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    ZMMessage *message = [self.messageWindow.messages objectAtIndex:indexPath.row];
+    ZMMessage *message = [self.messageWindow.messages objectAtIndex:indexPath.section];
     NSIndexPath *selectedIndexPath = nil;
     
     if ([message isEqual:self.conversationMessageWindowTableViewAdapter.selectedMessage]) {

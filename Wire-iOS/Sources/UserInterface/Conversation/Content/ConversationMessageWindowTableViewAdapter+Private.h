@@ -39,6 +39,7 @@ static NSString *const ConversationUnknownMessageCellId     = @"conversationUnkn
 static NSString *const ConversationMessageTimerUpdateCellId = @"ConversationMessageTimerUpdateCellId";
 
 @class ConversationCell;
+@class ConversationCellActionController;
 
 @interface ConversationMessageWindowTableViewAdapter () <ZMConversationMessageWindowObserver>
 
@@ -48,6 +49,10 @@ static NSString *const ConversationMessageTimerUpdateCellId = @"ConversationMess
 @property (nonatomic) ZMConversationMessageWindow * _Nonnull messageWindow;
 @property (nonatomic) id _Nonnull messageWindowObserverToken;
 @property (nonatomic) BOOL expandingWindow;
+
+@property (nonatomic, strong) NSMutableArray<Class> *registeredCells;
+@property (nonatomic, strong) NSCache<id<ZMConversationMessage>, ConversationMessageSectionController *> *sectionControllers;
+@property (nonatomic, strong) NSCache<id<ZMConversationMessage>, ConversationCellActionController *> *actionControllers;
 
 NS_ASSUME_NONNULL_END
 

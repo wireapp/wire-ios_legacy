@@ -47,7 +47,7 @@ import Cartography
         var currentElements: [Any] = self.accessibilityElements ?? []
         let contentViewAccessibilityElements: [Any] = self.fileTransferView.accessibilityElements ?? []
         currentElements.append(contentsOf: contentViewAccessibilityElements)
-        currentElements.append(contentsOf: [likeButton, toolboxView])
+        currentElements.append(toolboxView)
         self.accessibilityElements = currentElements
     }
     
@@ -128,6 +128,7 @@ import Cartography
         if let message = message, let fileMessageData = message.fileMessageData {
             if let _ = fileMessageData.fileURL {
                 additionalItems += [
+                    .forbiddenInEphemeral(.reply(with: #selector(replyTo(_:)))),
                     .forbiddenInEphemeral(.open(with: #selector(open))),
                     .forbiddenInEphemeral(.save(with: #selector(save))),
                     .forbiddenInEphemeral(.forward(with: #selector(forward)))
@@ -166,15 +167,15 @@ import Cartography
 
     @objc func open(_ sender: Any) {
         showsMenu = false
-        delegate?.conversationCell?(self, didSelect: .present)
+        delegate?.conversationCell?(self, didSelect: .present, for: self.message)
     }
 
     @objc func save(_ sender: Any) {
-        delegate?.conversationCell?(self, didSelect: .save)
+        delegate?.conversationCell?(self, didSelect: .save, for: self.message)
     }
     
     @objc func download(_ sender: Any) {
-        delegate?.conversationCell?(self, didSelect: .download)
+        delegate?.conversationCell?(self, didSelect: .download, for: self.message)
     }
     
     override public func messageType() -> MessageType {
@@ -184,6 +185,6 @@ import Cartography
 
 extension FileTransferCell: TransferViewDelegate {
     public func transferView(_ view: TransferView, didSelect action: MessageAction) {
-        self.delegate.conversationCell?(self, didSelect: action)
+        self.delegate.conversationCell?(self, didSelect: action, for: self.message)
     }
 }

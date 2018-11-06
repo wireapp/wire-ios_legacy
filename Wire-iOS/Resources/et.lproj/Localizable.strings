@@ -412,12 +412,10 @@
 "content.system.conversation.with_name.participants" = "ja";
 
 "content.system.message_timer_changes" = "%@ määras sõnumi taimeriks: %@";
-"content.system.message_timer_changes.you" = "Sina määrasid sõnumi taimeriks %@";
-
-"content.system.message_timer.you_part" = "Sina";
+"content.system.message_timer_changes-you" = "Sina määrasid sõnumi taimeriks %@";
 
 "content.system.message_timer_off" = "%@ lülitas sõnumi taimeri välja";
-"content.system.message_timer_off.you" = "Sa lülitasid sõnumi taimeri välja";
+"content.system.message_timer_off-you" = "Sa lülitasid sõnumi taimeri välja";
 
 "content.system.reactivated_device" = "Hakkasid uuesti kasutama seadet %@. Vahepeal saadetud sõnumid siia ei ilmu.";
 

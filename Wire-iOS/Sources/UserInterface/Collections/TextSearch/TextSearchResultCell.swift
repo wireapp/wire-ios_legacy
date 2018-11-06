@@ -142,10 +142,11 @@ internal class TextSearchResultCell: UITableViewCell {
         
         userImageView.user = newMessage.sender
         footerView.message = newMessage
-        
-        observerToken = MessageChangeInfo.add(observer: self,
-                                              for: newMessage,
-                                              userSession: ZMUserSession.shared()!)
+        if let userSession = ZMUserSession.shared() {
+            observerToken = MessageChangeInfo.add(observer: self,
+                                                  for: newMessage,
+                                                  userSession: userSession)
+        }
         
         updateTextView()
     }

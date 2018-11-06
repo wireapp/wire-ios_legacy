@@ -25,7 +25,6 @@
 #import "WireSyncEngine+iOS.h"
 #import "ZMConversation+Additions.h"
 #import "Constants.h"
-#import "LinkAttachmentViewControllerFactory.h"
 #import "LinkAttachment.h"
 #import "Wire-Swift.h"
 #import "Analytics.h"
@@ -368,6 +367,9 @@
     
     BOOL isEditableMessage = self.message.conversation.isSelfAnActiveMember && (self.message.deliveryState == ZMDeliveryStateDelivered || self.message.deliveryState == ZMDeliveryStateSent);
     NSMutableArray <AdditionalMenuItem *>* additionalItems = [NSMutableArray array];
+    
+    UIMenuItem *replyItem = [UIMenuItem replyToWithAction:@selector(replyTo:)];
+    [additionalItems addObject:[AdditionalMenuItem forbiddenInEphemeral:replyItem]];
     
     if (isEditableMessage) {
         UIMenuItem *item = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"message.menu.edit.title", @"") action:@selector(edit:)];

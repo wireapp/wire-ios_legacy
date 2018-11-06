@@ -172,7 +172,7 @@ public func==(left: FontSpec, right: FontSpec) -> Bool {
     
     public var fontMapping: FontMapping = [:]
     
-    fileprivate static func mapFontTextStyleAndFontSizeAndPoint(fintSizeTuples allFontSizes: [(fontSize: FontSize, point: CGFloat)], mapping: inout [FontSpec : UIFont], fontTextStyle: FontTextStyle, contentSizeCategory: UIContentSizeCategory) {
+    fileprivate static func mapFontTextStyleAndFontSizeAndPoint(fontSizeTuples allFontSizes: [(fontSize: FontSize, point: CGFloat)], mapping: inout [FontSpec : UIFont], fontTextStyle: FontTextStyle, contentSizeCategory: UIContentSizeCategory) {
         let allFontWeights: [FontWeight] = [.ultraLight, .thin, .light, .regular, .medium, .semibold, .bold, .heavy, .black]
         for fontWeight in allFontWeights {
             for fontSizeTuple in allFontSizes {
@@ -192,14 +192,14 @@ public func==(left: FontSpec, right: FontSpec) -> Bool {
                                                                                 (fontSize: .normal, point: 26),
                                                                                 (fontSize: .medium, point: 20),
                                                                                 (fontSize: .small,  point: 18)]
-        mapFontTextStyleAndFontSizeAndPoint(fintSizeTuples: largeTitleFontSizeTuples, mapping: &mapping, fontTextStyle: .largeTitle, contentSizeCategory: contentSizeCategory)
+        mapFontTextStyleAndFontSizeAndPoint(fontSizeTuples: largeTitleFontSizeTuples, mapping: &mapping, fontTextStyle: .largeTitle, contentSizeCategory: contentSizeCategory)
 
 
         let inputTextFontSizeTuples: [(fontSize: FontSize, point: CGFloat)] = [(fontSize: .large,  point: 21),
                                                                                (fontSize: .normal, point: 14),
                                                                                (fontSize: .medium, point: 11),
                                                                                (fontSize: .small,  point: 10)]
-        mapFontTextStyleAndFontSizeAndPoint(fintSizeTuples: inputTextFontSizeTuples, mapping: &mapping, fontTextStyle: .inputText, contentSizeCategory: contentSizeCategory)
+        mapFontTextStyleAndFontSizeAndPoint(fontSizeTuples: inputTextFontSizeTuples, mapping: &mapping, fontTextStyle: .inputText, contentSizeCategory: contentSizeCategory)
 
         /// fontTextStyle: none
 

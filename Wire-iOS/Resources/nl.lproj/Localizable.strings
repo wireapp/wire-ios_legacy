@@ -412,12 +412,10 @@
 "content.system.conversation.with_name.participants" = "with";
 
 "content.system.message_timer_changes" = "%@ set the message timer to %@";
-"content.system.message_timer_changes.you" = "You set the message timer to %@";
-
-"content.system.message_timer.you_part" = "Jij";
+"content.system.message_timer_changes-you" = "You set the message timer to %@";
 
 "content.system.message_timer_off" = "%@ turned off the message timer";
-"content.system.message_timer_off.you" = "You turned off the message timer";
+"content.system.message_timer_off-you" = "You turned off the message timer";
 
 "content.system.reactivated_device" = "Je bent %@ weer gaan gebruiken. Berichten die in de tussentijd verzonden zijn worden hier niet getoond.";
 

@@ -33,7 +33,7 @@ class VideoMessageCellTests: ZMSnapshotTestCase {
         let fileMessage = MockMessageFactory.fileTransferMessage()
         fileMessage?.backingFileMessageData.mimeType = "video/mp4"
         fileMessage?.backingFileMessageData.filename = "vacation.mp4"
-        fileMessage?.backingFileMessageData.imagePreviewData = image(inTestBundleNamed: "unsplash_matterhorn.jpg").jpegData(compressionQuality: 0.9)
+        fileMessage?.backingFileMessageData.previewData = image(inTestBundleNamed: "unsplash_matterhorn.jpg").jpegData(compressionQuality: 0.9)
         
         if let config = config {
             config(fileMessage!)
@@ -81,7 +81,7 @@ class VideoMessageCellTests: ZMSnapshotTestCase {
     
     func testUploadedCell_fromOtherUser_withoutPreview() {
         let cell = self.wrappedCellWithConfig({
-            $0.backingFileMessageData.imagePreviewData = nil
+            $0.backingFileMessageData.previewData = nil
             $0.fileMessageData?.transferState = .uploaded
             $0.backingFileMessageData.fileURL = .none
             $0.sender = MockUser.mockUsers().first!
@@ -115,7 +115,7 @@ class VideoMessageCellTests: ZMSnapshotTestCase {
     func testUploadingCell_fromOtherUser_withoutPreview() {
         let cell = self.wrappedCellWithConfig({
             $0.fileMessageData?.transferState = .uploading
-            $0.backingFileMessageData.imagePreviewData = nil
+            $0.backingFileMessageData.previewData = nil
             $0.backingFileMessageData.fileURL = .none
             $0.sender = MockUser.mockUsers().first!
         })

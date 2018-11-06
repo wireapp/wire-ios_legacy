@@ -25,9 +25,6 @@ import UIKit
  * can be used "as-is" without any additional configuration.
  */
 class TailEditingTextField: UITextField {
-    static let normalSpace = " "
-    static let nonBreakingSpace = "\u{00a0}"
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -47,15 +44,15 @@ class TailEditingTextField: UITextField {
     }
     
     @objc func replaceNormalSpacesWithNonBreakingSpaces() {
-        guard let isContainsNormalSpace = (self.text?.contains(type(of: self).normalSpace)), isContainsNormalSpace else {
+        guard let isContainsNormalSpace = (self.text?.contains(String.breakingSpace)), isContainsNormalSpace else {
             return }
 
-        self.text = self.text?.replacingOccurrences(of: type(of: self).normalSpace, with: type(of: self).nonBreakingSpace)
+        self.text = self.text?.replacingOccurrences(of: String.breakingSpace, with: String.nonBreakingSpace)
     }
     
     @objc func replaceNonBreakingSpacesWithNormalSpaces() {
-        guard let isContainsNonBreakingSpace = (self.text?.contains(type(of: self).nonBreakingSpace)), isContainsNonBreakingSpace else { return }
+        guard let isContainsNonBreakingSpace = (self.text?.contains(String.nonBreakingSpace)), isContainsNonBreakingSpace else { return }
         
-        self.text = self.text?.replacingOccurrences(of: type(of: self).nonBreakingSpace, with: type(of: self).normalSpace)
+        self.text = self.text?.replacingOccurrences(of: String.nonBreakingSpace, with: String.breakingSpace)
     }
 }

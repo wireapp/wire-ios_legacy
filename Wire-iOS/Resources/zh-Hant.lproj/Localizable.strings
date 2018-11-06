@@ -412,12 +412,10 @@
 "content.system.conversation.with_name.participants" = "和";
 
 "content.system.message_timer_changes" = "%@將訊息時限設置為%@";
-"content.system.message_timer_changes.you" = "你將訊息時限設置為%@";
-
-"content.system.message_timer.you_part" = "您";
+"content.system.message_timer_changes-you" = "你將訊息時限設置為%@";
 
 "content.system.message_timer_off" = "%@關閉了訊息時限";
-"content.system.message_timer_off.you" = "你關閉了訊息時限";
+"content.system.message_timer_off-you" = "你關閉了訊息時限";
 
 "content.system.reactivated_device" = "您重新使用%@，在停用期間的訊息不會顯示出來。";
 

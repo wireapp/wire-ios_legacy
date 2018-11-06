@@ -89,18 +89,19 @@ static AppDelegate *sharedAppDelegate = nil;
     ZMLogInfo(@"Wire-ios version %@ (%@)",
               [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"],
               [[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString *) kCFBundleVersionKey]);
-    
+
     // Note: if we instantiate the root view controller (& windows) any earlier,
     // the windows will not receive any info about device orientation.
     self.rootViewController = [[AppRootViewController alloc] init];
-    
+
+    [PerformanceDebugger.shared start];
     return YES;
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [ZMSLog switchCurrentLogToPrevious];
-    
+
     ZMLogInfo(@"application:didFinishLaunchingWithOptions START %@ (applicationState = %ld)", launchOptions, (long)application.applicationState);
     
     [self setupBackendEnvironment];

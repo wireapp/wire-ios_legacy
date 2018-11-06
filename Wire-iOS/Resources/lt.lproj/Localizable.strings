@@ -412,12 +412,10 @@
 "content.system.conversation.with_name.participants" = "su";
 
 "content.system.message_timer_changes" = "%@ nustatė žinutės laikmatį į %@";
-"content.system.message_timer_changes.you" = "Nustatėte žinutės laikmatį į %@";
-
-"content.system.message_timer.you_part" = "Jūs";
+"content.system.message_timer_changes-you" = "Nustatėte žinutės laikmatį į %@";
 
 "content.system.message_timer_off" = "%@ išjungė žinutės laikmatį";
-"content.system.message_timer_off.you" = "Išjungėte žinutės laikmatį";
+"content.system.message_timer_off-you" = "Išjungėte žinutės laikmatį";
 
 "content.system.reactivated_device" = "Vėl pradėjote naudotis „%@“. Žinutės parašytos įrenginio nenaudojimo laikotarpiu čia neatsiras.";
 
