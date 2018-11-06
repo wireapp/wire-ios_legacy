@@ -21,40 +21,6 @@ import WireSyncEngine
 import Cartography
 import TTTAttributedLabel
 
-
-extension ZMConversationMessage {
-
-    fileprivate func formattedReceivedDate() -> String? {
-        return serverTimestamp.map(formattedDate)
-    }
-
-    fileprivate func formattedEditedDate() -> String? {
-        return updatedAt.map(formattedDate)
-    }
-
-    private func formattedDate(_ date: Date) -> String {
-        let timeString = Message.longVersionTimeFormatter().string(from: date)
-        let oneDayInSeconds = 24.0 * 60.0 * 60.0
-        let shouldShowDate = fabs(date.timeIntervalSinceReferenceDate - Date().timeIntervalSinceReferenceDate) > oneDayInSeconds
-        if shouldShowDate {
-            let dateString = Message.shortVersionDateFormatter().string(from: date)
-            return dateString + " " + timeString
-        } else {
-            return timeString
-        }
-    }
-}
-
-extension ZMSystemMessageData {
-
-    fileprivate func callDurationString() -> String? {
-        guard systemMessageType == .performedCall, duration > 0 else { return nil }
-//        return  PerformedCallCell.callDurationFormatter.string(from: duration)
-        return nil
-    }
-}
-
-
 @objc public protocol MessageToolboxViewDelegate: NSObjectProtocol {
     func messageToolboxViewDidSelectLikers(_ messageToolboxView: MessageToolboxView)
     func messageToolboxViewDidSelectResend(_ messageToolboxView: MessageToolboxView)

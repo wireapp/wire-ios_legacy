@@ -93,7 +93,7 @@ extension ConversationMessageCellDescription {
     }
 
     func makeCell(for tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
-        return tableView.dequeueConversationCell(for: type(of: self), description: self, for: indexPath)
+        return tableView.dequeueConversationCell(with: self, for: indexPath)
     }
     
     func configureCell(_ cell: UITableViewCell) {

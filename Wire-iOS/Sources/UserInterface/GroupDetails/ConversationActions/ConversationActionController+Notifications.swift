@@ -19,7 +19,7 @@
 import Foundation
 
 enum NotificationResult: CaseIterable {
-    case everything, mentions, nothing, cancel
+    case everything, mentionsAndReplies, nothing, cancel
     
     static var title: String {
         return "meta.menu.configure_notification.dialog_message".localized
@@ -29,8 +29,8 @@ enum NotificationResult: CaseIterable {
         switch self {
         case .everything:
             return MutedMessageTypes.none
-        case .mentions:
-            return .nonMentions
+        case .mentionsAndReplies:
+            return .regular
         case .nothing:
             return .all
         case .cancel:
@@ -46,7 +46,7 @@ enum NotificationResult: CaseIterable {
         let base = "meta.menu.configure_notification.button_"
         switch self {
         case .everything: return base + "everything"
-        case .mentions: return base + "mentions"
+        case .mentionsAndReplies: return base + "mentions_and_replies"
         case .nothing: return base + "nothing"
         case .cancel: return base + "cancel"
         }
@@ -77,7 +77,8 @@ enum NotificationResult: CaseIterable {
 extension ConversationActionController {
 
     func requestNotificationResult(for conversation: ZMConversation, handler: @escaping (NotificationResult) -> Void) {
-        let controller = UIAlertController(title: NotificationResult.title, message: nil, preferredStyle: .actionSheet)
+        let title = "\(conversation.displayName) • \(NotificationResult.title)"
+        let controller = UIAlertController(title: title, message: nil, preferredStyle: .actionSheet)
         NotificationResult.allCases.map { $0.action(for: conversation, handler: handler) }.forEach(controller.addAction)
         present(controller)
     }

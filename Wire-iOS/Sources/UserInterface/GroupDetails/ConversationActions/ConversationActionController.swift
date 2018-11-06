@@ -43,6 +43,7 @@
         }
         
         let controller = UIAlertController(title: showConverationNameInMenuTitle ? conversation.displayName: nil, message: nil, preferredStyle: .actionSheet)
+        // TODO: we need to exclude the notification settings action if the menu is being presented from the conversation details.
         conversation.actions.map(alertAction).forEach(controller.addAction)
         controller.addAction(.cancel())
         present(controller)

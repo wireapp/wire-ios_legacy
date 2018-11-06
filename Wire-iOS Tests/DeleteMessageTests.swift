@@ -73,24 +73,26 @@ final class DeleteMessageTests: XCTestCase {
     }
 
     func testThatTheExpectedCellsCanBeDeleted() {
+        let deleteAction = #selector(ConversationCellActionController.deleteMessage)
+
         // can perform action decides if the action will be present in menu, therefore be deletable
         let textMessageCell = actionController(for: .text)
-        XCTAssertTrue((textMessageCell.canPerformAction(#selector(UIResponder.delete(_:)))))
+        XCTAssertTrue(textMessageCell.canPerformAction(deleteAction))
 
         let richMediaMessageCell = actionController(for: .textWithRichMedia)
-        XCTAssertTrue((richMediaMessageCell.canPerformAction(#selector(UIResponder.delete(_:)))))
+        XCTAssertTrue(richMediaMessageCell.canPerformAction(deleteAction))
 
         let fileMessageCell = actionController(for: .fileTransfer)
-        XCTAssertTrue((fileMessageCell.canPerformAction(#selector(UIResponder.delete(_:)))))
+        XCTAssertTrue(fileMessageCell.canPerformAction(deleteAction))
 
         let pingMessageCell = actionController(for: .ping)
-        XCTAssertTrue((pingMessageCell.canPerformAction(#selector(UIResponder.delete(_:)))))
+        XCTAssertTrue(pingMessageCell.canPerformAction(deleteAction))
 
         let imageMessageCell = actionController(for: .image)
-        XCTAssertTrue((imageMessageCell.canPerformAction(#selector(UIResponder.delete(_:)))))
+        XCTAssertTrue(imageMessageCell.canPerformAction(deleteAction))
 
         let systemMessageCell = actionController(for: .systemMessage)
-        XCTAssertFalse((systemMessageCell.canPerformAction(#selector(UIResponder.delete(_:)))))
+        XCTAssertFalse(systemMessageCell.canPerformAction(deleteAction))
     }
 
 }

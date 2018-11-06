@@ -39,9 +39,9 @@ class GroupDetailsViewControllerSnapshotTests: CoreDataSnapshotTestCase {
         }
     }
 
-    func testForInitState_NoTeam() {
+    func testForInitState_NonTeam() {
         nonTeamTest {
-            verify(view: sut.view)
+            verify(view: self.sut.view)
         }
     }
 
@@ -49,12 +49,6 @@ class GroupDetailsViewControllerSnapshotTests: CoreDataSnapshotTestCase {
         teamTest {
             sut.detailsView(GroupDetailsFooterView(), performAction: .more)
             verifyAlertController((sut?.actionController?.alertController)!)
-        }
-    }
-    
-    func testForInitState_NonTeam() {
-        nonTeamTest {
-            verify(view: self.sut.view)
         }
     }
     

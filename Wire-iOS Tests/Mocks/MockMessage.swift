@@ -289,22 +289,3 @@ extension MockFileMessageData: MockFileMessageDataType { }
     
     var systemMessageType: ZMSystemMessageType = ZMSystemMessageType.invalid
 }
-
-extension MockMessage {
-    func formattedReceivedDate() -> String? {
-        guard let timestamp = self.serverTimestamp else {
-            return .none
-        }
-        let timeString = Message.longVersionTimeFormatter().string(from: timestamp)
-        let oneDayInSeconds = 24.0 * 60.0 * 60.0
-        let shouldShowDate = fabs(timestamp.timeIntervalSinceReferenceDate - Date().timeIntervalSinceReferenceDate) > oneDayInSeconds
-        
-        if shouldShowDate {
-            let dateString = Message.shortVersionDateFormatter().string(from: timestamp)
-            return dateString + " " + timeString
-        }
-        else {
-            return timeString
-        }
-    }
-}

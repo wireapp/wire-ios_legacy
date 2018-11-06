@@ -42,8 +42,8 @@
         self.messageWindow = messageWindow;
         self.messageWindowObserverToken = [MessageWindowChangeInfo addObserver:self forWindow:self.messageWindow];
         self.firstUnreadMessage = self.messageWindow.conversation.firstUnreadMessage;
-        self.sectionControllers = [[NSCache alloc] init];
-        self.actionControllers = [[NSCache alloc] init];
+        self.sectionControllers = [[NSMutableDictionary alloc] init];
+        self.actionControllers = [[NSMutableDictionary alloc] init];
     }
     
     return self;
@@ -62,14 +62,14 @@
 
 - (ConversationCellActionController *)actionControllerForMessage:(id<ZMConversationMessage>)message
 {
-    ConversationCellActionController *cachedEntry = [self.actionControllers objectForKey:message];
+    ConversationCellActionController *cachedEntry = [self.actionControllers objectForKey:message.nonce];
 
     if (cachedEntry) {
         return cachedEntry;
     }
 
     ConversationCellActionController *actionController = [[ConversationCellActionController alloc] initWithResponder:self.messageActionResponder message:message];
-    [self.actionControllers setObject:actionController forKey:message];
+    [self.actionControllers setObject:actionController forKey:message.nonce];
 
     return actionController;
 }
@@ -139,3 +139,4 @@
 }
 
 @end
+

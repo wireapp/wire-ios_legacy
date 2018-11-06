@@ -84,10 +84,10 @@ extension IndexSet {
     /// The object that receives informations from the section.
     @objc weak var sectionDelegate: ConversationMessageSectionControllerDelegate?
 
-    private var changeObserver: Any?
+    private var changeObservers: [Any] = []
 
     deinit {
-        changeObserver = nil
+        changeObservers.removeAll()
     }
 
     init(message: ZMConversationMessage, context: ConversationMessageContext, layoutProperties: ConversationCellLayoutProperties) {
@@ -102,6 +102,10 @@ extension IndexSet {
         visibleCellDescriptions = visibleDescriptions(in: context)
         
         startObservingChanges(for: message)
+        
+	if let quotedMessage = message?.textMessageData?.quote {
+             startObservingChanges(for: quotedMessage)
+        }
     }
     
     
@@ -299,12 +303,13 @@ extension IndexSet {
 
     private func startObservingChanges(for message: ZMConversationMessage) {
         if let userSession = ZMUserSession.shared() {
-            changeObserver = MessageChangeInfo.add(observer: self, for: message, userSession: userSession)
+            let observer = MessageChangeInfo.add(observer: self, for: message, userSession: userSession)
+            changeObservers.append(observer)
         }
     }
 
     func messageDidChange(_ changeInfo: MessageChangeInfo) {
-        sectionDelegate?.messageSectionController(self, didRequestRefreshForMessage: changeInfo.message)
+        sectionDelegate?.messageSectionController(self, didRequestRefreshForMessage: self.message)
     }
 
 }
