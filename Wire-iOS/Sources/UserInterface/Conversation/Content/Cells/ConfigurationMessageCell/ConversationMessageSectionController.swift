@@ -55,8 +55,8 @@ extension IndexSet {
 @objc class ConversationMessageSectionController: NSObject, ZMMessageObserver {
 
     /// The view descriptor of the section.
+    @objc var visibleCellDescriptions: [AnyConversationMessageCellDescription] = []
     @objc var cellDescriptions: [AnyConversationMessageCellDescription] = []
-    @objc var allCellDescriptions: [AnyConversationMessageCellDescription] = []
     
     var toolboxDescription: AnyConversationMessageCellDescription
     var senderDescription: AnyConversationMessageCellDescription
@@ -100,12 +100,12 @@ extension IndexSet {
         
         if addLegacyContentIfNeeded(layoutProperties: layoutProperties) { return }
         
-        allCellDescriptions.append(burstTimestampDescription)
-        allCellDescriptions.append(senderDescription)
+        cellDescriptions.append(burstTimestampDescription)
+        cellDescriptions.append(senderDescription)
         addContent(context: context, layoutProperties: layoutProperties)
-        allCellDescriptions.append(toolboxDescription)
+        cellDescriptions.append(toolboxDescription)
         
-        cellDescriptions = visibleDescriptions(in: context)
+        visibleCellDescriptions = visibleDescriptions(in: context)
     }
     
     
@@ -185,12 +185,12 @@ extension IndexSet {
     
     private func addSystemMessage(layoutProperties: ConversationCellLayoutProperties) {
         let cells = ConversationSystemMessageCellDescription.cells(for: message, layoutProperties: layoutProperties)
-        allCellDescriptions.append(contentsOf: cells)
+        cellDescriptions.append(contentsOf: cells)
     }
     
     private func addTextMessageAndAttachments() {
         let cells = ConversationTextMessageCellDescription.cells(for: message)
-        allCellDescriptions.append(contentsOf: cells)
+        cellDescriptions.append(contentsOf: cells)
     }
     
     private func addLocationMessage() {
@@ -210,7 +210,7 @@ extension IndexSet {
      */
 
     func add<T: ConversationMessageCellDescription>(description: T) {
-        allCellDescriptions.append(AnyConversationMessageCellDescription(description))
+        cellDescriptions.append(AnyConversationMessageCellDescription(description))
     }
     
     func didSelect(indexPath: IndexPath, tableView: UITableView) {
@@ -227,9 +227,9 @@ extension IndexSet {
         self.context = context
         tableView.beginUpdates()
         
-        let old = ZMOrderedSetState(orderedSet: NSOrderedSet(array: cellDescriptions.reversed()))
-        cellDescriptions = visibleDescriptions(in: context)
-        let new = ZMOrderedSetState(orderedSet: NSOrderedSet(array: cellDescriptions.reversed()))
+        let old = ZMOrderedSetState(orderedSet: NSOrderedSet(array: visibleCellDescriptions.reversed()))
+        visibleCellDescriptions = visibleDescriptions(in: context)
+        let new = ZMOrderedSetState(orderedSet: NSOrderedSet(array: visibleCellDescriptions.reversed()))
         let change = ZMChangedIndexes(start: old, end: new, updatedState: new, moveType: .nsTableView)
         
         if let deleted = change?.deletedIndexes.indexPaths(in: sectionIndex) {
@@ -245,7 +245,7 @@ extension IndexSet {
     
     func visibleDescriptions(in context: ConversationMessageContext) -> [AnyConversationMessageCellDescription] {
         
-        return allCellDescriptions.filter { (description) -> Bool in
+        return cellDescriptions.filter { (description) -> Bool in
             
             switch description {
             case burstTimestampDescription:
@@ -284,7 +284,7 @@ extension IndexSet {
 
     /// The number of child cells in the section that compose the message.
     var numberOfCells: Int {
-        return cellDescriptions.count
+        return visibleCellDescriptions.count
     }
 
     /**
@@ -313,9 +313,9 @@ extension IndexSet {
 
     func cellDescription(at row: Int) -> AnyConversationMessageCellDescription {
         if useInvertedIndices {
-            return cellDescriptions[(numberOfCells - 1) - row]
+            return visibleCellDescriptions[(numberOfCells - 1) - row]
         } else {
-            return cellDescriptions[row]
+            return visibleCellDescriptions[row]
         }
     }
 

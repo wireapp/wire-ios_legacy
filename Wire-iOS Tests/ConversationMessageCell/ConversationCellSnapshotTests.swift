@@ -50,7 +50,7 @@ class ConversationCellSnapshotTests: CoreDataSnapshotTestCase {
 
         tableView.dataSource = self.section
         tableView.delegate = self.section
-        section.cellDescriptions.forEach { $0.register(in: tableView) }
+        section.visibleCellDescriptions.forEach { $0.register(in: tableView) }
 
         tableView.backgroundColor = .contentBackground
         tableView.translatesAutoresizingMaskIntoConstraints = false
