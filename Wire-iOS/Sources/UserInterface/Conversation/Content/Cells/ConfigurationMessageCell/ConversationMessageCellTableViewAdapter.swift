@@ -21,7 +21,13 @@ import Foundation
 class ConversationMessageCellTableViewAdapter<C: ConversationMessageCellDescription>: UITableViewCell {
     
     var cellView: C.View
-    var cellDescription: C?
+
+    var cellDescription: C? {
+        didSet {
+            longPressGesture.isEnabled = cellDescription?.supportsActions == true
+            doubleTapGesture.isEnabled = cellDescription?.supportsActions == true
+        }
+    }
 
     var isFullWidth: Bool = false {
         didSet {
@@ -33,6 +39,9 @@ class ConversationMessageCellTableViewAdapter<C: ConversationMessageCellDescript
     private var top: NSLayoutConstraint!
     private var trailing: NSLayoutConstraint!
     private var bottom: NSLayoutConstraint!
+
+    private var longPressGesture: UILongPressGestureRecognizer!
+    private var doubleTapGesture: UITapGestureRecognizer!
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         self.cellView = C.View(frame: .zero)
@@ -55,12 +64,12 @@ class ConversationMessageCellTableViewAdapter<C: ConversationMessageCellDescript
 
         NSLayoutConstraint.activate([leading, trailing, top, bottom])
 
-        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(onLongPress))
-        contentView.addGestureRecognizer(longPress)
+        longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(onLongPress))
+        contentView.addGestureRecognizer(longPressGesture)
 
-        let doubleTap = UITapGestureRecognizer(target: self, action: #selector(onDoubleTap))
-        doubleTap.numberOfTapsRequired = 2
-        contentView.addGestureRecognizer(doubleTap)
+        doubleTapGesture = UITapGestureRecognizer(target: self, action: #selector(onDoubleTap))
+        doubleTapGesture.numberOfTapsRequired = 2
+        contentView.addGestureRecognizer(doubleTapGesture)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -147,13 +156,6 @@ class ConversationMessageCellTableViewAdapter<C: ConversationMessageCellDescript
         cellDescription?.actionController?.likeMessage()
     }
 
-    override func copy(_ sender: Any?) {
-        cellDescription?.actionController?.copyMessage()
-    }
-
-    override func delete(_ sender: Any?) {
-        cellDescription?.actionController?.deleteMessage()
-    }
 
 }
 
@@ -164,7 +166,7 @@ extension UITableView {
         register(ConversationMessageCellTableViewAdapter<C>.self, forCellReuseIdentifier: reuseIdentifier)
     }
 
-    func dequeueConversationCell<C: ConversationMessageCellDescription>(for type: C.Type, description: C, for indexPath: IndexPath) -> UITableViewCell {
+    func dequeueConversationCell<C: ConversationMessageCellDescription>(with description: C, for indexPath: IndexPath) -> ConversationMessageCellTableViewAdapter<C> {
         let reuseIdentifier = String(describing: C.View.self)
 
         let cell = dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as Any as! ConversationMessageCellTableViewAdapter<C>

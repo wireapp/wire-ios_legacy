@@ -127,13 +127,22 @@ final class MessageThumbnailPreviewView: UIView {
             imagePreview.heightAnchor.constraint(equalToConstant: 42),
             ])
     }
+
+    private func editIcon() -> NSAttributedString {
+        if message.updatedAt != nil {
+            return "  " + NSAttributedString(attachment: NSTextAttachment.textAttachment(for: .pencil, with: .textForeground, iconSize: 8)!)
+        }
+        else {
+            return NSAttributedString()
+        }
+    }
     
     private func updateForMessage() {
-        senderLabel.text = message.sender?.displayName(in: message.conversation!)
-        
         let attributes: [NSAttributedString.Key: Any] = [.font: UIFont.smallSemiboldFont,
                                                          .foregroundColor: UIColor.textForeground]
-        
+
+        senderLabel.attributedText = (message.senderName && attributes) + self.editIcon()
+
         if message.isImage {
             let attributes: [NSAttributedString.Key: Any] = [.font: UIFont.smallSemiboldFont,
                                                              .foregroundColor: UIColor.textForeground]
@@ -208,18 +217,17 @@ final class MessagePreviewView: UIView {
     }
     
     private func setupConstraints() {
-        
         let inset: CGFloat = 12
-        
+
         NSLayoutConstraint.activate([
             senderLabel.topAnchor.constraint(equalTo: topAnchor, constant: inset),
             senderLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: inset),
             senderLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -inset),
-            contentTextView.topAnchor.constraint(equalTo: senderLabel.bottomAnchor, constant: inset),
+            contentTextView.topAnchor.constraint(equalTo: senderLabel.bottomAnchor, constant: inset / 2),
             contentTextView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: inset),
             contentTextView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -inset),
             contentTextView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -inset),
-            ])
+        ])
     }
     
     private func editIcon() -> NSAttributedString {
@@ -230,24 +238,15 @@ final class MessagePreviewView: UIView {
             return NSAttributedString()
         }
     }
-    
+
     private func updateForMessage() {
-        
         let attributes: [NSAttributedString.Key: Any] = [.font: UIFont.smallSemiboldFont,
                                                          .foregroundColor: UIColor.textForeground]
         
         senderLabel.attributedText = (message.senderName && attributes) + self.editIcon()
         
         if let textMessageData = message.textMessageData {
-            let hasNoText = textMessageData.messageText == nil || textMessageData.messageText!.isEmpty
-            if hasNoText, let linkPreview = textMessageData.linkPreview {
-                let font = UIFont.systemFont(ofSize: 14, contentSizeCategory: .medium, weight: .light)
-                    contentTextView.attributedText = linkPreview.originalURLString && [.font: font,
-                                                                                       .foregroundColor: UIColor.textForeground]
-            }
-            else {
-                contentTextView.attributedText = NSAttributedString.formatForPreview(message: message.textMessageData!)
-            }
+            contentTextView.attributedText = NSAttributedString.formatForPreview(message: textMessageData, inputMode: true)
         }
         else if let location = message.locationMessageData {
             

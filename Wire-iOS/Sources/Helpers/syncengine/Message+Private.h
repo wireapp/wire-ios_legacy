@@ -22,9 +22,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface Message (Private)
 
-+ (NSDateFormatter *)shortVersionDateFormatter;
-+ (NSDateFormatter *)longVersionTimeFormatter;
-
+@property (class, nonatomic, strong) NSDateFormatter *shortTimeFormatter;
+@property (class, nonatomic, strong) NSDateFormatter *shortDateFormatter;
+@property (class, nonatomic, strong) NSDateFormatter *shortDateTimeFormatter;
 
 @end
 

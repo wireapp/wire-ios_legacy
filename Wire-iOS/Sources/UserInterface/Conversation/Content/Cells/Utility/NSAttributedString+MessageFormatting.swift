@@ -104,9 +104,15 @@ extension NSAttributedString {
     }
     
     @objc
-    static func formatForPreview(message: ZMTextMessageData) -> NSAttributedString {
+    static func formatForPreview(message: ZMTextMessageData, inputMode: Bool) -> NSAttributedString {
         var plainText = message.messageText ?? ""
-        
+
+        // Inline the link preview text
+        if let linkPreview = message.linkPreview {
+            let separator = plainText.isEmpty ? "" : " · "
+            plainText.append(separator + linkPreview.originalURLString)
+        }
+
         // Substitute mentions with text markers
         let mentionTextObjects = plainText.replaceMentionsWithTextMarkers(mentions: message.mentions)
         
@@ -124,6 +130,10 @@ extension NSAttributedString {
         let mentionRanges = mentionTextObjects.compactMap{ $0.range(in: markdownText.string as String)}
         markdownText.replaceEmoticons(excluding: linkAttachmentRanges + mentionRanges)
         markdownText.removeTrailingWhitespace()
+
+        if !inputMode {
+            markdownText.changeFontSizeIfMessageContainsOnlyEmoticons(to: 32)
+        }
         
         markdownText.removeAttribute(.link, range: NSRange(location: 0, length: markdownText.length))
         markdownText.addAttribute(.foregroundColor, value: UIColor.textForeground, range: NSRange(location: 0, length: markdownText.length))
@@ -198,9 +208,9 @@ extension NSMutableAttributedString {
         }
     }
     
-    func changeFontSizeIfMessageContainsOnlyEmoticons() {
+    func changeFontSizeIfMessageContainsOnlyEmoticons(to fontSize: CGFloat = 40) {
         if (string as String).containsOnlyEmojiWithSpaces {
-            setAttributes([.font: UIFont.systemFont(ofSize: 40)], range: wholeRange)
+            setAttributes([.font: UIFont.systemFont(ofSize: fontSize)], range: wholeRange)
         }
     }
     
