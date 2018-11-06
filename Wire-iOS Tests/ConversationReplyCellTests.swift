@@ -254,9 +254,20 @@ class ConversationReplyCellTests: CoreDataSnapshotTestCase {
         verifyInAllPhoneWidths(view: cell)
     }
 
+    func testThatItDisplaysErrorForDeletedMessage_57() {
+        // GIVEN
+        let message: ZMConversationMessage? = nil
+
+        // WHEN
+        let cell = makeCell(for: message)
+
+        // THEN
+        verifyInAllPhoneWidths(view: cell)
+    }
+
     // MARK: - Helpers
 
-    private func makeCell(for message: ZMConversationMessage) -> ConversationReplyCell {
+    private func makeCell(for message: ZMConversationMessage?) -> ConversationReplyCell {
         let cellDescription = ConversationReplyCellDescription(quotedMessage: message)
         let cell = ConversationReplyCell()
         cell.configure(with: cellDescription.configuration)
