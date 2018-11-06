@@ -103,8 +103,8 @@ extension IndexSet {
         
         startObservingChanges(for: message)
         
-	if let quotedMessage = message?.textMessageData?.quote {
-             startObservingChanges(for: quotedMessage)
+        if let quotedMessage = message.textMessageData?.quote {
+            startObservingChanges(for: quotedMessage)
         }
     }
     
