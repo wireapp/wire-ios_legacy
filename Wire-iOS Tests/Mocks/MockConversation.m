@@ -82,4 +82,9 @@
     return nil;
 }
 
+- (BOOL)isSelfAnActiveMember
+{
+    return YES;
+}
+
 @end
