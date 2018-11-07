@@ -44,7 +44,7 @@ extension ZMConversationMessage {
             return false
         }
 
-        let isSent = self.deliveryState == .delivered || self.deliveryState == .sent
+        let isSent = deliveryState.isOne(of: [.delivered, .sent])
         return !isEphemeral && conversation.isSelfAnActiveMember && isSent && (isText || isImage || isLocation || isFile)
     }
 
