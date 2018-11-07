@@ -216,7 +216,7 @@ final class CallViewController: UIViewController {
     }
 
     private func updateAppearance() {
-        view.backgroundColor = UIColor(scheme: .background, variant: callInfoConfiguration.variant)
+        view.backgroundColor = UIColor.from(scheme: .background, variant: callInfoConfiguration.variant)
     }
 
     fileprivate func alertVideoUnavailable() {

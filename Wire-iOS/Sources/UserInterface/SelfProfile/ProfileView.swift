@@ -56,19 +56,19 @@ import Cartography
         nameLabel.accessibilityIdentifier = "name"
         nameLabel.setContentHuggingPriority(UILayoutPriority.required, for: .vertical)
         nameLabel.setContentCompressionResistancePriority(UILayoutPriority.required, for: .vertical)
-        nameLabel.textColor = UIColor(scheme: .textForeground, variant: .dark)
+        nameLabel.textColor = UIColor.from(scheme: .textForeground, variant: .dark)
         nameLabel.font = FontSpec(.large, .light).font!
         handleLabel.accessibilityLabel = "profile_view.accessibility.handle".localized
         handleLabel.accessibilityIdentifier = "username"
         handleLabel.setContentHuggingPriority(UILayoutPriority.required, for: .vertical)
         handleLabel.setContentCompressionResistancePriority(UILayoutPriority.required, for: .vertical)
-        handleLabel.textColor = UIColor(scheme: .textForeground, variant: .dark)
+        handleLabel.textColor = UIColor.from(scheme: .textForeground, variant: .dark)
         handleLabel.font = FontSpec(.small, .regular).font!
         teamNameLabel.accessibilityLabel = "profile_view.accessibility.team_name".localized
         teamNameLabel.accessibilityIdentifier = "team name"
         teamNameLabel.setContentHuggingPriority(UILayoutPriority.required, for: .vertical)
         teamNameLabel.setContentCompressionResistancePriority(UILayoutPriority.required, for: .vertical)
-        teamNameLabel.textColor = UIColor(scheme: .textForeground, variant: .dark)
+        teamNameLabel.textColor = UIColor.from(scheme: .textForeground, variant: .dark)
         teamNameLabel.font = FontSpec(.small, .regular).font!
         
         nameLabel.text = user.name

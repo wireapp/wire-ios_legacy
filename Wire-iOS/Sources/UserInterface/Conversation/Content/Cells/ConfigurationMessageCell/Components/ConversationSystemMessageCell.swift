@@ -80,7 +80,7 @@ class ConversationRenamedSystemMessageCell: ConversationIconBasedCell, Conversat
     override func configureSubviews() {
         super.configureSubviews()
         nameLabel.numberOfLines = 0
-        imageView.image = UIImage(for: .pencil, fontSize: 16, color: .textForeground)
+        imageView.image = UIImage(for: .pencil, fontSize: 16, color: .from(scheme: .textForeground))
         contentView.addSubview(nameLabel)
     }
 
@@ -202,10 +202,10 @@ class ConversationRenamedSystemMessageCellDescription: ConversationMessageCellDe
         let senderText = message.senderName
         let titleString = "content.system.renamed_conv.title".localized(pov: sender.pov, args: senderText)
 
-        let title = NSAttributedString(string: titleString, attributes: [.font: UIFont.mediumFont, .foregroundColor: UIColor.textForeground])
+        let title = NSAttributedString(string: titleString, attributes: [.font: UIFont.mediumFont, .foregroundColor: UIColor.from(scheme: .textForeground)])
             .adding(font: .mediumSemiboldFont, to: senderText)
 
-        let conversationName = NSAttributedString(string: newName, attributes: [.font: UIFont.normalSemiboldFont, .foregroundColor: UIColor.textForeground])
+        let conversationName = NSAttributedString(string: newName, attributes: [.font: UIFont.normalSemiboldFont, .foregroundColor: UIColor.from(scheme: .textForeground)])
         configuration = View.Configuration(attributedText: title, newConversationName: conversationName)
         actionController = nil
     }
@@ -235,7 +235,7 @@ class ConversationCallSystemMessageCellDescription: ConversationMessageCellDescr
             systemMessageType: data.systemMessageType,
             font: .mediumFont,
             boldFont: .mediumSemiboldFont,
-            textColor: .textForeground,
+            textColor: .from(scheme: .textForeground),
             message: message
         )
 
@@ -265,7 +265,7 @@ class ConversationMessageTimerCellDescription: ConversationMessageCellDescriptio
         let timeoutValue = MessageDestructionTimeoutValue(rawValue: timer.doubleValue)
 
         var updateText: NSAttributedString? = nil
-        let baseAttributes: [NSAttributedString.Key: AnyObject] = [.font: UIFont.mediumFont, .foregroundColor: UIColor.textForeground]
+        let baseAttributes: [NSAttributedString.Key: AnyObject] = [.font: UIFont.mediumFont, .foregroundColor: UIColor.from(scheme: .textForeground)]
 
         if timeoutValue == .none {
             updateText = NSAttributedString(string: "content.system.message_timer_off".localized(pov: sender.pov, args: senderText), attributes: baseAttributes)
@@ -278,7 +278,7 @@ class ConversationMessageTimerCellDescription: ConversationMessageCellDescriptio
                 .adding(font: .mediumSemiboldFont, to: timerString)
         }
 
-        let icon = UIImage(for: .hourglass, fontSize: 16, color: UIColor(scheme: .textDimmed))
+        let icon = UIImage(for: .hourglass, fontSize: 16, color: UIColor.from(scheme: .textDimmed))
         configuration = View.Configuration(icon: icon, attributedText: updateText, showLine: false)
         actionController = nil
     }
@@ -304,7 +304,7 @@ class ConversationVerifiedSystemMessageSectionDescription: ConversationMessageCe
     init() {
         let title = NSAttributedString(
             string: "content.system.is_verified".localized,
-            attributes: [.font: UIFont.mediumFont, .foregroundColor: UIColor.textForeground]
+            attributes: [.font: UIFont.mediumFont, .foregroundColor: UIColor.from(scheme: .textForeground)]
         )
 
         configuration = View.Configuration(icon: WireStyleKit.imageOfShieldverified, attributedText: title, showLine: true)
@@ -358,18 +358,18 @@ class ConversationCannotDecryptSystemMessageCellDescription: ConversationMessage
         let name = localizedWhoPart(sender, remoteIDChanged: remoteIDChanged)
 
         let why = NSAttributedString(string: localizedWhyPart(remoteIDChanged),
-                                     attributes: [.font: UIFont.mediumFont, .link: link as AnyObject, .foregroundColor: UIColor.textForeground])
+                                     attributes: [.font: UIFont.mediumFont, .link: link as AnyObject, .foregroundColor: UIColor.from(scheme: .textForeground)])
 
         let device : NSAttributedString
         if DeveloperMenuState.developerMenuEnabled() {
             device = "\n" + NSAttributedString(string: localizedDevice(systemMessage.clients.first as? UserClient),
-                                               attributes: [.font: UIFont.mediumFont, .foregroundColor: UIColor.textDimmed])
+                                               attributes: [.font: UIFont.mediumFont, .foregroundColor: UIColor.from(scheme: .textDimmed)])
         } else {
             device = NSAttributedString()
         }
 
         let messageString = NSAttributedString(string: localizedWhatPart(remoteIDChanged, name: name),
-                                               attributes: [.font: UIFont.mediumFont, .foregroundColor: UIColor.textForeground])
+                                               attributes: [.font: UIFont.mediumFont, .foregroundColor: UIColor.from(scheme: .textForeground)])
 
         let fullString = messageString + " " + why + device
         return fullString.addAttributes([.font: UIFont.mediumSemiboldFont], toSubstring:name)

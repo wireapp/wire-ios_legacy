@@ -100,7 +100,7 @@ class ConversationSenderMessageCellDescription: ConversationMessageCellDescripti
         self.message = message
         
         var icon: UIImage? = nil
-        let iconColor = UIColor(scheme: .iconNormal)
+        let iconColor = UIColor.from(scheme: .iconNormal)
 
         if message.isDeletion {
             icon = UIImage(for: .trash, iconSize: .messageStatus, color: iconColor)

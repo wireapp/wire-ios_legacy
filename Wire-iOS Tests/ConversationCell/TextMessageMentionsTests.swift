@@ -175,5 +175,6 @@ final class TextMessageMentionsTests: ConversationCellSnapshotTests {
 //
 //        verify(for: message)
 //    }
+
 }
 

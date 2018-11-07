@@ -47,14 +47,14 @@ protocol ChangeHandleTableViewCellDelegate: class {
     let prefixLabel: UILabel = {
         let label = UILabel()
         label.font = .normalSemiboldFont
-        label.textColor = UIColor(scheme: .textDimmed, variant: .dark)
+        label.textColor = UIColor.from(scheme: .textDimmed, variant: .dark)
 
         return label
     }()
     let handleTextField: UITextField = {
         let textField = UITextField()
         textField.font = .normalFont
-        textField.textColor = .textForegroundDark
+        textField.textColor = .from(scheme: .textForeground, variant: .dark)
 
         return textField
     }()
@@ -255,7 +255,7 @@ struct HandleChangeState {
 
     fileprivate var attributedFooterTitle: NSAttributedString? {
         let infoText = "self.settings.account_section.handle.change.footer".localized.attributedString && UIColor(white: 1, alpha: 0.4)
-        let alreadyTakenText = "self.settings.account_section.handle.change.footer.unavailable".localized && UIColor(for: .vividRed)
+        let alreadyTakenText = "self.settings.account_section.handle.change.footer.unavailable".localized && UIColor.vividRed
         let prefix = state.availability == .taken ? alreadyTakenText + "\n\n" : "\n\n".attributedString
         return (prefix + infoText) && footerFont
     }

@@ -45,7 +45,7 @@ class MockCellDescription<T>: ConversationMessageCellDescription {
     weak var actionController: ConversationCellActionController?
 
     init() {
-        let backgroundColor = UIColor(for: .vividRed)!
+        let backgroundColor = UIColor(for: .vividRed)
         configuration = View.Configuration(backgroundColor: backgroundColor)
     }
 }

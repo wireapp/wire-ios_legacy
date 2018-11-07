@@ -40,8 +40,8 @@ class AnimatedPenView : UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        let iconColor = UIColor(scheme: .textForeground)
-        let backgroundColor = UIColor(scheme: .background)
+        let iconColor = UIColor.from(scheme: .textForeground)
+        let backgroundColor = UIColor.from(scheme: .background)
         
         dots.image = UIImage(for: .typingDots, fontSize: 8, color: iconColor)
         pen.image = UIImage(for: .pencil, fontSize: 8, color: iconColor)
@@ -113,20 +113,20 @@ class AnimatedPenView : UIView {
     public let nameLabel: UILabel = {
         let label = UILabel()
         label.font = .smallLightFont
-        label.textColor = .textPlaceholder
+        label.textColor = .from(scheme: .textPlaceholder)
 
         return label
     }()
     public let animatedPen = AnimatedPenView()
     public let container: UIView = {
         let view = UIView()
-        view.backgroundColor = .background
+        view.backgroundColor = .from(scheme: .background)
 
         return view
     }()
     public let expandingLine: UIView = {
         let view = UIView()
-        view.backgroundColor = .background
+        view.backgroundColor = .from(scheme: .background)
 
         return view
     }()

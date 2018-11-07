@@ -89,11 +89,11 @@ class SeparatorCollectionViewCell: UICollectionViewCell, SeparatorViewProtocol, 
     }
 
     func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
-        separator.backgroundColor = UIColor(scheme: .separator, variant: colorSchemeVariant)
+        separator.backgroundColor = UIColor.from(scheme: .separator, variant: colorSchemeVariant)
     }
 
     final func contentBackgroundColor(for colorSchemeVariant: ColorSchemeVariant) -> UIColor {
-        return contentBackgroundColor ?? UIColor(scheme: .barBackground, variant: colorSchemeVariant)
+        return contentBackgroundColor ?? UIColor.from(scheme: .barBackground, variant: colorSchemeVariant)
     }
 
 }

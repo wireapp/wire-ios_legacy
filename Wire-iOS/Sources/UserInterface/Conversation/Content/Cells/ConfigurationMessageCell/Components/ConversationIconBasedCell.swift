@@ -76,7 +76,7 @@ class ConversationIconBasedCell: UIView, TTTAttributedLabelDelegate {
         ]
 
         textLabel.delegate = self
-        lineView.backgroundColor = .separator
+        lineView.backgroundColor = .from(scheme: .separator)
 
         imageContainer.addSubview(imageView)
         addSubview(imageContainer)

@@ -84,7 +84,7 @@ final class GroupParticipantsDetailViewController: UIViewController, UICollectio
         collectionView.dataSource = self
         collectionView.register(SelectedUserCell.self, forCellWithReuseIdentifier: SelectedUserCell.reuseIdentifier)
         title = "participants.all.title".localized.uppercased()
-        view.backgroundColor = UIColor(scheme: .contentBackground)
+        view.backgroundColor = UIColor.from(scheme: .contentBackground)
         navigationItem.rightBarButtonItem = navigationController?.closeItem()
     }
     
@@ -149,7 +149,7 @@ private class SelectedUserCell: UserCell {
         guard preselected else { return }
         
         let changes: () -> () = {
-            self.contentView.backgroundColor = UIColor(scheme: .cellSeparator)
+            self.contentView.backgroundColor = UIColor.from(scheme: .cellSeparator)
         }
         
         if animated {

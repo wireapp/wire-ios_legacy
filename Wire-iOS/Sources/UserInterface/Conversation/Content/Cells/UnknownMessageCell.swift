@@ -68,7 +68,7 @@ class CustomMessageView: UIView {
         messageLabel.delegate = self
 
         messageLabel.font = FontSpec(.small, .light).font
-        messageLabel.textColor = UIColor(scheme: .textForeground)
+        messageLabel.textColor = UIColor.from(scheme: .textForeground)
     }
 
 }
@@ -118,7 +118,7 @@ public class CustomMessageCell : ConversationCell {
         messageLabel.delegate = self
 
         messageLabel.font = FontSpec(.small, .light).font
-        messageLabel.textColor = UIColor(scheme: .textForeground)
+        messageLabel.textColor = UIColor.from(scheme: .textForeground)
     }
 
 }

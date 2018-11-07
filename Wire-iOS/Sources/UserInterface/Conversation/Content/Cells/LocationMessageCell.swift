@@ -32,8 +32,8 @@ public final class LocationMessageCell: ConversationCell {
     private var recognizer: UITapGestureRecognizer?
     private weak var locationAnnotation: MKPointAnnotation? = nil
     var labelFont: UIFont? = .normalFont
-    var labelTextColor: UIColor? = .textForeground
-    var containerColor: UIColor? = .placeholderBackground
+    var labelTextColor: UIColor? = .from(scheme: .textForeground)
+    var containerColor: UIColor? = .from(scheme: .placeholderBackground)
     var containerHeightConstraint: NSLayoutConstraint!
     
     public override required init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -41,7 +41,7 @@ public final class LocationMessageCell: ConversationCell {
         containerView.translatesAutoresizingMaskIntoConstraints = false
         containerView.layer.cornerRadius = 4
         containerView.clipsToBounds = true
-        containerView.backgroundColor = .placeholderBackground
+        containerView.backgroundColor = .from(scheme: .placeholderBackground)
         
         configureViews()
         createConstraints()

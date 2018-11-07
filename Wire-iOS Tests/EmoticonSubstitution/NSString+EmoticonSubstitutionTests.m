@@ -76,4 +76,22 @@
     XCTAssertEqualObjects(resolvedString, targetString);
 }
 
+- (void)testThatSubstitutionInMiddleRangeWorks {
+    // Given
+    NSString *targetString = @"Hello, my darling!😊 I love you <3!";
+
+    id classMock = OCMClassMock([EmoticonSubstitutionConfiguration class]);
+    EmoticonSubstitutionConfiguration *config = [EmoticonSubstitutionConfigurationMocks configurationFromFile:@"emo-test-03.json"];
+    OCMStub([classMock sharedInstance]).andReturn(config);
+
+    NSString *testString = @"Hello, my darling!:) I love you <3!";
+    NSMutableString *resolvedString = [testString mutableCopy];
+
+    // When
+    [resolvedString resolveEmoticonShortcutsInRange:NSMakeRange(10, 22)];
+
+    // Then
+    XCTAssertEqualObjects(resolvedString, targetString);
+}
+
 @end

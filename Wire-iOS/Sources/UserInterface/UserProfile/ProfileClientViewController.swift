@@ -91,7 +91,7 @@ import Cartography
     }
 
     func setupViews() {
-        view.backgroundColor = UIColor(scheme: .background)
+        view.backgroundColor = UIColor.from(scheme: .background)
 
         self.setupContentView()
         self.setupBackButton()
@@ -140,8 +140,8 @@ import Cartography
         descriptionTextView.isScrollEnabled = false
         descriptionTextView.isEditable = false
         descriptionTextView.delegate = self
-        descriptionTextView.textColor = UIColor(scheme: .textForeground)
-        descriptionTextView.backgroundColor = UIColor(scheme: .textBackground)
+        descriptionTextView.textColor = UIColor.from(scheme: .textForeground)
+        descriptionTextView.backgroundColor = UIColor.from(scheme: .textBackground)
         descriptionTextView.linkTextAttributes = [.foregroundColor : UIColor.accent()]
         
         let descriptionTextFont = FontSpec(.normal, .light).font!
@@ -149,7 +149,7 @@ import Cartography
         if let user = self.userClient.user {
             descriptionTextView.attributedText = (String(format: "profile.devices.detail.verify_message".localized, user.displayName) &&
                 descriptionTextFont &&
-                UIColor(scheme: .textForeground)) +
+                UIColor.from(scheme: .textForeground)) +
                 "\n" +
                 ("profile.devices.detail.verify_message.link".localized &&
                     [.font: descriptionTextFont, .link: URL.wr_fingerprintHowToVerify])
@@ -158,7 +158,7 @@ import Cartography
     }
     
     private func setupSeparatorLineView() {
-        separatorLineView.backgroundColor = UIColor(scheme: .separator)
+        separatorLineView.backgroundColor = UIColor.from(scheme: .separator)
         self.contentView.addSubview(separatorLineView)
     }
     
@@ -166,13 +166,13 @@ import Cartography
         typeLabel.text = self.userClient.deviceClass?.uppercased()
         typeLabel.numberOfLines = 1
         typeLabel.font = FontSpec(.small, .semibold).font!
-        typeLabel.textColor = UIColor(scheme: .textForeground)
+        typeLabel.textColor = UIColor.from(scheme: .textForeground)
         self.contentView.addSubview(typeLabel)
     }
     
     private func setupIDLabel() {
         IDLabel.numberOfLines = 1
-        IDLabel.textColor = UIColor(scheme: .textForeground)
+        IDLabel.textColor = UIColor.from(scheme: .textForeground)
         self.contentView.addSubview(IDLabel)
         self.updateIDLabel()
     }
@@ -190,7 +190,7 @@ import Cartography
 
     private func setupFullIDLabel() {
         fullIDLabel.numberOfLines = 0
-        fullIDLabel.textColor = UIColor(scheme: .textForeground)
+        fullIDLabel.textColor = UIColor.from(scheme: .textForeground)
         self.contentView.addSubview(fullIDLabel)
     }
     
@@ -227,7 +227,7 @@ import Cartography
     
     private func setupVerifiedToggleLabel() {
         verifiedToggleLabel.font = FontSpec(.small, .light).font!
-        verifiedToggleLabel.textColor = UIColor(scheme: .textForeground)
+        verifiedToggleLabel.textColor = UIColor.from(scheme: .textForeground)
         verifiedToggleLabel.text = NSLocalizedString("device.verified", comment: "").uppercased()
         verifiedToggleLabel.numberOfLines = 0
         self.contentView.addSubview(verifiedToggleLabel)

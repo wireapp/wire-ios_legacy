@@ -51,7 +51,7 @@ class ConversationCellSnapshotTests: CoreDataSnapshotTestCase {
         tableView.delegate = self.section
         section.cellDescriptions.forEach { $0.register(in: tableView) }
 
-        tableView.backgroundColor = .contentBackground
+        tableView.backgroundColor = .from(scheme: .contentBackground)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.widthAnchor.constraint(equalToConstant: 375).isActive = true
 

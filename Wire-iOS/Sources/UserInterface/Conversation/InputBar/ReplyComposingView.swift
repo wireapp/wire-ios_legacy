@@ -97,7 +97,7 @@ final class ReplyComposingView: UIView {
         accessibilityIdentifier = "replyView"
         accessibilityLabel = buildAccessibilityLabel()
         
-        backgroundColor = .init(scheme: .barBackground)
+        backgroundColor = .from(scheme: .barBackground)
         
         previewView = message.replyPreview()!
         previewView.isUserInteractionEnabled = false
@@ -111,7 +111,7 @@ final class ReplyComposingView: UIView {
         closeButton.accessibilityIdentifier = "cancelReply"
         closeButton.accessibilityLabel = "conversation.input_bar.close_reply".localized
         closeButton.setIcon(.X, with: .tiny, for: .normal)
-        closeButton.setIconColor(.init(scheme: .iconNormal), for: .normal)
+        closeButton.setIconColor(.from(scheme: .iconNormal), for: .normal)
         closeButton.addCallback(for: .touchUpInside) { [weak self] _ in
             self?.delegate?.composingViewDidCancel(composingView: self!)
         }

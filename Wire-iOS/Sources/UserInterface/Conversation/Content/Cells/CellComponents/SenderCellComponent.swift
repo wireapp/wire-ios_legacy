@@ -28,9 +28,9 @@ private enum TextKind {
         case let .userName(accent: accent):
             return accent
         case .botName:
-            return UIColor(scheme: .textForeground)
+            return .from(scheme: .textForeground)
         case .botSuffix:
-            return UIColor(scheme: .textDimmed)
+            return .from(scheme: .textDimmed)
         }
     }
     
@@ -111,7 +111,7 @@ class SenderCellComponent: UIView {
         var attributedString: NSAttributedString
         if user.isServiceUser {
             let attachment = NSTextAttachment()
-            let botIcon = UIImage(for: .bot, iconSize: .like, color: UIColor(scheme: .iconGuest, variant: ColorScheme.default.variant))!
+            let botIcon = UIImage(for: .bot, iconSize: .like, color: UIColor.from(scheme: .iconGuest))!
             attachment.image = botIcon
             attachment.bounds = CGRect(x: 0.0, y: -1.5, width: botIcon.size.width, height: botIcon.size.height)
             attachment.accessibilityLabel = "general.service".localized

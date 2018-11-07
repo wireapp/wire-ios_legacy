@@ -90,7 +90,7 @@ fileprivate let normalBoldFont = FontSpec(.normal, .medium).font!
     }
 
     static var formatter: AddressBookCorrelationFormatter = {
-        AddressBookCorrelationFormatter(lightFont: smallLightFont, boldFont: smallBoldFont, color: UIColor(scheme: .textDimmed))
+        AddressBookCorrelationFormatter(lightFont: smallLightFont, boldFont: smallBoldFont, color: UIColor.from(scheme: .textDimmed))
     }()
 
     init(user: UserType?, fallbackName fallback: String, addressBookName: String?) {
@@ -100,12 +100,12 @@ fileprivate let normalBoldFont = FontSpec(.normal, .medium).font!
     }
 
     static func attributedTitle(for user: UserType?, fallback: String) -> NSAttributedString {
-        return (user?.name ?? fallback) && normalBoldFont && UIColor(scheme: .textForeground)
+        return (user?.name ?? fallback) && normalBoldFont && UIColor.from(scheme: .textForeground)
     }
 
     static func attributedSubtitle(for user: UserType?) -> NSAttributedString? {
         guard let handle = user?.handle, handle.count > 0 else { return nil }
-        return ("@" + handle) && smallBoldFont && UIColor(scheme: .textDimmed)
+        return ("@" + handle) && smallBoldFont && UIColor.from(scheme: .textDimmed)
     }
 
     static func attributedCorrelationText(for user: UserType?, addressBookName: String?) -> NSAttributedString? {

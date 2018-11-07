@@ -129,9 +129,9 @@ import Cartography
     }
 
     func setupStyle() {
-        label.textColor = UIColor(scheme: .textForeground)
-        separatorColor = UIColor(scheme: .separator)
-        separatorColorExpanded = UIColor(scheme: .paleSeparator)
+        label.textColor = UIColor.from(scheme: .textForeground)
+        separatorColor = UIColor.from(scheme: .separator)
+        separatorColorExpanded = UIColor.from(scheme: .paleSeparator)
     }
     
     func configure(with timestamp: Date, includeDayOfWeek: Bool, showUnreadDot: Bool) {

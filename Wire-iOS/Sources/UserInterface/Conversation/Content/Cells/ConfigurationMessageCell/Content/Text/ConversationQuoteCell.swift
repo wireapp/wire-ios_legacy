@@ -66,7 +66,7 @@ class ConversationReplyContentView: UIView {
         addSubview(stackView)
 
         senderComponent.label.font = .mediumSemiboldFont
-        senderComponent.label.textColor = .textForeground
+        senderComponent.label.textColor = .from(scheme: .textForeground)
         stackView.addArrangedSubview(senderComponent)
 
         contentTextView.textContainer.lineBreakMode = .byTruncatingTail
@@ -78,7 +78,7 @@ class ConversationReplyContentView: UIView {
         contentTextView.isEditable = false
         contentTextView.isSelectable = false
         contentTextView.backgroundColor = .clear
-        contentTextView.textColor = .textForeground
+        contentTextView.textColor = .from(scheme: .textForeground)
 
         contentTextView.setContentCompressionResistancePriority(.required, for: .vertical)
         stackView.addArrangedSubview(contentTextView)
@@ -87,7 +87,7 @@ class ConversationReplyContentView: UIView {
         stackView.addArrangedSubview(assetThumbnail)
 
         timestampLabel.font = .mediumFont
-        timestampLabel.textColor = .textDimmed
+        timestampLabel.textColor = .from(scheme: .textDimmed)
         timestampLabel.numberOfLines = 1
         timestampLabel.setContentCompressionResistancePriority(.required, for: .vertical)
         stackView.addArrangedSubview(timestampLabel)
@@ -110,7 +110,7 @@ class ConversationReplyContentView: UIView {
         timestampLabel.isHidden = !object.showDetails
 
         senderComponent.senderName = object.senderName
-        senderComponent.indicatorIcon = object.isEdited ? UIImage(for: .pencil, iconSize: .messageStatus, color: .iconNormal) : nil
+        senderComponent.indicatorIcon = object.isEdited ? UIImage(for: .pencil, iconSize: .messageStatus, color: .from(scheme: .iconNormal)) : nil
         timestampLabel.text = object.timestamp
 
         switch object.content {
@@ -217,7 +217,7 @@ class ConversationReplyCellDescription: ConversationMessageCellDescription {
         var isUnavailable = false
         let content: View.Configuration.Content
         let attributes: [NSAttributedString.Key: Any] = [.font: UIFont.smallSemiboldFont,
-                                                         .foregroundColor: UIColor.textForeground]
+                                                         .foregroundColor: UIColor.from(scheme: .textForeground)]
 
         switch quotedMessage {
         case let message? where message.isText:
@@ -226,12 +226,12 @@ class ConversationReplyCellDescription: ConversationMessageCellDescription {
 
         case let message? where message.isLocation:
             let location = message.locationMessageData!
-            let imageIcon = NSTextAttachment.textAttachment(for: .location, with: .textForeground)!
+            let imageIcon = NSTextAttachment.textAttachment(for: .location, with: .from(scheme: .textForeground))!
             let initialString = NSAttributedString(attachment: imageIcon) + "  " + (location.name ?? "conversation.input_bar.message_preview.location".localized).localizedUppercase
             content = .text(initialString && attributes)
 
         case let message? where message.isAudio:
-            let imageIcon = NSTextAttachment.textAttachment(for: .microphone, with: .textForeground)!
+            let imageIcon = NSTextAttachment.textAttachment(for: .microphone, with: .from(scheme: .textForeground))!
             let initialString = NSAttributedString(attachment: imageIcon) + "  " + "conversation.input_bar.message_preview.audio".localized.localizedUppercase
             content = .text(initialString && attributes)
 
@@ -243,13 +243,13 @@ class ConversationReplyCellDescription: ConversationMessageCellDescription {
 
         case let message? where message.isFile:
             let fileData = message.fileMessageData!
-            let imageIcon = NSTextAttachment.textAttachment(for: .document, with: .textForeground)!
+            let imageIcon = NSTextAttachment.textAttachment(for: .document, with: .from(scheme: .textForeground))!
             let initialString = NSAttributedString(attachment: imageIcon) + "  " + (fileData.filename ?? "conversation.input_bar.message_preview.file".localized).localizedUppercase
             content = .text(initialString && attributes)
 
         default:
             isUnavailable = true
-            let attributes: [NSAttributedString.Key: AnyObject] = [.font: UIFont.mediumFont.italic, .foregroundColor: UIColor.textDimmed]
+            let attributes: [NSAttributedString.Key: AnyObject] = [.font: UIFont.mediumFont.italic, .foregroundColor: UIColor.from(scheme: .textDimmed)]
             content = .text(NSAttributedString(string: "content.message.reply.broken_message".localized, attributes: attributes))
         }
 

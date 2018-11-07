@@ -37,7 +37,7 @@ extension UIView {
 class MessageReplyPreviewViewTests: ZMSnapshotTestCase {
     override func setUp() {
         super.setUp()
-        snapshotBackgroundColor = UIColor(scheme: .contentBackground)
+        snapshotBackgroundColor = UIColor.from(scheme: .contentBackground)
     }
     
     override func tearDown() {
@@ -50,7 +50,7 @@ class MessageReplyPreviewViewTests: ZMSnapshotTestCase {
         NSAttributedString.invalidateMarkdownStyle()
         NSAttributedString.invalidateParagraphStyle()
         
-        snapshotBackgroundColor = UIColor(scheme: .contentBackground)
+        snapshotBackgroundColor = UIColor.from(scheme: .contentBackground)
     }
     
     func testThatItRendersTextMessagePreview() {

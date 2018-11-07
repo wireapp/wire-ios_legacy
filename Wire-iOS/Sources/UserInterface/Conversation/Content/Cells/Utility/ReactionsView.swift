@@ -49,7 +49,7 @@ import Cartography
     
     public override init(frame: CGRect) {
         
-        elipsis = UIImageView(image: UIImage(for: .ellipsis, iconSize: .like, color:UIColor(scheme: .textForeground)))
+        elipsis = UIImageView(image: UIImage(for: .ellipsis, iconSize: .like, color:UIColor.from(scheme: .textForeground)))
         elipsis.contentMode = .center
         elipsis.isHidden = true
         

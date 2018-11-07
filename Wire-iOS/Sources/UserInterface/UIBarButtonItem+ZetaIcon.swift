@@ -21,7 +21,7 @@ extension UIBarButtonItem {
 
     @objc convenience init(icon: ZetaIconType, style: UIBarButtonItem.Style = .plain, target: Any?, action: Selector?) {
         self.init(
-            image: UIImage(for: icon, iconSize: .tiny, color: UIColor(scheme: .textForeground)),
+            image: UIImage(for: icon, iconSize: .tiny, color: UIColor.from(scheme: .textForeground)),
             style: style,
             target: target,
             action: action

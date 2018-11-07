@@ -37,8 +37,8 @@ class ConversationLocationMessageCell: UIView, ConversationMessageCell {
     private weak var locationAnnotation: MKPointAnnotation? = nil
 
     var labelFont: UIFont? = .normalFont
-    var labelTextColor: UIColor? = .textForeground
-    var containerColor: UIColor? = .placeholderBackground
+    var labelTextColor: UIColor? = .from(scheme: .textForeground)
+    var containerColor: UIColor? = .from(scheme: .placeholderBackground)
     var containerHeightConstraint: NSLayoutConstraint!
 
     var isSelected: Bool = false
@@ -61,7 +61,7 @@ class ConversationLocationMessageCell: UIView, ConversationMessageCell {
         containerView.translatesAutoresizingMaskIntoConstraints = false
         containerView.layer.cornerRadius = 4
         containerView.clipsToBounds = true
-        containerView.backgroundColor = .placeholderBackground
+        containerView.backgroundColor = .from(scheme: .placeholderBackground)
 
         mapView.isScrollEnabled = false
         mapView.isZoomEnabled = false

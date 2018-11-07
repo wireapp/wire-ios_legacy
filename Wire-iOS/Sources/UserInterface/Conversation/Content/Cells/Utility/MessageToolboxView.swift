@@ -38,7 +38,7 @@ import TTTAttributedLabel
         let attributedLabel = TTTAttributedLabel(frame: CGRect.zero)
         attributedLabel.font = UIFont.smallSemiboldFont
         attributedLabel.backgroundColor = .clear
-        attributedLabel.textColor = UIColor(scheme: .textDimmed)
+        attributedLabel.textColor = UIColor.from(scheme: .textDimmed)
         attributedLabel.textInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
 
         return attributedLabel
@@ -81,7 +81,7 @@ import TTTAttributedLabel
         likeButton.accessibilityLabel = "likeButton"
         likeButton.addTarget(self, action: #selector(requestLike), for: .touchUpInside)
         likeButton.setIcon(.liked, with: .like, for: .normal)
-        likeButton.setIconColor(UIColor(scheme: .textDimmed), for: .normal)
+        likeButton.setIconColor(UIColor.from(scheme: .textDimmed), for: .normal)
         likeButton.setIcon(.liked, with: .like, for: .selected)
         likeButton.setIconColor(UIColor(for: .vividRed), for: .selected)
         likeButton.hitAreaPadding = CGSize(width: 20, height: 20)
@@ -97,9 +97,9 @@ import TTTAttributedLabel
         statusLabel.setContentHuggingPriority(.defaultLow, for: .vertical)
         statusLabel.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
         statusLabel.linkAttributes = [NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue as NSNumber,
-                                      NSAttributedString.Key.foregroundColor: UIColor(for: .vividRed)]
+                                      NSAttributedString.Key.foregroundColor: UIColor.vividRed]
         statusLabel.activeLinkAttributes = [NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue as NSNumber,
-                                            NSAttributedString.Key.foregroundColor: UIColor(for: .vividRed).withAlphaComponent(0.5)]
+                                            NSAttributedString.Key.foregroundColor: UIColor.vividRed.withAlphaComponent(0.5)]
 
         [likeButtonContainer, likeButton, statusLabel, reactionsView].forEach(addSubview)
     }

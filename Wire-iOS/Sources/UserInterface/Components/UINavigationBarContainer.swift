@@ -32,7 +32,7 @@ class UINavigationBarContainer: UIViewController {
         self.navigationBar = navigationBar
         super.init(nibName: nil, bundle: nil)
         self.view.addSubview(navigationBar)
-        self.view.backgroundColor = UIColor(scheme: .barBackground)
+        self.view.backgroundColor = UIColor.from(scheme: .barBackground)
         createConstraints()
     }
 

@@ -18,9 +18,9 @@
 
 @testable import Wire
 
+
 // TODO 2838: - Migrate to new cell system
 //class TextMessageCellTests: ZMSnapshotTestCase {
-
 //    var sut: TextMessageCell!
 //
 //    /// "Saturday, February 14, 2009 at 12:20:30 AM Central European Standard Time"

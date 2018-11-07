@@ -42,7 +42,7 @@ final class ConversationListTopBar: TopBar {
             let titleLabel = UILabel()
             
             titleLabel.font = FontSpec(.normal, .semibold).font
-            titleLabel.textColor = UIColor(scheme: .textForeground, variant: .dark)
+            titleLabel.textColor = UIColor.from(scheme: .textForeground, variant: .dark)
             titleLabel.accessibilityTraits = .header
             titleLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
             titleLabel.setContentCompressionResistancePriority(.required, for: .vertical)

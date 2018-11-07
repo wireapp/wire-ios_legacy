@@ -33,7 +33,7 @@ class FingerprintTableViewCell: UITableViewCell {
             case .dark?, .none:
                 color = .white
             case .light?:
-                color = UIColor(scheme: .textForeground, variant: .light)
+                color = UIColor.from(scheme: .textForeground, variant: .light)
             }
 
             fingerprintLabel.textColor = color

@@ -32,8 +32,6 @@
 
 + (ZMAccentColor)indexedAccentColor;
 
-+ (UIColor *)colorForZMAccentColor:(ZMAccentColor)accentColor;
-
 - (BOOL)isEqualTo:(id)object;
 
 @end

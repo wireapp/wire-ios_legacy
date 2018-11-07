@@ -32,8 +32,8 @@ class LocationPreviewController: TintColorCorrectedViewController {
     private let addressLabel = UILabel()
 
     let labelFont = UIFont.normalFont
-    let labelTextColor = UIColor.textForeground
-    let containerColor = UIColor.placeholderBackground
+    let labelTextColor = UIColor.from(scheme: .textForeground)
+    let containerColor = UIColor.from(scheme: .placeholderBackground)
 
     // MARK: - Initialization
 
@@ -42,7 +42,7 @@ class LocationPreviewController: TintColorCorrectedViewController {
         self.actionController = ConversationCellActionController(responder: actionResponder, message: message)
         super.init(nibName: nil, bundle: nil)
         containerView.translatesAutoresizingMaskIntoConstraints = false
-        containerView.backgroundColor = .placeholderBackground
+        containerView.backgroundColor = .from(scheme: .placeholderBackground)
 
         configureViews()
         createConstraints()

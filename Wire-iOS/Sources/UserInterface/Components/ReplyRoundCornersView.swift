@@ -32,10 +32,10 @@ final class ReplyRoundCornersView: UIView {
     private func setupSubviews() {
         layer.cornerRadius = 8
         layer.borderWidth = 1
-        layer.borderColor = UIColor.init(scheme: .replyBorder).cgColor
+        layer.borderColor = UIColor.from(scheme: .replyBorder).cgColor
         layer.masksToBounds = true
         
-        grayBoxView.backgroundColor = UIColor.init(scheme: .replyBorder)
+        grayBoxView.backgroundColor = .from(scheme: .replyBorder)
         
         containedView.translatesAutoresizingMaskIntoConstraints = false
         grayBoxView.translatesAutoresizingMaskIntoConstraints = false

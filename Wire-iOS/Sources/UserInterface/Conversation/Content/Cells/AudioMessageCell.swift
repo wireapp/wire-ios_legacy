@@ -31,7 +31,7 @@ import Cartography
         
         self.containerView.translatesAutoresizingMaskIntoConstraints = false
         self.containerView.layer.cornerRadius = 4
-        containerView.backgroundColor = .placeholderBackground
+        containerView.backgroundColor = .from(scheme: .placeholderBackground)
         self.containerView.clipsToBounds = true
         
         self.audioMessageView.delegate = self

@@ -79,7 +79,7 @@ extension NSAttributedString {
     fileprivate static func previewMarkdownStyle() -> DownStyle {
         let style = DownStyle.preview
         
-        style.baseFontColor = UIColor(scheme: .textForeground)
+        style.baseFontColor = UIColor.from(scheme: .textForeground)
         style.codeColor = style.baseFontColor
         style.h1Color = style.baseFontColor
         style.h2Color = style.baseFontColor
@@ -96,7 +96,7 @@ extension NSAttributedString {
         let style = DownStyle.normal
         
         style.baseFont = UIFont.normalLightFont
-        style.baseFontColor = UIColor(scheme: .textForeground)
+        style.baseFontColor = UIColor.from(scheme: .textForeground)
         style.baseParagraphStyle = paragraphStyle
         style.listItemPrefixColor = style.baseFontColor.withAlphaComponent(0.64)
         
@@ -136,7 +136,7 @@ extension NSAttributedString {
         }
         
         markdownText.removeAttribute(.link, range: NSRange(location: 0, length: markdownText.length))
-        markdownText.addAttribute(.foregroundColor, value: UIColor.textForeground, range: NSRange(location: 0, length: markdownText.length))
+        markdownText.addAttribute(.foregroundColor, value: UIColor.from(scheme: .textForeground), range: NSRange(location: 0, length: markdownText.length))
         return markdownText
     }
     
@@ -203,8 +203,8 @@ extension NSMutableAttributedString {
         let allowedIndexSet = IndexSet(integersIn: Range<Int>(wholeRange)!, excluding: excludedRanges)
         
         for range in allowedIndexSet.rangeView {
-            let range = NSRange(location: range.startIndex, length: range.endIndex - range.startIndex)
-            self.mutableString.resolveEmoticonShortcuts(in: range)
+            let convertedRange = NSRange(location: range.startIndex, length: range.endIndex - range.startIndex - 1)
+            self.mutableString.resolveEmoticonShortcuts(in: convertedRange)
         }
     }
     

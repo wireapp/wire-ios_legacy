@@ -23,7 +23,7 @@ extension ImageMessageCell {
         if let isTransparent = fullImageView?.image?.isTransparent(), isTransparent {
             imageViewContainer.backgroundColor = UIColor.clear
         } else {
-            imageViewContainer.backgroundColor = UIColor(scheme: .placeholderBackground, variant: variant)
+            imageViewContainer.backgroundColor = UIColor.from(scheme: .placeholderBackground, variant: variant)
         }
     }
 }

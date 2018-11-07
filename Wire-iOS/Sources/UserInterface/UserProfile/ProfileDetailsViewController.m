@@ -32,7 +32,6 @@
 #import "IconButton.h"
 #import "Constants.h"
 #import "UIColor+WAZExtensions.h"
-#import "UIColor+WR_ColorScheme.h"
 #import "UIViewController+WR_Additions.h"
 
 #import "TextView.h"

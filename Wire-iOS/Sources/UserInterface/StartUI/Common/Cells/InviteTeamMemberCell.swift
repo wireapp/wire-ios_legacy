@@ -58,7 +58,7 @@ class StartUIIconCell: UICollectionViewCell {
         titleLabel.font = FontSpec(.normal, .light).font
         titleLabel.textColor = .white
         [iconView, titleLabel, separator].forEach(contentView.addSubview)
-        separator.backgroundColor = UIColor(scheme: .cellSeparator, variant: .dark)
+        separator.backgroundColor = UIColor.from(scheme: .cellSeparator, variant: .dark)
     }
     
     fileprivate  func createConstraints() {
@@ -137,13 +137,13 @@ final class OpenServicesAdminCell: StartUIIconCell, Themeable  {
     
     func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
         backgroundColor = contentBackgroundColor(for: colorSchemeVariant)
-        separator.backgroundColor = UIColor(scheme: .cellSeparator, variant: colorSchemeVariant)
-        titleLabel.textColor = UIColor(scheme: .textForeground, variant: colorSchemeVariant)
-        iconView.image = icon.map { UIImage.init(for: $0, iconSize: .tiny, color: UIColor(scheme: .iconNormal, variant: colorSchemeVariant)) }
+        separator.backgroundColor = UIColor.from(scheme: .cellSeparator, variant: colorSchemeVariant)
+        titleLabel.textColor = UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)
+        iconView.image = icon.map { UIImage.init(for: $0, iconSize: .tiny, color: UIColor.from(scheme: .iconNormal, variant: colorSchemeVariant)) }
     }
     
     func contentBackgroundColor(for colorSchemeVariant: ColorSchemeVariant) -> UIColor {
-        return contentBackgroundColor ?? UIColor(scheme: .barBackground, variant: colorSchemeVariant)
+        return contentBackgroundColor ?? UIColor.from(scheme: .barBackground, variant: colorSchemeVariant)
     }
     
     override var isHighlighted: Bool {
