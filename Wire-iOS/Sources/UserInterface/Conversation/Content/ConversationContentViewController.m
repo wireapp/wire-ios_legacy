@@ -847,10 +847,10 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     // no op
 }
 
-- (void)conversationCellDidTapOpenLikers:(ConversationCell *)cell
+- (void)conversationCellDidTapOpenLikers:(UIView *)cell forMessage:(id<ZMConversationMessage>)message
 {
-    if ([Message hasLikers:cell.message]) {
-        ReactionsListViewController *reactionsListController = [[ReactionsListViewController alloc] initWithMessage:cell.message showsStatusBar:!IS_IPAD_FULLSCREEN];
+    if ([Message hasLikers:message]) {
+        ReactionsListViewController *reactionsListController = [[ReactionsListViewController alloc] initWithMessage:message showsStatusBar:!IS_IPAD_FULLSCREEN];
         [self.parentViewController presentViewController:reactionsListController animated:YES completion:nil];
     }
 }

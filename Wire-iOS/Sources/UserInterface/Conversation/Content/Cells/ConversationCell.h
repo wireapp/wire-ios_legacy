@@ -58,7 +58,7 @@ typedef void (^SelectedMenuBlock)(BOOL selected, BOOL animated);
 - (void)conversationCell:(ConversationCell *)cell didSelectURL:(NSURL *)url;
 - (BOOL)conversationCell:(ConversationCell *)cell shouldBecomeFirstResponderWhenShowMenuWithCellType:(MessageType)messageType;
 - (void)conversationCell:(ConversationCell *)cell didOpenMenuForCellType:(MessageType)messageType;
-- (void)conversationCellDidTapOpenLikers:(ConversationCell *)cell;
+- (void)conversationCellDidTapOpenLikers:(UIView *)cell forMessage:(id<ZMConversationMessage>)message;
 - (BOOL)conversationCellShouldStartDestructionTimer:(ConversationCell *)cell;
 - (void)conversationCell:(UIView *)cell openGuestOptionsFromView:(UIView *)sourceView;
 - (void)conversationCell:(UIView *)cell openParticipantsDetailsWithSelectedUsers:(NSArray <ZMUser *>*)selectedUsers fromView:(UIView *)sourceView;

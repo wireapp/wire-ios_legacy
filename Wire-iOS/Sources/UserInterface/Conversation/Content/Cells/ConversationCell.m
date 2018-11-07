@@ -600,7 +600,7 @@ static const CGFloat BurstContainerExpandedHeight = 40;
 
 - (void)messageToolboxViewDidSelectLikers:(MessageToolboxView *)messageToolboxView
 {
-    [self.delegate conversationCellDidTapOpenLikers:self];
+    [self.delegate conversationCellDidTapOpenLikers:self forMessage:self.message];
 }
 
 - (void)messageToolboxViewDidSelectResend:(MessageToolboxView *)messageToolboxView
