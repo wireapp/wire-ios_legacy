@@ -171,7 +171,13 @@ import TTTAttributedLabel
             self.tapGestureRecogniser.isEnabled = false
         }
         
-        if message.shouldShowDestructionCountdown && timestampTimer == nil {
+        updateTimestampTimer()
+    }
+    
+    private func updateTimestampTimer() {
+        let shouldShowDestructionCountdown = (message?.shouldShowDestructionCountdown ?? false) && self.window != nil
+        
+        if shouldShowDestructionCountdown && timestampTimer == nil {
             timestampTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [weak self] _ in
                 guard let `self` = self, let message = self.message else {
                     return
@@ -180,7 +186,7 @@ import TTTAttributedLabel
             }
         }
         
-        if !message.shouldShowDestructionCountdown && timestampTimer != nil {
+        if !shouldShowDestructionCountdown && timestampTimer != nil {
             timestampTimer = nil
         }
     }
@@ -211,6 +217,14 @@ import TTTAttributedLabel
     func update(for change: MessageChangeInfo) {
         if change.reactionsChanged {
             configureLikedState(change.message)
+        }
+    }
+    
+    override open func willMove(toWindow newWindow: UIWindow?) {
+        super.willMove(toWindow: newWindow)
+        
+        if newWindow != self.window {
+            updateTimestampTimer()
         }
     }
     
