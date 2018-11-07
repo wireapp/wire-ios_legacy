@@ -50,11 +50,10 @@ class ConversationMessageSectionControllerTests: XCTestCase {
         // WHEN
         section.add(description: MockCellDescription<Bool>())
         section.add(description: MockCellDescription<String>())
-        section.visibleCellDescriptions = section.cellDescriptions
 
         // THEN
-        let cell1 = section.tableViewVisibleCellDescriptions[0]
-        let cell2 = section.tableViewVisibleCellDescriptions[1]
+        let cell1 = section.tableViewCellDescriptions[0]
+        let cell2 = section.tableViewCellDescriptions[1]
 
         XCTAssertEqual(String(describing: cell1.baseType), "MockCellDescription<Bool>")
         XCTAssertEqual(String(describing: cell2.baseType), "MockCellDescription<String>")
@@ -69,11 +68,10 @@ class ConversationMessageSectionControllerTests: XCTestCase {
         // WHEN
         section.add(description: MockCellDescription<Bool>())
         section.add(description: MockCellDescription<String>())
-        section.visibleCellDescriptions = section.cellDescriptions
 
         // THEN
-        let cell1 = section.tableViewVisibleCellDescriptions[0]
-        let cell2 = section.tableViewVisibleCellDescriptions[1]
+        let cell1 = section.tableViewCellDescriptions[0]
+        let cell2 = section.tableViewCellDescriptions[1]
 
         XCTAssertEqual(String(describing: cell1.baseType), "MockCellDescription<String>")
         XCTAssertEqual(String(describing: cell2.baseType), "MockCellDescription<Bool>")
@@ -89,7 +87,6 @@ class ConversationMessageSectionControllerTests: XCTestCase {
 
         section.add(description: MockCellDescription<Any>())
         section.cellDescriptions[0].register(in: tableView)
-        section.visibleCellDescriptions = section.cellDescriptions
 
         // WHEN
         let indexPath = IndexPath(row: 0, section: 0)

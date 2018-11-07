@@ -55,12 +55,11 @@ extension IndexSet {
 @objc class ConversationMessageSectionController: NSObject, ZMMessageObserver {
 
     /// The view descriptor of the section.
-    @objc var visibleCellDescriptions: [AnyConversationMessageCellDescription] = []
     @objc var cellDescriptions: [AnyConversationMessageCellDescription] = []
     
     /// The view descriptors in the order in which the tableview displays them.
-    var tableViewVisibleCellDescriptions: [AnyConversationMessageCellDescription] {
-        return useInvertedIndices ? visibleCellDescriptions.reversed() : visibleCellDescriptions
+    var tableViewCellDescriptions: [AnyConversationMessageCellDescription] {
+        return useInvertedIndices ? cellDescriptions.reversed() : cellDescriptions
     }
     
     var context: ConversationMessageContext
@@ -98,13 +97,10 @@ extension IndexSet {
         super.init()
         
         if addLegacyContentIfNeeded(layoutProperties: layoutProperties) {
-            visibleCellDescriptions = visibleDescriptions(in: context)
             return
         }
         
         createCellDescriptions(in: context, layoutProperties: layoutProperties)
-        
-        visibleCellDescriptions = visibleDescriptions(in: context)
         
         startObservingChanges(for: message)
         
@@ -220,29 +216,32 @@ extension IndexSet {
     
     func didSelect(indexPath: IndexPath, tableView: UITableView) {
         selected = true
-        configure(in: context, at: indexPath.section, in: tableView)
+        configure(at: indexPath.section, in: tableView)
     }
     
     func didDeselect(indexPath: IndexPath, tableView: UITableView) {
         selected = false
-        configure(in: context, at: indexPath.section, in: tableView)
+        configure(at: indexPath.section, in: tableView)
     }
     
     private func createCellDescriptions(in context: ConversationMessageContext, layoutProperties: ConversationCellLayoutProperties) {
         cellDescriptions.removeAll()
         
-        let burstTimestampDescription = AnyConversationMessageCellDescription(BurstTimestampSenderMessageCellDescription(message: message, context: context))
-        let toolboxDescription = AnyConversationMessageCellDescription(ConversationMessageToolboxCellDescription(message: message))
-        let senderDescription = AnyConversationMessageCellDescription(ConversationSenderMessageCellDescription(sender: message.sender, message: message))
+        if isBurstTimestampVisible(in: context) {
+            add(description: BurstTimestampSenderMessageCellDescription(message: message, context: context))
+        }
+        if isSenderVisible(in: context), let sender = message.sender {
+            add(description: ConversationSenderMessageCellDescription(sender: sender, message: message))
+        }
         
-        cellDescriptions.append(burstTimestampDescription)
-        cellDescriptions.append(senderDescription)
         addContent(context: context, layoutProperties: layoutProperties)
-        cellDescriptions.append(toolboxDescription)
+        
+        if isToolboxVisible(in: context) {
+            add(description: ConversationMessageToolboxCellDescription(message: message))
+        }
     }
     
     func configure(at sectionIndex: Int, in tableView: UITableView) {
-        createCellDescriptions(in: context, layoutProperties: layoutProperties)
         configure(in: context, at: sectionIndex, in: tableView)
     }
     
@@ -250,9 +249,9 @@ extension IndexSet {
         self.context = context
         tableView.beginUpdates()
         
-        let old = ZMOrderedSetState(orderedSet: NSOrderedSet(array: tableViewVisibleCellDescriptions.map({ $0.baseType })))
-        visibleCellDescriptions = visibleDescriptions(in: context)
-        let new = ZMOrderedSetState(orderedSet: NSOrderedSet(array: tableViewVisibleCellDescriptions.map({ $0.baseType })))
+        let old = ZMOrderedSetState(orderedSet: NSOrderedSet(array: tableViewCellDescriptions.map({ $0.baseType })))
+        createCellDescriptions(in: context, layoutProperties: layoutProperties)
+        let new = ZMOrderedSetState(orderedSet: NSOrderedSet(array: tableViewCellDescriptions.map({ $0.baseType })))
         let change = ZMChangedIndexes(start: old, end: new, updatedState: new, moveType: .nsTableView)
         
         if let deleted = change?.deletedIndexes.indexPaths(in: sectionIndex) {
@@ -265,24 +264,34 @@ extension IndexSet {
         
         tableView.endUpdates()
         
-        for (index, description) in tableViewVisibleCellDescriptions.enumerated() {
+        for (index, description) in tableViewCellDescriptions.enumerated() {
             if let cell = tableView.cellForRow(at: IndexPath(row: index, section: sectionIndex)) {
                 description.configure(cell: cell)
             }
         }
     }
     
-    func visibleDescriptions(in context: ConversationMessageContext) -> [AnyConversationMessageCellDescription] {
-        return cellDescriptions.filter { (description) -> Bool in
-            return description.visible(in: context, selected: selected)
+    func isBurstTimestampVisible(in context: ConversationMessageContext) -> Bool {
+        return context.isTimeIntervalSinceLastMessageSignificant
+    }
+    
+    func isToolboxVisible(in context: ConversationMessageContext) -> Bool {
+        return selected || context.isLastMessageSentBySelfUser || message.deliveryState == .failedToSend || message.hasReactions()
+    }
+    
+    func isSenderVisible(in context: ConversationMessageContext) -> Bool {
+        guard message.sender != nil, !message.isKnock, !message.isSystem else {
+            return false
         }
+        
+        return !context.isSameSenderAsPrevious || message.updatedAt != nil
     }
     
     // MARK: - Data Source
 
     /// The number of child cells in the section that compose the message.
     var numberOfCells: Int {
-        return visibleCellDescriptions.count
+        return cellDescriptions.count
     }
 
     /**
@@ -295,7 +304,7 @@ extension IndexSet {
      */
 
     func makeCell(for tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
-        let description = tableViewVisibleCellDescriptions[indexPath.row]
+        let description = tableViewCellDescriptions[indexPath.row]
         description.delegate = self.cellDelegate
         description.message = self.message
         description.actionController = self.actionController

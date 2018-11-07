@@ -66,15 +66,7 @@ class ConversationMessageToolboxCellDescription: ConversationMessageCellDescript
 
     let isFullWidth: Bool = true
     let supportsActions: Bool = false
-    
-    func visible(in context: ConversationMessageContext, selected: Bool) -> Bool {
-        guard let message = message else {
-            return false
-        }
         
-        return selected || context.isLastMessageSentBySelfUser || message.deliveryState == .failedToSend || message.hasReactions()
-    }
-    
     init(message: ZMConversationMessage) {
         self.message = message
         self.configuration = View.Configuration(message: message)

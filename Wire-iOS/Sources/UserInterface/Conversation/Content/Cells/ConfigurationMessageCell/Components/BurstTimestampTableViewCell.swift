@@ -50,9 +50,6 @@ class BurstTimestampSenderMessageCellDescription: ConversationMessageCellDescrip
         self.configuration = configuration
     }
     
-    func visible(in context: ConversationMessageContext, selected: Bool) -> Bool {
-        return context.isTimeIntervalSinceLastMessageSignificant
-    }
 }
 
 class BurstTimestampSenderMessageCell: UIView, ConversationMessageCell {
