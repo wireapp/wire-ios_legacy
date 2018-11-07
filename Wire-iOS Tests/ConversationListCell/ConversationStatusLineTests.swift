@@ -30,7 +30,8 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
     override var needsCaches: Bool {
         return true
     }
-        
+
+
     func testStatusForNotActiveConversationWithHandle() {
         // GIVEN
         let sut = self.otherUserConversation!
@@ -73,27 +74,19 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
     func testStatusMissedCall() {
         // GIVEN
         let sut = self.otherUserConversation!
-        let otherMessage = ZMSystemMessage(nonce: UUID(), managedObjectContext: uiMOC)
-        otherMessage.sender = self.otherUser
-        otherMessage.systemMessageType = .missedCall
-        sut.sortedAppendMessage(otherMessage)
-        sut.lastReadServerTimeStamp = Date.distantPast
+        appendMissedCall(to: sut)
 
         // WHEN
         let status = sut.status.description(for: sut)
         // THEN
         XCTAssertEqual(status.string, "Missed call")
     }
-    
+
     func testStatusMissedCallInGroup() {
         // GIVEN
         let sut = createGroupConversation()
-        let otherMessage = ZMSystemMessage(nonce: UUID(), managedObjectContext: uiMOC)
-        otherMessage.sender = self.otherUser
-        otherMessage.systemMessageType = .missedCall
-        sut.sortedAppendMessage(otherMessage)
-        sut.lastReadServerTimeStamp = Date.distantPast
-        
+        appendMissedCall(to: sut)
+
         // WHEN
         let status = sut.status.description(for: sut)
         // THEN
@@ -129,7 +122,34 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         // THEN
         XCTAssertEqual(status.string, "test 5")
     }
-    
+
+    func testStatusMissedCallAndUnreadMessagesAndReplies() {
+        // GIVEN
+        let sut = self.otherUserConversation!
+
+        let selfMessage = sut.append(text: "I am a programmer") as! ZMMessage
+        selfMessage.sender = selfUser
+        
+        for index in 1...3 {
+            (sut.append(text: "Yes, it is true \(index)", replyingTo: selfMessage) as! ZMMessage).sender = self.otherUser
+        }
+        sut.setPrimitiveValue(3, forKey: ZMConversationInternalEstimatedUnreadSelfReplyCountKey)
+
+        appendMissedCall(to: sut)
+
+        // insert messages from other
+        for index in 1...2 {
+            (sut.append(text: "test \(index)") as! ZMMessage).sender = self.otherUser
+        }
+
+        sut.lastReadServerTimeStamp = Date.distantPast
+
+        // WHEN
+        let status = sut.status.description(for: sut)
+        // THEN
+        XCTAssertEqual(status.string, "3 replies, 1 missed call, 2 messages")
+    }
+
     func testStatusForMultipleTextMessagesInConversationIncludingMention() {
         // GIVEN
         let sut = self.otherUserConversation!

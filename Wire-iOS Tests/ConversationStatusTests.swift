@@ -176,4 +176,21 @@ class ConversationStatusTests: CoreDataSnapshotTestCase {
         XCTAssertEqual(status.messagesRequiringAttention.count, 1)
         XCTAssertEqual(status.messagesRequiringAttentionByType[.mention]!, 1)
     }
+
+    func testThatItDetectsReplies() {
+        // GIVEN
+        let sut = self.otherUserConversation!
+
+        let selfMessage = sut.append(text: "I am a programmer") as! ZMMessage
+
+        selfMessage.sender = selfUser
+        (sut.append(text: "Yes, it is true", replyingTo: selfMessage) as! ZMMessage).sender = self.otherUser
+        sut.lastReadServerTimeStamp = Date.distantPast
+        // WHEN
+        let status = sut.status
+        // THEN
+        XCTAssertTrue(status.hasMessages)
+        XCTAssertEqual(status.messagesRequiringAttention.count, 1)
+        XCTAssertEqual(status.messagesRequiringAttentionByType[.reply]!, 1)
+    }
 }

@@ -30,25 +30,135 @@ class ConversationStatusLineTests_Muting: CoreDataSnapshotTestCase {
     override var needsCaches: Bool {
         return true
     }
+}
 
-    func appendTextMessage(to conversation: ZMConversation) {
-        let message = conversation.append(text: "test \(conversation.messages.count + 1)") as! ZMMessage
-        (message).sender = self.otherUser
+// MARK: - Only replies
+extension ConversationStatusLineTests_Muting {
+    func testStatusShowSpecialSummaryForSingleEphemeralReplyWhenOnlyReplies_oneToOne() {
+        // GIVEN
+        let sut = self.otherUserConversation!
+        sut.messageDestructionTimeout = .local(100)
 
-        conversation.lastReadServerTimeStamp = Date.distantPast
+        let selfMessage = appendSelfMessage(to: sut)
+
+        appendReply(to: sut, selfMessage: selfMessage)
+        sut.mutedMessageTypes = .regular
+
+        // WHEN
+        let status = sut.status.description(for: sut)
+
+        // THEN
+        XCTAssertEqual(status.string, "Replied you")
     }
 
-    func appendImage(to conversation: ZMConversation) {
-        (conversation.append(imageFromData: self.image(inTestBundleNamed: "unsplash_burger.jpg").jpegData(compressionQuality: 1.0)!) as! ZMMessage).sender = self.otherUser
-        conversation.lastReadServerTimeStamp = Date.distantPast
+    func testStatusShowSpecialSummaryForSingleEphemeralReplyWhenOnlyReplies_group() {
+        // GIVEN
+        let sut = self.createGroupConversation()
+        sut.addParticipantIfMissing(createUser(name: "other"))
+        sut.messageDestructionTimeout = .local(100)
+
+        let selfMessage = appendSelfMessage(to: sut)
+
+        appendReply(to: sut, selfMessage: selfMessage)
+
+        sut.mutedMessageTypes = .regular
+
+        // WHEN
+        let status = sut.status.description(for: sut)
+
+        // THEN
+        XCTAssertEqual(status.string, "Someone replied you")
     }
 
-    func appendMention(to conversation: ZMConversation) {
-        let selfMention = Mention(range: NSRange(location: 0, length: 5), user: self.selfUser)
-        (conversation.append(text: "@self test", mentions: [selfMention]) as! ZMMessage).sender = self.otherUser
-        conversation.setPrimitiveValue(1, forKey: ZMConversationInternalEstimatedUnreadSelfMentionCountKey)
-        conversation.lastReadServerTimeStamp = Date.distantPast
+    func testStatusShowSummaryForMultipleEphemeralRepliesWhenOnlyReplies() {
+        // GIVEN
+        let sut = self.createGroupConversation()
+        sut.messageDestructionTimeout = .local(100)
+
+        let selfMessage = appendSelfMessage(to: sut)
+
+        for _ in 1...5 {
+            appendReply(to: sut, selfMessage: selfMessage)
+        }
+        sut.mutedMessageTypes = .regular
+
+        // WHEN
+        let status = sut.status.description(for: sut)
+
+        // THEN
+        XCTAssertEqual(status.string, "5 replies")
     }
+
+    func testStatusShowSummaryForMultipleMessagesAndReplyWhenNoNotifications() {
+        // GIVEN
+        let sut = self.otherUserConversation!
+        sut.mutedMessageTypes = [.all]
+        for _ in 1...5 {
+            appendTextMessage(to: sut)
+        }
+
+        let selfMessage = appendSelfMessage(to: sut)
+
+        appendReply(to: sut, selfMessage: selfMessage)
+
+        // WHEN
+        let status = sut.status.description(for: sut)
+        // THEN
+        XCTAssertEqual(status.string, "1 reply, 5 messages")
+    }
+
+    func testStatusShowSummaryForMultipleRepliesAndMultipleMessagesWhenOnlyReplies() {
+        // GIVEN
+        let sut = self.otherUserConversation!
+        for _ in 1...5 {
+            appendTextMessage(to: sut)
+        }
+
+        let selfMessage = appendSelfMessage(to: sut)
+
+        for _ in 1...5 {
+            appendReply(to: sut, selfMessage: selfMessage)
+        }
+
+        sut.mutedMessageTypes = .regular
+
+        // WHEN
+        let status = sut.status.description(for: sut)
+
+        // THEN
+        XCTAssertEqual(status.string, "5 replies, 5 messages")
+    }
+
+}
+
+// MARK: - mentions & replies
+extension ConversationStatusLineTests_Muting {
+    func testStatusShowSummaryForMultipleMentionsAndRepliesAndMultipleMessagesWhenOnlyMentionsAndReplies() {
+        // GIVEN
+        let sut = self.otherUserConversation!
+        for _ in 1...5 {
+            appendTextMessage(to: sut)
+        }
+
+        let selfMessage = appendSelfMessage(to: sut)
+
+        for _ in 1...5 {
+            appendReply(to: sut, selfMessage: selfMessage)
+        }
+
+        for _ in 1...5 {
+            appendMention(to: sut)
+        }
+
+        sut.mutedMessageTypes = .regular
+
+        // WHEN
+        let status = sut.status.description(for: sut)
+
+        // THEN
+        XCTAssertEqual(status.string, "5 mentions, 5 replies, 5 messages")
+    }
+
 }
 
 // MARK: - Only mentions
