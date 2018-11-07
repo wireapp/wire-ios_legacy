@@ -34,13 +34,12 @@ class ConversationStatusLineTests_Muting: CoreDataSnapshotTestCase {
 
 // MARK: - Only replies
 extension ConversationStatusLineTests_Muting {
-    func testStatusShowSpecialSummaryForSingleEphemeralMentionWhenOnlyReplies_oneToOne() {
+    func testStatusShowSpecialSummaryForSingleEphemeralReplyWhenOnlyReplies_oneToOne() {
         // GIVEN
         let sut = self.otherUserConversation!
         sut.messageDestructionTimeout = .local(100)
 
-        let selfMessage = sut.append(text: "I am a programmer") as! ZMMessage
-        selfMessage.sender = selfUser
+        let selfMessage = appendSelfMessage(to: sut)
 
         appendReply(to: sut, selfMessage: selfMessage)
         sut.mutedMessageTypes = .regular
@@ -51,6 +50,45 @@ extension ConversationStatusLineTests_Muting {
         // THEN
         XCTAssertEqual(status.string, "Replied you")
     }
+
+    func testStatusShowSpecialSummaryForSingleEphemeralReplyWhenOnlyReplies_group() {
+        // GIVEN
+        let sut = self.createGroupConversation()
+        sut.addParticipantIfMissing(createUser(name: "other"))
+        sut.messageDestructionTimeout = .local(100)
+
+        let selfMessage = appendSelfMessage(to: sut)
+
+        appendReply(to: sut, selfMessage: selfMessage)
+
+        sut.mutedMessageTypes = .regular
+
+        // WHEN
+        let status = sut.status.description(for: sut)
+
+        // THEN
+        XCTAssertEqual(status.string, "Someone replied you")
+    }
+
+    func testStatusShowSummaryForMultipleEphemeralRepliesWhenOnlyReplies() {
+        // GIVEN
+        let sut = self.createGroupConversation()
+        sut.messageDestructionTimeout = .local(100)
+
+        let selfMessage = appendSelfMessage(to: sut)
+
+        for _ in 1...5 {
+            appendReply(to: sut, selfMessage: selfMessage)
+        }
+        sut.mutedMessageTypes = .regular
+
+        // WHEN
+        let status = sut.status.description(for: sut)
+
+        // THEN
+        XCTAssertEqual(status.string, "5 replies")
+    }
+
 }
 
 // MARK: - Only mentions

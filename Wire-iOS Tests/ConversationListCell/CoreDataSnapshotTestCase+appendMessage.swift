@@ -44,6 +44,13 @@ extension CoreDataSnapshotTestCase {
         conversation.lastReadServerTimeStamp = Date.distantPast
     }
 
+    func appendSelfMessage(to conversation: ZMConversation) -> ZMMessage {
+        let selfMessage = conversation.append(text: "I am a programmer") as! ZMMessage
+        selfMessage.sender = selfUser
+
+        return selfMessage
+    }
+
     func appendMissedCall(to conversation: ZMConversation) {
         let otherMessage = ZMSystemMessage(nonce: UUID(), managedObjectContext: uiMOC)
         otherMessage.sender = self.otherUser
