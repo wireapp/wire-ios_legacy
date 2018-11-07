@@ -53,7 +53,7 @@ struct ConversationStatus {
     let isBlocked: Bool
     let isSelfAnActiveMember: Bool
     let hasSelfMention: Bool
-    let hasReply: Bool
+    let hasSelfReply: Bool
 }
 
 // Describes the conversation message.
@@ -338,11 +338,15 @@ final internal class SilencedMatcher: ConversationStatusMatcher {
     }
     
     func icon(with status: ConversationStatus, conversation: ZMConversation) -> ConversationStatusIcon {
-        if status.hasSelfMention && status.showingOnlyMentions {
-            return .mention
-        } else {
-            return .silenced
+        if status.showingOnlyMentionsAndReplies {
+            if status.hasSelfMention {
+                return .mention
+            } else if status.hasSelfReply {
+                return .reply
+            }
         }
+
+        return .silenced
     }
     
     var combinesWith: [ConversationStatusMatcher] = []
@@ -355,8 +359,8 @@ extension ConversationStatus {
         return mutedMessageTypes == .none
     }
 
-    var showingOnlyMentions: Bool {
-        return mutedMessageTypes == .regular
+    var showingOnlyMentionsAndReplies: Bool {
+        return mutedMessageTypes == .mentionsAndReplies
     }
 
     var completelyMuted: Bool {
@@ -367,10 +371,10 @@ extension ConversationStatus {
         if completelyMuted {
             // Always summarize for completely muted conversation
             return true
-        } else if showingOnlyMentions && !hasSelfMention {
+        } else if showingOnlyMentionsAndReplies && !hasSelfMention && !hasSelfReply {
             // Summarize when there is no mention
             return true
-        } else if hasSelfMention || hasReply {
+        } else if hasSelfMention || hasSelfReply {
             // Summarize if there is at least one mention or reply and another activity that can be inside a summary
             return StatusMessageType.summaryTypes.reduce(into: UInt(0)) { $0 += (messagesRequiringAttentionByType[$1] ?? 0) } > 1
         } else {
@@ -502,7 +506,7 @@ final internal class NewMessagesMatcher: TypedConversationStatusMatcher {
         
         if status.hasSelfMention {
             return .mention
-        } else if status.hasReply {
+        } else if status.hasSelfReply {
             return .reply
         }
 
@@ -804,7 +808,7 @@ extension ZMConversation {
             isBlocked: isBlocked,
             isSelfAnActiveMember: isSelfAnActiveMember,
             hasSelfMention: estimatedUnreadSelfMentionCount > 0,
-            hasReply: estimatedUnreadSelfReplyCount > 0
+            hasSelfReply: estimatedUnreadSelfReplyCount > 0
         )
     }
 }
