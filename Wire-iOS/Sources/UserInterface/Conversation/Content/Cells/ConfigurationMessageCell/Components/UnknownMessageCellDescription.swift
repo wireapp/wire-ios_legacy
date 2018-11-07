@@ -24,7 +24,7 @@ extension CustomMessageView: ConversationMessageCell {
         return messageLabel
     }
 
-    func configure(with object: String) {
+    func configure(with object: String, animated: Bool) {
         messageText = object
     }
 }

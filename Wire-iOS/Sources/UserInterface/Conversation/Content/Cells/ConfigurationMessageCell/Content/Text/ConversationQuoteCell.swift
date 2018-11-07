@@ -188,7 +188,7 @@ class ConversationReplyCell: UIView, ConversationMessageCell, ConversationReplyC
         ])
     }
 
-    func configure(with object: Configuration) {
+    func configure(with object: Configuration, animated: Bool) {
         contentView.configure(with: object)
     }
 

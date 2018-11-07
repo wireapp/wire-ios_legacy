@@ -114,7 +114,7 @@ class ConversationLocationMessageCell: UIView, ConversationMessageCell {
         ])
     }
 
-    func configure(with object: Configuration) {
+    func configure(with object: Configuration, animated: Bool) {
         lastConfiguration = object
         recognizer?.isEnabled = !object.isObfuscated
         obfuscationView.isHidden = !object.isObfuscated

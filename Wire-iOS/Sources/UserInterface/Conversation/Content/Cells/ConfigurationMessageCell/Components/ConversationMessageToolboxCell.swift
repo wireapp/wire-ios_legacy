@@ -22,6 +22,7 @@ class ConversationMessageToolboxCell: UIView, ConversationMessageCell, MessageTo
 
     struct Configuration {
         let message: ZMConversationMessage
+        let selected: Bool
     }
 
     let toolboxView = MessageToolboxView()
@@ -53,8 +54,8 @@ class ConversationMessageToolboxCell: UIView, ConversationMessageCell, MessageTo
         toolboxView.fitInSuperview()
     }
 
-    func configure(with object: Configuration) {
-        toolboxView.configureForMessage(object.message, forceShowTimestamp: false, animated: false)
+    func configure(with object: Configuration, animated: Bool) {
+        toolboxView.configureForMessage(object.message, forceShowTimestamp: object.selected, animated: animated)
     }
 
     func messageToolboxViewDidRequestLike(_ messageToolboxView: MessageToolboxView) {
@@ -86,9 +87,9 @@ class ConversationMessageToolboxCellDescription: ConversationMessageCellDescript
     let isFullWidth: Bool = true
     let supportsActions: Bool = false
         
-    init(message: ZMConversationMessage) {
+    init(message: ZMConversationMessage, selected: Bool) {
         self.message = message
-        self.configuration = View.Configuration(message: message)
+        self.configuration = View.Configuration(message: message, selected: selected)
     }
 
     func makeCell(for tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
