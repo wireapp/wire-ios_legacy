@@ -69,7 +69,7 @@ protocol ConversationMessageCellDescription: class {
     var configuration: View.Configuration { get }
 
     /// Wheater the view should be displayed
-    func visible(in context: ConversationMessageContext, selected: Bool) ->  Bool // TODO jacob move selected into context?
+    func visible(in context: ConversationMessageContext, selected: Bool) ->  Bool
     func register(in tableView: UITableView)
     func makeCell(for tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell
 }
