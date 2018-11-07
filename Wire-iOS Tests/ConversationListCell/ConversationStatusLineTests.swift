@@ -32,17 +32,6 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
     }
 
 
-    // MARK: - Helper
-
-    func createMissedCallMessage(sut: ZMConversation) {
-        let otherMessage = ZMSystemMessage(nonce: UUID(), managedObjectContext: uiMOC)
-        otherMessage.sender = self.otherUser
-        otherMessage.systemMessageType = .missedCall
-        sut.sortedAppendMessage(otherMessage)
-    }
-
-    // MARK: - Tests
-
     func testStatusForNotActiveConversationWithHandle() {
         // GIVEN
         let sut = self.otherUserConversation!
@@ -85,8 +74,7 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
     func testStatusMissedCall() {
         // GIVEN
         let sut = self.otherUserConversation!
-        createMissedCallMessage(sut: sut)
-        sut.lastReadServerTimeStamp = Date.distantPast
+        appendMissedCall(to: sut)
 
         // WHEN
         let status = sut.status.description(for: sut)
@@ -97,8 +85,7 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
     func testStatusMissedCallInGroup() {
         // GIVEN
         let sut = createGroupConversation()
-        createMissedCallMessage(sut: sut)
-        sut.lastReadServerTimeStamp = Date.distantPast
+        appendMissedCall(to: sut)
 
         // WHEN
         let status = sut.status.description(for: sut)
@@ -148,7 +135,7 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         }
         sut.setPrimitiveValue(3, forKey: ZMConversationInternalEstimatedUnreadSelfReplyCountKey)
 
-        createMissedCallMessage(sut: sut)
+        appendMissedCall(to: sut)
 
         // insert messages from other
         for index in 1...2 {

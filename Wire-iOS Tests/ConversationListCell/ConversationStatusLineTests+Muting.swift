@@ -30,24 +30,26 @@ class ConversationStatusLineTests_Muting: CoreDataSnapshotTestCase {
     override var needsCaches: Bool {
         return true
     }
+}
 
-    func appendTextMessage(to conversation: ZMConversation) {
-        let message = conversation.append(text: "test \(conversation.messages.count + 1)") as! ZMMessage
-        (message).sender = self.otherUser
+// MARK: - Only replies
+extension ConversationStatusLineTests_Muting {
+    func testStatusShowSpecialSummaryForSingleEphemeralMentionWhenOnlyReplies_oneToOne() {
+        // GIVEN
+        let sut = self.otherUserConversation!
+        sut.messageDestructionTimeout = .local(100)
 
-        conversation.lastReadServerTimeStamp = Date.distantPast
-    }
+        let selfMessage = sut.append(text: "I am a programmer") as! ZMMessage
+        selfMessage.sender = selfUser
 
-    func appendImage(to conversation: ZMConversation) {
-        (conversation.append(imageFromData: self.image(inTestBundleNamed: "unsplash_burger.jpg").jpegData(compressionQuality: 1.0)!) as! ZMMessage).sender = self.otherUser
-        conversation.lastReadServerTimeStamp = Date.distantPast
-    }
+        appendReply(to: sut, selfMessage: selfMessage)
+        sut.mutedMessageTypes = .regular
 
-    func appendMention(to conversation: ZMConversation) {
-        let selfMention = Mention(range: NSRange(location: 0, length: 5), user: self.selfUser)
-        (conversation.append(text: "@self test", mentions: [selfMention]) as! ZMMessage).sender = self.otherUser
-        conversation.setPrimitiveValue(1, forKey: ZMConversationInternalEstimatedUnreadSelfMentionCountKey)
-        conversation.lastReadServerTimeStamp = Date.distantPast
+        // WHEN
+        let status = sut.status.description(for: sut)
+
+        // THEN
+        XCTAssertEqual(status.string, "Replied you")
     }
 }
 
