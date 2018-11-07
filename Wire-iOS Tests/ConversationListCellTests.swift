@@ -30,8 +30,6 @@ class ConversationListCellTests: CoreDataSnapshotTestCase {
         snapshotBackgroundColor = .darkGray
         accentColor = .strongBlue
         sut = ConversationListCell(frame: CGRect(x: 0, y: 0, width: 375, height: 60))
-
-        recordMode = true
     }
     
     override func tearDown() {
@@ -137,7 +135,6 @@ class ConversationListCellTests: CoreDataSnapshotTestCase {
         verify(otherUserConversation)
     }
 
-    // subtitle = "Replied"
     func testThatItRendersConversation_ReplySelfMessage() {
         // when
         let message = otherUserConversation.append(text: "Hey there!")
