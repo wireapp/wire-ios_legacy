@@ -97,6 +97,8 @@ class ConversationSenderMessageCellDescription: ConversationMessageCellDescripti
     }
 
     init(sender: UserType, message: ZMConversationMessage) {
+        self.message = message
+        
         var icon: UIImage? = nil
         let iconColor = UIColor(scheme: .iconNormal)
 
@@ -109,4 +111,5 @@ class ConversationSenderMessageCellDescription: ConversationMessageCellDescripti
         self.configuration = View.Configuration(user: sender, indicatorIcon: icon)
         actionController = nil
     }
+    
 }

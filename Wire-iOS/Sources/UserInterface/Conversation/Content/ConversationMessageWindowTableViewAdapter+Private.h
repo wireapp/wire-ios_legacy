@@ -41,7 +41,7 @@ static NSString *const ConversationMessageTimerUpdateCellId = @"ConversationMess
 @class ConversationCell;
 @class ConversationCellActionController;
 
-@interface ConversationMessageWindowTableViewAdapter () <ZMConversationMessageWindowObserver>
+@interface ConversationMessageWindowTableViewAdapter ()
 
 - (void)configureConversationCell:(ConversationCell *)conversationCell withMessage:(nullable id<ZMConversationMessage>)message;
 

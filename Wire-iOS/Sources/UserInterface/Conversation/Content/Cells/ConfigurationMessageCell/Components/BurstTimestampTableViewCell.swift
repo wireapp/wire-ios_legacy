@@ -25,6 +25,7 @@ struct BurstTimestampSenderMessageCellConfiguration {
 }
 
 class BurstTimestampSenderMessageCellDescription: ConversationMessageCellDescription {
+    
     typealias View = BurstTimestampSenderMessageCell
     let configuration: View.Configuration
 
@@ -48,6 +49,7 @@ class BurstTimestampSenderMessageCellDescription: ConversationMessageCellDescrip
     init(configuration: View.Configuration) {
         self.configuration = configuration
     }
+    
 }
 
 class BurstTimestampSenderMessageCell: UIView, ConversationMessageCell {

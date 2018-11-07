@@ -19,13 +19,7 @@
 import Foundation
 
 extension ZMConversationMessageWindow {
-    
-    func sectionController(for message: ZMConversationMessage, firstUnreadMessage: ZMConversationMessage?) -> ConversationMessageSectionController {
-        let context = self.context(for: message, firstUnreadMessage: firstUnreadMessage)
-        let layoutProperties = self.layoutProperties(for: message, firstUnreadMessage: firstUnreadMessage)
-        return ConversationMessageSectionBuilder.buildSection(for: message, context: context, layoutProperties: layoutProperties)
-    }
-    
+        
     @objc func isPreviousSenderSame(forMessage message: ZMConversationMessage?) -> Bool {
         guard let message = message,
               messages.index(of: message) != NSNotFound,
@@ -39,7 +33,7 @@ extension ZMConversationMessageWindow {
         return true
     }
     
-    fileprivate func context(for message: ZMConversationMessage, firstUnreadMessage: ZMConversationMessage?) -> ConversationMessageContext {
+    func context(for message: ZMConversationMessage, firstUnreadMessage: ZMConversationMessage?) -> ConversationMessageContext {
         let significantTimeInterval: TimeInterval = 60 * 45; // 45 minutes
         let isTimeIntervalSinceLastMessageSignificant: Bool
         

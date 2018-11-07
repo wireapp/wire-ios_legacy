@@ -22,10 +22,29 @@ import XCTest
 class ConversationMessageSectionControllerTests: XCTestCase {
 
     // MARK: - Dequeuing
+    
+    var context: ConversationMessageContext!
+    var layoutProperties: ConversationCellLayoutProperties!
+    
+    override func setUp() {
+        super.setUp()
+        
+        context = ConversationMessageContext(isSameSenderAsPrevious: false, isLastMessageSentBySelfUser: false, isTimeIntervalSinceLastMessageSignificant: false, isFirstMessageOfTheDay: false, isFirstUnreadMessage: false)
+        layoutProperties = ConversationCellLayoutProperties()
+    }
+    
+    override func tearDown() {
+        context = nil
+        layoutProperties = nil
+        
+        super.tearDown()
+    }
 
     func testThatItReturnsCellsInCorrectOrder_Normal() {
+        
         // GIVEN
-        let section = ConversationMessageSectionController()
+        let section = ConversationMessageSectionController(message: MockMessage(), context: context, layoutProperties: layoutProperties)
+        section.cellDescriptions.removeAll()
         section.useInvertedIndices = false
 
         // WHEN
@@ -33,8 +52,8 @@ class ConversationMessageSectionControllerTests: XCTestCase {
         section.add(description: MockCellDescription<String>())
 
         // THEN
-        let cell1 = section.cellDescription(at: 0)
-        let cell2 = section.cellDescription(at: 1)
+        let cell1 = section.tableViewCellDescriptions[0]
+        let cell2 = section.tableViewCellDescriptions[1]
 
         XCTAssertEqual(String(describing: cell1.baseType), "MockCellDescription<Bool>")
         XCTAssertEqual(String(describing: cell2.baseType), "MockCellDescription<String>")
@@ -42,7 +61,8 @@ class ConversationMessageSectionControllerTests: XCTestCase {
 
     func testThatItReturnsCellsInCorrectOrder_UpsideDown() {
         // GIVEN
-        let section = ConversationMessageSectionController()
+        let section = ConversationMessageSectionController(message: MockMessage(), context: context, layoutProperties: layoutProperties)
+        section.cellDescriptions.removeAll()
         section.useInvertedIndices = true
 
         // WHEN
@@ -50,8 +70,8 @@ class ConversationMessageSectionControllerTests: XCTestCase {
         section.add(description: MockCellDescription<String>())
 
         // THEN
-        let cell1 = section.cellDescription(at: 0)
-        let cell2 = section.cellDescription(at: 1)
+        let cell1 = section.tableViewCellDescriptions[0]
+        let cell2 = section.tableViewCellDescriptions[1]
 
         XCTAssertEqual(String(describing: cell1.baseType), "MockCellDescription<String>")
         XCTAssertEqual(String(describing: cell2.baseType), "MockCellDescription<Bool>")
@@ -61,7 +81,8 @@ class ConversationMessageSectionControllerTests: XCTestCase {
 
     func testThatItConfiguresCellAfterDequeuing() {
         // GIVEN
-        let section = ConversationMessageSectionController()
+        let section = ConversationMessageSectionController(message: MockMessage(), context: context, layoutProperties: layoutProperties)
+        section.cellDescriptions.removeAll()
         let tableView = UITableView()
 
         section.add(description: MockCellDescription<Any>())

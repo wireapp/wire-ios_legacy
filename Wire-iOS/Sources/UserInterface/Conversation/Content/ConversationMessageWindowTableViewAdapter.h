@@ -25,6 +25,7 @@
 @protocol ConversationCellDelegate;
 @class ConversationMessageSectionController;
 @class AnyConversationMessageCellDescription;
+@class ConversationCellActionController;
 
 @interface ConversationMessageWindowTableViewAdapter : NSObject
 
@@ -38,9 +39,9 @@
 
 - (instancetype)initWithTableView:(UITableView *)tableView messageWindow:(ZMConversationMessageWindow *)messageWindow;
 - (void)expandMessageWindow;
-- (void)reconfigureVisibleCellsWithDeletedIndexPaths:(NSSet<NSIndexPath *>*)deletedIndexPaths;
 
-- (ConversationMessageSectionController *)sectionControllerAtIndex:(NSInteger)index inTableView:(UITableView *)tableView;
+- (void)stopAudioPlayerForDeletedMessages:(NSSet *)deletedMessages;
+- (ConversationCellActionController *)actionControllerForMessage:(id<ZMConversationMessage>)message;
 - (void)registerCellIfNeeded:(AnyConversationMessageCellDescription *)cellDescription inTableView:(UITableView *)tableView;
 
 @end

@@ -49,7 +49,7 @@ protocol ConversationMessageCell {
 protocol ConversationMessageCellDescription: class {
     /// The view that will be displayed for the cell.
     associatedtype View: ConversationMessageCell & UIView
-
+    
     /// Whether the view occupies the entire width of the cell.
     var isFullWidth: Bool { get }
 
@@ -83,7 +83,13 @@ extension ConversationMessageCellDescription {
     func makeCell(for tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
         return tableView.dequeueConversationCell(with: self, for: indexPath)
     }
-
+    
+    func configureCell(_ cell: UITableViewCell) {
+        guard let adapterCell = cell as? ConversationMessageCellTableViewAdapter<Self> else { return }
+        
+        adapterCell.cellView.configure(with: self.configuration)
+    }
+    
 }
 
 /**
@@ -93,6 +99,7 @@ extension ConversationMessageCellDescription {
 @objc class AnyConversationMessageCellDescription: NSObject {
     private let cellGenerator: (UITableView, IndexPath) -> UITableViewCell
     private let registrationBlock: (UITableView) -> Void
+    private let configureBlock: (UITableViewCell) -> Void
     private let baseTypeGetter: () -> AnyClass
 
     private let _delegate: AnyMutableProperty<ConversationCellDelegate?>
@@ -102,6 +109,10 @@ extension ConversationMessageCellDescription {
     init<T: ConversationMessageCellDescription>(_ description: T) {
         registrationBlock = { tableView in
             description.register(in: tableView)
+        }
+        
+        configureBlock = { cell in
+            description.configureCell(cell)
         }
 
         cellGenerator = { tableView, indexPath in
@@ -134,6 +145,10 @@ extension ConversationMessageCellDescription {
     @objc var actionController: ConversationCellActionController? {
         get { return _actionController.getter() }
         set { _actionController.setter(newValue) }
+    }
+        
+    func configure(cell: UITableViewCell) {
+        configureBlock(cell)
     }
 
     @objc(registerInTableView:)

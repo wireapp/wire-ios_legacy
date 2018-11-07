@@ -18,19 +18,123 @@
 
 import Foundation
 
-extension ConversationMessageWindowTableViewAdapter: UITableViewDataSource {
-
-    /**
-     * Creates a new section controller for the message, when the adapter cannot find one in the cache.
-     */
-
-    @objc(buildSectionControllerForMessage:)
-    func buildSectionController(for message: ZMConversationMessage) -> ConversationMessageSectionController {
-        return messageWindow.sectionController(for: message, firstUnreadMessage: firstUnreadMessage)
+extension ConversationMessageWindowTableViewAdapter: ConversationMessageSectionControllerDelegate {
+    
+    func messageSectionController(_ controller: ConversationMessageSectionController, didRequestRefreshForMessage message: ZMConversationMessage) {
+        
+        let section = messageWindow.messages.index(of: message)
+        
+        if section == NSNotFound {
+            return
+        }
+        
+        controller.configure(at: section, in: tableView)
     }
+    
+}
 
+extension ConversationMessageWindowTableViewAdapter: ZMConversationMessageWindowObserver {
+    
+    func reconfigureSectionController(at index: Int, tableView: UITableView) {
+        guard let sectionController = self.sectionController(at: index, in: tableView) else { return }
+        
+        let context = messageWindow.context(for: sectionController.message, firstUnreadMessage: firstUnreadMessage)
+        sectionController.configure(in: context, at: index, in: tableView)
+    }
+    
+    public func conversationWindowDidChange(_ changeInfo: MessageWindowChangeInfo) {
+        
+        let isLoadingInitialContent = messageWindow.messages.count == changeInfo.insertedIndexes.count && changeInfo.deletedIndexes.count == 0
+        let isExpandingMessageWindow = changeInfo.insertedIndexes.count > 0 && changeInfo.insertedIndexes.last == messageWindow.messages.count - 1
+        
+        stopAudioPlayer(forDeletedMessages: changeInfo.deletedObjects)
+        
+        if isLoadingInitialContent || (isExpandingMessageWindow && changeInfo.deletedIndexes.count == 0) || changeInfo.needsReload {
+            tableView.reloadData()
+        } else {
+            tableView.beginUpdates()
+            
+            if changeInfo.deletedIndexes.count > 0 {
+                for deletedMessage in changeInfo.deletedObjects {
+                    if let deletedMessage = deletedMessage as? ZMConversationMessage {
+                        sectionControllers.removeObject(forKey: deletedMessage)
+                    }
+                }
+                tableView.deleteSections(changeInfo.deletedIndexes, with: .fade)
+            }
+            
+            if changeInfo.insertedIndexes.count > 0 {
+                tableView.insertSections(changeInfo.insertedIndexes, with: .fade)
+            }
+            
+            for movedIndexPair in changeInfo.zm_movedIndexPairs {
+                tableView.moveSection(Int(movedIndexPair.from), toSection: Int(movedIndexPair.to))
+            }
+            
+            tableView.endUpdates()
+            
+            // Re-evalulate visible cells in all sections, this is necessary because if a message is inserted/moved the
+            // neighbouring messages may no longer want to display sender, toolbox or burst timestamp.
+            reconfigureVisibleSections()
+        }
+    }
+    
+    @objc
+    func reconfigureVisibleSections() {
+        tableView.beginUpdates()
+        if let indexPathsForVisibleRows = tableView.indexPathsForVisibleRows {
+            let visibleSections = indexPathsForVisibleRows.map({ $0.section })
+            for section in visibleSections {
+                reconfigureSectionController(at: section, tableView: tableView)
+            }
+        }
+        tableView.endUpdates()
+    }
+    
+}
+
+extension ConversationMessageWindowTableViewAdapter: UITableViewDataSource {
+    
+    
+    @objc
+    func sectionController(at sectionIndex: Int, in tableView: UITableView) -> ConversationMessageSectionController? {
+        guard let message = messageWindow.messages.object(at: sectionIndex) as? ZMConversationMessage, let nonce = message.nonce else { return nil }
+        
+        if let cachedEntry = sectionControllers.object(forKey: nonce) {
+            return cachedEntry as? ConversationMessageSectionController
+        }
+        
+        let context = messageWindow.context(for: message, firstUnreadMessage: firstUnreadMessage)
+        let layoutProperties = messageWindow.layoutProperties(for: message, firstUnreadMessage: firstUnreadMessage)
+        
+        let sectionController = ConversationMessageSectionController(message: message, context: context, layoutProperties: layoutProperties)
+        sectionController.useInvertedIndices = true
+        sectionController.cellDelegate = conversationCellDelegate
+        sectionController.sectionDelegate = self
+        sectionController.actionController = actionController(for: message)
+        sectionController.selected = message.isEqual(selectedMessage)
+        
+        sectionControllers.setObject(sectionController, forKey: nonce as NSUUID)
+        
+        for description in sectionController.cellDescriptions {
+            registerCellIfNeeded(description, in: tableView)
+        }
+        
+        return sectionController
+    }
+    
     public func numberOfSections(in tableView: UITableView) -> Int {
         return self.messageWindow.messages.count
+    }
+    
+    @objc
+    func select(indexPath: IndexPath) {
+        sectionController(at: indexPath.section, in: tableView)?.didSelect(indexPath: indexPath, tableView: tableView)
+    }
+    
+    @objc
+    func deselect(indexPath: IndexPath) {
+        sectionController(at: indexPath.section, in: tableView)?.didDeselect(indexPath: indexPath, tableView: tableView)
     }
 
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

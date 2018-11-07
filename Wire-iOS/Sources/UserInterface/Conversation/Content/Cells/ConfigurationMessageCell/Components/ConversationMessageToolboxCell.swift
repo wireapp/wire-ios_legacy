@@ -29,6 +29,7 @@ class ConversationMessageToolboxCell: UIView, ConversationMessageCell, MessageTo
     weak var message: ZMConversationMessage?
 
     var isSelected: Bool = false
+    var observerToken: Any?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -84,9 +85,10 @@ class ConversationMessageToolboxCellDescription: ConversationMessageCellDescript
 
     let isFullWidth: Bool = true
     let supportsActions: Bool = false
-
+        
     init(message: ZMConversationMessage) {
-        configuration = View.Configuration(message: message)
+        self.message = message
+        self.configuration = View.Configuration(message: message)
     }
 
     func makeCell(for tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {

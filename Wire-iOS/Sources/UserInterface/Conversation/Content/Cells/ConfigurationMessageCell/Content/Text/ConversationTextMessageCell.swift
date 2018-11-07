@@ -105,6 +105,13 @@ extension ConversationTextMessageCellDescription {
         let messageText = NSAttributedString.format(message: textMessageData, isObfuscated: message.isObfuscated, linkAttachment: &lastKnownLinkAttachment)
 
         var cells: [AnyConversationMessageCellDescription] = []
+        
+        // Quote
+        if textMessageData.hasQuote {
+            let quotedMessage = message.textMessageData?.quote
+            let quoteCell = ConversationReplyCellDescription(quotedMessage: quotedMessage)
+            cells.append(AnyConversationMessageCellDescription(quoteCell))
+        }
 
         // Text
         let textCell = ConversationTextMessageCellDescription(attributedString: messageText)
