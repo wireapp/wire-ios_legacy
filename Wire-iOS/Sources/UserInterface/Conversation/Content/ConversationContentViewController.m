@@ -438,24 +438,24 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
             {
                 BOOL liked = ![Message isLikedMessage:message];
                 
-                NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+                NSIndexPath *indexPath = [self.conversationMessageWindowTableViewAdapter indexPathForMessage:message];
                 
                 [[ZMUserSession sharedSession] enqueueChanges:^{
                     [Message setLikedMessage:message liked:liked];
-                    
-                    if (liked) {
-                        // Deselect if necessary to show list of likers
-                        if (self.conversationMessageWindowTableViewAdapter.selectedMessage == message) {
-                            [self tableView:self.tableView willSelectRowAtIndexPath:indexPath];
-                        }
-                    } else {
-                        // Select if necessary to prevent message from collapsing
-                        if (self.conversationMessageWindowTableViewAdapter.selectedMessage != message && ![Message hasReactions:message]) {
-                            [self tableView:self.tableView willSelectRowAtIndexPath:indexPath];
-                            [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
-                        }
-                    }
                 }];
+                
+                if (liked) {
+                    // Deselect if necessary to show list of likers
+                    if (self.conversationMessageWindowTableViewAdapter.selectedMessage == message) {
+                        [self tableView:self.tableView willSelectRowAtIndexPath:indexPath];
+                    }
+                } else {
+                    // Select if necessary to prevent message from collapsing
+                    if (self.conversationMessageWindowTableViewAdapter.selectedMessage != message && ![Message hasReactions:message]) {
+                        [self tableView:self.tableView willSelectRowAtIndexPath:indexPath];
+                        [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+                    }
+                }
             }
                 break;
             case MessageActionForward:
@@ -626,12 +626,12 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 
 - (ConversationCell *)cellForMessage:(id<ZMConversationMessage>)message
 {
-    NSUInteger messageIndex = [self.messageWindow.messages indexOfObject:message];
-    if (messageIndex == NSNotFound) {
+    NSIndexPath *indexPath = [self.conversationMessageWindowTableViewAdapter indexPathForMessage:message];
+    
+    if (indexPath == nil) {
         return nil;
     }
     
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:messageIndex];
     ConversationCell *cell = (ConversationCell *)[self.tableView cellForRowAtIndexPath:indexPath];
     return cell;
 }

@@ -123,6 +123,17 @@ extension ConversationMessageWindowTableViewAdapter: UITableViewDataSource {
         return sectionController
     }
     
+    @objc(indexPathForMessage:)
+    public func indexPath(for message: ZMConversationMessage) -> IndexPath? {
+        let section = self.messageWindow.messages.index(of: message)
+        
+        guard section != NSNotFound else {
+            return nil
+        }
+        
+        return IndexPath(row: 0, section: section)
+    }
+    
     public func numberOfSections(in tableView: UITableView) -> Int {
         return self.messageWindow.messages.count
     }
