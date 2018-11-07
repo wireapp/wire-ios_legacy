@@ -18,7 +18,7 @@
 
 import Foundation
 
-class ConversationMessageCellTableViewAdapter<C: ConversationMessageCellDescription>: UITableViewCell {
+class ConversationMessageCellTableViewAdapter<C: ConversationMessageCellDescription>: UITableViewCell, SelectableView {
     
     var cellView: C.View
 
@@ -127,7 +127,7 @@ class ConversationMessageCellTableViewAdapter<C: ConversationMessageCellDescript
     }
 
     private func showMenu() {
-        guard let selectionView = cellView.selectionView, cellDescription?.supportsActions == true else {
+        guard cellDescription?.supportsActions == true else {
             return
         }
 
@@ -141,7 +141,7 @@ class ConversationMessageCellTableViewAdapter<C: ConversationMessageCellDescript
             self.becomeFirstResponder()
         }
 
-        menu.setTargetRect(cellView.selectionRect, in: selectionView)
+        menu.setTargetRect(selectionRect, in: selectionView)
         menu.setMenuVisible(true, animated: true)
     }
 
@@ -183,13 +183,21 @@ class ConversationMessageCellTableViewAdapter<C: ConversationMessageCellDescript
     }
 
     func setSelectedByMenu(_ isSelected: Bool, animated: Bool) {
-        guard let selectionView = cellView.selectionView else { return }
-
         let animations = {
-            selectionView.alpha = isSelected ? ConversationCellSelectedOpacity : 1
+            self.selectionView.alpha = isSelected ? ConversationCellSelectedOpacity : 1
         }
 
         UIView.animate(withDuration: ConversationCellSelectionAnimationDuration, animations: animations)
+    }
+
+    // MARK: - SelectableView
+
+    var selectionView: UIView! {
+        return cellView.selectionView ?? self
+    }
+
+    var selectionRect: CGRect {
+        return cellView.selectionRect
     }
 
 }
