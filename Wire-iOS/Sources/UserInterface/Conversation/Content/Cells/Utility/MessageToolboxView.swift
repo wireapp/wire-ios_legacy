@@ -60,6 +60,8 @@ import TTTAttributedLabel
     
     fileprivate var forceShowTimestamp: Bool = false
     private var isConfigured: Bool = false
+    
+    private var timestampTimer: Timer? = nil
 
     override init(frame: CGRect) {
         
@@ -168,6 +170,25 @@ import TTTAttributedLabel
             self.configureTimestamp(message, animated: animated)
             self.tapGestureRecogniser.isEnabled = false
         }
+        
+        updateTimestampTimer()
+    }
+    
+    private func updateTimestampTimer() {
+        let shouldShowDestructionCountdown = (message?.shouldShowDestructionCountdown ?? false) && self.window != nil
+        
+        if shouldShowDestructionCountdown && timestampTimer == nil {
+            timestampTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [weak self] _ in
+                guard let `self` = self, let message = self.message else {
+                    return
+                }
+                self.configureTimestamp(message, animated: false)
+            }
+        }
+        
+        if !shouldShowDestructionCountdown && timestampTimer != nil {
+            timestampTimer = nil
+        }
     }
     
     func setHidden(_ isHidden: Bool, animated: Bool) {
@@ -196,6 +217,14 @@ import TTTAttributedLabel
     func update(for change: MessageChangeInfo) {
         if change.reactionsChanged {
             configureLikedState(change.message)
+        }
+    }
+    
+    override open func willMove(toWindow newWindow: UIWindow?) {
+        super.willMove(toWindow: newWindow)
+        
+        if newWindow != self.window {
+            updateTimestampTimer()
         }
     }
     
@@ -286,10 +315,6 @@ import TTTAttributedLabel
         }
     }
 
-    public func updateTimestamp(_ message: ZMConversationMessage) {
-        configureTimestamp(message)
-    }
-    
     fileprivate func configureTimestamp(_ message: ZMConversationMessage, animated: Bool = false) {
         var deliveryStateString: String? = .none
         
@@ -346,6 +371,10 @@ import TTTAttributedLabel
         }
         else {
             finalText = (deliveryStateString ?? "")
+        }
+        
+        if statusLabel.attributedText?.string == finalText {
+            return
         }
         
         let attributedText = NSMutableAttributedString(attributedString: finalText && [.font: statusLabel.font, .foregroundColor: statusLabel.textColor])

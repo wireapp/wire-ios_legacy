@@ -25,7 +25,7 @@
 #import <CommonCrypto/CommonCrypto.h>
 #import "Settings.h"
 #import "AppDelegate.h"
-#import "Message+Private.h"
+#import "Message+UI.h"
 
 // UI
 @import WireExtensionComponents;
