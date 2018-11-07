@@ -18,13 +18,15 @@
 
 import UIKit
 
-class ConversationMessageToolboxCell: UIView, ConversationMessageCell {
+class ConversationMessageToolboxCell: UIView, ConversationMessageCell, MessageToolboxViewDelegate {
 
     struct Configuration {
         let message: ZMConversationMessage
     }
 
     let toolboxView = MessageToolboxView()
+    weak var delegate: ConversationCellDelegate?
+    weak var message: ZMConversationMessage?
 
     var isSelected: Bool = false
     var observerToken: Any?
@@ -42,6 +44,7 @@ class ConversationMessageToolboxCell: UIView, ConversationMessageCell {
     }
 
     private func configureSubviews() {
+        toolboxView.delegate = self
         addSubview(toolboxView)
     }
 
@@ -52,6 +55,22 @@ class ConversationMessageToolboxCell: UIView, ConversationMessageCell {
 
     func configure(with object: Configuration) {
         toolboxView.configureForMessage(object.message, forceShowTimestamp: false, animated: false)
+    }
+
+    func messageToolboxViewDidRequestLike(_ messageToolboxView: MessageToolboxView) {
+        delegate?.conversationCell?(self, didSelect: .like, for: message)
+    }
+
+    func messageToolboxViewDidSelectDelete(_ messageToolboxView: MessageToolboxView) {
+        delegate?.conversationCell?(self, didSelect: .delete, for: message)
+    }
+
+    func messageToolboxViewDidSelectResend(_ messageToolboxView: MessageToolboxView) {
+        delegate?.conversationCell?(self, didSelect: .resend, for: message)
+    }
+
+    func messageToolboxViewDidSelectLikers(_ messageToolboxView: MessageToolboxView) {
+        delegate?.conversationCellDidTapOpenLikers?(self, for: message)
     }
 
 }
@@ -70,6 +89,13 @@ class ConversationMessageToolboxCellDescription: ConversationMessageCellDescript
     init(message: ZMConversationMessage) {
         self.message = message
         self.configuration = View.Configuration(message: message)
+    }
+
+    func makeCell(for tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueConversationCell(with: self, for: indexPath)
+        cell.cellView.delegate = self.delegate
+        cell.cellView.message = self.message
+        return cell
     }
 
 }
