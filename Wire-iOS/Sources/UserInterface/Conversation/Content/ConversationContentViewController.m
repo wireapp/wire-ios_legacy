@@ -572,6 +572,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     
     // If the user tapped on a file or image and the menu controller is currently visible,
     // we do not want to show the detail but instead hide the menu controller first.
+    // TODO: Remove when the file cell is ported to the new system
     if ([cell isKindOfClass:ConversationCell.class] && [(ConversationCell *)cell showsMenu]) {
         [self removeHighlightsAndMenu];
         return;
@@ -806,6 +807,32 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 
 @implementation ConversationContentViewController (ConversationCellDelegate)
 
+- (BOOL)canPerformAction:(MessageAction)action forMessage:(id<ZMConversationMessage>)message
+{
+    if ([Message isImageMessage:message]) {
+
+        switch (action) {
+            case MessageActionForward:
+            case MessageActionSave:
+            case MessageActionCopy:
+
+                return YES;
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    return NO;
+}
+
+- (void)wantsToPerformAction:(MessageAction)action forMessage:(id<ZMConversationMessage>)message
+{
+    ConversationCell *cell = [self cellForMessage:message];
+    [self wantsToPerformAction:action forMessage:message cell:cell];
+}
+
 - (void)conversationCell:(ConversationCell *)cell userTapped:(id<UserType>)user inView:(UIView *)view frame:(CGRect)frame
 {
     if (!cell || !view) {
@@ -838,18 +865,13 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     [self.tableView endUpdates];
 }
 
-- (BOOL)conversationCell:(ConversationCell *)cell shouldBecomeFirstResponderWhenShowMenuWithCellType:(MessageType)messageType;
+- (BOOL)conversationCellShouldBecomeFirstResponderWhenShowingMenuForCell:(UIView *)cell;
 {
     BOOL shouldBecomeFirstResponder = YES;
     if ([self.delegate respondsToSelector:@selector(conversationContentViewController:shouldBecomeFirstResponderWhenShowMenuFromCell:)]) {
         shouldBecomeFirstResponder = [self.delegate conversationContentViewController:self shouldBecomeFirstResponderWhenShowMenuFromCell:cell];
     }
     return shouldBecomeFirstResponder;
-}
-
-- (void)conversationCell:(ConversationCell *)cell didOpenMenuForCellType:(MessageType)messageType;
-{
-    // no op
 }
 
 - (void)conversationCellDidTapOpenLikers:(UIView *)cell forMessage:(id<ZMConversationMessage>)message
@@ -979,36 +1001,6 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
             self.expectedMessageToShow = nil;
         }
     }
-}
-
-@end
-
-@implementation ConversationContentViewController (MessageActionResponder)
-
-- (BOOL)canPerformAction:(MessageAction)action forMessage:(id<ZMConversationMessage>)message
-{
-    if ([Message isImageMessage:message]) {
-        
-        switch (action) {
-            case MessageActionForward:
-            case MessageActionSave:
-            case MessageActionCopy:
-                
-                return YES;
-                break;
-                
-            default:
-                break;
-        }
-    }
-    
-    return NO;
-}
-
-- (void)wantsToPerformAction:(MessageAction)action forMessage:(id<ZMConversationMessage>)message
-{
-    ConversationCell *cell = [self cellForMessage:message];
-    [self wantsToPerformAction:action forMessage:message cell:cell];
 }
 
 @end

@@ -29,6 +29,11 @@ class ConversationLinkPreviewArticleCell: UIView, ConversationMessageCell {
     private let articleView = ArticleView(withImagePlaceholder: true)
 
     var isSelected: Bool = false
+
+    var selectionView: UIView? {
+        return articleView
+    }
+
     var configuration: Configuration?
 
     override init(frame: CGRect) {

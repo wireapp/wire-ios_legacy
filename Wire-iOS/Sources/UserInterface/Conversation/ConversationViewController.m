@@ -595,7 +595,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self.inputBarController replyToMessage:message composingView:replyComposingView];
 }
 
-- (BOOL)conversationContentViewController:(ConversationContentViewController *)controller shouldBecomeFirstResponderWhenShowMenuFromCell:(UITableViewCell *)cell
+- (BOOL)conversationContentViewController:(ConversationContentViewController *)controller shouldBecomeFirstResponderWhenShowMenuFromCell:(UIView *)cell
 {
     if ([self.inputBarController.inputBar.textView isFirstResponder]) {
         self.inputBarController.inputBar.textView.overrideNextResponder = cell;

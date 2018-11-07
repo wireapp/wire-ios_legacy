@@ -313,7 +313,6 @@ static const CGFloat BurstContainerExpandedHeight = 40;
 - (void)configureForMessage:(id<ZMConversationMessage>)message layoutProperties:(ConversationCellLayoutProperties *)layoutProperties;
 {
     _message = message;
-
     _layoutProperties = layoutProperties;
 
     if (layoutProperties.showSender) {
@@ -323,6 +322,8 @@ static const CGFloat BurstContainerExpandedHeight = 40;
     if (layoutProperties.showBurstTimestamp || layoutProperties.showDayBurstTimestamp) {
         [self updateBurstTimestamp];
     }
+
+    self.actionController = [[ConversationCellActionController alloc] initWithResponder:self.delegate message:message];
 
     [self updateConstraintConstants];
     [self updateToolboxVisibilityAnimated:NO];
@@ -455,37 +456,12 @@ static const CGFloat BurstContainerExpandedHeight = 40;
 
 - (BOOL)canPerformAction:(SEL)action withSender:(id)sender;
 {
-    if (action == @selector(deleteMessage:) && self.message.canBeDeleted) {
-        return YES;
-    }
-    
-    if (action == @selector(likeMessage:)) {
-        return YES;
-    }
-    
-    if (action == @selector(replyTo:)) {
-        return YES;
-    }
-    
-    if (action == @selector(copy:) && self.message.isEphemeral) {
-        return NO;
-    }
-    
-    return [super canPerformAction:action withSender:sender];
+    return [self.actionController canPerformAction:action];
 }
 
-- (void)forward:(id)sender
+- (id)forwardingTargetForSelector:(SEL)aSelector
 {
-    if ([self.delegate respondsToSelector:@selector(conversationCell:didSelectAction:forMessage:)]) {
-        [self.delegate conversationCell:self didSelectAction:MessageActionForward forMessage:self.message];
-    }
-}
-
-- (void)replyTo:(id)sender
-{
-    if ([self.delegate respondsToSelector:@selector(conversationCell:didSelectAction:forMessage:)]) {
-        [self.delegate conversationCell:self didSelectAction:MessageActionReply forMessage:self.message];
-    }
+    return self.actionController;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated

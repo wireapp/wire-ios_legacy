@@ -390,51 +390,6 @@ static const CGFloat ImageToolbarMinimumSize = 192;
 
 #pragma mark - Copy/Paste
 
-- (BOOL)canBecomeFirstResponder
-{
-    return YES;
-}
-
-- (BOOL)canPerformAction:(SEL)action
-              withSender:(id)sender
-{
-    
-    if (action == @selector(cut:)) {
-        return NO;
-    }
-    else if (action == @selector(copy:) || action == @selector(saveImage) || action == @selector(forward:)) {
-        return !self.message.isEphemeral && self.fullImageView.image != nil;
-    }
-    else if (action == @selector(paste:)) {
-        return NO;
-    }
-    else if (action == @selector(select:) || action == @selector(selectAll:)) {
-        return NO;
-    }
-    
-    return [super canPerformAction:action withSender:sender];
-}
-
-- (void)copy:(id)sender
-{
-    [[UIPasteboard generalPasteboard] setMediaAsset:[self.fullImageView mediaAsset]];
-}
-
-- (void)setSelectedByMenu:(BOOL)selected animated:(BOOL)animated
-{
-    ZMLogDebug(@"Setting selected: %@ animated: %@", @(selected), @(animated));
-    
-    dispatch_block_t animations = ^{
-        self.fullImageView.alpha = selected ? ConversationCellSelectedOpacity : 1.0f;
-    };
-    
-    if (animated) {
-        [UIView animateWithDuration:ConversationCellSelectionAnimationDuration animations:animations];
-    } else {
-        animations();
-    }
-}
-
 - (CGRect)selectionRect
 {
     return self.imageViewContainer.bounds;
@@ -450,25 +405,7 @@ static const CGFloat ImageToolbarMinimumSize = 192;
     MenuConfigurationProperties *properties = [[MenuConfigurationProperties alloc] init];
     properties.targetRect = self.selectionRect;
     properties.targetView = self.selectionView;
-    UIMenuItem *replyItem = [UIMenuItem replyToWithAction:@selector(replyTo:)];
-    UIMenuItem *saveItem = [UIMenuItem saveItemWithAction:@selector(saveImage)];
-    UIMenuItem *forwardItem = [UIMenuItem forwardItemWithAction:@selector(forward:)];
-    properties.additionalItems = @[
-                                   [AdditionalMenuItem forbiddenInEphemeral:replyItem],
-                                   [AdditionalMenuItem forbiddenInEphemeral:saveItem],
-                                   [AdditionalMenuItem forbiddenInEphemeral:forwardItem]
-                                   ];
-    properties.selectedMenuBlock = ^(BOOL selected, BOOL animated) {
-        [self setSelectedByMenu:selected animated:animated];
-    };
     return properties;
-}
-
-- (void)saveImage
-{
-    if ([self.delegate respondsToSelector:@selector(conversationCell:didSelectAction:forMessage:)]) {
-        [self.delegate conversationCell:self didSelectAction:MessageActionSave forMessage:self.message];
-    }
 }
 
 - (MessageType)messageType;

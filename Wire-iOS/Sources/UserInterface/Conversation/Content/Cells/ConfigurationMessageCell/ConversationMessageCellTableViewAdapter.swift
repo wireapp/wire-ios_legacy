@@ -18,7 +18,7 @@
 
 import Foundation
 
-class ConversationMessageCellTableViewAdapter<C: ConversationMessageCellDescription>: UITableViewCell {
+class ConversationMessageCellTableViewAdapter<C: ConversationMessageCellDescription>: UITableViewCell, SelectableView {
     
     var cellView: C.View
 
@@ -42,6 +42,8 @@ class ConversationMessageCellTableViewAdapter<C: ConversationMessageCellDescript
 
     private var longPressGesture: UILongPressGestureRecognizer!
     private var doubleTapGesture: UITapGestureRecognizer!
+
+    @objc var showsMenu = false
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         self.cellView = C.View(frame: .zero)
@@ -125,16 +127,21 @@ class ConversationMessageCellTableViewAdapter<C: ConversationMessageCellDescript
     }
 
     private func showMenu() {
-        guard cellDescription?.actionController != nil, cellDescription?.supportsActions == true else {
+        guard cellDescription?.supportsActions == true else {
             return
         }
+
+        let needsFirstResponder = cellDescription?.delegate?.conversationCellShouldBecomeFirstResponderWhenShowingMenu?(forCell: self)
+        registerMenuObservers()
 
         let menu = UIMenuController.shared
         menu.menuItems = ConversationCellActionController.allMessageActions
 
-        self.becomeFirstResponder()
+        if needsFirstResponder != false {
+            self.becomeFirstResponder()
+        }
 
-        menu.setTargetRect(contentView.bounds, in: self)
+        menu.setTargetRect(selectionRect, in: selectionView)
         menu.setMenuVisible(true, animated: true)
     }
 
@@ -156,6 +163,46 @@ class ConversationMessageCellTableViewAdapter<C: ConversationMessageCellDescript
         cellDescription?.actionController?.likeMessage()
     }
 
+    // MARK: - Target / Action
+
+    private func registerMenuObservers() {
+        NotificationCenter.default.addObserver(self, selector: #selector(menuWillShow), name: UIMenuController.willShowMenuNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(menuDidHide), name: UIMenuController.didHideMenuNotification, object: nil)
+    }
+
+    @objc private func menuWillShow(_ note: Notification) {
+        showsMenu = true
+        setSelectedByMenu(true, animated: true)
+        NotificationCenter.default.removeObserver(self, name: UIMenuController.willShowMenuNotification, object: nil)
+    }
+
+    @objc private func menuDidHide(_ note: Notification) {
+        showsMenu = false
+        setSelectedByMenu(false, animated: true)
+        NotificationCenter.default.removeObserver(self, name: UIMenuController.didHideMenuNotification, object: nil)
+    }
+
+    func setSelectedByMenu(_ isSelected: Bool, animated: Bool) {
+        let animations = {
+            self.selectionView.alpha = isSelected ? ConversationCellSelectedOpacity : 1
+        }
+
+        UIView.animate(withDuration: ConversationCellSelectionAnimationDuration, animations: animations)
+    }
+
+    // MARK: - SelectableView
+
+    var selectionView: UIView! {
+        return cellView.selectionView ?? self
+    }
+
+    var selectionRect: CGRect {
+        if cellView.selectionView != nil {
+            return cellView.selectionRect
+        } else {
+            return self.bounds
+        }
+    }
 
 }
 

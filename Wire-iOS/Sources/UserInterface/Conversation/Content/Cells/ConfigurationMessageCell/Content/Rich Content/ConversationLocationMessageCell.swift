@@ -43,6 +43,10 @@ class ConversationLocationMessageCell: UIView, ConversationMessageCell {
 
     var isSelected: Bool = false
 
+    var selectionView: UIView? {
+        return containerView
+    }
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureViews()

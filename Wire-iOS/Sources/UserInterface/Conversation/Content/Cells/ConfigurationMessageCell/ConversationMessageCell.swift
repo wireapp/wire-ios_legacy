@@ -30,12 +30,30 @@ protocol ConversationMessageCell {
     /// Whether the cell is selected.
     var isSelected: Bool { get set }
 
+    /// The view to highlight when the cell is selected.
+    var selectionView: UIView? { get }
+
+    /// The frame to highlight when the cell is selected.
+    var selectionRect: CGRect { get }
+
     /**
      * Configures the cell with the specified configuration object.
      * - parameter object: The view model for the cell.
      */
 
     func configure(with object: Configuration)
+}
+
+extension ConversationMessageCell {
+
+    var selectionView: UIView? {
+        return nil
+    }
+
+    var selectionRect: CGRect {
+        return selectionView?.bounds ?? .zero
+    }
+
 }
 
 /**
