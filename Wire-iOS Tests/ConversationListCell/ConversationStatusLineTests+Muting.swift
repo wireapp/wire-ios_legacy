@@ -89,6 +89,76 @@ extension ConversationStatusLineTests_Muting {
         XCTAssertEqual(status.string, "5 replies")
     }
 
+    func testStatusShowSummaryForMultipleMessagesAndReplyWhenNoNotifications() {
+        // GIVEN
+        let sut = self.otherUserConversation!
+        sut.mutedMessageTypes = [.all]
+        for _ in 1...5 {
+            appendTextMessage(to: sut)
+        }
+
+        let selfMessage = appendSelfMessage(to: sut)
+
+        appendReply(to: sut, selfMessage: selfMessage)
+
+        // WHEN
+        let status = sut.status.description(for: sut)
+        // THEN
+        XCTAssertEqual(status.string, "1 reply, 5 messages")
+    }
+
+    func testStatusShowSummaryForMultipleRepliesAndMultipleMessagesWhenOnlyReplies() {
+        // GIVEN
+        let sut = self.otherUserConversation!
+        for _ in 1...5 {
+            appendTextMessage(to: sut)
+        }
+
+        let selfMessage = appendSelfMessage(to: sut)
+
+        for _ in 1...5 {
+            appendReply(to: sut, selfMessage: selfMessage)
+        }
+
+        sut.mutedMessageTypes = .regular
+
+        // WHEN
+        let status = sut.status.description(for: sut)
+
+        // THEN
+        XCTAssertEqual(status.string, "5 replies, 5 messages")
+    }
+
+}
+
+// MARK: - mentions & replies
+extension ConversationStatusLineTests_Muting {
+    func testStatusShowSummaryForMultipleMentionsAndRepliesAndMultipleMessagesWhenOnlyMentionsAndReplies() {
+        // GIVEN
+        let sut = self.otherUserConversation!
+        for _ in 1...5 {
+            appendTextMessage(to: sut)
+        }
+
+        let selfMessage = appendSelfMessage(to: sut)
+
+        for _ in 1...5 {
+            appendReply(to: sut, selfMessage: selfMessage)
+        }
+
+        for _ in 1...5 {
+            appendMention(to: sut)
+        }
+
+        sut.mutedMessageTypes = .regular
+
+        // WHEN
+        let status = sut.status.description(for: sut)
+
+        // THEN
+        XCTAssertEqual(status.string, "5 mentions, 5 replies, 5 messages")
+    }
+
 }
 
 // MARK: - Only mentions
