@@ -47,6 +47,8 @@ extension ConversationMessageWindowTableViewAdapter: ZMConversationMessageWindow
         let isLoadingInitialContent = messageWindow.messages.count == changeInfo.insertedIndexes.count && changeInfo.deletedIndexes.count == 0
         let isExpandingMessageWindow = changeInfo.insertedIndexes.count > 0 && changeInfo.insertedIndexes.last == messageWindow.messages.count - 1
         
+        stopAudioPlayer(forDeletedMessages: changeInfo.deletedObjects)
+        
         if isLoadingInitialContent || (isExpandingMessageWindow && changeInfo.deletedIndexes.count == 0) || changeInfo.needsReload {
             tableView.reloadData()
         } else {

@@ -40,6 +40,7 @@
 - (instancetype)initWithTableView:(UITableView *)tableView messageWindow:(ZMConversationMessageWindow *)messageWindow;
 - (void)expandMessageWindow;
 
+- (void)stopAudioPlayerForDeletedMessages:(NSSet *)deletedMessages;
 - (ConversationCellActionController *)actionControllerForMessage:(id<ZMConversationMessage>)message;
 - (void)registerCellIfNeeded:(AnyConversationMessageCellDescription *)cellDescription inTableView:(UITableView *)tableView;
 
