@@ -30,7 +30,19 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
     override var needsCaches: Bool {
         return true
     }
-        
+
+
+    // MARK: - Helper
+
+    func createMissedCallMessage(sut: ZMConversation) {
+        let otherMessage = ZMSystemMessage(nonce: UUID(), managedObjectContext: uiMOC)
+        otherMessage.sender = self.otherUser
+        otherMessage.systemMessageType = .missedCall
+        sut.sortedAppendMessage(otherMessage)
+    }
+
+    // MARK: - Tests
+
     func testStatusForNotActiveConversationWithHandle() {
         // GIVEN
         let sut = self.otherUserConversation!
@@ -73,10 +85,7 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
     func testStatusMissedCall() {
         // GIVEN
         let sut = self.otherUserConversation!
-        let otherMessage = ZMSystemMessage(nonce: UUID(), managedObjectContext: uiMOC)
-        otherMessage.sender = self.otherUser
-        otherMessage.systemMessageType = .missedCall
-        sut.sortedAppendMessage(otherMessage)
+        createMissedCallMessage(sut: sut)
         sut.lastReadServerTimeStamp = Date.distantPast
 
         // WHEN
@@ -84,16 +93,13 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         // THEN
         XCTAssertEqual(status.string, "Missed call")
     }
-    
+
     func testStatusMissedCallInGroup() {
         // GIVEN
         let sut = createGroupConversation()
-        let otherMessage = ZMSystemMessage(nonce: UUID(), managedObjectContext: uiMOC)
-        otherMessage.sender = self.otherUser
-        otherMessage.systemMessageType = .missedCall
-        sut.sortedAppendMessage(otherMessage)
+        createMissedCallMessage(sut: sut)
         sut.lastReadServerTimeStamp = Date.distantPast
-        
+
         // WHEN
         let status = sut.status.description(for: sut)
         // THEN
@@ -136,20 +142,20 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
 
         let selfMessage = sut.append(text: "I am a programmer") as! ZMMessage
         selfMessage.sender = selfUser
-        for _ in 1...3 {
-            (sut.append(text: "Yes, it is true", replyingTo: selfMessage) as! ZMMessage).sender = self.otherUser
+        
+        for index in 1...3 {
+            (sut.append(text: "Yes, it is true \(index)", replyingTo: selfMessage) as! ZMMessage).sender = self.otherUser
         }
+        sut.setPrimitiveValue(3, forKey: ZMConversationInternalEstimatedUnreadSelfReplyCountKey)
 
-        let otherMessage = ZMSystemMessage(nonce: UUID(), managedObjectContext: uiMOC)
-        otherMessage.sender = self.otherUser
-        otherMessage.systemMessageType = .missedCall
-        sut.sortedAppendMessage(otherMessage)
-        sut.lastReadServerTimeStamp = Date.distantPast
+        createMissedCallMessage(sut: sut)
 
         // insert messages from other
         for index in 1...2 {
             (sut.append(text: "test \(index)") as! ZMMessage).sender = self.otherUser
         }
+
+        sut.lastReadServerTimeStamp = Date.distantPast
 
         // WHEN
         let status = sut.status.description(for: sut)

@@ -371,7 +371,7 @@ extension ConversationStatus {
             // Summarize when there is no mention
             return true
         } else if hasSelfMention || hasReply {
-            // Summarize if there is at least one mention and another activity that can be inside a summary
+            // Summarize if there is at least one mention or reply and another activity that can be inside a summary
             return StatusMessageType.summaryTypes.reduce(into: UInt(0)) { $0 += (messagesRequiringAttentionByType[$1] ?? 0) } > 1
         } else {
             // Never summarize in other cases
@@ -517,7 +517,7 @@ final internal class NewMessagesMatcher: TypedConversationStatusMatcher {
                     return false
                 }
             }),
-            let type = StatusMessageType(message: message) else { ///TODO: no replay here??
+            let type = StatusMessageType(message: message) else {
             return .none
         }
         
@@ -758,7 +758,7 @@ extension ZMConversation {
     var status: ConversationStatus {
         let isBlocked = self.conversationType == .oneOnOne ? (self.firstActiveParticipantOtherThanSelf()?.isBlocked ?? false) : false
 
-        var messagesRequiringAttention: [ZMConversationMessage] = unreadMessages
+        var messagesRequiringAttention = unreadMessages
 
         if messagesRequiringAttention.count == 0,
             let lastMessage = self.messages.lastObject as? ZMConversationMessage,
