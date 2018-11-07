@@ -20,14 +20,19 @@ import Foundation
 
 extension ConversationCell {
     @objc func updateCountdownView() {
-        countdownContainerViewHidden = !showDestructionCountdown()
+        guard let message = self.message else {
+            tearDownCountdown()
+            return
+        }
+        
+        countdownContainerViewHidden = !message.shouldShowDestructionCountdown
 
         guard !(countdownContainerViewHidden && nil != destructionLink) else {
             tearDownCountdown()
             return
         }
 
-        guard showDestructionCountdown(), let destructionDate = message.destructionDate else { return }
+        guard message.shouldShowDestructionCountdown, let destructionDate = message.destructionDate else { return }
 
         let duration = destructionDate.timeIntervalSinceNow
 
@@ -36,6 +41,5 @@ extension ConversationCell {
             countdownView.startAnimating(duration: duration, currentProgress: CGFloat(progress))
             countdownView.isHidden = false
         }
-        toolboxView.updateTimestamp(message)
     }
 }

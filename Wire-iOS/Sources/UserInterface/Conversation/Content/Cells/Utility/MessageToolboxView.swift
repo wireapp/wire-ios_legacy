@@ -60,6 +60,8 @@ import TTTAttributedLabel
     
     fileprivate var forceShowTimestamp: Bool = false
     private var isConfigured: Bool = false
+    
+    private var timestampTimer: Timer? = nil
 
     override init(frame: CGRect) {
         
@@ -167,6 +169,19 @@ import TTTAttributedLabel
             showReactionsView(false, animated: animated)
             self.configureTimestamp(message, animated: animated)
             self.tapGestureRecogniser.isEnabled = false
+        }
+        
+        if message.shouldShowDestructionCountdown && timestampTimer == nil {
+            timestampTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [weak self] _ in
+                guard let `self` = self, let message = self.message else {
+                    return
+                }
+                self.configureTimestamp(message, animated: false)
+            }
+        }
+        
+        if !message.shouldShowDestructionCountdown && timestampTimer != nil {
+            timestampTimer = nil
         }
     }
     
@@ -286,10 +301,6 @@ import TTTAttributedLabel
         }
     }
 
-    public func updateTimestamp(_ message: ZMConversationMessage) {
-        configureTimestamp(message)
-    }
-    
     fileprivate func configureTimestamp(_ message: ZMConversationMessage, animated: Bool = false) {
         var deliveryStateString: String? = .none
         
@@ -346,6 +357,10 @@ import TTTAttributedLabel
         }
         else {
             finalText = (deliveryStateString ?? "")
+        }
+        
+        if statusLabel.attributedText?.string == finalText {
+            return
         }
         
         let attributedText = NSMutableAttributedString(attributedString: finalText && [.font: statusLabel.font, .foregroundColor: statusLabel.textColor])

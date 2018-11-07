@@ -29,7 +29,6 @@
 #import "AccentColorChangeHandler.h"
 #import "Analytics.h"
 #import "UIResponder+FirstResponder.h"
-#import "Wire-Swift.h"
 
 const CGFloat ConversationCellSelectedOpacity = 0.4;
 const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
@@ -561,15 +560,10 @@ static const CGFloat BurstContainerExpandedHeight = 40;
 
 - (void)startCountdownAnimationIfNeeded:(id<ZMConversationMessage>)message
 {
-    if (self.showDestructionCountdown && nil == self.destructionLink) {
+    if ([Message shouldShowDestructionCountdown:message] && nil == self.destructionLink) {
         self.destructionLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(updateCountdownView)];
         [self.destructionLink addToRunLoop:NSRunLoop.mainRunLoop forMode:NSRunLoopCommonModes];
     }
-}
-
-- (BOOL)showDestructionCountdown
-{
-    return !self.message.hasBeenDeleted && self.message.isEphemeral && !self.message.isObfuscated && ![Message isKnockMessage:self.message];
 }
 
 @end

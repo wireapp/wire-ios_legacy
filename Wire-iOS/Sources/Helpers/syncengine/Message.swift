@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2016 Wire Swiss GmbH
+// Copyright (C) 2018 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,16 +16,20 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-#import "Message+UI.h"
+import Foundation
 
-NS_ASSUME_NONNULL_BEGIN
+extension Message {
+    @objc(shouldShowDestructionCountdown:)
+    public static func shouldShowDestructionCountdown(_ message: ZMConversationMessage) -> Bool {
+        return message.shouldShowDestructionCountdown
+    }
+}
 
-@interface Message (Private)
-
-@property (class, nonatomic, strong) NSDateFormatter *shortTimeFormatter;
-@property (class, nonatomic, strong) NSDateFormatter *shortDateFormatter;
-@property (class, nonatomic, strong) NSDateFormatter *shortDateTimeFormatter;
-
-@end
-
-NS_ASSUME_NONNULL_END
+extension ZMConversationMessage {
+    var shouldShowDestructionCountdown: Bool {
+        return !self.hasBeenDeleted &&
+               self.isEphemeral &&
+               !self.isObfuscated &&
+               !self.isKnock
+    }
+}

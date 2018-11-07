@@ -17,7 +17,6 @@
 // 
 
 
-#import "Message+Private.h"
 #import "Settings.h"
 #import "Wire-Swift.h"
 

@@ -19,6 +19,8 @@
 
 #import <WireSyncEngine/WireSyncEngine.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface Message (UI)
 
 + (BOOL)shouldShowTimestamp:(id<ZMConversationMessage>)message;
@@ -31,4 +33,11 @@
 
 + (BOOL)canBePrefetched:(id<ZMConversationMessage>)message;
 
+@property (class, nonatomic, strong, readonly) NSDateFormatter *shortTimeFormatter;
+@property (class, nonatomic, strong, readonly) NSDateFormatter *shortDateFormatter;
+@property (class, nonatomic, strong, readonly) NSDateFormatter *shortDateTimeFormatter;
+
 @end
+
+NS_ASSUME_NONNULL_END
+
