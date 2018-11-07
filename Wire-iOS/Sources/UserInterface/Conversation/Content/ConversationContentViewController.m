@@ -762,6 +762,10 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
         self.conversationMessageWindowTableViewAdapter.selectedMessage  = nil;
         [self.conversationMessageWindowTableViewAdapter deselectWithIndexPath:indexPath];
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
+        
+        // Make table view to update cells with animation (TODO can be removed when legacy cells are removed)
+        [tableView beginUpdates];
+        [tableView endUpdates];
     } else {
         if (tableView.indexPathForSelectedRow != nil) {
             [self.conversationMessageWindowTableViewAdapter deselectWithIndexPath:tableView.indexPathForSelectedRow];

@@ -97,6 +97,11 @@ extension IndexSet {
         
         super.init()
         
+        if addLegacyContentIfNeeded(layoutProperties: layoutProperties) {
+            visibleCellDescriptions = visibleDescriptions(in: context)
+            return
+        }
+        
         createCellDescriptions(in: context, layoutProperties: layoutProperties)
         
         visibleCellDescriptions = visibleDescriptions(in: context)

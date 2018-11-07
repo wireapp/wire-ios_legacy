@@ -348,29 +348,32 @@ static const CGFloat BurstContainerExpandedHeight = 40;
         shouldBeVisible = NO;
     }
 
-    self.toolboxCollapseConstraint.active = ! shouldBeVisible;
+//    self.toolboxCollapseConstraint.active = ! shouldBeVisible;
     self.toolboxView.isAccessibilityElement = shouldBeVisible;
 
     if (shouldBeVisible) {
         [self.toolboxView configureForMessage:self.message forceShowTimestamp:self.selected animated:animated];
     }
     
-    if (animated) {
-        if (shouldBeVisible) {
-            [UIView animateWithDuration:0.35 animations:^{
-                self.toolboxView.alpha = 1;
-            }];
-        }
-        else {
-            [UIView animateWithDuration:0.35 animations:^{
-                self.toolboxView.alpha = 0;
-            }];
-        }
-    }
-    else {
-        [self.toolboxView.layer removeAllAnimations];
-        self.toolboxView.alpha = shouldBeVisible ? 1 : 0;
-    }
+    
+    [self.toolboxView setHidden:!shouldBeVisible animated:animated];
+    
+//    if (animated) {
+//        if (shouldBeVisible) {
+//            [UIView animateWithDuration:0.35 animations:^{
+//                self.toolboxView.alpha = 1;
+//            }];
+//        }
+//        else {
+//            [UIView animateWithDuration:0.35 animations:^{
+//                self.toolboxView.alpha = 0;
+//            }];
+//        }
+//    }
+//    else {
+//        [self.toolboxView.layer removeAllAnimations];
+//        self.toolboxView.alpha = shouldBeVisible ? 1 : 0;
+//    }
 }
 
 
