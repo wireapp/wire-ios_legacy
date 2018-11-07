@@ -80,7 +80,7 @@ class ImageResourceThumbnailView: UIView {
         return imageView.intrinsicContentSize
     }
 
-    func setResource(_ resource: ImageResource, isVideoPreview: Bool) {
+    func setResource(_ resource: PreviewableImageResource, isVideoPreview: Bool) {
         imageView.configure(with: resource) {
             DispatchQueue.main.async {
                 let needsVideoCoverView = isVideoPreview && self.imageView.mediaAsset != nil

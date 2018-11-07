@@ -27,7 +27,7 @@ class ConversationReplyContentView: UIView {
     struct Configuration {
         enum Content {
             case text(NSAttributedString)
-            case imagePreview(thumbnail: ImageResource, isVideo: Bool)
+            case imagePreview(thumbnail: PreviewableImageResource, isVideo: Bool)
         }
 
         let showDetails: Bool
