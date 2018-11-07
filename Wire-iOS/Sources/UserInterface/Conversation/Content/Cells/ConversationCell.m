@@ -71,8 +71,6 @@ static const CGFloat BurstContainerExpandedHeight = 40;
 @property (nonatomic) NSLayoutConstraint *topMarginConstraint;
 @property (nonatomic) NSLayoutConstraint *messageToolsHeightConstraint;
 
-@property (nonatomic) NSLayoutConstraint *toolboxCollapseConstraint;
-
 @property (nonatomic) UIView *countdownContainerView;
 
 @end
@@ -260,7 +258,7 @@ static const CGFloat BurstContainerExpandedHeight = 40;
     }];
     
     [NSLayoutConstraint autoSetPriority:UILayoutPriorityDefaultHigh + 1 forConstraints:^{
-        self.toolboxCollapseConstraint = [self.toolboxView autoSetDimension:ALDimensionHeight toSize:0];
+        [self.toolboxView autoSetDimension:ALDimensionHeight toSize:0];
     }];
     
     [self.toolboxView autoSetDimension:ALDimensionHeight toSize:0 relation:NSLayoutRelationGreaterThanOrEqual];
@@ -348,7 +346,6 @@ static const CGFloat BurstContainerExpandedHeight = 40;
         shouldBeVisible = NO;
     }
 
-//    self.toolboxCollapseConstraint.active = ! shouldBeVisible;
     self.toolboxView.isAccessibilityElement = shouldBeVisible;
 
     if (shouldBeVisible) {
@@ -357,23 +354,6 @@ static const CGFloat BurstContainerExpandedHeight = 40;
     
     
     [self.toolboxView setHidden:!shouldBeVisible animated:animated];
-    
-//    if (animated) {
-//        if (shouldBeVisible) {
-//            [UIView animateWithDuration:0.35 animations:^{
-//                self.toolboxView.alpha = 1;
-//            }];
-//        }
-//        else {
-//            [UIView animateWithDuration:0.35 animations:^{
-//                self.toolboxView.alpha = 0;
-//            }];
-//        }
-//    }
-//    else {
-//        [self.toolboxView.layer removeAllAnimations];
-//        self.toolboxView.alpha = shouldBeVisible ? 1 : 0;
-//    }
 }
 
 
