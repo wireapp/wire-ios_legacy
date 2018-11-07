@@ -27,6 +27,14 @@ class ConversationTextMessageCell: UIView, ConversationMessageCell {
     let messageTextView = LinkInteractionTextView()
     var isSelected: Bool = false
 
+    var selectionView: UIView? {
+        return messageTextView
+    }
+
+    var selectionRect: CGRect {
+        return messageTextView.layoutManager.usedRect(for: messageTextView.textContainer)
+    }
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureSubviews()
@@ -52,6 +60,10 @@ class ConversationTextMessageCell: UIView, ConversationMessageCell {
         messageTextView.dataDetectorTypes = [.link, .address, .phoneNumber, .flightNumber, .calendarEvent, .shipmentTrackingNumber]
         messageTextView.setContentHuggingPriority(.required, for: .vertical)
         messageTextView.setContentCompressionResistancePriority(.required, for: .vertical)
+
+        if #available(iOS 11.0, *) {
+            messageTextView.textDragInteraction?.isEnabled = false
+        }
 
         addSubview(messageTextView)
     }

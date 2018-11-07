@@ -19,6 +19,11 @@
 import Foundation
 
 extension CustomMessageView: ConversationMessageCell {
+
+    var selectionView: UIView? {
+        return messageLabel
+    }
+
     func configure(with object: String) {
         messageText = object
     }

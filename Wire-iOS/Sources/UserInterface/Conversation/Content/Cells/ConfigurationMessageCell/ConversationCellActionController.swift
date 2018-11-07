@@ -30,7 +30,7 @@ import UIKit
 
     // MARK: - List of Actions
 
-    static let allMessageActions: [UIMenuItem] = [
+    @objc static let allMessageActions: [UIMenuItem] = [
         UIMenuItem(title: "content.message.copy".localized, action: #selector(ConversationCellActionController.copyMessage)),
         UIMenuItem(title: "content.message.reply".localized, action: #selector(ConversationCellActionController.quoteMessage)),
         UIMenuItem(title: "message.menu.edit.title".localized, action: #selector(ConversationCellActionController.editMessage)),
@@ -43,7 +43,7 @@ import UIKit
         UIMenuItem(title: "content.message.resend".localized, action: #selector(ConversationCellActionController.resendMessage))
     ]
 
-    func canPerformAction(_ selector: Selector) -> Bool {
+    @objc func canPerformAction(_ selector: Selector) -> Bool {
         switch selector {
         case #selector(ConversationCellActionController.copyMessage):
             return message.canBeCopied
@@ -68,6 +68,16 @@ import UIKit
         default:
             return false
         }
+    }
+
+    @objc func makePreviewActions() -> [UIPreviewAction] {
+        return ConversationCellActionController.allMessageActions
+            .filter { self.canPerformAction($0.action) }
+            .map { menuItem in
+                UIPreviewAction(title: menuItem.title, style: .default) { [weak self] _, _ in
+                    self?.perform(menuItem.action)
+                }
+            }
     }
 
     // MARK: - Handler

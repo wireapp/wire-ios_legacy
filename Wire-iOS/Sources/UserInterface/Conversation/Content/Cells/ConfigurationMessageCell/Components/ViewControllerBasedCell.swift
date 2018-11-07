@@ -22,6 +22,10 @@ class ViewControllerBasedCell<Child: UIViewController>: UIView {
 
     let viewController: Child
 
+    var selectionView: UIView? {
+        return viewController.view
+    }
+
     init(viewController: Child) {
         self.viewController = viewController
         super.init(frame: .zero)
