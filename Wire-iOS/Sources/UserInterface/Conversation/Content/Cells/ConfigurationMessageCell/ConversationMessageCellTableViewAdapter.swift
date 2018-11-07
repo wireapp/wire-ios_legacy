@@ -197,7 +197,11 @@ class ConversationMessageCellTableViewAdapter<C: ConversationMessageCellDescript
     }
 
     var selectionRect: CGRect {
-        return cellView.selectionRect
+        if cellView.selectionView != nil {
+            return cellView.selectionRect
+        } else {
+            return self.bounds
+        }
     }
 
 }
