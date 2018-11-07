@@ -46,8 +46,8 @@
         self.messageWindow = messageWindow;
         self.messageWindowObserverToken = [MessageWindowChangeInfo addObserver:self forWindow:self.messageWindow];
         self.firstUnreadMessage = self.messageWindow.conversation.firstUnreadMessage;
-        self.sectionControllers = [[NSCache alloc] init];
-        self.actionControllers = [[NSCache alloc] init];
+        self.sectionControllers = [[NSMutableDictionary alloc] init];
+        self.actionControllers = [[NSMutableDictionary alloc] init];
     }
     
     return self;
@@ -85,7 +85,7 @@
         
         if (change.deletedIndexes.count) {
             for (id<ZMConversationMessage> message in change.deletedObjects) {
-                [self.sectionControllers removeObjectForKey:message];
+                [self.sectionControllers removeObjectForKey:message.nonce];
             }
 
             [self.tableView deleteSections:change.deletedIndexes withRowAnimation:UITableViewRowAnimationFade];
@@ -113,7 +113,7 @@
 - (ConversationMessageSectionController *)sectionControllerAtIndex:(NSInteger)sectionIndex inTableView:(UITableView *)tableView;
 {
     id<ZMConversationMessage> message = [self.messageWindow.messages objectAtIndex:sectionIndex];
-    ConversationMessageSectionController *cachedEntry = [self.sectionControllers objectForKey:message];
+    ConversationMessageSectionController *cachedEntry = [self.sectionControllers objectForKey:message.nonce];
 
     if (cachedEntry) {
         return cachedEntry;
@@ -126,7 +126,7 @@
     sectionController.message = message;
     sectionController.actionController = [self actionControllerForMessage:message];
 
-    [self.sectionControllers setObject:sectionController forKey:message];
+    [self.sectionControllers setObject:sectionController forKey:message.nonce];
 
     for (AnyConversationMessageCellDescription *cellDescription in sectionController.cellDescriptions) {
         [self registerCellIfNeeded:cellDescription inTableView:tableView];
@@ -137,14 +137,14 @@
 
 - (ConversationCellActionController *)actionControllerForMessage:(id<ZMConversationMessage>)message
 {
-    ConversationCellActionController *cachedEntry = [self.actionControllers objectForKey:message];
+    ConversationCellActionController *cachedEntry = [self.actionControllers objectForKey:message.nonce];
 
     if (cachedEntry) {
         return cachedEntry;
     }
 
     ConversationCellActionController *actionController = [[ConversationCellActionController alloc] initWithResponder:self.messageActionResponder message:message];
-    [self.actionControllers setObject:actionController forKey:message];
+    [self.actionControllers setObject:actionController forKey:message.nonce];
 
     return actionController;
 }
@@ -242,10 +242,11 @@
 {
     NSInteger section = [self.messageWindow.messages indexOfObject:message];
 
-    if (!section) {
+    if (section == NSNotFound) {
         return;
     }
 
+    [self.sectionControllers removeObjectForKey:message.nonce];
     [self.tableView reloadSections:[[NSIndexSet alloc] initWithIndex:section] withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 

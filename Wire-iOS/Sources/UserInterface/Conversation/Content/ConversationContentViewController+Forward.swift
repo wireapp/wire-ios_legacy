@@ -259,7 +259,7 @@ extension ConversationContentViewController {
     }
     
     @objc func scroll(toIndex indexToShow: Int, completion: ((ConversationCell)->())? = .none) {
-        let cellIndexPath = IndexPath(row: indexToShow, section: 0)
+        let cellIndexPath = IndexPath(row: 0, section: indexToShow)
 
         self.tableView.scrollToRow(at: cellIndexPath, at: .middle, animated: false)
         if let cell = self.tableView.cellForRow(at: cellIndexPath) as? ConversationCell {

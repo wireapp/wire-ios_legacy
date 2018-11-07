@@ -57,10 +57,10 @@ import Foundation
     /// The object that receives informations from the section.
     @objc weak var sectionDelegate: ConversationMessageSectionControllerDelegate?
 
-    private var changeObserver: Any?
+    private var changeObservers: [Any] = []
 
     deinit {
-        changeObserver = nil
+        changeObservers.removeAll()
     }
 
     // MARK: - Composition
@@ -121,15 +121,19 @@ import Foundation
 
         if let newValue = self.message {
             startObservingChanges(for: newValue)
+            if let quotedMessage = message?.textMessageData?.quote {
+                startObservingChanges(for: quotedMessage)
+            }
         }
     }
 
     private func startObservingChanges(for message: ZMConversationMessage) {
-        changeObserver = MessageChangeInfo.add(observer: self, for: message, userSession: ZMUserSession.shared()!)
+        let observer = MessageChangeInfo.add(observer: self, for: message, userSession: ZMUserSession.shared()!)
+        changeObservers.append(observer)
     }
 
     func messageDidChange(_ changeInfo: MessageChangeInfo) {
-        sectionDelegate?.messageSectionController(self, didRequestRefreshForMessage: changeInfo.message)
+        sectionDelegate?.messageSectionController(self, didRequestRefreshForMessage: self.message!)
     }
 
 }

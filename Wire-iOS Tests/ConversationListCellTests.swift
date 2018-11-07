@@ -30,6 +30,8 @@ class ConversationListCellTests: CoreDataSnapshotTestCase {
         snapshotBackgroundColor = .darkGray
         accentColor = .strongBlue
         sut = ConversationListCell(frame: CGRect(x: 0, y: 0, width: 375, height: 60))
+
+        recordMode = true
     }
     
     override func tearDown() {
@@ -135,8 +137,8 @@ class ConversationListCellTests: CoreDataSnapshotTestCase {
         verify(otherUserConversation)
     }
 
-    // subtitle = "1 message, 1 reply"
-    func testThatItRendersConversation_TextMessagesThenReply() {
+    // subtitle = "Replied"
+    func testThatItRendersConversation_ReplySelfMessage() {
         // when
         let message = otherUserConversation.append(text: "Hey there!")
         (message as! ZMClientMessage).sender = selfUser
@@ -247,7 +249,7 @@ class ConversationListCellTests: CoreDataSnapshotTestCase {
 
     func testThatItRendersGroupConversationWithIncomingCall_SilencedExceptMentions() {
         let conversation = createGroupConversation()
-        conversation.mutedMessageTypes = .mentions
+        conversation.mutedMessageTypes = .mentionsAndReplies
         let icon = CallingMatcher.icon(for: .incoming(video: false, shouldRing: true, degraded: false), conversation: conversation)
         verify(conversation: conversation, icon: icon)
     }
@@ -273,7 +275,7 @@ class ConversationListCellTests: CoreDataSnapshotTestCase {
     
     func testThatItRendersOneOnOneConversationWithIncomingCall_SilencedExceptMentions() {
         let conversation = otherUserConversation
-        conversation?.mutedMessageTypes = .mentions
+        conversation?.mutedMessageTypes = .mentionsAndReplies
         let icon = CallingMatcher.icon(for: .incoming(video: false, shouldRing: true, degraded: false), conversation: conversation)
         verify(conversation: conversation, icon: icon)
     }

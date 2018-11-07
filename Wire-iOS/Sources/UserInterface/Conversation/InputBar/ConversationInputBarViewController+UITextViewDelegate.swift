@@ -128,7 +128,7 @@ extension ConversationInputBarViewController: UITextViewDelegate {
             self.conversation.draftMessage = DraftMessage(
                 text: text,
                 mentions: mentions,
-                quote: self.replyingToMessage
+                quote: self.quotedMessage as? ZMMessage
             )
         }
     }

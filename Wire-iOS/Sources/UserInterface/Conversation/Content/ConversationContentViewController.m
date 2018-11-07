@@ -496,6 +496,16 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
                 [self.delegate conversationContentViewController:self didTriggerReplyingToMessage:message];
             }
                 break;
+            case MessageActionOpenQuote:
+            {
+                if (message.textMessageData.quote) {
+                    [self scrollTo:message.textMessageData.quote completion:^(UIView *cell) {
+                        // TODO Alexis: Flash background of cell
+                        // [cell flashBackground];
+                    }];
+                }
+            }
+                break;
         }
     };
 
@@ -542,7 +552,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     NSIndexPath *firstIndexPath = indexPathsForVisibleRows.firstObject;
     
     if (firstIndexPath) {
-        id<ZMConversationMessage>lastVisibleMessage = [self.messageWindow.messages objectAtIndex:firstIndexPath.row];
+        id<ZMConversationMessage>lastVisibleMessage = [self.messageWindow.messages objectAtIndex:firstIndexPath.section];
         [self.conversation markMessagesAsReadUntil:lastVisibleMessage];
     }
 }
@@ -807,9 +817,9 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     [self.delegate conversationContentViewController:self didTriggerResendingMessage:cell.message];
 }
 
-- (void)conversationCell:(ConversationCell *)cell didSelectAction:(MessageAction)actionId
+- (void)conversationCell:(ConversationCell *)cell didSelectAction:(MessageAction)actionId forMessage:(id<ZMConversationMessage>)message
 {
-    [self wantsToPerformAction:actionId forMessage:cell.message cell:cell];
+    [self wantsToPerformAction:actionId forMessage:message cell:cell];
 }
 
 - (void)conversationCell:(ConversationCell *)cell didSelectURL:(NSURL *)url
@@ -837,10 +847,10 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     // no op
 }
 
-- (void)conversationCellDidTapOpenLikers:(ConversationCell *)cell
+- (void)conversationCellDidTapOpenLikers:(UIView *)cell forMessage:(id<ZMConversationMessage>)message
 {
-    if ([Message hasLikers:cell.message]) {
-        ReactionsListViewController *reactionsListController = [[ReactionsListViewController alloc] initWithMessage:cell.message showsStatusBar:!IS_IPAD_FULLSCREEN];
+    if ([Message hasLikers:message]) {
+        ReactionsListViewController *reactionsListController = [[ReactionsListViewController alloc] initWithMessage:message showsStatusBar:!IS_IPAD_FULLSCREEN];
         [self.parentViewController presentViewController:reactionsListController animated:YES completion:nil];
     }
 }

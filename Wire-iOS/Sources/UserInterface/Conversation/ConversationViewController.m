@@ -589,7 +589,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     }
 }
 
-- (void)conversationContentViewController:(ConversationContentViewController *)contentViewController didTriggerReplyingToMessage:(ZMClientMessage *)message
+- (void)conversationContentViewController:(ConversationContentViewController *)contentViewController didTriggerReplyingToMessage:(id<ZMConversationMessage>)message
 {
     ReplyComposingView *replyComposingView = [contentViewController createReplyComposingViewForMessage:message];
     [self.inputBarController replyToMessage:message composingView:replyComposingView];

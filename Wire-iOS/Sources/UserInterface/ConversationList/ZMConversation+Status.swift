@@ -356,8 +356,7 @@ extension ConversationStatus {
     }
 
     var showingOnlyMentions: Bool {
-//        return mutedMessageTypes == .nonMentions
-        return true
+        return mutedMessageTypes == .regular
     }
 
     var completelyMuted: Bool {
