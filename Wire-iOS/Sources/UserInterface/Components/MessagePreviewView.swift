@@ -70,7 +70,7 @@ extension UITextView {
 final class MessageThumbnailPreviewView: UIView {
     private let senderLabel = UILabel()
     private let contentTextView = UITextView.previewTextView()
-    private let imagePreview = UIImageView()
+    private let imagePreview = ImageContentView()
     private var observerToken: Any? = nil
 
     let message: ZMConversationMessage
@@ -150,8 +150,8 @@ final class MessageThumbnailPreviewView: UIView {
             let initialString = NSAttributedString(attachment: imageIcon) + "  " + "conversation.input_bar.message_preview.image".localized.localizedUppercase
             contentTextView.attributedText = initialString && attributes
             
-            if let data = message.imageMessageData?.imageData {
-                imagePreview.image = UIImage(from: data, withMaxSize: 100)
+            if let imageResource = message.imageMessageData?.image {
+                imagePreview.configure(with: imageResource)
             }
         }
         else if message.isVideo, let fileMessageData = message.fileMessageData {
@@ -159,9 +159,7 @@ final class MessageThumbnailPreviewView: UIView {
             let initialString = NSAttributedString(attachment: imageIcon) + "  " + "conversation.input_bar.message_preview.video".localized.localizedUppercase
             contentTextView.attributedText = initialString && attributes
             
-            if let data = fileMessageData.previewData {
-                imagePreview.image = UIImage(from: data, withMaxSize: 100)
-            }
+            imagePreview.configure(with: fileMessageData.thumbnailImage)
         }
         else {
             fatal("Unknown message for preview: \(message)")
