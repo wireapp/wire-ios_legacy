@@ -25,8 +25,6 @@ class ImageContentView: UIView {
     var imageWidthConstraint: NSLayoutConstraint
     var imageHeightConstraint: NSLayoutConstraint
 
-    let placeholderSize = CGSize(width: 140, height: 140)
-
     var mediaAsset: MediaAsset? {
         return imageView.mediaAsset()
     }
@@ -37,7 +35,7 @@ class ImageContentView: UIView {
         
         super.init(frame: .zero)
         
-        imageView.contentMode = .scaleAspectFit
+        imageView.clipsToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageWidthConstraint.priority = .defaultLow
         imageHeightConstraint.priority = .defaultLow
@@ -57,20 +55,19 @@ class ImageContentView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func configure(with resource: ImageResource, completionHandler: (() -> Void)?) {
-        updateAspectRatio(contentSize: placeholderSize)
-        imageView.setImageResource(resource) {
-            self.updateAspectRatio(contentSize: self.imageView.mediaAsset()?.size ?? self.placeholderSize)
-            completionHandler?()
-        }
+    func configure(with resource: PreviewableImageResource, completionHandler: (() -> Void)?) {
+        updateAspectRatio(for: resource)
+        imageView.setImageResource(resource, completion: completionHandler)
     }
 
-    private func updateAspectRatio(contentSize: CGSize) {
+    private func updateAspectRatio(for resource: PreviewableImageResource) {
+        let contentSize = resource.contentSize
         imageAspectConstraint.apply(imageView.removeConstraint)
         imageAspectConstraint = imageView.heightAnchor.constraint(equalTo: imageView.widthAnchor, multiplier: contentSize.height / contentSize.width)
         imageAspectConstraint?.isActive = true
         imageWidthConstraint.constant = contentSize.width
         imageHeightConstraint.constant = contentSize.height
+        imageView.contentMode = resource.contentMode
     }
 
 }
