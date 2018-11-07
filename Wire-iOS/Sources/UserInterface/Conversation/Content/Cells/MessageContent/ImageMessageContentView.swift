@@ -55,7 +55,7 @@ class ImageContentView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func configure(with resource: PreviewableImageResource, completionHandler: (() -> Void)?) {
+    func configure(with resource: PreviewableImageResource, completionHandler: (() -> Void)? = nil) {
         updateAspectRatio(for: resource)
         imageView.setImageResource(resource, completion: completionHandler)
     }

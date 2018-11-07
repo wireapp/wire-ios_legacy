@@ -22,16 +22,24 @@ extension ConversationInputBarViewController: ReplyComposingViewDelegate {
     
     @objc(replyToMessage:composingView:)
     func reply(to message: ZMConversationMessage, composingView: ReplyComposingView) {
+        if let _ = self.replyComposingView {
+            removeReplyComposingView()
+        }
+        
         self.quotedMessage = message
         self.replyComposingView = composingView
         composingView.delegate = self
         inputBar.textView.becomeFirstResponder()
     }
     
-    func composingViewDidCancel(composingView: ReplyComposingView) {
+    private func removeReplyComposingView() {
         self.quotedMessage = nil
+        self.replyComposingView?.removeFromSuperview()
         self.replyComposingView = nil
-        composingView.removeFromSuperview()
+    }
+    
+    func composingViewDidCancel(composingView: ReplyComposingView) {
+        removeReplyComposingView()
     }
     
     func composingViewWantsToShowMessage(composingView: ReplyComposingView, message: ZMConversationMessage) {
