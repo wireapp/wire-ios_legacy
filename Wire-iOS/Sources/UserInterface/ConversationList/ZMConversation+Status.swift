@@ -360,7 +360,7 @@ extension ConversationStatus {
     }
 
     var showingOnlyMentionsAndReplies: Bool {
-        return mutedMessageTypes == .mentionsAndReplies
+        return mutedMessageTypes == .regular
     }
 
     var completelyMuted: Bool {
