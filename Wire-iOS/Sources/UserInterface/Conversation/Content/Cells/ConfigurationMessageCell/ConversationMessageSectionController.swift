@@ -24,6 +24,7 @@ struct ConversationMessageContext {
     let isTimeIntervalSinceLastMessageSignificant: Bool
     let isFirstMessageOfTheDay: Bool
     let isFirstUnreadMessage: Bool
+    let searchQueries: [String]
 }
 
 extension IndexSet {
@@ -161,49 +162,46 @@ extension IndexSet {
         return true
     }
     
-    private func addContent(context: ConversationMessageContext, layoutProperties: ConversationCellLayoutProperties) {
+    private func addContent(context: ConversationMessageContext, layoutProperties: ConversationCellLayoutProperties, isSenderVisible: Bool) {
+        
+        var contentCellDescriptions: [AnyConversationMessageCellDescription]
         
         if message.isKnock {
-            addPing()
+            contentCellDescriptions = addPingMessageCells()
         } else if message.isText {
-            addTextMessageAndAttachments()
+            contentCellDescriptions = ConversationTextMessageCellDescription.cells(for: message, searchQueries: context.searchQueries)
         } else if message.isLocation {
-            addLocationMessage()
+            contentCellDescriptions = addLocationMessageCells()
         } else if message.isSystem {
-            addSystemMessage(layoutProperties: layoutProperties)
+            contentCellDescriptions = ConversationSystemMessageCellDescription.cells(for: message, layoutProperties: layoutProperties)
         } else {
-            add(description: UnknownMessageCellDescription())
+            contentCellDescriptions = [AnyConversationMessageCellDescription(UnknownMessageCellDescription())]
         }
+        
+        if isSenderVisible, let topCellDescription = contentCellDescriptions.first {
+            topCellDescription.topMargin = 0
+        }
+        
+        cellDescriptions.append(contentsOf: contentCellDescriptions)
     }
     
     // MARK: - Content Cells
     
-    private func addPing() {
+    private func addPingMessageCells() -> [AnyConversationMessageCellDescription] {
         guard let sender = message.sender else {
-            return
+            return []
         }
         
-        let pingCell = ConversationPingCellDescription(message: message, sender: sender)
-        add(description: pingCell)
+        return [AnyConversationMessageCellDescription(ConversationPingCellDescription(message: message, sender: sender))]
     }
     
-    private func addSystemMessage(layoutProperties: ConversationCellLayoutProperties) {
-        let cells = ConversationSystemMessageCellDescription.cells(for: message, layoutProperties: layoutProperties)
-        cellDescriptions.append(contentsOf: cells)
-    }
-    
-    private func addTextMessageAndAttachments() {
-        let cells = ConversationTextMessageCellDescription.cells(for: message)
-        cellDescriptions.append(contentsOf: cells)
-    }
-    
-    private func addLocationMessage() {
+    private func addLocationMessageCells() -> [AnyConversationMessageCellDescription] {
         guard let locationMessageData = message.locationMessageData else {
-            return
+            return []
         }
         
         let locationCell = ConversationLocationMessageCellDescription(message: message, location: locationMessageData)
-        add(description: locationCell)
+        return [AnyConversationMessageCellDescription(locationCell)]
     }
 
     // MARK: - Composition
@@ -234,17 +232,23 @@ extension IndexSet {
     private func createCellDescriptions(in context: ConversationMessageContext, layoutProperties: ConversationCellLayoutProperties) {
         cellDescriptions.removeAll()
         
+        let isSenderVisible = self.isSenderVisible(in: context) && message.sender != nil
+        
         if isBurstTimestampVisible(in: context) {
             add(description: BurstTimestampSenderMessageCellDescription(message: message, context: context))
         }
-        if isSenderVisible(in: context), let sender = message.sender {
+        if isSenderVisible, let sender = message.sender {
             add(description: ConversationSenderMessageCellDescription(sender: sender, message: message))
         }
         
-        addContent(context: context, layoutProperties: layoutProperties)
+        addContent(context: context, layoutProperties: layoutProperties, isSenderVisible: isSenderVisible)
         
         if isToolboxVisible(in: context) {
             add(description: ConversationMessageToolboxCellDescription(message: message, selected: selected))
+        }
+        
+        if let topCelldescription = cellDescriptions.first {
+            topCelldescription.topMargin = Float(layoutProperties.topPadding)
         }
     }
     

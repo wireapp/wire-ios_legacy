@@ -38,6 +38,8 @@ class ConversationLegacyCellDescription<T: ConversationCell>: ConversationMessag
     var message: ZMConversationMessage?
     weak var delegate: ConversationCellDelegate? 
     weak var actionController: ConversationCellActionController?
+    
+    var topMargin: Float = 0
 
     var isFullWidth: Bool {
         return false

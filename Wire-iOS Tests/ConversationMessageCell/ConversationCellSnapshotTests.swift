@@ -40,8 +40,8 @@ class ConversationCellSnapshotTests: CoreDataSnapshotTestCase {
     /**
      * Performs a snapshot test for the current section controller.
      */
-
     func verifySectionSnapshots() {
+        
         let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 375, height: 0))
         tableView.separatorStyle = .none
         tableView.rowHeight = UITableView.automaticDimension

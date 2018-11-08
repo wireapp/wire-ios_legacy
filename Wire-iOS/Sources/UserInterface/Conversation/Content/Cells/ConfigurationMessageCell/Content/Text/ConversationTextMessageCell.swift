@@ -50,7 +50,7 @@ class ConversationTextMessageCell: UIView, ConversationMessageCell {
     private func configureSubviews() {
         messageTextView.isEditable = false
         messageTextView.isSelectable = true
-        messageTextView.backgroundColor = UIColor.from(scheme: .contentBackground)
+        messageTextView.backgroundColor = .clear
         messageTextView.isScrollEnabled = false
         messageTextView.textContainerInset = UIEdgeInsets.zero
         messageTextView.textContainer.lineFragmentPadding = 0
@@ -70,13 +70,7 @@ class ConversationTextMessageCell: UIView, ConversationMessageCell {
 
     private func configureConstraints() {
         messageTextView.translatesAutoresizingMaskIntoConstraints = false
-
-        NSLayoutConstraint.activate([
-            messageTextView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            messageTextView.topAnchor.constraint(equalTo: topAnchor, constant: 8),
-            messageTextView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            messageTextView.bottomAnchor.constraint(equalTo: bottomAnchor)
-        ])
+        messageTextView.fitInSuperview()
     }
 
     func configure(with object: Configuration, animated: Bool) {
@@ -94,6 +88,8 @@ class ConversationTextMessageCellDescription: ConversationMessageCellDescription
     weak var message: ZMConversationMessage?
     weak var delegate: ConversationCellDelegate?
     weak var actionController: ConversationCellActionController?
+    
+    var topMargin: Float = 8
 
     let isFullWidth: Bool  = false
     let supportsActions: Bool = true
@@ -108,16 +104,25 @@ class ConversationTextMessageCellDescription: ConversationMessageCellDescription
 
 extension ConversationTextMessageCellDescription {
 
-    static func cells(for message: ZMConversationMessage) -> [AnyConversationMessageCellDescription] {
+    static func cells(for message: ZMConversationMessage, searchQueries: [String]) -> [AnyConversationMessageCellDescription] {
         guard let textMessageData = message.textMessageData else {
             preconditionFailure("Invalid text message")
         }
 
-        var lastKnownLinkAttachment: LinkAttachment?
-        let messageText = NSAttributedString.format(message: textMessageData, isObfuscated: message.isObfuscated, linkAttachment: &lastKnownLinkAttachment)
-
         var cells: [AnyConversationMessageCellDescription] = []
-        
+
+        // Text parsing
+
+        var lastKnownLinkAttachment: LinkAttachment?
+        var messageText = NSAttributedString.format(message: textMessageData, isObfuscated: message.isObfuscated, linkAttachment: &lastKnownLinkAttachment)
+
+        // Search queries
+
+        if !searchQueries.isEmpty {
+            let highlightStyle: [NSAttributedString.Key: AnyObject] = [.backgroundColor: UIColor.accentDarken]
+            messageText = messageText.highlightingAppearances(of: searchQueries, with: highlightStyle, upToWidth: 0, totalMatches: nil)
+        }
+
         // Quote
         if textMessageData.hasQuote {
             let quotedMessage = message.textMessageData?.quote

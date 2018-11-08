@@ -29,7 +29,7 @@ class ConversationMessageSectionControllerTests: XCTestCase {
     override func setUp() {
         super.setUp()
         
-        context = ConversationMessageContext(isSameSenderAsPrevious: false, isLastMessageSentBySelfUser: false, isTimeIntervalSinceLastMessageSignificant: false, isFirstMessageOfTheDay: false, isFirstUnreadMessage: false)
+        context = ConversationMessageContext(isSameSenderAsPrevious: false, isLastMessageSentBySelfUser: false, isTimeIntervalSinceLastMessageSignificant: false, isFirstMessageOfTheDay: false, isFirstUnreadMessage: false, searchQueries: [])
         layoutProperties = ConversationCellLayoutProperties()
     }
     

@@ -69,6 +69,11 @@ protocol ConversationMessageCellDescription: class {
     /// The view that will be displayed for the cell.
     associatedtype View: ConversationMessageCell & UIView
     
+    /// The top margin is used to configure the spacing between cells. This property will
+    /// get updated by the ConversationMessageSectionController if necessary so any
+    /// default value is just a recommendation.
+    var topMargin: Float { get set }
+    
     /// Whether the view occupies the entire width of the cell.
     var isFullWidth: Bool { get }
 
@@ -124,6 +129,7 @@ extension ConversationMessageCellDescription {
     private let _delegate: AnyMutableProperty<ConversationCellDelegate?>
     private let _message: AnyMutableProperty<ZMConversationMessage?>
     private let _actionController: AnyMutableProperty<ConversationCellActionController?>
+    private let _topMargin: AnyMutableProperty<Float>
 
     init<T: ConversationMessageCellDescription>(_ description: T) {
         registrationBlock = { tableView in
@@ -141,10 +147,11 @@ extension ConversationMessageCellDescription {
         baseTypeGetter = {
             return T.self
         }
-
+        
         _delegate = AnyMutableProperty(description, keyPath: \.delegate)
         _message = AnyMutableProperty(description, keyPath: \.message)
         _actionController = AnyMutableProperty(description, keyPath: \.actionController)
+        _topMargin = AnyMutableProperty(description, keyPath: \.topMargin)
     }
 
     @objc var baseType: AnyClass {
@@ -164,6 +171,11 @@ extension ConversationMessageCellDescription {
     @objc var actionController: ConversationCellActionController? {
         get { return _actionController.getter() }
         set { _actionController.setter(newValue) }
+    }
+    
+    @objc var topMargin: Float {
+        get { return _topMargin.getter() }
+        set { _topMargin.setter(newValue) }
     }
         
     func configure(cell: UITableViewCell, animated: Bool = false) {

@@ -28,7 +28,13 @@ class ConversationMessageCellTableViewAdapter<C: ConversationMessageCellDescript
             doubleTapGesture.isEnabled = cellDescription?.supportsActions == true
         }
     }
-
+    
+    var topMargin: Float = 0 {
+        didSet {
+            top.constant = CGFloat(topMargin)
+        }
+    }
+    
     var isFullWidth: Bool = false {
         didSet {
             configureConstraints(fullWidth: isFullWidth)
@@ -78,9 +84,10 @@ class ConversationMessageCellTableViewAdapter<C: ConversationMessageCellDescript
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(with object: C.View.Configuration, fullWidth: Bool) {
+    func configure(with object: C.View.Configuration, fullWidth: Bool, topMargin: Float) {
         cellView.configure(with: object, animated: false)
         self.isFullWidth = fullWidth
+        self.topMargin = topMargin
     }
 
     func configureConstraints(fullWidth: Bool) {
@@ -219,7 +226,7 @@ extension UITableView {
         let cell = dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as Any as! ConversationMessageCellTableViewAdapter<C>
 
         cell.cellDescription = description
-        cell.configure(with: description.configuration, fullWidth: description.isFullWidth)
+        cell.configure(with: description.configuration, fullWidth: description.isFullWidth, topMargin: description.topMargin)
 
         return cell
     }

@@ -55,6 +55,8 @@ class ConversationSoundCloudCellDescription<Player: PlayerViewControllerProtocol
     weak var message: ZMConversationMessage?
     weak var delegate: ConversationCellDelegate?
     weak var actionController: ConversationCellActionController?
+    
+    var topMargin: Float = 8
 
     var isFullWidth: Bool {
         return true

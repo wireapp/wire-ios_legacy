@@ -84,6 +84,7 @@ class ConversationMessageToolboxCellDescription: ConversationMessageCellDescript
     weak var delegate: ConversationCellDelegate? 
     weak var actionController: ConversationCellActionController?
 
+    var topMargin: Float = 2
     let isFullWidth: Bool = true
     let supportsActions: Bool = false
         
