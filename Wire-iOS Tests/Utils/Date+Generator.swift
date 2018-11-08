@@ -31,5 +31,17 @@ extension Date {
 
         return calendar.date(from: components)!
     }
-
+    
+    /// Return first day of the current year at 8am
+    ///
+    /// - Returns: a Date at ThisYear/1/1 8am
+    func startOfYear() -> Date {
+        var components = DateComponents()
+        components.year = Calendar.current.component(.year, from: self)
+        components.month = 1
+        components.day = 1
+        components.hour = 8
+        components.minute = 0
+        return Calendar.current.date(from: components)!
+    }
 }
