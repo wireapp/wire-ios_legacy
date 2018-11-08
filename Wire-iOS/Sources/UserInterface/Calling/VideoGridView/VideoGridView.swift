@@ -77,6 +77,7 @@ class VideoGridViewController: UIViewController {
     /// Update view visibility when this view controller is covered or not
     var isCovered: Bool = true {
         didSet {
+            displayIndicatorViewsIfNeeded()
             UIView.animate(
                 withDuration: 0.2,
                 delay: 0,

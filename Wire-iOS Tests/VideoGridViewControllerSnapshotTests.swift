@@ -37,7 +37,6 @@ final class VideoGridViewControllerSnapshotTests: ZMSnapshotTestCase {
 
     override func setUp() {
         super.setUp()
-
         mediaManager = ZMMockAVSMediaManager()
         configuration = MockVideoGridConfiguration()
     }
@@ -53,23 +52,19 @@ final class VideoGridViewControllerSnapshotTests: ZMSnapshotTestCase {
         ZMUser.selfUser().remoteIdentifier = UUID()
         sut = VideoGridViewController(configuration: configuration,
                                       mediaManager: mediaManager)
-
+        sut.isCovered = false
         sut.view.backgroundColor = .black
     }
 
     func testForMuted(){
         configuration.isMuted = true
         createSut()
-
-        sut.isCovered = false
         verify(view: sut.view)
     }
 
     func testForBadNetwork(){
         configuration.networkQuality = .poor
         createSut()
-
-        sut.isCovered = false
         verify(view: sut.view)
     }
 }
