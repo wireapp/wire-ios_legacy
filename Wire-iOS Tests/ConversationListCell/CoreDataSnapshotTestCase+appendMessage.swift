@@ -38,8 +38,8 @@ extension CoreDataSnapshotTestCase {
         conversation.lastReadServerTimeStamp = Date.distantPast
     }
 
-    func appendReply(to conversation: ZMConversation, selfMessage: ZMMessage) {
-        (conversation.append(text: "reply test \(index)", replyingTo: selfMessage) as! ZMMessage).sender = self.otherUser
+    func appendReply(to conversation: ZMConversation, selfMessage: ZMMessage, text: String = "reply test") {
+        (conversation.append(text: text, replyingTo: selfMessage) as! ZMMessage).sender = self.otherUser
         conversation.setPrimitiveValue(1, forKey: ZMConversationInternalEstimatedUnreadSelfReplyCountKey)
         conversation.lastReadServerTimeStamp = Date.distantPast
     }
