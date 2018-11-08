@@ -205,9 +205,7 @@ extension UserSearchResultsViewController: UserList {
             return .none
         }
 
-        let index = searchResults.count - 1 - collectionViewSelectedIndex
-
-        let bestSuggestion = users[index]
+        let bestSuggestion = searchResults[collectionViewSelectedIndex]
 
         return bestSuggestion
     }
