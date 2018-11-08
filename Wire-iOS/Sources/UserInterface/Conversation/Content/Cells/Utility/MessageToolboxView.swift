@@ -174,8 +174,9 @@ import TTTAttributedLabel
         updateTimestampTimer()
     }
     
-    private func updateTimestampTimer() {
-        let shouldShowDestructionCountdown = (message?.shouldShowDestructionCountdown ?? false) && self.window != nil
+    private func updateTimestampTimer(window: UIWindow? = nil) {
+        let currentWindow: UIWindow? = window ?? self.window
+        let shouldShowDestructionCountdown = (message?.shouldShowDestructionCountdown ?? false) && currentWindow != nil
         
         if shouldShowDestructionCountdown && timestampTimer == nil {
             timestampTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [weak self] _ in
@@ -224,7 +225,7 @@ import TTTAttributedLabel
         super.willMove(toWindow: newWindow)
         
         if newWindow != self.window {
-            updateTimestampTimer()
+            updateTimestampTimer(window: newWindow)
         }
     }
     

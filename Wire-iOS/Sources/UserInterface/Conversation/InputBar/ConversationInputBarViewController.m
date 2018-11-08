@@ -576,37 +576,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 #pragma mark - Keyboard Shortcuts
 
-- (NSArray<UIKeyCommand *> *)keyCommands
-{
-    NSMutableArray *commands = [[NSMutableArray alloc] init];
-    
-    if (IS_IPAD) {
-        [commands addObject:[UIKeyCommand keyCommandWithInput:@"\r"
-                                                modifierFlags:UIKeyModifierShift
-                                                       action:@selector(shiftReturnPressed)
-                                         discoverabilityTitle:NSLocalizedString(@"conversation.input_bar.shortcut.newline", nil)]];
-    }
-    
-    [commands addObject:[UIKeyCommand keyCommandWithInput:@"\r"
-                                            modifierFlags:UIKeyModifierCommand
-                                                   action:@selector(commandReturnPressed)
-                                     discoverabilityTitle:NSLocalizedString(@"conversation.input_bar.shortcut.send", nil)]];
-    
-    if (self.inputBar.isEditing) {
-        [commands addObject:[UIKeyCommand keyCommandWithInput:UIKeyInputEscape
-                                                modifierFlags:0
-                                                       action:@selector(escapePressed)
-                                         discoverabilityTitle:NSLocalizedString(@"conversation.input_bar.shortcut.cancel_editing_message", nil)]];
-    } else if(self.inputBar.textView.text.length == 0) {
-        [commands addObject:[UIKeyCommand keyCommandWithInput:UIKeyInputUpArrow
-                                                modifierFlags:0
-                                                       action:@selector(upArrowPressed)
-                                         discoverabilityTitle:NSLocalizedString(@"conversation.input_bar.shortcut.edit_last_message", nil)]];
-    }
-    
-    return commands;
-}
-
 - (BOOL)canBecomeFirstResponder
 {
     return YES;

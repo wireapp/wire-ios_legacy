@@ -55,7 +55,13 @@ class BurstTimestampSenderMessageCellDescription: ConversationMessageCellDescrip
 class BurstTimestampSenderMessageCell: UIView, ConversationMessageCell {
 
     private let timestampView = ConversationCellBurstTimestampView()
-
+    private var configuration: BurstTimestampSenderMessageCellConfiguration? = nil {
+        didSet {
+            updateTimer()
+        }
+    }
+    private var timer: Timer? = nil
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureSubviews()
@@ -83,12 +89,43 @@ class BurstTimestampSenderMessageCell: UIView, ConversationMessageCell {
         ])
     }
 
+    override open func willMove(toWindow newWindow: UIWindow?) {
+        super.willMove(toWindow: newWindow)
+        
+        if self.window != newWindow {
+            updateTimer(window: newWindow)
+        }
+    }
+    
+    private func reconfigure() {
+        guard let configuration = self.configuration else {
+            return
+        }
+        configure(with: configuration, animated: false)
+    }
+    
+    private func updateTimer(window: UIWindow? = nil) {
+        let currentWindow: UIWindow? = window ?? self.window
+
+        if currentWindow != nil && timer == nil {
+            timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { [weak self] _ in
+                self?.reconfigure()
+            })
+        }
+        
+        if currentWindow == nil && timer != nil {
+            timer = nil
+        }
+    }
+    
     // MARK: - Cell
 
     var isSelected: Bool = false
 
     func configure(with object: BurstTimestampSenderMessageCellConfiguration, animated: Bool) {
+        configuration = object
         timestampView.configure(with: object.date, includeDayOfWeek: object.includeDayOfWeek, showUnreadDot: object.showUnreadDot)
+        updateTimer()
     }
 
 }
