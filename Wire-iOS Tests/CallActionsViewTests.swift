@@ -25,6 +25,7 @@ fileprivate struct CallActionsViewInput: CallActionsViewInputType {
     let mediaState: MediaState
     let variant: ColorSchemeVariant
     var cameraType: CaptureDevice
+    let networkQuality: NetworkQuality = .normal
 }
 
 class CallActionsViewTests: ZMSnapshotTestCase {

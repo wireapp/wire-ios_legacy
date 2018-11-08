@@ -90,9 +90,7 @@ class CallInfoRootViewControllerTests: CoreDataSnapshotTestCase {
         verifySafeAreas(viewController: sut)
     }
 
-    @available(iOS 11.0, *)
     func testOneToOneAudioEstablishedPoorConnection() {
-        recordMode = true
         // given
         let fixture = CallInfoTestFixture(otherUser: otherUser)
 
@@ -221,7 +219,6 @@ class CallInfoRootViewControllerTests: CoreDataSnapshotTestCase {
     }
 
     func testGroupVideoEstablishedPoorConnection() {
-        recordMode = true
         // given
         let fixture = CallInfoTestFixture(otherUser: otherUser)
 
