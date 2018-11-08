@@ -108,16 +108,25 @@ class ConversationTextMessageCellDescription: ConversationMessageCellDescription
 
 extension ConversationTextMessageCellDescription {
 
-    static func cells(for message: ZMConversationMessage) -> [AnyConversationMessageCellDescription] {
+    static func cells(for message: ZMConversationMessage, searchQueries: [String]) -> [AnyConversationMessageCellDescription] {
         guard let textMessageData = message.textMessageData else {
             preconditionFailure("Invalid text message")
         }
 
-        var lastKnownLinkAttachment: LinkAttachment?
-        let messageText = NSAttributedString.format(message: textMessageData, isObfuscated: message.isObfuscated, linkAttachment: &lastKnownLinkAttachment)
-
         var cells: [AnyConversationMessageCellDescription] = []
-        
+
+        // Text parsing
+
+        var lastKnownLinkAttachment: LinkAttachment?
+        var messageText = NSAttributedString.format(message: textMessageData, isObfuscated: message.isObfuscated, linkAttachment: &lastKnownLinkAttachment)
+
+        // Search queries
+
+        if !searchQueries.isEmpty {
+            let highlightStyle: [NSAttributedString.Key: AnyObject] = [.backgroundColor: UIColor.accentDarken]
+            messageText = messageText.highlightingAppearances(of: searchQueries, with: highlightStyle, upToWidth: 0, totalMatches: nil)
+        }
+
         // Quote
         if textMessageData.hasQuote {
             let quotedMessage = message.textMessageData?.quote
