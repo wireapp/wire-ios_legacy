@@ -25,7 +25,7 @@ extension ConversationCell: ConversationMessageCell {
         let layoutProperties: ConversationCellLayoutProperties
     }
 
-    func configure(with object: Configuration) {
+    func configure(with object: Configuration, animated: Bool = false) {
         self.configure(for: object.message, layoutProperties: object.layoutProperties)
     }
 

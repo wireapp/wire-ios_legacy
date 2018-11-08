@@ -39,9 +39,10 @@ protocol ConversationMessageCell {
     /**
      * Configures the cell with the specified configuration object.
      * - parameter object: The view model for the cell.
+     * - parameter animated: True if the view should animate the changes
      */
 
-    func configure(with object: Configuration)
+    func configure(with object: Configuration, animated: Bool)
 }
 
 extension ConversationMessageCell {
@@ -102,10 +103,10 @@ extension ConversationMessageCellDescription {
         return tableView.dequeueConversationCell(with: self, for: indexPath)
     }
     
-    func configureCell(_ cell: UITableViewCell) {
+    func configureCell(_ cell: UITableViewCell, animated: Bool = false) {
         guard let adapterCell = cell as? ConversationMessageCellTableViewAdapter<Self> else { return }
         
-        adapterCell.cellView.configure(with: self.configuration)
+        adapterCell.cellView.configure(with: self.configuration, animated: animated)
     }
     
 }
@@ -117,7 +118,7 @@ extension ConversationMessageCellDescription {
 @objc class AnyConversationMessageCellDescription: NSObject {
     private let cellGenerator: (UITableView, IndexPath) -> UITableViewCell
     private let registrationBlock: (UITableView) -> Void
-    private let configureBlock: (UITableViewCell) -> Void
+    private let configureBlock: (UITableViewCell, Bool) -> Void
     private let baseTypeGetter: () -> AnyClass
 
     private let _delegate: AnyMutableProperty<ConversationCellDelegate?>
@@ -129,8 +130,8 @@ extension ConversationMessageCellDescription {
             description.register(in: tableView)
         }
         
-        configureBlock = { cell in
-            description.configureCell(cell)
+        configureBlock = { cell, animated in
+            description.configureCell(cell, animated: animated)
         }
 
         cellGenerator = { tableView, indexPath in
@@ -165,8 +166,8 @@ extension ConversationMessageCellDescription {
         set { _actionController.setter(newValue) }
     }
         
-    func configure(cell: UITableViewCell) {
-        configureBlock(cell)
+    func configure(cell: UITableViewCell, animated: Bool = false) {
+        configureBlock(cell, animated)
     }
 
     @objc(registerInTableView:)

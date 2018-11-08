@@ -87,7 +87,7 @@ class BurstTimestampSenderMessageCell: UIView, ConversationMessageCell {
 
     var isSelected: Bool = false
 
-    func configure(with object: BurstTimestampSenderMessageCellConfiguration) {
+    func configure(with object: BurstTimestampSenderMessageCellConfiguration, animated: Bool) {
         timestampView.configure(with: object.date, includeDayOfWeek: object.includeDayOfWeek, showUnreadDot: object.showUnreadDot)
     }
 

@@ -30,7 +30,7 @@ class ConversationYouTubeAttachmentCell: ViewControllerBasedCell<MediaPreviewVie
         self.init(viewController: MediaPreviewViewController())
     }
 
-    func configure(with object: Configuration) {
+    func configure(with object: Configuration, animated: Bool) {
         viewController.linkAttachment = object.attachment
         viewController.fetchAttachment()
     }

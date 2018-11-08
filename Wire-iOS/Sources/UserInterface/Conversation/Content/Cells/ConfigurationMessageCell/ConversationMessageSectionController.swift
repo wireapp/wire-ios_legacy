@@ -84,6 +84,8 @@ extension IndexSet {
     @objc weak var sectionDelegate: ConversationMessageSectionControllerDelegate?
 
     private var changeObservers: [Any] = []
+    
+    private var hasLegacyContent: Bool = false
 
     deinit {
         changeObservers.removeAll()
@@ -97,6 +99,7 @@ extension IndexSet {
         super.init()
         
         if addLegacyContentIfNeeded(layoutProperties: layoutProperties) {
+            hasLegacyContent = true
             return
         }
         
@@ -215,11 +218,15 @@ extension IndexSet {
     }
     
     func didSelect(indexPath: IndexPath, tableView: UITableView) {
+        guard !hasLegacyContent else { return }
+        
         selected = true
         configure(at: indexPath.section, in: tableView)
     }
     
     func didDeselect(indexPath: IndexPath, tableView: UITableView) {
+        guard !hasLegacyContent else { return }
+        
         selected = false
         configure(at: indexPath.section, in: tableView)
     }
@@ -237,7 +244,7 @@ extension IndexSet {
         addContent(context: context, layoutProperties: layoutProperties)
         
         if isToolboxVisible(in: context) {
-            add(description: ConversationMessageToolboxCellDescription(message: message))
+            add(description: ConversationMessageToolboxCellDescription(message: message, selected: selected))
         }
     }
     
@@ -246,6 +253,8 @@ extension IndexSet {
     }
     
     func configure(in context: ConversationMessageContext, at sectionIndex: Int, in tableView: UITableView) {
+        guard !hasLegacyContent else { return }
+        
         self.context = context
         tableView.beginUpdates()
         
@@ -266,7 +275,7 @@ extension IndexSet {
         
         for (index, description) in tableViewCellDescriptions.enumerated() {
             if let cell = tableView.cellForRow(at: IndexPath(row: index, section: sectionIndex)) {
-                description.configure(cell: cell)
+                description.configure(cell: cell, animated: true)
             }
         }
     }

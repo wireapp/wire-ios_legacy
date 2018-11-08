@@ -25,7 +25,7 @@ class ConversationPingCell: ConversationIconBasedCell, ConversationMessageCell {
         let pingText: NSAttributedString
     }
 
-    func configure(with object: Configuration) {
+    func configure(with object: Configuration, animated: Bool) {
         attributedText = object.pingText
         imageView.image = UIImage(for: .ping, fontSize: 20, color: object.pingColor)
         lineView.isHidden = true

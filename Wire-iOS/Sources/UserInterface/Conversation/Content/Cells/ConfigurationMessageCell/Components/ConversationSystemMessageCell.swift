@@ -31,7 +31,7 @@ class ConversationSystemMessageCell: ConversationIconBasedCell, ConversationMess
 
     // MARK: - Configuration
 
-    func configure(with object: Configuration) {
+    func configure(with object: Configuration, animated: Bool) {
         lineView.isHidden = !object.showLine
         imageView.image = object.icon
         attributedText = object.attributedText
@@ -52,7 +52,7 @@ class LinkConversationSystemMessageCell: ConversationIconBasedCell, Conversation
 
     // MARK: - Configuration
 
-    func configure(with object: Configuration) {
+    func configure(with object: Configuration, animated: Bool) {
         lastConfiguration = object
         lineView.isHidden = !object.showLine
         imageView.image = object.icon
@@ -92,7 +92,7 @@ class ConversationRenamedSystemMessageCell: ConversationIconBasedCell, Conversat
 
     // MARK: - Configuration
 
-    func configure(with object: Configuration) {
+    func configure(with object: Configuration, animated: Bool) {
         lineView.isHidden = false
         attributedText = object.attributedText
         nameLabel.attributedText = object.newConversationName

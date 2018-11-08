@@ -39,7 +39,7 @@ class ConversationSoundCloudAttachmentCell<Player: UIViewController & PlayerView
         self.init(viewController: player)
     }
 
-    func configure(with object: Configuration) {
+    func configure(with object: Configuration, animated: Bool) {
         viewController.linkAttachment = object.attachment
         viewController.sourceMessage = object.message
         viewController.providerImage = UIImage(named: "soundcloud")

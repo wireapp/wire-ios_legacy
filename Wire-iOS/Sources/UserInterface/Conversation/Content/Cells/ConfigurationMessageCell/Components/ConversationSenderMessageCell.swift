@@ -43,7 +43,7 @@ class ConversationSenderMessageCell: UIView, ConversationMessageCell {
         configureConstraints()
     }
 
-    func configure(with object: Configuration) {
+    func configure(with object: Configuration, animated: Bool) {
         senderView.configure(with: object.user)
         indicatorImageView.isHidden = object.indicatorIcon == nil
         indicatorImageView.image = object.indicatorIcon

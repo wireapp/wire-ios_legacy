@@ -79,7 +79,7 @@ class ConversationTextMessageCell: UIView, ConversationMessageCell {
         ])
     }
 
-    func configure(with object: Configuration) {
+    func configure(with object: Configuration, animated: Bool) {
         messageTextView.attributedText = object.attributedText
     }
 
