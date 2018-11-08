@@ -174,7 +174,7 @@ extension ConversationContentViewController {
 
 extension ConversationContentViewController: UIAdaptivePresentationControllerDelegate {
 
-    @objc public func showForwardFor(message: ZMConversationMessage?, fromCell: ConversationCell?) {
+    @objc public func showForwardFor(message: ZMConversationMessage?, fromCell: UIView?) {
         guard let message = message else { return }
         guard let rootViewController = UIApplication.shared.keyWindow?.rootViewController as? PopoverPresenter & UIViewController else { return }
 
@@ -199,7 +199,7 @@ extension ConversationContentViewController: UIAdaptivePresentationControllerDel
         keyboardAvoiding.modalPresentationStyle = .popover
         
         if let popoverPresentationController = keyboardAvoiding.popoverPresentationController {
-            if let cell = fromCell {
+            if let cell = fromCell as? SelectableView {
                 popoverPresentationController.config(from: rootViewController,
                                pointToView: cell.selectionView,
                                sourceView: rootViewController.view)
@@ -228,7 +228,7 @@ extension ConversationContentViewController: UIAdaptivePresentationControllerDel
 }
 
 extension ConversationContentViewController {
-    @objc func scroll(to messageToShow: ZMConversationMessage, completion: ((ConversationCell)->())? = .none) {
+    @objc func scroll(to messageToShow: ZMConversationMessage, completion: ((UIView)->())? = .none) {
         guard messageToShow.conversation == self.conversation else {
             fatal("Message from the wrong conversation")
         }
@@ -258,11 +258,11 @@ extension ConversationContentViewController {
         }
     }
     
-    @objc func scroll(toIndex indexToShow: Int, completion: ((ConversationCell)->())? = .none) {
+    @objc func scroll(toIndex indexToShow: Int, completion: ((UIView)->())? = .none) {
         let cellIndexPath = IndexPath(row: 0, section: indexToShow)
 
         self.tableView.scrollToRow(at: cellIndexPath, at: .middle, animated: false)
-        if let cell = self.tableView.cellForRow(at: cellIndexPath) as? ConversationCell {
+        if let cell = self.tableView.cellForRow(at: cellIndexPath) {
             completion?(cell)
         }
     }

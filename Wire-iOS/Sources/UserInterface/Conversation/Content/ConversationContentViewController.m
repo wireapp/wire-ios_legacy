@@ -464,7 +464,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
             }
                 break;
             case MessageActionShowInConversation:
-                [self scrollTo:message completion:^(ConversationCell *cell) {
+                [self scrollTo:message completion:^(UIView *cell) {
                     [cell flashBackground];
                 }];
                 break;
@@ -499,8 +499,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
             {
                 if (message.textMessageData.quote) {
                     [self scrollTo:message.textMessageData.quote completion:^(UIView *cell) {
-                        // TODO Alexis: Flash background of cell
-                        // [cell flashBackground];
+                        [cell flashBackground];
                     }];
                 }
             }

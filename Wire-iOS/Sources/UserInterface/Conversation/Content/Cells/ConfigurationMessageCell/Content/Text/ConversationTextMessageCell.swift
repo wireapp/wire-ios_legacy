@@ -50,7 +50,7 @@ class ConversationTextMessageCell: UIView, ConversationMessageCell {
     private func configureSubviews() {
         messageTextView.isEditable = false
         messageTextView.isSelectable = true
-        messageTextView.backgroundColor = UIColor.from(scheme: .contentBackground)
+        messageTextView.backgroundColor = .clear
         messageTextView.isScrollEnabled = false
         messageTextView.textContainerInset = UIEdgeInsets.zero
         messageTextView.textContainer.lineFragmentPadding = 0
