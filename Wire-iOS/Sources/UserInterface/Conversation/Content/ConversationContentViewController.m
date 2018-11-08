@@ -779,7 +779,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    id<ZMConversationMessage>message = [self.messageWindow.messages objectAtIndex:indexPath.row];
+    id<ZMConversationMessage>message = [self.messageWindow.messages objectAtIndex:indexPath.section];
     BOOL isFile = [Message isFileTransferMessage:message] &&
                  ![Message isVideoMessage:message] &&
                  ![Message isAudioMessage:message];
