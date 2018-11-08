@@ -70,6 +70,7 @@ class ConversationReplyContentView: UIView {
         addSubview(stackView)
 
         senderComponent.label.accessibilityIdentifier = "original.sender"
+        senderComponent.indicatorView.accessibilityIdentifier = "original.edit_icon"
         senderComponent.label.font = .mediumSemiboldFont
         senderComponent.label.textColor = .from(scheme: .textForeground)
         stackView.addArrangedSubview(senderComponent)
