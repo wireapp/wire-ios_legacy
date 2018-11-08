@@ -412,12 +412,10 @@
 "content.system.conversation.with_name.participants" = "with";
 
 "content.system.message_timer_changes" = "%@ set the message timer to %@";
-"content.system.message_timer_changes.you" = "You set the message timer to %@";
-
-"content.system.message_timer.you_part" = "Dig";
+"content.system.message_timer_changes-you" = "You set the message timer to %@";
 
 "content.system.message_timer_off" = "%@ turned off the message timer";
-"content.system.message_timer_off.you" = "You turned off the message timer";
+"content.system.message_timer_off-you" = "You turned off the message timer";
 
 "content.system.reactivated_device" = "Du begyndte at bruge %@ igen. Beskeder der sendes, vises i mellemtiden ikke her.";
 
@@ -635,7 +633,7 @@
 // Configure conversation notifications
 "meta.menu.configure_notification.dialog_message" = "Notify me about:";
 "meta.menu.configure_notification.button_everything" = "Everything";
-"meta.menu.configure_notification.button_mentions" = "Only Mentions";
+"meta.menu.configure_notification.button_mentions_and_replies" = "Mentions and Replies";
 "meta.menu.configure_notification.button_nothing" = "Nothing";
 "meta.menu.configure_notification.button_cancel" = "Annuller";
 
@@ -731,7 +729,7 @@
 "group_details.guest_options_cell.disabled" = "Slået fra";
 "group_details.timeout_options_cell.title" = "Timed messages";
 "group_details.notification_options_cell.title" = "Notifications";
-"group_details.notification_options_cell.description" = "You can be notified about everything (including audio and video calls) or only when you are mentioned.";
+"group_details.notification_options_cell.description" = "You can be notified about everything (including audio and video calls) or only when someone mentions you or replies to one of your messages.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile

@@ -19,6 +19,7 @@
 import Foundation
 
 extension ZMConversationMessageWindow {
+        
     @objc func isPreviousSenderSame(forMessage message: ZMConversationMessage?) -> Bool {
         guard let message = message,
               messages.index(of: message) != NSNotFound,
@@ -31,4 +32,41 @@ extension ZMConversationMessageWindow {
 
         return true
     }
+    
+    func context(for message: ZMConversationMessage, firstUnreadMessage: ZMConversationMessage?) -> ConversationMessageContext {
+        let significantTimeInterval: TimeInterval = 60 * 45; // 45 minutes
+        let isTimeIntervalSinceLastMessageSignificant: Bool
+        
+        if let timeIntervalToPreviousMessage = timeIntervalToPreviousMessage(from: message) {
+            isTimeIntervalSinceLastMessageSignificant = timeIntervalToPreviousMessage > significantTimeInterval
+        } else {
+            isTimeIntervalSinceLastMessageSignificant = false
+        }
+        
+        return ConversationMessageContext(
+            isSameSenderAsPrevious: isPreviousSenderSame(forMessage: message),
+            isLastMessageSentBySelfUser: isLastMessageSentBySelfUser(message),
+            isTimeIntervalSinceLastMessageSignificant: isTimeIntervalSinceLastMessageSignificant,
+            isFirstMessageOfTheDay: isFirstMessageOfTheDay(for: message),
+            isFirstUnreadMessage: message.isEqual(firstUnreadMessage)
+        )
+    }
+    
+    fileprivate func timeIntervalToPreviousMessage(from message: ZMConversationMessage) -> TimeInterval? {
+        guard let currentMessageTimestamp = message.serverTimestamp, let previousMessageTimestamp = messagePrevious(to: message)?.serverTimestamp else {
+            return nil
+        }
+        
+        return currentMessageTimestamp.timeIntervalSince(previousMessageTimestamp)
+    }
+    
+    fileprivate func isLastMessageSentBySelfUser(_ message: ZMConversationMessage) -> Bool {
+        return message.isEqual(message.conversation?.lastMessageSent(by: ZMUser.selfUser(), limit: 10))
+    }
+    
+    fileprivate func isFirstMessageOfTheDay(for message: ZMConversationMessage) -> Bool {
+        guard let previous = messagePrevious(to: message)?.serverTimestamp, let current = message.serverTimestamp else { return false }
+        return !Calendar.current.isDate(current, inSameDayAs: previous)
+    }
+    
 }

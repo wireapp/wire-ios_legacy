@@ -55,4 +55,8 @@ public extension UIMenuItem {
         return UIMenuItem(title: "content.message.download".localized, action: selector)
     }
 
+    @objc(replyToWithAction:)
+    class func reply(with selector: Selector) -> UIMenuItem {
+        return UIMenuItem(title: "content.message.reply".localized, action: selector)
+    }
 }

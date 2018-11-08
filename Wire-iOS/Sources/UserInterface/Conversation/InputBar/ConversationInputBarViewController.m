@@ -542,6 +542,9 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self.inputBar.textView resetMarkdown];
     [self updateRightAccessoryView];
     [self.conversation setIsTyping:NO];
+    [self.replyComposingView removeFromSuperview];
+    self.replyComposingView = nil;
+    self.quotedMessage = nil;
 }
 
 - (void)setInputBarOverlapsContent:(BOOL)inputBarOverlapsContent
@@ -595,7 +598,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     }
 }
 
--(void)escapePressed
+- (void)escapePressed
 {
     [self endEditingMessageIfNeeded];
 }

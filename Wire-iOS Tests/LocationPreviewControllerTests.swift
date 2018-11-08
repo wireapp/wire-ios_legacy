@@ -19,6 +19,19 @@
 import XCTest
 @testable import Wire
 
+class MockActionResponder: NSObject, MessageActionResponder {
+    func canPerform(_ action: MessageAction, for message: ZMConversationMessage!) -> Bool {
+        // no-op
+        return false
+    }
+    
+    func wants(toPerform action: MessageAction, for message: ZMConversationMessage!) {
+        // no-op
+    }
+    
+    
+}
+
 final class LocationPreviewControllerTests: ZMSnapshotTestCase {
     
     var sut: LocationPreviewController!
@@ -26,7 +39,7 @@ final class LocationPreviewControllerTests: ZMSnapshotTestCase {
     override func setUp() {
         super.setUp()
         let mockMessage = MockMessageFactory.locationMessage()
-        sut = LocationPreviewController(message: mockMessage!)
+        sut = LocationPreviewController(message: mockMessage!, actionResponder: MockActionResponder())
     }
     
     override func tearDown() {

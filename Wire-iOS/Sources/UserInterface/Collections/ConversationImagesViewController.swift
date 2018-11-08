@@ -57,9 +57,15 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
     fileprivate let likeButton = IconButton(style: .default)
     
     internal let inverse: Bool
-    
-    public weak var messageActionDelegate: MessageActionResponder? = .none
-    
+
+    public var currentActionController: ConversationCellActionController?
+
+    public weak var messageActionDelegate: MessageActionResponder? = .none {
+        didSet {
+            self.updateActionControllerForMessage()
+        }
+    }
+
     public var snapshotBackgroundView: UIView? = .none
     
     fileprivate var imageMessages: [ZMConversationMessage] = []
@@ -68,6 +74,7 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
         didSet {
             self.updateButtonsForMessage()
             self.createNavigationTitle()
+            self.updateActionControllerForMessage()
         }
     }
 
@@ -330,6 +337,10 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
     private func updateButtonsForMessage() {
         self.deleteButton.isHidden = !currentMessage.canBeDeleted
     }
+
+    private func updateActionControllerForMessage() {
+        currentActionController = ConversationCellActionController(responder: messageActionDelegate, message: currentMessage)
+    }
     
     var currentController: FullscreenImageViewController? {
         get {
@@ -516,36 +527,7 @@ fileprivate extension UIPreviewAction {
 extension ConversationImagesViewController {
 
     override var previewActionItems: [UIPreviewActionItem] {
-        let deleteAction = UIPreviewAction(
-            titleKey: "content.message.delete_ellipsis",
-            handler: { self.deleteCurrent(nil) }
-        )
-
-        if !currentMessage.isEphemeral {
-            let copyAction = UIPreviewAction(
-                titleKey: "content.message.copy",
-                handler: { self.copyCurrent(nil) }
-            )
-
-            let likeAction = UIPreviewAction(
-                titleKey: "content.message.\(currentMessage.liked ? "unlike" : "like")",
-                handler: likeCurrent
-            )
-
-            let saveAction = UIPreviewAction(
-                titleKey: "content.message.save",
-                handler: { self.saveCurrent(nil) }
-            )
-
-            let shareAction = UIPreviewAction(
-                titleKey: "content.message.forward",
-                handler: { self.shareCurrent(nil) }
-            )
-
-            return [copyAction, likeAction, saveAction, shareAction, deleteAction]
-        } else {
-            return [deleteAction]
-        }
+        return currentActionController?.makePreviewActions() ?? []
     }
 
 }

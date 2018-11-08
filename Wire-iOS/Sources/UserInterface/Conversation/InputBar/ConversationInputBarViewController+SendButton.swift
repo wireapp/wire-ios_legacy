@@ -36,7 +36,7 @@ extension ConversationInputBarViewController {
         
     @objc func sendText() {
         let (text, mentions) = inputBar.textView.preparedText
-        
+        let quote = quotedMessage
         guard !showAlertIfTextIsTooLong(text: text) else { return }
         
         if inputBar.isEditing, let message = editingMessage {
@@ -47,7 +47,7 @@ extension ConversationInputBarViewController {
             updateWritingState(animated: true)
         } else {
             clearInputBar()
-            delegate?.conversationInputBarViewControllerDidComposeText(text, mentions: mentions)
+            delegate?.conversationInputBarViewControllerDidComposeText(text, mentions: mentions, replyingTo: quote)
         }
         
         dismissMentionsIfNeeded()

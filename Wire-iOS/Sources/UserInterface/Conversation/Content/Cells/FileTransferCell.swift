@@ -47,7 +47,7 @@ import Cartography
         var currentElements: [Any] = self.accessibilityElements ?? []
         let contentViewAccessibilityElements: [Any] = self.fileTransferView.accessibilityElements ?? []
         currentElements.append(contentsOf: contentViewAccessibilityElements)
-        currentElements.append(contentsOf: [likeButton, toolboxView])
+        currentElements.append(toolboxView)
         self.accessibilityElements = currentElements
     }
     
@@ -117,66 +117,9 @@ import Cartography
         let properties = MenuConfigurationProperties()
         properties.targetRect = selectionRect
         properties.targetView = selectionView
-        properties.selectedMenuBlock = { [weak self] selected, animated in
-            UIView.animate(withDuration: animated ? ConversationCellSelectionAnimationDuration : 0) {
-                self?.messageContentView.alpha = selected ? ConversationCellSelectedOpacity : 1.0
-            }
-        }
-        
-        var additionalItems = [AdditionalMenuItem]()
-        
-        if let message = message, let fileMessageData = message.fileMessageData {
-            if let _ = fileMessageData.fileURL {
-                additionalItems += [
-                    .forbiddenInEphemeral(.open(with: #selector(open))),
-                    .forbiddenInEphemeral(.save(with: #selector(save))),
-                    .forbiddenInEphemeral(.forward(with: #selector(forward)))
-                ]
-            }
-            
-            if fileMessageData.transferState.isOne(of: .uploaded, .failedDownload) {
-                additionalItems += [
-                    .allowedInEphemeral(.download(with: #selector(download)))
-                ]
-            }
-        }
-
-        properties.likeItemIndex = 1 // Open should be first
-        properties.additionalItems = additionalItems
-        
         return properties
     }
-    
-    override public func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
-        switch action {
-        case #selector(forward), #selector(save):
-            if let fileMessageData = message.fileMessageData,
-                let _ = fileMessageData.fileURL {
-                return true
-            }
-        case #selector(download):
-            return true == message.fileMessageData?.transferState.isOne(of: .uploaded, .failedDownload)
-        case #selector(open):
-            return true
-        default: break
-        }
 
-        return super.canPerformAction(action, withSender: sender)
-    }
-
-    @objc func open(_ sender: Any) {
-        showsMenu = false
-        delegate?.conversationCell?(self, didSelect: .present)
-    }
-
-    @objc func save(_ sender: Any) {
-        delegate?.conversationCell?(self, didSelect: .save)
-    }
-    
-    @objc func download(_ sender: Any) {
-        delegate?.conversationCell?(self, didSelect: .download)
-    }
-    
     override public func messageType() -> MessageType {
         return .file
     }
@@ -184,6 +127,6 @@ import Cartography
 
 extension FileTransferCell: TransferViewDelegate {
     public func transferView(_ view: TransferView, didSelect action: MessageAction) {
-        self.delegate.conversationCell?(self, didSelect: action)
+        self.delegate.conversationCell?(self, didSelect: action, for: self.message)
     }
 }

@@ -40,16 +40,17 @@ class ShareViewControllerTests: CoreDataSnapshotTestCase {
     override var needsCaches: Bool {
         return true
     }
-    
-    func testThatItRendersCorrectlyShareViewController_OneLineTextMessage() {
-        groupConversation.append(text: "This is a text message.")
-        makeTestForShareViewController()
-    }
-    
-    func testThatItRendersCorrectlyShareViewController_MultiLineTextMessage() {
-        groupConversation.append(text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce tempor nulla nec justo tincidunt iaculis. Suspendisse et viverra lacus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aliquam pretium suscipit purus, sed eleifend erat ullamcorper non. Sed non enim diam. Fusce pulvinar turpis sit amet pretium finibus. Donec ipsum massa, aliquam eget sollicitudin vel, fringilla eget arcu. Donec faucibus porttitor nisi ut fermentum. Donec sit amet massa sodales, facilisis neque et, condimentum leo. Maecenas quis vulputate libero, id suscipit magna.")
-        makeTestForShareViewController()
-    }
+
+    // TODO 2838: - Replace with new cell design
+//    func testThatItRendersCorrectlyShareViewController_OneLineTextMessage() {
+//        groupConversation.append(text: "This is a text message.")
+//        makeTestForShareViewController()
+//    }
+//    
+//    func testThatItRendersCorrectlyShareViewController_MultiLineTextMessage() {
+//        groupConversation.append(text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce tempor nulla nec justo tincidunt iaculis. Suspendisse et viverra lacus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aliquam pretium suscipit purus, sed eleifend erat ullamcorper non. Sed non enim diam. Fusce pulvinar turpis sit amet pretium finibus. Donec ipsum massa, aliquam eget sollicitudin vel, fringilla eget arcu. Donec faucibus porttitor nisi ut fermentum. Donec sit amet massa sodales, facilisis neque et, condimentum leo. Maecenas quis vulputate libero, id suscipit magna.")
+//        makeTestForShareViewController()
+//    }
     
     func DISABLE_testThatItRendersCorrectlyShareViewController_LocationMessage() {
         let location = LocationData.locationData(withLatitude: 43.94, longitude: 12.46, name: "Stranger Place", zoomLevel: 0)

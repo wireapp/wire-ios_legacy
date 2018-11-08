@@ -45,7 +45,7 @@ import Cartography
         var currentElements: [Any] = self.accessibilityElements ?? []
         let contentViewAccessibilityElements: [Any] = self.audioMessageView.accessibilityElements ?? []
         currentElements.append(contentsOf: contentViewAccessibilityElements)
-        currentElements.append(contentsOf: [likeButton, toolboxView])
+        currentElements.append(toolboxView)
         self.accessibilityElements = currentElements
         
         setNeedsLayout()
@@ -111,19 +111,6 @@ import Cartography
         }
     }
     // MARK: - Menu
-
-    public func setSelectedByMenu(_ selected: Bool, animated: Bool) {
-        
-        let animation = {
-            self.messageContentView.alpha = selected ? ConversationCellSelectedOpacity : 1.0;
-        }
-        
-        if (animated) {
-            UIView.animate(withDuration: ConversationCellSelectionAnimationDuration, animations: animation)
-        } else {
-            animation()
-        }
-    }
     
     public override var selectionRect: CGRect {
         return audioMessageView.bounds
@@ -139,62 +126,14 @@ import Cartography
         let properties = MenuConfigurationProperties()
         properties.targetRect = selectionRect
         properties.targetView = selectionView
-        properties.selectedMenuBlock = setSelectedByMenu
-        
-        var additionalItems = [AdditionalMenuItem]()
-        
-        if message.audioCanBeSaved() {
-            let menuItem = UIMenuItem(title: "content.file.save_audio".localized, action:#selector(wr_saveAudio))
-            additionalItems.append(.forbiddenInEphemeral(menuItem))
-        }
-        
-        if let fileMessageData = message.fileMessageData {
-            if let _ = fileMessageData.fileURL {
-                additionalItems.append(.forbiddenInEphemeral(.forward(with: #selector(forward))))
-            }
-            
-            if fileMessageData.transferState.isOne(of: .uploaded, .failedDownload) {
-                additionalItems.append(.allowedInEphemeral(.download(with: #selector(download))))
-            }
-        }
-        
-        properties.additionalItems = additionalItems
-        
+
         return properties
-    }
-    
-    override public func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
-        switch action {
-        case #selector(wr_saveAudio) where message.audioCanBeSaved():
-            return true
-        case #selector(forward(_:)):
-            if let fileMessageData = message.fileMessageData, let _ = fileMessageData.fileURL {
-                return true
-            } else {
-                return false
-            }
-        case #selector(download):
-            return true == message.fileMessageData?.transferState.isOne(of: .uploaded, .failedDownload)
-        default: break
-        }
-        
-        return super.canPerformAction(action, withSender: sender)
-    }
-    
-    @objc public func wr_saveAudio() {
-        if self.message.audioCanBeSaved() {
-            self.delegate?.conversationCell?(self, didSelect: .save)
-        }
-    }
-    
-    @objc func download(_ sender: Any) {
-        delegate?.conversationCell?(self, didSelect: .download)
     }
     
 }
 
 extension AudioMessageCell: TransferViewDelegate {
     public func transferView(_ view: TransferView, didSelect action: MessageAction) {
-        self.delegate.conversationCell?(self, didSelect: action)
+        self.delegate.conversationCell?(self, didSelect: action, for: self.message)
     }
 }

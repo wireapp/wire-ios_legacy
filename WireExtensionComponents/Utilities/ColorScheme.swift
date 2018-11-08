@@ -111,6 +111,8 @@ public extension UIColor {
 
     case selfMentionHighlight
     case cellHighlight
+    
+    case replyBorder
 }
 
 extension UIColor {
@@ -221,6 +223,9 @@ extension ColorSchemeColor {
             return ColorPair(light: .amberAlpha48, dark: .amberAlpha80)
         case .cellHighlight:
             return ColorPair(light: .white97, dark: .whiteAlpha16)
+        case .replyBorder:
+            return ColorPair(light: UIColor(white: 233.0/255.0, alpha: 1),
+                             dark: UIColor(white: 114.0/255.0, alpha: 1))
         }
     }
 }

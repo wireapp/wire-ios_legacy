@@ -63,9 +63,7 @@ import WireExtensionComponents
             imageView.isAccessibilityElement = true
             imageView.accessibilityIdentifier = "linkPreviewImage"
         }
-        
-        
-        
+
         setupViews()
         setupConstraints(imagePlaceholder)
     }
@@ -165,7 +163,7 @@ import WireExtensionComponents
         }
 
         obfuscationView.isHidden = !obfuscated
-        
+
         if obfuscated {
             imageView.image = UIImage(for: .link, iconSize: .tiny, color: UIColor.from(scheme: .background))
             imageView.contentMode = .center

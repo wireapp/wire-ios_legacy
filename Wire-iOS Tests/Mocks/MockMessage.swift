@@ -21,12 +21,16 @@ import Foundation
 import WireLinkPreview
 
 @objcMembers class MockTextMessageData : NSObject, ZMTextMessageData {
+    
     var messageText: String? = ""
     var linkPreview: LinkPreview? = nil
     var imageData: Data? = nil
     var linkPreviewHasImage: Bool = false
     var linkPreviewImageCacheKey: String? = nil
     var mentions = [Mention]()
+    var quote: ZMMessage? = nil
+    var isQuotingSelf: Bool = false
+    var hasQuote: Bool = false
     
     func fetchLinkPreviewImageData(with queue: DispatchQueue, completionHandler: @escaping ((Data?) -> Void)) {
         completionHandler(imageData)
@@ -34,6 +38,10 @@ import WireLinkPreview
     
     func requestLinkPreviewImageDownload() {
         // no-op
+    }
+    
+    func editText(_ text: String, mentions: [Mention], fetchLinkPreview: Bool) {
+        // stub
     }
 }
 
@@ -62,7 +70,7 @@ import WireLinkPreview
     var mimeType: String? { get set }
     var filename: String? { get set }
     var fileURL: URL? { get set }
-    var imagePreviewData: Data? { get set }
+    var previewData: Data? { get set }
     var durationMilliseconds: UInt64 { get set }
     var normalizedLoudness: [Float]? { get set }
 }
@@ -86,7 +94,6 @@ extension MockFileMessageData: MockFileMessageDataType { }
 
         }
     }
-    var imagePreviewData: Data? = nil
     var thumbnailAssetID : String? = ""
     var imagePreviewDataIdentifier: String? = "preview-identifier-123"
     var durationMilliseconds: UInt64 = 0
@@ -119,7 +126,7 @@ extension MockFileMessageData: MockFileMessageDataType { }
     }
 
     func fetchImagePreviewData(queue: DispatchQueue, completionHandler: @escaping (Data?) -> Void) {
-        completionHandler(imagePreviewData)
+        completionHandler(previewData)
     }
 
     func requestImagePreviewDownload() {
@@ -134,7 +141,6 @@ extension MockFileMessageData: MockFileMessageDataType { }
     var filename: String? = "TestFile.pdf"
     var progress: Float = 0
     var fileURL: URL? = .none
-    var imagePreviewData: Data? = nil
     var thumbnailAssetID : String? = ""
     var imagePreviewDataIdentifier: String? = "preview-identifier-123"
     var durationMilliseconds: UInt64 = 233000
@@ -167,7 +173,7 @@ extension MockFileMessageData: MockFileMessageDataType { }
     }
     
     func fetchImagePreviewData(queue: DispatchQueue, completionHandler: @escaping (Data?) -> Void) {
-        completionHandler(imagePreviewData)
+        completionHandler(previewData)
     }
     
     func requestImagePreviewDownload() {
@@ -215,6 +221,7 @@ extension MockFileMessageData: MockFileMessageDataType { }
 
 
 @objcMembers class MockMessage: NSObject, ZMConversationMessage {
+    
     typealias UsersByReaction = Dictionary<String, [ZMUser]>
     
     // MARK: - ZMConversationMessage
@@ -238,6 +245,8 @@ extension MockFileMessageData: MockFileMessageDataType { }
     var locationMessageData: ZMLocationMessageData? {
         return backingLocationMessageData
     }
+    
+    var replies: Set<ZMMessage> = Set()
     
     var usersReaction: [String: [ZMUser]] {
         return backingUsersReaction
@@ -279,23 +288,4 @@ extension MockFileMessageData: MockFileMessageDataType { }
     var hasBeenDeleted = false
     
     var systemMessageType: ZMSystemMessageType = ZMSystemMessageType.invalid
-}
-
-extension MockMessage {
-    func formattedReceivedDate() -> String? {
-        guard let timestamp = self.serverTimestamp else {
-            return .none
-        }
-        let timeString = Message.longVersionTimeFormatter().string(from: timestamp)
-        let oneDayInSeconds = 24.0 * 60.0 * 60.0
-        let shouldShowDate = fabs(timestamp.timeIntervalSinceReferenceDate - Date().timeIntervalSinceReferenceDate) > oneDayInSeconds
-        
-        if shouldShowDate {
-            let dateString = Message.shortVersionDateFormatter().string(from: timestamp)
-            return dateString + " " + timeString
-        }
-        else {
-            return timeString
-        }
-    }
 }

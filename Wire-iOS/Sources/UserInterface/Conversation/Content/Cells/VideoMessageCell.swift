@@ -46,7 +46,7 @@ public final class VideoMessageCell: ConversationCell {
         var currentElements: [Any] = self.accessibilityElements ?? []
         let contentViewAccessibilityElements: [Any] = self.videoMessageView.accessibilityElements ?? []
         currentElements.append(contentsOf: contentViewAccessibilityElements)
-        currentElements.append(contentsOf: [likeButton, toolboxView])
+        currentElements.append(toolboxView)
         self.accessibilityElements = currentElements
 
         setNeedsLayout()
@@ -119,95 +119,20 @@ public final class VideoMessageCell: ConversationCell {
     }
     
     // MARK: - Menu
-    
-    public func setSelectedByMenu(_ selected: Bool, animated: Bool) {
-        
-        let animation = {
-            self.messageContentView.alpha = selected ? ConversationCellSelectedOpacity : 1.0;
-        }
-        
-        if (animated) {
-            UIView.animate(withDuration: ConversationCellSelectionAnimationDuration, animations: animation)
-        } else {
-            animation()
-        }
-    }
-    
-    override public func menuConfigurationProperties() -> MenuConfigurationProperties! {
-        guard let _ = message else {return nil}
-
-        let properties = MenuConfigurationProperties()
-        properties.targetRect = selectionRect
-        properties.targetView = selectionView
-        properties.selectedMenuBlock = setSelectedByMenu
-
-        var additionalItems = [AdditionalMenuItem]()
-        
-        if message.videoCanBeSavedToCameraRoll() {
-            additionalItems.append(.forbiddenInEphemeral(.save(with: #selector(wr_saveVideo))))
-        }
-        
-        if let fileMessageData = message.fileMessageData {
-            if let _ = fileMessageData.fileURL {
-                additionalItems.append(.forbiddenInEphemeral(.forward(with: #selector(forward))))
-            }
             
-            additionalItems.append(.allowedInEphemeral(.download(with: #selector(download))))
-        }
-        
-        properties.additionalItems = additionalItems
-
-        return properties
-    }
-
-    override public func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
-        switch action {
-        case #selector(wr_saveVideo):
-            if message.videoCanBeSavedToCameraRoll() {
-                return true
-            }
-        case #selector(forward(_:)):
-            if let fileMessageData = message.fileMessageData,
-                let _ = fileMessageData.fileURL {
-                return true
-            }
-        case #selector(download):
-            return true == message.fileMessageData?.transferState.isOne(of: .uploaded, .failedDownload)
-        default: break
-        }
-
-        return super.canPerformAction(action, withSender: sender)
-    }
-    
-    @objc public func wr_saveVideo() {
-        if let fileMessageData = self.message.fileMessageData,
-            let fileURL = fileMessageData.fileURL,
-            self.message.videoCanBeSavedToCameraRoll() {
-            
-            let selector = #selector(self.video(_:didFinishSavingWithError:contextInfo:))
-            UISaveVideoAtPathToSavedPhotosAlbum(fileURL.path, self, selector, nil)
-        }
-    }
-    
-    @objc func video(_ videoPath: NSString, didFinishSavingWithError error: NSError?, contextInfo info: AnyObject) {
-        if let error = error {
-            zmLog.error("Cannot save video: \(error)")
-        }
-    }
-    
     @objc override func prepareLayoutForPreview(message: ZMConversationMessage?) -> CGFloat {
         super.prepareLayoutForPreview(message: message)
         return PreviewHeightCalculator.heightForVideo()
     }
     
     @objc func download(_ sender: Any) {
-        delegate?.conversationCell?(self, didSelect: .download)
+        delegate?.conversationCell?(self, didSelect: .download, for: self.message)
     }
 }
 
 
 extension VideoMessageCell: TransferViewDelegate {
     public func transferView(_ view: TransferView, didSelect action: MessageAction) {
-        self.delegate.conversationCell?(self, didSelect: action)
+        self.delegate.conversationCell?(self, didSelect: action, for: self.message)
     }
 }

@@ -412,12 +412,10 @@
 "content.system.conversation.with_name.participants" = "ja";
 
 "content.system.message_timer_changes" = "%@ määras sõnumi taimeriks: %@";
-"content.system.message_timer_changes.you" = "Sina määrasid sõnumi taimeriks %@";
-
-"content.system.message_timer.you_part" = "Sina";
+"content.system.message_timer_changes-you" = "Sina määrasid sõnumi taimeriks %@";
 
 "content.system.message_timer_off" = "%@ lülitas sõnumi taimeri välja";
-"content.system.message_timer_off.you" = "Sa lülitasid sõnumi taimeri välja";
+"content.system.message_timer_off-you" = "Sa lülitasid sõnumi taimeri välja";
 
 "content.system.reactivated_device" = "Hakkasid uuesti kasutama seadet %@. Vahepeal saadetud sõnumid siia ei ilmu.";
 
@@ -635,7 +633,7 @@
 // Configure conversation notifications
 "meta.menu.configure_notification.dialog_message" = "Teavita mind:";
 "meta.menu.configure_notification.button_everything" = "Kõik";
-"meta.menu.configure_notification.button_mentions" = "Ainult mainimised";
+"meta.menu.configure_notification.button_mentions_and_replies" = "Mentions and Replies";
 "meta.menu.configure_notification.button_nothing" = "Ei midagi";
 "meta.menu.configure_notification.button_cancel" = "Tühista";
 
@@ -731,7 +729,7 @@
 "group_details.guest_options_cell.disabled" = "Väljas";
 "group_details.timeout_options_cell.title" = "Kustuvad sõnumid";
 "group_details.notification_options_cell.title" = "Notifications";
-"group_details.notification_options_cell.description" = "You can be notified about everything (including audio and video calls) or only when you are mentioned.";
+"group_details.notification_options_cell.description" = "You can be notified about everything (including audio and video calls) or only when someone mentions you or replies to one of your messages.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile

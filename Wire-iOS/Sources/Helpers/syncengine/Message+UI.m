@@ -17,7 +17,6 @@
 // 
 
 
-#import "Message+Private.h"
 #import "Settings.h"
 #import "Wire-Swift.h"
 
@@ -59,30 +58,43 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     return ![Message isPerformedCallMessage:message] && ![Message isMissedCallMessage:message];
 }
 
-+ (NSDateFormatter *)shortVersionDateFormatter
++ (NSDateFormatter *)shortTimeFormatter
 {
-    static NSDateFormatter *shortVersionDateFormatter = nil;
+    static NSDateFormatter *shortTimeFormatter = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        shortVersionDateFormatter = [[NSDateFormatter alloc] init];
-        [shortVersionDateFormatter setDateStyle:NSDateFormatterShortStyle];
-        [shortVersionDateFormatter setTimeStyle:NSDateFormatterNoStyle];
+        shortTimeFormatter = [[NSDateFormatter alloc] init];
+        [shortTimeFormatter setDateStyle:NSDateFormatterNoStyle];
+        [shortTimeFormatter setTimeStyle:NSDateFormatterShortStyle];
     });
-    
-    return shortVersionDateFormatter;
+
+    return shortTimeFormatter;
 }
 
-+ (NSDateFormatter *)longVersionTimeFormatter
++ (NSDateFormatter *)shortDateFormatter
 {
-    static NSDateFormatter *longVersionTimeFormatter = nil;
+    static NSDateFormatter *shortDateFormatter = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        longVersionTimeFormatter = [[NSDateFormatter alloc] init];
-        [longVersionTimeFormatter setDateStyle:NSDateFormatterNoStyle];
-        [longVersionTimeFormatter setTimeStyle:NSDateFormatterShortStyle];
+        shortDateFormatter = [[NSDateFormatter alloc] init];
+        [shortDateFormatter setDateStyle:NSDateFormatterShortStyle];
+        [shortDateFormatter setTimeStyle:NSDateFormatterNoStyle];
     });
     
-    return longVersionTimeFormatter;
+    return shortDateFormatter;
+}
+
++ (NSDateFormatter *)shortDateTimeFormatter
+{
+    static NSDateFormatter *longDateFormatter = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        longDateFormatter = [[NSDateFormatter alloc] init];
+        [longDateFormatter setDateStyle:NSDateFormatterShortStyle];
+        [longDateFormatter setTimeStyle:NSDateFormatterShortStyle];
+    });
+    
+    return longDateFormatter;
 }
 
 + (NSString *)nonNilImageDataIdentifier:(id<ZMConversationMessage>)message

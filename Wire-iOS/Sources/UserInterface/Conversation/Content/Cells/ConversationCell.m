@@ -28,7 +28,6 @@
 #import "AccentColorChangeHandler.h"
 #import "Analytics.h"
 #import "UIResponder+FirstResponder.h"
-#import "Wire-Swift.h"
 
 const CGFloat ConversationCellSelectedOpacity = 0.4;
 const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
@@ -69,8 +68,6 @@ static const CGFloat BurstContainerExpandedHeight = 40;
 @property (nonatomic) NSLayoutConstraint *burstTimestampHeightConstraint;
 @property (nonatomic) NSLayoutConstraint *topMarginConstraint;
 @property (nonatomic) NSLayoutConstraint *messageToolsHeightConstraint;
-
-@property (nonatomic) NSLayoutConstraint *toolboxCollapseConstraint;
 
 @property (nonatomic) UIView *countdownContainerView;
 
@@ -185,9 +182,7 @@ static const CGFloat BurstContainerExpandedHeight = 40;
     [self.contentView addSubview:self.countdownContainerView];
     
     self.countdownContainerViewHidden = YES;
-    
-    [self createLikeButton];
-    
+
     self.doubleTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didDoubleTapMessage:)];
     self.doubleTapGestureRecognizer.numberOfTapsRequired = 2;
     self.doubleTapGestureRecognizer.delaysTouchesBegan = YES;
@@ -196,7 +191,7 @@ static const CGFloat BurstContainerExpandedHeight = 40;
     self.contentView.isAccessibilityElement = YES;
     
     NSMutableArray *accessibilityElements = [NSMutableArray arrayWithArray:self.accessibilityElements];
-    [accessibilityElements addObjectsFromArray:@[self.messageContentView, self.authorLabel, self.authorImageView, self.burstTimestampView.unreadDot, self.toolboxView, self.likeButton]];
+    [accessibilityElements addObjectsFromArray:@[self.messageContentView, self.authorLabel, self.authorImageView, self.burstTimestampView.unreadDot, self.toolboxView]];
     self.accessibilityElements = accessibilityElements;
 }
 
@@ -261,7 +256,7 @@ static const CGFloat BurstContainerExpandedHeight = 40;
     }];
     
     [NSLayoutConstraint autoSetPriority:UILayoutPriorityDefaultHigh + 1 forConstraints:^{
-        self.toolboxCollapseConstraint = [self.toolboxView autoSetDimension:ALDimensionHeight toSize:0];
+        [self.toolboxView autoSetDimension:ALDimensionHeight toSize:0];
     }];
     
     [self.toolboxView autoSetDimension:ALDimensionHeight toSize:0 relation:NSLayoutRelationGreaterThanOrEqual];
@@ -269,9 +264,6 @@ static const CGFloat BurstContainerExpandedHeight = 40;
     [self.toolboxView autoPinEdgeToSuperviewEdge:ALEdgeTrailing];
     [self.toolboxView autoPinEdgeToSuperviewEdge:ALEdgeLeading];
     [self.toolboxView autoPinEdgeToSuperviewEdge:ALEdgeBottom];
-    
-    [self.likeButton autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.toolboxView];
-    [self.likeButton autoAlignAxis:ALAxisVertical toSameAxisOfView:self.authorImageContainer];
 
     const CGFloat inset = UIFont.normalRegularFont.lineHeight / 2;
     
@@ -319,7 +311,6 @@ static const CGFloat BurstContainerExpandedHeight = 40;
 - (void)configureForMessage:(id<ZMConversationMessage>)message layoutProperties:(ConversationCellLayoutProperties *)layoutProperties;
 {
     _message = message;
-
     _layoutProperties = layoutProperties;
 
     if (layoutProperties.showSender) {
@@ -329,9 +320,9 @@ static const CGFloat BurstContainerExpandedHeight = 40;
     if (layoutProperties.showBurstTimestamp || layoutProperties.showDayBurstTimestamp) {
         [self updateBurstTimestamp];
     }
-    
-    [self configureLikeButtonForMessage:message];
-    
+
+    self.actionController = [[ConversationCellActionController alloc] initWithResponder:self.delegate message:message];
+
     [self updateConstraintConstants];
     [self updateToolboxVisibilityAnimated:NO];
     [self startCountdownAnimationIfNeeded:message];
@@ -353,42 +344,15 @@ static const CGFloat BurstContainerExpandedHeight = 40;
     if (! [Message shouldShowTimestamp:self.message]) {
         shouldBeVisible = NO;
     }
-    
-    BOOL hideLikeButton = !([Message hasLikers:self.message] || self.selected) && self.layoutProperties.alwaysShowDeliveryState;
-    BOOL showLikeButton = [Message messageCanBeLiked:self.message] && !hideLikeButton;
-    
-    self.toolboxCollapseConstraint.active = ! shouldBeVisible;
+
     self.toolboxView.isAccessibilityElement = shouldBeVisible;
 
     if (shouldBeVisible) {
         [self.toolboxView configureForMessage:self.message forceShowTimestamp:self.selected animated:animated];
     }
     
-    if (animated) {
-        if (shouldBeVisible) {
-            [UIView animateWithDuration:0.35 animations:^{
-                self.toolboxView.alpha = 1;
-            } completion:^(BOOL finished) {
-                if (self.toolboxView.alpha == 1) {
-                    [UIView animateWithDuration:0.15 animations:^{
-                        self.likeButton.alpha = showLikeButton ? 1 : 0;
-                    }];
-                }
-            }];
-        }
-        else {
-            self.likeButton.alpha = 0;
-            [UIView animateWithDuration:0.35 animations:^{
-                self.toolboxView.alpha = 0;
-            }];
-        }
-    }
-    else {
-        [self.toolboxView.layer removeAllAnimations];
-        [self.likeButton.layer removeAllAnimations];
-        self.toolboxView.alpha = shouldBeVisible ? 1 : 0;
-        self.likeButton.alpha = shouldBeVisible && showLikeButton ? 1 : 0;
-    }
+    
+    [self.toolboxView setHidden:!shouldBeVisible animated:animated];
 }
 
 
@@ -490,26 +454,12 @@ static const CGFloat BurstContainerExpandedHeight = 40;
 
 - (BOOL)canPerformAction:(SEL)action withSender:(id)sender;
 {
-    if (action == @selector(deleteMessage:) && self.message.canBeDeleted) {
-        return YES;
-    }
-    
-    if (action == @selector(likeMessage:)) {
-        return YES;
-    }
-    
-    if (action == @selector(copy:) && self.message.isEphemeral) {
-        return NO;
-    }
-    
-    return [super canPerformAction:action withSender:sender];
+    return [self.actionController canPerformAction:action];
 }
 
-- (void)forward:(id)sender
+- (id)forwardingTargetForSelector:(SEL)aSelector
 {
-    if ([self.delegate respondsToSelector:@selector(conversationCell:didSelectAction:)]) {
-        [self.delegate conversationCell:self didSelectAction:MessageActionForward];
-    }
+    return self.actionController;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
@@ -548,7 +498,7 @@ static const CGFloat BurstContainerExpandedHeight = 40;
 - (BOOL)updateForMessage:(MessageChangeInfo *)change
 {
     if (change.reactionsChanged) {
-        [self configureLikeButtonForMessage:change.message];
+        [self.toolboxView updateForMessage:change];
     }
     
     if (change.userChangeInfo.nameChanged || change.senderChanged) {
@@ -585,24 +535,24 @@ static const CGFloat BurstContainerExpandedHeight = 40;
 
 - (void)startCountdownAnimationIfNeeded:(id<ZMConversationMessage>)message
 {
-    if (self.showDestructionCountdown && nil == self.destructionLink) {
+    if ([Message shouldShowDestructionCountdown:message] && nil == self.destructionLink) {
         self.destructionLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(updateCountdownView)];
         [self.destructionLink addToRunLoop:NSRunLoop.mainRunLoop forMode:NSRunLoopCommonModes];
     }
-}
-
-- (BOOL)showDestructionCountdown
-{
-    return !self.message.hasBeenDeleted && self.message.isEphemeral && !self.message.isObfuscated && ![Message isKnockMessage:self.message];
 }
 
 @end
 
 @implementation ConversationCell (MessageToolboxViewDelegate)
 
+- (void)messageToolboxViewDidRequestLike:(MessageToolboxView *)messageToolboxView
+{
+    [self.delegate conversationCell:messageToolboxView didSelectAction:MessageActionLike forMessage:self.message];
+}
+
 - (void)messageToolboxViewDidSelectLikers:(MessageToolboxView *)messageToolboxView
 {
-    [self.delegate conversationCellDidTapOpenLikers:self];
+    [self.delegate conversationCellDidTapOpenLikers:self forMessage:self.message];
 }
 
 - (void)messageToolboxViewDidSelectResend:(MessageToolboxView *)messageToolboxView
@@ -612,7 +562,7 @@ static const CGFloat BurstContainerExpandedHeight = 40;
 
 - (void)messageToolboxViewDidSelectDelete:(MessageToolboxView *)messageToolboxView
 {
-    [self.delegate conversationCell:self didSelectAction:MessageActionDelete];
+    [self.delegate conversationCell:self didSelectAction:MessageActionDelete forMessage:self.message];
 }
 
 @end

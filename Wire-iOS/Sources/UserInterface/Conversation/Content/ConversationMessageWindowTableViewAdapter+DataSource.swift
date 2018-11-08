@@ -18,115 +18,144 @@
 
 import Foundation
 
-extension ConversationMessageWindowTableViewAdapter {
+extension ConversationMessageWindowTableViewAdapter: ConversationMessageSectionControllerDelegate {
     
-    @objc func registerTableCellClasses() {
-        tableView.register(TextMessageCell.self, forCellReuseIdentifier: ConversationTextCellId)
-        tableView.register(ImageMessageCell.self, forCellReuseIdentifier: ConversationImageCellId)
-        tableView.register(ConversationRenamedCell.self, forCellReuseIdentifier: ConversationNameChangedCellId)
-        tableView.register(PingCell.self, forCellReuseIdentifier: ConversationPingCellId)
-        tableView.register(PerformedCallCell.self, forCellReuseIdentifier: ConversationPerformedCallCellId)
-        tableView.register(MissedCallCell.self, forCellReuseIdentifier: ConversationMissedCallCellId)
-        tableView.register(ConnectionRequestCell.self, forCellReuseIdentifier: ConversationConnectionRequestCellId)
-        tableView.register(ConversationNewDeviceCell.self, forCellReuseIdentifier: ConversationNewDeviceCellId)
-        tableView.register(ConversationVerifiedCell.self, forCellReuseIdentifier: ConversationVerifiedCellId)
-        tableView.register(MissingMessagesCell.self, forCellReuseIdentifier: ConversationMissingMessagesCellId)
-        tableView.register(ConversationIgnoredDeviceCell.self, forCellReuseIdentifier: ConversationIgnoredDeviceCellId)
-        tableView.register(CannotDecryptCell.self, forCellReuseIdentifier: ConversationCannotDecryptCellId)
-        tableView.register(FileTransferCell.self, forCellReuseIdentifier: ConversationFileTransferCellId)
-        tableView.register(VideoMessageCell.self, forCellReuseIdentifier: ConversationVideoMessageCellId)
-        tableView.register(AudioMessageCell.self, forCellReuseIdentifier: ConversationAudioMessageCellId)
-        tableView.register(ParticipantsCell.self, forCellReuseIdentifier: ParticipantsCell.zm_reuseIdentifier)
-        tableView.register(LocationMessageCell.self, forCellReuseIdentifier: ConversationLocationMessageCellId)
-        tableView.register(MessageDeletedCell.self, forCellReuseIdentifier: ConversationMessageDeletedCellId)
-        tableView.register(UnknownMessageCell.self, forCellReuseIdentifier: ConversationUnknownMessageCellId)
-        tableView.register(MessageTimerUpdateCell.self, forCellReuseIdentifier: ConversationMessageTimerUpdateCellId)
+    func messageSectionController(_ controller: ConversationMessageSectionController, didRequestRefreshForMessage message: ZMConversationMessage) {
+        
+        let section = messageWindow.messages.index(of: message)
+        
+        if section == NSNotFound {
+            return
+        }
+        
+        controller.configure(at: section, in: tableView)
     }
+    
+}
+
+extension ConversationMessageWindowTableViewAdapter: ZMConversationMessageWindowObserver {
+    
+    func reconfigureSectionController(at index: Int, tableView: UITableView) {
+        guard let sectionController = self.sectionController(at: index, in: tableView) else { return }
+        
+        let context = messageWindow.context(for: sectionController.message, firstUnreadMessage: firstUnreadMessage)
+        sectionController.configure(in: context, at: index, in: tableView)
+    }
+    
+    public func conversationWindowDidChange(_ changeInfo: MessageWindowChangeInfo) {
+        
+        let isLoadingInitialContent = messageWindow.messages.count == changeInfo.insertedIndexes.count && changeInfo.deletedIndexes.count == 0
+        let isExpandingMessageWindow = changeInfo.insertedIndexes.count > 0 && changeInfo.insertedIndexes.last == messageWindow.messages.count - 1
+        
+        stopAudioPlayer(forDeletedMessages: changeInfo.deletedObjects)
+        
+        if isLoadingInitialContent || (isExpandingMessageWindow && changeInfo.deletedIndexes.count == 0) || changeInfo.needsReload {
+            tableView.reloadData()
+        } else {
+            tableView.beginUpdates()
+            
+            if changeInfo.deletedIndexes.count > 0 {
+                for deletedMessage in changeInfo.deletedObjects {
+                    if let deletedMessage = deletedMessage as? ZMConversationMessage {
+                        sectionControllers.removeObject(forKey: deletedMessage)
+                    }
+                }
+                tableView.deleteSections(changeInfo.deletedIndexes, with: .fade)
+            }
+            
+            if changeInfo.insertedIndexes.count > 0 {
+                tableView.insertSections(changeInfo.insertedIndexes, with: .fade)
+            }
+            
+            for movedIndexPair in changeInfo.zm_movedIndexPairs {
+                tableView.moveSection(Int(movedIndexPair.from), toSection: Int(movedIndexPair.to))
+            }
+            
+            tableView.endUpdates()
+            
+            // Re-evalulate visible cells in all sections, this is necessary because if a message is inserted/moved the
+            // neighbouring messages may no longer want to display sender, toolbox or burst timestamp.
+            reconfigureVisibleSections()
+        }
+    }
+    
+    @objc
+    func reconfigureVisibleSections() {
+        tableView.beginUpdates()
+        if let indexPathsForVisibleRows = tableView.indexPathsForVisibleRows {
+            let visibleSections = indexPathsForVisibleRows.map({ $0.section })
+            for section in visibleSections {
+                reconfigureSectionController(at: section, tableView: tableView)
+            }
+        }
+        tableView.endUpdates()
+    }
+    
 }
 
 extension ConversationMessageWindowTableViewAdapter: UITableViewDataSource {
-    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    
+    
+    @objc
+    func sectionController(at sectionIndex: Int, in tableView: UITableView) -> ConversationMessageSectionController? {
+        guard let message = messageWindow.messages.object(at: sectionIndex) as? ZMConversationMessage, let nonce = message.nonce else { return nil }
+        
+        if let cachedEntry = sectionControllers.object(forKey: nonce) as? ConversationMessageSectionController {
+            return cachedEntry
+        }
+        
+        let context = messageWindow.context(for: message, firstUnreadMessage: firstUnreadMessage)
+        let layoutProperties = messageWindow.layoutProperties(for: message, firstUnreadMessage: firstUnreadMessage)
+        
+        let sectionController = ConversationMessageSectionController(message: message, context: context, layoutProperties: layoutProperties)
+        sectionController.useInvertedIndices = true
+        sectionController.cellDelegate = conversationCellDelegate
+        sectionController.sectionDelegate = self
+        sectionController.actionController = actionController(for: message)
+        sectionController.selected = message.isEqual(selectedMessage)
+        
+        sectionControllers.setObject(sectionController, forKey: nonce as NSUUID)
+        
+        return sectionController
+    }
+    
+    @objc(indexPathForMessage:)
+    public func indexPath(for message: ZMConversationMessage) -> IndexPath? {
+        let section = self.messageWindow.messages.index(of: message)
+        
+        guard section != NSNotFound else {
+            return nil
+        }
+        
+        return IndexPath(row: 0, section: section)
+    }
+    
+    public func numberOfSections(in tableView: UITableView) -> Int {
         return self.messageWindow.messages.count
     }
     
-    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let message = messageWindow.messages[indexPath.row] as? ZMConversationMessage  else {
-            return UITableViewCell()
-        }
-
-        let cell = tableView.dequeueReusableCell(withIdentifier: message.cellIdentifier, for: indexPath)
-
-        // Newly created cells will have a size of {320, 44}, which leads to layout problems when they contain `UICollectionViews`.
-        // This is needed as long as `ParticipantsCell` contains a `UICollectionView`.
-        var bounds = cell.bounds
-        bounds.size.width = tableView.bounds.size.width
-        cell.bounds = bounds
-
-        guard let conversationCell = cell as? ConversationCell else { return cell }
-
-        conversationCell.searchQueries = searchQueries
-        conversationCell.delegate = conversationCellDelegate
-        // Configuration of the cell is not possible when `ZMUserSession` is not available.
-        if let _ = ZMUserSession.shared() {
-            configureConversationCell(conversationCell, with: message)
-        }
-        return conversationCell
+    @objc
+    func select(indexPath: IndexPath) {
+        sectionController(at: indexPath.section, in: tableView)?.didSelect(indexPath: indexPath, tableView: tableView)
     }
-}
+    
+    @objc
+    func deselect(indexPath: IndexPath) {
+        sectionController(at: indexPath.section, in: tableView)?.didDeselect(indexPath: indexPath, tableView: tableView)
+    }
 
-extension ZMConversationMessage {
-    var cellIdentifier: String {
-        var cellIdentifier = ConversationUnknownMessageCellId
-
-        if isText {
-            cellIdentifier = ConversationTextCellId
-        } else if isVideo {
-            cellIdentifier = ConversationVideoMessageCellId
-        } else if isAudio {
-            cellIdentifier = ConversationAudioMessageCellId
-        } else if isLocation {
-            cellIdentifier = ConversationLocationMessageCellId
-        } else if isFile {
-            cellIdentifier = ConversationFileTransferCellId
-        } else if isImage {
-            cellIdentifier = ConversationImageCellId
-        } else if isKnock {
-            cellIdentifier = ConversationPingCellId
-        } else if isSystem, let systemMessageType = systemMessageData?.systemMessageType {
-            switch systemMessageType {
-            case .connectionRequest:
-                cellIdentifier = ConversationConnectionRequestCellId
-            case .connectionUpdate:
-                break
-            case .conversationNameChanged:
-                cellIdentifier = ConversationNameChangedCellId
-            case .missedCall:
-                cellIdentifier = ConversationMissedCallCellId
-            case .newClient, .usingNewDevice:
-                cellIdentifier = ConversationNewDeviceCellId
-            case .ignoredClient:
-                cellIdentifier = ConversationIgnoredDeviceCellId
-            case .conversationIsSecure:
-                cellIdentifier = ConversationVerifiedCellId
-            case .potentialGap, .reactivatedDevice:
-                cellIdentifier = ConversationMissingMessagesCellId
-            case .decryptionFailed, .decryptionFailed_RemoteIdentityChanged:
-                cellIdentifier = ConversationCannotDecryptCellId
-            case .participantsAdded, .participantsRemoved, .newConversation, .teamMemberLeave:
-                cellIdentifier = ParticipantsCell.zm_reuseIdentifier
-            case .messageDeletedForEveryone:
-                cellIdentifier = ConversationMessageDeletedCellId
-            case .performedCall:
-                cellIdentifier = ConversationPerformedCallCellId
-            case .messageTimerUpdate:
-                cellIdentifier = ConversationMessageTimerUpdateCellId
-            default:
-                break
-            }
-        } else {
-            cellIdentifier = ConversationUnknownMessageCellId
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        let sectionController = self.sectionController(at: section, in: tableView)!
+        return sectionController.numberOfCells
+    }
+    
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let sectionController = self.sectionController(at: indexPath.section, in: tableView)!
+        
+        for description in sectionController.cellDescriptions {
+            registerCellIfNeeded(description, in: tableView)
         }
         
-        return cellIdentifier
+        return sectionController.makeCell(for: tableView, at: indexPath)
     }
 }

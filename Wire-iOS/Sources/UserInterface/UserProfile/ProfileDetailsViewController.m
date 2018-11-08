@@ -108,6 +108,7 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
 
 - (void)setupViews
 {
+    // TODO: We need to add notification settings option
     [self createUserImageView];
     [self createFooter];
     [self createGuestIndicator];

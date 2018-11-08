@@ -19,12 +19,10 @@
 import UIKit
 
 public extension ConversationCell {
-    
+
     @objc public func showMenu() {
         guard !message.isEphemeral || message.canBeDeleted else { return } // Ephemeral message's only possibility is to be deleted
-        let shouldBecomeFirstResponder = delegate?.conversationCell?(self, shouldBecomeFirstResponderWhenShowMenuWithCellType: messageType()) ?? true
-        
-        guard let properties = menuConfigurationProperties() else { return }
+        let shouldBecomeFirstResponder = delegate?.conversationCellShouldBecomeFirstResponderWhenShowingMenu?(forCell: self) ?? true        
         registerMenuObservers()
         
         //  The reason why we are touching the window here is to workaround a bug where,
@@ -37,58 +35,36 @@ public extension ConversationCell {
             becomeFirstResponder()
         }
         
-        UIMenuController.shared.menuItems = ConversationCell.items(for: message, with: properties)
-        UIMenuController.shared.setTargetRect(properties.targetRect, in: properties.targetView)
+        UIMenuController.shared.menuItems = ConversationCellActionController.allMessageActions
+        UIMenuController.shared.setTargetRect(selectionRect, in: selectionView)
         UIMenuController.shared.setMenuVisible(true, animated: true)
-        
-        delegate?.conversationCell?(self, didOpenMenuForCellType: messageType())
     }
-    
-    // MARK: - Helper
-    
+
+    // MARK: - Target / Action
+
     private func registerMenuObservers() {
         NotificationCenter.default.addObserver(self, selector: #selector(menuWillShow), name: UIMenuController.willShowMenuNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(menuDidHide), name: UIMenuController.didHideMenuNotification, object: nil)
     }
-    
-    private static func items(for message: ZMConversationMessage, with properties: MenuConfigurationProperties) -> [UIMenuItem] {
-        var items = [UIMenuItem]()
-        
-        if message.isEphemeral {
-            items += properties.additionalItems?.filter(\.isAvailableInEphemeralConversations).map(\.item) ?? []
-        } else {
-            items += properties.additionalItems?.map(\.item) ?? []
 
-            if message.canBeLiked {
-                let index = items.count > 0 ? properties.likeItemIndex : 0
-                items.insert(.like(for: message, with: #selector(likeMessage)), at: index)
-            }
-        }
-        
-        if message.canBeDeleted {
-            items.append(.delete(with: #selector(deleteMessage)))
-        }
-        
-        return items
-    }
-    
-    // MARK: - Target / Action
-    
     @objc private func menuWillShow(_ note: Notification) {
         showsMenu = true
-        menuConfigurationProperties().selectedMenuBlock?(true, true)
+        setSelectedByMenu(true, animated: true)
         NotificationCenter.default.removeObserver(self, name: UIMenuController.willShowMenuNotification, object: nil)
     }
     
     @objc private func menuDidHide(_ note: Notification) {
         showsMenu = false
-        menuConfigurationProperties().selectedMenuBlock?(false, true)
+        setSelectedByMenu(false, animated: true)
         NotificationCenter.default.removeObserver(self, name: UIMenuController.didHideMenuNotification, object: nil)
     }
-    
-    @objc func deleteMessage(_ sender: Any) {
-        beingEdited = true
-        delegate?.conversationCell?(self, didSelect: .delete)
+
+    func setSelectedByMenu(_ isSelected: Bool, animated: Bool) {
+        let animations = {
+            self.selectionView.alpha = isSelected ? ConversationCellSelectedOpacity : 1
+        }
+
+        UIView.animate(withDuration: ConversationCellSelectionAnimationDuration, animations: animations)
     }
 
 }

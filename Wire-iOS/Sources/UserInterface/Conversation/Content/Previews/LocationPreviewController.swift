@@ -24,7 +24,7 @@ import Cartography
 class LocationPreviewController: TintColorCorrectedViewController {
 
     let message: ZMConversationMessage
-    weak var messageActionDelegate: MessageActionResponder?
+    let actionController: ConversationCellActionController
 
     private var mapView = MKMapView()
     private let containerView = UIView()
@@ -37,8 +37,9 @@ class LocationPreviewController: TintColorCorrectedViewController {
 
     // MARK: - Initialization
 
-    init(message: ZMConversationMessage) {
+    init(message: ZMConversationMessage, actionResponder: MessageActionResponder) {
         self.message = message
+        self.actionController = ConversationCellActionController(responder: actionResponder, message: message)
         super.init(nibName: nil, bundle: nil)
         containerView.translatesAutoresizingMaskIntoConstraints = false
         containerView.backgroundColor = .from(scheme: .placeholderBackground)
@@ -123,83 +124,7 @@ class LocationPreviewController: TintColorCorrectedViewController {
     // MARK: - Preview
 
     override var previewActionItems: [UIPreviewActionItem] {
-
-        var actions: [UIPreviewActionItem] = []
-
-        // Copy
-
-        let copyAction = UIPreviewAction(title: "content.message.copy".localized, style: .default) { [weak self] _, _ in
-            guard let `self` = self else {
-                return
-            }
-            self.copyLocation()
-        }
-
-        actions.append(copyAction)
-
-        // Like / unlike
-
-        if message.liked || message.canBeLiked {
-            let likeActionKey = message.liked ? "unlike" : "like"
-            let toggleLikeAction = UIPreviewAction(title: "content.message.\(likeActionKey)".localized, style: .default) { [weak self] _, _ in
-                guard let `self` = self else {
-                    return
-                }
-                self.toggleLike()
-            }
-
-            actions.append(toggleLikeAction)
-        }
-
-        // Share
-
-        let shareAction = UIPreviewAction(title: "content.message.forward".localized, style: .default) { [weak self] _, _ in
-            guard let `self` = self else {
-                return
-            }
-            self.forwardMessage()
-        }
-
-        actions.append(shareAction)
-
-        // Delete
-
-        if message.canBeDeleted {
-            let deleteAction = UIPreviewAction(title: "content.message.delete_ellipsis".localized, style: .default) { [weak self] _, _ in
-                guard let `self` = self else {
-                    return
-                }
-                self.deleteMessage()
-            }
-
-            actions.append(deleteAction)
-        }
-
-        return actions
-    }
-
-    /// Copies the coordinates into the clipboard.
-    private func copyLocation() {
-        guard let locationMessageData = message.locationMessageData else { return }
-        let coordinates = "\(locationMessageData.latitude), \(locationMessageData.longitude)"
-        UIPasteboard.general.string = message.locationMessageData?.name ?? coordinates
-    }
-
-    /// Invert the like status of the message.
-    private func toggleLike() {
-        ZMUserSession.shared()?.enqueueChanges {
-            self.message.liked = !self.message.liked
-        }
-    }
-
-    /// Forwards the message.
-    private func forwardMessage() {
-        messageActionDelegate?.wants(toPerform: .forward, for: message)
-    }
-
-    /// Deletes the current message.
-    private func deleteMessage() {
-        messageActionDelegate?.wants(toPerform: .delete, for: message)
+        return actionController.makePreviewActions()
     }
 
 }
