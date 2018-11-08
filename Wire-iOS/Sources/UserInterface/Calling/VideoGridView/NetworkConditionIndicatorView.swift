@@ -20,16 +20,24 @@ import Foundation
 
 extension NetworkQuality {
     func attributedString(color: UIColor) -> NSAttributedString? {
-        switch self {
-        case .medium, .poor:
+        if isNormal {
+            return nil
+        } else {
             let attachment = NSTextAttachment()
             attachment.image = UIImage(for: .networkCondition, iconSize: .tiny, color: color)
             attachment.bounds = CGRect(x: 0.0, y: -4, width: attachment.image!.size.width, height: attachment.image!.size.height)
             let text = "Poor connection".uppercased()
             let attributedText = text.attributedString.adding(font: FontSpec(.small, .semibold).font!, to: text).adding(color: color, to: text)
             return NSAttributedString(attachment: attachment) + " " + attributedText
+        }
+    }
+
+    var isNormal: Bool {
+        switch self {
         case .normal:
-            return nil
+            return true
+        case .medium, .poor:
+            return false
         }
     }
 }
@@ -64,9 +72,9 @@ final class NetworkConditionIndicatorView: UIView, RoundedViewProtocol {
         fatalError("init(coder:) has not been implemented")
     }
 
-    var networkQuality: NetworkQuality? {
+    var networkQuality: NetworkQuality = .normal {
         didSet {
-            label.attributedText = networkQuality?.attributedString(color: .white)
+            label.attributedText = networkQuality.attributedString(color: .white)
             layoutIfNeeded()
         }
     }

@@ -27,7 +27,6 @@ protocol CallInfoViewControllerInput: CallActionsViewInputType, CallStatusViewIn
     var degradationState: CallDegradationState { get }
     var videoPlaceholderState: CallVideoPlaceholderState { get }
     var disableIdleTimer: Bool { get }
-    var networkQuality: NetworkQuality { get }
 }
 
 // Workaround to make the protocol equatable, it might be possible to conform CallInfoConfiguration
@@ -52,7 +51,8 @@ extension CallInfoViewControllerInput {
             state == other.state &&
             isConstantBitRate == other.isConstantBitRate &&
             title == other.title &&
-            cameraType == other.cameraType
+            cameraType == other.cameraType &&
+            networkQuality == other.networkQuality
     }
 }
 
@@ -65,7 +65,6 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate, C
     private let statusViewController: CallStatusViewController
     private let accessoryViewController: CallAccessoryViewController
     private let actionsView = CallActionsView()
-    private let titleViewLabel = UILabel()
 
     var configuration: CallInfoViewControllerInput {
         didSet {
@@ -140,9 +139,6 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate, C
         minimizeItem.accessibilityIdentifier = "CallDismissOverlayButton"
 
         navigationItem.leftBarButtonItem = minimizeItem
-        titleViewLabel.font = FontSpec(.small, .semibold).font
-        titleViewLabel.textColor = UIColor.nameColor(for: .brightOrange, variant: .light)
-        navigationItem.titleView = titleViewLabel
     }
 
     private func updateState() {
@@ -152,8 +148,15 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate, C
         accessoryViewController.configuration = configuration
         backgroundViewController.view.isHidden = configuration.videoPlaceholderState == .hidden
 
-        titleViewLabel.attributedText = configuration.networkQuality.attributedString(color: UIColor.nameColor(for: .brightOrange, variant: .light))
-        titleViewLabel.isHidden = (titleViewLabel.attributedText == nil)
+        if configuration.networkQuality.isNormal {
+            navigationItem.titleView = nil
+        } else {
+            let label = UILabel()
+            label.translatesAutoresizingMaskIntoConstraints = false
+            label.attributedText = configuration.networkQuality.attributedString(color: UIColor.nameColor(for: .brightOrange, variant: .light))
+            label.font = FontSpec(.small, .semibold).font
+            navigationItem.titleView = label
+        }
     }
     
     // MARK: - Actions + Delegates
