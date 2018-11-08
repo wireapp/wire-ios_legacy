@@ -18,7 +18,7 @@
 
 import Foundation
 
-class ConversationTextMessageCell: UIView, ConversationMessageCell {
+class ConversationTextMessageCell: UIView, ConversationMessageCell, TextViewInteractionDelegate {
 
     struct Configuration {
         let attributedText: NSAttributedString
@@ -26,6 +26,9 @@ class ConversationTextMessageCell: UIView, ConversationMessageCell {
 
     let messageTextView = LinkInteractionTextView()
     var isSelected: Bool = false
+
+    weak var message: ZMConversationMessage?
+    weak var delegate: ConversationCellDelegate?
 
     var selectionView: UIView? {
         return messageTextView
@@ -60,6 +63,7 @@ class ConversationTextMessageCell: UIView, ConversationMessageCell {
         messageTextView.dataDetectorTypes = [.link, .address, .phoneNumber, .flightNumber, .calendarEvent, .shipmentTrackingNumber]
         messageTextView.setContentHuggingPriority(.required, for: .vertical)
         messageTextView.setContentCompressionResistancePriority(.required, for: .vertical)
+        messageTextView.interactionDelegate = self
 
         if #available(iOS 11.0, *) {
             messageTextView.textDragInteraction?.isEnabled = false
@@ -75,6 +79,29 @@ class ConversationTextMessageCell: UIView, ConversationMessageCell {
 
     func configure(with object: Configuration, animated: Bool) {
         messageTextView.attributedText = object.attributedText
+    }
+
+    func textView(_ textView: LinkInteractionTextView, open url: URL) -> Bool {
+        // Open mention link
+        if url.isMention {
+            if let message = self.message, let mention = message.textMessageData?.mentions.first(where: { $0.location == url.mentionLocation }) {
+                return self.openMention(mention)
+            } else {
+                return false
+            }
+        }
+
+        // Open the URL
+        return url.open()
+    }
+
+    func openMention(_ mention: Mention) -> Bool {
+        self.delegate?.conversationCell?(self, userTapped: mention.user, in: messageTextView, frame: selectionRect)
+        return true
+    }
+
+    func textViewDidLongPress(_ textView: LinkInteractionTextView) {
+        // no-op, handled by the container
     }
 
 }
@@ -96,6 +123,13 @@ class ConversationTextMessageCellDescription: ConversationMessageCellDescription
 
     init(attributedString: NSAttributedString) {
         configuration = View.Configuration(attributedText: attributedString)
+    }
+
+    func makeCell(for tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueConversationCell(with: self, for: indexPath)
+        cell.cellView.delegate = self.delegate
+        cell.cellView.message = self.message
+        return cell
     }
 
 }

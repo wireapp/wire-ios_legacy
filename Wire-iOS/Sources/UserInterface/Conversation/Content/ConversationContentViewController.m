@@ -831,7 +831,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     [self wantsToPerformAction:action forMessage:message cell:cell];
 }
 
-- (void)conversationCell:(ConversationCell *)cell userTapped:(id<UserType>)user inView:(UIView *)view frame:(CGRect)frame
+- (void)conversationCell:(UIView *)cell userTapped:(id<UserType>)user inView:(UIView *)view frame:(CGRect)frame
 {
     if (!cell || !view) {
         return;

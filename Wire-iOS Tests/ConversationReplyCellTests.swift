@@ -44,6 +44,7 @@ class ConversationReplyCellTests: CoreDataSnapshotTestCase {
 
         // THEN
         verifyInAllPhoneWidths(view: cell)
+        verifyAccessibilityIdentifiers(cell, message)
     }
 
     func testThatItRendersShortMessageWithOtherMention_31() {
@@ -58,6 +59,7 @@ class ConversationReplyCellTests: CoreDataSnapshotTestCase {
 
         // THEN
         verifyInAllPhoneWidths(view: cell)
+        verifyAccessibilityIdentifiers(cell, message)
     }
 
     func testThatItRendersShortMessageWithSelfMention_31() {
@@ -72,6 +74,7 @@ class ConversationReplyCellTests: CoreDataSnapshotTestCase {
 
         // THEN
         verifyInAllPhoneWidths(view: cell)
+        verifyAccessibilityIdentifiers(cell, message)
     }
 
     func testThatItTruncatesTextAfterFourLines_31() {
@@ -86,6 +89,7 @@ class ConversationReplyCellTests: CoreDataSnapshotTestCase {
 
         // THEN
         verifyInAllPhoneWidths(view: cell)
+        verifyAccessibilityIdentifiers(cell, message)
     }
 
     func testThatItRendersMarkdownWithoutFontChanges_32() {
@@ -106,6 +110,7 @@ class ConversationReplyCellTests: CoreDataSnapshotTestCase {
 
         // THEN
         verifyInAllPhoneWidths(view: cell)
+        verifyAccessibilityIdentifiers(cell, message)
     }
 
     func testThatItRendersMarkdownWithoutFontChanges_NoHeaders_32() {
@@ -113,6 +118,27 @@ class ConversationReplyCellTests: CoreDataSnapshotTestCase {
         let markdownNoHeaders = """
         1. Annual report status: We need to get the final copy finished before we can finalize a layout.
         2. Board meeting: Steph will begin brainstorming for the next project.
+        """
+
+        let message = MockMessageFactory.textMessage(withText: markdownNoHeaders)!
+        message.sender = selfUser
+        message.conversation = otherUserConversation
+
+        // WHEN
+        let cell = makeCell(for: message)
+
+        // THEN
+        verifyInAllPhoneWidths(view: cell)
+        verifyAccessibilityIdentifiers(cell, message)
+    }
+
+    func testThatItRendersMarkdownListMoreThan4Line() {
+        // GIVEN
+        let markdownNoHeaders = """
+        1. In den alten Zeiten, wo das Wünschen noch geholfen hat, lebte ein König, dessen Töchter waren alle schön;
+        2. aber die jüngste war so schön, daß die Sonne selber, die doch so vieles gesehen hat, sich verwunderte, sooft sie ihr ins Gesicht schien.
+        3. Nahe bei dem Schlosse des Königs lag ein großer dunkler Wald, und in dem Walde unter einer alten Linde war ein Brunnen;
+        4. wenn nun der Tag recht heiß war, so ging das Königskind hinaus in den Wald und setzte sich an den Rand des kühlen Brunnens - und wenn sie Langeweile hatte, so nahm sie eine goldene Kugel, warf sie in die Höhe und fing sie wieder; und das war ihr liebstes Spielwerk.
         """
 
         let message = MockMessageFactory.textMessage(withText: markdownNoHeaders)!
@@ -138,6 +164,7 @@ class ConversationReplyCellTests: CoreDataSnapshotTestCase {
 
         // THEN
         verifyInAllPhoneWidths(view: cell)
+        verifyAccessibilityIdentifiers(cell, message)
     }
 
     func testThatItShowsEditBadgeWhenMessageIsEdited_34() {
@@ -153,6 +180,7 @@ class ConversationReplyCellTests: CoreDataSnapshotTestCase {
 
         // THEN
         verifyInAllPhoneWidths(view: cell)
+        verifyAccessibilityIdentifiers(cell, message)
     }
 
     // MARK: - Rich content
@@ -170,6 +198,7 @@ class ConversationReplyCellTests: CoreDataSnapshotTestCase {
 
         // THEN
         verifyInAllPhoneWidths(view: cell)
+        verifyAccessibilityIdentifiers(cell, message)
     }
 
     func testThatItDisplaysLinkPreviewAsText_WithText_51() {
@@ -185,6 +214,7 @@ class ConversationReplyCellTests: CoreDataSnapshotTestCase {
 
         // THEN
         verifyInAllPhoneWidths(view: cell)
+        verifyAccessibilityIdentifiers(cell, message)
     }
 
     func testThatItDisplaysPortraitImage_52() {
@@ -199,6 +229,7 @@ class ConversationReplyCellTests: CoreDataSnapshotTestCase {
 
         // THEN
         verifyInAllPhoneWidths(view: cell)
+        verifyAccessibilityIdentifiers(cell, message)
     }
 
     func testThatItDisplaysSquareImage_52() {
@@ -213,6 +244,7 @@ class ConversationReplyCellTests: CoreDataSnapshotTestCase {
 
         // THEN
         verifyInAllPhoneWidths(view: cell)
+        verifyAccessibilityIdentifiers(cell, message)
     }
 
     func testThatItDisplaysPanoImage_52() {
@@ -227,6 +259,7 @@ class ConversationReplyCellTests: CoreDataSnapshotTestCase {
 
         // THEN
         verifyInAllPhoneWidths(view: cell)
+        verifyAccessibilityIdentifiers(cell, message)
     }
 
     func testThatItDisplaysVideoMessage_53() {
@@ -244,6 +277,7 @@ class ConversationReplyCellTests: CoreDataSnapshotTestCase {
 
         // THEN
         verifyInAllPhoneWidths(view: cell)
+        verifyAccessibilityIdentifiers(cell, message)
     }
 
     func testThatItDisplaysFileMessage_54() {
@@ -259,6 +293,7 @@ class ConversationReplyCellTests: CoreDataSnapshotTestCase {
 
         // THEN
         verifyInAllPhoneWidths(view: cell)
+        verifyAccessibilityIdentifiers(cell, message)
     }
 
     func testThatItDisplaysAudioMessage_55() {
@@ -274,6 +309,7 @@ class ConversationReplyCellTests: CoreDataSnapshotTestCase {
 
         // THEN
         verifyInAllPhoneWidths(view: cell)
+        verifyAccessibilityIdentifiers(cell, message)
     }
 
     func testThatItDisplaysLocationMessage_56() {
@@ -288,6 +324,7 @@ class ConversationReplyCellTests: CoreDataSnapshotTestCase {
 
         // THEN
         verifyInAllPhoneWidths(view: cell)
+        verifyAccessibilityIdentifiers(cell, message)
     }
 
     func testThatItDoesNotTruncateLongLocationMessage_56() {
@@ -302,6 +339,7 @@ class ConversationReplyCellTests: CoreDataSnapshotTestCase {
 
         // THEN
         verifyInAllPhoneWidths(view: cell)
+        verifyAccessibilityIdentifiers(cell, message)
     }
 
     func testThatItDisplaysErrorForUnsupportedMessageType_57() {
@@ -315,6 +353,7 @@ class ConversationReplyCellTests: CoreDataSnapshotTestCase {
 
         // THEN
         verifyInAllPhoneWidths(view: cell)
+        verifyAccessibilityIdentifiers(cell, message)
     }
 
     func testThatItDisplaysErrorForDeletedMessage_57() {
@@ -326,6 +365,7 @@ class ConversationReplyCellTests: CoreDataSnapshotTestCase {
 
         // THEN
         verifyInAllPhoneWidths(view: cell)
+        verifyAccessibilityIdentifiers(cell, message)
     }
 
     // MARK: - Highlighting
@@ -342,6 +382,7 @@ class ConversationReplyCellTests: CoreDataSnapshotTestCase {
 
         // THEN
         verifyInAllPhoneWidths(view: cell)
+        verifyAccessibilityIdentifiers(cell, message)
     }
 
     // MARK: - Helpers
@@ -352,6 +393,47 @@ class ConversationReplyCellTests: CoreDataSnapshotTestCase {
         cell.configure(with: cellDescription.configuration, animated: false)
         XCTAssertTrue(waitForGroupsToBeEmpty([defaultImageCache.dispatchGroup]))
         return cell
+    }
+
+    private func verifyAccessibilityIdentifiers(_ cell: ConversationReplyCell, _ message: ZMConversationMessage?, file: StaticString = #file, line: UInt = #line) {
+        let contentView = cell.contentView
+
+        // Structure
+        XCTAssertEqual(contentView.accessibilityIdentifier, "ReplyCell", file: file, line: line)
+        XCTAssertEqual(contentView.senderComponent.label.accessibilityIdentifier, "original.sender", file: file, line: line)
+        XCTAssertEqual(contentView.senderComponent.indicatorView.accessibilityIdentifier, "original.edit_icon", file: file, line: line)
+        XCTAssertEqual(contentView.timestampLabel.accessibilityIdentifier, "original.timestamp", file: file, line: line)
+
+        // Content
+        switch message {
+        case let message? where message.isText:
+            XCTAssertEqual(contentView.contentTextView.accessibilityIdentifier, "quote.type.text", file: file, line: line)
+            XCTAssertNil(contentView.assetThumbnail.accessibilityIdentifier, file: file, line: line)
+
+        case let message? where message.isLocation:
+            XCTAssertEqual(contentView.contentTextView.accessibilityIdentifier, "quote.type.location", file: file, line: line)
+            XCTAssertNil(contentView.assetThumbnail.accessibilityIdentifier, file: file, line: line)
+
+        case let message? where message.isAudio:
+            XCTAssertEqual(contentView.contentTextView.accessibilityIdentifier, "quote.type.audio", file: file, line: line)
+            XCTAssertNil(contentView.assetThumbnail.accessibilityIdentifier, file: file, line: line)
+
+        case let message? where message.isImage:
+            XCTAssertEqual(contentView.assetThumbnail.accessibilityIdentifier, "quote.type.image", file: file, line: line)
+            XCTAssertNil(contentView.contentTextView.accessibilityIdentifier, file: file, line: line)
+
+        case let message? where message.isVideo:
+            XCTAssertEqual(contentView.assetThumbnail.accessibilityIdentifier, "quote.type.video", file: file, line: line)
+            XCTAssertNil(contentView.contentTextView.accessibilityIdentifier, file: file, line: line)
+
+        case let message? where message.isFile:
+            XCTAssertEqual(contentView.contentTextView.accessibilityIdentifier, "quote.type.file", file: file, line: line)
+            XCTAssertNil(contentView.assetThumbnail.accessibilityIdentifier, file: file, line: line)
+
+        default:
+            XCTAssertEqual(contentView.contentTextView.accessibilityIdentifier, "quote.type.unavailable", file: file, line: line)
+            XCTAssertNil(contentView.assetThumbnail.accessibilityIdentifier, file: file, line: line)
+        }
     }
 
 }

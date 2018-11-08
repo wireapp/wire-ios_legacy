@@ -36,6 +36,7 @@ class ConversationReplyContentView: UIView {
         let timestamp: String?
 
         let content: Content
+        let contentType: String
     }
 
     let senderComponent = SenderNameCellComponent()
@@ -60,11 +61,16 @@ class ConversationReplyContentView: UIView {
     }
 
     private func configureSubviews() {
+        accessibilityIdentifier = "ReplyCell"
+        isAccessibilityElement = true
+
         stackView.axis = .vertical
         stackView.alignment = .leading
         stackView.spacing = 6
         addSubview(stackView)
 
+        senderComponent.label.accessibilityIdentifier = "original.sender"
+        senderComponent.indicatorView.accessibilityIdentifier = "original.edit_icon"
         senderComponent.label.font = .mediumSemiboldFont
         senderComponent.label.textColor = .from(scheme: .textForeground)
         stackView.addArrangedSubview(senderComponent)
@@ -80,12 +86,12 @@ class ConversationReplyContentView: UIView {
         contentTextView.backgroundColor = .clear
         contentTextView.textColor = .from(scheme: .textForeground)
 
-        contentTextView.setContentCompressionResistancePriority(.required, for: .vertical)
+        contentTextView.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
         stackView.addArrangedSubview(contentTextView)
-
         assetThumbnail.setContentCompressionResistancePriority(.required, for: .vertical)
         stackView.addArrangedSubview(assetThumbnail)
 
+        timestampLabel.accessibilityIdentifier = "original.timestamp"
         timestampLabel.font = .mediumFont
         timestampLabel.textColor = .from(scheme: .textDimmed)
         timestampLabel.numberOfLines = 1
@@ -101,7 +107,8 @@ class ConversationReplyContentView: UIView {
             stackView.topAnchor.constraint(equalTo: topAnchor, constant: 12),
             stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -12),
-            assetThumbnail.heightAnchor.constraint(lessThanOrEqualToConstant: 140)
+            assetThumbnail.heightAnchor.constraint(lessThanOrEqualToConstant: 140),
+            contentTextView.widthAnchor.constraint(equalTo: stackView.widthAnchor)
         ])
     }
 
@@ -117,11 +124,17 @@ class ConversationReplyContentView: UIView {
         case .text(let attributedContent):
             contentTextView.attributedText = attributedContent
             contentTextView.isHidden = false
+            contentTextView.accessibilityIdentifier = object.contentType
+            contentTextView.isAccessibilityElement = true
             assetThumbnail.isHidden = true
+            assetThumbnail.isAccessibilityElement = false
         case .imagePreview(let resource, let isVideo):
             assetThumbnail.setResource(resource, isVideoPreview: isVideo)
             assetThumbnail.isHidden = false
+            assetThumbnail.accessibilityIdentifier = object.contentType
+            assetThumbnail.isAccessibilityElement = true
             contentTextView.isHidden = true
+            contentTextView.isAccessibilityElement = false
         }
     }
 
@@ -217,6 +230,7 @@ class ConversationReplyCellDescription: ConversationMessageCellDescription {
 
         var isUnavailable = false
         let content: View.Configuration.Content
+        let contentType: String
         let attributes: [NSAttributedString.Key: Any] = [.font: UIFont.smallSemiboldFont,
                                                          .foregroundColor: UIColor.from(scheme: .textForeground)]
 
@@ -224,37 +238,44 @@ class ConversationReplyCellDescription: ConversationMessageCellDescription {
         case let message? where message.isText:
             let data = message.textMessageData!
             content = .text(NSAttributedString.formatForPreview(message: data, inputMode: false))
+            contentType = "quote.type.text"
 
         case let message? where message.isLocation:
             let location = message.locationMessageData!
             let imageIcon = NSTextAttachment.textAttachment(for: .location, with: .from(scheme: .textForeground))!
             let initialString = NSAttributedString(attachment: imageIcon) + "  " + (location.name ?? "conversation.input_bar.message_preview.location".localized).localizedUppercase
             content = .text(initialString && attributes)
+            contentType = "quote.type.location"
 
         case let message? where message.isAudio:
             let imageIcon = NSTextAttachment.textAttachment(for: .microphone, with: .from(scheme: .textForeground))!
             let initialString = NSAttributedString(attachment: imageIcon) + "  " + "conversation.input_bar.message_preview.audio".localized.localizedUppercase
             content = .text(initialString && attributes)
+            contentType = "quote.type.audio"
 
         case let message? where message.isImage:
             content = .imagePreview(thumbnail: message.imageMessageData!.image, isVideo: false)
+            contentType = "quote.type.image"
 
         case let message? where message.isVideo:
             content = .imagePreview(thumbnail: message.fileMessageData!.thumbnailImage, isVideo: true)
+            contentType = "quote.type.video"
 
         case let message? where message.isFile:
             let fileData = message.fileMessageData!
             let imageIcon = NSTextAttachment.textAttachment(for: .document, with: .from(scheme: .textForeground))!
             let initialString = NSAttributedString(attachment: imageIcon) + "  " + (fileData.filename ?? "conversation.input_bar.message_preview.file".localized).localizedUppercase
             content = .text(initialString && attributes)
+            contentType = "quote.type.file"
 
         default:
             isUnavailable = true
             let attributes: [NSAttributedString.Key: AnyObject] = [.font: UIFont.mediumFont.italic, .foregroundColor: UIColor.from(scheme: .textDimmed)]
             content = .text(NSAttributedString(string: "content.message.reply.broken_message".localized, attributes: attributes))
+            contentType = "quote.type.unavailable"
         }
 
-        configuration = View.Configuration(showDetails: !isUnavailable, isEdited: isEdited, senderName: senderName, timestamp: timestamp, content: content)
+        configuration = View.Configuration(showDetails: !isUnavailable, isEdited: isEdited, senderName: senderName, timestamp: timestamp, content: content, contentType: contentType)
     }
 
     func makeCell(for tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
