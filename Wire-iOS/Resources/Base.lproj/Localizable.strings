@@ -200,6 +200,7 @@
 "conversation.status.typing" = "Typing a message…";
 "conversation.status.typing.group" = "%@: typing a message…";
 "conversation.status.silenced" = "Muted";
+"conversation.status.poor_connection" = "Poor connection";
 "conversation.status.blocked" = "Blocked";
 
 "conversation.status.message.text" = "%@";
