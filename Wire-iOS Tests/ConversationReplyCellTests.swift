@@ -126,6 +126,26 @@ class ConversationReplyCellTests: CoreDataSnapshotTestCase {
         verifyInAllPhoneWidths(view: cell)
     }
 
+    func testThatItRendersMarkdownListMoreThan4Line() {
+        // GIVEN
+        let markdownNoHeaders = """
+        1. In den alten Zeiten, wo das Wünschen noch geholfen hat, lebte ein König, dessen Töchter waren alle schön;
+        2. aber die jüngste war so schön, daß die Sonne selber, die doch so vieles gesehen hat, sich verwunderte, sooft sie ihr ins Gesicht schien.
+        3. Nahe bei dem Schlosse des Königs lag ein großer dunkler Wald, und in dem Walde unter einer alten Linde war ein Brunnen;
+        4. wenn nun der Tag recht heiß war, so ging das Königskind hinaus in den Wald und setzte sich an den Rand des kühlen Brunnens - und wenn sie Langeweile hatte, so nahm sie eine goldene Kugel, warf sie in die Höhe und fing sie wieder; und das war ihr liebstes Spielwerk.
+        """
+
+        let message = MockMessageFactory.textMessage(withText: markdownNoHeaders)!
+        message.sender = selfUser
+        message.conversation = otherUserConversation
+
+        // WHEN
+        let cell = makeCell(for: message)
+
+        // THEN
+        verifyInAllPhoneWidths(view: cell)
+    }
+
 
     func testThatItRendersEmojiInLargeFont_33() {
         // GIVEN
