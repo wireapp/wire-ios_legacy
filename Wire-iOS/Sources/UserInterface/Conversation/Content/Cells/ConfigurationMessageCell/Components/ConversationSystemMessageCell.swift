@@ -189,6 +189,8 @@ class ConversationRenamedSystemMessageCellDescription: ConversationMessageCellDe
     var message: ZMConversationMessage?
     weak var delegate: ConversationCellDelegate? 
     weak var actionController: ConversationCellActionController?
+    
+    var topMargin: Float = 0
 
     var isFullWidth: Bool {
         return true
@@ -219,6 +221,8 @@ class ConversationCallSystemMessageCellDescription: ConversationMessageCellDescr
     var message: ZMConversationMessage?
     weak var delegate: ConversationCellDelegate? 
     weak var actionController: ConversationCellActionController?
+    
+    var topMargin: Float = 0
 
     var isFullWidth: Bool {
         return true
@@ -251,6 +255,8 @@ class ConversationMessageTimerCellDescription: ConversationMessageCellDescriptio
     var message: ZMConversationMessage?
     weak var delegate: ConversationCellDelegate? 
     weak var actionController: ConversationCellActionController?
+    
+    var topMargin: Float = 0
 
     var isFullWidth: Bool {
         return true
@@ -292,6 +298,8 @@ class ConversationVerifiedSystemMessageSectionDescription: ConversationMessageCe
     var message: ZMConversationMessage?
     weak var delegate: ConversationCellDelegate? 
     weak var actionController: ConversationCellActionController?
+    
+    var topMargin: Float = 0
 
     var isFullWidth: Bool {
         return true
@@ -322,6 +330,8 @@ class ConversationCannotDecryptSystemMessageCellDescription: ConversationMessage
     var message: ZMConversationMessage?
     weak var delegate: ConversationCellDelegate?
     weak var actionController: ConversationCellActionController?
+    
+    var topMargin: Float = 0
 
     var isFullWidth: Bool {
         return true

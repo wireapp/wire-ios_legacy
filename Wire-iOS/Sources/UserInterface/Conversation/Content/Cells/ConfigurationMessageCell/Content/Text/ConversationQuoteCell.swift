@@ -202,6 +202,7 @@ class ConversationReplyCellDescription: ConversationMessageCellDescription {
     typealias View = ConversationReplyCell
     let configuration: View.Configuration
 
+    var topMargin: Float = 8
     let isFullWidth = false
     let supportsActions = false
 

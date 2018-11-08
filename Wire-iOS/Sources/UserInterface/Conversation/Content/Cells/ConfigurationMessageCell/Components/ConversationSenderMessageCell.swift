@@ -87,6 +87,8 @@ class ConversationSenderMessageCellDescription: ConversationMessageCellDescripti
     var message: ZMConversationMessage?
     weak var delegate: ConversationCellDelegate?
     weak var actionController: ConversationCellActionController?
+    
+    var topMargin: Float = 16
 
     var isFullWidth: Bool {
         return true

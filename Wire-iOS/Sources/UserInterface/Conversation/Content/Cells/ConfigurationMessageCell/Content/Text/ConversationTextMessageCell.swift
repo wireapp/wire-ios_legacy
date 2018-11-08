@@ -70,13 +70,7 @@ class ConversationTextMessageCell: UIView, ConversationMessageCell {
 
     private func configureConstraints() {
         messageTextView.translatesAutoresizingMaskIntoConstraints = false
-
-        NSLayoutConstraint.activate([
-            messageTextView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            messageTextView.topAnchor.constraint(equalTo: topAnchor, constant: 8),
-            messageTextView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            messageTextView.bottomAnchor.constraint(equalTo: bottomAnchor)
-        ])
+        messageTextView.fitInSuperview()
     }
 
     func configure(with object: Configuration, animated: Bool) {
@@ -94,6 +88,8 @@ class ConversationTextMessageCellDescription: ConversationMessageCellDescription
     weak var message: ZMConversationMessage?
     weak var delegate: ConversationCellDelegate?
     weak var actionController: ConversationCellActionController?
+    
+    var topMargin: Float = 8
 
     let isFullWidth: Bool  = false
     let supportsActions: Bool = true
