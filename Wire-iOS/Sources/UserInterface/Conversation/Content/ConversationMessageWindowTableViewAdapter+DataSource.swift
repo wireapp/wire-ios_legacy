@@ -100,8 +100,8 @@ extension ConversationMessageWindowTableViewAdapter: UITableViewDataSource {
     func sectionController(at sectionIndex: Int, in tableView: UITableView) -> ConversationMessageSectionController? {
         guard let message = messageWindow.messages.object(at: sectionIndex) as? ZMConversationMessage, let nonce = message.nonce else { return nil }
         
-        if let cachedEntry = sectionControllers.object(forKey: nonce) {
-            return cachedEntry as? ConversationMessageSectionController
+        if let cachedEntry = sectionControllers.object(forKey: nonce) as? ConversationMessageSectionController {
+            return cachedEntry
         }
         
         let context = messageWindow.context(for: message, firstUnreadMessage: firstUnreadMessage)
@@ -115,10 +115,6 @@ extension ConversationMessageWindowTableViewAdapter: UITableViewDataSource {
         sectionController.selected = message.isEqual(selectedMessage)
         
         sectionControllers.setObject(sectionController, forKey: nonce as NSUUID)
-        
-        for description in sectionController.cellDescriptions {
-            registerCellIfNeeded(description, in: tableView)
-        }
         
         return sectionController
     }
@@ -155,6 +151,11 @@ extension ConversationMessageWindowTableViewAdapter: UITableViewDataSource {
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let sectionController = self.sectionController(at: indexPath.section, in: tableView)!
+        
+        for description in sectionController.cellDescriptions {
+            registerCellIfNeeded(description, in: tableView)
+        }
+        
         return sectionController.makeCell(for: tableView, at: indexPath)
     }
 }
