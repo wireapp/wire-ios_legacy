@@ -18,30 +18,6 @@
 
 import Foundation
 
-extension NetworkQuality {
-    func attributedString(color: UIColor) -> NSAttributedString? {
-        if isNormal {
-            return nil
-        } else {
-            let attachment = NSTextAttachment()
-            attachment.image = UIImage(for: .networkCondition, iconSize: .tiny, color: color)
-            attachment.bounds = CGRect(x: 0.0, y: -4, width: attachment.image!.size.width, height: attachment.image!.size.height)
-            let text = "Poor connection".uppercased()
-            let attributedText = text.attributedString.adding(font: FontSpec(.small, .semibold).font!, to: text).adding(color: color, to: text)
-            return NSAttributedString(attachment: attachment) + " " + attributedText
-        }
-    }
-
-    var isNormal: Bool {
-        switch self {
-        case .normal:
-            return true
-        case .medium, .poor:
-            return false
-        }
-    }
-}
-
 final class NetworkConditionIndicatorView: UIView, RoundedViewProtocol {
 
     private let label = UILabel()
@@ -78,5 +54,4 @@ final class NetworkConditionIndicatorView: UIView, RoundedViewProtocol {
             layoutIfNeeded()
         }
     }
-
 }
