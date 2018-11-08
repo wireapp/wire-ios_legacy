@@ -27,7 +27,7 @@ class MockCell: UIView, ConversationMessageCell {
     var isConfigured: Bool  = false
     var isSelected: Bool = false
 
-    func configure(with object: Configuration) {
+    func configure(with object: Configuration, animated: Bool) {
         isConfigured = true
         backgroundColor = object.backgroundColor
     }

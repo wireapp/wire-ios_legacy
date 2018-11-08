@@ -57,7 +57,7 @@ class ConversationLinkPreviewArticleCell: UIView, ConversationMessageCell {
         articleView.fitInSuperview()
     }
 
-    func configure(with object: Configuration) {
+    func configure(with object: Configuration, animated: Bool) {
         configuration = object
         articleView.configure(withTextMessageData: object.textMessageData, obfuscated: object.isObfuscated)
         updateImageLayout(isRegular: self.traitCollection.horizontalSizeClass == .regular)

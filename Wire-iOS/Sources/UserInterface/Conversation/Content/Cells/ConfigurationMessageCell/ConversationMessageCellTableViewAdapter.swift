@@ -79,7 +79,7 @@ class ConversationMessageCellTableViewAdapter<C: ConversationMessageCellDescript
     }
     
     func configure(with object: C.View.Configuration, fullWidth: Bool) {
-        cellView.configure(with: object)
+        cellView.configure(with: object, animated: false)
         self.isFullWidth = fullWidth
     }
 
