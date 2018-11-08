@@ -36,12 +36,15 @@ extension ZMConversationMessage {
         guard self.canBeQuoted else {
             return nil
         }
-        
+        return preparePreviewView()
+    }
+    
+    func preparePreviewView(shouldDisplaySender: Bool = true) -> UIView? {
         if self.isImage || self.isVideo {
-            return MessageThumbnailPreviewView(message: self)
+            return MessageThumbnailPreviewView(message: self, displaySender: shouldDisplaySender)
         }
         else {
-            return MessagePreviewView(message: self)
+            return MessagePreviewView(message: self, displaySender: shouldDisplaySender)
         }
     }
 }
@@ -72,13 +75,15 @@ final class MessageThumbnailPreviewView: UIView {
     private let contentTextView = UITextView.previewTextView()
     private let imagePreview = ImageContentView()
     private var observerToken: Any? = nil
+    private let displaySender: Bool
 
     let message: ZMConversationMessage
     
-    init(message: ZMConversationMessage) {
-        require(message.canBeQuoted)
+    init(message: ZMConversationMessage, displaySender: Bool = true) {
+        require(message.canBeQuoted || !displaySender)
         require(message.conversation != nil)
         self.message = message
+        self.displaySender = displaySender
         super.init(frame: .zero)
         setupSubviews()
         setupConstraints()
@@ -95,11 +100,14 @@ final class MessageThumbnailPreviewView: UIView {
     }
     
     private func setupSubviews() {
-        let allViews: [UIView] = [senderLabel, contentTextView, imagePreview]
+        var allViews: [UIView] = [contentTextView, imagePreview]
         
-        senderLabel.font = .mediumSemiboldFont
-        senderLabel.textColor = .from(scheme: .textForeground)
-        senderLabel.setContentCompressionResistancePriority(.required, for: .vertical)
+        if displaySender {
+            allViews.append(senderLabel)
+            senderLabel.font = .mediumSemiboldFont
+            senderLabel.textColor = .from(scheme: .textForeground)
+            senderLabel.setContentCompressionResistancePriority(.required, for: .vertical)
+        }
         
         imagePreview.clipsToBounds = true
         imagePreview.contentMode = .scaleAspectFill
@@ -113,12 +121,7 @@ final class MessageThumbnailPreviewView: UIView {
         let inset: CGFloat = 12
         
         NSLayoutConstraint.activate([
-            senderLabel.topAnchor.constraint(equalTo: topAnchor, constant: inset),
-            senderLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: inset),
-            senderLabel.trailingAnchor.constraint(equalTo: imagePreview.leadingAnchor, constant: inset),
-            contentTextView.topAnchor.constraint(equalTo: senderLabel.bottomAnchor, constant: inset),
             contentTextView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: inset),
-            contentTextView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -inset),
             contentTextView.trailingAnchor.constraint(equalTo: imagePreview.leadingAnchor, constant: inset),
             imagePreview.topAnchor.constraint(equalTo: topAnchor, constant: inset),
             imagePreview.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -inset),
@@ -126,6 +129,19 @@ final class MessageThumbnailPreviewView: UIView {
             imagePreview.widthAnchor.constraint(equalToConstant: 42),
             imagePreview.heightAnchor.constraint(equalToConstant: 42),
             ])
+        
+        if displaySender {
+            NSLayoutConstraint.activate([
+                
+                senderLabel.topAnchor.constraint(equalTo: topAnchor, constant: inset),
+                senderLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: inset),
+                senderLabel.trailingAnchor.constraint(equalTo: imagePreview.leadingAnchor, constant: inset),
+                contentTextView.topAnchor.constraint(equalTo: senderLabel.bottomAnchor, constant: inset),
+                contentTextView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -inset)
+                ])
+        } else {
+            contentTextView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+        }
     }
 
     private func editIcon() -> NSAttributedString {
@@ -181,13 +197,15 @@ final class MessagePreviewView: UIView {
     private let senderLabel = UILabel()
     private let contentTextView = UITextView.previewTextView()
     private var observerToken: Any? = nil
+    private let displaySender: Bool
 
     let message: ZMConversationMessage
     
-    init(message: ZMConversationMessage) {
-        require(message.canBeQuoted)
+    init(message: ZMConversationMessage, displaySender: Bool = true) {
+        require(message.canBeQuoted || !displaySender)
         require(message.conversation != nil)
         self.message = message
+        self.displaySender = displaySender
         super.init(frame: .zero)
         setupSubviews()
         setupConstraints()
@@ -204,12 +222,15 @@ final class MessagePreviewView: UIView {
     }
     
     private func setupSubviews() {
-        let allViews: [UIView] = [senderLabel, contentTextView]
+        var allViews: [UIView] = [contentTextView]
         
-        senderLabel.font = .mediumSemiboldFont
-        senderLabel.textColor = .from(scheme: .textForeground)
-        senderLabel.setContentCompressionResistancePriority(.required, for: .vertical)
-
+        if displaySender {
+            allViews.append(senderLabel)
+            senderLabel.font = .mediumSemiboldFont
+            senderLabel.textColor = .from(scheme: .textForeground)
+            senderLabel.setContentCompressionResistancePriority(.required, for: .vertical)
+        }
+        
         allViews.forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
         allViews.forEach(self.addSubview)
     }
@@ -218,14 +239,21 @@ final class MessagePreviewView: UIView {
         let inset: CGFloat = 12
 
         NSLayoutConstraint.activate([
-            senderLabel.topAnchor.constraint(equalTo: topAnchor, constant: inset),
-            senderLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: inset),
-            senderLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -inset),
-            contentTextView.topAnchor.constraint(equalTo: senderLabel.bottomAnchor, constant: inset / 2),
             contentTextView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: inset),
             contentTextView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -inset),
             contentTextView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -inset),
         ])
+        
+        if displaySender {
+            NSLayoutConstraint.activate([
+                senderLabel.topAnchor.constraint(equalTo: topAnchor, constant: inset),
+                senderLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: inset),
+                senderLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -inset),
+                contentTextView.topAnchor.constraint(equalTo: senderLabel.bottomAnchor, constant: inset / 2),
+                ])
+        } else {
+            contentTextView.topAnchor.constraint(equalTo: topAnchor, constant: inset).isActive = true
+        }
     }
     
     private func editIcon() -> NSAttributedString {
