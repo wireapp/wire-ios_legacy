@@ -31,7 +31,7 @@ class ConversationPingMessageCellTests: ConversationCellSnapshotTests {
         message.sender = selfUser
 
         // WHEN
-        let context = ConversationMessageContext(isSameSenderAsPrevious: false, isLastMessageSentBySelfUser: true, isTimeIntervalSinceLastMessageSignificant: true, isFirstMessageOfTheDay: true, isFirstUnreadMessage: true)
+        let context = ConversationMessageContext(isSameSenderAsPrevious: false, isLastMessageSentBySelfUser: true, isTimeIntervalSinceLastMessageSignificant: true, isFirstMessageOfTheDay: true, isFirstUnreadMessage: true, searchQueries: [])
         section = ConversationMessageSectionController(message: message, context: context, layoutProperties: ConversationCellLayoutProperties())
 
         // THEN
@@ -44,7 +44,7 @@ class ConversationPingMessageCellTests: ConversationCellSnapshotTests {
         message.sender = otherUser
 
         // WHEN
-        let context = ConversationMessageContext(isSameSenderAsPrevious: false, isLastMessageSentBySelfUser: false, isTimeIntervalSinceLastMessageSignificant: true, isFirstMessageOfTheDay: true, isFirstUnreadMessage: true)
+        let context = ConversationMessageContext(isSameSenderAsPrevious: false, isLastMessageSentBySelfUser: false, isTimeIntervalSinceLastMessageSignificant: true, isFirstMessageOfTheDay: true, isFirstUnreadMessage: true, searchQueries: [])
         section = ConversationMessageSectionController(message: message, context: context, layoutProperties: ConversationCellLayoutProperties())
 
         // THEN
