@@ -28,7 +28,7 @@ class AnimatedPenView : UIView {
     
     public var isAnimating : Bool = false {
         didSet {
-            pen.layer.speed = isAnimating ? 1 : 0;
+            pen.layer.speed = isAnimating ? 1 : 0
             pen.layer.beginTime = pen.layer.convertTime(CACurrentMediaTime(), from: nil)
         }
     }

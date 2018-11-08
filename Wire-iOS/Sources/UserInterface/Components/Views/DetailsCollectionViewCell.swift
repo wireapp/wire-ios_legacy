@@ -25,7 +25,8 @@ class DetailsCollectionViewCell: SeparatorCollectionViewCell {
     private let titleLabel = UILabel()
     private let statusLabel = UILabel()
 
-    private var contentStackView : UIStackView!
+    private var titleStackView: UIStackView!
+    private var contentStackView: UIStackView!
     private var leftIconContainer: UIView!
     private var contentLeadingConstraint: NSLayoutConstraint!
 
@@ -73,8 +74,7 @@ class DetailsCollectionViewCell: SeparatorCollectionViewCell {
         titleLabel.font = FontSpec.init(.normal, .light).font!
 
         statusLabel.translatesAutoresizingMaskIntoConstraints = false
-        statusLabel.font = FontSpec.init(.normal, .light).font!
-        statusLabel.setContentHuggingPriority(.required, for: .horizontal)
+        statusLabel.font = FontSpec.init(.small, .regular).font!
 
         leftIconContainer = UIView()
         leftIconContainer.addSubview(leftIconView)
@@ -87,8 +87,14 @@ class DetailsCollectionViewCell: SeparatorCollectionViewCell {
         let iconViewSpacer = UIView()
         iconViewSpacer.translatesAutoresizingMaskIntoConstraints = false
         iconViewSpacer.widthAnchor.constraint(equalToConstant: 8).isActive = true
+        
+        titleStackView = UIStackView(arrangedSubviews: [titleLabel, statusLabel])
+        titleStackView.axis = .vertical
+        titleStackView.distribution = .equalSpacing
+        titleStackView.alignment = .leading
+        titleStackView.translatesAutoresizingMaskIntoConstraints = false
 
-        contentStackView = UIStackView(arrangedSubviews: [leftIconContainer, titleLabel, statusLabel, iconViewSpacer, accessoryIconView])
+        contentStackView = UIStackView(arrangedSubviews: [leftIconContainer, titleStackView, iconViewSpacer, accessoryIconView])
         contentStackView.axis = .horizontal
         contentStackView.distribution = .fill
         contentStackView.alignment = .center

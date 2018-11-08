@@ -32,12 +32,12 @@ enum ConversationCellType : Int {
 final class DeleteMessageTests: XCTestCase {
     
     var sut: DeleteMessageTests!
-    
+
     override func setUp() {
         super.setUp()
         sut = DeleteMessageTests()
     }
-    
+
     override func tearDown() {
         sut = nil
         super.tearDown()
@@ -67,52 +67,32 @@ final class DeleteMessageTests: XCTestCase {
         return message as Any as? ZMConversationMessage
     }
 
-    func conversationCell(for conversationType: ConversationCellType) -> ConversationCell? {
-        var cell: ConversationCell! = nil
-
-        switch conversationType {
-        case .text, .textWithRichMedia:
-            cell = TextMessageCell(style: .default, reuseIdentifier: "test")
-        case .image:
-            cell = ImageMessageCell(style: .default, reuseIdentifier: "test")
-        case .ping:
-            cell = PingCell(style: .default, reuseIdentifier: "test")
-        case .fileTransfer:
-            cell = FileTransferCell(style: .default, reuseIdentifier: "test")
-        case .systemMessage:
-            cell = CannotDecryptCell(style: .default, reuseIdentifier: "test")
-        case .count:
-            XCTFail("You can't just give the .COUNT and expect a cell!")
-        }
-
-        cell.configure(for: message(for: conversationType), layoutProperties: nil)
-        cell.autoSetDimension(.height, toSize: 60)
-
-        return cell
+    func actionController(for conversationType: ConversationCellType) -> ConversationCellActionController {
+        let message = self.message(for: conversationType)!
+        return ConversationCellActionController(responder: nil, message: message)
     }
 
     func testThatTheExpectedCellsCanBeDeleted() {
-        
-        // can perform action decides if the action will be present in menu, therefor be deletable
-        let textMessageCell: ConversationCell? = conversationCell(for: .text)
-        XCTAssertTrue((textMessageCell?.canPerformAction(#selector(ConversationCell.deleteMessage(_:)), withSender: nil))!)
-        XCTAssertFalse((textMessageCell?.canPerformAction(#selector(ConversationCell.delete(_:)), withSender: nil))!)
+        let deleteAction = #selector(ConversationCellActionController.deleteMessage)
 
-        let richMediaMessageCell: ConversationCell? = conversationCell(for: .textWithRichMedia)
-        XCTAssertTrue((richMediaMessageCell?.canPerformAction(#selector(ConversationCell.deleteMessage(_:)), withSender: nil))!)
-        XCTAssertFalse((richMediaMessageCell?.canPerformAction(#selector(ConversationCell.delete(_:)), withSender: nil))!)
+        // can perform action decides if the action will be present in menu, therefore be deletable
+        let textMessageCell = actionController(for: .text)
+        XCTAssertTrue(textMessageCell.canPerformAction(deleteAction))
 
-        let fileMessageCell: ConversationCell? = conversationCell(for: .fileTransfer)
-        XCTAssertTrue((fileMessageCell?.canPerformAction(#selector(ConversationCell.deleteMessage(_:)), withSender: nil))!)
-        XCTAssertFalse((fileMessageCell?.canPerformAction(#selector(ConversationCell.delete(_:)), withSender: nil))!)
+        let richMediaMessageCell = actionController(for: .textWithRichMedia)
+        XCTAssertTrue(richMediaMessageCell.canPerformAction(deleteAction))
 
-        let pingMessageCell: ConversationCell? = conversationCell(for: .ping)
-        XCTAssertTrue((pingMessageCell?.canPerformAction(#selector(ConversationCell.deleteMessage(_:)), withSender: nil))!)
-        XCTAssertFalse((pingMessageCell?.canPerformAction(#selector(ConversationCell.delete(_:)), withSender: nil))!)
+        let fileMessageCell = actionController(for: .fileTransfer)
+        XCTAssertTrue(fileMessageCell.canPerformAction(deleteAction))
 
-        let imageMessageCell: ConversationCell? = conversationCell(for: .image)
-        XCTAssertTrue((imageMessageCell?.canPerformAction(#selector(ConversationCell.deleteMessage(_:)), withSender: nil))!)
-        XCTAssertFalse((imageMessageCell?.canPerformAction(#selector(ConversationCell.delete(_:)), withSender: nil))!)
+        let pingMessageCell = actionController(for: .ping)
+        XCTAssertTrue(pingMessageCell.canPerformAction(deleteAction))
+
+        let imageMessageCell = actionController(for: .image)
+        XCTAssertTrue(imageMessageCell.canPerformAction(deleteAction))
+
+        let systemMessageCell = actionController(for: .systemMessage)
+        XCTAssertFalse(systemMessageCell.canPerformAction(deleteAction))
     }
 
 }

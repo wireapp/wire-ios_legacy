@@ -25,7 +25,6 @@
 #import "NSIndexSet+IndexPaths.h"
 
 // Cells
-#import "TextMessageCell.h"
 #import "ImageMessageCell.h"
 #import "PingCell.h"
 #import "ConnectionRequestCell.h"
@@ -43,8 +42,8 @@
         self.messageWindow = messageWindow;
         self.messageWindowObserverToken = [MessageWindowChangeInfo addObserver:self forWindow:self.messageWindow];
         self.firstUnreadMessage = self.messageWindow.conversation.firstUnreadMessage;
-        
-        [self registerTableCellClasses];
+        self.sectionControllers = [[NSMutableDictionary alloc] init];
+        self.actionControllers = [[NSMutableDictionary alloc] init];
     }
     
     return self;
@@ -61,75 +60,34 @@
     }
 }
 
-#pragma mark - ZMConversationMessageWindowObserver
-
-- (void)conversationWindowDidChange:(MessageWindowChangeInfo *)change
+- (ConversationCellActionController *)actionControllerForMessage:(id<ZMConversationMessage>)message
 {
-    BOOL initialContentLoad = self.messageWindow.messages.count == change.insertedIndexes.count && change.deletedIndexes.count == 0;
-    BOOL updateOnlyChange = change.insertedIndexes.count == 0 && change.deletedIndexes.count == 0 && change.zm_movedIndexPairs.count == 0;
-    BOOL expandedWindow = change.insertedIndexes.count > 0 && change.insertedIndexes.lastIndex == self.messageWindow.messages.count - 1;
-    
-    [self stopAudioPlayerForDeletedMessages:change.deletedObjects];
+    ConversationCellActionController *cachedEntry = [self.actionControllers objectForKey:message.nonce];
 
-    // We want to reload if this is the initial content load or if the message window did expand to the top
-    // (e.g. when scrolling to the top), as there are also insertions at the top if messages get deleted we do not
-    // trigger a full reload if there are also deleted indices.
-    if (initialContentLoad || (expandedWindow && !change.deletedIndexes.count) || change.needsReload) {
-        [self.tableView reloadData];
+    if (cachedEntry) {
+        return cachedEntry;
     }
-    else if (! updateOnlyChange) {
-        [self.tableView beginUpdates];
-        
-        if (change.deletedIndexes.count) {
-            [self.tableView deleteRowsAtIndexPaths:[change.deletedIndexes indexPaths] withRowAnimation:UITableViewRowAnimationFade];
-        }
-        
-        if (change.insertedIndexes.count) {
-            [self.tableView insertRowsAtIndexPaths:[change.insertedIndexes indexPaths] withRowAnimation:UITableViewRowAnimationFade];
-        }
-        
-        [change.zm_movedIndexPairs enumerateObjectsUsingBlock:^(ZMMovedIndex *moved, NSUInteger idx, BOOL *stop) {
-            NSIndexPath *from = [NSIndexPath indexPathForRow:moved.from inSection:0];
-            NSIndexPath *to = [NSIndexPath indexPathForRow:moved.to inSection:0];
-            [self.tableView moveRowAtIndexPath:from toIndexPath:to];
-        }];
-        
-        if (change.insertedIndexes.count > 0 || change.deletedIndexes.count > 0 || change.zm_movedIndexPairs.count > 0) {
-            // deleted index paths need to be passed in because this method is called before `endUpdates`, when
-            // the cells have not yet been removed from the view but the messages they refer to can not be
-            // materialized anymore
-            [self reconfigureVisibleCellsWithDeletedIndexPaths:[NSSet setWithArray:[change.deletedIndexes indexPaths]]];
-        }
-        
-        [self.tableView endUpdates];
+
+    ConversationCellActionController *actionController = [[ConversationCellActionController alloc] initWithResponder:self.messageActionResponder message:message];
+    [self.actionControllers setObject:actionController forKey:message.nonce];
+
+    return actionController;
+}
+
+- (void)registerCellIfNeeded:(AnyConversationMessageCellDescription *)cellDescription inTableView:(UITableView *)tableView
+{
+    if ([self.registeredCells containsObject:cellDescription.baseType]) {
+        return;
     }
+
+    [cellDescription registerInTableView:tableView];
+    [self.registeredCells addObject:cellDescription.baseType];
 }
 
 - (void)setEditingMessage:(id <ZMConversationMessage>)editingMessage
 {
     _editingMessage = editingMessage;
-    [self reconfigureVisibleCellsWithDeletedIndexPaths:nil];
-}
-
-- (void)reconfigureVisibleCellsWithDeletedIndexPaths:(NSSet<NSIndexPath *>*)deletedIndexPaths
-{
-    for (ConversationCell *cell in self.tableView.visibleCells) {
-        
-        if (! [cell isKindOfClass:ConversationCell.class]) {
-            continue;
-        }
-        
-        // ignore deleted cells, or it will configure them, which might be
-        // unsafe if the original message was deleted
-        if (deletedIndexPaths != nil) {
-            NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-            if ([deletedIndexPaths containsObject:indexPath]) {
-                continue;
-            }
-        }
-        cell.searchQueries = self.searchQueries;
-        [self configureConversationCell:cell withMessage:cell.message];
-    }
+    [self reconfigureVisibleSections];
 }
 
 - (void)messagesInsideWindow:(ZMConversationMessageWindow *)window didChange:(NSArray<MessageChangeInfo *> *)messageChangeInfos
@@ -181,3 +139,4 @@
 }
 
 @end
+

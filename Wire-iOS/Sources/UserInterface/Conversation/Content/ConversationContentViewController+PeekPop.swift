@@ -31,8 +31,8 @@ extension ConversationContentViewController: UIViewControllerPreviewingDelegate 
         let cellLocation = view.convert(location, to: tableView)
 
         guard let cellIndexPath = self.tableView.indexPathForRow(at: cellLocation),
-              let message = self.messageWindow.messages[cellIndexPath.row] as? ZMConversationMessage,
-              let cell = tableView.cellForRow(at: cellIndexPath) as? ConversationCell else {
+              let message = self.messageWindow.messages[cellIndexPath.section] as? ZMConversationMessage,
+              let cell = tableView.cellForRow(at: cellIndexPath) as? SelectableView & UIView else {
             return .none
         }
 
@@ -43,21 +43,16 @@ extension ConversationContentViewController: UIViewControllerPreviewingDelegate 
         lastPreviewURL = nil
         var controller: UIViewController?
 
-        if message.isText, let url = message.textMessageData?.linkPreview?.openableURL as URL? {
+        if message.isText, cell.selectionView is ArticleView, let url = message.textMessageData?.linkPreview?.openableURL as URL? {
             lastPreviewURL = url
             controller = BrowserViewController(url: url)
         } else if message.isImage {
             controller = self.messagePresenter.viewController(forImageMessagePreview: message, actionResponder: self)
         } else if message.isLocation {
-            let locationController = LocationPreviewController(message: message)
-            locationController.messageActionDelegate = self
-            controller = locationController
+            controller = LocationPreviewController(message: message, actionResponder: self)
         }
 
-        if nil != controller, cell.previewView.bounds != .zero {
-            previewingContext.sourceRect = previewingContext.sourceView.convert(cell.previewView.frame, from: cell.previewView.superview!)
-        }
-
+        previewingContext.sourceRect = previewingContext.sourceView.convert(cell.selectionRect, from: cell.selectionView)
         return controller
     }
 

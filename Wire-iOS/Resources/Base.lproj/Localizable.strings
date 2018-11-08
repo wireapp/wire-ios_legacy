@@ -149,6 +149,7 @@
 "conversation_list.voiceover.status.typing" = "typing";
 "conversation_list.voiceover.status.ping" = "ping";
 "conversation_list.voiceover.status.mention" = "you are mentioned";
+"conversation_list.voiceover.status.reply" = "reply";
 "conversation_list.voiceover.bottom_bar.archived_button.label" = "archived";
 "conversation_list.voiceover.bottom_bar.archived_button.hint" = "list of archived conversations";
 "conversation_list.voiceover.bottom_bar.contacts_button.label" = "contacts";
@@ -212,15 +213,19 @@
 "conversation.status.message.missedcall" = "Missed call";
 "conversation.status.message.missedcall.groups" = "Missed call from %@";
 "conversation.status.message.mention" = "%@";
+"conversation.status.message.reply" = "%@";
 "conversation.status.message.ephemeral" = "Sent a message";
 "conversation.status.message.ephemeral.group" = "Someone sent a message";
 "conversation.status.message.ephemeral.mention" = "Mentioned you";
 "conversation.status.message.ephemeral.mention.group" = "Someone mentioned you";
+"conversation.status.message.ephemeral.reply" = "Replied you";
+"conversation.status.message.ephemeral.reply.group" = "Someone replied you";
 "conversation.status.message.ephemeral.knock" = "Pinged";
 "conversation.status.message.ephemeral.knock.group" = "Someone pinged";
 
 "conversation.status.unsent" = "⚠️ Unsent message";
 "conversation.status.you" = "You";
+"conversation.status.someone" = "Someone";
 "conversation.status.added_multiple" = "People added";
 "conversation.status.you_was_added" = "%@ added you";
 "conversation.status.added_users" = "%@ added %@";
@@ -296,7 +301,23 @@
 "conversation.guests_services_present" = "Guests and services are present";
 "conversation.action.search" = "Search";
 
-// Image confirmation dialogue
+// Reply message preview
+"conversation.input_bar.message_preview.image" = "Image";
+"conversation.input_bar.message_preview.location" = "Location";
+"conversation.input_bar.message_preview.video" = "Video";
+"conversation.input_bar.message_preview.audio" = "Audio Message";
+"conversation.input_bar.message_preview.file" = "File";
+"conversation.input_bar.close_reply" = "Cancel reply";
+
+"conversation.input_bar.message_preview.accessibility_description" = "Replying to message: %@";
+"conversation.input_bar.message_preview.accessibility.image_message" = "Image message";
+"conversation.input_bar.message_preview.accessibility.location_message" = "Location message";
+"conversation.input_bar.message_preview.accessibility.video_message" = "Video message";
+"conversation.input_bar.message_preview.accessibility.audio_message" = "Audio message";
+"conversation.input_bar.message_preview.accessibility.file_message" = "File message (%@)";
+"conversation.input_bar.message_preview.accessibility.unknown_message" = "Unknown message";
+"conversation.input_bar.message_preview.accessibility.message_from" = "%@ from %@";
+
 "image_confirmer.confirm" = "OK";
 "image_confirmer.cancel" = "Cancel";
 "image.add_sketch" = "Add a sketch";
@@ -412,12 +433,10 @@
 "content.system.conversation.with_name.participants" = "with";
 
 "content.system.message_timer_changes" = "%@ set the message timer to %@";
-"content.system.message_timer_changes.you" = "You set the message timer to %@";
-
-"content.system.message_timer.you_part" = "You";
+"content.system.message_timer_changes-you" = "%@ set the message timer to %@";
 
 "content.system.message_timer_off" = "%@ turned off the message timer";
-"content.system.message_timer_off.you" = "You turned off the message timer";
+"content.system.message_timer_off-you" = "%@ turned off the message timer";
 
 "content.system.reactivated_device" = "You started using %@ again. Messages sent in the meantime will not appear here.";
 
@@ -462,6 +481,7 @@
 
 "content.message.delete" = "Delete";
 "content.message.save" = "Save";
+"content.message.resend" = "Resend";
 
 "content.message.delete_ellipsis" = "Delete…";
 
@@ -473,6 +493,11 @@
 "content.message.open" = "Open";
 "content.message.copy" = "Copy";
 "content.message.download" = "Download";
+
+// Reply
+"content.message.reply" = "Reply";
+"content.message.reply.original_timestamp" = "Original message from %@";
+"content.message.reply.broken_message" = "You cannot see this message.";
 
 "content.message.open_link_alert.title" = "Visit Link";
 "content.message.open_link_alert.message" = "This will take you to\n%@";
@@ -635,7 +660,7 @@
 // Configure conversation notifications
 "meta.menu.configure_notification.dialog_message" = "Notify me about:";
 "meta.menu.configure_notification.button_everything" = "Everything";
-"meta.menu.configure_notification.button_mentions" = "Only Mentions";
+"meta.menu.configure_notification.button_mentions_and_replies" = "Mentions and Replies";
 "meta.menu.configure_notification.button_nothing" = "Nothing";
 "meta.menu.configure_notification.button_cancel" = "Cancel";
 
@@ -731,7 +756,7 @@
 "group_details.guest_options_cell.disabled" = "Off";
 "group_details.timeout_options_cell.title" = "Timed messages";
 "group_details.notification_options_cell.title" = "Notifications";
-"group_details.notification_options_cell.description" = "You can be notified about everything (including audio and video calls) or only when you are mentioned.";
+"group_details.notification_options_cell.description" = "You can be notified about everything (including audio and video calls) or only when someone mentions you or replies to one of your messages.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile

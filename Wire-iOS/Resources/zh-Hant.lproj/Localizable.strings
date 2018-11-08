@@ -412,12 +412,10 @@
 "content.system.conversation.with_name.participants" = "和";
 
 "content.system.message_timer_changes" = "%@將訊息時限設置為%@";
-"content.system.message_timer_changes.you" = "你將訊息時限設置為%@";
-
-"content.system.message_timer.you_part" = "您";
+"content.system.message_timer_changes-you" = "你將訊息時限設置為%@";
 
 "content.system.message_timer_off" = "%@關閉了訊息時限";
-"content.system.message_timer_off.you" = "你關閉了訊息時限";
+"content.system.message_timer_off-you" = "你關閉了訊息時限";
 
 "content.system.reactivated_device" = "您重新使用%@，在停用期間的訊息不會顯示出來。";
 
@@ -635,7 +633,7 @@
 // Configure conversation notifications
 "meta.menu.configure_notification.dialog_message" = "通知我關於：";
 "meta.menu.configure_notification.button_everything" = "所有";
-"meta.menu.configure_notification.button_mentions" = "僅用於提及";
+"meta.menu.configure_notification.button_mentions_and_replies" = "Mentions and Replies";
 "meta.menu.configure_notification.button_nothing" = "無";
 "meta.menu.configure_notification.button_cancel" = "取消";
 
@@ -731,7 +729,7 @@
 "group_details.guest_options_cell.disabled" = "關閉";
 "group_details.timeout_options_cell.title" = "限時訊息";
 "group_details.notification_options_cell.title" = "Notifications";
-"group_details.notification_options_cell.description" = "You can be notified about everything (including audio and video calls) or only when you are mentioned.";
+"group_details.notification_options_cell.description" = "You can be notified about everything (including audio and video calls) or only when someone mentions you or replies to one of your messages.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile

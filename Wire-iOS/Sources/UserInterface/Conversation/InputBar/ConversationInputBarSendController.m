@@ -18,7 +18,7 @@
 
 
 @import WireExtensionComponents;
-
+@import WireDataModel;
 
 #import "ConversationInputBarSendController.h"
 #import "ZMUserSession+iOS.h"
@@ -65,7 +65,9 @@
     }
 }
 
-- (void)sendTextMessage:(NSString *)text mentions:(NSArray <Mention *>*)mentions
+- (void)sendTextMessage:(NSString *)text
+               mentions:(NSArray <Mention *>*)mentions
+      replyingToMessage:(ZMClientMessage *)message
 {
     BOOL shouldFetchLinkPreview = ![Settings sharedSettings].disableLinkPreviews;
     
@@ -78,13 +80,21 @@
             for(int i = 0; i < 500; ++i) {
                 NSString *textWithNumber = [NSString stringWithFormat:@"%@ (%d)", text, i+1];
                 // only save last ones, who cares
-                textMessage = [self.conversation appendText:textWithNumber mentions:mentions fetchLinkPreview:shouldFetchLinkPreview nonce:NSUUID.UUID];
+                textMessage = [self.conversation appendText:textWithNumber
+                                                   mentions:mentions
+                                          replyingToMessage:message
+                                           fetchLinkPreview:shouldFetchLinkPreview
+                                                      nonce:NSUUID.UUID];
                 [(ZMMessage *)textMessage removeExpirationDate];
             }
         }
         else {
             // normal sending
-            textMessage = [self.conversation appendText:text mentions:mentions fetchLinkPreview:shouldFetchLinkPreview nonce:NSUUID.UUID];
+            textMessage = [self.conversation appendText:text
+                                               mentions:mentions
+                                      replyingToMessage:message
+                                       fetchLinkPreview:shouldFetchLinkPreview
+                                                  nonce:NSUUID.UUID];
         }
         self.conversation.draftMessage = nil;
     } completionHandler:^{
@@ -99,7 +109,11 @@
     BOOL shouldFetchLinkPreview = ![Settings sharedSettings].disableLinkPreviews;
     
     [ZMUserSession.sharedSession enqueueChanges:^{
-        textMessage = [self.conversation appendText:text mentions:mentions fetchLinkPreview:shouldFetchLinkPreview nonce:NSUUID.UUID];
+        textMessage = [self.conversation appendText:text
+                                           mentions:mentions
+                                  replyingToMessage:nil
+                                   fetchLinkPreview:shouldFetchLinkPreview
+                                              nonce:NSUUID.UUID];
         
         [self.conversation appendMessageWithImageData:data];
         self.conversation.draftMessage = nil;

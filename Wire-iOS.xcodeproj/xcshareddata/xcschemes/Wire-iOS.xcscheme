@@ -145,7 +145,7 @@
          </EnvironmentVariable>
          <EnvironmentVariable
             key = "ZMLOG_TAGS"
-            value = "Network,Authentication"
+            value = "Network,Authentication,Performance"
             isEnabled = "YES">
          </EnvironmentVariable>
          <EnvironmentVariable

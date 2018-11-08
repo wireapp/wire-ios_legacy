@@ -101,11 +101,9 @@ extension ZMMessage: Shareable {
 extension ZMConversationMessage {
     public func previewView() -> UIView? {
         var cell: ConversationCell
-        
-        if isText {
-            cell = TextMessageCell(style: .default, reuseIdentifier: "")
-        }
-        else if isImage {
+
+        // TODO 2838: Use the quote cell as the preview
+        if isImage {
             cell = ImageMessageCell(style: .default, reuseIdentifier: "")
         }
         else if isVideo {
@@ -261,7 +259,7 @@ extension ConversationContentViewController {
     }
     
     @objc func scroll(toIndex indexToShow: Int, completion: ((ConversationCell)->())? = .none) {
-        let cellIndexPath = IndexPath(row: indexToShow, section: 0)
+        let cellIndexPath = IndexPath(row: 0, section: indexToShow)
 
         self.tableView.scrollToRow(at: cellIndexPath, at: .middle, animated: false)
         if let cell = self.tableView.cellForRow(at: cellIndexPath) as? ConversationCell {

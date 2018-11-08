@@ -18,12 +18,14 @@
 
 import Foundation
 
-extension TextMessageCell {
-    
-    @objc(openMention:frame:) func open(mention: Mention, frame: CGRect) {
-        self.delegate.conversationCell?(self,
-                                        userTapped: mention.user,
-                                        in: self.messageTextView,
-                                        frame: frame)
-    }
-}
+// TODO: Open mention
+//
+//extension TextMessageCell {
+//
+//    @objc(openMention:frame:) func open(mention: Mention, frame: CGRect) {
+//        self.delegate.conversationCell?(self,
+//                                        userTapped: mention.user,
+//                                        in: self.messageTextView,
+//                                        frame: frame)
+//    }
+//}

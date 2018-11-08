@@ -20,12 +20,9 @@
 import Cartography
 
 @objcMembers final public class ConversationCellBurstTimestampView: UIView {
-
+    
     public let unreadDot = UIView()
-    public let label: UILabel = {
-        let label = UILabel()
-        return label
-    }()
+    public let label: UILabel = UILabel()
 
     public var separatorColor: UIColor?
     public var separatorColorExpanded: UIColor?
@@ -38,6 +35,8 @@ import Cartography
     private let unreadDotHeight: CGFloat = 8
     private var heightConstraints = [NSLayoutConstraint]()
     private var accentColorObserver: AccentColorChangeHandler?
+    private let burstNormalFont = UIFont.smallLightFont
+    private let burstBoldFont = UIFont.smallSemiboldFont
 
     public var isShowingUnreadDot: Bool = true {
         didSet {
@@ -98,17 +97,18 @@ import Cartography
 
     private func createConstraints() {
         constrain(self, label, leftSeparator, rightSeparator) { view, label, leftSeparator, rightSeparator in
+            view.height == 40
+            
             leftSeparator.leading == view.leading
-            leftSeparator.trailing == label.leading - inset
+            leftSeparator.width == UIView.conversationLayoutMargins.left - inset
             leftSeparator.centerY == view.centerY
+            
+            label.centerY == view.centerY
+            label.leading == leftSeparator.trailing + inset
 
             rightSeparator.leading == label.trailing + inset
             rightSeparator.trailing == view.trailing
             rightSeparator.centerY == view.centerY
-
-            label.centerY == view.centerY
-            label.leading == view.leadingMargin
-            label.trailing <= view.trailingMargin ~ 500.0
 
             heightConstraints = [
                 leftSeparator.height == separatorHeight,
@@ -132,5 +132,25 @@ import Cartography
         label.textColor = UIColor.from(scheme: .textForeground)
         separatorColor = UIColor.from(scheme: .separator)
         separatorColorExpanded = UIColor.from(scheme: .paleSeparator)
+    }
+    
+    func configure(with timestamp: Date, includeDayOfWeek: Bool, showUnreadDot: Bool) {
+        if includeDayOfWeek {
+            isSeparatorExpanded = true
+            isSeparatorHidden = false
+            label.font = burstBoldFont
+            label.text = timestamp.olderThanOneWeekdateFormatter.string(from: timestamp).uppercased()
+        } else {
+            isSeparatorExpanded = false
+            isSeparatorHidden = false
+            label.font = burstNormalFont
+            label.text = timestamp.formattedDate.uppercased()
+        }
+        
+        isShowingUnreadDot = showUnreadDot
+    }
+
+    func prepareForReuse() {
+        label.text = nil
     }
 }

@@ -412,12 +412,10 @@
 "content.system.conversation.with_name.participants" = "su";
 
 "content.system.message_timer_changes" = "%@ nustatė žinutės laikmatį į %@";
-"content.system.message_timer_changes.you" = "Nustatėte žinutės laikmatį į %@";
-
-"content.system.message_timer.you_part" = "Jūs";
+"content.system.message_timer_changes-you" = "Nustatėte žinutės laikmatį į %@";
 
 "content.system.message_timer_off" = "%@ išjungė žinutės laikmatį";
-"content.system.message_timer_off.you" = "Išjungėte žinutės laikmatį";
+"content.system.message_timer_off-you" = "Išjungėte žinutės laikmatį";
 
 "content.system.reactivated_device" = "Vėl pradėjote naudotis „%@“. Žinutės parašytos įrenginio nenaudojimo laikotarpiu čia neatsiras.";
 
@@ -635,7 +633,7 @@
 // Configure conversation notifications
 "meta.menu.configure_notification.dialog_message" = "Pranešti apie:";
 "meta.menu.configure_notification.button_everything" = "Viską";
-"meta.menu.configure_notification.button_mentions" = "Tik paminėjimus";
+"meta.menu.configure_notification.button_mentions_and_replies" = "Mentions and Replies";
 "meta.menu.configure_notification.button_nothing" = "Nieką";
 "meta.menu.configure_notification.button_cancel" = "Atsisakyti";
 
@@ -731,7 +729,7 @@
 "group_details.guest_options_cell.disabled" = "Išjungta";
 "group_details.timeout_options_cell.title" = "Laikinos žinutės";
 "group_details.notification_options_cell.title" = "Notifications";
-"group_details.notification_options_cell.description" = "You can be notified about everything (including audio and video calls) or only when you are mentioned.";
+"group_details.notification_options_cell.description" = "You can be notified about everything (including audio and video calls) or only when someone mentions you or replies to one of your messages.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile

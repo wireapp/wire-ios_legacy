@@ -412,12 +412,10 @@
 "content.system.conversation.with_name.participants" = "з";
 
 "content.system.message_timer_changes" = "%@ встановив(-ла) таймер повідомлень на %@";
-"content.system.message_timer_changes.you" = "Ви встановили таймер повідомлень на %@";
-
-"content.system.message_timer.you_part" = "Ви";
+"content.system.message_timer_changes-you" = "Ви встановили таймер повідомлень на %@";
 
 "content.system.message_timer_off" = "%@ вимкнув(-ла) таймер повідомлень";
-"content.system.message_timer_off.you" = "Ви вимкнули таймер повідомлень";
+"content.system.message_timer_off-you" = "Ви вимкнули таймер повідомлень";
 
 "content.system.reactivated_device" = "Ви почали використовувати %@ знову. Повідомлення, надіслані поки ви не користувалися ним, не з'являться тут.";
 
@@ -635,7 +633,7 @@
 // Configure conversation notifications
 "meta.menu.configure_notification.dialog_message" = "Повідомляти мене про:";
 "meta.menu.configure_notification.button_everything" = "Все";
-"meta.menu.configure_notification.button_mentions" = "Тільки згадки";
+"meta.menu.configure_notification.button_mentions_and_replies" = "Mentions and Replies";
 "meta.menu.configure_notification.button_nothing" = "Нічого";
 "meta.menu.configure_notification.button_cancel" = "Скасувати";
 
@@ -731,7 +729,7 @@
 "group_details.guest_options_cell.disabled" = "Вимкнений";
 "group_details.timeout_options_cell.title" = "Тимчасові повідомлення";
 "group_details.notification_options_cell.title" = "Notifications";
-"group_details.notification_options_cell.description" = "You can be notified about everything (including audio and video calls) or only when you are mentioned.";
+"group_details.notification_options_cell.description" = "You can be notified about everything (including audio and video calls) or only when someone mentions you or replies to one of your messages.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile

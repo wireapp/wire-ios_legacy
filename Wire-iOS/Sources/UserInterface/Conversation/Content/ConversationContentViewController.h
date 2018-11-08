@@ -36,6 +36,7 @@
 @property (nonatomic, readonly) BOOL isScrolledToBottom;
 @property (nonatomic, weak) ConversationMediaController *mediaController;
 @property (nonatomic) UpsideDownTableView *tableView;
+@property (nonatomic) UIView *bottomContainer;
 @property (nonatomic) NSArray<NSString *> *searchQueries;
 @property (nonatomic) UserSearchResultsViewController *mentionsSearchResultsViewController;
 

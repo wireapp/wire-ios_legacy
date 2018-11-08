@@ -52,7 +52,6 @@
 #import "UIViewController+WR_Additions.h"
 
 // Cells
-#import "TextMessageCell.h"
 #import "PingCell.h"
 #import "ImageMessageCell.h"
 
@@ -142,7 +141,22 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     self.tableView = [[UpsideDownTableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
     [self.view addSubview:self.tableView];
     
-    [self.tableView autoPinEdgesToSuperviewEdges];
+    self.bottomContainer = [[UIView alloc] initWithFrame:CGRectZero];
+    self.bottomContainer.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addSubview:self.bottomContainer];
+
+    [NSLayoutConstraint activateConstraints:@[
+      [self.tableView.topAnchor constraintEqualToAnchor:self.view.topAnchor],
+      [self.tableView.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor],
+      [self.tableView.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor],
+      [self.bottomContainer.topAnchor constraintEqualToAnchor:self.tableView.bottomAnchor],
+      [self.bottomContainer.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor],
+      [self.bottomContainer.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor],
+      [self.bottomContainer.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor],
+    ]];
+    NSLayoutConstraint *heightCollapsingConstraint = [self.bottomContainer.heightAnchor constraintEqualToConstant:0];
+    heightCollapsingConstraint.priority = UILayoutPriorityDefaultHigh;
+    heightCollapsingConstraint.active = YES;
 }
 
 - (void)viewDidLoad
@@ -154,6 +168,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     [[ConversationMessageWindowTableViewAdapter alloc] initWithTableView:self.tableView
                                                            messageWindow:self.messageWindow];
     self.conversationMessageWindowTableViewAdapter.conversationCellDelegate = self;
+    self.conversationMessageWindowTableViewAdapter.messageActionResponder = self;
     
     self.messageWindowObserverToken = [MessageWindowChangeInfo addObserver:self forWindow:self.messageWindow];
     
@@ -305,7 +320,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     
     _searchQueries = searchQueries;
     self.conversationMessageWindowTableViewAdapter.searchQueries = self.searchQueries;
-    [self.conversationMessageWindowTableViewAdapter reconfigureVisibleCellsWithDeletedIndexPaths:nil];
+    [self.conversationMessageWindowTableViewAdapter reconfigureVisibleSections];
 }
 
 #pragma mark - Get/set
@@ -337,7 +352,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
             case MessageActionCancel:
             {
                 [[ZMUserSession sharedSession] enqueueChanges:^{
-                    [cell.message.fileMessageData cancelTransfer];
+                    [message.fileMessageData cancelTransfer];
                 }];
             }
                 break;
@@ -345,7 +360,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
             case MessageActionResend:
             {
                 [[ZMUserSession sharedSession] enqueueChanges:^{
-                    [cell.message resend];
+                    [message resend];
                 }];
             }
                 break;
@@ -355,19 +370,20 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
                 assert([message canBeDeleted]);
                 
                 self.deletionDialogPresenter = [[DeletionDialogPresenter alloc] initWithSourceViewController:self.presentedViewController ?: self];
-                [self.deletionDialogPresenter presentDeletionAlertControllerForMessage:cell.message source:cell completion:^(BOOL deleted) {
+                [self.deletionDialogPresenter presentDeletionAlertControllerForMessage:message source:cell completion:^(BOOL deleted) {
                     if (self.presentedViewController && deleted) {
                         [self.presentedViewController dismissViewControllerAnimated:YES completion:nil];
                     }
                     if (!deleted) {
-                        cell.beingEdited = NO;
+                        // TODO 2838: Support editing
+                        // cell.beingEdited = NO;
                     }
                 }];
             }
                 break;
             case MessageActionPresent:
             {
-                self.conversationMessageWindowTableViewAdapter.selectedMessage = cell.message;
+                self.conversationMessageWindowTableViewAdapter.selectedMessage = message;
                 [self presentDetailsForMessageAtIndexPath:[self.tableView indexPathForCell:cell]];
             }
                 break;
@@ -376,7 +392,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
                 if ([Message isImageMessage:message]) {
                     [self saveImageFromMessage:message cell:(ImageMessageCell *)cell];
                 } else {
-                    self.conversationMessageWindowTableViewAdapter.selectedMessage = cell.message;
+                    self.conversationMessageWindowTableViewAdapter.selectedMessage = message;
                     
                     UIView *targetView = nil;
                     
@@ -399,18 +415,18 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
                 break;
             case MessageActionEdit:
             {
-                self.conversationMessageWindowTableViewAdapter.editingMessage = cell.message;
-                [self.delegate conversationContentViewController:self didTriggerEditingMessage:cell.message];
+                self.conversationMessageWindowTableViewAdapter.editingMessage = message;
+                [self.delegate conversationContentViewController:self didTriggerEditingMessage:message];
             }
                 break;
             case MessageActionSketchDraw:
             {
-                [self openSketchForMessage:cell.message inEditMode:CanvasViewControllerEditModeDraw];
+                [self openSketchForMessage:message inEditMode:CanvasViewControllerEditModeDraw];
             }
                 break;
             case MessageActionSketchEmoji:
             {
-                [self openSketchForMessage:cell.message inEditMode:CanvasViewControllerEditModeEmoji];
+                [self openSketchForMessage:message inEditMode:CanvasViewControllerEditModeEmoji];
             }
                 break;
             case MessageActionSketchText:
@@ -420,31 +436,31 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
                 break;
             case MessageActionLike:
             {
-                BOOL liked = ![Message isLikedMessage:cell.message];
+                BOOL liked = ![Message isLikedMessage:message];
                 
-                NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+                NSIndexPath *indexPath = [self.conversationMessageWindowTableViewAdapter indexPathForMessage:message];
                 
                 [[ZMUserSession sharedSession] enqueueChanges:^{
-                    [Message setLikedMessage:cell.message liked:liked];
-                    
-                    if (liked) {
-                        // Deselect if necessary to show list of likers
-                        if (self.conversationMessageWindowTableViewAdapter.selectedMessage == cell.message) {
-                            [self tableView:self.tableView willSelectRowAtIndexPath:indexPath];
-                        }
-                    } else {
-                        // Select if necessary to prevent message from collapsing
-                        if (self.conversationMessageWindowTableViewAdapter.selectedMessage != cell.message && ![Message hasReactions:cell.message]) {
-                            [self tableView:self.tableView willSelectRowAtIndexPath:indexPath];
-                            [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
-                        }
-                    }
+                    [Message setLikedMessage:message liked:liked];
                 }];
+                
+                if (liked) {
+                    // Deselect if necessary to show list of likers
+                    if (self.conversationMessageWindowTableViewAdapter.selectedMessage == message) {
+                        [self tableView:self.tableView willSelectRowAtIndexPath:indexPath];
+                    }
+                } else {
+                    // Select if necessary to prevent message from collapsing
+                    if (self.conversationMessageWindowTableViewAdapter.selectedMessage != message && ![Message hasReactions:message]) {
+                        [self tableView:self.tableView willSelectRowAtIndexPath:indexPath];
+                        [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+                    }
+                }
             }
                 break;
             case MessageActionForward:
             {
-                [self showForwardForMessage:cell.message fromCell:cell];
+                [self showForwardForMessage:message fromCell:cell];
             }
                 break;
             case MessageActionShowInConversation:
@@ -454,16 +470,39 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
                 break;
             case MessageActionCopy:
             {
-                NSData *imageData = cell.message.imageMessageData.imageData;
-                [[UIPasteboard generalPasteboard] setMediaAsset:[[UIImage alloc] initWithData:imageData]];
+                if ([Message isTextMessage:message]) {
+                    [[UIPasteboard generalPasteboard] setString:message.textMessageData.messageText];
+                } else if ([Message isImageMessage:message]) {
+                    NSData *imageData = message.imageMessageData.imageData;
+                    [[UIPasteboard generalPasteboard] setMediaAsset:[[UIImage alloc] initWithData:imageData]];
+                } else if ([Message isLocationMessage:message]) {
+                    if (message.locationMessageData.name) {
+                        [[UIPasteboard generalPasteboard] setString:message.locationMessageData.name];
+                    }
+                }
             }
                 break;
             
             case MessageActionDownload:
             {
                 [ZMUserSession.sharedSession enqueueChanges:^{
-                    [cell.message.fileMessageData requestFileDownload];
+                    [message.fileMessageData requestFileDownload];
                 }];
+            }
+                break;
+            case MessageActionReply:
+            {
+                [self.delegate conversationContentViewController:self didTriggerReplyingToMessage:message];
+            }
+                break;
+            case MessageActionOpenQuote:
+            {
+                if (message.textMessageData.quote) {
+                    [self scrollTo:message.textMessageData.quote completion:^(UIView *cell) {
+                        // TODO Alexis: Flash background of cell
+                        // [cell flashBackground];
+                    }];
+                }
             }
                 break;
         }
@@ -512,7 +551,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     NSIndexPath *firstIndexPath = indexPathsForVisibleRows.firstObject;
     
     if (firstIndexPath) {
-        id<ZMConversationMessage>lastVisibleMessage = [self.messageWindow.messages objectAtIndex:firstIndexPath.row];
+        id<ZMConversationMessage>lastVisibleMessage = [self.messageWindow.messages objectAtIndex:firstIndexPath.section];
         [self.conversation markMessagesAsReadUntil:lastVisibleMessage];
     }
 }
@@ -532,6 +571,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     
     // If the user tapped on a file or image and the menu controller is currently visible,
     // we do not want to show the detail but instead hide the menu controller first.
+    // TODO: Remove when the file cell is ported to the new system
     if ([cell isKindOfClass:ConversationCell.class] && [(ConversationCell *)cell showsMenu]) {
         [self removeHighlightsAndMenu];
         return;
@@ -567,8 +607,8 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 
 #pragma mark - Custom UI, utilities
 
-- (void) createMentionsResultsView {
-    
+- (void)createMentionsResultsView
+{    
     self.mentionsSearchResultsViewController = [[UserSearchResultsViewController alloc] init];
     self.mentionsSearchResultsViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
     // delegate here
@@ -586,12 +626,12 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 
 - (ConversationCell *)cellForMessage:(id<ZMConversationMessage>)message
 {
-    NSUInteger messageIndex = [self.messageWindow.messages indexOfObject:message];
-    if (messageIndex == NSNotFound) {
+    NSIndexPath *indexPath = [self.conversationMessageWindowTableViewAdapter indexPathForMessage:message];
+    
+    if (indexPath == nil) {
         return nil;
     }
     
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:messageIndex inSection:0];
     ConversationCell *cell = (ConversationCell *)[self.tableView cellForRowAtIndexPath:indexPath];
     return cell;
 }
@@ -633,15 +673,16 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if ([cell isKindOfClass:[TextMessageCell class]] || [cell isKindOfClass:[AudioMessageCell class]]) {
-        ConversationCell *messageCell = (ConversationCell *)cell;
-        MediaPlaybackManager *mediaPlaybackManager = [AppDelegate sharedAppDelegate].mediaPlaybackManager;
-        
-        if (mediaPlaybackManager.activeMediaPlayer != nil && mediaPlaybackManager.activeMediaPlayer.sourceMessage == messageCell.message) {
-            [self.delegate conversationContentViewController:self willDisplayActiveMediaPlayerForMessage:messageCell.message];
-        }
-    }
-    
+    // TODO 2838: Support ping animation, ephemeral timer and media playback
+//    if ([cell isKindOfClass:[TextMessageCell class]] || [cell isKindOfClass:[AudioMessageCell class]]) {
+//        ConversationCell *messageCell = (ConversationCell *)cell;
+//        MediaPlaybackManager *mediaPlaybackManager = [AppDelegate sharedAppDelegate].mediaPlaybackManager;
+//
+//        if (mediaPlaybackManager.activeMediaPlayer != nil && mediaPlaybackManager.activeMediaPlayer.sourceMessage == messageCell.message) {
+//            [self.delegate conversationContentViewController:self willDisplayActiveMediaPlayerForMessage:messageCell.message];
+//        }
+//    }
+
     ConversationCell *conversationCell = nil;
     if ([cell isKindOfClass:ConversationCell.class]) {
         conversationCell = (ConversationCell *)cell;
@@ -664,14 +705,15 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 
 - (void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if ([cell isKindOfClass:[TextMessageCell class]] || [cell isKindOfClass:[AudioMessageCell class]]) {
-        ConversationCell *messageCell = (ConversationCell *)cell;
-        MediaPlaybackManager *mediaPlaybackManager = [AppDelegate sharedAppDelegate].mediaPlaybackManager;
-        if (mediaPlaybackManager.activeMediaPlayer != nil && mediaPlaybackManager.activeMediaPlayer.sourceMessage == messageCell.message) {
-            [self.delegate conversationContentViewController:self didEndDisplayingActiveMediaPlayerForMessage:messageCell.message];
-        }
-    }
-    
+    // TODO 2838: Support ping animation, ephemeral timer and media playback
+//    if ([cell isKindOfClass:[TextMessageCell class]] || [cell isKindOfClass:[AudioMessageCell class]]) {
+//        ConversationCell *messageCell = (ConversationCell *)cell;
+//        MediaPlaybackManager *mediaPlaybackManager = [AppDelegate sharedAppDelegate].mediaPlaybackManager;
+//        if (mediaPlaybackManager.activeMediaPlayer != nil && mediaPlaybackManager.activeMediaPlayer.sourceMessage == messageCell.message) {
+//            [self.delegate conversationContentViewController:self didEndDisplayingActiveMediaPlayerForMessage:messageCell.message];
+//        }
+//    }
+
     ConversationCell *conversationCell = nil;
     if ([cell isKindOfClass:ConversationCell.class]) {
         conversationCell = (ConversationCell *)cell;
@@ -711,20 +753,25 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 
 - (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    ZMMessage *message = [self.messageWindow.messages objectAtIndex:indexPath.row];
+    ZMMessage *message = [self.messageWindow.messages objectAtIndex:indexPath.section];
     NSIndexPath *selectedIndexPath = nil;
     
     if ([message isEqual:self.conversationMessageWindowTableViewAdapter.selectedMessage]) {
         
         // If this cell is already selected, deselect it.
         self.conversationMessageWindowTableViewAdapter.selectedMessage  = nil;
+        [self.conversationMessageWindowTableViewAdapter deselectWithIndexPath:indexPath];
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
         
-        // Make table view to update cells with animation
+        // Make table view to update cells with animation (TODO can be removed when legacy cells are removed)
         [tableView beginUpdates];
         [tableView endUpdates];
     } else {
+        if (tableView.indexPathForSelectedRow != nil) {
+            [self.conversationMessageWindowTableViewAdapter deselectWithIndexPath:tableView.indexPathForSelectedRow];
+        }
         self.conversationMessageWindowTableViewAdapter.selectedMessage = message;
+        [self.conversationMessageWindowTableViewAdapter selectWithIndexPath:indexPath];
         selectedIndexPath = indexPath;
     }
     
@@ -733,7 +780,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    id<ZMConversationMessage>message = [self.messageWindow.messages objectAtIndex:indexPath.row];
+    id<ZMConversationMessage>message = [self.messageWindow.messages objectAtIndex:indexPath.section];
     BOOL isFile = [Message isFileTransferMessage:message] &&
                  ![Message isVideoMessage:message] &&
                  ![Message isAudioMessage:message];
@@ -759,6 +806,32 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 
 @implementation ConversationContentViewController (ConversationCellDelegate)
 
+- (BOOL)canPerformAction:(MessageAction)action forMessage:(id<ZMConversationMessage>)message
+{
+    if ([Message isImageMessage:message]) {
+
+        switch (action) {
+            case MessageActionForward:
+            case MessageActionSave:
+            case MessageActionCopy:
+
+                return YES;
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    return NO;
+}
+
+- (void)wantsToPerformAction:(MessageAction)action forMessage:(id<ZMConversationMessage>)message
+{
+    ConversationCell *cell = [self cellForMessage:message];
+    [self wantsToPerformAction:action forMessage:message cell:cell];
+}
+
 - (void)conversationCell:(ConversationCell *)cell userTapped:(id<UserType>)user inView:(UIView *)view frame:(CGRect)frame
 {
     if (!cell || !view) {
@@ -775,9 +848,9 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     [self.delegate conversationContentViewController:self didTriggerResendingMessage:cell.message];
 }
 
-- (void)conversationCell:(ConversationCell *)cell didSelectAction:(MessageAction)actionId
+- (void)conversationCell:(ConversationCell *)cell didSelectAction:(MessageAction)actionId forMessage:(id<ZMConversationMessage>)message
 {
-    [self wantsToPerformAction:actionId forMessage:cell.message cell:cell];
+    [self wantsToPerformAction:actionId forMessage:message cell:cell];
 }
 
 - (void)conversationCell:(ConversationCell *)cell didSelectURL:(NSURL *)url
@@ -791,7 +864,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     [self.tableView endUpdates];
 }
 
-- (BOOL)conversationCell:(ConversationCell *)cell shouldBecomeFirstResponderWhenShowMenuWithCellType:(MessageType)messageType;
+- (BOOL)conversationCellShouldBecomeFirstResponderWhenShowingMenuForCell:(UIView *)cell;
 {
     BOOL shouldBecomeFirstResponder = YES;
     if ([self.delegate respondsToSelector:@selector(conversationContentViewController:shouldBecomeFirstResponderWhenShowMenuFromCell:)]) {
@@ -800,15 +873,10 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     return shouldBecomeFirstResponder;
 }
 
-- (void)conversationCell:(ConversationCell *)cell didOpenMenuForCellType:(MessageType)messageType;
+- (void)conversationCellDidTapOpenLikers:(UIView *)cell forMessage:(id<ZMConversationMessage>)message
 {
-    // no op
-}
-
-- (void)conversationCellDidTapOpenLikers:(ConversationCell *)cell
-{
-    if ([Message hasLikers:cell.message]) {
-        ReactionsListViewController *reactionsListController = [[ReactionsListViewController alloc] initWithMessage:cell.message showsStatusBar:!IS_IPAD_FULLSCREEN];
+    if ([Message hasLikers:message]) {
+        ReactionsListViewController *reactionsListController = [[ReactionsListViewController alloc] initWithMessage:message showsStatusBar:!IS_IPAD_FULLSCREEN];
         [self.parentViewController presentViewController:reactionsListController animated:YES completion:nil];
     }
 }
@@ -932,36 +1000,6 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
             self.expectedMessageToShow = nil;
         }
     }
-}
-
-@end
-
-@implementation ConversationContentViewController (MessageActionResponder)
-
-- (BOOL)canPerformAction:(MessageAction)action forMessage:(id<ZMConversationMessage>)message
-{
-    if ([Message isImageMessage:message]) {
-        
-        switch (action) {
-            case MessageActionForward:
-            case MessageActionSave:
-            case MessageActionCopy:
-                
-                return YES;
-                break;
-                
-            default:
-                break;
-        }
-    }
-    
-    return NO;
-}
-
-- (void)wantsToPerformAction:(MessageAction)action forMessage:(id<ZMConversationMessage>)message
-{
-    ConversationCell *cell = [self cellForMessage:message];
-    [self wantsToPerformAction:action forMessage:message cell:cell];
 }
 
 @end

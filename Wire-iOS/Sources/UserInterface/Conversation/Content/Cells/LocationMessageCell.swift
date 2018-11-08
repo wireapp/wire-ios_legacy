@@ -172,38 +172,6 @@ public final class LocationMessageCell: ConversationCell {
     
     // MARK: - Selection, Copy & Delete
     
-    public override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
-        switch action {
-        case #selector(cut), #selector(paste(_:)), #selector(select(_:)), #selector(selectAll(_:)):
-            return false
-        case #selector(copy(_:)), #selector(forward(_:)):
-            return !self.message.isEphemeral
-        default:
-            return super.canPerformAction(action, withSender: sender)
-        }
-    }
-    
-    public override func copy(_ sender: Any?) {
-        guard let locationMessageData = message.locationMessageData else { return }
-        let coordinates = "\(locationMessageData.latitude), \(locationMessageData.longitude)"
-        UIPasteboard.general.string = message.locationMessageData?.name ?? coordinates
-    }
-    
-    public override func menuConfigurationProperties() -> MenuConfigurationProperties! {
-        let properties = MenuConfigurationProperties()
-        properties.targetRect = selectionRect
-        properties.targetView = selectionView
-        properties.selectedMenuBlock = setSelectedByMenu
-        properties.additionalItems = [.forbiddenInEphemeral(.forward(with: #selector(forward)))]
-        return properties
-    }
-    
-    private func setSelectedByMenu(_ selected: Bool, animated: Bool) {
-        UIView.animate(withDuration: animated ? ConversationCellSelectionAnimationDuration: 0) {
-            self.containerView.alpha = selected ? ConversationCellSelectedOpacity : 1
-        }
-    }
-    
     @objc public override func prepareLayoutForPreview(message: ZMConversationMessage?) -> CGFloat {
         let height = super.prepareLayoutForPreview(message: message)
         self.containerHeightConstraint.constant = 160

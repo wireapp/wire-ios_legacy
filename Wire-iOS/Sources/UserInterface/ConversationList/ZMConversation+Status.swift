@@ -29,7 +29,8 @@ enum ConversationStatusIcon: Equatable {
     case unreadPing
     case missedCall
     case mention
-    
+    case reply
+
     case silenced
     
     case playingMedia
@@ -52,11 +53,13 @@ struct ConversationStatus {
     let isBlocked: Bool
     let isSelfAnActiveMember: Bool
     let hasSelfMention: Bool
+    let hasSelfReply: Bool
 }
 
 // Describes the conversation message.
 enum StatusMessageType: Int {
     case mention
+    case reply
     case missedCall
     case knock
     case text
@@ -73,7 +76,7 @@ enum StatusMessageType: Int {
 
 extension StatusMessageType {
     /// Types of statuses that can be included in a status summary.
-    static let summaryTypes: [StatusMessageType] = [.mention, .missedCall, .knock, .text, .link, .image, .location, .audio, .video, .file]
+    static let summaryTypes: [StatusMessageType] = [.mention, .reply, .missedCall, .knock, .text, .link, .image, .location, .audio, .video, .file]
 
     var parentSummaryType: StatusMessageType? {
         switch self {
@@ -94,6 +97,9 @@ extension StatusMessageType {
         if message.isText, let textMessage = message.textMessageData {
             if textMessage.isMentioningSelf {
                 self = .mention
+            }
+            else if textMessage.isQuotingSelf {
+                self = .reply
             }
             else if let _ = textMessage.linkPreview {
                 self = .link
@@ -332,11 +338,15 @@ final internal class SilencedMatcher: ConversationStatusMatcher {
     }
     
     func icon(with status: ConversationStatus, conversation: ZMConversation) -> ConversationStatusIcon {
-        if status.hasSelfMention && status.showingOnlyMentions {
-            return .mention
-        } else {
-            return .silenced
+        if status.showingOnlyMentionsAndReplies {
+            if status.hasSelfMention {
+                return .mention
+            } else if status.hasSelfReply {
+                return .reply
+            }
         }
+
+        return .silenced
     }
     
     var combinesWith: [ConversationStatusMatcher] = []
@@ -349,8 +359,8 @@ extension ConversationStatus {
         return mutedMessageTypes == .none
     }
 
-    var showingOnlyMentions: Bool {
-        return mutedMessageTypes == .nonMentions
+    var showingOnlyMentionsAndReplies: Bool {
+        return mutedMessageTypes == .regular
     }
 
     var completelyMuted: Bool {
@@ -361,11 +371,11 @@ extension ConversationStatus {
         if completelyMuted {
             // Always summarize for completely muted conversation
             return true
-        } else if showingOnlyMentions && !hasSelfMention {
+        } else if showingOnlyMentionsAndReplies && !hasSelfMention && !hasSelfReply {
             // Summarize when there is no mention
             return true
-        } else if hasSelfMention {
-            // Summarize if there is at least one mention and another activity that can be inside a summary
+        } else if hasSelfMention || hasSelfReply {
+            // Summarize if there is at least one mention or reply and another activity that can be inside a summary
             return StatusMessageType.summaryTypes.reduce(into: UInt(0)) { $0 += (messagesRequiringAttentionByType[$1] ?? 0) } > 1
         } else {
             // Never summarize in other cases
@@ -388,6 +398,7 @@ final internal class NewMessagesMatcher: TypedConversationStatusMatcher {
 
     let matchedSummaryTypesDescriptions: [StatusMessageType: String] = [
         .mention:    "mention",
+        .reply:      "reply",
         .missedCall: "missedcall",
         .knock:      "knock",
         .text:       "generic_message"
@@ -395,6 +406,7 @@ final internal class NewMessagesMatcher: TypedConversationStatusMatcher {
 
     let matchedTypesDescriptions: [StatusMessageType: String] = [
         .mention:    "mention",
+        .reply:      "reply",
         .missedCall: "missedcall",
         .knock:      "knock",
         .text:       "text",
@@ -460,6 +472,8 @@ final internal class NewMessagesMatcher: TypedConversationStatusMatcher {
                 var typeSuffix = ".ephemeral"
                 if type == .mention {
                     typeSuffix += status.isGroup ? ".mention.group" : ".mention"
+                } else if type == .reply {
+                    typeSuffix += status.isGroup ? ".reply.group" : ".reply"
                 } else if type == .knock {
                     typeSuffix += status.isGroup ? ".knock.group" : ".knock"
                 } else if status.isGroup {
@@ -492,6 +506,8 @@ final internal class NewMessagesMatcher: TypedConversationStatusMatcher {
         
         if status.hasSelfMention {
             return .mention
+        } else if status.hasSelfReply {
+            return .reply
         }
 
         guard let message = status.messagesRequiringAttention.reversed().first(where: {
@@ -745,9 +761,9 @@ extension ZMConversation {
     
     var status: ConversationStatus {
         let isBlocked = self.conversationType == .oneOnOne ? (self.firstActiveParticipantOtherThanSelf()?.isBlocked ?? false) : false
-        
-        var messagesRequiringAttention = self.unreadMessages
-        
+
+        var messagesRequiringAttention = unreadMessages
+
         if messagesRequiringAttention.count == 0,
             let lastMessage = self.messages.lastObject as? ZMConversationMessage,
             let systemMessageData = lastMessage.systemMessageData,
@@ -791,7 +807,8 @@ extension ZMConversation {
             isOngoingCall: isOngoingCall,
             isBlocked: isBlocked,
             isSelfAnActiveMember: isSelfAnActiveMember,
-            hasSelfMention: estimatedUnreadSelfMentionCount > 0
+            hasSelfMention: estimatedUnreadSelfMentionCount > 0,
+            hasSelfReply: estimatedUnreadSelfReplyCount > 0
         )
     }
 }

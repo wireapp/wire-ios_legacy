@@ -637,6 +637,22 @@ extension DownStyle {
         style.h3Size = style.h1Size
         return style
     }()
+    
+    /// The style used for the reply compose preview.
+    @objc static var preview: DownStyle = {
+        let style = DownStyle()
+        style.baseFont = UIFont.systemFont(ofSize: 14, contentSizeCategory: .medium, weight: .light)
+        style.baseFontColor = UIColor.from(scheme: .textForeground)
+        style.codeFont = UIFont(name: "Menlo", size: style.baseFont.pointSize) ?? style.baseFont
+        style.baseParagraphStyle = NSParagraphStyle.default
+        style.listItemPrefixSpacing = 8
+        
+        // headers all same size
+        style.h1Size = style.baseFont.pointSize
+        style.h2Size = style.h1Size
+        style.h3Size = style.h1Size
+        return style
+    }()
 }
 
 

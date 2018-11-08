@@ -20,28 +20,10 @@ import XCTest
 @testable import Wire
 
 final class IconSystemCellTests: ZMSnapshotTestCase {
-    
-    var sut: IconSystemCell!
-    
+
     override func setUp() {
         super.setUp()
-        sut = IconSystemCell()
-
-        self.snapshotBackgroundColor = .white
-    }
-    
-    override func tearDown() {
-        sut = nil
-        super.tearDown()
-    }
-
-    class func systemMessageTypeToClass() -> [ZMSystemMessageType : IconSystemCell.Type]? {
-        return [.newClient: ConversationNewDeviceCell.self,
-                .ignoredClient: ConversationIgnoredDeviceCell.self,
-                .conversationIsSecure: ConversationVerifiedCell.self,
-                .potentialGap: MissingMessagesCell.self,
-                .decryptionFailed: CannotDecryptCell.self,
-                .reactivatedDevice: MissingMessagesCell.self]
+        snapshotBackgroundColor = .white
     }
 
     class func wrappedCell(for type: ZMSystemMessageType,
@@ -49,26 +31,24 @@ final class IconSystemCellTests: ZMSnapshotTestCase {
                            clients clientsCount: Int,
                            config: ((MockMessage) -> ())?) -> UITableView? {
 
+        let factoryTableView = UITableView()
         let systemMessage = MockMessageFactory.systemMessage(with: type, users: usersCount, clients: clientsCount)
-
         config?(systemMessage!)
-
-        let cell: IconSystemCell? = IconSystemCellTests.systemMessageTypeToClass()![type]!.init(style: .default, reuseIdentifier: "test") as IconSystemCell
 
         let layoutProperties = ConversationCellLayoutProperties()
         layoutProperties.showSender = false
         layoutProperties.showBurstTimestamp = false
         layoutProperties.showUnreadMarker = false
 
-        cell?.prepareForReuse()
-        cell?.bounds = CGRect(x: 0.0, y: 0.0, width: 320.0, height: 9999)
-        cell?.contentView.bounds = CGRect(x: 0.0, y: 0.0, width: 320, height: 9999)
-        cell?.layoutMargins = UIView.directionAwareConversationLayoutMargins
-        cell?.configure(for: systemMessage, layoutProperties: layoutProperties)
-        cell?.layoutIfNeeded()
-        let size = cell?.systemLayoutSizeFitting(CGSize(width: 320.0, height: 0.0), withHorizontalFittingPriority: .required, verticalFittingPriority: .fittingSizeLevel)
-        cell?.bounds = CGRect(x: 0.0, y: 0.0, width: (size?.width)!, height: (size?.height)!)
-        return cell?.wrapInTableView()
+        let cellDescription = ConversationSystemMessageCellDescription.cells(for: systemMessage!, layoutProperties: layoutProperties).first!
+        cellDescription.register(in: factoryTableView)
+
+        let cell = cellDescription.makeCell(for: factoryTableView, at: IndexPath())
+        cell.layoutIfNeeded()
+
+        let size = cell.systemLayoutSizeFitting(CGSize(width: 320.0, height: 0.0), withHorizontalFittingPriority: .required, verticalFittingPriority: .fittingSizeLevel)
+        cell.bounds = CGRect(origin: .zero, size: size)
+        return cell.wrapInTableView()
     }
 
 

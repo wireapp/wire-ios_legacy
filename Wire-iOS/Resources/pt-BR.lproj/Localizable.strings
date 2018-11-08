@@ -412,12 +412,10 @@
 "content.system.conversation.with_name.participants" = "com";
 
 "content.system.message_timer_changes" = "%@ definiu o tempo da mensagem para %@";
-"content.system.message_timer_changes.you" = "Você definiu o tempo da mensagem para %@";
-
-"content.system.message_timer.you_part" = "Você";
+"content.system.message_timer_changes-you" = "Você definiu o tempo da mensagem para %@";
 
 "content.system.message_timer_off" = "%@ desligou o tempo da mensagem";
-"content.system.message_timer_off.you" = "Você desligou o tempo da mensagem";
+"content.system.message_timer_off-you" = "Você desligou o tempo da mensagem";
 
 "content.system.reactivated_device" = "Você começou a usar o %@ novamente. Mensagens enviadas entretanto não aparecerão aqui.";
 
@@ -635,7 +633,7 @@
 // Configure conversation notifications
 "meta.menu.configure_notification.dialog_message" = "Notify me about:";
 "meta.menu.configure_notification.button_everything" = "Everything";
-"meta.menu.configure_notification.button_mentions" = "Only Mentions";
+"meta.menu.configure_notification.button_mentions_and_replies" = "Mentions and Replies";
 "meta.menu.configure_notification.button_nothing" = "Nothing";
 "meta.menu.configure_notification.button_cancel" = "Cancelar";
 
@@ -731,7 +729,7 @@
 "group_details.guest_options_cell.disabled" = "Desligar";
 "group_details.timeout_options_cell.title" = "Mensagens com tempo";
 "group_details.notification_options_cell.title" = "Notifications";
-"group_details.notification_options_cell.description" = "You can be notified about everything (including audio and video calls) or only when you are mentioned.";
+"group_details.notification_options_cell.description" = "You can be notified about everything (including audio and video calls) or only when someone mentions you or replies to one of your messages.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile

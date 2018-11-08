@@ -31,6 +31,7 @@
 @class AdditionalMenuItem;
 @class MenuConfigurationProperties;
 @class UserImageView;
+@class ConversationCellActionController;
 
 extern const CGFloat ConversationCellSelectedOpacity;
 extern const NSTimeInterval ConversationCellSelectionAnimationDuration;
@@ -49,20 +50,19 @@ typedef void (^SelectedMenuBlock)(BOOL selected, BOOL animated);
 @end
 
 
-@protocol ConversationCellDelegate <NSObject>
+@protocol ConversationCellDelegate <MessageActionResponder>
 
 @optional
 /// Called on touch up inside event on the user image (@c fromImage)
 - (void)conversationCell:(ConversationCell *)cell userTapped:(id<UserType>)user inView:(UIView *)view frame:(CGRect)frame;
 - (void)conversationCellDidTapResendMessage:(ConversationCell *)cell;
-- (void)conversationCell:(ConversationCell *)cell didSelectAction:(MessageAction)actionId;
 - (void)conversationCell:(ConversationCell *)cell didSelectURL:(NSURL *)url;
-- (BOOL)conversationCell:(ConversationCell *)cell shouldBecomeFirstResponderWhenShowMenuWithCellType:(MessageType)messageType;
-- (void)conversationCell:(ConversationCell *)cell didOpenMenuForCellType:(MessageType)messageType;
-- (void)conversationCellDidTapOpenLikers:(ConversationCell *)cell;
+- (BOOL)conversationCellShouldBecomeFirstResponderWhenShowingMenuForCell:(UIView *)cell;
+- (void)conversationCellDidTapOpenLikers:(UIView *)cell forMessage:(id<ZMConversationMessage>)message;
 - (BOOL)conversationCellShouldStartDestructionTimer:(ConversationCell *)cell;
-- (void)conversationCell:(ConversationCell *)cell openGuestOptionsFromView:(UIView *)sourceView;
-- (void)conversationCell:(ConversationCell *)cell openParticipantsDetailsWithSelectedUsers:(NSArray <ZMUser *>*)selectedUsers fromView:(UIView *)sourceView;
+- (void)conversationCell:(UIView *)cell openGuestOptionsFromView:(UIView *)sourceView;
+- (void)conversationCell:(UIView *)cell openParticipantsDetailsWithSelectedUsers:(NSArray <ZMUser *>*)selectedUsers fromView:(UIView *)sourceView;
+- (void)conversationCell:(UIView *)cell didSelectAction:(MessageAction)actionId forMessage:(id<ZMConversationMessage>)message;
 @end
 
 @interface ConversationCell : UITableViewCell
@@ -74,7 +74,6 @@ typedef void (^SelectedMenuBlock)(BOOL selected, BOOL animated);
 @property (nonatomic, readonly) UILabel *authorLabel;
 @property (nonatomic, readonly) UserImageView *authorImageView;
 @property (nonatomic, readonly) UIView *messageContentView;
-@property (nonatomic)           LikeButton *likeButton;
 @property (nonatomic, readonly) MessageToolboxView *toolboxView;
 @property (nonatomic, readonly) UIView *countdownContainerView;
 @property (nonatomic, strong, readonly) UIView *selectionView;
@@ -96,12 +95,12 @@ typedef void (^SelectedMenuBlock)(BOOL selected, BOOL animated);
 @property (nonatomic) UIFont *burstNormalFont;
 @property (nonatomic) UIFont *burstBoldFont;
 
+@property (nonatomic) ConversationCellActionController *actionController;
+
 - (void)configureForMessage:(id<ZMConversationMessage>)message layoutProperties:(ConversationCellLayoutProperties *)layoutProperties;
 /// Update cell due since the message content has changed. Return True if the change requires the cell to be re-sized.
 - (BOOL)updateForMessage:(MessageChangeInfo *)changeInfo;
 - (void)didEndDisplayingInTableView;
-
-- (void)forward:(id)sender;
 
 #pragma mark - For deleted menu, meant to be implmented by subclass
 
