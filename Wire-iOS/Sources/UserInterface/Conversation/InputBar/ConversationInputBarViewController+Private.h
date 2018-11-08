@@ -69,6 +69,12 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)updateAccessoryViews;
 - (void)updateNewButtonTitleLabel;
 - (void)clearInputBar;
+
+- (void)shiftReturnPressed;
+- (void)commandReturnPressed;
+- (void)upArrowPressed;
+- (void)escapePressed;
+
 @end
 
 NS_ASSUME_NONNULL_END
