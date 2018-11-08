@@ -80,9 +80,8 @@ class ConversationReplyContentView: UIView {
         contentTextView.backgroundColor = .clear
         contentTextView.textColor = .from(scheme: .textForeground)
 
-        contentTextView.setContentCompressionResistancePriority(.required, for: .vertical)
+        contentTextView.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
         stackView.addArrangedSubview(contentTextView)
-
         assetThumbnail.setContentCompressionResistancePriority(.required, for: .vertical)
         stackView.addArrangedSubview(assetThumbnail)
 
@@ -101,7 +100,8 @@ class ConversationReplyContentView: UIView {
             stackView.topAnchor.constraint(equalTo: topAnchor, constant: 12),
             stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -12),
-            assetThumbnail.heightAnchor.constraint(lessThanOrEqualToConstant: 140)
+            assetThumbnail.heightAnchor.constraint(lessThanOrEqualToConstant: 140),
+            contentTextView.widthAnchor.constraint(equalTo: stackView.widthAnchor)
         ])
     }
 
