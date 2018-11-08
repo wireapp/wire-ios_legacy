@@ -24,6 +24,7 @@ struct ConversationMessageContext {
     let isTimeIntervalSinceLastMessageSignificant: Bool
     let isFirstMessageOfTheDay: Bool
     let isFirstUnreadMessage: Bool
+    let searchQueries: [String]
 }
 
 extension IndexSet {
@@ -168,7 +169,7 @@ extension IndexSet {
         if message.isKnock {
             contentCellDescriptions = addPingMessageCells()
         } else if message.isText {
-            contentCellDescriptions = ConversationTextMessageCellDescription.cells(for: message)
+            contentCellDescriptions = ConversationTextMessageCellDescription.cells(for: message, searchQueries: context.searchQueries)
         } else if message.isLocation {
             contentCellDescriptions = addLocationMessageCells()
         } else if message.isSystem {

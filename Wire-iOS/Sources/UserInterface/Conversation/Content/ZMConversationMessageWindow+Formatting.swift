@@ -33,7 +33,7 @@ extension ZMConversationMessageWindow {
         return true
     }
     
-    func context(for message: ZMConversationMessage, firstUnreadMessage: ZMConversationMessage?) -> ConversationMessageContext {
+    func context(for message: ZMConversationMessage, firstUnreadMessage: ZMConversationMessage?, searchQueries: [String]) -> ConversationMessageContext {
         let significantTimeInterval: TimeInterval = 60 * 45; // 45 minutes
         let isTimeIntervalSinceLastMessageSignificant: Bool
         
@@ -48,7 +48,8 @@ extension ZMConversationMessageWindow {
             isLastMessageSentBySelfUser: isLastMessageSentBySelfUser(message),
             isTimeIntervalSinceLastMessageSignificant: isTimeIntervalSinceLastMessageSignificant,
             isFirstMessageOfTheDay: isFirstMessageOfTheDay(for: message),
-            isFirstUnreadMessage: message.isEqual(firstUnreadMessage)
+            isFirstUnreadMessage: message.isEqual(firstUnreadMessage),
+            searchQueries: searchQueries
         )
     }
     

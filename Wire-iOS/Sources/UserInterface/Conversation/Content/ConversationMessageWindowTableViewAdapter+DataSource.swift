@@ -38,7 +38,7 @@ extension ConversationMessageWindowTableViewAdapter: ZMConversationMessageWindow
     func reconfigureSectionController(at index: Int, tableView: UITableView) {
         guard let sectionController = self.sectionController(at: index, in: tableView) else { return }
         
-        let context = messageWindow.context(for: sectionController.message, firstUnreadMessage: firstUnreadMessage)
+        let context = messageWindow.context(for: sectionController.message, firstUnreadMessage: firstUnreadMessage, searchQueries: self.searchQueries ?? [])
         sectionController.configure(in: context, at: index, in: tableView)
     }
     
@@ -104,7 +104,7 @@ extension ConversationMessageWindowTableViewAdapter: UITableViewDataSource {
             return cachedEntry
         }
         
-        let context = messageWindow.context(for: message, firstUnreadMessage: firstUnreadMessage)
+        let context = messageWindow.context(for: message, firstUnreadMessage: firstUnreadMessage, searchQueries: self.searchQueries ?? [])
         let layoutProperties = messageWindow.layoutProperties(for: message, firstUnreadMessage: firstUnreadMessage)
         
         let sectionController = ConversationMessageSectionController(message: message, context: context, layoutProperties: layoutProperties)
