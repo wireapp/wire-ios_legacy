@@ -83,7 +83,7 @@ extension ConversationMessageWindowTableViewAdapter: ZMConversationMessageWindow
     func reconfigureVisibleSections() {
         tableView.beginUpdates()
         if let indexPathsForVisibleRows = tableView.indexPathsForVisibleRows {
-            let visibleSections = Set(indexPathsForVisibleRows.map({ $0.section }))
+            let visibleSections = Set(indexPathsForVisibleRows.map(\.section))
             for section in visibleSections {
                 reconfigureSectionController(at: section, tableView: tableView)
             }
