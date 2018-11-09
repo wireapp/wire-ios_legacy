@@ -66,7 +66,7 @@ class ConversationLinkPreviewArticleCell: UIView, ConversationMessageCell {
 
     func updateImageLayout(isRegular: Bool) {
         if configuration?.showImage == true {
-            articleView.imageHeight = isRegular ? 125 : 75
+            articleView.imageHeight = isRegular ? 250 : 150
         } else {
             articleView.imageHeight = 0
         }
