@@ -754,7 +754,13 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 {
     ZMMessage *message = [self.messageWindow.messages objectAtIndex:indexPath.section];
     NSIndexPath *selectedIndexPath = nil;
-    
+
+    // If the menu is visible, hide it and do nothing
+    if (UIMenuController.sharedMenuController.isMenuVisible) {
+        [UIMenuController.sharedMenuController setMenuVisible:NO animated:YES];
+        return nil;
+    }
+
     if ([message isEqual:self.conversationMessageWindowTableViewAdapter.selectedMessage]) {
         
         // If this cell is already selected, deselect it.
