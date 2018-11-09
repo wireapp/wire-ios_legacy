@@ -48,7 +48,7 @@ extension ConversationStatusLineTests_Muting {
         let status = sut.status.description(for: sut)
 
         // THEN
-        XCTAssertEqual(status.string, "Replied you")
+        XCTAssertEqual(status.string, "Replied your message")
     }
 
     func testStatusShowSpecialSummaryForSingleEphemeralReplyWhenOnlyReplies_group() {
@@ -67,7 +67,7 @@ extension ConversationStatusLineTests_Muting {
         let status = sut.status.description(for: sut)
 
         // THEN
-        XCTAssertEqual(status.string, "Someone replied you")
+        XCTAssertEqual(status.string, "Someone replied your message")
     }
 
     func testStatusShowSummaryForMultipleEphemeralRepliesWhenOnlyReplies() {
@@ -86,7 +86,7 @@ extension ConversationStatusLineTests_Muting {
         let status = sut.status.description(for: sut)
 
         // THEN
-        XCTAssertEqual(status.string, "5 replies")
+        XCTAssertEqual(status.string, "Someone replied your message")
     }
 
     func testStatusShowSummaryForMultipleMessagesAndReplyWhenNoNotifications() {
@@ -105,6 +105,21 @@ extension ConversationStatusLineTests_Muting {
         let status = sut.status.description(for: sut)
         // THEN
         XCTAssertEqual(status.string, "1 reply, 5 messages")
+    }
+
+    func testStatusShowSummaryForOneReplyWhenNoNotifications() {
+        // GIVEN
+        let sut = self.otherUserConversation!
+        sut.mutedMessageTypes = [.all]
+
+        let selfMessage = appendSelfMessage(to: sut)
+
+        appendReply(to: sut, selfMessage: selfMessage)
+
+        // WHEN
+        let status = sut.status.description(for: sut)
+        // THEN
+        XCTAssertEqual(status.string, "1 reply")
     }
 
     func testStatusShowSummaryForMultipleRepliesAndMultipleMessagesWhenOnlyReplies() {
