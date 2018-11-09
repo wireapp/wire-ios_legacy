@@ -32,7 +32,7 @@ extension ConversationInputBarViewController: ReplyComposingViewDelegate {
         inputBar.textView.becomeFirstResponder()
     }
     
-    private func removeReplyComposingView() {
+    @objc func removeReplyComposingView() {
         self.quotedMessage = nil
         self.replyComposingView?.removeFromSuperview()
         self.replyComposingView = nil
