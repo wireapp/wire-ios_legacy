@@ -19,6 +19,7 @@
 import UIKit
 
 protocol ConversationReplyContentViewDelegate: class {
+    func conversationReplyContentViewDidChangeHighlightState(_ view: ConversationReplyContentView, shouldHighlight: Bool)
     func conversationReplyContentViewDidTapOriginalMessage()
 }
 
@@ -139,12 +140,12 @@ class ConversationReplyContentView: UIView {
     }
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        backgroundColor = UIColor(rgb: 0x33373A, alpha: 0.4)
+        delegate?.conversationReplyContentViewDidChangeHighlightState(self, shouldHighlight: true)
     }
 
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         defer {
-            backgroundColor = .clear
+            delegate?.conversationReplyContentViewDidChangeHighlightState(self, shouldHighlight: false)
         }
 
         guard
@@ -158,7 +159,7 @@ class ConversationReplyContentView: UIView {
     }
 
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-        backgroundColor = .clear
+        delegate?.conversationReplyContentViewDidChangeHighlightState(self, shouldHighlight: false)
     }
 
 }
@@ -207,6 +208,10 @@ class ConversationReplyCell: UIView, ConversationMessageCell, ConversationReplyC
 
     func conversationReplyContentViewDidTapOriginalMessage() {
         delegate?.conversationCell?(self, didSelect: .openQuote, for: message)
+    }
+
+    func conversationReplyContentViewDidChangeHighlightState(_ view: ConversationReplyContentView, shouldHighlight: Bool) {
+        container.setHighlighted(shouldHighlight, animated: true)
     }
 
 }
