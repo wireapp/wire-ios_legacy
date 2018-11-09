@@ -48,7 +48,7 @@ extension ConversationStatusLineTests_Muting {
         let status = sut.status.description(for: sut)
 
         // THEN
-        XCTAssertEqual(status.string, "Replied your message")
+        XCTAssertEqual(status.string, "Replied to your message")
     }
 
     func testStatusShowSpecialSummaryForSingleEphemeralReplyWhenOnlyReplies_group() {
@@ -67,7 +67,7 @@ extension ConversationStatusLineTests_Muting {
         let status = sut.status.description(for: sut)
 
         // THEN
-        XCTAssertEqual(status.string, "Someone replied your message")
+        XCTAssertEqual(status.string, "Someone replied to your message")
     }
 
     func testStatusShowSummaryForMultipleEphemeralRepliesWhenOnlyReplies() {
@@ -86,7 +86,7 @@ extension ConversationStatusLineTests_Muting {
         let status = sut.status.description(for: sut)
 
         // THEN
-        XCTAssertEqual(status.string, "Someone replied your message")
+        XCTAssertEqual(status.string, "Someone replied to your message")
     }
 
     func testStatusShowSummaryForMultipleMessagesAndReplyWhenNoNotifications() {
