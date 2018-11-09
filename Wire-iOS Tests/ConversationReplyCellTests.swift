@@ -446,7 +446,7 @@ class ConversationReplyCellTests: CoreDataSnapshotTestCase {
 
         // WHEN
         let cell = makeCell(for: message)
-        cell.contentView.touchesBegan([], with: nil)
+        cell.container.touchesBegan([], with: nil)
 
         // THEN
         verifyInAllPhoneWidths(view: cell)

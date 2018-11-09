@@ -29,6 +29,7 @@ class ConversationTextMessageCell: UIView, ConversationMessageCell, TextViewInte
 
     weak var message: ZMConversationMessage?
     weak var delegate: ConversationCellDelegate?
+    weak var menuPresenter: ConversationMessageCellMenuPresenter?
 
     var selectionView: UIView? {
         return messageTextView
@@ -101,7 +102,7 @@ class ConversationTextMessageCell: UIView, ConversationMessageCell, TextViewInte
     }
 
     func textViewDidLongPress(_ textView: LinkInteractionTextView) {
-        // no-op, handled by the container
+        self.menuPresenter?.showMenu()
     }
 
 }
@@ -129,6 +130,7 @@ class ConversationTextMessageCellDescription: ConversationMessageCellDescription
         let cell = tableView.dequeueConversationCell(with: self, for: indexPath)
         cell.cellView.delegate = self.delegate
         cell.cellView.message = self.message
+        cell.cellView.menuPresenter = cell
         return cell
     }
 

@@ -49,6 +49,7 @@ class ConversationLinkPreviewArticleCell: UIView, ConversationMessageCell {
     }
 
     private func configureSubviews() {
+        articleView.delegate = self
         addSubview(articleView)
     }
 
@@ -76,6 +77,14 @@ class ConversationLinkPreviewArticleCell: UIView, ConversationMessageCell {
         updateImageLayout(isRegular: self.traitCollection.horizontalSizeClass == .regular)
     }
 
+}
+
+extension ConversationLinkPreviewArticleCell: ArticleViewDelegate {
+    
+    func articleViewWantsToOpenURL(_ articleView: ArticleView, url: URL) {
+        url.open()
+    }
+    
 }
 
 class ConversationLinkPreviewArticleCellDescription: ConversationMessageCellDescription {

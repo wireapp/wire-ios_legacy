@@ -18,10 +18,6 @@
 
 import UIKit
 
-protocol ConversationReplyContentViewDelegate: class {
-    func conversationReplyContentViewDidTapOriginalMessage()
-}
-
 class ConversationReplyContentView: UIView {
     let numberOfLinesLimit: Int = 4
 
@@ -46,8 +42,6 @@ class ConversationReplyContentView: UIView {
     let assetThumbnail = ImageResourceThumbnailView()
 
     let stackView = UIStackView()
-
-    weak var delegate: ConversationReplyContentViewDelegate?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -142,45 +136,9 @@ class ConversationReplyContentView: UIView {
         }
     }
 
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        backgroundColor = UIColor(rgb: 0x33373A, alpha: 0.4)
-    }
-
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        defer {
-            backgroundColor = .clear
-        }
-
-        guard
-            let touchLocation = touches.first?.location(in: self),
-            bounds.contains(touchLocation)
-        else {
-            return
-        }
-
-        delegate?.conversationReplyContentViewDidTapOriginalMessage()
-    }
-
-    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-        backgroundColor = .clear
-    }
-
 }
 
-extension NSAttributedString {
-    func trimmedToNumberOfLines(numberOfLinesLimit: Int) -> NSAttributedString {
-        /// trim the string to first four lines to prevent last line narrower spacing issue
-        let lines = string.components(separatedBy: ["\n"])
-        if lines.count >= numberOfLinesLimit {
-            let headLines = lines.prefix(numberOfLinesLimit).joined(separator: "\n")
-            return attributedSubstring(from: NSMakeRange(0, headLines.count))
-        } else {
-            return self
-        }
-    }
-}
-
-class ConversationReplyCell: UIView, ConversationMessageCell, ConversationReplyContentViewDelegate {
+class ConversationReplyCell: UIView, ConversationMessageCell {
     typealias Configuration = ConversationReplyContentView.Configuration
     var isSelected: Bool = false
 
@@ -203,7 +161,7 @@ class ConversationReplyCell: UIView, ConversationMessageCell, ConversationReplyC
     }
 
     private func configureSubviews() {
-        contentView.delegate = self
+        container.addTarget(self, action: #selector(onTap), for: .touchUpInside)
         addSubview(container)
     }
 
@@ -222,7 +180,7 @@ class ConversationReplyCell: UIView, ConversationMessageCell, ConversationReplyC
         contentView.configure(with: object)
     }
 
-    func conversationReplyContentViewDidTapOriginalMessage() {
+    @objc func onTap() {
         delegate?.conversationCell?(self, didSelect: .openQuote, for: message)
     }
 
@@ -302,4 +260,17 @@ class ConversationReplyCellDescription: ConversationMessageCellDescription {
         return cell
     }
 
+}
+
+extension NSAttributedString {
+    func trimmedToNumberOfLines(numberOfLinesLimit: Int) -> NSAttributedString {
+        /// trim the string to first four lines to prevent last line narrower spacing issue
+        let lines = string.components(separatedBy: ["\n"])
+        if lines.count >= numberOfLinesLimit {
+            let headLines = lines.prefix(numberOfLinesLimit).joined(separator: "\n")
+            return attributedSubstring(from: NSMakeRange(0, headLines.count))
+        } else {
+            return self
+        }
+    }
 }

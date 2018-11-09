@@ -73,7 +73,6 @@ final class ReplyComposingView: UIView {
         setupMessageObserver()
         setupSubviews()
         setupConstraints()
-        setupGestureRecognizers()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -103,7 +102,8 @@ final class ReplyComposingView: UIView {
         previewView.isUserInteractionEnabled = false
         
         messagePreviewContainer = ReplyRoundCornersView(containedView: previewView)
-        
+        messagePreviewContainer.addTarget(self, action: #selector(onTap), for: .touchUpInside)
+
         leftSideView.translatesAutoresizingMaskIntoConstraints = false
         closeButton.translatesAutoresizingMaskIntoConstraints = false
         messagePreviewContainer.translatesAutoresizingMaskIntoConstraints = false
@@ -140,15 +140,11 @@ final class ReplyComposingView: UIView {
         
         NSLayoutConstraint.activate(constraints)
     }
-    
-    private func setupGestureRecognizers() {
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(onTap))
-        addGestureRecognizer(tapGestureRecognizer)
-    }
-    
+
     @objc func onTap() {
         self.delegate?.composingViewWantsToShowMessage(composingView: self, message: message)
     }
+
 }
 
 extension ReplyComposingView: ZMMessageObserver {
