@@ -19,7 +19,7 @@
 import Foundation
 
 class MockVoiceChannel: NSObject, VoiceChannel {
-    
+
     var conversation: ZMConversation?
     var mockCallState: CallState = .incoming(video: false, shouldRing: true, degraded: false)
     var mockCallDuration: TimeInterval?
@@ -29,7 +29,8 @@ class MockVoiceChannel: NSObject, VoiceChannel {
     var mockIsVideoCall: Bool = false
     var mockCallParticipantState: CallParticipantState = .unconnected
     var mockVideoState: VideoState = .stopped
-    
+    var mockNetworkQuality: NetworkQuality = .normal
+
     required init(conversation: ZMConversation) {
         self.conversation = conversation
     }
@@ -51,6 +52,10 @@ class MockVoiceChannel: NSObject, VoiceChannel {
     }
     
     static func addCallStateObserver(_ observer: WireCallCenterCallStateObserver, userSession: ZMUserSession) -> Any {
+        return "token"
+    }
+
+    func addNetworkQualityObserver(_ observer: NetworkQualityObserver) -> Any {
         return "token"
     }
     
@@ -94,6 +99,10 @@ class MockVoiceChannel: NSObject, VoiceChannel {
             mockVideoState = newValue
         }
         
+    }
+
+    var networkQuality: NetworkQuality {
+        return mockNetworkQuality
     }
     
     func setVideoCaptureDevice(_ device: CaptureDevice) throws {}

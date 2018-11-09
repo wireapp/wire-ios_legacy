@@ -28,6 +28,7 @@ protocol VideoGridConfiguration {
     var floatingVideoStream: ParticipantVideoState? { get }
     var videoStreams: [ParticipantVideoState] { get }
     var isMuted: Bool { get }
+    var networkQuality: NetworkQuality { get }
 }
 
 // Workaround to make the protocol equatable, it might be possible to conform VideoGridConfiguration
@@ -39,7 +40,8 @@ extension VideoGridConfiguration {
     func isEqual(toConfiguration other: VideoGridConfiguration) -> Bool {
         return floatingVideoStream == other.floatingVideoStream &&
             videoStreams == other.videoStreams &&
-            isMuted == other.isMuted
+            isMuted == other.isMuted &&
+            networkQuality == other.networkQuality
     }
     
 }
@@ -63,6 +65,7 @@ class VideoGridViewController: UIViewController {
     private let gridView = GridView()
     private let thumbnailViewController = PinnableThumbnailViewController()
     private let muteIndicatorView = MuteIndicatorView()
+    private let networkConditionView = NetworkConditionIndicatorView()
     fileprivate let mediaManager: AVSMediaManagerInterface
 
     var previewOverlay: UIView? {
@@ -71,29 +74,35 @@ class VideoGridViewController: UIViewController {
 
     private var selfPreviewView: SelfVideoPreviewView?
 
-
-    /// Show mute indicator when this view controller is not convered
+    /// Update view visibility when this view controller is covered or not
     var isCovered: Bool = true {
         didSet {
-            guard oldValue != isCovered else { return }
-            guard mediaManager.isMicrophoneMuted else {
-                muteIndicatorView.isHidden = true
-                return
-            }
-
-            muteIndicatorView.isHidden = false
-            muteIndicatorView.alpha = isCovered ? 1 : 0
-
+            displayIndicatorViewsIfNeeded()
             UIView.animate(
                 withDuration: 0.2,
                 delay: 0,
-                options: .curveEaseInOut,
+                options: [.curveEaseInOut, .beginFromCurrentState],
                 animations: {
-                    self.muteIndicatorView.alpha = self.isCovered ? 0 : 1
+                    self.muteIndicatorView.alpha = self.isCovered ? 0.0 : 1.0
+                    self.networkConditionView.alpha = self.isCovered ? 0.0 : 1.0
             },
                 completion: nil
             )
         }
+    }
+
+    func displayIndicatorViewsIfNeeded() {
+        networkConditionView.networkQuality = configuration.networkQuality
+        networkConditionView.isHidden = shouldHideNetworkCondition
+        muteIndicatorView.isHidden = shouldHideMuteIndicator
+    }
+
+    var shouldHideMuteIndicator: Bool {
+        return isCovered || !configuration.isMuted
+    }
+
+    var shouldHideNetworkCondition: Bool {
+        return isCovered || configuration.networkQuality.isNormal
     }
 
     var configuration: VideoGridConfiguration {
@@ -108,13 +117,12 @@ class VideoGridViewController: UIViewController {
         self.configuration = configuration
         self.mediaManager = mediaManager
 
-        muteIndicatorView.isHidden = true
-
         super.init(nibName: nil, bundle: nil)
 
         setupViews()
         createConstraints()
         updateState()
+        displayIndicatorViewsIfNeeded()
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -128,18 +136,21 @@ class VideoGridViewController: UIViewController {
         addToSelf(thumbnailViewController)
 
         view.addSubview(muteIndicatorView)
+        view.addSubview(networkConditionView)
     }
 
     func createConstraints() {
         gridView.fitInSuperview()
         [thumbnailViewController].forEach{ $0.view.fitInSuperview() }
 
-        constrain(view, muteIndicatorView) { view, muteIndicatorView in
+        constrain(view, muteIndicatorView, networkConditionView) { view, muteIndicatorView, networkConditionView in
             let bottomOffset: CGFloat = UIScreen.safeArea.bottom + (UIScreen.hasNotch ? 8 : 24)
             
             muteIndicatorView.centerX == view.centerX
             muteIndicatorView.bottom == view.bottom - bottomOffset
             muteIndicatorView.height == CGFloat.MuteIndicator.containerHeight
+            networkConditionView.centerX == view.centerX
+            networkConditionView.top == view.safeAreaLayoutGuideOrFallback.top + 24
         }
     }
 
@@ -181,6 +192,8 @@ class VideoGridViewController: UIViewController {
             selfPreviewView = nil
         }
 
+        displayIndicatorViewsIfNeeded()
+        
         // Update grid view axis
         updateGridViewAxis()
 

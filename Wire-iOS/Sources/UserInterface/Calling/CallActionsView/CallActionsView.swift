@@ -59,6 +59,7 @@ protocol CallActionsViewInputType: CallTypeProvider, ColorVariantProvider {
     var mediaState: MediaState { get }
     var permissions: CallPermissionsConfiguration { get }
     var cameraType: CaptureDevice { get }
+    var networkQuality: NetworkQuality { get }
 }
 
 extension CallActionsViewInputType {
