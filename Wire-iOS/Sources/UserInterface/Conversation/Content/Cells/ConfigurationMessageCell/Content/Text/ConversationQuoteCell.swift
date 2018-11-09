@@ -18,11 +18,6 @@
 
 import UIKit
 
-protocol ConversationReplyContentViewDelegate: class {
-    func conversationReplyContentViewDidChangeHighlightState(_ view: ConversationReplyContentView, shouldHighlight: Bool)
-    func conversationReplyContentViewDidTapOriginalMessage()
-}
-
 class ConversationReplyContentView: UIView {
 
     struct Configuration {
@@ -46,8 +41,6 @@ class ConversationReplyContentView: UIView {
     let assetThumbnail = ImageResourceThumbnailView()
 
     let stackView = UIStackView()
-
-    weak var delegate: ConversationReplyContentViewDelegate?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -139,32 +132,9 @@ class ConversationReplyContentView: UIView {
         }
     }
 
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        delegate?.conversationReplyContentViewDidChangeHighlightState(self, shouldHighlight: true)
-    }
-
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        defer {
-            delegate?.conversationReplyContentViewDidChangeHighlightState(self, shouldHighlight: false)
-        }
-
-        guard
-            let touchLocation = touches.first?.location(in: self),
-            bounds.contains(touchLocation)
-        else {
-            return
-        }
-
-        delegate?.conversationReplyContentViewDidTapOriginalMessage()
-    }
-
-    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-        delegate?.conversationReplyContentViewDidChangeHighlightState(self, shouldHighlight: false)
-    }
-
 }
 
-class ConversationReplyCell: UIView, ConversationMessageCell, ConversationReplyContentViewDelegate {
+class ConversationReplyCell: UIView, ConversationMessageCell {
     typealias Configuration = ConversationReplyContentView.Configuration
     var isSelected: Bool = false
 
@@ -187,7 +157,7 @@ class ConversationReplyCell: UIView, ConversationMessageCell, ConversationReplyC
     }
 
     private func configureSubviews() {
-        contentView.delegate = self
+        container.addTarget(self, action: #selector(onTap), for: .touchUpInside)
         addSubview(container)
     }
 
@@ -206,12 +176,8 @@ class ConversationReplyCell: UIView, ConversationMessageCell, ConversationReplyC
         contentView.configure(with: object)
     }
 
-    func conversationReplyContentViewDidTapOriginalMessage() {
+    @objc func onTap() {
         delegate?.conversationCell?(self, didSelect: .openQuote, for: message)
-    }
-
-    func conversationReplyContentViewDidChangeHighlightState(_ view: ConversationReplyContentView, shouldHighlight: Bool) {
-        container.setHighlighted(shouldHighlight, animated: true)
     }
 
 }

@@ -18,7 +18,7 @@
 
 import Foundation
 
-final class ReplyRoundCornersView: UIView {
+final class ReplyRoundCornersView: UIControl {
     let containedView: UIView
     private let grayBoxView = UIView()
     private let highlightLayer = UIView()
@@ -70,7 +70,34 @@ final class ReplyRoundCornersView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func setHighlighted(_ isHighlighted: Bool, animated: Bool) {
+    // MARK: - UIControl
+
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        setHighlighted(true, animated: false)
+        sendActions(for: .touchDown)
+    }
+
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        defer {
+            setHighlighted(false, animated: true)
+        }
+
+        guard
+            let touchLocation = touches.first?.location(in: self),
+            bounds.contains(touchLocation)
+        else {
+            return sendActions(for: .touchUpOutside)
+        }
+
+        sendActions(for: .touchUpInside)
+    }
+
+    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+        setHighlighted(false, animated: true)
+        sendActions(for: .touchCancel)
+    }
+
+    private func setHighlighted(_ isHighlighted: Bool, animated: Bool) {
         let changes = {
             self.highlightLayer.alpha = isHighlighted ? 1 : 0
         }

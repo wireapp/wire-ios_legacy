@@ -102,7 +102,8 @@ final class ReplyComposingView: UIView {
         previewView.isUserInteractionEnabled = false
         
         messagePreviewContainer = ReplyRoundCornersView(containedView: previewView)
-        
+        messagePreviewContainer.addTarget(self, action: #selector(onTap), for: .touchUpInside)
+
         leftSideView.translatesAutoresizingMaskIntoConstraints = false
         closeButton.translatesAutoresizingMaskIntoConstraints = false
         messagePreviewContainer.translatesAutoresizingMaskIntoConstraints = false
@@ -140,29 +141,10 @@ final class ReplyComposingView: UIView {
         NSLayoutConstraint.activate(constraints)
     }
 
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        messagePreviewContainer.setHighlighted(true, animated: false)
-    }
-
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        defer {
-            messagePreviewContainer.setHighlighted(false, animated: true)
-        }
-
-        guard
-            let touchLocation = touches.first?.location(in: self),
-            bounds.contains(touchLocation)
-        else {
-            return
-        }
-
+    @objc func onTap() {
         self.delegate?.composingViewWantsToShowMessage(composingView: self, message: message)
     }
 
-    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-        messagePreviewContainer.setHighlighted(false, animated: true)
-    }
-    
 }
 
 extension ReplyComposingView: ZMMessageObserver {
