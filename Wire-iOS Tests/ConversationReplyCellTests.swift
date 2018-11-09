@@ -22,12 +22,6 @@ import WireLinkPreview
 
 class ConversationReplyCellTests: CoreDataSnapshotTestCase {
 
-    override func setUp() {
-        super.setUp()
-
-        recordMode = true
-    }
-
     override func tearDown() {
         super.tearDown()
         defaultImageCache.cache.removeAllObjects()
