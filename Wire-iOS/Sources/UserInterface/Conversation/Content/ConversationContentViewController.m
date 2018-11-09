@@ -557,7 +557,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 
 - (void)presentDetailsForMessageAtIndexPath:(NSIndexPath *)indexPath
 {
-    id<ZMConversationMessage>message = [self.messageWindow.messages objectAtIndex:indexPath.row];
+    id<ZMConversationMessage>message = [self.messageWindow.messages objectAtIndex:indexPath.section];
     BOOL isFile = [Message isFileTransferMessage:message];
     BOOL isImage = [Message isImageMessage:message];
     BOOL isLocation = [Message isLocationMessage:message];
