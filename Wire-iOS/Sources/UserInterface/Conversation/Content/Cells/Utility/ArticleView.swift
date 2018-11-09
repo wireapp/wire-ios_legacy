@@ -207,6 +207,10 @@ import WireExtensionComponents
     }
 
     @objc private func viewTapped(_ sender: UITapGestureRecognizer) {
+        if UIMenuController.shared.isMenuVisible {
+            return UIMenuController.shared.setMenuVisible(false, animated: true)
+        }
+
         guard let url = linkPreview?.openableURL else { return }
         delegate?.articleViewWantsToOpenURL(self, url: url as URL)
     }
