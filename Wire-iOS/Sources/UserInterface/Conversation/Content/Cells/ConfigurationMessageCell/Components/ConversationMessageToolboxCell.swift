@@ -45,6 +45,7 @@ class ConversationMessageToolboxCell: UIView, ConversationMessageCell, MessageTo
     }
 
     private func configureSubviews() {
+        toolboxView.accessibilityIdentifier = "MessageToolbox"
         toolboxView.delegate = self
         addSubview(toolboxView)
     }

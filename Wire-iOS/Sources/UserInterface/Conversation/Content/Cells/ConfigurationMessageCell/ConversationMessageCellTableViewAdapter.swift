@@ -18,7 +18,11 @@
 
 import Foundation
 
-class ConversationMessageCellTableViewAdapter<C: ConversationMessageCellDescription>: UITableViewCell, SelectableView {
+protocol ConversationMessageCellMenuPresenter: class {
+    func showMenu()
+}
+
+class ConversationMessageCellTableViewAdapter<C: ConversationMessageCellDescription>: UITableViewCell, SelectableView, ConversationMessageCellMenuPresenter {
     
     var cellView: C.View
 
@@ -133,7 +137,7 @@ class ConversationMessageCellTableViewAdapter<C: ConversationMessageCellDescript
         return cellDescription?.actionController
     }
 
-    private func showMenu() {
+    func showMenu() {
         guard cellDescription?.supportsActions == true else {
             return
         }
