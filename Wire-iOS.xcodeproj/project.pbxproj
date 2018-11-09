@@ -101,6 +101,7 @@
 		1682AEC520484B9B003A052A /* Themeable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1682AEC420484B9B003A052A /* Themeable.swift */; };
 		1687ABA820EBB5F30007C240 /* ImageMessageCell+Configure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1687ABA720EBB5F30007C240 /* ImageMessageCell+Configure.swift */; };
 		1687C0FC2151435F003099DD /* ZClientViewController+ShowContentDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1687C0FB2151435F003099DD /* ZClientViewController+ShowContentDelegate.swift */; };
+		1689FD4B2195C8B800A656E2 /* EphemeralCountdownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1689FD4A2195C8B800A656E2 /* EphemeralCountdownView.swift */; };
 		168A16AC1D9597C2005CFA6C /* ShareExtensionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 168A16AB1D9597C2005CFA6C /* ShareExtensionViewController.swift */; };
 		168A16AF1D9597C2005CFA6C /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 168A16AD1D9597C2005CFA6C /* MainInterface.storyboard */; };
 		168A16B31D9597C2005CFA6C /* Wire Share Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 168A16A91D9597C2005CFA6C /* Wire Share Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -1583,6 +1584,7 @@
 		1687ABA720EBB5F30007C240 /* ImageMessageCell+Configure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ImageMessageCell+Configure.swift"; sourceTree = "<group>"; };
 		1687ABA920EBCED80007C240 /* ZMUser+Images.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ZMUser+Images.swift"; sourceTree = "<group>"; };
 		1687C0FB2151435F003099DD /* ZClientViewController+ShowContentDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ZClientViewController+ShowContentDelegate.swift"; sourceTree = "<group>"; };
+		1689FD4A2195C8B800A656E2 /* EphemeralCountdownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EphemeralCountdownView.swift; sourceTree = "<group>"; };
 		168A16A31D95964B005CFA6C /* NSString+URL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSString+URL.swift"; sourceTree = "<group>"; };
 		168A16A91D9597C2005CFA6C /* Wire Share Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Wire Share Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		168A16AB1D9597C2005CFA6C /* ShareExtensionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareExtensionViewController.swift; sourceTree = "<group>"; };
@@ -3837,6 +3839,7 @@
 				5EBBE97021878D09008BC1B7 /* ConversationMessageToolboxCell.swift */,
 				5EBBE96C218751D0008BC1B7 /* ConversationLegacyCell.swift */,
 				5E4BC1BF218A0A4300A8682E /* UnknownMessageCellDescription.swift */,
+				1689FD4A2195C8B800A656E2 /* EphemeralCountdownView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -8275,6 +8278,7 @@
 				BF79B0FC20A98B60001BF4FE /* SelfVideoPreviewView.swift in Sources */,
 				5E8C38B8212FDD68002AE12B /* ObservableSessionManager.swift in Sources */,
 				16E311D81A6024F400FF2C9E /* ImageMessageCell.m in Sources */,
+				1689FD4B2195C8B800A656E2 /* EphemeralCountdownView.swift in Sources */,
 				162917CE1F8CD327000F3E92 /* NetworkStatusViewController.swift in Sources */,
 				163495871F010F91004E80DB /* UnauthenticatedSession+Shared.swift in Sources */,
 				F1199D401FC849450070FAC3 /* ButtonDescription.swift in Sources */,

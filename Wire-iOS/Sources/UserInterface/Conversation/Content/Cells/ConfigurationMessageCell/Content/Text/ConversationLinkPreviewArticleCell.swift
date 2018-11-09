@@ -95,6 +95,7 @@ class ConversationLinkPreviewArticleCellDescription: ConversationMessageCellDesc
     weak var delegate: ConversationCellDelegate? 
     weak var actionController: ConversationCellActionController?
     
+    var showEphemeralTimer: Bool = false
     var topMargin: Float = 8
 
     var isFullWidth: Bool {

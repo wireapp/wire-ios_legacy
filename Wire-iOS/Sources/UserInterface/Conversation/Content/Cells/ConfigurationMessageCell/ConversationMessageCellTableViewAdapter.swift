@@ -22,9 +22,22 @@ protocol ConversationMessageCellMenuPresenter: class {
     func showMenu()
 }
 
+extension UITableViewCell {
+    
+    @objc func willDisplayCell() {
+        // to be overriden in subclasses
+    }
+    
+    @objc func didEndDisplayingCell() {
+        // to be overriden in subclasses
+    }
+    
+}
+
 class ConversationMessageCellTableViewAdapter<C: ConversationMessageCellDescription>: UITableViewCell, SelectableView, ConversationMessageCellMenuPresenter {
     
     var cellView: C.View
+    var ephemeralCountdownView: EphemeralCountdownView
 
     var cellDescription: C? {
         didSet {
@@ -49,6 +62,7 @@ class ConversationMessageCellTableViewAdapter<C: ConversationMessageCellDescript
     private var top: NSLayoutConstraint!
     private var trailing: NSLayoutConstraint!
     private var bottom: NSLayoutConstraint!
+    private var ephemeralTop: NSLayoutConstraint!
 
     private var longPressGesture: UILongPressGestureRecognizer!
     private var doubleTapGesture: UITapGestureRecognizer!
@@ -58,6 +72,8 @@ class ConversationMessageCellTableViewAdapter<C: ConversationMessageCellDescript
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         self.cellView = C.View(frame: .zero)
         self.cellView.translatesAutoresizingMaskIntoConstraints = false
+        self.ephemeralCountdownView = EphemeralCountdownView()
+        self.ephemeralCountdownView.translatesAutoresizingMaskIntoConstraints = false
         
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
@@ -67,14 +83,24 @@ class ConversationMessageCellTableViewAdapter<C: ConversationMessageCellDescript
         self.isOpaque = false
         
         contentView.addSubview(cellView)
+        contentView.addSubview(ephemeralCountdownView)
 
         leading = cellView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor)
         trailing = cellView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)
         top = cellView.topAnchor.constraint(equalTo: contentView.topAnchor)
         bottom = cellView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         bottom.priority = UILayoutPriority(999)
-
-        NSLayoutConstraint.activate([leading, trailing, top, bottom])
+        ephemeralTop = ephemeralCountdownView.topAnchor.constraint(equalTo: cellView.topAnchor)
+        
+        NSLayoutConstraint.activate([
+            ephemeralCountdownView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            ephemeralCountdownView.trailingAnchor.constraint(equalTo: cellView.leadingAnchor),
+            ephemeralTop,
+            leading,
+            trailing,
+            top,
+            bottom
+        ])
 
         longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(onLongPress))
         contentView.addGestureRecognizer(longPressGesture)
@@ -92,11 +118,14 @@ class ConversationMessageCellTableViewAdapter<C: ConversationMessageCellDescript
         cellView.configure(with: object, animated: false)
         self.isFullWidth = fullWidth
         self.topMargin = topMargin
+        self.ephemeralCountdownView.isHidden = cellDescription?.showEphemeralTimer == false
+        self.ephemeralCountdownView.message = cellDescription?.message
     }
 
     func configureConstraints(fullWidth: Bool) {
         leading.constant = fullWidth ? 0 : UIView.conversationLayoutMargins.left
         trailing.constant = fullWidth ? 0 : -UIView.conversationLayoutMargins.right
+        ephemeralTop.constant = cellView.ephemeralTimerTopInset
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -214,7 +243,19 @@ class ConversationMessageCellTableViewAdapter<C: ConversationMessageCellDescript
             return self.bounds
         }
     }
-
+    
+    override func willDisplayCell() {
+        if cellDescription?.showEphemeralTimer == true {
+            ephemeralCountdownView.startCountDown()
+        }
+    }
+    
+    override func didEndDisplayingCell() {
+        if cellDescription?.showEphemeralTimer == true {
+            ephemeralCountdownView.stopCountDown()
+        }
+    }
+    
 }
 
 extension UITableView {

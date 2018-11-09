@@ -179,8 +179,12 @@ extension IndexSet {
             contentCellDescriptions = [AnyConversationMessageCellDescription(UnknownMessageCellDescription())]
         }
         
-        if isSenderVisible, let topCellDescription = contentCellDescriptions.first {
-            topCellDescription.topMargin = 0
+        if let topContentCellDescription = contentCellDescriptions.first {
+            topContentCellDescription.showEphemeralTimer = true
+            
+            if isSenderVisible {
+                topContentCellDescription.topMargin = 0
+            }
         }
         
         cellDescriptions.append(contentsOf: contentCellDescriptions)

@@ -33,6 +33,7 @@ class BurstTimestampSenderMessageCellDescription: ConversationMessageCellDescrip
     weak var delegate: ConversationCellDelegate?
     weak var actionController: ConversationCellActionController?
     
+    var showEphemeralTimer: Bool = false
     var topMargin: Float = 0
 
     var isFullWidth: Bool {
