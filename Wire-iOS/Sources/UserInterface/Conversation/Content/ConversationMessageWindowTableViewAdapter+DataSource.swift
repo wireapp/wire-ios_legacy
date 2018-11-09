@@ -33,12 +33,6 @@ extension ConversationMessageWindowTableViewAdapter: ConversationMessageSectionC
     
 }
 
-extension MessageWindowChangeInfo {
-    var insertedMessages: [ZMConversationMessage] {
-        return self.insertedIndexes.compactMap { conversationMessageWindow.messages[$0] as? ZMConversationMessage }
-    }
-}
-
 extension ConversationMessageWindowTableViewAdapter: ZMConversationMessageWindowObserver {
     
     func reconfigureSectionController(at index: Int, tableView: UITableView) {
@@ -52,14 +46,11 @@ extension ConversationMessageWindowTableViewAdapter: ZMConversationMessageWindow
         
         let isLoadingInitialContent = messageWindow.messages.count == changeInfo.insertedIndexes.count && changeInfo.deletedIndexes.count == 0
         let isExpandingMessageWindow = changeInfo.insertedIndexes.count > 0 && changeInfo.insertedIndexes.last == messageWindow.messages.count - 1
-        var shouldJumpToTheConversationEnd = false
         stopAudioPlayer(forDeletedMessages: changeInfo.deletedObjects)
         
-        if changeInfo.insertedMessages.any({ $0.sender?.isSelfUser ?? false }) {
-            shouldJumpToTheConversationEnd = true
-        }
-        
-        if isLoadingInitialContent || (isExpandingMessageWindow && changeInfo.deletedIndexes.count == 0) || changeInfo.needsReload || shouldJumpToTheConversationEnd {
+        if isLoadingInitialContent ||
+            (isExpandingMessageWindow && changeInfo.deletedIndexes.count == 0) ||
+            changeInfo.needsReload {
             tableView.reloadData()
         } else {
             tableView.beginUpdates()
@@ -86,10 +77,6 @@ extension ConversationMessageWindowTableViewAdapter: ZMConversationMessageWindow
             // Re-evalulate visible cells in all sections, this is necessary because if a message is inserted/moved the
             // neighbouring messages may no longer want to display sender, toolbox or burst timestamp.
             reconfigureVisibleSections()
-        }
-        
-        if shouldJumpToTheConversationEnd {
-            tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .bottom, animated: false)
         }
     }
     

@@ -58,11 +58,7 @@
 
 - (void)scrollToBottomAnimated:(BOOL)animated
 {
-    // kill existing scrolling if any
-    [self.tableView setContentOffset:self.tableView.contentOffset animated:NO];
-    
-    // scroll to bottom
-    [self.tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:animated];
+    [self.tableView scrollToBottomAnimated:animated];
 }
 
 - (BOOL)scrollToMessage:(id<ZMConversationMessage>)message animated:(BOOL)animated
