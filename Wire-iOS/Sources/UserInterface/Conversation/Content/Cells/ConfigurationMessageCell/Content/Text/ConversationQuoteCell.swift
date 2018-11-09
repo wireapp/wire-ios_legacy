@@ -122,7 +122,9 @@ class ConversationReplyContentView: UIView {
 
         switch object.content {
         case .text(let attributedContent):
-            contentTextView.attributedText = attributedContent
+            let textWithoutPara = NSMutableAttributedString(attributedString: attributedContent)
+            textWithoutPara.removeAttribute(NSAttributedString.Key.paragraphStyle, range: NSMakeRange(0, attributedContent.length))
+            contentTextView.attributedText = textWithoutPara
             contentTextView.isHidden = false
             contentTextView.accessibilityIdentifier = object.contentType
             contentTextView.isAccessibilityElement = true

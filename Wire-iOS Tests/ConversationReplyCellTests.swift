@@ -24,6 +24,8 @@ class ConversationReplyCellTests: CoreDataSnapshotTestCase {
 
     override func setUp() {
         super.setUp()
+
+        recordMode = true
     }
 
     override func tearDown() {
@@ -99,6 +101,72 @@ class ConversationReplyCellTests: CoreDataSnapshotTestCase {
         - Jan 4, final copy in review
         - Jan 15, final layout with copy
         - Jan 20, release on website
+        """
+
+        let message = MockMessageFactory.textMessage(withText: markdownWithTitle)!
+        message.sender = selfUser
+        message.conversation = otherUserConversation
+
+        // WHEN
+        let cell = makeCell(for: message)
+
+        // THEN
+        verifyInAllPhoneWidths(view: cell)
+        verifyAccessibilityIdentifiers(cell, message)
+    }
+
+    func testThatItRendersMarkdownWithMoreThan4Lines() {
+        // GIVEN
+        let markdownWithTitle = """
+        # Summary of Today’s Meeting Upcoming due dates:
+        - Jan 4, final copy in review
+        - Jan 15, final layout with copy
+        - Jan 20, release on website
+        - Jan 31, review
+        """
+
+        let message = MockMessageFactory.textMessage(withText: markdownWithTitle)!
+        message.sender = selfUser
+        message.conversation = otherUserConversation
+
+        // WHEN
+        let cell = makeCell(for: message)
+
+        // THEN
+        verifyInAllPhoneWidths(view: cell)
+        verifyAccessibilityIdentifiers(cell, message)
+    }
+
+    func testThatItRendersMarkdownWithLastLineClipped() {
+        // GIVEN
+        let markdownWithTitle = """
+        # Summary of Today’s Meeting Upcoming due dates:
+        - Jan 4, final copy in review
+        - Jan 15, final layout with copy
+        - Jan 20, release on website for internal testers and QA teams
+        - Jan 31, review
+        """
+
+        let message = MockMessageFactory.textMessage(withText: markdownWithTitle)!
+        message.sender = selfUser
+        message.conversation = otherUserConversation
+
+        // WHEN
+        let cell = makeCell(for: message)
+
+        // THEN
+        verifyInAllPhoneWidths(view: cell)
+        verifyAccessibilityIdentifiers(cell, message)
+    }
+
+    func testThatItRendersMarkdownWith5LinesAndForthLineClipped() {
+        // GIVEN
+        let markdownWithTitle = """
+        # Summary of Today’s Meeting Upcoming due dates:
+        - Jan 4, final copy in review
+        - Jan 15, final layout with copy
+        - Jan 20, release on website for internal testers and QA teams
+        - Jan 31, review
         """
 
         let message = MockMessageFactory.textMessage(withText: markdownWithTitle)!
