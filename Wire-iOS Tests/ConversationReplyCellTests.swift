@@ -115,6 +115,28 @@ class ConversationReplyCellTests: CoreDataSnapshotTestCase {
         verifyAccessibilityIdentifiers(cell, message)
     }
 
+    func testThatItRendersTextMoreThan4Lines() {
+        // GIVEN
+        let markdownWithTitle = """
+        In den alten Zeiten,
+        wo das Wünschen noch geholfen hat,
+        lebte ein König, dessen Töchter waren alle schön;
+        aber die jüngste war so schön, daß die Sonne selber,
+        die doch so vieles gesehen hat,
+        """
+
+        let message = MockMessageFactory.textMessage(withText: markdownWithTitle)!
+        message.sender = selfUser
+        message.conversation = otherUserConversation
+
+        // WHEN
+        let cell = makeCell(for: message)
+
+        // THEN
+        verifyInAllPhoneWidths(view: cell)
+        verifyAccessibilityIdentifiers(cell, message)
+    }
+
     func testThatItRendersMarkdownWithMoreThan4Lines() {
         // GIVEN
         let markdownWithTitle = """
