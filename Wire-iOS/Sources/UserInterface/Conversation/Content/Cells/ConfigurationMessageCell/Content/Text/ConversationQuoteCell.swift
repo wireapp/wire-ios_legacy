@@ -23,6 +23,7 @@ protocol ConversationReplyContentViewDelegate: class {
 }
 
 class ConversationReplyContentView: UIView {
+    let numberOfLinesLimit: Int = 4
 
     struct Configuration {
         enum Content {
@@ -76,7 +77,7 @@ class ConversationReplyContentView: UIView {
         stackView.addArrangedSubview(senderComponent)
 
         contentTextView.textContainer.lineBreakMode = .byTruncatingTail
-        contentTextView.textContainer.maximumNumberOfLines = 4
+        contentTextView.textContainer.maximumNumberOfLines = numberOfLinesLimit
         contentTextView.textContainer.lineFragmentPadding = 0
         contentTextView.isScrollEnabled = false
         contentTextView.isUserInteractionEnabled = false
@@ -112,6 +113,7 @@ class ConversationReplyContentView: UIView {
         ])
     }
 
+
     func configure(with object: Configuration) {
         senderComponent.isHidden = !object.showDetails
         timestampLabel.isHidden = !object.showDetails
@@ -124,11 +126,7 @@ class ConversationReplyContentView: UIView {
         case .text(let attributedContent):
 
             /// trim the string to first four lines to prevent last line narrower spacing issue
-            let lines = attributedContent.string.components(separatedBy: ["\n"])
-            let first4Lines = lines.prefix(4).joined(separator: "\n")
-            let attributedContentHead = attributedContent.attributedSubstring(from: NSMakeRange(0, first4Lines.count))
-
-            contentTextView.attributedText = attributedContentHead
+            contentTextView.attributedText = attributedContent.trimmedToNumberOfLines(numberOfLinesLimit: numberOfLinesLimit)
             contentTextView.isHidden = false
             contentTextView.accessibilityIdentifier = object.contentType
             contentTextView.isAccessibilityElement = true
@@ -167,6 +165,19 @@ class ConversationReplyContentView: UIView {
         backgroundColor = .clear
     }
 
+}
+
+extension NSAttributedString {
+    func trimmedToNumberOfLines(numberOfLinesLimit: Int) -> NSAttributedString {
+        /// trim the string to first four lines to prevent last line narrower spacing issue
+        let lines = string.components(separatedBy: ["\n"])
+        if lines.count >= numberOfLinesLimit {
+            let headLines = lines.prefix(numberOfLinesLimit).joined(separator: "\n")
+            return attributedSubstring(from: NSMakeRange(0, headLines.count))
+        } else {
+            return self
+        }
+    }
 }
 
 class ConversationReplyCell: UIView, ConversationMessageCell, ConversationReplyContentViewDelegate {
