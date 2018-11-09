@@ -440,6 +440,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 {
     if (self.conversation.isReadOnly) {
         [self.inputBarController.inputBar.textView resignFirstResponder];
+        [self.inputBarController dismissMentionsIfNeeded];
         [self.inputBarController removeReplyComposingView];
     }
 

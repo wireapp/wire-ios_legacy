@@ -75,7 +75,7 @@ extension ConversationInputBarViewController: UserSearchResultsViewControllerDel
 
 extension ConversationInputBarViewController {
     
-    func dismissMentionsIfNeeded() {
+    @objc func dismissMentionsIfNeeded() {
         mentionsHandler = nil
         mentionsView?.dismiss()
     }
