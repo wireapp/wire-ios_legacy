@@ -113,6 +113,7 @@ public extension UIColor {
     case cellHighlight
     
     case replyBorder
+    case replyHighlight
 }
 
 extension UIColor {
@@ -226,6 +227,9 @@ extension ColorSchemeColor {
         case .replyBorder:
             return ColorPair(light: UIColor(white: 233.0/255.0, alpha: 1),
                              dark: UIColor(white: 114.0/255.0, alpha: 1))
+        case .replyHighlight:
+            return ColorPair(light: UIColor(rgb: 0x33373A, alpha: 0.24),
+                             dark: UIColor(white: 1, alpha: 0.24))
         }
     }
 }
