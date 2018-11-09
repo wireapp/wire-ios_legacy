@@ -122,9 +122,13 @@ class ConversationReplyContentView: UIView {
 
         switch object.content {
         case .text(let attributedContent):
-            let textWithoutPara = NSMutableAttributedString(attributedString: attributedContent)
-            textWithoutPara.removeAttribute(NSAttributedString.Key.paragraphStyle, range: NSMakeRange(0, attributedContent.length))
-            contentTextView.attributedText = textWithoutPara
+
+            /// trim the string to first four lines to prevent last line narrower spacing issue
+            let lines = attributedContent.string.components(separatedBy: ["\n"])
+            let first4Lines = lines.prefix(4).joined(separator: "\n")
+            let attributedContentHead = attributedContent.attributedSubstring(from: NSMakeRange(0, first4Lines.count))
+
+            contentTextView.attributedText = attributedContentHead
             contentTextView.isHidden = false
             contentTextView.accessibilityIdentifier = object.contentType
             contentTextView.isAccessibilityElement = true
