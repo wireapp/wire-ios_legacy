@@ -73,7 +73,6 @@ final class ReplyComposingView: UIView {
         setupMessageObserver()
         setupSubviews()
         setupConstraints()
-        setupGestureRecognizers()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -140,15 +139,30 @@ final class ReplyComposingView: UIView {
         
         NSLayoutConstraint.activate(constraints)
     }
-    
-    private func setupGestureRecognizers() {
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(onTap))
-        addGestureRecognizer(tapGestureRecognizer)
+
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        messagePreviewContainer.setHighlighted(true, animated: false)
     }
-    
-    @objc func onTap() {
+
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        defer {
+            messagePreviewContainer.setHighlighted(false, animated: true)
+        }
+
+        guard
+            let touchLocation = touches.first?.location(in: self),
+            bounds.contains(touchLocation)
+        else {
+            return
+        }
+
         self.delegate?.composingViewWantsToShowMessage(composingView: self, message: message)
     }
+
+    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+        messagePreviewContainer.setHighlighted(false, animated: true)
+    }
+    
 }
 
 extension ReplyComposingView: ZMMessageObserver {
