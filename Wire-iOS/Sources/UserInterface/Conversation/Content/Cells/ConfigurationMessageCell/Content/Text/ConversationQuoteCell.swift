@@ -120,7 +120,7 @@ class ConversationReplyContentView: UIView {
         case .text(let attributedContent):
 
             /// trim the string to first four lines to prevent last line narrower spacing issue
-            contentTextView.attributedText = attributedContent.trimmedToNumberOfLines(numberOfLinesLimit: numberOfLinesLimit)
+            contentTextView.attributedText = attributedContent.replaceParagraphySyleLineBreaks()//trimmedToNumberOfLines(numberOfLinesLimit: numberOfLinesLimit)
             contentTextView.isHidden = false
             contentTextView.accessibilityIdentifier = object.contentType
             contentTextView.isAccessibilityElement = true
@@ -263,6 +263,19 @@ class ConversationReplyCellDescription: ConversationMessageCellDescription {
 }
 
 extension NSAttributedString {
+
+    func replaceParagraphySyleLineBreaks() -> NSMutableAttributedString {
+        let mutableString = NSMutableAttributedString(attributedString: self)
+
+        mutableString.enumerateAttributes(in: NSRange(0..<length), options: []) { (dict, range, _) in
+            if let paragraphStyle = dict[NSAttributedString.Key.paragraphStyle] as? NSMutableParagraphStyle{
+                paragraphStyle.lineBreakMode = .byTruncatingTail
+            }
+
+        }
+
+        return mutableString
+    }
 
     /// Trim the NSAttributedString to given number of line limit and add an ellipsis at the end if necessary
     ///
