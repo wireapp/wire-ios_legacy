@@ -287,7 +287,6 @@ extension NSAttributedString {
         if lines.count > numberOfLinesLimit {
             let headLines = lines.prefix(numberOfLinesLimit).joined(separator: "\n")
 
-            ///TODO: add ellipsis only when the last line is too long
             return attributedSubstring(from: NSMakeRange(0, headLines.count)) + String.ellipsis
         } else {
             return self
