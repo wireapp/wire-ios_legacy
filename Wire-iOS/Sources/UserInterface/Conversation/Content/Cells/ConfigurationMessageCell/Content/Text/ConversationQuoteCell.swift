@@ -120,7 +120,7 @@ class ConversationReplyContentView: UIView {
         case .text(let attributedContent):
 
             /// trim the string to first four lines to prevent last line narrower spacing issue
-            contentTextView.attributedText = attributedContent.replaceParagraphySyleLineBreaks()//trimmedToNumberOfLines(numberOfLinesLimit: numberOfLinesLimit)
+            contentTextView.attributedText = attributedContent.replaceParagraphySyleLineBreaks().trimmedToNumberOfLines(numberOfLinesLimit: numberOfLinesLimit)
             contentTextView.isHidden = false
             contentTextView.accessibilityIdentifier = object.contentType
             contentTextView.isAccessibilityElement = true
@@ -286,7 +286,8 @@ extension NSAttributedString {
         let lines = string.components(separatedBy: ["\n"])
         if lines.count > numberOfLinesLimit {
             let headLines = lines.prefix(numberOfLinesLimit).joined(separator: "\n")
-            
+
+            ///TODO: add ellipsis only when the last line is too long
             return attributedSubstring(from: NSMakeRange(0, headLines.count)) + String.ellipsis
         } else {
             return self
