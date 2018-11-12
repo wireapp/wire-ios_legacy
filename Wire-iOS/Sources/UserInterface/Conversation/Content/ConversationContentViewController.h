@@ -47,6 +47,7 @@
 
 - (void)updateTableViewHeaderView;
 - (BOOL)displaysMessage:(id<ZMConversationMessage>)message;
+- (void)highlightMessage:(id<ZMConversationMessage>)message;
 
 @end
 
