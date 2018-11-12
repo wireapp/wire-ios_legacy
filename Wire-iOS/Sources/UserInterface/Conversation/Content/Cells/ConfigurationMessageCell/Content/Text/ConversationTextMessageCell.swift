@@ -110,7 +110,9 @@ class ConversationTextMessageCell: UIView, ConversationMessageCell, TextViewInte
     }
 
     func textViewDidLongPress(_ textView: LinkInteractionTextView) {
-        self.menuPresenter?.showMenu()
+        if !UIMenuController.shared.isMenuVisible {
+            self.menuPresenter?.showMenu()
+        }
     }
 
 }
