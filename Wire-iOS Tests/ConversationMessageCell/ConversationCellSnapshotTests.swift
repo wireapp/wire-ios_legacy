@@ -23,7 +23,6 @@ import XCTest
  * A base test class for section-based messages. Use the section property to build
  * your layout and call `verifySectionSnapshots` to record and verify the snapshot.
  */
-
 class ConversationCellSnapshotTests: CoreDataSnapshotTestCase {
 
     var section: ConversationMessageSectionController!
@@ -41,44 +40,12 @@ class ConversationCellSnapshotTests: CoreDataSnapshotTestCase {
      * Performs a snapshot test for the current section controller.
      */
     func verifySectionSnapshots() {
+        let views = section.cellDescriptions.map({ $0.makeView() })
+        let stackView = UIStackView(arrangedSubviews: views)
+        stackView.axis = .vertical
+        stackView.translatesAutoresizingMaskIntoConstraints = false
         
-        let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 375, height: 0))
-        tableView.separatorStyle = .none
-        tableView.rowHeight = UITableView.automaticDimension
-        tableView.estimatedRowHeight = 0
-
-        tableView.dataSource = self.section
-        tableView.delegate = self.section
-        section.cellDescriptions.forEach { $0.register(in: tableView) }
-
-        tableView.backgroundColor = .from(scheme: .contentBackground)
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.widthAnchor.constraint(equalToConstant: 375).isActive = true
-
-        tableView.reloadData()
-        tableView.layoutIfNeeded()
-        tableView.bounds = CGRect(x: 0, y: 0, width: 375, height: tableView.contentSize.height)
-        tableView.heightAnchor.constraint(equalToConstant: tableView.contentSize.height).isActive = true
-        tableView.layoutIfNeeded()
-        tableView.updateConstraints()
-
-        verify(view: tableView)
-    }
-
-}
-
-extension ConversationMessageSectionController: UITableViewDataSource, UITableViewDelegate {
-
-    public func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-
-    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.numberOfCells
-    }
-
-    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return self.makeCell(for: tableView, at: indexPath)
+        verifyInAllPhoneWidths(view: stackView)
     }
 
 }
