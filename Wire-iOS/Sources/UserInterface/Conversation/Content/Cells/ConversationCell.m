@@ -77,10 +77,6 @@ static const CGFloat BurstContainerExpandedHeight = 40;
 
 @end
 
-@interface ConversationCell (HighlightableView) <HighlightableView>
-
-@end
-
 @implementation ConversationCell
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier

@@ -215,8 +215,8 @@ class ConversationMessageCellTableViewAdapter<C: ConversationMessageCellDescript
         }
     }
 
-    var highlightContainer: UIView? {
-        return cellView
+    var highlightContainer: UIView {
+        return self
     }
 
 }

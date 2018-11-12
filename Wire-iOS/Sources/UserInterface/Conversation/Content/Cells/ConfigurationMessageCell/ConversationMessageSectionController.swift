@@ -329,6 +329,8 @@ extension IndexSet {
     // MARK: - Highlight
 
     @objc func highlight(in tableView: UITableView, sectionIndex: Int) {
+        let cellDescriptions = tableViewCellDescriptions
+
         let highlightableCells: [HighlightableView] = cellDescriptions.indices.compactMap {
             guard cellDescriptions[$0].containsHighlightableContent else {
                 return nil
@@ -338,21 +340,21 @@ extension IndexSet {
             return tableView.cellForRow(at: index) as? HighlightableView
         }
 
-        CATransaction.begin()
-        CATransaction.setAnimationDuration(0.2)
-        CATransaction.setAnimationTimingFunction(CAMediaTimingFunction(name: .easeIn))
-
-        for container in highlightableCells {
-            container.highlightContainer?.backgroundColor = UIColor.accentDimmedFlat
-        }
-
-        CATransaction.setCompletionBlock {
+        let highlight = {
             for container in highlightableCells {
-                container.highlightContainer?.backgroundColor = .clear
+                container.highlightContainer.backgroundColor = UIColor.accentDimmedFlat
             }
         }
 
-        CATransaction.commit()
+        let unhighlight = {
+            for container in highlightableCells {
+                container.highlightContainer.backgroundColor = .clear
+            }
+        }
+
+        UIView.animate(withDuration: 0.2, animations: highlight) { _ in
+            UIView.animate(withDuration: 1, delay: 0.55, animations: unhighlight)
+        }
     }
 
     // MARK: - Changes

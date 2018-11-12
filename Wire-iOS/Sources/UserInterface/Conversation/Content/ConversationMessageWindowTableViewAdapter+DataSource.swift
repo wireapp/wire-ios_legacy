@@ -146,6 +146,18 @@ extension ConversationMessageWindowTableViewAdapter: UITableViewDataSource {
         sectionController(at: indexPath.section, in: tableView)?.didDeselect(indexPath: indexPath, tableView: tableView)
     }
 
+    @objc(highlightMessage:)
+    func highlight(message: ZMConversationMessage) {
+        guard
+            let section = indexPath(for: message)?.section,
+            let sectionController = self.sectionController(at: section, in: tableView)
+        else {
+            return
+        }
+
+        sectionController.highlight(in: tableView, sectionIndex: section)
+    }
+
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let sectionController = self.sectionController(at: section, in: tableView)!
         return sectionController.numberOfCells
