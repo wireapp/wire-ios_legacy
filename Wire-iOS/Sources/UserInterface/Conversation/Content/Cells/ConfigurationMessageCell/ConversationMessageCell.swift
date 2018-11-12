@@ -197,6 +197,7 @@ extension ConversationMessageCellDescription {
 
     @objc var containsHighlightableContent: Bool {
         return _containsHighlightableContent.getter()
+    }
     
     @objc var showEphemeralTimer: Bool {
         get { return _showEphemeralTimer.getter() }
