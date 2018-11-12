@@ -260,6 +260,10 @@ class ConversationReplyCellDescription: ConversationMessageCellDescription {
 
 extension NSAttributedString {
 
+
+    /// Replace all paragarphies' line break mode to byTruncatingTail for quoted mseesage display
+    ///
+    /// - Returns: a NSMutableAttributedString with all paragraph's styles are set to .byTruncatingTail
     func replaceParagraphySyleLineBreaks() -> NSMutableAttributedString {
         let mutableString = NSMutableAttributedString(attributedString: self)
 
