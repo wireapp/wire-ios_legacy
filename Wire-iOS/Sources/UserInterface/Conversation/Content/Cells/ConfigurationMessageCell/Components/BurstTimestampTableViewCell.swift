@@ -33,15 +33,12 @@ class BurstTimestampSenderMessageCellDescription: ConversationMessageCellDescrip
     weak var delegate: ConversationCellDelegate?
     weak var actionController: ConversationCellActionController?
     
+    var showEphemeralTimer: Bool = false
     var topMargin: Float = 0
 
-    var isFullWidth: Bool {
-        return true
-    }
-
-    var supportsActions: Bool {
-        return false
-    }
+    let isFullWidth: Bool = true
+    let supportsActions: Bool = false
+    let containsHighlightableContent: Bool = false
 
     init(message: ZMConversationMessage, context: ConversationMessageContext) {
         self.configuration = View.Configuration(date: message.serverTimestamp ?? Date(), includeDayOfWeek: context.isFirstMessageOfTheDay, showUnreadDot: context.isFirstUnreadMessage)

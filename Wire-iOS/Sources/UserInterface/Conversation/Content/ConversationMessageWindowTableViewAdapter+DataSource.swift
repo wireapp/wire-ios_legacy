@@ -46,10 +46,11 @@ extension ConversationMessageWindowTableViewAdapter: ZMConversationMessageWindow
         
         let isLoadingInitialContent = messageWindow.messages.count == changeInfo.insertedIndexes.count && changeInfo.deletedIndexes.count == 0
         let isExpandingMessageWindow = changeInfo.insertedIndexes.count > 0 && changeInfo.insertedIndexes.last == messageWindow.messages.count - 1
-        
         stopAudioPlayer(forDeletedMessages: changeInfo.deletedObjects)
         
-        if isLoadingInitialContent || (isExpandingMessageWindow && changeInfo.deletedIndexes.count == 0) || changeInfo.needsReload {
+        if isLoadingInitialContent ||
+            (isExpandingMessageWindow && changeInfo.deletedIndexes.count == 0) ||
+            changeInfo.needsReload {
             tableView.reloadData()
         } else {
             tableView.beginUpdates()
@@ -144,6 +145,18 @@ extension ConversationMessageWindowTableViewAdapter: UITableViewDataSource {
     @objc
     func deselect(indexPath: IndexPath) {
         sectionController(at: indexPath.section, in: tableView)?.didDeselect(indexPath: indexPath, tableView: tableView)
+    }
+
+    @objc(highlightMessage:)
+    func highlight(message: ZMConversationMessage) {
+        guard
+            let section = indexPath(for: message)?.section,
+            let sectionController = self.sectionController(at: section, in: tableView)
+        else {
+            return
+        }
+
+        sectionController.highlight(in: tableView, sectionIndex: section)
     }
 
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

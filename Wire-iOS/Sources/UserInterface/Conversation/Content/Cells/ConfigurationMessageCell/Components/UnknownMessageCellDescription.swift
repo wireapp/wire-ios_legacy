@@ -41,15 +41,12 @@ class UnknownMessageCellDescription: ConversationMessageCellDescription {
     weak var delegate: ConversationCellDelegate?
     weak var actionController: ConversationCellActionController?
     
+    var showEphemeralTimer: Bool = false
     var topMargin: Float = 0
 
-    var isFullWidth: Bool {
-        return false
-    }
-
-    var supportsActions: Bool {
-        return false
-    }
+    let isFullWidth: Bool = false
+    let supportsActions: Bool = false
+    let containsHighlightableContent = false
 
     init() {
         self.configuration = "content.system.unknown_message.body".localized

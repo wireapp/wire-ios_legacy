@@ -37,9 +37,11 @@ class MockCellDescription<T>: ConversationMessageCellDescription {
     typealias View = MockCell
     let configuration: View.Configuration
 
+    var showEphemeralTimer: Bool = false
     var topMargin: Float = 0
     var isFullWidth: Bool = false
     var supportsActions: Bool = true
+    var containsHighlightableContent: Bool = true
 
     weak var message: ZMConversationMessage?
     weak var delegate: ConversationCellDelegate?

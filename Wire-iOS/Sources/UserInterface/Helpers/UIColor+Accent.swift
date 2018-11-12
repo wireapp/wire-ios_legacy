@@ -24,7 +24,11 @@ extension UIColor {
     }
 
     @objc static var accentDimmedFlat: UIColor {
-        return accent().withAlphaComponent(0.16).removeAlphaByBlending(with: .white)
+        if ColorScheme.default.variant == .light {
+            return accent().withAlphaComponent(0.16).removeAlphaByBlending(with: .white)
+        } else {
+            return accentDarken
+        }
     }
 
     @objc (accentColor)

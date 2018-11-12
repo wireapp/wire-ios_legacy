@@ -212,6 +212,10 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
         if ([cell isKindOfClass:ConversationCell.class]) {
             [cell willDisplayInTableView];
         }
+        
+        if ([cell respondsToSelector:@selector(willDisplayCell)]) {
+            [cell willDisplayCell];
+        }
     }
     
     self.messagePresenter.modalTargetController = self.parentViewController;
@@ -464,9 +468,11 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
             }
                 break;
             case MessageActionShowInConversation:
+            {
                 [self scrollTo:message completion:^(UIView *cell) {
-                    [cell flashBackground];
+                    [self.conversationMessageWindowTableViewAdapter highlightMessage:message];
                 }];
+            }
                 break;
             case MessageActionCopy:
             {
@@ -498,8 +504,9 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
             case MessageActionOpenQuote:
             {
                 if (message.textMessageData.quote) {
-                    [self scrollTo:message.textMessageData.quote completion:^(UIView *cell) {
-                        [cell flashBackground];
+                    id<ZMConversationMessage> quote = message.textMessageData.quote;
+                    [self scrollTo:quote completion:^(UIView *cell) {
+                        [self.conversationMessageWindowTableViewAdapter highlightMessage:quote];
                     }];
                 }
             }
@@ -681,6 +688,10 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 //            [self.delegate conversationContentViewController:self willDisplayActiveMediaPlayerForMessage:messageCell.message];
 //        }
 //    }
+    
+    if ([cell respondsToSelector:@selector(willDisplayCell)] && self.onScreen) {
+        [(id)cell willDisplayCell];
+    }
 
     ConversationCell *conversationCell = nil;
     if ([cell isKindOfClass:ConversationCell.class]) {
@@ -712,6 +723,10 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 //            [self.delegate conversationContentViewController:self didEndDisplayingActiveMediaPlayerForMessage:messageCell.message];
 //        }
 //    }
+    
+    if ([cell respondsToSelector:@selector(didEndDisplayingCell)]) {
+        [(id)cell didEndDisplayingCell];
+    }
 
     ConversationCell *conversationCell = nil;
     if ([cell isKindOfClass:ConversationCell.class]) {
