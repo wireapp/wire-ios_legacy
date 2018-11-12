@@ -54,6 +54,14 @@ class ConversationMessageToolboxCell: UIView, ConversationMessageCell, MessageTo
         toolboxView.translatesAutoresizingMaskIntoConstraints = false
         toolboxView.fitInSuperview()
     }
+    
+    func willDisplay() {
+        toolboxView.startCountdownTimer()
+    }
+    
+    func didEndDisplaying() {
+        toolboxView.stopCountdownTimer()
+    }
 
     func configure(with object: Configuration, animated: Bool) {
         toolboxView.configureForMessage(object.message, forceShowTimestamp: object.selected, animated: animated)
