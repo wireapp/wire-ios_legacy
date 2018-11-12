@@ -352,8 +352,10 @@ extension IndexSet {
             }
         }
 
-        UIView.animate(withDuration: 0.2, animations: highlight) { _ in
-            UIView.animate(withDuration: 1, delay: 0.55, animations: unhighlight)
+        let animationOptions: UIView.AnimationOptions = [.curveEaseIn, .allowUserInteraction]
+
+        UIView.animate(withDuration: 0.2, delay: 0, options: animationOptions, animations: highlight) { _ in
+            UIView.animate(withDuration: 1, delay: 0.55, options: animationOptions, animations: unhighlight)
         }
     }
 
