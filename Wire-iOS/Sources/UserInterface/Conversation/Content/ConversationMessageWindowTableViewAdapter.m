@@ -62,7 +62,7 @@
 
 - (ConversationCellActionController *)actionControllerForMessage:(id<ZMConversationMessage>)message
 {
-    NSString *identifier = message.nonpersistedObjectIdentifer;
+    NSString *identifier = message.objectIdentifier;
     ConversationCellActionController *cachedEntry = [self.actionControllers objectForKey:identifier];
 
     if (cachedEntry) {

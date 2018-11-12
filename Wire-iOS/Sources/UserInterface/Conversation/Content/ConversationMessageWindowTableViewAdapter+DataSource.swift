@@ -100,7 +100,7 @@ extension ConversationMessageWindowTableViewAdapter: UITableViewDataSource {
     @objc
     func sectionController(at sectionIndex: Int, in tableView: UITableView) -> ConversationMessageSectionController? {
         guard let message = messageWindow.messages.object(at: sectionIndex) as? ZMConversationMessage else { return nil }
-        let messageIdentifier = message.nonpersistedObjectIdentifer as NSString
+        let messageIdentifier = message.objectIdentifier as NSString
 
         if let cachedEntry = sectionControllers.object(forKey: messageIdentifier) as? ConversationMessageSectionController {
             return cachedEntry
