@@ -180,7 +180,7 @@ extension IndexSet {
         }
         
         if let topContentCellDescription = contentCellDescriptions.first {
-            topContentCellDescription.showEphemeralTimer = true
+            topContentCellDescription.showEphemeralTimer = message.isEphemeral
             
             if isSenderVisible {
                 topContentCellDescription.topMargin = 0
