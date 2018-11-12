@@ -745,7 +745,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 - (BOOL)conversationInputBarViewControllerShouldBeginEditing:(ConversationInputBarViewController *)controller
 {
     if (! self.contentViewController.isScrolledToBottom && !controller.isEditingMessage && !controller.isReplyingToMessage) {
-        [self.contentViewController scrollToBottomAnimated:YES];
+        [self.contentViewController scrollToBottomAnimated:NO];
     }
     
     [self.guestsBarController setState:GuestBarStateHidden animated:YES];

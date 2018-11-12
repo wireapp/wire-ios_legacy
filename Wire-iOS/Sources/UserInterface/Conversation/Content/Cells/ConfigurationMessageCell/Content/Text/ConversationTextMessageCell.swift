@@ -30,6 +30,14 @@ class ConversationTextMessageCell: UIView, ConversationMessageCell, TextViewInte
     weak var message: ZMConversationMessage?
     weak var delegate: ConversationCellDelegate?
     weak var menuPresenter: ConversationMessageCellMenuPresenter?
+    
+    var ephemeralTimerTopInset: CGFloat {
+        guard let font = messageTextView.font else {
+            return 0
+        }
+        
+        return font.lineHeight / 2
+    }
 
     var selectionView: UIView? {
         return messageTextView
@@ -117,6 +125,7 @@ class ConversationTextMessageCellDescription: ConversationMessageCellDescription
     weak var delegate: ConversationCellDelegate?
     weak var actionController: ConversationCellActionController?
     
+    var showEphemeralTimer: Bool = false
     var topMargin: Float = 8
 
     let isFullWidth: Bool  = false

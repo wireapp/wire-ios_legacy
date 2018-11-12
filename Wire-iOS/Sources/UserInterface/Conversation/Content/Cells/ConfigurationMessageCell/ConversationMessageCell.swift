@@ -35,6 +35,9 @@ protocol ConversationMessageCell {
 
     /// The frame to highlight when the cell is selected.
     var selectionRect: CGRect { get }
+    
+    /// Top inset for ephemeral timer relative to the cell content
+    var ephemeralTimerTopInset: CGFloat { get }
 
     /**
      * Configures the cell with the specified configuration object.
@@ -53,6 +56,10 @@ extension ConversationMessageCell {
 
     var selectionRect: CGRect {
         return selectionView?.bounds ?? .zero
+    }
+    
+    var ephemeralTimerTopInset: CGFloat {
+        return 8
     }
 
 }
@@ -79,6 +86,9 @@ protocol ConversationMessageCellDescription: class {
 
     /// Whether the cell supports actions.
     var supportsActions: Bool { get }
+    
+    /// Whether the cell should display an ephemeral timer in the margin given it's an ephemeral message
+    var showEphemeralTimer: Bool { get set }
 
     /// Whether the cell contains content that can be highlighted.
     var containsHighlightableContent: Bool { get }
@@ -134,6 +144,7 @@ extension ConversationMessageCellDescription {
     private let _actionController: AnyMutableProperty<ConversationCellActionController?>
     private let _topMargin: AnyMutableProperty<Float>
     private let _containsHighlightableContent: AnyConstantProperty<Bool>
+    private let _showEphemeralTimer: AnyMutableProperty<Bool>
 
     init<T: ConversationMessageCellDescription>(_ description: T) {
         registrationBlock = { tableView in
@@ -157,6 +168,7 @@ extension ConversationMessageCellDescription {
         _actionController = AnyMutableProperty(description, keyPath: \.actionController)
         _topMargin = AnyMutableProperty(description, keyPath: \.topMargin)
         _containsHighlightableContent = AnyConstantProperty(description, keyPath: \.containsHighlightableContent)
+        _showEphemeralTimer = AnyMutableProperty(description, keyPath: \.showEphemeralTimer)
     }
 
     @objc var baseType: AnyClass {
@@ -185,6 +197,10 @@ extension ConversationMessageCellDescription {
 
     @objc var containsHighlightableContent: Bool {
         return _containsHighlightableContent.getter()
+    
+    @objc var showEphemeralTimer: Bool {
+        get { return _showEphemeralTimer.getter() }
+        set { _showEphemeralTimer.setter(newValue) }
     }
         
     func configure(cell: UITableViewCell, animated: Bool = false) {

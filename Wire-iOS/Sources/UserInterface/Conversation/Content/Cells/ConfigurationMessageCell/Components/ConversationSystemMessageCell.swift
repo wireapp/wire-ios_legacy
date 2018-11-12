@@ -196,6 +196,7 @@ class ConversationRenamedSystemMessageCellDescription: ConversationMessageCellDe
     weak var delegate: ConversationCellDelegate? 
     weak var actionController: ConversationCellActionController?
     
+    var showEphemeralTimer: Bool = false
     var topMargin: Float = 0
 
     let isFullWidth: Bool = true
@@ -224,6 +225,7 @@ class ConversationCallSystemMessageCellDescription: ConversationMessageCellDescr
     weak var delegate: ConversationCellDelegate? 
     weak var actionController: ConversationCellActionController?
     
+    var showEphemeralTimer: Bool = false
     var topMargin: Float = 0
 
     let isFullWidth: Bool = true
@@ -254,6 +256,7 @@ class ConversationMessageTimerCellDescription: ConversationMessageCellDescriptio
     weak var delegate: ConversationCellDelegate? 
     weak var actionController: ConversationCellActionController?
     
+    var showEphemeralTimer: Bool = false
     var topMargin: Float = 0
 
     let isFullWidth: Bool = true
@@ -293,6 +296,7 @@ class ConversationVerifiedSystemMessageSectionDescription: ConversationMessageCe
     weak var delegate: ConversationCellDelegate? 
     weak var actionController: ConversationCellActionController?
     
+    var showEphemeralTimer: Bool = false
     var topMargin: Float = 0
 
     let isFullWidth: Bool = true
@@ -321,6 +325,7 @@ class ConversationCannotDecryptSystemMessageCellDescription: ConversationMessage
     weak var delegate: ConversationCellDelegate?
     weak var actionController: ConversationCellActionController?
     
+    var showEphemeralTimer: Bool = false
     var topMargin: Float = 0
 
     let isFullWidth: Bool = true
