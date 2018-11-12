@@ -22,7 +22,7 @@ class EphemeralCountdownView: UIView {
     
     fileprivate let destructionCountdownView: DestructionCountdownView = DestructionCountdownView()
     fileprivate let containerView =  UIView()
-    fileprivate var displayLink: CADisplayLink?
+    fileprivate var timer: Timer?
     
     var message: ZMConversationMessage? = nil
     
@@ -64,13 +64,15 @@ class EphemeralCountdownView: UIView {
         
         isHidden = false
         _ = message.startSelfDestructionIfNeeded()
-        displayLink = CADisplayLink(target: self, selector: #selector(updateCountdown))
-        displayLink?.add(to: .main, forMode: .common)
+        
+        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] _ in
+            self?.updateCountdown()
+        }
     }
     
     func stopCountDown() {
-        displayLink?.invalidate()
-        displayLink = nil
+        timer?.invalidate()
+        timer = nil
     }
     
     @objc
