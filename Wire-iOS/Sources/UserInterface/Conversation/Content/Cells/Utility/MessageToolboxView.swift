@@ -18,7 +18,6 @@
 
 import Foundation
 import WireSyncEngine
-import Cartography
 import TTTAttributedLabel
 
 @objc public protocol MessageToolboxViewDelegate: NSObjectProtocol {
@@ -66,7 +65,7 @@ import TTTAttributedLabel
     override init(frame: CGRect) {
         
         super.init(frame: frame)
-        self.isAccessibilityElement = true
+        isAccessibilityElement = false
         self.accessibilityElementsHidden = false
 
         backgroundColor = .clear
