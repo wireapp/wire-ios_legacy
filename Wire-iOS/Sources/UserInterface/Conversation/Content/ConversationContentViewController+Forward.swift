@@ -100,38 +100,10 @@ extension ZMMessage: Shareable {
 
 extension ZMConversationMessage {
     public func previewView() -> UIView? {
-        var cell: ConversationCell
-
-        // TODO 2838: Use the quote cell as the preview
-        if isImage {
-            cell = ImageMessageCell(style: .default, reuseIdentifier: "")
-        }
-        else if isVideo {
-            cell = VideoMessageCell(style: .default, reuseIdentifier: "")
-        }
-        else if isAudio {
-            cell = AudioMessageCell(style: .default, reuseIdentifier: "")
-        }
-        else if isLocation {
-            cell = LocationMessageCell(style: .default, reuseIdentifier: "")
-        }
-        else if isFile {
-            cell = FileTransferCell(style: .default, reuseIdentifier: "")
-        }
-        else {
-            fatal("Cannot create preview for \(type(of: self))")
-        }
-        
-        cell.translatesAutoresizingMaskIntoConstraints = false
-        let height = cell.prepareLayoutForPreview(message: self)
-        
-        constrain(cell.contentView) { cellContentView in
-            cellContentView.height == height
-        }
-        
-        cell.frame = CGRect(x: 0, y: 0, width: cell.frame.size.width, height: height)
-        
-        return cell
+        guard let view = self.preparePreviewView(shouldDisplaySender: false) else { return nil }
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .white
+        return view
     }
 }
 
