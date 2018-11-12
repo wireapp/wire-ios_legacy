@@ -18,10 +18,6 @@
 
 import UIKit
 
-protocol ConversationReplyContentViewDelegate: class {
-    func conversationReplyContentViewDidTapOriginalMessage()
-}
-
 class ConversationReplyContentView: UIView {
 
     struct Configuration {
@@ -45,8 +41,6 @@ class ConversationReplyContentView: UIView {
     let assetThumbnail = ImageResourceThumbnailView()
 
     let stackView = UIStackView()
-
-    weak var delegate: ConversationReplyContentViewDelegate?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -138,32 +132,9 @@ class ConversationReplyContentView: UIView {
         }
     }
 
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        backgroundColor = UIColor(rgb: 0x33373A, alpha: 0.4)
-    }
-
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        defer {
-            backgroundColor = .clear
-        }
-
-        guard
-            let touchLocation = touches.first?.location(in: self),
-            bounds.contains(touchLocation)
-        else {
-            return
-        }
-
-        delegate?.conversationReplyContentViewDidTapOriginalMessage()
-    }
-
-    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-        backgroundColor = .clear
-    }
-
 }
 
-class ConversationReplyCell: UIView, ConversationMessageCell, ConversationReplyContentViewDelegate {
+class ConversationReplyCell: UIView, ConversationMessageCell {
     typealias Configuration = ConversationReplyContentView.Configuration
     var isSelected: Bool = false
 
@@ -186,26 +157,20 @@ class ConversationReplyCell: UIView, ConversationMessageCell, ConversationReplyC
     }
 
     private func configureSubviews() {
-        contentView.delegate = self
+        container.addTarget(self, action: #selector(onTap), for: .touchUpInside)
         addSubview(container)
     }
 
     private func configureConstraints() {
         container.translatesAutoresizingMaskIntoConstraints = false
-
-        NSLayoutConstraint.activate([
-            container.leadingAnchor.constraint(equalTo: leadingAnchor),
-            container.topAnchor.constraint(equalTo: topAnchor, constant: 8),
-            container.trailingAnchor.constraint(equalTo: trailingAnchor),
-            container.bottomAnchor.constraint(equalTo: bottomAnchor)
-        ])
+        container.fitInSuperview()
     }
 
     func configure(with object: Configuration, animated: Bool) {
         contentView.configure(with: object)
     }
 
-    func conversationReplyContentViewDidTapOriginalMessage() {
+    @objc func onTap() {
         delegate?.conversationCell?(self, didSelect: .openQuote, for: message)
     }
 
@@ -215,6 +180,7 @@ class ConversationReplyCellDescription: ConversationMessageCellDescription {
     typealias View = ConversationReplyCell
     let configuration: View.Configuration
 
+    var showEphemeralTimer: Bool = false
     var topMargin: Float = 8
     let isFullWidth = false
     let supportsActions = false

@@ -46,10 +46,11 @@ extension ConversationMessageWindowTableViewAdapter: ZMConversationMessageWindow
         
         let isLoadingInitialContent = messageWindow.messages.count == changeInfo.insertedIndexes.count && changeInfo.deletedIndexes.count == 0
         let isExpandingMessageWindow = changeInfo.insertedIndexes.count > 0 && changeInfo.insertedIndexes.last == messageWindow.messages.count - 1
-        
         stopAudioPlayer(forDeletedMessages: changeInfo.deletedObjects)
         
-        if isLoadingInitialContent || (isExpandingMessageWindow && changeInfo.deletedIndexes.count == 0) || changeInfo.needsReload {
+        if isLoadingInitialContent ||
+            (isExpandingMessageWindow && changeInfo.deletedIndexes.count == 0) ||
+            changeInfo.needsReload {
             tableView.reloadData()
         } else {
             tableView.beginUpdates()
@@ -83,7 +84,7 @@ extension ConversationMessageWindowTableViewAdapter: ZMConversationMessageWindow
     func reconfigureVisibleSections() {
         tableView.beginUpdates()
         if let indexPathsForVisibleRows = tableView.indexPathsForVisibleRows {
-            let visibleSections = indexPathsForVisibleRows.map({ $0.section })
+            let visibleSections = Set(indexPathsForVisibleRows.map(\.section))
             for section in visibleSections {
                 reconfigureSectionController(at: section, tableView: tableView)
             }
@@ -107,12 +108,14 @@ extension ConversationMessageWindowTableViewAdapter: UITableViewDataSource {
         let context = messageWindow.context(for: message, firstUnreadMessage: firstUnreadMessage, searchQueries: self.searchQueries ?? [])
         let layoutProperties = messageWindow.layoutProperties(for: message, firstUnreadMessage: firstUnreadMessage)
         
-        let sectionController = ConversationMessageSectionController(message: message, context: context, layoutProperties: layoutProperties)
+        let sectionController = ConversationMessageSectionController(message: message,
+                                                                     context: context,
+                                                                     layoutProperties: layoutProperties,
+                                                                     selected: message.isEqual(selectedMessage))
         sectionController.useInvertedIndices = true
         sectionController.cellDelegate = conversationCellDelegate
         sectionController.sectionDelegate = self
         sectionController.actionController = actionController(for: message)
-        sectionController.selected = message.isEqual(selectedMessage)
         
         sectionControllers.setObject(sectionController, forKey: nonce as NSUUID)
         

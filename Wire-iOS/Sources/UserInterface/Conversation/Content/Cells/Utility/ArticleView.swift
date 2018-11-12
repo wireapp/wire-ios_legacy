@@ -25,7 +25,6 @@ import WireExtensionComponents
 
 @objc protocol ArticleViewDelegate: class {
     func articleViewWantsToOpenURL(_ articleView: ArticleView, url: URL)
-    func articleViewDidLongPressView(_ articleView: ArticleView)
 }
 
 @objcMembers class ArticleView: UIView {
@@ -94,7 +93,6 @@ import WireExtensionComponents
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(viewTapped))
         tapGestureRecognizer.delegate = self
         addGestureRecognizer(tapGestureRecognizer)
-        addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(viewLongPressed)))
 
         updateLabels()
     }
@@ -209,13 +207,12 @@ import WireExtensionComponents
     }
 
     @objc private func viewTapped(_ sender: UITapGestureRecognizer) {
+        if UIMenuController.shared.isMenuVisible {
+            return UIMenuController.shared.setMenuVisible(false, animated: true)
+        }
+
         guard let url = linkPreview?.openableURL else { return }
         delegate?.articleViewWantsToOpenURL(self, url: url as URL)
-    }
-    
-    @objc private func viewLongPressed(_ sender: UILongPressGestureRecognizer) {
-        guard sender.state == .began else { return }
-        delegate?.articleViewDidLongPressView(self)
     }
     
 }

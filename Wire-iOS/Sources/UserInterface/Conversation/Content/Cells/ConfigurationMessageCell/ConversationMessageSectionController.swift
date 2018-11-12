@@ -66,9 +66,6 @@ extension IndexSet {
     var context: ConversationMessageContext
     var layoutProperties: ConversationCellLayoutProperties
 
-    /// Wheater this section is selected
-    @objc var selected: Bool = false
-
     /// Whether we need to use inverted indices. This is `true` when the table view is upside down.
     @objc var useInvertedIndices = false
 
@@ -83,6 +80,9 @@ extension IndexSet {
 
     /// The object that receives informations from the section.
     @objc weak var sectionDelegate: ConversationMessageSectionControllerDelegate?
+    
+    /// Wheater this section is selected
+    private var selected: Bool
 
     private var changeObservers: [Any] = []
     
@@ -92,10 +92,11 @@ extension IndexSet {
         changeObservers.removeAll()
     }
 
-    init(message: ZMConversationMessage, context: ConversationMessageContext, layoutProperties: ConversationCellLayoutProperties) {
+    init(message: ZMConversationMessage, context: ConversationMessageContext, layoutProperties: ConversationCellLayoutProperties, selected: Bool = false) {
         self.message = message
         self.context = context
         self.layoutProperties = layoutProperties
+        self.selected = selected
         
         super.init()
         
@@ -178,8 +179,12 @@ extension IndexSet {
             contentCellDescriptions = [AnyConversationMessageCellDescription(UnknownMessageCellDescription())]
         }
         
-        if isSenderVisible, let topCellDescription = contentCellDescriptions.first {
-            topCellDescription.topMargin = 0
+        if let topContentCellDescription = contentCellDescriptions.first {
+            topContentCellDescription.showEphemeralTimer = message.isEphemeral
+            
+            if isSenderVisible {
+                topContentCellDescription.topMargin = 0
+            }
         }
         
         cellDescriptions.append(contentsOf: contentCellDescriptions)

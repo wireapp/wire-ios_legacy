@@ -45,6 +45,7 @@ class ConversationMessageToolboxCell: UIView, ConversationMessageCell, MessageTo
     }
 
     private func configureSubviews() {
+        toolboxView.accessibilityIdentifier = "MessageToolbox"
         toolboxView.delegate = self
         addSubview(toolboxView)
     }
@@ -84,6 +85,7 @@ class ConversationMessageToolboxCellDescription: ConversationMessageCellDescript
     weak var delegate: ConversationCellDelegate? 
     weak var actionController: ConversationCellActionController?
 
+    var showEphemeralTimer: Bool = false
     var topMargin: Float = 2
     let isFullWidth: Bool = true
     let supportsActions: Bool = false

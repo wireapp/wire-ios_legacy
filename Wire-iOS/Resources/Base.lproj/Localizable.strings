@@ -200,6 +200,7 @@
 "conversation.status.typing" = "Typing a message…";
 "conversation.status.typing.group" = "%@: typing a message…";
 "conversation.status.silenced" = "Muted";
+"conversation.status.poor_connection" = "Poor connection";
 "conversation.status.blocked" = "Blocked";
 
 "conversation.status.message.text" = "%@";
@@ -218,8 +219,8 @@
 "conversation.status.message.ephemeral.group" = "Someone sent a message";
 "conversation.status.message.ephemeral.mention" = "Mentioned you";
 "conversation.status.message.ephemeral.mention.group" = "Someone mentioned you";
-"conversation.status.message.ephemeral.reply" = "Replied you";
-"conversation.status.message.ephemeral.reply.group" = "Someone replied you";
+"conversation.status.message.ephemeral.reply" = "Replied to your message";
+"conversation.status.message.ephemeral.reply.group" = "Someone replied to your message";
 "conversation.status.message.ephemeral.knock" = "Pinged";
 "conversation.status.message.ephemeral.knock.group" = "Someone pinged";
 

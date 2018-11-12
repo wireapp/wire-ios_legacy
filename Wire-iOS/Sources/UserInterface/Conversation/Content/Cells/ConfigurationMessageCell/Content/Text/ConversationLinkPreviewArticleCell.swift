@@ -49,6 +49,7 @@ class ConversationLinkPreviewArticleCell: UIView, ConversationMessageCell {
     }
 
     private func configureSubviews() {
+        articleView.delegate = self
         addSubview(articleView)
     }
 
@@ -78,6 +79,14 @@ class ConversationLinkPreviewArticleCell: UIView, ConversationMessageCell {
 
 }
 
+extension ConversationLinkPreviewArticleCell: ArticleViewDelegate {
+    
+    func articleViewWantsToOpenURL(_ articleView: ArticleView, url: URL) {
+        url.open()
+    }
+    
+}
+
 class ConversationLinkPreviewArticleCellDescription: ConversationMessageCellDescription {
     typealias View = ConversationLinkPreviewArticleCell
     let configuration: View.Configuration
@@ -86,6 +95,7 @@ class ConversationLinkPreviewArticleCellDescription: ConversationMessageCellDesc
     weak var delegate: ConversationCellDelegate? 
     weak var actionController: ConversationCellActionController?
     
+    var showEphemeralTimer: Bool = false
     var topMargin: Float = 8
 
     var isFullWidth: Bool {

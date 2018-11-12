@@ -119,6 +119,13 @@ public final class VideoMessageCell: ConversationCell {
     }
     
     // MARK: - Menu
+
+    public override func menuConfigurationProperties() -> MenuConfigurationProperties! {
+        let properties = MenuConfigurationProperties()
+        properties.targetRect = selectionRect
+        properties.targetView = selectionView
+        return properties
+    }
             
     @objc override func prepareLayoutForPreview(message: ZMConversationMessage?) -> CGFloat {
         super.prepareLayoutForPreview(message: message)

@@ -102,6 +102,7 @@ extension ConversationInputBarViewController: UITextViewDelegate {
         guard mode != .audioRecord else { return true }
         guard delegate?.responds(to:  #selector(ConversationInputBarViewControllerDelegate.conversationInputBarViewControllerShouldBeginEditing(_:))) == true else { return true }
 
+        triggerMentionsIfNeeded(from: textView)
         return delegate?.conversationInputBarViewControllerShouldBeginEditing?(self) ?? true
     }
 

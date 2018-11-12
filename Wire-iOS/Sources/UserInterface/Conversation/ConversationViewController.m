@@ -438,6 +438,12 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 - (void)updateInputBarVisibility
 {
+    if (self.conversation.isReadOnly) {
+        [self.inputBarController.inputBar.textView resignFirstResponder];
+        [self.inputBarController dismissMentionsIfNeeded];
+        [self.inputBarController removeReplyComposingView];
+    }
+
     self.inputBarZeroHeight.active = self.conversation.isReadOnly;
     [self.view setNeedsLayout];
 }
@@ -739,7 +745,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 - (BOOL)conversationInputBarViewControllerShouldBeginEditing:(ConversationInputBarViewController *)controller
 {
     if (! self.contentViewController.isScrolledToBottom && !controller.isEditingMessage && !controller.isReplyingToMessage) {
-        [self.contentViewController scrollToBottomAnimated:YES];
+        [self.contentViewController scrollToBottomAnimated:NO];
     }
     
     [self.guestsBarController setState:GuestBarStateHidden animated:YES];
@@ -773,7 +779,9 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 - (void)conversationInputBarViewControllerWantsToShowMessage:(id<ZMConversationMessage>)message
 {
-    [self scrollToMessage:message];
+    [self.contentViewController scrollTo:message completion:^(UIView * cell) {
+        [cell flashBackground];
+    }];
 }
 
 - (void)conversationInputBarViewControllerEditLastMessage

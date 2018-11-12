@@ -88,6 +88,7 @@ class ConversationSenderMessageCellDescription: ConversationMessageCellDescripti
     weak var delegate: ConversationCellDelegate?
     weak var actionController: ConversationCellActionController?
     
+    var showEphemeralTimer: Bool = false
     var topMargin: Float = 16
 
     var isFullWidth: Bool {
