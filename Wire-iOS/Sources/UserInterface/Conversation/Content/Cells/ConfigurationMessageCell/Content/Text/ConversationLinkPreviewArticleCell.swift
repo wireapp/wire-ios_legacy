@@ -97,13 +97,9 @@ class ConversationLinkPreviewArticleCellDescription: ConversationMessageCellDesc
     
     var topMargin: Float = 8
 
-    var isFullWidth: Bool {
-        return false
-    }
-
-    var supportsActions: Bool {
-        return true
-    }
+    let isFullWidth: Bool = false
+    let supportsActions: Bool = true
+    let containsHighlightableContent: Bool = true
 
     init(message: ZMConversationMessage, data: ZMTextMessageData) {
         let showImage = data.linkPreviewHasImage

@@ -80,6 +80,9 @@ protocol ConversationMessageCellDescription: class {
     /// Whether the cell supports actions.
     var supportsActions: Bool { get }
 
+    /// Whether the cell contains content that can be highlighted.
+    var containsHighlightableContent: Bool { get }
+
     /// The message that is displayed.
     var message: ZMConversationMessage? { get set }
 
@@ -130,6 +133,7 @@ extension ConversationMessageCellDescription {
     private let _message: AnyMutableProperty<ZMConversationMessage?>
     private let _actionController: AnyMutableProperty<ConversationCellActionController?>
     private let _topMargin: AnyMutableProperty<Float>
+    private let _containsHighlightableContent: AnyConstantProperty<Bool>
 
     init<T: ConversationMessageCellDescription>(_ description: T) {
         registrationBlock = { tableView in
@@ -152,6 +156,7 @@ extension ConversationMessageCellDescription {
         _message = AnyMutableProperty(description, keyPath: \.message)
         _actionController = AnyMutableProperty(description, keyPath: \.actionController)
         _topMargin = AnyMutableProperty(description, keyPath: \.topMargin)
+        _containsHighlightableContent = AnyConstantProperty(description, keyPath: \.containsHighlightableContent)
     }
 
     @objc var baseType: AnyClass {
@@ -176,6 +181,10 @@ extension ConversationMessageCellDescription {
     @objc var topMargin: Float {
         get { return _topMargin.getter() }
         set { _topMargin.setter(newValue) }
+    }
+
+    @objc var containsHighlightableContent: Bool {
+        return _containsHighlightableContent.getter()
     }
         
     func configure(cell: UITableViewCell, animated: Bool = false) {

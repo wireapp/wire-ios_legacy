@@ -121,6 +121,7 @@ class ConversationTextMessageCellDescription: ConversationMessageCellDescription
 
     let isFullWidth: Bool  = false
     let supportsActions: Bool = true
+    let containsHighlightableContent: Bool = true
 
     init(attributedString: NSAttributedString) {
         configuration = View.Configuration(attributedText: attributedString)

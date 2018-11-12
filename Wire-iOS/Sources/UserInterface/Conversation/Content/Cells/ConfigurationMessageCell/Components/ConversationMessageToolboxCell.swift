@@ -88,6 +88,7 @@ class ConversationMessageToolboxCellDescription: ConversationMessageCellDescript
     var topMargin: Float = 2
     let isFullWidth: Bool = true
     let supportsActions: Bool = false
+    let containsHighlightableContent: Bool = false
         
     init(message: ZMConversationMessage, selected: Bool) {
         self.message = message

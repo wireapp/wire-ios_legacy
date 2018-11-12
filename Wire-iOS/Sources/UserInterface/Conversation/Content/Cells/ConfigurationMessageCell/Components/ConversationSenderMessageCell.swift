@@ -90,13 +90,9 @@ class ConversationSenderMessageCellDescription: ConversationMessageCellDescripti
     
     var topMargin: Float = 16
 
-    var isFullWidth: Bool {
-        return true
-    }
-
-    var supportsActions: Bool {
-        return false
-    }
+    let isFullWidth: Bool = true
+    let supportsActions: Bool = false
+    let containsHighlightableContent: Bool = false
 
     init(sender: UserType, message: ZMConversationMessage) {
         self.message = message

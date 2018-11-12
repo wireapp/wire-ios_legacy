@@ -189,6 +189,7 @@ class ConversationReplyCellDescription: ConversationMessageCellDescription {
     var topMargin: Float = 8
     let isFullWidth = false
     let supportsActions = false
+    let containsHighlightableContent: Bool = true
 
     weak var message: ZMConversationMessage?
     weak var delegate: ConversationCellDelegate?

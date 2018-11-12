@@ -22,8 +22,8 @@ protocol ConversationMessageCellMenuPresenter: class {
     func showMenu()
 }
 
-class ConversationMessageCellTableViewAdapter<C: ConversationMessageCellDescription>: UITableViewCell, SelectableView, ConversationMessageCellMenuPresenter {
-    
+class ConversationMessageCellTableViewAdapter<C: ConversationMessageCellDescription>: UITableViewCell, SelectableView, HighlightableView, ConversationMessageCellMenuPresenter {
+
     var cellView: C.View
 
     var cellDescription: C? {
@@ -213,6 +213,10 @@ class ConversationMessageCellTableViewAdapter<C: ConversationMessageCellDescript
         } else {
             return self.bounds
         }
+    }
+
+    var highlightContainer: UIView? {
+        return cellView
     }
 
 }

@@ -41,13 +41,9 @@ class ConversationLegacyCellDescription<T: ConversationCell>: ConversationMessag
     
     var topMargin: Float = 0
 
-    var isFullWidth: Bool {
-        return false
-    }
-
-    var supportsActions: Bool {
-        return false
-    }
+    let isFullWidth: Bool = false
+    let supportsActions: Bool = false
+    let containsHighlightableContent: Bool = true
 
     init(message: ZMConversationMessage, layoutProperties: ConversationCellLayoutProperties) {
         configuration = View.Configuration(message: message, layoutProperties: layoutProperties)

@@ -114,7 +114,6 @@ extension IndexSet {
         }
     }
     
-    
     // MARK: - Content Types
     
     private func addLegacyContentIfNeeded(layoutProperties: ConversationCellLayoutProperties) -> Bool {
@@ -166,7 +165,7 @@ extension IndexSet {
     private func addContent(context: ConversationMessageContext, layoutProperties: ConversationCellLayoutProperties, isSenderVisible: Bool) {
         
         var contentCellDescriptions: [AnyConversationMessageCellDescription]
-        
+
         if message.isKnock {
             contentCellDescriptions = addPingMessageCells()
         } else if message.isText {
@@ -192,7 +191,7 @@ extension IndexSet {
         guard let sender = message.sender else {
             return []
         }
-        
+
         return [AnyConversationMessageCellDescription(ConversationPingCellDescription(message: message, sender: sender))]
     }
     
@@ -325,6 +324,35 @@ extension IndexSet {
 
         let cell = description.makeCell(for: tableView, at: indexPath)
         return cell
+    }
+
+    // MARK: - Highlight
+
+    @objc func highlight(in tableView: UITableView, sectionIndex: Int) {
+        let highlightableCells: [HighlightableView] = cellDescriptions.indices.compactMap {
+            guard cellDescriptions[$0].containsHighlightableContent else {
+                return nil
+            }
+
+            let index = IndexPath(row: $0, section: sectionIndex)
+            return tableView.cellForRow(at: index) as? HighlightableView
+        }
+
+        CATransaction.begin()
+        CATransaction.setAnimationDuration(0.2)
+        CATransaction.setAnimationTimingFunction(CAMediaTimingFunction(name: .easeIn))
+
+        for container in highlightableCells {
+            container.highlightContainer?.backgroundColor = UIColor.accentDimmedFlat
+        }
+
+        CATransaction.setCompletionBlock {
+            for container in highlightableCells {
+                container.highlightContainer?.backgroundColor = .clear
+            }
+        }
+
+        CATransaction.commit()
     }
 
     // MARK: - Changes

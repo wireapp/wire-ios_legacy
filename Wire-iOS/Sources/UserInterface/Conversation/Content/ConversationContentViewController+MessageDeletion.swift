@@ -44,6 +44,10 @@ private extension ZMConversationMessage {
     var selectionRect: CGRect { get }
 }
 
+@objc public protocol HighlightableView: NSObjectProtocol {
+    var highlightContainer: UIView? { get }
+}
+
 extension ConversationCell: SelectableView {}
 
 extension CollectionCell: SelectableView {

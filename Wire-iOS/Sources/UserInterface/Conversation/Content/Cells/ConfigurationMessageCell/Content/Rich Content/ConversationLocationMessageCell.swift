@@ -171,13 +171,9 @@ class ConversationLocationMessageCellDescription: ConversationMessageCellDescrip
     
     var topMargin: Float = 0
 
-    var isFullWidth: Bool {
-        return false
-    }
-
-    var supportsActions: Bool {
-        return true
-    }
+    let isFullWidth: Bool = false
+    let supportsActions: Bool = true
+    let containsHighlightableContent: Bool = true
 
     init(message: ZMConversationMessage, location: ZMLocationMessageData) {
         configuration = View.Configuration(location: location, isObfuscated: message.isObfuscated)

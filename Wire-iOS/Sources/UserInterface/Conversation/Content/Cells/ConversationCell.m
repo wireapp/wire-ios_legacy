@@ -77,6 +77,10 @@ static const CGFloat BurstContainerExpandedHeight = 40;
 
 @end
 
+@interface ConversationCell (HighlightableView) <HighlightableView>
+
+@end
+
 @implementation ConversationCell
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -404,6 +408,11 @@ static const CGFloat BurstContainerExpandedHeight = 40;
 - (CGRect)selectionRect
 {
     return self.bounds;
+}
+
+- (UIView *)highlightContainer
+{
+    return self;
 }
 
 - (UIView *)previewView
