@@ -176,8 +176,10 @@ extension ConversationTextMessageCellDescription {
         }
 
         // Text
-        let textCell = ConversationTextMessageCellDescription(attributedString: messageText)
-        cells.append(AnyConversationMessageCellDescription(textCell))
+        if messageText.length > 0 {
+            let textCell = ConversationTextMessageCellDescription(attributedString: messageText)
+            cells.append(AnyConversationMessageCellDescription(textCell))
+        }
 
         guard !message.isObfuscated else {
             return cells
