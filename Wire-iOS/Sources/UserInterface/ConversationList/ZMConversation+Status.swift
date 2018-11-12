@@ -374,9 +374,20 @@ extension ConversationStatus {
         } else if showingOnlyMentionsAndReplies && !hasSelfMention && !hasSelfReply {
             // Summarize when there is no mention
             return true
-        } else if hasSelfMention || hasSelfReply {
-            // Summarize if there is at least one mention or reply and another activity that can be inside a summary
+        } else if hasSelfMention {
+            // Summarize if there is at least one mention and another activity that can be inside a summary
             return StatusMessageType.summaryTypes.reduce(into: UInt(0)) { $0 += (messagesRequiringAttentionByType[$1] ?? 0) } > 1
+        } else if hasSelfReply {
+            // Summarize if there is at least one reply and another activity that can be inside a summary
+
+            let count = StatusMessageType.summaryTypes.reduce(into: UInt(0)) { $0 += (messagesRequiringAttentionByType[$1] ?? 0) }
+
+            // if all activities are replies, do not summarize
+            if messagesRequiringAttentionByType[.reply] == count {
+                return false
+            } else {
+                return count > 1
+            }
         } else {
             // Never summarize in other cases
             return false

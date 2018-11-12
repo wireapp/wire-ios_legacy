@@ -123,6 +123,23 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         XCTAssertEqual(status.string, "test 5")
     }
 
+    func testStatusSecondReplyDoesNotSummarize() {
+        // GIVEN
+        let sut = self.otherUserConversation!
+
+        let selfMessage = appendSelfMessage(to: sut)
+
+        for index in 1...2 {
+            appendReply(to: sut, selfMessage: selfMessage, text: "reply test \(index)")
+        }
+
+        // WHEN
+        let status = sut.status.description(for: sut)
+        // THEN
+        XCTAssertEqual(status.string, "reply test 2")
+    }
+
+
     func testStatusMissedCallAndUnreadMessagesAndReplies() {
         // GIVEN
         let sut = self.otherUserConversation!
