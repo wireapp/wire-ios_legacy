@@ -249,15 +249,15 @@ class ConversationMessageCellTableViewAdapter<C: ConversationMessageCellDescript
     }
     
     override func willDisplayCell() {
-        if cellDescription?.showEphemeralTimer == true {
-            ephemeralCountdownView.startCountDown()
-        }
+        cellDescription?.willDisplayCell()
+        cellView.willDisplay()
+        ephemeralCountdownView.startCountDown()
     }
     
     override func didEndDisplayingCell() {
-        if cellDescription?.showEphemeralTimer == true {
-            ephemeralCountdownView.stopCountDown()
-        }
+        cellDescription?.didEndDisplayingCell()
+        cellView.didEndDisplaying()
+        ephemeralCountdownView.stopCountDown()
     }
     
 }

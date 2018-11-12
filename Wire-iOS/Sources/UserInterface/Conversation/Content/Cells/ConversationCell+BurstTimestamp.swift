@@ -38,6 +38,7 @@ public extension ConversationCell {
 
     @objc func willDisplayInTableView() {
         scheduledTimerForUpdateBurstTimestamp()
+        toolboxView.startCountdownTimer()
 
         if delegate != nil &&
             delegate.responds(to: #selector(ConversationCellDelegate.conversationCellShouldStartDestructionTimer)) &&

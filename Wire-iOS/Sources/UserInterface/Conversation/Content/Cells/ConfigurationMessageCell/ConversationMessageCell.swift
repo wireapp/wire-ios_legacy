@@ -46,6 +46,12 @@ protocol ConversationMessageCell {
      */
 
     func configure(with object: Configuration, animated: Bool)
+    
+    /// Called before the cell will be displayed on the screen.
+    func willDisplay()
+    
+    /// Called after the cell as been moved off screen.
+    func didEndDisplaying()
 }
 
 extension ConversationMessageCell {
@@ -60,6 +66,14 @@ extension ConversationMessageCell {
     
     var ephemeralTimerTopInset: CGFloat {
         return 8
+    }
+    
+    func willDisplay() {
+        // to be overriden
+    }
+    
+    func didEndDisplaying() {
+        // to be overriden
     }
 
 }
@@ -107,11 +121,21 @@ protocol ConversationMessageCellDescription: class {
 
     func register(in tableView: UITableView)
     func makeCell(for tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell
+    func willDisplayCell()
+    func didEndDisplayingCell()
 }
 
 // MARK: - Table View Dequeuing
 
 extension ConversationMessageCellDescription {
+    
+    func willDisplayCell() {
+        _ = message?.startSelfDestructionIfNeeded()
+    }
+    
+    func didEndDisplayingCell() {
+        
+    }
 
     func register(in tableView: UITableView) {
         tableView.register(cell: type(of: self))
