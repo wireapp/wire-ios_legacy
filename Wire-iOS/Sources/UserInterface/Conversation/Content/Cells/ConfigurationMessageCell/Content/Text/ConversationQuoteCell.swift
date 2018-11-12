@@ -82,6 +82,8 @@ class ConversationReplyContentView: UIView {
 
         contentTextView.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
         stackView.addArrangedSubview(contentTextView)
+
+        assetThumbnail.shape = .rounded(radius: 4)
         assetThumbnail.setContentCompressionResistancePriority(.required, for: .vertical)
         stackView.addArrangedSubview(assetThumbnail)
 
