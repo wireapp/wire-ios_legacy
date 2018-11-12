@@ -163,13 +163,7 @@ class ConversationReplyCell: UIView, ConversationMessageCell {
 
     private func configureConstraints() {
         container.translatesAutoresizingMaskIntoConstraints = false
-
-        NSLayoutConstraint.activate([
-            container.leadingAnchor.constraint(equalTo: leadingAnchor),
-            container.topAnchor.constraint(equalTo: topAnchor, constant: 8),
-            container.trailingAnchor.constraint(equalTo: trailingAnchor),
-            container.bottomAnchor.constraint(equalTo: bottomAnchor)
-        ])
+        container.fitInSuperview()
     }
 
     func configure(with object: Configuration, animated: Bool) {
@@ -186,6 +180,7 @@ class ConversationReplyCellDescription: ConversationMessageCellDescription {
     typealias View = ConversationReplyCell
     let configuration: View.Configuration
 
+    var showEphemeralTimer: Bool = false
     var topMargin: Float = 8
     let isFullWidth = false
     let supportsActions = false

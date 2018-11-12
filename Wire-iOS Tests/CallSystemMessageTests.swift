@@ -105,6 +105,7 @@ class CallSystemMessageTests: CoreDataSnapshotTestCase {
         let description = ConversationCallSystemMessageCellDescription(message: systemMessage, data: systemMessage.systemMessageData!, missed: missed)
 
         let cell = ConversationMessageCellTableViewAdapter<ConversationCallSystemMessageCellDescription>(style: .default, reuseIdentifier: nil)
+        cell.cellDescription = description
         cell.configure(with: description.configuration, fullWidth: description.isFullWidth, topMargin: description.topMargin)
 
         return cell

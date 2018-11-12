@@ -45,6 +45,7 @@ class ConversationYouTubeAttachmentCellDescription: ConversationMessageCellDescr
     weak var delegate: ConversationCellDelegate?
     weak var actionController: ConversationCellActionController?
     
+    var showEphemeralTimer: Bool = false
     var topMargin: Float = 8
 
     let isFullWidth: Bool = false

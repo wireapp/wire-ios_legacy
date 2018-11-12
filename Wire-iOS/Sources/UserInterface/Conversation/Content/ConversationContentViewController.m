@@ -212,6 +212,10 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
         if ([cell isKindOfClass:ConversationCell.class]) {
             [cell willDisplayInTableView];
         }
+        
+        if ([cell respondsToSelector:@selector(willDisplayCell)]) {
+            [cell willDisplayCell];
+        }
     }
     
     self.messagePresenter.modalTargetController = self.parentViewController;
@@ -684,6 +688,10 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 //            [self.delegate conversationContentViewController:self willDisplayActiveMediaPlayerForMessage:messageCell.message];
 //        }
 //    }
+    
+    if ([cell respondsToSelector:@selector(willDisplayCell)] && self.onScreen) {
+        [(id)cell willDisplayCell];
+    }
 
     ConversationCell *conversationCell = nil;
     if ([cell isKindOfClass:ConversationCell.class]) {
@@ -715,6 +723,10 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 //            [self.delegate conversationContentViewController:self didEndDisplayingActiveMediaPlayerForMessage:messageCell.message];
 //        }
 //    }
+    
+    if ([cell respondsToSelector:@selector(didEndDisplayingCell)]) {
+        [(id)cell didEndDisplayingCell];
+    }
 
     ConversationCell *conversationCell = nil;
     if ([cell isKindOfClass:ConversationCell.class]) {
