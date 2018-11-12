@@ -174,9 +174,10 @@ import TTTAttributedLabel
     
     @objc
     func startCountdownTimer() {
-        guard let message = message, message.isEphemeral, !message.hasBeenDeleted else { return }
-        
         stopCountdownTimer()
+        
+        guard let message = message, message.isEphemeral, !message.hasBeenDeleted, !message.isObfuscated else { return }
+        
         timestampTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [weak self] _ in
             guard let `self` = self, let message = self.message else {
                 return
