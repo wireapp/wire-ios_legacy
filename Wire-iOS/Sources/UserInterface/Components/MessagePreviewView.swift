@@ -70,7 +70,7 @@ extension UITextView {
 final class MessageThumbnailPreviewView: UIView {
     private let senderLabel = UILabel()
     private let contentTextView = UITextView.previewTextView()
-    private let imagePreview = ImageContentView()
+    private let imagePreview = ImageResourceView()
     private var observerToken: Any? = nil
 
     let message: ZMConversationMessage
@@ -94,6 +94,8 @@ final class MessageThumbnailPreviewView: UIView {
         }
     }
     
+    private static let thumbnailSize: CGFloat = 42
+    
     private func setupSubviews() {
         let allViews: [UIView] = [senderLabel, contentTextView, imagePreview]
         
@@ -103,7 +105,8 @@ final class MessageThumbnailPreviewView: UIView {
         
         imagePreview.clipsToBounds = true
         imagePreview.contentMode = .scaleAspectFill
-        
+        imagePreview.imageSizeLimit = .maxDimensionForShortSide(MessageThumbnailPreviewView.thumbnailSize * UIScreen.main.scale)
+
         allViews.forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
         allViews.forEach(self.addSubview)
     }
@@ -123,8 +126,8 @@ final class MessageThumbnailPreviewView: UIView {
             imagePreview.topAnchor.constraint(equalTo: topAnchor, constant: inset),
             imagePreview.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -inset),
             imagePreview.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -inset),
-            imagePreview.widthAnchor.constraint(equalToConstant: 42),
-            imagePreview.heightAnchor.constraint(equalToConstant: 42),
+            imagePreview.widthAnchor.constraint(equalToConstant: MessageThumbnailPreviewView.thumbnailSize),
+            imagePreview.heightAnchor.constraint(equalToConstant: MessageThumbnailPreviewView.thumbnailSize),
             ])
     }
 
@@ -146,20 +149,20 @@ final class MessageThumbnailPreviewView: UIView {
         if message.isImage {
             let attributes: [NSAttributedString.Key: Any] = [.font: UIFont.smallSemiboldFont,
                                                              .foregroundColor: UIColor.from(scheme: .textForeground)]
-            let imageIcon = NSTextAttachment.textAttachment(for: .photo, with: .from(scheme: .textForeground))!
+            let imageIcon = NSTextAttachment.textAttachment(for: .photo, with: .from(scheme: .textForeground), verticalCorrection: -1)!
             let initialString = NSAttributedString(attachment: imageIcon) + "  " + "conversation.input_bar.message_preview.image".localized.localizedUppercase
             contentTextView.attributedText = initialString && attributes
             
             if let imageResource = message.imageMessageData?.image {
-                imagePreview.configure(with: imageResource)
+                imagePreview.setImageResource(imageResource)
             }
         }
         else if message.isVideo, let fileMessageData = message.fileMessageData {
-            let imageIcon = NSTextAttachment.textAttachment(for: .videoCall, with: .from(scheme: .textForeground))!
+            let imageIcon = NSTextAttachment.textAttachment(for: .videoCall, with: .from(scheme: .textForeground), verticalCorrection: -1)!
             let initialString = NSAttributedString(attachment: imageIcon) + "  " + "conversation.input_bar.message_preview.video".localized.localizedUppercase
             contentTextView.attributedText = initialString && attributes
             
-            imagePreview.configure(with: fileMessageData.thumbnailImage)
+            imagePreview.setImageResource(fileMessageData.thumbnailImage)
         }
         else {
             fatal("Unknown message for preview: \(message)")
@@ -248,17 +251,17 @@ final class MessagePreviewView: UIView {
         }
         else if let location = message.locationMessageData {
             
-            let imageIcon = NSTextAttachment.textAttachment(for: .location, with: .from(scheme: .textForeground))!
+            let imageIcon = NSTextAttachment.textAttachment(for: .locationPin, with: .from(scheme: .textForeground), verticalCorrection: -1)!
             let initialString = NSAttributedString(attachment: imageIcon) + "  " + (location.name ?? "conversation.input_bar.message_preview.location".localized).localizedUppercase
             contentTextView.attributedText = initialString && attributes
         }
         else if message.isAudio {
-            let imageIcon = NSTextAttachment.textAttachment(for: .microphone, with: .from(scheme: .textForeground))!
+            let imageIcon = NSTextAttachment.textAttachment(for: .microphone, with: .from(scheme: .textForeground), verticalCorrection: -1)!
             let initialString = NSAttributedString(attachment: imageIcon) + "  " + "conversation.input_bar.message_preview.audio".localized.localizedUppercase
             contentTextView.attributedText = initialString && attributes
         }
         else if let fileData = message.fileMessageData {
-            let imageIcon = NSTextAttachment.textAttachment(for: .document, with: .from(scheme: .textForeground))!
+            let imageIcon = NSTextAttachment.textAttachment(for: .document, with: .from(scheme: .textForeground), verticalCorrection: -1)!
             let initialString = NSAttributedString(attachment: imageIcon) + "  " + (fileData.filename ?? "conversation.input_bar.message_preview.file".localized).localizedUppercase
             contentTextView.attributedText = initialString && attributes
         }
