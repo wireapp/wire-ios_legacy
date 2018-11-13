@@ -21,6 +21,7 @@
 #import <FBSnapshotTestCase/FBSnapshotTestCase.h>
 @import WireDataModel;
 
+///TODO: move to private header
 static CGSize const ZMDeviceSizeIPhone5 = (CGSize){ .width = 320, .height = 568 };
 static CGSize const ZMDeviceSizeIPhone6 = (CGSize){ .width = 375, .height = 667 };
 static CGSize const ZMDeviceSizeIPhone6Plus = (CGSize){ .width = 414, .height = 736 };
@@ -29,6 +30,24 @@ static CGSize const ZMDeviceSizeIPhoneXR = (CGSize){ .width = 414, .height = 896
 
 static CGSize const ZMDeviceSizeIPadPortrait = (CGSize){ .width = 768, .height = 1024 };
 static CGSize const ZMDeviceSizeIPadLandscape = (CGSize){ .width = 1024, .height = 768 };
+
+static NSArray<NSValue *> * _Nonnull phoneSizes(void) {
+    return @[
+             [NSValue valueWithCGSize:ZMDeviceSizeIPhone5],
+             [NSValue valueWithCGSize:ZMDeviceSizeIPhone6],
+             [NSValue valueWithCGSize:ZMDeviceSizeIPhone6Plus],
+             [NSValue valueWithCGSize:ZMDeviceSizeIPhoneX],
+             [NSValue valueWithCGSize:ZMDeviceSizeIPhoneXR]
+             ];
+}
+
+static NSArray<NSValue *> * _Nonnull tabletSizes(void) {
+    return @[
+             [NSValue valueWithCGSize:ZMDeviceSizeIPadPortrait],
+             [NSValue valueWithCGSize:ZMDeviceSizeIPadLandscape]
+             ];
+}
+
 
 #define ZMVerifyViewInAllDeviceSizesWithBlock(view__, configuration__) \
 do { \
@@ -96,23 +115,12 @@ NS_ASSUME_NONNULL_BEGIN
 /// Performs multiple assertions with the given view using the screen sizes of
 /// the common iPhones in Portrait and iPad in Landscape and Portrait.
 /// This method only makes sense for views that will be on presented fullscreen.
-- (void)verifyViewInAllDeviceSizes:(UIView *)view extraLayoutPass:(BOOL)extraLayoutPass file:(const char[_Nullable])file line:(NSUInteger)line;
+
+//- (void)verifyViewInAllDeviceSizes:(UIView *)view extraLayoutPass:(BOOL)extraLayoutPass file:(const char[_Nullable])file line:(NSUInteger)line;
 
 - (void)verifyViewInAllPhoneWidths:(UIView *)view extraLayoutPass:(BOOL)extraLayoutPass file:(const char[_Nullable])file line:(NSUInteger)line;
 
 - (void)verifyViewInAllTabletWidths:(UIView *)view extraLayoutPass:(BOOL)extraLayoutPass file:(const char[_Nullable])file line:(NSUInteger)line;
-
-- (void)verifyViewInAllPhoneSizes:(UIView *)view
-                  extraLayoutPass:(BOOL)extraLayoutPass
-                             file:(const char[_Nullable])file
-                             line:(NSUInteger)line
-               configurationBlock:(nullable void (^)(UIView * view))configuration;
-
-- (void)verifyViewInAllDeviceSizes:(UIView *)view
-                   extraLayoutPass:(BOOL)extraLayoutPass
-                              file:(const char[_Nullable])file
-                              line:(NSUInteger)line
-                configurationBlock:(nullable void (^)(UIView *view, BOOL isPad))configuration;
 
 @end
 

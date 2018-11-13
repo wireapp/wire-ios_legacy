@@ -80,13 +80,70 @@ extension StaticString {
     }
 }
 
+// MARK: - verify the snapshots in all devices
 extension ZMSnapshotTestCase {
+    static var deviceScreenSizes: [String:CGSize] = [
+        "iPhone4Inch": ZMDeviceSizeIPhone5,
+        "iPhone4_7Inch": ZMDeviceSizeIPhone6,
+        "iPhone5_5Inch": ZMDeviceSizeIPhone6Plus,
+        "iPhone5_8Inch": ZMDeviceSizeIPhoneX,
+        "iPhone6_5Inch": ZMDeviceSizeIPhoneXR,
+        ]
+
+    
+    typealias ConfigurationWithDeviceType = (_ view: UIView, _ isPad: Bool) -> Void
+    typealias Configuration = (_ view: UIView) -> Void
+
+    private static func deviceSizes() -> [NSValue] {
+        return phoneSizes() + tabletSizes()
+    }
+
+    func verifyMultipleSize(view: UIView, extraLayoutPass: Bool, inSizes sizes: [NSValue], configuration: ConfigurationWithDeviceType?,
+                file: StaticString = #file, line: UInt = #line) {
+        for value in sizes {
+            let size = value.cgSizeValue
+            view.frame = CGRect(x: 0, y: 0, width: size.width, height: size.height)
+            if let configuration = configuration {
+                let iPad = size.equalTo(ZMDeviceSizeIPadLandscape) || size.equalTo(ZMDeviceSizeIPadPortrait)
+                UIView.performWithoutAnimation({
+                    configuration(view, iPad)
+                })
+            }
+            verifyView(view, extraLayoutPass: extraLayoutPass, file: file.utf8SignedStart(), line: line)
+        }
+    }
+
+    ///TODO: rename
+    func verifyView(inAllPhoneSizes view: UIView, extraLayoutPass: Bool, file: StaticString = #file, line: UInt = #line, configurationBlock configuration: Configuration?) {
+        verifyMultipleSize(view: view, extraLayoutPass: extraLayoutPass, inSizes: phoneSizes(), configuration: { view, isPad in
+            if let configuration = configuration {
+                configuration(view)
+            }
+        }, file: file, line: line)
+    }
+
+    ///TODO: rename
+    func verifyView(inAllDeviceSizes view: UIView, extraLayoutPass: Bool, file: StaticString = #file, line: UInt = #line, configurationBlock configuration: ConfigurationWithDeviceType?) {
+
+        verifyMultipleSize(view: view, extraLayoutPass: extraLayoutPass, inSizes: ZMSnapshotTestCase.deviceSizes(),
+               configuration: configuration,
+               file: file, line: line)
+    }
+
+    ///TODO: rename
+    func verifyView(inAllDeviceSizes view: UIView, extraLayoutPass: Bool, file: StaticString = #file, line: UInt = #line) {
+        verifyView(inAllDeviceSizes: view, extraLayoutPass: extraLayoutPass, file: file, line: line, configurationBlock: nil)
+    }
+}
+
+extension ZMSnapshotTestCase {
+
     func verify(view: UIView, identifier: String = "", tolerance: Float = 0, file: StaticString = #file, line: UInt = #line) {
         verifyView(view, extraLayoutPass: false, tolerance: tolerance, file: file.utf8SignedStart(), line: line, identifier: identifier)
     }
     
     func verifyInAllDeviceSizes(view: UIView, file: StaticString = #file, line: UInt = #line, configuration: @escaping (UIView, Bool) -> () = { _, _ in }) {
-        verifyView(inAllDeviceSizes: view, extraLayoutPass: false, file: file.utf8SignedStart(), line: line, configurationBlock: configuration)
+        verifyView(inAllDeviceSizes: view, extraLayoutPass: false, file: file, line: line, configurationBlock: configuration)
     }
     
     func verifyInAllPhoneWidths(view: UIView, file: StaticString = #file, line: UInt = #line) {
@@ -114,7 +171,7 @@ extension ZMSnapshotTestCase {
     }
     
     func verifyInAllIPhoneSizes(view: UIView, extraLayoutPass: Bool = false, file: StaticString = #file, line: UInt = #line, configurationBlock: ((UIView) -> Swift.Void)? = nil) {
-        verifyView(inAllPhoneSizes: view, extraLayoutPass: extraLayoutPass, file: file.utf8SignedStart(), line: line, configurationBlock: configurationBlock)
+        verifyView(inAllPhoneSizes: view, extraLayoutPass: extraLayoutPass, file: file, line: line, configurationBlock: configurationBlock)
     }
     
     func verifyInAllColorSchemes(view: UIView, tolerance: Float = 0, file: StaticString = #file, line: UInt = #line) {

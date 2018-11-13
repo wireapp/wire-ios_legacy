@@ -23,27 +23,7 @@
 #import "UIColor+WAZExtensions.h"
 #import "ColorScheme.h"
 #import "Wire-Swift.h"
-
-static NSArray<NSValue *> *phoneSizes(void) {
-    return @[
-             [NSValue valueWithCGSize:ZMDeviceSizeIPhone5],
-             [NSValue valueWithCGSize:ZMDeviceSizeIPhone6],
-             [NSValue valueWithCGSize:ZMDeviceSizeIPhone6Plus],
-             [NSValue valueWithCGSize:ZMDeviceSizeIPhoneX],
-             [NSValue valueWithCGSize:ZMDeviceSizeIPhoneXR]
-             ];
-}
-
-static NSArray<NSValue *> *tabletSizes(void) {
-    return @[
-             [NSValue valueWithCGSize:ZMDeviceSizeIPadPortrait],
-             [NSValue valueWithCGSize:ZMDeviceSizeIPadLandscape]
-             ];
-}
-
-static NSArray<NSValue *> *deviceSizes(void) {
-    return [phoneSizes() arrayByAddingObjectsFromArray:tabletSizes()];
-}
+//#import "Wire_iOS_Tests-Swift.h"
 
 static NSSet<NSNumber *> *phoneWidths(void) {
     return [phoneSizes() mapWithBlock:^NSNumber *(NSValue *boxedSize) {
@@ -207,7 +187,7 @@ static NSSet<NSNumber *> *phoneWidths(void) {
     if ([self assertEmptyFrame:container file:file line:line]) {
         return;
     }
-    NSString *finalIdentifier = @"";
+    NSString *finalIdentifier = @""; ///TODO: replace size with  device type
     
     if (0 == identifier.length) {
         finalIdentifier = NSStringFromCGSize(view.bounds.size);
@@ -233,11 +213,6 @@ static NSSet<NSNumber *> *phoneWidths(void) {
     }
     
     return NO;
-}
-
-- (void)verifyViewInAllDeviceSizes:(UIView *)view  extraLayoutPass:(BOOL)extraLayoutPass file:(const char[])file line:(NSUInteger)line
-{
-    [self verifyViewInAllDeviceSizes:view extraLayoutPass:extraLayoutPass file:file line:line configurationBlock:nil];
 }
 
 - (void)verifyViewInAllPhoneWidths:(UIView *)view extraLayoutPass:(BOOL)extraLayoutPass file:(const char[])file line:(NSUInteger)line
@@ -273,50 +248,6 @@ static NSSet<NSNumber *> *phoneWidths(void) {
     }
     
     FBSnapshotVerifyView(container, @(width).stringValue)
-}
-
-- (void)verifyViewInAllPhoneSizes:(UIView *)view
-                  extraLayoutPass:(BOOL)extraLayoutPass
-                             file:(const char[])file
-                             line:(NSUInteger)line
-               configurationBlock:(void (^)(UIView * view))configuration;
-{
-    [self verifyView:view extraLayoutPass:extraLayoutPass inSizes:phoneSizes() file:file line:line configuration:^(UIView *view,__unused BOOL isPad) {
-        if (nil != configuration) {
-            configuration(view);
-        }
-    }];
-}
-
-
-- (void)verifyViewInAllDeviceSizes:(UIView *)view
-                   extraLayoutPass:(BOOL)extraLayoutPass
-                              file:(const char[])file
-                              line:(NSUInteger)line
-                configurationBlock:(void (^)(UIView * view, BOOL isPad))configuration
-{
-    [self verifyView:view extraLayoutPass:extraLayoutPass inSizes:deviceSizes() file:file line:line configuration:configuration];
-}
-
-- (void)verifyView:(UIView *)view
-   extraLayoutPass:(BOOL)extraLayoutPass
-           inSizes:(NSArray <NSValue *>*)sizes
-              file:(const char[])file
-              line:(NSUInteger)line
-     configuration:(void (^)(UIView * view, BOOL isPad))configuration
-{
-    for (NSValue *value in sizes) {
-        CGSize size = value.CGSizeValue;
-        view.frame = CGRectMake(0, 0, size.width, size.height);
-        if (nil != configuration) {
-            BOOL iPad = CGSizeEqualToSize(size, ZMDeviceSizeIPadLandscape) || CGSizeEqualToSize(size, ZMDeviceSizeIPadPortrait);
-            [UIView performWithoutAnimation:^{
-                configuration(view, iPad);
-            }];
-        }
-        
-        [self verifyView:view extraLayoutPass:extraLayoutPass file:file line:line];
-    }
 }
 
 @end
