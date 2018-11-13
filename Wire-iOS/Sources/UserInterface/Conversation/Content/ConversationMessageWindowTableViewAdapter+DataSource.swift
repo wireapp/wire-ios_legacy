@@ -61,7 +61,7 @@ extension ConversationMessageWindowTableViewAdapter: ZMConversationMessageWindow
         
         let isLoadingInitialContent = messageWindow.messages.count == changeInfo.insertedIndexes.count && changeInfo.deletedIndexes.count == 0
         let isExpandingMessageWindow = changeInfo.insertedIndexes.count > 0 && changeInfo.insertedIndexes.last == messageWindow.messages.count - 1
-        let shouldJumpToTheConversationEnd = changeInfo.insertedMessages.any({ $0.isSentFromThisDevice })
+        let shouldJumpToTheConversationEnd = changeInfo.insertedMessages.any(\.isSentFromThisDevice)
         
         stopAudioPlayer(forDeletedMessages: changeInfo.deletedObjects)
         
