@@ -18,17 +18,10 @@
 
 
 #import "ZMSnapshotTestCase.h"
-@import PureLayout;
 #import <WireSyncEngine/WireSyncEngine.h>
 #import "UIColor+WAZExtensions.h"
 #import "ColorScheme.h"
 #import "Wire-Swift.h"
-
-static NSSet<NSNumber *> *phoneWidths(void) {
-    return [phoneSizes() mapWithBlock:^NSNumber *(NSValue *boxedSize) {
-        return @(boxedSize.CGSizeValue.width);
-    }].set;
-}
 
 
 @interface ZMSnapshotTestCase ()
@@ -166,7 +159,7 @@ static NSSet<NSNumber *> *phoneWidths(void) {
     container.backgroundColor = self.snapshotBackgroundColor;
     
     [container addSubview:view];
-    [view autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
+    [view fitInSuperviewWithNoInset];
     return container;
 }
 
@@ -236,27 +229,14 @@ static NSSet<NSNumber *> *phoneWidths(void) {
     return NO;
 }
 
-- (void)verifyViewInAllPhoneWidths:(UIView *)view extraLayoutPass:(BOOL)extraLayoutPass file:(const char[])file line:(NSUInteger)line
-{
-    [self assertAmbigousLayout:view file:file line:line];
-    for (NSNumber *value in phoneWidths()) {
-        [self verifyView:view extraLayoutPass:extraLayoutPass width:value.floatValue file:file line:line];
-    }
-}
-
-- (void)verifyViewInAllTabletWidths:(UIView *)view extraLayoutPass:(BOOL)extraLayoutPass file:(const char[])file line:(NSUInteger)line
-{
-    [self assertAmbigousLayout:view file:file line:line];
-    for (NSValue *value in tabletSizes()) {
-        [self verifyView:view extraLayoutPass:extraLayoutPass width:value.CGSizeValue.width file:file line:line];
-    }
-}
-
 - (void)verifyView:(UIView *)view extraLayoutPass:(BOOL)extraLayoutPass width:(CGFloat)width file:(const char[])file line:(NSUInteger)line
 {
     UIView *container = [self containerViewWithView:view];
-    
-    [container autoSetDimension:ALDimensionWidth toSize:width];
+
+    container.translatesAutoresizingMaskIntoConstraints = NO;
+    [NSLayoutConstraint activateConstraints:
+     @[[container.widthAnchor constraintEqualToConstant:width]]
+     ];
     [container setNeedsLayout];
     [container layoutIfNeeded];
     [container setNeedsLayout];

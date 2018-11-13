@@ -101,6 +101,16 @@ extension ZMSnapshotTestCase {
         return phoneScreenSizes.merging(tabletScreenSizes) { $1 }
     }()
 
+    private static var phoneWidths: [String:CGFloat] = {
+        return Dictionary(uniqueKeysWithValues:
+            phoneScreenSizes.map { key, value in (key, value.width) })
+    }()
+
+    private static var tabletSizes: [String:CGFloat] = {
+        return Dictionary(uniqueKeysWithValues:
+            tabletScreenSizes.map { key, value in (key, value.width) })
+    }()
+
     func verifyMultipleSize(view: UIView, extraLayoutPass: Bool, inSizes sizes: [String:CGSize], configuration: ConfigurationWithDeviceType?,
                 file: StaticString = #file, line: UInt = #line) {
         for (deviceName, size) in sizes {
@@ -129,6 +139,22 @@ extension ZMSnapshotTestCase {
                configuration: configuration,
                file: file, line: line)
     }
+
+    func verifyView(inAllPhoneWidths view: UIView, extraLayoutPass: Bool, file: StaticString = #file, line: UInt = #line) {
+        assertAmbigousLayout(view, file: file.utf8SignedStart(), line: line)
+        for (_/*deviceName*/, width) in ZMSnapshotTestCase.phoneWidths {
+//        for value: NSNumber in ZMSnapshotTestCase.phoneWidths {
+            verifyView(view, extraLayoutPass: extraLayoutPass, width: width, file: file.utf8SignedStart(), line: line)
+        }
+    }
+
+    func verifyView(inAllTabletWidths view: UIView, extraLayoutPass: Bool, file: StaticString = #file, line: UInt = #line) {
+        assertAmbigousLayout(view, file: file.utf8SignedStart(), line: line)
+        for (_/*deviceName*/, width) in ZMSnapshotTestCase.tabletSizes {
+//        for value: NSValue in ZMSnapshotTestCase.tabletSizes {
+            verifyView(view, extraLayoutPass: extraLayoutPass, width: width, file: file.utf8SignedStart(), line: line)
+        }
+    }
 }
 
 extension ZMSnapshotTestCase {
@@ -142,11 +168,11 @@ extension ZMSnapshotTestCase {
     }
     
     func verifyInAllPhoneWidths(view: UIView, file: StaticString = #file, line: UInt = #line) {
-        verifyView(inAllPhoneWidths: view, extraLayoutPass: false, file: file.utf8SignedStart(), line: line)
+        verifyView(inAllPhoneWidths: view, extraLayoutPass: false, file: file, line: line)
     }
     
     func verifyInAllTabletWidths(view: UIView, file: StaticString = #file, line: UInt = #line) {
-        verifyView(inAllTabletWidths: view, extraLayoutPass: false, file: file.utf8SignedStart(), line: line)
+        verifyView(inAllTabletWidths: view, extraLayoutPass: false, file: file, line: line)
     }
 
 

@@ -31,22 +31,28 @@ static CGSize const ZMDeviceSizeIPhoneXR = (CGSize){ .width = 414, .height = 896
 static CGSize const ZMDeviceSizeIPadPortrait = (CGSize){ .width = 768, .height = 1024 };
 static CGSize const ZMDeviceSizeIPadLandscape = (CGSize){ .width = 1024, .height = 768 };
 
-static NSArray<NSValue *> * _Nonnull phoneSizes(void) {
-    return @[
-             [NSValue valueWithCGSize:ZMDeviceSizeIPhone5],
-             [NSValue valueWithCGSize:ZMDeviceSizeIPhone6],
-             [NSValue valueWithCGSize:ZMDeviceSizeIPhone6Plus],
-             [NSValue valueWithCGSize:ZMDeviceSizeIPhoneX],
-             [NSValue valueWithCGSize:ZMDeviceSizeIPhoneXR]
-             ];
-}
+//static NSArray<NSValue *> * _Nonnull phoneSizes(void) {
+//    return @[
+//             [NSValue valueWithCGSize:ZMDeviceSizeIPhone5],
+//             [NSValue valueWithCGSize:ZMDeviceSizeIPhone6],
+//             [NSValue valueWithCGSize:ZMDeviceSizeIPhone6Plus],
+//             [NSValue valueWithCGSize:ZMDeviceSizeIPhoneX],
+//             [NSValue valueWithCGSize:ZMDeviceSizeIPhoneXR]
+//             ];
+//}
 
-static NSArray<NSValue *> * _Nonnull tabletSizes(void) {
-    return @[
-             [NSValue valueWithCGSize:ZMDeviceSizeIPadPortrait],
-             [NSValue valueWithCGSize:ZMDeviceSizeIPadLandscape]
-             ];
-}
+//static NSArray<NSValue *> * _Nonnull tabletSizes(void) {
+//    return @[
+//             [NSValue valueWithCGSize:ZMDeviceSizeIPadPortrait],
+//             [NSValue valueWithCGSize:ZMDeviceSizeIPadLandscape]
+//             ];
+//}
+
+//static NSSet<NSNumber *> * _Nonnull phoneWidths(void) {
+//    return [phoneSizes() mapWithBlock:^NSNumber *(NSValue *boxedSize) {
+//        return @(boxedSize.CGSizeValue.width);
+//    }].set;
+//}
 
 
 #define ZMVerifyViewInAllDeviceSizesWithBlock(view__, configuration__) \
@@ -123,12 +129,11 @@ NS_ASSUME_NONNULL_BEGIN
 /// the common iPhones in Portrait and iPad in Landscape and Portrait.
 /// This method only makes sense for views that will be on presented fullscreen.
 
-//- (void)verifyViewInAllDeviceSizes:(UIView *)view extraLayoutPass:(BOOL)extraLayoutPass file:(const char[_Nullable])file line:(NSUInteger)line;
 
-- (void)verifyViewInAllPhoneWidths:(UIView *)view extraLayoutPass:(BOOL)extraLayoutPass file:(const char[_Nullable])file line:(NSUInteger)line;
+///TODO: internal
+- (void)assertAmbigousLayout:(UIView *)view file:(const char[_Nullable])file line:(NSUInteger)line;
 
-- (void)verifyViewInAllTabletWidths:(UIView *)view extraLayoutPass:(BOOL)extraLayoutPass file:(const char[_Nullable])file line:(NSUInteger)line;
-
+- (void)verifyView:(UIView *)view extraLayoutPass:(BOOL)extraLayoutPass width:(CGFloat)width file:(const char[_Nullable])file line:(NSUInteger)line;
 @end
 
 NS_ASSUME_NONNULL_END
