@@ -199,13 +199,9 @@ class ConversationRenamedSystemMessageCellDescription: ConversationMessageCellDe
     var showEphemeralTimer: Bool = false
     var topMargin: Float = 0
 
-    var isFullWidth: Bool {
-        return true
-    }
-
-    var supportsActions: Bool {
-        return false
-    }
+    let isFullWidth: Bool = true
+    let supportsActions: Bool = false
+    let containsHighlightableContent: Bool = false
 
     init(message: ZMConversationMessage, data: ZMSystemMessageData, sender: ZMUser, newName: String) {
         let senderText = message.senderName
@@ -232,13 +228,9 @@ class ConversationCallSystemMessageCellDescription: ConversationMessageCellDescr
     var showEphemeralTimer: Bool = false
     var topMargin: Float = 0
 
-    var isFullWidth: Bool {
-        return true
-    }
-
-    var supportsActions: Bool {
-        return false
-    }
+    let isFullWidth: Bool = true
+    let supportsActions: Bool = false
+    let containsHighlightableContent: Bool = false
 
     init(message: ZMConversationMessage, data: ZMSystemMessageData, missed: Bool) {
         let viewModel = CallCellViewModel(
@@ -267,13 +259,9 @@ class ConversationMessageTimerCellDescription: ConversationMessageCellDescriptio
     var showEphemeralTimer: Bool = false
     var topMargin: Float = 0
 
-    var isFullWidth: Bool {
-        return true
-    }
-
-    var supportsActions: Bool {
-        return false
-    }
+    let isFullWidth: Bool = true
+    let supportsActions: Bool = false
+    let containsHighlightableContent: Bool = false
 
     init(message: ZMConversationMessage, data: ZMSystemMessageData, timer: NSNumber, sender: ZMUser) {
         let senderText = message.senderName
@@ -311,13 +299,9 @@ class ConversationVerifiedSystemMessageSectionDescription: ConversationMessageCe
     var showEphemeralTimer: Bool = false
     var topMargin: Float = 0
 
-    var isFullWidth: Bool {
-        return true
-    }
-
-    var supportsActions: Bool {
-        return false
-    }
+    let isFullWidth: Bool = true
+    let supportsActions: Bool = false
+    let containsHighlightableContent: Bool = false
 
     init() {
         let title = NSAttributedString(
@@ -344,13 +328,9 @@ class ConversationCannotDecryptSystemMessageCellDescription: ConversationMessage
     var showEphemeralTimer: Bool = false
     var topMargin: Float = 0
 
-    var isFullWidth: Bool {
-        return true
-    }
-
-    var supportsActions: Bool {
-        return false
-    }
+    let isFullWidth: Bool = true
+    let supportsActions: Bool = false
+    let containsHighlightableContent: Bool = false
 
     init(message: ZMConversationMessage, data: ZMSystemMessageData, sender: ZMUser, remoteIdentityChanged: Bool) {
         let exclamationColor = UIColor(for: .vividRed)

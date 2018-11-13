@@ -780,7 +780,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 - (void)conversationInputBarViewControllerWantsToShowMessage:(id<ZMConversationMessage>)message
 {
     [self.contentViewController scrollTo:message completion:^(UIView * cell) {
-        [cell flashBackground];
+        [self.contentViewController highlightMessage:message];
     }];
 }
 

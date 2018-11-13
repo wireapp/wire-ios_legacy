@@ -36,13 +36,9 @@ class BurstTimestampSenderMessageCellDescription: ConversationMessageCellDescrip
     var showEphemeralTimer: Bool = false
     var topMargin: Float = 0
 
-    var isFullWidth: Bool {
-        return true
-    }
-
-    var supportsActions: Bool {
-        return false
-    }
+    let isFullWidth: Bool = true
+    let supportsActions: Bool = false
+    let containsHighlightableContent: Bool = false
 
     init(message: ZMConversationMessage, context: ConversationMessageContext) {
         self.configuration = View.Configuration(date: message.serverTimestamp ?? Date(), includeDayOfWeek: context.isFirstMessageOfTheDay, showUnreadDot: context.isFirstUnreadMessage)
@@ -58,11 +54,7 @@ class BurstTimestampSenderMessageCellDescription: ConversationMessageCellDescrip
 class BurstTimestampSenderMessageCell: UIView, ConversationMessageCell {
 
     private let timestampView = ConversationCellBurstTimestampView()
-    private var configuration: BurstTimestampSenderMessageCellConfiguration? = nil {
-        didSet {
-            updateTimer()
-        }
-    }
+    private var configuration: BurstTimestampSenderMessageCellConfiguration? = nil
     private var timer: Timer? = nil
     
     override init(frame: CGRect) {
@@ -95,9 +87,17 @@ class BurstTimestampSenderMessageCell: UIView, ConversationMessageCell {
     override open func willMove(toWindow newWindow: UIWindow?) {
         super.willMove(toWindow: newWindow)
         
-        if self.window != newWindow {
-            updateTimer(window: newWindow)
+        if self.window == nil {
+            stopTimer()
         }
+    }
+    
+    func willDisplay() {
+        startTimer()
+    }
+    
+    func didEndDisplaying() {
+        stopTimer()
     }
     
     private func reconfigure() {
@@ -107,18 +107,16 @@ class BurstTimestampSenderMessageCell: UIView, ConversationMessageCell {
         configure(with: configuration, animated: false)
     }
     
-    private func updateTimer(window: UIWindow? = nil) {
-        let currentWindow: UIWindow? = window ?? self.window
-
-        if currentWindow != nil && timer == nil {
-            timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { [weak self] _ in
-                self?.reconfigure()
-            })
-        }
-        
-        if currentWindow == nil && timer != nil {
-            timer = nil
-        }
+    private func startTimer() {
+        stopTimer()
+        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { [weak self] _ in
+            self?.reconfigure()
+        })
+    }
+    
+    private func stopTimer() {
+        timer?.invalidate()
+        timer = nil
     }
     
     // MARK: - Cell
@@ -128,7 +126,6 @@ class BurstTimestampSenderMessageCell: UIView, ConversationMessageCell {
     func configure(with object: BurstTimestampSenderMessageCellConfiguration, animated: Bool) {
         configuration = object
         timestampView.configure(with: object.date, includeDayOfWeek: object.includeDayOfWeek, showUnreadDot: object.showUnreadDot)
-        updateTimer()
     }
 
 }

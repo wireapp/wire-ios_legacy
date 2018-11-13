@@ -28,6 +28,11 @@ import UIKit
 @objcMembers public class LinkInteractionTextView: UITextView {
     
     public weak var interactionDelegate: TextViewInteractionDelegate?
+
+    override public var selectedTextRange: UITextRange? {
+        get { return nil }
+        set { /* no-op */ }
+    }
     
     // URLs with these schemes should be handled by the os.
     fileprivate let dataDetectedURLSchemes = [ "x-apple-data-detectors", "tel", "mailto"]
@@ -105,8 +110,9 @@ extension LinkInteractionTextView: UITextViewDelegate {
             interactionDelegate?.textViewDidLongPress(self)
             return false
         case .preview:
-            // if no alert is shown, still allow preview peeking
-            return !showAlertIfNeeded(for: URL, in: characterRange)
+            // do not allow peeking links, as it blocks showing the menu for replies
+            interactionDelegate?.textViewDidLongPress(self)
+            return false
         }
     }
 }

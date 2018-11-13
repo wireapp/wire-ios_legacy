@@ -48,13 +48,9 @@ class ConversationYouTubeAttachmentCellDescription: ConversationMessageCellDescr
     var showEphemeralTimer: Bool = false
     var topMargin: Float = 8
 
-    var isFullWidth: Bool {
-        return false
-    }
-
-    var supportsActions: Bool {
-        return true
-    }
+    let isFullWidth: Bool = false
+    let supportsActions: Bool = true
+    let containsHighlightableContent: Bool = true
 
     init(attachment: LinkAttachment) {
         configuration = View.Configuration(attachment: attachment)

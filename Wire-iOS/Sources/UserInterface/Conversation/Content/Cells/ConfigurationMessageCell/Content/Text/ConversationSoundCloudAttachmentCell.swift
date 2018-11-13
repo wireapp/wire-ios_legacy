@@ -59,13 +59,9 @@ class ConversationSoundCloudCellDescription<Player: PlayerViewControllerProtocol
     var showEphemeralTimer: Bool = false
     var topMargin: Float = 8
 
-    var isFullWidth: Bool {
-        return true
-    }
-
-    var supportsActions: Bool {
-        return true
-    }
+    let isFullWidth: Bool = true
+    let supportsActions: Bool = true
+    let containsHighlightableContent: Bool = false
 
     init(message: ZMConversationMessage, attachment: LinkAttachment) {
         self.configuration = View.Configuration(attachment: attachment, message: message)

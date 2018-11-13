@@ -349,6 +349,11 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 }
 #pragma mark - Actions
 
+- (void)highlightMessage:(id<ZMConversationMessage>)message;
+{
+    [self.conversationMessageWindowTableViewAdapter highlightMessage:message];
+}
+
 - (void)wantsToPerformAction:(MessageAction)actionId forMessage:(id<ZMConversationMessage>)message cell:(ConversationCell *)cell
 {
     dispatch_block_t action = ^{
@@ -468,9 +473,11 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
             }
                 break;
             case MessageActionShowInConversation:
+            {
                 [self scrollTo:message completion:^(UIView *cell) {
-                    [cell flashBackground];
+                    [self.conversationMessageWindowTableViewAdapter highlightMessage:message];
                 }];
+            }
                 break;
             case MessageActionCopy:
             {
@@ -502,8 +509,9 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
             case MessageActionOpenQuote:
             {
                 if (message.textMessageData.quote) {
-                    [self scrollTo:message.textMessageData.quote completion:^(UIView *cell) {
-                        [cell flashBackground];
+                    id<ZMConversationMessage> quote = message.textMessageData.quote;
+                    [self scrollTo:quote completion:^(UIView *cell) {
+                        [self.conversationMessageWindowTableViewAdapter highlightMessage:quote];
                     }];
                 }
             }

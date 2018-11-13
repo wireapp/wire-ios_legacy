@@ -114,7 +114,6 @@ extension IndexSet {
         }
     }
     
-    
     // MARK: - Content Types
     
     private func addLegacyContentIfNeeded(layoutProperties: ConversationCellLayoutProperties) -> Bool {
@@ -166,7 +165,7 @@ extension IndexSet {
     private func addContent(context: ConversationMessageContext, layoutProperties: ConversationCellLayoutProperties, isSenderVisible: Bool) {
         
         var contentCellDescriptions: [AnyConversationMessageCellDescription]
-        
+
         if message.isKnock {
             contentCellDescriptions = addPingMessageCells()
         } else if message.isText {
@@ -196,7 +195,7 @@ extension IndexSet {
         guard let sender = message.sender else {
             return []
         }
-        
+
         return [AnyConversationMessageCellDescription(ConversationPingCellDescription(message: message, sender: sender))]
     }
     
@@ -329,6 +328,39 @@ extension IndexSet {
 
         let cell = description.makeCell(for: tableView, at: indexPath)
         return cell
+    }
+
+    // MARK: - Highlight
+
+    @objc func highlight(in tableView: UITableView, sectionIndex: Int) {
+        let cellDescriptions = tableViewCellDescriptions
+
+        let highlightableCells: [HighlightableView] = cellDescriptions.indices.compactMap {
+            guard cellDescriptions[$0].containsHighlightableContent else {
+                return nil
+            }
+
+            let index = IndexPath(row: $0, section: sectionIndex)
+            return tableView.cellForRow(at: index) as? HighlightableView
+        }
+
+        let highlight = {
+            for container in highlightableCells {
+                container.highlightContainer.backgroundColor = UIColor.accentDimmedFlat
+            }
+        }
+
+        let unhighlight = {
+            for container in highlightableCells {
+                container.highlightContainer.backgroundColor = .clear
+            }
+        }
+
+        let animationOptions: UIView.AnimationOptions = [.curveEaseIn, .allowUserInteraction]
+
+        UIView.animate(withDuration: 0.2, delay: 0, options: animationOptions, animations: highlight) { _ in
+            UIView.animate(withDuration: 1, delay: 0.55, options: animationOptions, animations: unhighlight)
+        }
     }
 
     // MARK: - Changes

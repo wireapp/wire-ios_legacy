@@ -46,6 +46,12 @@ protocol ConversationMessageCell {
      */
 
     func configure(with object: Configuration, animated: Bool)
+    
+    /// Called before the cell will be displayed on the screen.
+    func willDisplay()
+    
+    /// Called after the cell as been moved off screen.
+    func didEndDisplaying()
 }
 
 extension ConversationMessageCell {
@@ -60,6 +66,14 @@ extension ConversationMessageCell {
     
     var ephemeralTimerTopInset: CGFloat {
         return 8
+    }
+    
+    func willDisplay() {
+        // to be overriden
+    }
+    
+    func didEndDisplaying() {
+        // to be overriden
     }
 
 }
@@ -90,6 +104,9 @@ protocol ConversationMessageCellDescription: class {
     /// Whether the cell should display an ephemeral timer in the margin given it's an ephemeral message
     var showEphemeralTimer: Bool { get set }
 
+    /// Whether the cell contains content that can be highlighted.
+    var containsHighlightableContent: Bool { get }
+
     /// The message that is displayed.
     var message: ZMConversationMessage? { get set }
 
@@ -104,11 +121,21 @@ protocol ConversationMessageCellDescription: class {
 
     func register(in tableView: UITableView)
     func makeCell(for tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell
+    func willDisplayCell()
+    func didEndDisplayingCell()
 }
 
 // MARK: - Table View Dequeuing
 
 extension ConversationMessageCellDescription {
+    
+    func willDisplayCell() {
+        _ = message?.startSelfDestructionIfNeeded()
+    }
+    
+    func didEndDisplayingCell() {
+        
+    }
 
     func register(in tableView: UITableView) {
         tableView.register(cell: type(of: self))
@@ -140,6 +167,7 @@ extension ConversationMessageCellDescription {
     private let _message: AnyMutableProperty<ZMConversationMessage?>
     private let _actionController: AnyMutableProperty<ConversationCellActionController?>
     private let _topMargin: AnyMutableProperty<Float>
+    private let _containsHighlightableContent: AnyConstantProperty<Bool>
     private let _showEphemeralTimer: AnyMutableProperty<Bool>
 
     init<T: ConversationMessageCellDescription>(_ description: T) {
@@ -163,6 +191,7 @@ extension ConversationMessageCellDescription {
         _message = AnyMutableProperty(description, keyPath: \.message)
         _actionController = AnyMutableProperty(description, keyPath: \.actionController)
         _topMargin = AnyMutableProperty(description, keyPath: \.topMargin)
+        _containsHighlightableContent = AnyConstantProperty(description, keyPath: \.containsHighlightableContent)
         _showEphemeralTimer = AnyMutableProperty(description, keyPath: \.showEphemeralTimer)
     }
 
@@ -188,6 +217,10 @@ extension ConversationMessageCellDescription {
     @objc var topMargin: Float {
         get { return _topMargin.getter() }
         set { _topMargin.setter(newValue) }
+    }
+
+    @objc var containsHighlightableContent: Bool {
+        return _containsHighlightableContent.getter()
     }
     
     @objc var showEphemeralTimer: Bool {

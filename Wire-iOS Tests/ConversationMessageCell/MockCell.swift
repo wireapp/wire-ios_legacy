@@ -41,6 +41,7 @@ class MockCellDescription<T>: ConversationMessageCellDescription {
     var topMargin: Float = 0
     var isFullWidth: Bool = false
     var supportsActions: Bool = true
+    var containsHighlightableContent: Bool = true
 
     weak var message: ZMConversationMessage?
     weak var delegate: ConversationCellDelegate?

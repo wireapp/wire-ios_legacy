@@ -51,8 +51,8 @@ static NSString *const ConversationMessageTimerUpdateCellId = @"ConversationMess
 @property (nonatomic) BOOL expandingWindow;
 
 @property (nonatomic, strong) NSMutableArray<Class> *registeredCells;
-@property (nonatomic, strong) NSMutableDictionary<NSUUID *, ConversationMessageSectionController *> *sectionControllers;
-@property (nonatomic, strong) NSMutableDictionary<NSUUID *, ConversationCellActionController *> *actionControllers;
+@property (nonatomic, strong) NSMutableDictionary<NSString *, ConversationMessageSectionController *> *sectionControllers;
+@property (nonatomic, strong) NSMutableDictionary<NSString *, ConversationCellActionController *> *actionControllers;
 
 NS_ASSUME_NONNULL_END
 

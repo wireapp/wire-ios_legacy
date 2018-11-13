@@ -170,26 +170,26 @@ import TTTAttributedLabel
             self.configureTimestamp(message, animated: animated)
             self.tapGestureRecogniser.isEnabled = false
         }
-        
-        updateTimestampTimer()
     }
     
-    private func updateTimestampTimer(window: UIWindow? = nil) {
-        let currentWindow: UIWindow? = window ?? self.window
-        let shouldShowDestructionCountdown = (message?.shouldShowDestructionCountdown ?? false) && currentWindow != nil
+    @objc
+    func startCountdownTimer() {
+        stopCountdownTimer()
         
-        if shouldShowDestructionCountdown && timestampTimer == nil {
-            timestampTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [weak self] _ in
-                guard let `self` = self, let message = self.message else {
-                    return
-                }
-                self.configureTimestamp(message, animated: false)
+        guard let message = message, message.isEphemeral, !message.hasBeenDeleted, !message.isObfuscated else { return }
+        
+        timestampTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [weak self] _ in
+            guard let `self` = self, let message = self.message else {
+                return
             }
+            self.configureTimestamp(message, animated: false)
         }
-        
-        if !shouldShowDestructionCountdown && timestampTimer != nil {
-            timestampTimer = nil
-        }
+    }
+    
+    @objc
+    func stopCountdownTimer() {
+        timestampTimer?.invalidate()
+        timestampTimer = nil
     }
     
     func setHidden(_ isHidden: Bool, animated: Bool) {
@@ -224,8 +224,8 @@ import TTTAttributedLabel
     override open func willMove(toWindow newWindow: UIWindow?) {
         super.willMove(toWindow: newWindow)
         
-        if newWindow != self.window {
-            updateTimestampTimer(window: newWindow)
+        if newWindow == nil {
+            stopCountdownTimer()
         }
     }
     

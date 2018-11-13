@@ -41,16 +41,15 @@ class ConversationPingCellDescription: ConversationMessageCellDescription {
     weak var delegate: ConversationCellDelegate? 
     weak var actionController: ConversationCellActionController?
     
-    var showEphemeralTimer: Bool = false
+    var showEphemeralTimer: Bool {
+        get { return false }
+        set { /* pings doesn't support the ephemeral timer */ }
+    }
+
     var topMargin: Float = 0
-
-    var isFullWidth: Bool {
-        return true
-    }
-
-    var supportsActions: Bool {
-        return true
-    }
+    let isFullWidth: Bool = true
+    let supportsActions: Bool = false
+    let containsHighlightableContent: Bool = false
 
     init(message: ZMConversationMessage, sender: ZMUser) {
         let senderText = sender.isSelfUser ? "content.ping.text.you".localized : sender.displayName

@@ -110,7 +110,9 @@ class ConversationTextMessageCell: UIView, ConversationMessageCell, TextViewInte
     }
 
     func textViewDidLongPress(_ textView: LinkInteractionTextView) {
-        self.menuPresenter?.showMenu()
+        if !UIMenuController.shared.isMenuVisible {
+            self.menuPresenter?.showMenu()
+        }
     }
 
 }
@@ -130,6 +132,7 @@ class ConversationTextMessageCellDescription: ConversationMessageCellDescription
 
     let isFullWidth: Bool  = false
     let supportsActions: Bool = true
+    let containsHighlightableContent: Bool = true
 
     init(attributedString: NSAttributedString) {
         configuration = View.Configuration(attributedText: attributedString)
@@ -176,8 +179,10 @@ extension ConversationTextMessageCellDescription {
         }
 
         // Text
-        let textCell = ConversationTextMessageCellDescription(attributedString: messageText)
-        cells.append(AnyConversationMessageCellDescription(textCell))
+        if messageText.length > 0 {
+            let textCell = ConversationTextMessageCellDescription(attributedString: messageText)
+            cells.append(AnyConversationMessageCellDescription(textCell))
+        }
 
         guard !message.isObfuscated else {
             return cells

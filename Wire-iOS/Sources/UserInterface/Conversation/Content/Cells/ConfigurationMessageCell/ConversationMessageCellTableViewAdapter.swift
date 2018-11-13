@@ -34,7 +34,7 @@ extension UITableViewCell {
     
 }
 
-class ConversationMessageCellTableViewAdapter<C: ConversationMessageCellDescription>: UITableViewCell, SelectableView, ConversationMessageCellMenuPresenter {
+class ConversationMessageCellTableViewAdapter<C: ConversationMessageCellDescription>: UITableViewCell, SelectableView, HighlightableView, ConversationMessageCellMenuPresenter {
     
     var cellView: C.View
     var ephemeralCountdownView: EphemeralCountdownView
@@ -243,17 +243,21 @@ class ConversationMessageCellTableViewAdapter<C: ConversationMessageCellDescript
             return self.bounds
         }
     }
+
+    var highlightContainer: UIView {
+        return self
+    }
     
     override func willDisplayCell() {
-        if cellDescription?.showEphemeralTimer == true {
-            ephemeralCountdownView.startCountDown()
-        }
+        cellDescription?.willDisplayCell()
+        cellView.willDisplay()
+        ephemeralCountdownView.startCountDown()
     }
     
     override func didEndDisplayingCell() {
-        if cellDescription?.showEphemeralTimer == true {
-            ephemeralCountdownView.stopCountDown()
-        }
+        cellDescription?.didEndDisplayingCell()
+        cellView.didEndDisplaying()
+        ephemeralCountdownView.stopCountDown()
     }
     
 }

@@ -82,6 +82,8 @@ class ConversationReplyContentView: UIView {
 
         contentTextView.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
         stackView.addArrangedSubview(contentTextView)
+
+        assetThumbnail.shape = .rounded(radius: 4)
         assetThumbnail.setContentCompressionResistancePriority(.required, for: .vertical)
         stackView.addArrangedSubview(assetThumbnail)
 
@@ -184,6 +186,7 @@ class ConversationReplyCellDescription: ConversationMessageCellDescription {
     var topMargin: Float = 8
     let isFullWidth = false
     let supportsActions = false
+    let containsHighlightableContent: Bool = true
 
     weak var message: ZMConversationMessage?
     weak var delegate: ConversationCellDelegate?

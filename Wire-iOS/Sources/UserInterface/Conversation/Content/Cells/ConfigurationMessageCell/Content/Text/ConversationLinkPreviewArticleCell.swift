@@ -66,7 +66,7 @@ class ConversationLinkPreviewArticleCell: UIView, ConversationMessageCell {
 
     func updateImageLayout(isRegular: Bool) {
         if configuration?.showImage == true {
-            articleView.imageHeight = isRegular ? 125 : 75
+            articleView.imageHeight = isRegular ? 250 : 150
         } else {
             articleView.imageHeight = 0
         }
@@ -98,13 +98,9 @@ class ConversationLinkPreviewArticleCellDescription: ConversationMessageCellDesc
     var showEphemeralTimer: Bool = false
     var topMargin: Float = 8
 
-    var isFullWidth: Bool {
-        return false
-    }
-
-    var supportsActions: Bool {
-        return true
-    }
+    let isFullWidth: Bool = false
+    let supportsActions: Bool = true
+    let containsHighlightableContent: Bool = true
 
     init(message: ZMConversationMessage, data: ZMTextMessageData) {
         let showImage = data.linkPreviewHasImage

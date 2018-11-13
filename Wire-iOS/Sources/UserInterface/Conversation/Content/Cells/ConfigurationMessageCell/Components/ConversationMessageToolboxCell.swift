@@ -54,6 +54,14 @@ class ConversationMessageToolboxCell: UIView, ConversationMessageCell, MessageTo
         toolboxView.translatesAutoresizingMaskIntoConstraints = false
         toolboxView.fitInSuperview()
     }
+    
+    func willDisplay() {
+        toolboxView.startCountdownTimer()
+    }
+    
+    func didEndDisplaying() {
+        toolboxView.stopCountdownTimer()
+    }
 
     func configure(with object: Configuration, animated: Bool) {
         toolboxView.configureForMessage(object.message, forceShowTimestamp: object.selected, animated: animated)
@@ -89,6 +97,7 @@ class ConversationMessageToolboxCellDescription: ConversationMessageCellDescript
     var topMargin: Float = 2
     let isFullWidth: Bool = true
     let supportsActions: Bool = false
+    let containsHighlightableContent: Bool = false
         
     init(message: ZMConversationMessage, selected: Bool) {
         self.message = message

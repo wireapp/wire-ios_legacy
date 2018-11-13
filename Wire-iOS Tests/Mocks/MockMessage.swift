@@ -221,7 +221,7 @@ extension MockFileMessageData: MockFileMessageDataType { }
 
 
 @objcMembers class MockMessage: NSObject, ZMConversationMessage {
-    
+
     typealias UsersByReaction = Dictionary<String, [ZMUser]>
     
     // MARK: - ZMConversationMessage
@@ -237,6 +237,7 @@ extension MockFileMessageData: MockFileMessageDataType { }
     var systemMessageData: ZMSystemMessageData? = .none
     var knockMessageData: ZMKnockMessageData? = .none
     var causedSecurityLevelDegradation: Bool = false
+    let objectIdentifier: String = UUID().uuidString
 
     var fileMessageData: ZMFileMessageData? {
         return backingFileMessageData
