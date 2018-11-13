@@ -57,11 +57,9 @@ class EphemeralCountdownView: UIView {
     func startCountDown() {
         stopCountDown()
         
-        guard let message = message, message.shouldShowDestructionCountdown else {
+        guard !isHidden else {
             return
         }
-        
-        _ = message.startSelfDestructionIfNeeded()
         
         timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] _ in
             self?.updateCountdown()
@@ -69,6 +67,7 @@ class EphemeralCountdownView: UIView {
     }
     
     func stopCountDown() {
+        destructionCountdownView.stopAnimating()
         timer?.invalidate()
         timer = nil
     }

@@ -41,9 +41,12 @@ class ConversationPingCellDescription: ConversationMessageCellDescription {
     weak var delegate: ConversationCellDelegate? 
     weak var actionController: ConversationCellActionController?
     
-    var showEphemeralTimer: Bool = false
-    var topMargin: Float = 0
+    var showEphemeralTimer: Bool {
+        get { return false }
+        set { /* pings doesn't support the ephemeral timer */ }
+    }
 
+    var topMargin: Float = 0
     let isFullWidth: Bool = true
     let supportsActions: Bool = false
     let containsHighlightableContent: Bool = false
@@ -52,8 +55,10 @@ class ConversationPingCellDescription: ConversationMessageCellDescription {
         let senderText = sender.isSelfUser ? "content.ping.text.you".localized : sender.displayName
         let pingText = "content.ping.text".localized(pov: sender.pov, args: senderText)
 
-        let text = NSAttributedString(string: pingText, attributes: [.font: UIFont.mediumFont])
-            .adding(font: .mediumSemiboldFont, to: senderText)
+        let text = NSAttributedString(string: pingText, attributes: [
+            .font: UIFont.mediumFont,
+            .foregroundColor: UIColor.from(scheme: .textForeground)
+            ]).adding(font: .mediumSemiboldFont, to: senderText)
 
         let pingColor: UIColor = message.isObfuscated ? .accentDimmedFlat : sender.accentColor
         self.configuration = View.Configuration(pingColor: pingColor, pingText: text)

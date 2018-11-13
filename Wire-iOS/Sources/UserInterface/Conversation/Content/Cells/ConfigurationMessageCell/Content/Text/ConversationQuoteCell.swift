@@ -83,6 +83,8 @@ class ConversationReplyContentView: UIView {
 
         contentTextView.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
         stackView.addArrangedSubview(contentTextView)
+
+        assetThumbnail.shape = .rounded(radius: 4)
         assetThumbnail.setContentCompressionResistancePriority(.required, for: .vertical)
         stackView.addArrangedSubview(assetThumbnail)
 
@@ -213,7 +215,7 @@ class ConversationReplyCellDescription: ConversationMessageCellDescription {
 
         case let message? where message.isLocation:
             let location = message.locationMessageData!
-            let imageIcon = NSTextAttachment.textAttachment(for: .location, with: .from(scheme: .textForeground))!
+            let imageIcon = NSTextAttachment.textAttachment(for: .locationPin, with: .from(scheme: .textForeground))!
             let initialString = NSAttributedString(attachment: imageIcon) + "  " + (location.name ?? "conversation.input_bar.message_preview.location".localized).localizedUppercase
             content = .text(initialString && attributes)
             contentType = "quote.type.location"

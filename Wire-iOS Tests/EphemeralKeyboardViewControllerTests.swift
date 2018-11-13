@@ -44,6 +44,12 @@ class EphemeralKeyboardViewControllerTests: CoreDataSnapshotTestCase {
     func testThatItRendersCorrectInitially() {
         verify(view: sut.prepareForSnapshots())
     }
+    
+    func testThatItRendersCorrectIntially_DarkMode() {
+        ColorScheme.default.variant = .dark
+        verify(view: sut.prepareForSnapshots())
+        ColorScheme.default.variant = .light
+    }
 
 }
 

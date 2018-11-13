@@ -110,7 +110,9 @@ class ConversationTextMessageCell: UIView, ConversationMessageCell, TextViewInte
     }
 
     func textViewDidLongPress(_ textView: LinkInteractionTextView) {
-        self.menuPresenter?.showMenu()
+        if !UIMenuController.shared.isMenuVisible {
+            self.menuPresenter?.showMenu()
+        }
     }
 
 }
@@ -201,10 +203,8 @@ extension ConversationTextMessageCellDescription {
             default:
                 break
             }
-        }
-
-        // Link Preview
-        if textMessageData.linkPreview != nil {
+        } else if textMessageData.linkPreview != nil {
+            // Link Preview
             let linkPreviewCell = ConversationLinkPreviewArticleCellDescription(message: message, data: textMessageData)
             cells.append(AnyConversationMessageCellDescription(linkPreviewCell))
         }

@@ -36,12 +36,15 @@ extension ZMConversationMessage {
         guard self.canBeQuoted else {
             return nil
         }
-        
+        return preparePreviewView()
+    }
+    
+    func preparePreviewView(shouldDisplaySender: Bool = true) -> UIView {
         if self.isImage || self.isVideo {
-            return MessageThumbnailPreviewView(message: self)
+            return MessageThumbnailPreviewView(message: self, displaySender: shouldDisplaySender)
         }
         else {
-            return MessagePreviewView(message: self)
+            return MessagePreviewView(message: self, displaySender: shouldDisplaySender)
         }
     }
 }
@@ -67,18 +70,27 @@ extension UITextView {
     }
 }
 
-final class MessageThumbnailPreviewView: UIView {
+final class MessageThumbnailPreviewView: UIView, Themeable {
     private let senderLabel = UILabel()
     private let contentTextView = UITextView.previewTextView()
     private let imagePreview = ImageResourceView()
     private var observerToken: Any? = nil
+    private let displaySender: Bool
 
     let message: ZMConversationMessage
     
-    init(message: ZMConversationMessage) {
-        require(message.canBeQuoted)
+    @objc dynamic var colorSchemeVariant: ColorSchemeVariant = ColorScheme.default.variant {
+        didSet {
+            guard oldValue != colorSchemeVariant else { return }
+            applyColorScheme(colorSchemeVariant)
+        }
+    }
+    
+    init(message: ZMConversationMessage, displaySender: Bool = true) {
+        require(message.canBeQuoted || !displaySender)
         require(message.conversation != nil)
         self.message = message
+        self.displaySender = displaySender
         super.init(frame: .zero)
         setupSubviews()
         setupConstraints()
@@ -97,16 +109,20 @@ final class MessageThumbnailPreviewView: UIView {
     private static let thumbnailSize: CGFloat = 42
     
     private func setupSubviews() {
-        let allViews: [UIView] = [senderLabel, contentTextView, imagePreview]
+        var allViews: [UIView] = [contentTextView, imagePreview]
         
-        senderLabel.font = .mediumSemiboldFont
-        senderLabel.textColor = .from(scheme: .textForeground)
-        senderLabel.setContentCompressionResistancePriority(.required, for: .vertical)
+        if displaySender {
+            allViews.append(senderLabel)
+            senderLabel.font = .mediumSemiboldFont
+            senderLabel.textColor = .from(scheme: .textForeground)
+            senderLabel.setContentCompressionResistancePriority(.required, for: .vertical)
+        }
         
         imagePreview.clipsToBounds = true
         imagePreview.contentMode = .scaleAspectFill
         imagePreview.imageSizeLimit = .maxDimensionForShortSide(MessageThumbnailPreviewView.thumbnailSize * UIScreen.main.scale)
-
+        imagePreview.layer.cornerRadius = 4
+        
         allViews.forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
         allViews.forEach(self.addSubview)
     }
@@ -116,12 +132,7 @@ final class MessageThumbnailPreviewView: UIView {
         let inset: CGFloat = 12
         
         NSLayoutConstraint.activate([
-            senderLabel.topAnchor.constraint(equalTo: topAnchor, constant: inset),
-            senderLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: inset),
-            senderLabel.trailingAnchor.constraint(equalTo: imagePreview.leadingAnchor, constant: inset),
-            contentTextView.topAnchor.constraint(equalTo: senderLabel.bottomAnchor, constant: inset),
             contentTextView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: inset),
-            contentTextView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -inset),
             contentTextView.trailingAnchor.constraint(equalTo: imagePreview.leadingAnchor, constant: inset),
             imagePreview.topAnchor.constraint(equalTo: topAnchor, constant: inset),
             imagePreview.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -inset),
@@ -129,6 +140,19 @@ final class MessageThumbnailPreviewView: UIView {
             imagePreview.widthAnchor.constraint(equalToConstant: MessageThumbnailPreviewView.thumbnailSize),
             imagePreview.heightAnchor.constraint(equalToConstant: MessageThumbnailPreviewView.thumbnailSize),
             ])
+        
+        if displaySender {
+            NSLayoutConstraint.activate([
+                
+                senderLabel.topAnchor.constraint(equalTo: topAnchor, constant: inset),
+                senderLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: inset),
+                senderLabel.trailingAnchor.constraint(equalTo: imagePreview.leadingAnchor, constant: inset),
+                contentTextView.topAnchor.constraint(equalTo: senderLabel.bottomAnchor, constant: inset),
+                contentTextView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -inset)
+                ])
+        } else {
+            contentTextView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+        }
     }
 
     private func editIcon() -> NSAttributedString {
@@ -169,6 +193,12 @@ final class MessageThumbnailPreviewView: UIView {
         }
     }
     
+    func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
+        let contentColor = UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)
+        senderLabel.textColor = contentColor
+        contentTextView.textColor = contentColor
+    }
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -180,17 +210,27 @@ extension MessageThumbnailPreviewView: ZMMessageObserver {
     }
 }
 
-final class MessagePreviewView: UIView {
+final class MessagePreviewView: UIView, Themeable {
+    
     private let senderLabel = UILabel()
     private let contentTextView = UITextView.previewTextView()
     private var observerToken: Any? = nil
+    private let displaySender: Bool
 
     let message: ZMConversationMessage
     
-    init(message: ZMConversationMessage) {
-        require(message.canBeQuoted)
+    @objc dynamic var colorSchemeVariant: ColorSchemeVariant = ColorScheme.default.variant {
+        didSet {
+            guard oldValue != colorSchemeVariant else { return }
+            applyColorScheme(colorSchemeVariant)
+        }
+    }
+    
+    init(message: ZMConversationMessage, displaySender: Bool = true) {
+        require(message.canBeQuoted || !displaySender)
         require(message.conversation != nil)
         self.message = message
+        self.displaySender = displaySender
         super.init(frame: .zero)
         setupSubviews()
         setupConstraints()
@@ -207,12 +247,15 @@ final class MessagePreviewView: UIView {
     }
     
     private func setupSubviews() {
-        let allViews: [UIView] = [senderLabel, contentTextView]
+        var allViews: [UIView] = [contentTextView]
         
-        senderLabel.font = .mediumSemiboldFont
-        senderLabel.textColor = .from(scheme: .textForeground)
-        senderLabel.setContentCompressionResistancePriority(.required, for: .vertical)
-
+        if displaySender {
+            allViews.append(senderLabel)
+            senderLabel.font = .mediumSemiboldFont
+            senderLabel.textColor = .from(scheme: .textForeground)
+            senderLabel.setContentCompressionResistancePriority(.required, for: .vertical)
+        }
+        
         allViews.forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
         allViews.forEach(self.addSubview)
     }
@@ -221,14 +264,21 @@ final class MessagePreviewView: UIView {
         let inset: CGFloat = 12
 
         NSLayoutConstraint.activate([
-            senderLabel.topAnchor.constraint(equalTo: topAnchor, constant: inset),
-            senderLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: inset),
-            senderLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -inset),
-            contentTextView.topAnchor.constraint(equalTo: senderLabel.bottomAnchor, constant: inset / 2),
             contentTextView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: inset),
             contentTextView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -inset),
             contentTextView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -inset),
         ])
+        
+        if displaySender {
+            NSLayoutConstraint.activate([
+                senderLabel.topAnchor.constraint(equalTo: topAnchor, constant: inset),
+                senderLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: inset),
+                senderLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -inset),
+                contentTextView.topAnchor.constraint(equalTo: senderLabel.bottomAnchor, constant: inset / 2),
+                ])
+        } else {
+            contentTextView.topAnchor.constraint(equalTo: topAnchor, constant: inset).isActive = true
+        }
     }
     
     private func editIcon() -> NSAttributedString {
@@ -265,6 +315,12 @@ final class MessagePreviewView: UIView {
             let initialString = NSAttributedString(attachment: imageIcon) + "  " + (fileData.filename ?? "conversation.input_bar.message_preview.file".localized).localizedUppercase
             contentTextView.attributedText = initialString && attributes
         }
+    }
+    
+    func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
+        let contentColor = UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)
+        senderLabel.textColor = contentColor
+        contentTextView.textColor = contentColor
     }
     
     required init?(coder aDecoder: NSCoder) {

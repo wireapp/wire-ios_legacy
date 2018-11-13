@@ -349,6 +349,11 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 }
 #pragma mark - Actions
 
+- (void)highlightMessage:(id<ZMConversationMessage>)message;
+{
+    [self.conversationMessageWindowTableViewAdapter highlightMessage:message];
+}
+
 - (void)wantsToPerformAction:(MessageAction)actionId forMessage:(id<ZMConversationMessage>)message cell:(ConversationCell *)cell
 {
     dispatch_block_t action = ^{

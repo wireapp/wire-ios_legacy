@@ -47,7 +47,7 @@ class LinkInteractionTextViewTests: XCTestCase {
         }
     }
     
-    func testThatItPreviewsNormalLinks() {
+    func testThatItDoesNotPreviewNormalLinks() {
         ["http://www.wire.com", "x-apple-data-detectors:some-detected-data", "tel:12345678", "mailto:bob@example.com"].forEach {
             // GIVEN
             let str = $0
@@ -56,7 +56,7 @@ class LinkInteractionTextViewTests: XCTestCase {
             // WHEN
             let shouldOpenURL = sut.delegate!.textView!(sut, shouldInteractWith: url, in: NSMakeRange(0, str.count), interaction: .preview)
             // THEN
-            XCTAssertTrue(shouldOpenURL)
+            XCTAssertFalse(shouldOpenURL)
         }
     }
     

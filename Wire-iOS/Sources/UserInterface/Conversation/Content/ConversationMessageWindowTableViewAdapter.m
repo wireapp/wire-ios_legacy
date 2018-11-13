@@ -62,14 +62,15 @@
 
 - (ConversationCellActionController *)actionControllerForMessage:(id<ZMConversationMessage>)message
 {
-    ConversationCellActionController *cachedEntry = [self.actionControllers objectForKey:message.nonce];
+    NSString *identifier = message.objectIdentifier;
+    ConversationCellActionController *cachedEntry = [self.actionControllers objectForKey:identifier];
 
     if (cachedEntry) {
         return cachedEntry;
     }
 
     ConversationCellActionController *actionController = [[ConversationCellActionController alloc] initWithResponder:self.messageActionResponder message:message];
-    [self.actionControllers setObject:actionController forKey:message.nonce];
+    [self.actionControllers setObject:actionController forKey:identifier];
 
     return actionController;
 }

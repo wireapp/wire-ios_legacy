@@ -21,14 +21,14 @@ import Foundation
 extension ConversationMessageWindowTableViewAdapter: ConversationMessageSectionControllerDelegate {
     
     func messageSectionController(_ controller: ConversationMessageSectionController, didRequestRefreshForMessage message: ZMConversationMessage) {
-        
         let section = messageWindow.messages.index(of: message)
-        
+
         if section == NSNotFound {
             return
         }
-        
-        controller.configure(at: section, in: tableView)
+
+        let controller = self.sectionController(at: section, in: tableView)
+        controller?.configure(at: section, in: tableView)
     }
     
 }
@@ -99,12 +99,13 @@ extension ConversationMessageWindowTableViewAdapter: UITableViewDataSource {
     
     @objc
     func sectionController(at sectionIndex: Int, in tableView: UITableView) -> ConversationMessageSectionController? {
-        guard let message = messageWindow.messages.object(at: sectionIndex) as? ZMConversationMessage, let nonce = message.nonce else { return nil }
-        
-        if let cachedEntry = sectionControllers.object(forKey: nonce) as? ConversationMessageSectionController {
+        guard let message = messageWindow.messages.object(at: sectionIndex) as? ZMConversationMessage else { return nil }
+        let messageIdentifier = message.objectIdentifier as NSString
+
+        if let cachedEntry = sectionControllers.object(forKey: messageIdentifier) as? ConversationMessageSectionController {
             return cachedEntry
         }
-        
+
         let context = messageWindow.context(for: message, firstUnreadMessage: firstUnreadMessage, searchQueries: self.searchQueries ?? [])
         let layoutProperties = messageWindow.layoutProperties(for: message, firstUnreadMessage: firstUnreadMessage)
         
@@ -117,7 +118,7 @@ extension ConversationMessageWindowTableViewAdapter: UITableViewDataSource {
         sectionController.sectionDelegate = self
         sectionController.actionController = actionController(for: message)
         
-        sectionControllers.setObject(sectionController, forKey: nonce as NSUUID)
+        sectionControllers.setObject(sectionController, forKey: messageIdentifier)
         
         return sectionController
     }

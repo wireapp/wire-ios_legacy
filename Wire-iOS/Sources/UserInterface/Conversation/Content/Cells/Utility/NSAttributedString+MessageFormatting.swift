@@ -107,12 +107,6 @@ extension NSAttributedString {
     static func formatForPreview(message: ZMTextMessageData, inputMode: Bool) -> NSAttributedString {
         var plainText = message.messageText ?? ""
 
-        // Inline the link preview text
-        if let linkPreview = message.linkPreview {
-            let separator = plainText.isEmpty ? "" : " · "
-            plainText.append(separator + linkPreview.originalURLString)
-        }
-
         // Substitute mentions with text markers
         let mentionTextObjects = plainText.replaceMentionsWithTextMarkers(mentions: message.mentions)
         
@@ -124,7 +118,7 @@ extension NSAttributedString {
         
         // Remove trailing link if we show a link preview
         let linkAttachments = markdownText.linksAttachments()
-        
+
         // Do emoji substition (but not inside link or mentions)
         let linkAttachmentRanges = linkAttachments.compactMap { Range<Int>($0.range) }
         let mentionRanges = mentionTextObjects.compactMap{ $0.range(in: markdownText.string as String)}

@@ -18,7 +18,7 @@
 
 import Foundation
 
-class ImageResourceThumbnailView: UIView {
+class ImageResourceThumbnailView: RoundedView {
 
     private let imageView = ImageContentView()
     private let coverView = UIView()
