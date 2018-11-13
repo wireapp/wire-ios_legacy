@@ -23,20 +23,20 @@ final class PingCellSnapshotTests: ZMSnapshotTestCase {
 
     var sut: PingCell!
 
-    override func setUp() {
-
-        super.setUp()
-
-        sut = createPingCellForTest()
-    }
-
     override func tearDown() {
         sut = nil
-
+        ColorScheme.default.variant = .light
         super.tearDown()
     }
-
+    
     func testForYouPinged() {
+        sut = createPingCellForTest()
+        verify(view: sut.tableViewForSnapshot())
+    }
+    
+    func testForYouPinged_darkMode() {
+        ColorScheme.default.variant = .dark
+        sut = createPingCellForTest()
         verify(view: sut.tableViewForSnapshot())
     }
 }
