@@ -16,25 +16,19 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
-
-
+#include "../../../Configuration/Base.xcconfig"
 #include "Warnings.xcconfig"
-#include "Version.xcconfig"
-#include? "../wire-ios-build-assets/Base_private.xcconfig"
-
 
 // Packaging
 //
-PRODUCT_NAME = $(TARGET_NAME)
 INFOPLIST_EXPAND_BUILD_SETTINGS = YES
-
 
 // Deployment
 //
 SKIP_INSTALL = NO
 
-
+// Code Signing
+CODE_SIGN_STYLE = Manual
 
 // Build Options
 //

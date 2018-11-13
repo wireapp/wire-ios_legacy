@@ -16,40 +16,15 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
 #include "Base.xcconfig"
-#include? "../wire-ios-build-assets/Release_private.xcconfig"
+#include "../../../Configuration/Release.xcconfig"
 
-
-//Code Signature
-//
-CODE_SIGN_IDENTITY = iPhone Distribution: Wire Swiss GmbH (EDF3JCE8BC)
-CODE_SIGN_IDENTITY[sdk=iphoneos*] = iPhone Distribution: Wire Swiss GmbH (EDF3JCE8BC)
-
-DEVELOPMENT_TEAM = EDF3JCE8BC
-PROVISIONING_PROFILE_SPECIFIER_APP = iOS Store Distribution com.wearezeta.zclient.ios
-PROVISIONING_PROFILE_SPECIFIER_SHARE_EXT = iOS Store Share Extension
-PROVISIONING_PROFILE_SPECIFIER_IMGNOTIFICATION_EXT = iOS Store Image Provisioning Profile
-
-
-CODE_SIGN_ENTITLEMENTS_APP = Wire-iOS/Entitlements-Prod.entitlements
-CODE_SIGN_ENTITLEMENTS_SHARE_EXT = Wire-Sharing-Extension-iOS/Wire-Sharing-Extension-iOS.entitlements
-
-
-//Bundle stuff
-//
-WIRE_BUNDLE_ID = com.wearezeta.zclient.ios
-WIRE_BUILD_NUMBER =
 ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon
-SSO_URL_SCHEME = wire-sso
-
 
 // Deployment
 //
 COPY_PHASE_STRIP = YES
 STRIP_INSTALLED_PRODUCT = YES
-
-
 
 //Build options
 DEBUG_INFORMATION_FORMAT = dwarf-with-dsym

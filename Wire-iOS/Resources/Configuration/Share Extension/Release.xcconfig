@@ -16,9 +16,5 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
-WIRE_BUNDLE_DISPLAY_NAME = Wire
-SHARE_EXTENSION_BUNDLE_SUFFIX = extension-share
-SWIFT_OBJC_BRIDGING_HEADER = $(TARGET_NAME)/WireShareExtensionBridgingHeader.h
-
-APPLICATION_EXTENSION_API_ONLY = YES
+#include "Base.xcconfig"
+#include "../Release.xcconfig"

@@ -1360,6 +1360,9 @@
 		F1199D421FC849450070FAC3 /* VerificationCodeFieldDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1199D3E1FC849440070FAC3 /* VerificationCodeFieldDescription.swift */; };
 		F127BD571E262E9F0093B2F1 /* CollectionsViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F127BD561E262E9F0093B2F1 /* CollectionsViewControllerTests.swift */; };
 		F127BD5A1E2667170093B2F1 /* MockCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F127BD581E265FB40093B2F1 /* MockCollection.swift */; };
+		F12C48F92199D2F100F49548 /* Base.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = F12C48F62199D2F000F49548 /* Base.xcconfig */; };
+		F12C48FA2199D2F100F49548 /* Development.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = F12C48F72199D2F000F49548 /* Development.xcconfig */; };
+		F12C48FB2199D2F100F49548 /* Release.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = F12C48F82199D2F100F49548 /* Release.xcconfig */; };
 		F12CDADE1E43868200CEFCEB /* ChangeEmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F12CDADA1E43868200CEFCEB /* ChangeEmailViewController.swift */; };
 		F12CDADF1E43868200CEFCEB /* ChangePhoneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F12CDADB1E43868200CEFCEB /* ChangePhoneViewController.swift */; };
 		F12CDAE01E43868200CEFCEB /* ConfirmEmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F12CDADC1E43868200CEFCEB /* ConfirmEmailViewController.swift */; };
@@ -1665,7 +1668,6 @@
 		1E5E0CF81B6B8EDB003B0CAC /* UIImage+ImageUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageUtilities.m"; sourceTree = "<group>"; };
 		1E80A3631B0DF6120049A809 /* MediaPlaybackManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaPlaybackManager.h; sourceTree = "<group>"; };
 		1E80A3641B0DF6120049A809 /* MediaPlaybackManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaPlaybackManager.m; sourceTree = "<group>"; };
-		1E8666E21BE21BC3000B013E /* Version.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Version.xcconfig; sourceTree = "<group>"; };
 		1E8772211B0C8B0F005BDDC6 /* EmoticonSubstitutionConfigurationMocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmoticonSubstitutionConfigurationMocks.h; sourceTree = "<group>"; };
 		1E8772221B0C8B0F005BDDC6 /* EmoticonSubstitutionConfigurationMocks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmoticonSubstitutionConfigurationMocks.m; sourceTree = "<group>"; };
 		1E8772271B0C8CAB005BDDC6 /* emo-test-03.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "emo-test-03.json"; sourceTree = "<group>"; };
@@ -1682,9 +1684,6 @@
 		1EE85C501B5F96FB008E084B /* WireExtensionComponents.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = WireExtensionComponents.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1EE85C531B5F96FC008E084B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1EE85C541B5F96FC008E084B /* WireExtensionComponents.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WireExtensionComponents.h; sourceTree = "<group>"; };
-		1EE9DC921B5F9A1300E347DF /* Wire-Share-Extension.base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Wire-Share-Extension.base.xcconfig"; sourceTree = "<group>"; };
-		1EE9DC931B5F9A1300E347DF /* Wire-Share-Extension.debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Wire-Share-Extension.debug.xcconfig"; sourceTree = "<group>"; };
-		1EE9DC941B5F9A1300E347DF /* Wire-Share-Extension.release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Wire-Share-Extension.release.xcconfig"; sourceTree = "<group>"; };
 		1EE9DCA81B5F9A6D00E347DF /* TextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextView.h; sourceTree = "<group>"; };
 		1EE9DCA91B5F9A6D00E347DF /* TextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextView.m; sourceTree = "<group>"; };
 		1EE9DCAB1B5F9A6D00E347DF /* Token.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Token.h; sourceTree = "<group>"; };
@@ -2202,7 +2201,6 @@
 		876113EA1DD1FEC4007F5969 /* ConversationContentViewController+Forward.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConversationContentViewController+Forward.swift"; sourceTree = "<group>"; };
 		876376871E840E9C00B2CCF0 /* ConversationStatusTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationStatusTests.swift; sourceTree = "<group>"; };
 		876376891E8413D900B2CCF0 /* RawRepresentable+AllValues.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RawRepresentable+AllValues.swift"; sourceTree = "<group>"; };
-		876513521D66F06C00D1D77E /* wire-ios-build-assets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "wire-ios-build-assets"; sourceTree = SOURCE_ROOT; };
 		87656FCE1FB5FEDC00D5286C /* 0x0.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = 0x0.pdf; sourceTree = "<group>"; };
 		87656FD01FB5FF0300D5286C /* FilePreviewGeneratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilePreviewGeneratorTests.swift; sourceTree = "<group>"; };
 		876AE75F1C159A9C00E3E743 /* NSStringFingerprintTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSStringFingerprintTests.m; sourceTree = "<group>"; };
@@ -2432,7 +2430,6 @@
 		8F41CFC6199297C600E3B032 /* Message+UI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Message+UI.h"; sourceTree = "<group>"; };
 		8F41CFC7199297C600E3B032 /* Message+UI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Message+UI.m"; sourceTree = "<group>"; };
 		8F42C538199244A700288E4D /* Wire.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Wire.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		8F48C85A1A026E120048E6EB /* Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
 		8F5A3E9A19AE2C9E00D0E9DA /* avs+iOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "avs+iOS.h"; sourceTree = "<group>"; };
 		8F5A3E9B19AE2C9E00D0E9DA /* AVSMediaManager+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AVSMediaManager+Additions.h"; sourceTree = "<group>"; };
 		8F5A3E9C19AE2C9E00D0E9DA /* AVSMediaManager+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AVSMediaManager+Additions.m"; sourceTree = "<group>"; };
@@ -2489,9 +2486,6 @@
 		8FC852BF199245760008B66B /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ProfileViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		8FC853A0199245770008B66B /* Wire-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "Wire-Info.plist"; path = "Wire-iOS/Wire-Info.plist"; sourceTree = "<group>"; };
 		8FC853A1199245770008B66B /* Wire-iOS-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Wire-iOS-Prefix.pch"; path = "Wire-iOS/Wire-iOS-Prefix.pch"; sourceTree = "<group>"; };
-		8FC85546199246EF0008B66B /* Development.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Development.xcconfig; sourceTree = "<group>"; };
-		8FC8554B199246EF0008B66B /* Base.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Base.xcconfig; sourceTree = "<group>"; };
-		8FC8554C199246EF0008B66B /* Warnings.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Warnings.xcconfig; sourceTree = "<group>"; };
 		8FC8563F19924CBA0008B66B /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		8FC856B019925B680008B66B /* WireSyncEngine+iOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WireSyncEngine+iOS.h"; sourceTree = "<group>"; };
 		A9B02231209B6E4E00DF25D8 /* Hockey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hockey.swift; sourceTree = "<group>"; };
@@ -3176,6 +3170,16 @@
 		F1199D3E1FC849440070FAC3 /* VerificationCodeFieldDescription.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerificationCodeFieldDescription.swift; sourceTree = "<group>"; };
 		F127BD561E262E9F0093B2F1 /* CollectionsViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionsViewControllerTests.swift; sourceTree = "<group>"; };
 		F127BD581E265FB40093B2F1 /* MockCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockCollection.swift; sourceTree = "<group>"; };
+		F12C48EF2199D2C200F49548 /* Development.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Development.xcconfig; sourceTree = "<group>"; };
+		F12C48F02199D2C200F49548 /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
+		F12C48F12199D2C200F49548 /* Base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Base.xcconfig; sourceTree = "<group>"; };
+		F12C48F22199D2D600F49548 /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
+		F12C48F32199D2D600F49548 /* Base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Base.xcconfig; sourceTree = "<group>"; };
+		F12C48F42199D2D600F49548 /* Development.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Development.xcconfig; sourceTree = "<group>"; };
+		F12C48F52199D2D600F49548 /* Warnings.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Warnings.xcconfig; sourceTree = "<group>"; };
+		F12C48F62199D2F000F49548 /* Base.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Base.xcconfig; sourceTree = "<group>"; };
+		F12C48F72199D2F000F49548 /* Development.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Development.xcconfig; sourceTree = "<group>"; };
+		F12C48F82199D2F100F49548 /* Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
 		F12CDADA1E43868200CEFCEB /* ChangeEmailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeEmailViewController.swift; sourceTree = "<group>"; };
 		F12CDADB1E43868200CEFCEB /* ChangePhoneViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangePhoneViewController.swift; sourceTree = "<group>"; };
 		F12CDADC1E43868200CEFCEB /* ConfirmEmailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmEmailViewController.swift; sourceTree = "<group>"; };
@@ -5154,7 +5158,7 @@
 			children = (
 				87C8D7FB1BA8261C00B0530B /* Entitlements-Dev.entitlements */,
 				87C8D7FC1BA8261C00B0530B /* Entitlements-Prod.entitlements */,
-				8FC85543199246EF0008B66B /* ConfigurationSets */,
+				F12C48952199CBB600F49548 /* Configuration */,
 				8FC85083199245760008B66B /* Resources */,
 				8FC850D8199245760008B66B /* Sources */,
 				8FC8564919924D4E0008B66B /* Supporting Files */,
@@ -5237,6 +5241,7 @@
 		8FC85083199245760008B66B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				F12C48DE2199CBD900F49548 /* Configuration */,
 				8FC8564019924CBA0008B66B /* Localizable.strings */,
 				1EFB23DE1ACEDE5400244571 /* Localizable.stringsdict */,
 				848DE12A1A83D20000E154B1 /* emoticons.min.json */,
@@ -5791,22 +5796,6 @@
 				872CB8A019E58816006752B4 /* Views */,
 			);
 			path = UserProfile;
-			sourceTree = "<group>";
-		};
-		8FC85543199246EF0008B66B /* ConfigurationSets */ = {
-			isa = PBXGroup;
-			children = (
-				876513521D66F06C00D1D77E /* wire-ios-build-assets */,
-				8FC8554C199246EF0008B66B /* Warnings.xcconfig */,
-				1E8666E21BE21BC3000B013E /* Version.xcconfig */,
-				8FC8554B199246EF0008B66B /* Base.xcconfig */,
-				8FC85546199246EF0008B66B /* Development.xcconfig */,
-				8F48C85A1A026E120048E6EB /* Release.xcconfig */,
-				1EE9DC921B5F9A1300E347DF /* Wire-Share-Extension.base.xcconfig */,
-				1EE9DC931B5F9A1300E347DF /* Wire-Share-Extension.debug.xcconfig */,
-				1EE9DC941B5F9A1300E347DF /* Wire-Share-Extension.release.xcconfig */,
-			);
-			path = ConfigurationSets;
 			sourceTree = "<group>";
 		};
 		8FC8564919924D4E0008B66B /* Supporting Files */ = {
@@ -6565,6 +6554,38 @@
 			path = ViewDescriptions;
 			sourceTree = "<group>";
 		};
+		F12C48952199CBB600F49548 /* Configuration */ = {
+			isa = PBXGroup;
+			children = (
+				F12C48F12199D2C200F49548 /* Base.xcconfig */,
+				F12C48EF2199D2C200F49548 /* Development.xcconfig */,
+				F12C48F02199D2C200F49548 /* Release.xcconfig */,
+			);
+			path = Configuration;
+			sourceTree = "<group>";
+		};
+		F12C48DE2199CBD900F49548 /* Configuration */ = {
+			isa = PBXGroup;
+			children = (
+				F12C48F32199D2D600F49548 /* Base.xcconfig */,
+				F12C48F42199D2D600F49548 /* Development.xcconfig */,
+				F12C48F22199D2D600F49548 /* Release.xcconfig */,
+				F12C48F52199D2D600F49548 /* Warnings.xcconfig */,
+				F12C48E22199CBD900F49548 /* Share Extension */,
+			);
+			path = Configuration;
+			sourceTree = "<group>";
+		};
+		F12C48E22199CBD900F49548 /* Share Extension */ = {
+			isa = PBXGroup;
+			children = (
+				F12C48F62199D2F000F49548 /* Base.xcconfig */,
+				F12C48F72199D2F000F49548 /* Development.xcconfig */,
+				F12C48F82199D2F100F49548 /* Release.xcconfig */,
+			);
+			path = "Share Extension";
+			sourceTree = "<group>";
+		};
 		F12CDAD91E43868200CEFCEB /* ChangingDetails */ = {
 			isa = PBXGroup;
 			children = (
@@ -6756,6 +6777,7 @@
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = W5KEQBF9B5;
 						LastSwiftMigration = 1000;
+						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
 								enabled = 1;
@@ -6786,6 +6808,7 @@
 						CreatedOnToolsVersion = 6.3;
 						DevelopmentTeam = W5KEQBF9B5;
 						LastSwiftMigration = 1000;
+						ProvisioningStyle = Manual;
 						TestTargetID = 8F42C537199244A700288E4D;
 					};
 				};
@@ -6853,10 +6876,12 @@
 			files = (
 				1658D2041D3E742A00249609 /* new_message.caf in Resources */,
 				87AEDB281DBA619D00010451 /* logo@2x.png in Resources */,
+				F12C48FB2199D2F100F49548 /* Release.xcconfig in Resources */,
 				BF732A761D9C14C7003077DB /* emoji_nature.plist in Resources */,
 				16A2024D1B66505C0095BBD1 /* soundcloud@2x.png in Resources */,
 				87AEDB271DBA619D00010451 /* logo.png in Resources */,
 				8FC853D7199245770008B66B /* Settings.bundle in Resources */,
+				F12C48FA2199D2F100F49548 /* Development.xcconfig in Resources */,
 				BF732A781D9C14C7003077DB /* emoji_people.plist in Resources */,
 				1ED28CD71A94E26D00B96189 /* group-icon.png in Resources */,
 				1658D2031D3E742A00249609 /* new_message_apns.caf in Resources */,
@@ -6865,6 +6890,7 @@
 				1658D2061D3E742A00249609 /* ringing_from_them_long.caf in Resources */,
 				16A2024C1B66505B0095BBD1 /* soundcloud.png in Resources */,
 				874C09361B4A8EF40077393B /* InfoPlist.strings in Resources */,
+				F12C48F92199D2F100F49548 /* Base.xcconfig in Resources */,
 				BF732A731D9C14C7003077DB /* emoji_activities.plist in Resources */,
 				87AEDB291DBA619D00010451 /* logo@3x.png in Resources */,
 				DBF597581A3600FC00269B7F /* icon-no-appstore.xcassets in Resources */,
@@ -6987,7 +7013,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "$SRCROOT/Scripts/remove-bitcode.sh $BUILT_PRODUCTS_DIR/$FRAMEWORKS_FOLDER_PATH $EXPANDED_CODE_SIGN_IDENTITY";
+			shellScript = "$SRCROOT/Scripts/remove-bitcode.sh $BUILT_PRODUCTS_DIR/$FRAMEWORKS_FOLDER_PATH $EXPANDED_CODE_SIGN_IDENTITY\n";
 		};
 		8795A5D21D34D1A50024101B /* EmbedBuildInfo */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -8523,13 +8549,12 @@
 /* Begin XCBuildConfiguration section */
 		168A16B51D9597C2005CFA6C /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1EE9DC931B5F9A1300E347DF /* Wire-Share-Extension.debug.xcconfig */;
+			baseConfigurationReference = F12C48F72199D2F000F49548 /* Development.xcconfig */;
 			buildSettings = {
-				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
-				CODE_SIGN_ENTITLEMENTS = "Wire-iOS Share Extension/Wire-iOS Share Extension.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "$(CODE_SIGN_ENTITLEMENTS_SHARE_EXT)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -8543,20 +8568,18 @@
 				PROVISIONING_PROFILE_SPECIFIER = "$(PROVISIONING_PROFILE_SPECIFIER_SHARE_EXT)";
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_OBJC_BRIDGING_HEADER = "Wire-iOS Share Extension/Wire-iOS Share Extension-Bridging-Header.h";
 				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
 		168A16B61D9597C2005CFA6C /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1EE9DC941B5F9A1300E347DF /* Wire-Share-Extension.release.xcconfig */;
+			baseConfigurationReference = F12C48F82199D2F100F49548 /* Release.xcconfig */;
 			buildSettings = {
-				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
-				CODE_SIGN_ENTITLEMENTS = "Wire-iOS Share Extension/Wire-iOS Share Extension.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "$(CODE_SIGN_ENTITLEMENTS_SHARE_EXT)";
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -8570,14 +8593,13 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "$(PROVISIONING_PROFILE_SPECIFIER_SHARE_EXT)";
 				SKIP_INSTALL = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "Wire-iOS Share Extension/Wire-iOS Share Extension-Bridging-Header.h";
 				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};
 		1EE85C6A1B5F96FC008E084B /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8FC85546199246EF0008B66B /* Development.xcconfig */;
+			baseConfigurationReference = F12C48F42199D2D600F49548 /* Development.xcconfig */;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
 				CODE_SIGN_IDENTITY = "";
@@ -8611,7 +8633,7 @@
 		};
 		1EE85C6B1B5F96FC008E084B /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8F48C85A1A026E120048E6EB /* Release.xcconfig */;
+			baseConfigurationReference = F12C48F22199D2D600F49548 /* Release.xcconfig */;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
 				CODE_SIGN_IDENTITY = "";
@@ -8752,7 +8774,7 @@
 		};
 		8F42C559199244A700288E4D /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8FC85546199246EF0008B66B /* Development.xcconfig */;
+			baseConfigurationReference = F12C48F42199D2D600F49548 /* Development.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_ENABLE_MODULES = YES;
@@ -8779,7 +8801,7 @@
 		};
 		8F42C55A199244A700288E4D /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8F48C85A1A026E120048E6EB /* Release.xcconfig */;
+			baseConfigurationReference = F12C48F22199D2D600F49548 /* Release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -8807,7 +8829,7 @@
 		};
 		BACB885A1AF7C48900DDCDB0 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8FC85546199246EF0008B66B /* Development.xcconfig */;
+			baseConfigurationReference = F12C48F42199D2D600F49548 /* Development.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -8835,7 +8857,7 @@
 		};
 		BACB885B1AF7C48900DDCDB0 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8F48C85A1A026E120048E6EB /* Release.xcconfig */;
+			baseConfigurationReference = F12C48F22199D2D600F49548 /* Release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;

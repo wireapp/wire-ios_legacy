@@ -40,17 +40,17 @@ XCODE_VERSION=( ${version//./ } )
 [[ ${CARTHAGE_VERSION[0]} -gt 0 || ${CARTHAGE_VERSION[1]} -ge 29 ]] || die "Carthage should be at least version 0.29"
 [[ ${XCODE_VERSION[0]} -gt 9 || ( ${XCODE_VERSION[0]} -eq 9 && ${XCODE_VERSION[1]} -ge 3 ) ]] || die "Xcode version should be at least 9.3.0"
 
-# SETUP
-echo "ℹ️  Carthage bootstrap. This might take a while..."
-carthage bootstrap --platform ios
-echo ""
+# # SETUP
+# echo "ℹ️  Carthage bootstrap. This might take a while..."
+# carthage bootstrap --platform ios
+# echo ""
 
-echo "ℹ️  Downloading AVS library..."
-./Scripts/download-avs.sh
-echo ""
+# echo "ℹ️  Downloading AVS library..."
+# ./Scripts/download-avs.sh 
+# echo ""
 
 echo "ℹ️  Downloading additional assets..."
-./Scripts/download-assets.sh
+./Scripts/download-assets.sh $@
 echo ""
 
 echo "✅  Wire project was set up, you can now open Wire-iOS.xcodeproj"

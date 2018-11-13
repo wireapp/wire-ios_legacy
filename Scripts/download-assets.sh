@@ -23,23 +23,30 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd $DIR/..
 
+CONFIGURATION_NAME=Configuration
+PUBLIC_CONFIGURATION_REPO=git@github.com:wireapp/wire-ios-build-configuration.git
 
-REPO_NAME=wire-ios-build-assets
-REPO_URL=github.com:wireapp/${REPO_NAME}.git
+if [[ $# -eq 2 && $1 == "--configuration" ]]; then
+	echo "Using custom configuration repository: $2"
+	REPO_URL=$2
+else
+	REPO_URL=$PUBLIC_CONFIGURATION_REPO
+fi
 
 ##################################
 # Checout assets
 ##################################
-if [ -e "${REPO_NAME}" ]; then
-	cd ${REPO_NAME}
-	echo "Pulling assets..."
+if [ -e "${CONFIGURATION_NAME}" ]; then
+	cd ${CONFIGURATION_NAME}
+	echo "Pulling configuration..."
 	git pull
 else
-	git ls-remote "git@${REPO_URL}" &> /dev/null
+	git ls-remote "${REPO_URL}" &> /dev/null
 	if [ "$?" -ne 0 ]; then
-		echo "No access to assets"
-	else 
-		echo "Cloning assets..."
-		git clone --depth 1 git@${REPO_URL}
-	fi
+		echo "No access to configuration repository, falling back to public"
+		REPO_URL=$PUBLIC_CONFIGURATION_REPO
+	fi 
+
+	echo "Cloning assets from ${REPO_URL}"
+	git clone --depth 1 ${REPO_URL} ${CONFIGURATION_NAME}
 fi
