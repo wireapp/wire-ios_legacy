@@ -55,7 +55,8 @@ class ConversationPingCellDescription: ConversationMessageCellDescription {
         let senderText = sender.isSelfUser ? "content.ping.text.you".localized : sender.displayName
         let pingText = "content.ping.text".localized(pov: sender.pov, args: senderText)
 
-        let text = NSAttributedString(string: pingText, attributes: [.font: UIFont.mediumFont])
+        let text = NSAttributedString(string: pingText, attributes: [.font: UIFont.mediumFont,
+                                                                     .foregroundColor: UIColor.from(scheme: .textForeground)])
             .adding(font: .mediumSemiboldFont, to: senderText)
 
         let pingColor: UIColor = message.isObfuscated ? .accentDimmedFlat : sender.accentColor
