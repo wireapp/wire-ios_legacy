@@ -63,13 +63,18 @@ class UpsideDownTableView: UITableView {
         }
     }
 
+    var lockContentOffset: Bool = false
+    
     override var contentOffset: CGPoint {
         get {
             return super.contentOffset
         }
 
         set {
-
+            // Blindly ignoring the SOLID principles, we are modifying the functionality of the parent class.
+            if lockContentOffset {
+                return
+            }
             /// do not set contentOffset if the user is panning on the bottom edge of pannableView (with 10 pt threshold)
             if let pannableView = pannableView,
                self.panGestureRecognizer.location(in: self.superview).y >= pannableView.frame.maxY - 10 {

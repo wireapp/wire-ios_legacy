@@ -33,7 +33,7 @@
 
 @implementation ConversationMessageWindowTableViewAdapter
 
-- (instancetype)initWithTableView:(UITableView *)tableView messageWindow:(ZMConversationMessageWindow *)messageWindow
+- (instancetype)initWithTableView:(UpsideDownTableView *)tableView messageWindow:(ZMConversationMessageWindow *)messageWindow
 {
     self = [super init];
     

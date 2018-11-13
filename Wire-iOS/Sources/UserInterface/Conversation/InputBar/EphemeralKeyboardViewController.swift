@@ -154,6 +154,7 @@ extension UIAlertController {
         
         picker.delegate = self
         picker.dataSource = self
+        picker.backgroundColor = .clear
         picker.tintColor = .red
         picker.showsSelectionIndicator = true
         picker.selectorColor = separatorColor
@@ -216,8 +217,6 @@ class PickerView: UIPickerView, UIGestureRecognizerDelegate {
 
     init() {
         super.init(frame: .zero)
-        self.backgroundColor = .clear
-
         tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapView))
         tapRecognizer.delegate = self
         addGestureRecognizer(tapRecognizer)

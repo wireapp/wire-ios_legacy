@@ -88,6 +88,13 @@ class ShareViewControllerTests: CoreDataSnapshotTestCase {
         self.verifyInAllDeviceSizes(view: sut.view)
     }
     
+    func testThatItRendersCorrectlyShareViewController_DarkMode() {
+        ColorScheme.default.variant = .dark
+        groupConversation.append(text: "This is a text message.")
+        makeTestForShareViewController()
+        ColorScheme.default.variant = .light
+    }
+    
     func makeTestForShareViewController() {
         
         groupConversation.internalAddParticipants(Set([self.createUser(name: "John Appleseed")]))

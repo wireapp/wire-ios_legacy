@@ -26,6 +26,7 @@
 @class ConversationMessageSectionController;
 @class AnyConversationMessageCellDescription;
 @class ConversationCellActionController;
+@class UpsideDownTableView;
 
 @interface ConversationMessageWindowTableViewAdapter : NSObject
 
@@ -37,7 +38,7 @@
 
 @property (nonatomic) NSArray<NSString *> *searchQueries;
 
-- (instancetype)initWithTableView:(UITableView *)tableView messageWindow:(ZMConversationMessageWindow *)messageWindow;
+- (instancetype)initWithTableView:(UpsideDownTableView *)tableView messageWindow:(ZMConversationMessageWindow *)messageWindow;
 - (void)expandMessageWindow;
 
 - (void)stopAudioPlayerForDeletedMessages:(NSSet *)deletedMessages;

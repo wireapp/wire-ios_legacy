@@ -149,7 +149,7 @@ final class ReplyComposingView: UIView {
 
 extension ReplyComposingView: ZMMessageObserver {
     func messageDidChange(_ changeInfo: MessageChangeInfo) {
-        if changeInfo.message.hiddenInConversation != nil {
+        if changeInfo.message.hasBeenDeleted {
             self.delegate?.composingViewDidCancel(composingView: self)
         }
     }

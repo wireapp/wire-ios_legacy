@@ -100,7 +100,7 @@ extension ZMMessage: Shareable {
 
 extension ZMConversationMessage {
     public func previewView() -> UIView? {
-        guard let view = self.preparePreviewView(shouldDisplaySender: false) else { return nil }
+        let view = self.preparePreviewView(shouldDisplaySender: false)
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .white
         return view

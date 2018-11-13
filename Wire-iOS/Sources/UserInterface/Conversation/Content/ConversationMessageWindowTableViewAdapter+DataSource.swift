@@ -33,6 +33,21 @@ extension ConversationMessageWindowTableViewAdapter: ConversationMessageSectionC
     
 }
 
+extension MessageWindowChangeInfo {
+    var insertedMessages: [ZMConversationMessage] {
+        return self.insertedIndexes.compactMap { conversationMessageWindow.messages[$0] as? ZMConversationMessage }
+    }
+}
+
+extension ZMConversationMessage {
+    var isSentFromThisDevice: Bool {
+        guard let sender = sender else {
+            return false
+        }
+        return sender.isSelfUser && deliveryState.isOne(of: [.pending])
+    }
+}
+
 extension ConversationMessageWindowTableViewAdapter: ZMConversationMessageWindowObserver {
     
     func reconfigureSectionController(at index: Int, tableView: UITableView) {
@@ -46,11 +61,15 @@ extension ConversationMessageWindowTableViewAdapter: ZMConversationMessageWindow
         
         let isLoadingInitialContent = messageWindow.messages.count == changeInfo.insertedIndexes.count && changeInfo.deletedIndexes.count == 0
         let isExpandingMessageWindow = changeInfo.insertedIndexes.count > 0 && changeInfo.insertedIndexes.last == messageWindow.messages.count - 1
+        let shouldJumpToTheConversationEnd = changeInfo.insertedMessages.any(\.isSentFromThisDevice)
+        
         stopAudioPlayer(forDeletedMessages: changeInfo.deletedObjects)
         
         if isLoadingInitialContent ||
             (isExpandingMessageWindow && changeInfo.deletedIndexes.count == 0) ||
-            changeInfo.needsReload {
+            changeInfo.needsReload ||
+            shouldJumpToTheConversationEnd {
+
             tableView.reloadData()
         } else {
             tableView.beginUpdates()
@@ -77,6 +96,16 @@ extension ConversationMessageWindowTableViewAdapter: ZMConversationMessageWindow
             // Re-evalulate visible cells in all sections, this is necessary because if a message is inserted/moved the
             // neighbouring messages may no longer want to display sender, toolbox or burst timestamp.
             reconfigureVisibleSections()
+        }
+        
+        if shouldJumpToTheConversationEnd {
+            // The action has to be performed on the next run loop, since the current one already has the call to scroll
+            // the table view back to the previous position.
+            self.tableView.scrollToBottom(animated: false)
+            self.tableView.lockContentOffset = true
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                self.tableView.lockContentOffset = false
+            }
         }
     }
     

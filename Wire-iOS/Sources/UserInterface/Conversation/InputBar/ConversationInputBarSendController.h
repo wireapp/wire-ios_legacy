@@ -22,19 +22,10 @@
 @class Mention;
 @class ZMConversation;
 @protocol ZMConversationMessage;
-@class ConversationInputBarSendController;
-
-@protocol ConversationInputBarSendControllerDelegate <NSObject>
-
-@optional
-- (void)conversationInputBarSendController:(ConversationInputBarSendController *)controller didSendMessage:(id<ZMConversationMessage>)message;
-
-@end
 
 @interface ConversationInputBarSendController : NSObject
 
 @property (nonatomic, readonly) ZMConversation *conversation;
-@property (nonatomic, weak) id<ConversationInputBarSendControllerDelegate> delegate;
 
 - (instancetype)initWithConversation:(ZMConversation *)conversation;
 - (void)sendMessageWithImageData:(NSData *)imageData completion:(dispatch_block_t)completionHandler;

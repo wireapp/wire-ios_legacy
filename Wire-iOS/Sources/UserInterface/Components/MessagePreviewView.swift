@@ -39,7 +39,7 @@ extension ZMConversationMessage {
         return preparePreviewView()
     }
     
-    func preparePreviewView(shouldDisplaySender: Bool = true) -> UIView? {
+    func preparePreviewView(shouldDisplaySender: Bool = true) -> UIView {
         if self.isImage || self.isVideo {
             return MessageThumbnailPreviewView(message: self, displaySender: shouldDisplaySender)
         }
@@ -70,7 +70,7 @@ extension UITextView {
     }
 }
 
-final class MessageThumbnailPreviewView: UIView {
+final class MessageThumbnailPreviewView: UIView, Themeable {
     private let senderLabel = UILabel()
     private let contentTextView = UITextView.previewTextView()
     private let imagePreview = ImageResourceView()
@@ -78,6 +78,13 @@ final class MessageThumbnailPreviewView: UIView {
     private let displaySender: Bool
 
     let message: ZMConversationMessage
+    
+    @objc dynamic var colorSchemeVariant: ColorSchemeVariant = ColorScheme.default.variant {
+        didSet {
+            guard oldValue != colorSchemeVariant else { return }
+            applyColorScheme(colorSchemeVariant)
+        }
+    }
     
     init(message: ZMConversationMessage, displaySender: Bool = true) {
         require(message.canBeQuoted || !displaySender)
@@ -186,6 +193,12 @@ final class MessageThumbnailPreviewView: UIView {
         }
     }
     
+    func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
+        let contentColor = UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)
+        senderLabel.textColor = contentColor
+        contentTextView.textColor = contentColor
+    }
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -193,17 +206,29 @@ final class MessageThumbnailPreviewView: UIView {
 
 extension MessageThumbnailPreviewView: ZMMessageObserver {
     func messageDidChange(_ changeInfo: MessageChangeInfo) {
+        guard !message.hasBeenDeleted else {
+            return // Deleted message won't have any content
+        }
+        
         updateForMessage()
     }
 }
 
-final class MessagePreviewView: UIView {
+final class MessagePreviewView: UIView, Themeable {
+    
     private let senderLabel = UILabel()
     private let contentTextView = UITextView.previewTextView()
     private var observerToken: Any? = nil
     private let displaySender: Bool
 
     let message: ZMConversationMessage
+    
+    @objc dynamic var colorSchemeVariant: ColorSchemeVariant = ColorScheme.default.variant {
+        didSet {
+            guard oldValue != colorSchemeVariant else { return }
+            applyColorScheme(colorSchemeVariant)
+        }
+    }
     
     init(message: ZMConversationMessage, displaySender: Bool = true) {
         require(message.canBeQuoted || !displaySender)
@@ -294,6 +319,12 @@ final class MessagePreviewView: UIView {
             let initialString = NSAttributedString(attachment: imageIcon) + "  " + (fileData.filename ?? "conversation.input_bar.message_preview.file".localized).localizedUppercase
             contentTextView.attributedText = initialString && attributes
         }
+    }
+    
+    func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
+        let contentColor = UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)
+        senderLabel.textColor = contentColor
+        contentTextView.textColor = contentColor
     }
     
     required init?(coder aDecoder: NSCoder) {
