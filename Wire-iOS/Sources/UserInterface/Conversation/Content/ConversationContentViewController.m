@@ -199,11 +199,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 
 - (void)loadQuotedMessageIfNeeded {
     
-    NSUUID *nonce = self.conversation.draftMessage.quote.nonce;
-    NSManagedObjectContext *context = self.conversation.managedObjectContext;
-    ZMMessage *quote = [ZMMessage fetchMessageWithNonce:nonce
-                                        forConversation:self.conversation
-                                 inManagedObjectContext:context];
+    ZMMessage *quote = [self.conversation fetchQuoteFromDraftMessage];
     
     if (quote != nil && quote.conversation != nil) {
         [self.delegate conversationContentViewController:self didTriggerReplyingToMessage:quote];
