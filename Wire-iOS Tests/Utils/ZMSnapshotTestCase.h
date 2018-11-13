@@ -110,7 +110,8 @@ NS_ASSUME_NONNULL_BEGIN
          tolerance:(float)tolerance
               file:(const char[_Nullable])file
               line:(NSUInteger)line
-        identifier:(nullable NSString *)identifier;
+        identifier:(nullable NSString *)identifier
+        deviceName:(nullable NSString *)deviceName;
 
 /// Performs multiple assertions with the given view using the screen sizes of
 /// the common iPhones in Portrait and iPad in Landscape and Portrait.

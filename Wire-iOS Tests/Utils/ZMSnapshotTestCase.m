@@ -173,15 +173,21 @@ static NSSet<NSNumber *> *phoneWidths(void) {
 
 - (void)verifyView:(UIView *)view extraLayoutPass:(BOOL)extraLayoutPass file:(const char[])file line:(NSUInteger)line
 {
-    [self verifyView:view extraLayoutPass:extraLayoutPass tolerance:0 file:file line:line identifier:nil];
+    [self verifyView:view extraLayoutPass:extraLayoutPass tolerance:0 file:file line:line identifier:nil deviceName:nil];
 }
 
 - (void)verifyView:(UIView *)view extraLayoutPass:(BOOL)extraLayoutPass file:(const char[])file line:(NSUInteger)line identifier:(NSString *)identifier
 {
-    [self verifyView:view extraLayoutPass:extraLayoutPass tolerance:0 file:file line:line identifier:identifier];
+    [self verifyView:view extraLayoutPass:extraLayoutPass tolerance:0 file:file line:line identifier:identifier deviceName:nil];
 }
 
-- (void)verifyView:(UIView *)view extraLayoutPass:(BOOL)extraLayoutPass tolerance:(float)tolerance file:(const char[])file line:(NSUInteger)line identifier:(NSString *)identifier
+- (void)verifyView:(UIView *)view
+   extraLayoutPass:(BOOL)extraLayoutPass
+         tolerance:(float)tolerance
+              file:(const char[])file
+              line:(NSUInteger)line
+        identifier:(NSString *)identifier
+        deviceName:(NSString *)deviceName
 {
     UIView *container = [self containerViewWithView:view];
     if ([self assertEmptyFrame:container file:file line:line]) {
@@ -190,11 +196,18 @@ static NSSet<NSNumber *> *phoneWidths(void) {
     NSString *finalIdentifier = @""; ///TODO: replace size with  device type
     
     if (0 == identifier.length) {
-        finalIdentifier = NSStringFromCGSize(view.bounds.size);
+        if (deviceName.length > 0) {
+            finalIdentifier = deviceName;
+        }
     }
     else {
-        finalIdentifier = [NSString stringWithFormat:@"%@-%@", identifier, NSStringFromCGSize(view.bounds.size)];
+        if (deviceName.length > 0) {
+        finalIdentifier = [NSString stringWithFormat:@"%@-%@", identifier, deviceName];
+        } else {
+            finalIdentifier = [NSString stringWithFormat:@"%@", identifier];
+        }
     }
+
     if (extraLayoutPass) {
         [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.1]];
     }
