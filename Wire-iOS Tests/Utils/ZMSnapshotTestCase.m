@@ -230,6 +230,7 @@
 }
 
 - (void)verifyView:(UIView *)view extraLayoutPass:(BOOL)extraLayoutPass width:(CGFloat)width file:(const char[])file line:(NSUInteger)line
+        deviceName:(NSString *)deviceName;
 {
     UIView *container = [self containerViewWithView:view];
 
@@ -248,7 +249,7 @@
         [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.1]];
     }
     
-    FBSnapshotVerifyView(container, @(width).stringValue)
+    FBSnapshotVerifyView(container, deviceName)
 }
 
 @end

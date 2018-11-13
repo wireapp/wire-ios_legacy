@@ -142,17 +142,15 @@ extension ZMSnapshotTestCase {
 
     func verifyView(inAllPhoneWidths view: UIView, extraLayoutPass: Bool, file: StaticString = #file, line: UInt = #line) {
         assertAmbigousLayout(view, file: file.utf8SignedStart(), line: line)
-        for (_/*deviceName*/, width) in ZMSnapshotTestCase.phoneWidths {
-//        for value: NSNumber in ZMSnapshotTestCase.phoneWidths {
-            verifyView(view, extraLayoutPass: extraLayoutPass, width: width, file: file.utf8SignedStart(), line: line)
+        for (deviceName, width) in ZMSnapshotTestCase.phoneWidths {
+            verifyView(view, extraLayoutPass: extraLayoutPass, width: width, file: file.utf8SignedStart(), line: line, deviceName: deviceName)
         }
     }
 
     func verifyView(inAllTabletWidths view: UIView, extraLayoutPass: Bool, file: StaticString = #file, line: UInt = #line) {
         assertAmbigousLayout(view, file: file.utf8SignedStart(), line: line)
-        for (_/*deviceName*/, width) in ZMSnapshotTestCase.tabletSizes {
-//        for value: NSValue in ZMSnapshotTestCase.tabletSizes {
-            verifyView(view, extraLayoutPass: extraLayoutPass, width: width, file: file.utf8SignedStart(), line: line)
+        for (deviceName, width) in ZMSnapshotTestCase.tabletSizes {
+            verifyView(view, extraLayoutPass: extraLayoutPass, width: width, file: file.utf8SignedStart(), line: line, deviceName: deviceName)
         }
     }
 }

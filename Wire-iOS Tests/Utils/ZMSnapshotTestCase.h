@@ -133,7 +133,13 @@ NS_ASSUME_NONNULL_BEGIN
 ///TODO: internal
 - (void)assertAmbigousLayout:(UIView *)view file:(const char[_Nullable])file line:(NSUInteger)line;
 
-- (void)verifyView:(UIView *)view extraLayoutPass:(BOOL)extraLayoutPass width:(CGFloat)width file:(const char[_Nullable])file line:(NSUInteger)line;
+- (void)verifyView:(UIView *)view
+   extraLayoutPass:(BOOL)extraLayoutPass
+             width:(CGFloat)width
+              file:(const char[_Nullable])file
+              line:(NSUInteger)line
+        deviceName:(nullable NSString *)deviceName;
+
 @end
 
 NS_ASSUME_NONNULL_END
