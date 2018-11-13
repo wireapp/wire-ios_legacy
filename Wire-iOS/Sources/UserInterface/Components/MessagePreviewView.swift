@@ -114,7 +114,8 @@ final class MessageThumbnailPreviewView: UIView {
         imagePreview.clipsToBounds = true
         imagePreview.contentMode = .scaleAspectFill
         imagePreview.imageSizeLimit = .maxDimensionForShortSide(MessageThumbnailPreviewView.thumbnailSize * UIScreen.main.scale)
-
+        imagePreview.layer.cornerRadius = 4
+        
         allViews.forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
         allViews.forEach(self.addSubview)
     }
