@@ -140,6 +140,12 @@ extension ZMSnapshotTestCase {
                file: file, line: line)
     }
 
+
+}
+
+// MARK: - verify the snapshots in multiple widths
+
+extension ZMSnapshotTestCase {
     func verifyInAllPhoneWidths(view: UIView, extraLayoutPass: Bool = false, file: StaticString = #file, line: UInt = #line) {
         assertAmbigousLayout(view, file: file.utf8SignedStart(), line: line)
         for (deviceName, width) in ZMSnapshotTestCase.phoneWidths {
