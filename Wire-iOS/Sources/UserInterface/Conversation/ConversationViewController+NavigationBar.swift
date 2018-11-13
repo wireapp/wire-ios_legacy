@@ -224,8 +224,8 @@ extension ConversationViewController: CollectionsViewControllerDelegate {
                 guard let `self` = self else {
                     return
                 }
-                self.contentViewController.scroll(to: message) { cell in
-                    cell.flashBackground()
+                self.contentViewController.scroll(to: message) { _ in
+                    self.contentViewController.highlight(message)
                 }
             }
         default:

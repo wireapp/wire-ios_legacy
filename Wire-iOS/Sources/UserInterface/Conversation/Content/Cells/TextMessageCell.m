@@ -149,11 +149,6 @@
     }
 }
 
-- (void)flashBackground
-{
-    [self.messageTextView flashBackground];
-}
-
 - (void)configureForMessage:(id<ZMConversationMessage>)message layoutProperties:(ConversationCellLayoutProperties *)layoutProperties
 {
     if ( ! [Message isTextMessage:message]) {
