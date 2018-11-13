@@ -67,6 +67,7 @@ class EphemeralCountdownView: UIView {
     }
     
     func stopCountDown() {
+        destructionCountdownView.stopAnimating()
         timer?.invalidate()
         timer = nil
     }

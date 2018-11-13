@@ -52,6 +52,7 @@ import UIKit
     
     override public func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
         let isInside = super.point(inside: point, with: event)
+        guard !UIMenuController.shared.isMenuVisible else { return false }
         guard let position = characterRange(at: point), isInside else { return false }
         let index = offset(from: beginningOfDocument, to: position.start)
         return urlAttribute(at: index)
