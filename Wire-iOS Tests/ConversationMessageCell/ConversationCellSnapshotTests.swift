@@ -82,3 +82,9 @@ extension ConversationMessageSectionController: UITableViewDataSource, UITableVi
     }
 
 }
+
+func XCTAssertEqualCells(_ descriptions: [AnyConversationMessageCellDescription], _ expectedDescriptions: [AnyClass], file: StaticString = #file, line: UInt = #line) {
+    let classes = descriptions.map { String(describing: $0.baseType) }
+    let expectedClasses = expectedDescriptions.map { String(describing: $0) }
+    XCTAssertEqual(classes, expectedClasses, file: file, line: line)
+}
