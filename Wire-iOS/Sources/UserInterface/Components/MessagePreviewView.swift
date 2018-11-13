@@ -39,7 +39,7 @@ extension ZMConversationMessage {
         return preparePreviewView()
     }
     
-    func preparePreviewView(shouldDisplaySender: Bool = true) -> UIView? {
+    func preparePreviewView(shouldDisplaySender: Bool = true) -> UIView {
         if self.isImage || self.isVideo {
             return MessageThumbnailPreviewView(message: self, displaySender: shouldDisplaySender)
         }

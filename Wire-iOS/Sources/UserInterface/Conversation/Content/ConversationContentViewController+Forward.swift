@@ -100,7 +100,13 @@ extension ZMMessage: Shareable {
 
 extension ZMConversationMessage {
     public func previewView() -> UIView? {
-        guard let view = self.preparePreviewView(shouldDisplaySender: false) else { return nil }
+        // the preview view will have a white bg color, so we need to
+        // temporarily force a light color scheme for all subviews.
+        let variant = ColorScheme.default.variant
+        defer { ColorScheme.default.variant = variant }
+        ColorScheme.default.variant = .light
+        
+        let view = self.preparePreviewView(shouldDisplaySender: false)
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .white
         return view
