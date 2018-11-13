@@ -80,15 +80,20 @@ extension StaticString {
     }
 }
 
-// MARK: - verify the snapshots in all devices
+// MARK: - verify the snapshots in multiple devices
 extension ZMSnapshotTestCase {
-    static var deviceScreenSizes: [String:CGSize] = [
+    static let phoneScreenSizes: [String:CGSize] = [
         "iPhone4Inch": ZMDeviceSizeIPhone5,
         "iPhone4_7Inch": ZMDeviceSizeIPhone6,
         "iPhone5_5Inch": ZMDeviceSizeIPhone6Plus,
         "iPhone5_8Inch": ZMDeviceSizeIPhoneX,
-        "iPhone6_5Inch": ZMDeviceSizeIPhoneXR,
+        "iPhone6_5Inch": ZMDeviceSizeIPhoneXR
         ]
+
+    static let tabletScreenSizes: [String:CGSize] = [
+        "iPadPortrait": ZMDeviceSizeIPadPortrait,
+        "iPadLandscape": ZMDeviceSizeIPadLandscape
+    ] ///TODO: add iPad Pro sizes
 
     
     typealias ConfigurationWithDeviceType = (_ view: UIView, _ isPad: Bool) -> Void
@@ -121,22 +126,18 @@ extension ZMSnapshotTestCase {
         }, file: file, line: line)
     }
 
-    func verifyInAllDeviceSizes(view: UIView, extraLayoutPass: Bool, file: StaticString = #file, line: UInt = #line, configurationBlock configuration: ConfigurationWithDeviceType?) {
+    func verifyInAllDeviceSizes(view: UIView, extraLayoutPass: Bool, file: StaticString = #file, line: UInt = #line, configurationBlock configuration: ConfigurationWithDeviceType? = nil) {
 
         verifyMultipleSize(view: view, extraLayoutPass: extraLayoutPass, inSizes: ZMSnapshotTestCase.deviceSizes(),
                configuration: configuration,
                file: file, line: line)
-    }
-
-    func verifyInAllDeviceSizes( view: UIView, extraLayoutPass: Bool, file: StaticString = #file, line: UInt = #line) {
-        verifyInAllDeviceSizes(view: view, extraLayoutPass: extraLayoutPass, file: file, line: line, configurationBlock: nil)
     }
 }
 
 extension ZMSnapshotTestCase {
 
     func verify(view: UIView, identifier: String = "", tolerance: Float = 0, file: StaticString = #file, line: UInt = #line) {
-        verifyView(view, extraLayoutPass: false, tolerance: tolerance, file: file.utf8SignedStart(), line: line, identifier: identifier)
+        verifyView(view, extraLayoutPass: false, tolerance: tolerance, file: file.utf8SignedStart(), line: line, identifier: identifier, deviceName: nil)
     }
     
     func verifyInAllDeviceSizes(view: UIView, file: StaticString = #file, line: UInt = #line, configuration: @escaping (UIView, Bool) -> () = { _, _ in }) {
@@ -164,7 +165,7 @@ extension ZMSnapshotTestCase {
         }
         view.setNeedsLayout()
         view.layoutIfNeeded()
-        verifyView(view, extraLayoutPass: false, tolerance: 0, file: file.utf8SignedStart(), line: line, identifier: "")
+        verifyView(view, extraLayoutPass: false, tolerance: 0, file: file.utf8SignedStart(), line: line, identifier: "", deviceName: nil)
     }
     
     func verifyInAllIPhoneSizes(view: UIView, extraLayoutPass: Bool = false, file: StaticString = #file, line: UInt = #line, configurationBlock: ((UIView) -> Swift.Void)? = nil) {
@@ -175,10 +176,10 @@ extension ZMSnapshotTestCase {
         if var themeable = view as? Themeable {
             themeable.colorSchemeVariant = .light
             snapshotBackgroundColor = .white
-            verifyView(view, extraLayoutPass: false, tolerance: tolerance, file: file.utf8SignedStart(), line: line, identifier: "LightTheme")
+            verifyView(view, extraLayoutPass: false, tolerance: tolerance, file: file.utf8SignedStart(), line: line, identifier: "LightTheme", deviceName: nil)
             themeable.colorSchemeVariant = .dark
             snapshotBackgroundColor = .black
-            verifyView(view, extraLayoutPass: false, tolerance: tolerance, file: file.utf8SignedStart(), line: line, identifier: "DarkTheme")
+            verifyView(view, extraLayoutPass: false, tolerance: tolerance, file: file.utf8SignedStart(), line: line, identifier: "DarkTheme", deviceName: nil)
         } else {
             XCTFail("View doesn't support Themable protocol")
         }
