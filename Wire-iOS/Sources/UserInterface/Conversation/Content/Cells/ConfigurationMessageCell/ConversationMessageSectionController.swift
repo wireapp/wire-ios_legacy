@@ -373,6 +373,10 @@ extension IndexSet {
     }
 
     func messageDidChange(_ changeInfo: MessageChangeInfo) {
+        guard !changeInfo.message.hasBeenDeleted else {
+            return // Deletions are handled by the window observer
+        }
+        
         sectionDelegate?.messageSectionController(self, didRequestRefreshForMessage: self.message)
     }
 
