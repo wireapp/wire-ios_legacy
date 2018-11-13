@@ -41,7 +41,7 @@ class MessageReplyPreviewViewTests: ZMSnapshotTestCase {
     }
     
     override func tearDown() {
-        ColorScheme.default.variant = .light
+        disableDarkColorScheme()
         super.tearDown()
     }
     
@@ -51,6 +51,12 @@ class MessageReplyPreviewViewTests: ZMSnapshotTestCase {
         NSAttributedString.invalidateParagraphStyle()
         
         snapshotBackgroundColor = UIColor.from(scheme: .contentBackground)
+    }
+
+    func disableDarkColorScheme() {
+        ColorScheme.default.variant = .light
+        NSAttributedString.invalidateMarkdownStyle()
+        NSAttributedString.invalidateParagraphStyle()
     }
     
     func testThatItRendersTextMessagePreview() {

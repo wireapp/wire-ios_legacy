@@ -29,11 +29,11 @@ class ConversationTextMessageCellTests: CoreDataSnapshotTestCase {
         message.backingTextMessageData.linkPreview = LinkPreview(originalURLString: url, permanentURLString: url, resolvedURLString: url, offset: 0)
 
         // WHEN
-        let cells = ConversationTextMessageCellDescription.cells(for: message, searchQueries: [])
+        let cellTypes: [AnyClass] = ConversationTextMessageCellDescription.cells(for: message, searchQueries: []).map(\.baseType)
 
         // THEN
         let expectedCellTypes: [AnyClass] = [ConversationTextMessageCellDescription.self, ConversationSoundCloudCellDescription<AudioTrackViewController>.self]
-        XCTAssertEqualCells(cells, expectedCellTypes)
+        XCTAssertEqual(cellTypes, expectedCellTypes)
     }
 
 }
