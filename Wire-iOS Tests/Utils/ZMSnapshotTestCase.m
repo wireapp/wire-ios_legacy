@@ -159,6 +159,7 @@
     container.backgroundColor = self.snapshotBackgroundColor;
     
     [container addSubview:view];
+    view.translatesAutoresizingMaskIntoConstraints = NO;
     [view fitInSuperviewWithNoInset];
     return container;
 }
