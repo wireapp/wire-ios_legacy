@@ -113,8 +113,7 @@ extension ZMSnapshotTestCase {
         }
     }
 
-    ///TODO: rename
-    func verifyView(inAllPhoneSizes view: UIView, extraLayoutPass: Bool, file: StaticString = #file, line: UInt = #line, configurationBlock configuration: Configuration?) {
+    func verifyInAllPhoneSizes( view: UIView, extraLayoutPass: Bool, file: StaticString = #file, line: UInt = #line, configurationBlock configuration: Configuration?) {
         verifyMultipleSize(view: view, extraLayoutPass: extraLayoutPass, inSizes: phoneSizes(), configuration: { view, isPad in
             if let configuration = configuration {
                 configuration(view)
@@ -122,17 +121,15 @@ extension ZMSnapshotTestCase {
         }, file: file, line: line)
     }
 
-    ///TODO: rename
-    func verifyView(inAllDeviceSizes view: UIView, extraLayoutPass: Bool, file: StaticString = #file, line: UInt = #line, configurationBlock configuration: ConfigurationWithDeviceType?) {
+    func verifyInAllDeviceSizes(view: UIView, extraLayoutPass: Bool, file: StaticString = #file, line: UInt = #line, configurationBlock configuration: ConfigurationWithDeviceType?) {
 
         verifyMultipleSize(view: view, extraLayoutPass: extraLayoutPass, inSizes: ZMSnapshotTestCase.deviceSizes(),
                configuration: configuration,
                file: file, line: line)
     }
 
-    ///TODO: rename
-    func verifyView(inAllDeviceSizes view: UIView, extraLayoutPass: Bool, file: StaticString = #file, line: UInt = #line) {
-        verifyView(inAllDeviceSizes: view, extraLayoutPass: extraLayoutPass, file: file, line: line, configurationBlock: nil)
+    func verifyInAllDeviceSizes( view: UIView, extraLayoutPass: Bool, file: StaticString = #file, line: UInt = #line) {
+        verifyInAllDeviceSizes(view: view, extraLayoutPass: extraLayoutPass, file: file, line: line, configurationBlock: nil)
     }
 }
 
@@ -143,7 +140,7 @@ extension ZMSnapshotTestCase {
     }
     
     func verifyInAllDeviceSizes(view: UIView, file: StaticString = #file, line: UInt = #line, configuration: @escaping (UIView, Bool) -> () = { _, _ in }) {
-        verifyView(inAllDeviceSizes: view, extraLayoutPass: false, file: file, line: line, configurationBlock: configuration)
+        verifyInAllDeviceSizes(view: view, extraLayoutPass: false, file: file, line: line, configurationBlock: configuration)
     }
     
     func verifyInAllPhoneWidths(view: UIView, file: StaticString = #file, line: UInt = #line) {
@@ -171,7 +168,7 @@ extension ZMSnapshotTestCase {
     }
     
     func verifyInAllIPhoneSizes(view: UIView, extraLayoutPass: Bool = false, file: StaticString = #file, line: UInt = #line, configurationBlock: ((UIView) -> Swift.Void)? = nil) {
-        verifyView(inAllPhoneSizes: view, extraLayoutPass: extraLayoutPass, file: file, line: line, configurationBlock: configurationBlock)
+        verifyInAllPhoneSizes(view: view, extraLayoutPass: extraLayoutPass, file: file, line: line, configurationBlock: configurationBlock)
     }
     
     func verifyInAllColorSchemes(view: UIView, tolerance: Float = 0, file: StaticString = #file, line: UInt = #line) {
