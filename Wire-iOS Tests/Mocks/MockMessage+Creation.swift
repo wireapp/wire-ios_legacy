@@ -101,7 +101,7 @@ final class MockMessageFactory: NSObject {
 
         mockSystemMessageData.clients = Set(userClients)
 
-        message.systemMessageData = mockSystemMessageData
+        message.backingSystemMessageData = mockSystemMessageData
         return message
     }
 
