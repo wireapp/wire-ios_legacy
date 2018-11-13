@@ -132,21 +132,15 @@ class MessageReplyPreviewViewTests: ZMSnapshotTestCase {
     }
     
     func testThatItRendersLinkPreviewMessagePreview() {
-        let message = MockMessageFactory.linkMessage()!
-        let article = Article(
-            originalURLString: "https://www.example.com/article/1",
-            permanentURLString: "https://www.example.com/article/1",
-            resolvedURLString: "https://www.example.com/article/1",
-            offset: 0
-        )
-        
+        let url = "https://www.example.com/article/1"
+        let article = Article(originalURLString: url, permanentURLString: url, resolvedURLString: url, offset: 0)
         article.title = "You won't believe what happened next!"
-        let textMessageData = MockTextMessageData()
-        textMessageData.linkPreview = article
-        textMessageData.linkPreviewImageCacheKey = "image-id-unsplash_matterhorn.jpg"
-        textMessageData.imageData = image(inTestBundleNamed: "unsplash_matterhorn.jpg").jpegData(compressionQuality: 0.9)
-        textMessageData.linkPreviewHasImage = true
-        message.backingTextMessageData = textMessageData
+
+        let message = MockMessageFactory.textMessage(withText: "https://www.example.com/article/1")!
+        message.backingTextMessageData.linkPreview = article
+        message.backingTextMessageData.linkPreviewImageCacheKey = "image-id-unsplash_matterhorn.jpg"
+        message.backingTextMessageData.imageData = image(inTestBundleNamed: "unsplash_matterhorn.jpg").jpegData(compressionQuality: 0.9)
+        message.backingTextMessageData.linkPreviewHasImage = true
         
         let previewView = message.replyPreview()!
         XCTAssertTrue(waitForGroupsToBeEmpty([defaultImageCache.dispatchGroup]))
