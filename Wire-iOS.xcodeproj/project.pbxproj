@@ -4859,8 +4859,8 @@
 				EF15A7B520BC34F700A045C7 /* XCTestCase+ImageFromBundle.swift */,
 				EF19209C20C6E4F700E4B92D /* XCTestCase+DayFormatter.swift */,
 				BF5127141CC9118F00F23DEA /* ZMSnapshotTestCase+Swift.swift */,
-				EF10CB1E2151057D00AEA8EA /* UITableViewCell+Snapshot.swift */,
 				BF29C9861C6E357100601EE7 /* ZMSnapshotTestCase.m */,
+				EF10CB1E2151057D00AEA8EA /* UITableViewCell+Snapshot.swift */,
 				BFFE943D1E7839EB0025AD75 /* CoreDataSnapshotTestCase.swift */,
 				5E294594219081A80045ACFA /* Date+Generator.swift */,
 			);

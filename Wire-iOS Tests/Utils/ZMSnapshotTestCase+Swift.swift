@@ -96,11 +96,17 @@ extension ZMSnapshotTestCase {
     func verifyInAllTabletWidths(view: UIView, file: StaticString = #file, line: UInt = #line) {
         verifyView(inAllTabletWidths: view, extraLayoutPass: false, file: file.utf8SignedStart(), line: line)
     }
-    
+
+
+    /// return the smallest iPhone screen size that Wire app supports
+    private var defaultIPhoneSize: CGSize {
+        return ZMDeviceSizeIPhone5
+    }
+
     func verifyInIPhoneSize(view: UIView, file: StaticString = #file, line: UInt = #line) {
         constrain(view) { view in
-            view.width == 320
-            view.height == 480
+            view.width == defaultIPhoneSize.width
+            view.height == defaultIPhoneSize.height
         }
         view.setNeedsLayout()
         view.layoutIfNeeded()
