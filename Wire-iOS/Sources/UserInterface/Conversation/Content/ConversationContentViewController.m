@@ -194,6 +194,20 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     [self.view addGestureRecognizer:pinchImageGestureRecognizer];
     
     [self createMentionsResultsView];
+    
+}
+
+- (void)loadQuotedMessageIfNeeded {
+    
+    NSUUID *nonce = self.conversation.draftMessage.quote.nonce;
+    NSManagedObjectContext *context = self.conversation.managedObjectContext;
+    ZMMessage *quote = [ZMMessage fetchMessageWithNonce:nonce
+                                        forConversation:self.conversation
+                                 inManagedObjectContext:context];
+    
+    if (quote != nil && quote.conversation != nil) {
+        [self.delegate conversationContentViewController:self didTriggerReplyingToMessage:quote];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -233,6 +247,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     }
 
     [self scrollToFirstUnreadMessageIfNeeded];
+    [self loadQuotedMessageIfNeeded];
     UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, nil);
 }
 
