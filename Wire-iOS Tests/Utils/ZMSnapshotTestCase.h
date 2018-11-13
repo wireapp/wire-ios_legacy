@@ -101,6 +101,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)verifyView:(UIView *)view
    extraLayoutPass:(BOOL)extraLayoutPass
+              file:(const char [_Nullable])file
+              line:(NSUInteger)line
+        deviceName:(nullable NSString *)deviceName;
+
+- (void)verifyView:(UIView *)view
+   extraLayoutPass:(BOOL)extraLayoutPass
               file:(const char[_Nullable])file
               line:(NSUInteger)line
         identifier:(nullable NSString *)identifier;

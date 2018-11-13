@@ -83,7 +83,7 @@ extension StaticString {
 // MARK: - verify the snapshots in multiple devices
 extension ZMSnapshotTestCase {
     static let phoneScreenSizes: [String:CGSize] = [
-        "iPhone4Inch": ZMDeviceSizeIPhone5,
+        "iPhone4Inch":   ZMDeviceSizeIPhone5,
         "iPhone4_7Inch": ZMDeviceSizeIPhone6,
         "iPhone5_5Inch": ZMDeviceSizeIPhone6Plus,
         "iPhone5_8Inch": ZMDeviceSizeIPhoneX,
@@ -99,27 +99,26 @@ extension ZMSnapshotTestCase {
     typealias ConfigurationWithDeviceType = (_ view: UIView, _ isPad: Bool) -> Void
     typealias Configuration = (_ view: UIView) -> Void
 
-    private static func deviceSizes() -> [NSValue] {
-        return phoneSizes() + tabletSizes()
-    }
+    private static var deviceScreenSizes: [String:CGSize] = {
+        return phoneScreenSizes.merging(tabletScreenSizes) { $1 }
+    }()
 
-    func verifyMultipleSize(view: UIView, extraLayoutPass: Bool, inSizes sizes: [NSValue], configuration: ConfigurationWithDeviceType?,
+    func verifyMultipleSize(view: UIView, extraLayoutPass: Bool, inSizes sizes: [String:CGSize], configuration: ConfigurationWithDeviceType?,
                 file: StaticString = #file, line: UInt = #line) {
-        for value in sizes {
-            let size = value.cgSizeValue
-            view.frame = CGRect(x: 0, y: 0, width: size.width, height: size.height)
+        for (deviceName, size) in sizes {
+            view.frame = CGRect(origin: .zero, size: size)
             if let configuration = configuration {
                 let iPad = size.equalTo(ZMDeviceSizeIPadLandscape) || size.equalTo(ZMDeviceSizeIPadPortrait)
                 UIView.performWithoutAnimation({
                     configuration(view, iPad)
                 })
             }
-            verifyView(view, extraLayoutPass: extraLayoutPass, file: file.utf8SignedStart(), line: line)
+            verifyView(view, extraLayoutPass: extraLayoutPass, file: file.utf8SignedStart(), line: line, deviceName: deviceName)
         }
     }
 
     func verifyInAllPhoneSizes( view: UIView, extraLayoutPass: Bool, file: StaticString = #file, line: UInt = #line, configurationBlock configuration: Configuration?) {
-        verifyMultipleSize(view: view, extraLayoutPass: extraLayoutPass, inSizes: phoneSizes(), configuration: { view, isPad in
+        verifyMultipleSize(view: view, extraLayoutPass: extraLayoutPass, inSizes: ZMSnapshotTestCase.phoneScreenSizes, configuration: { view, isPad in
             if let configuration = configuration {
                 configuration(view)
             }
@@ -128,7 +127,7 @@ extension ZMSnapshotTestCase {
 
     func verifyInAllDeviceSizes(view: UIView, extraLayoutPass: Bool, file: StaticString = #file, line: UInt = #line, configurationBlock configuration: ConfigurationWithDeviceType? = nil) {
 
-        verifyMultipleSize(view: view, extraLayoutPass: extraLayoutPass, inSizes: ZMSnapshotTestCase.deviceSizes(),
+        verifyMultipleSize(view: view, extraLayoutPass: extraLayoutPass, inSizes: ZMSnapshotTestCase.deviceScreenSizes,
                configuration: configuration,
                file: file, line: line)
     }
