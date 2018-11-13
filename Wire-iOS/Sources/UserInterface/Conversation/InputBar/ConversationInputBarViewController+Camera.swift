@@ -165,17 +165,17 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
         confirmImageViewController.image = image
         confirmImageViewController.previewTitle = self.conversation.displayName.uppercased()
         confirmImageViewController.onConfirm = { [unowned self] (editedImage: UIImage?) in
-            self.dismiss(animated: true, completion: .none)
-            
-            if isFromCamera {
-                let selector = #selector(ConversationInputBarViewController.image(_:didFinishSavingWithError:contextInfo:))
-                UIImageWriteToSavedPhotosAlbum(UIImage(data: imageData as Data)!, self, selector, nil)
-            }
-            
-            if let editedImage = editedImage, let editedImageData = editedImage.pngData() {
-                self.sendController.sendMessage(withImageData: editedImageData, completion: .none)
-            } else {
-                self.sendController.sendMessage(withImageData: imageData as Data, completion: .none)
+            self.dismiss(animated: true) {
+                if isFromCamera {
+                    let selector = #selector(ConversationInputBarViewController.image(_:didFinishSavingWithError:contextInfo:))
+                    UIImageWriteToSavedPhotosAlbum(UIImage(data: imageData as Data)!, self, selector, nil)
+                }
+                
+                if let editedImage = editedImage, let editedImageData = editedImage.pngData() {
+                    self.sendController.sendMessage(withImageData: editedImageData, completion: .none)
+                } else {
+                    self.sendController.sendMessage(withImageData: imageData as Data, completion: .none)
+                }
             }
         }
         

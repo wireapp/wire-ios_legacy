@@ -821,9 +821,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 - (void)postImage:(id<MediaAsset>)image
 {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-        [self.sendController sendMessageWithImageData:image.data completion:^() {}];
-    });
+    [self.sendController sendMessageWithImageData:image.data completion:^() {}];
 }
 
 @end
@@ -1048,17 +1046,17 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 - (void)giphySearchViewController:(GiphySearchViewController *)giphySearchViewController didSelectImageData:(NSData *)imageData searchTerm:(NSString *)searchTerm
 {
     [self clearInputBar];
-    [self dismissViewControllerAnimated:YES completion:nil];
-    
-    NSString *messageText = nil;
-    
-    if ([searchTerm isEqualToString:@""]) {
-        messageText = [NSString stringWithFormat:NSLocalizedString(@"giphy.conversation.random_message", nil), searchTerm];
-    } else {
-        messageText = [NSString stringWithFormat:NSLocalizedString(@"giphy.conversation.message", nil), searchTerm];
-    }
-    
-    [self.sendController sendTextMessage:messageText mentions:@[] withImageData:imageData];
+    [self dismissViewControllerAnimated:YES completion:^{
+        NSString *messageText = nil;
+        
+        if ([searchTerm isEqualToString:@""]) {
+            messageText = [NSString stringWithFormat:NSLocalizedString(@"giphy.conversation.random_message", nil), searchTerm];
+        } else {
+            messageText = [NSString stringWithFormat:NSLocalizedString(@"giphy.conversation.message", nil), searchTerm];
+        }
+        
+        [self.sendController sendTextMessage:messageText mentions:@[] withImageData:imageData];
+    }];
 }
 
 @end
