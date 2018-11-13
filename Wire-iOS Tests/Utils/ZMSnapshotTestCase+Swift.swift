@@ -140,10 +140,6 @@ extension ZMSnapshotTestCase {
                file: file, line: line)
     }
 
-//    func verifyInAllPhoneWidths(view: UIView, file: StaticString = #file, line: UInt = #line) {
-//        verifyInAllPhoneWidths(view, extraLayoutPass: false, file: file, line: line)
-//    }
-
     func verifyInAllPhoneWidths(view: UIView, extraLayoutPass: Bool = false, file: StaticString = #file, line: UInt = #line) {
         assertAmbigousLayout(view, file: file.utf8SignedStart(), line: line)
         for (deviceName, width) in ZMSnapshotTestCase.phoneWidths {
@@ -168,11 +164,6 @@ extension ZMSnapshotTestCase {
     func verifyInAllDeviceSizes(view: UIView, file: StaticString = #file, line: UInt = #line, configuration: @escaping (UIView, Bool) -> () = { _, _ in }) {
         verifyInAllDeviceSizes(view: view, extraLayoutPass: false, file: file, line: line, configurationBlock: configuration)
     }
-
-//    func verifyInAllTabletWidths(view: UIView, file: StaticString = #file, line: UInt = #line) {
-//        verifyInAllTabletWidths(view, extraLayoutPass: false, file: file, line: line)
-//    }
-
 
     /// return the smallest iPhone screen size that Wire app supports
     private var defaultIPhoneSize: CGSize {
