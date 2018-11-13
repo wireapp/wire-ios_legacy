@@ -23,7 +23,6 @@
 #import "UIColor+WAZExtensions.h"
 #import "ColorScheme.h"
 #import "Wire-Swift.h"
-//#import "Wire_iOS_Tests-Swift.h"
 
 static NSSet<NSNumber *> *phoneWidths(void) {
     return [phoneSizes() mapWithBlock:^NSNumber *(NSValue *boxedSize) {

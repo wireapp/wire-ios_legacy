@@ -18,7 +18,6 @@
 
 
 import Foundation
-import Cartography
 @testable import Wire
 
 
@@ -42,12 +41,11 @@ extension UITableViewCell: UITableViewDelegate, UITableViewDataSource {
         tableView.reloadData()
         tableView.bounds = self.bounds
         tableView.layoutIfNeeded()
-        
-        constrain(tableView) { tableView in
-            tableView.height == size.height
-        }
-        
-        
+
+        NSLayoutConstraint.activate([
+            tableView.heightAnchor.constraint(equalToConstant: size.height)
+            ])
+
         self.layoutSubviews()
         return tableView
     }
@@ -158,10 +156,13 @@ extension ZMSnapshotTestCase {
     }
 
     func verifyInIPhoneSize(view: UIView, file: StaticString = #file, line: UInt = #line) {
-        constrain(view) { view in
-            view.width == defaultIPhoneSize.width
-            view.height == defaultIPhoneSize.height
-        }
+
+        view.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            view.heightAnchor.constraint(equalToConstant: defaultIPhoneSize.height),
+            view.widthAnchor.constraint(equalToConstant: defaultIPhoneSize.width)
+            ])
+
         view.setNeedsLayout()
         view.layoutIfNeeded()
         verifyView(view, extraLayoutPass: false, tolerance: 0, file: file.utf8SignedStart(), line: line, identifier: "", deviceName: nil)
