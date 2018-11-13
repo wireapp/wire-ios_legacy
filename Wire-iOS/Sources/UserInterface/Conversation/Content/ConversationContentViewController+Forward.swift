@@ -103,12 +103,6 @@ extension ZMConversationMessage {
         let view = self.preparePreviewView(shouldDisplaySender: false)
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .white
-
-        if var themeable = view as? Themeable {
-            // since bg color is white, content should be dark
-            themeable.colorSchemeVariant = .light
-        }
-
         return view
     }
 }
