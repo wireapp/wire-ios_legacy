@@ -144,8 +144,26 @@ extension ConversationMessageCellDescription {
     
     func makeView() -> UIView {
         let view = View()
+        let container = UIView()
+        
+        view.translatesAutoresizingMaskIntoConstraints = false
+        container.translatesAutoresizingMaskIntoConstraints = false
+        container.addSubview(view)
+        
+        let leading = view.leadingAnchor.constraint(equalTo: container.leadingAnchor)
+        let trailing = view.trailingAnchor.constraint(equalTo: container.trailingAnchor)
+        let top = view.topAnchor.constraint(equalTo: container.topAnchor)
+        let bottom = view.bottomAnchor.constraint(equalTo: container.bottomAnchor)
+        
+        top.constant = CGFloat(topMargin)
+        leading.constant = isFullWidth ? 0 : UIView.conversationLayoutMargins.left
+        trailing.constant = isFullWidth ? 0 : -UIView.conversationLayoutMargins.right
+        
+        NSLayoutConstraint.activate([leading, trailing, top, bottom])
+        
         view.configure(with: configuration, animated: false)
-        return view
+        
+        return container
     }
 
     func makeCell(for tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {

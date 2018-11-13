@@ -19,33 +19,20 @@
 import XCTest
 @testable import Wire
 
-/**
- * A base test class for section-based messages. Use the section property to build
- * your layout and call `verifySectionSnapshots` to record and verify the snapshot.
- */
-class ConversationCellSnapshotTests: CoreDataSnapshotTestCase {
-
-    var section: ConversationMessageSectionController!
+class ConversationPingMessageTests: ConversationCellSnapshotTestCase {
 
     override func setUp() {
         super.setUp()
     }
 
-    override func tearDown() {
-        section = nil
-        super.tearDown()
+    func testPing() {
+        // GIVEN
+        let message = MockMessageFactory.pingMessage()!
+        message.sender = selfUser
+
+        // THEN
+        verify(message: message)
     }
 
-    /**
-     * Performs a snapshot test for the current section controller.
-     */
-    func verifySectionSnapshots() {
-        let views = section.cellDescriptions.map({ $0.makeView() })
-        let stackView = UIStackView(arrangedSubviews: views)
-        stackView.axis = .vertical
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        
-        verifyInAllPhoneWidths(view: stackView)
-    }
 
 }
