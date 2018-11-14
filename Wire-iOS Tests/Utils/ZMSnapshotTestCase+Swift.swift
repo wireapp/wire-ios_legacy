@@ -79,6 +79,10 @@ extension StaticString {
 }
 
 // MARK: - verify the snapshots in multiple devices
+
+/// Performs multiple assertions with the given view using the screen sizes of
+/// the common iPhones in Portrait and iPad in Landscape and Portrait.
+/// This method only makes sense for views that will be on presented fullscreen.
 extension ZMSnapshotTestCase {
     
     static let phoneScreenSizes: [String:CGSize] = [

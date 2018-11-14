@@ -91,12 +91,7 @@ NS_ASSUME_NONNULL_BEGIN
         identifier:(nullable NSString *)identifier
         deviceName:(nullable NSString *)deviceName;
 
-/// Performs multiple assertions with the given view using the screen sizes of
-/// the common iPhones in Portrait and iPad in Landscape and Portrait.
-/// This method only makes sense for views that will be on presented fullscreen.
 
-
-///TODO: internal
 - (void)assertAmbigousLayout:(UIView *)view file:(const char[_Nullable])file line:(NSUInteger)line;
 
 - (void)verifyView:(UIView *)view
