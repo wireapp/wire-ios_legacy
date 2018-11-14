@@ -18,7 +18,6 @@
 
 import Foundation
 import WireSyncEngine
-import Cartography
 import TTTAttributedLabel
 
 @objc public protocol MessageToolboxViewDelegate: NSObjectProtocol {
@@ -300,8 +299,7 @@ import TTTAttributedLabel
         }
         
         let changeBlock = {
-            self.statusLabel.attributedText = attributedText
-            self.accessibilityValue = self.statusLabel.attributedText.string
+            self.updateStatusLabelAttributedText(attributedText: attributedText)
         }
         
         if animated {
@@ -310,6 +308,11 @@ import TTTAttributedLabel
         else {
             changeBlock()
         }
+    }
+
+    fileprivate func updateStatusLabelAttributedText(attributedText: NSAttributedString) {
+        statusLabel.attributedText = attributedText
+        statusLabel.accessibilityValue = statusLabel.attributedText.string
     }
 
     fileprivate func configureTimestamp(_ message: ZMConversationMessage, animated: Bool = false) {
@@ -389,8 +392,7 @@ import TTTAttributedLabel
         }
         
         let changeBlock =  {
-            self.statusLabel.attributedText = NSAttributedString(attributedString: attributedText)
-            self.accessibilityValue = self.statusLabel.attributedText.string
+            self.updateStatusLabelAttributedText(attributedText: attributedText)
             self.statusLabel.addLinks()
         }
         
@@ -412,8 +414,7 @@ import TTTAttributedLabel
         }
         
         let changeBlock = {
-            self.statusLabel.attributedText = attributedText
-            self.accessibilityValue = self.statusLabel.attributedText.string
+            self.updateStatusLabelAttributedText(attributedText: attributedText)
         }
         
         if animated {

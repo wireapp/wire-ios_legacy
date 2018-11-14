@@ -29,11 +29,11 @@ extension ZMConversationMessage {
 
         if Calendar.current.isDateInToday(timestamp) {
             formattedDate = Message.shortTimeFormatter.string(from: timestamp)
+            return "content.message.reply.original_timestamp.time".localized(args: formattedDate)
         } else {
             formattedDate = Message.shortDateFormatter.string(from: timestamp)
+            return "content.message.reply.original_timestamp.date".localized(args: formattedDate)
         }
-
-        return "content.message.reply.original_timestamp".localized(args: formattedDate)
     }
 
     func formattedReceivedDate() -> String? {
