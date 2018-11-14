@@ -113,7 +113,7 @@ extension ZMSnapshotTestCase {
         "414": CGSize.DeviceScreen.iPhone5_5Inch.width
     ]
 
-    private static var tabletSizes: [String:CGFloat] = {
+    private static var tabletWidths: [String:CGFloat] = {
         return Dictionary(uniqueKeysWithValues:
             tabletScreenSizes.map { key, value in (key, value.width) })
     }()
@@ -160,7 +160,7 @@ extension ZMSnapshotTestCase {
 
     func verifyInAllTabletWidths(view: UIView, extraLayoutPass: Bool = false, file: StaticString = #file, line: UInt = #line) {
         assertAmbigousLayout(view, file: file.utf8SignedStart(), line: line)
-        for (deviceName, width) in ZMSnapshotTestCase.tabletSizes {
+        for (deviceName, width) in ZMSnapshotTestCase.tabletWidths {
             verifyView(view, extraLayoutPass: extraLayoutPass, width: width, file: file.utf8SignedStart(), line: line, deviceName: deviceName)
         }
     }
