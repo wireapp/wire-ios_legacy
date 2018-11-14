@@ -18,9 +18,20 @@
 
 import Foundation
 
-extension UIViewController {
+extension CGSize {
+    enum DeviceScreen {
+        // iPhone 5
+        static let iPhone4_0Inch = CGSize(width: 320, height: 568)
+        // iPhone 6
+        static let iPhone4_7Inch = CGSize(width: 375, height: 667)
+        // iPhone 6 plus
+        static let iPhone5_5Inch = CGSize(width: 414, height: 736)
+        // iPhone X
+        static let iPhone5_8Inch = CGSize(width: 375, height: 812)
+        // iPhone XR
+        static let iPhone6_5Inch = CGSize(width: 414, height: 896)
 
-    func setBoundsSizeAsIPhone4_7Inch() {
-        view.bounds.size = CGSize.DeviceScreen.iPhone4_7Inch
+        static let iPadPortrait =  CGSize(width: 768, height: 1024)
+        static let iPadLandscape = CGSize(width: 1024, height: 768)
     }
 }

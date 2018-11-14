@@ -85,7 +85,7 @@ final class FullscreenImageViewControllerTests: XCTestCase {
         sut = createFullscreenImageViewControllerForTest(imageFileName: "unsplash_matterhorn.jpg")
 
         // WHEN
-        let landscapeSize = CGSize(width: CGSize.iPhoneSize.iPhone4_7.height, height: CGSize.iPhoneSize.iPhone4_7.width)
+        let landscapeSize = CGSize(width: CGSize.DeviceScreen.iPhone4_7Inch.height, height: CGSize.DeviceScreen.iPhone4_7Inch.width)
         sut.view.bounds.size = landscapeSize
         sut.viewWillTransition(to: landscapeSize, with: nil)
 
@@ -106,7 +106,7 @@ final class FullscreenImageViewControllerTests: XCTestCase {
         XCTAssertEqual(1, sut.scrollView.zoomScale)
 
         // WHEN
-        let landscapeSize = CGSize(width: CGSize.iPhoneSize.iPhone4_7.height, height: CGSize.iPhoneSize.iPhone4_7.width)
+        let landscapeSize = CGSize(width: CGSize.DeviceScreen.iPhone4_7Inch.height, height: CGSize.DeviceScreen.iPhone4_7Inch.width)
         sut.view.bounds.size = landscapeSize
         sut.viewWillTransition(to: landscapeSize, with: nil)
 
@@ -126,7 +126,7 @@ final class FullscreenImageViewControllerTests: XCTestCase {
         XCTAssertEqual(maxZoomScale, sut.view.frame.width / 40.0)
 
         // WHEN
-        let landscapeSize = CGSize(width: CGSize.iPhoneSize.iPhone4_7.height, height: CGSize.iPhoneSize.iPhone4_7.width)
+        let landscapeSize = CGSize(width: CGSize.DeviceScreen.iPhone4_7Inch.height, height: CGSize.DeviceScreen.iPhone4_7Inch.width)
         sut.view.bounds.size = landscapeSize
         sut.viewWillTransition(to: landscapeSize, with: nil)
 

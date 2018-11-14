@@ -80,19 +80,20 @@ extension StaticString {
 
 // MARK: - verify the snapshots in multiple devices
 extension ZMSnapshotTestCase {
+    
     static let phoneScreenSizes: [String:CGSize] = [
-        "iPhone4_0Inch": ZMDeviceSizeIPhone5,
-        "iPhone4_7Inch": ZMDeviceSizeIPhone6,
-        "iPhone5_5Inch": ZMDeviceSizeIPhone6Plus,
-        "iPhone5_8Inch": ZMDeviceSizeIPhoneX,
-        "iPhone6_5Inch": ZMDeviceSizeIPhoneXR
+        "iPhone4_0Inch": CGSize.DeviceScreen.iPhone4_0Inch,
+        "iPhone4_7Inch": CGSize.DeviceScreen.iPhone4_7Inch,
+        "iPhone5_5Inch": CGSize.DeviceScreen.iPhone5_5Inch,
+        "iPhone5_8Inch": CGSize.DeviceScreen.iPhone5_8Inch,
+        "iPhone6_5Inch": CGSize.DeviceScreen.iPhone6_5Inch
         ]
 
+    // We should add iPad Pro sizes 1366x1024, 1194x834
     static let tabletScreenSizes: [String:CGSize] = [
-        "iPadPortrait": ZMDeviceSizeIPadPortrait,
-        "iPadLandscape": ZMDeviceSizeIPadLandscape
-    ] ///TODO: add iPad Pro sizes
-
+        "iPadPortrait": CGSize.DeviceScreen.iPadPortrait,
+        "iPadLandscape": CGSize.DeviceScreen.iPadLandscape
+    ]
     
     typealias ConfigurationWithDeviceType = (_ view: UIView, _ isPad: Bool) -> Void
     typealias Configuration = (_ view: UIView) -> Void
@@ -116,7 +117,7 @@ extension ZMSnapshotTestCase {
         for (deviceName, size) in sizes {
             view.frame = CGRect(origin: .zero, size: size)
             if let configuration = configuration {
-                let iPad = size.equalTo(ZMDeviceSizeIPadLandscape) || size.equalTo(ZMDeviceSizeIPadPortrait)
+                let iPad = size.equalTo(CGSize.DeviceScreen.iPadLandscape) || size.equalTo(CGSize.DeviceScreen.iPadPortrait)
                 UIView.performWithoutAnimation({
                     configuration(view, iPad)
                 })
@@ -171,7 +172,7 @@ extension ZMSnapshotTestCase {
 
     /// return the smallest iPhone screen size that Wire app supports
     private var defaultIPhoneSize: CGSize {
-        return ZMDeviceSizeIPhone5
+        return CGSize.DeviceScreen.iPhone4_0Inch
     }
 
     func verifyInIPhoneSize(view: UIView, file: StaticString = #file, line: UInt = #line) {
