@@ -169,9 +169,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>1 message</string>
+        <string>1 mensagem</string>
         <key>other</key>
-        <string>%d messages</string>
+        <string>%d mensagens</string>
       </dict>
     </dict>
     <key>conversation.silenced.status.message.mention</key>
@@ -188,6 +188,22 @@
         <string>1 menção</string>
         <key>other</key>
         <string>%d menções</string>
+      </dict>
+    </dict>
+    <key>conversation.silenced.status.message.reply</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@d_number_of_new@</string>
+      <key>d_number_of_new</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>1 resposta</string>
+        <key>other</key>
+        <string>%d respostas</string>
       </dict>
     </dict>
     <key>conversation.silenced.status.message.knock</key>
