@@ -169,6 +169,10 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
     [self createConstraints];
     [self updateInputBarVisibility];
+    
+    if (self.conversation.draftMessage.quote != nil) {
+        [self.inputBarController addReplyComposingView:[self.contentViewController createReplyComposingViewForMessage:self.conversation.draftMessage.quote]];
+    }
 }
 
 - (void)createInputBarController
