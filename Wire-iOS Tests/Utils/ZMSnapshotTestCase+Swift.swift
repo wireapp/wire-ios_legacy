@@ -106,10 +106,12 @@ extension ZMSnapshotTestCase {
         return phoneScreenSizes.merging(tabletScreenSizes) { $1 }
     }()
 
-    private static var phoneWidths: [String:CGFloat] = {
-        return Dictionary(uniqueKeysWithValues:
-            phoneScreenSizes.map { key, value in (key, value.width) })
-    }()
+    ///iPhone X's width is same and iPhone 6 and iPhone XR's width is same as iPhone 6 plus
+    static let phoneWidths: [String:CGFloat] = [
+        "320": CGSize.DeviceScreen.iPhone4_0Inch.width,
+        "375": CGSize.DeviceScreen.iPhone4_7Inch.width,
+        "414": CGSize.DeviceScreen.iPhone5_5Inch.width
+    ]
 
     private static var tabletSizes: [String:CGFloat] = {
         return Dictionary(uniqueKeysWithValues:
