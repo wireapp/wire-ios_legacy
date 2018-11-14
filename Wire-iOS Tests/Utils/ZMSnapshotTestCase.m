@@ -164,25 +164,6 @@
     return container;
 }
 
-- (void)verifyView:(UIView *)view extraLayoutPass:(BOOL)extraLayoutPass file:(const char[])file line:(NSUInteger)line
-{
-    [self verifyView:view extraLayoutPass:extraLayoutPass tolerance:0 file:file line:line identifier:nil deviceName:nil];
-}
-
-- (void)verifyView:(UIView *)view
-   extraLayoutPass:(BOOL)extraLayoutPass
-              file:(const char[])file
-              line:(NSUInteger)line
-        deviceName:(NSString *)deviceName
-{
-    [self verifyView:view extraLayoutPass:extraLayoutPass tolerance:0 file:file line:line identifier:nil deviceName:deviceName];
-}
-
-- (void)verifyView:(UIView *)view extraLayoutPass:(BOOL)extraLayoutPass file:(const char[])file line:(NSUInteger)line identifier:(NSString *)identifier
-{
-    [self verifyView:view extraLayoutPass:extraLayoutPass tolerance:0 file:file line:line identifier:identifier deviceName:nil];
-}
-
 - (void)verifyView:(UIView *)view
    extraLayoutPass:(BOOL)extraLayoutPass
          tolerance:(float)tolerance

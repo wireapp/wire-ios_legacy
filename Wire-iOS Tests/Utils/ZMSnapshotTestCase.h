@@ -69,20 +69,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) ZMAccentColor accentColor;
 
 /// Performs an assertion with the given view and the recorded snapshot.
-- (void)verifyView:(UIView *)view extraLayoutPass:(BOOL)extraLayoutPass file:(const char [_Nullable])file line:(NSUInteger)line;
-
-- (void)verifyView:(UIView *)view
-   extraLayoutPass:(BOOL)extraLayoutPass
-              file:(const char [_Nullable])file
-              line:(NSUInteger)line
-        deviceName:(nullable NSString *)deviceName;
-
-- (void)verifyView:(UIView *)view
-   extraLayoutPass:(BOOL)extraLayoutPass
-              file:(const char[_Nullable])file
-              line:(NSUInteger)line
-        identifier:(nullable NSString *)identifier;
-
 - (void)verifyView:(UIView *)view
    extraLayoutPass:(BOOL)extraLayoutPass
          tolerance:(float)tolerance
@@ -91,15 +77,15 @@ NS_ASSUME_NONNULL_BEGIN
         identifier:(nullable NSString *)identifier
         deviceName:(nullable NSString *)deviceName;
 
-
-- (void)assertAmbigousLayout:(UIView *)view file:(const char[_Nullable])file line:(NSUInteger)line;
-
+/// For tests with customized view's width
 - (void)verifyView:(UIView *)view
    extraLayoutPass:(BOOL)extraLayoutPass
              width:(CGFloat)width
               file:(const char[_Nullable])file
               line:(NSUInteger)line
         deviceName:(nullable NSString *)deviceName;
+
+- (void)assertAmbigousLayout:(UIView *)view file:(const char[_Nullable])file line:(NSUInteger)line;
 
 @end
 
