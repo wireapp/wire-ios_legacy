@@ -241,8 +241,6 @@
      ];
     [container setNeedsLayout];
     [container layoutIfNeeded];
-    [container setNeedsLayout];
-    [container layoutIfNeeded];
     if ([self assertEmptyFrame:container file:file line:line]) {
         return;
     }
