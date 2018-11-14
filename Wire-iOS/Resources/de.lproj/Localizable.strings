@@ -479,6 +479,11 @@
 "content.reactions_list.likers" = "Gefällt";
 
 "content.file.too_big" = "Du kannst Dateien bis zu %@ senden";
+
+// Reply
+"content.message.reply.original_timestamp.date" = "Ursprüngliche Nachricht vom %@";
+"content.message.reply.original_timestamp.time" = "Ursprüngliche Nachricht von %@";
+
 // Someone pinged
 "content.ping.text" = "%@ hat gepingt";
 "content.ping.text-you" = "%@ hast gepingt";
