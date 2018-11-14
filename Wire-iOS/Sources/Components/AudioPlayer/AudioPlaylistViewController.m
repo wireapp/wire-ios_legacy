@@ -92,6 +92,12 @@ static const CGFloat SeparatorLineOverflow = 4;
     return self;
 }
 
+- (instancetype)init
+{
+    self = [self initWithAudioTrackPlayer:[AppDelegate sharedAppDelegate].mediaPlaybackManager.audioTrackPlayer];
+    return self;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
