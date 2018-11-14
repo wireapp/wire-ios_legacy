@@ -55,8 +55,7 @@ class ConversationReplyContentView: UIView {
     }
 
     private func configureSubviews() {
-        accessibilityIdentifier = "ReplyCell"
-        isAccessibilityElement = true
+        shouldGroupAccessibilityChildren = false
 
         stackView.axis = .vertical
         stackView.alignment = .leading
@@ -191,6 +190,9 @@ class ConversationReplyCellDescription: ConversationMessageCellDescription {
     weak var message: ZMConversationMessage?
     weak var delegate: ConversationCellDelegate?
     weak var actionController: ConversationCellActionController?
+
+    let accessibilityLabel: String? = "content.message.original_label".localized
+    let accessibilityIdentifier: String? = "ReplyCell"
 
     init(quotedMessage: ZMConversationMessage?) {
         let isEdited = quotedMessage?.updatedAt != nil

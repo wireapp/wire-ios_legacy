@@ -44,6 +44,9 @@ class UnknownMessageCellDescription: ConversationMessageCellDescription {
     var showEphemeralTimer: Bool = false
     var topMargin: Float = 0
 
+    let accessibilityIdentifier: String? = nil
+    let accessibilityLabel: String? = nil
+
     let isFullWidth: Bool = false
     let supportsActions: Bool = false
     let containsHighlightableContent = false

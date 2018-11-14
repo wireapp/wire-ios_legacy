@@ -176,6 +176,9 @@ class ConversationLocationMessageCellDescription: ConversationMessageCellDescrip
     let supportsActions: Bool = true
     let containsHighlightableContent: Bool = true
 
+    let accessibilityIdentifier: String? = nil
+    let accessibilityLabel: String? = nil
+
     init(message: ZMConversationMessage, location: ZMLocationMessageData) {
         configuration = View.Configuration(location: location, isObfuscated: message.isObfuscated)
     }

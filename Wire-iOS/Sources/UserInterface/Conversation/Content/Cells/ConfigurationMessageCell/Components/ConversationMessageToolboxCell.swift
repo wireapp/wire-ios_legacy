@@ -45,7 +45,6 @@ class ConversationMessageToolboxCell: UIView, ConversationMessageCell, MessageTo
     }
 
     private func configureSubviews() {
-        toolboxView.accessibilityIdentifier = "MessageToolbox"
         toolboxView.delegate = self
         addSubview(toolboxView)
     }
@@ -98,7 +97,10 @@ class ConversationMessageToolboxCellDescription: ConversationMessageCellDescript
     let isFullWidth: Bool = true
     let supportsActions: Bool = false
     let containsHighlightableContent: Bool = false
-        
+
+    let accessibilityIdentifier: String? = "MessageToolbox"
+    let accessibilityLabel: String? = nil
+
     init(message: ZMConversationMessage, selected: Bool) {
         self.message = message
         self.configuration = View.Configuration(message: message, selected: selected)

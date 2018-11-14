@@ -134,6 +134,9 @@ class ConversationTextMessageCellDescription: ConversationMessageCellDescription
     let supportsActions: Bool = true
     let containsHighlightableContent: Bool = true
 
+    let accessibilityIdentifier: String? = nil
+    let accessibilityLabel: String? = nil
+
     init(attributedString: NSAttributedString) {
         configuration = View.Configuration(attributedText: attributedString)
     }

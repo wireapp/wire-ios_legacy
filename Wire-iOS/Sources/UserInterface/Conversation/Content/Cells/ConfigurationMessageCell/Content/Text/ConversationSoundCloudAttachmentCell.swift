@@ -57,6 +57,9 @@ class ConversationSoundCloudCellDescription<Player: PlayerViewControllerProtocol
     let supportsActions: Bool = true
     let containsHighlightableContent: Bool = false
 
+    let accessibilityIdentifier: String? = nil
+    let accessibilityLabel: String? = nil
+
     init(message: ZMConversationMessage, attachment: LinkAttachment) {
         self.configuration = View.Configuration(attachment: attachment, message: message)
         actionController = nil

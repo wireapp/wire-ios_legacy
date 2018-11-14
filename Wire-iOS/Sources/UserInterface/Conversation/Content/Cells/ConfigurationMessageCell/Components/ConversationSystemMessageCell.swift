@@ -203,6 +203,9 @@ class ConversationRenamedSystemMessageCellDescription: ConversationMessageCellDe
     let supportsActions: Bool = false
     let containsHighlightableContent: Bool = false
 
+    let accessibilityIdentifier: String? = nil
+    let accessibilityLabel: String? = nil
+
     init(message: ZMConversationMessage, data: ZMSystemMessageData, sender: ZMUser, newName: String) {
         let senderText = message.senderName
         let titleString = "content.system.renamed_conv.title".localized(pov: sender.pov, args: senderText)
@@ -231,6 +234,9 @@ class ConversationCallSystemMessageCellDescription: ConversationMessageCellDescr
     let isFullWidth: Bool = true
     let supportsActions: Bool = false
     let containsHighlightableContent: Bool = false
+
+    let accessibilityIdentifier: String? = nil
+    let accessibilityLabel: String? = nil
 
     init(message: ZMConversationMessage, data: ZMSystemMessageData, missed: Bool) {
         let viewModel = CallCellViewModel(
@@ -262,6 +268,9 @@ class ConversationMessageTimerCellDescription: ConversationMessageCellDescriptio
     let isFullWidth: Bool = true
     let supportsActions: Bool = false
     let containsHighlightableContent: Bool = false
+
+    let accessibilityIdentifier: String? = nil
+    let accessibilityLabel: String? = nil
 
     init(message: ZMConversationMessage, data: ZMSystemMessageData, timer: NSNumber, sender: ZMUser) {
         let senderText = message.senderName
@@ -303,6 +312,9 @@ class ConversationVerifiedSystemMessageSectionDescription: ConversationMessageCe
     let supportsActions: Bool = false
     let containsHighlightableContent: Bool = false
 
+    let accessibilityIdentifier: String? = nil
+    let accessibilityLabel: String? = nil
+
     init() {
         let title = NSAttributedString(
             string: "content.system.is_verified".localized,
@@ -331,6 +343,9 @@ class ConversationCannotDecryptSystemMessageCellDescription: ConversationMessage
     let isFullWidth: Bool = true
     let supportsActions: Bool = false
     let containsHighlightableContent: Bool = false
+
+    let accessibilityIdentifier: String? = nil
+    let accessibilityLabel: String? = nil
 
     init(message: ZMConversationMessage, data: ZMSystemMessageData, sender: ZMUser, remoteIdentityChanged: Bool) {
         let exclamationColor = UIColor(for: .vividRed)
