@@ -199,7 +199,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 
 - (void)loadQuotedMessageIfNeeded {
     
-    ZMMessage *quote = [self.conversation fetchQuoteFromDraftMessage];
+    ZMMessage *quote = self.conversation.draftMessage.quote;
     
     if (quote != nil && quote.conversation != nil) {
         [self.delegate conversationContentViewController:self didTriggerReplyingToMessage:quote];
