@@ -27,10 +27,6 @@ final class TextMessageMentionsTests: ConversationCellSnapshotTestCase {
     /// "Saturday, February 14, 2009 at 12:20:30 AM Central European Standard Time"
     static let dummyServerTimestamp = Date(timeIntervalSince1970: 1234567230)
 
-    override func setUp() {
-        super.setUp()
-    }
-
     func testThatItRendersMentions_OnlyMention() {
         let messageText = "@Bruno"
         let mention = Mention(range: NSRange(location: 0, length: 6), user: otherUser)
