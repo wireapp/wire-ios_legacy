@@ -139,8 +139,6 @@ extension ZMSnapshotTestCase {
                configuration: configuration,
                file: file, line: line)
     }
-
-
 }
 
 // MARK: - verify the snapshots in multiple widths
