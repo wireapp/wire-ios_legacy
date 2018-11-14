@@ -31,29 +31,6 @@ static CGSize const ZMDeviceSizeIPhoneXR = (CGSize){ .width = 414, .height = 896
 static CGSize const ZMDeviceSizeIPadPortrait = (CGSize){ .width = 768, .height = 1024 };
 static CGSize const ZMDeviceSizeIPadLandscape = (CGSize){ .width = 1024, .height = 768 };
 
-//static NSArray<NSValue *> * _Nonnull phoneSizes(void) {
-//    return @[
-//             [NSValue valueWithCGSize:ZMDeviceSizeIPhone5],
-//             [NSValue valueWithCGSize:ZMDeviceSizeIPhone6],
-//             [NSValue valueWithCGSize:ZMDeviceSizeIPhone6Plus],
-//             [NSValue valueWithCGSize:ZMDeviceSizeIPhoneX],
-//             [NSValue valueWithCGSize:ZMDeviceSizeIPhoneXR]
-//             ];
-//}
-
-//static NSArray<NSValue *> * _Nonnull tabletSizes(void) {
-//    return @[
-//             [NSValue valueWithCGSize:ZMDeviceSizeIPadPortrait],
-//             [NSValue valueWithCGSize:ZMDeviceSizeIPadLandscape]
-//             ];
-//}
-
-//static NSSet<NSNumber *> * _Nonnull phoneWidths(void) {
-//    return [phoneSizes() mapWithBlock:^NSNumber *(NSValue *boxedSize) {
-//        return @(boxedSize.CGSizeValue.width);
-//    }].set;
-//}
-
 
 #define ZMVerifyViewInAllDeviceSizesWithBlock(view__, configuration__) \
 do { \
