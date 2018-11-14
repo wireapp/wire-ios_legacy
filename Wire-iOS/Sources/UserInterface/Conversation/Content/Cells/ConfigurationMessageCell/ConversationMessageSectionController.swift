@@ -289,7 +289,7 @@ extension IndexSet {
     }
     
     func isBurstTimestampVisible(in context: ConversationMessageContext) -> Bool {
-        return context.isTimeIntervalSinceLastMessageSignificant
+        return context.isTimeIntervalSinceLastMessageSignificant ||  context.isFirstUnreadMessage || context.isFirstMessageOfTheDay
     }
     
     func isToolboxVisible(in context: ConversationMessageContext) -> Bool {
@@ -301,7 +301,7 @@ extension IndexSet {
             return false
         }
         
-        return !context.isSameSenderAsPrevious || message.updatedAt != nil
+        return !context.isSameSenderAsPrevious || message.updatedAt != nil || isBurstTimestampVisible(in: context)
     }
     
     // MARK: - Data Source
