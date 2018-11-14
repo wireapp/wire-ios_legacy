@@ -119,6 +119,12 @@ protocol ConversationMessageCellDescription: class {
     /// The configuration object that will be used to populate the cell.
     var configuration: View.Configuration { get }
 
+    /// The accessibility identifier of the cell.
+    var accessibilityIdentifier: String? { get }
+
+    /// The accessibility label of the cell.
+    var accessibilityLabel: String? { get }
+
     func register(in tableView: UITableView)
     func makeCell(for tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell
     func makeView() -> UIView
@@ -194,6 +200,8 @@ extension ConversationMessageCellDescription {
     private let _topMargin: AnyMutableProperty<Float>
     private let _containsHighlightableContent: AnyConstantProperty<Bool>
     private let _showEphemeralTimer: AnyMutableProperty<Bool>
+    private let _axIdentifier: AnyConstantProperty<String?>
+    private let _axLabel: AnyConstantProperty<String?>
 
     init<T: ConversationMessageCellDescription>(_ description: T) {
         registrationBlock = { tableView in
@@ -222,6 +230,8 @@ extension ConversationMessageCellDescription {
         _topMargin = AnyMutableProperty(description, keyPath: \.topMargin)
         _containsHighlightableContent = AnyConstantProperty(description, keyPath: \.containsHighlightableContent)
         _showEphemeralTimer = AnyMutableProperty(description, keyPath: \.showEphemeralTimer)
+        _axIdentifier = AnyConstantProperty(description, keyPath: \.accessibilityIdentifier)
+        _axLabel = AnyConstantProperty(description, keyPath: \.accessibilityLabel)
     }
 
     @objc var baseType: AnyClass {
@@ -256,7 +266,17 @@ extension ConversationMessageCellDescription {
         get { return _showEphemeralTimer.getter() }
         set { _showEphemeralTimer.setter(newValue) }
     }
-        
+
+    /// The accessibility identifier of the cell.
+    var cellAccessibilityIdentifier: String? {
+        return _axIdentifier.getter()
+    }
+
+    /// The accessibility label of the cell.
+    var cellAccessibilityLabel: String? {
+        return _axLabel.getter()
+    }
+
     func configure(cell: UITableViewCell, animated: Bool = false) {
         configureBlock(cell, animated)
     }

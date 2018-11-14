@@ -63,11 +63,7 @@ import TTTAttributedLabel
     private var timestampTimer: Timer? = nil
 
     override init(frame: CGRect) {
-        
         super.init(frame: frame)
-        isAccessibilityElement = false
-        self.accessibilityElementsHidden = false
-
         backgroundColor = .clear
         clipsToBounds = true
     }

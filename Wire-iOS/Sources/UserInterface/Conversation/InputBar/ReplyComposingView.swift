@@ -91,23 +91,23 @@ final class ReplyComposingView: UIView {
     }
     
     private func setupSubviews() {
-        shouldGroupAccessibilityChildren = true
-        isAccessibilityElement = true
-        accessibilityIdentifier = "replyView"
-        accessibilityLabel = buildAccessibilityLabel()
-        
         backgroundColor = .from(scheme: .barBackground)
-        
+
         previewView = message.replyPreview()!
         previewView.isUserInteractionEnabled = false
-        
+        previewView.isAccessibilityElement = true
+        previewView.shouldGroupAccessibilityChildren = true
+        previewView.accessibilityIdentifier = "replyView"
+        previewView.accessibilityLabel = buildAccessibilityLabel()
+
         messagePreviewContainer = ReplyRoundCornersView(containedView: previewView)
         messagePreviewContainer.addTarget(self, action: #selector(onTap), for: .touchUpInside)
 
         leftSideView.translatesAutoresizingMaskIntoConstraints = false
         closeButton.translatesAutoresizingMaskIntoConstraints = false
         messagePreviewContainer.translatesAutoresizingMaskIntoConstraints = false
-                
+
+        closeButton.isAccessibilityElement = true
         closeButton.accessibilityIdentifier = "cancelReply"
         closeButton.accessibilityLabel = "conversation.input_bar.close_reply".localized
         closeButton.setIcon(.X, with: .tiny, for: .normal)

@@ -51,6 +51,9 @@ class ConversationPingCellDescription: ConversationMessageCellDescription {
     let supportsActions: Bool = false
     let containsHighlightableContent: Bool = false
 
+    let accessibilityIdentifier: String? = nil
+    let accessibilityLabel: String? = nil
+
     init(message: ZMConversationMessage, sender: ZMUser) {
         let senderText = sender.isSelfUser ? "content.ping.text.you".localized : sender.displayName
         let pingText = "content.ping.text".localized(pov: sender.pov, args: senderText)

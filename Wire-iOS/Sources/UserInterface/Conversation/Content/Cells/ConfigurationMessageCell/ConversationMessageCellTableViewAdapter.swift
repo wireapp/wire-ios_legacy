@@ -43,6 +43,8 @@ class ConversationMessageCellTableViewAdapter<C: ConversationMessageCellDescript
         didSet {
             longPressGesture.isEnabled = cellDescription?.supportsActions == true
             doubleTapGesture.isEnabled = cellDescription?.supportsActions == true
+            accessibilityLabel = cellDescription?.accessibilityLabel
+            accessibilityIdentifier = cellDescription?.accessibilityIdentifier
         }
     }
     

@@ -95,6 +95,9 @@ class ConversationSenderMessageCellDescription: ConversationMessageCellDescripti
     let supportsActions: Bool = false
     let containsHighlightableContent: Bool = false
 
+    let accessibilityIdentifier: String? = nil
+    let accessibilityLabel: String? = nil
+
     init(sender: UserType, message: ZMConversationMessage) {
         self.message = message
         

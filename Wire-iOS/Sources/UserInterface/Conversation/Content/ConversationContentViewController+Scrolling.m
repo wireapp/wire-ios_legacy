@@ -65,7 +65,8 @@
 {
     NSUInteger index = [self.messageWindow.messages indexOfObject:message];
     if (index != NSNotFound) {
-        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:index]
+        NSInteger rowIndex = [self.tableView numberOfRowsInSection:index] - 1;
+        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:rowIndex inSection:index]
                               atScrollPosition:UITableViewScrollPositionTop
                                       animated:animated];
     }

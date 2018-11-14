@@ -399,7 +399,6 @@ class ConversationReplyCellTests: CoreDataSnapshotTestCase {
         let contentView = cell.contentView
 
         // Structure
-        XCTAssertEqual(contentView.accessibilityIdentifier, "ReplyCell", file: file, line: line)
         XCTAssertEqual(contentView.senderComponent.label.accessibilityIdentifier, "original.sender", file: file, line: line)
         XCTAssertEqual(contentView.senderComponent.indicatorView.accessibilityIdentifier, "original.edit_icon", file: file, line: line)
         XCTAssertEqual(contentView.timestampLabel.accessibilityIdentifier, "original.timestamp", file: file, line: line)

@@ -40,6 +40,9 @@ class BurstTimestampSenderMessageCellDescription: ConversationMessageCellDescrip
     let supportsActions: Bool = false
     let containsHighlightableContent: Bool = false
 
+    let accessibilityIdentifier: String? = nil
+    let accessibilityLabel: String? = nil
+
     init(message: ZMConversationMessage, context: ConversationMessageContext) {
         self.configuration = View.Configuration(date: message.serverTimestamp ?? Date(), includeDayOfWeek: context.isFirstMessageOfTheDay, showUnreadDot: context.isFirstUnreadMessage)
         actionController = nil
