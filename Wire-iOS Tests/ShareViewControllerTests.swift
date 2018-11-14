@@ -34,11 +34,26 @@ class ShareViewControllerTests: CoreDataSnapshotTestCase {
     override func tearDown() {
         self.groupConversation = nil
         sut = nil
+        disableDarkColorScheme()
         super.tearDown()
     }
     
     override var needsCaches: Bool {
         return true
+    }
+
+    func activateDarkColorScheme() {
+        ColorScheme.default.variant = .dark
+        NSAttributedString.invalidateMarkdownStyle()
+        NSAttributedString.invalidateParagraphStyle()
+
+        snapshotBackgroundColor = UIColor.from(scheme: .contentBackground)
+    }
+
+    func disableDarkColorScheme() {
+        ColorScheme.default.variant = .light
+        NSAttributedString.invalidateMarkdownStyle()
+        NSAttributedString.invalidateParagraphStyle()
     }
 
     func testThatItRendersCorrectlyShareViewController_OneLineTextMessage() {
@@ -89,10 +104,16 @@ class ShareViewControllerTests: CoreDataSnapshotTestCase {
     }
     
     func testThatItRendersCorrectlyShareViewController_DarkMode() {
-        ColorScheme.default.variant = .dark
+        activateDarkColorScheme()
         groupConversation.append(text: "This is a text message.")
         makeTestForShareViewController()
-        ColorScheme.default.variant = .light
+    }
+
+    func testThatItRendersCorrectlyShareViewController_Location_DarkMode() {
+        activateDarkColorScheme()
+        let location = LocationData.locationData(withLatitude: 43.94, longitude: 12.46, name: "Stranger Place", zoomLevel: 0)
+        groupConversation.append(location: location)
+        makeTestForShareViewController()
     }
     
     func makeTestForShareViewController() {

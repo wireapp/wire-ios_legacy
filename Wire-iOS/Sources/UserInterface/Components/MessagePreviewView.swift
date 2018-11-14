@@ -301,7 +301,7 @@ final class MessagePreviewView: UIView, Themeable {
         senderLabel.attributedText = (message.senderName && attributes) + self.editIcon()
         
         if let textMessageData = message.textMessageData {
-            contentTextView.attributedText = NSAttributedString.formatForPreview(message: textMessageData, inputMode: true)
+            contentTextView.attributedText = NSAttributedString.formatForPreview(message: textMessageData, inputMode: true, variant: colorSchemeVariant)
         }
         else if let location = message.locationMessageData {
             
