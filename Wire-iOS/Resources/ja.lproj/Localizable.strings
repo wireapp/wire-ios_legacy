@@ -149,6 +149,7 @@
 "conversation_list.voiceover.status.typing" = "入力中";
 "conversation_list.voiceover.status.ping" = "ping";
 "conversation_list.voiceover.status.mention" = "you are mentioned";
+"conversation_list.voiceover.status.reply" = "reply";
 "conversation_list.voiceover.bottom_bar.archived_button.label" = "アーカイブ済み";
 "conversation_list.voiceover.bottom_bar.archived_button.hint" = "アーカイブ済み会話一覧";
 "conversation_list.voiceover.bottom_bar.contacts_button.label" = "連絡先";
@@ -199,6 +200,7 @@
 "conversation.status.typing" = "メッセージを入力中";
 "conversation.status.typing.group" = "%@: メッセージの入力中";
 "conversation.status.silenced" = "ミュート";
+"conversation.status.poor_connection" = "Poor connection";
 "conversation.status.blocked" = "ブロック";
 
 "conversation.status.message.text" = "%@";
@@ -212,15 +214,19 @@
 "conversation.status.message.missedcall" = "不在着信";
 "conversation.status.message.missedcall.groups" = "Missed call from %@";
 "conversation.status.message.mention" = "%@";
+"conversation.status.message.reply" = "%@";
 "conversation.status.message.ephemeral" = "Sent a message";
 "conversation.status.message.ephemeral.group" = "Someone sent a message";
 "conversation.status.message.ephemeral.mention" = "Mentioned you";
 "conversation.status.message.ephemeral.mention.group" = "Someone mentioned you";
+"conversation.status.message.ephemeral.reply" = "Replied to your message";
+"conversation.status.message.ephemeral.reply.group" = "Someone replied to your message";
 "conversation.status.message.ephemeral.knock" = "Ping されました";
 "conversation.status.message.ephemeral.knock.group" = "Someone pinged";
 
 "conversation.status.unsent" = "⚠️ 未送信メッセージ";
 "conversation.status.you" = "あなた";
+"conversation.status.someone" = "Someone";
 "conversation.status.added_multiple" = "追加された人";
 "conversation.status.you_was_added" = "%@はあなたを追加しました";
 "conversation.status.added_users" = "%@は%@を追加しました";
@@ -296,7 +302,23 @@
 "conversation.guests_services_present" = "Guests and services are present";
 "conversation.action.search" = "検索";
 
-// Image confirmation dialogue
+// Reply message preview
+"conversation.input_bar.message_preview.image" = "Image";
+"conversation.input_bar.message_preview.location" = "Location";
+"conversation.input_bar.message_preview.video" = "ビデオ";
+"conversation.input_bar.message_preview.audio" = "Audio Message";
+"conversation.input_bar.message_preview.file" = "File";
+"conversation.input_bar.close_reply" = "Cancel reply";
+
+"conversation.input_bar.message_preview.accessibility_description" = "Replying to message: %@";
+"conversation.input_bar.message_preview.accessibility.image_message" = "Image message";
+"conversation.input_bar.message_preview.accessibility.location_message" = "Location message";
+"conversation.input_bar.message_preview.accessibility.video_message" = "Video message";
+"conversation.input_bar.message_preview.accessibility.audio_message" = "Audio message";
+"conversation.input_bar.message_preview.accessibility.file_message" = "File message (%@)";
+"conversation.input_bar.message_preview.accessibility.unknown_message" = "Unknown message";
+"conversation.input_bar.message_preview.accessibility.message_from" = "%@ from %@";
+
 "image_confirmer.confirm" = "OK";
 "image_confirmer.cancel" = "キャンセル";
 "image.add_sketch" = "スケッチを追加";
@@ -412,10 +434,10 @@
 "content.system.conversation.with_name.participants" = "と";
 
 "content.system.message_timer_changes" = "%@ はタイマーメッセージを %@ に設定しました。";
-"content.system.message_timer_changes-you" = "あなたはタイマーメッセージを %@ に設定しました";
+"content.system.message_timer_changes-you" = "%@ はタイマーメッセージを %@ に設定しました。";
 
 "content.system.message_timer_off" = "%@ が タイマーメッセージをオフにしました";
-"content.system.message_timer_off-you" = "あなたがタイマーメッセージをオフにしました";
+"content.system.message_timer_off-you" = "%@ が タイマーメッセージをオフにしました";
 
 "content.system.reactivated_device" = "あなたは %@ を再び利用しています。いままでのメッセージはここには表示されません。";
 
@@ -460,6 +482,7 @@
 
 "content.message.delete" = "削除";
 "content.message.save" = "保存";
+"content.message.resend" = "再送する";
 
 "content.message.delete_ellipsis" = "削除...";
 
@@ -471,6 +494,12 @@
 "content.message.open" = "開く";
 "content.message.copy" = "コピー";
 "content.message.download" = "Download";
+
+// Reply
+"content.message.reply" = "返信";
+"content.message.reply.original_timestamp.date" = "Original message from %@";
+"content.message.reply.original_timestamp.time" = "Original message from %@";
+"content.message.reply.broken_message" = "You cannot see this message.";
 
 "content.message.open_link_alert.title" = "リンクを開く";
 "content.message.open_link_alert.message" = "あなたは、%@ にアクセスしようとしています";
@@ -728,7 +757,7 @@
 "group_details.guest_options_cell.enabled" = "オン";
 "group_details.guest_options_cell.disabled" = "オフ";
 "group_details.timeout_options_cell.title" = "タイマーメッセージ";
-"group_details.notification_options_cell.title" = "Notifications";
+"group_details.notification_options_cell.title" = "通知センター";
 "group_details.notification_options_cell.description" = "You can be notified about everything (including audio and video calls) or only when someone mentions you or replies to one of your messages.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -1152,6 +1181,13 @@
 "registration.no_history.got_it" = "OK";
 "registration.no_history.restore_backup" = "バックアップからリストアする";
 
+"registration.alert.account_exists.title" = "Account Exists";
+"registration.alert.account_exists.message_phone" = "The phone number you used to register is already linked to an account.\n\nUse another phone number, or try to log in if you own this account.";
+"registration.alert.account_exists.message_email" = "The email address you used to register is already linked to an account.\n\n Use another email address, or try to log in if you own this account.";
+"registration.alert.change_email_action" = "Change Email";
+"registration.alert.change_phone_action" = "Change Phone";
+"registration.alert.change_signin_action" = "Sign In";
+
 // Restore History Warning Alert
 "registration.no_history.restore_backup_warning.title" = "リストア履歴";
 "registration.no_history.restore_backup_warning.message" = "リストアするとバックアップされた内容で、デバイスの会話履歴を上書きします。また、同じプラットフォームで作成されたバックアップデータからのみリストア可能です。";
@@ -1250,7 +1286,7 @@
 "registration.devices.active_list_header" = "アクティブ";
 "registration.devices.current_list_header" = "最新";
 "registration.devices.active_list_subtitle" = "もし上のデバイスを知らない場合は、それを削除して、パスワードをリセットしてください。";
-"registration.devices.activated"  = "Activated %@";
+"registration.devices.activated" = "Activated %@";
 "registration.devices.id" = "ID:";
 
 "signin.use_email.label" = "メールアドレス でログイン";

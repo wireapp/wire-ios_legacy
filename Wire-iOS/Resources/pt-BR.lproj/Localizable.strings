@@ -149,6 +149,7 @@
 "conversation_list.voiceover.status.typing" = "digitando";
 "conversation_list.voiceover.status.ping" = "ping";
 "conversation_list.voiceover.status.mention" = "você foi mencionado";
+"conversation_list.voiceover.status.reply" = "responder";
 "conversation_list.voiceover.bottom_bar.archived_button.label" = "arquivado";
 "conversation_list.voiceover.bottom_bar.archived_button.hint" = "lista de conversas arquivadas";
 "conversation_list.voiceover.bottom_bar.contacts_button.label" = "contatos";
@@ -199,6 +200,7 @@
 "conversation.status.typing" = "Digitando uma mensagem…";
 "conversation.status.typing.group" = "%@: está digitando…";
 "conversation.status.silenced" = "Silenciado";
+"conversation.status.poor_connection" = "Conexão fraca";
 "conversation.status.blocked" = "Bloqueado";
 
 "conversation.status.message.text" = "%@";
@@ -212,15 +214,19 @@
 "conversation.status.message.missedcall" = "Chamada não atendida";
 "conversation.status.message.missedcall.groups" = "Chamada não atendida de %@";
 "conversation.status.message.mention" = "%@";
+"conversation.status.message.reply" = "%@";
 "conversation.status.message.ephemeral" = "Enviou uma mensagem";
 "conversation.status.message.ephemeral.group" = "Alguém mandou uma mensagem";
 "conversation.status.message.ephemeral.mention" = "Mencionou você";
 "conversation.status.message.ephemeral.mention.group" = "Alguém mencionou você";
+"conversation.status.message.ephemeral.reply" = "Respondeu à sua mensagem";
+"conversation.status.message.ephemeral.reply.group" = "Alguém respondeu a sua mensagem";
 "conversation.status.message.ephemeral.knock" = "Pingou";
 "conversation.status.message.ephemeral.knock.group" = "Alguém pingou";
 
 "conversation.status.unsent" = "⚠️ Mensagem não enviada";
 "conversation.status.you" = "Você";
+"conversation.status.someone" = "Alguém";
 "conversation.status.added_multiple" = "Pessoas adicionadas";
 "conversation.status.you_was_added" = "%@ adicionou você";
 "conversation.status.added_users" = "%@ adicionou %@";
@@ -296,7 +302,23 @@
 "conversation.guests_services_present" = "Os hóspedes e serviços estão presentes";
 "conversation.action.search" = "Procurar";
 
-// Image confirmation dialogue
+// Reply message preview
+"conversation.input_bar.message_preview.image" = "Imagem";
+"conversation.input_bar.message_preview.location" = "Localização";
+"conversation.input_bar.message_preview.video" = "Vídeo";
+"conversation.input_bar.message_preview.audio" = "Mensagem de Áudio";
+"conversation.input_bar.message_preview.file" = "Arquivo";
+"conversation.input_bar.close_reply" = "Cancelar resposta";
+
+"conversation.input_bar.message_preview.accessibility_description" = "Responder a mensagem: %@";
+"conversation.input_bar.message_preview.accessibility.image_message" = "Mensagem de imagem";
+"conversation.input_bar.message_preview.accessibility.location_message" = "Mensagem de localização";
+"conversation.input_bar.message_preview.accessibility.video_message" = "Mensagem de vídeo";
+"conversation.input_bar.message_preview.accessibility.audio_message" = "Mensagens de áudio";
+"conversation.input_bar.message_preview.accessibility.file_message" = "Mensagem de arquivo (%@)";
+"conversation.input_bar.message_preview.accessibility.unknown_message" = "Mensagem desconhecida";
+"conversation.input_bar.message_preview.accessibility.message_from" = "%@ de %@";
+
 "image_confirmer.confirm" = "OK";
 "image_confirmer.cancel" = "Cancelar";
 "image.add_sketch" = "Adicionar um desenho";
@@ -412,10 +434,10 @@
 "content.system.conversation.with_name.participants" = "com";
 
 "content.system.message_timer_changes" = "%@ definiu o tempo da mensagem para %@";
-"content.system.message_timer_changes-you" = "Você definiu o tempo da mensagem para %@";
+"content.system.message_timer_changes-you" = "%@ definiu o tempo da mensagem para %@";
 
 "content.system.message_timer_off" = "%@ desligou o tempo da mensagem";
-"content.system.message_timer_off-you" = "Você desligou o tempo da mensagem";
+"content.system.message_timer_off-you" = "%@ desligou o tempo da mensagem";
 
 "content.system.reactivated_device" = "Você começou a usar o %@ novamente. Mensagens enviadas entretanto não aparecerão aqui.";
 
@@ -460,6 +482,7 @@
 
 "content.message.delete" = "Apagar";
 "content.message.save" = "Salvar";
+"content.message.resend" = "Reenviar";
 
 "content.message.delete_ellipsis" = "Excluir…";
 
@@ -471,6 +494,12 @@
 "content.message.open" = "Abrir";
 "content.message.copy" = "Copiar";
 "content.message.download" = "Baixar";
+
+// Reply
+"content.message.reply" = "Responder";
+"content.message.reply.original_timestamp.date" = "Mensagem original de %@";
+"content.message.reply.original_timestamp.time" = "Mensagem original de %@";
+"content.message.reply.broken_message" = "Você não pode ver esta mensagem.";
 
 "content.message.open_link_alert.title" = "Visitar Link";
 "content.message.open_link_alert.message" = "Isso levará você para\n%@";
@@ -620,7 +649,7 @@
 "meta.menu.mark_unread" = "Marcar como Não Lida";
 "meta.menu.mark_read" = "Marcar como Lida";
 "shortcut.mark_all_as_read.title" = "Marcar Todas como Lidas";
-"meta.menu.configure_notifications" = "Notifications…";
+"meta.menu.configure_notifications" = "Notificações…";
 
 // Delete conversation
 "meta.menu.delete_content.dialog_title" = "Excluir conteúdo?";
@@ -631,10 +660,10 @@
 "meta.menu.delete_content.button_delete_and_leave" = "Apagar e sair";
 
 // Configure conversation notifications
-"meta.menu.configure_notification.dialog_message" = "Notify me about:";
-"meta.menu.configure_notification.button_everything" = "Everything";
-"meta.menu.configure_notification.button_mentions_and_replies" = "Mentions and Replies";
-"meta.menu.configure_notification.button_nothing" = "Nothing";
+"meta.menu.configure_notification.dialog_message" = "Notifique-me sobre:";
+"meta.menu.configure_notification.button_everything" = "Tudo";
+"meta.menu.configure_notification.button_mentions_and_replies" = "Menções e Respostas";
+"meta.menu.configure_notification.button_nothing" = "Nada";
 "meta.menu.configure_notification.button_cancel" = "Cancelar";
 
 // Leave conversation
@@ -728,8 +757,8 @@
 "group_details.guest_options_cell.enabled" = "Ligado";
 "group_details.guest_options_cell.disabled" = "Desligar";
 "group_details.timeout_options_cell.title" = "Mensagens com tempo";
-"group_details.notification_options_cell.title" = "Notifications";
-"group_details.notification_options_cell.description" = "You can be notified about everything (including audio and video calls) or only when someone mentions you or replies to one of your messages.";
+"group_details.notification_options_cell.title" = "Notificações";
+"group_details.notification_options_cell.description" = "Você pode ser notificado sobre tudo (incluindo chamadas de áudio e vídeo) ou apenas quando alguém mencioná-lo ou responder a uma de suas mensagens.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile
@@ -1152,6 +1181,13 @@
 "registration.no_history.got_it" = "OK";
 "registration.no_history.restore_backup" = "Restaurar do backup";
 
+"registration.alert.account_exists.title" = "Conta Existe";
+"registration.alert.account_exists.message_phone" = "O número de telefone que você usou para se registrar já está vinculado a uma conta.\n\nUse outro número de telefone ou tente fazer login se você possui essa conta.";
+"registration.alert.account_exists.message_email" = "O endereço de e-mail que você usou para registrar já está vinculado a uma conta.\n\n  Use outro endereço de e-mail ou tente fazer login se você possui essa conta.";
+"registration.alert.change_email_action" = "Alterar E-mail";
+"registration.alert.change_phone_action" = "Alterar Telefone";
+"registration.alert.change_signin_action" = "Entrar";
+
 // Restore History Warning Alert
 "registration.no_history.restore_backup_warning.title" = "Restaurar histórico";
 "registration.no_history.restore_backup_warning.message" = "O conteúdo do backup substituirá o histórico de conversas neste dispositivo.\nVocê só pode restaurar o histórico de um backup da mesma plataforma.";
@@ -1250,7 +1286,7 @@
 "registration.devices.active_list_header" = "Ativo";
 "registration.devices.current_list_header" = "Atual";
 "registration.devices.active_list_subtitle" = "Se você não reconhecer um dispositivo acima, remova-o e redefina sua senha.";
-"registration.devices.activated"  = "Activated %@";
+"registration.devices.activated" = "Ativado %@";
 "registration.devices.id" = "ID:";
 
 "signin.use_email.label" = "Entrar com E-mail";
