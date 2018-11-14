@@ -19,7 +19,6 @@
 import Foundation
 
 protocol PlayerViewControllerProtocol: class, LinkAttachmentPresenter {
-    init(audioTrackPlayer: AudioTrackPlayer!)
     var providerImage: UIImage! { get set }
     var sourceMessage: ZMConversationMessage! { get set }
 }
@@ -32,11 +31,6 @@ class ConversationSoundCloudAttachmentCell<Player: UIViewController & PlayerView
     struct Configuration {
         let attachment: LinkAttachment
         let message: ZMConversationMessage
-    }
-
-    convenience init() {
-        let player = Player(audioTrackPlayer: AppDelegate.shared().mediaPlaybackManager?.audioTrackPlayer)
-        self.init(viewController: player)
     }
 
     func configure(with object: Configuration, animated: Bool) {

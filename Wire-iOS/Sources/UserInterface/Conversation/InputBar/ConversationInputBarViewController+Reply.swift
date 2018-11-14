@@ -26,10 +26,13 @@ extension ConversationInputBarViewController: ReplyComposingViewDelegate {
             removeReplyComposingView()
         }
         
-        self.quotedMessage = message
+        addReplyComposingView(composingView)
+    }
+    
+    @objc func addReplyComposingView(_ composingView: ReplyComposingView) {
+        self.quotedMessage = composingView.message
         self.replyComposingView = composingView
         composingView.delegate = self
-        inputBar.textView.becomeFirstResponder()
     }
     
     @objc func removeReplyComposingView() {

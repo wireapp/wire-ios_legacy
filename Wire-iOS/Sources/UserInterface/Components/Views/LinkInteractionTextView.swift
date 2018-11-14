@@ -18,7 +18,7 @@
 
 
 import UIKit
-
+ 
 @objc public protocol TextViewInteractionDelegate: NSObjectProtocol {
     func textView(_ textView: LinkInteractionTextView, open url: URL) -> Bool
     func textViewDidLongPress(_ textView: LinkInteractionTextView)
@@ -103,6 +103,10 @@ extension LinkInteractionTextView: UITextViewDelegate {
     public func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
         switch interaction {
         case .invokeDefaultAction:
+            guard !UIMenuController.shared.isMenuVisible else {
+                return false // Don't open link/show alert if menu controller is visible
+            }
+            
             // if alert shown, link opening is handled in alert actions
             if showAlertIfNeeded(for: URL, in: characterRange) { return false }
             // data detector links should be handle by the system

@@ -181,8 +181,8 @@ extension IndexSet {
         if let topContentCellDescription = contentCellDescriptions.first {
             topContentCellDescription.showEphemeralTimer = message.isEphemeral
             
-            if isSenderVisible {
-                topContentCellDescription.topMargin = 0
+            if isSenderVisible && topContentCellDescription.baseType == ConversationTextMessageCellDescription.self {
+                topContentCellDescription.topMargin = 0 // We only do this for text content since the text label already contains the spacing
             }
         }
         
