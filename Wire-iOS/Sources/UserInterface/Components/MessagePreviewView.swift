@@ -194,9 +194,7 @@ final class MessageThumbnailPreviewView: UIView, Themeable {
     }
     
     func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
-        let contentColor = UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)
-        senderLabel.textColor = contentColor
-        contentTextView.textColor = contentColor
+        updateForMessage()
     }
     
     required init?(coder aDecoder: NSCoder) {
