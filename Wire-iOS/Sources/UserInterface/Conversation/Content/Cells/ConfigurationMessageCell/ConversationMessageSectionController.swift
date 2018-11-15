@@ -293,6 +293,10 @@ extension IndexSet {
     }
     
     func isToolboxVisible(in context: ConversationMessageContext) -> Bool {
+        guard !message.isSystem else {
+            return false
+        }
+        
         return selected || context.isLastMessageSentBySelfUser || message.deliveryState == .failedToSend || message.hasReactions()
     }
     
