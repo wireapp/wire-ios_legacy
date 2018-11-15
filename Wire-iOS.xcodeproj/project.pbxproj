@@ -214,6 +214,7 @@
 		5E0EB1FB2100D80B00B5DC2B /* CompanyLoginFlowOpener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E0EB1FA2100D80B00B5DC2B /* CompanyLoginFlowOpener.swift */; };
 		5E0FB21B2057F50C00FD9867 /* CallQualitySurveyReview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E0FB21A2057F50C00FD9867 /* CallQualitySurveyReview.swift */; };
 		5E144FFF213EA0EC00B65E14 /* PreviewImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E144FFD213E973B00B65E14 /* PreviewImageView.swift */; };
+		5E15D31B219DB9060038439D /* ConversationFileMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E15D31A219DB9060038439D /* ConversationFileMessageCell.swift */; };
 		5E294595219081A80045ACFA /* Date+Generator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E294594219081A80045ACFA /* Date+Generator.swift */; };
 		5E294597219087CA0045ACFA /* ConversationReplyCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E294596219087CA0045ACFA /* ConversationReplyCellTests.swift */; };
 		5E2945992190A1680045ACFA /* SenderNameCellComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E2945982190A1680045ACFA /* SenderNameCellComponent.swift */; };
@@ -1714,6 +1715,7 @@
 		5E0EB1FA2100D80B00B5DC2B /* CompanyLoginFlowOpener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyLoginFlowOpener.swift; sourceTree = "<group>"; };
 		5E0FB21A2057F50C00FD9867 /* CallQualitySurveyReview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallQualitySurveyReview.swift; sourceTree = "<group>"; };
 		5E144FFD213E973B00B65E14 /* PreviewImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewImageView.swift; sourceTree = "<group>"; };
+		5E15D31A219DB9060038439D /* ConversationFileMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationFileMessageCell.swift; sourceTree = "<group>"; };
 		5E181908216B734C003659CB /* Cartfile.resolved */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cartfile.resolved; sourceTree = "<group>"; };
 		5E294594219081A80045ACFA /* Date+Generator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Generator.swift"; sourceTree = "<group>"; };
 		5E294596219087CA0045ACFA /* ConversationReplyCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationReplyCellTests.swift; sourceTree = "<group>"; };
@@ -3841,6 +3843,7 @@
 				5E35F7732180B98B00D3F4FE /* ConversationSoundCloudAttachmentCell.swift */,
 				5E35F77D218300D400D3F4FE /* ConversationLinkPreviewArticleCell.swift */,
 				5E4BC1C9218C9F6600A8682E /* ConversationQuoteCell.swift */,
+				5E15D31A219DB9060038439D /* ConversationFileMessageCell.swift */,
 			);
 			path = Text;
 			sourceTree = "<group>";
@@ -8026,6 +8029,7 @@
 				1610366F20616EBC008AFDD0 /* SelfProfileViewController+NewDeviceAlert.swift in Sources */,
 				D5674610208F39D200DC7F26 /* TintColorCorrectedViewController.swift in Sources */,
 				87D5E43E1C3E78A000EB8289 /* ProfileClientViewController.swift in Sources */,
+				5E15D31B219DB9060038439D /* ConversationFileMessageCell.swift in Sources */,
 				5E766D9F21147697005242B4 /* AuthenticationCoordinatorDelegate.swift in Sources */,
 				BFE277631D5B4FC50074DC6D /* ConversationContentViewController+MessageDeletion.swift in Sources */,
 				7C5836661FD5ABFE001CC843 /* TitleView.swift in Sources */,

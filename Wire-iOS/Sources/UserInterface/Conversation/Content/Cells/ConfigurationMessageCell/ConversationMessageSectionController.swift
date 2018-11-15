@@ -126,10 +126,6 @@ extension IndexSet {
             let audioCell = ConversationLegacyCellDescription<AudioMessageCell>(message: message, layoutProperties: layoutProperties)
             add(description: audioCell)
             
-        } else if message.isFile {
-            let fileCell = ConversationLegacyCellDescription<FileTransferCell>(message: message, layoutProperties: layoutProperties)
-            add(description: fileCell)
-            
         } else if message.isImage {
             let imageCell = ConversationLegacyCellDescription<ImageMessageCell>(message: message, layoutProperties: layoutProperties)
             add(description: imageCell)
@@ -172,6 +168,8 @@ extension IndexSet {
             contentCellDescriptions = ConversationTextMessageCellDescription.cells(for: message, searchQueries: context.searchQueries)
         } else if message.isLocation {
             contentCellDescriptions = addLocationMessageCells()
+        } else if message.isFile {
+            contentCellDescriptions = [AnyConversationMessageCellDescription(ConversationFileMessageCellDescription(message: message))]
         } else if message.isSystem {
             contentCellDescriptions = ConversationSystemMessageCellDescription.cells(for: message, layoutProperties: layoutProperties)
         } else {
