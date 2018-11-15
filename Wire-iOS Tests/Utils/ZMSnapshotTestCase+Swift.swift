@@ -167,7 +167,7 @@ extension ZMSnapshotTestCase {
         for (deviceName, width) in ZMSnapshotTestCase.phoneWidths {
             verifyView(view,
                        extraLayoutPass: extraLayoutPass,
-                       tolerance: 0,
+                       tolerance: tolerance,
                        width: width,
                        file: file.utf8SignedStart(),
                        line: line,
