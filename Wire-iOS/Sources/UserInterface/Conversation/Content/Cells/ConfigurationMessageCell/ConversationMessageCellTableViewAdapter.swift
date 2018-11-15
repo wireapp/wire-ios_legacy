@@ -68,6 +68,7 @@ class ConversationMessageCellTableViewAdapter<C: ConversationMessageCellDescript
 
     private var longPressGesture: UILongPressGestureRecognizer!
     private var doubleTapGesture: UITapGestureRecognizer!
+    private var singleTapGesture: UITapGestureRecognizer!
 
     @objc var showsMenu = false
 
@@ -106,10 +107,14 @@ class ConversationMessageCellTableViewAdapter<C: ConversationMessageCellDescript
 
         longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(onLongPress))
         contentView.addGestureRecognizer(longPressGesture)
-
+        
         doubleTapGesture = UITapGestureRecognizer(target: self, action: #selector(onDoubleTap))
         doubleTapGesture.numberOfTapsRequired = 2
         contentView.addGestureRecognizer(doubleTapGesture)
+        
+        singleTapGesture = UITapGestureRecognizer(target: self, action: #selector(onSingleTap))
+        cellView.addGestureRecognizer(singleTapGesture)
+        singleTapGesture.require(toFail: doubleTapGesture)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -186,16 +191,32 @@ class ConversationMessageCellTableViewAdapter<C: ConversationMessageCellDescript
         menu.setTargetRect(selectionRect, in: selectionView)
         menu.setMenuVisible(true, animated: true)
     }
+    
+    // MARK: - Single Tap To View Details
+    
+    @objc private func onSingleTap(_ gestureRecognizer: UITapGestureRecognizer) {
+        if gestureRecognizer.state == .recognized {
+            presentDetails()
+        }
+    }
 
     // MARK: - Double Tap To Like
 
-    @objc private func onDoubleTap(_ gestureRecognizer: UILongPressGestureRecognizer) {
+    @objc private func onDoubleTap(_ gestureRecognizer: UITapGestureRecognizer) {
         if gestureRecognizer.state == .recognized {
             likeMessage()
         }
     }
 
     // MARK: - Standard Actions
+    
+    private func presentDetails() {
+        guard cellDescription?.supportsActions == true, let message = cellDescription?.message else {
+            return
+        }
+        
+        cellDescription?.delegate?.conversationCell?(cellView, didSelect: .present, for: message)
+    }
 
     private func likeMessage() {
         guard cellDescription?.supportsActions == true else {
