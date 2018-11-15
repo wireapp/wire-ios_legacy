@@ -44,7 +44,7 @@
 "peoplepicker.search_placeholder" = "Nach Name/Benutzername suchen";
 "peoplepicker.header.top_people" = "Top Kontakte";
 "peoplepicker.button.create_conversation" = "Gruppe erstellen";
-"peoplepicker.button.add_to_conversation" = "Personen zur Gruppe hinzufügen";
+"peoplepicker.button.add_to_conversation" = "Teilnehmer zur Gruppe hinzufügen";
 "peoplepicker.header.conversations" = "Gruppen";
 "peoplepicker.header.team_conversations" = "%@ Gruppen";
 "peoplepicker.header.send_invitation" = "Einladen";
@@ -53,7 +53,7 @@
 "peoplepicker.header.directory" = "Vorschläge";
 
 "peoplepicker.group.title.singular" = "Teilnehmer hinzufügen";
-"peoplepicker.group.title.plural" = "Personen hinzufügen (%d)";
+"peoplepicker.group.title.plural" = "Teilnehmer hinzufügen (%d)";
 "peoplepicker.group.skip" = "Überspringen";
 "peoplepicker.group.done" = "Fertig";
 "peoplepicker.group.create" = "Erstellen";
@@ -67,7 +67,7 @@
 "peoplepicker.services.add_service.error.full" = "Die Unterhaltung ist voll";
 
 "peoplepicker.title.create_conversation" = "Gruppe erstellen";
-"peoplepicker.title.add_to_conversation" = "Personen hinzufügen";
+"peoplepicker.title.add_to_conversation" = "Teilnehmer hinzufügen";
 
 "peoplepicker.no_contacts_title" = "Keine Kontakte";
 
@@ -149,6 +149,7 @@
 "conversation_list.voiceover.status.typing" = "tippt";
 "conversation_list.voiceover.status.ping" = "Ping";
 "conversation_list.voiceover.status.mention" = "du wurdest erwähnt";
+"conversation_list.voiceover.status.reply" = "antworten";
 "conversation_list.voiceover.bottom_bar.archived_button.label" = "archivierte";
 "conversation_list.voiceover.bottom_bar.archived_button.hint" = "Liste der archivierten Unterhaltungen";
 "conversation_list.voiceover.bottom_bar.contacts_button.label" = "Kontakte";
@@ -183,7 +184,7 @@
 "notifications.sent_file" = "hat eine Datei geteilt";
 "notifications.sent_location" = "hat einen Standort geteilt";
 "notifications.sent_video" = "hat ein Video geteilt";
-"notifications.sent_audio" = "hat eine Audio-Nachricht geteilt";
+"notifications.sent_audio" = "hat eine Audionachricht geteilt";
 "notifications.in_conversation" = "%@ - %@";
 "notifications.this_conversation" = "%@ in dieser Unterhaltung";
 
@@ -199,6 +200,7 @@
 "conversation.status.typing" = "Schreibt eine Nachricht…";
 "conversation.status.typing.group" = "%@: schreibt eine Nachricht…";
 "conversation.status.silenced" = "Lautlos";
+"conversation.status.poor_connection" = "Schlechte Verbindung";
 "conversation.status.blocked" = "Blockiert";
 
 "conversation.status.message.text" = "%@";
@@ -212,15 +214,19 @@
 "conversation.status.message.missedcall" = "Verpasster Anruf";
 "conversation.status.message.missedcall.groups" = "Verpasster Anruf von %@";
 "conversation.status.message.mention" = "%@";
+"conversation.status.message.reply" = "%@";
 "conversation.status.message.ephemeral" = "Temporäre Nachricht";
 "conversation.status.message.ephemeral.group" = "Jemand hat eine Nachricht gesendet";
 "conversation.status.message.ephemeral.mention" = "Hat dich erwähnt";
 "conversation.status.message.ephemeral.mention.group" = "Jemand hat dich erwähnt";
+"conversation.status.message.ephemeral.reply" = "Hat auf deine Nachricht geantwortet";
+"conversation.status.message.ephemeral.reply.group" = "Jemand hat auf deine Nachricht geantwortet";
 "conversation.status.message.ephemeral.knock" = "hat gepingt";
 "conversation.status.message.ephemeral.knock.group" = "Jemand hat gepingt";
 
 "conversation.status.unsent" = "⚠️ Nicht gesendete Nachricht";
 "conversation.status.you" = "Du";
+"conversation.status.someone" = "Jemand";
 "conversation.status.added_multiple" = "Teilnehmer hinzugefügt";
 "conversation.status.you_was_added" = "%@ hat dich hinzugefügt";
 "conversation.status.added_users" = "%@ hat %@ hinzugefügt";
@@ -256,9 +262,9 @@
 "conversation.input_bar.audio_message.tooltip.pull_send" = "Zum Senden nach oben Wischen";
 "conversation.input_bar.audio_message.tooltip.tap_send" = "Tippe, um zu senden";
 "conversation.input_bar.audio_message.too_long.title" = "Die Aufnahme wurde beendet";
-"conversation.input_bar.audio_message.too_long.message" = "Audio-Nachrichten sind auf %@ beschränkt.";
+"conversation.input_bar.audio_message.too_long.message" = "Audionachrichten sind auf %@ beschränkt.";
 
-"conversation.input_bar.audio_message.too_long_size.message" = "Die Dateigröße für Sprachnachrichten ist auf %@ begrenzt.";
+"conversation.input_bar.audio_message.too_long_size.message" = "Die Dateigröße für Audionachrichten ist auf %@ begrenzt.";
 
 "conversation.input_bar.audio_message.send" = "Senden";
 
@@ -296,7 +302,23 @@
 "conversation.guests_services_present" = "Gäste und Dienste anwesend";
 "conversation.action.search" = "Suche";
 
-// Image confirmation dialogue
+// Reply message preview
+"conversation.input_bar.message_preview.image" = "Bild";
+"conversation.input_bar.message_preview.location" = "Standort";
+"conversation.input_bar.message_preview.video" = "Video";
+"conversation.input_bar.message_preview.audio" = "Audionachricht";
+"conversation.input_bar.message_preview.file" = "Datei";
+"conversation.input_bar.close_reply" = "Antwort abbrechen";
+
+"conversation.input_bar.message_preview.accessibility_description" = "Auf Nachricht antworten: %@";
+"conversation.input_bar.message_preview.accessibility.image_message" = "Bildnachricht";
+"conversation.input_bar.message_preview.accessibility.location_message" = "Standortmeldung";
+"conversation.input_bar.message_preview.accessibility.video_message" = "Videonachricht";
+"conversation.input_bar.message_preview.accessibility.audio_message" = "Audionachricht";
+"conversation.input_bar.message_preview.accessibility.file_message" = "Dateinachricht (%@)";
+"conversation.input_bar.message_preview.accessibility.unknown_message" = "Unbekannte Nachricht";
+"conversation.input_bar.message_preview.accessibility.message_from" = "%@ von %@";
+
 "image_confirmer.confirm" = "OK";
 "image_confirmer.cancel" = "Abbrechen";
 "image.add_sketch" = "Skizze hinzufügen";
@@ -412,10 +434,10 @@
 "content.system.conversation.with_name.participants" = "mit";
 
 "content.system.message_timer_changes" = "%@ hat temporäre Nachrichten auf %@ gestellt";
-"content.system.message_timer_changes-you" = "Du hast temporäre Nachrichten auf %@ gestellt";
+"content.system.message_timer_changes-you" = "%@ hast temporäre Nachrichten auf %@ gestellt";
 
 "content.system.message_timer_off" = "%@ hat temporäre Nachrichten ausgeschaltet";
-"content.system.message_timer_off-you" = "Du hast temporäre Nachrichten ausgeschaltet";
+"content.system.message_timer_off-you" = "%@ hast temporäre Nachrichten ausgeschaltet";
 
 "content.system.reactivated_device" = "Du hast %@ eine Weile nicht benutzt. Nachrichten, die in der Zwischenzeit gesendet wurden, werden nicht angezeigt.";
 
@@ -460,6 +482,7 @@
 
 "content.message.delete" = "Löschen";
 "content.message.save" = "Speichern";
+"content.message.resend" = "Erneut senden";
 
 "content.message.delete_ellipsis" = "Löschen…";
 
@@ -472,6 +495,12 @@
 "content.message.copy" = "Kopieren";
 "content.message.download" = "Download";
 
+// Reply
+"content.message.reply" = "Antworten";
+"content.message.reply.original_timestamp.date" = "Ursprüngliche Nachricht vom %@";
+"content.message.reply.original_timestamp.time" = "Ursprüngliche Nachricht von %@";
+"content.message.reply.broken_message" = "Diese Nachricht ist nicht sichtbar.";
+
 "content.message.open_link_alert.title" = "Link öffnen";
 "content.message.open_link_alert.message" = "Dieser Link öffnet\n%@";
 "content.message.open_link_alert.open" = "Öffnen";
@@ -479,11 +508,6 @@
 "content.reactions_list.likers" = "Gefällt";
 
 "content.file.too_big" = "Du kannst Dateien bis zu %@ senden";
-
-// Reply
-"content.message.reply.original_timestamp.date" = "Ursprüngliche Nachricht vom %@";
-"content.message.reply.original_timestamp.time" = "Ursprüngliche Nachricht von %@";
-
 // Someone pinged
 "content.ping.text" = "%@ hat gepingt";
 "content.ping.text-you" = "%@ hast gepingt";
@@ -638,7 +662,7 @@
 // Configure conversation notifications
 "meta.menu.configure_notification.dialog_message" = "Benachrichtigungen über:";
 "meta.menu.configure_notification.button_everything" = "Alles";
-"meta.menu.configure_notification.button_mentions_and_replies" = "Mentions and Replies";
+"meta.menu.configure_notification.button_mentions_and_replies" = "Erwähnungen und Antworten";
 "meta.menu.configure_notification.button_nothing" = "Nichts";
 "meta.menu.configure_notification.button_cancel" = "Abbrechen";
 
@@ -733,8 +757,8 @@
 "group_details.guest_options_cell.enabled" = "An";
 "group_details.guest_options_cell.disabled" = "Aus";
 "group_details.timeout_options_cell.title" = "Temporäre Nachrichten";
-"group_details.notification_options_cell.title" = "Notifications";
-"group_details.notification_options_cell.description" = "You can be notified about everything (including audio and video calls) or only when someone mentions you or replies to one of your messages.";
+"group_details.notification_options_cell.title" = "Benachrichtigungen";
+"group_details.notification_options_cell.description" = "Immer benachrichtigen (einschließlich Audio- und Videoanrufe) oder nur bei Erwähnungen oder wenn jemand auf eine deiner Nachrichten antwortet.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile
@@ -975,7 +999,7 @@
 
 "self.settings.advanced.title" = "Erweitert";
 "self.settings.advanced.troubleshooting.title" = "Fehlerbehebung";
-"self.settings.advanced.troubleshooting.submit_debug.title" = "Fehlerbericht senden";
+"self.settings.advanced.troubleshooting.submit_debug.title" = "Anruf-Fehlerbericht senden";
 "self.settings.advanced.troubleshooting.submit_debug.subtitle" = "Diese Information hilft uns Probleme zu erkennen.\nWenn beim Anrufen Probleme auftraten, beschreibe mit welchen Schritten das Problem reproduzierbar ist und sende uns gegebenenfalls Bildschirmfotos mit dieser Email.";
 "self.settings.advanced.reset_push_token.title" = "Push-Token zurücksetzen";
 "self.settings.advanced.reset_push_token.subtitle" = "Der Wire Kundenservice kann dich bitten, diesen Token zurückzusetzen, wenn du Probleme mit Push-Benachrichtigungen hast.";
@@ -1157,6 +1181,13 @@
 "registration.no_history.got_it" = "OK";
 "registration.no_history.restore_backup" = "Backup wiederherstellen";
 
+"registration.alert.account_exists.title" = "Konto Vorhanden";
+"registration.alert.account_exists.message_phone" = "Die für die Registrierung verwendete Telefonnummer ist bereits mit einem Konto verknüpft.\n\nBitte andere Telefonnummer nutzen oder versuchen, sich mit dieser Telefonnummer einzuloggen.";
+"registration.alert.account_exists.message_email" = "Die für die Registrierung verwendete E-Mail-Adresse ist bereits mit einem Konto verknüpft.\n\nBitte andere E-Mail-Adresse nutzen oder versuchen, sich mit dieser E-Mail-Adresse einzuloggen.";
+"registration.alert.change_email_action" = "E-Mail-Adresse ändern";
+"registration.alert.change_phone_action" = "Telefonnummer ändern";
+"registration.alert.change_signin_action" = "Login";
+
 // Restore History Warning Alert
 "registration.no_history.restore_backup_warning.title" = "Gesprächsverlauf wiederherstellen";
 "registration.no_history.restore_backup_warning.message" = "Der Inhalt der Backup-Datei ersetzt den Gesprächsverlauf auf diesem Gerät. Es können nur Backup-Dateien derselben Plattform wiederhergestellt werden.";
@@ -1255,7 +1286,7 @@
 "registration.devices.active_list_header" = "Aktiv";
 "registration.devices.current_list_header" = "Dieses Gerät";
 "registration.devices.active_list_subtitle" = "Falls du eines dieser Geräte nicht erkennst, entferne es und setze dein Passwort zurück.";
-"registration.devices.activated"  = "Activated %@";
+"registration.devices.activated" = "Aktiviert %@";
 "registration.devices.id" = "ID:";
 
 "signin.use_email.label" = "Mit E-Mail anmelden";

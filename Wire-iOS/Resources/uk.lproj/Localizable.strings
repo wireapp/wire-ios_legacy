@@ -149,6 +149,7 @@
 "conversation_list.voiceover.status.typing" = "вводить текст";
 "conversation_list.voiceover.status.ping" = "пінг";
 "conversation_list.voiceover.status.mention" = "вас хтось згадав";
+"conversation_list.voiceover.status.reply" = "відповідь";
 "conversation_list.voiceover.bottom_bar.archived_button.label" = "заархівовано";
 "conversation_list.voiceover.bottom_bar.archived_button.hint" = "перелік заархівованих розмов";
 "conversation_list.voiceover.bottom_bar.contacts_button.label" = "контакти";
@@ -199,6 +200,7 @@
 "conversation.status.typing" = "Набирається повідомлення…";
 "conversation.status.typing.group" = "%@: набирає повідомлення…";
 "conversation.status.silenced" = "Режим тиші увімк.";
+"conversation.status.poor_connection" = "Повільне з'єднання";
 "conversation.status.blocked" = "Заблокований(-на)";
 
 "conversation.status.message.text" = "%@";
@@ -212,15 +214,19 @@
 "conversation.status.message.missedcall" = "Пропущений дзвінок";
 "conversation.status.message.missedcall.groups" = "Пропущений дзвінок від %@";
 "conversation.status.message.mention" = "%@";
+"conversation.status.message.reply" = "%@";
 "conversation.status.message.ephemeral" = "Надіслав повідомлення";
 "conversation.status.message.ephemeral.group" = "Хтось надіслав повідомлення";
 "conversation.status.message.ephemeral.mention" = "Згадав вас";
 "conversation.status.message.ephemeral.mention.group" = "Хтось згадав вас";
+"conversation.status.message.ephemeral.reply" = "Відповів(-ла) на ваше повідомлення";
+"conversation.status.message.ephemeral.reply.group" = "Хтось відповів на ваше повідомлення";
 "conversation.status.message.ephemeral.knock" = "Надіслав(-ла) пінг";
 "conversation.status.message.ephemeral.knock.group" = "Хтось надіслав пінг";
 
 "conversation.status.unsent" = "⚠️ Ненадіслане повідомлення";
 "conversation.status.you" = "Ви";
+"conversation.status.someone" = "Хтось";
 "conversation.status.added_multiple" = "Додані нові учасники";
 "conversation.status.you_was_added" = "%@ додав(-ла) вас";
 "conversation.status.added_users" = "%@ додав(-ла) %@";
@@ -296,7 +302,23 @@
 "conversation.guests_services_present" = "Присутні гості та сервіси";
 "conversation.action.search" = "Пошук";
 
-// Image confirmation dialogue
+// Reply message preview
+"conversation.input_bar.message_preview.image" = "Картинка";
+"conversation.input_bar.message_preview.location" = "Розташування";
+"conversation.input_bar.message_preview.video" = "Відео";
+"conversation.input_bar.message_preview.audio" = "Аудіоповідомлення";
+"conversation.input_bar.message_preview.file" = "Файл";
+"conversation.input_bar.close_reply" = "Скасувати відповідь";
+
+"conversation.input_bar.message_preview.accessibility_description" = "Відповідь на повідомлення: %@";
+"conversation.input_bar.message_preview.accessibility.image_message" = "Картинка";
+"conversation.input_bar.message_preview.accessibility.location_message" = "Розташування";
+"conversation.input_bar.message_preview.accessibility.video_message" = "Відеоповідомлення";
+"conversation.input_bar.message_preview.accessibility.audio_message" = "Аудіоповідомлення";
+"conversation.input_bar.message_preview.accessibility.file_message" = "Файл (%@)";
+"conversation.input_bar.message_preview.accessibility.unknown_message" = "Невизначене повідомлення";
+"conversation.input_bar.message_preview.accessibility.message_from" = "%@ із %@";
+
 "image_confirmer.confirm" = "OK";
 "image_confirmer.cancel" = "Скасувати";
 "image.add_sketch" = "Додати зарисовку";
@@ -412,10 +434,10 @@
 "content.system.conversation.with_name.participants" = "з";
 
 "content.system.message_timer_changes" = "%@ встановив(-ла) таймер повідомлень на %@";
-"content.system.message_timer_changes-you" = "Ви встановили таймер повідомлень на %@";
+"content.system.message_timer_changes-you" = "%@ встановив(-ла) таймер повідомлень на %@";
 
 "content.system.message_timer_off" = "%@ вимкнув(-ла) таймер повідомлень";
-"content.system.message_timer_off-you" = "Ви вимкнули таймер повідомлень";
+"content.system.message_timer_off-you" = "%@ вимкнув(-ла) таймер повідомлень";
 
 "content.system.reactivated_device" = "Ви почали використовувати %@ знову. Повідомлення, надіслані поки ви не користувалися ним, не з'являться тут.";
 
@@ -460,6 +482,7 @@
 
 "content.message.delete" = "Видалити";
 "content.message.save" = "Зберегти";
+"content.message.resend" = "Надіслати ще раз";
 
 "content.message.delete_ellipsis" = "Видалити…";
 
@@ -471,6 +494,12 @@
 "content.message.open" = "Вiдкрити";
 "content.message.copy" = "Скопіювати";
 "content.message.download" = "Завантажити";
+
+// Reply
+"content.message.reply" = "Відповісти";
+"content.message.reply.original_timestamp.date" = "Original message from %@";
+"content.message.reply.original_timestamp.time" = "Original message from %@";
+"content.message.reply.broken_message" = "Ви не можете бачити це повідомлення.";
 
 "content.message.open_link_alert.title" = "Перейдіть за лінком";
 "content.message.open_link_alert.message" = "Це перенаправить вас на\n%@";
@@ -633,7 +662,7 @@
 // Configure conversation notifications
 "meta.menu.configure_notification.dialog_message" = "Повідомляти мене про:";
 "meta.menu.configure_notification.button_everything" = "Все";
-"meta.menu.configure_notification.button_mentions_and_replies" = "Mentions and Replies";
+"meta.menu.configure_notification.button_mentions_and_replies" = "Згадки та відповіді";
 "meta.menu.configure_notification.button_nothing" = "Нічого";
 "meta.menu.configure_notification.button_cancel" = "Скасувати";
 
@@ -728,8 +757,8 @@
 "group_details.guest_options_cell.enabled" = "Увімк.";
 "group_details.guest_options_cell.disabled" = "Вимкнений";
 "group_details.timeout_options_cell.title" = "Тимчасові повідомлення";
-"group_details.notification_options_cell.title" = "Notifications";
-"group_details.notification_options_cell.description" = "You can be notified about everything (including audio and video calls) or only when someone mentions you or replies to one of your messages.";
+"group_details.notification_options_cell.title" = "Сповіщення";
+"group_details.notification_options_cell.description" = "Ви можете отримувати нотифікації про всі події (включаючи аудіо- і відеодзвінки), або тільки тоді, коли хтось згадує вас або відповідає на одне з ваших повідомлень.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile
@@ -1152,6 +1181,13 @@
 "registration.no_history.got_it" = "OK";
 "registration.no_history.restore_backup" = "Відновити з резервної копії";
 
+"registration.alert.account_exists.title" = "Акаунт уже існує";
+"registration.alert.account_exists.message_phone" = "Номер телефону, який використовується для реєстрації, вже зв'язано з іншим акаунтом.\n\nСпробуйте використати інший номер телефону або залогіньтесь, якщо ви є власником цього акаунту.";
+"registration.alert.account_exists.message_email" = "Адреса електронної пошти, яка використовується для реєстрації, вже зв'язана з іншим акаунтом.\n\n Спробуйте використати іншу адресу або залогіньтесь, якщо ви є власником цього акаунту.";
+"registration.alert.change_email_action" = "Змінити email-адресу";
+"registration.alert.change_phone_action" = "Змінити номер телефону";
+"registration.alert.change_signin_action" = "Увійти";
+
 // Restore History Warning Alert
 "registration.no_history.restore_backup_warning.title" = "Відновлення історії";
 "registration.no_history.restore_backup_warning.message" = "Відновлення резервної копії замінить істоію розмов на цьому пристрої. Історію можна відновити тільки з резервної копії, зробленої на тій же платформі.";
@@ -1250,7 +1286,7 @@
 "registration.devices.active_list_header" = "Активні";
 "registration.devices.current_list_header" = "Поточний";
 "registration.devices.active_list_subtitle" = "Якщо ви не впізнаєте пристрою вище, видаліть його і виконайте скидання паролю.";
-"registration.devices.activated"  = "Activated %@";
+"registration.devices.activated" = "Активований %@";
 "registration.devices.id" = "ID:";
 
 "signin.use_email.label" = "Увійти через Email";

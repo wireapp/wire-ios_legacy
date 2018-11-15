@@ -149,6 +149,7 @@
 "conversation_list.voiceover.status.typing" = "trükib";
 "conversation_list.voiceover.status.ping" = "ping";
 "conversation_list.voiceover.status.mention" = "sind on mainitud";
+"conversation_list.voiceover.status.reply" = "reply";
 "conversation_list.voiceover.bottom_bar.archived_button.label" = "arhiveeritud";
 "conversation_list.voiceover.bottom_bar.archived_button.hint" = "arhiveeritud vestluste nimekiri";
 "conversation_list.voiceover.bottom_bar.contacts_button.label" = "kontaktid";
@@ -199,6 +200,7 @@
 "conversation.status.typing" = "Kirjutab…";
 "conversation.status.typing.group" = "%@: kirjutab…";
 "conversation.status.silenced" = "Vaigistatud";
+"conversation.status.poor_connection" = "Poor connection";
 "conversation.status.blocked" = "Blokeeritud";
 
 "conversation.status.message.text" = "%@";
@@ -212,15 +214,19 @@
 "conversation.status.message.missedcall" = "Vastamata kõne";
 "conversation.status.message.missedcall.groups" = "Vastamata kõne kasutajalt %@";
 "conversation.status.message.mention" = "%@";
+"conversation.status.message.reply" = "%@";
 "conversation.status.message.ephemeral" = "Saatis sõnumi";
 "conversation.status.message.ephemeral.group" = "Keegi saatis sõnumi";
 "conversation.status.message.ephemeral.mention" = "Mainis sind";
 "conversation.status.message.ephemeral.mention.group" = "Keegi mainis sind";
+"conversation.status.message.ephemeral.reply" = "Replied to your message";
+"conversation.status.message.ephemeral.reply.group" = "Someone replied to your message";
 "conversation.status.message.ephemeral.knock" = "Pingis";
 "conversation.status.message.ephemeral.knock.group" = "Keegi pingis";
 
 "conversation.status.unsent" = "⚠️ Saatmata sõnum";
 "conversation.status.you" = "Sina";
+"conversation.status.someone" = "Keegi";
 "conversation.status.added_multiple" = "Lisatud mitu inimest";
 "conversation.status.you_was_added" = "%@ lisas sinu";
 "conversation.status.added_users" = "%@ lisas kasutaja %@";
@@ -296,7 +302,23 @@
 "conversation.guests_services_present" = "Kohal on külalisi ja teenuseid";
 "conversation.action.search" = "Otsing";
 
-// Image confirmation dialogue
+// Reply message preview
+"conversation.input_bar.message_preview.image" = "Image";
+"conversation.input_bar.message_preview.location" = "Location";
+"conversation.input_bar.message_preview.video" = "Video";
+"conversation.input_bar.message_preview.audio" = "Audio Message";
+"conversation.input_bar.message_preview.file" = "File";
+"conversation.input_bar.close_reply" = "Cancel reply";
+
+"conversation.input_bar.message_preview.accessibility_description" = "Replying to message: %@";
+"conversation.input_bar.message_preview.accessibility.image_message" = "Image message";
+"conversation.input_bar.message_preview.accessibility.location_message" = "Location message";
+"conversation.input_bar.message_preview.accessibility.video_message" = "Video message";
+"conversation.input_bar.message_preview.accessibility.audio_message" = "Audio message";
+"conversation.input_bar.message_preview.accessibility.file_message" = "File message (%@)";
+"conversation.input_bar.message_preview.accessibility.unknown_message" = "Unknown message";
+"conversation.input_bar.message_preview.accessibility.message_from" = "%@ from %@";
+
 "image_confirmer.confirm" = "OK";
 "image_confirmer.cancel" = "Tühista";
 "image.add_sketch" = "Lisa joonistus";
@@ -412,10 +434,10 @@
 "content.system.conversation.with_name.participants" = "ja";
 
 "content.system.message_timer_changes" = "%@ määras sõnumi taimeriks: %@";
-"content.system.message_timer_changes-you" = "Sina määrasid sõnumi taimeriks %@";
+"content.system.message_timer_changes-you" = "%@ määras sõnumi taimeriks: %@";
 
 "content.system.message_timer_off" = "%@ lülitas sõnumi taimeri välja";
-"content.system.message_timer_off-you" = "Sa lülitasid sõnumi taimeri välja";
+"content.system.message_timer_off-you" = "%@ lülitas sõnumi taimeri välja";
 
 "content.system.reactivated_device" = "Hakkasid uuesti kasutama seadet %@. Vahepeal saadetud sõnumid siia ei ilmu.";
 
@@ -460,6 +482,7 @@
 
 "content.message.delete" = "Kustuta";
 "content.message.save" = "Salvesta";
+"content.message.resend" = "Saada uuesti";
 
 "content.message.delete_ellipsis" = "Kustuta…";
 
@@ -471,6 +494,12 @@
 "content.message.open" = "Ava";
 "content.message.copy" = "Kopeeri";
 "content.message.download" = "Laadi alla";
+
+// Reply
+"content.message.reply" = "Vasta";
+"content.message.reply.original_timestamp.date" = "Original message from %@";
+"content.message.reply.original_timestamp.time" = "Original message from %@";
+"content.message.reply.broken_message" = "You cannot see this message.";
 
 "content.message.open_link_alert.title" = "Ava lehekülg";
 "content.message.open_link_alert.message" = "Link viitab lehele: %@";
@@ -728,7 +757,7 @@
 "group_details.guest_options_cell.enabled" = "Sees";
 "group_details.guest_options_cell.disabled" = "Väljas";
 "group_details.timeout_options_cell.title" = "Kustuvad sõnumid";
-"group_details.notification_options_cell.title" = "Notifications";
+"group_details.notification_options_cell.title" = "Teavitused";
 "group_details.notification_options_cell.description" = "You can be notified about everything (including audio and video calls) or only when someone mentions you or replies to one of your messages.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -1152,6 +1181,13 @@
 "registration.no_history.got_it" = "OK";
 "registration.no_history.restore_backup" = "Taasta varundusest";
 
+"registration.alert.account_exists.title" = "Account Exists";
+"registration.alert.account_exists.message_phone" = "The phone number you used to register is already linked to an account.\n\nUse another phone number, or try to log in if you own this account.";
+"registration.alert.account_exists.message_email" = "The email address you used to register is already linked to an account.\n\n Use another email address, or try to log in if you own this account.";
+"registration.alert.change_email_action" = "Change Email";
+"registration.alert.change_phone_action" = "Change Phone";
+"registration.alert.change_signin_action" = "Sign In";
+
 // Restore History Warning Alert
 "registration.no_history.restore_backup_warning.title" = "Taasta ajalugu";
 "registration.no_history.restore_backup_warning.message" = "Varukoopia sisu asendab selles seadmes vestlusajaloo.\nSa saad taastada ajalugu ainult sama platvormi varukoopiast.";
@@ -1250,7 +1286,7 @@
 "registration.devices.active_list_header" = "Aktiivsed";
 "registration.devices.current_list_header" = "Praegune";
 "registration.devices.active_list_subtitle" = "Kui sa mõnda toodud seadmetest ei tunne ära, eemalda see ja muuda oma parool.";
-"registration.devices.activated"  = "Activated %@";
+"registration.devices.activated" = "Aktiveeritud %@";
 "registration.devices.id" = "ID:";
 
 "signin.use_email.label" = "Logi sisse e-posti aadresiga";
