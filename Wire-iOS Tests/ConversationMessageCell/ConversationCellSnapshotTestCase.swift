@@ -65,13 +65,18 @@ class ConversationCellSnapshotTestCase: CoreDataSnapshotTestCase {
     /**
      * Performs a snapshot test for a message
      */
-    func verify(message: ZMConversationMessage, context: ConversationMessageContext? = nil, file: StaticString = #file, line: UInt = #line) {
+    func verify(message: ZMConversationMessage, context: ConversationMessageContext? = nil, waitForImagesToLoad: Bool = false, file: StaticString = #file, line: UInt = #line) {
         let context = (context ?? defaultContext)!
         let section = ConversationMessageSectionController(message: message, context: context, layoutProperties: ConversationCellLayoutProperties())
         let views = section.cellDescriptions.map({ $0.makeView() })
         let stackView = UIStackView(arrangedSubviews: views)
         stackView.axis = .vertical
         stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.layer.speed = 0 // freeze animations for deterministic tests
+        
+        if waitForImagesToLoad {
+            XCTAssertTrue(waitForGroupsToBeEmpty([defaultImageCache.dispatchGroup]))
+        }
         
         verifyView(inAllPhoneWidths: stackView, extraLayoutPass: false, file: file.utf8SignedStart(), line: line)
     }
