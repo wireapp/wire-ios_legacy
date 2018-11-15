@@ -113,6 +113,7 @@ class ConversationReplyContentView: UIView {
 
         senderComponent.senderName = object.senderName
         senderComponent.indicatorIcon = object.isEdited ? UIImage(for: .pencil, iconSize: .messageStatus, color: .from(scheme: .iconNormal)) : nil
+        senderComponent.indicatorLabel = object.isEdited ? "content.message.reply.edited_message".localized : nil
         timestampLabel.text = object.timestamp
 
         switch object.content {
