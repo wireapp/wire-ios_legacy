@@ -199,19 +199,10 @@
     [self assertAmbigousLayout:container file:file line:line];
 }
 
-- (BOOL)assertEmptyFrame:(UIView *)view file:(const char[])file line:(NSUInteger)line
-{
-    if (CGRectIsEmpty(view.frame)) {
-        NSString *description = @"View frame can not be empty";
-        NSString *filePath = [NSString stringWithFormat:@"%s", file];
-        [self recordFailureWithDescription:description inFile:filePath atLine:line expected:YES];
-        return YES;
-    }
-    
-    return NO;
-}
-
-- (void)verifyView:(UIView *)view extraLayoutPass:(BOOL)extraLayoutPass width:(CGFloat)width file:(const char[])file line:(NSUInteger)line
+- (void)verifyView:(UIView *)view
+   extraLayoutPass:(BOOL)extraLayoutPass
+             width:(CGFloat)width
+              file:(const char[])file line:(NSUInteger)line
         deviceName:(NSString *)deviceName;
 {
     UIView *container = [self containerViewWithView:view];
@@ -231,5 +222,17 @@
     
     FBSnapshotVerifyView(container, deviceName)
 }
+
+- (BOOL)assertEmptyFrame:(UIView *)view file:(const char[])file line:(NSUInteger)line
+    {
+        if (CGRectIsEmpty(view.frame)) {
+            NSString *description = @"View frame can not be empty";
+            NSString *filePath = [NSString stringWithFormat:@"%s", file];
+            [self recordFailureWithDescription:description inFile:filePath atLine:line expected:YES];
+            return YES;
+        }
+
+        return NO;
+    }
 
 @end

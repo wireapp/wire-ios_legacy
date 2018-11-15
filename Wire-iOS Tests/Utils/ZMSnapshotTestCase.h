@@ -85,8 +85,6 @@ NS_ASSUME_NONNULL_BEGIN
               line:(NSUInteger)line
         deviceName:(nullable NSString *)deviceName;
 
-- (void)assertAmbigousLayout:(UIView *)view file:(const char[_Nullable])file line:(NSUInteger)line;
-
 @end
 
 NS_ASSUME_NONNULL_END
