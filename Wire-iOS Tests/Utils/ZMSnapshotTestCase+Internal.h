@@ -18,6 +18,6 @@
 
 @interface ZMSnapshotTestCase ()
     
-- (void)assertAmbigousLayout:(UIView *)view file:(const char[_Nullable])file line:(NSUInteger)line;
+- (void)assertAmbigousLayout:(nonnull UIView *)view file:(const char[_Nullable])file line:(NSUInteger)line;
 
 @end

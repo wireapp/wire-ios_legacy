@@ -18,6 +18,7 @@
 
 
 #import "ZMSnapshotTestCase.h"
+#import "ZMSnapshotTestCase+Internal.h"
 #import <WireSyncEngine/WireSyncEngine.h>
 #import "UIColor+WAZExtensions.h"
 #import "ColorScheme.h"
@@ -201,6 +202,7 @@
 
 - (void)verifyView:(UIView *)view
    extraLayoutPass:(BOOL)extraLayoutPass
+         tolerance:(float)tolerance
              width:(CGFloat)width
               file:(const char[])file line:(NSUInteger)line
         deviceName:(NSString *)deviceName;
@@ -220,7 +222,8 @@
         [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.1]];
     }
     
-    FBSnapshotVerifyView(container, deviceName)
+    FBSnapshotVerifyViewWithOptions(container, deviceName, FBSnapshotTestCaseDefaultSuffixes(), tolerance);
+
 }
 
 - (BOOL)assertEmptyFrame:(UIView *)view file:(const char[])file line:(NSUInteger)line

@@ -80,6 +80,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// For tests with customized view's width
 - (void)verifyView:(UIView *)view
    extraLayoutPass:(BOOL)extraLayoutPass
+         tolerance:(float)tolerance
              width:(CGFloat)width
               file:(const char[_Nullable])file
               line:(NSUInteger)line

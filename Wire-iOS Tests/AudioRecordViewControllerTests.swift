@@ -90,7 +90,7 @@ class AudioRecordViewControllerTests: ZMSnapshotTestCase {
         sut.setOverlayState(.expanded(1), animated: false)
         
         // then
-        verifyInAllPhoneWidths(view: sut.prepareForSnapshot())
+        verifyInAllPhoneWidths(view: sut.prepareForSnapshot(), tolerance: 0.1)
     }
     
     func testThatItRendersViewControllerCorrectlyState_FinishedRecording() {

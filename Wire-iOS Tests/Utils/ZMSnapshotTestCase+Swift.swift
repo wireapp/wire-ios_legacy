@@ -158,10 +158,17 @@ extension ZMSnapshotTestCase {
 // MARK: - verify the snapshots in multiple widths
 
 extension ZMSnapshotTestCase {
-    func verifyInAllPhoneWidths(view: UIView, extraLayoutPass: Bool = false, file: StaticString = #file, line: UInt = #line) {
+    func verifyInAllPhoneWidths(view: UIView,
+                                extraLayoutPass: Bool = false,
+                                tolerance: Float = 0,
+                                file: StaticString = #file,
+                                line: UInt = #line) {
         assertAmbigousLayout(view, file: file.utf8SignedStart(), line: line)
         for (deviceName, width) in ZMSnapshotTestCase.phoneWidths {
-            verifyView(view, extraLayoutPass: extraLayoutPass, width: width, file: file.utf8SignedStart(), line: line, deviceName: deviceName)
+            verifyView(view,
+                       extraLayoutPass: extraLayoutPass,
+                       tolerance: 0,
+                       width: width, file: file.utf8SignedStart(), line: line, deviceName: deviceName)
         }
     }
 
@@ -171,7 +178,10 @@ extension ZMSnapshotTestCase {
                                  line: UInt = #line) {
         assertAmbigousLayout(view, file: file.utf8SignedStart(), line: line)
         for (deviceName, width) in ZMSnapshotTestCase.tabletWidths {
-            verifyView(view, extraLayoutPass: extraLayoutPass, width: width, file: file.utf8SignedStart(), line: line, deviceName: deviceName)
+            verifyView(view,
+                       extraLayoutPass: extraLayoutPass,
+                       tolerance: 0,
+                       width: width, file: file.utf8SignedStart(), line: line, deviceName: deviceName)
         }
     }
 }
