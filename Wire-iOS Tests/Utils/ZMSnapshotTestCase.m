@@ -161,6 +161,7 @@
     
     [container addSubview:view];
     view.translatesAutoresizingMaskIntoConstraints = NO;
+    container.translatesAutoresizingMaskIntoConstraints = NO;
     [view fitInSuperviewWithNoInset];
     return container;
 }
@@ -209,12 +210,13 @@
 {
     UIView *container = [self containerViewWithView:view];
 
-    container.translatesAutoresizingMaskIntoConstraints = NO;
     [NSLayoutConstraint activateConstraints:
-     @[[container.widthAnchor constraintEqualToConstant:width]]
+     @[[container.widthAnchor constraintEqualToConstant:width]
+       ]
      ];
-    [container setNeedsLayout];
+
     [container layoutIfNeeded];
+
     if ([self assertEmptyFrame:container file:file line:line]) {
         return;
     }

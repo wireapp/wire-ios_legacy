@@ -54,7 +54,14 @@ class AudioRecordViewControllerTests: ZMSnapshotTestCase {
         delegate = nil
         super.tearDown()
     }
-    
+
+    // The waveform drawing may have sutble difference when running on CI server.
+    // Verify the SUT with tolerance to prevent random fails
+    func verifySut(file: StaticString = #file,
+                   line: UInt = #line) {
+        verifyInAllPhoneWidths(view: sut.prepareForSnapshot(), tolerance: 0.1, file: file, line: line)
+    }
+
     func testThatItRendersViewControllerCorrectlyState_Recording() {
         // when
         XCTAssertEqual(sut.recordingState, AudioRecordState.recording)
@@ -80,13 +87,6 @@ class AudioRecordViewControllerTests: ZMSnapshotTestCase {
         
         // then
         verifySut()
-    }
-
-
-    // The waveform drawing may have sutble difference when running on CI server.
-    // Verify the SUT with tolerance to prevent random fails
-    func verifySut() {
-        verifyInAllPhoneWidths(view: sut.prepareForSnapshot(), tolerance: 0.1)
     }
 
     func testThatItRendersViewControllerCorrectlyState_Recording_WithTime_Visualization_Full() {
@@ -144,7 +144,9 @@ private extension UIViewController {
             view.left == container.left
             view.right == container.right
         }
-        
+
+        container.layoutIfNeeded()
+
         return container
     }
 }

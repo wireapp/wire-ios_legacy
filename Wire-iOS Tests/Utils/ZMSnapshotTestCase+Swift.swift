@@ -168,7 +168,10 @@ extension ZMSnapshotTestCase {
             verifyView(view,
                        extraLayoutPass: extraLayoutPass,
                        tolerance: 0,
-                       width: width, file: file.utf8SignedStart(), line: line, deviceName: deviceName)
+                       width: width,
+                       file: file.utf8SignedStart(),
+                       line: line,
+                       deviceName: deviceName)
         }
     }
 
