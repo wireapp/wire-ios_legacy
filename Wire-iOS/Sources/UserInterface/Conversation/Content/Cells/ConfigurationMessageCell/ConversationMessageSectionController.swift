@@ -81,7 +81,7 @@ extension IndexSet {
     /// The object that receives informations from the section.
     @objc weak var sectionDelegate: ConversationMessageSectionControllerDelegate?
     
-    /// Wheater this section is selected
+    /// Whether this section is selected
     private var selected: Bool
 
     private var changeObservers: [Any] = []
