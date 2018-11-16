@@ -90,10 +90,11 @@ extension ZMSnapshotTestCase {
         "iPhone6_5Inch": ZMDeviceSizeIPhoneXR
         ]
 
+    /// we shoudl add iPad Pro sizes
     static let tabletScreenSizes: [String:CGSize] = [
         "iPadPortrait": ZMDeviceSizeIPadPortrait,
         "iPadLandscape": ZMDeviceSizeIPadLandscape
-    ] ///TODO: add iPad Pro sizes
+    ]
 
     
     typealias ConfigurationWithDeviceType = (_ view: UIView, _ isPad: Bool) -> Void
