@@ -81,7 +81,7 @@ extension IndexSet {
     /// The object that receives informations from the section.
     @objc weak var sectionDelegate: ConversationMessageSectionControllerDelegate?
     
-    /// Wheater this section is selected
+    /// Whether this section is selected
     private var selected: Bool
 
     private var changeObservers: [Any] = []
@@ -293,6 +293,10 @@ extension IndexSet {
     }
     
     func isToolboxVisible(in context: ConversationMessageContext) -> Bool {
+        guard !message.isSystem else {
+            return false
+        }
+        
         return selected || context.isLastMessageSentBySelfUser || message.deliveryState == .failedToSend || message.hasReactions()
     }
     
