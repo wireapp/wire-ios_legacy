@@ -37,6 +37,7 @@ static NSArray<NSValue *> * _Nonnull phoneSizes(void) {
              [NSValue valueWithCGSize:ZMDeviceSizeIPhone6],
              [NSValue valueWithCGSize:ZMDeviceSizeIPhone6Plus],
              [NSValue valueWithCGSize:ZMDeviceSizeIPhoneX],
+             ///same size as iPhone Xs Max
              [NSValue valueWithCGSize:ZMDeviceSizeIPhoneXR]
              ];
 }
@@ -122,8 +123,6 @@ NS_ASSUME_NONNULL_BEGIN
 /// Performs multiple assertions with the given view using the screen sizes of
 /// the common iPhones in Portrait and iPad in Landscape and Portrait.
 /// This method only makes sense for views that will be on presented fullscreen.
-
-//- (void)verifyViewInAllDeviceSizes:(UIView *)view extraLayoutPass:(BOOL)extraLayoutPass file:(const char[_Nullable])file line:(NSUInteger)line;
 
 - (void)verifyViewInAllPhoneWidths:(UIView *)view extraLayoutPass:(BOOL)extraLayoutPass file:(const char[_Nullable])file line:(NSUInteger)line;
 
