@@ -114,9 +114,14 @@ extension ZMSnapshotTestCase {
                     configuration(view, iPad)
                 })
             }
-            verifyView(view, extraLayoutPass: extraLayoutPass, file: file.utf8SignedStart(), line: line, deviceName: deviceName)
+            verify(view: view,
+                   extraLayoutPass: extraLayoutPass,
+                   deviceName: deviceName,
+                   file: file,
+                   line: line)
         }
     }
+    
 
     func verifyInAllPhoneSizes( view: UIView, extraLayoutPass: Bool, file: StaticString = #file, line: UInt = #line, configurationBlock configuration: Configuration?) {
         verifyMultipleSize(view: view, extraLayoutPass: extraLayoutPass, inSizes: ZMSnapshotTestCase.phoneScreenSizes, configuration: { view, isPad in
@@ -136,8 +141,14 @@ extension ZMSnapshotTestCase {
 
 extension ZMSnapshotTestCase {
 
-    func verify(view: UIView, identifier: String = "", tolerance: Float = 0, file: StaticString = #file, line: UInt = #line) {
-        verifyView(view, extraLayoutPass: false, tolerance: tolerance, file: file.utf8SignedStart(), line: line, identifier: identifier, deviceName: nil)
+    func verify(view: UIView,
+                extraLayoutPass: Bool = false,
+                identifier: String = "",
+                tolerance: Float = 0,
+                deviceName: String? = nil,
+                file: StaticString = #file,
+                line: UInt = #line) {
+        verifyView(view, extraLayoutPass: false, tolerance: tolerance, file: file.utf8SignedStart(), line: line, identifier: identifier, deviceName: deviceName)
     }
     
     func verifyInAllDeviceSizes(view: UIView, file: StaticString = #file, line: UInt = #line, configuration: @escaping (UIView, Bool) -> () = { _, _ in }) {
