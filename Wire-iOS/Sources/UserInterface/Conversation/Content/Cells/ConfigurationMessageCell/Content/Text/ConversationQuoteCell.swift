@@ -122,9 +122,10 @@ class ConversationReplyContentView: UIView {
 
         switch object.content {
         case .text(let attributedContent):
-
+            let mutableAttributedContent = NSMutableAttributedString(attributedString: attributedContent)
             /// trim the string to first four lines to prevent last line narrower spacing issue
-            contentTextView.attributedText = attributedContent.paragraphTailTruncated().trimmedToNumberOfLines(numberOfLinesLimit: numberOfLinesLimit)
+            mutableAttributedContent.paragraphTailTruncated()
+            contentTextView.attributedText = mutableAttributedContent.trimmedToNumberOfLines(numberOfLinesLimit: numberOfLinesLimit)
             contentTextView.isHidden = false
             contentTextView.accessibilityIdentifier = object.contentType
             contentTextView.isAccessibilityElement = true
