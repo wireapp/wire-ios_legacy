@@ -43,23 +43,6 @@ extension NSMutableAttributedString {
 
 extension NSAttributedString {
 
-
-    /// Replace all paragarphies' line break mode to byTruncatingTail for quoted mseesage display
-    ///
-    /// - Returns: a NSMutableAttributedString with all paragraph's styles are set to .byTruncatingTail
-    func replaceParagraphySyleLineBreaks() -> NSMutableAttributedString {
-        let mutableString = NSMutableAttributedString(attributedString: self)
-
-                mutableString.enumerateAttributes(in: NSRange(0..<length), options: []) { (dict, range, _) in
-                    if let paragraphStyle = dict[NSAttributedString.Key.paragraphStyle] as? NSMutableParagraphStyle{
-                        paragraphStyle.lineBreakMode = .byTruncatingTail
-                    }
-
-                }
-
-        return mutableString
-    }
-
     /// Trim the NSAttributedString to given number of line limit and add an ellipsis at the end if necessary
     ///
     /// - Parameter numberOfLinesLimit: number of line reserved

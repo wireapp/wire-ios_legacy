@@ -17,6 +17,8 @@
 //
 
 import UIKit
+import Down
+
 
 class ConversationReplyContentView: UIView {
     let numberOfLinesLimit: Int = 4
@@ -122,7 +124,7 @@ class ConversationReplyContentView: UIView {
         case .text(let attributedContent):
 
             /// trim the string to first four lines to prevent last line narrower spacing issue
-            contentTextView.attributedText = attributedContent.replaceParagraphySyleLineBreaks().trimmedToNumberOfLines(numberOfLinesLimit: numberOfLinesLimit)
+            contentTextView.attributedText = attributedContent.paragraphTailTruncated().trimmedToNumberOfLines(numberOfLinesLimit: numberOfLinesLimit)
             contentTextView.isHidden = false
             contentTextView.accessibilityIdentifier = object.contentType
             contentTextView.isAccessibilityElement = true
