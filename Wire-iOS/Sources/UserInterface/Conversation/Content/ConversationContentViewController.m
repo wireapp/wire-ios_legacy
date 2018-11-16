@@ -449,7 +449,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
                 
                 NSIndexPath *indexPath = [self.conversationMessageWindowTableViewAdapter indexPathForMessage:message];
                 
-                [[ZMUserSession sharedSession] enqueueChanges:^{
+                [[ZMUserSession sharedSession] performChanges:^{
                     [Message setLikedMessage:message liked:liked];
                 }];
                 
