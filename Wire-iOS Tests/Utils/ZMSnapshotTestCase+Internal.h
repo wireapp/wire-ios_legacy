@@ -43,3 +43,17 @@ static NSArray<NSValue *> * _Nonnull tabletSizes(void) {
              [NSValue valueWithCGSize:ZMDeviceSizeIPadLandscape]
              ];
 }
+
+
+@interface ZMSnapshotTestCase ()
+
+- (UIView * _Nonnull)containerViewWithView:(UIView * _Nullable)view;
+
+- (BOOL)assertEmptyFrame:(UIView * _Nullable)view file:(const char[_Nullable])file line:(NSUInteger)line;
+
+- (void)assertAmbigousLayout:(UIView * _Nullable)view file:(const char[_Nullable])file line:(NSUInteger)line;
+
+- (void)snapshotVerifyViewWithOptions:(UIView * _Nullable)container finalIdentifier:(NSString *_Nullable)finalIdentifier suffix:(NSOrderedSet * _Nullable)suffix
+    tolerance:(float)tolerance;
+
+@end

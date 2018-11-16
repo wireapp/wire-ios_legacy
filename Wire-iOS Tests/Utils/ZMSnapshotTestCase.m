@@ -171,39 +171,10 @@ static NSSet<NSNumber *> *phoneWidths(void) {
     return container;
 }
 
-- (void)verifyView:(UIView *)view
-   extraLayoutPass:(BOOL)extraLayoutPass
-         tolerance:(float)tolerance
-              file:(const char[])file
-              line:(NSUInteger)line
-        identifier:(NSString *)identifier
-        deviceName:(NSString *)deviceName
+- (void)snapshotVerifyViewWithOptions:(UIView *)container finalIdentifier:(NSString *)finalIdentifier suffix:(NSOrderedSet *)suffix
+tolerance:(float)tolerance
 {
-    UIView *container = [self containerViewWithView:view];
-    if ([self assertEmptyFrame:container file:file line:line]) {
-        return;
-    }
-    NSString *finalIdentifier = @""; ///TODO: replace size with  device type
-    
-    if (0 == identifier.length) {
-        if (deviceName.length > 0) {
-            finalIdentifier = deviceName;
-        }
-    }
-    else {
-        if (deviceName.length > 0) {
-        finalIdentifier = [NSString stringWithFormat:@"%@-%@", identifier, deviceName];
-        } else {
-            finalIdentifier = [NSString stringWithFormat:@"%@", identifier];
-        }
-    }
-
-    if (extraLayoutPass) {
-        [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.1]];
-    }
-    
-    FBSnapshotVerifyViewWithOptions(container, finalIdentifier, FBSnapshotTestCaseDefaultSuffixes(), tolerance);
-    [self assertAmbigousLayout:container file:file line:line];
+    FBSnapshotVerifyViewWithOptions(container, finalIdentifier, suffix, tolerance);
 }
 
 - (BOOL)assertEmptyFrame:(UIView *)view file:(const char[])file line:(NSUInteger)line
