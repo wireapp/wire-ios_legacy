@@ -21,35 +21,6 @@
 #import <FBSnapshotTestCase/FBSnapshotTestCase.h>
 @import WireDataModel;
 
-///TODO: move to private header
-static CGSize const ZMDeviceSizeIPhone5 = (CGSize){ .width = 320, .height = 568 };
-static CGSize const ZMDeviceSizeIPhone6 = (CGSize){ .width = 375, .height = 667 };
-static CGSize const ZMDeviceSizeIPhone6Plus = (CGSize){ .width = 414, .height = 736 };
-static CGSize const ZMDeviceSizeIPhoneX = (CGSize){ .width = 375, .height = 812 };
-static CGSize const ZMDeviceSizeIPhoneXR = (CGSize){ .width = 414, .height = 896 };
-
-static CGSize const ZMDeviceSizeIPadPortrait = (CGSize){ .width = 768, .height = 1024 };
-static CGSize const ZMDeviceSizeIPadLandscape = (CGSize){ .width = 1024, .height = 768 };
-
-static NSArray<NSValue *> * _Nonnull phoneSizes(void) {
-    return @[
-             [NSValue valueWithCGSize:ZMDeviceSizeIPhone5],
-             [NSValue valueWithCGSize:ZMDeviceSizeIPhone6],
-             [NSValue valueWithCGSize:ZMDeviceSizeIPhone6Plus],
-             [NSValue valueWithCGSize:ZMDeviceSizeIPhoneX],
-             ///same size as iPhone Xs Max
-             [NSValue valueWithCGSize:ZMDeviceSizeIPhoneXR]
-             ];
-}
-
-static NSArray<NSValue *> * _Nonnull tabletSizes(void) {
-    return @[
-             [NSValue valueWithCGSize:ZMDeviceSizeIPadPortrait],
-             [NSValue valueWithCGSize:ZMDeviceSizeIPadLandscape]
-             ];
-}
-
-
 #define ZMVerifyViewInAllDeviceSizesWithBlock(view__, configuration__) \
 do { \
     [self verifyViewInAllDeviceSizes:view__ extraLayoutPass:NO file:__FILE__ line:__LINE__ configurationBlock:configuration__]; \
