@@ -69,13 +69,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) ZMAccentColor accentColor;
 
 /// Performs an assertion with the given view and the recorded snapshot.
-- (void)verifyView:(UIView *)view extraLayoutPass:(BOOL)extraLayoutPass file:(const char [_Nullable])file line:(NSUInteger)line;
 
-- (void)verifyView:(UIView *)view
-   extraLayoutPass:(BOOL)extraLayoutPass
-              file:(const char[_Nullable])file
-              line:(NSUInteger)line
-        identifier:(nullable NSString *)identifier;
 
 - (void)verifyView:(UIView *)view
    extraLayoutPass:(BOOL)extraLayoutPass
