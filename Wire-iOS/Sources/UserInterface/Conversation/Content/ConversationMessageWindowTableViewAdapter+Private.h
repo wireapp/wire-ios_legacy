@@ -41,6 +41,7 @@ static NSString *const ConversationMessageTimerUpdateCellId = @"ConversationMess
 @class ConversationCell;
 @class UpsideDownTableView;
 @class ConversationCellActionController;
+@class ConversationMessageSectionController;
 
 @interface ConversationMessageWindowTableViewAdapter ()
 
