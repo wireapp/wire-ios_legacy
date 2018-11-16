@@ -83,7 +83,7 @@ extension StaticString {
 // MARK: - verify the snapshots in multiple devices
 extension ZMSnapshotTestCase {
     static let phoneScreenSizes: [String:CGSize] = [
-        "iPhone4Inch":   ZMDeviceSizeIPhone5,
+        "iPhone4_0Inch": ZMDeviceSizeIPhone5,
         "iPhone4_7Inch": ZMDeviceSizeIPhone6,
         "iPhone5_5Inch": ZMDeviceSizeIPhone6Plus,
         "iPhone5_8Inch": ZMDeviceSizeIPhoneX,
