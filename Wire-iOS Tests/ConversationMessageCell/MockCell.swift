@@ -47,6 +47,9 @@ class MockCellDescription<T>: ConversationMessageCellDescription {
     weak var delegate: ConversationCellDelegate?
     weak var actionController: ConversationCellActionController?
 
+    var accessibilityIdentifier: String?
+    var accessibilityLabel: String?
+
     init() {
         let backgroundColor = UIColor(for: .vividRed)
         configuration = View.Configuration(backgroundColor: backgroundColor)

@@ -149,6 +149,7 @@
 "conversation_list.voiceover.status.typing" = "輸入中";
 "conversation_list.voiceover.status.ping" = "招呼";
 "conversation_list.voiceover.status.mention" = "有人提及你";
+"conversation_list.voiceover.status.reply" = "回覆";
 "conversation_list.voiceover.bottom_bar.archived_button.label" = "已封存";
 "conversation_list.voiceover.bottom_bar.archived_button.hint" = "已封存對話";
 "conversation_list.voiceover.bottom_bar.contacts_button.label" = "連絡人";
@@ -199,6 +200,7 @@
 "conversation.status.typing" = "輸入訊息中...";
 "conversation.status.typing.group" = "%@：輸入訊息中…";
 "conversation.status.silenced" = "訊息通知已關閉";
+"conversation.status.poor_connection" = "連線品質不佳";
 "conversation.status.blocked" = "已封鎖";
 
 "conversation.status.message.text" = "%@";
@@ -212,15 +214,19 @@
 "conversation.status.message.missedcall" = "未接來電";
 "conversation.status.message.missedcall.groups" = "錯過%@的來電";
 "conversation.status.message.mention" = "%@";
+"conversation.status.message.reply" = "%@";
 "conversation.status.message.ephemeral" = "發送一則消息";
 "conversation.status.message.ephemeral.group" = "某人傳送了一則訊息";
 "conversation.status.message.ephemeral.mention" = "提及您";
 "conversation.status.message.ephemeral.mention.group" = "某人提及你";
+"conversation.status.message.ephemeral.reply" = "回覆了您";
+"conversation.status.message.ephemeral.reply.group" = "某人回覆了您";
 "conversation.status.message.ephemeral.knock" = "打了聲招呼";
 "conversation.status.message.ephemeral.knock.group" = "有了打了聲招呼";
 
 "conversation.status.unsent" = "⚠️ 未發信息";
 "conversation.status.you" = "您";
+"conversation.status.someone" = "某人";
 "conversation.status.added_multiple" = "聯絡人已加入";
 "conversation.status.you_was_added" = "%@加入了您";
 "conversation.status.added_users" = "%@加了%@到對話";
@@ -273,7 +279,7 @@
 
 "conversation.input_bar.shortcut.send" = "發送訊息";
 "conversation.input_bar.shortcut.newline" = "插入換行";
-"conversation.input_bar.shortcut.edit_last_message" = "編輯最新訊息";
+"conversation.input_bar.shortcut.edit_last_message" = "編輯最近訊息";
 "conversation.input_bar.shortcut.cancel_editing_message" = "取消";
 
 "conversation.input_bar.message_too_long.title" = "訊息過長";
@@ -296,7 +302,23 @@
 "conversation.guests_services_present" = "對話中有訪客和服務";
 "conversation.action.search" = "搜索";
 
-// Image confirmation dialogue
+// Reply message preview
+"conversation.input_bar.message_preview.image" = "圖片";
+"conversation.input_bar.message_preview.location" = "地點";
+"conversation.input_bar.message_preview.video" = "影片";
+"conversation.input_bar.message_preview.audio" = "語音訊息";
+"conversation.input_bar.message_preview.file" = "檔案";
+"conversation.input_bar.close_reply" = "取消回覆";
+
+"conversation.input_bar.message_preview.accessibility_description" = "回覆訊息：%@";
+"conversation.input_bar.message_preview.accessibility.image_message" = "圖像訊息";
+"conversation.input_bar.message_preview.accessibility.location_message" = "地點消息";
+"conversation.input_bar.message_preview.accessibility.video_message" = "視訊訊息";
+"conversation.input_bar.message_preview.accessibility.audio_message" = "語音訊息";
+"conversation.input_bar.message_preview.accessibility.file_message" = "檔案訊息 (%@)";
+"conversation.input_bar.message_preview.accessibility.unknown_message" = "未知訊息";
+"conversation.input_bar.message_preview.accessibility.message_from" = "%@來自%@";
+
 "image_confirmer.confirm" = "確認";
 "image_confirmer.cancel" = "取消";
 "image.add_sketch" = "加入手繪";
@@ -412,12 +434,12 @@
 "content.system.conversation.with_name.participants" = "和";
 
 "content.system.message_timer_changes" = "%@將訊息時限設置為%@";
-"content.system.message_timer_changes-you" = "你將訊息時限設置為%@";
+"content.system.message_timer_changes-you" = "%@將訊息時限設置為%@";
 
 "content.system.message_timer_off" = "%@關閉了訊息時限";
-"content.system.message_timer_off-you" = "你關閉了訊息時限";
+"content.system.message_timer_off-you" = "%@關閉了訊息時限";
 
-"content.system.reactivated_device" = "您重新使用%@，在停用期間的訊息不會顯示出來。";
+"content.system.reactivated_device" = "您重新使用%@，在沒有使用期間的訊息不會顯示出來。";
 
 "content.system.new_device" = "新的設備";
 "content.system.started_using" = "開始使用";
@@ -460,6 +482,7 @@
 
 "content.message.delete" = "刪除";
 "content.message.save" = "儲存";
+"content.message.resend" = "重新發送";
 
 "content.message.delete_ellipsis" = "刪除...";
 
@@ -471,6 +494,12 @@
 "content.message.open" = "開啟";
 "content.message.copy" = "複製";
 "content.message.download" = "下載";
+
+// Reply
+"content.message.reply" = "回覆";
+"content.message.reply.original_timestamp.date" = "原訊息於%@";
+"content.message.reply.original_timestamp.time" = "原訊息於%@";
+"content.message.reply.broken_message" = "您不能看見這則訊息";
 
 "content.message.open_link_alert.title" = "瀏覽連結";
 "content.message.open_link_alert.message" = "這會帶你去\n%@";
@@ -633,7 +662,7 @@
 // Configure conversation notifications
 "meta.menu.configure_notification.dialog_message" = "通知我關於：";
 "meta.menu.configure_notification.button_everything" = "所有";
-"meta.menu.configure_notification.button_mentions_and_replies" = "Mentions and Replies";
+"meta.menu.configure_notification.button_mentions_and_replies" = "提及和回覆";
 "meta.menu.configure_notification.button_nothing" = "無";
 "meta.menu.configure_notification.button_cancel" = "取消";
 
@@ -728,8 +757,8 @@
 "group_details.guest_options_cell.enabled" = "開啟";
 "group_details.guest_options_cell.disabled" = "關閉";
 "group_details.timeout_options_cell.title" = "限時訊息";
-"group_details.notification_options_cell.title" = "Notifications";
-"group_details.notification_options_cell.description" = "You can be notified about everything (including audio and video calls) or only when someone mentions you or replies to one of your messages.";
+"group_details.notification_options_cell.title" = "通知";
+"group_details.notification_options_cell.description" = "您可以收到有關所有內容 (包括音訊和視頻通話) 的通知, 或者僅當有人提及您或回復您的訊息時才會收到通知。";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile
@@ -1152,6 +1181,13 @@
 "registration.no_history.got_it" = "確認";
 "registration.no_history.restore_backup" = "從備份回復";
 
+"registration.alert.account_exists.title" = "帳戶已存在";
+"registration.alert.account_exists.message_phone" = "您註冊的電話號碼已連結到帳戶。\n\n請使用其他電話號碼，或者如果您擁有此帳戶，請嘗試登錄。";
+"registration.alert.account_exists.message_email" = "您註冊的電郵地址已連結到帳戶。\n\n請使用其他電郵地址，或者如果您擁有此帳戶，請嘗試登錄。";
+"registration.alert.change_email_action" = "更改電子郵箱";
+"registration.alert.change_phone_action" = "更改電話號碼";
+"registration.alert.change_signin_action" = "登入";
+
 // Restore History Warning Alert
 "registration.no_history.restore_backup_warning.title" = "回復歷史紀錄";
 "registration.no_history.restore_backup_warning.message" = "備份內容將替代此設備上的會話歷史記錄。只能從同一平臺的備份中還原歷史記錄。";
@@ -1250,7 +1286,7 @@
 "registration.devices.active_list_header" = "其他已啟用的設備";
 "registration.devices.current_list_header" = "此設備";
 "registration.devices.active_list_subtitle" = "若您不認可該設備，請將它移除，並且重設您的密碼。";
-"registration.devices.activated"  = "Activated %@";
+"registration.devices.activated" = "已啟用%@";
 "registration.devices.id" = "ID:";
 
 "signin.use_email.label" = "以電子郵件登入";

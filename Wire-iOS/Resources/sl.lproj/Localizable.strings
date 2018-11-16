@@ -149,6 +149,7 @@
 "conversation_list.voiceover.status.typing" = "typing";
 "conversation_list.voiceover.status.ping" = "ping";
 "conversation_list.voiceover.status.mention" = "you are mentioned";
+"conversation_list.voiceover.status.reply" = "reply";
 "conversation_list.voiceover.bottom_bar.archived_button.label" = "archived";
 "conversation_list.voiceover.bottom_bar.archived_button.hint" = "list of archived conversations";
 "conversation_list.voiceover.bottom_bar.contacts_button.label" = "stiki";
@@ -199,6 +200,7 @@
 "conversation.status.typing" = "Tipka sporočilo…";
 "conversation.status.typing.group" = "%@: tipka sporočilo…";
 "conversation.status.silenced" = "Utišan";
+"conversation.status.poor_connection" = "Poor connection";
 "conversation.status.blocked" = "Blokiran";
 
 "conversation.status.message.text" = "%@";
@@ -212,15 +214,19 @@
 "conversation.status.message.missedcall" = "Zgrešen klic";
 "conversation.status.message.missedcall.groups" = "Missed call from %@";
 "conversation.status.message.mention" = "%@";
+"conversation.status.message.reply" = "%@";
 "conversation.status.message.ephemeral" = "Sent a message";
 "conversation.status.message.ephemeral.group" = "Someone sent a message";
 "conversation.status.message.ephemeral.mention" = "Mentioned you";
 "conversation.status.message.ephemeral.mention.group" = "Someone mentioned you";
+"conversation.status.message.ephemeral.reply" = "Replied to your message";
+"conversation.status.message.ephemeral.reply.group" = "Someone replied to your message";
 "conversation.status.message.ephemeral.knock" = "Je pingal(-a)";
 "conversation.status.message.ephemeral.knock.group" = "Someone pinged";
 
 "conversation.status.unsent" = "⚠️ Neposlano sporočilo";
 "conversation.status.you" = "Ti";
+"conversation.status.someone" = "Someone";
 "conversation.status.added_multiple" = "Dodanih oseb";
 "conversation.status.you_was_added" = "%@ te je dodal(-a)";
 "conversation.status.added_users" = "%@ je dodal(-a) %@";
@@ -296,7 +302,23 @@
 "conversation.guests_services_present" = "Guests and services are present";
 "conversation.action.search" = "Iščite";
 
-// Image confirmation dialogue
+// Reply message preview
+"conversation.input_bar.message_preview.image" = "Image";
+"conversation.input_bar.message_preview.location" = "Location";
+"conversation.input_bar.message_preview.video" = "Video";
+"conversation.input_bar.message_preview.audio" = "Audio Message";
+"conversation.input_bar.message_preview.file" = "File";
+"conversation.input_bar.close_reply" = "Cancel reply";
+
+"conversation.input_bar.message_preview.accessibility_description" = "Replying to message: %@";
+"conversation.input_bar.message_preview.accessibility.image_message" = "Image message";
+"conversation.input_bar.message_preview.accessibility.location_message" = "Location message";
+"conversation.input_bar.message_preview.accessibility.video_message" = "Video message";
+"conversation.input_bar.message_preview.accessibility.audio_message" = "Audio message";
+"conversation.input_bar.message_preview.accessibility.file_message" = "File message (%@)";
+"conversation.input_bar.message_preview.accessibility.unknown_message" = "Unknown message";
+"conversation.input_bar.message_preview.accessibility.message_from" = "%@ from %@";
+
 "image_confirmer.confirm" = "V redu";
 "image_confirmer.cancel" = "Prekliči";
 "image.add_sketch" = "Dodaj skico";
@@ -412,10 +434,10 @@
 "content.system.conversation.with_name.participants" = "with";
 
 "content.system.message_timer_changes" = "%@ set the message timer to %@";
-"content.system.message_timer_changes-you" = "You set the message timer to %@";
+"content.system.message_timer_changes-you" = "%@ set the message timer to %@";
 
 "content.system.message_timer_off" = "%@ turned off the message timer";
-"content.system.message_timer_off-you" = "You turned off the message timer";
+"content.system.message_timer_off-you" = "%@ turned off the message timer";
 
 "content.system.reactivated_device" = "Spet ste začeli z uporabo %@. Sporočila poslana medtem ne bodo prikazana tukaj.";
 
@@ -460,6 +482,7 @@
 
 "content.message.delete" = "Izbriši";
 "content.message.save" = "Shrani";
+"content.message.resend" = "Ponovno pošlji";
 
 "content.message.delete_ellipsis" = "Delete…";
 
@@ -471,6 +494,12 @@
 "content.message.open" = "Odpri";
 "content.message.copy" = "Kopiraj";
 "content.message.download" = "Download";
+
+// Reply
+"content.message.reply" = "Odgovori";
+"content.message.reply.original_timestamp.date" = "Original message from %@";
+"content.message.reply.original_timestamp.time" = "Original message from %@";
+"content.message.reply.broken_message" = "You cannot see this message.";
 
 "content.message.open_link_alert.title" = "Visit Link";
 "content.message.open_link_alert.message" = "This will take you to\n%@";
@@ -728,7 +757,7 @@
 "group_details.guest_options_cell.enabled" = "On";
 "group_details.guest_options_cell.disabled" = "Izklopljeno";
 "group_details.timeout_options_cell.title" = "Timed messages";
-"group_details.notification_options_cell.title" = "Notifications";
+"group_details.notification_options_cell.title" = "Obvestila";
 "group_details.notification_options_cell.description" = "You can be notified about everything (including audio and video calls) or only when someone mentions you or replies to one of your messages.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -1152,6 +1181,13 @@
 "registration.no_history.got_it" = "V redu";
 "registration.no_history.restore_backup" = "Restore from backup";
 
+"registration.alert.account_exists.title" = "Account Exists";
+"registration.alert.account_exists.message_phone" = "The phone number you used to register is already linked to an account.\n\nUse another phone number, or try to log in if you own this account.";
+"registration.alert.account_exists.message_email" = "The email address you used to register is already linked to an account.\n\n Use another email address, or try to log in if you own this account.";
+"registration.alert.change_email_action" = "Change Email";
+"registration.alert.change_phone_action" = "Change Phone";
+"registration.alert.change_signin_action" = "Sign In";
+
 // Restore History Warning Alert
 "registration.no_history.restore_backup_warning.title" = "Restore history";
 "registration.no_history.restore_backup_warning.message" = "The backup contents will replace the conversation history on this device.\nYou can only restore history from a backup of the same platform.";
@@ -1250,7 +1286,7 @@
 "registration.devices.active_list_header" = "Aktivno";
 "registration.devices.current_list_header" = "Trenutna";
 "registration.devices.active_list_subtitle" = "Če ne prepoznate zgornje naprave, jo odstranite in ponastavite vaše geslo.";
-"registration.devices.activated"  = "Activated %@";
+"registration.devices.activated" = "Activated %@";
 "registration.devices.id" = "ID:";
 
 "signin.use_email.label" = "Login with Email";

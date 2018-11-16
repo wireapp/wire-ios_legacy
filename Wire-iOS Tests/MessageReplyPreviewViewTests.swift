@@ -153,7 +153,17 @@ class MessageReplyPreviewViewTests: ZMSnapshotTestCase {
         
         verify(view: previewView.prepareForSnapshot())
     }
-    
+
+    func testThatItRendersImageMessagePreview() {
+        let image = self.image(inTestBundleNamed: "unsplash_matterhorn.jpg")
+        let message = MockMessageFactory.imageMessage(with: image)!
+
+        let previewView = message.replyPreview()!
+        XCTAssertTrue(waitForGroupsToBeEmpty([defaultImageCache.dispatchGroup]))
+
+        verify(view: previewView.prepareForSnapshot())
+    }
+
     func testThatItRendersVideoMessagePreview() {
         let message = MockMessageFactory.fileTransferMessage()!
         message.backingFileMessageData.mimeType = "video/mp4"

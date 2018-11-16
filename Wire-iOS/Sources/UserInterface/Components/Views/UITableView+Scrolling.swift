@@ -25,6 +25,6 @@ extension UITableView {
         self.setContentOffset(self.contentOffset, animated: false)
         
         // scroll to bottom
-        self.scrollRectToVisible(CGRect(x: 0, y: 0, width: 1, height: 1), animated:animated)
+        self.setContentOffset(CGPoint(x: 0, y: self.contentInset.bottom), animated:animated)
     }
 }

@@ -73,6 +73,12 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     return self;
 }
 
+- (instancetype)init
+{
+    self = [self initWithAudioTrackPlayer:[AppDelegate sharedAppDelegate].mediaPlaybackManager.audioTrackPlayer];
+    return self;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];

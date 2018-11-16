@@ -81,7 +81,7 @@ extension IndexSet {
     /// The object that receives informations from the section.
     @objc weak var sectionDelegate: ConversationMessageSectionControllerDelegate?
     
-    /// Wheater this section is selected
+    /// Whether this section is selected
     private var selected: Bool
 
     private var changeObservers: [Any] = []
@@ -181,8 +181,8 @@ extension IndexSet {
         if let topContentCellDescription = contentCellDescriptions.first {
             topContentCellDescription.showEphemeralTimer = message.isEphemeral
             
-            if isSenderVisible {
-                topContentCellDescription.topMargin = 0
+            if isSenderVisible && topContentCellDescription.baseType == ConversationTextMessageCellDescription.self {
+                topContentCellDescription.topMargin = 0 // We only do this for text content since the text label already contains the spacing
             }
         }
         
@@ -289,10 +289,14 @@ extension IndexSet {
     }
     
     func isBurstTimestampVisible(in context: ConversationMessageContext) -> Bool {
-        return context.isTimeIntervalSinceLastMessageSignificant
+        return context.isTimeIntervalSinceLastMessageSignificant ||  context.isFirstUnreadMessage || context.isFirstMessageOfTheDay
     }
     
     func isToolboxVisible(in context: ConversationMessageContext) -> Bool {
+        guard !message.isSystem else {
+            return false
+        }
+        
         return selected || context.isLastMessageSentBySelfUser || message.deliveryState == .failedToSend || message.hasReactions()
     }
     
@@ -301,7 +305,7 @@ extension IndexSet {
             return false
         }
         
-        return !context.isSameSenderAsPrevious || message.updatedAt != nil
+        return !context.isSameSenderAsPrevious || message.updatedAt != nil || isBurstTimestampVisible(in: context)
     }
     
     // MARK: - Data Source
@@ -373,6 +377,10 @@ extension IndexSet {
     }
 
     func messageDidChange(_ changeInfo: MessageChangeInfo) {
+        guard !changeInfo.message.hasBeenDeleted else {
+            return // Deletions are handled by the window observer
+        }
+        
         sectionDelegate?.messageSectionController(self, didRequestRefreshForMessage: self.message)
     }
 

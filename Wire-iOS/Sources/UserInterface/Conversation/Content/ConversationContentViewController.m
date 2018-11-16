@@ -449,7 +449,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
                 
                 NSIndexPath *indexPath = [self.conversationMessageWindowTableViewAdapter indexPathForMessage:message];
                 
-                [[ZMUserSession sharedSession] enqueueChanges:^{
+                [[ZMUserSession sharedSession] performChanges:^{
                     [Message setLikedMessage:message liked:liked];
                 }];
                 
@@ -604,16 +604,17 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 
 - (void)canvasViewController:(CanvasViewController *)canvasViewController didExportImage:(UIImage *)image
 {
-    [self.parentViewController dismissViewControllerAnimated:YES completion:nil];
-    if (image) {
-        NSData *imageData = UIImagePNGRepresentation(image);
-        
-        [[ZMUserSession sharedSession] enqueueChanges:^{
-            [self.conversation appendMessageWithImageData:imageData];
-        } completionHandler:^{
-            [[Analytics shared] tagMediaActionCompleted:ConversationMediaActionPhoto inConversation:self.conversation];
-        }];
-    }
+    [self.parentViewController dismissViewControllerAnimated:YES completion:^{
+        if (image) {
+            NSData *imageData = UIImagePNGRepresentation(image);
+            
+            [[ZMUserSession sharedSession] enqueueChanges:^{
+                [self.conversation appendMessageWithImageData:imageData];
+            } completionHandler:^{
+                [[Analytics shared] tagMediaActionCompleted:ConversationMediaActionPhoto inConversation:self.conversation];
+            }];
+        }
+    }];
 }
 
 #pragma mark - Custom UI, utilities

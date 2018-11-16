@@ -234,7 +234,6 @@ extension MockFileMessageData: MockFileMessageDataType { }
     var conversation: ZMConversation? = .none
     var deliveryState: ZMDeliveryState = .delivered
     var imageMessageData: ZMImageMessageData? = .none
-    var systemMessageData: ZMSystemMessageData? = .none
     var knockMessageData: ZMKnockMessageData? = .none
     var causedSecurityLevelDegradation: Bool = false
     let objectIdentifier: String = UUID().uuidString
@@ -247,20 +246,25 @@ extension MockFileMessageData: MockFileMessageDataType { }
         return backingLocationMessageData
     }
     
+    var textMessageData: ZMTextMessageData? {
+        return backingTextMessageData
+    }
+    
+    var systemMessageData: ZMSystemMessageData? {
+        return backingSystemMessageData
+    }
+    
     var replies: Set<ZMMessage> = Set()
     
     var usersReaction: [String: [ZMUser]] {
         return backingUsersReaction
     }
     
-    var textMessageData: ZMTextMessageData? {
-        return backingTextMessageData
-    }
-    
     var backingUsersReaction: UsersByReaction = [:]
     var backingTextMessageData: MockTextMessageData! = .none
     var backingFileMessageData: MockFileMessageDataType! = .none
     var backingLocationMessageData: MockLocationMessageData! = .none
+    var backingSystemMessageData: MockSystemMessageData! = .none
 
     var isEphemeral: Bool = false
     var isObfuscated: Bool = false

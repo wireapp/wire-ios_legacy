@@ -286,6 +286,30 @@
         <string>%d mentions</string>
       </dict>
     </dict>
+    <key>conversation.silenced.status.message.reply</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@d_number_of_new@</string>
+      <key>d_number_of_new</key>
+      <dict>
+        <key>zero</key>
+        <string>%d replies</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>1 reply</string>
+        <key>two</key>
+        <string>%d replies</string>
+        <key>few</key>
+        <string>%d replies</string>
+        <key>many</key>
+        <string>%d replies</string>
+        <key>other</key>
+        <string>%d replies</string>
+      </dict>
+    </dict>
     <key>conversation.silenced.status.message.knock</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>

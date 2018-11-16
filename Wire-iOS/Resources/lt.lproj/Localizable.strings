@@ -149,6 +149,7 @@
 "conversation_list.voiceover.status.typing" = "rašo";
 "conversation_list.voiceover.status.ping" = "skambtelėjimas";
 "conversation_list.voiceover.status.mention" = "jus paminėjo";
+"conversation_list.voiceover.status.reply" = "reply";
 "conversation_list.voiceover.bottom_bar.archived_button.label" = "archyvuotas";
 "conversation_list.voiceover.bottom_bar.archived_button.hint" = "archyvuotų susirašinėjimų sąrašas";
 "conversation_list.voiceover.bottom_bar.contacts_button.label" = "kontaktai";
@@ -198,7 +199,8 @@
 
 "conversation.status.typing" = "Rašo žinutę…";
 "conversation.status.typing.group" = "%@: rašo žinutę…";
-"conversation.status.silenced" = "Išjungti pranešimai";
+"conversation.status.silenced" = "Išjungtas garsas";
+"conversation.status.poor_connection" = "Poor connection";
 "conversation.status.blocked" = "Užblokuotas(-a)";
 
 "conversation.status.message.text" = "%@";
@@ -212,15 +214,19 @@
 "conversation.status.message.missedcall" = "Praleistas skambutis";
 "conversation.status.message.missedcall.groups" = "Skambino %@";
 "conversation.status.message.mention" = "%@";
+"conversation.status.message.reply" = "%@";
 "conversation.status.message.ephemeral" = "Atsiuntė jums žinutę";
 "conversation.status.message.ephemeral.group" = "Kažkas atsiuntė žinutę";
 "conversation.status.message.ephemeral.mention" = "Jus paminėjo";
 "conversation.status.message.ephemeral.mention.group" = "Kažkas jus paminėjo";
+"conversation.status.message.ephemeral.reply" = "Replied to your message";
+"conversation.status.message.ephemeral.reply.group" = "Someone replied to your message";
 "conversation.status.message.ephemeral.knock" = "Patikrinti ryšį";
 "conversation.status.message.ephemeral.knock.group" = "Kažkas skambtelėjo";
 
 "conversation.status.unsent" = "⚠ Neišsiųsta žinutė";
 "conversation.status.you" = "Jūs";
+"conversation.status.someone" = "Kažkas";
 "conversation.status.added_multiple" = "Žmonės pridėti";
 "conversation.status.you_was_added" = "%@ pridėjo jus";
 "conversation.status.added_users" = "%@ pridėjo pašnekovą %@";
@@ -296,7 +302,23 @@
 "conversation.guests_services_present" = "Yra svečių ir tarnybų";
 "conversation.action.search" = "Ieškoti";
 
-// Image confirmation dialogue
+// Reply message preview
+"conversation.input_bar.message_preview.image" = "Image";
+"conversation.input_bar.message_preview.location" = "Location";
+"conversation.input_bar.message_preview.video" = "Vaizdas";
+"conversation.input_bar.message_preview.audio" = "Audio Message";
+"conversation.input_bar.message_preview.file" = "File";
+"conversation.input_bar.close_reply" = "Cancel reply";
+
+"conversation.input_bar.message_preview.accessibility_description" = "Replying to message: %@";
+"conversation.input_bar.message_preview.accessibility.image_message" = "Image message";
+"conversation.input_bar.message_preview.accessibility.location_message" = "Location message";
+"conversation.input_bar.message_preview.accessibility.video_message" = "Video message";
+"conversation.input_bar.message_preview.accessibility.audio_message" = "Audio message";
+"conversation.input_bar.message_preview.accessibility.file_message" = "File message (%@)";
+"conversation.input_bar.message_preview.accessibility.unknown_message" = "Unknown message";
+"conversation.input_bar.message_preview.accessibility.message_from" = "%@ from %@";
+
 "image_confirmer.confirm" = "GERAI";
 "image_confirmer.cancel" = "Atsisakyti";
 "image.add_sketch" = "Pridėti piešinuką";
@@ -412,10 +434,10 @@
 "content.system.conversation.with_name.participants" = "su";
 
 "content.system.message_timer_changes" = "%@ nustatė žinutės laikmatį į %@";
-"content.system.message_timer_changes-you" = "Nustatėte žinutės laikmatį į %@";
+"content.system.message_timer_changes-you" = "%@ nustatė žinutės laikmatį į %@";
 
 "content.system.message_timer_off" = "%@ išjungė žinutės laikmatį";
-"content.system.message_timer_off-you" = "Išjungėte žinutės laikmatį";
+"content.system.message_timer_off-you" = "%@ išjungė žinutės laikmatį";
 
 "content.system.reactivated_device" = "Vėl pradėjote naudotis „%@“. Žinutės parašytos įrenginio nenaudojimo laikotarpiu čia neatsiras.";
 
@@ -460,6 +482,7 @@
 
 "content.message.delete" = "Ištrinti";
 "content.message.save" = "Įrašyti";
+"content.message.resend" = "Siųsti iš naujo";
 
 "content.message.delete_ellipsis" = "Ištrinti…";
 
@@ -471,6 +494,12 @@
 "content.message.open" = "Atverti";
 "content.message.copy" = "Kopijuoti";
 "content.message.download" = "Atsisiųsti";
+
+// Reply
+"content.message.reply" = "Atsakyti";
+"content.message.reply.original_timestamp.date" = "Original message from %@";
+"content.message.reply.original_timestamp.time" = "Original message from %@";
+"content.message.reply.broken_message" = "You cannot see this message.";
 
 "content.message.open_link_alert.title" = "Atverti nuorodą";
 "content.message.open_link_alert.message" = "Nueisite į \n%@";
@@ -520,7 +549,7 @@
 "voice.accept_button.title" = "Priimti";
 "voice.decline_button.title" = "Atmesti";
 "voice.hang_up_button.title" = "Užbaigti";
-"voice.mute_button.title" = "Išjungti pranešimus";
+"voice.mute_button.title" = "Nutildyti";
 "voice.video_button.title" = "Vaizdas";
 "voice.flip_video_button.title" = "Apversti";
 "voice.speaker_button.title" = "Garsiakalbis";
@@ -728,7 +757,7 @@
 "group_details.guest_options_cell.enabled" = "Įjungta";
 "group_details.guest_options_cell.disabled" = "Išjungta";
 "group_details.timeout_options_cell.title" = "Laikinos žinutės";
-"group_details.notification_options_cell.title" = "Notifications";
+"group_details.notification_options_cell.title" = "Pranešimai";
 "group_details.notification_options_cell.description" = "You can be notified about everything (including audio and video calls) or only when someone mentions you or replies to one of your messages.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -1152,6 +1181,13 @@
 "registration.no_history.got_it" = "GERAI";
 "registration.no_history.restore_backup" = "Atkurti iš atsarginės kopijos";
 
+"registration.alert.account_exists.title" = "Paskyra jau yra";
+"registration.alert.account_exists.message_phone" = "Šis telefono numeris jau yra susietas su paskyra.\n\nNaudokite kitą telefono numerį arba bandykite prisijungti jei tai jūsų paskyra.";
+"registration.alert.account_exists.message_email" = "Šis el. pašto adresas jau yra susietas su paskyra.\n\nNaudokite kitą el. pašto adresą arba bandykite prisijungti jei tai jūsų paskyra.";
+"registration.alert.change_email_action" = "Keisti el. paštą";
+"registration.alert.change_phone_action" = "Keisti telefono numerį";
+"registration.alert.change_signin_action" = "Prisijungti";
+
 // Restore History Warning Alert
 "registration.no_history.restore_backup_warning.title" = "Atkurti praeitį";
 "registration.no_history.restore_backup_warning.message" = "Atsarginės kopijos turinys pakeis susirašinėjimo praeitį šiame įrenginyje. \nAtkurti atsarginėje kopijoje esančią praeitį galite tik toje pačioje platformoje, kur jis ir buvo sukurtas.";
@@ -1250,7 +1286,7 @@
 "registration.devices.active_list_header" = "Aktyvūs";
 "registration.devices.current_list_header" = "Esamas";
 "registration.devices.active_list_subtitle" = "Jeigu jūs neatpažįstate aukščiau esančio įrenginio, pašalinkite jį ir atstatykite savo slaptažodį.";
-"registration.devices.activated"  = "Activated %@";
+"registration.devices.activated" = "Aktyvuota %@";
 "registration.devices.id" = "ID:";
 
 "signin.use_email.label" = "Prisijungti el. paštu";

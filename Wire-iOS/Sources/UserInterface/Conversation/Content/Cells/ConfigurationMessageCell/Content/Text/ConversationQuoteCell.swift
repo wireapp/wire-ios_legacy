@@ -56,8 +56,7 @@ class ConversationReplyContentView: UIView {
     }
 
     private func configureSubviews() {
-        accessibilityIdentifier = "ReplyCell"
-        isAccessibilityElement = true
+        shouldGroupAccessibilityChildren = false
 
         stackView.axis = .vertical
         stackView.alignment = .leading
@@ -116,6 +115,7 @@ class ConversationReplyContentView: UIView {
 
         senderComponent.senderName = object.senderName
         senderComponent.indicatorIcon = object.isEdited ? UIImage(for: .pencil, iconSize: .messageStatus, color: .from(scheme: .iconNormal)) : nil
+        senderComponent.indicatorLabel = object.isEdited ? "content.message.reply.edited_message".localized : nil
         timestampLabel.text = object.timestamp
 
         switch object.content {
@@ -195,6 +195,9 @@ class ConversationReplyCellDescription: ConversationMessageCellDescription {
     weak var message: ZMConversationMessage?
     weak var delegate: ConversationCellDelegate?
     weak var actionController: ConversationCellActionController?
+
+    let accessibilityLabel: String? = "content.message.original_label".localized
+    let accessibilityIdentifier: String? = "ReplyCell"
 
     init(quotedMessage: ZMConversationMessage?) {
         let isEdited = quotedMessage?.updatedAt != nil

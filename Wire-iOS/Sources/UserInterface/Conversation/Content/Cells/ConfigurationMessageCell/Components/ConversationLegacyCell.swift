@@ -46,6 +46,9 @@ class ConversationLegacyCellDescription<T: ConversationCell>: ConversationMessag
     let supportsActions: Bool = false
     let containsHighlightableContent: Bool = true
 
+    let accessibilityIdentifier: String? = nil
+    let accessibilityLabel: String? = nil
+
     init(message: ZMConversationMessage, layoutProperties: ConversationCellLayoutProperties) {
         configuration = View.Configuration(message: message, layoutProperties: layoutProperties)
     }

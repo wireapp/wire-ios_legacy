@@ -78,9 +78,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Eine Kontaktanfrage wartet</string>
+        <string>Eine Kontaktanfrage</string>
         <key>other</key>
-        <string>%d Kontakte warten</string>
+        <string>%d Kontaktanfragen</string>
       </dict>
     </dict>
     <key>content.system.participants_n_others</key>
@@ -188,6 +188,22 @@
         <string>1 Erwähnung</string>
         <key>other</key>
         <string>%d Erwähnungen</string>
+      </dict>
+    </dict>
+    <key>conversation.silenced.status.message.reply</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@d_number_of_new@</string>
+      <key>d_number_of_new</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>1 Antwort</string>
+        <key>other</key>
+        <string>%d Antworten</string>
       </dict>
     </dict>
     <key>conversation.silenced.status.message.knock</key>
