@@ -139,6 +139,37 @@ extension ZMSnapshotTestCase {
     }
 }
 
+// MARK: - Helpers
+extension ZMSnapshotTestCase {
+    func containerView(with view: UIView) -> UIView {
+        let container = UIView(frame: view.bounds)
+        container.backgroundColor = snapshotBackgroundColor
+        container.addSubview(view)
+
+        view.fitInSuperview()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return container
+    }
+
+    func tabletSizes() -> [NSValue] {
+        return [NSValue(cgSize: ZMDeviceSizeIPadPortrait), NSValue(cgSize: ZMDeviceSizeIPadLandscape)]
+    }
+
+    func phoneWidths() -> Set<CGFloat> {
+        return Set(phoneSizes().map( { boxedSize in
+            return boxedSize.cgSizeValue.width
+        }))
+    }
+
+    func phoneSizes() -> [NSValue] {
+        return [NSValue(cgSize: ZMDeviceSizeIPhone5),
+                NSValue(cgSize: ZMDeviceSizeIPhone6),
+                NSValue(cgSize: ZMDeviceSizeIPhone6Plus),
+                NSValue(cgSize: ZMDeviceSizeIPhoneX),     ///same size as iPhone Xs Max
+                NSValue(cgSize: ZMDeviceSizeIPhoneXR)]
+    }
+}
+
 extension ZMSnapshotTestCase {
 
     /// Performs an assertion with the given view and the recorded snapshot.
@@ -181,16 +212,62 @@ extension ZMSnapshotTestCase {
         assertAmbigousLayout(container, file: file.utf8SignedStart(), line: line)
     }
 
+    func verifyView(view: UIView, extraLayoutPass: Bool, width: CGFloat,
+                    file: StaticString = #file,
+                    line: UInt = #line
+        ) {
+        let container = containerView(with: view)
+
+        constrain(container, view) { container, view in
+            container.width == width
+            container.height == view.height
+        }
+
+
+        container.setNeedsLayout()
+        container.layoutIfNeeded()
+        container.setNeedsLayout()
+        container.layoutIfNeeded()
+        if assertEmptyFrame(container, file: file.utf8SignedStart(), line: line) {
+            return
+        }
+
+        if extraLayoutPass {
+            RunLoop.current.run(until: Date(timeIntervalSinceNow: 0.1))
+        }
+
+        snapshotVerifyView(container, finalIdentifier:"\(Int(width))")
+    }
+
+    /// Performs multiple assertions with the given view using the screen sizes of
+    /// the common iPhones in Portrait and iPad in Landscape and Portrait.
+    /// This method only makes sense for views that will be on presented fullscreen.
+    func verifyView(inAllPhoneWidths view: UIView, extraLayoutPass: Bool, file: StaticString = #file, line: UInt = #line) {
+        assertAmbigousLayout(view, file: file.utf8SignedStart(), line: line)
+        for width: CGFloat in phoneWidths() {
+            verifyView(view: view, extraLayoutPass: extraLayoutPass, width: width, file: file, line: line)
+        }
+    }
+
+    ///TODO: rename
+    func verifyView(inAllTabletWidths view: UIView, extraLayoutPass: Bool, file: StaticString = #file, line: UInt = #line) {
+        assertAmbigousLayout(view, file: file.utf8SignedStart(), line: line)
+        for value: NSValue in tabletSizes() {
+            verifyView(view: view, extraLayoutPass: extraLayoutPass, width: value.cgSizeValue.width, file: file, line: line)
+        }
+    }
+
     func verifyInAllDeviceSizes(view: UIView, file: StaticString = #file, line: UInt = #line, configuration: @escaping (UIView, Bool) -> () = { _, _ in }) {
         verifyInAllDeviceSizes(view: view, extraLayoutPass: false, file: file, line: line, configurationBlock: configuration)
     }
-    
+
+    ///TODO: remove
     func verifyInAllPhoneWidths(view: UIView, file: StaticString = #file, line: UInt = #line) {
-        verifyView(inAllPhoneWidths: view, extraLayoutPass: false, file: file.utf8SignedStart(), line: line)
+        verifyView(inAllPhoneWidths: view, extraLayoutPass: false, file: file, line: line)
     }
     
     func verifyInAllTabletWidths(view: UIView, file: StaticString = #file, line: UInt = #line) {
-        verifyView(inAllTabletWidths: view, extraLayoutPass: false, file: file.utf8SignedStart(), line: line)
+        verifyView(inAllTabletWidths: view, extraLayoutPass: false, file: file, line: line)
     }
 
 

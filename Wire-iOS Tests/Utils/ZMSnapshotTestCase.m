@@ -19,17 +19,11 @@
 
 #import "ZMSnapshotTestCase.h"
 #import "ZMSnapshotTestCase+Internal.h"
-@import PureLayout;
 #import <WireSyncEngine/WireSyncEngine.h>
 #import "UIColor+WAZExtensions.h"
 #import "ColorScheme.h"
 #import "Wire-Swift.h"
 
-static NSSet<NSNumber *> *phoneWidths(void) {
-    return [phoneSizes() mapWithBlock:^NSNumber *(NSValue *boxedSize) {
-        return @(boxedSize.CGSizeValue.width);
-    }].set;
-}
 
 
 @interface ZMSnapshotTestCase ()
@@ -161,21 +155,19 @@ static NSSet<NSNumber *> *phoneWidths(void) {
     }
 }
 
-- (UIView *)containerViewWithView:(UIView *)view
-{
-    UIView *container = [[UIView alloc] initWithFrame:view.bounds];
-    container.backgroundColor = self.snapshotBackgroundColor;
-    
-    [container addSubview:view];
-    [view autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
-    return container;
-}
-
+///TODO: rewrite macro with function, with file and line argument
 - (void)snapshotVerifyViewWithOptions:(UIView *)container finalIdentifier:(NSString *)finalIdentifier suffix:(NSOrderedSet *)suffix
 tolerance:(float)tolerance
 {
     FBSnapshotVerifyViewWithOptions(container, finalIdentifier, suffix, tolerance);
 }
+
+- (void)snapshotVerifyView:(UIView *)container finalIdentifier:(NSString *)finalIdentifier
+{
+    FBSnapshotVerifyView(container, finalIdentifier)
+}
+
+
 
 - (BOOL)assertEmptyFrame:(UIView *)view file:(const char[])file line:(NSUInteger)line
 {
@@ -187,41 +179,6 @@ tolerance:(float)tolerance
     }
     
     return NO;
-}
-
-- (void)verifyViewInAllPhoneWidths:(UIView *)view extraLayoutPass:(BOOL)extraLayoutPass file:(const char[])file line:(NSUInteger)line
-{
-    [self assertAmbigousLayout:view file:file line:line];
-    for (NSNumber *value in phoneWidths()) {
-        [self verifyView:view extraLayoutPass:extraLayoutPass width:value.floatValue file:file line:line];
-    }
-}
-
-- (void)verifyViewInAllTabletWidths:(UIView *)view extraLayoutPass:(BOOL)extraLayoutPass file:(const char[])file line:(NSUInteger)line
-{
-    [self assertAmbigousLayout:view file:file line:line];
-    for (NSValue *value in tabletSizes()) {
-        [self verifyView:view extraLayoutPass:extraLayoutPass width:value.CGSizeValue.width file:file line:line];
-    }
-}
-
-- (void)verifyView:(UIView *)view extraLayoutPass:(BOOL)extraLayoutPass width:(CGFloat)width file:(const char[])file line:(NSUInteger)line
-{
-    UIView *container = [self containerViewWithView:view];
-    
-    [container autoSetDimension:ALDimensionWidth toSize:width];
-    [container setNeedsLayout];
-    [container layoutIfNeeded];
-    [container setNeedsLayout];
-    [container layoutIfNeeded];
-    if ([self assertEmptyFrame:container file:file line:line]) {
-        return;
-    }
-    if (extraLayoutPass) {
-        [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.1]];
-    }
-    
-    FBSnapshotVerifyView(container, @(width).stringValue)
 }
 
 @end

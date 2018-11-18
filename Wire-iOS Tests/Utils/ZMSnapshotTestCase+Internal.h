@@ -26,34 +26,15 @@ static CGSize const ZMDeviceSizeIPhoneXR = (CGSize){ .width = 414, .height = 896
 static CGSize const ZMDeviceSizeIPadPortrait = (CGSize){ .width = 768, .height = 1024 };
 static CGSize const ZMDeviceSizeIPadLandscape = (CGSize){ .width = 1024, .height = 768 };
 
-static NSArray<NSValue *> * _Nonnull phoneSizes(void) {
-    return @[
-             [NSValue valueWithCGSize:ZMDeviceSizeIPhone5],
-             [NSValue valueWithCGSize:ZMDeviceSizeIPhone6],
-             [NSValue valueWithCGSize:ZMDeviceSizeIPhone6Plus],
-             [NSValue valueWithCGSize:ZMDeviceSizeIPhoneX],
-             ///same size as iPhone Xs Max
-             [NSValue valueWithCGSize:ZMDeviceSizeIPhoneXR]
-             ];
-}
-
-static NSArray<NSValue *> * _Nonnull tabletSizes(void) {
-    return @[
-             [NSValue valueWithCGSize:ZMDeviceSizeIPadPortrait],
-             [NSValue valueWithCGSize:ZMDeviceSizeIPadLandscape]
-             ];
-}
-
-
 @interface ZMSnapshotTestCase ()
-
-- (UIView * _Nonnull)containerViewWithView:(UIView * _Nullable)view;
 
 - (BOOL)assertEmptyFrame:(UIView * _Nullable)view file:(const char[_Nullable])file line:(NSUInteger)line;
 
 - (void)assertAmbigousLayout:(UIView * _Nullable)view file:(const char[_Nullable])file line:(NSUInteger)line;
 
-- (void)snapshotVerifyViewWithOptions:(UIView * _Nullable)container finalIdentifier:(NSString *_Nullable)finalIdentifier suffix:(NSOrderedSet * _Nullable)suffix
+- (void)snapshotVerifyViewWithOptions:(UIView * _Nonnull)container finalIdentifier:(NSString *_Nullable)finalIdentifier suffix:(NSOrderedSet * _Nullable)suffix
     tolerance:(float)tolerance;
+
+- (void)snapshotVerifyView:(UIView * _Nonnull)container finalIdentifier:(NSString * _Nullable)finalIdentifier;
 
 @end

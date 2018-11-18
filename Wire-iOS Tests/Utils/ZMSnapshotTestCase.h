@@ -68,14 +68,6 @@ NS_ASSUME_NONNULL_BEGIN
 /// If this is set the accent color will be overriden for the tests
 @property (nonatomic) ZMAccentColor accentColor;
 
-/// Performs multiple assertions with the given view using the screen sizes of
-/// the common iPhones in Portrait and iPad in Landscape and Portrait.
-/// This method only makes sense for views that will be on presented fullscreen.
-
-- (void)verifyViewInAllPhoneWidths:(UIView *)view extraLayoutPass:(BOOL)extraLayoutPass file:(const char[_Nullable])file line:(NSUInteger)line;
-
-- (void)verifyViewInAllTabletWidths:(UIView *)view extraLayoutPass:(BOOL)extraLayoutPass file:(const char[_Nullable])file line:(NSUInteger)line;
-
 @end
 
 NS_ASSUME_NONNULL_END
