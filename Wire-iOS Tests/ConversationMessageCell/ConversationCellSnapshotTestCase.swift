@@ -73,7 +73,7 @@ class ConversationCellSnapshotTestCase: CoreDataSnapshotTestCase {
         stackView.axis = .vertical
         stackView.translatesAutoresizingMaskIntoConstraints = false
         
-        verifyView(inAllPhoneWidths: stackView, extraLayoutPass: false, file: file, line: line)
+        verifyInAllPhoneWidths(view: stackView)
     }
 
 }

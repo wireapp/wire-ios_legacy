@@ -219,7 +219,7 @@ extension ZMSnapshotTestCase {
 
         constrain(container, view) { container, view in
             container.width == width
-            container.height == view.height
+//            container.height == view.height
         }
 
 
@@ -241,32 +241,22 @@ extension ZMSnapshotTestCase {
     /// Performs multiple assertions with the given view using the screen sizes of
     /// the common iPhones in Portrait and iPad in Landscape and Portrait.
     /// This method only makes sense for views that will be on presented fullscreen.
-    func verifyView(inAllPhoneWidths view: UIView, extraLayoutPass: Bool, file: StaticString = #file, line: UInt = #line) {
+    func verifyInAllPhoneWidths(view: UIView, file: StaticString = #file, line: UInt = #line) {
         assertAmbigousLayout(view, file: file.utf8SignedStart(), line: line)
         for width: CGFloat in phoneWidths() {
-            verifyView(view: view, extraLayoutPass: extraLayoutPass, width: width, file: file, line: line)
+            verifyView(view: view, extraLayoutPass: false, width: width, file: file, line: line)
         }
     }
 
-    ///TODO: rename
-    func verifyView(inAllTabletWidths view: UIView, extraLayoutPass: Bool, file: StaticString = #file, line: UInt = #line) {
+    func verifyInAllTabletWidths(view: UIView, file: StaticString = #file, line: UInt = #line) {
         assertAmbigousLayout(view, file: file.utf8SignedStart(), line: line)
         for value: NSValue in tabletSizes() {
-            verifyView(view: view, extraLayoutPass: extraLayoutPass, width: value.cgSizeValue.width, file: file, line: line)
+            verifyView(view: view, extraLayoutPass: false, width: value.cgSizeValue.width, file: file, line: line)
         }
     }
 
     func verifyInAllDeviceSizes(view: UIView, file: StaticString = #file, line: UInt = #line, configuration: @escaping (UIView, Bool) -> () = { _, _ in }) {
         verifyInAllDeviceSizes(view: view, extraLayoutPass: false, file: file, line: line, configurationBlock: configuration)
-    }
-
-    ///TODO: remove
-    func verifyInAllPhoneWidths(view: UIView, file: StaticString = #file, line: UInt = #line) {
-        verifyView(inAllPhoneWidths: view, extraLayoutPass: false, file: file, line: line)
-    }
-    
-    func verifyInAllTabletWidths(view: UIView, file: StaticString = #file, line: UInt = #line) {
-        verifyView(inAllTabletWidths: view, extraLayoutPass: false, file: file, line: line)
     }
 
 
