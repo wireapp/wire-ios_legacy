@@ -3159,6 +3159,9 @@
 		F10F46D320288CEB00261449 /* ConversationCreationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationCreationController.swift; sourceTree = "<group>"; };
 		F112C58520497860007C1E8F /* Analytics+Guests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Analytics+Guests.swift"; sourceTree = "<group>"; };
 		F1141C961F5EB2DC005340B3 /* WireApplication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WireApplication.swift; sourceTree = "<group>"; };
+		F114466321A2D8CC00B5FEBA /* ExtensionComponents-Base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "ExtensionComponents-Base.xcconfig"; sourceTree = "<group>"; };
+		F114466421A2D8CC00B5FEBA /* ExtensionComponents-Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "ExtensionComponents-Release.xcconfig"; sourceTree = "<group>"; };
+		F114466521A2D8CC00B5FEBA /* ExtensionComponents-Development.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "ExtensionComponents-Development.xcconfig"; sourceTree = "<group>"; };
 		F1199D2F1FC8490A0070FAC3 /* TeamCreationState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeamCreationState.swift; sourceTree = "<group>"; };
 		F1199D301FC8490A0070FAC3 /* TeamCreationStepController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeamCreationStepController.swift; sourceTree = "<group>"; };
 		F1199D3B1FC849440070FAC3 /* BackButtonDescription.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackButtonDescription.swift; sourceTree = "<group>"; };
@@ -6532,6 +6535,16 @@
 			path = Create;
 			sourceTree = "<group>";
 		};
+		F114466221A2D8B500B5FEBA /* ExtensionComponents */ = {
+			isa = PBXGroup;
+			children = (
+				F114466321A2D8CC00B5FEBA /* ExtensionComponents-Base.xcconfig */,
+				F114466521A2D8CC00B5FEBA /* ExtensionComponents-Development.xcconfig */,
+				F114466421A2D8CC00B5FEBA /* ExtensionComponents-Release.xcconfig */,
+			);
+			path = ExtensionComponents;
+			sourceTree = "<group>";
+		};
 		F1199D2B1FC8490A0070FAC3 /* Flow */ = {
 			isa = PBXGroup;
 			children = (
@@ -6615,6 +6628,7 @@
 				F1B24230219B2C9B00F7035C /* Project-Development.xcconfig */,
 				F1B24236219B2C9B00F7035C /* Project-Release.xcconfig */,
 				F1B24231219B2C9B00F7035C /* Wire-iOS */,
+				F114466221A2D8B500B5FEBA /* ExtensionComponents */,
 				F1B24237219B2C9B00F7035C /* Share Extension */,
 			);
 			path = Configuration;
@@ -8605,9 +8619,8 @@
 		};
 		1EE85C6A1B5F96FC008E084B /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F1B24230219B2C9B00F7035C /* Project-Development.xcconfig */;
+			baseConfigurationReference = F114466521A2D8CC00B5FEBA /* ExtensionComponents-Development.xcconfig */;
 			buildSettings = {
-				APPLICATION_EXTENSION_API_ONLY = YES;
 				CODE_SIGN_IDENTITY = "";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -8638,9 +8651,8 @@
 		};
 		1EE85C6B1B5F96FC008E084B /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F1B24236219B2C9B00F7035C /* Project-Release.xcconfig */;
+			baseConfigurationReference = F114466421A2D8CC00B5FEBA /* ExtensionComponents-Release.xcconfig */;
 			buildSettings = {
-				APPLICATION_EXTENSION_API_ONLY = YES;
 				CODE_SIGN_IDENTITY = "";
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
