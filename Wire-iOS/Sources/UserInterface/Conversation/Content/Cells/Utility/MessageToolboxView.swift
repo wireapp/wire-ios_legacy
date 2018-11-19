@@ -234,9 +234,16 @@ import TTTAttributedLabel
             self.reactionsView.alpha = show ? 1 : 0
         }
 
-        UIView.animate(withDuration: animated ? 0.2 : 0, animations: animations, completion: { _ in
+        let completion: (Bool) -> Void = { _ in
             self.reactionsView.isHidden = !show
-        }) 
+        }
+
+        if animated {
+            UIView.animate(withDuration: animated ? 0.2 : 0, animations: animations, completion: completion)
+        } else {
+            animations()
+            completion(true)
+        }
     }
     
     fileprivate func configureLikedState(_ message: ZMConversationMessage, animated: Bool) {
@@ -271,7 +278,12 @@ import TTTAttributedLabel
         self.reactionsView.likers = message.likers()
 
         // Animate Changes
-        UIView.animate(withDuration: needsAnimation ? 0.2 : 0, animations: changes, completion: completion)
+        if needsAnimation {
+            UIView.animate(withDuration: needsAnimation ? 0.2 : 0, animations: changes, completion: completion)
+        } else {
+            changes()
+            completion(true)
+        }
     }
     
     fileprivate func timestampString(_ message: ZMConversationMessage) -> String? {
