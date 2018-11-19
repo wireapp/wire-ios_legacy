@@ -21,6 +21,21 @@ import XCTest
 
 final class NSMutableAttributedStringReplaceEmojiTests: XCTestCase {
 
+    func testThatReplaceEmojiAtTheEndWithoutExcludedRange() {
+        // GIVEN
+        // length = 2
+        let plainText = "<3"
+
+        let sut = NSMutableAttributedString.markdown(from: plainText, style: NSAttributedString.style)
+
+        // WHEN
+        sut.replaceEmoticons(excluding: [])
+
+
+        // THEN
+        XCTAssertEqual(sut.string, "❤")
+    }
+
     func testThatReplaceEmojiCorrectlyWhenTheRangeIsOutOfBound() {
         // GIVEN
         // length = 32
@@ -38,7 +53,7 @@ final class NSMutableAttributedStringReplaceEmojiTests: XCTestCase {
 
     func testThatReplaceEmojiCorrectlyWhenTheRangeIsWithinTheStringLength() {
         // GIVEN
-        // length = 32
+        // length = 32, index 20 is after "Dolor".
         let plainText = "<3 Lorem Ipsum Dolor Sit Amed. :)"
 
         let sut = NSMutableAttributedString.markdown(from: plainText, style: NSAttributedString.style)
