@@ -14,10 +14,7 @@
 // 
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see http://www.gnu.org/licenses/.
-// 
-#include "../Base.xcconfig"
+//
 
-SHARE_EXTENSION_BUNDLE_SUFFIX = extension-share
-SWIFT_OBJC_BRIDGING_HEADER = Wire-iOS Share Extension/Wire-iOS Share Extension-Bridging-Header.h
-
-APPLICATION_EXTENSION_API_ONLY = YES
+#include "Wire-iOS-Base.xcconfig"
+#include "../Project-Development.xcconfig"
