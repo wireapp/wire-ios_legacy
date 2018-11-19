@@ -267,7 +267,7 @@ import TTTAttributedLabel
         // Change State and Appearance
         likeButton.setIcon(message.liked ? .liked : .like, with: .like, for: .normal)
         likeButton.setIcon(.liked, with: .like, for: .selected)
-        likeButton.setSelected(message.liked, animated: needsAnimation)
+        likeButton.setSelected(message.liked, animated: false)
         self.reactionsView.likers = message.likers()
 
         // Animate Changes
