@@ -186,7 +186,8 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     self.tableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeInteractive;
     
     [UIView performWithoutAnimation:^{
-    self.tableView.backgroundColor = self.view.backgroundColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorContentBackground];
+        self.tableView.backgroundColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorContentBackground];
+        self.view.backgroundColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorContentBackground];
     }];
     
     UIPinchGestureRecognizer *pinchImageGestureRecognizer = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(onPinchZoom:)];
@@ -194,6 +195,18 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     [self.view addGestureRecognizer:pinchImageGestureRecognizer];
     
     [self createMentionsResultsView];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(applicationDidBecomeActive:)
+                                                 name:UIApplicationDidBecomeActiveNotification
+                                               object:nil];
+
+}
+
+- (void)applicationDidBecomeActive:(NSNotification *)notification
+{
+    self.conversationMessageWindowTableViewAdapter.sectionControllers = [[NSMutableDictionary alloc] init];
+    [self.tableView reloadData];
 }
 
 - (void)viewWillAppear:(BOOL)animated
