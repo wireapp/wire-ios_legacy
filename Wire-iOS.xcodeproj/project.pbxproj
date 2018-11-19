@@ -8707,7 +8707,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F1B24232219B2C9B00F7035C /* Wire-iOS-Development.xcconfig */;
 			buildSettings = {
-				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=10000 -Xfrontend -warn-long-expression-type-checking=10000";
 			};
 			name = Debug;
 		};
@@ -8715,7 +8714,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F1B24234219B2C9B00F7035C /* Wire-iOS-Release.xcconfig */;
 			buildSettings = {
-				OTHER_SWIFT_FLAGS = "";
 			};
 			name = Release;
 		};
