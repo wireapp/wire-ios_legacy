@@ -18,4 +18,3 @@
 
 #include "Wire-iOS-Base.xcconfig"
 #include "../Project-Release.xcconfig"
-
