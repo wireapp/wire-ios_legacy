@@ -46,6 +46,7 @@ LD_RUNPATH_SEARCH_PATHS = $(inherited) @executable_path/Frameworks @loader_path/
 // Search Paths
 //
 FRAMEWORK_SEARCH_PATHS = $(inherited) $(PROJECT_DIR)/Carthage/Build/iOS
+HEADER_SEARCH_PATHS = $(inherited) "$(TARGET_TEMP_DIR)/../$(PROJECT_NAME).build/DerivedSources"
 
 // LLVM compiler - Language
 GCC_PRECOMPILE_PREFIX_HEADER = YES
