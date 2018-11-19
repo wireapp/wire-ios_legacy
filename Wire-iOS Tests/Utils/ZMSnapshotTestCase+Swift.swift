@@ -43,10 +43,9 @@ extension UITableViewCell: UITableViewDelegate, UITableViewDataSource {
         tableView.bounds = self.bounds
         tableView.layoutIfNeeded()
         
-        constrain(tableView) { tableView in
-            tableView.height == size.height
-        }
-        
+        NSLayoutConstraint.activate([
+            tableView.heightAnchor.constraint(equalToConstant: size.height)
+        ])
         
         self.layoutSubviews()
         return tableView
