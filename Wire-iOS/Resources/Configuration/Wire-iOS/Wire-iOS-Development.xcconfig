@@ -18,3 +18,5 @@
 
 #include "Wire-iOS-Base.xcconfig"
 #include "../Project-Development.xcconfig"
+
+GCC_SYMBOLS_PRIVATE_EXTERN = NO
