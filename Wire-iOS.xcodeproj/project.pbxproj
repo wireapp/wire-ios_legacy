@@ -8584,7 +8584,6 @@
 			baseConfigurationReference = F1B24239219B2C9B00F7035C /* Share-Extension-Development.xcconfig */;
 			buildSettings = {
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 			};
 			name = Debug;
 		};
