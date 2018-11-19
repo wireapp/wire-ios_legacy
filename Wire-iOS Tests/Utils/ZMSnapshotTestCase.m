@@ -202,7 +202,7 @@ static NSSet<NSNumber *> *phoneWidths(void) {
     if ([self assertEmptyFrame:container file:file line:line]) {
         return;
     }
-    NSString *finalIdentifier = @""; ///TODO: replace size with  device type
+    NSString *finalIdentifier = @"";
     
     if (0 == identifier.length) {
         if (deviceName.length > 0) {
@@ -211,7 +211,7 @@ static NSSet<NSNumber *> *phoneWidths(void) {
     }
     else {
         if (deviceName.length > 0) {
-        finalIdentifier = [NSString stringWithFormat:@"%@-%@", identifier, deviceName];
+            finalIdentifier = [NSString stringWithFormat:@"%@-%@", identifier, deviceName];
         } else {
             finalIdentifier = [NSString stringWithFormat:@"%@", identifier];
         }
