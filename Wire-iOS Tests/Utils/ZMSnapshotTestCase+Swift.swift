@@ -266,10 +266,13 @@ extension ZMSnapshotTestCase {
     }
 
     func verifyInIPhoneSize(view: UIView, file: StaticString = #file, line: UInt = #line) {
-        constrain(view) { view in
-            view.width == defaultIPhoneSize.width
-            view.height == defaultIPhoneSize.height
-        }
+
+        view.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            view.heightAnchor.constraint(equalToConstant: defaultIPhoneSize.height),
+            view.widthAnchor.constraint(equalToConstant: defaultIPhoneSize.width)
+            ])
+
         view.setNeedsLayout()
         view.layoutIfNeeded()
         verify(view: view)
