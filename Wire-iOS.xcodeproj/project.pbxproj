@@ -3162,6 +3162,7 @@
 		F114466321A2D8CC00B5FEBA /* ExtensionComponents-Base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "ExtensionComponents-Base.xcconfig"; sourceTree = "<group>"; };
 		F114466421A2D8CC00B5FEBA /* ExtensionComponents-Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "ExtensionComponents-Release.xcconfig"; sourceTree = "<group>"; };
 		F114466521A2D8CC00B5FEBA /* ExtensionComponents-Development.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "ExtensionComponents-Development.xcconfig"; sourceTree = "<group>"; };
+		F114466821A2F8BC00B5FEBA /* Tests-Development.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Tests-Development.xcconfig"; sourceTree = "<group>"; };
 		F1199D2F1FC8490A0070FAC3 /* TeamCreationState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeamCreationState.swift; sourceTree = "<group>"; };
 		F1199D301FC8490A0070FAC3 /* TeamCreationStepController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeamCreationStepController.swift; sourceTree = "<group>"; };
 		F1199D3B1FC849440070FAC3 /* BackButtonDescription.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackButtonDescription.swift; sourceTree = "<group>"; };
@@ -6545,6 +6546,14 @@
 			path = ExtensionComponents;
 			sourceTree = "<group>";
 		};
+		F114466721A2F89D00B5FEBA /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				F114466821A2F8BC00B5FEBA /* Tests-Development.xcconfig */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
 		F1199D2B1FC8490A0070FAC3 /* Flow */ = {
 			isa = PBXGroup;
 			children = (
@@ -6630,6 +6639,7 @@
 				F1B24231219B2C9B00F7035C /* Wire-iOS */,
 				F114466221A2D8B500B5FEBA /* ExtensionComponents */,
 				F1B24237219B2C9B00F7035C /* Share Extension */,
+				F114466721A2F89D00B5FEBA /* Tests */,
 			);
 			path = Configuration;
 			sourceTree = "<group>";
@@ -8807,9 +8817,8 @@
 		};
 		BACB885A1AF7C48900DDCDB0 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F1B24230219B2C9B00F7035C /* Project-Development.xcconfig */;
+			baseConfigurationReference = F114466821A2F8BC00B5FEBA /* Tests-Development.xcconfig */;
 			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEFINES_MODULE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -8833,9 +8842,8 @@
 		};
 		BACB885B1AF7C48900DDCDB0 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F1B24236219B2C9B00F7035C /* Project-Release.xcconfig */;
+			baseConfigurationReference = F114466821A2F8BC00B5FEBA /* Tests-Development.xcconfig */;
 			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEFINES_MODULE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
