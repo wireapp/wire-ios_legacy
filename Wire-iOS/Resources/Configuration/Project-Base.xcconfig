@@ -50,7 +50,7 @@ LIBRARY_SEARCH_PATHS = $(inherited) $(LIBRARY_SEARCH_PATHS_common)
 
 HEADER_SEARCH_PATHS_common = "$(TARGET_TEMP_DIR)/../$(PROJECT_NAME).build/DerivedSources"
 HEADER_SEARCH_PATHS = $(inherited) $(HEADER_SEARCH_PATHS_common)
-
+FRAMEWORK_SEARCH_PATHS = $(inherited) $(PROJECT_DIR)/Carthage/Build/iOS
 
 // LLVM compiler - Language
 GCC_PRECOMPILE_PREFIX_HEADER = YES
