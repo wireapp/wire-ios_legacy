@@ -54,7 +54,7 @@ final class NSMutableAttributedStringReplaceEmojiTests: XCTestCase {
     func testThatReplaceEmojiCorrectlyWhenTheRangeIsWithinTheStringLength() {
         // GIVEN
         // length = 32, index 20 is after "Dolor".
-        let plainText = "<3 Lorem Ipsum Dolor Sit Amed. :)"
+        let plainText = "<3 Lorem Ipsum Dolor }:-)Amed. :)"
 
         let sut = NSMutableAttributedString.markdown(from: plainText, style: NSAttributedString.style)
 
@@ -63,7 +63,7 @@ final class NSMutableAttributedStringReplaceEmojiTests: XCTestCase {
 
 
         // THEN
-        XCTAssertEqual(sut.string, "❤ Lorem Ipsum Dolor Sit Amed. 😊")
+        XCTAssertEqual(sut.string, "❤ Lorem Ipsum Dolor 😈Amed. 😊")
     }
 
 }
