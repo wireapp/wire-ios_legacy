@@ -37,7 +37,7 @@ CODE_SIGN_STYLE = Manual
 // Build Options
 //
 DEBUG_INFORMATION_FORMAT = dwarf-with-dsym
-
+ENABLE_TESTABILITY = YES
 
 // Search Paths
 //
