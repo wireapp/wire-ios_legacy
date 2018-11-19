@@ -8602,7 +8602,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F114466521A2D8CC00B5FEBA /* ExtensionComponents-Development.xcconfig */;
 			buildSettings = {
-				GCC_NO_COMMON_BLOCKS = YES;
 			};
 			name = Debug;
 		};
@@ -8610,7 +8609,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F114466421A2D8CC00B5FEBA /* ExtensionComponents-Release.xcconfig */;
 			buildSettings = {
-				GCC_NO_COMMON_BLOCKS = YES;
 			};
 			name = Release;
 		};
@@ -8721,7 +8719,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F114466821A2F8BC00B5FEBA /* Tests-Development.xcconfig */;
 			buildSettings = {
-				GCC_NO_COMMON_BLOCKS = YES;
 			};
 			name = Debug;
 		};
@@ -8729,7 +8726,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F114466821A2F8BC00B5FEBA /* Tests-Development.xcconfig */;
 			buildSettings = {
-				GCC_NO_COMMON_BLOCKS = YES;
 			};
 			name = Release;
 		};
