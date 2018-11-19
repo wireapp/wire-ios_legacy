@@ -195,18 +195,6 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     [self.view addGestureRecognizer:pinchImageGestureRecognizer];
     
     [self createMentionsResultsView];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(applicationDidBecomeActive:)
-                                                 name:UIApplicationDidBecomeActiveNotification
-                                               object:nil];
-
-}
-
-- (void)applicationDidBecomeActive:(NSNotification *)notification
-{
-    self.conversationMessageWindowTableViewAdapter.sectionControllers = [[NSMutableDictionary alloc] init];
-    [self.tableView reloadData];
 }
 
 - (void)viewWillAppear:(BOOL)animated
