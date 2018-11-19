@@ -56,12 +56,8 @@ ENABLE_BITCODE = NO
 ENABLE_STRICT_OBJC_MSGSEND = YES
 
 // LLVM compiler - Preprocessing
-//
-// Turn off analytics & Hockey for the simulator
-GCC_PREPROCESSOR_DEFINITIONS = ${inherited} DEBUG=0
 
-GCC_PREPROCESSOR_DEFINITIONS[sdk=iphonesimulator*] = ${inherited} USE_HOCKEY=0
-GCC_PREPROCESSOR_DEFINITIONS[sdk=iphoneos*] = ${inherited} USE_HOCKEY=1
+SHARED_CUSTOM_VALUES = HOCKEY_APP_ID_KEY=$(HOCKEY_APP_ID) WIRE_SSO_URL_SCHEME=$(SSO_URL_SCHEME)
 
 // Swift Compiler
 

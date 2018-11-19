@@ -34,10 +34,19 @@ ENABLE_NS_ASSERTIONS = NO
 
 // LLVM compiler - Preprocessing
 //
-// Turn off analytics & Hockey for the simulator
-GCC_PREPROCESSOR_DEFINITIONS[sdk=iphoneos*] = ${inherited} USE_ANALYTICS=1 USE_HOCKEY=1 ENABLE_DEVELOPER_MENU=0 HOCKEY_APP_ID_KEY=$(HOCKEY_APP_ID) WIRE_SSO_URL_SCHEME=$(SSO_URL_SCHEME)
 
-GCC_PREPROCESSOR_DEFINITIONS[sdk=iphonesimulator*] = ${inherited} USE_ANALYTICS=0 USE_HOCKEY=0 ENABLE_DEVELOPER_MENU=0 HOCKEY_APP_ID_KEY=$(HOCKEY_APP_ID) WIRE_SSO_URL_SCHEME=$(SSO_URL_SCHEME)
+// Flags:
+// FT - feature toggle
+//
+// ENABLE_DEVELOPER_MENU - Enabled developer menu from self profile -> settings
+// WIRESTAN - Enabled the fake country in the phone number selection
+FEATURE_FLAGS = ENABLE_DEVELOPER_MENU=0 WIRESTAN=0
+
+// No analytics / Hockey for Debug builds:
+ANALYTICS_FLAGS = USE_HOCKEY=1 USE_ANALYTICS=1
+
+GCC_PREPROCESSOR_DEFINITIONS = $(SHARED_CUSTOM_VALUES) $(FEATURE_FLAGS) $(ANALYTICS_FLAGS) DEBUG=0
+
 
 // Swift Compiler
 
