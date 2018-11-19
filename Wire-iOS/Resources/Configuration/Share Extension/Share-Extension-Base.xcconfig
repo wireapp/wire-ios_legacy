@@ -20,3 +20,4 @@ SHARE_EXTENSION_BUNDLE_SUFFIX = extension-share
 SWIFT_OBJC_BRIDGING_HEADER = Wire-iOS Share Extension/Wire-iOS Share Extension-Bridging-Header.h
 
 APPLICATION_EXTENSION_API_ONLY = YES
+SKIP_INSTALL = YES
