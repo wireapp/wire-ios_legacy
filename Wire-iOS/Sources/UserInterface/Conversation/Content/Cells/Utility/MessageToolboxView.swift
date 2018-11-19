@@ -75,9 +75,7 @@ import TTTAttributedLabel
         likeButton.accessibilityIdentifier = "likeButton"
         likeButton.accessibilityLabel = "likeButton"
         likeButton.addTarget(self, action: #selector(requestLike), for: .touchUpInside)
-        likeButton.setIcon(.liked, with: .like, for: .normal)
         likeButton.setIconColor(UIColor.from(scheme: .textDimmed), for: .normal)
-        likeButton.setIcon(.liked, with: .like, for: .selected)
         likeButton.setIconColor(UIColor(for: .vividRed), for: .selected)
         likeButton.hitAreaPadding = CGSize(width: 20, height: 20)
 
@@ -148,11 +146,11 @@ import TTTAttributedLabel
             tapGestureRecogniser.delegate = self
             addGestureRecognizer(tapGestureRecogniser)
         }
-        
+
         self.forceShowTimestamp = forceShowTimestamp
         self.message = message
 
-        self.configureLikedState(message)
+        self.configureLikedState(message, animated: animated)
         self.layoutIfNeeded()
 
         if !self.forceShowTimestamp && message.hasReactions() {
@@ -212,7 +210,7 @@ import TTTAttributedLabel
     @objc(updateForMessage:)
     func update(for change: MessageChangeInfo) {
         if change.reactionsChanged {
-            configureLikedState(change.message)
+            configureLikedState(change.message, animated: true)
         }
     }
     
@@ -241,10 +239,39 @@ import TTTAttributedLabel
         }) 
     }
     
-    fileprivate func configureLikedState(_ message: ZMConversationMessage) {
-        likeButton.isHidden = !message.canBeLiked
-        likeButton.setSelected(message.liked, animated: false)
+    fileprivate func configureLikedState(_ message: ZMConversationMessage, animated: Bool) {
+        let showLikeButton: Bool
+
+        if forceShowTimestamp {
+            showLikeButton = message.canBeLiked
+        } else {
+            showLikeButton = message.liked
+        }
+
+        // Prepare Animations
+        let needsAnimation = animated && (showLikeButton ? likeButton.isHidden : !likeButton.isHidden)
+
+        if showLikeButton && likeButton.isHidden {
+            likeButton.alpha = 0
+            likeButton.isHidden = false
+        }
+
+        let changes = {
+            self.likeButton.alpha = showLikeButton ? 1 : 0
+        }
+
+        let completion: (Bool) -> Void = { _ in
+            self.likeButton.isHidden = !showLikeButton
+        }
+
+        // Change State and Appearance
+        likeButton.setIcon(message.liked ? .liked : .like, with: .like, for: .normal)
+        likeButton.setIcon(.liked, with: .like, for: .selected)
+        likeButton.setSelected(message.liked, animated: animated)
         self.reactionsView.likers = message.likers()
+
+        // Animate Changes
+        UIView.animate(withDuration: needsAnimation ? 0.2 : 0, animations: changes, completion: completion)
     }
     
     fileprivate func timestampString(_ message: ZMConversationMessage) -> String? {
