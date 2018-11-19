@@ -26,6 +26,7 @@ SDKROOT = iphoneos
 // Packaging
 //
 INFOPLIST_EXPAND_BUILD_SETTINGS = YES
+DEFINES_MODULE = YES
 
 // Deployment
 //
