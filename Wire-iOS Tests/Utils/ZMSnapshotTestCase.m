@@ -170,8 +170,8 @@
 - (void)snapshotVerifyView:(UIView *)container finalIdentifier:(NSString *)finalIdentifier
 {
     [self snapshotVerifyViewOrLayerWithOptions:container
-                                    identifier: finalIdentifier
-                                        suffix: FBSnapshotTestCaseDefaultSuffixes()
+                                    identifier:finalIdentifier
+                                        suffix:FBSnapshotTestCaseDefaultSuffixes()
                                      tolerance:0];
 }
 

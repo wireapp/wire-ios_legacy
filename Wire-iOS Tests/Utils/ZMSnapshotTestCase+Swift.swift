@@ -18,7 +18,6 @@
 
 
 import Foundation
-import Cartography
 @testable import Wire
 
 
@@ -205,7 +204,11 @@ extension ZMSnapshotTestCase {
             RunLoop.current.run(until: Date(timeIntervalSinceNow: 0.1))
         }
 
-        snapshotVerifyView(withOptions: container, finalIdentifier: finalIdentifier, suffix: FBSnapshotTestCaseDefaultSuffixes(), tolerance: tolerance)
+        snapshotVerifyViewOrLayer(withOptions: container,
+                                             identifier: finalIdentifier,
+                                             suffix: FBSnapshotTestCaseDefaultSuffixes(),
+                                             tolerance: tolerance)
+        
 
 
         assertAmbigousLayout(container, file: file.utf8SignedStart(), line: line)
@@ -217,11 +220,10 @@ extension ZMSnapshotTestCase {
         ) {
         let container = containerView(with: view)
 
-        constrain(container, view) { container, view in
-            container.width == width
-//            container.height == view.height
-        }
-
+        container.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            container.widthAnchor.constraint(equalToConstant: width)
+            ])
 
         container.setNeedsLayout()
         container.layoutIfNeeded()
@@ -248,10 +250,12 @@ extension ZMSnapshotTestCase {
         }
     }
 
-    func verifyInAllTabletWidths(view: UIView, file: StaticString = #file, line: UInt = #line) {
+    func verifyInAllTabletWidths(view: UIView,
+                                 extraLayoutPass: Bool = false,
+                                 file: StaticString = #file, line: UInt = #line) {
         assertAmbigousLayout(view, file: file.utf8SignedStart(), line: line)
         for value: NSValue in tabletSizes() {
-            verifyView(view: view, extraLayoutPass: false, width: value.cgSizeValue.width, file: file, line: line)
+            verifyView(view: view, extraLayoutPass: extraLayoutPass, width: value.cgSizeValue.width, file: file, line: line)
         }
     }
 
@@ -275,7 +279,7 @@ extension ZMSnapshotTestCase {
 
         view.setNeedsLayout()
         view.layoutIfNeeded()
-        verify(view: view)
+        verify(view: view, file: file, line: line)
     }
     
     func verifyInAllIPhoneSizes(view: UIView, extraLayoutPass: Bool = false, file: StaticString = #file, line: UInt = #line, configurationBlock: ((UIView) -> Swift.Void)? = nil) {
