@@ -118,7 +118,7 @@ class ConversationPingCell: ConversationIconBasedCell, ConversationMessageCell {
             let message = self.configuration?.message {
             
             let isLastMessage = lastMessage.isEqual(message)
-            let result = message.serverTimestamp?.compare(conversation.firstUnreadMessage?.serverTimestamp ?? Date(timeIntervalSince1970: 0))
+            let result = message.serverTimestamp?.compare(conversation.lastServerTimeStamp ?? Date())
             let isMessageOlder = result != .orderedAscending
             
             if isLastMessage && message.isKnock && isMessageOlder {
