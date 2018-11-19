@@ -18,6 +18,7 @@
 
 #include "../Project-Development.xcconfig"
 
+TEST_HOST = $(BUILT_PRODUCTS_DIR)/Wire.app/Wire
 BUNDLE_LOADER = $(TEST_HOST)
 INFOPLIST_FILE = Wire-iOS Tests/Info.plist
 PRODUCT_NAME = $(TARGET_NAME)

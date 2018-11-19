@@ -8755,7 +8755,6 @@
 				);
 				SWIFT_OBJC_BRIDGING_HEADER = "Wire-iOS Tests/Wire-iOS-Tests-Bridging-Header.h";
 				SWIFT_VERSION = 4.2;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Wire.app/Wire";
 			};
 			name = Debug;
 		};
@@ -8766,7 +8765,6 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "Wire-iOS Tests/Wire-iOS-Tests-Bridging-Header.h";
 				SWIFT_VERSION = 4.2;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Wire.app/Wire";
 			};
 			name = Release;
 		};
