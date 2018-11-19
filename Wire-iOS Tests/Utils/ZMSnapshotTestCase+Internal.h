@@ -32,8 +32,11 @@ static CGSize const ZMDeviceSizeIPadLandscape = (CGSize){ .width = 1024, .height
 
 - (void)assertAmbigousLayout:(UIView * _Nullable)view file:(const char[_Nullable])file line:(NSUInteger)line;
 
-- (void)snapshotVerifyViewWithOptions:(UIView * _Nonnull)container finalIdentifier:(NSString *_Nullable)finalIdentifier suffix:(NSOrderedSet * _Nullable)suffix
-    tolerance:(float)tolerance;
+- (void)snapshotVerifyViewOrLayerWithOptions:(UIView * _Nonnull)container
+                                  identifier:(NSString * _Nullable)identifier
+                                      suffix:(NSOrderedSet * _Nullable)suffix
+                                   tolerance:(float)tolerance;
+
 
 - (void)snapshotVerifyView:(UIView * _Nonnull)container finalIdentifier:(NSString * _Nullable)finalIdentifier;
 

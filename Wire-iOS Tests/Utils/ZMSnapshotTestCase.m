@@ -155,16 +155,24 @@
     }
 }
 
-///TODO: rewrite macro with function, with file and line argument
-- (void)snapshotVerifyViewWithOptions:(UIView *)container finalIdentifier:(NSString *)finalIdentifier suffix:(NSOrderedSet *)suffix
-tolerance:(float)tolerance
+- (void)snapshotVerifyViewOrLayerWithOptions:(UIView *)container
+                                  identifier:(NSString *)identifier
+                                      suffix:(NSOrderedSet *)suffix
+                                   tolerance:(float)tolerance
+//                                        file:(const char[])file
+//                                        line:(NSUInteger)line
 {
-    FBSnapshotVerifyViewWithOptions(container, finalIdentifier, suffix, tolerance);
+    NSString *errorDescription = [self snapshotVerifyViewOrLayer:container identifier:identifier suffixes:suffix tolerance:tolerance defaultReferenceDirectory:(@ FB_REFERENCE_IMAGE_DIR)];
+    BOOL noErrors = (errorDescription == nil);
+    XCTAssertTrue(noErrors, @"%@", errorDescription);
 }
 
 - (void)snapshotVerifyView:(UIView *)container finalIdentifier:(NSString *)finalIdentifier
 {
-    FBSnapshotVerifyView(container, finalIdentifier)
+    [self snapshotVerifyViewOrLayerWithOptions:container
+                                    identifier: finalIdentifier
+                                        suffix: FBSnapshotTestCaseDefaultSuffixes()
+                                     tolerance:0];
 }
 
 
