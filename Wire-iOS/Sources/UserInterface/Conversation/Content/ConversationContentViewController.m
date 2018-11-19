@@ -197,14 +197,15 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     [self createMentionsResultsView];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(applicationDidBecomeActive:)
-                                                 name:UIApplicationDidBecomeActiveNotification
+                                             selector:@selector(applicationWillEnterForeground:)
+                                                 name:UIApplicationWillEnterForegroundNotification
                                                object:nil];
 
 }
 
-- (void)applicationDidBecomeActive:(NSNotification *)notification
+- (void)applicationWillEnterForeground:(NSNotification *)notification
 {
+    [ZMConversationList refetchAllListsInUserSession:ZMUserSession.sharedSession];
     self.conversationMessageWindowTableViewAdapter.sectionControllers = [[NSMutableDictionary alloc] init];
     [self.tableView reloadData];
 }
