@@ -245,7 +245,7 @@ import TTTAttributedLabel
         if forceShowTimestamp {
             showLikeButton = message.canBeLiked
         } else {
-            showLikeButton = message.liked
+            showLikeButton = message.liked || message.hasReactions()
         }
 
         // Prepare Animations
@@ -267,7 +267,7 @@ import TTTAttributedLabel
         // Change State and Appearance
         likeButton.setIcon(message.liked ? .liked : .like, with: .like, for: .normal)
         likeButton.setIcon(.liked, with: .like, for: .selected)
-        likeButton.setSelected(message.liked, animated: animated)
+        likeButton.setSelected(message.liked, animated: needsAnimation)
         self.reactionsView.likers = message.likers()
 
         // Animate Changes
