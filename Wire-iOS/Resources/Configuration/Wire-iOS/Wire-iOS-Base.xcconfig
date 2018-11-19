@@ -40,8 +40,6 @@ CLANG_ENABLE_MODULES = YES
 
 // Swift Compiler - Custom Flags
 
-OTHER_SWIFT_FLAGS = -Xfrontend -warn-long-function-bodies=10000 -Xfrontend -warn-long-expression-type-checking=10000
-
 ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES
 SWIFT_OBJC_BRIDGING_HEADER = $(TARGET_NAME)/WireBridgingHeader.h
 SWIFT_VERSION = 4.2

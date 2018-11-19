@@ -65,4 +65,5 @@ GCC_PREPROCESSOR_DEFINITIONS[sdk=iphonesimulator*] = ${inherited} ${BASIC_GCC_PR
 GCC_PREPROCESSOR_DEFINITIONS[sdk=iphoneos*][config=Debug] = ${inherited} ${BASIC_GCC_PREPROCESSOR_DEFINITIONS} USE_ANALYTICS=0
 GCC_PREPROCESSOR_DEFINITIONS[sdk=iphoneos*][config=Release] = ${inherited} ${BASIC_GCC_PREPROCESSOR_DEFINITIONS} USE_ANALYTICS=1
 
+OTHER_SWIFT_FLAGS = -Xfrontend -warn-long-function-bodies=10000 -Xfrontend -warn-long-expression-type-checking=10000
 
