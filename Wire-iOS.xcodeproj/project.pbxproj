@@ -8583,7 +8583,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F1B24239219B2C9B00F7035C /* Share-Extension-Development.xcconfig */;
 			buildSettings = {
-				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 			};
 			name = Debug;
 		};
@@ -8591,7 +8590,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F1B24238219B2C9B00F7035C /* Share-Extension-Release.xcconfig */;
 			buildSettings = {
-				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 			};
 			name = Release;
 		};
