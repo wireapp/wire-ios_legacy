@@ -19,9 +19,6 @@
 // Build Options
 ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES
 
-// Linking
-LD_RUNPATH_SEARCH_PATHS = $(inherited) @executable_path/Frameworks @loader_path/Frameworks
-
 // Packaging
 DEFINES_MODULE = YES
 INFOPLIST_FILE = $(SRCROOT)/Wire-iOS/Wire-Info.plist

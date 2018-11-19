@@ -39,6 +39,9 @@ CODE_SIGN_STYLE = Manual
 DEBUG_INFORMATION_FORMAT = dwarf-with-dsym
 ENABLE_TESTABILITY = YES
 
+// Linking
+LD_RUNPATH_SEARCH_PATHS = $(inherited) @executable_path/Frameworks @loader_path/Frameworks $(PROJECT_DIR)/Carthage/Build/iOS
+
 // Search Paths
 //
 LIBRARY_SEARCH_PATHS_common = $(inherited)
