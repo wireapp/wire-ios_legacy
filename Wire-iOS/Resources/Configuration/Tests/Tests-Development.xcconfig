@@ -19,4 +19,4 @@
 #include "../Project-Development.xcconfig"
 
 BUNDLE_LOADER = $(TEST_HOST)
-
+INFOPLIST_FILE = Wire-iOS Tests/Info.plist
