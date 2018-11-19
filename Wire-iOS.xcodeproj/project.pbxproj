@@ -8587,7 +8587,6 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -8598,7 +8597,6 @@
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
-				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};
@@ -8611,7 +8609,6 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -8620,7 +8617,6 @@
 			baseConfigurationReference = F114466421A2D8CC00B5FEBA /* ExtensionComponents-Release.xcconfig */;
 			buildSettings = {
 				GCC_NO_COMMON_BLOCKS = YES;
-				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};
@@ -8719,7 +8715,6 @@
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=10000 -Xfrontend -warn-long-expression-type-checking=10000";
-				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -8730,7 +8725,6 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				OTHER_SWIFT_FLAGS = "";
-				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};
@@ -8743,7 +8737,6 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -8752,7 +8745,6 @@
 			baseConfigurationReference = F114466821A2F8BC00B5FEBA /* Tests-Development.xcconfig */;
 			buildSettings = {
 				GCC_NO_COMMON_BLOCKS = YES;
-				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};
