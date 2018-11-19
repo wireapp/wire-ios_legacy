@@ -8735,7 +8735,6 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "${CODE_SIGN_ENTITLEMENTS_APP}";
 				GCC_PREFIX_HEADER = "Wire-iOS/Wire-iOS-Prefix.pch";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=10000 -Xfrontend -warn-long-expression-type-checking=10000";
 				PROVISIONING_PROFILE_SPECIFIER = "$(PROVISIONING_PROFILE_SPECIFIER_APP)";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(TARGET_NAME)/WireBridgingHeader.h";
@@ -8751,7 +8750,6 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "${CODE_SIGN_ENTITLEMENTS_APP}";
 				GCC_PREFIX_HEADER = "Wire-iOS/Wire-iOS-Prefix.pch";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_SWIFT_FLAGS = "";
 				PROVISIONING_PROFILE_SPECIFIER = "$(PROVISIONING_PROFILE_SPECIFIER_APP)";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(TARGET_NAME)/WireBridgingHeader.h";
@@ -8768,7 +8766,6 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Wire-iOS Tests/Wire-iOS-Tests-Bridging-Header.h";
 				SWIFT_VERSION = 4.2;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Wire.app/Wire";
@@ -8780,7 +8777,6 @@
 			baseConfigurationReference = F114466821A2F8BC00B5FEBA /* Tests-Development.xcconfig */;
 			buildSettings = {
 				GCC_NO_COMMON_BLOCKS = YES;
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Wire-iOS Tests/Wire-iOS-Tests-Bridging-Header.h";
 				SWIFT_VERSION = 4.2;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Wire.app/Wire";

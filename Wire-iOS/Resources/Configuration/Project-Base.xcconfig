@@ -45,9 +45,6 @@ LD_RUNPATH_SEARCH_PATHS = $(inherited) @executable_path/Frameworks @loader_path/
 
 // Search Paths
 //
-LIBRARY_SEARCH_PATHS_common = $(inherited)
-LIBRARY_SEARCH_PATHS = $(inherited) $(LIBRARY_SEARCH_PATHS_common)
-
 FRAMEWORK_SEARCH_PATHS = $(inherited) $(PROJECT_DIR)/Carthage/Build/iOS
 
 // LLVM compiler - Language
