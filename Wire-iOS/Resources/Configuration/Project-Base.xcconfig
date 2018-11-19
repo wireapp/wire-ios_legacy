@@ -19,6 +19,9 @@
 #include "../../../Configuration/Base.xcconfig"
 #include "Warnings.xcconfig"
 
+// Architectures
+//
+SDKROOT = iphoneos
 
 // Packaging
 //
