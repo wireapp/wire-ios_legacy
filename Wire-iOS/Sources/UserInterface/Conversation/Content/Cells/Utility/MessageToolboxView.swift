@@ -239,7 +239,7 @@ import TTTAttributedLabel
         }
 
         if animated {
-            UIView.animate(withDuration: animated ? 0.2 : 0, animations: animations, completion: completion)
+            UIView.animate(withDuration: 0.2, animations: animations, completion: completion)
         } else {
             animations()
             completion(true)
@@ -279,7 +279,7 @@ import TTTAttributedLabel
 
         // Animate Changes
         if needsAnimation {
-            UIView.animate(withDuration: needsAnimation ? 0.2 : 0, animations: changes, completion: completion)
+            UIView.animate(withDuration: 0.2, animations: changes, completion: completion)
         } else {
             changes()
             completion(true)
