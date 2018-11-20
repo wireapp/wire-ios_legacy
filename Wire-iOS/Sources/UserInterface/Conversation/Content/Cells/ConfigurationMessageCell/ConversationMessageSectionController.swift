@@ -144,7 +144,7 @@ extension IndexSet {
                 let missingMessagesCell = ConversationLegacyCellDescription<MissingMessagesCell>(message: message, layoutProperties: layoutProperties)
                 add(description: missingMessagesCell)
                 
-            case .participantsAdded, .participantsRemoved, .newConversation, .teamMemberLeave:
+            case .newConversation:
                 let participantsCell = ConversationLegacyCellDescription<ParticipantsCell>(message: message, layoutProperties: layoutProperties)
                 add(description: participantsCell)
                 

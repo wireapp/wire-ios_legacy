@@ -172,7 +172,10 @@ class ConversationSystemMessageCellDescription {
             let missingMessagesCell = ConversationLegacyCellDescription<MissingMessagesCell>(message: message, layoutProperties: layoutProperties)
             return [AnyConversationMessageCellDescription(missingMessagesCell)]
 
-        case .participantsAdded, .participantsRemoved, .newConversation, .teamMemberLeave:
+        case .participantsAdded, .participantsRemoved, .teamMemberLeave:
+            let participantsChangedCell = ConversationParticipantsChangedSystemMessageCellDescription(message: message, data: systemMessageData)
+            return [AnyConversationMessageCellDescription(participantsChangedCell)]
+        case .newConversation:
             let participantsCell = ConversationLegacyCellDescription<ParticipantsCell>(message: message, layoutProperties: layoutProperties)
             return [AnyConversationMessageCellDescription(participantsCell)]
 
@@ -187,6 +190,36 @@ class ConversationSystemMessageCellDescription {
 }
 
 // MARK: - Descriptions
+
+class ConversationParticipantsChangedSystemMessageCellDescription: ConversationMessageCellDescription {
+    typealias View = ConversationSystemMessageCell
+    let configuration: View.Configuration
+    
+    var message: ZMConversationMessage?
+    weak var delegate: ConversationCellDelegate?
+    weak var actionController: ConversationCellActionController?
+    
+    var showEphemeralTimer: Bool = false
+    var topMargin: Float = 0
+    
+    let isFullWidth: Bool = true
+    let supportsActions: Bool = false
+    let containsHighlightableContent: Bool = false
+    
+    let accessibilityIdentifier: String? = nil
+    let accessibilityLabel: String? = nil
+    
+    init(message: ZMConversationMessage, data: ZMSystemMessageData) {
+        let model = ParticipantsCellViewModel(font: .mediumFont, boldFont: .mediumSemiboldFont, largeFont: .largeSemiboldFont, textColor: .black, iconColor: .black, message: message)
+        let asd = NSParagraphStyle.default.mutableCopy() as! NSMutableParagraphStyle
+        asd.paragraphSpacingBefore = 16
+        let muu = model.attributedTitle()
+        let koo = muu?.addAttributes([.paragraphStyle: asd], toSubstring: muu!.string)
+        configuration = View.Configuration(icon: model.image(), attributedText: koo, showLine: true)
+        actionController = nil
+    }
+    
+}
 
 class ConversationRenamedSystemMessageCellDescription: ConversationMessageCellDescription {
     typealias View = ConversationRenamedSystemMessageCell
