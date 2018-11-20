@@ -79,6 +79,31 @@ import UIKit
                 }
             }
     }
+    
+    // MARK: - Single Tap Action
+    
+    @objc func performSingleTapAction() {
+        guard let singleTapAction = singleTapAction else { return }
+        
+        responder?.wants(toPerform: singleTapAction, for: message)
+    }
+    
+    internal var singleTapAction: MessageAction? {
+        if message.isImage, message.imageMessageData?.isDownloaded == true {
+            return .present
+        } else if message.isFile, let transferState = message.fileMessageData?.transferState {
+            switch transferState {
+            case .downloaded:
+                return .present
+            case .uploaded, .failedDownload:
+                return .download
+            default:
+                return nil
+            }
+        }
+        
+        return nil
+    }
 
     // MARK: - Handler
 

@@ -52,7 +52,6 @@
 #import "UIViewController+WR_Additions.h"
 
 // Cells
-#import "PingCell.h"
 #import "ImageMessageCell.h"
 
 #import "Wire-Swift.h"
@@ -406,7 +405,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
             case MessageActionPresent:
             {
                 self.conversationMessageWindowTableViewAdapter.selectedMessage = message;
-                [self presentDetailsForMessageAtIndexPath:[self.tableView indexPathForCell:cell]];
+                [self presentDetailsForMessage:message];
             }
                 break;
             case MessageActionSave:
@@ -580,9 +579,8 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     }
 }
 
-- (void)presentDetailsForMessageAtIndexPath:(NSIndexPath *)indexPath
+- (void)presentDetailsForMessage:(id<ZMConversationMessage>)message
 {
-    id<ZMConversationMessage>message = [self.messageWindow.messages objectAtIndex:indexPath.section];
     BOOL isFile = [Message isFileTransferMessage:message];
     BOOL isImage = [Message isImageMessage:message];
     BOOL isLocation = [Message isLocationMessage:message];
@@ -717,10 +715,6 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
         conversationCell = (ConversationCell *)cell;
     }
     
-    if (conversationCell.message != nil && [Message isKnockMessage:conversationCell.message]) {
-        [self updatePingCellAppearance:(PingCell *)conversationCell];
-    }
-    
 	// using dispatch_async because when this method gets run, the cell is not yet in visible cells,
 	// so the update will fail
 	// dispatch_async runs it with next runloop, when the cell has been added to visible cells
@@ -757,21 +751,6 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     [self.cachedRowHeights setObject:@(cell.frame.size.height) forKey:indexPath];
 }
 
-- (void)updatePingCellAppearance:(PingCell *)pingCell
-{
-    // determine if we should start animating a ping cell
-    // Unfortunate that this can't be inside the cell itself
-    BOOL isMessageOfCellLastMessageInConversation = [self.messageWindow.messages.firstObject isEqual:pingCell.message];
-    
-    NSComparisonResult comparisonResult = [pingCell.message.serverTimestamp compare:self.conversation.firstUnreadMessage.serverTimestamp];
-    BOOL isMessageOlderThanFirstUnreadMessage =  (comparisonResult != NSOrderedAscending);
-    
-    if (isMessageOfCellLastMessageInConversation
-        && [Message isKnockMessage:pingCell.message]
-        && isMessageOlderThanFirstUnreadMessage ) {
-        [pingCell startPingAnimation];
-    }
-}
 
 - (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
 {

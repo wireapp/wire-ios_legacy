@@ -26,7 +26,6 @@
 
 // Cells
 #import "ImageMessageCell.h"
-#import "PingCell.h"
 #import "ConnectionRequestCell.h"
 
 #import "Wire-Swift.h"

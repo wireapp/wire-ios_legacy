@@ -68,6 +68,7 @@ class ConversationMessageCellTableViewAdapter<C: ConversationMessageCellDescript
 
     private var longPressGesture: UILongPressGestureRecognizer!
     private var doubleTapGesture: UITapGestureRecognizer!
+    private var singleTapGesture: UITapGestureRecognizer!
 
     @objc var showsMenu = false
 
@@ -106,10 +107,15 @@ class ConversationMessageCellTableViewAdapter<C: ConversationMessageCellDescript
 
         longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(onLongPress))
         contentView.addGestureRecognizer(longPressGesture)
-
+        
         doubleTapGesture = UITapGestureRecognizer(target: self, action: #selector(onDoubleTap))
         doubleTapGesture.numberOfTapsRequired = 2
         contentView.addGestureRecognizer(doubleTapGesture)
+        
+        singleTapGesture = UITapGestureRecognizer(target: self, action: #selector(onSingleTap))
+        cellView.addGestureRecognizer(singleTapGesture)
+        singleTapGesture.require(toFail: doubleTapGesture)
+        singleTapGesture.delegate = self
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -186,17 +192,25 @@ class ConversationMessageCellTableViewAdapter<C: ConversationMessageCellDescript
         menu.setTargetRect(selectionRect, in: selectionView)
         menu.setMenuVisible(true, animated: true)
     }
+    
+    // MARK: - Single Tap Action
+    
+    @objc private func onSingleTap(_ gestureRecognizer: UITapGestureRecognizer) {
+        if gestureRecognizer.state == .recognized {
+            cellDescription?.actionController?.performSingleTapAction()
+        }
+    }
 
     // MARK: - Double Tap To Like
 
-    @objc private func onDoubleTap(_ gestureRecognizer: UILongPressGestureRecognizer) {
+    @objc private func onDoubleTap(_ gestureRecognizer: UITapGestureRecognizer) {
         if gestureRecognizer.state == .recognized {
             likeMessage()
         }
     }
 
     // MARK: - Standard Actions
-
+    
     private func likeMessage() {
         guard cellDescription?.supportsActions == true else {
             return
@@ -260,6 +274,14 @@ class ConversationMessageCellTableViewAdapter<C: ConversationMessageCellDescript
         cellDescription?.didEndDisplayingCell()
         cellView.didEndDisplaying()
         ephemeralCountdownView.stopCountDown()
+    }
+    
+    override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        guard gestureRecognizer == singleTapGesture else { return super.gestureRecognizerShouldBegin(gestureRecognizer) }
+        
+        // We fail the single tap gesture recognizer if there's no single tap action to perform, which gives
+        // other gesture recognizers the opportunity to fire.
+        return cellDescription?.actionController?.singleTapAction != nil
     }
     
 }
