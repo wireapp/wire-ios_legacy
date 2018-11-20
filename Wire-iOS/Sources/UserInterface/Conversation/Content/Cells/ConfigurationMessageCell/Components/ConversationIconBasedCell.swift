@@ -106,7 +106,7 @@ class ConversationIconBasedCell: UIView, TTTAttributedLabelDelegate {
         
         // We want the content view to at least be below the image container
         let contentViewTopConstraint = contentView.topAnchor.constraint(equalTo: imageContainer.bottomAnchor)
-        contentViewTopConstraint.priority = .defaultHigh
+        contentViewTopConstraint.priority = .defaultLow
 
         NSLayoutConstraint.activate([
             // imageContainer
