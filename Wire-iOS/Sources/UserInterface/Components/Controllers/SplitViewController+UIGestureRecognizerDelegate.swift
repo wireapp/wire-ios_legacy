@@ -19,11 +19,29 @@
 import Foundation
 
 extension SplitViewController: UIGestureRecognizerDelegate {
-    @objc(gestureRecognizer:shouldBeRequiredToFailByGestureRecognizer:)
-    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-        //    return gestureRecognizer == self.revealDrawerGestureRecognizer;
-        return false
-    }
+//    @objc(gestureRecognizer:shouldBeRequiredToFailByGestureRecognizer:)
+//    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
+//                                  shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+//        //    return gestureRecognizer == self.revealDrawerGestureRecognizer;
+//
+//        if otherGestureRecognizer.view is MarkdownTextView ||
+//            otherGestureRecognizer.view is InputBar {
+//            return true
+//        }
+//
+//        return false
+//    }
+
+//    @objc(gestureRecognizer:shouldRecognizeSimultaneouslyWithGestureRecognizer:)
+//    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+//        if otherGestureRecognizer.view is MarkdownTextView ||
+//            otherGestureRecognizer.view is InputBar {
+//            return true
+//        }
+//
+//        return false
+//    }
+
 
     @objc(gestureRecognizerShouldBegin:)
     public func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
@@ -38,6 +56,8 @@ extension SplitViewController: UIGestureRecognizerDelegate {
         if isLeftViewControllerRevealed && !isIPadRegular() {
             return false
         }
+
+        ///TODO: return false if keyboard is shown??
         return true
     }
 }
