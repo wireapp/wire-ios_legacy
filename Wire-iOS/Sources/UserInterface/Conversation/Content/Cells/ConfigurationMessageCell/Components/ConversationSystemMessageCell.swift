@@ -211,11 +211,7 @@ class ConversationParticipantsChangedSystemMessageCellDescription: ConversationM
     
     init(message: ZMConversationMessage, data: ZMSystemMessageData) {
         let model = ParticipantsCellViewModel(font: .mediumFont, boldFont: .mediumSemiboldFont, largeFont: .largeSemiboldFont, textColor: .black, iconColor: .black, message: message)
-        let asd = NSParagraphStyle.default.mutableCopy() as! NSMutableParagraphStyle
-        asd.paragraphSpacingBefore = 16
-        let muu = model.attributedTitle()
-        let koo = muu?.addAttributes([.paragraphStyle: asd], toSubstring: muu!.string)
-        configuration = View.Configuration(icon: model.image(), attributedText: koo, showLine: true)
+        configuration = View.Configuration(icon: model.image(), attributedText: model.attributedTitle(), showLine: true)
         actionController = nil
     }
     
