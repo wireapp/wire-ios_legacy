@@ -143,28 +143,4 @@
      [UIColor setAccentOverrideColor:accentColor];
 }
 
-- (void)assertAmbigousLayout:(UIView *)view file:(const char[])file line:(NSUInteger)line
-{
-    if (view.hasAmbiguousLayout) {
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wundeclared-selector"
-        NSString *description = [NSString stringWithFormat:@"Ambigous layout in view: %@ trace: \n%@", view, [view performSelector:@selector(_autolayoutTrace)]];
-#pragma clang diagnostic pop
-        NSString *filePath = [NSString stringWithFormat:@"%s", file];
-        [self recordFailureWithDescription:description inFile:filePath atLine:line expected:YES];
-    }
-}
-
-- (BOOL)assertEmptyFrame:(UIView *)view file:(const char[])file line:(NSUInteger)line
-{
-    if (CGRectIsEmpty(view.frame)) {
-        NSString *description = @"View frame can not be empty";
-        NSString *filePath = [NSString stringWithFormat:@"%s", file];
-        [self recordFailureWithDescription:description inFile:filePath atLine:line expected:YES];
-        return YES;
-    }
-    
-    return NO;
-}
-
 @end
