@@ -18,38 +18,12 @@
 
 
 #import "ZMSnapshotTestCase.h"
+#import "ZMSnapshotTestCase+Internal.h"
 @import PureLayout;
 #import <WireSyncEngine/WireSyncEngine.h>
 #import "UIColor+WAZExtensions.h"
 #import "ColorScheme.h"
 #import "Wire-Swift.h"
-
-static CGSize const ZMDeviceSizeIPhone4 = (CGSize){ .width = 320, .height = 480 };
-static CGSize const ZMDeviceSizeIPhone5 = (CGSize){ .width = 320, .height = 568 };
-static CGSize const ZMDeviceSizeIPhone6 = (CGSize){ .width = 375, .height = 667 };
-static CGSize const ZMDeviceSizeIPhone6Plus = (CGSize){ .width = 414, .height = 736 };
-static CGSize const ZMDeviceSizeIPadPortrait = (CGSize){ .width = 768, .height = 1024 };
-static CGSize const ZMDeviceSizeIPadLandscape = (CGSize){ .width = 1024, .height = 768 };
-
-static NSArray<NSValue *> *phoneSizes(void) {
-    return @[
-             [NSValue valueWithCGSize:ZMDeviceSizeIPhone4],
-             [NSValue valueWithCGSize:ZMDeviceSizeIPhone5],
-             [NSValue valueWithCGSize:ZMDeviceSizeIPhone6],
-             [NSValue valueWithCGSize:ZMDeviceSizeIPhone6Plus]
-             ];
-}
-
-static NSArray<NSValue *> *tabletSizes(void) {
-    return @[
-             [NSValue valueWithCGSize:ZMDeviceSizeIPadPortrait],
-             [NSValue valueWithCGSize:ZMDeviceSizeIPadLandscape]
-             ];
-}
-
-static NSArray<NSValue *> *deviceSizes(void) {
-    return [phoneSizes() arrayByAddingObjectsFromArray:tabletSizes()];
-}
 
 static NSSet<NSNumber *> *phoneWidths(void) {
     return [phoneSizes() mapWithBlock:^NSNumber *(NSValue *boxedSize) {
@@ -199,15 +173,30 @@ static NSSet<NSNumber *> *phoneWidths(void) {
 
 - (void)verifyView:(UIView *)view extraLayoutPass:(BOOL)extraLayoutPass file:(const char[])file line:(NSUInteger)line
 {
-    [self verifyView:view extraLayoutPass:extraLayoutPass tolerance:0 file:file line:line identifier:nil];
+    [self verifyView:view extraLayoutPass:extraLayoutPass tolerance:0 file:file line:line identifier:nil deviceName:nil];
+}
+
+- (void)verifyView:(UIView *)view
+   extraLayoutPass:(BOOL)extraLayoutPass
+              file:(const char[])file
+              line:(NSUInteger)line
+        deviceName:(NSString *)deviceName
+{
+    [self verifyView:view extraLayoutPass:extraLayoutPass tolerance:0 file:file line:line identifier:nil deviceName:deviceName];
 }
 
 - (void)verifyView:(UIView *)view extraLayoutPass:(BOOL)extraLayoutPass file:(const char[])file line:(NSUInteger)line identifier:(NSString *)identifier
 {
-    [self verifyView:view extraLayoutPass:extraLayoutPass tolerance:0 file:file line:line identifier:identifier];
+    [self verifyView:view extraLayoutPass:extraLayoutPass tolerance:0 file:file line:line identifier:identifier deviceName:nil];
 }
 
-- (void)verifyView:(UIView *)view extraLayoutPass:(BOOL)extraLayoutPass tolerance:(float)tolerance file:(const char[])file line:(NSUInteger)line identifier:(NSString *)identifier
+- (void)verifyView:(UIView *)view
+   extraLayoutPass:(BOOL)extraLayoutPass
+         tolerance:(float)tolerance
+              file:(const char[])file
+              line:(NSUInteger)line
+        identifier:(NSString *)identifier
+        deviceName:(NSString *)deviceName
 {
     UIView *container = [self containerViewWithView:view];
     if ([self assertEmptyFrame:container file:file line:line]) {
@@ -216,11 +205,18 @@ static NSSet<NSNumber *> *phoneWidths(void) {
     NSString *finalIdentifier = @"";
     
     if (0 == identifier.length) {
-        finalIdentifier = NSStringFromCGSize(view.bounds.size);
+        if (deviceName.length > 0) {
+            finalIdentifier = deviceName;
+        }
     }
     else {
-        finalIdentifier = [NSString stringWithFormat:@"%@-%@", identifier, NSStringFromCGSize(view.bounds.size)];
+        if (deviceName.length > 0) {
+            finalIdentifier = [NSString stringWithFormat:@"%@-%@", identifier, deviceName];
+        } else {
+            finalIdentifier = [NSString stringWithFormat:@"%@", identifier];
+        }
     }
+
     if (extraLayoutPass) {
         [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.1]];
     }
@@ -239,11 +235,6 @@ static NSSet<NSNumber *> *phoneWidths(void) {
     }
     
     return NO;
-}
-
-- (void)verifyViewInAllDeviceSizes:(UIView *)view  extraLayoutPass:(BOOL)extraLayoutPass file:(const char[])file line:(NSUInteger)line
-{
-    [self verifyViewInAllDeviceSizes:view extraLayoutPass:extraLayoutPass file:file line:line configurationBlock:nil];
 }
 
 - (void)verifyViewInAllPhoneWidths:(UIView *)view extraLayoutPass:(BOOL)extraLayoutPass file:(const char[])file line:(NSUInteger)line
@@ -279,50 +270,6 @@ static NSSet<NSNumber *> *phoneWidths(void) {
     }
     
     FBSnapshotVerifyView(container, @(width).stringValue)
-}
-
-- (void)verifyViewInAllPhoneSizes:(UIView *)view
-                  extraLayoutPass:(BOOL)extraLayoutPass
-                             file:(const char[])file
-                             line:(NSUInteger)line
-               configurationBlock:(void (^)(UIView * view))configuration;
-{
-    [self verifyView:view extraLayoutPass:extraLayoutPass inSizes:phoneSizes() file:file line:line configuration:^(UIView *view,__unused BOOL isPad) {
-        if (nil != configuration) {
-            configuration(view);
-        }
-    }];
-}
-
-
-- (void)verifyViewInAllDeviceSizes:(UIView *)view
-                   extraLayoutPass:(BOOL)extraLayoutPass
-                              file:(const char[])file
-                              line:(NSUInteger)line
-                configurationBlock:(void (^)(UIView * view, BOOL isPad))configuration
-{
-    [self verifyView:view extraLayoutPass:extraLayoutPass inSizes:deviceSizes() file:file line:line configuration:configuration];
-}
-
-- (void)verifyView:(UIView *)view
-   extraLayoutPass:(BOOL)extraLayoutPass
-           inSizes:(NSArray <NSValue *>*)sizes
-              file:(const char[])file
-              line:(NSUInteger)line
-     configuration:(void (^)(UIView * view, BOOL isPad))configuration
-{
-    for (NSValue *value in sizes) {
-        CGSize size = value.CGSizeValue;
-        view.frame = CGRectMake(0, 0, size.width, size.height);
-        if (nil != configuration) {
-            BOOL iPad = CGSizeEqualToSize(size, ZMDeviceSizeIPadLandscape) || CGSizeEqualToSize(size, ZMDeviceSizeIPadPortrait);
-            [UIView performWithoutAnimation:^{
-                configuration(view, iPad);
-            }];
-        }
-        
-        [self verifyView:view extraLayoutPass:extraLayoutPass file:file line:line];
-    }
 }
 
 @end

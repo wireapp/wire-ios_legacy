@@ -34,6 +34,16 @@ class SenderNameCellComponent: UIView {
         set { indicatorView.image = newValue }
     }
 
+    var indicatorLabel: String? {
+        get {
+            return indicatorView.accessibilityLabel
+        }
+        set {
+            indicatorView.accessibilityLabel = newValue
+            indicatorView.isAccessibilityElement = newValue != nil
+        }
+    }
+
     // MARK: - Initialization
 
     override init(frame: CGRect) {

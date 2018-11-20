@@ -23,7 +23,6 @@
 #import "MessageAction.h"
 
 @protocol ConversationCellDelegate;
-@class ConversationMessageSectionController;
 @class AnyConversationMessageCellDescription;
 @class ConversationCellActionController;
 @class UpsideDownTableView;

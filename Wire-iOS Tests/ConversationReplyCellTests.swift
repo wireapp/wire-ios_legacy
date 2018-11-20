@@ -22,10 +22,6 @@ import WireLinkPreview
 
 class ConversationReplyCellTests: CoreDataSnapshotTestCase {
 
-    override func setUp() {
-        super.setUp()
-    }
-
     override func tearDown() {
         super.tearDown()
         defaultImageCache.cache.removeAllObjects()
@@ -99,6 +95,94 @@ class ConversationReplyCellTests: CoreDataSnapshotTestCase {
         - Jan 4, final copy in review
         - Jan 15, final layout with copy
         - Jan 20, release on website
+        """
+
+        let message = MockMessageFactory.textMessage(withText: markdownWithTitle)!
+        message.sender = selfUser
+        message.conversation = otherUserConversation
+
+        // WHEN
+        let cell = makeCell(for: message)
+
+        // THEN
+        verifyInAllPhoneWidths(view: cell)
+        verifyAccessibilityIdentifiers(cell, message)
+    }
+
+    func testThatItRendersTextMoreThan4Lines() {
+        // GIVEN
+        let markdownWithTitle = """
+        In den alten Zeiten,
+        wo das Wünschen noch geholfen hat,
+        lebte ein König, dessen Töchter waren alle schön;
+        aber die jüngste war so schön, daß die Sonne selber,
+        die doch so vieles gesehen hat,
+        """
+
+        let message = MockMessageFactory.textMessage(withText: markdownWithTitle)!
+        message.sender = selfUser
+        message.conversation = otherUserConversation
+
+        // WHEN
+        let cell = makeCell(for: message)
+
+        // THEN
+        verifyInAllPhoneWidths(view: cell)
+        verifyAccessibilityIdentifiers(cell, message)
+    }
+
+    func testThatItRendersMarkdownWithMoreThan4Lines() {
+        // GIVEN
+        let markdownWithTitle = """
+        # Summary of Today’s Meeting Upcoming due dates:
+        - Jan 4, final copy in review
+        - Jan 15, final layout with copy
+        - Jan 20, release on website
+        - Jan 31, review
+        """
+
+        let message = MockMessageFactory.textMessage(withText: markdownWithTitle)!
+        message.sender = selfUser
+        message.conversation = otherUserConversation
+
+        // WHEN
+        let cell = makeCell(for: message)
+
+        // THEN
+        verifyInAllPhoneWidths(view: cell)
+        verifyAccessibilityIdentifiers(cell, message)
+    }
+
+    func testThatItRendersMarkdownWithLastLineClipped() {
+        // GIVEN
+        let markdownWithTitle = """
+        # Summary of Today’s Meeting Upcoming due dates:
+        - Jan 4, final copy in review
+        - Jan 15, final layout with copy
+        - Jan 20, release on website for internal testers and QA teams
+        - Jan 31, review
+        """
+
+        let message = MockMessageFactory.textMessage(withText: markdownWithTitle)!
+        message.sender = selfUser
+        message.conversation = otherUserConversation
+
+        // WHEN
+        let cell = makeCell(for: message)
+
+        // THEN
+        verifyInAllPhoneWidths(view: cell)
+        verifyAccessibilityIdentifiers(cell, message)
+    }
+
+    func testThatItRendersMarkdownWith5LinesAndForthLineClipped() {
+        // GIVEN
+        let markdownWithTitle = """
+        # Summary of Today’s Meeting Upcoming due dates:
+        - Jan 4, final copy in review
+        - Jan 15, final layout with copy
+        - Jan 20, release on website for internal testers and QA teams
+        - Jan 31, review
         """
 
         let message = MockMessageFactory.textMessage(withText: markdownWithTitle)!
