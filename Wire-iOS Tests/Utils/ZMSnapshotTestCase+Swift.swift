@@ -185,13 +185,29 @@ extension ZMSnapshotTestCase {
         XCTAssert(noErrors, "\(String(describing: errorDescription))", file:file, line:line)
     }
 
-//    func snapshotVerify(view: UIView,
-//                        finalIdentifier: String? = nil,
-//                        file: StaticString = #file,
-//                        line: UInt = #line
-//        ) {
-//        snapshotVerify(view: view, identifier: finalIdentifier, suffix: FBSnapshotTestCaseDefaultSuffixes(), tolerance: 0)
-//    }
+    func assertAmbigousLayout(_ view: UIView,
+                              file: StaticString = #file,
+                              line: UInt = #line) {
+        if view.hasAmbiguousLayout,
+            let trace = view._autolayoutTrace() {
+            let description = "Ambigous layout in view: \(view) trace: \n\(trace)"
+
+            recordFailure(withDescription: description, inFile: "\(file)", atLine: Int(line), expected: true)
+
+        }
+    }
+
+    func assertEmptyFrame(_ view: UIView,
+                          file: StaticString = #file,
+                          line: UInt = #line) -> Bool {
+        if view.frame.isEmpty {
+            let description = "View frame can not be empty"
+            let filePath = "\(file)"
+            recordFailure(withDescription: description, inFile: filePath, atLine: Int(line), expected: true)
+            return true
+        }
+        return false
+    }
 }
 
 extension ZMSnapshotTestCase {
@@ -206,7 +222,7 @@ extension ZMSnapshotTestCase {
                 line: UInt = #line
         ) {
         let container = containerView(with: view)
-        if assertEmptyFrame(container, file: file.utf8SignedStart(), line: line) {
+        if assertEmptyFrame(container, file: file, line: line) {
             return
         }
 
@@ -237,7 +253,7 @@ extension ZMSnapshotTestCase {
                        file: file,
                        line: line)
 
-        assertAmbigousLayout(container, file: file.utf8SignedStart(), line: line)
+        assertAmbigousLayout(container, file: file, line: line)
     }
 
     func verifyView(view: UIView, extraLayoutPass: Bool, width: CGFloat,
@@ -255,7 +271,7 @@ extension ZMSnapshotTestCase {
         container.layoutIfNeeded()
         container.setNeedsLayout()
         container.layoutIfNeeded()
-        if assertEmptyFrame(container, file: file.utf8SignedStart(), line: line) {
+        if assertEmptyFrame(container, file: file, line: line) {
             return
         }
 
@@ -270,7 +286,7 @@ extension ZMSnapshotTestCase {
     /// the common iPhones in Portrait and iPad in Landscape and Portrait.
     /// This method only makes sense for views that will be on presented fullscreen.
     func verifyInAllPhoneWidths(view: UIView, file: StaticString = #file, line: UInt = #line) {
-        assertAmbigousLayout(view, file: file.utf8SignedStart(), line: line)
+        assertAmbigousLayout(view, file: file, line: line)
         for width: CGFloat in phoneWidths() {
             verifyView(view: view, extraLayoutPass: false, width: width, file: file, line: line)
         }
@@ -279,7 +295,7 @@ extension ZMSnapshotTestCase {
     func verifyInAllTabletWidths(view: UIView,
                                  extraLayoutPass: Bool = false,
                                  file: StaticString = #file, line: UInt = #line) {
-        assertAmbigousLayout(view, file: file.utf8SignedStart(), line: line)
+        assertAmbigousLayout(view, file: file, line: line)
         for value: NSValue in tabletSizes() {
             verifyView(view: view, extraLayoutPass: extraLayoutPass, width: value.cgSizeValue.width, file: file, line: line)
         }

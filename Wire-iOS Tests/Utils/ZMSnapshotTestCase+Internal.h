@@ -25,10 +25,17 @@ static CGSize const ZMDeviceSizeIPhoneXR = (CGSize){ .width = 414, .height = 896
 static CGSize const ZMDeviceSizeIPadPortrait = (CGSize){ .width = 768, .height = 1024 };
 static CGSize const ZMDeviceSizeIPadLandscape = (CGSize){ .width = 1024, .height = 768 };
 
-@interface ZMSnapshotTestCase ()
 
-- (BOOL)assertEmptyFrame:(UIView * _Nullable)view file:(const char[_Nullable])file line:(NSUInteger)line;
+// expose _autolayoutTrace for Swift
+@interface UIView (LayoutDebugging)
 
-- (void)assertAmbigousLayout:(UIView * _Nullable)view file:(const char[_Nullable])file line:(NSUInteger)line;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wundeclared-selector"
+
+- (_Nullable id)recursiveDescription;
+
+- (_Nullable id)_autolayoutTrace;
+
+#pragma clang diagnostic pop
 
 @end
