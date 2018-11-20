@@ -20,7 +20,6 @@
 import Foundation
 @testable import Wire
 
-
 extension UITableViewCell: UITableViewDelegate, UITableViewDataSource {
     @objc public func wrapInTableView() -> UITableView {
         let tableView = UITableView(frame: self.bounds, style: .plain)
@@ -44,7 +43,7 @@ extension UITableViewCell: UITableViewDelegate, UITableViewDataSource {
         
         NSLayoutConstraint.activate([
             tableView.heightAnchor.constraint(equalToConstant: size.height)
-        ])
+            ])
         
         self.layoutSubviews()
         return tableView
@@ -86,7 +85,7 @@ extension ZMSnapshotTestCase {
         "iPhone-5_5_Inch": ZMDeviceSizeIPhone6Plus,
         "iPhone-5_8_Inch": ZMDeviceSizeIPhoneX,
         "iPhone-6_5_Inch": ZMDeviceSizeIPhoneXR
-        ]
+    ]
 
     /// we should add iPad Pro sizes
     static let tabletScreenSizes: [String:CGSize] = [
@@ -121,7 +120,11 @@ extension ZMSnapshotTestCase {
     }
     
 
-    func verifyInAllPhoneSizes( view: UIView, extraLayoutPass: Bool, file: StaticString = #file, line: UInt = #line, configurationBlock configuration: Configuration?) {
+    func verifyInAllPhoneSizes( view: UIView,
+                                extraLayoutPass: Bool,
+                                file: StaticString = #file,
+                                line: UInt = #line,
+                                configurationBlock configuration: Configuration?) {
         verifyMultipleSize(view: view, extraLayoutPass: extraLayoutPass, inSizes: ZMSnapshotTestCase.phoneScreenSizes, configuration: { view, isPad in
             if let configuration = configuration {
                 configuration(view)
@@ -164,8 +167,31 @@ extension ZMSnapshotTestCase {
                 NSValue(cgSize: ZMDeviceSizeIPhone6),
                 NSValue(cgSize: ZMDeviceSizeIPhone6Plus),
                 NSValue(cgSize: ZMDeviceSizeIPhoneX),     ///same size as iPhone Xs Max
-                NSValue(cgSize: ZMDeviceSizeIPhoneXR)]
+            NSValue(cgSize: ZMDeviceSizeIPhoneXR)]
     }
+
+    func snapshotVerify(view: UIView,
+                        identifier: String? = nil,
+                        suffix: NSOrderedSet? = FBSnapshotTestCaseDefaultSuffixes(),
+                        tolerance: CGFloat = 0,
+                        file: StaticString = #file,
+                        line: UInt = #line) {
+        let errorDescription = snapshotVerifyViewOrLayer(view,
+                                                         identifier: identifier,
+                                                         suffixes: suffix,
+                                                         tolerance: tolerance, defaultReferenceDirectory: (FB_REFERENCE_IMAGE_DIR))
+
+        let noErrors: Bool = errorDescription == nil
+        XCTAssert(noErrors, "\(String(describing: errorDescription))", file:file, line:line)
+    }
+
+//    func snapshotVerify(view: UIView,
+//                        finalIdentifier: String? = nil,
+//                        file: StaticString = #file,
+//                        line: UInt = #line
+//        ) {
+//        snapshotVerify(view: view, identifier: finalIdentifier, suffix: FBSnapshotTestCaseDefaultSuffixes(), tolerance: 0)
+//    }
 }
 
 extension ZMSnapshotTestCase {
@@ -173,7 +199,7 @@ extension ZMSnapshotTestCase {
     /// Performs an assertion with the given view and the recorded snapshot.
     func verify(view: UIView,
                 extraLayoutPass: Bool = false,
-                tolerance: Float = 0,
+                tolerance: CGFloat = 0,
                 identifier: String? = nil,
                 deviceName: String? = nil,
                 file: StaticString = #file,
@@ -204,12 +230,12 @@ extension ZMSnapshotTestCase {
             RunLoop.current.run(until: Date(timeIntervalSinceNow: 0.1))
         }
 
-        snapshotVerifyViewOrLayer(withOptions: container,
-                                             identifier: finalIdentifier,
-                                             suffix: FBSnapshotTestCaseDefaultSuffixes(),
-                                             tolerance: tolerance)
-        
-
+        snapshotVerify(view: container,
+                       identifier: finalIdentifier,
+                       suffix: FBSnapshotTestCaseDefaultSuffixes(),
+                       tolerance: tolerance,
+                       file: file,
+                       line: line)
 
         assertAmbigousLayout(container, file: file.utf8SignedStart(), line: line)
     }
@@ -237,7 +263,7 @@ extension ZMSnapshotTestCase {
             RunLoop.current.run(until: Date(timeIntervalSinceNow: 0.1))
         }
 
-        snapshotVerifyView(container, finalIdentifier:"\(Int(width))")
+        snapshotVerify(view: container, identifier:"\(Int(width))", file: file, line: line)
     }
 
     /// Performs multiple assertions with the given view using the screen sizes of
@@ -286,7 +312,10 @@ extension ZMSnapshotTestCase {
         verifyInAllPhoneSizes(view: view, extraLayoutPass: extraLayoutPass, file: file, line: line, configurationBlock: configurationBlock)
     }
     
-    func verifyInAllColorSchemes(view: UIView, tolerance: Float = 0, file: StaticString = #file, line: UInt = #line) {
+    func verifyInAllColorSchemes(view: UIView,
+                                 tolerance: CGFloat = 0,
+                                 file: StaticString = #file,
+                                 line: UInt = #line) {
         if var themeable = view as? Themeable {
             themeable.colorSchemeVariant = .light
             snapshotBackgroundColor = .white

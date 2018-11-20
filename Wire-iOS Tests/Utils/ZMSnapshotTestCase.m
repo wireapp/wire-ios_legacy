@@ -155,27 +155,6 @@
     }
 }
 
-- (void)snapshotVerifyViewOrLayerWithOptions:(UIView *)container
-                                  identifier:(NSString *)identifier
-                                      suffix:(NSOrderedSet *)suffix
-                                   tolerance:(float)tolerance
-//                                        file:(const char[])file
-//                                        line:(NSUInteger)line
-{
-    NSString *errorDescription = [self snapshotVerifyViewOrLayer:container identifier:identifier suffixes:suffix tolerance:tolerance defaultReferenceDirectory:(@ FB_REFERENCE_IMAGE_DIR)];
-    BOOL noErrors = (errorDescription == nil);
-    XCTAssertTrue(noErrors, @"%@", errorDescription);
-}
-
-- (void)snapshotVerifyView:(UIView *)container finalIdentifier:(NSString *)finalIdentifier
-{
-    [self snapshotVerifyViewOrLayerWithOptions:container
-                                    identifier:finalIdentifier
-                                        suffix:FBSnapshotTestCaseDefaultSuffixes()
-                                     tolerance:0];
-}
-
-
 - (BOOL)assertEmptyFrame:(UIView *)view file:(const char[])file line:(NSUInteger)line
 {
     if (CGRectIsEmpty(view.frame)) {
