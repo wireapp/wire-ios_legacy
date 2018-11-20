@@ -39,3 +39,8 @@ static CGSize const ZMDeviceSizeIPadLandscape = (CGSize){ .width = 1024, .height
 #pragma clang diagnostic pop
 
 @end
+
+@interface ZMSnapshotTestCase ()
+@property (nonatomic, nullable) NSURL * documentsDirectory;
+@end
+

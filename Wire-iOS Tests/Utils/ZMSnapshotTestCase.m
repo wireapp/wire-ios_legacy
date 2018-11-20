@@ -25,12 +25,6 @@
 #import "Wire-Swift.h"
 
 
-
-@interface ZMSnapshotTestCase ()
-@property (nonatomic) NSURL *documentsDirectory;
-@end
-
-
 @implementation ZMSnapshotTestCase
 
 - (BOOL)needsCaches
@@ -38,6 +32,7 @@
     return NO;
 }
 
+/*
 - (void)setUp
 {
     [super setUp];
@@ -87,6 +82,7 @@
         [self setUpCaches];
     }
 }
+*/
 
 - (void)tearDown
 {
@@ -107,11 +103,13 @@
     [super tearDown];
 }
 
+/*
 - (void)setUpCaches
 {
     self.uiMOC.zm_userImageCache = [[UserImageLocalCache alloc] initWithLocation:nil];
     self.uiMOC.zm_fileAssetCache = [[FileAssetCache alloc] initWithLocation:nil];
 }
+ */
 
 - (void)wipeCaches
 {

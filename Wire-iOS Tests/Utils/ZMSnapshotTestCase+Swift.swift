@@ -101,6 +101,50 @@ extension ZMSnapshotTestCase {
         return phoneScreenSizes.merging(tabletScreenSizes) { $1 }
     }()
 
+    override open func setUp() {
+        super.setUp()
+
+        XCTAssertEqual(UIScreen.main.scale, 2, "Snapshot tests need to be run on a device with a 2x scale")
+        if UIDevice.current.systemVersion.compare("10", options: .numeric, range: nil, locale: .current) == .orderedAscending {
+            XCTFail("Snapshot tests need to be run on a device running at least iOS 10")
+        }
+        AppRootViewController.configureAppearance()
+        UIView.setAnimationsEnabled(false)
+        accentColor = .vividRed
+        snapshotBackgroundColor = UIColor.clear
+
+        // Enable when the design of the view has changed in order to update the reference snapshots
+        #if RECORDING_SNAPSHOTS
+        recordMode = true
+        #endif
+
+        usesDrawViewHierarchyInRect = true
+        let contextExpectation: XCTestExpectation = expectation(description: "It should create a context")
+        StorageStack.reset()
+        StorageStack.shared.createStorageAsInMemory = true
+        do {
+            documentsDirectory = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+        } catch {
+            XCTAssertNil(error, "Unexpected error \(error)")
+        }
+
+        StorageStack.shared.createManagedObjectContextDirectory(accountIdentifier: UUID(), applicationContainer: documentsDirectory!, dispatchGroup: nil, startedMigrationCallback: nil, completionHandler: { contextDirectory in
+            self.uiMOC = contextDirectory.uiContext
+            contextExpectation.fulfill()
+        })
+
+        wait(for: [contextExpectation], timeout: 0.1)
+
+        if needsCaches {
+            setUpCaches()
+        }
+    }
+
+    func setUpCaches() {
+        uiMOC.zm_userImageCache = UserImageLocalCache(location: nil)
+        uiMOC.zm_fileAssetCache = FileAssetCache(location: nil)
+    }
+
     func verifyMultipleSize(view: UIView, extraLayoutPass: Bool, inSizes sizes: [String:CGSize], configuration: ConfigurationWithDeviceType?,
                             file: StaticString = #file, line: UInt = #line) {
         for (deviceName, size) in sizes {
@@ -181,9 +225,9 @@ extension ZMSnapshotTestCase {
                         file: StaticString = #file,
                         line: UInt = #line) {
         if let errorDescription = snapshotVerifyViewOrLayer(view,
-                                                         identifier: identifier,
-                                                         suffixes: suffix,
-                                                         tolerance: tolerance, defaultReferenceDirectory: (FB_REFERENCE_IMAGE_DIR)) {
+                                                            identifier: identifier,
+                                                            suffixes: suffix,
+                                                            tolerance: tolerance, defaultReferenceDirectory: (FB_REFERENCE_IMAGE_DIR)) {
 
             XCTFail("\(errorDescription)", file:file, line:line)
         } else {
