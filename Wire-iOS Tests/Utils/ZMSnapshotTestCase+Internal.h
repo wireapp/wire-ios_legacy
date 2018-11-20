@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-///TODO: move to private header
 static CGSize const ZMDeviceSizeIPhone5 = (CGSize){ .width = 320, .height = 568 };
 static CGSize const ZMDeviceSizeIPhone6 = (CGSize){ .width = 375, .height = 667 };
 static CGSize const ZMDeviceSizeIPhone6Plus = (CGSize){ .width = 414, .height = 736 };
