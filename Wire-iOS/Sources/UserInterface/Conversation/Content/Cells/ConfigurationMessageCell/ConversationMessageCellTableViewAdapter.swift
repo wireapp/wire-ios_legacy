@@ -289,12 +289,12 @@ class ConversationMessageCellTableViewAdapter<C: ConversationMessageCellDescript
 extension UITableView {
 
     func register<C: ConversationMessageCellDescription>(cell: C.Type) {
-        let reuseIdentifier = String(describing: C.View.self)
+        let reuseIdentifier = String(describing: C.self)
         register(ConversationMessageCellTableViewAdapter<C>.self, forCellReuseIdentifier: reuseIdentifier)
     }
 
     func dequeueConversationCell<C: ConversationMessageCellDescription>(with description: C, for indexPath: IndexPath) -> ConversationMessageCellTableViewAdapter<C> {
-        let reuseIdentifier = String(describing: C.View.self)
+        let reuseIdentifier = String(describing: C.self)
 
         let cell = dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as Any as! ConversationMessageCellTableViewAdapter<C>
 
