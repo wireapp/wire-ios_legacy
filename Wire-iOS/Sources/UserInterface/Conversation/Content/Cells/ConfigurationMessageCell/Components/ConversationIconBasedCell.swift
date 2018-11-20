@@ -103,6 +103,10 @@ class ConversationIconBasedCell: UIView, TTTAttributedLabelDelegate {
         containerWidthConstraint = imageContainer.widthAnchor.constraint(equalToConstant: UIView.conversationLayoutMargins.left)
         labelTrailingConstraint = textLabel.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant: -UIView.conversationLayoutMargins.right)
         labelTopConstraint = textLabel.topAnchor.constraint(equalTo: topAnchor)
+        
+        // We want the content view to at least be below the image container
+        let contentViewTopConstraint = contentView.topAnchor.constraint(equalTo: imageContainer.bottomAnchor)
+        contentViewTopConstraint.priority = .defaultHigh
 
         NSLayoutConstraint.activate([
             // imageContainer
@@ -131,9 +135,10 @@ class ConversationIconBasedCell: UIView, TTTAttributedLabelDelegate {
 
             // contentView
             contentView.leadingAnchor.constraint(equalTo: textLabel.leadingAnchor),
-            contentView.topAnchor.constraint(equalTo: textLabel.bottomAnchor),
+            contentView.topAnchor.constraint(greaterThanOrEqualTo: textLabel.bottomAnchor),
             contentView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            contentView.bottomAnchor.constraint(equalTo: bottomAnchor)
+            contentView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            contentViewTopConstraint
         ])
     }
 
