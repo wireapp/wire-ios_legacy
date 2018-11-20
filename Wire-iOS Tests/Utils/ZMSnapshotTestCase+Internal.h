@@ -29,16 +29,17 @@ static CGSize const ZMDeviceSizeIPadLandscape = (CGSize){ .width = 1024, .height
 // expose _autolayoutTrace for Swift
 @interface UIView (LayoutDebugging)
 
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wundeclared-selector"
-
 - (_Nullable id)recursiveDescription;
 
 - (_Nullable id)_autolayoutTrace;
 
-#pragma clang diagnostic pop
-
 @end
+
+// expose PersonName.stringsToPersonNames for Swift
+@interface PersonName (stringsToPersonNames)
++ (NSCache<NSString *, PersonName *> * _Nonnull)stringsToPersonNames SWIFT_WARN_UNUSED_RESULT;
+@end
+
 
 @interface ZMSnapshotTestCase ()
 @property (nonatomic, nullable) NSURL * documentsDirectory;

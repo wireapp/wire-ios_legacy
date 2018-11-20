@@ -54,9 +54,9 @@ do { \
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ZMSnapshotTestCase : FBSnapshotTestCase
+@interface ZMSnapshotTestCase : FBSnapshotTestCase ///TODO: swift
 
-@property (nonatomic) NSManagedObjectContext *uiMOC;
+@property (nonatomic, null_unspecified) NSManagedObjectContext *uiMOC;
 
 /// If YES the uiMOC will have image and file caches. Defaults to NO.
 @property (nonatomic, readonly) BOOL needsCaches;
@@ -66,7 +66,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, nullable) UIColor *snapshotBackgroundColor;
 
 /// If this is set the accent color will be overriden for the tests
-@property (nonatomic) ZMAccentColor accentColor;
+//@property (nonatomic) ZMAccentColor accentColor;
 
 @end
 

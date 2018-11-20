@@ -38,6 +38,13 @@ static ZMAccentColor overridenAccentColor = ZMAccentColorUndefined;
     }];
 }
 
++ (ZMAccentColor)accentOverrideColor {
+    id<ZMEditableUser> editableSelf = [ZMUser editableSelfUser];
+
+    return editableSelf.accentColorValue;
+}
+
+
 + (ZMAccentColor)indexedAccentColor
 {
 	// priority 1: overriden color

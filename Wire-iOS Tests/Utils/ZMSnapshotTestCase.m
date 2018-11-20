@@ -84,6 +84,7 @@
 }
 */
 
+/*
 - (void)tearDown
 {
     if (self.needsCaches) {
@@ -102,6 +103,7 @@
 
     [super tearDown];
 }
+*/
 
 /*
 - (void)setUpCaches
@@ -111,6 +113,7 @@
 }
  */
 
+/*
 - (void)wipeCaches
 {
     [self.uiMOC.zm_fileAssetCache wipeCaches];
@@ -118,7 +121,8 @@
     
     [PersonName.stringsToPersonNames removeAllObjects];
 }
-
+*/
+/*
 - (void)removeContentsOfDocumentsDirectory
 {
     NSError *error = nil;
@@ -140,5 +144,5 @@
 {
      [UIColor setAccentOverrideColor:accentColor];
 }
-
+*/
 @end

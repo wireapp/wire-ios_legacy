@@ -19,6 +19,7 @@
 
 import Foundation
 @testable import Wire
+//@testable import WireDataModel
 
 extension UITableViewCell: UITableViewDelegate, UITableViewDataSource {
     @objc public func wrapInTableView() -> UITableView {
@@ -140,6 +141,57 @@ extension ZMSnapshotTestCase {
         }
     }
 
+    override open func tearDown() {
+        if needsCaches {
+            wipeCaches()
+        }
+        // Needs to be called before setting self.documentsDirectory to nil.
+        removeContentsOfDocumentsDirectory()
+        uiMOC = nil
+        documentsDirectory = nil
+        snapshotBackgroundColor = nil
+        UIColor.setAccentOverride(.undefined)
+        UIView.setAnimationsEnabled(true)
+        super.tearDown()
+    }
+
+    func removeContentsOfDocumentsDirectory() {
+        do {
+        let contents = try FileManager.default.contentsOfDirectory(at: documentsDirectory!, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
+
+            for content: URL in contents {
+                do {
+                    try FileManager.default.removeItem(at: content)
+                } catch {
+                XCTAssertNil(error, "Unexpected error \(error)")
+                }
+            }
+
+        } catch {
+        XCTAssertNil(error, "Unexpected error \(error)")
+        }
+
+    }
+
+    var accentColor: ZMAccentColor {
+        set {
+            UIColor.setAccentOverride(accentColor)
+        }
+        get {
+            return UIColor.accentOverrideColor()
+        }
+    }
+
+//    func setAccentColor(_ accentColor: ZMAccentColor) {
+//        UIColor.setAccentOverride(accentColor)
+//    }
+
+    func wipeCaches() {
+        uiMOC.zm_fileAssetCache.wipeCaches()
+        uiMOC.zm_userImageCache.wipeCache()
+        PersonName.stringsToPersonNames().removeAllObjects()
+    }
+    
     func setUpCaches() {
         uiMOC.zm_userImageCache = UserImageLocalCache(location: nil)
         uiMOC.zm_fileAssetCache = FileAssetCache(location: nil)
