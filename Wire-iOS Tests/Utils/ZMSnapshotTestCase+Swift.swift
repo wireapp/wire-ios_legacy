@@ -180,13 +180,15 @@ extension ZMSnapshotTestCase {
                         tolerance: CGFloat = 0,
                         file: StaticString = #file,
                         line: UInt = #line) {
-        let errorDescription = snapshotVerifyViewOrLayer(view,
+        if let errorDescription = snapshotVerifyViewOrLayer(view,
                                                          identifier: identifier,
                                                          suffixes: suffix,
-                                                         tolerance: tolerance, defaultReferenceDirectory: (FB_REFERENCE_IMAGE_DIR))
+                                                         tolerance: tolerance, defaultReferenceDirectory: (FB_REFERENCE_IMAGE_DIR)) {
 
-        let noErrors: Bool = errorDescription == nil
-        XCTAssert(noErrors, "\(String(describing: errorDescription))", file:file, line:line)
+            XCTFail("\(errorDescription)", file:file, line:line)
+        } else {
+            XCTAssert(true)
+        }
     }
 
     func assertAmbigousLayout(_ view: UIView,
