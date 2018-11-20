@@ -192,11 +192,11 @@ class ConversationMessageCellTableViewAdapter<C: ConversationMessageCellDescript
         menu.setMenuVisible(true, animated: true)
     }
     
-    // MARK: - Single Tap To View Details
+    // MARK: - Single Tap Action
     
     @objc private func onSingleTap(_ gestureRecognizer: UITapGestureRecognizer) {
         if gestureRecognizer.state == .recognized {
-            presentDetails()
+            cellDescription?.actionController?.performSingleTapAction()
         }
     }
 
@@ -210,14 +210,6 @@ class ConversationMessageCellTableViewAdapter<C: ConversationMessageCellDescript
 
     // MARK: - Standard Actions
     
-    private func presentDetails() {
-        guard cellDescription?.supportsActions == true, let message = cellDescription?.message else {
-            return
-        }
-        
-        cellDescription?.delegate?.conversationCell?(cellView, didSelect: .present, for: message)
-    }
-
     private func likeMessage() {
         guard cellDescription?.supportsActions == true else {
             return

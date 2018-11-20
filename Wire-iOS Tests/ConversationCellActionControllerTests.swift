@@ -20,6 +20,36 @@ import XCTest
 @testable import Wire
 
 class ConversationCellActionControllerTests: CoreDataSnapshotTestCase {
+    
+    // MARK: - Single Tap Action
+    
+    func testThatImageIsPresentedOnSingleTapWhenDownloaded() {
+        // GIVEN
+        let message = MockMessageFactory.imageMessage(with: image(inTestBundleNamed: "unsplash_burger.jpg"))!
+        message.sender = otherUser
+        message.conversation = otherUserConversation
+        
+        // WHEN
+        let actionController = ConversationCellActionController(responder: nil, message: message)
+        let singleTapAction = actionController.singleTapAction
+        
+        // THEN
+        XCTAssertEqual(singleTapAction, .present)
+    }
+    
+    func testThatImageIgnoresSingleTapWhenNotDownloaded() {
+        // GIVEN
+        let message = MockMessageFactory.imageMessage(with: nil)!
+        message.sender = otherUser
+        message.conversation = otherUserConversation
+        
+        // WHEN
+        let actionController = ConversationCellActionController(responder: nil, message: message)
+        let singleTapAction = actionController.singleTapAction
+        
+        // THEN
+        XCTAssertNil(singleTapAction)
+    }
 
     // MARK: - Reply
 
