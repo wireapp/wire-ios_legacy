@@ -50,6 +50,17 @@ class MessageToolboxViewTests: CoreDataSnapshotTestCase {
         verify(view: sut)
     }
 
+    func testThatItConfiguresWithTimestamp_Unselected_NoLikers() {
+        // GIVEN
+        message.backingUsersReaction = [:]
+
+        // WHEN
+        sut.configureForMessage(message, forceShowTimestamp: false, animated: false)
+
+        // THEN
+        verify(view: sut)
+    }
+
     func testThatItConfiguresWithOtherLiker() {
         // GIVEN
         let users = MockUser.mockUsers().first(where: { !$0.isSelfUser })!

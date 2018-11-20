@@ -76,6 +76,24 @@
     XCTAssertEqualObjects(resolvedString, targetString);
 }
 
+- (void)testThatSubstitutionInTailRangeWorks {
+    // Given
+    NSString *targetString = @"<3 Lorem Ipsum Dolor 😈Ame😊 😊";
+
+    id classMock = OCMClassMock([EmoticonSubstitutionConfiguration class]);
+    EmoticonSubstitutionConfiguration *config = [EmoticonSubstitutionConfigurationMocks configurationFromFile:@"emo-test-03.json"];
+    OCMStub([classMock sharedInstance]).andReturn(config);
+
+    NSString *testString = @"<3 Lorem Ipsum Dolor }:-)Ame:) :)";
+    NSMutableString *resolvedString = [testString mutableCopy];
+
+    // When
+    [resolvedString resolveEmoticonShortcutsInRange:NSMakeRange(20, 13)];
+
+    // Then
+    XCTAssertEqualObjects(resolvedString, targetString);
+}
+
 - (void)testThatSubstitutionInMiddleRangeWorks {
     // Given
     NSString *targetString = @"Hello, my darling!😊 I love you <3!";

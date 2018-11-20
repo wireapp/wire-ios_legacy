@@ -133,7 +133,7 @@ class SenderCellComponent: UIView {
     }
     
     private func attributedName(for kind: TextKind, string: String) -> NSAttributedString {
-        return string.attributedString.addAttributes([.foregroundColor : kind.color, .font : kind.font], toSubstring: string)
+        return NSAttributedString(string: string, attributes: [.foregroundColor : kind.color, .font : kind.font])
     }
     
 }
