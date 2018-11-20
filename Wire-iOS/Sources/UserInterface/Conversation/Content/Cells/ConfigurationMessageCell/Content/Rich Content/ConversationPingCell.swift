@@ -20,17 +20,112 @@ import Foundation
 
 class ConversationPingCell: ConversationIconBasedCell, ConversationMessageCell {
 
+    typealias AnimationBlock = (_ animationBlock: Any, _ reps: Int) -> Void
+    var animationBlock: AnimationBlock?
+    var isAnimationRunning = false
+    var configuration: Configuration?
+    
     struct Configuration {
         let pingColor: UIColor
         let pingText: NSAttributedString
+        var message: ZMConversationMessage?
     }
 
     func configure(with object: Configuration, animated: Bool) {
+        self.configuration = object
         attributedText = object.pingText
         imageView.image = UIImage(for: .ping, fontSize: 20, color: object.pingColor)
         lineView.isHidden = true
     }
 
+    @objc func startAnimation() {
+        self.animationBlock = createAnimationBlock()
+        animate()
+    }
+    
+    func stopAnimation() {
+        self.isAnimationRunning = false
+        self.imageView.alpha = 1.0
+    }
+    
+    func animate() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            
+            if !self.canAnimationContinue(for: self.configuration?.message) {
+                return
+            }
+            
+            self.isAnimationRunning = true
+            self.imageView.alpha = 1.0
+            self.animationBlock!(self.animationBlock as Any, 2);
+        }
+    }
+    
+    func createAnimationBlock() -> AnimationBlock {
+        
+        let animationBlock: AnimationBlock = { [weak self] otherBlock, reps in
+            guard let `self` = self else { return }
+            self.imageView.alpha = 1.0
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.05, execute: {
+                
+                if !self.canAnimationContinue(for: self.configuration?.message) {
+                    return
+                }
+                
+                self.isAnimationRunning = true
+                
+                UIView.wr_animate(easing: .easeOutExpo, duration: 0.7, animations: {
+                    self.imageView.transform = CGAffineTransform(scaleX: 1.8, y: 1.8)
+                }, completion: { (completed) in
+                    self.imageView.transform = .identity
+                })
+                
+                UIView.wr_animate(easing: .easeOutQuart, duration: 0.7, animations: {
+                    self.imageView.alpha = 0.0
+                }, completion: { (completed) in
+                    if reps > 0 {
+                        (otherBlock as! AnimationBlock)(self.animationBlock as Any, reps - 1)
+                    } else {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.35, execute: {
+                             if !self.canAnimationContinue(for: self.configuration?.message) {
+                                return
+                             }
+                            
+                            UIView.wr_animate(easing: .easeOutQuart, duration: 0.55, animations: {
+                                self.imageView.alpha = 1.0
+                            }, completion: { (completed) in
+                                self.stopAnimation()
+                            })
+                        })
+                    }
+                })
+            })
+            
+        }
+        
+        return animationBlock
+    }
+    
+    func canAnimationContinue(for message: ZMConversationMessage?) -> Bool {
+        return message?.knockMessageData?.isEqual(configuration?.message?.knockMessageData) ?? false
+    }
+    
+    func willDisplay() {
+        
+        if let conversation = self.configuration?.message?.conversation,
+            let lastMessage = conversation.conversationWindow(withSize: 30).messages.firstObject as? ZMConversationMessage,
+            let message = self.configuration?.message {
+            
+            let isLastMessage = lastMessage.isEqual(message)
+            let result = message.serverTimestamp?.compare(conversation.lastServerTimeStamp ?? Date())
+            let isMessageOlder = result != .orderedAscending
+            
+            if isLastMessage && message.isKnock && isMessageOlder {
+                startAnimation()
+            }
+        }
+    }
 }
 
 class ConversationPingCellDescription: ConversationMessageCellDescription {
@@ -64,7 +159,7 @@ class ConversationPingCellDescription: ConversationMessageCellDescription {
             ]).adding(font: .mediumSemiboldFont, to: senderText)
 
         let pingColor: UIColor = message.isObfuscated ? .accentDimmedFlat : sender.accentColor
-        self.configuration = View.Configuration(pingColor: pingColor, pingText: text)
+        self.configuration = View.Configuration(pingColor: pingColor, pingText: text, message: message)
         actionController = nil
     }
 
