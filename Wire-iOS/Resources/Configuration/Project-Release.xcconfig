@@ -19,8 +19,6 @@
 #include "../../../Configuration/Release.xcconfig"
 #include "Project-Base.xcconfig"
 
-ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon
-
 // Deployment
 //
 COPY_PHASE_STRIP = YES
