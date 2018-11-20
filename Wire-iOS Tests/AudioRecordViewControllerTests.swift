@@ -54,13 +54,17 @@ class AudioRecordViewControllerTests: ZMSnapshotTestCase {
         delegate = nil
         super.tearDown()
     }
-    
+
+    func verify() {
+        verifyInAllPhoneWidths(view: sut.prepareForSnapshot(), tolerance: 0.1)
+    }
+
     func testThatItRendersViewControllerCorrectlyState_Recording() {
         // when
         XCTAssertEqual(sut.recordingState, AudioRecordState.recording)
         
         // then
-        verifyInAllPhoneWidths(view: sut.prepareForSnapshot())
+        verify()
     }
     
     func testThatItRendersViewControllerCorrectlyState_Recording_WithTime() {
@@ -68,7 +72,7 @@ class AudioRecordViewControllerTests: ZMSnapshotTestCase {
         XCTAssertEqual(sut.recordingState, AudioRecordState.recording)
         
         // then
-        verifyInAllPhoneWidths(view: sut.prepareForSnapshot())
+        verify()
     }
     
     func testThatItRendersViewControllerCorrectlyState_Recording_WithTime_Visualization() {
@@ -79,7 +83,7 @@ class AudioRecordViewControllerTests: ZMSnapshotTestCase {
         sut.setOverlayState(.expanded(0), animated: false)
         
         // then
-        verifyInAllPhoneWidths(view: sut.prepareForSnapshot())
+        verify()
     }
     
     func testThatItRendersViewControllerCorrectlyState_Recording_WithTime_Visualization_Full() {
@@ -90,7 +94,7 @@ class AudioRecordViewControllerTests: ZMSnapshotTestCase {
         sut.setOverlayState(.expanded(1), animated: false)
         
         // then
-        verifyInAllPhoneWidths(view: sut.prepareForSnapshot())
+        verify()
     }
     
     func testThatItRendersViewControllerCorrectlyState_FinishedRecording() {
@@ -98,7 +102,7 @@ class AudioRecordViewControllerTests: ZMSnapshotTestCase {
         sut.recordingState = .finishedRecording
         
         // then
-        verifyInAllPhoneWidths(view: sut.prepareForSnapshot())
+        verify()
     }
     
     func testThatItRendersViewControllerCorrectlyState_FinishedRecording_Playing() {
@@ -108,7 +112,7 @@ class AudioRecordViewControllerTests: ZMSnapshotTestCase {
         sut.updateTimeLabel(343)
 
         // then
-        verifyInAllPhoneWidths(view: sut.prepareForSnapshot())
+        verify()
     }
         
     func testThatItCallsItsDelegateWhenCancelIsPressed() {

@@ -132,7 +132,11 @@ extension ZMSnapshotTestCase {
         }, file: file, line: line)
     }
 
-    func verifyInAllDeviceSizes(view: UIView, extraLayoutPass: Bool, file: StaticString = #file, line: UInt = #line, configurationBlock configuration: ConfigurationWithDeviceType? = nil) {
+    func verifyInAllDeviceSizes(view: UIView,
+                                extraLayoutPass: Bool = false,
+                                file: StaticString = #file,
+                                line: UInt = #line,
+                                configurationBlock configuration: ConfigurationWithDeviceType? = nil) {
 
         verifyMultipleSize(view: view, extraLayoutPass: extraLayoutPass, inSizes: ZMSnapshotTestCase.deviceScreenSizes,
                            configuration: configuration,
@@ -256,7 +260,10 @@ extension ZMSnapshotTestCase {
         assertAmbigousLayout(container, file: file, line: line)
     }
 
-    func verifyView(view: UIView, extraLayoutPass: Bool, width: CGFloat,
+    func verifyView(view: UIView,
+                    extraLayoutPass: Bool = false,
+                    width: CGFloat,
+                    tolerance: CGFloat = 0,
                     file: StaticString = #file,
                     line: UInt = #line
         ) {
@@ -279,16 +286,27 @@ extension ZMSnapshotTestCase {
             RunLoop.current.run(until: Date(timeIntervalSinceNow: 0.1))
         }
 
-        snapshotVerify(view: container, identifier:"\(Int(width))", file: file, line: line)
+        snapshotVerify(view: container,
+                       identifier:"\(Int(width))",
+            tolerance: tolerance,
+            file: file,
+            line: line)
     }
 
     /// Performs multiple assertions with the given view using the screen sizes of
     /// the common iPhones in Portrait and iPad in Landscape and Portrait.
     /// This method only makes sense for views that will be on presented fullscreen.
-    func verifyInAllPhoneWidths(view: UIView, file: StaticString = #file, line: UInt = #line) {
+    func verifyInAllPhoneWidths(view: UIView,
+                                tolerance: CGFloat = 0,
+                                file: StaticString = #file,
+                                line: UInt = #line) {
         assertAmbigousLayout(view, file: file, line: line)
         for width: CGFloat in phoneWidths() {
-            verifyView(view: view, extraLayoutPass: false, width: width, file: file, line: line)
+            verifyView(view: view,
+                       width: width,
+                       tolerance: tolerance,
+                       file: file,
+                       line: line)
         }
     }
 
@@ -302,7 +320,7 @@ extension ZMSnapshotTestCase {
     }
 
     func verifyInAllDeviceSizes(view: UIView, file: StaticString = #file, line: UInt = #line, configuration: @escaping (UIView, Bool) -> () = { _, _ in }) {
-        verifyInAllDeviceSizes(view: view, extraLayoutPass: false, file: file, line: line, configurationBlock: configuration)
+        verifyInAllDeviceSizes(view: view, file: file, line: line, configurationBlock: configuration)
     }
 
 
