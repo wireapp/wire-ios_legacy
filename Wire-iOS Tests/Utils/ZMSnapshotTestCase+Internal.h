@@ -16,17 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-@import WireDataModel;
-
-static CGSize const ZMDeviceSizeIPhone5 = (CGSize){ .width = 320, .height = 568 };
-static CGSize const ZMDeviceSizeIPhone6 = (CGSize){ .width = 375, .height = 667 };
-static CGSize const ZMDeviceSizeIPhone6Plus = (CGSize){ .width = 414, .height = 736 };
-static CGSize const ZMDeviceSizeIPhoneX = (CGSize){ .width = 375, .height = 812 };
-static CGSize const ZMDeviceSizeIPhoneXR = (CGSize){ .width = 414, .height = 896 };
-
-static CGSize const ZMDeviceSizeIPadPortrait = (CGSize){ .width = 768, .height = 1024 };
-static CGSize const ZMDeviceSizeIPadLandscape = (CGSize){ .width = 1024, .height = 768 };
-
 
 // expose _autolayoutTrace for Swift
 @interface UIView (LayoutDebugging)

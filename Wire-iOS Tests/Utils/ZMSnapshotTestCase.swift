@@ -80,6 +80,15 @@ extension StaticString {
 
 // MARK: - verify the snapshots in multiple devices
 open class ZMSnapshotTestCase: FBSnapshotTestCase {
+
+    static let ZMDeviceSizeIPhone5 = CGSize(width: 320, height: 568)
+    static let ZMDeviceSizeIPhone6 = CGSize(width: 375, height: 667)
+    static let ZMDeviceSizeIPhone6Plus = CGSize(width: 414, height: 736)
+    static let ZMDeviceSizeIPhoneX = CGSize(width: 375, height: 812)
+    static let ZMDeviceSizeIPhoneXR = CGSize(width: 414, height: 896)
+    static let ZMDeviceSizeIPadPortrait = CGSize(width: 768, height: 1024)
+    static let ZMDeviceSizeIPadLandscape = CGSize(width: 1024, height: 768)
+
     static let phoneScreenSizes: [String:CGSize] = [
         "iPhone-4_0_Inch": ZMDeviceSizeIPhone5,
         "iPhone-4_7_Inch": ZMDeviceSizeIPhone6,
@@ -214,7 +223,7 @@ open class ZMSnapshotTestCase: FBSnapshotTestCase {
         for (deviceName, size) in sizes {
             view.frame = CGRect(origin: .zero, size: size)
             if let configuration = configuration {
-                let iPad = size.equalTo(ZMDeviceSizeIPadLandscape) || size.equalTo(ZMDeviceSizeIPadPortrait)
+                let iPad = size.equalTo(ZMSnapshotTestCase.ZMDeviceSizeIPadLandscape) || size.equalTo(ZMSnapshotTestCase.ZMDeviceSizeIPadPortrait)
                 UIView.performWithoutAnimation({
                     configuration(view, iPad)
                 })
@@ -265,7 +274,7 @@ extension ZMSnapshotTestCase {
     }
 
     func tabletSizes() -> [NSValue] {
-        return [NSValue(cgSize: ZMDeviceSizeIPadPortrait), NSValue(cgSize: ZMDeviceSizeIPadLandscape)]
+        return [NSValue(cgSize: ZMSnapshotTestCase.ZMDeviceSizeIPadPortrait), NSValue(cgSize: ZMSnapshotTestCase.ZMDeviceSizeIPadLandscape)]
     }
 
     func phoneWidths() -> Set<CGFloat> {
@@ -275,11 +284,11 @@ extension ZMSnapshotTestCase {
     }
 
     func phoneSizes() -> [NSValue] {
-        return [NSValue(cgSize: ZMDeviceSizeIPhone5),
-                NSValue(cgSize: ZMDeviceSizeIPhone6),
-                NSValue(cgSize: ZMDeviceSizeIPhone6Plus),
-                NSValue(cgSize: ZMDeviceSizeIPhoneX),     ///same size as iPhone Xs Max
-            NSValue(cgSize: ZMDeviceSizeIPhoneXR)]
+        return [NSValue(cgSize: ZMSnapshotTestCase.ZMDeviceSizeIPhone5),
+                NSValue(cgSize: ZMSnapshotTestCase.ZMDeviceSizeIPhone6),
+                NSValue(cgSize: ZMSnapshotTestCase.ZMDeviceSizeIPhone6Plus),
+                NSValue(cgSize: ZMSnapshotTestCase.ZMDeviceSizeIPhoneX),     ///same size as iPhone Xs Max
+                NSValue(cgSize: ZMSnapshotTestCase.ZMDeviceSizeIPhoneXR)]
     }
 
     func snapshotVerify(view: UIView,
@@ -436,7 +445,7 @@ extension ZMSnapshotTestCase {
 
     /// return the smallest iPhone screen size that Wire app supports
     private var defaultIPhoneSize: CGSize {
-        return ZMDeviceSizeIPhone5
+        return ZMSnapshotTestCase.ZMDeviceSizeIPhone5
     }
 
     func verifyInIPhoneSize(view: UIView, file: StaticString = #file, line: UInt = #line) {
