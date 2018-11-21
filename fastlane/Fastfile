@@ -13,6 +13,7 @@ platform :ios do
     lane :build do
         scan(
             scheme: "Wire-iOS",
+            configuration: "Development",
             build_for_testing: true,
             devices: ["iPhone 7"],
             code_coverage: true,
@@ -27,6 +28,7 @@ platform :ios do
     lane :test do
         scan(
             scheme: "Wire-iOS",
+            configuration: "Development",
             test_without_building: true,
             devices: ["iPhone 7"],
             code_coverage: true,
