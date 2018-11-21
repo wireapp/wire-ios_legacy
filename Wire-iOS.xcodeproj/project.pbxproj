@@ -3163,6 +3163,7 @@
 		F114466421A2D8CC00B5FEBA /* ExtensionComponents-Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "ExtensionComponents-Release.xcconfig"; sourceTree = "<group>"; };
 		F114466521A2D8CC00B5FEBA /* ExtensionComponents-Development.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "ExtensionComponents-Development.xcconfig"; sourceTree = "<group>"; };
 		F114466821A2F8BC00B5FEBA /* Tests-Development.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Tests-Development.xcconfig"; sourceTree = "<group>"; };
+		F114466921A56F3200B5FEBA /* Version.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Version.xcconfig; sourceTree = "<group>"; };
 		F1199D2F1FC8490A0070FAC3 /* TeamCreationState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeamCreationState.swift; sourceTree = "<group>"; };
 		F1199D301FC8490A0070FAC3 /* TeamCreationStepController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeamCreationStepController.swift; sourceTree = "<group>"; };
 		F1199D3B1FC849440070FAC3 /* BackButtonDescription.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackButtonDescription.swift; sourceTree = "<group>"; };
@@ -6633,6 +6634,7 @@
 			isa = PBXGroup;
 			children = (
 				F1B24235219B2C9B00F7035C /* Warnings.xcconfig */,
+				F114466921A56F3200B5FEBA /* Version.xcconfig */,
 				F1B2422F219B2C9B00F7035C /* Project-Base.xcconfig */,
 				F1B24230219B2C9B00F7035C /* Project-Development.xcconfig */,
 				F1B24236219B2C9B00F7035C /* Project-Release.xcconfig */,
