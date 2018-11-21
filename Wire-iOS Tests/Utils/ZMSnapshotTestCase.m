@@ -17,6 +17,7 @@
 // 
 
 
+/*
 #import "ZMSnapshotTestCase.h"
 #import "ZMSnapshotTestCase+Internal.h"
 #import <WireSyncEngine/WireSyncEngine.h>
@@ -27,122 +28,11 @@
 
 @implementation ZMSnapshotTestCase
 
+
 - (BOOL)needsCaches
 {
     return NO;
 }
 
-/*
-- (void)setUp
-{
-    [super setUp];
-    XCTAssertEqual(UIScreen.mainScreen.scale, 2, @"Snapshot tests need to be run on a device with a 2x scale");
-
-    if ([UIDevice.currentDevice.systemVersion compare:@"10" options:NSNumericSearch] == NSOrderedAscending) {
-        XCTFail(@"Snapshot tests need to be run on a device running at least iOS 10");
-    }
-
-    [AppRootViewController configureAppearance];
-    [UIView setAnimationsEnabled:NO];
-    self.accentColor = ZMAccentColorVividRed;
-    self.snapshotBackgroundColor = UIColor.clearColor;
-    
-    // Enable when the design of the view has changed in order to update the reference snapshots
-#ifdef RECORDING_SNAPSHOTS
-    self.recordMode = YES;
-#endif
-    
-    self.usesDrawViewHierarchyInRect = YES;
-
-    XCTestExpectation *contextExpectation = [self expectationWithDescription:@"It should create a context"];
-
-    [StorageStack reset];
-    StorageStack.shared.createStorageAsInMemory = YES;
-    NSError *error = nil;
-    self.documentsDirectory = [NSFileManager.defaultManager URLForDirectory:NSDocumentDirectory
-                                                                   inDomain:NSUserDomainMask
-                                                          appropriateForURL:nil
-                                                                     create:YES
-                                                                      error:&error];
-
-    XCTAssertNil(error, @"Unexpected error %@", error);
-
-    [StorageStack.shared createManagedObjectContextDirectoryForAccountIdentifier:NSUUID.UUID
-                                                            applicationContainer:self.documentsDirectory
-                                                                   dispatchGroup:nil
-                                                        startedMigrationCallback:nil
-                                                               completionHandler:^(ManagedObjectContextDirectory * _Nonnull contextDirectory) {
-                                                                   self.uiMOC = contextDirectory.uiContext;
-                                                                   [contextExpectation fulfill];
-                                                               }];
-
-    [self waitForExpectations:@[contextExpectation] timeout:0.1];
-    
-    if (self.needsCaches) {
-        [self setUpCaches];
-    }
-}
-*/
-
-/*
-- (void)tearDown
-{
-    if (self.needsCaches) {
-        [self wipeCaches];
-    }
-    
-    // Needs to be called before setting self.documentsDirectory to nil.
-    [self removeContentsOfDocumentsDirectory];
-
-    self.uiMOC = (id _Nonnull)nil;
-    self.documentsDirectory = nil;
-    self.snapshotBackgroundColor = nil;
-
-    [UIColor setAccentOverrideColor:ZMAccentColorUndefined];
-    [UIView setAnimationsEnabled:YES];
-
-    [super tearDown];
-}
-*/
-
-/*
-- (void)setUpCaches
-{
-    self.uiMOC.zm_userImageCache = [[UserImageLocalCache alloc] initWithLocation:nil];
-    self.uiMOC.zm_fileAssetCache = [[FileAssetCache alloc] initWithLocation:nil];
-}
- */
-
-/*
-- (void)wipeCaches
-{
-    [self.uiMOC.zm_fileAssetCache wipeCaches];
-    [self.uiMOC.zm_userImageCache wipeCache];
-    
-    [PersonName.stringsToPersonNames removeAllObjects];
-}
-*/
-/*
-- (void)removeContentsOfDocumentsDirectory
-{
-    NSError *error = nil;
-    NSArray<NSURL *> *contents = [NSFileManager.defaultManager contentsOfDirectoryAtURL:self.documentsDirectory
-                                                             includingPropertiesForKeys:nil
-                                                                                options:NSDirectoryEnumerationSkipsHiddenFiles
-                                                                                  error:&error];
-
-    XCTAssertNil(error, @"Unexpected error %@", error);
-
-    for (NSURL *content in contents) {
-        error = nil;
-        [NSFileManager.defaultManager removeItemAtURL:content error:&error];
-        XCTAssertNil(error, @"Unexpected error %@", error);
-    }
-}
-
-- (void)setAccentColor:(ZMAccentColor)accentColor
-{
-     [UIColor setAccentOverrideColor:accentColor];
-}
-*/
 @end
+ */

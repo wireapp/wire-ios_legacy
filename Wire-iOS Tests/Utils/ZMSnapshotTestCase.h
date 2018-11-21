@@ -54,20 +54,20 @@ do { \
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ZMSnapshotTestCase : FBSnapshotTestCase ///TODO: swift
+//@interface ZMSnapshotTestCase : FBSnapshotTestCase ///TODO: swift
 
-@property (nonatomic, null_unspecified) NSManagedObjectContext *uiMOC;
+//@property (nonatomic, null_unspecified) NSManagedObjectContext *uiMOC;
+//
+///// If YES the uiMOC will have image and file caches. Defaults to NO.
+////@property (nonatomic, readonly) BOOL needsCaches;
+//
+///// The color of the container view in which the view to
+///// be snapshot will be placed, defaults to UIColor.lightGrayColor
+//@property (nonatomic, nullable) UIColor *snapshotBackgroundColor;
+//
+///// If this is set the accent color will be overriden for the tests
+////@property (nonatomic) ZMAccentColor accentColor;
 
-/// If YES the uiMOC will have image and file caches. Defaults to NO.
-@property (nonatomic, readonly) BOOL needsCaches;
-
-/// The color of the container view in which the view to
-/// be snapshot will be placed, defaults to UIColor.lightGrayColor
-@property (nonatomic, nullable) UIColor *snapshotBackgroundColor;
-
-/// If this is set the accent color will be overriden for the tests
-//@property (nonatomic) ZMAccentColor accentColor;
-
-@end
+//@end
 
 NS_ASSUME_NONNULL_END

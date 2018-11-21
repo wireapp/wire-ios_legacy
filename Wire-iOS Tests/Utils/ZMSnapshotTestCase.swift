@@ -19,7 +19,6 @@
 
 import Foundation
 @testable import Wire
-//@testable import WireDataModel
 
 extension UITableViewCell: UITableViewDelegate, UITableViewDataSource {
     @objc public func wrapInTableView() -> UITableView {
@@ -79,7 +78,7 @@ extension StaticString {
 }
 
 // MARK: - verify the snapshots in multiple devices
-extension ZMSnapshotTestCase {
+open class ZMSnapshotTestCase: FBSnapshotTestCase {
     static let phoneScreenSizes: [String:CGSize] = [
         "iPhone-4_0_Inch": ZMDeviceSizeIPhone5,
         "iPhone-4_7_Inch": ZMDeviceSizeIPhone6,
@@ -101,6 +100,31 @@ extension ZMSnapshotTestCase {
     private static var deviceScreenSizes: [String:CGSize] = {
         return phoneScreenSizes.merging(tabletScreenSizes) { $1 }
     }()
+
+    var uiMOC: NSManagedObjectContext!
+
+    /// The color of the container view in which the view to
+    /// be snapshot will be placed, defaults to UIColor.lightGrayColor
+    var snapshotBackgroundColor: UIColor?
+
+    /// If YES the uiMOC will have image and file caches. Defaults to NO.
+    var needsCaches: Bool {
+        get {
+            return false
+        }
+    }
+
+    /// If this is set the accent color will be overriden for the tests
+    var accentColor: ZMAccentColor {
+        set {
+            UIColor.setAccentOverride(accentColor)
+        }
+        get {
+            return UIColor.accentOverrideColor()
+        }
+    }
+
+    var documentsDirectory: URL?
 
     override open func setUp() {
         super.setUp()
@@ -172,19 +196,6 @@ extension ZMSnapshotTestCase {
         }
 
     }
-
-    var accentColor: ZMAccentColor {
-        set {
-            UIColor.setAccentOverride(accentColor)
-        }
-        get {
-            return UIColor.accentOverrideColor()
-        }
-    }
-
-//    func setAccentColor(_ accentColor: ZMAccentColor) {
-//        UIColor.setAccentOverride(accentColor)
-//    }
 
     func wipeCaches() {
         uiMOC.zm_fileAssetCache.wipeCaches()

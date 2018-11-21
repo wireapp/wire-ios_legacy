@@ -41,7 +41,7 @@ static CGSize const ZMDeviceSizeIPadLandscape = (CGSize){ .width = 1024, .height
 @end
 
 
-@interface ZMSnapshotTestCase ()
-@property (nonatomic, nullable) NSURL * documentsDirectory;
-@end
+//@interface ZMSnapshotTestCase ()
+//@property (nonatomic, nullable) NSURL * documentsDirectory;
+//@end
 
