@@ -182,7 +182,6 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
     _leftViewControllerRevealed = YES;
     self.openPercentage = 1;
     self.horizontalPanner = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(onHorizontalPan:)];
-//    self.horizontalPanner.cancelsTouchesInView = NO;
     self.horizontalPanner.delegate = self;
     [self.view addGestureRecognizer:self.horizontalPanner];
 }
