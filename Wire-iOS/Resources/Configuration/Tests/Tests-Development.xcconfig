@@ -18,9 +18,16 @@
 
 #include "../Project-Development.xcconfig"
 
-TEST_HOST = $(BUILT_PRODUCTS_DIR)/Wire.app/Wire
+// Linking
 BUNDLE_LOADER = $(TEST_HOST)
+
+// Packaging
 INFOPLIST_FILE = Wire-iOS Tests/Info.plist
 PRODUCT_NAME = $(TARGET_NAME)
 PRODUCT_BUNDLE_IDENTIFIER = $(WIRE_BUNDLE_ID).$(PRODUCT_NAME:rfc1034identifier)
+
+// Swift Compiler - General
 SWIFT_OBJC_BRIDGING_HEADER = Wire-iOS Tests/Wire-iOS-Tests-Bridging-Header.h
+
+// Testing
+TEST_HOST = $(BUILT_PRODUCTS_DIR)/Wire.app/Wire

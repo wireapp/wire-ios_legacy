@@ -14,16 +14,26 @@
 // 
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see http://www.gnu.org/licenses/.
-// 
+//
 
+// Custom
 SHARE_EXTENSION_BUNDLE_SUFFIX = extension-share
-SWIFT_OBJC_BRIDGING_HEADER = Wire-iOS Share Extension/Wire-iOS Share Extension-Bridging-Header.h
 
+// Build Options
 APPLICATION_EXTENSION_API_ONLY = YES
+
+// Deployment
 SKIP_INSTALL = YES
+
+// Packaging
 DEFINES_MODULE = NO
 INFOPLIST_FILE = Wire-iOS Share Extension/Info.plist
 PRODUCT_NAME = $(TARGET_NAME)
 PRODUCT_BUNDLE_IDENTIFIER = $(WIRE_BUNDLE_ID).$(SHARE_EXTENSION_BUNDLE_SUFFIX)
+
+// Signing
 CODE_SIGN_ENTITLEMENTS = $(CODE_SIGN_ENTITLEMENTS_SHARE_EXT)
 PROVISIONING_PROFILE_SPECIFIER = $(PROVISIONING_PROFILE_SPECIFIER_SHARE_EXT)
+
+// Swift Compiler - General
+SWIFT_OBJC_BRIDGING_HEADER = Wire-iOS Share Extension/Wire-iOS Share Extension-Bridging-Header.h
