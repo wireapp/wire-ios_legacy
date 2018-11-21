@@ -25,7 +25,6 @@
 #import "Analytics.h"
 #import "ParticipantDeviceCell.h"
 #import "NSString+Fingerprint.h"
-#import "ZMSnapshotTestCase.h"
 #import "ZMSnapshotTestCase+Internal.h"
 #import "MockUser.h"
 #import "SplitViewController.h"

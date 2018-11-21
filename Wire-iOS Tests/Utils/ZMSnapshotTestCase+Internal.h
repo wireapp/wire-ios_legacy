@@ -40,8 +40,3 @@ static CGSize const ZMDeviceSizeIPadLandscape = (CGSize){ .width = 1024, .height
 + (NSCache<NSString *, PersonName *> * _Nonnull)stringsToPersonNames SWIFT_WARN_UNUSED_RESULT;
 @end
 
-
-//@interface ZMSnapshotTestCase ()
-//@property (nonatomic, nullable) NSURL * documentsDirectory;
-//@end
-

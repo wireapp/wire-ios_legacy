@@ -117,7 +117,7 @@ open class ZMSnapshotTestCase: FBSnapshotTestCase {
     /// If this is set the accent color will be overriden for the tests
     var accentColor: ZMAccentColor {
         set {
-            UIColor.setAccentOverride(accentColor)
+            UIColor.setAccentOverride(newValue)
         }
         get {
             return UIColor.accentOverrideColor()
