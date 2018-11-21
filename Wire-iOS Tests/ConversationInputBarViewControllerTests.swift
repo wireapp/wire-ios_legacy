@@ -134,7 +134,7 @@ final class ConversationInputBarViewControllerTests: CoreDataSnapshotTestCase {
 
 // MARK: - Ephemeral indicator button
 extension ConversationInputBarViewControllerTests {
-    func testEphemeralIndicatorButton(){
+    func testEphemeralIndicatorButton(){ ///TODO: broken constraint? the placeholder label's position.y is not always the same
         // GIVEN
         sut = ConversationInputBarViewController(conversation: otherUserConversation)
         sut.viewDidLoad()
