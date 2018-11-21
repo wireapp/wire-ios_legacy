@@ -19,6 +19,7 @@
 
 import Foundation
 @testable import Wire
+import FBSnapshotTestCase
 
 extension UITableViewCell: UITableViewDelegate, UITableViewDataSource {
     @objc public func wrapInTableView() -> UITableView {
@@ -181,18 +182,18 @@ open class ZMSnapshotTestCase: FBSnapshotTestCase {
 
     func removeContentsOfDocumentsDirectory() {
         do {
-        let contents = try FileManager.default.contentsOfDirectory(at: documentsDirectory!, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
+            let contents = try FileManager.default.contentsOfDirectory(at: documentsDirectory!, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
 
             for content: URL in contents {
                 do {
                     try FileManager.default.removeItem(at: content)
                 } catch {
-                XCTAssertNil(error, "Unexpected error \(error)")
+                    XCTAssertNil(error, "Unexpected error \(error)")
                 }
             }
 
         } catch {
-        XCTAssertNil(error, "Unexpected error \(error)")
+            XCTAssertNil(error, "Unexpected error \(error)")
         }
 
     }
