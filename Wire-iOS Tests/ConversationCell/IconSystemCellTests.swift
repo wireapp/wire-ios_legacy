@@ -51,12 +51,6 @@ final class IconSystemCellTests: ZMSnapshotTestCase {
         return cell.wrapInTableView()
     }
 
-
-    func testCannotDecryptMessage() {
-        let wrappedCell: UITableView? = IconSystemCellTests.wrappedCell(for: .decryptionFailed, users: 0, clients: 0, config: nil)
-        verify(view: wrappedCell!)
-    }
-
     func testNewClient_oneUser_oneClient() {
         let wrappedCell: UITableView? = IconSystemCellTests.wrappedCell(for: .newClient, users: 1, clients: 1, config: nil)
         verify(view: wrappedCell!)
