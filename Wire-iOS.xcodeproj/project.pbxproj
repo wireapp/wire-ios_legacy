@@ -8579,12 +8579,12 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		168A16B51D9597C2005CFA6C /* Debug */ = {
+		168A16B51D9597C2005CFA6C /* Development */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F1B24239219B2C9B00F7035C /* Share-Extension-Development.xcconfig */;
 			buildSettings = {
 			};
-			name = Debug;
+			name = Development;
 		};
 		168A16B61D9597C2005CFA6C /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -8593,12 +8593,12 @@
 			};
 			name = Release;
 		};
-		1EE85C6A1B5F96FC008E084B /* Debug */ = {
+		1EE85C6A1B5F96FC008E084B /* Development */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F114466521A2D8CC00B5FEBA /* ExtensionComponents-Development.xcconfig */;
 			buildSettings = {
 			};
-			name = Debug;
+			name = Development;
 		};
 		1EE85C6B1B5F96FC008E084B /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -8607,11 +8607,11 @@
 			};
 			name = Release;
 		};
-		8F42C556199244A700288E4D /* Debug */ = {
+		8F42C556199244A700288E4D /* Development */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 			};
-			name = Debug;
+			name = Development;
 		};
 		8F42C557199244A700288E4D /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -8619,12 +8619,12 @@
 			};
 			name = Release;
 		};
-		8F42C559199244A700288E4D /* Debug */ = {
+		8F42C559199244A700288E4D /* Development */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F1B24232219B2C9B00F7035C /* Wire-iOS-Development.xcconfig */;
 			buildSettings = {
 			};
-			name = Debug;
+			name = Development;
 		};
 		8F42C55A199244A700288E4D /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -8633,12 +8633,12 @@
 			};
 			name = Release;
 		};
-		BACB885A1AF7C48900DDCDB0 /* Debug */ = {
+		BACB885A1AF7C48900DDCDB0 /* Development */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F114466821A2F8BC00B5FEBA /* Tests-Development.xcconfig */;
 			buildSettings = {
 			};
-			name = Debug;
+			name = Development;
 		};
 		BACB885B1AF7C48900DDCDB0 /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -8653,7 +8653,7 @@
 		168A16B41D9597C2005CFA6C /* Build configuration list for PBXNativeTarget "Wire Share Extension" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				168A16B51D9597C2005CFA6C /* Debug */,
+				168A16B51D9597C2005CFA6C /* Development */,
 				168A16B61D9597C2005CFA6C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -8662,7 +8662,7 @@
 		1EE85C701B5F96FC008E084B /* Build configuration list for PBXNativeTarget "WireExtensionComponents" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				1EE85C6A1B5F96FC008E084B /* Debug */,
+				1EE85C6A1B5F96FC008E084B /* Development */,
 				1EE85C6B1B5F96FC008E084B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -8671,7 +8671,7 @@
 		8F42C533199244A700288E4D /* Build configuration list for PBXProject "Wire-iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				8F42C556199244A700288E4D /* Debug */,
+				8F42C556199244A700288E4D /* Development */,
 				8F42C557199244A700288E4D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -8680,7 +8680,7 @@
 		8F42C558199244A700288E4D /* Build configuration list for PBXNativeTarget "Wire-iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				8F42C559199244A700288E4D /* Debug */,
+				8F42C559199244A700288E4D /* Development */,
 				8F42C55A199244A700288E4D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -8689,7 +8689,7 @@
 		BACB88591AF7C48900DDCDB0 /* Build configuration list for PBXNativeTarget "Wire-iOS-Tests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				BACB885A1AF7C48900DDCDB0 /* Debug */,
+				BACB885A1AF7C48900DDCDB0 /* Development */,
 				BACB885B1AF7C48900DDCDB0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
