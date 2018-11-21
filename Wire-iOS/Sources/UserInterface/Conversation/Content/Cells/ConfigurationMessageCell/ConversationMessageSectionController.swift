@@ -130,10 +130,6 @@ extension IndexSet {
             let fileCell = ConversationLegacyCellDescription<FileTransferCell>(message: message, layoutProperties: layoutProperties)
             add(description: fileCell)
             
-        } else if message.isImage {
-            let imageCell = ConversationLegacyCellDescription<ImageMessageCell>(message: message, layoutProperties: layoutProperties)
-            add(description: imageCell)
-            
         } else if message.isSystem, let systemMessageType = message.systemMessageData?.systemMessageType {
             switch systemMessageType {
             case .newClient, .usingNewDevice:
@@ -148,7 +144,7 @@ extension IndexSet {
                 let missingMessagesCell = ConversationLegacyCellDescription<MissingMessagesCell>(message: message, layoutProperties: layoutProperties)
                 add(description: missingMessagesCell)
                 
-            case .participantsAdded, .participantsRemoved, .newConversation, .teamMemberLeave:
+            case .newConversation:
                 let participantsCell = ConversationLegacyCellDescription<ParticipantsCell>(message: message, layoutProperties: layoutProperties)
                 add(description: participantsCell)
                 
@@ -170,6 +166,8 @@ extension IndexSet {
             contentCellDescriptions = addPingMessageCells()
         } else if message.isText {
             contentCellDescriptions = ConversationTextMessageCellDescription.cells(for: message, searchQueries: context.searchQueries)
+        } else if message.isImage {
+            contentCellDescriptions = [AnyConversationMessageCellDescription(ConversationImageMessageCellDescription(message: message, image: message.imageMessageData!))]
         } else if message.isLocation {
             contentCellDescriptions = addLocationMessageCells()
         } else if message.isSystem {

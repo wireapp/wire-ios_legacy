@@ -31,6 +31,7 @@ class ConversationIconBasedCell: UIView, TTTAttributedLabelDelegate {
 
     private var containerWidthConstraint: NSLayoutConstraint!
     private var labelTrailingConstraint: NSLayoutConstraint!
+    private var labelTopConstraint: NSLayoutConstraint!
 
     var isSelected: Bool = false
 
@@ -43,6 +44,13 @@ class ConversationIconBasedCell: UIView, TTTAttributedLabelDelegate {
             textLabel.attributedText = attributedText
             textLabel.accessibilityLabel = attributedText?.string
             textLabel.addLinks()
+            
+            let font = attributedText?.attributes(at: 0, effectiveRange: nil)[.font] as? UIFont
+            if let lineHeight = font?.lineHeight {
+                labelTopConstraint.constant = (32 - lineHeight) / 2
+            } else {
+                labelTopConstraint.constant = 0
+            }
         }
     }
 
@@ -94,6 +102,11 @@ class ConversationIconBasedCell: UIView, TTTAttributedLabelDelegate {
 
         containerWidthConstraint = imageContainer.widthAnchor.constraint(equalToConstant: UIView.conversationLayoutMargins.left)
         labelTrailingConstraint = textLabel.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant: -UIView.conversationLayoutMargins.right)
+        labelTopConstraint = textLabel.topAnchor.constraint(equalTo: topAnchor)
+        
+        // We want the content view to at least be below the image container
+        let contentViewTopConstraint = contentView.topAnchor.constraint(equalTo: imageContainer.bottomAnchor)
+        contentViewTopConstraint.priority = .defaultLow
 
         NSLayoutConstraint.activate([
             // imageContainer
@@ -101,30 +114,31 @@ class ConversationIconBasedCell: UIView, TTTAttributedLabelDelegate {
             imageContainer.leadingAnchor.constraint(equalTo: leadingAnchor),
             imageContainer.topAnchor.constraint(equalTo: topAnchor, constant: 0),
             imageContainer.heightAnchor.constraint(equalTo: imageView.heightAnchor),
+            imageContainer.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: 0),
 
-            // pingImageView
+            // imageView
             imageView.widthAnchor.constraint(equalToConstant: 32),
             imageView.heightAnchor.constraint(equalToConstant: 32),
             imageView.centerXAnchor.constraint(equalTo: imageContainer.centerXAnchor),
             imageView.centerYAnchor.constraint(equalTo: imageContainer.centerYAnchor),
-
-            // pingLabel
+            
+            // label
             textLabel.leadingAnchor.constraint(equalTo: imageContainer.trailingAnchor),
-            textLabel.topAnchor.constraint(equalTo: topAnchor, constant: 0),
-            textLabel.bottomAnchor.constraint(equalTo: imageContainer.bottomAnchor),
+            labelTopConstraint,
             labelTrailingConstraint,
-
+        
             // lineView
             lineView.leadingAnchor.constraint(equalTo: textLabel.trailingAnchor, constant: 16),
             lineView.heightAnchor.constraint(equalToConstant: .hairline),
             lineView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            lineView.centerYAnchor.constraint(equalTo: textLabel.centerYAnchor),
+            lineView.centerYAnchor.constraint(equalTo: imageContainer.centerYAnchor),
 
             // contentView
             contentView.leadingAnchor.constraint(equalTo: textLabel.leadingAnchor),
-            contentView.topAnchor.constraint(equalTo: textLabel.bottomAnchor, constant: 0),
+            contentView.topAnchor.constraint(greaterThanOrEqualTo: textLabel.bottomAnchor),
             contentView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            contentView.bottomAnchor.constraint(equalTo: bottomAnchor)
+            contentView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            contentViewTopConstraint
         ])
     }
 

@@ -32,5 +32,33 @@ class ConversationSystemMessageTests: ConversationCellSnapshotTestCase {
         
         verify(message: message)
     }
+    
+    func testAddParticipant() {
+        let message = MockMessageFactory.systemMessage(with: .participantsAdded, users: 1, clients: 0)!
+        message.sender = MockUser.mockUsers()?.last
+        
+        verify(message: message)
+    }
+    
+    func testAddManyParticipants() {
+        let message = MockMessageFactory.systemMessage(with: .participantsAdded, users: 10, clients: 0)!
+        message.sender = MockUser.mockUsers()?.last
+        
+        verify(message: message)
+    }
+    
+    func testRemoveParticipant() {
+        let message = MockMessageFactory.systemMessage(with: .participantsRemoved, users: 1, clients: 0)!
+        message.sender = MockUser.mockUsers()?.last
+        
+        verify(message: message)
+    }
+    
+    func testTeamMemberLeave() {
+        let message = MockMessageFactory.systemMessage(with: .teamMemberLeave, users: 1, clients: 0)!
+        message.sender = MockUser.mockUsers()?.last
+        
+        verify(message: message)
+    }
 
 }

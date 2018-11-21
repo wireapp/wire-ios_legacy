@@ -405,7 +405,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
             case MessageActionPresent:
             {
                 self.conversationMessageWindowTableViewAdapter.selectedMessage = message;
-                [self presentDetailsForMessageAtIndexPath:[self.tableView indexPathForCell:cell]];
+                [self presentDetailsForMessage:message];
             }
                 break;
             case MessageActionSave:
@@ -579,9 +579,8 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     }
 }
 
-- (void)presentDetailsForMessageAtIndexPath:(NSIndexPath *)indexPath
+- (void)presentDetailsForMessage:(id<ZMConversationMessage>)message
 {
-    id<ZMConversationMessage>message = [self.messageWindow.messages objectAtIndex:indexPath.section];
     BOOL isFile = [Message isFileTransferMessage:message];
     BOOL isImage = [Message isImageMessage:message];
     BOOL isLocation = [Message isLocationMessage:message];
