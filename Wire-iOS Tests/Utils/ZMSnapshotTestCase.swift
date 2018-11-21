@@ -393,16 +393,14 @@ extension ZMSnapshotTestCase {
             container.widthAnchor.constraint(equalToConstant: width)
             ])
 
-        container.setNeedsLayout()
         container.layoutIfNeeded()
-        container.setNeedsLayout()
-        container.layoutIfNeeded()
-        if assertEmptyFrame(container, file: file, line: line) {
-            return
-        }
 
         if extraLayoutPass {
             RunLoop.current.run(until: Date(timeIntervalSinceNow: 0.1))
+        }
+
+        if assertEmptyFrame(container, file: file, line: line) {
+            return
         }
 
         snapshotVerify(view: container,
@@ -416,12 +414,14 @@ extension ZMSnapshotTestCase {
     /// the common iPhones in Portrait and iPad in Landscape and Portrait.
     /// This method only makes sense for views that will be on presented fullscreen.
     func verifyInAllPhoneWidths(view: UIView,
+                                extraLayoutPass: Bool = false,
                                 tolerance: CGFloat = 0,
                                 file: StaticString = #file,
                                 line: UInt = #line) {
         assertAmbigousLayout(view, file: file, line: line)
-        for width: CGFloat in phoneWidths() {
+        for width in phoneWidths() {
             verifyView(view: view,
+                       extraLayoutPass: extraLayoutPass,
                        width: width,
                        tolerance: tolerance,
                        file: file,
