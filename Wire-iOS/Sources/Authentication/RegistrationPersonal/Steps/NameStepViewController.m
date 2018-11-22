@@ -26,7 +26,7 @@
 
 @import WireExtensionComponents;
 
-@interface NameStepViewController () <RegistrationTextFieldDelegate>
+@interface NameStepViewController () 
 
 @property (nonatomic) UILabel *heroLabel;
 @property (nonatomic) RegistrationTextField *nameField;

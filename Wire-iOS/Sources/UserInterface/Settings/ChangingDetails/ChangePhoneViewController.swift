@@ -117,8 +117,6 @@ fileprivate enum Section: Int {
 }
 
 final class ChangePhoneViewController: SettingsBaseTableViewController {
-    fileprivate let emailTextField = RegistrationTextField()
-
     fileprivate var state = ChangePhoneNumberState()
     fileprivate let userProfile = ZMUserSession.shared()?.userProfile
     fileprivate var observerToken: Any?
@@ -254,19 +252,49 @@ final class ChangePhoneViewController: SettingsBaseTableViewController {
 }
 
 extension ChangePhoneViewController: RegistrationTextFieldDelegate {
-    
+
+    func textField(_ textField: UITextField, shouldPasteCharactersIn range: NSRange, replacementString string: String) -> Bool {
+
+        ///TODO:
+        return true
+    }
+
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        let registrationTextField = textField as! RegistrationTextField
-        let newNumber = (textField.text as NSString?)?.replacingCharacters(in: range, with: string) ?? ""
-        
-        let number = PhoneNumber(countryCode: registrationTextField.countryCode, numberWithoutCode: newNumber)
+        guard let registrationTextField = textField as? RegistrationTextField else { return false }
+
+        var numberWithoutCode: String!
+        var countryCode: UInt!
+
+        /// Prevent crashing(with no reason, may be caused by textField is numeric) when a user insert a phone number form system keyboard accessory with phone number starting with a "+". We should extract the number without country code in the future.
+        if string != " " &&
+            !CharacterSet.decimalDigits.isSuperset(of: CharacterSet(charactersIn: string)) {
+            if let country = Country.detect(forPhoneNumber: string) {
+
+                countryCode = country.e164.uintValue
+                let prefix = country.e164PrefixString
+                numberWithoutCode = String(string[prefix.endIndex...])
+            } else {///TODO: allow " "
+                return false
+            }
+        } else {
+            numberWithoutCode = string
+        }
+
+        let newNumber = (textField.text as NSString?)?.replacingCharacters(in: range, with: numberWithoutCode) ?? ""
+
+        /// TODO: update UI country code
+        if countryCode == nil {
+            countryCode = registrationTextField.countryCode
+        }
+
+        let number = PhoneNumber(countryCode: countryCode, numberWithoutCode: newNumber)
         switch number.validate() {
         case .containsInvalidCharacters, .tooLong:
             return false
         default:
             break
         }
-        
+
         state.newNumber = number
         updateSaveButtonState()
         return true
