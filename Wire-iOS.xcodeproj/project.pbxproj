@@ -1143,6 +1143,7 @@
 		EF13204B21A6DF3900E7EF21 /* NameStepViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF13204921A6DF3900E7EF21 /* NameStepViewController+Extension.swift */; };
 		EF13204E21A6DFCB00E7EF21 /* EmailSignInViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF13204C21A6DFCB00E7EF21 /* EmailSignInViewController+Extension.swift */; };
 		EF13205121A6E12E00E7EF21 /* EmailFormViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF13204F21A6E12E00E7EF21 /* EmailFormViewController+Extension.swift */; };
+		EF13205321A6EBF900E7EF21 /* NSString+PastePhoneNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF13205221A6EBF900E7EF21 /* NSString+PastePhoneNumber.swift */; };
 		EF159F381FD59607006E0A9C /* TextFieldValidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF159F361FD59556006E0A9C /* TextFieldValidatorTests.swift */; };
 		EF15A7B020BC08C000A045C7 /* ConversationContentViewController+SaveImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF15A7AF20BC08C000A045C7 /* ConversationContentViewController+SaveImage.swift */; };
 		EF15A7B420BC304A00A045C7 /* SavableImageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF15A7B320BC304A00A045C7 /* SavableImageTests.swift */; };
@@ -2912,6 +2913,7 @@
 		EF13204921A6DF3900E7EF21 /* NameStepViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NameStepViewController+Extension.swift"; sourceTree = "<group>"; };
 		EF13204C21A6DFCB00E7EF21 /* EmailSignInViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EmailSignInViewController+Extension.swift"; sourceTree = "<group>"; };
 		EF13204F21A6E12E00E7EF21 /* EmailFormViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EmailFormViewController+Extension.swift"; sourceTree = "<group>"; };
+		EF13205221A6EBF900E7EF21 /* NSString+PastePhoneNumber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSString+PastePhoneNumber.swift"; sourceTree = "<group>"; };
 		EF159F361FD59556006E0A9C /* TextFieldValidatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldValidatorTests.swift; sourceTree = "<group>"; };
 		EF15A7AF20BC08C000A045C7 /* ConversationContentViewController+SaveImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationContentViewController+SaveImage.swift"; sourceTree = "<group>"; };
 		EF15A7B320BC304A00A045C7 /* SavableImageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavableImageTests.swift; sourceTree = "<group>"; };
@@ -6585,6 +6587,7 @@
 			children = (
 				F12CDAE51E4387E500CEFCEB /* Views */,
 				F12CDAE21E4386A100CEFCEB /* ChangeHandleViewController.swift */,
+				EF13205221A6EBF900E7EF21 /* NSString+PastePhoneNumber.swift */,
 				F12CDADB1E43868200CEFCEB /* ChangePhoneViewController.swift */,
 				F12CDADD1E43868200CEFCEB /* ConfirmPhoneViewController.swift */,
 				F12CDADA1E43868200CEFCEB /* ChangeEmailViewController.swift */,
@@ -8137,6 +8140,7 @@
 				16E311D81A6024F400FF2C9E /* ImageMessageCell.m in Sources */,
 				1689FD4B2195C8B800A656E2 /* EphemeralCountdownView.swift in Sources */,
 				162917CE1F8CD327000F3E92 /* NetworkStatusViewController.swift in Sources */,
+				EF13205321A6EBF900E7EF21 /* NSString+PastePhoneNumber.swift in Sources */,
 				163495871F010F91004E80DB /* UnauthenticatedSession+Shared.swift in Sources */,
 				F1199D401FC849450070FAC3 /* ButtonDescription.swift in Sources */,
 				87DCF48F1D34E9BA00BB420F /* ContactsEmptyResultView.m in Sources */,
