@@ -264,6 +264,7 @@ extension ChangePhoneViewController: RegistrationTextFieldDelegate {
                 /// The textField not allow space. We have to replace it first
                 registrationTextField.text = String(phoneNumber.filter { !" ".contains($0) })
                 registrationTextField.countryCode = country.e164.uintValue
+                updateSaveButtonState()
             }
         }
     }
@@ -278,8 +279,12 @@ extension ChangePhoneViewController: RegistrationTextFieldDelegate {
             string.pasteAsPhoneNumber(presetCountry: presetCountry){country, phoneNumber in
                 if let country = country, let phoneNumber = phoneNumber {
                     /// The textField not allow space. We have to replace it first
-                    registrationTextField.text = String(phoneNumber.filter { !" ".contains($0) })
+                    let numberWithoutCode = String(phoneNumber.filter { !" ".contains($0) })
+                    registrationTextField.text = numberWithoutCode
                     registrationTextField.countryCode = country.e164.uintValue
+                    let number = PhoneNumber(countryCode: registrationTextField.countryCode, numberWithoutCode: numberWithoutCode)
+                    state.newNumber = number
+                    updateSaveButtonState()
                 }
             }
 
