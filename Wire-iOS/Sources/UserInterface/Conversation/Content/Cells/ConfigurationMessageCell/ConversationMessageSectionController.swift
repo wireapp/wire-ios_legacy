@@ -132,10 +132,6 @@ extension IndexSet {
             
         } else if message.isSystem, let systemMessageType = message.systemMessageData?.systemMessageType {
             switch systemMessageType {
-            case .newClient, .usingNewDevice:
-                let newClientCell = ConversationLegacyCellDescription<ConversationNewDeviceCell>(message: message, layoutProperties: layoutProperties)
-                add(description: newClientCell)
-                
             case .ignoredClient:
                 let ignoredClientCell = ConversationLegacyCellDescription<ConversationIgnoredDeviceCell>(message: message, layoutProperties: layoutProperties)
                 add(description: ignoredClientCell)

@@ -66,5 +66,44 @@ class ConversationSystemMessageTests: ConversationCellSnapshotTestCase {
         
         verify(message: message)
     }
+    
+    func testNewClient_oneUser_oneClient() {
+        let message = MockMessageFactory.systemMessage(with: .newClient, users: 1, clients: 1)!
+        
+        verify(message: message)
+    }
+    
+    func testNewClient_selfUser_oneClient() {
+        let message = MockMessageFactory.systemMessage(with: .newClient, users: 1, clients: 1)!
+        message.backingSystemMessageData?.users = Set<AnyHashable>([MockUser.mockSelf()]) as! Set<ZMUser>
+        
+        verify(message: message)
+    }
+    
+    func testNewClient_selfUser_manyClients() {
+        let message = MockMessageFactory.systemMessage(with: .newClient, users: 1, clients: 2)!
+        message.backingSystemMessageData?.users = Set<AnyHashable>([MockUser.mockSelf()]) as! Set<ZMUser>
+        
+        verify(message: message)
+    }
+    
+    func testNewClient_oneUser_manyClients() {
+        let message = MockMessageFactory.systemMessage(with: .newClient, users: 1, clients: 3)!
+        
+        verify(message: message)
+    }
+    
+    func testNewClient_manyUsers_manyClients() {
+        let message = MockMessageFactory.systemMessage(with: .newClient, users: 3, clients: 4)!
+        
+        verify(message: message)
+    }
+    
+    func testUsingNewDevice() {
+        let message = MockMessageFactory.systemMessage(with: .usingNewDevice, users: 1, clients: 1)!
+        message.backingSystemMessageData?.users = Set<AnyHashable>([MockUser.mockSelf()]) as! Set<ZMUser>
+        
+        verify(message: message)
+    }
 
 }
