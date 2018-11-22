@@ -23,23 +23,47 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd $DIR/..
 
-CONFIGURATION_NAME=Configuration
+CONFIGURATION_LOCATION=Configuration
 PUBLIC_CONFIGURATION_REPO=https://github.com/wireapp/wire-ios-build-configuration.git
+REPO_URL=$PUBLIC_CONFIGURATION_REPO
 
-if [[ $# -eq 2 && $1 == "--configuration" ]]; then
-	echo "Using custom configuration repository: $2"
-	REPO_URL=$2
-else
-	REPO_URL=$PUBLIC_CONFIGURATION_REPO
-fi
+OVERRIDES_DIR=
+
+usage()
+{
+    echo "usage: download_assets.sh [[--configuration_repo repo_url] | [--override_with path] | [-h]]"
+}
+
+
+while [ "$1" != "" ]; do
+    case $1 in
+        --configuration_repo )  shift
+								echo "Using custom configuration repository: $@"
+                                REPO_URL=$@
+                                break
+                                ;;
+        --override_with )  		shift
+								echo "Overriding with configuration files in $@"
+								OVERRIDES_DIR=$@
+                                break
+                                ;;
+        -h | --help )           usage
+                                exit
+                                ;;
+        * )                     usage
+                                exit 1
+    esac
+    shift
+done
 
 ##################################
 # Checout assets
 ##################################
-if [ -e "${CONFIGURATION_NAME}" ]; then
-	cd ${CONFIGURATION_NAME}
+if [ -e "${CONFIGURATION_LOCATION}" ]; then
+	pushd ${CONFIGURATION_LOCATION} &> /dev/null
 	echo "Pulling configuration..."
 	git pull
+	popd &> /dev/null
 else
 	git ls-remote "${REPO_URL}" &> /dev/null
 	if [ "$?" -ne 0 ]; then
@@ -48,5 +72,14 @@ else
 	fi 
 
 	echo "Cloning assets from ${REPO_URL}"
-	git clone --depth 1 ${REPO_URL} ${CONFIGURATION_NAME}
+	git clone --depth 1 ${REPO_URL} ${CONFIGURATION_LOCATION}
 fi
+
+if [ ! -z "${OVERRIDES_DIR}" ]; then
+    # Add trailing slash if not present so that cp would copy contents of directory
+    [[ "${OVERRIDES_DIR}" != */ ]] && OVERRIDES_DIR="${OVERRIDES_DIR}/"
+	echo "Copying '${OVERRIDES_DIR}' over to '${CONFIGURATION_LOCATION}'"
+	cp -R "${OVERRIDES_DIR}" "${CONFIGURATION_LOCATION}"
+fi
+
+
