@@ -79,6 +79,7 @@
 		165FDC4B1DD5D447009D75A2 /* NSItemProvider+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 165FDC4A1DD5D447009D75A2 /* NSItemProvider+Helper.m */; };
 		1660F2381FBC6E2E00A0EE54 /* silence.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 1660F2371FBC6E2D00A0EE54 /* silence.m4a */; };
 		1660F23A1FBF32D400A0EE54 /* MediaPlayerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1660F2391FBF32D400A0EE54 /* MediaPlayerController.swift */; };
+		1661C71B21A7113A003DCE1C /* ConversationFileMessageCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1661C71A21A7113A003DCE1C /* ConversationFileMessageCellTests.swift */; };
 		166264F32179D3CF00300F45 /* SenderCellComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166264F22179D3CF00300F45 /* SenderCellComponent.swift */; };
 		166264F62179E63F00300F45 /* ImageMessageContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166264F52179E63F00300F45 /* ImageMessageContentView.swift */; };
 		16626500217DAC4F00300F45 /* ConversationMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166264FF217DAC4F00300F45 /* ConversationMessageCell.swift */; };
@@ -427,7 +428,6 @@
 		870533FF1DD6162400A7F822 /* OverflowSeparatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870533FE1DD6162400A7F822 /* OverflowSeparatorView.swift */; };
 		870534011DD6265100A7F822 /* AttributedStringOperators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870534001DD6265100A7F822 /* AttributedStringOperators.swift */; };
 		87071CC01CB68BDA0039388A /* ProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87071CBF1CB68BDA0039388A /* ProgressView.swift */; };
-		87071CC41CB6A3790039388A /* FileTransferCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87071CC31CB6A3790039388A /* FileTransferCellTests.swift */; };
 		870815861BF4E76A00D321BC /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870815851BF4E76A00D321BC /* SettingsCell.swift */; };
 		870815881BF4EAD100D321BC /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870815871BF4EAD100D321BC /* SettingsTableViewController.swift */; };
 		8708B8331DDDFF0D00310A53 /* UserConnectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8708B8321DDDFF0D00310A53 /* UserConnectionView.swift */; };
@@ -1545,6 +1545,7 @@
 		165FDC4A1DD5D447009D75A2 /* NSItemProvider+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSItemProvider+Helper.m"; sourceTree = "<group>"; };
 		1660F2371FBC6E2D00A0EE54 /* silence.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = silence.m4a; sourceTree = "<group>"; };
 		1660F2391FBF32D400A0EE54 /* MediaPlayerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaPlayerController.swift; sourceTree = "<group>"; };
+		1661C71A21A7113A003DCE1C /* ConversationFileMessageCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationFileMessageCellTests.swift; sourceTree = "<group>"; };
 		166264F22179D3CF00300F45 /* SenderCellComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SenderCellComponent.swift; sourceTree = "<group>"; };
 		166264F52179E63F00300F45 /* ImageMessageContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageMessageContentView.swift; sourceTree = "<group>"; };
 		166264FF217DAC4F00300F45 /* ConversationMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationMessageCell.swift; sourceTree = "<group>"; };
@@ -1925,7 +1926,6 @@
 		870533FE1DD6162400A7F822 /* OverflowSeparatorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OverflowSeparatorView.swift; sourceTree = "<group>"; };
 		870534001DD6265100A7F822 /* AttributedStringOperators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttributedStringOperators.swift; sourceTree = "<group>"; };
 		87071CBF1CB68BDA0039388A /* ProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressView.swift; sourceTree = "<group>"; };
-		87071CC31CB6A3790039388A /* FileTransferCellTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileTransferCellTests.swift; sourceTree = "<group>"; };
 		870815851BF4E76A00D321BC /* SettingsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
 		870815871BF4EAD100D321BC /* SettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 		8708B8321DDDFF0D00310A53 /* UserConnectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserConnectionView.swift; sourceTree = "<group>"; };
@@ -3822,14 +3822,15 @@
 			isa = PBXGroup;
 			children = (
 				5EBBE96721871F70008BC1B7 /* MockCell.swift */,
+				5EBBE9722187A844008BC1B7 /* MessageToolboxViewTests.swift */,
 				5E35F7702180B8C600D3F4FE /* ConversationMessageSectionControllerTests.swift */,
 				5E35F7892187068500D3F4FE /* ConversationCellSnapshotTestCase.swift */,
 				5E35F78C21870EDB00D3F4FE /* ConversationPingMessageTests.swift */,
 				162AE739219AC4C100581D98 /* ConversationTextMessageTests.swift */,
 				162AE747219B26AF00581D98 /* ConversationSystemMessageTests.swift */,
 				162AE74B219DB1B600581D98 /* ConversationImageMessageTests.swift */,
-				5EBBE9722187A844008BC1B7 /* MessageToolboxViewTests.swift */,
 				5EC25A2E219ACB4B00F6214E /* ConversationTextMessageCellTests.swift */,
+				1661C71A21A7113A003DCE1C /* ConversationFileMessageCellTests.swift */,
 			);
 			path = ConversationMessageCell;
 			sourceTree = "<group>";
@@ -5887,7 +5888,6 @@
 				8787BDD31BF374420096B1B5 /* Settings */,
 				874E85951BEA0D3C006A7EBF /* Wire-iOS-Tests-Bridging-Header.h */,
 				87D5E43F1C3E797A00EB8289 /* UserClientFingerprintTests.swift */,
-				87071CC31CB6A3790039388A /* FileTransferCellTests.swift */,
 				AF65A25B1D7E202D00EBA38E /* ReactionsListViewControllerTests.swift */,
 				EF21A06F21305F6A00B9120C /* DeleteMessageTests.swift */,
 				BF2A74741CEB595E002608BF /* AudioButtonOverlayTests.swift */,
@@ -8275,6 +8275,7 @@
 				87BEB0E21C734DB60094BFE9 /* MockMessage.swift in Sources */,
 				162917CC1F8CC176000F3E92 /* NetworkStatusViewTests.swift in Sources */,
 				EF24037220A1E988002813BE /* TermsOfUseStepViewControllerSnapshotTests.swift in Sources */,
+				1661C71B21A7113A003DCE1C /* ConversationFileMessageCellTests.swift in Sources */,
 				5E35F78D21870EDB00D3F4FE /* ConversationPingMessageTests.swift in Sources */,
 				EF2128EE2056D55400C1673B /* NetworkStatusViewControllerTests.swift in Sources */,
 				EE75B774203C6F5300855099 /* MarkdownTextStorageTests.swift in Sources */,
@@ -8379,7 +8380,6 @@
 				BF0BDF8A1DABF32B003C61DE /* DestructionCountdownViewTests.swift in Sources */,
 				EF98987220C5A47A005680C5 /* SettingsClientViewControllerTests.swift in Sources */,
 				8742FB801E8BD18900D046BC /* ConversationListAccessoryViewTests.swift in Sources */,
-				87071CC41CB6A3790039388A /* FileTransferCellTests.swift in Sources */,
 				162AE73A219AC4C100581D98 /* ConversationTextMessageTests.swift in Sources */,
 				BFE3FEEC20975D1E003D9AB5 /* CallStatusViewTests.swift in Sources */,
 				BF808B591DE72B7100718076 /* UserNameTakeOverViewControllerTests.swift in Sources */,
