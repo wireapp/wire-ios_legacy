@@ -261,15 +261,32 @@ extension ChangePhoneViewController: RegistrationTextFieldDelegate {
 
         return string.pasteAsPhoneNumber(presetCountry: presetCountry){country, phoneNumber in
             if let country = country, let phoneNumber = phoneNumber {
-                ///TODO: update UI
-                print("country = \(country)")
-                print("phoneNumber = \(phoneNumber)")
+                /// The textField not allow space. We have to replace it first
+                registrationTextField.text = String(phoneNumber.filter { !" ".contains($0) })
+                registrationTextField.countryCode = country.e164.uintValue
             }
         }
     }
 
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        let registrationTextField = textField as! RegistrationTextField
+        guard let registrationTextField = textField as? RegistrationTextField else { return false }
+
+        ///If textField is empty and a string with more than 1 char is replaced, it is likely to insert from autoFill.
+        if textField.text?.count == 0 && string.count > 1 {
+            ///TODO: replace
+            let presetCountry = Country(iso: "", e164: NSNumber(value: registrationTextField.countryCode))
+            string.pasteAsPhoneNumber(presetCountry: presetCountry){country, phoneNumber in
+                if let country = country, let phoneNumber = phoneNumber {
+                    /// The textField not allow space. We have to replace it first
+                    registrationTextField.text = String(phoneNumber.filter { !" ".contains($0) })
+                    registrationTextField.countryCode = country.e164.uintValue
+                }
+            }
+
+            return false
+        }
+
+
         let newNumber = (textField.text as NSString?)?.replacingCharacters(in: range, with: string) ?? ""
 
         let number = PhoneNumber(countryCode: registrationTextField.countryCode, numberWithoutCode: newNumber)

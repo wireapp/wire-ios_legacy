@@ -28,6 +28,7 @@ extension NSString {
     ///
     /// - Parameter completion: completion closure with Country object and phoneNumber extracted from self
     /// - Returns: true if should paste as Phone number(not beginning with "+"). If self is prased as a phone number, reture false (it should the be pasted, the caller use the completion's data for further actions.)
+    @discardableResult
     @objc func pasteAsPhoneNumber(presetCountry: Country, completion: (_ country: Country?, _ phoneNumber: String?) -> Void) -> Bool {
 
         var illegalCharacters = CharacterSet.whitespacesAndNewlines
