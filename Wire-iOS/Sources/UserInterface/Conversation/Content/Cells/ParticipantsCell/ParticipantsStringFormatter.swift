@@ -116,7 +116,7 @@ class ParticipantsStringFormatter {
         return [.link: ParticipantsCellViewModel.showMoreLinkURL]
     }
     
-    init(message: ZMConversationMessage, font: UIFont, boldFont: UIFont, largeFont: UIFont, textColor: UIColor) {
+    init(message: ZMConversationMessage, font: UIFont = .mediumFont, boldFont: UIFont = .mediumSemiboldFont, largeFont: UIFont = .largeSemiboldFont, textColor: UIColor = .from(scheme: .textForeground)) {
         self.message = message
         self.font = font
         self.boldFont = boldFont

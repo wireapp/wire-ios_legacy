@@ -32,5 +32,78 @@ class ConversationSystemMessageTests: ConversationCellSnapshotTestCase {
         
         verify(message: message)
     }
+    
+    func testAddParticipant() {
+        let message = MockMessageFactory.systemMessage(with: .participantsAdded, users: 1, clients: 0)!
+        message.sender = MockUser.mockUsers()?.last
+        
+        verify(message: message)
+    }
+    
+    func testAddManyParticipants() {
+        let message = MockMessageFactory.systemMessage(with: .participantsAdded, users: 10, clients: 0)!
+        message.sender = MockUser.mockUsers()?.last
+        
+        verify(message: message)
+    }
+    
+    func testRemoveParticipant() {
+        let message = MockMessageFactory.systemMessage(with: .participantsRemoved, users: 1, clients: 0)!
+        message.sender = MockUser.mockUsers()?.last
+        
+        verify(message: message)
+    }
+    
+    func testTeamMemberLeave() {
+        let message = MockMessageFactory.systemMessage(with: .teamMemberLeave, users: 1, clients: 0)!
+        message.sender = MockUser.mockUsers()?.last
+        
+        verify(message: message)
+    }
+    
+    func testDecryptionFailed() {
+        let message = MockMessageFactory.systemMessage(with: .decryptionFailed, users: 0, clients: 0)!
+        
+        verify(message: message)
+    }
+    
+    func testNewClient_oneUser_oneClient() {
+        let message = MockMessageFactory.systemMessage(with: .newClient, users: 1, clients: 1)!
+        
+        verify(message: message)
+    }
+    
+    func testNewClient_selfUser_oneClient() {
+        let message = MockMessageFactory.systemMessage(with: .newClient, users: 1, clients: 1)!
+        message.backingSystemMessageData?.users = Set<AnyHashable>([MockUser.mockSelf()]) as! Set<ZMUser>
+        
+        verify(message: message)
+    }
+    
+    func testNewClient_selfUser_manyClients() {
+        let message = MockMessageFactory.systemMessage(with: .newClient, users: 1, clients: 2)!
+        message.backingSystemMessageData?.users = Set<AnyHashable>([MockUser.mockSelf()]) as! Set<ZMUser>
+        
+        verify(message: message)
+    }
+    
+    func testNewClient_oneUser_manyClients() {
+        let message = MockMessageFactory.systemMessage(with: .newClient, users: 1, clients: 3)!
+        
+        verify(message: message)
+    }
+    
+    func testNewClient_manyUsers_manyClients() {
+        let message = MockMessageFactory.systemMessage(with: .newClient, users: 3, clients: 4)!
+        
+        verify(message: message)
+    }
+    
+    func testUsingNewDevice() {
+        let message = MockMessageFactory.systemMessage(with: .usingNewDevice, users: 1, clients: 1)!
+        message.backingSystemMessageData?.users = Set<AnyHashable>([MockUser.mockSelf()]) as! Set<ZMUser>
+        
+        verify(message: message)
+    }
 
 }

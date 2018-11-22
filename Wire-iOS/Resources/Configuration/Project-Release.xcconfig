@@ -1,0 +1,53 @@
+// 
+// Wire
+// Copyright (C) 2016 Wire Swiss GmbH
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with this program. If not, see http://www.gnu.org/licenses/.
+//
+
+#include "../../../Configuration/Release.xcconfig"
+#include "Project-Base.xcconfig"
+
+// Deployment
+//
+COPY_PHASE_STRIP = YES
+STRIP_INSTALLED_PRODUCT = YES
+
+//Build options
+VALIDATE_PRODUCT = YES
+DEBUG_INFORMATION_FORMAT = dwarf-with-dsym
+OTHER_CFLAGS = ${inherited} -Wno-unused-variable -Wno-macro-redefined
+ENABLE_NS_ASSERTIONS = NO
+
+// LLVM compiler - Preprocessing
+//
+
+// Flags:
+// FT - feature toggle
+//
+// ENABLE_DEVELOPER_MENU - Enabled developer menu from self profile -> settings
+// WIRESTAN - Enabled the fake country in the phone number selection
+FEATURE_FLAGS = ENABLE_DEVELOPER_MENU=0 WIRESTAN=0
+
+// Use analytics / Hockey for Release builds:
+ANALYTICS_FLAGS = USE_HOCKEY=1 USE_ANALYTICS=1
+
+GCC_PREPROCESSOR_DEFINITIONS = $(SHARED_CUSTOM_VALUES) $(FEATURE_FLAGS) $(ANALYTICS_FLAGS) $(OTHER_PREPROCESSOR_FLAGS) DEBUG=0
+
+
+// Swift Compiler
+
+SWIFT_COMPILATION_MODE = wholemodule
+
+RUN_CLANG_STATIC_ANALYZER = YES

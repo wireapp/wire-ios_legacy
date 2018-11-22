@@ -81,7 +81,7 @@ extension IndexSet {
     /// The object that receives informations from the section.
     @objc weak var sectionDelegate: ConversationMessageSectionControllerDelegate?
     
-    /// Wheater this section is selected
+    /// Whether this section is selected
     private var selected: Bool
 
     private var changeObservers: [Any] = []
@@ -125,17 +125,8 @@ extension IndexSet {
         } else if message.isAudio {
             let audioCell = ConversationLegacyCellDescription<AudioMessageCell>(message: message, layoutProperties: layoutProperties)
             add(description: audioCell)
-            
-        } else if message.isImage {
-            let imageCell = ConversationLegacyCellDescription<ImageMessageCell>(message: message, layoutProperties: layoutProperties)
-            add(description: imageCell)
-            
         } else if message.isSystem, let systemMessageType = message.systemMessageData?.systemMessageType {
             switch systemMessageType {
-            case .newClient, .usingNewDevice:
-                let newClientCell = ConversationLegacyCellDescription<ConversationNewDeviceCell>(message: message, layoutProperties: layoutProperties)
-                add(description: newClientCell)
-                
             case .ignoredClient:
                 let ignoredClientCell = ConversationLegacyCellDescription<ConversationIgnoredDeviceCell>(message: message, layoutProperties: layoutProperties)
                 add(description: ignoredClientCell)
@@ -144,7 +135,7 @@ extension IndexSet {
                 let missingMessagesCell = ConversationLegacyCellDescription<MissingMessagesCell>(message: message, layoutProperties: layoutProperties)
                 add(description: missingMessagesCell)
                 
-            case .participantsAdded, .participantsRemoved, .newConversation, .teamMemberLeave:
+            case .newConversation:
                 let participantsCell = ConversationLegacyCellDescription<ParticipantsCell>(message: message, layoutProperties: layoutProperties)
                 add(description: participantsCell)
                 
@@ -166,6 +157,8 @@ extension IndexSet {
             contentCellDescriptions = addPingMessageCells()
         } else if message.isText {
             contentCellDescriptions = ConversationTextMessageCellDescription.cells(for: message, searchQueries: context.searchQueries)
+        } else if message.isImage {
+            contentCellDescriptions = [AnyConversationMessageCellDescription(ConversationImageMessageCellDescription(message: message, image: message.imageMessageData!))]
         } else if message.isLocation {
             contentCellDescriptions = addLocationMessageCells()
         } else if message.isFile {
@@ -291,6 +284,10 @@ extension IndexSet {
     }
     
     func isToolboxVisible(in context: ConversationMessageContext) -> Bool {
+        guard !message.isSystem else {
+            return false
+        }
+        
         return selected || context.isLastMessageSentBySelfUser || message.deliveryState == .failedToSend || message.hasReactions()
     }
     

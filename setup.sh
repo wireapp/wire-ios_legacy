@@ -46,11 +46,11 @@ carthage bootstrap --platform ios
 echo ""
 
 echo "ℹ️  Downloading AVS library..."
-./Scripts/download-avs.sh
+./Scripts/download-avs.sh 
 echo ""
 
 echo "ℹ️  Downloading additional assets..."
-./Scripts/download-assets.sh
+./Scripts/download-assets.sh $@
 echo ""
 
 echo "✅  Wire project was set up, you can now open Wire-iOS.xcodeproj"
