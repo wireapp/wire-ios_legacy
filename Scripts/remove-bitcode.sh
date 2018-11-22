@@ -30,7 +30,7 @@ if [ "$PLATFORM_NAME" == "iphonesimulator" ] ; then
 	exit 0
 fi
 
-if [ "$CONFIGURATION" == "Debug" ] ; then
+if [ "$CONFIGURATION" == "Development" ] ; then
 	echo 'Not necessary to strip for debug.'
 	exit 0
 fi
