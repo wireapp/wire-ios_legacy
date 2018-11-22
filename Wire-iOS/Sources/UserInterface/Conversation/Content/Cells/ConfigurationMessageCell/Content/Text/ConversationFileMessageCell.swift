@@ -27,6 +27,9 @@ class ConversationFileMessageCell: RoundedView, ConversationMessageCell {
 
     private let fileTransferView = FileTransferView(frame: .zero)
     private let obfuscationView = ObfuscationView(icon: .paperclip)
+    
+    weak var delegate: ConversationCellDelegate? = nil
+    weak var message: ZMConversationMessage? = nil
 
     var isSelected: Bool = false
 
@@ -47,6 +50,7 @@ class ConversationFileMessageCell: RoundedView, ConversationMessageCell {
         backgroundColor = .from(scheme: .placeholderBackground)
         clipsToBounds = true
 
+        fileTransferView.delegate = self
         fileTransferView.isAccessibilityElement = true
         obfuscationView.isHidden = true
 
@@ -97,6 +101,14 @@ class ConversationFileMessageCell: RoundedView, ConversationMessageCell {
 
 }
 
+extension ConversationFileMessageCell: TransferViewDelegate {
+    func transferView(_ view: TransferView, didSelect action: MessageAction) {
+        guard let message = message else { return }
+        
+        delegate?.conversationCell?(self, didSelect: action, for: message)
+    }
+}
+
 class ConversationFileMessageCellDescription: ConversationMessageCellDescription {
     typealias View = ConversationFileMessageCell
     let configuration: View.Configuration
@@ -118,4 +130,12 @@ class ConversationFileMessageCellDescription: ConversationMessageCellDescription
     init(message: ZMConversationMessage) {
         self.configuration = View.Configuration(message: message, isObfuscated: message.isObfuscated)
     }
+    
+    func makeCell(for tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
+        let cell =  tableView.dequeueConversationCell(with: self, for: indexPath)
+        cell.cellView.message = message
+        cell.cellView.delegate = delegate
+        return cell
+    }
+    
 }
