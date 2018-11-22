@@ -20,6 +20,7 @@ import Foundation
 
 extension NSString {
 
+    ///TODO: apply to PhoneNumberVC
 
     /// Auto detect country for phone numbers beginning with "+"
 

@@ -269,22 +269,6 @@ static const CGFloat GuidanceDotViewWidth = 40;
     return rightViewRect;
 }
 
-- (void)paste:(id)sender
-{
-    BOOL shouldPaste = YES;
-    if ([self.delegate respondsToSelector:@selector(textField:shouldPasteCharactersInRange:replacementString:)]) {
-        UIPasteboard *pasteboard = [UIPasteboard pasteboardWithName:UIPasteboardNameGeneral create:NO];
-        NSString *pastedString = [pasteboard string];
-        shouldPaste = [self.delegate textField:self
-                  shouldPasteCharactersInRange:self.selectedRange
-                             replacementString:pastedString];
-    }
-    
-    if (shouldPaste) {
-        [super paste:sender];
-    }
-}
-
 - (NSRange)selectedRange
 {
     NSInteger location = [self offsetFromPosition:self.beginningOfDocument

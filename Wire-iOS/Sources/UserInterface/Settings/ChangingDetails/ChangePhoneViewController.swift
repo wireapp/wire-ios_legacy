@@ -257,13 +257,19 @@ extension ChangePhoneViewController: RegistrationTextFieldDelegate {
     func textField(_ textField: UITextField, shouldPasteCharactersIn range: NSRange, replacementString string: String) -> Bool {
         guard let registrationTextField = textField as? RegistrationTextField else { return false }
 
-        let presetCountry = Country(iso: "", e164: NSNumber(value: registrationTextField.countryCode))
+        return insert(phoneNumber: string, registrationTextField: registrationTextField)
+    }
 
-        return string.pasteAsPhoneNumber(presetCountry: presetCountry){country, phoneNumber in
+    func insert(phoneNumber: String, registrationTextField: RegistrationTextField) -> Bool {
+        let presetCountry = Country(iso: "", e164: NSNumber(value: registrationTextField.countryCode))
+        return phoneNumber.pasteAsPhoneNumber(presetCountry: presetCountry){country, phoneNumber in
             if let country = country, let phoneNumber = phoneNumber {
                 /// The textField not allow space. We have to replace it first
-                registrationTextField.text = String(phoneNumber.filter { !" ".contains($0) })
+                let numberWithoutCode = String(phoneNumber.filter { !" ".contains($0) })
+                registrationTextField.text = numberWithoutCode
                 registrationTextField.countryCode = country.e164.uintValue
+                let number = PhoneNumber(countryCode: registrationTextField.countryCode, numberWithoutCode: numberWithoutCode)
+                state.newNumber = number
                 updateSaveButtonState()
             }
         }
@@ -272,25 +278,10 @@ extension ChangePhoneViewController: RegistrationTextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         guard let registrationTextField = textField as? RegistrationTextField else { return false }
 
-        ///If textField is empty and a string with more than 1 char is replaced, it is likely to insert from autoFill.
+        ///If textField is empty and a replacementString with longer than 1 char, it is likely to insert from autoFill.
         if textField.text?.count == 0 && string.count > 1 {
-            ///TODO: replace
-            let presetCountry = Country(iso: "", e164: NSNumber(value: registrationTextField.countryCode))
-            string.pasteAsPhoneNumber(presetCountry: presetCountry){country, phoneNumber in
-                if let country = country, let phoneNumber = phoneNumber {
-                    /// The textField not allow space. We have to replace it first
-                    let numberWithoutCode = String(phoneNumber.filter { !" ".contains($0) })
-                    registrationTextField.text = numberWithoutCode
-                    registrationTextField.countryCode = country.e164.uintValue
-                    let number = PhoneNumber(countryCode: registrationTextField.countryCode, numberWithoutCode: numberWithoutCode)
-                    state.newNumber = number
-                    updateSaveButtonState()
-                }
-            }
-
-            return false
+            return insert(phoneNumber: string, registrationTextField: registrationTextField)
         }
-
 
         let newNumber = (textField.text as NSString?)?.replacingCharacters(in: range, with: string) ?? ""
 

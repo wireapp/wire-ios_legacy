@@ -32,7 +32,7 @@
 
 const NSTimeInterval VerificationCodeResendInterval = 30.0f;
 
-@interface VerificationCodeStepViewController () <ZMTimerClient>
+@interface VerificationCodeStepViewController () <UITextFieldDelegate, ZMTimerClient>
 
 @property (nonatomic, copy) NSString *credential;
 

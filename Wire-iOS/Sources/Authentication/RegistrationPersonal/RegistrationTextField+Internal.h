@@ -21,4 +21,6 @@
 @property (nonatomic) UIEdgeInsets placeholderInsets;
 @property (nonatomic) UIEdgeInsets textInsets;
 
+- (NSRange)selectedRange;
+
 @end
