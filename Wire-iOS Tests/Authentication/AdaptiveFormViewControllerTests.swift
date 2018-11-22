@@ -21,26 +21,65 @@ import XCTest
 
 class AdaptiveFormViewControllerTests: ZMSnapshotTestCase {
 
-    var child: VerificationCodeStepViewController?
+    var child: VerificationCodeStepViewController!
+    var mockDevice: MockDevice! = MockDevice()
+    var mockParentViewControler: UIViewController! = UIViewController()
 
     override func setUp() {
         super.setUp()
         child = VerificationCodeStepViewController(credential: "user@example.com")
+
+        recordMode = true
     }
 
     override func tearDown() {
         child = nil
+        mockDevice = nil
+        mockParentViewControler = nil
         super.tearDown()
     }
 
     func testThatItHasCorrectLayout() {
         // GIVEN
-        let sut = AdaptiveFormViewController(childViewController: child!)
+        let sut = AdaptiveFormViewController(childViewController: child, device: mockDevice)
+        mockParentViewControler.addChild(sut)
 
         // THEN
         verifyInAllDeviceSizes(view: sut.view) { _, isPad in
-            sut.updateConstraints(usingRegularLayout: isPad)
+            let traitCollection: UITraitCollection
+            if isPad {
+                self.mockDevice.userInterfaceIdiom = .pad
+                traitCollection = UITraitCollection(horizontalSizeClass: .regular)
+            } else {
+                self.mockDevice.userInterfaceIdiom = .phone
+                traitCollection = UITraitCollection(horizontalSizeClass: .compact)
+            }
+
+            ///TODO: mock a parent for SUT
+            self.mockParentViewControler.setOverrideTraitCollection(traitCollection, forChild: sut)
+//            sut.setOverrideTraitCollection(traitCollection, forChild: self.child)
+            sut.traitCollectionDidChange(nil)
+//            self.child.traitCollectionDidChange(nil)
         }
     }
+
+    func testForIPadRegular() {
+        // GIVEN
+        mockDevice.userInterfaceIdiom = .pad
+        let sut = AdaptiveFormViewController(childViewController: child, device: mockDevice)
+        mockParentViewControler.addChild(sut)
+
+        // WHEN
+        let traitCollection = UITraitCollection(horizontalSizeClass: .regular)
+
+        mockParentViewControler.setOverrideTraitCollection(traitCollection, forChild: sut)
+        sut.traitCollectionDidChange(nil)
+
+        sut.view.frame = CGRect(origin: .zero, size: CGSize(width: 768, height: 1024))
+
+        // THEN
+        self.verify(view: sut.view)
+    }
+
 
 }

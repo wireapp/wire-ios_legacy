@@ -187,7 +187,6 @@ final class LandingViewController: AuthenticationStepViewController {
 
         updateStackViewAxis()
         updateConstraintsForIPad()
-
     }
 
     private func createConstraints() {
@@ -267,10 +266,9 @@ final class LandingViewController: AuthenticationStepViewController {
     }
 
     func updateStackViewAxis() {
-        let userInterfaceIdiom = device.userInterfaceIdiom
-        guard userInterfaceIdiom == .pad else { return }
+        guard device.userInterfaceIdiom == .pad else { return }
 
-        switch self.traitCollection.horizontalSizeClass {
+        switch traitCollection.horizontalSizeClass {
         case .regular:
             buttonStackView.axis = .horizontal
         default:

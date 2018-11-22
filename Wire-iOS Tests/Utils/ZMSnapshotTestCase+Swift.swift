@@ -254,9 +254,12 @@ open class ZMSnapshotTestCase: FBSnapshotTestCase {
                                 line: UInt = #line,
                                 configurationBlock configuration: ConfigurationWithDeviceType? = nil) {
 
-        verifyMultipleSize(view: view, extraLayoutPass: extraLayoutPass, inSizes: ZMSnapshotTestCase.deviceScreenSizes,
+        verifyMultipleSize(view: view,
+                           extraLayoutPass: extraLayoutPass,
+                           inSizes: ZMSnapshotTestCase.deviceScreenSizes,
                            configuration: configuration,
-                           file: file, line: line)
+                           file: file,
+                           line: line)
     }
 }
 
