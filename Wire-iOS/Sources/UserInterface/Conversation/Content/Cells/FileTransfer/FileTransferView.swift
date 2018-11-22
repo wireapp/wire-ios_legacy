@@ -84,9 +84,6 @@ final public class FileTransferView: UIView, TransferView {
         var currentElements = self.accessibilityElements ?? []
         currentElements.append(contentsOf: [topLabel, bottomLabel, fileTypeIconView, fileEyeView, actionButton])
         self.accessibilityElements = currentElements
-        
-        setNeedsLayout()
-        layoutIfNeeded()
     }
     
     public required init?(coder aDecoder: NSCoder) {
