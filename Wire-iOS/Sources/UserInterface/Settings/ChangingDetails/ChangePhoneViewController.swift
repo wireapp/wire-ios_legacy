@@ -262,7 +262,7 @@ extension ChangePhoneViewController: RegistrationTextFieldDelegate {
 
     func insert(phoneNumber: String, registrationTextField: RegistrationTextField) -> Bool {
         let presetCountry = Country(iso: "", e164: NSNumber(value: registrationTextField.countryCode))
-        return phoneNumber.pasteAsPhoneNumber(presetCountry: presetCountry){country, phoneNumber in
+        return phoneNumber.shouldPasteAsPhoneNumber(presetCountry: presetCountry){country, phoneNumber in
             if let country = country, let phoneNumber = phoneNumber {
                 /// The textField not allow space. We have to replace it first
                 let numberWithoutCode = String(phoneNumber.filter { !" ".contains($0) })

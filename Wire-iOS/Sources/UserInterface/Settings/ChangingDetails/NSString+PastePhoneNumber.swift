@@ -20,24 +20,23 @@ import Foundation
 
 extension NSString {
 
-    ///TODO: apply to PhoneNumberVC
-
     /// Auto detect country for phone numbers beginning with "+"
-
+    ///
     /// When pastedString is copied from phone app (self phone number section), it contains right/left handling symbols: \u202A\u202B\u202C\u202D
     /// @"\U0000202d+380 (00) 123 45 67\U0000202c"
     ///
     /// - Parameter completion: completion closure with Country object and phoneNumber extracted from self
     /// - Returns: true if should paste as Phone number(not beginning with "+"). If self is prased as a phone number, reture false (it should the be pasted, the caller use the completion's data for further actions.)
     @discardableResult
-    @objc func pasteAsPhoneNumber(presetCountry: Country, completion: (_ country: Country?, _ phoneNumber: String?) -> Void) -> Bool {
+    @objc func shouldPasteAsPhoneNumber(presetCountry: Country,
+                                        completion: (_ country: Country?, _ phoneNumber: String?) -> Void)
+        -> Bool {
 
         var illegalCharacters = CharacterSet.whitespacesAndNewlines
         illegalCharacters.formUnion(CharacterSet.decimalDigits)
         illegalCharacters.formUnion(CharacterSet(charactersIn: "+-()"))
         illegalCharacters.invert()
         var phoneNumber: NSString = trimmingCharacters(in: illegalCharacters) as NSString
-
 
         if phoneNumber.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).hasPrefix("+") {
             if let country = Country.detect(forPhoneNumber: phoneNumber as String) {

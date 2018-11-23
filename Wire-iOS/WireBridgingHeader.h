@@ -121,6 +121,7 @@
 #import "KeyboardAvoidingViewController.h"
 #import "KeyboardAvoidingViewController+Internal.h"
 #import "PhoneNumberViewController.h"
+#import "PhoneNumberViewController+Internal.h"
 #import "CountryCodeTableViewController.h"
 #import "UIViewController+WR_Invite.h"
 #import "UIActivityViewController+Invite.h"

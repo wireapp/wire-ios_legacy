@@ -1193,6 +1193,7 @@
 		EF24036C20A1A2EF002813BE /* ConversationInputBarViewController+ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF24036B20A1A2EE002813BE /* ConversationInputBarViewController+ImagePicker.swift */; };
 		EF24036E20A1D581002813BE /* TermsOfUseStepViewController+Constraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF24036D20A1D581002813BE /* TermsOfUseStepViewController+Constraints.swift */; };
 		EF24037220A1E988002813BE /* TermsOfUseStepViewControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF24037020A1E971002813BE /* TermsOfUseStepViewControllerSnapshotTests.swift */; };
+		EF2587F821A7FE210039E283 /* PhoneNumberViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2587F621A7FE210039E283 /* PhoneNumberViewController+Extension.swift */; };
 		EF25F7DE1FC45F8E0040C3CC /* AccessoryTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF25F7DD1FC45F8E0040C3CC /* AccessoryTextField.swift */; };
 		EF25F8871FC57F320040C3CC /* AccessoryTextFieldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF25F8851FC57EE90040C3CC /* AccessoryTextFieldTests.swift */; };
 		EF266C612003B75C00A8C136 /* BreathLoadingBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF266C602003B75C00A8C136 /* BreathLoadingBar.swift */; };
@@ -2989,6 +2990,8 @@
 		EF24036D20A1D581002813BE /* TermsOfUseStepViewController+Constraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TermsOfUseStepViewController+Constraints.swift"; sourceTree = "<group>"; };
 		EF24036F20A1E161002813BE /* TermsOfUseStepViewController+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TermsOfUseStepViewController+Private.h"; sourceTree = "<group>"; };
 		EF24037020A1E971002813BE /* TermsOfUseStepViewControllerSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsOfUseStepViewControllerSnapshotTests.swift; sourceTree = "<group>"; };
+		EF2587F621A7FE210039E283 /* PhoneNumberViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhoneNumberViewController+Extension.swift"; sourceTree = "<group>"; };
+		EF2587F721A7FE210039E283 /* PhoneNumberViewController+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PhoneNumberViewController+Internal.h"; sourceTree = "<group>"; };
 		EF25F7DD1FC45F8E0040C3CC /* AccessoryTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessoryTextField.swift; sourceTree = "<group>"; };
 		EF25F8851FC57EE90040C3CC /* AccessoryTextFieldTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessoryTextFieldTests.swift; sourceTree = "<group>"; };
 		EF266C602003B75C00A8C136 /* BreathLoadingBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreathLoadingBar.swift; sourceTree = "<group>"; };
@@ -6385,7 +6388,9 @@
 				EFE285432146B4DC00720737 /* RegistrationTextField+EdgeInset.swift */,
 				EF2126BA1FB9DFE300625A9B /* GuidanceDotView.m */,
 				EF5EF40120B5B70A005453C1 /* ZMUserSession+MarketingConsent.swift */,
+				EF2587F721A7FE210039E283 /* PhoneNumberViewController+Internal.h */,
 				EF2126BD1FB9DFE300625A9B /* PhoneNumberViewController.m */,
+				EF2587F621A7FE210039E283 /* PhoneNumberViewController+Extension.swift */,
 				EF2126BE1FB9DFE300625A9B /* EmailFormViewController.m */,
 				EF2126BF1FB9DFE300625A9B /* GuidanceLabel.h */,
 				EF2126C21FB9DFE300625A9B /* CountryCodeView.h */,
@@ -7338,6 +7343,7 @@
 				164C29AD1ED446660026562A /* UserSelection.swift in Sources */,
 				8736F1841E4B67F0001CBA62 /* AppLockView.swift in Sources */,
 				D594343A203DCB8F006AA0C0 /* ConversationOptionsViewModel.swift in Sources */,
+				EF2587F821A7FE210039E283 /* PhoneNumberViewController+Extension.swift in Sources */,
 				5E8C38B2212E9799002AE12B /* AuthenticationStartMissingCredentialsErrorHandler.swift in Sources */,
 				8F8914131A9F287E0056AB0C /* ConversationListItemView.m in Sources */,
 				DBACFF7A1B3C96E1004062E0 /* MentionsBubbleView.m in Sources */,
