@@ -24,7 +24,7 @@ extension PhoneNumberViewController {
     func insert(phoneNumber: String?) -> Bool {
         guard let phoneNumber = phoneNumber else { return false }
 
-        return phoneNumber.shouldPasteAsPhoneNumber(presetCountry: country){ country, phoneNumber in
+        return phoneNumber.shouldInsertAsPhoneNumber(presetCountry: country){ country, phoneNumber in
             if let country = country, let phoneNumber = phoneNumber {
                 self.country = country
 

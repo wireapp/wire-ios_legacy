@@ -38,7 +38,7 @@ final class String_PhoneNumberTests: XCTestCase {
 
         // WHEN
         let presetCountry = Country(iso: "", e164: NSNumber(value: 49))
-        let result = sut.shouldPasteAsPhoneNumber(presetCountry: presetCountry) {
+        let result = sut.shouldInsertAsPhoneNumber(presetCountry: presetCountry) {
             country, phoneNumber in
             if let country = country, let phoneNumber = phoneNumber {
                 XCTAssertEqual(country.iso, "ch")
@@ -56,7 +56,7 @@ final class String_PhoneNumberTests: XCTestCase {
 
         // WHEN
         let presetCountry = Country(iso: "", e164: NSNumber(value: 49))
-        let result = sut.shouldPasteAsPhoneNumber(presetCountry: presetCountry) {
+        let result = sut.shouldInsertAsPhoneNumber(presetCountry: presetCountry) {
             country, phoneNumber in
             if let country = country, let phoneNumber = phoneNumber {
                 XCTAssertEqual(country.iso, "ch")
@@ -74,7 +74,7 @@ final class String_PhoneNumberTests: XCTestCase {
 
         // WHEN
         let presetCountry = Country(iso: "", e164: NSNumber(value: 49))
-        let result = sut.shouldPasteAsPhoneNumber(presetCountry: presetCountry) {
+        let result = sut.shouldInsertAsPhoneNumber(presetCountry: presetCountry) {
             country, phoneNumber in
             XCTAssertNil(country)
             XCTAssertNil(phoneNumber)
@@ -90,7 +90,7 @@ final class String_PhoneNumberTests: XCTestCase {
 
         // WHEN
         let presetCountry = Country(iso: "", e164: NSNumber(value: 49))
-        let result = sut.shouldPasteAsPhoneNumber(presetCountry: presetCountry) {
+        let result = sut.shouldInsertAsPhoneNumber(presetCountry: presetCountry) {
             country, phoneNumber in
             XCTAssertNil(country)
             XCTAssertNil(phoneNumber)

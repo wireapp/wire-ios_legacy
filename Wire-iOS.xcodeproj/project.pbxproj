@@ -1357,6 +1357,7 @@
 		EFF92B6221A839790090DA66 /* RegistrationTextField+PhoneNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF92B6121A839790090DA66 /* RegistrationTextField+PhoneNumber.swift */; };
 		EFF92B6421A84E210090DA66 /* PhoneNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF92B6321A84E210090DA66 /* PhoneNumber.swift */; };
 		EFF92B6721A855050090DA66 /* String+PhoneNumberTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF92B6521A854BA0090DA66 /* String+PhoneNumberTests.swift */; };
+		EFF92B6921A85A8B0090DA66 /* RegistrationTextFieldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF92B6821A85A8B0090DA66 /* RegistrationTextFieldDelegate.swift */; };
 		F10F46D420288CEB00261449 /* ConversationCreationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10F46D320288CEB00261449 /* ConversationCreationController.swift */; };
 		F112C58620497860007C1E8F /* Analytics+Guests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F112C58520497860007C1E8F /* Analytics+Guests.swift */; };
 		F1141C971F5EB2DC005340B3 /* WireApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1141C961F5EB2DC005340B3 /* WireApplication.swift */; };
@@ -3172,6 +3173,7 @@
 		EFF92B6121A839790090DA66 /* RegistrationTextField+PhoneNumber.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RegistrationTextField+PhoneNumber.swift"; sourceTree = "<group>"; };
 		EFF92B6321A84E210090DA66 /* PhoneNumber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneNumber.swift; sourceTree = "<group>"; };
 		EFF92B6521A854BA0090DA66 /* String+PhoneNumberTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+PhoneNumberTests.swift"; sourceTree = "<group>"; };
+		EFF92B6821A85A8B0090DA66 /* RegistrationTextFieldDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationTextFieldDelegate.swift; sourceTree = "<group>"; };
 		EFFF9E841FBF335700491F9A /* UIColor+TeamCreation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+TeamCreation.swift"; sourceTree = "<group>"; };
 		F10F46D320288CEB00261449 /* ConversationCreationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationCreationController.swift; sourceTree = "<group>"; };
 		F112C58520497860007C1E8F /* Analytics+Guests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Analytics+Guests.swift"; sourceTree = "<group>"; };
@@ -6386,6 +6388,7 @@
 				EF2126D31FB9DFE300625A9B /* RegistrationViewController.h */,
 				EF2126B81FB9DFE300625A9B /* RegistrationViewController.m */,
 				EF2126D21FB9DFE300625A9B /* RegistrationTextField.h */,
+				EFF92B6821A85A8B0090DA66 /* RegistrationTextFieldDelegate.swift */,
 				EFE285482146B7A200720737 /* RegistrationTextField+Internal.h */,
 				EF2126B91FB9DFE300625A9B /* RegistrationTextField.m */,
 				EFF92B6121A839790090DA66 /* RegistrationTextField+PhoneNumber.swift */,
@@ -8174,6 +8177,7 @@
 				BFE57B4B1D52335A00CB0806 /* ConversationPreviewViewController.swift in Sources */,
 				871BC3561D34F94200DF0793 /* AudioPlaylistViewController.m in Sources */,
 				D5677158202B496700308448 /* CreateGroupSection.swift in Sources */,
+				EFF92B6921A85A8B0090DA66 /* RegistrationTextFieldDelegate.swift in Sources */,
 				EEBE8C5C1F681694009D78C9 /* NSData+ImageType.swift in Sources */,
 				F16427021FCC5B9E00D2ABFC /* SetEmailStepDescription.swift in Sources */,
 				5E766D9921144DFC005242B4 /* AuthenticationCoordinator.swift in Sources */,

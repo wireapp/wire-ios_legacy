@@ -193,16 +193,16 @@ final class ChangePhoneViewController: SettingsBaseTableViewController {
 
 // MARK: - RegistrationTextFieldDelegate
 extension ChangePhoneViewController: RegistrationTextFieldDelegate {
-
-    func textField(_ textField: UITextField, shouldPasteCharactersIn range: NSRange, replacementString string: String) -> Bool {
+    func textField(_ textField: UITextField?, shouldPasteCharactersIn range: NSRange, replacementString string: String?) -> Bool {
         guard let registrationTextField = textField as? RegistrationTextField else { return false }
+        guard let string = string else { return false }
 
         return insert(phoneNumber: string, registrationTextField: registrationTextField)
     }
 
     func insert(phoneNumber: String, registrationTextField: RegistrationTextField) -> Bool {
         let presetCountry = Country(iso: "", e164: NSNumber(value: registrationTextField.countryCode))
-        return phoneNumber.shouldPasteAsPhoneNumber(presetCountry: presetCountry){country, phoneNumber in
+        return phoneNumber.shouldInsertAsPhoneNumber(presetCountry: presetCountry){country, phoneNumber in
             if let country = country, let phoneNumber = phoneNumber {
                 registrationTextField.text = phoneNumber
                 registrationTextField.countryCode = country.e164.uintValue
