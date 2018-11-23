@@ -26,7 +26,7 @@
 #import "NSURL+WireLocale.h"
 #import "Wire-Swift.h"
 
-@interface EmailSignInViewController () <RegistrationTextFieldDelegate>
+@interface EmailSignInViewController () <UITextFieldDelegate>
 
 @property (nonatomic) RegistrationTextField *emailField;
 @property (nonatomic) RegistrationTextField *passwordField;

@@ -117,8 +117,6 @@ fileprivate enum Section: Int {
 }
 
 final class ChangePhoneViewController: SettingsBaseTableViewController {
-    fileprivate let emailTextField = RegistrationTextField()
-
     fileprivate var state = ChangePhoneNumberState()
     fileprivate let userProfile = ZMUserSession.shared()?.userProfile
     fileprivate var observerToken: Any?
@@ -253,12 +251,40 @@ final class ChangePhoneViewController: SettingsBaseTableViewController {
     }
 }
 
+// MARK: - RegistrationTextFieldDelegate
 extension ChangePhoneViewController: RegistrationTextFieldDelegate {
-    
+
+    func textField(_ textField: UITextField, shouldPasteCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        guard let registrationTextField = textField as? RegistrationTextField else { return false }
+
+        return insert(phoneNumber: string, registrationTextField: registrationTextField)
+    }
+
+    func insert(phoneNumber: String, registrationTextField: RegistrationTextField) -> Bool {
+        let presetCountry = Country(iso: "", e164: NSNumber(value: registrationTextField.countryCode))
+        return phoneNumber.shouldPasteAsPhoneNumber(presetCountry: presetCountry){country, phoneNumber in
+            if let country = country, let phoneNumber = phoneNumber {
+                /// The textField not allow space. We have to replace it first
+                let numberWithoutCode = String(phoneNumber.filter { !" ".contains($0) })
+                registrationTextField.text = numberWithoutCode
+                registrationTextField.countryCode = country.e164.uintValue
+                let number = PhoneNumber(countryCode: registrationTextField.countryCode, numberWithoutCode: numberWithoutCode)
+                state.newNumber = number
+                updateSaveButtonState()
+            }
+        }
+    }
+
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        let registrationTextField = textField as! RegistrationTextField
+        guard let registrationTextField = textField as? RegistrationTextField else { return false }
+
+        ///If textField is empty and a replacementString with longer than 1 char, it is likely to insert from autoFill.
+        if textField.text?.count == 0 && string.count > 1 {
+            return insert(phoneNumber: string, registrationTextField: registrationTextField)
+        }
+
         let newNumber = (textField.text as NSString?)?.replacingCharacters(in: range, with: string) ?? ""
-        
+
         let number = PhoneNumber(countryCode: registrationTextField.countryCode, numberWithoutCode: newNumber)
         switch number.validate() {
         case .containsInvalidCharacters, .tooLong:
@@ -266,7 +292,7 @@ extension ChangePhoneViewController: RegistrationTextFieldDelegate {
         default:
             break
         }
-        
+
         state.newNumber = number
         updateSaveButtonState()
         return true

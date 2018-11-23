@@ -125,17 +125,8 @@ extension IndexSet {
         } else if message.isAudio {
             let audioCell = ConversationLegacyCellDescription<AudioMessageCell>(message: message, layoutProperties: layoutProperties)
             add(description: audioCell)
-            
-        } else if message.isFile {
-            let fileCell = ConversationLegacyCellDescription<FileTransferCell>(message: message, layoutProperties: layoutProperties)
-            add(description: fileCell)
-            
         } else if message.isSystem, let systemMessageType = message.systemMessageData?.systemMessageType {
             switch systemMessageType {
-            case .newClient, .usingNewDevice:
-                let newClientCell = ConversationLegacyCellDescription<ConversationNewDeviceCell>(message: message, layoutProperties: layoutProperties)
-                add(description: newClientCell)
-                
             case .ignoredClient:
                 let ignoredClientCell = ConversationLegacyCellDescription<ConversationIgnoredDeviceCell>(message: message, layoutProperties: layoutProperties)
                 add(description: ignoredClientCell)
@@ -170,6 +161,8 @@ extension IndexSet {
             contentCellDescriptions = [AnyConversationMessageCellDescription(ConversationImageMessageCellDescription(message: message, image: message.imageMessageData!))]
         } else if message.isLocation {
             contentCellDescriptions = addLocationMessageCells()
+        } else if message.isFile {
+            contentCellDescriptions = [AnyConversationMessageCellDescription(ConversationFileMessageCellDescription(message: message))]
         } else if message.isSystem {
             contentCellDescriptions = ConversationSystemMessageCellDescription.cells(for: message, layoutProperties: layoutProperties)
         } else {

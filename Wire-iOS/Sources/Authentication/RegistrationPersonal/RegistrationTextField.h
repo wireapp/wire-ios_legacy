@@ -36,8 +36,6 @@ typedef NS_ENUM(NSUInteger, RegistrationTextFieldLeftAccessoryView) {
 
 
 @protocol RegistrationTextFieldDelegate <UITextFieldDelegate>
-@optional
-///
 - (BOOL)textField:(UITextField *)textField shouldPasteCharactersInRange:(NSRange)range replacementString:(NSString *)string;
 @end
 
@@ -45,7 +43,7 @@ typedef NS_ENUM(NSUInteger, RegistrationTextFieldLeftAccessoryView) {
 
 @interface RegistrationTextField : UITextField
 
-@property (nonatomic, weak) id<RegistrationTextFieldDelegate> delegate;
+@property (nonatomic, weak) id<UITextFieldDelegate> delegate;
 
 @property (nonatomic) RegistrationTextFieldLeftAccessoryView leftAccessoryView;
 @property (nonatomic) RegistrationTextFieldRightAccessoryView rightAccessoryView;

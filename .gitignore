@@ -25,3 +25,4 @@ Scripts/**/.build
 /fastlane/report.xml
 /test
 /fastlane/README.md
+Configuration/**

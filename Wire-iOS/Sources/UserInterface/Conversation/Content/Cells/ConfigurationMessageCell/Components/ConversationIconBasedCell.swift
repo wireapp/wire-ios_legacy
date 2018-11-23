@@ -41,7 +41,7 @@ class ConversationIconBasedCell: UIView, TTTAttributedLabelDelegate {
 
     var attributedText: NSAttributedString? {
         didSet {
-            textLabel.attributedText = attributedText
+            textLabel.text = attributedText
             textLabel.accessibilityLabel = attributedText?.string
             textLabel.addLinks()
             

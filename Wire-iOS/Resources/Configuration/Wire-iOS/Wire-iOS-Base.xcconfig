@@ -1,0 +1,46 @@
+// 
+// Wire
+// Copyright (C) 2016 Wire Swiss GmbH
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with this program. If not, see http://www.gnu.org/licenses/.
+// 
+
+// Build Options
+ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES
+
+// Packaging
+DEFINES_MODULE = YES
+INFOPLIST_FILE = $(SRCROOT)/Wire-iOS/Wire-Info.plist
+PRODUCT_BUNDLE_IDENTIFIER = $(WIRE_BUNDLE_ID)
+PRODUCT_NAME = $(WIRE_PRODUCT_NAME)
+
+// Search Paths
+FRAMEWORK_SEARCH_PATHS = $(inherited) $(PROJECT_DIR)/Carthage/Build/iOS
+
+// Signing
+CODE_SIGN_ENTITLEMENTS = $(CODE_SIGN_ENTITLEMENTS_APP)
+PROVISIONING_PROFILE_SPECIFIER = $(PROVISIONING_PROFILE_SPECIFIER_APP)
+
+// Apple Clang - Language
+GCC_PREFIX_HEADER = Wire-iOS/Wire-iOS-Prefix.pch
+
+// Apple Clang - Language - Modules
+CLANG_ENABLE_MODULES = YES
+
+// Swift Compiler - Custom Flags
+
+ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES
+SWIFT_OBJC_BRIDGING_HEADER = $(TARGET_NAME)/WireBridgingHeader.h
+
+
