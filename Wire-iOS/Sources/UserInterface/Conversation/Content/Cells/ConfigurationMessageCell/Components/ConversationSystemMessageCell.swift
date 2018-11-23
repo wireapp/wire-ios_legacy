@@ -67,6 +67,62 @@ class LinkConversationSystemMessageCell: ConversationIconBasedCell, Conversation
 
 }
 
+class NewDeviceSystemMessageCell: ConversationIconBasedCell, ConversationMessageCell {
+    
+    static let userClientURL: URL = URL(string: "settings://user-client")!
+    
+    var linkTarget: LinkTarget? = nil
+    
+    enum LinkTarget {
+        case user(ZMUser)
+        case conversation(ZMConversation)
+    }
+    
+    struct Configuration {
+        let attributedText: NSAttributedString?
+        let showIcon: Bool
+        var linkTarget: LinkTarget
+    }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+       setupView()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        
+        setupView()
+    }
+    
+    func setupView() {
+        imageView.image  = WireStyleKit.imageOfShieldnotverified
+        lineView.isHidden = false
+    }
+    
+    func configure(with object: Configuration, animated: Bool) {
+        attributedText = object.attributedText
+        imageView.isHidden = !object.showIcon
+        linkTarget = object.linkTarget
+    }
+    
+    // MARK: - TTTAttributedLabelDelegate
+    
+    func attributedLabel(_ label: TTTAttributedLabel!, didSelectLinkWith URL: URL!) {
+        guard let linkTarget = linkTarget  else { return }
+        
+        if URL == type(of: self).userClientURL {
+            switch linkTarget {
+            case .user(let user):
+                ZClientViewController.shared()?.openClientListScreen(for: user)
+            case .conversation(let conversation):
+                ZClientViewController.shared()?.openDetailScreen(for: conversation)
+            }
+        }
+    }
+}
+
 class ConversationRenamedSystemMessageCell: ConversationIconBasedCell, ConversationMessageCell {
 
     struct Configuration {
@@ -112,7 +168,7 @@ class ConversationRenamedSystemMessageCell: ConversationIconBasedCell, Conversat
 class ConversationSystemMessageCellDescription {
 
     static func cells(for message: ZMConversationMessage, layoutProperties: ConversationCellLayoutProperties) -> [AnyConversationMessageCellDescription] {
-        guard let systemMessageData = message.systemMessageData, let sender = message.sender else {
+        guard let systemMessageData = message.systemMessageData, let sender = message.sender, let conversation = message.conversation else {
             preconditionFailure("Invalid system message")
         }
 
@@ -161,7 +217,7 @@ class ConversationSystemMessageCellDescription {
             return [AnyConversationMessageCellDescription(decryptionCell)]
 
         case .newClient, .usingNewDevice:
-            let newClientCell = ConversationLegacyCellDescription<ConversationNewDeviceCell>(message: message, layoutProperties: layoutProperties)
+            let newClientCell = ConversationNewDeviceSystemMessageCellDescription(message: message, systemMessageData: systemMessageData, conversation: conversation)
             return [AnyConversationMessageCellDescription(newClientCell)]
 
         case .ignoredClient:
@@ -443,5 +499,118 @@ class ConversationCannotDecryptSystemMessageCellDescription: ConversationMessage
         return (BaseLocalizationString + ".otherDevice_part").localized(args: device?.remoteIdentifier ?? "-")
     }
 
+}
+
+class ConversationNewDeviceSystemMessageCellDescription: ConversationMessageCellDescription {
+    
+    typealias View = NewDeviceSystemMessageCell
+    let configuration: View.Configuration
+    
+    var message: ZMConversationMessage?
+    weak var delegate: ConversationCellDelegate?
+    weak var actionController: ConversationCellActionController?
+    
+    var showEphemeralTimer: Bool = false
+    var topMargin: Float = 0
+    
+    let isFullWidth: Bool = true
+    let supportsActions: Bool = false
+    let containsHighlightableContent: Bool = false
+    
+    let accessibilityIdentifier: String? = nil
+    let accessibilityLabel: String? = nil
+    
+    init(message: ZMConversationMessage, systemMessageData: ZMSystemMessageData, conversation: ZMConversation) {
+        configuration = ConversationNewDeviceSystemMessageCellDescription.configuration(for: systemMessageData, in: conversation)
+        actionController = nil
+    }
+    
+    struct TextAttributes {
+        let senderAttributes : [NSAttributedString.Key: AnyObject]
+        let startedUsingAttributes : [NSAttributedString.Key: AnyObject]
+        let linkAttributes : [NSAttributedString.Key: AnyObject]
+        
+        init(boldFont: UIFont, normalFont: UIFont, textColor: UIColor, link: URL) {
+            senderAttributes = [.font: boldFont, .foregroundColor: textColor]
+            startedUsingAttributes = [.font: normalFont, .foregroundColor: textColor]
+            linkAttributes = [.font: normalFont, .link: link as AnyObject]
+        }
+    }
+    
+    private static func configuration(for systemMessage: ZMSystemMessageData, in conversation: ZMConversation) -> View.Configuration {
+        
+        let textAttributes = TextAttributes(boldFont: .mediumSemiboldFont, normalFont: .mediumFont, textColor: UIColor.from(scheme: .textForeground), link: View.userClientURL)
+        let clients = systemMessage.clients.compactMap ({ $0 as? UserClientType })
+        let users = systemMessage.users.sorted(by: { (a: ZMUser, b: ZMUser) -> Bool in
+            a.displayName.compare(b.displayName) == ComparisonResult.orderedAscending
+        })
+        
+        if !systemMessage.addedUsers.isEmpty {
+            return configureForAddedUsers(in: conversation, attributes: textAttributes)
+        } else if let user = users.first , user.isSelfUser && systemMessage.systemMessageType == .usingNewDevice {
+            return configureForNewCurrentDeviceOfSelfUser(user, attributes: textAttributes)
+        } else if users.count == 1, let user = users.first , user.isSelfUser {
+            return configureForNewClientOfSelfUser(user, clients: clients, attributes: textAttributes)
+        } else {
+            return configureForOtherUsers(users, conversation: conversation, clients: clients, attributes: textAttributes)
+        }
+    }
+    
+    private static func configureForNewClientOfSelfUser(_ selfUser: ZMUser, clients: [UserClientType], attributes: TextAttributes) -> View.Configuration {
+        let isSelfClient = clients.first?.isEqual(ZMUserSession.shared()?.selfUserClient()) ?? false
+        let senderName = NSLocalizedString("content.system.you_started", comment: "") && attributes.senderAttributes
+        let startedUsingString = NSLocalizedString("content.system.started_using", comment: "") && attributes.startedUsingAttributes
+        let userClientString = NSLocalizedString("content.system.new_device", comment: "") && attributes.linkAttributes
+        let attributedText = senderName + "general.space_between_words".localized + startedUsingString + "general.space_between_words".localized + userClientString
+        
+        return View.Configuration(attributedText: attributedText, showIcon: !isSelfClient, linkTarget: .user(selfUser))
+    }
+    
+    private static func configureForNewCurrentDeviceOfSelfUser(_ selfUser: ZMUser, attributes: TextAttributes) -> View.Configuration {
+        let senderName = NSLocalizedString("content.system.you_started", comment: "") && attributes.senderAttributes
+        let startedUsingString = NSLocalizedString("content.system.started_using", comment: "") && attributes.startedUsingAttributes
+        let userClientString = NSLocalizedString("content.system.this_device", comment: "") && attributes.linkAttributes
+        let attributedText = senderName + "general.space_between_words".localized + startedUsingString + "general.space_between_words".localized + userClientString
+        
+        return View.Configuration(attributedText: attributedText, showIcon: false, linkTarget: .user(selfUser))
+    }
+    
+    private static func configureForOtherUsers(_ users: [ZMUser], conversation: ZMConversation, clients: [UserClientType], attributes: TextAttributes) -> View.Configuration {
+        let displayNamesOfOthers = users.filter {!$0.isSelfUser }.compactMap {$0.displayName as String}
+        let firstTwoNames = displayNamesOfOthers.prefix(2)
+        let senderNames = firstTwoNames.joined(separator: ", ")
+        let additionalSenderCount = max(displayNamesOfOthers.count - 1, 1)
+        
+        // %@ %#@d_number_of_others@ started using %#@d_new_devices@
+        let senderNamesString = NSString(format: NSLocalizedString("content.system.people_started_using", comment: "") as NSString,
+                                         senderNames,
+                                         additionalSenderCount,
+                                         clients.count) as String
+        
+        let userClientString = NSString(format: NSLocalizedString("content.system.new_devices", comment: "") as NSString, clients.count) as String
+        
+        var attributedSenderNames = NSAttributedString(string: senderNamesString, attributes: attributes.startedUsingAttributes)
+        attributedSenderNames = attributedSenderNames.setAttributes(attributes.senderAttributes, toSubstring: senderNames)
+        attributedSenderNames = attributedSenderNames.setAttributes(attributes.linkAttributes, toSubstring: userClientString)
+        let attributedText = attributedSenderNames
+
+        var linkTarget: View.LinkTarget
+        if let user = users.first, users.count == 1 {
+            linkTarget = .user(user)
+        } else {
+            linkTarget = .conversation(conversation)
+        }
+       
+        return View.Configuration(attributedText: attributedText, showIcon: true, linkTarget: linkTarget)
+    }
+    
+    private static func configureForAddedUsers(in conversation: ZMConversation, attributes: TextAttributes) -> View.Configuration {
+        let attributedNewUsers = NSAttributedString(string: "content.system.new_users".localized, attributes: attributes.startedUsingAttributes)
+        let attributedLink = NSAttributedString(string: "content.system.verify_devices".localized, attributes: attributes.linkAttributes)
+        let attributedText = attributedNewUsers + " " + attributedLink
+        
+        return View.Configuration(attributedText: attributedText, showIcon: true, linkTarget: .conversation(conversation))
+    }
+    
 }
 

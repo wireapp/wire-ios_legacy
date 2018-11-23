@@ -23,23 +23,63 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd $DIR/..
 
+CONFIGURATION_LOCATION=Configuration
+PUBLIC_CONFIGURATION_REPO=https://github.com/wireapp/wire-ios-build-configuration.git
+REPO_URL=$PUBLIC_CONFIGURATION_REPO
 
-REPO_NAME=wire-ios-build-assets
-REPO_URL=github.com:wireapp/${REPO_NAME}.git
+OVERRIDES_DIR=
+
+usage()
+{
+    echo "usage: download_assets.sh [[--configuration_repo repo_url] | [--override_with path] | [-h]]"
+}
+
+
+while [ "$1" != "" ]; do
+    case $1 in
+        --configuration_repo )  shift
+                                echo "Using custom configuration repository: $@"
+                                REPO_URL=$@
+                                break
+                                ;;
+        --override_with )       shift
+                                echo "Overriding with configuration files in $@"
+                                OVERRIDES_DIR=$@
+                                break
+                                ;;
+        -h | --help )           usage
+                                exit
+                                ;;
+        * )                     usage
+                                exit 1
+    esac
+    shift
+done
 
 ##################################
 # Checout assets
 ##################################
-if [ -e "${REPO_NAME}" ]; then
-	cd ${REPO_NAME}
-	echo "Pulling assets..."
-	git pull
+if [ -e "${CONFIGURATION_LOCATION}" ]; then
+    pushd ${CONFIGURATION_LOCATION} &> /dev/null
+    echo "Pulling configuration..."
+    git pull
+    popd &> /dev/null
 else
-	git ls-remote "git@${REPO_URL}" &> /dev/null
-	if [ "$?" -ne 0 ]; then
-		echo "No access to assets"
-	else 
-		echo "Cloning assets..."
-		git clone --depth 1 git@${REPO_URL}
-	fi
+    git ls-remote "${REPO_URL}" &> /dev/null
+    if [ "$?" -ne 0 ]; then
+        echo "No access to configuration repository, falling back to public"
+        REPO_URL=$PUBLIC_CONFIGURATION_REPO
+    fi 
+
+    echo "Cloning assets from ${REPO_URL}"
+    git clone --depth 1 ${REPO_URL} ${CONFIGURATION_LOCATION}
 fi
+
+if [ ! -z "${OVERRIDES_DIR}" ]; then
+    # Add trailing slash if not present so that cp would copy contents of directory
+    [[ "${OVERRIDES_DIR}" != */ ]] && OVERRIDES_DIR="${OVERRIDES_DIR}/"
+    echo "Copying '${OVERRIDES_DIR}' over to '${CONFIGURATION_LOCATION}'"
+    cp -R "${OVERRIDES_DIR}" "${CONFIGURATION_LOCATION}"
+fi
+
+

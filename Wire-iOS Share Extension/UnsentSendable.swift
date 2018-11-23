@@ -247,7 +247,16 @@ class UnsentFileSendable: UnsentSendableBase, UnsentSendable {
                     error?.log(message: "Unable to prepare file attachment for sending")
                     return completion()
                 }
-
+                
+                // Generating PDF previews can be expensive. To avoid hitting the Share Extension's
+                // memory budget we should avoid to generate previews if the file is a PDF.
+                guard !UTTypeConformsTo(url.UTI() as CFString, kUTTypePDF) else {
+                    self?.metadata = ZMFileMetadata(fileURL: url)
+                    completion()
+                    return
+                }
+                
+                // Generate preview
                 FileMetaDataGenerator.metadataForFileAtURL(url, UTI: url.UTI(), name: name ?? url.lastPathComponent) { [weak self] metadata in
                     self?.metadata = metadata
                     completion()

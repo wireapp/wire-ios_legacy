@@ -1,0 +1,69 @@
+// 
+// Wire
+// Copyright (C) 2016 Wire Swiss GmbH
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with this program. If not, see http://www.gnu.org/licenses/.
+// 
+
+#include "../../../Configuration/Base.xcconfig"
+#include "Warnings.xcconfig"
+#include "Version.xcconfig"
+
+// Architectures
+//
+SDKROOT = iphoneos
+
+// Packaging
+//
+INFOPLIST_EXPAND_BUILD_SETTINGS = YES
+DEFINES_MODULE = YES
+
+// Deployment
+//
+TARGETED_DEVICE_FAMILY = 1,2
+IPHONEOS_DEPLOYMENT_TARGET = 10.0
+
+//Icon
+ASSETCATALOG_COMPILER_APPICON_NAME = $(APPICON_NAME)
+
+// Code Signing
+CODE_SIGN_STYLE = Manual
+
+// Build Options
+//
+DEBUG_INFORMATION_FORMAT = dwarf-with-dsym
+
+// Linking
+LD_RUNPATH_SEARCH_PATHS = $(inherited) @executable_path/Frameworks @loader_path/Frameworks $(PROJECT_DIR)/Carthage/Build/iOS
+
+// Search Paths
+//
+FRAMEWORK_SEARCH_PATHS = $(inherited) $(PROJECT_DIR)/Carthage/Build/iOS
+HEADER_SEARCH_PATHS = $(inherited) "$(TARGET_TEMP_DIR)/../$(PROJECT_NAME).build/DerivedSources"
+ALWAYS_SEARCH_USER_PATHS = NO
+
+// LLVM compiler - Language
+GCC_PRECOMPILE_PREFIX_HEADER = YES
+CLANG_ENABLE_MODULES = YES
+CLANG_ENABLE_OBJC_ARC = YES
+ENABLE_BITCODE = NO
+ENABLE_STRICT_OBJC_MSGSEND = YES
+
+// LLVM compiler - Preprocessing
+
+SHARED_CUSTOM_VALUES = HOCKEY_APP_ID_KEY=$(HOCKEY_APP_ID) WIRE_SSO_URL_SCHEME=$(SSO_URL_SCHEME)
+
+// Swift Compiler
+
+SWIFT_VERSION = 4.2

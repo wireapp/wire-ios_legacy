@@ -104,7 +104,7 @@
     static const CGFloat accentColorNameColorBlendingCoefficientsDark[] = {0.0f, 0.8f, 0.72f, 1.0f, 0.8f, 0.8f, 0.8f, 0.64f};
     static const CGFloat accentColorNameColorBlendingCoefficientsLight[] = {0.0f, 0.8f, 0.72f, 1.0f, 0.8f, 0.8f, 0.64f, 1.0f};
  
-    assert(accentColor < ZMAccentColorMax);
+    assert(accentColor <= ZMAccentColorMax);
     
     const CGFloat *coefficientsArray = variant == ColorSchemeVariantDark ? accentColorNameColorBlendingCoefficientsDark : accentColorNameColorBlendingCoefficientsLight;
     const CGFloat coefficient = coefficientsArray[accentColor];

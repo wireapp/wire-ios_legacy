@@ -93,10 +93,8 @@ import UIKit
             return .present
         } else if message.isFile, let transferState = message.fileMessageData?.transferState {
             switch transferState {
-            case .downloaded:
+            case .downloaded, .uploaded, .failedDownload:
                 return .present
-            case .uploaded, .failedDownload:
-                return .download
             default:
                 return nil
             }
