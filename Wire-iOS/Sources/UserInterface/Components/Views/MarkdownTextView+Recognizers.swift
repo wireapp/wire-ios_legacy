@@ -49,6 +49,12 @@ extension MarkdownTextView {
 
 extension MarkdownTextView: UIGestureRecognizerDelegate {
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+
+        // prevent recognizing other UIPanGestureRecognizers at the same time, e.g. SplitViewController's panGestureRecognizers will dismiss the keyboard and this MarkdownTextView moves down immediately
+        if otherGestureRecognizer is UIPanGestureRecognizer {
+            return false
+        }
+
         return true
     }
 }
