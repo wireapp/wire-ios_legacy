@@ -110,7 +110,9 @@ static CGFloat PhoneNumberFieldTopMargin = 16;
 {
     self.phoneNumberField = [[RegistrationTextField alloc] initForAutoLayout];
     self.phoneNumberField.leftAccessoryView = RegistrationTextFieldLeftAccessoryViewCountryCode;
-    self.phoneNumberField.keyboardType = UIKeyboardTypeNumberPad;
+
+    self.phoneNumberField.isPhoneNumberMode = YES;
+
     self.phoneNumberField.placeholder = NSLocalizedString(@"registration.enter_phone_number.placeholder", nil);
     self.phoneNumberField.accessibilityLabel = NSLocalizedString(@"registration.enter_phone_number.placeholder", nil);
     self.phoneNumberField.delegate = self;

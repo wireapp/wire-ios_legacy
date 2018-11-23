@@ -22,8 +22,9 @@ extension NSString {
 
     /// Auto detect country for phone numbers beginning with "+"
     ///
-    /// When pastedString is copied from phone app (self phone number section), it contains right/left handling symbols: \u202A\u202B\u202C\u202D
-    /// @"\U0000202d+380 (00) 123 45 67\U0000202c"
+    /// Notice: When pastedString is copied from phone app (self phone number section), it contains right/left handling symbols: \u202A\u202B\u202C\u202D or \u{e2}
+    /// e.g. @"\U0000202d+380 (00) 123 45 67\U0000202c"
+    /// or  \u{e2}+49 123 12349999\u{e2}
     ///
     /// - Parameter completion: completion closure with Country object and phoneNumber extracted from self
     /// - Returns: true if should paste as Phone number(not beginning with "+"). If self is prased as a phone number, reture false (it should the be pasted, the caller use the completion's data for further actions.)
@@ -32,7 +33,7 @@ extension NSString {
                                         completion: (_ country: Country?, _ phoneNumber: String?) -> Void)
         -> Bool {
 
-        var illegalCharacters = CharacterSet.whitespacesAndNewlines
+        var illegalCharacters = CharacterSet.whitespaces
         illegalCharacters.formUnion(CharacterSet.decimalDigits)
         illegalCharacters.formUnion(CharacterSet(charactersIn: "+-()"))
         illegalCharacters.invert()

@@ -18,19 +18,15 @@
 
 import Foundation
 
-extension PhoneNumberViewController {
+extension RegistrationTextField {
     @objc
-    @discardableResult
-    func pastePhoneNumber(_ phoneNumber: NSString?) -> Bool {
-        guard let phoneNumber = phoneNumber else { return false }
-
-        return phoneNumber.shouldPasteAsPhoneNumber(presetCountry: self.country){country, phoneNumber in
-            if let _ /*country*/ = country, let phoneNumber = phoneNumber {
-
-                self.phoneNumberField.text = phoneNumber;
-                ///TODO: update country name and county code after a phone number with prefix is pasted
-                self.updateRightAccessory(forPhoneNumber: phoneNumber)
-            }
+    var isPhoneNumberMode: Bool {
+        set {
+            keyboardType = .phonePad
+            textContentType = .telephoneNumber
+        }
+        get {
+            return keyboardType == .phonePad && textContentType == .telephoneNumber
         }
     }
 }

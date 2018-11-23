@@ -189,8 +189,7 @@ final class ChangePhoneViewController: SettingsBaseTableViewController {
         switch Section(rawValue: indexPath.section)! {
         case .phoneNumber:
             let cell = tableView.dequeueReusableCell(withIdentifier: RegistrationTextFieldCell.zm_reuseIdentifier, for: indexPath) as! RegistrationTextFieldCell
-            cell.textField.keyboardType = .phonePad
-            cell.textField.textContentType = .telephoneNumber
+            cell.textField.isPhoneNumberMode = true
             cell.textField.leftAccessoryView = .countryCode
             cell.textField.accessibilityIdentifier = "PhoneNumberField"
             cell.textField.placeholder = "registration.enter_phone_number.placeholder".localized

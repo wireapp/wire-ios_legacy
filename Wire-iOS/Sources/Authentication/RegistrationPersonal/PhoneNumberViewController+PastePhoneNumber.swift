@@ -16,9 +16,21 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-@interface PhoneNumberViewController ()
+import Foundation
 
-- (void)updateRightAccessoryForPhoneNumber:(NSString *)phoneNumber;
-- (void)setCountry:(Country *)country;
+extension PhoneNumberViewController {
+    @objc
+    @discardableResult
+    func pastePhoneNumber(_ phoneNumber: NSString?) -> Bool {
+        guard let phoneNumber = phoneNumber else { return false }
 
-@end
+        return phoneNumber.shouldPasteAsPhoneNumber(presetCountry: country){ country, phoneNumber in
+            if let country = country, let phoneNumber = phoneNumber {
+                self.setCountry(country)
+
+                self.phoneNumberField.text = phoneNumber;
+                self.updateRightAccessory(forPhoneNumber: phoneNumber)
+            }
+        }
+    }
+}
