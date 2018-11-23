@@ -18,22 +18,6 @@
 
 import Foundation
 
-//- (void)paste:(id)sender
-//{
-//    BOOL shouldPaste = YES;
-//    if ([self.delegate respondsToSelector:@selector(textField:shouldPasteCharactersInRange:replacementString:)]) {
-//        UIPasteboard *pasteboard = [UIPasteboard pasteboardWithName:UIPasteboardNameGeneral create:NO];
-//        NSString *pastedString = [pasteboard string];
-//        shouldPaste = [self.delegate textField:self
-//            shouldPasteCharactersInRange:self.selectedRange
-//            replacementString:pastedString];
-//    }
-//
-//    if (shouldPaste) {
-//        [super paste:sender];
-//    }
-//}
-
 extension RegistrationTextField {
     override open func paste(_ sender: Any?) {
         var shouldPaste = true

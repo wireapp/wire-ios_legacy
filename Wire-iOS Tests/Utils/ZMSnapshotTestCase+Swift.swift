@@ -154,7 +154,7 @@ extension ZMSnapshotTestCase {
 
 
     /// return the smallest iPhone screen size that Wire app supports
-    private var defaultIPhoneSize: CGSize {
+    public var defaultIPhoneSize: CGSize {
         return ZMDeviceSizeIPhone5
     }
 

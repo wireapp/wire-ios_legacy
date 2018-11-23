@@ -27,9 +27,6 @@ final class ChangePhoneViewControllerSnapshotTests: ZMSnapshotTestCase {
         super.setUp()
         sut = ChangePhoneViewController()
         sut.view.backgroundColor = .black
-
-        /// TODO: remove this after snapshot is created
-        recordMode = true
     }
     
     override func tearDown() {
@@ -37,11 +34,22 @@ final class ChangePhoneViewControllerSnapshotTests: ZMSnapshotTestCase {
         super.tearDown()
     }
 
-    func testForInitState(){
-        verify(view: sut.view)
-    }
+    func testForANumberPasted(){
+        // call viewDidLoad
+        sut.loadViewIfNeeded()
 
-    func testForOnlyNumericStringIsAllowed() {
+        // make table view's cells visible
+        sut.view.frame = CGRect(origin: .zero, size: defaultIPhoneSize)
+        sut.view.layoutIfNeeded()
 
+        UIPasteboard.general.string = "+41 86 079 209 36 37"
+
+        let indexPath = IndexPath(row: 0, section: 0)
+        if let cell = sut.tableView.cellForRow(at: indexPath) as? RegistrationTextFieldCell {
+
+            cell.textField.paste(nil)
+        }
+
+        verifyInIPhoneSize(view: sut.view)
     }
 }
