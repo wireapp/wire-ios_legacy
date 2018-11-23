@@ -141,8 +141,6 @@
 #import "BlueViewController.h"
 #import "PermissionDeniedViewController.h"
 #import "ShareContactsViewController.h"
-#import "EmailSignInViewController.h"
-#import "EmailFormViewController.h"
 
 // Helper objects
 #import "PushTransition.h"
