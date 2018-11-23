@@ -21,7 +21,7 @@ import Foundation
 extension PhoneNumberViewController {
     @objc
     @discardableResult
-    func pastePhoneNumber(_ phoneNumber: String?) -> Bool {
+    func insert(phoneNumber: String?) -> Bool {
         guard let phoneNumber = phoneNumber else { return false }
 
         return phoneNumber.shouldPasteAsPhoneNumber(presetCountry: country){ country, phoneNumber in
@@ -37,7 +37,7 @@ extension PhoneNumberViewController {
 
 extension PhoneNumberViewController: RegistrationTextFieldDelegate {
     public func textField(_ textField: UITextField?, shouldPasteCharactersIn range: NSRange, replacementString string: String?) -> Bool {
-        return pastePhoneNumber(string)
+        return insert(phoneNumber: string)
     }
 
     @objc(textField:shouldChangeCharactersInRange:replacementString:)
@@ -48,9 +48,8 @@ extension PhoneNumberViewController: RegistrationTextFieldDelegate {
 
         ///If the textField is empty and a replacementString with longer than 1 char, it is likely to insert from autoFill.
         if textField.text?.count == 0 && string.count > 1 {
-            return pastePhoneNumber(string)
+            return insert(phoneNumber: string)
         }
-
 
         let number = PhoneNumber(countryCode: country.e164.uintValue, numberWithoutCode: newString)
 
@@ -62,6 +61,8 @@ extension PhoneNumberViewController: RegistrationTextFieldDelegate {
         default:
             break
         }
+
+        let phoneNumber = NSString.phoneNumber(withE164: country.e164, number: newString)
 
         updateRightAccessory(forPhoneNumber: phoneNumber)
         return true

@@ -191,7 +191,7 @@ static CGFloat PhoneNumberFieldTopMargin = 16;
         [self selectInitialCountry];
         self.phoneNumberField.text = nil;
     } else {
-        [self pastePhoneNumber:phoneNumber];
+        [self insertWithPhoneNumber:phoneNumber];
     }
 }
 
