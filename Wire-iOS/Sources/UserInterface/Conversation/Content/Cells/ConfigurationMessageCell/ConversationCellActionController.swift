@@ -91,7 +91,7 @@ import UIKit
     internal var singleTapAction: MessageAction? {
         if message.isImage, message.imageMessageData?.isDownloaded == true {
             return .present
-        } else if message.isFile, let transferState = message.fileMessageData?.transferState {
+        } else if message.isFile, !message.isAudio, let transferState = message.fileMessageData?.transferState {
             switch transferState {
             case .downloaded, .uploaded, .failedDownload:
                 return .present

@@ -80,6 +80,8 @@
 		1660F2381FBC6E2E00A0EE54 /* silence.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 1660F2371FBC6E2D00A0EE54 /* silence.m4a */; };
 		1660F23A1FBF32D400A0EE54 /* MediaPlayerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1660F2391FBF32D400A0EE54 /* MediaPlayerController.swift */; };
 		1661C71B21A7113A003DCE1C /* ConversationFileMessageCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1661C71A21A7113A003DCE1C /* ConversationFileMessageCellTests.swift */; };
+		1661C71D21A71853003DCE1C /* ConversationVideoMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1661C71C21A71853003DCE1C /* ConversationVideoMessageCell.swift */; };
+		1661C71F21A71F15003DCE1C /* ConversationAudioMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1661C71E21A71F15003DCE1C /* ConversationAudioMessageCell.swift */; };
 		166264F32179D3CF00300F45 /* SenderCellComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166264F22179D3CF00300F45 /* SenderCellComponent.swift */; };
 		166264F62179E63F00300F45 /* ImageMessageContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166264F52179E63F00300F45 /* ImageMessageContentView.swift */; };
 		16626500217DAC4F00300F45 /* ConversationMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166264FF217DAC4F00300F45 /* ConversationMessageCell.swift */; };
@@ -1551,6 +1553,8 @@
 		1660F2371FBC6E2D00A0EE54 /* silence.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = silence.m4a; sourceTree = "<group>"; };
 		1660F2391FBF32D400A0EE54 /* MediaPlayerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaPlayerController.swift; sourceTree = "<group>"; };
 		1661C71A21A7113A003DCE1C /* ConversationFileMessageCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationFileMessageCellTests.swift; sourceTree = "<group>"; };
+		1661C71C21A71853003DCE1C /* ConversationVideoMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationVideoMessageCell.swift; sourceTree = "<group>"; };
+		1661C71E21A71F15003DCE1C /* ConversationAudioMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationAudioMessageCell.swift; sourceTree = "<group>"; };
 		166264F22179D3CF00300F45 /* SenderCellComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SenderCellComponent.swift; sourceTree = "<group>"; };
 		166264F52179E63F00300F45 /* ImageMessageContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageMessageContentView.swift; sourceTree = "<group>"; };
 		166264FF217DAC4F00300F45 /* ConversationMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationMessageCell.swift; sourceTree = "<group>"; };
@@ -3873,6 +3877,8 @@
 				5E35F7442180779D00D3F4FE /* ConversationPingCell.swift */,
 				5E35F785218340EB00D3F4FE /* ConversationLocationMessageCell.swift */,
 				162AE749219D854100581D98 /* ConversationImageMessageCell.swift */,
+				1661C71C21A71853003DCE1C /* ConversationVideoMessageCell.swift */,
+				1661C71E21A71F15003DCE1C /* ConversationAudioMessageCell.swift */,
 			);
 			path = "Rich Content";
 			sourceTree = "<group>";
@@ -7524,6 +7530,7 @@
 				8787D1841EA74F5B00254D02 /* ZMUser+Additions.swift in Sources */,
 				5E0FB21B2057F50C00FD9867 /* CallQualitySurveyReview.swift in Sources */,
 				BFF8CBE02126E98900DB0330 /* InteractiveModalTransition.swift in Sources */,
+				1661C71D21A71853003DCE1C /* ConversationVideoMessageCell.swift in Sources */,
 				162936BD1F470B4800D4F386 /* AppStateController.swift in Sources */,
 				BF02CDC31D79A98000C87D38 /* SavableImage.swift in Sources */,
 				877ABB471E8118E300CBCF2B /* BackgroundViewController.swift in Sources */,
@@ -7604,6 +7611,7 @@
 				5E8DA786211C458600360979 /* AuthenticationEmailFallbackErrorHandler.swift in Sources */,
 				EF6777062073C6C20062F122 /* OfflineBar.swift in Sources */,
 				BFFD439E1DE47FFA00505C8C /* UIView+RightToLeft.swift in Sources */,
+				1661C71F21A71F15003DCE1C /* ConversationAudioMessageCell.swift in Sources */,
 				872B3283209B208D005AC615 /* CallTopOverlayController.swift in Sources */,
 				871BC2511D34F8F800DF0793 /* MediaPreviewData.m in Sources */,
 				EF297DDA2131FF310002983A /* ConversationInputBarViewController+Style.swift in Sources */,
