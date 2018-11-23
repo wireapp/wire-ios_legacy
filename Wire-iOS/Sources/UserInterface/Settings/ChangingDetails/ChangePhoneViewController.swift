@@ -21,65 +21,6 @@ import Cartography
 import WireUtilities
 import WireSyncEngine
 
-fileprivate struct PhoneNumber: Equatable {
-    enum ValidationResult {
-        case valid
-        case tooLong
-        case tooShort
-        case containsInvalidCharacters
-        case invalid
-        
-        init(error: Error) {
-            let code = (error as NSError).code
-            guard let errorCode = ZMManagedObjectValidationErrorCode(rawValue: UInt(code)) else {
-                self = .invalid
-                return
-            }
-            
-            switch errorCode {
-            case .objectValidationErrorCodeStringTooLong:
-                self = .tooLong
-            case .objectValidationErrorCodeStringTooShort:
-                self = .tooShort
-            case .objectValidationErrorCodePhoneNumberContainsInvalidCharacters:
-                self = .containsInvalidCharacters
-            default:
-                self = .invalid
-            }
-        }
-    }
-    
-    let countryCode: UInt
-    let fullNumber: String
-    let numberWithoutCode: String
-    
-    init(countryCode: UInt, numberWithoutCode: String) {
-        self.countryCode = countryCode
-        self.numberWithoutCode = numberWithoutCode
-        fullNumber = NSString.phoneNumber(withE164: countryCode as NSNumber , number: numberWithoutCode)
-    }
-    
-    init?(fullNumber: String) {
-        guard let country = Country.detect(forPhoneNumber: fullNumber) else { return nil }
-        countryCode = country.e164.uintValue
-        let prefix = country.e164PrefixString
-        numberWithoutCode = String(fullNumber[prefix.endIndex...])
-        self.fullNumber = fullNumber
-        
-    }
-    
-    func validate() -> ValidationResult {
-        var validatedNumber = fullNumber as NSString?
-        let pointer = AutoreleasingUnsafeMutablePointer<NSString?>(&validatedNumber)
-        do {
-            try ZMUser.validatePhoneNumber(pointer)
-        } catch let error {
-            return ValidationResult(error: error)
-        }
-        
-        return .valid
-    }
-}
 
 fileprivate struct ChangePhoneNumberState {
     let currentNumber: PhoneNumber?
@@ -263,11 +204,9 @@ extension ChangePhoneViewController: RegistrationTextFieldDelegate {
         let presetCountry = Country(iso: "", e164: NSNumber(value: registrationTextField.countryCode))
         return phoneNumber.shouldPasteAsPhoneNumber(presetCountry: presetCountry){country, phoneNumber in
             if let country = country, let phoneNumber = phoneNumber {
-                /// The textField not allow space. We have to replace it first
-                let numberWithoutCode = String(phoneNumber.filter { !" ".contains($0) })
-                registrationTextField.text = numberWithoutCode
+                registrationTextField.text = phoneNumber
                 registrationTextField.countryCode = country.e164.uintValue
-                let number = PhoneNumber(countryCode: registrationTextField.countryCode, numberWithoutCode: numberWithoutCode)
+                let number = PhoneNumber(countryCode: registrationTextField.countryCode, numberWithoutCode: phoneNumber)
                 state.newNumber = number
                 updateSaveButtonState()
             }
@@ -277,12 +216,15 @@ extension ChangePhoneViewController: RegistrationTextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         guard let registrationTextField = textField as? RegistrationTextField else { return false }
 
-        ///If textField is empty and a replacementString with longer than 1 char, it is likely to insert from autoFill.
-        if textField.text?.count == 0 && string.count > 1 {
-            return insert(phoneNumber: string, registrationTextField: registrationTextField)
+        guard let newString = (registrationTextField.text as NSString?)?.replacingCharacters(in: range, with: string) else { return false }
+
+
+        ///If the textField is empty and a replacementString with longer than 1 char, it is likely to insert from autoFill.
+        if textField.text?.count == 0 && newString.count > 1 {
+            return insert(phoneNumber: newString, registrationTextField: registrationTextField)
         }
 
-        let newNumber = (textField.text as NSString?)?.replacingCharacters(in: range, with: string) ?? ""
+        let newNumber = (textField.text as NSString?)?.replacingCharacters(in: range, with: newString) ?? ""
 
         let number = PhoneNumber(countryCode: registrationTextField.countryCode, numberWithoutCode: newNumber)
         switch number.validate() {

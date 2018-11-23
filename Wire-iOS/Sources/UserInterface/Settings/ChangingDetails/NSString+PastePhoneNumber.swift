@@ -26,7 +26,7 @@ extension NSString {
     /// e.g. @"\U0000202d+380 (00) 123 45 67\U0000202c"
     /// or  \u{e2}+49 123 12349999\u{e2}
     ///
-    /// - Parameter completion: completion closure with Country object and phoneNumber extracted from self
+    /// - Parameter completion: completion closure with Country object and phoneNumber extracted from self. country: a Country object parsed from self. phoneNumber: phone Number with no space
     /// - Returns: true if should paste as Phone number(not beginning with "+"). If self is prased as a phone number, reture false (it should the be pasted, the caller use the completion's data for further actions.)
     @discardableResult
     @objc func shouldPasteAsPhoneNumber(presetCountry: Country,
@@ -41,7 +41,9 @@ extension NSString {
 
         if phoneNumber.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).hasPrefix("+") {
             if let country = Country.detect(forPhoneNumber: phoneNumber as String) {
-                let phoneNumberWithoutCountryCode = phoneNumber.replacingOccurrences(of: country.e164PrefixString, with: "")
+                /// remove the leading space and country prefix
+                let phoneNumberWithoutCountryCode = phoneNumber.replacingOccurrences(of: country.e164PrefixString, with: "").filter { !" ".contains($0) }
+
                 completion(country, phoneNumberWithoutCountryCode)
 
                 return false
@@ -60,4 +62,4 @@ extension NSString {
             return false
         }
     }
-}
+} ///TODO: unit test
