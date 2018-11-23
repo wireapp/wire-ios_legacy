@@ -16,6 +16,5 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-#include "../Project-Development.xcconfig"
-#include "ExtensionComponents-Base.xcconfig"
-
+#include "../Project-Debug.xcconfig"
+#include "Share-Extension-Base.xcconfig"

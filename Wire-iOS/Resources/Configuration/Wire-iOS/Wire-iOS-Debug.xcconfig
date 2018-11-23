@@ -14,7 +14,9 @@
 // 
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see http://www.gnu.org/licenses/.
-// 
+//
 
-#include "../Project-Development.xcconfig"
-#include "Share-Extension-Base.xcconfig"
+#include "Wire-iOS-Base.xcconfig"
+#include "../Project-Debug.xcconfig"
+
+GCC_SYMBOLS_PRIVATE_EXTERN = NO

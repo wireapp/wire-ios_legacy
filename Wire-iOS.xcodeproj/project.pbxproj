@@ -3163,8 +3163,8 @@
 		F1141C961F5EB2DC005340B3 /* WireApplication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WireApplication.swift; sourceTree = "<group>"; };
 		F114466321A2D8CC00B5FEBA /* ExtensionComponents-Base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "ExtensionComponents-Base.xcconfig"; sourceTree = "<group>"; };
 		F114466421A2D8CC00B5FEBA /* ExtensionComponents-Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "ExtensionComponents-Release.xcconfig"; sourceTree = "<group>"; };
-		F114466521A2D8CC00B5FEBA /* ExtensionComponents-Development.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "ExtensionComponents-Development.xcconfig"; sourceTree = "<group>"; };
-		F114466821A2F8BC00B5FEBA /* Tests-Development.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Tests-Development.xcconfig"; sourceTree = "<group>"; };
+		F114466521A2D8CC00B5FEBA /* ExtensionComponents-Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "ExtensionComponents-Debug.xcconfig"; sourceTree = "<group>"; };
+		F114466821A2F8BC00B5FEBA /* Tests-Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Tests-Debug.xcconfig"; sourceTree = "<group>"; };
 		F114466921A56F3200B5FEBA /* Version.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Version.xcconfig; sourceTree = "<group>"; };
 		F1199D2F1FC8490A0070FAC3 /* TeamCreationState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeamCreationState.swift; sourceTree = "<group>"; };
 		F1199D301FC8490A0070FAC3 /* TeamCreationStepController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeamCreationStepController.swift; sourceTree = "<group>"; };
@@ -3174,7 +3174,7 @@
 		F1199D3E1FC849440070FAC3 /* VerificationCodeFieldDescription.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerificationCodeFieldDescription.swift; sourceTree = "<group>"; };
 		F127BD561E262E9F0093B2F1 /* CollectionsViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionsViewControllerTests.swift; sourceTree = "<group>"; };
 		F127BD581E265FB40093B2F1 /* MockCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockCollection.swift; sourceTree = "<group>"; };
-		F12C48EF2199D2C200F49548 /* Development.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Development.xcconfig; sourceTree = "<group>"; };
+		F12C48EF2199D2C200F49548 /* Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
 		F12C48F02199D2C200F49548 /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
 		F12C48F12199D2C200F49548 /* Base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Base.xcconfig; sourceTree = "<group>"; };
 		F12CDADA1E43868200CEFCEB /* ChangeEmailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeEmailViewController.swift; sourceTree = "<group>"; };
@@ -3213,14 +3213,14 @@
 		F19C3A8E20513532004387E4 /* DatabaseStatisticsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseStatisticsController.swift; sourceTree = "<group>"; };
 		F1A989CF1FD1630300B8A82E /* SecondaryViewDescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondaryViewDescription.swift; sourceTree = "<group>"; };
 		F1B2422F219B2C9B00F7035C /* Project-Base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Project-Base.xcconfig"; sourceTree = "<group>"; };
-		F1B24230219B2C9B00F7035C /* Project-Development.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Project-Development.xcconfig"; sourceTree = "<group>"; };
-		F1B24232219B2C9B00F7035C /* Wire-iOS-Development.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Wire-iOS-Development.xcconfig"; sourceTree = "<group>"; };
+		F1B24230219B2C9B00F7035C /* Project-Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Project-Debug.xcconfig"; sourceTree = "<group>"; };
+		F1B24232219B2C9B00F7035C /* Wire-iOS-Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Wire-iOS-Debug.xcconfig"; sourceTree = "<group>"; };
 		F1B24233219B2C9B00F7035C /* Wire-iOS-Base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Wire-iOS-Base.xcconfig"; sourceTree = "<group>"; };
 		F1B24234219B2C9B00F7035C /* Wire-iOS-Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Wire-iOS-Release.xcconfig"; sourceTree = "<group>"; };
 		F1B24235219B2C9B00F7035C /* Warnings.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Warnings.xcconfig; sourceTree = "<group>"; };
 		F1B24236219B2C9B00F7035C /* Project-Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Project-Release.xcconfig"; sourceTree = "<group>"; };
 		F1B24238219B2C9B00F7035C /* Share-Extension-Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Share-Extension-Release.xcconfig"; sourceTree = "<group>"; };
-		F1B24239219B2C9B00F7035C /* Share-Extension-Development.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Share-Extension-Development.xcconfig"; sourceTree = "<group>"; };
+		F1B24239219B2C9B00F7035C /* Share-Extension-Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Share-Extension-Debug.xcconfig"; sourceTree = "<group>"; };
 		F1B2423A219B2C9B00F7035C /* Share-Extension-Base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Share-Extension-Base.xcconfig"; sourceTree = "<group>"; };
 		F1B5D54C2182096B00986911 /* NetworkConditionIndicatorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkConditionIndicatorView.swift; sourceTree = "<group>"; };
 		F1B5EAC62029AB9A0081D402 /* SimpleTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleTextField.swift; sourceTree = "<group>"; };
@@ -6544,7 +6544,7 @@
 			isa = PBXGroup;
 			children = (
 				F114466321A2D8CC00B5FEBA /* ExtensionComponents-Base.xcconfig */,
-				F114466521A2D8CC00B5FEBA /* ExtensionComponents-Development.xcconfig */,
+				F114466521A2D8CC00B5FEBA /* ExtensionComponents-Debug.xcconfig */,
 				F114466421A2D8CC00B5FEBA /* ExtensionComponents-Release.xcconfig */,
 			);
 			path = ExtensionComponents;
@@ -6553,7 +6553,7 @@
 		F114466721A2F89D00B5FEBA /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				F114466821A2F8BC00B5FEBA /* Tests-Development.xcconfig */,
+				F114466821A2F8BC00B5FEBA /* Tests-Debug.xcconfig */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -6584,7 +6584,7 @@
 			isa = PBXGroup;
 			children = (
 				F12C48F12199D2C200F49548 /* Base.xcconfig */,
-				F12C48EF2199D2C200F49548 /* Development.xcconfig */,
+				F12C48EF2199D2C200F49548 /* Debug.xcconfig */,
 				F12C48F02199D2C200F49548 /* Release.xcconfig */,
 			);
 			path = Configuration;
@@ -6639,7 +6639,7 @@
 				F1B24235219B2C9B00F7035C /* Warnings.xcconfig */,
 				F114466921A56F3200B5FEBA /* Version.xcconfig */,
 				F1B2422F219B2C9B00F7035C /* Project-Base.xcconfig */,
-				F1B24230219B2C9B00F7035C /* Project-Development.xcconfig */,
+				F1B24230219B2C9B00F7035C /* Project-Debug.xcconfig */,
 				F1B24236219B2C9B00F7035C /* Project-Release.xcconfig */,
 				F1B24231219B2C9B00F7035C /* Wire-iOS */,
 				F114466221A2D8B500B5FEBA /* ExtensionComponents */,
@@ -6653,7 +6653,7 @@
 			isa = PBXGroup;
 			children = (
 				F1B24233219B2C9B00F7035C /* Wire-iOS-Base.xcconfig */,
-				F1B24232219B2C9B00F7035C /* Wire-iOS-Development.xcconfig */,
+				F1B24232219B2C9B00F7035C /* Wire-iOS-Debug.xcconfig */,
 				F1B24234219B2C9B00F7035C /* Wire-iOS-Release.xcconfig */,
 			);
 			path = "Wire-iOS";
@@ -6663,7 +6663,7 @@
 			isa = PBXGroup;
 			children = (
 				F1B2423A219B2C9B00F7035C /* Share-Extension-Base.xcconfig */,
-				F1B24239219B2C9B00F7035C /* Share-Extension-Development.xcconfig */,
+				F1B24239219B2C9B00F7035C /* Share-Extension-Debug.xcconfig */,
 				F1B24238219B2C9B00F7035C /* Share-Extension-Release.xcconfig */,
 			);
 			path = "Share Extension";
@@ -8587,7 +8587,7 @@
 /* Begin XCBuildConfiguration section */
 		168A16B51D9597C2005CFA6C /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F1B24239219B2C9B00F7035C /* Share-Extension-Development.xcconfig */;
+			baseConfigurationReference = F1B24239219B2C9B00F7035C /* Share-Extension-Debug.xcconfig */;
 			buildSettings = {
 			};
 			name = Debug;
@@ -8601,7 +8601,7 @@
 		};
 		1EE85C6A1B5F96FC008E084B /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F114466521A2D8CC00B5FEBA /* ExtensionComponents-Development.xcconfig */;
+			baseConfigurationReference = F114466521A2D8CC00B5FEBA /* ExtensionComponents-Debug.xcconfig */;
 			buildSettings = {
 			};
 			name = Debug;
@@ -8627,7 +8627,7 @@
 		};
 		8F42C559199244A700288E4D /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F1B24232219B2C9B00F7035C /* Wire-iOS-Development.xcconfig */;
+			baseConfigurationReference = F1B24232219B2C9B00F7035C /* Wire-iOS-Debug.xcconfig */;
 			buildSettings = {
 			};
 			name = Debug;
@@ -8641,14 +8641,14 @@
 		};
 		BACB885A1AF7C48900DDCDB0 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F114466821A2F8BC00B5FEBA /* Tests-Development.xcconfig */;
+			baseConfigurationReference = F114466821A2F8BC00B5FEBA /* Tests-Debug.xcconfig */;
 			buildSettings = {
 			};
 			name = Debug;
 		};
 		BACB885B1AF7C48900DDCDB0 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F114466821A2F8BC00B5FEBA /* Tests-Development.xcconfig */;
+			baseConfigurationReference = F114466821A2F8BC00B5FEBA /* Tests-Debug.xcconfig */;
 			buildSettings = {
 			};
 			name = Release;

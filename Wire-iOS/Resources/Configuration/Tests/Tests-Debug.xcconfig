@@ -14,9 +14,20 @@
 // 
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see http://www.gnu.org/licenses/.
-//
+// 
 
-#include "Wire-iOS-Base.xcconfig"
-#include "../Project-Development.xcconfig"
+#include "../Project-Debug.xcconfig"
 
-GCC_SYMBOLS_PRIVATE_EXTERN = NO
+// Linking
+BUNDLE_LOADER = $(TEST_HOST)
+
+// Packaging
+INFOPLIST_FILE = Wire-iOS Tests/Info.plist
+PRODUCT_NAME = $(TARGET_NAME)
+PRODUCT_BUNDLE_IDENTIFIER = $(WIRE_BUNDLE_ID).$(PRODUCT_NAME:rfc1034identifier)
+
+// Swift Compiler - General
+SWIFT_OBJC_BRIDGING_HEADER = Wire-iOS Tests/Wire-iOS-Tests-Bridging-Header.h
+
+// Testing
+TEST_HOST = $(BUILT_PRODUCTS_DIR)/Wire.app/Wire
