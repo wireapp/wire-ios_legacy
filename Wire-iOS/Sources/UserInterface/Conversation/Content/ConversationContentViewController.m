@@ -366,7 +366,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     [self.conversationMessageWindowTableViewAdapter highlightMessage:message];
 }
 
-- (void)wantsToPerformAction:(MessageAction)actionId forMessage:(id<ZMConversationMessage>)message cell:(ConversationCell *)cell
+- (void)wantsToPerformAction:(MessageAction)actionId forMessage:(id<ZMConversationMessage>)message cell:(UIView<SelectableView> *)cell
 {
     dispatch_block_t action = ^{
         switch (actionId) {
@@ -411,23 +411,10 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
             case MessageActionSave:
             {
                 if ([Message isImageMessage:message]) {
-                    [self saveImageFromMessage:message cell:(ImageMessageCell *)cell];
+                    [self saveImageFromMessage:message cell:cell];
                 } else {
                     self.conversationMessageWindowTableViewAdapter.selectedMessage = message;
-                    
-                    UIView *targetView = nil;
-                    
-                    if ([cell isKindOfClass:[FileTransferCell class]]) {
-                        FileTransferCell *fileCell = (FileTransferCell *)cell;
-                        targetView = fileCell.actionButton;
-                    }
-                    else if ([cell isKindOfClass:[AudioMessageCell class]]) {
-                        AudioMessageCell *audioCell = (AudioMessageCell *)cell;
-                        targetView = audioCell.contentView;
-                    }
-                    else {
-                        targetView = cell;
-                    }
+                    UIView *targetView = cell.selectionView;
 
                     UIActivityViewController *saveController = [[UIActivityViewController alloc] initWithMessage:message from:targetView];
                     [self presentViewController:saveController animated:YES completion:nil];
