@@ -30,7 +30,7 @@ class ConversationMessageActionControllerTests: CoreDataSnapshotTestCase {
         message.conversation = otherUserConversation
         
         // WHEN
-        let actionController = ConversationMessageActionController(responder: nil, message: message)
+        let actionController = ConversationMessageActionController(responder: nil, message: message, context: .content)
         let singleTapAction = actionController.singleTapAction
         
         // THEN
@@ -44,7 +44,7 @@ class ConversationMessageActionControllerTests: CoreDataSnapshotTestCase {
         message.conversation = otherUserConversation
         
         // WHEN
-        let actionController = ConversationMessageActionController(responder: nil, message: message)
+        let actionController = ConversationMessageActionController(responder: nil, message: message, context: .content)
         let singleTapAction = actionController.singleTapAction
         
         // THEN
@@ -61,7 +61,7 @@ class ConversationMessageActionControllerTests: CoreDataSnapshotTestCase {
         message.deliveryState = .failedToSend
 
         // WHEN
-        let actionController = ConversationMessageActionController(responder: nil, message: message)
+        let actionController = ConversationMessageActionController(responder: nil, message: message, context: .content)
         let supportsReply = actionController.canPerformAction(#selector(ConversationMessageActionController.quoteMessage))
 
         // THEN
