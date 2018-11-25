@@ -113,7 +113,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         _forcePortraitMode = NO;
         _swipeToDismiss = YES;
         _showCloseButton = YES;
-        self.actionController = [[ConversationMessageActionController alloc] initWithResponder:nil message:message context:ConversationMessageActionControllerContextContent];
+        self.actionController = [[ConversationMessageActionController alloc] initWithResponder:self message:message context:ConversationMessageActionControllerContextCollection];
         if (nil != [ZMUserSession sharedSession]) {
             self.messageObserverToken = [MessageChangeInfo addObserver:self forMessage:message userSession:[ZMUserSession sharedSession]];
         }
@@ -479,14 +479,14 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 #pragma mark - Actions
 
-- (id)forwardingTargetForSelector:(SEL)aSelector
-{
-    return self.actionController;
-}
-
 - (BOOL)canPerformAction:(SEL)action withSender:(id)sender
 {
     return [self.actionController canPerformAction:action];
+}
+
+- (id)forwardingTargetForSelector:(SEL)aSelector
+{
+    return self.actionController;
 }
 
 - (void)saveImage
@@ -588,7 +588,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     switch (action) {
         case MessageActionForward:
         {
-            [self dismissWithCompletion:^{
+            [self dismissViewControllerAnimated:NO completion:^{
                 [self.delegate wantsToPerformAction:MessageActionForward forMessage:message];
             }];
         }
@@ -596,11 +596,20 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
         case MessageActionPresent:
         {
-            [self dismissWithCompletion:^{
+            [self dismissViewControllerAnimated:NO completion:^{
                 [self.delegate wantsToPerformAction:MessageActionShowInConversation forMessage:message];
             }];
         }
             break;
+
+        case MessageActionReply:
+        {
+            [self dismissViewControllerAnimated:NO completion:^{
+                [self.delegate wantsToPerformAction:MessageActionReply forMessage:message];
+            }];
+        }
+            break;
+
         default:
         {
             [self.delegate wantsToPerformAction:action forMessage:message];
