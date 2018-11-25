@@ -43,6 +43,7 @@ import UIKit
         UIMenuItem(title: "message.menu.edit.title".localized, action: #selector(ConversationMessageActionController.editMessage)),
         UIMenuItem(title: "content.message.delete".localized, action: #selector(ConversationMessageActionController.deleteMessage)),
         UIMenuItem(title: "content.message.save".localized, action: #selector(ConversationMessageActionController.saveMessage)),
+        UIMenuItem(title: "general.cancel".localized, action: #selector(ConversationMessageActionController.cancelDownloadingMessage)),
         UIMenuItem(title: "content.message.download".localized, action: #selector(ConversationMessageActionController.downloadMessage)),
         UIMenuItem(title: "content.message.forward".localized, action: #selector(ConversationMessageActionController.forwardMessage)),
         UIMenuItem(title: "content.message.like".localized, action: #selector(ConversationMessageActionController.likeMessage)),
@@ -59,6 +60,8 @@ import UIKit
             return message.canBeEdited
         case #selector(ConversationMessageActionController.quoteMessage):
             return message.canBeQuoted
+        case #selector(ConversationMessageActionController.cancelDownloadingMessage):
+            return message.canCancelDownload
         case #selector(ConversationMessageActionController.downloadMessage):
             return message.canBeDownloaded
         case #selector(ConversationMessageActionController.saveMessage):
@@ -125,6 +128,10 @@ import UIKit
     
     @objc func quoteMessage() {
         responder?.wants(toPerform: .reply, for: message)
+    }
+
+    @objc func cancelDownloadingMessage() {
+        responder?.wants(toPerform: .cancel, for: message)
     }
 
     @objc func downloadMessage() {
