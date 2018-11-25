@@ -690,9 +690,6 @@ extension CollectionsViewController: CollectionCellDelegate, MessageActionRespon
                 message.copy(in: .general)
             }
 
-        case .forward, .showInConversation, .reply:
-            self.delegate?.collectionsViewController(self, performAction: action, onMessage: message)
-
         case .delete:
             deletionDialogPresenter?.presentDeletionAlertController(forMessage: message, source: source) { [weak self] deleted in
                 guard deleted else { return }
@@ -700,11 +697,6 @@ extension CollectionsViewController: CollectionCellDelegate, MessageActionRespon
                 self?.refetchCollection()
             }
 
-        case .cancel:
-            self.selectedMessage = .none
-            ZMUserSession.shared()?.enqueueChanges {
-                message.fileMessageData?.cancelTransfer()
-            }
         case .present:
             self.selectedMessage = message
 
@@ -739,7 +731,7 @@ extension CollectionsViewController: CollectionCellDelegate, MessageActionRespon
             }
 
         default:
-            break
+            self.delegate?.collectionsViewController(self, performAction: action, onMessage: message)
         }
     }
 

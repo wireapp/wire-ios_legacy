@@ -217,7 +217,7 @@ open class CollectionCell: UICollectionViewCell {
 
     /// To be implemented in the subclass
     func copyDisplayedContent(in pasteboard: UIPasteboard) {
-        // no-op
+        message?.copy(in: pasteboard)
     }
     
 }
