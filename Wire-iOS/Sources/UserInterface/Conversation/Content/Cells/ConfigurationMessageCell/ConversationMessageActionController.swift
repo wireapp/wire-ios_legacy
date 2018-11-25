@@ -156,7 +156,7 @@ import UIKit
     }
 
     @objc func revealMessage() {
-        responder?.wants(toPerform: .present, for: message)
+        responder?.wants(toPerform: .showInConversation, for: message)
     }
 
 }

@@ -602,7 +602,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         case MessageActionPresent:
         {
             [self dismissWithCompletion:^{
-                [self.delegate wantsToPerformAction:MessageActionPresent forMessage:message];
+                [self.delegate wantsToPerformAction:MessageActionShowInConversation forMessage:message];
             }];
         }
             break;

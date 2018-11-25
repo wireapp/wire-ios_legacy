@@ -2437,7 +2437,7 @@
 		8F41CFC5199297C600E3B032 /* ZMConversation+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ZMConversation+Additions.m"; sourceTree = "<group>"; };
 		8F41CFC6199297C600E3B032 /* Message+UI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Message+UI.h"; sourceTree = "<group>"; };
 		8F41CFC7199297C600E3B032 /* Message+UI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Message+UI.m"; sourceTree = "<group>"; };
-		8F42C538199244A700288E4D /* Wire.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = Wire.app; path = .app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8F42C538199244A700288E4D /* Wire.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Wire.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F5A3E9A19AE2C9E00D0E9DA /* avs+iOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "avs+iOS.h"; sourceTree = "<group>"; };
 		8F5A3E9B19AE2C9E00D0E9DA /* AVSMediaManager+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AVSMediaManager+Additions.h"; sourceTree = "<group>"; };
 		8F5A3E9C19AE2C9E00D0E9DA /* AVSMediaManager+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AVSMediaManager+Additions.m"; sourceTree = "<group>"; };
