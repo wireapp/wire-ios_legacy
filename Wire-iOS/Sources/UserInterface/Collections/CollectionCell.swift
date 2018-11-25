@@ -215,7 +215,13 @@ open class CollectionCell: UICollectionViewCell {
         // no-op
     }
 
-    /// To be implemented in the subclass
+    /**
+     * Copies the contents of the message.
+     * - parameter pasteboard: The pasteboard to copy the contents to.
+     * - note: The default implementation copies using the default implementation. Override it
+     * if you want to customize the behavior of the copy (ex: only copying parts of the message).
+     */
+
     func copyDisplayedContent(in pasteboard: UIPasteboard) {
         message?.copy(in: pasteboard)
     }

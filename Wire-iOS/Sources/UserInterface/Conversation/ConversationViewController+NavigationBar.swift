@@ -239,11 +239,6 @@ extension ConversationViewController: CollectionsViewControllerDelegate {
                 }
             }
 
-        case .like:
-            ZMUserSession.shared()?.enqueueChanges {
-                Message.setLikedMessage(message, liked: !message.liked)
-            }
-
         default:
             self.contentViewController.wants(toPerform: action, for: message)
             break

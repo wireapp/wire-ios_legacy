@@ -41,8 +41,6 @@ extension ZMConversationMessage {
             if let locationName = locationMessageData?.name {
                 pasteboard.string = locationName
             }
-        } else {
-            return
         }
     }
 

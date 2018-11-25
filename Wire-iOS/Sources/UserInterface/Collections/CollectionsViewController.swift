@@ -739,6 +739,11 @@ extension CollectionsViewController: CollectionCellDelegate, MessageActionRespon
                 message.fileMessageData?.cancelTransfer()
             }
 
+        case .like:
+            ZMUserSession.shared()?.enqueueChanges {
+                Message.setLikedMessage(message, liked: !message.liked)
+            }
+
         default:
             self.delegate?.collectionsViewController(self, performAction: action, onMessage: message)
         }
