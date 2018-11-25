@@ -22,7 +22,6 @@ import Cartography
 import WireDataModel
 
 public protocol CollectionsViewControllerDelegate: class {
-    /// NB: only showInConversation, forward, copy and save actions are forwarded to delegate
     func collectionsViewController(_ viewController: CollectionsViewController, performAction: MessageAction, onMessage: ZMConversationMessage)
 }
 
@@ -728,6 +727,16 @@ extension CollectionsViewController: CollectionCellDelegate, MessageActionRespon
             } else {
                 guard let saveController = UIActivityViewController(message: message, from: view) else { return }
                 present(saveController, animated: true, completion: nil)
+            }
+
+        case .download:
+            ZMUserSession.shared()?.enqueueChanges {
+                message.fileMessageData?.requestFileDownload()
+            }
+
+        case .cancel:
+            ZMUserSession.shared()?.enqueueChanges {
+                message.fileMessageData?.cancelTransfer()
             }
 
         default:
