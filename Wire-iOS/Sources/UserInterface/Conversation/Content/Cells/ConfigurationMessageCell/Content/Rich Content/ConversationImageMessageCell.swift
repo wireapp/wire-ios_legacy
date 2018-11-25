@@ -110,8 +110,10 @@ class ConversationImageMessageCell: UIView, ConversationMessageCell {
         
         containerView.backgroundColor = UIColor.from(scheme: .placeholderBackground)
         imageResourceView.layer.borderWidth = 0
-        
-        imageResourceView.setImageResource(object.image.image) { [weak self] in
+
+        let imageResource = object.isObfuscated ? nil : object.image.image
+
+        imageResourceView.setImageResource(imageResource) { [weak self] in
             self?.updateImageContainerAppearance()
         }
     }
