@@ -84,15 +84,6 @@ final public class CollectionImageCell: CollectionCell {
         loadImage()
     }
 
-
-    override public func copy(_ sender: Any?) {
-        guard let imageData = self.message?.imageMessageData?.imageData else {
-            return
-        }
-        
-        UIPasteboard.general.setMediaAsset(UIImage(data: imageData))
-    }
-    
     var saveableImage : SavableImage?
     
     @objc func save(_ sender: AnyObject!) {

@@ -395,9 +395,6 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
 }
 
 extension ConversationImagesViewController: MessageActionResponder {
-    public func canPerform(_ action: MessageAction, for message: ZMConversationMessage!) -> Bool {
-        return self.messageActionDelegate?.canPerform(action, for: message) ?? false
-    }
 
     func wants(toPerform action: MessageAction, for message: ZMConversationMessage!) {
         switch action {
@@ -405,6 +402,7 @@ extension ConversationImagesViewController: MessageActionResponder {
         default: self.messageActionDelegate?.wants(toPerform: action, for: message)
         }
     }
+
 }
 
 extension ConversationImagesViewController: ScreenshotProvider {

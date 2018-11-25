@@ -214,6 +214,11 @@ open class CollectionCell: UICollectionViewCell {
         self.updateMessageVisibility()
         // no-op
     }
+
+    /// To be implemented in the subclass
+    func copyDisplayedContent(in pasteboard: UIPasteboard) {
+        // no-op
+    }
     
 }
 
@@ -225,10 +230,6 @@ extension CollectionCell: ZMMessageObserver {
 }
 
 extension CollectionCell: MessageActionResponder {
-
-    public func canPerform(_ action: MessageAction, for message: ZMConversationMessage!) -> Bool {
-        return true
-    }
 
     public func wants(toPerform action: MessageAction, for message: ZMConversationMessage!) {
         delegate?.collectionCell(self, performAction: action)

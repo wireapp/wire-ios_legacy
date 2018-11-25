@@ -228,6 +228,17 @@ extension ConversationViewController: CollectionsViewControllerDelegate {
                     self.contentViewController.highlight(message)
                 }
             }
+
+        case .reply:
+            viewController.dismiss(animated: true) {
+                self.contentViewController.scroll(to: message) { [weak self] cell in
+                    guard let `self` = self else {
+                        return
+                    }
+                    self.contentViewController.wants(toPerform: action, for: message)
+                }
+            }
+
         default:
             self.contentViewController.wants(toPerform: action, for: message)
             break

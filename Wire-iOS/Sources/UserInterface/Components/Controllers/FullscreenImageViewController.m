@@ -583,11 +583,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @implementation FullscreenImageViewController (ActionResponder)
 
-- (BOOL)canPerformAction:(MessageAction)action forMessage:(id<ZMConversationMessage>)message
-{
-    return [self.delegate canPerformAction:action forMessage:message];
-}
-
 - (void)wantsToPerformAction:(MessageAction)action forMessage:(id<ZMConversationMessage>)message
 {
     switch (action) {
