@@ -334,7 +334,7 @@
 		5EB45761204EA75300BA217A /* CallQualityDismissalTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EB45760204EA75300BA217A /* CallQualityDismissalTransition.swift */; };
 		5EBBE96B21872060008BC1B7 /* MockCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EBBE96721871F70008BC1B7 /* MockCell.swift */; };
 		5EBBE96D218751D0008BC1B7 /* ConversationLegacyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EBBE96C218751D0008BC1B7 /* ConversationLegacyCell.swift */; };
-		5EBBE96F218783A2008BC1B7 /* ConversationCellActionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EBBE96E218783A2008BC1B7 /* ConversationCellActionController.swift */; };
+		5EBBE96F218783A2008BC1B7 /* ConversationMessageActionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EBBE96E218783A2008BC1B7 /* ConversationMessageActionController.swift */; };
 		5EBBE97121878D09008BC1B7 /* ConversationMessageToolboxCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EBBE97021878D09008BC1B7 /* ConversationMessageToolboxCell.swift */; };
 		5EBBE9732187A844008BC1B7 /* MessageToolboxViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EBBE9722187A844008BC1B7 /* MessageToolboxViewTests.swift */; };
 		5EBBE9782188B85B008BC1B7 /* ZMMessage+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EBBE9772188B85A008BC1B7 /* ZMMessage+Actions.swift */; };
@@ -1839,7 +1839,7 @@
 		5EB45760204EA75300BA217A /* CallQualityDismissalTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallQualityDismissalTransition.swift; sourceTree = "<group>"; };
 		5EBBE96721871F70008BC1B7 /* MockCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCell.swift; sourceTree = "<group>"; };
 		5EBBE96C218751D0008BC1B7 /* ConversationLegacyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationLegacyCell.swift; sourceTree = "<group>"; };
-		5EBBE96E218783A2008BC1B7 /* ConversationCellActionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationCellActionController.swift; sourceTree = "<group>"; };
+		5EBBE96E218783A2008BC1B7 /* ConversationMessageActionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationMessageActionController.swift; sourceTree = "<group>"; };
 		5EBBE97021878D09008BC1B7 /* ConversationMessageToolboxCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationMessageToolboxCell.swift; sourceTree = "<group>"; };
 		5EBBE9722187A844008BC1B7 /* MessageToolboxViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageToolboxViewTests.swift; sourceTree = "<group>"; };
 		5EBBE9772188B85A008BC1B7 /* ZMMessage+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ZMMessage+Actions.swift"; sourceTree = "<group>"; };
@@ -2437,7 +2437,7 @@
 		8F41CFC5199297C600E3B032 /* ZMConversation+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ZMConversation+Additions.m"; sourceTree = "<group>"; };
 		8F41CFC6199297C600E3B032 /* Message+UI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Message+UI.h"; sourceTree = "<group>"; };
 		8F41CFC7199297C600E3B032 /* Message+UI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Message+UI.m"; sourceTree = "<group>"; };
-		8F42C538199244A700288E4D /* Wire.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Wire.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8F42C538199244A700288E4D /* Wire.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = Wire.app; path = .app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F5A3E9A19AE2C9E00D0E9DA /* avs+iOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "avs+iOS.h"; sourceTree = "<group>"; };
 		8F5A3E9B19AE2C9E00D0E9DA /* AVSMediaManager+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AVSMediaManager+Additions.h"; sourceTree = "<group>"; };
 		8F5A3E9C19AE2C9E00D0E9DA /* AVSMediaManager+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AVSMediaManager+Additions.m"; sourceTree = "<group>"; };
@@ -3801,7 +3801,7 @@
 				166264FF217DAC4F00300F45 /* ConversationMessageCell.swift */,
 				5E35F732217F147A00D3F4FE /* ConversationMessageSectionController.swift */,
 				16626501217DACBE00300F45 /* ConversationMessageCellTableViewAdapter.swift */,
-				5EBBE96E218783A2008BC1B7 /* ConversationCellActionController.swift */,
+				5EBBE96E218783A2008BC1B7 /* ConversationMessageActionController.swift */,
 				5E35F7462180A25100D3F4FE /* Content */,
 				5E35F734217F415700D3F4FE /* Components */,
 			);
@@ -6610,7 +6610,7 @@
 				F12C48F02199D2C200F49548 /* Release.xcconfig */,
 			);
 			path = Configuration;
-			sourceTree = "<group>";
+			sourceTree = SOURCE_ROOT;
 		};
 		F12CDAD91E43868200CEFCEB /* ChangingDetails */ = {
 			isa = PBXGroup;
@@ -8035,7 +8035,7 @@
 				F1199D3F1FC849450070FAC3 /* BackButtonDescription.swift in Sources */,
 				54F7C2851D746F3F004D8087 /* AddressBookHelper+Automation.swift in Sources */,
 				BF4D99BF1E78555700A7B08F /* ZMConversationMessageWindow+DaySeparator.swift in Sources */,
-				5EBBE96F218783A2008BC1B7 /* ConversationCellActionController.swift in Sources */,
+				5EBBE96F218783A2008BC1B7 /* ConversationMessageActionController.swift in Sources */,
 				BFAAB2391DEC6B2800CBC096 /* ConversationListViewController+Handles.swift in Sources */,
 				EF2127051FB9DFE300625A9B /* RegistrationTextField.m in Sources */,
 				BF0BDF801DAB8923003C61DE /* EphemeralKeyboardViewController.swift in Sources */,

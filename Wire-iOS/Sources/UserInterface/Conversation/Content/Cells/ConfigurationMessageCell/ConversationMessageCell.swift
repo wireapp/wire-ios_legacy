@@ -114,7 +114,7 @@ protocol ConversationMessageCellDescription: class {
     var delegate: ConversationCellDelegate? { get set }
 
     /// The action controller that handles the menu item.
-    var actionController: ConversationCellActionController? { get set }
+    var actionController: ConversationMessageActionController? { get set }
 
     /// The configuration object that will be used to populate the cell.
     var configuration: View.Configuration { get }
@@ -196,7 +196,7 @@ extension ConversationMessageCellDescription {
 
     private let _delegate: AnyMutableProperty<ConversationCellDelegate?>
     private let _message: AnyMutableProperty<ZMConversationMessage?>
-    private let _actionController: AnyMutableProperty<ConversationCellActionController?>
+    private let _actionController: AnyMutableProperty<ConversationMessageActionController?>
     private let _topMargin: AnyMutableProperty<Float>
     private let _containsHighlightableContent: AnyConstantProperty<Bool>
     private let _showEphemeralTimer: AnyMutableProperty<Bool>
@@ -248,7 +248,7 @@ extension ConversationMessageCellDescription {
         set { _message.setter(newValue) }
     }
 
-    @objc var actionController: ConversationCellActionController? {
+    @objc var actionController: ConversationMessageActionController? {
         get { return _actionController.getter() }
         set { _actionController.setter(newValue) }
     }

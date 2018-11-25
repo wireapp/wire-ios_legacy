@@ -322,7 +322,7 @@ static const CGFloat BurstContainerExpandedHeight = 40;
         [self updateBurstTimestamp];
     }
 
-    self.actionController = [[ConversationCellActionController alloc] initWithResponder:self.delegate message:message];
+    self.actionController = [[ConversationMessageActionController alloc] initWithResponder:self.delegate message:message context:ConversationMessageActionControllerContextContent];
 
     [self updateConstraintConstants];
     [self updateToolboxVisibilityAnimated:NO];

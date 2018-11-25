@@ -58,7 +58,7 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
     
     internal let inverse: Bool
 
-    public var currentActionController: ConversationCellActionController?
+    public var currentActionController: ConversationMessageActionController?
 
     public weak var messageActionDelegate: MessageActionResponder? = .none {
         didSet {
@@ -339,7 +339,7 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
     }
 
     private func updateActionControllerForMessage() {
-        currentActionController = ConversationCellActionController(responder: messageActionDelegate, message: currentMessage)
+        currentActionController = ConversationMessageActionController(responder: messageActionDelegate, message: currentMessage, context: .collection)
     }
     
     var currentController: FullscreenImageViewController? {

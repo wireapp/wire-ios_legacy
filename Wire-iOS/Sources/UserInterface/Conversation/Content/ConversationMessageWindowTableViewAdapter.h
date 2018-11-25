@@ -24,7 +24,7 @@
 
 @protocol ConversationCellDelegate;
 @class AnyConversationMessageCellDescription;
-@class ConversationCellActionController;
+@class ConversationMessageActionController;
 @class UpsideDownTableView;
 
 @interface ConversationMessageWindowTableViewAdapter : NSObject
@@ -41,7 +41,7 @@
 - (void)expandMessageWindow;
 
 - (void)stopAudioPlayerForDeletedMessages:(NSSet *)deletedMessages;
-- (ConversationCellActionController *)actionControllerForMessage:(id<ZMConversationMessage>)message;
+- (ConversationMessageActionController *)actionControllerForMessage:(id<ZMConversationMessage>)message;
 - (void)registerCellIfNeeded:(AnyConversationMessageCellDescription *)cellDescription inTableView:(UITableView *)tableView;
 
 @end
