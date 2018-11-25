@@ -239,6 +239,14 @@ extension ConversationViewController: CollectionsViewControllerDelegate {
                 }
             }
 
+        case .like:
+            // Do not dismiss the collection when changing liked state
+            guard message.canBeLiked else { return }
+
+            ZMUserSession.shared()?.enqueueChanges {
+                Message.setLikedMessage(message, liked: !message.liked)
+            }
+
         default:
             self.contentViewController.wants(toPerform: action, for: message)
             break
