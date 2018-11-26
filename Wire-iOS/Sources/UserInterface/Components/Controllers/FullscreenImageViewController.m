@@ -35,6 +35,7 @@
 
 // helpers
 #import "NSDate+Format.h"
+#import "MessageAction.h"
 
 #import "Constants.h"
 #import "UIImage+ZetaIconsNeue.h"
@@ -71,10 +72,15 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @end
 
+@interface FullscreenImageViewController (ActionResponder) <MessageActionResponder>
+
+@end
+
 
 @interface FullscreenImageViewController () <UIScrollViewDelegate>
 
 @property (nonatomic, readwrite) UIScrollView *scrollView;
+@property (nonatomic, strong) ConversationMessageActionController *actionController;
 
 @property (nonatomic) CALayer *highlightLayer;
 @property (nonatomic, strong) ObfuscationView *obfuscationView;
@@ -107,6 +113,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         _forcePortraitMode = NO;
         _swipeToDismiss = YES;
         _showCloseButton = YES;
+        self.actionController = [[ConversationMessageActionController alloc] initWithResponder:self message:message context:ConversationMessageActionControllerContextCollection];
         if (nil != [ZMUserSession sharedSession]) {
             self.messageObserverToken = [MessageChangeInfo addObserver:self forMessage:message userSession:[ZMUserSession sharedSession]];
         }
@@ -461,13 +468,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         [self.view becomeFirstResponder];
         
         UIMenuController *menuController = UIMenuController.sharedMenuController;
-        menuController.menuItems = @[
-                                     [UIMenuItem likeItemForMessage:self.message action:@selector(likeImage)],
-                                     [UIMenuItem saveItemWithAction:@selector(saveImage)],
-                                     [UIMenuItem forwardItemWithAction:@selector(forward)],
-                                     [UIMenuItem deleteItemWithAction:@selector(deleteImage)],
-                                     [UIMenuItem revealItemWithAction:@selector(revealInConversation)]
-                                     ];
+        menuController.menuItems = ConversationMessageActionController.allMessageActions;
         
         [menuController setTargetRect:self.imageView.bounds inView:self.imageView];
         [menuController setMenuVisible:YES animated:YES];
@@ -476,59 +477,16 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 }
 
 
-#pragma mark - Copy/Paste
+#pragma mark - Actions
 
-- (BOOL)canPerformAction:(SEL)action
-              withSender:(id)sender
+- (BOOL)canPerformAction:(SEL)action withSender:(id)sender
 {
-    if (action == @selector(cut:)) {
-        return NO;
-    }
-    else if (action == @selector(copy:)) {
-        return !self.message.isEphemeral && [self.delegate canPerformAction:MessageActionCopy forMessage:self.message];
-    }
-    else if (action == @selector(saveImage)) {
-        return !self.message.isEphemeral && [self.delegate canPerformAction:MessageActionSave forMessage:self.message];
-    }
-    else if (action == @selector(forward)) {
-        return !self.message.isEphemeral && [self.delegate canPerformAction:MessageActionForward forMessage:self.message];
-    }
-    else if (action == @selector(revealInConversation)) {
-        return !self.message.isEphemeral && [self.delegate canPerformAction:MessageActionShowInConversation forMessage:self.message];
-    }
-    else if (action == @selector(likeImage)) {
-        return [Message messageCanBeLiked:self.message];
-    }
-    else if (action == @selector(deleteImage)) {
-        return self.message.canBeDeleted;
-    }
-    else if (action == @selector(paste:)) {
-        return NO;
-    }
-    else if (action == @selector(select:) || action == @selector(selectAll:)) {
-        return NO;
-    }
-
-    return [super canPerformAction:action withSender:sender];
+    return [self.actionController canPerformAction:action];
 }
 
-- (void)copy:(id)sender
+- (id)forwardingTargetForSelector:(SEL)aSelector
 {
-    [self.delegate wantsToPerformAction:MessageActionCopy forMessage:self.message];
-}
-
-- (void)forward
-{
-    [self dismissWithCompletion:^{
-        [self.delegate wantsToPerformAction:MessageActionForward forMessage:self.message];
-    }];
-}
-
-- (void)revealInConversation
-{
-    [self dismissWithCompletion:^{
-        [self.delegate wantsToPerformAction:MessageActionShowInConversation forMessage:self.message];
-    }];
+    return self.actionController;
 }
 
 - (void)saveImage
@@ -618,6 +576,45 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         changeInfo.isObfuscatedChanged) {
         
         [self updateForMessage];
+    }
+}
+
+@end
+
+@implementation FullscreenImageViewController (ActionResponder)
+
+- (void)wantsToPerformAction:(MessageAction)action forMessage:(id<ZMConversationMessage>)message
+{
+    switch (action) {
+        case MessageActionForward:
+        {
+            [self dismissViewControllerAnimated:NO completion:^{
+                [self.delegate wantsToPerformAction:MessageActionForward forMessage:message];
+            }];
+        }
+            break;
+
+        case MessageActionPresent:
+        {
+            [self dismissViewControllerAnimated:NO completion:^{
+                [self.delegate wantsToPerformAction:MessageActionShowInConversation forMessage:message];
+            }];
+        }
+            break;
+
+        case MessageActionReply:
+        {
+            [self dismissViewControllerAnimated:NO completion:^{
+                [self.delegate wantsToPerformAction:MessageActionReply forMessage:message];
+            }];
+        }
+            break;
+
+        default:
+        {
+            [self.delegate wantsToPerformAction:action forMessage:message];
+        }
+            break;
     }
 }
 

@@ -55,6 +55,13 @@ extension ZMConversationMessage {
         }
         return isFile && fileMessageData.transferState.isOne(of: .uploaded, .failedDownload)
     }
+
+    var canCancelDownload: Bool {
+        guard let fileMessageData = self.fileMessageData else {
+            return false
+        }
+        return isFile && fileMessageData.transferState == .downloading
+    }
     
     /// Wether the content of the message can be saved to the disk.
     var canBeSaved: Bool {

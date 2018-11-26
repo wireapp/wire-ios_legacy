@@ -253,7 +253,7 @@ class ConversationParticipantsChangedSystemMessageCellDescription: ConversationM
     
     var message: ZMConversationMessage?
     weak var delegate: ConversationCellDelegate?
-    weak var actionController: ConversationCellActionController?
+    weak var actionController: ConversationMessageActionController?
     
     var showEphemeralTimer: Bool = false
     var topMargin: Float = 0
@@ -279,7 +279,7 @@ class ConversationRenamedSystemMessageCellDescription: ConversationMessageCellDe
 
     var message: ZMConversationMessage?
     weak var delegate: ConversationCellDelegate? 
-    weak var actionController: ConversationCellActionController?
+    weak var actionController: ConversationMessageActionController?
     
     var showEphemeralTimer: Bool = false
     var topMargin: Float = 0
@@ -311,7 +311,7 @@ class ConversationCallSystemMessageCellDescription: ConversationMessageCellDescr
 
     var message: ZMConversationMessage?
     weak var delegate: ConversationCellDelegate? 
-    weak var actionController: ConversationCellActionController?
+    weak var actionController: ConversationMessageActionController?
     
     var showEphemeralTimer: Bool = false
     var topMargin: Float = 0
@@ -345,7 +345,7 @@ class ConversationMessageTimerCellDescription: ConversationMessageCellDescriptio
 
     var message: ZMConversationMessage?
     weak var delegate: ConversationCellDelegate? 
-    weak var actionController: ConversationCellActionController?
+    weak var actionController: ConversationMessageActionController?
     
     var showEphemeralTimer: Bool = false
     var topMargin: Float = 0
@@ -388,7 +388,7 @@ class ConversationVerifiedSystemMessageSectionDescription: ConversationMessageCe
 
     var message: ZMConversationMessage?
     weak var delegate: ConversationCellDelegate? 
-    weak var actionController: ConversationCellActionController?
+    weak var actionController: ConversationMessageActionController?
     
     var showEphemeralTimer: Bool = false
     var topMargin: Float = 0
@@ -420,7 +420,7 @@ class ConversationCannotDecryptSystemMessageCellDescription: ConversationMessage
 
     var message: ZMConversationMessage?
     weak var delegate: ConversationCellDelegate?
-    weak var actionController: ConversationCellActionController?
+    weak var actionController: ConversationMessageActionController?
     
     var showEphemeralTimer: Bool = false
     var topMargin: Float = 0
@@ -508,7 +508,7 @@ class ConversationNewDeviceSystemMessageCellDescription: ConversationMessageCell
     
     var message: ZMConversationMessage?
     weak var delegate: ConversationCellDelegate?
-    weak var actionController: ConversationCellActionController?
+    weak var actionController: ConversationMessageActionController?
     
     var showEphemeralTimer: Bool = false
     var topMargin: Float = 0

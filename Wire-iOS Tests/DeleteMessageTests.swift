@@ -67,13 +67,13 @@ final class DeleteMessageTests: XCTestCase {
         return message as Any as? ZMConversationMessage
     }
 
-    func actionController(for conversationType: ConversationCellType) -> ConversationCellActionController {
+    func actionController(for conversationType: ConversationCellType) -> ConversationMessageActionController {
         let message = self.message(for: conversationType)!
-        return ConversationCellActionController(responder: nil, message: message)
+        return ConversationMessageActionController(responder: nil, message: message, context: .content)
     }
 
     func testThatTheExpectedCellsCanBeDeleted() {
-        let deleteAction = #selector(ConversationCellActionController.deleteMessage)
+        let deleteAction = #selector(ConversationMessageActionController.deleteMessage)
 
         // can perform action decides if the action will be present in menu, therefore be deletable
         let textMessageCell = actionController(for: .text)

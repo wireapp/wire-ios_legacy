@@ -40,7 +40,7 @@ static NSString *const ConversationMessageTimerUpdateCellId = @"ConversationMess
 
 @class ConversationCell;
 @class UpsideDownTableView;
-@class ConversationCellActionController;
+@class ConversationMessageActionController;
 @class ConversationMessageSectionController;
 
 @interface ConversationMessageWindowTableViewAdapter ()
@@ -54,7 +54,7 @@ static NSString *const ConversationMessageTimerUpdateCellId = @"ConversationMess
 
 @property (nonatomic, strong) NSMutableArray<Class> *registeredCells;
 @property (nonatomic, strong) NSMutableDictionary<NSString *, ConversationMessageSectionController *> *sectionControllers;
-@property (nonatomic, strong) NSMutableDictionary<NSString *, ConversationCellActionController *> *actionControllers;
+@property (nonatomic, strong) NSMutableDictionary<NSString *, ConversationMessageActionController *> *actionControllers;
 
 NS_ASSUME_NONNULL_END
 

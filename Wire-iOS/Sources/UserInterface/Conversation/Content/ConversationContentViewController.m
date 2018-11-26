@@ -366,7 +366,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     [self.conversationMessageWindowTableViewAdapter highlightMessage:message];
 }
 
-- (void)wantsToPerformAction:(MessageAction)actionId forMessage:(id<ZMConversationMessage>)message cell:(ConversationCell *)cell
+- (void)wantsToPerformAction:(MessageAction)actionId forMessage:(id<ZMConversationMessage>)message cell:(UIView<SelectableView> *)cell
 {
     dispatch_block_t action = ^{
         switch (actionId) {
@@ -389,7 +389,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
             case MessageActionDelete:
             {
                 assert([message canBeDeleted]);
-                
+
                 self.deletionDialogPresenter = [[DeletionDialogPresenter alloc] initWithSourceViewController:self.presentedViewController ?: self];
                 [self.deletionDialogPresenter presentDeletionAlertControllerForMessage:message source:cell completion:^(BOOL deleted) {
                     if (self.presentedViewController && deleted) {
@@ -411,23 +411,10 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
             case MessageActionSave:
             {
                 if ([Message isImageMessage:message]) {
-                    [self saveImageFromMessage:message cell:(ImageMessageCell *)cell];
+                    [self saveImageFromMessage:message cell:cell];
                 } else {
                     self.conversationMessageWindowTableViewAdapter.selectedMessage = message;
-                    
-                    UIView *targetView = nil;
-                    
-                    if ([cell isKindOfClass:[FileTransferCell class]]) {
-                        FileTransferCell *fileCell = (FileTransferCell *)cell;
-                        targetView = fileCell.actionButton;
-                    }
-                    else if ([cell isKindOfClass:[AudioMessageCell class]]) {
-                        AudioMessageCell *audioCell = (AudioMessageCell *)cell;
-                        targetView = audioCell.contentView;
-                    }
-                    else {
-                        targetView = cell;
-                    }
+                    UIView *targetView = cell.selectionView;
 
                     UIActivityViewController *saveController = [[UIActivityViewController alloc] initWithMessage:message from:targetView];
                     [self presentViewController:saveController animated:YES completion:nil];
@@ -493,16 +480,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
                 break;
             case MessageActionCopy:
             {
-                if ([Message isTextMessage:message]) {
-                    [[UIPasteboard generalPasteboard] setString:message.textMessageData.messageText];
-                } else if ([Message isImageMessage:message]) {
-                    NSData *imageData = message.imageMessageData.imageData;
-                    [[UIPasteboard generalPasteboard] setMediaAsset:[[UIImage alloc] initWithData:imageData]];
-                } else if ([Message isLocationMessage:message]) {
-                    if (message.locationMessageData.name) {
-                        [[UIPasteboard generalPasteboard] setString:message.locationMessageData.name];
-                    }
-                }
+                [Message copy:message in:UIPasteboard.generalPasteboard];
             }
                 break;
             
@@ -806,26 +784,6 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 
 
 @implementation ConversationContentViewController (ConversationCellDelegate)
-
-- (BOOL)canPerformAction:(MessageAction)action forMessage:(id<ZMConversationMessage>)message
-{
-    if ([Message isImageMessage:message]) {
-
-        switch (action) {
-            case MessageActionForward:
-            case MessageActionSave:
-            case MessageActionCopy:
-
-                return YES;
-                break;
-
-            default:
-                break;
-        }
-    }
-
-    return NO;
-}
 
 - (void)wantsToPerformAction:(MessageAction)action forMessage:(id<ZMConversationMessage>)message
 {
