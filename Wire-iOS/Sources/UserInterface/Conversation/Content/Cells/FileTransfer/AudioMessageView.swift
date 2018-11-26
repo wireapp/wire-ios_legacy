@@ -53,7 +53,6 @@ private let zmLog = ZMSLog(tag: "UI")
         label.textColor = .from(scheme: .textForeground)
         label.numberOfLines = 1
         label.textAlignment = .center
-        label.accessibilityLabel = "AudioTimeLabel"
         label.accessibilityIdentifier = "AudioTimeLabel"
 
         return label
