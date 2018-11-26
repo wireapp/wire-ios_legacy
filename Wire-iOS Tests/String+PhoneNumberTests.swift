@@ -36,63 +36,50 @@ final class String_PhoneNumberTests: XCTestCase {
         // GIVEN
         sut = "+41 86 079 209 36 37"
 
-        // WHEN
+        // WHEN & THEN
         let presetCountry = Country(iso: "", e164: NSNumber(value: 49))
-        let result = sut.shouldInsertAsPhoneNumber(presetCountry: presetCountry) {
-            country, phoneNumber in
-            XCTAssertEqual(country?.iso, "ch")
-            XCTAssertEqual(phoneNumber, "860792093637")
-        }
 
-        // THEN
-        XCTAssertFalse(result)
+        if let (country, phoneNumberWithoutCountryCode) = sut.shouldInsertAsPhoneNumber(presetCountry: presetCountry) {
+            XCTAssertEqual(country?.iso, "ch")
+            XCTAssertEqual(phoneNumberWithoutCountryCode, "860792093637")
+        }
     }
 
     func testThatPhoneNumberWithoutSpaceIsParsed(){
         // GIVEN
         sut = "+41860792093637"
 
-        // WHEN
-        let presetCountry = Country(iso: "", e164: NSNumber(value: 49))
-        let result = sut.shouldInsertAsPhoneNumber(presetCountry: presetCountry) {
-            country, phoneNumber in
-            XCTAssertEqual(country?.iso, "ch")
-            XCTAssertEqual(phoneNumber, "860792093637")
-        }
 
-        // THEN
-        XCTAssertFalse(result)
+        // WHEN & THEN
+        let presetCountry = Country(iso: "", e164: NSNumber(value: 49))
+
+        if let (country, phoneNumberWithoutCountryCode) = sut.shouldInsertAsPhoneNumber(presetCountry: presetCountry) {
+            XCTAssertEqual(country?.iso, "ch")
+            XCTAssertEqual(phoneNumberWithoutCountryCode, "860792093637")
+        }
     }
 
-    func testThatPhoneNumberWithNoCountryCodeIsNotParsed(){
+    func testThatPhoneNumberWithNoCountryCodeIsParsedAndNormized(){
         // GIVEN
         sut = "86 079 209 36 37"
 
-        // WHEN
+        // WHEN & THEN
         let presetCountry = Country(iso: "", e164: NSNumber(value: 49))
-        let result = sut.shouldInsertAsPhoneNumber(presetCountry: presetCountry) {
-            country, phoneNumber in
-            XCTAssertNil(country)
-            XCTAssertNil(phoneNumber)
-        }
 
-        // THEN
-        XCTAssert(result)
+        if let (country, phoneNumberWithoutCountryCode) = sut.shouldInsertAsPhoneNumber(presetCountry: presetCountry) {
+            XCTAssertEqual(country?.e164, 49)
+            XCTAssertEqual(phoneNumberWithoutCountryCode, "860792093637")
+        }
     }
 
     func testThatInvalidPhoneNumberIsNotParsed(){
         // GIVEN
         sut = "860792093637860792093637860792093637"
 
-        // WHEN
+        // WHEN & THEN
         let presetCountry = Country(iso: "", e164: NSNumber(value: 49))
-        let result = sut.shouldInsertAsPhoneNumber(presetCountry: presetCountry) {
-            country, phoneNumber in
-            XCTAssertNil(country)
-            XCTAssertNil(phoneNumber)
-        }
 
-        // THEN
-        XCTAssertFalse(result)
+        let ret = sut.shouldInsertAsPhoneNumber(presetCountry: presetCountry)
+        XCTAssertNil(ret)
     }
 }

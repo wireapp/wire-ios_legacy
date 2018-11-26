@@ -19,6 +19,10 @@
 import Foundation
 
 extension String {
+    fileprivate var withoutSpace: String {
+        return components(separatedBy: .whitespaces).joined()
+    }
+
 
     /// Auto detect country for phone numbers beginning with "+"
     ///
@@ -35,25 +39,25 @@ extension String {
         illegalCharacters.formUnion(CharacterSet.decimalDigits)
         illegalCharacters.formUnion(CharacterSet(charactersIn: "+-()"))
         illegalCharacters.invert()
-        var phoneNumber: NSString = trimmingCharacters(in: illegalCharacters) as NSString
+        let phoneNumber = trimmingCharacters(in: illegalCharacters)
 
         if phoneNumber.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).hasPrefix("+") {
-            if let country = Country.detect(forPhoneNumber: phoneNumber as String) {
+            if let country = Country.detect(forPhoneNumber: phoneNumber) {
                 /// remove the leading space and country prefix
-                let phoneNumberWithoutCountryCode = phoneNumber.replacingOccurrences(of: country.e164PrefixString, with: "").filter { !" ".contains($0) } ///TODO: set
-
+                let phoneNumberWithoutCountryCode = phoneNumber.replacingOccurrences(of: country.e164PrefixString, with: "").withoutSpace
+                
                 return (country: country, phoneNumber: phoneNumberWithoutCountryCode)
             }
         }
 
         // Just paste (if valid) for phone numbers not beginning with "+", or phones where country is not detected.
 
-        phoneNumber = NSString.phoneNumber(withE164: presetCountry.e164, number: phoneNumber as String) as NSString
+        let phoneNumberWithCountryCode = NSString.phoneNumber(withE164: presetCountry.e164, number: phoneNumber)
 
-        let result = UnregisteredUser.normalizedPhoneNumber(phoneNumber as String)
+        let result = UnregisteredUser.normalizedPhoneNumber(phoneNumberWithCountryCode)
 
         if result.isValid {
-            return (country: nil, phoneNumber: (phoneNumber as String))
+            return (country: presetCountry, phoneNumber: phoneNumber.withoutSpace)
         } else {
             return nil
         }
