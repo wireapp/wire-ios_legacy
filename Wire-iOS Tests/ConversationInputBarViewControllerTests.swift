@@ -137,7 +137,8 @@ extension ConversationInputBarViewControllerTests {
     func testEphemeralIndicatorButton(){ ///TODO: broken constraint? the placeholder label's position.y is not always the same
         // GIVEN
         sut = ConversationInputBarViewController(conversation: otherUserConversation)
-        sut.viewDidLoad()
+        // call viewDidLoad
+        sut.loadViewIfNeeded()
 
         // WHEN
         sut.mode = .timeoutConfguration

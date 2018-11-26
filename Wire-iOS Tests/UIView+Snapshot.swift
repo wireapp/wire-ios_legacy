@@ -21,7 +21,5 @@ import Foundation
 extension UIView {
     func prepareForSnapshot() {
         self.layer.speed = 0
-        self.setNeedsLayout()
-        self.layoutIfNeeded()
     }
 }
