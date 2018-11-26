@@ -104,7 +104,7 @@ private let zmLog = ZMSLog(tag: "UI")
         self.downloadProgressView.accessibilityIdentifier = "AudioProgressView"
 
         self.playerProgressView.setDeterministic(true, animated: false)
-        self.downloadProgressView.accessibilityIdentifier = "PlayerProgressView"
+        self.playerProgressView.accessibilityIdentifier = "PlayerProgressView"
         
         self.loadingView.isHidden = true
         
