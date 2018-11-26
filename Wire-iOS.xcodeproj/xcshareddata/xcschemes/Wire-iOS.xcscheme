@@ -39,11 +39,6 @@
                BlueprintName = "Wire-iOS-Tests"
                ReferencedContainer = "container:Wire-iOS.xcodeproj">
             </BuildableReference>
-            <SkippedTests>
-               <Test
-                  Identifier = "AdaptiveFormViewControllerTests/testThatItHasCorrectLayout()">
-               </Test>
-            </SkippedTests>
          </TestableReference>
       </Testables>
       <MacroExpansion>

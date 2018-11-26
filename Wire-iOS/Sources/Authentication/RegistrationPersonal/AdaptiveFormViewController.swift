@@ -35,17 +35,8 @@ class AdaptiveFormViewController: BlueViewController, AuthenticationCoordinatedV
     private var regularConstraints: [NSLayoutConstraint]?
     private var compactConstraints: [NSLayoutConstraint]?
 
-    fileprivate var device: DeviceProtocol
-
-    /// init method for injecting mock device
-    ///
-    /// - Parameters:
-    ///   - childViewController: an AuthenticationStepViewController
-    /// - Parameter device: Provide this param for testing only
-    init(childViewController: AuthenticationStepViewController,
-         device: DeviceProtocol = UIDevice.current) {
+    init(childViewController: AuthenticationStepViewController) {
         self.childViewController = childViewController
-        self.device = device
 
         super.init(nibName: nil, bundle: nil)
     }

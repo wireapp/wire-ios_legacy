@@ -22,64 +22,36 @@ import XCTest
 class AdaptiveFormViewControllerTests: ZMSnapshotTestCase {
 
     var child: VerificationCodeStepViewController!
-    var mockDevice: MockDevice! = MockDevice()
-    var mockParentViewControler: UIViewController! = UIViewController()
+    var sut: AdaptiveFormViewController!
+
+    // wrap the SUT in a mock navigator VC to mock the traitcollection's horizontalSizeClass.
+    var mockParentViewControler: UINavigationController!
 
     override func setUp() {
         super.setUp()
         child = VerificationCodeStepViewController(credential: "user@example.com")
-
-        recordMode = true
+        sut = AdaptiveFormViewController(childViewController: child)
+        mockParentViewControler = UINavigationController(rootViewController: sut)
     }
 
     override func tearDown() {
         child = nil
-        mockDevice = nil
         mockParentViewControler = nil
+        sut = nil
         super.tearDown()
     }
 
     func testThatItHasCorrectLayout() {
-        // GIVEN
-        let sut = AdaptiveFormViewController(childViewController: child, device: mockDevice)
-        mockParentViewControler.addChild(sut)
-
-        // THEN
         verifyInAllDeviceSizes(view: sut.view) { _, isPad in
             let traitCollection: UITraitCollection
             if isPad {
-                self.mockDevice.userInterfaceIdiom = .pad
                 traitCollection = UITraitCollection(horizontalSizeClass: .regular)
             } else {
-                self.mockDevice.userInterfaceIdiom = .phone
                 traitCollection = UITraitCollection(horizontalSizeClass: .compact)
             }
 
-            ///TODO: mock a parent for SUT
-            self.mockParentViewControler.setOverrideTraitCollection(traitCollection, forChild: sut)
-//            sut.setOverrideTraitCollection(traitCollection, forChild: self.child)
-            sut.traitCollectionDidChange(nil)
-//            self.child.traitCollectionDidChange(nil)
+            self.mockParentViewControler.setOverrideTraitCollection(traitCollection, forChild: self.sut)
+            self.sut.traitCollectionDidChange(nil)
         }
     }
-
-    func testForIPadRegular() {
-        // GIVEN
-        mockDevice.userInterfaceIdiom = .pad
-        let sut = AdaptiveFormViewController(childViewController: child, device: mockDevice)
-        mockParentViewControler.addChild(sut)
-
-        // WHEN
-        let traitCollection = UITraitCollection(horizontalSizeClass: .regular)
-
-        mockParentViewControler.setOverrideTraitCollection(traitCollection, forChild: sut)
-        sut.traitCollectionDidChange(nil)
-
-        sut.view.frame = CGRect(origin: .zero, size: CGSize(width: 768, height: 1024))
-
-        // THEN
-        self.verify(view: sut.view)
-    }
-
-
 }
