@@ -210,24 +210,44 @@ extension ConversationViewController: CollectionsViewControllerDelegate {
     public func collectionsViewController(_ viewController: CollectionsViewController, performAction action: MessageAction, onMessage message: ZMConversationMessage) {
         switch action {
         case .forward:
-            viewController.dismiss(animated: true) {
-                self.contentViewController.scroll(to: message) { [weak self] cell in
-                    guard let `self` = self else {
-                        return
-                    }
+            let actions: () -> Void = {
+                self.contentViewController.scroll(to: message) { cell in
                     self.contentViewController.showForwardFor(message: message, fromCell: cell)
                 }
             }
 
+            if viewController.isBeingPresented {
+                viewController.dismiss(animated: true, completion: actions)
+            } else {
+                actions()
+            }
+
         case .showInConversation:
-            viewController.dismiss(animated: true) { [weak self] in
-                guard let `self` = self else {
-                    return
-                }
+            let actions: () -> Void = {
                 self.contentViewController.scroll(to: message) { _ in
                     self.contentViewController.highlight(message)
                 }
             }
+
+            if viewController.isBeingPresented {
+                viewController.dismiss(animated: true, completion: actions)
+            } else {
+                actions()
+            }
+
+        case .reply:
+            let actions = {
+                self.contentViewController.scroll(to: message) { cell in
+                    self.contentViewController.wants(toPerform: action, for: message)
+                }
+            }
+            
+            if viewController.isBeingPresented {
+                viewController.dismiss(animated: true, completion: actions)
+            } else {
+                actions()
+            }
+
         default:
             self.contentViewController.wants(toPerform: action, for: message)
             break

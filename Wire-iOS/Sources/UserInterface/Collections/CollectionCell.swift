@@ -29,6 +29,7 @@ protocol CollectionCellMessageChangeDelegate: class {
 
 open class CollectionCell: UICollectionViewCell {
 
+    var actionController: ConversationMessageActionController?
     var messageObserverToken: NSObjectProtocol? = .none
     weak var delegate: CollectionCellDelegate?
     // Cell forwards the message changes to the delegate
@@ -40,6 +41,11 @@ open class CollectionCell: UICollectionViewCell {
             if let userSession = ZMUserSession.shared(), let newMessage = message {
                 self.messageObserverToken = MessageChangeInfo.add(observer: self, for: newMessage, userSession: userSession)
             }
+
+            actionController = message.map {
+                ConversationMessageActionController(responder: self, message: $0, context: .collection)
+            }
+
             self.updateForMessage(changeInfo: .none)
         }
     }
@@ -166,11 +172,6 @@ open class CollectionCell: UICollectionViewCell {
         let properties = MenuConfigurationProperties()
         properties.targetRect = self.contentView.bounds
         properties.targetView = self.contentView
-        if message?.canBeLiked == true {
-            properties.additionalItems = [.forbiddenInEphemeral(.like(for: message, with: #selector(like)))]
-        } else {
-            properties.additionalItems = []
-        }
 
         return properties
     }
@@ -191,17 +192,7 @@ open class CollectionCell: UICollectionViewCell {
         self.becomeFirstResponder()
         
         let menuController = UIMenuController.shared
-        let menuItems: [UIMenuItem] = [
-            .forward(with: #selector(forward)),
-            .delete(with: #selector(deleteMessage)),
-            .reveal(with: #selector(showInConversation)),
-        ]
-        
-        let existingItems = menuConfigurationProperties.additionalItems?
-            .filter { $0.isAvailableInEphemeralConversations }
-            .map { $0.item }
-
-        menuController.menuItems = (existingItems ?? []) + menuItems
+        menuController.menuItems = ConversationMessageActionController.allMessageActions
         menuController.setTargetRect(menuConfigurationProperties.targetRect, in: menuConfigurationProperties.targetView)
         menuController.setMenuVisible(true, animated: true)
     }
@@ -211,16 +202,11 @@ open class CollectionCell: UICollectionViewCell {
     }
     
     override open func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
-        switch action {
-        case #selector(forward), #selector(showInConversation):
-            return true
-        case #selector(like):
-            return message?.canBeLiked == true
-        case #selector(deleteMessage):
-            return message?.canBeDeleted == true
-        default:
-            return false
-        }
+        return actionController?.canPerformAction(action) == true
+    }
+
+    open override func forwardingTarget(for aSelector: Selector!) -> Any? {
+        return actionController
     }
     
     /// To be implemented in the subclass
@@ -229,23 +215,17 @@ open class CollectionCell: UICollectionViewCell {
         // no-op
     }
 
-    @objc func deleteMessage(_ sender: AnyObject!) {
-        guard message?.canBeDeleted == true else { return }
-        delegate?.collectionCell(self, performAction: .delete)
-    }
+    /**
+     * Copies the contents of the message.
+     * - parameter pasteboard: The pasteboard to copy the contents to.
+     * - note: The default implementation copies using the default implementation. Override it
+     * if you want to customize the behavior of the copy (ex: only copying parts of the message).
+     */
 
-    @objc func like(_ sender: AnyObject!) {
-        guard let message = message else { return }
-        Message.setLikedMessage(message, liked: !message.liked)
-    }
-
-    @objc func forward(_ sender: AnyObject!) {
-        self.delegate?.collectionCell(self, performAction: .forward)
+    func copyDisplayedContent(in pasteboard: UIPasteboard) {
+        message?.copy(in: pasteboard)
     }
     
-    @objc func showInConversation(_ sender: AnyObject!) {
-        self.delegate?.collectionCell(self, performAction: .showInConversation)
-    }
 }
 
 extension CollectionCell: ZMMessageObserver {
@@ -253,4 +233,12 @@ extension CollectionCell: ZMMessageObserver {
         self.updateForMessage(changeInfo: changeInfo)
         self.messageChangeDelegate?.messageDidChange(self, changeInfo: changeInfo)
     }
+}
+
+extension CollectionCell: MessageActionResponder {
+
+    public func wants(toPerform action: MessageAction, for message: ZMConversationMessage!) {
+        delegate?.collectionCell(self, performAction: action)
+    }
+
 }

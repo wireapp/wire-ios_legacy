@@ -197,7 +197,7 @@ class ConversationReplyCellDescription: ConversationMessageCellDescription {
 
     weak var message: ZMConversationMessage?
     weak var delegate: ConversationCellDelegate?
-    weak var actionController: ConversationCellActionController?
+    weak var actionController: ConversationMessageActionController?
 
     let accessibilityLabel: String? = "content.message.original_label".localized
     let accessibilityIdentifier: String? = "ReplyCell"

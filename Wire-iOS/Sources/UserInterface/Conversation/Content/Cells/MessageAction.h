@@ -40,6 +40,5 @@ typedef NS_ENUM(NSUInteger, MessageAction) {
 
 @protocol MessageActionResponder <NSObject>
 @required
-- (BOOL)canPerformAction:(MessageAction)action forMessage:(id<ZMConversationMessage>)message;
 - (void)wantsToPerformAction:(MessageAction)action forMessage:(id<ZMConversationMessage>)message;
 @end

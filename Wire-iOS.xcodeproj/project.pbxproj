@@ -277,7 +277,7 @@
 		5E672C942179D41100522E61 /* UserType+ZMUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E672C932179D41100522E61 /* UserType+ZMUser.swift */; };
 		5E678061204E8BEB002F63FB /* CallQualityPresentationTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E678060204E8BEB002F63FB /* CallQualityPresentationTransition.swift */; };
 		5E7315352191EADF00255A78 /* Message+Formatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E7315342191EADF00255A78 /* Message+Formatters.swift */; };
-		5E7315382191FCCB00255A78 /* ConversationCellActionControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E7315362191FCC400255A78 /* ConversationCellActionControllerTests.swift */; };
+		5E7315382191FCCB00255A78 /* ConversationMessageActionControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E7315362191FCC400255A78 /* ConversationMessageActionControllerTests.swift */; };
 		5E73153B2195B4B500255A78 /* UIColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16426F51FCC0FE200D2ABFC /* UIColor+Hex.swift */; };
 		5E766D9921144DFC005242B4 /* AuthenticationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E766D9821144DFC005242B4 /* AuthenticationCoordinator.swift */; };
 		5E766D9B211472C0005242B4 /* AuthenticationFlowStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E766D9A211472C0005242B4 /* AuthenticationFlowStep.swift */; };
@@ -334,7 +334,7 @@
 		5EB45761204EA75300BA217A /* CallQualityDismissalTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EB45760204EA75300BA217A /* CallQualityDismissalTransition.swift */; };
 		5EBBE96B21872060008BC1B7 /* MockCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EBBE96721871F70008BC1B7 /* MockCell.swift */; };
 		5EBBE96D218751D0008BC1B7 /* ConversationLegacyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EBBE96C218751D0008BC1B7 /* ConversationLegacyCell.swift */; };
-		5EBBE96F218783A2008BC1B7 /* ConversationCellActionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EBBE96E218783A2008BC1B7 /* ConversationCellActionController.swift */; };
+		5EBBE96F218783A2008BC1B7 /* ConversationMessageActionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EBBE96E218783A2008BC1B7 /* ConversationMessageActionController.swift */; };
 		5EBBE97121878D09008BC1B7 /* ConversationMessageToolboxCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EBBE97021878D09008BC1B7 /* ConversationMessageToolboxCell.swift */; };
 		5EBBE9732187A844008BC1B7 /* MessageToolboxViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EBBE9722187A844008BC1B7 /* MessageToolboxViewTests.swift */; };
 		5EBBE9782188B85B008BC1B7 /* ZMMessage+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EBBE9772188B85A008BC1B7 /* ZMMessage+Actions.swift */; };
@@ -387,6 +387,7 @@
 		5EF5C54C209B33E600676405 /* CGSize+AspectRatio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF5C54B209B33E600676405 /* CGSize+AspectRatio.swift */; };
 		5EF5CDA520EF739200CC98B0 /* DataTaskSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF5CDA420EF739200CC98B0 /* DataTaskSession.swift */; };
 		5EF5CDAA20EF925000CC98B0 /* MockDataTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF5CDA620EF903A00CC98B0 /* MockDataTask.swift */; };
+		5EFCB3BF21AAD46C00E892D9 /* Message+Pasteboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFCB3BE21AAD46C00E892D9 /* Message+Pasteboard.swift */; };
 		5EFD4526215A78E800BEE703 /* IndexedListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFD4525215A78E800BEE703 /* IndexedListView.swift */; };
 		5EFE9BFF21246483007932A6 /* RegistrationFinalErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFE9BFE21246483007932A6 /* RegistrationFinalErrorHandler.swift */; };
 		5EFE9C01212468E8007932A6 /* RegistrationSuccessEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFE9C00212468E8007932A6 /* RegistrationSuccessEventHandler.swift */; };
@@ -1788,7 +1789,7 @@
 		5E672C932179D41100522E61 /* UserType+ZMUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserType+ZMUser.swift"; sourceTree = "<group>"; };
 		5E678060204E8BEB002F63FB /* CallQualityPresentationTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallQualityPresentationTransition.swift; sourceTree = "<group>"; };
 		5E7315342191EADF00255A78 /* Message+Formatters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Message+Formatters.swift"; sourceTree = "<group>"; };
-		5E7315362191FCC400255A78 /* ConversationCellActionControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationCellActionControllerTests.swift; sourceTree = "<group>"; };
+		5E7315362191FCC400255A78 /* ConversationMessageActionControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationMessageActionControllerTests.swift; sourceTree = "<group>"; };
 		5E766D9821144DFC005242B4 /* AuthenticationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationCoordinator.swift; sourceTree = "<group>"; };
 		5E766D9A211472C0005242B4 /* AuthenticationFlowStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationFlowStep.swift; sourceTree = "<group>"; };
 		5E766D9E21147697005242B4 /* AuthenticationCoordinatorDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationCoordinatorDelegate.swift; sourceTree = "<group>"; };
@@ -1844,7 +1845,7 @@
 		5EB45760204EA75300BA217A /* CallQualityDismissalTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallQualityDismissalTransition.swift; sourceTree = "<group>"; };
 		5EBBE96721871F70008BC1B7 /* MockCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCell.swift; sourceTree = "<group>"; };
 		5EBBE96C218751D0008BC1B7 /* ConversationLegacyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationLegacyCell.swift; sourceTree = "<group>"; };
-		5EBBE96E218783A2008BC1B7 /* ConversationCellActionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationCellActionController.swift; sourceTree = "<group>"; };
+		5EBBE96E218783A2008BC1B7 /* ConversationMessageActionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationMessageActionController.swift; sourceTree = "<group>"; };
 		5EBBE97021878D09008BC1B7 /* ConversationMessageToolboxCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationMessageToolboxCell.swift; sourceTree = "<group>"; };
 		5EBBE9722187A844008BC1B7 /* MessageToolboxViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageToolboxViewTests.swift; sourceTree = "<group>"; };
 		5EBBE9772188B85A008BC1B7 /* ZMMessage+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ZMMessage+Actions.swift"; sourceTree = "<group>"; };
@@ -1898,6 +1899,7 @@
 		5EF5C54B209B33E600676405 /* CGSize+AspectRatio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGSize+AspectRatio.swift"; sourceTree = "<group>"; };
 		5EF5CDA420EF739200CC98B0 /* DataTaskSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataTaskSession.swift; sourceTree = "<group>"; };
 		5EF5CDA620EF903A00CC98B0 /* MockDataTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDataTask.swift; sourceTree = "<group>"; };
+		5EFCB3BE21AAD46C00E892D9 /* Message+Pasteboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Message+Pasteboard.swift"; sourceTree = "<group>"; };
 		5EFD4525215A78E800BEE703 /* IndexedListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexedListView.swift; sourceTree = "<group>"; };
 		5EFE9BFE21246483007932A6 /* RegistrationFinalErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationFinalErrorHandler.swift; sourceTree = "<group>"; };
 		5EFE9C00212468E8007932A6 /* RegistrationSuccessEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationSuccessEventHandler.swift; sourceTree = "<group>"; };
@@ -3811,7 +3813,7 @@
 				166264FF217DAC4F00300F45 /* ConversationMessageCell.swift */,
 				5E35F732217F147A00D3F4FE /* ConversationMessageSectionController.swift */,
 				16626501217DACBE00300F45 /* ConversationMessageCellTableViewAdapter.swift */,
-				5EBBE96E218783A2008BC1B7 /* ConversationCellActionController.swift */,
+				5EBBE96E218783A2008BC1B7 /* ConversationMessageActionController.swift */,
 				5E35F7462180A25100D3F4FE /* Content */,
 				5E35F734217F415700D3F4FE /* Components */,
 			);
@@ -5410,6 +5412,7 @@
 				5E936E8E20B590530060E6AA /* UIDevice+Platform.swift */,
 				5E35F77B2182124E00D3F4FE /* PerformanceDebugger.swift */,
 				5E4BC1CB218CA94D00A8682E /* ZMConversationMessage+Date.swift */,
+				5EFCB3BE21AAD46C00E892D9 /* Message+Pasteboard.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -6028,7 +6031,7 @@
 				873F91942189BB3C00E1DBB9 /* MessageReplyPreviewViewTests.swift */,
 				5EC7C87B21907D94004662AC /* ConversationReplyCellDescriptionTests.swift */,
 				5E294596219087CA0045ACFA /* ConversationReplyCellTests.swift */,
-				5E7315362191FCC400255A78 /* ConversationCellActionControllerTests.swift */,
+				5E7315362191FCC400255A78 /* ConversationMessageActionControllerTests.swift */,
 				8758CDB82191A7D60031BE0F /* ReplyComposingViewTests.swift */,
 				EF13204121A6C58000E7EF21 /* ChangePhoneViewControllerSnapshotTests.swift */,
 				EFF92B6521A854BA0090DA66 /* String+PhoneNumberTests.swift */,
@@ -6624,7 +6627,7 @@
 				F12C48F02199D2C200F49548 /* Release.xcconfig */,
 			);
 			path = Configuration;
-			sourceTree = "<group>";
+			sourceTree = SOURCE_ROOT;
 		};
 		F12CDAD91E43868200CEFCEB /* ChangingDetails */ = {
 			isa = PBXGroup;
@@ -8007,6 +8010,7 @@
 				875E7D1B2188C25A00E571B7 /* ReplyRoundCornersView.swift in Sources */,
 				D53D390E20596ED300B87DAD /* ConversationActionController+Block.swift in Sources */,
 				5EE73BF1212319BB0032986D /* RegistrationIncrementalUserDataChangeHandler.swift in Sources */,
+				5EFCB3BF21AAD46C00E892D9 /* Message+Pasteboard.swift in Sources */,
 				BFC47D86211DAA9D0021B3F2 /* ZMConversation+GuestBarState.swift in Sources */,
 				BF52C1571CAEB9E10037331F /* ArchivedListViewController.swift in Sources */,
 				87CB36BC1D7480F6007AB4E5 /* ConversationCell+Like.swift in Sources */,
@@ -8051,7 +8055,7 @@
 				F1199D3F1FC849450070FAC3 /* BackButtonDescription.swift in Sources */,
 				54F7C2851D746F3F004D8087 /* AddressBookHelper+Automation.swift in Sources */,
 				BF4D99BF1E78555700A7B08F /* ZMConversationMessageWindow+DaySeparator.swift in Sources */,
-				5EBBE96F218783A2008BC1B7 /* ConversationCellActionController.swift in Sources */,
+				5EBBE96F218783A2008BC1B7 /* ConversationMessageActionController.swift in Sources */,
 				BFAAB2391DEC6B2800CBC096 /* ConversationListViewController+Handles.swift in Sources */,
 				EF2127051FB9DFE300625A9B /* RegistrationTextField.m in Sources */,
 				BF0BDF801DAB8923003C61DE /* EphemeralKeyboardViewController.swift in Sources */,
@@ -8276,7 +8280,7 @@
 				D525426820934629001C04C1 /* IconLabelButtonTests.swift in Sources */,
 				BFF655741E81235900D48337 /* ConversationAvatarViewTests.swift in Sources */,
 				16D4932C203DD480008DDFFA /* UserCellTests.swift in Sources */,
-				5E7315382191FCCB00255A78 /* ConversationCellActionControllerTests.swift in Sources */,
+				5E7315382191FCCB00255A78 /* ConversationMessageActionControllerTests.swift in Sources */,
 				EF98987420C5A589005680C5 /* ZMSnapshotTestCase+MockUserClient.swift in Sources */,
 				1E98C81B1BD1719500C7A7A2 /* ContactsDataSourceTests.m in Sources */,
 				162E8C631CF5D68A004B4F45 /* AudioProcessingTests.swift in Sources */,

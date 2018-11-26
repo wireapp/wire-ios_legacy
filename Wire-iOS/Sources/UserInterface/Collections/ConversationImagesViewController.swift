@@ -58,7 +58,7 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
     
     internal let inverse: Bool
 
-    public var currentActionController: ConversationCellActionController?
+    public var currentActionController: ConversationMessageActionController?
 
     public weak var messageActionDelegate: MessageActionResponder? = .none {
         didSet {
@@ -339,7 +339,7 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
     }
 
     private func updateActionControllerForMessage() {
-        currentActionController = ConversationCellActionController(responder: messageActionDelegate, message: currentMessage)
+        currentActionController = ConversationMessageActionController(responder: messageActionDelegate, message: currentMessage, context: .collection)
     }
     
     var currentController: FullscreenImageViewController? {
@@ -395,9 +395,6 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
 }
 
 extension ConversationImagesViewController: MessageActionResponder {
-    public func canPerform(_ action: MessageAction, for message: ZMConversationMessage!) -> Bool {
-        return self.messageActionDelegate?.canPerform(action, for: message) ?? false
-    }
 
     func wants(toPerform action: MessageAction, for message: ZMConversationMessage!) {
         switch action {
@@ -405,6 +402,7 @@ extension ConversationImagesViewController: MessageActionResponder {
         default: self.messageActionDelegate?.wants(toPerform: action, for: message)
         }
     }
+
 }
 
 extension ConversationImagesViewController: ScreenshotProvider {

@@ -122,7 +122,7 @@ class ConversationVideoMessageCellDescription: ConversationMessageCellDescriptio
     
     weak var message: ZMConversationMessage?
     weak var delegate: ConversationCellDelegate?
-    weak var actionController: ConversationCellActionController?
+    weak var actionController: ConversationMessageActionController?
     
     let accessibilityIdentifier: String? = nil
     let accessibilityLabel: String? = nil

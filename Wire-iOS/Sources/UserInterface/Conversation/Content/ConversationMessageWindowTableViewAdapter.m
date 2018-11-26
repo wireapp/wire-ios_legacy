@@ -59,16 +59,16 @@
     }
 }
 
-- (ConversationCellActionController *)actionControllerForMessage:(id<ZMConversationMessage>)message
+- (ConversationMessageActionController *)actionControllerForMessage:(id<ZMConversationMessage>)message
 {
     NSString *identifier = message.objectIdentifier;
-    ConversationCellActionController *cachedEntry = [self.actionControllers objectForKey:identifier];
+    ConversationMessageActionController *cachedEntry = [self.actionControllers objectForKey:identifier];
 
     if (cachedEntry) {
         return cachedEntry;
     }
 
-    ConversationCellActionController *actionController = [[ConversationCellActionController alloc] initWithResponder:self.messageActionResponder message:message];
+    ConversationMessageActionController *actionController = [[ConversationMessageActionController alloc] initWithResponder:self.messageActionResponder message:message context: ConversationMessageActionControllerContextContent];
     [self.actionControllers setObject:actionController forKey:identifier];
 
     return actionController;

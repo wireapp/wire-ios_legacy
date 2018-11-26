@@ -20,14 +20,14 @@ import Foundation
 
 extension ConversationContentViewController {
     @objc(saveImageFromMessage:cell:)
-    func saveImage(from message: ZMConversationMessage, cell: ImageMessageCell?) {
+    func saveImage(from message: ZMConversationMessage, cell: SelectableView?) {
         guard let imageMessageData = message.imageMessageData, let imageData = imageMessageData.imageData else { return }
         
         let savableImage = SavableImage(data: imageData, isGIF: imageMessageData.isAnimatedGIF)
         
         if let cell = cell {
-            let snapshot = cell.fullImageView.snapshotView(afterScreenUpdates: true)
-            let sourceRect = self.view.convert(cell.fullImageView.frame, from: cell.fullImageView.superview)
+            let snapshot = cell.selectionView.snapshotView(afterScreenUpdates: true)
+            let sourceRect = self.view.convert(cell.selectionView.frame, from: cell.selectionView.superview)
             savableImage.saveToLibrary { success in
                 guard nil != self.view.window, success else { return }
                 snapshot?.translatesAutoresizingMaskIntoConstraints = true
