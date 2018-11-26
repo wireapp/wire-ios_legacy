@@ -54,21 +54,21 @@ final public class FileTransferView: UIView, TransferView {
         
         self.topLabel.numberOfLines = 1
         self.topLabel.lineBreakMode = .byTruncatingMiddle
-        self.topLabel.accessibilityLabel = "FileTransferTopLabel"
+        self.topLabel.accessibilityIdentifier = "FileTransferTopLabel"
         
         self.bottomLabel.numberOfLines = 1
-        self.bottomLabel.accessibilityLabel = "FileTransferBottomLabel"
+        self.bottomLabel.accessibilityIdentifier = "FileTransferBottomLabel"
         
-        self.fileTypeIconView.accessibilityLabel = "FileTransferFileTypeIcon"
+        self.fileTypeIconView.accessibilityIdentifier = "FileTransferFileTypeIcon"
         
         self.fileEyeView.image = UIImage(for: .eye, iconSize: .messageStatus, color: UIColor.white).withRenderingMode(.alwaysTemplate)
         
         self.actionButton.contentMode = .scaleAspectFit
         actionButton.setIconColor(.white, for: .normal)
         self.actionButton.addTarget(self, action: #selector(FileTransferView.onActionButtonPressed(_:)), for: .touchUpInside)
-        self.actionButton.accessibilityLabel = "FileTransferActionButton"
+        self.actionButton.accessibilityIdentifier = "FileTransferActionButton"
         
-        self.progressView.accessibilityLabel = "FileTransferProgressView"
+        self.progressView.accessibilityIdentifier = "FileTransferProgressView"
         self.progressView.isUserInteractionEnabled = false
         
         self.loadingView.translatesAutoresizingMaskIntoConstraints = false

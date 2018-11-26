@@ -63,13 +63,13 @@ import Cartography
         self.playButton.layer.masksToBounds = true
 
         self.progressView.isUserInteractionEnabled = false
-        self.progressView.accessibilityLabel = "VideoProgressView"
+        self.progressView.accessibilityIdentifier = "VideoProgressView"
         self.progressView.deterministic = true
 
         self.bottomGradientView.gradientLayer.colors = [UIColor.clear.cgColor, UIColor.black.withAlphaComponent(0.4).cgColor]
 
         self.timeLabel.numberOfLines = 1
-        self.timeLabel.accessibilityLabel = "VideoActionTimeLabel"
+        self.timeLabel.accessibilityIdentifier = "VideoActionTimeLabel"
 
         self.loadingView.isHidden = true
         
