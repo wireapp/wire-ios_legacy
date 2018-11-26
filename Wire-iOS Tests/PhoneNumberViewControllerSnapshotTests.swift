@@ -27,8 +27,6 @@ final class PhoneNumberViewControllerSnapshotTests: ZMSnapshotTestCase {
         super.setUp()
         sut = PhoneNumberViewController()
         sut.view.frame = CGRect(origin: .zero, size: CGSize(width: 320, height: 100))
-        /// TODO: remove this after snapshot is created
-//        recordMode = true
     }
     
     override func tearDown() {
@@ -36,8 +34,11 @@ final class PhoneNumberViewControllerSnapshotTests: ZMSnapshotTestCase {
         super.tearDown()
     }
 
-    func testForInitState(){
-        ///TODO: insert a phone number
+    func testForPhoneNumberPasted(){
+        UIPasteboard.general.string = "+41 86 079 209 36 37"
+
+        sut.phoneNumberField.paste(nil)
+
         verify(view: sut.view)
     }
 }
