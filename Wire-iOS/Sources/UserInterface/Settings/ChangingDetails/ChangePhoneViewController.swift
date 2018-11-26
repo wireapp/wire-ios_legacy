@@ -61,7 +61,7 @@ final class ChangePhoneViewController: SettingsBaseTableViewController {
     fileprivate var state = ChangePhoneNumberState()
     fileprivate let userProfile = ZMUserSession.shared()?.userProfile
     fileprivate var observerToken: Any?
-
+    
     init() {
         super.init(style: .grouped)
         setupViews()
@@ -171,8 +171,8 @@ final class ChangePhoneViewController: SettingsBaseTableViewController {
                 self.userProfile?.requestPhoneNumberRemoval()
                 self.updateSaveButtonState(enabled: false)
                 self.navigationController?.showLoadingView = true
-            })
-
+                })
+            
             present(alert, animated: true, completion: nil)
         }
         tableView.deselectRow(at: indexPath, animated: false)
@@ -196,36 +196,41 @@ extension ChangePhoneViewController: RegistrationTextFieldDelegate {
     func textField(_ textField: UITextField?, shouldPasteCharactersIn range: NSRange, replacementString string: String?) -> Bool {
         guard let registrationTextField = textField as? RegistrationTextField else { return false }
         guard let string = string else { return false }
-
+        
         return insert(phoneNumber: string, registrationTextField: registrationTextField)
     }
-
+    
     func insert(phoneNumber: String, registrationTextField: RegistrationTextField) -> Bool {
         let presetCountry = Country(iso: "", e164: NSNumber(value: registrationTextField.countryCode))
-        return phoneNumber.shouldInsertAsPhoneNumber(presetCountry: presetCountry){country, phoneNumber in
-            if let country = country, let phoneNumber = phoneNumber {
-                registrationTextField.text = phoneNumber
+        
+        if let (country, phoneNumberWithoutCountryCode) = phoneNumber.shouldInsertAsPhoneNumber(presetCountry: presetCountry) {
+            registrationTextField.text = phoneNumber
+            if let country = country {
                 registrationTextField.countryCode = country.e164.uintValue
-                let number = PhoneNumber(countryCode: registrationTextField.countryCode, numberWithoutCode: phoneNumber)
-                state.newNumber = number
-                updateSaveButtonState()
             }
+            let number = PhoneNumber(countryCode: registrationTextField.countryCode, numberWithoutCode: phoneNumberWithoutCountryCode)
+            state.newNumber = number
+            updateSaveButtonState()
+            
+            return true
+        } else {
+            return false
         }
     }
-
+    
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         guard let registrationTextField = textField as? RegistrationTextField else { return false }
-
+        
         guard let newString = (registrationTextField.text as NSString?)?.replacingCharacters(in: range, with: string) else { return false }
-
-
+        
+        
         ///If the textField is empty and a replacementString with longer than 1 char, it is likely to insert from autoFill.
         if textField.text?.count == 0 && newString.count > 1 {
             return insert(phoneNumber: newString, registrationTextField: registrationTextField)
         }
-
+        
         let newNumber = (textField.text as NSString?)?.replacingCharacters(in: range, with: newString) ?? ""
-
+        
         let number = PhoneNumber(countryCode: registrationTextField.countryCode, numberWithoutCode: newNumber)
         switch number.validate() {
         case .containsInvalidCharacters, .tooLong:
@@ -233,7 +238,7 @@ extension ChangePhoneViewController: RegistrationTextFieldDelegate {
         default:
             break
         }
-
+        
         state.newNumber = number
         updateSaveButtonState()
         return true
@@ -280,7 +285,7 @@ extension ChangePhoneViewController: UserProfileUpdateObserver {
         navigationController?.showLoadingView = false
         _ = navigationController?.popToPrevious(of: self)
     }
-
+    
 }
 
 extension ChangePhoneViewController: ConfirmPhoneDelegate {

@@ -40,10 +40,8 @@ final class String_PhoneNumberTests: XCTestCase {
         let presetCountry = Country(iso: "", e164: NSNumber(value: 49))
         let result = sut.shouldInsertAsPhoneNumber(presetCountry: presetCountry) {
             country, phoneNumber in
-            if let country = country, let phoneNumber = phoneNumber {
-                XCTAssertEqual(country.iso, "ch")
-                XCTAssertEqual(phoneNumber, "860792093637")
-            }
+            XCTAssertEqual(country?.iso, "ch")
+            XCTAssertEqual(phoneNumber, "860792093637")
         }
 
         // THEN
@@ -58,10 +56,8 @@ final class String_PhoneNumberTests: XCTestCase {
         let presetCountry = Country(iso: "", e164: NSNumber(value: 49))
         let result = sut.shouldInsertAsPhoneNumber(presetCountry: presetCountry) {
             country, phoneNumber in
-            if let country = country, let phoneNumber = phoneNumber {
-                XCTAssertEqual(country.iso, "ch")
-                XCTAssertEqual(phoneNumber, "860792093637")
-            }
+            XCTAssertEqual(country?.iso, "ch")
+            XCTAssertEqual(phoneNumber, "860792093637")
         }
 
         // THEN

@@ -27,10 +27,9 @@ extension String {
     /// or  \u{e2}+49 123 12349999\u{e2}
     ///
     /// - Parameter completion: completion closure with Country object and phoneNumber extracted from self. country: a Country object parsed from self. phoneNumber: phone Number with no space
-    /// - Returns: true if should paste as Phone number(not beginning with "+"). If self is prased as a phone number, reture false (it should the be pasted, the caller use the completion's data for further actions.)
+    /// - Returns: If the number can be prased, return a tuple of country and the phone number without country code. Otherwise return nil. country would be nil if self is a phone number without country
     @discardableResult
-    func shouldInsertAsPhoneNumber(presetCountry: Country,
-                                   completion: (_ country: Country?, _ phoneNumber: String?) -> Void) -> Bool {
+    func shouldInsertAsPhoneNumber(presetCountry: Country) -> (country: Country?, phoneNumber: String)? {
 
         var illegalCharacters = CharacterSet.whitespaces
         illegalCharacters.formUnion(CharacterSet.decimalDigits)
@@ -41,11 +40,9 @@ extension String {
         if phoneNumber.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).hasPrefix("+") {
             if let country = Country.detect(forPhoneNumber: phoneNumber as String) {
                 /// remove the leading space and country prefix
-                let phoneNumberWithoutCountryCode = phoneNumber.replacingOccurrences(of: country.e164PrefixString, with: "").filter { !" ".contains($0) }
+                let phoneNumberWithoutCountryCode = phoneNumber.replacingOccurrences(of: country.e164PrefixString, with: "").filter { !" ".contains($0) } ///TODO: set
 
-                completion(country, phoneNumberWithoutCountryCode)
-
-                return false
+                return (country: country, phoneNumber: phoneNumberWithoutCountryCode)
             }
         }
 
@@ -55,11 +52,10 @@ extension String {
 
         let result = UnregisteredUser.normalizedPhoneNumber(phoneNumber as String)
 
-        completion(nil, nil)
         if result.isValid {
-            return true
+            return (country: nil, phoneNumber: (phoneNumber as String))
         } else {
-            return false
+            return nil
         }
     }
 }

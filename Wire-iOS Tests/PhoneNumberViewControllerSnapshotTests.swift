@@ -27,6 +27,7 @@ final class PhoneNumberViewControllerSnapshotTests: ZMSnapshotTestCase {
         super.setUp()
         sut = PhoneNumberViewController()
         sut.view.frame = CGRect(origin: .zero, size: CGSize(width: 320, height: 100))
+        sut.view.backgroundColor = .black
     }
     
     override func tearDown() {

@@ -24,13 +24,14 @@ extension PhoneNumberViewController {
     func insert(phoneNumber: String?) -> Bool {
         guard let phoneNumber = phoneNumber else { return false }
 
-        return phoneNumber.shouldInsertAsPhoneNumber(presetCountry: country){ country, phoneNumber in
-            if let country = country, let phoneNumber = phoneNumber {
+        if let (country: country, phoneNumber: phoneNumberWithoutCountryCode) = phoneNumber.shouldInsertAsPhoneNumber(presetCountry: country){
                 self.country = country
 
-                self.phoneNumberField.text = phoneNumber;
-                self.updateRightAccessory(forPhoneNumber: phoneNumber)
-            }
+                self.phoneNumberField.text = phoneNumberWithoutCountryCode;
+                self.updateRightAccessory(forPhoneNumber: phoneNumberWithoutCountryCode)
+            return true
+        } else {
+            return false
         }
     }
 }
@@ -54,10 +55,10 @@ extension PhoneNumberViewController: RegistrationTextFieldDelegate {
         let number = PhoneNumber(countryCode: country.e164.uintValue, numberWithoutCode: newString)
 
         switch number.validate() {
+
+            
         case .containsInvalidCharacters, .tooLong:
             return false
-        case .tooShort:
-            break
         default:
             break
         }
