@@ -23,10 +23,6 @@ final class String_PhoneNumberTests: XCTestCase {
     
     var sut: String!
     
-    override func setUp() {
-        super.setUp()
-    }
-    
     override func tearDown() {
         sut = nil
         super.tearDown()
@@ -42,6 +38,8 @@ final class String_PhoneNumberTests: XCTestCase {
         if let (country, phoneNumberWithoutCountryCode) = sut.shouldInsertAsPhoneNumber(presetCountry: presetCountry) {
             XCTAssertEqual(country?.iso, "ch")
             XCTAssertEqual(phoneNumberWithoutCountryCode, "860792093637")
+        } else {
+            XCTFail()
         }
     }
 
@@ -56,6 +54,8 @@ final class String_PhoneNumberTests: XCTestCase {
         if let (country, phoneNumberWithoutCountryCode) = sut.shouldInsertAsPhoneNumber(presetCountry: presetCountry) {
             XCTAssertEqual(country?.iso, "ch")
             XCTAssertEqual(phoneNumberWithoutCountryCode, "860792093637")
+        } else {
+            XCTFail()
         }
     }
 
@@ -69,6 +69,8 @@ final class String_PhoneNumberTests: XCTestCase {
         if let (country, phoneNumberWithoutCountryCode) = sut.shouldInsertAsPhoneNumber(presetCountry: presetCountry) {
             XCTAssertEqual(country?.e164, 49)
             XCTAssertEqual(phoneNumberWithoutCountryCode, "860792093637")
+        } else {
+            XCTFail()
         }
     }
 
