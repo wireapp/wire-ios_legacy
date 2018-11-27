@@ -353,13 +353,18 @@ extension AuthenticationCoordinator {
 
     @objc(startRegistrationWithPhoneNumber:)
     func startRegistration(phoneNumber: String) {
-        guard case let .createCredentials(unregisteredUser) = stateController.currentStep else {
+        guard case let .createCredentials(unregisteredUser) = stateController.currentStep, let presenter = self.presenter else {
             log.error("Cannot start phone registration outside of registration flow.")
             return
         }
 
-        unregisteredUser.credentials = .phone(number: phoneNumber)
-        sendActivationCode(.phone(phoneNumber), unregisteredUser, isResend: false)
+        UIAlertController.requestTOSApproval(over: presenter) { approved in
+            if approved {
+                unregisteredUser.credentials = .phone(number: phoneNumber)
+                unregisteredUser.acceptedTermsOfService = true
+                self.sendActivationCode(.phone(phoneNumber), unregisteredUser, isResend: false)
+            }
+        }
     }
 
     /**
@@ -375,15 +380,20 @@ extension AuthenticationCoordinator {
 
     @objc(startRegistrationWithName:email:password:)
     func startRegistration(name: String, email: String, password: String) {
-        guard case let .createCredentials(unregisteredUser) = stateController.currentStep else {
+        guard case let .createCredentials(unregisteredUser) = stateController.currentStep, let presenter = self.presenter else {
             log.error("Cannot start email registration outside of registration flow.")
             return
         }
 
-        unregisteredUser.credentials = .email(address: email, password: password)
-        unregisteredUser.name = name
+        UIAlertController.requestTOSApproval(over: presenter) { approved in
+            if approved {
+                unregisteredUser.credentials = .email(address: email, password: password)
+                unregisteredUser.name = name
+                unregisteredUser.acceptedTermsOfService = true
 
-        sendActivationCode(.email(email), unregisteredUser, isResend: false)
+                self.sendActivationCode(.email(email), unregisteredUser, isResend: false)
+            }
+        }
     }
 
     /// Sends the registration activation code.
@@ -401,17 +411,6 @@ extension AuthenticationCoordinator {
     }
 
     // MARK: Linear Registration
-
-    /**
-     * Notifies the registration state observers that the user accepted the
-     * terms of service.
-     */
-
-    @objc func acceptTermsOfService() {
-        updateUnregisteredUser {
-            $0.acceptedTermsOfService = true
-        }
-    }
 
     /**
      * Notifies the registration state observers that the user set a display name.
@@ -680,7 +679,6 @@ extension AuthenticationCoordinator {
         default:
             companyLoginController?.isAutoDetectionEnabled = false
         }
-
     }
 
     /**
