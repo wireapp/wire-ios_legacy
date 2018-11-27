@@ -137,8 +137,4 @@ extension NSURL {
         return URL.wr_website as NSURL
     }
 
-    @objc class func wr_termsOfServicesURLForTeamAccount(_ isTeamAccount: Bool) -> NSURL {
-        return URL.wr_termsOfServicesURL(forTeamAccount: isTeamAccount) as NSURL
-    }
-
 }

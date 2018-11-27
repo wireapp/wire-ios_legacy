@@ -358,7 +358,7 @@ extension AuthenticationCoordinator {
             return
         }
 
-        UIAlertController.requestTOSApproval(over: presenter) { approved in
+        UIAlertController.requestTOSApproval(over: presenter, forTeamAccount: false) { approved in
             if approved {
                 unregisteredUser.credentials = .phone(number: phoneNumber)
                 unregisteredUser.acceptedTermsOfService = true
@@ -385,7 +385,7 @@ extension AuthenticationCoordinator {
             return
         }
 
-        UIAlertController.requestTOSApproval(over: presenter) { approved in
+        UIAlertController.requestTOSApproval(over: presenter, forTeamAccount: false) { approved in
             if approved {
                 unregisteredUser.credentials = .email(address: email, password: password)
                 unregisteredUser.name = name
@@ -720,7 +720,7 @@ extension AuthenticationCoordinator {
                 break
             }
 
-            UIAlertController.requestTOSApproval(over: presenter) { approved in
+            UIAlertController.requestTOSApproval(over: presenter, forTeamAccount: true) { approved in
                 if approved {
                     presenter.showLoadingView = true
                     self.registrationStatus.sendActivationCode(to: .email(emailAddress))
