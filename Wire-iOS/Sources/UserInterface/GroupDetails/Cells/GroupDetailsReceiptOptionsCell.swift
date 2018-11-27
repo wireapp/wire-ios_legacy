@@ -19,24 +19,29 @@
 import UIKit
 import WireExtensionComponents
 
-class GroupDetailsGuestOptionsCell: GroupDetailsOptionsCell { ///TODO: extend ToggleSubtitleCell
+class GroupDetailsReceiptOptionsCell: DetailsCollectionViewCell & ConversationOptionsConfigurable {
 
-    var isOn = false /*{
+    var isOn = false {
         didSet {
-            let key = "group_details.guest_options_cell.\(isOn ? "enabled" : "disabled")"
-            status = key.localized
+            receiptSwitch.isOn = isOn
         }
-    }*/
+    }
+
+    let receiptSwitch = UISwitch()
 
     override func setUp() {
         super.setUp()
         accessibilityIdentifier = "cell.groupdetails.receiptoptions"///TODO:
         title = "group_details.receipt_options_cell.title".localized
+
+        rightAccessoryView = receiptSwitch
+
     }
 
-    override func configure(with conversation: ZMConversation) {
+    func configure(with conversation: ZMConversation) {
         ///TODO: wait for DM update
 //        self.isOn = conversation.allowReceipts
+
     }
 
     override func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {

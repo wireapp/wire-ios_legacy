@@ -18,7 +18,30 @@
 
 import UIKit
 
-class GroupDetailsTimeoutOptionsCell: GroupDetailsOptionsCell {
+protocol ConversationOptionsConfigurable {
+    func configure(with conversation: ZMConversation)
+}
+
+protocol GroupDetailsOptionsCell where Self: DetailsCollectionViewCell {
+    func setAccessoryAsDisclosureIndicator(colorSchemeVariant: ColorSchemeVariant)
+}
+
+extension GroupDetailsOptionsCell where Self: DetailsCollectionViewCell {
+
+
+    /// call this method in override func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant)
+    ///
+    /// - Parameter colorSchemeVariant: the colorSchemeVariant for the right icon image
+    func setAccessoryAsDisclosureIndicator(colorSchemeVariant: ColorSchemeVariant) {
+        let sectionTextColor = UIColor.from(scheme: .sectionText, variant: colorSchemeVariant)
+        accessoryImage = UIImage(for: .disclosureIndicator, iconSize: .like, color: sectionTextColor)
+    }
+}
+
+typealias ConversationOptionsCell = DetailsCollectionViewCell & ConversationOptionsConfigurable
+typealias GroupDetailsDisclosureOptionsCell = ConversationOptionsCell & GroupDetailsOptionsCell
+
+class GroupDetailsTimeoutOptionsCell: GroupDetailsDisclosureOptionsCell {
 
     override func setUp() {
         super.setUp()
@@ -26,7 +49,7 @@ class GroupDetailsTimeoutOptionsCell: GroupDetailsOptionsCell {
         title = "group_details.timeout_options_cell.title".localized
     }
 
-    override func configure(with conversation: ZMConversation) {
+    func configure(with conversation: ZMConversation) {
         switch conversation.messageDestructionTimeout {
         case .synced(let value)?:
             status = value.displayString
@@ -37,6 +60,8 @@ class GroupDetailsTimeoutOptionsCell: GroupDetailsOptionsCell {
 
     override func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
         super.applyColorScheme(colorSchemeVariant)
+        setAccessoryAsDisclosureIndicator(colorSchemeVariant: colorSchemeVariant)
+
         icon = UIImage(for: .hourglass, iconSize: .tiny,
                        color: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant))
     }

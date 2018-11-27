@@ -101,7 +101,7 @@ class GroupOptionsSectionController: GroupDetailsSectionController {
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let option = options[indexPath.row]
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: option.cellReuseIdentifier, for: indexPath) as! GroupDetailsOptionsCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: option.cellReuseIdentifier, for: indexPath) as! GroupDetailsDisclosureOptionsCell
 
         cell.configure(with: conversation)
         cell.showSeparator = option.rawValue < (Option.count - 1)

@@ -123,10 +123,8 @@ import Cartography
             sections.append(optionsSectionController)            
         }
 
-        ///TODO: one more section for receipt
-
         let receiptOptionsSectionController = ReceiptOptionsSectionController(conversation: conversation,
-//                                                                              delegate: self,
+                                                                              //TODO:                                                                              delegate: self,
                                                                               syncCompleted: didCompleteInitialSync,
                                                                               collectionView: self.collectionViewController.collectionView!)
         sections.append(receiptOptionsSectionController)

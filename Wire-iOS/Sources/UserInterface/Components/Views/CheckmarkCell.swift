@@ -46,7 +46,7 @@ class CheckmarkCell: DetailsCollectionViewCell {
     private func updateCheckmark(forColor colorSchemeVariant: ColorSchemeVariant) {
 
         guard showCheckmark else {
-            accessory = nil
+            accessoryImage = nil
             return
         }
 
@@ -63,7 +63,7 @@ class CheckmarkCell: DetailsCollectionViewCell {
             color = UIColor.from(scheme: .textPlaceholder, variant: colorSchemeVariant)
         }
     
-        accessory = UIImage(for: .checkmark, iconSize: .tiny, color: color)
+        accessoryImage = UIImage(for: .checkmark, iconSize: .tiny, color: color)
     }
 
 }

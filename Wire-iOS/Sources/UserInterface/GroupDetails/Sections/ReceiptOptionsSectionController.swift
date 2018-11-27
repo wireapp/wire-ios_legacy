@@ -80,11 +80,10 @@ class ReceiptOptionsSectionController: GroupDetailsSectionController {
         return CGSize(width: collectionView.bounds.size.width, height: 56)
     }
 
-    ///TODO: footer text
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 //        let option = options[indexPath.row]
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellReuseIdentifier, for: indexPath) as! GroupDetailsOptionsCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellReuseIdentifier, for: indexPath) as! ConversationOptionsCell 
 
         cell.configure(with: conversation)
         cell.showSeparator = false
@@ -93,6 +92,15 @@ class ReceiptOptionsSectionController: GroupDetailsSectionController {
         return cell
 
     }
+
+    ///MARK: - header with less height
+
+    override func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return CGSize(width: collectionView.bounds.size.width, height: 20) ///TODO: ask for design
+    }
+
+
+    ///MARK: - footer
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
 

@@ -19,7 +19,7 @@
 import UIKit
 import WireExtensionComponents
 
-class GroupDetailsGuestOptionsCell: GroupDetailsOptionsCell {
+class GroupDetailsGuestOptionsCell: GroupDetailsDisclosureOptionsCell {
 
     var isOn = false {
         didSet {
@@ -34,12 +34,13 @@ class GroupDetailsGuestOptionsCell: GroupDetailsOptionsCell {
         title = "group_details.guest_options_cell.title".localized
     }
 
-    override func configure(with conversation: ZMConversation) {
+    func configure(with conversation: ZMConversation) {
         self.isOn = conversation.allowGuests
     }
 
     override func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
         super.applyColorScheme(colorSchemeVariant)
+        setAccessoryAsDisclosureIndicator(colorSchemeVariant: colorSchemeVariant)
         icon = UIImage(for: .guest, iconSize: .tiny,
                        color: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant))
     }
