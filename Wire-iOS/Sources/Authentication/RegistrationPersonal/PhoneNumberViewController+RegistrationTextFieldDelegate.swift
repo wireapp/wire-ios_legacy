@@ -37,7 +37,7 @@ extension PhoneNumberViewController {
 }
 
 extension PhoneNumberViewController: RegistrationTextFieldDelegate {
-    public func textField(_ textField: UITextField?, shouldPasteCharactersIn range: NSRange, replacementString string: String?) -> Bool {
+    func textField(_ textField: UITextField, shouldPasteCharactersIn range: NSRange, replacementString string: String) -> Bool {
         return insert(phoneNumber: string)
     }
 

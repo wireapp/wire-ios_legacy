@@ -19,5 +19,5 @@
 import Foundation
 
 protocol RegistrationTextFieldDelegate: UITextFieldDelegate {
-    func textField(_ textField: UITextField?, shouldPasteCharactersIn range: NSRange, replacementString string: String?) -> Bool
+    func textField(_ textField: UITextField, shouldPasteCharactersIn range: NSRange, replacementString string: String) -> Bool
 }

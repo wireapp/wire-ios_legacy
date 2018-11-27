@@ -20,11 +20,13 @@ import Foundation
 
 extension RegistrationTextField {
     override open func paste(_ sender: Any?) {
+
         var shouldPaste = true
 
-        if let registrationTextFieldDelegate = delegate as? RegistrationTextFieldDelegate {
-            let pasteboard = UIPasteboard(name: .general, create: false)
-            let pastedString = pasteboard?.string
+        if let registrationTextFieldDelegate = delegate as? RegistrationTextFieldDelegate,
+           let pasteboard = UIPasteboard(name: .general, create: false),
+           let pastedString = pasteboard.string {
+
             shouldPaste = registrationTextFieldDelegate.textField(self, shouldPasteCharactersIn: selectedRange(), replacementString: pastedString)
         }
 
