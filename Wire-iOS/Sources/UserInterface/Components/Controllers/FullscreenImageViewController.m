@@ -588,15 +588,15 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     switch (action) {
         case MessageActionForward:
         {
-            [self dismissViewControllerAnimated:NO completion:^{
+            [self dismissViewControllerAnimated:YES completion:^{
                 [self.delegate wantsToPerformAction:MessageActionForward forMessage:message];
             }];
         }
             break;
 
-        case MessageActionPresent:
+        case MessageActionShowInConversation:
         {
-            [self dismissViewControllerAnimated:NO completion:^{
+            [self dismissViewControllerAnimated:YES completion:^{
                 [self.delegate wantsToPerformAction:MessageActionShowInConversation forMessage:message];
             }];
         }
@@ -604,7 +604,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
         case MessageActionReply:
         {
-            [self dismissViewControllerAnimated:NO completion:^{
+            [self dismissViewControllerAnimated:YES completion:^{
                 [self.delegate wantsToPerformAction:MessageActionReply forMessage:message];
             }];
         }

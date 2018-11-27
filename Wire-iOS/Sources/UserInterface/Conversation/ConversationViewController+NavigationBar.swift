@@ -210,42 +210,24 @@ extension ConversationViewController: CollectionsViewControllerDelegate {
     public func collectionsViewController(_ viewController: CollectionsViewController, performAction action: MessageAction, onMessage message: ZMConversationMessage) {
         switch action {
         case .forward:
-            let actions: () -> Void = {
+            viewController.dismissIfNeeded(animated: true) {
                 self.contentViewController.scroll(to: message) { cell in
                     self.contentViewController.showForwardFor(message: message, fromCell: cell)
                 }
             }
 
-            if viewController.isBeingPresented {
-                viewController.dismiss(animated: true, completion: actions)
-            } else {
-                actions()
-            }
-
         case .showInConversation:
-            let actions: () -> Void = {
+            viewController.dismissIfNeeded(animated: true) {
                 self.contentViewController.scroll(to: message) { _ in
                     self.contentViewController.highlight(message)
                 }
             }
 
-            if viewController.isBeingPresented {
-                viewController.dismiss(animated: true, completion: actions)
-            } else {
-                actions()
-            }
-
         case .reply:
-            let actions = {
+            viewController.dismissIfNeeded(animated: true) {
                 self.contentViewController.scroll(to: message) { cell in
-                    self.contentViewController.wants(toPerform: action, for: message)
+                    self.contentViewController.wants(toPerform: .reply, for: message)
                 }
-            }
-            
-            if viewController.isBeingPresented {
-                viewController.dismiss(animated: true, completion: actions)
-            } else {
-                actions()
             }
 
         default:

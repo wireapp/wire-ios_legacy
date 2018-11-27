@@ -282,6 +282,8 @@
 		5E766D9921144DFC005242B4 /* AuthenticationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E766D9821144DFC005242B4 /* AuthenticationCoordinator.swift */; };
 		5E766D9B211472C0005242B4 /* AuthenticationFlowStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E766D9A211472C0005242B4 /* AuthenticationFlowStep.swift */; };
 		5E766D9F21147697005242B4 /* AuthenticationCoordinatorDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E766D9E21147697005242B4 /* AuthenticationCoordinatorDelegate.swift */; };
+		5E769C5421AD89A900785EB7 /* UIViewController+Dismiss.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E769C5321AD89A900785EB7 /* UIViewController+Dismiss.swift */; };
+		5E769C5621AD8ABD00785EB7 /* DismissalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E769C5521AD8ABD00785EB7 /* DismissalTests.swift */; };
 		5E7E496A20F37DAA0005C602 /* Ziphy+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E7E496920F37DAA0005C602 /* Ziphy+Convenience.swift */; };
 		5E8C38A8212D5AF7002AE12B /* RegistrationSessionAvailableEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8C38A7212D5AF7002AE12B /* RegistrationSessionAvailableEventHandler.swift */; };
 		5E8C38AA212D7003002AE12B /* VerificationCodeStepViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8C38A9212D7003002AE12B /* VerificationCodeStepViewControllerTests.swift */; };
@@ -1795,6 +1797,8 @@
 		5E766D9821144DFC005242B4 /* AuthenticationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationCoordinator.swift; sourceTree = "<group>"; };
 		5E766D9A211472C0005242B4 /* AuthenticationFlowStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationFlowStep.swift; sourceTree = "<group>"; };
 		5E766D9E21147697005242B4 /* AuthenticationCoordinatorDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationCoordinatorDelegate.swift; sourceTree = "<group>"; };
+		5E769C5321AD89A900785EB7 /* UIViewController+Dismiss.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Dismiss.swift"; sourceTree = "<group>"; };
+		5E769C5521AD8ABD00785EB7 /* DismissalTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DismissalTests.swift; sourceTree = "<group>"; };
 		5E7E496920F37DAA0005C602 /* Ziphy+Convenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ziphy+Convenience.swift"; sourceTree = "<group>"; };
 		5E8C38A7212D5AF7002AE12B /* RegistrationSessionAvailableEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationSessionAvailableEventHandler.swift; sourceTree = "<group>"; };
 		5E8C38A9212D7003002AE12B /* VerificationCodeStepViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationCodeStepViewControllerTests.swift; sourceTree = "<group>"; };
@@ -5418,6 +5422,7 @@
 				5E35F77B2182124E00D3F4FE /* PerformanceDebugger.swift */,
 				5E4BC1CB218CA94D00A8682E /* ZMConversationMessage+Date.swift */,
 				5EFCB3BE21AAD46C00E892D9 /* Message+Pasteboard.swift */,
+				5E769C5321AD89A900785EB7 /* UIViewController+Dismiss.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -6041,6 +6046,7 @@
 				EF13204121A6C58000E7EF21 /* ChangePhoneViewControllerSnapshotTests.swift */,
 				EFF92B6521A854BA0090DA66 /* String+PhoneNumberTests.swift */,
 				EFF92B6A21A863700090DA66 /* PhoneNumberViewControllerSnapshotTests.swift */,
+				5E769C5521AD8ABD00785EB7 /* DismissalTests.swift */,
 			);
 			path = "Wire-iOS Tests";
 			sourceTree = "<group>";
@@ -7911,6 +7917,7 @@
 				EFDB3135217F5E0300D2A7CE /* ConversationListCell+Constraint.swift in Sources */,
 				EE1AFBFE2124330B003D1AE1 /* UNUserNotificationCenter+Permission.swift in Sources */,
 				7C25D755214911AC002E22BF /* UserSearchResultsViewController.swift in Sources */,
+				5E769C5421AD89A900785EB7 /* UIViewController+Dismiss.swift in Sources */,
 				5E35F733217F147A00D3F4FE /* ConversationMessageSectionController.swift in Sources */,
 				87797C0B1FF3C849009FC9A9 /* SearchServicesSectionController.swift in Sources */,
 				EF21271E1FB9DFE300625A9B /* AddEmailStepViewController.m in Sources */,
@@ -8478,6 +8485,7 @@
 				5E8C38AA212D7003002AE12B /* VerificationCodeStepViewControllerTests.swift in Sources */,
 				BF2A74751CEB595E002608BF /* AudioButtonOverlayTests.swift in Sources */,
 				EF01AF8520BED3F500E5E5B4 /* MockUserClient+RemoteIdentifier.swift in Sources */,
+				5E769C5621AD8ABD00785EB7 /* DismissalTests.swift in Sources */,
 				EF80466520D17130001A1C53 /* MessageDestructionTimeoutValueTests.swift in Sources */,
 				EF106E86204D8BDF00B9F0F6 /* MockDevice.swift in Sources */,
 				EFF92B6721A855050090DA66 /* String+PhoneNumberTests.swift in Sources */,
