@@ -21,26 +21,11 @@ import UIKit
 class DetailsCollectionViewCell: SeparatorCollectionViewCell {
 
     private let leftIconView = UIImageView()
-    public var rightAccessoryView: UIView? {
-        didSet {
-            guard let rightAccessoryView = rightAccessoryView else { return }
-
-            rightAccessoryView.translatesAutoresizingMaskIntoConstraints = false
-
-            if let imageView = rightAccessoryView as? UIImageView {
-                imageView.contentMode = .center
-            }
-
-            if !contentStackView.arrangedSubviews.contains(rightAccessoryView) {
-                contentStackView.insertArrangedSubview(rightAccessoryView, at: contentStackView.arrangedSubviews.count - 1)
-            }
-        }
-    }
     private let titleLabel = UILabel()
     private let statusLabel = UILabel()
 
     private var titleStackView: UIStackView!
-    private var contentStackView: UIStackView!
+    var contentStackView: UIStackView!
     private var leftIconContainer: UIView!
     private var contentLeadingConstraint: NSLayoutConstraint!
 
@@ -49,14 +34,6 @@ class DetailsCollectionViewCell: SeparatorCollectionViewCell {
     var icon: UIImage? {
         get { return leftIconView.image }
         set { updateIcon(newValue) }
-    }
-
-    var accessoryImage: UIImage? {
-        get {
-            guard let imageView = rightAccessoryView as? UIImageView else { return nil }
-            return imageView.image
-        }
-        set { updateAccessory(newValue) }
     }
 
     var title: String? {
@@ -109,10 +86,6 @@ class DetailsCollectionViewCell: SeparatorCollectionViewCell {
         titleStackView.translatesAutoresizingMaskIntoConstraints = false
 
         contentStackView = UIStackView(arrangedSubviews: [leftIconContainer, titleStackView, iconViewSpacer])
-
-        if let rightAccessoryView = rightAccessoryView {
-            contentStackView.insertArrangedSubview(rightAccessoryView, at: contentStackView.arrangedSubviews.count - 1)
-        }
         contentStackView.axis = .horizontal
         contentStackView.distribution = .fill
         contentStackView.alignment = .center
@@ -169,21 +142,6 @@ class DetailsCollectionViewCell: SeparatorCollectionViewCell {
             statusLabel.isHidden = false
         } else {
             statusLabel.isHidden = true
-        }
-    }
-
-    private func updateAccessory(_ newValue: UIImage?) {
-        if let value = newValue {
-            if rightAccessoryView == nil || !(rightAccessoryView is UIImageView) {
-                rightAccessoryView = UIImageView()
-            }
-
-            if let imageView = rightAccessoryView as? UIImageView {
-                imageView.image = value
-            }
-            rightAccessoryView?.isHidden = false
-        } else {
-            rightAccessoryView?.isHidden = true
         }
     }
     

@@ -20,23 +20,16 @@ protocol ConversationOptionsConfigurable {
     func configure(with conversation: ZMConversation)
 }
 
-// a protocol for the DetailsCollectionViewCell with a disclosureIndicator image as right accessory
-protocol DisclosureCell where Self: DetailsCollectionViewCell {
-    /// call this method in override func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant)
-    ///
-    /// - Parameter colorSchemeVariant: the colorSchemeVariant for the right icon image
-    func setAccessoryAsDisclosureIndicator(colorSchemeVariant: ColorSchemeVariant)
-}
 
-extension DisclosureCell where Self: DetailsCollectionViewCell {
-
-    func setAccessoryAsDisclosureIndicator(colorSchemeVariant: ColorSchemeVariant) {
-        let sectionTextColor = UIColor.from(scheme: .sectionText, variant: colorSchemeVariant)
-        accessoryImage = UIImage(for: .disclosureIndicator, iconSize: .like, color: sectionTextColor)
-    }
-}
-
-typealias ConversationOptionsCell = DetailsCollectionViewCell & ConversationOptionsConfigurable
+//typealias ConversationOptionsCell = DetailsCollectionViewCell & ConversationOptionsConfigurable
 
 // a ConversationOptionsCell that with a disclosure indicator on the right
-typealias GroupDetailsDisclosureOptionsCell = ConversationOptionsCell & DisclosureCell
+typealias GroupDetailsDisclosureOptionsCell = ConversationOptionsConfigurable & DisclosureCell
+
+class DisclosureCell: RightIconDetailsCell {
+    override func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
+        super.applyColorScheme(colorSchemeVariant)
+        let sectionTextColor = UIColor.from(scheme: .sectionText, variant: colorSchemeVariant)
+        accessory = UIImage(for: .disclosureIndicator, iconSize: .like, color: sectionTextColor)
+    }
+}

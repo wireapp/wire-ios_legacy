@@ -37,7 +37,6 @@ class GroupDetailsTimeoutOptionsCell: GroupDetailsDisclosureOptionsCell {
 
     override func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
         super.applyColorScheme(colorSchemeVariant)
-        setAccessoryAsDisclosureIndicator(colorSchemeVariant: colorSchemeVariant)
 
         icon = UIImage(for: .hourglass, iconSize: .tiny,
                        color: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant))

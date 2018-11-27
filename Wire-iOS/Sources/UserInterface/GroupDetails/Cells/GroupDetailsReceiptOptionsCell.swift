@@ -19,7 +19,7 @@
 import UIKit
 import WireExtensionComponents
 
-class GroupDetailsReceiptOptionsCell: ConversationOptionsCell {
+class GroupDetailsReceiptOptionsCell: DetailsCollectionViewCell & ConversationOptionsConfigurable {
 
     var isOn = false {
         didSet {
@@ -34,7 +34,8 @@ class GroupDetailsReceiptOptionsCell: ConversationOptionsCell {
         accessibilityIdentifier = "cell.groupdetails.receiptoptions"///TODO:
         title = "group_details.receipt_options_cell.title".localized
 
-        rightAccessoryView = toggle
+        contentStackView.insertArrangedSubview(toggle, at: contentStackView.arrangedSubviews.count - 1)
+
 
         toggle.addTarget(self, action: #selector(toggleChanged), for: .valueChanged)
     }
