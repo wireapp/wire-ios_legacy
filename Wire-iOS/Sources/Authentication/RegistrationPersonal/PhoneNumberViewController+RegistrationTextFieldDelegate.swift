@@ -55,12 +55,10 @@ extension PhoneNumberViewController: RegistrationTextFieldDelegate {
         let number = PhoneNumber(countryCode: country.e164.uintValue, numberWithoutCode: newString)
 
         switch number.validate() {
-
-            
-        case .containsInvalidCharacters, .tooLong:
-            return false
-        default:
-            break
+            case .containsInvalidCharacters, .tooLong:
+                return false
+            default:
+                break
         }
 
         let phoneNumber = NSString.phoneNumber(withE164: country.e164, number: newString)
