@@ -59,7 +59,7 @@ final class ConversationInputBarViewControllerAudioRecorderSnapshotTests: CoreDa
 
         sut = ConversationInputBarViewController(conversation: otherUserConversation)
         sut.audioSession = MockAudioSession()
-        sut.viewDidLoad()
+        sut.loadViewIfNeeded()
 
         sut.createAudioRecord()
     }
@@ -115,17 +115,20 @@ final class ConversationInputBarViewControllerTests: CoreDataSnapshotTestCase {
     
     var sut: ConversationInputBarViewController!
 
+    override func setUp() {
+        super.setUp()
+        sut = ConversationInputBarViewController(conversation: otherUserConversation)
+        sut.loadViewIfNeeded()
+
+        //        recordMode = true
+    }
+
     override func tearDown() {
         sut = nil
         super.tearDown()
     }
 
     func testNormalState(){
-        // GIVEN
-        sut = ConversationInputBarViewController(conversation: otherUserConversation)
-        sut.viewDidLoad()
-        
-        // THEN
         verifyInAllPhoneWidths(view: sut.view)
         verifyInAllTabletWidths(view: sut.view)
     }

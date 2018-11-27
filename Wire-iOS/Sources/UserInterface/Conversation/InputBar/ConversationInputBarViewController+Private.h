@@ -56,12 +56,36 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) IconButton *sendButton;
 @property (nonatomic) IconButton *hourglassButton;
 @property (nonatomic) IconButton *videoButton;
+@property (nonatomic) IconButton *audioButton;
+@property (nonatomic) IconButton *photoButton;
+@property (nonatomic) IconButton *uploadFileButton;
+@property (nonatomic) IconButton *sketchButton;
+@property (nonatomic) IconButton *pingButton;
+@property (nonatomic) IconButton *locationButton;
+@property (nonatomic) IconButton *ephemeralIndicatorButton;
+@property (nonatomic) IconButton *emojiButton;
+@property (nonatomic) IconButton *markdownButton;
+@property (nonatomic) IconButton *gifButton;
+@property (nonatomic) IconButton *mentionButton;
 
 @property (nonatomic) BOOL inRotation;
 
 // PopoverPresenter
 @property (nonatomic, nullable, weak) UIPopoverPresentationController *presentedPopover;
 @property (nonatomic, nullable, weak) UIView *popoverPointToView;
+
+@property (nonatomic) UIGestureRecognizer *singleTapGestureRecognizer;
+
+@property (nonatomic) InputBar *inputBar;
+@property (nonatomic) ZMConversation *conversation;
+
+@property (nonatomic) NSSet *typingUsers;
+@property (nonatomic) id conversationObserverToken;
+@property (nonatomic) id userObserverToken;
+
+@property (nonatomic) id typingObserverToken;
+
+@property (nonatomic) UINotificationFeedbackGenerator *notificationFeedbackGenerator;
 
 - (void)createAudioRecordViewController;
 - (void)updateRightAccessoryView;

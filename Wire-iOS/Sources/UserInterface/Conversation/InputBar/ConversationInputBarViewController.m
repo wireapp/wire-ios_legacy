@@ -101,35 +101,10 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @interface ConversationInputBarViewController ()
 
-@property (nonatomic) IconButton *audioButton;
-@property (nonatomic) IconButton *photoButton;
-@property (nonatomic) IconButton *uploadFileButton;
-@property (nonatomic) IconButton *sketchButton;
-@property (nonatomic) IconButton *pingButton;
-@property (nonatomic) IconButton *locationButton;
-@property (nonatomic) IconButton *ephemeralIndicatorButton;
-@property (nonatomic) IconButton *emojiButton;
-@property (nonatomic) IconButton *markdownButton;
-@property (nonatomic) IconButton *gifButton;
-@property (nonatomic) IconButton *mentionButton;
-
-@property (nonatomic) UIGestureRecognizer *singleTapGestureRecognizer;
-
-@property (nonatomic) UserImageView *authorImageView;
 @property (nonatomic) TypingIndicatorView *typingIndicatorView;
-
-@property (nonatomic) InputBar *inputBar;
-@property (nonatomic) ZMConversation *conversation;
-
-@property (nonatomic) NSSet *typingUsers;
-@property (nonatomic) id conversationObserverToken;
-@property (nonatomic) id userObserverToken;
-
+@property (nonatomic) UserImageView *authorImageView;
 @property (nonatomic) UIViewController *inputController;
 
-@property (nonatomic) id typingObserverToken;
-
-@property (nonatomic) UINotificationFeedbackGenerator *notificationFeedbackGenerator;
 @end
 
 
@@ -190,9 +165,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     
     [self setupCallStateObserver];
     [self setupAppLockedObserver];
-    
-    [self createSingleTapGestureRecognizer];
-    
+
     [self createInputBar]; // Creates all input bar buttons
     [self createSendButton];
     [self createEphemeralIndicatorButton];
@@ -240,6 +213,8 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
     [self setInputLanguage];
     [self setupStyle];
+
+    [self createSingleTapGestureRecognizer];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -267,59 +242,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 {
     [super viewDidLayoutSubviews];
     self.ephemeralIndicatorButton.layer.cornerRadius = CGRectGetWidth(self.ephemeralIndicatorButton.bounds) / 2;
-}
-
-- (void)createInputBar
-{
-    self.audioButton = [[IconButton alloc] init];
-    self.audioButton.hitAreaPadding = CGSizeZero;
-    self.audioButton.accessibilityIdentifier = @"audioButton";
-    [self.audioButton setIconColor:[UIColor accentColor] forState:UIControlStateSelected];
-
-    self.videoButton = [[IconButton alloc] init];
-    self.videoButton.hitAreaPadding = CGSizeZero;
-    self.videoButton.accessibilityIdentifier = @"videoButton";
-    
-    self.photoButton = [[IconButton alloc] init];
-    self.photoButton.hitAreaPadding = CGSizeZero;
-    self.photoButton.accessibilityIdentifier = @"photoButton";
-    [self.photoButton setIconColor:[UIColor accentColor] forState:UIControlStateSelected];
-
-    self.uploadFileButton = [[IconButton alloc] init];
-    self.uploadFileButton.hitAreaPadding = CGSizeZero;
-    self.uploadFileButton.accessibilityIdentifier = @"uploadFileButton";
-    
-    self.sketchButton = [[IconButton alloc] init];
-    self.sketchButton.hitAreaPadding = CGSizeZero;
-    self.sketchButton.accessibilityIdentifier = @"sketchButton";
-    
-    self.pingButton = [[IconButton alloc] init];
-    self.pingButton.hitAreaPadding = CGSizeZero;
-    self.pingButton.accessibilityIdentifier = @"pingButton";
-    
-    self.locationButton = [[IconButton alloc] init];
-    self.locationButton.hitAreaPadding = CGSizeZero;
-    self.locationButton.accessibilityIdentifier = @"locationButton";
-    
-    self.gifButton = [[IconButton alloc] init];
-    self.gifButton.hitAreaPadding = CGSizeZero;
-    self.gifButton.accessibilityIdentifier = @"gifButton";
-
-    self.mentionButton = [[IconButton alloc] init];
-    self.mentionButton.hitAreaPadding = CGSizeZero;
-    self.mentionButton.accessibilityIdentifier = @"mentionButton";
-
-    self.inputBar = [[InputBar alloc] initWithButtons:@[self.photoButton, self.mentionButton, self.sketchButton, self.gifButton, self.audioButton, self.pingButton, self.uploadFileButton, self.locationButton, self.videoButton]];
-    self.inputBar.translatesAutoresizingMaskIntoConstraints = NO;
-    self.inputBar.textView.delegate = self;
-    [self registerForTextFieldSelectionChange];
-    
-    [self.view addSubview:self.inputBar];
-    [self.inputBar autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeBottom];
-    [NSLayoutConstraint autoSetPriority:UILayoutPriorityDefaultLow forConstraints:^{
-        [self.inputBar autoPinEdgeToSuperviewEdge:ALEdgeBottom];
-    }];
-    self.inputBar.editingView.delegate = self;
 }
 
 - (void)createSingleTapGestureRecognizer
