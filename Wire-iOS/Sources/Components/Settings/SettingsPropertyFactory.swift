@@ -334,6 +334,18 @@ class SettingsPropertyFactory {
                         Settings.shared().disableCallKit = disabled.boolValue
                     }
             })
+        case .enableReadReceipts:
+            return SettingsBlockProperty(
+                propertyName: propertyName,
+                getAction: { _ in return SettingsPropertyValue(self.selfUser?.enableReadReceipts ?? false) },
+                setAction: { _, value in
+                    if case .number(let enabled) = value,
+                        let userSession = self.userSession as? ZMUserSession {
+                            userSession.performChanges {
+                                self.selfUser?.enableReadReceipts = enabled.boolValue
+                            }
+                        }
+            })
             
         default:
             if let userDefaultsKey = type(of: self).userDefaultsPropertiesToKeys[propertyName] {
