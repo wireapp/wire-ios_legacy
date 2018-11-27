@@ -20,7 +20,7 @@ import Foundation
 
 extension ProfileDetailsViewController {
     @objc func setupStyle() {
-        remainingTimeLabel.textColor = .textDimmed
+        remainingTimeLabel.textColor = .from(scheme: .textDimmed)
         remainingTimeLabel.font = .mediumSemiboldFont
     }
 

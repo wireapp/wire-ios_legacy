@@ -33,16 +33,43 @@ import Cartography
 
 @objc protocol UserList {
     var users: [UserType] { get set }
+    var selectedUser: UserType? { get }
+
+    func selectPreviousUser()
+    func selectNextUser()
 }
 
 class UserSearchResultsViewController: UIViewController, KeyboardCollapseObserver {
 
     private let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
-    private var searchResults: [UserType] = []
+    private var searchResults: [UserType] = [] {
+        didSet {
+            if searchResults.count > 0 {
+                collectionViewSelectedIndex = searchResults.count - 1
+            } else {
+                collectionViewSelectedIndex = .none
+            }
+        }
+    }
     private var query: String = ""
     private var collectionViewHeight: NSLayoutConstraint?
     private let rowHeight: CGFloat = 56.0
     private var isKeyboardCollapsedFirstCalled = true
+
+    private var _collectionViewSelectedIndex : Int? = .none
+    private var collectionViewSelectedIndex: Int? {
+        get{
+            return _collectionViewSelectedIndex
+        }
+        set{
+            if let newValue = newValue {
+                self._collectionViewSelectedIndex = min(searchResults.count - 1, max(0, newValue))
+            } else {
+                _collectionViewSelectedIndex = newValue
+            }
+        }
+    }
+
     public private(set) var isKeyboardCollapsed: Bool = true {
         didSet {
             guard oldValue != isKeyboardCollapsed || isKeyboardCollapsedFirstCalled else { return }
@@ -86,7 +113,7 @@ class UserSearchResultsViewController: UIViewController, KeyboardCollapseObserve
         collectionView.delegate = self
         collectionView.register(UserCell.self, forCellWithReuseIdentifier: UserCell.reuseIdentifier)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.backgroundColor = UIColor(scheme: .barBackground)
+        collectionView.backgroundColor = UIColor.from(scheme: .barBackground)
         
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -143,7 +170,7 @@ class UserSearchResultsViewController: UIViewController, KeyboardCollapseObserve
     }
     
     func show() {
-        self.view.isHidden = false
+        view.isHidden = false
     }
     
     @objc dynamic func keyboardWillChangeFrame(_ notification: Notification) {
@@ -167,10 +194,46 @@ class UserSearchResultsViewController: UIViewController, KeyboardCollapseObserve
 extension UserSearchResultsViewController: Dismissable {
     func dismiss() {
         self.view.isHidden = true
+        collectionViewSelectedIndex = .none
     }
 }
 
 extension UserSearchResultsViewController: UserList {
+    var selectedUser: UserType? {
+
+        guard let collectionViewSelectedIndex = collectionViewSelectedIndex else {
+            return .none
+        }
+
+        let bestSuggestion = searchResults[collectionViewSelectedIndex]
+
+        return bestSuggestion
+    }
+
+    func selectNextUser() {
+        guard let collectionViewSelectedIndex = collectionViewSelectedIndex else { return }
+
+        self.collectionViewSelectedIndex = collectionViewSelectedIndex + 1
+
+        updateHighlightedItem()
+    }
+
+    func selectPreviousUser() {
+        guard let collectionViewSelectedIndex = collectionViewSelectedIndex else { return }
+
+        self.collectionViewSelectedIndex = collectionViewSelectedIndex - 1
+
+        updateHighlightedItem()
+    }
+
+    func updateHighlightedItem() {
+        collectionView.reloadData()
+
+        guard let collectionViewSelectedIndex = collectionViewSelectedIndex else { return }
+
+        collectionView.scrollToItem(at: IndexPath(item: collectionViewSelectedIndex, section: 0), at: .centeredVertically, animated: true)
+    }
+
     var users: [UserType] {
         set {
             reloadTable(with: newValue.reversed())
@@ -208,14 +271,14 @@ extension UserSearchResultsViewController: UICollectionViewDataSource {
         cell.avatarSpacing = UIView.conversationLayoutMargins.left
 
         // hightlight the lowest cell if keyboard is collapsed
-        if isKeyboardCollapsed {
-            if indexPath.item == searchResults.count - 1 {
-                cell.backgroundColor = .contentBackground
+        if isKeyboardCollapsed || UIDevice.current.userInterfaceIdiom == .pad {
+            if indexPath.item == collectionViewSelectedIndex {
+                cell.backgroundColor = .from(scheme: .cellHighlight)
             } else {
-                cell.backgroundColor = .background
+                cell.backgroundColor = .from(scheme: .background)
             }
         } else {
-            cell.backgroundColor = .background
+            cell.backgroundColor = .from(scheme: .background)
         }
 
         return cell

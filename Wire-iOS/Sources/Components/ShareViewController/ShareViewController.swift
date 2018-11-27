@@ -77,6 +77,12 @@ public class ShareViewController<D: ShareDestination, S: Shareable>: UIViewContr
         super.init(nibName: nil, bundle: nil)
         self.transitioningDelegate = self
         
+        let messagePreviewAppearance = MessagePreviewView.appearance(whenContainedInInstancesOf: [ShareViewController.self])
+        messagePreviewAppearance.colorSchemeVariant = .light
+
+        let messageThumbnailPreviewAppearance = MessageThumbnailPreviewView.appearance(whenContainedInInstancesOf: [ShareViewController.self])
+        messageThumbnailPreviewAppearance.colorSchemeVariant = .light
+        
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(keyboardFrameWillChange(notification:)),
                                                name: UIResponder.keyboardWillChangeFrameNotification,
@@ -102,7 +108,7 @@ public class ShareViewController<D: ShareDestination, S: Shareable>: UIViewContr
     let tokenField = TokenField()
     let bottomSeparatorLine: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor(scheme: .separator)
+        view.backgroundColor = UIColor.from(scheme: .separator)
         return view
     }()
     

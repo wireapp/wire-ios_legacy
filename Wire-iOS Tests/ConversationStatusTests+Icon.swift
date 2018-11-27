@@ -76,7 +76,7 @@ class ConversationStatusTests_Icon: CoreDataSnapshotTestCase {
 
     func testThatItShowsSilencedIconWithMessageWhenMentionsOnly() {
         // given
-        let sut = conversationWithUnread(.text, muted: .nonMentions)
+        let sut = conversationWithUnread(.text, muted: .regular)
 
         // when
         let icon = sut.status.icon(for: sut)
@@ -87,7 +87,7 @@ class ConversationStatusTests_Icon: CoreDataSnapshotTestCase {
 
     func testThatItShowsMentionIconWithMentionWhenMentionsOnly() {
         // given
-        let sut = conversationWithUnread(.mention, muted: .nonMentions)
+        let sut = conversationWithUnread(.mention, muted: .regular)
 
         // when
         let icon = sut.status.icon(for: sut)

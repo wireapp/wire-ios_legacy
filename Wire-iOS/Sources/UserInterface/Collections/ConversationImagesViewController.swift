@@ -51,15 +51,21 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
     let overlay = FeedbackOverlayView()
     let separator: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor(scheme: .separator)
+        view.backgroundColor = UIColor.from(scheme: .separator)
         return view
     }()
     fileprivate let likeButton = IconButton(style: .default)
     
     internal let inverse: Bool
-    
-    public weak var messageActionDelegate: MessageActionResponder? = .none
-    
+
+    public var currentActionController: ConversationCellActionController?
+
+    public weak var messageActionDelegate: MessageActionResponder? = .none {
+        didSet {
+            self.updateActionControllerForMessage()
+        }
+    }
+
     public var snapshotBackgroundView: UIView? = .none
     
     fileprivate var imageMessages: [ZMConversationMessage] = []
@@ -68,6 +74,7 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
         didSet {
             self.updateButtonsForMessage()
             self.createNavigationTitle()
+            self.updateActionControllerForMessage()
         }
     }
 
@@ -129,7 +136,7 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
             let navigationBar = UINavigationBar()
             navigationBar.items = [navigationItem]
             navigationBar.isTranslucent = false
-            navigationBar.barTintColor = UIColor(scheme: .barBackground)
+            navigationBar.barTintColor = UIColor.from(scheme: .barBackground)
 
             navBarContainer = UINavigationBarContainer(navigationBar)
         }
@@ -171,7 +178,7 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
 
         updateBarsForPreview()
 
-        view.backgroundColor = .background
+        view.backgroundColor = .from(scheme: .background)
     }
     
     private func createPageController() {
@@ -280,8 +287,8 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
 
         self.buttonsBar = InputBarButtonsView(buttons: buttons)
         self.buttonsBar.clipsToBounds = true
-        self.buttonsBar.expandRowButton.setIconColor(UIColor(scheme: .textForeground), for: .normal)
-        self.buttonsBar.backgroundColor = UIColor(scheme: .barBackground)
+        self.buttonsBar.expandRowButton.setIconColor(UIColor.from(scheme: .textForeground), for: .normal)
+        self.buttonsBar.backgroundColor = UIColor.from(scheme: .barBackground)
         self.view.addSubview(self.buttonsBar)
         
         self.updateButtonsForMessage()
@@ -329,6 +336,10 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
     
     private func updateButtonsForMessage() {
         self.deleteButton.isHidden = !currentMessage.canBeDeleted
+    }
+
+    private func updateActionControllerForMessage() {
+        currentActionController = ConversationCellActionController(responder: messageActionDelegate, message: currentMessage)
     }
     
     var currentController: FullscreenImageViewController? {
@@ -516,36 +527,7 @@ fileprivate extension UIPreviewAction {
 extension ConversationImagesViewController {
 
     override var previewActionItems: [UIPreviewActionItem] {
-        let deleteAction = UIPreviewAction(
-            titleKey: "content.message.delete_ellipsis",
-            handler: { self.deleteCurrent(nil) }
-        )
-
-        if !currentMessage.isEphemeral {
-            let copyAction = UIPreviewAction(
-                titleKey: "content.message.copy",
-                handler: { self.copyCurrent(nil) }
-            )
-
-            let likeAction = UIPreviewAction(
-                titleKey: "content.message.\(currentMessage.liked ? "unlike" : "like")",
-                handler: likeCurrent
-            )
-
-            let saveAction = UIPreviewAction(
-                titleKey: "content.message.save",
-                handler: { self.saveCurrent(nil) }
-            )
-
-            let shareAction = UIPreviewAction(
-                titleKey: "content.message.forward",
-                handler: { self.shareCurrent(nil) }
-            )
-
-            return [copyAction, likeAction, saveAction, shareAction, deleteAction]
-        } else {
-            return [deleteAction]
-        }
+        return currentActionController?.makePreviewActions() ?? []
     }
 
 }

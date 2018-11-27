@@ -82,7 +82,7 @@ final class MentionTextAttachment: NSTextAttachment {
     
     private class func attributedMentionString(user: UserType, font: UIFont, color: UIColor) -> NSAttributedString {
         // Replace all spaces with non-breaking space to avoid wrapping when displaying mention
-        let nameWithNonBreakingSpaces = user.name?.replacingOccurrences(of: " ", with: " ")
+        let nameWithNonBreakingSpaces = user.name?.replacingOccurrences(of: String.breakingSpace, with: String.nonBreakingSpace)
         return "@" + (nameWithNonBreakingSpaces ?? "") && font && color && [.paragraphStyle : paragraphStyle]
     }
     

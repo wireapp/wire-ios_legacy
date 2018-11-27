@@ -20,7 +20,7 @@ import Foundation
 
 class ConversationNotificationOptionsViewController: UIViewController {
     
-    private var items: [MutedMessageTypes] = [.none, .nonMentions, .all]
+    private var items: [MutedMessageTypes] = [.none, .regular, .all]
     
     private let conversation: ZMConversation
     private let userSession: ZMUserSession
@@ -65,7 +65,7 @@ class ConversationNotificationOptionsViewController: UIViewController {
         
         collectionView.dataSource = self
         collectionView.delegate = self
-        collectionView.backgroundColor = UIColor(scheme: .contentBackground)
+        collectionView.backgroundColor = UIColor.from(scheme: .contentBackground)
         collectionView.alwaysBounceVertical = true
         
         collectionViewLayout.minimumLineSpacing = 0
@@ -166,7 +166,7 @@ extension MutedMessageTypes {
         let base = "meta.menu.configure_notification.button_"
         switch self {
         case .none:         return base + "everything"
-        case .nonMentions:  return base + "mentions"
+        case .regular:      return base + "mentions_and_replies"
         case .all:          return base + "nothing"
         default:            return nil
         }

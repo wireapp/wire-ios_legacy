@@ -25,7 +25,7 @@
 #import <CommonCrypto/CommonCrypto.h>
 #import "Settings.h"
 #import "AppDelegate.h"
-#import "Message+Private.h"
+#import "Message+UI.h"
 
 // UI
 @import WireExtensionComponents;
@@ -35,14 +35,13 @@
 #import "ParticipantDeviceHeaderView+Internal.h"
 #import "ConversationCell.h"
 #import "ConversationCell+Private.h"
-#import "TextMessageCell.h"
-#import "TextMessageCell+Internal.h"
 #import "ImageMessageCell.h"
 #import "ImageMessageCell+Internal.h"
 #import "UIViewController+Errors.h"
 #import "ConversationViewController.h"
 #import "ConversationViewController+Private.h"
 #import "ConversationListCell.h"
+#import "ConversationListCell+Internal.h"
 #import "ConversationListItemView.h"
 #import "ConversationListItemView+Internal.h"
 #import "ResizingTextView.h"
@@ -79,6 +78,10 @@
 #import "Button.h"
 #import "ButtonWithLargerHitArea.h"
 #import "UITableView+RowCount.h"
+#import "AnimatedListMenuView.h"
+#import "AnimatedListMenuView+Internal.h"
+#import "SwipeMenuCollectionCell.h"
+#import "SwipeMenuCollectionCell+Internal.h"
 
 // View Controllers
 #import "ProfileDevicesViewController.h"
@@ -163,7 +166,6 @@
 #import "UIImage+ZetaIconsNeue.h"
 #import "UIColor+WAZExtensions.h"
 #import "AccentColorChangeHandler.h"
-#import "UIColor+WR_ColorScheme.h"
 #import "UIApplication+Permissions.h"
 #import "UIView+WR_ExtendedBlockAnimations.h"
 #import "UIView+Zeta.h"
@@ -188,11 +190,14 @@
 #import "UIColor+Mixing.h"
 #import "MessageType.h"
 #import "NSString+EmoticonSubstitution.h"
+#import "ZMConversationMessageWindow+Formatting.h"
 
 // Audio player
 #import "AudioTrack.h"
 #import "AudioTrackPlayer.h"
 #import "MediaPlaybackManager.h"
+#import "AudioTrackViewController.h"
+#import "AudioPlaylistViewController.h"
 
 // Media
 #import "MediaPreviewData.h"

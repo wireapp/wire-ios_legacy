@@ -29,12 +29,12 @@ import Cartography
     public let addressLabel: UILabel = {
         let label = UILabel()
         label.font = .normalFont
-        label.textColor = .textForeground
+        label.textColor = .from(scheme: .textForeground)
         return label
     }()
     public let separatorView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor.separator
+        view.backgroundColor = UIColor.from(scheme: .separator)
         return view
     }()
     fileprivate let containerView = UIView()
@@ -52,7 +52,7 @@ import Cartography
         configureViews()
         createConstraints()
 
-        view.backgroundColor = .background
+        view.backgroundColor = .from(scheme: .background)
     }
     
     fileprivate func configureViews() {

@@ -19,13 +19,14 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class Mention;
 @class AudioRecordKeyboardViewController;
 @class CameraKeyboardViewController;
 @class ConversationInputBarSendController;
 @class EmojiKeyboardViewController;
 @class EphemeralKeyboardViewController;
 @class ConversationInputBarButtonState;
+@class ZMClientMessage;
+@class ReplyComposingView;
 
 @interface ConversationInputBarViewController ()
 @property (nonatomic, nullable) AudioRecordViewController *audioRecordViewController;
@@ -36,7 +37,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, nullable) EmojiKeyboardViewController *emojiKeyboardViewController;
 @property (nonatomic, nullable) EphemeralKeyboardViewController *ephemeralKeyboardViewController;
 @property (nonatomic, nonnull)  ConversationInputBarSendController *sendController;
-@property (nonatomic, nullable) id <ZMConversationMessage> editingMessage;
+@property (nonatomic, nullable) id<ZMConversationMessage> editingMessage;
+@property (nonatomic, nullable) id<ZMConversationMessage> quotedMessage;
+@property (nonatomic, nullable) ReplyComposingView *replyComposingView;
 
 @property (nonatomic) UIImpactFeedbackGenerator *impactFeedbackGenerator;
 
@@ -66,6 +69,12 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)updateAccessoryViews;
 - (void)updateNewButtonTitleLabel;
 - (void)clearInputBar;
+
+- (void)shiftReturnPressed;
+- (void)commandReturnPressed;
+- (void)upArrowPressed;
+- (void)escapePressed;
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -120,21 +120,21 @@ private let zmLog = ZMSLog(tag: "UI")
         self.recordButton.setIcon(.recordDot, with: .tiny, for: [])
         self.recordButton.accessibilityLabel = "record"
         self.recordButton.addTarget(self, action: #selector(recordButtonPressed(_:)), for: .touchUpInside)
-        self.recordButton.setBackgroundImageColor(UIColor(for: .vividRed), for: .normal)
+        self.recordButton.setBackgroundImageColor(.vividRed, for: .normal)
         self.recordButton.setIconColor(UIColor.white, for: [])
         self.recordButton.layer.masksToBounds = true
         
         self.stopRecordButton.setIcon(.stopRecording, with: .tiny, for: [])
         self.stopRecordButton.accessibilityLabel = "stopRecording"
         self.stopRecordButton.addTarget(self, action: #selector(stopRecordButtonPressed(_:)), for: .touchUpInside)
-        self.stopRecordButton.setBackgroundImageColor(UIColor(for: .vividRed), for: .normal)
+        self.stopRecordButton.setBackgroundImageColor(.vividRed, for: .normal)
         self.stopRecordButton.setIconColor(UIColor.white, for: [])
         self.stopRecordButton.layer.masksToBounds = true
         
         self.confirmButton.setIcon(.checkmark, with: .tiny, for: [])
         self.confirmButton.accessibilityLabel = "confirmRecording"
         self.confirmButton.addTarget(self, action: #selector(confirmButtonPressed(_:)), for: .touchUpInside)
-        self.confirmButton.setBackgroundImageColor(UIColor(for: .strongLimeGreen), for: .normal)
+        self.confirmButton.setBackgroundImageColor(.strongLimeGreen, for: .normal)
         self.confirmButton.setIconColor(UIColor.white, for: [])
         self.confirmButton.layer.masksToBounds = true
         

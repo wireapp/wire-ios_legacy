@@ -57,7 +57,7 @@ final class SectionFooter: UICollectionReusableView, Themeable {
     }
     
     func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
-        titleLabel.textColor = UIColor(scheme: .textDimmed, variant: colorSchemeVariant)
+        titleLabel.textColor = UIColor.from(scheme: .textDimmed, variant: colorSchemeVariant)
     }
     
 }

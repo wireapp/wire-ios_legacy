@@ -34,13 +34,28 @@ class ShareViewControllerTests: CoreDataSnapshotTestCase {
     override func tearDown() {
         self.groupConversation = nil
         sut = nil
+        disableDarkColorScheme()
         super.tearDown()
     }
     
     override var needsCaches: Bool {
         return true
     }
-    
+
+    func activateDarkColorScheme() {
+        ColorScheme.default.variant = .dark
+        NSAttributedString.invalidateMarkdownStyle()
+        NSAttributedString.invalidateParagraphStyle()
+
+        snapshotBackgroundColor = UIColor.from(scheme: .contentBackground)
+    }
+
+    func disableDarkColorScheme() {
+        ColorScheme.default.variant = .light
+        NSAttributedString.invalidateMarkdownStyle()
+        NSAttributedString.invalidateParagraphStyle()
+    }
+
     func testThatItRendersCorrectlyShareViewController_OneLineTextMessage() {
         groupConversation.append(text: "This is a text message.")
         makeTestForShareViewController()
@@ -51,9 +66,15 @@ class ShareViewControllerTests: CoreDataSnapshotTestCase {
         makeTestForShareViewController()
     }
     
-    func DISABLE_testThatItRendersCorrectlyShareViewController_LocationMessage() {
+    func testThatItRendersCorrectlyShareViewController_LocationMessage() {
         let location = LocationData.locationData(withLatitude: 43.94, longitude: 12.46, name: "Stranger Place", zoomLevel: 0)
         groupConversation.append(location: location)
+        makeTestForShareViewController()
+    }
+    
+    func testThatItRendersCorrectlyShareViewController_FileMessage() {
+        let file = ZMFileMetadata(fileURL: urlForResource(inTestBundleNamed: "huge.pdf"))
+        groupConversation.append(file: file)
         makeTestForShareViewController()
     }
 
@@ -80,6 +101,78 @@ class ShareViewControllerTests: CoreDataSnapshotTestCase {
         XCTAssertTrue(waitForGroupsToBeEmpty([defaultImageCache.dispatchGroup]))
         
         self.verifyInAllDeviceSizes(view: sut.view)
+    }
+    
+    func testThatItRendersCorrectlyShareViewController_DarkMode() {
+        activateDarkColorScheme()
+        groupConversation.append(text: "This is a text message.")
+        makeTestForShareViewController()
+    }
+
+    func testThatItRendersCorrectlyShareViewController_Image_DarkMode() {
+        activateDarkColorScheme()
+        let img = urlForResource(inTestBundleNamed: "unsplash_matterhorn.jpg")
+        self.groupConversation.append(imageAtURL: img)
+
+        groupConversation.internalAddParticipants(Set([self.createUser(name: "John Appleseed")]))
+        let oneToOneConversation = self.createGroupConversation()
+
+        guard let message = groupConversation.messages.firstObject as? ZMMessage else {
+            XCTFail("Cannot add test message to the group conversation")
+            return
+        }
+
+        sut = ShareViewController<ZMConversation, ZMMessage>(
+            shareable: message,
+            destinations: [groupConversation, oneToOneConversation],
+            showPreview: true
+        )
+
+        _ = sut.view // make sure view is loaded
+
+        XCTAssertTrue(waitForGroupsToBeEmpty([defaultImageCache.dispatchGroup]))
+        self.verifyInAllDeviceSizes(view: sut.view)
+    }
+
+    func testThatItRendersCorrectlyShareViewController_Video_DarkMode() {
+        activateDarkColorScheme()
+        let videoURL = urlForResource(inTestBundleNamed: "video.mp4")
+        let thumbnail = image(inTestBundleNamed: "unsplash_matterhorn.jpg").jpegData(compressionQuality: 0)
+        let file = ZMFileMetadata(fileURL: videoURL, thumbnail: thumbnail)
+        self.groupConversation.append(file: file)
+
+        groupConversation.internalAddParticipants(Set([self.createUser(name: "John Appleseed")]))
+        let oneToOneConversation = self.createGroupConversation()
+
+        guard let message = groupConversation.messages.firstObject as? ZMMessage else {
+            XCTFail("Cannot add test message to the group conversation")
+            return
+        }
+
+        sut = ShareViewController<ZMConversation, ZMMessage>(
+            shareable: message,
+            destinations: [groupConversation, oneToOneConversation],
+            showPreview: true
+        )
+
+        _ = sut.view // make sure view is loaded
+
+        XCTAssertTrue(waitForGroupsToBeEmpty([defaultImageCache.dispatchGroup]))
+        self.verifyInAllDeviceSizes(view: sut.view)
+    }
+
+    func testThatItRendersCorrectlyShareViewController_File_DarkMode() {
+        activateDarkColorScheme()
+        let file = ZMFileMetadata(fileURL: urlForResource(inTestBundleNamed: "huge.pdf"))
+        groupConversation.append(file: file)
+        makeTestForShareViewController()
+    }
+
+    func testThatItRendersCorrectlyShareViewController_Location_DarkMode() {
+        activateDarkColorScheme()
+        let location = LocationData.locationData(withLatitude: 43.94, longitude: 12.46, name: "Stranger Place", zoomLevel: 0)
+        groupConversation.append(location: location)
+        makeTestForShareViewController()
     }
     
     func makeTestForShareViewController() {

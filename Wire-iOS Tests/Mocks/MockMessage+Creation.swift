@@ -48,8 +48,9 @@ final class MockMessageFactory: NSObject {
 
     class func imageMessage(with image: UIImage?) -> MockMessage? {
         let imageData = MockImageMessageData()
-        if let data = image?.data() {
+        if let image = image, let data = image.data() {
             imageData.mockImageData = data
+            imageData.mockOriginalSize = image.size
         }
 
         let message: MockMessage? = self.imageMessage()
@@ -100,7 +101,7 @@ final class MockMessageFactory: NSObject {
 
         mockSystemMessageData.clients = Set(userClients)
 
-        message.systemMessageData = mockSystemMessageData
+        message.backingSystemMessageData = mockSystemMessageData
         return message
     }
 

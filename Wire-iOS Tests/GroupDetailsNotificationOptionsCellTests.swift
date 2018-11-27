@@ -45,7 +45,7 @@ class GroupDetailsNotificationOptionsCellTests: CoreDataSnapshotTestCase {
     }
     
     func testThatItDisplaysCell_NonMentionsMuted() {
-        update(.nonMentions)
+        update(.regular)
         verify(view: cell)
     }
     

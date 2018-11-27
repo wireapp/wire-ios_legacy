@@ -39,15 +39,22 @@ static NSString *const ConversationUnknownMessageCellId     = @"conversationUnkn
 static NSString *const ConversationMessageTimerUpdateCellId = @"ConversationMessageTimerUpdateCellId";
 
 @class ConversationCell;
+@class UpsideDownTableView;
+@class ConversationCellActionController;
+@class ConversationMessageSectionController;
 
-@interface ConversationMessageWindowTableViewAdapter () <ZMConversationMessageWindowObserver>
+@interface ConversationMessageWindowTableViewAdapter ()
 
 - (void)configureConversationCell:(ConversationCell *)conversationCell withMessage:(nullable id<ZMConversationMessage>)message;
 
-@property (nonatomic) UITableView * _Nonnull tableView;
+@property (nonatomic) UpsideDownTableView * _Nonnull tableView;
 @property (nonatomic) ZMConversationMessageWindow * _Nonnull messageWindow;
 @property (nonatomic) id _Nonnull messageWindowObserverToken;
 @property (nonatomic) BOOL expandingWindow;
+
+@property (nonatomic, strong) NSMutableArray<Class> *registeredCells;
+@property (nonatomic, strong) NSMutableDictionary<NSString *, ConversationMessageSectionController *> *sectionControllers;
+@property (nonatomic, strong) NSMutableDictionary<NSString *, ConversationCellActionController *> *actionControllers;
 
 NS_ASSUME_NONNULL_END
 

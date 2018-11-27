@@ -105,8 +105,8 @@ import Ziphy
     }
 
     private func applyStyle() {
-        collectionView?.backgroundColor = UIColor(scheme: .background)
-        noResultsLabel.textColor = UIColor(scheme: .textPlaceholder)
+        collectionView?.backgroundColor = UIColor.from(scheme: .background)
+        noResultsLabel.textColor = UIColor.from(scheme: .textPlaceholder)
         noResultsLabel.font = UIFont.smallLightFont
     }
 
@@ -139,9 +139,9 @@ import Ziphy
         navigationController.navigationBar.backIndicatorTransitionMaskImage = backButtonImage
 
         navigationController.navigationBar.backItem?.backBarButtonItem = UIBarButtonItem(title: " ", style: .plain, target: nil, action: nil)
-        navigationController.navigationBar.tintColor = UIColor(scheme: .textForeground)
+        navigationController.navigationBar.tintColor = UIColor.from(scheme: .textForeground)
         navigationController.navigationBar.titleTextAttributes = DefaultNavigationBar.titleTextAttributes(for: ColorScheme.default.variant)
-        navigationController.navigationBar.barTintColor = UIColor(scheme: .background)
+        navigationController.navigationBar.barTintColor = UIColor.from(scheme: .background)
         navigationController.navigationBar.isTranslucent = false
 
         return navigationController
@@ -167,7 +167,7 @@ import Ziphy
 
         cell.ziph = ziph
         cell.representation = representation
-        cell.backgroundColor = UIColor(for: ZMUser.pickRandomAccentColor())
+        cell.backgroundColor = UIColor(fromZMAccentColor: ZMUser.pickRandomAccentColor())
         cell.isAccessibilityElement = true
         cell.accessibilityTraits.insert(.image)
         cell.accessibilityLabel = ziph.title

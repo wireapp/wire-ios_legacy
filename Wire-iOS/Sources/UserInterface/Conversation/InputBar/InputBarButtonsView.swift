@@ -85,7 +85,7 @@ public final class InputBarButtonsView: UIView {
         buttonOuterContainer.clipsToBounds = true
         addSubview(buttonOuterContainer)
         addSubview(expandRowButton)
-        self.backgroundColor = UIColor(scheme: .barBackground)
+        self.backgroundColor = UIColor.from(scheme: .barBackground)
     }
     
     func createConstraints() {

@@ -54,13 +54,13 @@ class CheckmarkCell: DetailsCollectionViewCell {
         
         switch (colorSchemeVariant, disabled) {
         case (.light, false):
-            color = UIColor(scheme: .textForeground, variant: colorSchemeVariant)
+            color = UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)
         case (.light, true):
-            color = UIColor(scheme: .textPlaceholder, variant: colorSchemeVariant)
+            color = UIColor.from(scheme: .textPlaceholder, variant: colorSchemeVariant)
         case (.dark, false):
             color = .white
         case (.dark, true):
-            color = UIColor(scheme: .textPlaceholder, variant: colorSchemeVariant)
+            color = UIColor.from(scheme: .textPlaceholder, variant: colorSchemeVariant)
         }
     
         accessory = UIImage(for: .checkmark, iconSize: .tiny, color: color)

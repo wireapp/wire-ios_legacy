@@ -64,7 +64,7 @@ import Cartography
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "participants.title".localized.uppercased()
-        view.backgroundColor = UIColor(scheme: .contentBackground)
+        view.backgroundColor = UIColor.from(scheme: .contentBackground)
         
         let collectionView = UICollectionView(forUserList: ())
 
@@ -73,7 +73,7 @@ import Cartography
         }
         
         [collectionView, footerView, bottomSpacer].forEach(view.addSubview)
-        bottomSpacer.backgroundColor = UIColor(scheme: .barBackground)
+        bottomSpacer.backgroundColor = UIColor.from(scheme: .barBackground)
         
         constrain(view, collectionView, footerView, bottomSpacer) { container, collectionView, footerView, bottomSpacer in
             collectionView.top == container.top

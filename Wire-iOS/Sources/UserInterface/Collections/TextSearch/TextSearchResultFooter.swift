@@ -70,7 +70,7 @@ public final class TextSearchResultFooter: UIView {
     public var dateLabel: UILabel = {
         let label = UILabel()
         label.font = .smallLightFont
-        label.textColor = .textDimmed
+        label.textColor = .from(scheme: .textDimmed)
 
         return label
     }()

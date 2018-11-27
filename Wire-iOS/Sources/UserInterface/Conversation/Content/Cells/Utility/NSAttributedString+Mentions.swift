@@ -54,18 +54,20 @@ extension Mention {
     }
 }
 
-extension NSURL {
-    @objc var isMentionURL: Bool {
+extension URL {
+
+    var isMention: Bool {
         return scheme == Mention.mentionScheme
     }
-    
-    @objc var mentionLocation: Int {
-        guard self.isMentionURL, let indexString = pathComponents?.last, let index = Int(indexString) else {
+
+    var mentionLocation: Int {
+        guard self.isMention, let indexString = pathComponents.last, let index = Int(indexString) else {
             return NSNotFound
         }
-        
+
         return index
     }
+
 }
 
 extension NSMutableAttributedString {

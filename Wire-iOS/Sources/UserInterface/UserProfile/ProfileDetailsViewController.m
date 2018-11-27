@@ -32,7 +32,6 @@
 #import "IconButton.h"
 #import "Constants.h"
 #import "UIColor+WAZExtensions.h"
-#import "UIColor+WR_ColorScheme.h"
 #import "UIViewController+WR_Additions.h"
 
 #import "TextView.h"
@@ -109,6 +108,7 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
 
 - (void)setupViews
 {
+    // TODO: We need to add notification settings option
     [self createUserImageView];
     [self createFooter];
     [self createGuestIndicator];

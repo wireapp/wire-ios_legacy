@@ -60,7 +60,7 @@ public extension ConversationViewController {
         button.accessibilityLabel = "conversation.join_call.voiceover".localized
         button.accessibilityTraits.insert(.startsMediaSession)
         button.titleLabel?.font = FontSpec(.small, .semibold).font
-        button.backgroundColor = UIColor(for: .strongLimeGreen)
+        button.backgroundColor = .strongLimeGreen
         button.addTarget(self, action: #selector(joinCallButtonTapped), for: .touchUpInside)
         button.contentEdgeInsets = UIEdgeInsets(top: 2, left: 8, bottom: 2, right: 8)
         button.bounds.size = button.systemLayoutSizeFitting(CGSize(width: .max, height: 24))
@@ -224,8 +224,8 @@ extension ConversationViewController: CollectionsViewControllerDelegate {
                 guard let `self` = self else {
                     return
                 }
-                self.contentViewController.scroll(to: message) { cell in
-                    cell.flashBackground()
+                self.contentViewController.scroll(to: message) { _ in
+                    self.contentViewController.highlight(message)
                 }
             }
         default:

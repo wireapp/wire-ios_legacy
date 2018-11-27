@@ -49,7 +49,7 @@ public extension ZMConversation {
 
     @objc var disabledTimeoutImage: UIImage? {
         guard let value = self.destructionTimeout else { return nil }
-        return timeoutImage(for: value, withColor: UIColor(scheme: .lightGraphite))
+        return timeoutImage(for: value, withColor: .lightGraphite)
     }
     
     private func timeoutImage(for timeout: MessageDestructionTimeoutValue, withColor color: UIColor = UIColor.accent()) -> UIImage? {
@@ -110,8 +110,8 @@ extension UIAlertController {
 
     public let titleLabel = UILabel()
     public var pickerFont: UIFont? = .normalSemiboldFont
-    public var pickerColor: UIColor? = UIColor(scheme: .textForeground, variant: .dark)
-    public var separatorColor: UIColor? = UIColor(scheme: .separator, variant: .light)
+    public var pickerColor: UIColor? = UIColor.from(scheme: .textForeground, variant: .dark)
+    public var separatorColor: UIColor? = UIColor.from(scheme: .separator, variant: .light)
 
     private let conversation: ZMConversation!
     private let picker = PickerView()
@@ -140,7 +140,7 @@ extension UIAlertController {
         setupViews()
         createConstraints()
 
-        view.backgroundColor = UIColor(scheme: .textForeground, variant: .light)
+        view.backgroundColor = UIColor.from(scheme: .textForeground, variant: .light)
     }
 
     public override func viewWillAppear(_ animated: Bool) {
@@ -154,13 +154,14 @@ extension UIAlertController {
         
         picker.delegate = self
         picker.dataSource = self
+        picker.backgroundColor = .clear
         picker.tintColor = .red
         picker.showsSelectionIndicator = true
         picker.selectorColor = separatorColor
         picker.didTapViewClosure = dismissKeyboardIfNeeded
 
         titleLabel.textAlignment = .center
-        titleLabel.textColor = UIColor(scheme: .textForeground, variant: .dark)
+        titleLabel.textColor = UIColor.from(scheme: .textForeground, variant: .dark)
         titleLabel.font = .smallSemiboldFont
 
         titleLabel.text = "input.ephemeral.title".localized.uppercased()
@@ -216,8 +217,6 @@ class PickerView: UIPickerView, UIGestureRecognizerDelegate {
 
     init() {
         super.init(frame: .zero)
-        self.backgroundColor = .clear
-
         tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapView))
         tapRecognizer.delegate = self
         addGestureRecognizer(tapRecognizer)

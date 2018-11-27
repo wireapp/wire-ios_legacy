@@ -105,11 +105,53 @@ class UserSearchResultsViewControllerTests: CoreDataSnapshotTestCase {
     }
 
 
-    func testThatItOverflowsWithTooManyUsers() {
+    func testThatItOverflowsWithTooManyUsers_darkMode() {
+        ColorScheme.default.variant = .dark
         createSUT()
 
         sut.users = mockSearchResultUsers()
         guard let view = sut.view else { XCTFail(); return }
+        verify(view: view)
+    }
+
+    func testThatHighlightedTopMostItemUpdatesAfterSelectedTopMostUser() {
+        createSUT()
+
+        sut.users = mockSearchResultUsers()
+        guard let view = sut.view else { XCTFail(); return }
+
+        let numberOfUsers = usernames.count
+
+        for _ in 0..<numberOfUsers {
+            sut.selectPreviousUser()
+        }
+
+        verify(view: view)
+    }
+
+    func testThatHighlightedItemStaysAtMiddleAfterSelectedAnUserAtTheMiddle() {
+        createSUT()
+
+        sut.users = mockSearchResultUsers()
+        guard let view = sut.view else { XCTFail(); return }
+
+        let numberOfUsers = usernames.count
+
+        // go to top most
+        for _ in 0..<numberOfUsers+5 {
+            sut.selectPreviousUser()
+        }
+
+        // go to bottom most
+        for _ in 0..<numberOfUsers+5 {
+            sut.selectNextUser()
+        }
+
+        // go to middle
+        for _ in 0..<numberOfUsers/2 {
+            sut.selectPreviousUser()
+        }
+
         verify(view: view)
     }
 

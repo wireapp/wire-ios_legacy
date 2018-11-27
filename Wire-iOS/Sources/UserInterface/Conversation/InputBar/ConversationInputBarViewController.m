@@ -369,7 +369,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self.inputBar.rightAccessoryStackView insertArrangedSubview:self.ephemeralIndicatorButton atIndex:0];
     [self.ephemeralIndicatorButton autoSetDimensionsToSize:CGSizeMake(InputBar.rightIconSize, InputBar.rightIconSize)];
 
-    [self.ephemeralIndicatorButton setTitleColor:[UIColor wr_colorFromColorScheme:ColorSchemeColorLightGraphite]
+    [self.ephemeralIndicatorButton setTitleColor:[UIColor lightGraphite]
                                         forState:UIControlStateDisabled];
     [self.ephemeralIndicatorButton setTitleColor:[UIColor accentColor]
                                         forState:UIControlStateNormal];
@@ -542,6 +542,9 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self.inputBar.textView resetMarkdown];
     [self updateRightAccessoryView];
     [self.conversation setIsTyping:NO];
+    [self.replyComposingView removeFromSuperview];
+    self.replyComposingView = nil;
+    self.quotedMessage = nil;
 }
 
 - (void)setInputBarOverlapsContent:(BOOL)inputBarOverlapsContent
@@ -573,37 +576,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 #pragma mark - Keyboard Shortcuts
 
-- (NSArray<UIKeyCommand *> *)keyCommands
-{
-    NSMutableArray *commands = [[NSMutableArray alloc] init];
-    
-    if (IS_IPAD) {
-        [commands addObject:[UIKeyCommand keyCommandWithInput:@"\r"
-                                                modifierFlags:UIKeyModifierShift
-                                                       action:@selector(shiftReturnPressed)
-                                         discoverabilityTitle:NSLocalizedString(@"conversation.input_bar.shortcut.newline", nil)]];
-    }
-    
-    [commands addObject:[UIKeyCommand keyCommandWithInput:@"\r"
-                                            modifierFlags:UIKeyModifierCommand
-                                                   action:@selector(commandReturnPressed)
-                                     discoverabilityTitle:NSLocalizedString(@"conversation.input_bar.shortcut.send", nil)]];
-    
-    if (self.inputBar.isEditing) {
-        [commands addObject:[UIKeyCommand keyCommandWithInput:UIKeyInputEscape
-                                                modifierFlags:0
-                                                       action:@selector(escapePressed)
-                                         discoverabilityTitle:NSLocalizedString(@"conversation.input_bar.shortcut.cancel_editing_message", nil)]];
-    } else if(self.inputBar.textView.text.length == 0) {
-        [commands addObject:[UIKeyCommand keyCommandWithInput:UIKeyInputUpArrow
-                                                modifierFlags:0
-                                                       action:@selector(upArrowPressed)
-                                         discoverabilityTitle:NSLocalizedString(@"conversation.input_bar.shortcut.edit_last_message", nil)]];
-    }
-    
-    return commands;
-}
-
 - (BOOL)canBecomeFirstResponder
 {
     return YES;
@@ -626,7 +598,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     }
 }
 
--(void)escapePressed
+- (void)escapePressed
 {
     [self endEditingMessageIfNeeded];
 }
@@ -849,9 +821,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 - (void)postImage:(id<MediaAsset>)image
 {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-        [self.sendController sendMessageWithImageData:image.data completion:^() {}];
-    });
+    [self.sendController sendMessageWithImageData:image.data completion:^() {}];
 }
 
 @end
@@ -1076,17 +1046,17 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 - (void)giphySearchViewController:(GiphySearchViewController *)giphySearchViewController didSelectImageData:(NSData *)imageData searchTerm:(NSString *)searchTerm
 {
     [self clearInputBar];
-    [self dismissViewControllerAnimated:YES completion:nil];
-    
-    NSString *messageText = nil;
-    
-    if ([searchTerm isEqualToString:@""]) {
-        messageText = [NSString stringWithFormat:NSLocalizedString(@"giphy.conversation.random_message", nil), searchTerm];
-    } else {
-        messageText = [NSString stringWithFormat:NSLocalizedString(@"giphy.conversation.message", nil), searchTerm];
-    }
-    
-    [self.sendController sendTextMessage:messageText mentions:@[] withImageData:imageData];
+    [self dismissViewControllerAnimated:YES completion:^{
+        NSString *messageText = nil;
+        
+        if ([searchTerm isEqualToString:@""]) {
+            messageText = [NSString stringWithFormat:NSLocalizedString(@"giphy.conversation.random_message", nil), searchTerm];
+        } else {
+            messageText = [NSString stringWithFormat:NSLocalizedString(@"giphy.conversation.message", nil), searchTerm];
+        }
+        
+        [self.sendController sendTextMessage:messageText mentions:@[] withImageData:imageData];
+    }];
 }
 
 @end

@@ -36,7 +36,7 @@ import Cartography
     }
     
     private func applyStyle() {
-        self.backgroundColor = UIColor(scheme: .separator)
+        self.backgroundColor = UIColor.from(scheme: .separator)
         self.alpha = 0
     }
     

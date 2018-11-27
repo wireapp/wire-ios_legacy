@@ -18,7 +18,7 @@
 
 
 @import WireExtensionComponents;
-
+@import WireDataModel;
 
 #import "ConversationInputBarSendController.h"
 #import "ZMUserSession+iOS.h"
@@ -49,23 +49,26 @@
     return self;
 }
 
--(void)sendMessageWithImageData:(NSData *)imageData completion:(dispatch_block_t)completionHandler
+- (void)sendMessageWithImageData:(NSData *)imageData completion:(dispatch_block_t)completionHandler
 {
-    if (imageData != nil) {
-        [self.feedbackGenerator prepare];
-        [[ZMUserSession sharedSession] enqueueChanges:^{
-            [self.conversation appendMessageWithImageData:imageData];
-            [self.feedbackGenerator impactOccurred];
-        } completionHandler:^{
-            if (completionHandler){
-                completionHandler();
-            }
-            [[Analytics shared] tagMediaActionCompleted:ConversationMediaActionPhoto inConversation:self.conversation];
-        }];
+    if (imageData == nil) {
+        return;
     }
+    [self.feedbackGenerator prepare];
+    [[ZMUserSession sharedSession] enqueueChanges:^{
+        [self.conversation appendMessageWithImageData:imageData];
+        [self.feedbackGenerator impactOccurred];
+    } completionHandler:^{
+        if (completionHandler){
+            completionHandler();
+        }
+        [[Analytics shared] tagMediaActionCompleted:ConversationMediaActionPhoto inConversation:self.conversation];
+    }];
 }
 
-- (void)sendTextMessage:(NSString *)text mentions:(NSArray <Mention *>*)mentions
+- (void)sendTextMessage:(NSString *)text
+               mentions:(NSArray <Mention *>*)mentions
+      replyingToMessage:(ZMClientMessage *)message
 {
     BOOL shouldFetchLinkPreview = ![Settings sharedSettings].disableLinkPreviews;
     
@@ -78,13 +81,21 @@
             for(int i = 0; i < 500; ++i) {
                 NSString *textWithNumber = [NSString stringWithFormat:@"%@ (%d)", text, i+1];
                 // only save last ones, who cares
-                textMessage = [self.conversation appendText:textWithNumber mentions:mentions fetchLinkPreview:shouldFetchLinkPreview nonce:NSUUID.UUID];
+                textMessage = [self.conversation appendText:textWithNumber
+                                                   mentions:mentions
+                                          replyingToMessage:message
+                                           fetchLinkPreview:shouldFetchLinkPreview
+                                                      nonce:NSUUID.UUID];
                 [(ZMMessage *)textMessage removeExpirationDate];
             }
         }
         else {
             // normal sending
-            textMessage = [self.conversation appendText:text mentions:mentions fetchLinkPreview:shouldFetchLinkPreview nonce:NSUUID.UUID];
+            textMessage = [self.conversation appendText:text
+                                               mentions:mentions
+                                      replyingToMessage:message
+                                       fetchLinkPreview:shouldFetchLinkPreview
+                                                  nonce:NSUUID.UUID];
         }
         self.conversation.draftMessage = nil;
     } completionHandler:^{
@@ -99,7 +110,11 @@
     BOOL shouldFetchLinkPreview = ![Settings sharedSettings].disableLinkPreviews;
     
     [ZMUserSession.sharedSession enqueueChanges:^{
-        textMessage = [self.conversation appendText:text mentions:mentions fetchLinkPreview:shouldFetchLinkPreview nonce:NSUUID.UUID];
+        textMessage = [self.conversation appendText:text
+                                           mentions:mentions
+                                  replyingToMessage:nil
+                                   fetchLinkPreview:shouldFetchLinkPreview
+                                              nonce:NSUUID.UUID];
         
         [self.conversation appendMessageWithImageData:data];
         self.conversation.draftMessage = nil;

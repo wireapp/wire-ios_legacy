@@ -22,7 +22,6 @@
 @import PureLayout;
 #import "IconButton.h"
 #import "NSLayoutConstraint+Helpers.h"
-#import "UIColor+WR_ColorScheme.h"
 #import "Wire-Swift.h"
 
 

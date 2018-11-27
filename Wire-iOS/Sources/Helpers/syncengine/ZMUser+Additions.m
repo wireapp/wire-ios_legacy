@@ -22,6 +22,7 @@
 #import "UIColor+WAZExtensions.h"
 #import "Analytics.h"
 #import "ColorScheme.h"
+@import WireExtensionComponents;
 
 ZMUser *BareUserToUser(id bareUser) {
     ZMUser *user = nil;
@@ -37,7 +38,7 @@ ZMUser *BareUserToUser(id bareUser) {
 
 - (UIColor *)accentColor
 {
-    return [UIColor colorForZMAccentColor:self.accentColorValue];
+    return [[UIColor alloc] initWithColorForZMAccentColor:self.accentColorValue];
 }
 
 @end
@@ -47,7 +48,7 @@ ZMUser *BareUserToUser(id bareUser) {
 
 - (UIColor *)accentColor
 {
-    return [UIColor colorForZMAccentColor:self.accentColorValue];
+    return [[UIColor alloc] initWithColorForZMAccentColor:self.accentColorValue];
 }
 
 @end

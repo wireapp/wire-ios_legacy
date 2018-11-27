@@ -31,7 +31,7 @@ extension ZMTextMessageData {
 
 extension ZMFileMessageData {
     
-    var thumbnailImage: ImageResource {
+    var thumbnailImage: PreviewableImageResource {
         return FileMessageImageResourceAdaptor(fileMesssageData: self)
     }
     
@@ -39,7 +39,7 @@ extension ZMFileMessageData {
 
 extension ZMImageMessageData {
     
-    var image: ImageResource {
+    var image: PreviewableImageResource {
         return ImageMessageImageResourceAdaptor(imageMessageData: self)
     }
     
@@ -67,12 +67,20 @@ struct LinkPreviewImageResourceAdaptor: ImageResource {
     
 }
 
-struct FileMessageImageResourceAdaptor: ImageResource {
+struct FileMessageImageResourceAdaptor: PreviewableImageResource {
     
     let fileMesssageData: ZMFileMessageData
     
     var cacheIdentifier: String? {
         return fileMesssageData.imagePreviewDataIdentifier?.appending("-file")
+    }
+
+    var contentMode: UIView.ContentMode {
+        return .scaleAspectFill
+    }
+
+    var contentSize: CGSize {
+        return CGSize(width: 250, height: 140)
     }
     
     var isAnimatedGIF: Bool {
@@ -89,7 +97,7 @@ struct FileMessageImageResourceAdaptor: ImageResource {
     
 }
 
-struct ImageMessageImageResourceAdaptor: ImageResource {
+struct ImageMessageImageResourceAdaptor: PreviewableImageResource {
     
     let imageMessageData: ZMImageMessageData
     
@@ -99,6 +107,14 @@ struct ImageMessageImageResourceAdaptor: ImageResource {
     
     var isAnimatedGIF: Bool {
         return imageMessageData.isAnimatedGIF
+    }
+
+    var contentMode: UIView.ContentMode {
+        return .scaleAspectFit
+    }
+
+    var contentSize: CGSize {
+        return imageMessageData.originalSize
     }
     
     func requestImageDownload() {
@@ -115,10 +131,15 @@ protocol ImageResource {
     
     var cacheIdentifier: String? { get }
     var isAnimatedGIF: Bool { get }
-    
+
     func requestImageDownload()
     func fetchImageData(queue: DispatchQueue, completionHandler: @escaping (_ imageData: Data?) -> Void)
     
+}
+
+protocol PreviewableImageResource: ImageResource {
+    var contentMode: UIView.ContentMode { get }
+    var contentSize: CGSize { get }
 }
 
 enum ImageSizeLimit {
@@ -149,7 +170,9 @@ extension ImageResource {
     /// Fetch image data and calls the completion handler when it is available on the main queue.
     func fetchImage(cache: ImageCache<MediaAsset> = defaultImageCache, sizeLimit: ImageSizeLimit = .deviceOptimized, completion: @escaping (_ image: MediaAsset?, _ cacheHit: Bool) -> Void) {
         
-        guard let cacheIdentifier = self.cacheIdentifier else { return }
+        guard let cacheIdentifier = self.cacheIdentifier else {
+            return completion(nil, false)
+        }
         
         let isAnimatedGIF = self.isAnimatedGIF
         var sizeLimit = sizeLimit

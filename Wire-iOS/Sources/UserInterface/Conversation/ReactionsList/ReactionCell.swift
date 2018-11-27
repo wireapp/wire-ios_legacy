@@ -25,14 +25,14 @@ public class ReactionCell: UICollectionViewCell {
     public let userDisplayNameLabel: UILabel = {
         let label = UILabel()
         label.font = .normalFont
-        label.textColor = .textForeground
+        label.textColor = .from(scheme: .textForeground)
 
         return label
     }()
     public let usernameLabel: UILabel = {
         let label = UILabel()
         label.font = .smallSemiboldFont
-        label.textColor = .textDimmed
+        label.textColor = .from(scheme: .textDimmed)
 
         return label
     }()
@@ -96,7 +96,7 @@ public class ReactionCell: UICollectionViewCell {
     }
 
     func setupStyle() {
-        contentView.backgroundColor = .textBackground
+        contentView.backgroundColor = .from(scheme: .textBackground)
     }
 
     
