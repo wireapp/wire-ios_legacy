@@ -718,8 +718,19 @@ extension AuthenticationCoordinator {
 
         switch nextState {
         case let .sendEmailCode(_, emailAddress, _):
-            presenter?.showLoadingView = true
-            registrationStatus.sendActivationCode(to: .email(emailAddress))
+            guard let presenter = self.presenter else {
+                break
+            }
+
+            UIAlertController.requestTOSApproval(over: presenter) { approved in
+                if approved {
+                    presenter.showLoadingView = true
+                    self.registrationStatus.sendActivationCode(to: .email(emailAddress))
+                } else {
+                    presenter.showLoadingView = false
+                    self.stateController.unwindState()
+                }
+            }
 
         case let .verifyActivationCode(_, emailAddress, activationCode):
             presenter?.showLoadingView = true
@@ -731,20 +742,8 @@ extension AuthenticationCoordinator {
             presentAlert(for: marketingConsentAlertModel)
 
         case let .createTeam(teamName, email, activationCode, _, fullName, password):
-            guard let presenter = self.presenter else {
-                break
-            }
-
-            UIAlertController.requestTOSApproval(over: presenter) { approved in
-                if approved {
-                    presenter.showLoadingView = true
-                    let unregisteredTeam = UnregisteredTeam(teamName: teamName, email: email, emailCode: activationCode, fullName: fullName, password: password, accentColor: UIColor.indexedAccentColor())
-                    self.registrationStatus.create(team: unregisteredTeam)
-                } else {
-                    presenter.showLoadingView = false
-                    self.stateController.unwindState()
-                }
-            }
+            let unregisteredTeam = UnregisteredTeam(teamName: teamName, email: email, emailCode: activationCode, fullName: fullName, password: password, accentColor: UIColor.indexedAccentColor())
+            registrationStatus.create(team: unregisteredTeam)
 
         default:
             break
