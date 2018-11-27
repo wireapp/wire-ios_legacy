@@ -18,29 +18,6 @@
 
 import UIKit
 
-protocol ConversationOptionsConfigurable {
-    func configure(with conversation: ZMConversation)
-}
-
-protocol GroupDetailsOptionsCell where Self: DetailsCollectionViewCell {
-    func setAccessoryAsDisclosureIndicator(colorSchemeVariant: ColorSchemeVariant)
-}
-
-extension GroupDetailsOptionsCell where Self: DetailsCollectionViewCell {
-
-
-    /// call this method in override func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant)
-    ///
-    /// - Parameter colorSchemeVariant: the colorSchemeVariant for the right icon image
-    func setAccessoryAsDisclosureIndicator(colorSchemeVariant: ColorSchemeVariant) {
-        let sectionTextColor = UIColor.from(scheme: .sectionText, variant: colorSchemeVariant)
-        accessoryImage = UIImage(for: .disclosureIndicator, iconSize: .like, color: sectionTextColor)
-    }
-}
-
-typealias ConversationOptionsCell = DetailsCollectionViewCell & ConversationOptionsConfigurable
-typealias GroupDetailsDisclosureOptionsCell = ConversationOptionsCell & GroupDetailsOptionsCell
-
 class GroupDetailsTimeoutOptionsCell: GroupDetailsDisclosureOptionsCell {
 
     override func setUp() {

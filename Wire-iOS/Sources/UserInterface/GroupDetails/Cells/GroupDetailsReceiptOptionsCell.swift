@@ -19,28 +19,29 @@
 import UIKit
 import WireExtensionComponents
 
-class GroupDetailsReceiptOptionsCell: DetailsCollectionViewCell & ConversationOptionsConfigurable {
+class GroupDetailsReceiptOptionsCell: ConversationOptionsCell {
 
     var isOn = false {
         didSet {
-            receiptSwitch.isOn = isOn
+            toggle.isOn = isOn
         }
     }
 
-    let receiptSwitch = UISwitch()
+    private let toggle = UISwitch()
 
     override func setUp() {
         super.setUp()
         accessibilityIdentifier = "cell.groupdetails.receiptoptions"///TODO:
         title = "group_details.receipt_options_cell.title".localized
 
-        rightAccessoryView = receiptSwitch
+        rightAccessoryView = toggle
 
+        toggle.addTarget(self, action: #selector(toggleChanged), for: .valueChanged)
     }
 
     func configure(with conversation: ZMConversation) {
-        ///TODO: wait for DM update
-//        self.isOn = conversation.allowReceipts
+        ///TODO: wait for Date model update to toggle the conversation's allow receipt option
+        // self.isOn = conversation.allowReceipts
 
     }
 
@@ -51,4 +52,7 @@ class GroupDetailsReceiptOptionsCell: DetailsCollectionViewCell & ConversationOp
                        color: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant))
     }
 
+    @objc private func toggleChanged(_ sender: UISwitch) {
+        // TODO: set the converation's receipt enabled setting
+    }
 }

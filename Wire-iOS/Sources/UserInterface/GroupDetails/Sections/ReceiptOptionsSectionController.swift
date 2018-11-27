@@ -18,42 +18,20 @@
 
 import Foundation
 
-//protocol GroupOptionsSectionControllerDelegate: class {
-//    func presentTimeoutOptions(animated: Bool)
-//    func presentGuestOptions(animated: Bool)
-//    func presentNotificationsOptions(animated: Bool)
-//}
-
 class ReceiptOptionsSectionController: GroupDetailsSectionController {
 
-//    private enum Option: Int {
-//
-//        case receipts = 1
-
-        let cellReuseIdentifier: String = GroupDetailsReceiptOptionsCell.zm_reuseIdentifier
-
-//        fileprivate static let count = Option.allValues.count
-
-//    }
+    let cellReuseIdentifier: String = GroupDetailsReceiptOptionsCell.zm_reuseIdentifier
 
     // MARK: - Properties
 
-//    private weak var delegate: GroupOptionsSectionControllerDelegate?
     private let conversation: ZMConversation
     private let syncCompleted: Bool
-//    private let options: [Option]
-
-//    var hasOptions: Bool {
-//        return !options.isEmpty
-//    }
 
     private var footerView = SectionFooter(frame: .zero)
 
     init(conversation: ZMConversation,
-//         delegate: GroupOptionsSectionControllerDelegate,
-         syncCompleted: Bool,
-         collectionView: UICollectionView) {
-//        self.delegate = delegate
+        syncCompleted: Bool,
+        collectionView: UICollectionView) {
         self.conversation = conversation
         self.syncCompleted = syncCompleted
 
@@ -82,8 +60,7 @@ class ReceiptOptionsSectionController: GroupDetailsSectionController {
 
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-//        let option = options[indexPath.row]
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellReuseIdentifier, for: indexPath) as! ConversationOptionsCell 
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellReuseIdentifier, for: indexPath) as! ConversationOptionsCell
 
         cell.configure(with: conversation)
         cell.showSeparator = false
@@ -96,7 +73,7 @@ class ReceiptOptionsSectionController: GroupDetailsSectionController {
     ///MARK: - header with less height
 
     override func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: collectionView.bounds.size.width, height: 20) ///TODO: ask for design
+        return CGSize(width: collectionView.bounds.size.width, height: 20)
     }
 
 
@@ -117,13 +94,7 @@ class ReceiptOptionsSectionController: GroupDetailsSectionController {
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-
         collectionView.deselectItem(at: indexPath, animated: true)
-
-        ///TODO:
-        //        let selectedItem = items[indexPath.row] ///TODO
-//        guard selectedItem != conversation.mutedMessageTypes else { return }
-//        updateMutedMessageTypes(selectedItem)
-
+        ///TODO: update conversation's receipt setting after the switch is toggled
     }
 }
