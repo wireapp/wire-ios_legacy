@@ -30,7 +30,6 @@ import Cartography
     public let titleLabel: UILabel = {
         let label = UILabel()
         label.textColor = .from(scheme: .textForeground)
-        label.font = .mediumSemiboldFont
         label.textAlignment = .center
 
         return label
@@ -39,7 +38,7 @@ import Cartography
     public let subtitleLabel: UILabel = {
         let label = UILabel()
         label.textColor = .from(scheme: .textForeground)
-        label.font = .mediumFont
+        label.font = UIFont.systemFont(ofSize: 11)
         label.textAlignment = .center
 
         return label
@@ -97,6 +96,7 @@ import Cartography
 
         self.title = title
         self.subtitle = subtitle
+        self.titleLabel.font = subtitle == nil ? .mediumSemiboldFont : .systemFont(ofSize: 11, weight: .semibold)
     }
     
     fileprivate func configureViews() {

@@ -21,7 +21,6 @@
 import Cartography
 
 class ReactionsListViewControllerTests: ZMSnapshotTestCase {
-    
 
     override func setUp() {
         super.setUp()
@@ -29,19 +28,12 @@ class ReactionsListViewControllerTests: ZMSnapshotTestCase {
     }
     
     func testThatItRendersReactionsListViewController() {
-        let sut = ReactionsListViewController(message: message, showsStatusBar: true)
+        let sut = ReactionsListViewController(message: message)
         sut.beginAppearanceTransition(true, animated: false)
         sut.endAppearanceTransition()
         verify(view: sut.view)
     }
-    
-    func testThatItRendersReactionsListViewController_NoStatusBar() {
-        let sut = ReactionsListViewController(message: message, showsStatusBar: false)
-        sut.beginAppearanceTransition(true, animated: false)
-        sut.endAppearanceTransition()
-        verify(view: sut.view)
-    }
-    
+        
     var message: ZMConversationMessage {
         let message = MockMessageFactory.textMessage(withText: "Hello")
         message?.deliveryState = .sent

@@ -43,7 +43,7 @@ import Cartography
 
         self.view.addSubview(self.topBar)
         let title = "content.reactions_list.likers".localized.uppercased()
-        topBar.configure(title: title, subtitle: "Subtitle of the Message", topAnchor: safeTopAnchor)
+        topBar.configure(title: title, subtitle: nil, topAnchor: safeTopAnchor)
         topBar.accessibilityTraits.insert(.header)
         topBar.delegate = self
 
