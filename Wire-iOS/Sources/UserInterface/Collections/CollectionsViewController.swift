@@ -745,7 +745,7 @@ extension CollectionsViewController: CollectionCellDelegate, MessageActionRespon
             }
 
         case .openDetails:
-            let detailsViewController = ReactionsListViewController(message: message, showsStatusBar: true)
+            let detailsViewController = ReactionsListViewController(message: message)
             present(detailsViewController, animated: true)
 
         default:

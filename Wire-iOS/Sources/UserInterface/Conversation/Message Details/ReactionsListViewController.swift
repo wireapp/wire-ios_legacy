@@ -25,17 +25,13 @@ import Cartography
     public let reactionsUsers: [ZMUser]
     fileprivate let collectionViewLayout = UICollectionViewFlowLayout()
     fileprivate var collectionView: UICollectionView!
-    fileprivate let topBar: ModalTopBar
-    public let dismissButton = IconButton(style: .default)
-    public let titleLabel = UILabel()
+    fileprivate var topBar = ModalTopBar()
     
-    public init(message: ZMConversationMessage, showsStatusBar: Bool) {
+    public init(message: ZMConversationMessage) {
         self.message = message
-        topBar = ModalTopBar(forUseWithStatusBar: showsStatusBar)
         self.reactionsUsers = self.message.likers()
         super.init(nibName: .none, bundle: .none)
         self.modalPresentationStyle = .formSheet
-        topBar.delegate = self
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -44,10 +40,13 @@ import Cartography
     
     override open func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.title = "content.reactions_list.likers".localized.uppercased()
-        self.topBar.title = self.title
-        
+
+        self.view.addSubview(self.topBar)
+        let title = "content.reactions_list.likers".localized.uppercased()
+        topBar.configure(title: title, subtitle: "Subtitle of the Message", topAnchor: safeTopAnchor)
+        topBar.accessibilityTraits.insert(.header)
+        topBar.delegate = self
+
         self.collectionViewLayout.scrollDirection = .vertical
         self.collectionViewLayout.minimumLineSpacing = 0
         self.collectionViewLayout.minimumInteritemSpacing = 0
@@ -63,8 +62,7 @@ import Cartography
         self.collectionView.isScrollEnabled = true
         self.collectionView.backgroundColor = UIColor.clear
         self.view.addSubview(self.collectionView)
-        self.view.addSubview(self.topBar)
-        
+
         constrain(self.view, self.collectionView, self.topBar) { selfView, collectionView, topBar in
             topBar.top == selfView.top
             topBar.left == selfView.left

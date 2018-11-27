@@ -4823,13 +4823,13 @@
 			path = LaunchImage;
 			sourceTree = "<group>";
 		};
-		875F89151D6F35DC00D8748E /* ReactionsList */ = {
+		875F89151D6F35DC00D8748E /* Message Details */ = {
 			isa = PBXGroup;
 			children = (
 				875F89161D6F35EC00D8748E /* ReactionsListViewController.swift */,
 				873151101D75D0C000284C1F /* ReactionCell.swift */,
 			);
-			path = ReactionsList;
+			path = "Message Details";
 			sourceTree = "<group>";
 		};
 		876113E51DD1DE70007F5969 /* ShareViewController */ = {
@@ -5529,7 +5529,7 @@
 				F10F46D02028857C00261449 /* Create */,
 				8FC85180199245760008B66B /* Content */,
 				8FC851B3199245760008B66B /* InputBar */,
-				875F89151D6F35DC00D8748E /* ReactionsList */,
+				875F89151D6F35DC00D8748E /* Message Details */,
 				8FC851B0199245760008B66B /* ConversationViewController.h */,
 				8FC851B1199245760008B66B /* ConversationViewController.m */,
 				BF1A81271C9848DB00A96CAA /* ConversationViewController+NavigationBar.swift */,
