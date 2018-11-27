@@ -20,6 +20,8 @@ import Foundation
 
 class ReceiptOptionsSectionController: GroupDetailsSectionController {
 
+    private let emptySectionHeaderHeight: CGFloat = 24
+
     let cellReuseIdentifier: String = GroupDetailsReceiptOptionsCell.zm_reuseIdentifier
 
     // MARK: - Properties
@@ -70,12 +72,11 @@ class ReceiptOptionsSectionController: GroupDetailsSectionController {
 
     }
 
-    ///MARK: - header with less height
+    ///MARK: - header
 
     override func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: collectionView.bounds.size.width, height: 20)
+        return CGSize(width: collectionView.bounds.size.width, height: emptySectionHeaderHeight)
     }
-
 
     ///MARK: - footer
 
