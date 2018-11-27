@@ -34,10 +34,7 @@ class RegistrationIncrementalUserDataChangeHandler: AuthenticationEventHandler {
         
         // Check for missing requirements before allowing the user to register.
 
-        if unregisteredUser.acceptedTermsOfService != true {
-            return requestIntermediateStep(.reviewTermsOfService, with: unregisteredUser)
-
-        } else if unregisteredUser.marketingConsent == nil {
+        if unregisteredUser.marketingConsent == nil {
             return handleMissingMarketingConsent(with: unregisteredUser)
 
         } else if unregisteredUser.name == nil {

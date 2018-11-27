@@ -115,8 +115,6 @@ class AuthenticationInterfaceBuilder {
         switch step {
         case .start:
             return nil
-        case .reviewTermsOfService:
-            return TermsOfUseStepViewController()
         case .provideMarketingConsent:
             return nil
         case .setName:
