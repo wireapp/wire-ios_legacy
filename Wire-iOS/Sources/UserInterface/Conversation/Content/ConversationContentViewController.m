@@ -506,6 +506,12 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
                 }
             }
                 break;
+            case MessageActionOpenDetails:
+            {
+                ReactionsListViewController *reactionsListController = [[ReactionsListViewController alloc] initWithMessage:message showsStatusBar:YES];
+                [self.parentViewController presentViewController:reactionsListController animated:YES completion:nil];
+            }
+                break;
         }
     };
 

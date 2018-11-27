@@ -609,6 +609,12 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
             }];
         }
             break;
+        case MessageActionOpenDetails:
+        {
+            ReactionsListViewController *detailsViewController = [[ReactionsListViewController alloc] initWithMessage:message showsStatusBar:YES];
+            [self presentViewController:detailsViewController animated:YES completion:nil];
+        }
+            break;
 
         default:
         {

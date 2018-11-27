@@ -494,6 +494,7 @@
 "content.message.open" = "Open";
 "content.message.copy" = "Copy";
 "content.message.download" = "Download";
+"content.message.details" = "Details";
 
 // Reply
 "content.message.reply" = "Reply";
