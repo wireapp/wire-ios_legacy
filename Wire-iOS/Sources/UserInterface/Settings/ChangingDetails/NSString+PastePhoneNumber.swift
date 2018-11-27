@@ -31,7 +31,7 @@ extension String {
     /// or  \u{e2}+49 123 12349999\u{e2}
     ///
     /// - Parameter completion: completion closure with Country object and phoneNumber extracted from self. country: a Country object parsed from self. phoneNumber: phone Number with no space
-    /// - Returns: If the number can be prased, return a tuple of country and the phone number without country code. Otherwise return nil. country would be nil if self is a phone number without country
+    /// - Returns: If the number can be parsed, return a tuple of country and the phone number without country code. Otherwise return nil. country would be nil if self is a phone number without country
     @discardableResult
     func shouldInsertAsPhoneNumber(presetCountry: Country) -> (country: Country?, phoneNumber: String)? {
 
