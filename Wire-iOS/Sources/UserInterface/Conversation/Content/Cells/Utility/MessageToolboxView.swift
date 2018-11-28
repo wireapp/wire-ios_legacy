@@ -326,6 +326,8 @@ import TTTAttributedLabel
             switch message.deliveryState {
             case .pending:
                 deliveryStateString = "content.system.pending_message_timestamp".localized
+            case .read:
+                deliveryStateString = "content.system.message_read_timestamp".localized
             case .delivered:
                 deliveryStateString = "content.system.message_delivered_timestamp".localized
             case .sent:
