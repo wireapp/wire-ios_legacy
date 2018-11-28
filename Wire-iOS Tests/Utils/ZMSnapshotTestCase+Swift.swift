@@ -240,7 +240,7 @@ open class ZMSnapshotTestCase: FBSnapshotTestCase {
                                 extraLayoutPass: Bool,
                                 file: StaticString = #file,
                                 line: UInt = #line,
-                                configurationBlock configuration: Configuration?) {
+                                configuration: Configuration?) {
         verifyMultipleSize(view: view, extraLayoutPass: extraLayoutPass, inSizes: ZMSnapshotTestCase.phoneScreenSizes, configuration: { view, isPad in
             if let configuration = configuration {
                 configuration(view)
@@ -252,7 +252,7 @@ open class ZMSnapshotTestCase: FBSnapshotTestCase {
                                 extraLayoutPass: Bool = false,
                                 file: StaticString = #file,
                                 line: UInt = #line,
-                                configurationBlock configuration: ConfigurationWithDeviceType? = nil) {
+                                configuration: ConfigurationWithDeviceType? = nil) {
 
         verifyMultipleSize(view: view,
                            extraLayoutPass: extraLayoutPass,
@@ -385,7 +385,7 @@ extension ZMSnapshotTestCase {
                     extraLayoutPass: Bool = false,
                     width: CGFloat,
                     tolerance: CGFloat = 0,
-                    configurationBlock: ((UIView) -> Swift.Void)? = nil,
+                    configuration: ((UIView) -> Swift.Void)? = nil,
                     file: StaticString = #file,
                     line: UInt = #line
         ) {
@@ -406,7 +406,7 @@ extension ZMSnapshotTestCase {
             return
         }
 
-        configurationBlock?(view)
+        configuration?(view)
 
         snapshotVerify(view: container,
                        identifier:"\(Int(width))",
@@ -421,7 +421,7 @@ extension ZMSnapshotTestCase {
     func verifyInAllPhoneWidths(view: UIView,
                                 extraLayoutPass: Bool = false,
                                 tolerance: CGFloat = 0,
-                                configurationBlock: ((UIView) -> Swift.Void)? = nil,
+                                configuration: ((UIView) -> Swift.Void)? = nil,
                                 file: StaticString = #file,
                                 line: UInt = #line) {
         assertAmbigousLayout(view, file: file, line: line)
@@ -430,7 +430,7 @@ extension ZMSnapshotTestCase {
                        extraLayoutPass: extraLayoutPass,
                        width: width,
                        tolerance: tolerance,
-                       configurationBlock: configurationBlock,
+                       configuration: configuration,
                        file: file,
                        line: line)
         }
@@ -467,8 +467,8 @@ extension ZMSnapshotTestCase {
                                 extraLayoutPass: Bool = false,
                                 file: StaticString = #file,
                                 line: UInt = #line,
-                                configurationBlock: ((UIView) -> Swift.Void)? = nil) {
-        verifyInAllPhoneSizes(view: view, extraLayoutPass: extraLayoutPass, file: file, line: line, configurationBlock: configurationBlock)
+                                configuration: ((UIView) -> Swift.Void)? = nil) {
+        verifyInAllPhoneSizes(view: view, extraLayoutPass: extraLayoutPass, file: file, line: line, configuration: configuration)
     }
     
     func verifyInAllColorSchemes(view: UIView,

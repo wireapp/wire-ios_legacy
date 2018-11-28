@@ -168,7 +168,7 @@ class InputBarTests: ZMSnapshotTestCase {
 
         sut.textView.resignFirstResponder() // make sure to avoid cursor being visible
 
-        verifyInAllPhoneWidths(view: sut, configurationBlock: configure)
+        verifyInAllPhoneWidths(view: sut, configuration: configure)
     }
 
     func configure(view: UIView) {
