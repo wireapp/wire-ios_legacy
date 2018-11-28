@@ -84,8 +84,8 @@ class InputBarTests: ZMSnapshotTestCase {
         sut.textView.text = longText
         sut.textView.scrollToBottom()
         
-        verifyInAllPhoneWidths(view: sut)
-        verifyInAllTabletWidths(view: sut)
+        verifyInAllPhoneWidths(view: sut, configuration: configure)
+        verifyInAllTabletWidths(view: sut, configuration: configure)
     }
     
     func testRTLText() {

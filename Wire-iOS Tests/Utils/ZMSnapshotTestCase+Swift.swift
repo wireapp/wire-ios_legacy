@@ -438,10 +438,17 @@ extension ZMSnapshotTestCase {
 
     func verifyInAllTabletWidths(view: UIView,
                                  extraLayoutPass: Bool = false,
-                                 file: StaticString = #file, line: UInt = #line) {
+                                 configuration: ((UIView) -> Swift.Void)? = nil,
+                                 file: StaticString = #file,
+                                 line: UInt = #line) {
         assertAmbigousLayout(view, file: file, line: line)
-        for value: NSValue in tabletSizes() {
-            verifyView(view: view, extraLayoutPass: extraLayoutPass, width: value.cgSizeValue.width, file: file, line: line)
+        for value in tabletSizes() {
+            verifyView(view: view,
+                       extraLayoutPass: extraLayoutPass,
+                       width: value.cgSizeValue.width,
+                       configuration: configuration,
+                       file: file,
+                       line: line)
         }
     }
 
