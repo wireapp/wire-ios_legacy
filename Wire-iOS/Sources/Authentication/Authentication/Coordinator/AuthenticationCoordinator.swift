@@ -353,13 +353,18 @@ extension AuthenticationCoordinator {
 
     @objc(startRegistrationWithPhoneNumber:)
     func startRegistration(phoneNumber: String) {
-        guard case let .createCredentials(unregisteredUser) = stateController.currentStep else {
+        guard case let .createCredentials(unregisteredUser) = stateController.currentStep, let presenter = self.presenter else {
             log.error("Cannot start phone registration outside of registration flow.")
             return
         }
 
-        unregisteredUser.credentials = .phone(number: phoneNumber)
-        sendActivationCode(.phone(phoneNumber), unregisteredUser, isResend: false)
+        UIAlertController.requestTOSApproval(over: presenter, forTeamAccount: false) { approved in
+            if approved {
+                unregisteredUser.credentials = .phone(number: phoneNumber)
+                unregisteredUser.acceptedTermsOfService = true
+                self.sendActivationCode(.phone(phoneNumber), unregisteredUser, isResend: false)
+            }
+        }
     }
 
     /**
@@ -375,15 +380,20 @@ extension AuthenticationCoordinator {
 
     @objc(startRegistrationWithName:email:password:)
     func startRegistration(name: String, email: String, password: String) {
-        guard case let .createCredentials(unregisteredUser) = stateController.currentStep else {
+        guard case let .createCredentials(unregisteredUser) = stateController.currentStep, let presenter = self.presenter else {
             log.error("Cannot start email registration outside of registration flow.")
             return
         }
 
-        unregisteredUser.credentials = .email(address: email, password: password)
-        unregisteredUser.name = name
+        UIAlertController.requestTOSApproval(over: presenter, forTeamAccount: false) { approved in
+            if approved {
+                unregisteredUser.credentials = .email(address: email, password: password)
+                unregisteredUser.name = name
+                unregisteredUser.acceptedTermsOfService = true
 
-        sendActivationCode(.email(email), unregisteredUser, isResend: false)
+                self.sendActivationCode(.email(email), unregisteredUser, isResend: false)
+            }
+        }
     }
 
     /// Sends the registration activation code.
@@ -401,17 +411,6 @@ extension AuthenticationCoordinator {
     }
 
     // MARK: Linear Registration
-
-    /**
-     * Notifies the registration state observers that the user accepted the
-     * terms of service.
-     */
-
-    @objc func acceptTermsOfService() {
-        updateUnregisteredUser {
-            $0.acceptedTermsOfService = true
-        }
-    }
 
     /**
      * Notifies the registration state observers that the user set a display name.
@@ -680,7 +679,6 @@ extension AuthenticationCoordinator {
         default:
             companyLoginController?.isAutoDetectionEnabled = false
         }
-
     }
 
     /**
@@ -718,8 +716,19 @@ extension AuthenticationCoordinator {
 
         switch nextState {
         case let .sendEmailCode(_, emailAddress, _):
-            presenter?.showLoadingView = true
-            registrationStatus.sendActivationCode(to: .email(emailAddress))
+            guard let presenter = self.presenter else {
+                break
+            }
+
+            UIAlertController.requestTOSApproval(over: presenter, forTeamAccount: true) { approved in
+                if approved {
+                    presenter.showLoadingView = true
+                    self.registrationStatus.sendActivationCode(to: .email(emailAddress))
+                } else {
+                    presenter.showLoadingView = false
+                    self.stateController.unwindState()
+                }
+            }
 
         case let .verifyActivationCode(_, emailAddress, activationCode):
             presenter?.showLoadingView = true
@@ -731,20 +740,8 @@ extension AuthenticationCoordinator {
             presentAlert(for: marketingConsentAlertModel)
 
         case let .createTeam(teamName, email, activationCode, _, fullName, password):
-            guard let presenter = self.presenter else {
-                break
-            }
-
-            UIAlertController.requestTOSApproval(over: presenter) { approved in
-                if approved {
-                    presenter.showLoadingView = true
-                    let unregisteredTeam = UnregisteredTeam(teamName: teamName, email: email, emailCode: activationCode, fullName: fullName, password: password, accentColor: UIColor.indexedAccentColor())
-                    self.registrationStatus.create(team: unregisteredTeam)
-                } else {
-                    presenter.showLoadingView = false
-                    self.stateController.unwindState()
-                }
-            }
+            let unregisteredTeam = UnregisteredTeam(teamName: teamName, email: email, emailCode: activationCode, fullName: fullName, password: password, accentColor: UIColor.indexedAccentColor())
+            registrationStatus.create(team: unregisteredTeam)
 
         default:
             break

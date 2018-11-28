@@ -52,10 +52,7 @@ import Cartography
         }
     }
 
-    lazy private var showComposeButtons: Bool = {
-        let debugHideComposeButtonsOverride = false // Set this to not show the compose buttons when debugging
-        return DeveloperMenuState.developerMenuEnabled() && !debugHideComposeButtonsOverride
-    }()
+    private let showComposeButtons: Bool = false // Set this to show the compose buttons
 
     var showSeparator: Bool {
         set { separator.fadeAndHide(!newValue) }
