@@ -41,6 +41,6 @@ class RightIconDetailsCell: DetailsCollectionViewCell {
         accessoryIconView.translatesAutoresizingMaskIntoConstraints = false
         accessoryIconView.contentMode = .center
 
-        contentStackView.insertArrangedSubview(accessoryIconView, at: contentStackView.arrangedSubviews.count - 1)
+        contentStackView.insertArrangedSubview(accessoryIconView, at: contentStackView.arrangedSubviews.count)
     }
 }
