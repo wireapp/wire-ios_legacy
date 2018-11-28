@@ -371,6 +371,7 @@ extension ZMSnapshotTestCase {
             RunLoop.current.run(until: Date(timeIntervalSinceNow: 0.1))
         }
 
+        view.layer.speed = 0 // freeze animations for deterministic tests
         snapshotVerify(view: container,
                        identifier: finalIdentifier,
                        suffix: FBSnapshotTestCaseDefaultSuffixes(),
@@ -408,6 +409,7 @@ extension ZMSnapshotTestCase {
 
         configuration?(view)
 
+        view.layer.speed = 0 // freeze animations for deterministic tests
         snapshotVerify(view: container,
                        identifier:"\(Int(width))",
             tolerance: tolerance,
