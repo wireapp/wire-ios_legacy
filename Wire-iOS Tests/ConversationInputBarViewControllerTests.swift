@@ -59,7 +59,11 @@ final class ConversationInputBarViewControllerAudioRecorderSnapshotTests: CoreDa
 
         sut = ConversationInputBarViewController(conversation: otherUserConversation)
         sut.audioSession = MockAudioSession()
-        sut.loadViewIfNeeded()
+//        sut.loadViewIfNeeded()
+
+        //HACK: prevent a crash from pureLayout when creating constraint in a zero size frame
+        // A multiplier of 0 or a nil second item together with a location for the first attribute creates an illegal constraint of a location equal to a constant. Location attributes must be specified in pairs."
+        sut.view.frame = CGRect(origin: .zero, size: CGSize(width: 320, height: 320))
 
         sut.createAudioRecord()
     }
@@ -80,10 +84,10 @@ final class ConversationInputBarViewControllerAudioRecorderSnapshotTests: CoreDa
         // WHEN
         let mockLongPressGestureRecognizer = MockLongPressGestureRecognizer(location: .zero, state: .began)
         sut.audioButtonLongPressed(mockLongPressGestureRecognizer)
-        sut.view.layoutIfNeeded()
+//        sut.view.layoutIfNeeded()
 
         // THEN
-        self.verifyInAllPhoneWidths(view: sut.view)
+        verifyInAllPhoneWidths(view: sut.view)
     }
 
     func testAudioRecorderTouchChanged() {
@@ -139,9 +143,6 @@ final class ConversationInputBarViewControllerTests: CoreDataSnapshotTestCase {
 extension ConversationInputBarViewControllerTests {
     func testEphemeralIndicatorButton(){ ///TODO: broken constraint? the placeholder label's position.y is not always the same
         // GIVEN
-        sut = ConversationInputBarViewController(conversation: otherUserConversation)
-        // call viewDidLoad
-        sut.loadViewIfNeeded()
 
         // WHEN
         sut.mode = .timeoutConfguration
@@ -153,9 +154,7 @@ extension ConversationInputBarViewControllerTests {
 
     func testEphemeralTimeNone(){
         // GIVEN
-        sut = ConversationInputBarViewController(conversation: otherUserConversation)
-        sut.viewDidLoad()
-        
+
         // WHEN
         sut.mode = .timeoutConfguration
         otherUserConversation.messageDestructionTimeout = .local(.none)
@@ -167,10 +166,7 @@ extension ConversationInputBarViewControllerTests {
 
     func testEphemeralTime10Second() {
         // GIVEN
-        sut = ConversationInputBarViewController(conversation: otherUserConversation)
-        
-        sut.viewDidLoad()
-        
+
         // WHEN
         sut.mode = .timeoutConfguration
         otherUserConversation.messageDestructionTimeout = .local(10)
@@ -184,10 +180,7 @@ extension ConversationInputBarViewControllerTests {
     
     func testEphemeralTime5Minutes() {
         // GIVEN
-        sut = ConversationInputBarViewController(conversation: otherUserConversation)
-        
-        sut.viewDidLoad()
-        
+
         // WHEN
         sut.mode = .timeoutConfguration
         otherUserConversation.messageDestructionTimeout = .local(300)
@@ -201,10 +194,7 @@ extension ConversationInputBarViewControllerTests {
     
     func testEphemeralTime2Hours() {
         // GIVEN
-        sut = ConversationInputBarViewController(conversation: otherUserConversation)
-        
-        sut.viewDidLoad()
-        
+
         // WHEN
         sut.mode = .timeoutConfguration
         otherUserConversation.messageDestructionTimeout = .local(7200)
@@ -218,10 +208,7 @@ extension ConversationInputBarViewControllerTests {
     
     func testEphemeralTime3Days() {
         // GIVEN
-        sut = ConversationInputBarViewController(conversation: otherUserConversation)
-        
-        sut.viewDidLoad()
-        
+
         // WHEN
         sut.mode = .timeoutConfguration
         otherUserConversation.messageDestructionTimeout = .local(259200)
@@ -235,9 +222,6 @@ extension ConversationInputBarViewControllerTests {
 
     func testEphemeralTime4Weeks(){
         // GIVEN
-        sut = ConversationInputBarViewController(conversation: otherUserConversation)
-
-        sut.viewDidLoad()
 
         // WHEN
         sut.mode = .timeoutConfguration
@@ -252,10 +236,7 @@ extension ConversationInputBarViewControllerTests {
     
     func testEphemeralTime1Year() {
         // GIVEN
-        sut = ConversationInputBarViewController(conversation: otherUserConversation)
-        
-        sut.viewDidLoad()
-        
+
         // WHEN
         sut.mode = .timeoutConfguration
         otherUserConversation.messageDestructionTimeout = .local(31540000)
@@ -269,9 +250,6 @@ extension ConversationInputBarViewControllerTests {
 
     func testEphemeralModeWhenTyping() {
         // GIVEN
-        sut = ConversationInputBarViewController(conversation: otherUserConversation)
-
-        sut.viewDidLoad()
 
         // WHEN
         sut.mode = .timeoutConfguration

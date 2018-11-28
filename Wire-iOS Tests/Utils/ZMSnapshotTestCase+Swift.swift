@@ -450,6 +450,13 @@ extension ZMSnapshotTestCase {
         return ZMSnapshotTestCase.ZMDeviceSizeIPhone5
     }
 
+
+    /// verify the snapshot with default iphone size
+    ///
+    /// - Parameters:
+    ///   - view: the view to verify
+    ///   - file: file of the source
+    ///   - line: line of the source
     func verifyInIPhoneSize(view: UIView, file: StaticString = #file, line: UInt = #line) {
 
         view.translatesAutoresizingMaskIntoConstraints = false
