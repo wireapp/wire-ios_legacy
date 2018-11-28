@@ -62,7 +62,7 @@ class CallQualityControllerTests: ZMSnapshotTestCase {
         CallQualityController.resetSurveyMuteFilter()
         let qualityController = CallQualityViewController.configureSurveyController(callDuration: 10)
         self.qualityController = qualityController
-        verifyInAllDeviceSizes(view: qualityController.view, configuration: configure)
+        verifyInAllDeviceSizes(view: qualityController.view, configurationBlock: configure)
     }
 
 }
