@@ -49,14 +49,6 @@ public class ReactionCell: UICollectionViewCell {
             
             self.userImageView.user = user
             self.userDisplayNameLabel.text = user.name
-
-            if let handle = user.handle {
-                displayNameTopConstraint?.isActive = true
-                displayNameVerticalConstraint?.isActive = false
-            } else {
-                displayNameTopConstraint?.isActive = false
-                displayNameVerticalConstraint?.isActive = true
-            }
         }
     }
     
@@ -99,6 +91,14 @@ public class ReactionCell: UICollectionViewCell {
     func configure(user: ZMUser, subtitle: String? = nil) {
         self.user = user
         self.subtitleLabel.text = subtitle
+
+        if subtitle != nil {
+            displayNameTopConstraint?.isActive = true
+            displayNameVerticalConstraint?.isActive = false
+        } else {
+            displayNameTopConstraint?.isActive = false
+            displayNameVerticalConstraint?.isActive = true
+        }
     }
 
     required public init?(coder aDecoder: NSCoder) {
