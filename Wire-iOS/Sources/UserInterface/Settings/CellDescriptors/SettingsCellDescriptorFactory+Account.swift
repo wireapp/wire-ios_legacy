@@ -77,7 +77,7 @@ extension SettingsCellDescriptorFactory {
     
     func privacySection() -> SettingsSectionDescriptorType {
         return SettingsSectionDescriptor(
-            cellDescriptors: [enableReadReceiptsElement()],
+            cellDescriptors: [readReceiptsEnabledElement()],
             header: "self.settings.privacy_section_group.title".localized,
             footer: "self.settings.privacy_section_group.subtitle".localized
         )
@@ -210,8 +210,8 @@ extension SettingsCellDescriptorFactory {
         )
     }
     
-    func enableReadReceiptsElement() -> SettingsCellDescriptorType {
-        return SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.enableReadReceipts))
+    func readReceiptsEnabledElement() -> SettingsCellDescriptorType {
+        return SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.readReceiptsEnabled))
     }
 
     func backUpElement() -> SettingsCellDescriptorType {
