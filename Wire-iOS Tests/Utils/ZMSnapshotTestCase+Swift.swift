@@ -208,7 +208,7 @@ extension ZMSnapshotTestCase {
 
 // MARK: - UIAlertController
 extension ZMSnapshotTestCase {
-    func verifyAlertController(_ controller: UIAlertController, file: StaticString = #file, line: UInt = #line) {
+    func presentViewController(_ controller: UIViewController, file: StaticString = #file, line: UInt = #line) {
         // Given
         let window = UIWindow(frame: .init(x: 0, y: 0, width: 375, height: 667))
         let container = UIViewController()
@@ -227,6 +227,19 @@ extension ZMSnapshotTestCase {
 
         // Then
         waitForExpectations(timeout: 2, handler: nil)
+    }
+
+    func dismissViewController(_ controller: UIViewController, file: StaticString = #file, line: UInt = #line) {
+        let dismissalExpectation = expectation(description: "It should be dismissed")
+        controller.dismiss(animated: false) {
+            dismissalExpectation.fulfill()
+        }
+
+        waitForExpectations(timeout: 2, handler: nil)
+    }
+
+    func verifyAlertController(_ controller: UIAlertController, file: StaticString = #file, line: UInt = #line) {
+        presentViewController(controller, file: file, line: line)
         verify(view: controller.view, file: file, line: line)
     }
 }

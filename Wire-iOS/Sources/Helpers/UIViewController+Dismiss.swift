@@ -1,4 +1,4 @@
-////
+//
 // Wire
 // Copyright (C) 2018 Wire Swiss GmbH
 //
@@ -16,20 +16,23 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-@class Button;
+import UIKit
 
-@interface TermsOfUseStepViewController ()
+extension UIViewController {
 
-@property (nonatomic) UILabel *titleLabel;
-@property (nonatomic) UITextView *termsOfUseText;
-@property (nonatomic) Button *agreeButton;
-@property (nonatomic) UIView *containerView;
-@property (nonatomic) BOOL initialConstraintsCreated;
-@property (nonatomic) id device;
+    /// Returns whether the view controller can be dismissed.
+    var canBeDismissed: Bool {
+        return self.presentingViewController?.presentedViewController == self
+            || (navigationController != nil && navigationController?.presentingViewController?.presentedViewController == navigationController)
+    }
 
-@property (nonatomic) NSArray<NSLayoutConstraint *> *containerViewEdges;
-@property (nonatomic) NSLayoutConstraint *containerViewWidth;
-@property (nonatomic) NSLayoutConstraint *containerViewHeight;
-@property (nonatomic) NSArray<NSLayoutConstraint *> *containerViewCenter;
+    /// Dismisses the view controller if needed before performing the specified actions.
+    func dismissIfNeeded(animated: Bool, completion: (() -> Void)? = nil) {
+        if canBeDismissed {
+            dismiss(animated: animated, completion: completion)
+        } else {
+            completion?()
+        }
+    }
 
-@end
+}

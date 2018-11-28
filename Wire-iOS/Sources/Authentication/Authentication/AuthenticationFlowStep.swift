@@ -115,7 +115,7 @@ indirect enum AuthenticationFlowStep: Equatable {
  */
 
 enum IntermediateRegistrationStep: Equatable {
-    case start, reviewTermsOfService, provideMarketingConsent, setName
+    case start, provideMarketingConsent, setName
 
     var needsInterface: Bool {
         switch self {
