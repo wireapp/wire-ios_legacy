@@ -29,7 +29,7 @@ public class ReactionCell: UICollectionViewCell {
 
         return label
     }()
-    public let usernameLabel: UILabel = {
+    public let subtitleLabel: UILabel = {
         let label = UILabel()
         label.font = .smallSemiboldFont
         label.textColor = .from(scheme: .textDimmed)
@@ -44,7 +44,6 @@ public class ReactionCell: UICollectionViewCell {
         didSet {
             guard let user = self.user else {
                 self.userDisplayNameLabel.text = ""
-                self.usernameLabel.text = ""
                 return
             }
             
@@ -54,11 +53,9 @@ public class ReactionCell: UICollectionViewCell {
             if let handle = user.handle {
                 displayNameTopConstraint?.isActive = true
                 displayNameVerticalConstraint?.isActive = false
-                usernameLabel.text = "@" + handle
             } else {
                 displayNameTopConstraint?.isActive = false
                 displayNameVerticalConstraint?.isActive = true
-                usernameLabel.text = ""
             }
         }
     }
@@ -70,12 +67,12 @@ public class ReactionCell: UICollectionViewCell {
         self.userImageView.initialsFont = UIFont.systemFont(ofSize: 11, weight: UIFont.Weight.light)
         
         self.contentView.addSubview(self.userDisplayNameLabel)
-        self.contentView.addSubview(self.usernameLabel)
+        self.contentView.addSubview(self.subtitleLabel)
         self.contentView.addSubview(self.userImageView)
 
         let verticalOffset: CGFloat = 3
         
-        constrain(self.contentView, self.userImageView, self.userDisplayNameLabel, self.usernameLabel) { contentView, userImageView, userDisplayNameLabel, usernameLabel in
+        constrain(self.contentView, self.userImageView, self.userDisplayNameLabel, self.subtitleLabel) { contentView, userImageView, userDisplayNameLabel, subtitleLabel in
             userImageView.leading == contentView.leading + 24
             userImageView.width == userImageView.height
             userImageView.top == contentView.top + 8
@@ -84,9 +81,9 @@ public class ReactionCell: UICollectionViewCell {
             userDisplayNameLabel.leading == userImageView.trailing + 24
             userDisplayNameLabel.trailing <= contentView.trailing - 24
 
-            usernameLabel.top == contentView.centerY + verticalOffset
-            usernameLabel.leading == userDisplayNameLabel.leading
-            usernameLabel.trailing <= contentView.trailing - 24
+            subtitleLabel.top == contentView.centerY + verticalOffset
+            subtitleLabel.leading == userDisplayNameLabel.leading
+            subtitleLabel.trailing <= contentView.trailing - 24
 
             displayNameTopConstraint = userDisplayNameLabel.bottom == contentView.centerY + verticalOffset
             displayNameVerticalConstraint = userDisplayNameLabel.centerY == userImageView.centerY
@@ -99,7 +96,11 @@ public class ReactionCell: UICollectionViewCell {
         contentView.backgroundColor = .from(scheme: .textBackground)
     }
 
-    
+    func configure(user: ZMUser, subtitle: String? = nil) {
+        self.user = user
+        self.subtitleLabel.text = subtitle
+    }
+
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

@@ -284,6 +284,9 @@
 		5E766D9F21147697005242B4 /* AuthenticationCoordinatorDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E766D9E21147697005242B4 /* AuthenticationCoordinatorDelegate.swift */; };
 		5E769C5421AD89A900785EB7 /* UIViewController+Dismiss.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E769C5321AD89A900785EB7 /* UIViewController+Dismiss.swift */; };
 		5E769C5621AD8ABD00785EB7 /* DismissalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E769C5521AD8ABD00785EB7 /* DismissalTests.swift */; };
+		5E769C5821AE948F00785EB7 /* MessageDetailsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E769C5721AE948E00785EB7 /* MessageDetailsDataSource.swift */; };
+		5E769C5A21AE97E600785EB7 /* MessageDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E769C5921AE97E500785EB7 /* MessageDetailsViewController.swift */; };
+		5E769C5C21AEA3CB00785EB7 /* MesageDetailsContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E769C5B21AEA3CB00785EB7 /* MesageDetailsContentViewController.swift */; };
 		5E7E496A20F37DAA0005C602 /* Ziphy+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E7E496920F37DAA0005C602 /* Ziphy+Convenience.swift */; };
 		5E8C38A8212D5AF7002AE12B /* RegistrationSessionAvailableEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8C38A7212D5AF7002AE12B /* RegistrationSessionAvailableEventHandler.swift */; };
 		5E8C38AA212D7003002AE12B /* VerificationCodeStepViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8C38A9212D7003002AE12B /* VerificationCodeStepViewControllerTests.swift */; };
@@ -1791,6 +1794,9 @@
 		5E766D9E21147697005242B4 /* AuthenticationCoordinatorDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationCoordinatorDelegate.swift; sourceTree = "<group>"; };
 		5E769C5321AD89A900785EB7 /* UIViewController+Dismiss.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Dismiss.swift"; sourceTree = "<group>"; };
 		5E769C5521AD8ABD00785EB7 /* DismissalTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DismissalTests.swift; sourceTree = "<group>"; };
+		5E769C5721AE948E00785EB7 /* MessageDetailsDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageDetailsDataSource.swift; sourceTree = "<group>"; };
+		5E769C5921AE97E500785EB7 /* MessageDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageDetailsViewController.swift; sourceTree = "<group>"; };
+		5E769C5B21AEA3CB00785EB7 /* MesageDetailsContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MesageDetailsContentViewController.swift; sourceTree = "<group>"; };
 		5E7E496920F37DAA0005C602 /* Ziphy+Convenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ziphy+Convenience.swift"; sourceTree = "<group>"; };
 		5E8C38A7212D5AF7002AE12B /* RegistrationSessionAvailableEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationSessionAvailableEventHandler.swift; sourceTree = "<group>"; };
 		5E8C38A9212D7003002AE12B /* VerificationCodeStepViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationCodeStepViewControllerTests.swift; sourceTree = "<group>"; };
@@ -4828,6 +4834,9 @@
 			children = (
 				875F89161D6F35EC00D8748E /* ReactionsListViewController.swift */,
 				873151101D75D0C000284C1F /* ReactionCell.swift */,
+				5E769C5721AE948E00785EB7 /* MessageDetailsDataSource.swift */,
+				5E769C5921AE97E500785EB7 /* MessageDetailsViewController.swift */,
+				5E769C5B21AEA3CB00785EB7 /* MesageDetailsContentViewController.swift */,
 			);
 			path = "Message Details";
 			sourceTree = "<group>";
@@ -7489,6 +7498,7 @@
 				871BC3621D34F94200DF0793 /* Settings.m in Sources */,
 				EF47971E211E398000EDFC15 /* MessagePresenter+OpenFile.swift in Sources */,
 				7C17ECA81F7508980056600C /* PreviewHeightCalculator.swift in Sources */,
+				5E769C5C21AEA3CB00785EB7 /* MesageDetailsContentViewController.swift in Sources */,
 				EF33204C21496A0D0079E832 /* AVPlayerViewController+StatusBarAndNotification.swift in Sources */,
 				8712134B1FA37882008B6767 /* TrackingManager.swift in Sources */,
 				871BC3541D34F94200DF0793 /* AudioHeaderView.m in Sources */,
@@ -8009,6 +8019,7 @@
 				D53D39102059784900B87DAD /* ConversationActionController+CancelRequest.swift in Sources */,
 				AF36C59F1E9F67B600FADECC /* DraftListViewController.swift in Sources */,
 				EF1F9A021FBB1FD800969DD1 /* LandingButton.swift in Sources */,
+				5E769C5821AE948F00785EB7 /* MessageDetailsDataSource.swift in Sources */,
 				8733378A1DF5B43A006AE609 /* SwiftDependencies.swift in Sources */,
 				1660F23A1FBF32D400A0EE54 /* MediaPlayerController.swift in Sources */,
 				167961AF20445FB400B72ACC /* ProfileTitleView.swift in Sources */,
@@ -8165,6 +8176,7 @@
 				87F18BB01E01533F00C69D9B /* CollectionFileCell.swift in Sources */,
 				5EA73D8920D901000001D106 /* ImageContainer.swift in Sources */,
 				5E8DA768211B2D9A00360979 /* AuthenticationSuccessEventHandler.swift in Sources */,
+				5E769C5A21AE97E600785EB7 /* MessageDetailsViewController.swift in Sources */,
 				164C29AB1ED33A5F0026562A /* SearchResultsViewController.swift in Sources */,
 				D5168F522010F20700F8222A /* ShareDestinationCell.swift in Sources */,
 				873C5FE91C10426A00D5132A /* ClientUnregisterFlowViewController.swift in Sources */,

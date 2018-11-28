@@ -137,7 +137,7 @@ class TabBarController: UIViewController, UIPageViewControllerDelegate, UIPageVi
 
     fileprivate func createConstraints() {
         pageViewController.view.fitInSuperview()
-        
+
         if let tabBar = self.tabBar {
             constrain(tabBar, contentView, view) { tabBar, contentView, view in
                 tabBar.top == tabBar.superview!.top
@@ -146,14 +146,6 @@ class TabBarController: UIViewController, UIPageViewControllerDelegate, UIPageVi
                 contentView.top == tabBar.bottom
                 contentView.bottom == view.bottom
             }
-        }
-
-        constrain(contentView, view, pageViewController.view) { contentView, view, pageViewController in
-            if (self.tabBar == nil) { contentView.top == contentView.superview!.top }
-            contentView.left == contentView.superview!.left
-            contentView.right == contentView.superview!.right
-            pageViewController.width == contentView.width
-            pageViewController.height == contentView.height
         }
     }
 
