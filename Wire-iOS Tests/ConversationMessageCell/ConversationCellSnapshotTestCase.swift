@@ -72,8 +72,7 @@ class ConversationCellSnapshotTestCase: CoreDataSnapshotTestCase {
         let stackView = UIStackView(arrangedSubviews: views)
         stackView.axis = .vertical
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.layer.speed = 0 // freeze animations for deterministic tests
-        
+
         if waitForImagesToLoad {
             XCTAssertTrue(waitForGroupsToBeEmpty([defaultImageCache.dispatchGroup]))
         }
