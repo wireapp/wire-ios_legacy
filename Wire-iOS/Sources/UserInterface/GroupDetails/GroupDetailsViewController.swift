@@ -123,10 +123,12 @@ import Cartography
             sections.append(optionsSectionController)            
         }
 
-        let receiptOptionsSectionController = ReceiptOptionsSectionController(conversation: conversation,
-                                                                              syncCompleted: didCompleteInitialSync,
-                                                                              collectionView: self.collectionViewController.collectionView!)
-        sections.append(receiptOptionsSectionController)
+        if let selfUser = ZMUser.selfUser(), selfUser.isTeamMember {
+            let receiptOptionsSectionController = ReceiptOptionsSectionController(conversation: conversation,
+                                                                                  syncCompleted: didCompleteInitialSync,
+                                                                                  collectionView: self.collectionViewController.collectionView!)
+            sections.append(receiptOptionsSectionController)
+        }
 
         let (participants, serviceUsers) = (conversation.sortedOtherParticipants, conversation.sortedServiceUsers)
         if !participants.isEmpty {

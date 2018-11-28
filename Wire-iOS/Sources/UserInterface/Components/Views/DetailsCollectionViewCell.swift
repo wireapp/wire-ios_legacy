@@ -86,7 +86,7 @@ class DetailsCollectionViewCell: SeparatorCollectionViewCell {
         titleStackView.translatesAutoresizingMaskIntoConstraints = false
 
         contentStackView = UIStackView(arrangedSubviews: [leftIconContainer, titleStackView, iconViewSpacer])
-        contentStackView.axis = .horizontal
+        contentStackView.axis = .horizontal 
         contentStackView.distribution = .fill
         contentStackView.alignment = .center
         contentStackView.translatesAutoresizingMaskIntoConstraints = false

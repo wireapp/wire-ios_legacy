@@ -1155,7 +1155,7 @@
 		EF1A461821AD5A270009B6B9 /* GroupDetailsReceiptOptionsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1A461721AD5A270009B6B9 /* GroupDetailsReceiptOptionsCell.swift */; };
 		EF1A461A21AD60510009B6B9 /* ReceiptOptionsSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1A461921AD60510009B6B9 /* ReceiptOptionsSectionController.swift */; };
 		EF1A461C21AD955A0009B6B9 /* GroupDetailsCellProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1A461B21AD955A0009B6B9 /* GroupDetailsCellProtocols.swift */; };
-		EF1A461E21ADACF50009B6B9 /* RightIconDetailsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1A461D21ADACF50009B6B9 /* RightIconDetailsCollectionViewCell.swift */; };
+		EF1A461E21ADACF50009B6B9 /* RightIconDetailsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1A461D21ADACF50009B6B9 /* RightIconDetailsCell.swift */; };
 		EF1EA4631FB0937000B53063 /* MockUser+filename.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1EA4611FB0934D00B53063 /* MockUser+filename.swift */; };
 		EF1EF1C320627075004DB245 /* SignInViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1EF1C220627075004DB245 /* SignInViewControllerTests.swift */; };
 		EF1F99F71FBB06C000969DD1 /* UILabel+TextTransform.m in Sources */ = {isa = PBXBuildFile; fileRef = CE8E4FBA1DF17BBE0009F437 /* UILabel+TextTransform.m */; };
@@ -2925,7 +2925,7 @@
 		EF1A461721AD5A270009B6B9 /* GroupDetailsReceiptOptionsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupDetailsReceiptOptionsCell.swift; sourceTree = "<group>"; };
 		EF1A461921AD60510009B6B9 /* ReceiptOptionsSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReceiptOptionsSectionController.swift; sourceTree = "<group>"; };
 		EF1A461B21AD955A0009B6B9 /* GroupDetailsCellProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDetailsCellProtocols.swift; sourceTree = "<group>"; };
-		EF1A461D21ADACF50009B6B9 /* RightIconDetailsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RightIconDetailsCollectionViewCell.swift; sourceTree = "<group>"; };
+		EF1A461D21ADACF50009B6B9 /* RightIconDetailsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RightIconDetailsCell.swift; sourceTree = "<group>"; };
 		EF1EA4611FB0934D00B53063 /* MockUser+filename.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MockUser+filename.swift"; sourceTree = "<group>"; };
 		EF1EF1C220627075004DB245 /* SignInViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewControllerTests.swift; sourceTree = "<group>"; };
 		EF1EF1C420627305004DB245 /* SignInViewController+internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SignInViewController+internal.h"; sourceTree = "<group>"; };
@@ -4521,7 +4521,7 @@
 			children = (
 				5EA73D8620D901000001D106 /* CheckmarkCell.swift */,
 				5EA73D8420D900FF0001D106 /* DetailsCollectionViewCell.swift */,
-				EF1A461D21ADACF50009B6B9 /* RightIconDetailsCollectionViewCell.swift */,
+				EF1A461D21ADACF50009B6B9 /* RightIconDetailsCell.swift */,
 				5EA73D8520D900FF0001D106 /* ImageContainer.swift */,
 				5EA73D8320D900FE0001D106 /* SeparatorCollectionViewCell.swift */,
 				EF2A8DEC214AA36E002C9058 /* SeparatorViewProtocol.swift */,
@@ -8151,7 +8151,7 @@
 				5EBBE97121878D09008BC1B7 /* ConversationMessageToolboxCell.swift in Sources */,
 				871BC22C1D34F8F800DF0793 /* ImagePickerConfirmationController.m in Sources */,
 				8775BF1E2007CFB200A8AD93 /* UIControlBlockAPI.swift in Sources */,
-				EF1A461E21ADACF50009B6B9 /* RightIconDetailsCollectionViewCell.swift in Sources */,
+				EF1A461E21ADACF50009B6B9 /* RightIconDetailsCell.swift in Sources */,
 				5EE73BF3212323C70032986D /* RegistrationCredentialsVerifiedEventHandler.swift in Sources */,
 				EF2C18A01FED435600E9F2FD /* ConversationCell+BurstTimestamp.swift in Sources */,
 				EE8E926E2024F085000F4752 /* MarkdownTextView.swift in Sources */,
