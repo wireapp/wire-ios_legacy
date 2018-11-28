@@ -19,7 +19,7 @@
 import UIKit
 import WireExtensionComponents
 
-class GroupDetailsReceiptOptionsCell: DetailsCollectionViewCell & ConversationOptionsConfigurable {
+class GroupDetailsReceiptOptionsCell: DetailsCollectionViewCell {
 
     var isOn = false {
         didSet {
@@ -40,12 +40,6 @@ class GroupDetailsReceiptOptionsCell: DetailsCollectionViewCell & ConversationOp
         toggle.addTarget(self, action: #selector(toggleChanged), for: .valueChanged)
     }
 
-    func configure(with conversation: ZMConversation) {
-        ///TODO: wait for Date model update to toggle the conversation's allow receipt option
-        // self.isOn = conversation.allowReceipts
-
-    }
-
     override func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
         super.applyColorScheme(colorSchemeVariant)
         icon = UIImage(for: .eye,
@@ -55,5 +49,13 @@ class GroupDetailsReceiptOptionsCell: DetailsCollectionViewCell & ConversationOp
 
     @objc private func toggleChanged(_ sender: UISwitch) {
         // TODO: set the converation's receipt enabled setting
+    }
+}
+
+extension GroupDetailsReceiptOptionsCell: ConversationOptionsConfigurable {
+    func configure(with conversation: ZMConversation) {
+        ///TODO: wait for Date model update to toggle the conversation's allow receipt option
+        // self.isOn = conversation.allowReceipts
+
     }
 }
