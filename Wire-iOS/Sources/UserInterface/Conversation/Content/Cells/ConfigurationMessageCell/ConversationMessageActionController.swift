@@ -18,60 +18,73 @@
 
 import UIKit
 
-@objc class ConversationCellActionController: NSObject {
+@objc class ConversationMessageActionController: NSObject {
 
-    let message: ZMConversationMessage
-    weak var responder: MessageActionResponder?
+    @objc(ConversationMessageActionControllerContext)
+    enum Context: Int {
+        case content, collection
+    }
 
-    @objc init(responder: MessageActionResponder?, message: ZMConversationMessage) {
+    @objc let message: ZMConversationMessage
+    @objc let context: Context
+    @objc weak var responder: MessageActionResponder?
+
+    @objc init(responder: MessageActionResponder?, message: ZMConversationMessage, context: Context) {
         self.responder = responder
         self.message = message
+        self.context = context
     }
 
     // MARK: - List of Actions
 
     @objc static let allMessageActions: [UIMenuItem] = [
-        UIMenuItem(title: "content.message.copy".localized, action: #selector(ConversationCellActionController.copyMessage)),
-        UIMenuItem(title: "content.message.reply".localized, action: #selector(ConversationCellActionController.quoteMessage)),
-        UIMenuItem(title: "message.menu.edit.title".localized, action: #selector(ConversationCellActionController.editMessage)),
-        UIMenuItem(title: "content.message.delete".localized, action: #selector(ConversationCellActionController.deleteMessage)),
-        UIMenuItem(title: "content.message.save".localized, action: #selector(ConversationCellActionController.saveMessage)),
-        UIMenuItem(title: "content.message.download".localized, action: #selector(ConversationCellActionController.downloadMessage)),
-        UIMenuItem(title: "content.message.forward".localized, action: #selector(ConversationCellActionController.forwardMessage)),
-        UIMenuItem(title: "content.message.like".localized, action: #selector(ConversationCellActionController.likeMessage)),
-        UIMenuItem(title: "content.message.unlike".localized, action: #selector(ConversationCellActionController.unlikeMessage)),
-        UIMenuItem(title: "content.message.resend".localized, action: #selector(ConversationCellActionController.resendMessage))
+        UIMenuItem(title: "content.message.copy".localized, action: #selector(ConversationMessageActionController.copyMessage)),
+        UIMenuItem(title: "content.message.reply".localized, action: #selector(ConversationMessageActionController.quoteMessage)),
+        UIMenuItem(title: "message.menu.edit.title".localized, action: #selector(ConversationMessageActionController.editMessage)),
+        UIMenuItem(title: "content.message.delete".localized, action: #selector(ConversationMessageActionController.deleteMessage)),
+        UIMenuItem(title: "content.message.save".localized, action: #selector(ConversationMessageActionController.saveMessage)),
+        UIMenuItem(title: "general.cancel".localized, action: #selector(ConversationMessageActionController.cancelDownloadingMessage)),
+        UIMenuItem(title: "content.message.download".localized, action: #selector(ConversationMessageActionController.downloadMessage)),
+        UIMenuItem(title: "content.message.forward".localized, action: #selector(ConversationMessageActionController.forwardMessage)),
+        UIMenuItem(title: "content.message.like".localized, action: #selector(ConversationMessageActionController.likeMessage)),
+        UIMenuItem(title: "content.message.unlike".localized, action: #selector(ConversationMessageActionController.unlikeMessage)),
+        UIMenuItem(title: "content.message.resend".localized, action: #selector(ConversationMessageActionController.resendMessage)),
+        UIMenuItem(title: "content.message.go_to_conversation".localized, action: #selector(ConversationMessageActionController.revealMessage))
     ]
 
     @objc func canPerformAction(_ selector: Selector) -> Bool {
         switch selector {
-        case #selector(ConversationCellActionController.copyMessage):
+        case #selector(ConversationMessageActionController.copyMessage):
             return message.canBeCopied
-        case #selector(ConversationCellActionController.editMessage):
+        case #selector(ConversationMessageActionController.editMessage):
             return message.canBeEdited
-        case #selector(ConversationCellActionController.quoteMessage):
+        case #selector(ConversationMessageActionController.quoteMessage):
             return message.canBeQuoted
-        case #selector(ConversationCellActionController.downloadMessage):
+        case #selector(ConversationMessageActionController.cancelDownloadingMessage):
+            return message.canCancelDownload
+        case #selector(ConversationMessageActionController.downloadMessage):
             return message.canBeDownloaded
-        case #selector(ConversationCellActionController.saveMessage):
+        case #selector(ConversationMessageActionController.saveMessage):
             return message.canBeSaved
-        case #selector(ConversationCellActionController.forwardMessage):
+        case #selector(ConversationMessageActionController.forwardMessage):
             return message.canBeForwarded
-        case #selector(ConversationCellActionController.likeMessage):
+        case #selector(ConversationMessageActionController.likeMessage):
             return message.canBeLiked && !message.liked
-        case #selector(ConversationCellActionController.unlikeMessage):
+        case #selector(ConversationMessageActionController.unlikeMessage):
             return message.canBeLiked && message.liked
-        case #selector(ConversationCellActionController.deleteMessage):
+        case #selector(ConversationMessageActionController.deleteMessage):
             return message.canBeDeleted
-        case #selector(ConversationCellActionController.resendMessage):
+        case #selector(ConversationMessageActionController.resendMessage):
             return message.canBeResent
+        case #selector(ConversationMessageActionController.revealMessage):
+            return context == .collection
         default:
             return false
         }
     }
 
     @objc func makePreviewActions() -> [UIPreviewAction] {
-        return ConversationCellActionController.allMessageActions
+        return ConversationMessageActionController.allMessageActions
             .filter { self.canPerformAction($0.action) }
             .map { menuItem in
                 UIPreviewAction(title: menuItem.title, style: .default) { [weak self] _, _ in
@@ -117,6 +130,10 @@ import UIKit
         responder?.wants(toPerform: .reply, for: message)
     }
 
+    @objc func cancelDownloadingMessage() {
+        responder?.wants(toPerform: .cancel, for: message)
+    }
+
     @objc func downloadMessage() {
         responder?.wants(toPerform: .download, for: message)
     }
@@ -143,6 +160,10 @@ import UIKit
     
     @objc func resendMessage() {
         responder?.wants(toPerform: .resend, for: message)
+    }
+
+    @objc func revealMessage() {
+        responder?.wants(toPerform: .showInConversation, for: message)
     }
 
 }

@@ -31,7 +31,7 @@
 @class AdditionalMenuItem;
 @class MenuConfigurationProperties;
 @class UserImageView;
-@class ConversationCellActionController;
+@class ConversationMessageActionController;
 
 extern const CGFloat ConversationCellSelectedOpacity;
 extern const NSTimeInterval ConversationCellSelectionAnimationDuration;
@@ -95,7 +95,7 @@ typedef void (^SelectedMenuBlock)(BOOL selected, BOOL animated);
 @property (nonatomic) UIFont *burstNormalFont;
 @property (nonatomic) UIFont *burstBoldFont;
 
-@property (nonatomic) ConversationCellActionController *actionController;
+@property (nonatomic) ConversationMessageActionController *actionController;
 
 - (void)configureForMessage:(id<ZMConversationMessage>)message layoutProperties:(ConversationCellLayoutProperties *)layoutProperties;
 /// Update cell due since the message content has changed. Return True if the change requires the cell to be re-sized.

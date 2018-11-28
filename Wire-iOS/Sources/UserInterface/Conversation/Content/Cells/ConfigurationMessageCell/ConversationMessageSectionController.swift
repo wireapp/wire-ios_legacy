@@ -70,7 +70,7 @@ extension IndexSet {
     @objc var useInvertedIndices = false
 
     /// The object that controls actions for the cell.
-    @objc var actionController: ConversationCellActionController?
+    @objc var actionController: ConversationMessageActionController?
 
     /// The message that is being presented.
     @objc var message: ZMConversationMessage

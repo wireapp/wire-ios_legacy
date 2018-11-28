@@ -62,6 +62,7 @@ done
 if [ -e "${CONFIGURATION_LOCATION}" ]; then
     pushd ${CONFIGURATION_LOCATION} &> /dev/null
     echo "Pulling configuration..."
+    git stash # Stash in case there are some changes here
     git pull
     popd &> /dev/null
 else

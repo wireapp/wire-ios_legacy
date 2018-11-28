@@ -19,7 +19,7 @@
 import XCTest
 @testable import Wire
 
-class ConversationCellActionControllerTests: CoreDataSnapshotTestCase {
+class ConversationMessageActionControllerTests: CoreDataSnapshotTestCase {
     
     // MARK: - Single Tap Action
     
@@ -30,7 +30,7 @@ class ConversationCellActionControllerTests: CoreDataSnapshotTestCase {
         message.conversation = otherUserConversation
         
         // WHEN
-        let actionController = ConversationCellActionController(responder: nil, message: message)
+        let actionController = ConversationMessageActionController(responder: nil, message: message, context: .content)
         let singleTapAction = actionController.singleTapAction
         
         // THEN
@@ -44,7 +44,7 @@ class ConversationCellActionControllerTests: CoreDataSnapshotTestCase {
         message.conversation = otherUserConversation
         
         // WHEN
-        let actionController = ConversationCellActionController(responder: nil, message: message)
+        let actionController = ConversationMessageActionController(responder: nil, message: message, context: .content)
         let singleTapAction = actionController.singleTapAction
         
         // THEN
@@ -61,8 +61,8 @@ class ConversationCellActionControllerTests: CoreDataSnapshotTestCase {
         message.deliveryState = .failedToSend
 
         // WHEN
-        let actionController = ConversationCellActionController(responder: nil, message: message)
-        let supportsReply = actionController.canPerformAction(#selector(ConversationCellActionController.quoteMessage))
+        let actionController = ConversationMessageActionController(responder: nil, message: message, context: .content)
+        let supportsReply = actionController.canPerformAction(#selector(ConversationMessageActionController.quoteMessage))
 
         // THEN
         XCTAssertFalse(supportsReply)

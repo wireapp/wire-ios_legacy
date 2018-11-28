@@ -58,23 +58,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
             [[NSFileManager defaultManager] copyItemAtURL:sourceLocation toURL:destLocation error:nil];
             [self uploadFileAtURL:destLocation];
         }];
-    }];
-    [docController addOptionWithTitle:NSLocalizedString(@"group-icon@3x.png", nil) image:nil order:UIDocumentMenuOrderFirst handler:^{
-        [[ZMUserSession sharedSession] enqueueChanges:^{
-            NSURL *sourceLocation = [[NSBundle bundleForClass:self.class] URLForResource:@"group-icon@3x" withExtension:@"png"];
-            
-            NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-            NSString *basePath = paths.firstObject;
-            
-            
-            NSString *destLocationString = [basePath stringByAppendingPathComponent:sourceLocation.lastPathComponent];
-            NSURL *destLocation = [NSURL fileURLWithPath:destLocationString];
-            
-            [[NSFileManager defaultManager] copyItemAtURL:sourceLocation toURL:destLocation error:nil];
-            [self uploadFileAtURL:destLocation];
-        }];
-    }];
-    
+    }];    
     [self appendUploadTestOptionTo:docController
                               size:(NSUInteger)[[ZMUserSession sharedSession] maxUploadFileSize] + 1
                              title:NSLocalizedString(@"Big file", nil)

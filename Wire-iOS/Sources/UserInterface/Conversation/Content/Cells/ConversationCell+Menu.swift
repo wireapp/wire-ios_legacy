@@ -35,7 +35,7 @@ public extension ConversationCell {
             becomeFirstResponder()
         }
         
-        UIMenuController.shared.menuItems = ConversationCellActionController.allMessageActions
+        UIMenuController.shared.menuItems = ConversationMessageActionController.allMessageActions
         UIMenuController.shared.setTargetRect(selectionRect, in: selectionView)
         UIMenuController.shared.setMenuVisible(true, animated: true)
     }

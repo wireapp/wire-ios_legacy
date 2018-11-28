@@ -22,7 +22,6 @@ import Cartography
 import WireDataModel
 
 public protocol CollectionsViewControllerDelegate: class {
-    /// NB: only showInConversation, forward, copy and save actions are forwarded to delegate
     func collectionsViewController(_ viewController: CollectionsViewController, performAction: MessageAction, onMessage: ZMConversationMessage)
 }
 
@@ -299,45 +298,7 @@ public protocol CollectionsViewControllerDelegate: class {
             self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
         }
     }
-    
-    public func perform(_ action: MessageAction, for message: ZMConversationMessage, from view: UIView) {
-        switch (action) {
-        case .cancel:
-            self.selectedMessage = .none
-            ZMUserSession.shared()?.enqueueChanges {
-                message.fileMessageData?.cancelTransfer()
-            }
-        case .present:
-            self.selectedMessage = message
-                        
-            if message.isImage {
-                let imagesController = ConversationImagesViewController(collection: self.collection, initialMessage: message)
-            
-                let backButton = CollectionsView.backButton()
-                backButton.addTarget(self, action: #selector(CollectionsViewController.backButtonPressed(_:)), for: .touchUpInside)
 
-                let closeButton = CollectionsView.closeButton()
-                closeButton.addTarget(self, action: #selector(CollectionsViewController.closeButtonPressed(_:)), for: .touchUpInside)
-
-                imagesController.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
-                imagesController.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: closeButton)
-                imagesController.swipeToDismiss = false
-                imagesController.messageActionDelegate = self
-                self.navigationController?.pushViewController(imagesController, animated: true)
-            }
-            else {
-                self.messagePresenter.open(message, targetView: view, actionResponder: self)
-            }
-
-        case .save:
-            guard let saveController = UIActivityViewController(message: message, from: view) else { return }
-            present(saveController, animated: true, completion: nil)
-            
-        default:
-            break
-        }
-    }
-    
     @objc func closeButtonPressed(_ button: UIButton) {
         self.onDismiss?(self)
     }
@@ -517,6 +478,8 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
         
         return self.elements(for: section).count > 0 ? UIEdgeInsets(top: 0, left: 16, bottom: 8, right: 16) : .zero
     }
+
+    // MARK: - Data Source
     
     public func numberOfSections(in collectionView: UICollectionView) -> Int {
         return CollectionsSectionSet.visible.count
@@ -583,22 +546,7 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
         
         return resultCell
     }
-    
-    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        guard let section = CollectionsSectionSet(index: UInt(section)) else {
-            fatal("Unknown section")
-        }
-        
-        if section == CollectionsSectionSet.loading {
-            return .zero
-        }
-        return self.elements(for: section).count > 0 ? CGSize(width: collectionView.bounds.size.width, height: 48) : .zero
-    }
-    
-    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-        return .zero
-    }
-    
+
     public func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         guard let section = CollectionsSectionSet(index: UInt(indexPath.section)) else {
             fatal("Unknown section")
@@ -626,9 +574,38 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
             fatal("No supplementary view for \(kind)")
         }
     }
+
+    // MARK: - Layout
+
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        guard let section = CollectionsSectionSet(index: UInt(section)) else {
+            fatal("Unknown section")
+        }
+
+        if section == CollectionsSectionSet.loading {
+            return .zero
+        }
+        return self.elements(for: section).count > 0 ? CGSize(width: collectionView.bounds.size.width, height: 48) : .zero
+    }
+
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+        return .zero
+    }
+
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        guard let section = CollectionsSectionSet(index: UInt(section)) else {
+            fatal("Unknown section")
+        }
+        return self.sectionInsets(in: section)
+    }
+
+    // MARK: - Delegate
     
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let section = CollectionsSectionSet(index: UInt(indexPath.section)) else {
+        guard
+            let section = CollectionsSectionSet(index: UInt(indexPath.section)),
+            let cell = collectionView.cellForItem(at: indexPath) as? CollectionCell
+        else {
             fatal("Unknown section")
         }
         
@@ -637,15 +614,9 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
         }
         
         let message = self.message(for: indexPath)
-        self.perform(.present, for: message, from: collectionView.cellForItem(at: indexPath)!)
+        self.perform(.present, for: message, source: cell)
     }
     
-    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        guard let section = CollectionsSectionSet(index: UInt(section)) else {
-            fatal("Unknown section")
-        }
-        return self.sectionInsets(in: section)
-    }
 }
 
 extension CollectionsViewController: UICollectionViewDataSourcePrefetching {
@@ -662,34 +633,11 @@ extension CollectionsViewController: UICollectionViewDataSourcePrefetching {
     }
 }
 
-extension CollectionsViewController: CollectionCellDelegate {
-    func collectionCell(_ cell: CollectionCell, performAction action: MessageAction) {
-        guard let message = cell.message else {
-            fatal("Cell does not have a message: \(cell)")
-        }
-        
-        switch action {
-        case .forward, .showInConversation:
-            self.delegate?.collectionsViewController(self, performAction: action, onMessage: message)
-        case .delete:
-            deletionDialogPresenter?.presentDeletionAlertController(forMessage: message, source: cell) { [weak self] deleted in
-                guard deleted else { return }
-                self?.refetchCollection()
-            }
-        default:
-            if message.isFile {
-                self.perform(action, for: message, from: cell)
-            }
-            else if let linkPreview = message.textMessageData?.linkPreview {
-                linkPreview.openableURL?.open()
-            }
-        }
-    }
-}
+// MARK: - Message Change
 
 extension CollectionsViewController: CollectionCellMessageChangeDelegate {
     public func messageDidChange(_ cell: CollectionCell, changeInfo: MessageChangeInfo) {
-        
+        // Open the file when it is downloaded
         guard let message = self.selectedMessage as? ZMMessage,
               changeInfo.message == message,
               let fileMessageData = message.fileMessageData,
@@ -700,39 +648,10 @@ extension CollectionsViewController: CollectionCellMessageChangeDelegate {
         }
         
         self.messagePresenter.openFileMessage(message, targetView: cell)
-        
     }
 }
 
-extension CollectionsViewController: MessageActionResponder {
-    public func canPerform(_ action: MessageAction, for message: ZMConversationMessage!) -> Bool {
-        if message.isImage {
-            switch action {
-            case .like, .forward, .copy, .save, .showInConversation:
-                return true
-            
-            default:
-                return false
-            }
-        }
-        
-        return false
-    }
-    
-    public func wants(toPerform action: MessageAction, for message: ZMConversationMessage!) {
-        switch action {
-        case .forward, .copy, .save, .showInConversation:
-            self.delegate?.collectionsViewController(self, performAction: action, onMessage: message)
-        case .delete:
-            deletionDialogPresenter?.presentDeletionAlertController(forMessage: message, source: nil) { [weak self] deleted in
-                guard deleted else { return }
-                _ = self?.navigationController?.popViewController(animated: true)
-                self?.refetchCollection()
-            }
-        default: break
-        }
-    }
-}
+// MARK: - Gestures
 
 extension CollectionsViewController: UIGestureRecognizerDelegate {
     public func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
@@ -743,4 +662,91 @@ extension CollectionsViewController: UIGestureRecognizerDelegate {
             return true
         }
     }
+}
+
+// MARK: - Actions
+
+extension CollectionsViewController: CollectionCellDelegate, MessageActionResponder {
+
+    func collectionCell(_ cell: CollectionCell, performAction action: MessageAction) {
+        guard let message = cell.message else {
+            fatal("Cell does not have a message: \(cell)")
+        }
+
+        self.perform(action, for: message, source: cell)
+    }
+    
+    public func wants(toPerform action: MessageAction, for message: ZMConversationMessage!) {
+        self.perform(action, for: message, source: nil)
+    }
+
+    func perform(_ action: MessageAction, for message: ZMConversationMessage, source: CollectionCell?) {
+        switch action {
+        case .copy:
+            if let cell = source {
+                cell.copyDisplayedContent(in: .general)
+            } else {
+                message.copy(in: .general)
+            }
+
+        case .delete:
+            deletionDialogPresenter?.presentDeletionAlertController(forMessage: message, source: source) { [weak self] deleted in
+                guard deleted else { return }
+                _ = self?.navigationController?.popViewController(animated: true)
+                self?.refetchCollection()
+            }
+
+        case .present:
+            self.selectedMessage = message
+
+            if message.isImage {
+                let imagesController = ConversationImagesViewController(collection: self.collection, initialMessage: message)
+
+                let backButton = CollectionsView.backButton()
+                backButton.addTarget(self, action: #selector(CollectionsViewController.backButtonPressed(_:)), for: .touchUpInside)
+
+                let closeButton = CollectionsView.closeButton()
+                closeButton.addTarget(self, action: #selector(CollectionsViewController.closeButtonPressed(_:)), for: .touchUpInside)
+
+                imagesController.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
+                imagesController.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: closeButton)
+                imagesController.swipeToDismiss = false
+                imagesController.messageActionDelegate = self
+                self.navigationController?.pushViewController(imagesController, animated: true)
+            } else {
+                self.messagePresenter.open(message, targetView: view, actionResponder: self)
+            }
+
+        case .save:
+            if message.isImage {
+                guard let imageMessageData = message.imageMessageData, let imageData = imageMessageData.imageData else { return }
+
+                let saveableImage = SavableImage(data: imageData, isGIF: imageMessageData.isAnimatedGIF)
+                saveableImage.saveToLibrary()
+
+            } else {
+                guard let saveController = UIActivityViewController(message: message, from: view) else { return }
+                present(saveController, animated: true, completion: nil)
+            }
+
+        case .download:
+            ZMUserSession.shared()?.enqueueChanges {
+                message.fileMessageData?.requestFileDownload()
+            }
+
+        case .cancel:
+            ZMUserSession.shared()?.enqueueChanges {
+                message.fileMessageData?.cancelTransfer()
+            }
+
+        case .like:
+            ZMUserSession.shared()?.enqueueChanges {
+                Message.setLikedMessage(message, liked: !message.liked)
+            }
+
+        default:
+            self.delegate?.collectionsViewController(self, performAction: action, onMessage: message)
+        }
+    }
+
 }
