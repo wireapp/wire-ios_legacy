@@ -18,14 +18,12 @@
 
 
 import XCTest
-import Cartography
 @testable import Wire
 
 extension UITextView {
     func scrollToBottom() {
-        let count = text.count
-        guard count >= 1 else { return }
-        scrollRangeToVisible(NSMakeRange(count - 1, 1))
+        let bottomOffset = CGPoint(x: 0, y: contentSize.height - bounds.size.height)
+        setContentOffset(bottomOffset, animated: false)
     }
 }
 
@@ -58,9 +56,6 @@ class InputBarTests: ZMSnapshotTestCase {
         sut = InputBar(buttons: buttons())
         sut.leftAccessoryView.isHidden = true
         sut.rightAccessoryStackView.isHidden = true
-        sut.layer.speed = 0
-
-//        recordMode = true
     }
 
     override func tearDown() {
@@ -170,11 +165,13 @@ class InputBarTests: ZMSnapshotTestCase {
     
     func testThatItRendersCorrectlyInEditState_LongText() {
         sut.setInputBarState(.editing(originalText: longText, mentions: []), animated: false)
+
         sut.textView.resignFirstResponder() // make sure to avoid cursor being visible
 
-        sut.textView.scrollToBottom()
-
-        verifyInAllPhoneWidths(view: sut)
+        verifyInAllPhoneWidths(view: sut, configurationBlock: configure)
     }
 
+    func configure(view: UIView) {
+        (view as! InputBar).textView.scrollToBottom()
+    }
 }
