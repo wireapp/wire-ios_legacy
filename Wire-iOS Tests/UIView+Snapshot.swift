@@ -20,6 +20,6 @@ import Foundation
 
 extension UIView {
     func prepareForSnapshot() {
-        self.layer.speed = 0
+//        self.layer.speed = 0
     }
 }
