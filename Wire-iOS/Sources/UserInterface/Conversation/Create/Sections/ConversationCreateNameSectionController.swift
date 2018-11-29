@@ -20,70 +20,60 @@ import Foundation
 
 class ConversationCreateNameSectionController: NSObject, CollectionViewSectionController {
     
-    typealias Cell = ConversationCreateNameCell
+    // TODO: john need to add the error view here.
     
-    private weak var nameCell: Cell?
-    private var footer = SectionFooter(frame: .zero)
+    typealias Cell = ConversationCreateNameCell
     
     var isHidden: Bool {
         return false
     }
     
-    func prepareForUse(in collectionView: UICollectionView?) {
-        collectionView.flatMap(Cell.register)
-        collectionView?.register(SectionFooter.self,
-                                 forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
-                                 withReuseIdentifier: "SectionFooter")
+    private weak var nameCell: Cell?
+    private weak var textFieldDelegate: SimpleTextFieldDelegate?
+    private var footer = SectionFooter(frame: .zero)
+    
+    private lazy var footerText: String = {
+        let key = "participants.section.name.footer"
+        return key.localized(args: ZMConversation.maxParticipants, ZMConversation.maxVideoCallParticipantsExcludingSelf)
+    }()
+    
+    init(delegate: SimpleTextFieldDelegate? = nil) {
+        textFieldDelegate = delegate
     }
     
-    func collectionView(_ collectionView: UICollectionView,
-                        numberOfItemsInSection section: Int) -> Int {
-        
+    func prepareForUse(in collectionView: UICollectionView?) {
+        collectionView.flatMap(Cell.register)
+        collectionView?.register(SectionFooter.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: "SectionFooter")
+    }
+    
+    func collectionView(_ collectionView: UICollectionView,numberOfItemsInSection section: Int) -> Int {
         return 1
     }
     
-    func collectionView(_ collectionView: UICollectionView,
-                        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(ofType: Cell.self, for: indexPath)
-        // should be conversation create vc
-        // cell.textField.textFieldDelegate = self
+        cell.textField.textFieldDelegate = textFieldDelegate
         nameCell = cell
         return cell
     }
     
-    func collectionView(_ collectionView: UICollectionView,
-                        viewForSupplementaryElementOfKind kind: String,
-                        at indexPath: IndexPath) -> UICollectionReusableView {
-        
-        let view = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionFooter,
-                                                                   withReuseIdentifier: "SectionFooter",
-                                                                   for: indexPath)
-        let key = "participants.section.name.footer"
-        let args = [ZMConversation.maxParticipants, ZMConversation.maxVideoCallParticipantsExcludingSelf]
-        (view as? SectionFooter)?.titleLabel.text = key.localized(args: args)
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let view = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: "SectionFooter", for: indexPath)
+        (view as? SectionFooter)?.titleLabel.text = footerText
         return view
     }
     
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.bounds.size.width, height: 56)
     }
     
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        referenceSizeForFooterInSection section: Int) -> CGSize {
-        
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
         guard ZMUser.selfUser().hasTeam else { return .zero }
-        footer.titleLabel.text = "participants.section.name.footer".localized
+        footer.titleLabel.text = footerText
         return footer.sized(fittingWidth: collectionView.bounds.width).bounds.size
     }
     
-    func collectionView(_ collectionView: UICollectionView,
-                        didSelectItemAt indexPath: IndexPath) {
-        
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         nameCell?.textField.becomeFirstResponder()
     }
 }
