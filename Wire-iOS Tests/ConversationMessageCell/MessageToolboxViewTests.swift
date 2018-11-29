@@ -19,7 +19,17 @@
 import XCTest
 @testable import Wire
 
-class MessageToolboxViewTests: CoreDataSnapshotTestCase {
+final class MockReadReceipt: ReadReceipt {
+    var user: ZMUser
+
+    var serverTimestamp: Date?
+
+    init(user: ZMUser) {
+        self.user = user
+    }
+}
+
+final class MessageToolboxViewTests: CoreDataSnapshotTestCase {
 
     var message: MockMessage!
     var sut: MessageToolboxView!
@@ -31,6 +41,8 @@ class MessageToolboxViewTests: CoreDataSnapshotTestCase {
 
         sut = MessageToolboxView()
         sut.frame = CGRect(x: 0, y: 0, width: 375, height: 28)
+
+        recordMode = true
     }
 
     override func tearDown() {
@@ -53,6 +65,10 @@ class MessageToolboxViewTests: CoreDataSnapshotTestCase {
         // GIVEN
         message.conversation?.conversationType = .oneOnOne
         message.deliveryState = .read
+
+        let readReceipt = MockReadReceipt(user: self.otherUser)
+        readReceipt.serverTimestamp = Date(timeIntervalSince1970: 12345678564)
+        message.readReceipts = [readReceipt]
 
         // WHEN
         sut.configureForMessage(message, forceShowTimestamp: true, animated: false)

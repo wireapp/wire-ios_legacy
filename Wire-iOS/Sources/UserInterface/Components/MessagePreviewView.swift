@@ -18,19 +18,6 @@
 
 import Foundation
 
-extension NSTextAttachment {
-    static func textAttachment(for icon: ZetaIconType, with color: UIColor, iconSize: CGFloat = 10, verticalCorrection: CGFloat = 0) -> NSTextAttachment? {
-        guard let image = UIImage(for: icon, fontSize: iconSize, color: color)
-            else { return nil }
-        
-        let attachment = NSTextAttachment()
-        attachment.image = image
-        let ratio = image.size.width / image.size.height
-        attachment.bounds = CGRect(x: 0, y: verticalCorrection, width: iconSize * ratio, height: iconSize)
-        return attachment
-    }
-}
-
 extension ZMConversationMessage {
     func replyPreview() -> UIView? {
         guard self.canBeQuoted else {

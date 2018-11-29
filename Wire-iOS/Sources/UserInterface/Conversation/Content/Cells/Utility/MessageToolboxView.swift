@@ -314,6 +314,7 @@ import TTTAttributedLabel
         }
     }
 
+    ///TODO: rename to shorter one
     fileprivate func updateStatusLabelAttributedText(attributedText: NSAttributedString) {
         statusLabel.attributedText = attributedText
         statusLabel.accessibilityValue = statusLabel.attributedText.string
@@ -325,14 +326,37 @@ import TTTAttributedLabel
 
         if animated {
             statusLabel.wr_animateSlideTo(.up, newState: changeBlock)
-        }
-        else {
+        } else {
             changeBlock()
         }
     }
 
+    ///TODO: extension of ZMConversationType
+    fileprivate func selfStatusStringForRead(for message: ZMConversationMessage) -> NSAttributedString? {
+        guard let conversationType = message.conversation?.conversationType else {return nil}
+
+        switch conversationType {
+        case .group:
+            return nil ///TODO: icon + num
+        case .oneOnOne:
+            let imageIcon = NSTextAttachment.textAttachment(for: .eye, with: .from(scheme: .textDimmed))!
+
+            let statusString: NSAttributedString
+            if let timeString = message.readReceipts.first?.serverTimestamp {
+                statusString = NSAttributedString(attachment: imageIcon) + " " + Message.formattedDate(timeString)
+            } else {
+                statusString = NSAttributedString(attachment: imageIcon)
+            }
+
+
+            return statusString
+        default:
+            return nil
+        }
+    }
+
     ///TODO: rewrite as ZMConversationMessage extension
-    fileprivate func statusString(for message: ZMConversationMessage) -> NSAttributedString? {
+    fileprivate func selfStatusString(for message: ZMConversationMessage) -> NSAttributedString? {
         var deliveryStateString: String? = .none
 
         if let sender = message.sender, sender.isSelfUser {
@@ -340,8 +364,7 @@ import TTTAttributedLabel
             case .pending:
                 deliveryStateString = "content.system.pending_message_timestamp".localized
             case .read:
-                ///TODO: eye icon attachment, group and 1to1 cases
-                deliveryStateString = "content.system.message_read_timestamp".localized
+                return selfStatusStringForRead(for: message)
             case .delivered:
                 deliveryStateString = "content.system.message_delivered_timestamp".localized
             case .sent:
@@ -366,8 +389,8 @@ import TTTAttributedLabel
     }
 
 
-    fileprivate func statusUpdate(message: ZMConversationMessage) -> (()->())? {
-        var deliveryStateString: NSAttributedString? = statusString(for: message)
+    fileprivate func statusString(for message: ZMConversationMessage) -> NSAttributedString {
+        var deliveryStateString: NSAttributedString? = selfStatusString(for: message)
 
         // Ephemeral overrides
         let showDestructionTimer = message.isEphemeral && !message.isObfuscated && nil != message.destructionDate
@@ -377,7 +400,7 @@ import TTTAttributedLabel
             if remaining > 0 {
                 if let string = MessageToolboxView.ephemeralTimeFormatter.string(from: remaining) {
 
-                deliveryStateString = NSMutableAttributedString(string: string)
+                    deliveryStateString = NSMutableAttributedString(string: string)
                 }
             } else if message.isAudio {
                 // do nothing, audio messages are allowed to extend the timer
@@ -413,6 +436,12 @@ import TTTAttributedLabel
         else {
             finalText = (deliveryStateString ?? NSAttributedString(string: ""))
         }
+
+        return finalText
+    }
+
+    fileprivate func statusUpdate(message: ZMConversationMessage) -> (()->())? {
+        let finalText = statusString(for: message)
 
         if statusLabel.attributedText?.string == finalText.string {
             return nil
