@@ -615,7 +615,6 @@
 		875E7D1B2188C25A00E571B7 /* ReplyRoundCornersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 875E7D1A2188C25A00E571B7 /* ReplyRoundCornersView.swift */; };
 		875F89121D6DCD2C00D8748E /* MessageToolboxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 875F89111D6DCD2C00D8748E /* MessageToolboxView.swift */; };
 		875F89141D6DD6D000D8748E /* ReactionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 875F89131D6DD6D000D8748E /* ReactionsView.swift */; };
-		875F89171D6F35EC00D8748E /* ReactionsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 875F89161D6F35EC00D8748E /* ReactionsListViewController.swift */; };
 		876041551F5451EA003CB161 /* AccountViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876041531F5451B3003CB161 /* AccountViewTests.swift */; };
 		876113E21DD1DD4D007F5969 /* CanvasViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876113E11DD1DD4D007F5969 /* CanvasViewController.swift */; };
 		876113E41DD1DD6B007F5969 /* SketchToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876113E31DD1DD6B007F5969 /* SketchToolbar.swift */; };
@@ -2211,7 +2210,6 @@
 		875F15C91ED5BDFC008E9A6D /* ConversationListViewModel+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ConversationListViewModel+Private.h"; sourceTree = "<group>"; };
 		875F89111D6DCD2C00D8748E /* MessageToolboxView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageToolboxView.swift; sourceTree = "<group>"; };
 		875F89131D6DD6D000D8748E /* ReactionsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReactionsView.swift; sourceTree = "<group>"; };
-		875F89161D6F35EC00D8748E /* ReactionsListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReactionsListViewController.swift; sourceTree = "<group>"; };
 		876041531F5451B3003CB161 /* AccountViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountViewTests.swift; sourceTree = "<group>"; };
 		876113E11DD1DD4D007F5969 /* CanvasViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CanvasViewController.swift; path = Sketchpad/CanvasViewController.swift; sourceTree = "<group>"; };
 		876113E31DD1DD6B007F5969 /* SketchToolbar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SketchToolbar.swift; path = Sketchpad/SketchToolbar.swift; sourceTree = "<group>"; };
@@ -4832,7 +4830,6 @@
 		875F89151D6F35DC00D8748E /* Message Details */ = {
 			isa = PBXGroup;
 			children = (
-				875F89161D6F35EC00D8748E /* ReactionsListViewController.swift */,
 				873151101D75D0C000284C1F /* ReactionCell.swift */,
 				5E769C5721AE948E00785EB7 /* MessageDetailsDataSource.swift */,
 				5E769C5921AE97E500785EB7 /* MessageDetailsViewController.swift */,
@@ -7582,7 +7579,6 @@
 				7C4918A11F8BB1A20038AF4B /* UIScreen+SafeArea.swift in Sources */,
 				8775BF1C2007C6B900A8AD93 /* SearchGroupSelector.swift in Sources */,
 				872C8242214BFA8700236A76 /* UITextView+Range.swift in Sources */,
-				875F89171D6F35EC00D8748E /* ReactionsListViewController.swift in Sources */,
 				BF5DF5C720F4C1C5002BCB67 /* GroupParticipantsDetailViewModel.swift in Sources */,
 				EF297DE321320AC20002983A /* InviteContactsViewController+Swift.swift in Sources */,
 				F1199D361FC8490A0070FAC3 /* TeamCreationState.swift in Sources */,

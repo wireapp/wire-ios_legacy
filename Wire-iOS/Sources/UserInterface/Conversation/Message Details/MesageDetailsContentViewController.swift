@@ -151,32 +151,33 @@ class MesageDetailsContentViewController: UIViewController {
     }
 
     private func reloadData(_ old: [MessageDetailsCellDescription], _ new: [MessageDetailsCellDescription]) {
-        let updates = {
-            let old = ZMOrderedSetState(orderedSet: NSOrderedSet(array: old))
-            let new = ZMOrderedSetState(orderedSet: NSOrderedSet(array: new))
-            let change = ZMChangedIndexes(start: old, end: new, updatedState: new, moveType: .uiCollectionView)
-
-            if let deleted = change?.deletedIndexes.indexPaths(in: 0) {
-                self.collectionView.deleteItems(at: deleted)
-            }
-
-            if let inserted = change?.insertedIndexes.indexPaths(in: 0) {
-                self.collectionView.insertItems(at: inserted)
-            }
-
-            change?.enumerateMovedIndexes { (oldIndex, newIndex) in
-                let oldIndexPath = IndexPath(item: Int(oldIndex), section: 0)
-                let newIndexPath = IndexPath(item: Int(newIndex), section: 0)
-                self.collectionView.moveItem(at: oldIndexPath, to: newIndexPath)
-            }
-        }
-
-        collectionView.performBatchUpdates(updates, completion: nil)
+        collectionView.reloadData()
+        //        let updates = {
+//            let old = ZMOrderedSetState(orderedSet: NSOrderedSet(array: old))
+//            let new = ZMOrderedSetState(orderedSet: NSOrderedSet(array: new))
+//            let change = ZMChangedIndexes(start: old, end: new, updatedState: new, moveType: .uiCollectionView)
+//
+//            if let deleted = change?.deletedIndexes.indexPaths(in: 0) {
+//                self.collectionView.deleteItems(at: deleted)
+//            }
+//
+//            if let inserted = change?.insertedIndexes.indexPaths(in: 0) {
+//                self.collectionView.insertItems(at: inserted)
+//            }
+//
+//            change?.enumerateMovedIndexes { (oldIndex, newIndex) in
+//                let oldIndexPath = IndexPath(item: Int(oldIndex), section: 0)
+//                let newIndexPath = IndexPath(item: Int(newIndex), section: 0)
+//                self.collectionView.moveItem(at: oldIndexPath, to: newIndexPath)
+//            }
+//        }
+//
+//        collectionView.performBatchUpdates(updates, completion: nil)
     }
 
 }
 
-extension MesageDetailsContentViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+extension MesageDetailsContentViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return cells.count

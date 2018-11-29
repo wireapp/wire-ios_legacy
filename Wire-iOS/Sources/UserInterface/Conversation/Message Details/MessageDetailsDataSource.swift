@@ -18,6 +18,11 @@
 
 import Foundation
 
+/// The way the details are displayed.
+enum MessageDetailsDisplayMode {
+    case reactions, receipts, combined
+}
+
 /**
  * An object that observes changes in the message data source.
  */
@@ -25,24 +30,31 @@ import Foundation
 protocol MessageDetailsDataSourceObserver: class {
     /// Called when the message details change.
     func dataSourceDidChange(_ dataSource: MessageDetailsDataSource)
+
+    /// Called when the message subtitle changes.
+    func detailsHeaderDidChange(_ dataSource: MessageDetailsDataSource)
 }
 
 /**
  * The data source to present message details.
  */
 
-class MessageDetailsDataSource: NSObject, ZMMessageObserver {
-
-    /// The way the details are displayed.
-    enum DisplayMode {
-        case likes, receipts, combined
-    }
+class MessageDetailsDataSource: NSObject, ZMMessageObserver, ZMConversationObserver {
 
     /// The presented message.
     let message: ZMConversationMessage
 
+    /// The conversation where the message is
+    let conversation: ZMConversation
+
     /// How to display the message details.
-    let displayMode: DisplayMode
+    let displayMode: MessageDetailsDisplayMode
+
+    /// The title of the message details.
+    let title: String
+
+    /// The subtitle of the message details.
+    private(set) var subtitle: String!
 
     /// The list of likes.
     private(set) var reactions: [ZMUser]
@@ -55,34 +67,62 @@ class MessageDetailsDataSource: NSObject, ZMMessageObserver {
 
     // MARK: - Initialization
 
-    private var changeObserverToken: Any?
+    private var observationTokens: [Any] = []
+
+    deinit {
+        observationTokens.removeAll()
+    }
 
     init(message: ZMConversationMessage) {
         self.message = message
+        self.conversation = message.conversation!
 
-        // Compute the display mode
+        // Assign the initial data
+        self.reactions = message.likers()
+        self.readReciepts = [:]
+
+        // Compute the title and display mode
         let supportsLikes = message.canBeLiked
         let supportsReadReciepts = message.areReadReceiptsDetailsAvailable
+//        let readReceiptsEnabled = false // TODO: Support read receipts settings in conversation
 
         switch (supportsLikes, supportsReadReciepts) {
         case (true, true):
             self.displayMode = .combined
+            self.title = "message_details.combined_title".localized
         case (false, true):
             self.displayMode = .receipts
+            self.title = "message_details.receipts_title".localized
         case (true, false):
-            self.displayMode = .likes
+            self.displayMode = .reactions
+            self.title = "message_details.likes_title".localized
         default:
-            fatal("Trying to display a message that does not support likes or receipts.")
+            fatal("Trying to display a message that does not support reactions or receipts.")
         }
 
-        // Assign the initial details
-        self.reactions = message.likers()
-
-        // TODO: Get read receipts from message.
-        self.readReciepts = [:]
-
         super.init()
+        
+        updateSubtitle()
         setupMessageObserver()
+    }
+
+    // MARK: - Interface Properties
+
+    private func updateSubtitle() {
+        guard let sentDate = message.formattedReceivedDate() else {
+            return
+        }
+
+        let sentString = "message_details.subtitle_send_date".localized(args: sentDate)
+        var subtitle = sentString
+
+        if let editedDate = message.formattedEditedDate() {
+            let editedString = "message_details.subtitle_edit_date".localized(args: editedDate)
+            subtitle += "\n" + editedString
+        }
+
+        self.subtitle = subtitle
+        self.observer?.detailsHeaderDidChange(self)
     }
 
     // MARK: - Changes
@@ -95,11 +135,26 @@ class MessageDetailsDataSource: NSObject, ZMMessageObserver {
                 self.reactions = message.likers()
             }
         }
+
+        if message.updatedAt != nil {
+            updateSubtitle()
+        }
+    }
+
+    func conversationDidChange(_ changeInfo: ConversationChangeInfo) {
+        // TODO: Detect "read receipts" settings change
+//        let receiptsStatusChanged = false
+//
+//        if receiptsStatusChanged {
+//            updateDisplayMode()
+//        }
     }
 
     private func setupMessageObserver() {
         if let userSession = ZMUserSession.shared() {
-            changeObserverToken = MessageChangeInfo.add(observer: self, for: message, userSession: userSession)
+            let messageObserver = MessageChangeInfo.add(observer: self, for: message, userSession: userSession)
+            let conversationObserver = ConversationChangeInfo.add(observer: self, for: conversation)
+            observationTokens = [messageObserver, conversationObserver]
         }
     }
 

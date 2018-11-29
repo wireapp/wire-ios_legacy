@@ -611,7 +611,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
             break;
         case MessageActionOpenDetails:
         {
-            ReactionsListViewController *detailsViewController = [[ReactionsListViewController alloc] initWithMessage:message];
+            MessageDetailsViewController *detailsViewController = [[MessageDetailsViewController alloc] initWithMessage:message];
             [self presentViewController:detailsViewController animated:YES completion:nil];
         }
             break;

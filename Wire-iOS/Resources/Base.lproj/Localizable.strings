@@ -1491,5 +1491,5 @@
 "message_details.receipts_title" = "Seen";
 "message_details.tabs.seen" = "Seen (%d)";
 "message_details.tabs.likes" = "Likes (%d)";
-"message_details.subtitle_send_date" = "Sent: %@"
+"message_details.subtitle_send_date" = "Sent: %@";
 "message_details.subtitle_edit_date" = "Last Edited: %@";

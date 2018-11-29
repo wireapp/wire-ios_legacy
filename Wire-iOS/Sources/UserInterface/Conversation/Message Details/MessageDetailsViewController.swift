@@ -19,36 +19,47 @@
 import UIKit
 import WireExtensionComponents
 
-class MessageDetailsViewController: TabBarController {
+/**
+ * A view controller wrapping the message details.
+ */
 
+@objc class MessageDetailsViewController: UIViewController {
+
+    /// The displayed message.
     let message: ZMConversationMessage
+
+    /// The data source for the message details.
     let dataSource: MessageDetailsDataSource
 
-    let topBar = ModalTopBar()
-    var tabBar: TabBar?
+    // MARK: - UI Elements
 
+    let container: TabBarController
+    let topBar = ModalTopBar()
     var reactionsViewController = MesageDetailsContentViewController(contentType: .reactions)
     var readReceiptsViewController = MesageDetailsContentViewController(contentType: .receipts)
 
     // MARK: - Initialization
 
-    init(message: ZMConversationMessage) {
+    @objc init(message: ZMConversationMessage) {
         self.message = message
         self.dataSource = MessageDetailsDataSource(message: message)
 
         var viewControllers: [UIViewController]
 
+        // Setup the appropriate view controllers
         switch dataSource.displayMode {
         case .combined:
             viewControllers = [reactionsViewController, readReceiptsViewController]
-        case .likes:
+        case .reactions:
             viewControllers = [reactionsViewController]
         case .receipts:
             viewControllers = [readReceiptsViewController]
         }
 
-        super.init(viewControllers: viewControllers)
-        isTabBarHidden = dataSource.displayMode != .combined
+        container = TabBarController(viewControllers: viewControllers)
+
+        super.init(nibName: nil, bundle: nil)
+        container.isTabBarHidden = dataSource.displayMode != .combined
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -61,58 +72,44 @@ class MessageDetailsViewController: TabBarController {
         super.viewDidLoad()
 
         // Configure the top bar
-        let title: String
-        let subtitle = makeSubtitle()
-
-        switch dataSource.displayMode {
-        case .combined:
-            title = "message_details.combined_title".localized
-        case .likes:
-            title = "message_details.likes_title".localized
-        case .receipts:
-            title = "message_details.receipts_title".localized
-        }
-
         view.addSubview(topBar)
-        topBar.configure(title: title, subtitle: subtitle, topAnchor: safeTopAnchor)
+        configureTopBar()
 
-        // Configure the tabs
+        // Configure the content
+        addChild(container)
+        view.addSubview(container.view)
+        container.didMove(toParent: self)
+
+        // Create the constraints
+        configureConstraints()
 
         // Display initial data
         reloadData()
     }
 
-    func makeSubtitle() -> String? {
-        guard let sentDate = message.formattedReceivedDate() else {
-            return nil
-        }
+    private func configureConstraints() {
+        topBar.translatesAutoresizingMaskIntoConstraints = false
+        container.view.translatesAutoresizingMaskIntoConstraints = false
 
-        let sentString = "message_details.subtitle_send_date".localized(args: sentDate)
-        var subtitle = sentString
+        NSLayoutConstraint.activate([
+            // topBar
+            topBar.topAnchor.constraint(equalTo: view.topAnchor),
+            topBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            topBar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
 
-        if let editedDate = message.formattedEditedDate() {
-            let editedString = "message_details.subtitle_edit_date".localized(args: editedDate)
-            subtitle += "\n" + editedString
-        }
-
-        return subtitle
-    }
-}
-
-// MARK: - Changes
-
-extension MessageDetailsViewController: MessageDetailsDataSourceObserver {
-
-    func dataSourceDidChange(_ dataSource: MessageDetailsDataSource) {
-        reloadData()
+            ])
     }
 
-    func reloadData() {
+    private func configureTopBar() {
+        topBar.configure(title: dataSource.title, subtitle: dataSource.subtitle, topAnchor: safeTopAnchor)
+    }
+
+    private func reloadData() {
         switch dataSource.displayMode {
-        case.combined:
+        case .combined:
             reactionsViewController.cells = makeReactionCells()
             readReceiptsViewController.cells = makeReceiptsCell()
-        case .likes:
+        case .reactions:
             reactionsViewController.cells = makeReactionCells()
         case .receipts:
             readReceiptsViewController.cells = makeReceiptsCell()
@@ -131,6 +128,26 @@ extension MessageDetailsViewController: MessageDetailsDataSourceObserver {
             // TODO: Use correct formatter
             let formattedDate = Message.shortDateTimeFormatter.string(from: readDate)
             return MessageDetailsCellDescription(user: user, subtitle: formattedDate)
+        }
+    }
+
+}
+
+// MARK: - Changes
+
+extension MessageDetailsViewController: MessageDetailsDataSourceObserver {
+
+    func dataSourceDidChange(_ dataSource: MessageDetailsDataSource) {
+        reloadData()
+    }
+
+    func detailsHeaderDidChange(_ dataSource: MessageDetailsDataSource) {
+        configureTopBar()
+    }
+
+    func messageDidBecomeUnavailable(_ dataSource: MessageDetailsDataSource, deleted: Bool) {
+        if deleted {
+            dismiss(animated: true)
         }
     }
 
