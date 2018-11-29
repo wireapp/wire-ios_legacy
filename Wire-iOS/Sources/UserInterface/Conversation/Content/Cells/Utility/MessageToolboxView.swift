@@ -33,12 +33,12 @@ import TTTAttributedLabel
 
     private static let ephemeralTimeFormatter = EphemeralTimeoutFormatter()
 
-    public let statusLabel: TTTAttributedLabel = {
-        let attributedLabel = TTTAttributedLabel(frame: CGRect.zero)
+    public let statusLabel: UILabel = {
+        let attributedLabel = UILabel(frame: CGRect.zero)
         attributedLabel.font = UIFont.smallSemiboldFont
         attributedLabel.backgroundColor = .clear
         attributedLabel.textColor = UIColor.from(scheme: .textDimmed)
-        attributedLabel.textInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+//        attributedLabel.textInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
 
         return attributedLabel
     }()
@@ -76,21 +76,22 @@ import TTTAttributedLabel
         likeButton.setIconColor(UIColor(for: .vividRed), for: .selected)
         likeButton.hitAreaPadding = CGSize(width: 20, height: 20)
 
-        statusLabel.delegate = self
-        statusLabel.extendsLinkTouchArea = true
+//        statusLabel.delegate = self
+//        statusLabel.extendsLinkTouchArea = true
         statusLabel.isUserInteractionEnabled = true
-        statusLabel.verticalAlignment = .center
+//        statusLabel.verticalAlignment = .center
         statusLabel.isAccessibilityElement = true
         statusLabel.accessibilityLabel = "DeliveryStatus"
         statusLabel.lineBreakMode = NSLineBreakMode.byTruncatingMiddle
         statusLabel.numberOfLines = 0
         statusLabel.setContentHuggingPriority(.defaultLow, for: .vertical)
         statusLabel.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
+        /*
         statusLabel.linkAttributes = [NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue as NSNumber,
                                       NSAttributedString.Key.foregroundColor: UIColor.vividRed]
         statusLabel.activeLinkAttributes = [NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue as NSNumber,
                                             NSAttributedString.Key.foregroundColor: UIColor.vividRed.withAlphaComponent(0.5)]
-
+*/
         [likeButtonContainer, likeButton, statusLabel].forEach(addSubview)
     }
     
@@ -317,7 +318,7 @@ import TTTAttributedLabel
     ///TODO: rename to shorter one
     fileprivate func updateStatusLabelAttributedText(attributedText: NSAttributedString) {
         statusLabel.attributedText = attributedText
-        statusLabel.accessibilityValue = statusLabel.attributedText.string
+//        statusLabel.accessibilityValue = statusLabel.attributedText.string
     }
 
     fileprivate func configureTimestamp(_ message: ZMConversationMessage, animated: Bool = false) {
@@ -341,13 +342,16 @@ import TTTAttributedLabel
         case .oneOnOne:
             let imageIcon = NSTextAttachment.textAttachment(for: .eye, with: .from(scheme: .textDimmed))!
 
-            let statusString: NSAttributedString
-            if let timeString = message.readReceipts.first?.serverTimestamp {
-                statusString = NSAttributedString(attachment: imageIcon) + " " + Message.formattedDate(timeString)
-            } else {
-                statusString = NSAttributedString(attachment: imageIcon)
-            }
+            let statusString: NSMutableAttributedString
 
+            if let timeString = message.readReceipts.first?.serverTimestamp {
+                statusString = NSMutableAttributedString(attachment: imageIcon)// + " " + Message.formattedDate(timeString)
+
+                statusString.append(NSMutableAttributedString(string: " "))
+                statusString.append(NSMutableAttributedString(string: Message.formattedDate(timeString)))
+            } else {
+                statusString = NSMutableAttributedString(attachment: imageIcon)
+            }
 
             return statusString
         default:
@@ -456,7 +460,7 @@ import TTTAttributedLabel
 
         let changeBlock =  {
             self.updateStatusLabelAttributedText(attributedText: attributedText)
-            self.statusLabel.addLinks()
+//            self.statusLabel.addLinks()
         }
 
         return changeBlock
