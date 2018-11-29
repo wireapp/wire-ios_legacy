@@ -56,7 +56,7 @@ class MesageDetailsContentViewController: UIViewController {
 
     var contentType: ContentType {
         didSet {
-            configureNoResultsViewForContentType()
+            configureForContentType()
         }
     }
 
@@ -100,11 +100,22 @@ class MesageDetailsContentViewController: UIViewController {
         view.addSubview(collectionView)
 
         noResultsView.isHidden = true
-        configureNoResultsViewForContentType()
+        configureForContentType()
         view.addSubview(noResultsView)
+
+        updateTitle()
     }
 
-    private func configureNoResultsViewForContentType() {
+    private func updateTitle() {
+        switch contentType {
+        case .receipts, .receiptsDisabled:
+            title = "message_details.tabs.seen".localized(args: cells.count).uppercased()
+        case .reactions:
+            title = "message_details.tabs.likes".localized(args: cells.count).uppercased()
+        }
+    }
+
+    private func configureForContentType() {
         switch contentType {
         case .reactions:
             noResultsView.label.accessibilityLabel = "no likes"
@@ -147,6 +158,7 @@ class MesageDetailsContentViewController: UIViewController {
     private func reloadData(_ old: [MessageDetailsCellDescription], _ new: [MessageDetailsCellDescription]) {
         noResultsView.isHidden = !cells.isEmpty
         collectionView.reloadData()
+        updateTitle()
         //        let updates = {
 //            let old = ZMOrderedSetState(orderedSet: NSOrderedSet(array: old))
 //            let new = ZMOrderedSetState(orderedSet: NSOrderedSet(array: new))

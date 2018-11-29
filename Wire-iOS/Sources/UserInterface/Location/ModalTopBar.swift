@@ -76,6 +76,14 @@ import Cartography
         }
     }
 
+    private var sepeatorHeight: NSLayoutConstraint!
+
+    var needsSeparator: Bool = true {
+        didSet {
+            sepeatorHeight.constant = needsSeparator ? 1 : 0
+        }
+    }
+
     public override init(frame: CGRect) {
         super.init(frame: frame)
         configureViews()
@@ -116,6 +124,8 @@ import Cartography
         dismissButton.translatesAutoresizingMaskIntoConstraints = false
         separatorView.translatesAutoresizingMaskIntoConstraints = false
 
+        sepeatorHeight = separatorView.heightAnchor.constraint(equalToConstant: 1)
+
         NSLayoutConstraint.activate([
             // contentStackView
             contentStackView.leadingAnchor.constraint(greaterThanOrEqualTo: safeLeadingAnchor, constant: 48),
@@ -132,7 +142,7 @@ import Cartography
             separatorView.leadingAnchor.constraint(equalTo: leadingAnchor),
             separatorView.trailingAnchor.constraint(equalTo: trailingAnchor),
             separatorView.bottomAnchor.constraint(equalTo: bottomAnchor),
-            separatorView.heightAnchor.constraint(equalToConstant: .hairline),
+            sepeatorHeight
         ])
 
         dismissButton.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 1000), for: .horizontal)

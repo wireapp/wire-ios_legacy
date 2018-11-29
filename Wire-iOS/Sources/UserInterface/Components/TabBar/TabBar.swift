@@ -55,7 +55,13 @@ class TabBar: UIView {
         return self.tabs[selectedIndex]
     }
 
+    private var titleObservers: [Any] = []
+
     // MARK: - Initialization
+
+    deinit {
+        titleObservers.removeAll()
+    }
 
     init(items: [UITabBarItem], style: ColorSchemeVariant, selectedIndex: Int = 0) {
         precondition(items.count > 0, "TabBar must be initialized with at least one item")
@@ -147,6 +153,13 @@ class TabBar: UIView {
         let tab = Tab(variant: style)
         tab.textTransform = .upper
         tab.setTitle(item.title, for: .normal)
+
+        let changeObserver = item.observe(\.title) { _, _ in
+            tab.setTitle(item.title, for: .normal)
+        }
+
+        titleObservers.append(changeObserver)
+
         tab.addTarget(self, action: #selector(TabBar.itemSelected(_:)), for: .touchUpInside)
         return tab
     }

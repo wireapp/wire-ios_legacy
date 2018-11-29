@@ -49,7 +49,7 @@ import WireExtensionComponents
         // Setup the appropriate view controllers
         switch dataSource.displayMode {
         case .combined:
-            viewControllers = [reactionsViewController, readReceiptsViewController]
+            viewControllers = [readReceiptsViewController, reactionsViewController]
         case .reactions:
             viewControllers = [reactionsViewController]
         case .receipts:
@@ -69,6 +69,7 @@ import WireExtensionComponents
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = UIColor.from(scheme: .barBackground)
         dataSource.observer = self
 
         // Configure the top bar
@@ -82,6 +83,7 @@ import WireExtensionComponents
         container.didMove(toParent: self)
         container.isTabBarHidden = dataSource.displayMode != .combined
         container.isEnabled = dataSource.displayMode == .combined
+        topBar.needsSeparator = dataSource.displayMode != .combined
 
         // Create the constraints
         configureConstraints()
