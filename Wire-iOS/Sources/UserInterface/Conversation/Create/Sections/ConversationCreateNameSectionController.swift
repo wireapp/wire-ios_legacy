@@ -45,6 +45,9 @@ class ConversationCreateNameSectionController: NSObject, CollectionViewSectionCo
         collectionView.flatMap(Cell.register)
         collectionView?.register(SectionFooter.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: "SectionFooter")
     }
+}
+
+extension ConversationCreateNameSectionController {
     
     func collectionView(_ collectionView: UICollectionView,numberOfItemsInSection section: Int) -> Int {
         return 1
