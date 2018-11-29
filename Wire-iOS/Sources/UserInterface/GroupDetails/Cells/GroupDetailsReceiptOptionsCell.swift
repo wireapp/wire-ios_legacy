@@ -19,30 +19,43 @@
 import UIKit
 import WireExtensionComponents
 
-class GroupDetailsGuestOptionsCell: GroupDetailsDisclosureOptionsCell {
+class GroupDetailsReceiptOptionsCell: DetailsCollectionViewCell {
 
     var isOn = false {
         didSet {
-            let key = "group_details.guest_options_cell.\(isOn ? "enabled" : "disabled")"
-            status = key.localized
+            toggle.isOn = isOn
         }
     }
 
+    private let toggle = UISwitch()
+
     override func setUp() {
         super.setUp()
-        accessibilityIdentifier = "cell.groupdetails.guestoptions"
-        title = "group_details.guest_options_cell.title".localized
-    }
+        accessibilityIdentifier = "cell.groupdetails.receiptoptions"///TODO:
+        title = "group_details.receipt_options_cell.title".localized
 
-    func configure(with conversation: ZMConversation) {
-        self.isOn = conversation.allowGuests
+        contentStackView.insertArrangedSubview(toggle, at: contentStackView.arrangedSubviews.count - 1)
+
+
+        toggle.addTarget(self, action: #selector(toggleChanged), for: .valueChanged)
     }
 
     override func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
         super.applyColorScheme(colorSchemeVariant)
-
-        icon = UIImage(for: .guest, iconSize: .tiny,
+        icon = UIImage(for: .eye,
+                       iconSize: .tiny,
                        color: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant))
     }
 
+    @objc private func toggleChanged(_ sender: UISwitch) {
+        // TODO: set the converation's receipt enabled setting
+    }
+}
+
+extension GroupDetailsReceiptOptionsCell: ConversationOptionsConfigurable {
+    func configure(with conversation: ZMConversation) {
+        ///TODO: wait for Date model update to toggle the conversation's allow receipt option
+        // self.isOn = conversation.allowReceipts
+
+    }
 }

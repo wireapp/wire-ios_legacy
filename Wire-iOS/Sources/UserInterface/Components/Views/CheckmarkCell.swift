@@ -18,7 +18,7 @@
 
 import UIKit
 
-class CheckmarkCell: DetailsCollectionViewCell {
+class CheckmarkCell: RightIconDetailsCell {
 
     var showCheckmark: Bool = false {
         didSet {

@@ -317,7 +317,6 @@
 		5E9E8AA1216277800058D6E1 /* AuthenticationPostRegistrationFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E9E8AA0216277800058D6E1 /* AuthenticationPostRegistrationFields.swift */; };
 		5EA73D7920D900830001D106 /* GroupOptionsSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EA73D7820D900820001D106 /* GroupOptionsSectionController.swift */; };
 		5EA73D7F20D900A10001D106 /* GroupDetailsGuestOptionsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EA73D7B20D900A10001D106 /* GroupDetailsGuestOptionsCell.swift */; };
-		5EA73D8020D900A10001D106 /* GroupDetailsOptionsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EA73D7C20D900A10001D106 /* GroupDetailsOptionsCell.swift */; };
 		5EA73D8120D900A10001D106 /* GroupDetailsTimeoutOptionsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EA73D7D20D900A10001D106 /* GroupDetailsTimeoutOptionsCell.swift */; };
 		5EA73D8220D900A10001D106 /* GroupDetailsRenameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EA73D7E20D900A10001D106 /* GroupDetailsRenameCell.swift */; };
 		5EA73D8720D901000001D106 /* SeparatorCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EA73D8320D900FE0001D106 /* SeparatorCollectionViewCell.swift */; };
@@ -1142,6 +1141,10 @@
 		EF18C7E41F9E4DA00085A832 /* NSString+FileNameForZMUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF18C7E31F9E4DA00085A832 /* NSString+FileNameForZMUser.swift */; };
 		EF18D7C82102345B005B51A1 /* UpsideDownTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF18D7C72102345B005B51A1 /* UpsideDownTableView.swift */; };
 		EF19209D20C6E4F800E4B92D /* XCTestCase+DayFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF19209C20C6E4F700E4B92D /* XCTestCase+DayFormatter.swift */; };
+		EF1A461821AD5A270009B6B9 /* GroupDetailsReceiptOptionsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1A461721AD5A270009B6B9 /* GroupDetailsReceiptOptionsCell.swift */; };
+		EF1A461A21AD60510009B6B9 /* ReceiptOptionsSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1A461921AD60510009B6B9 /* ReceiptOptionsSectionController.swift */; };
+		EF1A461C21AD955A0009B6B9 /* GroupDetailsCellProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1A461B21AD955A0009B6B9 /* GroupDetailsCellProtocols.swift */; };
+		EF1A461E21ADACF50009B6B9 /* RightIconDetailsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1A461D21ADACF50009B6B9 /* RightIconDetailsCell.swift */; };
 		EF1EA4631FB0937000B53063 /* MockUser+filename.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1EA4611FB0934D00B53063 /* MockUser+filename.swift */; };
 		EF1EF1C320627075004DB245 /* SignInViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1EF1C220627075004DB245 /* SignInViewControllerTests.swift */; };
 		EF1F99F71FBB06C000969DD1 /* UILabel+TextTransform.m in Sources */ = {isa = PBXBuildFile; fileRef = CE8E4FBA1DF17BBE0009F437 /* UILabel+TextTransform.m */; };
@@ -1814,7 +1817,6 @@
 		5E9E8AA0216277800058D6E1 /* AuthenticationPostRegistrationFields.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationPostRegistrationFields.swift; sourceTree = "<group>"; };
 		5EA73D7820D900820001D106 /* GroupOptionsSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupOptionsSectionController.swift; sourceTree = "<group>"; };
 		5EA73D7B20D900A10001D106 /* GroupDetailsGuestOptionsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupDetailsGuestOptionsCell.swift; sourceTree = "<group>"; };
-		5EA73D7C20D900A10001D106 /* GroupDetailsOptionsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupDetailsOptionsCell.swift; sourceTree = "<group>"; };
 		5EA73D7D20D900A10001D106 /* GroupDetailsTimeoutOptionsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupDetailsTimeoutOptionsCell.swift; sourceTree = "<group>"; };
 		5EA73D7E20D900A10001D106 /* GroupDetailsRenameCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupDetailsRenameCell.swift; sourceTree = "<group>"; };
 		5EA73D8320D900FE0001D106 /* SeparatorCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeparatorCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -2897,6 +2899,10 @@
 		EF18C7E31F9E4DA00085A832 /* NSString+FileNameForZMUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSString+FileNameForZMUser.swift"; sourceTree = "<group>"; };
 		EF18D7C72102345B005B51A1 /* UpsideDownTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpsideDownTableView.swift; sourceTree = "<group>"; };
 		EF19209C20C6E4F700E4B92D /* XCTestCase+DayFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "XCTestCase+DayFormatter.swift"; sourceTree = "<group>"; };
+		EF1A461721AD5A270009B6B9 /* GroupDetailsReceiptOptionsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupDetailsReceiptOptionsCell.swift; sourceTree = "<group>"; };
+		EF1A461921AD60510009B6B9 /* ReceiptOptionsSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReceiptOptionsSectionController.swift; sourceTree = "<group>"; };
+		EF1A461B21AD955A0009B6B9 /* GroupDetailsCellProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDetailsCellProtocols.swift; sourceTree = "<group>"; };
+		EF1A461D21ADACF50009B6B9 /* RightIconDetailsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RightIconDetailsCell.swift; sourceTree = "<group>"; };
 		EF1EA4611FB0934D00B53063 /* MockUser+filename.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MockUser+filename.swift"; sourceTree = "<group>"; };
 		EF1EF1C220627075004DB245 /* SignInViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewControllerTests.swift; sourceTree = "<group>"; };
 		EF1EF1C420627305004DB245 /* SignInViewController+internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SignInViewController+internal.h"; sourceTree = "<group>"; };
@@ -3377,6 +3383,7 @@
 		1682AEB720483C9D003A052A /* Sections */ = {
 			isa = PBXGroup;
 			children = (
+				EF1A461921AD60510009B6B9 /* ReceiptOptionsSectionController.swift */,
 				5EA73D7820D900820001D106 /* GroupOptionsSectionController.swift */,
 				1682AEB820483CC5003A052A /* RenameGroupSectionController.swift */,
 				1682AEBC20483DA5003A052A /* ServicesSectionController.swift */,
@@ -4102,9 +4109,10 @@
 		5EA73D7A20D900A10001D106 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				EF1A461B21AD955A0009B6B9 /* GroupDetailsCellProtocols.swift */,
 				EE571C022175ED7B0011B59C /* GroupDetailsNotificationOptionsCell.swift */,
 				5EA73D7B20D900A10001D106 /* GroupDetailsGuestOptionsCell.swift */,
-				5EA73D7C20D900A10001D106 /* GroupDetailsOptionsCell.swift */,
+				EF1A461721AD5A270009B6B9 /* GroupDetailsReceiptOptionsCell.swift */,
 				5EA73D7D20D900A10001D106 /* GroupDetailsTimeoutOptionsCell.swift */,
 				5EA73D7E20D900A10001D106 /* GroupDetailsRenameCell.swift */,
 			);
@@ -4484,6 +4492,7 @@
 			children = (
 				5EA73D8620D901000001D106 /* CheckmarkCell.swift */,
 				5EA73D8420D900FF0001D106 /* DetailsCollectionViewCell.swift */,
+				EF1A461D21ADACF50009B6B9 /* RightIconDetailsCell.swift */,
 				5EA73D8520D900FF0001D106 /* ImageContainer.swift */,
 				5EA73D8320D900FE0001D106 /* SeparatorCollectionViewCell.swift */,
 				EF2A8DEC214AA36E002C9058 /* SeparatorViewProtocol.swift */,
@@ -7294,6 +7303,7 @@
 				5EA73D8C20D901E80001D106 /* ConversationTimeoutOptionsViewController.swift in Sources */,
 				8750A00F21934F1A00DC8DB6 /* AnimatedListMenuView+Constraint.swift in Sources */,
 				8708C6831F50860100845C7D /* AccountView.swift in Sources */,
+				EF1A461C21AD955A0009B6B9 /* GroupDetailsCellProtocols.swift in Sources */,
 				87A6BD0F1F0D2A58006A3232 /* UIApplication+StatusBar.m in Sources */,
 				BFFA182B20FDE93400F64377 /* CompanyLoginController.swift in Sources */,
 				872E22221F600347007729D4 /* Cartography+Additions.swift in Sources */,
@@ -7614,6 +7624,7 @@
 				EFC6F8A0213FCDE200B92D51 /* MenuConfigurationProperties.swift in Sources */,
 				EF2127201FB9DFE300625A9B /* NavigationController.m in Sources */,
 				EF297DE9213215210002983A /* ProfileDevicesViewController+Style.swift in Sources */,
+				EF1A461821AD5A270009B6B9 /* GroupDetailsReceiptOptionsCell.swift in Sources */,
 				EFCDA974209A0F6D004682EA /* ImageMessageCell+ImageBorder.swift in Sources */,
 				871BC2971D34F8F800DF0793 /* UIViewController+WR_Additions.m in Sources */,
 				87EB6B871E2FCE080019B3C5 /* ZMConversationMessage+File.swift in Sources */,
@@ -7819,6 +7830,7 @@
 				EF2127031FB9DFE300625A9B /* CheckmarkView.m in Sources */,
 				162917C91F8BB991000F3E92 /* NetworkStatusView.swift in Sources */,
 				5E936E8F20B590530060E6AA /* UIDevice+Platform.swift in Sources */,
+				EF1A461A21AD60510009B6B9 /* ReceiptOptionsSectionController.swift in Sources */,
 				EEB8A2D01F628D1100958881 /* Settings+Account.swift in Sources */,
 				BF5C37981C0E0D9C00EA11E3 /* ParticipantDeviceHeaderView.m in Sources */,
 				5E0EB1FB2100D80B00B5DC2B /* CompanyLoginFlowOpener.swift in Sources */,
@@ -7896,7 +7908,6 @@
 				5EE73BF821242F0D0032986D /* BlueViewController.m in Sources */,
 				8797A9B42046D687009865D5 /* GuestsBarController.swift in Sources */,
 				161285DF1DD1E81E004728E9 /* NSString+URL.swift in Sources */,
-				5EA73D8020D900A10001D106 /* GroupDetailsOptionsCell.swift in Sources */,
 				16E2A0A21F6BEF6E005F4DB1 /* SoundEventListener.swift in Sources */,
 				AF58EC821E9FBCD800EB94CD /* ColorScheme+Helper.swift in Sources */,
 				AF36C5A31E9F681000FADECC /* DraftsRootViewController.swift in Sources */,
@@ -8090,6 +8101,7 @@
 				5EBBE97121878D09008BC1B7 /* ConversationMessageToolboxCell.swift in Sources */,
 				871BC22C1D34F8F800DF0793 /* ImagePickerConfirmationController.m in Sources */,
 				8775BF1E2007CFB200A8AD93 /* UIControlBlockAPI.swift in Sources */,
+				EF1A461E21ADACF50009B6B9 /* RightIconDetailsCell.swift in Sources */,
 				5EE73BF3212323C70032986D /* RegistrationCredentialsVerifiedEventHandler.swift in Sources */,
 				EF2C18A01FED435600E9F2FD /* ConversationCell+BurstTimestamp.swift in Sources */,
 				EE8E926E2024F085000F4752 /* MarkdownTextView.swift in Sources */,

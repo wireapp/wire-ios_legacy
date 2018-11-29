@@ -16,18 +16,20 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import UIKit
+protocol ConversationOptionsConfigurable {
+    func configure(with conversation: ZMConversation)
+}
 
-class GroupDetailsOptionsCell: DetailsCollectionViewCell {
 
-    func configure(with conversation: ZMConversation) {
-        fatal("Your subclasses must implement `configure(with conversation)`.")
-    }
+//typealias ConversationOptionsCell = DetailsCollectionViewCell & ConversationOptionsConfigurable
 
+// a ConversationOptionsCell that with a disclosure indicator on the right
+typealias GroupDetailsDisclosureOptionsCell = ConversationOptionsConfigurable & DisclosureCell
+
+class DisclosureCell: RightIconDetailsCell {
     override func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
         super.applyColorScheme(colorSchemeVariant)
         let sectionTextColor = UIColor.from(scheme: .sectionText, variant: colorSchemeVariant)
         accessory = UIImage(for: .disclosureIndicator, iconSize: .like, color: sectionTextColor)
     }
-
 }
