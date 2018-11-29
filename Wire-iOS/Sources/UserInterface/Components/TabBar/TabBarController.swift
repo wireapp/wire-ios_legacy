@@ -71,6 +71,7 @@ class TabBarController: UIViewController, UIPageViewControllerDelegate, UIPageVi
     @objc(tabBarHidden) var isTabBarHidden = false {
         didSet {
             tabBar?.isHidden = isTabBarHidden
+            tabBarHeight.isActive = isTabBarHidden
         }
     }
 
@@ -89,10 +90,11 @@ class TabBarController: UIViewController, UIPageViewControllerDelegate, UIPageVi
     }
 
     // MARK: - Views
-    private var tabBar: TabBar?
+    private var tabBar: TabBar!
     private var contentView = UIView()
     private var isSwiping = false
     private var startOffset: CGFloat = 0
+    private var tabBarHeight: NSLayoutConstraint!
 
     // MARK: - Initialization
 
@@ -115,7 +117,6 @@ class TabBarController: UIViewController, UIPageViewControllerDelegate, UIPageVi
     }
 
     fileprivate func createViews() {
-        self.contentView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(self.contentView)
         contentView.backgroundColor = viewControllers.first?.view?.backgroundColor
         add(pageViewController, to: contentView)
@@ -136,17 +137,25 @@ class TabBarController: UIViewController, UIPageViewControllerDelegate, UIPageVi
     }
 
     fileprivate func createConstraints() {
+        tabBar.translatesAutoresizingMaskIntoConstraints = false
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        pageViewController.view.translatesAutoresizingMaskIntoConstraints = false
+
+        tabBarHeight = tabBar.heightAnchor.constraint(equalToConstant: 0)
         pageViewController.view.fitInSuperview()
 
-        if let tabBar = self.tabBar {
-            constrain(tabBar, contentView, view) { tabBar, contentView, view in
-                tabBar.top == tabBar.superview!.top
-                tabBar.left == tabBar.superview!.left
-                tabBar.right == tabBar.superview!.right
-                contentView.top == tabBar.bottom
-                contentView.bottom == view.bottom
-            }
-        }
+        NSLayoutConstraint.activate([
+            // tabBar
+            tabBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tabBar.topAnchor.constraint(equalTo: view.topAnchor),
+            tabBar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+
+            // contentView
+            contentView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            contentView.topAnchor.constraint(equalTo: tabBar.bottomAnchor),
+            contentView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            contentView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+        ])
     }
 
     // MARK: - Interacting with the Tab Bar

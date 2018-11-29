@@ -23,7 +23,7 @@ import WireExtensionComponents
  * A view controller wrapping the message details.
  */
 
-@objc class MessageDetailsViewController: UIViewController {
+@objc class MessageDetailsViewController: UIViewController, ModalTopBarDelegate {
 
     /// The displayed message.
     let message: ZMConversationMessage
@@ -59,7 +59,6 @@ import WireExtensionComponents
         container = TabBarController(viewControllers: viewControllers)
 
         super.init(nibName: nil, bundle: nil)
-        container.isTabBarHidden = dataSource.displayMode != .combined
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -70,15 +69,19 @@ import WireExtensionComponents
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        dataSource.observer = self
 
         // Configure the top bar
         view.addSubview(topBar)
+        topBar.delegate = self
         configureTopBar()
 
         // Configure the content
         addChild(container)
         view.addSubview(container.view)
         container.didMove(toParent: self)
+        container.isTabBarHidden = dataSource.displayMode != .combined
+        container.isEnabled = dataSource.displayMode == .combined
 
         // Create the constraints
         configureConstraints()
@@ -97,7 +100,12 @@ import WireExtensionComponents
             topBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             topBar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
 
-            ])
+            // container
+            container.view.topAnchor.constraint(equalTo: topBar.bottomAnchor),
+            container.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            container.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            container.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+        ])
     }
 
     private func configureTopBar() {
@@ -129,6 +137,12 @@ import WireExtensionComponents
             let formattedDate = Message.shortDateTimeFormatter.string(from: readDate)
             return MessageDetailsCellDescription(user: user, subtitle: formattedDate)
         }
+    }
+
+    // MARK: - Top Bar
+
+    func modelTopBarWantsToBeDismissed(_ topBar: ModalTopBar) {
+        dismiss(animated: true, completion: nil)
     }
 
 }

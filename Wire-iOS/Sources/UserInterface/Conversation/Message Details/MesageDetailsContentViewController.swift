@@ -54,12 +54,6 @@ class MesageDetailsContentViewController: UIViewController {
     let collectionViewLayout = UICollectionViewFlowLayout()
     var collectionView: UICollectionView!
 
-    var isEmpty: Bool = false {
-        didSet {
-            self.noResultsView.isHidden = !self.isEmpty
-        }
-    }
-
     var contentType: ContentType {
         didSet {
             configureNoResultsViewForContentType()
@@ -137,7 +131,7 @@ class MesageDetailsContentViewController: UIViewController {
             // noResultsView
             noResultsView.topAnchor.constraint(greaterThanOrEqualTo: view.topAnchor, constant: 12),
             noResultsView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            noResultsView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            noResultsView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -44),
             noResultsView.bottomAnchor.constraint(lessThanOrEqualTo: view.bottomAnchor, constant: -12),
             noResultsView.leadingAnchor.constraint(greaterThanOrEqualTo: view.leadingAnchor, constant: 24),
             noResultsView.trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor, constant: -24),
@@ -151,6 +145,7 @@ class MesageDetailsContentViewController: UIViewController {
     }
 
     private func reloadData(_ old: [MessageDetailsCellDescription], _ new: [MessageDetailsCellDescription]) {
+        noResultsView.isHidden = !cells.isEmpty
         collectionView.reloadData()
         //        let updates = {
 //            let old = ZMOrderedSetState(orderedSet: NSOrderedSet(array: old))

@@ -118,7 +118,7 @@ class MessageDetailsDataSource: NSObject, ZMMessageObserver, ZMConversationObser
 
         if let editedDate = message.formattedEditedDate() {
             let editedString = "message_details.subtitle_edit_date".localized(args: editedDate)
-            subtitle += "\n" + editedString
+            subtitle += " · " + editedString
         }
 
         self.subtitle = subtitle
