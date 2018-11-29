@@ -43,11 +43,7 @@ class ConversationCreateNameCell: UICollectionViewCell {
         textField.isAccessibilityElement = true
         textField.accessibilityIdentifier = "textfield.newgroup.name"
         textField.placeholder = "conversation.create.group_name.placeholder".localized.uppercased()
-        
-        // this needs to be the conversation creation vc
-        // we could set this from the outside.
-        // textField.textFieldDelegate =
-        
+                
         contentView.addSubview(textField)
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.fitInSuperview(with: EdgeInsets(top: 0, leading: 24, bottom: 0, trailing: 16))
