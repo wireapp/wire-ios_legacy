@@ -46,7 +46,7 @@ class ConversationCreateNameCell: UICollectionViewCell {
                 
         contentView.addSubview(textField)
         textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.fitInSuperview(with: EdgeInsets(top: 0, leading: 24, bottom: 0, trailing: 16))
+        textField.fitInSuperview()
         
         configureColors()
     }
