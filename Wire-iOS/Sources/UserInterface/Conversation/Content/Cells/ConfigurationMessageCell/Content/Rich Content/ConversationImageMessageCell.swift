@@ -23,6 +23,7 @@ class ConversationImageMessageCell: UIView, ConversationMessageCell {
     struct Configuration {
         let image: ZMImageMessageData
         let isObfuscated: Bool
+        let message: ZMConversationMessage?
     }
     
     private var containerView = UIView()
@@ -115,6 +116,7 @@ class ConversationImageMessageCell: UIView, ConversationMessageCell {
 
         imageResourceView.setImageResource(imageResource) { [weak self] in
             self?.updateImageContainerAppearance()
+            _ = object.message?.startSelfDestructionIfNeeded()
         }
     }
     
@@ -151,7 +153,7 @@ class ConversationImageMessageCellDescription: ConversationMessageCellDescriptio
     
     init(message: ZMConversationMessage, image: ZMImageMessageData) {
         self.message = message
-        self.configuration = View.Configuration(image: image, isObfuscated: message.isObfuscated)
+        self.configuration = View.Configuration(image: image, isObfuscated: message.isObfuscated, message: message)
     }
     
 }
