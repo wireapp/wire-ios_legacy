@@ -1141,6 +1141,7 @@
 		EF15A7B620BC34F700A045C7 /* XCTestCase+ImageFromBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF15A7B520BC34F700A045C7 /* XCTestCase+ImageFromBundle.swift */; };
 		EF18C7E41F9E4DA00085A832 /* NSString+FileNameForZMUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF18C7E31F9E4DA00085A832 /* NSString+FileNameForZMUser.swift */; };
 		EF18D7C82102345B005B51A1 /* UpsideDownTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF18D7C72102345B005B51A1 /* UpsideDownTableView.swift */; };
+		EF18D97E21AFEAC300403C98 /* ConversationInputBarViewControllerAudioRecorderSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF18D97C21AFEA6600403C98 /* ConversationInputBarViewControllerAudioRecorderSnapshotTests.swift */; };
 		EF19209D20C6E4F800E4B92D /* XCTestCase+DayFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF19209C20C6E4F700E4B92D /* XCTestCase+DayFormatter.swift */; };
 		EF1A461621AD42B50009B6B9 /* ConversationInputBarViewController+CreateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1A461521AD42B50009B6B9 /* ConversationInputBarViewController+CreateView.swift */; };
 		EF1EA4631FB0937000B53063 /* MockUser+filename.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1EA4611FB0934D00B53063 /* MockUser+filename.swift */; };
@@ -2896,6 +2897,7 @@
 		EF15A7B520BC34F700A045C7 /* XCTestCase+ImageFromBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+ImageFromBundle.swift"; sourceTree = "<group>"; };
 		EF18C7E31F9E4DA00085A832 /* NSString+FileNameForZMUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSString+FileNameForZMUser.swift"; sourceTree = "<group>"; };
 		EF18D7C72102345B005B51A1 /* UpsideDownTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpsideDownTableView.swift; sourceTree = "<group>"; };
+		EF18D97C21AFEA6600403C98 /* ConversationInputBarViewControllerAudioRecorderSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationInputBarViewControllerAudioRecorderSnapshotTests.swift; sourceTree = "<group>"; };
 		EF19209C20C6E4F700E4B92D /* XCTestCase+DayFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "XCTestCase+DayFormatter.swift"; sourceTree = "<group>"; };
 		EF1A461521AD42B50009B6B9 /* ConversationInputBarViewController+CreateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationInputBarViewController+CreateView.swift"; sourceTree = "<group>"; };
 		EF1EA4611FB0934D00B53063 /* MockUser+filename.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MockUser+filename.swift"; sourceTree = "<group>"; };
@@ -5823,6 +5825,7 @@
 		BACB88521AF7C48900DDCDB0 /* Wire-iOS Tests */ = {
 			isa = PBXGroup;
 			children = (
+				DBD990471B39927A000ACF94 /* InputBar */,
 				EF6A33D02192F47200970698 /* ConversationListCell */,
 				5E35F76F2180B8A500D3F4FE /* ConversationMessageCell */,
 				5E65A798212FF7A6008BFCC0 /* Authentication */,
@@ -5866,7 +5869,6 @@
 				EF297DD32131F39F0002983A /* MediaPreviewViewControllerTests.swift */,
 				87BEB0D71C734D550094BFE9 /* Mocks */,
 				1E12C04D1BFA6346001A8A26 /* TestCategories */,
-				DBD990471B39927A000ACF94 /* InputBar */,
 				16A202611B66A0040095BBD1 /* Soundcloud */,
 				BACB88551AF7C48900DDCDB0 /* AggregateArrayTests.m */,
 				16D453C61B6F9CB000675246 /* LinkAttachmentTests.m */,
@@ -5940,7 +5942,6 @@
 				87AE8BDB207B99540058715E /* BackupPasswordViewControllerTests.swift */,
 				EF3052442087388000613C45 /* ConfirmEmailViewControllerTests.swift */,
 				EF305246208742F300613C45 /* ConfirmPhoneViewControllerTests.swift */,
-				EF63528C209C4A9300F5E950 /* ConversationInputBarViewControllerTests.swift */,
 				EF2971552099AD3000EFE6A4 /* SelfProfileViewControllerTests.swift */,
 				EF80C0032097151C00E0040B /* ZMConversationMessageWindowTests.swift */,
 				EF6EB1CD20A5C296002F720D /* AppStateControllerTests.swift */,
@@ -6319,6 +6320,8 @@
 				DBD990481B39927A000ACF94 /* InputBarRightMenuButtonPresenterTests.m */,
 				16B2DE2F1CCFB845000D7C30 /* InputBarTests.swift */,
 				BF8EE5571D6351B100B0D6D7 /* InputBarEditViewTests.swift */,
+				EF63528C209C4A9300F5E950 /* ConversationInputBarViewControllerTests.swift */,
+				EF18D97C21AFEA6600403C98 /* ConversationInputBarViewControllerAudioRecorderSnapshotTests.swift */,
 			);
 			path = InputBar;
 			sourceTree = "<group>";
@@ -8252,6 +8255,7 @@
 				D524BE5F207B99B800542A4E /* UIViewController+LoadingTests.swift in Sources */,
 				EF29F1BB21271A9A00BE94E6 /* GroupDetailsViewControllerTests.swift in Sources */,
 				87BEB0E01C734DA60094BFE9 /* MockLoader.m in Sources */,
+				EF18D97E21AFEAC300403C98 /* ConversationInputBarViewControllerAudioRecorderSnapshotTests.swift in Sources */,
 				EF883F8C215250B000B440CC /* AddParticipantsViewControllerSnapshotTests.swift in Sources */,
 				EF9C552720D2796A00D94EEB /* EphemeralTimeoutFormatterTests.swift in Sources */,
 				8758CDB92191A7D60031BE0F /* ReplyComposingViewTests.swift in Sources */,
