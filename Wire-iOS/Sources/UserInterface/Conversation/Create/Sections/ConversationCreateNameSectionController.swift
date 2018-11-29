@@ -28,6 +28,10 @@ class ConversationCreateNameSectionController: NSObject, CollectionViewSectionCo
         return false
     }
     
+    var value: SimpleTextField.Value? {
+        return nameCell?.textField.value
+    }
+    
     private weak var nameCell: Cell?
     private weak var textFieldDelegate: SimpleTextFieldDelegate?
     private var footer = SectionFooter(frame: .zero)
@@ -44,6 +48,14 @@ class ConversationCreateNameSectionController: NSObject, CollectionViewSectionCo
     func prepareForUse(in collectionView: UICollectionView?) {
         collectionView.flatMap(Cell.register)
         collectionView?.register(SectionFooter.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: "SectionFooter")
+    }
+    
+    func becomeFirstResponder() {
+        nameCell?.textField.becomeFirstResponder()
+    }
+    
+    func resignFirstResponder() {
+        nameCell?.textField.resignFirstResponder()
     }
 }
 
