@@ -16,14 +16,23 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
-import WireTransport
+import UIKit
 
-extension BackendEnvironment {
-    public static let shared: BackendEnvironment = {
-        let type = EnvironmentType(userDefaults: .standard)
-        let bundle = Bundle.backendBundle
-        guard let environment = BackendEnvironment.from(environmentType: type, configurationBundle: bundle) else { fatalError("Malformed data inside backend.bundle") }
-        return environment
-    }()
+extension UIViewController {
+
+    /// Returns whether the view controller can be dismissed.
+    var canBeDismissed: Bool {
+        return self.presentingViewController?.presentedViewController == self
+            || (navigationController != nil && navigationController?.presentingViewController?.presentedViewController == navigationController)
+    }
+
+    /// Dismisses the view controller if needed before performing the specified actions.
+    func dismissIfNeeded(animated: Bool, completion: (() -> Void)? = nil) {
+        if canBeDismissed {
+            dismiss(animated: animated, completion: completion)
+        } else {
+            completion?()
+        }
+    }
+
 }

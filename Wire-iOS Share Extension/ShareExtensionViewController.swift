@@ -160,7 +160,8 @@ class ShareExtensionViewController: SLComposeServiceViewController {
         sharingSession = try SharingSession(
             applicationGroupIdentifier: applicationGroupIdentifier,
             accountIdentifier: accountIdentifier,
-            hostBundleIdentifier: hostBundleIdentifier
+            hostBundleIdentifier: hostBundleIdentifier,
+            environment: .shared
         )
     }
 

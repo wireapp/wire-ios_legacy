@@ -21,12 +21,11 @@ import UIKit
 class DetailsCollectionViewCell: SeparatorCollectionViewCell {
 
     private let leftIconView = UIImageView()
-    private let accessoryIconView = UIImageView()
     private let titleLabel = UILabel()
     private let statusLabel = UILabel()
 
     private var titleStackView: UIStackView!
-    private var contentStackView: UIStackView!
+    var contentStackView: UIStackView!
     private var leftIconContainer: UIView!
     private var contentLeadingConstraint: NSLayoutConstraint!
 
@@ -35,11 +34,6 @@ class DetailsCollectionViewCell: SeparatorCollectionViewCell {
     var icon: UIImage? {
         get { return leftIconView.image }
         set { updateIcon(newValue) }
-    }
-
-    var accessory: UIImage? {
-        get { return accessoryIconView.image }
-        set { updateAccessory(newValue) }
     }
 
     var title: String? {
@@ -67,9 +61,6 @@ class DetailsCollectionViewCell: SeparatorCollectionViewCell {
         leftIconView.contentMode = .scaleAspectFit
         leftIconView.setContentHuggingPriority(.required, for: .horizontal)
 
-        accessoryIconView.translatesAutoresizingMaskIntoConstraints = false
-        accessoryIconView.contentMode = .center
-
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.font = FontSpec.init(.normal, .light).font!
 
@@ -94,8 +85,8 @@ class DetailsCollectionViewCell: SeparatorCollectionViewCell {
         titleStackView.alignment = .leading
         titleStackView.translatesAutoresizingMaskIntoConstraints = false
 
-        contentStackView = UIStackView(arrangedSubviews: [leftIconContainer, titleStackView, iconViewSpacer, accessoryIconView])
-        contentStackView.axis = .horizontal
+        contentStackView = UIStackView(arrangedSubviews: [leftIconContainer, titleStackView, iconViewSpacer])
+        contentStackView.axis = .horizontal 
         contentStackView.distribution = .fill
         contentStackView.alignment = .center
         contentStackView.translatesAutoresizingMaskIntoConstraints = false
@@ -151,15 +142,6 @@ class DetailsCollectionViewCell: SeparatorCollectionViewCell {
             statusLabel.isHidden = false
         } else {
             statusLabel.isHidden = true
-        }
-    }
-
-    private func updateAccessory(_ newValue: UIImage?) {
-        if let value = newValue {
-            accessoryIconView.image = value
-            accessoryIconView.isHidden = false
-        } else {
-            accessoryIconView.isHidden = true
         }
     }
     

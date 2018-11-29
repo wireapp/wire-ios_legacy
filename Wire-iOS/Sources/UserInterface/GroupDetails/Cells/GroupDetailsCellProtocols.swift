@@ -16,30 +16,20 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import UIKit
+protocol ConversationOptionsConfigurable {
+    func configure(with conversation: ZMConversation)
+}
 
-class GroupDetailsTimeoutOptionsCell: GroupDetailsDisclosureOptionsCell {
 
-    override func setUp() {
-        super.setUp()
-        accessibilityIdentifier = "cell.groupdetails.timeoutoptions"
-        title = "group_details.timeout_options_cell.title".localized
-    }
+//typealias ConversationOptionsCell = DetailsCollectionViewCell & ConversationOptionsConfigurable
 
-    func configure(with conversation: ZMConversation) {
-        switch conversation.messageDestructionTimeout {
-        case .synced(let value)?:
-            status = value.displayString
-        default:
-            status = MessageDestructionTimeoutValue.none.displayString
-        }
-    }
+// a ConversationOptionsCell that with a disclosure indicator on the right
+typealias GroupDetailsDisclosureOptionsCell = ConversationOptionsConfigurable & DisclosureCell
 
+class DisclosureCell: RightIconDetailsCell {
     override func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
         super.applyColorScheme(colorSchemeVariant)
-
-        icon = UIImage(for: .hourglass, iconSize: .tiny,
-                       color: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant))
+        let sectionTextColor = UIColor.from(scheme: .sectionText, variant: colorSchemeVariant)
+        accessory = UIImage(for: .disclosureIndicator, iconSize: .like, color: sectionTextColor)
     }
-
 }

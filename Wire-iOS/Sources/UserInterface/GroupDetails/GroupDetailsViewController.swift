@@ -50,6 +50,8 @@ import Cartography
         super.init(nibName: nil, bundle: nil)
         token = ConversationChangeInfo.add(observer: self, for: conversation)
 
+        createSubviews()
+
         if let session = ZMUserSession.shared() {
             syncObserver = InitialSyncObserver(in: session) { [weak self] completed in
                 self?.didCompleteInitialSync = completed
@@ -60,21 +62,17 @@ import Cartography
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        title = "participants.title".localized.uppercased()
-        view.backgroundColor = UIColor.from(scheme: .contentBackground)
-        
+
+    func createSubviews() {
         let collectionView = UICollectionView(forUserList: ())
 
         if #available(iOS 11.0, *) {
             collectionView.contentInsetAdjustmentBehavior = .never
         }
-        
+
         [collectionView, footerView, bottomSpacer].forEach(view.addSubview)
         bottomSpacer.backgroundColor = UIColor.from(scheme: .barBackground)
-        
+
         constrain(view, collectionView, footerView, bottomSpacer) { container, collectionView, footerView, bottomSpacer in
             collectionView.top == container.top
             collectionView.leading == container.leading
@@ -83,22 +81,29 @@ import Cartography
             footerView.leading == container.leading
             footerView.trailing == container.trailing
             footerView.bottom == bottomSpacer.top
-            
+
             if #available(iOS 11, *) {
                 bottomSpacer.top == container.safeAreaLayoutGuide.bottom
             } else {
                 bottomSpacer.top == container.bottom
             }
-            
+
             bottomSpacer.bottom == container.bottom
             bottomSpacer.leading == container.leading
             bottomSpacer.trailing == container.trailing
         }
-        
+
         collectionViewController.collectionView = collectionView
         footerView.delegate = self
         footerView.update(for: conversation)
         collectionViewController.sections = computeVisibleSections()
+
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        title = "participants.title".localized.uppercased()
+        view.backgroundColor = UIColor.from(scheme: .contentBackground)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -116,6 +121,13 @@ import Cartography
         let optionsSectionController = GroupOptionsSectionController(conversation: conversation, delegate: self, syncCompleted: didCompleteInitialSync)
         if optionsSectionController.hasOptions {
             sections.append(optionsSectionController)            
+        }
+
+        if let selfUser = ZMUser.selfUser(), selfUser.isTeamMember {
+            let receiptOptionsSectionController = ReceiptOptionsSectionController(conversation: conversation,
+                                                                                  syncCompleted: didCompleteInitialSync,
+                                                                                  collectionView: self.collectionViewController.collectionView!)
+            sections.append(receiptOptionsSectionController)
         }
 
         let (participants, serviceUsers) = (conversation.sortedOtherParticipants, conversation.sortedServiceUsers)
