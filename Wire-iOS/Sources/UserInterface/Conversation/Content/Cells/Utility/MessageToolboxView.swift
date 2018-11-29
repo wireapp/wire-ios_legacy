@@ -331,10 +331,9 @@ import TTTAttributedLabel
         }
     }
 
-    ///TODO: rewrite as extension
+    ///TODO: rewrite as ZMConversationMessage extension
     fileprivate func statusString(for message: ZMConversationMessage) -> NSAttributedString? {
         var deliveryStateString: String? = .none
-//        var attributedString: NSMutableAttributedString? = .none
 
         if let sender = message.sender, sender.isSelfUser {
             switch message.deliveryState {

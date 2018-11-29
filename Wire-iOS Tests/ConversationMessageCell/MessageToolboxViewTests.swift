@@ -38,6 +38,17 @@ class MessageToolboxViewTests: CoreDataSnapshotTestCase {
         super.tearDown()
     }
 
+    func testThatItConfiguresWithFailedToSend() {
+        // GIVEN
+        message.deliveryState = .failedToSend
+
+        // WHEN
+        sut.configureForMessage(message, forceShowTimestamp: true, animated: false)
+
+        // THEN
+        verify(view: sut) ///TODO: expected a time stamp
+    }
+
     func testThatItConfiguresWith1To1ConversationReadReceipt() {
         // GIVEN
         message.conversation?.conversationType = .oneOnOne
