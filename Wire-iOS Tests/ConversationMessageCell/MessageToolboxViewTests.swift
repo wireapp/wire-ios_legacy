@@ -38,6 +38,19 @@ class MessageToolboxViewTests: CoreDataSnapshotTestCase {
         super.tearDown()
     }
 
+    func testThatItConfiguresWith1To1ConversationReadReceipt() {
+        // GIVEN
+        message.conversation?.conversationType = .oneOnOne
+        message.deliveryState = .read
+
+        // WHEN
+        sut.configureForMessage(message, forceShowTimestamp: true, animated: false)
+
+        // THEN
+        verify(view: sut) ///TODO: expected a time stamp
+    }
+
+
     func testThatItConfiguresWithTimestamp() {
         // GIVEN
         let users = MockUser.mockUsers().filter { !$0.isSelfUser }

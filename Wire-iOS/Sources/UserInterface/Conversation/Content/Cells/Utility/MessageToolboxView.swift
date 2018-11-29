@@ -320,94 +320,118 @@ import TTTAttributedLabel
     }
 
     fileprivate func configureTimestamp(_ message: ZMConversationMessage, animated: Bool = false) {
-        var deliveryStateString: String? = .none
-        
-        if let sender = message.sender, sender.isSelfUser {
-            switch message.deliveryState {
-            case .pending:
-                deliveryStateString = "content.system.pending_message_timestamp".localized
-            case .read:
-                deliveryStateString = "content.system.message_read_timestamp".localized
-            case .delivered:
-                deliveryStateString = "content.system.message_delivered_timestamp".localized
-            case .sent:
-                deliveryStateString = "content.system.message_sent_timestamp".localized
-            case .failedToSend:
-                deliveryStateString = "content.system.failedtosend_message_timestamp".localized + " " +
-                                      "content.system.failedtosend_message_timestamp_resend".localized + " · " +
-                                      "content.system.failedtosend_message_timestamp_delete".localized
-            default:
-                deliveryStateString = .none
-            }
-        }
 
-        let showDestructionTimer = message.isEphemeral && !message.isObfuscated && nil != message.destructionDate
-        if let destructionDate = message.destructionDate, showDestructionTimer {
-            let remaining = destructionDate.timeIntervalSinceNow + 1 // We need to add one second to start with the correct value
-            
-            if remaining > 0 {
-                deliveryStateString = MessageToolboxView.ephemeralTimeFormatter.string(from: remaining)
-            } else if message.isAudio {
-                // do nothing, audio messages are allowed to extend the timer
-                // past the destruction date.
-            }
-        }
+        guard let changeBlock = statusUpdate(message: message) else { return }
 
-        let finalText: String
-
-        if let childMessages = message.systemMessageData?.childMessages,
-            !childMessages.isEmpty,
-            let timestamp = timestampString(message) {
-            let childrenTimestamps = childMessages.compactMap {
-                $0 as? ZMConversationMessage
-            }.sorted { left, right in
-                left.serverTimestamp < right.serverTimestamp
-            }.compactMap(timestampString)
-
-            finalText = childrenTimestamps.reduce(timestamp) { (text, current) in
-                return "\(text)\n\(current)"
-            }
-        } else if let timestampString = self.timestampString(message), message.deliveryState == .delivered || message.deliveryState == .sent {
-            if let deliveryStateString = deliveryStateString, Message.shouldShowDeliveryState(message) {
-                finalText = timestampString + " ・ " + deliveryStateString
-            }
-            else {
-                finalText = timestampString
-            }
-        }
-        else {
-            finalText = (deliveryStateString ?? "")
-        }
-        
-        if statusLabel.attributedText?.string == finalText {
-            return
-        }
-        
-        let attributedText = NSMutableAttributedString(attributedString: finalText && [.font: statusLabel.font, .foregroundColor: statusLabel.textColor])
-        
-        if message.deliveryState == .failedToSend {
-            let linkRange = (finalText as NSString).range(of: "content.system.failedtosend_message_timestamp_resend".localized)
-            attributedText.addAttributes([.link: type(of: self).resendLink], range: linkRange)
-            
-            let deleteRange = (finalText as NSString).range(of: "content.system.failedtosend_message_timestamp_delete".localized)
-            attributedText.addAttributes([.link: type(of: self).deleteLink], range: deleteRange)
-        }
-
-        if let currentText = self.statusLabel.attributedText, currentText.string == attributedText.string {
-            return
-        }
-        
-        let changeBlock =  {
-            self.updateStatusLabelAttributedText(attributedText: attributedText)
-            self.statusLabel.addLinks()
-        }
-        
         if animated {
             statusLabel.wr_animateSlideTo(.up, newState: changeBlock)
         }
         else {
             changeBlock()
         }
+    }
+
+    ///TODO: rewrite as extension
+    fileprivate func statusString(for message: ZMConversationMessage) -> NSAttributedString? {
+        var deliveryStateString: String? = .none
+//        var attributedString: NSMutableAttributedString? = .none
+
+        if let sender = message.sender, sender.isSelfUser {
+            switch message.deliveryState {
+            case .pending:
+                deliveryStateString = "content.system.pending_message_timestamp".localized
+            case .read:
+                ///TODO: eye icon attachment, group and 1to1 cases
+                deliveryStateString = "content.system.message_read_timestamp".localized
+            case .delivered:
+                deliveryStateString = "content.system.message_delivered_timestamp".localized
+            case .sent:
+                deliveryStateString = "content.system.message_sent_timestamp".localized
+            case .failedToSend:
+                let resendString = NSAttributedString(string: "content.system.failedtosend_message_timestamp_resend".localized, attributes:[.link: type(of: self).resendLink])
+
+                let deleteRange = NSAttributedString(string: "content.system.failedtosend_message_timestamp_delete".localized, attributes:[.link: type(of: self).deleteLink])
+
+                return NSAttributedString(string:"content.system.failedtosend_message_timestamp".localized) + resendString + NSAttributedString(string:" · ") + deleteRange
+
+            case .invalid:
+                return nil
+            }
+        }
+
+        if let deliveryStateString = deliveryStateString {
+            return NSAttributedString(string: deliveryStateString)
+        } else {
+            return nil
+        }
+    }
+
+
+    fileprivate func statusUpdate(message: ZMConversationMessage) -> (()->())? {
+        var deliveryStateString: NSAttributedString? = statusString(for: message)
+
+        // Ephemeral overrides
+        let showDestructionTimer = message.isEphemeral && !message.isObfuscated && nil != message.destructionDate
+        if let destructionDate = message.destructionDate, showDestructionTimer {
+            let remaining = destructionDate.timeIntervalSinceNow + 1 // We need to add one second to start with the correct value
+
+            if remaining > 0 {
+                if let string = MessageToolboxView.ephemeralTimeFormatter.string(from: remaining) {
+
+                deliveryStateString = NSMutableAttributedString(string: string)
+                }
+            } else if message.isAudio {
+                // do nothing, audio messages are allowed to extend the timer
+                // past the destruction date.
+            }
+        }
+
+        // System message overrides
+
+        let finalText: NSAttributedString
+
+        if let childMessages = message.systemMessageData?.childMessages,
+            !childMessages.isEmpty,
+            let timestamp = timestampString(message) {
+            let childrenTimestamps = childMessages.compactMap {
+                $0 as? ZMConversationMessage
+                }.sorted { left, right in
+                    left.serverTimestamp < right.serverTimestamp
+                }.compactMap(timestampString)
+
+            finalText = NSAttributedString(string: childrenTimestamps.reduce(timestamp) { (text, current) in
+                return "\(text)\n\(current)"
+            })
+        } else if let timestampString = self.timestampString(message),
+            message.deliveryState == .delivered || message.deliveryState == .sent {
+            if let deliveryStateString = deliveryStateString, Message.shouldShowDeliveryState(message) {
+                finalText = NSAttributedString(string: timestampString + " ・ ") + deliveryStateString
+            }
+            else {
+                finalText = NSMutableAttributedString(string: timestampString)
+            }
+        }
+        else {
+            finalText = (deliveryStateString ?? NSAttributedString(string: ""))
+        }
+
+        if statusLabel.attributedText?.string == finalText.string {
+            return nil
+        }
+
+        let attributedText = NSMutableAttributedString(attributedString: finalText && [.font: statusLabel.font, .foregroundColor: statusLabel.textColor])
+
+
+        if let currentText = self.statusLabel.attributedText, currentText.string == attributedText.string {
+            return nil
+        }
+
+        let changeBlock =  {
+            self.updateStatusLabelAttributedText(attributedText: attributedText)
+            self.statusLabel.addLinks()
+        }
+
+        return changeBlock
     }
     
     fileprivate func configureLikeTip(_ message: ZMConversationMessage, animated: Bool = false) {
