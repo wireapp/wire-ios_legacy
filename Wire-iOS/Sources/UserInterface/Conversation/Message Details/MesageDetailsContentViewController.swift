@@ -85,7 +85,7 @@ class MesageDetailsContentViewController: UIViewController {
         collectionViewLayout.scrollDirection = .vertical
         collectionViewLayout.minimumLineSpacing = 0
         collectionViewLayout.minimumInteritemSpacing = 0
-        collectionViewLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        collectionViewLayout.sectionInset = UIEdgeInsets(top: 24, left: 0, bottom: 0, right: 0)
 
         collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: collectionViewLayout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false

@@ -75,6 +75,7 @@ import WireExtensionComponents
         // Configure the top bar
         view.addSubview(topBar)
         topBar.delegate = self
+        topBar.needsSeparator = false
         configureTopBar()
 
         // Configure the content
@@ -83,7 +84,6 @@ import WireExtensionComponents
         container.didMove(toParent: self)
         container.isTabBarHidden = dataSource.displayMode != .combined
         container.isEnabled = dataSource.displayMode == .combined
-        topBar.needsSeparator = dataSource.displayMode != .combined
 
         // Create the constraints
         configureConstraints()
