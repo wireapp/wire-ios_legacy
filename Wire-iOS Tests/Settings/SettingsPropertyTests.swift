@@ -21,7 +21,6 @@ import XCTest
 @testable import Wire
 
 @objcMembers class MockZMEditableUser: MockUser, ZMEditableUser, ValidatorType {
-    var readReceiptsEnabled: Bool = false
     
     var enableReadReceipts: Bool = false
     
