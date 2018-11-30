@@ -553,7 +553,6 @@
 		872CB8B919E58816006752B4 /* ProfileUnblockFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 872CB8B019E58816006752B4 /* ProfileUnblockFooterView.m */; };
 		872E22201F5EA4B6007729D4 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872E221F1F5EA4B6007729D4 /* ProfileView.swift */; };
 		872E22221F600347007729D4 /* Cartography+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872E22211F600347007729D4 /* Cartography+Additions.swift */; };
-		873151111D75D0C000284C1F /* ReactionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 873151101D75D0C000284C1F /* ReactionCell.swift */; };
 		8732670E1D2D0C5C005A62C1 /* AudioRecordKeyboardViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8732670C1D2D0C49005A62C1 /* AudioRecordKeyboardViewControllerTests.swift */; };
 		8733378A1DF5B43A006AE609 /* SwiftDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 873337891DF5B43A006AE609 /* SwiftDependencies.swift */; };
 		8735AE722036CBF900DCE66E /* huge.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 8735AE702036C88800DCE66E /* huge.pdf */; };
@@ -2133,7 +2132,6 @@
 		872CB8B019E58816006752B4 /* ProfileUnblockFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileUnblockFooterView.m; sourceTree = "<group>"; };
 		872E221F1F5EA4B6007729D4 /* ProfileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		872E22211F600347007729D4 /* Cartography+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Cartography+Additions.swift"; sourceTree = "<group>"; };
-		873151101D75D0C000284C1F /* ReactionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReactionCell.swift; sourceTree = "<group>"; };
 		8732670C1D2D0C49005A62C1 /* AudioRecordKeyboardViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioRecordKeyboardViewControllerTests.swift; sourceTree = "<group>"; };
 		873337891DF5B43A006AE609 /* SwiftDependencies.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftDependencies.swift; sourceTree = "<group>"; };
 		8735AE702036C88800DCE66E /* huge.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = huge.pdf; sourceTree = "<group>"; };
@@ -4828,7 +4826,6 @@
 		875F89151D6F35DC00D8748E /* Message Details */ = {
 			isa = PBXGroup;
 			children = (
-				873151101D75D0C000284C1F /* ReactionCell.swift */,
 				5E769C5721AE948E00785EB7 /* MessageDetailsDataSource.swift */,
 				5E53534321B14A8A0060DB38 /* MessageDetailsCellDescription.swift */,
 				5E769C5921AE97E500785EB7 /* MessageDetailsViewController.swift */,
@@ -7726,7 +7723,6 @@
 				D5C34E8E203D75C5004A0986 /* ConversationOptionsViewController.swift in Sources */,
 				871BC22E1D34F8F800DF0793 /* SplitViewController.m in Sources */,
 				BFAF4CB31CECA68200780537 /* AudioRecorder.swift in Sources */,
-				873151111D75D0C000284C1F /* ReactionCell.swift in Sources */,
 				877A32601E892A100017DD9A /* ConversationListAccessoryView.swift in Sources */,
 				5EE73BF5212419ED0032986D /* AuthenticationCoordinator+Registration.swift in Sources */,
 				EE7E0E762109FE9200787C65 /* ParticipantsStringFormatter.swift in Sources */,

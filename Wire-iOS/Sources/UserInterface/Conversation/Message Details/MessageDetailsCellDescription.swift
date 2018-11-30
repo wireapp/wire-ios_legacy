@@ -30,6 +30,11 @@ class MessageDetailsCellDescription: NSObject, NSCopying {
     /// The subtitle string to display under the user name.
     let subtitle: String?
 
+    /// The attributed string for the subtitle.
+    var attributedTitle: NSAttributedString? {
+        return subtitle.map { $0 && UserCell.boldFont }
+    }
+
     // MARK: - Initialization
 
     /// Creates a new cell description.

@@ -83,7 +83,7 @@ class MesageDetailsContentViewController: UIViewController {
         collectionView.backgroundColor = UIColor.clear
         collectionView.dataSource = self
         collectionView.delegate = self
-        ReactionCell.register(in: collectionView)
+        UserCell.register(in: collectionView)
         view.addSubview(collectionView)
 
         noResultsView.isHidden = true
@@ -191,9 +191,12 @@ extension MesageDetailsContentViewController: UICollectionViewDataSource, UIColl
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(ofType: ReactionCell.self, for: indexPath)
-        let description = cells[indexPath.row]
-        cell.configure(user: description.user, subtitle: description.subtitle)
+        let description = cells[indexPath.item]
+        let cell = collectionView.dequeueReusableCell(ofType: UserCell.self, for: indexPath)
+
+        cell.configure(with: description.user, subtitle: description.attributedTitle, conversation: conversation)
+        cell.showSeparator = indexPath.item != (cells.endIndex - 1)
+
         return cell
     }
 
