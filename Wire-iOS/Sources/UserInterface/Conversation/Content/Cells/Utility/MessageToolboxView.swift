@@ -46,12 +46,14 @@ import WireSyncEngine
         textView.isAccessibilityElement = true
         textView.accessibilityLabel = "DeliveryStatus"
         textView.textContainer.lineBreakMode = NSLineBreakMode.byTruncatingMiddle
-        textView.textContainer.maximumNumberOfLines = 0
+        textView.textContainer.maximumNumberOfLines = 1
         textView.setContentHuggingPriority(.defaultLow, for: .vertical)
         textView.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
 
         textView.linkTextAttributes = [.foregroundColor: UIColor.vividRed,
                                               .underlineStyle: NSUnderlineStyle.single.rawValue as NSNumber]
+
+        textView.textContainerInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
 
         return textView
     }()
@@ -99,7 +101,7 @@ import WireSyncEngine
         likeButton.translatesAutoresizingMaskIntoConstraints = false
         statusTextView.translatesAutoresizingMaskIntoConstraints = false
 
-        heightConstraint = self.heightAnchor.constraint(equalToConstant: 28)
+        heightConstraint = heightAnchor.constraint(equalToConstant: 28)
         heightConstraint.priority = UILayoutPriority(999)
 
         likeButtonWidth = likeButtonContainer.widthAnchor.constraint(equalToConstant: UIView.conversationLayoutMargins.left)
@@ -115,11 +117,10 @@ import WireSyncEngine
             likeButton.centerXAnchor.constraint(equalTo: likeButtonContainer.centerXAnchor),
             likeButton.centerYAnchor.constraint(equalTo: likeButtonContainer.centerYAnchor),
 
-            // statusLabel
+            // statusTextView align vertically center
             statusTextView.leadingAnchor.constraint(equalTo: likeButtonContainer.trailingAnchor),
-            statusTextView.topAnchor.constraint(equalTo: topAnchor),
             statusTextView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -UIView.conversationLayoutMargins.right),
-            statusTextView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            statusTextView.centerYAnchor.constraint(equalTo: centerYAnchor)
             ])
     }
     
@@ -303,7 +304,7 @@ import WireSyncEngine
         }
         
         let changeBlock = {
-            self.updateStatusLabel(attributedText: attributedText)
+            self.updateStatusTextView(attributedText: attributedText)
         }
         
         if animated {
@@ -314,7 +315,7 @@ import WireSyncEngine
         }
     }
 
-    fileprivate func updateStatusLabel(attributedText: NSAttributedString) {
+    fileprivate func updateStatusTextView(attributedText: NSAttributedString) {
         statusTextView.attributedText = attributedText
         statusTextView.accessibilityValue = statusTextView.attributedText.string
     }
@@ -460,7 +461,7 @@ import WireSyncEngine
         }
 
         let changeBlock =  {
-            self.updateStatusLabel(attributedText: attributedText)
+            self.updateStatusTextView(attributedText: attributedText)
         }
 
         return changeBlock
@@ -476,7 +477,7 @@ import WireSyncEngine
         }
         
         let changeBlock = {
-            self.updateStatusLabel(attributedText: attributedText)
+            self.updateStatusTextView(attributedText: attributedText)
         }
         
         if animated {
