@@ -65,11 +65,14 @@ class ReceiptOptionsSectionController: GroupDetailsSectionController {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellReuseIdentifier, for: indexPath) as! GroupDetailsReceiptOptionsCell
 
         cell.configure(with: conversation)
+        cell.action = { isOn in
+            self.conversation.hasReadReceiptsEnabled = isOn
+        }
         cell.showSeparator = false
         cell.isUserInteractionEnabled = syncCompleted
         cell.alpha = syncCompleted ? 1 : 0.48
-        return cell
 
+        return cell
     }
 
     ///MARK: - header

@@ -18,25 +18,28 @@
 
 import UIKit
 
+class IconToggleCell: DetailsCollectionViewCell {
+    var isOn: Bool {
+        set {
+            toggle.isOn = newValue
+        }
 
-final class GroupDetailsReceiptOptionsCell: IconToggleCell {
+        get {
+            return toggle.isOn
+        }
+    }
+
+    private let toggle = UISwitch()
+    var action: ((Bool) -> Void)?
 
     override func setUp() {
         super.setUp()
-        accessibilityIdentifier = "cell.groupdetails.receiptoptions"
-        title = "group_details.receipt_options_cell.title".localized
+        contentStackView.insertArrangedSubview(toggle, at: contentStackView.arrangedSubviews.count)
+
+        toggle.addTarget(self, action: #selector(toggleChanged), for: .valueChanged)
     }
 
-    override func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
-        super.applyColorScheme(colorSchemeVariant)
-        icon = UIImage(for: .eye,
-                       iconSize: .tiny,
-                       color: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant))
-    }
-}
-
-extension GroupDetailsReceiptOptionsCell: ConversationOptionsConfigurable {
-    func configure(with conversation: ZMConversation) {
-         isOn = conversation.hasReadReceiptsEnabled
+    @objc func toggleChanged(_ sender: UISwitch) {
+        action?(sender.isOn)
     }
 }
