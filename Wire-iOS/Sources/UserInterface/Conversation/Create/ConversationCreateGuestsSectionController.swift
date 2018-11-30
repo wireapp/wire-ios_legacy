@@ -24,7 +24,7 @@ class ConversationCreateGuestsSectionController: NSObject, CollectionViewSection
     
     private typealias Cell = ConversationCreateGuestsCell
     private var footer = SectionFooter(frame: .zero)
-    private let footerText = "conversation.create.toggle.subtitle".localized
+    private let footerText = "conversation.create.guests.subtitle".localized
     
     func prepareForUse(in collectionView: UICollectionView?) {
         collectionView.flatMap(Cell.register)

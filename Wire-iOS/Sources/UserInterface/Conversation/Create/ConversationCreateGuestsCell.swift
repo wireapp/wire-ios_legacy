@@ -23,7 +23,7 @@ class ConversationCreateGuestsCell: IconToggleCell {
     override func setUp() {
         super.setUp()
         accessibilityIdentifier = "toggle.newgroup.allowguests"
-        title = "conversation.create.toggle.title".localized
+        title = "conversation.create.guests.title".localized
         isOn = true
     }
     
