@@ -6345,27 +6345,6 @@
 			path = InputBar;
 			sourceTree = "<group>";
 		};
-		EEAC0A1921AD9CCB00BE5F5D /* Sections */ = {
-			isa = PBXGroup;
-			children = (
-				EEAC0A1521AD98BA00BE5F5D /* ConversationCreateOptionsSectionController.swift */,
-				EEAC0A1121AD875900BE5F5D /* ConversationCreateNameSectionController.swift */,
-				EEA9A76021B0244D001F7B5C /* ConversationCreateErrorSectionController.swift */,
-				EE0DE1CC21B172BF00CF3C4E /* ConversationCreateGuestsSectionController.swift */,
-			);
-			path = Sections;
-			sourceTree = "<group>";
-		};
-		EEAC0A1A21AD9CD900BE5F5D /* Cells */ = {
-			isa = PBXGroup;
-			children = (
-				EEAC0A1321AD898200BE5F5D /* ConversationCreateNameCell.swift */,
-				EEA9A75E21B01F28001F7B5C /* ConversationCreateErrorCell.swift */,
-				EE0DE1CE21B17DBD00CF3C4E /* ConversationCreateGuestsCell.swift */,
-			);
-			path = Cells;
-			sourceTree = "<group>";
-		};
 		EF2126B41FB9DFE300625A9B /* Authentication */ = {
 			isa = PBXGroup;
 			children = (
@@ -6569,8 +6548,13 @@
 			isa = PBXGroup;
 			children = (
 				F10F46D320288CEB00261449 /* ConversationCreationController.swift */,
-				EEAC0A1921AD9CCB00BE5F5D /* Sections */,
-				EEAC0A1A21AD9CD900BE5F5D /* Cells */,
+				EEAC0A1521AD98BA00BE5F5D /* ConversationCreateOptionsSectionController.swift */,
+				EEAC0A1121AD875900BE5F5D /* ConversationCreateNameSectionController.swift */,
+				EEA9A76021B0244D001F7B5C /* ConversationCreateErrorSectionController.swift */,
+				EE0DE1CC21B172BF00CF3C4E /* ConversationCreateGuestsSectionController.swift */,
+				EEAC0A1321AD898200BE5F5D /* ConversationCreateNameCell.swift */,
+				EEA9A75E21B01F28001F7B5C /* ConversationCreateErrorCell.swift */,
+				EE0DE1CE21B17DBD00CF3C4E /* ConversationCreateGuestsCell.swift */,
 				D5694B4F2044144500C84C8F /* ToggleView.swift */,
 				F1B5EAC62029AB9A0081D402 /* SimpleTextField.swift */,
 				F1B5EAC82029AC7E0081D402 /* SimpleTextFieldValidator.swift */,
