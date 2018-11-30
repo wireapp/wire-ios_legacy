@@ -77,6 +77,20 @@ final class MessageToolboxViewTests: CoreDataSnapshotTestCase {
         verify(view: sut) ///TODO: expected a time stamp
     }
 
+    func testThatItConfiguresWithGroupConversationReadReceipt() {
+        // GIVEN
+        message.conversation?.conversationType = .group
+        message.deliveryState = .read
+
+        let readReceipt = MockReadReceipt(user: otherUser)
+        message.readReceipts = [readReceipt]
+
+        // WHEN
+        sut.configureForMessage(message, forceShowTimestamp: true, animated: false)
+
+        // THEN
+        verify(view: sut)
+    }
 
     func testThatItConfiguresWithTimestamp() {
         // GIVEN

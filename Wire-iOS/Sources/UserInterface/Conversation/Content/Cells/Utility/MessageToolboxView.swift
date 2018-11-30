@@ -336,17 +336,20 @@ import WireSyncEngine
 
         switch conversationType {
         case .group:
-            return nil ///TODO: icon + num
+            let imageIcon = NSTextAttachment.textAttachment(for: .eye, with: .from(scheme: .textDimmed))!
+
+            let statusString: NSAttributedString
+
+            statusString = NSAttributedString(attachment: imageIcon) + " \(message.readReceipts.count)"
+
+            return statusString
         case .oneOnOne:
             let imageIcon = NSTextAttachment.textAttachment(for: .eye, with: .from(scheme: .textDimmed))!
 
-            let statusString: NSMutableAttributedString
+            let statusString: NSAttributedString
 
             if let timeString = message.readReceipts.first?.serverTimestamp {
-                statusString = NSMutableAttributedString(attachment: imageIcon)// + " " + Message.formattedDate(timeString)
-
-                statusString.append(NSMutableAttributedString(string: " "))
-                statusString.append(NSMutableAttributedString(string: Message.formattedDate(timeString)))
+                statusString = NSAttributedString(attachment: imageIcon) + " " + Message.formattedDate(timeString)
             } else {
                 statusString = NSMutableAttributedString(attachment: imageIcon)
             }
