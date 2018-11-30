@@ -1145,6 +1145,8 @@
 		EF15A7B020BC08C000A045C7 /* ConversationContentViewController+SaveImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF15A7AF20BC08C000A045C7 /* ConversationContentViewController+SaveImage.swift */; };
 		EF15A7B420BC304A00A045C7 /* SavableImageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF15A7B320BC304A00A045C7 /* SavableImageTests.swift */; };
 		EF15A7B620BC34F700A045C7 /* XCTestCase+ImageFromBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF15A7B520BC34F700A045C7 /* XCTestCase+ImageFromBundle.swift */; };
+		EF18140A21B17FB3008F7DA8 /* GroupDetailsReceiptOptionsCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF18140821B17F94008F7DA8 /* GroupDetailsReceiptOptionsCellTests.swift */; };
+		EF18140C21B18846008F7DA8 /* IconToggleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF18140B21B18846008F7DA8 /* IconToggleCell.swift */; };
 		EF18C7E41F9E4DA00085A832 /* NSString+FileNameForZMUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF18C7E31F9E4DA00085A832 /* NSString+FileNameForZMUser.swift */; };
 		EF18D7C82102345B005B51A1 /* UpsideDownTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF18D7C72102345B005B51A1 /* UpsideDownTableView.swift */; };
 		EF19209D20C6E4F800E4B92D /* XCTestCase+DayFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF19209C20C6E4F700E4B92D /* XCTestCase+DayFormatter.swift */; };
@@ -2910,6 +2912,8 @@
 		EF15A7AF20BC08C000A045C7 /* ConversationContentViewController+SaveImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationContentViewController+SaveImage.swift"; sourceTree = "<group>"; };
 		EF15A7B320BC304A00A045C7 /* SavableImageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavableImageTests.swift; sourceTree = "<group>"; };
 		EF15A7B520BC34F700A045C7 /* XCTestCase+ImageFromBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+ImageFromBundle.swift"; sourceTree = "<group>"; };
+		EF18140821B17F94008F7DA8 /* GroupDetailsReceiptOptionsCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDetailsReceiptOptionsCellTests.swift; sourceTree = "<group>"; };
+		EF18140B21B18846008F7DA8 /* IconToggleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconToggleCell.swift; sourceTree = "<group>"; };
 		EF18C7E31F9E4DA00085A832 /* NSString+FileNameForZMUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSString+FileNameForZMUser.swift"; sourceTree = "<group>"; };
 		EF18D7C72102345B005B51A1 /* UpsideDownTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpsideDownTableView.swift; sourceTree = "<group>"; };
 		EF19209C20C6E4F700E4B92D /* XCTestCase+DayFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "XCTestCase+DayFormatter.swift"; sourceTree = "<group>"; };
@@ -4123,6 +4127,7 @@
 		5EA73D7A20D900A10001D106 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				EF18140B21B18846008F7DA8 /* IconToggleCell.swift */,
 				EF1A461B21AD955A0009B6B9 /* GroupDetailsCellProtocols.swift */,
 				EE571C022175ED7B0011B59C /* GroupDetailsNotificationOptionsCell.swift */,
 				5EA73D7B20D900A10001D106 /* GroupDetailsGuestOptionsCell.swift */,
@@ -5845,6 +5850,7 @@
 		BACB88521AF7C48900DDCDB0 /* Wire-iOS Tests */ = {
 			isa = PBXGroup;
 			children = (
+				EF18140721B17F7A008F7DA8 /* ConversationOption */,
 				EF6A33D02192F47200970698 /* ConversationListCell */,
 				5E35F76F2180B8A500D3F4FE /* ConversationMessageCell */,
 				5E65A798212FF7A6008BFCC0 /* Authentication */,
@@ -5862,7 +5868,6 @@
 				BFAD3A1B1CD1078500F0FBED /* Resources */,
 				BF079A3520EF9E6F00B152DD /* ConversationListCellTests.swift */,
 				5EA73D8D20D9038F0001D106 /* CheckmarkCellTests.swift */,
-				5EA73D8E20D903900001D106 /* GroupDetailsTimeoutOptionsCellTests.swift */,
 				EEE60E2B2179D99100D03346 /* GroupDetailsNotificationOptionsCellTests.swift */,
 				D58192042091F34E003BA7EC /* CallActionsViewTests.swift */,
 				1658C19920A1F00500148F6D /* CallInfoTestFixture.swift */,
@@ -6343,6 +6348,15 @@
 				BF8EE5571D6351B100B0D6D7 /* InputBarEditViewTests.swift */,
 			);
 			path = InputBar;
+			sourceTree = "<group>";
+		};
+		EF18140721B17F7A008F7DA8 /* ConversationOption */ = {
+			isa = PBXGroup;
+			children = (
+				5EA73D8E20D903900001D106 /* GroupDetailsTimeoutOptionsCellTests.swift */,
+				EF18140821B17F94008F7DA8 /* GroupDetailsReceiptOptionsCellTests.swift */,
+			);
+			path = ConversationOption;
 			sourceTree = "<group>";
 		};
 		EF2126B41FB9DFE300625A9B /* Authentication */ = {
@@ -7550,6 +7564,7 @@
 				87DCF4E91D34EA4500BB420F /* ProfilePresenter.m in Sources */,
 				87F18BD21E03F13900C69D9B /* ZMLocationMessageData+Coordinates.swift in Sources */,
 				EF7D75A6201B6149003A8AF8 /* DeviceNativeBoundsSize.swift in Sources */,
+				EF18140C21B18846008F7DA8 /* IconToggleCell.swift in Sources */,
 				EF2127161FB9DFE300625A9B /* VerificationCodeStepViewController.m in Sources */,
 				16E311C31A5FEA2B00FF2C9E /* ConversationCell.m in Sources */,
 				5E8DA74D211AEB9E00360979 /* AuthenticationEventHandler.swift in Sources */,
@@ -8379,6 +8394,7 @@
 				EF297DD82131FABE0002983A /* LocationPreviewControllerTests.swift in Sources */,
 				EF27CD9E20C161500077FE55 /* ProfileViewControllerTests.swift in Sources */,
 				EF883F8A2152476900B440CC /* ConversationCreationControllerSnapshotTests.swift in Sources */,
+				EF18140A21B17FB3008F7DA8 /* GroupDetailsReceiptOptionsCellTests.swift in Sources */,
 				EF8D7D4920D8FCA500F98666 /* MockConversation+TimedMessage.swift in Sources */,
 				87D553681C86F0450026573C /* MockUserClient.m in Sources */,
 				879489E71E5464CF0071B2C1 /* SearchResultLabelTests.swift in Sources */,
