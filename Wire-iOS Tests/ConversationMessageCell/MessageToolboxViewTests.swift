@@ -58,7 +58,7 @@ final class MessageToolboxViewTests: CoreDataSnapshotTestCase {
         sut.configureForMessage(message, forceShowTimestamp: true, animated: false)
 
         // THEN
-        verify(view: sut) ///TODO: expected a time stamp
+        verify(view: sut)
     }
 
     func testThatItConfiguresWith1To1ConversationReadReceipt() {

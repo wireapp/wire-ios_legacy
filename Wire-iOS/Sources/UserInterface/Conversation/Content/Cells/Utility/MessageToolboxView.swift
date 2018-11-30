@@ -18,7 +18,6 @@
 
 import Foundation
 import WireSyncEngine
-import TTTAttributedLabel
 
 @objc public protocol MessageToolboxViewDelegate: NSObjectProtocol {
     func messageToolboxViewDidSelectLikers(_ messageToolboxView: MessageToolboxView)
@@ -33,12 +32,26 @@ import TTTAttributedLabel
 
     private static let ephemeralTimeFormatter = EphemeralTimeoutFormatter()
 
-    public let statusLabel: UILabel = {
-        let attributedLabel = UILabel(frame: CGRect.zero)
-        attributedLabel.font = UIFont.smallSemiboldFont
+    private static let statusFont = UIFont.smallSemiboldFont
+    private var statusTextColor: UIColor {
+        return UIColor.from(scheme: .textDimmed)
+    }
+
+    public let statusLabel: UITextView = {
+        let attributedLabel = UITextView(frame: CGRect.zero)
         attributedLabel.backgroundColor = .clear
-        attributedLabel.textColor = UIColor.from(scheme: .textDimmed)
-//        attributedLabel.textInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        attributedLabel.isEditable = false
+        attributedLabel.isScrollEnabled = false
+        attributedLabel.isUserInteractionEnabled = true
+        attributedLabel.isAccessibilityElement = true
+        attributedLabel.accessibilityLabel = "DeliveryStatus"
+        attributedLabel.textContainer.lineBreakMode = NSLineBreakMode.byTruncatingMiddle
+        attributedLabel.textContainer.maximumNumberOfLines = 0
+        attributedLabel.setContentHuggingPriority(.defaultLow, for: .vertical)
+        attributedLabel.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
+
+        attributedLabel.linkTextAttributes = [.foregroundColor: UIColor.vividRed,
+        .underlineStyle: NSUnderlineStyle.single.rawValue as NSNumber]
 
         return attributedLabel
     }()
@@ -76,22 +89,8 @@ import TTTAttributedLabel
         likeButton.setIconColor(UIColor(for: .vividRed), for: .selected)
         likeButton.hitAreaPadding = CGSize(width: 20, height: 20)
 
-//        statusLabel.delegate = self
-//        statusLabel.extendsLinkTouchArea = true
-        statusLabel.isUserInteractionEnabled = true
-//        statusLabel.verticalAlignment = .center
-        statusLabel.isAccessibilityElement = true
-        statusLabel.accessibilityLabel = "DeliveryStatus"
-        statusLabel.lineBreakMode = NSLineBreakMode.byTruncatingMiddle
-        statusLabel.numberOfLines = 0
-        statusLabel.setContentHuggingPriority(.defaultLow, for: .vertical)
-        statusLabel.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
-        /*
-        statusLabel.linkAttributes = [NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue as NSNumber,
-                                      NSAttributedString.Key.foregroundColor: UIColor.vividRed]
-        statusLabel.activeLinkAttributes = [NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue as NSNumber,
-                                            NSAttributedString.Key.foregroundColor: UIColor.vividRed.withAlphaComponent(0.5)]
-*/
+        statusLabel.delegate = self
+
         [likeButtonContainer, likeButton, statusLabel].forEach(addSubview)
     }
     
@@ -283,7 +282,7 @@ import TTTAttributedLabel
             return user.displayName
         }.joined(separator: ", ")
         
-        let attributes: [NSAttributedString.Key : AnyObject] = [.font: statusLabel.font, .foregroundColor: statusLabel.textColor]
+        let attributes: [NSAttributedString.Key : AnyObject] = [.font: MessageToolboxView.statusFont, .foregroundColor: statusTextColor]
         let likersNamesAttributedString = likersNames && attributes
 
         let framesetter = CTFramesetterCreateWithAttributedString(likersNamesAttributedString)
@@ -304,7 +303,7 @@ import TTTAttributedLabel
         }
         
         let changeBlock = {
-            self.updateStatusLabelAttributedText(attributedText: attributedText)
+            self.updateStatusLabel(attributedText: attributedText)
         }
         
         if animated {
@@ -315,10 +314,9 @@ import TTTAttributedLabel
         }
     }
 
-    ///TODO: rename to shorter one
-    fileprivate func updateStatusLabelAttributedText(attributedText: NSAttributedString) {
+    fileprivate func updateStatusLabel(attributedText: NSAttributedString) {
         statusLabel.attributedText = attributedText
-//        statusLabel.accessibilityValue = statusLabel.attributedText.string
+        statusLabel.accessibilityValue = statusLabel.attributedText.string
     }
 
     fileprivate func configureTimestamp(_ message: ZMConversationMessage, animated: Bool = false) {
@@ -451,7 +449,7 @@ import TTTAttributedLabel
             return nil
         }
 
-        let attributedText = NSMutableAttributedString(attributedString: finalText && [.font: statusLabel.font, .foregroundColor: statusLabel.textColor])
+        let attributedText = NSMutableAttributedString(attributedString: finalText && [.font: MessageToolboxView.statusFont, .foregroundColor: statusTextColor])
 
 
         if let currentText = self.statusLabel.attributedText, currentText.string == attributedText.string {
@@ -459,8 +457,7 @@ import TTTAttributedLabel
         }
 
         let changeBlock =  {
-            self.updateStatusLabelAttributedText(attributedText: attributedText)
-//            self.statusLabel.addLinks()
+            self.updateStatusLabel(attributedText: attributedText)
         }
 
         return changeBlock
@@ -468,7 +465,7 @@ import TTTAttributedLabel
     
     fileprivate func configureLikeTip(_ message: ZMConversationMessage, animated: Bool = false) {
         let likeTooltipText = "content.system.like_tooltip".localized
-        let attributes: [NSAttributedString.Key : AnyObject] = [.font: statusLabel.font, .foregroundColor: statusLabel.textColor]
+        let attributes: [NSAttributedString.Key : AnyObject] = [.font: MessageToolboxView.statusFont, .foregroundColor: statusTextColor]
         let attributedText = likeTooltipText && attributes
 
         if let currentText = self.statusLabel.attributedText, currentText.string == attributedText.string {
@@ -476,7 +473,7 @@ import TTTAttributedLabel
         }
         
         let changeBlock = {
-            self.updateStatusLabelAttributedText(attributedText: attributedText)
+            self.updateStatusLabel(attributedText: attributedText)
         }
         
         if animated {
@@ -513,23 +510,22 @@ import TTTAttributedLabel
     }
 }
 
-
-extension MessageToolboxView: TTTAttributedLabelDelegate {
-    
-    // MARK: - TTTAttributedLabelDelegate
-    
-    public func attributedLabel(_ label: TTTAttributedLabel!, didSelectLinkWith URL: Foundation.URL!) {
-        if URL == type(of: self).resendLink {
-            self.delegate?.messageToolboxViewDidSelectResend(self)
-        }
-        else if URL == type(of: self).deleteLink {
-            self.delegate?.messageToolboxViewDidSelectDelete(self)
-        }
-    }
-}
-
 extension MessageToolboxView: UIGestureRecognizerDelegate {
     public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return gestureRecognizer.isEqual(self.tapGestureRecogniser)
+    }
+}
+
+extension MessageToolboxView: UITextViewDelegate {
+    public func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+        switch URL {
+        case MessageToolboxView.resendLink:
+            self.delegate?.messageToolboxViewDidSelectResend(self)
+        case MessageToolboxView.deleteLink:
+            self.delegate?.messageToolboxViewDidSelectDelete(self)
+        default:
+            return false
+        }
+        return true
     }
 }
