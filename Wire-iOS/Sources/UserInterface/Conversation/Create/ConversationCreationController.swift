@@ -46,26 +46,26 @@ final public class ConversationCreationValues {
 
 @objcMembers final class ConversationCreationController: UIViewController {
 
-    static let errorFont = FontSpec(.small, .semibold).font!
     static let mainViewHeight: CGFloat = 56
-
-    fileprivate let errorLabel = UILabel()
-    fileprivate let errorViewContainer = UIView()
     fileprivate let colorSchemeVariant = ColorScheme.default.variant
-    private let mainViewContainer = UIView()
-    private let bottomViewContainer = UIView()
-    private let toggleSubtitleLabel = UILabel()
-    private let textFieldSubtitleLabel = UILabel()
+    
+    private let collectionViewController = SectionCollectionViewController()
+
+    private lazy var nameSection: ConversationCreateNameSectionController = {
+        return ConversationCreateNameSectionController(delegate: self)
+    }()
+    
+    private let errorSection = ConversationCreateErrorSectionController()
+    private let optionsSection = ConversationCreateOptionsSectionController()
+
     private let toggleView = ToggleView(
         title: "conversation.create.toggle.title".localized,
         isOn: true,
         accessibilityIdentifier: "toggle.newgroup.allowguests"
     )
 
-    fileprivate var navigationBarBackgroundView = UIView()
+    fileprivate var navBarBackgroundView = UIView()
 
-    private var textField = SimpleTextField()
-    
     fileprivate var values: ConversationCreationValues?
     fileprivate let source: LinearGroupCreationFlowEvent.Source
     
@@ -99,11 +99,10 @@ final public class ConversationCreationValues {
         
         setupNavigationBar()
         setupViews()
-        createConstraints()
         
         // try to overtake the first responder from the other view
         if let _ = UIResponder.wr_currentFirst() {
-            self.textField.becomeFirstResponder()
+            nameSection.becomeFirstResponder()
         }
     }
 
@@ -118,54 +117,60 @@ final public class ConversationCreationValues {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        textField.becomeFirstResponder()
+        nameSection.becomeFirstResponder()
     }
-
+    
     private func setupViews() {
-        mainViewContainer.translatesAutoresizingMaskIntoConstraints = false
-        navigationBarBackgroundView.backgroundColor = UIColor.from(scheme: .barBackground, variant: colorSchemeVariant)
-        mainViewContainer.addSubview(navigationBarBackgroundView)
         
-        textField = SimpleTextField()
-        textField.isAccessibilityElement = true
-        textField.accessibilityIdentifier = "textfield.newgroup.name"
-        textField.placeholder = "conversation.create.group_name.placeholder".localized.uppercased()
-        textField.textFieldDelegate = self
-        mainViewContainer.addSubview(textField)
-        if ZMUser.selfUser().hasTeam {
-            mainViewContainer.addSubview(textFieldSubtitleLabel)
-            textFieldSubtitleLabel.numberOfLines = 0
-        }
-        errorViewContainer.translatesAutoresizingMaskIntoConstraints = false
-
-        errorLabel.textAlignment = .center
-        errorLabel.font = TeamCreationStepController.errorFont
-        errorLabel.textColor = UIColor.Team.errorMessageColor
-        errorLabel.translatesAutoresizingMaskIntoConstraints = false
-        errorViewContainer.addSubview(errorLabel)
-        toggleSubtitleLabel.numberOfLines = 0
+        let collectionView = UICollectionView(forUserList: ())
         
-        [toggleSubtitleLabel, textFieldSubtitleLabel].forEach {
-            $0.translatesAutoresizingMaskIntoConstraints = false
-            $0.font = .preferredFont(forTextStyle: .footnote)
-            $0.textColor = UIColor.from(scheme: .textDimmed)
+        if #available(iOS 11.0, *) {
+            collectionView.contentInsetAdjustmentBehavior = .never
         }
         
-        toggleSubtitleLabel.text = "conversation.create.toggle.subtitle".localized
-        textFieldSubtitleLabel.text = "participants.section.name.footer".localized(args: ZMConversation.maxParticipants, ZMConversation.maxVideoCallParticipantsExcludingSelf)
+        view.addSubview(collectionView)
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.fitInSuperview(safely: true)
+        collectionViewController.collectionView = collectionView
         
-        [toggleView, toggleSubtitleLabel].forEach(bottomViewContainer.addSubview)
-        [mainViewContainer, errorViewContainer, bottomViewContainer].forEach(view.addSubview)
+        collectionViewController.sections = [nameSection, errorSection, optionsSection]
         
-        toggleView.handler = { [unowned self] allowGuests in
-            self.values = ConversationCreationValues(
-                name: self.values?.name ?? "",
-                participants: self.values?.participants ?? [],
-                allowGuests: allowGuests
-            )
-        }
+        navBarBackgroundView.backgroundColor = UIColor.from(scheme: .barBackground, variant: colorSchemeVariant)
+        view.addSubview(navBarBackgroundView)
         
-        bottomViewContainer.isHidden = nil == ZMUser.selfUser().team
+        navBarBackgroundView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            navBarBackgroundView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            navBarBackgroundView.topAnchor.constraint(equalTo: view.topAnchor),
+            navBarBackgroundView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            navBarBackgroundView.bottomAnchor.constraint(equalTo: view.safeTopAnchor)
+        ])
+        
+        
+//        toggleSubtitleLabel.numberOfLines = 0
+//        
+//        [toggleSubtitleLabel, textFieldSubtitleLabel].forEach {
+//            $0.translatesAutoresizingMaskIntoConstraints = false
+//            $0.font = .preferredFont(forTextStyle: .footnote)
+//            $0.textColor = UIColor.from(scheme: .textDimmed)
+//        }
+//        
+//        toggleSubtitleLabel.text = "conversation.create.toggle.subtitle".localized
+//        textFieldSubtitleLabel.text = "participants.section.name.footer".localized(args: ZMConversation.maxParticipants, ZMConversation.maxVideoCallParticipantsExcludingSelf)
+//        
+//        [toggleView, toggleSubtitleLabel].forEach(bottomViewContainer.addSubview)
+//        [mainViewContainer, errorViewContainer, bottomViewContainer].forEach(view.addSubview)
+//        
+//        toggleView.handler = { [unowned self] allowGuests in
+//            self.values = ConversationCreationValues(
+//                name: self.values?.name ?? "",
+//                participants: self.values?.participants ?? [],
+//                allowGuests: allowGuests
+//            )
+//        }
+//        
+//        bottomViewContainer.isHidden = nil == ZMUser.selfUser().team
     }
 
     private func setupNavigationBar() {
@@ -184,73 +189,13 @@ final public class ConversationCreationValues {
         navigationItem.rightBarButtonItem = nextButtonItem
     }
     
-    private func createConstraints() {
-        constrain(toggleView, toggleSubtitleLabel, bottomViewContainer) { toggleView, toggleSubtitleLabel, container in
-            toggleView.leading == container.leading
-            toggleView.trailing == container.trailing
-            toggleSubtitleLabel.leading == container.leading + 16
-            toggleSubtitleLabel.trailing == container.trailing - 16
-            toggleView.top == container.top
-            toggleSubtitleLabel.top == toggleView.bottom + 16
-            toggleSubtitleLabel.bottom == container.bottom
-        }
-        
-        constrain(view, errorViewContainer, bottomViewContainer) { view, errorViewContainer, bottomViewContainer in
-            bottomViewContainer.top == errorViewContainer.bottom + 8
-            bottomViewContainer.leading == view.leading
-            bottomViewContainer.trailing == view.trailing
-        }
-        
-        constrain(view, navigationBarBackgroundView, self.car_topLayoutGuide, mainViewContainer) { view, navigationBarBackgroundView, topLayoutGuide, mainViewContainer in
-            navigationBarBackgroundView.leading == view.leading
-            navigationBarBackgroundView.trailing == view.trailing
-            navigationBarBackgroundView.top == view.top
-            navigationBarBackgroundView.bottom == topLayoutGuide.bottom
-            
-            mainViewContainer.top == navigationBarBackgroundView.bottom + 32
-        }
-        
-        constrain(view, errorViewContainer, mainViewContainer) { view, errorViewContainer, mainViewContainer in
-            errorViewContainer.leading == view.leading
-            errorViewContainer.trailing == view.trailing
-            errorViewContainer.height == 48
-
-            mainViewContainer.bottom == errorViewContainer.top
-            mainViewContainer.centerX == view.centerX
-            mainViewContainer.width == view.width
-        }
-
-        constrain(mainViewContainer, textField, textFieldSubtitleLabel) { mainViewContainer, textField, textFieldSubtitleLabel in
-            textField.height == TeamCreationStepController.mainViewHeight
-            textField.top == mainViewContainer.top
-            textField.leading == mainViewContainer.leading
-            textField.trailing == mainViewContainer.trailing
-            
-            if ZMUser.selfUser().hasTeam {
-                textFieldSubtitleLabel.leading == mainViewContainer.leading + 16
-                textFieldSubtitleLabel.trailing == mainViewContainer.trailing - 16
-                textFieldSubtitleLabel.bottom == mainViewContainer.bottom - 24
-                textField.bottom == textFieldSubtitleLabel.top - 16
-            } else {
-                textField.bottom == mainViewContainer.bottom
-            }
-        }
-
-        constrain(errorViewContainer, errorLabel) { errorViewContainer, errorLabel in
-            errorLabel.leading == errorViewContainer.leadingMargin
-            errorLabel.trailing == errorViewContainer.trailingMargin
-            errorLabel.top == errorViewContainer.top + 16
-            errorLabel.bottom <= errorViewContainer.bottom - 16
-        }
-    }
-
     func proceedWith(value: SimpleTextField.Value) {
         switch value {
         case let .error(error):
-            displayError(error)
+            errorSection.displayError(error)
         case let .valid(name):
             let trimmed = name.trimmingCharacters(in: .whitespacesAndNewlines)
-            textField.resignFirstResponder()
+            nameSection.resignFirstResponder()
             let newValues = ConversationCreationValues(name: trimmed, participants: preSelectedParticipants ?? values?.participants ?? [], allowGuests: values?.allowGuests ?? true)
             values = newValues
             
@@ -263,7 +208,7 @@ final public class ConversationCreationValues {
     }
     
     @objc fileprivate func tryToProceed() {
-        guard let value = textField.value else { return }
+        guard let value = nameSection.value else { return }
         proceedWith(value: value)
     }
 }
@@ -299,7 +244,7 @@ extension ConversationCreationController: AddParticipantsConversationCreationDel
 extension ConversationCreationController: SimpleTextFieldDelegate {
 
     func textField(_ textField: SimpleTextField, valueChanged value: SimpleTextField.Value) {
-        clearError()
+        errorSection.clearError()
         switch value {
         case .error(_): navigationItem.rightBarButtonItem?.isEnabled = false
         case .valid(let text): navigationItem.rightBarButtonItem?.isEnabled = !text.isEmpty
@@ -317,19 +262,5 @@ extension ConversationCreationController: SimpleTextFieldDelegate {
     
     func textFieldDidEndEditing(_ textField: SimpleTextField) {
         
-    }
-}
-
-
-// MARK: - Error handling
-extension ConversationCreationController {
-    func clearError() {
-        errorLabel.text = nil
-        self.errorViewContainer.setNeedsLayout()
-    }
-
-    func displayError(_ error: Error) {
-        errorLabel.text = error.localizedDescription.uppercased()
-        self.errorViewContainer.setNeedsLayout()
     }
 }

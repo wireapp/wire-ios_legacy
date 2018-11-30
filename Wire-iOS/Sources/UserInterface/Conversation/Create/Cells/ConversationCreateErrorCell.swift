@@ -34,7 +34,7 @@ class ConversationCreateErrorCell: UICollectionViewCell {
     
     fileprivate func setup() {
         label.textAlignment = .center
-        label.font = TeamCreationStepController.errorFont
+        label.font = FontSpec(.small, .semibold).font!
         label.textColor = UIColor.Team.errorMessageColor
         
         contentView.addSubview(label)
