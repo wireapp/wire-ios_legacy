@@ -72,7 +72,8 @@ final class TextMessageMentionsTests: ConversationCellSnapshotTestCase {
         let mention2 = Mention(range: NSRange(location: 26, length: 28), user: otherUser)
         let message = otherUserConversation.append(text: messageText, mentions: [mention1, mention2], fetchLinkPreview: false)!
 
-        verify(message: message)
+        verify(message: message,
+               tolerance: 0.01)
     }
 
     func testThatItRendersMentions_SelfMention_LongText() {
