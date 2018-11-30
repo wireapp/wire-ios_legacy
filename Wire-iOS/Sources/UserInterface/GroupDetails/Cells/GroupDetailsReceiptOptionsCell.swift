@@ -40,23 +40,3 @@ extension GroupDetailsReceiptOptionsCell: ConversationOptionsConfigurable {
          isOn = conversation.hasReadReceiptsEnabled
     }
 }
-
-class DetailsToggleCollectionViewCell: DetailsCollectionViewCell {
-    
-    let toggle = UISwitch()
-    
-    var isOn = false {
-        didSet { toggle.isOn = isOn }
-    }
-    
-    override func setUp() {
-        super.setUp()
-        let secondLast = contentStackView.arrangedSubviews.count - 1
-        contentStackView.insertArrangedSubview(toggle, at: secondLast)
-        toggle.addTarget(self, action: #selector(toggleChanged), for: .valueChanged)
-    }
-    
-    @objc func toggleChanged(_ sender: UISwitch) {
-        assertionFailure("Must be overrided.")
-    }
-}

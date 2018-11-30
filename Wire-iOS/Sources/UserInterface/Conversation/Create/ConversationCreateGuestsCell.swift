@@ -18,22 +18,18 @@
 
 import Foundation
 
-class ConversationCreateGuestsCell: DetailsToggleCollectionViewCell {
+class ConversationCreateGuestsCell: IconToggleCell {
     
     override func setUp() {
         super.setUp()
         accessibilityIdentifier = "toggle.newgroup.allowguests"
         title = "conversation.create.toggle.title".localized
-        toggle.isOn = true
+        isOn = true
     }
     
     override func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
         super.applyColorScheme(colorSchemeVariant)
         let color = UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)
         icon = UIImage(for: .guest, iconSize: .tiny, color: color)
-    }
-    
-    override func toggleChanged(_ sender: UISwitch) {
-        
     }
 }

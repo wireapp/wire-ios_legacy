@@ -19,27 +19,25 @@
 import UIKit
 
 class IconToggleCell: DetailsCollectionViewCell {
+    
+    typealias ToggleHandler = (_ isOn: Bool) -> Void
+    
+    var action: ToggleHandler?
+    
     var isOn: Bool {
-        set {
-            toggle.isOn = newValue
-        }
-
-        get {
-            return toggle.isOn
-        }
+        set { toggle.isOn = newValue }
+        get { return toggle.isOn }
     }
 
     private let toggle = UISwitch()
-    var action: ((Bool) -> Void)?
-
+    
     override func setUp() {
         super.setUp()
-        contentStackView.insertArrangedSubview(toggle, at: contentStackView.arrangedSubviews.count)
-
+        contentStackView.addArrangedSubview(toggle)
         toggle.addTarget(self, action: #selector(toggleChanged), for: .valueChanged)
     }
 
-    @objc func toggleChanged(_ sender: UISwitch) {
+    @objc private func toggleChanged(_ sender: UISwitch) {
         action?(sender.isOn)
     }
 }
