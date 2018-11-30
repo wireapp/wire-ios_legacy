@@ -464,9 +464,12 @@ extension ZMSnapshotTestCase {
     ///
     /// - Parameters:
     ///   - view: the view to verify
-    ///   - file: file of the source
-    ///   - line: line of the source
-    func verifyInIPhoneSize(view: UIView, file: StaticString = #file, line: UInt = #line) {
+    ///   - file: source file
+    ///   - line: source line
+    func verifyInIPhoneSize(view: UIView,
+                            extraLayoutPass: Bool = false,
+                            file: StaticString = #file,
+                            line: UInt = #line) {
 
         view.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -476,7 +479,10 @@ extension ZMSnapshotTestCase {
 
         view.setNeedsLayout()
         view.layoutIfNeeded()
-        verify(view: view, file: file, line: line)
+        verify(view: view,
+               extraLayoutPass: extraLayoutPass,
+               file: file,
+               line: line)
     }
     
     func verifyInAllIPhoneSizes(view: UIView,
@@ -484,7 +490,11 @@ extension ZMSnapshotTestCase {
                                 file: StaticString = #file,
                                 line: UInt = #line,
                                 configuration: ((UIView) -> Swift.Void)? = nil) {
-        verifyInAllPhoneSizes(view: view, extraLayoutPass: extraLayoutPass, file: file, line: line, configuration: configuration)
+        verifyInAllPhoneSizes(view: view,
+                              extraLayoutPass: extraLayoutPass,
+                              file: file,
+                              line: line,
+                              configuration: configuration)
     }
     
     func verifyInAllColorSchemes(view: UIView,

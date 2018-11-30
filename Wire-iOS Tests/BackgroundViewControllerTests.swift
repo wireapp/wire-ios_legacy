@@ -46,7 +46,8 @@ class BackgroundViewControllerTests: CoreDataSnapshotTestCase {
         XCTAssertTrue(waitForGroupsToBeEmpty([sut.dispatchGroup]))
         
         // WHEN & THEN
-        self.verifyInIPhoneSize(view: sut.view)
+        self.verifyInIPhoneSize(view: sut.view,
+                                extraLayoutPass: true)
     }
     
     func testThatItUpdatesForUserAccentColorUpdate_fromAccentColor() {
