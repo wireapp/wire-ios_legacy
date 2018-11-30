@@ -94,7 +94,7 @@ class TabBarController: UIViewController, UIPageViewControllerDelegate, UIPageVi
     @objc(tabBarHidden) var isTabBarHidden = false {
         didSet {
             tabBar?.isHidden = isTabBarHidden
-            tabBarHeight.isActive = isTabBarHidden
+            tabBarHeight?.isActive = isTabBarHidden
         }
     }
 
@@ -165,6 +165,8 @@ class TabBarController: UIViewController, UIPageViewControllerDelegate, UIPageVi
         pageViewController.view.translatesAutoresizingMaskIntoConstraints = false
 
         tabBarHeight = tabBar.heightAnchor.constraint(equalToConstant: 0)
+        tabBarHeight?.isActive = isTabBarHidden
+        
         pageViewController.view.fitInSuperview()
 
         NSLayoutConstraint.activate([
