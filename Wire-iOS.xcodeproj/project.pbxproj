@@ -1132,6 +1132,7 @@
 		EEF28EEA1F1613DA007642E2 /* MarkdownBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF28EE91F1613DA007642E2 /* MarkdownBarView.swift */; };
 		EEF28EED1F16692A007642E2 /* InputBarSecondaryButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF28EEC1F16692A007642E2 /* InputBarSecondaryButtonsView.swift */; };
 		EEF28EEF1F168039007642E2 /* ConversationInputBarViewController+Markdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF28EEE1F168039007642E2 /* ConversationInputBarViewController+Markdown.swift */; };
+		EEF71F6321B1973D00F0FB30 /* ConversationCreateReceiptsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF71F6221B1973D00F0FB30 /* ConversationCreateReceiptsCell.swift */; };
 		EF00FD741FDA97BA0059FEDC /* UIViewController+Orientation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF00FD731FDA97BA0059FEDC /* UIViewController+Orientation.swift */; };
 		EF01AF8520BED3F500E5E5B4 /* MockUserClient+RemoteIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF01AF8320BED38300E5E5B4 /* MockUserClient+RemoteIdentifier.swift */; };
 		EF0D9972205BC74F002D488E /* NetworkStatusViewControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF0D9971205BC74F002D488E /* NetworkStatusViewControllerSnapshotTests.swift */; };
@@ -2899,6 +2900,7 @@
 		EEF28EE91F1613DA007642E2 /* MarkdownBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MarkdownBarView.swift; path = ../../MarkdownBarView.swift; sourceTree = "<group>"; };
 		EEF28EEC1F16692A007642E2 /* InputBarSecondaryButtonsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputBarSecondaryButtonsView.swift; sourceTree = "<group>"; };
 		EEF28EEE1F168039007642E2 /* ConversationInputBarViewController+Markdown.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConversationInputBarViewController+Markdown.swift"; sourceTree = "<group>"; };
+		EEF71F6221B1973D00F0FB30 /* ConversationCreateReceiptsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationCreateReceiptsCell.swift; sourceTree = "<group>"; };
 		EF00FD731FDA97BA0059FEDC /* UIViewController+Orientation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Orientation.swift"; sourceTree = "<group>"; };
 		EF01AF8320BED38300E5E5B4 /* MockUserClient+RemoteIdentifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MockUserClient+RemoteIdentifier.swift"; sourceTree = "<group>"; };
 		EF0D9971205BC74F002D488E /* NetworkStatusViewControllerSnapshotTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkStatusViewControllerSnapshotTests.swift; sourceTree = "<group>"; };
@@ -6569,6 +6571,7 @@
 				EEAC0A1321AD898200BE5F5D /* ConversationCreateNameCell.swift */,
 				EEA9A75E21B01F28001F7B5C /* ConversationCreateErrorCell.swift */,
 				EE0DE1CE21B17DBD00CF3C4E /* ConversationCreateGuestsCell.swift */,
+				EEF71F6221B1973D00F0FB30 /* ConversationCreateReceiptsCell.swift */,
 				D5694B4F2044144500C84C8F /* ToggleView.swift */,
 				F1B5EAC62029AB9A0081D402 /* SimpleTextField.swift */,
 				F1B5EAC82029AC7E0081D402 /* SimpleTextFieldValidator.swift */,
@@ -7305,6 +7308,7 @@
 				871BC2911D34F8F800DF0793 /* UIView+RemoveAnimations.m in Sources */,
 				5E8DA755211AF8E200360979 /* AuthenticationInitialSyncEventHandler.swift in Sources */,
 				5E672C922179C3E300522E61 /* BadgeUserImageView.swift in Sources */,
+				EEF71F6321B1973D00F0FB30 /* ConversationCreateReceiptsCell.swift in Sources */,
 				5EE73BE62122C6DC0032986D /* AuthenticationStartAddAccountEventHandler.swift in Sources */,
 				EEF28EED1F16692A007642E2 /* InputBarSecondaryButtonsView.swift in Sources */,
 				871BC23B1D34F8F800DF0793 /* KeyboardFrameObserver.m in Sources */,
