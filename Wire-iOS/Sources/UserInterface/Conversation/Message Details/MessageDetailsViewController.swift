@@ -36,7 +36,7 @@ import WireExtensionComponents
     let container: TabBarController
     let topBar = ModalTopBar()
     var reactionsViewController = MesageDetailsContentViewController(contentType: .reactions)
-    var readReceiptsViewController = MesageDetailsContentViewController(contentType: .receipts)
+    var readReceiptsViewController = MesageDetailsContentViewController(contentType: .receipts(enabled: false))
 
     // MARK: - Initialization
 
@@ -44,15 +44,21 @@ import WireExtensionComponents
         self.message = message
         self.dataSource = MessageDetailsDataSource(message: message)
 
-        var viewControllers: [UIViewController]
+        var viewControllers: [MesageDetailsContentViewController]
 
         // Setup the appropriate view controllers
         switch dataSource.displayMode {
         case .combined:
+            reactionsViewController.conversation = dataSource.conversation
+            readReceiptsViewController.conversation = dataSource.conversation
+            readReceiptsViewController.contentType = .receipts(enabled: dataSource.receiptsSupported)
             viewControllers = [readReceiptsViewController, reactionsViewController]
         case .reactions:
+            reactionsViewController.conversation = dataSource.conversation
             viewControllers = [reactionsViewController]
         case .receipts:
+            readReceiptsViewController.conversation = dataSource.conversation
+            readReceiptsViewController.contentType = .receipts(enabled: dataSource.receiptsSupported)
             viewControllers = [readReceiptsViewController]
         }
 
@@ -117,12 +123,12 @@ import WireExtensionComponents
     private func reloadData() {
         switch dataSource.displayMode {
         case .combined:
-            reactionsViewController.cells = makeReactionCells()
-            readReceiptsViewController.cells = makeReceiptsCell()
+            reactionsViewController.updateData(makeReactionCells())
+            readReceiptsViewController.updateData(makeReceiptsCell())
         case .reactions:
-            reactionsViewController.cells = makeReactionCells()
+            reactionsViewController.updateData(makeReactionCells())
         case .receipts:
-            readReceiptsViewController.cells = makeReceiptsCell()
+            readReceiptsViewController.updateData(makeReceiptsCell())
         }
     }
 
@@ -134,10 +140,10 @@ import WireExtensionComponents
     }
 
     private func makeReceiptsCell() -> [MessageDetailsCellDescription] {
-        return dataSource.readReciepts.map { user, readDate in
+        return dataSource.readReciepts.map { receipt in
             // TODO: Use correct formatter
-            let formattedDate = Message.shortDateTimeFormatter.string(from: readDate)
-            return MessageDetailsCellDescription(user: user, subtitle: formattedDate)
+            let formattedDate = receipt.serverTimestamp.map(Message.shortDateTimeFormatter.string(from:))
+            return MessageDetailsCellDescription(user: receipt.user, subtitle: formattedDate)
         }
     }
 
@@ -149,7 +155,7 @@ import WireExtensionComponents
 
 }
 
-// MARK: - Changes
+// MARK: - MessageDetailsDataSourceObserver
 
 extension MessageDetailsViewController: MessageDetailsDataSourceObserver {
 
@@ -161,10 +167,12 @@ extension MessageDetailsViewController: MessageDetailsDataSourceObserver {
         configureTopBar()
     }
 
-    func messageDidBecomeUnavailable(_ dataSource: MessageDetailsDataSource, deleted: Bool) {
-        if deleted {
-            dismiss(animated: true)
+    func receiptsStatusDidChange(_ dataSource: MessageDetailsDataSource) {
+        guard dataSource.displayMode.isOne(of: .receipts, .combined) else {
+            return
         }
+
+        readReceiptsViewController.contentType = .receipts(enabled: dataSource.receiptsSupported)
     }
 
 }

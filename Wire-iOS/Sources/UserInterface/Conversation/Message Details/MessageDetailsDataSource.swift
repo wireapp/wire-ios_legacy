@@ -33,6 +33,9 @@ protocol MessageDetailsDataSourceObserver: class {
 
     /// Called when the message subtitle changes.
     func detailsHeaderDidChange(_ dataSource: MessageDetailsDataSource)
+
+    /// Called when a user enables or disables read receipts.
+    func receiptsStatusDidChange(_ dataSource: MessageDetailsDataSource)
 }
 
 /**
@@ -60,7 +63,10 @@ class MessageDetailsDataSource: NSObject, ZMMessageObserver, ZMConversationObser
     private(set) var reactions: [ZMUser]
 
     /// The list of read receipts with the associated date.
-    private(set) var readReciepts: [ZMUser: Date]
+    private(set) var readReciepts: [ReadReceipt]
+
+    /// Whether read receipts are supported.
+    private(set) var receiptsSupported: Bool = false
 
     /// The object that receives information when the message details changes.
     weak var observer: MessageDetailsDataSourceObserver?
@@ -78,13 +84,12 @@ class MessageDetailsDataSource: NSObject, ZMMessageObserver, ZMConversationObser
         self.conversation = message.conversation!
 
         // Assign the initial data
-        self.reactions = message.likers()
-        self.readReciepts = [:]
+        self.reactions = message.sortedLikers
+        self.readReciepts = message.sortedReadReceipts
 
         // Compute the title and display mode
         let supportsLikes = message.canBeLiked
         let supportsReadReciepts = message.areReadReceiptsDetailsAvailable
-//        let readReceiptsEnabled = false // TODO: Support read receipts settings in conversation
 
         switch (supportsLikes, supportsReadReciepts) {
         case (true, true):
@@ -101,12 +106,18 @@ class MessageDetailsDataSource: NSObject, ZMMessageObserver, ZMConversationObser
         }
 
         super.init()
-        
+
         updateSubtitle()
-        setupMessageObserver()
+        updateReceiptsSupport()
+        setupObservers()
     }
 
     // MARK: - Interface Properties
+
+    private func updateReceiptsSupport() {
+        receiptsSupported = message.areReadReceiptsDetailsAvailable && conversation.hasReadReceiptsEnabled
+        observer?.receiptsStatusDidChange(self)
+    }
 
     private func updateSubtitle() {
         guard let sentDate = message.formattedReceivedDate() else {
@@ -128,29 +139,33 @@ class MessageDetailsDataSource: NSObject, ZMMessageObserver, ZMConversationObser
     // MARK: - Changes
 
     func messageDidChange(_ changeInfo: MessageChangeInfo) {
-        // TODO: Detect read receipts in change info
-
+        // Detect changes in likes
         if changeInfo.reactionsChanged {
             performChanges {
-                self.reactions = message.likers()
+                self.reactions = message.sortedLikers
             }
         }
 
+        // Detect changes in read receipts
+        if changeInfo.confirmationsChanged {
+            performChanges {
+                self.readReciepts = message.sortedReadReceipts
+            }
+        }
+
+        // Detect message edits
         if message.updatedAt != nil {
             updateSubtitle()
         }
     }
 
     func conversationDidChange(_ changeInfo: ConversationChangeInfo) {
-        // TODO: Detect "read receipts" settings change
-//        let receiptsStatusChanged = false
-//
-//        if receiptsStatusChanged {
-//            updateDisplayMode()
-//        }
+        if changeInfo.hasReadReceiptsEnabledChanged {
+            self.updateReceiptsSupport()
+        }
     }
 
-    private func setupMessageObserver() {
+    private func setupObservers() {
         if let userSession = ZMUserSession.shared() {
             let messageObserver = MessageChangeInfo.add(observer: self, for: message, userSession: userSession)
             let conversationObserver = ConversationChangeInfo.add(observer: self, for: conversation)

@@ -18,55 +18,43 @@
 
 import UIKit
 
-class MessageDetailsCellDescription: NSObject, NSCopying {
-    let user: ZMUser
-    let subtitle: String?
-
-    init(user: ZMUser, subtitle: String?) {
-        self.user = user
-        self.subtitle = subtitle
-    }
-
-    override var hash: Int {
-        return user.hash
-    }
-
-    override func isEqual(_ object: Any?) -> Bool {
-        guard let otherDescription = object as? MessageDetailsCellDescription else {
-            return false
-        }
-
-        return user == otherDescription.user && subtitle == otherDescription.subtitle
-    }
-
-    func copy(with zone: NSZone? = nil) -> Any {
-        return MessageDetailsCellDescription(user: user, subtitle: subtitle)
-    }
-}
+/**
+ * Displays the list of users for a specified message detail content type.
+ */
 
 class MesageDetailsContentViewController: UIViewController {
 
+    /// The type of the displayed content.
     enum ContentType {
-        case reactions, receipts, receiptsDisabled
+        case reactions, receipts(enabled: Bool)
     }
 
-    let noResultsView = NoResultsView()
-    let collectionViewLayout = UICollectionViewFlowLayout()
-    var collectionView: UICollectionView!
+    // MARK: - Configuration
 
+    /// The conversation that is being accessed.
+    var conversation: ZMConversation!
+
+    /// The type of the displayed content.
     var contentType: ContentType {
         didSet {
             configureForContentType()
         }
     }
 
-    var cells: [MessageDetailsCellDescription] = [] {
-        didSet {
-            reloadData(oldValue, cells)
-        }
-    }
+    /// The displayed cells.
+    fileprivate(set) var cells: [MessageDetailsCellDescription] = []
+
+    // MARK: - UI Elements
+
+    fileprivate let noResultsView = NoResultsView()
+    fileprivate let collectionViewLayout = UICollectionViewFlowLayout()
+    fileprivate var collectionView: UICollectionView!
 
     // MARK: - Initialization
+
+    /**
+     * Creates a view controller to display message details of a certain type.
+     */
 
     init(contentType: ContentType) {
         self.contentType = contentType
@@ -88,7 +76,6 @@ class MesageDetailsContentViewController: UIViewController {
         collectionViewLayout.sectionInset = UIEdgeInsets(top: 24, left: 0, bottom: 0, right: 0)
 
         collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: collectionViewLayout)
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.allowsMultipleSelection = false
         collectionView.allowsSelection = true
         collectionView.alwaysBounceVertical = true
@@ -108,7 +95,7 @@ class MesageDetailsContentViewController: UIViewController {
 
     private func updateTitle() {
         switch contentType {
-        case .receipts, .receiptsDisabled:
+        case .receipts:
             title = "message_details.tabs.seen".localized(args: cells.count).uppercased()
         case .reactions:
             title = "message_details.tabs.likes".localized(args: cells.count).uppercased()
@@ -122,12 +109,12 @@ class MesageDetailsContentViewController: UIViewController {
             noResultsView.label.text = "message_details.empty_likes".localized.uppercased()
             noResultsView.icon = .like
 
-        case .receipts:
+        case .receipts(enabled: true):
             noResultsView.label.accessibilityLabel = "no read receipts"
             noResultsView.label.text = "message_details.empty_read_receipts".localized.uppercased()
             noResultsView.icon = .eye
 
-        case .receiptsDisabled:
+        case .receipts(enabled: false):
             noResultsView.label.accessibilityLabel = "read receipts disabled"
             noResultsView.label.text = "message_details.read_receipts_disabled".localized.uppercased()
             noResultsView.icon = .eye
@@ -138,6 +125,8 @@ class MesageDetailsContentViewController: UIViewController {
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         noResultsView.translatesAutoresizingMaskIntoConstraints = false
 
+        collectionView.fitInSuperview()
+
         NSLayoutConstraint.activate([
             // noResultsView
             noResultsView.topAnchor.constraint(greaterThanOrEqualTo: view.topAnchor, constant: 12),
@@ -146,43 +135,54 @@ class MesageDetailsContentViewController: UIViewController {
             noResultsView.bottomAnchor.constraint(lessThanOrEqualTo: view.bottomAnchor, constant: -12),
             noResultsView.leadingAnchor.constraint(greaterThanOrEqualTo: view.leadingAnchor, constant: 24),
             noResultsView.trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor, constant: -24),
-
-            // collectionView
-            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            collectionView.topAnchor.constraint(equalTo: view.topAnchor),
-            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
 
-    private func reloadData(_ old: [MessageDetailsCellDescription], _ new: [MessageDetailsCellDescription]) {
+    // MARK: - Updating the Data
+
+    /**
+     * Updates the list of users for the details.
+     * - parameter cells: The new list of cells to display.
+     */
+
+    func updateData(_ cells: [MessageDetailsCellDescription]) {
         noResultsView.isHidden = !cells.isEmpty
-        collectionView.reloadData()
-        updateTitle()
-        //        let updates = {
-//            let old = ZMOrderedSetState(orderedSet: NSOrderedSet(array: old))
-//            let new = ZMOrderedSetState(orderedSet: NSOrderedSet(array: new))
-//            let change = ZMChangedIndexes(start: old, end: new, updatedState: new, moveType: .uiCollectionView)
-//
-//            if let deleted = change?.deletedIndexes.indexPaths(in: 0) {
-//                self.collectionView.deleteItems(at: deleted)
-//            }
-//
-//            if let inserted = change?.insertedIndexes.indexPaths(in: 0) {
-//                self.collectionView.insertItems(at: inserted)
-//            }
-//
-//            change?.enumerateMovedIndexes { (oldIndex, newIndex) in
-//                let oldIndexPath = IndexPath(item: Int(oldIndex), section: 0)
-//                let newIndexPath = IndexPath(item: Int(newIndex), section: 0)
-//                self.collectionView.moveItem(at: oldIndexPath, to: newIndexPath)
-//            }
-//        }
-//
-//        collectionView.performBatchUpdates(updates, completion: nil)
+
+        let old = self.cells
+        let new = cells
+
+        let updates = {
+            self.cells = new
+
+            let old = ZMOrderedSetState(orderedSet: NSOrderedSet(array: old))
+            let new = ZMOrderedSetState(orderedSet: NSOrderedSet(array: new))
+            let change = ZMChangedIndexes(start: old, end: new, updatedState: new, moveType: .uiCollectionView)
+
+            if let deleted = change?.deletedIndexes.indexPaths(in: 0) {
+                self.collectionView.deleteItems(at: deleted)
+            }
+
+            if let inserted = change?.insertedIndexes.indexPaths(in: 0) {
+                self.collectionView.insertItems(at: inserted)
+            }
+
+            change?.enumerateMovedIndexes { (oldIndex, newIndex) in
+                let oldIndexPath = IndexPath(item: Int(oldIndex), section: 0)
+                let newIndexPath = IndexPath(item: Int(newIndex), section: 0)
+                self.collectionView.moveItem(at: oldIndexPath, to: newIndexPath)
+            }
+        }
+
+        collectionView.performBatchUpdates(updates) { finished in
+            if finished {
+                self.updateTitle()
+            }
+        }
     }
 
 }
+
+// MARK: - UICollectionViewDataSource
 
 extension MesageDetailsContentViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 
@@ -201,8 +201,31 @@ extension MesageDetailsContentViewController: UICollectionViewDataSource, UIColl
         return CGSize(width: collectionView.bounds.width, height: 52)
     }
 
+    /// When the user selects a cell, show the details for this user.
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        // todo: open user profile
+        let user = cells[indexPath.item].user
+
+        let profileViewController = ProfileViewController(user: user, conversation: conversation)
+        profileViewController.delegate = self
+        profileViewController.viewControllerDismisser = self
+
+        present(profileViewController.wrapInNavigationController(), animated: true)
+    }
+
+}
+
+// MARK: - ProfileViewControllerDelegate
+
+extension MesageDetailsContentViewController: ProfileViewControllerDelegate, ViewControllerDismisser {
+
+    func dismiss(viewController: UIViewController, completion: (() -> ())?) {
+        viewController.dismiss(animated: true, completion: nil)
+    }
+
+    func profileViewController(_ controller: ProfileViewController?, wantsToNavigateTo conversation: ZMConversation) {
+        dismiss(animated: true) {
+            ZClientViewController.shared()?.load(conversation, scrollTo: nil, focusOnView: true, animated: true)
+        }
     }
 
 }
