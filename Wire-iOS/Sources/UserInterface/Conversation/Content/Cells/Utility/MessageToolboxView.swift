@@ -85,7 +85,7 @@ import WireSyncEngine
         likeButton.accessibilityIdentifier = "likeButton"
         likeButton.accessibilityLabel = "likeButton"
         likeButton.addTarget(self, action: #selector(requestLike), for: .touchUpInside)
-        likeButton.setIconColor(UIColor.from(scheme: .textDimmed), for: .normal)
+        likeButton.setIconColor(statusTextColor, for: .normal)
         likeButton.setIconColor(UIColor(for: .vividRed), for: .selected)
         likeButton.hitAreaPadding = CGSize(width: 20, height: 20)
 
@@ -330,13 +330,13 @@ import WireSyncEngine
         }
     }
 
-    ///TODO: extension of ZMConversationType
+    ///TODO: extension of ZMConversationMessage
     fileprivate func selfStatusStringForRead(for message: ZMConversationMessage) -> NSAttributedString? {
         guard let conversationType = message.conversation?.conversationType else {return nil}
 
         switch conversationType {
-        case .group:
-            let imageIcon = NSTextAttachment.textAttachment(for: .eye, with: .from(scheme: .textDimmed))!
+        case .group: ///TODO: tap gesture for openning read detail screen
+            let imageIcon = NSTextAttachment.textAttachment(for: .eye, with: statusTextColor)!
 
             let statusString: NSAttributedString
 
@@ -344,7 +344,7 @@ import WireSyncEngine
 
             return statusString
         case .oneOnOne:
-            let imageIcon = NSTextAttachment.textAttachment(for: .eye, with: .from(scheme: .textDimmed))!
+            let imageIcon = NSTextAttachment.textAttachment(for: .eye, with: statusTextColor)!
 
             let statusString: NSAttributedString
 

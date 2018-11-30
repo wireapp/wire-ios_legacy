@@ -74,7 +74,7 @@ final class MessageToolboxViewTests: CoreDataSnapshotTestCase {
         sut.configureForMessage(message, forceShowTimestamp: true, animated: false)
 
         // THEN
-        verify(view: sut) ///TODO: expected a time stamp
+        verify(view: sut)
     }
 
     func testThatItConfiguresWithGroupConversationReadReceipt() {
@@ -119,6 +119,27 @@ final class MessageToolboxViewTests: CoreDataSnapshotTestCase {
         // GIVEN
         let users = MockUser.mockUsers().first(where: { !$0.isSelfUser })!
         message.backingUsersReaction = [MessageReaction.like.unicodeValue: [users]]
+
+        // WHEN
+        sut.configureForMessage(message, forceShowTimestamp: false, animated: false)
+
+        // THEN
+        verify(view: sut)
+    }
+
+    func testThatItConfiguresWithReadThenLiked() {
+        // GIVEN
+        message.conversation?.conversationType = .oneOnOne
+        message.deliveryState = .read
+
+        let readReceipt = MockReadReceipt(user: otherUser)
+        readReceipt.serverTimestamp = Date(timeIntervalSince1970: 12345678564)
+        message.readReceipts = [readReceipt]
+
+        ///liked after read
+        let users = MockUser.mockUsers().first(where: { !$0.isSelfUser })!
+        message.backingUsersReaction = [MessageReaction.like.unicodeValue: [users]]
+
 
         // WHEN
         sut.configureForMessage(message, forceShowTimestamp: false, animated: false)
