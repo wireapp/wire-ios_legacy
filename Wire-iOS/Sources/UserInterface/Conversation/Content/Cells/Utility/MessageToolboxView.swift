@@ -53,7 +53,8 @@ import WireSyncEngine
         textView.linkTextAttributes = [.foregroundColor: UIColor.vividRed,
                                               .underlineStyle: NSUnderlineStyle.single.rawValue as NSNumber]
 
-        textView.textContainerInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        textView.textContainerInset = UIEdgeInsets.zero
+        textView.textContainer.lineFragmentPadding = 0
 
         return textView
     }()
