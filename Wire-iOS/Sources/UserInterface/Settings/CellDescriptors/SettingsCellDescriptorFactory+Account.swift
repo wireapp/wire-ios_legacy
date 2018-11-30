@@ -36,6 +36,7 @@ extension SettingsCellDescriptorFactory {
         var sections: [SettingsSectionDescriptorType] = [
             infoSection(),
             appearanceSection(),
+            privacySection(),
             personalInformationSection(),
             conversationsSection()]
         
@@ -71,6 +72,14 @@ extension SettingsCellDescriptorFactory {
         return SettingsSectionDescriptor(
             cellDescriptors: [pictureElement(), colorElement()],
             header: "self.settings.account_appearance_group.title".localized
+        )
+    }
+    
+    func privacySection() -> SettingsSectionDescriptorType {
+        return SettingsSectionDescriptor(
+            cellDescriptors: [readReceiptsEnabledElement()],
+            header: "self.settings.privacy_section_group.title".localized,
+            footer: "self.settings.privacy_section_group.subtitle".localized
         )
     }
 
@@ -199,6 +208,10 @@ extension SettingsCellDescriptorFactory {
             presentationAction: AccentColorPickerController.init,
             previewGenerator: { _ in .color(ZMUser.selfUser().accentColor) }
         )
+    }
+    
+    func readReceiptsEnabledElement() -> SettingsCellDescriptorType {
+        return SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.readReceiptsEnabled))
     }
 
     func backUpElement() -> SettingsCellDescriptorType {

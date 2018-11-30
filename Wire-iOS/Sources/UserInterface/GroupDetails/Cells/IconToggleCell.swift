@@ -17,32 +17,29 @@
 //
 
 import UIKit
-import WireExtensionComponents
 
-class GroupDetailsGuestOptionsCell: GroupDetailsDisclosureOptionsCell {
+class IconToggleCell: DetailsCollectionViewCell {
+    var isOn: Bool {
+        set {
+            toggle.isOn = newValue
+        }
 
-    var isOn = false {
-        didSet {
-            let key = "group_details.guest_options_cell.\(isOn ? "enabled" : "disabled")"
-            status = key.localized
+        get {
+            return toggle.isOn
         }
     }
 
+    private let toggle = UISwitch()
+    var action: ((Bool) -> Void)?
+
     override func setUp() {
         super.setUp()
-        accessibilityIdentifier = "cell.groupdetails.guestoptions"
-        title = "group_details.guest_options_cell.title".localized
+        contentStackView.insertArrangedSubview(toggle, at: contentStackView.arrangedSubviews.count)
+
+        toggle.addTarget(self, action: #selector(toggleChanged), for: .valueChanged)
     }
 
-    func configure(with conversation: ZMConversation) {
-        self.isOn = conversation.allowGuests
+    @objc func toggleChanged(_ sender: UISwitch) {
+        action?(sender.isOn)
     }
-
-    override func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
-        super.applyColorScheme(colorSchemeVariant)
-
-        icon = UIImage(for: .guest, iconSize: .tiny,
-                       color: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant))
-    }
-
 }

@@ -221,7 +221,7 @@ extension MockFileMessageData: MockFileMessageDataType { }
 
 
 @objcMembers class MockMessage: NSObject, ZMConversationMessage {
-
+    
     typealias UsersByReaction = Dictionary<String, [ZMUser]>
     
     // MARK: - ZMConversationMessage
@@ -287,6 +287,8 @@ extension MockFileMessageData: MockFileMessageDataType { }
     func markAsUnread() {
         // no-op
     }
+    
+    var readReceipts: [ReadReceipt] = []
     
     var canBeMarkedUnread = true
     

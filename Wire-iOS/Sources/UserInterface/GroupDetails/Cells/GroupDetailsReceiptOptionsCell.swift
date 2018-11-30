@@ -18,28 +18,25 @@
 
 import UIKit
 
-class GroupDetailsTimeoutOptionsCell: GroupDetailsDisclosureOptionsCell {
+
+final class GroupDetailsReceiptOptionsCell: IconToggleCell {
 
     override func setUp() {
         super.setUp()
-        accessibilityIdentifier = "cell.groupdetails.timeoutoptions"
-        title = "group_details.timeout_options_cell.title".localized
-    }
-
-    func configure(with conversation: ZMConversation) {
-        switch conversation.messageDestructionTimeout {
-        case .synced(let value)?:
-            status = value.displayString
-        default:
-            status = MessageDestructionTimeoutValue.none.displayString
-        }
+        accessibilityIdentifier = "cell.groupdetails.receiptoptions"
+        title = "group_details.receipt_options_cell.title".localized
     }
 
     override func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
         super.applyColorScheme(colorSchemeVariant)
-
-        icon = UIImage(for: .hourglass, iconSize: .tiny,
+        icon = UIImage(for: .eye,
+                       iconSize: .tiny,
                        color: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant))
     }
+}
 
+extension GroupDetailsReceiptOptionsCell: ConversationOptionsConfigurable {
+    func configure(with conversation: ZMConversation) {
+         isOn = conversation.hasReadReceiptsEnabled
+    }
 }
