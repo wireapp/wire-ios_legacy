@@ -28,10 +28,11 @@ class GroupDetailsReceiptOptionsCell: DetailsCollectionViewCell {
     }
 
     private let toggle = UISwitch()
+    var action: ((Bool) -> Void)?
 
     override func setUp() {
         super.setUp()
-        accessibilityIdentifier = "cell.groupdetails.receiptoptions"///TODO:
+        accessibilityIdentifier = "cell.groupdetails.receiptoptions"
         title = "group_details.receipt_options_cell.title".localized
 
         contentStackView.insertArrangedSubview(toggle, at: contentStackView.arrangedSubviews.count - 1)
@@ -48,14 +49,12 @@ class GroupDetailsReceiptOptionsCell: DetailsCollectionViewCell {
     }
 
     @objc private func toggleChanged(_ sender: UISwitch) {
-        // TODO: set the converation's receipt enabled setting
+        action?(sender.isOn)
     }
 }
 
 extension GroupDetailsReceiptOptionsCell: ConversationOptionsConfigurable {
     func configure(with conversation: ZMConversation) {
-        ///TODO: wait for Date model update to toggle the conversation's allow receipt option
-        // self.isOn = conversation.allowReceipts
-
+         isOn = conversation.hasReadReceiptsEnabled
     }
 }
