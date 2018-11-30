@@ -250,6 +250,8 @@ func SettingsPropertyLabelText(_ name: SettingsPropertyName) -> String {
         return "self.settings.privacy_analytics.title".localized
     case .receiveNewsAndOffers:
         return "self.settings.receiveNews_and_offers.title".localized
+    case .readReceiptsEnabled:
+        return "self.settings.enable_read_receipts.title".localized
     }
 }
 

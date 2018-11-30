@@ -508,6 +508,8 @@
 "content.message.open_link_alert.message" = "This will take you to\n%@";
 "content.message.open_link_alert.open" = "Open";
 
+"content.message.audio_message.accessibility" = "Play the audio message";
+
 "content.reactions_list.likers" = "Liked by";
 
 "content.file.too_big" = "You can send files up to %@";
@@ -840,6 +842,11 @@
 "self.settings.account_details.remove_device.password.error" = "Wrong password";
 
 "self.settings.account_appearance_group.title" = "Appearance";
+
+"self.settings.privacy_section_group.title" = "Privacy";
+"self.settings.enable_read_receipts.title" = "Send read receipts";
+"self.settings.privacy_section_group.subtitle" = "Only people who have read receipts turned on as well will see when you read their message. This setting does not apply to group conversations.";
+
 "self.settings.account_picture_group.picture" = "Picture";
 "self.settings.account_picture_group.color" = "Color";
 
