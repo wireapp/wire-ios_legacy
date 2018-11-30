@@ -68,8 +68,8 @@ if [ -e "${CONFIGURATION_LOCATION}" ]; then
 else
     git ls-remote "${REPO_URL}" &> /dev/null
     if [ "$?" -ne 0 ]; then
-        echo "No access to configuration repository, falling back to public"
-        REPO_URL=$PUBLIC_CONFIGURATION_REPO
+        echo "Cannot access configuration repository!"
+        exit -1
     fi 
 
     echo "Cloning assets from ${REPO_URL}"

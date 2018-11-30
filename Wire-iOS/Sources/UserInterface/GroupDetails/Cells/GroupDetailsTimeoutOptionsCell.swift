@@ -18,7 +18,7 @@
 
 import UIKit
 
-class GroupDetailsTimeoutOptionsCell: GroupDetailsOptionsCell {
+class GroupDetailsTimeoutOptionsCell: GroupDetailsDisclosureOptionsCell {
 
     override func setUp() {
         super.setUp()
@@ -26,7 +26,7 @@ class GroupDetailsTimeoutOptionsCell: GroupDetailsOptionsCell {
         title = "group_details.timeout_options_cell.title".localized
     }
 
-    override func configure(with conversation: ZMConversation) {
+    func configure(with conversation: ZMConversation) {
         switch conversation.messageDestructionTimeout {
         case .synced(let value)?:
             status = value.displayString
@@ -37,6 +37,7 @@ class GroupDetailsTimeoutOptionsCell: GroupDetailsOptionsCell {
 
     override func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
         super.applyColorScheme(colorSchemeVariant)
+
         icon = UIImage(for: .hourglass, iconSize: .tiny,
                        color: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant))
     }

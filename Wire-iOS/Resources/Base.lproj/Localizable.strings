@@ -405,6 +405,7 @@
 "content.system.pending_message_timestamp" = "Sending…";
 "content.system.message_sent_timestamp" = "Sent";
 "content.system.message_delivered_timestamp" = "Delivered";
+"content.system.message_read_timestamp" = "Seen";
 "content.system.failedtosend_message_timestamp" = "Sending failed.";
 "content.system.failedtosend_message_timestamp_resend" = "Resend";
 "content.system.failedtosend_message_timestamp_delete" = "Delete";
@@ -763,6 +764,8 @@
 "group_details.timeout_options_cell.title" = "Timed messages";
 "group_details.notification_options_cell.title" = "Notifications";
 "group_details.notification_options_cell.description" = "You can be notified about everything (including audio and video calls) or only when someone mentions you or replies to one of your messages.";
+"group_details.receipt_options_cell.title" = "Read receipts";
+"group_details.receipt_options_cell.description" = "Turning this on will enable read receipts for everyone in this group. The sender can see at which time you read a message. This only affects future messages.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile
@@ -839,6 +842,11 @@
 "self.settings.account_details.remove_device.password.error" = "Wrong password";
 
 "self.settings.account_appearance_group.title" = "Appearance";
+
+"self.settings.privacy_section_group.title" = "Privacy";
+"self.settings.enable_read_receipts.title" = "Send read receipts";
+"self.settings.privacy_section_group.subtitle" = "Only people who have read receipts turned on as well will see when you read their message. This setting does not apply to group conversations.";
+
 "self.settings.account_picture_group.picture" = "Picture";
 "self.settings.account_picture_group.color" = "Color";
 
