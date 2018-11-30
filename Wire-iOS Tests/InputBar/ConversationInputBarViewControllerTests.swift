@@ -41,7 +41,6 @@ final class ConversationInputBarViewControllerTests: CoreDataSnapshotTestCase {
         verifyInAllPhoneWidths(view: sut.view)
         verifyInAllTabletWidths(view: sut.view)
     }
-
 }
 
 // MARK: - Ephemeral indicator button

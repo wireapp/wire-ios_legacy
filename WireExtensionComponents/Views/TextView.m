@@ -20,6 +20,7 @@
 @import MobileCoreServices;
 
 #import "TextView.h"
+#import "TextView+Internal.h"
 
 #import "MediaAsset.h"
 #import "UILabel+TextTransform.h"
@@ -31,7 +32,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 @interface TextView ()
 
 @property (nonatomic) BOOL shouldDrawPlaceholder;
-@property (nonatomic) UILabel *placeholderLabel;
 @end
 
 // Inspired by https://github.com/samsoffes/sstoolkit/blob/master/SSToolkit/SSTextView.m
@@ -157,21 +157,9 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 {
     if(self.placeholder.length > 0 || self.attributedPlaceholder.length > 0) {
         if(self.placeholderLabel == nil) {
-            
-            float linePadding = self.textContainer.lineFragmentPadding;
-            
-            CGRect placeholderRect = CGRectMake(self.placeholderTextContainerInset.left + linePadding,
-                                                self.placeholderTextContainerInset.top,
-                                                rect.size.width - self.placeholderTextContainerInset.left - self.placeholderTextContainerInset.right - 2 * linePadding,
-                                                rect.size.height - self.placeholderTextContainerInset.top - self.placeholderTextContainerInset.bottom);
-            self.placeholderLabel = [[UILabel alloc] initWithFrame:placeholderRect];
-            self.placeholderLabel.font = self.placeholderFont;
-            self.placeholderLabel.textColor = self.placeholderTextColor;
-            self.placeholderLabel.textTransform = self.placeholderTextTransform;
-            self.placeholderLabel.textAlignment = self.placeholderTextAlignment;
-            self.placeholderLabel.isAccessibilityElement = NO;
-            [self addSubview:self.placeholderLabel];
-            
+
+            [self createPlaceholderLabel: rect];
+
             if(self.attributedPlaceholder && self.attributedPlaceholder.length > 0) {
                 self.placeholderLabel.attributedText = self.attributedPlaceholder;
             } else {

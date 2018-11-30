@@ -60,6 +60,8 @@
 #import "CAMediaTimingFunction+AdditionalEquations.h"
 #import "Token.h"
 #import "TokenField.h"
+#import "TextView.h"
+#import "TextView+Internal.h"
 #import "TokenizedTextView.h"
 #import "TokenTextAttachment.h"
 #import "ProfileViewController.h"
