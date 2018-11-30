@@ -47,7 +47,6 @@ class MesageDetailsContentViewController: UIViewController {
     // MARK: - UI Elements
 
     fileprivate let noResultsView = NoResultsView()
-    fileprivate let collectionViewLayout = UICollectionViewFlowLayout()
     fileprivate var collectionView: UICollectionView!
 
     // MARK: - Initialization
@@ -59,23 +58,23 @@ class MesageDetailsContentViewController: UIViewController {
     init(contentType: ContentType) {
         self.contentType = contentType
         super.init(nibName: nil, bundle: nil)
-        configureSubviews()
-        configureConstraints()
+        updateTitle()
     }
 
     public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        configureSubviews()
+        configureConstraints()
+    }
+
     private func configureSubviews() {
         view.backgroundColor = .from(scheme: .contentBackground)
 
-        collectionViewLayout.scrollDirection = .vertical
-        collectionViewLayout.minimumLineSpacing = 0
-        collectionViewLayout.minimumInteritemSpacing = 0
-        collectionViewLayout.sectionInset = UIEdgeInsets(top: 24, left: 0, bottom: 0, right: 0)
-
-        collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: collectionViewLayout)
+        collectionView = UICollectionView(forUserList: ())
         collectionView.allowsMultipleSelection = false
         collectionView.allowsSelection = true
         collectionView.alwaysBounceVertical = true
@@ -89,8 +88,7 @@ class MesageDetailsContentViewController: UIViewController {
         noResultsView.isHidden = true
         configureForContentType()
         view.addSubview(noResultsView)
-
-        updateTitle()
+        updateData(cells)
     }
 
     private func updateTitle() {
@@ -148,6 +146,12 @@ class MesageDetailsContentViewController: UIViewController {
     func updateData(_ cells: [MessageDetailsCellDescription]) {
         noResultsView.isHidden = !cells.isEmpty
 
+        // If the collection view doesn't exit, set the initial data and return
+        guard collectionView != nil else {
+            self.cells = cells
+            return updateTitle()
+        }
+
         let old = self.cells
         let new = cells
 
@@ -201,18 +205,19 @@ extension MesageDetailsContentViewController: UICollectionViewDataSource, UIColl
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.bounds.width, height: 52)
+        return CGSize(width: collectionView.bounds.size.width, height: 56)
     }
 
     /// When the user selects a cell, show the details for this user.
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let user = cells[indexPath.item].user
+        let cell = collectionView.cellForItem(at: indexPath) as! UserCell
 
         let profileViewController = ProfileViewController(user: user, conversation: conversation)
         profileViewController.delegate = self
         profileViewController.viewControllerDismisser = self
 
-        present(profileViewController.wrapInNavigationController(), animated: true)
+        presentDetailsViewController(profileViewController, above: cell)
     }
 
 }
@@ -229,6 +234,26 @@ extension MesageDetailsContentViewController: ProfileViewControllerDelegate, Vie
         dismiss(animated: true) {
             ZClientViewController.shared()?.load(conversation, scrollTo: nil, focusOnView: true, animated: true)
         }
+    }
+
+}
+
+// MARK: - Adaptive Presentation
+
+extension MesageDetailsContentViewController {
+
+    /// Presents a profile view controller as a popover or a modal depending on the context.
+    fileprivate func presentDetailsViewController(_ controller: ProfileViewController, above cell: UserCell) {
+        let presentedController = controller.wrapInNavigationController()
+        presentedController.modalPresentationStyle = .popover
+
+        if let popover = presentedController.popoverPresentationController {
+            popover.sourceRect = cell.avatar.bounds
+            popover.sourceView = cell.avatar
+            popover.backgroundColor = .white
+        }
+
+        present(presentedController, animated: true)
     }
 
 }

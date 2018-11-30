@@ -65,6 +65,7 @@ import WireExtensionComponents
         container = TabBarController(viewControllers: viewControllers)
 
         super.init(nibName: nil, bundle: nil)
+        self.modalPresentationStyle = .formSheet
     }
 
     required init?(coder aDecoder: NSCoder) {
