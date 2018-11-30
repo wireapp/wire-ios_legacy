@@ -58,12 +58,6 @@ final public class ConversationCreationValues {
     private let errorSection = ConversationCreateErrorSectionController()
     private let optionsSection = ConversationCreateOptionsSectionController()
 
-    private let toggleView = ToggleView(
-        title: "conversation.create.toggle.title".localized,
-        isOn: true,
-        accessibilityIdentifier: "toggle.newgroup.allowguests"
-    )
-
     fileprivate var navBarBackgroundView = UIView()
 
     fileprivate var values: ConversationCreationValues?
@@ -133,7 +127,12 @@ final public class ConversationCreationValues {
         collectionView.fitInSuperview(safely: true)
         collectionViewController.collectionView = collectionView
         
-        collectionViewController.sections = [nameSection, errorSection, optionsSection]
+        collectionViewController.sections = [
+            nameSection,
+            errorSection,
+//            optionsSection,
+            ConversationCreateGuestsSectionController()
+        ]
         
         navBarBackgroundView.backgroundColor = UIColor.from(scheme: .barBackground, variant: colorSchemeVariant)
         view.addSubview(navBarBackgroundView)
