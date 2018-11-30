@@ -20,8 +20,6 @@ import Foundation
 
 class ConversationCreateNameSectionController: NSObject, CollectionViewSectionController {
     
-    // TODO: john need to add the error view here.
-    
     typealias Cell = ConversationCreateNameCell
     
     var isHidden: Bool {
