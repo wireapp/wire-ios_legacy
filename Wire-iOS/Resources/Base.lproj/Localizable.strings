@@ -840,6 +840,11 @@
 "self.settings.account_details.remove_device.password.error" = "Wrong password";
 
 "self.settings.account_appearance_group.title" = "Appearance";
+
+"self.settings.privacy_section_group.title" = "Privacy";
+"self.settings.enable_read_receipts.title" = "Send read receipts";
+"self.settings.privacy_section_group.subtitle" = "Only people who have read receipts turned on as well will see when you read their message. This setting does not apply to group conversations.";
+
 "self.settings.account_picture_group.picture" = "Picture";
 "self.settings.account_picture_group.color" = "Color";
 
