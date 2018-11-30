@@ -765,7 +765,7 @@
 "group_details.notification_options_cell.title" = "Notifications";
 "group_details.notification_options_cell.description" = "You can be notified about everything (including audio and video calls) or only when someone mentions you or replies to one of your messages.";
 "group_details.receipt_options_cell.title" = "Read receipts";
-"group_details.receipt_options_cell.description" = "Turning this on will enable read receipts for everyone in this group. The sender can see at which time you read a message. This only affects future messages.";
+"group_details.receipt_options_cell.description" = "When this is on, people can see when their messages in this conversation are read.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile
