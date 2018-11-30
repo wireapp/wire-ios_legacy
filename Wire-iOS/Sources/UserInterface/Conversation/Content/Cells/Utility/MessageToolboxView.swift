@@ -37,23 +37,23 @@ import WireSyncEngine
         return UIColor.from(scheme: .textDimmed)
     }
 
-    public let statusLabel: UITextView = {
-        let attributedLabel = UITextView(frame: CGRect.zero)
-        attributedLabel.backgroundColor = .clear
-        attributedLabel.isEditable = false
-        attributedLabel.isScrollEnabled = false
-        attributedLabel.isUserInteractionEnabled = true
-        attributedLabel.isAccessibilityElement = true
-        attributedLabel.accessibilityLabel = "DeliveryStatus"
-        attributedLabel.textContainer.lineBreakMode = NSLineBreakMode.byTruncatingMiddle
-        attributedLabel.textContainer.maximumNumberOfLines = 0
-        attributedLabel.setContentHuggingPriority(.defaultLow, for: .vertical)
-        attributedLabel.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
+    public let statusTextView: UITextView = {
+        let textView = UITextView(frame: CGRect.zero)
+        textView.backgroundColor = .clear
+        textView.isEditable = false
+        textView.isScrollEnabled = false
+        textView.isUserInteractionEnabled = true
+        textView.isAccessibilityElement = true
+        textView.accessibilityLabel = "DeliveryStatus"
+        textView.textContainer.lineBreakMode = NSLineBreakMode.byTruncatingMiddle
+        textView.textContainer.maximumNumberOfLines = 0
+        textView.setContentHuggingPriority(.defaultLow, for: .vertical)
+        textView.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
 
-        attributedLabel.linkTextAttributes = [.foregroundColor: UIColor.vividRed,
-        .underlineStyle: NSUnderlineStyle.single.rawValue as NSNumber]
+        textView.linkTextAttributes = [.foregroundColor: UIColor.vividRed,
+                                              .underlineStyle: NSUnderlineStyle.single.rawValue as NSNumber]
 
-        return attributedLabel
+        return textView
     }()
 
     fileprivate var tapGestureRecogniser: UITapGestureRecognizer!
@@ -89,15 +89,15 @@ import WireSyncEngine
         likeButton.setIconColor(UIColor(for: .vividRed), for: .selected)
         likeButton.hitAreaPadding = CGSize(width: 20, height: 20)
 
-        statusLabel.delegate = self
+        statusTextView.delegate = self
 
-        [likeButtonContainer, likeButton, statusLabel].forEach(addSubview)
+        [likeButtonContainer, likeButton, statusTextView].forEach(addSubview)
     }
     
     private func createConstraints() {
         likeButtonContainer.translatesAutoresizingMaskIntoConstraints = false
         likeButton.translatesAutoresizingMaskIntoConstraints = false
-        statusLabel.translatesAutoresizingMaskIntoConstraints = false
+        statusTextView.translatesAutoresizingMaskIntoConstraints = false
 
         heightConstraint = self.heightAnchor.constraint(equalToConstant: 28)
         heightConstraint.priority = UILayoutPriority(999)
@@ -116,11 +116,11 @@ import WireSyncEngine
             likeButton.centerYAnchor.constraint(equalTo: likeButtonContainer.centerYAnchor),
 
             // statusLabel
-            statusLabel.leadingAnchor.constraint(equalTo: likeButtonContainer.trailingAnchor),
-            statusLabel.topAnchor.constraint(equalTo: topAnchor),
-            statusLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -UIView.conversationLayoutMargins.right),
-            statusLabel.bottomAnchor.constraint(equalTo: bottomAnchor),
-        ])
+            statusTextView.leadingAnchor.constraint(equalTo: likeButtonContainer.trailingAnchor),
+            statusTextView.topAnchor.constraint(equalTo: topAnchor),
+            statusTextView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -UIView.conversationLayoutMargins.right),
+            statusTextView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            ])
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -280,7 +280,7 @@ import WireSyncEngine
         
         let likersNames = likers.map { user in
             return user.displayName
-        }.joined(separator: ", ")
+            }.joined(separator: ", ")
         
         let attributes: [NSAttributedString.Key : AnyObject] = [.font: MessageToolboxView.statusFont, .foregroundColor: statusTextColor]
         let likersNamesAttributedString = likersNames && attributes
@@ -290,7 +290,7 @@ import WireSyncEngine
         let labelSize = CTFramesetterSuggestFrameSizeWithConstraints(framesetter, CFRangeMake(0, likersNamesAttributedString.length), nil, targetSize, nil)
 
         let attributedText: NSAttributedString
-        if labelSize.width > statusLabel.bounds.width {
+        if labelSize.width > statusTextView.bounds.width {
             let likersCount = String(format: "participants.people.count".localized, likers.count)
             attributedText = likersCount && attributes
         }
@@ -298,7 +298,7 @@ import WireSyncEngine
             attributedText = likersNamesAttributedString
         }
 
-        if let currentText = self.statusLabel.attributedText, currentText.string == attributedText.string {
+        if let currentText = self.statusTextView.attributedText, currentText.string == attributedText.string {
             return
         }
         
@@ -307,7 +307,7 @@ import WireSyncEngine
         }
         
         if animated {
-            statusLabel.wr_animateSlideTo(.down, newState: changeBlock)
+            statusTextView.wr_animateSlideTo(.down, newState: changeBlock)
         }
         else {
             changeBlock()
@@ -315,8 +315,8 @@ import WireSyncEngine
     }
 
     fileprivate func updateStatusLabel(attributedText: NSAttributedString) {
-        statusLabel.attributedText = attributedText
-        statusLabel.accessibilityValue = statusLabel.attributedText.string
+        statusTextView.attributedText = attributedText
+        statusTextView.accessibilityValue = statusTextView.attributedText.string
     }
 
     fileprivate func configureTimestamp(_ message: ZMConversationMessage, animated: Bool = false) {
@@ -324,18 +324,17 @@ import WireSyncEngine
         guard let changeBlock = statusUpdate(message: message) else { return }
 
         if animated {
-            statusLabel.wr_animateSlideTo(.up, newState: changeBlock)
+            statusTextView.wr_animateSlideTo(.up, newState: changeBlock)
         } else {
             changeBlock()
         }
     }
 
-    ///TODO: extension of ZMConversationMessage
-    fileprivate func selfStatusStringForRead(for message: ZMConversationMessage) -> NSAttributedString? {
+    fileprivate func selfStatusForReadDeliveryState(for message: ZMConversationMessage) -> NSAttributedString? {
         guard let conversationType = message.conversation?.conversationType else {return nil}
 
         switch conversationType {
-        case .group: ///TODO: tap gesture for openning read detail screen
+        case .group: ///TODO: tap gesture for openning read detail screen https://github.com/wireapp/wire-ios/pull/2971
             let imageIcon = NSTextAttachment.textAttachment(for: .eye, with: statusTextColor)!
 
             let statusString: NSAttributedString
@@ -360,30 +359,30 @@ import WireSyncEngine
         }
     }
 
-    ///TODO: rewrite as ZMConversationMessage extension
-    fileprivate func selfStatusString(for message: ZMConversationMessage) -> NSAttributedString? {
+    fileprivate func selfStatus(for message: ZMConversationMessage) -> NSAttributedString? {
+        guard let sender = message.sender,
+              sender.isSelfUser else { return nil }
+
         var deliveryStateString: String? = .none
 
-        if let sender = message.sender, sender.isSelfUser {
-            switch message.deliveryState {
-            case .pending:
-                deliveryStateString = "content.system.pending_message_timestamp".localized
-            case .read:
-                return selfStatusStringForRead(for: message)
-            case .delivered:
-                deliveryStateString = "content.system.message_delivered_timestamp".localized
-            case .sent:
-                deliveryStateString = "content.system.message_sent_timestamp".localized
-            case .failedToSend:
-                let resendString = NSAttributedString(string: "content.system.failedtosend_message_timestamp_resend".localized, attributes:[.link: type(of: self).resendLink])
+        switch message.deliveryState {
+        case .pending:
+            deliveryStateString = "content.system.pending_message_timestamp".localized
+        case .read:
+            return selfStatusForReadDeliveryState(for: message)
+        case .delivered:
+            deliveryStateString = "content.system.message_delivered_timestamp".localized
+        case .sent:
+            deliveryStateString = "content.system.message_sent_timestamp".localized
+        case .failedToSend:
+            let resendString = NSAttributedString(string: "content.system.failedtosend_message_timestamp_resend".localized, attributes:[.link: type(of: self).resendLink])
 
-                let deleteRange = NSAttributedString(string: "content.system.failedtosend_message_timestamp_delete".localized, attributes:[.link: type(of: self).deleteLink])
+            let deleteRange = NSAttributedString(string: "content.system.failedtosend_message_timestamp_delete".localized, attributes:[.link: type(of: self).deleteLink])
 
-                return NSAttributedString(string:"content.system.failedtosend_message_timestamp".localized) + resendString + NSAttributedString(string:" · ") + deleteRange
+            return NSAttributedString(string:"content.system.failedtosend_message_timestamp".localized) + resendString + NSAttributedString(string:" · ") + deleteRange
 
-            case .invalid:
-                return nil
-            }
+        case .invalid:
+            return nil
         }
 
         if let deliveryStateString = deliveryStateString {
@@ -395,9 +394,10 @@ import WireSyncEngine
 
 
     fileprivate func statusString(for message: ZMConversationMessage) -> NSAttributedString {
-        var deliveryStateString: NSAttributedString? = selfStatusString(for: message)
+        var deliveryStateString: NSAttributedString? = selfStatus(for: message)
 
         // Ephemeral overrides
+
         let showDestructionTimer = message.isEphemeral && !message.isObfuscated && nil != message.destructionDate
         if let destructionDate = message.destructionDate, showDestructionTimer {
             let remaining = destructionDate.timeIntervalSinceNow + 1 // We need to add one second to start with the correct value
@@ -448,14 +448,14 @@ import WireSyncEngine
     fileprivate func statusUpdate(message: ZMConversationMessage) -> (()->())? {
         let finalText = statusString(for: message)
 
-        if statusLabel.attributedText?.string == finalText.string {
+        if statusTextView.attributedText?.string == finalText.string {
             return nil
         }
 
         let attributedText = NSMutableAttributedString(attributedString: finalText && [.font: MessageToolboxView.statusFont, .foregroundColor: statusTextColor])
 
 
-        if let currentText = self.statusLabel.attributedText, currentText.string == attributedText.string {
+        if let currentText = self.statusTextView.attributedText, currentText.string == attributedText.string {
             return nil
         }
 
@@ -471,7 +471,7 @@ import WireSyncEngine
         let attributes: [NSAttributedString.Key : AnyObject] = [.font: MessageToolboxView.statusFont, .foregroundColor: statusTextColor]
         let attributedText = likeTooltipText && attributes
 
-        if let currentText = self.statusLabel.attributedText, currentText.string == attributedText.string {
+        if let currentText = self.statusTextView.attributedText, currentText.string == attributedText.string {
             return
         }
         
@@ -480,7 +480,7 @@ import WireSyncEngine
         }
         
         if animated {
-            statusLabel.wr_animateSlideTo(.up, newState: changeBlock)
+            statusTextView.wr_animateSlideTo(.up, newState: changeBlock)
         }
         else {
             changeBlock()

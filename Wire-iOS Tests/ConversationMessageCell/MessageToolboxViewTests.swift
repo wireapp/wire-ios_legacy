@@ -148,6 +148,8 @@ final class MessageToolboxViewTests: CoreDataSnapshotTestCase {
         verify(view: sut)
     }
 
+    ///TODO: test for edited cases
+
     func testThatItConfiguresWithOtherLikers() {
         // GIVEN
         let users = MockUser.mockUsers().filter { !$0.isSelfUser }
