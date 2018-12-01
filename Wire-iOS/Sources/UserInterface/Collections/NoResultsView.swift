@@ -31,7 +31,7 @@ import Cartography
     
     public var placeholderColor: UIColor {
         let backgroundColor = UIColor.from(scheme: .background)
-        let placeholderColor = backgroundColor.mix(UIColor.from(scheme: .textForeground), amount: 0.16)
+        let placeholderColor = backgroundColor.mix(UIColor.from(scheme: .sectionText), amount: 0.16)
         return placeholderColor!
     }
     

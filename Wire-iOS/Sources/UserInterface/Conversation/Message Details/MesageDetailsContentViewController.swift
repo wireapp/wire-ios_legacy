@@ -41,6 +41,17 @@ class MesageDetailsContentViewController: UIViewController {
         }
     }
 
+    /// The subtitle displaying message details.
+    var subtitle: String? {
+        get {
+            return subtitleLabel.text
+        }
+        set {
+            subtitleLabel.text = newValue
+            collectionView.map(updateFooterPosition)
+        }
+    }
+
     /// The displayed cells.
     fileprivate(set) var cells: [MessageDetailsCellDescription] = []
 
@@ -48,6 +59,8 @@ class MesageDetailsContentViewController: UIViewController {
 
     fileprivate let noResultsView = NoResultsView()
     fileprivate var collectionView: UICollectionView!
+    fileprivate var subtitleLabel = UILabel()
+    fileprivate var subtitleBottom: NSLayoutConstraint?
 
     // MARK: - Initialization
 
@@ -68,13 +81,13 @@ class MesageDetailsContentViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureSubviews()
-        configureConstraints()
     }
 
     private func configureSubviews() {
         view.backgroundColor = .from(scheme: .contentBackground)
 
         collectionView = UICollectionView(forUserList: ())
+        collectionView.contentInset.bottom = 64
         collectionView.allowsMultipleSelection = false
         collectionView.allowsSelection = true
         collectionView.alwaysBounceVertical = true
@@ -85,10 +98,18 @@ class MesageDetailsContentViewController: UIViewController {
         UserCell.register(in: collectionView)
         view.addSubview(collectionView)
 
+        subtitleLabel.numberOfLines = 0
+        subtitleLabel.textAlignment = .center
+        subtitleLabel.font = .mediumFont
+        subtitleLabel.textColor = UIColor.from(scheme: .sectionText)
+        subtitleLabel.accessibilityLabel = "DeliveryStatus"
+        view.addSubview(subtitleLabel)
+
         noResultsView.isHidden = true
         configureForContentType()
         view.addSubview(noResultsView)
         updateData(cells)
+        configureConstraints()
     }
 
     private func updateTitle() {
@@ -98,6 +119,35 @@ class MesageDetailsContentViewController: UIViewController {
         case .reactions:
             title = "message_details.tabs.likes".localized(args: cells.count).uppercased()
         }
+    }
+
+    private func updateFooterPosition(for scrollView: UIScrollView) {
+        let padding: CGFloat = 8
+        let footerHeight = subtitleLabel.frame.height.rounded(.up)
+        let footerRegionHeight = 28 + footerHeight + padding
+
+        guard !cells.isEmpty else {
+            subtitleBottom?.constant = -padding
+            return
+        }
+
+        // Update the bottom cell padding to fit the text
+        collectionView.contentInset.bottom = footerRegionHeight
+
+        /*
+         We calculate the distance between the bottom of the last cell and the bottom of the view.
+
+         We use this height to move the status label offscreen if needed, and move it up alongside the
+         content if the user scroll up.
+         */
+
+        let offset = scrollView.contentOffset.y + scrollView.contentInset.top
+        let scrollableContentHeight = scrollView.contentInset.top + scrollView.contentSize.height + footerRegionHeight
+        let visibleOnScreen = min(scrollableContentHeight - offset, scrollView.bounds.height - scrollView.contentInset.top)
+        let bottomSpace = scrollableContentHeight - (visibleOnScreen + offset)
+
+        let constant = bottomSpace - padding
+        subtitleBottom?.constant = constant
     }
 
     private func configureForContentType() {
@@ -122,8 +172,11 @@ class MesageDetailsContentViewController: UIViewController {
     private func configureConstraints() {
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         noResultsView.translatesAutoresizingMaskIntoConstraints = false
+        subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
 
         collectionView.fitInSuperview()
+        subtitleBottom = subtitleLabel.bottomAnchor.constraint(equalTo: safeBottomAnchor)
+        subtitleBottom!.priority = .defaultHigh
 
         NSLayoutConstraint.activate([
             // noResultsView
@@ -133,6 +186,10 @@ class MesageDetailsContentViewController: UIViewController {
             noResultsView.bottomAnchor.constraint(lessThanOrEqualTo: view.bottomAnchor, constant: -12),
             noResultsView.leadingAnchor.constraint(greaterThanOrEqualTo: view.leadingAnchor, constant: 24),
             noResultsView.trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor, constant: -24),
+
+            // subtitleLabel
+            subtitleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            subtitleBottom!
         ])
     }
 
@@ -147,7 +204,7 @@ class MesageDetailsContentViewController: UIViewController {
         noResultsView.isHidden = !cells.isEmpty
 
         // If the collection view doesn't exit, set the initial data and return
-        guard collectionView != nil else {
+        guard let collectionView = self.collectionView else {
             self.cells = cells
             return updateTitle()
         }
@@ -163,23 +220,24 @@ class MesageDetailsContentViewController: UIViewController {
             let change = ZMChangedIndexes(start: old, end: new, updatedState: new, moveType: .uiCollectionView)
 
             if let deleted = change?.deletedIndexes.indexPaths(in: 0) {
-                self.collectionView.deleteItems(at: deleted)
+                collectionView.deleteItems(at: deleted)
             }
 
             if let inserted = change?.insertedIndexes.indexPaths(in: 0) {
-                self.collectionView.insertItems(at: inserted)
+                collectionView.insertItems(at: inserted)
             }
 
             change?.enumerateMovedIndexes { (oldIndex, newIndex) in
                 let oldIndexPath = IndexPath(item: Int(oldIndex), section: 0)
                 let newIndexPath = IndexPath(item: Int(newIndex), section: 0)
-                self.collectionView.moveItem(at: oldIndexPath, to: newIndexPath)
+                collectionView.moveItem(at: oldIndexPath, to: newIndexPath)
             }
         }
 
         collectionView.performBatchUpdates(updates) { finished in
             if finished {
                 self.updateTitle()
+                self.updateFooterPosition(for: collectionView)
             }
         }
     }
@@ -218,6 +276,10 @@ extension MesageDetailsContentViewController: UICollectionViewDataSource, UIColl
         profileViewController.viewControllerDismisser = self
 
         presentDetailsViewController(profileViewController, above: cell)
+    }
+
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        updateFooterPosition(for: scrollView)
     }
 
 }

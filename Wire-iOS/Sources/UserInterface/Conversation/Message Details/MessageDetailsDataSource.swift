@@ -32,7 +32,7 @@ protocol MessageDetailsDataSourceObserver: class {
     func dataSourceDidChange(_ dataSource: MessageDetailsDataSource)
 
     /// Called when the message subtitle changes.
-    func detailsHeaderDidChange(_ dataSource: MessageDetailsDataSource)
+    func detailsFooterDidChange(_ dataSource: MessageDetailsDataSource)
 
     /// Called when a user enables or disables read receipts.
     func receiptsStatusDidChange(_ dataSource: MessageDetailsDataSource)
@@ -129,11 +129,11 @@ class MessageDetailsDataSource: NSObject, ZMMessageObserver, ZMConversationObser
 
         if let editedDate = message.formattedEditedDate() {
             let editedString = "message_details.subtitle_edit_date".localized(args: editedDate)
-            subtitle += " · " + editedString
+            subtitle += "\n" + editedString
         }
 
         self.subtitle = subtitle
-        self.observer?.detailsHeaderDidChange(self)
+        self.observer?.detailsFooterDidChange(self)
     }
 
     // MARK: - Changes

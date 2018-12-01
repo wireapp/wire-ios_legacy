@@ -83,7 +83,8 @@ import WireExtensionComponents
         view.addSubview(topBar)
         topBar.delegate = self
         topBar.needsSeparator = false
-        configureTopBar()
+        topBar.configure(title: dataSource.title, subtitle: nil, topAnchor: safeTopAnchor)
+        reloadFooters()
 
         // Configure the content
         addChild(container)
@@ -117,8 +118,16 @@ import WireExtensionComponents
         ])
     }
 
-    private func configureTopBar() {
-        topBar.configure(title: dataSource.title, subtitle: dataSource.subtitle, topAnchor: safeTopAnchor)
+    private func reloadFooters() {
+        switch dataSource.displayMode {
+        case .combined:
+            reactionsViewController.subtitle = dataSource.subtitle
+            readReceiptsViewController.subtitle = dataSource.subtitle
+        case .reactions:
+            reactionsViewController.subtitle = dataSource.subtitle
+        case .receipts:
+            readReceiptsViewController.subtitle = dataSource.subtitle
+        }
     }
 
     private func reloadData() {
@@ -164,8 +173,8 @@ extension MessageDetailsViewController: MessageDetailsDataSourceObserver {
         reloadData()
     }
 
-    func detailsHeaderDidChange(_ dataSource: MessageDetailsDataSource) {
-        configureTopBar()
+    func detailsFooterDidChange(_ dataSource: MessageDetailsDataSource) {
+        reloadFooters()
     }
 
     func receiptsStatusDidChange(_ dataSource: MessageDetailsDataSource) {
