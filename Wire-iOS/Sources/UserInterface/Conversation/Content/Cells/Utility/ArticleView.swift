@@ -48,7 +48,7 @@ import WireExtensionComponents
     let messageLabel = TTTAttributedLabel(frame: CGRect.zero)
     let authorLabel = UILabel()
     let imageView = ImageResourceView()
-    var linkPreview: LinkPreview?
+    var linkPreview: WireLinkPreview.LinkPreview?
     private let obfuscationView = ObfuscationView(icon: .link)
     private let ephemeralColor = UIColor.accent()
     private var imageHeightConstraint: NSLayoutConstraint!
@@ -152,7 +152,7 @@ import WireExtensionComponents
         self.linkPreview = linkPreview
         updateLabels(obfuscated: obfuscated)
 
-        if let article = linkPreview as? Article {
+        if let article = linkPreview as? WireLinkPreview.Article {
             configure(withArticle: article, obfuscated: obfuscated)
         }
         
@@ -187,7 +187,7 @@ import WireExtensionComponents
         }
     }
     
-    private func configure(withArticle article: Article, obfuscated: Bool) {
+    private func configure(withArticle article: WireLinkPreview.Article, obfuscated: Bool) {
         if let url = article.openableURL, !obfuscated {
             authorLabel.attributedText = formatURL(url as URL)
         } else {
@@ -232,7 +232,7 @@ extension ArticleView : UIGestureRecognizerDelegate {
 
 }
 
-extension LinkPreview {
+extension WireLinkPreview.LinkPreview {
 
     /// Returns a `NSURL` that can be openened using `-openURL:` on `UIApplication` or `nil` if no openable `NSURL` could be created.
     var openableURL: NSURL? {
