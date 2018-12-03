@@ -98,6 +98,7 @@ import WireExtensionComponents
 
         // Display initial data
         reloadData()
+        reloadPlaceholders()
     }
 
     private func configureConstraints() {
@@ -128,6 +129,14 @@ import WireExtensionComponents
         case .receipts:
             readReceiptsViewController.subtitle = dataSource.subtitle
         }
+    }
+
+    private func reloadPlaceholders() {
+        guard dataSource.displayMode.isOne(of: .receipts, .combined) else {
+            return
+        }
+
+        readReceiptsViewController.contentType = .receipts(enabled: dataSource.receiptsSupported)
     }
 
     private func reloadData() {
@@ -178,11 +187,7 @@ extension MessageDetailsViewController: MessageDetailsDataSourceObserver {
     }
 
     func receiptsStatusDidChange(_ dataSource: MessageDetailsDataSource) {
-        guard dataSource.displayMode.isOne(of: .receipts, .combined) else {
-            return
-        }
-
-        readReceiptsViewController.contentType = .receipts(enabled: dataSource.receiptsSupported)
+        reloadPlaceholders()
     }
 
 }

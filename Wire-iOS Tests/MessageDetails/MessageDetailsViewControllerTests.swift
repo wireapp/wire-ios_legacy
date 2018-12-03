@@ -26,15 +26,19 @@ class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
         recordMode = true
     }
 
+    // MARK: - Seen
+
     // MARK: - Empty State
 
     func testThatItShowsNoLikesEmptyState_14() {
         teamTest {
             // GIVEN
             let conversation = self.createGroupConversation()
+            conversation.hasReadReceiptsEnabled = true
+
             let message = MockMessageFactory.textMessage(withText: "Message")!
             message.sender = selfUser
-            message.conversation = self.createGroupConversation()
+            message.conversation = conversation
 
             let users = Set(usernames.prefix(upTo: 5).map(self.createUser))
             let receipts = users.map(MockReadReceipt.init)
@@ -51,7 +55,101 @@ class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
         }
     }
 
-    // MARK: - 17) Non-Combined Scenarios
+    func testThatItShowsNoReceiptsEmptyState_DisabledInConversation_15() {
+        teamTest {
+            // GIVEN
+            let conversation = self.createGroupConversation()
+            conversation.hasReadReceiptsEnabled = false
+
+            let message = MockMessageFactory.textMessage(withText: "Message")!
+            message.sender = selfUser
+            message.conversation = conversation
+            message.readReceipts = []
+
+            // WHEN
+            let detailsViewController = MessageDetailsViewController(message: message)
+            detailsViewController.container.selectIndex(0, animated: false)
+
+            // THEN
+            verify(view: detailsViewController.view)
+        }
+    }
+
+    func testThatItShowsNoReceiptsEmptyState_EnabledInConversation_16() {
+        teamTest {
+            // GIVEN
+            let conversation = self.createGroupConversation()
+            conversation.hasReadReceiptsEnabled = true
+
+            let message = MockMessageFactory.textMessage(withText: "Message")!
+            message.sender = selfUser
+            message.conversation = conversation
+            message.readReceipts = []
+
+            // WHEN
+            let detailsViewController = MessageDetailsViewController(message: message)
+            detailsViewController.container.selectIndex(0, animated: false)
+
+            // THEN
+            verify(view: detailsViewController.view)
+        }
+    }
+
+    func testThatItUpdatesPlaceholderWhenReceiptsAreEnabledInConversation() {
+        teamTest {
+            // GIVEN
+            let conversation = self.createGroupConversation()
+            conversation.hasReadReceiptsEnabled = false
+
+            let message = MockMessageFactory.textMessage(withText: "Message")!
+            message.sender = selfUser
+            message.conversation = conversation
+            message.readReceipts = []
+
+            // WHEN: creating the controller
+            let detailsViewController = MessageDetailsViewController(message: message)
+            detailsViewController.container.selectIndex(0, animated: false)
+
+            // WHEN: updating the conversation settings
+            conversation.hasReadReceiptsEnabled = true
+
+            let changeInfo = ConversationChangeInfo(object: conversation)
+            changeInfo.changedKeys = [#keyPath(ZMConversation.hasReadReceiptsEnabled)]
+            detailsViewController.dataSource.conversationDidChange(changeInfo)
+
+            // THEN
+            verify(view: detailsViewController.view)
+        }
+    }
+
+    func testThatItUpdatesPlaceholderWhenReceiptsAreDisabledInConversation() {
+        teamTest {
+            // GIVEN
+            let conversation = self.createGroupConversation()
+            conversation.hasReadReceiptsEnabled = true
+
+            let message = MockMessageFactory.textMessage(withText: "Message")!
+            message.sender = selfUser
+            message.conversation = conversation
+            message.readReceipts = []
+
+            // WHEN: creating the controller
+            let detailsViewController = MessageDetailsViewController(message: message)
+            detailsViewController.container.selectIndex(0, animated: false)
+
+            // WHEN: updating the conversation settings
+            conversation.hasReadReceiptsEnabled = false
+
+            let changeInfo = ConversationChangeInfo(object: conversation)
+            changeInfo.changedKeys = [#keyPath(ZMConversation.hasReadReceiptsEnabled)]
+            detailsViewController.dataSource.conversationDidChange(changeInfo)
+
+            // THEN
+            verify(view: detailsViewController.view)
+        }
+    }
+
+    // MARK: - Non-Combined Scenarios
 
     func testThatItShowsReceiptsOnly_Ephemeral() {
         teamTest {
