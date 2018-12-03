@@ -23,7 +23,7 @@ final class GroupDetailsReceiptOptionsCell: IconToggleCell {
 
     override func setUp() {
         super.setUp()
-        
+
         accessibilityIdentifier = "cell.groupdetails.receiptoptions"
         toggle.accessibilityIdentifier = "ReadReceiptsSwitch"
 

@@ -67,8 +67,6 @@ public extension UIColor {
     case textDimmed
     case textPlaceholder
 
-    case systemMessageForeground
-
     case iconNormal
     case iconSelected
     case iconHighlighted
@@ -150,8 +148,6 @@ extension ColorSchemeColor {
             return ColorPair(light: .graphite, dark: .white)
         case .textBackground:
             return ColorPair(light: .white, dark: .backgroundGraphite)
-        case .systemMessageForeground:
-            return ColorPair(light: .black, dark: .white)
         case .textDimmed:
             return ColorPair(both: .lightGraphite)
         case .textPlaceholder:
