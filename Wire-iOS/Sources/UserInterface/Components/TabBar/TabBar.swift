@@ -59,10 +59,6 @@ class TabBar: UIView {
 
     // MARK: - Initialization
 
-    deinit {
-        titleObservers.removeAll()
-    }
-
     init(items: [UITabBarItem], style: ColorSchemeVariant, selectedIndex: Int = 0) {
         precondition(items.count > 0, "TabBar must be initialized with at least one item")
         

@@ -55,22 +55,22 @@ extension ZMConversationMessage {
         }
 
         // Do not show the details of the message was not sent or delivered.
-        guard self.deliveryState.isOne(of: .delivered, .sent) else {
+        guard self.deliveryState.isOne(of: .delivered, .sent, .read) else {
             return false
         }
 
-        if conversation.conversationType.isOne(of: .oneOnOne, .connection) {
-            // There is no message details view in 1:1s.
+        // There is no message details view in 1:1s.
+        guard conversation.conversationType == .group else {
             return false
+        }
+
+        // Show the message details in Team groups.
+        if ZMUser.selfUser()?.isTeamMember == true {
+            return true
         } else {
-            // Show the message details in Team groups.
-            if ZMUser.selfUser()?.isTeamMember == true {
-                return true
-            } else {
-                // In Consumer groups, read receipts are not supported. If the message
-                // is ephemeral, we cannot not show the likes details
-                return !self.isEphemeral
-            }
+            // In Consumer groups, read receipts are not supported. If the message
+            // is ephemeral, we cannot not show the likes details
+            return !self.isEphemeral
         }
     }
 
