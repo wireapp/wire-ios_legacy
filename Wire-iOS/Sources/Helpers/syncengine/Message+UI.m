@@ -97,19 +97,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     return longDateFormatter;
 }
 
-+ (NSDateFormatter *)longDateTimeFormatter
-{
-    static NSDateFormatter *longDateFormatter = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        longDateFormatter = [[NSDateFormatter alloc] init];
-        [longDateFormatter setDateStyle:NSDateFormatterLongStyle];
-        [longDateFormatter setTimeStyle:NSDateFormatterShortStyle];
-    });
-
-    return longDateFormatter;
-}
-
 + (NSString *)nonNilImageDataIdentifier:(id<ZMConversationMessage>)message
 {
     NSString *identifier = message.imageMessageData.imageDataIdentifier;

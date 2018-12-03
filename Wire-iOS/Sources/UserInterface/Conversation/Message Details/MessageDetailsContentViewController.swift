@@ -24,10 +24,6 @@ import UIKit
 
 class MessageDetailsContentViewController: UIViewController {
 
-    deinit {
-        print("Deinit")
-    }
-
     /// The type of the displayed content.
     enum ContentType {
         case reactions, receipts(enabled: Bool)
@@ -236,10 +232,6 @@ extension MessageDetailsContentViewController: UICollectionViewDataSource, UICol
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let description = cells[indexPath.item]
         let cell = collectionView.dequeueReusableCell(ofType: UserCell.self, for: indexPath)
-
-        if description.user.managedObjectContext == nil {
-            print(">>> NO MANAGED OBJECT CONTEXT")
-        }
 
         cell.configure(with: description.user, subtitle: description.attributedSubtitle, conversation: conversation)
         cell.showSeparator = indexPath.item != (cells.endIndex - 1)

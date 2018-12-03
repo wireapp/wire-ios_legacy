@@ -45,7 +45,7 @@ import CoreLocation
 
     public let locationButtonContainer = UIView()
     fileprivate var mapView = MKMapView()
-    fileprivate var toolBar = ModalTopBar()
+    fileprivate let toolBar = ModalTopBar()
     fileprivate let locationManager = CLLocationManager()
     fileprivate let geocoder = CLGeocoder()
     fileprivate let sendViewController = LocationSendViewController()

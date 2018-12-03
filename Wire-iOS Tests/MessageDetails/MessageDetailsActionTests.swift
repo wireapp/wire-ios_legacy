@@ -115,5 +115,4 @@ class MessageDetailsActionTests: CoreDataSnapshotTestCase {
         }
     }
 
-
 }

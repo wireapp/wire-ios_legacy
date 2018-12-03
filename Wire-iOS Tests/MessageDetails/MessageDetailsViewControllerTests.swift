@@ -25,14 +25,6 @@ class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
         super.setUp()
     }
 
-    override func tearDown() {
-        super.tearDown()
-    }
-
-    override var needsCaches: Bool {
-        return true
-    }
-
     // MARK: - Seen
 
     func testThatItShowsReceipts_ShortList_11() {
@@ -82,7 +74,6 @@ class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
             // WHEN
             let detailsViewController = MessageDetailsViewController(message: message)
             detailsViewController.container.selectIndex(0, animated: false)
-            detailsViewController.loadViewIfNeeded()
 
             // THEN
             snapshot(detailsViewController)
