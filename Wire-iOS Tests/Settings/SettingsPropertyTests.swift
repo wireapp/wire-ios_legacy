@@ -21,8 +21,7 @@ import XCTest
 @testable import Wire
 
 @objcMembers class MockZMEditableUser: MockUser, ZMEditableUser, ValidatorType {
-    var readReceiptsEnabled: Bool = false
-    
+    var readReceiptsEnabled: Bool = false    
     var originalProfileImageData: Data!
     
     func deleteProfileImage() {
