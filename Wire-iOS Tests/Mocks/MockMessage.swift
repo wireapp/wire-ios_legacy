@@ -23,7 +23,7 @@ import WireLinkPreview
 @objcMembers class MockTextMessageData : NSObject, ZMTextMessageData {
     
     var messageText: String? = ""
-    var linkPreview: WireLinkPreview.LinkPreview? = nil
+    var linkPreview: LinkMetadata? = nil
     var imageData: Data? = nil
     var linkPreviewHasImage: Bool = false
     var linkPreviewImageCacheKey: String? = nil

@@ -41,7 +41,7 @@ class Message_FormattingTests: XCTestCase {
             let range = textMessageData.messageText!.range(of: url)!
             let offset = textMessageData.messageText!.distance(from: textMessageData.messageText!.startIndex, to: range.lowerBound)
             
-            textMessageData.linkPreview = Article(originalURLString: url, permanentURLString: url, resolvedURLString: url, offset: offset)
+            textMessageData.linkPreview = ArticleMetadata(originalURLString: url, permanentURLString: url, resolvedURLString: url, offset: offset)
         }
         
         return textMessageData
