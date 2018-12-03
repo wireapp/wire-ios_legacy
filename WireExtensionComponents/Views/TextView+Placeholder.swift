@@ -19,17 +19,22 @@
 import Foundation
 
 extension TextView {
-    @objc func createPlaceholderLabel(_ rect: CGRect) {
+    @objc func createPlaceholderLabel() {
         let linePadding = CGFloat(textContainer.lineFragmentPadding)
-        ///TODO: constraints instead of frame
-        let placeholderRect = CGRect(x: CGFloat(placeholderTextContainerInset.left + linePadding), y: placeholderTextContainerInset.top, width: CGFloat(rect.size.width - placeholderTextContainerInset.left - placeholderTextContainerInset.right - 2 * linePadding), height: rect.size.height - placeholderTextContainerInset.top - placeholderTextContainerInset.bottom)
-        placeholderLabel = UILabel(frame: placeholderRect)
+        placeholderLabel = UILabel()
+        addSubview(placeholderLabel)
+
+        placeholderLabel.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            placeholderLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: placeholderTextContainerInset.left + linePadding),
+            placeholderLabel.centerYAnchor.constraint(equalTo: centerYAnchor)
+            ])
+
         placeholderLabel.font = placeholderFont
         placeholderLabel.textColor = placeholderTextColor
         placeholderLabel.textTransform = placeholderTextTransform
         placeholderLabel.textAlignment = placeholderTextAlignment
         placeholderLabel.isAccessibilityElement = false
-
-        addSubview(placeholderLabel)
     }
 }

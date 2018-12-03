@@ -27,9 +27,6 @@ final class ConversationInputBarViewControllerTests: CoreDataSnapshotTestCase {
     override func setUp() {
         super.setUp()
         sut = ConversationInputBarViewController(conversation: otherUserConversation)
-        sut.loadViewIfNeeded()
-
-        //        recordMode = true
     }
 
     override func tearDown() {
@@ -45,7 +42,7 @@ final class ConversationInputBarViewControllerTests: CoreDataSnapshotTestCase {
 
 // MARK: - Ephemeral indicator button
 extension ConversationInputBarViewControllerTests {
-    func testEphemeralIndicatorButton(){ ///TODO: broken constraint? the placeholder label's position.y is not always the same
+    func testEphemeralIndicatorButton(){
         // GIVEN
 
         // WHEN

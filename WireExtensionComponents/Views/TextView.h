@@ -25,7 +25,7 @@
 /**
 Adds placeholder support to @c UITextView. The position of the placeholder is automatically set based on the text view container insets, which ensures correct vertical position. In some cases, it is desirable to horizontally offset the text, which can be done manually.
 */
-IB_DESIGNABLE
+
 @interface TextView : UITextView
 
 @property (nonatomic, copy, nullable) IBInspectable NSString *placeholder;

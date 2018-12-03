@@ -76,6 +76,8 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     self.placeholderTextContainerInset = self.textContainerInset;
     self.placeholderTextAlignment = NSTextAlignmentNatural;
     
+    [self createPlaceholderLabel];
+
     if ([AutomationHelper.sharedHelper disableAutocorrection]) {
         self.autocorrectionType = UITextAutocorrectionTypeNo;
     }
@@ -152,31 +154,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     else
         [self.placeholderLabel setAlpha:0];
 }
-
-- (void)drawRect:(CGRect)rect
-{
-    if(self.placeholder.length > 0 || self.attributedPlaceholder.length > 0) {
-        if(self.placeholderLabel == nil) {
-
-            [self createPlaceholderLabel: rect];
-
-            if(self.attributedPlaceholder && self.attributedPlaceholder.length > 0) {
-                self.placeholderLabel.attributedText = self.attributedPlaceholder;
-            } else {
-                self.placeholderLabel.text = self.placeholder;
-            }
-            
-            if (self.textAlignment == NSTextAlignmentLeft) {
-                [self.placeholderLabel sizeToFit];
-            }
-            
-        }
-        [self showOrHidePlaceholder];
-    }
-    
-    [super drawRect:rect];
-}
-
 
 #pragma mark - Copy/Pasting
 
