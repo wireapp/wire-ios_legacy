@@ -23,29 +23,6 @@ import Cartography
     func tabBarController(_ controller: TabBarController, tabBarDidSelectIndex: Int)
 }
 
-class DynamicTabBarItem: UITabBarItem {
-
-    private var observationToken: Any?
-
-    deinit {
-        observationToken = nil
-    }
-
-    init(viewController: UIViewController) {
-        super.init()
-        self.title = viewController.title
-
-        observationToken = viewController.observe(\.title) { updatedViewController, _ in
-            self.title = updatedViewController.title
-        }
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-}
-
 extension UIPageViewController {
     var scrollView: UIScrollView? {
         return view.subviews
@@ -150,7 +127,7 @@ class TabBarController: UIViewController, UIPageViewControllerDelegate, UIPageVi
             pageViewController.delegate = self
         }
         
-        let items = self.viewControllers.map(DynamicTabBarItem.init)
+        let items = self.viewControllers.map { $0.tabBarItem! }
         self.tabBar = TabBar(items: items, style: self.style, selectedIndex: selectedIndex)
         tabBar?.animatesTransition = isInteractive
         tabBar?.isHidden = isTabBarHidden

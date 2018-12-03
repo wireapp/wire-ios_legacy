@@ -23,7 +23,7 @@ import UIKit
  * - note: This class needs to be NSCopying to be used in an ordered set for diffing.
  */
 
-class MessageDetailsCellDescription: NSObject, NSCopying {
+class MessageDetailsCellDescription: NSObject {
     /// The user to display.
     let user: ZMUser
 
@@ -31,9 +31,7 @@ class MessageDetailsCellDescription: NSObject, NSCopying {
     let subtitle: String?
 
     /// The attributed string for the subtitle.
-    var attributedTitle: NSAttributedString? {
-        return subtitle.map { $0 && UserCell.boldFont }
-    }
+    let attributedSubtitle: NSAttributedString?
 
     // MARK: - Initialization
 
@@ -41,23 +39,27 @@ class MessageDetailsCellDescription: NSObject, NSCopying {
     init(user: ZMUser, subtitle: String?) {
         self.user = user
         self.subtitle = subtitle
+        self.attributedSubtitle = subtitle.map { $0 && UserCell.boldFont }
     }
 
-    // MARK: - NSCopying
+}
 
-    override var hash: Int {
-        return user.hash
-    }
+// MARK: - Helpers
 
-    override func isEqual(_ object: Any?) -> Bool {
-        guard let otherDescription = object as? MessageDetailsCellDescription else {
-            return false
+extension MessageDetailsCellDescription {
+
+    static func makeReactionCells(_ users: [ZMUser]) -> [MessageDetailsCellDescription] {
+        return users.map {
+            let handle = $0.handle.map { "@" + $0 }
+            return MessageDetailsCellDescription(user: $0, subtitle: handle)
         }
-
-        return user == otherDescription.user && subtitle == otherDescription.subtitle
     }
 
-    func copy(with zone: NSZone? = nil) -> Any {
-        return MessageDetailsCellDescription(user: user, subtitle: subtitle)
+    static func makeReceiptCell(_ receipts: [ReadReceipt]) -> [MessageDetailsCellDescription] {
+        return receipts.map {
+            let formattedDate = $0.serverTimestamp.map(Message.shortDateTimeFormatter.string(from:))
+            return MessageDetailsCellDescription(user: $0.user, subtitle: formattedDate)
+        }
     }
+
 }

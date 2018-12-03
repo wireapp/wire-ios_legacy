@@ -26,7 +26,122 @@ class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
         recordMode = true
     }
 
+    override func tearDown() {
+        super.tearDown()
+    }
+
+    override var needsCaches: Bool {
+        return true
+    }
+
     // MARK: - Seen
+
+    func testThatItShowsReceipts_ShortList_11() {
+        teamTest {
+            // GIVEN
+            let conversation = self.createGroupConversation()
+            conversation.hasReadReceiptsEnabled = true
+
+            let message = MockMessageFactory.textMessage(withText: "Message")!
+            message.sender = selfUser
+            message.conversation = conversation
+
+            let users = usernames.prefix(upTo: 5).map(self.createUser)
+            let receipts = users.map(MockReadReceipt.init)
+
+            conversation.internalAddParticipants(Set(users))
+            message.readReceipts = receipts
+            message.backingUsersReaction = [MessageReaction.like.unicodeValue: Array(users.prefix(upTo: 4))]
+
+            // WHEN
+            let detailsViewController = MessageDetailsViewController(message: message)
+            detailsViewController.container.selectIndex(0, animated: false)
+
+            // THEN
+            snapshot(detailsViewController)
+        }
+    }
+
+    func testThatItShowsReceipts_ShortList_Edited_11() {
+        teamTest {
+            // GIVEN
+            let conversation = self.createGroupConversation()
+            conversation.hasReadReceiptsEnabled = true
+
+            let message = MockMessageFactory.textMessage(withText: "Message")!
+            message.sender = selfUser
+            message.conversation = conversation
+            message.updatedAt = Date(timeIntervalSince1970: 69)
+
+            let users = usernames.prefix(upTo: 5).map(self.createUser)
+            let receipts = users.map(MockReadReceipt.init)
+
+            conversation.internalAddParticipants(Set(users))
+            message.readReceipts = receipts
+            message.backingUsersReaction = [MessageReaction.like.unicodeValue: Array(users.prefix(upTo: 4))]
+
+            // WHEN
+            let detailsViewController = MessageDetailsViewController(message: message)
+            detailsViewController.container.selectIndex(0, animated: false)
+            detailsViewController.loadViewIfNeeded()
+
+            // THEN
+            snapshot(detailsViewController)
+        }
+    }
+
+    func testThatItShowsReceipts_LongList_12() {
+        teamTest {
+            // GIVEN
+            let conversation = self.createGroupConversation()
+            conversation.hasReadReceiptsEnabled = true
+
+            let message = MockMessageFactory.textMessage(withText: "Message")!
+            message.sender = selfUser
+            message.conversation = conversation
+            message.updatedAt = Date(timeIntervalSince1970: 69)
+
+            let users = usernames.prefix(upTo: 20).map(self.createUser)
+            let receipts = users.map(MockReadReceipt.init)
+
+            conversation.internalAddParticipants(Set(users))
+            message.readReceipts = receipts
+            message.backingUsersReaction = [MessageReaction.like.unicodeValue: Array(users.prefix(upTo: 4))]
+
+            // WHEN
+            let detailsViewController = MessageDetailsViewController(message: message)
+            detailsViewController.container.selectIndex(0, animated: false)
+
+            // THEN
+            snapshot(detailsViewController)
+        }
+    }
+
+    func testThatItShowsLikes_13() {
+        teamTest {
+            // GIVEN
+            let conversation = self.createGroupConversation()
+            conversation.hasReadReceiptsEnabled = true
+
+            let message = MockMessageFactory.textMessage(withText: "Message")!
+            message.sender = selfUser
+            message.conversation = conversation
+
+            let users = usernames.prefix(upTo: 6).map(self.createUser)
+            users.forEach { $0.setHandle($0.name) }
+
+            conversation.internalAddParticipants(Set(users))
+            message.readReceipts =  users.map(MockReadReceipt.init)
+            message.backingUsersReaction = [MessageReaction.like.unicodeValue: Array(users.prefix(upTo: 4))]
+
+            // WHEN
+            let detailsViewController = MessageDetailsViewController(message: message)
+            detailsViewController.container.selectIndex(1, animated: false)
+
+            // THEN
+            snapshot(detailsViewController)
+        }
+    }
 
     // MARK: - Empty State
 
@@ -40,18 +155,12 @@ class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
             message.sender = selfUser
             message.conversation = conversation
 
-            let users = Set(usernames.prefix(upTo: 5).map(self.createUser))
-            let receipts = users.map(MockReadReceipt.init)
-
-            conversation.internalAddParticipants(users)
-            message.readReceipts = receipts
-
             // WHEN
             let detailsViewController = MessageDetailsViewController(message: message)
             detailsViewController.container.selectIndex(1, animated: false)
 
             // THEN
-            verify(view: detailsViewController.view)
+            snapshot(detailsViewController)
         }
     }
 
@@ -71,7 +180,7 @@ class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
             detailsViewController.container.selectIndex(0, animated: false)
 
             // THEN
-            verify(view: detailsViewController.view)
+            snapshot(detailsViewController)
         }
     }
 
@@ -91,7 +200,7 @@ class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
             detailsViewController.container.selectIndex(0, animated: false)
 
             // THEN
-            verify(view: detailsViewController.view)
+            snapshot(detailsViewController)
         }
     }
 
@@ -118,7 +227,7 @@ class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
             detailsViewController.dataSource.conversationDidChange(changeInfo)
 
             // THEN
-            verify(view: detailsViewController.view)
+            snapshot(detailsViewController)
         }
     }
 
@@ -145,7 +254,7 @@ class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
             detailsViewController.dataSource.conversationDidChange(changeInfo)
 
             // THEN
-            verify(view: detailsViewController.view)
+            snapshot(detailsViewController)
         }
     }
 
@@ -164,7 +273,7 @@ class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
             let detailsViewController = MessageDetailsViewController(message: message)
 
             // THEN
-            verify(view: detailsViewController.view)
+            snapshot(detailsViewController)
         }
     }
 
@@ -179,7 +288,7 @@ class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
             let detailsViewController = MessageDetailsViewController(message: message)
 
             // THEN
-            verify(view: detailsViewController.view)
+            snapshot(detailsViewController)
         }
     }
 
@@ -194,8 +303,44 @@ class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
             let detailsViewController = MessageDetailsViewController(message: message)
 
             // THEN
-            verify(view: detailsViewController.view)
+            snapshot(detailsViewController)
         }
+    }
+
+    // MARK: - Deallocation
+
+    func testThatItDeallocates() {
+        self.verifyDeallocation { () -> MessageDetailsViewController in
+            // GIVEN
+            let conversation = self.createGroupConversation()
+            conversation.hasReadReceiptsEnabled = true
+
+            let message = MockMessageFactory.textMessage(withText: "Message")!
+            message.sender = selfUser
+            message.conversation = conversation
+
+            let users = usernames.prefix(upTo: 5).map(self.createUser)
+            let receipts = users.map(MockReadReceipt.init)
+
+            conversation.internalAddParticipants(Set(users))
+            message.readReceipts = receipts
+            message.backingUsersReaction = [MessageReaction.like.unicodeValue: Array(users.prefix(upTo: 4))]
+
+            // WHEN
+            let detailsViewController = MessageDetailsViewController(message: message)
+            detailsViewController.container.selectIndex(0, animated: false)
+            return detailsViewController
+        }
+    }
+
+
+    // MARK: - Helpers
+
+    private func snapshot(_ detailsViewController: MessageDetailsViewController, configuration: ((MessageDetailsViewController) -> Void)? = nil) {
+        detailsViewController.reloadData()
+        detailsViewController.loadViewIfNeeded()
+        configuration?(detailsViewController)
+        self.verify(view: detailsViewController.view)
     }
 
 }

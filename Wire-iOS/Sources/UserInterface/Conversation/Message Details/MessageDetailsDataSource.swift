@@ -60,10 +60,10 @@ class MessageDetailsDataSource: NSObject, ZMMessageObserver, ZMConversationObser
     private(set) var subtitle: String!
 
     /// The list of likes.
-    private(set) var reactions: [ZMUser]
+    private(set) var reactions: [MessageDetailsCellDescription]
 
     /// The list of read receipts with the associated date.
-    private(set) var readReciepts: [ReadReceipt]
+    private(set) var readReceipts: [MessageDetailsCellDescription]
 
     /// Whether read receipts are supported.
     private(set) var receiptsSupported: Bool = false
@@ -84,8 +84,8 @@ class MessageDetailsDataSource: NSObject, ZMMessageObserver, ZMConversationObser
         self.conversation = message.conversation!
 
         // Assign the initial data
-        self.reactions = message.sortedLikers
-        self.readReciepts = message.sortedReadReceipts
+        self.reactions = MessageDetailsCellDescription.makeReactionCells(message.sortedLikers)
+        self.readReceipts = MessageDetailsCellDescription.makeReceiptCell(message.sortedReadReceipts)
 
         // Compute the title and display mode
         let supportsLikes = message.canBeLiked
@@ -142,14 +142,14 @@ class MessageDetailsDataSource: NSObject, ZMMessageObserver, ZMConversationObser
         // Detect changes in likes
         if changeInfo.reactionsChanged {
             performChanges {
-                self.reactions = message.sortedLikers
+                self.reactions = MessageDetailsCellDescription.makeReactionCells(message.sortedLikers)
             }
         }
 
         // Detect changes in read receipts
         if changeInfo.confirmationsChanged {
             performChanges {
-                self.readReciepts = message.sortedReadReceipts
+                self.readReceipts = MessageDetailsCellDescription.makeReceiptCell(message.sortedReadReceipts)
             }
         }
 

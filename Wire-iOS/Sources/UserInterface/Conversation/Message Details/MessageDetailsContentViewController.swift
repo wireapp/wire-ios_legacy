@@ -22,7 +22,11 @@ import UIKit
  * Displays the list of users for a specified message detail content type.
  */
 
-class MesageDetailsContentViewController: UIViewController {
+class MessageDetailsContentViewController: UIViewController {
+
+    deinit {
+        print("Deinit")
+    }
 
     /// The type of the displayed content.
     enum ContentType {
@@ -83,6 +87,11 @@ class MesageDetailsContentViewController: UIViewController {
         configureSubviews()
     }
 
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        collectionView.map(updateFooterPosition)
+    }
+
     private func configureSubviews() {
         view.backgroundColor = .from(scheme: .contentBackground)
 
@@ -110,6 +119,7 @@ class MesageDetailsContentViewController: UIViewController {
         view.addSubview(noResultsView)
         updateData(cells)
         configureConstraints()
+        updateFooterPosition(for: collectionView)
     }
 
     private func updateTitle() {
@@ -202,51 +212,22 @@ class MesageDetailsContentViewController: UIViewController {
 
     func updateData(_ cells: [MessageDetailsCellDescription]) {
         noResultsView.isHidden = !cells.isEmpty
+        self.cells = cells
+        self.updateTitle()
 
-        // If the collection view doesn't exit, set the initial data and return
         guard let collectionView = self.collectionView else {
-            self.cells = cells
-            return updateTitle()
+            return
         }
 
-        let old = self.cells
-        let new = cells
-
-        let updates = {
-            self.cells = new
-
-            let old = ZMOrderedSetState(orderedSet: NSOrderedSet(array: old))
-            let new = ZMOrderedSetState(orderedSet: NSOrderedSet(array: new))
-            let change = ZMChangedIndexes(start: old, end: new, updatedState: new, moveType: .uiCollectionView)
-
-            if let deleted = change?.deletedIndexes.indexPaths(in: 0) {
-                collectionView.deleteItems(at: deleted)
-            }
-
-            if let inserted = change?.insertedIndexes.indexPaths(in: 0) {
-                collectionView.insertItems(at: inserted)
-            }
-
-            change?.enumerateMovedIndexes { (oldIndex, newIndex) in
-                let oldIndexPath = IndexPath(item: Int(oldIndex), section: 0)
-                let newIndexPath = IndexPath(item: Int(newIndex), section: 0)
-                collectionView.moveItem(at: oldIndexPath, to: newIndexPath)
-            }
-        }
-
-        collectionView.performBatchUpdates(updates) { finished in
-            if finished {
-                self.updateTitle()
-                self.updateFooterPosition(for: collectionView)
-            }
-        }
+        collectionView.reloadData()
+        self.updateFooterPosition(for: collectionView)
     }
 
 }
 
 // MARK: - UICollectionViewDataSource
 
-extension MesageDetailsContentViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension MessageDetailsContentViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return cells.count
@@ -256,7 +237,11 @@ extension MesageDetailsContentViewController: UICollectionViewDataSource, UIColl
         let description = cells[indexPath.item]
         let cell = collectionView.dequeueReusableCell(ofType: UserCell.self, for: indexPath)
 
-        cell.configure(with: description.user, subtitle: description.attributedTitle, conversation: conversation)
+        if description.user.managedObjectContext == nil {
+            print(">>> NO MANAGED OBJECT CONTEXT")
+        }
+
+        cell.configure(with: description.user, subtitle: description.attributedSubtitle, conversation: conversation)
         cell.showSeparator = indexPath.item != (cells.endIndex - 1)
 
         return cell
@@ -286,7 +271,7 @@ extension MesageDetailsContentViewController: UICollectionViewDataSource, UIColl
 
 // MARK: - ProfileViewControllerDelegate
 
-extension MesageDetailsContentViewController: ProfileViewControllerDelegate, ViewControllerDismisser {
+extension MessageDetailsContentViewController: ProfileViewControllerDelegate, ViewControllerDismisser {
 
     func dismiss(viewController: UIViewController, completion: (() -> ())?) {
         viewController.dismiss(animated: true, completion: nil)
@@ -302,7 +287,7 @@ extension MesageDetailsContentViewController: ProfileViewControllerDelegate, Vie
 
 // MARK: - Adaptive Presentation
 
-extension MesageDetailsContentViewController {
+extension MessageDetailsContentViewController {
 
     /// Presents a profile view controller as a popover or a modal depending on the context.
     fileprivate func presentDetailsViewController(_ controller: ProfileViewController, above cell: UserCell) {

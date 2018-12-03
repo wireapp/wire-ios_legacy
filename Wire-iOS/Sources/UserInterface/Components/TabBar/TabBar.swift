@@ -154,7 +154,7 @@ class TabBar: UIView {
         tab.textTransform = .upper
         tab.setTitle(item.title, for: .normal)
 
-        let changeObserver = item.observe(\.title) { _, _ in
+        let changeObserver = item.observe(\.title) { [unowned tab, unowned item] _, _ in
             tab.setTitle(item.title, for: .normal)
         }
 
