@@ -135,6 +135,7 @@ static id<UserType> mockSelfUser = nil;
 @synthesize smallProfileImageCacheKey;
 @synthesize mediumProfileImageCacheKey;
 @synthesize isTeamMember;
+@synthesize readReceiptsEnabled;
 
 - (BOOL)conformsToProtocol:(Protocol *)aProtocol
 {

@@ -729,6 +729,9 @@
 "profile.create_conversation_button_title" = "Create group";
 "profile.open_conversation_button_title" = "Open conversation";
 
+"profile.read_receipts_enabled_memo.header" = "YOU HAVE ENABLED READ RECEIPTS";
+"profile.read_receipts_enabled_memo.body" = "If both sides turn on read receipts, you can see when messages are read.\nYou can change this option in your account settings.";
+
 // User Details
 "profile.details.title" = "Details";
 "profile.details.guest" = "Guest";

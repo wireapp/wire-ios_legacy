@@ -211,7 +211,9 @@ extension SettingsCellDescriptorFactory {
     }
     
     func readReceiptsEnabledElement() -> SettingsCellDescriptorType {
-        return SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.readReceiptsEnabled))
+        return SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.readReceiptsEnabled),
+                                                    inverse: false,
+                                                    identifier: "ReadReceiptsSwitch")
     }
 
     func backUpElement() -> SettingsCellDescriptorType {
