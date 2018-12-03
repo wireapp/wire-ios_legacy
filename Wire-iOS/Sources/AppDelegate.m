@@ -125,6 +125,7 @@ static AppDelegate *sharedAppDelegate = nil;
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
+    [BackgroundActivityFactory.sharedFactory resume];
     ZMLogInfo(@"applicationWillEnterForeground: (applicationState = %ld)", (long)application.applicationState);
 }
 
