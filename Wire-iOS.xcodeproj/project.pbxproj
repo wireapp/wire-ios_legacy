@@ -1145,7 +1145,7 @@
 		EF19209D20C6E4F800E4B92D /* XCTestCase+DayFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF19209C20C6E4F700E4B92D /* XCTestCase+DayFormatter.swift */; };
 		EF1A461821AD5A270009B6B9 /* GroupDetailsReceiptOptionsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1A461721AD5A270009B6B9 /* GroupDetailsReceiptOptionsCell.swift */; };
 		EF1A461A21AD60510009B6B9 /* ReceiptOptionsSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1A461921AD60510009B6B9 /* ReceiptOptionsSectionController.swift */; };
-		EF1A461C21AD955A0009B6B9 /* GroupDetailsCellProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1A461B21AD955A0009B6B9 /* GroupDetailsCellProtocols.swift */; };
+		EF1A461C21AD955A0009B6B9 /* GroupDetailsDisclosureOptionsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1A461B21AD955A0009B6B9 /* GroupDetailsDisclosureOptionsCell.swift */; };
 		EF1A461E21ADACF50009B6B9 /* RightIconDetailsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1A461D21ADACF50009B6B9 /* RightIconDetailsCell.swift */; };
 		EF1EA4631FB0937000B53063 /* MockUser+filename.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1EA4611FB0934D00B53063 /* MockUser+filename.swift */; };
 		EF1EF1C320627075004DB245 /* SignInViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1EF1C220627075004DB245 /* SignInViewControllerTests.swift */; };
@@ -2905,7 +2905,7 @@
 		EF19209C20C6E4F700E4B92D /* XCTestCase+DayFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "XCTestCase+DayFormatter.swift"; sourceTree = "<group>"; };
 		EF1A461721AD5A270009B6B9 /* GroupDetailsReceiptOptionsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupDetailsReceiptOptionsCell.swift; sourceTree = "<group>"; };
 		EF1A461921AD60510009B6B9 /* ReceiptOptionsSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReceiptOptionsSectionController.swift; sourceTree = "<group>"; };
-		EF1A461B21AD955A0009B6B9 /* GroupDetailsCellProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDetailsCellProtocols.swift; sourceTree = "<group>"; };
+		EF1A461B21AD955A0009B6B9 /* GroupDetailsDisclosureOptionsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDetailsDisclosureOptionsCell.swift; sourceTree = "<group>"; };
 		EF1A461D21ADACF50009B6B9 /* RightIconDetailsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RightIconDetailsCell.swift; sourceTree = "<group>"; };
 		EF1EA4611FB0934D00B53063 /* MockUser+filename.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MockUser+filename.swift"; sourceTree = "<group>"; };
 		EF1EF1C220627075004DB245 /* SignInViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewControllerTests.swift; sourceTree = "<group>"; };
@@ -4114,7 +4114,7 @@
 			isa = PBXGroup;
 			children = (
 				EF18140B21B18846008F7DA8 /* IconToggleCell.swift */,
-				EF1A461B21AD955A0009B6B9 /* GroupDetailsCellProtocols.swift */,
+				EF1A461B21AD955A0009B6B9 /* GroupDetailsDisclosureOptionsCell.swift */,
 				EE571C022175ED7B0011B59C /* GroupDetailsNotificationOptionsCell.swift */,
 				5EA73D7B20D900A10001D106 /* GroupDetailsGuestOptionsCell.swift */,
 				EF1A461721AD5A270009B6B9 /* GroupDetailsReceiptOptionsCell.swift */,
@@ -7317,7 +7317,7 @@
 				5EA73D8C20D901E80001D106 /* ConversationTimeoutOptionsViewController.swift in Sources */,
 				8750A00F21934F1A00DC8DB6 /* AnimatedListMenuView+Constraint.swift in Sources */,
 				8708C6831F50860100845C7D /* AccountView.swift in Sources */,
-				EF1A461C21AD955A0009B6B9 /* GroupDetailsCellProtocols.swift in Sources */,
+				EF1A461C21AD955A0009B6B9 /* GroupDetailsDisclosureOptionsCell.swift in Sources */,
 				87A6BD0F1F0D2A58006A3232 /* UIApplication+StatusBar.m in Sources */,
 				BFFA182B20FDE93400F64377 /* CompanyLoginController.swift in Sources */,
 				872E22221F600347007729D4 /* Cartography+Additions.swift in Sources */,
