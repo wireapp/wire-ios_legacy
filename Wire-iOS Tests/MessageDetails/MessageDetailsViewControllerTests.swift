@@ -26,6 +26,31 @@ class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
         recordMode = true
     }
 
+    // MARK: - Empty State
+
+    func testThatItShowsNoLikesEmptyState_14() {
+        teamTest {
+            // GIVEN
+            let conversation = self.createGroupConversation()
+            let message = MockMessageFactory.textMessage(withText: "Message")!
+            message.sender = selfUser
+            message.conversation = self.createGroupConversation()
+
+            let users = Set(usernames.prefix(upTo: 5).map(self.createUser))
+            let receipts = users.map(MockReadReceipt.init)
+
+            conversation.internalAddParticipants(users)
+            message.readReceipts = receipts
+
+            // WHEN
+            let detailsViewController = MessageDetailsViewController(message: message)
+            detailsViewController.container.selectIndex(1, animated: false)
+
+            // THEN
+            verify(view: detailsViewController.view)
+        }
+    }
+
     // MARK: - 17) Non-Combined Scenarios
 
     func testThatItShowsReceiptsOnly_Ephemeral() {
