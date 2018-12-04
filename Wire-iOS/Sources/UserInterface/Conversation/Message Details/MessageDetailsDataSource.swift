@@ -59,6 +59,9 @@ class MessageDetailsDataSource: NSObject, ZMMessageObserver, ZMConversationObser
     /// The subtitle of the message details.
     private(set) var subtitle: String!
 
+    /// The subtitle of the message details for accessibility purposes.
+    private(set) var accessibilitySubtitle: String!
+
     /// The list of likes.
     private(set) var reactions: [MessageDetailsCellDescription]
 
@@ -133,6 +136,7 @@ class MessageDetailsDataSource: NSObject, ZMMessageObserver, ZMConversationObser
         }
 
         self.subtitle = subtitle
+        self.accessibilitySubtitle = message.formattedAccessibleMessageDetails()
         self.observer?.detailsFooterDidChange(self)
     }
 

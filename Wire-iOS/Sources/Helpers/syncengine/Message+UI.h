@@ -36,6 +36,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (class, nonatomic, strong, readonly) NSDateFormatter *shortTimeFormatter;
 @property (class, nonatomic, strong, readonly) NSDateFormatter *shortDateFormatter;
 @property (class, nonatomic, strong, readonly) NSDateFormatter *shortDateTimeFormatter;
+@property (class, nonatomic, strong, readonly) NSDateFormatter *spellOutDateTimeFormatter;
 
 @end
 

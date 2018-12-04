@@ -31,6 +31,7 @@ import Cartography
         let label = UILabel()
         label.textColor = .from(scheme: .textForeground)
         label.textAlignment = .center
+        label.accessibilityIdentifier = "Title"
 
         return label
     }()
@@ -40,6 +41,7 @@ import Cartography
         label.textColor = .from(scheme: .textForeground)
         label.font = UIFont.systemFont(ofSize: 11)
         label.textAlignment = .center
+        label.accessibilityIdentifier = "Subtitle"
 
         return label
     }()
@@ -66,6 +68,8 @@ import Cartography
         didSet {
             titleLabel.text = title?.uppercased()
             titleLabel.isHidden = title == nil
+            titleLabel.accessibilityLabel = title
+            titleLabel.accessibilityTraits.insert(.header)
         }
     }
 
@@ -73,6 +77,7 @@ import Cartography
         didSet {
             subtitleLabel.text = subtitle?.uppercased()
             subtitleLabel.isHidden = subtitle == nil
+            subtitleLabel.accessibilityLabel = subtitle
         }
     }
 
@@ -113,6 +118,10 @@ import Cartography
         subtitleLabel.isHidden = true
         [titleLabel, subtitleLabel].forEach(contentStackView.addArrangedSubview)
         [contentStackView, dismissButton, separatorView].forEach(addSubview)
+
+        dismissButton.accessibilityIdentifier = "Close"
+        dismissButton.accessibilityLabel = "general.close".localized
+
         dismissButton.setIcon(.cancel, with: .tiny, for: [])
         dismissButton.setIconColor(.from(scheme: .iconNormal), for: .normal)
         dismissButton.addTarget(self, action: #selector(dismissButtonTapped), for: .touchUpInside)
