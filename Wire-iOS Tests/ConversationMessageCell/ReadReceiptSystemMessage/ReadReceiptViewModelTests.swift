@@ -22,35 +22,30 @@ import XCTest
 final class ReadReceiptViewModelTests: XCTestCase {
     
     var sut: ReadReceiptViewModel!
+    var mockMessage: MockMessage!
     
     override func setUp() {
         super.setUp()
-    }
-    
-    override func tearDown() {
-        sut = nil
-        super.tearDown()
-    }
-
-
-
-    /// Example checker method which can be reused in different tests
-    ///
-    /// - Parameters:
-    ///   - file: optional, for XCTAssert logging error source
-    ///   - line: optional, for XCTAssert logging error source
-    fileprivate func checkerExample(file: StaticString = #file, line: UInt = #line) {
-        XCTAssert(true, file: file, line: line)
-    }
-
-    func testThatSelfUserSwitchOffReceiptOption(){
-        // GIVEN & WHEN
 
         let usersCount = 1
         let clientsCount = 1
         let type = ZMSystemMessageType.readReceiptSettingChanged
 
-        let mockMessage = MockMessageFactory.systemMessage(with: type, users: usersCount, clients: clientsCount)!
+        mockMessage = MockMessageFactory.systemMessage(with: type, users: usersCount, clients: clientsCount)!
+
+    }
+    
+    override func tearDown() {
+        sut = nil
+        mockMessage = nil
+
+        super.tearDown()
+    }
+
+
+
+    func testThatSelfUserSwitchOffReceiptOption(){
+        // GIVEN & WHEN
 
         mockMessage.backingSystemMessageData?.users = Set<AnyHashable>([MockUser.mockSelf()]) as! Set<ZMUser>
 
@@ -63,22 +58,16 @@ final class ReadReceiptViewModelTests: XCTestCase {
         XCTAssertEqual(sut.attributedTitle()?.string, "You turned read receipts off for everyone")
     }
 
-    /*
     func testThatOneUserSwitchOffReceiptOption(){
         // GIVEN & WHEN
 
-        let usersCount = 1
-        let clientsCount = 1
-        let type = ZMSystemMessageType.readReceiptSettingChanged
-
-        let systemMessage = MockMessageFactory.systemMessage(with: type, users: usersCount, clients: clientsCount)!
 
         sut = ReadReceiptViewModel(icon: .eye,
                                    iconColor: UIColor.from(scheme: .textDimmed),
-                                   message: systemMessage)
+                                   message: mockMessage,
+                                   systemMessage:mockMessage.systemMessageData!)
 
         // THEN
-        XCTAssertEqual(sut.attributedTitle()?.string, "Someone turned read receipts off for everyone")
+        XCTAssertEqual(sut.attributedTitle()?.string, "James Hetfield turned read receipts off for everyone")
     }
- */
 }
