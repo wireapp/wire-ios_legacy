@@ -19,16 +19,6 @@
 import XCTest
 @testable import Wire
 
-final class MockReadReceipt: ReadReceipt {
-    var user: ZMUser
-
-    var serverTimestamp: Date?
-
-    init(user: ZMUser) {
-        self.user = user
-    }
-}
-
 final class MessageToolboxViewTests: CoreDataSnapshotTestCase {
 
     var message: MockMessage!
