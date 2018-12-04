@@ -337,7 +337,7 @@ import WireSyncEngine
         guard let conversationType = message.conversation?.conversationType else {return nil}
 
         switch conversationType {
-        case .group: ///TODO: tap gesture for openning read detail screen https://github.com/wireapp/wire-ios/pull/2971
+        case .group:
             let imageIcon = NSTextAttachment.textAttachment(for: .eye, with: statusTextColor)!
 
             let statusString: NSAttributedString
