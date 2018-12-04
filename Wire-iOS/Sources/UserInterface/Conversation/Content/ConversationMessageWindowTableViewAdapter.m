@@ -55,11 +55,6 @@
     return self;
 }
 
-- (void)dealloc
-{
-    self.conversationChangeObserver = nil;
-}
-
 - (void)stopAudioPlayerForDeletedMessages:(NSSet *)deletedMessages
 {
     AudioTrackPlayer *audioTrackerPlayer = [AppDelegate sharedAppDelegate].mediaPlaybackManager.audioTrackPlayer;
@@ -152,7 +147,9 @@
 
 - (void)conversationDidChange:(ConversationChangeInfo *)changeInfo
 {
-    [self reconfigureVisibleSections];
+    if (changeInfo.participantsChanged) {
+        [self reconfigureVisibleSections];
+    }
 }
 
 @end
