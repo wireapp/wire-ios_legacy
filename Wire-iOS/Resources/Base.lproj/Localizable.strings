@@ -1506,3 +1506,4 @@
 "message_details.tabs.likes" = "Likes (%d)";
 "message_details.subtitle_send_date" = "Sent: %@";
 "message_details.subtitle_edit_date" = "Edited: %@";
+"message_details.subtitle_label_voiceOver" = "Message Details";

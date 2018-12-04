@@ -52,6 +52,16 @@ class MessageDetailsContentViewController: UIViewController {
         }
     }
 
+    /// The subtitle displaying message details in Voice Over.
+    var accessibleSubtitle: String? {
+        get {
+            return subtitleLabel.accessibilityValue
+        }
+        set {
+            subtitleLabel.accessibilityValue = newValue
+        }
+    }
+
     /// The displayed cells.
     fileprivate(set) var cells: [MessageDetailsCellDescription] = []
 
@@ -107,7 +117,8 @@ class MessageDetailsContentViewController: UIViewController {
         subtitleLabel.textAlignment = .center
         subtitleLabel.font = .mediumFont
         subtitleLabel.textColor = UIColor.from(scheme: .sectionText)
-        subtitleLabel.accessibilityLabel = "DeliveryStatus"
+        subtitleLabel.accessibilityIdentifier = "DeliveryStatus"
+        subtitleLabel.accessibilityLabel = "message_details.subtitle_label_voiceOver".localized
         view.addSubview(subtitleLabel)
 
         noResultsView.isHidden = true
@@ -159,18 +170,18 @@ class MessageDetailsContentViewController: UIViewController {
     private func configureForContentType() {
         switch contentType {
         case .reactions:
-            noResultsView.label.accessibilityLabel = "no likes"
-            noResultsView.label.text = "message_details.empty_likes".localized.uppercased()
+            noResultsView.label.accessibilityIdentifier = "placeholder.no_likes"
+            noResultsView.placeholderText = "message_details.empty_likes".localized.uppercased()
             noResultsView.icon = .like
 
         case .receipts(enabled: true):
-            noResultsView.label.accessibilityLabel = "no read receipts"
-            noResultsView.label.text = "message_details.empty_read_receipts".localized.uppercased()
+            noResultsView.label.accessibilityIdentifier = "placeholder.no_read_receipts"
+            noResultsView.placeholderText = "message_details.empty_read_receipts".localized.uppercased()
             noResultsView.icon = .eye
 
         case .receipts(enabled: false):
-            noResultsView.label.accessibilityLabel = "read receipts disabled"
-            noResultsView.label.text = "message_details.read_receipts_disabled".localized.uppercased()
+            noResultsView.label.accessibilityIdentifier = "placeholder.read_receipts_disabled"
+            noResultsView.placeholderText = "message_details.read_receipts_disabled".localized.uppercased()
             noResultsView.icon = .eye
         }
     }

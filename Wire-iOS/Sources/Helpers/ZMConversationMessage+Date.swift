@@ -51,6 +51,25 @@ extension ZMConversationMessage {
             return Message.shortDateTimeFormatter.string(from: date)
         }
     }
+
+    func formattedAccessibleMessageDetails() -> String? {
+        guard let serverTimestamp = self.serverTimestamp else {
+            return nil
+        }
+
+        let formattedTimestamp = Message.spellOutDateTimeFormatter.string(from: serverTimestamp)
+        let sendDate = "message_details.subtitle_send_date".localized(args: formattedTimestamp)
+
+        var accessibleMessageDetails = sendDate
+
+        if let editTimestamp = self.updatedAt {
+            let formattedEditTimestamp = Message.spellOutDateTimeFormatter.string(from: editTimestamp)
+            let editDate = "message_details.subtitle_edit_date".localized(args: formattedEditTimestamp)
+            accessibleMessageDetails += ("\n" + editDate)
+        }
+
+        return accessibleMessageDetails
+    }
 }
 
 extension ZMSystemMessageData {

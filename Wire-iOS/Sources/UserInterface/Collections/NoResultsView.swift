@@ -22,6 +22,16 @@ import Cartography
 @objcMembers final public class NoResultsView: UIView {
     public let label = UILabel()
     private let iconView = UIImageView()
+
+    public var placeholderText: String? {
+        get {
+            return label.text
+        }
+        set {
+            label.text = newValue
+            label.accessibilityLabel = newValue
+        }
+    }
     
     public var icon: ZetaIconType = .none {
         didSet {
