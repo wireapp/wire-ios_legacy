@@ -82,7 +82,7 @@ public protocol SearchHeaderViewControllerDelegate : class {
         tokenField.textView.keyboardAppearance = ColorScheme.keyboardAppearance(for: colorSchemeVariant)
         tokenField.textView.returnKeyType = .done
         tokenField.textView.autocorrectionType = .no
-        tokenField.textView.textContainerInset = UIEdgeInsets(top: 9, left: 40, bottom: 11, right: 32)
+        tokenField.textView.textContainerInset = UIEdgeInsets(top: 9, left: 40, bottom: 11, right: 32) ///TODO: override, change constraint constraint instead
         tokenField.delegate = self
         
         [tokenField, searchIcon, clearButton].forEach(tokenFieldContainer.addSubview)

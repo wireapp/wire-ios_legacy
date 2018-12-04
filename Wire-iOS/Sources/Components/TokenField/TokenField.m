@@ -160,7 +160,7 @@ CGFloat const accessoryButtonSize = 32.0f;
     
     self.toLabelLeftMargin = [[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(left)-[toLabel]" options:0 metrics:metrics views:views] objectAtIndex:0];
     self.toLabelTopMargin = [[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(top)-[toLabel]" options:0 metrics:metrics views:views] objectAtIndex:0];
-    [self.textView addConstraints:@[self.toLabelLeftMargin, self.toLabelTopMargin]];
+    [self.textView addConstraints:@[self.toLabelLeftMargin, self.toLabelTopMargin]]; ///TODO: convert with modern setup
     
     [self updateTextAttributes];
 }

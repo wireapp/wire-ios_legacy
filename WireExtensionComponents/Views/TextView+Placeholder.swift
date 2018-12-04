@@ -27,7 +27,7 @@ extension TextView {
         placeholderLabel.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            placeholderLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: placeholderTextContainerInset.left + linePadding),
+            placeholderLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: placeholderTextContainerInset.left + linePadding),
             placeholderLabel.centerYAnchor.constraint(equalTo: centerYAnchor)
             ])
 
