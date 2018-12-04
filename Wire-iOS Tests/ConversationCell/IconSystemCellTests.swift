@@ -25,6 +25,8 @@ final class IconSystemCellTests: ZMSnapshotTestCase {
         super.setUp()
         ColorScheme.default.variant = .light
         snapshotBackgroundColor = .white
+
+        recordMode = true
     }
 
     class func wrappedCell(for type: ZMSystemMessageType,
@@ -111,4 +113,9 @@ final class IconSystemCellTests: ZMSnapshotTestCase {
         verify(view: wrappedCell!)
     }
 
+    ///TODO: test for on/off cases
+    func testReadReceiptSettingChanged() {
+        let wrappedCell: UITableView? = IconSystemCellTests.wrappedCell(for: .readReceiptSettingChanged, users: 1, clients: 1, config: nil)
+        verify(view: wrappedCell!)
+    }
 }

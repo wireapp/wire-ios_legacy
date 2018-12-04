@@ -231,6 +231,11 @@ class ConversationSystemMessageCellDescription {
         case .participantsAdded, .participantsRemoved, .teamMemberLeave:
             let participantsChangedCell = ConversationParticipantsChangedSystemMessageCellDescription(message: message, data: systemMessageData)
             return [AnyConversationMessageCellDescription(participantsChangedCell)]
+
+        case .readReceiptSettingChanged:
+            let cell = ConversationReadReceiptSettingChangedCellDescription(message: message, data: systemMessageData)
+            return [AnyConversationMessageCellDescription(cell)]
+
         case .newConversation:
             let participantsCell = ConversationLegacyCellDescription<ParticipantsCell>(message: message, layoutProperties: layoutProperties)
             return [AnyConversationMessageCellDescription(participantsCell)]
@@ -246,6 +251,7 @@ class ConversationSystemMessageCellDescription {
 }
 
 // MARK: - Descriptions
+
 
 class ConversationParticipantsChangedSystemMessageCellDescription: ConversationMessageCellDescription {
     typealias View = ConversationSystemMessageCell
