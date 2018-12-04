@@ -22,7 +22,7 @@ class ConversationCreateReceiptsSectionController: NSObject, CollectionViewSecti
     
     private typealias Cell = ConversationCreateReceiptsCell
 
-    var isHidden: Bool { return false }
+    var isHidden: Bool = false
     
     private var footer = SectionFooter(frame: .zero)
     private let footerText = "conversation.create.receipts.subtitle".localized

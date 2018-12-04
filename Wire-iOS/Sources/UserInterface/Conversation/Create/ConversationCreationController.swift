@@ -55,9 +55,28 @@ final public class ConversationCreationValues {
         return ConversationCreateNameSectionController(delegate: self)
     }()
     
-    private let errorSection = ConversationCreateErrorSectionController()
-    private let optionsSection = ConversationCreateOptionsSectionController()
-
+    private lazy var errorSection: ConversationCreateErrorSectionController = {
+        return ConversationCreateErrorSectionController()
+    }()
+    
+    private lazy var optionsSection: ConversationCreateOptionsSectionController = {
+        let section = ConversationCreateOptionsSectionController()
+        section.tapHandler = self.optionsTapped
+        return section
+    }()
+    
+    private lazy var guestsSection: ConversationCreateGuestsSectionController = {
+       let section = ConversationCreateGuestsSectionController()
+        section.isHidden = true
+        return section
+    }()
+    
+    private lazy var receiptsSection: ConversationCreateReceiptsSectionController = {
+        let section = ConversationCreateReceiptsSectionController()
+        section.isHidden = true
+        return section
+    }()
+    
     fileprivate var navBarBackgroundView = UIView()
 
     fileprivate var values: ConversationCreationValues?
@@ -115,6 +134,7 @@ final public class ConversationCreationValues {
     }
     
     private func setupViews() {
+        // TODO: if keyboard is open, it should scroll.
         
         let collectionView = UICollectionView(forUserList: ())
         
@@ -130,9 +150,9 @@ final public class ConversationCreationValues {
         collectionViewController.sections = [
             nameSection,
             errorSection,
-//            optionsSection,
-            ConversationCreateGuestsSectionController(),
-            ConversationCreateReceiptsSectionController()
+            optionsSection,
+            guestsSection,
+            receiptsSection
         ]
         
         navBarBackgroundView.backgroundColor = UIColor.from(scheme: .barBackground, variant: colorSchemeVariant)
@@ -148,20 +168,6 @@ final public class ConversationCreationValues {
         ])
         
         
-//        toggleSubtitleLabel.numberOfLines = 0
-//        
-//        [toggleSubtitleLabel, textFieldSubtitleLabel].forEach {
-//            $0.translatesAutoresizingMaskIntoConstraints = false
-//            $0.font = .preferredFont(forTextStyle: .footnote)
-//            $0.textColor = UIColor.from(scheme: .textDimmed)
-//        }
-//        
-//        toggleSubtitleLabel.text = "conversation.create.toggle.subtitle".localized
-//        textFieldSubtitleLabel.text = "participants.section.name.footer".localized(args: ZMConversation.maxParticipants, ZMConversation.maxVideoCallParticipantsExcludingSelf)
-//        
-//        [toggleView, toggleSubtitleLabel].forEach(bottomViewContainer.addSubview)
-//        [mainViewContainer, errorViewContainer, bottomViewContainer].forEach(view.addSubview)
-//        
 //        toggleView.handler = { [unowned self] allowGuests in
 //            self.values = ConversationCreationValues(
 //                name: self.values?.name ?? "",
@@ -169,8 +175,6 @@ final public class ConversationCreationValues {
 //                allowGuests: allowGuests
 //            )
 //        }
-//        
-//        bottomViewContainer.isHidden = nil == ZMUser.selfUser().team
     }
 
     private func setupNavigationBar() {
@@ -264,3 +268,28 @@ extension ConversationCreationController: SimpleTextFieldDelegate {
         
     }
 }
+
+// MARK: - Handlers
+
+extension ConversationCreationController {
+    private func optionsTapped(expanded: Bool) {
+        guard let collectionView = collectionViewController.collectionView else {
+            return
+        }
+        
+        self.guestsSection.isHidden = !expanded
+        self.receiptsSection.isHidden = !expanded
+        
+        let changes: () -> Void
+        
+        if expanded {
+            nameSection.resignFirstResponder()
+            changes = { collectionView.insertSections([3, 4]) }
+        } else {
+            changes = { collectionView.deleteSections([3, 4]) }
+        }
+        
+        collectionView.performBatchUpdates(changes)
+    }
+}
+
