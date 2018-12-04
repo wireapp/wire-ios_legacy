@@ -144,14 +144,17 @@ import WireExtensionComponents
         case .combined:
             reactionsViewController.subtitle = dataSource.subtitle
             reactionsViewController.accessibleSubtitle = dataSource.accessibilitySubtitle
+            
             readReceiptsViewController.subtitle = dataSource.subtitle
-            reactionsViewController.accessibleSubtitle = dataSource.accessibilitySubtitle
+            readReceiptsViewController.accessibleSubtitle = dataSource.accessibilitySubtitle
+
         case .reactions:
             reactionsViewController.subtitle = dataSource.subtitle
             reactionsViewController.accessibleSubtitle = dataSource.accessibilitySubtitle
+
         case .receipts:
             readReceiptsViewController.subtitle = dataSource.subtitle
-            reactionsViewController.accessibleSubtitle = dataSource.accessibilitySubtitle
+            readReceiptsViewController.accessibleSubtitle = dataSource.accessibilitySubtitle
         }
     }
 
