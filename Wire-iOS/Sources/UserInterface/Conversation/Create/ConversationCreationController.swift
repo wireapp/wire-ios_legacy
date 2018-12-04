@@ -23,13 +23,16 @@ import Cartography
 
 final public class ConversationCreationValues {
     var allowGuests: Bool
+    var enableReceipts: Bool
     var name: String
     var participants: Set<ZMUser>
-    init (name: String, participants: Set<ZMUser> = [], allowGuests: Bool) {
+    
+    init (name: String = "", participants: Set<ZMUser> = [], allowGuests: Bool = true, enableReceipts: Bool = true) {
         self.name = name
         let selfUser = ZMUser.selfUser()!
         self.participants = allowGuests ? participants : Set(Array(participants).filter { $0.team == selfUser.team })
         self.allowGuests = allowGuests
+        self.enableReceipts = enableReceipts
     }
 }
 
@@ -60,26 +63,38 @@ final public class ConversationCreationValues {
     }()
     
     private lazy var optionsSection: ConversationCreateOptionsSectionController = {
-        let section = ConversationCreateOptionsSectionController()
+        let section = ConversationCreateOptionsSectionController(values: self.values)
         section.tapHandler = self.optionsTapped
         return section
     }()
     
     private lazy var guestsSection: ConversationCreateGuestsSectionController = {
-       let section = ConversationCreateGuestsSectionController()
+        let section = ConversationCreateGuestsSectionController(values: self.values)
         section.isHidden = true
+        
+        section.toggleAction = { [unowned self] allowGuests in
+            self.values.allowGuests = allowGuests
+            self.updateOptions()
+        }
+        
         return section
     }()
     
     private lazy var receiptsSection: ConversationCreateReceiptsSectionController = {
-        let section = ConversationCreateReceiptsSectionController()
+        let section = ConversationCreateReceiptsSectionController(values: self.values)
         section.isHidden = true
+        
+        section.toggleAction = { [unowned self] enableReceipts in
+            self.values.enableReceipts = enableReceipts
+            self.updateOptions()
+        }
+        
         return section
     }()
     
     fileprivate var navBarBackgroundView = UIView()
 
-    fileprivate var values: ConversationCreationValues?
+    fileprivate var values = ConversationCreationValues()
     fileprivate let source: LinearGroupCreationFlowEvent.Source
     
     weak var delegate: ConversationCreationControllerDelegate?
@@ -166,15 +181,6 @@ final public class ConversationCreationValues {
             navBarBackgroundView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             navBarBackgroundView.bottomAnchor.constraint(equalTo: view.safeTopAnchor)
         ])
-        
-        
-//        toggleView.handler = { [unowned self] allowGuests in
-//            self.values = ConversationCreationValues(
-//                name: self.values?.name ?? "",
-//                participants: self.values?.participants ?? [],
-//                allowGuests: allowGuests
-//            )
-//        }
     }
 
     private func setupNavigationBar() {
@@ -200,12 +206,15 @@ final public class ConversationCreationValues {
         case let .valid(name):
             let trimmed = name.trimmingCharacters(in: .whitespacesAndNewlines)
             nameSection.resignFirstResponder()
-            let newValues = ConversationCreationValues(name: trimmed, participants: preSelectedParticipants ?? values?.participants ?? [], allowGuests: values?.allowGuests ?? true)
-            values = newValues
+            values.name = trimmed
+            
+            if let parts = preSelectedParticipants {
+                values.participants = parts
+            }
             
             Analytics.shared().tagLinearGroupSelectParticipantsOpened(with: self.source)
             
-            let participantsController = AddParticipantsViewController(context: .create(newValues), variant: colorSchemeVariant)
+            let participantsController = AddParticipantsViewController(context: .create(values), variant: colorSchemeVariant)
             participantsController.conversationCreationDelegate = self
             navigationController?.pushViewController(participantsController, animated: true)
         }
@@ -214,6 +223,12 @@ final public class ConversationCreationValues {
     @objc fileprivate func tryToProceed() {
         guard let value = nameSection.value else { return }
         proceedWith(value: value)
+    }
+    
+    private func updateOptions() {
+        self.optionsSection.configure(values: values)
+        self.guestsSection.configure(values: values)
+        self.receiptsSection.configure(values: values)
     }
 }
 
@@ -224,21 +239,20 @@ extension ConversationCreationController: AddParticipantsConversationCreationDel
     func addParticipantsViewController(_ addParticipantsViewController: AddParticipantsViewController, didPerform action: AddParticipantsViewController.CreateAction) {
         switch action {
         case .updatedUsers(let users):
-            values = values.map { .init(name: $0.name, participants: users, allowGuests: $0.allowGuests) }
-        case .create:
-            values.apply {
-                var allParticipants = $0.participants
-                allParticipants.insert(ZMUser.selfUser())
-                Analytics.shared().tagLinearGroupCreated(with: self.source, isEmpty: $0.participants.isEmpty, allowGuests: $0.allowGuests)
-                Analytics.shared().tagAddParticipants(source: self.source, allParticipants, allowGuests: $0.allowGuests, in: nil)
+            values.participants = users
 
-                delegate?.conversationCreationController(
-                    self,
-                    didSelectName: $0.name,
-                    participants: $0.participants,
-                    allowGuests: $0.allowGuests
-                )
-            }
+        case .create:
+            var allParticipants = values.participants
+            allParticipants.insert(ZMUser.selfUser())
+            Analytics.shared().tagLinearGroupCreated(with: self.source, isEmpty: values.participants.isEmpty, allowGuests: values.allowGuests)
+            Analytics.shared().tagAddParticipants(source: self.source, allParticipants, allowGuests: values.allowGuests, in: nil)
+            
+            delegate?.conversationCreationController(
+                self,
+                didSelectName: values.name,
+                participants: values.participants,
+                allowGuests: values.allowGuests
+            )
         }
     }
 }
