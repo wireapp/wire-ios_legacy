@@ -1134,6 +1134,7 @@
 		EEF28EEF1F168039007642E2 /* ConversationInputBarViewController+Markdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF28EEE1F168039007642E2 /* ConversationInputBarViewController+Markdown.swift */; };
 		EEF71F6321B1973D00F0FB30 /* ConversationCreateReceiptsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF71F6221B1973D00F0FB30 /* ConversationCreateReceiptsCell.swift */; };
 		EEF71F6521B19F5300F0FB30 /* ConversationCreateReceiptsSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF71F6421B19F5300F0FB30 /* ConversationCreateReceiptsSectionController.swift */; };
+		EEFF3E7A21B67990000834A6 /* ConversationCreateOptionsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEFF3E7921B67990000834A6 /* ConversationCreateOptionsCell.swift */; };
 		EF00FD741FDA97BA0059FEDC /* UIViewController+Orientation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF00FD731FDA97BA0059FEDC /* UIViewController+Orientation.swift */; };
 		EF01AF8520BED3F500E5E5B4 /* MockUserClient+RemoteIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF01AF8320BED38300E5E5B4 /* MockUserClient+RemoteIdentifier.swift */; };
 		EF0D9972205BC74F002D488E /* NetworkStatusViewControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF0D9971205BC74F002D488E /* NetworkStatusViewControllerSnapshotTests.swift */; };
@@ -2903,6 +2904,7 @@
 		EEF28EEE1F168039007642E2 /* ConversationInputBarViewController+Markdown.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConversationInputBarViewController+Markdown.swift"; sourceTree = "<group>"; };
 		EEF71F6221B1973D00F0FB30 /* ConversationCreateReceiptsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationCreateReceiptsCell.swift; sourceTree = "<group>"; };
 		EEF71F6421B19F5300F0FB30 /* ConversationCreateReceiptsSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationCreateReceiptsSectionController.swift; sourceTree = "<group>"; };
+		EEFF3E7921B67990000834A6 /* ConversationCreateOptionsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationCreateOptionsCell.swift; sourceTree = "<group>"; };
 		EF00FD731FDA97BA0059FEDC /* UIViewController+Orientation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Orientation.swift"; sourceTree = "<group>"; };
 		EF01AF8320BED38300E5E5B4 /* MockUserClient+RemoteIdentifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MockUserClient+RemoteIdentifier.swift"; sourceTree = "<group>"; };
 		EF0D9971205BC74F002D488E /* NetworkStatusViewControllerSnapshotTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkStatusViewControllerSnapshotTests.swift; sourceTree = "<group>"; };
@@ -6357,9 +6359,9 @@
 		EEFF3E7321B6755D000834A6 /* Sections */ = {
 			isa = PBXGroup;
 			children = (
-				EEAC0A1521AD98BA00BE5F5D /* ConversationCreateOptionsSectionController.swift */,
 				EEAC0A1121AD875900BE5F5D /* ConversationCreateNameSectionController.swift */,
 				EEA9A76021B0244D001F7B5C /* ConversationCreateErrorSectionController.swift */,
+				EEAC0A1521AD98BA00BE5F5D /* ConversationCreateOptionsSectionController.swift */,
 				EE0DE1CC21B172BF00CF3C4E /* ConversationCreateGuestsSectionController.swift */,
 				EEF71F6421B19F5300F0FB30 /* ConversationCreateReceiptsSectionController.swift */,
 			);
@@ -6371,6 +6373,7 @@
 			children = (
 				EEAC0A1321AD898200BE5F5D /* ConversationCreateNameCell.swift */,
 				EEA9A75E21B01F28001F7B5C /* ConversationCreateErrorCell.swift */,
+				EEFF3E7921B67990000834A6 /* ConversationCreateOptionsCell.swift */,
 				EE0DE1CE21B17DBD00CF3C4E /* ConversationCreateGuestsCell.swift */,
 				EEF71F6221B1973D00F0FB30 /* ConversationCreateReceiptsCell.swift */,
 			);
@@ -7449,6 +7452,7 @@
 				8736F1841E4B67F0001CBA62 /* AppLockView.swift in Sources */,
 				D594343A203DCB8F006AA0C0 /* ConversationOptionsViewModel.swift in Sources */,
 				EF2587F821A7FE210039E283 /* PhoneNumberViewController+Extension.swift in Sources */,
+				EEFF3E7A21B67990000834A6 /* ConversationCreateOptionsCell.swift in Sources */,
 				5E8C38B2212E9799002AE12B /* AuthenticationStartMissingCredentialsErrorHandler.swift in Sources */,
 				8F8914131A9F287E0056AB0C /* ConversationListItemView.m in Sources */,
 				DBACFF7A1B3C96E1004062E0 /* MentionsBubbleView.m in Sources */,

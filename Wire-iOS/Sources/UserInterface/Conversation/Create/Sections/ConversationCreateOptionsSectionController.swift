@@ -20,36 +20,40 @@ import Foundation
 
 class ConversationCreateOptionsSectionController: NSObject, CollectionViewSectionController {
     
-    private enum Item {
-        case summary, allowGuests, readReceipts
-    }
+    private typealias Cell = ConversationCreateOptionsCell
     
-    ///////////////////////////////////////////////////////////////////////
+    var tapHandler: ((Bool) -> Void)?
     
     var isHidden: Bool {
-        // TODO: John, maybe it's better not to hide the whole section. We could
-        // add items depending on team membership, then hide only if there are
-        // still some items to show.
         return ZMUser.selfUser().team == nil
     }
     
-    // TODO: John, for now let's just show the cells, we can configure it after
-    private var items = [Item.allowGuests, .readReceipts]
+    private weak var optionCell: Cell?
     
     func prepareForUse(in collectionView: UICollectionView?) {
-        // TODO: John, register cells
+        collectionView.flatMap(Cell.register)
+    }
+}
+
+extension ConversationCreateOptionsSectionController {
+    func collectionView(_ collectionView: UICollectionView,numberOfItemsInSection section: Int) -> Int {
+        return 1
     }
     
-    func collectionView(_ collectionView: UICollectionView,
-                        numberOfItemsInSection section: Int) -> Int {
-        
-        return items.count
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(ofType: Cell.self, for: indexPath)
+        cell.setUp()
+        optionCell = cell
+        return cell
     }
     
-    func collectionView(_ collectionView: UICollectionView,
-                        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
-        // TODO: John, create cell
-        return UICollectionViewCell()
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: collectionView.bounds.size.width, height: 56)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let cell = optionCell else { return }
+        cell.expanded.toggle()
+        tapHandler?(cell.expanded)
     }
 }
