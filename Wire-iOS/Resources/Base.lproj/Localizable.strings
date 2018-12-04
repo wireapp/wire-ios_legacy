@@ -729,6 +729,9 @@
 "profile.create_conversation_button_title" = "Create group";
 "profile.open_conversation_button_title" = "Open conversation";
 
+"profile.read_receipts_enabled_memo.header" = "YOU HAVE ENABLED READ RECEIPTS";
+"profile.read_receipts_enabled_memo.body" = "If both sides turn on read receipts, you can see when messages are read.\nYou can change this option in your account settings.";
+
 // User Details
 "profile.details.title" = "Details";
 "profile.details.guest" = "Guest";
@@ -765,7 +768,7 @@
 "group_details.notification_options_cell.title" = "Notifications";
 "group_details.notification_options_cell.description" = "You can be notified about everything (including audio and video calls) or only when someone mentions you or replies to one of your messages.";
 "group_details.receipt_options_cell.title" = "Read receipts";
-"group_details.receipt_options_cell.description" = "Turning this on will enable read receipts for everyone in this group. The sender can see at which time you read a message. This only affects future messages.";
+"group_details.receipt_options_cell.description" = "When this is on, people can see when their messages in this conversation are read.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile
@@ -845,7 +848,7 @@
 
 "self.settings.privacy_section_group.title" = "Privacy";
 "self.settings.enable_read_receipts.title" = "Send read receipts";
-"self.settings.privacy_section_group.subtitle" = "Only people who have read receipts turned on as well will see when you read their message. This setting does not apply to group conversations.";
+"self.settings.privacy_section_group.subtitle" = "When this is off, you won’t be able to see read receipts from other people.\nThis setting does not apply to group conversations.";
 
 "self.settings.account_picture_group.picture" = "Picture";
 "self.settings.account_picture_group.color" = "Color";

@@ -23,6 +23,7 @@ final class IconSystemCellTests: ZMSnapshotTestCase {
 
     override func setUp() {
         super.setUp()
+        ColorScheme.default.variant = .light
         snapshotBackgroundColor = .white
     }
 
@@ -94,6 +95,19 @@ final class IconSystemCellTests: ZMSnapshotTestCase {
 
     func testStartedusingANewDevice() {
         let wrappedCell: UITableView? = IconSystemCellTests.wrappedCell(for: .reactivatedDevice, users: 0, clients: 0, config: nil)
+        verify(view: wrappedCell!)
+    }
+
+    func testParticipantsRemoved() {
+        let wrappedCell: UITableView? = IconSystemCellTests.wrappedCell(for: .participantsRemoved, users: 1, clients: 1, config: nil)
+        verify(view: wrappedCell!)
+    }
+
+    func testParticipantsRemoved_dark() {
+        ColorScheme.default.variant = .dark
+        snapshotBackgroundColor = .black
+
+        let wrappedCell: UITableView? = IconSystemCellTests.wrappedCell(for: .participantsRemoved, users: 1, clients: 1, config: nil)
         verify(view: wrappedCell!)
     }
 

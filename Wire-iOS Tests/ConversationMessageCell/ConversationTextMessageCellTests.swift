@@ -26,7 +26,7 @@ class ConversationTextMessageCellTests: CoreDataSnapshotTestCase {
         // GIVEN
         let url = "https://soundcloud.com/fatma-alraeesi/moving-parts-trixie-mattel"
         let message = MockMessageFactory.textMessage(withText: url)!
-        message.backingTextMessageData.linkPreview = LinkPreview(originalURLString: url, permanentURLString: url, resolvedURLString: url, offset: 0)
+        message.backingTextMessageData.linkPreview = LinkMetadata(originalURLString: url, permanentURLString: url, resolvedURLString: url, offset: 0)
 
         // WHEN
         let cellTypes: [AnyClass] = ConversationTextMessageCellDescription.cells(for: message, searchQueries: []).map(\.baseType)

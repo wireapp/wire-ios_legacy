@@ -16,14 +16,30 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-@class ConversationActionController;
+import UIKit
 
-@interface ProfileDetailsViewController ()
+class IconToggleCell: DetailsCollectionViewCell {
+    var isOn: Bool {
+        set {
+            toggle.isOn = newValue
+        }
 
-@property (nonatomic) UILabel *remainingTimeLabel;
-@property (nonatomic) ConversationActionController *actionsController;
-@property (nonatomic) ZMConversation *conversation;
-@property (nonatomic) UIView *footerView;
-@property (nonatomic) UILabel *readReceiptsEnabledLabel;
+        get {
+            return toggle.isOn
+        }
+    }
 
-@end
+    let toggle = UISwitch()
+    var action: ((Bool) -> Void)?
+
+    override func setUp() {
+        super.setUp()
+        contentStackView.insertArrangedSubview(toggle, at: contentStackView.arrangedSubviews.count)
+
+        toggle.addTarget(self, action: #selector(toggleChanged), for: .valueChanged)
+    }
+
+    @objc func toggleChanged(_ sender: UISwitch) {
+        action?(sender.isOn)
+    }
+}

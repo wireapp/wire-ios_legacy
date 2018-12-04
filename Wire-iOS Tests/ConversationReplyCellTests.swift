@@ -273,7 +273,7 @@ class ConversationReplyCellTests: CoreDataSnapshotTestCase {
         // GIVEN
         let url = "https://apple.com/de/apple-pay"
         let message = MockMessageFactory.textMessage(withText: "https://apple.com/de/apple-pay")!
-        message.backingTextMessageData?.linkPreview = LinkPreview(originalURLString: url, permanentURLString: url, resolvedURLString: url, offset: 0)
+        message.backingTextMessageData?.linkPreview = LinkMetadata(originalURLString: url, permanentURLString: url, resolvedURLString: url, offset: 0)
         message.sender = otherUser
         message.conversation = otherUserConversation
 
@@ -289,7 +289,7 @@ class ConversationReplyCellTests: CoreDataSnapshotTestCase {
         // GIVEN
         let url = "https://apple.com/de/apple-pay"
         let message = MockMessageFactory.textMessage(withText: "There you go! https://apple.com/de/apple-pay")!
-        message.backingTextMessageData?.linkPreview = LinkPreview(originalURLString: url, permanentURLString: url, resolvedURLString: url, offset: 14)
+        message.backingTextMessageData?.linkPreview = LinkMetadata(originalURLString: url, permanentURLString: url, resolvedURLString: url, offset: 14)
         message.sender = otherUser
         message.conversation = otherUserConversation
 
