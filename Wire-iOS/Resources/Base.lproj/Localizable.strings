@@ -495,6 +495,7 @@
 "content.message.open" = "Open";
 "content.message.copy" = "Copy";
 "content.message.download" = "Download";
+"content.message.details" = "Details";
 
 // Reply
 "content.message.reply" = "Reply";
@@ -1492,3 +1493,16 @@
 "news_offers.consent.title" = "Do you want to receive news and product updates from Wire via email?";
 "news_offers.consent.message" = "You can unsubscribe at any time.";
 "news_offers.consent.button.privacy_policy.title" = "Privacy Policy";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Message Details
+"message_details.empty_likes" = "No one has liked this message yet.";
+"message_details.empty_read_receipts" = "No one has seen this message yet.";
+"message_details.read_receipts_disabled" = "Read receipts are turned off for this group.";
+"message_details.combined_title" = "Message Details";
+"message_details.likes_title" = "Likes";
+"message_details.receipts_title" = "Seen";
+"message_details.tabs.seen" = "Seen (%d)";
+"message_details.tabs.likes" = "Likes (%d)";
+"message_details.subtitle_send_date" = "Sent: %@";
+"message_details.subtitle_edit_date" = "Edited: %@";

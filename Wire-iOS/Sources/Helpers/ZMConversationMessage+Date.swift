@@ -37,25 +37,18 @@ extension ZMConversationMessage {
     }
 
     func formattedReceivedDate() -> String? {
-        guard let serverTimestamp = serverTimestamp else { return nil }
-        return Message.formattedDate(serverTimestamp)
+        return serverTimestamp.map(formattedDate)
     }
 
     func formattedEditedDate() -> String? {
-        guard let updatedAt = updatedAt else { return nil }
-        return Message.formattedDate(updatedAt)
+        return updatedAt.map(formattedDate)
     }
 
-}
-
-extension Message {
-    static func formattedDate(_ date: Date) -> String {
-        let oneDayInSeconds = 24.0 * 60.0 * 60.0
-        let shouldShowDate = fabs(date.timeIntervalSinceReferenceDate - Date().timeIntervalSinceReferenceDate) > oneDayInSeconds
-        if shouldShowDate {
-            return Message.shortDateTimeFormatter.string(from: date)
-        } else {
+    func formattedDate(_ date: Date) -> String {
+        if Calendar.current.isDateInToday(date) {
             return Message.shortTimeFormatter.string(from: date)
+        } else {
+            return Message.shortDateTimeFormatter.string(from: date)
         }
     }
 }

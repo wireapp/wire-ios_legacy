@@ -55,6 +55,8 @@ class TabBar: UIView {
         return self.tabs[selectedIndex]
     }
 
+    private var titleObservers: [Any] = []
+
     // MARK: - Initialization
 
     init(items: [UITabBarItem], style: ColorSchemeVariant, selectedIndex: Int = 0) {
@@ -147,6 +149,13 @@ class TabBar: UIView {
         let tab = Tab(variant: style)
         tab.textTransform = .upper
         tab.setTitle(item.title, for: .normal)
+
+        let changeObserver = item.observe(\.title) { [unowned tab, unowned item] _, _ in
+            tab.setTitle(item.title, for: .normal)
+        }
+
+        titleObservers.append(changeObserver)
+
         tab.addTarget(self, action: #selector(TabBar.itemSelected(_:)), for: .touchUpInside)
         return tab
     }
