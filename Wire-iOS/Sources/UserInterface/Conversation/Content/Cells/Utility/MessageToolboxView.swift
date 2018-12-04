@@ -43,7 +43,6 @@ import TTTAttributedLabel
         return attributedLabel
     }()
 
-    public let reactionsView = ReactionsView()
     fileprivate var tapGestureRecogniser: UITapGestureRecognizer!
 
     fileprivate let likeButton = LikeButton()
@@ -69,8 +68,6 @@ import TTTAttributedLabel
     }
     
     private func setupViews() {
-        reactionsView.accessibilityIdentifier = "reactionsView"
-
         likeButton.translatesAutoresizingMaskIntoConstraints = false
         likeButton.accessibilityIdentifier = "likeButton"
         likeButton.accessibilityLabel = "likeButton"
@@ -94,14 +91,13 @@ import TTTAttributedLabel
         statusLabel.activeLinkAttributes = [NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue as NSNumber,
                                             NSAttributedString.Key.foregroundColor: UIColor.vividRed.withAlphaComponent(0.5)]
 
-        [likeButtonContainer, likeButton, statusLabel, reactionsView].forEach(addSubview)
+        [likeButtonContainer, likeButton, statusLabel].forEach(addSubview)
     }
     
     private func createConstraints() {
         likeButtonContainer.translatesAutoresizingMaskIntoConstraints = false
         likeButton.translatesAutoresizingMaskIntoConstraints = false
         statusLabel.translatesAutoresizingMaskIntoConstraints = false
-        reactionsView.translatesAutoresizingMaskIntoConstraints = false
 
         heightConstraint = self.heightAnchor.constraint(equalToConstant: 28)
         heightConstraint.priority = UILayoutPriority(999)
@@ -122,12 +118,8 @@ import TTTAttributedLabel
             // statusLabel
             statusLabel.leadingAnchor.constraint(equalTo: likeButtonContainer.trailingAnchor),
             statusLabel.topAnchor.constraint(equalTo: topAnchor),
-            statusLabel.trailingAnchor.constraint(equalTo: reactionsView.leadingAnchor, constant: -UIView.conversationLayoutMargins.right),
+            statusLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -UIView.conversationLayoutMargins.right),
             statusLabel.bottomAnchor.constraint(equalTo: bottomAnchor),
-
-            // reactionsView
-            reactionsView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -UIView.conversationLayoutMargins.right),
-            reactionsView.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
     }
     
@@ -154,12 +146,10 @@ import TTTAttributedLabel
         self.layoutIfNeeded()
 
         if !self.forceShowTimestamp && message.hasReactions() {
-            showReactionsView(true, animated: animated)
             self.configureReactions(message, animated: animated)
             self.tapGestureRecogniser.isEnabled = true
         }
         else {
-            showReactionsView(false, animated: animated)
             self.configureTimestamp(message, animated: animated)
             self.tapGestureRecogniser.isEnabled = false
         }
@@ -222,30 +212,6 @@ import TTTAttributedLabel
         }
     }
     
-    fileprivate func showReactionsView(_ show: Bool, animated: Bool) {
-        guard show == reactionsView.isHidden else { return }
-
-        if show {
-            reactionsView.alpha = 0
-            reactionsView.isHidden = false
-        }
-
-        let animations = {
-            self.reactionsView.alpha = show ? 1 : 0
-        }
-
-        let completion: (Bool) -> Void = { _ in
-            self.reactionsView.isHidden = !show
-        }
-
-        if animated {
-            UIView.animate(withDuration: 0.2, animations: animations, completion: completion)
-        } else {
-            animations()
-            completion(true)
-        }
-    }
-    
     fileprivate func configureLikedState(_ message: ZMConversationMessage, animated: Bool) {
         let showLikeButton: Bool
 
@@ -275,7 +241,6 @@ import TTTAttributedLabel
         likeButton.setIcon(message.liked ? .liked : .like, with: .like, for: .normal)
         likeButton.setIcon(.liked, with: .like, for: .selected)
         likeButton.setSelected(message.liked, animated: false)
-        self.reactionsView.likers = message.likers()
 
         // Animate Changes
         if needsAnimation {
@@ -325,7 +290,7 @@ import TTTAttributedLabel
         let labelSize = CTFramesetterSuggestFrameSizeWithConstraints(framesetter, CFRangeMake(0, likersNamesAttributedString.length), nil, targetSize, nil)
 
         let attributedText: NSAttributedString
-        if labelSize.width > (statusLabel.bounds.width - reactionsView.bounds.width) {
+        if labelSize.width > statusLabel.bounds.width {
             let likersCount = String(format: "participants.people.count".localized, likers.count)
             attributedText = likersCount && attributes
         }
@@ -361,6 +326,8 @@ import TTTAttributedLabel
             switch message.deliveryState {
             case .pending:
                 deliveryStateString = "content.system.pending_message_timestamp".localized
+            case .read:
+                deliveryStateString = "content.system.message_read_timestamp".localized
             case .delivered:
                 deliveryStateString = "content.system.message_delivered_timestamp".localized
             case .sent:

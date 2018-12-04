@@ -35,7 +35,7 @@ class ArticleViewTests: ZMSnapshotTestCase {
     /// MARK - Fixture
     
     func articleWithoutPicture() -> MockTextMessageData {
-        let article = Article(originalURLString: "https://www.example.com/article/1",
+        let article = ArticleMetadata(originalURLString: "https://www.example.com/article/1",
                               permanentURLString: "https://www.example.com/article/1",
                               resolvedURLString: "https://www.example.com/article/1",
                               offset: 0)
@@ -49,7 +49,7 @@ class ArticleViewTests: ZMSnapshotTestCase {
     }
     
     func articleWithPicture(imageNamed: String = "unsplash_matterhorn.jpg") -> MockTextMessageData {
-        let article = Article(originalURLString: "https://www.example.com/article/1",
+        let article = ArticleMetadata(originalURLString: "https://www.example.com/article/1",
                               permanentURLString: "https://www.example.com/article/1",
                               resolvedURLString: "https://www.example.com/article/1",
                               offset: 0)
@@ -67,7 +67,7 @@ class ArticleViewTests: ZMSnapshotTestCase {
     }
     
     func articleWithLongURL() -> MockTextMessageData {
-        let article = Article(originalURLString: "https://www.example.com/verylooooooooooooooooooooooooooooooooooooongpath/article/1/",
+        let article = ArticleMetadata(originalURLString: "https://www.example.com/verylooooooooooooooooooooooooooooooooooooongpath/article/1/",
                               permanentURLString: "https://www.example.com/veryloooooooooooooooooooooooooooooooooooongpath/article/1/",
                               resolvedURLString: "https://www.example.com/veryloooooooooooooooooooooooooooooooooooongpath/article/1/",
                               offset: 0)
@@ -85,7 +85,7 @@ class ArticleViewTests: ZMSnapshotTestCase {
     }
     
     func twitterStatusWithoutPicture() -> MockTextMessageData {
-        let twitterStatus = TwitterStatus(
+        let twitterStatus = TwitterStatusMetadata(
             originalURLString: "https://www.example.com/twitter/status/12345",
             permanentURLString: "https://www.example.com/twitter/status/12345/permanent",
             resolvedURLString: "https://www.example.com/twitter/status/12345/permanent",
