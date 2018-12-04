@@ -40,6 +40,7 @@ import WireSyncEngine
     public let statusTextView: UITextView = {
         let textView = UITextView(frame: CGRect.zero)
         textView.backgroundColor = .clear
+        textView.isSelectable = false
         textView.isEditable = false
         textView.isScrollEnabled = false
         textView.isUserInteractionEnabled = true
