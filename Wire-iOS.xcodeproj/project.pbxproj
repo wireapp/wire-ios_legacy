@@ -6354,6 +6354,29 @@
 			path = InputBar;
 			sourceTree = "<group>";
 		};
+		EEFF3E7321B6755D000834A6 /* Sections */ = {
+			isa = PBXGroup;
+			children = (
+				EEAC0A1521AD98BA00BE5F5D /* ConversationCreateOptionsSectionController.swift */,
+				EEAC0A1121AD875900BE5F5D /* ConversationCreateNameSectionController.swift */,
+				EEA9A76021B0244D001F7B5C /* ConversationCreateErrorSectionController.swift */,
+				EE0DE1CC21B172BF00CF3C4E /* ConversationCreateGuestsSectionController.swift */,
+				EEF71F6421B19F5300F0FB30 /* ConversationCreateReceiptsSectionController.swift */,
+			);
+			path = Sections;
+			sourceTree = "<group>";
+		};
+		EEFF3E7421B67573000834A6 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				EEAC0A1321AD898200BE5F5D /* ConversationCreateNameCell.swift */,
+				EEA9A75E21B01F28001F7B5C /* ConversationCreateErrorCell.swift */,
+				EE0DE1CE21B17DBD00CF3C4E /* ConversationCreateGuestsCell.swift */,
+				EEF71F6221B1973D00F0FB30 /* ConversationCreateReceiptsCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
 		EF18140721B17F7A008F7DA8 /* ConversationOption */ = {
 			isa = PBXGroup;
 			children = (
@@ -6566,15 +6589,8 @@
 			isa = PBXGroup;
 			children = (
 				F10F46D320288CEB00261449 /* ConversationCreationController.swift */,
-				EEAC0A1521AD98BA00BE5F5D /* ConversationCreateOptionsSectionController.swift */,
-				EEAC0A1121AD875900BE5F5D /* ConversationCreateNameSectionController.swift */,
-				EEA9A76021B0244D001F7B5C /* ConversationCreateErrorSectionController.swift */,
-				EE0DE1CC21B172BF00CF3C4E /* ConversationCreateGuestsSectionController.swift */,
-				EEF71F6421B19F5300F0FB30 /* ConversationCreateReceiptsSectionController.swift */,
-				EEAC0A1321AD898200BE5F5D /* ConversationCreateNameCell.swift */,
-				EEA9A75E21B01F28001F7B5C /* ConversationCreateErrorCell.swift */,
-				EE0DE1CE21B17DBD00CF3C4E /* ConversationCreateGuestsCell.swift */,
-				EEF71F6221B1973D00F0FB30 /* ConversationCreateReceiptsCell.swift */,
+				EEFF3E7321B6755D000834A6 /* Sections */,
+				EEFF3E7421B67573000834A6 /* Cells */,
 				D5694B4F2044144500C84C8F /* ToggleView.swift */,
 				F1B5EAC62029AB9A0081D402 /* SimpleTextField.swift */,
 				F1B5EAC82029AC7E0081D402 /* SimpleTextFieldValidator.swift */,
