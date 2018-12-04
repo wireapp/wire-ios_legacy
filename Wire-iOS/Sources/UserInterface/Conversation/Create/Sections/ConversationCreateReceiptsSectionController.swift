@@ -18,66 +18,27 @@
 
 import Foundation
 
-class ConversationCreateReceiptsSectionController: NSObject, CollectionViewSectionController {
+class ConversationCreateReceiptsSectionController: ConversationCreateSectionController {
     
     typealias Cell = ConversationCreateReceiptsCell
 
-    var isHidden: Bool = false
     var toggleAction: Cell.ToggleHandler?
-    
-    private weak var receiptsCell: Cell?
-    
-    private var footer = SectionFooter(frame: .zero)
-    private let footerText = "conversation.create.receipts.subtitle".localized
-    
-    private var values: ConversationCreationValues
-    
-    init(values: ConversationCreationValues) {
-        self.values = values
-    }
-    
-    func prepareForUse(in collectionView: UICollectionView?) {
-        collectionView.flatMap(Cell.register)
-        collectionView?.register(SectionFooter.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: "SectionFooter")
-    }
-}
 
-extension ConversationCreateReceiptsSectionController: ConversationCreationValuesConfigurable {
-    func configure(with values: ConversationCreationValues) {
-        receiptsCell?.configure(with: values)
+    override func prepareForUse(in collectionView: UICollectionView?) {
+        super.prepareForUse(in: collectionView)
+        collectionView.flatMap(Cell.register)
+        headerHeight = 24
+        footerText = "conversation.create.receipts.subtitle".localized
     }
 }
 
 extension ConversationCreateReceiptsSectionController {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 1
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(ofType: Cell.self, for: indexPath)
+        self.cell = cell
         cell.setUp()
-        cell.action = toggleAction
         cell.configure(with: values)
-        receiptsCell = cell
+        cell.action = toggleAction
         return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let view = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: "SectionFooter", for: indexPath)
-        (view as? SectionFooter)?.titleLabel.text = footerText
-        return view
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.bounds.size.width, height: 56)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: collectionView.bounds.size.width, height: 24)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-        footer.titleLabel.text = footerText
-        return footer.sized(fittingWidth: collectionView.bounds.width).bounds.size
     }
 }

@@ -18,86 +18,27 @@
 
 import Foundation
 
-class ConversationCreateGuestsSectionController: NSObject, CollectionViewSectionController {
+class ConversationCreateGuestsSectionController: ConversationCreateSectionController {
     
     typealias Cell = ConversationCreateGuestsCell
-
-    var isHidden: Bool = false
+    
     var toggleAction: Cell.ToggleHandler?
     
-    private weak var guestsCell: Cell?
-    
-    private var header = SectionHeader(frame: .zero)
-    private let headerText = ""
-    
-    private var footer = SectionFooter(frame: .zero)
-    private let footerText = "conversation.create.guests.subtitle".localized
-    
-    private var values: ConversationCreationValues
-    
-    init(values: ConversationCreationValues) {
-        self.values = values
-    }
-    
-    func prepareForUse(in collectionView: UICollectionView?) {
+    override func prepareForUse(in collectionView: UICollectionView?) {
+        super.prepareForUse(in: collectionView)
         collectionView.flatMap(Cell.register)
-        
-        collectionView?.register(
-            SectionFooter.self,
-            forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
-            withReuseIdentifier: "SectionFooter")
-        
-        collectionView?.register(
-            SectionHeader.self,
-            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-            withReuseIdentifier: "SectionHeader")
-    }
-
-}
-
-extension ConversationCreateGuestsSectionController: ConversationCreationValuesConfigurable {
-    func configure(with values: ConversationCreationValues) {
-        guestsCell?.configure(with: values)
+        headerHeight = 40
+        footerText = "conversation.create.guests.subtitle".localized
     }
 }
 
 extension ConversationCreateGuestsSectionController {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 1
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(ofType: Cell.self, for: indexPath)
+        self.cell = cell
         cell.setUp()
-        cell.action = toggleAction
         cell.configure(with: values)
-        guestsCell = cell
+        cell.action = toggleAction
         return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        switch kind {
-        case UICollectionView.elementKindSectionHeader:
-            let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "SectionHeader", for: indexPath)
-            (view as? SectionHeader)?.titleLabel.text = headerText
-            return view
-        default:
-            let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "SectionFooter", for: indexPath)
-            (view as? SectionFooter)?.titleLabel.text = footerText
-            return view
-        }
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.bounds.size.width, height: 56)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: collectionView.bounds.size.width, height: 40)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-        footer.titleLabel.text = footerText
-        return footer.sized(fittingWidth: collectionView.bounds.width).bounds.size
     }
 }

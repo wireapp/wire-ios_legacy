@@ -18,54 +18,30 @@
 
 import Foundation
 
-class ConversationCreateOptionsSectionController: NSObject, CollectionViewSectionController {
+class ConversationCreateOptionsSectionController: ConversationCreateSectionController {
     
     typealias Cell = ConversationCreateOptionsCell
     
     var tapHandler: ((Bool) -> Void)?
     
-    var isHidden: Bool {
-        return ZMUser.selfUser().team == nil
-    }
-    
-    private weak var optionCell: Cell?
-
-    private var values: ConversationCreationValues
-    
-    init(values: ConversationCreationValues) {
-        self.values = values
-    }
-    
-    func prepareForUse(in collectionView: UICollectionView?) {
+    override func prepareForUse(in collectionView: UICollectionView?) {
         collectionView.flatMap(Cell.register)
     }
 }
 
-extension ConversationCreateOptionsSectionController: ConversationCreationValuesConfigurable {
-    func configure(with values: ConversationCreationValues) {
-        optionCell?.configure(with: values)
-    }
-}
 
 extension ConversationCreateOptionsSectionController {
-    func collectionView(_ collectionView: UICollectionView,numberOfItemsInSection section: Int) -> Int {
-        return 1
-    }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(ofType: Cell.self, for: indexPath)
+        self.cell = cell
         cell.setUp()
         cell.configure(with: values)
-        optionCell = cell
         return cell
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.bounds.size.width, height: 56)
-    }
-    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let cell = optionCell else { return }
+        guard let cell = cell as? Cell else { return }
         cell.expanded.toggle()
         tapHandler?(cell.expanded)
     }
