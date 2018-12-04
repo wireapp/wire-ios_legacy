@@ -21,6 +21,15 @@ import XCTest
 
 class ConversationSystemMessageTests: ConversationCellSnapshotTestCase {
 
+    override func setUp() {
+        super.setUp()
+        ColorScheme.default.variant = .light
+//        snapshotBackgroundColor = .white
+
+        recordMode = true
+    }
+
+
     func testRenameConversation() {
         let message = MockMessageFactory.systemMessage(with: .conversationNameChanged, users: 0, clients: 0)!
         message.backingSystemMessageData.text = "Blue room"
@@ -46,10 +55,20 @@ class ConversationSystemMessageTests: ConversationCellSnapshotTestCase {
     func testRemoveParticipant() {
         let message = MockMessageFactory.systemMessage(with: .participantsRemoved, users: 1, clients: 0)!
         message.sender = MockUser.mockUsers()?.last
-        
+
         verify(message: message)
     }
-    
+
+    func testRemoveParticipant_dark() {
+        ColorScheme.default.variant = .dark
+        snapshotBackgroundColor = .black
+
+        let message = MockMessageFactory.systemMessage(with: .participantsRemoved, users: 1, clients: 0)!
+        message.sender = MockUser.mockUsers()?.last
+
+        verify(message: message)
+    }
+
     func testTeamMemberLeave() {
         let message = MockMessageFactory.systemMessage(with: .teamMemberLeave, users: 1, clients: 0)!
         message.sender = MockUser.mockUsers()?.last
@@ -101,6 +120,21 @@ class ConversationSystemMessageTests: ConversationCellSnapshotTestCase {
         
         verify(message: message)
     }
+
+    
+    // MARK: - reactivated Device
+
+    ///TODO: text is nil issue
+    func testStartedusingANewDevice() {
+        let message = MockMessageFactory.systemMessage(with: .reactivatedDevice,
+                                                       users: 0,
+                                                       clients: 0)!
+
+        verify(message: message)
+    }
+
+
+    // MARK: - read receipt
 
     ///TODO: update after new enum values are added
     func testReadReceiptIsOffByThirdPerson() {

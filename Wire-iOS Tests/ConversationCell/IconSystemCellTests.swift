@@ -90,28 +90,28 @@ final class IconSystemCellTests: ZMSnapshotTestCase {
         verify(view: wrappedCell!)
     }
 
-    func testDecryptionFailed() {
-        let wrappedCell: UITableView? = IconSystemCellTests.wrappedCell(for: .decryptionFailed, users: 0, clients: 0, config: nil)
-        verify(view: wrappedCell!)
-    }
+//    func testDecryptionFailed() {
+//        let wrappedCell: UITableView? = IconSystemCellTests.wrappedCell(for: .decryptionFailed, users: 0, clients: 0, config: nil)
+//        verify(view: wrappedCell!)
+//    }
 
     func testStartedusingANewDevice() {
         let wrappedCell: UITableView? = IconSystemCellTests.wrappedCell(for: .reactivatedDevice, users: 0, clients: 0, config: nil)
         verify(view: wrappedCell!)
     }
 
-    func testParticipantsRemoved() {
-        let wrappedCell: UITableView? = IconSystemCellTests.wrappedCell(for: .participantsRemoved, users: 1, clients: 1, config: nil)
-        verify(view: wrappedCell!)
-    }
+//    func testParticipantsRemoved() {
+//        let wrappedCell: UITableView? = IconSystemCellTests.wrappedCell(for: .participantsRemoved, users: 1, clients: 1, config: nil)
+//        verify(view: wrappedCell!)
+//    }
 
-    func testParticipantsRemoved_dark() {
-        ColorScheme.default.variant = .dark
-        snapshotBackgroundColor = .black
-
-        let wrappedCell: UITableView? = IconSystemCellTests.wrappedCell(for: .participantsRemoved, users: 1, clients: 1, config: nil)
-        verify(view: wrappedCell!)
-    }
+//    func testParticipantsRemoved_dark() {
+//        ColorScheme.default.variant = .dark
+//        snapshotBackgroundColor = .black
+//
+//        let wrappedCell: UITableView? = IconSystemCellTests.wrappedCell(for: .participantsRemoved, users: 1, clients: 1, config: nil)
+//        verify(view: wrappedCell!)
+//    }
 
     ///TODO: test for on/off cases
 //    func testReadReceiptSettingChanged() {
