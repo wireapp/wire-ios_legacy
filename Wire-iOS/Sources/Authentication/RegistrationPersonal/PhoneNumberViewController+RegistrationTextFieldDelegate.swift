@@ -19,16 +19,21 @@
 import Foundation
 
 extension PhoneNumberViewController {
+
+    /// insert a phone number to the phoneNumberField, e.g. from paste board or autofill
+    ///
+    /// - Parameter phoneNumber: the phone number
+    /// - Returns: true if the phone number can be inserted
     @objc
     @discardableResult
     func insert(phoneNumber: String?) -> Bool {
         guard let phoneNumber = phoneNumber else { return false }
 
-        if let (country: country, phoneNumber: phoneNumberWithoutCountryCode) = phoneNumber.shouldInsertAsPhoneNumber(presetCountry: country){
+        if let (country: country, phoneNumber: phoneNumberWithoutCountryCode) = phoneNumber.shouldInsertAsPhoneNumber(presetCountry: country) {
                 self.country = country
 
-                self.phoneNumberField.text = phoneNumberWithoutCountryCode;
-                self.updateRightAccessory(forPhoneNumber: phoneNumberWithoutCountryCode)
+                phoneNumberField.text = phoneNumberWithoutCountryCode;
+                updateRightAccessory(forPhoneNumber: phoneNumberWithoutCountryCode)
             return true
         } else {
             return false
