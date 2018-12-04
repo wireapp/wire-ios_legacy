@@ -45,12 +45,10 @@ extension ZMConversationMessage {
     }
 
     func formattedDate(_ date: Date) -> String {
-        let oneDayInSeconds = 24.0 * 60.0 * 60.0
-        let shouldShowDate = fabs(date.timeIntervalSinceReferenceDate - Date().timeIntervalSinceReferenceDate) > oneDayInSeconds
-        if shouldShowDate {
-            return Message.shortDateTimeFormatter.string(from: date)
-        } else {
+        if Calendar.current.isDateInToday(date) {
             return Message.shortTimeFormatter.string(from: date)
+        } else {
+            return Message.shortDateTimeFormatter.string(from: date)
         }
     }
 }

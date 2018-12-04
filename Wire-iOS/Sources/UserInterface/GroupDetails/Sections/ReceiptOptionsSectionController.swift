@@ -30,12 +30,15 @@ class ReceiptOptionsSectionController: GroupDetailsSectionController {
     private let syncCompleted: Bool
 
     private var footerView = SectionFooter(frame: .zero)
+    private weak var presentingViewController: UIViewController?
 
     init(conversation: ZMConversation,
         syncCompleted: Bool,
-        collectionView: UICollectionView) {
+        collectionView: UICollectionView,
+        presentingViewController: UIViewController) {
         self.conversation = conversation
         self.syncCompleted = syncCompleted
+        self.presentingViewController = presentingViewController
 
         collectionView.register(SectionFooter.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: "SectionFooter")
     }
@@ -63,16 +66,39 @@ class ReceiptOptionsSectionController: GroupDetailsSectionController {
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellReuseIdentifier, for: indexPath) as! GroupDetailsReceiptOptionsCell
-
+        
         cell.configure(with: conversation)
-        cell.action = { isOn in
-            self.conversation.hasReadReceiptsEnabled = isOn
+        cell.action = { [weak self] enabled in
+            guard let userSession = ZMUserSession.shared(), let conversation = self?.conversation else { return }
+            
+            cell.isUserInteractionEnabled = false
+            conversation.setEnableReadReceipts(enabled, in: userSession, { result in
+                cell.isUserInteractionEnabled = true
+                
+                switch result {
+                case .failure(_):
+                    cell.configure(with: conversation)
+                    self?.presentingViewController?.present(UIAlertController.checkYourConnection(), animated: true)
+                default:
+                    break
+                }
+            })
+            
         }
+        
         cell.showSeparator = false
         cell.isUserInteractionEnabled = syncCompleted
         cell.alpha = syncCompleted ? 1 : 0.48
 
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
+        return false
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+        return false
     }
 
     ///MARK: - header
@@ -97,9 +123,5 @@ class ReceiptOptionsSectionController: GroupDetailsSectionController {
         (view as? SectionFooter)?.titleLabel.text = "group_details.receipt_options_cell.description".localized
         return view
     }
-
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        collectionView.deselectItem(at: indexPath, animated: true)
-        ///TODO: update conversation's receipt setting after the switch is toggled
-    }
+    
 }
