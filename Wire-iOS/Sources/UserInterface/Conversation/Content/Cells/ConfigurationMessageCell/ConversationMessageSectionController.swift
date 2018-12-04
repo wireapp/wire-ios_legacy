@@ -271,6 +271,7 @@ extension IndexSet {
         
         for (index, description) in tableViewCellDescriptions.enumerated() {
             if let cell = tableView.cellForRow(at: IndexPath(row: index, section: sectionIndex)) {
+                cell.accessibilityCustomActions = self.actionController?.makeAccessibilityActions()
                 description.configure(cell: cell, animated: true)
             }
         }
@@ -319,6 +320,7 @@ extension IndexSet {
         description.actionController = self.actionController
 
         let cell = description.makeCell(for: tableView, at: indexPath)
+        cell.accessibilityCustomActions = actionController?.makeAccessibilityActions()
         return cell
     }
 
