@@ -59,7 +59,6 @@ extension ConversationCreateReceiptsSectionController {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-        guard ZMUser.selfUser().hasTeam else { return .zero }
         footer.titleLabel.text = footerText
         return footer.sized(fittingWidth: collectionView.bounds.width).bounds.size
     }

@@ -20,9 +20,10 @@ import Foundation
 
 class ConversationCreateGuestsSectionController: NSObject, CollectionViewSectionController {
     
+    private typealias Cell = ConversationCreateGuestsCell
+
     var isHidden: Bool { return false }
     
-    private typealias Cell = ConversationCreateGuestsCell
     private var footer = SectionFooter(frame: .zero)
     private let footerText = "conversation.create.guests.subtitle".localized
     
@@ -55,7 +56,6 @@ extension ConversationCreateGuestsSectionController {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-        guard ZMUser.selfUser().hasTeam else { return .zero }
         footer.titleLabel.text = footerText
         return footer.sized(fittingWidth: collectionView.bounds.width).bounds.size
     }

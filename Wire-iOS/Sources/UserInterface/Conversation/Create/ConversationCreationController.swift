@@ -131,7 +131,8 @@ final public class ConversationCreationValues {
             nameSection,
             errorSection,
 //            optionsSection,
-            ConversationCreateGuestsSectionController()
+            ConversationCreateGuestsSectionController(),
+            ConversationCreateReceiptsSectionController()
         ]
         
         navBarBackgroundView.backgroundColor = UIColor.from(scheme: .barBackground, variant: colorSchemeVariant)
