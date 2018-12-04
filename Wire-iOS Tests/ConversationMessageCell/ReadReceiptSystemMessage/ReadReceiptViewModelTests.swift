@@ -43,8 +43,29 @@ final class ReadReceiptViewModelTests: XCTestCase {
         XCTAssert(true, file: file, line: line)
     }
 
-    func testThatSeldUserTurnOffReceiptOption(){
-        // GIVEN
+    func testThatSelfUserSwitchOffReceiptOption(){
+        // GIVEN & WHEN
+
+        let usersCount = 1
+        let clientsCount = 1
+        let type = ZMSystemMessageType.readReceiptSettingChanged
+
+        let mockMessage = MockMessageFactory.systemMessage(with: type, users: usersCount, clients: clientsCount)!
+
+        mockMessage.backingSystemMessageData?.users = Set<AnyHashable>([MockUser.mockSelf()]) as! Set<ZMUser>
+
+        sut = ReadReceiptViewModel(icon: .eye,
+                                   iconColor: UIColor.from(scheme: .textDimmed),
+                                   message: mockMessage,
+                                   systemMessage:mockMessage.systemMessageData!)
+
+        // THEN
+        XCTAssertEqual(sut.attributedTitle()?.string, "You turned read receipts off for everyone")
+    }
+
+    /*
+    func testThatOneUserSwitchOffReceiptOption(){
+        // GIVEN & WHEN
 
         let usersCount = 1
         let clientsCount = 1
@@ -56,10 +77,8 @@ final class ReadReceiptViewModelTests: XCTestCase {
                                    iconColor: UIColor.from(scheme: .textDimmed),
                                    message: systemMessage)
 
-
-        // WHEN
-
         // THEN
-        XCTAssertEqual(sut.attributedTitle()?.string, "You turned read receipts off for everyone")
+        XCTAssertEqual(sut.attributedTitle()?.string, "Someone turned read receipts off for everyone")
     }
+ */
 }

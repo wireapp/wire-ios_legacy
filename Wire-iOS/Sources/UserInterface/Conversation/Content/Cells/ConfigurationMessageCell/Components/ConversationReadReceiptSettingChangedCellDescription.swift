@@ -18,11 +18,30 @@
 
 import Foundation
 
+extension ZMSystemMessageData {
+
+    /// return self user if the users array has self user only. Otherwise return nil
+    var involvsSelfUserOnly: ZMUser? {
+        if users.count == 1,
+            let user = users.first,
+            user.isSelfUser {
+            return user
+        }
+
+        return .none
+    }
+
+    var otherUserName: String? {
+        let displayNamesOfOthers = users.filter {!$0.isSelfUser }.compactMap {$0.displayName as String}
+        return displayNamesOfOthers[0]
+    }
+}
+
 struct ReadReceiptViewModel {
     let icon: ZetaIconType
     let iconColor: UIColor?
-//    let systemMessageType: ZMSystemMessageType
     let message: ZMConversationMessage
+    let systemMessage: ZMSystemMessageData
 
     ///TODO: protocol default method
     func image() -> UIImage? {
@@ -32,14 +51,19 @@ struct ReadReceiptViewModel {
     func attributedTitle() -> NSAttributedString? {
         let baseAttributes: [NSAttributedString.Key: AnyObject] = [.font: UIFont.mediumFont, .foregroundColor: UIColor.from(scheme: .textForeground)]
 
-        ///TODO: get on/off setting from somewhere or argument?
-        let updateText: NSAttributedString
-        let sender = message.sender! ///TODO:
-        let senderText = message.senderName
 
-        ///TODO: on case
-        updateText = NSAttributedString(string: "content.system.message_read_receipt_off".localized(pov: sender.pov, args: senderText), attributes: baseAttributes)
-            .adding(font: .mediumSemiboldFont, to: senderText)
+        ///TODO: get on/off setting from somewhere or argument?
+
+        let updateText: NSAttributedString
+
+        if let selfUser = systemMessage.involvsSelfUserOnly {
+            updateText = NSAttributedString(string: "content.system.message_read_receipt_off".localized(pov: selfUser.pov, args: "content.system.you_started".localized), attributes: baseAttributes)
+        } else if let otherUserName = systemMessage.otherUserName {
+            updateText = NSAttributedString(string: "content.system.message_read_receipt_off".localized(args: otherUserName), attributes: baseAttributes)
+                .adding(font: .mediumSemiboldFont, to: otherUserName)
+        } else { ///TODO: case When I am added to a group conversation...
+            updateText = NSAttributedString(string: "")
+        }
 
         return updateText
     }
@@ -67,7 +91,8 @@ final class ConversationReadReceiptSettingChangedCellDescription: ConversationMe
          data: ZMSystemMessageData) {
         let viewModel = ReadReceiptViewModel(icon: .eye,
                                              iconColor: UIColor.from(scheme: .textDimmed),
-                                             message: message)
+                                             message: message,
+                                             systemMessage: data)
 
         configuration = View.Configuration(icon: viewModel.image(),
                                            attributedText: viewModel.attributedTitle(),
