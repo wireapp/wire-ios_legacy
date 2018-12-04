@@ -45,7 +45,6 @@ extension ZMConversationMessageWindow {
         
         return ConversationMessageContext(
             isSameSenderAsPrevious: isPreviousSenderSame(forMessage: message),
-            isLastMessageSentBySelfUser: isLastMessageSentBySelfUser(message),
             isTimeIntervalSinceLastMessageSignificant: isTimeIntervalSinceLastMessageSignificant,
             isFirstMessageOfTheDay: isFirstMessageOfTheDay(for: message),
             isFirstUnreadMessage: message.isEqual(firstUnreadMessage),
@@ -59,10 +58,6 @@ extension ZMConversationMessageWindow {
         }
         
         return currentMessageTimestamp.timeIntervalSince(previousMessageTimestamp)
-    }
-    
-    fileprivate func isLastMessageSentBySelfUser(_ message: ZMConversationMessage) -> Bool {
-        return message.isEqual(message.conversation?.lastMessageSent(by: ZMUser.selfUser(), limit: 10))
     }
     
     fileprivate func isFirstMessageOfTheDay(for message: ZMConversationMessage) -> Bool {

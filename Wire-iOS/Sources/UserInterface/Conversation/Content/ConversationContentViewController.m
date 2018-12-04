@@ -233,6 +233,8 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     self.messagePresenter.modalTargetController = self.parentViewController;
 
     [self updateHeaderHeight];
+    
+    [self selectLastMessageInConversation];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -459,10 +461,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
                     }
                 } else {
                     // Select if necessary to prevent message from collapsing
-                    if (self.conversationMessageWindowTableViewAdapter.selectedMessage != message && ![Message hasReactions:message]) {
-                        [self tableView:self.tableView willSelectRowAtIndexPath:indexPath];
-                        [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
-                    }
+                    [self selectMessage:message];
                 }
             }
                 break;
@@ -518,6 +517,28 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     }
     else {
         action();
+    }
+}
+
+- (void)selectLastMessageInConversation {
+    ZMMessage *message = self.conversation.messages.lastObject;
+    [self selectMessage:message];
+}
+
+- (void)selectMessage:(id<ZMConversationMessage>)message {
+    NSIndexPath *indexPath = [self.conversationMessageWindowTableViewAdapter indexPathForMessage:message];
+    
+    id<ZMConversationMessage> selectedMessage = self.conversationMessageWindowTableViewAdapter.selectedMessage;
+    NSIndexPath *selectedIndexPath = [self.conversationMessageWindowTableViewAdapter indexPathForMessage:selectedMessage];
+    
+    if (selectedMessage != message && ![Message hasReactions:message]) {
+        
+        if(selectedIndexPath != nil) {
+            [self tableView:self.tableView willSelectRowAtIndexPath:selectedIndexPath];
+        }
+        
+        [self tableView:self.tableView willSelectRowAtIndexPath:indexPath];
+        [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
     }
 }
 
@@ -958,6 +979,10 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
             self.onMessageShown = nil;
             self.expectedMessageToShow = nil;
         }
+    }
+    
+    if(note.insertedIndexes.count > 0) {
+        [self selectLastMessageInConversation];
     }
 }
 
