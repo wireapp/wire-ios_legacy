@@ -108,7 +108,7 @@ class LocationPreviewController: TintColorCorrectedViewController {
 
     // MARK: - Map
 
-    func updateMapLocation(withLocationData locationData: ZMLocationMessageData) {
+    func updateMapLocation(withLocationData locationData: LocationMessageData) {
         let region: MKCoordinateRegion
 
         if locationData.zoomLevel != 0 {

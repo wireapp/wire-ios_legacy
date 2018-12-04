@@ -609,6 +609,12 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
             }];
         }
             break;
+        case MessageActionOpenDetails:
+        {
+            MessageDetailsViewController *detailsViewController = [[MessageDetailsViewController alloc] initWithMessage:message];
+            [self presentViewController:detailsViewController animated:YES completion:nil];
+        }
+            break;
 
         default:
         {

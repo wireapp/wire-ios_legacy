@@ -60,7 +60,15 @@ public extension ZMConversationMessage {
                 return users
             }.first ?? []
     }
-    
+
+    var sortedLikers: [ZMUser] {
+        return likers().sorted { $0.displayName < $1.displayName }
+    }
+
+    var sortedReadReceipts: [ReadReceipt] {
+        return readReceipts.sorted { $0.user.displayName < $1.user.displayName }
+    }
+
 }
 
 public extension Message {

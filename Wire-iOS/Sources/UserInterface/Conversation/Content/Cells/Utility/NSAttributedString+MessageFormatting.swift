@@ -217,7 +217,7 @@ extension NSMutableAttributedString {
         }
     }
     
-    func removeTrailingLink(for linkPreview: LinkPreview, linkAttachments: [LinkAttachment]) -> [LinkAttachment] {
+    func removeTrailingLink(for linkPreview: LinkMetadata, linkAttachments: [LinkAttachment]) -> [LinkAttachment] {
     
         // Don't remove trailing link if we embed content
         guard linkAttachments.first?.type == LinkAttachmentType.none,

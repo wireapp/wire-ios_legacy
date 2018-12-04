@@ -21,10 +21,6 @@ import XCTest
 
 class ConversationSystemMessageTests: ConversationCellSnapshotTestCase {
 
-    override func setUp() {
-        super.setUp()
-    }
-
     func testRenameConversation() {
         let message = MockMessageFactory.systemMessage(with: .conversationNameChanged, users: 0, clients: 0)!
         message.backingSystemMessageData.text = "Blue room"
