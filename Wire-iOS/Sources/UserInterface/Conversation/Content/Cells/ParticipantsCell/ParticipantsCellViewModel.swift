@@ -158,7 +158,7 @@ class ParticipantsCellViewModel {
         if user.isSelfUser {
             return "content.system.you_\(grammaticalCase(for: user))".localized
         }
-        return user.displayName
+        return user.nameAsSender(in: message.conversation!)
     }
     
     private var nameList: NameList {
