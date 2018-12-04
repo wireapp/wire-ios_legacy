@@ -20,16 +20,31 @@ import Foundation
 
 class ConversationCreateReceiptsSectionController: NSObject, CollectionViewSectionController {
     
-    private typealias Cell = ConversationCreateReceiptsCell
+    typealias Cell = ConversationCreateReceiptsCell
 
     var isHidden: Bool = false
+    var toggleAction: Cell.ToggleHandler?
+    
+    private weak var receiptsCell: Cell?
     
     private var footer = SectionFooter(frame: .zero)
     private let footerText = "conversation.create.receipts.subtitle".localized
     
+    private var values: ConversationCreationValues
+    
+    init(values: ConversationCreationValues) {
+        self.values = values
+    }
+    
     func prepareForUse(in collectionView: UICollectionView?) {
         collectionView.flatMap(Cell.register)
         collectionView?.register(SectionFooter.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: "SectionFooter")
+    }
+}
+
+extension ConversationCreateReceiptsSectionController: ConversationCreationValuesConfigurable {
+    func configure(with values: ConversationCreationValues) {
+        receiptsCell?.configure(with: values)
     }
 }
 
@@ -41,6 +56,9 @@ extension ConversationCreateReceiptsSectionController {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(ofType: Cell.self, for: indexPath)
         cell.setUp()
+        cell.action = toggleAction
+        cell.configure(with: values)
+        receiptsCell = cell
         return cell
     }
     

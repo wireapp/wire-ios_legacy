@@ -24,7 +24,6 @@ class ConversationCreateReceiptsCell: IconToggleCell {
         super.setUp()
         accessibilityIdentifier = "toggle.newgroup.allowreceipts"
         title = "conversation.create.receipts.title".localized
-        isOn = true
         showSeparator = false
     }
     
@@ -32,5 +31,11 @@ class ConversationCreateReceiptsCell: IconToggleCell {
         super.applyColorScheme(colorSchemeVariant)
         let color = UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)
         icon = UIImage(for: .eye, iconSize: .tiny, color: color)
+    }
+}
+
+extension ConversationCreateReceiptsCell: ConversationCreationValuesConfigurable {
+    func configure(with values: ConversationCreationValues) {
+        isOn = values.enableReceipts
     }
 }

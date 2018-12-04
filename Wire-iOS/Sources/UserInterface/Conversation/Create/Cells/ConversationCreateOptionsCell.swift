@@ -28,13 +28,10 @@ class ConversationCreateOptionsCell: RightIconDetailsCell {
         super.setUp()
         // TODO: localize
         title = "Conversation options"
-        status = "Allow guests: ON, Read receipts: ON"
         icon = nil
         showSeparator = false
         contentLeadingOffset = 16
     }
-    
-    
     
     override func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
         super.applyColorScheme(colorSchemeVariant)
@@ -48,5 +45,17 @@ class ConversationCreateOptionsCell: RightIconDetailsCell {
         } else {
             accessory = UIImage(for: .downArrow, iconSize: .tiny, color: color)
         }
+    }
+}
+
+extension ConversationCreateOptionsCell: ConversationCreationValuesConfigurable {
+    func configure(with values: ConversationCreationValues) {
+        status = "Allow guests: \(values.allowGuests.localized), Read receipts: \(values.enableReceipts.localized)"
+    }
+}
+
+private extension Bool {
+    var localized: String {
+        return self ? "ON" : "OFF"
     }
 }

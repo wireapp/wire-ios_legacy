@@ -20,15 +20,24 @@ import Foundation
 
 class ConversationCreateGuestsSectionController: NSObject, CollectionViewSectionController {
     
-    private typealias Cell = ConversationCreateGuestsCell
+    typealias Cell = ConversationCreateGuestsCell
 
     var isHidden: Bool = false
+    var toggleAction: Cell.ToggleHandler?
+    
+    private weak var guestsCell: Cell?
     
     private var header = SectionHeader(frame: .zero)
     private let headerText = ""
     
     private var footer = SectionFooter(frame: .zero)
     private let footerText = "conversation.create.guests.subtitle".localized
+    
+    private var values: ConversationCreationValues
+    
+    init(values: ConversationCreationValues) {
+        self.values = values
+    }
     
     func prepareForUse(in collectionView: UICollectionView?) {
         collectionView.flatMap(Cell.register)
@@ -46,6 +55,12 @@ class ConversationCreateGuestsSectionController: NSObject, CollectionViewSection
 
 }
 
+extension ConversationCreateGuestsSectionController: ConversationCreationValuesConfigurable {
+    func configure(with values: ConversationCreationValues) {
+        guestsCell?.configure(with: values)
+    }
+}
+
 extension ConversationCreateGuestsSectionController {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 1
@@ -54,6 +69,9 @@ extension ConversationCreateGuestsSectionController {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(ofType: Cell.self, for: indexPath)
         cell.setUp()
+        cell.action = toggleAction
+        cell.configure(with: values)
+        guestsCell = cell
         return cell
     }
     

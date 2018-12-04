@@ -24,7 +24,6 @@ class ConversationCreateGuestsCell: IconToggleCell {
         super.setUp()
         accessibilityIdentifier = "toggle.newgroup.allowguests"
         title = "conversation.create.guests.title".localized
-        isOn = true
         showSeparator = false
     }
     
@@ -32,5 +31,11 @@ class ConversationCreateGuestsCell: IconToggleCell {
         super.applyColorScheme(colorSchemeVariant)
         let color = UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)
         icon = UIImage(for: .guest, iconSize: .tiny, color: color)
+    }
+}
+
+extension ConversationCreateGuestsCell: ConversationCreationValuesConfigurable {
+    func configure(with values: ConversationCreationValues) {
+        isOn = values.allowGuests
     }
 }

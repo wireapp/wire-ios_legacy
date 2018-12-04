@@ -21,6 +21,10 @@ import Foundation
 import UIKit
 import Cartography
 
+protocol ConversationCreationValuesConfigurable: class {
+    func configure(with values: ConversationCreationValues)
+}
+
 final public class ConversationCreationValues {
     var allowGuests: Bool
     var enableReceipts: Bool
@@ -226,9 +230,9 @@ final public class ConversationCreationValues {
     }
     
     private func updateOptions() {
-        self.optionsSection.configure(values: values)
-        self.guestsSection.configure(values: values)
-        self.receiptsSection.configure(values: values)
+        self.optionsSection.configure(with: values)
+        self.guestsSection.configure(with: values)
+        self.receiptsSection.configure(with: values)
     }
 }
 

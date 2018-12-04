@@ -20,7 +20,7 @@ import Foundation
 
 class ConversationCreateOptionsSectionController: NSObject, CollectionViewSectionController {
     
-    private typealias Cell = ConversationCreateOptionsCell
+    typealias Cell = ConversationCreateOptionsCell
     
     var tapHandler: ((Bool) -> Void)?
     
@@ -29,9 +29,21 @@ class ConversationCreateOptionsSectionController: NSObject, CollectionViewSectio
     }
     
     private weak var optionCell: Cell?
+
+    private var values: ConversationCreationValues
+    
+    init(values: ConversationCreationValues) {
+        self.values = values
+    }
     
     func prepareForUse(in collectionView: UICollectionView?) {
         collectionView.flatMap(Cell.register)
+    }
+}
+
+extension ConversationCreateOptionsSectionController: ConversationCreationValuesConfigurable {
+    func configure(with values: ConversationCreationValues) {
+        optionCell?.configure(with: values)
     }
 }
 
@@ -43,6 +55,7 @@ extension ConversationCreateOptionsSectionController {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(ofType: Cell.self, for: indexPath)
         cell.setUp()
+        cell.configure(with: values)
         optionCell = cell
         return cell
     }
