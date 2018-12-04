@@ -266,7 +266,9 @@ class ConversationParticipantsChangedSystemMessageCellDescription: ConversationM
     let accessibilityLabel: String? = nil
     
     init(message: ZMConversationMessage, data: ZMSystemMessageData) {
-        let model = ParticipantsCellViewModel(font: .mediumFont, boldFont: .mediumSemiboldFont, largeFont: .largeSemiboldFont, textColor: .black, iconColor: .black, message: message)
+        let color = UIColor.from(scheme: .textForeground)
+
+        let model = ParticipantsCellViewModel(font: .mediumFont, boldFont: .mediumSemiboldFont, largeFont: .largeSemiboldFont, textColor: color, iconColor: color, message: message)
         configuration = View.Configuration(icon: model.image(), attributedText: model.attributedTitle(), showLine: true)
         actionController = nil
     }

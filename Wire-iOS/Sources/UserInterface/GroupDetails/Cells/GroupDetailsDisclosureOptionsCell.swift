@@ -21,8 +21,6 @@ protocol ConversationOptionsConfigurable {
 }
 
 
-//typealias ConversationOptionsCell = DetailsCollectionViewCell & ConversationOptionsConfigurable
-
 // a ConversationOptionsCell that with a disclosure indicator on the right
 typealias GroupDetailsDisclosureOptionsCell = ConversationOptionsConfigurable & DisclosureCell
 

@@ -139,7 +139,7 @@ class MessageReplyPreviewViewTests: ZMSnapshotTestCase {
     
     func testThatItRendersLinkPreviewMessagePreview() {
         let url = "https://www.example.com/article/1"
-        let article = Article(originalURLString: url, permanentURLString: url, resolvedURLString: url, offset: 0)
+        let article = ArticleMetadata(originalURLString: url, permanentURLString: url, resolvedURLString: url, offset: 0)
         article.title = "You won't believe what happened next!"
 
         let message = MockMessageFactory.textMessage(withText: "https://www.example.com/article/1")!
