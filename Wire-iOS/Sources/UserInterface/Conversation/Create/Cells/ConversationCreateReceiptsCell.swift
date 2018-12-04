@@ -25,6 +25,7 @@ class ConversationCreateReceiptsCell: IconToggleCell {
         accessibilityIdentifier = "toggle.newgroup.allowreceipts"
         title = "conversation.create.receipts.title".localized
         isOn = true
+        showSeparator = false
     }
     
     override func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {

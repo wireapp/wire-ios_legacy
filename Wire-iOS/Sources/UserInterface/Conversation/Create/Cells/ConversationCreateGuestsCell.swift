@@ -25,6 +25,7 @@ class ConversationCreateGuestsCell: IconToggleCell {
         accessibilityIdentifier = "toggle.newgroup.allowguests"
         title = "conversation.create.guests.title".localized
         isOn = true
+        showSeparator = false
     }
     
     override func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
