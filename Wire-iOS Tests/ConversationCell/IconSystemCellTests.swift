@@ -114,8 +114,8 @@ final class IconSystemCellTests: ZMSnapshotTestCase {
     }
 
     ///TODO: test for on/off cases
-    func testReadReceiptSettingChanged() {
-        let wrappedCell: UITableView? = IconSystemCellTests.wrappedCell(for: .readReceiptSettingChanged, users: 1, clients: 1, config: nil)
-        verify(view: wrappedCell!)
-    }
+//    func testReadReceiptSettingChanged() {
+//        let wrappedCell: UITableView? = IconSystemCellTests.wrappedCell(for: .readReceiptSettingChanged, users: 1, clients: 1, config: nil)
+//        verify(view: wrappedCell!)
+//    }
 }

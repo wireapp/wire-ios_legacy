@@ -109,4 +109,12 @@ class ConversationSystemMessageTests: ConversationCellSnapshotTestCase {
         verify(message: message)
     }
 
+    ///TODO: update after new enum values are added
+    func testReadReceiptIsOffByYou() {
+        let message = MockMessageFactory.systemMessage(with: .readReceiptSettingChanged, users: 1, clients: 1)!
+        message.backingSystemMessageData?.users = Set<AnyHashable>([MockUser.mockSelf()]) as! Set<ZMUser>
+
+        verify(message: message)
+    }
+
 }
