@@ -102,4 +102,11 @@ class ConversationSystemMessageTests: ConversationCellSnapshotTestCase {
         verify(message: message)
     }
 
+    ///TODO: update after new enum values are added
+    func testReadReceiptIsOffByThirdPerson() {
+        let message = MockMessageFactory.systemMessage(with: .readReceiptSettingChanged, users: 1, clients: 1)!
+
+        verify(message: message)
+    }
+
 }
