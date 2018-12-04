@@ -22,7 +22,7 @@ extension ConversationInputBarViewController {
     @objc func locationButtonPressed(_ sender: IconButton?) {
         guard let parentViewConvtoller = self.parent else { return }
 
-        let locationSelectionViewController = LocationSelectionViewController(forPopoverPresentation: isIPadRegular())
+        let locationSelectionViewController = LocationSelectionViewController()
         locationSelectionViewController.modalPresentationStyle = .popover
         
         if let popover = locationSelectionViewController.popoverPresentationController,

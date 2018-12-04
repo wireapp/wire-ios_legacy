@@ -744,6 +744,10 @@ extension CollectionsViewController: CollectionCellDelegate, MessageActionRespon
                 Message.setLikedMessage(message, liked: !message.liked)
             }
 
+        case .openDetails:
+            let detailsViewController = MessageDetailsViewController(message: message)
+            present(detailsViewController, animated: true)
+
         default:
             self.delegate?.collectionsViewController(self, performAction: action, onMessage: message)
         }

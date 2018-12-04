@@ -53,7 +53,7 @@ private let zmLog = ZMSLog(tag: "UI")
         label.textColor = .from(scheme: .textForeground)
         label.numberOfLines = 1
         label.textAlignment = .center
-        label.accessibilityLabel = "AudioTimeLabel"
+        label.accessibilityIdentifier = "AudioTimeLabel"
 
         return label
     }()
@@ -96,15 +96,15 @@ private let zmLog = ZMSLog(tag: "UI")
         backgroundColor = .from(scheme: .placeholderBackground)
 
         self.playButton.addTarget(self, action: #selector(AudioMessageView.onActionButtonPressed(_:)), for: .touchUpInside)
-        self.playButton.accessibilityLabel = "AudioActionButton"
+        self.playButton.accessibilityLabel = "content.message.audio_message.accessibility".localized
+        self.playButton.accessibilityIdentifier = "AudioActionButton"
         self.playButton.layer.masksToBounds = true
         
         self.downloadProgressView.isUserInteractionEnabled = false
-        self.downloadProgressView.accessibilityLabel = "AudioProgressView"
-        
+        self.downloadProgressView.accessibilityIdentifier = "AudioProgressView"
 
         self.playerProgressView.setDeterministic(true, animated: false)
-        self.playerProgressView.accessibilityLabel = "PlayerProgressView"
+        self.playerProgressView.accessibilityIdentifier = "PlayerProgressView"
         
         self.loadingView.isHidden = true
         

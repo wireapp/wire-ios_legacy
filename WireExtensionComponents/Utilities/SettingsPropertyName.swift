@@ -75,6 +75,8 @@ public enum SettingsPropertyName: String, CustomStringConvertible {
     case lockApp = "lockApp"
     case lockAppLastDate = "lockAppLastDate"
     
+    case readReceiptsEnabled = "readReceiptsEnabled"
+    
     public var changeNotificationName: String {
         return self.description + "ChangeNotification"
     }

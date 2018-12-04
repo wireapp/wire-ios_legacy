@@ -23,30 +23,28 @@ class GroupDetailsViewControllerSnapshotTests: CoreDataSnapshotTestCase {
     
     var sut: GroupDetailsViewController!
     
-    override func setUp() {
-        super.setUp()
-        sut = GroupDetailsViewController(conversation: otherUserConversation)
-    }
-    
     override func tearDown() {
         sut = nil
         super.tearDown()
     }
 
-    func testForInitState() {
+    func testForOptionsForTeamUser() {
         teamTest {
+            sut = GroupDetailsViewController(conversation: otherUserConversation)
             verify(view: sut.view)
         }
     }
 
-    func testForInitState_NonTeam() {
+    func testForOptionsForNonTeamUser() {
         nonTeamTest {
+            sut = GroupDetailsViewController(conversation: otherUserConversation)
             verify(view: self.sut.view)
         }
     }
 
     func testForActionMenu() {
         teamTest {
+            sut = GroupDetailsViewController(conversation: otherUserConversation)
             sut.detailsView(GroupDetailsFooterView(), performAction: .more)
             verifyAlertController((sut?.actionController?.alertController)!)
         }
@@ -54,6 +52,7 @@ class GroupDetailsViewControllerSnapshotTests: CoreDataSnapshotTestCase {
     
     func testForActionMenu_NonTeam() {
         nonTeamTest {
+            sut = GroupDetailsViewController(conversation: otherUserConversation)
             sut.detailsView(GroupDetailsFooterView(), performAction: .more)
             verifyAlertController((sut?.actionController?.alertController)!)
         }

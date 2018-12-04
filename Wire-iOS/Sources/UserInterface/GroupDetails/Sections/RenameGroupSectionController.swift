@@ -73,7 +73,8 @@ class RenameGroupSectionController: NSObject, CollectionViewSectionController {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
         guard ZMUser.selfUser().hasTeam else { return .zero }
         sizingFooter.titleLabel.text = "participants.section.name.footer".localized
-        return sizingFooter.sized(fittingWidth: collectionView.bounds.width).bounds.size
+        sizingFooter.size(fittingWidth: collectionView.bounds.width)
+        return sizingFooter.bounds.size
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

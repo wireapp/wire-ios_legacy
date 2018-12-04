@@ -135,7 +135,7 @@ public final class LocationMessageCell: ConversationCell {
         return true
     }
     
-    func updateMapLocation(withLocationData locationData: ZMLocationMessageData) {
+    func updateMapLocation(withLocationData locationData: LocationMessageData) {
         if locationData.zoomLevel != 0 {
             mapView.setCenterCoordinate(locationData.coordinate, zoomLevel: Int(locationData.zoomLevel))
         } else {

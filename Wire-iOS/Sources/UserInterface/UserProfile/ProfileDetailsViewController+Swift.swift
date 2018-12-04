@@ -18,16 +18,70 @@
 
 import Foundation
 
+extension NSAttributedString {
+    fileprivate static var readReceiptsEnabledText: NSAttributedString {
+        
+        let paragraph = NSParagraphStyle.default.mutableCopy() as! NSMutableParagraphStyle
+        paragraph.paragraphSpacing = 8
+        paragraph.firstLineHeadIndent = 5
+        paragraph.headIndent = 5
+        paragraph.tailIndent = -5
+        
+        let titleFont = UIFont.smallSemiboldFont
+        let title = "profile.read_receipts_enabled_memo.header".localized && [NSAttributedString.Key.font: titleFont,
+                                                                              NSAttributedString.Key.foregroundColor: UIColor.from(scheme: .textForeground),
+                                                                              NSAttributedString.Key.paragraphStyle: paragraph]
+        
+        let lineBreak = "\n" && [NSAttributedString.Key.paragraphStyle: paragraph]
+        
+        let textFont = UIFont.mediumFont
+        let text = "profile.read_receipts_enabled_memo.body".localized && [NSAttributedString.Key.font: textFont,
+                                                                           NSAttributedString.Key.foregroundColor: UIColor.from(scheme: .textDimmed),
+                                                                           NSAttributedString.Key.paragraphStyle: paragraph]
+        
+        return title + lineBreak + text
+    }
+}
+
 extension ProfileDetailsViewController {
     @objc func setupStyle() {
         remainingTimeLabel.textColor = .from(scheme: .textDimmed)
         remainingTimeLabel.font = .mediumSemiboldFont
     }
 
-    //MARK: - action menu
+    // MARK: - action menu
 
     @objc func presentMenuSheetController() {
         actionsController = ConversationActionController(conversation: conversation, target: self)
         actionsController.presentMenu(from: footerView, showConverationNameInMenuTitle: false)
     }
+    
+    // MARK: - Bottom labels
+    
+    @objc func createReadReceiptsEnabledLabel() {
+        readReceiptsEnabledLabel = UILabel()
+        readReceiptsEnabledLabel.translatesAutoresizingMaskIntoConstraints = false
+        readReceiptsEnabledLabel.accessibilityIdentifier = "ReadReceiptsEnabledLabel"
+        
+        readReceiptsEnabledLabel.setContentCompressionResistancePriority(.required, for: .vertical)
+        readReceiptsEnabledLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
+        readReceiptsEnabledLabel.setContentHuggingPriority(.required, for: .vertical)
+        readReceiptsEnabledLabel.setContentHuggingPriority(.required, for: .horizontal)
+
+        readReceiptsEnabledLabel.lineBreakMode = .byWordWrapping
+        readReceiptsEnabledLabel.numberOfLines = 0
+        
+        if let selfUser = ZMUser.selfUser(), selfUser.readReceiptsEnabled {
+            readReceiptsEnabledLabel.attributedText = NSAttributedString.readReceiptsEnabledText
+            
+            // On small screens the label gets compressed for unknown reason.
+            if UIScreen.main.isSmall {
+                readReceiptsEnabledLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: 100).isActive = true
+            }
+        }
+        else {
+            readReceiptsEnabledLabel.isHidden = true
+        }
+    }
+
 }

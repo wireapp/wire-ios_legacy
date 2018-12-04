@@ -24,46 +24,95 @@ import Cartography
 }
 
 @objcMembers final public class ModalTopBar: UIView {
-    
+
+    public let dismissButton = IconButton()
+
     public let titleLabel: UILabel = {
         let label = UILabel()
         label.textColor = .from(scheme: .textForeground)
-        label.font = .mediumSemiboldFont
+        label.textAlignment = .center
 
         return label
     }()
 
-    public let dismissButton = IconButton()
+    public let subtitleLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .from(scheme: .textForeground)
+        label.font = UIFont.systemFont(ofSize: 11)
+        label.textAlignment = .center
+
+        return label
+    }()
+
     public let separatorView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor.from(scheme: .separator)
         return view
     }()
 
-    fileprivate let showsStatusBar: Bool
+    public let contentStackView: UIStackView = {
+        let stack = UIStackView()
+        stack.distribution = .fillEqually
+        stack.alignment = .fill
+        stack.axis = .vertical
+
+        return stack
+    }()
+
     weak var delegate: ModalTopBarDelegate?
+    private var contentTopConstraint: NSLayoutConstraint?
     
-    var title: String? {
+    private var title: String? {
         didSet {
             titleLabel.text = title?.uppercased()
+            titleLabel.isHidden = title == nil
         }
     }
-    
-    required public init(forUseWithStatusBar statusBar: Bool = true) {
-        showsStatusBar = statusBar
-        super.init(frame: CGRect.zero)
-        configureViews()
-        backgroundColor = .from(scheme: .background)
 
+    private var subtitle: String? {
+        didSet {
+            subtitleLabel.text = subtitle?.uppercased()
+            subtitleLabel.isHidden = subtitle == nil
+        }
+    }
+
+    private var sepeatorHeight: NSLayoutConstraint!
+
+    var needsSeparator: Bool = true {
+        didSet {
+            sepeatorHeight.constant = needsSeparator ? 1 : 0
+        }
+    }
+
+    public override init(frame: CGRect) {
+        super.init(frame: frame)
+        configureViews()
         createConstraints()
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    func configure(title: String, subtitle: String?, topAnchor: NSLayoutYAxisAnchor) {
+        if let topConstraint = self.contentTopConstraint {
+            contentStackView.removeConstraint(topConstraint)
+        }
+
+        contentTopConstraint = contentStackView.topAnchor.constraint(equalTo: topAnchor, constant: 4)
+        contentTopConstraint?.isActive = true
+
+        self.title = title
+        self.subtitle = subtitle
+        self.titleLabel.font = subtitle == nil ? .mediumSemiboldFont : .systemFont(ofSize: 11, weight: .semibold)
+    }
     
     fileprivate func configureViews() {
-        [titleLabel, dismissButton, separatorView].forEach(addSubview)
+        backgroundColor = .from(scheme: .background)
+        titleLabel.isHidden = true
+        subtitleLabel.isHidden = true
+        [titleLabel, subtitleLabel].forEach(contentStackView.addArrangedSubview)
+        [contentStackView, dismissButton, separatorView].forEach(addSubview)
         dismissButton.setIcon(.cancel, with: .tiny, for: [])
         dismissButton.setIconColor(.from(scheme: .iconNormal), for: .normal)
         dismissButton.addTarget(self, action: #selector(dismissButtonTapped), for: .touchUpInside)
@@ -71,34 +120,38 @@ import Cartography
     }
 
     fileprivate func createConstraints() {
-        let insets = UIScreen.safeArea
-        constrain(self, titleLabel, dismissButton, separatorView) { view, label, button, separator in
-            label.centerX == view.centerX
-            label.top == view.top + (showsStatusBar ? insets.top : 0) + (showsStatusBar && insets.top == 0 ? 20 : 0)
-            label.bottom == view.bottom
-            label.trailing <= button.leading - 12
-            button.trailing == view.trailing - 16
-            button.centerY == label.centerY
-            separator.leading == view.leading
-            separator.trailing == view.trailing
-            separator.bottom == view.bottom
-            separator.height == .hairline
-        }
-        
+        contentStackView.translatesAutoresizingMaskIntoConstraints = false
+        dismissButton.translatesAutoresizingMaskIntoConstraints = false
+        separatorView.translatesAutoresizingMaskIntoConstraints = false
+
+        sepeatorHeight = separatorView.heightAnchor.constraint(equalToConstant: 1)
+
+        NSLayoutConstraint.activate([
+            // contentStackView
+            contentStackView.leadingAnchor.constraint(greaterThanOrEqualTo: safeLeadingAnchor, constant: 48),
+            contentStackView.centerXAnchor.constraint(equalTo: safeCenterXAnchor),
+            contentStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
+            contentStackView.trailingAnchor.constraint(lessThanOrEqualTo: dismissButton.leadingAnchor, constant: -12),
+            contentStackView.heightAnchor.constraint(greaterThanOrEqualToConstant: 32),
+
+            // dismissButton
+            dismissButton.trailingAnchor.constraint(equalTo: safeTrailingAnchor, constant: -16),
+            dismissButton.centerYAnchor.constraint(equalTo: contentStackView.centerYAnchor),
+
+            // separator
+            separatorView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            separatorView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            separatorView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            sepeatorHeight
+        ])
+
         dismissButton.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 1000), for: .horizontal)
         titleLabel.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 750), for: .horizontal)
+        subtitleLabel.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 750), for: .horizontal)
     }
     
     @objc fileprivate func dismissButtonTapped(_ sender: IconButton) {
         delegate?.modelTopBarWantsToBeDismissed(self)
     }
-    
-    public override var intrinsicContentSize : CGSize {
-        let insets = UIScreen.safeArea
-        if insets.top > 20 {
-            return CGSize(width: UIView.noIntrinsicMetric, height: 44 + insets.top)
-        }
-        return CGSize(width: UIView.noIntrinsicMetric, height: showsStatusBar ? 64 : 44)
-    }
-    
+
 }

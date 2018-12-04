@@ -62,14 +62,14 @@ done
 if [ -e "${CONFIGURATION_LOCATION}" ]; then
     pushd ${CONFIGURATION_LOCATION} &> /dev/null
     echo "Pulling configuration..."
-    git stash # Stash in case there are some changes here
+    git stash --include-untracked # Stash in case there are some changes here
     git pull
     popd &> /dev/null
 else
     git ls-remote "${REPO_URL}" &> /dev/null
     if [ "$?" -ne 0 ]; then
-        echo "No access to configuration repository, falling back to public"
-        REPO_URL=$PUBLIC_CONFIGURATION_REPO
+        echo "Cannot access configuration repository!"
+        exit -1
     fi 
 
     echo "Cloning assets from ${REPO_URL}"
