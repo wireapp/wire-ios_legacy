@@ -1155,6 +1155,7 @@
 		EF1F99F71FBB06C000969DD1 /* UILabel+TextTransform.m in Sources */ = {isa = PBXBuildFile; fileRef = CE8E4FBA1DF17BBE0009F437 /* UILabel+TextTransform.m */; };
 		EF1F99F81FBB06D400969DD1 /* UILabel+TextTransform.h in Headers */ = {isa = PBXBuildFile; fileRef = CE8E4FB91DF17BBE0009F437 /* UILabel+TextTransform.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EF1F9A021FBB1FD800969DD1 /* LandingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1F9A011FBB1FD800969DD1 /* LandingButton.swift */; };
+		EF1FCE5021B69381003E0BE2 /* ReadReceiptViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1FCE4E21B69381003E0BE2 /* ReadReceiptViewModelTests.swift */; };
 		EF2127031FB9DFE300625A9B /* CheckmarkView.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126B71FB9DFE300625A9B /* CheckmarkView.m */; };
 		EF2127041FB9DFE300625A9B /* RegistrationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126B81FB9DFE300625A9B /* RegistrationViewController.m */; };
 		EF2127051FB9DFE300625A9B /* RegistrationTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126B91FB9DFE300625A9B /* RegistrationTextField.m */; };
@@ -2918,6 +2919,7 @@
 		EF1EF1C220627075004DB245 /* SignInViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewControllerTests.swift; sourceTree = "<group>"; };
 		EF1EF1C420627305004DB245 /* SignInViewController+internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SignInViewController+internal.h"; sourceTree = "<group>"; };
 		EF1F9A011FBB1FD800969DD1 /* LandingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingButton.swift; sourceTree = "<group>"; };
+		EF1FCE4E21B69381003E0BE2 /* ReadReceiptViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadReceiptViewModelTests.swift; sourceTree = "<group>"; };
 		EF2126B71FB9DFE300625A9B /* CheckmarkView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckmarkView.m; sourceTree = "<group>"; };
 		EF2126B81FB9DFE300625A9B /* RegistrationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegistrationViewController.m; sourceTree = "<group>"; };
 		EF2126B91FB9DFE300625A9B /* RegistrationTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegistrationTextField.m; sourceTree = "<group>"; };
@@ -3839,6 +3841,7 @@
 		5E35F76F2180B8A500D3F4FE /* ConversationMessageCell */ = {
 			isa = PBXGroup;
 			children = (
+				EF1FCE4D21B69353003E0BE2 /* ReadReceiptSystemMessage */,
 				5EBBE96721871F70008BC1B7 /* MockCell.swift */,
 				5EBBE9722187A844008BC1B7 /* MessageToolboxViewTests.swift */,
 				5E35F7702180B8C600D3F4FE /* ConversationMessageSectionControllerTests.swift */,
@@ -6365,6 +6368,14 @@
 			path = ConversationOption;
 			sourceTree = "<group>";
 		};
+		EF1FCE4D21B69353003E0BE2 /* ReadReceiptSystemMessage */ = {
+			isa = PBXGroup;
+			children = (
+				EF1FCE4E21B69381003E0BE2 /* ReadReceiptViewModelTests.swift */,
+			);
+			path = ReadReceiptSystemMessage;
+			sourceTree = "<group>";
+		};
 		EF2126B41FB9DFE300625A9B /* Authentication */ = {
 			isa = PBXGroup;
 			children = (
@@ -8313,6 +8324,7 @@
 				5EBF47C621B2FA6D0021CFFC /* MockReadReceipt.swift in Sources */,
 				EF68856A20F622C60074CA0F /* DraftSendInputAccessoryViewTests.swift in Sources */,
 				5E52376220E7E50F00649241 /* ColorTilesViewController.swift in Sources */,
+				EF1FCE5021B69381003E0BE2 /* ReadReceiptViewModelTests.swift in Sources */,
 				5E8C38B6212F136A002AE12B /* EmailLinkVerificationViewControllerTests.swift in Sources */,
 				EF4478522090BF8700BD9827 /* FullscreenImageViewControllerTests.swift in Sources */,
 				F127BD571E262E9F0093B2F1 /* CollectionsViewControllerTests.swift in Sources */,

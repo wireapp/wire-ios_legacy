@@ -18,9 +18,36 @@
 
 import Foundation
 
+struct ReadReceiptViewModel {
+    let icon: ZetaIconType
+    let iconColor: UIColor?
+//    let systemMessageType: ZMSystemMessageType
+    let message: ZMConversationMessage
+
+    ///TODO: protocol default method
+    func image() -> UIImage? {
+        return iconColor.map { UIImage(for: icon, iconSize: .tiny, color: $0) }
+    }
+
+    func attributedTitle() -> NSAttributedString? {
+        let baseAttributes: [NSAttributedString.Key: AnyObject] = [.font: UIFont.mediumFont, .foregroundColor: UIColor.from(scheme: .textForeground)]
+
+        ///TODO: get on/off setting from somewhere or argument?
+        let updateText: NSAttributedString
+        let sender = message.sender! ///TODO:
+        let senderText = message.senderName
+
+        ///TODO: on case
+        updateText = NSAttributedString(string: "content.system.message_read_receipt_off".localized(pov: sender.pov, args: senderText), attributes: baseAttributes)
+            .adding(font: .mediumSemiboldFont, to: senderText)
+
+        return updateText
+    }
+}
+
 final class ConversationReadReceiptSettingChangedCellDescription: ConversationMessageCellDescription {
     typealias View = ConversationSystemMessageCell
-    var configuration: View.Configuration!
+    let configuration: View.Configuration
 
     var message: ZMConversationMessage?
     weak var delegate: ConversationCellDelegate?
@@ -36,29 +63,15 @@ final class ConversationReadReceiptSettingChangedCellDescription: ConversationMe
     let accessibilityIdentifier: String? = nil
     let accessibilityLabel: String? = nil
 
-    init(message: ZMConversationMessage, data: ZMSystemMessageData) {
-        let icon = UIImage(for: .eye, fontSize: 16, color: UIColor.from(scheme: .textDimmed))
+    init(message: ZMConversationMessage,
+         data: ZMSystemMessageData) {
+        let viewModel = ReadReceiptViewModel(icon: .eye,
+                                             iconColor: UIColor.from(scheme: .textDimmed),
+                                             message: message)
 
-
-        configuration = View.Configuration(icon: icon,
-                                           attributedText: messageString(message: message),
+        configuration = View.Configuration(icon: viewModel.image(),
+                                           attributedText: viewModel.attributedTitle(),
                                            showLine: true)
         actionController = nil
     }
-
-    func messageString(message: ZMConversationMessage) -> NSAttributedString {
-        let baseAttributes: [NSAttributedString.Key: AnyObject] = [.font: UIFont.mediumFont, .foregroundColor: UIColor.from(scheme: .textForeground)]
-
-        ///TODO: get on/off setting from somewhere or argument?
-        let updateText: NSAttributedString
-        let sender = message.sender! ///TODO:
-        let senderText = message.senderName
-
-        ///TODO: on case
-        updateText = NSAttributedString(string: "content.system.message_read_receipt_off".localized(pov: sender.pov, args: senderText), attributes: baseAttributes)
-            .adding(font: .mediumSemiboldFont, to: senderText)
-
-        return updateText
-    }
-
 }
