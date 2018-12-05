@@ -154,7 +154,6 @@ final public class ConversationCreationValues {
     
     private func setupViews() {
         // TODO: if keyboard is open, it should scroll.
-        
         let collectionView = UICollectionView(forUserList: ())
         
         if #available(iOS 11.0, *) {
@@ -164,15 +163,17 @@ final public class ConversationCreationValues {
         view.addSubview(collectionView)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.fitInSuperview(safely: true)
-        collectionViewController.collectionView = collectionView
         
-        collectionViewController.sections = [
-            nameSection,
-            errorSection,
-            optionsSection,
-            guestsSection,
-            receiptsSection
-        ]
+        collectionViewController.collectionView = collectionView
+        collectionViewController.sections = [nameSection, errorSection]
+        
+        if ZMUser.selfUser()?.team != nil {
+            collectionViewController.sections.append(contentsOf: [
+                optionsSection,
+                guestsSection,
+                receiptsSection
+            ])
+        }
         
         navBarBackgroundView.backgroundColor = UIColor.from(scheme: .barBackground, variant: colorSchemeVariant)
         view.addSubview(navBarBackgroundView)
