@@ -20,7 +20,6 @@ import Foundation
 
 struct ConversationMessageContext {
     let isSameSenderAsPrevious: Bool
-    let isLastMessageSentBySelfUser: Bool
     let isTimeIntervalSinceLastMessageSignificant: Bool
     let isFirstMessageOfTheDay: Bool
     let isFirstUnreadMessage: Bool
@@ -286,7 +285,8 @@ extension IndexSet {
             return false
         }
         
-        return selected || context.isLastMessageSentBySelfUser || message.deliveryState == .failedToSend || message.hasReactions()
+        
+        return selected || message.deliveryState == .failedToSend || message.hasReactions()
     }
     
     func isSenderVisible(in context: ConversationMessageContext) -> Bool {
