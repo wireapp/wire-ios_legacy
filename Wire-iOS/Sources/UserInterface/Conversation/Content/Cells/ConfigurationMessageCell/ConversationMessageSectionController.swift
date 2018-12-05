@@ -243,7 +243,7 @@ extension IndexSet {
         }
     }
     
-    func configure(at sectionIndex: Int, in tableView: UITableView) {
+    @objc func configure(at sectionIndex: Int, in tableView: UITableView) {
         configure(in: context, at: sectionIndex, in: tableView)
     }
     
