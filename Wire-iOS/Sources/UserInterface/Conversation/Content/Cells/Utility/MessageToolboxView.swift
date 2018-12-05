@@ -433,7 +433,7 @@ import WireSyncEngine
                 return "\(text)\n\(current)"
             })
         } else if let timestampString = self.timestampString(message),
-            message.deliveryState == .delivered || message.deliveryState == .sent {
+            message.deliveryState.isOne(of: .delivered, .sent, .read) {
             if let deliveryStateString = deliveryStateString, Message.shouldShowDeliveryState(message) {
                 finalText = NSAttributedString(string: timestampString + " ・ ") + deliveryStateString
             }
