@@ -62,7 +62,7 @@ struct ReadReceiptViewModel {
                     .adding(font: .mediumSemiboldFont, to: otherUserName)
             }
         case .readReceiptsEnabled:
-            if let selfUser = systemMessage.involvsSelfUserOnly {
+            if let selfUser = systemMessage.involvesSelfUserOnly {
                 updateText = NSAttributedString(string: "content.system.message_read_receipt_on".localized(pov: selfUser.pov, args: "content.system.you_started".localized), attributes: baseAttributes)
             } else if let otherUserName = systemMessage.otherUserName {
                 updateText = NSAttributedString(string: "content.system.message_read_receipt_on".localized(args: otherUserName), attributes: baseAttributes)
