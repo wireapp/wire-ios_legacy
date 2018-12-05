@@ -30,12 +30,6 @@
 
 #import "Wire-Swift.h"
 
-@interface ConversationMessageWindowTableViewAdapter () <ZMConversationObserver>
-
-@property (nonatomic, nullable) id conversationChangeObserver;
-
-@end
-
 @implementation ConversationMessageWindowTableViewAdapter
 
 - (instancetype)initWithTableView:(UpsideDownTableView *)tableView messageWindow:(ZMConversationMessageWindow *)messageWindow
@@ -49,7 +43,6 @@
         self.firstUnreadMessage = self.messageWindow.conversation.firstUnreadMessage;
         self.sectionControllers = [[NSMutableDictionary alloc] init];
         self.actionControllers = [[NSMutableDictionary alloc] init];
-        self.conversationChangeObserver = [ConversationChangeInfo addObserver:self forConversation:messageWindow.conversation];
     }
     
     return self;
@@ -99,24 +92,13 @@
 
 - (void)messagesInsideWindow:(ZMConversationMessageWindow *)window didChange:(NSArray<MessageChangeInfo *> *)messageChangeInfos
 {
-    BOOL needsToLayoutCells = NO;
-    
-    for (UITableViewCell *cell in self.tableView.visibleCells) {
-        if ([cell isKindOfClass:[ConversationCell class]]) {
-            ConversationCell *conversationCell = (ConversationCell *)cell;
-            
-            for (MessageChangeInfo *changeInfo in messageChangeInfos) {
-                if ([changeInfo.message isEqual:conversationCell.message]) {
-                    needsToLayoutCells |= [conversationCell updateForMessage:changeInfo];
-                }
-            }
+    for (MessageChangeInfo *changeInfo in messageChangeInfos) {
+        NSInteger sectionIndex = [self.messageWindow.messages indexOfObject:changeInfo.message];
+
+        if (sectionIndex != NSNotFound) {
+            ConversationMessageSectionController *controller = [self sectionControllerAt:sectionIndex in:self.tableView];
+            [controller configureAt:sectionIndex in:self.tableView];
         }
-    }
-    
-    if (needsToLayoutCells) {
-        // Make table view to update cells with animation
-        [self.tableView beginUpdates];
-        [self.tableView endUpdates];
     }
 }
 
@@ -142,13 +124,6 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             self.expandingWindow = NO;
         });
-    }
-}
-
-- (void)conversationDidChange:(ConversationChangeInfo *)changeInfo
-{
-    if (changeInfo.participantsChanged) {
-        [self reconfigureVisibleSections];
     }
 }
 
