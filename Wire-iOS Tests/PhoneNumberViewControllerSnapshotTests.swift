@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2016 Wire Swiss GmbH
+// Copyright (C) 2018 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -17,43 +17,29 @@
 //
 
 import XCTest
-
 @testable import Wire
-import Cartography
 
-class ReactionsCellTests: ZMSnapshotTestCase {
-
-    var sut: ReactionCell!
-
+final class PhoneNumberViewControllerSnapshotTests: ZMSnapshotTestCase {
+    
+    var sut: PhoneNumberViewController!
+    
     override func setUp() {
         super.setUp()
-        snapshotBackgroundColor = .white
-        accentColor = .strongBlue
-        sut = ReactionCell(frame: .zero)
+        sut = PhoneNumberViewController()
+        sut.view.frame = CGRect(origin: .zero, size: CGSize(width: 320, height: 100))
+        sut.view.backgroundColor = .black
     }
-
+    
     override func tearDown() {
         sut = nil
         super.tearDown()
     }
 
-    func testThatItRendersReactionCellWithoutUsername() {
-        sut.user = MockUser.mockUsers().first
-        verifyInAllPhoneWidths(view: sut.snapshotView())
-    }
+    func testForPhoneNumberPasted(){
+        UIPasteboard.general.string = "+41 86 079 209 36 37"
 
-    func testThatItRendersReactionCellWithUsername() {
-        sut.user = MockUser.mockUsers().last
-        verifyInAllPhoneWidths(view: sut.snapshotView())
-    }
+        sut.phoneNumberField.paste(nil)
 
-}
-
-fileprivate extension UICollectionViewCell {
-    func snapshotView() -> UIView {
-        constrain(self) { cell in
-            cell.height == 52
-        }
-        return self
+        verify(view: sut.view)
     }
 }

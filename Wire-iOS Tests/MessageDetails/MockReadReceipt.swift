@@ -16,21 +16,16 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
+import Wire
 
-extension PhoneNumberViewController {
-    @objc
-    @discardableResult
-    func pastePhoneNumber(_ phoneNumber: NSString?) -> Bool {
-        guard let phoneNumber = phoneNumber else { return false }
+class MockReadReceipt: ReadReceipt {
 
-        return phoneNumber.shouldPasteAsPhoneNumber(presetCountry: self.country){country, phoneNumber in
-            if let _ /*country*/ = country, let phoneNumber = phoneNumber {
+    var user: ZMUser
+    var serverTimestamp: Date?
 
-                self.phoneNumberField.text = phoneNumber;
-                ///TODO: update country name and county code after a phone number with prefix is pasted
-                self.updateRightAccessory(forPhoneNumber: phoneNumber)
-            }
-        }
+    init(user: ZMUser) {
+        self.user = user
+        self.serverTimestamp = Date(timeIntervalSince1970: 0)
     }
+
 }

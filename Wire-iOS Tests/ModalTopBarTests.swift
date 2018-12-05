@@ -34,25 +34,29 @@ class ModalTopBarTests: ZMSnapshotTestCase {
     }
     
     func testThatItRendersCorrectly_ShortTitle() {
-        sut.title = "Tim Cook"
+        sut.configure(title: "Tim Cook", subtitle: nil, topAnchor: sut.topAnchor)
         verifyInAllPhoneWidths(view: sut)
     }
     
     func testThatItRendersCorrectly_LongTitle() {
-        sut.title = "Adrian Hardacre, Amelia Henderson & Dylan Parsons"
-        verifyInAllPhoneWidths(view: sut)
-    }
-    
-    func testThatItRendersCorrectly_ShortTitle_WithoutStatusBar() {
-        sut = ModalTopBar(forUseWithStatusBar: false)
-        sut.title = "Tim Cook"
+        sut.configure(title: "Adrian Hardacre, Amelia Henderson & Dylan Parsons",
+                      subtitle: nil,
+                      topAnchor: sut.topAnchor)
+
         verifyInAllPhoneWidths(view: sut)
     }
 
-    func testThatItRendersCorrectly_LongTitle_WithoutStatusBar() {
-        sut = ModalTopBar(forUseWithStatusBar: false)
-        sut.title = "Adrian Hardacre, Amelia Henderson & Dylan Parsons"
+    func testThatItRendersCorrectly_Subtitle() {
+        sut.configure(title: "Details", subtitle: "Tim Cook", topAnchor: sut.topAnchor)
         verifyInAllPhoneWidths(view: sut)
     }
-    
+
+    func testThatItRendersCorrectly_LongSubtitle() {
+        sut.configure(title: "Details",
+                      subtitle: "Adrian Hardacre, Amelia Henderson & Dylan Parsons",
+                      topAnchor: sut.topAnchor)
+
+        verifyInAllPhoneWidths(view: sut)
+    }
+
 }

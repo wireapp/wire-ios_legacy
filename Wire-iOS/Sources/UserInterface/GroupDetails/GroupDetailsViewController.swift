@@ -126,7 +126,8 @@ import Cartography
         if let selfUser = ZMUser.selfUser(), selfUser.isTeamMember {
             let receiptOptionsSectionController = ReceiptOptionsSectionController(conversation: conversation,
                                                                                   syncCompleted: didCompleteInitialSync,
-                                                                                  collectionView: self.collectionViewController.collectionView!)
+                                                                                  collectionView: self.collectionViewController.collectionView!,
+                                                                                  presentingViewController: self)
             sections.append(receiptOptionsSectionController)
         }
 

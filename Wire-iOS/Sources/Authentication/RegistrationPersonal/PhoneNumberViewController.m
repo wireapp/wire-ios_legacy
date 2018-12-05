@@ -37,9 +37,8 @@ static CGFloat PhoneNumberFieldTopMargin = 16;
 
 
 
-@interface PhoneNumberViewController () <CountryCodeTableViewControllerDelegate, RegistrationTextFieldDelegate>
+@interface PhoneNumberViewController () <CountryCodeTableViewControllerDelegate>
 
-@property (nonatomic, readwrite) Country *country;
 @property (nonatomic, readwrite) UIButton *selectCountryButton;
 @property (nonatomic) UIImageView *selectCountryButtonIcon;
 @property (nonatomic, readwrite) RegistrationTextField *phoneNumberField;
@@ -110,7 +109,9 @@ static CGFloat PhoneNumberFieldTopMargin = 16;
 {
     self.phoneNumberField = [[RegistrationTextField alloc] initForAutoLayout];
     self.phoneNumberField.leftAccessoryView = RegistrationTextFieldLeftAccessoryViewCountryCode;
-    self.phoneNumberField.keyboardType = UIKeyboardTypeNumberPad;
+
+    self.phoneNumberField.isPhoneNumberMode = YES;
+
     self.phoneNumberField.placeholder = NSLocalizedString(@"registration.enter_phone_number.placeholder", nil);
     self.phoneNumberField.accessibilityLabel = NSLocalizedString(@"registration.enter_phone_number.placeholder", nil);
     self.phoneNumberField.delegate = self;
@@ -190,7 +191,7 @@ static CGFloat PhoneNumberFieldTopMargin = 16;
         [self selectInitialCountry];
         self.phoneNumberField.text = nil;
     } else {
-        [self pastePhoneNumber:phoneNumber];
+        [self insertWithPhoneNumber:phoneNumber];
     }
 }
 
@@ -201,28 +202,6 @@ static CGFloat PhoneNumberFieldTopMargin = 16;
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
     return self.editable;
-}
-
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
-{
-    NSString *newString = [textField.text stringByReplacingCharactersInRange:range withString:string];
-    NSString *phoneNumber = [NSString phoneNumberStringWithE164:self.country.e164 number:newString];
-    
-    NSError *error = nil;
-    [ZMUser validatePhoneNumber:&phoneNumber error:&error];
-    
-    if (error != nil && error.code != ZMObjectValidationErrorCodeStringTooShort) {
-        return NO;
-    }
-    
-    [self updateRightAccessoryForPhoneNumber:phoneNumber];
-    return YES;
-}
-
-- (BOOL)textField:(UITextField *)textField shouldPasteCharactersInRange:(NSRange)range replacementString:(NSString *)string
-{
-    NSString *phoneNumber = [textField.text stringByReplacingCharactersInRange:range withString:string];
-    return [self pastePhoneNumber:phoneNumber];
 }
 
 #pragma mark - Actions

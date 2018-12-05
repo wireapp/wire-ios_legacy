@@ -17,6 +17,13 @@
 //
 
 import Foundation
+
+extension UIScreen {
+    @objc var isSmall: Bool {
+        return self.nativeBounds.size.height <= 1136
+    }
+}
+
 /// Enum for replacing IS_IPHONE, IS_IPHONE_4, IS_IPHONE_5, IS_IPHONE_6, IS_IPHONE_6_PLUS_OR_BIGGER objc macros. Each value represents a native screen size of the device.
 enum DeviceNativeBoundsSize: CGSize {
 

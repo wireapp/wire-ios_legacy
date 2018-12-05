@@ -23,6 +23,7 @@ class Tab: Button {
 
     var title: String = "" {
         didSet {
+            accessibilityLabel = title
             setTitle(title.localizedUppercase, for: .normal)
         }
     }

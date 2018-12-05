@@ -48,7 +48,7 @@ import WireExtensionComponents
     let messageLabel = TTTAttributedLabel(frame: CGRect.zero)
     let authorLabel = UILabel()
     let imageView = ImageResourceView()
-    var linkPreview: LinkPreview?
+    var linkPreview: LinkMetadata?
     private let obfuscationView = ObfuscationView(icon: .link)
     private let ephemeralColor = UIColor.accent()
     private var imageHeightConstraint: NSLayoutConstraint!
@@ -152,11 +152,11 @@ import WireExtensionComponents
         self.linkPreview = linkPreview
         updateLabels(obfuscated: obfuscated)
 
-        if let article = linkPreview as? Article {
+        if let article = linkPreview as? ArticleMetadata {
             configure(withArticle: article, obfuscated: obfuscated)
         }
         
-        if let twitterStatus = linkPreview as? TwitterStatus {
+        if let twitterStatus = linkPreview as? TwitterStatusMetadata {
             configure(withTwitterStatus: twitterStatus)
         }
 
@@ -187,7 +187,7 @@ import WireExtensionComponents
         }
     }
     
-    private func configure(withArticle article: Article, obfuscated: Bool) {
+    private func configure(withArticle article: ArticleMetadata, obfuscated: Bool) {
         if let url = article.openableURL, !obfuscated {
             authorLabel.attributedText = formatURL(url as URL)
         } else {
@@ -198,7 +198,7 @@ import WireExtensionComponents
         messageLabel.text = article.title
     }
     
-    private func configure(withTwitterStatus twitterStatus: TwitterStatus) {
+    private func configure(withTwitterStatus twitterStatus: TwitterStatusMetadata) {
         let author = twitterStatus.author ?? "-"
         authorLabel.attributedText = "twitter_status.on_twitter".localized(args: author).attributedString.addAttributes(authorHighlightAttributes, toSubstring: author)
 
@@ -232,7 +232,7 @@ extension ArticleView : UIGestureRecognizerDelegate {
 
 }
 
-extension LinkPreview {
+extension LinkMetadata {
 
     /// Returns a `NSURL` that can be openened using `-openURL:` on `UIApplication` or `nil` if no openable `NSURL` could be created.
     var openableURL: NSURL? {

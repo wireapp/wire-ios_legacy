@@ -187,7 +187,8 @@
 
 
 - (CGFloat)contentHeightConstraintConstant:(BOOL)isRegular {
-    return isRegular ? 262 : 244;
+    CGFloat height =  isRegular ? 262 : 244;
+    return self.registrationTabBarController.tabBarHidden ? height - 48 : height;
 }
 
 - (void)updateConstraintsForRegularLayout:(BOOL)isRegular

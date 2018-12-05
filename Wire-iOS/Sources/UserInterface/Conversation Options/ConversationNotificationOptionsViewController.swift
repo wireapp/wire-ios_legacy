@@ -118,7 +118,8 @@ extension ConversationNotificationOptionsViewController: UICollectionViewDelegat
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
         
         footerView.titleLabel.text = "group_details.notification_options_cell.description".localized
-        return footerView.sized(fittingWidth: collectionView.bounds.width).bounds.size
+        footerView.size(fittingWidth: collectionView.bounds.width)
+        return footerView.bounds.size
     }
     
     // MARK: Saving Changes

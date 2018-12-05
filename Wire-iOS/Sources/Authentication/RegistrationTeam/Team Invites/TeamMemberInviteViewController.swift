@@ -91,7 +91,8 @@ final class TeamMemberInviteViewController: AuthenticationStepViewController, Te
     private func setupHeaderView() {
         headerView.updateHeadlineLabelFont(forWidth: view.bounds.width)
         headerView.bottomSpacing = 60
-        tableView.tableHeaderView = headerView.sized(fittingWidth: tableView.bounds.width)
+        headerView.size(fittingWidth: tableView.bounds.width)
+        tableView.tableHeaderView = headerView
     }
     
     private func setupFooterView() {
@@ -100,7 +101,8 @@ final class TeamMemberInviteViewController: AuthenticationStepViewController, Te
             guard let `self` = self else { return true }
             return !self.dataSource.data.emails.contains(email)
         }
-        tableView.tableFooterView = footerTextFieldView.sized(fittingWidth: tableView.bounds.width)
+        footerTextFieldView.size(fittingWidth: tableView.bounds.width)
+        tableView.tableFooterView = footerTextFieldView
     }
     
     private func sendInvite(to email: String) {

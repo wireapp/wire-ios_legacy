@@ -71,6 +71,7 @@ class TabBarController: UIViewController, UIPageViewControllerDelegate, UIPageVi
     @objc(tabBarHidden) var isTabBarHidden = false {
         didSet {
             tabBar?.isHidden = isTabBarHidden
+            tabBarHeight?.isActive = isTabBarHidden
         }
     }
 
@@ -89,10 +90,11 @@ class TabBarController: UIViewController, UIPageViewControllerDelegate, UIPageVi
     }
 
     // MARK: - Views
-    private var tabBar: TabBar?
+    private var tabBar: TabBar!
     private var contentView = UIView()
     private var isSwiping = false
     private var startOffset: CGFloat = 0
+    private var tabBarHeight: NSLayoutConstraint!
 
     // MARK: - Initialization
 
@@ -115,7 +117,6 @@ class TabBarController: UIViewController, UIPageViewControllerDelegate, UIPageVi
     }
 
     fileprivate func createViews() {
-        self.contentView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(self.contentView)
         contentView.backgroundColor = viewControllers.first?.view?.backgroundColor
         add(pageViewController, to: contentView)
@@ -126,7 +127,7 @@ class TabBarController: UIViewController, UIPageViewControllerDelegate, UIPageVi
             pageViewController.delegate = self
         }
         
-        let items = self.viewControllers.map({ viewController in viewController.tabBarItem! })
+        let items = self.viewControllers.map { $0.tabBarItem! }
         self.tabBar = TabBar(items: items, style: self.style, selectedIndex: selectedIndex)
         tabBar?.animatesTransition = isInteractive
         tabBar?.isHidden = isTabBarHidden
@@ -136,25 +137,27 @@ class TabBarController: UIViewController, UIPageViewControllerDelegate, UIPageVi
     }
 
     fileprivate func createConstraints() {
-        pageViewController.view.fitInSuperview()
-        
-        if let tabBar = self.tabBar {
-            constrain(tabBar, contentView, view) { tabBar, contentView, view in
-                tabBar.top == tabBar.superview!.top
-                tabBar.left == tabBar.superview!.left
-                tabBar.right == tabBar.superview!.right
-                contentView.top == tabBar.bottom
-                contentView.bottom == view.bottom
-            }
-        }
+        tabBar.translatesAutoresizingMaskIntoConstraints = false
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        pageViewController.view.translatesAutoresizingMaskIntoConstraints = false
 
-        constrain(contentView, view, pageViewController.view) { contentView, view, pageViewController in
-            if (self.tabBar == nil) { contentView.top == contentView.superview!.top }
-            contentView.left == contentView.superview!.left
-            contentView.right == contentView.superview!.right
-            pageViewController.width == contentView.width
-            pageViewController.height == contentView.height
-        }
+        tabBarHeight = tabBar.heightAnchor.constraint(equalToConstant: 0)
+        tabBarHeight?.isActive = isTabBarHidden
+        
+        pageViewController.view.fitInSuperview()
+
+        NSLayoutConstraint.activate([
+            // tabBar
+            tabBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tabBar.topAnchor.constraint(equalTo: view.topAnchor),
+            tabBar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+
+            // contentView
+            contentView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            contentView.topAnchor.constraint(equalTo: tabBar.bottomAnchor),
+            contentView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            contentView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+        ])
     }
 
     // MARK: - Interacting with the Tab Bar
