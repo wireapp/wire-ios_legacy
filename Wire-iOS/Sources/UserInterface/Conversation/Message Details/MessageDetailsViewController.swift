@@ -101,6 +101,11 @@ import WireExtensionComponents
         reloadPlaceholders()
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        UIAccessibility.post(notification: .layoutChanged, argument: topBar)
+    }
+
     private func configureConstraints() {
         topBar.translatesAutoresizingMaskIntoConstraints = false
         container.view.translatesAutoresizingMaskIntoConstraints = false
@@ -138,11 +143,18 @@ import WireExtensionComponents
         switch dataSource.displayMode {
         case .combined:
             reactionsViewController.subtitle = dataSource.subtitle
+            reactionsViewController.accessibleSubtitle = dataSource.accessibilitySubtitle
+            
             readReceiptsViewController.subtitle = dataSource.subtitle
+            readReceiptsViewController.accessibleSubtitle = dataSource.accessibilitySubtitle
+
         case .reactions:
             reactionsViewController.subtitle = dataSource.subtitle
+            reactionsViewController.accessibleSubtitle = dataSource.accessibilitySubtitle
+
         case .receipts:
             readReceiptsViewController.subtitle = dataSource.subtitle
+            readReceiptsViewController.accessibleSubtitle = dataSource.accessibilitySubtitle
         }
     }
 
@@ -155,6 +167,11 @@ import WireExtensionComponents
     }
 
     // MARK: - Top Bar
+
+    override func accessibilityPerformEscape() -> Bool {
+        dismiss(animated: true, completion: nil)
+        return true
+    }
 
     func modelTopBarWantsToBeDismissed(_ topBar: ModalTopBar) {
         dismiss(animated: true, completion: nil)

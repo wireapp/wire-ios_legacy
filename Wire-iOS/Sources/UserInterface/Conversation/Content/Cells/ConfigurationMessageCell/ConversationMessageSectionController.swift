@@ -20,7 +20,6 @@ import Foundation
 
 struct ConversationMessageContext {
     let isSameSenderAsPrevious: Bool
-    let isLastMessageSentBySelfUser: Bool
     let isTimeIntervalSinceLastMessageSignificant: Bool
     let isFirstMessageOfTheDay: Bool
     let isFirstUnreadMessage: Bool
@@ -244,7 +243,7 @@ extension IndexSet {
         }
     }
     
-    func configure(at sectionIndex: Int, in tableView: UITableView) {
+    @objc func configure(at sectionIndex: Int, in tableView: UITableView) {
         configure(in: context, at: sectionIndex, in: tableView)
     }
     
@@ -271,6 +270,7 @@ extension IndexSet {
         
         for (index, description) in tableViewCellDescriptions.enumerated() {
             if let cell = tableView.cellForRow(at: IndexPath(row: index, section: sectionIndex)) {
+                cell.accessibilityCustomActions = self.actionController?.makeAccessibilityActions()
                 description.configure(cell: cell, animated: true)
             }
         }
@@ -285,7 +285,8 @@ extension IndexSet {
             return false
         }
         
-        return selected || context.isLastMessageSentBySelfUser || message.deliveryState == .failedToSend || message.hasReactions()
+        
+        return selected || message.deliveryState == .failedToSend || message.hasReactions()
     }
     
     func isSenderVisible(in context: ConversationMessageContext) -> Bool {
@@ -319,6 +320,7 @@ extension IndexSet {
         description.actionController = self.actionController
 
         let cell = description.makeCell(for: tableView, at: indexPath)
+        cell.accessibilityCustomActions = actionController?.makeAccessibilityActions()
         return cell
     }
 

@@ -86,6 +86,14 @@ import UIKit
         }
     }
 
+    @objc func makeAccessibilityActions() -> [UIAccessibilityCustomAction] {
+        return ConversationMessageActionController.allMessageActions
+            .filter { self.canPerformAction($0.action) }
+            .map { menuItem in
+                UIAccessibilityCustomAction(name: menuItem.title, target: self, selector: menuItem.action)
+            }
+    }
+
     @objc func makePreviewActions() -> [UIPreviewAction] {
         return ConversationMessageActionController.allMessageActions
             .filter { self.canPerformAction($0.action) }

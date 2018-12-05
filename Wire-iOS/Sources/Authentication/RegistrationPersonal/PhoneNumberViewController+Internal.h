@@ -17,6 +17,7 @@
 //
 
 @interface PhoneNumberViewController ()
+@property (nonatomic, readwrite) Country *country;
 
 - (void)updateRightAccessoryForPhoneNumber:(NSString *)phoneNumber;
 

@@ -200,6 +200,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
                                                  name:UIApplicationDidBecomeActiveNotification
                                                object:nil];
 
+    [self.conversationMessageWindowTableViewAdapter selectLastMessage];
 }
 
 - (void)applicationDidBecomeActive:(NSNotification *)notification
@@ -233,6 +234,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     self.messagePresenter.modalTargetController = self.parentViewController;
 
     [self updateHeaderHeight];
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -965,6 +967,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
             self.expectedMessageToShow = nil;
         }
     }
+    
 }
 
 @end
