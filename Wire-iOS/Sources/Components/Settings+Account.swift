@@ -70,3 +70,17 @@ extension Settings {
         self.defaults().synchronize()
     }
 }
+
+extension Settings {
+    func readReceiptsValueChanged(for account: Account) -> Bool {
+        let currentValue = ZMUser.selfUser().readReceiptsEnabled
+        
+        if let lastDisplayedValue: Bool = self.value(for: UserDefaultReadReceiptsEnabledLastSeenValue, in: account),
+            currentValue != lastDisplayedValue {
+            return true
+        }
+        else {
+            return false
+        }        
+    }
+}

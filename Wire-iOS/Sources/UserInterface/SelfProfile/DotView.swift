@@ -25,6 +25,7 @@ class DotView: UIView {
     fileprivate let centerView = ShapeView()
     private var userObserver: NSObjectProtocol!
     private var clientsObserverTokens: [NSObjectProtocol] = []
+    private var settingsObserver: AnyObject!
     private let user : ZMUser?
     public var hasUnreadMessages: Bool = false {
         didSet { self.updateIndicator() }
@@ -62,6 +63,12 @@ class DotView: UIView {
             userObserver = UserChangeInfo.add(observer: self, for: user, userSession: userSession)
         }
         
+        let name = Notification.Name(SettingsPropertyName.readReceiptsEnabled.changeNotificationName)
+        
+        settingsObserver = NotificationCenter.default.addObserver(forName: name, object: nil, queue: nil, using: { [weak self] _ in
+            self?.updateIndicator()
+        })
+        
         self.createClientObservers()
     }
     
@@ -75,14 +82,23 @@ class DotView: UIView {
     }
     
     internal func updateIndicator() {
-        showIndicator = hasUnreadMessages || (user?.clientsRequiringUserAttention.count ?? 0) > 0
+        let readReceiptsChanged: Bool
+        if let settings = Settings.shared(),
+            let account = SessionManager.shared?.accountManager.selectedAccount {
+           readReceiptsChanged = settings.readReceiptsValueChanged(for: account)
+        }
+        else {
+           readReceiptsChanged = false
+        }
+        
+        showIndicator = hasUnreadMessages || (user?.clientsRequiringUserAttention.count ?? 0) > 0 || readReceiptsChanged
     }
 }
 
 extension DotView: ZMUserObserver {
     func userDidChange(_ changeInfo: UserChangeInfo) {
         
-        guard changeInfo.trustLevelChanged || changeInfo.clientsChanged || changeInfo.accentColorValueChanged else { return }
+        guard changeInfo.trustLevelChanged || changeInfo.clientsChanged || changeInfo.accentColorValueChanged else { return } // TODO  || changeInfo.
         
         centerView.hostedLayer.fillColor = UIColor.accent().cgColor
         

@@ -111,7 +111,9 @@ final internal class SelfProfileViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
-        presentNewLoginAlertControllerIfNeeded()
+        if !presentNewLoginAlertControllerIfNeeded() {
+            presentUserSettingChangeControllerIfNeeded()
+        }
     }
     
     override func accessibilityPerformEscape() -> Bool {
