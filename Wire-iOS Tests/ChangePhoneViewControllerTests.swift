@@ -19,22 +19,21 @@
 import XCTest
 @testable import Wire
 
-final class ChangePhoneViewControllerSnapshotTests: ZMSnapshotTestCase {
-    
+final class ChangePhoneViewControllerTests: XCTestCase {
     var sut: ChangePhoneViewController!
-    
+
     override func setUp() {
         super.setUp()
         sut = ChangePhoneViewController()
-        sut.view.backgroundColor = .black
     }
-    
+
     override func tearDown() {
         sut = nil
         super.tearDown()
     }
 
-    func testForANumberPasted(){
+    func testForADigitIsAllowed(){
+        // GIVEN
         // call viewDidLoad
         sut.loadViewIfNeeded()
 
@@ -42,14 +41,15 @@ final class ChangePhoneViewControllerSnapshotTests: ZMSnapshotTestCase {
         sut.view.frame = CGRect(origin: .zero, size: defaultIPhoneSize)
         sut.view.layoutIfNeeded()
 
-        UIPasteboard.general.string = "+41 86 079 209 36 37"
-
         let indexPath = IndexPath(row: 0, section: 0)
         if let cell = sut.tableView.cellForRow(at: indexPath) as? RegistrationTextFieldCell {
+            // WHEN
+            let result = sut.textField(cell.textField, shouldChangeCharactersIn: NSRange(location: cell.textField.text!.count, length: 0), replacementString: "8")
 
-            cell.textField.paste(nil)
+            //THEN
+            XCTAssert(result)
+        } else {
+            XCTFail()
         }
-
-        verifyInIPhoneSize(view: sut.view)
     }
 }
