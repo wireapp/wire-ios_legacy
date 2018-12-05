@@ -40,12 +40,12 @@ class ConversationCreateNameCell: UICollectionViewCell {
     }
     
     fileprivate func setup() {
+        textField.translatesAutoresizingMaskIntoConstraints = false
         textField.isAccessibilityElement = true
         textField.accessibilityIdentifier = "textfield.newgroup.name"
         textField.placeholder = "conversation.create.group_name.placeholder".localized.uppercased()
                 
         contentView.addSubview(textField)
-        textField.translatesAutoresizingMaskIntoConstraints = false
         textField.fitInSuperview()
         
         configureColors()

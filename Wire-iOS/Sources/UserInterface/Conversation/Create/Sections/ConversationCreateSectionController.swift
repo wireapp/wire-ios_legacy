@@ -28,8 +28,7 @@ class ConversationCreateSectionController: NSObject, CollectionViewSectionContro
 
     weak var cell: CreationCell?
     
-    var header = SectionHeader(frame: .zero)
-    var headerText = ""
+    var header = UICollectionReusableView(frame: .zero)
     var headerHeight: CGFloat = 0
     
     var footer = SectionFooter(frame: .zero)
@@ -46,7 +45,7 @@ class ConversationCreateSectionController: NSObject, CollectionViewSectionContro
             withReuseIdentifier: "SectionFooter")
         
         collectionView?.register(
-            SectionHeader.self,
+            UICollectionReusableView.self,
             forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
             withReuseIdentifier: "SectionHeader")
     }
@@ -76,7 +75,6 @@ extension ConversationCreateSectionController {
         switch kind {
         case UICollectionView.elementKindSectionHeader:
             let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "SectionHeader", for: indexPath)
-            (view as? SectionHeader)?.titleLabel.text = headerText
             return view
         default:
             let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "SectionFooter", for: indexPath)
@@ -92,7 +90,6 @@ extension ConversationCreateSectionController {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        header.titleLabel.text = headerText
         return CGSize(width: collectionView.bounds.size.width, height: headerHeight)
     }
     
