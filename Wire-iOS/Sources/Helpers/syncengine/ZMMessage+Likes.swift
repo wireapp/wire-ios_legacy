@@ -28,7 +28,7 @@ public extension ZMConversationMessage {
         }
 
         let participatesInConversation = conversation.activeParticipants.contains(ZMUser.selfUser())
-        let sentOrDelivered = [ZMDeliveryState.sent, ZMDeliveryState.delivered].contains(deliveryState)
+        let sentOrDelivered = deliveryState.isOne(of: .sent, .delivered, .read)
         let likableType = isNormal && !isKnock
         return participatesInConversation && sentOrDelivered && likableType && !isObfuscated && !isEphemeral
     }

@@ -18,45 +18,48 @@
 
 import Foundation
 
-extension NSString {
+extension String {
+    fileprivate var withoutSpace: String {
+        return components(separatedBy: .whitespaces).joined()
+    }
+
 
     /// Auto detect country for phone numbers beginning with "+"
     ///
-    /// When pastedString is copied from phone app (self phone number section), it contains right/left handling symbols: \u202A\u202B\u202C\u202D
-    /// @"\U0000202d+380 (00) 123 45 67\U0000202c"
+    /// Notice: When pastedString is copied from phone app (self phone number section), it contains right/left handling symbols: \u202A\u202B\u202C\u202D or \u{e2}
+    /// e.g. @"\U0000202d+380 (00) 123 45 67\U0000202c"
+    /// or  \u{e2}+49 123 12349999\u{e2}
     ///
-    /// - Parameter completion: completion closure with Country object and phoneNumber extracted from self
-    /// - Returns: true if should paste as Phone number(not beginning with "+"). If self is prased as a phone number, reture false (it should the be pasted, the caller use the completion's data for further actions.)
+    /// - Parameter completion: completion closure with Country object and phoneNumber extracted from self. country: a Country object parsed from self. phoneNumber: phone Number with no space
+    /// - Returns: If the number can be parsed, return a tuple of country and the phone number without country code. Otherwise return nil. country would be nil if self is a phone number without country
     @discardableResult
-    @objc func shouldPasteAsPhoneNumber(presetCountry: Country,
-                                        completion: (_ country: Country?, _ phoneNumber: String?) -> Void)
-        -> Bool {
+    func shouldInsertAsPhoneNumber(presetCountry: Country) -> (country: Country?, phoneNumber: String)? {
 
-        var illegalCharacters = CharacterSet.whitespacesAndNewlines
+        var illegalCharacters = CharacterSet.whitespaces
         illegalCharacters.formUnion(CharacterSet.decimalDigits)
         illegalCharacters.formUnion(CharacterSet(charactersIn: "+-()"))
         illegalCharacters.invert()
-        var phoneNumber: NSString = trimmingCharacters(in: illegalCharacters) as NSString
+        let phoneNumber = trimmingCharacters(in: illegalCharacters)
 
         if phoneNumber.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).hasPrefix("+") {
-            if let country = Country.detect(forPhoneNumber: phoneNumber as String) {
-                let phoneNumberWithoutCountryCode = phoneNumber.replacingOccurrences(of: country.e164PrefixString, with: "")
-                completion(country, phoneNumberWithoutCountryCode)
-
-                return false
+            if let country = Country.detect(forPhoneNumber: phoneNumber) {
+                /// remove the leading space and country prefix
+                let phoneNumberWithoutCountryCode = phoneNumber.replacingOccurrences(of: country.e164PrefixString, with: "").withoutSpace
+                
+                return (country: country, phoneNumber: phoneNumberWithoutCountryCode)
             }
         }
 
         // Just paste (if valid) for phone numbers not beginning with "+", or phones where country is not detected.
 
-        phoneNumber = NSString.phoneNumber(withE164: presetCountry.e164, number: phoneNumber as String) as NSString
+        let phoneNumberWithCountryCode = NSString.phoneNumber(withE164: presetCountry.e164, number: phoneNumber)
 
-        let result = UnregisteredUser.normalizedPhoneNumber(phoneNumber as String)
+        let result = UnregisteredUser.normalizedPhoneNumber(phoneNumberWithCountryCode)
 
         if result.isValid {
-            return true
+            return (country: presetCountry, phoneNumber: phoneNumber.withoutSpace)
         } else {
-            return false
+            return nil
         }
     }
 }

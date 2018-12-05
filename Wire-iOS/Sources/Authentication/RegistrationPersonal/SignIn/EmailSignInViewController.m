@@ -397,8 +397,6 @@
     }
 }
 
-#pragma mark - RegistrationTextFieldDelegate
-
 - (void)executeErrorFeedbackAction:(AuthenticationErrorFeedbackAction)feedbackAction
 {
     if (feedbackAction == AuthenticationErrorFeedbackActionShowGuidanceDot) {

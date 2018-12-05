@@ -35,7 +35,6 @@ class ConversationCellSnapshotTestCase: CoreDataSnapshotTestCase {
         NSAttributedString.invalidateMarkdownStyle()
         snapshotBackgroundColor = UIColor.from(scheme: .contentBackground)
         defaultContext = ConversationMessageContext(isSameSenderAsPrevious: false,
-                                                    isLastMessageSentBySelfUser: false,
                                                     isTimeIntervalSinceLastMessageSignificant: false,
                                                     isFirstMessageOfTheDay: false,
                                                     isFirstUnreadMessage: false,

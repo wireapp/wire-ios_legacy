@@ -16,22 +16,30 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
+import XCTest
+@testable import Wire
 
-extension RegistrationTextField {
-    override open func paste(_ sender: Any?) {
+final class PhoneNumberViewControllerSnapshotTests: ZMSnapshotTestCase {
+    
+    var sut: PhoneNumberViewController!
+    
+    override func setUp() {
+        super.setUp()
+        sut = PhoneNumberViewController()
+        sut.view.frame = CGRect(origin: .zero, size: CGSize(width: 320, height: 100))
+        sut.view.backgroundColor = .black
+    }
+    
+    override func tearDown() {
+        sut = nil
+        super.tearDown()
+    }
 
-        var shouldPaste = true
+    func testForPhoneNumberPasted(){
+        UIPasteboard.general.string = "+41 86 079 209 36 37"
 
-        if let registrationTextFieldDelegate = delegate as? RegistrationTextFieldDelegate,
-           let pasteboard = UIPasteboard(name: .general, create: false),
-           let pastedString = pasteboard.string {
+        sut.phoneNumberField.paste(nil)
 
-            shouldPaste = registrationTextFieldDelegate.textField(self, shouldPasteCharactersIn: selectedRange(), replacementString: pastedString)
-        }
-
-        if shouldPaste {
-            super.paste(sender)
-        }
+        verify(view: sut.view)
     }
 }

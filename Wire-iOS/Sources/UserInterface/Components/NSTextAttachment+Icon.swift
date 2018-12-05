@@ -18,19 +18,15 @@
 
 import Foundation
 
-extension PhoneNumberViewController {
-    @objc
-    @discardableResult
-    func pastePhoneNumber(_ phoneNumber: NSString?) -> Bool {
-        guard let phoneNumber = phoneNumber else { return false }
+extension NSTextAttachment {
+    static func textAttachment(for icon: ZetaIconType, with color: UIColor, iconSize: CGFloat = 10, verticalCorrection: CGFloat = 0) -> NSTextAttachment? {
+        guard let image = UIImage(for: icon, fontSize: iconSize, color: color)
+            else { return nil }
 
-        return phoneNumber.shouldPasteAsPhoneNumber(presetCountry: self.country){country, phoneNumber in
-            if let _ /*country*/ = country, let phoneNumber = phoneNumber {
-
-                self.phoneNumberField.text = phoneNumber;
-                ///TODO: update country name and county code after a phone number with prefix is pasted
-                self.updateRightAccessory(forPhoneNumber: phoneNumber)
-            }
-        }
+        let attachment = NSTextAttachment()
+        attachment.image = image
+        let ratio = image.size.width / image.size.height
+        attachment.bounds = CGRect(x: 0, y: verticalCorrection, width: iconSize * ratio, height: iconSize)
+        return attachment
     }
 }
