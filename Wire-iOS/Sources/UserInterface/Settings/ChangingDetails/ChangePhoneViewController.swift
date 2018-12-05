@@ -221,20 +221,17 @@ extension ChangePhoneViewController: RegistrationTextFieldDelegate {
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         guard let registrationTextField = textField as? RegistrationTextField else { return false }
-        
         guard let newString = (registrationTextField.text as NSString?)?.replacingCharacters(in: range, with: string) else { return false }
-        
-        
+
         ///If the textField is empty and a replacementString with longer than 1 char, it is likely to insert from autoFill.
         if textField.text?.count == 0 && newString.count > 1 {
             return insert(phoneNumber: newString, registrationTextField: registrationTextField)
         }
         
-        let newNumber = (textField.text as NSString?)?.replacingCharacters(in: range, with: newString) ?? ""
-        
-        let number = PhoneNumber(countryCode: registrationTextField.countryCode, numberWithoutCode: newNumber)
+        let number = PhoneNumber(countryCode: registrationTextField.countryCode, numberWithoutCode: newString)
         switch number.validate() {
-        case .containsInvalidCharacters, .tooLong:
+        case .containsInvalidCharacters,
+             .tooLong:
             return false
         default:
             break
@@ -242,6 +239,7 @@ extension ChangePhoneViewController: RegistrationTextFieldDelegate {
         
         state.newNumber = number
         updateSaveButtonState()
+
         return true
     }
 }
