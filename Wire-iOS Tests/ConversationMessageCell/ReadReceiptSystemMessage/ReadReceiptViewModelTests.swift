@@ -26,16 +26,6 @@ final class ReadReceiptViewModelTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
-//        ZMSystemMessageTypeReadReceiptsEnabled,
-//        ZMSystemMessageTypeReadReceiptsDisabled,
-//        ZMSystemMessageTypeReadReceiptsOn
-
-        let usersCount = 1
-        let clientsCount = 1
-        let type = ZMSystemMessageType.readReceiptsDisabled
-
-        mockMessage = MockMessageFactory.systemMessage(with: type, users: usersCount, clients: clientsCount)!
-
     }
     
     override func tearDown() {
@@ -45,11 +35,16 @@ final class ReadReceiptViewModelTests: XCTestCase {
         super.tearDown()
     }
 
+    func createMockMessage(type: ZMSystemMessageType) {
+        let usersCount = 1
+        let clientsCount = 1
 
+        mockMessage = MockMessageFactory.systemMessage(with: type, users: usersCount, clients: clientsCount)!
+    }
 
     func testThatSelfUserSwitchOffReceiptOption(){
         // GIVEN & WHEN
-
+        createMockMessage(type: .readReceiptsDisabled)
         mockMessage.backingSystemMessageData?.users = Set<AnyHashable>([MockUser.mockSelf()]) as! Set<ZMUser>
 
         sut = ReadReceiptViewModel(icon: .eye,
@@ -63,7 +58,7 @@ final class ReadReceiptViewModelTests: XCTestCase {
 
     func testThatOneUserSwitchOffReceiptOption(){
         // GIVEN & WHEN
-
+        createMockMessage(type: .readReceiptsDisabled)
 
         sut = ReadReceiptViewModel(icon: .eye,
                                    iconColor: UIColor.from(scheme: .textDimmed),
@@ -72,5 +67,31 @@ final class ReadReceiptViewModelTests: XCTestCase {
 
         // THEN
         XCTAssertEqual(sut.attributedTitle()?.string, "James Hetfield turned read receipts off for everyone")
+    }
+
+    func testThatOneUserSwitchOnReceiptOption(){
+        // GIVEN & WHEN
+        createMockMessage(type: .readReceiptsEnabled)
+
+        sut = ReadReceiptViewModel(icon: .eye,
+                                   iconColor: UIColor.from(scheme: .textDimmed),
+                                   message: mockMessage,
+                                   systemMessage:mockMessage.systemMessageData!)
+
+        // THEN
+        XCTAssertEqual(sut.attributedTitle()?.string, "James Hetfield turned read receipts on for everyone")
+    }
+
+    func testThatReceiptOptionOnMessageIsShown(){
+        // GIVEN & WHEN
+        createMockMessage(type: .readReceiptsOn)
+
+        sut = ReadReceiptViewModel(icon: .eye,
+                                   iconColor: UIColor.from(scheme: .textDimmed),
+                                   message: mockMessage,
+                                   systemMessage:mockMessage.systemMessageData!)
+
+        // THEN
+        XCTAssertEqual(sut.attributedTitle()?.string, "Read receipts are on")
     }
 }

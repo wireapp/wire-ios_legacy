@@ -24,9 +24,6 @@ class ConversationSystemMessageTests: ConversationCellSnapshotTestCase {
     override func setUp() {
         super.setUp()
         ColorScheme.default.variant = .light
-//        snapshotBackgroundColor = .white
-
-        recordMode = true
     }
 
 
@@ -113,26 +110,6 @@ class ConversationSystemMessageTests: ConversationCellSnapshotTestCase {
         
         verify(message: message)
     }
-    
-    func testUsingNewDevice() {
-        let message = MockMessageFactory.systemMessage(with: .usingNewDevice, users: 1, clients: 1)!
-        message.backingSystemMessageData?.users = Set<AnyHashable>([MockUser.mockSelf()]) as! Set<ZMUser>
-        
-        verify(message: message)
-    }
-
-    
-    // MARK: - reactivated Device
-
-    ///TODO: text is nil issue
-    func testStartedusingANewDevice() {
-        let message = MockMessageFactory.systemMessage(with: .reactivatedDevice,
-                                                       users: 0,
-                                                       clients: 0)!
-
-        verify(message: message)
-    }
-
 
     // MARK: - read receipt
 
@@ -142,7 +119,6 @@ class ConversationSystemMessageTests: ConversationCellSnapshotTestCase {
         verify(message: message)
     }
 
-    ///TODO: update after new enum values are added
     func testReadReceiptIsOffByYou() {
         let message = MockMessageFactory.systemMessage(with: .readReceiptsDisabled, users: 1, clients: 1)!
         message.backingSystemMessageData?.users = Set<AnyHashable>([MockUser.mockSelf()]) as! Set<ZMUser>
