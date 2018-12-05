@@ -26,8 +26,8 @@ class ConversationCreateOptionsCell: RightIconDetailsCell {
     
     override func setUp() {
         super.setUp()
-        // TODO: localize
-        title = "Conversation options"
+        accessibilityIdentifier = "cell.groupdetails.options"
+        title = "conversation.create.options.title".localized
         icon = nil
         showSeparator = false
         contentLeadingOffset = 16
@@ -40,6 +40,7 @@ class ConversationCreateOptionsCell: RightIconDetailsCell {
         let color = UIColor.from(scheme: .sectionText, variant: colorSchemeVariant)
         let image = UIImage(for: .downArrow, iconSize: .tiny, color: color)
         
+        // flip upside down if necessary
         if let cgImage = image?.cgImage, let scale = image?.scale, expanded {
             accessory = UIImage(cgImage: cgImage, scale: scale, orientation: .downMirrored)
         } else {
@@ -50,12 +51,14 @@ class ConversationCreateOptionsCell: RightIconDetailsCell {
 
 extension ConversationCreateOptionsCell: ConversationCreationValuesConfigurable {
     func configure(with values: ConversationCreationValues) {
-        status = "Allow guests: \(values.allowGuests.localized), Read receipts: \(values.enableReceipts.localized)"
+        let guests = values.allowGuests.localized.uppercased()
+        let receipts = values.enableReceipts.localized.uppercased()
+        status = "conversation.create.options.subtitle".localized(args: guests, receipts)
     }
 }
 
 private extension Bool {
     var localized: String {
-        return self ? "ON" : "OFF"
+        return self ? "general.on".localized : "general.off".localized
     }
 }
