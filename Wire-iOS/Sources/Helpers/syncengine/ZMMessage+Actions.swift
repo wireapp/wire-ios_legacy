@@ -35,7 +35,7 @@ extension ZMConversationMessage {
                isText &&
                conversation.isSelfAnActiveMember &&
                sender.isSelfUser &&
-               deliveryState.isOne(of: [.delivered, .sent])
+               deliveryState.isOne(of: .delivered, .sent, .read)
     }
     
     /// Whether the message can be quoted.
@@ -44,7 +44,7 @@ extension ZMConversationMessage {
             return false
         }
 
-        let isSent = deliveryState.isOne(of: [.delivered, .sent])
+        let isSent = deliveryState.isOne(of: .delivered, .sent, .read)
         return !isEphemeral && conversation.isSelfAnActiveMember && isSent && (isText || isImage || isLocation || isFile)
     }
 

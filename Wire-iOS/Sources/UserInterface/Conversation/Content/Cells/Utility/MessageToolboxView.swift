@@ -18,7 +18,6 @@
 
 import Foundation
 import WireSyncEngine
-import TTTAttributedLabel
 
 @objc public protocol MessageToolboxViewDelegate: NSObjectProtocol {
     func messageToolboxViewDidSelectLikers(_ messageToolboxView: MessageToolboxView)
@@ -33,14 +32,32 @@ import TTTAttributedLabel
 
     private static let ephemeralTimeFormatter = EphemeralTimeoutFormatter()
 
-    public let statusLabel: TTTAttributedLabel = {
-        let attributedLabel = TTTAttributedLabel(frame: CGRect.zero)
-        attributedLabel.font = UIFont.smallSemiboldFont
-        attributedLabel.backgroundColor = .clear
-        attributedLabel.textColor = UIColor.from(scheme: .textDimmed)
-        attributedLabel.textInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+    private static let statusFont = UIFont.smallSemiboldFont
+    private var statusTextColor: UIColor {
+        return UIColor.from(scheme: .textDimmed)
+    }
 
-        return attributedLabel
+    public let statusTextView: UITextView = {
+        let textView = UITextView(frame: CGRect.zero)
+        textView.backgroundColor = .clear
+        textView.isSelectable = false
+        textView.isEditable = false
+        textView.isScrollEnabled = false
+        textView.isUserInteractionEnabled = true
+        textView.isAccessibilityElement = true
+        textView.accessibilityLabel = "DeliveryStatus"
+        textView.textContainer.lineBreakMode = NSLineBreakMode.byTruncatingMiddle
+        textView.textContainer.maximumNumberOfLines = 1
+        textView.setContentHuggingPriority(.defaultLow, for: .vertical)
+        textView.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
+
+        textView.linkTextAttributes = [.foregroundColor: UIColor.vividRed,
+                                              .underlineStyle: NSUnderlineStyle.single.rawValue as NSNumber]
+
+        textView.textContainerInset = UIEdgeInsets.zero
+        textView.textContainer.lineFragmentPadding = 0
+
+        return textView
     }()
 
     fileprivate var tapGestureRecogniser: UITapGestureRecognizer!
@@ -72,34 +89,21 @@ import TTTAttributedLabel
         likeButton.accessibilityIdentifier = "likeButton"
         likeButton.accessibilityLabel = "likeButton"
         likeButton.addTarget(self, action: #selector(requestLike), for: .touchUpInside)
-        likeButton.setIconColor(UIColor.from(scheme: .textDimmed), for: .normal)
+        likeButton.setIconColor(statusTextColor, for: .normal)
         likeButton.setIconColor(UIColor(for: .vividRed), for: .selected)
         likeButton.hitAreaPadding = CGSize(width: 20, height: 20)
 
-        statusLabel.delegate = self
-        statusLabel.extendsLinkTouchArea = true
-        statusLabel.isUserInteractionEnabled = true
-        statusLabel.verticalAlignment = .center
-        statusLabel.isAccessibilityElement = true
-        statusLabel.accessibilityLabel = "DeliveryStatus"
-        statusLabel.lineBreakMode = NSLineBreakMode.byTruncatingMiddle
-        statusLabel.numberOfLines = 0
-        statusLabel.setContentHuggingPriority(.defaultLow, for: .vertical)
-        statusLabel.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
-        statusLabel.linkAttributes = [NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue as NSNumber,
-                                      NSAttributedString.Key.foregroundColor: UIColor.vividRed]
-        statusLabel.activeLinkAttributes = [NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue as NSNumber,
-                                            NSAttributedString.Key.foregroundColor: UIColor.vividRed.withAlphaComponent(0.5)]
+        statusTextView.delegate = self
 
-        [likeButtonContainer, likeButton, statusLabel].forEach(addSubview)
+        [likeButtonContainer, likeButton, statusTextView].forEach(addSubview)
     }
     
     private func createConstraints() {
         likeButtonContainer.translatesAutoresizingMaskIntoConstraints = false
         likeButton.translatesAutoresizingMaskIntoConstraints = false
-        statusLabel.translatesAutoresizingMaskIntoConstraints = false
+        statusTextView.translatesAutoresizingMaskIntoConstraints = false
 
-        heightConstraint = self.heightAnchor.constraint(equalToConstant: 28)
+        heightConstraint = heightAnchor.constraint(equalToConstant: 28)
         heightConstraint.priority = UILayoutPriority(999)
 
         likeButtonWidth = likeButtonContainer.widthAnchor.constraint(equalToConstant: UIView.conversationLayoutMargins.left)
@@ -115,12 +119,11 @@ import TTTAttributedLabel
             likeButton.centerXAnchor.constraint(equalTo: likeButtonContainer.centerXAnchor),
             likeButton.centerYAnchor.constraint(equalTo: likeButtonContainer.centerYAnchor),
 
-            // statusLabel
-            statusLabel.leadingAnchor.constraint(equalTo: likeButtonContainer.trailingAnchor),
-            statusLabel.topAnchor.constraint(equalTo: topAnchor),
-            statusLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -UIView.conversationLayoutMargins.right),
-            statusLabel.bottomAnchor.constraint(equalTo: bottomAnchor),
-        ])
+            // statusTextView align vertically center
+            statusTextView.leadingAnchor.constraint(equalTo: likeButtonContainer.trailingAnchor),
+            statusTextView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -UIView.conversationLayoutMargins.right),
+            statusTextView.centerYAnchor.constraint(equalTo: centerYAnchor)
+            ])
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -280,9 +283,9 @@ import TTTAttributedLabel
         
         let likersNames = likers.map { user in
             return user.displayName
-        }.joined(separator: ", ")
+            }.joined(separator: ", ")
         
-        let attributes: [NSAttributedString.Key : AnyObject] = [.font: statusLabel.font, .foregroundColor: statusLabel.textColor]
+        let attributes: [NSAttributedString.Key : AnyObject] = [.font: MessageToolboxView.statusFont, .foregroundColor: statusTextColor]
         let likersNamesAttributedString = likersNames && attributes
 
         let framesetter = CTFramesetterCreateWithAttributedString(likersNamesAttributedString)
@@ -290,7 +293,7 @@ import TTTAttributedLabel
         let labelSize = CTFramesetterSuggestFrameSizeWithConstraints(framesetter, CFRangeMake(0, likersNamesAttributedString.length), nil, targetSize, nil)
 
         let attributedText: NSAttributedString
-        if labelSize.width > statusLabel.bounds.width {
+        if labelSize.width > statusTextView.bounds.width {
             let likersCount = String(format: "participants.people.count".localized, likers.count)
             attributedText = likersCount && attributes
         }
@@ -298,133 +301,189 @@ import TTTAttributedLabel
             attributedText = likersNamesAttributedString
         }
 
-        if let currentText = self.statusLabel.attributedText, currentText.string == attributedText.string {
+        if let currentText = self.statusTextView.attributedText, currentText.string == attributedText.string {
             return
         }
         
         let changeBlock = {
-            self.updateStatusLabelAttributedText(attributedText: attributedText)
+            self.updateStatusTextView(attributedText: attributedText)
         }
         
         if animated {
-            statusLabel.wr_animateSlideTo(.down, newState: changeBlock)
+            statusTextView.wr_animateSlideTo(.down, newState: changeBlock)
         }
         else {
             changeBlock()
         }
     }
 
-    fileprivate func updateStatusLabelAttributedText(attributedText: NSAttributedString) {
-        statusLabel.attributedText = attributedText
-        statusLabel.accessibilityValue = statusLabel.attributedText.string
+    fileprivate func updateStatusTextView(attributedText: NSAttributedString) {
+        statusTextView.attributedText = attributedText
+        statusTextView.accessibilityValue = statusTextView.attributedText.string
     }
 
     fileprivate func configureTimestamp(_ message: ZMConversationMessage, animated: Bool = false) {
-        var deliveryStateString: String? = .none
-        
-        if let sender = message.sender, sender.isSelfUser {
-            switch message.deliveryState {
-            case .pending:
-                deliveryStateString = "content.system.pending_message_timestamp".localized
-            case .read:
-                deliveryStateString = "content.system.message_read_timestamp".localized
-            case .delivered:
-                deliveryStateString = "content.system.message_delivered_timestamp".localized
-            case .sent:
-                deliveryStateString = "content.system.message_sent_timestamp".localized
-            case .failedToSend:
-                deliveryStateString = "content.system.failedtosend_message_timestamp".localized + " " +
-                                      "content.system.failedtosend_message_timestamp_resend".localized + " · " +
-                                      "content.system.failedtosend_message_timestamp_delete".localized
-            default:
-                deliveryStateString = .none
-            }
+
+        guard let changeBlock = statusUpdate(message: message) else { return }
+
+        if animated {
+            statusTextView.wr_animateSlideTo(.up, newState: changeBlock)
+        } else {
+            changeBlock()
         }
+    }
+
+    fileprivate func selfStatusForReadDeliveryState(for message: ZMConversationMessage) -> NSAttributedString? {
+        guard let conversationType = message.conversation?.conversationType else {return nil}
+
+        switch conversationType {
+        case .group:
+            let imageIcon = NSTextAttachment.textAttachment(for: .eye, with: statusTextColor)!
+
+            let statusString: NSAttributedString
+
+            statusString = NSAttributedString(attachment: imageIcon) + " \(message.readReceipts.count)"
+
+            return statusString
+        case .oneOnOne:
+            let imageIcon = NSTextAttachment.textAttachment(for: .eye, with: statusTextColor)!
+
+            let statusString: NSAttributedString
+
+            if let timeString = message.readReceipts.first?.serverTimestamp {
+                statusString = NSAttributedString(attachment: imageIcon) + " " + Message.formattedDate(timeString)
+            } else {
+                statusString = NSMutableAttributedString(attachment: imageIcon)
+            }
+
+            return statusString
+        default:
+            return nil
+        }
+    }
+
+    fileprivate func selfStatus(for message: ZMConversationMessage) -> NSAttributedString? {
+        guard let sender = message.sender,
+              sender.isSelfUser else { return nil }
+
+        var deliveryStateString: String? = .none
+
+        switch message.deliveryState {
+        case .pending:
+            deliveryStateString = "content.system.pending_message_timestamp".localized
+        case .read:
+            return selfStatusForReadDeliveryState(for: message)
+        case .delivered:
+            deliveryStateString = "content.system.message_delivered_timestamp".localized
+        case .sent:
+            deliveryStateString = "content.system.message_sent_timestamp".localized
+        case .failedToSend:
+            let resendString = NSAttributedString(string: "content.system.failedtosend_message_timestamp_resend".localized, attributes:[.link: type(of: self).resendLink])
+
+            let deleteRange = NSAttributedString(string: "content.system.failedtosend_message_timestamp_delete".localized, attributes:[.link: type(of: self).deleteLink])
+
+            return NSAttributedString(string:"content.system.failedtosend_message_timestamp".localized) + resendString + NSAttributedString(string:" · ") + deleteRange
+
+        case .invalid:
+            return nil
+        }
+
+        if let deliveryStateString = deliveryStateString {
+            return NSAttributedString(string: deliveryStateString)
+        } else {
+            return nil
+        }
+    }
+
+
+    fileprivate func statusString(for message: ZMConversationMessage) -> NSAttributedString {
+        var deliveryStateString: NSAttributedString? = selfStatus(for: message)
+
+        // Ephemeral overrides
 
         let showDestructionTimer = message.isEphemeral && !message.isObfuscated && nil != message.destructionDate
         if let destructionDate = message.destructionDate, showDestructionTimer {
             let remaining = destructionDate.timeIntervalSinceNow + 1 // We need to add one second to start with the correct value
-            
+
             if remaining > 0 {
-                deliveryStateString = MessageToolboxView.ephemeralTimeFormatter.string(from: remaining)
+                if let string = MessageToolboxView.ephemeralTimeFormatter.string(from: remaining) {
+
+                    deliveryStateString = NSMutableAttributedString(string: string)
+                }
             } else if message.isAudio {
                 // do nothing, audio messages are allowed to extend the timer
                 // past the destruction date.
             }
         }
 
-        let finalText: String
+        // System message overrides
+
+        let finalText: NSAttributedString
 
         if let childMessages = message.systemMessageData?.childMessages,
             !childMessages.isEmpty,
             let timestamp = timestampString(message) {
             let childrenTimestamps = childMessages.compactMap {
                 $0 as? ZMConversationMessage
-            }.sorted { left, right in
-                left.serverTimestamp < right.serverTimestamp
-            }.compactMap(timestampString)
+                }.sorted { left, right in
+                    left.serverTimestamp < right.serverTimestamp
+                }.compactMap(timestampString)
 
-            finalText = childrenTimestamps.reduce(timestamp) { (text, current) in
+            finalText = NSAttributedString(string: childrenTimestamps.reduce(timestamp) { (text, current) in
                 return "\(text)\n\(current)"
-            }
-        } else if let timestampString = self.timestampString(message), message.deliveryState == .delivered || message.deliveryState == .sent {
+            })
+        } else if let timestampString = self.timestampString(message),
+            message.deliveryState == .delivered || message.deliveryState == .sent {
             if let deliveryStateString = deliveryStateString, Message.shouldShowDeliveryState(message) {
-                finalText = timestampString + " ・ " + deliveryStateString
+                finalText = NSAttributedString(string: timestampString + " ・ ") + deliveryStateString
             }
             else {
-                finalText = timestampString
+                finalText = NSMutableAttributedString(string: timestampString)
             }
         }
         else {
-            finalText = (deliveryStateString ?? "")
-        }
-        
-        if statusLabel.attributedText?.string == finalText {
-            return
-        }
-        
-        let attributedText = NSMutableAttributedString(attributedString: finalText && [.font: statusLabel.font, .foregroundColor: statusLabel.textColor])
-        
-        if message.deliveryState == .failedToSend {
-            let linkRange = (finalText as NSString).range(of: "content.system.failedtosend_message_timestamp_resend".localized)
-            attributedText.addAttributes([.link: type(of: self).resendLink], range: linkRange)
-            
-            let deleteRange = (finalText as NSString).range(of: "content.system.failedtosend_message_timestamp_delete".localized)
-            attributedText.addAttributes([.link: type(of: self).deleteLink], range: deleteRange)
+            finalText = (deliveryStateString ?? NSAttributedString(string: ""))
         }
 
-        if let currentText = self.statusLabel.attributedText, currentText.string == attributedText.string {
-            return
+        return finalText
+    }
+
+    fileprivate func statusUpdate(message: ZMConversationMessage) -> (()->())? {
+        let finalText = statusString(for: message)
+
+        if statusTextView.attributedText?.string == finalText.string {
+            return nil
         }
-        
+
+        let attributedText = NSMutableAttributedString(attributedString: finalText && [.font: MessageToolboxView.statusFont, .foregroundColor: statusTextColor])
+
+
+        if let currentText = self.statusTextView.attributedText, currentText.string == attributedText.string {
+            return nil
+        }
+
         let changeBlock =  {
-            self.updateStatusLabelAttributedText(attributedText: attributedText)
-            self.statusLabel.addLinks()
+            self.updateStatusTextView(attributedText: attributedText)
         }
-        
-        if animated {
-            statusLabel.wr_animateSlideTo(.up, newState: changeBlock)
-        }
-        else {
-            changeBlock()
-        }
+
+        return changeBlock
     }
     
     fileprivate func configureLikeTip(_ message: ZMConversationMessage, animated: Bool = false) {
         let likeTooltipText = "content.system.like_tooltip".localized
-        let attributes: [NSAttributedString.Key : AnyObject] = [.font: statusLabel.font, .foregroundColor: statusLabel.textColor]
+        let attributes: [NSAttributedString.Key : AnyObject] = [.font: MessageToolboxView.statusFont, .foregroundColor: statusTextColor]
         let attributedText = likeTooltipText && attributes
 
-        if let currentText = self.statusLabel.attributedText, currentText.string == attributedText.string {
+        if let currentText = self.statusTextView.attributedText, currentText.string == attributedText.string {
             return
         }
         
         let changeBlock = {
-            self.updateStatusLabelAttributedText(attributedText: attributedText)
+            self.updateStatusTextView(attributedText: attributedText)
         }
         
         if animated {
-            statusLabel.wr_animateSlideTo(.up, newState: changeBlock)
+            statusTextView.wr_animateSlideTo(.up, newState: changeBlock)
         }
         else {
             changeBlock()
@@ -457,23 +516,22 @@ import TTTAttributedLabel
     }
 }
 
-
-extension MessageToolboxView: TTTAttributedLabelDelegate {
-    
-    // MARK: - TTTAttributedLabelDelegate
-    
-    public func attributedLabel(_ label: TTTAttributedLabel!, didSelectLinkWith URL: Foundation.URL!) {
-        if URL == type(of: self).resendLink {
-            self.delegate?.messageToolboxViewDidSelectResend(self)
-        }
-        else if URL == type(of: self).deleteLink {
-            self.delegate?.messageToolboxViewDidSelectDelete(self)
-        }
-    }
-}
-
 extension MessageToolboxView: UIGestureRecognizerDelegate {
     public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return gestureRecognizer.isEqual(self.tapGestureRecogniser)
+    }
+}
+
+extension MessageToolboxView: UITextViewDelegate {
+    public func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+        switch URL {
+        case MessageToolboxView.resendLink:
+            self.delegate?.messageToolboxViewDidSelectResend(self)
+        case MessageToolboxView.deleteLink:
+            self.delegate?.messageToolboxViewDidSelectDelete(self)
+        default:
+            return false
+        }
+        return true
     }
 }
