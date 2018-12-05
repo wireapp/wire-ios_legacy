@@ -48,7 +48,7 @@ extension Settings {
         let avsTag = "AVS"
         if isInternal {
             var tagsToEnable = Set(arrayLiteral: avsTag)
-            if let savedTags = UserDefaults.shared().object(forKey: "WireEnabledZMLogTags") as? Array<String> {
+            if let savedTags = UserDefaults.shared().object(forKey: enabledLogsKey) as? Array<String> {
                 tagsToEnable.formUnion(savedTags)
             } else {
                 tagsToEnable.formUnion(["Network", "SessionManager", "Conversations", "calling", "link previews", "ephemeral", "event-processing", "SyncStatus", "OperationStatus", "Push"])
