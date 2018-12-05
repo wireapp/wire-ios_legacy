@@ -25,8 +25,6 @@ final class IconSystemCellTests: ZMSnapshotTestCase {
         super.setUp()
         ColorScheme.default.variant = .light
         snapshotBackgroundColor = .white
-
-        recordMode = true
     }
 
     class func wrappedCell(for type: ZMSystemMessageType,

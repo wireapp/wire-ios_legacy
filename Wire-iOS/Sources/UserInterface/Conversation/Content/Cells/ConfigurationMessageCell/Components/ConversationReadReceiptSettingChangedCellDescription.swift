@@ -43,7 +43,6 @@ struct ReadReceiptViewModel {
     let message: ZMConversationMessage
     let systemMessage: ZMSystemMessageData
 
-    ///TODO: protocol default method
     func image() -> UIImage? {
         return iconColor.map { UIImage(for: icon, iconSize: .tiny, color: $0) }
     }
