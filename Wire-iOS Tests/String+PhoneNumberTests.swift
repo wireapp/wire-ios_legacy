@@ -43,6 +43,22 @@ final class String_PhoneNumberTests: XCTestCase {
         }
     }
 
+    func testThatPhoneNumberWithDash(){
+        // GIVEN
+        sut = "+41 86-079-209-36-37"
+
+        // WHEN
+        let presetCountry = Country(iso: "", e164: NSNumber(value: 49))
+
+        if let (country, phoneNumberWithoutCountryCode) = sut.shouldInsertAsPhoneNumber(presetCountry: presetCountry) {
+            // THEN
+            XCTAssertEqual(country?.iso, "ch")
+            XCTAssertEqual(phoneNumberWithoutCountryCode, "860792093637")
+        } else {
+            XCTFail()
+        }
+    }
+
     func testThatPhoneNumberWithoutSpaceIsParsed(){
         // GIVEN
         sut = "+41860792093637"

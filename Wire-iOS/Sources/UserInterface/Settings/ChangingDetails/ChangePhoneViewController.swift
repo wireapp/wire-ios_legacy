@@ -198,23 +198,28 @@ extension ChangePhoneViewController: RegistrationTextFieldDelegate {
         
         return insert(phoneNumber: string, registrationTextField: registrationTextField)
     }
-    
+
+
+    /// Insert a phone number to a RegistrationTextField or return true if it is not a valide number to insert.
+    ///
+    /// - Parameters:
+    ///   - phoneNumber: the phone number to insert
+    ///   - registrationTextField: the RegistrationTextField to insert the phone number
+    /// - Returns: return false if the phone number is inserted manually in this method. Otherwise return true.
     func insert(phoneNumber: String, registrationTextField: RegistrationTextField) -> Bool {
         let presetCountry = Country(iso: "", e164: NSNumber(value: registrationTextField.countryCode))
         
-        if let (country, phoneNumberWithoutCountryCode) = phoneNumber.shouldInsertAsPhoneNumber(presetCountry: presetCountry) {
-            registrationTextField.text = phoneNumber
-            if let country = country {
-                registrationTextField.countryCode = country.e164.uintValue
-            }
-            let number = PhoneNumber(countryCode: registrationTextField.countryCode, numberWithoutCode: phoneNumberWithoutCountryCode)
-            state.newNumber = number
-            updateSaveButtonState()
-            
-            return true
-        } else {
-            return false
+        guard let (country, phoneNumberWithoutCountryCode) = phoneNumber.shouldInsertAsPhoneNumber(presetCountry: presetCountry) else { return true }
+
+        registrationTextField.text = phoneNumberWithoutCountryCode
+        if let country = country {
+            registrationTextField.countryCode = country.e164.uintValue
         }
+        let number = PhoneNumber(countryCode: registrationTextField.countryCode, numberWithoutCode: phoneNumberWithoutCountryCode)
+        state.newNumber = number
+        updateSaveButtonState()
+
+        return false
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {

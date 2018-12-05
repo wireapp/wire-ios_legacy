@@ -32,7 +32,7 @@ extension PhoneNumberViewController {
         if let (country: country, phoneNumber: phoneNumberWithoutCountryCode) = phoneNumber.shouldInsertAsPhoneNumber(presetCountry: country) {
                 self.country = country
 
-                phoneNumberField.text = phoneNumberWithoutCountryCode;
+                phoneNumberField.text = phoneNumberWithoutCountryCode
                 updateRightAccessory(forPhoneNumber: phoneNumberWithoutCountryCode)
             return true
         } else {
@@ -47,7 +47,11 @@ extension PhoneNumberViewController: RegistrationTextFieldDelegate {
     }
 
     @objc(textField:shouldChangeCharactersInRange:replacementString:)
-    public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+    public func textField(_ textField: UITextField,
+                          shouldChangeCharactersIn range: NSRange,
+                          replacementString string: String) -> Bool {
+        guard string.trimmingCharacters(in: .whitespaces).count > 0 else { return false }
+
         guard let newString = (textField.text as NSString?)?.replacingCharacters(in: range, with: string) else { return false }
 
         guard let country = country else { return true }
@@ -60,7 +64,8 @@ extension PhoneNumberViewController: RegistrationTextFieldDelegate {
         let number = PhoneNumber(countryCode: country.e164.uintValue, numberWithoutCode: newString)
 
         switch number.validate() {
-            case .containsInvalidCharacters, .tooLong:
+            case .containsInvalidCharacters,
+                 .tooLong:
                 return false
             default:
                 break
