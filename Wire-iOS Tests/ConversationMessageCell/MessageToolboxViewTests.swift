@@ -160,4 +160,68 @@ final class MessageToolboxViewTests: CoreDataSnapshotTestCase {
         verify(view: sut)
     }
 
+    // MARK: - Tap Gesture
+
+    func testThatItOpensReceipts_NoLikers() {
+        teamTest {
+            // WHEN
+            sut.configureForMessage(message, forceShowTimestamp: false, animated: false)
+
+            // THEN
+            XCTAssertEqual(sut.preferredDetailsDisplayMode(), .receipts)
+        }
+    }
+
+    func testThatItOpensReceipts_WithLikers_ShowingTimestamp() {
+        teamTest {
+            // GIVEN
+            let selfUser = (MockUser.mockSelf() as Any) as! ZMUser
+            message.backingUsersReaction = [MessageReaction.like.unicodeValue: [selfUser]]
+
+            // WHEN
+            sut.configureForMessage(message, forceShowTimestamp: true, animated: false)
+
+            // THEN
+            XCTAssertEqual(sut.preferredDetailsDisplayMode(), .receipts)
+        }
+    }
+
+    func testThatItOpensLikesWhenTapped_ReceiptsEnabled() {
+        teamTest {
+            // GIVEN
+            let selfUser = (MockUser.mockSelf() as Any) as! ZMUser
+            message.backingUsersReaction = [MessageReaction.like.unicodeValue: [selfUser]]
+
+            // WHEN
+            sut.configureForMessage(message, forceShowTimestamp: false, animated: false)
+
+            // THEN
+            XCTAssertEqual(sut.preferredDetailsDisplayMode(), .reactions)
+        }
+    }
+
+    func testThatItOpensLikesWhenTapped_ReceiptsDisabled() {
+        // GIVEN
+        let selfUser = (MockUser.mockSelf() as Any) as! ZMUser
+        message.backingUsersReaction = [MessageReaction.like.unicodeValue: [selfUser]]
+
+        // WHEN
+        sut.configureForMessage(message, forceShowTimestamp: false, animated: false)
+
+        // THEN
+        XCTAssertEqual(sut.preferredDetailsDisplayMode(), .reactions)
+    }
+
+    func testThatItDoesNotShowLikes_ReceiptsDisabled_ShowingTimestamp() {
+        // GIVEN
+        let selfUser = (MockUser.mockSelf() as Any) as! ZMUser
+        message.backingUsersReaction = [MessageReaction.like.unicodeValue: [selfUser]]
+
+        // WHEN
+        sut.configureForMessage(message, forceShowTimestamp: true, animated: false)
+
+        // THEN
+        XCTAssertNil(sut.preferredDetailsDisplayMode())
+    }
+
 }
