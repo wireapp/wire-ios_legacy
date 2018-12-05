@@ -207,14 +207,11 @@ extension ChangePhoneViewController: RegistrationTextFieldDelegate {
     ///   - registrationTextField: the RegistrationTextField to insert the phone number
     /// - Returns: return false if the phone number is inserted manually in this method. Otherwise return true.
     func insert(phoneNumber: String, registrationTextField: RegistrationTextField) -> Bool {
-        let presetCountry = Country(iso: "", e164: NSNumber(value: registrationTextField.countryCode))
-        
-        guard let (country, phoneNumberWithoutCountryCode) = phoneNumber.shouldInsertAsPhoneNumber(presetCountry: presetCountry) else { return true }
 
-        registrationTextField.text = phoneNumberWithoutCountryCode
-        if let country = country {
-            registrationTextField.countryCode = country.e164.uintValue
+        guard let (_, phoneNumberWithoutCountryCode) = registrationTextField.insert(phoneNumber: phoneNumber) else {
+            return true
         }
+
         let number = PhoneNumber(countryCode: registrationTextField.countryCode, numberWithoutCode: phoneNumberWithoutCountryCode)
         state.newNumber = number
         updateSaveButtonState()

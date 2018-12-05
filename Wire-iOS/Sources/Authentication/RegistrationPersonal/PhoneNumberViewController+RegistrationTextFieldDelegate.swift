@@ -26,31 +26,30 @@ extension PhoneNumberViewController {
     /// - Returns: true if the phone number can be inserted
     @objc
     @discardableResult
-    func insert(phoneNumber: String?) -> Bool {
-        guard let phoneNumber = phoneNumber else { return false }
-
-        if let (country: country, phoneNumber: phoneNumberWithoutCountryCode) = phoneNumber.shouldInsertAsPhoneNumber(presetCountry: country) {
-                self.country = country
-
-                phoneNumberField.text = phoneNumberWithoutCountryCode
-                updateRightAccessory(forPhoneNumber: phoneNumberWithoutCountryCode)
+    func insert(phoneNumber: String, registrationTextField: RegistrationTextField) -> Bool {
+        guard let (country, phoneNumberWithoutCountryCode) = registrationTextField.insert(phoneNumber: phoneNumber) else {
             return true
-        } else {
-            return false
         }
+
+        self.country = country
+        updateRightAccessory(forPhoneNumber: phoneNumberWithoutCountryCode)
+
+        return false
     }
 }
 
 extension PhoneNumberViewController: RegistrationTextFieldDelegate {
     func textField(_ textField: UITextField, shouldPasteCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        return insert(phoneNumber: string)
+        guard let registrationTextField = textField as? RegistrationTextField else { return true }
+
+        return insert(phoneNumber: string, registrationTextField: registrationTextField)
     }
 
     @objc(textField:shouldChangeCharactersInRange:replacementString:)
     public func textField(_ textField: UITextField,
                           shouldChangeCharactersIn range: NSRange,
                           replacementString string: String) -> Bool {
-        guard string.trimmingCharacters(in: .whitespaces).count > 0 else { return false }
+        guard let registrationTextField = textField as? RegistrationTextField else { return true }
 
         guard let newString = (textField.text as NSString?)?.replacingCharacters(in: range, with: string) else { return false }
 
@@ -58,17 +57,17 @@ extension PhoneNumberViewController: RegistrationTextFieldDelegate {
 
         ///If the textField is empty and a replacementString with longer than 1 char, it is likely to insert from autoFill.
         if textField.text?.count == 0 && string.count > 1 {
-            return insert(phoneNumber: string)
+            return insert(phoneNumber: string, registrationTextField: registrationTextField)
         }
 
         let number = PhoneNumber(countryCode: country.e164.uintValue, numberWithoutCode: newString)
 
         switch number.validate() {
-            case .containsInvalidCharacters,
-                 .tooLong:
-                return false
-            default:
-                break
+        case .containsInvalidCharacters,
+             .tooLong:
+            return false
+        default:
+            break
         }
 
         let phoneNumber = NSString.phoneNumber(withE164: country.e164, number: newString)
