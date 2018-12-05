@@ -46,7 +46,8 @@ final public class ConversationCreationValues {
         _ controller: ConversationCreationController,
         didSelectName name: String,
         participants: Set<ZMUser>,
-        allowGuests: Bool
+        allowGuests: Bool,
+        enableReceipts: Bool
     )
     
 }
@@ -256,7 +257,8 @@ extension ConversationCreationController: AddParticipantsConversationCreationDel
                 self,
                 didSelectName: values.name,
                 participants: values.participants,
-                allowGuests: values.allowGuests
+                allowGuests: values.allowGuests,
+                enableReceipts: values.enableReceipts
             )
         }
     }
