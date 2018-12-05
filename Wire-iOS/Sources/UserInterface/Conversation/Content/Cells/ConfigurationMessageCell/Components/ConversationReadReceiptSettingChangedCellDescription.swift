@@ -52,18 +52,31 @@ struct ReadReceiptViewModel {
         let baseAttributes: [NSAttributedString.Key: AnyObject] = [.font: UIFont.mediumFont, .foregroundColor: UIColor.from(scheme: .textForeground)]
 
 
-        ///TODO: get on/off setting from somewhere or argument?
+        var updateText: NSAttributedString! = .none
 
-        let updateText: NSAttributedString
+        switch systemMessage.systemMessageType {
+        case .readReceiptsDisabled:
+            if let selfUser = systemMessage.involvsSelfUserOnly {
+                updateText = NSAttributedString(string: "content.system.message_read_receipt_off".localized(pov: selfUser.pov, args: "content.system.you_started".localized), attributes: baseAttributes)
+            } else if let otherUserName = systemMessage.otherUserName {
+                updateText = NSAttributedString(string: "content.system.message_read_receipt_off".localized(args: otherUserName), attributes: baseAttributes)
+                    .adding(font: .mediumSemiboldFont, to: otherUserName)
+            }
+        case .readReceiptsEnabled:
+            if let selfUser = systemMessage.involvsSelfUserOnly {
+                updateText = NSAttributedString(string: "content.system.message_read_receipt_on".localized(pov: selfUser.pov, args: "content.system.you_started".localized), attributes: baseAttributes)
+            } else if let otherUserName = systemMessage.otherUserName {
+                updateText = NSAttributedString(string: "content.system.message_read_receipt_on".localized(args: otherUserName), attributes: baseAttributes)
+                    .adding(font: .mediumSemiboldFont, to: otherUserName)
+            }
+        case .readReceiptsOn:
+            updateText = NSAttributedString(string: "content.system.message_read_receipt_on_add_to_group".localized)
 
-        if let selfUser = systemMessage.involvsSelfUserOnly {
-            updateText = NSAttributedString(string: "content.system.message_read_receipt_off".localized(pov: selfUser.pov, args: "content.system.you_started".localized), attributes: baseAttributes)
-        } else if let otherUserName = systemMessage.otherUserName {
-            updateText = NSAttributedString(string: "content.system.message_read_receipt_off".localized(args: otherUserName), attributes: baseAttributes)
-                .adding(font: .mediumSemiboldFont, to: otherUserName)
-        } else { ///TODO: case When I am added to a group conversation...
-            updateText = NSAttributedString(string: "")
+        default:
+            assertionFailure("invalid systemMessageType for ReadReceiptViewModel")
+            break
         }
+
 
         return updateText
     }

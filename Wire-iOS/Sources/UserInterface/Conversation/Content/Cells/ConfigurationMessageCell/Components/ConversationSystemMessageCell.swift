@@ -234,7 +234,9 @@ class ConversationSystemMessageCellDescription {
             let participantsChangedCell = ConversationParticipantsChangedSystemMessageCellDescription(message: message, data: systemMessageData)
             return [AnyConversationMessageCellDescription(participantsChangedCell)]
 
-        case .readReceiptSettingChanged:
+        case .readReceiptsEnabled,
+             .readReceiptsDisabled,
+             .readReceiptsOn:
             let cell = ConversationReadReceiptSettingChangedCellDescription(message: message, data: systemMessageData)
             return [AnyConversationMessageCellDescription(cell)]
 

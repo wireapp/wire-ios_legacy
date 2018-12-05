@@ -26,10 +26,13 @@ final class ReadReceiptViewModelTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
+//        ZMSystemMessageTypeReadReceiptsEnabled,
+//        ZMSystemMessageTypeReadReceiptsDisabled,
+//        ZMSystemMessageTypeReadReceiptsOn
 
         let usersCount = 1
         let clientsCount = 1
-        let type = ZMSystemMessageType.readReceiptSettingChanged
+        let type = ZMSystemMessageType.readReceiptsDisabled
 
         mockMessage = MockMessageFactory.systemMessage(with: type, users: usersCount, clients: clientsCount)!
 

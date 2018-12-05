@@ -136,16 +136,15 @@ class ConversationSystemMessageTests: ConversationCellSnapshotTestCase {
 
     // MARK: - read receipt
 
-    ///TODO: update after new enum values are added
     func testReadReceiptIsOffByThirdPerson() {
-        let message = MockMessageFactory.systemMessage(with: .readReceiptSettingChanged, users: 1, clients: 1)!
+        let message = MockMessageFactory.systemMessage(with: .readReceiptsDisabled, users: 1, clients: 1)!
 
         verify(message: message)
     }
 
     ///TODO: update after new enum values are added
     func testReadReceiptIsOffByYou() {
-        let message = MockMessageFactory.systemMessage(with: .readReceiptSettingChanged, users: 1, clients: 1)!
+        let message = MockMessageFactory.systemMessage(with: .readReceiptsDisabled, users: 1, clients: 1)!
         message.backingSystemMessageData?.users = Set<AnyHashable>([MockUser.mockSelf()]) as! Set<ZMUser>
 
         verify(message: message)
