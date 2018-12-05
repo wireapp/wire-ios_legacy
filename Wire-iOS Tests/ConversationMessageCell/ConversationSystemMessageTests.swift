@@ -111,6 +111,13 @@ class ConversationSystemMessageTests: ConversationCellSnapshotTestCase {
         verify(message: message)
     }
 
+    func testUsingNewDevice() {
+        let message = MockMessageFactory.systemMessage(with: .usingNewDevice, users: 1, clients: 1)!
+        message.backingSystemMessageData?.users = Set<AnyHashable>([MockUser.mockSelf()]) as! Set<ZMUser>
+
+        verify(message: message)
+    }
+
     // MARK: - read receipt
 
     func testReadReceiptIsOffByThirdPerson() {
