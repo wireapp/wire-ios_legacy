@@ -91,7 +91,7 @@ class MessageDetailsDataSource: NSObject, ZMMessageObserver, ZMConversationObser
         self.readReceipts = MessageDetailsCellDescription.makeReceiptCell(message.sortedReadReceipts)
 
         // Compute the title and display mode
-        let supportsLikes = message.canBeLiked
+        let supportsLikes = !message.isEphemeral
         let supportsReadReciepts = message.areReadReceiptsDetailsAvailable
 
         switch (supportsLikes, supportsReadReciepts) {
