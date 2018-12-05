@@ -97,6 +97,13 @@ final public class ConversationCreationValues {
         return section
     }()
     
+    internal var optionsExpanded: Bool = false {
+        didSet {
+            self.guestsSection.isHidden = !optionsExpanded
+            self.receiptsSection.isHidden = !optionsExpanded
+        }
+    }
+    
     fileprivate var navBarBackgroundView = UIView()
 
     fileprivate var values = ConversationCreationValues()
@@ -293,13 +300,13 @@ extension ConversationCreationController: SimpleTextFieldDelegate {
 // MARK: - Handlers
 
 extension ConversationCreationController {
+    
     private func optionsTapped(expanded: Bool) {
         guard let collectionView = collectionViewController.collectionView else {
             return
         }
         
-        self.guestsSection.isHidden = !expanded
-        self.receiptsSection.isHidden = !expanded
+        optionsExpanded = expanded
         
         let changes: () -> Void
         

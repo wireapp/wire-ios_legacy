@@ -19,7 +19,7 @@
 import XCTest
 @testable import Wire
 
-final class ConversationCreationControllerSnapshotTests: ZMSnapshotTestCase {
+final class ConversationCreationControllerSnapshotTests: CoreDataSnapshotTestCase {
     
     var sut: ConversationCreationController!
     
@@ -34,7 +34,7 @@ final class ConversationCreationControllerSnapshotTests: ZMSnapshotTestCase {
         super.tearDown()
     }
 
-    func testForEditingTextField(){
+    func testForEditingTextField() {
 
         sut.loadViewIfNeeded()
         sut.beginAppearanceTransition(false, animated: false)
@@ -43,5 +43,23 @@ final class ConversationCreationControllerSnapshotTests: ZMSnapshotTestCase {
         sut.viewDidAppear(false)
 
         verify(view: sut.view)
+    }
+    
+    func testTeamGroupOptionsCollapsed() {
+        teamTest {
+            self.sut.loadViewIfNeeded()
+            self.sut.viewDidAppear(false)
+            
+            verify(view: self.sut.view)
+        }
+    }
+    
+    func testTeamGroupOptionsExpanded() {
+        teamTest {
+            self.sut.loadViewIfNeeded()
+            self.sut.optionsExpanded = true
+            
+            verify(view: self.sut.view)
+        }
     }
 }
