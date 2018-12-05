@@ -79,7 +79,7 @@ final class ChangePhoneViewControllerTests: ZMSnapshotTestCase {
         let indexPath = IndexPath(row: 0, section: 0)
         if let cell = sut.tableView.cellForRow(at: indexPath) as? RegistrationTextFieldCell {
             // WHEN
-            let result = sut.textField(cell.textField, shouldChangeCharactersIn: NSRange(location: 0, length: 0), replacementString: "8")
+            let result = sut.textField(cell.textField, shouldChangeCharactersIn: NSRange(location: cell.textField.text!.count, length: 0), replacementString: "8")
 
             //THEN
             XCTAssert(result)
