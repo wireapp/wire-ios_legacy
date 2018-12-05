@@ -21,7 +21,7 @@ import Foundation
 extension ZMSystemMessageData {
 
     /// return self user if the users array has self user only. Otherwise return nil
-    var involvsSelfUserOnly: ZMUser? {
+    var involvesSelfUserOnly: ZMUser? {
         if users.count == 1,
             let user = users.first,
             user.isSelfUser {
@@ -55,7 +55,7 @@ struct ReadReceiptViewModel {
 
         switch systemMessage.systemMessageType {
         case .readReceiptsDisabled:
-            if let selfUser = systemMessage.involvsSelfUserOnly {
+            if let selfUser = systemMessage.involvesSelfUserOnly {
                 updateText = NSAttributedString(string: "content.system.message_read_receipt_off".localized(pov: selfUser.pov, args: "content.system.you_started".localized), attributes: baseAttributes)
             } else if let otherUserName = systemMessage.otherUserName {
                 updateText = NSAttributedString(string: "content.system.message_read_receipt_off".localized(args: otherUserName), attributes: baseAttributes)
