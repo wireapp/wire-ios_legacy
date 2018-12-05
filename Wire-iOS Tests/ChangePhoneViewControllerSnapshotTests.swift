@@ -53,3 +53,38 @@ final class ChangePhoneViewControllerSnapshotTests: ZMSnapshotTestCase {
         verifyInIPhoneSize(view: sut.view)
     }
 }
+
+final class ChangePhoneViewControllerTests: ZMSnapshotTestCase {
+    var sut: ChangePhoneViewController!
+
+    override func setUp() {
+        super.setUp()
+        sut = ChangePhoneViewController()
+    }
+
+    override func tearDown() {
+        sut = nil
+        super.tearDown()
+    }
+
+    func testForADigitIsAllowed(){
+        // GIVEN
+        // call viewDidLoad
+        sut.loadViewIfNeeded()
+
+        // make table view's cells visible
+        sut.view.frame = CGRect(origin: .zero, size: defaultIPhoneSize)
+        sut.view.layoutIfNeeded()
+
+        let indexPath = IndexPath(row: 0, section: 0)
+        if let cell = sut.tableView.cellForRow(at: indexPath) as? RegistrationTextFieldCell {
+            // WHEN
+            let result = sut.textField(cell.textField, shouldChangeCharactersIn: NSRange(location: 0, length: 0), replacementString: "8")
+
+            //THEN
+            XCTAssert(result)
+        } else {
+            XCTFail()
+        }
+    }
+}
