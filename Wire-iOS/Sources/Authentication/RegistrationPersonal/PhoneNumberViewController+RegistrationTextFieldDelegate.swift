@@ -26,8 +26,8 @@ extension PhoneNumberViewController {
     /// - Returns: true if the phone number can be inserted
     @objc
     @discardableResult
-    func insert(phoneNumber: String, registrationTextField: RegistrationTextField) -> Bool {
-        guard let (country, phoneNumberWithoutCountryCode) = registrationTextField.insert(phoneNumber: phoneNumber) else {
+    func insert(phoneNumber: String) -> Bool {
+        guard let (country, phoneNumberWithoutCountryCode) = phoneNumberField.insert(phoneNumber: phoneNumber) else {
             return true
         }
 
@@ -39,25 +39,23 @@ extension PhoneNumberViewController {
 }
 
 extension PhoneNumberViewController: RegistrationTextFieldDelegate {
-    func textField(_ textField: UITextField, shouldPasteCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        guard let registrationTextField = textField as? RegistrationTextField else { return true }
-
-        return insert(phoneNumber: string, registrationTextField: registrationTextField)
+    func textField(_ textField: UITextField,
+                   shouldPasteCharactersIn range: NSRange,
+                   replacementString string: String) -> Bool {
+        return insert(phoneNumber: string)
     }
 
     @objc(textField:shouldChangeCharactersInRange:replacementString:)
     public func textField(_ textField: UITextField,
                           shouldChangeCharactersIn range: NSRange,
                           replacementString string: String) -> Bool {
-        guard let registrationTextField = textField as? RegistrationTextField else { return true }
-
         guard let newString = (textField.text as NSString?)?.replacingCharacters(in: range, with: string) else { return false }
 
         guard let country = country else { return true }
 
         ///If the textField is empty and a replacementString with longer than 1 char, it is likely to insert from autoFill.
         if textField.text?.count == 0 && string.count > 1 {
-            return insert(phoneNumber: string, registrationTextField: registrationTextField)
+            return insert(phoneNumber: string)
         }
 
         let number = PhoneNumber(countryCode: country.e164.uintValue, numberWithoutCode: newString)
