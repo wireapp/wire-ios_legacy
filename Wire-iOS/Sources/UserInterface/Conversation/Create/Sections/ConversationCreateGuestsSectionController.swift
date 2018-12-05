@@ -22,7 +22,7 @@ class ConversationCreateGuestsSectionController: ConversationCreateSectionContro
     
     typealias Cell = ConversationCreateGuestsCell
     
-    var toggleAction: Cell.ToggleHandler?
+    var toggleAction: ((Bool) -> Void)?
     
     override func prepareForUse(in collectionView: UICollectionView?) {
         super.prepareForUse(in: collectionView)

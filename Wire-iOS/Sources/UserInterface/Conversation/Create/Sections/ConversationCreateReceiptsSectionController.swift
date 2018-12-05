@@ -22,7 +22,7 @@ class ConversationCreateReceiptsSectionController: ConversationCreateSectionCont
     
     typealias Cell = ConversationCreateReceiptsCell
 
-    var toggleAction: Cell.ToggleHandler?
+    var toggleAction: ((Bool) -> Void)?
 
     override func prepareForUse(in collectionView: UICollectionView?) {
         super.prepareForUse(in: collectionView)
