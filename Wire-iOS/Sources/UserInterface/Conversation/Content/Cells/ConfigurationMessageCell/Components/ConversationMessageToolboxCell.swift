@@ -66,6 +66,11 @@ class ConversationMessageToolboxCell: UIView, ConversationMessageCell, MessageTo
         toolboxView.configureForMessage(object.message, forceShowTimestamp: object.selected, animated: animated)
     }
 
+    func messageToolboxDidRequestOpeningDetails(_ messageToolboxView: MessageToolboxView, preferredDisplayMode: MessageDetailsDisplayMode) {
+        let detailsViewController = MessageDetailsViewController(message: message!, preferredDisplayMode: preferredDisplayMode)
+        delegate?.conversationCellDidRequestOpeningMessageDetails?(self, messageDetails: detailsViewController)
+    }
+
     func messageToolboxViewDidRequestLike(_ messageToolboxView: MessageToolboxView) {
         delegate?.conversationCell?(self, didSelect: .like, for: message)
     }
@@ -76,10 +81,6 @@ class ConversationMessageToolboxCell: UIView, ConversationMessageCell, MessageTo
 
     func messageToolboxViewDidSelectResend(_ messageToolboxView: MessageToolboxView) {
         delegate?.conversationCell?(self, didSelect: .resend, for: message)
-    }
-
-    func messageToolboxViewDidSelectLikers(_ messageToolboxView: MessageToolboxView) {
-        delegate?.conversationCellDidTapOpenLikers?(self, for: message)
     }
 
 }

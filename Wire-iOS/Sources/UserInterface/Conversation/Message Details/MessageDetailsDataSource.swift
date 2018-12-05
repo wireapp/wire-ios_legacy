@@ -19,7 +19,7 @@
 import Foundation
 
 /// The way the details are displayed.
-enum MessageDetailsDisplayMode {
+@objc public enum MessageDetailsDisplayMode: Int {
     case reactions, receipts, combined
 }
 
