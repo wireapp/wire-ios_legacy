@@ -39,6 +39,42 @@ class ConversationSystemMessageCell: ConversationIconBasedCell, ConversationMess
 
 }
 
+class ParticipantsConversationSystemMessageCell: ConversationIconBasedCell, ConversationMessageCell {
+    
+    struct Configuration {
+        let icon: UIImage?
+        let attributedText: NSAttributedString?
+        let showLine: Bool
+        let warning: String?
+    }
+    
+    private let warningLabel = UILabel()
+    
+    override func configureSubviews() {
+        super.configureSubviews()
+        warningLabel.numberOfLines = 0
+        warningLabel.isAccessibilityElement = true
+        warningLabel.font = FontSpec(.small, .regular).font
+        warningLabel.textColor = .vividRed
+        contentView.addSubview(warningLabel)
+    }
+    
+    override func configureConstraints() {
+        super.configureConstraints()
+        warningLabel.translatesAutoresizingMaskIntoConstraints = false
+        warningLabel.fitInSuperview()
+    }
+    
+    // MARK: - Configuration
+    
+    func configure(with object: Configuration, animated: Bool) {
+        lineView.isHidden = !object.showLine
+        imageView.image = object.icon
+        attributedText = object.attributedText
+        warningLabel.text = object.warning
+    }
+}
+
 class LinkConversationSystemMessageCell: ConversationIconBasedCell, ConversationMessageCell {
 
     struct Configuration {
@@ -259,7 +295,7 @@ class ConversationSystemMessageCellDescription {
 
 
 class ConversationParticipantsChangedSystemMessageCellDescription: ConversationMessageCellDescription {
-    typealias View = ConversationSystemMessageCell
+    typealias View = ParticipantsConversationSystemMessageCell
     let configuration: View.Configuration
     
     var message: ZMConversationMessage?
@@ -280,7 +316,7 @@ class ConversationParticipantsChangedSystemMessageCellDescription: ConversationM
         let color = UIColor.from(scheme: .textForeground)
 
         let model = ParticipantsCellViewModel(font: .mediumFont, boldFont: .mediumSemiboldFont, largeFont: .largeSemiboldFont, textColor: color, iconColor: color, message: message)
-        configuration = View.Configuration(icon: model.image(), attributedText: model.attributedTitle(), showLine: true)
+        configuration = View.Configuration(icon: model.image(), attributedText: model.attributedTitle(), showLine: true, warning: model.warning())
         actionController = nil
     }
     
