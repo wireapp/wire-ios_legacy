@@ -30,8 +30,6 @@
 #import "MockUser.h"
 #import "SplitViewController.h"
 #import <avs/AVSAudioEffect.h>
-#import "ImageMessageCell.h"
-#import "ImageMessageCell+Internal.h"
 #import "Message+UI.h"
 #import "MockConversation.h"
 #import "MockConversationFactory.h"
