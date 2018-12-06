@@ -21,6 +21,7 @@ import UIKit
 
 public extension UIColor {
     @objc static var graphite: UIColor = UIColor.wr_color(from: "rgb(51, 55, 58)")
+    static var graphiteAlpha4: UIColor = UIColor.wr_color(from: "rgb(51, 55, 58, 0.04)")
     static var graphiteAlpha8: UIColor = UIColor.wr_color(from: "rgb(51, 55, 58, 0.08)")
     static var graphiteAlpha16: UIColor = UIColor.wr_color(from: "rgb(51, 55, 58, 0.16)")
     static var graphiteAlpha40: UIColor = UIColor.wr_color(from: "rgb(51, 55, 58, 0.4)")
@@ -104,6 +105,7 @@ public extension UIColor {
     case audioButtonOverlay
 
     case sectionBackground
+    case sectionBackgroundHighlighted
     case sectionText
 
     case tokenFieldBackground
@@ -208,6 +210,8 @@ extension ColorSchemeColor {
             return ColorPair(both: .blackAlpha40)
         case .sectionBackground:
             return ColorPair(both: .clear)
+        case .sectionBackgroundHighlighted:
+            return ColorPair(both: .graphiteAlpha4)
         case .sectionText:
             return ColorPair(light: .blackAlpha40, dark: .whiteAlpha40)
         case .tokenFieldBackground:

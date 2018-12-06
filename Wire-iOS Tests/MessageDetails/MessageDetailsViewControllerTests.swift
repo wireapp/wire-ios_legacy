@@ -36,6 +36,7 @@ class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
             let message = MockMessageFactory.textMessage(withText: "Message")!
             message.sender = selfUser
             message.conversation = conversation
+            message.deliveryState = .read
 
             let users = usernames.prefix(upTo: 5).map(self.createUser)
             let receipts = users.map(MockReadReceipt.init)
@@ -63,6 +64,7 @@ class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
             message.sender = selfUser
             message.conversation = conversation
             message.updatedAt = Date(timeIntervalSince1970: 69)
+            message.deliveryState = .read
 
             let users = usernames.prefix(upTo: 5).map(self.createUser)
             let receipts = users.map(MockReadReceipt.init)
@@ -90,6 +92,7 @@ class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
             message.sender = selfUser
             message.conversation = conversation
             message.updatedAt = Date(timeIntervalSince1970: 69)
+            message.deliveryState = .read
 
             let users = usernames.prefix(upTo: 20).map(self.createUser)
             let receipts = users.map(MockReadReceipt.init)
@@ -116,6 +119,7 @@ class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
             let message = MockMessageFactory.textMessage(withText: "Message")!
             message.sender = selfUser
             message.conversation = conversation
+            message.deliveryState = .read
 
             let users = usernames.prefix(upTo: 6).map(self.createUser)
             users.forEach { $0.setHandle($0.name) }
@@ -144,6 +148,7 @@ class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
             let message = MockMessageFactory.textMessage(withText: "Message")!
             message.sender = selfUser
             message.conversation = conversation
+            message.deliveryState = .sent
 
             // WHEN
             let detailsViewController = MessageDetailsViewController(message: message)
@@ -164,6 +169,7 @@ class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
             message.sender = selfUser
             message.conversation = conversation
             message.readReceipts = []
+            message.deliveryState = .sent
 
             // WHEN
             let detailsViewController = MessageDetailsViewController(message: message)
@@ -184,6 +190,7 @@ class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
             message.sender = selfUser
             message.conversation = conversation
             message.readReceipts = []
+            message.deliveryState = .sent
 
             // WHEN
             let detailsViewController = MessageDetailsViewController(message: message)
@@ -204,6 +211,7 @@ class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
             message.sender = selfUser
             message.conversation = conversation
             message.readReceipts = []
+            message.deliveryState = .delivered
 
             // WHEN: creating the controller
             let detailsViewController = MessageDetailsViewController(message: message)
@@ -231,6 +239,7 @@ class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
             message.sender = selfUser
             message.conversation = conversation
             message.readReceipts = []
+            message.deliveryState = .delivered
 
             // WHEN: creating the controller
             let detailsViewController = MessageDetailsViewController(message: message)
@@ -242,6 +251,27 @@ class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
             let changeInfo = ConversationChangeInfo(object: conversation)
             changeInfo.changedKeys = [#keyPath(ZMConversation.hasReadReceiptsEnabled)]
             detailsViewController.dataSource.conversationDidChange(changeInfo)
+
+            // THEN
+            snapshot(detailsViewController)
+        }
+    }
+
+    func testThatItShowsBothTabs_WhenMessageIsSeenButNotLiked() {
+        teamTest {
+            // GIVEN
+            let conversation = self.createGroupConversation()
+            conversation.hasReadReceiptsEnabled = true
+
+            let message = MockMessageFactory.textMessage(withText: "Message")!
+            message.sender = selfUser
+            message.conversation = conversation
+            message.readReceipts = [MockReadReceipt(user: otherUser)]
+            message.deliveryState = .read
+
+            // WHEN: creating the controller
+            let detailsViewController = MessageDetailsViewController(message: message)
+            detailsViewController.container.selectIndex(0, animated: false)
 
             // THEN
             snapshot(detailsViewController)

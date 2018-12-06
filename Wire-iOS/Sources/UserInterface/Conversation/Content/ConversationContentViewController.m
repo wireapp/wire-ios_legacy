@@ -200,6 +200,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
                                                  name:UIApplicationDidBecomeActiveNotification
                                                object:nil];
 
+    [self.conversationMessageWindowTableViewAdapter selectLastMessage];
 }
 
 - (void)applicationDidBecomeActive:(NSNotification *)notification
@@ -233,6 +234,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     self.messagePresenter.modalTargetController = self.parentViewController;
 
     [self updateHeaderHeight];
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -838,12 +840,9 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     return shouldBecomeFirstResponder;
 }
 
-- (void)conversationCellDidTapOpenLikers:(UIView *)cell forMessage:(id<ZMConversationMessage>)message
+- (void)conversationCellDidRequestOpeningMessageDetails:(UIView *)cell messageDetails:(MessageDetailsViewController *)messageDetails
 {
-    if ([Message hasLikers:message]) {
-        MessageDetailsViewController *detailsViewController = [[MessageDetailsViewController alloc] initWithMessage:message];
-        [self.parentViewController presentViewController:detailsViewController animated:YES completion:nil];
-    }
+    [self.parentViewController presentViewController:messageDetails animated:YES completion:nil];
 }
 
 - (BOOL)conversationCellShouldStartDestructionTimer:(ConversationCell *)cell
@@ -965,6 +964,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
             self.expectedMessageToShow = nil;
         }
     }
+    
 }
 
 @end

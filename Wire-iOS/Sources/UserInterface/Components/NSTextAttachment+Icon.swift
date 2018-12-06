@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2016 Wire Swiss GmbH
+// Copyright (C) 2018 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,11 +16,17 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-@class LinkInteractionTextView;
+import Foundation
 
-@interface TextMessageCell ()
-@property (nonatomic) LinkInteractionTextView *messageTextView;
-// Using @c smallLinkAttachments = YES imply that the cell is not going to be re-used.
-@property (nonatomic) BOOL smallLinkAttachments;
-@property (nonatomic) UIView *linkAttachmentContainer;
-@end
+extension NSTextAttachment {
+    static func textAttachment(for icon: ZetaIconType, with color: UIColor, iconSize: CGFloat = 10, verticalCorrection: CGFloat = 0) -> NSTextAttachment? {
+        guard let image = UIImage(for: icon, fontSize: iconSize, color: color)
+            else { return nil }
+
+        let attachment = NSTextAttachment()
+        attachment.image = image
+        let ratio = image.size.width / image.size.height
+        attachment.bounds = CGRect(x: 0, y: verticalCorrection, width: iconSize * ratio, height: iconSize)
+        return attachment
+    }
+}

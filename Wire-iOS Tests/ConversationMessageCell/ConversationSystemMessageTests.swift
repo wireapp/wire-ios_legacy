@@ -21,6 +21,12 @@ import XCTest
 
 class ConversationSystemMessageTests: ConversationCellSnapshotTestCase {
 
+    override func setUp() {
+        super.setUp()
+        ColorScheme.default.variant = .light
+    }
+
+
     func testRenameConversation() {
         let message = MockMessageFactory.systemMessage(with: .conversationNameChanged, users: 0, clients: 0)!
         message.backingSystemMessageData.text = "Blue room"
@@ -46,10 +52,20 @@ class ConversationSystemMessageTests: ConversationCellSnapshotTestCase {
     func testRemoveParticipant() {
         let message = MockMessageFactory.systemMessage(with: .participantsRemoved, users: 1, clients: 0)!
         message.sender = MockUser.mockUsers()?.last
-        
+
         verify(message: message)
     }
-    
+
+    func testRemoveParticipant_dark() {
+        ColorScheme.default.variant = .dark
+        snapshotBackgroundColor = .black
+
+        let message = MockMessageFactory.systemMessage(with: .participantsRemoved, users: 1, clients: 0)!
+        message.sender = MockUser.mockUsers()?.last
+
+        verify(message: message)
+    }
+
     func testTeamMemberLeave() {
         let message = MockMessageFactory.systemMessage(with: .teamMemberLeave, users: 1, clients: 0)!
         message.sender = MockUser.mockUsers()?.last
@@ -94,11 +110,26 @@ class ConversationSystemMessageTests: ConversationCellSnapshotTestCase {
         
         verify(message: message)
     }
-    
+
     func testUsingNewDevice() {
         let message = MockMessageFactory.systemMessage(with: .usingNewDevice, users: 1, clients: 1)!
         message.backingSystemMessageData?.users = Set<AnyHashable>([MockUser.mockSelf()]) as! Set<ZMUser>
-        
+
+        verify(message: message)
+    }
+
+    // MARK: - read receipt
+
+    func testReadReceiptIsOffByThirdPerson() {
+        let message = MockMessageFactory.systemMessage(with: .readReceiptsDisabled, users: 1, clients: 1)!
+
+        verify(message: message)
+    }
+
+    func testReadReceiptIsOffByYou() {
+        let message = MockMessageFactory.systemMessage(with: .readReceiptsDisabled, users: 1, clients: 1)!
+        message.backingSystemMessageData?.users = Set<AnyHashable>([MockUser.mockSelf()]) as! Set<ZMUser>
+
         verify(message: message)
     }
 

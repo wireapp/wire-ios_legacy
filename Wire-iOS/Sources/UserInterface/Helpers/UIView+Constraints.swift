@@ -37,19 +37,30 @@ struct EdgeInsets {
 }
 
 extension UIView {
-    @discardableResult func fitInSuperview(with insets: EdgeInsets = .zero) -> [NSLayoutConstraint] {
+    @discardableResult func fitInSuperview(safely: Bool = false, with insets: EdgeInsets = .zero) -> [NSLayoutConstraint] {
         guard let superview = self.superview else {
             fatal("Not in view hierarchy: self.superview = nil")
         }
         
         let constraints = [
-            self.leadingAnchor.constraint(equalTo: superview.leadingAnchor, constant: insets.leading),
-            self.topAnchor.constraint(equalTo: superview.topAnchor, constant: insets.top),
-            self.bottomAnchor.constraint(equalTo: superview.bottomAnchor, constant: -insets.bottom),
-            self.trailingAnchor.constraint(equalTo: superview.trailingAnchor, constant: -insets.trailing)
+            self.leadingAnchor.constraint(
+                equalTo: safely ? superview.safeLeadingAnchor : superview.leadingAnchor,
+                constant: insets.leading),
+            
+            self.topAnchor.constraint(
+                equalTo: safely ? superview.safeTopAnchor : superview.topAnchor,
+                constant: insets.top),
+            
+            self.bottomAnchor.constraint(
+                equalTo: safely ? superview.safeBottomAnchor : superview.bottomAnchor,
+                constant: -insets.bottom),
+            
+            self.trailingAnchor.constraint(
+                equalTo: safely ? superview.safeTrailingAnchor : superview.trailingAnchor,
+                constant: -insets.trailing)
         ]
-        NSLayoutConstraint.activate(constraints)
         
+        NSLayoutConstraint.activate(constraints)
         return constraints
     }
 }

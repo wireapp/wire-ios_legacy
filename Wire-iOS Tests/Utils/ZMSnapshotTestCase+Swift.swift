@@ -153,11 +153,6 @@ extension ZMSnapshotTestCase {
     }
 
 
-    /// return the smallest iPhone screen size that Wire app supports
-    public var defaultIPhoneSize: CGSize {
-        return ZMDeviceSizeIPhone5
-    }
-
     func verifyInIPhoneSize(view: UIView, file: StaticString = #file, line: UInt = #line) {
         constrain(view) { view in
             view.width == defaultIPhoneSize.width

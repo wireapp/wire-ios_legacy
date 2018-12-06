@@ -40,7 +40,24 @@ import WireExtensionComponents
 
     // MARK: - Initialization
 
-    @objc init(message: ZMConversationMessage) {
+    /**
+     * Creates a details view controller for the specified message displaying the first available tab by default.
+     * - parameter message: The message to display the details of.
+     */
+
+    @objc convenience init(message: ZMConversationMessage) {
+        self.init(message: message, preferredDisplayMode: .receipts)
+    }
+
+    /**
+     * Creates a details view controller for the specified message.
+     * - parameter message: The message to display the details of.
+     * - parameter preferredDisplayMode: The display mode to display by default when there are multiple
+     * tabs. Note that this object is only an indication, and will not override the displayed content
+     * if the data source says it is unavailable for the message.
+     */
+
+    @objc init(message: ZMConversationMessage, preferredDisplayMode: MessageDetailsDisplayMode) {
         self.message = message
         self.dataSource = MessageDetailsDataSource(message: message)
 
@@ -63,6 +80,11 @@ import WireExtensionComponents
         }
 
         container = TabBarController(viewControllers: viewControllers)
+
+        if case .combined = dataSource.displayMode {
+            let tabIndex = preferredDisplayMode == .reactions ? 1 : 0
+            container.selectIndex(tabIndex, animated: false)
+        }
 
         super.init(nibName: nil, bundle: nil)
         self.modalPresentationStyle = .formSheet

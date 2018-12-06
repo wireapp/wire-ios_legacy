@@ -32,6 +32,8 @@
 "general.decline" = "No, thanks";
 "general.failure" = "Something went wrong";
 "general.service" = "Service";
+"general.off" = "Off";
+"general.on" = "On";
 
 // Language like Chinese does not use space to sperate words or sentences.
 "general.space_between_words" = " ";
@@ -289,8 +291,12 @@
 "conversation.create.group_name.placeholder" = "Group name";
 "conversation.create.guidance.empty" = "At least 1 character";
 "conversation.create.guidance.toolong" = "Too many characters";
-"conversation.create.toggle.title" = "Allow guests and services";
-"conversation.create.toggle.subtitle" = "Open this conversation to services and people outside your team. You can always change it later.";
+"conversation.create.options.title" = "Conversation options";
+"conversation.create.options.subtitle" = "Allow guests: %@, Read receipts: %@";
+"conversation.create.guests.title" = "Allow guests and services";
+"conversation.create.guests.subtitle" = "Open this conversation to services and people outside your team. You can always change it later.";
+"conversation.create.receipts.title" = "Read receipts";
+"conversation.create.receipts.subtitle" = "Turning this on will enable read receipts for everyone in this group. The sender can see at which time you read a message. This only affects future messages.";
 
 "conversation.input_bar.ongoing_call_alert.title" = "Ongoing call";
 "conversation.input_bar.ongoing_call_alert.audio.message" = "You can’t record an audio message during a call.";
@@ -439,6 +445,17 @@
 
 "content.system.message_timer_off" = "%@ turned off the message timer";
 "content.system.message_timer_off-you" = "%@ turned off the message timer";
+
+// read receipt
+
+"content.system.message_read_receipt_on" = "%@ turned read receipts on for everyone";
+"content.system.message_read_receipt_on-you" = "%@ turned read receipts on for everyone";
+
+"content.system.message_read_receipt_off" = "%@ turned read receipts off for everyone";
+"content.system.message_read_receipt_off-you" = "%@ turned read receipts off for everyone";
+
+"content.system.message_read_receipt_on_add_to_group" = "Read receipts are on";
+
 
 "content.system.reactivated_device" = "You started using %@ again. Messages sent in the meantime will not appear here.";
 
@@ -731,7 +748,8 @@
 "profile.open_conversation_button_title" = "Open conversation";
 
 "profile.read_receipts_enabled_memo.header" = "YOU HAVE ENABLED READ RECEIPTS";
-"profile.read_receipts_enabled_memo.body" = "If both sides turn on read receipts, you can see when messages are read.\nYou can change this option in your account settings.";
+"profile.read_receipts_disabled_memo.header" = "YOU HAVE DISABLED READ RECEIPTS";
+"profile.read_receipts_memo.body" = "If both sides turn on read receipts, you can see when messages are read.\nYou can change this option in your account settings.";
 
 // User Details
 "profile.details.title" = "Details";

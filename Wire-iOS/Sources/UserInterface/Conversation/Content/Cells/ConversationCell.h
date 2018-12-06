@@ -32,6 +32,7 @@
 @class MenuConfigurationProperties;
 @class UserImageView;
 @class ConversationMessageActionController;
+@class MessageDetailsViewController;
 
 extern const CGFloat ConversationCellSelectedOpacity;
 extern const NSTimeInterval ConversationCellSelectionAnimationDuration;
@@ -58,7 +59,7 @@ typedef void (^SelectedMenuBlock)(BOOL selected, BOOL animated);
 - (void)conversationCellDidTapResendMessage:(ConversationCell *)cell;
 - (void)conversationCell:(ConversationCell *)cell didSelectURL:(NSURL *)url;
 - (BOOL)conversationCellShouldBecomeFirstResponderWhenShowingMenuForCell:(UIView *)cell;
-- (void)conversationCellDidTapOpenLikers:(UIView *)cell forMessage:(id<ZMConversationMessage>)message;
+- (void)conversationCellDidRequestOpeningMessageDetails:(UIView *)cell messageDetails:(MessageDetailsViewController *)messageDetails;
 - (BOOL)conversationCellShouldStartDestructionTimer:(ConversationCell *)cell;
 - (void)conversationCell:(UIView *)cell openGuestOptionsFromView:(UIView *)sourceView;
 - (void)conversationCell:(UIView *)cell openParticipantsDetailsWithSelectedUsers:(NSArray <ZMUser *>*)selectedUsers fromView:(UIView *)sourceView;

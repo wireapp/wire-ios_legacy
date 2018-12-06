@@ -92,24 +92,13 @@
 
 - (void)messagesInsideWindow:(ZMConversationMessageWindow *)window didChange:(NSArray<MessageChangeInfo *> *)messageChangeInfos
 {
-    BOOL needsToLayoutCells = NO;
-    
-    for (UITableViewCell *cell in self.tableView.visibleCells) {
-        if ([cell isKindOfClass:[ConversationCell class]]) {
-            ConversationCell *conversationCell = (ConversationCell *)cell;
-            
-            for (MessageChangeInfo *changeInfo in messageChangeInfos) {
-                if ([changeInfo.message isEqual:conversationCell.message]) {
-                    needsToLayoutCells |= [conversationCell updateForMessage:changeInfo];
-                }
-            }
+    for (MessageChangeInfo *changeInfo in messageChangeInfos) {
+        NSInteger sectionIndex = [self.messageWindow.messages indexOfObject:changeInfo.message];
+
+        if (sectionIndex != NSNotFound) {
+            ConversationMessageSectionController *controller = [self sectionControllerAt:sectionIndex in:self.tableView];
+            [controller configureAt:sectionIndex in:self.tableView];
         }
-    }
-    
-    if (needsToLayoutCells) {
-        // Make table view to update cells with animation
-        [self.tableView beginUpdates];
-        [self.tableView endUpdates];
     }
 }
 
