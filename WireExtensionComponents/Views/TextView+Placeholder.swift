@@ -19,15 +19,26 @@
 import Foundation
 
 extension TextView {
+
+    override open var textContainerInset: UIEdgeInsets {
+        didSet {
+            let linePadding = textContainer.lineFragmentPadding
+
+            placeholderLabelLeftAnchor?.constant = textContainerInset.left + linePadding
+        }
+    }
+
     @objc func createPlaceholderLabel() {
-        let linePadding = CGFloat(textContainer.lineFragmentPadding)
+        let linePadding = textContainer.lineFragmentPadding
         placeholderLabel = UILabel()
         addSubview(placeholderLabel)
 
         placeholderLabel.translatesAutoresizingMaskIntoConstraints = false
 
+        placeholderLabelLeftAnchor = placeholderLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: placeholderTextContainerInset.left + linePadding)
+
         NSLayoutConstraint.activate([
-            placeholderLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: placeholderTextContainerInset.left + linePadding),
+            placeholderLabelLeftAnchor!,
             placeholderLabel.centerYAnchor.constraint(equalTo: centerYAnchor)
             ])
 

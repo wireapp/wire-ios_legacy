@@ -19,6 +19,7 @@
 import XCTest
 @testable import Wire
 
+///TODO: refresh snpashots
 final class AddParticipantsViewControllerSnapshotTests: CoreDataSnapshotTestCase {
     
     var sut: AddParticipantsViewController!
