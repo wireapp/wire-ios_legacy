@@ -114,6 +114,12 @@ class ConversationLocationMessageCell: UIView, ConversationMessageCell {
         ])
     }
 
+    override func willMove(toSuperview newSuperview: UIView?) {
+        if newSuperview == nil {
+            locationAnnotation.map(mapView.removeAnnotation)
+        }
+    }
+
     func configure(with object: Configuration, animated: Bool) {
         lastConfiguration = object
         recognizer?.isEnabled = !object.isObfuscated

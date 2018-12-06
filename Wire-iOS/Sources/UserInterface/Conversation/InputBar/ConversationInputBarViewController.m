@@ -42,7 +42,6 @@
 @import FLAnimatedImage;
 #import "MediaAsset.h"
 #import "UIView+WR_ExtendedBlockAnimations.h"
-#import "ImageMessageCell.h"
 
 static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
