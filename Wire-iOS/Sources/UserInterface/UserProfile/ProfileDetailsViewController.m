@@ -115,10 +115,13 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
     self.view.backgroundColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorContentBackground];
     self.stackViewContainer = [[UIView alloc] initForAutoLayout];
     [self.view addSubview:self.stackViewContainer];
+    
     self.teamsGuestIndicator.hidden = !self.showGuestLabel;
     self.availabilityView.hidden = !ZMUser.selfUser.isTeamMember || self.fullUser.availability == AvailabilityNone;
-    self.remainingTimeLabel = [[UILabel alloc] initForAutoLayout];
+    
     NSString *remainingTimeString = self.fullUser.expirationDisplayString;
+    self.remainingTimeLabel = [[UILabel alloc] initForAutoLayout];
+    [self.remainingTimeLabel setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisVertical];
     self.remainingTimeLabel.text = remainingTimeString;
     self.remainingTimeLabel.textColor = [ColorScheme.defaultColorScheme colorWithName:ColorSchemeColorTextForeground];
     self.remainingTimeLabel.font = [UIFont mediumSemiboldFont];
