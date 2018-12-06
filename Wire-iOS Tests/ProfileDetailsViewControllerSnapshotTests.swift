@@ -58,7 +58,7 @@ final class ProfileDetailsViewControllerSnapshotTests: CoreDataSnapshotTestCase 
         verifyInIPhoneSize(view: sut.view)
     }
     
-    func testSmallScreen_expiringGuestReadReceipts() {
+    func testExpiringGuestReadReceipts() {
         // given
         let selfUser = self.selfUser
         selfUser?.teamIdentifier = UUID()
@@ -71,23 +71,7 @@ final class ProfileDetailsViewControllerSnapshotTests: CoreDataSnapshotTestCase 
         
         self.otherUser.setValue(Date(timeIntervalSinceNow: 3600), forKey: "expiresAt")
         // when & then
-        verifyInIPhoneSize(view: sut.view)
-    }
-
-    func testNormalScreen_expiringGuestReadReceipts() {
-        // given
-        let selfUser = self.selfUser
-        selfUser?.teamIdentifier = UUID()
-        selfUser?.readReceiptsEnabled = true
-        
-        let groupConversation = self.createGroupConversation()
-        groupConversation.teamRemoteIdentifier = UUID()
-        
-        sut = ProfileDetailsViewController(user: self.otherUser, conversation: groupConversation, context: .oneToOneConversation)
-        
-        self.otherUser.setValue(Date(timeIntervalSinceNow: 3600), forKey: "expiresAt")
-        // when & then
-        verify(view: sut.view)
+        verifyInAllIPhoneSizes(view: sut.view)
     }
     
     func testForActionMenu() {

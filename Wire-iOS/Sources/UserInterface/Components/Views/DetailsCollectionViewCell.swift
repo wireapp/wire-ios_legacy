@@ -28,6 +28,9 @@ class DetailsCollectionViewCell: SeparatorCollectionViewCell {
     var contentStackView: UIStackView!
     private var leftIconContainer: UIView!
     private var contentLeadingConstraint: NSLayoutConstraint!
+    
+    /// The leading offset of the content when `icon` is nil.
+    var contentLeadingOffset: CGFloat = 24
 
     // MARK: - Properties
 
@@ -122,8 +125,8 @@ class DetailsCollectionViewCell: SeparatorCollectionViewCell {
             leftIconView.isHidden = true
             leftIconContainer.isHidden = true
 
-            contentLeadingConstraint.constant = 24
-            separatorLeadingInset = 24
+            contentLeadingConstraint.constant = contentLeadingOffset
+            separatorLeadingInset = contentLeadingOffset
         }
     }
 

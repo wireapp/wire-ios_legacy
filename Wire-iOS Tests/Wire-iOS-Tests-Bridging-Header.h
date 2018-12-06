@@ -25,7 +25,7 @@
 #import "Analytics.h"
 #import "ParticipantDeviceCell.h"
 #import "NSString+Fingerprint.h"
-#import "ZMSnapshotTestCase+Internal.h"
+#import "XCTestCase+Internal.h"
 #import "MockUser.h"
 #import "SplitViewController.h"
 #import <avs/AVSAudioEffect.h>

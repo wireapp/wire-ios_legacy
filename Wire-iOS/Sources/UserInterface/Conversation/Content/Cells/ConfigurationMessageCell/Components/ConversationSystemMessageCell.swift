@@ -168,7 +168,9 @@ class ConversationRenamedSystemMessageCell: ConversationIconBasedCell, Conversat
 class ConversationSystemMessageCellDescription {
 
     static func cells(for message: ZMConversationMessage, layoutProperties: ConversationCellLayoutProperties) -> [AnyConversationMessageCellDescription] {
-        guard let systemMessageData = message.systemMessageData, let sender = message.sender, let conversation = message.conversation else {
+        guard let systemMessageData = message.systemMessageData,
+            let sender = message.sender,
+            let conversation = message.conversation else {
             preconditionFailure("Invalid system message")
         }
 
@@ -231,6 +233,14 @@ class ConversationSystemMessageCellDescription {
         case .participantsAdded, .participantsRemoved, .teamMemberLeave:
             let participantsChangedCell = ConversationParticipantsChangedSystemMessageCellDescription(message: message, data: systemMessageData)
             return [AnyConversationMessageCellDescription(participantsChangedCell)]
+
+        case .readReceiptsEnabled,
+             .readReceiptsDisabled,
+             .readReceiptsOn:
+            let cell = ConversationReadReceiptSettingChangedCellDescription(sender: sender,
+                                                                            systemMessageType: systemMessageData.systemMessageType)
+            return [AnyConversationMessageCellDescription(cell)]
+
         case .newConversation:
             let participantsCell = ConversationLegacyCellDescription<ParticipantsCell>(message: message, layoutProperties: layoutProperties)
             return [AnyConversationMessageCellDescription(participantsCell)]
@@ -246,6 +256,7 @@ class ConversationSystemMessageCellDescription {
 }
 
 // MARK: - Descriptions
+
 
 class ConversationParticipantsChangedSystemMessageCellDescription: ConversationMessageCellDescription {
     typealias View = ConversationSystemMessageCell

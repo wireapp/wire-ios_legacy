@@ -80,14 +80,6 @@ extension StaticString {
 // MARK: - verify the snapshots in multiple devices
 open class ZMSnapshotTestCase: FBSnapshotTestCase {
 
-    static let ZMDeviceSizeIPhone5          = CGSize(width: 320, height: 568)
-    static let ZMDeviceSizeIPhone6          = CGSize(width: 375, height: 667)
-    static let ZMDeviceSizeIPhone6Plus      = CGSize(width: 414, height: 736)
-    static let ZMDeviceSizeIPhoneX          = CGSize(width: 375, height: 812)
-    static let ZMDeviceSizeIPhoneXR         = CGSize(width: 414, height: 896)
-    static let ZMDeviceSizeIPadPortrait     = CGSize(width: 768, height: 1024)
-    static let ZMDeviceSizeIPadLandscape    = CGSize(width: 1024, height: 768)
-
     static let phoneScreenSizes: [String:CGSize] = [
         "iPhone-4_0_Inch": ZMDeviceSizeIPhone5,
         "iPhone-4_7_Inch": ZMDeviceSizeIPhone6,
@@ -454,12 +446,6 @@ extension ZMSnapshotTestCase {
         }
     }
 
-    /// return the smallest iPhone screen size that Wire app supports
-    public var defaultIPhoneSize: CGSize {
-        return ZMSnapshotTestCase.ZMDeviceSizeIPhone5
-    }
-
-
     /// verify the snapshot with default iphone size
     ///
     /// - Parameters:
@@ -478,7 +464,7 @@ extension ZMSnapshotTestCase {
             ])
 
         view.setNeedsLayout()
-        view.layoutIfNeeded()
+
         verify(view: view,
                extraLayoutPass: extraLayoutPass,
                file: file,

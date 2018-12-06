@@ -34,4 +34,22 @@ extension RegistrationTextField {
             super.paste(sender)
         }
     }
+
+    /// Insert a phone number to a RegistrationTextField or return true if it is not a valide number to insert.
+    ///
+    /// - Parameters:
+    ///   - phoneNumber: the phone number to insert
+    /// - Returns: If the number can be parsed, return a tuple of country and the phone number without country code. Otherwise return nil. country would be nil if self is a phone number without country
+    func insert(phoneNumber: String) -> (country: Country?, phoneNumber: String)? {
+        let presetCountry = Country(iso: "", e164: NSNumber(value: countryCode))
+
+        guard let (country, phoneNumberWithoutCountryCode) = phoneNumber.shouldInsertAsPhoneNumber(presetCountry: presetCountry) else { return nil }
+
+        text = phoneNumberWithoutCountryCode
+        if let country = country {
+            countryCode = country.e164.uintValue
+        }
+
+        return (country, phoneNumberWithoutCountryCode)
+    }
 }

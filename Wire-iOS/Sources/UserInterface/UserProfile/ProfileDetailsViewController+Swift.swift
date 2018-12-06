@@ -19,7 +19,7 @@
 import Foundation
 
 extension NSAttributedString {
-    fileprivate static var readReceiptsEnabledText: NSAttributedString {
+    fileprivate static func readReceiptsText(_ isEnabled: Bool) -> NSAttributedString {
         
         let paragraph = NSParagraphStyle.default.mutableCopy() as! NSMutableParagraphStyle
         paragraph.paragraphSpacing = 8
@@ -28,16 +28,19 @@ extension NSAttributedString {
         paragraph.tailIndent = -5
         
         let titleFont = UIFont.smallSemiboldFont
-        let title = "profile.read_receipts_enabled_memo.header".localized && [NSAttributedString.Key.font: titleFont,
-                                                                              NSAttributedString.Key.foregroundColor: UIColor.from(scheme: .textForeground),
-                                                                              NSAttributedString.Key.paragraphStyle: paragraph]
+        
+        let titleText = isEnabled ? "profile.read_receipts_enabled_memo.header".localized : "profile.read_receipts_disabled_memo.header".localized
+        
+        let title = titleText && [NSAttributedString.Key.font: titleFont,
+                                  NSAttributedString.Key.foregroundColor: UIColor.from(scheme: .sectionText),
+                                  NSAttributedString.Key.paragraphStyle: paragraph]
         
         let lineBreak = "\n" && [NSAttributedString.Key.paragraphStyle: paragraph]
         
         let textFont = UIFont.mediumFont
-        let text = "profile.read_receipts_enabled_memo.body".localized && [NSAttributedString.Key.font: textFont,
-                                                                           NSAttributedString.Key.foregroundColor: UIColor.from(scheme: .textDimmed),
-                                                                           NSAttributedString.Key.paragraphStyle: paragraph]
+        let text = "profile.read_receipts_memo.body".localized && [NSAttributedString.Key.font: textFont,
+                                                                   NSAttributedString.Key.foregroundColor: UIColor.from(scheme: .textDimmed),
+                                                                   NSAttributedString.Key.paragraphStyle: paragraph]
         
         return title + lineBreak + text
     }
@@ -59,6 +62,10 @@ extension ProfileDetailsViewController {
     // MARK: - Bottom labels
     
     @objc func createReadReceiptsEnabledLabel() {
+        guard let selfUser = ZMUser.selfUser() else {
+            return
+        }
+        
         readReceiptsEnabledLabel = UILabel()
         readReceiptsEnabledLabel.translatesAutoresizingMaskIntoConstraints = false
         readReceiptsEnabledLabel.accessibilityIdentifier = "ReadReceiptsEnabledLabel"
@@ -70,17 +77,12 @@ extension ProfileDetailsViewController {
 
         readReceiptsEnabledLabel.lineBreakMode = .byWordWrapping
         readReceiptsEnabledLabel.numberOfLines = 0
+    
+        readReceiptsEnabledLabel.attributedText = NSAttributedString.readReceiptsText(selfUser.readReceiptsEnabled)
         
-        if let selfUser = ZMUser.selfUser(), selfUser.readReceiptsEnabled {
-            readReceiptsEnabledLabel.attributedText = NSAttributedString.readReceiptsEnabledText
-            
-            // On small screens the label gets compressed for unknown reason.
-            if UIScreen.main.isSmall {
-                readReceiptsEnabledLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: 100).isActive = true
-            }
-        }
-        else {
-            readReceiptsEnabledLabel.isHidden = true
+        // On small screens the label gets compressed for unknown reason.
+        if UIScreen.main.isSmall {
+            readReceiptsEnabledLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: 100).isActive = true
         }
     }
 

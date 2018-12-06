@@ -79,8 +79,9 @@ final class MockMessageFactory: NSObject {
         return message
     }
 
-    @objc(systemMessageWithType:users:clients:)
-    class func systemMessage(with systemMessageType: ZMSystemMessageType, users numUsers: Int, clients numClients: Int) -> MockMessage? {
+    class func systemMessage(with systemMessageType: ZMSystemMessageType,
+                             users numUsers: Int = 0,
+                             clients numClients: Int = 0) -> MockMessage? {
         let message = MockMessageFactory.messageTemplate()
 
         let mockSystemMessageData = MockSystemMessageData(systemMessageType: systemMessageType)

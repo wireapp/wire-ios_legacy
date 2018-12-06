@@ -94,19 +94,19 @@ typedef void (^ConversationCreatedBlock)(ZMConversation *);
     }];
 }
 
-- (void)startUI:(StartUIViewController *)startUI createConversationWithUsers:(NSSet<ZMUser *> *)users name:(NSString *)name allowGuests:(BOOL)allowGuests
+- (void)startUI:(StartUIViewController *)startUI createConversationWithUsers:(NSSet<ZMUser *> *)users name:(NSString *)name allowGuests:(BOOL)allowGuests enableReceipts:(BOOL)enableReceipts
 {
     if (self.presentedViewController != nil) {
         [self dismissViewControllerAnimated:YES completion:^{
-            [self createConversationWithUsers:users name:name allowGuests:allowGuests];
+            [self createConversationWithUsers:users name:name allowGuests:allowGuests enableReceipts:enableReceipts];
         }];
     }
     else {
-        [self createConversationWithUsers:users name:name allowGuests:allowGuests];
+        [self createConversationWithUsers:users name:name allowGuests:allowGuests enableReceipts:enableReceipts];
     }
 }
 
-- (void)createConversationWithUsers:(NSSet<ZMUser *> *)users name:(NSString *)name allowGuests:(BOOL)allowGuests
+- (void)createConversationWithUsers:(NSSet<ZMUser *> *)users name:(NSString *)name allowGuests:(BOOL)allowGuests enableReceipts:(BOOL)enableReceipts
 {
     __block ZMConversation *conversation = nil;
     [ZMUserSession.sharedSession enqueueChanges:^{
@@ -114,7 +114,8 @@ typedef void (^ConversationCreatedBlock)(ZMConversation *);
                                                              withParticipants:users.allObjects
                                                                          name:name
                                                                        inTeam:ZMUser.selfUser.team
-                                                                  allowGuests: allowGuests];
+                                                                  allowGuests: allowGuests
+                                                                 readReceipts:enableReceipts];
     } completionHandler:^{
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [ZClientViewController.sharedZClientViewController selectConversation:conversation focusOnView:YES animated:YES];

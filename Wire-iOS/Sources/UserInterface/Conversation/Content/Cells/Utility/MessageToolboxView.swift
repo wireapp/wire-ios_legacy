@@ -20,7 +20,7 @@ import Foundation
 import WireSyncEngine
 
 @objc public protocol MessageToolboxViewDelegate: NSObjectProtocol {
-    func messageToolboxViewDidSelectLikers(_ messageToolboxView: MessageToolboxView)
+    func messageToolboxDidRequestOpeningDetails(_ messageToolboxView: MessageToolboxView, preferredDisplayMode: MessageDetailsDisplayMode)
     func messageToolboxViewDidSelectResend(_ messageToolboxView: MessageToolboxView)
     func messageToolboxViewDidSelectDelete(_ messageToolboxView: MessageToolboxView)
     func messageToolboxViewDidRequestLike(_ messageToolboxView: MessageToolboxView)
@@ -150,11 +150,9 @@ import WireSyncEngine
 
         if !self.forceShowTimestamp && message.hasReactions() {
             self.configureReactions(message, animated: animated)
-            self.tapGestureRecogniser.isEnabled = true
         }
         else {
             self.configureTimestamp(message, animated: animated)
-            self.tapGestureRecogniser.isEnabled = false
         }
     }
     
@@ -505,10 +503,19 @@ import WireSyncEngine
     // MARK: - Events
 
     @objc func onTapContent(_ sender: UITapGestureRecognizer!) {
-        guard !forceShowTimestamp else { return }
-        if let message = self.message , !message.likers().isEmpty {
-            self.delegate?.messageToolboxViewDidSelectLikers(self)
+        if let displayMode = preferredDetailsDisplayMode() {
+            delegate?.messageToolboxDidRequestOpeningDetails(self, preferredDisplayMode: displayMode)
         }
+    }
+
+    func preferredDetailsDisplayMode() -> MessageDetailsDisplayMode? {
+        if !self.forceShowTimestamp && message?.hasReactions() == true {
+            return .reactions
+        } else if message?.areReadReceiptsDetailsAvailable == true {
+            return .receipts
+        }
+
+        return nil
     }
     
     @objc func prepareForReuse() {
