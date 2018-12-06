@@ -120,15 +120,21 @@ class ConversationSystemMessageTests: ConversationCellSnapshotTestCase {
 
     // MARK: - read receipt
 
-    func testReadReceiptIsOffByThirdPerson() {
-        let message = MockMessageFactory.systemMessage(with: .readReceiptsDisabled, users: 1, clients: 1)!
+    func testReadReceiptIsOn() {
+        let message = MockMessageFactory.systemMessage(with: .readReceiptsOn)!
+
+        verify(message: message)
+    }
+
+    func testReadReceiptIsOnByThirdPerson() {
+        let message = MockMessageFactory.systemMessage(with: .readReceiptsEnabled)!
+        message.sender = MockUser.mockUsers()?.first
 
         verify(message: message)
     }
 
     func testReadReceiptIsOffByYou() {
-        let message = MockMessageFactory.systemMessage(with: .readReceiptsDisabled, users: 1, clients: 1)!
-        message.backingSystemMessageData?.users = Set<AnyHashable>([MockUser.mockSelf()]) as! Set<ZMUser>
+        let message = MockMessageFactory.systemMessage(with: .readReceiptsDisabled)!
 
         verify(message: message)
     }

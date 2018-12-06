@@ -36,10 +36,7 @@ final class ReadReceiptViewModelTests: XCTestCase {
     }
 
     func createMockMessage(type: ZMSystemMessageType) {
-        let usersCount = 1
-        let clientsCount = 1
-
-        mockMessage = MockMessageFactory.systemMessage(with: type, users: usersCount, clients: clientsCount)!
+        mockMessage = MockMessageFactory.systemMessage(with: type)!
     }
 
     func testThatSelfUserSwitchOffReceiptOption(){

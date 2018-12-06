@@ -33,12 +33,10 @@ struct ReadReceiptViewModel {
     func createSystemMessage(template: String) -> NSAttributedString {
         var updateText: NSAttributedString! = .none
 
-        let baseAttributes: [NSAttributedString.Key: AnyObject] = [.font: UIFont.mediumFont, .foregroundColor: UIColor.from(scheme: .textForeground)]
-
         if sender.isSelfUser {
-            updateText = NSAttributedString(string: template.localized(pov: sender.pov, args: "content.system.you_started".localized), attributes: baseAttributes)
+            updateText = NSAttributedString(string: template.localized(pov: sender.pov, args: "content.system.you_started".localized), attributes: ConversationSystemMessageCell.baseAttributes)
         } else if let otherUserName = sender.name {
-            updateText = NSAttributedString(string: template.localized(args: otherUserName), attributes: baseAttributes)
+            updateText = NSAttributedString(string: template.localized(args: otherUserName), attributes: ConversationSystemMessageCell.baseAttributes)
                 .adding(font: .mediumSemiboldFont, to: otherUserName)
         } else {
             assertionFailure("invalid user name for ReadReceiptViewModel")
@@ -57,7 +55,7 @@ struct ReadReceiptViewModel {
         case .readReceiptsEnabled:
             updateText = createSystemMessage(template: "content.system.message_read_receipt_on")
         case .readReceiptsOn:
-            updateText = NSAttributedString(string: "content.system.message_read_receipt_on_add_to_group".localized)
+            updateText = NSAttributedString(string: "content.system.message_read_receipt_on_add_to_group".localized, attributes: ConversationSystemMessageCell.baseAttributes)
         default:
             assertionFailure("invalid systemMessageType for ReadReceiptViewModel")
             break
@@ -65,6 +63,12 @@ struct ReadReceiptViewModel {
 
 
         return updateText
+    }
+}
+
+extension ConversationSystemMessageCell {
+    static var baseAttributes: [NSAttributedString.Key: AnyObject] {
+        return [.font: UIFont.mediumFont, .foregroundColor: UIColor.from(scheme: .textForeground)]
     }
 }
 
