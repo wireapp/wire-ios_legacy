@@ -73,7 +73,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textChanged:) name:UITextViewTextDidChangeNotification object:self];
     self.placeholderTextColor = [UIColor lightGrayColor];
-    self.placeholderTextContainerInset = self.textContainerInset;
+    self._placeholderTextContainerInset = self.textContainerInset;
     self.placeholderTextAlignment = NSTextAlignmentNatural;
     
     [self createPlaceholderLabel];

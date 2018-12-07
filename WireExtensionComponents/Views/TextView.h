@@ -34,13 +34,17 @@ Adds placeholder support to @c UITextView. The position of the placeholder is au
 @property (nonatomic, nullable) IBInspectable UIFont   *placeholderFont;
 @property (nonatomic) TextTransform placeholderTextTransform;
 @property (nonatomic) CGFloat lineFragmentPadding;
-@property (nonatomic) UIEdgeInsets placeholderTextContainerInset;
 @property (nonatomic) NSTextAlignment placeholderTextAlignment;
 @property (nonatomic, copy, nullable) NSString *language;
 
 
 ///TODO: internal
 @property (nonatomic, nullable) NSLayoutConstraint *placeholderLabelLeftAnchor;
+@property (nonatomic, nullable) NSLayoutConstraint *placeholderLabelRightAnchor;
+//@property (nonatomic, nullable) NSLayoutConstraint *placeholderLabelBottomAnchor;
+//@property (nonatomic, nullable) NSLayoutConstraint *placeholderLabelTopAnchor;
+
+@property (nonatomic) UIEdgeInsets _placeholderTextContainerInset;
 
 - (void)showOrHidePlaceholder;
     

@@ -20,13 +20,23 @@ import Foundation
 
 extension TextView {
 
-    override open var textContainerInset: UIEdgeInsets {
-        didSet {
-            let linePadding = textContainer.lineFragmentPadding
+    @objc
+    var placeholderTextContainerInset: UIEdgeInsets {
+        set {
+            _placeholderTextContainerInset = newValue
+//            let linePadding = textContainer.lineFragmentPadding
 
-            placeholderLabelLeftAnchor?.constant = textContainerInset.left + linePadding
+            placeholderLabelLeftAnchor?.constant = newValue.left
+            placeholderLabelRightAnchor?.constant = newValue.right
+//            placeholderLabelTopAnchor?.constant = newValue.top
+//            placeholderLabelBottomAnchor?.constant = newValue.bottom
+        }
+
+        get {
+            return _placeholderTextContainerInset
         }
     }
+
 
     @objc func createPlaceholderLabel() {
         let linePadding = textContainer.lineFragmentPadding
@@ -36,10 +46,16 @@ extension TextView {
         placeholderLabel.translatesAutoresizingMaskIntoConstraints = false
 
         placeholderLabelLeftAnchor = placeholderLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: placeholderTextContainerInset.left + linePadding)
+//        placeholderLabelTopAnchor = placeholderLabel.topAnchor.constraint(equalTo: topAnchor, constant: placeholderTextContainerInset.top)
+        placeholderLabelRightAnchor = placeholderLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: placeholderTextContainerInset.right - linePadding)
+//        placeholderLabelBottomAnchor = placeholderLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: placeholderTextContainerInset.bottom)
 
         NSLayoutConstraint.activate([
             placeholderLabelLeftAnchor!,
+            placeholderLabelRightAnchor!,
             placeholderLabel.centerYAnchor.constraint(equalTo: centerYAnchor)
+//            placeholderLabelTopAnchor!,
+//            placeholderLabelBottomAnchor!
             ])
 
         placeholderLabel.font = placeholderFont

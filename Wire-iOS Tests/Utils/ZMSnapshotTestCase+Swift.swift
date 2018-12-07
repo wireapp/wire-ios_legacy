@@ -463,7 +463,7 @@ extension ZMSnapshotTestCase {
             view.widthAnchor.constraint(equalToConstant: defaultIPhoneSize.width)
             ])
 
-        view.setNeedsLayout()
+        view.layoutIfNeeded()
 
         verify(view: view,
                extraLayoutPass: extraLayoutPass,
