@@ -89,10 +89,10 @@ class ParticipantsCellViewModel {
         return conversation.canManageAccess && conversation.allowGuests
     }
     
-    var showServiceUserWarning: Bool {
-        guard case .added = action, let systemMessage = message as? ZMSystemMessage, let conversation = message.conversation else { return false }
-        let selfAddedToServiceConversation = systemMessage.users.any(\.isSelfUser) && conversation.areServicesPresent
-        let serviceAdded = systemMessage.users.any(\.isServiceUser)
+    private var showServiceUserWarning: Bool {
+        guard case .added = action, let messageData = message.systemMessageData, let conversation = message.conversation else { return false }
+        let selfAddedToServiceConversation = messageData.users.any(\.isSelfUser) && conversation.areServicesPresent
+        let serviceAdded = messageData.users.any(\.isServiceUser)
         return selfAddedToServiceConversation || serviceAdded
     }
     
@@ -208,6 +208,11 @@ class ParticipantsCellViewModel {
         } else {
             return formatter.title(senderName: senderName, senderIsSelf: sender.isSelfUser)
         }
+    }
+    
+    func warning() -> String? {
+        guard showServiceUserWarning else { return nil }
+        return "content.system.services.warning".localized
     }
     
     private func formatter(for message: ZMConversationMessage) -> ParticipantsStringFormatter? {

@@ -33,13 +33,21 @@ class MessageDetailsCellDescription: NSObject {
     /// The attributed string for the subtitle.
     let attributedSubtitle: NSAttributedString?
 
+    /// The label of the subtitle.
+    let accessibleSubtitleLabel: String?
+
+    /// The value of the subtitle.
+    let accessibleSubtitleValue: String?
+
     // MARK: - Initialization
 
     /// Creates a new cell description.
-    init(user: ZMUser, subtitle: String?) {
+    init(user: ZMUser, subtitle: String?, accessibleSubtitleLabel: String?, accessibleSubtitleValue: String?) {
         self.user = user
         self.subtitle = subtitle
         self.attributedSubtitle = subtitle.map { $0 && UserCell.boldFont }
+        self.accessibleSubtitleLabel = accessibleSubtitleLabel
+        self.accessibleSubtitleValue = accessibleSubtitleValue
     }
 
 }
@@ -51,14 +59,20 @@ extension MessageDetailsCellDescription {
     static func makeReactionCells(_ users: [ZMUser]) -> [MessageDetailsCellDescription] {
         return users.map {
             let handle = $0.handle.map { "@" + $0 }
-            return MessageDetailsCellDescription(user: $0, subtitle: handle)
+            return MessageDetailsCellDescription(user: $0, subtitle: handle,
+                                                 accessibleSubtitleLabel: "message_details.user_handle_subtitle_label".localized,
+                                                 accessibleSubtitleValue: $0.handle)
         }
     }
 
     static func makeReceiptCell(_ receipts: [ReadReceipt]) -> [MessageDetailsCellDescription] {
         return receipts.map {
-            let formattedDate = $0.serverTimestamp.map(Message.shortDateTimeFormatter.string(from:))
-            return MessageDetailsCellDescription(user: $0.user, subtitle: formattedDate)
+            let formattedDate = $0.serverTimestamp.map(Message.shortDateTimeFormatter.string)
+            let formattedAccessibleDate = $0.serverTimestamp.map(Message.spellOutDateTimeFormatter.string)
+
+            return MessageDetailsCellDescription(user: $0.user, subtitle: formattedDate,
+                                                 accessibleSubtitleLabel: "message_details.user_read_timestamp_subtitle_label".localized,
+                                                 accessibleSubtitleValue: formattedAccessibleDate)
         }
     }
 

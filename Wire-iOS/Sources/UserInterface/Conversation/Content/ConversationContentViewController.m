@@ -51,9 +51,6 @@
 #import "MessagePresenter.h"
 #import "UIViewController+WR_Additions.h"
 
-// Cells
-#import "ImageMessageCell.h"
-
 #import "Wire-Swift.h"
 
 

@@ -34,7 +34,9 @@ struct ReadReceiptViewModel {
         var updateText: NSAttributedString! = .none
 
         if sender.isSelfUser {
-            updateText = NSAttributedString(string: template.localized(pov: sender.pov, args: "content.system.you_started".localized), attributes: ConversationSystemMessageCell.baseAttributes)
+            let youLocalized = "content.system.you_started".localized
+
+            updateText = NSAttributedString(string: template.localized(pov: sender.pov, args: youLocalized), attributes: ConversationSystemMessageCell.baseAttributes).adding(font: .mediumSemiboldFont, to: youLocalized)
         } else if let otherUserName = sender.name {
             updateText = NSAttributedString(string: template.localized(args: otherUserName), attributes: ConversationSystemMessageCell.baseAttributes)
                 .adding(font: .mediumSemiboldFont, to: otherUserName)

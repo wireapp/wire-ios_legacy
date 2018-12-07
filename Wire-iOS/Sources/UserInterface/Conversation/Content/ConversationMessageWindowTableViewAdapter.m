@@ -24,10 +24,6 @@
 #import "Analytics.h"
 #import "NSIndexSet+IndexPaths.h"
 
-// Cells
-#import "ImageMessageCell.h"
-#import "ConnectionRequestCell.h"
-
 #import "Wire-Swift.h"
 
 @implementation ConversationMessageWindowTableViewAdapter

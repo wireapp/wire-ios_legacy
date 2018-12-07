@@ -31,12 +31,12 @@ class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
         teamTest {
             // GIVEN
             let conversation = self.createGroupConversation()
-            conversation.hasReadReceiptsEnabled = true
 
             let message = MockMessageFactory.textMessage(withText: "Message")!
             message.sender = selfUser
             message.conversation = conversation
             message.deliveryState = .read
+            message.needsReadConfirmation = true
 
             let users = usernames.prefix(upTo: 5).map(self.createUser)
             let receipts = users.map(MockReadReceipt.init)
@@ -58,13 +58,13 @@ class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
         teamTest {
             // GIVEN
             let conversation = self.createGroupConversation()
-            conversation.hasReadReceiptsEnabled = true
 
             let message = MockMessageFactory.textMessage(withText: "Message")!
             message.sender = selfUser
             message.conversation = conversation
             message.updatedAt = Date(timeIntervalSince1970: 69)
             message.deliveryState = .read
+            message.needsReadConfirmation = true
 
             let users = usernames.prefix(upTo: 5).map(self.createUser)
             let receipts = users.map(MockReadReceipt.init)
@@ -86,13 +86,13 @@ class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
         teamTest {
             // GIVEN
             let conversation = self.createGroupConversation()
-            conversation.hasReadReceiptsEnabled = true
 
             let message = MockMessageFactory.textMessage(withText: "Message")!
             message.sender = selfUser
             message.conversation = conversation
             message.updatedAt = Date(timeIntervalSince1970: 69)
             message.deliveryState = .read
+            message.needsReadConfirmation = true
 
             let users = usernames.prefix(upTo: 20).map(self.createUser)
             let receipts = users.map(MockReadReceipt.init)
@@ -114,12 +114,12 @@ class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
         teamTest {
             // GIVEN
             let conversation = self.createGroupConversation()
-            conversation.hasReadReceiptsEnabled = true
 
             let message = MockMessageFactory.textMessage(withText: "Message")!
             message.sender = selfUser
             message.conversation = conversation
             message.deliveryState = .read
+            message.needsReadConfirmation = true
 
             let users = usernames.prefix(upTo: 6).map(self.createUser)
             users.forEach { $0.setHandle($0.name) }
@@ -143,12 +143,12 @@ class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
         teamTest {
             // GIVEN
             let conversation = self.createGroupConversation()
-            conversation.hasReadReceiptsEnabled = true
 
             let message = MockMessageFactory.textMessage(withText: "Message")!
             message.sender = selfUser
             message.conversation = conversation
             message.deliveryState = .sent
+            message.needsReadConfirmation = true
 
             // WHEN
             let detailsViewController = MessageDetailsViewController(message: message)
@@ -163,13 +163,13 @@ class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
         teamTest {
             // GIVEN
             let conversation = self.createGroupConversation()
-            conversation.hasReadReceiptsEnabled = false
 
             let message = MockMessageFactory.textMessage(withText: "Message")!
             message.sender = selfUser
             message.conversation = conversation
             message.readReceipts = []
             message.deliveryState = .sent
+            message.needsReadConfirmation = false
 
             // WHEN
             let detailsViewController = MessageDetailsViewController(message: message)
@@ -184,13 +184,13 @@ class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
         teamTest {
             // GIVEN
             let conversation = self.createGroupConversation()
-            conversation.hasReadReceiptsEnabled = true
 
             let message = MockMessageFactory.textMessage(withText: "Message")!
             message.sender = selfUser
             message.conversation = conversation
             message.readReceipts = []
             message.deliveryState = .sent
+            message.needsReadConfirmation = true
 
             // WHEN
             let detailsViewController = MessageDetailsViewController(message: message)
@@ -201,73 +201,17 @@ class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
         }
     }
 
-    func testThatItUpdatesPlaceholderWhenReceiptsAreEnabledInConversation() {
-        teamTest {
-            // GIVEN
-            let conversation = self.createGroupConversation()
-            conversation.hasReadReceiptsEnabled = false
-
-            let message = MockMessageFactory.textMessage(withText: "Message")!
-            message.sender = selfUser
-            message.conversation = conversation
-            message.readReceipts = []
-            message.deliveryState = .delivered
-
-            // WHEN: creating the controller
-            let detailsViewController = MessageDetailsViewController(message: message)
-            detailsViewController.container.selectIndex(0, animated: false)
-
-            // WHEN: updating the conversation settings
-            conversation.hasReadReceiptsEnabled = true
-
-            let changeInfo = ConversationChangeInfo(object: conversation)
-            changeInfo.changedKeys = [#keyPath(ZMConversation.hasReadReceiptsEnabled)]
-            detailsViewController.dataSource.conversationDidChange(changeInfo)
-
-            // THEN
-            snapshot(detailsViewController)
-        }
-    }
-
-    func testThatItUpdatesPlaceholderWhenReceiptsAreDisabledInConversation() {
-        teamTest {
-            // GIVEN
-            let conversation = self.createGroupConversation()
-            conversation.hasReadReceiptsEnabled = true
-
-            let message = MockMessageFactory.textMessage(withText: "Message")!
-            message.sender = selfUser
-            message.conversation = conversation
-            message.readReceipts = []
-            message.deliveryState = .delivered
-
-            // WHEN: creating the controller
-            let detailsViewController = MessageDetailsViewController(message: message)
-            detailsViewController.container.selectIndex(0, animated: false)
-
-            // WHEN: updating the conversation settings
-            conversation.hasReadReceiptsEnabled = false
-
-            let changeInfo = ConversationChangeInfo(object: conversation)
-            changeInfo.changedKeys = [#keyPath(ZMConversation.hasReadReceiptsEnabled)]
-            detailsViewController.dataSource.conversationDidChange(changeInfo)
-
-            // THEN
-            snapshot(detailsViewController)
-        }
-    }
-
     func testThatItShowsBothTabs_WhenMessageIsSeenButNotLiked() {
         teamTest {
             // GIVEN
             let conversation = self.createGroupConversation()
-            conversation.hasReadReceiptsEnabled = true
 
             let message = MockMessageFactory.textMessage(withText: "Message")!
             message.sender = selfUser
             message.conversation = conversation
             message.readReceipts = [MockReadReceipt(user: otherUser)]
             message.deliveryState = .read
+            message.needsReadConfirmation = true
 
             // WHEN: creating the controller
             let detailsViewController = MessageDetailsViewController(message: message)
@@ -288,6 +232,7 @@ class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
             message.conversation = self.createGroupConversation()
             message.isEphemeral = true
             message.backingUsersReaction = [MessageReaction.like.unicodeValue: [otherUser]]
+            message.needsReadConfirmation = true
 
             // WHEN
             let detailsViewController = MessageDetailsViewController(message: message)
@@ -303,6 +248,7 @@ class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
             let message = MockMessageFactory.textMessage(withText: "Message")!
             message.sender = otherUser
             message.conversation = self.createGroupConversation()
+            message.needsReadConfirmation = false
 
             // WHEN
             let detailsViewController = MessageDetailsViewController(message: message)
@@ -318,6 +264,7 @@ class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
             let message = MockMessageFactory.textMessage(withText: "Message")!
             message.sender = otherUser
             message.conversation = self.createGroupConversation()
+            message.needsReadConfirmation = false
 
             // WHEN
             let detailsViewController = MessageDetailsViewController(message: message)

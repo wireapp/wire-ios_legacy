@@ -42,6 +42,14 @@ class ConversationSystemMessageTests: ConversationCellSnapshotTestCase {
         verify(message: message)
     }
     
+    func testAddParticipant_Service() {
+        let message = MockMessageFactory.systemMessage(with: .participantsAdded, users: 1, clients: 0)!
+        message.sender = MockUser.mockUsers()?.last
+        message.backingSystemMessageData?.users = Set<AnyHashable>([MockUser.mockService()]) as! Set<ZMUser>
+        
+        verify(message: message)
+    }
+    
     func testAddManyParticipants() {
         let message = MockMessageFactory.systemMessage(with: .participantsAdded, users: 10, clients: 0)!
         message.sender = MockUser.mockUsers()?.last
