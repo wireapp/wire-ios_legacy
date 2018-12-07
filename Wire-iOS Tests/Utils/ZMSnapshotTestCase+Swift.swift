@@ -391,15 +391,15 @@ extension ZMSnapshotTestCase {
 
         container.layoutIfNeeded()
 
-        if extraLayoutPass {
-            RunLoop.current.run(until: Date(timeIntervalSinceNow: 0.1))
-        }
-
         if assertEmptyFrame(container, file: file, line: line) {
             return
         }
 
         configuration?(view)
+
+        if extraLayoutPass {
+            RunLoop.current.run(until: Date(timeIntervalSinceNow: 0.1))
+        }
 
         view.layer.speed = 0 // freeze animations for deterministic tests
         snapshotVerify(view: container,

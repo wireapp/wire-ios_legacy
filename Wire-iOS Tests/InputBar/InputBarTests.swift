@@ -20,10 +20,58 @@
 import XCTest
 @testable import Wire
 
+/*
+extension UITableView {
+    @objc(scrollToBottomAnimated:)
+    func scrollToBottom(animated: Bool) {
+        // kill existing scrolling animation
+        self.setContentOffset(self.contentOffset, animated: false)
+
+        // scroll to bottom
+        self.setContentOffset(CGPoint(x: 0, y: self.contentInset.bottom), animated:animated)
+    }
+}
+- (void)scrollToBottomOfInputField
+    {
+        if (self.textView.contentSize.height > self.textView.bounds.size.height) {
+            [self.textView setContentOffset:CGPointMake(0.0f, self.textView.contentSize.height - self.textView.bounds.size.height)
+                animated:YES];
+        }
+        else {
+            [self.textView setContentOffset:CGPointZero];
+        }
+}
+*/
+
 extension UITextView {
+    /*
     func scrollToBottom() {
-        let bottomOffset = CGPoint(x: 0, y: contentSize.height - bounds.size.height)
-        setContentOffset(bottomOffset, animated: false)
+        self.layoutIfNeeded()
+
+        // kill existing scrolling animation
+        self.setContentOffset(self.contentOffset, animated: false)
+
+        // scroll to bottom
+        self.setContentOffset(CGPoint(x: 0, y: self.contentInset.bottom), animated:false)
+    }
+ */
+
+    //    func scrollToBottom() {
+//        let bottomOffset = CGPoint(x: 0, y: contentSize.height - bounds.size.height)
+//        setContentOffset(bottomOffset, animated: false)
+//    }
+
+    func scrollToBottom() {
+        // kill existing scrolling animation
+        self.setContentOffset(self.contentOffset, animated: false)
+
+//        self.layoutIfNeeded()
+
+        if text.count > 0 {
+            let location = text.count - 1
+            let bottom = NSMakeRange(location, 1)
+            scrollRangeToVisible(bottom)
+        }
     }
 }
 
@@ -53,6 +101,7 @@ class InputBarTests: ZMSnapshotTestCase {
 
     override func setUp() {
         super.setUp()
+
         sut = InputBar(buttons: buttons())
         sut.leftAccessoryView.isHidden = true
         sut.rightAccessoryStackView.isHidden = true
@@ -82,10 +131,13 @@ class InputBarTests: ZMSnapshotTestCase {
     
     func testLongText() {
         sut.textView.text = longText
-        sut.textView.scrollToBottom()
-        
-        verifyInAllPhoneWidths(view: sut, configuration: configure)
-        verifyInAllTabletWidths(view: sut, configuration: configure)
+
+        verifyInAllPhoneWidths(view: sut,
+//                               extraLayoutPass: true,
+                               configuration: configure)
+        verifyInAllTabletWidths(view: sut,
+//                                extraLayoutPass: true,
+                                configuration: configure)
     }
     
     func testRTLText() {
@@ -121,8 +173,8 @@ class InputBarTests: ZMSnapshotTestCase {
         inputBar.rightAccessoryStackView.isHidden = true
 
         inputBar.translatesAutoresizingMaskIntoConstraints = false
-        inputBar.layer.speed = 0
-        
+//        inputBar.layer.speed = 0
+
         
         verifyInAllPhoneWidths(view: inputBar)
     }
@@ -133,8 +185,8 @@ class InputBarTests: ZMSnapshotTestCase {
         inputBar.leftAccessoryView.isHidden = true
         inputBar.rightAccessoryStackView.isHidden = true
         inputBar.textView.text = ""
-        inputBar.layer.speed = 0
-        
+//        inputBar.layer.speed = 0
+
         
         verifyInAllPhoneWidths(view: inputBar)
     }
@@ -172,6 +224,8 @@ class InputBarTests: ZMSnapshotTestCase {
     }
 
     func configure(view: UIView) {
+//        view.layoutIfNeeded()
+        view.layoutSubviews()
         (view as! InputBar).textView.scrollToBottom()
     }
 }
