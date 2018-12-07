@@ -26,8 +26,10 @@ extension TextView {
             _placeholderTextContainerInset = newValue
 //            let linePadding = textContainer.lineFragmentPadding
 
-            placeholderLabelLeftAnchor?.constant = newValue.left
-            placeholderLabelRightAnchor?.constant = newValue.right
+//            let linePadding = textContainer.lineFragmentPadding
+
+            placeholderLabelLeftAnchor?.constant = newValue.left// + linePadding
+            placeholderLabelRightAnchor?.constant = newValue.right// - linePadding
 //            placeholderLabelTopAnchor?.constant = newValue.top
 //            placeholderLabelBottomAnchor?.constant = newValue.bottom
         }
