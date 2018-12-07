@@ -339,21 +339,11 @@ class SettingsPropertyFactory {
                 propertyName: propertyName,
                 getAction: { _ in
                     let value = self.selfUser?.readReceiptsEnabled ?? false
-                    
-                    if let settings = Settings.shared(),
-                        let account = SessionManager.shared?.accountManager.selectedAccount {
-                        settings.setValue(value, for: UserDefaultReadReceiptsEnabledLastSeenValue, in: account)
-                    }
-                    
                     return SettingsPropertyValue(value)
             },
                 setAction: { _, value in
                     if case .number(let enabled) = value,
-                        let userSession = self.userSession as? ZMUserSession,
-                        let settings = Settings.shared(),
-                        let account = SessionManager.shared?.accountManager.selectedAccount {
-
-                        settings.setValue(enabled.boolValue, for: UserDefaultReadReceiptsEnabledLastSeenValue, in: account)
+                        let userSession = self.userSession as? ZMUserSession {
                             userSession.performChanges {
                                 self.selfUser?.readReceiptsEnabled = enabled.boolValue
                             }

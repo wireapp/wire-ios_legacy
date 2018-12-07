@@ -21,15 +21,10 @@ import Foundation
 extension SelfProfileViewController {
 
     @discardableResult func presentUserSettingChangeControllerIfNeeded() -> Bool {
-        guard let settings = Settings.shared(),
-                let account = SessionManager.shared?.accountManager.selectedAccount else {
-                fatal("Settings.shared() is missing")
-        }
-        
-        if settings.readReceiptsValueChanged(for: account) {
+        if ZMUser.selfUser()?.readReceiptsEnabledChangedRemotely ?? false {
             let currentValue = ZMUser.selfUser()!.readReceiptsEnabled
             self.presentReadReceiptsChangedAlert(with: currentValue)
-            settings.setValue(currentValue, for: UserDefaultReadReceiptsEnabledLastSeenValue, in: account)
+            
             return true
         }
         else {
@@ -41,10 +36,15 @@ extension SelfProfileViewController {
         let title = newValue ? "self.read_receipts_enabled.title".localized : "self.read_receipts_disabled.title".localized
         let description = "self.read_receipts_description.title".localized
         
-        let settingsChangedAlert = UIAlertController(title: title,
-                                                     message: description,
-                                                     cancelButtonTitle: "general.ok".localized)
+        let settingsChangedAlert = UIAlertController(title: title, message: description, preferredStyle: .alert)
+        
+        let okAction = UIAlertAction(title: "general.ok".localized, style: .default) { [weak settingsChangedAlert] _ in
+            ZMUser.selfUser()?.readReceiptsEnabledChangedRemotely = false
+            settingsChangedAlert?.dismiss(animated: true)
+        }
 
+        settingsChangedAlert.addAction(okAction)
+        
         self.present(settingsChangedAlert, animated: true)
     }
     

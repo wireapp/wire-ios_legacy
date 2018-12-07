@@ -78,8 +78,6 @@ extern NSString * const UserDefaultCallingConstantBitRate;
 
 extern NSString * const UserDefaultDisableLinkPreviews;
 
-extern NSString * const UserDefaultReadReceiptsEnabledLastSeenValue;
-
 /// Model object for locally stored (not in SE or AVS) user app settings
 @interface Settings : NSObject
 

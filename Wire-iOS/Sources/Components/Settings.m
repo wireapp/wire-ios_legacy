@@ -62,8 +62,6 @@ NSString * const UserDefaultCallingConstantBitRate = @"CallingConstantBitRate";
 
 NSString * const UserDefaultDisableLinkPreviews = @"DisableLinkPreviews";
 
-NSString * const UserDefaultReadReceiptsEnabledLastSeenValue = @"ReadReceiptsEnabledLastSeenValue";
-
 @interface Settings ()
 
 @property (strong, readonly, nonatomic) NSUserDefaults *defaults;
