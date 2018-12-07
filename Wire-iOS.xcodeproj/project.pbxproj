@@ -1330,6 +1330,8 @@
 		EFBCC91521551694006AAB70 /* ContactsViewController+ViewLifeCycle.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBCC91421551694006AAB70 /* ContactsViewController+ViewLifeCycle.swift */; };
 		EFBCC917215548EE006AAB70 /* AVAudioSessionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBCC916215548EE006AAB70 /* AVAudioSessionType.swift */; };
 		EFC0C7F121778FB000380C4B /* SettingsTextCellSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC0C7F021778FB000380C4B /* SettingsTextCellSnapshotTests.swift */; };
+		EFC57A0D21BAAE440008DBE6 /* TextView+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = EFC57A0B21BAAE440008DBE6 /* TextView+Internal.h */; };
+		EFC57A0E21BAAF9A0008DBE6 /* TextView+Placeholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC57A0A21BAAE440008DBE6 /* TextView+Placeholder.swift */; };
 		EFC6F8A0213FCDE200B92D51 /* MenuConfigurationProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC6F89F213FCDE200B92D51 /* MenuConfigurationProperties.swift */; };
 		EFC7146F20DD476000FAA4B4 /* CountryCodeTableViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC7146D20DD471800FAA4B4 /* CountryCodeTableViewControllerTests.swift */; };
 		EFC8E21B212C6BF700BE7BBE /* ConversationCell+Snapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC8E21A212C6BF700BE7BBE /* ConversationCell+Snapshot.swift */; };
@@ -3141,6 +3143,8 @@
 		EFBCC91421551694006AAB70 /* ContactsViewController+ViewLifeCycle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContactsViewController+ViewLifeCycle.swift"; sourceTree = "<group>"; };
 		EFBCC916215548EE006AAB70 /* AVAudioSessionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVAudioSessionType.swift; sourceTree = "<group>"; };
 		EFC0C7F021778FB000380C4B /* SettingsTextCellSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTextCellSnapshotTests.swift; sourceTree = "<group>"; };
+		EFC57A0A21BAAE440008DBE6 /* TextView+Placeholder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TextView+Placeholder.swift"; sourceTree = "<group>"; };
+		EFC57A0B21BAAE440008DBE6 /* TextView+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TextView+Internal.h"; sourceTree = "<group>"; };
 		EFC6F89F213FCDE200B92D51 /* MenuConfigurationProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuConfigurationProperties.swift; sourceTree = "<group>"; };
 		EFC7146D20DD471800FAA4B4 /* CountryCodeTableViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryCodeTableViewControllerTests.swift; sourceTree = "<group>"; };
 		EFC8E21A212C6BF700BE7BBE /* ConversationCell+Snapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationCell+Snapshot.swift"; sourceTree = "<group>"; };
@@ -3700,7 +3704,9 @@
 				5E672C8E2178D85200522E61 /* AvatarImageView.swift */,
 				164A55AC20ECFD7400AE62A6 /* UserImageView.swift */,
 				1EE9DCA81B5F9A6D00E347DF /* TextView.h */,
+				EFC57A0B21BAAE440008DBE6 /* TextView+Internal.h */,
 				1EE9DCA91B5F9A6D00E347DF /* TextView.m */,
+				EFC57A0A21BAAE440008DBE6 /* TextView+Placeholder.swift */,
 				870533FE1DD6162400A7F822 /* OverflowSeparatorView.swift */,
 				87831A961E69B5E600DDF3C3 /* ThreeDotsLoadingView.swift */,
 				879D6AFB1E69E20900DC07A1 /* ImageMessageView.swift */,
@@ -6771,6 +6777,7 @@
 				1E5E0D061B6B8EDB003B0CAC /* UIImage+ImageUtilities.h in Headers */,
 				D5168F43200F6F2300F8222A /* CABasicAnimation+Rotation.h in Headers */,
 				1E5E0CFD1B6B8EDB003B0CAC /* ZetaIconTypes.h in Headers */,
+				EFC57A0D21BAAE440008DBE6 /* TextView+Internal.h in Headers */,
 				1E5E0D021B6B8EDB003B0CAC /* UIColor+Mixing.h in Headers */,
 				1E5E0D041B6B8EDB003B0CAC /* UIControl+Wire.h in Headers */,
 				87B7DAEB1E697C11005F5140 /* AccentColorProvider.h in Headers */,
@@ -7465,6 +7472,7 @@
 				16E6C1001A837C0300AA2F32 /* NSIndexSet+IndexPaths.m in Sources */,
 				5E35F77E218300D400D3F4FE /* ConversationLinkPreviewArticleCell.swift in Sources */,
 				EFF92B6421A84E210090DA66 /* PhoneNumber.swift in Sources */,
+				EFC57A0E21BAAF9A0008DBE6 /* TextView+Placeholder.swift in Sources */,
 				87A15FCE1E07EAB400AED79B /* AssetCollectionWrapper.swift in Sources */,
 				871BC2821D34F8F800DF0793 /* UIAlertController+Wire.m in Sources */,
 				D5168F2C200CBBF300F8222A /* Analytics+TeamInvites.swift in Sources */,
