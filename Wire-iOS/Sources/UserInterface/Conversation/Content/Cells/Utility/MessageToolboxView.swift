@@ -47,7 +47,7 @@ import WireSyncEngine
     private let contentStack: UIStackView = {
         let stack = UIStackView()
         stack.axis = .horizontal
-        stack.spacing = 4
+        stack.spacing = 6
         return stack
     }()
 
