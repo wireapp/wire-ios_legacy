@@ -144,10 +144,25 @@ extension ZMSnapshotTestCase {
         verifyInAllDeviceSizes(view: view, extraLayoutPass: false, file: file, line: line, configurationBlock: configuration)
     }
     
-    func verifyInAllPhoneWidths(view: UIView, file: StaticString = #file, line: UInt = #line) {
-        verifyView(inAllPhoneWidths: view, extraLayoutPass: false, file: file.utf8SignedStart(), line: line)
+    func verifyInAllPhoneWidths(view: UIView,
+                                configuration: @escaping (UIView, Bool) -> () = { _, _ in },
+                                file: StaticString = #file,
+                                line: UInt = #line) {
+        verifyView(inAllPhoneWidths: view, extraLayoutPass: false,
+                   configuration: configuration,
+                   file: file.utf8SignedStart(),
+                   line: line)
     }
-    
+
+    func verifyView(inAllPhoneWidths view: UIView?,
+                    configuration: @escaping (UIView, Bool) -> () = { _, _ in },
+                    extraLayoutPass: Bool, file: [Int8], line: Int) {
+        assertAmbigousLayout(view, file: file, line: line)
+        for value: NSNumber? in phoneWidths() {
+            verifyView(view, extraLayoutPass: extraLayoutPass, width: Float(value ?? 0.0), file: file, line: line)
+        }
+    }
+
     func verifyInAllTabletWidths(view: UIView, file: StaticString = #file, line: UInt = #line) {
         verifyView(inAllTabletWidths: view, extraLayoutPass: false, file: file.utf8SignedStart(), line: line)
     }

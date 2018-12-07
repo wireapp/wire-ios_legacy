@@ -95,9 +95,11 @@ NS_ASSUME_NONNULL_BEGIN
 /// the common iPhones in Portrait and iPad in Landscape and Portrait.
 /// This method only makes sense for views that will be on presented fullscreen.
 
-- (void)verifyViewInAllPhoneWidths:(UIView *)view extraLayoutPass:(BOOL)extraLayoutPass file:(const char[_Nullable])file line:(NSUInteger)line;
+//- (void)verifyViewInAllPhoneWidths:(UIView *)view extraLayoutPass:(BOOL)extraLayoutPass file:(const char[_Nullable])file line:(NSUInteger)line;
 
 - (void)verifyViewInAllTabletWidths:(UIView *)view extraLayoutPass:(BOOL)extraLayoutPass file:(const char[_Nullable])file line:(NSUInteger)line;
+
+- (void)assertAmbigousLayout:(UIView *)view file:(const char[])file line:(NSUInteger)line;
 
 @end
 
