@@ -24,14 +24,9 @@ extension TextView {
     var placeholderTextContainerInset: UIEdgeInsets {
         set {
             _placeholderTextContainerInset = newValue
-//            let linePadding = textContainer.lineFragmentPadding
 
-//            let linePadding = textContainer.lineFragmentPadding
-
-            placeholderLabelLeftAnchor?.constant = newValue.left// + linePadding
-            placeholderLabelRightAnchor?.constant = newValue.right// - linePadding
-//            placeholderLabelTopAnchor?.constant = newValue.top
-//            placeholderLabelBottomAnchor?.constant = newValue.bottom
+            placeholderLabelLeftAnchor?.constant = newValue.left
+            placeholderLabelRightAnchor?.constant = newValue.right
         }
 
         get {
@@ -48,16 +43,12 @@ extension TextView {
         placeholderLabel.translatesAutoresizingMaskIntoConstraints = false
 
         placeholderLabelLeftAnchor = placeholderLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: placeholderTextContainerInset.left + linePadding)
-//        placeholderLabelTopAnchor = placeholderLabel.topAnchor.constraint(equalTo: topAnchor, constant: placeholderTextContainerInset.top)
         placeholderLabelRightAnchor = placeholderLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: placeholderTextContainerInset.right - linePadding)
-//        placeholderLabelBottomAnchor = placeholderLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: placeholderTextContainerInset.bottom)
 
         NSLayoutConstraint.activate([
             placeholderLabelLeftAnchor!,
             placeholderLabelRightAnchor!,
             placeholderLabel.centerYAnchor.constraint(equalTo: centerYAnchor)
-//            placeholderLabelTopAnchor!,
-//            placeholderLabelBottomAnchor!
             ])
 
         placeholderLabel.font = placeholderFont

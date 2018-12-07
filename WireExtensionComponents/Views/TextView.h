@@ -41,8 +41,6 @@ Adds placeholder support to @c UITextView. The position of the placeholder is au
 ///TODO: internal
 @property (nonatomic, nullable) NSLayoutConstraint *placeholderLabelLeftAnchor;
 @property (nonatomic, nullable) NSLayoutConstraint *placeholderLabelRightAnchor;
-//@property (nonatomic, nullable) NSLayoutConstraint *placeholderLabelBottomAnchor;
-//@property (nonatomic, nullable) NSLayoutConstraint *placeholderLabelTopAnchor;
 
 @property (nonatomic) UIEdgeInsets _placeholderTextContainerInset;
 

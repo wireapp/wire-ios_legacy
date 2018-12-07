@@ -21,7 +21,6 @@
 #import "ZetaIconTypes.h"
 
 
-IB_DESIGNABLE
 @interface ProgressSpinner : UIView
 
 @property (nonatomic, strong) IBInspectable UIColor *color;

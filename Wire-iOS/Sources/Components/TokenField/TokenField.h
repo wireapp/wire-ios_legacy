@@ -41,7 +41,6 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 
-IB_DESIGNABLE
 @interface TokenField : UIView
 
 @property (weak, nonatomic, nullable) IBOutlet id<TokenFieldDelegate> delegate;
