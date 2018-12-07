@@ -28,10 +28,10 @@ Adds placeholder support to @c UITextView. The position of the placeholder is au
 
 @interface TextView : UITextView
 
-@property (nonatomic, copy, nullable) IBInspectable NSString *placeholder;
-@property (nonatomic, copy, nullable) IBInspectable NSAttributedString *attributedPlaceholder;
-@property (nonatomic, nullable) IBInspectable UIColor  *placeholderTextColor;
-@property (nonatomic, nullable) IBInspectable UIFont   *placeholderFont;
+@property (nonatomic, copy, nullable) NSString *placeholder;
+@property (nonatomic, copy, nullable) NSAttributedString *attributedPlaceholder;
+@property (nonatomic, nullable) UIColor  *placeholderTextColor;
+@property (nonatomic, nullable) UIFont   *placeholderFont;
 @property (nonatomic) TextTransform placeholderTextTransform;
 @property (nonatomic) CGFloat lineFragmentPadding;
 @property (nonatomic) NSTextAlignment placeholderTextAlignment;

@@ -8216,7 +8216,7 @@ public class WireStyleKit : NSObject {
 
     //// Customization Infrastructure
 
-    @objc @IBOutlet dynamic var ongoingcallTargets: [AnyObject]! {
+    @objc dynamic var ongoingcallTargets: [AnyObject]! {
         get { return Cache.ongoingcallTargets }
         set {
             Cache.ongoingcallTargets = newValue
@@ -8226,7 +8226,7 @@ public class WireStyleKit : NSObject {
         }
     }
 
-    @objc @IBOutlet dynamic var shieldverifiedTargets: [AnyObject]! {
+    @objc dynamic var shieldverifiedTargets: [AnyObject]! {
         get { return Cache.shieldverifiedTargets }
         set {
             Cache.shieldverifiedTargets = newValue
@@ -8236,7 +8236,7 @@ public class WireStyleKit : NSObject {
         }
     }
 
-    @objc @IBOutlet dynamic var shieldnotverifiedTargets: [AnyObject]! {
+    @objc dynamic var shieldnotverifiedTargets: [AnyObject]! {
         get { return Cache.shieldnotverifiedTargets }
         set {
             Cache.shieldnotverifiedTargets = newValue
@@ -8246,7 +8246,7 @@ public class WireStyleKit : NSObject {
         }
     }
 
-    @objc @IBOutlet dynamic var degradationTargets: [AnyObject]! {
+    @objc dynamic var degradationTargets: [AnyObject]! {
         get { return Cache.degradationTargets }
         set {
             Cache.degradationTargets = newValue
