@@ -20,6 +20,8 @@ import Foundation
 
 extension TextView {
 
+
+    /// custom inset for placeholder, only left and right inset value is used
     @objc
     var placeholderTextContainerInset: UIEdgeInsets {
         set {
