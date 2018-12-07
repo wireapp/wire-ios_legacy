@@ -43,6 +43,7 @@ class ConversationMessageCellTableViewAdapter<C: ConversationMessageCellDescript
         didSet {
             longPressGesture.isEnabled = cellDescription?.supportsActions == true
             doubleTapGesture.isEnabled = cellDescription?.supportsActions == true
+            singleTapGesture.isEnabled = cellDescription?.supportsActions == true
             accessibilityLabel = cellDescription?.accessibilityLabel
             accessibilityIdentifier = cellDescription?.accessibilityIdentifier
         }
@@ -278,12 +279,12 @@ class ConversationMessageCellTableViewAdapter<C: ConversationMessageCellDescript
     
     override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         guard gestureRecognizer == singleTapGesture else { return super.gestureRecognizerShouldBegin(gestureRecognizer) }
-        
+
         // We fail the single tap gesture recognizer if there's no single tap action to perform, which gives
         // other gesture recognizers the opportunity to fire.
         return cellDescription?.actionController?.singleTapAction != nil
     }
-    
+
 }
 
 extension UITableView {

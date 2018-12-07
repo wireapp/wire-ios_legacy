@@ -196,8 +196,6 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
                                              selector:@selector(applicationDidBecomeActive:)
                                                  name:UIApplicationDidBecomeActiveNotification
                                                object:nil];
-
-    [self.conversationMessageWindowTableViewAdapter selectLastMessage];
 }
 
 - (void)applicationDidBecomeActive:(NSNotification *)notification
