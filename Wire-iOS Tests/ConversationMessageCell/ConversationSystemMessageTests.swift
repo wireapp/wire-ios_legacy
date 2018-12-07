@@ -42,6 +42,14 @@ class ConversationSystemMessageTests: ConversationCellSnapshotTestCase {
         verify(message: message)
     }
     
+    func testAddParticipant_Service() {
+        let message = MockMessageFactory.systemMessage(with: .participantsAdded, users: 1, clients: 0)!
+        message.sender = MockUser.mockUsers()?.last
+        message.backingSystemMessageData?.users = Set<AnyHashable>([MockUser.mockService()]) as! Set<ZMUser>
+        
+        verify(message: message)
+    }
+    
     func testAddManyParticipants() {
         let message = MockMessageFactory.systemMessage(with: .participantsAdded, users: 10, clients: 0)!
         message.sender = MockUser.mockUsers()?.last
@@ -120,15 +128,21 @@ class ConversationSystemMessageTests: ConversationCellSnapshotTestCase {
 
     // MARK: - read receipt
 
-    func testReadReceiptIsOffByThirdPerson() {
-        let message = MockMessageFactory.systemMessage(with: .readReceiptsDisabled, users: 1, clients: 1)!
+    func testReadReceiptIsOn() {
+        let message = MockMessageFactory.systemMessage(with: .readReceiptsOn)!
+
+        verify(message: message)
+    }
+
+    func testReadReceiptIsOnByThirdPerson() {
+        let message = MockMessageFactory.systemMessage(with: .readReceiptsEnabled)!
+        message.sender = MockUser.mockUsers()?.first
 
         verify(message: message)
     }
 
     func testReadReceiptIsOffByYou() {
-        let message = MockMessageFactory.systemMessage(with: .readReceiptsDisabled, users: 1, clients: 1)!
-        message.backingSystemMessageData?.users = Set<AnyHashable>([MockUser.mockSelf()]) as! Set<ZMUser>
+        let message = MockMessageFactory.systemMessage(with: .readReceiptsDisabled)!
 
         verify(message: message)
     }

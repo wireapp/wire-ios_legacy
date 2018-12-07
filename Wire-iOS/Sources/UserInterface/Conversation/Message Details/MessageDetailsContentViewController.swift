@@ -32,14 +32,10 @@ class MessageDetailsContentViewController: UIViewController {
     // MARK: - Configuration
 
     /// The conversation that is being accessed.
-    var conversation: ZMConversation!
+    let conversation: ZMConversation
 
     /// The type of the displayed content.
-    var contentType: ContentType {
-        didSet {
-            configureForContentType()
-        }
-    }
+    let contentType: ContentType
 
     /// The subtitle displaying message details.
     var subtitle: String? {
@@ -78,8 +74,9 @@ class MessageDetailsContentViewController: UIViewController {
      * Creates a view controller to display message details of a certain type.
      */
 
-    init(contentType: ContentType) {
+    init(contentType: ContentType, conversation: ZMConversation) {
         self.contentType = contentType
+        self.conversation = conversation
         super.init(nibName: nil, bundle: nil)
         updateTitle()
     }
@@ -246,6 +243,8 @@ extension MessageDetailsContentViewController: UICollectionViewDataSource, UICol
 
         cell.configure(with: description.user, subtitle: description.attributedSubtitle, conversation: conversation)
         cell.showSeparator = indexPath.item != (cells.endIndex - 1)
+        cell.subtitleLabel.accessibilityLabel = description.accessibleSubtitleLabel
+        cell.subtitleLabel.accessibilityValue = description.accessibleSubtitleValue
 
         return cell
     }

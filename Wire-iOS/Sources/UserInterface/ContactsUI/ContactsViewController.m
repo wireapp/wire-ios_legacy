@@ -426,7 +426,8 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
                                                                  [unableToSendController dismissViewControllerAnimated:YES completion:nil];
                                                              }];
             [unableToSendController addAction:okAction];
-            [self presentViewController:unableToSendController animated:YES completion:nil];
+
+            [[AppDelegate sharedAppDelegate].notificationsWindow.rootViewController presentViewController:unableToSendController animated:YES completion:nil];
             return;
         }
         

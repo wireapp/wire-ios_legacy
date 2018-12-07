@@ -19,45 +19,96 @@
 import Foundation
 import WireSyncEngine
 
-@objc public protocol MessageToolboxViewDelegate: NSObjectProtocol {
+/// Observes events from the message toolbox.
+@objc protocol MessageToolboxViewDelegate: NSObjectProtocol {
     func messageToolboxDidRequestOpeningDetails(_ messageToolboxView: MessageToolboxView, preferredDisplayMode: MessageDetailsDisplayMode)
     func messageToolboxViewDidSelectResend(_ messageToolboxView: MessageToolboxView)
     func messageToolboxViewDidSelectDelete(_ messageToolboxView: MessageToolboxView)
     func messageToolboxViewDidRequestLike(_ messageToolboxView: MessageToolboxView)
 }
 
-@objcMembers open class MessageToolboxView: UIView {
-    fileprivate static let resendLink = URL(string: "settings://resend-message")!
-    fileprivate static let deleteLink = URL(string: "settings://delete-message")!
+/**
+ * A view that displays information about a message.
+ */
 
-    private static let ephemeralTimeFormatter = EphemeralTimeoutFormatter()
+@objc class MessageToolboxView: UIView {
 
-    private static let statusFont = UIFont.smallSemiboldFont
-    private var statusTextColor: UIColor {
-        return UIColor.from(scheme: .textDimmed)
-    }
+    /// The object receiving events.
+    @objc weak var delegate: MessageToolboxViewDelegate?
 
-    public let statusTextView: UITextView = {
-        let textView = UITextView(frame: CGRect.zero)
-        textView.backgroundColor = .clear
-        textView.isSelectable = false
-        textView.isEditable = false
-        textView.isScrollEnabled = false
-        textView.isUserInteractionEnabled = true
-        textView.isAccessibilityElement = true
-        textView.accessibilityLabel = "DeliveryStatus"
-        textView.textContainer.lineBreakMode = NSLineBreakMode.byTruncatingMiddle
-        textView.textContainer.maximumNumberOfLines = 1
-        textView.setContentHuggingPriority(.defaultLow, for: .vertical)
-        textView.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
+    ///
+    fileprivate(set) var dataSource: MessageToolboxDataSource?
 
-        textView.linkTextAttributes = [.foregroundColor: UIColor.vividRed,
-                                              .underlineStyle: NSUnderlineStyle.single.rawValue as NSNumber]
+    // MARK: - UI Elements
 
-        textView.textContainerInset = UIEdgeInsets.zero
-        textView.textContainer.lineFragmentPadding = 0
+    /// The timer for ephemeral messages.
+    private var timestampTimer: Timer? = nil
 
-        return textView
+    private let contentStack: UIStackView = {
+        let stack = UIStackView()
+        stack.axis = .horizontal
+        stack.spacing = 6
+        return stack
+    }()
+
+    private let detailsLabel: UILabel = {
+        let label = UILabel()
+        label.lineBreakMode = .byTruncatingMiddle
+        label.numberOfLines = 1
+        label.accessibilityIdentifier = "Details"
+        label.setContentHuggingPriority(.required, for: .horizontal)
+        label.setContentCompressionResistancePriority(.required, for: .horizontal)
+        return label
+    }()
+
+    private let separatorLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 1
+        label.textColor = UIColor.from(scheme: .textDimmed)
+        label.font = UIFont.smallSemiboldFont
+        label.text = "·"
+        label.isAccessibilityElement = false
+        label.setContentHuggingPriority(.required, for: .horizontal)
+        label.setContentCompressionResistancePriority(.required, for: .horizontal)
+        return label
+    }()
+
+    private let resendButton: UIButton = {
+        let button = UIButton()
+        let attributedTitle = NSAttributedString(string: "content.system.failedtosend_message_timestamp_resend".localized,
+                                                 attributes: [.foregroundColor: UIColor.vividRed,
+                                                              .underlineStyle: NSUnderlineStyle.single.rawValue as NSNumber,
+                                                              .font: UIFont.smallSemiboldFont])
+
+        button.contentHorizontalAlignment = .left
+        button.setAttributedTitle(attributedTitle, for: .normal)
+        button.setContentHuggingPriority(.required, for: .horizontal)
+        button.setContentCompressionResistancePriority(.required, for: .horizontal)
+        return button
+    }()
+
+    private let deleteButton: UIButton = {
+        let button = UIButton()
+        let attributedTitle = NSAttributedString(string: "content.system.failedtosend_message_timestamp_delete".localized,
+                                                 attributes: [.foregroundColor: UIColor.vividRed,
+                                                              .underlineStyle: NSUnderlineStyle.single.rawValue as NSNumber,
+                                                              .font: UIFont.smallSemiboldFont])
+
+        button.contentHorizontalAlignment = .left
+        button.setAttributedTitle(attributedTitle, for: .normal)
+        button.setContentHuggingPriority(.defaultLow, for: .horizontal)
+        button.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        return button
+    }()
+
+    private let statusLabel: UILabel = {
+        let label = UILabel()
+        label.lineBreakMode = .byTruncatingMiddle
+        label.numberOfLines = 1
+        label.accessibilityIdentifier = "DeliveryStatus"
+        label.setContentHuggingPriority(.defaultLow, for: .horizontal)
+        label.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        return label
     }()
 
     fileprivate var tapGestureRecogniser: UITapGestureRecognizer!
@@ -66,42 +117,40 @@ import WireSyncEngine
     fileprivate let likeButtonContainer = UIView()
     fileprivate var likeButtonWidth: NSLayoutConstraint!
     fileprivate var heightConstraint: NSLayoutConstraint!
-
-    open weak var delegate: MessageToolboxViewDelegate?
-
     fileprivate var previousLayoutBounds: CGRect = CGRect.zero
-    
-    fileprivate(set) weak var message: ZMConversationMessage?
-    
     fileprivate var forceShowTimestamp: Bool = false
-    private var isConfigured: Bool = false
-    
-    private var timestampTimer: Timer? = nil
+
+    // MARK: - Initialization
 
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .clear
         clipsToBounds = true
     }
+
+    required public init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     private func setupViews() {
-        likeButton.translatesAutoresizingMaskIntoConstraints = false
         likeButton.accessibilityIdentifier = "likeButton"
-        likeButton.accessibilityLabel = "likeButton"
         likeButton.addTarget(self, action: #selector(requestLike), for: .touchUpInside)
-        likeButton.setIconColor(statusTextColor, for: .normal)
+        likeButton.setIconColor(UIColor.from(scheme: .textDimmed), for: .normal)
         likeButton.setIconColor(UIColor(for: .vividRed), for: .selected)
         likeButton.hitAreaPadding = CGSize(width: 20, height: 20)
 
-        statusTextView.delegate = self
+        resendButton.addTarget(self, action: #selector(resendMessage), for: .touchUpInside)
+        deleteButton.addTarget(self, action: #selector(deleteMessage), for: .touchUpInside)
 
-        [likeButtonContainer, likeButton, statusTextView].forEach(addSubview)
+        [detailsLabel, resendButton, separatorLabel, deleteButton, statusLabel].forEach(contentStack.addArrangedSubview)
+        [likeButtonContainer, likeButton, contentStack].forEach(addSubview)
     }
     
     private func createConstraints() {
+        likeButton.translatesAutoresizingMaskIntoConstraints = false
         likeButtonContainer.translatesAutoresizingMaskIntoConstraints = false
         likeButton.translatesAutoresizingMaskIntoConstraints = false
-        statusTextView.translatesAutoresizingMaskIntoConstraints = false
+        contentStack.translatesAutoresizingMaskIntoConstraints = false
 
         heightConstraint = heightAnchor.constraint(equalToConstant: 28)
         heightConstraint.priority = UILayoutPriority(999)
@@ -120,19 +169,43 @@ import WireSyncEngine
             likeButton.centerYAnchor.constraint(equalTo: likeButtonContainer.centerYAnchor),
 
             // statusTextView align vertically center
-            statusTextView.leadingAnchor.constraint(equalTo: likeButtonContainer.trailingAnchor),
-            statusTextView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -UIView.conversationLayoutMargins.right),
-            statusTextView.centerYAnchor.constraint(equalTo: centerYAnchor)
-            ])
-    }
-    
-    required public init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+            contentStack.leadingAnchor.constraint(equalTo: likeButtonContainer.trailingAnchor),
+            contentStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -UIView.conversationLayoutMargins.right),
+            contentStack.centerYAnchor.constraint(equalTo: centerYAnchor)
+        ])
     }
 
-    open func configureForMessage(_ message: ZMConversationMessage, forceShowTimestamp: Bool, animated: Bool = false) {
-        if !self.isConfigured {
-            self.isConfigured = true
+    // MARK: - Lifecycle
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        guard let message = self.dataSource?.message else { return }
+        guard !self.bounds.equalTo(self.previousLayoutBounds) else {
+            return
+        }
+
+        self.previousLayoutBounds = self.bounds
+        self.configureForMessage(message, forceShowTimestamp: self.forceShowTimestamp)
+    }
+
+    override func willMove(toWindow newWindow: UIWindow?) {
+        super.willMove(toWindow: newWindow)
+
+        if newWindow == nil {
+            stopCountdownTimer()
+        }
+    }
+
+    @objc func prepareForReuse() {
+        self.dataSource = nil
+        stopCountdownTimer()
+    }
+
+    // MARK: - Configuration
+
+    @objc func configureForMessage(_ message: ZMConversationMessage, forceShowTimestamp: Bool, animated: Bool = false) {
+        if dataSource?.message.nonce != message.nonce {
+            dataSource = MessageToolboxDataSource(message: message)
 
             setupViews()
             createConstraints()
@@ -143,41 +216,85 @@ import WireSyncEngine
         }
 
         self.forceShowTimestamp = forceShowTimestamp
-        self.message = message
-
-        self.configureLikedState(message, animated: animated)
-        self.layoutIfNeeded()
-
-        if !self.forceShowTimestamp && message.hasReactions() {
-            self.configureReactions(message, animated: animated)
-        }
-        else {
-            self.configureTimestamp(message, animated: animated)
-        }
+        reloadContent(animated: animated)
     }
-    
-    @objc
-    func startCountdownTimer() {
+
+    private func reloadContent(animated: Bool) {
+        guard let dataSource = self.dataSource else { return }
+
+        // Do not reload the content if it didn't change.
+        guard let newPosition = dataSource.updateContent(forceShowTimestamp: forceShowTimestamp, widthConstraint: bounds.width) else {
+            return
+        }
+
+        switch dataSource.content {
+        case .reactions(let reactionsString):
+            updateContentStack(to: newPosition, animated: animated) {
+                self.detailsLabel.attributedText = reactionsString
+                self.detailsLabel.isHidden = false
+                self.statusLabel.isHidden = true
+                self.separatorLabel.isHidden = true
+                self.deleteButton.isHidden = true
+                self.resendButton.isHidden = true
+            }
+
+        case .sendFailure(let detailsString):
+            updateContentStack(to: newPosition, animated: animated) {
+                self.detailsLabel.attributedText = detailsString
+                self.detailsLabel.isHidden = false
+                self.statusLabel.isHidden = true
+                self.separatorLabel.isHidden = false
+                self.deleteButton.isHidden = false
+                self.resendButton.isHidden = false
+            }
+
+        case .details(let timestamp, let status):
+            updateContentStack(to: newPosition, animated: animated) {
+                self.detailsLabel.attributedText = timestamp
+                self.detailsLabel.isHidden = timestamp == nil
+                self.statusLabel.attributedText = status
+                self.statusLabel.isHidden = status == nil
+                self.separatorLabel.isHidden = timestamp == nil || status == nil
+                self.deleteButton.isHidden = true
+                self.resendButton.isHidden = true
+            }
+        }
+
+        configureLikedState(dataSource.message, animated: animated)
+        layoutIfNeeded()
+    }
+
+    // MARK: - Timer
+
+    /// Starts the countdown timer.
+    @objc func startCountdownTimer() {
         stopCountdownTimer()
-        
-        guard let message = message, message.isEphemeral, !message.hasBeenDeleted, !message.isObfuscated else { return }
+
+        guard let message = self.dataSource?.message else { return }
+        guard message.isEphemeral, !message.hasBeenDeleted, !message.isObfuscated else { return }
         
         timestampTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [weak self] _ in
-            guard let `self` = self, let message = self.message else {
-                return
-            }
-            self.configureTimestamp(message, animated: false)
+            self?.reloadContent(animated: false)
         }
     }
-    
-    @objc
-    func stopCountdownTimer() {
+
+    /// Stops the countdown timer.
+    @objc func stopCountdownTimer() {
         timestampTimer?.invalidate()
         timestampTimer = nil
     }
-    
-    func setHidden(_ isHidden: Bool, animated: Bool) {
 
+    fileprivate func updateContentStack(to direction: SlideDirection, animated: Bool = false, changes: @escaping () -> Void) {
+        if animated {
+            contentStack.wr_animateSlideTo(direction, newState: changes)
+        } else {
+            changes()
+        }
+    }
+
+    // MARK: - Hiding the Contents
+
+    @objc func setHidden(_ isHidden: Bool, animated: Bool) {
         let changes = {
             self.heightConstraint?.constant = isHidden ? 0 : 28
             self.alpha = isHidden ? 0 : 1
@@ -194,8 +311,18 @@ import WireSyncEngine
         }
     }
 
+    // MARK: - Actions
+
     @objc private func requestLike() {
         delegate?.messageToolboxViewDidRequestLike(self)
+    }
+
+    @objc private func resendMessage() {
+        delegate?.messageToolboxViewDidSelectResend(self)
+    }
+
+    @objc private func deleteMessage() {
+        delegate?.messageToolboxViewDidSelectDelete(self)
     }
 
     @objc(updateForMessage:)
@@ -204,22 +331,15 @@ import WireSyncEngine
             configureLikedState(change.message, animated: true)
         }
     }
-    
-    override open func willMove(toWindow newWindow: UIWindow?) {
-        super.willMove(toWindow: newWindow)
-        
-        if newWindow == nil {
-            stopCountdownTimer()
-        }
-    }
-    
+
+    /// Configures the like button.
     fileprivate func configureLikedState(_ message: ZMConversationMessage, animated: Bool) {
         let showLikeButton: Bool
 
-        if forceShowTimestamp {
-            showLikeButton = message.canBeLiked
-        } else {
+        if case .reactions? = dataSource?.content {
             showLikeButton = message.liked || message.hasReactions()
+        } else {
+            showLikeButton = message.canBeLiked
         }
 
         // Prepare Animations
@@ -239,6 +359,7 @@ import WireSyncEngine
         }
 
         // Change State and Appearance
+        likeButton.accessibilityLabel = message.liked ? "content.message.unlike".localized : "content.message.like".localized
         likeButton.setIcon(message.liked ? .liked : .like, with: .like, for: .normal)
         likeButton.setIcon(.liked, with: .like, for: .selected)
         likeButton.setSelected(message.liked, animated: false)
@@ -251,256 +372,12 @@ import WireSyncEngine
             completion(true)
         }
     }
-    
-    fileprivate func timestampString(_ message: ZMConversationMessage) -> String? {
-        let timestampString: String?
 
-        if let editedTimeString = message.formattedEditedDate() {
-            timestampString = String(format: "content.system.edited_message_prefix_timestamp".localized, editedTimeString)
-        } else if let dateTimeString = message.formattedReceivedDate() {
-            if let systemMessage = message as? ZMSystemMessage , systemMessage.systemMessageType == .messageDeletedForEveryone {
-                timestampString = String(format: "content.system.deleted_message_prefix_timestamp".localized, dateTimeString)
-            } else if let durationString = message.systemMessageData?.callDurationString() {
-                timestampString = dateTimeString + " · " + durationString
-            } else {
-                timestampString = dateTimeString
-            }
-        } else {
-            timestampString = .none
-        }
-        
-        return timestampString
-    }
-    
-    fileprivate func configureReactions(_ message: ZMConversationMessage, animated: Bool = false) {
-        guard !self.bounds.equalTo(CGRect.zero) else {
-            return
-        }
-        
-        let likers = message.likers()
-        
-        let likersNames = likers.map { user in
-            return user.displayName
-            }.joined(separator: ", ")
-        
-        let attributes: [NSAttributedString.Key : AnyObject] = [.font: MessageToolboxView.statusFont, .foregroundColor: statusTextColor]
-        let likersNamesAttributedString = likersNames && attributes
+}
 
-        let framesetter = CTFramesetterCreateWithAttributedString(likersNamesAttributedString)
-        let targetSize = CGSize(width: 10000, height: CGFloat.greatestFiniteMagnitude)
-        let labelSize = CTFramesetterSuggestFrameSizeWithConstraints(framesetter, CFRangeMake(0, likersNamesAttributedString.length), nil, targetSize, nil)
+// MARK: - Tap Gesture
 
-        let attributedText: NSAttributedString
-        if labelSize.width > statusTextView.bounds.width {
-            let likersCount = String(format: "participants.people.count".localized, likers.count)
-            attributedText = likersCount && attributes
-        }
-        else {
-            attributedText = likersNamesAttributedString
-        }
-
-        if let currentText = self.statusTextView.attributedText, currentText.string == attributedText.string {
-            return
-        }
-        
-        let changeBlock = {
-            self.updateStatusTextView(attributedText: attributedText)
-        }
-        
-        if animated {
-            statusTextView.wr_animateSlideTo(.down, newState: changeBlock)
-        }
-        else {
-            changeBlock()
-        }
-    }
-
-    fileprivate func updateStatusTextView(attributedText: NSAttributedString) {
-        statusTextView.attributedText = attributedText
-        statusTextView.accessibilityValue = statusTextView.attributedText.string
-    }
-
-    fileprivate func configureTimestamp(_ message: ZMConversationMessage, animated: Bool = false) {
-
-        guard let changeBlock = statusUpdate(message: message) else { return }
-
-        if animated {
-            statusTextView.wr_animateSlideTo(.up, newState: changeBlock)
-        } else {
-            changeBlock()
-        }
-    }
-
-    fileprivate func selfStatusForReadDeliveryState(for message: ZMConversationMessage) -> NSAttributedString? {
-        guard let conversationType = message.conversation?.conversationType else {return nil}
-
-        switch conversationType {
-        case .group:
-            let imageIcon = NSTextAttachment.textAttachment(for: .eye, with: statusTextColor)!
-
-            let statusString: NSAttributedString
-
-            statusString = NSAttributedString(attachment: imageIcon) + " \(message.readReceipts.count)"
-
-            return statusString
-        case .oneOnOne:
-            let imageIcon = NSTextAttachment.textAttachment(for: .eye, with: statusTextColor)!
-
-            let statusString: NSAttributedString
-
-            if let timeString = message.readReceipts.first?.serverTimestamp {
-                statusString = NSAttributedString(attachment: imageIcon) + " " + Message.formattedDate(timeString)
-            } else {
-                statusString = NSMutableAttributedString(attachment: imageIcon)
-            }
-
-            return statusString
-        default:
-            return nil
-        }
-    }
-
-    fileprivate func selfStatus(for message: ZMConversationMessage) -> NSAttributedString? {
-        guard let sender = message.sender,
-              sender.isSelfUser else { return nil }
-
-        var deliveryStateString: String? = .none
-
-        switch message.deliveryState {
-        case .pending:
-            deliveryStateString = "content.system.pending_message_timestamp".localized
-        case .read:
-            return selfStatusForReadDeliveryState(for: message)
-        case .delivered:
-            deliveryStateString = "content.system.message_delivered_timestamp".localized
-        case .sent:
-            deliveryStateString = "content.system.message_sent_timestamp".localized
-        case .failedToSend:
-            let resendString = NSAttributedString(string: "content.system.failedtosend_message_timestamp_resend".localized, attributes:[.link: type(of: self).resendLink])
-
-            let deleteRange = NSAttributedString(string: "content.system.failedtosend_message_timestamp_delete".localized, attributes:[.link: type(of: self).deleteLink])
-
-            return NSAttributedString(string:"content.system.failedtosend_message_timestamp".localized) + resendString + NSAttributedString(string:" · ") + deleteRange
-
-        case .invalid:
-            return nil
-        }
-
-        if let deliveryStateString = deliveryStateString {
-            return NSAttributedString(string: deliveryStateString)
-        } else {
-            return nil
-        }
-    }
-
-
-    fileprivate func statusString(for message: ZMConversationMessage) -> NSAttributedString {
-        var deliveryStateString: NSAttributedString? = selfStatus(for: message)
-
-        // Ephemeral overrides
-
-        let showDestructionTimer = message.isEphemeral && !message.isObfuscated && nil != message.destructionDate
-        if let destructionDate = message.destructionDate, showDestructionTimer {
-            let remaining = destructionDate.timeIntervalSinceNow + 1 // We need to add one second to start with the correct value
-
-            if remaining > 0 {
-                if let string = MessageToolboxView.ephemeralTimeFormatter.string(from: remaining) {
-
-                    deliveryStateString = NSMutableAttributedString(string: string)
-                }
-            } else if message.isAudio {
-                // do nothing, audio messages are allowed to extend the timer
-                // past the destruction date.
-            }
-        }
-
-        // System message overrides
-
-        let finalText: NSAttributedString
-
-        if let childMessages = message.systemMessageData?.childMessages,
-            !childMessages.isEmpty,
-            let timestamp = timestampString(message) {
-            let childrenTimestamps = childMessages.compactMap {
-                $0 as? ZMConversationMessage
-                }.sorted { left, right in
-                    left.serverTimestamp < right.serverTimestamp
-                }.compactMap(timestampString)
-
-            finalText = NSAttributedString(string: childrenTimestamps.reduce(timestamp) { (text, current) in
-                return "\(text)\n\(current)"
-            })
-        } else if let timestampString = self.timestampString(message),
-            message.deliveryState.isOne(of: .delivered, .sent, .read) {
-            if let deliveryStateString = deliveryStateString, Message.shouldShowDeliveryState(message) {
-                finalText = NSAttributedString(string: timestampString + " ・ ") + deliveryStateString
-            }
-            else {
-                finalText = NSMutableAttributedString(string: timestampString)
-            }
-        }
-        else {
-            finalText = (deliveryStateString ?? NSAttributedString(string: ""))
-        }
-
-        return finalText
-    }
-
-    fileprivate func statusUpdate(message: ZMConversationMessage) -> (()->())? {
-        let finalText = statusString(for: message)
-
-        if statusTextView.attributedText?.string == finalText.string {
-            return nil
-        }
-
-        let attributedText = NSMutableAttributedString(attributedString: finalText && [.font: MessageToolboxView.statusFont, .foregroundColor: statusTextColor])
-
-
-        if let currentText = self.statusTextView.attributedText, currentText.string == attributedText.string {
-            return nil
-        }
-
-        let changeBlock =  {
-            self.updateStatusTextView(attributedText: attributedText)
-        }
-
-        return changeBlock
-    }
-    
-    fileprivate func configureLikeTip(_ message: ZMConversationMessage, animated: Bool = false) {
-        let likeTooltipText = "content.system.like_tooltip".localized
-        let attributes: [NSAttributedString.Key : AnyObject] = [.font: MessageToolboxView.statusFont, .foregroundColor: statusTextColor]
-        let attributedText = likeTooltipText && attributes
-
-        if let currentText = self.statusTextView.attributedText, currentText.string == attributedText.string {
-            return
-        }
-        
-        let changeBlock = {
-            self.updateStatusTextView(attributedText: attributedText)
-        }
-        
-        if animated {
-            statusTextView.wr_animateSlideTo(.up, newState: changeBlock)
-        }
-        else {
-            changeBlock()
-        }
-    }
-    
-    open override func layoutSubviews() {
-        super.layoutSubviews()
-        guard let message = self.message, !self.bounds.equalTo(self.previousLayoutBounds) else {
-            return
-        }
-        
-        self.previousLayoutBounds = self.bounds
-        
-        self.configureForMessage(message, forceShowTimestamp: self.forceShowTimestamp)
-    }
-    
-    
-    // MARK: - Events
+extension MessageToolboxView: UIGestureRecognizerDelegate {
 
     @objc func onTapContent(_ sender: UITapGestureRecognizer!) {
         if let displayMode = preferredDetailsDisplayMode() {
@@ -509,36 +386,24 @@ import WireSyncEngine
     }
 
     func preferredDetailsDisplayMode() -> MessageDetailsDisplayMode? {
-        if !self.forceShowTimestamp && message?.hasReactions() == true {
+        guard let dataSource = self.dataSource else { return nil }
+
+        switch dataSource.content {
+        case .sendFailure:
+            break
+        case .reactions where dataSource.message.areMessageDetailsAvailable:
             return .reactions
-        } else if message?.areReadReceiptsDetailsAvailable == true {
+        case .details where dataSource.message.areReadReceiptsDetailsAvailable:
             return .receipts
+        default:
+            break
         }
 
         return nil
     }
-    
-    @objc func prepareForReuse() {
-        self.message = nil
-    }
-}
 
-extension MessageToolboxView: UIGestureRecognizerDelegate {
-    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return gestureRecognizer.isEqual(self.tapGestureRecogniser)
     }
-}
 
-extension MessageToolboxView: UITextViewDelegate {
-    public func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
-        switch URL {
-        case MessageToolboxView.resendLink:
-            self.delegate?.messageToolboxViewDidSelectResend(self)
-        case MessageToolboxView.deleteLink:
-            self.delegate?.messageToolboxViewDidSelectDelete(self)
-        default:
-            return false
-        }
-        return true
-    }
 }

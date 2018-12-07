@@ -18,59 +18,46 @@
 
 import Foundation
 
-extension ZMSystemMessageData {
-
-    /// return self user if the users array has self user only. Otherwise return nil
-    var involvesSelfUserOnly: ZMUser? {
-        if users.count == 1,
-            let user = users.first,
-            user.isSelfUser {
-            return user
-        }
-
-        return .none
-    }
-
-    var otherUserName: String? {
-        let displayNamesOfOthers = users.filter {!$0.isSelfUser }.compactMap {$0.displayName as String}
-        return displayNamesOfOthers[0]
-    }
-}
 
 struct ReadReceiptViewModel {
     let icon: ZetaIconType
     let iconColor: UIColor?
-    let message: ZMConversationMessage
-    let systemMessage: ZMSystemMessageData
+    let systemMessageType: ZMSystemMessageType
+    let sender: ZMUser
+
 
     func image() -> UIImage? {
         return iconColor.map { UIImage(for: icon, iconSize: .tiny, color: $0) }
     }
 
-    func attributedTitle() -> NSAttributedString? {
-        let baseAttributes: [NSAttributedString.Key: AnyObject] = [.font: UIFont.mediumFont, .foregroundColor: UIColor.from(scheme: .textForeground)]
+    func createSystemMessage(template: String) -> NSAttributedString {
+        var updateText: NSAttributedString! = .none
 
+        if sender.isSelfUser {
+            let youLocalized = "content.system.you_started".localized
+
+            updateText = NSAttributedString(string: template.localized(pov: sender.pov, args: youLocalized), attributes: ConversationSystemMessageCell.baseAttributes).adding(font: .mediumSemiboldFont, to: youLocalized)
+        } else if let otherUserName = sender.name {
+            updateText = NSAttributedString(string: template.localized(args: otherUserName), attributes: ConversationSystemMessageCell.baseAttributes)
+                .adding(font: .mediumSemiboldFont, to: otherUserName)
+        } else {
+            assertionFailure("invalid user name for ReadReceiptViewModel")
+        }
+
+        return updateText
+    }
+
+    func attributedTitle() -> NSAttributedString? {
 
         var updateText: NSAttributedString! = .none
 
-        switch systemMessage.systemMessageType {
+        switch systemMessageType {
         case .readReceiptsDisabled:
-            if let selfUser = systemMessage.involvesSelfUserOnly {
-                updateText = NSAttributedString(string: "content.system.message_read_receipt_off".localized(pov: selfUser.pov, args: "content.system.you_started".localized), attributes: baseAttributes)
-            } else if let otherUserName = systemMessage.otherUserName {
-                updateText = NSAttributedString(string: "content.system.message_read_receipt_off".localized(args: otherUserName), attributes: baseAttributes)
-                    .adding(font: .mediumSemiboldFont, to: otherUserName)
-            }
+            updateText = createSystemMessage(template: "content.system.message_read_receipt_off")
         case .readReceiptsEnabled:
-            if let selfUser = systemMessage.involvesSelfUserOnly {
-                updateText = NSAttributedString(string: "content.system.message_read_receipt_on".localized(pov: selfUser.pov, args: "content.system.you_started".localized), attributes: baseAttributes)
-            } else if let otherUserName = systemMessage.otherUserName {
-                updateText = NSAttributedString(string: "content.system.message_read_receipt_on".localized(args: otherUserName), attributes: baseAttributes)
-                    .adding(font: .mediumSemiboldFont, to: otherUserName)
-            }
+            updateText = createSystemMessage(template: "content.system.message_read_receipt_on")
         case .readReceiptsOn:
-            updateText = NSAttributedString(string: "content.system.message_read_receipt_on_add_to_group".localized)
-
+            updateText = NSAttributedString(string: "content.system.message_read_receipt_on_add_to_group".localized, attributes: ConversationSystemMessageCell.baseAttributes)
         default:
             assertionFailure("invalid systemMessageType for ReadReceiptViewModel")
             break
@@ -78,6 +65,12 @@ struct ReadReceiptViewModel {
 
 
         return updateText
+    }
+}
+
+extension ConversationSystemMessageCell {
+    static var baseAttributes: [NSAttributedString.Key: AnyObject] {
+        return [.font: UIFont.mediumFont, .foregroundColor: UIColor.from(scheme: .textForeground)]
     }
 }
 
@@ -99,12 +92,11 @@ final class ConversationReadReceiptSettingChangedCellDescription: ConversationMe
     let accessibilityIdentifier: String? = nil
     let accessibilityLabel: String? = nil
 
-    init(message: ZMConversationMessage,
-         data: ZMSystemMessageData) {
+    init(sender: ZMUser,
+         systemMessageType: ZMSystemMessageType) {
         let viewModel = ReadReceiptViewModel(icon: .eye,
                                              iconColor: UIColor.from(scheme: .textDimmed),
-                                             message: message,
-                                             systemMessage: data)
+                                             systemMessageType: systemMessageType, sender: sender)
 
         configuration = View.Configuration(icon: viewModel.image(),
                                            attributedText: viewModel.attributedTitle(),

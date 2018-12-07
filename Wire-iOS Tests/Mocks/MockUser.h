@@ -28,6 +28,7 @@
 + (NSArray <ZMUser *> *)mockUsers;
 + (NSArray <MockUser *> *)realMockUsers;
 + (MockUser *)mockSelfUser;
++ (MockUser *)mockServiceUser;
 + (MockUser *)mockUserFor:(ZMUser *)user;
 + (ZMUser<ZMEditableUser> *)selfUserInUserSession:(ZMUserSession *)session;
 
