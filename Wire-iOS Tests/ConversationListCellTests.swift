@@ -48,7 +48,6 @@ class ConversationListCellTests: CoreDataSnapshotTestCase {
         ) {
         sut.conversation = conversation
         
-        sut.prepareForSnapshot()
         verify(view: sut, file: file, line: line)
     }
     
@@ -297,7 +296,7 @@ class ConversationListCellTests: CoreDataSnapshotTestCase {
         guard let conversation = conversation else { XCTFail(); return }
         sut.conversation = conversation
         sut.itemView.rightAccessory.icon = icon
-        sut.prepareForSnapshot()
+
         verify(view: sut)
     }
     

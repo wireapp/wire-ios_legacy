@@ -224,7 +224,7 @@ private struct InputBarConstants {
         updateRightAccessoryStackViewLayoutMargins()
         createConstraints()
 
-        updateInputBar(withState: inputBarState, animated: false) ///TODO: mv after create constraint
+        updateInputBar(withState: inputBarState, animated: false)
 
         notificationCenter.addObserver(markdownView, selector: #selector(markdownView.textViewDidChangeActiveMarkdown), name: Notification.Name.MarkdownTextViewDidChangeActiveMarkdown, object: textView)
         notificationCenter.addObserver(self, selector: #selector(textViewTextDidChange), name: UITextView.textDidChangeNotification, object: textView)
@@ -340,7 +340,6 @@ private struct InputBarConstants {
     func updatePlaceholder() {
         textView.attributedPlaceholder = placeholderText(for: inputBarState)
         textView.setNeedsLayout()
-        //        textView.layoutIfNeeded() ///TODO: breaking constraint when self.frame is zero
     }
 
     func placeholderText(for state: InputBarState) -> NSAttributedString? {
@@ -422,7 +421,6 @@ private struct InputBarConstants {
             }
         } else {
             setNeedsLayout()
-//            layoutIfNeeded()
             textViewChanges()
             completion()
         }

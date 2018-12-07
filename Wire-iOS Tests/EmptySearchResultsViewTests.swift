@@ -87,7 +87,6 @@ final class EmptySearchResultsViewTests: ZMSnapshotTestCase {
         builder.allVariants().forEach { version in
             let sut = version.createView()
             
-            sut.prepareForSnapshot()
             sut.backgroundColor = .lightGray
             sut.bounds.size = sut.systemLayoutSizeFitting(
                 CGSize(width: 375, height: 600),

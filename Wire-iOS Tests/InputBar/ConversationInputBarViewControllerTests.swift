@@ -50,7 +50,6 @@ extension ConversationInputBarViewControllerTests {
         sut.mode = .timeoutConfguration
 
         // THEN
-        sut.view.prepareForSnapshot()
         self.verifyInAllPhoneWidths(view: sut.view)
     }
 
@@ -62,7 +61,6 @@ extension ConversationInputBarViewControllerTests {
         otherUserConversation.messageDestructionTimeout = .local(.none)
 
         // THEN
-        sut.view.prepareForSnapshot()
         self.verifyInAllPhoneWidths(view: sut.view)
     }
 
@@ -76,7 +74,6 @@ extension ConversationInputBarViewControllerTests {
         sut.inputBar.setInputBarState(.writing(ephemeral: .message), animated: false)
         
         // THEN
-        sut.view.prepareForSnapshot()
         self.verifyInAllPhoneWidths(view: sut.view)
     }
     
@@ -90,7 +87,6 @@ extension ConversationInputBarViewControllerTests {
         sut.inputBar.setInputBarState(.writing(ephemeral: .message), animated: false)
         
         // THEN
-        sut.view.prepareForSnapshot()
         self.verifyInAllPhoneWidths(view: sut.view)
     }
     
@@ -104,7 +100,6 @@ extension ConversationInputBarViewControllerTests {
         sut.inputBar.setInputBarState(.writing(ephemeral: .message), animated: false)
         
         // THEN
-        sut.view.prepareForSnapshot()
         self.verifyInAllPhoneWidths(view: sut.view)
     }
     
@@ -118,7 +113,6 @@ extension ConversationInputBarViewControllerTests {
         sut.inputBar.setInputBarState(.writing(ephemeral: .message), animated: false)
         
         // THEN
-        sut.view.prepareForSnapshot()
         self.verifyInAllPhoneWidths(view: sut.view)
     }
 
@@ -132,7 +126,6 @@ extension ConversationInputBarViewControllerTests {
         sut.inputBar.setInputBarState(.writing(ephemeral: .message), animated: false)
 
         // THEN
-        sut.view.prepareForSnapshot()
         self.verifyInAllPhoneWidths(view: sut.view)
     }
     
@@ -146,7 +139,6 @@ extension ConversationInputBarViewControllerTests {
         sut.inputBar.setInputBarState(.writing(ephemeral: .message), animated: false)
         
         // THEN
-        sut.view.prepareForSnapshot()
         self.verifyInAllPhoneWidths(view: sut.view)
     }
 
@@ -162,7 +154,6 @@ extension ConversationInputBarViewControllerTests {
         sut.inputBar.textView.text = shortText
 
         // THEN
-        sut.view.prepareForSnapshot()
         self.verifyInAllPhoneWidths(view: sut.view)
     }
 }
