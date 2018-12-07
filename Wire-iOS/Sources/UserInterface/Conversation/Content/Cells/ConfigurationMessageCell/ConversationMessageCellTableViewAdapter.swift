@@ -196,7 +196,7 @@ class ConversationMessageCellTableViewAdapter<C: ConversationMessageCellDescript
     // MARK: - Single Tap Action
     
     @objc private func onSingleTap(_ gestureRecognizer: UITapGestureRecognizer) {
-        if gestureRecognizer.state == .recognized {
+        if gestureRecognizer.state == .recognized && cellDescription?.supportsActions == true {
             cellDescription?.actionController?.performSingleTapAction()
         }
     }
