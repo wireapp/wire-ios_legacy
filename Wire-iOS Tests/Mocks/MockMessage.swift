@@ -236,6 +236,7 @@ extension MockFileMessageData: MockFileMessageDataType { }
     var imageMessageData: ZMImageMessageData? = .none
     var knockMessageData: ZMKnockMessageData? = .none
     var causedSecurityLevelDegradation: Bool = false
+    var needsReadConfirmation: Bool = false
     let objectIdentifier: String = UUID().uuidString
 
     var fileMessageData: ZMFileMessageData? {

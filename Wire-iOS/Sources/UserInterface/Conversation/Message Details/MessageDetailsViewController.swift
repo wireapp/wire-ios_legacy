@@ -25,6 +25,46 @@ import WireExtensionComponents
 
 @objc class MessageDetailsViewController: UIViewController, ModalTopBarDelegate {
 
+    /**
+     * The collection of view controllers displaying the content.
+     */
+
+    enum ViewControllers {
+        /// We are displaying the combined view.
+        case combinedView(readReceipts: MessageDetailsContentViewController, reactions: MessageDetailsContentViewController)
+
+        /// We are displaying the single view.
+        case singleView(MessageDetailsContentViewController)
+
+        /// The read receipts view controller.
+        var readReceipts: MessageDetailsContentViewController {
+            switch self {
+            case .combinedView(let readReceipts, _): return readReceipts
+            case .singleView(let viewController): return viewController
+            }
+        }
+
+        /// The reactions view controller.
+        var reactions: MessageDetailsContentViewController {
+            switch self {
+            case .combinedView(_, let reactions): return reactions
+            case .singleView(let viewController): return viewController
+            }
+        }
+
+        /// All the view controllers.
+        var all: [MessageDetailsContentViewController] {
+            switch self {
+            case .combinedView(let readReceipts, let reactions):
+                return [readReceipts, reactions]
+            case .singleView(let viewController):
+                return [viewController]
+            }
+        }
+    }
+
+    // MARK: - Properties
+
     /// The displayed message.
     let message: ZMConversationMessage
 
@@ -35,8 +75,7 @@ import WireExtensionComponents
 
     let container: TabBarController
     let topBar = ModalTopBar()
-    var reactionsViewController = MessageDetailsContentViewController(contentType: .reactions)
-    var readReceiptsViewController = MessageDetailsContentViewController(contentType: .receipts(enabled: false))
+    let viewControllers: ViewControllers
 
     // MARK: - Initialization
 
@@ -61,25 +100,23 @@ import WireExtensionComponents
         self.message = message
         self.dataSource = MessageDetailsDataSource(message: message)
 
-        var viewControllers: [MessageDetailsContentViewController]
-
         // Setup the appropriate view controllers
         switch dataSource.displayMode {
         case .combined:
-            reactionsViewController.conversation = dataSource.conversation
-            readReceiptsViewController.conversation = dataSource.conversation
-            readReceiptsViewController.contentType = .receipts(enabled: dataSource.receiptsSupported)
-            viewControllers = [readReceiptsViewController, reactionsViewController]
+            let readReceiptsViewController = MessageDetailsContentViewController(contentType: .receipts(enabled: dataSource.supportsReadReceipts), conversation: dataSource.conversation)
+            let reactionsViewController = MessageDetailsContentViewController(contentType: .reactions, conversation: dataSource.conversation)
+            viewControllers = .combinedView(readReceipts: readReceiptsViewController, reactions: reactionsViewController)
+
         case .reactions:
-            reactionsViewController.conversation = dataSource.conversation
-            viewControllers = [reactionsViewController]
+            let reactionsViewController = MessageDetailsContentViewController(contentType: .reactions, conversation: dataSource.conversation)
+            viewControllers = .singleView(reactionsViewController)
+
         case .receipts:
-            readReceiptsViewController.conversation = dataSource.conversation
-            readReceiptsViewController.contentType = .receipts(enabled: dataSource.receiptsSupported)
-            viewControllers = [readReceiptsViewController]
+            let readReceiptsViewController = MessageDetailsContentViewController(contentType: .receipts(enabled: dataSource.supportsReadReceipts), conversation: dataSource.conversation)
+            viewControllers = .singleView(readReceiptsViewController)
         }
 
-        container = TabBarController(viewControllers: viewControllers)
+        container = TabBarController(viewControllers: viewControllers.all)
 
         if case .combined = dataSource.displayMode {
             let tabIndex = preferredDisplayMode == .reactions ? 1 : 0
@@ -120,7 +157,6 @@ import WireExtensionComponents
 
         // Display initial data
         reloadData()
-        reloadPlaceholders()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -151,41 +187,22 @@ import WireExtensionComponents
     func reloadData() {
         switch dataSource.displayMode {
         case .combined:
-            reactionsViewController.updateData(dataSource.reactions)
-            readReceiptsViewController.updateData(self.dataSource.readReceipts)
+            viewControllers.reactions.updateData(dataSource.reactions)
+            viewControllers.readReceipts.updateData(dataSource.readReceipts)
 
         case .reactions:
-            reactionsViewController.updateData(dataSource.reactions)
+            viewControllers.reactions.updateData(dataSource.reactions)
+
         case .receipts:
-            readReceiptsViewController.updateData(self.dataSource.readReceipts)
+            viewControllers.readReceipts.updateData(dataSource.readReceipts)
         }
     }
 
     private func reloadFooters() {
-        switch dataSource.displayMode {
-        case .combined:
-            reactionsViewController.subtitle = dataSource.subtitle
-            reactionsViewController.accessibleSubtitle = dataSource.accessibilitySubtitle
-            
-            readReceiptsViewController.subtitle = dataSource.subtitle
-            readReceiptsViewController.accessibleSubtitle = dataSource.accessibilitySubtitle
-
-        case .reactions:
-            reactionsViewController.subtitle = dataSource.subtitle
-            reactionsViewController.accessibleSubtitle = dataSource.accessibilitySubtitle
-
-        case .receipts:
-            readReceiptsViewController.subtitle = dataSource.subtitle
-            readReceiptsViewController.accessibleSubtitle = dataSource.accessibilitySubtitle
+        viewControllers.all.forEach {
+            $0.subtitle = dataSource.subtitle
+            $0.accessibleSubtitle = dataSource.accessibilitySubtitle
         }
-    }
-
-    private func reloadPlaceholders() {
-        guard dataSource.displayMode.isOne(of: .receipts, .combined) else {
-            return
-        }
-
-        readReceiptsViewController.contentType = .receipts(enabled: dataSource.receiptsSupported)
     }
 
     // MARK: - Top Bar
@@ -211,10 +228,6 @@ extension MessageDetailsViewController: MessageDetailsDataSourceObserver {
 
     func detailsFooterDidChange(_ dataSource: MessageDetailsDataSource) {
         reloadFooters()
-    }
-
-    func receiptsStatusDidChange(_ dataSource: MessageDetailsDataSource) {
-        reloadPlaceholders()
     }
 
 }
