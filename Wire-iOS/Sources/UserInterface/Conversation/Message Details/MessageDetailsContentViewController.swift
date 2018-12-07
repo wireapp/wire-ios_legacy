@@ -243,6 +243,8 @@ extension MessageDetailsContentViewController: UICollectionViewDataSource, UICol
 
         cell.configure(with: description.user, subtitle: description.attributedSubtitle, conversation: conversation)
         cell.showSeparator = indexPath.item != (cells.endIndex - 1)
+        cell.subtitleLabel.accessibilityLabel = description.accessibleSubtitleLabel
+        cell.subtitleLabel.accessibilityValue = description.accessibleSubtitleValue
 
         return cell
     }
