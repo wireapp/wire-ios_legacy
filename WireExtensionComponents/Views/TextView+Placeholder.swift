@@ -21,14 +21,14 @@ import Foundation
 extension TextView {
 
 
-    /// custom inset for placeholder, only left and right inset value is used
+    /// custom inset for placeholder, only left and right inset value is applied (The placeholder is align center vertically)
     @objc
     var placeholderTextContainerInset: UIEdgeInsets {
         set {
             _placeholderTextContainerInset = newValue
 
-            placeholderLabelLeftAnchor?.constant = newValue.left
-            placeholderLabelRightAnchor?.constant = newValue.right
+            placeholderLabelLeftConstraint?.constant = newValue.left
+            placeholderLabelRightConstraint?.constant = newValue.right
         }
 
         get {
@@ -46,16 +46,16 @@ extension TextView {
         placeholderLabel.textAlignment = placeholderTextAlignment
         placeholderLabel.isAccessibilityElement = false
 
-        addSubview(placeholderLabel)
-
         placeholderLabel.translatesAutoresizingMaskIntoConstraints = false
 
-        placeholderLabelLeftAnchor = placeholderLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: placeholderTextContainerInset.left + linePadding)
-        placeholderLabelRightAnchor = placeholderLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: placeholderTextContainerInset.right - linePadding)
+        addSubview(placeholderLabel)
+
+        placeholderLabelLeftConstraint = placeholderLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: placeholderTextContainerInset.left + linePadding)
+        placeholderLabelRightConstraint = placeholderLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: placeholderTextContainerInset.right - linePadding)
 
         NSLayoutConstraint.activate([
-            placeholderLabelLeftAnchor!,
-            placeholderLabelRightAnchor!,
+            placeholderLabelLeftConstraint!,
+            placeholderLabelRightConstraint!,
             placeholderLabel.centerYAnchor.constraint(equalTo: centerYAnchor)
             ])
     }

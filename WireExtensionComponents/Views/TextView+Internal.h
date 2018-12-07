@@ -20,8 +20,8 @@
 
 @property (nonatomic, nonnull) UILabel *placeholderLabel;
 
-@property (nonatomic, nullable) NSLayoutConstraint *placeholderLabelLeftAnchor;
-@property (nonatomic, nullable) NSLayoutConstraint *placeholderLabelRightAnchor;
+@property (nonatomic, nullable) NSLayoutConstraint *placeholderLabelLeftConstraint;
+@property (nonatomic, nullable) NSLayoutConstraint *placeholderLabelRightConstraint;
 
 @property (nonatomic) UIEdgeInsets _placeholderTextContainerInset;
 
