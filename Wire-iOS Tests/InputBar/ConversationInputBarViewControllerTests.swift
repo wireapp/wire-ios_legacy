@@ -27,6 +27,7 @@ final class ConversationInputBarViewControllerTests: CoreDataSnapshotTestCase {
     override func setUp() {
         super.setUp()
         sut = ConversationInputBarViewController(conversation: otherUserConversation)
+        sut.loadViewIfNeeded()
     }
 
     override func tearDown() {
