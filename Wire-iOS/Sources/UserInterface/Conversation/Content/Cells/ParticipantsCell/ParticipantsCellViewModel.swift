@@ -213,7 +213,6 @@ class ParticipantsCellViewModel {
     func warning() -> String? {
         guard showServiceUserWarning else { return nil }
         return "content.system.services.warning".localized
-        
     }
     
     private func formatter(for message: ZMConversationMessage) -> ParticipantsStringFormatter? {
