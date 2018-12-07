@@ -90,9 +90,9 @@ class ParticipantsCellViewModel {
     }
     
     private var showServiceUserWarning: Bool {
-        guard case .added = action, let systemMessage = message as? ZMSystemMessage, let conversation = message.conversation else { return false }
-        let selfAddedToServiceConversation = systemMessage.users.any(\.isSelfUser) && conversation.areServicesPresent
-        let serviceAdded = systemMessage.users.any(\.isServiceUser)
+        guard case .added = action, let messageData = message.systemMessageData, let conversation = message.conversation else { return false }
+        let selfAddedToServiceConversation = messageData.users.any(\.isSelfUser) && conversation.areServicesPresent
+        let serviceAdded = messageData.users.any(\.isServiceUser)
         return selfAddedToServiceConversation || serviceAdded
     }
     
