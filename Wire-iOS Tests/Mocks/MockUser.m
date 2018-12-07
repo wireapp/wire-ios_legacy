@@ -72,6 +72,16 @@ static id<UserType> mockSelfUser = nil;
     return (MockUser *)mockSelfUser;
 }
 
++ (MockUser *)mockServiceUser
+{
+    return [[MockUser alloc] initWithJSONObject:@{@"name": @"GitHub",
+                                                  @"displayName": @"GitHub",
+                                                  @"isSelfUser": @false,
+                                                  @"isServiceUser": @true,
+                                                  @"isConnected": @true,
+                                                  @"accentColorValue": @1}];
+}
+
 + (void)setMockSelfUser:(id<UserType>)newMockUser
 {
     mockSelfUser = newMockUser;
