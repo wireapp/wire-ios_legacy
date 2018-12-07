@@ -33,16 +33,13 @@ protocol MessageDetailsDataSourceObserver: class {
 
     /// Called when the message subtitle changes.
     func detailsFooterDidChange(_ dataSource: MessageDetailsDataSource)
-
-    /// Called when a user enables or disables read receipts.
-    func receiptsStatusDidChange(_ dataSource: MessageDetailsDataSource)
 }
 
 /**
  * The data source to present message details.
  */
 
-class MessageDetailsDataSource: NSObject, ZMMessageObserver, ZMConversationObserver {
+class MessageDetailsDataSource: NSObject, ZMMessageObserver {
 
     /// The presented message.
     let message: ZMConversationMessage
@@ -52,6 +49,9 @@ class MessageDetailsDataSource: NSObject, ZMMessageObserver, ZMConversationObser
 
     /// How to display the message details.
     let displayMode: MessageDetailsDisplayMode
+
+    /// Whether read receipts are supported.
+    let supportsReadReceipts: Bool
 
     /// The title of the message details.
     let title: String
@@ -67,9 +67,6 @@ class MessageDetailsDataSource: NSObject, ZMMessageObserver, ZMConversationObser
 
     /// The list of read receipts with the associated date.
     private(set) var readReceipts: [MessageDetailsCellDescription]
-
-    /// Whether read receipts are supported.
-    private(set) var receiptsSupported: Bool = false
 
     /// The object that receives information when the message details changes.
     weak var observer: MessageDetailsDataSourceObserver?
@@ -91,10 +88,11 @@ class MessageDetailsDataSource: NSObject, ZMMessageObserver, ZMConversationObser
         self.readReceipts = MessageDetailsCellDescription.makeReceiptCell(message.sortedReadReceipts)
 
         // Compute the title and display mode
-        let supportsLikes = !message.isEphemeral
-        let supportsReadReciepts = message.areReadReceiptsDetailsAvailable
+        let showLikesTab = !message.isEphemeral
+        let showReceiptsTab = message.areReadReceiptsDetailsAvailable
+        supportsReadReceipts = message.needsReadConfirmation
 
-        switch (supportsLikes, supportsReadReciepts) {
+        switch (showLikesTab, showReceiptsTab) {
         case (true, true):
             self.displayMode = .combined
             self.title = "message_details.combined_title".localized
@@ -111,16 +109,10 @@ class MessageDetailsDataSource: NSObject, ZMMessageObserver, ZMConversationObser
         super.init()
 
         updateSubtitle()
-        updateReceiptsSupport()
         setupObservers()
     }
 
     // MARK: - Interface Properties
-
-    private func updateReceiptsSupport() {
-        receiptsSupported = message.areReadReceiptsDetailsAvailable && conversation.hasReadReceiptsEnabled
-        observer?.receiptsStatusDidChange(self)
-    }
 
     private func updateSubtitle() {
         guard let sentDate = message.formattedReceivedDate() else {
@@ -163,17 +155,10 @@ class MessageDetailsDataSource: NSObject, ZMMessageObserver, ZMConversationObser
         }
     }
 
-    func conversationDidChange(_ changeInfo: ConversationChangeInfo) {
-        if changeInfo.hasReadReceiptsEnabledChanged {
-            self.updateReceiptsSupport()
-        }
-    }
-
     private func setupObservers() {
         if let userSession = ZMUserSession.shared() {
             let messageObserver = MessageChangeInfo.add(observer: self, for: message, userSession: userSession)
-            let conversationObserver = ConversationChangeInfo.add(observer: self, for: conversation)
-            observationTokens = [messageObserver, conversationObserver]
+            observationTokens = [messageObserver]
         }
     }
 
