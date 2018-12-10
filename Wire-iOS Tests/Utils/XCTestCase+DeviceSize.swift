@@ -16,7 +16,7 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import XCTest
+import Foundation
 
 extension XCTestCase {
     static let ZMDeviceSizeIPhone5          = CGSize(width: 320, height: 568)
@@ -29,6 +29,6 @@ extension XCTestCase {
 
     /// return the smallest iPhone screen size that Wire app supports
     public var defaultIPhoneSize: CGSize {
-        return ZMSnapshotTestCase.ZMDeviceSizeIPhone5
+        return XCTestCase.ZMDeviceSizeIPhone5
     }
 }
