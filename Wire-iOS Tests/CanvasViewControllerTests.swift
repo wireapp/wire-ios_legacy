@@ -26,7 +26,8 @@ final class CanvasViewControllerTests: ZMSnapshotTestCase {
     override func setUp() {
         super.setUp()
         sut = CanvasViewController()
-        sut.viewDidLoad()
+
+        sut.loadViewIfNeeded()
     }
     
     override func tearDown() {
@@ -37,6 +38,11 @@ final class CanvasViewControllerTests: ZMSnapshotTestCase {
     func testForSendButtonEnalbed(){
         sut.sendButton.isEnabled = true
         sut.view.prepareForSnapshot()
+        verify(view: sut.view)
+    }
+
+    func testForEmojiKeyboard(){
+        sut.emojiButton.sendActions(for: .touchUpInside)
         verify(view: sut.view)
     }
 }
