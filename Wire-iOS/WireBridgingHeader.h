@@ -77,6 +77,7 @@
 #import "AnimatedListMenuView+Internal.h"
 #import "SwipeMenuCollectionCell.h"
 #import "SwipeMenuCollectionCell+Internal.h"
+#import "TextView+Internal.h"
 
 // View Controllers
 #import "ProfileDevicesViewController.h"

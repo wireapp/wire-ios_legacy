@@ -18,7 +18,6 @@
 
 
 import XCTest
-import Cartography
 @testable import Wire
 
 class InputBarTests: ZMSnapshotTestCase {

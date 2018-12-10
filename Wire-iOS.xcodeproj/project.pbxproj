@@ -347,6 +347,7 @@
 		5EBF4A3621BE91170021CFFC /* TransformLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EBF4A3221BE71930021CFFC /* TransformLabel.swift */; };
 		5EBF4A3721BE91490021CFFC /* String+Transform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EBF4A3021BE6E3D0021CFFC /* String+Transform.swift */; };
 		5EBF4A3B21BE984E0021CFFC /* TransformTextViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EBF4A3A21BE984E0021CFFC /* TransformTextViewTests.swift */; };
+		5EBF4A3D21BE9E050021CFFC /* TextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EE9DCA91B5F9A6D00E347DF /* TextView.m */; };
 		5EC0870D20EF530D000366B7 /* MockURLSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC0870C20EF530D000366B7 /* MockURLSession.swift */; };
 		5EC0871020EF5C89000366B7 /* ImageDownloadCacheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC0870F20EF5C89000366B7 /* ImageDownloadCacheTests.swift */; };
 		5EC16B9020EB8C6F00955156 /* YouTubeService+DataTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC16B8D20EB8C6F00955156 /* YouTubeService+DataTypes.swift */; };
@@ -1279,7 +1280,6 @@
 		EF71BFD820EBD0DC00894A7C /* UIPopoverPresentationController+config.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF71BFD720EBD0DC00894A7C /* UIPopoverPresentationController+config.swift */; };
 		EF7CCAFD204E96390050325B /* MockUser+PointOfView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7CCAFC204E96390050325B /* MockUser+PointOfView.swift */; };
 		EF7D75A6201B6149003A8AF8 /* DeviceNativeBoundsSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7D75A5201B6149003A8AF8 /* DeviceNativeBoundsSize.swift */; };
-		EF7E53C7209765E900EA8357 /* TextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EE9DCA91B5F9A6D00E347DF /* TextView.m */; };
 		EF7E96EE214BB41800475C63 /* ContactsViewController+ContactsDataSourceDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7E96ED214BB41800475C63 /* ContactsViewController+ContactsDataSourceDelegate.swift */; };
 		EF7E96F0214BFBE100475C63 /* ContactsViewController+UITableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7E96EF214BFBE100475C63 /* ContactsViewController+UITableViewDelegate.swift */; };
 		EF7ECE1B211111B4003786C6 /* XCTestCase+FullscreenImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7ECE1A211111B2003786C6 /* XCTestCase+FullscreenImageViewController.swift */; };
@@ -1330,6 +1330,8 @@
 		EFBCC91521551694006AAB70 /* ContactsViewController+ViewLifeCycle.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBCC91421551694006AAB70 /* ContactsViewController+ViewLifeCycle.swift */; };
 		EFBCC917215548EE006AAB70 /* AVAudioSessionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBCC916215548EE006AAB70 /* AVAudioSessionType.swift */; };
 		EFC0C7F121778FB000380C4B /* SettingsTextCellSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC0C7F021778FB000380C4B /* SettingsTextCellSnapshotTests.swift */; };
+		EFC57A0D21BAAE440008DBE6 /* TextView+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = EFC57A0B21BAAE440008DBE6 /* TextView+Internal.h */; };
+		EFC57A0E21BAAF9A0008DBE6 /* TextView+Placeholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC57A0A21BAAE440008DBE6 /* TextView+Placeholder.swift */; };
 		EFC6F8A0213FCDE200B92D51 /* MenuConfigurationProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC6F89F213FCDE200B92D51 /* MenuConfigurationProperties.swift */; };
 		EFC7146F20DD476000FAA4B4 /* CountryCodeTableViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC7146D20DD471800FAA4B4 /* CountryCodeTableViewControllerTests.swift */; };
 		EFC8E21B212C6BF700BE7BBE /* ConversationCell+Snapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC8E21A212C6BF700BE7BBE /* ConversationCell+Snapshot.swift */; };
@@ -3139,6 +3141,8 @@
 		EFBCC91421551694006AAB70 /* ContactsViewController+ViewLifeCycle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContactsViewController+ViewLifeCycle.swift"; sourceTree = "<group>"; };
 		EFBCC916215548EE006AAB70 /* AVAudioSessionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVAudioSessionType.swift; sourceTree = "<group>"; };
 		EFC0C7F021778FB000380C4B /* SettingsTextCellSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTextCellSnapshotTests.swift; sourceTree = "<group>"; };
+		EFC57A0A21BAAE440008DBE6 /* TextView+Placeholder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TextView+Placeholder.swift"; sourceTree = "<group>"; };
+		EFC57A0B21BAAE440008DBE6 /* TextView+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TextView+Internal.h"; sourceTree = "<group>"; };
 		EFC6F89F213FCDE200B92D51 /* MenuConfigurationProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuConfigurationProperties.swift; sourceTree = "<group>"; };
 		EFC7146D20DD471800FAA4B4 /* CountryCodeTableViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryCodeTableViewControllerTests.swift; sourceTree = "<group>"; };
 		EFC8E21A212C6BF700BE7BBE /* ConversationCell+Snapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationCell+Snapshot.swift"; sourceTree = "<group>"; };
@@ -3697,7 +3701,9 @@
 				5E672C8E2178D85200522E61 /* AvatarImageView.swift */,
 				164A55AC20ECFD7400AE62A6 /* UserImageView.swift */,
 				1EE9DCA81B5F9A6D00E347DF /* TextView.h */,
+				EFC57A0B21BAAE440008DBE6 /* TextView+Internal.h */,
 				1EE9DCA91B5F9A6D00E347DF /* TextView.m */,
+				EFC57A0A21BAAE440008DBE6 /* TextView+Placeholder.swift */,
 				870533FE1DD6162400A7F822 /* OverflowSeparatorView.swift */,
 				87831A961E69B5E600DDF3C3 /* ThreeDotsLoadingView.swift */,
 				879D6AFB1E69E20900DC07A1 /* ImageMessageView.swift */,
@@ -6759,6 +6765,7 @@
 				1E5E0D061B6B8EDB003B0CAC /* UIImage+ImageUtilities.h in Headers */,
 				D5168F43200F6F2300F8222A /* CABasicAnimation+Rotation.h in Headers */,
 				1E5E0CFD1B6B8EDB003B0CAC /* ZetaIconTypes.h in Headers */,
+				EFC57A0D21BAAE440008DBE6 /* TextView+Internal.h in Headers */,
 				1E5E0D021B6B8EDB003B0CAC /* UIColor+Mixing.h in Headers */,
 				1E5E0D041B6B8EDB003B0CAC /* UIControl+Wire.h in Headers */,
 				87B7DAEB1E697C11005F5140 /* AccentColorProvider.h in Headers */,
@@ -7452,6 +7459,7 @@
 				16E6C1001A837C0300AA2F32 /* NSIndexSet+IndexPaths.m in Sources */,
 				5E35F77E218300D400D3F4FE /* ConversationLinkPreviewArticleCell.swift in Sources */,
 				EFF92B6421A84E210090DA66 /* PhoneNumber.swift in Sources */,
+				EFC57A0E21BAAF9A0008DBE6 /* TextView+Placeholder.swift in Sources */,
 				87A15FCE1E07EAB400AED79B /* AssetCollectionWrapper.swift in Sources */,
 				871BC2821D34F8F800DF0793 /* UIAlertController+Wire.m in Sources */,
 				D5168F2C200CBBF300F8222A /* Analytics+TeamInvites.swift in Sources */,
@@ -7567,6 +7575,7 @@
 				BFF8CBE02126E98900DB0330 /* InteractiveModalTransition.swift in Sources */,
 				1661C71D21A71853003DCE1C /* ConversationVideoMessageCell.swift in Sources */,
 				162936BD1F470B4800D4F386 /* AppStateController.swift in Sources */,
+				5EBF4A3D21BE9E050021CFFC /* TextView.m in Sources */,
 				BF02CDC31D79A98000C87D38 /* SavableImage.swift in Sources */,
 				877ABB471E8118E300CBCF2B /* BackgroundViewController.swift in Sources */,
 				870815861BF4E76A00D321BC /* SettingsCell.swift in Sources */,
@@ -8203,7 +8212,6 @@
 				BFB5972320E62EB6008720ED /* CancelableItem.swift in Sources */,
 				5E35F74121804A9E00D3F4FE /* ConversationSenderMessageCell.swift in Sources */,
 				D59EA0C520234EE300B17CE7 /* ConversationCellLayoutProperties+Preview.swift in Sources */,
-				EF7E53C7209765E900EA8357 /* TextView.m in Sources */,
 				16D68E9B1CEF99C7003AB9E0 /* WaveformProgressView.swift in Sources */,
 				87BEB0441D3E478500DE9575 /* AssetLibrary.swift in Sources */,
 				EE43324B1F1A785800096D90 /* PopUpIconButtonView.swift in Sources */,
