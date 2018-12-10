@@ -18,6 +18,11 @@
 
 @interface TextView ()
 
-@property (nonatomic) UILabel *placeholderLabel;
+@property (nonatomic, nonnull) UILabel *placeholderLabel;
+
+@property (nonatomic, nullable) NSLayoutConstraint *placeholderLabelLeftConstraint;
+@property (nonatomic, nullable) NSLayoutConstraint *placeholderLabelRightConstraint;
+
+@property (nonatomic) UIEdgeInsets _placeholderTextContainerInset;
 
 @end

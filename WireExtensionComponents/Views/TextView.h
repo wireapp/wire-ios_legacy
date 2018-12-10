@@ -23,8 +23,9 @@
 @protocol TextViewProtocol;
 
 /**
-Adds placeholder support to @c UITextView. The position of the placeholder is automatically set based on the text view container insets, which ensures correct vertical position. In some cases, it is desirable to horizontally offset the text, which can be done manually.
-*/
+ Adds placeholder support to @c UITextView. The position of the placeholder is automatically set based on the text view container insets, which ensures correct vertical position. In some cases, it is desirable to horizontally offset the text, which can be done manually.
+ */
+
 @interface TextView : UITextView
 
 @property (nonatomic, copy, nullable) NSString *placeholder;
@@ -35,13 +36,6 @@ Adds placeholder support to @c UITextView. The position of the placeholder is au
 @property (nonatomic) CGFloat lineFragmentPadding;
 @property (nonatomic) NSTextAlignment placeholderTextAlignment;
 @property (nonatomic, copy, nullable) NSString *language;
-
-
-///TODO: internal
-@property (nonatomic, nullable) NSLayoutConstraint *placeholderLabelLeftAnchor;
-@property (nonatomic, nullable) NSLayoutConstraint *placeholderLabelRightAnchor;
-
-@property (nonatomic) UIEdgeInsets _placeholderTextContainerInset;
 
 - (void)showOrHidePlaceholder;
 
