@@ -230,15 +230,6 @@
     return NO;
 }
 
-//- (void)verifyViewInAllPhoneWidths:(UIView *)view extraLayoutPass:(BOOL)extraLayoutPass file:(const char[])file line:(NSUInteger)line
-//{
-//    [self assertAmbigousLayout:view file:file line:line];
-//    for (NSNumber *value in phoneWidths()) {
-//
-//        [self verifyView:view extraLayoutPass:extraLayoutPass width:value.floatValue file:file line:line];
-//    }
-//}
-
 - (void)verifyViewInAllTabletWidths:(UIView *)view extraLayoutPass:(BOOL)extraLayoutPass file:(const char[])file line:(NSUInteger)line
 {
     [self assertAmbigousLayout:view file:file line:line];
