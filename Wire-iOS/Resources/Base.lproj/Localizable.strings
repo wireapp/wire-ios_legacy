@@ -294,9 +294,9 @@
 "conversation.create.options.title" = "Conversation options";
 "conversation.create.options.subtitle" = "Allow guests: %@, Read receipts: %@";
 "conversation.create.guests.title" = "Allow guests and services";
-"conversation.create.guests.subtitle" = "Open this conversation to services and people outside your team. You can always change it later.";
+"conversation.create.guests.subtitle" = "Open this conversation to services and people outside your team.";
 "conversation.create.receipts.title" = "Read receipts";
-"conversation.create.receipts.subtitle" = "Turning this on will enable read receipts for everyone in this group. The sender can see at which time you read a message. This only affects future messages.";
+"conversation.create.receipts.subtitle" = "When this is on, people can see when their messages in this conversation are read.";
 
 "conversation.input_bar.ongoing_call_alert.title" = "Ongoing call";
 "conversation.input_bar.ongoing_call_alert.audio.message" = "You can’t record an audio message during a call.";
@@ -832,9 +832,9 @@
 
 // Settings changed alert
 
-"self.read_receipts_enabled.title" = "Read receipts are now turned on for private conversations";
-"self.read_receipts_disabled.title" = "Read receipts are now turned off for private conversations";
-"self.read_receipts_description.title" = "You can change this in your account settings.";
+"self.read_receipts_enabled.title" = "You have enabled read receipts";
+"self.read_receipts_disabled.title" = "You have disabled read receipts";
+"self.read_receipts_description.title" = "You can change this option in your account settings.";
 
 // Settings - top level
 "self.settings.create_team.title" = "Create a team";
@@ -1521,13 +1521,13 @@
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Message Details
 "message_details.empty_likes" = "No one has liked this message yet.";
-"message_details.empty_read_receipts" = "No one has seen this message yet.";
+"message_details.empty_read_receipts" = "No one has read this message yet.";
 "message_details.read_receipts_disabled" = "Read receipts were not on when this message was sent.";
 "message_details.combined_title" = "Message Details";
-"message_details.likes_title" = "Likes";
-"message_details.receipts_title" = "Seen";
-"message_details.tabs.seen" = "Seen (%d)";
-"message_details.tabs.likes" = "Likes (%d)";
+"message_details.likes_title" = "Liked";
+"message_details.receipts_title" = "Read";
+"message_details.tabs.seen" = "Read (%d)";
+"message_details.tabs.likes" = "Liked (%d)";
 "message_details.subtitle_send_date" = "Sent: %@";
 "message_details.subtitle_edit_date" = "Edited: %@";
 "message_details.subtitle_label_voiceOver" = "Message Details";
