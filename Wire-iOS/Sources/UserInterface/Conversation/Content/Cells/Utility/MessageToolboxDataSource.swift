@@ -72,6 +72,8 @@ class MessageToolboxDataSource {
         return [.font: statusFont, .foregroundColor: statusTextColor]
     }
 
+    private static let separator = " · "
+    
     // MARK: - Initialization
 
     /// Creates a toolbox data source for the given message.
@@ -168,7 +170,12 @@ class MessageToolboxDataSource {
 
             if remaining > 0 {
                 if let string = MessageToolboxDataSource.ephemeralTimeFormatter.string(from: remaining) {
-                    deliveryStateString = string && attributes
+                    if let existingString = deliveryStateString {
+                        deliveryStateString = existingString + MessageToolboxDataSource.separator + string && attributes
+                    }
+                    else {
+                        deliveryStateString = string && attributes
+                    }
                 }
             } else if message.isAudio {
                 // do nothing, audio messages are allowed to extend the timer
@@ -261,7 +268,7 @@ class MessageToolboxDataSource {
             if let systemMessage = message as? ZMSystemMessage , systemMessage.systemMessageType == .messageDeletedForEveryone {
                 timestampString = String(format: "content.system.deleted_message_prefix_timestamp".localized, dateTimeString)
             } else if let durationString = message.systemMessageData?.callDurationString() {
-                timestampString = dateTimeString + " · " + durationString
+                timestampString = dateTimeString + MessageToolboxDataSource.separator + durationString
             } else {
                 timestampString = dateTimeString
             }
