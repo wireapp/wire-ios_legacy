@@ -109,7 +109,7 @@ extension ZMSnapshotTestCase {
         for (deviceName, size) in sizes {
             view.frame = CGRect(origin: .zero, size: size)
             if let configuration = configuration {
-                let iPad = size.equalTo(ZMDeviceSizeIPadLandscape) || size.equalTo(ZMDeviceSizeIPadPortrait)
+                let iPad = size.equalTo(XCTestCase.ZMDeviceSizeIPadLandscape) || size.equalTo(XCTestCase.ZMDeviceSizeIPadPortrait)
                 UIView.performWithoutAnimation({
                     configuration(view, iPad)
                 })
@@ -144,24 +144,130 @@ extension ZMSnapshotTestCase {
         verifyInAllDeviceSizes(view: view, extraLayoutPass: false, file: file, line: line, configurationBlock: configuration)
     }
     
+    /// Performs multiple assertions with the given view using the screen sizes of
+    /// the common iPhones in Portrait and iPad in Landscape and Portrait.
+    /// This method only makes sense for views that will be on presented fullscreen.
     func verifyInAllPhoneWidths(view: UIView,
-                                configuration: @escaping (UIView, Bool) -> () = { _, _ in },
+                                extraLayoutPass: Bool = false,
+                                tolerance: CGFloat = 0,
+                                configuration: ((UIView) -> Swift.Void)? = nil,
                                 file: StaticString = #file,
                                 line: UInt = #line) {
-        verifyView(inAllPhoneWidths: view, extraLayoutPass: false,
-                   configuration: configuration,
-                   file: file.utf8SignedStart(),
-                   line: line)
-    }
-
-    func verifyView(inAllPhoneWidths view: UIView?,
-                    configuration: @escaping (UIView, Bool) -> () = { _, _ in },
-                    extraLayoutPass: Bool, file: [Int8], line: Int) {
         assertAmbigousLayout(view, file: file, line: line)
-        for value: NSNumber? in phoneWidths() {
-            verifyView(view, extraLayoutPass: extraLayoutPass, width: Float(value ?? 0.0), file: file, line: line)
+        for width in phoneWidths() {
+            verifyView(view: view,
+                       extraLayoutPass: extraLayoutPass,
+                       width: width,
+                       tolerance: tolerance,
+                       configuration: configuration,
+                       file: file,
+                       line: line)
         }
     }
+
+    func verifyView(view: UIView,
+                    extraLayoutPass: Bool = false,
+                    width: CGFloat,
+                    tolerance: CGFloat = 0,
+                    configuration: ((UIView) -> Swift.Void)? = nil,
+                    file: StaticString = #file,
+                    line: UInt = #line
+        ) {
+        let container = containerView(with: view)
+
+        container.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            container.widthAnchor.constraint(equalToConstant: width)
+            ])
+
+        container.layoutIfNeeded()
+
+        if assertEmptyFrame(container, file: file, line: line) {
+            return
+        }
+
+        configuration?(view)
+
+        if extraLayoutPass {
+            RunLoop.current.run(until: Date(timeIntervalSinceNow: 0.1))
+        }
+
+        view.layer.speed = 0 // freeze animations for deterministic tests
+        snapshotVerify(view: container,
+                       identifier:"\(Int(width))",
+            tolerance: tolerance,
+            file: file,
+            line: line)
+    }
+
+    func snapshotVerify(view: UIView,
+                        identifier: String? = nil,
+                        suffix: NSOrderedSet? = FBSnapshotTestCaseDefaultSuffixes(),
+                        tolerance: CGFloat = 0,
+                        file: StaticString = #file,
+                        line: UInt = #line) {
+        if let errorDescription = snapshotVerifyViewOrLayer(view,
+                                                            identifier: identifier,
+                                                            suffixes: suffix,
+                                                            tolerance: tolerance, defaultReferenceDirectory: (FB_REFERENCE_IMAGE_DIR)) {
+
+            XCTFail("\(errorDescription)", file:file, line:line)
+        } else {
+            XCTAssert(true)
+        }
+    }
+
+
+    func assertEmptyFrame(_ view: UIView,
+                          file: StaticString = #file,
+                          line: UInt = #line) -> Bool {
+        if view.frame.isEmpty {
+            let description = "View frame can not be empty"
+            let filePath = "\(file)"
+            recordFailure(withDescription: description, inFile: filePath, atLine: Int(line), expected: true)
+            return true
+        }
+        return false
+    }
+
+
+
+    func containerView(with view: UIView) -> UIView {
+        let container = UIView(frame: view.bounds)
+        container.backgroundColor = snapshotBackgroundColor
+        container.addSubview(view)
+
+        view.fitInSuperview()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return container
+    }
+
+    func phoneWidths() -> Set<CGFloat> {
+        return Set(phoneSizes().map( { boxedSize in
+            return boxedSize.cgSizeValue.width
+        }))
+    }
+
+    func phoneSizes() -> [NSValue] {
+        return [NSValue(cgSize: XCTestCase.ZMDeviceSizeIPhone5),
+                NSValue(cgSize: XCTestCase.ZMDeviceSizeIPhone6),
+                NSValue(cgSize: XCTestCase.ZMDeviceSizeIPhone6Plus),
+                NSValue(cgSize: XCTestCase.ZMDeviceSizeIPhoneX),     ///same size as iPhone Xs Max
+            NSValue(cgSize: ZMSnapshotTestCase.ZMDeviceSizeIPhoneXR)]
+    }
+
+    func assertAmbigousLayout(_ view: UIView,
+                              file: StaticString = #file,
+                              line: UInt = #line) {
+        if view.hasAmbiguousLayout,
+            let trace = view._autolayoutTrace() {
+            let description = "Ambigous layout in view: \(view) trace: \n\(trace)"
+
+            recordFailure(withDescription: description, inFile: "\(file)", atLine: Int(line), expected: true)
+
+        }
+    }
+
 
     func verifyInAllTabletWidths(view: UIView, file: StaticString = #file, line: UInt = #line) {
         verifyView(inAllTabletWidths: view, extraLayoutPass: false, file: file.utf8SignedStart(), line: line)

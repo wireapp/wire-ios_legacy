@@ -25,20 +25,18 @@ static CGSize const ZMDeviceSizeIPhoneXR = (CGSize){ .width = 414, .height = 896
 static CGSize const ZMDeviceSizeIPadPortrait = (CGSize){ .width = 768, .height = 1024 };
 static CGSize const ZMDeviceSizeIPadLandscape = (CGSize){ .width = 1024, .height = 768 };
 
-static NSArray<NSValue *> * _Nonnull phoneSizes(void) {
-    return @[
-             [NSValue valueWithCGSize:ZMDeviceSizeIPhone5],
-             [NSValue valueWithCGSize:ZMDeviceSizeIPhone6],
-             [NSValue valueWithCGSize:ZMDeviceSizeIPhone6Plus],
-             [NSValue valueWithCGSize:ZMDeviceSizeIPhoneX],
-             ///same size as iPhone Xs Max
-             [NSValue valueWithCGSize:ZMDeviceSizeIPhoneXR]
-             ];
-}
-
 static NSArray<NSValue *> * _Nonnull tabletSizes(void) {
     return @[
              [NSValue valueWithCGSize:ZMDeviceSizeIPadPortrait],
              [NSValue valueWithCGSize:ZMDeviceSizeIPadLandscape]
              ];
 }
+
+// expose _autolayoutTrace for Swift
+@interface UIView (LayoutDebugging)
+
+- (_Nullable id)recursiveDescription;
+
+- (_Nullable id)_autolayoutTrace;
+
+@end

@@ -61,8 +61,6 @@ final class ConversationInputBarViewController_AudioRecorderSnapshotTests: CoreD
         sut.createAudioRecord()
 
         mockLongPressGestureRecognizer = MockLongPressGestureRecognizer(location: .zero, state: .began)
-
-        recordMode = true
     }
 
     override func tearDown() {

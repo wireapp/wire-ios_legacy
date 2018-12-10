@@ -19,8 +19,16 @@
 import Foundation
 
 extension XCTestCase {
+    static let ZMDeviceSizeIPhone5          = CGSize(width: 320, height: 568)
+    static let ZMDeviceSizeIPhone6          = CGSize(width: 375, height: 667)
+    static let ZMDeviceSizeIPhone6Plus      = CGSize(width: 414, height: 736)
+    static let ZMDeviceSizeIPhoneX          = CGSize(width: 375, height: 812)
+    static let ZMDeviceSizeIPhoneXR         = CGSize(width: 414, height: 896)
+    static let ZMDeviceSizeIPadPortrait     = CGSize(width: 768, height: 1024)
+    static let ZMDeviceSizeIPadLandscape    = CGSize(width: 1024, height: 768)
+
     /// return the smallest iPhone screen size that Wire app supports
     public var defaultIPhoneSize: CGSize {
-        return ZMDeviceSizeIPhone5
+        return XCTestCase.ZMDeviceSizeIPhone5
     }
 }

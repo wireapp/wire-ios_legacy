@@ -67,6 +67,7 @@ class ConversationCellSnapshotTestCase: CoreDataSnapshotTestCase {
     func verify(message: ZMConversationMessage,
                 context: ConversationMessageContext? = nil,
                 waitForImagesToLoad: Bool = false,
+                tolerance: CGFloat = 0,
                 file: StaticString = #file,
                 line: UInt = #line) {
         let context = (context ?? defaultContext)!
@@ -75,13 +76,15 @@ class ConversationCellSnapshotTestCase: CoreDataSnapshotTestCase {
         let stackView = UIStackView(arrangedSubviews: views)
         stackView.axis = .vertical
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.layer.speed = 0 // freeze animations for deterministic tests
-        
+
         if waitForImagesToLoad {
             XCTAssertTrue(waitForGroupsToBeEmpty([defaultImageCache.dispatchGroup]))
         }
-        
-        verifyView(inAllPhoneWidths: stackView, extraLayoutPass: false, file: file.utf8SignedStart(), line: line)
+
+        verifyInAllPhoneWidths(view: stackView,
+                               tolerance: tolerance,
+                               file: file,
+                               line: line)
     }
 
 }
