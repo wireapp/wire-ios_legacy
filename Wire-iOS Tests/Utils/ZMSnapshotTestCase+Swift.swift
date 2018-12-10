@@ -134,16 +134,9 @@ extension ZMSnapshotTestCase {
     }
 }
 
-extension ZMSnapshotTestCase {
+// MARK: - verify view for a set of devices' widths
 
-    func verify(view: UIView, identifier: String = "", tolerance: Float = 0, file: StaticString = #file, line: UInt = #line) {
-        verifyView(view, extraLayoutPass: false, tolerance: tolerance, file: file.utf8SignedStart(), line: line, identifier: identifier, deviceName: nil)
-    }
-    
-    func verifyInAllDeviceSizes(view: UIView, file: StaticString = #file, line: UInt = #line, configuration: @escaping (UIView, Bool) -> () = { _, _ in }) {
-        verifyInAllDeviceSizes(view: view, extraLayoutPass: false, file: file, line: line, configurationBlock: configuration)
-    }
-    
+extension ZMSnapshotTestCase {
     /// Performs multiple assertions with the given view using the screen sizes of
     /// the common iPhones in Portrait and iPad in Landscape and Portrait.
     /// This method only makes sense for views that will be on presented fullscreen.
@@ -199,7 +192,11 @@ extension ZMSnapshotTestCase {
             file: file,
             line: line)
     }
+}
 
+// MARK: - Helpers
+
+extension ZMSnapshotTestCase {
     func snapshotVerify(view: UIView,
                         identifier: String? = nil,
                         suffix: NSOrderedSet? = FBSnapshotTestCaseDefaultSuffixes(),
@@ -267,7 +264,17 @@ extension ZMSnapshotTestCase {
 
         }
     }
+}
 
+extension ZMSnapshotTestCase {
+
+    func verify(view: UIView, identifier: String = "", tolerance: Float = 0, file: StaticString = #file, line: UInt = #line) {
+        verifyView(view, extraLayoutPass: false, tolerance: tolerance, file: file.utf8SignedStart(), line: line, identifier: identifier, deviceName: nil)
+    }
+    
+    func verifyInAllDeviceSizes(view: UIView, file: StaticString = #file, line: UInt = #line, configuration: @escaping (UIView, Bool) -> () = { _, _ in }) {
+        verifyInAllDeviceSizes(view: view, extraLayoutPass: false, file: file, line: line, configurationBlock: configuration)
+    }
 
     func verifyInAllTabletWidths(view: UIView, file: StaticString = #file, line: UInt = #line) {
         verifyView(inAllTabletWidths: view, extraLayoutPass: false, file: file.utf8SignedStart(), line: line)
