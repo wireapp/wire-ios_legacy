@@ -24,10 +24,10 @@ enum MessageToolboxContent: Equatable {
     case sendFailure(NSAttributedString)
 
     /// Display the list of reactions.
-    case reactions(NSAttributedString)
+    case reactions(NSAttributedString, likers: [ZMUser])
 
     /// Display the message details (timestamp and/or status).
-    case details(timestamp: NSAttributedString?, status: NSAttributedString?)
+    case details(timestamp: NSAttributedString?, status: NSAttributedString?, likers: [ZMUser])
 }
 
 extension MessageToolboxContent: Comparable {
@@ -77,7 +77,7 @@ class MessageToolboxDataSource {
     /// Creates a toolbox data source for the given message.
     init(message: ZMConversationMessage) {
         self.message = message
-        self.content = .details(timestamp: nil, status: nil)
+        self.content = .details(timestamp: nil, status: nil, likers: [])
     }
 
     // MARK: - Content
@@ -107,12 +107,12 @@ class MessageToolboxDataSource {
         // 2) Likers
         else if !showTimestamp {
             let text = makeReactionsLabel(with: likers, widthConstraint: widthConstraint)
-            content = .reactions(text)
+            content = .reactions(text, likers: likers)
         }
         // 3) Timestamp
         else {
             let (timestamp, status) = makeDetailsString()
-            content = .details(timestamp: timestamp, status: status)
+            content = .details(timestamp: timestamp, status: status, likers: likers)
         }
 
         // Only perform the changes if the content did change.
@@ -130,7 +130,7 @@ class MessageToolboxDataSource {
         let likers = message.likers()
         let conversation = message.conversation
 
-        // If there is only one liker, always display the name, even if the width doesn't fir
+        // If there is only one liker, always display the name, even if the width doesn't fit
         if likers.count == 1 {
             return likers[0].displayName(in: conversation) && attributes
         }
