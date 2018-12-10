@@ -56,7 +56,7 @@ class AudioRecordViewControllerTests: ZMSnapshotTestCase {
     }
 
     func verify() {
-        verifyInAllPhoneWidths(view: sut.prepareForSnapshot(), tolerance: 0.01)
+        verifyInAllPhoneWidths(view: sut.prepareForSnapshot(), tolerance: 0.05)
     }
 
     func testThatItRendersViewControllerCorrectlyState_Recording() {
