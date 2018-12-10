@@ -44,7 +44,7 @@ NS_ASSUME_NONNULL_BEGIN
 IB_DESIGNABLE
 @interface TokenField : UIView
 
-@property (weak, nonatomic, nullable) IBOutlet id<TokenFieldDelegate> delegate;
+@property (weak, nonatomic, nullable) id<TokenFieldDelegate> delegate;
 
 @property (readonly, nonatomic) TextView *textView;
 
