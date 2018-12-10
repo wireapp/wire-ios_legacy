@@ -23,6 +23,7 @@ struct ConversationMessageContext {
     let isTimeIntervalSinceLastMessageSignificant: Bool
     let isFirstMessageOfTheDay: Bool
     let isFirstUnreadMessage: Bool
+    let isLastMessage: Bool
     let searchQueries: [String]
 }
 
@@ -284,9 +285,8 @@ extension IndexSet {
         guard !message.isSystem else {
             return false
         }
-        
-        
-        return selected || message.deliveryState == .failedToSend || message.hasReactions()
+
+        return context.isLastMessage || selected || message.deliveryState == .failedToSend || message.hasReactions()
     }
     
     func isSenderVisible(in context: ConversationMessageContext) -> Bool {

@@ -48,6 +48,7 @@ extension ZMConversationMessageWindow {
             isTimeIntervalSinceLastMessageSignificant: isTimeIntervalSinceLastMessageSignificant,
             isFirstMessageOfTheDay: isFirstMessageOfTheDay(for: message),
             isFirstUnreadMessage: message.isEqual(firstUnreadMessage),
+            isLastMessage: self.messages.index(of: message) == 0,
             searchQueries: searchQueries
         )
     }

@@ -181,8 +181,6 @@
 #import "NetworkConditionHelper.h"
 #import "SoundEventRulesWatchDog.h"
 #import "NSString+EmoticonSubstitution.h"
-#import "UILabel+TextTransform.h"
-#import "NSString+TextTransform.h"
 #import "KeyboardFrameObserver+iOS.h"
 #import "UIColor+Mixing.h"
 #import "MessageType.h"

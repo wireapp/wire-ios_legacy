@@ -228,7 +228,7 @@ import WireSyncEngine
         }
 
         switch dataSource.content {
-        case .reactions(let reactionsString):
+        case .reactions(let reactionsString, _):
             updateContentStack(to: newPosition, animated: animated) {
                 self.detailsLabel.attributedText = reactionsString
                 self.detailsLabel.isHidden = false
@@ -248,7 +248,7 @@ import WireSyncEngine
                 self.resendButton.isHidden = false
             }
 
-        case .details(let timestamp, let status):
+        case .details(let timestamp, let status, _):
             updateContentStack(to: newPosition, animated: animated) {
                 self.detailsLabel.attributedText = timestamp
                 self.detailsLabel.isHidden = timestamp == nil

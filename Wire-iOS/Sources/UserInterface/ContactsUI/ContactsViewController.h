@@ -22,7 +22,6 @@
 
 #import "ColorScheme.h"
 
-
 @class ContactsDataSource;
 @class ContactsViewController;
 @class ContactsCell;
