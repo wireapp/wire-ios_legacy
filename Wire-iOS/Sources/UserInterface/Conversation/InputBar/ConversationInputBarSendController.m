@@ -70,33 +70,13 @@
                mentions:(NSArray <Mention *>*)mentions
       replyingToMessage:(ZMClientMessage *)message
 {
-    BOOL shouldFetchLinkPreview = ![Settings sharedSettings].disableLinkPreviews;
-    
-    __block id<ZMConversationMessage> textMessage = nil;
     [[ZMUserSession sharedSession] enqueueChanges:^{
-        
-        if ([Settings sharedSettings].shouldSend500Messages) {
-            [Settings sharedSettings].shouldSend500Messages = NO;
-            // This is a debug function to stress-load the client
-            for(int i = 0; i < 500; ++i) {
-                NSString *textWithNumber = [NSString stringWithFormat:@"%@ (%d)", text, i+1];
-                // only save last ones, who cares
-                textMessage = [self.conversation appendText:textWithNumber
-                                                   mentions:mentions
-                                          replyingToMessage:message
-                                           fetchLinkPreview:shouldFetchLinkPreview
-                                                      nonce:NSUUID.UUID];
-                [(ZMMessage *)textMessage removeExpirationDate];
-            }
-        }
-        else {
-            // normal sending
-            textMessage = [self.conversation appendText:text
-                                               mentions:mentions
-                                      replyingToMessage:message
-                                       fetchLinkPreview:shouldFetchLinkPreview
-                                                  nonce:NSUUID.UUID];
-        }
+        BOOL shouldFetchLinkPreview = ![Settings sharedSettings].disableLinkPreviews;
+        [self.conversation appendText:text
+                             mentions:mentions
+                    replyingToMessage:message
+                     fetchLinkPreview:shouldFetchLinkPreview
+                                nonce:NSUUID.UUID];
         self.conversation.draftMessage = nil;
     } completionHandler:^{
         [[Analytics shared] tagMediaActionCompleted:ConversationMediaActionText inConversation:self.conversation];

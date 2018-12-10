@@ -830,6 +830,12 @@
 "self.new_device_alert.manage_devices" = "Manage devices";
 "self.new_device_alert.trust_devices" = "OK";
 
+// Settings changed alert
+
+"self.read_receipts_enabled.title" = "Read receipts are now turned on for private conversations";
+"self.read_receipts_disabled.title" = "Read receipts are now turned off for private conversations";
+"self.read_receipts_description.title" = "You can change this in your account settings.";
+
 // Settings - top level
 "self.settings.create_team.title" = "Create a team";
 "self.settings.manage_team.title" = "Manage Team";

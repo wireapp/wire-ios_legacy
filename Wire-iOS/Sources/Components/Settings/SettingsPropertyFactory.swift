@@ -337,7 +337,10 @@ class SettingsPropertyFactory {
         case .readReceiptsEnabled:
             return SettingsBlockProperty(
                 propertyName: propertyName,
-                getAction: { _ in return SettingsPropertyValue(self.selfUser?.readReceiptsEnabled ?? false) },
+                getAction: { _ in
+                    let value = self.selfUser?.readReceiptsEnabled ?? false
+                    return SettingsPropertyValue(value)
+            },
                 setAction: { _, value in
                     if case .number(let enabled) = value,
                         let userSession = self.userSession as? ZMUserSession {

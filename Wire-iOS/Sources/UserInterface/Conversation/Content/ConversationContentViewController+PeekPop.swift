@@ -30,8 +30,8 @@ extension ConversationContentViewController: UIViewControllerPreviewingDelegate 
 
         let cellLocation = view.convert(location, to: tableView)
 
-        guard let cellIndexPath = self.tableView.indexPathForRow(at: cellLocation),
-              let message = self.messageWindow.messages[cellIndexPath.section] as? ZMConversationMessage,
+        guard let cellIndexPath = tableView.indexPathForRow(at: cellLocation),
+              let message = self.conversationMessageWindowTableViewAdapter.previewableMessage(at: cellIndexPath, in: tableView),
               let cell = tableView.cellForRow(at: cellIndexPath) as? SelectableView & UIView else {
             return .none
         }

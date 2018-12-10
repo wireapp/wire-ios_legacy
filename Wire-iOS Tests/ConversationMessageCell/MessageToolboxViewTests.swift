@@ -28,6 +28,7 @@ final class MessageToolboxViewTests: CoreDataSnapshotTestCase {
         super.setUp()
         message = MockMessageFactory.textMessage(withText: "Hello")
         message.deliveryState = .sent
+        message.conversation = otherUserConversation
 
         sut = MessageToolboxView()
         sut.frame = CGRect(x: 0, y: 0, width: 375, height: 28)
@@ -51,7 +52,6 @@ final class MessageToolboxViewTests: CoreDataSnapshotTestCase {
 
     func testThatItConfiguresWith1To1ConversationReadReceipt() {
         // GIVEN
-        message.conversation?.conversationType = .oneOnOne
         message.deliveryState = .read
 
         let readReceipt = MockReadReceipt(user: otherUser)
@@ -67,7 +67,7 @@ final class MessageToolboxViewTests: CoreDataSnapshotTestCase {
 
     func testThatItConfiguresWithGroupConversationReadReceipt() {
         // GIVEN
-        message.conversation?.conversationType = .group
+        message.conversation = createGroupConversation()
         message.deliveryState = .read
 
         let readReceipt = MockReadReceipt(user: otherUser)
@@ -117,7 +117,6 @@ final class MessageToolboxViewTests: CoreDataSnapshotTestCase {
 
     func testThatItConfiguresWithReadThenLiked() {
         // GIVEN
-        message.conversation?.conversationType = .oneOnOne
         message.deliveryState = .read
 
         let readReceipt = MockReadReceipt(user: otherUser)
@@ -150,7 +149,6 @@ final class MessageToolboxViewTests: CoreDataSnapshotTestCase {
 
     func testThatItConfiguresWithSelfLiker() {
         // GIVEN
-        let selfUser = (MockUser.mockSelf() as Any) as! ZMUser
         message.backingUsersReaction = [MessageReaction.like.unicodeValue: [selfUser]]
 
         // WHEN
@@ -165,6 +163,7 @@ final class MessageToolboxViewTests: CoreDataSnapshotTestCase {
     func testThatItOpensReceipts_NoLikers() {
         teamTest {
             // WHEN
+            message.conversation = createGroupConversation()
             sut.configureForMessage(message, forceShowTimestamp: false, animated: false)
 
             // THEN
@@ -175,7 +174,7 @@ final class MessageToolboxViewTests: CoreDataSnapshotTestCase {
     func testThatItOpensReceipts_WithLikers_ShowingTimestamp() {
         teamTest {
             // GIVEN
-            let selfUser = (MockUser.mockSelf() as Any) as! ZMUser
+            message.conversation = createGroupConversation()
             message.backingUsersReaction = [MessageReaction.like.unicodeValue: [selfUser]]
 
             // WHEN
@@ -189,7 +188,7 @@ final class MessageToolboxViewTests: CoreDataSnapshotTestCase {
     func testThatItOpensLikesWhenTapped_ReceiptsEnabled() {
         teamTest {
             // GIVEN
-            let selfUser = (MockUser.mockSelf() as Any) as! ZMUser
+            message.conversation = createGroupConversation()
             message.backingUsersReaction = [MessageReaction.like.unicodeValue: [selfUser]]
 
             // WHEN
@@ -202,7 +201,7 @@ final class MessageToolboxViewTests: CoreDataSnapshotTestCase {
 
     func testThatItOpensLikesWhenTapped_ReceiptsDisabled() {
         // GIVEN
-        let selfUser = (MockUser.mockSelf() as Any) as! ZMUser
+        message.conversation = createGroupConversation()
         message.backingUsersReaction = [MessageReaction.like.unicodeValue: [selfUser]]
 
         // WHEN
@@ -214,7 +213,7 @@ final class MessageToolboxViewTests: CoreDataSnapshotTestCase {
 
     func testThatItDoesNotShowLikes_ReceiptsDisabled_ShowingTimestamp() {
         // GIVEN
-        let selfUser = (MockUser.mockSelf() as Any) as! ZMUser
+        message.conversation = createGroupConversation()
         message.backingUsersReaction = [MessageReaction.like.unicodeValue: [selfUser]]
 
         // WHEN
