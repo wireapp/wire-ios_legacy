@@ -20,13 +20,15 @@ import Foundation
 
 extension TextView {
 
+
+    /// custom inset for placeholder, only left and right inset value is applied (The placeholder is align center vertically)
     @objc
     var placeholderTextContainerInset: UIEdgeInsets {
         set {
             _placeholderTextContainerInset = newValue
 
-            placeholderLabelLeftAnchor?.constant = newValue.left
-            placeholderLabelRightAnchor?.constant = newValue.right
+            placeholderLabelLeftConstraint?.constant = newValue.left
+            placeholderLabelRightConstraint?.constant = newValue.right
         }
 
         get {
@@ -38,23 +40,23 @@ extension TextView {
     @objc func createPlaceholderLabel() {
         let linePadding = textContainer.lineFragmentPadding
         placeholderLabel = UILabel()
-        addSubview(placeholderLabel)
-
-        placeholderLabel.translatesAutoresizingMaskIntoConstraints = false
-
-        placeholderLabelLeftAnchor = placeholderLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: placeholderTextContainerInset.left + linePadding)
-        placeholderLabelRightAnchor = placeholderLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: placeholderTextContainerInset.right - linePadding)
-
-        NSLayoutConstraint.activate([
-            placeholderLabelLeftAnchor!,
-            placeholderLabelRightAnchor!,
-            placeholderLabel.centerYAnchor.constraint(equalTo: centerYAnchor)
-            ])
-
         placeholderLabel.font = placeholderFont
         placeholderLabel.textColor = placeholderTextColor
         placeholderLabel.textTransform = placeholderTextTransform
         placeholderLabel.textAlignment = placeholderTextAlignment
         placeholderLabel.isAccessibilityElement = false
+
+        placeholderLabel.translatesAutoresizingMaskIntoConstraints = false
+
+        addSubview(placeholderLabel)
+
+        placeholderLabelLeftConstraint = placeholderLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: placeholderTextContainerInset.left + linePadding)
+        placeholderLabelRightConstraint = placeholderLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: placeholderTextContainerInset.right - linePadding)
+
+        NSLayoutConstraint.activate([
+            placeholderLabelLeftConstraint!,
+            placeholderLabelRightConstraint!,
+            placeholderLabel.centerYAnchor.constraint(equalTo: centerYAnchor)
+            ])
     }
 }
