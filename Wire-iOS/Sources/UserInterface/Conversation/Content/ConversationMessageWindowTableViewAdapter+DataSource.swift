@@ -107,33 +107,9 @@ extension ConversationMessageWindowTableViewAdapter: ZMConversationMessageWindow
                 self.tableView.lockContentOffset = false
             }
         }
-        
-        if changeInfo.insertedIndexes.count > 0 {
-            selectLastMessage()
-        }
     }
-    
-    @objc
-    func selectLastMessage() {
-        
-        if let lastMessage = self.messageWindow.conversation.messages.lastObject as? ZMConversationMessage,
-            let lastIndex = self.indexPath(for: lastMessage) {
-            
-            if let selectedMessage = selectedMessage,
-                let selectedIndex = self.indexPath(for: selectedMessage) {
-                self.selectedMessage = nil
-                deselect(indexPath: selectedIndex)
-                tableView.deselectRow(at: selectedIndex, animated: true)
-            }
-            
-            self.selectedMessage = lastMessage
-            select(indexPath: lastIndex)
-            tableView.selectRow(at: lastIndex, animated: true, scrollPosition: .none)
-        }
-    }
-    
-    @objc
-    func reconfigureVisibleSections() {
+
+    @objc func reconfigureVisibleSections() {
         tableView.beginUpdates()
         if let indexPathsForVisibleRows = tableView.indexPathsForVisibleRows {
             let visibleSections = Set(indexPathsForVisibleRows.map(\.section))

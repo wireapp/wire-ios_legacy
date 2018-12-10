@@ -211,7 +211,7 @@ extension ColorSchemeColor {
         case .sectionBackground:
             return ColorPair(both: .clear)
         case .sectionBackgroundHighlighted:
-            return ColorPair(both: .graphiteAlpha4)
+            return ColorPair(light: .graphiteAlpha4, dark: .backgroundLightGraphite)
         case .sectionText:
             return ColorPair(light: .blackAlpha40, dark: .whiteAlpha40)
         case .tokenFieldBackground:
