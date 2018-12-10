@@ -160,7 +160,7 @@ open class CollectionCell: UICollectionViewCell {
     }()
 
     fileprivate func updateMessageVisibility() {
-        let isObfuscated = message?.isObfuscated == true
+        let isObfuscated = message?.isObfuscated == true || message?.hasBeenDeleted == true
         secureContentsView.isHidden = isObfuscated
         obfuscationView.isHidden = !isObfuscated
         obfuscationView.backgroundColor = .accentDimmedFlat

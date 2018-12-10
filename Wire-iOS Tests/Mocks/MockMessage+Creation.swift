@@ -169,6 +169,7 @@ final class MockMessageFactory: NSObject {
     class func expiredMessage(from message: MockMessage?) -> MockMessage? {
         message?.isEphemeral = true
         message?.isObfuscated = true
+        message?.hasBeenDeleted = false
         return message
     }
 
@@ -192,6 +193,33 @@ final class MockMessageFactory: NSObject {
         return self.expiredMessage(from: self.linkMessage())
     }
 
+    class func deletedMessage(from message: MockMessage?) -> MockMessage? {
+        message?.isEphemeral = false
+        message?.isObfuscated = false
+        message?.hasBeenDeleted = true
+        return message
+    }
+    
+    class func deletedImageMessage() -> MockMessage? {
+        return self.deletedMessage(from: self.imageMessage())
+    }
+    
+    class func deletedVideoMessage() -> MockMessage? {
+        return self.deletedMessage(from: self.videoMessage())
+    }
+    
+    class func deletedAudioMessage() -> MockMessage? {
+        return self.deletedMessage(from: self.audioMessage())
+    }
+    
+    class func deletedFileMessage() -> MockMessage? {
+        return self.deletedMessage(from: self.fileTransferMessage())
+    }
+    
+    class func deletedLinkMessage() -> MockMessage? {
+        return self.deletedMessage(from: self.linkMessage())
+    }
+    
     class func passFileTransferMessage() -> MockMessage {
         let message = MockMessageFactory.messageTemplate()
         message.backingFileMessageData = MockPassFileMessageData()

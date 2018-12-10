@@ -231,7 +231,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 - (void)updateForMessage
 {
-    if (self.message.isObfuscated) {
+    if (self.message.isObfuscated || self.message.hasBeenDeleted) {
         [self removeImage];
         self.obfuscationView.hidden = NO;
     } else {
