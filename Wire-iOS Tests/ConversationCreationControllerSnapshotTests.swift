@@ -27,10 +27,13 @@ final class ConversationCreationControllerSnapshotTests: CoreDataSnapshotTestCas
         super.setUp()
         sut = ConversationCreationController()
         accentColor = .violet
+
+        recordMode = true
     }
     
     override func tearDown() {
         sut = nil
+        ColorScheme.default.variant = .light
         super.tearDown()
     }
 
@@ -49,11 +52,23 @@ final class ConversationCreationControllerSnapshotTests: CoreDataSnapshotTestCas
         teamTest {
             self.sut.loadViewIfNeeded()
             self.sut.viewDidAppear(false)
-            
+
             verify(view: self.sut.view)
         }
     }
-    
+
+    func testTeamGroupOptionsCollapsed_dark() {
+        ColorScheme.default.variant = .dark
+//        sut.view.backgroundColor = .black
+
+        teamTest {
+            self.sut.loadViewIfNeeded()
+            self.sut.viewDidAppear(false)
+
+            verify(view: self.sut.view)
+        }
+    }
+
     func testTeamGroupOptionsExpanded() {
         teamTest {
             self.sut.loadViewIfNeeded()
