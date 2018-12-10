@@ -1,25 +1,26 @@
 //
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
-// 
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see http://www.gnu.org/licenses/.
-// 
+//
 
 
 @import MobileCoreServices;
 
 #import "TextView.h"
+#import "TextView+Internal.h"
 
 #import "MediaAsset.h"
 #import "UILabel+TextTransform.h"
@@ -31,7 +32,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 @interface TextView ()
 
 @property (nonatomic) BOOL shouldDrawPlaceholder;
-@property (nonatomic) UILabel *placeholderLabel;
 @end
 
 // Inspired by https://github.com/samsoffes/sstoolkit/blob/master/SSToolkit/SSTextView.m
@@ -73,9 +73,11 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textChanged:) name:UITextViewTextDidChangeNotification object:self];
     self.placeholderTextColor = [UIColor lightGrayColor];
-    self.placeholderTextContainerInset = self.textContainerInset;
+    self._placeholderTextContainerInset = self.textContainerInset;
     self.placeholderTextAlignment = NSTextAlignmentNatural;
-    
+
+    [self createPlaceholderLabel];
+
     if ([AutomationHelper.sharedHelper disableAutocorrection]) {
         self.autocorrectionType = UITextAutocorrectionTypeNo;
     }
@@ -153,50 +155,13 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         [self.placeholderLabel setAlpha:0];
 }
 
-- (void)drawRect:(CGRect)rect
-{
-    if(self.placeholder.length > 0 || self.attributedPlaceholder.length > 0) {
-        if(self.placeholderLabel == nil) {
-            
-            float linePadding = self.textContainer.lineFragmentPadding;
-            
-            CGRect placeholderRect = CGRectMake(self.placeholderTextContainerInset.left + linePadding,
-                                                self.placeholderTextContainerInset.top,
-                                                rect.size.width - self.placeholderTextContainerInset.left - self.placeholderTextContainerInset.right - 2 * linePadding,
-                                                rect.size.height - self.placeholderTextContainerInset.top - self.placeholderTextContainerInset.bottom);
-            self.placeholderLabel = [[UILabel alloc] initWithFrame:placeholderRect];
-            self.placeholderLabel.font = self.placeholderFont;
-            self.placeholderLabel.textColor = self.placeholderTextColor;
-            self.placeholderLabel.textTransform = self.placeholderTextTransform;
-            self.placeholderLabel.textAlignment = self.placeholderTextAlignment;
-            self.placeholderLabel.isAccessibilityElement = NO;
-            [self addSubview:self.placeholderLabel];
-            
-            if(self.attributedPlaceholder && self.attributedPlaceholder.length > 0) {
-                self.placeholderLabel.attributedText = self.attributedPlaceholder;
-            } else {
-                self.placeholderLabel.text = self.placeholder;
-            }
-            
-            if (self.textAlignment == NSTextAlignmentLeft) {
-                [self.placeholderLabel sizeToFit];
-            }
-            
-        }
-        [self showOrHidePlaceholder];
-    }
-    
-    [super drawRect:rect];
-}
-
-
 #pragma mark - Copy/Pasting
 
 - (void)paste:(id)sender
 {
     UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
     ZMLogDebug(@"types available: %@", [pasteboard pasteboardTypes]);
-    
+
     if ((pasteboard.hasImages)
         && [self.delegate respondsToSelector:@selector(textView:hasImageToPaste:)]) {
         id<MediaAsset> image = [[UIPasteboard generalPasteboard] mediaAsset];

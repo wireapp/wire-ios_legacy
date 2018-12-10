@@ -77,7 +77,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 
 @interface ConversationContentViewController () <CanvasViewControllerDelegate>
 
-@property (nonatomic) ConversationMessageWindowTableViewAdapter *conversationMessageWindowTableViewAdapter;
+@property (nonatomic, readwrite) ConversationMessageWindowTableViewAdapter *conversationMessageWindowTableViewAdapter;
 @property (nonatomic, assign) BOOL wasScrolledToBottomAtStartOfUpdate;
 @property (nonatomic) NSObject *activeMediaPlayerObserver;
 @property (nonatomic) MediaPlaybackManager *mediaPlaybackManager;
@@ -196,8 +196,6 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
                                              selector:@selector(applicationDidBecomeActive:)
                                                  name:UIApplicationDidBecomeActiveNotification
                                                object:nil];
-
-    [self.conversationMessageWindowTableViewAdapter selectLastMessage];
 }
 
 - (void)applicationDidBecomeActive:(NSNotification *)notification

@@ -75,14 +75,22 @@ class DotView: UIView {
     }
     
     internal func updateIndicator() {
-        showIndicator = hasUnreadMessages || (user?.clientsRequiringUserAttention.count ?? 0) > 0
+        guard let user = user else { return }
+
+        showIndicator = hasUnreadMessages ||
+                        user.clientsRequiringUserAttention.count > 0 ||
+                        user.readReceiptsEnabledChangedRemotely
     }
 }
 
 extension DotView: ZMUserObserver {
     func userDidChange(_ changeInfo: UserChangeInfo) {
         
-        guard changeInfo.trustLevelChanged || changeInfo.clientsChanged || changeInfo.accentColorValueChanged else { return }
+        guard changeInfo.trustLevelChanged ||
+              changeInfo.clientsChanged ||
+              changeInfo.accentColorValueChanged ||
+              changeInfo.readReceiptsEnabledChanged ||
+              changeInfo.readReceiptsEnabledChangedRemotelyChanged else { return }
         
         centerView.hostedLayer.fillColor = UIColor.accent().cgColor
         

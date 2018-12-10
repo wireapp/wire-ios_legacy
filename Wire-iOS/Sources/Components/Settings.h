@@ -123,9 +123,6 @@ extern NSString * const UserDefaultDisableLinkPreviews;
 /// These settings are not actually persisted, just kept in memory
 @interface Settings (Debug)
 
-/// when true, send the next message 500 times (!)
-@property (nonatomic) BOOL shouldSend500Messages;
-
 // Max audio recording duration in seconds
 @property (nonatomic) NSTimeInterval maxRecordingDurationDebug;
 
