@@ -51,7 +51,6 @@ class ConversationVideoMessageCell: RoundedView, ConversationMessageCell {
         clipsToBounds = true
         
         transferView.delegate = self
-        transferView.isAccessibilityElement = true
         obfuscationView.isHidden = true
         
         addSubview(self.transferView)
