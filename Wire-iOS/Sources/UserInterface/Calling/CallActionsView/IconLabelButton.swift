@@ -23,7 +23,7 @@ class IconLabelButton: ButtonWithLargerHitArea {
     private static let height: CGFloat = 88
     
     private(set) var iconButton = IconButton()
-    private(set) var subtitleLabel = UILabel()
+    private(set) var subtitleLabel = TransformLabel()
     private let blurView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
     
     var appearance: CallActionAppearance = .dark(blurred: false) {

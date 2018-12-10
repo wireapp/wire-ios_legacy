@@ -16,6 +16,7 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
+@import WireExtensionComponents;
 
 #import "Button.h"
 
@@ -24,7 +25,6 @@
 
 #import "UIControl+Wire.h"
 #import "UIImage+ImageUtilities.h"
-#import "NSString+TextTransform.h"
 #import "Wire-Swift.h"
 
 @import QuartzCore;
@@ -145,7 +145,7 @@
     }];
     
     if (self.textTransform != TextTransformNone) {
-        title = [title transformStringWithTransform:self.textTransform];
+        title = [title stringByApplyingTextTransform:self.textTransform];
     }
 
     [super setTitle:title forState:state];

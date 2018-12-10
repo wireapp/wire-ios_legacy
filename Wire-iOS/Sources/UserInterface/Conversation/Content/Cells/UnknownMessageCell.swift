@@ -26,8 +26,7 @@ class CustomMessageView: UIView, TTTAttributedLabelDelegate {
     public var messageLabel : TTTAttributedLabel = TTTAttributedLabel(frame: CGRect.zero)
     var messageText: String? {
         didSet {
-            messageLabel.text = messageText
-            messageLabel.textTransform = .upper
+            messageLabel.text = messageText?.applying(transform: .upper)
         }
     }
 

@@ -49,9 +49,7 @@ FOUNDATION_EXPORT const unsigned char WireExtensionComponentsVersionString[];
 #import <WireExtensionComponents/weakify.h>
 #import <WireExtensionComponents/NSLayoutConstraint+Helpers.h>
 #import <WireExtensionComponents/TextTransform.h>
-#import <WireExtensionComponents/NSString+TextTransform.h>
 #import <WireExtensionComponents/AVAsset+VideoConvert.h>
 #import <WireExtensionComponents/AccentColorProvider.h>
-#import <WireExtensionComponents/UILabel+TextTransform.h>
 #import <WireExtensionComponents/CABasicAnimation+Rotation.h>
 #import <WireExtensionComponents/AccentColorProvider.h>

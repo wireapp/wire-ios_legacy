@@ -22,7 +22,6 @@
 #import "TextView.h"
 
 #import "MediaAsset.h"
-#import "UILabel+TextTransform.h"
 #import <WireExtensionComponents/WireExtensionComponents-Swift.h>
 #import "Wire-Swift.h"
 
@@ -31,7 +30,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 @interface TextView ()
 
 @property (nonatomic) BOOL shouldDrawPlaceholder;
-@property (nonatomic) UILabel *placeholderLabel;
+@property (nonatomic) TransformLabel *placeholderLabel;
 @end
 
 // Inspired by https://github.com/samsoffes/sstoolkit/blob/master/SSToolkit/SSTextView.m
@@ -164,7 +163,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
                                                 self.placeholderTextContainerInset.top,
                                                 rect.size.width - self.placeholderTextContainerInset.left - self.placeholderTextContainerInset.right - 2 * linePadding,
                                                 rect.size.height - self.placeholderTextContainerInset.top - self.placeholderTextContainerInset.bottom);
-            self.placeholderLabel = [[UILabel alloc] initWithFrame:placeholderRect];
+            self.placeholderLabel = [[TransformLabel alloc] initWithFrame:placeholderRect];
             self.placeholderLabel.font = self.placeholderFont;
             self.placeholderLabel.textColor = self.placeholderTextColor;
             self.placeholderLabel.textTransform = self.placeholderTextTransform;
