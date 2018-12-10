@@ -169,7 +169,7 @@ final class MockMessageFactory: NSObject {
     class func expiredMessage(from message: MockMessage?) -> MockMessage? {
         message?.isEphemeral = true
         message?.isObfuscated = true
-        message?.isHiddenInConversation = false
+        message?.hasBeenDeleted = false
         return message
     }
 
@@ -196,7 +196,7 @@ final class MockMessageFactory: NSObject {
     class func deletedMessage(from message: MockMessage?) -> MockMessage? {
         message?.isEphemeral = false
         message?.isObfuscated = false
-        message?.isHiddenInConversation = true
+        message?.hasBeenDeleted = true
         return message
     }
     

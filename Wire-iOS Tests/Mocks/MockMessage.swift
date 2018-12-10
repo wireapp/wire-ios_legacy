@@ -228,7 +228,6 @@ extension MockFileMessageData: MockFileMessageDataType { }
     var nonce: UUID? = UUID()
     var isEncrypted: Bool = false
     var isPlainText: Bool = true
-    var isHiddenInConversation: Bool = false
     var sender: ZMUser? = .none
     var serverTimestamp: Date? = .none
     var updatedAt: Date? = .none
