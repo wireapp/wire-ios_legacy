@@ -112,7 +112,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     self.topContainerView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:self.topContainerView];
     
-    self.titleLabel = [[UILabel alloc] initForAutoLayout];
+    self.titleLabel = [[TransformLabel alloc] initForAutoLayout];
     self.titleLabel.numberOfLines = 1;
     self.titleLabel.text = self.title;
     self.titleLabel.textColor = [colorScheme colorWithName:ColorSchemeColorTextForeground];

@@ -16,9 +16,11 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+@import WireExtensionComponents;
+
 @interface TextView ()
 
-@property (nonatomic, nonnull) UILabel *placeholderLabel;
+@property (nonatomic, nonnull) TransformLabel *placeholderLabel;
 
 @property (nonatomic, nullable) NSLayoutConstraint *placeholderLabelLeftConstraint;
 @property (nonatomic, nullable) NSLayoutConstraint *placeholderLabelRightConstraint;

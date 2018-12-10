@@ -16,11 +16,11 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
+@import WireExtensionComponents;
 
 #import "TokenTextAttachment.h"
 #import "Token.h"
 #import "TokenField.h"
-#import "NSString+TextTransform.h"
 
 @implementation TokenSeparatorAttachment
 
@@ -121,7 +121,7 @@
 - (UIImage *)imageForCurrentToken
 {
     const CGFloat imageHeight = ceilf(self.tokenField.font.lineHeight);
-    NSString *title = [self.token.title transformStringWithTransform:self.tokenField.tokenTextTransform];
+    NSString *title = [self.token.title stringByApplyingTextTransform:self.tokenField.tokenTextTransform];
     CGFloat tokenMaxWidth = ceilf(self.token.maxTitleWidth - self.tokenField.tokenOffset - imageHeight);
     // Width cannot be smaller than height
     if (tokenMaxWidth < imageHeight) {

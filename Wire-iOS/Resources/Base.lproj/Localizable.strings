@@ -1531,5 +1531,5 @@
 "message_details.subtitle_send_date" = "Sent: %@";
 "message_details.subtitle_edit_date" = "Edited: %@";
 "message_details.subtitle_label_voiceOver" = "Message Details";
-"message_details.user_handle_subtitle_label" = "User Handle";
+"message_details.user_handle_subtitle_label" = "Username";
 "message_details.user_read_timestamp_subtitle_label" = "Read at";

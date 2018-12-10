@@ -39,7 +39,7 @@ extension TextView {
 
     @objc func createPlaceholderLabel() {
         let linePadding = textContainer.lineFragmentPadding
-        placeholderLabel = UILabel()
+        placeholderLabel = TransformLabel()
         placeholderLabel.font = placeholderFont
         placeholderLabel.textColor = placeholderTextColor
         placeholderLabel.textTransform = placeholderTextTransform
