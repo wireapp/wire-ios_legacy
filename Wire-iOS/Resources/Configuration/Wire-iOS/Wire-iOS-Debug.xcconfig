@@ -20,3 +20,4 @@
 #include "../Project-Debug.xcconfig"
 
 GCC_SYMBOLS_PRIVATE_EXTERN = NO
+CODE_SIGN_ENTITLEMENTS_APP = Wire-iOS/Entitlements-Dev.entitlements

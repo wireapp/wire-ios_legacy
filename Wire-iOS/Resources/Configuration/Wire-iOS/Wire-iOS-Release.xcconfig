@@ -20,3 +20,4 @@
 #include "../Project-Release.xcconfig"
 
 GCC_SYMBOLS_PRIVATE_EXTERN = YES
+CODE_SIGN_ENTITLEMENTS_APP = Wire-iOS/Entitlements-Prod.entitlements
