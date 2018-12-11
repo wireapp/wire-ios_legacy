@@ -52,7 +52,7 @@ class BackgroundViewControllerTests: CoreDataSnapshotTestCase {
         XCTAssertTrue(waitForGroupsToBeEmpty([sut.dispatchGroup]))
         
         // WHEN & THEN
-        ///TODO: this tests sometime fails, the image is not loaded
+        ///TODO: this tests sometime fails, the image is not loaded without above hack
         self.verifyInIPhoneSize(view: sut.view)
     }
     
