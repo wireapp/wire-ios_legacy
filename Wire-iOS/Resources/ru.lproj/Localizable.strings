@@ -32,6 +32,8 @@
 "general.decline" = "Нет, спасибо";
 "general.failure" = "Что-то пошло не так";
 "general.service" = "Сервис";
+"general.off" = "Выключен";
+"general.on" = "Вкл.";
 
 // Language like Chinese does not use space to sperate words or sentences.
 "general.space_between_words" = " ";
@@ -289,8 +291,12 @@
 "conversation.create.group_name.placeholder" = "Имя группы";
 "conversation.create.guidance.empty" = "Не менее 1 символа";
 "conversation.create.guidance.toolong" = "Слишком много символов";
-"conversation.create.toggle.title" = "Разрешить гостей и сервисы";
-"conversation.create.toggle.subtitle" = "Открыть этот разговор для сервисов и пользователей не из вашей команды. Вы всегда сможете изменить это позже.";
+"conversation.create.options.title" = "Настройки разговора";
+"conversation.create.options.subtitle" = "Разрешено гостей: %@, Прочитано отчетов: %@";
+"conversation.create.guests.title" = "Разрешить гостей и сервисы";
+"conversation.create.guests.subtitle" = "Открыть этот разговор для сервисов и людей не из вашей команды.";
+"conversation.create.receipts.title" = "Отчеты о прочтении";
+"conversation.create.receipts.subtitle" = "При включении ваши собеседники смогут видеть когда было прочитано их сообщение.";
 
 "conversation.input_bar.ongoing_call_alert.title" = "Исходящий звонок";
 "conversation.input_bar.ongoing_call_alert.audio.message" = "Во время разговора вы не можете записать аудиосообщение.";
@@ -405,6 +411,7 @@
 "content.system.pending_message_timestamp" = "Отправка...";
 "content.system.message_sent_timestamp" = "Отправлено";
 "content.system.message_delivered_timestamp" = "Доставлено";
+"content.system.message_read_timestamp" = "Прочитано";
 "content.system.failedtosend_message_timestamp" = "Отправка не удалась.";
 "content.system.failedtosend_message_timestamp_resend" = "Отправить повторно";
 "content.system.failedtosend_message_timestamp_delete" = "Удалить";
@@ -438,6 +445,17 @@
 
 "content.system.message_timer_off" = "%@ отключил таймер сообщения";
 "content.system.message_timer_off-you" = "%@ отключил таймер сообщения";
+
+// read receipt
+
+"content.system.message_read_receipt_on" = "%@ включил отчеты о прочтении для всех";
+"content.system.message_read_receipt_on-you" = "%@ включил отчеты о прочтении для всех";
+
+"content.system.message_read_receipt_off" = "%@ отключил отчеты о прочтении для всех";
+"content.system.message_read_receipt_off-you" = "%@ отключил отчеты о прочтении для всех";
+
+"content.system.message_read_receipt_on_add_to_group" = "Отчет о прочтении включен";
+
 
 "content.system.reactivated_device" = "Вы начали использовать %@ снова. Сообщения, отправленные ранее, не будут отображаться здесь.";
 
@@ -494,16 +512,21 @@
 "content.message.open" = "Открыть";
 "content.message.copy" = "Копировать";
 "content.message.download" = "Скачать";
+"content.message.details" = "Подробнее";
 
 // Reply
 "content.message.reply" = "Ответить";
-"content.message.reply.original_timestamp.date" = "Original message from %@";
-"content.message.reply.original_timestamp.time" = "Original message from %@";
+"content.message.original_label" = "Исходное сообщение";
+"content.message.reply.original_timestamp.date" = "Исходное сообщение от %@";
+"content.message.reply.original_timestamp.time" = "Исходное сообщение от %@";
 "content.message.reply.broken_message" = "Вы не можете увидеть это сообщение.";
+"content.message.reply.edited_message" = "Отредактировано";
 
 "content.message.open_link_alert.title" = "Перейти по ссылке";
 "content.message.open_link_alert.message" = "Это приведет вас к\n%@";
 "content.message.open_link_alert.open" = "Открыть";
+
+"content.message.audio_message.accessibility" = "Воспроизвести аудиосообщение";
 
 "content.reactions_list.likers" = "Понравилось";
 
@@ -724,6 +747,10 @@
 "profile.create_conversation_button_title" = "Создать группу";
 "profile.open_conversation_button_title" = "Открыть разговор";
 
+"profile.read_receipts_enabled_memo.header" = "ВЫ ВКЛЮЧИЛИ ОТЧЕТЫ О ПРОЧТЕНИИ";
+"profile.read_receipts_disabled_memo.header" = "ВЫ ОТКЛЮЧИЛИ ОТЧЕТЫ О ПРОЧТЕНИИ";
+"profile.read_receipts_memo.body" = "Если обе стороны включат отчеты о прочтении, вы можете видеть когда были прочитаны ваши сообщения. Этот параметр можно изменить в настройках учетной записи.";
+
 // User Details
 "profile.details.title" = "Подробнее";
 "profile.details.guest" = "Гость";
@@ -759,6 +786,8 @@
 "group_details.timeout_options_cell.title" = "Временные сообщения";
 "group_details.notification_options_cell.title" = "Уведомления";
 "group_details.notification_options_cell.description" = "Вы можете получать уведомления обо всем (включая аудио- и видеовызовы) или только когда кто-то упоминает вас или отвечает на одно из ваших сообщений.";
+"group_details.receipt_options_cell.title" = "Отчеты о прочтении";
+"group_details.receipt_options_cell.description" = "При включении ваши собеседники смогут видеть когда было прочитано их сообщение.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile
@@ -801,6 +830,12 @@
 "self.new_device_alert.manage_devices" = "Управление устройствами";
 "self.new_device_alert.trust_devices" = "OK";
 
+// Settings changed alert
+
+"self.read_receipts_enabled.title" = "Вы включили отчеты о прочтении";
+"self.read_receipts_disabled.title" = "Вы отключили отчеты о прочтении";
+"self.read_receipts_description.title" = "Вы можете изменить эту опцию в настройках своего аккаунта.";
+
 // Settings - top level
 "self.settings.create_team.title" = "Создать команду";
 "self.settings.manage_team.title" = "Управлять командой";
@@ -835,6 +870,11 @@
 "self.settings.account_details.remove_device.password.error" = "Неправильный пароль";
 
 "self.settings.account_appearance_group.title" = "Внешний вид";
+
+"self.settings.privacy_section_group.title" = "Конфиденциальность";
+"self.settings.enable_read_receipts.title" = "Отправлять отчет о прочтении";
+"self.settings.privacy_section_group.subtitle" = "Если этот параметр выключен, вы не сможете увидеть отчеты о прочтении от ваших собеседников. Этот параметр не применяется к групповым разговорам.";
+
 "self.settings.account_picture_group.picture" = "Изображение";
 "self.settings.account_picture_group.color" = "Цвет";
 
@@ -1477,3 +1517,19 @@
 "news_offers.consent.title" = "Вы хотите получать новости и обновления от Wire по электронной почте?";
 "news_offers.consent.message" = "Вы можете отписаться в любое время.";
 "news_offers.consent.button.privacy_policy.title" = "Политика конфиденциальности";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Message Details
+"message_details.empty_likes" = "Сообщение еще никому не понравилось.";
+"message_details.empty_read_receipts" = "Сообщение еще никем не прочитано.";
+"message_details.read_receipts_disabled" = "Отчетов о прочтении не существовало, когда это сообщение было отправлено.";
+"message_details.combined_title" = "Сведения о сообщении";
+"message_details.likes_title" = "Понравилось";
+"message_details.receipts_title" = "Прочитано";
+"message_details.tabs.seen" = "Прочитано (%d)";
+"message_details.tabs.likes" = "Понравилось (%d)";
+"message_details.subtitle_send_date" = "Отправлено: %@";
+"message_details.subtitle_edit_date" = "Изменено: %@";
+"message_details.subtitle_label_voiceOver" = "Сведения о сообщении";
+"message_details.user_handle_subtitle_label" = "Имя пользователя";
+"message_details.user_read_timestamp_subtitle_label" = "Прочитано в";

@@ -32,6 +32,8 @@
 "general.decline" = "No, grazie";
 "general.failure" = "Qualcosa è andato storto";
 "general.service" = "Servizio";
+"general.off" = "Disattivo";
+"general.on" = "On";
 
 // Language like Chinese does not use space to sperate words or sentences.
 "general.space_between_words" = " ";
@@ -100,7 +102,7 @@
 "peoplepicker.quick-action.create-guest-room" = "Crea stanza degli ospiti";
 "peoplepicker.quick-action.admin-services" = "Gestisci servizi";
 
-"add_participants.all_contacts_added" = "Everyone’s here.";
+"add_participants.all_contacts_added" = "Sono tutti qui.";
 
 "add_participants.alert.title" = "Il gruppo è pieno";
 "add_participants.alert.message.new_conversation" = "Un massimo di %d persone può partecipare ad una conversazione.";
@@ -149,7 +151,7 @@
 "conversation_list.voiceover.status.typing" = "sta scrivendo";
 "conversation_list.voiceover.status.ping" = "fai un trillo";
 "conversation_list.voiceover.status.mention" = "sei stato menzionato";
-"conversation_list.voiceover.status.reply" = "reply";
+"conversation_list.voiceover.status.reply" = "rispondi";
 "conversation_list.voiceover.bottom_bar.archived_button.label" = "archivio";
 "conversation_list.voiceover.bottom_bar.archived_button.hint" = "elenco di conversazioni archiviate";
 "conversation_list.voiceover.bottom_bar.contacts_button.label" = "contatti";
@@ -200,7 +202,7 @@
 "conversation.status.typing" = "Scrivendo un messaggio…";
 "conversation.status.typing.group" = "%@: scrivendo un messaggio…";
 "conversation.status.silenced" = "Silenzioso";
-"conversation.status.poor_connection" = "Poor connection";
+"conversation.status.poor_connection" = "Connessione scadente";
 "conversation.status.blocked" = "Bloccato";
 
 "conversation.status.message.text" = "%@";
@@ -219,14 +221,14 @@
 "conversation.status.message.ephemeral.group" = "Qualcuno ha mandato un messaggio";
 "conversation.status.message.ephemeral.mention" = "Ti ha menzionato";
 "conversation.status.message.ephemeral.mention.group" = "Qualcuno ti ha menzionato";
-"conversation.status.message.ephemeral.reply" = "Replied to your message";
-"conversation.status.message.ephemeral.reply.group" = "Someone replied to your message";
+"conversation.status.message.ephemeral.reply" = "Ha risposto al tuo messaggio";
+"conversation.status.message.ephemeral.reply.group" = "Qualcuno ha risposto al tuo messaggio";
 "conversation.status.message.ephemeral.knock" = "Ha fatto un trillo";
-"conversation.status.message.ephemeral.knock.group" = "Someone pinged";
+"conversation.status.message.ephemeral.knock.group" = "Qualcuno ha fatto un trillo";
 
 "conversation.status.unsent" = "⚠️ Messaggio non inviato";
 "conversation.status.you" = "Tu";
-"conversation.status.someone" = "Someone";
+"conversation.status.someone" = "Qualcuno";
 "conversation.status.added_multiple" = "Persone aggiunte";
 "conversation.status.you_was_added" = "%@ ti ha aggiunto";
 "conversation.status.added_users" = "%@ ha aggiunto %@";
@@ -289,8 +291,12 @@
 "conversation.create.group_name.placeholder" = "Nome del gruppo";
 "conversation.create.guidance.empty" = "Almeno 1 carattere";
 "conversation.create.guidance.toolong" = "Troppi caratteri";
-"conversation.create.toggle.title" = "Consenti ospiti e servizi";
-"conversation.create.toggle.subtitle" = "Apri questa conversazione a servizi e persone fuori dal tuo team. Puoi sempre cambiare questa impostazione più tardi.";
+"conversation.create.options.title" = "Opzioni conversazione";
+"conversation.create.options.subtitle" = "Consenti ospiti: %@, Conferme di lettura: %@";
+"conversation.create.guests.title" = "Consenti ospiti e servizi";
+"conversation.create.guests.subtitle" = "Apri questa conversazione a servizi e persone esterne al tuo team.";
+"conversation.create.receipts.title" = "Conferme di lettura";
+"conversation.create.receipts.subtitle" = "Quando è attivo, le persone potranno vedere quando i loro messaggi vengono letti in questa conversazione.";
 
 "conversation.input_bar.ongoing_call_alert.title" = "Chiamata in corso";
 "conversation.input_bar.ongoing_call_alert.audio.message" = "Non è possibile registrare un messaggio vocale durante una chiamata.";
@@ -303,21 +309,21 @@
 "conversation.action.search" = "Cerca";
 
 // Reply message preview
-"conversation.input_bar.message_preview.image" = "Image";
-"conversation.input_bar.message_preview.location" = "Location";
+"conversation.input_bar.message_preview.image" = "Immagine";
+"conversation.input_bar.message_preview.location" = "Posizione";
 "conversation.input_bar.message_preview.video" = "Video";
-"conversation.input_bar.message_preview.audio" = "Audio Message";
+"conversation.input_bar.message_preview.audio" = "Messaggio vocale";
 "conversation.input_bar.message_preview.file" = "File";
-"conversation.input_bar.close_reply" = "Cancel reply";
+"conversation.input_bar.close_reply" = "Cancella risposta";
 
-"conversation.input_bar.message_preview.accessibility_description" = "Replying to message: %@";
-"conversation.input_bar.message_preview.accessibility.image_message" = "Image message";
-"conversation.input_bar.message_preview.accessibility.location_message" = "Location message";
-"conversation.input_bar.message_preview.accessibility.video_message" = "Video message";
-"conversation.input_bar.message_preview.accessibility.audio_message" = "Audio message";
-"conversation.input_bar.message_preview.accessibility.file_message" = "File message (%@)";
-"conversation.input_bar.message_preview.accessibility.unknown_message" = "Unknown message";
-"conversation.input_bar.message_preview.accessibility.message_from" = "%@ from %@";
+"conversation.input_bar.message_preview.accessibility_description" = "In risposta al messaggio: %@";
+"conversation.input_bar.message_preview.accessibility.image_message" = "Messaggio con immagine";
+"conversation.input_bar.message_preview.accessibility.location_message" = "Messaggio con posizione";
+"conversation.input_bar.message_preview.accessibility.video_message" = "Messaggio con video";
+"conversation.input_bar.message_preview.accessibility.audio_message" = "Messaggio vocale";
+"conversation.input_bar.message_preview.accessibility.file_message" = "Messaggio con file (%@)";
+"conversation.input_bar.message_preview.accessibility.unknown_message" = "Messaggio sconosciuto";
+"conversation.input_bar.message_preview.accessibility.message_from" = "%@ da %@";
 
 "image_confirmer.confirm" = "OK";
 "image_confirmer.cancel" = "Annulla";
@@ -405,6 +411,7 @@
 "content.system.pending_message_timestamp" = "Invio in corso…";
 "content.system.message_sent_timestamp" = "Inviato";
 "content.system.message_delivered_timestamp" = "Consegnato";
+"content.system.message_read_timestamp" = "Letto";
 "content.system.failedtosend_message_timestamp" = "Invio non riuscito.";
 "content.system.failedtosend_message_timestamp_resend" = "Inviare di nuovo";
 "content.system.failedtosend_message_timestamp_delete" = "Elimina";
@@ -434,10 +441,21 @@
 "content.system.conversation.with_name.participants" = "con";
 
 "content.system.message_timer_changes" = "%@ ha impostato la scadenza a %@";
-"content.system.message_timer_changes-you" = "%@ set the message timer to %@";
+"content.system.message_timer_changes-you" = "%@ ha impostato la scadenza a %@";
 
 "content.system.message_timer_off" = "%@ ha disattivato la scadenza dei messaggi";
-"content.system.message_timer_off-you" = "%@ turned off the message timer";
+"content.system.message_timer_off-you" = "%@ ha disattivato la scadenza dei messaggi";
+
+// read receipt
+
+"content.system.message_read_receipt_on" = "%@ ha abilitato le conferme di lettura per tutti";
+"content.system.message_read_receipt_on-you" = "%@ ha abilitato le conferme di lettura per tutti";
+
+"content.system.message_read_receipt_off" = "%@ ha disabilitato le conferme di lettura per tutti";
+"content.system.message_read_receipt_off-you" = "%@ ha disabilitato le conferme di lettura per tutti";
+
+"content.system.message_read_receipt_on_add_to_group" = "Conferme di lettura attivate";
+
 
 "content.system.reactivated_device" = "Hai iniziato a utilizzare %@ nuovamente. I messaggi inviati nel frattempo non verranno visualizzato qui.";
 
@@ -494,16 +512,21 @@
 "content.message.open" = "Apri";
 "content.message.copy" = "Copia";
 "content.message.download" = "Scarica";
+"content.message.details" = "Dettagli";
 
 // Reply
 "content.message.reply" = "Rispondi";
-"content.message.reply.original_timestamp.date" = "Original message from %@";
-"content.message.reply.original_timestamp.time" = "Original message from %@";
-"content.message.reply.broken_message" = "You cannot see this message.";
+"content.message.original_label" = "Messaggio originale";
+"content.message.reply.original_timestamp.date" = "Messaggio originale da %@";
+"content.message.reply.original_timestamp.time" = "Messaggio originale da %@";
+"content.message.reply.broken_message" = "Non puoi vedere questo messaggio.";
+"content.message.reply.edited_message" = "Modificato";
 
 "content.message.open_link_alert.title" = "Apri Link";
 "content.message.open_link_alert.message" = "Ti porterà su %@";
 "content.message.open_link_alert.open" = "Apri";
+
+"content.message.audio_message.accessibility" = "Riproduci il messaggio vocale";
 
 "content.reactions_list.likers" = "Piace a";
 
@@ -551,7 +574,7 @@
 "voice.hang_up_button.title" = "Riattacca";
 "voice.mute_button.title" = "Silenzia";
 "voice.video_button.title" = "Video";
-"voice.flip_video_button.title" = "Flip";
+"voice.flip_video_button.title" = "Capovolgi";
 "voice.speaker_button.title" = "Altoparlante";
 "voice.cancel_button.title" = "Annulla";
 "voice.call_button.title" = "Chiama";
@@ -576,9 +599,9 @@
 "call.status.incoming.user" = "%@ sta chiamando…";
 "call.status.incoming" = "Chiamata in corso…";
 "call.status.outgoing" = "Sta squillando…";
-"call.status.outgoing.user" = "Calling %@…";
+"call.status.outgoing.user" = "Chiamando %@…";
 "call.status.reconnecting" = "Riconnessione in corso…";
-"call.status.terminating" = "Hanging up…";
+"call.status.terminating" = "In fase di chiusura…";
 "call.status.constant_bitrate" = "Bit Rate costante";
 
 "call.participants.show_all" = "Mostra tutti (%@)";
@@ -595,28 +618,28 @@
 "call.degraded.alert.message.unknown" = "Qualcuno ha iniziato ad usare un nuovo dispositivo.";
 "call.degraded.alert.action.continue" = "Chiama comunque";
 
-"call.alert.ongoing.alert_title" = "This will end your other call.";
+"call.alert.ongoing.alert_title" = "La chiamata verrà interrotta.";
 
-"call.alert.ongoing.start.message" = "A call is active in another conversation.\nCalling here will hang up the other call.";
-"call.alert.ongoing.join.message" = "A call is active in another conversation.\nJoining this call will hang up the other one.";
+"call.alert.ongoing.start.message" = "Una chiamata è attiva in un'altra conversazione.\nLa nuova chiamata interromperà quella in corso.";
+"call.alert.ongoing.join.message" = "Una chiamata è attiva in un'altra conversazione.\nUnendoti a questa chiamata verrà interrotta quella in corso.";
 "call.alert.ongoing.start.button" = "Chiama comunque";
-"call.alert.ongoing.join.button" = "Join anyway";
+"call.alert.ongoing.join.button" = "Entra comunque";
 
 // Call Actions (accessibility)
 
 "call.announcement.incoming" = "Chiamata in arrivo da %@";
 "call.actions.label.toggle_mute_on" = "Silenzia";
 "call.actions.label.toggle_mute_off" = "Riattiva audio";
-"call.actions.label.flip_camera" = "Flip camera";
+"call.actions.label.flip_camera" = "Capovolgi fotocamera";
 "call.actions.label.toggle_speaker_on" = "Attiva l'altoparlante";
 "call.actions.label.toggle_speaker_off" = "Disattiva l'altoparlante";
 "call.actions.label.accept_call" = "Accetta la chiamata";
 "call.actions.label.reject_call" = "Rifiuta chiamata";
 "call.actions.label.terminate_call" = "Termina chiamata";
-"call.actions.label.toggle_video_on" = "Turn on camera";
-"call.actions.label.toggle_video_off" = "Turn off camera";
-"call.actions.label.switch_to_back_camera" = "Switch to back camera";
-"call.actions.label.switch_to_front_camera" = "Switch to front camera";
+"call.actions.label.toggle_video_on" = "Attiva fotocamera";
+"call.actions.label.toggle_video_off" = "Disattiva fotocamera";
+"call.actions.label.switch_to_back_camera" = "Usa la fotocamera principale";
+"call.actions.label.switch_to_front_camera" = "Usa la fotocamera frontale";
 "call.actions.label.minimize_call" = "Minimizza chiamata";
 "call.actions.label.make_audio_call" = "Inizia chiamata audio";
 "call.actions.label.make_video_call" = "Inizia videochiamata";
@@ -660,10 +683,10 @@
 "meta.menu.delete_content.button_delete_and_leave" = "Elimina e abbandona";
 
 // Configure conversation notifications
-"meta.menu.configure_notification.dialog_message" = "Notify me about:";
-"meta.menu.configure_notification.button_everything" = "Everything";
-"meta.menu.configure_notification.button_mentions_and_replies" = "Mentions and Replies";
-"meta.menu.configure_notification.button_nothing" = "Nothing";
+"meta.menu.configure_notification.dialog_message" = "Notificami riguardo a:";
+"meta.menu.configure_notification.button_everything" = "Tutto";
+"meta.menu.configure_notification.button_mentions_and_replies" = "Menzioni e risposte";
+"meta.menu.configure_notification.button_nothing" = "Niente";
 "meta.menu.configure_notification.button_cancel" = "Annulla";
 
 // Leave conversation
@@ -724,6 +747,10 @@
 "profile.create_conversation_button_title" = "Crea gruppo";
 "profile.open_conversation_button_title" = "Apri conversazione";
 
+"profile.read_receipts_enabled_memo.header" = "HAI ABILITATO LE CONFERME DI LETTURA";
+"profile.read_receipts_disabled_memo.header" = "HAI DISABILITATO LE CONFERME DI LETTURA";
+"profile.read_receipts_memo.body" = "Se entrambe le parti attivano le conferme di lettura, è possibile vedere quando vengono letti i messaggi.\nPuoi cambiare questa opzione nelle impostazioni del tuo account.";
+
 // User Details
 "profile.details.title" = "Dettagli";
 "profile.details.guest" = "Ospite";
@@ -753,12 +780,14 @@
 "participants.services.remove_integration.button" = "rimuovi integrazione";
 
 // Group details
-"group_details.guest_options_cell.title" = "Guests and services";
+"group_details.guest_options_cell.title" = "Ospiti e servizi";
 "group_details.guest_options_cell.enabled" = "On";
 "group_details.guest_options_cell.disabled" = "Disattivo";
 "group_details.timeout_options_cell.title" = "Messaggi a tempo";
 "group_details.notification_options_cell.title" = "Notifiche";
-"group_details.notification_options_cell.description" = "You can be notified about everything (including audio and video calls) or only when someone mentions you or replies to one of your messages.";
+"group_details.notification_options_cell.description" = "È possibile ricevere notifiche su tutto (comprese le chiamate audio e video) o solo quando qualcuno parla di te o risponde a uno dei tuoi messaggi.";
+"group_details.receipt_options_cell.title" = "Conferme di lettura";
+"group_details.receipt_options_cell.description" = "Quando è attivo, le persone potranno vedere quando i loro messaggi vengono letti in questa conversazione.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile
@@ -801,6 +830,12 @@
 "self.new_device_alert.manage_devices" = "Gestione dei dispositivi";
 "self.new_device_alert.trust_devices" = "OK";
 
+// Settings changed alert
+
+"self.read_receipts_enabled.title" = "Hai abilitato le conferme di lettura";
+"self.read_receipts_disabled.title" = "Hai disabilitato le conferme di lettura";
+"self.read_receipts_description.title" = "Puoi modificare questa opzione nelle impostazioni del tuo account.";
+
 // Settings - top level
 "self.settings.create_team.title" = "Crea un team";
 "self.settings.manage_team.title" = "Gestione Team";
@@ -810,8 +845,8 @@
 "self.settings.add_account.error.title" = "Tre account attivi";
 "self.settings.add_account.error.message" = "Puoi connetterti solo con tre account per volta. Esci da un account per aggiungerne un altro.";
 
-"self.settings.switch_account.message" = "A call is active in this account.\nSwitching accounts will hang up the current call.";
-"self.settings.switch_account.action" = "Switch anyway";
+"self.settings.switch_account.message" = "Una chiamata è attiva in questo account.\nCambiando account verrà interrotta la chiamata in corso.";
+"self.settings.switch_account.action" = "Cambia comunque";
 
 // Settings - Account details
 "self.settings.account_section" = "Account";
@@ -835,6 +870,11 @@
 "self.settings.account_details.remove_device.password.error" = "Password errata";
 
 "self.settings.account_appearance_group.title" = "Aspetto";
+
+"self.settings.privacy_section_group.title" = "Privacy";
+"self.settings.enable_read_receipts.title" = "Invia conferme di lettura";
+"self.settings.privacy_section_group.subtitle" = "Quando è disattivato, non sarai in grado di vedere le conferme di lettura da altre persone.\nQuesta impostazione non si applica alle conversazioni di gruppo.";
+
 "self.settings.account_picture_group.picture" = "Foto";
 "self.settings.account_picture_group.color" = "Colore";
 
@@ -953,7 +993,7 @@
 
 "open_link.maps.option.apple" = "Mappa";
 "open_link.maps.option.google" = "Google Map";
-"open_link.maps.footer" = "Some location links will always open in Apple Maps.";
+"open_link.maps.footer" = "Alcuni link di posizione verranno sempre aperti in Apple Maps.";
 
 "open_link.browser.option.safari" = "Safari";
 "open_link.browser.option.chrome" = "Chrome";
@@ -1028,7 +1068,7 @@
 
 "self.settings.conversations.title" = "Cronologia";
 "self.settings.history_backup.title" = "Backup delle conversazioni";
-"self.settings.history_backup.description" = "Create a backup to preserve your conversation history. You can use this to restore history if you lose your device or switch to a new one.\n\nChoose a strong password to protect the backup file.";
+"self.settings.history_backup.description" = "Crea una copia di backup per conservare la cronologia delle conversazioni. Potrai utilizzarla per ripristinare la cronologia se perdi il tuo dispositivo o passi ad uno nuovo.\n\nScegli una password complessa per proteggere il file di backup.";
 "self.settings.history_backup.action" = "Esegui il backup ora";
 "self.settings.history_backup.error.title" = "Errore";
 
@@ -1124,8 +1164,8 @@
 // Guest Room
 
 "guest_room.allow_guests.title" = "Consenti ospiti e servizi";
-"guest_room.allow_guests.subtitle" = "Open this conversation to services and people outside your team.";
-"guest_room.remove_guests.message" = "Current guests and services will be removed from the conversation. New guests and services will not be allowed.";
+"guest_room.allow_guests.subtitle" = "Apri questa conversazione a servizi e persone esterne al tuo team.";
+"guest_room.remove_guests.message" = "Gli ospiti e i servizi attuali saranno rimossi dalla conversazione. Non saranno accettati nuovi ospiti e servizi.";
 "guest_room.remove_guests.action" = "Rimuovi";
 "guest_room.revoke_link.message" = "I nuovi ospiti non saranno in grado di partecipare con questo link. Gli ospiti attuali avranno ancora accesso.";
 "guest_room.revoke_link.action" = "Revoca il link";
@@ -1134,7 +1174,7 @@
 "guest_room.error.generic.message" = "Controlla la tua connessione e riprova";
 
 "guest_room.link.header.title" = "Invita altre persone con un link";
-"guest_room.link.header.subtitle" = "Anyone with the link can join the conversation, even if they don’t have Wire.";
+"guest_room.link.header.subtitle" = "Chiunque abbia il link potrà unirsi alla conversazione, anche se non ha Wire.";
 
 "guest_room.link.button.title" = "Crea un link";
 
@@ -1181,11 +1221,11 @@
 "registration.no_history.got_it" = "OK";
 "registration.no_history.restore_backup" = "Ripristina da backup";
 
-"registration.alert.account_exists.title" = "Account Exists";
-"registration.alert.account_exists.message_phone" = "The phone number you used to register is already linked to an account.\n\nUse another phone number, or try to log in if you own this account.";
-"registration.alert.account_exists.message_email" = "The email address you used to register is already linked to an account.\n\n Use another email address, or try to log in if you own this account.";
-"registration.alert.change_email_action" = "Change Email";
-"registration.alert.change_phone_action" = "Change Phone";
+"registration.alert.account_exists.title" = "Account Esistente";
+"registration.alert.account_exists.message_phone" = "Il numero di telefono che hai usato per registrarti è già collegato ad un account.\n\nUtilizza un altro numero di telefono oppure prova ad entrare, nel caso l'account sia tuo.";
+"registration.alert.account_exists.message_email" = "L'indirizzo email che hai usato per registrarti è già collegato ad un account.\n\nUtilizza un altro indirizzo email oppure prova ad entrare, nel caso l'account sia tuo.";
+"registration.alert.change_email_action" = "Modifica email";
+"registration.alert.change_phone_action" = "Modifica telefono";
 "registration.alert.change_signin_action" = "Accedi";
 
 // Restore History Warning Alert
@@ -1216,11 +1256,11 @@
 
 "login.sso.error.alert.title" = "Qualcosa è andato storto";
 "login.sso.error.alert.invalid_code.title" = "Codice non valido.";
-"login.sso.error.alert.invalid_code.message" = "Please verify your company SSO access code and try again.";
-"login.sso.error.offline.alert.message" = "Please check your Internet connection and try again.";
-"login.sso.error.alert.message" = "Please contact your team administrator for details (error %@).";
-"login.sso.error.alert.unknown.message" = "Please try again later.";
-"login.sso.error.alert.invalid_status.message" = "Please try again later (error %@).";
+"login.sso.error.alert.invalid_code.message" = "Verifica il tuo codice di accesso SSO aziendale e riprova.";
+"login.sso.error.offline.alert.message" = "Verifica la tua connessione internet e riprova.";
+"login.sso.error.alert.message" = "Contattare l'amministratore del sistema per maggiori dettagli (errore %@).";
+"login.sso.error.alert.unknown.message" = "Riprova più tardi.";
+"login.sso.error.alert.invalid_status.message" = "Riprova più tardi (errore %@).";
 
 // Restore In Progress Loading Titles
 "registration.no_history.restore_backup.restoring" = "Ripristino in corso…";
@@ -1286,7 +1326,7 @@
 "registration.devices.active_list_header" = "Attivi";
 "registration.devices.current_list_header" = "Corrente";
 "registration.devices.active_list_subtitle" = "Se non riconosci un dispositivo qui sopra, rimuovilo e reimposta la password.";
-"registration.devices.activated" = "Activated %@";
+"registration.devices.activated" = "Attivato il %@";
 "registration.devices.id" = "ID:";
 
 "signin.use_email.label" = "Accedi tramite email";
@@ -1468,8 +1508,8 @@
 // URL Action
 
 "url_action.confirm" = "Conferma";
-"url_action.title" = "Confirm URL action";
-"url_action.connect_to_bot.message" = "Would you like to connect to the bot?";
+"url_action.title" = "Conferma azione URL";
+"url_action.connect_to_bot.message" = "Vorresti connetterti al bot?";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // News and offers consent prompt
@@ -1477,3 +1517,19 @@
 "news_offers.consent.title" = "Vuoi ricevere notizie e aggiornamenti da Wire via email?";
 "news_offers.consent.message" = "Puoi disdire in qualsiasi momento.";
 "news_offers.consent.button.privacy_policy.title" = "Informativa sulla privacy";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Message Details
+"message_details.empty_likes" = "Nessuno ha ancora messo mi piace a questo messaggio.";
+"message_details.empty_read_receipts" = "Nessuno ha ancora letto questo messaggio.";
+"message_details.read_receipts_disabled" = "Le conferme di lettura non erano abilitate quando questo messaggio è stato inviato.";
+"message_details.combined_title" = "Dettagli messaggio";
+"message_details.likes_title" = "Mi piace";
+"message_details.receipts_title" = "Letto";
+"message_details.tabs.seen" = "Letto (%d)";
+"message_details.tabs.likes" = "Mi piace (%d)";
+"message_details.subtitle_send_date" = "Inviato: %@";
+"message_details.subtitle_edit_date" = "Modificato il %@";
+"message_details.subtitle_label_voiceOver" = "Dettagli messaggio";
+"message_details.user_handle_subtitle_label" = "Username";
+"message_details.user_read_timestamp_subtitle_label" = "Letto alle";
