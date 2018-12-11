@@ -79,21 +79,6 @@ extension StaticString {
 
 class ZMSnapshotTestCase: FBSnapshotTestCase {
 
-    static let phoneScreenSizes: [String:CGSize] = [
-        "iPhone-4_0_Inch": ZMDeviceSizeIPhone5,
-        "iPhone-4_7_Inch": ZMDeviceSizeIPhone6,
-        "iPhone-5_5_Inch": ZMDeviceSizeIPhone6Plus,
-        "iPhone-5_8_Inch": ZMDeviceSizeIPhoneX,
-        "iPhone-6_5_Inch": ZMDeviceSizeIPhoneXR
-    ]
-
-    /// we should add iPad Pro sizes
-    static let tabletScreenSizes: [String:CGSize] = [
-        "iPad-Portrait":  ZMDeviceSizeIPadPortrait,
-        "iPad-Landscape": ZMDeviceSizeIPadLandscape
-    ]
-
-
     typealias ConfigurationWithDeviceType = (_ view: UIView, _ isPad: Bool) -> Void
     typealias Configuration = (_ view: UIView) -> Void
 
@@ -486,15 +471,13 @@ extension ZMSnapshotTestCase {
     }
 
 
-    func verifyInAllPhoneSizes( view: UIView,
-                                extraLayoutPass: Bool,
+    func verifyInAllIPhoneSizes(view: UIView,
+                                extraLayoutPass: Bool = false,
+                                configuration: Configuration? = nil,
                                 file: StaticString = #file,
-                                line: UInt = #line,
-                                configuration: Configuration?) {
+                                line: UInt = #line) {
         verifyMultipleSize(view: view, extraLayoutPass: extraLayoutPass, inSizes: XCTestCase.phoneScreenSizes, configuration: { view, isPad in
-            if let configuration = configuration {
-                configuration(view)
-            }
+                configuration?(view)
         }, file: file, line: line)
     }
 

@@ -27,6 +27,20 @@ extension XCTestCase {
     static let ZMDeviceSizeIPadPortrait     = CGSize(width: 768, height: 1024)
     static let ZMDeviceSizeIPadLandscape    = CGSize(width: 1024, height: 768)
 
+    static let phoneScreenSizes: [String:CGSize] = [
+        "iPhone-4_0_Inch": ZMDeviceSizeIPhone5,
+        "iPhone-4_7_Inch": ZMDeviceSizeIPhone6,
+        "iPhone-5_5_Inch": ZMDeviceSizeIPhone6Plus,
+        "iPhone-5_8_Inch": ZMDeviceSizeIPhoneX,
+        "iPhone-6_5_Inch": ZMDeviceSizeIPhoneXR
+    ]
+
+    /// we should add iPad Pro sizes
+    static let tabletScreenSizes: [String:CGSize] = [
+        "iPad-Portrait":  ZMDeviceSizeIPadPortrait,
+        "iPad-Landscape": ZMDeviceSizeIPadLandscape
+    ]
+
     /// return the smallest iPhone screen size that Wire app supports
     public var defaultIPhoneSize: CGSize {
         return XCTestCase.ZMDeviceSizeIPhone5
