@@ -203,25 +203,7 @@ extension ZMSnapshotTestCase {
         return container
     }
 
-    func tabletSizes() -> [NSValue] {
-        return [NSValue(cgSize: XCTestCase.ZMDeviceSizeIPadPortrait), NSValue(cgSize: XCTestCase.ZMDeviceSizeIPadLandscape)]
-    }
-
-    func phoneWidths() -> Set<CGFloat> {
-        return Set(phoneSizes().map( { boxedSize in
-            return boxedSize.cgSizeValue.width
-        }))
-    }
-
-    func phoneSizes() -> [NSValue] {
-        return [NSValue(cgSize: XCTestCase.DeviceSizeIPhone5),
-                NSValue(cgSize: XCTestCase.DeviceSizeIPhone6),
-                NSValue(cgSize: XCTestCase.DeviceSizeIPhone6Plus),
-                NSValue(cgSize: XCTestCase.DeviceSizeIPhoneX),     ///same size as iPhone Xs Max
-            NSValue(cgSize: XCTestCase.DeviceSizeIPhoneXR)]
-    }
-
-    func snapshotVerify(view: UIView,
+    private func snapshotVerify(view: UIView,
                         identifier: String? = nil,
                         suffix: NSOrderedSet? = FBSnapshotTestCaseDefaultSuffixes(),
                         tolerance: CGFloat = 0,
@@ -238,7 +220,7 @@ extension ZMSnapshotTestCase {
         }
     }
 
-    func assertAmbigousLayout(_ view: UIView,
+    private func assertAmbigousLayout(_ view: UIView,
                               file: StaticString = #file,
                               line: UInt = #line) {
         if view.hasAmbiguousLayout,
@@ -250,7 +232,7 @@ extension ZMSnapshotTestCase {
         }
     }
 
-    func assertEmptyFrame(_ view: UIView,
+    private func assertEmptyFrame(_ view: UIView,
                           file: StaticString = #file,
                           line: UInt = #line) -> Bool {
         if view.frame.isEmpty {
@@ -260,6 +242,13 @@ extension ZMSnapshotTestCase {
             return true
         }
         return false
+    }
+
+    func resetColorScheme() {
+        ColorScheme.default.variant = .light
+
+        NSAttributedString.invalidateMarkdownStyle()
+        NSAttributedString.invalidateParagraphStyle()
     }
 }
 
@@ -439,13 +428,6 @@ extension ZMSnapshotTestCase {
         verify(view: viewController.view)
     }
 
-    func resetColorScheme() {
-        ColorScheme.default.variant = .light
-
-        NSAttributedString.invalidateMarkdownStyle()
-        NSAttributedString.invalidateParagraphStyle()
-    }
-
     // MARK: - verify the snapshots in multiple devices
 
     func verifyMultipleSize(view: UIView, extraLayoutPass: Bool, inSizes sizes: [String:CGSize], configuration: ConfigurationWithDeviceType?,
@@ -453,7 +435,7 @@ extension ZMSnapshotTestCase {
         for (deviceName, size) in sizes {
             view.frame = CGRect(origin: .zero, size: size)
             if let configuration = configuration {
-                let iPad = size.equalTo(XCTestCase.ZMDeviceSizeIPadLandscape) || size.equalTo(XCTestCase.ZMDeviceSizeIPadPortrait)
+                let iPad = size.equalTo(XCTestCase.DeviceSizeIPadLandscape) || size.equalTo(XCTestCase.DeviceSizeIPadPortrait)
                 UIView.performWithoutAnimation({
                     configuration(view, iPad)
                 })
