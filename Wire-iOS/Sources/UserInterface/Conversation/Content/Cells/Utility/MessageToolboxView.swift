@@ -61,7 +61,19 @@ import WireSyncEngine
         return label
     }()
 
-    private let separatorLabel: UILabel = {
+    private let timestampSeparatorLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 1
+        label.textColor = UIColor.from(scheme: .textDimmed)
+        label.font = UIFont.smallSemiboldFont
+        label.text = "·"
+        label.isAccessibilityElement = false
+        label.setContentHuggingPriority(.required, for: .horizontal)
+        label.setContentCompressionResistancePriority(.required, for: .horizontal)
+        return label
+    }()
+
+    private let statusSeparatorLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 1
         label.textColor = UIColor.from(scheme: .textDimmed)
@@ -106,6 +118,16 @@ import WireSyncEngine
         label.lineBreakMode = .byTruncatingMiddle
         label.numberOfLines = 1
         label.accessibilityIdentifier = "DeliveryStatus"
+        label.setContentHuggingPriority(.required, for: .horizontal)
+        label.setContentCompressionResistancePriority(.required, for: .horizontal)
+        return label
+    }()
+
+    private let countdownLabel: UILabel = {
+        let label = UILabel()
+        label.lineBreakMode = .byTruncatingMiddle
+        label.numberOfLines = 1
+        label.accessibilityIdentifier = "EphemeralCountdown"
         label.setContentHuggingPriority(.defaultLow, for: .horizontal)
         label.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         return label
@@ -142,7 +164,7 @@ import WireSyncEngine
         resendButton.addTarget(self, action: #selector(resendMessage), for: .touchUpInside)
         deleteButton.addTarget(self, action: #selector(deleteMessage), for: .touchUpInside)
 
-        [detailsLabel, resendButton, separatorLabel, deleteButton, statusLabel].forEach(contentStack.addArrangedSubview)
+        [detailsLabel, resendButton, timestampSeparatorLabel, deleteButton, statusLabel, statusSeparatorLabel, countdownLabel].forEach(contentStack.addArrangedSubview)
         [likeButtonContainer, likeButton, contentStack].forEach(addSubview)
     }
     
@@ -170,7 +192,7 @@ import WireSyncEngine
 
             // statusTextView align vertically center
             contentStack.leadingAnchor.constraint(equalTo: likeButtonContainer.trailingAnchor),
-            contentStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -UIView.conversationLayoutMargins.right),
+            contentStack.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant: -UIView.conversationLayoutMargins.right),
             contentStack.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
     }
@@ -233,9 +255,11 @@ import WireSyncEngine
                 self.detailsLabel.attributedText = reactionsString
                 self.detailsLabel.isHidden = false
                 self.statusLabel.isHidden = true
-                self.separatorLabel.isHidden = true
+                self.timestampSeparatorLabel.isHidden = true
                 self.deleteButton.isHidden = true
                 self.resendButton.isHidden = true
+                self.statusSeparatorLabel.isHidden = true
+                self.countdownLabel.isHidden = true
             }
 
         case .sendFailure(let detailsString):
@@ -243,20 +267,25 @@ import WireSyncEngine
                 self.detailsLabel.attributedText = detailsString
                 self.detailsLabel.isHidden = false
                 self.statusLabel.isHidden = true
-                self.separatorLabel.isHidden = false
+                self.timestampSeparatorLabel.isHidden = false
                 self.deleteButton.isHidden = false
                 self.resendButton.isHidden = false
+                self.statusSeparatorLabel.isHidden = true
+                self.countdownLabel.isHidden = true
             }
 
-        case .details(let timestamp, let status, _):
+        case .details(let timestamp, let status, let countdown, _):
             updateContentStack(to: newPosition, animated: animated) {
                 self.detailsLabel.attributedText = timestamp
                 self.detailsLabel.isHidden = timestamp == nil
                 self.statusLabel.attributedText = status
                 self.statusLabel.isHidden = status == nil
-                self.separatorLabel.isHidden = timestamp == nil || status == nil
+                self.timestampSeparatorLabel.isHidden = timestamp == nil || status == nil
                 self.deleteButton.isHidden = true
                 self.resendButton.isHidden = true
+                self.statusSeparatorLabel.isHidden = (timestamp == nil && status == nil) || countdown == nil
+                self.countdownLabel.attributedText = countdown
+                self.countdownLabel.isHidden = countdown == nil
             }
         }
 

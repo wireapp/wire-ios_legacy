@@ -32,6 +32,8 @@
 "general.decline" = "不要です";
 "general.failure" = "何か問題があります";
 "general.service" = "Service";
+"general.off" = "オフ";
+"general.on" = "オン";
 
 // Language like Chinese does not use space to sperate words or sentences.
 "general.space_between_words" = "\U200B";
@@ -289,8 +291,12 @@
 "conversation.create.group_name.placeholder" = "グループ名";
 "conversation.create.guidance.empty" = "１文字以上";
 "conversation.create.guidance.toolong" = "文字が多すぎます";
-"conversation.create.toggle.title" = "Allow guests and services";
-"conversation.create.toggle.subtitle" = "Open this conversation to services and people outside your team. You can always change it later.";
+"conversation.create.options.title" = "Conversation options";
+"conversation.create.options.subtitle" = "Allow guests: %@, Read receipts: %@";
+"conversation.create.guests.title" = "Allow guests and services";
+"conversation.create.guests.subtitle" = "Open this conversation to services and people outside your team.";
+"conversation.create.receipts.title" = "Read receipts";
+"conversation.create.receipts.subtitle" = "When this is on, people can see when their messages in this conversation are read.";
 
 "conversation.input_bar.ongoing_call_alert.title" = "通話中";
 "conversation.input_bar.ongoing_call_alert.audio.message" = "音声メッセージは通話中に記録できません";
@@ -405,6 +411,7 @@
 "content.system.pending_message_timestamp" = "送信中…";
 "content.system.message_sent_timestamp" = "送信済み";
 "content.system.message_delivered_timestamp" = "配信済み";
+"content.system.message_read_timestamp" = "Seen";
 "content.system.failedtosend_message_timestamp" = "送信できませんでした";
 "content.system.failedtosend_message_timestamp_resend" = "再送する";
 "content.system.failedtosend_message_timestamp_delete" = "削除";
@@ -438,6 +445,17 @@
 
 "content.system.message_timer_off" = "%@ が タイマーメッセージをオフにしました";
 "content.system.message_timer_off-you" = "%@ が タイマーメッセージをオフにしました";
+
+// read receipt
+
+"content.system.message_read_receipt_on" = "%@ turned read receipts on for everyone";
+"content.system.message_read_receipt_on-you" = "%@ turned read receipts on for everyone";
+
+"content.system.message_read_receipt_off" = "%@ turned read receipts off for everyone";
+"content.system.message_read_receipt_off-you" = "%@ turned read receipts off for everyone";
+
+"content.system.message_read_receipt_on_add_to_group" = "Read receipts are on";
+
 
 "content.system.reactivated_device" = "あなたは %@ を再び利用しています。いままでのメッセージはここには表示されません。";
 
@@ -494,16 +512,21 @@
 "content.message.open" = "開く";
 "content.message.copy" = "コピー";
 "content.message.download" = "Download";
+"content.message.details" = "詳細";
 
 // Reply
 "content.message.reply" = "返信";
+"content.message.original_label" = "Original message";
 "content.message.reply.original_timestamp.date" = "Original message from %@";
 "content.message.reply.original_timestamp.time" = "Original message from %@";
 "content.message.reply.broken_message" = "You cannot see this message.";
+"content.message.reply.edited_message" = "Edited";
 
 "content.message.open_link_alert.title" = "リンクを開く";
 "content.message.open_link_alert.message" = "あなたは、%@ にアクセスしようとしています";
 "content.message.open_link_alert.open" = "開く";
+
+"content.message.audio_message.accessibility" = "Play the audio message";
 
 "content.reactions_list.likers" = "いいね！しました";
 
@@ -724,6 +747,10 @@
 "profile.create_conversation_button_title" = "グループを作成します";
 "profile.open_conversation_button_title" = "会話を始めます";
 
+"profile.read_receipts_enabled_memo.header" = "YOU HAVE ENABLED READ RECEIPTS";
+"profile.read_receipts_disabled_memo.header" = "YOU HAVE DISABLED READ RECEIPTS";
+"profile.read_receipts_memo.body" = "If both sides turn on read receipts, you can see when messages are read.\nYou can change this option in your account settings.";
+
 // User Details
 "profile.details.title" = "詳細";
 "profile.details.guest" = "ゲスト";
@@ -759,6 +786,8 @@
 "group_details.timeout_options_cell.title" = "タイマーメッセージ";
 "group_details.notification_options_cell.title" = "通知センター";
 "group_details.notification_options_cell.description" = "You can be notified about everything (including audio and video calls) or only when someone mentions you or replies to one of your messages.";
+"group_details.receipt_options_cell.title" = "Read receipts";
+"group_details.receipt_options_cell.description" = "When this is on, people can see when their messages in this conversation are read.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile
@@ -801,6 +830,12 @@
 "self.new_device_alert.manage_devices" = "デバイスを管理";
 "self.new_device_alert.trust_devices" = "OK";
 
+// Settings changed alert
+
+"self.read_receipts_enabled.title" = "You have enabled read receipts";
+"self.read_receipts_disabled.title" = "You have disabled read receipts";
+"self.read_receipts_description.title" = "You can change this option in your account settings.";
+
 // Settings - top level
 "self.settings.create_team.title" = "新しいチームを作成";
 "self.settings.manage_team.title" = "チームを管理する";
@@ -835,6 +870,11 @@
 "self.settings.account_details.remove_device.password.error" = "パスワードが間違っています";
 
 "self.settings.account_appearance_group.title" = "外観";
+
+"self.settings.privacy_section_group.title" = "Privacy";
+"self.settings.enable_read_receipts.title" = "Send read receipts";
+"self.settings.privacy_section_group.subtitle" = "When this is off, you won’t be able to see read receipts from other people.\nThis setting does not apply to group conversations.";
+
 "self.settings.account_picture_group.picture" = "写真";
 "self.settings.account_picture_group.color" = "色";
 
@@ -1477,3 +1517,19 @@
 "news_offers.consent.title" = "電子メールで Wireからニュースや製品アップデート情報を受け取りますか？";
 "news_offers.consent.message" = "購読解除はいつでもできます。";
 "news_offers.consent.button.privacy_policy.title" = "プライバシーポリシー";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Message Details
+"message_details.empty_likes" = "No one has liked this message yet.";
+"message_details.empty_read_receipts" = "No one has read this message yet.";
+"message_details.read_receipts_disabled" = "Read receipts were not on when this message was sent.";
+"message_details.combined_title" = "Message Details";
+"message_details.likes_title" = "Liked";
+"message_details.receipts_title" = "Read";
+"message_details.tabs.seen" = "Read (%d)";
+"message_details.tabs.likes" = "Liked (%d)";
+"message_details.subtitle_send_date" = "Sent: %@";
+"message_details.subtitle_edit_date" = "編集済: %@";
+"message_details.subtitle_label_voiceOver" = "Message Details";
+"message_details.user_handle_subtitle_label" = "ユーザーネーム";
+"message_details.user_read_timestamp_subtitle_label" = "Read at";

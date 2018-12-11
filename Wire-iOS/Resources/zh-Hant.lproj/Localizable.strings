@@ -32,6 +32,8 @@
 "general.decline" = "不了，謝謝";
 "general.failure" = "出了點問題";
 "general.service" = "服務";
+"general.off" = "關閉";
+"general.on" = "開啟";
 
 // Language like Chinese does not use space to sperate words or sentences.
 "general.space_between_words" = "\U200B";
@@ -289,8 +291,12 @@
 "conversation.create.group_name.placeholder" = "群組名稱";
 "conversation.create.guidance.empty" = "至少1個字元";
 "conversation.create.guidance.toolong" = "字數過多";
-"conversation.create.toggle.title" = "允許訪客和服務";
-"conversation.create.toggle.subtitle" = "對團隊以外的人和服務公開此對話。您以後可隨時更改。";
+"conversation.create.options.title" = "會話選項";
+"conversation.create.options.subtitle" = "允許訪客：%@，讀取回條：%@";
+"conversation.create.guests.title" = "允許訪客和服務";
+"conversation.create.guests.subtitle" = "開放這個對話與團隊以外的訪客及服務。";
+"conversation.create.receipts.title" = "讀取回條";
+"conversation.create.receipts.subtitle" = "當這啓用時，參與者可以看到他們在此對話中的消息何時已閱讀。";
 
 "conversation.input_bar.ongoing_call_alert.title" = "通話中";
 "conversation.input_bar.ongoing_call_alert.audio.message" = "在通話時不能錄製語音訊息。";
@@ -405,6 +411,7 @@
 "content.system.pending_message_timestamp" = "傳送中...";
 "content.system.message_sent_timestamp" = "已送出";
 "content.system.message_delivered_timestamp" = "已傳送";
+"content.system.message_read_timestamp" = "閱";
 "content.system.failedtosend_message_timestamp" = "傳送失敗。";
 "content.system.failedtosend_message_timestamp_resend" = "重新發送";
 "content.system.failedtosend_message_timestamp_delete" = "刪除";
@@ -438,6 +445,17 @@
 
 "content.system.message_timer_off" = "%@關閉了訊息時限";
 "content.system.message_timer_off-you" = "%@關閉了訊息時限";
+
+// read receipt
+
+"content.system.message_read_receipt_on" = "%@為大家打開了讀取回條";
+"content.system.message_read_receipt_on-you" = "%@為大家打開了讀取回條";
+
+"content.system.message_read_receipt_off" = "%@為大家關閉了讀取回條";
+"content.system.message_read_receipt_off-you" = "%@為大家關閉了讀取回條";
+
+"content.system.message_read_receipt_on_add_to_group" = "傳送讀取已啓用";
+
 
 "content.system.reactivated_device" = "您重新使用%@，在沒有使用期間的訊息不會顯示出來。";
 
@@ -494,16 +512,21 @@
 "content.message.open" = "開啟";
 "content.message.copy" = "複製";
 "content.message.download" = "下載";
+"content.message.details" = "詳細資訊";
 
 // Reply
 "content.message.reply" = "回覆";
+"content.message.original_label" = "原始訊息";
 "content.message.reply.original_timestamp.date" = "原訊息於%@";
 "content.message.reply.original_timestamp.time" = "原訊息於%@";
 "content.message.reply.broken_message" = "您不能看見這則訊息";
+"content.message.reply.edited_message" = "已編輯";
 
 "content.message.open_link_alert.title" = "瀏覽連結";
 "content.message.open_link_alert.message" = "這會帶你去\n%@";
 "content.message.open_link_alert.open" = "開啟";
+
+"content.message.audio_message.accessibility" = "播放語音訊息";
 
 "content.reactions_list.likers" = "讚好";
 
@@ -724,6 +747,10 @@
 "profile.create_conversation_button_title" = "建立群組";
 "profile.open_conversation_button_title" = "開啟對話";
 
+"profile.read_receipts_enabled_memo.header" = "你已啓用讀取回條";
+"profile.read_receipts_disabled_memo.header" = "您已停用讀取回條";
+"profile.read_receipts_memo.body" = "如果雙方都打開讀取回條，則可以查看何時讀取信息。您可以在帳戶設置中更改此選項。";
+
 // User Details
 "profile.details.title" = "詳細資訊";
 "profile.details.guest" = "訪客";
@@ -759,6 +786,8 @@
 "group_details.timeout_options_cell.title" = "限時訊息";
 "group_details.notification_options_cell.title" = "通知";
 "group_details.notification_options_cell.description" = "您可以收到有關所有內容 (包括音訊和視頻通話) 的通知, 或者僅當有人提及您或回復您的訊息時才會收到通知。";
+"group_details.receipt_options_cell.title" = "讀取回條";
+"group_details.receipt_options_cell.description" = "當這啓用時, 參與者可以看到他們在此對話中的消息何時已閱讀。";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile
@@ -801,6 +830,12 @@
 "self.new_device_alert.manage_devices" = "管理設備";
 "self.new_device_alert.trust_devices" = "確認";
 
+// Settings changed alert
+
+"self.read_receipts_enabled.title" = "您已啟用讀取回條";
+"self.read_receipts_disabled.title" = "您已關閉讀取回條";
+"self.read_receipts_description.title" = "您可以在帳戶設置中更改此選項。";
+
 // Settings - top level
 "self.settings.create_team.title" = "建立團隊";
 "self.settings.manage_team.title" = "管理團隊";
@@ -835,6 +870,11 @@
 "self.settings.account_details.remove_device.password.error" = "錯誤的密碼";
 
 "self.settings.account_appearance_group.title" = "外觀";
+
+"self.settings.privacy_section_group.title" = "隱私設定";
+"self.settings.enable_read_receipts.title" = "傳送讀取回條";
+"self.settings.privacy_section_group.subtitle" = "當這是關閉, 你將無法看到從其他人是否已讀取你的訊息。\n此設定不適用於群組對話。";
+
 "self.settings.account_picture_group.picture" = "大頭照";
 "self.settings.account_picture_group.color" = "主色調";
 
@@ -1477,3 +1517,19 @@
 "news_offers.consent.title" = "您想接收來自Wire的新聞和產品更新電子郵件嗎？";
 "news_offers.consent.message" = "您可以在任何時候取消訂閱。";
 "news_offers.consent.button.privacy_policy.title" = "隱私權原則";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Message Details
+"message_details.empty_likes" = "目前還沒有人讚好這則訊息。";
+"message_details.empty_read_receipts" = "目前還沒有人讀取這則訊息。";
+"message_details.read_receipts_disabled" = "發送此郵件時沒有打開讀取回條。";
+"message_details.combined_title" = "訊息詳細資料";
+"message_details.likes_title" = "已按讚的項目";
+"message_details.receipts_title" = "已閱讀";
+"message_details.tabs.seen" = "已閱讀（%d）";
+"message_details.tabs.likes" = "讚（%d）";
+"message_details.subtitle_send_date" = "已寄出：%@";
+"message_details.subtitle_edit_date" = "已編輯: %@";
+"message_details.subtitle_label_voiceOver" = "訊息詳細資料";
+"message_details.user_handle_subtitle_label" = "使用者名稱";
+"message_details.user_read_timestamp_subtitle_label" = "閱於";
