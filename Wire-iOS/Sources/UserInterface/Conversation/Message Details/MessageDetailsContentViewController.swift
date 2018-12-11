@@ -129,9 +129,18 @@ class MessageDetailsContentViewController: UIViewController {
     private func updateTitle() {
         switch contentType {
         case .receipts:
-            title = "message_details.tabs.seen".localized(args: cells.count).uppercased()
+            if cells.isEmpty {
+                title = "message_details.receipts_title".localized(uppercased: true)
+            } else {
+                title = "message_details.tabs.seen".localized(args: cells.count).localizedUppercase
+            }
+
         case .reactions:
-            title = "message_details.tabs.likes".localized(args: cells.count).uppercased()
+            if cells.isEmpty {
+                title = "message_details.likes_title".localized(uppercased: true)
+            } else {
+                title = "message_details.tabs.likes".localized(args: cells.count).localizedUppercase
+            }
         }
     }
 
