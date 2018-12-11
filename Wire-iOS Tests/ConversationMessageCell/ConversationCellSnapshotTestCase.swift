@@ -39,7 +39,8 @@ class ConversationCellSnapshotTestCase: CoreDataSnapshotTestCase {
                                                     isFirstMessageOfTheDay: false,
                                                     isFirstUnreadMessage: false,
                                                     isLastMessage: false,
-                                                    searchQueries: [])
+                                                    searchQueries: [],
+                                                    previousMessageIsKnock: false)
         
         resetDayFormatter()
         

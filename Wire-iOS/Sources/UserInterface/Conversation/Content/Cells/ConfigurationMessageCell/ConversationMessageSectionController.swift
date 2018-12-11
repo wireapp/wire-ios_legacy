@@ -25,6 +25,7 @@ struct ConversationMessageContext {
     let isFirstUnreadMessage: Bool
     let isLastMessage: Bool
     let searchQueries: [String]
+    let previousMessageIsKnock: Bool
 }
 
 extension IndexSet {
@@ -294,7 +295,7 @@ extension IndexSet {
             return false
         }
         
-        return !context.isSameSenderAsPrevious || message.updatedAt != nil || isBurstTimestampVisible(in: context)
+        return !context.isSameSenderAsPrevious || context.previousMessageIsKnock || message.updatedAt != nil || isBurstTimestampVisible(in: context)
     }
     
     // MARK: - Data Source
