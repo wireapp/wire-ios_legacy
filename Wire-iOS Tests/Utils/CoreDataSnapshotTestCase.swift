@@ -17,6 +17,7 @@
 //
 
 import WireTesting
+import XCTest
 
 
 /// This class provides a `NSManagedObjectContext` in order to test views with real data instead

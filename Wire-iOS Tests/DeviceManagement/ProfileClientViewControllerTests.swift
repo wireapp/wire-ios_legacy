@@ -46,25 +46,22 @@ final class ProfileClientViewControllerTests: ZMSnapshotTestCase {
         super.tearDown()
     }
 
-    func testTestForLightTheme(){
-        ColorScheme.default.variant = .light
-        
+    func verify() {
         sut = ProfileClientViewController(client: client)
         sut.spinner.stopAnimating()
         sut.spinner.isHidden = true
         sut.showBackButton = false
 
-        self.verify(view: sut.view)
+        verify(view: sut.view, tolerance: 0.1)
+    }
+
+    func testTestForLightTheme(){
+        ColorScheme.default.variant = .light
+        verify()
     }
 
     func testTestForDarkTheme(){
         ColorScheme.default.variant = .dark
-
-        sut = ProfileClientViewController(client: client)
-        sut.spinner.stopAnimating()
-        sut.spinner.isHidden = true
-        sut.showBackButton = false
-
-        self.verify(view: sut.view)
+        verify()
     }
 }

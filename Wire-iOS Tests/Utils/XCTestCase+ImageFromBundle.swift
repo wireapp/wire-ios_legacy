@@ -16,7 +16,7 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
+import XCTest
 
 extension XCTestCase {
     func image(inTestBundleNamed name: String) -> UIImage {
