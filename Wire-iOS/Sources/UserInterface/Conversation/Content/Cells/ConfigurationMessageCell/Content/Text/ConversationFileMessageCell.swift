@@ -51,7 +51,6 @@ class ConversationFileMessageCell: RoundedView, ConversationMessageCell {
         clipsToBounds = true
 
         fileTransferView.delegate = self
-        fileTransferView.isAccessibilityElement = true
         obfuscationView.isHidden = true
 
         addSubview(self.fileTransferView)

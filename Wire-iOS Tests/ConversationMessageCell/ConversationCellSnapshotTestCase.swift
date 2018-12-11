@@ -81,7 +81,7 @@ class ConversationCellSnapshotTestCase: CoreDataSnapshotTestCase {
         if waitForImagesToLoad {
             XCTAssertTrue(waitForGroupsToBeEmpty([defaultImageCache.dispatchGroup]))
         }
-        
+
         verifyInAllPhoneWidths(view: stackView,
                                tolerance: tolerance,
                                file: file,

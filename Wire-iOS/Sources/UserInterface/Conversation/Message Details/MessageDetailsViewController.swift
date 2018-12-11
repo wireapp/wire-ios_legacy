@@ -142,6 +142,7 @@ import WireExtensionComponents
         view.addSubview(topBar)
         topBar.delegate = self
         topBar.needsSeparator = false
+        topBar.backgroundColor = UIColor.from(scheme: .barBackground)
         topBar.configure(title: dataSource.title, subtitle: nil, topAnchor: safeTopAnchor)
         reloadFooters()
 
