@@ -32,6 +32,8 @@
 "general.decline" = "Não, obrigado";
 "general.failure" = "Algo deu errado";
 "general.service" = "Serviço";
+"general.off" = "Desligar";
+"general.on" = "Ligado";
 
 // Language like Chinese does not use space to sperate words or sentences.
 "general.space_between_words" = " ";
@@ -289,8 +291,12 @@
 "conversation.create.group_name.placeholder" = "Nome do grupo";
 "conversation.create.guidance.empty" = "Pelo menos 1 caractere";
 "conversation.create.guidance.toolong" = "Muitos caracteres";
-"conversation.create.toggle.title" = "Permitir que os hóspedes e serviços";
-"conversation.create.toggle.subtitle" = "Abra esta conversa para serviços e pessoas de fora da sua equipe. Você sempre pode mudar depois.";
+"conversation.create.options.title" = "Conversation options";
+"conversation.create.options.subtitle" = "Allow guests: %@, Read receipts: %@";
+"conversation.create.guests.title" = "Permitir que os hóspedes e serviços";
+"conversation.create.guests.subtitle" = "Abra esta conversa para serviços e pessoas fora da sua equipe.";
+"conversation.create.receipts.title" = "Recibos de Leitura";
+"conversation.create.receipts.subtitle" = "Quando isso está ativado, as pessoas podem ver quando suas mensagens nessa conversa são lidas.";
 
 "conversation.input_bar.ongoing_call_alert.title" = "Chamada em curso";
 "conversation.input_bar.ongoing_call_alert.audio.message" = "Você não pode gravar uma mensagem de áudio durante uma chamada.";
@@ -405,6 +411,7 @@
 "content.system.pending_message_timestamp" = "Enviando…";
 "content.system.message_sent_timestamp" = "Enviado";
 "content.system.message_delivered_timestamp" = "Entregue";
+"content.system.message_read_timestamp" = "Visto";
 "content.system.failedtosend_message_timestamp" = "Envio falhou.";
 "content.system.failedtosend_message_timestamp_resend" = "Reenviar";
 "content.system.failedtosend_message_timestamp_delete" = "Apagar";
@@ -438,6 +445,17 @@
 
 "content.system.message_timer_off" = "%@ desligou o tempo da mensagem";
 "content.system.message_timer_off-you" = "%@ desligou o tempo da mensagem";
+
+// read receipt
+
+"content.system.message_read_receipt_on" = "%@ turned read receipts on for everyone";
+"content.system.message_read_receipt_on-you" = "%@ turned read receipts on for everyone";
+
+"content.system.message_read_receipt_off" = "%@ turned read receipts off for everyone";
+"content.system.message_read_receipt_off-you" = "%@ turned read receipts off for everyone";
+
+"content.system.message_read_receipt_on_add_to_group" = "Read receipts are on";
+
 
 "content.system.reactivated_device" = "Você começou a usar o %@ novamente. Mensagens enviadas entretanto não aparecerão aqui.";
 
@@ -494,16 +512,21 @@
 "content.message.open" = "Abrir";
 "content.message.copy" = "Copiar";
 "content.message.download" = "Baixar";
+"content.message.details" = "Detalhes";
 
 // Reply
 "content.message.reply" = "Responder";
+"content.message.original_label" = "Mensagem Original";
 "content.message.reply.original_timestamp.date" = "Mensagem original de %@";
 "content.message.reply.original_timestamp.time" = "Mensagem original de %@";
 "content.message.reply.broken_message" = "Você não pode ver esta mensagem.";
+"content.message.reply.edited_message" = "Editado";
 
 "content.message.open_link_alert.title" = "Visitar Link";
 "content.message.open_link_alert.message" = "Isso levará você para\n%@";
 "content.message.open_link_alert.open" = "Abrir";
+
+"content.message.audio_message.accessibility" = "Reproduzir a mensagem de áudio";
 
 "content.reactions_list.likers" = "Curtido por";
 
@@ -724,6 +747,10 @@
 "profile.create_conversation_button_title" = "Criar grupo";
 "profile.open_conversation_button_title" = "Abrir conversa";
 
+"profile.read_receipts_enabled_memo.header" = "VOCÊ HABILITOU RECIBOS DE LEITURA";
+"profile.read_receipts_disabled_memo.header" = "YOU HAVE DISABLED READ RECEIPTS";
+"profile.read_receipts_memo.body" = "If both sides turn on read receipts, you can see when messages are read.\nYou can change this option in your account settings.";
+
 // User Details
 "profile.details.title" = "Detalhes";
 "profile.details.guest" = "Convidado";
@@ -759,6 +786,8 @@
 "group_details.timeout_options_cell.title" = "Mensagens com tempo";
 "group_details.notification_options_cell.title" = "Notificações";
 "group_details.notification_options_cell.description" = "Você pode ser notificado sobre tudo (incluindo chamadas de áudio e vídeo) ou apenas quando alguém mencioná-lo ou responder a uma de suas mensagens.";
+"group_details.receipt_options_cell.title" = "Recibos de Leitura";
+"group_details.receipt_options_cell.description" = "Quando isso está ativado, as pessoas podem ver quando suas mensagens nessa conversa são lidas.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile
@@ -801,6 +830,12 @@
 "self.new_device_alert.manage_devices" = "Gerenciar dispositivos";
 "self.new_device_alert.trust_devices" = "OK";
 
+// Settings changed alert
+
+"self.read_receipts_enabled.title" = "You have enabled read receipts";
+"self.read_receipts_disabled.title" = "You have disabled read receipts";
+"self.read_receipts_description.title" = "You can change this option in your account settings.";
+
 // Settings - top level
 "self.settings.create_team.title" = "Criar uma equipe";
 "self.settings.manage_team.title" = "Gerenciar Equipe";
@@ -835,6 +870,11 @@
 "self.settings.account_details.remove_device.password.error" = "Senha errada";
 
 "self.settings.account_appearance_group.title" = "Aparência";
+
+"self.settings.privacy_section_group.title" = "Privacidade";
+"self.settings.enable_read_receipts.title" = "Enviar recibos de leitura";
+"self.settings.privacy_section_group.subtitle" = "Quando isso estiver desativado, você não poderá ver as confirmações de leitura de outras pessoas.\nEssa configuração não se aplica a conversas em grupo.";
+
 "self.settings.account_picture_group.picture" = "Foto";
 "self.settings.account_picture_group.color" = "Cor";
 
@@ -1477,3 +1517,19 @@
 "news_offers.consent.title" = "Deseja receber notícias e atualizações de produtos do Wire por email?";
 "news_offers.consent.message" = "Você pode cancelar a qualquer momento.";
 "news_offers.consent.button.privacy_policy.title" = "Política de privacidade";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Message Details
+"message_details.empty_likes" = "No one has liked this message yet.";
+"message_details.empty_read_receipts" = "No one has read this message yet.";
+"message_details.read_receipts_disabled" = "Read receipts were not on when this message was sent.";
+"message_details.combined_title" = "Message Details";
+"message_details.likes_title" = "Liked";
+"message_details.receipts_title" = "Read";
+"message_details.tabs.seen" = "Read (%d)";
+"message_details.tabs.likes" = "Liked (%d)";
+"message_details.subtitle_send_date" = "Sent: %@";
+"message_details.subtitle_edit_date" = "Editado: %@";
+"message_details.subtitle_label_voiceOver" = "Message Details";
+"message_details.user_handle_subtitle_label" = "Nome de usuário";
+"message_details.user_read_timestamp_subtitle_label" = "Read at";

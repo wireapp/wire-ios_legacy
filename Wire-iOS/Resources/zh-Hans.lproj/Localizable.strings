@@ -32,6 +32,8 @@
 "general.decline" = "不用了，谢谢";
 "general.failure" = "好像出了点问题。";
 "general.service" = "服务";
+"general.off" = "关闭";
+"general.on" = "开启";
 
 // Language like Chinese does not use space to sperate words or sentences.
 "general.space_between_words" = "\U200B";
@@ -289,8 +291,12 @@
 "conversation.create.group_name.placeholder" = "群组名称";
 "conversation.create.guidance.empty" = "至少1个字符";
 "conversation.create.guidance.toolong" = "超出字符限制";
-"conversation.create.toggle.title" = "Allow guests and services";
-"conversation.create.toggle.subtitle" = "Open this conversation to services and people outside your team. You can always change it later.";
+"conversation.create.options.title" = "Conversation options";
+"conversation.create.options.subtitle" = "Allow guests: %@, Read receipts: %@";
+"conversation.create.guests.title" = "Allow guests and services";
+"conversation.create.guests.subtitle" = "Open this conversation to services and people outside your team.";
+"conversation.create.receipts.title" = "Read receipts";
+"conversation.create.receipts.subtitle" = "When this is on, people can see when their messages in this conversation are read.";
 
 "conversation.input_bar.ongoing_call_alert.title" = "正在呼叫";
 "conversation.input_bar.ongoing_call_alert.audio.message" = "在通话时不能录制语音讯息。";
@@ -405,6 +411,7 @@
 "content.system.pending_message_timestamp" = "正在发送...";
 "content.system.message_sent_timestamp" = "发送";
 "content.system.message_delivered_timestamp" = "已送达";
+"content.system.message_read_timestamp" = "Seen";
 "content.system.failedtosend_message_timestamp" = "发送失败。";
 "content.system.failedtosend_message_timestamp_resend" = "重新发送";
 "content.system.failedtosend_message_timestamp_delete" = "删除";
@@ -438,6 +445,17 @@
 
 "content.system.message_timer_off" = "%@ turned off the message timer";
 "content.system.message_timer_off-you" = "%@ turned off the message timer";
+
+// read receipt
+
+"content.system.message_read_receipt_on" = "%@ turned read receipts on for everyone";
+"content.system.message_read_receipt_on-you" = "%@ turned read receipts on for everyone";
+
+"content.system.message_read_receipt_off" = "%@ turned read receipts off for everyone";
+"content.system.message_read_receipt_off-you" = "%@ turned read receipts off for everyone";
+
+"content.system.message_read_receipt_on_add_to_group" = "Read receipts are on";
+
 
 "content.system.reactivated_device" = "您再次开始使用%@。在此期间发送的信息将不会在这里显示。";
 
@@ -494,16 +512,21 @@
 "content.message.open" = "开启";
 "content.message.copy" = "复制";
 "content.message.download" = "Download";
+"content.message.details" = "详细信息";
 
 // Reply
 "content.message.reply" = "回复";
+"content.message.original_label" = "Original message";
 "content.message.reply.original_timestamp.date" = "Original message from %@";
 "content.message.reply.original_timestamp.time" = "Original message from %@";
 "content.message.reply.broken_message" = "You cannot see this message.";
+"content.message.reply.edited_message" = "Edited";
 
 "content.message.open_link_alert.title" = "打开链接";
 "content.message.open_link_alert.message" = "这会带你去\n%@";
 "content.message.open_link_alert.open" = "开启";
+
+"content.message.audio_message.accessibility" = "Play the audio message";
 
 "content.reactions_list.likers" = "赞好";
 
@@ -724,6 +747,10 @@
 "profile.create_conversation_button_title" = "创建群聊";
 "profile.open_conversation_button_title" = "打开对话";
 
+"profile.read_receipts_enabled_memo.header" = "YOU HAVE ENABLED READ RECEIPTS";
+"profile.read_receipts_disabled_memo.header" = "YOU HAVE DISABLED READ RECEIPTS";
+"profile.read_receipts_memo.body" = "If both sides turn on read receipts, you can see when messages are read.\nYou can change this option in your account settings.";
+
 // User Details
 "profile.details.title" = "详细信息";
 "profile.details.guest" = "游客";
@@ -759,6 +786,8 @@
 "group_details.timeout_options_cell.title" = "Timed messages";
 "group_details.notification_options_cell.title" = "通知";
 "group_details.notification_options_cell.description" = "You can be notified about everything (including audio and video calls) or only when someone mentions you or replies to one of your messages.";
+"group_details.receipt_options_cell.title" = "Read receipts";
+"group_details.receipt_options_cell.description" = "When this is on, people can see when their messages in this conversation are read.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile
@@ -801,6 +830,12 @@
 "self.new_device_alert.manage_devices" = "设备管理";
 "self.new_device_alert.trust_devices" = "好";
 
+// Settings changed alert
+
+"self.read_receipts_enabled.title" = "You have enabled read receipts";
+"self.read_receipts_disabled.title" = "You have disabled read receipts";
+"self.read_receipts_description.title" = "You can change this option in your account settings.";
+
 // Settings - top level
 "self.settings.create_team.title" = "创建团队";
 "self.settings.manage_team.title" = "管理团队";
@@ -835,6 +870,11 @@
 "self.settings.account_details.remove_device.password.error" = "错误的密码";
 
 "self.settings.account_appearance_group.title" = "外观";
+
+"self.settings.privacy_section_group.title" = "Privacy";
+"self.settings.enable_read_receipts.title" = "Send read receipts";
+"self.settings.privacy_section_group.subtitle" = "When this is off, you won’t be able to see read receipts from other people.\nThis setting does not apply to group conversations.";
+
 "self.settings.account_picture_group.picture" = "头像";
 "self.settings.account_picture_group.color" = "主色调";
 
@@ -1477,3 +1517,19 @@
 "news_offers.consent.title" = "Do you want to receive news and product updates from Wire via email?";
 "news_offers.consent.message" = "You can unsubscribe at any time.";
 "news_offers.consent.button.privacy_policy.title" = "隐私政策";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Message Details
+"message_details.empty_likes" = "No one has liked this message yet.";
+"message_details.empty_read_receipts" = "No one has read this message yet.";
+"message_details.read_receipts_disabled" = "Read receipts were not on when this message was sent.";
+"message_details.combined_title" = "Message Details";
+"message_details.likes_title" = "Liked";
+"message_details.receipts_title" = "Read";
+"message_details.tabs.seen" = "Read (%d)";
+"message_details.tabs.likes" = "Liked (%d)";
+"message_details.subtitle_send_date" = "Sent: %@";
+"message_details.subtitle_edit_date" = "已编辑: %@";
+"message_details.subtitle_label_voiceOver" = "Message Details";
+"message_details.user_handle_subtitle_label" = "用户名";
+"message_details.user_read_timestamp_subtitle_label" = "Read at";

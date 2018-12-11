@@ -32,6 +32,8 @@
 "general.decline" = "Ne, dėkui";
 "general.failure" = "Kažkas atsitiko";
 "general.service" = "Tarnyba";
+"general.off" = "Išjungta";
+"general.on" = "Įjungta";
 
 // Language like Chinese does not use space to sperate words or sentences.
 "general.space_between_words" = " ";
@@ -149,7 +151,7 @@
 "conversation_list.voiceover.status.typing" = "rašo";
 "conversation_list.voiceover.status.ping" = "skambtelėjimas";
 "conversation_list.voiceover.status.mention" = "jus paminėjo";
-"conversation_list.voiceover.status.reply" = "reply";
+"conversation_list.voiceover.status.reply" = "atsakyti";
 "conversation_list.voiceover.bottom_bar.archived_button.label" = "archyvuotas";
 "conversation_list.voiceover.bottom_bar.archived_button.hint" = "archyvuotų susirašinėjimų sąrašas";
 "conversation_list.voiceover.bottom_bar.contacts_button.label" = "kontaktai";
@@ -200,7 +202,7 @@
 "conversation.status.typing" = "Rašo žinutę…";
 "conversation.status.typing.group" = "%@: rašo žinutę…";
 "conversation.status.silenced" = "Išjungtas garsas";
-"conversation.status.poor_connection" = "Poor connection";
+"conversation.status.poor_connection" = "Prastas ryšys";
 "conversation.status.blocked" = "Užblokuotas(-a)";
 
 "conversation.status.message.text" = "%@";
@@ -219,8 +221,8 @@
 "conversation.status.message.ephemeral.group" = "Kažkas atsiuntė žinutę";
 "conversation.status.message.ephemeral.mention" = "Jus paminėjo";
 "conversation.status.message.ephemeral.mention.group" = "Kažkas jus paminėjo";
-"conversation.status.message.ephemeral.reply" = "Replied to your message";
-"conversation.status.message.ephemeral.reply.group" = "Someone replied to your message";
+"conversation.status.message.ephemeral.reply" = "Atsakę į jūsų žinutę";
+"conversation.status.message.ephemeral.reply.group" = "Kažkas atsakė į jūsų žinutę";
 "conversation.status.message.ephemeral.knock" = "Patikrinti ryšį";
 "conversation.status.message.ephemeral.knock.group" = "Kažkas skambtelėjo";
 
@@ -289,8 +291,12 @@
 "conversation.create.group_name.placeholder" = "Grupės pavadinimas";
 "conversation.create.guidance.empty" = "Bent 1 simbolis";
 "conversation.create.guidance.toolong" = "Per daug simbolių";
-"conversation.create.toggle.title" = "Leisti svečius ir tarnybas";
-"conversation.create.toggle.subtitle" = "Atverkite šį susirašinėjimą paslaugoms ir žmonėms, kurie nėra jūsų komandoje. Vėliau bet kada galėsite tai pakeisti.";
+"conversation.create.options.title" = "Susirašinėjimo parinktys";
+"conversation.create.options.subtitle" = "leisti svečius: %@, perskaitymo ataskaitos: %@";
+"conversation.create.guests.title" = "Leisti svečius ir tarnybas";
+"conversation.create.guests.subtitle" = "Leiskite šį susirašinėjimą matyti tarnyboms ir žmonėms, kurie nėra jūsų komandoje.";
+"conversation.create.receipts.title" = "Perskaitymo patvirtinimai";
+"conversation.create.receipts.subtitle" = "Įjungus, žmonės gali matyti ar jų žinutės buvo perskaitytos.";
 
 "conversation.input_bar.ongoing_call_alert.title" = "Vykstantis skambutis";
 "conversation.input_bar.ongoing_call_alert.audio.message" = "Kol kalbate, garso pranešimo įrašyti negalite.";
@@ -303,21 +309,21 @@
 "conversation.action.search" = "Ieškoti";
 
 // Reply message preview
-"conversation.input_bar.message_preview.image" = "Image";
-"conversation.input_bar.message_preview.location" = "Location";
+"conversation.input_bar.message_preview.image" = "Paveikslėlis";
+"conversation.input_bar.message_preview.location" = "Buvimo vieta";
 "conversation.input_bar.message_preview.video" = "Vaizdas";
-"conversation.input_bar.message_preview.audio" = "Audio Message";
-"conversation.input_bar.message_preview.file" = "File";
-"conversation.input_bar.close_reply" = "Cancel reply";
+"conversation.input_bar.message_preview.audio" = "Garso žinutė";
+"conversation.input_bar.message_preview.file" = "Failas";
+"conversation.input_bar.close_reply" = "Atšaukti atsakymą";
 
-"conversation.input_bar.message_preview.accessibility_description" = "Replying to message: %@";
-"conversation.input_bar.message_preview.accessibility.image_message" = "Image message";
-"conversation.input_bar.message_preview.accessibility.location_message" = "Location message";
-"conversation.input_bar.message_preview.accessibility.video_message" = "Video message";
-"conversation.input_bar.message_preview.accessibility.audio_message" = "Audio message";
-"conversation.input_bar.message_preview.accessibility.file_message" = "File message (%@)";
-"conversation.input_bar.message_preview.accessibility.unknown_message" = "Unknown message";
-"conversation.input_bar.message_preview.accessibility.message_from" = "%@ from %@";
+"conversation.input_bar.message_preview.accessibility_description" = "Atsakant į žinutę: %@";
+"conversation.input_bar.message_preview.accessibility.image_message" = "Žinutė su paveikslėliu";
+"conversation.input_bar.message_preview.accessibility.location_message" = "Buvimo vietos žinutė";
+"conversation.input_bar.message_preview.accessibility.video_message" = "Vaizdo žinutė";
+"conversation.input_bar.message_preview.accessibility.audio_message" = "Garso žinutė";
+"conversation.input_bar.message_preview.accessibility.file_message" = "Žinutė su failu (%@)";
+"conversation.input_bar.message_preview.accessibility.unknown_message" = "Nežinoma žinutė";
+"conversation.input_bar.message_preview.accessibility.message_from" = "%@ nuo %@";
 
 "image_confirmer.confirm" = "GERAI";
 "image_confirmer.cancel" = "Atsisakyti";
@@ -405,6 +411,7 @@
 "content.system.pending_message_timestamp" = "Siunčiama…";
 "content.system.message_sent_timestamp" = "Išsiųsta";
 "content.system.message_delivered_timestamp" = "Pristatyta";
+"content.system.message_read_timestamp" = "Perskaityta";
 "content.system.failedtosend_message_timestamp" = "Išsiųsti nepavyko.";
 "content.system.failedtosend_message_timestamp_resend" = "Siųsti iš naujo";
 "content.system.failedtosend_message_timestamp_delete" = "Ištrinti";
@@ -438,6 +445,17 @@
 
 "content.system.message_timer_off" = "%@ išjungė žinutės laikmatį";
 "content.system.message_timer_off-you" = "%@ išjungė žinutės laikmatį";
+
+// read receipt
+
+"content.system.message_read_receipt_on" = "%@ visiems įjungė perskaitymo patvirtinimus";
+"content.system.message_read_receipt_on-you" = "%@ visiems įjungė perskaitymo patvirtinimus";
+
+"content.system.message_read_receipt_off" = "%@ visiems išjungė perskaitymo patvirtinimus";
+"content.system.message_read_receipt_off-you" = "%@ visiems išjungė perskaitymo patvirtinimus";
+
+"content.system.message_read_receipt_on_add_to_group" = "Perskaitymo patvirtinimai įjungti";
+
 
 "content.system.reactivated_device" = "Vėl pradėjote naudotis „%@“. Žinutės parašytos įrenginio nenaudojimo laikotarpiu čia neatsiras.";
 
@@ -494,16 +512,21 @@
 "content.message.open" = "Atverti";
 "content.message.copy" = "Kopijuoti";
 "content.message.download" = "Atsisiųsti";
+"content.message.details" = "Išsamiau";
 
 // Reply
 "content.message.reply" = "Atsakyti";
-"content.message.reply.original_timestamp.date" = "Original message from %@";
-"content.message.reply.original_timestamp.time" = "Original message from %@";
-"content.message.reply.broken_message" = "You cannot see this message.";
+"content.message.original_label" = "Pirminė žinutė";
+"content.message.reply.original_timestamp.date" = "Pirminė žinutė iš %@";
+"content.message.reply.original_timestamp.time" = "Pirminė žinutė iš %@";
+"content.message.reply.broken_message" = "Jūs negalite matyti šitos žinutės.";
+"content.message.reply.edited_message" = "Pakeista";
 
 "content.message.open_link_alert.title" = "Atverti nuorodą";
 "content.message.open_link_alert.message" = "Nueisite į \n%@";
 "content.message.open_link_alert.open" = "Atverti";
+
+"content.message.audio_message.accessibility" = "Groti garso žinutę";
 
 "content.reactions_list.likers" = "Patinka";
 
@@ -662,7 +685,7 @@
 // Configure conversation notifications
 "meta.menu.configure_notification.dialog_message" = "Pranešti apie:";
 "meta.menu.configure_notification.button_everything" = "Viską";
-"meta.menu.configure_notification.button_mentions_and_replies" = "Mentions and Replies";
+"meta.menu.configure_notification.button_mentions_and_replies" = "Paminėjimai ir atsakymai";
 "meta.menu.configure_notification.button_nothing" = "Nieką";
 "meta.menu.configure_notification.button_cancel" = "Atsisakyti";
 
@@ -724,6 +747,10 @@
 "profile.create_conversation_button_title" = "Sukurti grupę";
 "profile.open_conversation_button_title" = "Atverti pokalbį";
 
+"profile.read_receipts_enabled_memo.header" = "JŪS ĮJUNGĖTE PERSKAITYMO PATVIRTINIMUS";
+"profile.read_receipts_disabled_memo.header" = "JŪS IŠUNGĖTE PERSKAITYMO PATVIRTINIMUS";
+"profile.read_receipts_memo.body" = "Jei abi pusės įjungia perskaitymo patvirtinimus, jūs galite matyti kai žinutė buvo perskaityta. Galite tai pakeisti paskyros nustatymuose.";
+
 // User Details
 "profile.details.title" = "Išsamiau";
 "profile.details.guest" = "Svečias";
@@ -758,7 +785,9 @@
 "group_details.guest_options_cell.disabled" = "Išjungta";
 "group_details.timeout_options_cell.title" = "Laikinos žinutės";
 "group_details.notification_options_cell.title" = "Pranešimai";
-"group_details.notification_options_cell.description" = "You can be notified about everything (including audio and video calls) or only when someone mentions you or replies to one of your messages.";
+"group_details.notification_options_cell.description" = "Jūms bus pranešta apie viską (įskaitant garso ir vaizdo skambučius) arba tik kai kažkas jus pamini arba atsako į jūsų žinutę.";
+"group_details.receipt_options_cell.title" = "Perskaitymo patvirtinimai";
+"group_details.receipt_options_cell.description" = "Įjungus, žmonės gali matyti ar jų žinutės buvo perskaitytos.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile
@@ -801,6 +830,12 @@
 "self.new_device_alert.manage_devices" = "Tvarkyti įrenginius";
 "self.new_device_alert.trust_devices" = "GERAI";
 
+// Settings changed alert
+
+"self.read_receipts_enabled.title" = "Jūs įjungėte perskaitymo patvirtinimus";
+"self.read_receipts_disabled.title" = "Jūs išjungėte perskaitymo patvirtinimus";
+"self.read_receipts_description.title" = "Galite pakeisti šį pasirinkimą savo paskyros nustatymuose.";
+
 // Settings - top level
 "self.settings.create_team.title" = "Sukurti komandą";
 "self.settings.manage_team.title" = "Valdyti komandą";
@@ -835,6 +870,11 @@
 "self.settings.account_details.remove_device.password.error" = "Neteisingas slaptažodis";
 
 "self.settings.account_appearance_group.title" = "Išvaizda";
+
+"self.settings.privacy_section_group.title" = "Privatumas";
+"self.settings.enable_read_receipts.title" = "Siųsti perskaitymo patvirtinimus";
+"self.settings.privacy_section_group.subtitle" = "Išjungus jūs nematysite perskaitymo patvirtinimų iš kitų žmonių. Šis nustatymas negalioja grupėse.";
+
 "self.settings.account_picture_group.picture" = "Paveikslas";
 "self.settings.account_picture_group.color" = "Spalva";
 
@@ -1477,3 +1517,19 @@
 "news_offers.consent.title" = "Ar norite gauti naujienas ir produktų pakeitimus iš „Wire“ el. paštu?";
 "news_offers.consent.message" = "Atsisakyti galite bet kada.";
 "news_offers.consent.button.privacy_policy.title" = "Privatumo politika";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Message Details
+"message_details.empty_likes" = "Niekas dar nepažymėjo, kad patinka.";
+"message_details.empty_read_receipts" = "Niekas dar neperskaitė šios žinutės.";
+"message_details.read_receipts_disabled" = "Perskaitymo patvirtinimai nebuvo įjungti kai žinutė buvo išsiųsta.";
+"message_details.combined_title" = "Žinutės duomenys";
+"message_details.likes_title" = "Patinka";
+"message_details.receipts_title" = "Perskaityta";
+"message_details.tabs.seen" = "Perskaityta (%d)";
+"message_details.tabs.likes" = "Patinka (%d)";
+"message_details.subtitle_send_date" = "Išsiųsta: %@";
+"message_details.subtitle_edit_date" = "Pakeista: %@";
+"message_details.subtitle_label_voiceOver" = "Žinutės duomenys";
+"message_details.user_handle_subtitle_label" = "Naudotojo vardas";
+"message_details.user_read_timestamp_subtitle_label" = "Perskaityta";
