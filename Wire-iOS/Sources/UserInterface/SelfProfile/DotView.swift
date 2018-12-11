@@ -75,11 +75,9 @@ class DotView: UIView {
     }
     
     internal func updateIndicator() {
-        guard let user = user else { return }
-
         showIndicator = hasUnreadMessages ||
-                        user.clientsRequiringUserAttention.count > 0 ||
-                        user.readReceiptsEnabledChangedRemotely
+                        user?.clientsRequiringUserAttention.count > 0 ||
+                        user?.readReceiptsEnabledChangedRemotely == true
     }
 }
 
