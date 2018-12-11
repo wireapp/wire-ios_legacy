@@ -33,7 +33,7 @@ class ConversationTextMessageCellTests: CoreDataSnapshotTestCase {
 
         // THEN
         let expectedCellTypes: [AnyClass] = [ConversationTextMessageCellDescription.self, ConversationSoundCloudCellDescription<AudioTrackViewController>.self]
-        XCTAssertEqual(cellTypes, expectedCellTypes)
+        XCTAssertArrayEqual(cellTypes, expectedCellTypes)
     }
 
 }

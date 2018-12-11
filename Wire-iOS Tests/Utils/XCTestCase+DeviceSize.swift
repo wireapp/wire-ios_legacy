@@ -41,6 +41,10 @@ extension XCTestCase {
         "iPad-Landscape": ZMDeviceSizeIPadLandscape
     ]
 
+    static var deviceScreenSizes: [String:CGSize] = {
+        return phoneScreenSizes.merging(tabletScreenSizes) { $1 }
+    }()
+
     /// return the smallest iPhone screen size that Wire app supports
     public var defaultIPhoneSize: CGSize {
         return XCTestCase.ZMDeviceSizeIPhone5

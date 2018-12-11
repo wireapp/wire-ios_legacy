@@ -4917,10 +4917,10 @@
 				F1C9E35E1EADFFB8006438D7 /* TestSetup.swift */,
 				EF2147DF219EE04000494FDE /* ZMSnapshotTestCase+Internal.h */,
 				BF5127141CC9118F00F23DEA /* ZMSnapshotTestCase.swift */,
+				EFD43FF621B82BB00050ABC5 /* XCTestCase+DeviceSize.swift */,
 				EF15A7B520BC34F700A045C7 /* XCTestCase+ImageFromBundle.swift */,
 				EF19209C20C6E4F700E4B92D /* XCTestCase+DayFormatter.swift */,
 				EF10CB1E2151057D00AEA8EA /* UITableViewCell+Snapshot.swift */,
-				EFD43FF621B82BB00050ABC5 /* XCTestCase+DeviceSize.swift */,
 				BFFE943D1E7839EB0025AD75 /* CoreDataSnapshotTestCase.swift */,
 				5E294594219081A80045ACFA /* Date+Generator.swift */,
 			);

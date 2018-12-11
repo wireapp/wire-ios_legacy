@@ -77,14 +77,10 @@ extension StaticString {
     }
 }
 
-class ZMSnapshotTestCase: FBSnapshotTestCase {
+open class ZMSnapshotTestCase: FBSnapshotTestCase {
 
     typealias ConfigurationWithDeviceType = (_ view: UIView, _ isPad: Bool) -> Void
     typealias Configuration = (_ view: UIView) -> Void
-
-    private static var deviceScreenSizes: [String:CGSize] = {
-        return phoneScreenSizes.merging(tabletScreenSizes) { $1 }
-    }()
 
     var uiMOC: NSManagedObjectContext!
 
@@ -111,7 +107,7 @@ class ZMSnapshotTestCase: FBSnapshotTestCase {
 
     var documentsDirectory: URL?
 
-    override public func setUp() {
+    override open func setUp() {
         super.setUp()
 
         XCTAssertEqual(UIScreen.main.scale, 2, "Snapshot tests need to be run on a device with a 2x scale")

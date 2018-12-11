@@ -90,7 +90,7 @@ class ConversationCellSnapshotTestCase: CoreDataSnapshotTestCase {
 
 }
 
-func XCTAssertEqual(_ descriptions: [AnyClass], _ expectedDescriptions: [AnyClass], file: StaticString = #file, line: UInt = #line) {
+func XCTAssertArrayEqual(_ descriptions: [Any], _ expectedDescriptions: [Any], file: StaticString = #file, line: UInt = #line) {
     let classes = descriptions.map { String(describing: $0) }
     let expectedClasses = expectedDescriptions.map { String(describing: $0) }
     XCTAssertEqual(classes, expectedClasses, file: file, line: line)
