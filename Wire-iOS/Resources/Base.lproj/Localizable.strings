@@ -292,7 +292,7 @@
 "conversation.create.guidance.empty" = "At least 1 character";
 "conversation.create.guidance.toolong" = "Too many characters";
 "conversation.create.options.title" = "Conversation options";
-"conversation.create.options.subtitle" = "Allow guests: %@, Read receipts: %@";
+"conversation.create.options.subtitle" = "Guests and services: %@, Read receipts: %@";
 "conversation.create.guests.title" = "Allow guests and services";
 "conversation.create.guests.subtitle" = "Open this conversation to services and people outside your team.";
 "conversation.create.receipts.title" = "Read receipts";
