@@ -214,11 +214,11 @@ extension ZMSnapshotTestCase {
     }
 
     func phoneSizes() -> [NSValue] {
-        return [NSValue(cgSize: XCTestCase.ZMDeviceSizeIPhone5),
-                NSValue(cgSize: XCTestCase.ZMDeviceSizeIPhone6),
-                NSValue(cgSize: XCTestCase.ZMDeviceSizeIPhone6Plus),
-                NSValue(cgSize: XCTestCase.ZMDeviceSizeIPhoneX),     ///same size as iPhone Xs Max
-            NSValue(cgSize: XCTestCase.ZMDeviceSizeIPhoneXR)]
+        return [NSValue(cgSize: XCTestCase.DeviceSizeIPhone5),
+                NSValue(cgSize: XCTestCase.DeviceSizeIPhone6),
+                NSValue(cgSize: XCTestCase.DeviceSizeIPhone6Plus),
+                NSValue(cgSize: XCTestCase.DeviceSizeIPhoneX),     ///same size as iPhone Xs Max
+            NSValue(cgSize: XCTestCase.DeviceSizeIPhoneXR)]
     }
 
     func snapshotVerify(view: UIView,

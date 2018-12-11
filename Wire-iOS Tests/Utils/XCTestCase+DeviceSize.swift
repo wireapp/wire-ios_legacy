@@ -19,20 +19,20 @@
 import XCTest
 
 extension XCTestCase {
-    static let ZMDeviceSizeIPhone5          = CGSize(width: 320, height: 568)
-    static let ZMDeviceSizeIPhone6          = CGSize(width: 375, height: 667)
-    static let ZMDeviceSizeIPhone6Plus      = CGSize(width: 414, height: 736)
-    static let ZMDeviceSizeIPhoneX          = CGSize(width: 375, height: 812)
-    static let ZMDeviceSizeIPhoneXR         = CGSize(width: 414, height: 896)
-    static let ZMDeviceSizeIPadPortrait     = CGSize(width: 768, height: 1024)
-    static let ZMDeviceSizeIPadLandscape    = CGSize(width: 1024, height: 768)
+    static let DeviceSizeIPhone5          = CGSize(width: 320, height: 568)
+    static let DeviceSizeIPhone6          = CGSize(width: 375, height: 667)
+    static let DeviceSizeIPhone6Plus      = CGSize(width: 414, height: 736)
+    static let DeviceSizeIPhoneX          = CGSize(width: 375, height: 812)
+    static let DeviceSizeIPhoneXR         = CGSize(width: 414, height: 896)
+    static let ZMDeviceSizeIPadPortrait   = CGSize(width: 768, height: 1024)
+    static let ZMDeviceSizeIPadLandscape  = CGSize(width: 1024, height: 768)
 
     static let phoneScreenSizes: [String:CGSize] = [
-        "iPhone-4_0_Inch": ZMDeviceSizeIPhone5,
-        "iPhone-4_7_Inch": ZMDeviceSizeIPhone6,
-        "iPhone-5_5_Inch": ZMDeviceSizeIPhone6Plus,
-        "iPhone-5_8_Inch": ZMDeviceSizeIPhoneX,
-        "iPhone-6_5_Inch": ZMDeviceSizeIPhoneXR
+        "iPhone-4_0_Inch": DeviceSizeIPhone5,
+        "iPhone-4_7_Inch": DeviceSizeIPhone6,
+        "iPhone-5_5_Inch": DeviceSizeIPhone6Plus,
+        "iPhone-5_8_Inch": DeviceSizeIPhoneX,
+        "iPhone-6_5_Inch": DeviceSizeIPhoneXR
     ]
 
     /// we should add iPad Pro sizes
@@ -47,6 +47,6 @@ extension XCTestCase {
 
     /// return the smallest iPhone screen size that Wire app supports
     public var defaultIPhoneSize: CGSize {
-        return XCTestCase.ZMDeviceSizeIPhone5
+        return XCTestCase.DeviceSizeIPhone5
     }
 }
