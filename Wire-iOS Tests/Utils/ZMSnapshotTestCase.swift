@@ -364,10 +364,10 @@ extension ZMSnapshotTestCase {
                                  file: StaticString = #file,
                                  line: UInt = #line) {
         assertAmbigousLayout(view, file: file, line: line)
-        for value in tabletSizes() {
+        for width in tabletWidths() {
             verifyView(view: view,
                        extraLayoutPass: extraLayoutPass,
-                       width: value.cgSizeValue.width,
+                       width: width,
                        configuration: configuration,
                        file: file,
                        line: line)

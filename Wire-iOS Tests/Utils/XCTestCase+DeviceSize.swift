@@ -24,8 +24,8 @@ extension XCTestCase {
     static let DeviceSizeIPhone6Plus      = CGSize(width: 414, height: 736)
     static let DeviceSizeIPhoneX          = CGSize(width: 375, height: 812)
     static let DeviceSizeIPhoneXR         = CGSize(width: 414, height: 896) ///same size as iPhone Xs Max
-    static let DeviceSizeIPadPortrait   = CGSize(width: 768, height: 1024)
-    static let DeviceSizeIPadLandscape  = CGSize(width: 1024, height: 768)
+    static let DeviceSizeIPadPortrait     = CGSize(width: 768, height: 1024)
+    static let DeviceSizeIPadLandscape    = CGSize(width: 1024, height: 768)
 
     static let phoneScreenSizes: [String:CGSize] = [
         "iPhone-4_0_Inch": DeviceSizeIPhone5,
@@ -45,13 +45,15 @@ extension XCTestCase {
         return phoneScreenSizes.merging(tabletScreenSizes) { $1 }
     }()
 
-    func tabletSizes() -> [NSValue] {
-        return [NSValue(cgSize: XCTestCase.DeviceSizeIPadPortrait), NSValue(cgSize: XCTestCase.DeviceSizeIPadLandscape)]
+    func phoneWidths() -> Set<CGFloat> {
+        return Set(XCTestCase.phoneScreenSizes.map( { size in
+            return size.value.width
+        }))
     }
 
-    func phoneWidths() -> Set<CGFloat> {
-        return Set(XCTestCase.phoneScreenSizes.map( { boxedSize in
-            return boxedSize.value.width
+    func tabletWidths() -> Set<CGFloat> {
+        return Set(XCTestCase.tabletScreenSizes.map( { size in
+            return size.value.width
         }))
     }
 
