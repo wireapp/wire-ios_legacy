@@ -51,6 +51,37 @@ class ConversationMessageActionControllerTests: CoreDataSnapshotTestCase {
         XCTAssertNil(singleTapAction)
     }
 
+    // MARK: - Double Tap Action
+
+    func testThatItAllowsToLikeMessage() {
+        // GIVEN
+        let message = MockMessageFactory.textMessage(withText: "Super likeable")!
+        message.sender = otherUser
+        message.conversation = otherUserConversation
+
+        // WHEN
+        let actionController = ConversationMessageActionController(responder: nil, message: message, context: .content)
+        let doubleTapAction = actionController.doubleTapAction
+
+        // THEN
+        XCTAssertEqual(doubleTapAction, .like)
+    }
+
+    func testThatItDoesNotAllowToLikeEphemeralMessage() {
+        // GIVEN
+        let message = MockMessageFactory.textMessage(withText: "Super likeable")!
+        message.sender = otherUser
+        message.conversation = otherUserConversation
+        message.isEphemeral = true
+
+        // WHEN
+        let actionController = ConversationMessageActionController(responder: nil, message: message, context: .content)
+        let doubleTapAction = actionController.doubleTapAction
+
+        // THEN
+        XCTAssertNil(doubleTapAction)
+    }
+
     // MARK: - Reply
 
     func testThatItDoesNotShowReplyItemForUnsentTextMessage() {

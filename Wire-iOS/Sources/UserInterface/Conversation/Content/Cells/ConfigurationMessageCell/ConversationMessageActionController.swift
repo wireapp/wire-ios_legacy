@@ -108,11 +108,10 @@ import UIKit
     
     @objc func performSingleTapAction() {
         guard let singleTapAction = singleTapAction else { return }
-        
         responder?.wants(toPerform: singleTapAction, for: message)
     }
     
-    internal var singleTapAction: MessageAction? {
+    var singleTapAction: MessageAction? {
         if message.isImage, message.imageMessageData?.isDownloaded == true {
             return .present
         } else if message.isFile, !message.isAudio, let transferState = message.fileMessageData?.transferState {
@@ -125,6 +124,17 @@ import UIKit
         }
         
         return nil
+    }
+
+    // MARK: - Double Tap Action
+
+    @objc func performDoubleTapAction() {
+        guard let doubleTapAction = doubleTapAction else { return }
+        responder?.wants(toPerform: doubleTapAction, for: message)
+    }
+
+    var doubleTapAction: MessageAction? {
+        return message.canBeLiked ? .like : nil
     }
 
     // MARK: - Handler
@@ -164,7 +174,7 @@ import UIKit
     @objc func likeMessage() {
         responder?.wants(toPerform: .like, for: message)
     }
-    
+
     @objc func unlikeMessage() {
         responder?.wants(toPerform: .like, for: message)
     }

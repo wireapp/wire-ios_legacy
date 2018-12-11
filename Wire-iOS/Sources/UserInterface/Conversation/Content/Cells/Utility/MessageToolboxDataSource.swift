@@ -26,8 +26,8 @@ enum MessageToolboxContent: Equatable {
     /// Display the list of reactions.
     case reactions(NSAttributedString, likers: [ZMUser])
 
-    /// Display the message details (timestamp and/or status).
-    case details(timestamp: NSAttributedString?, status: NSAttributedString?, likers: [ZMUser])
+    /// Display the message details (timestamp and/or status and/or countdown).
+    case details(timestamp: NSAttributedString?, status: NSAttributedString?, countdown: NSAttributedString?, likers: [ZMUser])
 }
 
 extension MessageToolboxContent: Comparable {
@@ -79,7 +79,7 @@ class MessageToolboxDataSource {
     /// Creates a toolbox data source for the given message.
     init(message: ZMConversationMessage) {
         self.message = message
-        self.content = .details(timestamp: nil, status: nil, likers: [])
+        self.content = .details(timestamp: nil, status: nil, countdown: nil, likers: [])
     }
 
     // MARK: - Content
@@ -113,8 +113,8 @@ class MessageToolboxDataSource {
         }
         // 3) Timestamp
         else {
-            let (timestamp, status) = makeDetailsString()
-            content = .details(timestamp: timestamp, status: status, likers: likers)
+            let (timestamp, status, countdown) = makeDetailsString()
+            content = .details(timestamp: timestamp, status: status, countdown: countdown, likers: likers)
         }
 
         // Only perform the changes if the content did change.
@@ -159,29 +159,9 @@ class MessageToolboxDataSource {
     // MARK: - Details Text
 
     /// Creates a label that display the status of the message.
-    private func makeDetailsString() -> (NSAttributedString?, NSAttributedString?) {
-        var deliveryStateString: NSAttributedString? = selfStatus(for: message)
-
-        // Ephemeral overrides
-
-        let showDestructionTimer = message.isEphemeral && !message.isObfuscated && nil != message.destructionDate
-        if let destructionDate = message.destructionDate, showDestructionTimer {
-            let remaining = destructionDate.timeIntervalSinceNow + 1 // We need to add one second to start with the correct value
-
-            if remaining > 0 {
-                if let string = MessageToolboxDataSource.ephemeralTimeFormatter.string(from: remaining) {
-                    if let existingString = deliveryStateString {
-                        deliveryStateString = existingString + MessageToolboxDataSource.separator + string && attributes
-                    }
-                    else {
-                        deliveryStateString = string && attributes
-                    }
-                }
-            } else if message.isAudio {
-                // do nothing, audio messages are allowed to extend the timer
-                // past the destruction date.
-            }
-        }
+    private func makeDetailsString() -> (NSAttributedString?, NSAttributedString?, NSAttributedString?) {
+        let deliveryStateString: NSAttributedString? = selfStatus(for: message)
+        let countdownStatus = makeEphemeralCountdown()
 
         // System message overrides
 
@@ -198,19 +178,37 @@ class MessageToolboxDataSource {
                 return "\(text)\n\(current)"
             })
 
-            return (finalText, deliveryStateString)
+            return (finalText, deliveryStateString, countdownStatus)
         } else if let timestampString = self.timestampString(message),
             message.deliveryState.isOne(of: .delivered, .sent, .read) {
             if let deliveryStateString = deliveryStateString, Message.shouldShowDeliveryState(message) {
-                return (timestampString && attributes, deliveryStateString)
+                return (timestampString && attributes, deliveryStateString, countdownStatus)
             }
             else {
-                return (timestampString && attributes, nil)
+                return (timestampString && attributes, nil, countdownStatus)
             }
         }
         else {
-            return (nil, deliveryStateString)
+            return (nil, deliveryStateString, countdownStatus)
         }
+    }
+
+    private func makeEphemeralCountdown() -> NSAttributedString? {
+        let showDestructionTimer = message.isEphemeral && !message.isObfuscated && nil != message.destructionDate
+        if let destructionDate = message.destructionDate, showDestructionTimer {
+            let remaining = destructionDate.timeIntervalSinceNow + 1 // We need to add one second to start with the correct value
+
+            if remaining > 0 {
+                if let string = MessageToolboxDataSource.ephemeralTimeFormatter.string(from: remaining) {
+                    return string && attributes
+                }
+            } else if message.isAudio {
+                // do nothing, audio messages are allowed to extend the timer
+                // past the destruction date.
+            }
+        }
+
+        return nil
     }
 
     /// Returns the status for the sender of the message.
@@ -242,6 +240,11 @@ class MessageToolboxDataSource {
 
         switch conversationType {
         case .group:
+            let attributes: [NSAttributedString.Key: AnyObject] = [
+                .font: UIFont.monospacedDigitSystemFont(ofSize: 10, weight: .semibold),
+                .foregroundColor: statusTextColor
+            ]
+
             let imageIcon = NSTextAttachment.textAttachment(for: .eye, with: statusTextColor, verticalCorrection: -1)!
             return NSAttributedString(attachment: imageIcon) + " \(message.readReceipts.count)" && attributes
 
