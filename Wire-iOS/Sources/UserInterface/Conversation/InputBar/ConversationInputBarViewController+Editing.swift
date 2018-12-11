@@ -50,6 +50,7 @@ extension ConversationInputBarViewController {
             self.conversation.draftMessage = nil
         }
         updateWritingState(animated: true)
+        conversation.setIsTyping(false)
 
         NotificationCenter.default.removeObserver(
             self,
