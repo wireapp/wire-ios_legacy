@@ -202,22 +202,12 @@ class ConversationMessageCellTableViewAdapter<C: ConversationMessageCellDescript
         }
     }
 
-    // MARK: - Double Tap To Like
+    // MARK: - Double Tap Action
 
     @objc private func onDoubleTap(_ gestureRecognizer: UITapGestureRecognizer) {
-        if gestureRecognizer.state == .recognized {
-            likeMessage()
+        if gestureRecognizer.state == .recognized && cellDescription?.supportsActions == true {
+            cellDescription?.actionController?.performDoubleTapAction()
         }
-    }
-
-    // MARK: - Standard Actions
-    
-    private func likeMessage() {
-        guard cellDescription?.supportsActions == true else {
-            return
-        }
-
-        cellDescription?.actionController?.likeMessage()
     }
 
     // MARK: - Target / Action
