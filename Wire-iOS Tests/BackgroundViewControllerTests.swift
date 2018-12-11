@@ -42,7 +42,9 @@ class BackgroundViewControllerTests: CoreDataSnapshotTestCase {
         // GIVEN
         selfUser.imageMediumData = image(inTestBundleNamed: "unsplash_matterhorn.jpg").pngData()
         let sut = BackgroundViewController(user: selfUser, userSession: .none)
-        _ = sut.view // make sure view is loaded
+
+        sut.loadViewIfNeeded()
+
         XCTAssertTrue(waitForGroupsToBeEmpty([sut.dispatchGroup]))
         
         // WHEN & THEN
