@@ -376,8 +376,18 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 #pragma mark - Send Invite
 
-- (void)inviteContact:(ZMAddressBookContact *)contact fromView:(UIView *)view
+
+/**
+ return a UIAlertController depends contact has email or phone number
+
+ @param contact a ZMAddressBookContact object
+ @param view the source view
+ @return a UIAlertController which let the user to choose invite via email or phone number or no email client is set
+ */
+- (UIAlertController *)inviteContact:(ZMAddressBookContact *)contact fromView:(UIView *)view
 {
+    UIAlertController * alertController;
+
     if (contact.contactDetails.count == 1) {
         if (contact.emailAddresses.count == 1 && [ZMAddressBookContact canInviteLocallyWithEmail]) {
             [contact inviteLocallyWithEmail:contact.emailAddresses[0]];
@@ -399,8 +409,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
                                                                  }];
                 [unableToSendController addAction:okAction];
 
-                [unableToSendController presentInNotificationsWindow];
-                return;
+                return unableToSendController;
             }
             else if (contact.rawPhoneNumbers.count == 1 && ![ZMAddressBookContact canInviteLocallyWithPhoneNumber]) {
                 ZMLogError(@"Cannot invite person: email is not configured");
@@ -413,7 +422,8 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
                                                                      [unableToSendController dismissViewControllerAnimated:YES completion:nil];
                                                                  }];
                 [unableToSendController addAction:okAction];
-                [unableToSendController presentInNotificationsWindow];
+
+                alertController = unableToSendController;
             }
         }
     }
@@ -428,8 +438,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
                                                              }];
             [unableToSendController addAction:okAction];
 
-            [unableToSendController presentInNotificationsWindow];
-            return;
+            return unableToSendController;
         }
         
         UIAlertController *chooseContactDetailController = [UIAlertController alertControllerWithTitle:nil
@@ -465,8 +474,10 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
             [chooseContactDetailController dismissViewControllerAnimated:YES completion:nil];
         }]];
 
-        [chooseContactDetailController presentInNotificationsWindow];
+        alertController = chooseContactDetailController;
     }
+
+    return alertController;
 }
 
 @end
