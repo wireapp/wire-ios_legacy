@@ -34,7 +34,7 @@ final class InviteContactsViewControllerSnapshotTests: ZMSnapshotTestCase {
         sut = nil
         super.tearDown()
     }
-    fileprivate func wrapInNavigationControllerWithDummyPerviosViewController() {
+    fileprivate func wrapInNavigationControllerWithDummyPerviousViewController() {
 
         let navigationController = UIViewController().wrapInNavigationController(ClearBackgroundNavigationController.self)
 
@@ -47,7 +47,7 @@ final class InviteContactsViewControllerSnapshotTests: ZMSnapshotTestCase {
     }
 
     fileprivate func snapshotWithNavigationBarWithBackButton(file: StaticString = #file, line: UInt = #line) {
-        wrapInNavigationControllerWithDummyPerviosViewController()
+        wrapInNavigationControllerWithDummyPerviousViewController()
 
         verify(view: sut.view)
     }
