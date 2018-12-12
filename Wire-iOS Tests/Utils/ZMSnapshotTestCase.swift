@@ -479,13 +479,15 @@ extension ZMSnapshotTestCase {
 extension ZMSnapshotTestCase {
     func presentViewController(_ controller: UIViewController, file: StaticString = #file, line: UInt = #line) {
         // Given
-        let window = UIWindow(frame: .init(x: 0, y: 0, width: 375, height: 667))
+        let window = UIWindow(frame: CGRect(origin: .zero, size: XCTestCase.DeviceSizeIPhone6))
+
         let container = UIViewController()
         container.loadViewIfNeeded()
+
         window.rootViewController = container
         window.makeKeyAndVisible()
+
         controller.loadViewIfNeeded()
-        controller.view.setNeedsLayout()
         controller.view.layoutIfNeeded()
 
         // When
