@@ -463,8 +463,9 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         [chooseContactDetailController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"contacts_ui.invite_sheet.cancel_button_title", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
             [chooseContactDetailController dismissViewControllerAnimated:YES completion:nil];
         }]];
-        
-        [self presentViewController:chooseContactDetailController animated:YES completion:nil];
+
+        ///TODO: check all present by...
+        [[AppDelegate sharedAppDelegate].notificationsWindow.rootViewController presentViewController:chooseContactDetailController animated:YES completion:nil];
     }
 }
 
