@@ -45,12 +45,12 @@ CODE_SIGN_STYLE = Manual
 DEBUG_INFORMATION_FORMAT = dwarf-with-dsym
 
 // Linking
-LD_RUNPATH_SEARCH_PATHS = $(inherited) @executable_path/Frameworks @loader_path/Frameworks $(PROJECT_DIR)/Carthage/Build/iOS
+LD_RUNPATH_SEARCH_PATHS = $(inherited) @executable_path/Frameworks @loader_path/Frameworks
 
 // Search Paths
 //
 FRAMEWORK_SEARCH_PATHS = $(inherited) $(PROJECT_DIR)/Carthage/Build/iOS
-HEADER_SEARCH_PATHS = $(inherited) "$(TARGET_TEMP_DIR)/../$(PROJECT_NAME).build/DerivedSources"
+HEADER_SEARCH_PATHS = $(inherited) "$(TARGET_TEMP_DIR)/DerivedSources"
 ALWAYS_SEARCH_USER_PATHS = NO
 
 // LLVM compiler - Language
