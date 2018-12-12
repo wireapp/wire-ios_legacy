@@ -65,7 +65,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) Button *__nullable bottomButton;
 @property (nonatomic) BOOL shouldShowShareContactsViewController;
 
-- (void)inviteContact:(ZMAddressBookContact *)contact fromView:(UIView *)view;
+- (UIAlertController *)inviteContact:(ZMAddressBookContact *)contact fromView:(UIView *)view;
 
 @end
 

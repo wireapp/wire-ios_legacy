@@ -82,7 +82,9 @@
             [self.tableView reloadData];
         }];
     } else {
-        [self inviteContact:user.contact fromView:view];
+        UIAlertController * alertController = [self inviteContact:user.contact fromView:view];
+
+        [alertController presentInNotificationsWindow];
     }
 }
 
