@@ -72,7 +72,7 @@ class MessageToolboxDataSource {
         return [.font: statusFont, .foregroundColor: statusTextColor]
     }
 
-    private static let separator = String.MessageToolbox.middleDot
+    private static let separator = " " + String.MessageToolbox.middleDot + " "
     
     // MARK: - Initialization
 

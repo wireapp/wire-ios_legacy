@@ -188,7 +188,7 @@ import Cartography
         if duration != 0 {
             let (seconds, minutes) = (duration % 60, duration / 60)
             let time = String(format: "%d:%02d", minutes, seconds)
-            timeLabelText = time + " · " + timeLabelText
+            timeLabelText = time + " " + String.MessageToolbox.middleDot + " " + timeLabelText
         }
         
         self.timeLabel.text = timeLabelText
