@@ -398,7 +398,8 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
                                                                      [unableToSendController dismissViewControllerAnimated:YES completion:nil];
                                                                  }];
                 [unableToSendController addAction:okAction];
-                [self presentViewController:unableToSendController animated:YES completion:nil];
+
+                [unableToSendController presentInNotificationsWindow];
                 return;
             }
             else if (contact.rawPhoneNumbers.count == 1 && ![ZMAddressBookContact canInviteLocallyWithPhoneNumber]) {
@@ -412,7 +413,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
                                                                      [unableToSendController dismissViewControllerAnimated:YES completion:nil];
                                                                  }];
                 [unableToSendController addAction:okAction];
-                [self presentViewController:unableToSendController animated:YES completion:nil];
+                [unableToSendController presentInNotificationsWindow];
             }
         }
     }
@@ -427,7 +428,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
                                                              }];
             [unableToSendController addAction:okAction];
 
-            [[AppDelegate sharedAppDelegate].notificationsWindow.rootViewController presentViewController:unableToSendController animated:YES completion:nil];
+            [unableToSendController presentInNotificationsWindow];
             return;
         }
         
@@ -464,8 +465,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
             [chooseContactDetailController dismissViewControllerAnimated:YES completion:nil];
         }]];
 
-        ///TODO: check all present by...
-        [[AppDelegate sharedAppDelegate].notificationsWindow.rootViewController presentViewController:chooseContactDetailController animated:YES completion:nil];
+        [chooseContactDetailController presentInNotificationsWindow];
     }
 }
 
