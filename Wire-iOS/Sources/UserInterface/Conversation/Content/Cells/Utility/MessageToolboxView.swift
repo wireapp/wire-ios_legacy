@@ -66,7 +66,7 @@ import WireSyncEngine
         label.numberOfLines = 1
         label.textColor = UIColor.from(scheme: .textDimmed)
         label.font = UIFont.smallSemiboldFont
-        label.text = "·"
+        label.text = String.MessageToolbox.middleDot
         label.isAccessibilityElement = false
         label.setContentHuggingPriority(.required, for: .horizontal)
         label.setContentCompressionResistancePriority(.required, for: .horizontal)
@@ -78,7 +78,7 @@ import WireSyncEngine
         label.numberOfLines = 1
         label.textColor = UIColor.from(scheme: .textDimmed)
         label.font = UIFont.smallSemiboldFont
-        label.text = "·"
+        label.text = String.MessageToolbox.middleDot
         label.isAccessibilityElement = false
         label.setContentHuggingPriority(.required, for: .horizontal)
         label.setContentCompressionResistancePriority(.required, for: .horizontal)
