@@ -148,7 +148,7 @@ class MessageToolboxDataSource {
         let constrainedSize = CGSize(width:  CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude)
         let labelSize = likersNamesAttributedString.boundingRect(with: constrainedSize, options: [.usesFontLeading, .usesLineFragmentOrigin], context: nil)
 
-        if labelSize.width > widthConstraint {
+        if likers.count >= 3 || labelSize.width > widthConstraint {
             let likersCount = String(format: "participants.people.count".localized, likers.count)
             return likersCount && attributes
         } else {

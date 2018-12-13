@@ -225,6 +225,10 @@ import WireSyncEngine
 
     // MARK: - Configuration
 
+    private var contentWidth: CGFloat {
+        return bounds.width - UIView.conversationLayoutMargins.left - UIView.conversationLayoutMargins.right
+    }
+
     @objc func configureForMessage(_ message: ZMConversationMessage, forceShowTimestamp: Bool, animated: Bool = false) {
         if dataSource?.message.nonce != message.nonce {
             dataSource = MessageToolboxDataSource(message: message)
@@ -245,7 +249,7 @@ import WireSyncEngine
         guard let dataSource = self.dataSource else { return }
 
         // Do not reload the content if it didn't change.
-        guard let newPosition = dataSource.updateContent(forceShowTimestamp: forceShowTimestamp, widthConstraint: bounds.width) else {
+        guard let newPosition = dataSource.updateContent(forceShowTimestamp: forceShowTimestamp, widthConstraint: contentWidth) else {
             return
         }
 

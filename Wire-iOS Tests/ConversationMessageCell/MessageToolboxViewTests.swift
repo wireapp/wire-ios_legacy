@@ -254,4 +254,20 @@ final class MessageToolboxViewTests: CoreDataSnapshotTestCase {
 
     }
 
+    func testThatItDisplaysLongListOfLikers() {
+        // GIVEN
+        let conversation = createGroupConversation()
+        message.conversation = conversation
+        message.sender = selfUser
+
+        let remoteUser = createUser(name: "Esteban Julio Ricardo Montoya de la Rosa Ramírez")
+        message.backingUsersReaction = [MessageReaction.like.unicodeValue: [otherUser, remoteUser]]
+
+        // WHEN
+        sut.configureForMessage(message, forceShowTimestamp: false, animated: false)
+
+        // THEN
+        verify(view: sut)
+    }
+
 }
