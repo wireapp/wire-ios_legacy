@@ -274,6 +274,22 @@ class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
         }
     }
 
+    func testThatItShowsReceiptsOnly_Pings() {
+        teamTest {
+            // GIVEN
+            let message = MockMessageFactory.pingMessage()!
+            message.sender = selfUser
+            message.conversation = self.createGroupConversation()
+            message.needsReadConfirmation = true
+
+            // WHEN
+            let detailsViewController = MessageDetailsViewController(message: message)
+
+            // THEN
+            snapshot(detailsViewController)
+        }
+    }
+
     // MARK: - Deallocation
 
     func testThatItDeallocates() {
