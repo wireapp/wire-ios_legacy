@@ -69,8 +69,8 @@ extension ZMConversationMessage {
             return true
         } else {
             // In Consumer groups, read receipts are not supported. If the message
-            // is ephemeral, we cannot not show the likes details
-            return !self.isEphemeral
+            // cannot be liked, we cannot not show the likes details
+            return canBeLiked
         }
     }
 

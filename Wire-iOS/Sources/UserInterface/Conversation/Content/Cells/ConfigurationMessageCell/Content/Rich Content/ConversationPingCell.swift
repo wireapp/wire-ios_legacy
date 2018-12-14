@@ -143,7 +143,7 @@ class ConversationPingCellDescription: ConversationMessageCellDescription {
 
     var topMargin: Float = 0
     let isFullWidth: Bool = true
-    let supportsActions: Bool = false
+    let supportsActions: Bool = true
     let containsHighlightableContent: Bool = false
 
     let accessibilityIdentifier: String? = nil

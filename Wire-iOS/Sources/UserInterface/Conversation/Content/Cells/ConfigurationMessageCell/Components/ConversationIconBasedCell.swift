@@ -39,6 +39,10 @@ class ConversationIconBasedCell: UIView, TTTAttributedLabelDelegate {
         return textLabel
     }
 
+    var selectionRect: CGRect {
+        return textLabel.bounds
+    }
+
     var attributedText: NSAttributedString? {
         didSet {
             textLabel.text = attributedText
