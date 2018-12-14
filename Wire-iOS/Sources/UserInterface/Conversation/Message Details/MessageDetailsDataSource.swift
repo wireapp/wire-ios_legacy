@@ -39,7 +39,7 @@ protocol MessageDetailsDataSourceObserver: class {
  * The data source to present message details.
  */
 
-class MessageDetailsDataSource: NSObject, ZMMessageObserver {
+class MessageDetailsDataSource: NSObject, ZMMessageObserver, ZMUserObserver {
 
     /// The presented message.
     let message: ZMConversationMessage
@@ -74,10 +74,6 @@ class MessageDetailsDataSource: NSObject, ZMMessageObserver {
     // MARK: - Initialization
 
     private var observationTokens: [Any] = []
-
-    deinit {
-        observationTokens.removeAll()
-    }
 
     init(message: ZMConversationMessage) {
         self.message = message
@@ -155,10 +151,18 @@ class MessageDetailsDataSource: NSObject, ZMMessageObserver {
         }
     }
 
+    func userDidChange(_ changeInfo: UserChangeInfo) {
+        performChanges {
+            self.reactions = MessageDetailsCellDescription.makeReactionCells(message.sortedLikers)
+            self.readReceipts = MessageDetailsCellDescription.makeReceiptCell(message.sortedReadReceipts)
+        }
+    }
+
     private func setupObservers() {
         if let userSession = ZMUserSession.shared() {
             let messageObserver = MessageChangeInfo.add(observer: self, for: message, userSession: userSession)
-            observationTokens = [messageObserver]
+            let userObserver = UserChangeInfo.add(userObserver: self, for: nil, userSession: userSession)
+            observationTokens = [messageObserver, userObserver]
         }
     }
 
