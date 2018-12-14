@@ -18,13 +18,20 @@
 
 import Foundation
 
-extension UITableView {
+extension UpsideDownTableView {
     @objc(scrollToBottomAnimated:)
     func scrollToBottom(animated: Bool) {
+        // upside-down tableview's bottom is rightside-up tableview's top
+        super.scrollToTop(animated: animated)
+    }
+}
+
+private extension UITableView {
+    func scrollToTop(animated: Bool) {
         // kill existing scrolling animation
         self.setContentOffset(self.contentOffset, animated: false)
         
-        // scroll to bottom
-        self.setContentOffset(CGPoint(x: 0, y: self.contentInset.bottom), animated:animated)
+        // sroll completely to top
+        self.setContentOffset(CGPoint(x: 0, y: -self.contentInset.top), animated:animated)
     }
 }
