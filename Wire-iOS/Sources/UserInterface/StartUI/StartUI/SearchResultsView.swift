@@ -17,7 +17,6 @@
 //
 
 import Foundation
-import Cartography
 
 @objcMembers class SearchResultsView : UIView {
     
@@ -61,24 +60,29 @@ import Cartography
     }
     
     func createConstraints() {
-        
-        constrain(self, collectionView, accessoryContainer, emptyResultContainer) { container, collectionView, accessoryContainer, emptyResultContainer in
-            
-            collectionView.top == container.top
-            collectionView.left == container.left
-            collectionView.right == container.right
-            collectionView.bottom == accessoryContainer.top
 
-            accessoryContainer.left == container.left
-            accessoryContainer.right == container.right
-            accessoryContainerHeightConstraint = accessoryContainer.height == 0
-            accessoryViewBottomOffsetConstraint = accessoryContainer.bottom == container.bottom
-            
-            emptyResultContainer.centerY == container.centerY - 64
-            emptyResultContainer.centerX == container.centerX
-            emptyResultContainer.leading >= container.leading
-            emptyResultContainer.trailing <= container.trailing
+        [collectionView, accessoryContainer, emptyResultContainer].forEach { view in
+            view.translatesAutoresizingMaskIntoConstraints = false
         }
+
+        collectionView.fitInSuperview(exclude: .bottom)
+
+        accessoryContainerHeightConstraint = accessoryContainer.heightAnchor.constraint(equalToConstant: 0)
+        accessoryViewBottomOffsetConstraint = accessoryContainer.bottomAnchor.constraint(equalTo: bottomAnchor)
+
+        NSLayoutConstraint.activate([
+            collectionView.bottomAnchor.constraint(equalTo: accessoryContainer.topAnchor),
+
+            accessoryContainer.leadingAnchor.constraint(equalTo: leadingAnchor),
+            accessoryContainer.trailingAnchor.constraint(equalTo: trailingAnchor),
+            accessoryContainerHeightConstraint!,
+            accessoryViewBottomOffsetConstraint!,
+
+            emptyResultContainer.centerYAnchor.constraint(equalTo: centerYAnchor, constant: -64),
+            emptyResultContainer.centerXAnchor.constraint(equalTo: centerXAnchor),
+            emptyResultContainer.leadingAnchor.constraint(greaterThanOrEqualTo: leadingAnchor),
+            emptyResultContainer.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor)
+            ])
     }
     
     override func layoutSubviews() {
@@ -100,9 +104,8 @@ import Cartography
             if let accessoryView = accessoryView {
                 accessoryContainer.addSubview(accessoryView)
                 accessoryContainerHeightConstraint?.isActive = false
-                constrain(accessoryContainer, accessoryView) { container, accessoryView in
-                    accessoryView.edges == container.edges
-                }
+
+                accessoryView.fitInSuperview()
             }
             else {
                 accessoryContainerHeightConstraint?.isActive = true
@@ -120,10 +123,8 @@ import Cartography
             
             if let emptyResultView = emptyResultView {
                 emptyResultContainer.addSubview(emptyResultView)
-                
-                constrain(emptyResultContainer, emptyResultView) { container, emptyResultView in
-                    emptyResultView.edges == container.edges
-                }
+
+                emptyResultView.fitInSuperview()
             }
         }
     }
