@@ -28,7 +28,7 @@ import Foundation
     var lastLayoutBounds : CGRect = CGRect.zero
     var accessoryContainerHeightConstraint: NSLayoutConstraint?
     var accessoryViewBottomOffsetConstraint : NSLayoutConstraint?
-    var parentViewController: UIViewController?
+    weak var parentViewController: UIViewController?
     
     init() {
         collectionViewLayout = UICollectionViewFlowLayout()
