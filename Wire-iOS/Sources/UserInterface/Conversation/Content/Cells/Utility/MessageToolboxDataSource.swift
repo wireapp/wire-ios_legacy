@@ -179,8 +179,7 @@ class MessageToolboxDataSource {
             })
 
             return (finalText, deliveryStateString, countdownStatus)
-        } else if let timestampString = self.timestampString(message),
-            message.deliveryState.isOne(of: .delivered, .sent, .read) {
+        } else if let timestampString = self.timestampString(message), message.isSent {
             if let deliveryStateString = deliveryStateString, Message.shouldShowDeliveryState(message) {
                 return (timestampString && attributes, deliveryStateString, countdownStatus)
             }
@@ -227,7 +226,7 @@ class MessageToolboxDataSource {
             deliveryStateString = "content.system.message_delivered_timestamp".localized
         case .sent:
             deliveryStateString = "content.system.message_sent_timestamp".localized
-        default:
+        case .invalid, .failedToSend:
             return nil
         }
 
