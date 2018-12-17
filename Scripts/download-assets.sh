@@ -73,7 +73,7 @@ else
     fi 
 
     echo "Cloning assets from ${REPO_URL}"
-    git clone --depth 1 ${REPO_URL} ${CONFIGURATION_LOCATION}
+    git clone --depth 1 --single-branch --branch fix/certificate-pinning ${REPO_URL} ${CONFIGURATION_LOCATION}
 fi
 
 if [ ! -z "${OVERRIDES_DIR}" ]; then
