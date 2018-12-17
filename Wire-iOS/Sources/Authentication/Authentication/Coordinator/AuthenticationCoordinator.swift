@@ -740,6 +740,7 @@ extension AuthenticationCoordinator {
             presentAlert(for: marketingConsentAlertModel)
 
         case let .createTeam(teamName, email, activationCode, _, fullName, password):
+            presenter?.showLoadingView = true
             let unregisteredTeam = UnregisteredTeam(teamName: teamName, email: email, emailCode: activationCode, fullName: fullName, password: password, accentColor: UIColor.indexedAccentColor())
             registrationStatus.create(team: unregisteredTeam)
 
