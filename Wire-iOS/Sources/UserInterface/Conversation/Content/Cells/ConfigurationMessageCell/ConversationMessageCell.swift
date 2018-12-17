@@ -179,6 +179,8 @@ extension ConversationMessageCellDescription {
         guard let adapterCell = cell as? ConversationMessageCellTableViewAdapter<Self> else { return }
         
         adapterCell.cellView.configure(with: self.configuration, animated: animated)
+        
+        _ = message?.startSelfDestructionIfNeeded()
     }
     
 }
