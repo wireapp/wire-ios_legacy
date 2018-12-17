@@ -161,7 +161,7 @@ class ShareExtensionViewController: SLComposeServiceViewController {
             applicationGroupIdentifier: applicationGroupIdentifier,
             accountIdentifier: accountIdentifier,
             hostBundleIdentifier: hostBundleIdentifier,
-            environment: .shared
+            environment: BackendEnvironment.shared
         )
     }
 
