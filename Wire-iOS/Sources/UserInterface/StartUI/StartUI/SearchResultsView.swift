@@ -29,7 +29,7 @@ import Cartography
     var lastLayoutBounds : CGRect = CGRect.zero
     var accessoryContainerHeightConstraint: NSLayoutConstraint?
     var accessoryViewBottomOffsetConstraint : NSLayoutConstraint?
-    var isContainedInPopover : Bool = false
+    var parentViewController: UIViewController?
     
     init() {
         collectionViewLayout = UICollectionViewFlowLayout()
@@ -129,7 +129,7 @@ import Cartography
     }
     
     @objc func keyboardFrameDidChange(notification: Notification) {
-        guard !isContainedInPopover else {
+        if let parentViewController = parentViewController, parentViewController.isContainedInPopover() {
             return
         }
         
