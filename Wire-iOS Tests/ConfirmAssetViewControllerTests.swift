@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Cartography
 @testable import Wire
 
 class ConfirmAssetViewControllerTests: ZMSnapshotTestCase {
@@ -27,6 +26,8 @@ class ConfirmAssetViewControllerTests: ZMSnapshotTestCase {
         super.setUp()
         sut = ConfirmAssetViewController()
         snapshotBackgroundColor = UIColor.white
+
+        recordMode = true
     }
 
     override func tearDown() {
@@ -53,6 +54,15 @@ class ConfirmAssetViewControllerTests: ZMSnapshotTestCase {
         sut.image = image(inTestBundleNamed: "unsplash_small.jpg").imageScaled(withFactor: 0.5);
         sut.previewTitle = "Sea Food"
         verifyInAllIPhoneSizes(view: sut.prepareForSnapshot())
+    }
+
+    ///TODO: test for AV, dark mode
+    func testThatItRendersTheAssetViewControllerWithVideoInDarkMode() {
+        let videoURL = urlForResource(inTestBundleNamed: "video.mp4")
+
+        sut.videoURL = videoURL
+        sut.previewTitle = "A hand and three cables on a white table."
+        verifyInIPhoneSize(view: sut.view)
     }
 
 }
