@@ -114,14 +114,12 @@ class ConversationPingCell: ConversationIconBasedCell, ConversationMessageCell {
     func willDisplay() {
         
         if let conversation = self.configuration?.message?.conversation,
-            let lastMessage = conversation.conversationWindow(withSize: 30).messages.firstObject as? ZMConversationMessage,
-            let message = self.configuration?.message {
+           let lastMessage = conversation.messages.lastObject as? ZMConversationMessage,
+           let message = self.configuration?.message {
             
             let isLastMessage = lastMessage.isEqual(message)
-            let result = message.serverTimestamp?.compare(conversation.lastServerTimeStamp ?? Date())
-            let isMessageOlder = result != .orderedAscending
             
-            if isLastMessage && message.isKnock && isMessageOlder {
+            if isLastMessage && message.isKnock {
                 startAnimation()
             }
         }

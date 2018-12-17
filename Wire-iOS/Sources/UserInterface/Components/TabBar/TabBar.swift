@@ -55,7 +55,11 @@ class TabBar: UIView {
         return self.tabs[selectedIndex]
     }
 
-    private var titleObservers: [Any] = []
+    private var titleObservers: [NSKeyValueObservation] = []
+
+    deinit {
+        titleObservers.forEach { $0.invalidate() }
+    }
 
     // MARK: - Initialization
 
