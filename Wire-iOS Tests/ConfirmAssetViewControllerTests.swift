@@ -22,20 +22,29 @@ class ConfirmAssetViewControllerTests: ZMSnapshotTestCase {
 
     var sut: ConfirmAssetViewController!
     
-    override func setUp() {
-        super.setUp()
-        sut = ConfirmAssetViewController()
-        snapshotBackgroundColor = UIColor.white
-
-        recordMode = true
-    }
-
     override func tearDown() {
         sut = nil
         super.tearDown()
+
+        ColorScheme.default.variant = .light
     }
 
+    func setupSUT(colorSchemeVariant: ColorSchemeVariant = .light){
+        ColorScheme.default.variant = colorSchemeVariant
+
+        sut = ConfirmAssetViewController()
+        switch colorSchemeVariant {
+            case .dark:
+                snapshotBackgroundColor = UIColor.black
+        case .light:
+                snapshotBackgroundColor = UIColor.white
+        }
+    }
+
+
     func testThatItRendersTheAssetViewControllerWithLandscapeImage() {
+        setupSUT()
+
         accentColor = .strongLimeGreen
         sut.image = image(inTestBundleNamed: "unsplash_matterhorn.jpg")
         sut.previewTitle = "Matterhorn"
@@ -43,6 +52,8 @@ class ConfirmAssetViewControllerTests: ZMSnapshotTestCase {
     }
         
     func testThatItRendersTheAssetViewControllerWithPortraitImage() {
+        setupSUT()
+
         accentColor = .vividRed
         sut.image = image(inTestBundleNamed: "unsplash_burger.jpg")
         sut.previewTitle = "Burger & Beer"
@@ -50,18 +61,21 @@ class ConfirmAssetViewControllerTests: ZMSnapshotTestCase {
     }
     
     func testThatItRendersTheAssetViewControllerWithSmallImage() {
+        setupSUT()
+
         accentColor = .vividRed
         sut.image = image(inTestBundleNamed: "unsplash_small.jpg").imageScaled(withFactor: 0.5);
         sut.previewTitle = "Sea Food"
         verifyInAllIPhoneSizes(view: sut.view)
     }
 
-    ///TODO: test for AV, dark mode
-    func testThatItRendersTheAssetViewControllerWithVideoInDarkMode() {
+    func testThatItRendersTheAssetViewControllerWithVideo_darkMode() {
+        setupSUT(colorSchemeVariant: .dark)
+
         let videoURL = urlForResource(inTestBundleNamed: "video.mp4")
 
         sut.videoURL = videoURL
-        sut.previewTitle = "Video: A hand and three cables on a white table."
+        sut.previewTitle = "Video: A hand and three cables on an office white table."
 
         verifyInIPhoneSize(view: sut.view)
     }
