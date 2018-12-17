@@ -105,6 +105,7 @@ import Foundation
                 accessoryContainer.addSubview(accessoryView)
                 accessoryContainerHeightConstraint?.isActive = false
 
+                accessoryView.translatesAutoresizingMaskIntoConstraints = false
                 accessoryView.fitInSuperview()
             }
             else {
@@ -124,6 +125,7 @@ import Foundation
             if let emptyResultView = emptyResultView {
                 emptyResultContainer.addSubview(emptyResultView)
 
+                emptyResultView.translatesAutoresizingMaskIntoConstraints = false
                 emptyResultView.fitInSuperview()
             }
         }
