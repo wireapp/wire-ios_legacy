@@ -80,6 +80,8 @@ typedef NS_ENUM(NSUInteger, ConversationInputBarViewControllerMode) {
 - (instancetype)initWithConversation:(ZMConversation *)conversation;
 - (void)bounceCameraIcon;
 
+- (void)playInputHapticFeedback;
+
 @end
 
 NS_ASSUME_NONNULL_END
