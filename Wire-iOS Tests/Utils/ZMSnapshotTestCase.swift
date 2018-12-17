@@ -382,6 +382,7 @@ extension ZMSnapshotTestCase {
     ///   - line: source line
     func verifyInIPhoneSize(view: UIView,
                             extraLayoutPass: Bool = false,
+                            colorScheme: ColorSchemeVariant = .light, ///TODO: .dark and .both
                             file: StaticString = #file,
                             line: UInt = #line) {
 

@@ -39,21 +39,21 @@ class ConfirmAssetViewControllerTests: ZMSnapshotTestCase {
         accentColor = .strongLimeGreen
         sut.image = image(inTestBundleNamed: "unsplash_matterhorn.jpg")
         sut.previewTitle = "Matterhorn"
-        verifyInAllIPhoneSizes(view: sut.prepareForSnapshot())
+        verifyInAllIPhoneSizes(view: sut.view)
     }
         
     func testThatItRendersTheAssetViewControllerWithPortraitImage() {
         accentColor = .vividRed
         sut.image = image(inTestBundleNamed: "unsplash_burger.jpg")
         sut.previewTitle = "Burger & Beer"
-        verifyInAllIPhoneSizes(view: sut.prepareForSnapshot())
+        verifyInAllIPhoneSizes(view: sut.view)
     }
     
     func testThatItRendersTheAssetViewControllerWithSmallImage() {
         accentColor = .vividRed
         sut.image = image(inTestBundleNamed: "unsplash_small.jpg").imageScaled(withFactor: 0.5);
         sut.previewTitle = "Sea Food"
-        verifyInAllIPhoneSizes(view: sut.prepareForSnapshot())
+        verifyInAllIPhoneSizes(view: sut.view)
     }
 
     ///TODO: test for AV, dark mode
@@ -61,16 +61,9 @@ class ConfirmAssetViewControllerTests: ZMSnapshotTestCase {
         let videoURL = urlForResource(inTestBundleNamed: "video.mp4")
 
         sut.videoURL = videoURL
-        sut.previewTitle = "A hand and three cables on a white table."
+        sut.previewTitle = "Video: A hand and three cables on a white table."
+
         verifyInIPhoneSize(view: sut.view)
     }
 
-}
-
-private extension UIViewController {
-    func prepareForSnapshot() -> UIView {
-        beginAppearanceTransition(true, animated: false)
-        endAppearanceTransition()
-        return view
-    }
 }
