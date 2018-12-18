@@ -36,30 +36,47 @@ struct EdgeInsets {
     }
 }
 
+enum Anchor {
+    case top
+    case bottom
+    case leading
+    case trailing
+}
+
 extension UIView {
-    @discardableResult func fitInSuperview(safely: Bool = false, with insets: EdgeInsets = .zero) -> [NSLayoutConstraint] {
+    @discardableResult func fitInSuperview(safely: Bool = false,
+                                           with insets: EdgeInsets = .zero,
+                                           exclude excludedAnchor: Anchor? = nil) -> [NSLayoutConstraint] {
         guard let superview = self.superview else {
             fatal("Not in view hierarchy: self.superview = nil")
         }
-        
-        let constraints = [
-            self.leadingAnchor.constraint(
+
+        var constraints: [NSLayoutConstraint] = []
+
+        if excludedAnchor != .leading {
+            constraints.append(leadingAnchor.constraint(
                 equalTo: safely ? superview.safeLeadingAnchor : superview.leadingAnchor,
-                constant: insets.leading),
-            
-            self.topAnchor.constraint(
-                equalTo: safely ? superview.safeTopAnchor : superview.topAnchor,
-                constant: insets.top),
-            
-            self.bottomAnchor.constraint(
+                constant: insets.leading))
+        }
+
+        if excludedAnchor != .bottom {
+            constraints.append(bottomAnchor.constraint(
                 equalTo: safely ? superview.safeBottomAnchor : superview.bottomAnchor,
-                constant: -insets.bottom),
-            
-            self.trailingAnchor.constraint(
+                constant: -insets.bottom))
+        }
+
+        if excludedAnchor != .top {
+            constraints.append(topAnchor.constraint(
+                equalTo: safely ? superview.safeTopAnchor : superview.topAnchor,
+                constant: insets.top))
+        }
+
+        if excludedAnchor != .trailing {
+            constraints.append(trailingAnchor.constraint(
                 equalTo: safely ? superview.safeTrailingAnchor : superview.trailingAnchor,
-                constant: -insets.trailing)
-        ]
-        
+                constant: -insets.trailing))
+        }
+
         NSLayoutConstraint.activate(constraints)
         return constraints
     }
