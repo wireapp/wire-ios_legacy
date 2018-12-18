@@ -121,7 +121,7 @@ final class TeamInviteTextFieldFooterView: UIView {
     }
     
     @objc private func showLearnMorePage() {
-        let url = URL(string: "https://support.wire.com/hc/en-us/articles/115004082129-My-email-address-is-already-in-use-and-I-cannot-create-an-account-What-can-I-do-")!
+        let url = URL.wr_emailAlreadyInUseLearnMore
         UIApplication.shared.open(url)
     }
     
