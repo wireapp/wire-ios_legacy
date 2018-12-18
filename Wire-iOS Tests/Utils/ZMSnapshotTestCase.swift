@@ -66,17 +66,6 @@ extension UITableViewCell: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-
-extension StaticString {
-    func utf8SignedStart() -> UnsafePointer<Int8> {
-        let fileUnsafePointer = self.utf8Start
-        let reboundToSigned = fileUnsafePointer.withMemoryRebound(to: Int8.self, capacity: self.utf8CodeUnitCount) {
-            return UnsafePointer($0)
-        }
-        return reboundToSigned
-    }
-}
-
 open class ZMSnapshotTestCase: FBSnapshotTestCase {
 
     typealias ConfigurationWithDeviceType = (_ view: UIView, _ isPad: Bool) -> Void
@@ -256,20 +245,7 @@ extension ZMSnapshotTestCase {
 
 extension ZMSnapshotTestCase {
 
-    /// Performs an assertion with the given view and the recorded snapshot.
-    func verify(view: UIView,
-                extraLayoutPass: Bool = false,
-                tolerance: CGFloat = 0,
-                identifier: String? = nil,
-                deviceName: String? = nil,
-                file: StaticString = #file,
-                line: UInt = #line
-        ) {
-        let container = containerView(with: view)
-        if assertEmptyFrame(container, file: file, line: line) {
-            return
-        }
-
+    func finalIdentifier(deviceName: String?, identifier: String?) -> String? {
         var finalIdentifier: String?
 
         if 0 == (identifier?.count ?? 0) {
@@ -286,13 +262,32 @@ extension ZMSnapshotTestCase {
             }
         }
 
+        return finalIdentifier
+    }
+
+    /// Performs an assertion with the given view and the recorded snapshot.
+    func verify(view: UIView,
+                extraLayoutPass: Bool = false,
+                tolerance: CGFloat = 0,
+                identifier: String? = nil,
+                deviceName: String? = nil,
+                file: StaticString = #file,
+                line: UInt = #line
+        ) {
+        let container = containerView(with: view)
+        if assertEmptyFrame(container, file: file, line: line) {
+            return
+        }
+
+        let identifier = finalIdentifier(deviceName: deviceName, identifier: identifier)
+
         if extraLayoutPass {
             RunLoop.current.run(until: Date(timeIntervalSinceNow: 0.1))
         }
 
         view.layer.speed = 0 // freeze animations for deterministic tests
         snapshotVerify(view: container,
-                       identifier: finalIdentifier,
+                       identifier: identifier,
                        suffix: FBSnapshotTestCaseDefaultSuffixes(),
                        tolerance: tolerance,
                        file: file,
@@ -306,6 +301,7 @@ extension ZMSnapshotTestCase {
                     extraLayoutPass: Bool = false,
                     width: CGFloat,
                     tolerance: CGFloat = 0,
+                    identifier: String? = nil,
                     configuration: ((UIView) -> Swift.Void)? = nil,
                     file: StaticString = #file,
                     line: UInt = #line
@@ -330,11 +326,14 @@ extension ZMSnapshotTestCase {
         }
 
         view.layer.speed = 0 // freeze animations for deterministic tests
+
+        let identifier = finalIdentifier(deviceName: "\(Int(width))", identifier: identifier)
+
         snapshotVerify(view: container,
-                       identifier:"\(Int(width))",
-            tolerance: tolerance,
-            file: file,
-            line: line)
+                       identifier:identifier,
+                       tolerance: tolerance,
+                       file: file,
+                       line: line)
     }
 
     /// Performs multiple assertions with the given view using the screen sizes of
@@ -399,54 +398,6 @@ extension ZMSnapshotTestCase {
                extraLayoutPass: extraLayoutPass,
                file: file,
                line: line)
-    }
-
-    func verifyInIPhoneSize(initialization: (() -> UIView),
-                           extraLayoutPass: Bool = false,
-                           colorSchemes: Set<ColorSchemeVariant> = [.light],
-                           file: StaticString = #file,
-                           line: UInt = #line) {
-
-
-
-
-        let testClosure: (UIView, String) -> Void = {view, identifier in
-
-            view.translatesAutoresizingMaskIntoConstraints = false
-            NSLayoutConstraint.activate([
-                view.heightAnchor.constraint(equalToConstant: self.defaultIPhoneSize.height),
-                view.widthAnchor.constraint(equalToConstant: self.defaultIPhoneSize.width)
-                ])
-
-            view.layoutIfNeeded()
-
-            self.verify(view: view,
-                        extraLayoutPass: extraLayoutPass,
-                        identifier: identifier,
-                        file: file,
-                        line: line)
-        }
-
-        switch colorSchemes {
-        case [.light]:
-            ColorScheme.default.variant = .light
-            snapshotBackgroundColor = .white
-            testClosure(initialization(), "light")
-        case [.dark]:
-            ColorScheme.default.variant = .dark
-            snapshotBackgroundColor = .black
-            testClosure(initialization(), "dark")
-        case [.dark, .light]:
-            for colorScheme in colorSchemes {
-                ColorScheme.default.variant = colorScheme
-                testClosure(initialization(), colorScheme == .dark ? "dark" : "light")
-            }
-        default:
-            break
-        }
-
-        /// restore to default light scheme
-        ColorScheme.default.variant = .light
     }
 
     func verifyInAllColorSchemes(view: UIView,
@@ -563,4 +514,105 @@ extension ZMSnapshotTestCase {
         presentViewController(controller, file: file, line: line)
         verify(view: controller.view, file: file, line: line)
     }
+}
+
+//MARK: - test with different color schemes
+
+extension ZMSnapshotTestCase {
+    func verifyInAllPhoneWidths(initialization: (() -> UIView),
+                                extraLayoutPass: Bool = false,
+                                tolerance: CGFloat = 0,
+                                configuration: ((UIView) -> Swift.Void)? = nil,
+                                colorSchemes: Set<ColorSchemeVariant> = [],
+                                file: StaticString = #file,
+                                line: UInt = #line) {
+
+        let testClosure: (UIView, String?) -> Void = {view, identifier in
+            self.assertAmbigousLayout(view, file: file, line: line)
+            for width in self.phoneWidths() {
+                self.verifyView(view: view,
+                                extraLayoutPass: extraLayoutPass,
+                                width: width,
+                                tolerance: tolerance,
+                                identifier: identifier,
+                                configuration: configuration,
+                                file: file,
+                                line: line)
+            }
+        }
+
+        switch colorSchemes {
+        case [.light]:
+            ColorScheme.default.variant = .light
+            snapshotBackgroundColor = .white
+            testClosure(initialization(), "light")
+        case [.dark]:
+            ColorScheme.default.variant = .dark
+            snapshotBackgroundColor = .black
+            testClosure(initialization(), "dark")
+        case [.dark, .light]:
+            for colorScheme in colorSchemes {
+                ColorScheme.default.variant = colorScheme
+                snapshotBackgroundColor = colorScheme == .dark ? .black : .white
+                testClosure(initialization(), colorScheme == .dark ? "dark" : "light")
+            }
+        case[]:
+            testClosure(initialization(), nil)
+        default:
+            break
+        }
+
+        /// restore to default light scheme
+        ColorScheme.default.variant = .light
+    }
+
+    func verifyInIPhoneSize(initialization: (() -> UIView),
+                            extraLayoutPass: Bool = false,
+                            colorSchemes: Set<ColorSchemeVariant> = [.light],
+                            file: StaticString = #file,
+                            line: UInt = #line) {
+
+
+
+
+        let testClosure: (UIView, String?) -> Void = {view, identifier in
+
+            view.translatesAutoresizingMaskIntoConstraints = false
+            NSLayoutConstraint.activate([
+                view.heightAnchor.constraint(equalToConstant: self.defaultIPhoneSize.height),
+                view.widthAnchor.constraint(equalToConstant: self.defaultIPhoneSize.width)
+                ])
+
+            view.layoutIfNeeded()
+
+            self.verify(view: view,
+                        extraLayoutPass: extraLayoutPass,
+                        identifier: identifier,
+                        file: file,
+                        line: line)
+        }
+
+        switch colorSchemes {
+        case [.light]:
+            ColorScheme.default.variant = .light
+            snapshotBackgroundColor = .white
+            testClosure(initialization(), "light")
+        case [.dark]:
+            ColorScheme.default.variant = .dark
+            snapshotBackgroundColor = .black
+            testClosure(initialization(), "dark")
+        case [.dark, .light]:
+            for colorScheme in colorSchemes {
+                ColorScheme.default.variant = colorScheme
+                snapshotBackgroundColor = colorScheme == .dark ? .black : .white
+                testClosure(initialization(), colorScheme == .dark ? "dark" : "light")
+            }
+        default:
+            break
+        }
+
+        /// restore to default light scheme
+        ColorScheme.default.variant = .light
+    }
+
 }
