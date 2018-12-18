@@ -19,7 +19,7 @@
 import UIKit
 import Cartography
 
-final class TeamCreationStepController: AuthenticationStepViewController {
+final class AuthenticationStepController: AuthenticationStepViewController {
 
     weak var authenticationCoordinator: AuthenticationCoordinator? {
         didSet {
@@ -109,7 +109,7 @@ final class TeamCreationStepController: AuthenticationStepViewController {
     // MARK: - View creation
 
     fileprivate func updateHeadlineLabelFont() {
-        headlineLabel.font = self.view.frame.size.width > 320 ? TeamCreationStepController.headlineFont : TeamCreationStepController.headlineSmallFont
+        headlineLabel.font = self.view.frame.size.width > 320 ? AuthenticationStepController.headlineFont : AuthenticationStepController.headlineSmallFont
     }
 
     private func createViews() {
@@ -123,7 +123,7 @@ final class TeamCreationStepController: AuthenticationStepViewController {
         subtextLabel = UILabel()
         subtextLabel.textAlignment = .center
         subtextLabel.text = stepDescription.subtext
-        subtextLabel.font = TeamCreationStepController.subtextFont
+        subtextLabel.font = AuthenticationStepController.subtextFont
         subtextLabel.textColor = UIColor.Team.subtitleColor
         subtextLabel.numberOfLines = 0
         subtextLabel.lineBreakMode = .byWordWrapping
@@ -147,7 +147,7 @@ final class TeamCreationStepController: AuthenticationStepViewController {
 
         errorLabel = UILabel()
         errorLabel.textAlignment = .center
-        errorLabel.font = TeamCreationStepController.errorFont
+        errorLabel.font = AuthenticationStepController.errorFont
         errorLabel.textColor = UIColor.Team.errorMessageColor
         errorLabel.translatesAutoresizingMaskIntoConstraints = false
         errorViewContainer.addSubview(errorLabel)
@@ -254,7 +254,7 @@ final class TeamCreationStepController: AuthenticationStepViewController {
         }
 
         constrain(mainViewContainer, mainView) { mainViewContainer, mainView in
-            mainView.height == TeamCreationStepController.mainViewHeight
+            mainView.height == AuthenticationStepController.mainViewHeight
 
             mainView.top == mainViewContainer.top
             mainView.leading == mainViewContainer.leading
@@ -293,7 +293,7 @@ final class TeamCreationStepController: AuthenticationStepViewController {
 }
 
 // MARK: - Error handling
-extension TeamCreationStepController {
+extension AuthenticationStepController {
     func clearError() {
         errorLabel.text = nil
         showSecondaryView(for: nil)

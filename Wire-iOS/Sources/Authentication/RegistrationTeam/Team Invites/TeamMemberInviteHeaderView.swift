@@ -58,7 +58,7 @@ final class TeamMemberInviteHeaderView: UIView {
     }
     
     func updateHeadlineLabelFont(forWidth width: CGFloat) {
-        titleLabel.font = width > 320 ? TeamCreationStepController.headlineFont : TeamCreationStepController.headlineSmallFont
+        titleLabel.font = width > 320 ? AuthenticationStepController.headlineFont : AuthenticationStepController.headlineSmallFont
     }
     
     private func createConstraints() {

@@ -72,8 +72,8 @@ class AuthenticationInterfaceBuilder {
             return AdaptiveFormViewController(childViewController: noHistory)
 
         case .enterLoginCode(let phoneNumber):
-            let verification = VerificationCodeStepViewController(credential: phoneNumber)
-            return AdaptiveFormViewController(childViewController: verification)
+            let stepDescription = VerifyPhoneStepDescription(phoneNumber: phoneNumber)
+            return AuthenticationStepController(description: stepDescription)
 
         case .addEmailAndPassword(_, _, let canSkip):
             let addEmailPasswordViewController = AddEmailPasswordViewController()
@@ -81,8 +81,16 @@ class AuthenticationInterfaceBuilder {
             return AdaptiveFormViewController(childViewController: addEmailPasswordViewController)
 
         case .enterActivationCode(let credentials, _):
-            let verification = VerificationCodeStepViewController(credential: credentials.rawValue)
-            return AdaptiveFormViewController(childViewController: verification)
+            let step: TeamCreationStepDescription
+
+            switch credentials {
+            case .email(let email):
+                step = VerifyEmailStepDescription(email: email)
+            case .phone(let phoneNumber):
+                step = VerifyPhoneStepDescription(phoneNumber: phoneNumber)
+            }
+
+            return AuthenticationStepController(description: step)
 
         case .pendingEmailLinkVerification(let emailCredentials):
             let verification = EmailLinkVerificationViewController(credentials: emailCredentials)
@@ -154,8 +162,8 @@ class AuthenticationInterfaceBuilder {
     }
 
     /// Creates the view controller for team description.
-    private func createViewController(for description: TeamCreationStepDescription) -> TeamCreationStepController {
-        let controller = TeamCreationStepController(description: description)
+    private func createViewController(for description: TeamCreationStepDescription) -> AuthenticationStepController {
+        let controller = AuthenticationStepController(description: description)
 
         let mainView = description.mainView
         mainView.valueSubmitted = controller.valueSubmitted

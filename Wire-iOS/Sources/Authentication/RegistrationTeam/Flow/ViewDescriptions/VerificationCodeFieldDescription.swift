@@ -69,7 +69,7 @@ extension VerificationCodeFieldDescription: ViewDescriptor {
     func create() -> UIView {
         /// get the with from keyWindow for iPad non full screen modes.
         let width = UIApplication.shared.keyWindow?.frame.width ?? UIScreen.main.bounds.size.width
-        let size = CGSize(width: width, height: TeamCreationStepController.mainViewHeight)
+        let size = CGSize(width: width, height: AuthenticationStepController.mainViewHeight)
 
         let inputField = CharacterInputField(maxLength: 6, characterSet: .decimalDigits, size: size)
         inputField.keyboardType = .decimalPad
@@ -77,6 +77,10 @@ extension VerificationCodeFieldDescription: ViewDescriptor {
         inputField.delegate = self
         inputField.accessibilityIdentifier = "VerificationCode"
         inputField.accessibilityLabel = "team.email_code.input_field.accessbility_label".localized
+
+        if #available(iOS 12, *) {
+            inputField.textContentType = .oneTimeCode
+        }
 
         let containerView = ResponderContainer(responder: inputField)
         containerView.translatesAutoresizingMaskIntoConstraints = false

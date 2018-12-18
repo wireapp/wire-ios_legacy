@@ -256,6 +256,7 @@ public class CharacterInputField: UIControl, UITextInputTraits, TextContainer {
     
     // MARK: - UITextInputTraits
     public var keyboardType: UIKeyboardType = .default
+    public var textContentType: UITextContentType! = nil
 }
 
 extension CharacterInputField: UIKeyInput {
