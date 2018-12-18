@@ -20,6 +20,12 @@ import XCTest
 @testable import Wire
 
 final class UrlTests: XCTestCase {
+    func testForFingerprintLearnMoreURL(){
+        let sut = NSURL.wr_fingerprintLearnMoreURL
+
+        XCTAssertEqual(sut.absoluteString, "https://wire.com/privacy/why")
+    }
+
     func testForWireAppOnItunes(){
         let sut = URL.wr_wireAppOnItunes
 
