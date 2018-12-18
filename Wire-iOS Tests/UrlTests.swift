@@ -20,9 +20,39 @@ import XCTest
 @testable import Wire
 
 final class UrlTests: XCTestCase {
-    func testForInitState(){
+    func testForWireAppOnItunes(){
         let sut = URL.wr_wireAppOnItunes
 
         XCTAssertEqual(sut.absoluteString, "https://geo.itunes.apple.com/us/app/wire/id930944768?mt=8")
+    }
+
+    func testForRandomProfilePictureSource(){
+        let sut = URL.wr_randomProfilePictureSource
+
+        XCTAssertEqual(sut.absoluteString, "https://source.unsplash.com/800x800/?landscape")
+    }
+
+    func testForTermsOfServicesURLForTeam(){
+        let sut = URL.wr_termsOfServicesURL(forTeamAccount: true)
+
+        XCTAssertEqual(sut.absoluteString, "https://wire.com/legal/terms/teams")
+    }
+
+    func testForTermsOfServicesURLForPersonal(){
+        let sut = URL.wr_termsOfServicesURL(forTeamAccount: false)
+
+        XCTAssertEqual(sut.absoluteString, "https://wire.com/legal/terms/personal")
+    }
+
+    func testForManageTeamOnboarding(){
+        let sut = URL.manageTeam(source: .onboarding)
+
+        XCTAssertEqual(sut.absoluteString, "https://teams.wire.com/login?utm_source=client_landing&utm_term=ios&hl=en_US")
+    }
+
+    func testForManageTeamSettings(){
+        let sut = URL.manageTeam(source: .settings)
+
+        XCTAssertEqual(sut.absoluteString, "https://teams.wire.com/login?utm_source=client_settings&utm_term=ios&hl=en_US")
     }
 }

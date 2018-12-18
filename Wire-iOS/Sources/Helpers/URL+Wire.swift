@@ -16,7 +16,7 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import UIKit
+import Foundation
 
 private let zmLog = ZMSLog(tag: "URL")
 
@@ -31,20 +31,7 @@ private let zmLog = ZMSLog(tag: "URL")
     }
 }
 
-extension URL {
-    
-    var appendingLocaleParameter: URL {
-        return (self as NSURL).wr_URLByAppendingLocaleParameter() as URL
-    }
-    
-    static func manageTeam(source: TeamSource) -> URL {
-        let query = "utm_source=\(source.parameterValue)&utm_term=ios"
-        return URL(string: "https://teams.wire.com/login?\(query)")!.appendingLocaleParameter
-    }
-}
-
 final class WireUrl {
-    /// The shared loader.
     static var shared: WireUrl! = {
         guard let filePath = Bundle.main.url(forResource: "url", withExtension: "json") else { return nil}
 
@@ -78,6 +65,26 @@ final class WireUrl {
     let urls: [String : URL]
 }
 
+extension URL {
+
+    var appendingLocaleParameter: URL {
+        return (self as NSURL).wr_URLByAppendingLocaleParameter() as URL
+    }
+
+    static func manageTeam(source: TeamSource) -> URL {
+        let baseURL = WireUrl.shared.urls["manageTeamBase"]!
+
+        let queryItems = [URLQueryItem(name: "utm_source", value: source.parameterValue),
+                          URLQueryItem(name: "utm_term", value: "ios")]
+
+        var components = URLComponents(url: baseURL, resolvingAgainstBaseURL: false)
+
+        components?.queryItems = queryItems
+
+        return components!.url!.appendingLocaleParameter
+    }
+}
+
 // MARK: - Standard URLS
 
 extension URL {
@@ -87,82 +94,82 @@ extension URL {
     }
 
     static var wr_emailAlreadyInUseLearnMore: URL {
-        return URL(string: "https://support.wire.com/hc/en-us/articles/115004082129-My-email-address-is-already-in-use-and-I-cannot-create-an-account-What-can-I-do-")!
+        return WireUrl.shared.urls["emailAlreadyInUseLearnMore"]!
     }
 
     static var wr_usernameLearnMore: URL {
-        return URL(string: "https://wire.com/support/username/")!
+        return WireUrl.shared.urls["usernameLearnMore"]!
     }
 
     static var wr_fingerprintLearnMore: URL {
-        return URL(string: "https://wire.com/privacy/why")!
+        return WireUrl.shared.urls["fingerprintLearnMore"]!
     }
 
     static var wr_fingerprintHowToVerify: URL {
-        return URL(string: "https://wire.com/privacy/how")!
+        return WireUrl.shared.urls["fingerprintHowToVerify"]!
     }
 
     static var wr_privacyPolicy: URL {
-        return URL(string: "https://wire.com/legal/privacy/embed/")!
+        return WireUrl.shared.urls["privacyPolicy"]!
     }
 
     static var wr_licenseInformation: URL {
-        return URL(string: "https://wire.com/legal/licenses/embed/")!
+        return WireUrl.shared.urls["licenseInformation"]!
     }
 
     static var wr_website: URL {
-        return URL(string: "https://wire.com")!
+        return WireUrl.shared.urls["website"]!
     }
 
     static var wr_passwordReset: URL {
-        return URL(string: "https://account.wire.com/forgot/")!
+        return WireUrl.shared.urls["passwordReset"]!
     }
 
     static var wr_support: URL {
-        return URL(string: "https://support.wire.com")!
+        return WireUrl.shared.urls["support"]!
     }
 
     static var wr_askSupport: URL {
-        return URL(string: "https://support.wire.com/hc/requests/new")!
+        return WireUrl.shared.urls["askSupport"]!
     }
 
     static var wr_reportAbuse: URL {
-        return URL(string: "https://wire.com/support/misuse/")!
+        return WireUrl.shared.urls["reportAbuse"]!
     }
 
     static var wr_cannotDecryptHelp: URL {
-        return URL(string: "https://wire.com/privacy/error-1")!
+        return WireUrl.shared.urls["cannotDecryptHelp"]!
     }
 
     static var wr_cannotDecryptNewRemoteIDHelp: URL {
-        return URL(string: "https://wire.com/privacy/error-2")!
+        return WireUrl.shared.urls["cannotDecryptNewRemoteIDHelp"]!
     }
 
     static var wr_createTeam: URL {
-        return URL(string: "https://wire.com/create-team?pk_campaign=client&pk_kwd=ios")!
+        return WireUrl.shared.urls["createTeam"]!
     }
 
     static var wr_createTeamFeatures: URL {
-        return URL(string: "https://wire.com/teams/learnmore/")!
+        return WireUrl.shared.urls["createTeamFeatures"]!
     }
 
     static var wr_manageTeam: URL {
-        return URL(string: "https://teams.wire.com/login?pk_campaign=client&pk_kwd=ios")!
+        return WireUrl.shared.urls["manageTeam"]!
     }
 
     static var wr_emailInUseLearnMore: URL {
-        return URL(string: "https://wire.com/support/email-in-use")!
+        return WireUrl.shared.urls["emailInUseLearnMore"]!
     }
 
     static var wr_randomProfilePictureSource: URL {
-        return URL(string: "https://source.unsplash.com/800x800/?landscape")!
+        return WireUrl.shared.urls["randomProfilePictureSource"]!
     }
 
     static func wr_termsOfServicesURL(forTeamAccount isTeamAccount: Bool) -> URL {
         if isTeamAccount {
-            return URL(string: "https://wire.com/legal/terms/teams")!
+            return WireUrl.shared.urls["termsOfServicesURL_teams"]!
         } else {
-            return URL(string: "https://wire.com/legal/terms/personal")!
+            return WireUrl.shared.urls["termsOfServicesURL_personal"]!
         }
     }
 

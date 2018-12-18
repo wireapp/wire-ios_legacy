@@ -1,3 +1,26 @@
 {
-    "wireAppOnItunes": "https://geo.itunes.apple.com/us/app/wire/id930944768?mt=8"
+    "wireAppOnItunes": "https://geo.itunes.apple.com/us/app/wire/id930944768?mt=8",
+    "emailAlreadyInUseLearnMore": "https://support.wire.com/hc/en-us/articles/115004082129-My-email-address-is-already-in-use-and-I-cannot-create-an-account-What-can-I-do-",
+    "usernameLearnMore": "https://wire.com/support/username/",
+    "fingerprintLearnMore": "https://wire.com/privacy/why",
+    "fingerprintHowToVerify": "https://wire.com/privacy/how",
+    "privacyPolicy": "https://wire.com/legal/privacy/embed/",
+    "licenseInformation": "https://wire.com/legal/licenses/embed/",
+    "website": "https://wire.com",
+    "passwordReset": "https://account.wire.com/forgot/",
+    "support": "https://support.wire.com",
+    "askSupport": "https://support.wire.com/hc/requests/new",
+    "reportAbuse": "https://wire.com/support/misuse/",
+    "cannotDecryptHelp": "https://wire.com/privacy/error-1",
+    "cannotDecryptNewRemoteIDHelp": "https://wire.com/privacy/error-2",
+    "createTeam": "https://wire.com/create-team?pk_campaign=client&pk_kwd=ios",
+    "createTeamFeatures": "https://wire.com/teams/learnmore/",
+    "manageTeam": "https://teams.wire.com/login?pk_campaign=client&pk_kwd=ios",
+    "emailInUseLearnMore": "https://wire.com/support/email-in-use",
+    "randomProfilePictureSource": "https://source.unsplash.com/800x800/?landscape",
+
+    "termsOfServicesURL_teams": "https://wire.com/legal/terms/teams",
+    "termsOfServicesURL_personal": "https://wire.com/legal/terms/personal",
+
+    "manageTeamBase": "https://teams.wire.com/login?"
 }

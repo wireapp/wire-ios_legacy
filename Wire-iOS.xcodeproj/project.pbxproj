@@ -1345,7 +1345,6 @@
 		EFD5FC3B21C93FEB00026E3A /* url.json in Resources */ = {isa = PBXBuildFile; fileRef = EFD5FC3A21C93FEB00026E3A /* url.json */; };
 		EFD5FC3C21C93FEB00026E3A /* url.json in Resources */ = {isa = PBXBuildFile; fileRef = EFD5FC3A21C93FEB00026E3A /* url.json */; };
 		EFD5FC3F21C94B2000026E3A /* BlacklistViewControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD5FC3D21C94B2000026E3A /* BlacklistViewControllerSnapshotTests.swift */; };
-		EFD5FC4121C94E9C00026E3A /* UrlTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD5FC4021C94E9C00026E3A /* UrlTests.swift */; };
 		EFD5FC4221C94E9C00026E3A /* UrlTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD5FC4021C94E9C00026E3A /* UrlTests.swift */; };
 		EFDACAB920FF715A00791207 /* ConversationInputBarViewController+OrientationAndSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFDACAB820FF715A00791207 /* ConversationInputBarViewController+OrientationAndSize.swift */; };
 		EFDACABB20FF84B900791207 /* ConversationInputBarViewController+FilesPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFDACABA20FF84B900791207 /* ConversationInputBarViewController+FilesPopover.swift */; };
@@ -7409,7 +7408,6 @@
 				D5C34E91203D7AEA004A0986 /* ToggleSubtitleCell.swift in Sources */,
 				EF883F292151190900B440CC /* UserCellSubtitleProtocol.swift in Sources */,
 				D518947B20504C6A00C095C1 /* LoadingIndicatorCell.swift in Sources */,
-				EFD5FC4121C94E9C00026E3A /* UrlTests.swift in Sources */,
 				8FC85471199245770008B66B /* ZClientViewController.m in Sources */,
 				EF4795AD2077847E00334E32 /* ConversationInputBarViewController+UITextViewDelegate.swift in Sources */,
 				EF2127081FB9DFE300625A9B /* PhoneNumberViewController.m in Sources */,
