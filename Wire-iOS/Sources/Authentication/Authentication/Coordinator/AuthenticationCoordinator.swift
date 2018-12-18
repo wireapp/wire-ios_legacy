@@ -766,4 +766,17 @@ extension AuthenticationCoordinator {
         registrationStatus.sendActivationCode(to: .email(emailAddress))
     }
 
+    /**
+     * Notifies the event responder chain that user input was provided.
+     *
+     * The responder chain will then go through all the input event handlers and
+     * pick the first that accepts the input.
+     *
+     * - parameter input: The input provided by the user.
+     */
+
+    func handleUserInput(_ input: Any) {
+        eventResponderChain.handleEvent(ofType: .userInput(input))
+    }
+
 }

@@ -20,7 +20,7 @@ import Foundation
 
 typealias TeamCreationSecondaryViewDescription = SecondaryViewDescription & AuthenticationActionable
 
-typealias ValueSubmitted = (String) -> ()
+typealias ValueSubmitted = (Any) -> ()
 typealias ValueValidated = (TextFieldValidator.ValidationError) -> ()
 
 protocol ViewDescriptor: class {

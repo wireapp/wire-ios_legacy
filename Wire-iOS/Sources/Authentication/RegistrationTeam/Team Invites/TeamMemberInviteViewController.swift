@@ -105,7 +105,11 @@ final class TeamMemberInviteViewController: AuthenticationStepViewController, Te
         tableView.tableFooterView = footerTextFieldView
     }
     
-    private func sendInvite(to email: String) {
+    private func sendInvite(to value: Any) {
+        guard let email = value as? String else {
+            fatal("Received invalid input. Expecting String, received \(type(of: value))")
+        }
+
         if case .unreachable = NetworkStatus.shared().reachability() {
             return footerTextFieldView.errorMessage = "team.invite.error.no_internet".localized.uppercased()
         }

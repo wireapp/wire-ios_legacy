@@ -395,6 +395,7 @@
 		5EFCB3BF21AAD46C00E892D9 /* Message+Pasteboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFCB3BE21AAD46C00E892D9 /* Message+Pasteboard.swift */; };
 		5EFD4526215A78E800BEE703 /* IndexedListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFD4525215A78E800BEE703 /* IndexedListView.swift */; };
 		5EFD913F21C8F98500080599 /* VerifyPhoneStepDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFD913E21C8F98500080599 /* VerifyPhoneStepDescription.swift */; };
+		5EFD914221C9065900080599 /* AuthenticationTeamCreationInputHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFD914121C9065900080599 /* AuthenticationTeamCreationInputHandler.swift */; };
 		5EFE9BFF21246483007932A6 /* RegistrationFinalErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFE9BFE21246483007932A6 /* RegistrationFinalErrorHandler.swift */; };
 		5EFE9C01212468E8007932A6 /* RegistrationSuccessEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFE9C00212468E8007932A6 /* RegistrationSuccessEventHandler.swift */; };
 		5EFE9C19212C1D6E007932A6 /* RegistrationActivationCodeSentEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFE9C18212C1D6E007932A6 /* RegistrationActivationCodeSentEventHandler.swift */; };
@@ -1907,6 +1908,7 @@
 		5EFCB3BE21AAD46C00E892D9 /* Message+Pasteboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Message+Pasteboard.swift"; sourceTree = "<group>"; };
 		5EFD4525215A78E800BEE703 /* IndexedListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexedListView.swift; sourceTree = "<group>"; };
 		5EFD913E21C8F98500080599 /* VerifyPhoneStepDescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyPhoneStepDescription.swift; sourceTree = "<group>"; };
+		5EFD914121C9065900080599 /* AuthenticationTeamCreationInputHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationTeamCreationInputHandler.swift; sourceTree = "<group>"; };
 		5EFE9BFE21246483007932A6 /* RegistrationFinalErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationFinalErrorHandler.swift; sourceTree = "<group>"; };
 		5EFE9C00212468E8007932A6 /* RegistrationSuccessEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationSuccessEventHandler.swift; sourceTree = "<group>"; };
 		5EFE9C18212C1D6E007932A6 /* RegistrationActivationCodeSentEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationActivationCodeSentEventHandler.swift; sourceTree = "<group>"; };
@@ -4032,6 +4034,7 @@
 				5E8DA752211AF7A000360979 /* Initial Sync */,
 				5E8DA780211C3B7200360979 /* Pre-Login */,
 				5E8DA756211B04EA00360979 /* Post-Login */,
+				5EFD914021C9063E00080599 /* Input */,
 			);
 			path = "Event Handlers";
 			sourceTree = "<group>";
@@ -4274,6 +4277,14 @@
 				F16427031FCC5BB600D2ABFC /* VerifyEmailStepDescription.swift */,
 			);
 			path = Registration;
+			sourceTree = "<group>";
+		};
+		5EFD914021C9063E00080599 /* Input */ = {
+			isa = PBXGroup;
+			children = (
+				5EFD914121C9065900080599 /* AuthenticationTeamCreationInputHandler.swift */,
+			);
+			path = Input;
 			sourceTree = "<group>";
 		};
 		7C25D7532149118D002E22BF /* Mentions */ = {
@@ -8277,6 +8288,7 @@
 				1689FD4B2195C8B800A656E2 /* EphemeralCountdownView.swift in Sources */,
 				162917CE1F8CD327000F3E92 /* NetworkStatusViewController.swift in Sources */,
 				EFF92B6221A839790090DA66 /* RegistrationTextField+PhoneNumber.swift in Sources */,
+				5EFD914221C9065900080599 /* AuthenticationTeamCreationInputHandler.swift in Sources */,
 				EF13205321A6EBF900E7EF21 /* NSString+PastePhoneNumber.swift in Sources */,
 				163495871F010F91004E80DB /* UnauthenticatedSession+Shared.swift in Sources */,
 				F1199D401FC849450070FAC3 /* ButtonDescription.swift in Sources */,

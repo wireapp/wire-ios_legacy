@@ -287,8 +287,8 @@ final class AuthenticationStepController: AuthenticationStepViewController {
         }
     }
 
-    func valueSubmitted(_ value: String) {
-        authenticationCoordinator?.advanceTeamCreation(value: value)
+    func valueSubmitted(_ value: Any) {
+        authenticationCoordinator?.handleUserInput(value)
     }
 }
 

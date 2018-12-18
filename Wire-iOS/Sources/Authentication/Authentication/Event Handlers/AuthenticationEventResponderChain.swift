@@ -64,6 +64,7 @@ class AuthenticationEventResponderChain {
         case registrationError(NSError)
         case registrationStepSuccess
         case userProfileChange(UserChangeInfo)
+        case userInput(Any)
     }
 
     // MARK: - Properties
@@ -86,6 +87,7 @@ class AuthenticationEventResponderChain {
     var registrationErrorHandlers: [AnyAuthenticationEventHandler<NSError>] = []
     var registrationSuccessHandlers: [AnyAuthenticationEventHandler<Void>] = []
     var userProfileChangeObservers: [AnyAuthenticationEventHandler<UserChangeInfo>] = []
+    var userInputObservers: [AnyAuthenticationEventHandler<Any>] = []
 
     /**
      * Configures the object with the given delegate and registers the default observers.
@@ -147,6 +149,9 @@ class AuthenticationEventResponderChain {
 
         // userProfileChangeObservers
         registerHandler(UserEmailChangeEventHandler(), to: &userProfileChangeObservers)
+
+        // userInputObservers
+        registerHandler(AuthenticationTeamCreationInputHandler(), to: &userInputObservers)
     }
 
     /// Registers a handler inside the specified type erased array.
@@ -186,6 +191,8 @@ class AuthenticationEventResponderChain {
             handleEvent(with: registrationSuccessHandlers, context: ())
         case .userProfileChange(let changeInfo):
             handleEvent(with: userProfileChangeObservers, context: changeInfo)
+        case .userInput(let value):
+            handleEvent(with: userInputObservers, context: value)
         }
     }
 
