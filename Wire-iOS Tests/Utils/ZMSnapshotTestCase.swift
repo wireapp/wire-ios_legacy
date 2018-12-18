@@ -380,12 +380,9 @@ extension ZMSnapshotTestCase {
     ///   - file: source file
     ///   - line: source line
     func verifyInIPhoneSize(view: UIView,
-                            initialization: (() -> ())? = nil,
                             extraLayoutPass: Bool = false,
                             file: StaticString = #file,
                             line: UInt = #line) {
-        initialization?()
-
         view.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             view.heightAnchor.constraint(equalToConstant: defaultIPhoneSize.height),
@@ -568,7 +565,7 @@ extension ZMSnapshotTestCase {
 
     func verifyInIPhoneSize(initialization: (() -> UIView),
                             extraLayoutPass: Bool = false,
-                            colorSchemes: Set<ColorSchemeVariant> = [.light],
+                            colorSchemes: Set<ColorSchemeVariant> = [],
                             file: StaticString = #file,
                             line: UInt = #line) {
 
@@ -607,12 +604,15 @@ extension ZMSnapshotTestCase {
                 snapshotBackgroundColor = colorScheme == .dark ? .black : .white
                 testClosure(initialization(), colorScheme == .dark ? "dark" : "light")
             }
+        case[]:
+            testClosure(initialization(), nil)
         default:
             break
         }
 
         /// restore to default light scheme
         ColorScheme.default.variant = .light
+        snapshotBackgroundColor = UIColor.lightGray
     }
 
 }
