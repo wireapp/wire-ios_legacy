@@ -199,7 +199,7 @@ extension UIViewController {
 
     public override func loadView() {
         searchResultsView  = SearchResultsView()
-        searchResultsView?.isContainedInPopover = isContainedInPopover()
+        searchResultsView?.parentViewController = self
         view = searchResultsView
     }
 

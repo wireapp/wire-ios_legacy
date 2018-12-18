@@ -45,6 +45,14 @@ extension URL {
 
 extension URL {
 
+    static var wr_wireAppOnItunes: URL {
+        return URL(string: "https://geo.itunes.apple.com/us/app/wire/id930944768?mt=8")!
+    }
+
+    static var wr_emailAlreadyInUseLearnMore: URL {
+        return URL(string: "https://support.wire.com/hc/en-us/articles/115004082129-My-email-address-is-already-in-use-and-I-cannot-create-an-account-What-can-I-do-")!
+    }
+
     static var wr_usernameLearnMore: URL {
         return URL(string: "https://wire.com/support/username/")!
     }
