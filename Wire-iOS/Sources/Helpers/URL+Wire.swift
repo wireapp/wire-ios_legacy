@@ -46,7 +46,7 @@ extension URL {
 extension URL {
 
     static var wr_wireAppOnItunes: URL {
-        return URL(string: "https://itunes.apple.com/us/app/wire/id930944768?mt=8")!
+        return URL(string: "https://geo.itunes.apple.com/us/app/wire/id930944768?mt=8")!
     }
 
     static var wr_emailAlreadyInUseLearnMore: URL {
