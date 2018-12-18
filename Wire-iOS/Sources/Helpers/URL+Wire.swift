@@ -18,6 +18,8 @@
 
 import UIKit
 
+private let zmLog = ZMSLog(tag: "URL")
+
 @objc enum TeamSource: Int {
     case onboarding, settings
     
@@ -41,12 +43,47 @@ extension URL {
     }
 }
 
+final class WireUrl {
+    /// The shared loader.
+    static var shared: WireUrl! = {
+        guard let filePath = Bundle.main.url(forResource: "url", withExtension: "json") else { return nil}
+
+        return WireUrl(filePath: filePath)
+    }()
+
+    init?(filePath: URL) {
+
+        let data: Data
+        do {
+            data = try Data(contentsOf: filePath)
+        } catch {
+            zmLog.error("Failed to load URL at path: \(filePath), error: \(error)")
+            return nil
+        }
+
+        let parsedJSONData: [String : String]
+        do {
+            parsedJSONData = try JSONSerialization.jsonObject(with: data, options: []) as! [String : String]
+        } catch {
+            zmLog.error("Failed to parse JSON at path: \(filePath), error: \(error)")
+            return nil
+        }
+
+        print("\(parsedJSONData)")
+
+        urls = Dictionary(uniqueKeysWithValues:
+            parsedJSONData.map { key, value in (key, URL(string: value)!) })
+    }
+
+    let urls: [String : URL]
+}
+
 // MARK: - Standard URLS
 
 extension URL {
 
     static var wr_wireAppOnItunes: URL {
-        return URL(string: "https://geo.itunes.apple.com/us/app/wire/id930944768?mt=8")!
+        return WireUrl.shared.urls["wireAppOnItunes"]!
     }
 
     static var wr_emailAlreadyInUseLearnMore: URL {
