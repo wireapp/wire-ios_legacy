@@ -21,12 +21,13 @@ import Foundation
 extension AuthenticationCoordinator: LandingViewControllerDelegate {
 
     func landingViewControllerDidChooseLogin() {
-        stateController.transition(to: .provideCredentials)
+        stateController.transition(to: .provideCredentials(.email))
     }
 
     func landingViewControllerDidChooseCreateAccount() {
         let unregisteredUser = makeUnregisteredUser()
-        stateController.transition(to: .createCredentials(unregisteredUser))
+        let usePhone = UIDevice.current.userInterfaceIdiom == .phone
+        stateController.transition(to: .createCredentials(unregisteredUser, usePhone ? .phone : .email))
     }
 
     func landingViewControllerDidChooseCreateTeam() {

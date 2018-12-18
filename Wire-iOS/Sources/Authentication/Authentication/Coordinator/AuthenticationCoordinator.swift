@@ -104,8 +104,8 @@ class AuthenticationCoordinator: NSObject, AuthenticationEventResponderChainDele
 
 extension AuthenticationCoordinator: AuthenticationStateControllerDelegate {
 
-    func stateDidChange(_ newState: AuthenticationFlowStep, withReset resetStack: Bool) {
-        guard newState.needsInterface else {
+    func stateDidChange(_ newState: AuthenticationFlowStep, mode: AuthenticationStateController.StateChangeMode) {
+        guard let presenter = self.presenter, newState.needsInterface else {
             return
         }
 
@@ -116,12 +116,19 @@ extension AuthenticationCoordinator: AuthenticationStateControllerDelegate {
         stepViewController.authenticationCoordinator = self
         currentViewController = stepViewController
 
-        if resetStack {
-            presenter?.backButtonEnabled = false
-            presenter?.setViewControllers([stepViewController], animated: true)
-        } else {
-            presenter?.backButtonEnabled = newState.allowsUnwind
-            presenter?.pushViewController(stepViewController, animated: true)
+        switch mode {
+        case .normal:
+            presenter.backButtonEnabled = newState.allowsUnwind
+            presenter.pushViewController(stepViewController, animated: true)
+
+        case .reset:
+            presenter.backButtonEnabled = false
+            presenter.setViewControllers([stepViewController], animated: true)
+
+        case .replace:
+            var viewControllers = presenter.viewControllers
+            viewControllers[viewControllers.count - 1] = stepViewController
+            presenter.viewControllers = viewControllers
         }
     }
 
@@ -254,6 +261,9 @@ extension AuthenticationCoordinator: AuthenticationActioner, SessionManagerCreat
 
             case .continueFlowWithLoginCode(let code):
                 continueFlow(withVerificationCode: code)
+
+            case .switchCredentialsType(let newType):
+                switchCredentialsType(newType)
             }
         }
     }
@@ -294,6 +304,20 @@ extension AuthenticationCoordinator: AuthenticationActioner, SessionManagerCreat
         }
     }
 
+    /// Switches the type of credentials in the current step.
+    private func switchCredentialsType(_ newType: AuthenticationCredentialsType) {
+        switch stateController.currentStep {
+        case .createCredentials(let unregisteredUser, _):
+            let newStep = AuthenticationFlowStep.createCredentials(unregisteredUser, newType)
+            stateController.replaceCurrentStep(with: newStep)
+        case .provideCredentials:
+            let newStep = AuthenticationFlowStep.provideCredentials(newType)
+            stateController.replaceCurrentStep(with: newStep)
+        default:
+            log.warn("The current step does not support credential type switching")
+        }
+    }
+
 }
 
 // MARK: - Actions
@@ -331,12 +355,12 @@ extension AuthenticationCoordinator {
 
     @objc func permuteCredentialProvidingFlowType() {
         switch stateController.currentStep {
-        case .provideCredentials:
+        case .provideCredentials(let type):
             let unregisteredUser = makeUnregisteredUser()
-            stateController.replaceCurrentStep(with: .createCredentials(unregisteredUser))
+            stateController.replaceCurrentStep(with: .createCredentials(unregisteredUser, type))
 
-        case .createCredentials:
-            stateController.replaceCurrentStep(with: .provideCredentials)
+        case .createCredentials(_, let type):
+            stateController.replaceCurrentStep(with: .provideCredentials(type))
 
         default:
             log.error("Cannot permute credential providing flow from step \(stateController.currentStep).")
@@ -356,7 +380,7 @@ extension AuthenticationCoordinator {
 
     @objc(startRegistrationWithPhoneNumber:)
     func startRegistration(phoneNumber: String) {
-        guard case let .createCredentials(unregisteredUser) = stateController.currentStep, let presenter = self.presenter else {
+        guard case let .createCredentials(unregisteredUser, _) = stateController.currentStep, let presenter = self.presenter else {
             log.error("Cannot start phone registration outside of registration flow.")
             return
         }
@@ -383,7 +407,7 @@ extension AuthenticationCoordinator {
 
     @objc(startRegistrationWithName:email:password:)
     func startRegistration(name: String, email: String, password: String) {
-        guard case let .createCredentials(unregisteredUser) = stateController.currentStep, let presenter = self.presenter else {
+        guard case let .createCredentials(unregisteredUser, _) = stateController.currentStep, let presenter = self.presenter else {
             log.error("Cannot start email registration outside of registration flow.")
             return
         }

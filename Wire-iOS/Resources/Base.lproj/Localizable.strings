@@ -1200,6 +1200,13 @@
 "registration.close_phone_invitation_button.email_title" = "Register by email";
 "registration.close_phone_invitation_button.phone_title" = "Use another phone";
 
+"registration.register_by_phone" = "Register by phone";
+"registration.register_by_email" = "Register by email";
+"registration.email.subheadline" = "Enter your personal email address.";
+"registration.phone.subheadline" = "Enter your phone number.";
+"registration.email.textfield.placeholder" = "you@youremail.com";
+"registration.email.textfield.accessibility" = "Your personal email";
+
 "registration.enter_phone_number.title" = "Edit phone number";
 "registration.enter_phone_number.placeholder" = "Phone number";
 
@@ -1210,13 +1217,6 @@
 "registration.verify_email.instructions" = "We sent an email to %@.\n Follow the link to verify your address.";
 "registration.verify_email.resend.instructions" = "Didn’t get the message?";
 "registration.verify_email.resend.button_title" = "Re-send";
-
-"registration.select_picture.subtitle" = "Wire is so much nicer with a picture.";
-"registration.select_picture.button_title" = "Choose your own";
-"registration.keep_picture.button_title" = "Keep this one";
-"registration.camera_action.title" = "Take photo";
-"registration.photo_gallery_action.title" = "Choose Photo";
-"registration.cancel_action.title" = "Cancel";
 
 "registration.no_history.hero" = "It’s the first time you’re using Wire on this device.";
 "registration.no_history.subtitle" = "For privacy reasons, your conversation history will not appear here.";

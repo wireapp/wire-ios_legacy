@@ -19,6 +19,19 @@
 import Foundation
 
 /**
+ * The type of credentials to ask when the user is creating or
+ * providing credentials.
+ */
+
+enum AuthenticationCredentialsType {
+    /// Register by phone.
+    case phone
+
+    /// Register by email.
+    case email
+}
+
+/**
  * Steps of the authentication flow.
  */
 
@@ -30,7 +43,7 @@ indirect enum AuthenticationFlowStep: Equatable {
     case reauthenticate(credentials: LoginCredentials?, numberOfAccounts: Int)
 
     // Sign-In
-    case provideCredentials
+    case provideCredentials(AuthenticationCredentialsType)
     case sendLoginCode(phoneNumber: String, isResend: Bool)
     case enterLoginCode(phoneNumber: String)
     case authenticateEmailCredentials(ZMEmailCredentials)
@@ -48,7 +61,7 @@ indirect enum AuthenticationFlowStep: Equatable {
 
     // Registration
     case teamCreation(TeamCreationState)
-    case createCredentials(UnregisteredUser)
+    case createCredentials(UnregisteredUser, AuthenticationCredentialsType)
     case sendActivationCode(UnverifiedCredential, user: UnregisteredUser, isResend: Bool)
     case enterActivationCode(UnverifiedCredential, user: UnregisteredUser)
     case activateCredentials(UnverifiedCredential, user: UnregisteredUser, code: String)

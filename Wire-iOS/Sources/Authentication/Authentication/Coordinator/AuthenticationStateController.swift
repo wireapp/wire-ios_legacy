@@ -19,7 +19,7 @@
 import Foundation
 
 protocol AuthenticationStateControllerDelegate: class {
-    func stateDidChange(_ newState: AuthenticationFlowStep, withReset resetStack: Bool)
+    func stateDidChange(_ newState: AuthenticationFlowStep, mode: AuthenticationStateController.StateChangeMode)
 }
 
 /**
@@ -28,6 +28,10 @@ protocol AuthenticationStateControllerDelegate: class {
  */
 
 class AuthenticationStateController {
+
+    enum StateChangeMode {
+        case reset, replace, normal
+    }
 
     /// The handle to the OS log for authentication.
     let log = ZMSLog(tag: "Authentication")
@@ -54,13 +58,13 @@ class AuthenticationStateController {
      * Replaces the current step with another step.
      * This is useful for cases where the user can switch between flows using a tab bar.
      * - parameter newStep: The new step of the authentication.
-     * - warning: This is not recommended, as we should have a unique UI for each state.
+     * - note: The change will not be animated.
      */
 
     func replaceCurrentStep(with newStep: AuthenticationFlowStep) {
-        log.warn("Replacing the step directly for \(newStep). This is not recommended and will be removed in a future version.")
         currentStep = newStep
         stack[stack.endIndex - 1] = newStep
+        delegate?.stateDidChange(newStep, mode: .replace)
     }
 
     /**
@@ -85,7 +89,7 @@ class AuthenticationStateController {
             stack.append(step)
         }
 
-        delegate?.stateDidChange(currentStep, withReset: resetStack)
+        delegate?.stateDidChange(currentStep, mode: resetStack ? .reset : .normal)
     }
 
     /**

@@ -57,10 +57,17 @@ class AuthenticationInterfaceBuilder {
             loginViewController.shouldHideCancelButton = true
             return loginViewController
 
-        case .createCredentials:
-            let registrationViewController = RegistrationViewController(authenticationFlow: .registration)
-            registrationViewController.shouldHideCancelButton = true
-            return registrationViewController
+        case .createCredentials(_, let credentialsFlowType):
+            let stepDescription: TeamCreationStepDescription
+
+            switch credentialsFlowType {
+            case .email:
+                stepDescription = SetPersonalEmailStepDescription()
+            case .phone:
+                stepDescription = SetPhoneStepDescription()
+            }
+
+            return createViewController(for: stepDescription)
 
         case .clientManagement(let clients, let credentials):
             let emailCredentials = credentials.map { ZMEmailCredentials(email: $0.email!, password: $0.password!) }

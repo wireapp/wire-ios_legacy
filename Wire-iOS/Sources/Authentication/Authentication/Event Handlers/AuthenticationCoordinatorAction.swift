@@ -45,6 +45,7 @@ enum AuthenticationCoordinatorAction {
     case displayInlineError(NSError)
     case assignRandomProfileImage
     case continueFlowWithLoginCode(String)
+    case switchCredentialsType(AuthenticationCredentialsType)
 
     var retainsModal: Bool {
         switch self {
