@@ -336,9 +336,6 @@ extension ZMSnapshotTestCase {
                        line: line)
     }
 
-    /// Performs multiple assertions with the given view using the screen sizes of
-    /// the common iPhones in Portrait and iPad in Landscape and Portrait.
-    /// This method only makes sense for views that will be on presented fullscreen.
     func verifyInAllPhoneWidths(view: UIView,
                                 extraLayoutPass: Bool = false,
                                 tolerance: CGFloat = 0,
@@ -428,6 +425,9 @@ extension ZMSnapshotTestCase {
 
     // MARK: - verify the snapshots in multiple devices
 
+    /// Performs multiple assertions with the given view using the screen sizes of
+    /// the common iPhones in Portrait and iPad in Landscape and Portrait.
+    /// This method only makes sense for views that will be on presented fullscreen.
     func verifyMultipleSize(view: UIView, extraLayoutPass: Bool, inSizes sizes: [String:CGSize], configuration: ConfigurationWithDeviceType?,
                             file: StaticString = #file, line: UInt = #line) {
         for (deviceName, size) in sizes {
@@ -516,6 +516,17 @@ extension ZMSnapshotTestCase {
 //MARK: - test with different color schemes
 
 extension ZMSnapshotTestCase {
+    /// Performs multiple assertions with the given view using the screen widths of
+    /// the common iPhones in Portrait.
+    ///
+    /// - Parameters:
+    ///   - initialization: create the view to test in this closure
+    ///   - extraLayoutPass: set to true for RunLoop run for extra 0.1 seconds
+    ///   - tolerance: The percentage difference to still count as identical - 0 mean pixel perfect, 1 means I don't care
+    ///   - configuration: configuration is executed after the view is finished layout.
+    ///   - colorSchemes: the color schemes to snapshot, default is a empty set. If the set is empty, it will test without ColorScheme override. Valid values are [.light], [.dark] and [.light, .dark]
+    ///   - file: source file
+    ///   - line: source line
     func verifyInAllPhoneWidths(initialization: (() -> UIView),
                                 extraLayoutPass: Bool = false,
                                 tolerance: CGFloat = 0,
@@ -563,13 +574,19 @@ extension ZMSnapshotTestCase {
         ColorScheme.default.variant = .light
     }
 
+    /// verify the snapshot with default iphone size in different color schemes
+    ///
+    /// - Parameters:
+    ///   - initialization: create the view to test in this closure
+    ///   - extraLayoutPass: set to true for RunLoop run for extra 0.1 seconds
+    ///   - colorSchemes: the color schemes to snapshot, default is a empty set. If the set is empty, it will test without ColorScheme override. Valid values are [.light], [.dark] and [.light, .dark]
+    ///   - file: source file
+    ///   - line: source line
     func verifyInIPhoneSize(initialization: (() -> UIView),
                             extraLayoutPass: Bool = false,
                             colorSchemes: Set<ColorSchemeVariant> = [],
                             file: StaticString = #file,
                             line: UInt = #line) {
-
-
 
 
         let testClosure: (UIView, String?) -> Void = {view, identifier in
