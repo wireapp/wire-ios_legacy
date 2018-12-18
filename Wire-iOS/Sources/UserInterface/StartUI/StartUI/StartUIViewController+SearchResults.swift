@@ -40,11 +40,7 @@ extension StartUIViewController: SearchResultsViewControllerDelegate {
         guard let unboxedUser = BareUserToUser(user), unboxedUser.isConnected, !unboxedUser.isBlocked else {
             return
         }
-            
-        guard self.userSelection.users.count != 1 || self.userSelection.users.contains(unboxedUser) else {
-            return
-        }
-            
+        
         self.delegate.startUI(self, didSelect: [unboxedUser])
     }
     
