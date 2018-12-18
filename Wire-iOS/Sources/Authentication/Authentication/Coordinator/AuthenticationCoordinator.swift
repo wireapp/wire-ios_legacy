@@ -251,6 +251,9 @@ extension AuthenticationCoordinator: AuthenticationActioner, SessionManagerCreat
 
             case .assignRandomProfileImage:
                 assignRandomProfileImage()
+
+            case .continueFlowWithLoginCode(let code):
+                continueFlow(withVerificationCode: code)
             }
         }
     }
