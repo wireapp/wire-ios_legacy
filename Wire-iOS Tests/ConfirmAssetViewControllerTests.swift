@@ -25,25 +25,10 @@ class ConfirmAssetViewControllerTests: ZMSnapshotTestCase {
     override func tearDown() {
         sut = nil
         super.tearDown()
-
-        ColorScheme.default.variant = .light
     }
-
-    func setupSUT(colorSchemeVariant: ColorSchemeVariant = .light){
-        ColorScheme.default.variant = colorSchemeVariant
-
-        sut = ConfirmAssetViewController()
-        switch colorSchemeVariant {
-            case .dark:
-                snapshotBackgroundColor = UIColor.black
-        case .light:
-                snapshotBackgroundColor = UIColor.white
-        }
-    }
-
 
     func testThatItRendersTheAssetViewControllerWithLandscapeImage() {
-        setupSUT()
+        sut = ConfirmAssetViewController()
 
         accentColor = .strongLimeGreen
         sut.image = image(inTestBundleNamed: "unsplash_matterhorn.jpg")
@@ -52,7 +37,7 @@ class ConfirmAssetViewControllerTests: ZMSnapshotTestCase {
     }
         
     func testThatItRendersTheAssetViewControllerWithPortraitImage() {
-        setupSUT()
+        sut = ConfirmAssetViewController()
 
         accentColor = .vividRed
         sut.image = image(inTestBundleNamed: "unsplash_burger.jpg")
@@ -61,7 +46,7 @@ class ConfirmAssetViewControllerTests: ZMSnapshotTestCase {
     }
     
     func testThatItRendersTheAssetViewControllerWithSmallImage() {
-        setupSUT()
+        sut = ConfirmAssetViewController()
 
         accentColor = .vividRed
         sut.image = image(inTestBundleNamed: "unsplash_small.jpg").imageScaled(withFactor: 0.5);
@@ -69,16 +54,17 @@ class ConfirmAssetViewControllerTests: ZMSnapshotTestCase {
         verifyInAllIPhoneSizes(view: sut.view)
     }
 
-    func testThatItRendersTheAssetViewControllerWithVideo_dark() {
+    func testThatItRendersTheAssetViewControllerWithVideo() {
 
         let videoURL = urlForResource(inTestBundleNamed: "video.mp4")
 
-        verifyInPhoneSize(initialization: {
-            self.setupSUT(colorSchemeVariant: .dark)
+        verifyInIPhoneSize(initialization: {
+            sut = ConfirmAssetViewController()
             sut.videoURL = videoURL
             sut.previewTitle = "Video: A hand and three cables on an office white table."
             return self.sut.view
-        })
+        },
+                          colorSchemes: [.light, .dark])
     }
 
 }
