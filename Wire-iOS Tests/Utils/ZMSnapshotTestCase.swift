@@ -400,6 +400,29 @@ extension ZMSnapshotTestCase {
                line: line)
     }
 
+    func verifyInPhoneSize(initialization: (() -> UIView),
+                           extraLayoutPass: Bool = false,
+                           colorScheme: ColorSchemeVariant = .light, ///TODO: .dark and .both
+                            file: StaticString = #file,
+                            line: UInt = #line) {
+
+        let view = initialization()
+
+
+            view.translatesAutoresizingMaskIntoConstraints = false
+            NSLayoutConstraint.activate([
+                view.heightAnchor.constraint(equalToConstant: defaultIPhoneSize.height),
+                view.widthAnchor.constraint(equalToConstant: defaultIPhoneSize.width)
+                ])
+
+            view.layoutIfNeeded()
+
+            verify(view: view,
+                   extraLayoutPass: extraLayoutPass,
+                   file: file,
+                   line: line)
+    }
+
     func verifyInAllColorSchemes(view: UIView,
                                  tolerance: CGFloat = 0,
                                  file: StaticString = #file,

@@ -69,15 +69,16 @@ class ConfirmAssetViewControllerTests: ZMSnapshotTestCase {
         verifyInAllIPhoneSizes(view: sut.view)
     }
 
-    func testThatItRendersTheAssetViewControllerWithVideo_darkMode() {
-        setupSUT(colorSchemeVariant: .dark)
+    func testThatItRendersTheAssetViewControllerWithVideo_dark() {
 
         let videoURL = urlForResource(inTestBundleNamed: "video.mp4")
 
-        sut.videoURL = videoURL
-        sut.previewTitle = "Video: A hand and three cables on an office white table."
-
-        verifyInIPhoneSize(view: sut.view)
+        verifyInPhoneSize(initialization: {
+            self.setupSUT(colorSchemeVariant: .dark)
+            sut.videoURL = videoURL
+            sut.previewTitle = "Video: A hand and three cables on an office white table."
+            return self.sut.view
+        })
     }
 
 }
