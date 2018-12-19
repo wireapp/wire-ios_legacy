@@ -22,5 +22,5 @@
     "termsOfServicesURL_teams": "https://wire.com/legal/terms/teams",
     "termsOfServicesURL_personal": "https://wire.com/legal/terms/personal",
 
-    "manageTeamBase": "https://teams.wire.com/login?"
+    "manageTeamBase": "https://teams.wire.com/login"
 }
