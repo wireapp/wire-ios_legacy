@@ -40,6 +40,9 @@ class RegistrationIncrementalUserDataChangeHandler: AuthenticationEventHandler {
         } else if unregisteredUser.name == nil {
             return requestIntermediateStep(.setName, with: unregisteredUser)
 
+        } else if unregisteredUser.password == nil && unregisteredUser.needsPassword {
+            return requestIntermediateStep(.setPassword, with: unregisteredUser)
+
         } else {
             return handleRegistrationCompletion(with: unregisteredUser)
         }

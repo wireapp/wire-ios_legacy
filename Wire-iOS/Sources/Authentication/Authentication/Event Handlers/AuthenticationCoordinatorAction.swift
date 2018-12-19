@@ -46,6 +46,9 @@ enum AuthenticationCoordinatorAction {
     case assignRandomProfileImage
     case continueFlowWithLoginCode(String)
     case switchCredentialsType(AuthenticationCredentialsType)
+    case startRegistrationFlow(UnverifiedCredentials)
+    case setUserName(String)
+    case setUserPassword(String)
 
     var retainsModal: Bool {
         switch self {

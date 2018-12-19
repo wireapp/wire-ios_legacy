@@ -128,12 +128,11 @@ class AuthenticationInterfaceBuilder {
 
     private func makeRegistrationStepViewController(for step: IntermediateRegistrationStep, user: UnregisteredUser) -> AuthenticationStepViewController? {
         switch step {
-        case .start:
-            return nil
-        case .provideMarketingConsent:
-            return nil
         case .setName:
-            return NameStepViewController()
+            let nameStep = SetFullNameStepDescription()
+            return createViewController(for: nameStep)
+        default:
+            return nil
         }
     }
 

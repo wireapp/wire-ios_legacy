@@ -27,8 +27,7 @@ class AnyAuthenticationEventHandler<Context> {
     /// The name of the handler.
     private(set) var name: String
 
-    private let statusProviderGetter: () -> AuthenticationStatusProvider?
-    private let statusProviderSetter: (AuthenticationStatusProvider?) -> Void
+    private let _statusProvider: AnyMutableProperty<AuthenticationStatusProvider?>
     private let handlerBlock: (AuthenticationFlowStep, Context) -> [AuthenticationCoordinatorAction]?
 
     /**
@@ -37,16 +36,15 @@ class AnyAuthenticationEventHandler<Context> {
      */
 
     init<Handler: AuthenticationEventHandler>(_ handler: Handler) where Handler.Context == Context {
-        statusProviderGetter = { handler.statusProvider }
-        statusProviderSetter = { handler.statusProvider = $0 }
+        _statusProvider = AnyMutableProperty(handler, keyPath: \.statusProvider)
         self.name = String(describing: Handler.self)
         handlerBlock = handler.handleEvent
     }
 
     /// The current status provider.
     var statusProvider: AuthenticationStatusProvider? {
-        get { return statusProviderGetter() }
-        set { statusProviderSetter(newValue) }
+        get { return _statusProvider.getter() }
+        set { _statusProvider.setter(newValue) }
     }
 
     /// Handles the event.

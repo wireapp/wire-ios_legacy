@@ -62,9 +62,9 @@ indirect enum AuthenticationFlowStep: Equatable {
     // Registration
     case teamCreation(TeamCreationState)
     case createCredentials(UnregisteredUser, AuthenticationCredentialsType)
-    case sendActivationCode(UnverifiedCredential, user: UnregisteredUser, isResend: Bool)
-    case enterActivationCode(UnverifiedCredential, user: UnregisteredUser)
-    case activateCredentials(UnverifiedCredential, user: UnregisteredUser, code: String)
+    case sendActivationCode(UnverifiedCredentials, user: UnregisteredUser, isResend: Bool)
+    case enterActivationCode(UnverifiedCredentials, user: UnregisteredUser)
+    case activateCredentials(UnverifiedCredentials, user: UnregisteredUser, code: String)
     case incrementalUserCreation(UnregisteredUser, IntermediateRegistrationStep)
     case createUser(UnregisteredUser)
 
@@ -128,7 +128,7 @@ indirect enum AuthenticationFlowStep: Equatable {
  */
 
 enum IntermediateRegistrationStep: Equatable {
-    case start, provideMarketingConsent, setName
+    case start, provideMarketingConsent, setName, setPassword
 
     var needsInterface: Bool {
         switch self {

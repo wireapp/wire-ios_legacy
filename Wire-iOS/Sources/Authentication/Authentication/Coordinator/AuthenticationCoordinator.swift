@@ -264,6 +264,15 @@ extension AuthenticationCoordinator: AuthenticationActioner, SessionManagerCreat
 
             case .switchCredentialsType(let newType):
                 switchCredentialsType(newType)
+
+            case .startRegistrationFlow(let unverifiedCredential):
+                startRegistration(unverifiedCredential)
+
+            case .setUserName(let userName):
+                updateUnregisteredUser(\.name, userName)
+
+            case .setUserPassword(let password):
+                updateUnregisteredUser(\.password, password)
             }
         }
     }
@@ -370,6 +379,30 @@ extension AuthenticationCoordinator {
     // MARK: Registration Code
 
     /**
+     * Starts the registration flow with the specified credentials.
+     *
+     * This step will ask the registration status to send the activation code
+     * by text message or email. It will advance the state to `.sendActivationCode`.
+     *
+     * - parameter credential: The unverified credential to register with.
+     */
+
+    func startRegistration(_ credentials: UnverifiedCredentials) {
+        guard case let .createCredentials(unregisteredUser, _) = stateController.currentStep, let presenter = self.presenter else {
+            log.error("Cannot start phone registration outside of registration flow.")
+            return
+        }
+
+        UIAlertController.requestTOSApproval(over: presenter, forTeamAccount: false) { approved in
+            if approved {
+                unregisteredUser.acceptedTermsOfService = true
+                unregisteredUser.credentials = credentials
+                self.sendActivationCode(credentials, unregisteredUser, isResend: false)
+            }
+        }
+    }
+
+    /**
      * Starts the registration flow with the specified phone number.
      *
      * This step will ask the registration status to send the activation code
@@ -387,7 +420,7 @@ extension AuthenticationCoordinator {
 
         UIAlertController.requestTOSApproval(over: presenter, forTeamAccount: false) { approved in
             if approved {
-                unregisteredUser.credentials = .phone(number: phoneNumber)
+                unregisteredUser.credentials = .phone(phoneNumber)
                 unregisteredUser.acceptedTermsOfService = true
                 self.sendActivationCode(.phone(phoneNumber), unregisteredUser, isResend: false)
             }
@@ -414,8 +447,9 @@ extension AuthenticationCoordinator {
 
         UIAlertController.requestTOSApproval(over: presenter, forTeamAccount: false) { approved in
             if approved {
-                unregisteredUser.credentials = .email(address: email, password: password)
+                unregisteredUser.credentials = .email(email)
                 unregisteredUser.name = name
+                unregisteredUser.password = password
                 unregisteredUser.acceptedTermsOfService = true
 
                 self.sendActivationCode(.email(email), unregisteredUser, isResend: false)
@@ -424,17 +458,17 @@ extension AuthenticationCoordinator {
     }
 
     /// Sends the registration activation code.
-    private func sendActivationCode(_ credential: UnverifiedCredential, _ user: UnregisteredUser, isResend: Bool) {
+    private func sendActivationCode(_ credentials: UnverifiedCredentials, _ user: UnregisteredUser, isResend: Bool) {
         presenter?.showLoadingView = true
-        stateController.transition(to: .sendActivationCode(credential, user: user, isResend: isResend))
-        registrationStatus.sendActivationCode(to: credential)
+        stateController.transition(to: .sendActivationCode(credentials, user: user, isResend: isResend))
+        registrationStatus.sendActivationCode(to: credentials)
     }
 
     /// Asks the registration
-    private func activateCredentials(credential: UnverifiedCredential, user: UnregisteredUser, code: String) {
+    private func activateCredentials(credentials: UnverifiedCredentials, user: UnregisteredUser, code: String) {
         presenter?.showLoadingView = true
-        stateController.transition(to: .activateCredentials(credential, user: user, code: code))
-        registrationStatus.checkActivationCode(credential: credential, code: code)
+        stateController.transition(to: .activateCredentials(credentials, user: user, code: code))
+        registrationStatus.checkActivationCode(credential: credentials, code: code)
     }
 
     // MARK: Linear Registration
@@ -475,6 +509,17 @@ extension AuthenticationCoordinator {
         updateBlock(unregisteredUser)
         eventResponderChain.handleEvent(ofType: .registrationStepSuccess)
     }
+
+    private func updateUnregisteredUser<T>(_ keyPath: ReferenceWritableKeyPath<UnregisteredUser, T?>, _ newValue: T) {
+        guard case let .incrementalUserCreation(unregisteredUser, _) = stateController.currentStep else {
+            log.error("Cannot update unregistered user outide of the incremental user creation flow")
+            return
+        }
+
+        unregisteredUser[keyPath: keyPath] = newValue
+        eventResponderChain.handleEvent(ofType: .registrationStepSuccess)
+    }
+
 
     /// Creates the user on the backend and advances the state.
     private func finishRegisteringUser() {
@@ -598,8 +643,8 @@ extension AuthenticationCoordinator {
         case .enterLoginCode(let phoneNumber):
             let credentials = ZMPhoneCredentials(phoneNumber: phoneNumber, verificationCode: code)
             requestPhoneLogin(with: credentials)
-        case .enterActivationCode(let unverifiedCredential, let user):
-            activateCredentials(credential: unverifiedCredential, user: user, code: code)
+        case .enterActivationCode(let unverifiedCredentials, let user):
+            activateCredentials(credentials: unverifiedCredentials, user: user, code: code)
         default:
             log.error("Cannot continue flow with user code in the current state (\(stateController.currentStep)")
         }

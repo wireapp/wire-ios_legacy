@@ -399,6 +399,9 @@
 		5EFD914421C918E400080599 /* AuthenticationCodeVerificationInputHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFD914321C918E400080599 /* AuthenticationCodeVerificationInputHandler.swift */; };
 		5EFD914621C926A900080599 /* SetPersonalEmailStepDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFD914521C926A900080599 /* SetPersonalEmailStepDescription.swift */; };
 		5EFD914821C92BF700080599 /* SetPhoneStepDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFD914721C92BF700080599 /* SetPhoneStepDescription.swift */; };
+		5EFD914A21C931B600080599 /* PhoneNumberFieldDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFD914921C931B600080599 /* PhoneNumberFieldDescription.swift */; };
+		5EFD914C21C931EE00080599 /* PhoneNumberTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFD914B21C931EE00080599 /* PhoneNumberTextField.swift */; };
+		5EFD914E21C9325B00080599 /* AuthenticationCredentialsCreationInputHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFD914D21C9325B00080599 /* AuthenticationCredentialsCreationInputHandler.swift */; };
 		5EFE9BFF21246483007932A6 /* RegistrationFinalErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFE9BFE21246483007932A6 /* RegistrationFinalErrorHandler.swift */; };
 		5EFE9C01212468E8007932A6 /* RegistrationSuccessEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFE9C00212468E8007932A6 /* RegistrationSuccessEventHandler.swift */; };
 		5EFE9C19212C1D6E007932A6 /* RegistrationActivationCodeSentEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFE9C18212C1D6E007932A6 /* RegistrationActivationCodeSentEventHandler.swift */; };
@@ -1915,6 +1918,9 @@
 		5EFD914321C918E400080599 /* AuthenticationCodeVerificationInputHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationCodeVerificationInputHandler.swift; sourceTree = "<group>"; };
 		5EFD914521C926A900080599 /* SetPersonalEmailStepDescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetPersonalEmailStepDescription.swift; sourceTree = "<group>"; };
 		5EFD914721C92BF700080599 /* SetPhoneStepDescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetPhoneStepDescription.swift; sourceTree = "<group>"; };
+		5EFD914921C931B600080599 /* PhoneNumberFieldDescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneNumberFieldDescription.swift; sourceTree = "<group>"; };
+		5EFD914B21C931EE00080599 /* PhoneNumberTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneNumberTextField.swift; sourceTree = "<group>"; };
+		5EFD914D21C9325B00080599 /* AuthenticationCredentialsCreationInputHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationCredentialsCreationInputHandler.swift; sourceTree = "<group>"; };
 		5EFE9BFE21246483007932A6 /* RegistrationFinalErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationFinalErrorHandler.swift; sourceTree = "<group>"; };
 		5EFE9C00212468E8007932A6 /* RegistrationSuccessEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationSuccessEventHandler.swift; sourceTree = "<group>"; };
 		5EFE9C18212C1D6E007932A6 /* RegistrationActivationCodeSentEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationActivationCodeSentEventHandler.swift; sourceTree = "<group>"; };
@@ -4292,6 +4298,7 @@
 			children = (
 				5EFD914121C9065900080599 /* AuthenticationTeamCreationInputHandler.swift */,
 				5EFD914321C918E400080599 /* AuthenticationCodeVerificationInputHandler.swift */,
+				5EFD914D21C9325B00080599 /* AuthenticationCredentialsCreationInputHandler.swift */,
 			);
 			path = Input;
 			sourceTree = "<group>";
@@ -6436,6 +6443,7 @@
 				EF61B3411FC8508400D8E631 /* TextFieldValidator.swift */,
 				EFFF9E841FBF335700491F9A /* UIColor+TeamCreation.swift */,
 				EF25F7DD1FC45F8E0040C3CC /* AccessoryTextField.swift */,
+				5EFD914B21C931EE00080599 /* PhoneNumberTextField.swift */,
 				8759E2C41FC86090008E17C9 /* UIAlertController+TOS.swift */,
 				EF218AC820AC76DB004977BF /* UIAlertController+Newsletter.swift */,
 			);
@@ -6672,6 +6680,7 @@
 				F1199D3B1FC849440070FAC3 /* BackButtonDescription.swift */,
 				F1199D3C1FC849440070FAC3 /* ButtonDescription.swift */,
 				F1199D3D1FC849440070FAC3 /* TextFieldDescription.swift */,
+				5EFD914921C931B600080599 /* PhoneNumberFieldDescription.swift */,
 				F1199D3E1FC849440070FAC3 /* VerificationCodeFieldDescription.swift */,
 				F1A989CF1FD1630300B8A82E /* SecondaryViewDescription.swift */,
 			);
@@ -7706,6 +7715,7 @@
 				16F6BB0E1EDD7B23009EA803 /* SearchHeaderViewController.swift in Sources */,
 				D550F57520444CF8009E09DD /* AlertResultConfiguration.swift in Sources */,
 				EF24036C20A1A2EF002813BE /* ConversationInputBarViewController+ImagePicker.swift in Sources */,
+				5EFD914E21C9325B00080599 /* AuthenticationCredentialsCreationInputHandler.swift in Sources */,
 				DB7FEC921B8729AD00BA72DE /* ConversationInputBarSendController.m in Sources */,
 				8744D5BE1C41D6C2000F8F93 /* SettingsClientViewController.swift in Sources */,
 				D54224C620513BFD00526A57 /* CellConfiguration+ConversationOptions.swift in Sources */,
@@ -7829,6 +7839,7 @@
 				EFF3DA452097587F007A3358 /* UIPasteboard+MediaAsset.swift in Sources */,
 				BAEF10FA1B8C8849005BFA48 /* AnimatedListMenuView.m in Sources */,
 				1682AEB620480C80003A052A /* UIViewController+Navigation.swift in Sources */,
+				5EFD914C21C931EE00080599 /* PhoneNumberTextField.swift in Sources */,
 				5E33F0D020AD629D00414EA6 /* CallPermissionsConfiguration.swift in Sources */,
 				871BC2551D34F8F800DF0793 /* CrossfadeTransition.m in Sources */,
 				EFBCC91521551694006AAB70 /* ContactsViewController+ViewLifeCycle.swift in Sources */,
@@ -8111,6 +8122,7 @@
 				87DCF4E01D34EA4500BB420F /* TopPeopleCell.m in Sources */,
 				8F5A3E9D19AE2C9E00D0E9DA /* AVSMediaManager+Additions.m in Sources */,
 				EF587164216669FD00E47E73 /* ConversationListViewController+ActionMenu.swift in Sources */,
+				5EFD914A21C931B600080599 /* PhoneNumberFieldDescription.swift in Sources */,
 				D51735712017640D00B473CE /* UIAlertController+PasswordVerification.swift in Sources */,
 				BF3A3DCE1EA75290005477F8 /* RotatingKeyboardAvoidingViewController.swift in Sources */,
 				87DCF49B1D34E9E600BB420F /* LocationSelectionViewController.swift in Sources */,

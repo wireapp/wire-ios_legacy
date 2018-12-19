@@ -19,26 +19,34 @@
 import Foundation
 
 /**
- * Handles the input of the 6-digit verification code.
+ * Handles the input of the phone number or email to register.
  */
 
-class AuthenticationCodeVerificationInputHandler: AuthenticationEventHandler {
+class AuthenticationCredentialsCreationInputHandler: AuthenticationEventHandler {
 
     weak var statusProvider: AuthenticationStatusProvider?
 
     func handleEvent(currentStep: AuthenticationFlowStep, context: Any) -> [AuthenticationCoordinatorAction]? {
-        // Only handle string values
-        guard let code = context as? String else {
+        // Only handle input during the credentials creation.
+        guard case .createCredentials(_, let type) = currentStep else {
             return nil
         }
 
-        // Only handle input during non-team code validation
-        switch currentStep {
-        case .enterActivationCode, .enterLoginCode:
-            return [.continueFlowWithLoginCode(code)]
-        default:
+        // Only handle string values
+        guard let input = context as? String else {
             return nil
         }
+
+        // Only handle input during code validation
+        switch type {
+        case .email:
+            let email = UnverifiedCredentials.email(input)
+            return [.startRegistrationFlow(email)]
+        case .phone:
+            let phone = UnverifiedCredentials.phone(input)
+            return [.startRegistrationFlow(phone)]
+        }
     }
-    
+
+
 }
