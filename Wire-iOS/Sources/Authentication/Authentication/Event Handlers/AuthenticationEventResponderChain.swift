@@ -227,10 +227,7 @@ class AuthenticationEventResponderChain {
         }
 
         log.info("Handing event using \(name), and \(actions.count) actions.")
-
-        DispatchQueue.main.async {
-            delegate.executeActions(actions)
-        }
+        delegate.executeActions(actions)
     }
 
 }
