@@ -32,32 +32,6 @@ private let zmLog = ZMSLog(tag: "URL")
 }
 
 struct WireUrl: Codable {
-    static var shared: WireUrl! = {
-        guard let filePath = Bundle.main.url(forResource: "url", withExtension: "json") else { return nil }
-
-        return WireUrl(filePath: filePath)
-    }()
-
-    private init?(filePath: URL) {
-
-        let data: Data
-        do {
-            data = try Data(contentsOf: filePath)
-        } catch {
-            zmLog.error("Failed to load URL at path: \(filePath), error: \(error)")
-            return nil
-        }
-
-        let decoder = JSONDecoder()
-
-        do {
-            self = try decoder.decode(WireUrl.self, from: data)
-        } catch {
-            zmLog.error("Failed to parse JSON at path: \(filePath), error: \(error)")
-            return nil
-        }
-    }
-
     let wireAppOnItunes: URL
 
     let emailAlreadyInUseLearnMore: URL
@@ -83,6 +57,35 @@ struct WireUrl: Codable {
     let termsOfServicesPersonal: URL
 
     let manageTeamBase: URL
+
+    static var shared: WireUrl! = {
+        guard let filePath = Bundle.main.url(forResource: "url", withExtension: "json") else {
+            zmLog.error("Failed to get URL from bundle")
+            return nil
+        }
+
+        return WireUrl(filePath: filePath)
+    }()
+
+    private init?(filePath: URL) {
+
+        let data: Data
+        do {
+            data = try Data(contentsOf: filePath)
+        } catch {
+            zmLog.error("Failed to load URL at path: \(filePath), error: \(error)")
+            return nil
+        }
+
+        let decoder = JSONDecoder()
+
+        do {
+            self = try decoder.decode(WireUrl.self, from: data)
+        } catch {
+            zmLog.error("Failed to parse JSON at path: \(filePath), error: \(error)")
+            return nil
+        }
+    }
 }
 
 extension URL {

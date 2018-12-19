@@ -1218,6 +1218,7 @@
 		EF2A8DEB214A9AFD002C9058 /* ContactsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2A8DEA214A9AFD002C9058 /* ContactsCell.swift */; };
 		EF2A8DED214AA36E002C9058 /* SeparatorViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2A8DEC214AA36E002C9058 /* SeparatorViewProtocol.swift */; };
 		EF2A8DEF214AAB13002C9058 /* ContactsCellSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2A8DEE214AAB13002C9058 /* ContactsCellSnapshotTests.swift */; };
+		EF2B0DD121CA8EF1003B2882 /* url.json in Resources */ = {isa = PBXBuildFile; fileRef = EF2B0DD021CA8DF7003B2882 /* url.json */; };
 		EF2B74CA2141699100FD2574 /* LandingViewControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2B74C92141699100FD2574 /* LandingViewControllerSnapshotTests.swift */; };
 		EF2C189E1FED0D6900E9F2FD /* ConversationCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2C189C1FED0D3000E9F2FD /* ConversationCellTests.swift */; };
 		EF2C18A01FED435600E9F2FD /* ConversationCell+BurstTimestamp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2C189F1FED435600E9F2FD /* ConversationCell+BurstTimestamp.swift */; };
@@ -1342,8 +1343,6 @@
 		EFD514AB21886C5D00D7C7E0 /* UIView+ConstraintsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD514AA21886C5D00D7C7E0 /* UIView+ConstraintsHelper.swift */; };
 		EFD514AD21886CC600D7C7E0 /* ConversationListItemView+Constraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD514AC21886CC600D7C7E0 /* ConversationListItemView+Constraints.swift */; };
 		EFD5CF4E2189C68D00BEC99E /* NSMutableAttributedString+ReplaceEmojiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD5CF4C2189C5F700BEC99E /* NSMutableAttributedString+ReplaceEmojiTests.swift */; };
-		EFD5FC3B21C93FEB00026E3A /* url.json in Resources */ = {isa = PBXBuildFile; fileRef = EFD5FC3A21C93FEB00026E3A /* url.json */; };
-		EFD5FC3C21C93FEB00026E3A /* url.json in Resources */ = {isa = PBXBuildFile; fileRef = EFD5FC3A21C93FEB00026E3A /* url.json */; };
 		EFD5FC4221C94E9C00026E3A /* UrlTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD5FC4021C94E9C00026E3A /* UrlTests.swift */; };
 		EFDACAB920FF715A00791207 /* ConversationInputBarViewController+OrientationAndSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFDACAB820FF715A00791207 /* ConversationInputBarViewController+OrientationAndSize.swift */; };
 		EFDACABB20FF84B900791207 /* ConversationInputBarViewController+FilesPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFDACABA20FF84B900791207 /* ConversationInputBarViewController+FilesPopover.swift */; };
@@ -3018,6 +3017,7 @@
 		EF2A8DEA214A9AFD002C9058 /* ContactsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsCell.swift; sourceTree = "<group>"; };
 		EF2A8DEC214AA36E002C9058 /* SeparatorViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeparatorViewProtocol.swift; sourceTree = "<group>"; };
 		EF2A8DEE214AAB13002C9058 /* ContactsCellSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsCellSnapshotTests.swift; sourceTree = "<group>"; };
+		EF2B0DD021CA8DF7003B2882 /* url.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = url.json; sourceTree = "<group>"; };
 		EF2B74C92141699100FD2574 /* LandingViewControllerSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingViewControllerSnapshotTests.swift; sourceTree = "<group>"; };
 		EF2C189C1FED0D3000E9F2FD /* ConversationCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationCellTests.swift; sourceTree = "<group>"; };
 		EF2C189F1FED435600E9F2FD /* ConversationCell+BurstTimestamp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationCell+BurstTimestamp.swift"; sourceTree = "<group>"; };
@@ -3154,7 +3154,6 @@
 		EFD514AA21886C5D00D7C7E0 /* UIView+ConstraintsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+ConstraintsHelper.swift"; sourceTree = "<group>"; };
 		EFD514AC21886CC600D7C7E0 /* ConversationListItemView+Constraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationListItemView+Constraints.swift"; sourceTree = "<group>"; };
 		EFD5CF4C2189C5F700BEC99E /* NSMutableAttributedString+ReplaceEmojiTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSMutableAttributedString+ReplaceEmojiTests.swift"; sourceTree = "<group>"; };
-		EFD5FC3A21C93FEB00026E3A /* url.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = url.json; path = "Wire-iOS/Sources/url.json"; sourceTree = SOURCE_ROOT; };
 		EFD5FC4021C94E9C00026E3A /* UrlTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UrlTests.swift; sourceTree = "<group>"; };
 		EFDACAB820FF715A00791207 /* ConversationInputBarViewController+OrientationAndSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationInputBarViewController+OrientationAndSize.swift"; sourceTree = "<group>"; };
 		EFDACABA20FF84B900791207 /* ConversationInputBarViewController+FilesPopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationInputBarViewController+FilesPopover.swift"; sourceTree = "<group>"; };
@@ -5307,7 +5306,6 @@
 				8FC8564019924CBA0008B66B /* Localizable.strings */,
 				1EFB23DE1ACEDE5400244571 /* Localizable.stringsdict */,
 				848DE12A1A83D20000E154B1 /* emoticons.min.json */,
-				EFD5FC3A21C93FEB00026E3A /* url.json */,
 				876F99061D070F6700CA2788 /* Sounds */,
 				8FC85089199245760008B66B /* Images */,
 				BF0BDF701DA7A9D8003C61DE /* Fonts */,
@@ -6657,6 +6655,7 @@
 		F12C48952199CBB600F49548 /* Configuration */ = {
 			isa = PBXGroup;
 			children = (
+				EF2B0DD021CA8DF7003B2882 /* url.json */,
 				F1FDF2C521ADA3F000E037A1 /* Images.xcassets */,
 				F122349821A715D90038DCAC /* Backend.bundle */,
 				F12C48F12199D2C200F49548 /* Base.xcconfig */,
@@ -7008,7 +7007,7 @@
 				EF21270B1FB9DFE300625A9B /* CountryCodes.plist in Resources */,
 				BF0BDF721DA7A9D8003C61DE /* RedactedScript-Regular.ttf in Resources */,
 				DB3E943A1B96EDBD00990482 /* LaunchScreen.xib in Resources */,
-				EFD5FC3B21C93FEB00026E3A /* url.json in Resources */,
+				EF2B0DD121CA8EF1003B2882 /* url.json in Resources */,
 				1658D2051D3E742A00249609 /* ping_from_them.caf in Resources */,
 				848DE12B1A83D20000E154B1 /* emoticons.min.json in Resources */,
 				1660F2381FBC6E2E00A0EE54 /* silence.m4a in Resources */,
@@ -7032,7 +7031,6 @@
 				7C374E4B1FDE7B8C00A43B9C /* unsplash_matterhorn_small_height.jpg in Resources */,
 				5EBC344420EE5FEF00AFB6DF /* identicon.png in Resources */,
 				BFA13E181D4B509A00F0A91B /* unsplash_burger.jpg in Resources */,
-				EFD5FC3C21C93FEB00026E3A /* url.json in Resources */,
 				7C374E4E1FDE7B8C00A43B9C /* unsplash_matterhorn_small_width.jpg in Resources */,
 				16A2027C1B677A5D0095BBD1 /* soundcloud-track4.json in Resources */,
 				1E18C2BE1AFBB8590043F3CF /* emo-test-01.json in Resources */,
