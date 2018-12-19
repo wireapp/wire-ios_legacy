@@ -1344,7 +1344,6 @@
 		EFD5CF4E2189C68D00BEC99E /* NSMutableAttributedString+ReplaceEmojiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD5CF4C2189C5F700BEC99E /* NSMutableAttributedString+ReplaceEmojiTests.swift */; };
 		EFD5FC3B21C93FEB00026E3A /* url.json in Resources */ = {isa = PBXBuildFile; fileRef = EFD5FC3A21C93FEB00026E3A /* url.json */; };
 		EFD5FC3C21C93FEB00026E3A /* url.json in Resources */ = {isa = PBXBuildFile; fileRef = EFD5FC3A21C93FEB00026E3A /* url.json */; };
-		EFD5FC3F21C94B2000026E3A /* BlacklistViewControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD5FC3D21C94B2000026E3A /* BlacklistViewControllerSnapshotTests.swift */; };
 		EFD5FC4221C94E9C00026E3A /* UrlTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD5FC4021C94E9C00026E3A /* UrlTests.swift */; };
 		EFDACAB920FF715A00791207 /* ConversationInputBarViewController+OrientationAndSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFDACAB820FF715A00791207 /* ConversationInputBarViewController+OrientationAndSize.swift */; };
 		EFDACABB20FF84B900791207 /* ConversationInputBarViewController+FilesPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFDACABA20FF84B900791207 /* ConversationInputBarViewController+FilesPopover.swift */; };
@@ -3156,7 +3155,6 @@
 		EFD514AC21886CC600D7C7E0 /* ConversationListItemView+Constraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationListItemView+Constraints.swift"; sourceTree = "<group>"; };
 		EFD5CF4C2189C5F700BEC99E /* NSMutableAttributedString+ReplaceEmojiTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSMutableAttributedString+ReplaceEmojiTests.swift"; sourceTree = "<group>"; };
 		EFD5FC3A21C93FEB00026E3A /* url.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = url.json; path = "Wire-iOS/Sources/url.json"; sourceTree = SOURCE_ROOT; };
-		EFD5FC3D21C94B2000026E3A /* BlacklistViewControllerSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlacklistViewControllerSnapshotTests.swift; sourceTree = "<group>"; };
 		EFD5FC4021C94E9C00026E3A /* UrlTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UrlTests.swift; sourceTree = "<group>"; };
 		EFDACAB820FF715A00791207 /* ConversationInputBarViewController+OrientationAndSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationInputBarViewController+OrientationAndSize.swift"; sourceTree = "<group>"; };
 		EFDACABA20FF84B900791207 /* ConversationInputBarViewController+FilesPopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationInputBarViewController+FilesPopover.swift"; sourceTree = "<group>"; };
@@ -6022,7 +6020,6 @@
 				EFF92B6A21A863700090DA66 /* PhoneNumberViewControllerSnapshotTests.swift */,
 				5E769C5521AD8ABD00785EB7 /* DismissalTests.swift */,
 				5EBF4A3A21BE984E0021CFFC /* TransformTextViewTests.swift */,
-				EFD5FC3D21C94B2000026E3A /* BlacklistViewControllerSnapshotTests.swift */,
 				EFD5FC4021C94E9C00026E3A /* UrlTests.swift */,
 				5E53533F21B05BF60060DB38 /* MessageDetails */,
 			);
@@ -8395,7 +8392,6 @@
 				1658C19820A1E55200148F6D /* CallInfoRootViewControllerTests.swift in Sources */,
 				EF68856820F611D50074CA0F /* CanvasViewControllerTests.swift in Sources */,
 				5EC16B9820EB9D3900955156 /* YouTubeServiceTests.swift in Sources */,
-				EFD5FC3F21C94B2000026E3A /* BlacklistViewControllerSnapshotTests.swift in Sources */,
 				EF31DC7C2092020300A4F09F /* UIViewController+iPhoneSize.swift in Sources */,
 				EF40AAE62146C94600211FBF /* RegistrationRootViewControllerSnapshotTests.swift in Sources */,
 				EEE60E2C2179D99100D03346 /* GroupDetailsNotificationOptionsCellTests.swift in Sources */,
