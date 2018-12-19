@@ -104,9 +104,7 @@ class AuthenticationInterfaceBuilder {
             return AdaptiveFormViewController(childViewController: verification)
 
         case .incrementalUserCreation(let user, let registrationStep):
-            return makeRegistrationStepViewController(for: registrationStep, user: user).map {
-                AdaptiveFormViewController(childViewController: $0)
-            }
+            return makeRegistrationStepViewController(for: registrationStep, user: user)
 
         case .teamCreation(let state):
             return makeTeamCreationStepViewController(for: state)

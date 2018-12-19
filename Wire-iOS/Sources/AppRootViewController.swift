@@ -230,7 +230,10 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
             authenticationCoordinator!.delegate = appStateController
             authenticationCoordinator!.startAuthentication(with: error, numberOfAccounts: SessionManager.numberOfAccounts)
 
-            viewController = KeyboardAvoidingViewController(viewController: navigationController)
+            let keyboardViewController = KeyboardAvoidingViewController(viewController: navigationController)
+            keyboardViewController.view.backgroundColor = UIColor.Team.background
+
+            viewController = keyboardViewController
 
         case .authenticated(completedRegistration: let completedRegistration):
             UIColor.setAccentOverride(.undefined)
