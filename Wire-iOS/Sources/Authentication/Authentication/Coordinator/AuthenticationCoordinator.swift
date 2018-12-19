@@ -468,7 +468,7 @@ extension AuthenticationCoordinator {
     private func activateCredentials(credentials: UnverifiedCredentials, user: UnregisteredUser, code: String) {
         presenter?.showLoadingView = true
         stateController.transition(to: .activateCredentials(credentials, user: user, code: code))
-        registrationStatus.checkActivationCode(credential: credentials, code: code)
+        registrationStatus.checkActivationCode(credentials: credentials, code: code)
     }
 
     // MARK: Linear Registration
@@ -804,7 +804,7 @@ extension AuthenticationCoordinator {
 
         case let .verifyActivationCode(_, emailAddress, activationCode):
             presenter?.showLoadingView = true
-            registrationStatus.checkActivationCode(credential: .email(emailAddress), code: activationCode)
+            registrationStatus.checkActivationCode(credentials: .email(emailAddress), code: activationCode)
 
         case .provideMarketingConsent:
             presenter?.showLoadingView = false
