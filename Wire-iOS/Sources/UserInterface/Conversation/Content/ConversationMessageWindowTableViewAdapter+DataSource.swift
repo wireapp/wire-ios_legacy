@@ -44,7 +44,7 @@ extension ZMConversationMessage {
         guard let sender = sender else {
             return false
         }
-        return sender.isSelfUser && deliveryState.isOne(of: [.pending])
+        return sender.isSelfUser && deliveryState == .pending
     }
 }
 

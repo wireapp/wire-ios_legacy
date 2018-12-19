@@ -26,15 +26,24 @@ protocol ConversationCreationValuesConfigurable: class {
 }
 
 final public class ConversationCreationValues {
+    private var unfilteredParticipants: Set<ZMUser>
+    
     var allowGuests: Bool
     var enableReceipts: Bool
     var name: String
-    var participants: Set<ZMUser>
+    var participants: Set<ZMUser> {
+        get {
+            let selfUser = ZMUser.selfUser()
+            return allowGuests ? unfilteredParticipants : unfilteredParticipants.filter({ $0.team == selfUser?.team})
+        }
+        set {
+            unfilteredParticipants = newValue
+        }
+    }
     
     init (name: String = "", participants: Set<ZMUser> = [], allowGuests: Bool = true, enableReceipts: Bool = true) {
         self.name = name
-        let selfUser = ZMUser.selfUser()!
-        self.participants = allowGuests ? participants : Set(Array(participants).filter { $0.team == selfUser.team })
+        self.unfilteredParticipants = participants
         self.allowGuests = allowGuests
         self.enableReceipts = enableReceipts
     }

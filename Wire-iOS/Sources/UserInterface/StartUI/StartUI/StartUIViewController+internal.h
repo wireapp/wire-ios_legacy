@@ -20,8 +20,6 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
 
 @interface StartUIViewController ()
 
-@property (nonatomic) UserSelection *userSelection;
-
 - (void)presentProfileViewControllerForUser:(id<UserType>)bareUser atIndexPath:(NSIndexPath *)indexPath;
 
 @end

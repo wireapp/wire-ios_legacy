@@ -44,7 +44,6 @@ extension ZMConversationMessage {
             return false
         }
 
-        let isSent = deliveryState.isOne(of: .delivered, .sent, .read)
         return !isEphemeral && conversation.isSelfAnActiveMember && isSent && (isText || isImage || isLocation || isFile)
     }
 
@@ -54,8 +53,8 @@ extension ZMConversationMessage {
             return false
         }
 
-        // Do not show the details of the message was not sent or delivered.
-        guard self.deliveryState.isOne(of: .delivered, .sent, .read) else {
+        // Do not show the details of the message if it was not sent
+        guard isSent else {
             return false
         }
 
