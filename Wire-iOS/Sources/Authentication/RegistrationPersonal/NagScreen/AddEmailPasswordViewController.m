@@ -21,7 +21,6 @@
 #import <WireExtensionComponents/UIViewController+LoadingView.h>
 
 #import "AddEmailStepViewController.h"
-#import "VerificationCodeStepViewController.h"
 #import "RegistrationFormController.h"
 #import "PopTransition.h"
 #import "PushTransition.h"

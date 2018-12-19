@@ -108,7 +108,6 @@
 #import "ConfirmAssetViewController+Internal.h"
 #import "ProfileSelfPictureViewController.h"
 #import "AddEmailPasswordViewController.h"
-#import "AddPhoneNumberViewController.h"
 #import "VersionInfoViewController.h"
 #import "SketchColorPickerController.h"
 #import "ConversationListViewController.h"

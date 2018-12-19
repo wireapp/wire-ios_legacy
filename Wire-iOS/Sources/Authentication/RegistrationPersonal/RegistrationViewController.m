@@ -24,7 +24,6 @@
 
 #import "WireSyncEngine+iOS.h"
 #import "AddEmailPasswordViewController.h"
-#import "AddPhoneNumberViewController.h"
 #import "RegistrationRootViewController.h"
 #import "NoHistoryViewController.h"
 #import "PopTransition.h"
