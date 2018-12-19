@@ -1182,8 +1182,6 @@
 		EF2127121FB9DFE300625A9B /* PhoneSignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126D91FB9DFE300625A9B /* PhoneSignInViewController.m */; };
 		EF2127131FB9DFE300625A9B /* EmailSignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126DC1FB9DFE300625A9B /* EmailSignInViewController.m */; };
 		EF2127141FB9DFE300625A9B /* EmailStepViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126E01FB9DFE300625A9B /* EmailStepViewController.m */; };
-		EF2127151FB9DFE300625A9B /* NameStepViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126E51FB9DFE300625A9B /* NameStepViewController.m */; };
-		EF2127161FB9DFE300625A9B /* VerificationCodeStepViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126E61FB9DFE300625A9B /* VerificationCodeStepViewController.m */; };
 		EF2127171FB9DFE300625A9B /* NoHistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126E81FB9DFE300625A9B /* NoHistoryViewController.m */; };
 		EF2127181FB9DFE300625A9B /* PhoneNumberStepViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126E91FB9DFE300625A9B /* PhoneNumberStepViewController.m */; };
 		EF21271D1FB9DFE300625A9B /* AddEmailPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126F31FB9DFE300625A9B /* AddEmailPasswordViewController.m */; };
@@ -2971,13 +2969,9 @@
 		EF2126DE1FB9DFE300625A9B /* PhoneNumberStepViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhoneNumberStepViewController.h; sourceTree = "<group>"; };
 		EF2126DF1FB9DFE300625A9B /* NoHistoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoHistoryViewController.h; sourceTree = "<group>"; };
 		EF2126E01FB9DFE300625A9B /* EmailStepViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmailStepViewController.m; sourceTree = "<group>"; };
-		EF2126E51FB9DFE300625A9B /* NameStepViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NameStepViewController.m; sourceTree = "<group>"; };
-		EF2126E61FB9DFE300625A9B /* VerificationCodeStepViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VerificationCodeStepViewController.m; sourceTree = "<group>"; };
 		EF2126E71FB9DFE300625A9B /* EmailStepViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmailStepViewController.h; sourceTree = "<group>"; };
 		EF2126E81FB9DFE300625A9B /* NoHistoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoHistoryViewController.m; sourceTree = "<group>"; };
 		EF2126E91FB9DFE300625A9B /* PhoneNumberStepViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhoneNumberStepViewController.m; sourceTree = "<group>"; };
-		EF2126EF1FB9DFE300625A9B /* VerificationCodeStepViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VerificationCodeStepViewController.h; sourceTree = "<group>"; };
-		EF2126F01FB9DFE300625A9B /* NameStepViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NameStepViewController.h; sourceTree = "<group>"; };
 		EF2126F21FB9DFE300625A9B /* AddPhoneNumberViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddPhoneNumberViewController.h; sourceTree = "<group>"; };
 		EF2126F31FB9DFE300625A9B /* AddEmailPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddEmailPasswordViewController.m; sourceTree = "<group>"; };
 		EF2126F41FB9DFE300625A9B /* AddEmailStepViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddEmailStepViewController.m; sourceTree = "<group>"; };
@@ -4263,15 +4257,6 @@
 				5EFE9C00212468E8007932A6 /* RegistrationSuccessEventHandler.swift */,
 			);
 			path = Registration;
-			sourceTree = "<group>";
-		};
-		5EE73BF92124308D0032986D /* Linear */ = {
-			isa = PBXGroup;
-			children = (
-				EF2126F01FB9DFE300625A9B /* NameStepViewController.h */,
-				EF2126E51FB9DFE300625A9B /* NameStepViewController.m */,
-			);
-			name = Linear;
 			sourceTree = "<group>";
 		};
 		5EEFC1A320C01BE8007E8A79 /* RoundedView */ = {
@@ -6532,9 +6517,6 @@
 		EF2126DD1FB9DFE300625A9B /* Steps */ = {
 			isa = PBXGroup;
 			children = (
-				5EE73BF92124308D0032986D /* Linear */,
-				EF2126EF1FB9DFE300625A9B /* VerificationCodeStepViewController.h */,
-				EF2126E61FB9DFE300625A9B /* VerificationCodeStepViewController.m */,
 				EF2126DF1FB9DFE300625A9B /* NoHistoryViewController.h */,
 				EF2126E81FB9DFE300625A9B /* NoHistoryViewController.m */,
 				87C39A8B206BCD26008DA100 /* NoHistoryViewController.swift */,
@@ -7650,7 +7632,6 @@
 				87F18BD21E03F13900C69D9B /* ZMLocationMessageData+Coordinates.swift in Sources */,
 				EF7D75A6201B6149003A8AF8 /* DeviceNativeBoundsSize.swift in Sources */,
 				EF18140C21B18846008F7DA8 /* IconToggleCell.swift in Sources */,
-				EF2127161FB9DFE300625A9B /* VerificationCodeStepViewController.m in Sources */,
 				16E311C31A5FEA2B00FF2C9E /* ConversationCell.m in Sources */,
 				5E8DA74D211AEB9E00360979 /* AuthenticationEventHandler.swift in Sources */,
 				5E53534421B14A8A0060DB38 /* MessageDetailsCellDescription.swift in Sources */,
@@ -8059,7 +8040,6 @@
 				F16426FE1FCC5A2C00D2ABFC /* TeamCreationStepDescription.swift in Sources */,
 				871BC2241D34F8F800DF0793 /* BottomOverlayViewController.m in Sources */,
 				87D56DFA1E0046FE00DFF722 /* CollectionImageCell.swift in Sources */,
-				EF2127151FB9DFE300625A9B /* NameStepViewController.m in Sources */,
 				8750B1CB2124236200B807A9 /* InviteButton.swift in Sources */,
 				EF25F7DE1FC45F8E0040C3CC /* AccessoryTextField.swift in Sources */,
 				BFE65AB320A047EB00689063 /* CallAccessoryViewController.swift in Sources */,

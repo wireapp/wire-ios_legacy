@@ -132,8 +132,6 @@
 #import "RegistrationFormController.h"
 #import "PhoneSignInViewController.h"
 #import "NoHistoryViewController.h"
-#import "VerificationCodeStepViewController.h"
-#import "NameStepViewController.h"
 #import "BlueViewController.h"
 #import "PermissionDeniedViewController.h"
 #import "ShareContactsViewController.h"
