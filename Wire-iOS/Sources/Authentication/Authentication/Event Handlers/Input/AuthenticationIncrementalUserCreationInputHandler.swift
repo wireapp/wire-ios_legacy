@@ -19,16 +19,16 @@
 import Foundation
 
 /**
- * Handles the input of the phone number or email to register.
+ * Handles input during the incremental user creation.
  */
 
-class AuthenticationCredentialsCreationInputHandler: AuthenticationEventHandler {
+class AuthenticationIncrementalUserCreationInputHandler: AuthenticationEventHandler {
 
     weak var statusProvider: AuthenticationStatusProvider?
 
     func handleEvent(currentStep: AuthenticationFlowStep, context: Any) -> [AuthenticationCoordinatorAction]? {
-        // Only handle input during the credentials creation.
-        guard case .createCredentials(_, let type) = currentStep else {
+        // Only handle input during the incremental user creation.
+        guard case .incrementalUserCreation(_, let step) = currentStep else {
             return nil
         }
 
@@ -37,14 +37,14 @@ class AuthenticationCredentialsCreationInputHandler: AuthenticationEventHandler 
             return nil
         }
 
-        // Only handle input during code validation
-        switch type {
-        case .email:
-            let email = UnverifiedCredentials.email(input)
-            return [.startRegistrationFlow(email)]
-        case .phone:
-            let phone = UnverifiedCredentials.phone(input)
-            return [.startRegistrationFlow(phone)]
+        // Only handle input during name and password steps
+        switch step {
+        case .setName:
+            return [.setUserName(input)]
+        case .setPassword:
+            return [.setUserPassword(input)]
+        default:
+            return nil
         }
     }
 

@@ -402,6 +402,7 @@
 		5EFD914A21C931B600080599 /* PhoneNumberFieldDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFD914921C931B600080599 /* PhoneNumberFieldDescription.swift */; };
 		5EFD914C21C931EE00080599 /* PhoneNumberTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFD914B21C931EE00080599 /* PhoneNumberTextField.swift */; };
 		5EFD914E21C9325B00080599 /* AuthenticationCredentialsCreationInputHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFD914D21C9325B00080599 /* AuthenticationCredentialsCreationInputHandler.swift */; };
+		5EFD915021CA688700080599 /* AuthenticationIncrementalUserCreationInputHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFD914F21CA688700080599 /* AuthenticationIncrementalUserCreationInputHandler.swift */; };
 		5EFE9BFF21246483007932A6 /* RegistrationFinalErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFE9BFE21246483007932A6 /* RegistrationFinalErrorHandler.swift */; };
 		5EFE9C01212468E8007932A6 /* RegistrationSuccessEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFE9C00212468E8007932A6 /* RegistrationSuccessEventHandler.swift */; };
 		5EFE9C19212C1D6E007932A6 /* RegistrationActivationCodeSentEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFE9C18212C1D6E007932A6 /* RegistrationActivationCodeSentEventHandler.swift */; };
@@ -1921,6 +1922,7 @@
 		5EFD914921C931B600080599 /* PhoneNumberFieldDescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneNumberFieldDescription.swift; sourceTree = "<group>"; };
 		5EFD914B21C931EE00080599 /* PhoneNumberTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneNumberTextField.swift; sourceTree = "<group>"; };
 		5EFD914D21C9325B00080599 /* AuthenticationCredentialsCreationInputHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationCredentialsCreationInputHandler.swift; sourceTree = "<group>"; };
+		5EFD914F21CA688700080599 /* AuthenticationIncrementalUserCreationInputHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationIncrementalUserCreationInputHandler.swift; sourceTree = "<group>"; };
 		5EFE9BFE21246483007932A6 /* RegistrationFinalErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationFinalErrorHandler.swift; sourceTree = "<group>"; };
 		5EFE9C00212468E8007932A6 /* RegistrationSuccessEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationSuccessEventHandler.swift; sourceTree = "<group>"; };
 		5EFE9C18212C1D6E007932A6 /* RegistrationActivationCodeSentEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationActivationCodeSentEventHandler.swift; sourceTree = "<group>"; };
@@ -4299,6 +4301,7 @@
 				5EFD914121C9065900080599 /* AuthenticationTeamCreationInputHandler.swift */,
 				5EFD914321C918E400080599 /* AuthenticationCodeVerificationInputHandler.swift */,
 				5EFD914D21C9325B00080599 /* AuthenticationCredentialsCreationInputHandler.swift */,
+				5EFD914F21CA688700080599 /* AuthenticationIncrementalUserCreationInputHandler.swift */,
 			);
 			path = Input;
 			sourceTree = "<group>";
@@ -7903,6 +7906,7 @@
 				870C92691E8CE5E500A10995 /* ConversationAvatarView.swift in Sources */,
 				BFF8076620BC275D0063E5D4 /* CallHapticsController.swift in Sources */,
 				BF415B271C3C354C00DF57B7 /* MissingMessagesCell.swift in Sources */,
+				5EFD915021CA688700080599 /* AuthenticationIncrementalUserCreationInputHandler.swift in Sources */,
 				1693D9681CEDB26200D1F13C /* UIApplication+Permissions.m in Sources */,
 				16A95FFE1A6EC3210045E175 /* ZMConversationMessageWindow+Formatting.m in Sources */,
 				5E52378A20EB5B4C00649241 /* SCSiriWaveformView.m in Sources */,

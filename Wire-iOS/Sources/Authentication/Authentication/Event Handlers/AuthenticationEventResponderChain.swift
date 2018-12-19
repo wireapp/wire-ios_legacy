@@ -154,6 +154,7 @@ class AuthenticationEventResponderChain {
         registerHandler(AuthenticationTeamCreationInputHandler(), to: &userInputObservers)
         registerHandler(AuthenticationCodeVerificationInputHandler(), to: &userInputObservers)
         registerHandler(AuthenticationCredentialsCreationInputHandler(), to: &userInputObservers)
+        registerHandler(AuthenticationIncrementalUserCreationInputHandler(), to: &userInputObservers)
     }
 
     /// Registers a handler inside the specified type erased array.
@@ -226,7 +227,10 @@ class AuthenticationEventResponderChain {
         }
 
         log.info("Handing event using \(name), and \(actions.count) actions.")
-        delegate.executeActions(actions)
+
+        DispatchQueue.main.async {
+            delegate.executeActions(actions)
+        }
     }
 
 }
