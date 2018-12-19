@@ -50,18 +50,39 @@ struct WireUrl: Codable {
 
         let decoder = JSONDecoder()
 
-        let dictionary: [String: String]
         do {
-            dictionary = try decoder.decode([String: String].self, from: data)
+            self = try decoder.decode(WireUrl.self, from: data)
         } catch {
             zmLog.error("Failed to parse JSON at path: \(filePath), error: \(error)")
             return nil
         }
-
-        urls = Dictionary(uniqueKeysWithValues: dictionary.map { key, value in (key, URL(string: value)!) })
     }
 
-    let urls: [String : URL]
+    let wireAppOnItunes: URL
+
+    let emailAlreadyInUseLearnMore: URL
+    let usernameLearnMore: URL
+    let fingerprintLearnMore: URL
+    let fingerprintHowToVerify: URL
+    let privacyPolicy: URL
+    let licenseInformation: URL
+    let website: URL
+    let passwordReset: URL
+    let support: URL
+    let askSupport: URL
+    let reportAbuse: URL
+    let cannotDecryptHelp: URL
+    let cannotDecryptNewRemoteIDHelp: URL
+    let createTeam: URL
+    let createTeamFeatures: URL
+    let manageTeam: URL
+    let emailInUseLearnMore: URL
+    let randomProfilePictureSource: URL
+
+    let termsOfServicesTeams: URL
+    let termsOfServicesPersonal: URL
+
+    let manageTeamBase: URL
 }
 
 extension URL {
@@ -71,7 +92,7 @@ extension URL {
     }
 
     static func manageTeam(source: TeamSource) -> URL {
-        let baseURL = WireUrl.shared.urls["manageTeamBase"]!
+        let baseURL = WireUrl.shared.manageTeamBase
 
         let queryItems = [URLQueryItem(name: "utm_source", value: source.parameterValue),
                           URLQueryItem(name: "utm_term", value: "ios")]
@@ -89,86 +110,86 @@ extension URL {
 extension URL {
 
     static var wr_wireAppOnItunes: URL {
-        return WireUrl.shared.urls["wireAppOnItunes"]!
+        return WireUrl.shared.wireAppOnItunes
     }
 
     static var wr_emailAlreadyInUseLearnMore: URL {
-        return WireUrl.shared.urls["emailAlreadyInUseLearnMore"]!
+        return WireUrl.shared.emailAlreadyInUseLearnMore
     }
 
     static var wr_usernameLearnMore: URL {
-        return WireUrl.shared.urls["usernameLearnMore"]!
+        return WireUrl.shared.usernameLearnMore
     }
 
     static var wr_fingerprintLearnMore: URL {
-        return WireUrl.shared.urls["fingerprintLearnMore"]!
+        return WireUrl.shared.fingerprintLearnMore
     }
 
     static var wr_fingerprintHowToVerify: URL {
-        return WireUrl.shared.urls["fingerprintHowToVerify"]!
+        return WireUrl.shared.fingerprintHowToVerify
     }
 
     static var wr_privacyPolicy: URL {
-        return WireUrl.shared.urls["privacyPolicy"]!
+        return WireUrl.shared.privacyPolicy
     }
 
     static var wr_licenseInformation: URL {
-        return WireUrl.shared.urls["licenseInformation"]!
+        return WireUrl.shared.licenseInformation
     }
 
     static var wr_website: URL {
-        return WireUrl.shared.urls["website"]!
+        return WireUrl.shared.website
     }
 
     static var wr_passwordReset: URL {
-        return WireUrl.shared.urls["passwordReset"]!
+        return WireUrl.shared.passwordReset
     }
 
     static var wr_support: URL {
-        return WireUrl.shared.urls["support"]!
+        return WireUrl.shared.support
     }
 
     static var wr_askSupport: URL {
-        return WireUrl.shared.urls["askSupport"]!
+        return WireUrl.shared.askSupport
     }
 
     static var wr_reportAbuse: URL {
-        return WireUrl.shared.urls["reportAbuse"]!
+        return WireUrl.shared.reportAbuse
     }
 
     static var wr_cannotDecryptHelp: URL {
-        return WireUrl.shared.urls["cannotDecryptHelp"]!
+        return WireUrl.shared.cannotDecryptHelp
     }
 
     static var wr_cannotDecryptNewRemoteIDHelp: URL {
-        return WireUrl.shared.urls["cannotDecryptNewRemoteIDHelp"]!
+        return WireUrl.shared.cannotDecryptNewRemoteIDHelp
     }
 
     static var wr_createTeam: URL {
-        return WireUrl.shared.urls["createTeam"]!
+        return WireUrl.shared.createTeam
     }
 
     static var wr_createTeamFeatures: URL {
-        return WireUrl.shared.urls["createTeamFeatures"]!
+        return WireUrl.shared.createTeamFeatures
     }
 
     static var wr_manageTeam: URL {
-        return WireUrl.shared.urls["manageTeam"]!
+        return WireUrl.shared.manageTeam
     }
 
     static var wr_emailInUseLearnMore: URL {
-        return WireUrl.shared.urls["emailInUseLearnMore"]!
+        return WireUrl.shared.emailInUseLearnMore
     }
 
     static var wr_randomProfilePictureSource: URL {
-        return WireUrl.shared.urls["randomProfilePictureSource"]!
+        return WireUrl.shared.randomProfilePictureSource
     }
 
     static func wr_termsOfServicesURL(forTeamAccount isTeamAccount: Bool) -> URL {
         if isTeamAccount {
-            return WireUrl.shared.urls["termsOfServicesURL_teams"]!
+            return WireUrl.shared.termsOfServicesTeams
         } else {
-            return WireUrl.shared.urls["termsOfServicesURL_personal"]!
+            return WireUrl.shared.termsOfServicesPersonal
         }
     }
 

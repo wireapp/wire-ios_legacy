@@ -1,5 +1,6 @@
 {
     "wireAppOnItunes": "https://geo.itunes.apple.com/us/app/wire/id930944768?mt=8",
+
     "emailAlreadyInUseLearnMore": "https://support.wire.com/hc/en-us/articles/115004082129-My-email-address-is-already-in-use-and-I-cannot-create-an-account-What-can-I-do-",
     "usernameLearnMore": "https://wire.com/support/username/",
     "fingerprintLearnMore": "https://wire.com/privacy/why",
@@ -19,8 +20,8 @@
     "emailInUseLearnMore": "https://wire.com/support/email-in-use",
     "randomProfilePictureSource": "https://source.unsplash.com/800x800/?landscape",
 
-    "termsOfServicesURL_teams": "https://wire.com/legal/terms/teams",
-    "termsOfServicesURL_personal": "https://wire.com/legal/terms/personal",
+    "termsOfServicesTeams": "https://wire.com/legal/terms/teams",
+    "termsOfServicesPersonal": "https://wire.com/legal/terms/personal",
 
     "manageTeamBase": "https://teams.wire.com/login"
 }
