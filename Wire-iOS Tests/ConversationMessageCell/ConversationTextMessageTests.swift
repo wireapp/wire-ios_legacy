@@ -41,7 +41,7 @@ class ConversationTextMessageTests: ConversationCellSnapshotTestCase {
     func testLinkPreview() {
         // GIVEN
         let linkURL = "http://www.example.com"
-        let article = Article(protocolBuffer: ZMLinkPreview.linkPreview(withOriginalURL: linkURL, permanentURL: linkURL, offset: 0, title: "Biggest catastrophe in history", summary: "", imageAsset: nil))
+        let article = ArticleMetadata(protocolBuffer: ZMLinkPreview.linkPreview(withOriginalURL: linkURL, permanentURL: linkURL, offset: 0, title: "Biggest catastrophe in history", summary: "", imageAsset: nil))
         let message = MockMessageFactory.textMessage(withText: "http://www.example.com")!
         message.sender = otherUser
         message.backingTextMessageData.linkPreview = article
@@ -53,7 +53,7 @@ class ConversationTextMessageTests: ConversationCellSnapshotTestCase {
     func testTextWithLinkPreview() {
         // GIVEN
         let linkURL = "http://www.example.com"
-        let article = Article(protocolBuffer: ZMLinkPreview.linkPreview(withOriginalURL: linkURL, permanentURL: linkURL, offset: 30, title: "Biggest catastrophe in history", summary: "", imageAsset: nil))
+        let article = ArticleMetadata(protocolBuffer: ZMLinkPreview.linkPreview(withOriginalURL: linkURL, permanentURL: linkURL, offset: 30, title: "Biggest catastrophe in history", summary: "", imageAsset: nil))
         let message = MockMessageFactory.textMessage(withText: "What do you think about this http://www.example.com")!
         message.sender = otherUser
         message.backingTextMessageData.linkPreview = article
@@ -79,7 +79,7 @@ class ConversationTextMessageTests: ConversationCellSnapshotTestCase {
     func testTextWithLinkPreviewAndQuote() {
         // GIVEN
         let linkURL = "http://www.example.com"
-        let article = Article(protocolBuffer: ZMLinkPreview.linkPreview(withOriginalURL: linkURL, permanentURL: linkURL, offset: 5, title: "Biggest catastrophe in history", summary: "", imageAsset: nil))
+        let article = ArticleMetadata(protocolBuffer: ZMLinkPreview.linkPreview(withOriginalURL: linkURL, permanentURL: linkURL, offset: 5, title: "Biggest catastrophe in history", summary: "", imageAsset: nil))
         let conversation = createGroupConversation()
         let quote = conversation.append(text: "Who is responsible for this!")
         (quote as? ZMMessage)?.serverTimestamp = Date.distantPast

@@ -65,7 +65,6 @@ NSString * const UserDefaultDisableLinkPreviews = @"DisableLinkPreviews";
 @interface Settings ()
 
 @property (strong, readonly, nonatomic) NSUserDefaults *defaults;
-@property (nonatomic) BOOL shouldSend500Messages;
 @property (nonatomic) NSTimeInterval maxRecordingDurationDebug;
 @end
 

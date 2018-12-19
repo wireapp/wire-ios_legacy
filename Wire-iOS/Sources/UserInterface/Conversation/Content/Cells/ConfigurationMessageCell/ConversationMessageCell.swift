@@ -114,7 +114,7 @@ protocol ConversationMessageCellDescription: class {
     var delegate: ConversationCellDelegate? { get set }
 
     /// The action controller that handles the menu item.
-    var actionController: ConversationCellActionController? { get set }
+    var actionController: ConversationMessageActionController? { get set }
 
     /// The configuration object that will be used to populate the cell.
     var configuration: View.Configuration { get }
@@ -179,6 +179,8 @@ extension ConversationMessageCellDescription {
         guard let adapterCell = cell as? ConversationMessageCellTableViewAdapter<Self> else { return }
         
         adapterCell.cellView.configure(with: self.configuration, animated: animated)
+        
+        _ = message?.startSelfDestructionIfNeeded()
     }
     
 }
@@ -196,12 +198,13 @@ extension ConversationMessageCellDescription {
 
     private let _delegate: AnyMutableProperty<ConversationCellDelegate?>
     private let _message: AnyMutableProperty<ZMConversationMessage?>
-    private let _actionController: AnyMutableProperty<ConversationCellActionController?>
+    private let _actionController: AnyMutableProperty<ConversationMessageActionController?>
     private let _topMargin: AnyMutableProperty<Float>
     private let _containsHighlightableContent: AnyConstantProperty<Bool>
     private let _showEphemeralTimer: AnyMutableProperty<Bool>
     private let _axIdentifier: AnyConstantProperty<String?>
     private let _axLabel: AnyConstantProperty<String?>
+    private let _supportsActions: AnyConstantProperty<Bool>
 
     init<T: ConversationMessageCellDescription>(_ description: T) {
         registrationBlock = { tableView in
@@ -232,6 +235,7 @@ extension ConversationMessageCellDescription {
         _showEphemeralTimer = AnyMutableProperty(description, keyPath: \.showEphemeralTimer)
         _axIdentifier = AnyConstantProperty(description, keyPath: \.accessibilityIdentifier)
         _axLabel = AnyConstantProperty(description, keyPath: \.accessibilityLabel)
+        _supportsActions = AnyConstantProperty(description, keyPath: \.supportsActions)
     }
 
     @objc var baseType: AnyClass {
@@ -248,7 +252,7 @@ extension ConversationMessageCellDescription {
         set { _message.setter(newValue) }
     }
 
-    @objc var actionController: ConversationCellActionController? {
+    @objc var actionController: ConversationMessageActionController? {
         get { return _actionController.getter() }
         set { _actionController.setter(newValue) }
     }
@@ -275,6 +279,11 @@ extension ConversationMessageCellDescription {
     /// The accessibility label of the cell.
     var cellAccessibilityLabel: String? {
         return _axLabel.getter()
+    }
+
+    /// Whether the cell supports actions.
+    var supportsActions: Bool {
+        return _supportsActions.getter()
     }
 
     func configure(cell: UITableViewCell, animated: Bool = false) {

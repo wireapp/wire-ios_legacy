@@ -249,13 +249,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>1 reply</string>
+        <string>1 atsakymas</string>
         <key>few</key>
-        <string>%d replies</string>
+        <string>%d atsakymai</string>
         <key>many</key>
-        <string>%d replies</string>
+        <string>%d atsakymo</string>
         <key>other</key>
-        <string>%d replies</string>
+        <string>%d atsakymų</string>
       </dict>
     </dict>
     <key>conversation.silenced.status.message.knock</key>

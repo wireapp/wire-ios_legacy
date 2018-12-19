@@ -20,10 +20,10 @@ import Foundation
 
 struct ConversationMessageContext {
     let isSameSenderAsPrevious: Bool
-    let isLastMessageSentBySelfUser: Bool
     let isTimeIntervalSinceLastMessageSignificant: Bool
     let isFirstMessageOfTheDay: Bool
     let isFirstUnreadMessage: Bool
+    let isLastMessage: Bool
     let searchQueries: [String]
 }
 
@@ -70,7 +70,7 @@ extension IndexSet {
     @objc var useInvertedIndices = false
 
     /// The object that controls actions for the cell.
-    @objc var actionController: ConversationCellActionController?
+    @objc var actionController: ConversationMessageActionController?
 
     /// The message that is being presented.
     @objc var message: ZMConversationMessage
@@ -118,28 +118,8 @@ extension IndexSet {
     
     private func addLegacyContentIfNeeded(layoutProperties: ConversationCellLayoutProperties) -> Bool {
         
-        if message.isVideo {
-            let videoCell = ConversationLegacyCellDescription<VideoMessageCell>(message: message, layoutProperties: layoutProperties)
-            add(description: videoCell)
-            
-        } else if message.isAudio {
-            let audioCell = ConversationLegacyCellDescription<AudioMessageCell>(message: message, layoutProperties: layoutProperties)
-            add(description: audioCell)
-            
-        } else if message.isFile {
-            let fileCell = ConversationLegacyCellDescription<FileTransferCell>(message: message, layoutProperties: layoutProperties)
-            add(description: fileCell)
-            
-        } else if message.isImage {
-            let imageCell = ConversationLegacyCellDescription<ImageMessageCell>(message: message, layoutProperties: layoutProperties)
-            add(description: imageCell)
-            
-        } else if message.isSystem, let systemMessageType = message.systemMessageData?.systemMessageType {
+        if message.isSystem, let systemMessageType = message.systemMessageData?.systemMessageType {
             switch systemMessageType {
-            case .newClient, .usingNewDevice:
-                let newClientCell = ConversationLegacyCellDescription<ConversationNewDeviceCell>(message: message, layoutProperties: layoutProperties)
-                add(description: newClientCell)
-                
             case .ignoredClient:
                 let ignoredClientCell = ConversationLegacyCellDescription<ConversationIgnoredDeviceCell>(message: message, layoutProperties: layoutProperties)
                 add(description: ignoredClientCell)
@@ -148,7 +128,7 @@ extension IndexSet {
                 let missingMessagesCell = ConversationLegacyCellDescription<MissingMessagesCell>(message: message, layoutProperties: layoutProperties)
                 add(description: missingMessagesCell)
                 
-            case .participantsAdded, .participantsRemoved, .newConversation, .teamMemberLeave:
+            case .newConversation:
                 let participantsCell = ConversationLegacyCellDescription<ParticipantsCell>(message: message, layoutProperties: layoutProperties)
                 add(description: participantsCell)
                 
@@ -170,8 +150,16 @@ extension IndexSet {
             contentCellDescriptions = addPingMessageCells()
         } else if message.isText {
             contentCellDescriptions = ConversationTextMessageCellDescription.cells(for: message, searchQueries: context.searchQueries)
+        } else if message.isImage {
+            contentCellDescriptions = [AnyConversationMessageCellDescription(ConversationImageMessageCellDescription(message: message, image: message.imageMessageData!))]
         } else if message.isLocation {
             contentCellDescriptions = addLocationMessageCells()
+        } else if message.isAudio {
+            contentCellDescriptions = [AnyConversationMessageCellDescription(ConversationAudioMessageCellDescription(message: message))]
+        } else if message.isVideo {
+            contentCellDescriptions = [AnyConversationMessageCellDescription(ConversationVideoMessageCellDescription(message: message))]
+        } else if message.isFile {
+            contentCellDescriptions = [AnyConversationMessageCellDescription(ConversationFileMessageCellDescription(message: message))]
         } else if message.isSystem {
             contentCellDescriptions = ConversationSystemMessageCellDescription.cells(for: message, layoutProperties: layoutProperties)
         } else {
@@ -256,7 +244,7 @@ extension IndexSet {
         }
     }
     
-    func configure(at sectionIndex: Int, in tableView: UITableView) {
+    @objc func configure(at sectionIndex: Int, in tableView: UITableView) {
         configure(in: context, at: sectionIndex, in: tableView)
     }
     
@@ -283,6 +271,7 @@ extension IndexSet {
         
         for (index, description) in tableViewCellDescriptions.enumerated() {
             if let cell = tableView.cellForRow(at: IndexPath(row: index, section: sectionIndex)) {
+                cell.accessibilityCustomActions = self.actionController?.makeAccessibilityActions()
                 description.configure(cell: cell, animated: true)
             }
         }
@@ -296,8 +285,8 @@ extension IndexSet {
         guard !message.isSystem else {
             return false
         }
-        
-        return selected || context.isLastMessageSentBySelfUser || message.deliveryState == .failedToSend || message.hasReactions()
+
+        return context.isLastMessage || selected || message.deliveryState == .failedToSend || message.hasReactions()
     }
     
     func isSenderVisible(in context: ConversationMessageContext) -> Bool {
@@ -331,6 +320,7 @@ extension IndexSet {
         description.actionController = self.actionController
 
         let cell = description.makeCell(for: tableView, at: indexPath)
+        cell.accessibilityCustomActions = actionController?.makeAccessibilityActions()
         return cell
     }
 

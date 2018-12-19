@@ -210,7 +210,7 @@ final public class ConversationAvatarView: UIView {
     
     let clippingView = UIView()
     let imageViewLeftTop: UserImageView = {
-        let userImageView = UserImageView()
+        let userImageView = BadgeUserImageView()
         userImageView.initialsFont = .mediumSemiboldFont
 
         return userImageView

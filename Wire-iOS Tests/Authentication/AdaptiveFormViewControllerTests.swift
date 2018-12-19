@@ -21,26 +21,37 @@ import XCTest
 
 class AdaptiveFormViewControllerTests: ZMSnapshotTestCase {
 
-    var child: VerificationCodeStepViewController?
+    var child: VerificationCodeStepViewController!
+    var sut: AdaptiveFormViewController!
+
+    // wrap the SUT in a mock navigator VC to mock the traitcollection's horizontalSizeClass.
+    var mockParentViewControler: UINavigationController!
 
     override func setUp() {
         super.setUp()
         child = VerificationCodeStepViewController(credential: "user@example.com")
+        sut = AdaptiveFormViewController(childViewController: child)
+        mockParentViewControler = UINavigationController(rootViewController: sut)
     }
 
     override func tearDown() {
         child = nil
+        mockParentViewControler = nil
+        sut = nil
         super.tearDown()
     }
 
     func testThatItHasCorrectLayout() {
-        // GIVEN
-        let sut = AdaptiveFormViewController(childViewController: child!)
-
-        // THEN
         verifyInAllDeviceSizes(view: sut.view) { _, isPad in
-            sut.updateConstraints(usingRegularLayout: isPad)
+            let traitCollection: UITraitCollection
+            if isPad {
+                traitCollection = UITraitCollection(horizontalSizeClass: .regular)
+            } else {
+                traitCollection = UITraitCollection(horizontalSizeClass: .compact)
+            }
+
+            self.mockParentViewControler.setOverrideTraitCollection(traitCollection, forChild: self.sut)
+            self.sut.traitCollectionDidChange(nil)
         }
     }
-
 }

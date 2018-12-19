@@ -22,7 +22,7 @@ import MapKit
 class ConversationLocationMessageCell: UIView, ConversationMessageCell {
 
     struct Configuration {
-        let location: ZMLocationMessageData
+        let location: LocationMessageData
         let isObfuscated: Bool
     }
 
@@ -114,6 +114,12 @@ class ConversationLocationMessageCell: UIView, ConversationMessageCell {
         ])
     }
 
+    override func willMove(toSuperview newSuperview: UIView?) {
+        if newSuperview == nil {
+            locationAnnotation.map(mapView.removeAnnotation)
+        }
+    }
+
     func configure(with object: Configuration, animated: Bool) {
         lastConfiguration = object
         recognizer?.isEnabled = !object.isObfuscated
@@ -138,7 +144,7 @@ class ConversationLocationMessageCell: UIView, ConversationMessageCell {
         locationAnnotation = annotation
     }
 
-    func updateMapLocation(withLocationData locationData: ZMLocationMessageData) {
+    func updateMapLocation(withLocationData locationData: LocationMessageData) {
         if locationData.zoomLevel != 0 {
             mapView.setCenterCoordinate(locationData.coordinate, zoomLevel: Int(locationData.zoomLevel))
         } else {
@@ -167,7 +173,7 @@ class ConversationLocationMessageCellDescription: ConversationMessageCellDescrip
 
     var message: ZMConversationMessage?
     weak var delegate: ConversationCellDelegate?     
-    weak var actionController: ConversationCellActionController?
+    weak var actionController: ConversationMessageActionController?
     
     var showEphemeralTimer: Bool = false
     var topMargin: Float = 0
@@ -179,7 +185,7 @@ class ConversationLocationMessageCellDescription: ConversationMessageCellDescrip
     let accessibilityIdentifier: String? = nil
     let accessibilityLabel: String? = nil
 
-    init(message: ZMConversationMessage, location: ZMLocationMessageData) {
+    init(message: ZMConversationMessage, location: LocationMessageData) {
         configuration = View.Configuration(location: location, isObfuscated: message.isObfuscated)
     }
 }

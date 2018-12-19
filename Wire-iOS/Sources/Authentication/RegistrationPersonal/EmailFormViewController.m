@@ -29,7 +29,7 @@
 
 #import "UIViewController+Errors.h"
 
-@interface EmailFormViewController () <RegistrationTextFieldDelegate>
+@interface EmailFormViewController () <UITextFieldDelegate>
 
 @property (nonatomic) BOOL nameFieldEnabled;
 @property (nonatomic) RegistrationTextField *nameField;

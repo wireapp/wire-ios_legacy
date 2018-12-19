@@ -157,17 +157,9 @@
 - (void)setConversation:(ZMConversation *)conversation
 {
     _conversation = conversation;
-
-    if (conversation.conversationType == ZMConversationTypeOneOnOne) {
-        ZMUser *otherUser = conversation.connectedUser;
-        self.user = otherUser;
-        self.conversationImageView.image = nil;
-    }
-    else {
-        self.conversationImageView.image = [UIImage imageNamed:@"group-icon.png"];
-        self.user = nil;
-        self.displayName = conversation.displayName;
-    }
+    ZMUser *otherUser = conversation.connectedUser;
+    self.user = otherUser;
+    self.conversationImageView.image = nil;
 }
 
 - (void)setDisplayName:(NSString *)displayName

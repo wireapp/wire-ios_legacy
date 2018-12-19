@@ -183,14 +183,14 @@ import WireSyncEngine
 
     /// Updates the image for the user.
     fileprivate func updateUserImage() {
-        guard let user = user else { return }
+        guard let user = user, let userSession = userSession else { return }
 
         var desaturate = false
         if shouldDesaturate {
             desaturate = !user.isConnected && !user.isSelfUser && !user.isTeamMember && !user.isServiceUser
         }
 
-        user.fetchProfileImage(sizeLimit: size.rawValue, desaturate: desaturate, completion: { [weak self] (image, cacheHit) in
+        user.fetchProfileImage(session: userSession, sizeLimit: size.rawValue, desaturate: desaturate, completion: { [weak self] (image, cacheHit) in
             // Don't set image if nil or if user has changed during fetch
             guard let image = image, user.isEqual(self?.user) else { return }
             self?.setAvatar(.image(image), user: user, animated: !cacheHit)

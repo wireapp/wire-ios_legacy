@@ -18,7 +18,6 @@
 
 #import "ConversationContentViewController+PinchZoom.h"
 #import "ConversationContentViewController+Private.h"
-#import "ImageMessageCell.h"
 #import "MediaAsset.h"
 #import "UIView+WR_ExtendedBlockAnimations.h"
 #import "Wire-Swift.h"
@@ -52,72 +51,73 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)onPinchZoom:(UIPinchGestureRecognizer *)pinchGestureRecognizer
 {
-    switch(pinchGestureRecognizer.state) {
-        case UIGestureRecognizerStateBegan:
-        {
-            CGPoint locationOfTouch = [pinchGestureRecognizer locationInView:self.tableView];
-            NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:locationOfTouch];
-            UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
-            id<ZMConversationMessage> message = [self.messageWindow.messages objectAtIndex:indexPath.row];
-            
-            if (![cell isKindOfClass:[ImageMessageCell class]]) {
-                return;
-            }
-            
-            ImageMessageCell *imageCell = (ImageMessageCell *)cell;
-            self.pinchImageCell = imageCell;
-            CGRect imageFrame = [self.view.window convertRect:imageCell.fullImageView.bounds fromView:imageCell.fullImageView];
-                        
-            id<MediaAsset> image = imageCell.fullImageView.mediaAsset;
-            self.initialPinchLocation = [pinchGestureRecognizer locationInView:self.view];
-            
-            self.dimView = [[UIView alloc] initWithFrame:self.view.window.bounds];
-            self.dimView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-            self.dimView.backgroundColor = [UIColor blackColor];
-            self.dimView.alpha = 0.0f;
-            [self.view.window addSubview:self.dimView];
-            
-            self.pinchImageView = [[FLAnimatedImageView alloc] initWithFrame:imageFrame];
-            [self.pinchImageView setMediaAsset:image];
-            self.pinchImageView.contentMode = UIViewContentModeScaleAspectFit;
-            self.pinchImageView.clipsToBounds = YES;
-            self.pinchImageView.image = [UIImage imageWithData:message.imageMessageData.imageData];
-            [self.view.window addSubview:self.pinchImageView];
-            
-            imageCell.fullImageView.hidden = YES;
-        }
-            break;
-        case UIGestureRecognizerStateChanged:
-        {
-            CGFloat scale = MAX(pinchGestureRecognizer.scale, 1.0f);
-            CGPoint newLocation = [pinchGestureRecognizer locationInView:self.view];
-            
-            CGAffineTransform translation = CGAffineTransformMakeTranslation(newLocation.x - self.initialPinchLocation.x, newLocation.y - self.initialPinchLocation.y);
-            
-            self.pinchImageView.transform = CGAffineTransformScale(translation, scale, scale);
-            
-            self.dimView.alpha = MIN(1.0f, (scale - 1.0f) / 2.0f) * 0.56f + 0.16f;
-        }
-            break;
-        case UIGestureRecognizerStateEnded:
-        case UIGestureRecognizerStateFailed:
-        case UIGestureRecognizerStateCancelled:
-        {
-            [UIView wr_animateWithEasing:WREasingFunctionEaseOutExpo duration:0.2 animations:^{
-                self.pinchImageView.transform = CGAffineTransformIdentity;
-                self.dimView.alpha = 0.0f;
-            } completion:^(BOOL finished) {
-                [self.pinchImageView removeFromSuperview];
-                self.pinchImageView = nil;
-                [self.dimView removeFromSuperview];
-                self.dimView = nil;
-                self.pinchImageCell.fullImageView.hidden = NO;
-            }];
-        }
-            break;
-        default:
-            break;
-    }
+    // TODO: restore pinch to zoom
+//    switch(pinchGestureRecognizer.state) {
+//        case UIGestureRecognizerStateBegan:
+//        {
+//            CGPoint locationOfTouch = [pinchGestureRecognizer locationInView:self.tableView];
+//            NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:locationOfTouch];
+//            UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+//            id<ZMConversationMessage> message = [self.messageWindow.messages objectAtIndex:indexPath.row];
+//
+//            if (![cell isKindOfClass:[ImageMessageCell class]]) {
+//                return;
+//            }
+//
+//            ImageMessageCell *imageCell = (ImageMessageCell *)cell;
+//            self.pinchImageCell = imageCell;
+//            CGRect imageFrame = [self.view.window convertRect:imageCell.fullImageView.bounds fromView:imageCell.fullImageView];
+//
+//            id<MediaAsset> image = imageCell.fullImageView.mediaAsset;
+//            self.initialPinchLocation = [pinchGestureRecognizer locationInView:self.view];
+//
+//            self.dimView = [[UIView alloc] initWithFrame:self.view.window.bounds];
+//            self.dimView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+//            self.dimView.backgroundColor = [UIColor blackColor];
+//            self.dimView.alpha = 0.0f;
+//            [self.view.window addSubview:self.dimView];
+//
+//            self.pinchImageView = [[FLAnimatedImageView alloc] initWithFrame:imageFrame];
+//            [self.pinchImageView setMediaAsset:image];
+//            self.pinchImageView.contentMode = UIViewContentModeScaleAspectFit;
+//            self.pinchImageView.clipsToBounds = YES;
+//            self.pinchImageView.image = [UIImage imageWithData:message.imageMessageData.imageData];
+//            [self.view.window addSubview:self.pinchImageView];
+//
+//            imageView.hidden = YES;
+//        }
+//            break;
+//        case UIGestureRecognizerStateChanged:
+//        {
+//            CGFloat scale = MAX(pinchGestureRecognizer.scale, 1.0f);
+//            CGPoint newLocation = [pinchGestureRecognizer locationInView:self.view];
+//
+//            CGAffineTransform translation = CGAffineTransformMakeTranslation(newLocation.x - self.initialPinchLocation.x, newLocation.y - self.initialPinchLocation.y);
+//
+//            self.pinchImageView.transform = CGAffineTransformScale(translation, scale, scale);
+//
+//            self.dimView.alpha = MIN(1.0f, (scale - 1.0f) / 2.0f) * 0.56f + 0.16f;
+//        }
+//            break;
+//        case UIGestureRecognizerStateEnded:
+//        case UIGestureRecognizerStateFailed:
+//        case UIGestureRecognizerStateCancelled:
+//        {
+//            [UIView wr_animateWithEasing:WREasingFunctionEaseOutExpo duration:0.2 animations:^{
+//                self.pinchImageView.transform = CGAffineTransformIdentity;
+//                self.dimView.alpha = 0.0f;
+//            } completion:^(BOOL finished) {
+//                [self.pinchImageView removeFromSuperview];
+//                self.pinchImageView = nil;
+//                [self.dimView removeFromSuperview];
+//                self.dimView = nil;
+//                self.pinchImageCell.fullImageView.hidden = NO;
+//            }];
+//        }
+//            break;
+//        default:
+//            break;
+//    }
 }
 
 @end

@@ -35,7 +35,7 @@ extension ZMConversationMessage {
                isText &&
                conversation.isSelfAnActiveMember &&
                sender.isSelfUser &&
-               deliveryState.isOne(of: [.delivered, .sent])
+               deliveryState.isOne(of: .delivered, .sent, .read)
     }
     
     /// Whether the message can be quoted.
@@ -44,8 +44,50 @@ extension ZMConversationMessage {
             return false
         }
 
-        let isSent = deliveryState.isOne(of: [.delivered, .sent])
+        let isSent = deliveryState.isOne(of: .delivered, .sent, .read)
         return !isEphemeral && conversation.isSelfAnActiveMember && isSent && (isText || isImage || isLocation || isFile)
+    }
+
+    /// Whether message details are available for this message.
+    var areMessageDetailsAvailable: Bool {
+        guard let conversation = self.conversation else {
+            return false
+        }
+
+        // Do not show the details of the message was not sent or delivered.
+        guard self.deliveryState.isOne(of: .delivered, .sent, .read) else {
+            return false
+        }
+
+        // There is no message details view in 1:1s.
+        guard conversation.conversationType == .group else {
+            return false
+        }
+
+        // Show the message details in Team groups.
+        if ZMUser.selfUser()?.isTeamMember == true {
+            return true
+        } else {
+            // In Consumer groups, read receipts are not supported. If the message
+            // cannot be liked, we cannot not show the likes details
+            return canBeLiked
+        }
+    }
+
+    /// Whether the user can see the read receipts details for this message.
+    var areReadReceiptsDetailsAvailable: Bool {
+        // Do not show read receipts if details are not available.
+        guard areMessageDetailsAvailable else {
+            return false
+        }
+
+        // No read receipts in group conversations in the Consumer version.
+        guard ZMUser.selfUser()?.isTeamMember == true else {
+            return false
+        }
+
+        // Only the sender of a message can see read receipts for their messages.
+        return isSentBySelfUser
     }
 
     /// Wether it is possible to download the message content.
@@ -54,6 +96,13 @@ extension ZMConversationMessage {
             return false
         }
         return isFile && fileMessageData.transferState.isOne(of: .uploaded, .failedDownload)
+    }
+
+    var canCancelDownload: Bool {
+        guard let fileMessageData = self.fileMessageData else {
+            return false
+        }
+        return isFile && fileMessageData.transferState == .downloading
     }
     
     /// Wether the content of the message can be saved to the disk.

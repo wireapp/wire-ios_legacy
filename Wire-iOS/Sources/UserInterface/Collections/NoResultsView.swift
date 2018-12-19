@@ -22,6 +22,16 @@ import Cartography
 @objcMembers final public class NoResultsView: UIView {
     public let label = UILabel()
     private let iconView = UIImageView()
+
+    public var placeholderText: String? {
+        get {
+            return label.text
+        }
+        set {
+            label.text = newValue
+            label.accessibilityLabel = newValue
+        }
+    }
     
     public var icon: ZetaIconType = .none {
         didSet {
@@ -31,7 +41,7 @@ import Cartography
     
     public var placeholderColor: UIColor {
         let backgroundColor = UIColor.from(scheme: .background)
-        let placeholderColor = backgroundColor.mix(UIColor.from(scheme: .textForeground), amount: 0.16)
+        let placeholderColor = backgroundColor.mix(UIColor.from(scheme: .sectionText), amount: 0.16)
         return placeholderColor!
     }
     

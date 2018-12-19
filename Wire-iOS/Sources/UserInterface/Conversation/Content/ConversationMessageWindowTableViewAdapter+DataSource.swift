@@ -108,9 +108,8 @@ extension ConversationMessageWindowTableViewAdapter: ZMConversationMessageWindow
             }
         }
     }
-    
-    @objc
-    func reconfigureVisibleSections() {
+
+    @objc func reconfigureVisibleSections() {
         tableView.beginUpdates()
         if let indexPathsForVisibleRows = tableView.indexPathsForVisibleRows {
             let visibleSections = Set(indexPathsForVisibleRows.map(\.section))
@@ -124,10 +123,8 @@ extension ConversationMessageWindowTableViewAdapter: ZMConversationMessageWindow
 }
 
 extension ConversationMessageWindowTableViewAdapter: UITableViewDataSource {
-    
-    
-    @objc
-    func sectionController(at sectionIndex: Int, in tableView: UITableView) -> ConversationMessageSectionController? {
+
+    @objc func sectionController(at sectionIndex: Int, in tableView: UITableView) -> ConversationMessageSectionController? {
         guard let message = messageWindow.messages.object(at: sectionIndex) as? ZMConversationMessage else { return nil }
         let messageIdentifier = message.objectIdentifier as NSString
 
@@ -150,6 +147,24 @@ extension ConversationMessageWindowTableViewAdapter: UITableViewDataSource {
         sectionControllers.setObject(sectionController, forKey: messageIdentifier)
         
         return sectionController
+    }
+
+    func previewableMessage(at indexPath: IndexPath, in tableView: UITableView) -> ZMConversationMessage? {
+        guard let message = messageWindow.messages.object(at: indexPath.section) as? ZMConversationMessage else { return nil }
+        let messageIdentifier = message.objectIdentifier as NSString
+
+        guard let sectionController = sectionControllers.object(forKey: messageIdentifier) as? ConversationMessageSectionController else {
+            return nil
+        }
+
+        let descriptions = sectionController.tableViewCellDescriptions
+
+        guard descriptions.indices.contains(indexPath.row) else {
+            return nil
+        }
+
+        let cellDescription = sectionController.tableViewCellDescriptions[indexPath.row]
+        return cellDescription.supportsActions ? message : nil
     }
     
     @objc(indexPathForMessage:)

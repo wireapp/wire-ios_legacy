@@ -63,13 +63,13 @@ import Cartography
         self.playButton.layer.masksToBounds = true
 
         self.progressView.isUserInteractionEnabled = false
-        self.progressView.accessibilityLabel = "VideoProgressView"
+        self.progressView.accessibilityIdentifier = "VideoProgressView"
         self.progressView.deterministic = true
 
         self.bottomGradientView.gradientLayer.colors = [UIColor.clear.cgColor, UIColor.black.withAlphaComponent(0.4).cgColor]
 
         self.timeLabel.numberOfLines = 1
-        self.timeLabel.accessibilityLabel = "VideoActionTimeLabel"
+        self.timeLabel.accessibilityIdentifier = "VideoActionTimeLabel"
 
         self.loadingView.isHidden = true
         
@@ -188,7 +188,7 @@ import Cartography
         if duration != 0 {
             let (seconds, minutes) = (duration % 60, duration / 60)
             let time = String(format: "%d:%02d", minutes, seconds)
-            timeLabelText = time + " · " + timeLabelText
+            timeLabelText = time + " " + String.MessageToolbox.middleDot + " " + timeLabelText
         }
         
         self.timeLabel.text = timeLabelText

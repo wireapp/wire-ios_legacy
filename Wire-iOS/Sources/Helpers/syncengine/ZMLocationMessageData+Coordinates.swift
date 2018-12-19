@@ -22,12 +22,12 @@ import MapKit
 import Contacts
 
 public extension Message {
-    @objc public class func openInMaps(_ messageData: ZMLocationMessageData) {
+    @objc public class func openInMaps(_ messageData: LocationMessageData) {
         messageData.openInMaps(with: MKCoordinateSpan(zoomLevel: Int(messageData.zoomLevel), viewSize: Float(UIScreen.main.bounds.height)))
     }
 }
 
-public extension ZMLocationMessageData {
+public extension LocationMessageData {
     
     func openInMaps(with span: MKCoordinateSpan) {
         let launchOptions = [

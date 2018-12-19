@@ -51,6 +51,9 @@ final class MockMessageFactory: NSObject {
         if let image = image, let data = image.data() {
             imageData.mockImageData = data
             imageData.mockOriginalSize = image.size
+            imageData.isDownloaded = true
+        } else {
+            imageData.isDownloaded = false
         }
 
         let message: MockMessage? = self.imageMessage()
@@ -76,8 +79,9 @@ final class MockMessageFactory: NSObject {
         return message
     }
 
-    @objc(systemMessageWithType:users:clients:)
-    class func systemMessage(with systemMessageType: ZMSystemMessageType, users numUsers: Int, clients numClients: Int) -> MockMessage? {
+    class func systemMessage(with systemMessageType: ZMSystemMessageType,
+                             users numUsers: Int = 0,
+                             clients numClients: Int = 0) -> MockMessage? {
         let message = MockMessageFactory.messageTemplate()
 
         let mockSystemMessageData = MockSystemMessageData(systemMessageType: systemMessageType)
@@ -112,9 +116,11 @@ final class MockMessageFactory: NSObject {
         return message
     }
 
-    class func videoMessage() -> MockMessage? {
+    class func videoMessage(previewImage: UIImage? = nil) -> MockMessage? {
         let message: MockMessage? = self.fileTransferMessage()
         message?.backingFileMessageData.mimeType = "video/mp4"
+        message?.backingFileMessageData.filename = "vacation.mp4"
+        message?.backingFileMessageData.previewData = previewImage?.jpegData(compressionQuality: 0.9)
         return message
     }
 
@@ -146,7 +152,7 @@ final class MockMessageFactory: NSObject {
         let message = MockMessageFactory.messageTemplate()
 
         let textData = MockTextMessageData()
-        let article = Article(originalURLString: "http://foo.bar/baz", permanentURLString: "http://foo.bar/baz", resolvedURLString: "http://foo.bar/baz", offset: 0)
+        let article = ArticleMetadata(originalURLString: "http://foo.bar/baz", permanentURLString: "http://foo.bar/baz", resolvedURLString: "http://foo.bar/baz", offset: 0)
         textData.linkPreview = article
         message.backingTextMessageData = textData
 
@@ -163,6 +169,7 @@ final class MockMessageFactory: NSObject {
     class func expiredMessage(from message: MockMessage?) -> MockMessage? {
         message?.isEphemeral = true
         message?.isObfuscated = true
+        message?.hasBeenDeleted = false
         return message
     }
 
@@ -186,6 +193,33 @@ final class MockMessageFactory: NSObject {
         return self.expiredMessage(from: self.linkMessage())
     }
 
+    class func deletedMessage(from message: MockMessage?) -> MockMessage? {
+        message?.isEphemeral = false
+        message?.isObfuscated = false
+        message?.hasBeenDeleted = true
+        return message
+    }
+    
+    class func deletedImageMessage() -> MockMessage? {
+        return self.deletedMessage(from: self.imageMessage())
+    }
+    
+    class func deletedVideoMessage() -> MockMessage? {
+        return self.deletedMessage(from: self.videoMessage())
+    }
+    
+    class func deletedAudioMessage() -> MockMessage? {
+        return self.deletedMessage(from: self.audioMessage())
+    }
+    
+    class func deletedFileMessage() -> MockMessage? {
+        return self.deletedMessage(from: self.fileTransferMessage())
+    }
+    
+    class func deletedLinkMessage() -> MockMessage? {
+        return self.deletedMessage(from: self.linkMessage())
+    }
+    
     class func passFileTransferMessage() -> MockMessage {
         let message = MockMessageFactory.messageTemplate()
         message.backingFileMessageData = MockPassFileMessageData()

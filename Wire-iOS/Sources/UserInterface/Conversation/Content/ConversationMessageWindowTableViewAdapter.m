@@ -24,11 +24,6 @@
 #import "Analytics.h"
 #import "NSIndexSet+IndexPaths.h"
 
-// Cells
-#import "ImageMessageCell.h"
-#import "PingCell.h"
-#import "ConnectionRequestCell.h"
-
 #import "Wire-Swift.h"
 
 @implementation ConversationMessageWindowTableViewAdapter
@@ -60,16 +55,16 @@
     }
 }
 
-- (ConversationCellActionController *)actionControllerForMessage:(id<ZMConversationMessage>)message
+- (ConversationMessageActionController *)actionControllerForMessage:(id<ZMConversationMessage>)message
 {
     NSString *identifier = message.objectIdentifier;
-    ConversationCellActionController *cachedEntry = [self.actionControllers objectForKey:identifier];
+    ConversationMessageActionController *cachedEntry = [self.actionControllers objectForKey:identifier];
 
     if (cachedEntry) {
         return cachedEntry;
     }
 
-    ConversationCellActionController *actionController = [[ConversationCellActionController alloc] initWithResponder:self.messageActionResponder message:message];
+    ConversationMessageActionController *actionController = [[ConversationMessageActionController alloc] initWithResponder:self.messageActionResponder message:message context: ConversationMessageActionControllerContextContent];
     [self.actionControllers setObject:actionController forKey:identifier];
 
     return actionController;
@@ -93,24 +88,13 @@
 
 - (void)messagesInsideWindow:(ZMConversationMessageWindow *)window didChange:(NSArray<MessageChangeInfo *> *)messageChangeInfos
 {
-    BOOL needsToLayoutCells = NO;
-    
-    for (UITableViewCell *cell in self.tableView.visibleCells) {
-        if ([cell isKindOfClass:[ConversationCell class]]) {
-            ConversationCell *conversationCell = (ConversationCell *)cell;
-            
-            for (MessageChangeInfo *changeInfo in messageChangeInfos) {
-                if ([changeInfo.message isEqual:conversationCell.message]) {
-                    needsToLayoutCells |= [conversationCell updateForMessage:changeInfo];
-                }
-            }
+    for (MessageChangeInfo *changeInfo in messageChangeInfos) {
+        NSInteger sectionIndex = [self.messageWindow.messages indexOfObject:changeInfo.message];
+
+        if (sectionIndex != NSNotFound) {
+            ConversationMessageSectionController *controller = [self sectionControllerAt:sectionIndex in:self.tableView];
+            [controller configureAt:sectionIndex in:self.tableView];
         }
-    }
-    
-    if (needsToLayoutCells) {
-        // Make table view to update cells with animation
-        [self.tableView beginUpdates];
-        [self.tableView endUpdates];
     }
 }
 

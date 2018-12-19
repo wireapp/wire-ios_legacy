@@ -39,7 +39,7 @@ class UnknownMessageCellDescription: ConversationMessageCellDescription {
 
     weak var message: ZMConversationMessage?
     weak var delegate: ConversationCellDelegate?
-    weak var actionController: ConversationCellActionController?
+    weak var actionController: ConversationMessageActionController?
     
     var showEphemeralTimer: Bool = false
     var topMargin: Float = 0

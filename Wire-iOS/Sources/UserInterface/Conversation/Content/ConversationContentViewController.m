@@ -51,10 +51,6 @@
 #import "MessagePresenter.h"
 #import "UIViewController+WR_Additions.h"
 
-// Cells
-#import "PingCell.h"
-#import "ImageMessageCell.h"
-
 #import "Wire-Swift.h"
 
 
@@ -81,7 +77,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 
 @interface ConversationContentViewController () <CanvasViewControllerDelegate>
 
-@property (nonatomic) ConversationMessageWindowTableViewAdapter *conversationMessageWindowTableViewAdapter;
+@property (nonatomic, readwrite) ConversationMessageWindowTableViewAdapter *conversationMessageWindowTableViewAdapter;
 @property (nonatomic, assign) BOOL wasScrolledToBottomAtStartOfUpdate;
 @property (nonatomic) NSObject *activeMediaPlayerObserver;
 @property (nonatomic) MediaPlaybackManager *mediaPlaybackManager;
@@ -195,6 +191,17 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     [self.view addGestureRecognizer:pinchImageGestureRecognizer];
     
     [self createMentionsResultsView];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(applicationDidBecomeActive:)
+                                                 name:UIApplicationDidBecomeActiveNotification
+                                               object:nil];
+}
+
+- (void)applicationDidBecomeActive:(NSNotification *)notification
+{
+    self.conversationMessageWindowTableViewAdapter.sectionControllers = [[NSMutableDictionary alloc] init];
+    [self.tableView reloadData];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -222,6 +229,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     self.messagePresenter.modalTargetController = self.parentViewController;
 
     [self updateHeaderHeight];
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -355,7 +363,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     [self.conversationMessageWindowTableViewAdapter highlightMessage:message];
 }
 
-- (void)wantsToPerformAction:(MessageAction)actionId forMessage:(id<ZMConversationMessage>)message cell:(ConversationCell *)cell
+- (void)wantsToPerformAction:(MessageAction)actionId forMessage:(id<ZMConversationMessage>)message cell:(UIView<SelectableView> *)cell
 {
     dispatch_block_t action = ^{
         switch (actionId) {
@@ -378,7 +386,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
             case MessageActionDelete:
             {
                 assert([message canBeDeleted]);
-                
+
                 self.deletionDialogPresenter = [[DeletionDialogPresenter alloc] initWithSourceViewController:self.presentedViewController ?: self];
                 [self.deletionDialogPresenter presentDeletionAlertControllerForMessage:message source:cell completion:^(BOOL deleted) {
                     if (self.presentedViewController && deleted) {
@@ -394,29 +402,16 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
             case MessageActionPresent:
             {
                 self.conversationMessageWindowTableViewAdapter.selectedMessage = message;
-                [self presentDetailsForMessageAtIndexPath:[self.tableView indexPathForCell:cell]];
+                [self presentDetailsForMessage:message];
             }
                 break;
             case MessageActionSave:
             {
                 if ([Message isImageMessage:message]) {
-                    [self saveImageFromMessage:message cell:(ImageMessageCell *)cell];
+                    [self saveImageFromMessage:message cell:cell];
                 } else {
                     self.conversationMessageWindowTableViewAdapter.selectedMessage = message;
-                    
-                    UIView *targetView = nil;
-                    
-                    if ([cell isKindOfClass:[FileTransferCell class]]) {
-                        FileTransferCell *fileCell = (FileTransferCell *)cell;
-                        targetView = fileCell.actionButton;
-                    }
-                    else if ([cell isKindOfClass:[AudioMessageCell class]]) {
-                        AudioMessageCell *audioCell = (AudioMessageCell *)cell;
-                        targetView = audioCell.contentView;
-                    }
-                    else {
-                        targetView = cell;
-                    }
+                    UIView *targetView = cell.selectionView;
 
                     UIActivityViewController *saveController = [[UIActivityViewController alloc] initWithMessage:message from:targetView];
                     [self presentViewController:saveController animated:YES completion:nil];
@@ -482,16 +477,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
                 break;
             case MessageActionCopy:
             {
-                if ([Message isTextMessage:message]) {
-                    [[UIPasteboard generalPasteboard] setString:message.textMessageData.messageText];
-                } else if ([Message isImageMessage:message]) {
-                    NSData *imageData = message.imageMessageData.imageData;
-                    [[UIPasteboard generalPasteboard] setMediaAsset:[[UIImage alloc] initWithData:imageData]];
-                } else if ([Message isLocationMessage:message]) {
-                    if (message.locationMessageData.name) {
-                        [[UIPasteboard generalPasteboard] setString:message.locationMessageData.name];
-                    }
-                }
+                [Message copy:message in:UIPasteboard.generalPasteboard];
             }
                 break;
             
@@ -515,6 +501,12 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
                         [self.conversationMessageWindowTableViewAdapter highlightMessage:quote];
                     }];
                 }
+            }
+                break;
+            case MessageActionOpenDetails:
+            {
+                MessageDetailsViewController *detailsViewController = [[MessageDetailsViewController alloc] initWithMessage:message];
+                [self.parentViewController presentViewController:detailsViewController animated:YES completion:nil];
             }
                 break;
         }
@@ -568,9 +560,8 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     }
 }
 
-- (void)presentDetailsForMessageAtIndexPath:(NSIndexPath *)indexPath
+- (void)presentDetailsForMessage:(id<ZMConversationMessage>)message
 {
-    id<ZMConversationMessage>message = [self.messageWindow.messages objectAtIndex:indexPath.section];
     BOOL isFile = [Message isFileTransferMessage:message];
     BOOL isImage = [Message isImageMessage:message];
     BOOL isLocation = [Message isLocationMessage:message];
@@ -705,10 +696,6 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
         conversationCell = (ConversationCell *)cell;
     }
     
-    if (conversationCell.message != nil && [Message isKnockMessage:conversationCell.message]) {
-        [self updatePingCellAppearance:(PingCell *)conversationCell];
-    }
-    
 	// using dispatch_async because when this method gets run, the cell is not yet in visible cells,
 	// so the update will fail
 	// dispatch_async runs it with next runloop, when the cell has been added to visible cells
@@ -745,21 +732,6 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     [self.cachedRowHeights setObject:@(cell.frame.size.height) forKey:indexPath];
 }
 
-- (void)updatePingCellAppearance:(PingCell *)pingCell
-{
-    // determine if we should start animating a ping cell
-    // Unfortunate that this can't be inside the cell itself
-    BOOL isMessageOfCellLastMessageInConversation = [self.messageWindow.messages.firstObject isEqual:pingCell.message];
-    
-    NSComparisonResult comparisonResult = [pingCell.message.serverTimestamp compare:self.conversation.firstUnreadMessage.serverTimestamp];
-    BOOL isMessageOlderThanFirstUnreadMessage =  (comparisonResult != NSOrderedAscending);
-    
-    if (isMessageOfCellLastMessageInConversation
-        && [Message isKnockMessage:pingCell.message]
-        && isMessageOlderThanFirstUnreadMessage ) {
-        [pingCell startPingAnimation];
-    }
-}
 
 - (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -805,23 +777,6 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     return selectedIndexPath;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    id<ZMConversationMessage>message = [self.messageWindow.messages objectAtIndex:indexPath.section];
-    BOOL isFile = [Message isFileTransferMessage:message] &&
-                 ![Message isVideoMessage:message] &&
-                 ![Message isAudioMessage:message];
-
-    if (isFile) {
-        [self wantsToPerformAction:MessageActionPresent
-                        forMessage:message
-                              cell:[tableView cellForRowAtIndexPath:indexPath]];
-    }
-    // Make table view to update cells with animation
-    [tableView beginUpdates];
-    [tableView endUpdates];
-}
-
 - (void)tableView:(UITableView *)tableView prefetchRowsAtIndexPaths:(NSArray<NSIndexPath *> *)indexPaths
 {
     [self prefetchNextMessagesForIndexPaths:indexPaths];
@@ -833,29 +788,9 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 
 @implementation ConversationContentViewController (ConversationCellDelegate)
 
-- (BOOL)canPerformAction:(MessageAction)action forMessage:(id<ZMConversationMessage>)message
-{
-    if ([Message isImageMessage:message]) {
-
-        switch (action) {
-            case MessageActionForward:
-            case MessageActionSave:
-            case MessageActionCopy:
-
-                return YES;
-                break;
-
-            default:
-                break;
-        }
-    }
-
-    return NO;
-}
-
 - (void)wantsToPerformAction:(MessageAction)action forMessage:(id<ZMConversationMessage>)message
 {
-    ConversationCell *cell = [self cellForMessage:message];
+    UITableViewCell<SelectableView> *cell = [self cellForMessage:message];
     [self wantsToPerformAction:action forMessage:message cell:cell];
 }
 
@@ -900,12 +835,9 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     return shouldBecomeFirstResponder;
 }
 
-- (void)conversationCellDidTapOpenLikers:(UIView *)cell forMessage:(id<ZMConversationMessage>)message
+- (void)conversationCellDidRequestOpeningMessageDetails:(UIView *)cell messageDetails:(MessageDetailsViewController *)messageDetails
 {
-    if ([Message hasLikers:message]) {
-        ReactionsListViewController *reactionsListController = [[ReactionsListViewController alloc] initWithMessage:message showsStatusBar:!IS_IPAD_FULLSCREEN];
-        [self.parentViewController presentViewController:reactionsListController animated:YES completion:nil];
-    }
+    [self.parentViewController presentViewController:messageDetails animated:YES completion:nil];
 }
 
 - (BOOL)conversationCellShouldStartDestructionTimer:(ConversationCell *)cell
@@ -1027,6 +959,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
             self.expectedMessageToShow = nil;
         }
     }
+    
 }
 
 @end

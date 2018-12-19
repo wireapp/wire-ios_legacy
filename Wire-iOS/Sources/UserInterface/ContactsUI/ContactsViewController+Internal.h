@@ -21,12 +21,13 @@ static NSString * const _Nonnull ContactsViewControllerSectionHeaderID = @"Conta
 
 @class IconButton;
 @class SearchHeaderViewController;
+@class TransformLabel;
 
 @interface ContactsViewController ()
 
 @property (nonatomic) BOOL searchResultsReceived;
 
-@property (nonatomic, nullable) UILabel *titleLabel;
+@property (nonatomic, nullable) TransformLabel *titleLabel;
 @property (nonatomic, nullable) UIView *bottomContainerView;
 @property (nonatomic, nullable) UIView *bottomContainerSeparatorView;
 @property (nonatomic, nullable) UILabel *noContactsLabel;

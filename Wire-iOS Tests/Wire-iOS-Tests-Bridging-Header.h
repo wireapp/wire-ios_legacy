@@ -26,12 +26,10 @@
 #import "ParticipantDeviceCell.h"
 #import "NSString+Fingerprint.h"
 #import "ZMSnapshotTestCase.h"
+#import "XCTestCase+Internal.h"
 #import "MockUser.h"
 #import "SplitViewController.h"
 #import <avs/AVSAudioEffect.h>
-#import "ImageMessageCell.h"
-#import "ImageMessageCell+Internal.h"
-#import "TextMessageCell.h"
 #import "Message+UI.h"
 #import "MockConversation.h"
 #import "MockConversationFactory.h"

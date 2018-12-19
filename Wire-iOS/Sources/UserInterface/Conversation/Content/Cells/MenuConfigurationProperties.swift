@@ -22,6 +22,4 @@ import Foundation
     var targetRect = CGRect.zero
     var targetView: UIView!
     var selectedMenuBlock: SelectedMenuBlock?
-    var additionalItems: [AdditionalMenuItem]?
-    var likeItemIndex: Int = 0
 }

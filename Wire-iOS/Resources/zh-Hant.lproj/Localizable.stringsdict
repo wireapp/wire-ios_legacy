@@ -177,7 +177,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>1則回覆</string>
+        <string>%d則回覆</string>
       </dict>
     </dict>
     <key>conversation.silenced.status.message.knock</key>

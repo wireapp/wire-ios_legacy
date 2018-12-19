@@ -149,7 +149,7 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
 @end
 
 
-@interface SplitViewController () <UIGestureRecognizerDelegate>
+@interface SplitViewController ()
 
 @property (nonatomic) UIPanGestureRecognizer *horizontalPanner;
 
@@ -506,20 +506,7 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
     self.leftViewOffsetConstraint.constant = 64.0f * (1.0f - percentage);
 }
 
-#pragma mark - Gesture Recognizers
-
-- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
-{
-    if (self.layoutSize == SplitViewControllerLayoutSizeRegularLandscape || ! [self.delegate splitViewControllerShouldMoveLeftViewController:self]) {
-        return NO;
-    }
-    
-    if (self.leftViewControllerRevealed && ! IS_IPAD_FULLSCREEN) {
-        return NO;
-    }
-    
-    return YES;
-}
+#pragma mark - Gesture
 
 - (void)onHorizontalPan:(UIPanGestureRecognizer *)gestureRecognizer
 {

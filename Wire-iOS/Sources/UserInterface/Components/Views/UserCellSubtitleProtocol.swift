@@ -46,7 +46,7 @@ extension UserCellSubtitleProtocol where Self: UIView & Themeable {
             components.append(formatter.correlationText(for: user, addressBookName: addressBookName))
         }
 
-        return components.compactMap({ $0 }).joined(separator: " · " && UserCell.lightFont)
+        return components.compactMap({ $0 }).joined(separator: " " + String.MessageToolbox.middleDot + " " && UserCell.lightFont)
     }
 
     private static func correlationFormatter(for colorSchemeVariant: ColorSchemeVariant) -> AddressBookCorrelationFormatter {

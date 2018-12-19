@@ -24,7 +24,7 @@ import Cartography
 class LocationPreviewController: TintColorCorrectedViewController {
 
     let message: ZMConversationMessage
-    let actionController: ConversationCellActionController
+    let actionController: ConversationMessageActionController
 
     private var mapView = MKMapView()
     private let containerView = UIView()
@@ -39,7 +39,7 @@ class LocationPreviewController: TintColorCorrectedViewController {
 
     init(message: ZMConversationMessage, actionResponder: MessageActionResponder) {
         self.message = message
-        self.actionController = ConversationCellActionController(responder: actionResponder, message: message)
+        self.actionController = ConversationMessageActionController(responder: actionResponder, message: message, context: .content)
         super.init(nibName: nil, bundle: nil)
         containerView.translatesAutoresizingMaskIntoConstraints = false
         containerView.backgroundColor = .from(scheme: .placeholderBackground)
@@ -108,7 +108,7 @@ class LocationPreviewController: TintColorCorrectedViewController {
 
     // MARK: - Map
 
-    func updateMapLocation(withLocationData locationData: ZMLocationMessageData) {
+    func updateMapLocation(withLocationData locationData: LocationMessageData) {
         let region: MKCoordinateRegion
 
         if locationData.zoomLevel != 0 {

@@ -205,10 +205,10 @@ class ContactsCell: UITableViewCell, SeparatorViewProtocol {
     func actionButtonWidth(forTitles actionButtonTitles: [String], textTransform: TextTransform, contentInsets: UIEdgeInsets, textAttributes: [NSAttributedString.Key : Any]?) -> Float {
         var width: CGFloat = 0
         for title: String in actionButtonTitles {
-            let transformedTitle = title.transform(with: textTransform)
+            let transformedTitle = title.applying(transform: textTransform)
+            let titleWidth = transformedTitle.size(withAttributes: textAttributes).width
 
-            if let titleWidth = transformedTitle?.size(withAttributes: textAttributes).width,
-                titleWidth > width {
+            if titleWidth > width {
                 width = titleWidth
             }
         }

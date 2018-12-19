@@ -20,10 +20,8 @@
 #import <UIKit/UIKit.h>
 
 
-
 @class Country;
 @class RegistrationTextField;
-
 
 
 @interface PhoneNumberViewController : UIViewController

@@ -322,7 +322,7 @@ static const CGFloat BurstContainerExpandedHeight = 40;
         [self updateBurstTimestamp];
     }
 
-    self.actionController = [[ConversationCellActionController alloc] initWithResponder:self.delegate message:message];
+    self.actionController = [[ConversationMessageActionController alloc] initWithResponder:self.delegate message:message context:ConversationMessageActionControllerContextContent];
 
     [self updateConstraintConstants];
     [self updateToolboxVisibilityAnimated:NO];
@@ -551,9 +551,10 @@ static const CGFloat BurstContainerExpandedHeight = 40;
     [self.delegate conversationCell:messageToolboxView didSelectAction:MessageActionLike forMessage:self.message];
 }
 
-- (void)messageToolboxViewDidSelectLikers:(MessageToolboxView *)messageToolboxView
+- (void)messageToolboxDidRequestOpeningDetails:(MessageToolboxView *)messageToolboxView preferredDisplayMode:(enum MessageDetailsDisplayMode)preferredDisplayMode
 {
-    [self.delegate conversationCellDidTapOpenLikers:self forMessage:self.message];
+    MessageDetailsViewController *detailsViewController = [[MessageDetailsViewController alloc] initWithMessage:self.message preferredDisplayMode:preferredDisplayMode];
+    [self.delegate conversationCellDidRequestOpeningMessageDetails:self messageDetails:detailsViewController];
 }
 
 - (void)messageToolboxViewDidSelectResend:(MessageToolboxView *)messageToolboxView

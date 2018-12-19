@@ -28,6 +28,7 @@
 + (NSArray <ZMUser *> *)mockUsers;
 + (NSArray <MockUser *> *)realMockUsers;
 + (MockUser *)mockSelfUser;
++ (MockUser *)mockServiceUser;
 + (MockUser *)mockUserFor:(ZMUser *)user;
 + (ZMUser<ZMEditableUser> *)selfUserInUserSession:(ZMUserSession *)session;
 
@@ -56,6 +57,7 @@
 @property (nonatomic, readwrite) NSString *expirationDisplayString;
 @property (nonatomic, readwrite) BOOL isWirelessUser;
 @property (nonatomic, readwrite) BOOL usesCompanyLogin;
+@property (nonatomic, readwrite) BOOL readReceiptsEnabled;
 @property (nonatomic) ZMUser * user;
 
 @property (nonatomic) NSSet <id<UserClientType>> * clients;

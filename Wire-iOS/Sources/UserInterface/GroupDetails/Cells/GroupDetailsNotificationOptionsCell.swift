@@ -18,7 +18,7 @@
 
 import Foundation
 
-class GroupDetailsNotificationOptionsCell: GroupDetailsOptionsCell {
+class GroupDetailsNotificationOptionsCell: GroupDetailsDisclosureOptionsCell {
     
     override func setUp() {
         super.setUp()
@@ -26,7 +26,7 @@ class GroupDetailsNotificationOptionsCell: GroupDetailsOptionsCell {
         title = "Notifications"
     }
     
-    override func configure(with conversation: ZMConversation) {
+    func configure(with conversation: ZMConversation) {
         guard let key = conversation.mutedMessageTypes.localizationKey else {
             return assertionFailure("Invalid muted message type.")
         }
@@ -36,6 +36,7 @@ class GroupDetailsNotificationOptionsCell: GroupDetailsOptionsCell {
     
     override func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
         super.applyColorScheme(colorSchemeVariant)
+        
         icon = UIImage(for: .alerts, iconSize: .tiny,
                        color: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant))
     }

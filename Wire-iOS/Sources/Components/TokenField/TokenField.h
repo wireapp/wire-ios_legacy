@@ -41,10 +41,9 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 
-IB_DESIGNABLE
 @interface TokenField : UIView
 
-@property (weak, nonatomic, nullable) IBOutlet id<TokenFieldDelegate> delegate;
+@property (weak, nonatomic, nullable) id<TokenFieldDelegate> delegate;
 
 @property (readonly, nonatomic) TextView *textView;
 
@@ -70,24 +69,24 @@ IB_DESIGNABLE
 
 // Appearance
 
-@property (nonatomic, nullable) IBInspectable NSString *toLabelText;
+@property (nonatomic, nullable) NSString *toLabelText;
 
-@property (nonatomic, nullable) IBInspectable UIFont *font;
-@property (nonatomic, nullable) IBInspectable UIColor *textColor;
+@property (nonatomic, nullable) UIFont *font;
+@property (nonatomic, nullable) UIColor *textColor;
 
-@property (nonatomic, nullable) IBInspectable UIFont *tokenTitleFont;
-@property (nonatomic, nullable) IBInspectable UIColor *tokenTitleColor;
-@property (nonatomic, nullable) IBInspectable UIColor *tokenSelectedTitleColor;
-@property (nonatomic, nullable) IBInspectable UIColor *tokenBackgroundColor;
-@property (nonatomic, nullable) IBInspectable UIColor *tokenSelectedBackgroundColor;
-@property (nonatomic, nullable) IBInspectable UIColor *tokenBorderColor;
-@property (nonatomic, nullable) IBInspectable UIColor *tokenSelectedBorderColor;
-@property (nonatomic, nullable) IBInspectable UIColor *dotColor;
+@property (nonatomic, nullable) UIFont *tokenTitleFont;
+@property (nonatomic, nullable) UIColor *tokenTitleColor;
+@property (nonatomic, nullable) UIColor *tokenSelectedTitleColor;
+@property (nonatomic, nullable) UIColor *tokenBackgroundColor;
+@property (nonatomic, nullable) UIColor *tokenSelectedBackgroundColor;
+@property (nonatomic, nullable) UIColor *tokenBorderColor;
+@property (nonatomic, nullable) UIColor *tokenSelectedBorderColor;
+@property (nonatomic, nullable) UIColor *dotColor;
 @property (nonatomic) TextTransform tokenTextTransform;
 
-@property (nonatomic) IBInspectable CGFloat lineSpacing;
-@property (nonatomic) IBInspectable CGFloat tokenOffset;    // horisontal distance between tokens, and btw "To:" and first token
-@property (nonatomic) IBInspectable CGFloat tokenTitleVerticalAdjustment;
+@property (nonatomic) CGFloat lineSpacing;
+@property (nonatomic) CGFloat tokenOffset;    // horisontal distance between tokens, and btw "To:" and first token
+@property (nonatomic) CGFloat tokenTitleVerticalAdjustment;
 
 // Utils
 @property (nonatomic) CGRect excludedRect;  // rect for excluded path in textView text container

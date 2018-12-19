@@ -169,9 +169,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>1 message</string>
+        <string>1 messaggio</string>
         <key>other</key>
-        <string>%d messages</string>
+        <string>%d messaggi</string>
       </dict>
     </dict>
     <key>conversation.silenced.status.message.mention</key>
@@ -185,9 +185,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>1 mention</string>
+        <string>1 menzione</string>
         <key>other</key>
-        <string>%d mentions</string>
+        <string>%d menzioni</string>
       </dict>
     </dict>
     <key>conversation.silenced.status.message.reply</key>
@@ -201,9 +201,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>1 reply</string>
+        <string>1 risposta</string>
         <key>other</key>
-        <string>%d replies</string>
+        <string>%d risposte</string>
       </dict>
     </dict>
     <key>conversation.silenced.status.message.knock</key>
@@ -217,9 +217,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>1 ping</string>
+        <string>1 trillo</string>
         <key>other</key>
-        <string>%d pings</string>
+        <string>%d trilli</string>
       </dict>
     </dict>
     <key>conversation.silenced.status.message.missedcall</key>
@@ -233,7 +233,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>1 missed call</string>
+        <string>1 chiamata senza risposta</string>
         <key>other</key>
         <string>%d chiamate senza risposta</string>
       </dict>
@@ -249,9 +249,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Missed call</string>
+        <string>Chiamata senza risposta</string>
         <key>other</key>
-        <string>Missed calls</string>
+        <string>Chiamate senza risposta</string>
       </dict>
     </dict>
     <key>content.system.call.missed-call.groups</key>
@@ -265,9 +265,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Missed call from %2$@</string>
+        <string>Chiamata persa da %2$@</string>
         <key>other</key>
-        <string>Missed calls from %2$@</string>
+        <string>Chiamate perse da %2$@</string>
       </dict>
     </dict>
   </dict>

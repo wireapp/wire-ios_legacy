@@ -26,7 +26,7 @@
 #import "NSURL+WireLocale.h"
 #import "Wire-Swift.h"
 
-@interface EmailSignInViewController () <RegistrationTextFieldDelegate>
+@interface EmailSignInViewController () <UITextFieldDelegate>
 
 @property (nonatomic) RegistrationTextField *emailField;
 @property (nonatomic) RegistrationTextField *passwordField;
@@ -179,7 +179,7 @@
     [self.companyLoginButton setTitle:[NSLocalizedString(@"signin.company_idp.button.title", nil) uppercasedWithCurrentLocale] forState:UIControlStateNormal];
     self.companyLoginButton.titleLabel.font = UIFont.smallLightFont;
     [self.companyLoginButton addTarget:self action:@selector(companyLoginButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-    
+
     self.companyLoginButton.accessibilityTraits |= UIAccessibilityTraitLink;
 }
 
@@ -396,8 +396,6 @@
         self.passwordField.rightAccessoryView = RegistrationTextFieldRightAccessoryViewNone;
     }
 }
-
-#pragma mark - RegistrationTextFieldDelegate
 
 - (void)executeErrorFeedbackAction:(AuthenticationErrorFeedbackAction)feedbackAction
 {

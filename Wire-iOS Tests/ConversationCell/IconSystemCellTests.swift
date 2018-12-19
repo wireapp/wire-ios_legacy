@@ -23,6 +23,7 @@ final class IconSystemCellTests: ZMSnapshotTestCase {
 
     override func setUp() {
         super.setUp()
+        ColorScheme.default.variant = .light
         snapshotBackgroundColor = .white
     }
 
@@ -49,43 +50,6 @@ final class IconSystemCellTests: ZMSnapshotTestCase {
         let size = cell.systemLayoutSizeFitting(CGSize(width: 320.0, height: 0.0), withHorizontalFittingPriority: .required, verticalFittingPriority: .fittingSizeLevel)
         cell.bounds = CGRect(origin: .zero, size: size)
         return cell.wrapInTableView()
-    }
-
-
-    func testCannotDecryptMessage() {
-        let wrappedCell: UITableView? = IconSystemCellTests.wrappedCell(for: .decryptionFailed, users: 0, clients: 0, config: nil)
-        verify(view: wrappedCell!)
-    }
-
-    func testNewClient_oneUser_oneClient() {
-        let wrappedCell: UITableView? = IconSystemCellTests.wrappedCell(for: .newClient, users: 1, clients: 1, config: nil)
-        verify(view: wrappedCell!)
-    }
-
-    func testNewClient_selfUser_oneClient() {
-        let wrappedCell: UITableView? = IconSystemCellTests.wrappedCell(for: .newClient, users: 1, clients: 1, config: { message in
-            let mockMessageData = message.systemMessageData as? MockSystemMessageData
-            mockMessageData?.users = Set<AnyHashable>([MockUser.mockSelf()]) as! Set<ZMUser>
-        })
-        verify(view: wrappedCell!)
-    }
-
-    func testNewClient_selfUser_manyClients() {
-        let wrappedCell: UITableView? = IconSystemCellTests.wrappedCell(for: .newClient, users: 1, clients: 2, config: { message in
-            let mockMessageData = message.systemMessageData as? MockSystemMessageData
-            mockMessageData?.users = Set<AnyHashable>([MockUser.mockSelf()]) as! Set<ZMUser>
-        })
-        verify(view: wrappedCell!)
-    }
-
-    func testNewClient_oneUser_manyClient() {
-        let wrappedCell: UITableView? = IconSystemCellTests.wrappedCell(for: .newClient, users: 1, clients: 3, config: nil)
-        verify(view: wrappedCell!)
-    }
-
-    func testNewClient_manyUsers_manyClient() {
-        let wrappedCell: UITableView? = IconSystemCellTests.wrappedCell(for: .newClient, users: 3, clients: 4, config: nil)
-        verify(view: wrappedCell!)
     }
 
     func testIgnoredClient_oneUser_oneClient() {
@@ -124,14 +88,8 @@ final class IconSystemCellTests: ZMSnapshotTestCase {
         verify(view: wrappedCell!)
     }
 
-    func testDecryptionFailed() {
-        let wrappedCell: UITableView? = IconSystemCellTests.wrappedCell(for: .decryptionFailed, users: 0, clients: 0, config: nil)
-        verify(view: wrappedCell!)
-    }
-
     func testStartedusingANewDevice() {
         let wrappedCell: UITableView? = IconSystemCellTests.wrappedCell(for: .reactivatedDevice, users: 0, clients: 0, config: nil)
         verify(view: wrappedCell!)
     }
-
 }

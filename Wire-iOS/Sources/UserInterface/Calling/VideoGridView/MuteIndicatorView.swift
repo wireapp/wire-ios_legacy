@@ -41,8 +41,8 @@ final class MuteIndicatorView: UIView {
         return UIImageView(image: image)
     }()
 
-    let mutedLabel: UILabel = {
-        let label = UILabel()
+    let mutedLabel: TransformLabel = {
+        let label = TransformLabel()
         label.font = .smallSemiboldFont
         label.textColor = .white
         label.text = "conversation.status.silenced".localized

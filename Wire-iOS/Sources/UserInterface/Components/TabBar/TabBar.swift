@@ -55,6 +55,12 @@ class TabBar: UIView {
         return self.tabs[selectedIndex]
     }
 
+    private var titleObservers: [NSKeyValueObservation] = []
+
+    deinit {
+        titleObservers.forEach { $0.invalidate() }
+    }
+
     // MARK: - Initialization
 
     init(items: [UITabBarItem], style: ColorSchemeVariant, selectedIndex: Int = 0) {
@@ -78,7 +84,7 @@ class TabBar: UIView {
     }
     
     fileprivate func setupViews() {
-        tabs = items.map(makeButtonForItem)
+        tabs = items.enumerated().map(makeButtonForItem)
         tabs.forEach(stackView.addArrangedSubview)
 
         stackView.distribution = .fillEqually
@@ -143,10 +149,18 @@ class TabBar: UIView {
         }
     }
 
-    fileprivate func makeButtonForItem(_ item: UITabBarItem) -> Tab {
+    fileprivate func makeButtonForItem(_ index: Int, _ item: UITabBarItem) -> Tab {
         let tab = Tab(variant: style)
         tab.textTransform = .upper
         tab.setTitle(item.title, for: .normal)
+        tab.accessibilityIdentifier = "Tab\(index)"
+
+        let changeObserver = item.observe(\.title) { [unowned tab, unowned item] _, _ in
+            tab.setTitle(item.title, for: .normal)
+        }
+
+        titleObservers.append(changeObserver)
+
         tab.addTarget(self, action: #selector(TabBar.itemSelected(_:)), for: .touchUpInside)
         return tab
     }

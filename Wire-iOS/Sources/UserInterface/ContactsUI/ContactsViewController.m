@@ -112,7 +112,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     self.topContainerView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:self.topContainerView];
     
-    self.titleLabel = [[UILabel alloc] initForAutoLayout];
+    self.titleLabel = [[TransformLabel alloc] initForAutoLayout];
     self.titleLabel.numberOfLines = 1;
     self.titleLabel.text = self.title;
     self.titleLabel.textColor = [colorScheme colorWithName:ColorSchemeColorTextForeground];
@@ -376,8 +376,18 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 #pragma mark - Send Invite
 
-- (void)inviteContact:(ZMAddressBookContact *)contact fromView:(UIView *)view
+
+/**
+ return a UIAlertController depends contact has email or phone number
+
+ @param contact a ZMAddressBookContact object
+ @param view the source view
+ @return a UIAlertController which let the user to choose invite via email or phone number or no email client is set
+ */
+- (UIAlertController *)inviteContact:(ZMAddressBookContact *)contact fromView:(UIView *)view
 {
+    UIAlertController * alertController;
+
     if (contact.contactDetails.count == 1) {
         if (contact.emailAddresses.count == 1 && [ZMAddressBookContact canInviteLocallyWithEmail]) {
             [contact inviteLocallyWithEmail:contact.emailAddresses[0]];
@@ -398,8 +408,8 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
                                                                      [unableToSendController dismissViewControllerAnimated:YES completion:nil];
                                                                  }];
                 [unableToSendController addAction:okAction];
-                [self presentViewController:unableToSendController animated:YES completion:nil];
-                return;
+
+                return unableToSendController;
             }
             else if (contact.rawPhoneNumbers.count == 1 && ![ZMAddressBookContact canInviteLocallyWithPhoneNumber]) {
                 ZMLogError(@"Cannot invite person: email is not configured");
@@ -412,7 +422,8 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
                                                                      [unableToSendController dismissViewControllerAnimated:YES completion:nil];
                                                                  }];
                 [unableToSendController addAction:okAction];
-                [self presentViewController:unableToSendController animated:YES completion:nil];
+
+                alertController = unableToSendController;
             }
         }
     }
@@ -426,8 +437,8 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
                                                                  [unableToSendController dismissViewControllerAnimated:YES completion:nil];
                                                              }];
             [unableToSendController addAction:okAction];
-            [self presentViewController:unableToSendController animated:YES completion:nil];
-            return;
+
+            return unableToSendController;
         }
         
         UIAlertController *chooseContactDetailController = [UIAlertController alertControllerWithTitle:nil
@@ -462,9 +473,11 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         [chooseContactDetailController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"contacts_ui.invite_sheet.cancel_button_title", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
             [chooseContactDetailController dismissViewControllerAnimated:YES completion:nil];
         }]];
-        
-        [self presentViewController:chooseContactDetailController animated:YES completion:nil];
+
+        alertController = chooseContactDetailController;
     }
+
+    return alertController;
 }
 
 @end

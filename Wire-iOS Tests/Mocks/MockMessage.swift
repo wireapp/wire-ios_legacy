@@ -23,7 +23,7 @@ import WireLinkPreview
 @objcMembers class MockTextMessageData : NSObject, ZMTextMessageData {
     
     var messageText: String? = ""
-    var linkPreview: LinkPreview? = nil
+    var linkPreview: LinkMetadata? = nil
     var imageData: Data? = nil
     var linkPreviewHasImage: Bool = false
     var linkPreviewImageCacheKey: String? = nil
@@ -212,7 +212,7 @@ extension MockFileMessageData: MockFileMessageDataType { }
     }
 }
 
-@objcMembers class MockLocationMessageData: NSObject, ZMLocationMessageData {
+@objcMembers class MockLocationMessageData: NSObject, LocationMessageData {
     var longitude: Float = 0
     var latitude: Float = 0
     var name: String? = nil
@@ -221,7 +221,7 @@ extension MockFileMessageData: MockFileMessageDataType { }
 
 
 @objcMembers class MockMessage: NSObject, ZMConversationMessage {
-
+    
     typealias UsersByReaction = Dictionary<String, [ZMUser]>
     
     // MARK: - ZMConversationMessage
@@ -236,13 +236,14 @@ extension MockFileMessageData: MockFileMessageDataType { }
     var imageMessageData: ZMImageMessageData? = .none
     var knockMessageData: ZMKnockMessageData? = .none
     var causedSecurityLevelDegradation: Bool = false
+    var needsReadConfirmation: Bool = false
     let objectIdentifier: String = UUID().uuidString
 
     var fileMessageData: ZMFileMessageData? {
         return backingFileMessageData
     }
     
-    var locationMessageData: ZMLocationMessageData? {
+    var locationMessageData: LocationMessageData? {
         return backingLocationMessageData
     }
     
@@ -287,6 +288,8 @@ extension MockFileMessageData: MockFileMessageDataType { }
     func markAsUnread() {
         // no-op
     }
+    
+    var readReceipts: [ReadReceipt] = []
     
     var canBeMarkedUnread = true
     
