@@ -31,14 +31,14 @@ private let zmLog = ZMSLog(tag: "URL")
     }
 }
 
-final class WireUrl {
+struct WireUrl: Codable {
     static var shared: WireUrl! = {
-        guard let filePath = Bundle.main.url(forResource: "url", withExtension: "json") else { return nil}
+        guard let filePath = Bundle.main.url(forResource: "url", withExtension: "json") else { return nil }
 
         return WireUrl(filePath: filePath)
     }()
 
-    init?(filePath: URL) {
+    private init?(filePath: URL) {
 
         let data: Data
         do {
@@ -48,18 +48,17 @@ final class WireUrl {
             return nil
         }
 
-        let parsedJSONData: [String : String]
+        let decoder = JSONDecoder()
+
+        let dictionary: [String: String]
         do {
-            parsedJSONData = try JSONSerialization.jsonObject(with: data, options: []) as! [String : String]
+            dictionary = try decoder.decode([String: String].self, from: data)
         } catch {
             zmLog.error("Failed to parse JSON at path: \(filePath), error: \(error)")
             return nil
         }
 
-        print("\(parsedJSONData)")
-
-        urls = Dictionary(uniqueKeysWithValues:
-            parsedJSONData.map { key, value in (key, URL(string: value)!) })
+        urls = Dictionary(uniqueKeysWithValues: dictionary.map { key, value in (key, URL(string: value)!) })
     }
 
     let urls: [String : URL]
