@@ -152,20 +152,19 @@ def language_folders_in_folder(folder):
     '''Find all language folders inside the given folder'''
     return [entry for entry in os.listdir(folder) if os.path.isdir(os.path.join(folder, entry)) and entry.endswith(LANGUAGE_FOLDER_EXT)]
 
-# From https://stackoverflow.com/questions/241327/python-snippet-to-remove-c-and-c-comments
 def _comment_remover(text):
-    '''Remove comments from source file'''
-    def replacer(match):
-        s = match.group(0)
-        if s.startswith('/'):
-            return " " # note: a space and not an empty string
-        else:
-            return s
-    pattern = re.compile(
-        r'//.*?$|/\*.*?\*/|\'(?:\\.|[^\\\'])*\'|"(?:\\.|[^\\"])*"',
-        re.DOTALL | re.MULTILINE
+    '''Remove `Localization.strings`-style comments from text'''
+    multiline_pattern = re.compile(r'/\*.*?\*/', re.DOTALL | re.MULTILINE)
+    text = multiline_pattern.sub(" ", text)
+
+    comment_with_delimiter = "{q}(?:\\.|[^\\{q}])*{q}"
+    quotes = comment_with_delimiter.format(q="\"")
+    single_quote = comment_with_delimiter.format(q="'")
+    single_line_pattern = re.compile(
+        "//.*?$|{}|{}".format(quotes, single_quote),
+        re.MULTILINE
     )
-    return re.sub(pattern, replacer, text)
+    return single_line_pattern.sub(lambda x: " " if x.group(0).startswith("/") else x.group(0), text)
 
 def load_file_to_dict(path):
     '''Load a strings file to a dictionary'''
