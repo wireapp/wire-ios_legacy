@@ -1,5 +1,22 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
+#
+# Wire
+# Copyright (C) 2018 Wire Swiss GmbH
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see http:#www.gnu.org/licenses/.
+#
 
 from __future__ import print_function
 import argparse
@@ -81,7 +98,7 @@ def language_folders_in_folder(folder):
     '''Find all language folders inside the given folder'''
     return [entry for entry in os.listdir(folder) if os.path.isdir(os.path.join(folder, entry)) and entry.endswith(LANGUAGE_FOLDER_EXT)]
 
-    # From https://stackoverflow.com/questions/241327/python-snippet-to-remove-c-and-c-comments
+    # From https:#stackoverflow.com/questions/241327/python-snippet-to-remove-c-and-c-comments
 def _comment_remover(text):
     '''Remove comments from source file'''
     def replacer(match):
@@ -91,7 +108,7 @@ def _comment_remover(text):
         else:
             return s
     pattern = re.compile(
-        r'//.*?$|/\*.*?\*/|\'(?:\\.|[^\\\'])*\'|"(?:\\.|[^\\"])*"',
+        r'#.*?$|/\*.*?\*/|\'(?:\\.|[^\\\'])*\'|"(?:\\.|[^\\"])*"',
         re.DOTALL | re.MULTILINE
     )
     return re.sub(pattern, replacer, text)
