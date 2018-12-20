@@ -17,48 +17,56 @@
 //
 
 import UIKit
-import Cartography
 
-final class AuthenticationStepController: AuthenticationStepViewController {
+/**
+ * A view controller that can display the interface from an authentication step.
+ */
 
+class AuthenticationStepController: AuthenticationStepViewController {
+
+    /// The step to display.
+    let stepDescription: TeamCreationStepDescription
+
+    /// The object that coordinates authentication.
     weak var authenticationCoordinator: AuthenticationCoordinator? {
         didSet {
             stepDescription.secondaryView?.actioner = authenticationCoordinator
         }
     }
 
-    /// headline font size is fixed and not affected by dynamic type setting,
+    // MARK: - Configuration
+
+    static let mainViewHeight: CGFloat = 56
+
     static let headlineFont         = UIFont.systemFont(ofSize: 40, weight: UIFont.Weight.light)
-    /// For 320 pt width screen
     static let headlineSmallFont    = UIFont.systemFont(ofSize: 32, weight: UIFont.Weight.light)
     static let subtextFont          = FontSpec(.normal, .regular).font!
     static let errorFont            = FontSpec(.small, .semibold).font!
     static let textButtonFont       = FontSpec(.small, .semibold).font!
 
-    static let mainViewHeight: CGFloat = 56
+    // MARK: - Views
 
-    let stepDescription: TeamCreationStepDescription
+    private var contentStack: CustomSpacingStackView!
 
     private var headlineLabel: UILabel!
     private var subtextLabel: UILabel!
+    private var mainView: UIView!
     fileprivate var errorLabel: UILabel!
 
-    fileprivate var secondaryViewsStackView: UIStackView!
-    fileprivate var errorViewContainer: UIView!
-    private var mainViewContainer: UIView!
-    private var topSpacer: UIView!
-    private var bottomSpacer: UIView!
-
-    /// mainView is a textField or CharacterInputField in team creation screens
-    private var mainView: UIView!
-    private var secondaryViews: [UIView] = []
+    fileprivate var secondaryViews: [UIView] = []
     fileprivate var secondaryErrorView: UIView?
+    fileprivate var secondaryViewsStackView: UIStackView!
 
     private var mainViewWidthRegular: NSLayoutConstraint!
     private var mainViewWidthCompact: NSLayoutConstraint!
-    private var topSpacerHeight: NSLayoutConstraint!
-    private var bottomSpacerHeight: NSLayoutConstraint!
-    private var spacerEqualHeight: NSLayoutConstraint!
+    private var contentCenter: NSLayoutConstraint!
+
+    // MARK: - Initialization
+
+    /**
+     * Creates the view controller to display the specified interface description.
+     * - parameter description: The description of the step interface.
+     */
 
     init(description: TeamCreationStepDescription) {
         self.stepDescription = description
@@ -69,9 +77,7 @@ final class AuthenticationStepController: AuthenticationStepViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override var prefersStatusBarHidden: Bool {
-        return false
-    }
+    // MARK: - View Lifecycle
 
     override var showLoadingView: Bool {
         didSet {
@@ -87,29 +93,34 @@ final class AuthenticationStepController: AuthenticationStepViewController {
         createConstraints()
     }
 
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(animated)
-        mainView.becomeFirstResponder()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        configureObservers()
+        mainView.becomeFirstResponderIfPossible()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(animated)
-        NotificationCenter.default.removeObserver(self)
-        mainView.resignFirstResponder()
+        removeObservers()
     }
 
     public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-        updateMainViewWidthConstraint()
+        updateConstraints(forRegularLayout: traitCollection.horizontalSizeClass == .regular)
         updateHeadlineLabelFont()
     }
 
-    // MARK: - View creation
+    // MARK: - View Creation
 
-    fileprivate func updateHeadlineLabelFont() {
-        headlineLabel.font = self.view.frame.size.width > 320 ? AuthenticationStepController.headlineFont : AuthenticationStepController.headlineSmallFont
+    /**
+     * Creates the main input view for the view controller. Override this method if you need a different
+     * main view than the one provided by the step description, or to customize its behavior.
+     * - returns: The main view to include in the stack.
+     */
+
+    /// Override this method to provide a different main view.
+    func createMainView() -> UIView {
+        return stepDescription.mainView.create()
     }
 
     private func createViews() {
@@ -127,30 +138,14 @@ final class AuthenticationStepController: AuthenticationStepViewController {
         subtextLabel.textColor = UIColor.Team.subtitleColor
         subtextLabel.numberOfLines = 0
         subtextLabel.lineBreakMode = .byWordWrapping
-        subtextLabel.translatesAutoresizingMaskIntoConstraints = false
 
-        mainViewContainer = UIView()
-        mainViewContainer.translatesAutoresizingMaskIntoConstraints = false
-
-        topSpacer = UIView()
-        bottomSpacer = UIView()
-
-        [topSpacer, bottomSpacer].forEach() { view in
-            view.translatesAutoresizingMaskIntoConstraints = false
-        }
-
-        mainView = stepDescription.mainView.create()
-        mainViewContainer.addSubview(mainView)
-
-        errorViewContainer = UIView()
-        errorViewContainer.translatesAutoresizingMaskIntoConstraints = false
+        mainView = createMainView()
 
         errorLabel = UILabel()
         errorLabel.textAlignment = .center
         errorLabel.font = AuthenticationStepController.errorFont
         errorLabel.textColor = UIColor.Team.errorMessageColor
         errorLabel.translatesAutoresizingMaskIntoConstraints = false
-        errorViewContainer.addSubview(errorLabel)
 
         if let secondaryView = stepDescription.secondaryView {
             secondaryViews = secondaryView.views.map { $0.create() }
@@ -161,149 +156,137 @@ final class AuthenticationStepController: AuthenticationStepViewController {
         secondaryViewsStackView.spacing = 24
         secondaryViewsStackView.translatesAutoresizingMaskIntoConstraints = false
 
-        [topSpacer,
-         bottomSpacer,
-         headlineLabel,
-         subtextLabel,
-         mainViewContainer,
-         errorViewContainer,
-         secondaryViewsStackView].compactMap {$0}.forEach {
-            self.view.addSubview($0)
-        }
+        let subviews = [headlineLabel, subtextLabel, mainView, errorLabel, secondaryViewsStackView].compactMap { $0 }
+        contentStack = CustomSpacingStackView(customSpacedArrangedSubviews: subviews)
+        contentStack.axis = .vertical
+        contentStack.distribution = .fill
+
+        view.addSubview(contentStack)
     }
 
-    fileprivate func updateMainViewWidthConstraint() {
-        guard UIDevice.current.userInterfaceIdiom == .pad else { return }
+    private func updateHeadlineLabelFont() {
+        headlineLabel.font = self.view.frame.size.width > 320 ? AuthenticationStepController.headlineFont : AuthenticationStepController.headlineSmallFont
+    }
 
-        switch self.traitCollection.horizontalSizeClass {
-        case .compact:
-            mainViewWidthRegular.isActive = false
-            mainViewWidthCompact.isActive = true
-        default:
+    /**
+     * Updates the constrains for display in regular or compact latout.
+     * - parameter isRegular: Whether the current size class is regular.
+     */
+
+    func updateConstraints(forRegularLayout isRegular: Bool) {
+        if isRegular {
             mainViewWidthCompact.isActive = false
             mainViewWidthRegular.isActive = true
+        } else {
+            mainViewWidthRegular.isActive = false
+            mainViewWidthCompact.isActive = true
         }
     }
 
     private func createConstraints() {
-        constrain(view, topSpacer, bottomSpacer) { view, topSpacer, bottomSpacer in
-            spacerEqualHeight = bottomSpacer.height == topSpacer.height
+        contentStack.translatesAutoresizingMaskIntoConstraints = false
 
-            topSpacerHeight = topSpacer.height >= 24
-            bottomSpacerHeight = bottomSpacer.height == 24
-
-            topSpacer.centerX == view.centerX
-            bottomSpacer.centerX == view.centerX
-            topSpacer.width == view.width
-            bottomSpacer.width == view.width
-        }
-
-        if UIDevice.current.userInterfaceIdiom == .pad {
-            topSpacerHeight.isActive = false
-            bottomSpacerHeight.isActive = false
-        } else {
-            spacerEqualHeight.isActive = false
-        }
-
-        constrain(view, secondaryViewsStackView, errorViewContainer, mainViewContainer, bottomSpacer) { view, secondaryViewsStackView, errorViewContainer, mainViewContainer, bottomSpacer in
-
-            secondaryViewsStackView.bottom == bottomSpacer.top
-            bottomSpacer.bottom == view.bottom
-
-            secondaryViewsStackView.leading >= view.leading
-            secondaryViewsStackView.trailing <= view.trailing
-            secondaryViewsStackView.height == 42 ~ 500.0
-            secondaryViewsStackView.height >= 13
-            secondaryViewsStackView.centerX == view.centerX
-
-            errorViewContainer.bottom == secondaryViewsStackView.top
-            errorViewContainer.leading == view.leading
-            errorViewContainer.trailing == view.trailing
-            errorViewContainer.height == 30
-
-            mainViewContainer.bottom == errorViewContainer.top
-
-            mainViewContainer.centerX == view.centerX
-
-            switch UIDevice.current.userInterfaceIdiom {
-            case .pad:
-                mainViewWidthRegular = mainViewContainer.width == 375
-                mainViewWidthCompact = mainViewContainer.width == view.width
-            default:
-                mainViewContainer.width == view.width
-            }
-
-        }
-
-        constrain(view, mainViewContainer, subtextLabel, headlineLabel, topSpacer) { view, inputViewsContainer, subtextLabel, headlineLabel, topSpacer in
-
-            topSpacer.top == view.top
-            headlineLabel.top == topSpacer.bottom
-
-            headlineLabel.bottom == subtextLabel.top - 24 ~ 750.0
-            headlineLabel.leading == view.leadingMargin
-            headlineLabel.trailing == view.trailingMargin
-
-            subtextLabel.top >= headlineLabel.bottom + 5
-            subtextLabel.leading == view.leadingMargin
-            subtextLabel.trailing == view.trailingMargin
-            subtextLabel.height >= 19
-
-            inputViewsContainer.top >= subtextLabel.bottom + 5
-            inputViewsContainer.top == subtextLabel.bottom + 80 ~ 800.0
-        }
-
-        constrain(mainViewContainer, mainView) { mainViewContainer, mainView in
-            mainView.height == AuthenticationStepController.mainViewHeight
-
-            mainView.top == mainViewContainer.top
-            mainView.leading == mainViewContainer.leading
-            mainView.trailing == mainViewContainer.trailing
-            mainView.bottom == mainViewContainer.bottom
-        }
-
-        constrain(errorViewContainer, errorLabel) { errorViewContainer, errorLabel in
-            errorLabel.centerY == errorViewContainer.centerY
-            errorLabel.leading == errorViewContainer.leadingMargin
-            errorLabel.trailing == errorViewContainer.trailingMargin
-            errorLabel.topMargin == errorViewContainer.topMargin
-            errorLabel.bottomMargin == errorViewContainer.bottomMargin
-            errorLabel.height >= 19
-        }
-
+        // Arrangement
         headlineLabel.setContentCompressionResistancePriority(UILayoutPriority.required, for: .vertical)
         subtextLabel.setContentCompressionResistancePriority(UILayoutPriority.required, for: .vertical)
         errorLabel.setContentCompressionResistancePriority(UILayoutPriority.required, for: .vertical)
+        mainView.setContentCompressionResistancePriority(UILayoutPriority.required, for: .vertical)
+        mainView.setContentHuggingPriority(.defaultLow, for: .horizontal)
 
-        updateMainViewWidthConstraint()
+        // Spacing
+        contentStack.wr_addCustomSpacing(16, after: headlineLabel)
+        contentStack.wr_addCustomSpacing(64, after: subtextLabel)
+        contentStack.wr_addCustomSpacing(8, after: mainView)
+        contentStack.wr_addCustomSpacing(16, after: errorLabel)
+
+        // Fixed Constraints
+        contentCenter = contentStack.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+
+        NSLayoutConstraint.activate([
+            // contentStack
+            contentStack.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            contentStack.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            contentStack.topAnchor.constraint(greaterThanOrEqualTo: safeTopAnchor),
+            contentCenter,
+
+            // height
+            mainView.heightAnchor.constraint(greaterThanOrEqualToConstant: AuthenticationStepController.mainViewHeight),
+            secondaryViewsStackView.heightAnchor.constraint(greaterThanOrEqualToConstant: 13),
+            errorLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: 19)
+        ])
+
+        // Adaptive Constraints
+        mainViewWidthRegular = mainView.widthAnchor.constraint(equalToConstant: 375)
+        mainViewWidthCompact = mainView.widthAnchor.constraint(equalTo: view.widthAnchor)
+
+        updateConstraints(forRegularLayout: traitCollection.horizontalSizeClass == .regular)
     }
 
+    // MARK: - Keyboard
+
+    private func configureObservers() {
+        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardPresentation), name: UIResponder.keyboardWillShowNotification, object: nil)
+    }
+
+    private func removeObservers() {
+        NotificationCenter.default.removeObserver(self)
+    }
+
+    @objc private func handleKeyboardPresentation(notification: Notification) {
+        updateOffsetForKeyboard(in: notification)
+    }
+
+    private func updateOffsetForKeyboard(in notification: Notification) {
+        let keyboardFrame = UIView.keyboardFrame(in: view, forKeyboardNotification: notification)
+        let minimumKeyboardSpacing: CGFloat = 24
+        let currentOffset = abs(contentCenter.constant)
+
+        // Calculate the height of the content under the keyboard
+        let contentRect = CGRect(x: contentStack.frame.origin.x,
+                                 y: contentStack.frame.origin.y + currentOffset - minimumKeyboardSpacing / 2,
+                                 width: contentStack.frame.width,
+                                 height: contentStack.frame.height + minimumKeyboardSpacing)
+
+        let offset = keyboardFrame.intersection(contentRect).height
+
+        // Adjust if we need more space
+        if offset > currentOffset {
+            contentCenter.constant = -offset
+        }
+    }
+
+}
+
+// MARK: - Event Handling
+
+extension AuthenticationStepController {
     func executeErrorFeedbackAction(_ feedbackAction: AuthenticationErrorFeedbackAction) {
         switch feedbackAction {
         case .clearInputFields:
             (mainView as? TextContainer)?.text = nil
+            mainView.becomeFirstResponderIfPossible()
         case .showGuidanceDot:
             break
         }
     }
 
     func valueSubmitted(_ value: Any) {
+        mainView.resignFirstResponder()
         authenticationCoordinator?.handleUserInput(value)
     }
 }
 
 // MARK: - Error handling
+
 extension AuthenticationStepController {
     func clearError() {
         errorLabel.text = nil
         showSecondaryView(for: nil)
-        self.errorViewContainer.setNeedsLayout()
     }
 
     func displayError(_ error: Error) {
         errorLabel.text = error.localizedDescription.uppercased()
         showSecondaryView(for: error)
-        self.errorViewContainer.setNeedsLayout()
     }
 
     func showSecondaryView(for error: Error?) {
