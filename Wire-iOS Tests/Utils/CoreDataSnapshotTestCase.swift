@@ -114,6 +114,13 @@ open class CoreDataSnapshotTestCase: ZMSnapshotTestCase {
         return conversation
     }
     
+    func createTeamGroupConversation() -> ZMConversation {
+        let conversation = createGroupConversation()
+        conversation.teamRemoteIdentifier = UUID.create()
+        conversation.userDefinedName = "Group conversation"
+        return conversation
+    }
+    
     func createUser(name: String) -> ZMUser {
         let user = ZMUser.insertNewObject(in: uiMOC)
         user.name = name

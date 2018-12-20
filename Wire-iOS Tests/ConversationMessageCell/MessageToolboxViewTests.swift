@@ -161,42 +161,36 @@ final class MessageToolboxViewTests: CoreDataSnapshotTestCase {
     // MARK: - Tap Gesture
 
     func testThatItOpensReceipts_NoLikers() {
-        teamTest {
-            // WHEN
-            message.conversation = createGroupConversation()
-            sut.configureForMessage(message, forceShowTimestamp: false, animated: false)
-
-            // THEN
-            XCTAssertEqual(sut.preferredDetailsDisplayMode(), .receipts)
-        }
+        // WHEN
+        message.conversation = createTeamGroupConversation()
+        sut.configureForMessage(message, forceShowTimestamp: false, animated: false)
+        
+        // THEN
+        XCTAssertEqual(sut.preferredDetailsDisplayMode(), .receipts)
     }
 
     func testThatItOpensReceipts_WithLikers_ShowingTimestamp() {
-        teamTest {
-            // GIVEN
-            message.conversation = createGroupConversation()
-            message.backingUsersReaction = [MessageReaction.like.unicodeValue: [selfUser]]
-
-            // WHEN
-            sut.configureForMessage(message, forceShowTimestamp: true, animated: false)
-
-            // THEN
-            XCTAssertEqual(sut.preferredDetailsDisplayMode(), .receipts)
-        }
+        // GIVEN
+        message.conversation = createTeamGroupConversation()
+        message.backingUsersReaction = [MessageReaction.like.unicodeValue: [selfUser]]
+        
+        // WHEN
+        sut.configureForMessage(message, forceShowTimestamp: true, animated: false)
+        
+        // THEN
+        XCTAssertEqual(sut.preferredDetailsDisplayMode(), .receipts)
     }
 
     func testThatItOpensLikesWhenTapped_ReceiptsEnabled() {
-        teamTest {
-            // GIVEN
-            message.conversation = createGroupConversation()
-            message.backingUsersReaction = [MessageReaction.like.unicodeValue: [selfUser]]
-
-            // WHEN
-            sut.configureForMessage(message, forceShowTimestamp: false, animated: false)
-
-            // THEN
-            XCTAssertEqual(sut.preferredDetailsDisplayMode(), .reactions)
-        }
+        // GIVEN
+        message.conversation = createTeamGroupConversation()
+        message.backingUsersReaction = [MessageReaction.like.unicodeValue: [selfUser]]
+        
+        // WHEN
+        sut.configureForMessage(message, forceShowTimestamp: false, animated: false)
+        
+        // THEN
+        XCTAssertEqual(sut.preferredDetailsDisplayMode(), .reactions)
     }
 
     func testThatItOpensLikesWhenTapped_ReceiptsDisabled() {
