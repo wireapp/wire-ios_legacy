@@ -44,9 +44,28 @@ enum Anchor {
 }
 
 extension UIView {
+
+    @discardableResult func centerInSuperview(activate: Bool = true) -> [NSLayoutConstraint] {
+        guard let superview = superview else {
+            fatal("Not in view hierarchy: self.superview = nil")
+        }
+
+        let constraints = [
+            superview.centerXAnchor.constraint(equalTo: centerXAnchor),
+            superview.centerYAnchor.constraint(equalTo: centerYAnchor)
+        ]
+
+        if activate {
+            NSLayoutConstraint.activate(constraints)
+        }
+
+        return constraints
+    }
+
     @discardableResult func fitInSuperview(safely: Bool = false,
                                            with insets: EdgeInsets = .zero,
-                                           exclude excludedAnchor: Anchor? = nil) -> [NSLayoutConstraint] {
+                                           exclude excludedAnchor: Anchor? = nil,
+                                           activate: Bool = true) -> [NSLayoutConstraint] {
         guard let superview = self.superview else {
             fatal("Not in view hierarchy: self.superview = nil")
         }
@@ -77,7 +96,33 @@ extension UIView {
                 constant: -insets.trailing))
         }
 
-        NSLayoutConstraint.activate(constraints)
+        if activate {
+            NSLayoutConstraint.activate(constraints)
+        }
+        
         return constraints
     }
+
+    func setDimensions(length: CGFloat) {
+        setDimensions(width: length, height: length)
+    }
+
+    func setDimensions(width: CGFloat, height: CGFloat) {
+        let constraints = [
+            widthAnchor.constraint(equalToConstant: width),
+            heightAnchor.constraint(equalToConstant: height)
+        ]
+
+        NSLayoutConstraint.activate(constraints)
+    }
+
+    @discardableResult func topAndBottomEdgesToSuperviewEdges() -> [NSLayoutConstraint] {
+        guard let superview = superview else { return [] }
+
+        return [
+            superview.topAnchor.constraint(equalTo: topAnchor),
+            superview.bottomAnchor.constraint(equalTo: bottomAnchor)
+        ]
+    }
+
 }
