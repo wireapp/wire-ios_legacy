@@ -26,7 +26,7 @@ ORIGINAL_TRANSLATIONS="Wire-iOS/Resources"
 MODIFIED_TRANSLATIONS="Configuration/Translations"
 
 if [ -e "${MODIFIED_TRANSLATIONS}" ]; then
-    ./Scripts/compare-translations.py "${ORIGINAL_TRANSLATIONS}" "${MODIFIED_TRANSLATIONS}"
+    ./Scripts/compare-translations.py "${ORIGINAL_TRANSLATIONS}" "${MODIFIED_TRANSLATIONS}" --copy-to "${ORIGINAL_TRANSLATIONS}" --ignore-missing
 else
     echo "No need to modify any translations, skipping..."
 fi
