@@ -28,14 +28,18 @@ import Cartography
      */
     init(customSpacedArrangedSubviews subviews : [UIView]) {
         var subviewsWithSpacers : [UIView] = []
-        
-        subviews.forEach { view in
-            subviewsWithSpacers.append(view)
-            subviewsWithSpacers.append(SpacingView(0))
+
+        if #available(iOS 11, *) {
+            stackView = UIStackView(arrangedSubviews: subviews)
+        } else {
+            subviews.forEach { view in
+                subviewsWithSpacers.append(view)
+                subviewsWithSpacers.append(SpacingView(0))
+            }
+
+            stackView = UIStackView(arrangedSubviews: subviewsWithSpacers)
         }
-        
-        stackView = UIStackView(arrangedSubviews: subviewsWithSpacers)
-        
+
         super.init(frame: .zero)
         
         addSubview(stackView)
@@ -58,6 +62,11 @@ import Cartography
      - custom spacing can't be smaller than 2x the minimum spacing
      */
     func wr_addCustomSpacing(_ customSpacing: CGFloat, after view: UIView) {
+        if #available(iOS 11, *) {
+            stackView.setCustomSpacing(customSpacing, after: view)
+            return
+        }
+
         guard let spacerIndex = stackView.subviews.index(of: view)?.advanced(by: 1),
             let spacer = stackView.subviews[spacerIndex] as? SpacingView else { return }
         
@@ -69,9 +78,8 @@ import Cartography
     }
     
     private func createConstraints() {
-        constrain(self, stackView) { view, stackView in
-            stackView.edges == view.edges
-        }
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.fitInSuperview()
     }
     
     var alignment: UIStackView.Alignment {
