@@ -24,7 +24,7 @@
 
 #import "UIView+Zeta.h"
 #import "Constants.h"
-#import "KeyboardFrameObserver+iOS.h"
+#import "KeyboardFrameObserver.h"
 #import "Wire-Swift.h"
 
 

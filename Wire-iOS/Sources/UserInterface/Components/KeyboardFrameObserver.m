@@ -19,17 +19,24 @@
 #import "KeyboardFrameObserver.h"
 #import "UIView+Zeta.h"
 
-
-
 @interface KeyboardFrameObserver ()
 
 @property (nonatomic) NSDictionary *currentKeyboardInfo;
 @property (nonatomic) BOOL keyboardWasShown;
+
 @end
 
-
-
 @implementation KeyboardFrameObserver
+
++ (instancetype)sharedObserver
+{
+    static KeyboardFrameObserver *sharedObserver = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sharedObserver = [[KeyboardFrameObserver alloc] init];
+    });
+    return sharedObserver;
+}
 
 - (instancetype)init
 {
