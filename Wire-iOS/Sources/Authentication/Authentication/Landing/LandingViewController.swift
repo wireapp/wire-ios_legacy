@@ -156,7 +156,6 @@ final class LandingViewController: AuthenticationStepViewController {
         }
 
         self.view.backgroundColor = UIColor.Team.background
-        navigationBar.pushItem(navigationItem, animated: false)
         navigationBar.tintColor = .black
         view.addSubview(navigationBar)
 
@@ -278,12 +277,12 @@ final class LandingViewController: AuthenticationStepViewController {
 
     private func updateBarButtonItem() {
         if SessionManager.shared?.firstAuthenticatedAccount == nil {
-            navigationBar.topItem?.rightBarButtonItem = nil
+            navigationItem.rightBarButtonItem = nil
         } else {
             let cancelItem = UIBarButtonItem(icon: .cancel, target: self, action: #selector(cancelButtonTapped))
             cancelItem.accessibilityIdentifier = "CancelButton"
             cancelItem.accessibilityLabel = "general.cancel".localized
-            navigationBar.topItem?.rightBarButtonItem = cancelItem
+            navigationItem.rightBarButtonItem = cancelItem
         }
     }
     

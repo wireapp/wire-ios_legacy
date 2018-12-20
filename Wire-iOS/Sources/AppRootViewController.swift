@@ -218,10 +218,10 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
                 break
             }
 
-            let navigationController = NavigationController()
-            navigationController.backButtonEnabled = false
-            navigationController.logoEnabled = false
-            navigationController.isNavigationBarHidden = true
+            let navigationController = UINavigationController()
+            navigationController.navigationBar.setBackgroundImage(UIImage(), for: .default)
+            navigationController.navigationBar.shadowImage = UIImage()
+            navigationController.navigationBar.tintColor = .black
 
             authenticationCoordinator = AuthenticationCoordinator(presenter: navigationController,
                                                                   unauthenticatedSession: UnauthenticatedSession.sharedSession!,
@@ -230,10 +230,7 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
             authenticationCoordinator!.delegate = appStateController
             authenticationCoordinator!.startAuthentication(with: error, numberOfAccounts: SessionManager.numberOfAccounts)
 
-            let keyboardViewController = KeyboardAvoidingViewController(viewController: navigationController)
-            keyboardViewController.view.backgroundColor = UIColor.Team.background
-
-            viewController = keyboardViewController
+            viewController = navigationController
 
         case .authenticated(completedRegistration: let completedRegistration):
             UIColor.setAccentOverride(.undefined)

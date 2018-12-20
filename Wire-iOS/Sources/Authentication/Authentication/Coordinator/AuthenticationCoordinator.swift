@@ -30,7 +30,7 @@ class AuthenticationCoordinator: NSObject, AuthenticationEventResponderChainDele
     let log = ZMSLog(tag: "Authentication")
 
     /// The navigation controller that presents the authentication interface.
-    weak var presenter: NavigationController?
+    weak var presenter: UINavigationController?
 
     /// The object receiving updates from the authentication state and providing state.
     weak var delegate: AuthenticationCoordinatorDelegate?
@@ -70,13 +70,11 @@ class AuthenticationCoordinator: NSObject, AuthenticationEventResponderChainDele
     private var postLoginObservers: [Any] = []
     private var initialSyncObserver: Any?
 
-    private(set) lazy var popTransition = PopTransition()
-    private(set) lazy var pushTransition = PushTransition()
     private var pendingAlert: AuthenticationCoordinatorAlert?
 
     // MARK: - Initialization
 
-    init(presenter: NavigationController, unauthenticatedSession: UnauthenticatedSession, sessionManager: ObservableSessionManager) {
+    init(presenter: UINavigationController, unauthenticatedSession: UnauthenticatedSession, sessionManager: ObservableSessionManager) {
         self.presenter = presenter
         self.sessionManager = sessionManager
         self.unauthenticatedSession = unauthenticatedSession
@@ -118,12 +116,10 @@ extension AuthenticationCoordinator: AuthenticationStateControllerDelegate {
 
         switch mode {
         case .normal:
-            presenter.backButtonEnabled = newState.allowsUnwind
             presenter.pushViewController(stepViewController, animated: true)
 
         case .reset:
-            presenter.backButtonEnabled = false
-            presenter.setViewControllers([stepViewController], animated: true)
+            presenter.viewControllers = [stepViewController]
 
         case .replace:
             var viewControllers = presenter.viewControllers

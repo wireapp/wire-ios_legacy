@@ -403,6 +403,7 @@
 		5EFD914C21C931EE00080599 /* PhoneNumberTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFD914B21C931EE00080599 /* PhoneNumberTextField.swift */; };
 		5EFD914E21C9325B00080599 /* AuthenticationCredentialsCreationInputHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFD914D21C9325B00080599 /* AuthenticationCredentialsCreationInputHandler.swift */; };
 		5EFD915021CA688700080599 /* AuthenticationIncrementalUserCreationInputHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFD914F21CA688700080599 /* AuthenticationIncrementalUserCreationInputHandler.swift */; };
+		5EFD915921CBCB5300080599 /* UIResponder+VoiceOver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFD915821CBCB5300080599 /* UIResponder+VoiceOver.swift */; };
 		5EFE9BFF21246483007932A6 /* RegistrationFinalErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFE9BFE21246483007932A6 /* RegistrationFinalErrorHandler.swift */; };
 		5EFE9C01212468E8007932A6 /* RegistrationSuccessEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFE9C00212468E8007932A6 /* RegistrationSuccessEventHandler.swift */; };
 		5EFE9C19212C1D6E007932A6 /* RegistrationActivationCodeSentEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFE9C18212C1D6E007932A6 /* RegistrationActivationCodeSentEventHandler.swift */; };
@@ -1920,6 +1921,7 @@
 		5EFD914B21C931EE00080599 /* PhoneNumberTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneNumberTextField.swift; sourceTree = "<group>"; };
 		5EFD914D21C9325B00080599 /* AuthenticationCredentialsCreationInputHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationCredentialsCreationInputHandler.swift; sourceTree = "<group>"; };
 		5EFD914F21CA688700080599 /* AuthenticationIncrementalUserCreationInputHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationIncrementalUserCreationInputHandler.swift; sourceTree = "<group>"; };
+		5EFD915821CBCB5300080599 /* UIResponder+VoiceOver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIResponder+VoiceOver.swift"; sourceTree = "<group>"; };
 		5EFE9BFE21246483007932A6 /* RegistrationFinalErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationFinalErrorHandler.swift; sourceTree = "<group>"; };
 		5EFE9C00212468E8007932A6 /* RegistrationSuccessEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationSuccessEventHandler.swift; sourceTree = "<group>"; };
 		5EFE9C18212C1D6E007932A6 /* RegistrationActivationCodeSentEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationActivationCodeSentEventHandler.swift; sourceTree = "<group>"; };
@@ -5442,6 +5444,7 @@
 				5E4BC1CB218CA94D00A8682E /* ZMConversationMessage+Date.swift */,
 				5EFCB3BE21AAD46C00E892D9 /* Message+Pasteboard.swift */,
 				5E769C5321AD89A900785EB7 /* UIViewController+Dismiss.swift */,
+				5EFD915821CBCB5300080599 /* UIResponder+VoiceOver.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -7800,6 +7803,7 @@
 				D5CEBFC3202CA3BA00AFBD3A /* AddParticipantsViewModel.swift in Sources */,
 				D586C51F20405CC200BBA492 /* GroupDetailsFooterView.swift in Sources */,
 				160D6923212C814200096EAD /* CallController.swift in Sources */,
+				5EFD915921CBCB5300080599 /* UIResponder+VoiceOver.swift in Sources */,
 				871BC2531D34F8F800DF0793 /* MediaThumbnail.m in Sources */,
 				871BC0281D34F5D200DF0793 /* EmoticonSubstitutionConfiguration.m in Sources */,
 				871BC2951D34F8F800DF0793 /* UIViewController+Errors.m in Sources */,
