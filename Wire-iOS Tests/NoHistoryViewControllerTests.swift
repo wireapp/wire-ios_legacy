@@ -40,6 +40,4 @@ class NoHistoryViewControllerTests: ZMSnapshotTestCase {
         // WHEN && THEN
         self.verifyInIPhoneSize(view: sut.view)
     }
-
-    ///TODO: test for spinner
 }
