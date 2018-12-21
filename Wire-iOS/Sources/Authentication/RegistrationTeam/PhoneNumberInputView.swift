@@ -20,6 +20,8 @@ import Foundation
 
 /// An object that receives notification about the phone number input view.
 protocol PhoneNumberInputViewDelegate: class {
+    func phoneNumberInputView(_ inputView: PhoneNumberInputView, didPickPhoneNumber phoneNumber: String)
+
     func phoneNumberInputViewDidRequestCountryPicker(_ inputView: PhoneNumberInputView)
 }
 
@@ -101,8 +103,8 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate {
         textField.accessibilityLabel = "registration.enter_phone_number.placeholder".localized
         textField.accessibilityIdentifier = "PhoneNumberField"
         textField.tintColor = UIColor.Team.activeButtonColor
+        textField.confirmButton.addTarget(self, action: #selector(habdleConfirmButtonTap), for: .touchUpInside)
         textField.delegate = self
-
         inputStack.addArrangedSubview(textField)
 
         selectCountry(.default)
@@ -171,7 +173,8 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate {
     }
 
     @objc private func habdleConfirmButtonTap() {
-
+        let phoneNumber = country.e164PrefixString + (textField.text ?? "")
+        delegate?.phoneNumberInputView(self, didPickPhoneNumber: phoneNumber)
     }
 
     /// Do not paste if we need to set the text manually.

@@ -44,6 +44,10 @@ class PhoneNumberAuthenticationStepController: AuthenticationStepController, Pho
         present(navigationController, animated: true)
     }
 
+    func phoneNumberInputView(_ inputView: PhoneNumberInputView, didPickPhoneNumber phoneNumber: String) {
+        valueSubmitted(phoneNumber)
+    }
+
     func countryCodeTableViewController(_ viewController: UIViewController!, didSelect country: Country!) {
         phoneInputView.selectCountry(country)
         viewController.dismiss(animated: true)

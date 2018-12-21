@@ -46,9 +46,7 @@ extension RegistrationTextField {
         guard let (country, phoneNumberWithoutCountryCode) = phoneNumber.shouldInsertAsPhoneNumber(presetCountry: presetCountry) else { return nil }
 
         text = phoneNumberWithoutCountryCode
-        if let country = country {
-            countryCode = country.e164.uintValue
-        }
+        countryCode = country.e164.uintValue
 
         return (country, phoneNumberWithoutCountryCode)
     }
