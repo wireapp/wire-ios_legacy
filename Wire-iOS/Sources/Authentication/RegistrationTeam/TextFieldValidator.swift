@@ -60,6 +60,9 @@ class TextFieldValidator {
             } else if stringToValidate.count < 2 {
                 return .tooShort(kind: kind)
             }
+        case .phoneNumber:
+            break
+
         case .unknown:
             break
         }
@@ -94,6 +97,8 @@ extension TextFieldValidator.ValidationError: LocalizedError {
                 return "password.guidance.tooshort".localized
             case .unknown:
                 return "unknown.guidance.tooshort".localized
+            case .phoneNumber:
+                return "too short"
             }
         case .tooLong(kind: let kind):
             switch kind {
@@ -105,6 +110,8 @@ extension TextFieldValidator.ValidationError: LocalizedError {
                 return "password.guidance.toolong".localized
             case .unknown:
                 return "unknown.guidance.toolong".localized
+            case .phoneNumber:
+                return "too long"
             }
         case .invalidEmail:
             return "email.guidance.invalid".localized

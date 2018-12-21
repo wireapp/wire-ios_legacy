@@ -218,8 +218,13 @@ class AccessoryTextField: UITextField, TextContainer {
     }
 
     @objc func textFieldDidChange(textField: UITextField) {
+        updateText(textField.text ?? "")
+    }
+
+    func updateText(_ text: String) {
+        self.text = text
+
         /// enable button if we have some text entered
-        let text = textField.text ?? ""
         confirmButton.isEnabled = !text.isEmpty
     }
 

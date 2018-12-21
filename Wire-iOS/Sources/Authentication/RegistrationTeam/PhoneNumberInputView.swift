@@ -18,21 +18,34 @@
 
 import Foundation
 
+/// An object that receives notification about the phone number input view.
 protocol PhoneNumberInputViewDelegate: class {
     func phoneNumberInputViewDidRequestCountryPicker(_ inputView: PhoneNumberInputView)
 }
 
-class PhoneNumberInputView: UIView {
+/**
+ * A view providing an input field for phone numbers and a.
+ */
 
+class PhoneNumberInputView: UIView, UITextFieldDelegate {
+
+    /// The object receiving notifications about events from this view.
     weak var delegate: PhoneNumberInputViewDelegate?
 
-    let countryPickerStack = UIStackView()
-    let countryPickerButton = UIButton()
-    let countryPickerIndicator = UIImageView()
+    /// The currently selected country.
+    private(set) var country = Country.default
 
-    let inputStack = UIStackView()
-    let countryCodeInputView = IconButton()
-    let textField = AccessoryTextField(kind: .phoneNumber)
+    // MARK: - Views
+
+    private let countryPickerStack = UIStackView()
+    private let countryPickerButton = UIButton()
+    private let countryPickerIndicator = UIImageView()
+
+    private let inputStack = UIStackView()
+    private let countryCodeInputView = IconButton()
+    private let textField = AccessoryTextField(kind: .phoneNumber)
+
+    // MARK: - Initialization
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -44,13 +57,6 @@ class PhoneNumberInputView: UIView {
         super.init(coder: aDecoder)
         configureSubviews()
         configureConstraints()
-    }
-
-    override var tintColor: UIColor! {
-        didSet {
-            countryPickerButton.setTitleColor(tintColor, for: .normal)
-            reloadIcon()
-        }
     }
 
     private func configureSubviews() {
@@ -94,19 +100,12 @@ class PhoneNumberInputView: UIView {
         textField.placeholder = "registration.enter_phone_number.placeholder".localized(uppercased: true)
         textField.accessibilityLabel = "registration.enter_phone_number.placeholder".localized
         textField.accessibilityIdentifier = "PhoneNumberField"
+        textField.tintColor = UIColor.Team.activeButtonColor
+        textField.delegate = self
+
         inputStack.addArrangedSubview(textField)
-        // textField.delegate = self
 
         selectCountry(.default)
-    }
-
-    func selectCountry(_ country: Country) {
-        countryPickerButton.setTitle(country.displayName, for: .normal)
-        countryPickerButton.accessibilityValue = country.displayName
-        countryPickerButton.accessibilityLabel = "registration.phone_country".localized
-        countryPickerButton.accessibilityHint = "registration.phone_country.hint".localized
-        countryCodeInputView.setTitle(country.e164PrefixString, for: .normal)
-        countryCodeInputView.accessibilityValue = country.e164PrefixString
     }
 
     private func reloadIcon() {
@@ -134,15 +133,94 @@ class PhoneNumberInputView: UIView {
             // dimentions
             textField.heightAnchor.constraint(equalToConstant: 56),
             countryCodeInputView.widthAnchor.constraint(equalToConstant: 60)
-            ])
+        ])
+    }
+
+    // MARK: - View Lifecycle
+
+    override var tintColor: UIColor! {
+        didSet {
+            countryPickerButton.setTitleColor(tintColor, for: .normal)
+            reloadIcon()
+        }
     }
 
     override func becomeFirstResponder() -> Bool {
         return textField.becomeFirstResponder()
     }
 
+    /**
+     * Selects the specified country as the beginning of the phone number.
+     * - parameter country: The country of the phone number,
+     */
+
+    func selectCountry(_ country: Country) {
+        self.country = country
+        countryPickerButton.setTitle(country.displayName, for: .normal)
+        countryPickerButton.accessibilityValue = country.displayName
+        countryPickerButton.accessibilityLabel = "registration.phone_country".localized
+        countryPickerButton.accessibilityHint = "registration.phone_country.hint".localized
+        countryCodeInputView.setTitle(country.e164PrefixString, for: .normal)
+        countryCodeInputView.accessibilityValue = country.e164PrefixString
+    }
+
+    // MARK: - Events
+
     @objc private func handleCountryButtonTap() {
         delegate?.phoneNumberInputViewDidRequestCountryPicker(self)
+    }
+
+    @objc private func habdleConfirmButtonTap() {
+
+    }
+
+    /// Do not paste if we need to set the text manually.
+    override open func paste(_ sender: Any?) {
+        var shouldPaste = true
+
+        if let pastedString = UIPasteboard.general.string {
+            shouldPaste = shouldInsert(phoneNumber: pastedString)
+        }
+
+        if shouldPaste {
+            super.paste(sender)
+        }
+    }
+
+    /// Only insert text if we have a valid phone number.
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        guard let newString = (textField.text as NSString?)?.replacingCharacters(in: range, with: string) else { return false }
+
+        // If the textField is empty and a replacementString with a +, it is likely to insert from autoFill.
+        if textField.text?.count == 0 && newString.contains("+") {
+            return shouldInsert(phoneNumber: string)
+        }
+
+        let number = PhoneNumber(countryCode: country.e164.uintValue, numberWithoutCode: newString)
+
+        switch number.validate() {
+        case .containsInvalidCharacters, .tooLong:
+            return false
+        default:
+            return true
+        }
+    }
+
+    /**
+     * Checks whether the inserted text contains a phone number. If it does, we overtake the paste / text change mechanism and
+     * update the country and text field manually.
+     * - parameter phoneNumber: The text that is being inserted.
+     * - returns: Whether the text should be inserted by the text field or if we need to insert it manually.
+     */
+
+    private func shouldInsert(phoneNumber: String) -> Bool {
+        guard let (country, phoneNumberWithoutCountryCode) = phoneNumber.shouldInsertAsPhoneNumber(presetCountry: country) else {
+            return true
+        }
+
+        selectCountry(country)
+        textField.updateText(phoneNumberWithoutCountryCode)
+        return false
     }
 
 }
