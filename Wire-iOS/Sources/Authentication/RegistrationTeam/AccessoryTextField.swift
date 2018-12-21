@@ -34,6 +34,7 @@ class AccessoryTextField: UITextField, TextContainer {
         case email
         case name(isTeam: Bool)
         case password(isNew: Bool)
+        case phoneNumber
         case unknown
     }
 
@@ -150,6 +151,10 @@ class AccessoryTextField: UITextField, TextContainer {
             autocapitalizationType = .words
             accessibilityIdentifier = "NameField"
             textContentType = isTeam ? .organizationName : .name
+        case .phoneNumber:
+            textContentType = .telephoneNumber
+            keyboardType = .numberPad
+            accessibilityIdentifier = "PhoneNumberField"
         case .unknown:
             keyboardType = .asciiCapable
             textContentType = nil

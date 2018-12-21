@@ -58,16 +58,14 @@ class AuthenticationInterfaceBuilder {
             return loginViewController
 
         case .createCredentials(_, let credentialsFlowType):
-            let stepDescription: TeamCreationStepDescription
-
             switch credentialsFlowType {
             case .email:
-                stepDescription = SetPersonalEmailStepDescription()
+                let emailStep = SetPersonalEmailStepDescription()
+                return createViewController(for: emailStep)
             case .phone:
-                stepDescription = SetPhoneStepDescription()
+                let phoneStep = SetPhoneStepDescription()
+                return createViewController(for: phoneStep, viewControllerType: PhoneNumberAuthenticationStepController.self)
             }
-
-            return createViewController(for: stepDescription)
 
         case .clientManagement(let clients, let credentials):
             let emailCredentials = credentials.map { ZMEmailCredentials(email: $0.email!, password: $0.password!) }
@@ -169,8 +167,8 @@ class AuthenticationInterfaceBuilder {
     }
 
     /// Creates the view controller for team description.
-    private func createViewController(for description: TeamCreationStepDescription) -> AuthenticationStepController {
-        let controller = AuthenticationStepController(description: description)
+    private func createViewController(for description: TeamCreationStepDescription, viewControllerType: AuthenticationStepController.Type = AuthenticationStepController.self) -> AuthenticationStepController {
+        let controller = viewControllerType.init(description: description)
 
         let mainView = description.mainView
         mainView.valueSubmitted = controller.valueSubmitted

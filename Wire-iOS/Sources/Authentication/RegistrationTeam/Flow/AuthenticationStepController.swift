@@ -68,7 +68,7 @@ class AuthenticationStepController: AuthenticationStepViewController {
      * - parameter description: The description of the step interface.
      */
 
-    init(description: TeamCreationStepDescription) {
+    required init(description: TeamCreationStepDescription) {
         self.stepDescription = description
         super.init(nibName: nil, bundle: nil)
     }
@@ -195,7 +195,7 @@ class AuthenticationStepController: AuthenticationStepViewController {
 
         // Spacing
         contentStack.wr_addCustomSpacing(16, after: headlineLabel)
-        contentStack.wr_addCustomSpacing(64, after: subtextLabel)
+        contentStack.wr_addCustomSpacing(44, after: subtextLabel)
         contentStack.wr_addCustomSpacing(8, after: mainView)
         contentStack.wr_addCustomSpacing(16, after: errorLabel)
 

@@ -58,7 +58,7 @@ final class SetPhoneStepDescription: TeamCreationStepDescription {
 
     init() {
         backButton = BackButtonDescription()
-        mainView = TextFieldDescription(placeholder: "registration.email.textfield.placeholder".localized, actionDescription: "registration.email.textfield.accessibility".localized, kind: .email)
+        mainView = EmptyViewDescription()
         headline = "team.email.headline".localized
         subtext = "registration.phone.subheadline".localized
         secondaryView = SetPhoneStepSecondaryView()
