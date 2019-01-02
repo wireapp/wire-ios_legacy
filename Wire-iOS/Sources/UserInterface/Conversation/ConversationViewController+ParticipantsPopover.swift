@@ -40,4 +40,19 @@ extension ConversationViewController: UIPopoverPresentationControllerDelegate {
         rootViewController.present(controller, animated: true)
     }
 
+    ///TODO: dismiss keyboard since no input field in popover
+    @objc
+    func didTap(onUserAvatar user: UserType?, view: UIView?, frame: CGRect) {
+        if user == nil || view == nil {
+            return
+        }
+
+        let profileViewController = ProfileViewController(user: user as! UserType & AccentColorProvider, conversation: conversation)
+        profileViewController.preferredContentSize = CGSize.IPadPopover.preferredContentSize
+
+        profileViewController.delegate = self
+        createAndPresentParticipantsPopoverController(with: frame, from: view!, contentViewController: profileViewController.wrapInNavigationController())
+    }
+
 }
+
