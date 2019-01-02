@@ -18,7 +18,6 @@
 
 
 #import "DeveloperMenuState.h"
-#import <WireExtensionComponents/WireExtensionComponents-Swift.h>
 
 @implementation DeveloperMenuState
 

@@ -20,7 +20,7 @@
 #import "ContactsEmptyResultView.h"
 @import PureLayout;
 #import "Button.h"
-@import WireExtensionComponents;
+#import "Wire-Swift.h"
 
 @interface ContactsEmptyResultView ()
 @property (nonatomic) UIView *containerView;

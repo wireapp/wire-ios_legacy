@@ -91,8 +91,6 @@
 		16719A101D99647D00AA6B63 /* GiphySearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16719A0F1D99647D00AA6B63 /* GiphySearchViewController.swift */; };
 		16719A1D1D9ABB7C00AA6B63 /* GiphyConfirmationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16719A1C1D9ABB7C00AA6B63 /* GiphyConfirmationViewController.swift */; };
 		1671D6D1200CDC380022D289 /* InviteTeamMemberCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1671D6D0200CDC380022D289 /* InviteTeamMemberCell.swift */; };
-		1677FD331BBC19A400491481 /* ColorScheme.h in Headers */ = {isa = PBXBuildFile; fileRef = 1677FD311BBC19A400491481 /* ColorScheme.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		1677FD341BBC19A400491481 /* ColorScheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 1677FD321BBC19A400491481 /* ColorScheme.m */; };
 		167961A7203DED9100B72ACC /* WireTesting.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 167961A6203DED9100B72ACC /* WireTesting.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		167961A9203F26E600B72ACC /* SectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 167961A8203F26E600B72ACC /* SectionHeader.swift */; };
 		167961AF20445FB400B72ACC /* ProfileTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 167961AE20445FB400B72ACC /* ProfileTitleView.swift */; };
@@ -1387,6 +1385,8 @@
 		F15650E521DD13C100210504 /* TextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EE9DCA91B5F9A6D00E347DF /* TextView.m */; };
 		F15650E621DD14B300210504 /* TransformLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EBF4A3221BE71930021CFFC /* TransformLabel.swift */; };
 		F15650E721DD14B600210504 /* String+Transform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EBF4A3021BE6E3D0021CFFC /* String+Transform.swift */; };
+		F15650EA21DD1A0800210504 /* ColorScheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 1677FD321BBC19A400491481 /* ColorScheme.m */; };
+		F15650EB21DD1A0C00210504 /* ColorScheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = F174AAAE218A0B1A00AFCC4D /* ColorScheme.swift */; };
 		F15E9BFD1E4878AC00EA207F /* UINavigationController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15E9BFC1E4878AC00EA207F /* UINavigationController+Additions.swift */; };
 		F16426FE1FCC5A2C00D2ABFC /* TeamCreationStepDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16426FD1FCC5A2C00D2ABFC /* TeamCreationStepDescription.swift */; };
 		F16427001FCC5B3C00D2ABFC /* SetTeamNameStepDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16426FF1FCC5B3C00D2ABFC /* SetTeamNameStepDescription.swift */; };
@@ -1395,7 +1395,6 @@
 		F16427061FCC5BE400D2ABFC /* SetFullNameStepDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16427051FCC5BE400D2ABFC /* SetFullNameStepDescription.swift */; };
 		F16427081FCC5BF800D2ABFC /* SetPasswordStepDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16427071FCC5BF800D2ABFC /* SetPasswordStepDescription.swift */; };
 		F16E8EA8214A910F005ED9E2 /* ConversationInputBarViewController+Mentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16E8EA7214A910F005ED9E2 /* ConversationInputBarViewController+Mentions.swift */; };
-		F174AAAF218A0B1B00AFCC4D /* ColorScheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = F174AAAE218A0B1A00AFCC4D /* ColorScheme.swift */; };
 		F174AAB1218B62D200AFCC4D /* UIColor+AccentColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F174AAB0218B62D200AFCC4D /* UIColor+AccentColor.swift */; };
 		F17B0A9D219489DC005ECAD0 /* NetworkCondition+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F17B0A9C219489DB005ECAD0 /* NetworkCondition+Helper.swift */; };
 		F187D6C820162A4300A2DA8F /* ConversationCell+Sender.swift in Sources */ = {isa = PBXBuildFile; fileRef = F187D6C720162A4300A2DA8F /* ConversationCell+Sender.swift */; };
@@ -3631,9 +3630,6 @@
 				5E52376320E7ECDF00649241 /* Animations */,
 				160FD05321085F3900C517B5 /* ImageCache.swift */,
 				87F18BC71E02E7BF00C69D9B /* Reusable.swift */,
-				1677FD311BBC19A400491481 /* ColorScheme.h */,
-				1677FD321BBC19A400491481 /* ColorScheme.m */,
-				F174AAAE218A0B1A00AFCC4D /* ColorScheme.swift */,
 				F174AAB0218B62D200AFCC4D /* UIColor+AccentColor.swift */,
 				F16426F51FCC0FE200D2ABFC /* UIColor+Hex.swift */,
 				87AAE4161E422E2300E1D13A /* FontScheme.swift */,
@@ -5437,6 +5433,9 @@
 				5E4BC1CB218CA94D00A8682E /* ZMConversationMessage+Date.swift */,
 				5EFCB3BE21AAD46C00E892D9 /* Message+Pasteboard.swift */,
 				5E769C5321AD89A900785EB7 /* UIViewController+Dismiss.swift */,
+				1677FD311BBC19A400491481 /* ColorScheme.h */,
+				1677FD321BBC19A400491481 /* ColorScheme.m */,
+				F174AAAE218A0B1A00AFCC4D /* ColorScheme.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -6833,7 +6832,6 @@
 				1E5E0D021B6B8EDB003B0CAC /* UIColor+Mixing.h in Headers */,
 				1E5E0D041B6B8EDB003B0CAC /* UIControl+Wire.h in Headers */,
 				87B7DAEB1E697C11005F5140 /* AccentColorProvider.h in Headers */,
-				1677FD331BBC19A400491481 /* ColorScheme.h in Headers */,
 				8786071D1D33E3FF00971A19 /* KeyValueObserver.h in Headers */,
 				8786072F1D33E3FF00971A19 /* metamacros.h in Headers */,
 				878607301D33E3FF00971A19 /* weakify.h in Headers */,
@@ -7360,7 +7358,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				5E52376920E7F12B00649241 /* EasingAnimation.swift in Sources */,
-				F174AAAF218A0B1B00AFCC4D /* ColorScheme.swift in Sources */,
 				87F18BC81E02E7BF00C69D9B /* Reusable.swift in Sources */,
 				87AAE4171E422E2300E1D13A /* FontScheme.swift in Sources */,
 				5423EF6D1E9B85C8007091DE /* DeveloperMenuState.m in Sources */,
@@ -7381,7 +7378,6 @@
 				1E5E0D051B6B8EDB003B0CAC /* UIControl+Wire.m in Sources */,
 				876CC8991E966C5C00F6BABC /* IteratorProtocol+Histogram.swift in Sources */,
 				5E672C942179D41100522E61 /* UserType+ZMUser.swift in Sources */,
-				1677FD341BBC19A400491481 /* ColorScheme.m in Sources */,
 				EFE8062B1FDFF24C006A0EE7 /* NSDate+Format.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -7580,6 +7576,7 @@
 				871BC28A1D34F8F800DF0793 /* UIImagePickerController+GetImage.m in Sources */,
 				87E3C5081FA76B7C008D1FC3 /* AnalyticsProviderFactory.swift in Sources */,
 				16460A42206412410096B616 /* UIColor+AudioPlayer.swift in Sources */,
+				F15650EB21DD1A0C00210504 /* ColorScheme.swift in Sources */,
 				5EA73D8220D900A10001D106 /* GroupDetailsRenameCell.swift in Sources */,
 				BFCF31D71DA3A9350039B3DC /* SettingsCellDescriptorFactory+Options.swift in Sources */,
 				BFF8076420BC072A0063E5D4 /* CallHapticsGenerator.swift in Sources */,
@@ -7752,6 +7749,7 @@
 				5E678061204E8BEB002F63FB /* CallQualityPresentationTransition.swift in Sources */,
 				D5168F282008ED0700F8222A /* KeyboardBlockObserver.swift in Sources */,
 				EF7E96EE214BB41800475C63 /* ContactsViewController+ContactsDataSourceDelegate.swift in Sources */,
+				F15650EA21DD1A0800210504 /* ColorScheme.m in Sources */,
 				BF0BDF6D1DA6794E003C61DE /* ConversationInputBarViewController+Ephemeral.swift in Sources */,
 				F12CDADF1E43868200CEFCEB /* ChangePhoneViewController.swift in Sources */,
 				871BC2931D34F8F800DF0793 /* UIView+WR_Snapshot.m in Sources */,

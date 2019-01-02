@@ -21,7 +21,7 @@
 
 #import "SketchColorCollectionViewCell.h"
 @import PureLayout;
-@import WireExtensionComponents;
+#import "Wire-Swift.h"
 
 static NSString* ZMLogTag ZM_UNUSED = @"UI";
 

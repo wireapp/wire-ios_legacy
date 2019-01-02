@@ -189,6 +189,7 @@
 #import "ProgressSpinner.h"
 #import "CABasicAnimation+Rotation.h"
 #import "DeveloperMenuState.h"
+#import "ColorScheme.h"
 
 // Audio player
 #import "AudioTrack.h"
