@@ -315,14 +315,14 @@
 
 - (IBAction)openOnePasswordExtension:(id)sender
 {
-    @weakify(self);
+    ZM_WEAK(self);
     
     [[OnePasswordExtension sharedExtension] findLoginForURLString:NSURL.wr_websiteURL.absoluteString
                                                 forViewController:self
                                                            sender:self.passwordField
                                                        completion:^(NSDictionary *loginDict, NSError *error)
      {
-         @strongify(self);
+         ZM_STRONG(self);
          
          if (loginDict) {
              self.emailField.text = loginDict[AppExtensionUsernameKey];

@@ -19,6 +19,7 @@
 
 #import "FullscreenImageViewController+PullToDismiss.h"
 #import "FullscreenImageViewController+internal.h"
+@import WireUtilities;
 
 @interface DynamicsProxy : NSObject <UIDynamicItem>
 @property (nonatomic) CGRect bounds;
@@ -109,9 +110,9 @@
                                                         offsetFromCenter:offset
                                                         attachedToAnchor:anchor];
     self.attachmentBehavior.damping = 1;
-    @weakify(self);
+    ZM_WEAK(self);
     self.attachmentBehavior.action = ^() {
-        @strongify(self);
+        ZM_STRONG(self);
         self.imageView.center = CGPointMake(self.imageView.center.x,
                                             proxy.center.y);
         self.imageView.transform = CGAffineTransformConcat(proxy.transform, self.imageViewStartingTransform);
@@ -155,7 +156,7 @@
 
 - (void)dismissImageFlickingWithVelocity:(CGPoint)velocity
 {
-    @weakify(self);
+    ZM_WEAK(self);
     // Proxy object is used because the UIDynamics messing up the zoom level transform on imageView
     DynamicsProxy *proxy = [DynamicsProxy new];
     proxy.center = self.imageView.center;
@@ -169,7 +170,7 @@
     push.magnitude = MAX(self.minimumDismissMagnitude, fabs(velocity.y) / 6.0f);
 
     push.action = ^{
-        @strongify(self);
+        ZM_STRONG(self);
         self.imageView.center = CGPointMake(self.imageView.center.x,
                                             proxy.center.y);
 

@@ -203,9 +203,9 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 - (void)createOutgoingConnectionViewController
 {
     self.outgoingConnectionViewController = [[OutgoingConnectionViewController alloc] init];
-    @weakify(self);
+    ZM_WEAK(self);
     self.outgoingConnectionViewController.buttonCallback = ^(OutgoingConnectionBottomBarAction action) {
-        @strongify(self);
+        ZM_STRONG(self);
         [ZMUserSession.sharedSession enqueueChanges:^{
             switch (action) {
                 case OutgoingConnectionBottomBarActionCancel:
@@ -497,11 +497,11 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 {
     ZMConversation __block *newConversation = nil;
 
-    @weakify(self);
+    ZM_WEAK(self);
     [[ZMUserSession sharedSession] enqueueChanges:^{
         newConversation = [self.conversation addParticipantsOrCreateConversation:participants];
     } completionHandler:^{
-        @strongify(self);
+        ZM_STRONG(self);
         [self.zClientViewController selectConversation:newConversation focusOnView:YES animated:YES];
     }];
 }
@@ -820,11 +820,11 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     dispatch_block_t conversationCreation = ^{
         __block  ZMConversation *newConversation = nil;
         
-        @weakify(self);
+        ZM_WEAK(self);
         [ZMUserSession.sharedSession enqueueChanges:^{
             newConversation = [ZMConversation insertGroupConversationIntoUserSession:ZMUserSession.sharedSession withParticipants:users.allObjects name:name inTeam:ZMUser.selfUser.team];
         } completionHandler:^{
-            @strongify(self);
+            ZM_STRONG(self);
             [self.zClientViewController selectConversation:newConversation focusOnView:YES animated:YES];
         }];
     };

@@ -482,9 +482,9 @@
 {
     self.selectedConversation = conversation;
     
-    @weakify(self);
+    ZM_WEAK(self);
     [self dismissPeoplePickerWithCompletionBlock:^{
-        @strongify(self);
+        ZM_STRONG(self);
         [self.listContentController selectConversation:self.selectedConversation scrollToMessage:message focusOnView:focus animated:animated completion:completion];
     }];
 }
@@ -681,12 +681,12 @@
 
 - (void)archivedListViewController:(ArchivedListViewController *)controller didSelectConversation:(ZMConversation *)conversation
 {
-    @weakify(self)
+    ZM_WEAK(self);
     [ZMUserSession.sharedSession enqueueChanges:^{
         conversation.isArchived = NO;
     } completionHandler:^{
         [self setState:ConversationListStateConversationList animated:YES completion:^{
-            @strongify(self)
+            ZM_STRONG(self);
             [self.listContentController selectConversation:conversation scrollToMessage:nil focusOnView:YES animated:YES];
         }];
     }];

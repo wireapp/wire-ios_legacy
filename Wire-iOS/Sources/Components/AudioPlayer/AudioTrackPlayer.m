@@ -241,9 +241,9 @@ static NSString* EmptyStringIfNil(NSString *string) {
         return NO;
     }
     
-    @weakify(self);
+    ZM_WEAK(self);
     [self loadTrack:nextAudioTrack playlist:self.audioPlaylist sourceMessage:self.sourceMessage completionHandler:^(BOOL loaded, NSError *error) {
-        @strongify(self);
+        ZM_STRONG(self);
         if (loaded) {
             [self play];
         }
@@ -267,9 +267,9 @@ static NSString* EmptyStringIfNil(NSString *string) {
         return NO;
     }
     
-    @weakify(self);
+    ZM_WEAK(self);
     [self loadTrack:previousAudioTrack playlist:self.audioPlaylist sourceMessage:self.sourceMessage completionHandler:^(BOOL loaded, NSError *error) {
-        @strongify(self);
+        ZM_STRONG(self);
         if (loaded) {
             [self play];
         }

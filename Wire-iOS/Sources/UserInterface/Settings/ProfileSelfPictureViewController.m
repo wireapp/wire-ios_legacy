@@ -58,9 +58,9 @@
     if (self) {
         _imagePickerConfirmationController = [[ImagePickerConfirmationController alloc] init];
         
-        @weakify(self);
+        ZM_WEAK(self);
         _imagePickerConfirmationController.imagePickedBlock = ^(NSData *imageData) {
-            @strongify(self);
+            ZM_STRONG(self);
             [self dismissViewControllerAnimated:YES completion:nil];
             [self setSelfImageToData:imageData];
         };

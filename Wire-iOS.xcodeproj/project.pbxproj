@@ -597,9 +597,6 @@
 		8784B62A1D89448700AB71BD /* UIAlertController+NewSelfClients.m in Sources */ = {isa = PBXBuildFile; fileRef = 8784B6281D89448700AB71BD /* UIAlertController+NewSelfClients.m */; };
 		8784D4551E817D13007A6867 /* ConversationListTopBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8784D4541E817D13007A6867 /* ConversationListTopBar.swift */; };
 		8784D4571E81832F007A6867 /* ConversationListViewController+TopBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8784D4561E81832F007A6867 /* ConversationListViewController+TopBar.swift */; };
-		8786071B1D33E3FF00971A19 /* Geometry.h in Headers */ = {isa = PBXBuildFile; fileRef = 878607021D33E3FF00971A19 /* Geometry.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		8786072F1D33E3FF00971A19 /* metamacros.h in Headers */ = {isa = PBXBuildFile; fileRef = 878607171D33E3FF00971A19 /* metamacros.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		878607301D33E3FF00971A19 /* weakify.h in Headers */ = {isa = PBXBuildFile; fileRef = 878607181D33E3FF00971A19 /* weakify.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8787BDD91BF374420096B1B5 /* SettingsPropertyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8787BDD61BF374420096B1B5 /* SettingsPropertyTests.swift */; };
 		8787D1841EA74F5B00254D02 /* ZMUser+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8787D1831EA74F5B00254D02 /* ZMUser+Additions.swift */; };
 		878A720C1E55D7D3008072B9 /* TextSearchResultFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 878A720B1E55D7D3008072B9 /* TextSearchResultFooter.swift */; };
@@ -2263,8 +2260,6 @@
 		878607051D33E3FF00971A19 /* KeyValueObserver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeyValueObserver.m; sourceTree = "<group>"; };
 		878607081D33E3FF00971A19 /* NetworkStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkStatus.h; sourceTree = "<group>"; };
 		878607091D33E3FF00971A19 /* NetworkStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkStatus.m; sourceTree = "<group>"; };
-		878607171D33E3FF00971A19 /* metamacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = metamacros.h; sourceTree = "<group>"; };
-		878607181D33E3FF00971A19 /* weakify.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = weakify.h; sourceTree = "<group>"; };
 		8787BDD61BF374420096B1B5 /* SettingsPropertyTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsPropertyTests.swift; sourceTree = "<group>"; };
 		8787D1831EA74F5B00254D02 /* ZMUser+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ZMUser+Additions.swift"; sourceTree = "<group>"; };
 		878A720B1E55D7D3008072B9 /* TextSearchResultFooter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextSearchResultFooter.swift; sourceTree = "<group>"; };
@@ -3621,8 +3616,6 @@
 			isa = PBXGroup;
 			children = (
 				5E52376320E7ECDF00649241 /* Animations */,
-				878607021D33E3FF00971A19 /* Geometry.h */,
-				878607161D33E3FF00971A19 /* weakify */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -4874,15 +4867,6 @@
 			path = Services;
 			sourceTree = "<group>";
 		};
-		878607161D33E3FF00971A19 /* weakify */ = {
-			isa = PBXGroup;
-			children = (
-				878607171D33E3FF00971A19 /* metamacros.h */,
-				878607181D33E3FF00971A19 /* weakify.h */,
-			);
-			path = weakify;
-			sourceTree = "<group>";
-		};
 		8787BDD31BF374420096B1B5 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
@@ -5426,6 +5410,7 @@
 				5E769C5321AD89A900785EB7 /* UIViewController+Dismiss.swift */,
 				CE8E4FC11DF17C240009F437 /* TextTransform.h */,
 				87B7DAEA1E697C11005F5140 /* AccentColorProvider.h */,
+				878607021D33E3FF00971A19 /* Geometry.h */,
 				1677FD311BBC19A400491481 /* ColorScheme.h */,
 				1677FD321BBC19A400491481 /* ColorScheme.m */,
 				F174AAAE218A0B1A00AFCC4D /* ColorScheme.swift */,
@@ -6819,9 +6804,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				1EE85C551B5F96FC008E084B /* WireExtensionComponents.h in Headers */,
-				8786072F1D33E3FF00971A19 /* metamacros.h in Headers */,
-				878607301D33E3FF00971A19 /* weakify.h in Headers */,
-				8786071B1D33E3FF00971A19 /* Geometry.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

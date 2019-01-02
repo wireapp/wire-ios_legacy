@@ -800,17 +800,17 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     confirmImageViewController.image = image;
     confirmImageViewController.previewTitle = [self.conversation.displayName uppercasedWithCurrentLocale];
     
-    @weakify(self);
+    ZM_WEAK(self);
     
     confirmImageViewController.onConfirm = ^(UIImage *editedImage){
-        @strongify(self);
+        ZM_STRONG(self);
         [self dismissViewControllerAnimated:NO completion:nil];
         id<MediaAsset> finalImage = editedImage == nil ? image : editedImage;
         [self postImage:finalImage];
     };
     
     confirmImageViewController.onCancel = ^() {
-        @strongify(self);
+        ZM_STRONG(self);
         [self dismissViewControllerAnimated:NO completion:nil];
     };
     
