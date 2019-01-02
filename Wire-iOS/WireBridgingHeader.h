@@ -191,6 +191,7 @@
 #import "DeveloperMenuState.h"
 #import "ColorScheme.h"
 #import "UIImage+ImageUtilities.h"
+#import "KeyValueObserver.h"
 
 // Audio player
 #import "AudioTrack.h"

@@ -24,6 +24,7 @@
 #import "AudioTrackView.h"
 #import "IconButton.h"
 #import "AudioTrack.h"
+#import "KeyValueObserver.h"
 
 
 @implementation AudioTrackCell

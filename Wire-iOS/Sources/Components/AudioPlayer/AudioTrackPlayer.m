@@ -24,6 +24,7 @@
 #import "UIImage+ImageUtilities.h"
 @import WireExtensionComponents;
 @import WireCommonComponents;
+#import "KeyValueObserver.h"
 
 static NSString* EmptyStringIfNil(NSString *string) {
     return string == nil ? @"" : string;
