@@ -23,11 +23,7 @@
 @class PopoverContentControllerWrappingController;
 
 
-@interface ConversationViewController (ParticipantsPopover) <UIPopoverPresentationControllerDelegate>
-
-- (void)createAndPresentParticipantsPopoverControllerWithRect:(CGRect)rect
-                                                     fromView:(UIView *)view
-                                        contentViewController:(UIViewController *)controller;
+@interface ConversationViewController (ParticipantsPopover)
 
 - (void)hideAndDestroyParticipantsPopoverController;
 
