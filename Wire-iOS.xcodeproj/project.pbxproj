@@ -356,10 +356,6 @@
 		5EC2C58921353FA100C6CE35 /* AuthenticationCoordinator+Teams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC2C58821353FA100C6CE35 /* AuthenticationCoordinator+Teams.swift */; };
 		5EC7C87A219038F6004662AC /* ImageResourceThumbnailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC7C879219038F6004662AC /* ImageResourceThumbnailView.swift */; };
 		5EC7C87C21907D94004662AC /* ConversationReplyCellDescriptionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC7C87B21907D94004662AC /* ConversationReplyCellDescriptionTests.swift */; };
-		5ED26CD320E7D08E00EB9ED4 /* VerticalColumnPositioningContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED26CD120E7CC5900EB9ED4 /* VerticalColumnPositioningContext.swift */; };
-		5ED26CD420E7D08E00EB9ED4 /* VerticalColumnCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E2B13E320E658EC002F27E2 /* VerticalColumnCollectionViewLayout.swift */; };
-		5ED26CD520E7D08E00EB9ED4 /* VerticalColumnPositioning.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED26CCD20E7A53A00EB9ED4 /* VerticalColumnPositioning.swift */; };
-		5ED26CD620E7D08E00EB9ED4 /* VerticalColumnCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E2B13EB20E68443002F27E2 /* VerticalColumnCollectionViewController.swift */; };
 		5EDD2538213FD5E200C0E254 /* SLComposeServiceViewController+Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EDD2536213FD5C300C0E254 /* SLComposeServiceViewController+Preview.swift */; };
 		5EDD253A213FFD9700C0E254 /* Licenses.generated.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5EDD2539213FFD9700C0E254 /* Licenses.generated.plist */; };
 		5EDD253C2140044D00C0E254 /* SettingsLicenseItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EDD253B2140044D00C0E254 /* SettingsLicenseItem.swift */; };
@@ -1393,6 +1389,10 @@
 		F15650C421DD0AB200210504 /* UIApplication+ShareExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F18998B52111F76500A7FC95 /* UIApplication+ShareExtension.swift */; };
 		F15650C521DD0C2800210504 /* Hockey.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B02231209B6E4E00DF25D8 /* Hockey.swift */; };
 		F15650C621DD0C5500210504 /* CGFloat+Hairline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8784D4581E818AA4007A6867 /* CGFloat+Hairline.swift */; };
+		F15650D421DD0FAB00210504 /* VerticalColumnPositioning.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED26CCD20E7A53A00EB9ED4 /* VerticalColumnPositioning.swift */; };
+		F15650D521DD0FC200210504 /* VerticalColumnPositioningContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED26CD120E7CC5900EB9ED4 /* VerticalColumnPositioningContext.swift */; };
+		F15650D621DD0FC600210504 /* VerticalColumnCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E2B13E320E658EC002F27E2 /* VerticalColumnCollectionViewLayout.swift */; };
+		F15650D721DD0FC800210504 /* VerticalColumnCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E2B13EB20E68443002F27E2 /* VerticalColumnCollectionViewController.swift */; };
 		F15E9BFD1E4878AC00EA207F /* UINavigationController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15E9BFC1E4878AC00EA207F /* UINavigationController+Additions.swift */; };
 		F16426FE1FCC5A2C00D2ABFC /* TeamCreationStepDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16426FD1FCC5A2C00D2ABFC /* TeamCreationStepDescription.swift */; };
 		F16427001FCC5B3C00D2ABFC /* SetTeamNameStepDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16426FF1FCC5B3C00D2ABFC /* SetTeamNameStepDescription.swift */; };
@@ -3699,7 +3699,6 @@
 			isa = PBXGroup;
 			children = (
 				1EE85C541B5F96FC008E084B /* WireExtensionComponents.h */,
-				5E2B13E520E67206002F27E2 /* CollectionLayouts */,
 				1EE9DCA51B5F9A6D00E347DF /* Views */,
 				1E5E0CEE1B6B8EDB003B0CAC /* Utilities */,
 				1EE85C521B5F96FC008E084B /* Supporting Files */,
@@ -4430,6 +4429,7 @@
 		871BC1271D34F8F800DF0793 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				5E2B13E520E67206002F27E2 /* CollectionLayouts */,
 				8FC8524E199245760008B66B /* NetworkStatus */,
 				876E0C8A1EC5ED69007EF34E /* CameraPicker.swift */,
 				871BC1281D34F8F800DF0793 /* Controllers */,
@@ -7388,12 +7388,10 @@
 				1E5E0D071B6B8EDB003B0CAC /* UIImage+ImageUtilities.m in Sources */,
 				160FD05421085F3900C517B5 /* ImageCache.swift in Sources */,
 				87831A971E69B5E600DDF3C3 /* ThreeDotsLoadingView.swift in Sources */,
-				5ED26CD620E7D08E00EB9ED4 /* VerticalColumnCollectionViewController.swift in Sources */,
 				F174AAB1218B62D200AFCC4D /* UIColor+AccentColor.swift in Sources */,
 				5EBF4A3621BE91170021CFFC /* TransformLabel.swift in Sources */,
 				164A55D120EFBD4500AE62A6 /* UIImage+Decoding.swift in Sources */,
 				8795A5A91D34CF7A0024101B /* NSLayoutConstraint+Helpers.m in Sources */,
-				5ED26CD520E7D08E00EB9ED4 /* VerticalColumnPositioning.swift in Sources */,
 				870533FF1DD6162400A7F822 /* OverflowSeparatorView.swift in Sources */,
 				5EEFC1A520C01C64007E8A79 /* ContinuousMaskLayer.swift in Sources */,
 				8763768A1E8413D900B2CCF0 /* RawRepresentable+AllValues.swift in Sources */,
@@ -7407,12 +7405,10 @@
 				5E52376B20E7F99500649241 /* EasingFunction.swift in Sources */,
 				1E5E0D051B6B8EDB003B0CAC /* UIControl+Wire.m in Sources */,
 				D5168F44200F6F2300F8222A /* CABasicAnimation+Rotation.m in Sources */,
-				5ED26CD320E7D08E00EB9ED4 /* VerticalColumnPositioningContext.swift in Sources */,
 				876CC8991E966C5C00F6BABC /* IteratorProtocol+Histogram.swift in Sources */,
 				5E672C942179D41100522E61 /* UserType+ZMUser.swift in Sources */,
 				5E672C8F2178D85200522E61 /* AvatarImageView.swift in Sources */,
 				1677FD341BBC19A400491481 /* ColorScheme.m in Sources */,
-				5ED26CD420E7D08E00EB9ED4 /* VerticalColumnCollectionViewLayout.swift in Sources */,
 				EFE8062B1FDFF24C006A0EE7 /* NSDate+Format.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -7521,6 +7517,7 @@
 				D503538C207B5DB900CE34A5 /* UIAlertController+RestorePassword.swift in Sources */,
 				871BC35E1D34F94200DF0793 /* NetworkConditionHelper.m in Sources */,
 				879489E51E54500A0071B2C1 /* TextSearchResultsView.swift in Sources */,
+				F15650D621DD0FC600210504 /* VerticalColumnCollectionViewLayout.swift in Sources */,
 				5E4BC1CA218C9F6600A8682E /* ConversationQuoteCell.swift in Sources */,
 				54FF9E281E813BA500323D2E /* DebugAlert.swift in Sources */,
 				F93D58451D7DA865003AE972 /* ZMConversation+Analytics.swift in Sources */,
@@ -7550,6 +7547,7 @@
 				F16427041FCC5BB600D2ABFC /* VerifyEmailStepDescription.swift in Sources */,
 				87F18BBE1E015BBB00C69D9B /* TransferView.swift in Sources */,
 				164C29AD1ED446660026562A /* UserSelection.swift in Sources */,
+				F15650D721DD0FC800210504 /* VerticalColumnCollectionViewController.swift in Sources */,
 				8736F1841E4B67F0001CBA62 /* AppLockView.swift in Sources */,
 				D594343A203DCB8F006AA0C0 /* ConversationOptionsViewModel.swift in Sources */,
 				EEFF3E7A21B67990000834A6 /* ConversationCreateOptionsCell.swift in Sources */,
@@ -7783,6 +7781,7 @@
 				BFE731E020A58EFD0088BA22 /* VideoState+Helper.swift in Sources */,
 				871BC3581D34F94200DF0793 /* AudioTrackPlayer.m in Sources */,
 				5E35F7482180A26900D3F4FE /* ConversationTextMessageCell.swift in Sources */,
+				F15650D421DD0FAB00210504 /* VerticalColumnPositioning.swift in Sources */,
 				5EA73D7F20D900A10001D106 /* GroupDetailsGuestOptionsCell.swift in Sources */,
 				8FC85427199245770008B66B /* ZetaKeyValueValidation.m in Sources */,
 				871BC26F1D34F8F800DF0793 /* ResizingTextView.m in Sources */,
@@ -7805,6 +7804,7 @@
 				BF3A3DD41EAA09C6005477F8 /* UIAlertController+DraftDeletion.swift in Sources */,
 				160D6929212EFE5300096EAD /* ButtonWithLargerHitArea.m in Sources */,
 				8FC8549D199245770008B66B /* NotificationWindowRootViewController.m in Sources */,
+				F15650D521DD0FC200210504 /* VerticalColumnPositioningContext.swift in Sources */,
 				871BC3531D34F94200DF0793 /* AudioErrorView.m in Sources */,
 				87DCF4E61D34EA4500BB420F /* ShareItemProvider.m in Sources */,
 				BFE4186A209B6E3700503C7C /* UserImageViewContainer.swift in Sources */,
