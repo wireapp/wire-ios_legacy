@@ -29,8 +29,6 @@ FOUNDATION_EXPORT const unsigned char WireExtensionComponentsVersionString[];
 
 // Views
 #import <WireExtensionComponents/TextView.h>
-#import <WireExtensionComponents/ProgressSpinner.h>
-#import <WireExtensionComponents/UIViewController+LoadingView.h>
 #import <WireExtensionComponents/DeveloperMenuState.h>
 
 // Utils
@@ -45,5 +43,4 @@ FOUNDATION_EXPORT const unsigned char WireExtensionComponentsVersionString[];
 #import <WireExtensionComponents/NSLayoutConstraint+Helpers.h>
 #import <WireExtensionComponents/TextTransform.h>
 #import <WireExtensionComponents/AccentColorProvider.h>
-#import <WireExtensionComponents/CABasicAnimation+Rotation.h>
 #import <WireExtensionComponents/AccentColorProvider.h>

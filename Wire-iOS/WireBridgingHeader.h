@@ -184,6 +184,9 @@
 #import "MessageType.h"
 #import "NSString+EmoticonSubstitution.h"
 #import "ZMConversationMessageWindow+Formatting.h"
+#import "UIViewController+LoadingView.h"
+#import "ProgressSpinner.h"
+#import "CABasicAnimation+Rotation.h"
 
 // Audio player
 #import "AudioTrack.h"

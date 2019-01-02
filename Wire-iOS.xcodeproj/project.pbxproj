@@ -174,10 +174,6 @@
 		1E80A3651B0DF6120049A809 /* MediaPlaybackManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E80A3641B0DF6120049A809 /* MediaPlaybackManager.m */; };
 		1E8772231B0C8B0F005BDDC6 /* EmoticonSubstitutionConfigurationMocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E8772221B0C8B0F005BDDC6 /* EmoticonSubstitutionConfigurationMocks.m */; };
 		1E8772281B0C8CAB005BDDC6 /* emo-test-03.json in Resources */ = {isa = PBXBuildFile; fileRef = 1E8772271B0C8CAB005BDDC6 /* emo-test-03.json */; };
-		1E8C253A1BBC279B00FC373F /* ProgressSpinner.h in Headers */ = {isa = PBXBuildFile; fileRef = 1E8C25361BBC279B00FC373F /* ProgressSpinner.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		1E8C253B1BBC279B00FC373F /* ProgressSpinner.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E8C25371BBC279B00FC373F /* ProgressSpinner.m */; };
-		1E8C253C1BBC279B00FC373F /* UIViewController+LoadingView.h in Headers */ = {isa = PBXBuildFile; fileRef = 1E8C25381BBC279B00FC373F /* UIViewController+LoadingView.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		1E8C253D1BBC279B00FC373F /* UIViewController+LoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E8C25391BBC279B00FC373F /* UIViewController+LoadingView.m */; };
 		1E98C81B1BD1719500C7A7A2 /* ContactsDataSourceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E98C81A1BD1719500C7A7A2 /* ContactsDataSourceTests.m */; };
 		1EB9BF411BC7F796002EF0F3 /* WireExtensionComponents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1EE85C501B5F96FB008E084B /* WireExtensionComponents.framework */; };
 		1EE85C551B5F96FC008E084B /* WireExtensionComponents.h in Headers */ = {isa = PBXBuildFile; fileRef = 1EE85C541B5F96FC008E084B /* WireExtensionComponents.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -414,7 +410,6 @@
 		7CF651861FDA837D00D6B9F4 /* AvailabilityTitleViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CFDC2801FD9A98100285047 /* AvailabilityTitleViewTests.swift */; };
 		848DE12B1A83D20000E154B1 /* emoticons.min.json in Resources */ = {isa = PBXBuildFile; fileRef = 848DE12A1A83D20000E154B1 /* emoticons.min.json */; };
 		8701221C20F7923E001E6342 /* Analytics+LinearGroupCreation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8701221B20F7923D001E6342 /* Analytics+LinearGroupCreation.swift */; };
-		870533FF1DD6162400A7F822 /* OverflowSeparatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870533FE1DD6162400A7F822 /* OverflowSeparatorView.swift */; };
 		87071CC01CB68BDA0039388A /* ProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87071CBF1CB68BDA0039388A /* ProgressView.swift */; };
 		870815861BF4E76A00D321BC /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870815851BF4E76A00D321BC /* SettingsCell.swift */; };
 		870815881BF4EAD100D321BC /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870815871BF4EAD100D321BC /* SettingsTableViewController.swift */; };
@@ -655,7 +650,6 @@
 		87A4DA9D1D34FEF400105D44 /* audio-notifications in Resources */ = {isa = PBXBuildFile; fileRef = 87A4DA9C1D34FEF400105D44 /* audio-notifications */; };
 		87A540A81E09450B009028C5 /* CollectionViewLeftAlignedFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A540A71E09450B009028C5 /* CollectionViewLeftAlignedFlowLayout.swift */; };
 		87A540AA1E094BA3009028C5 /* CollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A540A91E094BA3009028C5 /* CollectionCell.swift */; };
-		87A6761A206D426900596625 /* CheckAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A67617206D2D2200596625 /* CheckAnimationView.swift */; };
 		87A6BD0F1F0D2A58006A3232 /* UIApplication+StatusBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 87A6BD0E1F0D2A58006A3232 /* UIApplication+StatusBar.m */; };
 		87A752171E002F6C004317DB /* ConversationRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A752161E002F6C004317DB /* ConversationRootViewController.swift */; };
 		87A773CF1DD0B48400ACAA73 /* ObfuscationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A773CE1DD0B48400ACAA73 /* ObfuscationView.swift */; };
@@ -979,8 +973,6 @@
 		D5168F282008ED0700F8222A /* KeyboardBlockObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5168F272008ED0700F8222A /* KeyboardBlockObserver.swift */; };
 		D5168F2A2008F3EF00F8222A /* UIEdgeInsets+Adjusting.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5168F292008F3EF00F8222A /* UIEdgeInsets+Adjusting.swift */; };
 		D5168F2C200CBBF300F8222A /* Analytics+TeamInvites.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5168F2B200CBBF300F8222A /* Analytics+TeamInvites.swift */; };
-		D5168F43200F6F2300F8222A /* CABasicAnimation+Rotation.h in Headers */ = {isa = PBXBuildFile; fileRef = D5168F41200F6F2300F8222A /* CABasicAnimation+Rotation.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D5168F44200F6F2300F8222A /* CABasicAnimation+Rotation.m in Sources */ = {isa = PBXBuildFile; fileRef = D5168F42200F6F2300F8222A /* CABasicAnimation+Rotation.m */; };
 		D5168F4D2010B61D00F8222A /* URL+Wire.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5168F4C2010B61D00F8222A /* URL+Wire.swift */; };
 		D5168F502010F1FF00F8222A /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876113E61DD1DE89007F5969 /* ShareViewController.swift */; };
 		D5168F512010F20300F8222A /* ShareViewController+Views.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872C2B7E1DD9C22B0086A574 /* ShareViewController+Views.swift */; };
@@ -998,7 +990,6 @@
 		D5189477205045A100C095C1 /* LinkHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5189476205045A100C095C1 /* LinkHeaderCell.swift */; };
 		D51894792050490E00C095C1 /* ActionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51894782050490E00C095C1 /* ActionCell.swift */; };
 		D518947B20504C6A00C095C1 /* LoadingIndicatorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D518947A20504C6A00C095C1 /* LoadingIndicatorCell.swift */; };
-		D5197FC1207BAD2100F4622B /* SpinnerSubtitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D524BE62207BA15300542A4E /* SpinnerSubtitleView.swift */; };
 		D524BE5F207B99B800542A4E /* UIViewController+LoadingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D524BE5E207B99B800542A4E /* UIViewController+LoadingTests.swift */; };
 		D525426820934629001C04C1 /* IconLabelButtonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D525426720934629001C04C1 /* IconLabelButtonTests.swift */; };
 		D525426B2093637D001C04C1 /* IconButton+Factory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D525426920936378001C04C1 /* IconButton+Factory.swift */; };
@@ -1393,6 +1384,12 @@
 		F15650DC21DD10A100210504 /* AvatarImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E672C8E2178D85200522E61 /* AvatarImageView.swift */; };
 		F15650DD21DD10DD00210504 /* ThreeDotsLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87831A961E69B5E600DDF3C3 /* ThreeDotsLoadingView.swift */; };
 		F15650DE21DD10DD00210504 /* ImageMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 879D6AFB1E69E20900DC07A1 /* ImageMessageView.swift */; };
+		F15650DF21DD119D00210504 /* CheckAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A67617206D2D2200596625 /* CheckAnimationView.swift */; };
+		F15650E021DD119D00210504 /* OverflowSeparatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870533FE1DD6162400A7F822 /* OverflowSeparatorView.swift */; };
+		F15650E121DD11CA00210504 /* SpinnerSubtitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D524BE62207BA15300542A4E /* SpinnerSubtitleView.swift */; };
+		F15650E221DD11D100210504 /* ProgressSpinner.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E8C25371BBC279B00FC373F /* ProgressSpinner.m */; };
+		F15650E321DD11D700210504 /* CABasicAnimation+Rotation.m in Sources */ = {isa = PBXBuildFile; fileRef = D5168F42200F6F2300F8222A /* CABasicAnimation+Rotation.m */; };
+		F15650E421DD11DD00210504 /* UIViewController+LoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E8C25391BBC279B00FC373F /* UIViewController+LoadingView.m */; };
 		F15E9BFD1E4878AC00EA207F /* UINavigationController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15E9BFC1E4878AC00EA207F /* UINavigationController+Additions.swift */; };
 		F16426FE1FCC5A2C00D2ABFC /* TeamCreationStepDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16426FD1FCC5A2C00D2ABFC /* TeamCreationStepDescription.swift */; };
 		F16427001FCC5B3C00D2ABFC /* SetTeamNameStepDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16426FF1FCC5B3C00D2ABFC /* SetTeamNameStepDescription.swift */; };
@@ -3717,13 +3714,10 @@
 		1EE9DCA51B5F9A6D00E347DF /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				1E8C25351BBC279B00FC373F /* Loading */,
 				1EE9DCA81B5F9A6D00E347DF /* TextView.h */,
 				EFC57A0B21BAAE440008DBE6 /* TextView+Internal.h */,
 				1EE9DCA91B5F9A6D00E347DF /* TextView.m */,
 				EFC57A0A21BAAE440008DBE6 /* TextView+Placeholder.swift */,
-				870533FE1DD6162400A7F822 /* OverflowSeparatorView.swift */,
-				87A67617206D2D2200596625 /* CheckAnimationView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -4424,6 +4418,8 @@
 		871BC1271D34F8F800DF0793 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				870533FE1DD6162400A7F822 /* OverflowSeparatorView.swift */,
+				87A67617206D2D2200596625 /* CheckAnimationView.swift */,
 				87831A961E69B5E600DDF3C3 /* ThreeDotsLoadingView.swift */,
 				879D6AFB1E69E20900DC07A1 /* ImageMessageView.swift */,
 				5E672C8E2178D85200522E61 /* AvatarImageView.swift */,
@@ -4458,6 +4454,7 @@
 				875E7D1A2188C25A00E571B7 /* ReplyRoundCornersView.swift */,
 				875E7D182188BCA500E571B7 /* MessagePreviewView.swift */,
 				EF5396D421B03AC3004CF034 /* NSTextAttachment+Icon.swift */,
+				1E8C25351BBC279B00FC373F /* Loading */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -6832,14 +6829,12 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1E8C253C1BBC279B00FC373F /* UIViewController+LoadingView.h in Headers */,
 				544F735A1E8D3A1800EADAF6 /* DeveloperMenuState.h in Headers */,
 				CE8E4FC21DF17C7C0009F437 /* TextTransform.h in Headers */,
 				8795A5A81D34CF7A0024101B /* NSLayoutConstraint+Helpers.h in Headers */,
 				1EE85C551B5F96FC008E084B /* WireExtensionComponents.h in Headers */,
 				1EE9DCC11B5F9A6D00E347DF /* TextView.h in Headers */,
 				1E5E0D061B6B8EDB003B0CAC /* UIImage+ImageUtilities.h in Headers */,
-				D5168F43200F6F2300F8222A /* CABasicAnimation+Rotation.h in Headers */,
 				EFC57A0D21BAAE440008DBE6 /* TextView+Internal.h in Headers */,
 				1E5E0D021B6B8EDB003B0CAC /* UIColor+Mixing.h in Headers */,
 				1E5E0D041B6B8EDB003B0CAC /* UIControl+Wire.h in Headers */,
@@ -6849,7 +6844,6 @@
 				8786072F1D33E3FF00971A19 /* metamacros.h in Headers */,
 				878607301D33E3FF00971A19 /* weakify.h in Headers */,
 				8786071B1D33E3FF00971A19 /* Geometry.h in Headers */,
-				1E8C253A1BBC279B00FC373F /* ProgressSpinner.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7371,7 +7365,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				87A6761A206D426900596625 /* CheckAnimationView.swift in Sources */,
 				5E52376920E7F12B00649241 /* EasingAnimation.swift in Sources */,
 				F174AAAF218A0B1B00AFCC4D /* ColorScheme.swift in Sources */,
 				87F18BC81E02E7BF00C69D9B /* Reusable.swift in Sources */,
@@ -7379,7 +7372,6 @@
 				5423EF6D1E9B85C8007091DE /* DeveloperMenuState.m in Sources */,
 				16A5FE25215CB64D00AEEBBD /* UIFont+Weight.swift in Sources */,
 				5EBF4A3721BE91490021CFFC /* String+Transform.swift in Sources */,
-				D5197FC1207BAD2100F4622B /* SpinnerSubtitleView.swift in Sources */,
 				8786071E1D33E3FF00971A19 /* KeyValueObserver.m in Sources */,
 				164A55AE20EF8F4600AE62A6 /* ZMUser+Images.swift in Sources */,
 				5E73153B2195B4B500255A78 /* UIColor+Hex.swift in Sources */,
@@ -7390,15 +7382,11 @@
 				5EBF4A3621BE91170021CFFC /* TransformLabel.swift in Sources */,
 				164A55D120EFBD4500AE62A6 /* UIImage+Decoding.swift in Sources */,
 				8795A5A91D34CF7A0024101B /* NSLayoutConstraint+Helpers.m in Sources */,
-				870533FF1DD6162400A7F822 /* OverflowSeparatorView.swift in Sources */,
 				8763768A1E8413D900B2CCF0 /* RawRepresentable+AllValues.swift in Sources */,
-				1E8C253B1BBC279B00FC373F /* ProgressSpinner.m in Sources */,
-				1E8C253D1BBC279B00FC373F /* UIViewController+LoadingView.m in Sources */,
 				BF7EF5451D953B3F003E3999 /* Date+Format.swift in Sources */,
 				87AAE41D1E42399E00E1D13A /* UIFont+DynamicType.swift in Sources */,
 				5E52376B20E7F99500649241 /* EasingFunction.swift in Sources */,
 				1E5E0D051B6B8EDB003B0CAC /* UIControl+Wire.m in Sources */,
-				D5168F44200F6F2300F8222A /* CABasicAnimation+Rotation.m in Sources */,
 				876CC8991E966C5C00F6BABC /* IteratorProtocol+Histogram.swift in Sources */,
 				5E672C942179D41100522E61 /* UserType+ZMUser.swift in Sources */,
 				1677FD341BBC19A400491481 /* ColorScheme.m in Sources */,
@@ -7469,6 +7457,7 @@
 				5E7E496A20F37DAA0005C602 /* Ziphy+Convenience.swift in Sources */,
 				872C823E214AA12100236A76 /* NSAttributedString+Mentions.swift in Sources */,
 				EF6ACA7A213169540064047B /* ConfirmAssetViewController+Style.swift in Sources */,
+				F15650E221DD11D100210504 /* ProgressSpinner.m in Sources */,
 				8F41CFC319926B7A00E3B032 /* ZMUser+Additions.m in Sources */,
 				871BC2891D34F8F800DF0793 /* UIImage+Transform.m in Sources */,
 				8784B6291D89448700AB71BD /* ProfileSelfPictureViewController.m in Sources */,
@@ -7488,6 +7477,7 @@
 				16719A1D1D9ABB7C00AA6B63 /* GiphyConfirmationViewController.swift in Sources */,
 				163495891F015389004E80DB /* AppDelegate+Network.swift in Sources */,
 				87DCF4791D34E95B00BB420F /* PermissionDeniedViewController.m in Sources */,
+				F15650E321DD11D700210504 /* CABasicAnimation+Rotation.m in Sources */,
 				EF2127181FB9DFE300625A9B /* PhoneNumberStepViewController.m in Sources */,
 				BFAF4CB71CEDB9FC00780537 /* AudioButtonOverlayState.swift in Sources */,
 				8758220921B6999E00D68266 /* SelfProfileViewController+SettingsChangeAlert.swift in Sources */,
@@ -7528,6 +7518,7 @@
 				87AC77DB1DE48C01009F6D56 /* Copyable.swift in Sources */,
 				87371C1A1B7355C400807499 /* ConversationListViewController+StartUI.m in Sources */,
 				8FC85451199245770008B66B /* ConversationContentViewController+Scrolling.m in Sources */,
+				F15650DF21DD119D00210504 /* CheckAnimationView.swift in Sources */,
 				EF9FC3F12142AEDE00033ED0 /* ColorSchemeController.swift in Sources */,
 				F1B5D54D2182096B00986911 /* NetworkConditionIndicatorView.swift in Sources */,
 				D5168F2A2008F3EF00F8222A /* UIEdgeInsets+Adjusting.swift in Sources */,
@@ -7559,6 +7550,7 @@
 				5E9E8A9D21621FEC0058D6E1 /* AuthenticationActioner.swift in Sources */,
 				BF8EE5561D62FBCD00B0D6D7 /* ConversationInputBarViewController+Editing.swift in Sources */,
 				16A94AEF2099DFEC008A5718 /* CallParticipantsViewController.swift in Sources */,
+				F15650E121DD11CA00210504 /* SpinnerSubtitleView.swift in Sources */,
 				160D691C212AC94100096EAD /* ImageResource.swift in Sources */,
 				54F7C27F1D74367E004D8087 /* AddressBookHelper.swift in Sources */,
 				BFAAB2431DEDB21E00CBC096 /* ConversationListViewController+Transitions.swift in Sources */,
@@ -7804,6 +7796,7 @@
 				871BC3531D34F94200DF0793 /* AudioErrorView.m in Sources */,
 				87DCF4E61D34EA4500BB420F /* ShareItemProvider.m in Sources */,
 				BFE4186A209B6E3700503C7C /* UserImageViewContainer.swift in Sources */,
+				F15650E421DD11DD00210504 /* UIViewController+LoadingView.m in Sources */,
 				8719FD691C888044005FBEC0 /* NSData+MD5.swift in Sources */,
 				BA79B0A51B6284D900F23AFB /* SoundEventRulesWatchDog.m in Sources */,
 				AF58EC7E1E9FA01700EB94CD /* UIBarButtonItem+ZetaIcon.swift in Sources */,
@@ -7884,6 +7877,7 @@
 				5EF5C54C209B33E600676405 /* CGSize+AspectRatio.swift in Sources */,
 				EFC8E21D212D777A00BE7BBE /* UIColor+TeamCreation.swift in Sources */,
 				8F41CFC8199297C600E3B032 /* ZMConversation+Additions.m in Sources */,
+				F15650E021DD119D00210504 /* OverflowSeparatorView.swift in Sources */,
 				EFF3DA452097587F007A3358 /* UIPasteboard+MediaAsset.swift in Sources */,
 				BAEF10FA1B8C8849005BFA48 /* AnimatedListMenuView.m in Sources */,
 				1682AEB620480C80003A052A /* UIViewController+Navigation.swift in Sources */,

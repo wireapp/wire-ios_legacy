@@ -130,7 +130,7 @@ public struct FontSpec: Hashable {
 }
 
 extension FontSpec {
-    var fontWithoutDynamicType: UIFont? {
+    public var fontWithoutDynamicType: UIFont? {
         return FontScheme(contentSizeCategory: .medium).font(for: self)
     }
 }
