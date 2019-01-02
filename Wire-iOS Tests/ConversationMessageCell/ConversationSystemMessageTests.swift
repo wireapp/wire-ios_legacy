@@ -21,12 +21,6 @@ import XCTest
 
 class ConversationSystemMessageTests: ConversationCellSnapshotTestCase {
 
-    override func setUp() {
-        super.setUp()
-        ColorScheme.default.variant = .light
-    }
-
-
     func testRenameConversation() {
         let message = MockMessageFactory.systemMessage(with: .conversationNameChanged, users: 0, clients: 0)!
         message.backingSystemMessageData.text = "Blue room"
@@ -61,17 +55,7 @@ class ConversationSystemMessageTests: ConversationCellSnapshotTestCase {
         let message = MockMessageFactory.systemMessage(with: .participantsRemoved, users: 1, clients: 0)!
         message.sender = MockUser.mockUsers()?.last
 
-        verify(message: message)
-    }
-
-    func testRemoveParticipant_dark() {
-        ColorScheme.default.variant = .dark
-        snapshotBackgroundColor = .black
-
-        let message = MockMessageFactory.systemMessage(with: .participantsRemoved, users: 1, clients: 0)!
-        message.sender = MockUser.mockUsers()?.last
-
-        verify(message: message)
+        verify(message: message, colorSchemes: [.light, .dark])
     }
 
     func testTeamMemberLeave() {

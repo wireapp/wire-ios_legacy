@@ -62,13 +62,11 @@ extension ZMConversationMessage {
         guard conversation.conversationType == .group else {
             return false
         }
-
+        
         // Show the message details in Team groups.
-        if ZMUser.selfUser()?.isTeamMember == true {
-            return true
+        if conversation.teamRemoteIdentifier != nil {
+            return canBeLiked || isSentBySelfUser
         } else {
-            // In Consumer groups, read receipts are not supported. If the message
-            // cannot be liked, we cannot not show the likes details
             return canBeLiked
         }
     }
@@ -79,12 +77,12 @@ extension ZMConversationMessage {
         guard areMessageDetailsAvailable else {
             return false
         }
-
-        // No read receipts in group conversations in the Consumer version.
-        guard ZMUser.selfUser()?.isTeamMember == true else {
+        
+        // Read receipts are only available in team groups
+        guard conversation?.teamRemoteIdentifier != nil else {
             return false
         }
-
+        
         // Only the sender of a message can see read receipts for their messages.
         return isSentBySelfUser
     }

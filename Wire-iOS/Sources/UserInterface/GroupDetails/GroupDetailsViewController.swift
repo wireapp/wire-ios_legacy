@@ -123,7 +123,7 @@ import Cartography
             sections.append(optionsSectionController)            
         }
 
-        if let selfUser = ZMUser.selfUser(), selfUser.isTeamMember, conversation.team != nil {
+        if let selfUser = ZMUser.selfUser(), selfUser.isTeamMember, conversation.team == selfUser.team {
             let receiptOptionsSectionController = ReceiptOptionsSectionController(conversation: conversation,
                                                                                   syncCompleted: didCompleteInitialSync,
                                                                                   collectionView: self.collectionViewController.collectionView!,

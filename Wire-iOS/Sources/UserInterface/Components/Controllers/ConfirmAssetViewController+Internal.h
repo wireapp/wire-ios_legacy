@@ -16,10 +16,15 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+@import AVKit;
+
 @interface ConfirmAssetViewController ()
 
-@property (nonatomic) UIView *imageToolbarSeparatorView;
-@property (nonatomic) UIView *topPanel;
-@property (nonatomic) UILabel *titleLabel;
+@property (nonatomic, nullable) UIView *imageToolbarSeparatorView;
+@property (nonatomic, nullable) UIView *topPanel;
+@property (nonatomic, nullable) UILabel *titleLabel;
+@property (nonatomic, nullable) NSURL *videoURL;
+
+@property (nonatomic, nullable) AVPlayerViewController *playerViewController;
 
 @end

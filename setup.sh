@@ -53,4 +53,8 @@ echo "ℹ️  Downloading additional assets..."
 ./Scripts/download-assets.sh $@
 echo ""
 
+echo "ℹ️  Postprocessing translations..."
+./Scripts/process-translations.sh
+echo ""
+
 echo "✅  Wire project was set up, you can now open Wire-iOS.xcodeproj"
