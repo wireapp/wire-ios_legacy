@@ -18,7 +18,6 @@
 
 
 import WireCommonComponents
-import WireExtensionComponents
 import HockeySDK.BITHockeyManager
 
 

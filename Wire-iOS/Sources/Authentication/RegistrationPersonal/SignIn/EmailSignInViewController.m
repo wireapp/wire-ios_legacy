@@ -19,6 +19,7 @@
 #import "EmailSignInViewController.h"
 
 @import WireExtensionComponents;
+@import WireCommonComponents;
 @import OnePasswordExtension;
 
 #import "EmailSignInViewController.h"
@@ -64,7 +65,7 @@
     [super viewDidAppear:animated];
 
     if (AutomationHelper.sharedHelper.automationEmailCredentials != nil) {
-        ZMEmailCredentials *emailCredentials = AutomationHelper.sharedHelper.automationEmailCredentials;
+        AutomationEmailCredentials *emailCredentials = AutomationHelper.sharedHelper.automationEmailCredentials;
         self.emailField.text = emailCredentials.email;
         self.passwordField.text = emailCredentials.password;
         [self.passwordField.confirmButton sendActionsForControlEvents:UIControlEventTouchUpInside];
