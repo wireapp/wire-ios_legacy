@@ -29,4 +29,4 @@ FOUNDATION_EXPORT const unsigned char WireCommonComponentsVersionString[];
 #import <WireCommonComponents/NetworkStatus.h>
 #import <WireCommonComponents/ZetaIconTypes.h>
 #import <WireCommonComponents/UIImage+ZetaIconsNeue.h>
-
+#import <WireCommonComponents/AVAsset+VideoConvert.h>
