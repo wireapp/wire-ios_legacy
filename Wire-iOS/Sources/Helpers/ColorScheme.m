@@ -19,7 +19,7 @@
 #import "ColorScheme.h"
 #import "UIColor+Mixing.h"
 #import "UIColor+WAZExtensions.h"
-#import <WireExtensionComponents/WireExtensionComponents-Swift.h>
+#import "Wire-Swift.h"
 
 @interface ColorScheme ()
 
