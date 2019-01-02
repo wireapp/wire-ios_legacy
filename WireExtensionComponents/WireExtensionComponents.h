@@ -29,7 +29,6 @@ FOUNDATION_EXPORT const unsigned char WireExtensionComponentsVersionString[];
 
 // Utils
 #import <WireExtensionComponents/UIImage+ImageUtilities.h>
-#import <WireExtensionComponents/UIColor+Mixing.h>
 #import <WireExtensionComponents/UIControl+Wire.h>
 #import <WireExtensionComponents/Geometry.h>
 #import <WireExtensionComponents/KeyValueObserver.h>
