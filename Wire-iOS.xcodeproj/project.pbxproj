@@ -195,7 +195,6 @@
 		545BA2191E2D3C4900AA373E /* PostContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545BA2181E2D3C4900AA373E /* PostContent.swift */; };
 		549D55AC1DBE03990035EB66 /* Settings+Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 549D55AB1DBE03990035EB66 /* Settings+Logging.swift */; };
 		54AB765C1DB7AB77008D19C8 /* DeveloperOptionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54AB765B1DB7AB77008D19C8 /* DeveloperOptionsController.swift */; };
-		54BB91DE1E1FA5070039E91F /* WireExtensionComponents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1EE85C501B5F96FB008E084B /* WireExtensionComponents.framework */; };
 		54BB91E01E1FA6330039E91F /* WireShareEngine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 54BB91DF1E1FA6330039E91F /* WireShareEngine.framework */; };
 		54F4BAB61E143B4C00603C6F /* AppDelegate+ErrorTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54F4BAB51E143B4C00603C6F /* AppDelegate+ErrorTracking.swift */; };
 		54F7C27F1D74367E004D8087 /* AddressBookHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54F7C27E1D74367E004D8087 /* AddressBookHelper.swift */; };
@@ -1440,13 +1439,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 168A16A81D9597C2005CFA6C;
 			remoteInfo = "Wire-iOS Share Extension";
-		};
-		5E2BEC66214C01B800E65B53 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8F42C530199244A700288E4D /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 1EE85C4F1B5F96FB008E084B;
-			remoteInfo = WireExtensionComponents;
 		};
 		5E4BC1C7218C8F0900A8682E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -3313,7 +3305,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				F156509C21DCEE4600210504 /* WireCommonComponents.framework in Frameworks */,
-				54BB91DE1E1FA5070039E91F /* WireExtensionComponents.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6889,7 +6880,6 @@
 			);
 			dependencies = (
 				F1FEA15721DCEC3D00790A54 /* PBXTargetDependency */,
-				5E2BEC67214C01B800E65B53 /* PBXTargetDependency */,
 			);
 			name = "Wire Share Extension";
 			productName = "Wire-iOS Share Extension";
@@ -8672,11 +8662,6 @@
 			isa = PBXTargetDependency;
 			target = 168A16A81D9597C2005CFA6C /* Wire Share Extension */;
 			targetProxy = 168A16B11D9597C2005CFA6C /* PBXContainerItemProxy */;
-		};
-		5E2BEC67214C01B800E65B53 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 1EE85C4F1B5F96FB008E084B /* WireExtensionComponents */;
-			targetProxy = 5E2BEC66214C01B800E65B53 /* PBXContainerItemProxy */;
 		};
 		5E4BC1C8218C8F0900A8682E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
