@@ -22,7 +22,6 @@ import WireShareEngine
 import Cartography
 import MobileCoreServices
 import WireDataModel
-import WireExtensionComponents
 import WireCommonComponents
 import WireLinkPreview
 

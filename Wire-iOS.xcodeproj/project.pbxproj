@@ -420,8 +420,6 @@
 		7CB1B0C5200E13A600BD7CE9 /* MockPhotoPermissionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C72F03E200E1000001231D3 /* MockPhotoPermissionsController.swift */; };
 		7CC085461F7AA30F0010F96B /* DotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC085451F7AA30F0010F96B /* DotView.swift */; };
 		7CD0154A218053FF00DE7E3F /* NSString+URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 168A16A31D95964B005CFA6C /* NSString+URL.swift */; };
-		7CE71D8D1FC453E300C43E19 /* SettingsPropertyName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C98DCFF1FC32F41005C0042 /* SettingsPropertyName.swift */; };
-		7CE71D8E1FC454AA00C43E19 /* AppLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8778AAEC1F6BC6AD0022F53F /* AppLock.swift */; };
 		7CEB45281F8FAAC400D772D5 /* UINavigationBarContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CEB45271F8FAAC400D772D5 /* UINavigationBarContainer.swift */; };
 		7CED30721FD97748009F0DAC /* IconStringsBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CED30711FD97748009F0DAC /* IconStringsBuilder.swift */; };
 		7CED307C1FD97895009F0DAC /* AvailabilityStringBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CED307B1FD97895009F0DAC /* AvailabilityStringBuilder.swift */; };
@@ -1392,6 +1390,8 @@
 		F15650A821DCF82E00210504 /* UIImage+ZetaIconsNeue.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E5E0CEC1B6B8EDB003B0CAC /* UIImage+ZetaIconsNeue.m */; };
 		F15650AB21DCFA2A00210504 /* WireCommonComponents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1FEA14A21DCEB1700790A54 /* WireCommonComponents.framework */; };
 		F15650AC21DCFBC000210504 /* SharedConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCBE24C1FC72FE500CBD55D /* SharedConstants.swift */; };
+		F15650AD21DCFC8700210504 /* AppLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8778AAEC1F6BC6AD0022F53F /* AppLock.swift */; };
+		F15650AE21DCFCED00210504 /* SettingsPropertyName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C98DCFF1FC32F41005C0042 /* SettingsPropertyName.swift */; };
 		F15E9BFD1E4878AC00EA207F /* UINavigationController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15E9BFC1E4878AC00EA207F /* UINavigationController+Additions.swift */; };
 		F16426FE1FCC5A2C00D2ABFC /* TeamCreationStepDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16426FD1FCC5A2C00D2ABFC /* TeamCreationStepDescription.swift */; };
 		F16427001FCC5B3C00D2ABFC /* SetTeamNameStepDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16426FF1FCC5B3C00D2ABFC /* SetTeamNameStepDescription.swift */; };
@@ -3643,9 +3643,7 @@
 			children = (
 				CE8E4FB61DF17BBE0009F437 /* TextTransform */,
 				5E52376320E7ECDF00649241 /* Animations */,
-				8778AAEC1F6BC6AD0022F53F /* AppLock.swift */,
 				160FD05321085F3900C517B5 /* ImageCache.swift */,
-				7C98DCFF1FC32F41005C0042 /* SettingsPropertyName.swift */,
 				544F73581E8D3A1800EADAF6 /* DeveloperMenuState.h */,
 				544F73591E8D3A1800EADAF6 /* DeveloperMenuState.m */,
 				CE06C93C1DF5C3D900497685 /* AVAsset+VideoConvert.h */,
@@ -6805,6 +6803,8 @@
 				CE8E4FB21DF066EE0009F437 /* AudioProcessing.swift */,
 				CE8E4FAA1DF066750009F437 /* FilePreviewGenerator.swift */,
 				CE8E4FA91DF066750009F437 /* FileMetaDataGenerator.swift */,
+				8778AAEC1F6BC6AD0022F53F /* AppLock.swift */,
+				7C98DCFF1FC32F41005C0042 /* SettingsPropertyName.swift */,
 				7CCBE24C1FC72FE500CBD55D /* SharedConstants.swift */,
 				BFB332671E3A2D95003B0CD2 /* ExtensionSettings.swift */,
 				878607081D33E3FF00971A19 /* NetworkStatus.h */,
@@ -7397,7 +7397,6 @@
 				5E73153B2195B4B500255A78 /* UIColor+Hex.swift in Sources */,
 				54F7C2831D7467FA004D8087 /* AutomationHelper.swift in Sources */,
 				1E5E0D031B6B8EDB003B0CAC /* UIColor+Mixing.m in Sources */,
-				7CE71D8E1FC454AA00C43E19 /* AppLock.swift in Sources */,
 				1E5E0D071B6B8EDB003B0CAC /* UIImage+ImageUtilities.m in Sources */,
 				CE06C9411DF5C3D900497685 /* AVAsset+VideoConvert.swift in Sources */,
 				160FD05421085F3900C517B5 /* ImageCache.swift in Sources */,
@@ -7416,7 +7415,6 @@
 				5EEFC1A520C01C64007E8A79 /* ContinuousMaskLayer.swift in Sources */,
 				8763768A1E8413D900B2CCF0 /* RawRepresentable+AllValues.swift in Sources */,
 				164A55AD20ECFD7400AE62A6 /* UserImageView.swift in Sources */,
-				7CE71D8D1FC453E300C43E19 /* SettingsPropertyName.swift in Sources */,
 				5EEFC1A720C01C85007E8A79 /* RoundedViewProtocol.swift in Sources */,
 				1E8C253B1BBC279B00FC373F /* ProgressSpinner.m in Sources */,
 				1E8C253D1BBC279B00FC373F /* UIViewController+LoadingView.m in Sources */,
@@ -8654,7 +8652,9 @@
 				F15650A421DCF66600210504 /* AudioProcessing.swift in Sources */,
 				F15650A121DCF3E700210504 /* ExtensionSettings.swift in Sources */,
 				F15650A821DCF82E00210504 /* UIImage+ZetaIconsNeue.m in Sources */,
+				F15650AE21DCFCED00210504 /* SettingsPropertyName.swift in Sources */,
 				F15650A621DCF81C00210504 /* WireStyleKit.swift in Sources */,
+				F15650AD21DCFC8700210504 /* AppLock.swift in Sources */,
 				F15650A321DCF63300210504 /* FilePreviewGenerator.swift in Sources */,
 				F15650A221DCF60E00210504 /* FileMetaDataGenerator.swift in Sources */,
 				F156509E21DCF1DA00210504 /* Dummy.swift in Sources */,
