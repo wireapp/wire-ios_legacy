@@ -87,6 +87,10 @@ public class ShareViewController<D: ShareDestination, S: Shareable>: UIViewContr
                                                selector: #selector(keyboardFrameWillChange(notification:)),
                                                name: UIResponder.keyboardWillChangeFrameNotification,
                                                object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(keyboardFrameDidChange(notification:)),
+                                               name: UIResponder.keyboardDidChangeFrameNotification,
+                                               object: nil)
 
         self.createViews()
         self.createConstraints()
@@ -229,5 +233,17 @@ public class ShareViewController<D: ShareDestination, S: Shareable>: UIViewContr
             self.bottomConstraint?.constant = keyboardHeight == 0 ? -self.view.safeAreaInsetsOrFallback.bottom : CGFloat(0)
             self.view.layoutIfNeeded()
         }, completion: nil)
+    }
+
+    @objc func keyboardFrameDidChange(notification: Notification) {
+        updatePopoverFrame()
+    }
+
+    func updatePopoverFrame() {
+        if let popoverPresenter = self.popoverPresentationController?.presentingViewController as? PopoverPresenter {
+            popoverPresenter.updatePopoverSourceRect()
+        }
+        
+        popoverPresentationController?.containerView?.setNeedsLayout()
     }
 }
