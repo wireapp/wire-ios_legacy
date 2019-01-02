@@ -23,7 +23,6 @@
 #import "TextView+Internal.h"
 
 #import "MediaAsset.h"
-#import <WireExtensionComponents/WireExtensionComponents-Swift.h>
 #import "Wire-Swift.h"
 
 static NSString* ZMLogTag ZM_UNUSED = @"UI";
