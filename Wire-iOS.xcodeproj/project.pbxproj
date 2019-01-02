@@ -995,12 +995,9 @@
 		CE06C9401DF5C3D900497685 /* AVAsset+VideoConvert.m in Sources */ = {isa = PBXBuildFile; fileRef = CE06C93D1DF5C3D900497685 /* AVAsset+VideoConvert.m */; };
 		CE06C9411DF5C3D900497685 /* AVAsset+VideoConvert.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE06C93E1DF5C3D900497685 /* AVAsset+VideoConvert.swift */; };
 		CE2402811E0A992200665A91 /* AnalyticsConsoleProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2402801E0A992200665A91 /* AnalyticsConsoleProvider.swift */; };
-		CE8E4FAB1DF066750009F437 /* FileMetaDataGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8E4FA91DF066750009F437 /* FileMetaDataGenerator.swift */; };
-		CE8E4FAC1DF066750009F437 /* FilePreviewGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8E4FAA1DF066750009F437 /* FilePreviewGenerator.swift */; };
 		CE8E4FAE1DF066860009F437 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE8E4FAD1DF066860009F437 /* MobileCoreServices.framework */; };
 		CE8E4FB01DF0668A0009F437 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE8E4FAF1DF0668A0009F437 /* ImageIO.framework */; };
 		CE8E4FB11DF0668F0009F437 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 873DC95B1D479A0500C1C9B0 /* AVFoundation.framework */; };
-		CE8E4FB31DF066EE0009F437 /* AudioProcessing.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8E4FB21DF066EE0009F437 /* AudioProcessing.swift */; };
 		CE8E4FC21DF17C7C0009F437 /* TextTransform.h in Headers */ = {isa = PBXBuildFile; fileRef = CE8E4FC11DF17C240009F437 /* TextTransform.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CEC0FE3B1C4FBF120093BF0D /* ConversationIgnoredDeviceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC0FE3A1C4FBF120093BF0D /* ConversationIgnoredDeviceCell.swift */; };
 		CEE02EAD1DDDEF3A00BA2BE2 /* avs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEE02EAB1DDDD15200BA2BE2 /* avs.framework */; };
@@ -1392,6 +1389,9 @@
 		F156509F21DCF2A100210504 /* NetworkStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 878607091D33E3FF00971A19 /* NetworkStatus.m */; };
 		F15650A021DCF2BB00210504 /* NetworkStatus.h in Headers */ = {isa = PBXBuildFile; fileRef = 878607081D33E3FF00971A19 /* NetworkStatus.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F15650A121DCF3E700210504 /* ExtensionSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB332671E3A2D95003B0CD2 /* ExtensionSettings.swift */; };
+		F15650A221DCF60E00210504 /* FileMetaDataGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8E4FA91DF066750009F437 /* FileMetaDataGenerator.swift */; };
+		F15650A321DCF63300210504 /* FilePreviewGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8E4FAA1DF066750009F437 /* FilePreviewGenerator.swift */; };
+		F15650A421DCF66600210504 /* AudioProcessing.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8E4FB21DF066EE0009F437 /* AudioProcessing.swift */; };
 		F15E9BFD1E4878AC00EA207F /* UINavigationController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15E9BFC1E4878AC00EA207F /* UINavigationController+Additions.swift */; };
 		F16426FE1FCC5A2C00D2ABFC /* TeamCreationStepDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16426FD1FCC5A2C00D2ABFC /* TeamCreationStepDescription.swift */; };
 		F16427001FCC5B3C00D2ABFC /* SetTeamNameStepDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16426FF1FCC5B3C00D2ABFC /* SetTeamNameStepDescription.swift */; };
@@ -3643,9 +3643,6 @@
 				CE06C93C1DF5C3D900497685 /* AVAsset+VideoConvert.h */,
 				CE06C93D1DF5C3D900497685 /* AVAsset+VideoConvert.m */,
 				CE06C93E1DF5C3D900497685 /* AVAsset+VideoConvert.swift */,
-				CE8E4FA91DF066750009F437 /* FileMetaDataGenerator.swift */,
-				CE8E4FAA1DF066750009F437 /* FilePreviewGenerator.swift */,
-				CE8E4FB21DF066EE0009F437 /* AudioProcessing.swift */,
 				87F18BC71E02E7BF00C69D9B /* Reusable.swift */,
 				BF6EC9051EB1FC3D009D9A69 /* URL+Backup.swift */,
 				870534001DD6265100A7F822 /* AttributedStringOperators.swift */,
@@ -6798,6 +6795,9 @@
 		F1FEA14B21DCEB1700790A54 /* WireCommonComponents */ = {
 			isa = PBXGroup;
 			children = (
+				CE8E4FB21DF066EE0009F437 /* AudioProcessing.swift */,
+				CE8E4FAA1DF066750009F437 /* FilePreviewGenerator.swift */,
+				CE8E4FA91DF066750009F437 /* FileMetaDataGenerator.swift */,
 				BFB332671E3A2D95003B0CD2 /* ExtensionSettings.swift */,
 				878607081D33E3FF00971A19 /* NetworkStatus.h */,
 				878607091D33E3FF00971A19 /* NetworkStatus.m */,
@@ -7373,7 +7373,6 @@
 				87A6761A206D426900596625 /* CheckAnimationView.swift in Sources */,
 				5E52376920E7F12B00649241 /* EasingAnimation.swift in Sources */,
 				A9B02232209B6E4E00DF25D8 /* Hockey.swift in Sources */,
-				CE8E4FAC1DF066750009F437 /* FilePreviewGenerator.swift in Sources */,
 				87AC33AE217F4FE500069C79 /* BackendEnvironment+Shared.swift in Sources */,
 				F174AAAF218A0B1B00AFCC4D /* ColorScheme.swift in Sources */,
 				EEC7E822217620ED00E32835 /* WireStyleKit.swift in Sources */,
@@ -7382,11 +7381,9 @@
 				87AAE4171E422E2300E1D13A /* FontScheme.swift in Sources */,
 				5423EF6D1E9B85C8007091DE /* DeveloperMenuState.m in Sources */,
 				16A5FE25215CB64D00AEEBBD /* UIFont+Weight.swift in Sources */,
-				CE8E4FAB1DF066750009F437 /* FileMetaDataGenerator.swift in Sources */,
 				5EBF4A3721BE91490021CFFC /* String+Transform.swift in Sources */,
 				1E5E0CFC1B6B8EDB003B0CAC /* UIImage+ZetaIconsNeue.m in Sources */,
 				D5197FC1207BAD2100F4622B /* SpinnerSubtitleView.swift in Sources */,
-				CE8E4FB31DF066EE0009F437 /* AudioProcessing.swift in Sources */,
 				8786071E1D33E3FF00971A19 /* KeyValueObserver.m in Sources */,
 				8784D4591E818AA4007A6867 /* CGFloat+Hairline.swift in Sources */,
 				164A55AE20EF8F4600AE62A6 /* ZMUser+Images.swift in Sources */,
@@ -8648,7 +8645,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				F156509F21DCF2A100210504 /* NetworkStatus.m in Sources */,
+				F15650A421DCF66600210504 /* AudioProcessing.swift in Sources */,
 				F15650A121DCF3E700210504 /* ExtensionSettings.swift in Sources */,
+				F15650A321DCF63300210504 /* FilePreviewGenerator.swift in Sources */,
+				F15650A221DCF60E00210504 /* FileMetaDataGenerator.swift in Sources */,
 				F156509E21DCF1DA00210504 /* Dummy.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
