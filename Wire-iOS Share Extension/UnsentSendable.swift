@@ -21,6 +21,7 @@ import UIKit
 import WireShareEngine
 import MobileCoreServices
 import WireExtensionComponents
+import WireCommonComponents
 import ImageIO
 
 /// Error that can happen during the preparation or sending operation
