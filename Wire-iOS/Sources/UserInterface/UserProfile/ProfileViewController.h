@@ -24,6 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol UserType;
 @protocol ViewControllerDismisser;
+@protocol AccentColorProvider;
 @class ZMConversation;
 @class ZMUser;
 @class ProfileViewController;
