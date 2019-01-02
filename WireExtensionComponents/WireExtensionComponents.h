@@ -33,10 +33,6 @@ FOUNDATION_EXPORT const unsigned char WireExtensionComponentsVersionString[];
 #import <WireExtensionComponents/UIViewController+LoadingView.h>
 #import <WireExtensionComponents/DeveloperMenuState.h>
 
-// Icons
-#import <WireExtensionComponents/ZetaIconTypes.h>
-#import <WireExtensionComponents/UIImage+ZetaIconsNeue.h>
-
 // Utils
 #import <WireExtensionComponents/UIImage+ImageUtilities.h>
 #import <WireExtensionComponents/UIColor+Mixing.h>

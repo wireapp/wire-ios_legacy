@@ -16,7 +16,7 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-#import <WireExtensionComponents/WireExtensionComponents.h>
+@import WireCommonComponents;
 
 @interface WireStyleKit (Additions)
 + (UIBezierPath *)pathForTeamSelection;

@@ -18,7 +18,7 @@
 
 
 #import "AudioErrorView.h"
-#import <WireExtensionComponents/UIImage+ZetaIconsNeue.h>
+@import WireCommonComponents;
 
 @import PureLayout;
 

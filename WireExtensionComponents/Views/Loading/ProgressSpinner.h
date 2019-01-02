@@ -18,7 +18,7 @@
 
 
 @import UIKit;
-#import "ZetaIconTypes.h"
+@import WireCommonComponents;
 
 
 @interface ProgressSpinner : UIView
