@@ -17,7 +17,6 @@
 //
 
 import Foundation
-import WireExtensionComponents
 import WireCommonComponents
 import WireShareEngine
 import Cartography
