@@ -160,8 +160,6 @@
 		1E2268041B395722003980E3 /* people-01.json in Resources */ = {isa = PBXBuildFile; fileRef = 1E2268031B395722003980E3 /* people-01.json */; };
 		1E2268061B3957A7003980E3 /* conversations-01.json in Resources */ = {isa = PBXBuildFile; fileRef = 1E2268051B3957A7003980E3 /* conversations-01.json */; };
 		1E4B89E11B01E9DD0011BF43 /* NSString+EmoticonSubstitutionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E4B89E01B01E9DD0011BF43 /* NSString+EmoticonSubstitutionTests.m */; };
-		1E5E0D041B6B8EDB003B0CAC /* UIControl+Wire.h in Headers */ = {isa = PBXBuildFile; fileRef = 1E5E0CF51B6B8EDB003B0CAC /* UIControl+Wire.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		1E5E0D051B6B8EDB003B0CAC /* UIControl+Wire.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E5E0CF61B6B8EDB003B0CAC /* UIControl+Wire.m */; };
 		1E5E0D061B6B8EDB003B0CAC /* UIImage+ImageUtilities.h in Headers */ = {isa = PBXBuildFile; fileRef = 1E5E0CF71B6B8EDB003B0CAC /* UIImage+ImageUtilities.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1E5E0D071B6B8EDB003B0CAC /* UIImage+ImageUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E5E0CF81B6B8EDB003B0CAC /* UIImage+ImageUtilities.m */; };
 		1E80A3651B0DF6120049A809 /* MediaPlaybackManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E80A3641B0DF6120049A809 /* MediaPlaybackManager.m */; };
@@ -1387,6 +1385,7 @@
 		F15650F221DD1B4100210504 /* UIFont+Weight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16A5FE24215CB64D00AEEBBD /* UIFont+Weight.swift */; };
 		F15650F321DD1B6D00210504 /* ZMUser+Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1687ABA920EBCED80007C240 /* ZMUser+Images.swift */; };
 		F15650F421DD1C8B00210504 /* UIColor+Mixing.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E5E0CF41B6B8EDB003B0CAC /* UIColor+Mixing.m */; };
+		F15650F521DD1D8900210504 /* UIControl+Wire.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E5E0CF61B6B8EDB003B0CAC /* UIControl+Wire.m */; };
 		F15E9BFD1E4878AC00EA207F /* UINavigationController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15E9BFC1E4878AC00EA207F /* UINavigationController+Additions.swift */; };
 		F16426FE1FCC5A2C00D2ABFC /* TeamCreationStepDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16426FD1FCC5A2C00D2ABFC /* TeamCreationStepDescription.swift */; };
 		F16427001FCC5B3C00D2ABFC /* SetTeamNameStepDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16426FF1FCC5B3C00D2ABFC /* SetTeamNameStepDescription.swift */; };
@@ -3627,8 +3626,6 @@
 			isa = PBXGroup;
 			children = (
 				5E52376320E7ECDF00649241 /* Animations */,
-				1E5E0CF51B6B8EDB003B0CAC /* UIControl+Wire.h */,
-				1E5E0CF61B6B8EDB003B0CAC /* UIControl+Wire.m */,
 				1E5E0CF71B6B8EDB003B0CAC /* UIImage+ImageUtilities.h */,
 				1E5E0CF81B6B8EDB003B0CAC /* UIImage+ImageUtilities.m */,
 				878607021D33E3FF00971A19 /* Geometry.h */,
@@ -5378,6 +5375,8 @@
 				F174AAB0218B62D200AFCC4D /* UIColor+AccentColor.swift */,
 				F16426F51FCC0FE200D2ABFC /* UIColor+Hex.swift */,
 				87AAE4161E422E2300E1D13A /* FontScheme.swift */,
+				1E5E0CF51B6B8EDB003B0CAC /* UIControl+Wire.h */,
+				1E5E0CF61B6B8EDB003B0CAC /* UIControl+Wire.m */,
 				1E5E0CF31B6B8EDB003B0CAC /* UIColor+Mixing.h */,
 				1E5E0CF41B6B8EDB003B0CAC /* UIColor+Mixing.m */,
 				87AAE41C1E42399E00E1D13A /* UIFont+DynamicType.swift */,
@@ -6828,7 +6827,6 @@
 				8795A5A81D34CF7A0024101B /* NSLayoutConstraint+Helpers.h in Headers */,
 				1EE85C551B5F96FC008E084B /* WireExtensionComponents.h in Headers */,
 				1E5E0D061B6B8EDB003B0CAC /* UIImage+ImageUtilities.h in Headers */,
-				1E5E0D041B6B8EDB003B0CAC /* UIControl+Wire.h in Headers */,
 				87B7DAEB1E697C11005F5140 /* AccentColorProvider.h in Headers */,
 				8786071D1D33E3FF00971A19 /* KeyValueObserver.h in Headers */,
 				8786072F1D33E3FF00971A19 /* metamacros.h in Headers */,
@@ -7364,7 +7362,6 @@
 				8763768A1E8413D900B2CCF0 /* RawRepresentable+AllValues.swift in Sources */,
 				BF7EF5451D953B3F003E3999 /* Date+Format.swift in Sources */,
 				5E52376B20E7F99500649241 /* EasingFunction.swift in Sources */,
-				1E5E0D051B6B8EDB003B0CAC /* UIControl+Wire.m in Sources */,
 				876CC8991E966C5C00F6BABC /* IteratorProtocol+Histogram.swift in Sources */,
 				5E672C942179D41100522E61 /* UserType+ZMUser.swift in Sources */,
 				EFE8062B1FDFF24C006A0EE7 /* NSDate+Format.swift in Sources */,
@@ -8303,6 +8300,7 @@
 				BF8C8C6920D8F8F000442833 /* CallWindow.swift in Sources */,
 				F17B0A9D219489DC005ECAD0 /* NetworkCondition+Helper.swift in Sources */,
 				879649002046EE5E00F46B4B /* BarController.swift in Sources */,
+				F15650F521DD1D8900210504 /* UIControl+Wire.m in Sources */,
 				BFE57B4B1D52335A00CB0806 /* ConversationPreviewViewController.swift in Sources */,
 				871BC3561D34F94200DF0793 /* AudioPlaylistViewController.m in Sources */,
 				D5677158202B496700308448 /* CreateGroupSection.swift in Sources */,
