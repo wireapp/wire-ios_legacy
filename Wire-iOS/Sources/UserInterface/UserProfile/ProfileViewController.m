@@ -99,6 +99,8 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
         _bareUser = user;
         _conversation = conversation;
         _context = context;
+
+        [self setupKeyboardFrameNotification];
     }
     return self;
 }
