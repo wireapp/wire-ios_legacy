@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import AVKit
 
 extension ConfirmAssetViewController {
     @objc func setupStyle() {
@@ -28,4 +29,19 @@ extension ConfirmAssetViewController {
         titleLabel?.textColor = UIColor.from(scheme: .textForeground)
 
     }
+
+    @objc func createVideoPanel() {
+        playerViewController = AVPlayerViewController()
+
+        guard let videoURL = videoURL,
+              let playerViewController = playerViewController else { return }
+
+        playerViewController.player = AVPlayer(url: videoURL)
+        playerViewController.player?.play()
+        playerViewController.showsPlaybackControls = true
+        playerViewController.view.backgroundColor = UIColor.from(scheme: .textBackground)
+
+        view.addSubview(playerViewController.view)
+    }
+
 }

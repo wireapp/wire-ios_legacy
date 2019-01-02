@@ -70,23 +70,28 @@ class ConversationCellSnapshotTestCase: CoreDataSnapshotTestCase {
                 context: ConversationMessageContext? = nil,
                 waitForImagesToLoad: Bool = false,
                 tolerance: CGFloat = 0,
+                colorSchemes: Set<ColorSchemeVariant> = [],
                 file: StaticString = #file,
                 line: UInt = #line) {
-        let context = (context ?? defaultContext)!
-        let section = ConversationMessageSectionController(message: message, context: context, layoutProperties: ConversationCellLayoutProperties())
-        let views = section.cellDescriptions.map({ $0.makeView() })
-        let stackView = UIStackView(arrangedSubviews: views)
-        stackView.axis = .vertical
-        stackView.translatesAutoresizingMaskIntoConstraints = false
 
-        if waitForImagesToLoad {
-            XCTAssertTrue(waitForGroupsToBeEmpty([defaultImageCache.dispatchGroup]))
-        }
+        verifyInAllPhoneWidths(initialization:{
+            let context = (context ?? defaultContext)!
+            let section = ConversationMessageSectionController(message: message, context: context, layoutProperties: ConversationCellLayoutProperties())
+            let views = section.cellDescriptions.map({ $0.makeView() })
+            let stackView = UIStackView(arrangedSubviews: views)
+            stackView.axis = .vertical
+            stackView.translatesAutoresizingMaskIntoConstraints = false
 
-        verifyInAllPhoneWidths(view: stackView,
-                               tolerance: tolerance,
-                               file: file,
-                               line: line)
+            if waitForImagesToLoad {
+                XCTAssertTrue(waitForGroupsToBeEmpty([defaultImageCache.dispatchGroup]))
+            }
+
+            return stackView
+        },
+           tolerance: tolerance,
+           colorSchemes: colorSchemes,
+           file: file,
+           line: line)
     }
 
 }
