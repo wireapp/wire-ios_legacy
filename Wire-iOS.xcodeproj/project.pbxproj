@@ -160,8 +160,6 @@
 		1E2268041B395722003980E3 /* people-01.json in Resources */ = {isa = PBXBuildFile; fileRef = 1E2268031B395722003980E3 /* people-01.json */; };
 		1E2268061B3957A7003980E3 /* conversations-01.json in Resources */ = {isa = PBXBuildFile; fileRef = 1E2268051B3957A7003980E3 /* conversations-01.json */; };
 		1E4B89E11B01E9DD0011BF43 /* NSString+EmoticonSubstitutionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E4B89E01B01E9DD0011BF43 /* NSString+EmoticonSubstitutionTests.m */; };
-		1E5E0D061B6B8EDB003B0CAC /* UIImage+ImageUtilities.h in Headers */ = {isa = PBXBuildFile; fileRef = 1E5E0CF71B6B8EDB003B0CAC /* UIImage+ImageUtilities.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		1E5E0D071B6B8EDB003B0CAC /* UIImage+ImageUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E5E0CF81B6B8EDB003B0CAC /* UIImage+ImageUtilities.m */; };
 		1E80A3651B0DF6120049A809 /* MediaPlaybackManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E80A3641B0DF6120049A809 /* MediaPlaybackManager.m */; };
 		1E8772231B0C8B0F005BDDC6 /* EmoticonSubstitutionConfigurationMocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E8772221B0C8B0F005BDDC6 /* EmoticonSubstitutionConfigurationMocks.m */; };
 		1E8772281B0C8CAB005BDDC6 /* emo-test-03.json in Resources */ = {isa = PBXBuildFile; fileRef = 1E8772271B0C8CAB005BDDC6 /* emo-test-03.json */; };
@@ -1386,6 +1384,7 @@
 		F15650F321DD1B6D00210504 /* ZMUser+Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1687ABA920EBCED80007C240 /* ZMUser+Images.swift */; };
 		F15650F421DD1C8B00210504 /* UIColor+Mixing.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E5E0CF41B6B8EDB003B0CAC /* UIColor+Mixing.m */; };
 		F15650F521DD1D8900210504 /* UIControl+Wire.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E5E0CF61B6B8EDB003B0CAC /* UIControl+Wire.m */; };
+		F15650F621DD1E0A00210504 /* UIImage+ImageUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E5E0CF81B6B8EDB003B0CAC /* UIImage+ImageUtilities.m */; };
 		F15E9BFD1E4878AC00EA207F /* UINavigationController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15E9BFC1E4878AC00EA207F /* UINavigationController+Additions.swift */; };
 		F16426FE1FCC5A2C00D2ABFC /* TeamCreationStepDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16426FD1FCC5A2C00D2ABFC /* TeamCreationStepDescription.swift */; };
 		F16427001FCC5B3C00D2ABFC /* SetTeamNameStepDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16426FF1FCC5B3C00D2ABFC /* SetTeamNameStepDescription.swift */; };
@@ -3626,8 +3625,6 @@
 			isa = PBXGroup;
 			children = (
 				5E52376320E7ECDF00649241 /* Animations */,
-				1E5E0CF71B6B8EDB003B0CAC /* UIImage+ImageUtilities.h */,
-				1E5E0CF81B6B8EDB003B0CAC /* UIImage+ImageUtilities.m */,
 				878607021D33E3FF00971A19 /* Geometry.h */,
 				878607041D33E3FF00971A19 /* KeyValueObserver.h */,
 				878607051D33E3FF00971A19 /* KeyValueObserver.m */,
@@ -5412,6 +5409,8 @@
 				871BC0361D34F60700DF0793 /* NSDate+Format.m */,
 				544F73581E8D3A1800EADAF6 /* DeveloperMenuState.h */,
 				544F73591E8D3A1800EADAF6 /* DeveloperMenuState.m */,
+				1E5E0CF71B6B8EDB003B0CAC /* UIImage+ImageUtilities.h */,
+				1E5E0CF81B6B8EDB003B0CAC /* UIImage+ImageUtilities.m */,
 				871BC06A1D34F64B00DF0793 /* ApplicationLaunchType.h */,
 				168A16A31D95964B005CFA6C /* NSString+URL.swift */,
 				BD979D2D1D8F41E700E8E3CB /* String+WireLocales.swift */,
@@ -6826,7 +6825,6 @@
 				CE8E4FC21DF17C7C0009F437 /* TextTransform.h in Headers */,
 				8795A5A81D34CF7A0024101B /* NSLayoutConstraint+Helpers.h in Headers */,
 				1EE85C551B5F96FC008E084B /* WireExtensionComponents.h in Headers */,
-				1E5E0D061B6B8EDB003B0CAC /* UIImage+ImageUtilities.h in Headers */,
 				87B7DAEB1E697C11005F5140 /* AccentColorProvider.h in Headers */,
 				8786071D1D33E3FF00971A19 /* KeyValueObserver.h in Headers */,
 				8786072F1D33E3FF00971A19 /* metamacros.h in Headers */,
@@ -7356,7 +7354,6 @@
 				5E52376920E7F12B00649241 /* EasingAnimation.swift in Sources */,
 				5423EF6D1E9B85C8007091DE /* DeveloperMenuState.m in Sources */,
 				8786071E1D33E3FF00971A19 /* KeyValueObserver.m in Sources */,
-				1E5E0D071B6B8EDB003B0CAC /* UIImage+ImageUtilities.m in Sources */,
 				164A55D120EFBD4500AE62A6 /* UIImage+Decoding.swift in Sources */,
 				8795A5A91D34CF7A0024101B /* NSLayoutConstraint+Helpers.m in Sources */,
 				8763768A1E8413D900B2CCF0 /* RawRepresentable+AllValues.swift in Sources */,
@@ -8350,6 +8347,7 @@
 				871BC3591D34F94200DF0793 /* AudioTrackView.m in Sources */,
 				7C232CD91FE029BD00792E9B /* Analytics+Availability.swift in Sources */,
 				166390D41DC34CAB00D7BF1C /* ImageToolbarView.swift in Sources */,
+				F15650F621DD1E0A00210504 /* UIImage+ImageUtilities.m in Sources */,
 				EF6DAD6A2150F2C400D9BA70 /* ContactsViewController+SearchHeader.swift in Sources */,
 				EFE285442146B4DC00720737 /* RegistrationTextField+EdgeInset.swift in Sources */,
 				16E2A0A41F6BF0C6005F4DB1 /* AnalyticsCallingTracker.swift in Sources */,

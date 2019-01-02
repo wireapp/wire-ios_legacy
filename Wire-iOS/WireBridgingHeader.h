@@ -190,6 +190,7 @@
 #import "CABasicAnimation+Rotation.h"
 #import "DeveloperMenuState.h"
 #import "ColorScheme.h"
+#import "UIImage+ImageUtilities.h"
 
 // Audio player
 #import "AudioTrack.h"

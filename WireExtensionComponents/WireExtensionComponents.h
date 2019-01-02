@@ -28,7 +28,6 @@ FOUNDATION_EXPORT const unsigned char WireExtensionComponentsVersionString[];
 // In this header, you should import all the public headers of your framework using statements like #import <WireExtensionComponents/PublicHeader.h>
 
 // Utils
-#import <WireExtensionComponents/UIImage+ImageUtilities.h>
 #import <WireExtensionComponents/Geometry.h>
 #import <WireExtensionComponents/KeyValueObserver.h>
 #import <WireExtensionComponents/metamacros.h>
