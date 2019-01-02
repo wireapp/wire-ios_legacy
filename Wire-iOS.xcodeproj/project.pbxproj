@@ -647,8 +647,6 @@
 		8786071B1D33E3FF00971A19 /* Geometry.h in Headers */ = {isa = PBXBuildFile; fileRef = 878607021D33E3FF00971A19 /* Geometry.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8786071D1D33E3FF00971A19 /* KeyValueObserver.h in Headers */ = {isa = PBXBuildFile; fileRef = 878607041D33E3FF00971A19 /* KeyValueObserver.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8786071E1D33E3FF00971A19 /* KeyValueObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 878607051D33E3FF00971A19 /* KeyValueObserver.m */; };
-		878607211D33E3FF00971A19 /* NetworkStatus.h in Headers */ = {isa = PBXBuildFile; fileRef = 878607081D33E3FF00971A19 /* NetworkStatus.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		878607221D33E3FF00971A19 /* NetworkStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 878607091D33E3FF00971A19 /* NetworkStatus.m */; };
 		8786072F1D33E3FF00971A19 /* metamacros.h in Headers */ = {isa = PBXBuildFile; fileRef = 878607171D33E3FF00971A19 /* metamacros.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		878607301D33E3FF00971A19 /* weakify.h in Headers */ = {isa = PBXBuildFile; fileRef = 878607181D33E3FF00971A19 /* weakify.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8787BDD91BF374420096B1B5 /* SettingsPropertyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8787BDD61BF374420096B1B5 /* SettingsPropertyTests.swift */; };
@@ -1392,6 +1390,8 @@
 		F156509B21DCED3000210504 /* CommonComponents-Base.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = F156509821DCED3000210504 /* CommonComponents-Base.xcconfig */; };
 		F156509C21DCEE4600210504 /* WireCommonComponents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1FEA14A21DCEB1700790A54 /* WireCommonComponents.framework */; };
 		F156509E21DCF1DA00210504 /* Dummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = F156509D21DCF1DA00210504 /* Dummy.swift */; };
+		F156509F21DCF2A100210504 /* NetworkStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 878607091D33E3FF00971A19 /* NetworkStatus.m */; };
+		F15650A021DCF2BB00210504 /* NetworkStatus.h in Headers */ = {isa = PBXBuildFile; fileRef = 878607081D33E3FF00971A19 /* NetworkStatus.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F15E9BFD1E4878AC00EA207F /* UINavigationController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15E9BFC1E4878AC00EA207F /* UINavigationController+Additions.swift */; };
 		F16426FE1FCC5A2C00D2ABFC /* TeamCreationStepDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16426FD1FCC5A2C00D2ABFC /* TeamCreationStepDescription.swift */; };
 		F16427001FCC5B3C00D2ABFC /* SetTeamNameStepDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16426FF1FCC5B3C00D2ABFC /* SetTeamNameStepDescription.swift */; };
@@ -3667,8 +3667,6 @@
 				878607021D33E3FF00971A19 /* Geometry.h */,
 				878607041D33E3FF00971A19 /* KeyValueObserver.h */,
 				878607051D33E3FF00971A19 /* KeyValueObserver.m */,
-				878607081D33E3FF00971A19 /* NetworkStatus.h */,
-				878607091D33E3FF00971A19 /* NetworkStatus.m */,
 				8795A5A61D34CF7A0024101B /* NSLayoutConstraint+Helpers.h */,
 				8795A5A71D34CF7A0024101B /* NSLayoutConstraint+Helpers.m */,
 				BF4A15D11D4900930051E8BA /* AutomationHelper.swift */,
@@ -6801,6 +6799,8 @@
 		F1FEA14B21DCEB1700790A54 /* WireCommonComponents */ = {
 			isa = PBXGroup;
 			children = (
+				878607081D33E3FF00971A19 /* NetworkStatus.h */,
+				878607091D33E3FF00971A19 /* NetworkStatus.m */,
 				F1FEA14C21DCEB1700790A54 /* WireCommonComponents.h */,
 				F1FEA14D21DCEB1700790A54 /* Info.plist */,
 				F156509D21DCF1DA00210504 /* Dummy.swift */,
@@ -6849,7 +6849,6 @@
 				8786072F1D33E3FF00971A19 /* metamacros.h in Headers */,
 				878607301D33E3FF00971A19 /* weakify.h in Headers */,
 				8786071B1D33E3FF00971A19 /* Geometry.h in Headers */,
-				878607211D33E3FF00971A19 /* NetworkStatus.h in Headers */,
 				CE06C93F1DF5C3D900497685 /* AVAsset+VideoConvert.h in Headers */,
 				1E8C253A1BBC279B00FC373F /* ProgressSpinner.h in Headers */,
 			);
@@ -6860,6 +6859,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F1FEA14E21DCEB1700790A54 /* WireCommonComponents.h in Headers */,
+				F15650A021DCF2BB00210504 /* NetworkStatus.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7380,7 +7380,6 @@
 				87F18BC81E02E7BF00C69D9B /* Reusable.swift in Sources */,
 				5EEFC1A920C01CA9007E8A79 /* UIView+Rounded.swift in Sources */,
 				87AAE4171E422E2300E1D13A /* FontScheme.swift in Sources */,
-				878607221D33E3FF00971A19 /* NetworkStatus.m in Sources */,
 				5423EF6D1E9B85C8007091DE /* DeveloperMenuState.m in Sources */,
 				16A5FE25215CB64D00AEEBBD /* UIFont+Weight.swift in Sources */,
 				CE8E4FAB1DF066750009F437 /* FileMetaDataGenerator.swift in Sources */,
@@ -8649,6 +8648,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F156509F21DCF2A100210504 /* NetworkStatus.m in Sources */,
 				F156509E21DCF1DA00210504 /* Dummy.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

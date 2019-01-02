@@ -22,6 +22,7 @@
 #import "AudioTrack.h"
 #import "AudioPlaylist.h"
 @import WireExtensionComponents;
+@import WireCommonComponents;
 
 static NSString* EmptyStringIfNil(NSString *string) {
     return string == nil ? @"" : string;
