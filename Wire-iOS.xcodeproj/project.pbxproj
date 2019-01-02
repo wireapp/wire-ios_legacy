@@ -633,7 +633,6 @@
 		8784B62A1D89448700AB71BD /* UIAlertController+NewSelfClients.m in Sources */ = {isa = PBXBuildFile; fileRef = 8784B6281D89448700AB71BD /* UIAlertController+NewSelfClients.m */; };
 		8784D4551E817D13007A6867 /* ConversationListTopBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8784D4541E817D13007A6867 /* ConversationListTopBar.swift */; };
 		8784D4571E81832F007A6867 /* ConversationListViewController+TopBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8784D4561E81832F007A6867 /* ConversationListViewController+TopBar.swift */; };
-		8784D4591E818AA4007A6867 /* CGFloat+Hairline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8784D4581E818AA4007A6867 /* CGFloat+Hairline.swift */; };
 		8786071B1D33E3FF00971A19 /* Geometry.h in Headers */ = {isa = PBXBuildFile; fileRef = 878607021D33E3FF00971A19 /* Geometry.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8786071D1D33E3FF00971A19 /* KeyValueObserver.h in Headers */ = {isa = PBXBuildFile; fileRef = 878607041D33E3FF00971A19 /* KeyValueObserver.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8786071E1D33E3FF00971A19 /* KeyValueObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 878607051D33E3FF00971A19 /* KeyValueObserver.m */; };
@@ -802,7 +801,6 @@
 		8FC8549D199245770008B66B /* NotificationWindowRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FC85256199245760008B66B /* NotificationWindowRootViewController.m */; };
 		8FC854CC199245770008B66B /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FC852BF199245760008B66B /* ProfileViewController.m */; };
 		8FC8563E19924CBA0008B66B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8FC8564019924CBA0008B66B /* Localizable.strings */; };
-		A9B02232209B6E4E00DF25D8 /* Hockey.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B02231209B6E4E00DF25D8 /* Hockey.swift */; };
 		AF36C59F1E9F67B600FADECC /* DraftListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF36C59E1E9F67B600FADECC /* DraftListViewController.swift */; };
 		AF36C5A11E9F67E400FADECC /* MessageComposeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF36C5A01E9F67E400FADECC /* MessageComposeViewController.swift */; };
 		AF36C5A31E9F681000FADECC /* DraftsRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF36C5A21E9F681000FADECC /* DraftsRootViewController.swift */; };
@@ -1394,6 +1392,8 @@
 		F15650C221DD0A8A00210504 /* BackendEnvironment+Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87AC33AD217F4FE400069C79 /* BackendEnvironment+Shared.swift */; };
 		F15650C321DD0A9B00210504 /* Bundle+Backend.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10D5A6921A83793008BBD29 /* Bundle+Backend.swift */; };
 		F15650C421DD0AB200210504 /* UIApplication+ShareExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F18998B52111F76500A7FC95 /* UIApplication+ShareExtension.swift */; };
+		F15650C521DD0C2800210504 /* Hockey.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B02231209B6E4E00DF25D8 /* Hockey.swift */; };
+		F15650C621DD0C5500210504 /* CGFloat+Hairline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8784D4581E818AA4007A6867 /* CGFloat+Hairline.swift */; };
 		F15E9BFD1E4878AC00EA207F /* UINavigationController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15E9BFC1E4878AC00EA207F /* UINavigationController+Additions.swift */; };
 		F16426FE1FCC5A2C00D2ABFC /* TeamCreationStepDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16426FD1FCC5A2C00D2ABFC /* TeamCreationStepDescription.swift */; };
 		F16427001FCC5B3C00D2ABFC /* SetTeamNameStepDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16426FF1FCC5B3C00D2ABFC /* SetTeamNameStepDescription.swift */; };
@@ -3672,11 +3672,9 @@
 				BF7EF5441D953B3F003E3999 /* Date+Format.swift */,
 				EFE8062A1FDFF24C006A0EE7 /* NSDate+Format.swift */,
 				CE8E4FC11DF17C240009F437 /* TextTransform.h */,
-				8784D4581E818AA4007A6867 /* CGFloat+Hairline.swift */,
 				87B7DAEA1E697C11005F5140 /* AccentColorProvider.h */,
 				876376891E8413D900B2CCF0 /* RawRepresentable+AllValues.swift */,
 				876CC8981E966C5C00F6BABC /* IteratorProtocol+Histogram.swift */,
-				A9B02231209B6E4E00DF25D8 /* Hockey.swift */,
 				5E672C932179D41100522E61 /* UserType+ZMUser.swift */,
 			);
 			path = Utilities;
@@ -6803,6 +6801,8 @@
 				7CCBE24C1FC72FE500CBD55D /* SharedConstants.swift */,
 				BFB332671E3A2D95003B0CD2 /* ExtensionSettings.swift */,
 				161541BB1E28FFAE00AC2FFB /* CircularProgressView.swift */,
+				A9B02231209B6E4E00DF25D8 /* Hockey.swift */,
+				8784D4581E818AA4007A6867 /* CGFloat+Hairline.swift */,
 				BF6EC9051EB1FC3D009D9A69 /* URL+Backup.swift */,
 				F18998B52111F76500A7FC95 /* UIApplication+ShareExtension.swift */,
 				87AC33AD217F4FE400069C79 /* BackendEnvironment+Shared.swift */,
@@ -7383,7 +7383,6 @@
 			files = (
 				87A6761A206D426900596625 /* CheckAnimationView.swift in Sources */,
 				5E52376920E7F12B00649241 /* EasingAnimation.swift in Sources */,
-				A9B02232209B6E4E00DF25D8 /* Hockey.swift in Sources */,
 				F174AAAF218A0B1B00AFCC4D /* ColorScheme.swift in Sources */,
 				87F18BC81E02E7BF00C69D9B /* Reusable.swift in Sources */,
 				5EEFC1A920C01CA9007E8A79 /* UIView+Rounded.swift in Sources */,
@@ -7393,7 +7392,6 @@
 				5EBF4A3721BE91490021CFFC /* String+Transform.swift in Sources */,
 				D5197FC1207BAD2100F4622B /* SpinnerSubtitleView.swift in Sources */,
 				8786071E1D33E3FF00971A19 /* KeyValueObserver.m in Sources */,
-				8784D4591E818AA4007A6867 /* CGFloat+Hairline.swift in Sources */,
 				164A55AE20EF8F4600AE62A6 /* ZMUser+Images.swift in Sources */,
 				5E73153B2195B4B500255A78 /* UIColor+Hex.swift in Sources */,
 				1E5E0D031B6B8EDB003B0CAC /* UIColor+Mixing.m in Sources */,
@@ -8641,6 +8639,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F15650C521DD0C2800210504 /* Hockey.swift in Sources */,
 				F156509F21DCF2A100210504 /* NetworkStatus.m in Sources */,
 				F15650C221DD0A8A00210504 /* BackendEnvironment+Shared.swift in Sources */,
 				F15650BF21DD08F100210504 /* AVAsset+VideoConvert.swift in Sources */,
@@ -8656,6 +8655,7 @@
 				F15650AE21DCFCED00210504 /* SettingsPropertyName.swift in Sources */,
 				F15650A621DCF81C00210504 /* WireStyleKit.swift in Sources */,
 				F15650AD21DCFC8700210504 /* AppLock.swift in Sources */,
+				F15650C621DD0C5500210504 /* CGFloat+Hairline.swift in Sources */,
 				F15650A321DCF63300210504 /* FilePreviewGenerator.swift in Sources */,
 				F15650BE21DD08F100210504 /* AVAsset+VideoConvert.m in Sources */,
 				F15650A221DCF60E00210504 /* FileMetaDataGenerator.swift in Sources */,
