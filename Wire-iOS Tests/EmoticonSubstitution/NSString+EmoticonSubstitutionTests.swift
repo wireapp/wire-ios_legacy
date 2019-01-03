@@ -45,19 +45,13 @@ final class NSString_EmoticonSubstitutionTests: XCTestCase {
         XCTAssertEqual(resolvedString, targetString)
     }
 
-    func createSut(fileName: String) {
-        let path = urlForResource(inTestBundleNamed: fileName).path
-
-        sut = EmoticonSubstitutionConfiguration(configurationFile:path)!
-    }
-
     func testThatSimpleSubstitutionWorks() {
         // Given
         let targetString = "Hello, my darling!😊 I love you <3!"
 
         let testString = "Hello, my darling!:) I love you <3!"
 
-        createSut(fileName: "emo-test-01.json")
+        sut = createEmoticonSubstitutionConfiguration(fileName: "emo-test-01.json")
 
         // When
         let resolvedString = testString.resolvingEmoticonShortcuts(configuration: sut)
@@ -74,7 +68,7 @@ final class NSString_EmoticonSubstitutionTests: XCTestCase {
         let testString = "Hello, my darling!:) I love you <3!"
         var resolvedString = testString
 
-        createSut(fileName: "emo-test-03.json")
+        sut = createEmoticonSubstitutionConfiguration(fileName: "emo-test-03.json")
 
         // When
         resolvedString.resolveEmoticonShortcuts(in: NSRange(location: 0, length: 22), configuration: sut)
@@ -87,7 +81,7 @@ final class NSString_EmoticonSubstitutionTests: XCTestCase {
         // Given
         let targetString = "<3 Lorem Ipsum Dolor 😈Ame😊 😊"
 
-        createSut(fileName: "emo-test-03.json")
+        sut = createEmoticonSubstitutionConfiguration(fileName: "emo-test-03.json")
 
         let testString = "<3 Lorem Ipsum Dolor }:-)Ame:) :)"
         var resolvedString = testString
@@ -103,7 +97,7 @@ final class NSString_EmoticonSubstitutionTests: XCTestCase {
         // Given
         let targetString = "Hello, my darling!😊 I love you <3!"
 
-        createSut(fileName: "emo-test-03.json")
+        sut = createEmoticonSubstitutionConfiguration(fileName: "emo-test-03.json")
 
         let testString = "Hello, my darling!:) I love you <3!"
         var resolvedString = testString

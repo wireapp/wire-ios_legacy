@@ -32,3 +32,4 @@
 #import "Message+UI.h"
 #import "MockConversation.h"
 #import "MockConversationFactory.h"
+#import "EmoticonSubstitutionConfiguration+Tests.h"
