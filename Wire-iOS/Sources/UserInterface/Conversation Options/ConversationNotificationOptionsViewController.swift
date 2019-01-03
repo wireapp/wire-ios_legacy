@@ -27,8 +27,6 @@ class ConversationNotificationOptionsViewController: UIViewController {
     private var observerToken: Any! = nil
     
     public weak var dismisser: ViewControllerDismisser?
-
-    private var footerView = SectionFooter(frame: .zero)
     
     private let collectionViewLayout = UICollectionViewFlowLayout()
     
@@ -71,6 +69,7 @@ class ConversationNotificationOptionsViewController: UIViewController {
         collectionViewLayout.minimumLineSpacing = 0
         
         CheckmarkCell.register(in: collectionView)
+        collectionView.register(SectionHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "SectionHeader")
         collectionView.register(SectionFooter.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: "SectionFooter")
     }
     
@@ -109,17 +108,22 @@ extension ConversationNotificationOptionsViewController: UICollectionViewDelegat
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        
-        let view = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: "SectionFooter", for: indexPath)
-        (view as? SectionFooter)?.titleLabel.text = "group_details.notification_options_cell.description".localized
-        return view
+        if kind == UICollectionView.elementKindSectionHeader {
+            let view = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "SectionHeader", for: indexPath)
+            return view
+        } else {
+            guard let view = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: "SectionFooter", for: indexPath) as? SectionFooter else { return UICollectionReusableView(frame: .zero) }
+            view.titleLabel.text = "group_details.notification_options_cell.description".localized
+            return view
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
         
-        footerView.titleLabel.text = "group_details.notification_options_cell.description".localized
-        footerView.size(fittingWidth: collectionView.bounds.width)
-        return footerView.bounds.size
+        guard let view = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: "SectionFooter", for: IndexPath(item: 0, section: section)) as? SectionFooter else { return .zero }
+        view.titleLabel.text = "group_details.notification_options_cell.description".localized
+        view.size(fittingWidth: collectionView.bounds.width)
+        return view.bounds.size
     }
     
     // MARK: Saving Changes
