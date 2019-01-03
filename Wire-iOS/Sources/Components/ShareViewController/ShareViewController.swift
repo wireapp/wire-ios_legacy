@@ -239,13 +239,3 @@ public class ShareViewController<D: ShareDestination, S: Shareable>: UIViewContr
         updatePopoverFrame()
     }
 }
-///TODO: mv to new file
-extension UIViewController {
-    func updatePopoverFrame() {
-        if let popoverPresenter = self.popoverPresentationController?.presentingViewController as? PopoverPresenter {
-            popoverPresenter.updatePopoverSourceRect()
-        }
-
-        popoverPresentationController?.containerView?.setNeedsLayout()
-    }
-}

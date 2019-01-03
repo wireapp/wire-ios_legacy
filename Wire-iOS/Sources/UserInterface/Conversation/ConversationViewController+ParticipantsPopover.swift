@@ -51,6 +51,9 @@ extension ConversationViewController: UIPopoverPresentationControllerDelegate {
         profileViewController.preferredContentSize = CGSize.IPadPopover.preferredContentSize
 
         profileViewController.delegate = self
+
+        self.view.window?.endEditing(true)
+
         createAndPresentParticipantsPopoverController(with: frame, from: view!, contentViewController: profileViewController.wrapInNavigationController())
     }
 
