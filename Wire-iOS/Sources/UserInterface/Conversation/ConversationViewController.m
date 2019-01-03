@@ -555,23 +555,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     self.inputBarController.inputBarOverlapsContent = ! contentViewController.isScrolledToBottom;
 }
 
-//- (void)didTapOnUserAvatar:(id<UserType>)user view:(UIView *)view frame:(CGRect)frame
-//{
-//    if (! user || ! view) {
-//        return;
-//    }
-//
-//    ProfileViewController *profileViewController = [[ProfileViewController alloc] initWithUser:(id)user
-//                                                                      conversation:self.conversation];
-//
-//    ///TODO: preferredContentSize
-//
-//    profileViewController.delegate = self;
-//    [self createAndPresentParticipantsPopoverControllerWithRect:frame
-//                                                       fromView:view
-//                                          contentViewController:profileViewController.wrapInNavigationController];
-//}
-
 - (void)conversationContentViewController:(ConversationContentViewController *)contentViewController willDisplayActiveMediaPlayerForMessage:(id<ZMConversationMessage>)message
 {
     [self.conversationBarController dismissBar:self.mediaBarViewController];

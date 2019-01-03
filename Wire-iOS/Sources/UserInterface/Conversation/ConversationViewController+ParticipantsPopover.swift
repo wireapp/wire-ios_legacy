@@ -40,7 +40,6 @@ extension ConversationViewController: UIPopoverPresentationControllerDelegate {
         rootViewController.present(controller, animated: true)
     }
 
-    ///TODO: dismiss keyboard since no input field in popover
     @objc
     func didTap(onUserAvatar user: UserType?, view: UIView?, frame: CGRect) {
         if user == nil || view == nil {
