@@ -184,6 +184,7 @@
 #import "MessageType.h"
 #import "NSString+EmoticonSubstitution.h"
 #import "ZMConversationMessageWindow+Formatting.h"
+#import "EmoticonSubstitutionConfiguration.h"
 
 // Audio player
 #import "AudioTrack.h"

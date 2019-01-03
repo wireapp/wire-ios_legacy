@@ -20,40 +20,40 @@
 #import "NSString+EmoticonSubstitution.h"
 #import "EmoticonSubstitutionConfiguration.h"
 
-@implementation NSString (EmoticonSubstitution)
-
-- (NSString *)stringByResolvingEmoticonShortcuts
-{
-    NSMutableString *resultString = [self mutableCopy];
-    [resultString resolveEmoticonShortcuts];
-    return resultString;
-}
-
-@end
+//@implementation NSString (EmoticonSubstitution)
+//
+//- (NSString *)stringByResolvingEmoticonShortcuts
+//{
+//    NSMutableString *resultString = [self mutableCopy];
+//    [resultString resolveEmoticonShortcuts];
+//    return resultString;
+//}
+//
+//@end
 
 
 
 @implementation NSMutableString (EmoticonSubstitution)
 
-- (void)resolveEmoticonShortcutsInRange:(NSRange)range
-{
-    EmoticonSubstitutionConfiguration *configuration = [EmoticonSubstitutionConfiguration sharedInstance];
-    NSArray *shortcuts = configuration.shortcuts;
-    for (NSString *shortcut in shortcuts) {
-        NSString *emoticon = [configuration emoticonForShortcut:shortcut];
-        NSUInteger howManyTimesReplaced = [self replaceOccurrencesOfString:shortcut
-                                                                withString:emoticon
-                                                                   options:NSLiteralSearch
-                                                                     range:range];
-        if (howManyTimesReplaced) {
-            range = NSMakeRange(range.location, MAX(range.length - (shortcut.length - emoticon.length) * howManyTimesReplaced,  0UL));
-        }
-    }
-}
+//- (void)resolveEmoticonShortcutsInRange:(NSRange)range
+//{
+//    EmoticonSubstitutionConfiguration *configuration = [EmoticonSubstitutionConfiguration sharedInstance];
+//    NSArray *shortcuts = configuration.shortcuts;
+//    for (NSString *shortcut in shortcuts) {
+//        NSString *emoticon = [configuration emoticonForShortcut:shortcut];
+//        NSUInteger howManyTimesReplaced = [self replaceOccurrencesOfString:shortcut
+//                                                                withString:emoticon
+//                                                                   options:NSLiteralSearch
+//                                                                     range:range];
+//        if (howManyTimesReplaced) {
+//            range = NSMakeRange(range.location, MAX(range.length - (shortcut.length - emoticon.length) * howManyTimesReplaced,  0UL));
+//        }
+//    }
+//}
 
-- (void)resolveEmoticonShortcuts
-{
-    [self resolveEmoticonShortcutsInRange:NSMakeRange(0, self.length)];
-}
+//- (void)resolveEmoticonShortcuts
+//{
+//    [self resolveEmoticonShortcutsInRange:NSMakeRange(0, self.length)];
+//}
 
 @end

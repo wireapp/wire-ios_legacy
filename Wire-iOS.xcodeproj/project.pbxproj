@@ -1158,6 +1158,8 @@
 		EF1FCE5021B69381003E0BE2 /* ReadReceiptViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1FCE4E21B69381003E0BE2 /* ReadReceiptViewModelTests.swift */; };
 		EF1FCE5221B6A84B003E0BE2 /* PhoneNumberViewController+RegistrationTextFieldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1FCE5121B6A84B003E0BE2 /* PhoneNumberViewController+RegistrationTextFieldDelegate.swift */; };
 		EF1FDC7C21DE0E4100C9CEB1 /* UIViewController+PopoverFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1FDC7B21DE0E4100C9CEB1 /* UIViewController+PopoverFrame.swift */; };
+		EF1FDC7E21DE255C00C9CEB1 /* NSString+EmoticonSubstitutionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1FDC7D21DE255C00C9CEB1 /* NSString+EmoticonSubstitutionTests.swift */; };
+		EF1FDC8021DE47AB00C9CEB1 /* NSString+EmoticonSubstitution.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1FDC7F21DE47AB00C9CEB1 /* NSString+EmoticonSubstitution.swift */; };
 		EF2127031FB9DFE300625A9B /* CheckmarkView.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126B71FB9DFE300625A9B /* CheckmarkView.m */; };
 		EF2127041FB9DFE300625A9B /* RegistrationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126B81FB9DFE300625A9B /* RegistrationViewController.m */; };
 		EF2127051FB9DFE300625A9B /* RegistrationTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126B91FB9DFE300625A9B /* RegistrationTextField.m */; };
@@ -2924,6 +2926,8 @@
 		EF1FCE4E21B69381003E0BE2 /* ReadReceiptViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadReceiptViewModelTests.swift; sourceTree = "<group>"; };
 		EF1FCE5121B6A84B003E0BE2 /* PhoneNumberViewController+RegistrationTextFieldDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PhoneNumberViewController+RegistrationTextFieldDelegate.swift"; sourceTree = "<group>"; };
 		EF1FDC7B21DE0E4100C9CEB1 /* UIViewController+PopoverFrame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+PopoverFrame.swift"; sourceTree = "<group>"; };
+		EF1FDC7D21DE255C00C9CEB1 /* NSString+EmoticonSubstitutionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSString+EmoticonSubstitutionTests.swift"; sourceTree = "<group>"; };
+		EF1FDC7F21DE47AB00C9CEB1 /* NSString+EmoticonSubstitution.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSString+EmoticonSubstitution.swift"; sourceTree = "<group>"; };
 		EF2126B71FB9DFE300625A9B /* CheckmarkView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckmarkView.m; sourceTree = "<group>"; };
 		EF2126B81FB9DFE300625A9B /* RegistrationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegistrationViewController.m; sourceTree = "<group>"; };
 		EF2126B91FB9DFE300625A9B /* RegistrationTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegistrationTextField.m; sourceTree = "<group>"; };
@@ -3542,6 +3546,7 @@
 				EFD5CF4C2189C5F700BEC99E /* NSMutableAttributedString+ReplaceEmojiTests.swift */,
 				1E18C2BA1AFBB7E00043F3CF /* EmoticonSubstitutionConfigurationTests.m */,
 				1E4B89E01B01E9DD0011BF43 /* NSString+EmoticonSubstitutionTests.m */,
+				EF1FDC7D21DE255C00C9CEB1 /* NSString+EmoticonSubstitutionTests.swift */,
 				1E8772261B0C8B87005BDDC6 /* Utils */,
 				1E18C2BD1AFBB8590043F3CF /* emo-test-01.json */,
 				1E18C2C01AFBC0AB0043F3CF /* emo-test-02.json */,
@@ -5404,6 +5409,7 @@
 				871BC0251D34F5D200DF0793 /* EmoticonSubstitutionConfiguration.m */,
 				871BC0261D34F5D200DF0793 /* NSString+EmoticonSubstitution.h */,
 				871BC0271D34F5D200DF0793 /* NSString+EmoticonSubstitution.m */,
+				EF1FDC7F21DE47AB00C9CEB1 /* NSString+EmoticonSubstitution.swift */,
 				871BC0331D34F60700DF0793 /* NSAttributedString+Wire.h */,
 				871BC0341D34F60700DF0793 /* NSAttributedString+Wire.m */,
 				871BC0351D34F60700DF0793 /* NSDate+Format.h */,
@@ -8118,6 +8124,7 @@
 				D525426D209363AF001C04C1 /* IconLabelButton.swift in Sources */,
 				871BC0071D34F56300DF0793 /* Application+runDuration.m in Sources */,
 				F12CDAEB1E43886A00CEFCEB /* DecriptionHeaderView.swift in Sources */,
+				EF1FDC8021DE47AB00C9CEB1 /* NSString+EmoticonSubstitution.swift in Sources */,
 				5E8DA751211AEFC800360979 /* AuthenticationStatusProvider.swift in Sources */,
 				871BC3641D34F94200DF0793 /* SoundcloudService.m in Sources */,
 				872E22201F5EA4B6007729D4 /* ProfileView.swift in Sources */,
@@ -8310,6 +8317,7 @@
 				5E97C30420F4CFFF00C806B4 /* MockZiphyClient.swift in Sources */,
 				BF16FC4C1DAFCA0000FF4325 /* EphemeralKeyboardViewControllerTests.swift in Sources */,
 				87AE8BDC207B99540058715E /* BackupPasswordViewControllerTests.swift in Sources */,
+				EF1FDC7E21DE255C00C9CEB1 /* NSString+EmoticonSubstitutionTests.swift in Sources */,
 				BF27AE4E1E9E513400809A2B /* MessageDraftTests.swift in Sources */,
 				5EC16BA120EBB93A00955156 /* MockProxyRequester.swift in Sources */,
 				F1F5E57E216CC94A006BF3D5 /* ConversationStatusLineTests+Muting.swift in Sources */,
