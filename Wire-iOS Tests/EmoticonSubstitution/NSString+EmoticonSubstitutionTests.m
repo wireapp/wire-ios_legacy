@@ -28,19 +28,7 @@
 
 @implementation NSString_EmoticonSubstitution
 
-- (void)testThatAllEmoticonSubstitutionForNonMockedConfigurationWorks {
-    // Given
-    NSString *targetString =
-        @"😊😊😄😄😀😀😎😎😎😞😞😉😉😉😉😕😛😛😛😛😜😜😜😜😮😮😇😇😇😇😏😠😠😡😈😈😈😈😢😢😢😂😂😘😘😘😐😐😳😶😶😶😶🙌❤💔";
-    NSString *string = @":):-):D:-D:d:-dB-)b-)8-):(:-(;);-);-];]:-/:P:-P:p:-p;P;-P;p;-p:o:-oO:)O:-)o:)o:-);^):-||:@>:(}:-)}:)3:-)3:):'-(:'(;(:'-):'):*:^*:-*:-|:|:$:-X:X:-#:#\\o/<3</3";
-    
-    // When
-    NSString *resolvedString = [string stringByResolvingEmoticonShortcuts];
-    
-    // Then
-    XCTAssertEqualObjects(resolvedString, targetString);
-}
-
+/*
 - (void)testThatSimpleSubstitutionWorks {
     // Given
     NSString *targetString = @"Hello, my darling!😊 I love you <3!";
@@ -56,8 +44,10 @@
 
     // Then
     XCTAssertEqualObjects(resolvedString, targetString);
-}
+}*/
 
+///TODO:
+/*
 - (void)testThatSubstitutionInSpecificRangeWorks {
     // Given
     NSString *targetString = @"Hello, my darling!😊 I love you <3!";
@@ -111,5 +101,5 @@
     // Then
     XCTAssertEqualObjects(resolvedString, targetString);
 }
-
+*/
 @end

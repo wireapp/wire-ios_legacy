@@ -19,16 +19,17 @@
 
 #import <Foundation/Foundation.h>
 
-@interface NSString (EmoticonSubstitution)
+//@interface NSString (EmoticonSubstitution)
+//
+//- (NSString *)stringByResolvingEmoticonShortcuts;
+//
+//@end
 
-- (NSString *)stringByResolvingEmoticonShortcuts;
-
-@end
-
-
+/*
 @interface NSMutableString (EmoticonSubstitution)
 
 - (void)resolveEmoticonShortcutsInRange:(NSRange)range;
 - (void)resolveEmoticonShortcuts;
 
 @end
+*/

@@ -43,6 +43,16 @@ extension String {
 
         return String(mutableString)
     }
+
+    mutating func resolveEmoticonShortcuts(in range: NSRange,
+                                  configuration: EmoticonSubstitutionConfiguration = EmoticonSubstitutionConfiguration.sharedInstance()) {
+        let mutableString = NSMutableString(string: self)
+
+        mutableString.resolveEmoticonShortcuts(in: range, configuration: configuration)
+
+        self = String(mutableString)
+//        return String(mutableString)
+    }
 }
 
 extension NSMutableString {
@@ -58,15 +68,28 @@ extension NSMutableString {
         guard let shortcuts = configuration.shortcuts as? [String] else { return }
 
         var mutableRange = range
+//        var mutableSelf = NSMutableString(string: self)
+
         for shortcut in shortcuts {
             let emoticon = configuration.emoticon(forShortcut: shortcut)!
 
-            let howManyTimesReplaced = replaceOccurrences(of: shortcut, with: emoticon, options: .literal, range: mutableRange)
+                        let emoticonNS = NSString(string: emoticon)
+                        let shortcutNS = NSString(string: shortcut)
+
+            let howManyTimesReplaced = (self as NSMutableString).replaceOccurrences(of: shortcut,
+                                                          with: emoticon,
+                                                          options: .literal,
+                                                          range: mutableRange)
+
+
 
             if howManyTimesReplaced > 0 {
-                mutableRange = NSRange(location: range.location,
-                                       length: max(range.length - (shortcut.count - emoticon.count) * howManyTimesReplaced, 0))
+                let length = max(mutableRange.length - (shortcutNS.length - emoticonNS.length) * howManyTimesReplaced, 0)
+                mutableRange = NSRange(location: mutableRange.location,
+                                       length: length)
             }
         }
+
+//        self = mutableSelf
     }
 }

@@ -21,15 +21,14 @@ import XCTest
 
 final class NSString_EmoticonSubstitutionTests: XCTestCase {
     
-    //    var sut: NSString_EmoticonSubstitutionTestsTests!
+    var sut: EmoticonSubstitutionConfiguration!
 
     override func setUp() {
         super.setUp()
-        //        sut = NSString_EmoticonSubstitutionTestsTests()
     }
     
     override func tearDown() {
-        //        sut = nil
+        sut = nil
         super.tearDown()
     }
 
@@ -45,23 +44,75 @@ final class NSString_EmoticonSubstitutionTests: XCTestCase {
         // Then
         XCTAssertEqual(resolvedString, targetString)
     }
-    
+
+    func createSut(fileName: String) {
+        let path = urlForResource(inTestBundleNamed: fileName).path
+
+        sut = EmoticonSubstitutionConfiguration(configurationFile:path)!
+    }
+
     func testThatSimpleSubstitutionWorks() {
         // Given
         let targetString = "Hello, my darling!😊 I love you <3!"
-        let fileName = "emo-test-01.json"
-        let path = urlForResource(inTestBundleNamed: fileName).path
-
-        let emoticonSubstitutionConfiguration = EmoticonSubstitutionConfiguration(configurationFile:path)!
 
         let testString = "Hello, my darling!:) I love you <3!"
 
+        createSut(fileName: "emo-test-01.json")
+
         // When
-        let resolvedString = testString.resolvingEmoticonShortcuts(configuration: emoticonSubstitutionConfiguration)
+        let resolvedString = testString.resolvingEmoticonShortcuts(configuration: sut)
 
         // Then
         XCTAssertEqual(resolvedString, targetString)
     }
 
+
+    func testThatSubstitutionInSpecificRangeWorks() {
+        // Given
+        let targetString = "Hello, my darling!😊 I love you <3!"
+
+        let testString = "Hello, my darling!:) I love you <3!"
+        var resolvedString = testString
+
+        createSut(fileName: "emo-test-03.json")
+
+        // When
+        resolvedString.resolveEmoticonShortcuts(in: NSRange(location: 0, length: 22), configuration: sut)
+
+        // Then
+        XCTAssertEqual(resolvedString, targetString)
+    }
+
+    func testThatSubstitutionInTailRangeWorks() {
+        // Given
+        let targetString = "<3 Lorem Ipsum Dolor 😈Ame😊 😊"
+
+        createSut(fileName: "emo-test-03.json")
+
+        let testString = "<3 Lorem Ipsum Dolor }:-)Ame:) :)"
+        var resolvedString = testString
+
+        // When
+        resolvedString.resolveEmoticonShortcuts(in: NSRange(location: 20, length: 13), configuration: sut)
+
+        // Then
+        XCTAssertEqual(resolvedString, targetString)
+    }
+
+    func testThatSubstitutionInMiddleRangeWorks() {
+        // Given
+        let targetString = "Hello, my darling!😊 I love you <3!"
+
+        createSut(fileName: "emo-test-03.json")
+
+        let testString = "Hello, my darling!:) I love you <3!"
+        var resolvedString = testString
+
+        // When
+        resolvedString.resolveEmoticonShortcuts(in: NSRange(location: 10, length: 22), configuration: sut)
+
+        // Then
+        XCTAssertEqual(resolvedString, targetString)
+    }
 }
 
