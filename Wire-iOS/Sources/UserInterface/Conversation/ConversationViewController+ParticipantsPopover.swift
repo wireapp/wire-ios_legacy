@@ -52,7 +52,7 @@ extension ConversationViewController: UIPopoverPresentationControllerDelegate {
 
         profileViewController.delegate = self
 
-        self.view.window?.endEditing(true)
+        endEditing()
 
         createAndPresentParticipantsPopoverController(with: frame, from: view!, contentViewController: profileViewController.wrapInNavigationController())
     }

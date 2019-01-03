@@ -150,7 +150,7 @@ extension ConversationContentViewController: UIAdaptivePresentationControllerDel
         guard let message = message else { return }
         guard let rootViewController = UIApplication.shared.keyWindow?.rootViewController as? PopoverPresenter & UIViewController else { return }
 
-        view.window?.endEditing(true)
+        endEditing()
         
         let conversations = ZMConversationList.conversationsIncludingArchived(inUserSession: ZMUserSession.shared()!).shareableConversations(excluding: message.conversation!)
 

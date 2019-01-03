@@ -71,12 +71,12 @@ final class DraftsRootViewController: UISplitViewController {
 extension DraftsRootViewController: MessageComposeViewControllerDelegate, UIAdaptivePresentationControllerDelegate {
 
     func composeViewControllerWantsToDismiss(_ controller: MessageComposeViewController) {
-        view.window?.endEditing(true)
+        endEditing()
         presentingViewController?.dismiss(animated: true, completion: nil)
     }
 
     func composeViewController(_ controller: MessageComposeViewController, wantsToSendDraft draft: MessageDraft) {
-        view.window?.endEditing(true)
+        endEditing()
         let conversations = ZMConversationList.conversationsIncludingArchived(inUserSession: ZMUserSession.shared()!).shareableConversations()
         let shareViewController = ShareViewController(shareable: draft, destinations: conversations, showPreview: false)
         let keyboardAvoiding = KeyboardAvoidingViewController(viewController: shareViewController)

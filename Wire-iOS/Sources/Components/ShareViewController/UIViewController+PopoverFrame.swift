@@ -29,4 +29,8 @@ extension UIViewController {
 
         popoverPresentationController?.containerView?.setNeedsLayout()
     }
+
+    func endEditing() {
+        view.window?.endEditing(true)
+    }
 }
