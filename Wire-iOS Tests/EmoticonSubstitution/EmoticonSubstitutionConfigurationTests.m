@@ -20,7 +20,6 @@
 @import XCTest;
 #import "EmoticonSubstitutionConfiguration.h"
 #import "EmoticonSubstitutionConfiguration+Tests.h"
-#import "NSString+EmoticonSubstitution.h"
 #import "EmoticonSubstitutionConfigurationMocks.h"
 
 @interface EmoticonSubstitutionConfigurationTests : XCTestCase

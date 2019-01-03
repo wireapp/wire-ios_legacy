@@ -178,11 +178,9 @@
 #import "UIAlertController+Wire.h"
 #import "NetworkConditionHelper.h"
 #import "SoundEventRulesWatchDog.h"
-#import "NSString+EmoticonSubstitution.h"
 #import "KeyboardFrameObserver+iOS.h"
 #import "UIColor+Mixing.h"
 #import "MessageType.h"
-#import "NSString+EmoticonSubstitution.h"
 #import "ZMConversationMessageWindow+Formatting.h"
 #import "EmoticonSubstitutionConfiguration.h"
 

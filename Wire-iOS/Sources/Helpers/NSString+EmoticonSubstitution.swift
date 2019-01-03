@@ -17,23 +17,6 @@
 //
 
 import Foundation
-/*
-- (void)resolveEmoticonShortcutsInRange:(NSRange)range
-{
-    EmoticonSubstitutionConfiguration *configuration = [EmoticonSubstitutionConfiguration sharedInstance];
-    NSArray *shortcuts = configuration.shortcuts;
-    for (NSString *shortcut in shortcuts) {
-        NSString *emoticon = [configuration emoticonForShortcut:shortcut];
-        NSUInteger howManyTimesReplaced = [self replaceOccurrencesOfString:shortcut
-            withString:emoticon
-            options:NSLiteralSearch
-            range:range];
-        if (howManyTimesReplaced) {
-            range = NSMakeRange(range.location, MAX(range.length - (shortcut.length - emoticon.length) * howManyTimesReplaced,  0UL));
-        }
-    }
-}
-*/
 
 extension String {
     func resolvingEmoticonShortcuts(configuration: EmoticonSubstitutionConfiguration = EmoticonSubstitutionConfiguration.sharedInstance()) -> String {
@@ -45,13 +28,12 @@ extension String {
     }
 
     mutating func resolveEmoticonShortcuts(in range: NSRange,
-                                  configuration: EmoticonSubstitutionConfiguration = EmoticonSubstitutionConfiguration.sharedInstance()) {
+                                           configuration: EmoticonSubstitutionConfiguration = EmoticonSubstitutionConfiguration.sharedInstance()) {
         let mutableString = NSMutableString(string: self)
 
         mutableString.resolveEmoticonShortcuts(in: range, configuration: configuration)
 
         self = String(mutableString)
-//        return String(mutableString)
     }
 }
 
@@ -65,31 +47,25 @@ extension NSMutableString {
     ///   - configuration: a EmoticonSubstitutionConfiguration object for injection
     func resolveEmoticonShortcuts(in range: NSRange,
                                   configuration: EmoticonSubstitutionConfiguration = EmoticonSubstitutionConfiguration.sharedInstance()) {
-        guard let shortcuts = configuration.shortcuts as? [String] else { return }
+        guard let shortcuts = configuration.shortcuts as? [NSString] else { return }
 
         var mutableRange = range
-//        var mutableSelf = NSMutableString(string: self)
 
         for shortcut in shortcuts {
-            let emoticon = configuration.emoticon(forShortcut: shortcut)!
+            let emoticon = NSString(string: configuration.emoticon(forShortcut: shortcut as String))
 
-                        let emoticonNS = NSString(string: emoticon)
-                        let shortcutNS = NSString(string: shortcut)
-
-            let howManyTimesReplaced = (self as NSMutableString).replaceOccurrences(of: shortcut,
-                                                          with: emoticon,
-                                                          options: .literal,
-                                                          range: mutableRange)
+            let howManyTimesReplaced = (self as NSMutableString).replaceOccurrences(of: shortcut as String,
+                                                                                    with: emoticon as String,
+                                                                                    options: .literal,
+                                                                                    range: mutableRange)
 
 
 
             if howManyTimesReplaced > 0 {
-                let length = max(mutableRange.length - (shortcutNS.length - emoticonNS.length) * howManyTimesReplaced, 0)
+                let length = max(mutableRange.length - (shortcut.length - emoticon.length) * howManyTimesReplaced, 0)
                 mutableRange = NSRange(location: mutableRange.location,
                                        length: length)
             }
         }
-
-//        self = mutableSelf
     }
 }
