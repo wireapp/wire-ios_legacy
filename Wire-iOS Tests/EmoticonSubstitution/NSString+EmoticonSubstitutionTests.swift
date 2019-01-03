@@ -19,6 +19,26 @@
 import XCTest
 @testable import Wire
 
+
+extension String {
+    func resolvingEmoticonShortcuts(configuration: EmoticonSubstitutionConfiguration = EmoticonSubstitutionConfiguration.sharedInstance()) -> String {
+        let mutableString = NSMutableString(string: self)
+
+        mutableString.resolveEmoticonShortcuts(in: NSRange(location: 0, length: count), configuration: configuration)
+
+        return String(mutableString)
+    }
+
+    mutating func resolveEmoticonShortcuts(in range: NSRange,
+                                           configuration: EmoticonSubstitutionConfiguration = EmoticonSubstitutionConfiguration.sharedInstance()) {
+        let mutableString = NSMutableString(string: self)
+
+        mutableString.resolveEmoticonShortcuts(in: range, configuration: configuration)
+
+        self = String(mutableString)
+    }
+}
+
 final class NSString_EmoticonSubstitutionTests: XCTestCase {
     
     var sut: EmoticonSubstitutionConfiguration!
