@@ -259,7 +259,8 @@ class ConversationSystemMessageCellDescription {
             return [AnyConversationMessageCellDescription(newClientCell)]
 
         case .ignoredClient:
-            let ignoredClientCell = ConversationLegacyCellDescription<ConversationIgnoredDeviceCell>(message: message, layoutProperties: layoutProperties)
+            guard let user = systemMessageData.users.first else { fallthrough }
+            let ignoredClientCell = ConversationIgnoredDeviceSystemMessageCellDescription(message: message, data: systemMessageData, user: user)
             return [AnyConversationMessageCellDescription(ignoredClientCell)]
 
         case .potentialGap, .reactivatedDevice:
@@ -458,6 +459,59 @@ class ConversationVerifiedSystemMessageSectionDescription: ConversationMessageCe
         configuration = View.Configuration(icon: WireStyleKit.imageOfShieldverified, attributedText: title, showLine: true)
         actionController = nil
     }
+}
+
+class ConversationIgnoredDeviceSystemMessageCellDescription: ConversationMessageCellDescription {
+    
+    typealias View = NewDeviceSystemMessageCell
+    let configuration: View.Configuration
+    
+    var message: ZMConversationMessage?
+    weak var delegate: ConversationCellDelegate?
+    weak var actionController: ConversationMessageActionController?
+    
+    var showEphemeralTimer: Bool = false
+    var topMargin: Float = 0
+    
+    let isFullWidth: Bool = true
+    let supportsActions: Bool = false
+    let containsHighlightableContent: Bool = false
+    
+    let accessibilityIdentifier: String? = nil
+    let accessibilityLabel: String? = nil
+    
+    init(message: ZMConversationMessage, data: ZMSystemMessageData, user: ZMUser) {
+        let title = ConversationIgnoredDeviceSystemMessageCellDescription.makeAttributedString(systemMessage: data, user: user)
+        
+        configuration =  View.Configuration(attributedText: title, showIcon: true, linkTarget: .user(user))
+        actionController = nil
+    }
+    
+    private static func makeAttributedString(systemMessage: ZMSystemMessageData, user: ZMUser) -> NSAttributedString {
+        
+        let youString = "content.system.you_started".localized
+        let deviceString : String
+        
+        if user.isSelfUser == true {
+            deviceString = "content.system.your_devices".localized
+        } else {
+            deviceString = String(format: "content.system.other_devices".localized, user.displayName)
+        }
+        
+        let baseString = "content.system.unverified".localized
+        let endResult = String(format: baseString, youString, deviceString)
+        
+        let youRange = (endResult as NSString).range(of: youString)
+        let deviceRange = (endResult as NSString).range(of: deviceString)
+        
+        let attributedString = NSMutableAttributedString(string: endResult)
+        attributedString.addAttributes([.font: UIFont.mediumFont, .foregroundColor: UIColor.from(scheme: .textForeground)], range:NSRange(location: 0, length: endResult.count))
+        attributedString.addAttributes([.font: UIFont.mediumSemiboldFont, .foregroundColor: UIColor.from(scheme: .textForeground)], range: youRange)
+        attributedString.addAttributes([.font: UIFont.mediumFont, .link: link], range: deviceRange)
+        
+        return  NSAttributedString(attributedString: attributedString)
+    }
+    
 }
 
 class ConversationCannotDecryptSystemMessageCellDescription: ConversationMessageCellDescription {
