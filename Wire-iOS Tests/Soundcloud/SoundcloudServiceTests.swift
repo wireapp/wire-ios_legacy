@@ -21,26 +21,66 @@ import XCTest
 
 final class SoundcloudServiceTests23123: XCTestCase {
 
-    func testThatloadAudioResourceFromURLConstructsValidRequest_swift() {
+    var sut: SoundcloudService!
+    var sessionMock: MockProxiedURLRequester!
+
+    override func setUp() {
+        super.setUp()
+
+        sessionMock = MockProxiedURLRequester()
+        sut = SoundcloudService(userSession: sessionMock)!
+    }
+
+    override func tearDown() {
+        super.tearDown()
+
+        sut = nil
+        sessionMock = nil
+    }
+
+    func testThatloadAudioResourceFromURLConstructsValidRequest() {
         // given
         let url = URL(string: "https://soundcloud.com/goldenbest/ho-ga-toppar-djupa-basar")
         let expectedPath = "/resolve?url=\(url?.absoluteString ?? "")"
 
-        // expect
+        // when
+        sut.loadAudioResource(from: url, completion: nil)
 
-        let sessionMock = MockProxiedURLRequester()
+        guard let proxyRequest = sessionMock.proxyRequest else {
+            XCTFail("proxyRequest should have value after loadAudioResource is called")
+            return
+        }
 
-        let request = sessionMock.doRequest(withPath: expectedPath,
-                               method: ZMTransportRequestMethod.methodGET,
-                               type: ProxiedRequestType.soundcloud,
-                               completionHandler: {_,_,_ in })
+        // then
+        XCTAssertEqual(proxyRequest.type, ProxiedRequestType.soundcloud)
+        XCTAssertEqual(proxyRequest.path, expectedPath)
+        XCTAssertEqual(proxyRequest.method, ZMTransportRequestMethod.methodGET)
+    }
+
+    func testThatItIgnoresInconsistentResponse() {
+        // given
+        let responseStructure = ["some", "test", ["some": 1]] as [Any]
+        let jsonResponseData: Data = try! JSONSerialization.data(withJSONObject: responseStructure, options: .prettyPrinted)
+        let response = URLResponse()
 
         // when
+        let result = sut.audioObject(from: jsonResponseData, response: response)
 
-        let service = SoundcloudService(userSession: sessionMock)!
+        // then
+        // No crash happened and
+        XCTAssertNil(result)
+    }
 
-        service.loadAudioResource(from: url, completion: nil)
+    func testThatItIgnoresNilResponse() {
+        // given
+        let responseData: Data = Data()
+        let response = URLResponse()
 
-        XCTAssertNotNil(request)
+        // when
+        let result = sut.audioObject(from: responseData, response: response)
+
+        // then
+        // No crash happened and
+        XCTAssertNil(result)
     }
 }
