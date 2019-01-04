@@ -1187,6 +1187,7 @@
 		EF2127261FB9DFE300625A9B /* RegistrationRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2127011FB9DFE300625A9B /* RegistrationRootViewController.m */; };
 		EF2127281FB9E06300625A9B /* LandingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2127271FB9E06300625A9B /* LandingViewController.swift */; };
 		EF2128EE2056D55400C1673B /* NetworkStatusViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2128EC2056D51600C1673B /* NetworkStatusViewControllerTests.swift */; };
+		EF2172EA21DF982400DA1671 /* URL+EncodeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2172E821DF97CC00DA1671 /* URL+EncodeTests.swift */; };
 		EF218AC520A9C123004977BF /* SettingsCellDescriptorFactory+DataUsagePermissions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF218AC420A9C123004977BF /* SettingsCellDescriptorFactory+DataUsagePermissions.swift */; };
 		EF218AC720A9DDEF004977BF /* ConversationListViewController+DataUsagePermissions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF218AC620A9DDEF004977BF /* ConversationListViewController+DataUsagePermissions.swift */; };
 		EF218AC920AC76DB004977BF /* UIAlertController+Newsletter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF218AC820AC76DB004977BF /* UIAlertController+Newsletter.swift */; };
@@ -2978,6 +2979,7 @@
 		EF2127271FB9E06300625A9B /* LandingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingViewController.swift; sourceTree = "<group>"; };
 		EF2128EC2056D51600C1673B /* NetworkStatusViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkStatusViewControllerTests.swift; sourceTree = "<group>"; };
 		EF2147DF219EE04000494FDE /* ZMSnapshotTestCase+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ZMSnapshotTestCase+Internal.h"; sourceTree = "<group>"; };
+		EF2172E821DF97CC00DA1671 /* URL+EncodeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+EncodeTests.swift"; sourceTree = "<group>"; };
 		EF218AC420A9C123004977BF /* SettingsCellDescriptorFactory+DataUsagePermissions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingsCellDescriptorFactory+DataUsagePermissions.swift"; sourceTree = "<group>"; };
 		EF218AC620A9DDEF004977BF /* ConversationListViewController+DataUsagePermissions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationListViewController+DataUsagePermissions.swift"; sourceTree = "<group>"; };
 		EF218AC820AC76DB004977BF /* UIAlertController+Newsletter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Newsletter.swift"; sourceTree = "<group>"; };
@@ -6019,6 +6021,7 @@
 				5EBF4A3A21BE984E0021CFFC /* TransformTextViewTests.swift */,
 				EFD5FC4021C94E9C00026E3A /* UrlTests.swift */,
 				5E53533F21B05BF60060DB38 /* MessageDetails */,
+				EF2172E821DF97CC00DA1671 /* URL+EncodeTests.swift */,
 			);
 			path = "Wire-iOS Tests";
 			sourceTree = "<group>";
@@ -8433,6 +8436,7 @@
 				5EBBE96B21872060008BC1B7 /* MockCell.swift in Sources */,
 				EF2B74CA2141699100FD2574 /* LandingViewControllerSnapshotTests.swift in Sources */,
 				EF297DD82131FABE0002983A /* LocationPreviewControllerTests.swift in Sources */,
+				EF2172EA21DF982400DA1671 /* URL+EncodeTests.swift in Sources */,
 				EF27CD9E20C161500077FE55 /* ProfileViewControllerTests.swift in Sources */,
 				EF883F8A2152476900B440CC /* ConversationCreationControllerSnapshotTests.swift in Sources */,
 				EF18140A21B17FB3008F7DA8 /* GroupDetailsReceiptOptionsCellTests.swift in Sources */,

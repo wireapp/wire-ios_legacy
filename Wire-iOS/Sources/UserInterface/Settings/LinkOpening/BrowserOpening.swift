@@ -112,7 +112,7 @@ fileprivate extension UIApplication {
 }
 
 
-fileprivate extension URL {
+extension URL {
 
     var chromeURL: URL? {
         if absoluteString.contains("http://") {
