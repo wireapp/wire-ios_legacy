@@ -19,7 +19,7 @@
 import XCTest
 @testable import Wire
 
-final class SoundcloudServiceTests23123: XCTestCase {
+final class SoundcloudServiceTests: XCTestCase {
 
     var sut: SoundcloudService!
     var sessionMock: MockProxiedURLRequester!
