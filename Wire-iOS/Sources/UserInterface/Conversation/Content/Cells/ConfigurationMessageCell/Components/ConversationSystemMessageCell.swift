@@ -262,8 +262,12 @@ class ConversationSystemMessageCellDescription {
             guard let user = systemMessageData.users.first else { fallthrough }
             let ignoredClientCell = ConversationIgnoredDeviceSystemMessageCellDescription(message: message, data: systemMessageData, user: user)
             return [AnyConversationMessageCellDescription(ignoredClientCell)]
+            
+        case .potentialGap:
+            let missingMessagesCell = ConversationMissingMessagesSystemMessageCellDescription(message: message, data: systemMessageData)
+            return [AnyConversationMessageCellDescription(missingMessagesCell)]
 
-        case .potentialGap, .reactivatedDevice:
+        case .reactivatedDevice:
             let missingMessagesCell = ConversationLegacyCellDescription<MissingMessagesCell>(message: message, layoutProperties: layoutProperties)
             return [AnyConversationMessageCellDescription(missingMessagesCell)]
 
@@ -459,6 +463,59 @@ class ConversationVerifiedSystemMessageSectionDescription: ConversationMessageCe
         configuration = View.Configuration(icon: WireStyleKit.imageOfShieldverified, attributedText: title, showLine: true)
         actionController = nil
     }
+}
+
+class ConversationMissingMessagesSystemMessageCellDescription: ConversationMessageCellDescription {
+    
+    typealias View = ConversationSystemMessageCell
+    let configuration: View.Configuration
+    
+    var message: ZMConversationMessage?
+    weak var delegate: ConversationCellDelegate?
+    weak var actionController: ConversationMessageActionController?
+    
+    var showEphemeralTimer: Bool = false
+    var topMargin: Float = 0
+    
+    let isFullWidth: Bool = true
+    let supportsActions: Bool = false
+    let containsHighlightableContent: Bool = false
+    
+    let accessibilityIdentifier: String? = nil
+    let accessibilityLabel: String? = nil
+    
+    init(message: ZMConversationMessage, data: ZMSystemMessageData) {
+        let title = ConversationMissingMessagesSystemMessageCellDescription.makeAttributedString(systemMessageData: data)
+        configuration =  View.Configuration(icon: UIImage(for: .exclamationMark, fontSize: 16, color: .vividRed), attributedText: title, showLine: true)
+        actionController = nil
+    }
+    
+    private static func makeAttributedString(systemMessageData: ZMSystemMessageData) -> NSAttributedString {
+        let font = UIFont.mediumFont
+        let boldFont = UIFont.mediumSemiboldFont
+        let color = UIColor.from(scheme: .textForeground)
+        
+        func attributedLocalizedUppercaseString(_ localizationKey: String, _ users: Set<ZMUser>) -> NSAttributedString? {
+            guard users.count > 0 else { return nil }
+            let userNames = users.map { $0.displayName }.joined(separator: ", ")
+            let string = localizationKey.localized(args: userNames + " ", users.count) + ". "
+                && font && color
+            return string.addAttributes([.font: boldFont], toSubstring: userNames)
+        }
+        
+        var title = "content.system.missing_messages.title".localized && font && color
+        
+        // We only want to display the subtitle if we have the final added and removed users and either one is not empty
+        let addedOrRemovedUsers = !systemMessageData.addedUsers.isEmpty || !systemMessageData.removedUsers.isEmpty
+        if !systemMessageData.needsUpdatingUsers && addedOrRemovedUsers {
+            title += "\n\n" + "content.system.missing_messages.subtitle_start".localized + " " && font && color
+            title += attributedLocalizedUppercaseString("content.system.missing_messages.subtitle_added", systemMessageData.addedUsers)
+            title += attributedLocalizedUppercaseString("content.system.missing_messages.subtitle_removed", systemMessageData.removedUsers)
+        }
+        
+        return title
+    }
+    
 }
 
 class ConversationIgnoredDeviceSystemMessageCellDescription: ConversationMessageCellDescription {
