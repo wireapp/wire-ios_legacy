@@ -116,7 +116,7 @@ class NewDeviceSystemMessageCell: ConversationIconBasedCell, ConversationMessage
     
     struct Configuration {
         let attributedText: NSAttributedString?
-        let showIcon: Bool
+        var icon: UIImage?
         var linkTarget: LinkTarget
     }
     
@@ -133,13 +133,12 @@ class NewDeviceSystemMessageCell: ConversationIconBasedCell, ConversationMessage
     }
     
     func setupView() {
-        imageView.image  = WireStyleKit.imageOfShieldnotverified
         lineView.isHidden = false
     }
     
     func configure(with object: Configuration, animated: Bool) {
         attributedText = object.attributedText
-        imageView.isHidden = !object.showIcon
+        imageView.image = object.icon
         linkTarget = object.linkTarget
     }
     
@@ -254,7 +253,7 @@ class ConversationSystemMessageCellDescription {
             let decryptionCell = ConversationCannotDecryptSystemMessageCellDescription(message: message, data: systemMessageData, sender: sender, remoteIdentityChanged: true)
             return [AnyConversationMessageCellDescription(decryptionCell)]
 
-        case .newClient, .usingNewDevice:
+        case .newClient, .usingNewDevice, .reactivatedDevice:
             let newClientCell = ConversationNewDeviceSystemMessageCellDescription(message: message, systemMessageData: systemMessageData, conversation: conversation)
             return [AnyConversationMessageCellDescription(newClientCell)]
 
@@ -265,10 +264,6 @@ class ConversationSystemMessageCellDescription {
             
         case .potentialGap:
             let missingMessagesCell = ConversationMissingMessagesSystemMessageCellDescription(message: message, data: systemMessageData)
-            return [AnyConversationMessageCellDescription(missingMessagesCell)]
-
-        case .reactivatedDevice:
-            let missingMessagesCell = ConversationLegacyCellDescription<MissingMessagesCell>(message: message, layoutProperties: layoutProperties)
             return [AnyConversationMessageCellDescription(missingMessagesCell)]
 
         case .participantsAdded, .participantsRemoved, .teamMemberLeave:
@@ -540,7 +535,7 @@ class ConversationIgnoredDeviceSystemMessageCellDescription: ConversationMessage
     init(message: ZMConversationMessage, data: ZMSystemMessageData, user: ZMUser) {
         let title = ConversationIgnoredDeviceSystemMessageCellDescription.makeAttributedString(systemMessage: data, user: user)
         
-        configuration =  View.Configuration(attributedText: title, showIcon: true, linkTarget: .user(user))
+        configuration =  View.Configuration(attributedText: title, icon: WireStyleKit.imageOfShieldnotverified, linkTarget: .user(user))
         actionController = nil
     }
     
@@ -707,6 +702,8 @@ class ConversationNewDeviceSystemMessageCellDescription: ConversationMessageCell
         
         if !systemMessage.addedUsers.isEmpty {
             return configureForAddedUsers(in: conversation, attributes: textAttributes)
+        } else if systemMessage.systemMessageType == .reactivatedDevice {
+            return configureForReactivatedSelfClient(ZMUser.selfUser(), attributes: textAttributes)
         } else if let user = users.first , user.isSelfUser && systemMessage.systemMessageType == .usingNewDevice {
             return configureForNewCurrentDeviceOfSelfUser(user, attributes: textAttributes)
         } else if users.count == 1, let user = users.first , user.isSelfUser {
@@ -716,6 +713,17 @@ class ConversationNewDeviceSystemMessageCellDescription: ConversationMessageCell
         }
     }
     
+    private static var verifiedIcon = WireStyleKit.imageOfShieldnotverified
+    private static var exclamationMarkIcon = UIImage(for: .exclamationMark, fontSize: 16, color: .vividRed)
+    
+    private static func configureForReactivatedSelfClient(_ selfUser: ZMUser, attributes: TextAttributes) -> View.Configuration {
+        let deviceString = NSLocalizedString("content.system.this_device", comment: "")
+        let fullString  = String(format: NSLocalizedString("content.system.reactivated_device", comment: ""), deviceString) && attributes.startedUsingAttributes
+        let attributedText = fullString.setAttributes(attributes.linkAttributes, toSubstring: deviceString)
+        
+        return View.Configuration(attributedText: attributedText, icon: exclamationMarkIcon, linkTarget: .user(selfUser))
+    }
+    
     private static func configureForNewClientOfSelfUser(_ selfUser: ZMUser, clients: [UserClientType], attributes: TextAttributes) -> View.Configuration {
         let isSelfClient = clients.first?.isEqual(ZMUserSession.shared()?.selfUserClient()) ?? false
         let senderName = NSLocalizedString("content.system.you_started", comment: "") && attributes.senderAttributes
@@ -723,7 +731,7 @@ class ConversationNewDeviceSystemMessageCellDescription: ConversationMessageCell
         let userClientString = NSLocalizedString("content.system.new_device", comment: "") && attributes.linkAttributes
         let attributedText = senderName + "general.space_between_words".localized + startedUsingString + "general.space_between_words".localized + userClientString
         
-        return View.Configuration(attributedText: attributedText, showIcon: !isSelfClient, linkTarget: .user(selfUser))
+        return View.Configuration(attributedText: attributedText, icon: isSelfClient ? nil : verifiedIcon, linkTarget: .user(selfUser))
     }
     
     private static func configureForNewCurrentDeviceOfSelfUser(_ selfUser: ZMUser, attributes: TextAttributes) -> View.Configuration {
@@ -732,7 +740,7 @@ class ConversationNewDeviceSystemMessageCellDescription: ConversationMessageCell
         let userClientString = NSLocalizedString("content.system.this_device", comment: "") && attributes.linkAttributes
         let attributedText = senderName + "general.space_between_words".localized + startedUsingString + "general.space_between_words".localized + userClientString
         
-        return View.Configuration(attributedText: attributedText, showIcon: false, linkTarget: .user(selfUser))
+        return View.Configuration(attributedText: attributedText, icon: nil, linkTarget: .user(selfUser))
     }
     
     private static func configureForOtherUsers(_ users: [ZMUser], conversation: ZMConversation, clients: [UserClientType], attributes: TextAttributes) -> View.Configuration {
@@ -761,7 +769,7 @@ class ConversationNewDeviceSystemMessageCellDescription: ConversationMessageCell
             linkTarget = .conversation(conversation)
         }
        
-        return View.Configuration(attributedText: attributedText, showIcon: true, linkTarget: linkTarget)
+        return View.Configuration(attributedText: attributedText, icon: verifiedIcon, linkTarget: linkTarget)
     }
     
     private static func configureForAddedUsers(in conversation: ZMConversation, attributes: TextAttributes) -> View.Configuration {
@@ -769,7 +777,7 @@ class ConversationNewDeviceSystemMessageCellDescription: ConversationMessageCell
         let attributedLink = NSAttributedString(string: "content.system.verify_devices".localized, attributes: attributes.linkAttributes)
         let attributedText = attributedNewUsers + " " + attributedLink
         
-        return View.Configuration(attributedText: attributedText, showIcon: true, linkTarget: .conversation(conversation))
+        return View.Configuration(attributedText: attributedText, icon: verifiedIcon, linkTarget: .conversation(conversation))
     }
     
 }
