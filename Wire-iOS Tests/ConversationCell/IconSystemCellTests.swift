@@ -52,32 +52,6 @@ final class IconSystemCellTests: ZMSnapshotTestCase {
         return cell.wrapInTableView()
     }
 
-    func testIgnoredClient_oneUser_oneClient() {
-        let wrappedCell: UITableView? = IconSystemCellTests.wrappedCell(for: .ignoredClient, users: 1, clients: 1, config: nil)
-        verify(view: wrappedCell!)
-    }
-
-    func testIgnoredClient_selfUser_oneClient() {
-        let wrappedCell: UITableView? = IconSystemCellTests.wrappedCell(for: .ignoredClient, users: 1, clients: 1, config: { message in
-            let mockMessageData = message.systemMessageData as? MockSystemMessageData
-            mockMessageData?.users = Set<AnyHashable>([MockUser.mockSelf()]) as! Set<ZMUser>
-        })
-        verify(view: wrappedCell!)
-    }
-
-    func testIgnoredClient_selfUser_manyClients() {
-        let wrappedCell: UITableView? = IconSystemCellTests.wrappedCell(for: .ignoredClient, users: 1, clients: 2, config: { message in
-            let mockMessageData = message.systemMessageData as? MockSystemMessageData
-            mockMessageData?.users = Set<AnyHashable>([MockUser.mockSelf()]) as! Set<ZMUser>
-        })
-        verify(view: wrappedCell!)
-    }
-
-    func testIgnoredClient_oneUser_manyClient() {
-        let wrappedCell: UITableView? = IconSystemCellTests.wrappedCell(for: .ignoredClient, users: 1, clients: 3, config: nil)
-        verify(view: wrappedCell!)
-    }
-
     func testConversationIsSecure() {
         let wrappedCell: UITableView? = IconSystemCellTests.wrappedCell(for: .conversationIsSecure, users: 0, clients: 0, config: nil)
         verify(view: wrappedCell!)

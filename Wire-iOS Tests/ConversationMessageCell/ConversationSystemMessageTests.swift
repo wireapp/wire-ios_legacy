@@ -20,6 +20,10 @@ import XCTest
 @testable import Wire
 
 class ConversationSystemMessageTests: ConversationCellSnapshotTestCase {
+    
+    override func setUp() {
+        super.setUp()
+    }
 
     func testRenameConversation() {
         let message = MockMessageFactory.systemMessage(with: .conversationNameChanged, users: 0, clients: 0)!
@@ -128,6 +132,22 @@ class ConversationSystemMessageTests: ConversationCellSnapshotTestCase {
     func testReadReceiptIsOffByYou() {
         let message = MockMessageFactory.systemMessage(with: .readReceiptsDisabled)!
 
+        verify(message: message)
+    }
+    
+    // MARK: - ignored client
+    
+    func testIgnoredClient_self() {
+        let message = MockMessageFactory.systemMessage(with: .ignoredClient)!
+        message.backingSystemMessageData?.users = Set<AnyHashable>([MockUser.mockSelf()]) as! Set<ZMUser>
+        
+        verify(message: message)
+    }
+    
+    func testIgnoredClient_other() {
+        let message = MockMessageFactory.systemMessage(with: .ignoredClient)!
+        message.backingSystemMessageData?.users = Set<AnyHashable>([MockUser.mockUsers()!.last]) as! Set<ZMUser>
+        
         verify(message: message)
     }
 
