@@ -20,14 +20,44 @@
 import UIKit
  
 @objc public protocol TextViewInteractionDelegate: NSObjectProtocol {
-    func textView(_ textView: LinkInteractionTextView, open url: URL) -> Bool
-    func textViewDidLongPress(_ textView: LinkInteractionTextView)
+    func textView(_ textView: HyperLinkTextView, open url: URL) -> Bool
+    func textViewDidLongPress(_ textView: HyperLinkTextView)
 }
 
+public class HyperLinkTextView: UITextView {
 
-@objcMembers public class LinkInteractionTextView: UITextView {
-    
     public weak var interactionDelegate: TextViewInteractionDelegate?
+
+    required public init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    override public init(frame: CGRect = .zero, textContainer: NSTextContainer? = nil) {
+        super.init(frame: frame, textContainer: textContainer)
+        delegate = self
+
+        if #available(iOS 11.0, *) {
+            textDragDelegate = self
+        }
+    }
+}
+
+extension HyperLinkTextView: UITextViewDelegate {
+
+    public func textView(_ textView: UITextView, shouldInteractWith textAttachment: NSTextAttachment, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+        guard interaction == .presentActions else { return true }
+        interactionDelegate?.textViewDidLongPress(self)
+        return false
+    }
+}
+
+@available(iOS 11.0, *)
+extension HyperLinkTextView: UITextDragDelegate {
+}
+
+//////////////////////////
+
+public class LinkInteractionTextView: HyperLinkTextView {
 
     override public var selectedTextRange: UITextRange? {
         get { return nil }
@@ -36,19 +66,10 @@ import UIKit
     
     // URLs with these schemes should be handled by the os.
     fileprivate let dataDetectedURLSchemes = [ "x-apple-data-detectors", "tel", "mailto"]
-    
-    override init(frame: CGRect, textContainer: NSTextContainer?) {
-        super.init(frame: frame, textContainer: textContainer)
-        delegate = self
-        
-        if #available(iOS 11.0, *) {
-            textDragDelegate = self
-        }
-    }
-    
-    required public init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+
+//    required init?(coder aDecoder: NSCoder) {
+//        fatalError("init(coder:) has not been implemented")
+//    }
     
     override public func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
         let isInside = super.point(inside: point, with: event)
@@ -91,15 +112,9 @@ import UIKit
     }
 }
 
+// MARK: - UITextViewDelegate
+extension LinkInteractionTextView {
 
-extension LinkInteractionTextView: UITextViewDelegate {
-    
-    public func textView(_ textView: UITextView, shouldInteractWith textAttachment: NSTextAttachment, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
-        guard interaction == .presentActions else { return true }
-        interactionDelegate?.textViewDidLongPress(self)
-        return false
-    }
-    
     public func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
         switch interaction {
         case .invokeDefaultAction:
@@ -122,8 +137,9 @@ extension LinkInteractionTextView: UITextViewDelegate {
     }
 }
 
+// MARK: -  UITextDragDelegate
 @available(iOS 11.0, *)
-extension LinkInteractionTextView: UITextDragDelegate {
+extension LinkInteractionTextView {
     
     public func textDraggableView(_ textDraggableView: UIView & UITextDraggable, itemsForDrag dragRequest: UITextDragRequest) -> [UIDragItem] {
         
