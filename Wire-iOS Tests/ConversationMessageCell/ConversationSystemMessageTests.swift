@@ -113,6 +113,12 @@ class ConversationSystemMessageTests: ConversationCellSnapshotTestCase {
 
         verify(message: message)
     }
+    
+    func testReactivatedDevice() {
+        let message = MockMessageFactory.systemMessage(with: .reactivatedDevice)!
+        
+        verify(message: message)
+    }
 
     // MARK: - read receipt
 
@@ -162,7 +168,7 @@ class ConversationSystemMessageTests: ConversationCellSnapshotTestCase {
     func testPotentialGap_addedUsers() {
         let message = MockMessageFactory.systemMessage(with: .potentialGap)!
         
-        message.backingSystemMessageData?.addedUsers = Set<AnyHashable>(Array(MockUser.mockUsers()!.prefix(2))) as! Set<ZMUser>
+        message.backingSystemMessageData?.addedUsers = Set<AnyHashable>(Array(MockUser.mockUsers()!.prefix(1))) as! Set<ZMUser>
         
         verify(message: message)
     }
@@ -170,7 +176,7 @@ class ConversationSystemMessageTests: ConversationCellSnapshotTestCase {
     func testPotentialGap_removedUsers() {
         let message = MockMessageFactory.systemMessage(with: .potentialGap)!
         
-        message.backingSystemMessageData?.removedUsers = Set<AnyHashable>(Array(MockUser.mockUsers()!.prefix(2))) as! Set<ZMUser>
+        message.backingSystemMessageData?.removedUsers = Set<AnyHashable>(Array(MockUser.mockUsers()!.prefix(1))) as! Set<ZMUser>
         
         verify(message: message)
     }
@@ -178,8 +184,8 @@ class ConversationSystemMessageTests: ConversationCellSnapshotTestCase {
     func testPotentialGap_addedAndRemovedUsers() {
         let message = MockMessageFactory.systemMessage(with: .potentialGap)!
         
-        message.backingSystemMessageData?.addedUsers = Set<AnyHashable>(Array(MockUser.mockUsers()!.prefix(2))) as! Set<ZMUser>
-        message.backingSystemMessageData?.removedUsers = Set<AnyHashable>(Array(MockUser.mockUsers()!.suffix(2))) as! Set<ZMUser>
+        message.backingSystemMessageData?.addedUsers = Set<AnyHashable>(Array(MockUser.mockUsers()!.prefix(1))) as! Set<ZMUser>
+        message.backingSystemMessageData?.removedUsers = Set<AnyHashable>(Array(MockUser.mockUsers()!.suffix(1))) as! Set<ZMUser>
         
         verify(message: message)
     }
