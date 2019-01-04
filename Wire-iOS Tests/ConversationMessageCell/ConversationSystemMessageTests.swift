@@ -24,6 +24,12 @@ class ConversationSystemMessageTests: ConversationCellSnapshotTestCase {
     override func setUp() {
         super.setUp()
     }
+    
+    func testConversationIsSecure() {
+        let message = MockMessageFactory.systemMessage(with: .conversationIsSecure)!
+        
+        verify(message: message)
+    }
 
     func testRenameConversation() {
         let message = MockMessageFactory.systemMessage(with: .conversationNameChanged, users: 0, clients: 0)!
