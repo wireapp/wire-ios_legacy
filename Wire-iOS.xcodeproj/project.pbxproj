@@ -118,7 +118,6 @@
 		16A202681B66A0040095BBD1 /* soundcloud-track1.json in Resources */ = {isa = PBXBuildFile; fileRef = 16A202631B66A0040095BBD1 /* soundcloud-track1.json */; };
 		16A202691B66A0040095BBD1 /* soundcloud-track2.json in Resources */ = {isa = PBXBuildFile; fileRef = 16A202641B66A0040095BBD1 /* soundcloud-track2.json */; };
 		16A2026A1B66A0040095BBD1 /* SoundcloudAudioTrackTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 16A202651B66A0040095BBD1 /* SoundcloudAudioTrackTests.m */; };
-		16A2026B1B66A0040095BBD1 /* SoundcloudServiceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 16A202661B66A0040095BBD1 /* SoundcloudServiceTests.m */; };
 		16A202751B6772DB0095BBD1 /* soundcloud-track3.json in Resources */ = {isa = PBXBuildFile; fileRef = 16A202711B6771700095BBD1 /* soundcloud-track3.json */; };
 		16A202781B6774760095BBD1 /* soundcloud-playlist2.json in Resources */ = {isa = PBXBuildFile; fileRef = 16A202761B6774720095BBD1 /* soundcloud-playlist2.json */; };
 		16A2027A1B67777C0095BBD1 /* soundcloud-playlist3.json in Resources */ = {isa = PBXBuildFile; fileRef = 16A202791B67777C0095BBD1 /* soundcloud-playlist3.json */; };
@@ -1157,6 +1156,7 @@
 		EF1FDC8021DE47AB00C9CEB1 /* NSString+EmoticonSubstitution.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1FDC7F21DE47AB00C9CEB1 /* NSString+EmoticonSubstitution.swift */; };
 		EF1FDC8221DE677600C9CEB1 /* XCTestCase+EmoticonSubstitutionConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1FDC8121DE677600C9CEB1 /* XCTestCase+EmoticonSubstitutionConfiguration.swift */; };
 		EF1FDC8421DE68EF00C9CEB1 /* EmoticonSubstitutionConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1FDC8321DE68EF00C9CEB1 /* EmoticonSubstitutionConfigurationTests.swift */; };
+		EF1FDC8621DE701000C9CEB1 /* SoundcloudServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1FDC8521DE701000C9CEB1 /* SoundcloudServiceTests.swift */; };
 		EF2127031FB9DFE300625A9B /* CheckmarkView.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126B71FB9DFE300625A9B /* CheckmarkView.m */; };
 		EF2127041FB9DFE300625A9B /* RegistrationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126B81FB9DFE300625A9B /* RegistrationViewController.m */; };
 		EF2127051FB9DFE300625A9B /* RegistrationTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126B91FB9DFE300625A9B /* RegistrationTextField.m */; };
@@ -1608,7 +1608,6 @@
 		16A202631B66A0040095BBD1 /* soundcloud-track1.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "soundcloud-track1.json"; sourceTree = "<group>"; };
 		16A202641B66A0040095BBD1 /* soundcloud-track2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "soundcloud-track2.json"; sourceTree = "<group>"; };
 		16A202651B66A0040095BBD1 /* SoundcloudAudioTrackTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SoundcloudAudioTrackTests.m; sourceTree = "<group>"; };
-		16A202661B66A0040095BBD1 /* SoundcloudServiceTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SoundcloudServiceTests.m; sourceTree = "<group>"; };
 		16A202711B6771700095BBD1 /* soundcloud-track3.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "soundcloud-track3.json"; sourceTree = "<group>"; };
 		16A202761B6774720095BBD1 /* soundcloud-playlist2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "soundcloud-playlist2.json"; sourceTree = "<group>"; };
 		16A202791B67777C0095BBD1 /* soundcloud-playlist3.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "soundcloud-playlist3.json"; sourceTree = "<group>"; };
@@ -2920,6 +2919,7 @@
 		EF1FDC7F21DE47AB00C9CEB1 /* NSString+EmoticonSubstitution.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSString+EmoticonSubstitution.swift"; sourceTree = "<group>"; };
 		EF1FDC8121DE677600C9CEB1 /* XCTestCase+EmoticonSubstitutionConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+EmoticonSubstitutionConfiguration.swift"; sourceTree = "<group>"; };
 		EF1FDC8321DE68EF00C9CEB1 /* EmoticonSubstitutionConfigurationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmoticonSubstitutionConfigurationTests.swift; sourceTree = "<group>"; };
+		EF1FDC8521DE701000C9CEB1 /* SoundcloudServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundcloudServiceTests.swift; sourceTree = "<group>"; };
 		EF2126B71FB9DFE300625A9B /* CheckmarkView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckmarkView.m; sourceTree = "<group>"; };
 		EF2126B81FB9DFE300625A9B /* RegistrationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegistrationViewController.m; sourceTree = "<group>"; };
 		EF2126B91FB9DFE300625A9B /* RegistrationTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegistrationTextField.m; sourceTree = "<group>"; };
@@ -3440,7 +3440,7 @@
 				16A202711B6771700095BBD1 /* soundcloud-track3.json */,
 				16A2027B1B677A5D0095BBD1 /* soundcloud-track4.json */,
 				16A202651B66A0040095BBD1 /* SoundcloudAudioTrackTests.m */,
-				16A202661B66A0040095BBD1 /* SoundcloudServiceTests.m */,
+				EF1FDC8521DE701000C9CEB1 /* SoundcloudServiceTests.swift */,
 			);
 			path = Soundcloud;
 			sourceTree = "<group>";
@@ -4753,8 +4753,8 @@
 				871BC33F1D34F94200DF0793 /* SoundcloudAudioTrack.h */,
 				871BC3401D34F94200DF0793 /* SoundcloudAudioTrack.m */,
 				871BC3411D34F94200DF0793 /* SoundcloudService.h */,
-				87D815191D6B40EC004FD258 /* SoundcloudService+Testing.h */,
 				871BC3421D34F94200DF0793 /* SoundcloudService.m */,
+				87D815191D6B40EC004FD258 /* SoundcloudService+Testing.h */,
 			);
 			path = Soundcloud;
 			sourceTree = "<group>";
@@ -8331,7 +8331,6 @@
 				EF9B950420BEBD89000D4CA1 /* MockUser+AccentColorProvider.swift in Sources */,
 				EFE0439B2149D9CA00BC3079 /* ShareContactsViewControllerSnapshotTests.swift in Sources */,
 				BFC9149B1D181BE7001F068B /* LocationMessageCellTests.swift in Sources */,
-				16A2026B1B66A0040095BBD1 /* SoundcloudServiceTests.m in Sources */,
 				5EC7C87C21907D94004662AC /* ConversationReplyCellDescriptionTests.swift in Sources */,
 				EF6E3C7C208A02FE003F6752 /* GiphySearchViewControllerSnapshotTests.swift in Sources */,
 				EFC0C7F121778FB000380C4B /* SettingsTextCellSnapshotTests.swift in Sources */,
@@ -8506,6 +8505,7 @@
 				8742FB821E8BD23D00D046BC /* ConversationStatusLineTests.swift in Sources */,
 				EF5871662166802B00E47E73 /* GroupDetailsViewControllerSnapshotTests.swift in Sources */,
 				1651F9BC1D352C5700A9FAE8 /* ArticleViewTests.swift in Sources */,
+				EF1FDC8621DE701000C9CEB1 /* SoundcloudServiceTests.swift in Sources */,
 				BF78687F1D86B3710063762F /* LocationDataTests.swift in Sources */,
 				EF2A8DEF214AAB13002C9058 /* ContactsCellSnapshotTests.swift in Sources */,
 				EF25F8871FC57F320040C3CC /* AccessoryTextFieldTests.swift in Sources */,
