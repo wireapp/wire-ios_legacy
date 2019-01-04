@@ -2113,7 +2113,6 @@
 		871BC36B1D34F96000DF0793 /* DeviceOrientationObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceOrientationObserver.h; sourceTree = "<group>"; };
 		871BC36C1D34F96000DF0793 /* DeviceOrientationObserver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceOrientationObserver.m; sourceTree = "<group>"; };
 		871BE9551CD0C2DD002267E8 /* FBSnapshotTestCase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSnapshotTestCase.framework; path = Carthage/Build/iOS/FBSnapshotTestCase.framework; sourceTree = "<group>"; };
-		871BE9561CD0C2DD002267E8 /* OCMock.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OCMock.framework; path = Carthage/Build/iOS/OCMock.framework; sourceTree = "<group>"; };
 		871DD79C2080C4F6006B1C56 /* Conversation+Participants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Conversation+Participants.swift"; sourceTree = "<group>"; };
 		8724037F215B8EBA0094363B /* ZMUser+Mention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ZMUser+Mention.swift"; sourceTree = "<group>"; };
 		87240381215B92F00094363B /* ZMUserMentionsTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZMUserMentionsTest.swift; sourceTree = "<group>"; };
@@ -4314,7 +4313,6 @@
 				872786CA1D38EE2000CC3C15 /* OnePasswordExtension.framework */,
 				87E0D6D41CD3978900C54196 /* AVKit.framework */,
 				871BE9551CD0C2DD002267E8 /* FBSnapshotTestCase.framework */,
-				871BE9561CD0C2DD002267E8 /* OCMock.framework */,
 				169FF9321C57CB2100C5BF90 /* VideoToolbox.framework */,
 				876FAEDA1C762CFC00EBA732 /* TTTAttributedLabel.framework */,
 				87CA49EC1C467A710013A2A9 /* SafariServices.framework */,
