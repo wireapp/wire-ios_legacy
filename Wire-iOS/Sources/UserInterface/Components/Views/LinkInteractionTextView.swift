@@ -24,6 +24,8 @@ import UIKit
     func textViewDidLongPress(_ textView: HyperLinkTextView)
 }
 
+
+/// a non-selectable and non-draggable TextView 
 public class HyperLinkTextView: UITextView {
 
     public weak var interactionDelegate: TextViewInteractionDelegate?
@@ -39,6 +41,11 @@ public class HyperLinkTextView: UITextView {
         if #available(iOS 11.0, *) {
             textDragDelegate = self
         }
+    }
+
+    override public var selectedTextRange: UITextRange? {
+        get { return nil }
+        set { /* no-op */ }
     }
 }
 
@@ -59,18 +66,9 @@ extension HyperLinkTextView: UITextDragDelegate {
 
 public class LinkInteractionTextView: HyperLinkTextView {
 
-    override public var selectedTextRange: UITextRange? {
-        get { return nil }
-        set { /* no-op */ }
-    }
-    
     // URLs with these schemes should be handled by the os.
     fileprivate let dataDetectedURLSchemes = [ "x-apple-data-detectors", "tel", "mailto"]
 
-//    required init?(coder aDecoder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
-    
     override public func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
         let isInside = super.point(inside: point, with: event)
         guard !UIMenuController.shared.isMenuVisible else { return false }
