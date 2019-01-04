@@ -82,11 +82,11 @@ import Cartography
                         self.isSelected = selected
                     })
             }
+            
+            UIImpactFeedbackGenerator(style: .light).impactOccurred()
         }
         else {
             self.isSelected = selected
         }
-        
-        UIImpactFeedbackGenerator(style: .light).impactOccurred()
     }
 }
