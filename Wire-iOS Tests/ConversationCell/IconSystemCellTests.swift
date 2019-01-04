@@ -57,11 +57,6 @@ final class IconSystemCellTests: ZMSnapshotTestCase {
         verify(view: wrappedCell!)
     }
 
-    func testPotentialGap() {
-        let wrappedCell: UITableView? = IconSystemCellTests.wrappedCell(for: .potentialGap, users: 0, clients: 0, config: nil)
-        verify(view: wrappedCell!)
-    }
-
     func testStartedusingANewDevice() {
         let wrappedCell: UITableView? = IconSystemCellTests.wrappedCell(for: .reactivatedDevice, users: 0, clients: 0, config: nil)
         verify(view: wrappedCell!)
