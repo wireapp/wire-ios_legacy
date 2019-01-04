@@ -25,7 +25,7 @@ import Cartography
         guard selected != self.isSelected else {
             return
         }
-
+        
         if animated {
             guard let imageView = self.imageView else {
                 return
@@ -86,5 +86,7 @@ import Cartography
         else {
             self.isSelected = selected
         }
+        
+        UIImpactFeedbackGenerator(style: .light).impactOccurred()
     }
 }
