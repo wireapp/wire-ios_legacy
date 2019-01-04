@@ -159,14 +159,12 @@
 		16F6BB0E1EDD7B23009EA803 /* SearchHeaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16F6BB0D1EDD7B23009EA803 /* SearchHeaderViewController.swift */; };
 		16F6BB101EDDA0BA009EA803 /* AddParticipantsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16F6BB0F1EDDA0BA009EA803 /* AddParticipantsViewController.swift */; };
 		16FB2F6C20C0389800582137 /* Dictionary+Merge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16FB2F6B20C0389800582137 /* Dictionary+Merge.swift */; };
-		1E18C2BC1AFBB7E00043F3CF /* EmoticonSubstitutionConfigurationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E18C2BA1AFBB7E00043F3CF /* EmoticonSubstitutionConfigurationTests.m */; };
 		1E18C2BE1AFBB8590043F3CF /* emo-test-01.json in Resources */ = {isa = PBXBuildFile; fileRef = 1E18C2BD1AFBB8590043F3CF /* emo-test-01.json */; };
 		1E18C2BF1AFBBB820043F3CF /* emoticons.min.json in Resources */ = {isa = PBXBuildFile; fileRef = 848DE12A1A83D20000E154B1 /* emoticons.min.json */; };
 		1E18C2C11AFBC0AB0043F3CF /* emo-test-02.json in Resources */ = {isa = PBXBuildFile; fileRef = 1E18C2C01AFBC0AB0043F3CF /* emo-test-02.json */; };
 		1E2267F81B38489F003980E3 /* people-02.json in Resources */ = {isa = PBXBuildFile; fileRef = 1E2267F61B384619003980E3 /* people-02.json */; };
 		1E2268041B395722003980E3 /* people-01.json in Resources */ = {isa = PBXBuildFile; fileRef = 1E2268031B395722003980E3 /* people-01.json */; };
 		1E2268061B3957A7003980E3 /* conversations-01.json in Resources */ = {isa = PBXBuildFile; fileRef = 1E2268051B3957A7003980E3 /* conversations-01.json */; };
-		1E4B89E11B01E9DD0011BF43 /* NSString+EmoticonSubstitutionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E4B89E01B01E9DD0011BF43 /* NSString+EmoticonSubstitutionTests.m */; };
 		1E5E0CFB1B6B8EDB003B0CAC /* UIImage+ZetaIconsNeue.h in Headers */ = {isa = PBXBuildFile; fileRef = 1E5E0CEB1B6B8EDB003B0CAC /* UIImage+ZetaIconsNeue.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1E5E0CFC1B6B8EDB003B0CAC /* UIImage+ZetaIconsNeue.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E5E0CEC1B6B8EDB003B0CAC /* UIImage+ZetaIconsNeue.m */; };
 		1E5E0CFD1B6B8EDB003B0CAC /* ZetaIconTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 1E5E0CED1B6B8EDB003B0CAC /* ZetaIconTypes.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -178,7 +176,6 @@
 		1E5E0D071B6B8EDB003B0CAC /* UIImage+ImageUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E5E0CF81B6B8EDB003B0CAC /* UIImage+ImageUtilities.m */; };
 		1E6579981B8F3632002E0869 /* UIImage+ZetaIconsNeue.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E5E0CEC1B6B8EDB003B0CAC /* UIImage+ZetaIconsNeue.m */; };
 		1E80A3651B0DF6120049A809 /* MediaPlaybackManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E80A3641B0DF6120049A809 /* MediaPlaybackManager.m */; };
-		1E8772231B0C8B0F005BDDC6 /* EmoticonSubstitutionConfigurationMocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E8772221B0C8B0F005BDDC6 /* EmoticonSubstitutionConfigurationMocks.m */; };
 		1E8772281B0C8CAB005BDDC6 /* emo-test-03.json in Resources */ = {isa = PBXBuildFile; fileRef = 1E8772271B0C8CAB005BDDC6 /* emo-test-03.json */; };
 		1E8C253A1BBC279B00FC373F /* ProgressSpinner.h in Headers */ = {isa = PBXBuildFile; fileRef = 1E8C25361BBC279B00FC373F /* ProgressSpinner.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1E8C253B1BBC279B00FC373F /* ProgressSpinner.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E8C25371BBC279B00FC373F /* ProgressSpinner.m */; };
@@ -469,7 +466,6 @@
 		871BC00D1D34F56300DF0793 /* Analytics+MediaActionEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BBFC81D34F56300DF0793 /* Analytics+MediaActionEvents.swift */; };
 		871BC00F1D34F56300DF0793 /* Analytics+OTREvents.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BBFCC1D34F56300DF0793 /* Analytics+OTREvents.m */; };
 		871BC0281D34F5D200DF0793 /* EmoticonSubstitutionConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC0251D34F5D200DF0793 /* EmoticonSubstitutionConfiguration.m */; };
-		871BC0291D34F5D200DF0793 /* NSString+EmoticonSubstitution.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC0271D34F5D200DF0793 /* NSString+EmoticonSubstitution.m */; };
 		871BC0581D34F60700DF0793 /* NSAttributedString+Wire.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC0341D34F60700DF0793 /* NSAttributedString+Wire.m */; };
 		871BC0591D34F60700DF0793 /* NSDate+Format.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC0361D34F60700DF0793 /* NSDate+Format.m */; };
 		871BC2241D34F8F800DF0793 /* BottomOverlayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1341D34F8F800DF0793 /* BottomOverlayViewController.m */; };
@@ -1159,6 +1155,10 @@
 		EF1FCE5221B6A84B003E0BE2 /* PhoneNumberViewController+RegistrationTextFieldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1FCE5121B6A84B003E0BE2 /* PhoneNumberViewController+RegistrationTextFieldDelegate.swift */; };
 		EF1FDC7C21DE0E4100C9CEB1 /* UIViewController+PopoverFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1FDC7B21DE0E4100C9CEB1 /* UIViewController+PopoverFrame.swift */; };
 		EF1FDC8621DE701000C9CEB1 /* SoundcloudServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1FDC8521DE701000C9CEB1 /* SoundcloudServiceTests.swift */; };
+		EF1FDC7E21DE255C00C9CEB1 /* NSString+EmoticonSubstitutionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1FDC7D21DE255C00C9CEB1 /* NSString+EmoticonSubstitutionTests.swift */; };
+		EF1FDC8021DE47AB00C9CEB1 /* NSString+EmoticonSubstitution.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1FDC7F21DE47AB00C9CEB1 /* NSString+EmoticonSubstitution.swift */; };
+		EF1FDC8221DE677600C9CEB1 /* XCTestCase+EmoticonSubstitutionConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1FDC8121DE677600C9CEB1 /* XCTestCase+EmoticonSubstitutionConfiguration.swift */; };
+		EF1FDC8421DE68EF00C9CEB1 /* EmoticonSubstitutionConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1FDC8321DE68EF00C9CEB1 /* EmoticonSubstitutionConfigurationTests.swift */; };
 		EF2127031FB9DFE300625A9B /* CheckmarkView.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126B71FB9DFE300625A9B /* CheckmarkView.m */; };
 		EF2127041FB9DFE300625A9B /* RegistrationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126B81FB9DFE300625A9B /* RegistrationViewController.m */; };
 		EF2127051FB9DFE300625A9B /* RegistrationTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126B91FB9DFE300625A9B /* RegistrationTextField.m */; };
@@ -1660,14 +1660,12 @@
 		1E05C2421B6F7E0600616A66 /* Button.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Button.m; sourceTree = "<group>"; };
 		1E0737C31BD787D100D781EF /* ConversationListViewController+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ConversationListViewController+Private.h"; sourceTree = "<group>"; };
 		1E18C2B81AFBB7E00043F3CF /* EmoticonSubstitutionConfiguration+Tests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "EmoticonSubstitutionConfiguration+Tests.h"; sourceTree = "<group>"; };
-		1E18C2BA1AFBB7E00043F3CF /* EmoticonSubstitutionConfigurationTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmoticonSubstitutionConfigurationTests.m; sourceTree = "<group>"; };
 		1E18C2BD1AFBB8590043F3CF /* emo-test-01.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "emo-test-01.json"; sourceTree = "<group>"; };
 		1E18C2C01AFBC0AB0043F3CF /* emo-test-02.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "emo-test-02.json"; sourceTree = "<group>"; };
 		1E2267F61B384619003980E3 /* people-02.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = "people-02.json"; path = "PeoplePickerControllerTests/people-02.json"; sourceTree = "<group>"; };
 		1E2268031B395722003980E3 /* people-01.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = "people-01.json"; path = "PeoplePickerControllerTests/people-01.json"; sourceTree = "<group>"; };
 		1E2268051B3957A7003980E3 /* conversations-01.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = "conversations-01.json"; path = "PeoplePickerControllerTests/conversations-01.json"; sourceTree = "<group>"; };
 		1E3FA0321B78AD9500A9743D /* WireSystem.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WireSystem.framework; path = Carthage/Build/iOS/WireSystem.framework; sourceTree = "<group>"; };
-		1E4B89E01B01E9DD0011BF43 /* NSString+EmoticonSubstitutionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+EmoticonSubstitutionTests.m"; sourceTree = "<group>"; };
 		1E5E0CAC1B6B83C6003B0CAC /* ButtonWithLargerHitArea.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ButtonWithLargerHitArea.h; sourceTree = "<group>"; };
 		1E5E0CAD1B6B83C6003B0CAC /* ButtonWithLargerHitArea.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ButtonWithLargerHitArea.m; sourceTree = "<group>"; };
 		1E5E0CAE1B6B83C6003B0CAC /* IconButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IconButton.h; sourceTree = "<group>"; };
@@ -1683,8 +1681,6 @@
 		1E5E0CF81B6B8EDB003B0CAC /* UIImage+ImageUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageUtilities.m"; sourceTree = "<group>"; };
 		1E80A3631B0DF6120049A809 /* MediaPlaybackManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaPlaybackManager.h; sourceTree = "<group>"; };
 		1E80A3641B0DF6120049A809 /* MediaPlaybackManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaPlaybackManager.m; sourceTree = "<group>"; };
-		1E8772211B0C8B0F005BDDC6 /* EmoticonSubstitutionConfigurationMocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmoticonSubstitutionConfigurationMocks.h; sourceTree = "<group>"; };
-		1E8772221B0C8B0F005BDDC6 /* EmoticonSubstitutionConfigurationMocks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmoticonSubstitutionConfigurationMocks.m; sourceTree = "<group>"; };
 		1E8772271B0C8CAB005BDDC6 /* emo-test-03.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "emo-test-03.json"; sourceTree = "<group>"; };
 		1E8C25361BBC279B00FC373F /* ProgressSpinner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressSpinner.h; sourceTree = "<group>"; };
 		1E8C25371BBC279B00FC373F /* ProgressSpinner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProgressSpinner.m; sourceTree = "<group>"; };
@@ -1991,8 +1987,6 @@
 		871BBFCC1D34F56300DF0793 /* Analytics+OTREvents.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Analytics+OTREvents.m"; sourceTree = "<group>"; };
 		871BC0241D34F5D200DF0793 /* EmoticonSubstitutionConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmoticonSubstitutionConfiguration.h; sourceTree = "<group>"; };
 		871BC0251D34F5D200DF0793 /* EmoticonSubstitutionConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmoticonSubstitutionConfiguration.m; sourceTree = "<group>"; };
-		871BC0261D34F5D200DF0793 /* NSString+EmoticonSubstitution.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+EmoticonSubstitution.h"; sourceTree = "<group>"; };
-		871BC0271D34F5D200DF0793 /* NSString+EmoticonSubstitution.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+EmoticonSubstitution.m"; sourceTree = "<group>"; };
 		871BC0331D34F60700DF0793 /* NSAttributedString+Wire.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSAttributedString+Wire.h"; sourceTree = "<group>"; };
 		871BC0341D34F60700DF0793 /* NSAttributedString+Wire.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSAttributedString+Wire.m"; sourceTree = "<group>"; };
 		871BC0351D34F60700DF0793 /* NSDate+Format.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Format.h"; sourceTree = "<group>"; };
@@ -2926,6 +2920,10 @@
 		EF1FCE5121B6A84B003E0BE2 /* PhoneNumberViewController+RegistrationTextFieldDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PhoneNumberViewController+RegistrationTextFieldDelegate.swift"; sourceTree = "<group>"; };
 		EF1FDC7B21DE0E4100C9CEB1 /* UIViewController+PopoverFrame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+PopoverFrame.swift"; sourceTree = "<group>"; };
 		EF1FDC8521DE701000C9CEB1 /* SoundcloudServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundcloudServiceTests.swift; sourceTree = "<group>"; };
+		EF1FDC7D21DE255C00C9CEB1 /* NSString+EmoticonSubstitutionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSString+EmoticonSubstitutionTests.swift"; sourceTree = "<group>"; };
+		EF1FDC7F21DE47AB00C9CEB1 /* NSString+EmoticonSubstitution.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSString+EmoticonSubstitution.swift"; sourceTree = "<group>"; };
+		EF1FDC8121DE677600C9CEB1 /* XCTestCase+EmoticonSubstitutionConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+EmoticonSubstitutionConfiguration.swift"; sourceTree = "<group>"; };
+		EF1FDC8321DE68EF00C9CEB1 /* EmoticonSubstitutionConfigurationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmoticonSubstitutionConfigurationTests.swift; sourceTree = "<group>"; };
 		EF2126B71FB9DFE300625A9B /* CheckmarkView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckmarkView.m; sourceTree = "<group>"; };
 		EF2126B81FB9DFE300625A9B /* RegistrationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegistrationViewController.m; sourceTree = "<group>"; };
 		EF2126B91FB9DFE300625A9B /* RegistrationTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegistrationTextField.m; sourceTree = "<group>"; };
@@ -3542,9 +3540,10 @@
 		1E18C2B71AFBB7E00043F3CF /* EmoticonSubstitution */ = {
 			isa = PBXGroup;
 			children = (
+				EF1FDC8121DE677600C9CEB1 /* XCTestCase+EmoticonSubstitutionConfiguration.swift */,
 				EFD5CF4C2189C5F700BEC99E /* NSMutableAttributedString+ReplaceEmojiTests.swift */,
-				1E18C2BA1AFBB7E00043F3CF /* EmoticonSubstitutionConfigurationTests.m */,
-				1E4B89E01B01E9DD0011BF43 /* NSString+EmoticonSubstitutionTests.m */,
+				EF1FDC8321DE68EF00C9CEB1 /* EmoticonSubstitutionConfigurationTests.swift */,
+				EF1FDC7D21DE255C00C9CEB1 /* NSString+EmoticonSubstitutionTests.swift */,
 				1E8772261B0C8B87005BDDC6 /* Utils */,
 				1E18C2BD1AFBB8590043F3CF /* emo-test-01.json */,
 				1E18C2C01AFBC0AB0043F3CF /* emo-test-02.json */,
@@ -3660,8 +3659,6 @@
 			isa = PBXGroup;
 			children = (
 				1E18C2B81AFBB7E00043F3CF /* EmoticonSubstitutionConfiguration+Tests.h */,
-				1E8772211B0C8B0F005BDDC6 /* EmoticonSubstitutionConfigurationMocks.h */,
-				1E8772221B0C8B0F005BDDC6 /* EmoticonSubstitutionConfigurationMocks.m */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -5405,8 +5402,7 @@
 				1693D9671CEDB26200D1F13C /* UIApplication+Permissions.m */,
 				871BC0241D34F5D200DF0793 /* EmoticonSubstitutionConfiguration.h */,
 				871BC0251D34F5D200DF0793 /* EmoticonSubstitutionConfiguration.m */,
-				871BC0261D34F5D200DF0793 /* NSString+EmoticonSubstitution.h */,
-				871BC0271D34F5D200DF0793 /* NSString+EmoticonSubstitution.m */,
+				EF1FDC7F21DE47AB00C9CEB1 /* NSString+EmoticonSubstitution.swift */,
 				871BC0331D34F60700DF0793 /* NSAttributedString+Wire.h */,
 				871BC0341D34F60700DF0793 /* NSAttributedString+Wire.m */,
 				871BC0351D34F60700DF0793 /* NSDate+Format.h */,
@@ -7831,7 +7827,6 @@
 				EF297DEC213340CF0002983A /* ParticipantDeviceHeaderView+Style.swift in Sources */,
 				EF218AC720A9DDEF004977BF /* ConversationListViewController+DataUsagePermissions.swift in Sources */,
 				160A9CA81C3D62CD00B644AA /* ProfileDetailsViewController.m in Sources */,
-				871BC0291D34F5D200DF0793 /* NSString+EmoticonSubstitution.m in Sources */,
 				162936BB1F470A9300D4F386 /* AppState.swift in Sources */,
 				871BC0021D34F56300DF0793 /* AnalyticsDecryptionFailedObserver.m in Sources */,
 				EF2127211FB9DFE300625A9B /* GuidanceLabel.m in Sources */,
@@ -8121,6 +8116,7 @@
 				D525426D209363AF001C04C1 /* IconLabelButton.swift in Sources */,
 				871BC0071D34F56300DF0793 /* Application+runDuration.m in Sources */,
 				F12CDAEB1E43886A00CEFCEB /* DecriptionHeaderView.swift in Sources */,
+				EF1FDC8021DE47AB00C9CEB1 /* NSString+EmoticonSubstitution.swift in Sources */,
 				5E8DA751211AEFC800360979 /* AuthenticationStatusProvider.swift in Sources */,
 				871BC3641D34F94200DF0793 /* SoundcloudService.m in Sources */,
 				872E22201F5EA4B6007729D4 /* ProfileView.swift in Sources */,
@@ -8313,6 +8309,7 @@
 				5E97C30420F4CFFF00C806B4 /* MockZiphyClient.swift in Sources */,
 				BF16FC4C1DAFCA0000FF4325 /* EphemeralKeyboardViewControllerTests.swift in Sources */,
 				87AE8BDC207B99540058715E /* BackupPasswordViewControllerTests.swift in Sources */,
+				EF1FDC7E21DE255C00C9CEB1 /* NSString+EmoticonSubstitutionTests.swift in Sources */,
 				BF27AE4E1E9E513400809A2B /* MessageDraftTests.swift in Sources */,
 				5EC16BA120EBB93A00955156 /* MockProxyRequester.swift in Sources */,
 				F1F5E57E216CC94A006BF3D5 /* ConversationStatusLineTests+Muting.swift in Sources */,
@@ -8346,6 +8343,7 @@
 				EF6E3C7C208A02FE003F6752 /* GiphySearchViewControllerSnapshotTests.swift in Sources */,
 				EFC0C7F121778FB000380C4B /* SettingsTextCellSnapshotTests.swift in Sources */,
 				EFE806301FE006A7006A0EE7 /* DateFormatterTests.swift in Sources */,
+				EF1FDC8221DE677600C9CEB1 /* XCTestCase+EmoticonSubstitutionConfiguration.swift in Sources */,
 				87BEB0DC1C734D710094BFE9 /* MockConversation.m in Sources */,
 				EE118C012031D1C300BC68D6 /* MarkdownTextViewTests.swift in Sources */,
 				BFFE943E1E7839EB0025AD75 /* CoreDataSnapshotTestCase.swift in Sources */,
@@ -8394,7 +8392,6 @@
 				BFE49C321C0F39590061C16F /* NSString+FingerprintTests.m in Sources */,
 				87B0ACAA1FA20D7C001B2B9D /* AnalyticsTests.swift in Sources */,
 				EFB23D0B1FC853CF0055B866 /* AccessoryTextFieldValidationTests.swift in Sources */,
-				1E18C2BC1AFBB7E00043F3CF /* EmoticonSubstitutionConfigurationTests.m in Sources */,
 				EEAC654C206BD64700365C0C /* LinkInteractionTextViewTests.swift in Sources */,
 				5EE115E1204EEC7D002AD6C2 /* CallQualityControllerTests.swift in Sources */,
 				EFE043992149CE8D00BC3079 /* InviteContactsViewControllerSnapshotTests.swift in Sources */,
@@ -8408,7 +8405,6 @@
 				BFF9446C20F6480C00531BC3 /* ThumbnailCreationTests.swift in Sources */,
 				EFB4FADF216B8C8800700505 /* ProfileDetailsViewControllerSnapshotTests.swift in Sources */,
 				EF7F74041FCC033D0059C13F /* EmailAdresssValidatorTests.swift in Sources */,
-				1E4B89E11B01E9DD0011BF43 /* NSString+EmoticonSubstitutionTests.m in Sources */,
 				EF6251D421392FFE00943708 /* MockTapGestureRecognizer.swift in Sources */,
 				EF1EA4631FB0937000B53063 /* MockUser+filename.swift in Sources */,
 				162AE74D219DB1BD00581D98 /* ConversationImageMessageTests.swift in Sources */,
@@ -8475,6 +8471,7 @@
 				87BEB0DD1C734D710094BFE9 /* MockUser.m in Sources */,
 				EF8DD911211E02BE00E970F1 /* MockMessage+Creation.swift in Sources */,
 				16D453C71B6F9CB000675246 /* LinkAttachmentTests.m in Sources */,
+				EF1FDC8421DE68EF00C9CEB1 /* EmoticonSubstitutionConfigurationTests.swift in Sources */,
 				5E53534221B05C330060DB38 /* MessageDetailsViewControllerTests.swift in Sources */,
 				BF079A3620EF9E6F00B152DD /* ConversationListCellTests.swift in Sources */,
 				16A94AED20934AA8008A5718 /* CallParticipantsViewTests.swift in Sources */,
@@ -8515,7 +8512,6 @@
 				5E97C33120F5F17800C806B4 /* ExtensionSettingsTests.swift in Sources */,
 				8742FB821E8BD23D00D046BC /* ConversationStatusLineTests.swift in Sources */,
 				EF5871662166802B00E47E73 /* GroupDetailsViewControllerSnapshotTests.swift in Sources */,
-				1E8772231B0C8B0F005BDDC6 /* EmoticonSubstitutionConfigurationMocks.m in Sources */,
 				1651F9BC1D352C5700A9FAE8 /* ArticleViewTests.swift in Sources */,
 				EF1FDC8621DE701000C9CEB1 /* SoundcloudServiceTests.swift in Sources */,
 				BF78687F1D86B3710063762F /* LocationDataTests.swift in Sources */,

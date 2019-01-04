@@ -22,6 +22,7 @@
 @interface EmoticonSubstitutionConfiguration : NSObject
 
 + (instancetype)sharedInstance;
+- (instancetype)initWithConfigurationFile:(NSString *)filePath;
 
 @property (strong, readonly, nonatomic) NSArray *shortcuts;
 

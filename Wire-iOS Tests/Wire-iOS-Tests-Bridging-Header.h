@@ -33,3 +33,4 @@
 #import "MockConversation.h"
 #import "MockConversationFactory.h"
 #import "SoundcloudService.h"
+#import "EmoticonSubstitutionConfiguration+Tests.h"
