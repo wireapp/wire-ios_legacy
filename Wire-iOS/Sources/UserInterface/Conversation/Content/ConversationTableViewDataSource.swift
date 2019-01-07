@@ -311,13 +311,17 @@ extension ConversationTableViewDataSource: NSFetchedResultsControllerDelegate {
                     for changeType: NSFetchedResultsChangeType,
                     newIndexPath: IndexPath?) {
         
+        func rowToSection(_ indexPath: IndexPath) -> Int {
+            return self.messages.count - 1 - indexPath.row
+        }
+        
         switch changeType {
         case .insert:
             guard let insertedIndexPath = newIndexPath else {
                 fatal("Missing new index path")
             }
             
-            tableView.insertSections([insertedIndexPath.row], with: .fade)
+            tableView.insertSections([rowToSection(insertedIndexPath)], with: .fade)
         case .delete:
             guard let indexPathToRemove = indexPath else {
                 fatal("Missing index path")
@@ -325,24 +329,22 @@ extension ConversationTableViewDataSource: NSFetchedResultsControllerDelegate {
             let deletedMessage = anObject as! ZMMessage
             
             sectionControllers.removeValue(forKey: deletedMessage.objectIdentifier)
-            tableView.deleteSections([indexPathToRemove.row], with: .fade)
+            tableView.deleteSections([rowToSection(indexPathToRemove)], with: .fade)
             
             self.stopAudioPlayer(for: indexPathToRemove)
         case .update:
-            guard let indexPathToUpdate = indexPath,
-                  let message = anObject as? ZMMessage,
-                  let loadedCell = tableView.cellForRow(at: indexPathToUpdate) as? ConversationCell else {
+            guard let indexPathToUpdate = indexPath else {
                 return
             }
             
-            loadedCell.configure(for: message, layoutProperties: loadedCell.layoutProperties)
-            
+            reconfigureSectionController(at: rowToSection(indexPathToUpdate), tableView: tableView)
         case .move:
             guard let indexPath = indexPath, let newIndexPath = newIndexPath else {
                 return
             }
             
-            tableView.moveSection(Int(indexPath.row), toSection: Int(newIndexPath.row))
+            tableView.moveSection(rowToSection(indexPath),
+                                  toSection: rowToSection(newIndexPath))
         }
     }
     
