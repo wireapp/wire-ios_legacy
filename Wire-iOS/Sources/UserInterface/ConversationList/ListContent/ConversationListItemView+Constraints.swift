@@ -35,13 +35,13 @@ extension ConversationListItemView {
         constraints += [heightAnchor.constraint(greaterThanOrEqualToConstant: ConversationListItemView.minHeight)]
 
         
-        constraints += avatarContainer.fitInSuperview(exclude: .trailing, activate: false)
+        constraints += avatarContainer.fitInSuperview(exclude: [.trailing], activate: false)
         constraints += [avatarContainer.trailingAnchor.constraint(equalTo: titleField.leadingAnchor)]
         constraints += avatarView.centerInSuperview(activate: false)
 
-        constraints += titleField.fitInSuperview(exclude: .bottom, activate: false)
+        constraints += titleField.fitInSuperview(exclude: [.bottom], activate: false)
         constraints += [subtitleField.topAnchor.constraint(equalTo: titleField.bottomAnchor, constant: 2)]
-        constraints += subtitleField.fitInSuperview(exclude: .top, activate: false)
+        constraints += subtitleField.fitInSuperview(exclude: [.top], activate: false)
 
         constraints +=
             [labelsContainer.topAnchor.constraint(greaterThanOrEqualTo: labelsContainerSuperview.topAnchor, constant: 8),

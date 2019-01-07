@@ -65,8 +65,8 @@ import Foundation
             view.translatesAutoresizingMaskIntoConstraints = false
         }
 
-        collectionView.fitInSuperview(exclude: .bottom)
-        emptyResultContainer.fitInSuperview(exclude: .bottom)
+        collectionView.fitInSuperview(exclude: [.bottom])
+        emptyResultContainer.fitInSuperview(exclude: [.bottom])
 
         accessoryContainerHeightConstraint = accessoryContainer.heightAnchor.constraint(equalToConstant: 0)
         accessoryViewBottomOffsetConstraint = accessoryContainer.bottomAnchor.constraint(equalTo: bottomAnchor)
