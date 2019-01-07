@@ -19,7 +19,6 @@
 
 #import "ConversationMessageWindowTableViewAdapter.h"
 #import "ConversationMessageWindowTableViewAdapter+Private.h"
-#import "ZMConversationMessageWindow+Formatting.h"
 #import "NSIndexSet+IndexPaths.h"
 #import "Analytics.h"
 #import "NSIndexSet+IndexPaths.h"

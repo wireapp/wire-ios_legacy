@@ -36,16 +36,16 @@
 
 typedef void (^SelectedMenuBlock)(BOOL selected, BOOL animated);
 
-@interface ConversationCellLayoutProperties : NSObject
-
-@property (nonatomic, assign) BOOL showSender;
-@property (nonatomic, assign) BOOL showBurstTimestamp;
-@property (nonatomic, assign) BOOL showDayBurstTimestamp;
-@property (nonatomic, assign) BOOL alwaysShowDeliveryState;
-@property (nonatomic, assign) BOOL showUnreadMarker;
-@property (nonatomic, assign) CGFloat topPadding;
-
-@end
+//@interface ConversationCellLayoutProperties : NSObject
+//
+//@property (nonatomic, assign) BOOL showSender;
+//@property (nonatomic, assign) BOOL showBurstTimestamp;
+//@property (nonatomic, assign) BOOL showDayBurstTimestamp;
+//@property (nonatomic, assign) BOOL alwaysShowDeliveryState;
+//@property (nonatomic, assign) BOOL showUnreadMarker;
+//@property (nonatomic, assign) CGFloat topPadding;
+//
+//@end
 
 
 @protocol ConversationCellDelegate <MessageActionResponder>

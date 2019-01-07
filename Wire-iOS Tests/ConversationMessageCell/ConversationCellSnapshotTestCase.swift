@@ -40,7 +40,8 @@ class ConversationCellSnapshotTestCase: CoreDataSnapshotTestCase {
                                                     isFirstUnreadMessage: false,
                                                     isLastMessage: false,
                                                     searchQueries: [],
-                                                    previousMessageIsKnock: false)
+                                                    previousMessageIsKnock: false,
+                                                    spacing: 0)
         
         resetDayFormatter()
         
@@ -76,7 +77,7 @@ class ConversationCellSnapshotTestCase: CoreDataSnapshotTestCase {
 
         verifyInAllPhoneWidths(initialization:{
             let context = (context ?? defaultContext)!
-            let section = ConversationMessageSectionController(message: message, context: context, layoutProperties: ConversationCellLayoutProperties())
+            let section = ConversationMessageSectionController(message: message, context: context)
             let views = section.cellDescriptions.map({ $0.makeView() })
             let stackView = UIStackView(arrangedSubviews: views)
             stackView.axis = .vertical

@@ -180,7 +180,6 @@
 #import "KeyboardFrameObserver+iOS.h"
 #import "UIColor+Mixing.h"
 #import "MessageType.h"
-#import "ZMConversationMessageWindow+Formatting.h"
 #import "EmoticonSubstitutionConfiguration.h"
 
 // Audio player

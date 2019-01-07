@@ -26,6 +26,7 @@ struct ConversationMessageContext {
     let isLastMessage: Bool
     let searchQueries: [String]
     let previousMessageIsKnock: Bool
+    let spacing: Float
 }
 
 extension IndexSet {
@@ -65,8 +66,7 @@ extension IndexSet {
     }
     
     var context: ConversationMessageContext
-    var layoutProperties: ConversationCellLayoutProperties
-
+    
     /// Whether we need to use inverted indices. This is `true` when the table view is upside down.
     @objc var useInvertedIndices = false
 
@@ -91,15 +91,14 @@ extension IndexSet {
         changeObservers.removeAll()
     }
 
-    init(message: ZMConversationMessage, context: ConversationMessageContext, layoutProperties: ConversationCellLayoutProperties, selected: Bool = false) {
+    init(message: ZMConversationMessage, context: ConversationMessageContext, selected: Bool = false) {
         self.message = message
         self.context = context
-        self.layoutProperties = layoutProperties
         self.selected = selected
         
         super.init()
         
-        createCellDescriptions(in: context, layoutProperties: layoutProperties)
+        createCellDescriptions(in: context)
         
         startObservingChanges(for: message)
         
@@ -185,7 +184,7 @@ extension IndexSet {
         configure(at: indexPath.section, in: tableView)
     }
     
-    private func createCellDescriptions(in context: ConversationMessageContext, layoutProperties: ConversationCellLayoutProperties) {
+    private func createCellDescriptions(in context: ConversationMessageContext) {
         cellDescriptions.removeAll()
         
         let isSenderVisible = self.isSenderVisible(in: context) && message.sender != nil
@@ -204,7 +203,7 @@ extension IndexSet {
         }
         
         if let topCelldescription = cellDescriptions.first {
-            topCelldescription.topMargin = Float(layoutProperties.topPadding)
+            topCelldescription.topMargin = context.spacing
         }
     }
     
@@ -217,7 +216,7 @@ extension IndexSet {
         tableView.beginUpdates()
         
         let old = ZMOrderedSetState(orderedSet: NSOrderedSet(array: tableViewCellDescriptions.map({ $0.baseType })))
-        createCellDescriptions(in: context, layoutProperties: layoutProperties)
+        createCellDescriptions(in: context)
         let new = ZMOrderedSetState(orderedSet: NSOrderedSet(array: tableViewCellDescriptions.map({ $0.baseType })))
         let change = ZMChangedIndexes(start: old, end: new, updatedState: new, moveType: .nsTableView)
         

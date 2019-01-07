@@ -33,9 +33,9 @@
 //const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
 //static const CGFloat BurstContainerExpandedHeight = 40;
 
-@implementation ConversationCellLayoutProperties
-
-@end
+//@implementation ConversationCellLayoutProperties
+//
+//@end
 
 
 
