@@ -239,29 +239,35 @@ extension IndexSet {
     }
     
     @objc func configure(at sectionIndex: Int, in tableView: UITableView) {
-        configure(in: context, at: sectionIndex, in: tableView)
+        configure(in: context, at: sectionIndex, in: tableView, doBatchUpdate: true)
     }
     
-    func configure(in context: ConversationMessageContext, at sectionIndex: Int, in tableView: UITableView) {
+    func configure(in context: ConversationMessageContext, at sectionIndex: Int, in tableView: UITableView, doBatchUpdate: Bool) {
         guard !hasLegacyContent else { return }
         
         self.context = context
-        tableView.beginUpdates()
-        
-        let old = ZMOrderedSetState(orderedSet: NSOrderedSet(array: tableViewCellDescriptions.map({ $0.baseType })))
-        createCellDescriptions(in: context, layoutProperties: layoutProperties)
-        let new = ZMOrderedSetState(orderedSet: NSOrderedSet(array: tableViewCellDescriptions.map({ $0.baseType })))
-        let change = ZMChangedIndexes(start: old, end: new, updatedState: new, moveType: .nsTableView)
-        
-        if let deleted = change?.deletedIndexes.indexPaths(in: sectionIndex) {
-            tableView.deleteRows(at: deleted, with: .fade)
+
+        func action() {
+            let old = ZMOrderedSetState(orderedSet: NSOrderedSet(array: tableViewCellDescriptions.map({ $0.baseType })))
+            createCellDescriptions(in: context, layoutProperties: layoutProperties)
+            let new = ZMOrderedSetState(orderedSet: NSOrderedSet(array: tableViewCellDescriptions.map({ $0.baseType })))
+            let change = ZMChangedIndexes(start: old, end: new, updatedState: new, moveType: .nsTableView)
+            
+            if let deleted = change?.deletedIndexes.indexPaths(in: sectionIndex), deleted.count > 0 {
+                tableView.deleteRows(at: deleted, with: .fade)
+            }
+            
+            if let inserted = change?.insertedIndexes.indexPaths(in: sectionIndex), inserted.count > 0 {
+                tableView.insertRows(at: inserted, with: .fade)
+            }
         }
         
-        if let inserted = change?.insertedIndexes.indexPaths(in: sectionIndex) {
-            tableView.insertRows(at: inserted, with: .fade)
+        if doBatchUpdate {
+            tableView.performWithBatchUpdate(action)
         }
-        
-        tableView.endUpdates()
+        else {
+            action()
+        }
         
         for (index, description) in tableViewCellDescriptions.enumerated() {
             if let cell = tableView.cellForRow(at: IndexPath(row: index, section: sectionIndex)) {

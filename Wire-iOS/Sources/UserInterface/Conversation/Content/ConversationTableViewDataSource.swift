@@ -95,7 +95,7 @@ final class ConversationTableViewDataSource: NSObject {
     @objc public var selectedMessage: ZMConversationMessage? = nil
     @objc public var editingMessage: ZMConversationMessage? = nil {
         didSet {
-            reconfigureVisibleSections()
+            reconfigureVisibleSections(doBatchUpdate: true)
         }
     }
     
@@ -104,7 +104,7 @@ final class ConversationTableViewDataSource: NSObject {
     
     @objc public var searchQueries: [String] = [] {
         didSet {
-            reconfigureVisibleSections()
+            reconfigureVisibleSections(doBatchUpdate: true)
         }
     }
     
@@ -281,28 +281,49 @@ final class ConversationTableViewDataSource: NSObject {
     }
 }
 
+extension UITableView {
+    func performWithBatchUpdate(_ action: ()->()) {
+        self.beginUpdates()
+        action()
+        self.endUpdates()
+    }
+}
+
 extension ConversationTableViewDataSource: NSFetchedResultsControllerDelegate {
     
-    func reconfigureSectionController(at index: Int, tableView: UITableView) {
+    func reconfigureSectionController(at index: Int, tableView: UITableView, doBatchUpdate: Bool) {
         guard let sectionController = self.sectionController(at: index, in: tableView) else { return }
         
         let context = self.context(for: sectionController.message, at: index, firstUnreadMessage: firstUnreadMessage, searchQueries: self.searchQueries)
-        sectionController.configure(in: context, at: index, in: tableView)
+        sectionController.configure(in: context, at: index, in: tableView, doBatchUpdate: doBatchUpdate)
     }
     
-    @objc func reconfigureVisibleSections() {
-        tableView.beginUpdates()
-        if let indexPathsForVisibleRows = tableView.indexPathsForVisibleRows {
-            let visibleSections = Set(indexPathsForVisibleRows.map(\.section))
-            for section in visibleSections {
-                reconfigureSectionController(at: section, tableView: tableView)
+    func reconfigureVisibleSections(doBatchUpdate: Bool) {
+        
+        func action() {
+            if let indexPathsForVisibleRows = tableView.indexPathsForVisibleRows {
+                let visibleSections = Set(indexPathsForVisibleRows.map(\.section))
+                for section in visibleSections {
+                    reconfigureSectionController(at: section, tableView: tableView, doBatchUpdate: doBatchUpdate)
+                }
             }
         }
-        tableView.endUpdates()
+        
+        if doBatchUpdate {
+            tableView.performWithBatchUpdate(action)
+        }
+        else {
+            action()
+        }
     }
     
+    // TODO: this does not wwork currently (batch updates)
+    static let doBatchUpdates = false
+    
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        tableView.beginUpdates()
+        if ConversationTableViewDataSource.doBatchUpdates {
+            tableView.beginUpdates()
+        }
     }
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
@@ -312,15 +333,14 @@ extension ConversationTableViewDataSource: NSFetchedResultsControllerDelegate {
                     newIndexPath: IndexPath?) {
         
         func rowToSection(_ indexPath: IndexPath) -> Int {
-            return self.messages.count - 1 - indexPath.row
+            return indexPath.row // self.messages.count - 1 -
         }
-        
+
         switch changeType {
         case .insert:
             guard let insertedIndexPath = newIndexPath else {
                 fatal("Missing new index path")
             }
-            
             tableView.insertSections([rowToSection(insertedIndexPath)], with: .fade)
         case .delete:
             guard let indexPathToRemove = indexPath else {
@@ -337,7 +357,7 @@ extension ConversationTableViewDataSource: NSFetchedResultsControllerDelegate {
                 return
             }
             
-            reconfigureSectionController(at: rowToSection(indexPathToUpdate), tableView: tableView)
+            reconfigureSectionController(at: rowToSection(indexPathToUpdate), tableView: tableView, doBatchUpdate: false)
         case .move:
             guard let indexPath = indexPath, let newIndexPath = newIndexPath else {
                 return
@@ -356,10 +376,16 @@ extension ConversationTableViewDataSource: NSFetchedResultsControllerDelegate {
     }
     
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+      
         // Re-evalulate visible cells in all sections, this is necessary because if a message is inserted/moved the
         // neighbouring messages may no longer want to display sender, toolbox or burst timestamp.
-        reconfigureVisibleSections()
-        tableView.endUpdates()
+        reconfigureVisibleSections(doBatchUpdate: false)
+        if ConversationTableViewDataSource.doBatchUpdates {
+            tableView.endUpdates()
+        }
+        else {
+            tableView.reloadData()
+        }
     }
 }
 

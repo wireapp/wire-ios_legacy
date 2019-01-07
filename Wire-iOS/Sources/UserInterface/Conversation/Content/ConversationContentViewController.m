@@ -747,8 +747,11 @@
         [tableView beginUpdates];
         [tableView endUpdates];
     } else {
+        if (tableView.indexPathForSelectedRow != nil) {
+            [self.dataSource deselectWithIndexPath:tableView.indexPathForSelectedRow];
+        }
         self.dataSource.selectedMessage = message;
-
+        [self.dataSource selectWithIndexPath:indexPath];
         selectedIndexPath = indexPath;
     }
     
