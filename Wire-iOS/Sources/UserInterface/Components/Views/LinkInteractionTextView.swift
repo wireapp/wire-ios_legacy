@@ -38,7 +38,6 @@ public class ReadOnlyTextView: UITextView {
 
     override init(frame: CGRect, textContainer: NSTextContainer?) {
         super.init(frame: frame, textContainer: textContainer)
-        delegate = self
 
         if #available(iOS 11.0, *) {
             textDragDelegate = self
@@ -52,14 +51,6 @@ public class ReadOnlyTextView: UITextView {
     }
 }
 
-extension ReadOnlyTextView: UITextViewDelegate {
-    public func textView(_ textView: UITextView, shouldInteractWith textAttachment: NSTextAttachment, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
-        guard interaction == .presentActions else { return true }
-        interactionDelegate?.textViewDidLongPress(self)
-        return false
-    }
-}
-
 @available(iOS 11.0, *)
 extension ReadOnlyTextView: UITextDragDelegate {
 
@@ -70,8 +61,18 @@ extension ReadOnlyTextView: UITextDragDelegate {
 
 }
 
+////////////////////////////////////////////////////////////////////////////////////
 
 public class LinkInteractionTextView: ReadOnlyTextView {
+
+    override init(frame: CGRect, textContainer: NSTextContainer?) {
+        super.init(frame: frame, textContainer: textContainer)
+        delegate = self
+    }
+
+    required public init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     // URLs with these schemes should be handled by the os.
     fileprivate let dataDetectedURLSchemes = [ "x-apple-data-detectors", "tel", "mailto"]
@@ -117,8 +118,12 @@ public class LinkInteractionTextView: ReadOnlyTextView {
     }
 }
 
-//MARK: - UITextViewDelegate
-extension LinkInteractionTextView {
+extension LinkInteractionTextView: UITextViewDelegate {
+    public func textView(_ textView: UITextView, shouldInteractWith textAttachment: NSTextAttachment, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+        guard interaction == .presentActions else { return true }
+        interactionDelegate?.textViewDidLongPress(self)
+        return false
+    }
 
     public func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
         switch interaction {

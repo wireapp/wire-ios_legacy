@@ -96,11 +96,11 @@ class LinkConversationSystemMessageCell: ConversationIconBasedCell, Conversation
     }
 
     ///TODO: custom link
-//    func attributedLabel(_ label: TTTAttributedLabel!, didSelectLinkWith url: URL!) {
-//        if let itemURL = lastConfiguration?.url {
-//            UIApplication.shared.open(itemURL)
-//        }
-//    }
+    //    func attributedLabel(_ label: TTTAttributedLabel!, didSelectLinkWith url: URL!) {
+    //        if let itemURL = lastConfiguration?.url {
+    //            UIApplication.shared.open(itemURL)
+    //        }
+    //    }
 
 }
 
@@ -124,7 +124,7 @@ class NewDeviceSystemMessageCell: ConversationIconBasedCell, ConversationMessage
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-       setupView()
+        setupView()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -145,11 +145,30 @@ class NewDeviceSystemMessageCell: ConversationIconBasedCell, ConversationMessage
     
     // MARK: - TTTAttributedLabelDelegate
 
-    ///TODO:
+    ///TODO: shouldInteractWith
     /*
-    func attributedLabel(_ label: TTTAttributedLabel!, didSelectLinkWith URL: URL!) {
-        guard let linkTarget = linkTarget  else { return }
-        
+     func attributedLabel(_ label: TTTAttributedLabel!, didSelectLinkWith URL: URL!) {
+     guard let linkTarget = linkTarget  else { return }
+
+     if URL == type(of: self).userClientURL {
+     switch linkTarget {
+     case .user(let user):
+     ZClientViewController.shared()?.openClientListScreen(for: user)
+     case .conversation(let conversation):
+     ZClientViewController.shared()?.openDetailScreen(for: conversation)
+     }
+     }
+     }
+     */
+}
+
+//shouldInteractWith
+/// MARK: - custom link
+extension NewDeviceSystemMessageCell {
+    public func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+
+        guard let linkTarget = linkTarget  else { return false }
+
         if URL == type(of: self).userClientURL {
             switch linkTarget {
             case .user(let user):
@@ -157,10 +176,13 @@ class NewDeviceSystemMessageCell: ConversationIconBasedCell, ConversationMessage
             case .conversation(let conversation):
                 ZClientViewController.shared()?.openDetailScreen(for: conversation)
             }
+            return true
         }
+
+        return false
     }
- */
 }
+
 
 class ConversationRenamedSystemMessageCell: ConversationIconBasedCell, ConversationMessageCell {
 
@@ -188,7 +210,7 @@ class ConversationRenamedSystemMessageCell: ConversationIconBasedCell, Conversat
             nameLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
             nameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             nameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)
-        ])
+            ])
     }
 
     // MARK: - Configuration
@@ -210,7 +232,7 @@ class ConversationSystemMessageCellDescription {
         guard let systemMessageData = message.systemMessageData,
             let sender = message.sender,
             let conversation = message.conversation else {
-            preconditionFailure("Invalid system message")
+                preconditionFailure("Invalid system message")
         }
 
         switch systemMessageData.systemMessageType {
@@ -603,7 +625,7 @@ class ConversationCannotDecryptSystemMessageCellDescription: ConversationMessage
                 remoteIDChanged:
                 remoteIdentityChanged,
                 link: link
-            )
+        )
 
         configuration = View.Configuration(icon: icon, attributedText: title, showLine: false, url: link)
         actionController = nil
@@ -772,7 +794,7 @@ class ConversationNewDeviceSystemMessageCellDescription: ConversationMessageCell
         } else {
             linkTarget = .conversation(conversation)
         }
-       
+
         return View.Configuration(attributedText: attributedText, icon: verifiedIcon, linkTarget: linkTarget)
     }
     

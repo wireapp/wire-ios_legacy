@@ -19,13 +19,34 @@
 import UIKit
 //import TTTAttributedLabel
 
+extension ConversationIconBasedCell: TextViewInteractionDelegate {
+    func textView(_ textView: ReadOnlyTextView, open url: URL) -> Bool {
+        return true
+    }
+
+    func textViewDidLongPress(_ textView: ReadOnlyTextView) {
+
+    }
+
+}
+
+extension ConversationIconBasedCell: UITextViewDelegate {
+}
+
 class ConversationIconBasedCell: UIView
-//, TTTAttributedLabelDelegate
+    //, TTTAttributedLabelDelegate
 {
 
     let imageContainer = UIView()
     let imageView = UIImageView()
-    let textLabel = ReadOnlyTextView() //TTTAttributedLabel(frame: .zero) ///TODO: non editable/scrollable....
+    let textLabel: ReadOnlyTextView = {
+        let readOnlyTextView = ReadOnlyTextView()
+
+//        readOnlyTextView.isSelectable = false
+
+        return readOnlyTextView
+    }()
+    
     let lineView = UIView()
 
     let contentView = UIView()
@@ -49,23 +70,20 @@ class ConversationIconBasedCell: UIView
     var attributedText: NSAttributedString? {
         didSet {
             textLabel.attributedText = attributedText
-//            textLabel.sizeToFit()
 
             let size = textLabel.sizeThatFits(CGSize(width: textLabel.frame.size.width, height: UIView.noIntrinsicMetric))
-
-//            print("size = \(size)")
 
             labelHeightConstraint.constant = size.height
 
             textLabel.accessibilityLabel = attributedText?.string
-//            textLabel.addLinks()
+            //            textLabel.addLinks()
 
-//            let font = attributedText?.attributes(at: 0, effectiveRange: nil)[.font] as? UIFont
-//            if let lineHeight = font?.lineHeight {
-//                labelTopConstraint.constant = (32 - lineHeight) / 2
-//            } else {
+            let font = attributedText?.attributes(at: 0, effectiveRange: nil)[.font] as? UIFont
+            if let lineHeight = font?.lineHeight {
+                labelTopConstraint.constant = (32 - lineHeight) / 2
+            } else {
                 labelTopConstraint.constant = 0
-//            }
+            }
 
             textLabel.setNeedsLayout()
         }
@@ -73,6 +91,7 @@ class ConversationIconBasedCell: UIView
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+
         configureSubviews()
         configureConstraints()
     }
@@ -88,21 +107,19 @@ class ConversationIconBasedCell: UIView
         imageView.isAccessibilityElement = true
         imageView.accessibilityLabel = "Icon"
 
-//        textLabel.numberOfLines = 0
-
         textLabel.textContainer.maximumNumberOfLines = 0
         textLabel.isAccessibilityElement = true
         textLabel.backgroundColor = .clear
         textLabel.font = labelFont
 
-//        textLabel.extendsLinkTouchArea = true
+        textLabel.linkTextAttributes = [
+            NSAttributedString.Key.underlineStyle: NSUnderlineStyle().rawValue as NSNumber,
+            NSAttributedString.Key.foregroundColor: ZMUser.selfUser().accentColor
+        ]
 
-//        textLabel.linkAttributes = [
-//            NSAttributedString.Key.underlineStyle: NSUnderlineStyle().rawValue as NSNumber,
-//            NSAttributedString.Key.foregroundColor: ZMUser.selfUser().accentColor
-//        ]
+        textLabel.interactionDelegate = self
+        textLabel.delegate = self
 
-//        textLabel.delegate = self
         lineView.backgroundColor = .from(scheme: .separator)
 
         imageContainer.addSubview(imageView)
@@ -147,7 +164,7 @@ class ConversationIconBasedCell: UIView
             labelTopConstraint,
             labelTrailingConstraint,
             labelHeightConstraint,
-        
+
             // lineView
             lineView.leadingAnchor.constraint(equalTo: textLabel.trailingAnchor, constant: 16),
             lineView.heightAnchor.constraint(equalToConstant: .hairline),
@@ -160,7 +177,7 @@ class ConversationIconBasedCell: UIView
             contentView.trailingAnchor.constraint(equalTo: trailingAnchor),
             contentView.bottomAnchor.constraint(equalTo: bottomAnchor),
             contentViewTopConstraint
-        ])
+            ])
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
