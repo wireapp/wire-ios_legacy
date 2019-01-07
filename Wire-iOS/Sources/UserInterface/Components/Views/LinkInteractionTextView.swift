@@ -18,60 +18,38 @@
 
 
 import UIKit
-
+ 
 @objc public protocol TextViewInteractionDelegate: NSObjectProtocol {
-    func textView(_ textView: ReadOnlyTextView, open url: URL) -> Bool
-    func textViewDidLongPress(_ textView: ReadOnlyTextView)
+    func textView(_ textView: LinkInteractionTextView, open url: URL) -> Bool
+    func textViewDidLongPress(_ textView: LinkInteractionTextView)
 }
 
 
-/// a non-selectable TextView. The link in it is non-draggable.
-public class ReadOnlyTextView: UITextView {
-
+@objcMembers public class LinkInteractionTextView: UITextView {
+    
     public weak var interactionDelegate: TextViewInteractionDelegate?
-
-    required public init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    override public init(frame: CGRect = .zero, textContainer: NSTextContainer? = nil) {
-        super.init(frame: frame, textContainer: textContainer)
-        delegate = self
-
-        if #available(iOS 11.0, *) {
-            textDragDelegate = self
-        }
-    }
 
     override public var selectedTextRange: UITextRange? {
         get { return nil }
         set { /* no-op */ }
     }
-}
-
-extension ReadOnlyTextView: UITextViewDelegate {
-
-    public func textView(_ textView: UITextView, shouldInteractWith textAttachment: NSTextAttachment, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
-        guard interaction == .presentActions else { return true }
-        interactionDelegate?.textViewDidLongPress(self)
-        return false
-    }
-}
-
-@available(iOS 11.0, *)
-extension ReadOnlyTextView: UITextDragDelegate {
-    public func textDraggableView(_ textDraggableView: UIView & UITextDraggable, itemsForDrag dragRequest: UITextDragRequest) -> [UIDragItem] {
-        return []
-    }
-}
-
-//////////////////////////
-
-public class LinkInteractionTextView: ReadOnlyTextView {
-
+    
     // URLs with these schemes should be handled by the os.
     fileprivate let dataDetectedURLSchemes = [ "x-apple-data-detectors", "tel", "mailto"]
-
+    
+    override init(frame: CGRect, textContainer: NSTextContainer?) {
+        super.init(frame: frame, textContainer: textContainer)
+        delegate = self
+        
+        if #available(iOS 11.0, *) {
+            textDragDelegate = self
+        }
+    }
+    
+    required public init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override public func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
         let isInside = super.point(inside: point, with: event)
         guard !UIMenuController.shared.isMenuVisible else { return false }
@@ -113,9 +91,15 @@ public class LinkInteractionTextView: ReadOnlyTextView {
     }
 }
 
-// MARK: - UITextViewDelegate
-extension LinkInteractionTextView {
 
+extension LinkInteractionTextView: UITextViewDelegate {
+    
+    public func textView(_ textView: UITextView, shouldInteractWith textAttachment: NSTextAttachment, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+        guard interaction == .presentActions else { return true }
+        interactionDelegate?.textViewDidLongPress(self)
+        return false
+    }
+    
     public func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
         switch interaction {
         case .invokeDefaultAction:
@@ -138,11 +122,10 @@ extension LinkInteractionTextView {
     }
 }
 
-// MARK: -  UITextDragDelegate
 @available(iOS 11.0, *)
-extension LinkInteractionTextView {
+extension LinkInteractionTextView: UITextDragDelegate {
     
-    public override func textDraggableView(_ textDraggableView: UIView & UITextDraggable, itemsForDrag dragRequest: UITextDragRequest) -> [UIDragItem] {
+    public func textDraggableView(_ textDraggableView: UIView & UITextDraggable, itemsForDrag dragRequest: UITextDragRequest) -> [UIDragItem] {
         
         func isMentionLink(_ attributeTuple: (NSAttributedString.Key, Any)) -> Bool {
             return attributeTuple.0 == NSAttributedString.Key.link && (attributeTuple.1 as? NSURL)?.scheme ==  Mention.mentionScheme
