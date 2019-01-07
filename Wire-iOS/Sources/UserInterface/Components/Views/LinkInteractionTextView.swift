@@ -18,15 +18,15 @@
 
 
 import UIKit
- 
+
 @objc public protocol TextViewInteractionDelegate: NSObjectProtocol {
-    func textView(_ textView: HyperLinkTextView, open url: URL) -> Bool
-    func textViewDidLongPress(_ textView: HyperLinkTextView)
+    func textView(_ textView: ReadOnlyTextView, open url: URL) -> Bool
+    func textViewDidLongPress(_ textView: ReadOnlyTextView)
 }
 
 
-/// a non-selectable and non-draggable TextView 
-public class HyperLinkTextView: UITextView {
+/// a non-selectable TextView. The link in it is non-draggable.
+public class ReadOnlyTextView: UITextView {
 
     public weak var interactionDelegate: TextViewInteractionDelegate?
 
@@ -49,7 +49,7 @@ public class HyperLinkTextView: UITextView {
     }
 }
 
-extension HyperLinkTextView: UITextViewDelegate {
+extension ReadOnlyTextView: UITextViewDelegate {
 
     public func textView(_ textView: UITextView, shouldInteractWith textAttachment: NSTextAttachment, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
         guard interaction == .presentActions else { return true }
@@ -59,12 +59,15 @@ extension HyperLinkTextView: UITextViewDelegate {
 }
 
 @available(iOS 11.0, *)
-extension HyperLinkTextView: UITextDragDelegate {
+extension ReadOnlyTextView: UITextDragDelegate {
+    public func textDraggableView(_ textDraggableView: UIView & UITextDraggable, itemsForDrag dragRequest: UITextDragRequest) -> [UIDragItem] {
+        return []
+    }
 }
 
 //////////////////////////
 
-public class LinkInteractionTextView: HyperLinkTextView {
+public class LinkInteractionTextView: ReadOnlyTextView {
 
     // URLs with these schemes should be handled by the os.
     fileprivate let dataDetectedURLSchemes = [ "x-apple-data-detectors", "tel", "mailto"]
@@ -139,7 +142,7 @@ extension LinkInteractionTextView {
 @available(iOS 11.0, *)
 extension LinkInteractionTextView {
     
-    public func textDraggableView(_ textDraggableView: UIView & UITextDraggable, itemsForDrag dragRequest: UITextDragRequest) -> [UIDragItem] {
+    public override func textDraggableView(_ textDraggableView: UIView & UITextDraggable, itemsForDrag dragRequest: UITextDragRequest) -> [UIDragItem] {
         
         func isMentionLink(_ attributeTuple: (NSAttributedString.Key, Any)) -> Bool {
             return attributeTuple.0 == NSAttributedString.Key.link && (attributeTuple.1 as? NSURL)?.scheme ==  Mention.mentionScheme
