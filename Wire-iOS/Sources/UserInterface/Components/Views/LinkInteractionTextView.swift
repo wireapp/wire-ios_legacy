@@ -43,6 +43,12 @@ public class ReadOnlyTextView: UITextView {
         if #available(iOS 11.0, *) {
             textDragDelegate = self
         }
+
+        isEditable = false
+        isScrollEnabled = false
+        textContainerInset = UIEdgeInsets.zero
+        textContainer?.lineFragmentPadding = 0
+        isUserInteractionEnabled = true
     }
 }
 

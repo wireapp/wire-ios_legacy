@@ -60,13 +60,8 @@ class ConversationTextMessageCell: UIView, ConversationMessageCell, TextViewInte
     }
 
     private func configureSubviews() {
-        messageTextView.isEditable = false
         messageTextView.isSelectable = true
         messageTextView.backgroundColor = .clear
-        messageTextView.isScrollEnabled = false
-        messageTextView.textContainerInset = UIEdgeInsets.zero
-        messageTextView.textContainer.lineFragmentPadding = 0
-        messageTextView.isUserInteractionEnabled = true
         messageTextView.accessibilityIdentifier = "Message"
         messageTextView.accessibilityElementsHidden = false
         messageTextView.dataDetectorTypes = [.link, .address, .phoneNumber, .flightNumber, .calendarEvent, .shipmentTrackingNumber]

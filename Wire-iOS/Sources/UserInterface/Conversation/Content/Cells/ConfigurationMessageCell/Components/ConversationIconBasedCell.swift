@@ -25,7 +25,7 @@ class ConversationIconBasedCell: UIView
 
     let imageContainer = UIView()
     let imageView = UIImageView()
-    let textLabel = UITextView() //TTTAttributedLabel(frame: .zero) ///TODO: non editable/scrollable....
+    let textLabel = ReadOnlyTextView() //TTTAttributedLabel(frame: .zero) ///TODO: non editable/scrollable....
     let lineView = UIView()
 
     let contentView = UIView()
