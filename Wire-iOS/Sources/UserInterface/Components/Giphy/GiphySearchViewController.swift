@@ -24,7 +24,7 @@ import Ziphy
     func giphySearchViewController(_ giphySearchViewController: GiphySearchViewController, didSelectImageData imageData: Data, searchTerm: String)
 }
 
-@objc class GiphySearchViewController: VerticalColumnCollectionViewController { ///TODO: rm objc
+@objc class GiphySearchViewController: VerticalColumnCollectionViewController {
 
     @objc public weak var delegate: GiphySearchViewControllerDelegate?
 
@@ -43,7 +43,7 @@ import Ziphy
 
     @objc(initWithSearchTerm:conversation:)
     convenience init(searchTerm: String, conversation: ZMConversation) {
-        let searchResultsController = ZiphySearchResultsController(client: .default, pageSize: 50, maxImageSize: 6)
+        let searchResultsController = ZiphySearchResultsController(client: .default, pageSize: 50, maxImageSize: 3)
         self.init(searchTerm: searchTerm, conversation: conversation, searchResultsController: searchResultsController)
     }
 
