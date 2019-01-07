@@ -52,10 +52,15 @@ class AuthenticationInterfaceBuilder {
             registrationViewController.loginCredentials = credentials
             return registrationViewController
 
-        case .provideCredentials:
-            let loginViewController = RegistrationViewController(authenticationFlow: .login)
-            loginViewController.shouldHideCancelButton = true
-            return loginViewController
+        case .provideCredentials(let credentialsFlowType):
+            switch credentialsFlowType {
+            case .email:
+                let emailLoginStep = LogInWithEmailStepDescription()
+                return createViewController(for: emailLoginStep)
+            case .phone:
+                let phoneLoginStep = LogInWithPhoneNumberStepDescription()
+                return createViewController(for: phoneLoginStep, viewControllerType: PhoneNumberAuthenticationStepController.self)
+            }
 
         case .createCredentials(_, let credentialsFlowType):
             switch credentialsFlowType {

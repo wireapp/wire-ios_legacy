@@ -47,8 +47,10 @@ enum AuthenticationCoordinatorAction {
     case continueFlowWithLoginCode(String)
     case switchCredentialsType(AuthenticationCredentialsType)
     case startRegistrationFlow(UnverifiedCredentials)
+    case startLoginFlow(AuthenticationLoginRequest)
     case setUserName(String)
     case setUserPassword(String)
+    case startCompanyLogin
 
     var retainsModal: Bool {
         switch self {
@@ -92,4 +94,9 @@ extension AuthenticationCoordinatorAlertAction {
 struct AuthenticationCoordinatorErrorAlert {
     let error: NSError
     let completionActions: [AuthenticationCoordinatorAction]
+}
+
+enum AuthenticationLoginRequest {
+    case email(address: String, password: String)
+    case phoneNumber(String)
 }

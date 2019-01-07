@@ -295,7 +295,7 @@
 - (IBAction)signIn:(id)sender
 {
     self.needsToResetBothFieldAccessories = YES;
-    [self.authenticationCoordinator requestEmailLoginWithCredentials:self.credentials];
+    // [self.authenticationCoordinator requestEmailLoginWithCredentials:self.credentials];
 }
 
 - (IBAction)resetPassword:(id)sender

@@ -258,12 +258,12 @@
 
 - (void)phoneNumberStepViewControllerDidPickPhoneNumber:(NSString *)phoneNumber
 {
-    [self.authenticationCoordinator startRegistrationWithPhoneNumber:phoneNumber];
+    // [self.authenticationCoordinator startRegistrationWithPhoneNumber:phoneNumber];
 }
 
 - (void)emailStepViewControllerDidFinishWithInput:(EmailStepViewControllerInput *)input
 {
-    [self.authenticationCoordinator startRegistrationWithName:input.name email:input.emailAddress password:input.password];
+    // [self.authenticationCoordinator startRegistrationWithName:input.name email:input.emailAddress password:input.password];
 }
 
 @end

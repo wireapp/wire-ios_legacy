@@ -1322,8 +1322,9 @@
 "registration.signin.too_many_devices.subtitle" = "Remove one of your other devices to start using Wire on this one.";
 "registration.signin.too_many_devices.manage_button.title" = "Manage devices";
 "registration.signin.too_many_devices.sign_out_button.title" = "Log out";
-"registration.signin.email_button.title" = "Email";
-"registration.signin.phone_button.title" = "Phone";
+
+"registration.signin.email_button.title" = "Log In With Email";
+"registration.signin.phone_button.title" = "Log In With Phone Number";
 
 "registration.signin.alert.password_needed.title" = "Password needed";
 "registration.signin.alert.password_needed.message" = "Please enter your Password in order to log in.";

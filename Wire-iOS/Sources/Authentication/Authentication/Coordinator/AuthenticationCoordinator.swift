@@ -273,6 +273,12 @@ extension AuthenticationCoordinator: AuthenticationActioner, SessionManagerCreat
 
             case .setUserPassword(let password):
                 updateUnregisteredUser(\.password, password)
+
+            case .startCompanyLogin:
+                startCompanyLoginFlowIfPossible()
+
+            case .startLoginFlow(let request):
+                startLoginFlow(request: request)
             }
         }
     }
@@ -402,61 +408,6 @@ extension AuthenticationCoordinator {
         }
     }
 
-    /**
-     * Starts the registration flow with the specified phone number.
-     *
-     * This step will ask the registration status to send the activation code
-     * by text message. It will advance the state to `.sendActivationCode`.
-     *
-     * - parameter phoneNumber: The phone number to activate and register with.
-     */
-
-    @objc(startRegistrationWithPhoneNumber:)
-    func startRegistration(phoneNumber: String) {
-        guard case let .createCredentials(unregisteredUser, _) = stateController.currentStep, let presenter = self.presenter else {
-            log.error("Cannot start phone registration outside of registration flow.")
-            return
-        }
-
-        UIAlertController.requestTOSApproval(over: presenter, forTeamAccount: false) { approved in
-            if approved {
-                unregisteredUser.credentials = .phone(phoneNumber)
-                unregisteredUser.acceptedTermsOfService = true
-                self.sendActivationCode(.phone(phoneNumber), unregisteredUser, isResend: false)
-            }
-        }
-    }
-
-    /**
-     * Starts the registration flow with the specified e-mail and password.
-     *
-     * This step will ask the registration status to send the activation code
-     * by e-mail. It will advance the state to `.sendActivationCode`.
-     *
-     * - parameter name: The display name of the user.
-     * - parameter email: The email address to activate and register with.
-     * - parameter password: The password to link with the e-mail.
-     */
-
-    @objc(startRegistrationWithName:email:password:)
-    func startRegistration(name: String, email: String, password: String) {
-        guard case let .createCredentials(unregisteredUser, _) = stateController.currentStep, let presenter = self.presenter else {
-            log.error("Cannot start email registration outside of registration flow.")
-            return
-        }
-
-        UIAlertController.requestTOSApproval(over: presenter, forTeamAccount: false) { approved in
-            if approved {
-                unregisteredUser.credentials = .email(email)
-                unregisteredUser.name = name
-                unregisteredUser.password = password
-                unregisteredUser.acceptedTermsOfService = true
-
-                self.sendActivationCode(.email(email), unregisteredUser, isResend: false)
-            }
-        }
-    }
-
     /// Sends the registration activation code.
     private func sendActivationCode(_ credentials: UnverifiedCredentials, _ user: UnregisteredUser, isResend: Bool) {
         presenter?.showLoadingView = true
@@ -472,17 +423,6 @@ extension AuthenticationCoordinator {
     }
 
     // MARK: Linear Registration
-
-    /**
-     * Notifies the registration state observers that the user set a display name.
-     */
-
-    @objc(setUserName:)
-    func setUserName(_ userName: String) {
-        updateUnregisteredUser {
-            $0.name = userName
-        }
-    }
 
     func setMarketingConsent(_ consentValue: Bool) {
         switch stateController.currentStep {
@@ -578,26 +518,20 @@ extension AuthenticationCoordinator {
 
     // MARK: Login
 
-    /**
-     * Starts the phone number login flow for the given phone number.
-     * - parameter phoneNumber: The phone number to validate for login.
-     */
+    private func startLoginFlow(request: AuthenticationLoginRequest) {
+        switch request {
+        case .email(let address, let password):
+            let credentials = ZMEmailCredentials(email: address, password: password)
+            presenter?.showLoadingView = true
+            stateController.transition(to: .authenticateEmailCredentials(credentials))
+            unauthenticatedSession.login(with: credentials)
 
-    @objc(startLoginWithPhoneNumber:)
-    func startLogin(phoneNumber: String) {
-        sendLoginCode(phoneNumber: phoneNumber, isResend: false)
-    }
-
-    /**
-     * Requests an e-mail login for the specified credentials.
-     * - parameter credentials: The e-mail credentials to sign in with.
-     */
-
-    @objc(requestEmailLoginWithCredentials:)
-    func requestEmailLogin(with credentials: ZMEmailCredentials) {
-        presenter?.showLoadingView = true
-        stateController.transition(to: .authenticateEmailCredentials(credentials))
-        unauthenticatedSession.login(with: credentials)
+        case .phoneNumber(let phoneNumber):
+            presenter?.showLoadingView = true
+            let nextStep = AuthenticationFlowStep.sendLoginCode(phoneNumber: phoneNumber, isResend: false)
+            stateController.transition(to: nextStep)
+            unauthenticatedSession.requestPhoneVerificationCodeForLogin(phoneNumber: phoneNumber)
+        }
     }
 
     /// Sends the login verification code to the phone number.
