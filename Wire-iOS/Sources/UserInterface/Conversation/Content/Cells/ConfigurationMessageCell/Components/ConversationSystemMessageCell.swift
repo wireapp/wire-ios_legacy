@@ -17,7 +17,7 @@
 //
 
 import UIKit
-import TTTAttributedLabel
+//import TTTAttributedLabel
 
 // MARK: - Cells
 
@@ -95,11 +95,12 @@ class LinkConversationSystemMessageCell: ConversationIconBasedCell, Conversation
         attributedText = object.attributedText
     }
 
-    func attributedLabel(_ label: TTTAttributedLabel!, didSelectLinkWith url: URL!) {
-        if let itemURL = lastConfiguration?.url {
-            UIApplication.shared.open(itemURL)
-        }
-    }
+    ///TODO: custom link
+//    func attributedLabel(_ label: TTTAttributedLabel!, didSelectLinkWith url: URL!) {
+//        if let itemURL = lastConfiguration?.url {
+//            UIApplication.shared.open(itemURL)
+//        }
+//    }
 
 }
 
@@ -143,7 +144,9 @@ class NewDeviceSystemMessageCell: ConversationIconBasedCell, ConversationMessage
     }
     
     // MARK: - TTTAttributedLabelDelegate
-    
+
+    ///TODO:
+    /*
     func attributedLabel(_ label: TTTAttributedLabel!, didSelectLinkWith URL: URL!) {
         guard let linkTarget = linkTarget  else { return }
         
@@ -156,6 +159,7 @@ class NewDeviceSystemMessageCell: ConversationIconBasedCell, ConversationMessage
             }
         }
     }
+ */
 }
 
 class ConversationRenamedSystemMessageCell: ConversationIconBasedCell, ConversationMessageCell {
