@@ -90,7 +90,7 @@ class ConversationTextMessageCell: UIView, ConversationMessageCell, TextViewInte
         messageTextView.attributedText = object.attributedText
     }
 
-    func textView(_ textView: ReadOnlyTextView, open url: URL) -> Bool {
+    func textView(_ textView: LinkInteractionTextView, open url: URL) -> Bool {
         // Open mention link
         if url.isMention {
             if let message = self.message, let mention = message.textMessageData?.mentions.first(where: { $0.location == url.mentionLocation }) {
@@ -109,7 +109,7 @@ class ConversationTextMessageCell: UIView, ConversationMessageCell, TextViewInte
         return true
     }
 
-    func textViewDidLongPress(_ textView: ReadOnlyTextView) {
+    func textViewDidLongPress(_ textView: LinkInteractionTextView) {
         if !UIMenuController.shared.isMenuVisible {
             self.menuPresenter?.showMenu()
         }
