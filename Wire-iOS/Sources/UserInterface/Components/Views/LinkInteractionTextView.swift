@@ -45,8 +45,11 @@ public class ReadOnlyTextView: UITextView {
 
         isEditable = false
         isScrollEnabled = false
+
+        // no leading spacing
         textContainerInset = UIEdgeInsets.zero
-        textContainer?.lineFragmentPadding = 0
+        self.textContainer.lineFragmentPadding = 0
+
         isUserInteractionEnabled = true
     }
 }

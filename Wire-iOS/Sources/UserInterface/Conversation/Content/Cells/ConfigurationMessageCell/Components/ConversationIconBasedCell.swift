@@ -43,10 +43,6 @@ class ConversationIconBasedCell: UIView {
         readOnlyTextView.isAccessibilityElement = true
         readOnlyTextView.backgroundColor = .clear
 
-        // no leading spacing
-        readOnlyTextView.textContainerInset = UIEdgeInsets.zero
-        readOnlyTextView.textContainer.lineFragmentPadding = 0
-
         readOnlyTextView.linkTextAttributes = [
             NSAttributedString.Key.underlineStyle: NSUnderlineStyle().rawValue as NSNumber,
             NSAttributedString.Key.foregroundColor: ZMUser.selfUser().accentColor
