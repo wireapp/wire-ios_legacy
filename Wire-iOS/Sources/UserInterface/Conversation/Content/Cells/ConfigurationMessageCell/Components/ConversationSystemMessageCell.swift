@@ -39,6 +39,47 @@ class ConversationSystemMessageCell: ConversationIconBasedCell, ConversationMess
 
 }
 
+class ConversationStartedSystemMessageCell: ConversationIconBasedCell, ConversationMessageCell {
+    
+    struct Configuration {
+        let title: NSAttributedString?
+        let message: NSAttributedString
+        let selectedUsers: [ZMUser]
+        let icon: UIImage?
+    }
+    
+    weak var delegate: ConversationCellDelegate?
+    
+    private let titleLabel = UILabel()
+    private var selectedUsers: [ZMUser] = []
+    
+    override func configureSubviews() {
+        super.configureSubviews()
+        
+        titleLabel.numberOfLines = 0
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        topContentView.addSubview(titleLabel)
+    }
+    
+    override func configureConstraints() {
+        super.configureConstraints()
+        titleLabel.fitInSuperview()
+    }
+    
+    func configure(with object: Configuration, animated: Bool) {
+        titleLabel.attributedText = object.title
+        attributedText = object.message
+        imageView.image = object.icon
+        selectedUsers = object.selectedUsers
+    }
+    
+    func attributedLabel(_ label: TTTAttributedLabel!, didSelectLinkWith url: URL!) {
+        delegate?.conversationCell?(self, openParticipantsDetailsWithSelectedUsers: selectedUsers, from: self)
+    }
+    
+}
+
 class ParticipantsConversationSystemMessageCell: ConversationIconBasedCell, ConversationMessageCell {
     
     struct Configuration {
@@ -56,7 +97,7 @@ class ParticipantsConversationSystemMessageCell: ConversationIconBasedCell, Conv
         warningLabel.isAccessibilityElement = true
         warningLabel.font = FontSpec(.small, .regular).font
         warningLabel.textColor = .vividRed
-        contentView.addSubview(warningLabel)
+        bottomContentView.addSubview(warningLabel)
     }
     
     override func configureConstraints() {
@@ -172,7 +213,7 @@ class ConversationRenamedSystemMessageCell: ConversationIconBasedCell, Conversat
         super.configureSubviews()
         nameLabel.numberOfLines = 0
         imageView.image = UIImage(for: .pencil, fontSize: 16, color: .from(scheme: .textForeground))
-        contentView.addSubview(nameLabel)
+        bottomContentView.addSubview(nameLabel)
     }
 
     override func configureConstraints() {
@@ -180,10 +221,10 @@ class ConversationRenamedSystemMessageCell: ConversationIconBasedCell, Conversat
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            nameLabel.topAnchor.constraint(equalTo: contentView.topAnchor),
-            nameLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            nameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            nameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)
+            nameLabel.topAnchor.constraint(equalTo: bottomContentView.topAnchor),
+            nameLabel.bottomAnchor.constraint(equalTo: bottomContentView.bottomAnchor),
+            nameLabel.leadingAnchor.constraint(equalTo: bottomContentView.leadingAnchor),
+            nameLabel.trailingAnchor.constraint(equalTo: bottomContentView.trailingAnchor)
         ])
     }
 
@@ -278,8 +319,16 @@ class ConversationSystemMessageCellDescription {
             return [AnyConversationMessageCellDescription(cell)]
 
         case .newConversation:
-            let participantsCell = ConversationLegacyCellDescription<ParticipantsCell>(message: message, layoutProperties: layoutProperties)
-            return [AnyConversationMessageCellDescription(participantsCell)]
+            var cells: [AnyConversationMessageCellDescription] = []
+            let startedConversationCell = ConversationStartedSystemMessageCellDescription(message: message, data: systemMessageData)
+            cells.append(AnyConversationMessageCellDescription(startedConversationCell))
+            
+            if conversation.allowGuests {
+                cells.append(AnyConversationMessageCellDescription(GuestsAllowedCellDescription()))
+                
+            }
+            
+            return cells
 
         default:
             let unknownMessage = UnknownMessageCellDescription()
@@ -458,6 +507,44 @@ class ConversationVerifiedSystemMessageSectionDescription: ConversationMessageCe
         configuration = View.Configuration(icon: WireStyleKit.imageOfShieldverified, attributedText: title, showLine: true)
         actionController = nil
     }
+}
+
+class ConversationStartedSystemMessageCellDescription: ConversationMessageCellDescription {
+    
+    typealias View = ConversationStartedSystemMessageCell
+    let configuration: View.Configuration
+    
+    var message: ZMConversationMessage?
+    weak var delegate: ConversationCellDelegate?
+    weak var actionController: ConversationMessageActionController?
+    
+    var showEphemeralTimer: Bool = false
+    var topMargin: Float = 0
+    
+    let isFullWidth: Bool = true
+    let supportsActions: Bool = false
+    let containsHighlightableContent: Bool = false
+    
+    let accessibilityIdentifier: String? = nil
+    let accessibilityLabel: String? = nil
+    
+    init(message: ZMConversationMessage, data: ZMSystemMessageData) {
+        let color = UIColor.from(scheme: .textForeground)
+        let model = ParticipantsCellViewModel(font: .mediumFont, boldFont: .mediumSemiboldFont, largeFont: .largeSemiboldFont, textColor: color, iconColor: color, message: message)
+        
+        actionController = nil
+        configuration =  View.Configuration(title: model.attributedHeading(),
+                                            message: model.attributedTitle() ?? NSAttributedString(string: ""),
+                                            selectedUsers: model.selectedUsers,
+                                            icon: model.image())
+    }
+    
+    func makeCell(for tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueConversationCell(with: self, for: indexPath)
+        cell.cellView.delegate = self.delegate
+        return cell
+    }
+    
 }
 
 class ConversationMissingMessagesSystemMessageCellDescription: ConversationMessageCellDescription {

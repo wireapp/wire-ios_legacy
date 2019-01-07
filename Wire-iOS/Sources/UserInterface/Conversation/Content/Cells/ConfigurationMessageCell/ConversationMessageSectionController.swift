@@ -121,11 +121,7 @@ extension IndexSet {
         
         if message.isSystem, let systemMessageType = message.systemMessageData?.systemMessageType {
             switch systemMessageType {
-                
-            case .newConversation:
-                let participantsCell = ConversationLegacyCellDescription<ParticipantsCell>(message: message, layoutProperties: layoutProperties)
-                add(description: participantsCell)
-                
+                                
             default:
                 return false
             }
@@ -133,7 +129,6 @@ extension IndexSet {
             return false
         }
         
-        return true
     }
     
     private func addContent(context: ConversationMessageContext, layoutProperties: ConversationCellLayoutProperties, isSenderVisible: Bool) {
