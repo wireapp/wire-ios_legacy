@@ -22,10 +22,10 @@ class VerifyPhoneStepSecondaryView: TeamCreationSecondaryViewDescription {
     let views: [ViewDescriptor]
     weak var actioner: AuthenticationActioner?
 
-    init(phoneNumber: String) {
+    init(phoneNumber: String, allowChange: Bool) {
         let resendCode = ButtonDescription(title: "team.activation_code.button.resend".localized, accessibilityIdentifier: "resend_button")
         let changePhoneNumber = ButtonDescription(title: "team.activation_code.button.change_phone".localized, accessibilityIdentifier: "change_phone_button")
-        views = [resendCode, changePhoneNumber]
+        views = allowChange ? [resendCode, changePhoneNumber] : [resendCode]
 
         resendCode.buttonTapped = {
             self.actioner?.repeatAction()
@@ -45,13 +45,13 @@ final class VerifyPhoneStepDescription: TeamCreationStepDescription {
     let subtext: String?
     let secondaryView: TeamCreationSecondaryViewDescription?
 
-    init(phoneNumber: String) {
+    init(phoneNumber: String, allowChange: Bool) {
         self.phoneNumber = phoneNumber
         backButton = nil
         mainView = VerificationCodeFieldDescription()
         headline = "team.phone_activation_code.headline".localized
         subtext = "team.activation_code.subheadline".localized(args: phoneNumber)
-        secondaryView = VerifyPhoneStepSecondaryView(phoneNumber: phoneNumber)
+        secondaryView = VerifyPhoneStepSecondaryView(phoneNumber: phoneNumber, allowChange: allowChange)
     }
 
     func shouldSkipFromNavigation() -> Bool {

@@ -82,7 +82,7 @@ class AuthenticationInterfaceBuilder {
             return AdaptiveFormViewController(childViewController: noHistory)
 
         case .enterLoginCode(let phoneNumber):
-            let verifyPhoneStep = VerifyPhoneStepDescription(phoneNumber: phoneNumber)
+            let verifyPhoneStep = VerifyPhoneStepDescription(phoneNumber: phoneNumber, allowChange: false)
             return createViewController(for: verifyPhoneStep)
 
         case .addEmailAndPassword(_, _, let canSkip):
@@ -97,7 +97,7 @@ class AuthenticationInterfaceBuilder {
             case .email(let email):
                 step = VerifyEmailStepDescription(email: email)
             case .phone(let phoneNumber):
-                step = VerifyPhoneStepDescription(phoneNumber: phoneNumber)
+                step = VerifyPhoneStepDescription(phoneNumber: phoneNumber, allowChange: false)
             }
 
             return createViewController(for: step)

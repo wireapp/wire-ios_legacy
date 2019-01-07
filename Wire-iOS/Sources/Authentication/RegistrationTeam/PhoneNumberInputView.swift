@@ -173,8 +173,24 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
         }
     }
 
+    override var canBecomeFirstResponder: Bool {
+        return textField.canBecomeFirstResponder
+    }
+
+    override var isFirstResponder: Bool {
+        return textField.isFirstResponder
+    }
+
     override func becomeFirstResponder() -> Bool {
         return textField.becomeFirstResponder()
+    }
+
+    override var canResignFirstResponder: Bool {
+        return textField.canResignFirstResponder
+    }
+
+    override func resignFirstResponder() -> Bool {
+        return textField.resignFirstResponder()
     }
 
     /**
