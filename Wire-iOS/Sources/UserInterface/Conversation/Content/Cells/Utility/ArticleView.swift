@@ -18,7 +18,6 @@
 
 
 import UIKit
-import Cartography
 import WireLinkPreview
 import WireExtensionComponents
 
@@ -44,7 +43,7 @@ import WireExtensionComponents
     }
     
     /// MARK - Views
-    let messageLabel = UILabel(frame: CGRect.zero)
+    let messageLabel = UILabel()
     let authorLabel = UILabel()
     let imageView = ImageResourceView()
     var linkPreview: LinkMetadata?
@@ -104,24 +103,22 @@ import WireExtensionComponents
     
     private func setupConstraints(_ imagePlaceholder: Bool) {
         let imageHeight : CGFloat = imagePlaceholder ? self.imageHeight : 0
-        
-        constrain(self, messageLabel, authorLabel, imageView, obfuscationView) { container, messageLabel, authorLabel, imageView, obfuscationView in
-            imageView.left == container.left
-            imageView.top == container.top
-            imageView.right == container.right
-            self.imageHeightConstraint = (imageView.height == imageHeight ~ 999)
-            
-            messageLabel.left == container.left + 12
-            messageLabel.top == imageView.bottom + 12
-            messageLabel.right == container.right - 12
-            
-            authorLabel.left == container.left + 12
-            authorLabel.right == container.right - 12
-            authorLabel.top == messageLabel.bottom + 8
-            authorLabel.bottom == container.bottom - 12
 
-            obfuscationView.edges == imageView.edges
-        }
+        [messageLabel, authorLabel, imageView, obfuscationView].forEach(){ $0.translatesAutoresizingMaskIntoConstraints = false }
+
+        imageView.fitInSuperview(exclude: [.bottom])
+        imageHeightConstraint = imageView.heightAnchor.constraint(equalToConstant: imageHeight)
+        imageHeightConstraint.priority = UILayoutPriority(rawValue: 999)
+
+        messageLabel.fitInSuperview(with: EdgeInsets(margin: 12), exclude: [.bottom, .top])
+        authorLabel.fitInSuperview(with: EdgeInsets(margin: 12), exclude: [.top])
+        obfuscationView.pin(to: imageView)
+
+        NSLayoutConstraint.activate([
+            imageHeightConstraint,
+            messageLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 12),
+            authorLabel.topAnchor.constraint(equalTo: messageLabel.bottomAnchor, constant: 8)
+            ])
     }
     
     private var authorHighlightAttributes : [NSAttributedString.Key: AnyObject] {
