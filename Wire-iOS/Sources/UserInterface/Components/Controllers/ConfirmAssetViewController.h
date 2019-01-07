@@ -25,7 +25,6 @@
 
 /// Can either be UIImage or FLAnimatedImage
 @property (nonatomic, nullable) id<MediaAsset> image;
-@property (nonatomic, nullable) NSURL *videoURL;
 @property (nonatomic, copy, nullable) void (^onConfirm)(UIImage * _Nullable editedImage);
 @property (nonatomic, copy, nullable) void (^onCancel)(void);
 

@@ -47,8 +47,12 @@ extension Settings {
     @objc public func loadEnabledLogs() {
         let avsTag = "AVS"
         if isInternal {
-            var tagsToEnable = UserDefaults.shared().value(forKey: enabledLogsKey) as? Set<String> ?? ["Network", "SessionManager", "Conversations", avsTag, "calling", "link previews", "ephemeral", "event-processing", "SyncStatus", "OperationStatus"]
-            tagsToEnable.insert(avsTag)
+            var tagsToEnable = Set(arrayLiteral: avsTag)
+            if let savedTags = UserDefaults.shared().object(forKey: enabledLogsKey) as? Array<String> {
+                tagsToEnable.formUnion(savedTags)
+            } else {
+                tagsToEnable.formUnion(["Network", "SessionManager", "Conversations", "calling", "link previews", "event-processing", "SyncStatus", "OperationStatus", "Push", "Crypto", "cryptobox"])
+            }
             enableLogs(tagsToEnable)
         } else {
             enableLogs([avsTag])

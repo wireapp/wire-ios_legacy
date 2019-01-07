@@ -55,18 +55,15 @@
 
 - (void)scrollToBottomAnimated:(BOOL)animated
 {
-    // kill existing scrolling if any
-    [self.tableView setContentOffset:self.tableView.contentOffset animated:NO];
-    
-    // scroll to bottom
-    [self.tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:animated];
+    [self.tableView scrollToBottomAnimated:animated];
 }
 
 - (BOOL)scrollToMessage:(id<ZMConversationMessage>)message animated:(BOOL)animated
 {
     NSUInteger index = [self.dataSource indexOfMessage:(id)message];
     if (index != NSNotFound) {
-        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0]
+        NSInteger rowIndex = [self.tableView numberOfRowsInSection:index] - 1;
+        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:rowIndex inSection:index]
                               atScrollPosition:UITableViewScrollPositionTop
                                       animated:animated];
     }

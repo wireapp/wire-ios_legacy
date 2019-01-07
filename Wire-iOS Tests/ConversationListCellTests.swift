@@ -18,6 +18,7 @@
 
 import UIKit
 @testable import Wire
+import XCTest
 
 class ConversationListCellTests: CoreDataSnapshotTestCase {
 
@@ -29,7 +30,8 @@ class ConversationListCellTests: CoreDataSnapshotTestCase {
         super.setUp()
         snapshotBackgroundColor = .darkGray
         accentColor = .strongBlue
-        sut = ConversationListCell(frame: CGRect(x: 0, y: 0, width: 375, height: 60))
+        ///The cell must higher than 64, otherwise it breaks the constraints.
+        sut = ConversationListCell(frame: CGRect(x: 0, y: 0, width: 375, height: ConversationListItemView.minHeight))
     }
     
     override func tearDown() {
@@ -46,7 +48,6 @@ class ConversationListCellTests: CoreDataSnapshotTestCase {
         ) {
         sut.conversation = conversation
         
-        sut.prepareForSnapshot()
         verify(view: sut, file: file, line: line)
     }
     
@@ -113,7 +114,42 @@ class ConversationListCellTests: CoreDataSnapshotTestCase {
         // then
         verify(otherUserConversation)
     }
-    
+
+    func testThatItRendersConversation_TextMessagesThenMentionThenReply() {
+        // when
+        let message = otherUserConversation.append(text: "Hey there!")
+        (message as! ZMClientMessage).sender = otherUser
+
+        let selfMessage = otherUserConversation.append(text: "Ping!")
+        (message as! ZMClientMessage).sender = selfUser
+
+        let selfMention = Mention(range: NSRange(location: 0, length: 5), user: self.selfUser)
+        (otherUserConversation.append(text: "@self test", mentions: [selfMention]) as! ZMMessage).sender = self.otherUser
+
+        let replyMessage = otherUserConversation.append(text: "Pong!", replyingTo: selfMessage)
+        (replyMessage as! ZMMessage).sender = otherUser
+
+        otherUserConversation.setPrimitiveValue(1, forKey: ZMConversationInternalEstimatedUnreadSelfMentionCountKey)
+        otherUserConversation.setPrimitiveValue(1, forKey: ZMConversationInternalEstimatedUnreadSelfReplyCountKey)
+
+        // then
+        verify(otherUserConversation)
+    }
+
+    func testThatItRendersConversation_ReplySelfMessage() {
+        // when
+        let message = otherUserConversation.append(text: "Hey there!")
+        (message as! ZMClientMessage).sender = selfUser
+
+        let replyMessage = otherUserConversation.append(text: "reply test", replyingTo: message)
+        (replyMessage as! ZMMessage).sender = otherUser
+
+        otherUserConversation.setPrimitiveValue(1, forKey: ZMConversationInternalEstimatedUnreadSelfReplyCountKey)
+
+        // then
+        verify(otherUserConversation)
+    }
+
     func testThatItRendersConversation_MentionThenTextMessages() {
         // when
         let selfMention = Mention(range: NSRange(location: 0, length: 5), user: self.selfUser)
@@ -203,4 +239,65 @@ class ConversationListCellTests: CoreDataSnapshotTestCase {
         verify(conversation)
     }
 
+    func testThatItRendersGroupConversationWithIncomingCall() {
+        let conversation = createGroupConversation()
+        let icon = CallingMatcher.icon(for: .incoming(video: false, shouldRing: true, degraded: false), conversation: conversation)
+        verify(conversation: conversation, icon: icon)
+    }
+
+    func testThatItRendersGroupConversationWithIncomingCall_SilencedExceptMentions() {
+        let conversation = createGroupConversation()
+        conversation.mutedMessageTypes = .mentionsAndReplies
+        let icon = CallingMatcher.icon(for: .incoming(video: false, shouldRing: true, degraded: false), conversation: conversation)
+        verify(conversation: conversation, icon: icon)
+    }
+    
+    func testThatItRendersGroupConversationWithIncomingCall_SilencedAll() {
+        let conversation = createGroupConversation()
+        conversation.mutedMessageTypes = .all
+        let icon = CallingMatcher.icon(for: .incoming(video: false, shouldRing: true, degraded: false), conversation: conversation)
+        verify(conversation: conversation, icon: icon)
+    }
+    
+    func testThatItRendersGroupConversationWithOngoingCall() {
+        let conversation = createGroupConversation()
+        let icon = CallingMatcher.icon(for: .outgoing(degraded: false), conversation: conversation)
+        verify(conversation: conversation, icon: icon)
+    }
+
+    func testThatItRendersOneOnOneConversationWithIncomingCall() {
+        let conversation = otherUserConversation
+        let icon = CallingMatcher.icon(for: .incoming(video: false, shouldRing: true, degraded: false), conversation: conversation)
+        verify(conversation: conversation, icon: icon)
+    }
+    
+    func testThatItRendersOneOnOneConversationWithIncomingCall_SilencedExceptMentions() {
+        let conversation = otherUserConversation
+        conversation?.mutedMessageTypes = .mentionsAndReplies
+        let icon = CallingMatcher.icon(for: .incoming(video: false, shouldRing: true, degraded: false), conversation: conversation)
+        verify(conversation: conversation, icon: icon)
+    }
+    
+    func testThatItRendersOneOnOneConversationWithIncomingCall_SilencedAll() {
+        let conversation = otherUserConversation
+        conversation?.mutedMessageTypes = .all
+        let icon = CallingMatcher.icon(for: .incoming(video: false, shouldRing: true, degraded: false), conversation: conversation)
+        verify(conversation: conversation, icon: icon)
+    }
+    
+    func testThatItRendersOneOnOneConversationWithOngoingCall() {
+        let conversation = otherUserConversation
+        let icon = CallingMatcher.icon(for: .outgoing(degraded: false), conversation: conversation)
+        verify(conversation: conversation, icon: icon)
+    }
+
+    
+    func verify(conversation: ZMConversation?, icon: ConversationStatusIcon) {
+        guard let conversation = conversation else { XCTFail(); return }
+        sut.conversation = conversation
+        sut.itemView.rightAccessory.icon = icon
+
+        verify(view: sut)
+    }
+    
 }

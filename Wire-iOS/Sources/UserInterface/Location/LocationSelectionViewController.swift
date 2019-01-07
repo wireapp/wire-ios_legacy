@@ -34,18 +34,18 @@ import CoreLocation
         let button = IconButton()
         button.setIcon(.location, with: .tiny, for: [])
         button.borderWidth = 0.5
-        button.setBorderColor(.separator, for: .normal)
+        button.setBorderColor(.from(scheme: .separator), for: .normal)
         button.circular = true
-        button.backgroundColor = .background
-        button.setIconColor(.iconNormal, for: .normal)
-        button.setIconColor(.iconHighlighted, for: .highlighted)
+        button.backgroundColor = .from(scheme: .background)
+        button.setIconColor(.from(scheme: .iconNormal), for: .normal)
+        button.setIconColor(.from(scheme: .iconHighlighted), for: .highlighted)
 
         return button
     }()
 
     public let locationButtonContainer = UIView()
     fileprivate var mapView = MKMapView()
-    fileprivate let toolBar: ModalTopBar
+    fileprivate let toolBar = ModalTopBar()
     fileprivate let locationManager = CLLocationManager()
     fileprivate let geocoder = CLGeocoder()
     fileprivate let sendViewController = LocationSendViewController()
@@ -59,15 +59,6 @@ import CoreLocation
         return status == .authorizedAlways || status == .authorizedWhenInUse
     }
     
-    public init(forPopoverPresentation popover: Bool) {
-        toolBar = ModalTopBar(forUseWithStatusBar: !popover)
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required public init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented, user 'init(forPopoverPresentation:)'")
-    }
-
     public override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -101,7 +92,7 @@ import CoreLocation
 
         mapView.isRotateEnabled = false
         mapView.isPitchEnabled = false
-        toolBar.title = title
+        toolBar.configure(title: title!, subtitle: nil, topAnchor: safeTopAnchor)
         pointAnnotation.coordinate = mapView.centerCoordinate
         annotationView = MKPinAnnotationView(annotation: pointAnnotation, reuseIdentifier: String(describing: type(of: self)))
         mapView.addSubview(annotationView)

@@ -60,7 +60,7 @@ fileprivate extension UIViewController {
 
     func prepareForSnapshots() -> UIView {
         let navigationController = self.wrapInNavigationController(ClearBackgroundNavigationController.self)
-        navigationController.navigationBar.tintColor = UIColor(for: .brightOrange)
+        navigationController.navigationBar.tintColor = .brightOrange
 
         beginAppearanceTransition(true, animated: false)
         endAppearanceTransition()

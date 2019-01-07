@@ -23,9 +23,9 @@ extension ParticipantDeviceCell {
         boldFingerprintFont = .smallSemiboldFont
         fingerprintFont = .smallFont
 
-        nameLabel.textColor = .textForeground
+        nameLabel.textColor = .from(scheme: .textForeground)
         nameLabel.font = .smallSemiboldFont
 
-        identifierLabel.textColor = .textForeground
+        identifierLabel.textColor = .from(scheme: .textForeground)
     }
 }

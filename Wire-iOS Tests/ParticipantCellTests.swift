@@ -25,6 +25,9 @@ class ParticipantsCellTests: CoreDataSnapshotTestCase {
     
     override func setUp() {
         super.setUp()
+
+        selfUserInTeam = true
+        MockUser.mockSelf()?.accentColorValue = .strongBlue
     }
 
     // MARK: - Started a Conversation
@@ -191,21 +194,9 @@ class ParticipantsCellTests: CoreDataSnapshotTestCase {
         verify(view: sut.prepareForSnapshots())
     }
     
-    // MARK: - Services
-    
-    func testThatItRendersAddedServiceCellWithSubtitle() {
-        let sut = cell(for: .participantsAdded, fillUsers: .service)
-        verify(view: sut.prepareForSnapshots())
-    }
-    
-    func testThatItRendersAddedYouWithServicesPresentSystemMessage() {
-        let sut = cell(for: .participantsAdded, fillUsers: .justYou, conversationContainsService: true)
-        verify(view: sut.prepareForSnapshots())
-    }
-
     // MARK: - Helper
 
-    private func cell(for type: ZMSystemMessageType, text: String? = nil, fromSelf: Bool = false, fillUsers: Users = .one, allowGuests: Bool = false, allTeamUsers: Bool = false, numberOfGuests: Int16 = 0, conversationContainsService: Bool = false) -> ConversationCell {
+    private func cell(for type: ZMSystemMessageType, text: String? = nil, fromSelf: Bool = false, fillUsers: Users = .one, allowGuests: Bool = false, allTeamUsers: Bool = false, numberOfGuests: Int16 = 0) -> ConversationCell {
         let message = ZMSystemMessage(nonce: UUID(), managedObjectContext: uiMOC)
         message.sender = fromSelf ? selfUser : otherUser
         message.systemMessageType = type
@@ -226,7 +217,6 @@ class ParticipantsCellTests: CoreDataSnapshotTestCase {
             case .some: return Set(users[0...4] + additionalUsers)
             case .many: return Set(users[0..<11] + additionalUsers)
             case .overflow: return Set(users + additionalUsers)
-            case .service: return [createService(name: "GitHub")]
             }
         }()
         
@@ -235,7 +225,6 @@ class ParticipantsCellTests: CoreDataSnapshotTestCase {
         uiMOC.markAsUIContext()
         let member = Member.getOrCreateMember(for: selfUser, in: team!, context: uiMOC)
         member.permissions = .member
-        MockUser.mockSelf().isTeamMember = true
         let users = Array(message.users).filter { $0 != selfUser }
         let conversation = ZMConversation.insertGroupConversation(into: uiMOC, withParticipants: users, in: team)
         conversation?.allowGuests = allowGuests
@@ -243,10 +232,6 @@ class ParticipantsCellTests: CoreDataSnapshotTestCase {
         conversation?.remoteIdentifier = .create()
         message.visibleInConversation = conversation
         
-        if conversationContainsService {
-            conversation?.internalAddParticipants([createService(name: "GitHub")])
-        }
-
         let cell = ParticipantsCell(style: .default, reuseIdentifier: nil)
         let props = ConversationCellLayoutProperties()
         cell.configure(for: message, layoutProperties: props)
@@ -257,6 +242,6 @@ class ParticipantsCellTests: CoreDataSnapshotTestCase {
 }
 
 private enum Users {
-    case none, sender, one, some, many, justYou, youAndAnother, overflow, service
+    case none, sender, one, some, many, justYou, youAndAnother, overflow
 }
 

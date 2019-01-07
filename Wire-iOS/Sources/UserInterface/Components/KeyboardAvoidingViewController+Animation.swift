@@ -18,25 +18,6 @@
 
 import Foundation
 
-extension UIView.AnimationCurve {
-    init(rawValue: Int, fallbackValue: UIView.AnimationCurve) {
-        self = UIView.AnimationCurve(rawValue: rawValue) ?? fallbackValue
-
-        if #available(iOS 11.0, *) {
-        } else {
-            // iOS returns an undocumented type 7 animation curve raw value,
-            // which causes crashes on iOS 10 if it is used as an argument in
-            // UIViewPropertyAnimator init method. Workaround: assign a fallback value.
-            if self != .easeInOut &&
-                self != .easeIn &&
-                self != .easeOut &&
-                self != .linear {
-                self = fallbackValue
-            }
-        }
-    }
-}
-
 extension KeyboardAvoidingViewController {
 
     override open var preferredInterfaceOrientationForPresentation : UIInterfaceOrientation {
@@ -49,13 +30,13 @@ extension KeyboardAvoidingViewController {
         if let shouldAdjustFrame = shouldAdjustFrame, !shouldAdjustFrame(self) {
             bottomEdgeConstraint.constant = 0
             view.layoutIfNeeded()
+
             return
         }
 
         guard
             let userInfo = notification?.userInfo,
-            let duration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? TimeInterval,
-            let curveRawValue = userInfo[UIResponder.keyboardAnimationCurveUserInfoKey] as? Int
+            let duration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? TimeInterval
             else { return }
         
         let keyboardFrameInView = UIView.keyboardFrame(in: self.view, forKeyboardNotification: notification)
@@ -65,17 +46,19 @@ extension KeyboardAvoidingViewController {
         // When the keyboard is dismissed and then quickly revealed again, then
         // the dismiss animation will be cancelled.
         animator?.stopAnimation(true)
+        view.layoutIfNeeded()
+
+        animator = UIViewPropertyAnimator(duration: duration, timingParameters: UISpringTimingParameters())
+
+        animator?.addAnimations {
+            bottomEdgeConstraint.constant = bottomOffset
+            self.view.layoutIfNeeded()
+        }
         
-        bottomEdgeConstraint.constant = bottomOffset
-        self.view.setNeedsLayout()
-        
-        let animationCurve = UIView.AnimationCurve(rawValue: curveRawValue, fallbackValue: .easeIn)
-        
-        animator = UIViewPropertyAnimator(duration: duration,
-                                          curve: animationCurve,
-                                          animations: self.view.layoutIfNeeded)
-        
-        animator?.addCompletion { [weak self] _ in self?.animator = nil }
+        animator?.addCompletion { [weak self] _ in
+            self?.animator = nil
+        }
+
         animator?.startAnimation()
     }
 }

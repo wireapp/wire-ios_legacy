@@ -143,6 +143,7 @@ struct CallInfoConfiguration: CallInfoViewControllerInput  {
     let disableIdleTimer: Bool
     let cameraType: CaptureDevice
     let mediaManager: AVSMediaManagerInterface
+    let networkQuality: NetworkQuality
 
     private let voiceChannelSnapshot: VoiceChannelSnapshot
 
@@ -171,6 +172,7 @@ struct CallInfoConfiguration: CallInfoViewControllerInput  {
         mediaState = voiceChannel.mediaState(with: permissions)
         videoPlaceholderState = voiceChannel.videoPlaceholderState ?? preferedVideoPlaceholderState
         disableIdleTimer = voiceChannel.disableIdleTimer
+        networkQuality = voiceChannel.networkQuality
     }
 
     // This property has to be computed in order to return the correct call duration

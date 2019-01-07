@@ -197,7 +197,7 @@ extension Notification.Name {
 
     /// Updates the color of the text.
     func updateTextColor(base: UIColor?) {
-        let baseColor = base ?? UIColor(scheme: .textForeground)
+        let baseColor = base ?? UIColor.from(scheme: .textForeground)
         self.textColor = baseColor
         self.style.baseFontColor = baseColor
     }
@@ -615,7 +615,7 @@ extension DownStyle {
     @objc static var normal: DownStyle = {
         let style = DownStyle()
         style.baseFont = FontSpec(.normal, .light).font!
-        style.baseFontColor = UIColor(scheme: .textForeground)
+        style.baseFontColor = UIColor.from(scheme: .textForeground)
         style.codeFont = UIFont(name: "Menlo", size: style.baseFont.pointSize) ?? style.baseFont
         style.baseParagraphStyle = NSParagraphStyle.default
         style.listItemPrefixSpacing = 8
@@ -626,7 +626,23 @@ extension DownStyle {
     @objc static var compact: DownStyle = {
         let style = DownStyle()
         style.baseFont = FontSpec(.normal, .light).font!
-        style.baseFontColor = UIColor(scheme: .textForeground)
+        style.baseFontColor = UIColor.from(scheme: .textForeground)
+        style.codeFont = UIFont(name: "Menlo", size: style.baseFont.pointSize) ?? style.baseFont
+        style.baseParagraphStyle = NSParagraphStyle.default
+        style.listItemPrefixSpacing = 8
+        
+        // headers all same size
+        style.h1Size = style.baseFont.pointSize
+        style.h2Size = style.h1Size
+        style.h3Size = style.h1Size
+        return style
+    }()
+    
+    /// The style used for the reply compose preview.
+    @objc static var preview: DownStyle = {
+        let style = DownStyle()
+        style.baseFont = UIFont.systemFont(ofSize: 14, contentSizeCategory: .medium, weight: .light)
+        style.baseFontColor = UIColor.from(scheme: .textForeground)
         style.codeFont = UIFont(name: "Menlo", size: style.baseFont.pointSize) ?? style.baseFont
         style.baseParagraphStyle = NSParagraphStyle.default
         style.listItemPrefixSpacing = 8

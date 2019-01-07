@@ -31,6 +31,7 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol ZMConversationMessage;
 @protocol Dismissable;
 @protocol UserList;
+@protocol KeyboardCollapseObserver;
 @protocol AVAudioSessionType;
 
 typedef NS_ENUM(NSUInteger, ConversationInputBarViewControllerMode) {
@@ -44,14 +45,17 @@ typedef NS_ENUM(NSUInteger, ConversationInputBarViewControllerMode) {
 
 @protocol ConversationInputBarViewControllerDelegate <NSObject>
 
-- (void)conversationInputBarViewControllerDidComposeText:(NSString *)text mentions:(NSArray<Mention *> *)mentions;
+- (void)conversationInputBarViewControllerDidComposeText:(NSString *)text
+                                                mentions:(NSArray<Mention *> *)mentions
+                                       replyingToMessage:(nullable id <ZMConversationMessage>)message;
 
 @optional
-- (BOOL)conversationInputBarViewControllerShouldBeginEditing:(ConversationInputBarViewController *)controller isEditingMessage:(BOOL)isEditing;
+- (BOOL)conversationInputBarViewControllerShouldBeginEditing:(ConversationInputBarViewController *)controller;
 - (BOOL)conversationInputBarViewControllerShouldEndEditing:(ConversationInputBarViewController *)controller;
 - (void)conversationInputBarViewControllerDidNotSendMessageConversationDegraded:(ConversationInputBarViewController *)controller;
 - (void)conversationInputBarViewControllerDidFinishEditingMessage:(id <ZMConversationMessage>)message withText:(NSString *)newText mentions:(NSArray <Mention *> *)mentions;
 - (void)conversationInputBarViewControllerDidCancelEditingMessage:(id <ZMConversationMessage>)message;
+- (void)conversationInputBarViewControllerWantsToShowMessage:(id <ZMConversationMessage>)message;
 - (void)conversationInputBarViewControllerEditLastMessage;
 
 @end
@@ -69,12 +73,14 @@ typedef NS_ENUM(NSUInteger, ConversationInputBarViewControllerMode) {
 @property (nonatomic) ConversationInputBarViewControllerMode mode;
 @property (nonatomic, readonly, nullable) UIViewController *inputController;
 @property (nonatomic, strong, nullable) MentionsHandler *mentionsHandler;
-@property (nonatomic, weak, nullable) id<Dismissable, UserList> mentionsView;
+@property (nonatomic, weak, nullable) id<Dismissable, UserList, KeyboardCollapseObserver> mentionsView;
 @property (nonatomic, strong, nullable) id textfieldObserverToken;
 @property (nonatomic, nonnull) id<AVAudioSessionType> audioSession;
 
 - (instancetype)initWithConversation:(ZMConversation *)conversation;
 - (void)bounceCameraIcon;
+
+- (void)playInputHapticFeedback;
 
 @end
 

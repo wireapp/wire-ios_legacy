@@ -192,19 +192,36 @@ extension AppStateController {
     
 }
 
-extension AppStateController : RegistrationViewControllerDelegate {
-    
-    func registrationViewControllerDidSignIn() {
-        isLoggedIn = true
-        isLoggedOut = false
-        hasCompletedRegistration = false
-        updateAppState()
+extension AppStateController : AuthenticationCoordinatorDelegate {
+
+    var authenticatedUserWasRegisteredOnThisDevice: Bool {
+        return ZMUserSession.shared()?.registeredOnThisDevice == true
     }
-    
-    func registrationViewControllerDidCompleteRegistration() {
+
+    var authenticatedUserNeedsEmailCredentials: Bool {
+        return ZMUser.selfUser()?.emailAddress?.isEmpty == true
+    }
+
+    var sharedUserSession: ZMUserSession? {
+        return ZMUserSession.shared()
+    }
+
+    var selfUserProfile: UserProfileUpdateStatus? {
+        return sharedUserSession?.userProfile as? UserProfileUpdateStatus
+    }
+
+    var selfUser: ZMUser? {
+        return ZMUser.selfUser()
+    }
+
+    var numberOfAccounts: Int {
+        return SessionManager.numberOfAccounts
+    }
+
+    func userAuthenticationDidComplete(registered: Bool) {
         isLoggedIn = true
         isLoggedOut = false
-        hasCompletedRegistration = true
+        hasCompletedRegistration = registered
         updateAppState()
     }
     

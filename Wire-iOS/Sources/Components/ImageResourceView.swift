@@ -39,16 +39,16 @@ class ImageResourceView: FLAnimatedImageView {
         }
     }
     
-    public func setImageResource(_ imageResouce: ImageResource?, completion: (() -> Void)? = nil) {
-        
+    public func setImageResource(_ imageResource: ImageResource?, completion: (() -> Void)? = nil) {
         let token = UUID()
-        
-        imageResourceInternal = imageResouce
+        setMediaAsset(nil)
+
+        imageResourceInternal = imageResource
         reuseToken = token
         loadingView.isHidden = loadingView.isHidden || imageResource == nil
-        
-        guard let imageResource = imageResouce else {
-            setMediaAsset(nil)
+
+        guard let imageResource = imageResource, imageResource.cacheIdentifier != nil else {
+            loadingView.isHidden = true
             completion?()
             return
         }

@@ -25,7 +25,6 @@ final class ProfileDetailsViewControllerSnapshotTests: CoreDataSnapshotTestCase 
     
     override func setUp() {
         super.setUp()
-        sut = ProfileDetailsViewController(user: self.otherUser, conversation: self.otherUserConversation, context: .oneToOneConversation)
     }
     
     override func tearDown() {
@@ -33,13 +32,61 @@ final class ProfileDetailsViewControllerSnapshotTests: CoreDataSnapshotTestCase 
         super.tearDown()
     }
 
-    func testForInitState(){
+    func testForInitState() {
+        sut = ProfileDetailsViewController(user: self.otherUser, conversation: self.otherUserConversation, context: .oneToOneConversation)
         verify(view: sut.view)
     }
-
+    
+    func testSmallScreen_expiringUser() {
+        sut = ProfileDetailsViewController(user: self.otherUser, conversation: self.otherUserConversation, context: .oneToOneConversation)
+        self.otherUser.setValue(Date(timeIntervalSinceNow: 3600), forKey: "expiresAt")
+        verifyInIPhoneSize(view: sut.view)
+    }
+    
+    func testSmallScreen_expiringGuest() {
+        // given
+        let selfUser = self.selfUser
+        selfUser?.teamIdentifier = UUID()
+        
+        let groupConversation = self.createGroupConversation()
+        groupConversation.teamRemoteIdentifier = UUID()
+        
+        sut = ProfileDetailsViewController(user: self.otherUser, conversation: groupConversation, context: .oneToOneConversation)
+        
+        self.otherUser.setValue(Date(timeIntervalSinceNow: 3600), forKey: "expiresAt")
+        // when & then
+        verifyInIPhoneSize(view: sut.view)
+    }
+    
+    func testExpiringGuestReadReceipts() {
+        // given
+        let selfUser = self.selfUser
+        selfUser?.teamIdentifier = UUID()
+        selfUser?.readReceiptsEnabled = true
+        
+        let groupConversation = self.createGroupConversation()
+        groupConversation.teamRemoteIdentifier = UUID()
+        
+        sut = ProfileDetailsViewController(user: self.otherUser, conversation: groupConversation, context: .oneToOneConversation)
+        
+        self.otherUser.setValue(Date(timeIntervalSinceNow: 3600), forKey: "expiresAt")
+        // when & then
+        verifyInAllIPhoneSizes(view: sut.view)
+    }
+    
     func testForActionMenu() {
-        sut.presentMenuSheetController()
+        sut = ProfileDetailsViewController(user: self.otherUser, conversation: self.otherUserConversation, context: .oneToOneConversation)
+        teamTest {
+            sut.presentMenuSheetController()
+            verifyAlertController((sut?.actionsController?.alertController)!)
+        }
+    }
 
-        verifyAlertController((sut?.actionsController?.alertController)!)
+    func testForActionMenu_NoTeam() {
+        sut = ProfileDetailsViewController(user: self.otherUser, conversation: self.otherUserConversation, context: .oneToOneConversation)
+        nonTeamTest {
+            sut.presentMenuSheetController()
+            verifyAlertController((sut?.actionsController?.alertController)!)
+        }
     }
 }

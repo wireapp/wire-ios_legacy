@@ -38,6 +38,13 @@ static ZMAccentColor overridenAccentColor = ZMAccentColorUndefined;
     }];
 }
 
++ (ZMAccentColor)accentOverrideColor {
+    id<ZMEditableUser> editableSelf = [ZMUser editableSelfUser];
+
+    return editableSelf.accentColorValue;
+}
+
+
 + (ZMAccentColor)indexedAccentColor
 {
 	// priority 1: overriden color
@@ -54,31 +61,6 @@ static ZMAccentColor overridenAccentColor = ZMAccentColorUndefined;
 	
 	// priority 3: default color
 	return ZMAccentColorStrongBlue;
-}
-
-+ (UIColor *)colorForZMAccentColor:(ZMAccentColor)accentColor
-{
-	if (accentColor == ZMAccentColorUndefined) {
-        return nil;
-    }
-    
-    NSArray *accentColors = @[[UIColor colorWithRed:0.141 green:0.552 blue:0.827 alpha:1],
-                              [UIColor colorWithRed:0     green:0.784 blue:0     alpha:1],
-                              [UIColor colorWithRed:0.996 green:0.749 blue:0.007 alpha:1],
-                              [UIColor colorWithRed:1     green:0.152 blue:0     alpha:1],
-                              [UIColor colorWithRed:1     green:0.537 blue:0     alpha:1],
-                              [UIColor colorWithRed:0.996 green:0.368 blue:0.741 alpha:1],
-                              [UIColor colorWithRed:0.615 green:0     blue:1     alpha:1]];
-        
-    if (accentColor < 1 || accentColor > (NSInteger)accentColors.count) {
-        ZMLogError(@"Accent color index is out of bounds: %d", accentColor);
-        return accentColors[0];
-    }
-    
-    NSUInteger colorIndex = accentColor - 1;
-    colorIndex = MIN(accentColors.count - 1, colorIndex);
-    colorIndex = MAX(0u, colorIndex);
-    return accentColors[colorIndex];
 }
 
 + (void)setAccentOverrideColor:(ZMAccentColor)overrideColor

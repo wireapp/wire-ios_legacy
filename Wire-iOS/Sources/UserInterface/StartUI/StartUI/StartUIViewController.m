@@ -46,7 +46,7 @@
 static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 
-@interface StartUIViewController () <ContactsViewControllerDelegate, UserSelectionObserver, SearchHeaderViewControllerDelegate>
+@interface StartUIViewController () <ContactsViewControllerDelegate, SearchHeaderViewControllerDelegate>
 
 @property (nonatomic) ProfilePresenter *profilePresenter;
 @property (nonatomic) StartUIInviteActionBar *quickActionsBar;
@@ -63,11 +63,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 #pragma mark - Overloaded methods
 
-- (void)dealloc
-{
-    [self.userSelection removeObserver:self];
-}
-
 -(void)loadView
 {
     self.view = [[StartUIView alloc] initWithFrame:CGRectZero];
@@ -79,16 +74,13 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     
     Team *team = ZMUser.selfUser.team;
     
-    self.userSelection = [[UserSelection alloc] init];
-    [self.userSelection addObserver:self];
-    
     self.profilePresenter = [[ProfilePresenter alloc] init];
     
     self.emptyResultView = [[EmptySearchResultsView alloc] initWithVariant:ColorSchemeVariantDark
                                                            isSelfUserAdmin:[[ZMUser selfUser] canManageTeam]];
     self.emptyResultView.delegate = self;
     
-    self.searchHeaderViewController = [[SearchHeaderViewController alloc] initWithUserSelection:self.userSelection variant:ColorSchemeVariantDark];
+    self.searchHeaderViewController = [[SearchHeaderViewController alloc] initWithUserSelection:[[UserSelection alloc] init] variant:ColorSchemeVariantDark];
     self.title = (team != nil ? team.name : ZMUser.selfUser.displayName).localizedUppercaseString;
     self.searchHeaderViewController.delegate = self;
     self.searchHeaderViewController.allowsMultipleSelection = NO;
@@ -117,7 +109,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         [self.view addSubview:self.groupSelector];
     }
 
-    self.searchResultsViewController = [[SearchResultsViewController alloc] initWithUserSelection:self.userSelection
+    self.searchResultsViewController = [[SearchResultsViewController alloc] initWithUserSelection:[[UserSelection alloc] init]
                                                                              isAddingParticipants:NO
                                                                               shouldIncludeGuests:YES];
     self.searchResultsViewController.mode = SearchResultsViewControllerModeList;
@@ -221,12 +213,10 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 - (void)updateActionBar
 {
-    if (self.userSelection.users.count == 0) {
-        if (self.searchHeaderViewController.query.length != 0 || ZMUser.selfUser.hasTeam) {
-            self.searchResultsViewController.searchResultsView.accessoryView = nil;
-        } else {
-            self.searchResultsViewController.searchResultsView.accessoryView = self.quickActionsBar;
-        }
+    if (self.searchHeaderViewController.query.length != 0 || ZMUser.selfUser.hasTeam) {
+        self.searchResultsViewController.searchResultsView.accessoryView = nil;
+    } else {
+        self.searchResultsViewController.searchResultsView.accessoryView = self.quickActionsBar;
     }
     
     [self.view setNeedsLayout];
@@ -250,14 +240,8 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
             self.searchResultsViewController.mode = SearchResultsViewControllerModeList;
             [self.searchResultsViewController searchContactList];
         } else {
-            BOOL hasSelection = self.userSelection.users.count > 0;
-            self.searchResultsViewController.mode = hasSelection ? SearchResultsViewControllerModeSelection : SearchResultsViewControllerModeSearch;
-            if (hasSelection) {
-                [self.searchResultsViewController searchForLocalUsersWithQuery:searchString];
-            }
-            else {
-                [self.searchResultsViewController searchForUsersWithQuery:searchString];
-            }
+            self.searchResultsViewController.mode = SearchResultsViewControllerModeSearch;
+            [self.searchResultsViewController searchForUsersWithQuery:searchString];
         }
     }
     else {
@@ -300,33 +284,11 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
                                                 arrowDirection:UIPopoverArrowDirectionLeft];
 }
 
-#pragma mark - UserSelectionObserver
-
-- (void)userSelection:(UserSelection *)userSelection didAddUser:(ZMUser *)user
-{
-    // no-op
-}
-
-- (void)userSelection:(UserSelection *)userSelection didRemoveUser:(ZMUser * _Nonnull)user
-{
-  // no-op
-}
-
-- (void)userSelection:(UserSelection *)userSelection wasReplacedBy:(NSArray<ZMUser *> *)users
-{
-  // no-op
-}
-
 #pragma mark - SearchHeaderViewControllerDelegate
 
 - (void)searchHeaderViewControllerDidConfirmAction:(SearchHeaderViewController *)searchHeaderViewController
 {
-    if (self.userSelection.users.count > 0) {
-        [self.delegate startUI:self didSelectUsers:self.userSelection.users];
-    }
-    else {
-        [self.searchHeaderViewController resetQuery];
-    }
+    [self.searchHeaderViewController resetQuery];
 }
 
 - (void)searchHeaderViewController:(SearchHeaderViewController *)searchHeaderViewController updatedSearchQuery:(NSString *)query

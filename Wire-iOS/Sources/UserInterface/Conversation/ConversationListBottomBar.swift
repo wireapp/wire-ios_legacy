@@ -52,10 +52,7 @@ import Cartography
         }
     }
 
-    lazy private var showComposeButtons: Bool = {
-        let debugHideComposeButtonsOverride = false // Set this to not show the compose buttons when debugging
-        return DeveloperMenuState.developerMenuEnabled() && !debugHideComposeButtonsOverride
-    }()
+    private let showComposeButtons: Bool = false // Set this to show the compose buttons
 
     var showSeparator: Bool {
         set { separator.fadeAndHide(!newValue) }
@@ -75,7 +72,7 @@ import Cartography
 
 
     private func createViews() {
-        separator.backgroundColor = UIColor(scheme: .separator, variant: .light)
+        separator.backgroundColor = UIColor.from(scheme: .separator, variant: .light)
         
         archivedButton.setIcon(.archive, with: .tiny, for: [])
         archivedButton.addTarget(self, action: #selector(archivedButtonTapped), for: .touchUpInside)
@@ -102,7 +99,7 @@ import Cartography
         cameraButton.accessibilityHint = "conversation_list.voiceover.bottom_bar.camera_button.hint".localized
 
         [archivedButton, startUIButton, composeButton, cameraButton].forEach { button in
-            button.setIconColor(UIColor(scheme: .textForeground, variant: .dark), for: .normal)
+            button.setIconColor(UIColor.from(scheme: .textForeground, variant: .dark), for: .normal)
         }
 
         addSubviews()

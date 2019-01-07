@@ -25,18 +25,17 @@ import WireExtensionComponents
 
 @objc protocol ArticleViewDelegate: class {
     func articleViewWantsToOpenURL(_ articleView: ArticleView, url: URL)
-    func articleViewDidLongPressView(_ articleView: ArticleView)
 }
 
 @objcMembers class ArticleView: UIView {
 
     /// MARK - Styling
-    var containerColor: UIColor? = .placeholderBackground
-    var titleTextColor: UIColor? = .textForeground
+    var containerColor: UIColor? = .from(scheme: .placeholderBackground)
+    var titleTextColor: UIColor? = .from(scheme: .textForeground)
     var titleFont: UIFont? = .normalSemiboldFont
-    var authorTextColor: UIColor? = .textDimmed
+    var authorTextColor: UIColor? = .from(scheme: .textDimmed)
     var authorFont: UIFont? = .smallLightFont
-    let authorHighlightTextColor = UIColor.textDimmed
+    let authorHighlightTextColor = UIColor.from(scheme: .textDimmed)
     let authorHighlightFont = UIFont.smallSemiboldFont
     
     var imageHeight: CGFloat = 144 {
@@ -49,7 +48,7 @@ import WireExtensionComponents
     let messageLabel = TTTAttributedLabel(frame: CGRect.zero)
     let authorLabel = UILabel()
     let imageView = ImageResourceView()
-    var linkPreview: LinkPreview?
+    var linkPreview: LinkMetadata?
     private let obfuscationView = ObfuscationView(icon: .link)
     private let ephemeralColor = UIColor.accent()
     private var imageHeightConstraint: NSLayoutConstraint!
@@ -63,9 +62,7 @@ import WireExtensionComponents
             imageView.isAccessibilityElement = true
             imageView.accessibilityIdentifier = "linkPreviewImage"
         }
-        
-        
-        
+
         setupViews()
         setupConstraints(imagePlaceholder)
     }
@@ -96,7 +93,6 @@ import WireExtensionComponents
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(viewTapped))
         tapGestureRecognizer.delegate = self
         addGestureRecognizer(tapGestureRecognizer)
-        addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(viewLongPressed)))
 
         updateLabels()
     }
@@ -156,18 +152,18 @@ import WireExtensionComponents
         self.linkPreview = linkPreview
         updateLabels(obfuscated: obfuscated)
 
-        if let article = linkPreview as? Article {
+        if let article = linkPreview as? ArticleMetadata {
             configure(withArticle: article, obfuscated: obfuscated)
         }
         
-        if let twitterStatus = linkPreview as? TwitterStatus {
+        if let twitterStatus = linkPreview as? TwitterStatusMetadata {
             configure(withTwitterStatus: twitterStatus)
         }
 
         obfuscationView.isHidden = !obfuscated
-        
+
         if obfuscated {
-            imageView.image = UIImage(for: .link, iconSize: .tiny, color: UIColor(scheme: .background))
+            imageView.image = UIImage(for: .link, iconSize: .tiny, color: UIColor.from(scheme: .background))
             imageView.contentMode = .center
         } else {
             imageView.image = nil
@@ -191,7 +187,7 @@ import WireExtensionComponents
         }
     }
     
-    private func configure(withArticle article: Article, obfuscated: Bool) {
+    private func configure(withArticle article: ArticleMetadata, obfuscated: Bool) {
         if let url = article.openableURL, !obfuscated {
             authorLabel.attributedText = formatURL(url as URL)
         } else {
@@ -202,7 +198,7 @@ import WireExtensionComponents
         messageLabel.text = article.title
     }
     
-    private func configure(withTwitterStatus twitterStatus: TwitterStatus) {
+    private func configure(withTwitterStatus twitterStatus: TwitterStatusMetadata) {
         let author = twitterStatus.author ?? "-"
         authorLabel.attributedText = "twitter_status.on_twitter".localized(args: author).attributedString.addAttributes(authorHighlightAttributes, toSubstring: author)
 
@@ -211,13 +207,12 @@ import WireExtensionComponents
     }
 
     @objc private func viewTapped(_ sender: UITapGestureRecognizer) {
+        if UIMenuController.shared.isMenuVisible {
+            return UIMenuController.shared.setMenuVisible(false, animated: true)
+        }
+
         guard let url = linkPreview?.openableURL else { return }
         delegate?.articleViewWantsToOpenURL(self, url: url as URL)
-    }
-    
-    @objc private func viewLongPressed(_ sender: UILongPressGestureRecognizer) {
-        guard sender.state == .began else { return }
-        delegate?.articleViewDidLongPressView(self)
     }
     
 }
@@ -237,7 +232,7 @@ extension ArticleView : UIGestureRecognizerDelegate {
 
 }
 
-extension LinkPreview {
+extension LinkMetadata {
 
     /// Returns a `NSURL` that can be openened using `-openURL:` on `UIApplication` or `nil` if no openable `NSURL` could be created.
     var openableURL: NSURL? {

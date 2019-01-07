@@ -27,7 +27,7 @@ extension FullscreenImageViewController {
             minimumDismissMagnitude = 250
         }
 
-        view.backgroundColor = .background
-        topOverlay?.backgroundColor = .background
+        view.backgroundColor = .from(scheme: .background)
+        topOverlay?.backgroundColor = .from(scheme: .background)
     }
 }

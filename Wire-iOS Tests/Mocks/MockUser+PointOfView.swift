@@ -20,6 +20,10 @@ import Foundation
 
 extension MockUser {
     @objc var pov: PointOfView {
+        if MockUser.mockSelf() == self {
+            return .secondPerson
+        }
+
         return .none
     }
 }

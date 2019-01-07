@@ -61,8 +61,8 @@ class UserCell: SeparatorCollectionViewCell {
 
     override var isSelected: Bool {
         didSet {
-            let foregroundColor = UIColor(scheme: .background, variant: colorSchemeVariant)
-            let backgroundColor = UIColor(scheme: .iconNormal, variant: colorSchemeVariant)
+            let foregroundColor = UIColor.from(scheme: .background, variant: colorSchemeVariant)
+            let backgroundColor = UIColor.from(scheme: .iconNormal, variant: colorSchemeVariant)
             let borderColor = isSelected ? backgroundColor : backgroundColor.withAlphaComponent(0.64)
             checkmarkIconView.image = isSelected ? UIImage(for: .checkmark, iconSize: .like, color: foregroundColor) : nil
             checkmarkIconView.backgroundColor = isSelected ? backgroundColor : .clear
@@ -80,7 +80,7 @@ class UserCell: SeparatorCollectionViewCell {
             connectButton.isHidden = true
             accessoryIconView.isHidden = true
             checkmarkIconView.image = nil
-            checkmarkIconView.layer.borderColor = UIColor(scheme: .iconNormal, variant: colorSchemeVariant).cgColor
+            checkmarkIconView.layer.borderColor = UIColor.from(scheme: .iconNormal, variant: colorSchemeVariant).cgColor
             checkmarkIconView.isHidden = true
         }
     }
@@ -126,7 +126,7 @@ class UserCell: SeparatorCollectionViewCell {
         subtitleLabel.accessibilityIdentifier = "user_cell.username"
         
         avatar.userSession = ZMUserSession.shared()
-        avatar.initials.font = .avatarInitial
+        avatar.initialsFont = .avatarInitial
         avatar.size = .small
         avatar.translatesAutoresizingMaskIntoConstraints = false
 
@@ -179,14 +179,14 @@ class UserCell: SeparatorCollectionViewCell {
     
     override func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
         super.applyColorScheme(colorSchemeVariant)
-        let sectionTextColor = UIColor(scheme: .sectionText, variant: colorSchemeVariant)
+        let sectionTextColor = UIColor.from(scheme: .sectionText, variant: colorSchemeVariant)
         backgroundColor = contentBackgroundColor(for: colorSchemeVariant)
-        videoIconView.image = UIImage(for: .videoCall, iconSize: .tiny, color: UIColor(scheme: .iconGuest, variant: colorSchemeVariant))
-        guestIconView.image = UIImage(for: .guest, iconSize: .tiny, color: UIColor(scheme: .iconGuest, variant: colorSchemeVariant))
+        videoIconView.image = UIImage(for: .videoCall, iconSize: .tiny, color: UIColor.from(scheme: .iconGuest, variant: colorSchemeVariant))
+        guestIconView.image = UIImage(for: .guest, iconSize: .tiny, color: UIColor.from(scheme: .iconGuest, variant: colorSchemeVariant))
         accessoryIconView.image = UIImage(for: .disclosureIndicator, iconSize: .like, color: sectionTextColor)
         connectButton.setIconColor(sectionTextColor, for: .normal)
-        checkmarkIconView.layer.borderColor = UIColor(scheme: .iconNormal, variant: colorSchemeVariant).cgColor
-        titleLabel.textColor = UIColor(scheme: .textForeground, variant: colorSchemeVariant)
+        checkmarkIconView.layer.borderColor = UIColor.from(scheme: .iconNormal, variant: colorSchemeVariant).cgColor
+        titleLabel.textColor = UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)
         subtitleLabel.textColor = sectionTextColor
         updateTitleLabel()
     }
@@ -195,35 +195,39 @@ class UserCell: SeparatorCollectionViewCell {
         guard let user = self.user else {
             return
         }
-        titleLabel.attributedText = user.nameIncludingAvailability(color: UIColor(scheme: .textForeground, variant: colorSchemeVariant))
+        titleLabel.attributedText = user.nameIncludingAvailability(color: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant))
     }
     
     public func configure(with user: UserType, conversation: ZMConversation? = nil) {
+        configure(with: user, subtitle: subtitle(for: user), conversation: conversation)
+    }
+
+    public func configure(with user: UserType, subtitle: NSAttributedString?, conversation: ZMConversation? = nil) {
         self.user = user
-        
+
         avatar.user = user
         updateTitleLabel()
-        
+
         if let conversation = conversation {
             guestIconView.isHidden = !user.isGuest(in: conversation)
         } else {
             guestIconView.isHidden = !ZMUser.selfUser().isTeamMember || user.isTeamMember || user.isServiceUser
         }
-        
+
         if let user = user as? ZMUser {
             verifiedIconView.isHidden = !user.trusted() || user.clients.isEmpty
         } else {
             verifiedIconView.isHidden  = true
         }
-        
-        if let subtitle = subtitle(for: user), subtitle.length > 0, !hidesSubtitle {
+
+        if let subtitle = subtitle, !subtitle.string.isEmpty, !hidesSubtitle {
             subtitleLabel.isHidden = false
             subtitleLabel.attributedText = subtitle
         } else {
             subtitleLabel.isHidden = true
         }
     }
-    
+
 }
 
 // MARK: - Subtitle

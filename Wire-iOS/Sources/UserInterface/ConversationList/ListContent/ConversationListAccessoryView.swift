@@ -17,7 +17,6 @@
 //
 
 import UIKit
-import Cartography
 
 @objcMembers final class ConversationListAccessoryView: UIView {
     var icon: ConversationStatusIcon = .none {
@@ -64,21 +63,37 @@ import Cartography
         iconView.setContentCompressionResistancePriority(UILayoutPriority.defaultHigh, for: .vertical)
         
         [badgeView, transparentIconView].forEach(addSubview)
-        
-        constrain(self, badgeView, transparentIconView) { selfView, badgeView, transparentIconView in
-            badgeView.height == 20
-            badgeView.edges == selfView.edges
-            
-            transparentIconView.leading == selfView.leading ~ 999.0
-            transparentIconView.trailing == selfView.trailing ~ 999.0
-            transparentIconView.top == selfView.top
-            transparentIconView.bottom == selfView.bottom
-            self.expandTransparentIconViewWidthConstraint = transparentIconView.width >= defaultViewWidth
-            
-            self.expandWidthConstraint = selfView.width >= defaultViewWidth
-            self.collapseWidthConstraint = selfView.width == 0
-        }
-        self.collapseWidthConstraint.isActive = false
+
+        createConstraints()
+    }
+
+    func createConstraints() {
+        transparentIconView.translatesAutoresizingMaskIntoConstraints = false
+        translatesAutoresizingMaskIntoConstraints = false
+
+        let transparentIconViewLeading = transparentIconView.leadingAnchor.constraint(equalTo: leadingAnchor)
+        transparentIconViewLeading.priority = UILayoutPriority(999.0)
+
+        let transparentIconViewTrailing = transparentIconView.trailingAnchor.constraint(equalTo: trailingAnchor)
+        transparentIconViewTrailing.priority = UILayoutPriority(999.0)
+
+        expandTransparentIconViewWidthConstraint = transparentIconView.widthAnchor.constraint(greaterThanOrEqualToConstant: defaultViewWidth)
+
+        expandWidthConstraint = widthAnchor.constraint(greaterThanOrEqualToConstant: defaultViewWidth)
+
+        // collapseWidthConstraint is inactive when init, it is toggled in updateCollapseConstraints()
+        collapseWidthConstraint = widthAnchor.constraint(equalToConstant: 0)
+
+        NSLayoutConstraint.activate([
+            badgeView.heightAnchor.constraint(equalToConstant: 20),
+            transparentIconViewLeading,
+            transparentIconViewTrailing,
+            expandTransparentIconViewWidthConstraint,
+            expandWidthConstraint
+            ] +
+            badgeView.fitInSuperview(activate: false) +
+            transparentIconView.topAndBottomEdgesToSuperviewEdges()
+        )
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -129,6 +144,10 @@ import Cartography
             iconView.image = UIImage(for: .mention, fontSize: iconSize, color: .black)
             accessibilityValue = "conversation_list.voiceover.status.mention".localized
             return iconView
+        case .reply:
+            iconView.image = UIImage(for: .reply, fontSize: iconSize, color: .black)
+            accessibilityValue = "conversation_list.voiceover.status.reply".localized
+            return iconView
         case .unreadPing:
             iconView.image = UIImage(for: .ping, fontSize: iconSize, color: .black)
             accessibilityValue = "conversation_list.voiceover.status.ping".localized
@@ -140,6 +159,7 @@ import Cartography
 
     func updateCollapseConstraints(isCollapsed: Bool) {
         if isCollapsed {
+            badgeView.updateCollapseConstraints(isCollapsed: isCollapsed)
             expandWidthConstraint.isActive = false
             expandTransparentIconViewWidthConstraint.isActive = false
             collapseWidthConstraint.isActive = true
@@ -147,9 +167,8 @@ import Cartography
             collapseWidthConstraint.isActive = false
             expandWidthConstraint.isActive = true
             expandTransparentIconViewWidthConstraint.isActive = true
+            badgeView.updateCollapseConstraints(isCollapsed: isCollapsed)
         }
-
-        badgeView.updateCollapseConstraints(isCollapsed: isCollapsed)
     }
     
     public func updateForIcon() {
@@ -162,7 +181,7 @@ import Cartography
         self.expandTransparentIconViewWidthConstraint.constant = defaultViewWidth
         self.expandWidthConstraint.constant = defaultViewWidth
         
-        self.textLabel.textColor = UIColor(scheme: .textForeground, variant: .dark)
+        self.textLabel.textColor = UIColor.from(scheme: .textForeground, variant: .dark)
         
         switch self.icon {
         case .none:
@@ -181,7 +200,7 @@ import Cartography
             self.expandWidthConstraint.constant = activeCallWidth
 
         case .activeCall(true): // "Join" button
-            self.badgeView.backgroundColor = ZMAccentColor.strongLimeGreen.color
+            self.badgeView.backgroundColor = .strongLimeGreen
             
         case .typing:
             self.badgeView.isHidden = true
@@ -189,14 +208,14 @@ import Cartography
             self.transparentIconView.image = UIImage(for: .pencil, fontSize: 12.0, color: .white)
             
         case .unreadMessages(_), .mention:
-            self.textLabel.textColor = UIColor(scheme: .textForeground, variant: .light)
-            self.badgeView.backgroundColor = UIColor(scheme: .textBackground, variant: .light)
+            self.textLabel.textColor = UIColor.from(scheme: .textForeground, variant: .light)
+            self.badgeView.backgroundColor = UIColor.from(scheme: .textBackground, variant: .light)
             
-        case .unreadPing:
-            self.badgeView.backgroundColor = UIColor(scheme: .textBackground, variant: .light)
+        case .unreadPing,
+             .reply,
+             .missedCall:
 
-        case .missedCall:
-            self.badgeView.backgroundColor = UIColor(scheme: .textBackground, variant: .light)
+            self.badgeView.backgroundColor = .from(scheme: .textBackground, variant: .light)
 
         default:
             self.transparentIconView.image = .none
@@ -206,13 +225,18 @@ import Cartography
 
         if let view = self.viewForState {
             self.badgeView.containedView.addSubview(view)
-            
-            constrain(self.badgeView.containedView, view) { parentView, view in
-                view.top == parentView.top
-                view.bottom == parentView.bottom
-                view.leading == parentView.leading + 6
-                view.trailing == parentView.trailing - 6
-            }
+
+            let parentView = self.badgeView.containedView
+            view.translatesAutoresizingMaskIntoConstraints = false
+            parentView.translatesAutoresizingMaskIntoConstraints = false
+
+            NSLayoutConstraint.activate([
+                view.topAnchor.constraint(equalTo: parentView.topAnchor),
+                view.bottomAnchor.constraint(equalTo: parentView.bottomAnchor),
+                view.leadingAnchor.constraint(equalTo: parentView.leadingAnchor, constant: 6),
+                view.trailingAnchor.constraint(equalTo: parentView.trailingAnchor, constant: -6)
+                ])
+
         }
     }
 }

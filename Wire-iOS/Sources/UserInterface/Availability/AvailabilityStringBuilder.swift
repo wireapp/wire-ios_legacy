@@ -33,12 +33,12 @@
 
                 fontSize = .normal
                 if color == nil {
-                    color = UIColor(scheme: .textForeground, variant: .dark)
+                    color = UIColor.from(scheme: .textForeground, variant: .dark)
                 }
             }
             case .participants: do {
                 title = user.displayName.uppercased()
-                color = UIColor(scheme: .textForeground)
+                color = UIColor.from(scheme: .textForeground)
             }
             case .placeholder: do {
                 if availability != .none { //Should use the default placeholder string
@@ -54,15 +54,18 @@
     }
     
     static func icon(for availability: Availability, with color: UIColor, and size: FontSize) -> NSTextAttachment? {
-        guard availability != .none, let iconType = availability.iconType, let image = UIImage(for: iconType, fontSize: 10, color: color)
+        guard availability != .none, let iconType = availability.iconType
             else { return nil }
         
-        let attachment = NSTextAttachment()
-        attachment.image = image
-        let ratio = image.size.width / image.size.height
-        let height: CGFloat = 10
-        let verticalOffset : CGFloat = (size == .small) ? -1.0 : 0.0
-        attachment.bounds = CGRect(x: 0, y: verticalOffset, width: height * ratio, height: height)
-        return attachment
+        let verticalCorrection: CGFloat
+        
+        switch size {
+        case .small:
+            verticalCorrection = -1
+        case .medium, .large, .normal:
+            verticalCorrection = 0
+        }
+        
+        return NSTextAttachment.textAttachment(for: iconType, with: color, iconSize: 10, verticalCorrection: verticalCorrection)
     }
 }

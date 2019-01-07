@@ -21,9 +21,9 @@ import Foundation
 extension ProfileSelfPictureViewController: ZMUserObserver {
     
     public func userDidChange(_ changeInfo: UserChangeInfo) {
-        guard changeInfo.imageMediumDataChanged else { return }
+        guard changeInfo.imageMediumDataChanged, let userSession = ZMUserSession.shared() else { return }
         
-        changeInfo.user.fetchProfileImage { (image, _) in
+        changeInfo.user.fetchProfileImage(session: userSession) { (image, _) in
             self.selfUserImageView.image = image
         }
     }

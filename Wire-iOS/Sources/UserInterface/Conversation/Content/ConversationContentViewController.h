@@ -21,7 +21,6 @@
 #import "ConversationContentViewControllerDelegate.h"
 #import "Constants.h"
 
-
 @class ZMConversation;
 @class ConversationMediaController;
 @class UpsideDownTableView;
@@ -36,6 +35,7 @@
 @property (nonatomic, readonly) BOOL isScrolledToBottom;
 @property (nonatomic, weak) ConversationMediaController *mediaController;
 @property (nonatomic) UpsideDownTableView *tableView;
+@property (nonatomic) UIView *bottomContainer;
 @property (nonatomic) NSArray<NSString *> *searchQueries;
 @property (nonatomic) UserSearchResultsViewController *mentionsSearchResultsViewController;
 
@@ -46,6 +46,7 @@
 
 - (void)updateTableViewHeaderView;
 - (BOOL)displaysMessage:(id<ZMConversationMessage>)message;
+- (void)highlightMessage:(id<ZMConversationMessage>)message;
 
 @end
 

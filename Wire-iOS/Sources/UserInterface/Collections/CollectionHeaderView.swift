@@ -41,8 +41,7 @@ import Cartography
             default: fatal("Unknown section")
             }
             
-            let iconColor = UIColor(scheme: .lightGraphite)
-            self.iconImageView.image = UIImage(for: icon, iconSize: .tiny, color: iconColor)
+            self.iconImageView.image = UIImage(for: icon, iconSize: .tiny, color: .lightGraphite)
         }
     }
     
@@ -58,7 +57,7 @@ import Cartography
     public let titleLabel: UILabel = {
         let label = UILabel()
         label.font = .smallSemiboldFont
-        label.textColor = .textForeground
+        label.textColor = .from(scheme: .textForeground)
 
         return label
     }()

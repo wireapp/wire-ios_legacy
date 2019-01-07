@@ -18,7 +18,7 @@
 
 
 import UIKit
-
+ 
 @objc public protocol TextViewInteractionDelegate: NSObjectProtocol {
     func textView(_ textView: LinkInteractionTextView, open url: URL) -> Bool
     func textViewDidLongPress(_ textView: LinkInteractionTextView)
@@ -28,6 +28,11 @@ import UIKit
 @objcMembers public class LinkInteractionTextView: UITextView {
     
     public weak var interactionDelegate: TextViewInteractionDelegate?
+
+    override public var selectedTextRange: UITextRange? {
+        get { return nil }
+        set { /* no-op */ }
+    }
     
     // URLs with these schemes should be handled by the os.
     fileprivate let dataDetectedURLSchemes = [ "x-apple-data-detectors", "tel", "mailto"]
@@ -47,6 +52,7 @@ import UIKit
     
     override public func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
         let isInside = super.point(inside: point, with: event)
+        guard !UIMenuController.shared.isMenuVisible else { return false }
         guard let position = characterRange(at: point), isInside else { return false }
         let index = offset(from: beginningOfDocument, to: position.start)
         return urlAttribute(at: index)
@@ -97,16 +103,21 @@ extension LinkInteractionTextView: UITextViewDelegate {
     public func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
         switch interaction {
         case .invokeDefaultAction:
+            guard !UIMenuController.shared.isMenuVisible else {
+                return false // Don't open link/show alert if menu controller is visible
+            }
+            
             // if alert shown, link opening is handled in alert actions
             if showAlertIfNeeded(for: URL, in: characterRange) { return false }
             // data detector links should be handle by the system
-            return  dataDetectedURLSchemes.contains(URL.scheme ?? "") || !(interactionDelegate?.textView(self, open: URL) ?? false)
+            return dataDetectedURLSchemes.contains(URL.scheme ?? "") || !(interactionDelegate?.textView(self, open: URL) ?? false)
         case .presentActions:
             interactionDelegate?.textViewDidLongPress(self)
             return false
         case .preview:
-            // if no alert is shown, still allow preview peeking
-            return !showAlertIfNeeded(for: URL, in: characterRange)
+            // do not allow peeking links, as it blocks showing the menu for replies
+            interactionDelegate?.textViewDidLongPress(self)
+            return false
         }
     }
 }

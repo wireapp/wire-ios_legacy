@@ -31,7 +31,7 @@ final class BackupStatusCell: UITableViewCell {
         backgroundColor = .clear
         contentView.backgroundColor = .clear
         
-        let color = UIColor(scheme: .textForeground, variant: .dark)
+        let color = UIColor.from(scheme: .textForeground, variant: .dark)
         
         iconView.image = .imageForRestore(with: color, size: .large)
         iconView.contentMode = .center
@@ -82,7 +82,7 @@ final class BackupActionCell: UITableViewCell {
         
         actionTitleLabel.text = "self.settings.history_backup.action".localized
         actionTitleLabel.font = FontSpec(.normal, .regular).font
-        actionTitleLabel.textColor = UIColor(scheme: .textForeground, variant: .dark)
+        actionTitleLabel.textColor = UIColor.from(scheme: .textForeground, variant: .dark)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -197,7 +197,7 @@ extension BackupViewController: UITableViewDataSource, UITableViewDelegate {
 fileprivate extension BackupViewController {
 
     fileprivate func backupActiveAccount(indexPath: IndexPath) {
-        requestPassword { [weak self] result in
+        requestBackupPassword { [weak self] result in
             guard let `self` = self, let password = result else { return }
             self.loadingHostController.showLoadingView = true
 

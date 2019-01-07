@@ -32,6 +32,8 @@
 "general.decline" = "No, thanks";
 "general.failure" = "Jokin meni pieleen";
 "general.service" = "Service";
+"general.off" = "Pois päältä";
+"general.on" = "On";
 
 // Language like Chinese does not use space to sperate words or sentences.
 "general.space_between_words" = " ";
@@ -149,6 +151,7 @@
 "conversation_list.voiceover.status.typing" = "kirjoittaa";
 "conversation_list.voiceover.status.ping" = "ping";
 "conversation_list.voiceover.status.mention" = "you are mentioned";
+"conversation_list.voiceover.status.reply" = "reply";
 "conversation_list.voiceover.bottom_bar.archived_button.label" = "arkistoitu";
 "conversation_list.voiceover.bottom_bar.archived_button.hint" = "lista arkistoiduista keskusteluista";
 "conversation_list.voiceover.bottom_bar.contacts_button.label" = "yhteystiedot";
@@ -199,6 +202,7 @@
 "conversation.status.typing" = "Kirjoittaa viestiä…";
 "conversation.status.typing.group" = "%@ kirjoittaa viestiä…";
 "conversation.status.silenced" = "Mykistetty";
+"conversation.status.poor_connection" = "Poor connection";
 "conversation.status.blocked" = "Estetty";
 
 "conversation.status.message.text" = "%@";
@@ -212,15 +216,19 @@
 "conversation.status.message.missedcall" = "Vastaamaton puhelu";
 "conversation.status.message.missedcall.groups" = "Missed call from %@";
 "conversation.status.message.mention" = "%@";
+"conversation.status.message.reply" = "%@";
 "conversation.status.message.ephemeral" = "Sent a message";
 "conversation.status.message.ephemeral.group" = "Someone sent a message";
 "conversation.status.message.ephemeral.mention" = "Mentioned you";
 "conversation.status.message.ephemeral.mention.group" = "Someone mentioned you";
+"conversation.status.message.ephemeral.reply" = "Replied to your message";
+"conversation.status.message.ephemeral.reply.group" = "Someone replied to your message";
 "conversation.status.message.ephemeral.knock" = "Pinggasi";
 "conversation.status.message.ephemeral.knock.group" = "Someone pinged";
 
 "conversation.status.unsent" = "⚠ Lähettämätön viesti";
 "conversation.status.you" = "Sinä";
+"conversation.status.someone" = "Someone";
 "conversation.status.added_multiple" = "Ihmiset lisätty";
 "conversation.status.you_was_added" = "%@ lisäsi sinut";
 "conversation.status.added_users" = "%@ lisäsi %@ n";
@@ -283,8 +291,12 @@
 "conversation.create.group_name.placeholder" = "Ryhmän nimi";
 "conversation.create.guidance.empty" = "At least 1 character";
 "conversation.create.guidance.toolong" = "Liian monta merkkiä";
-"conversation.create.toggle.title" = "Allow guests and services";
-"conversation.create.toggle.subtitle" = "Open this conversation to services and people outside your team. You can always change it later.";
+"conversation.create.options.title" = "Conversation options";
+"conversation.create.options.subtitle" = "Allow guests: %@, Read receipts: %@";
+"conversation.create.guests.title" = "Allow guests and services";
+"conversation.create.guests.subtitle" = "Open this conversation to services and people outside your team.";
+"conversation.create.receipts.title" = "Read receipts";
+"conversation.create.receipts.subtitle" = "When this is on, people can see when their messages in this conversation are read.";
 
 "conversation.input_bar.ongoing_call_alert.title" = "Käynnissä oleva puhelu";
 "conversation.input_bar.ongoing_call_alert.audio.message" = "You can’t record an audio message during a call.";
@@ -296,7 +308,23 @@
 "conversation.guests_services_present" = "Guests and services are present";
 "conversation.action.search" = "Etsi";
 
-// Image confirmation dialogue
+// Reply message preview
+"conversation.input_bar.message_preview.image" = "Image";
+"conversation.input_bar.message_preview.location" = "Location";
+"conversation.input_bar.message_preview.video" = "Video";
+"conversation.input_bar.message_preview.audio" = "Audio Message";
+"conversation.input_bar.message_preview.file" = "File";
+"conversation.input_bar.close_reply" = "Cancel reply";
+
+"conversation.input_bar.message_preview.accessibility_description" = "Replying to message: %@";
+"conversation.input_bar.message_preview.accessibility.image_message" = "Image message";
+"conversation.input_bar.message_preview.accessibility.location_message" = "Location message";
+"conversation.input_bar.message_preview.accessibility.video_message" = "Video message";
+"conversation.input_bar.message_preview.accessibility.audio_message" = "Audio message";
+"conversation.input_bar.message_preview.accessibility.file_message" = "File message (%@)";
+"conversation.input_bar.message_preview.accessibility.unknown_message" = "Unknown message";
+"conversation.input_bar.message_preview.accessibility.message_from" = "%@ from %@";
+
 "image_confirmer.confirm" = "OK";
 "image_confirmer.cancel" = "Peruuta";
 "image.add_sketch" = "Lisää piirros";
@@ -383,6 +411,7 @@
 "content.system.pending_message_timestamp" = "Lähetetään…";
 "content.system.message_sent_timestamp" = "Lähetetty";
 "content.system.message_delivered_timestamp" = "Toimitettu";
+"content.system.message_read_timestamp" = "Seen";
 "content.system.failedtosend_message_timestamp" = "Lähettäminen epäonnistui.";
 "content.system.failedtosend_message_timestamp_resend" = "Lähetä uudelleen";
 "content.system.failedtosend_message_timestamp_delete" = "Poista";
@@ -412,12 +441,21 @@
 "content.system.conversation.with_name.participants" = "with";
 
 "content.system.message_timer_changes" = "%@ set the message timer to %@";
-"content.system.message_timer_changes.you" = "You set the message timer to %@";
-
-"content.system.message_timer.you_part" = "Sinä";
+"content.system.message_timer_changes-you" = "%@ set the message timer to %@";
 
 "content.system.message_timer_off" = "%@ turned off the message timer";
-"content.system.message_timer_off.you" = "You turned off the message timer";
+"content.system.message_timer_off-you" = "%@ turned off the message timer";
+
+// read receipt
+
+"content.system.message_read_receipt_on" = "%@ turned read receipts on for everyone";
+"content.system.message_read_receipt_on-you" = "%@ turned read receipts on for everyone";
+
+"content.system.message_read_receipt_off" = "%@ turned read receipts off for everyone";
+"content.system.message_read_receipt_off-you" = "%@ turned read receipts off for everyone";
+
+"content.system.message_read_receipt_on_add_to_group" = "Read receipts are on";
+
 
 "content.system.reactivated_device" = "Aloitit käyttämään %@ uudestaan. Viestit jotka lähetettiin sillä välin eivät näy täällä.";
 
@@ -462,6 +500,7 @@
 
 "content.message.delete" = "Poista";
 "content.message.save" = "Tallenna";
+"content.message.resend" = "Lähetä uudelleen";
 
 "content.message.delete_ellipsis" = "Delete…";
 
@@ -473,10 +512,21 @@
 "content.message.open" = "Avaa";
 "content.message.copy" = "Kopioi";
 "content.message.download" = "Download";
+"content.message.details" = "Lisätietoja";
+
+// Reply
+"content.message.reply" = "Vastaa";
+"content.message.original_label" = "Original message";
+"content.message.reply.original_timestamp.date" = "Original message from %@";
+"content.message.reply.original_timestamp.time" = "Original message from %@";
+"content.message.reply.broken_message" = "You cannot see this message.";
+"content.message.reply.edited_message" = "Edited";
 
 "content.message.open_link_alert.title" = "Visit Link";
 "content.message.open_link_alert.message" = "This will take you to\n%@";
 "content.message.open_link_alert.open" = "Avaa";
+
+"content.message.audio_message.accessibility" = "Play the audio message";
 
 "content.reactions_list.likers" = "Tykätty";
 
@@ -635,7 +685,7 @@
 // Configure conversation notifications
 "meta.menu.configure_notification.dialog_message" = "Notify me about:";
 "meta.menu.configure_notification.button_everything" = "Everything";
-"meta.menu.configure_notification.button_mentions" = "Only Mentions";
+"meta.menu.configure_notification.button_mentions_and_replies" = "Mentions and Replies";
 "meta.menu.configure_notification.button_nothing" = "Nothing";
 "meta.menu.configure_notification.button_cancel" = "Peruuta";
 
@@ -697,6 +747,10 @@
 "profile.create_conversation_button_title" = "Luo ryhmä";
 "profile.open_conversation_button_title" = "Avaa keskustelu";
 
+"profile.read_receipts_enabled_memo.header" = "YOU HAVE ENABLED READ RECEIPTS";
+"profile.read_receipts_disabled_memo.header" = "YOU HAVE DISABLED READ RECEIPTS";
+"profile.read_receipts_memo.body" = "If both sides turn on read receipts, you can see when messages are read.\nYou can change this option in your account settings.";
+
 // User Details
 "profile.details.title" = "Lisätietoja";
 "profile.details.guest" = "Vieras";
@@ -730,6 +784,10 @@
 "group_details.guest_options_cell.enabled" = "On";
 "group_details.guest_options_cell.disabled" = "Pois päältä";
 "group_details.timeout_options_cell.title" = "Timed messages";
+"group_details.notification_options_cell.title" = "Ilmoitukset";
+"group_details.notification_options_cell.description" = "You can be notified about everything (including audio and video calls) or only when someone mentions you or replies to one of your messages.";
+"group_details.receipt_options_cell.title" = "Read receipts";
+"group_details.receipt_options_cell.description" = "When this is on, people can see when their messages in this conversation are read.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile
@@ -772,6 +830,12 @@
 "self.new_device_alert.manage_devices" = "Hallitse laitteita";
 "self.new_device_alert.trust_devices" = "OK";
 
+// Settings changed alert
+
+"self.read_receipts_enabled.title" = "You have enabled read receipts";
+"self.read_receipts_disabled.title" = "You have disabled read receipts";
+"self.read_receipts_description.title" = "You can change this option in your account settings.";
+
 // Settings - top level
 "self.settings.create_team.title" = "Luo tiimi";
 "self.settings.manage_team.title" = "Hallinnoi tiimiä";
@@ -806,6 +870,11 @@
 "self.settings.account_details.remove_device.password.error" = "Väärä salasana";
 
 "self.settings.account_appearance_group.title" = "Ulkoasu";
+
+"self.settings.privacy_section_group.title" = "Privacy";
+"self.settings.enable_read_receipts.title" = "Send read receipts";
+"self.settings.privacy_section_group.subtitle" = "When this is off, you won’t be able to see read receipts from other people.\nThis setting does not apply to group conversations.";
+
 "self.settings.account_picture_group.picture" = "Kuva";
 "self.settings.account_picture_group.color" = "Väri";
 
@@ -1152,6 +1221,13 @@
 "registration.no_history.got_it" = "OK";
 "registration.no_history.restore_backup" = "Restore from backup";
 
+"registration.alert.account_exists.title" = "Account Exists";
+"registration.alert.account_exists.message_phone" = "The phone number you used to register is already linked to an account.\n\nUse another phone number, or try to log in if you own this account.";
+"registration.alert.account_exists.message_email" = "The email address you used to register is already linked to an account.\n\n Use another email address, or try to log in if you own this account.";
+"registration.alert.change_email_action" = "Change Email";
+"registration.alert.change_phone_action" = "Change Phone";
+"registration.alert.change_signin_action" = "Sign In";
+
 // Restore History Warning Alert
 "registration.no_history.restore_backup_warning.title" = "Restore history";
 "registration.no_history.restore_backup_warning.message" = "The backup contents will replace the conversation history on this device.\nYou can only restore history from a backup of the same platform.";
@@ -1250,7 +1326,7 @@
 "registration.devices.active_list_header" = "Aktiivinen";
 "registration.devices.current_list_header" = "Nykyinen";
 "registration.devices.active_list_subtitle" = "Jos et tunnista yllä olevaa laitetta, poista se ja vaihda salasanasi.";
-"registration.devices.activated"  = "Activated %@";
+"registration.devices.activated" = "Activated %@";
 "registration.devices.id" = "ID:";
 
 "signin.use_email.label" = "Login with Email";
@@ -1441,3 +1517,19 @@
 "news_offers.consent.title" = "Do you want to receive news and product updates from Wire via email?";
 "news_offers.consent.message" = "You can unsubscribe at any time.";
 "news_offers.consent.button.privacy_policy.title" = "Yksityisyyskäytännöt";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Message Details
+"message_details.empty_likes" = "No one has liked this message yet.";
+"message_details.empty_read_receipts" = "No one has read this message yet.";
+"message_details.read_receipts_disabled" = "Read receipts were not on when this message was sent.";
+"message_details.combined_title" = "Message Details";
+"message_details.likes_title" = "Liked";
+"message_details.receipts_title" = "Read";
+"message_details.tabs.seen" = "Read (%d)";
+"message_details.tabs.likes" = "Liked (%d)";
+"message_details.subtitle_send_date" = "Sent: %@";
+"message_details.subtitle_edit_date" = "Edited: %@";
+"message_details.subtitle_label_voiceOver" = "Message Details";
+"message_details.user_handle_subtitle_label" = "Käyttäjänimi";
+"message_details.user_read_timestamp_subtitle_label" = "Read at";

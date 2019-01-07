@@ -100,40 +100,10 @@ extension ZMMessage: Shareable {
 
 extension ZMConversationMessage {
     public func previewView() -> UIView? {
-        var cell: ConversationCell
-        
-        if isText {
-            cell = TextMessageCell(style: .default, reuseIdentifier: "")
-        }
-        else if isImage {
-            cell = ImageMessageCell(style: .default, reuseIdentifier: "")
-        }
-        else if isVideo {
-            cell = VideoMessageCell(style: .default, reuseIdentifier: "")
-        }
-        else if isAudio {
-            cell = AudioMessageCell(style: .default, reuseIdentifier: "")
-        }
-        else if isLocation {
-            cell = LocationMessageCell(style: .default, reuseIdentifier: "")
-        }
-        else if isFile {
-            cell = FileTransferCell(style: .default, reuseIdentifier: "")
-        }
-        else {
-            fatal("Cannot create preview for \(type(of: self))")
-        }
-        
-        cell.translatesAutoresizingMaskIntoConstraints = false
-        let height = cell.prepareLayoutForPreview(message: self)
-        
-        constrain(cell.contentView) { cellContentView in
-            cellContentView.height == height
-        }
-        
-        cell.frame = CGRect(x: 0, y: 0, width: cell.frame.size.width, height: height)
-        
-        return cell
+        let view = self.preparePreviewView(shouldDisplaySender: false)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .white
+        return view
     }
 }
 
@@ -176,11 +146,11 @@ extension ConversationContentViewController {
 
 extension ConversationContentViewController: UIAdaptivePresentationControllerDelegate {
 
-    @objc public func showForwardFor(message: ZMConversationMessage?, fromCell: ConversationCell?) {
+    @objc public func showForwardFor(message: ZMConversationMessage?, fromCell: UIView?) {
         guard let message = message else { return }
         guard let rootViewController = UIApplication.shared.keyWindow?.rootViewController as? PopoverPresenter & UIViewController else { return }
 
-        view.window?.endEditing(true)
+        endEditing()
         
         let conversations = ZMConversationList.conversationsIncludingArchived(inUserSession: ZMUserSession.shared()!).shareableConversations(excluding: message.conversation!)
 
@@ -201,14 +171,14 @@ extension ConversationContentViewController: UIAdaptivePresentationControllerDel
         keyboardAvoiding.modalPresentationStyle = .popover
         
         if let popoverPresentationController = keyboardAvoiding.popoverPresentationController {
-            if let cell = fromCell {
+            if let cell = fromCell as? SelectableView {
                 popoverPresentationController.config(from: rootViewController,
                                pointToView: cell.selectionView,
                                sourceView: rootViewController.view)
             }
 
             popoverPresentationController.backgroundColor = UIColor(white: 0, alpha: 0.5)
-            popoverPresentationController.permittedArrowDirections = [.left, .right]
+            popoverPresentationController.permittedArrowDirections = [.left, .right, .up, .down]
         }
         
         keyboardAvoiding.presentationController?.delegate = self
@@ -230,15 +200,15 @@ extension ConversationContentViewController: UIAdaptivePresentationControllerDel
 }
 
 extension ConversationContentViewController {
-    @objc func scroll(to messageToShow: ZMConversationMessage, completion: ((ConversationCell)->())? = .none) {
-        guard messageToShow.conversation == self.conversation,
-              let message = messageToShow as? ZMMessage else {
+
+    @objc func scroll(to messageToShow: ZMConversationMessage, completion: ((UIView)->())? = .none) {
+        guard messageToShow.conversation == self.conversation else {
             fatal("Message from the wrong conversation")
         }
         
         showLoadingView = true
         
-        dataSource.find(message) { index in
+        dataSource.find(messageToShow) { index in
             self.showLoadingView = false
             
             guard let indexToShow = index else {
@@ -249,11 +219,12 @@ extension ConversationContentViewController {
         }
     }
     
-    @objc func scroll(toIndex indexToShow: Int, completion: ((ConversationCell)->())? = .none) {
-        let cellIndexPath = IndexPath(row: indexToShow, section: 0)
+    @objc func scroll(toIndex indexToShow: Int, completion: ((UIView)->())? = .none) {
+        let rowIndex = tableView.numberOfCells(inSection: indexToShow) - 1
+        let cellIndexPath = IndexPath(row: rowIndex, section: indexToShow)
 
-        self.tableView.scrollToRow(at: cellIndexPath, at: .middle, animated: false)
-        if let cell = self.tableView.cellForRow(at: cellIndexPath) as? ConversationCell {
+        self.tableView.scrollToRow(at: cellIndexPath, at: .top, animated: false)
+        if let cell = self.tableView.cellForRow(at: cellIndexPath) {
             completion?(cell)
         }
     }

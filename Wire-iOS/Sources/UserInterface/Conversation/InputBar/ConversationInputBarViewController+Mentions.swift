@@ -35,8 +35,9 @@ extension ConversationInputBarViewController {
             fatal("Cannot insert best mention")
         }
         
-        let bestSuggestion = mentionsView.users[0]
-        insertMention(for: bestSuggestion)
+        if let bestSuggestion = mentionsView.selectedUser {
+            insertMention(for: bestSuggestion)
+        }
     }
     
     func insertMention(for user: UserType) {
@@ -47,6 +48,7 @@ extension ConversationInputBarViewController {
         let (range, attributedText) = handler.replacement(forMention: user, in: text)
 
         inputBar.textView.replace(range, withAttributedText: (attributedText && inputBar.textView.typingAttributes))
+        playInputHapticFeedback()
         dismissMentionsIfNeeded()
     }
     
@@ -74,7 +76,7 @@ extension ConversationInputBarViewController: UserSearchResultsViewControllerDel
 
 extension ConversationInputBarViewController {
     
-    func dismissMentionsIfNeeded() {
+    @objc func dismissMentionsIfNeeded() {
         mentionsHandler = nil
         mentionsView?.dismiss()
     }

@@ -20,6 +20,6 @@ import Foundation
 
 extension ConversationListItemView {
     @objc func setupStyle() {
-        titleField?.textColor = .textForegroundDark
+        titleField?.textColor = .from(scheme: .textForeground, variant: .dark)
     }
 }

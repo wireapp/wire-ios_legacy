@@ -17,15 +17,31 @@
 //
 
 import Foundation
+import AVKit
 
 extension ConfirmAssetViewController {
     @objc func setupStyle() {
-        view.backgroundColor = UIColor(scheme: .background)
-        imageToolbarSeparatorView?.backgroundColor = UIColor(scheme: .separator)
-        topPanel?.backgroundColor = UIColor(scheme: .background)
+        view.backgroundColor = UIColor.from(scheme: .background)
+        imageToolbarSeparatorView?.backgroundColor = UIColor.from(scheme: .separator)
+        topPanel?.backgroundColor = UIColor.from(scheme: .background)
 
         titleLabel?.font = UIFont.mediumSemiboldFont
-        titleLabel?.textColor = UIColor(scheme: .textForeground)
+        titleLabel?.textColor = UIColor.from(scheme: .textForeground)
 
     }
+
+    @objc func createVideoPanel() {
+        playerViewController = AVPlayerViewController()
+
+        guard let videoURL = videoURL,
+              let playerViewController = playerViewController else { return }
+
+        playerViewController.player = AVPlayer(url: videoURL)
+        playerViewController.player?.play()
+        playerViewController.showsPlaybackControls = true
+        playerViewController.view.backgroundColor = UIColor.from(scheme: .textBackground)
+
+        view.addSubview(playerViewController.view)
+    }
+
 }

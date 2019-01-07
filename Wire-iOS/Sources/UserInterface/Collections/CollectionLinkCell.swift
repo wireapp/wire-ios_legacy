@@ -82,14 +82,7 @@ final public class CollectionLinkCell: CollectionCell {
         }
     }
 
-    public override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
-        switch action{
-        case #selector(copy(_:)): return true
-        default: return super.canPerformAction(action, withSender: sender)
-        }
-    }
-
-    public override func copy(_ sender: Any?) {
+    override func copyDisplayedContent(in pasteboard: UIPasteboard) {
         guard let link = message?.textMessageData?.linkPreview else { return }
         UIPasteboard.general.url = link.openableURL as URL?
     }

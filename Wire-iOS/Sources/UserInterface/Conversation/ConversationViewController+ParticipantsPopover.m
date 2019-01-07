@@ -23,19 +23,6 @@
 
 @implementation ConversationViewController (ParticipantsPopover)
 
-- (void)createAndPresentParticipantsPopoverControllerWithRect:(CGRect)rect fromView:(UIView *)view contentViewController:(UIViewController *)controller
-{
-    controller.modalPresentationStyle = UIModalPresentationPopover;
-
-    UIPopoverPresentationController *popover = controller.popoverPresentationController;
-    popover.delegate = self;
-    popover.sourceRect = rect;
-    popover.sourceView = view;
-    popover.backgroundColor = UIColor.whiteColor;
-
-    [self presentViewController:controller animated:YES completion:nil];
-}
-
 - (void)hideAndDestroyParticipantsPopoverController
 {
     if ([self.presentedViewController isKindOfClass:[GroupDetailsViewController class]] ||

@@ -29,20 +29,20 @@ final public class FileTransferView: UIView, TransferView {
     public let bottomLabel = UILabel()
     public let fileTypeIconView: UIImageView = {
         let imageView = UIImageView()
-        imageView.tintColor = .textForeground
+        imageView.tintColor = .from(scheme: .textForeground)
         return imageView
     }()
     public let fileEyeView: UIImageView = {
         let imageView = UIImageView()
-        imageView.tintColor = .background
+        imageView.tintColor = .from(scheme: .background)
         return imageView
     }()
 
     private let loadingView = ThreeDotsLoadingView()
     public let actionButton = IconButton()
     
-    public let labelTextColor: UIColor = .textForeground
-    public let labelTextBlendedColor: UIColor = .textDimmed
+    public let labelTextColor: UIColor = .from(scheme: .textForeground)
+    public let labelTextBlendedColor: UIColor = .from(scheme: .textDimmed)
     public let labelFont: UIFont = .smallLightFont
     public let labelBoldFont: UIFont = .smallSemiboldFont
 
@@ -50,25 +50,25 @@ final public class FileTransferView: UIView, TransferView {
     
     public required override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .placeholderBackground
+        backgroundColor = .from(scheme: .placeholderBackground)
         
         self.topLabel.numberOfLines = 1
         self.topLabel.lineBreakMode = .byTruncatingMiddle
-        self.topLabel.accessibilityLabel = "FileTransferTopLabel"
+        self.topLabel.accessibilityIdentifier = "FileTransferTopLabel"
         
         self.bottomLabel.numberOfLines = 1
-        self.bottomLabel.accessibilityLabel = "FileTransferBottomLabel"
+        self.bottomLabel.accessibilityIdentifier = "FileTransferBottomLabel"
         
-        self.fileTypeIconView.accessibilityLabel = "FileTransferFileTypeIcon"
+        self.fileTypeIconView.accessibilityIdentifier = "FileTransferFileTypeIcon"
         
         self.fileEyeView.image = UIImage(for: .eye, iconSize: .messageStatus, color: UIColor.white).withRenderingMode(.alwaysTemplate)
         
         self.actionButton.contentMode = .scaleAspectFit
         actionButton.setIconColor(.white, for: .normal)
         self.actionButton.addTarget(self, action: #selector(FileTransferView.onActionButtonPressed(_:)), for: .touchUpInside)
-        self.actionButton.accessibilityLabel = "FileTransferActionButton"
+        self.actionButton.accessibilityIdentifier = "FileTransferActionButton"
         
-        self.progressView.accessibilityLabel = "FileTransferProgressView"
+        self.progressView.accessibilityIdentifier = "FileTransferProgressView"
         self.progressView.isUserInteractionEnabled = false
         
         self.loadingView.translatesAutoresizingMaskIntoConstraints = false
@@ -84,9 +84,6 @@ final public class FileTransferView: UIView, TransferView {
         var currentElements = self.accessibilityElements ?? []
         currentElements.append(contentsOf: [topLabel, bottomLabel, fileTypeIconView, fileEyeView, actionButton])
         self.accessibilityElements = currentElements
-        
-        setNeedsLayout()
-        layoutIfNeeded()
     }
     
     public required init?(coder aDecoder: NSCoder) {
@@ -147,7 +144,7 @@ final public class FileTransferView: UIView, TransferView {
         let filename = (filepath.lastPathComponent as NSString).deletingPathExtension
         let ext = filepath.pathExtension
         
-        let dot = " · " && labelFont && labelTextBlendedColor
+        let dot = " " + String.MessageToolbox.middleDot + " " && labelFont && labelTextBlendedColor
         let fileNameAttributed = filename.uppercased() && labelBoldFont && labelTextColor
         let extAttributed = ext.uppercased() && labelFont && labelTextBlendedColor
         
@@ -198,7 +195,7 @@ final public class FileTransferView: UIView, TransferView {
             
         case .failedUpload, .cancelledUpload:
             let statusText = fileMessageData.transferState == .failedUpload ? "content.file.upload_failed".localized : "content.file.upload_cancelled".localized
-            let attributedStatusText = statusText.uppercased() && labelFont && UIColor(for: .vividRed)
+            let attributedStatusText = statusText.uppercased() && labelFont && UIColor.vividRed
             
             let firstLine = fileNameAttributed
             let secondLine = fileSizeAttributed + dot + attributedStatusText

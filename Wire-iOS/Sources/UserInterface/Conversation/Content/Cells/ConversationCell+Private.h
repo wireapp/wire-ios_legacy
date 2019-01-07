@@ -25,7 +25,6 @@
 @property (nonatomic) BOOL showsPreview;
 
 - (void)startCountdownAnimationIfNeeded:(id<ZMConversationMessage>)message;
-- (BOOL)showDestructionCountdown;
 - (void)tearDownCountdown;
 
 @property (nonatomic) BOOL countdownContainerViewHidden;

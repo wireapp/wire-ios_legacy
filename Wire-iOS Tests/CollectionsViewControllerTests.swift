@@ -27,7 +27,7 @@ extension MockMessage {
     }
 }
 
-class CollectionsViewControllerTests: ZMSnapshotTestCase {
+class CollectionsViewControllerTests: CoreDataSnapshotTestCase {
     
     var emptyCollection: AssetCollectionWrapper!
     var imageMessage: ZMConversationMessage!
@@ -41,9 +41,19 @@ class CollectionsViewControllerTests: ZMSnapshotTestCase {
     var expiredAudioMessage: ZMConversationMessage!
     var expiredFileMessage: ZMConversationMessage!
     var expiredLinkMessage: ZMConversationMessage!
+    
+    var deletedImageMessage: ZMConversationMessage!
+    var deletedVideoMessage: ZMConversationMessage!
+    var deletedAudioMessage: ZMConversationMessage!
+    var deletedFileMessage: ZMConversationMessage!
+    var deletedLinkMessage: ZMConversationMessage!
 
     override func setUp() {
         super.setUp()
+
+        MockUser.mockSelf()?.name = "Tarja Turunen"
+        MockUser.mockSelf()?.accentColorValue = .strongBlue
+
         let conversation = MockConversation() as Any as! ZMConversation
         let assetCollection = MockCollection.empty
         let delegate = AssetCollectionMulticastDelegate()
@@ -60,6 +70,12 @@ class CollectionsViewControllerTests: ZMSnapshotTestCase {
         expiredFileMessage = MockMessageFactory.expiredFileMessage()
         expiredLinkMessage = MockMessageFactory.expiredLinkMessage()
         expiredAudioMessage = MockMessageFactory.expiredAudioMessage()
+        
+        deletedImageMessage = MockMessageFactory.deletedImageMessage()
+        deletedVideoMessage = MockMessageFactory.deletedVideoMessage()
+        deletedFileMessage = MockMessageFactory.deletedFileMessage()
+        deletedLinkMessage = MockMessageFactory.deletedLinkMessage()
+        deletedAudioMessage = MockMessageFactory.deletedAudioMessage()
     }
 
     override func tearDown() {
@@ -75,6 +91,12 @@ class CollectionsViewControllerTests: ZMSnapshotTestCase {
         expiredAudioMessage = nil
         expiredFileMessage = nil
         expiredLinkMessage = nil
+        
+        deletedImageMessage = nil
+        deletedVideoMessage = nil
+        deletedAudioMessage = nil
+        deletedFileMessage = nil
+        deletedLinkMessage = nil
         super.tearDown()
     }
     
@@ -137,6 +159,34 @@ class CollectionsViewControllerTests: ZMSnapshotTestCase {
 
     func testLinksSectionWhenExpired() {
         let assetCollection = MockCollection(linkMessages: [expiredLinkMessage, linkMessage])
+        let controller = createController(showingCollection: assetCollection)
+        verifyInAllIPhoneSizes(view: controller.view)
+    }
+
+    // MARK: - Expiration: Deletion
+    
+    func testImagesSectionWhenDeleted() {
+        let assetCollection = MockCollection(messages: [
+            MockCollection.onlyImagesCategory: [deletedImageMessage],
+            MockCollection.onlyVideosCategory: [videoMessage, deletedVideoMessage]])
+        let controller = createController(showingCollection: assetCollection)
+        verifyInAllIPhoneSizes(view: controller.view)
+    }
+    
+    func testFilesSectionWhenDeleted() {
+        let assetCollection = MockCollection(fileMessages: [fileMessage, deletedFileMessage])
+        let controller = createController(showingCollection: assetCollection)
+        verifyInAllIPhoneSizes(view: controller.view)
+    }
+    
+    func testAudioSectionWhenDeleted() {
+        let assetCollection = MockCollection(fileMessages: [audioMessage, deletedAudioMessage])
+        let controller = createController(showingCollection: assetCollection)
+        verifyInAllIPhoneSizes(view: controller.view)
+    }
+    
+    func testLinksSectionWhenDeleted() {
+        let assetCollection = MockCollection(linkMessages: [deletedLinkMessage, linkMessage])
         let controller = createController(showingCollection: assetCollection)
         verifyInAllIPhoneSizes(view: controller.view)
     }

@@ -32,6 +32,8 @@
 "general.decline" = "Tänan, ei";
 "general.failure" = "Midagi läks valesti";
 "general.service" = "Teenus";
+"general.off" = "Väljas";
+"general.on" = "Sees";
 
 // Language like Chinese does not use space to sperate words or sentences.
 "general.space_between_words" = " ";
@@ -149,6 +151,7 @@
 "conversation_list.voiceover.status.typing" = "trükib";
 "conversation_list.voiceover.status.ping" = "ping";
 "conversation_list.voiceover.status.mention" = "sind on mainitud";
+"conversation_list.voiceover.status.reply" = "reply";
 "conversation_list.voiceover.bottom_bar.archived_button.label" = "arhiveeritud";
 "conversation_list.voiceover.bottom_bar.archived_button.hint" = "arhiveeritud vestluste nimekiri";
 "conversation_list.voiceover.bottom_bar.contacts_button.label" = "kontaktid";
@@ -199,6 +202,7 @@
 "conversation.status.typing" = "Kirjutab…";
 "conversation.status.typing.group" = "%@: kirjutab…";
 "conversation.status.silenced" = "Vaigistatud";
+"conversation.status.poor_connection" = "Poor connection";
 "conversation.status.blocked" = "Blokeeritud";
 
 "conversation.status.message.text" = "%@";
@@ -212,15 +216,19 @@
 "conversation.status.message.missedcall" = "Vastamata kõne";
 "conversation.status.message.missedcall.groups" = "Vastamata kõne kasutajalt %@";
 "conversation.status.message.mention" = "%@";
+"conversation.status.message.reply" = "%@";
 "conversation.status.message.ephemeral" = "Saatis sõnumi";
 "conversation.status.message.ephemeral.group" = "Keegi saatis sõnumi";
 "conversation.status.message.ephemeral.mention" = "Mainis sind";
 "conversation.status.message.ephemeral.mention.group" = "Keegi mainis sind";
+"conversation.status.message.ephemeral.reply" = "Replied to your message";
+"conversation.status.message.ephemeral.reply.group" = "Someone replied to your message";
 "conversation.status.message.ephemeral.knock" = "Pingis";
 "conversation.status.message.ephemeral.knock.group" = "Keegi pingis";
 
 "conversation.status.unsent" = "⚠️ Saatmata sõnum";
 "conversation.status.you" = "Sina";
+"conversation.status.someone" = "Keegi";
 "conversation.status.added_multiple" = "Lisatud mitu inimest";
 "conversation.status.you_was_added" = "%@ lisas sinu";
 "conversation.status.added_users" = "%@ lisas kasutaja %@";
@@ -283,8 +291,12 @@
 "conversation.create.group_name.placeholder" = "Grupi nimi";
 "conversation.create.guidance.empty" = "Vähemalt 1 tähemärk";
 "conversation.create.guidance.toolong" = "Liiga pikk nimi";
-"conversation.create.toggle.title" = "Luba külalisi ja teenuseid";
-"conversation.create.toggle.subtitle" = "Ava see vestlus teenustele ja meeskonnast väljas olevatele inimestele. Sa saad seda alati hiljem muuta.";
+"conversation.create.options.title" = "Conversation options";
+"conversation.create.options.subtitle" = "Allow guests: %@, Read receipts: %@";
+"conversation.create.guests.title" = "Luba külalisi ja teenuseid";
+"conversation.create.guests.subtitle" = "Ava see vestlus teenustele ja meeskonnast väljas olevatele inimestele.";
+"conversation.create.receipts.title" = "Read receipts";
+"conversation.create.receipts.subtitle" = "When this is on, people can see when their messages in this conversation are read.";
 
 "conversation.input_bar.ongoing_call_alert.title" = "Aktiivne kõne";
 "conversation.input_bar.ongoing_call_alert.audio.message" = "Sa ei saa salvestada audiosõnumit kõne ajal.";
@@ -296,7 +308,23 @@
 "conversation.guests_services_present" = "Kohal on külalisi ja teenuseid";
 "conversation.action.search" = "Otsing";
 
-// Image confirmation dialogue
+// Reply message preview
+"conversation.input_bar.message_preview.image" = "Image";
+"conversation.input_bar.message_preview.location" = "Location";
+"conversation.input_bar.message_preview.video" = "Video";
+"conversation.input_bar.message_preview.audio" = "Audio Message";
+"conversation.input_bar.message_preview.file" = "File";
+"conversation.input_bar.close_reply" = "Cancel reply";
+
+"conversation.input_bar.message_preview.accessibility_description" = "Replying to message: %@";
+"conversation.input_bar.message_preview.accessibility.image_message" = "Image message";
+"conversation.input_bar.message_preview.accessibility.location_message" = "Location message";
+"conversation.input_bar.message_preview.accessibility.video_message" = "Video message";
+"conversation.input_bar.message_preview.accessibility.audio_message" = "Audio message";
+"conversation.input_bar.message_preview.accessibility.file_message" = "File message (%@)";
+"conversation.input_bar.message_preview.accessibility.unknown_message" = "Unknown message";
+"conversation.input_bar.message_preview.accessibility.message_from" = "%@ from %@";
+
 "image_confirmer.confirm" = "OK";
 "image_confirmer.cancel" = "Tühista";
 "image.add_sketch" = "Lisa joonistus";
@@ -383,6 +411,7 @@
 "content.system.pending_message_timestamp" = "Saadab…";
 "content.system.message_sent_timestamp" = "Saadetud";
 "content.system.message_delivered_timestamp" = "Kohale toimetatud";
+"content.system.message_read_timestamp" = "Seen";
 "content.system.failedtosend_message_timestamp" = "Saatmine ebaõnnestus.";
 "content.system.failedtosend_message_timestamp_resend" = "Saada uuesti";
 "content.system.failedtosend_message_timestamp_delete" = "Kustuta";
@@ -412,12 +441,21 @@
 "content.system.conversation.with_name.participants" = "ja";
 
 "content.system.message_timer_changes" = "%@ määras sõnumi taimeriks: %@";
-"content.system.message_timer_changes.you" = "Sina määrasid sõnumi taimeriks %@";
-
-"content.system.message_timer.you_part" = "Sina";
+"content.system.message_timer_changes-you" = "%@ määras sõnumi taimeriks: %@";
 
 "content.system.message_timer_off" = "%@ lülitas sõnumi taimeri välja";
-"content.system.message_timer_off.you" = "Sa lülitasid sõnumi taimeri välja";
+"content.system.message_timer_off-you" = "%@ lülitas sõnumi taimeri välja";
+
+// read receipt
+
+"content.system.message_read_receipt_on" = "%@ turned read receipts on for everyone";
+"content.system.message_read_receipt_on-you" = "%@ turned read receipts on for everyone";
+
+"content.system.message_read_receipt_off" = "%@ turned read receipts off for everyone";
+"content.system.message_read_receipt_off-you" = "%@ turned read receipts off for everyone";
+
+"content.system.message_read_receipt_on_add_to_group" = "Read receipts are on";
+
 
 "content.system.reactivated_device" = "Hakkasid uuesti kasutama seadet %@. Vahepeal saadetud sõnumid siia ei ilmu.";
 
@@ -462,6 +500,7 @@
 
 "content.message.delete" = "Kustuta";
 "content.message.save" = "Salvesta";
+"content.message.resend" = "Saada uuesti";
 
 "content.message.delete_ellipsis" = "Kustuta…";
 
@@ -473,10 +512,21 @@
 "content.message.open" = "Ava";
 "content.message.copy" = "Kopeeri";
 "content.message.download" = "Laadi alla";
+"content.message.details" = "Üksikasjad";
+
+// Reply
+"content.message.reply" = "Vasta";
+"content.message.original_label" = "Original message";
+"content.message.reply.original_timestamp.date" = "Original message from %@";
+"content.message.reply.original_timestamp.time" = "Original message from %@";
+"content.message.reply.broken_message" = "You cannot see this message.";
+"content.message.reply.edited_message" = "Edited";
 
 "content.message.open_link_alert.title" = "Ava lehekülg";
 "content.message.open_link_alert.message" = "Link viitab lehele: %@";
 "content.message.open_link_alert.open" = "Ava";
+
+"content.message.audio_message.accessibility" = "Play the audio message";
 
 "content.reactions_list.likers" = "Neile meeldib";
 
@@ -635,7 +685,7 @@
 // Configure conversation notifications
 "meta.menu.configure_notification.dialog_message" = "Teavita mind:";
 "meta.menu.configure_notification.button_everything" = "Kõik";
-"meta.menu.configure_notification.button_mentions" = "Ainult mainimised";
+"meta.menu.configure_notification.button_mentions_and_replies" = "Mentions and Replies";
 "meta.menu.configure_notification.button_nothing" = "Ei midagi";
 "meta.menu.configure_notification.button_cancel" = "Tühista";
 
@@ -697,6 +747,10 @@
 "profile.create_conversation_button_title" = "Loo grupp";
 "profile.open_conversation_button_title" = "Ava vestlus";
 
+"profile.read_receipts_enabled_memo.header" = "YOU HAVE ENABLED READ RECEIPTS";
+"profile.read_receipts_disabled_memo.header" = "YOU HAVE DISABLED READ RECEIPTS";
+"profile.read_receipts_memo.body" = "If both sides turn on read receipts, you can see when messages are read.\nYou can change this option in your account settings.";
+
 // User Details
 "profile.details.title" = "Üksikasjad";
 "profile.details.guest" = "Külaline";
@@ -730,6 +784,10 @@
 "group_details.guest_options_cell.enabled" = "Sees";
 "group_details.guest_options_cell.disabled" = "Väljas";
 "group_details.timeout_options_cell.title" = "Kustuvad sõnumid";
+"group_details.notification_options_cell.title" = "Teavitused";
+"group_details.notification_options_cell.description" = "You can be notified about everything (including audio and video calls) or only when someone mentions you or replies to one of your messages.";
+"group_details.receipt_options_cell.title" = "Read receipts";
+"group_details.receipt_options_cell.description" = "When this is on, people can see when their messages in this conversation are read.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile
@@ -772,6 +830,12 @@
 "self.new_device_alert.manage_devices" = "Halda seadmeid";
 "self.new_device_alert.trust_devices" = "OK";
 
+// Settings changed alert
+
+"self.read_receipts_enabled.title" = "You have enabled read receipts";
+"self.read_receipts_disabled.title" = "You have disabled read receipts";
+"self.read_receipts_description.title" = "You can change this option in your account settings.";
+
 // Settings - top level
 "self.settings.create_team.title" = "Loo uus tiim";
 "self.settings.manage_team.title" = "Tiimi haldus";
@@ -806,6 +870,11 @@
 "self.settings.account_details.remove_device.password.error" = "Vale parool";
 
 "self.settings.account_appearance_group.title" = "Välimus";
+
+"self.settings.privacy_section_group.title" = "Privacy";
+"self.settings.enable_read_receipts.title" = "Send read receipts";
+"self.settings.privacy_section_group.subtitle" = "When this is off, you won’t be able to see read receipts from other people.\nThis setting does not apply to group conversations.";
+
 "self.settings.account_picture_group.picture" = "Profiilipilt";
 "self.settings.account_picture_group.color" = "Värv";
 
@@ -1152,6 +1221,13 @@
 "registration.no_history.got_it" = "OK";
 "registration.no_history.restore_backup" = "Taasta varundusest";
 
+"registration.alert.account_exists.title" = "Account Exists";
+"registration.alert.account_exists.message_phone" = "The phone number you used to register is already linked to an account.\n\nUse another phone number, or try to log in if you own this account.";
+"registration.alert.account_exists.message_email" = "The email address you used to register is already linked to an account.\n\n Use another email address, or try to log in if you own this account.";
+"registration.alert.change_email_action" = "Change Email";
+"registration.alert.change_phone_action" = "Change Phone";
+"registration.alert.change_signin_action" = "Sign In";
+
 // Restore History Warning Alert
 "registration.no_history.restore_backup_warning.title" = "Taasta ajalugu";
 "registration.no_history.restore_backup_warning.message" = "Varukoopia sisu asendab selles seadmes vestlusajaloo.\nSa saad taastada ajalugu ainult sama platvormi varukoopiast.";
@@ -1250,7 +1326,7 @@
 "registration.devices.active_list_header" = "Aktiivsed";
 "registration.devices.current_list_header" = "Praegune";
 "registration.devices.active_list_subtitle" = "Kui sa mõnda toodud seadmetest ei tunne ära, eemalda see ja muuda oma parool.";
-"registration.devices.activated"  = "Activated %@";
+"registration.devices.activated" = "Aktiveeritud %@";
 "registration.devices.id" = "ID:";
 
 "signin.use_email.label" = "Logi sisse e-posti aadresiga";
@@ -1441,3 +1517,19 @@
 "news_offers.consent.title" = "Kas soovid saada Wire'i uudiseid ja tooteuuendusi e-posti teel?";
 "news_offers.consent.message" = "Saad igal ajal tellimuse lõpetada.";
 "news_offers.consent.button.privacy_policy.title" = "Privaatsuspoliitika";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Message Details
+"message_details.empty_likes" = "No one has liked this message yet.";
+"message_details.empty_read_receipts" = "No one has read this message yet.";
+"message_details.read_receipts_disabled" = "Read receipts were not on when this message was sent.";
+"message_details.combined_title" = "Message Details";
+"message_details.likes_title" = "Liked";
+"message_details.receipts_title" = "Read";
+"message_details.tabs.seen" = "Read (%d)";
+"message_details.tabs.likes" = "Liked (%d)";
+"message_details.subtitle_send_date" = "Sent: %@";
+"message_details.subtitle_edit_date" = "Muudetud: %@";
+"message_details.subtitle_label_voiceOver" = "Message Details";
+"message_details.user_handle_subtitle_label" = "Kasutajanimi";
+"message_details.user_read_timestamp_subtitle_label" = "Read at";

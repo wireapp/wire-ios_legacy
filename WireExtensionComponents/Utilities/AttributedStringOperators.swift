@@ -186,12 +186,18 @@ extension PointOfView: CustomStringConvertible {
 
 public extension String {
     
-    // Returns the NSLocalizedString version of self
+    /// Returns the NSLocalizedString version of self
     public var localized: String {
         return NSLocalizedString(self, comment: "")
     }
+
+    /// Returns the text and uppercases it if needed.
+    public func localized(uppercased: Bool) -> String {
+        let text = NSLocalizedString(self, comment: "")
+        return uppercased ? text.localizedUppercase : text
+    }
    
-    // Used to generate localized strings with plural rules from the stringdict
+    /// Used to generate localized strings with plural rules from the stringdict
     public func localized(pov pointOfView: PointOfView = .none, args: CVarArg...) -> String {
         return withVaList(args) {
             return NSString(format: self.localized(pov: pointOfView), arguments: $0) as String
@@ -221,8 +227,11 @@ public extension NSAttributedString {
     }
     
     @objc public func setAttributes(_ attributes: [NSAttributedString.Key: AnyObject], toSubstring substring: String) -> NSAttributedString {
+        let substringRange = (string as NSString).range(of: substring)
+        guard substringRange.location != NSNotFound else { return self }
+        
         let mutableSelf = NSMutableAttributedString(attributedString: self)
-        mutableSelf.setAttributes(attributes, range: (string as NSString).range(of: substring))
+        mutableSelf.setAttributes(attributes, range: substringRange)
         return NSAttributedString(attributedString: mutableSelf)
     }
 
@@ -259,7 +268,11 @@ extension Sequence where Iterator.Element == NSAttributedString {
 public extension NSMutableAttributedString {
 
     @objc public func addAttributes(_ attributes: [NSAttributedString.Key: AnyObject], to substring: String) {
-        addAttributes(attributes, range: (string as NSString).range(of: substring))
+        let substringRange = (string as NSString).range(of: substring)
+        
+        guard substringRange.location != NSNotFound else { return }
+        
+        addAttributes(attributes, range: substringRange)
     }
 
 }

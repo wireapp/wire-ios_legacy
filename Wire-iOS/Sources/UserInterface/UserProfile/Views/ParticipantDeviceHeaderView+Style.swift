@@ -20,7 +20,7 @@ import Foundation
 
 extension ParticipantDeviceHeaderView {
     @objc func setupStyle() {
-        textColor = .textForeground
+        textColor = .from(scheme: .textForeground)
         font = .normalLightFont
         linkAttributeColor = .accent()
     }

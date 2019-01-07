@@ -35,7 +35,6 @@ final class DraftSendInputAccessoryViewTests: ZMSnapshotTestCase {
     }
 
     func testForInitState(){
-        sut.prepareForSnapshot()
         verify(view: sut)
     }
 }

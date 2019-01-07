@@ -20,12 +20,13 @@
 import Foundation
 import SafariServices
 
-@objcMembers class SettingsCellDescriptorFactory: NSObject {
+class SettingsCellDescriptorFactory {
     static let settingsDevicesCellIdentifier: String = "devices"
     let settingsPropertyFactory: SettingsPropertyFactory
     
-    class DismissStepDelegate: NSObject, FormStepDelegate {
+    class DismissStepDelegate: NSObject {
         var strongCapture: DismissStepDelegate?
+        // TODO: Remove
         @objc func didCompleteFormStep(_ viewController: UIViewController!) {
             NotificationCenter.default.post(name: NSNotification.Name.DismissSettings, object: nil)
             self.strongCapture = nil
@@ -44,8 +45,11 @@ import SafariServices
         }
         
         rootElements.append(self.settingsGroup())
-        rootElements.append(self.addAccountOrTeamCell())
-        
+        #if MULTIPLE_ACCOUNTS_DISABLED
+            // We skip "add account" cell
+        #else
+            rootElements.append(self.addAccountOrTeamCell())
+        #endif
         let topSection = SettingsSectionDescriptor(cellDescriptors: rootElements)
         
         return SettingsGroupCellDescriptor(items: [topSection], title: "self.profile".localized, style: .plain)

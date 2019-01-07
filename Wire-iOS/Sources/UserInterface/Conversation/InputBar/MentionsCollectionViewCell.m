@@ -18,7 +18,6 @@
 
 
 #import "MentionsCollectionViewCell.h"
-#import "UserImageView.h"
 @import PureLayout;
 #import "WireSyncEngine+iOS.h"
 #import "Wire-Swift.h"
@@ -65,7 +64,7 @@
 -(void)createUserImageView
 {
     self.userImageView = [[UserImageView alloc] init];
-    self.userImageView.initials.font = [UIFont systemFontOfSize:11 weight:UIFontWeightLight];
+    self.userImageView.initialsFont = [UIFont systemFontOfSize:11 weight:UIFontWeightLight];
     self.userImageView.userSession = [ZMUserSession sharedSession];
     self.userImageView.translatesAutoresizingMaskIntoConstraints = NO;
     

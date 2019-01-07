@@ -80,14 +80,14 @@ import Cartography
         emojiKeyboardViewController.backspaceHidden = true
     
         toolbar = SketchToolbar(buttons: [photoButton, drawButton, emojiButton, sendButton])
-        separatorLine.backgroundColor = UIColor(scheme: .separator)
-        hintImageView.image = UIImage(for: .brush, fontSize: 172, color: UIColor(scheme: .placeholderBackground, variant: .light))
+        separatorLine.backgroundColor = UIColor.from(scheme: .separator)
+        hintImageView.image = UIImage(for: .brush, fontSize: 172, color: UIColor.from(scheme: .placeholderBackground, variant: .light))
         hintLabel.text = "sketchpad.initial_hint".localized.uppercased(with: Locale.current)
         hintLabel.numberOfLines = 0
         hintLabel.font = FontSpec(.small, .regular).font!
         hintLabel.textAlignment = .center
-        hintLabel.textColor = UIColor(scheme: .textPlaceholder)
-        self.view.backgroundColor = UIColor(scheme: .background)
+        hintLabel.textColor = UIColor.from(scheme: .textPlaceholder)
+        self.view.backgroundColor = UIColor.from(scheme: .background)
         
         [canvas, hintLabel, hintImageView, toolbar].forEach(view.addSubview)
         
@@ -140,8 +140,8 @@ import Cartography
         emojiButton.accessibilityIdentifier = "emojiButton"
 
         [photoButton, drawButton, emojiButton].forEach { iconButton in
-            iconButton.setIconColor(UIColor(scheme: .iconNormal), for: .normal)
-            iconButton.setIconColor(UIColor(scheme: .iconHighlighted), for: .highlighted)
+            iconButton.setIconColor(UIColor.from(scheme: .iconNormal), for: .normal)
+            iconButton.setIconColor(UIColor.from(scheme: .iconHighlighted), for: .highlighted)
             iconButton.setIconColor(UIColor.accent(), for: .selected)
         }
     }
@@ -149,13 +149,13 @@ import Cartography
     func configureColorPicker() {
         colorPickerController.sketchColors = [.black,
                                               .white,
-                                              UIColor(for: .strongBlue),
-                                              UIColor(for: .strongLimeGreen),
-                                              UIColor(for: .brightYellow),
-                                              UIColor(for: .vividRed),
-                                              UIColor(for: .brightOrange),
-                                              UIColor(for: .softPink),
-                                              UIColor(for: .violet),
+                                              .strongBlue,
+                                              .strongLimeGreen,
+                                              .brightYellow,
+                                              .vividRed,
+                                              .brightOrange,
+                                              .softPink,
+                                              .violet,
                                               UIColor(red: 0.688, green: 0.342, blue: 0.002, alpha: 1),
                                               UIColor(red: 0.381, green: 0.192, blue: 0.006, alpha: 1),
                                               UIColor(red: 0.894, green: 0.735, blue: 0.274, alpha: 1),

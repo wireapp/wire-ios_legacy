@@ -30,7 +30,7 @@ final class MarkdownTextViewTests: XCTestCase {
         super.setUp()
         style = DownStyle()
         style.baseFont = FontSpec(.normal, .regular).font!
-        style.baseFontColor = UIColor(scheme: .textForeground)
+        style.baseFontColor = UIColor.from(scheme: .textForeground)
         style.codeFont = UIFont(name: "Menlo", size: style.baseFont.pointSize) ?? style.baseFont
         style.codeColor = UIColor.red
         style.baseParagraphStyle = NSParagraphStyle.default

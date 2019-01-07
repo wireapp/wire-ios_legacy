@@ -61,7 +61,7 @@ import Cartography
 
     private func configureViews() {
         tabBar.delegate = self
-        backgroundColor = UIColor(scheme: .barBackground, variant: style)
+        backgroundColor = UIColor.from(scheme: .barBackground, variant: style)
         addSubview(tabBar)
     }
 

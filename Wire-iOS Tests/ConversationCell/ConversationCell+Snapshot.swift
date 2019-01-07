@@ -30,7 +30,6 @@ extension ConversationCell {
         contentView.bounds = CGRect(x: 0.0, y: 0.0, width: 320, height: 9999)
         layoutMargins = UIView.directionAwareConversationLayoutMargins
 
-        prepareForSnapshot()
         return wrapInTableView()
     }
 

@@ -91,29 +91,7 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
     public let format: AudioRecorderFormat
     public var state: AudioRecorderState = .recording
     
-    lazy var audioRecorder : AVAudioRecorder? = { [weak self] in
-        guard let `self` = self else { return nil }
-        let fileName = String.filenameForSelfUser().appendingPathExtension(self.format.fileExtension())!
-        let fileURL = NSURL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(fileName)
-        self.fileURL = fileURL
-        let settings = [
-            AVFormatIDKey : self.format.audioFormat(),
-            AVSampleRateKey : 32000,
-            AVNumberOfChannelsKey : 1,
-        ]
-        
-        let audioRecorder = try? AVAudioRecorder(url: fileURL!, settings: settings)
-
-        audioRecorder?.isMeteringEnabled = true
-        audioRecorder?.delegate = self
-        
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(handleInterruption),
-                                               name: AVAudioSession.interruptionNotification,
-                                               object: AVAudioSession.sharedInstance())
-
-        return audioRecorder
-    }()
+    var audioRecorder : AVAudioRecorder?
     
     var displayLink: CADisplayLink?
     var audioPlayer : AVAudioPlayer?
@@ -151,6 +129,32 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
         audioRecorder?.delegate = nil
     }
     
+    func createAudioRecorderIfNeeded() {
+        guard self.audioRecorder == nil else {
+            return
+        }
+        let fileName = String.filenameForSelfUser().appendingPathExtension(self.format.fileExtension())!
+        let fileURL = NSURL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(fileName)
+        self.fileURL = fileURL
+        let settings = [
+            AVFormatIDKey : self.format.audioFormat(),
+            AVSampleRateKey : 32000,
+            AVNumberOfChannelsKey : 1,
+            ]
+        
+        let audioRecorder = try? AVAudioRecorder(url: fileURL!, settings: settings)
+        
+        audioRecorder?.isMeteringEnabled = true
+        audioRecorder?.delegate = self
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(handleInterruption),
+                                               name: AVAudioSession.interruptionNotification,
+                                               object: AVAudioSession.sharedInstance())
+        
+        self.audioRecorder = audioRecorder
+    }
+    
     private func setupDidEnterBackgroundObserver() {
         token = NotificationCenter.default.addObserver(
             forName: UIApplication.didEnterBackgroundNotification,
@@ -176,6 +180,8 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
     // MARK: Recording
     
     public func startRecording() {
+        createAudioRecorderIfNeeded()
+        
         guard let audioRecorder = self.audioRecorder else { return }
 
         AVSMediaManager.sharedInstance().startRecording {

@@ -39,7 +39,6 @@
 #import "ConversationContentViewController.h"
 #import "ConversationContentViewController+Scrolling.h"
 #import "TextView.h"
-#import "TextMessageCell.h"
 
 #import "ZClientViewController.h"
 #import "ConversationViewController+ParticipantsPopover.h"
@@ -57,7 +56,6 @@
 #import "UIColor+WAZExtensions.h"
 #import "UIViewController+Errors.h"
 #import "SplitViewController.h"
-#import "UIColor+WR_ColorScheme.h"
 #import "UIResponder+FirstResponder.h"
 
 #import "Wire-Swift.h"
@@ -74,9 +72,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 @end
 
 @interface ConversationViewController (Content) <ConversationContentViewControllerDelegate>
-@end
-
-@interface ConversationViewController (ProfileViewController) <ProfileViewControllerDelegate>
 @end
 
 @interface ConversationViewController (ViewControllerDismisser) <ViewControllerDismisser>
@@ -171,6 +166,10 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
     [self createConstraints];
     [self updateInputBarVisibility];
+    
+    if (self.conversation.draftMessage.quote != nil && !self.conversation.draftMessage.quote.hasBeenDeleted) {
+        [self.inputBarController addReplyComposingView:[self.contentViewController createReplyComposingViewForMessage:self.conversation.draftMessage.quote]];
+    }
 }
 
 - (void)createInputBarController
@@ -337,6 +336,11 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self updateLeftNavigationBarItems];
 }
 
+- (void)scrollToMessage:(id<ZMConversationMessage>)message
+{
+    [self.contentViewController scrollToMessage:message animated:YES];
+}
+
 #pragma mark - Device orientation
 
 - (BOOL)shouldAutorotate
@@ -435,6 +439,12 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 - (void)updateInputBarVisibility
 {
+    if (self.conversation.isReadOnly) {
+        [self.inputBarController.inputBar.textView resignFirstResponder];
+        [self.inputBarController dismissMentionsIfNeeded];
+        [self.inputBarController removeReplyComposingView];
+    }
+
     self.inputBarZeroHeight.active = self.conversation.isReadOnly;
     [self.view setNeedsLayout];
 }
@@ -545,20 +555,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     self.inputBarController.inputBarOverlapsContent = ! contentViewController.isScrolledToBottom;
 }
 
-- (void)didTapOnUserAvatar:(id<UserType>)user view:(UIView *)view frame:(CGRect)frame
-{
-    if (! user || ! view) {
-        return;
-    }
-
-    ProfileViewController *profileViewController = [[ProfileViewController alloc] initWithUser:(id)user
-                                                                      conversation:self.conversation];
-    profileViewController.delegate = self;
-    [self createAndPresentParticipantsPopoverControllerWithRect:frame
-                                                       fromView:view
-                                          contentViewController:profileViewController.wrapInNavigationController];
-}
-
 - (void)conversationContentViewController:(ConversationContentViewController *)contentViewController willDisplayActiveMediaPlayerForMessage:(id<ZMConversationMessage>)message
 {
     [self.conversationBarController dismissBar:self.mediaBarViewController];
@@ -585,7 +581,13 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     }
 }
 
-- (BOOL)conversationContentViewController:(ConversationContentViewController *)controller shouldBecomeFirstResponderWhenShowMenuFromCell:(UITableViewCell *)cell
+- (void)conversationContentViewController:(ConversationContentViewController *)contentViewController didTriggerReplyingToMessage:(id<ZMConversationMessage>)message
+{
+    ReplyComposingView *replyComposingView = [contentViewController createReplyComposingViewForMessage:message];
+    [self.inputBarController replyToMessage:message composingView:replyComposingView];
+}
+
+- (BOOL)conversationContentViewController:(ConversationContentViewController *)controller shouldBecomeFirstResponderWhenShowMenuFromCell:(UIView *)cell
 {
     if ([self.inputBarController.inputBar.textView isFirstResponder]) {
         self.inputBarController.inputBar.textView.overrideNextResponder = cell;
@@ -722,15 +724,15 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @implementation ConversationViewController (InputBar)
 
-- (void)conversationInputBarViewControllerDidComposeText:(NSString *)text mentions:(NSArray<Mention *> *)mentions
+- (void)conversationInputBarViewControllerDidComposeText:(NSString *)text mentions:(NSArray<Mention *> *)mentions replyingToMessage:(nullable id<ZMConversationMessage>)message
 {
-    [self.inputBarController.sendController sendTextMessage:text mentions:mentions];
+    [self.inputBarController.sendController sendTextMessage:text mentions:mentions replyingToMessage:message];
 }
 
-- (BOOL)conversationInputBarViewControllerShouldBeginEditing:(ConversationInputBarViewController *)controller isEditingMessage:(BOOL)isEditing
+- (BOOL)conversationInputBarViewControllerShouldBeginEditing:(ConversationInputBarViewController *)controller
 {
-    if (! self.contentViewController.isScrolledToBottom && !isEditing) {
-        [self.contentViewController scrollToBottomAnimated:YES];
+    if (! self.contentViewController.isScrolledToBottom && !controller.isEditingMessage && !controller.isReplyingToMessage) {
+        [self.contentViewController scrollToBottomAnimated:NO];
     }
     
     [self.guestsBarController setState:GuestBarStateHidden animated:YES];
@@ -752,7 +754,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
             [ZMMessage deleteForEveryone:message];
         } else {
             BOOL fetchLinkPreview = ![[Settings sharedSettings] disableLinkPreviews];
-            NOT_USED([ZMMessage edit:message newText:newText mentions:mentions fetchLinkPreview:fetchLinkPreview]);
+            [message.textMessageData editText:newText mentions:mentions fetchLinkPreview:fetchLinkPreview];
         }
     }];
 }
@@ -760,6 +762,13 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 - (void)conversationInputBarViewControllerDidCancelEditingMessage:(id<ZMConversationMessage>)message
 {
     [self.contentViewController didFinishEditingMessage:message];
+}
+
+- (void)conversationInputBarViewControllerWantsToShowMessage:(id<ZMConversationMessage>)message
+{
+    [self.contentViewController scrollTo:message completion:^(UIView * cell) {
+        [self.contentViewController highlightMessage:message];
+    }];
 }
 
 - (void)conversationInputBarViewControllerEditLastMessage

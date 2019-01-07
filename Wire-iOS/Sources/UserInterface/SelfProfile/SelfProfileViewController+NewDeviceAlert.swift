@@ -21,11 +21,15 @@ import Foundation
 extension SelfProfileViewController {
     
 
-    func presentNewLoginAlertControllerIfNeeded() {
+    func presentNewLoginAlertControllerIfNeeded() -> Bool {
         let clientsRequiringUserAttention = ZMUser.selfUser().clientsRequiringUserAttention
         
         if clientsRequiringUserAttention.count > 0 {
             self.presentNewLoginAlertController(clientsRequiringUserAttention)
+            return true
+        }
+        else {
+            return false
         }
     }
     
@@ -38,11 +42,13 @@ extension SelfProfileViewController {
         
         newLoginAlertController?.addAction(actionManageDevices)
         
-        let actionTrustDevices = UIAlertAction(title:"self.new_device_alert.trust_devices".localized, style:.default, handler:.none)
+        let actionTrustDevices = UIAlertAction(title:"self.new_device_alert.trust_devices".localized, style:.default) { [weak self] _ in
+            self?.presentUserSettingChangeControllerIfNeeded()
+        }
         
         newLoginAlertController?.addAction(actionTrustDevices)
         
-        self.present(newLoginAlertController!, animated:true, completion:.none)
+        self.present(newLoginAlertController!, animated: true, completion: .none)
         
         ZMUserSession.shared()?.enqueueChanges {
             clients.forEach {

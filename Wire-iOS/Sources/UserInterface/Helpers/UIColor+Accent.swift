@@ -24,14 +24,17 @@ extension UIColor {
     }
 
     @objc static var accentDimmedFlat: UIColor {
-        return accent().withAlphaComponent(0.16).removeAlphaByBlending(with: .white)
+        if ColorScheme.default.variant == .light {
+            return accent().withAlphaComponent(0.16).removeAlphaByBlending(with: .white)
+        } else {
+            return accentDarken
+        }
     }
 
     @objc (accentColor)
     class func accent() -> UIColor {
-        return UIColor(for: indexedAccentColor())
+        return UIColor(fromZMAccentColor: indexedAccentColor())
     }
-
 
     @objc static func buttonEmptyText(variant: ColorSchemeVariant) -> UIColor {
         switch variant {
@@ -42,19 +45,3 @@ extension UIColor {
         }
     }
 }
-
-extension UIColor {
-    static var strongBlue: UIColor  {
-        return UIColor(for: .strongBlue)!
-    }
-
-    static var brightYellow: UIColor  {
-        return UIColor(for: .brightYellow)!
-    }
-
-    static var vividRed: UIColor  {
-        return UIColor(for: .vividRed)!
-    }
-}
-
-

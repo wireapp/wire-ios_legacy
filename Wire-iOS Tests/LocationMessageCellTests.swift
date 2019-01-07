@@ -21,54 +21,42 @@ import XCTest
 @testable import Wire
 import MapKit
 
-class LocationMessageCellTests: ZMSnapshotTestCase {
+class LocationMessageCellTests: ConversationCellSnapshotTestCase {
+
+    override func setUp() {
+        super.setUp()
+    }
 
     typealias CellConfiguration = (MockMessage) -> Void
 
     func testThatItRendersLocationCellWithAddressCorrect() {
         // This is experimental as the MKMapView might break the snapshot tests,
         // If it does we can try to use the 'withAccurancy' methods in FBSnapshotTestCase
-        verify(view: wrappedCellWithConfig())
+        verify(message: makeMessage())
     }
     
     func testThatItRendersLocationCellWithoutAddressCorrect() {
-        verify(view: wrappedCellWithConfig {
+        verify(message: makeMessage {
             $0.backingLocationMessageData.name = nil
         })
     }
 
     func testThatItRendersLocationCellObfuscated() {
-        verify(view: wrappedCellWithConfig {
+        verify(message: makeMessage {
             $0.isObfuscated = true
         })
     }
 
-    // MARK: - Helper
+    // MARK: - Helpers
 
-    func wrappedCellWithConfig(_ config: CellConfiguration? = nil) -> UITableView {
-        let fileMessage = MockMessageFactory.locationMessage()
-        fileMessage?.backingLocationMessageData?.latitude = 9.041169
-        fileMessage?.backingLocationMessageData?.longitude = 48.53775
-        fileMessage?.backingLocationMessageData?.name = "Berlin, Germany"
+    func makeMessage(_ config: CellConfiguration? = nil) -> MockMessage {
+        let locationMessage = MockMessageFactory.locationMessage()!
+        locationMessage.backingLocationMessageData?.latitude = 9.041169
+        locationMessage.backingLocationMessageData?.longitude = 48.53775
+        locationMessage.backingLocationMessageData?.name = "Berlin, Germany"
         
-        config?(fileMessage!)
-        
-        let cell = LocationMessageCell(style: .default, reuseIdentifier: String(describing: LocationMessageCell.self))
-        cell.backgroundColor = UIColor.white
-        let layoutProperties = ConversationCellLayoutProperties()
-        layoutProperties.showSender = true
-        layoutProperties.showBurstTimestamp = false
-        layoutProperties.showUnreadMarker = false
-        
-        cell.prepareForReuse()
-        cell.layer.speed = 0 // freeze animations for deterministic tests
-        cell.bounds = CGRect(x: 0.0, y: 0.0, width: 320.0, height: 9999)
-        cell.contentView.bounds = CGRect(x: 0.0, y: 0.0, width: 320, height: 9999)
-        cell.layoutMargins = UIView.directionAwareConversationLayoutMargins
-        
-        cell.configure(for: fileMessage, layoutProperties: layoutProperties)
-        
-        return cell.wrapInTableView()
+        config?(locationMessage)
+        return locationMessage
     }
     
 }

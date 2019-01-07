@@ -21,6 +21,11 @@ import Cartography
 
 @objcMembers open class LikeButton: IconButton {
     open func setSelected(_ selected: Bool, animated: Bool) {
+        // Do not animate changes if the state does not change
+        guard selected != self.isSelected else {
+            return
+        }
+        
         if animated {
             guard let imageView = self.imageView else {
                 return
@@ -77,6 +82,8 @@ import Cartography
                         self.isSelected = selected
                     })
             }
+            
+            UIImpactFeedbackGenerator(style: .light).impactOccurred()
         }
         else {
             self.isSelected = selected

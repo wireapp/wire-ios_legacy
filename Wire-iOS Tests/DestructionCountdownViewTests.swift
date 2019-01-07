@@ -39,7 +39,7 @@ class DestructionCountdownViewTests: ZMSnapshotTestCase {
     func prepareSut(variant: ColorSchemeVariant = .light) {
         ColorScheme.default.variant = variant
         sut = DestructionCountdownView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
-        sut.backgroundColor = UIColor(scheme: .contentBackground)
+        sut.backgroundColor = UIColor.from(scheme: .contentBackground)
     }
 
     func testThatItRendersCorrectlyInInitialState() {

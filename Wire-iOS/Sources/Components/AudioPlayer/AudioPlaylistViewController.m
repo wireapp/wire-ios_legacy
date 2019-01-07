@@ -49,7 +49,6 @@ static const CGFloat SeparatorLineOverflow = 4;
 @property (nonatomic, readonly) UIImageView *backgroundView;
 @property (nonatomic, readonly) UIVisualEffectView *blurEffectView;
 @property (nonatomic, readonly) AudioTrackPlayer *audioTrackPlayer;
-@property (nonatomic, readonly) id<ZMConversationMessage> sourceMessage;
 @property (nonatomic, readonly) BOOL isTrackPlayingInAudioPlayer;
 @property (nonatomic) BOOL loadingFailed;
 
@@ -82,15 +81,20 @@ static const CGFloat SeparatorLineOverflow = 4;
     [self.audioTrackPlayer stop];
 }
 
-- (instancetype)initWithAudioTrackPlayer:(AudioTrackPlayer *)audioTrackPlayer sourceMessage:(id<ZMConversationMessage>)sourceMessage
+- (instancetype)initWithAudioTrackPlayer:(AudioTrackPlayer *)audioTrackPlayer
 {
     self = [super initWithNibName:nil bundle:nil];
     
     if (self) {
-        _sourceMessage = sourceMessage;
         _audioTrackPlayer = audioTrackPlayer;
     }
     
+    return self;
+}
+
+- (instancetype)init
+{
+    self = [self initWithAudioTrackPlayer:[AppDelegate sharedAppDelegate].mediaPlaybackManager.audioTrackPlayer];
     return self;
 }
 

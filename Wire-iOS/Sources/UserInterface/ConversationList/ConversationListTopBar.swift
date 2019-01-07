@@ -42,7 +42,7 @@ final class ConversationListTopBar: TopBar {
             let titleLabel = UILabel()
             
             titleLabel.font = FontSpec(.normal, .semibold).font
-            titleLabel.textColor = UIColor(scheme: .textForeground, variant: .dark)
+            titleLabel.textColor = UIColor.from(scheme: .textForeground, variant: .dark)
             titleLabel.accessibilityTraits = .header
             titleLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
             titleLabel.setContentCompressionResistancePriority(.required, for: .vertical)
@@ -101,6 +101,12 @@ open class TopBar: UIView {
             constrain(self, new) { selfView, new in
                 new.leading == selfView.leadingMargin
                 new.centerY == selfView.centerY
+            }
+
+            if let middleView = middleView {
+                NSLayoutConstraint.activate([
+                    new.trailingAnchor.constraint(lessThanOrEqualTo: middleView.leadingAnchor, constant: 0)
+                    ])
             }
         }
     }

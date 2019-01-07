@@ -30,7 +30,6 @@
 
 #import "Constants.h"
 #import "UIColor+WAZExtensions.h"
-#import "UIColor+WR_ColorScheme.h"
 #import "Wire-Swift.h"
 
 #import "ContactsDataSource.h"
@@ -100,6 +99,8 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
         _bareUser = user;
         _conversation = conversation;
         _context = context;
+
+        [self setupKeyboardFrameNotification];
     }
     return self;
 }
@@ -312,7 +313,7 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
 
 @implementation ProfileViewController (ConversationCreationDelegate)
 
-- (void)conversationCreationController:(ConversationCreationController *)controller didSelectName:(NSString *)name participants:(NSSet<ZMUser *> *)participants allowGuests:(BOOL)allowGuests
+- (void)conversationCreationController:(ConversationCreationController *)controller didSelectName:(NSString *)name participants:(NSSet<ZMUser *> *)participants allowGuests:(BOOL)allowGuests enableReceipts:(BOOL)enableReceipts
 {
     [controller dismissViewControllerAnimated:YES completion:^{
         if ([self.delegate respondsToSelector:@selector(profileViewController:wantsToCreateConversationWithName:users:)]) {

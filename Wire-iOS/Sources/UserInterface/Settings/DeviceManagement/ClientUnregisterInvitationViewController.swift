@@ -20,12 +20,19 @@
 import UIKit
 import Cartography
 
-class ClientUnregisterInvitationViewController: RegistrationStepViewController {
+protocol ClientUnregisterInvitationViewControllerDelegate: class {
+    /// Called when the user tapped the button to unregister clients.
+    func userDidAcceptClientUnregisterInvitation()
+}
+
+class ClientUnregisterInvitationViewController: UIViewController {
     var heroLabel : UILabel?
     var subtitleLabel : UILabel?
     var manageDevicesButton : UIButton?
     var signOutButton : UIButton?
     var containerView : UIView?
+
+    weak var delegate: ClientUnregisterInvitationViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,7 +58,7 @@ class ClientUnregisterInvitationViewController: RegistrationStepViewController {
         let heroLabel = UILabel()
         heroLabel.translatesAutoresizingMaskIntoConstraints = false
         heroLabel.font = FontSpec(.large, .semibold).font!
-        heroLabel.textColor = UIColor(scheme: .textForeground, variant: .dark)
+        heroLabel.textColor = UIColor.from(scheme: .textForeground, variant: .dark)
         heroLabel.numberOfLines = 0
         heroLabel.text = String(format:NSLocalizedString("registration.signin.too_many_devices.title", comment:""), ZMUser.selfUser().displayName)
         
@@ -63,7 +70,7 @@ class ClientUnregisterInvitationViewController: RegistrationStepViewController {
         let subtitleLabel = UILabel()
         subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
         subtitleLabel.font = FontSpec(.large, .light).font!
-        subtitleLabel.textColor = UIColor(scheme: .textForeground, variant: .dark)
+        subtitleLabel.textColor = UIColor.from(scheme: .textForeground, variant: .dark)
         subtitleLabel.numberOfLines = 0
         subtitleLabel.text = NSLocalizedString("registration.signin.too_many_devices.subtitle", comment:"")
         
@@ -132,9 +139,7 @@ class ClientUnregisterInvitationViewController: RegistrationStepViewController {
     // MARK: - Actions
     
     @objc func openManageDevices(_ sender : UIButton!) {
-        if let formStepDelegate = self.formStepDelegate {
-            formStepDelegate.didCompleteFormStep(self)
-        }
+        delegate?.userDidAcceptClientUnregisterInvitation()
     }
     
     @objc func signOut(_ sender : UIButton!) {

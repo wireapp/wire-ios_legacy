@@ -37,15 +37,22 @@ class BackgroundViewControllerTests: CoreDataSnapshotTestCase {
         // WHEN & THEN
         self.verifyInIPhoneSize(view: sut.view)
     }
+
     
     func testThatItShowsUserWithImage() {
         // GIVEN
         selfUser.imageMediumData = image(inTestBundleNamed: "unsplash_matterhorn.jpg").pngData()
         let sut = BackgroundViewController(user: selfUser, userSession: .none)
-        _ = sut.view // make sure view is loaded
+        // make sure view is loaded
+        _ = sut.view
+        // WHEN
+        ///TODO: hacks to make below line passes
+        selfUser.accentColorValue = selfUser.accentColorValue
+
         XCTAssertTrue(waitForGroupsToBeEmpty([sut.dispatchGroup]))
         
         // WHEN & THEN
+        ///TODO: this tests sometime fails, the image is not loaded without above hack
         self.verifyInIPhoneSize(view: sut.view)
     }
     

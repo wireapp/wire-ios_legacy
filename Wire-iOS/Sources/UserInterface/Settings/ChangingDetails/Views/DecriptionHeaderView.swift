@@ -29,7 +29,7 @@ import Cartography
         descriptionLabel.numberOfLines = 0
         descriptionLabel.lineBreakMode = .byWordWrapping
         descriptionLabel.backgroundColor = .clear
-        descriptionLabel.textColor = .textForegroundDark
+        descriptionLabel.textColor = .from(scheme: .textForeground, variant: .dark)
 
         addSubview(descriptionLabel)
         

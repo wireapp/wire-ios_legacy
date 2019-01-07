@@ -16,7 +16,7 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
+import XCTest
 @testable import Wire
 
 class ZMUserMentionsTest: XCTestCase {
@@ -38,12 +38,17 @@ class ZMUserMentionsTest: XCTestCase {
         
         serviceUser = mockUsers[1]
         serviceUser.isServiceUser = true
+
+        MockUser.setMockSelf(selfUser)
     }
     
     override func tearDown() {
         selfUser = nil
         otherUser = nil
         serviceUser = nil
+
+        MockUser.setMockSelf(nil)
+
         super.tearDown()
     }
     

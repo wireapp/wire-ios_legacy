@@ -32,6 +32,8 @@
 "general.decline" = "Нет, спасибо";
 "general.failure" = "Что-то пошло не так";
 "general.service" = "Сервис";
+"general.off" = "Выключен";
+"general.on" = "Вкл.";
 
 // Language like Chinese does not use space to sperate words or sentences.
 "general.space_between_words" = " ";
@@ -149,6 +151,7 @@
 "conversation_list.voiceover.status.typing" = "печатает";
 "conversation_list.voiceover.status.ping" = "пинг";
 "conversation_list.voiceover.status.mention" = "вас упомянули";
+"conversation_list.voiceover.status.reply" = "ответ";
 "conversation_list.voiceover.bottom_bar.archived_button.label" = "Архивные";
 "conversation_list.voiceover.bottom_bar.archived_button.hint" = "список архивных разговоров";
 "conversation_list.voiceover.bottom_bar.contacts_button.label" = "контакты";
@@ -179,7 +182,7 @@
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++x
 // In-app notifications (chat heads)
 "notifications.shared_a_photo" = "поделился(-лась) картинкой";
-"notifications.pinged" = "отправил(-а) пинг";
+"notifications.pinged" = "отправил(а) пинг";
 "notifications.sent_file" = "поделился(-лась) файлом";
 "notifications.sent_location" = "поделился(-лась) местоположением";
 "notifications.sent_video" = "поделился(-лась) видео";
@@ -199,6 +202,7 @@
 "conversation.status.typing" = "Набирает сообщение…";
 "conversation.status.typing.group" = "%@: набирает сообщение…";
 "conversation.status.silenced" = "Без звука";
+"conversation.status.poor_connection" = "Плохое соединение";
 "conversation.status.blocked" = "Заблокирован(а)";
 
 "conversation.status.message.text" = "%@";
@@ -212,18 +216,22 @@
 "conversation.status.message.missedcall" = "Пропущенный звонок";
 "conversation.status.message.missedcall.groups" = "Пропущенный вызов от %@";
 "conversation.status.message.mention" = "%@";
+"conversation.status.message.reply" = "%@";
 "conversation.status.message.ephemeral" = "Отправил(а) вам сообщение";
 "conversation.status.message.ephemeral.group" = "Кто-то прислал сообщение";
 "conversation.status.message.ephemeral.mention" = "Вас упомянули";
 "conversation.status.message.ephemeral.mention.group" = "Вас упомянули";
+"conversation.status.message.ephemeral.reply" = "Ответил(а) на ваше сообщение";
+"conversation.status.message.ephemeral.reply.group" = "Кто-то ответил на ваше сообщение";
 "conversation.status.message.ephemeral.knock" = "Отправил(а) пинг";
 "conversation.status.message.ephemeral.knock.group" = "Новый пинг";
 
 "conversation.status.unsent" = "⚠️ Неотправленное сообщение";
 "conversation.status.you" = "Вы";
+"conversation.status.someone" = "Кто-то";
 "conversation.status.added_multiple" = "Добавлены участники";
-"conversation.status.you_was_added" = "%@ добавил(-а) вас";
-"conversation.status.added_users" = "%@ добавил(-а) %@";
+"conversation.status.you_was_added" = "%@ добавил(а) вас";
+"conversation.status.added_users" = "%@ добавил(а) %@";
 "conversation.status.joined" = "%@ присоединился";
 "conversation.status.removed_multiple" = "Удалены участники";
 "conversation.status.you_were_removed" = "Вы были удалены";
@@ -283,8 +291,12 @@
 "conversation.create.group_name.placeholder" = "Имя группы";
 "conversation.create.guidance.empty" = "Не менее 1 символа";
 "conversation.create.guidance.toolong" = "Слишком много символов";
-"conversation.create.toggle.title" = "Разрешить гостей и сервисы";
-"conversation.create.toggle.subtitle" = "Открыть этот разговор для сервисов и пользователей не из вашей команды. Вы всегда сможете изменить это позже.";
+"conversation.create.options.title" = "Настройки разговора";
+"conversation.create.options.subtitle" = "Разрешено гостей: %@, Прочитано отчетов: %@";
+"conversation.create.guests.title" = "Разрешить гостей и сервисы";
+"conversation.create.guests.subtitle" = "Открыть этот разговор для сервисов и людей не из вашей команды.";
+"conversation.create.receipts.title" = "Отчеты о прочтении";
+"conversation.create.receipts.subtitle" = "При включении ваши собеседники смогут видеть когда было прочитано их сообщение.";
 
 "conversation.input_bar.ongoing_call_alert.title" = "Исходящий звонок";
 "conversation.input_bar.ongoing_call_alert.audio.message" = "Во время разговора вы не можете записать аудиосообщение.";
@@ -296,7 +308,23 @@
 "conversation.guests_services_present" = "Присутствуют гости и сервисы";
 "conversation.action.search" = "Поиск";
 
-// Image confirmation dialogue
+// Reply message preview
+"conversation.input_bar.message_preview.image" = "Изображение";
+"conversation.input_bar.message_preview.location" = "Местоположение";
+"conversation.input_bar.message_preview.video" = "Видео";
+"conversation.input_bar.message_preview.audio" = "Аудиосообщение";
+"conversation.input_bar.message_preview.file" = "Файл";
+"conversation.input_bar.close_reply" = "Отменить ответ";
+
+"conversation.input_bar.message_preview.accessibility_description" = "Ответ на сообщение: %@";
+"conversation.input_bar.message_preview.accessibility.image_message" = "Изображение";
+"conversation.input_bar.message_preview.accessibility.location_message" = "Местоположение";
+"conversation.input_bar.message_preview.accessibility.video_message" = "Видеосообщение";
+"conversation.input_bar.message_preview.accessibility.audio_message" = "Аудиосообщение";
+"conversation.input_bar.message_preview.accessibility.file_message" = "Файл (%@)";
+"conversation.input_bar.message_preview.accessibility.unknown_message" = "Неизвестное сообщение";
+"conversation.input_bar.message_preview.accessibility.message_from" = "%@ от %@";
+
 "image_confirmer.confirm" = "OK";
 "image_confirmer.cancel" = "Отмена";
 "image.add_sketch" = "Добавить скетч";
@@ -348,12 +376,12 @@
 "content.system.you_started_conversation" = "Вы начали разговор с %@";
 
 "content.system.you_added_participant" = "Вы добавили %@";
-"content.system.other_added_participant" = "%@ добавил(-а) %@";
-"content.system.other_added_you" = "%@ добавил(-а) вас";
+"content.system.other_added_participant" = "%@ добавил(а) %@";
+"content.system.other_added_you" = "%@ добавил(а) вас";
 
 "content.system.participants_you" = "Вы";
 "content.system.participants_1_other" = "%@ и %@";
-"content.system.other_left" = "%@ покинул разговор";
+"content.system.other_left" = "%@ покинул(а) разговор";
 "content.system.you_left" = "Вы покинули разговор";
 "content.system.other_removed_other" = "%@ удалил %@";
 "content.system.other_removed_you" = "%@ удалил вас";
@@ -364,25 +392,26 @@
 // New conversation participants added / removed / started system message
 
 "content.system.conversation.other.started" = "%@ начал беседу с %@";
-"content.system.conversation.other.added" = "%@ добавил %@";
+"content.system.conversation.other.added" = "%@ добавил(a) %@";
 "content.system.conversation.other.removed" = "%@ удалил %@";
 "content.system.conversation.other.left" = "%@ покинул(а) разговор";
 
 "content.system.conversation.you.started" = "%@ начал беседу с %@";
-"content.system.conversation.you.added" = "%@ добавил %@";
+"content.system.conversation.you.added" = "%@ добавили %@";
 "content.system.conversation.you.removed" = "%@ удалил %@";
-"content.system.conversation.you.left" = "%@ покинул(а) разговор";
+"content.system.conversation.you.left" = "%@ покинули разговор";
 "content.system.conversation.team.member-leave" = "%@ был удален из команды.";
 "content.system.conversation.guest.joined" = "%@ присоединился";
 
 "content.system.conversation.invite.title" = "Сервисы и люди не из вашей команды могут присоединиться к этой беседе.";
 "content.system.conversation.invite.button" = "Пригласить людей";
 
-"content.system.other_renamed_conv_to_nothing" = "%@ удалил(-а) название разговора";
+"content.system.other_renamed_conv_to_nothing" = "%@ удалил(а) название разговора";
 "content.system.you_renamed_conv_to_nothing" = "Вы удалили название разговора";
 "content.system.pending_message_timestamp" = "Отправка...";
 "content.system.message_sent_timestamp" = "Отправлено";
 "content.system.message_delivered_timestamp" = "Доставлено";
+"content.system.message_read_timestamp" = "Прочитано";
 "content.system.failedtosend_message_timestamp" = "Отправка не удалась.";
 "content.system.failedtosend_message_timestamp_resend" = "Отправить повторно";
 "content.system.failedtosend_message_timestamp_delete" = "Удалить";
@@ -390,8 +419,8 @@
 "content.system.deleted_message_prefix_timestamp" = "Удалено: %@";
 "content.system.edited_message_prefix_timestamp" = "Изменено: %@";
 "content.system.connecting_to" = "Подключение к %@.\nНачните разговор";
-"content.system.connected_to" = "Добавил(-а) %@.\nНачните разговор";
-"content.system.other_wanted_to_talk" = "%@ звонил";
+"content.system.connected_to" = "Добавил(а) %@.\nНачните разговор";
+"content.system.other_wanted_to_talk" = "%@ звонил(а)";
 "content.system.you_wanted_to_talk" = "Вы звонили";
 "content.system.ephemeral_time_remaining" = "%@ покинул(а) разговор";
 
@@ -399,8 +428,8 @@
 "content.system.this_device" = "это устройство";
 
 "content.system.call.you" = "Вы";
-"content.system.call.called" = "%@ звонил(-а)";
-"content.system.call.called-you" = "%@ звонил";
+"content.system.call.called" = "%@ звонили";
+"content.system.call.called-you" = "%@ звонил(а)";
 
 "content.system.renamed_conv.title" = "%@ переименовал беседу";
 "content.system.renamed_conv.title-you" = "%@ переименовал беседу";
@@ -412,23 +441,32 @@
 "content.system.conversation.with_name.participants" = "с";
 
 "content.system.message_timer_changes" = "%@ установил таймер сообщения на %@";
-"content.system.message_timer_changes.you" = "Вы установили таймер сообщения на %@";
-
-"content.system.message_timer.you_part" = "Вы";
+"content.system.message_timer_changes-you" = "%@ установил таймер сообщения на %@";
 
 "content.system.message_timer_off" = "%@ отключил таймер сообщения";
-"content.system.message_timer_off.you" = "Вы отключили таймер сообщения";
+"content.system.message_timer_off-you" = "%@ отключил таймер сообщения";
+
+// read receipt
+
+"content.system.message_read_receipt_on" = "%@ включил отчеты о прочтении для всех";
+"content.system.message_read_receipt_on-you" = "%@ включил отчеты о прочтении для всех";
+
+"content.system.message_read_receipt_off" = "%@ отключил отчеты о прочтении для всех";
+"content.system.message_read_receipt_off-you" = "%@ отключил отчеты о прочтении для всех";
+
+"content.system.message_read_receipt_on_add_to_group" = "Отчет о прочтении включен";
+
 
 "content.system.reactivated_device" = "Вы начали использовать %@ снова. Сообщения, отправленные ранее, не будут отображаться здесь.";
 
 "content.system.new_device" = "новое устройство";
-"content.system.started_using" = "начал(-а) использовать";
+"content.system.started_using" = "начал(а) использовать";
 "content.system.is_verified" = "Все отпечатки верифицированы";
 
 "content.system.new_users" = "Присоединился новый участник.";
 "content.system.verify_devices" = "Верифицируйте устройства";
 
-"content.system.unverified" = "%@ деверифицировал(-а) одно из %@"; // example "You unverified one of Jule’s devices"
+"content.system.unverified" = "%@ деверифицировал(а) одно из %@"; // example "You unverified one of Jule’s devices"
 "content.system.your_devices" = "ваши устройства";
 "content.system.other_devices" = "Устройства, которыми пользуется %@";
 
@@ -462,6 +500,7 @@
 
 "content.message.delete" = "Удалить";
 "content.message.save" = "Сохранить";
+"content.message.resend" = "Отправить повторно";
 
 "content.message.delete_ellipsis" = "Удаление…";
 
@@ -473,17 +512,28 @@
 "content.message.open" = "Открыть";
 "content.message.copy" = "Копировать";
 "content.message.download" = "Скачать";
+"content.message.details" = "Подробнее";
+
+// Reply
+"content.message.reply" = "Ответить";
+"content.message.original_label" = "Исходное сообщение";
+"content.message.reply.original_timestamp.date" = "Исходное сообщение от %@";
+"content.message.reply.original_timestamp.time" = "Исходное сообщение от %@";
+"content.message.reply.broken_message" = "Вы не можете увидеть это сообщение.";
+"content.message.reply.edited_message" = "Отредактировано";
 
 "content.message.open_link_alert.title" = "Перейти по ссылке";
 "content.message.open_link_alert.message" = "Это приведет вас к\n%@";
 "content.message.open_link_alert.open" = "Открыть";
 
+"content.message.audio_message.accessibility" = "Воспроизвести аудиосообщение";
+
 "content.reactions_list.likers" = "Понравилось";
 
 "content.file.too_big" = "Вы можете отправлять файлы до %@";
 // Someone pinged
-"content.ping.text" = "%@ пинганул";
-"content.ping.text-you" = "%@ пинганул";
+"content.ping.text" = "%@ отправил(а) пинг";
+"content.ping.text-you" = "%@ отправили пинг";
 
 // Current user pinged
 "content.ping.text.you" = "Вы";
@@ -516,7 +566,7 @@
 "voice.status.cbr" = "Постоянный битрейт";
 "voice.network_error.body" = "Вы должны быть онлайн, чтобы позвонить. Проверьте подключение и повторите попытку.";
 "voice.degradation.new_self_device" = "Вы начали использовать новое устройство.";
-"voice.degradation.new_user_device" = "%@ начал(-а) использовать новое устройство.";
+"voice.degradation.new_user_device" = "%@ начал(а) использовать новое устройство.";
 "voice.degradation_outgoing.prompt" = "Вы действительно хотите позвонить?";
 "voice.degradation_incoming.prompt" = "Вы действительно хотите принять вызов?";
 "voice.accept_button.title" = "Принять";
@@ -635,7 +685,7 @@
 // Configure conversation notifications
 "meta.menu.configure_notification.dialog_message" = "Уведомлять меня о:";
 "meta.menu.configure_notification.button_everything" = "Все";
-"meta.menu.configure_notification.button_mentions" = "Только упоминания";
+"meta.menu.configure_notification.button_mentions_and_replies" = "Упоминания и ответы";
 "meta.menu.configure_notification.button_nothing" = "Ничего";
 "meta.menu.configure_notification.button_cancel" = "Отмена";
 
@@ -648,8 +698,8 @@
 "meta.leave_conversation_button_leave_and_delete" = "Покинуть и удалить контент";
 
 // Conversation Degraded (security level lowered)
-"meta.degraded.degradation_reason_message.singular" = "%@ начал(-а) использовать новое устройство.";
-"meta.degraded.degradation_reason_message.plural" = "%@ начал(-а) использовать новые устройства.";
+"meta.degraded.degradation_reason_message.singular" = "%@ начал(а) использовать новое устройство.";
+"meta.degraded.degradation_reason_message.plural" = "%@ начал(а) использовать новые устройства.";
 "meta.degraded.dialog_message" = "Вы все еще хотите отправить ваше сообщение?";
 "meta.degraded.show_device_button" = "Показать устройство";
 "meta.degraded.send_anyway_button" = "Все равно отправить";
@@ -697,6 +747,10 @@
 "profile.create_conversation_button_title" = "Создать группу";
 "profile.open_conversation_button_title" = "Открыть разговор";
 
+"profile.read_receipts_enabled_memo.header" = "ВЫ ВКЛЮЧИЛИ ОТЧЕТЫ О ПРОЧТЕНИИ";
+"profile.read_receipts_disabled_memo.header" = "ВЫ ОТКЛЮЧИЛИ ОТЧЕТЫ О ПРОЧТЕНИИ";
+"profile.read_receipts_memo.body" = "Если обе стороны включат отчеты о прочтении, вы можете видеть когда были прочитаны ваши сообщения. Этот параметр можно изменить в настройках учетной записи.";
+
 // User Details
 "profile.details.title" = "Подробнее";
 "profile.details.guest" = "Гость";
@@ -730,6 +784,10 @@
 "group_details.guest_options_cell.enabled" = "Вкл.";
 "group_details.guest_options_cell.disabled" = "Выключен";
 "group_details.timeout_options_cell.title" = "Временные сообщения";
+"group_details.notification_options_cell.title" = "Уведомления";
+"group_details.notification_options_cell.description" = "Вы можете получать уведомления обо всем (включая аудио- и видеовызовы) или только когда кто-то упоминает вас или отвечает на одно из ваших сообщений.";
+"group_details.receipt_options_cell.title" = "Отчеты о прочтении";
+"group_details.receipt_options_cell.description" = "При включении ваши собеседники смогут видеть когда было прочитано их сообщение.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile
@@ -772,6 +830,12 @@
 "self.new_device_alert.manage_devices" = "Управление устройствами";
 "self.new_device_alert.trust_devices" = "OK";
 
+// Settings changed alert
+
+"self.read_receipts_enabled.title" = "Вы включили отчеты о прочтении";
+"self.read_receipts_disabled.title" = "Вы отключили отчеты о прочтении";
+"self.read_receipts_description.title" = "Вы можете изменить эту опцию в настройках своего аккаунта.";
+
 // Settings - top level
 "self.settings.create_team.title" = "Создать команду";
 "self.settings.manage_team.title" = "Управлять командой";
@@ -806,6 +870,11 @@
 "self.settings.account_details.remove_device.password.error" = "Неправильный пароль";
 
 "self.settings.account_appearance_group.title" = "Внешний вид";
+
+"self.settings.privacy_section_group.title" = "Конфиденциальность";
+"self.settings.enable_read_receipts.title" = "Отправлять отчет о прочтении";
+"self.settings.privacy_section_group.subtitle" = "Если этот параметр выключен, вы не сможете увидеть отчеты о прочтении от ваших собеседников. Этот параметр не применяется к групповым разговорам.";
+
 "self.settings.account_picture_group.picture" = "Изображение";
 "self.settings.account_picture_group.color" = "Цвет";
 
@@ -1152,6 +1221,13 @@
 "registration.no_history.got_it" = "OK";
 "registration.no_history.restore_backup" = "Восстановить из резервной копии";
 
+"registration.alert.account_exists.title" = "Учетная запись существует";
+"registration.alert.account_exists.message_phone" = "Номер телефона, который вы использовали для регистрации, уже связан с учетной записью. \n\nИспользуйте другой номер телефона или попробуйте войти, если это ваша учетная запись.";
+"registration.alert.account_exists.message_email" = "Адрес email, который вы использовали для регистрации, уже связан с учетной записью. \n\n Используйте другой email или попробуйте войти, если это ваша учетная запись.";
+"registration.alert.change_email_action" = "Изменить адрес email";
+"registration.alert.change_phone_action" = "Изменить номер телефона";
+"registration.alert.change_signin_action" = "Войти";
+
 // Restore History Warning Alert
 "registration.no_history.restore_backup_warning.title" = "Восстановить историю";
 "registration.no_history.restore_backup_warning.message" = "Содержимое резервной копии заменит историю разговоров на этом устройстве.\nВосстановить историю можно только из резервной копии для одной и той же платформы.";
@@ -1249,8 +1325,8 @@
 "registration.devices.title" = "Устройства";
 "registration.devices.active_list_header" = "Активное";
 "registration.devices.current_list_header" = "Текущее";
-"registration.devices.active_list_subtitle" = "Если не распознаете устройство выше, удалите его и переустановите пароль.";
-"registration.devices.activated"  = "Activated %@";
+"registration.devices.active_list_subtitle" = "Если вам не знакомо какое-либо из устройств, удалите его и измените пароль.";
+"registration.devices.activated" = "Активировано %@";
 "registration.devices.id" = "ID:";
 
 "signin.use_email.label" = "Войти c email";
@@ -1441,3 +1517,19 @@
 "news_offers.consent.title" = "Вы хотите получать новости и обновления от Wire по электронной почте?";
 "news_offers.consent.message" = "Вы можете отписаться в любое время.";
 "news_offers.consent.button.privacy_policy.title" = "Политика конфиденциальности";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Message Details
+"message_details.empty_likes" = "Сообщение еще никому не понравилось.";
+"message_details.empty_read_receipts" = "Сообщение еще никем не прочитано.";
+"message_details.read_receipts_disabled" = "Отчетов о прочтении не существовало, когда это сообщение было отправлено.";
+"message_details.combined_title" = "Сведения о сообщении";
+"message_details.likes_title" = "Понравилось";
+"message_details.receipts_title" = "Прочитано";
+"message_details.tabs.seen" = "Прочитано (%d)";
+"message_details.tabs.likes" = "Понравилось (%d)";
+"message_details.subtitle_send_date" = "Отправлено: %@";
+"message_details.subtitle_edit_date" = "Изменено: %@";
+"message_details.subtitle_label_voiceOver" = "Сведения о сообщении";
+"message_details.user_handle_subtitle_label" = "Имя пользователя";
+"message_details.user_read_timestamp_subtitle_label" = "Прочитано в";

@@ -104,9 +104,9 @@ class SettingsClientViewController: UIViewController,
     }
 
     func setupFromConversationStyle() {
-        view.backgroundColor = .background
-        tableView.separatorColor = .separator
-        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor(scheme: .textForeground)]
+        view.backgroundColor = .from(scheme: .background)
+        tableView.separatorColor = .from(scheme: .separator)
+        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.from(scheme: .textForeground)]
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -288,28 +288,10 @@ class SettingsClientViewController: UIViewController,
             break
             
         case .removeDevice:
-            if let credentials = self.credentials {
-                ZMUserSession.shared()?.delete([self.userClient], with: credentials)
-                if let navigationController = self.navigationController {
-                    navigationController.popViewController(animated: true)
+            self.userClient.remove(over: self, credentials: self.credentials) { error in
+                if error == nil {
+                    self.navigationController?.popViewController(animated: true)
                 }
-            }
-            else {
-                let passwordRequest = RequestPasswordViewController.requestPasswordController() { (result: Either<String, NSError>) -> () in
-                    switch result {
-                    case .left(let passwordString):
-                        let newCredentials = ZMEmailCredentials(email: ZMUser.selfUser().emailAddress!, password: passwordString)
-                        self.credentials = newCredentials
-                        ZMUserSession.shared()?.delete([self.userClient], with: newCredentials)
-                        if let navigationController = self.navigationController {
-                            navigationController.popViewController(animated: true)
-                        }
-                        
-                    case .right(let error):
-                        zmLog.error("Error: \(error)")
-                    }
-                }
-                self.present(passwordRequest, animated: true, completion: .none)
             }
             
         default:

@@ -20,30 +20,13 @@ import Foundation
 import WireDataModel
 import WireUtilities
 
-
-extension ConversationCell {
-    static var allCellTypes: [ConversationCell.Type] = [
-    TextMessageCell.self,
-    ImageMessageCell.self,
-    ConversationRenamedCell.self,
-    PingCell.self,
-    PerformedCallCell.self,
-    MissedCallCell.self,
-    ConnectionRequestCell.self,
-    ConversationNewDeviceCell.self,
-    ConversationVerifiedCell.self,
-    MissingMessagesCell.self,
-    ConversationIgnoredDeviceCell.self,
-    CannotDecryptCell.self,
-    FileTransferCell.self,
-    VideoMessageCell.self,
-    AudioMessageCell.self,
-    ParticipantsCell.self,
-    LocationMessageCell.self,
-    MessageDeletedCell.self,
-    UnknownMessageCell.self,
-    MessageTimerUpdateCell.self
-    ]
+extension ZMConversationMessage {
+    var isSentFromThisDevice: Bool {
+        guard let sender = sender else {
+            return false
+        }
+        return sender.isSelfUser && deliveryState == .pending
+    }
 }
 
 final class ConversationTableViewDataSource: NSObject {
@@ -54,6 +37,15 @@ final class ConversationTableViewDataSource: NSObject {
     private var fetchOffset: Int = 0
     private var fetchLimit: Int = ConversationTableViewDataSource.defaultBatchSize
 
+    public var registeredCells: [AnyClass] = []
+    public var sectionControllers: [String: ConversationMessageSectionController] = [:]
+    
+    @objc func resetSectionControllers() {
+        sectionControllers = [:]
+    }
+    
+    public var actionControllers: [String: ConversationMessageActionController] = [:]
+    
     private func performFetch() {
         createFetchController()
         tableView.reloadData()
@@ -96,8 +88,6 @@ final class ConversationTableViewDataSource: NSObject {
         }
     }
     
-    private var deletedIndexPathsInCurrentUpdate = IndexSet()
-    
     public let conversation: ZMConversation
     public let tableView: UITableView
     
@@ -105,15 +95,16 @@ final class ConversationTableViewDataSource: NSObject {
     @objc public var selectedMessage: ZMConversationMessage? = nil
     @objc public var editingMessage: ZMConversationMessage? = nil {
         didSet {
-            reconfigureVisibleCells()
+            reconfigureVisibleSections()
         }
     }
     
     @objc public weak var conversationCellDelegate: ConversationCellDelegate? = nil
+    @objc public weak var messageActionResponder: MessageActionResponder? = nil // TODO: assign it
     
     @objc public var searchQueries: [String] = [] {
         didSet {
-            reconfigureVisibleCells()
+            reconfigureVisibleSections()
         }
     }
     
@@ -129,8 +120,61 @@ final class ConversationTableViewDataSource: NSObject {
         
         tableView.dataSource = self
         
-        registerTableCellClasses()
         createFetchController()
+    }
+    
+    @objc func actionController(for message: ZMConversationMessage) -> ConversationMessageActionController {
+        if let cachedEntry = actionControllers[message.objectIdentifier] {
+            return cachedEntry
+        }
+        let actionController = ConversationMessageActionController(responder: self.messageActionResponder,
+                                                                   message: message,
+                                                                   context: .content)
+        actionControllers[message.objectIdentifier] = actionController
+        
+        return actionController
+        
+    }
+    
+    @objc func sectionController(at sectionIndex: Int, in tableView: UITableView) -> ConversationMessageSectionController? {
+        let message = messages[sectionIndex]
+        
+        if let cachedEntry = sectionControllers[message.objectIdentifier] {
+            return cachedEntry
+        }
+        
+        let context = self.context(for: message, at: sectionIndex, firstUnreadMessage: firstUnreadMessage, searchQueries: self.searchQueries)
+        let layoutProperties = self.layoutProperties(for: message, at: sectionIndex)
+        
+        let sectionController = ConversationMessageSectionController(message: message,
+                                                                     context: context,
+                                                                     layoutProperties: layoutProperties,
+                                                                     selected: message.isEqual(selectedMessage))
+        sectionController.useInvertedIndices = true
+        sectionController.cellDelegate = conversationCellDelegate
+        sectionController.sectionDelegate = self
+        sectionController.actionController = actionController(for: message)
+        
+        sectionControllers[message.objectIdentifier] = sectionController
+        
+        return sectionController
+    }
+    
+    func previewableMessage(at indexPath: IndexPath, in tableView: UITableView) -> ZMConversationMessage? {
+        let message = messages[indexPath.section]
+        
+        guard let sectionController = sectionControllers[message.objectIdentifier] else {
+            return nil
+        }
+        
+        let descriptions = sectionController.tableViewCellDescriptions
+        
+        guard descriptions.indices.contains(indexPath.row) else {
+            return nil
+        }
+        
+        let cellDescription = sectionController.tableViewCellDescriptions[indexPath.row]
+        return cellDescription.supportsActions ? message : nil
     }
     
     public func find(_ message: ZMConversationMessage, completion: ((Int?)->())? = nil) {
@@ -185,6 +229,15 @@ final class ConversationTableViewDataSource: NSObject {
         }
     }
     
+    @objc(indexPathForMessage:)
+    public func indexPath(for message: ZMConversationMessage) -> IndexPath? {
+        guard let section = index(of: message) else {
+            return nil
+        }
+        
+        return IndexPath(row: 0, section: section)
+    }
+    
     @objc(tableViewDidScroll:) public func didScroll(tableView: UITableView) {
         let topRowLocationInTableViewCoordinates = CGPoint(x: tableView.bounds.width / 2, y: tableView.contentOffset.y + tableView.bounds.height)
         
@@ -193,31 +246,6 @@ final class ConversationTableViewDataSource: NSObject {
         readerPosition = topRow
     }
     
-    private func configure(_ conversationCell: ConversationCell, with message: ZMConversationMessage, at index: Int) {
-        // If a message has been deleted, we don't try to configure it
-        guard !message.hasBeenDeleted else { return }
-        
-        let layoutProperties = self.layoutProperties(for: message, at: index)
-    
-        conversationCell.isSelected = (message == self.selectedMessage)
-        conversationCell.beingEdited = (message == self.editingMessage)
-        
-        conversationCell.configure(for: message, layoutProperties: layoutProperties)
-    }
-    
-    private func reconfigureVisibleCells(withDeleted deletedIndexes: IndexSet = IndexSet()) {
-        tableView.visibleCells.forEach { cell in
-            guard let conversationCell = cell as? ConversationCell,
-                  let indexPath = self.tableView.indexPath(for: cell),
-                    !deletedIndexes.contains(indexPath.row) else {
-                return
-            }
-            
-            conversationCell.searchQueries = self.searchQueries
-            self.configure(conversationCell, with: conversationCell.message, at: indexPath.row)
-        }
-    }
-
     fileprivate func stopAudioPlayer(for indexPath: IndexPath) {
         guard let audioTrackPlayer = AppDelegate.shared().mediaPlaybackManager?.audioTrackPlayer,
               let sourceMessage = audioTrackPlayer.sourceMessage,
@@ -254,6 +282,25 @@ final class ConversationTableViewDataSource: NSObject {
 }
 
 extension ConversationTableViewDataSource: NSFetchedResultsControllerDelegate {
+    
+    func reconfigureSectionController(at index: Int, tableView: UITableView) {
+        guard let sectionController = self.sectionController(at: index, in: tableView) else { return }
+        
+        let context = self.context(for: sectionController.message, at: index, firstUnreadMessage: firstUnreadMessage, searchQueries: self.searchQueries)
+        sectionController.configure(in: context, at: index, in: tableView)
+    }
+    
+    @objc func reconfigureVisibleSections() {
+        tableView.beginUpdates()
+        if let indexPathsForVisibleRows = tableView.indexPathsForVisibleRows {
+            let visibleSections = Set(indexPathsForVisibleRows.map(\.section))
+            for section in visibleSections {
+                reconfigureSectionController(at: section, tableView: tableView)
+            }
+        }
+        tableView.endUpdates()
+    }
+    
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         tableView.beginUpdates()
     }
@@ -270,13 +317,16 @@ extension ConversationTableViewDataSource: NSFetchedResultsControllerDelegate {
                 fatal("Missing new index path")
             }
             
-            tableView.insertRows(at: [insertedIndexPath], with: .fade)
+            tableView.insertSections([insertedIndexPath.row], with: .fade)
         case .delete:
             guard let indexPathToRemove = indexPath else {
                 fatal("Missing index path")
             }
-            deletedIndexPathsInCurrentUpdate.insert(indexPathToRemove.row)
-            tableView.deleteRows(at: [indexPathToRemove], with: .fade)
+            let deletedMessage = anObject as! ZMMessage
+            
+            sectionControllers.removeValue(forKey: deletedMessage.objectIdentifier)
+            tableView.deleteSections([indexPathToRemove.row], with: .fade)
+            
             self.stopAudioPlayer(for: indexPathToRemove)
         case .update:
             guard let indexPathToUpdate = indexPath,
@@ -288,13 +338,11 @@ extension ConversationTableViewDataSource: NSFetchedResultsControllerDelegate {
             loadedCell.configure(for: message, layoutProperties: loadedCell.layoutProperties)
             
         case .move:
-            if let indexPath = indexPath {
-                tableView.deleteRows(at: [indexPath], with: .fade)
+            guard let indexPath = indexPath, let newIndexPath = newIndexPath else {
+                return
             }
             
-            if let newIndexPath = newIndexPath {
-                tableView.insertRows(at: [newIndexPath], with: .fade)
-            }
+            tableView.moveSection(Int(indexPath.row), toSection: Int(newIndexPath.row))
         }
     }
     
@@ -302,113 +350,252 @@ extension ConversationTableViewDataSource: NSFetchedResultsControllerDelegate {
                     didChange sectionInfo: NSFetchedResultsSectionInfo,
                     atSectionIndex sectionIndex: Int,
                     for changeType: NSFetchedResultsChangeType) {
-        let indexSet = IndexSet(integer: sectionIndex)
-        
-        switch changeType {
-        case .delete:
-            tableView.deleteSections(indexSet, with: .fade)
-        case .update:
-            tableView.reloadSections(indexSet, with: .fade)
-        case .insert:
-            tableView.insertSections(indexSet, with: .fade)
-        case .move:
-            fatal("Unexpected change type")
-        }
+        fatal("Unexpected change")
     }
     
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        reconfigureVisibleCells(withDeleted: deletedIndexPathsInCurrentUpdate)
-        deletedIndexPathsInCurrentUpdate.removeAll()
+        // Re-evalulate visible cells in all sections, this is necessary because if a message is inserted/moved the
+        // neighbouring messages may no longer want to display sender, toolbox or burst timestamp.
+        reconfigureVisibleSections()
         tableView.endUpdates()
     }
 }
 
-extension ConversationTableViewDataSource {
-    fileprivate func registerTableCellClasses() {
-        ConversationCell.allCellTypes.forEach {
-            tableView.register($0, forCellReuseIdentifier: $0.reuseIdentifier)
-        }
-    }
-}
-
 extension ConversationTableViewDataSource: UITableViewDataSource {
-    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    
+    public func numberOfSections(in tableView: UITableView) -> Int {
         return messages.count
     }
     
+    @objc
+    func select(indexPath: IndexPath) {
+        sectionController(at: indexPath.section, in: tableView)?.didSelect(indexPath: indexPath, tableView: tableView)
+    }
+    
+    @objc
+    func deselect(indexPath: IndexPath) {
+        sectionController(at: indexPath.section, in: tableView)?.didDeselect(indexPath: indexPath, tableView: tableView)
+    }
+    
+    @objc(highlightMessage:)
+    func highlight(message: ZMConversationMessage) {
+        guard
+            let section = indexPath(for: message)?.section,
+            let sectionController = self.sectionController(at: section, in: tableView)
+            else {
+                return
+        }
+        
+        sectionController.highlight(in: tableView, sectionIndex: section)
+    }
+    
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        let sectionController = self.sectionController(at: section, in: tableView)!
+        return sectionController.numberOfCells
+    }
+    
+    func registerCellIfNeeded(with description: AnyConversationMessageCellDescription, in tableView: UITableView) {
+        guard !registeredCells.contains(where: { obj in
+            obj == description.baseType
+        }) else {
+            return
+        }
+        
+        description.register(in: tableView)
+        registeredCells.append(description.baseType)
+    }
+    
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let message = messages[indexPath.row]
+        let sectionController = self.sectionController(at: indexPath.section, in: tableView)!
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: message.cellClass.reuseIdentifier, for: indexPath)
-        guard let conversationCell = cell as? ConversationCell else { fatal("Unknown cell") }
-
-        // Newly created cells will have a size of {320, 44}, which leads to layout problems when they contain `UICollectionViews`.
-        // This is needed as long as `ParticipantsCell` contains a `UICollectionView`.
-        var bounds = conversationCell.bounds
-        bounds.size.width = tableView.bounds.size.width
-        conversationCell.bounds = bounds
-        
-        conversationCell.searchQueries = searchQueries
-        conversationCell.delegate = conversationCellDelegate
-        // Configuration of the cell is not possible when `ZMUserSession` is not available.
-        if let _ = ZMUserSession.shared() {
-            configure(conversationCell, with: message, at: indexPath.row)
+        for description in sectionController.cellDescriptions {
+            registerCellIfNeeded(with: description, in: tableView)
         }
-        return conversationCell
+        
+        return sectionController.makeCell(for: tableView, at: indexPath)
     }
 }
 
-extension ZMConversationMessage {
-    var cellClass: ConversationCell.Type {
+extension ConversationTableViewDataSource: ConversationMessageSectionControllerDelegate {
+    
+    func messageSectionController(_ controller: ConversationMessageSectionController, didRequestRefreshForMessage message: ZMConversationMessage) {
+        guard let section = self.index(of: message) else {
+            return
+        }
         
-        if isText {
-            return TextMessageCell.self
-        } else if isVideo {
-            return VideoMessageCell.self
-        } else if isAudio {
-            return AudioMessageCell.self
-        } else if isLocation {
-            return LocationMessageCell.self
-        } else if isFile {
-            return FileTransferCell.self
-        } else if isImage {
-            return ImageMessageCell.self
-        } else if isKnock {
-            return PingCell.self
-        } else if isSystem, let systemMessageType = systemMessageData?.systemMessageType {
-            switch systemMessageType {
-            case .connectionRequest:
-                return ConnectionRequestCell.self
-            case .conversationNameChanged:
-                return ConversationRenamedCell.self
-            case .missedCall:
-                return MissedCallCell.self
-            case .newClient, .usingNewDevice:
-                return ConversationNewDeviceCell.self
-            case .ignoredClient:
-                return ConversationIgnoredDeviceCell.self
-            case .conversationIsSecure:
-                return ConversationVerifiedCell.self
-            case .potentialGap, .reactivatedDevice:
-                return MissingMessagesCell.self
-            case .decryptionFailed, .decryptionFailed_RemoteIdentityChanged:
-                return CannotDecryptCell.self
-            case .participantsAdded, .participantsRemoved, .newConversation, .teamMemberLeave:
-                return ParticipantsCell.self
-            case .messageDeletedForEveryone:
-                return MessageDeletedCell.self
-            case .performedCall:
-                return PerformedCallCell.self
-            case .messageTimerUpdate:
-                return MessageTimerUpdateCell.self
-            default:
-                fatal("Unknown cell")
+        let controller = self.sectionController(at: section, in: tableView)
+        controller?.configure(at: section, in: tableView)
+    }
+    
+}
+
+
+extension ConversationTableViewDataSource {
+    
+    func messagePrevious(to message: ZMConversationMessage, at index: Int) -> ZMConversationMessage? {
+        guard (index + 1) < messages.count else {
+            return nil
+        }
+        
+        return messages[index + 1]
+    }
+    
+    func shouldShowDaySeparator(for message: ZMConversationMessage, at index: Int) -> Bool {
+        guard let previous = messagePrevious(to: message, at: index)?.serverTimestamp, let current = message.serverTimestamp else { return false }
+        return !Calendar.current.isDate(current, inSameDayAs: previous)
+    }
+    
+    func isPreviousSenderSame(forMessage message: ZMConversationMessage?, at index: Int) -> Bool {
+        guard let message = message,
+            Message.isNormal(message),
+            !Message.isKnock(message) else { return false }
+        
+        guard let previousMessage = messagePrevious(to: message, at: index),
+            previousMessage.sender == message.sender,
+            Message.isNormal(previousMessage) else { return false }
+        
+        return true
+    }
+    
+    static let burstSeparatorTimeDifference: TimeInterval = 60 * 45
+    
+    public func layoutProperties(for message: ZMConversationMessage, at index: Int) -> ConversationCellLayoutProperties {
+        let layoutProperties = ConversationCellLayoutProperties()
+        
+        layoutProperties.showSender            = shouldShowSender(for: message, at: index)
+        layoutProperties.showUnreadMarker      = (message == firstUnreadMessage)
+        layoutProperties.showBurstTimestamp    = shouldShowBurstSeparator(for: message, at: index) || layoutProperties.showUnreadMarker
+        layoutProperties.showDayBurstTimestamp = shouldShowDaySeparator(for: message, at: index)
+        layoutProperties.topPadding            = topPadding(for: message, at: index, showingSender:layoutProperties.showSender, showingTimestamp:layoutProperties.showBurstTimestamp)
+        layoutProperties.alwaysShowDeliveryState = shouldShowAlwaysDeliveryState(for: message)
+        
+        return layoutProperties
+    }
+    
+    func shouldShowAlwaysDeliveryState(for message: ZMConversationMessage) -> Bool {
+        if let sender = message.sender, sender.isSelfUser,
+            let conversation = message.conversation,
+            conversation.conversationType == .oneOnOne,
+            let lastSentMessage = conversation.lastMessageSent(by: sender),
+            message == lastSentMessage {
+            return true
+        }
+        return false
+    }
+    
+    func shouldShowSender(for message: ZMConversationMessage, at index: Int) -> Bool {
+        if let systemMessageData = message.systemMessageData,
+            systemMessageData.systemMessageType == .messageDeletedForEveryone {
+            return true
+        }
+        
+        if !message.isSystem {
+            if !self.isPreviousSenderSame(forMessage: message, at: index) || message.updatedAt != nil {
+                return true
             }
-        } else {
-            return UnknownMessageCell.self
+            
+            if let previousMessage = self.messagePrevious(to: message, at: index) {
+                return previousMessage.isKnock
+            }
         }
         
-        fatal("Unknown cell")
+        return false
     }
+    
+    func shouldShowBurstSeparator(for message: ZMConversationMessage, at index: Int) -> Bool {
+        if let systemMessageData = message.systemMessageData {
+            switch systemMessageData.systemMessageType {
+            case .newClient, .conversationIsSecure, .reactivatedDevice, .newConversation, .usingNewDevice, .messageDeletedForEveryone, .missedCall, .performedCall:
+                return false
+            default:
+                return true
+            }
+        }
+        
+        if message.isKnock {
+            return false
+        }
+        
+        if !message.isNormal && !message.isSystem {
+            return false
+        }
+        
+        guard let previousMessage = self.messagePrevious(to: message, at: index),
+            let currentMessageServerTimestamp = message.serverTimestamp,
+            let previousMessageServerTimestamp = previousMessage.serverTimestamp else {
+                return true
+        }
+        
+        return currentMessageServerTimestamp.timeIntervalSince(previousMessageServerTimestamp) > type(of: self).burstSeparatorTimeDifference
+    }
+    
+    func topPadding(for message: ZMConversationMessage, at index: Int, showingSender: Bool, showingTimestamp: Bool) -> CGFloat {
+        guard let previousMessage = self.messagePrevious(to: message, at: index) else {
+            return self.topMargin(for: message, showingSender: showingSender, showingTimestamp: showingTimestamp)
+        }
+        
+        return max(self.topMargin(for: message, showingSender: showingSender, showingTimestamp: showingTimestamp), self.bottomMargin(for: previousMessage))
+    }
+    
+    func topMargin(for message: ZMConversationMessage, showingSender: Bool, showingTimestamp: Bool) -> CGFloat {
+        if message.isSystem || showingTimestamp {
+            return 16
+        }
+        else if message.isNormal {
+            return 12
+        }
+        else {
+            return 0
+        }
+    }
+    
+    func bottomMargin(for message: ZMConversationMessage) -> CGFloat {
+        if message.isSystem {
+            return 16
+        }
+        else if message.isNormal {
+            return 12
+        }
+        else {
+            return 0
+        }
+    }
+    
+    public func context(for message: ZMConversationMessage,
+                        at index: Int,
+                        firstUnreadMessage: ZMConversationMessage?,
+                        searchQueries: [String]) -> ConversationMessageContext {
+        let significantTimeInterval: TimeInterval = 60 * 45; // 45 minutes
+        let isTimeIntervalSinceLastMessageSignificant: Bool
+        
+        if let timeIntervalToPreviousMessage = timeIntervalToPreviousMessage(from: message, at: index) {
+            isTimeIntervalSinceLastMessageSignificant = timeIntervalToPreviousMessage > significantTimeInterval
+        } else {
+            isTimeIntervalSinceLastMessageSignificant = false
+        }
+        
+        return ConversationMessageContext(
+            isSameSenderAsPrevious: isPreviousSenderSame(forMessage: message, at: index),
+            isTimeIntervalSinceLastMessageSignificant: isTimeIntervalSinceLastMessageSignificant,
+            isFirstMessageOfTheDay: isFirstMessageOfTheDay(for: message, at: index),
+            isFirstUnreadMessage: message.isEqual(firstUnreadMessage),
+            isLastMessage: index == 0,
+            searchQueries: searchQueries,
+            previousMessageIsKnock: messagePrevious(to: message, at: index)?.isKnock == true
+        )
+    }
+    
+    fileprivate func timeIntervalToPreviousMessage(from message: ZMConversationMessage, at index: Int) -> TimeInterval? {
+        guard let currentMessageTimestamp = message.serverTimestamp, let previousMessageTimestamp = messagePrevious(to: message, at: index)?.serverTimestamp else {
+            return nil
+        }
+        
+        return currentMessageTimestamp.timeIntervalSince(previousMessageTimestamp)
+    }
+    
+    fileprivate func isFirstMessageOfTheDay(for message: ZMConversationMessage, at index: Int) -> Bool {
+        guard let previous = messagePrevious(to: message, at: index)?.serverTimestamp, let current = message.serverTimestamp else { return false }
+        return !Calendar.current.isDate(current, inSameDayAs: previous)
+    }
+    
 }
-

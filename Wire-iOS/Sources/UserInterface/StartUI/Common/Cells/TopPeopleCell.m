@@ -19,7 +19,6 @@
 
 #import "TopPeopleCell.h"
 @import PureLayout;
-#import "BadgeUserImageView.h"
 #import "Constants.h"
 #import "WireSyncEngine+iOS.h"
 #import "Wire-Swift.h"
@@ -79,7 +78,7 @@
     [self.badgeUserImageView removeFromSuperview];
 
     self.badgeUserImageView = [[BadgeUserImageView alloc] init];
-    self.badgeUserImageView.initials.font = [UIFont systemFontOfSize:11 weight:UIFontWeightLight];
+    self.badgeUserImageView.initialsFont = [UIFont systemFontOfSize:11 weight:UIFontWeightLight];
     self.badgeUserImageView.userSession = [ZMUserSession sharedSession];
     self.badgeUserImageView.size = UserImageViewSizeSmall;
     self.badgeUserImageView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -158,17 +157,9 @@
 - (void)setConversation:(ZMConversation *)conversation
 {
     _conversation = conversation;
-
-    if (conversation.conversationType == ZMConversationTypeOneOnOne) {
-        ZMUser *otherUser = conversation.connectedUser;
-        self.user = otherUser;
-        self.conversationImageView.image = nil;
-    }
-    else {
-        self.conversationImageView.image = [UIImage imageNamed:@"group-icon.png"];
-        self.user = nil;
-        self.displayName = conversation.displayName;
-    }
+    ZMUser *otherUser = conversation.connectedUser;
+    self.user = otherUser;
+    self.conversationImageView.image = nil;
 }
 
 - (void)setDisplayName:(NSString *)displayName
@@ -189,7 +180,7 @@
     if (selected) {
         [self.badgeUserImageView setBadgeIcon:ZetaIconTypeCheckmark];
     } else {
-        self.badgeUserImageView.badge = nil;
+        self.badgeUserImageView.badgeIcon = ZetaIconTypeNone;
     }
 }
 

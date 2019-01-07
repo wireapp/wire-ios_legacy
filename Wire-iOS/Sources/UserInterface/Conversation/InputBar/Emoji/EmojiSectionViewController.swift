@@ -73,9 +73,9 @@ class EmojiSectionViewController: UIViewController {
 
         let button: IconButton = {
             let button = IconButton(style: .default)
-            button.setIconColor(UIColor(scheme: .textDimmed, variant: .dark), for: .normal)
-            button.setIconColor(.textForegroundDark, for: .selected)
-            button.setIconColor(.iconHighlightedDark, for: .highlighted)
+            button.setIconColor(UIColor.from(scheme: .textDimmed, variant: .dark), for: .normal)
+            button.setIconColor(.from(scheme: .textForeground, variant: .dark), for: .selected)
+            button.setIconColor(.from(scheme: .iconHighlighted, variant: .dark), for: .highlighted)
             button.setBackgroundImageColor(.clear, for: .selected)
             button.setBorderColor(.clear, for: .normal)
             button.circular = false

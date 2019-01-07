@@ -60,8 +60,8 @@ final class ToggleView: UIView, Themeable {
     }
 
     func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
-        backgroundColor = UIColor(scheme: .barBackground, variant: colorSchemeVariant)
-        titleLabel.textColor = UIColor(scheme: .textForeground, variant: colorSchemeVariant)
+        backgroundColor = UIColor.from(scheme: .barBackground, variant: colorSchemeVariant)
+        titleLabel.textColor = UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)
     }
     
     private func createConstraints() {

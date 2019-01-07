@@ -21,36 +21,7 @@ import Foundation
 import Cartography
 import WireExtensionComponents
 
-open class CollectionForwardableSaveableFileCell: CollectionCell {
-
-    override func menuConfigurationProperties() -> MenuConfigurationProperties? {
-        guard let properties = super.menuConfigurationProperties() else { return nil }
-        if message?.isFileDownloaded() == true {
-            var mutableItems = properties.additionalItems ?? []
-            mutableItems.append(.forbiddenInEphemeral(.save(with: #selector(save))))
-            properties.additionalItems = mutableItems
-        }
-        return properties
-    }
-
-    override open func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
-        switch action {
-        case #selector(forward), #selector(save):
-            return self.message?.isFileDownloaded() ?? false
-        default:
-            return super.canPerformAction(action, withSender: sender)
-        }
-    }
-
-    @objc func save(_ sender: AnyObject) {
-        guard message?.isFileDownloaded() == true else { return }
-        delegate?.collectionCell(self, performAction: .save)
-    }
-
-}
-
-
-final public class CollectionFileCell: CollectionForwardableSaveableFileCell {
+final public class CollectionFileCell: CollectionCell {
     private let fileTransferView = FileTransferView()
     private let headerView = CollectionCellHeader()
     

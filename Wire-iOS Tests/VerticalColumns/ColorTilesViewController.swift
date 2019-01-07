@@ -19,7 +19,7 @@
 import UIKit
 
 struct ColorTile {
-    let color: ZMAccentColor
+    let color: AccentColor
     let size: CGSize
 }
 

@@ -21,24 +21,22 @@ import UIKit
 class DetailsCollectionViewCell: SeparatorCollectionViewCell {
 
     private let leftIconView = UIImageView()
-    private let accessoryIconView = UIImageView()
     private let titleLabel = UILabel()
     private let statusLabel = UILabel()
 
-    private var contentStackView : UIStackView!
+    private var titleStackView: UIStackView!
+    var contentStackView: UIStackView!
     private var leftIconContainer: UIView!
     private var contentLeadingConstraint: NSLayoutConstraint!
+    
+    /// The leading offset of the content when `icon` is nil.
+    var contentLeadingOffset: CGFloat = 24
 
     // MARK: - Properties
 
     var icon: UIImage? {
         get { return leftIconView.image }
         set { updateIcon(newValue) }
-    }
-
-    var accessory: UIImage? {
-        get { return accessoryIconView.image }
-        set { updateAccessory(newValue) }
     }
 
     var title: String? {
@@ -66,15 +64,11 @@ class DetailsCollectionViewCell: SeparatorCollectionViewCell {
         leftIconView.contentMode = .scaleAspectFit
         leftIconView.setContentHuggingPriority(.required, for: .horizontal)
 
-        accessoryIconView.translatesAutoresizingMaskIntoConstraints = false
-        accessoryIconView.contentMode = .center
-
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.font = FontSpec.init(.normal, .light).font!
 
         statusLabel.translatesAutoresizingMaskIntoConstraints = false
-        statusLabel.font = FontSpec.init(.normal, .light).font!
-        statusLabel.setContentHuggingPriority(.required, for: .horizontal)
+        statusLabel.font = FontSpec.init(.small, .regular).font!
 
         leftIconContainer = UIView()
         leftIconContainer.addSubview(leftIconView)
@@ -87,9 +81,15 @@ class DetailsCollectionViewCell: SeparatorCollectionViewCell {
         let iconViewSpacer = UIView()
         iconViewSpacer.translatesAutoresizingMaskIntoConstraints = false
         iconViewSpacer.widthAnchor.constraint(equalToConstant: 8).isActive = true
+        
+        titleStackView = UIStackView(arrangedSubviews: [titleLabel, statusLabel])
+        titleStackView.axis = .vertical
+        titleStackView.distribution = .equalSpacing
+        titleStackView.alignment = .leading
+        titleStackView.translatesAutoresizingMaskIntoConstraints = false
 
-        contentStackView = UIStackView(arrangedSubviews: [leftIconContainer, titleLabel, statusLabel, iconViewSpacer, accessoryIconView])
-        contentStackView.axis = .horizontal
+        contentStackView = UIStackView(arrangedSubviews: [leftIconContainer, titleStackView, iconViewSpacer])
+        contentStackView.axis = .horizontal 
         contentStackView.distribution = .fill
         contentStackView.alignment = .center
         contentStackView.translatesAutoresizingMaskIntoConstraints = false
@@ -105,8 +105,8 @@ class DetailsCollectionViewCell: SeparatorCollectionViewCell {
 
     override func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
         super.applyColorScheme(colorSchemeVariant)
-        let sectionTextColor = UIColor(scheme: .sectionText, variant: colorSchemeVariant)
-        backgroundColor = UIColor(scheme: .barBackground, variant: colorSchemeVariant)
+        let sectionTextColor = UIColor.from(scheme: .sectionText, variant: colorSchemeVariant)
+        backgroundColor = UIColor.from(scheme: .barBackground, variant: colorSchemeVariant)
         statusLabel.textColor = sectionTextColor
         updateDisabledState()
     }
@@ -125,8 +125,8 @@ class DetailsCollectionViewCell: SeparatorCollectionViewCell {
             leftIconView.isHidden = true
             leftIconContainer.isHidden = true
 
-            contentLeadingConstraint.constant = 24
-            separatorLeadingInset = 24
+            contentLeadingConstraint.constant = contentLeadingOffset
+            separatorLeadingInset = contentLeadingOffset
         }
     }
 
@@ -147,18 +147,9 @@ class DetailsCollectionViewCell: SeparatorCollectionViewCell {
             statusLabel.isHidden = true
         }
     }
-
-    private func updateAccessory(_ newValue: UIImage?) {
-        if let value = newValue {
-            accessoryIconView.image = value
-            accessoryIconView.isHidden = false
-        } else {
-            accessoryIconView.isHidden = true
-        }
-    }
     
     private func updateDisabledState() {
-        titleLabel.textColor = UIColor(scheme: disabled ? .textPlaceholder : .textForeground, variant: colorSchemeVariant)
+        titleLabel.textColor = UIColor.from(scheme: disabled ? .textPlaceholder : .textForeground, variant: colorSchemeVariant)
     }
 
 }

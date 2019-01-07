@@ -20,11 +20,13 @@ struct VideoConfiguration: VideoGridConfiguration {
     let floatingVideoStream: ParticipantVideoState?
     let videoStreams: [ParticipantVideoState]
     let isMuted: Bool
-    
+    let networkQuality: NetworkQuality
+
     init(voiceChannel: VoiceChannel, mediaManager: AVSMediaManagerInterface, isOverlayVisible: Bool) {
         floatingVideoStream = voiceChannel.videoStreamArrangment.preview
         videoStreams = voiceChannel.videoStreamArrangment.grid
         isMuted = mediaManager.isMicrophoneMuted && !isOverlayVisible
+        networkQuality = voiceChannel.networkQuality
     }
 }
 

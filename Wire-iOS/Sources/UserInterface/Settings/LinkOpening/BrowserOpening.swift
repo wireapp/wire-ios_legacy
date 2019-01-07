@@ -112,7 +112,7 @@ fileprivate extension UIApplication {
 }
 
 
-fileprivate extension URL {
+extension URL {
 
     var chromeURL: URL? {
         if absoluteString.contains("http://") {
@@ -124,8 +124,12 @@ fileprivate extension URL {
         return URL(string: "googlechrome://\(absoluteString)")
     }
 
+    var percentEncodingString: String {
+        return absoluteString.addingPercentEncoding(withAllowedCharacters: .alphanumerics)!;
+    }
+
     var firefoxURL: URL? {
-        return URL(string: "firefox://open-url?url=\(absoluteString)")
+        return URL(string: "firefox://open-url?url=\(percentEncodingString)")
     }
     
     var snowhazeURL: URL? {
@@ -141,6 +145,6 @@ fileprivate extension URL {
     
     var braveURL: URL? {
         // Reference: https://github.com/brave/ios-open-thirdparty-browser/blob/master/OpenInThirdPartyBrowser/OpenInThirdPartyBrowserControllerSwift.swift
-        return URL(string: "brave://open-url?url=\(absoluteString)")
+        return URL(string: "brave://open-url?url=\(percentEncodingString)")
     }
 }

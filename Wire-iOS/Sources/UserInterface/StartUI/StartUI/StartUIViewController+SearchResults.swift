@@ -40,11 +40,7 @@ extension StartUIViewController: SearchResultsViewControllerDelegate {
         guard let unboxedUser = BareUserToUser(user), unboxedUser.isConnected, !unboxedUser.isBlocked else {
             return
         }
-            
-        guard self.userSelection.users.count != 1 || self.userSelection.users.contains(unboxedUser) else {
-            return
-        }
-            
+        
         self.delegate.startUI(self, didSelect: [unboxedUser])
     }
     
@@ -137,9 +133,10 @@ extension StartUIViewController: ConversationCreationControllerDelegate {
     func conversationCreationController(_ controller: ConversationCreationController,
                                         didSelectName name: String,
                                         participants: Set<ZMUser>,
-                                        allowGuests: Bool) {
+                                        allowGuests: Bool,
+                                        enableReceipts: Bool) {
         dismiss(controller: controller)
-        delegate.startUI(self, createConversationWith: participants, name: name, allowGuests: allowGuests)
+        delegate.startUI(self, createConversationWith: participants, name: name, allowGuests: allowGuests, enableReceipts: enableReceipts)
     }
     
 }

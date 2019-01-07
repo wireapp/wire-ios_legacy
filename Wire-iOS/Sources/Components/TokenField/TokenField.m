@@ -584,6 +584,8 @@ CGFloat const accessoryButtonSize = 32.0f;
     
     if (anyTokenUpdated) {
         [self updateTokenAttachments];
+        NSRange wholeRange = NSMakeRange(0, self.textView.attributedText.length);
+        [self.textView.layoutManager invalidateLayoutForCharacterRange:wholeRange actualCharacterRange:NULL];
     }
 }
 
@@ -928,25 +930,6 @@ NS_INLINE BOOL RangeIncludesRange(NSRange range, NSRange includedRange)
     if (scrollView == self.textView) {
         [self updateExcludePath];
     }
-}
-
-#pragma mark - IB
-
-- (void)prepareForInterfaceBuilder
-{
-    Token *token = [[Token alloc] initWithTitle:NSLocalizedString(@"Obi wan Kenobi", nil) representedObject:[NSObject new]];
-    [self addToken:token];
-    token = [[Token alloc] initWithTitle:NSLocalizedString(@"Mace Windu", nil) representedObject:[NSObject new]];
-    [self addToken:token];
-    
-    NSMutableAttributedString *string = [self.textView.attributedText mutableCopy];
-    [string appendAttributedString:[[NSAttributedString alloc] initWithString:NSLocalizedString(@"Skywalker", nil)
-                                                                   attributes:self.textAttributes]];
-    self.textView.attributedText = string;
-    
-    self.textView.selectedRange = NSMakeRange(1, 1);
-    self.textView.textContainerInset = UIEdgeInsetsMake(16, 0, 16, 0);
-    
 }
 
 @end

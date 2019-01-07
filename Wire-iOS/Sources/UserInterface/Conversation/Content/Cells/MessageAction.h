@@ -33,11 +33,13 @@ typedef NS_ENUM(NSUInteger, MessageAction) {
     MessageActionLike,
     MessageActionForward,
     MessageActionShowInConversation,
-    MessageActionDownload
+    MessageActionDownload,
+    MessageActionReply,
+    MessageActionOpenQuote,
+    MessageActionOpenDetails
 };
 
 @protocol MessageActionResponder <NSObject>
 @required
-- (BOOL)canPerformAction:(MessageAction)action forMessage:(id<ZMConversationMessage>)message;
 - (void)wantsToPerformAction:(MessageAction)action forMessage:(id<ZMConversationMessage>)message;
 @end

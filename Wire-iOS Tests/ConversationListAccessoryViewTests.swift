@@ -121,6 +121,20 @@ class ConversationListAccessoryViewTests: ZMSnapshotTestCase {
         // THEN
         self.verify(view: sut.snapshotView())
     }
+
+    func testThatItShowsMention() {
+        // WHEN
+        sut.icon = ConversationStatusIcon.mention
+        // THEN
+        self.verify(view: sut.snapshotView())
+    }
+
+    func testThatItShowsReply() {
+        // WHEN
+        sut.icon = ConversationStatusIcon.reply
+        // THEN
+        self.verify(view: sut.snapshotView())
+    }
 }
 
 

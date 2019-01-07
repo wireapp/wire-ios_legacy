@@ -209,11 +209,12 @@
     }
     else if (self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassCompact) {
         if (self.presentedViewController) {
-            return self.presentedViewController.preferredStatusBarStyle;
+            if (![self.presentedViewController isKindOfClass:UIAlertController.class]) {
+                return self.presentedViewController.preferredStatusBarStyle;
+            }
         }
-        else {
-            return self.splitViewController.preferredStatusBarStyle;
-        }
+
+        return self.splitViewController.preferredStatusBarStyle;
     }
     else {
         return UIStatusBarStyleLightContent;
@@ -378,6 +379,10 @@
     ConversationRootViewController *conversationRootController = nil;
     if ([conversation isEqual:self.currentConversation]) {
         conversationRootController = (ConversationRootViewController *)self.conversationRootViewController;
+        if (message) {
+            [conversationRootController scrollToMessage:message];            
+        }
+        
     } else {
         conversationRootController = [[ConversationRootViewController alloc] initWithConversation:conversation message:message clientViewController:self];
     }

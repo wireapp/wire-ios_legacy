@@ -32,8 +32,6 @@
 #import "IconButton.h"
 #import "Constants.h"
 #import "UIColor+WAZExtensions.h"
-#import "UserImageView.h"
-#import "UIColor+WR_ColorScheme.h"
 #import "UIViewController+WR_Additions.h"
 
 #import "TextView.h"
@@ -83,7 +81,6 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
 @property (nonatomic) BOOL showGuestLabel;
 @property (nonatomic) AvailabilityTitleView *availabilityView;
 @property (nonatomic) CustomSpacingStackView *stackView;
-
 @end
 
 @implementation ProfileDetailsViewController
@@ -102,7 +99,8 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
     return self;
 }
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     [self setupViews];
     [self setupConstraints];
@@ -117,40 +115,67 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
     self.view.backgroundColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorContentBackground];
     self.stackViewContainer = [[UIView alloc] initForAutoLayout];
     [self.view addSubview:self.stackViewContainer];
+    
     self.teamsGuestIndicator.hidden = !self.showGuestLabel;
     self.availabilityView.hidden = !ZMUser.selfUser.isTeamMember || self.fullUser.availability == AvailabilityNone;
-    self.remainingTimeLabel = [[UILabel alloc] initForAutoLayout];
+    
     NSString *remainingTimeString = self.fullUser.expirationDisplayString;
+    self.remainingTimeLabel = [[UILabel alloc] initForAutoLayout];
+    [self.remainingTimeLabel setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisVertical];
     self.remainingTimeLabel.text = remainingTimeString;
+    self.remainingTimeLabel.textColor = [ColorScheme.defaultColorScheme colorWithName:ColorSchemeColorTextForeground];
+    self.remainingTimeLabel.font = [UIFont mediumSemiboldFont];
     self.remainingTimeLabel.hidden = nil == remainingTimeString;
 
-    self.stackView = [[CustomSpacingStackView alloc] initWithCustomSpacedArrangedSubviews:@[self.userImageView, self.teamsGuestIndicator, self.remainingTimeLabel, self.availabilityView]];
+    [self createReadReceiptsEnabledLabel];
+    
+    UIView *userImageViewWrapper = [[UIView alloc] initWithFrame:CGRectZero];
+    userImageViewWrapper.translatesAutoresizingMaskIntoConstraints = NO;
+    [userImageViewWrapper addSubview:self.userImageView];
+    
+    [NSLayoutConstraint activateConstraints:
+    @[[self.userImageView.leadingAnchor constraintEqualToAnchor:userImageViewWrapper.leadingAnchor constant:40],
+      [self.userImageView.trailingAnchor constraintEqualToAnchor:userImageViewWrapper.trailingAnchor constant:-40],
+      [self.userImageView.topAnchor constraintEqualToAnchor:userImageViewWrapper.topAnchor],
+      [self.userImageView.bottomAnchor constraintEqualToAnchor:userImageViewWrapper.bottomAnchor]
+      ]];
+    
+    self.stackView = [[CustomSpacingStackView alloc] initWithCustomSpacedArrangedSubviews:@[userImageViewWrapper, self.teamsGuestIndicator, self.remainingTimeLabel, self.availabilityView, self.readReceiptsEnabledLabel]];
     self.stackView.axis = UILayoutConstraintAxisVertical;
     self.stackView.spacing = 0;
     self.stackView.alignment = UIStackViewAlignmentCenter;
     [self.stackViewContainer addSubview:self.stackView];
     
-    [self.stackView wr_addCustomSpacing:32 after:self.userImageView];
-
-    if (self.remainingTimeLabel.isHidden) {
-        [self.stackView wr_addCustomSpacing:(self.availabilityView.isHidden ? 40 : 32) after:self.teamsGuestIndicator];
-    } else {
-        [self.stackView wr_addCustomSpacing:8 after:self.teamsGuestIndicator];
-        [self.stackView wr_addCustomSpacing:(self.availabilityView.isHidden ? 40 : 32) after:self.remainingTimeLabel];
+    CGFloat verticalSpacing = 32;
+    if (UIScreen.mainScreen.isSmall) {
+        verticalSpacing = 16;
     }
     
-    [self.stackView wr_addCustomSpacing:32 after:self.availabilityView];
+    [self.stackView wr_addCustomSpacing:verticalSpacing after:userImageViewWrapper];
+
+    if (self.remainingTimeLabel.isHidden) {
+        [self.stackView wr_addCustomSpacing:(self.availabilityView.isHidden ? (verticalSpacing + 8) : verticalSpacing) after:self.teamsGuestIndicator];
+    } else {
+        [self.stackView wr_addCustomSpacing:8 after:self.teamsGuestIndicator];
+        [self.stackView wr_addCustomSpacing:(self.availabilityView.isHidden ? (verticalSpacing + 8) : verticalSpacing) after:self.remainingTimeLabel];
+    }
+    
+    [self.stackView wr_addCustomSpacing:verticalSpacing after:self.availabilityView];
 }
 
 - (void)setupConstraints
 {
     [self.stackView autoCenterInSuperview];
     
-    const CGFloat offset = 40;
+    CGFloat offset = 40;
+    if (UIScreen.mainScreen.isSmall) {
+        offset = 20;
+    }
+    
     [NSLayoutConstraint autoSetPriority:UILayoutPriorityRequired forConstraints:^{
-        [self.stackView autoPinEdge:ALEdgeLeading toEdge:ALEdgeLeading ofView:self.stackViewContainer withOffset:offset relation:NSLayoutRelationGreaterThanOrEqual];
+        [self.stackView autoPinEdge:ALEdgeLeading toEdge:ALEdgeLeading ofView:self.stackViewContainer withOffset:0 relation:NSLayoutRelationGreaterThanOrEqual];
         [self.stackView autoPinEdge:ALEdgeTop toEdge:ALEdgeTop ofView:self.stackViewContainer withOffset:offset relation:NSLayoutRelationGreaterThanOrEqual];
-        [self.stackView autoPinEdge:ALEdgeTrailing toEdge:ALEdgeTrailing ofView:self.stackViewContainer withOffset:-offset relation:NSLayoutRelationLessThanOrEqual];
+        [self.stackView autoPinEdge:ALEdgeTrailing toEdge:ALEdgeTrailing ofView:self.stackViewContainer withOffset:0 relation:NSLayoutRelationLessThanOrEqual];
         [self.stackView autoPinEdge:ALEdgeBottom toEdge:ALEdgeBottom ofView:self.stackViewContainer withOffset:-offset relation:NSLayoutRelationLessThanOrEqual];
     }];
     
@@ -168,13 +193,11 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
 - (void)createUserImageView
 {
     self.userImageView = [[UserImageView alloc] init];
-    self.userImageView.initials.font = [UIFont systemFontOfSize:80 weight:UIFontWeightThin];
+    self.userImageView.initialsFont = [UIFont systemFontOfSize:80 weight:UIFontWeightThin];
     self.userImageView.userSession = [ZMUserSession sharedSession];
     self.userImageView.translatesAutoresizingMaskIntoConstraints = NO;
     self.userImageView.size = UserImageViewSizeBig;
     self.userImageView.user = self.bareUser;
-    self.userImageView.imageView.layer.borderWidth = 1;
-    self.userImageView.imageView.layer.borderColor = [UIColor colorWithWhite:0 alpha:0.08].CGColor;
 }
 
 - (void)createGuestIndicator

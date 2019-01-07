@@ -95,7 +95,7 @@ extension MessageDraft: Shareable {
         Don't forget to return the height of the view in `height(forPreviewView:)`.
      */
     public func previewView() -> UIView? {
-        return nil
+        return UIView()
     }
 }
 

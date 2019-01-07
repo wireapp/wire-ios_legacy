@@ -60,7 +60,7 @@ class GroupConversationCell: UICollectionViewCell, Themeable {
     }
     
     fileprivate func contentBackgroundColor(for colorSchemeVariant: ColorSchemeVariant) -> UIColor {
-        return contentBackgroundColor ?? UIColor(scheme: .barBackground, variant: colorSchemeVariant)
+        return contentBackgroundColor ?? UIColor.from(scheme: .barBackground, variant: colorSchemeVariant)
     }
     
     fileprivate func setup() {
@@ -118,10 +118,10 @@ class GroupConversationCell: UICollectionViewCell, Themeable {
     }
     
     func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
-        let sectionTextColor = UIColor(scheme: .sectionText, variant: colorSchemeVariant)
+        let sectionTextColor = UIColor.from(scheme: .sectionText, variant: colorSchemeVariant)
         backgroundColor = contentBackgroundColor(for: colorSchemeVariant)
-        separator.backgroundColor = UIColor(scheme: .cellSeparator, variant: colorSchemeVariant)
-        titleLabel.textColor = UIColor(scheme: .textForeground, variant: colorSchemeVariant)
+        separator.backgroundColor = UIColor.from(scheme: .cellSeparator, variant: colorSchemeVariant)
+        titleLabel.textColor = UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)
         subtitleLabel.textColor = sectionTextColor
     }
     

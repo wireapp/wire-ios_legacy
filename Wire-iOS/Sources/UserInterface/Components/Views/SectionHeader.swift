@@ -57,7 +57,7 @@ final class SectionHeader: UICollectionReusableView, Themeable {
     }
     
     func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
-        titleLabel.textColor = UIColor(scheme: .sectionText, variant: colorSchemeVariant)
+        titleLabel.textColor = UIColor.from(scheme: .sectionText, variant: colorSchemeVariant)
     }
     
 }

@@ -69,6 +69,7 @@
         self.playPauseButton.layer.shadowColor = UIColor.blackColor.CGColor;
         self.playPauseButton.layer.shadowRadius = 1;
         self.playPauseButton.layer.shadowOffset = CGSizeMake(0, 0);
+        self.playPauseButton.accessibilityIdentifier = @"soundcloudPlayPauseButton";
         [self.playPauseButton setIconColor:UIColor.whiteColor forState:UIControlStateNormal];
         [self addSubview:self.playPauseButton];
     }

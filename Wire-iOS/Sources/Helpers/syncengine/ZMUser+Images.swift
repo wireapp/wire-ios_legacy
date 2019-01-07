@@ -43,7 +43,7 @@ extension UserType {
         return derivedKey
     }
         
-    public func fetchProfileImage(cache: ImageCache<UIImage> = defaultUserImageCache, sizeLimit: Int? = nil, desaturate: Bool = false, completion: @escaping (_ image: UIImage?, _ cacheHit: Bool) -> Void ) -> Void {
+    public func fetchProfileImage(session: ZMUserSession, cache: ImageCache<UIImage> = defaultUserImageCache, sizeLimit: Int? = nil, desaturate: Bool = false, completion: @escaping (_ image: UIImage?, _ cacheHit: Bool) -> Void ) -> Void {
         
         let screenScale = UIScreen.main.scale
         let previewSizeLimit: CGFloat = 280
@@ -64,9 +64,13 @@ extension UserType {
         
         switch size {
         case .preview:
-            requestPreviewProfileImage()
+            session.enqueueChanges {
+                self.requestPreviewProfileImage()
+            }
         default:
-            requestCompleteProfileImage()
+            session.enqueueChanges {
+                self.requestCompleteProfileImage()
+            }
         }
         
         imageData(for: size, queue: cache.processingQueue) { (imageData) in

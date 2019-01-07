@@ -29,8 +29,16 @@ extension NSAttributedString {
         return defaultParagraphStyle()
     }()
     
+    static var previewParagraphStyle: NSParagraphStyle = {
+        return defaultPreviewParagraphStyle()
+    }()
+    
     static var style: DownStyle = {
         return defaultMarkdownStyle()
+    }()
+    
+    static var previewStyle: DownStyle = {
+        return previewMarkdownStyle()
     }()
     
     static var linkDataDetector: NSDataDetector? = {
@@ -41,12 +49,14 @@ extension NSAttributedString {
     @objc
     static func invalidateParagraphStyle() {
         paragraphStyle = defaultParagraphStyle()
+        previewParagraphStyle = defaultPreviewParagraphStyle()
     }
     
     /// This method needs to be called as soon as the text color configuration is changed.
     @objc
     static func invalidateMarkdownStyle() {
         style = defaultMarkdownStyle()
+        previewStyle = previewMarkdownStyle()
     }
     
     fileprivate static func defaultParagraphStyle() -> NSParagraphStyle {
@@ -58,11 +68,35 @@ extension NSAttributedString {
         return paragraphStyle
     }
     
+    fileprivate static func defaultPreviewParagraphStyle() -> NSParagraphStyle {
+        let paragraphStyle = NSMutableParagraphStyle()
+
+        paragraphStyle.paragraphSpacing = 0
+        
+        return paragraphStyle
+    }
+    
+    fileprivate static func previewMarkdownStyle() -> DownStyle {
+        let style = DownStyle.preview
+        
+        style.baseFontColor = UIColor.from(scheme: .textForeground)
+        style.codeColor = style.baseFontColor
+        style.h1Color = style.baseFontColor
+        style.h2Color = style.baseFontColor
+        style.h3Color = style.baseFontColor
+        style.quoteColor = style.baseFontColor
+        
+        style.baseParagraphStyle = previewParagraphStyle
+        style.listItemPrefixColor = style.baseFontColor.withAlphaComponent(0.64)
+        
+        return style
+    }
+    
     fileprivate static func defaultMarkdownStyle() -> DownStyle {
         let style = DownStyle.normal
         
         style.baseFont = UIFont.normalLightFont
-        style.baseFontColor = UIColor(scheme: .textForeground)
+        style.baseFontColor = UIColor.from(scheme: .textForeground)
         style.baseParagraphStyle = paragraphStyle
         style.listItemPrefixColor = style.baseFontColor.withAlphaComponent(0.64)
         
@@ -70,7 +104,38 @@ extension NSAttributedString {
     }
     
     @objc
-    static func format(message: ZMTextMessageData, isObfuscated: Bool, linkAttachment: UnsafeMutablePointer<LinkAttachment>?) -> NSAttributedString {
+    static func formatForPreview(message: ZMTextMessageData, inputMode: Bool, variant: ColorSchemeVariant = ColorScheme.default.variant) -> NSAttributedString {
+        var plainText = message.messageText ?? ""
+
+        // Substitute mentions with text markers
+        let mentionTextObjects = plainText.replaceMentionsWithTextMarkers(mentions: message.mentions)
+        
+        // Perform markdown parsing
+        let markdownText = NSMutableAttributedString.markdown(from: plainText, style: previewStyle)
+        
+        // Highlight mentions using previously inserted text markers
+        markdownText.highlight(mentions: mentionTextObjects)
+        
+        // Remove trailing link if we show a link preview
+        let linkAttachments = markdownText.linksAttachments()
+
+        // Do emoji substition (but not inside link or mentions)
+        let linkAttachmentRanges = linkAttachments.compactMap { Range<Int>($0.range) }
+        let mentionRanges = mentionTextObjects.compactMap{ $0.range(in: markdownText.string as String)}
+        markdownText.replaceEmoticons(excluding: linkAttachmentRanges + mentionRanges)
+        markdownText.removeTrailingWhitespace()
+
+        if !inputMode {
+            markdownText.changeFontSizeIfMessageContainsOnlyEmoticons(to: 32)
+        }
+        
+        markdownText.removeAttribute(.link, range: NSRange(location: 0, length: markdownText.length))
+        markdownText.addAttribute(.foregroundColor, value: UIColor.from(scheme: .textForeground, variant: variant), range: NSRange(location: 0, length: markdownText.length))
+        return markdownText
+    }
+    
+    @objc
+    static func format(message: ZMTextMessageData, isObfuscated: Bool, linkAttachment: UnsafeMutablePointer<LinkAttachment?>?) -> NSAttributedString {
         
         var plainText = message.messageText ?? ""
         
@@ -130,16 +195,17 @@ extension NSMutableAttributedString {
         beginEditing(); defer { endEditing() }
 
         let allowedIndexSet = IndexSet(integersIn: Range<Int>(wholeRange)!, excluding: excludedRanges)
-        
-        for range in allowedIndexSet.rangeView {
-            let range = NSRange(location: range.startIndex, length: range.endIndex - range.startIndex)
-            self.mutableString.resolveEmoticonShortcuts(in: range)
+
+        ///reverse the order of replacing, if we start replace from the beginning, the string may be shorten and other ranges may be invalid.
+        for range in allowedIndexSet.rangeView.sorted(by: {$0.lowerBound > $1.lowerBound}) {
+            let convertedRange = NSRange(location: range.lowerBound, length: range.upperBound - range.lowerBound)
+            mutableString.resolveEmoticonShortcuts(in: convertedRange)
         }
     }
     
-    func changeFontSizeIfMessageContainsOnlyEmoticons() {
-        if string.containsOnlyEmojiWithSpaces {
-            setAttributes([.font: UIFont.systemFont(ofSize: 40)], range: wholeRange)
+    func changeFontSizeIfMessageContainsOnlyEmoticons(to fontSize: CGFloat = 40) {
+        if (string as String).containsOnlyEmojiWithSpaces {
+            setAttributes([.font: UIFont.systemFont(ofSize: fontSize)], range: wholeRange)
         }
     }
     
@@ -151,7 +217,7 @@ extension NSMutableAttributedString {
         }
     }
     
-    func removeTrailingLink(for linkPreview: LinkPreview, linkAttachments: [LinkAttachment]) -> [LinkAttachment] {
+    func removeTrailingLink(for linkPreview: LinkMetadata, linkAttachments: [LinkAttachment]) -> [LinkAttachment] {
     
         // Don't remove trailing link if we embed content
         guard linkAttachments.first?.type == LinkAttachmentType.none,

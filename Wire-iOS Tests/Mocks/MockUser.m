@@ -72,6 +72,16 @@ static id<UserType> mockSelfUser = nil;
     return (MockUser *)mockSelfUser;
 }
 
++ (MockUser *)mockServiceUser
+{
+    return [[MockUser alloc] initWithJSONObject:@{@"name": @"GitHub",
+                                                  @"displayName": @"GitHub",
+                                                  @"isSelfUser": @false,
+                                                  @"isServiceUser": @true,
+                                                  @"isConnected": @true,
+                                                  @"accentColorValue": @1}];
+}
+
 + (void)setMockSelfUser:(id<UserType>)newMockUser
 {
     mockSelfUser = newMockUser;
@@ -135,6 +145,7 @@ static id<UserType> mockSelfUser = nil;
 @synthesize smallProfileImageCacheKey;
 @synthesize mediumProfileImageCacheKey;
 @synthesize isTeamMember;
+@synthesize readReceiptsEnabled;
 
 - (BOOL)conformsToProtocol:(Protocol *)aProtocol
 {
@@ -236,6 +247,11 @@ static id<UserType> mockSelfUser = nil;
 }
 
 - (BOOL)hasTeam
+{
+    return false;
+}
+
+- (BOOL)usesCompanyLogin
 {
     return false;
 }

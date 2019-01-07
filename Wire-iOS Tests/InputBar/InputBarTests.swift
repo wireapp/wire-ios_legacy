@@ -18,7 +18,6 @@
 
 
 import XCTest
-import Cartography
 @testable import Wire
 
 class InputBarTests: ZMSnapshotTestCase {
@@ -47,11 +46,10 @@ class InputBarTests: ZMSnapshotTestCase {
 
     override func setUp() {
         super.setUp()
+
         sut = InputBar(buttons: buttons())
         sut.leftAccessoryView.isHidden = true
         sut.rightAccessoryStackView.isHidden = true
-        sut.translatesAutoresizingMaskIntoConstraints = false
-        sut.layer.speed = 0
     }
 
     override func tearDown() {
@@ -78,8 +76,7 @@ class InputBarTests: ZMSnapshotTestCase {
     
     func testLongText() {
         sut.textView.text = longText
-        
-        
+
         verifyInAllPhoneWidths(view: sut)
         verifyInAllTabletWidths(view: sut)
     }
@@ -117,9 +114,7 @@ class InputBarTests: ZMSnapshotTestCase {
         inputBar.rightAccessoryStackView.isHidden = true
 
         inputBar.translatesAutoresizingMaskIntoConstraints = false
-        inputBar.layer.speed = 0
-        
-        
+
         verifyInAllPhoneWidths(view: inputBar)
     }
     
@@ -129,9 +124,7 @@ class InputBarTests: ZMSnapshotTestCase {
         inputBar.leftAccessoryView.isHidden = true
         inputBar.rightAccessoryStackView.isHidden = true
         inputBar.textView.text = ""
-        inputBar.layer.speed = 0
-        
-        
+
         verifyInAllPhoneWidths(view: inputBar)
     }
     
@@ -161,8 +154,9 @@ class InputBarTests: ZMSnapshotTestCase {
     
     func testThatItRendersCorrectlyInEditState_LongText() {
         sut.setInputBarState(.editing(originalText: longText, mentions: []), animated: false)
-        
+
+        sut.textView.resignFirstResponder() // make sure to avoid cursor being visible
+
         verifyInAllPhoneWidths(view: sut)
     }
-
 }

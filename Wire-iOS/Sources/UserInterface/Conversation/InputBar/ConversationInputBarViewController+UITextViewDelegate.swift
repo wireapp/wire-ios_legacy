@@ -50,6 +50,15 @@ extension ConversationInputBarViewController: UITextViewDelegate {
         return textAttachment.image == nil
     }
 
+    var isMentionsViewKeyboardCollapsed: Bool {
+        /// press tab or enter to insert mention if iPhone keyboard is collapsed
+        if let isKeyboardCollapsed = mentionsView?.isKeyboardCollapsed {
+            return isKeyboardCollapsed
+        } else {
+            return false
+        }
+    }
+
     public func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         // send only if send key pressed
         if textView.returnKeyType == .send && (text == "\n") {
@@ -63,11 +72,12 @@ extension ConversationInputBarViewController: UITextViewDelegate {
             }
             return false
         }
-                
-        if UIDevice.current.type == .iPad,
-            text.count == 1,
+
+        // insert mention if return or tab key is pressed and mention view is visible
+        if text.count == 1,
             text.containsCharacters(from: CharacterSet.newlinesAndTabulation),
-            canInsertMention {
+            canInsertMention,
+            UIDevice.current.type == .iPad || isMentionsViewKeyboardCollapsed {
             
             insertBestMatchMention()
             return false
@@ -90,9 +100,10 @@ extension ConversationInputBarViewController: UITextViewDelegate {
 
     public func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
         guard mode != .audioRecord else { return true }
-        guard delegate?.responds(to:  #selector(ConversationInputBarViewControllerDelegate.conversationInputBarViewControllerShouldBeginEditing(_:isEditingMessage:))) == true else { return true }
+        guard delegate?.responds(to:  #selector(ConversationInputBarViewControllerDelegate.conversationInputBarViewControllerShouldBeginEditing(_:))) == true else { return true }
 
-        return delegate?.conversationInputBarViewControllerShouldBeginEditing?(self, isEditingMessage: (nil != editingMessage)) ?? true
+        triggerMentionsIfNeeded(from: textView)
+        return delegate?.conversationInputBarViewControllerShouldBeginEditing?(self) ?? true
     }
 
     public func textViewDidBeginEditing(_ textView: UITextView) {
@@ -118,7 +129,8 @@ extension ConversationInputBarViewController: UITextViewDelegate {
             let (text, mentions) = textView.preparedText
             self.conversation.draftMessage = DraftMessage(
                 text: text,
-                mentions: mentions
+                mentions: mentions,
+                quote: self.quotedMessage as? ZMMessage
             )
         }
     }

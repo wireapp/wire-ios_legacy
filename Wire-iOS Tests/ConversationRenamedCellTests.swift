@@ -16,49 +16,45 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 @testable import Wire
 
+class ConversationRenamedCellTests: ConversationCellSnapshotTestCase {
 
-class ConversationRenamedCellTests: CoreDataSnapshotTestCase {
+    override func setUp() {
+        super.setUp()
+    }
 
     func testThatItRendersRenamedCellCorrectlySelf() {
-        verify(view: createSut(
-            fromSelf: true,
-            name: "Amazing Conversation"
-        ))
+        let name = "Amazing Conversation"
+        let message = renamedMessage(fromSelf: true, name: name)
+
+        verify(message: message)
     }
 
     func testThatItRendersRenamedCellCorrectlyOther() {
-        verify(view: createSut(
-            fromSelf: false,
-            name: "Best Conversation Ever"
-        ))
+        let name = "Best Conversation Ever"
+        let message = renamedMessage(fromSelf: false, name: name)
+
+        verify(message: message)
     }
 
     func testThatItRendersRenamedCellCorrectlyLongName() {
-        verify(view: createSut(
-            fromSelf: false,
-            name: "This is the best conversation name I could come up with for now!"
-        ))
+        let name = "This is the best conversation name I could come up with for now!"
+        let message = renamedMessage(fromSelf: false, name: name)
+
+        verify(message: message)
     }
 
-    // MARK: – Helper
+    // MARK: – Helpers
 
-    private func createSut(fromSelf: Bool, name: String) -> UIView {
-        let sut = ConversationRenamedCell(style: .default, reuseIdentifier: nil)
-        let message = renamedMessage(fromSelf: fromSelf, name: name)
-        sut.configure(for: message, layoutProperties: ConversationCellLayoutProperties())
-        return sut.prepareForSnapshots()
-    }
-
-    private func renamedMessage(fromSelf: Bool, name: String) -> ZMSystemMessage {
-        let message = ZMSystemMessage(nonce: UUID(), managedObjectContext: uiMOC)
-        message.systemMessageType = .conversationNameChanged
+    private func renamedMessage(fromSelf: Bool, name: String) -> ZMConversationMessage {
+        let message = MockMessageFactory.systemMessage(with: .conversationNameChanged, users: 0, clients: 0)!
+        message.backingSystemMessageData.systemMessageType = .conversationNameChanged
+        message.backingSystemMessageData.text = name
         message.sender = fromSelf ? selfUser : otherUser
-        message.text = name
+        message.conversation = otherUserConversation
+
         return message
     }
 
 }
-

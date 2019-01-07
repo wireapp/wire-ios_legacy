@@ -19,7 +19,7 @@
 import Foundation
 import Cartography
 
-final public class CollectionAudioCell: CollectionForwardableSaveableFileCell {
+final public class CollectionAudioCell: CollectionCell {
     private let audioMessageView = AudioMessageView()
     private let headerView = CollectionCellHeader()
 

@@ -108,10 +108,11 @@ extension EmptySearchResultsViewAction {
         
         addSubview(stackView)
         
-        stackView.fitInSuperview()
+        stackView.centerInSuperview()
+
         statusLabel.numberOfLines = 0
         statusLabel.preferredMaxLayoutWidth = 200
-        statusLabel.textColor = UIColor(scheme: .textForeground, variant: self.variant)
+        statusLabel.textColor = UIColor.from(scheme: .textForeground, variant: self.variant)
         statusLabel.font = FontSpec(.medium, .semibold).font!
         statusLabel.textAlignment = .center
         
@@ -147,7 +148,7 @@ extension EmptySearchResultsViewAction {
     private var icon: UIImage? {
         switch state {
         case .noServicesEnabled:
-            return UIImage(for: .bot, iconSize: .large, color: UIColor(scheme: .iconNormal, variant: self.variant))
+            return UIImage(for: .bot, iconSize: .large, color: UIColor.from(scheme: .iconNormal, variant: self.variant))
         default:
             return nil
         }

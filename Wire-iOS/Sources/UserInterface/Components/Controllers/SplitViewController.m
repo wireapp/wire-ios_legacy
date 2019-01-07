@@ -17,16 +17,12 @@
 // 
 
 
-@import PureLayout;
-
-
 #import "SplitViewController.h"
 #import "SplitViewController+internal.h"
 #import "CrossfadeTransition.h"
 #import "SwizzleTransition.h"
 #import "VerticalTransition.h"
 #import "UIView+WR_ExtendedBlockAnimations.h"
-#import "UIColor+WR_ColorScheme.h"
 #import "Constants.h"
 
 #import "Wire-Swift.h"
@@ -153,16 +149,7 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
 @end
 
 
-@interface SplitViewController () <UIGestureRecognizerDelegate>
-
-@property (nonatomic) NSLayoutConstraint *leftViewOffsetConstraint;
-@property (nonatomic) NSLayoutConstraint *rightViewOffsetConstraint;
-
-@property (nonatomic) NSLayoutConstraint *leftViewWidthConstraint;
-@property (nonatomic) NSLayoutConstraint *rightViewWidthConstraint;
-
-@property (nonatomic) NSLayoutConstraint *sideBySideConstraint;
-@property (nonatomic) NSLayoutConstraint *pinLeftViewOffsetConstraint;
+@interface SplitViewController ()
 
 @property (nonatomic) UIPanGestureRecognizer *horizontalPanner;
 
@@ -204,27 +191,6 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
     [super viewWillLayoutSubviews];
     
     [self updateForSize:self.view.bounds.size];
-}
-
-- (void)setupInitialConstraints
-{
-    [self.leftView autoPinEdgeToSuperviewEdge:ALEdgeTop];
-    [self.leftView autoPinEdgeToSuperviewEdge:ALEdgeBottom];
-    
-    [self.rightView autoPinEdgeToSuperviewEdge:ALEdgeTop];
-    [self.rightView autoPinEdgeToSuperviewEdge:ALEdgeBottom];
-    
-    [NSLayoutConstraint autoSetPriority:UILayoutPriorityDefaultHigh forConstraints:^{
-        self.leftViewOffsetConstraint = [self.leftView autoPinEdgeToSuperviewEdge:ALEdgeLeft];
-        self.rightViewOffsetConstraint = [self.rightView autoPinEdgeToSuperviewEdge:ALEdgeLeft];
-    }];
-    
-    self.leftViewWidthConstraint = [self.leftView autoSetDimension:ALDimensionWidth toSize:0];
-    self.rightViewWidthConstraint = [self.rightView autoSetDimension:ALDimensionWidth toSize:0];
-    
-    self.pinLeftViewOffsetConstraint = [self.leftView autoPinEdgeToSuperviewEdge:ALEdgeLeft];
-    self.sideBySideConstraint = [self.rightView autoPinEdge:ALEdgeLeft toEdge:ALEdgeRight ofView:self.leftView];
-    self.sideBySideConstraint.active = NO;
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
@@ -338,11 +304,6 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
     }
 }
 
-- (void)updateActiveConstraints
-{
-    [[self constraintsInactiveForCurrentLayout] autoRemoveConstraints];
-    [[self constraintsActiveForCurrentLayout] autoInstallConstraints];
-}
 
 - (UIStatusBarStyle)preferredStatusBarStyle
 {
@@ -545,20 +506,7 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
     self.leftViewOffsetConstraint.constant = 64.0f * (1.0f - percentage);
 }
 
-#pragma mark - Gesture Recognizers
-
-- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
-{
-    if (self.layoutSize == SplitViewControllerLayoutSizeRegularLandscape || ! [self.delegate splitViewControllerShouldMoveLeftViewController:self]) {
-        return NO;
-    }
-    
-    if (self.leftViewControllerRevealed && ! IS_IPAD_FULLSCREEN) {
-        return NO;
-    }
-    
-    return YES;
-}
+#pragma mark - Gesture
 
 - (void)onHorizontalPan:(UIPanGestureRecognizer *)gestureRecognizer
 {

@@ -19,13 +19,12 @@
 import XCTest
 @testable import Wire
 
-final class GroupDetailsViewControllerSnapshotTests: CoreDataSnapshotTestCase {
+class GroupDetailsViewControllerSnapshotTests: CoreDataSnapshotTestCase {
     
     var sut: GroupDetailsViewController!
     
     override func setUp() {
         super.setUp()
-        sut = GroupDetailsViewController(conversation: otherUserConversation)
     }
     
     override func tearDown() {
@@ -33,13 +32,41 @@ final class GroupDetailsViewControllerSnapshotTests: CoreDataSnapshotTestCase {
         super.tearDown()
     }
 
-    func testForInitState(){
-        verify(view: sut.view)
+    func testForOptionsForTeamUserInNonTeamConversation() {
+        teamTest {
+            sut = GroupDetailsViewController(conversation: otherUserConversation)
+            verify(view: sut.view)
+        }
+    }
+    
+    func testForOptionsForTeamUserInTeamConversation() {
+        teamTest {
+            otherUserConversation.team =  selfUser.team
+            sut = GroupDetailsViewController(conversation: otherUserConversation)
+            verify(view: sut.view)
+        }
+    }
+
+    func testForOptionsForNonTeamUser() {
+        nonTeamTest {
+            sut = GroupDetailsViewController(conversation: otherUserConversation)
+            verify(view: self.sut.view)
+        }
     }
 
     func testForActionMenu() {
-        sut.detailsView(GroupDetailsFooterView(), performAction: .more)
-
-        verifyAlertController((sut?.actionController?.alertController)!)
+        teamTest {
+            sut = GroupDetailsViewController(conversation: otherUserConversation)
+            sut.detailsView(GroupDetailsFooterView(), performAction: .more)
+            verifyAlertController((sut?.actionController?.alertController)!)
+        }
+    }
+    
+    func testForActionMenu_NonTeam() {
+        nonTeamTest {
+            sut = GroupDetailsViewController(conversation: otherUserConversation)
+            sut.detailsView(GroupDetailsFooterView(), performAction: .more)
+            verifyAlertController((sut?.actionController?.alertController)!)
+        }
     }
 }
