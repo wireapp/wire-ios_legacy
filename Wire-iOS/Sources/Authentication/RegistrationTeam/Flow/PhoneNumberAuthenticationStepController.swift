@@ -45,7 +45,11 @@ class PhoneNumberAuthenticationStepController: AuthenticationStepController, Pho
     }
 
     func phoneNumberInputView(_ inputView: PhoneNumberInputView, didPickPhoneNumber phoneNumber: String) {
-        valueSubmitted(phoneNumber)
+        stepDescription.mainView.valueSubmitted?(phoneNumber)
+    }
+
+    func phoneNumberInputView(_ inputView: PhoneNumberInputView, didValidatePhoneNumber phoneNumber: String, withResult validationError: TextFieldValidator.ValidationError) {
+        stepDescription.mainView.valueValidated?(validationError)
     }
 
     func countryCodeTableViewController(_ viewController: UIViewController!, didSelect country: Country!) {

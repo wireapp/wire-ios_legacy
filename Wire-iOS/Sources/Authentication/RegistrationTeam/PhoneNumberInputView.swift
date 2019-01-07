@@ -21,7 +21,7 @@ import Foundation
 /// An object that receives notification about the phone number input view.
 protocol PhoneNumberInputViewDelegate: class {
     func phoneNumberInputView(_ inputView: PhoneNumberInputView, didPickPhoneNumber phoneNumber: String)
-
+    func phoneNumberInputView(_ inputView: PhoneNumberInputView, didValidatePhoneNumber phoneNumber: String, withResult validationError: TextFieldValidator.ValidationError)
     func phoneNumberInputViewDidRequestCountryPicker(_ inputView: PhoneNumberInputView)
 }
 
@@ -29,13 +29,16 @@ protocol PhoneNumberInputViewDelegate: class {
  * A view providing an input field for phone numbers and a.
  */
 
-class PhoneNumberInputView: UIView, UITextFieldDelegate {
+class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDelegate {
 
     /// The object receiving notifications about events from this view.
     weak var delegate: PhoneNumberInputViewDelegate?
 
     /// The currently selected country.
     private(set) var country = Country.default
+
+    /// The validation error for the current input.
+    private(set) var validationError: TextFieldValidator.ValidationError = .tooShort(kind: .phoneNumber)
 
     // MARK: - Views
 
@@ -53,12 +56,14 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate {
         super.init(frame: frame)
         configureSubviews()
         configureConstraints()
+        configureValidation()
     }
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         configureSubviews()
         configureConstraints()
+        configureValidation()
     }
 
     private func configureSubviews() {
@@ -103,8 +108,9 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate {
         textField.accessibilityLabel = "registration.enter_phone_number.placeholder".localized
         textField.accessibilityIdentifier = "PhoneNumberField"
         textField.tintColor = UIColor.Team.activeButtonColor
-        textField.confirmButton.addTarget(self, action: #selector(habdleConfirmButtonTap), for: .touchUpInside)
+        textField.confirmButton.addTarget(self, action: #selector(handleConfirmButtonTap), for: .touchUpInside)
         textField.delegate = self
+        textField.textFieldValidationDelegate = self
         inputStack.addArrangedSubview(textField)
 
         selectCountry(.default)
@@ -136,6 +142,26 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate {
             textField.heightAnchor.constraint(equalToConstant: 56),
             countryCodeInputView.widthAnchor.constraint(equalToConstant: 60)
         ])
+    }
+
+    private func configureValidation() {
+        textField.textFieldValidator.customValidator = { input in
+            let phoneNumber = self.country.e164PrefixString + input
+            let normalizedNumber = UnregisteredUser.normalizedPhoneNumber(phoneNumber)
+
+            switch normalizedNumber {
+            case .invalid(let errorCode):
+                switch errorCode {
+                case .objectValidationErrorCodeStringTooLong: return .tooLong(kind: .phoneNumber)
+                case .objectValidationErrorCodeStringTooShort: return .tooShort(kind: .phoneNumber)
+                default: return .invalidPhoneNumber
+                }
+            case .unknownError:
+                return .invalidPhoneNumber
+            case .valid:
+                return .none
+            }
+        }
     }
 
     // MARK: - View Lifecycle
@@ -172,9 +198,8 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate {
         delegate?.phoneNumberInputViewDidRequestCountryPicker(self)
     }
 
-    @objc private func habdleConfirmButtonTap() {
-        let phoneNumber = country.e164PrefixString + (textField.text ?? "")
-        delegate?.phoneNumberInputView(self, didPickPhoneNumber: phoneNumber)
+    @objc private func handleConfirmButtonTap() {
+        submitValue()
     }
 
     /// Do not paste if we need to set the text manually.
@@ -205,6 +230,7 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate {
         case .containsInvalidCharacters, .tooLong:
             return false
         default:
+            removeValidationError()
             return true
         }
     }
@@ -223,7 +249,38 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate {
 
         selectCountry(country)
         textField.updateText(phoneNumberWithoutCountryCode)
+        removeValidationError()
         return false
+    }
+
+    // MARK: - Value Submission
+
+    func validationUpdated(sender: UITextField, error: TextFieldValidator.ValidationError) {
+        self.validationError = error
+    }
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.textField.validateInput()
+        submitValue()
+        return true
+    }
+
+    func submitValue() {
+        let phoneNumber = country.e164PrefixString + textField.input
+
+        switch validationError {
+        case .none:
+            delegate?.phoneNumberInputView(self, didValidatePhoneNumber: phoneNumber, withResult: .none)
+            delegate?.phoneNumberInputView(self, didPickPhoneNumber: phoneNumber)
+        default:
+            delegate?.phoneNumberInputView(self, didValidatePhoneNumber: phoneNumber, withResult: validationError)
+        }
+    }
+
+    func removeValidationError() {
+        validationError = .none
+        let phoneNumber = country.e164PrefixString + textField.input
+        delegate?.phoneNumberInputView(self, didValidatePhoneNumber: phoneNumber, withResult: .none)
     }
 
 }

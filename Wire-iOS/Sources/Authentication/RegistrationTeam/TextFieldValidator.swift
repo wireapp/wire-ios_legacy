@@ -26,6 +26,7 @@ class TextFieldValidator {
         case tooShort(kind: AccessoryTextField.Kind)
         case tooLong(kind: AccessoryTextField.Kind)
         case invalidEmail
+        case invalidPhoneNumber
         case custom(String)
         case none
     }
@@ -60,10 +61,8 @@ class TextFieldValidator {
             } else if stringToValidate.count < 2 {
                 return .tooShort(kind: kind)
             }
-        case .phoneNumber:
-            break
-
-        case .unknown:
+        case .phoneNumber, .unknown:
+            // phone number is validated with the custom validator
             break
         }
 
@@ -98,7 +97,7 @@ extension TextFieldValidator.ValidationError: LocalizedError {
             case .unknown:
                 return "unknown.guidance.tooshort".localized
             case .phoneNumber:
-                return "too short"
+                return "phone.guidance.tooshort".localized
             }
         case .tooLong(kind: let kind):
             switch kind {
@@ -111,10 +110,12 @@ extension TextFieldValidator.ValidationError: LocalizedError {
             case .unknown:
                 return "unknown.guidance.toolong".localized
             case .phoneNumber:
-                return "too long"
+                return "phone.guidance.toolong".localized
             }
         case .invalidEmail:
             return "email.guidance.invalid".localized
+        case .invalidPhoneNumber:
+            return "phone.guidance.invalid".localized
         case .custom(let description):
             return description
         case .none:

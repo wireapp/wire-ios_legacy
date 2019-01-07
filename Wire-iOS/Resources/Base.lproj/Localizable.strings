@@ -1104,6 +1104,10 @@
 "password.guidance.tooshort" = "At least 8 characters";
 "password.guidance.toolong" = "Too many characters";
 
+"phone.guidance.invalid" = "Invalid phone number";
+"phone.guidance.tooshort" = "Phone number is too short";
+"phone.guidance.toolong" = "Too many characters";
+
 // Landing screen
 
 "landing.app_name" = "Wire";

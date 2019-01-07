@@ -65,6 +65,10 @@ class AccessoryTextField: UITextField, TextContainer {
         }
     }
 
+    var input: String {
+        return text ?? ""
+    }
+
     let confirmButton: IconButton = {
         let iconButton = IconButton(style: .circular, variant: .dark)
         iconButton.accessibilityIdentifier = "AccessoryTextFieldConfirmButton"
@@ -218,7 +222,7 @@ class AccessoryTextField: UITextField, TextContainer {
     }
 
     @objc func textFieldDidChange(textField: UITextField) {
-        updateText(textField.text ?? "")
+        updateText(input)
     }
 
     func updateText(_ text: String) {
