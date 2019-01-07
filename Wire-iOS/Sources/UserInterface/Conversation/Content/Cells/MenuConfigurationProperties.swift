@@ -21,5 +21,4 @@ import Foundation
 @objcMembers public class MenuConfigurationProperties: NSObject {
     var targetRect = CGRect.zero
     var targetView: UIView!
-    var selectedMenuBlock: SelectedMenuBlock?
 }

@@ -33,7 +33,6 @@
 #import "ParticipantDeviceCell+Internal.h"
 #import "ParticipantDeviceHeaderView.h"
 #import "ParticipantDeviceHeaderView+Internal.h"
-#import "ConversationCell.h"
 #import "UIViewController+Errors.h"
 #import "ConversationViewController.h"
 #import "ConversationViewController+Private.h"

@@ -180,7 +180,7 @@ class ConversationMessageCellTableViewAdapter<C: ConversationMessageCellDescript
             return
         }
 
-        let needsFirstResponder = cellDescription?.delegate?.conversationCellShouldBecomeFirstResponderWhenShowingMenu?(forCell: self)
+        let needsFirstResponder = cellDescription?.delegate?.conversationMessageShouldBecomeFirstResponderWhenShowingMenuForCell(self)
         registerMenuObservers()
 
         let menu = UIMenuController.shared

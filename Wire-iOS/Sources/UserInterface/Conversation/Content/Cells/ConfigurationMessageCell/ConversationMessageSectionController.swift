@@ -77,7 +77,7 @@ extension IndexSet {
     @objc var message: ZMConversationMessage
 
     /// The delegate for cells injected by the list adapter.
-    @objc weak var cellDelegate: ConversationCellDelegate?
+    @objc weak var cellDelegate: ConversationMessageCellDelegate?
 
     /// The object that receives informations from the section.
     @objc weak var sectionDelegate: ConversationMessageSectionControllerDelegate?

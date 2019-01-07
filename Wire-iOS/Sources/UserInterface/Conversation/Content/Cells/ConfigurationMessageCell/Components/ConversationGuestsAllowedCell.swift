@@ -24,7 +24,7 @@ class GuestsAllowedCellDescription: ConversationMessageCellDescription {
     let configuration: View.Configuration
     
     weak var message: ZMConversationMessage?
-    weak var delegate: ConversationCellDelegate?
+    weak var delegate: ConversationMessageCellDelegate?
     weak var actionController: ConversationMessageActionController?
     
     var showEphemeralTimer: Bool = false
@@ -60,7 +60,7 @@ class GuestsAllowedCell: UIView, ConversationMessageCell {
     
     typealias Configuration = GuestsAllowedCellConfiguration
     
-    weak var delegate: ConversationCellDelegate? = nil
+    weak var delegate: ConversationMessageCellDelegate? = nil
     
     private let stackView = UIStackView()
     private let titleLabel = UILabel()
@@ -107,7 +107,7 @@ class GuestsAllowedCell: UIView, ConversationMessageCell {
     }
     
     @objc private func inviteButtonTapped(_ sender: UIButton) {
-        delegate?.conversationCell?(self, openGuestOptionsFrom: self)
+        delegate?.conversationMessageWantsToOpenGuestOptionsFromView(self, sourceView: self)
     }
     
 }

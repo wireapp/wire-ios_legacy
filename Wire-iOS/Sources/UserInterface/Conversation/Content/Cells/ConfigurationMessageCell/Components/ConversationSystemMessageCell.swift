@@ -48,7 +48,7 @@ class ConversationStartedSystemMessageCell: ConversationIconBasedCell, Conversat
         let icon: UIImage?
     }
     
-    weak var delegate: ConversationCellDelegate?
+    weak var delegate: ConversationMessageCellDelegate?
     
     private let titleLabel = UILabel()
     private var selectedUsers: [ZMUser] = []
@@ -75,7 +75,7 @@ class ConversationStartedSystemMessageCell: ConversationIconBasedCell, Conversat
     }
     
     func attributedLabel(_ label: TTTAttributedLabel!, didSelectLinkWith url: URL!) {
-        delegate?.conversationCell?(self, openParticipantsDetailsWithSelectedUsers: selectedUsers, from: self)
+        delegate?.conversationMessageWantsToOpenParticipantsDetails(self, selectedUsers: selectedUsers, sourceView: self)
     }
     
 }
@@ -348,7 +348,7 @@ class ConversationParticipantsChangedSystemMessageCellDescription: ConversationM
     let configuration: View.Configuration
     
     var message: ZMConversationMessage?
-    weak var delegate: ConversationCellDelegate?
+    weak var delegate: ConversationMessageCellDelegate?
     weak var actionController: ConversationMessageActionController?
     
     var showEphemeralTimer: Bool = false
@@ -376,7 +376,7 @@ class ConversationRenamedSystemMessageCellDescription: ConversationMessageCellDe
     let configuration: View.Configuration
 
     var message: ZMConversationMessage?
-    weak var delegate: ConversationCellDelegate? 
+    weak var delegate: ConversationMessageCellDelegate?
     weak var actionController: ConversationMessageActionController?
     
     var showEphemeralTimer: Bool = false
@@ -408,7 +408,7 @@ class ConversationCallSystemMessageCellDescription: ConversationMessageCellDescr
     let configuration: View.Configuration
 
     var message: ZMConversationMessage?
-    weak var delegate: ConversationCellDelegate? 
+    weak var delegate: ConversationMessageCellDelegate?
     weak var actionController: ConversationMessageActionController?
     
     var showEphemeralTimer: Bool = false
@@ -442,7 +442,7 @@ class ConversationMessageTimerCellDescription: ConversationMessageCellDescriptio
     let configuration: View.Configuration
 
     var message: ZMConversationMessage?
-    weak var delegate: ConversationCellDelegate? 
+    weak var delegate: ConversationMessageCellDelegate? 
     weak var actionController: ConversationMessageActionController?
     
     var showEphemeralTimer: Bool = false
@@ -485,7 +485,7 @@ class ConversationVerifiedSystemMessageSectionDescription: ConversationMessageCe
     let configuration: View.Configuration
 
     var message: ZMConversationMessage?
-    weak var delegate: ConversationCellDelegate? 
+    weak var delegate: ConversationMessageCellDelegate?
     weak var actionController: ConversationMessageActionController?
     
     var showEphemeralTimer: Bool = false
@@ -515,7 +515,7 @@ class ConversationStartedSystemMessageCellDescription: ConversationMessageCellDe
     let configuration: View.Configuration
     
     var message: ZMConversationMessage?
-    weak var delegate: ConversationCellDelegate?
+    weak var delegate: ConversationMessageCellDelegate?
     weak var actionController: ConversationMessageActionController?
     
     var showEphemeralTimer: Bool = false
@@ -553,7 +553,7 @@ class ConversationMissingMessagesSystemMessageCellDescription: ConversationMessa
     let configuration: View.Configuration
     
     var message: ZMConversationMessage?
-    weak var delegate: ConversationCellDelegate?
+    weak var delegate: ConversationMessageCellDelegate?
     weak var actionController: ConversationMessageActionController?
     
     var showEphemeralTimer: Bool = false
@@ -606,7 +606,7 @@ class ConversationIgnoredDeviceSystemMessageCellDescription: ConversationMessage
     let configuration: View.Configuration
     
     var message: ZMConversationMessage?
-    weak var delegate: ConversationCellDelegate?
+    weak var delegate: ConversationMessageCellDelegate?
     weak var actionController: ConversationMessageActionController?
     
     var showEphemeralTimer: Bool = false
@@ -661,7 +661,7 @@ class ConversationCannotDecryptSystemMessageCellDescription: ConversationMessage
     static fileprivate let remoteIDErrorURL : URL = URL(string:"action://remote-id-error")!
 
     var message: ZMConversationMessage?
-    weak var delegate: ConversationCellDelegate?
+    weak var delegate: ConversationMessageCellDelegate?
     weak var actionController: ConversationMessageActionController?
     
     var showEphemeralTimer: Bool = false
@@ -749,7 +749,7 @@ class ConversationNewDeviceSystemMessageCellDescription: ConversationMessageCell
     let configuration: View.Configuration
     
     var message: ZMConversationMessage?
-    weak var delegate: ConversationCellDelegate?
+    weak var delegate: ConversationMessageCellDelegate?
     weak var actionController: ConversationMessageActionController?
     
     var showEphemeralTimer: Bool = false

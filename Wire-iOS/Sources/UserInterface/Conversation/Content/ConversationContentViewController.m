@@ -63,7 +63,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 
 
 
-@interface ConversationContentViewController (ConversationCellDelegate) <ConversationCellDelegate>
+@interface ConversationContentViewController (ConversationMessageCellDelegate) <ConversationMessageCellDelegate>
 
 @end
 
@@ -749,7 +749,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 
 
 
-@implementation ConversationContentViewController (ConversationCellDelegate)
+@implementation ConversationContentViewController (ConversationMessageCellDelegate)
 
 - (void)wantsToPerformAction:(MessageAction)action forMessage:(id<ZMConversationMessage>)message
 {
@@ -760,25 +760,14 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     }
 }
 
-- (void)conversationCell:(UIView *)cell userTapped:(id<UserType>)user inView:(UIView *)view frame:(CGRect)frame
+- (void)conversationMessageWantsToOpenUserDetails:(UIView *)cell user:(id<UserType>)user sourceView:(UIView *)sourceView frame:(CGRect)frame
 {
-    if (!cell || !view) {
-        return;
-    }
-
     if ([self.delegate respondsToSelector:@selector(didTapOnUserAvatar:view:frame:)]) {
-        [self.delegate didTapOnUserAvatar:user view:view frame:frame];
+        [self.delegate didTapOnUserAvatar:user view:sourceView frame:frame];
     }
 }
 
-- (void)conversationCell:(UITableViewCell *)cell didSelectAction:(MessageAction)actionId forMessage:(id<ZMConversationMessage>)message
-{
-    if ([cell conformsToProtocol:@protocol(SelectableView)]) {
-        [self wantsToPerformAction:actionId forMessage:message cell:(UITableViewCell<SelectableView> *)cell];
-    }
-}
-
-- (BOOL)conversationCellShouldBecomeFirstResponderWhenShowingMenuForCell:(UIView *)cell;
+- (BOOL)conversationMessageShouldBecomeFirstResponderWhenShowingMenuForCell:(UIView *)cell
 {
     BOOL shouldBecomeFirstResponder = YES;
     if ([self.delegate respondsToSelector:@selector(conversationContentViewController:shouldBecomeFirstResponderWhenShowMenuFromCell:)]) {
@@ -787,22 +776,17 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     return shouldBecomeFirstResponder;
 }
 
-- (void)conversationCellDidRequestOpeningMessageDetails:(UIView *)cell messageDetails:(MessageDetailsViewController *)messageDetails
+- (void)conversationMessageWantsToOpenMessageDetails:(UIView *)cell messageDetailsViewController:(MessageDetailsViewController *)messageDetailsViewController
 {
-    [self.parentViewController presentViewController:messageDetails animated:YES completion:nil];
+    [self.parentViewController presentViewController:messageDetailsViewController animated:YES completion:nil];
 }
 
-- (BOOL)conversationCellShouldStartDestructionTimer:(ConversationCell *)cell
-{
-    return self.onScreen;
-}
-    
-- (void)conversationCell:(ConversationCell *)cell openGuestOptionsFromView:(UIView *)sourceView
+- (void)conversationMessageWantsToOpenGuestOptionsFromView:(UIView *)cell sourceView:(UIView *)sourceView
 {
     [self.delegate conversationContentViewController:self presentGuestOptionsFromView:sourceView];
 }
 
-- (void)conversationCell:(ConversationCell *)cell openParticipantsDetailsWithSelectedUsers:(NSArray<ZMUser *> *)selectedUsers fromView:(UIView *)sourceView
+- (void)conversationMessageWantsToOpenParticipantsDetails:(UIView *)cell selectedUsers:(NSArray<ZMUser *> *)selectedUsers sourceView:(UIView *)sourceView
 {
     [self.delegate conversationContentViewController:self presentParticipantsDetailsWithSelectedUsers:selectedUsers fromView:sourceView];
 }
