@@ -61,7 +61,6 @@ extension ReadOnlyTextView: UITextDragDelegate {
 
 }
 
-////////////////////////////////////////////////////////////////////////////////////
 
 public class LinkInteractionTextView: ReadOnlyTextView {
 

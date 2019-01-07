@@ -17,7 +17,6 @@
 //
 
 import UIKit
-//import TTTAttributedLabel
 
 // MARK: - Cells
 
@@ -143,27 +142,10 @@ class NewDeviceSystemMessageCell: ConversationIconBasedCell, ConversationMessage
         linkTarget = object.linkTarget
     }
     
-    // MARK: - TTTAttributedLabelDelegate
-
-    ///TODO: shouldInteractWith
-    /*
-     func attributedLabel(_ label: TTTAttributedLabel!, didSelectLinkWith URL: URL!) {
-     guard let linkTarget = linkTarget  else { return }
-
-     if URL == type(of: self).userClientURL {
-     switch linkTarget {
-     case .user(let user):
-     ZClientViewController.shared()?.openClientListScreen(for: user)
-     case .conversation(let conversation):
-     ZClientViewController.shared()?.openDetailScreen(for: conversation)
-     }
-     }
-     }
-     */
 }
 
-//shouldInteractWith
-/// MARK: - custom link
+/// MARK: - custom link handling
+
 extension NewDeviceSystemMessageCell {
     public func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
 

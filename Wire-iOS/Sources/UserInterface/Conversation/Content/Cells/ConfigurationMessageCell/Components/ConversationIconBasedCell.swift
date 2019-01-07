@@ -17,7 +17,6 @@
 //
 
 import UIKit
-//import TTTAttributedLabel
 
 extension ConversationIconBasedCell: TextViewInteractionDelegate {
     func textView(_ textView: ReadOnlyTextView, open url: URL) -> Bool {
@@ -33,16 +32,21 @@ extension ConversationIconBasedCell: TextViewInteractionDelegate {
 extension ConversationIconBasedCell: UITextViewDelegate {
 }
 
-class ConversationIconBasedCell: UIView
-    //, TTTAttributedLabelDelegate
-{
+class ConversationIconBasedCell: UIView {
 
     let imageContainer = UIView()
     let imageView = UIImageView()
     let textLabel: ReadOnlyTextView = {
         let readOnlyTextView = ReadOnlyTextView()
 
-//        readOnlyTextView.isSelectable = false
+        readOnlyTextView.textContainer.maximumNumberOfLines = 0
+        readOnlyTextView.isAccessibilityElement = true
+        readOnlyTextView.backgroundColor = .clear
+
+        readOnlyTextView.linkTextAttributes = [
+            NSAttributedString.Key.underlineStyle: NSUnderlineStyle().rawValue as NSNumber,
+            NSAttributedString.Key.foregroundColor: ZMUser.selfUser().accentColor
+        ]
 
         return readOnlyTextView
     }()
@@ -76,7 +80,6 @@ class ConversationIconBasedCell: UIView
             labelHeightConstraint.constant = size.height
 
             textLabel.accessibilityLabel = attributedText?.string
-            //            textLabel.addLinks()
 
             let font = attributedText?.attributes(at: 0, effectiveRange: nil)[.font] as? UIFont
             if let lineHeight = font?.lineHeight {
@@ -106,16 +109,6 @@ class ConversationIconBasedCell: UIView
         imageView.contentMode = .center
         imageView.isAccessibilityElement = true
         imageView.accessibilityLabel = "Icon"
-
-        textLabel.textContainer.maximumNumberOfLines = 0
-        textLabel.isAccessibilityElement = true
-        textLabel.backgroundColor = .clear
-        textLabel.font = labelFont
-
-        textLabel.linkTextAttributes = [
-            NSAttributedString.Key.underlineStyle: NSUnderlineStyle().rawValue as NSNumber,
-            NSAttributedString.Key.foregroundColor: ZMUser.selfUser().accentColor
-        ]
 
         textLabel.interactionDelegate = self
         textLabel.delegate = self
