@@ -15,7 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
-  
+
 import UIKit
 //import TTTAttributedLabel
 
@@ -25,7 +25,7 @@ class ConversationIconBasedCell: UIView
 
     let imageContainer = UIView()
     let imageView = UIImageView()
-    let textLabel = UITextView() //TTTAttributedLabel(frame: .zero)
+    let textLabel = UITextView() //TTTAttributedLabel(frame: .zero) ///TODO: non editable/scrollable....
     let lineView = UIView()
 
     let contentView = UIView()
@@ -34,6 +34,7 @@ class ConversationIconBasedCell: UIView
     private var containerWidthConstraint: NSLayoutConstraint!
     private var labelTrailingConstraint: NSLayoutConstraint!
     private var labelTopConstraint: NSLayoutConstraint!
+    private var labelHeightConstraint: NSLayoutConstraint!
 
     var isSelected: Bool = false
 
@@ -48,15 +49,25 @@ class ConversationIconBasedCell: UIView
     var attributedText: NSAttributedString? {
         didSet {
             textLabel.attributedText = attributedText
+//            textLabel.sizeToFit()
+
+            let size = textLabel.sizeThatFits(CGSize(width: textLabel.frame.size.width, height: UIView.noIntrinsicMetric))
+
+//            print("size = \(size)")
+
+            labelHeightConstraint.constant = size.height
+
             textLabel.accessibilityLabel = attributedText?.string
 //            textLabel.addLinks()
 
-            let font = attributedText?.attributes(at: 0, effectiveRange: nil)[.font] as? UIFont
-            if let lineHeight = font?.lineHeight {
-                labelTopConstraint.constant = (32 - lineHeight) / 2
-            } else {
+//            let font = attributedText?.attributes(at: 0, effectiveRange: nil)[.font] as? UIFont
+//            if let lineHeight = font?.lineHeight {
+//                labelTopConstraint.constant = (32 - lineHeight) / 2
+//            } else {
                 labelTopConstraint.constant = 0
-            }
+//            }
+
+            textLabel.setNeedsLayout()
         }
     }
 
@@ -78,6 +89,8 @@ class ConversationIconBasedCell: UIView
         imageView.accessibilityLabel = "Icon"
 
 //        textLabel.numberOfLines = 0
+
+        textLabel.textContainer.maximumNumberOfLines = 0
         textLabel.isAccessibilityElement = true
         textLabel.backgroundColor = .clear
         textLabel.font = labelFont
@@ -107,9 +120,10 @@ class ConversationIconBasedCell: UIView
         lineView.translatesAutoresizingMaskIntoConstraints = false
 
         containerWidthConstraint = imageContainer.widthAnchor.constraint(equalToConstant: UIView.conversationLayoutMargins.left)
-        labelTrailingConstraint = textLabel.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant: -UIView.conversationLayoutMargins.right)
+        labelTrailingConstraint = textLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -UIView.conversationLayoutMargins.right)
         labelTopConstraint = textLabel.topAnchor.constraint(equalTo: topAnchor)
-        
+        labelHeightConstraint = textLabel.heightAnchor.constraint(equalToConstant: 0)
+
         // We want the content view to at least be below the image container
         let contentViewTopConstraint = contentView.topAnchor.constraint(equalTo: imageContainer.bottomAnchor)
         contentViewTopConstraint.priority = .defaultLow
@@ -132,6 +146,7 @@ class ConversationIconBasedCell: UIView
             textLabel.leadingAnchor.constraint(equalTo: imageContainer.trailingAnchor),
             labelTopConstraint,
             labelTrailingConstraint,
+            labelHeightConstraint,
         
             // lineView
             lineView.leadingAnchor.constraint(equalTo: textLabel.trailingAnchor, constant: 16),
