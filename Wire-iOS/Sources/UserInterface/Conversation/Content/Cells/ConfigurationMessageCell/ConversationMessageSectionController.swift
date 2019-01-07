@@ -87,8 +87,6 @@ extension IndexSet {
 
     private var changeObservers: [Any] = []
     
-    private var hasLegacyContent: Bool = false
-
     deinit {
         changeObservers.removeAll()
     }
@@ -101,11 +99,6 @@ extension IndexSet {
         
         super.init()
         
-        if addLegacyContentIfNeeded(layoutProperties: layoutProperties) {
-            hasLegacyContent = true
-            return
-        }
-        
         createCellDescriptions(in: context, layoutProperties: layoutProperties)
         
         startObservingChanges(for: message)
@@ -117,21 +110,7 @@ extension IndexSet {
     
     // MARK: - Content Types
     
-    private func addLegacyContentIfNeeded(layoutProperties: ConversationCellLayoutProperties) -> Bool {
-        
-        if message.isSystem, let systemMessageType = message.systemMessageData?.systemMessageType {
-            switch systemMessageType {
-                                
-            default:
-                return false
-            }
-        } else {
-            return false
-        }
-        
-    }
-    
-    private func addContent(context: ConversationMessageContext, layoutProperties: ConversationCellLayoutProperties, isSenderVisible: Bool) {
+    private func addContent(context: ConversationMessageContext, isSenderVisible: Bool) {
         
         var contentCellDescriptions: [AnyConversationMessageCellDescription]
 
@@ -150,7 +129,7 @@ extension IndexSet {
         } else if message.isFile {
             contentCellDescriptions = [AnyConversationMessageCellDescription(ConversationFileMessageCellDescription(message: message))]
         } else if message.isSystem {
-            contentCellDescriptions = ConversationSystemMessageCellDescription.cells(for: message, layoutProperties: layoutProperties)
+            contentCellDescriptions = ConversationSystemMessageCellDescription.cells(for: message)
         } else {
             contentCellDescriptions = [AnyConversationMessageCellDescription(UnknownMessageCellDescription())]
         }
@@ -197,15 +176,11 @@ extension IndexSet {
     }
     
     func didSelect(indexPath: IndexPath, tableView: UITableView) {
-        guard !hasLegacyContent else { return }
-        
         selected = true
         configure(at: indexPath.section, in: tableView)
     }
     
     func didDeselect(indexPath: IndexPath, tableView: UITableView) {
-        guard !hasLegacyContent else { return }
-        
         selected = false
         configure(at: indexPath.section, in: tableView)
     }
@@ -222,7 +197,7 @@ extension IndexSet {
             add(description: ConversationSenderMessageCellDescription(sender: sender, message: message))
         }
         
-        addContent(context: context, layoutProperties: layoutProperties, isSenderVisible: isSenderVisible)
+        addContent(context: context, isSenderVisible: isSenderVisible)
         
         if isToolboxVisible(in: context) {
             add(description: ConversationMessageToolboxCellDescription(message: message, selected: selected))
@@ -237,9 +212,7 @@ extension IndexSet {
         configure(in: context, at: sectionIndex, in: tableView)
     }
     
-    func configure(in context: ConversationMessageContext, at sectionIndex: Int, in tableView: UITableView) {
-        guard !hasLegacyContent else { return }
-        
+    func configure(in context: ConversationMessageContext, at sectionIndex: Int, in tableView: UITableView) {        
         self.context = context
         tableView.beginUpdates()
         

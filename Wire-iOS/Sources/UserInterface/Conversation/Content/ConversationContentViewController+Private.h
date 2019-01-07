@@ -25,7 +25,6 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class ConversationCell;
 @class MessagePresenter;
 @class FLAnimatedImageView;
 @protocol SelectableView;
@@ -45,7 +44,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) CGPoint initialPinchLocation;
 
 - (void)removeHighlightsAndMenu;
-- (nullable ConversationCell *)cellForMessage:(id<ZMConversationMessage>)message;
+- (nullable UITableViewCell *)cellForMessage:(id<ZMConversationMessage>)message;
 
 @end
 

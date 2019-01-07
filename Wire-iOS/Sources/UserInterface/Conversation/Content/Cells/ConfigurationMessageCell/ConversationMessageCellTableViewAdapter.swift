@@ -231,10 +231,10 @@ class ConversationMessageCellTableViewAdapter<C: ConversationMessageCellDescript
 
     func setSelectedByMenu(_ isSelected: Bool, animated: Bool) {
         let animations = {
-            self.selectionView.alpha = isSelected ? ConversationCellSelectedOpacity : 1
+            self.selectionView.alpha = isSelected ? 0.4 : 1
         }
 
-        UIView.animate(withDuration: ConversationCellSelectionAnimationDuration, animations: animations)
+        UIView.animate(withDuration: 0.32, animations: animations)
     }
 
     // MARK: - SelectableView

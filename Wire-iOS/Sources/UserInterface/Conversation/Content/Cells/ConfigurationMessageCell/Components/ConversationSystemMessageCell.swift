@@ -243,7 +243,7 @@ class ConversationRenamedSystemMessageCell: ConversationIconBasedCell, Conversat
 
 class ConversationSystemMessageCellDescription {
 
-    static func cells(for message: ZMConversationMessage, layoutProperties: ConversationCellLayoutProperties) -> [AnyConversationMessageCellDescription] {
+    static func cells(for message: ZMConversationMessage) -> [AnyConversationMessageCellDescription] {
         guard let systemMessageData = message.systemMessageData,
             let sender = message.sender,
             let conversation = message.conversation else {
