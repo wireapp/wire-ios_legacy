@@ -20,7 +20,6 @@
 import UIKit
 import Cartography
 import WireLinkPreview
-import TTTAttributedLabel
 import WireExtensionComponents
 
 @objc protocol ArticleViewDelegate: class {
@@ -45,7 +44,7 @@ import WireExtensionComponents
     }
     
     /// MARK - Views
-    let messageLabel = TTTAttributedLabel(frame: CGRect.zero)
+    let messageLabel = UILabel(frame: CGRect.zero)
     let authorLabel = UILabel()
     let imageView = ImageResourceView()
     var linkPreview: LinkMetadata?
@@ -88,19 +87,14 @@ import WireExtensionComponents
         messageLabel.numberOfLines = 0
         messageLabel.accessibilityIdentifier = "linkPreviewContent"
         messageLabel.setContentHuggingPriority(.required, for: .vertical)
-        messageLabel.delegate = self
 
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(viewTapped))
-        tapGestureRecognizer.delegate = self
         addGestureRecognizer(tapGestureRecognizer)
 
         updateLabels()
     }
 
     private func updateLabels(obfuscated: Bool = false) {
-        messageLabel.linkAttributes = obfuscated ? nil :  [NSAttributedString.Key.foregroundColor.rawValue : UIColor.accent()]
-        messageLabel.activeLinkAttributes = obfuscated ? nil : [NSAttributedString.Key.foregroundColor.rawValue : UIColor.accent().withAlphaComponent(0.5)]
-
         authorLabel.font = obfuscated ? UIFont(name: "RedactedScript-Regular", size: 16) : authorFont
         messageLabel.font = obfuscated ? UIFont(name: "RedactedScript-Regular", size: 20) : titleFont
 
@@ -194,7 +188,6 @@ import WireExtensionComponents
             authorLabel.text = article.originalURLString
         }
 
-        messageLabel.enabledTextCheckingTypes = 0
         messageLabel.text = article.title
     }
     
@@ -202,7 +195,6 @@ import WireExtensionComponents
         let author = twitterStatus.author ?? "-"
         authorLabel.attributedText = "twitter_status.on_twitter".localized(args: author).attributedString.addAttributes(authorHighlightAttributes, toSubstring: author)
 
-        messageLabel.enabledTextCheckingTypes = NSTextCheckingResult.CheckingType.link.rawValue
         messageLabel.text = twitterStatus.message
     }
 
@@ -215,21 +207,6 @@ import WireExtensionComponents
         delegate?.articleViewWantsToOpenURL(self, url: url as URL)
     }
     
-}
-
-extension ArticleView : TTTAttributedLabelDelegate {
-    
-    func attributedLabel(_ label: TTTAttributedLabel!, didSelectLinkWith url: URL!) {
-        UIApplication.shared.open(url)
-    }
-}
-
-extension ArticleView : UIGestureRecognizerDelegate {
-    
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-        return !messageLabel.containslink(at: touch.location(in: messageLabel))
-    }
-
 }
 
 extension LinkMetadata {
