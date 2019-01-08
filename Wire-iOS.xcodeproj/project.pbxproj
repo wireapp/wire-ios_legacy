@@ -490,7 +490,6 @@
 		871BC26F1D34F8F800DF0793 /* ResizingTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1D31D34F8F800DF0793 /* ResizingTextView.m */; };
 		871BC2701D34F8F800DF0793 /* StackView.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1D51D34F8F800DF0793 /* StackView.m */; };
 		871BC2711D34F8F800DF0793 /* SwipeMenuCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1D71D34F8F800DF0793 /* SwipeMenuCollectionCell.m */; };
-		871BC27A1D34F8F800DF0793 /* WebLinkTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1EA1D34F8F800DF0793 /* WebLinkTextView.m */; };
 		871BC27D1D34F8F800DF0793 /* CAMediaTimingFunction+AdditionalEquations.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1F01D34F8F800DF0793 /* CAMediaTimingFunction+AdditionalEquations.m */; };
 		871BC2811D34F8F800DF0793 /* NSString+Fingerprint.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1F71D34F8F800DF0793 /* NSString+Fingerprint.m */; };
 		871BC2821D34F8F800DF0793 /* UIAlertController+Wire.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1F91D34F8F800DF0793 /* UIAlertController+Wire.m */; };
@@ -1148,6 +1147,7 @@
 		EF1FDC8221DE677600C9CEB1 /* XCTestCase+EmoticonSubstitutionConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1FDC8121DE677600C9CEB1 /* XCTestCase+EmoticonSubstitutionConfiguration.swift */; };
 		EF1FDC8421DE68EF00C9CEB1 /* EmoticonSubstitutionConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1FDC8321DE68EF00C9CEB1 /* EmoticonSubstitutionConfigurationTests.swift */; };
 		EF1FDC8621DE701000C9CEB1 /* SoundcloudServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1FDC8521DE701000C9CEB1 /* SoundcloudServiceTests.swift */; };
+		EF20B59221E3C3A800BE86F8 /* WebLinkTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF20B59121E3C3A800BE86F8 /* WebLinkTextView.swift */; };
 		EF2127031FB9DFE300625A9B /* CheckmarkView.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126B71FB9DFE300625A9B /* CheckmarkView.m */; };
 		EF2127041FB9DFE300625A9B /* RegistrationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126B81FB9DFE300625A9B /* RegistrationViewController.m */; };
 		EF2127051FB9DFE300625A9B /* RegistrationTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126B91FB9DFE300625A9B /* RegistrationTextField.m */; };
@@ -2022,8 +2022,6 @@
 		871BC1D51D34F8F800DF0793 /* StackView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StackView.m; sourceTree = "<group>"; };
 		871BC1D61D34F8F800DF0793 /* SwipeMenuCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwipeMenuCollectionCell.h; sourceTree = "<group>"; };
 		871BC1D71D34F8F800DF0793 /* SwipeMenuCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwipeMenuCollectionCell.m; sourceTree = "<group>"; };
-		871BC1E91D34F8F800DF0793 /* WebLinkTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebLinkTextView.h; sourceTree = "<group>"; };
-		871BC1EA1D34F8F800DF0793 /* WebLinkTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebLinkTextView.m; sourceTree = "<group>"; };
 		871BC1EF1D34F8F800DF0793 /* CAMediaTimingFunction+AdditionalEquations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CAMediaTimingFunction+AdditionalEquations.h"; sourceTree = "<group>"; };
 		871BC1F01D34F8F800DF0793 /* CAMediaTimingFunction+AdditionalEquations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CAMediaTimingFunction+AdditionalEquations.m"; sourceTree = "<group>"; };
 		871BC1F61D34F8F800DF0793 /* NSString+Fingerprint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Fingerprint.h"; sourceTree = "<group>"; };
@@ -2895,6 +2893,7 @@
 		EF1FDC8121DE677600C9CEB1 /* XCTestCase+EmoticonSubstitutionConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+EmoticonSubstitutionConfiguration.swift"; sourceTree = "<group>"; };
 		EF1FDC8321DE68EF00C9CEB1 /* EmoticonSubstitutionConfigurationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmoticonSubstitutionConfigurationTests.swift; sourceTree = "<group>"; };
 		EF1FDC8521DE701000C9CEB1 /* SoundcloudServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundcloudServiceTests.swift; sourceTree = "<group>"; };
+		EF20B59121E3C3A800BE86F8 /* WebLinkTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebLinkTextView.swift; sourceTree = "<group>"; };
 		EF2126B71FB9DFE300625A9B /* CheckmarkView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckmarkView.m; sourceTree = "<group>"; };
 		EF2126B81FB9DFE300625A9B /* RegistrationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegistrationViewController.m; sourceTree = "<group>"; };
 		EF2126B91FB9DFE300625A9B /* RegistrationTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegistrationTextField.m; sourceTree = "<group>"; };
@@ -4534,8 +4533,7 @@
 				8750A0102195BEE800DC8DB6 /* UpsideDownTableView+Scrolling.swift */,
 				166390D31DC34CAB00D7BF1C /* ImageToolbarView.swift */,
 				871BC1DC1D34F8F800DF0793 /* UserImageView */,
-				871BC1E91D34F8F800DF0793 /* WebLinkTextView.h */,
-				871BC1EA1D34F8F800DF0793 /* WebLinkTextView.m */,
+				EF20B59121E3C3A800BE86F8 /* WebLinkTextView.swift */,
 				8742C2E11E51BD7900329FB6 /* TextSearchInputView.swift */,
 				8742C2F21E534ED500329FB6 /* SearchResultLabel.swift */,
 				877A325D1E8912500017DD9A /* RoundedBadge.swift */,
@@ -7328,6 +7326,7 @@
 				87A1F9DB200CEDCA0040E9A9 /* ClearBackgroundNavigationController.swift in Sources */,
 				EE571C032175ED7B0011B59C /* GroupDetailsNotificationOptionsCell.swift in Sources */,
 				7C3083AC1FE15FBF0036AFCC /* CustomSpacingStackView.swift in Sources */,
+				EF20B59221E3C3A800BE86F8 /* WebLinkTextView.swift in Sources */,
 				871BC2291D34F8F800DF0793 /* ConfirmAssetViewController.m in Sources */,
 				BFFA182820FDE22B00F64377 /* UIAlertController+CompanyLogin.swift in Sources */,
 				F16427001FCC5B3C00D2ABFC /* SetTeamNameStepDescription.swift in Sources */,
@@ -7897,7 +7896,6 @@
 				EF21270E1FB9DFE300625A9B /* CountryCodeTableViewController.m in Sources */,
 				BFBDDBC61DB0D51C00BEED02 /* ConversationInputBarButtonState.swift in Sources */,
 				EE0DE1CD21B172BF00CF3C4E /* ConversationCreateGuestsSectionController.swift in Sources */,
-				871BC27A1D34F8F800DF0793 /* WebLinkTextView.m in Sources */,
 				5E7315352191EADF00255A78 /* Message+Formatters.swift in Sources */,
 				8F8914111A9F287E0056AB0C /* ConversationListCell.m in Sources */,
 				EF13205521A7121F00E7EF21 /* RegistrationTextField+Paste.swift in Sources */,

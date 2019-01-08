@@ -20,7 +20,6 @@
 #import "ParticipantDeviceHeaderView.h"
 #import "ParticipantDeviceHeaderView+Internal.h"
 @import PureLayout;
-#import "WebLinkTextView.h"
 #import "WireExtensionComponents.h"
 #import "NSAttributedString+Wire.h"
 #import "Wire-Swift.h"
