@@ -72,13 +72,6 @@
     [self layoutIfNeeded];
 }
 
-//- (void)layoutSubviews
-//{
-//    [super layoutSubviews];
-//    [self.textView setNeedsUpdateConstraints];
-//    [self.textView updateConstraintsIfNeeded];
-//}
-
 - (void)setupConstraints
 {
     [self.textView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsMake(40, 24, 16, 24)];

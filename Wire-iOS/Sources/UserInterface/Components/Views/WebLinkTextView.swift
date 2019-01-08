@@ -23,7 +23,8 @@ import UIKit
 // Purpose of this class is to reduce the amount of duplicate code to set the default properties of this NSTextView. On the Mac client we are using something similar to also stop the user from being able to select the text (selection property needs to be enabled to make the NSLinkAttribute work on the string). We may want to add this in the future here as well
 @objc final class WebLinkTextView: UITextView {
 
-    var heightConstraint: NSLayoutConstraint!
+    //
+//    var heightConstraint: NSLayoutConstraint?
 
     init() {
         super.init(frame: .zero, textContainer: nil)
@@ -43,23 +44,5 @@ import UIKit
         bounces = false
         backgroundColor = UIColor.clear
         textContainerInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-
-        setupConstraints()
-    }
-
-
-    override public var attributedText: NSAttributedString? {
-        didSet {
-            let size = sizeThatFits(CGSize(width: frame.size.width, height: UIView.noIntrinsicMetric))
-
-            heightConstraint.constant = size.height
-
-            layoutIfNeeded()
-        }
-    }
-
-    private func setupConstraints() {
-        heightConstraint = heightAnchor.constraint(equalToConstant: 0)
-        NSLayoutConstraint.activate([heightConstraint])
     }
 }
