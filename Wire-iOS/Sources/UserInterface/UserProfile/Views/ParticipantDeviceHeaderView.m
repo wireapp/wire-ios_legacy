@@ -68,8 +68,6 @@
 - (void)setShowUnencryptedLabel:(BOOL)showUnencryptedLabel
 {
     self.textView.attributedText = [self attributedExplanationTextForUserName:self.userName showUnencryptedLabel:showUnencryptedLabel];
-
-    [self layoutIfNeeded];
 }
 
 - (void)setupConstraints
