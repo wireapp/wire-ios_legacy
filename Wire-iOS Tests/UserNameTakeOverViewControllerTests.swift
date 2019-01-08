@@ -27,8 +27,6 @@ class UserNameTakeOverViewControllerTests: ZMSnapshotTestCase {
         super.setUp()
         snapshotBackgroundColor = .darkGray
         accentColor = .vividRed
-
-        recordMode = true
     }
 
     func testThatItRendersCorrectInitally() {

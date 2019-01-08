@@ -18,8 +18,6 @@
 
 
 import UIKit
-import Cartography
-
 
 protocol UserNameTakeOverViewControllerDelegate: NSObjectProtocol {
     func takeOverViewController(_ viewController: UserNameTakeOverViewController, didPerformAction action: UserNameTakeOverViewControllerAction)
@@ -61,7 +59,6 @@ final class UserNameTakeOverViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        contentView.layoutMargins = UIEdgeInsets(top: 28, left: 28, bottom: 28, right: 28)
         setupViews()
         createConstraints()
     }
@@ -113,36 +110,47 @@ final class UserNameTakeOverViewController: UIViewController {
     }
 
     func createConstraints() {
-        constrain(displayNameLabel, suggestedHandleLabel, topContainer) { nameLabel, handleLabel, container in
-            nameLabel.leading == container.leading
-            nameLabel.trailing == container.trailing
-            nameLabel.bottom == container.centerY - 4
-            handleLabel.leading == container.leading
-            handleLabel.trailing == container.trailing
-            handleLabel.top == container.centerY + 4
+
+        [displayNameLabel, suggestedHandleLabel, topContainer, subtitleTextView, chooseOwnButton, keepSuggestedButton, contentView].forEach() {
+            $0.translatesAutoresizingMaskIntoConstraints = false
         }
 
-        constrain(view, contentView, topContainer, subtitleTextView) { view, contentView, container, subtitleLabel in
-            contentView.edges == view.edges
-            container.top == contentView.topMargin
-            container.leading == contentView.leading
-            container.trailing == contentView.trailing
-            container.bottom == subtitleLabel.top
-            subtitleLabel.leading == contentView.leadingMargin
-            subtitleLabel.trailing == contentView.trailingMargin
-        }
+        displayNameLabel.fitInSuperview(exclude: [.top, .bottom])
+        suggestedHandleLabel.fitInSuperview(exclude: [.top, .bottom])
 
-        constrain(contentView, subtitleTextView, chooseOwnButton, keepSuggestedButton) { contentView, subtitleLabel, chooseButton, keepButton in
-            subtitleLabel.bottom == chooseButton.top - 28
-            chooseButton.leading == contentView.leadingMargin
-            chooseButton.trailing == contentView.trailingMargin
-            chooseButton.bottom == keepButton.top - 8
-            chooseButton.height == 40
-            keepButton.leading == contentView.leadingMargin
-            keepButton.trailing == contentView.trailingMargin
-            keepButton.bottom == contentView.bottomMargin
-            keepButton.height == 40
-        }
+
+        NSLayoutConstraint.activate([
+            displayNameLabel.bottomAnchor.constraint(equalTo: topContainer.centerYAnchor, constant: -4),
+            suggestedHandleLabel.topAnchor.constraint(equalTo: topContainer.centerYAnchor, constant: 4)
+            ])
+
+        let inset: CGFloat = 28
+        let edgeInsets = EdgeInsets(margin: inset)
+
+        contentView.fitInSuperview()
+        topContainer.fitInSuperview(with:edgeInsets, exclude: [.bottom])
+
+        NSLayoutConstraint.activate([
+            topContainer.bottomAnchor.constraint(equalTo: subtitleTextView.topAnchor)
+            ])
+
+        subtitleTextView.fitInSuperview(with:edgeInsets, exclude: [.top, .bottom])
+
+        NSLayoutConstraint.activate([
+            subtitleTextView.bottomAnchor.constraint(equalTo: chooseOwnButton.topAnchor, constant: -inset)
+            ])
+
+        chooseOwnButton.fitInSuperview(with:edgeInsets, exclude: [.top, .bottom])
+        NSLayoutConstraint.activate([
+            chooseOwnButton.bottomAnchor.constraint(equalTo: keepSuggestedButton.topAnchor, constant: -8),
+            chooseOwnButton.heightAnchor.constraint(equalToConstant: 40)
+            ])
+
+        keepSuggestedButton.fitInSuperview(with:edgeInsets, exclude: [.top])
+
+        NSLayoutConstraint.activate([
+            keepSuggestedButton.heightAnchor.constraint(equalToConstant: 40)
+            ])
     }
 
     @objc func buttonTapped(sender: Button) {
