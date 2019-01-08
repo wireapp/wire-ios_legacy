@@ -44,7 +44,7 @@ class MockCellDescription<T>: ConversationMessageCellDescription {
     var containsHighlightableContent: Bool = true
 
     weak var message: ZMConversationMessage?
-    weak var delegate: ConversationCellDelegate?
+    weak var delegate: ConversationMessageCellDelegate?
     weak var actionController: ConversationMessageActionController?
 
     var accessibilityIdentifier: String?

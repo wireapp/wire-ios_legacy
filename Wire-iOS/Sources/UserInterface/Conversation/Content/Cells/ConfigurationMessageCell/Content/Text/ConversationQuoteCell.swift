@@ -150,7 +150,7 @@ class ConversationReplyCell: UIView, ConversationMessageCell {
     let contentView: ConversationReplyContentView
     var container: ReplyRoundCornersView
 
-    weak var delegate: ConversationCellDelegate?
+    weak var delegate: ConversationMessageCellDelegate?
     weak var message: ZMConversationMessage?
 
     override init(frame: CGRect) {
@@ -180,7 +180,7 @@ class ConversationReplyCell: UIView, ConversationMessageCell {
     }
 
     @objc func onTap() {
-        delegate?.conversationCell?(self, didSelect: .openQuote, for: message)
+        delegate?.wants(toPerform: .openQuote, for: message)
     }
 
 }
@@ -196,7 +196,7 @@ class ConversationReplyCellDescription: ConversationMessageCellDescription {
     let containsHighlightableContent: Bool = true
 
     weak var message: ZMConversationMessage?
-    weak var delegate: ConversationCellDelegate?
+    weak var delegate: ConversationMessageCellDelegate?
     weak var actionController: ConversationMessageActionController?
 
     let accessibilityLabel: String? = "content.message.original_label".localized

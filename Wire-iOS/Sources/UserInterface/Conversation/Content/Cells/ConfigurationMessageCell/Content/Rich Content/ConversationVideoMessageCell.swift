@@ -28,7 +28,7 @@ class ConversationVideoMessageCell: RoundedView, ConversationMessageCell {
     private let transferView = VideoMessageView(frame: .zero)
     private let obfuscationView = ObfuscationView(icon: .videoMessage)
     
-    weak var delegate: ConversationCellDelegate? = nil
+    weak var delegate: ConversationMessageCellDelegate? = nil
     weak var message: ZMConversationMessage? = nil
     
     var isSelected: Bool = false
@@ -104,7 +104,7 @@ extension ConversationVideoMessageCell: TransferViewDelegate {
     func transferView(_ view: TransferView, didSelect action: MessageAction) {
         guard let message = message else { return }
         
-        delegate?.conversationCell?(self, didSelect: action, for: message)
+        delegate?.wants(toPerform: action, for: message)
     }
 }
 
@@ -120,7 +120,7 @@ class ConversationVideoMessageCellDescription: ConversationMessageCellDescriptio
     let containsHighlightableContent: Bool = true
     
     weak var message: ZMConversationMessage?
-    weak var delegate: ConversationCellDelegate?
+    weak var delegate: ConversationMessageCellDelegate?
     weak var actionController: ConversationMessageActionController?
     
     let accessibilityIdentifier: String? = nil

@@ -24,7 +24,7 @@ import WireLinkPreview
 class ArticleViewTests: ZMSnapshotTestCase {
     
     var sut: ArticleView!
-        
+
     override func tearDown() {
         
         defaultImageCache.cache.removeAllObjects()

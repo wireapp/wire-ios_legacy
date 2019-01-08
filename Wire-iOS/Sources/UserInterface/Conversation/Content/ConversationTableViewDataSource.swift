@@ -99,7 +99,7 @@ final class ConversationTableViewDataSource: NSObject {
         }
     }
     
-    @objc public weak var conversationCellDelegate: ConversationCellDelegate? = nil
+    @objc public weak var conversationCellDelegate: ConversationMessageCellDelegate? = nil
     @objc public weak var messageActionResponder: MessageActionResponder? = nil // TODO: assign it
     
     @objc public var searchQueries: [String] = [] {
@@ -147,11 +147,9 @@ final class ConversationTableViewDataSource: NSObject {
         }
         
         let context = self.context(for: message, at: sectionIndex, firstUnreadMessage: firstUnreadMessage, searchQueries: self.searchQueries)
-        let layoutProperties = self.layoutProperties(for: message, at: sectionIndex)
         
         let sectionController = ConversationMessageSectionController(message: message,
                                                                      context: context,
-                                                                     layoutProperties: layoutProperties,
                                                                      selected: message.isEqual(selectedMessage))
         sectionController.useInvertedIndices = true
         sectionController.cellDelegate = conversationCellDelegate
@@ -517,11 +515,6 @@ extension ConversationTableViewDataSource {
         return messages[index + 1]
     }
     
-    func shouldShowDaySeparator(for message: ZMConversationMessage, at index: Int) -> Bool {
-        guard let previous = messagePrevious(to: message, at: index)?.serverTimestamp, let current = message.serverTimestamp else { return false }
-        return !Calendar.current.isDate(current, inSameDayAs: previous)
-    }
-    
     func isPreviousSenderSame(forMessage message: ZMConversationMessage?, at index: Int) -> Bool {
         guard let message = message,
             Message.isNormal(message),
@@ -534,116 +527,13 @@ extension ConversationTableViewDataSource {
         return true
     }
     
-    static let burstSeparatorTimeDifference: TimeInterval = 60 * 45
-    
-    public func layoutProperties(for message: ZMConversationMessage, at index: Int) -> ConversationCellLayoutProperties {
-        let layoutProperties = ConversationCellLayoutProperties()
-        
-        layoutProperties.showSender            = shouldShowSender(for: message, at: index)
-        layoutProperties.showUnreadMarker      = (message == firstUnreadMessage)
-        layoutProperties.showBurstTimestamp    = shouldShowBurstSeparator(for: message, at: index) || layoutProperties.showUnreadMarker
-        layoutProperties.showDayBurstTimestamp = shouldShowDaySeparator(for: message, at: index)
-        layoutProperties.topPadding            = topPadding(for: message, at: index, showingSender:layoutProperties.showSender, showingTimestamp:layoutProperties.showBurstTimestamp)
-        layoutProperties.alwaysShowDeliveryState = shouldShowAlwaysDeliveryState(for: message)
-        
-        return layoutProperties
-    }
-    
-    func shouldShowAlwaysDeliveryState(for message: ZMConversationMessage) -> Bool {
-        if let sender = message.sender, sender.isSelfUser,
-            let conversation = message.conversation,
-            conversation.conversationType == .oneOnOne,
-            let lastSentMessage = conversation.lastMessageSent(by: sender),
-            message == lastSentMessage {
-            return true
-        }
-        return false
-    }
-    
-    func shouldShowSender(for message: ZMConversationMessage, at index: Int) -> Bool {
-        if let systemMessageData = message.systemMessageData,
-            systemMessageData.systemMessageType == .messageDeletedForEveryone {
-            return true
-        }
-        
-        if !message.isSystem {
-            if !self.isPreviousSenderSame(forMessage: message, at: index) || message.updatedAt != nil {
-                return true
-            }
-            
-            if let previousMessage = self.messagePrevious(to: message, at: index) {
-                return previousMessage.isKnock
-            }
-        }
-        
-        return false
-    }
-    
-    func shouldShowBurstSeparator(for message: ZMConversationMessage, at index: Int) -> Bool {
-        if let systemMessageData = message.systemMessageData {
-            switch systemMessageData.systemMessageType {
-            case .newClient, .conversationIsSecure, .reactivatedDevice, .newConversation, .usingNewDevice, .messageDeletedForEveryone, .missedCall, .performedCall:
-                return false
-            default:
-                return true
-            }
-        }
-        
-        if message.isKnock {
-            return false
-        }
-        
-        if !message.isNormal && !message.isSystem {
-            return false
-        }
-        
-        guard let previousMessage = self.messagePrevious(to: message, at: index),
-            let currentMessageServerTimestamp = message.serverTimestamp,
-            let previousMessageServerTimestamp = previousMessage.serverTimestamp else {
-                return true
-        }
-        
-        return currentMessageServerTimestamp.timeIntervalSince(previousMessageServerTimestamp) > type(of: self).burstSeparatorTimeDifference
-    }
-    
-    func topPadding(for message: ZMConversationMessage, at index: Int, showingSender: Bool, showingTimestamp: Bool) -> CGFloat {
-        guard let previousMessage = self.messagePrevious(to: message, at: index) else {
-            return self.topMargin(for: message, showingSender: showingSender, showingTimestamp: showingTimestamp)
-        }
-        
-        return max(self.topMargin(for: message, showingSender: showingSender, showingTimestamp: showingTimestamp), self.bottomMargin(for: previousMessage))
-    }
-    
-    func topMargin(for message: ZMConversationMessage, showingSender: Bool, showingTimestamp: Bool) -> CGFloat {
-        if message.isSystem || showingTimestamp {
-            return 16
-        }
-        else if message.isNormal {
-            return 12
-        }
-        else {
-            return 0
-        }
-    }
-    
-    func bottomMargin(for message: ZMConversationMessage) -> CGFloat {
-        if message.isSystem {
-            return 16
-        }
-        else if message.isNormal {
-            return 12
-        }
-        else {
-            return 0
-        }
-    }
-    
     public func context(for message: ZMConversationMessage,
                         at index: Int,
                         firstUnreadMessage: ZMConversationMessage?,
                         searchQueries: [String]) -> ConversationMessageContext {
         let significantTimeInterval: TimeInterval = 60 * 45; // 45 minutes
         let isTimeIntervalSinceLastMessageSignificant: Bool
+        let previousMessage = messagePrevious(to: message, at: index)
         
         if let timeIntervalToPreviousMessage = timeIntervalToPreviousMessage(from: message, at: index) {
             isTimeIntervalSinceLastMessageSignificant = timeIntervalToPreviousMessage > significantTimeInterval
@@ -658,7 +548,8 @@ extension ConversationTableViewDataSource {
             isFirstUnreadMessage: message.isEqual(firstUnreadMessage),
             isLastMessage: index == 0,
             searchQueries: searchQueries,
-            previousMessageIsKnock: messagePrevious(to: message, at: index)?.isKnock == true
+            previousMessageIsKnock: previousMessage?.isKnock == true,
+            spacing: message.isSystem || previousMessage?.isSystem == true || isTimeIntervalSinceLastMessageSignificant ? 16 : 12
         )
     }
     

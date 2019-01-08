@@ -64,35 +64,44 @@ extension UIView {
 
     @discardableResult func fitInSuperview(safely: Bool = false,
                                            with insets: EdgeInsets = .zero,
-                                           exclude excludedAnchor: Anchor? = nil,
+                                           exclude excludedAnchors: [Anchor] = [],
                                            activate: Bool = true) -> [NSLayoutConstraint] {
-        guard let superview = self.superview else {
+        guard let superview = superview else {
             fatal("Not in view hierarchy: self.superview = nil")
         }
 
+        return pin(to: superview, safely: safely, with: insets, exclude: excludedAnchors, activate: activate)
+    }
+
+    @discardableResult func pin(to view: UIView,
+                                  safely: Bool = false,
+                                  with insets: EdgeInsets = .zero,
+                                  exclude excludedAnchors: [Anchor] = [],
+                                  activate: Bool = true) -> [NSLayoutConstraint] {
+
         var constraints: [NSLayoutConstraint] = []
 
-        if excludedAnchor != .leading {
+        if !excludedAnchors.contains(.leading) {
             constraints.append(leadingAnchor.constraint(
-                equalTo: safely ? superview.safeLeadingAnchor : superview.leadingAnchor,
+                equalTo: safely ? view.safeLeadingAnchor : view.leadingAnchor,
                 constant: insets.leading))
         }
 
-        if excludedAnchor != .bottom {
+        if !excludedAnchors.contains(.bottom) {
             constraints.append(bottomAnchor.constraint(
-                equalTo: safely ? superview.safeBottomAnchor : superview.bottomAnchor,
+                equalTo: safely ? view.safeBottomAnchor : view.bottomAnchor,
                 constant: -insets.bottom))
         }
 
-        if excludedAnchor != .top {
+        if !excludedAnchors.contains(.top) {
             constraints.append(topAnchor.constraint(
-                equalTo: safely ? superview.safeTopAnchor : superview.topAnchor,
+                equalTo: safely ? view.safeTopAnchor : view.topAnchor,
                 constant: insets.top))
         }
 
-        if excludedAnchor != .trailing {
+        if !excludedAnchors.contains(.trailing) {
             constraints.append(trailingAnchor.constraint(
-                equalTo: safely ? superview.safeTrailingAnchor : superview.trailingAnchor,
+                equalTo: safely ? view.safeTrailingAnchor : view.trailingAnchor,
                 constant: -insets.trailing))
         }
 
