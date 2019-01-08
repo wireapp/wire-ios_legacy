@@ -35,7 +35,7 @@ NS_ASSUME_NONNULL_BEGIN
     if (indexPath == nil || indexPath.row >= (NSInteger)self.dataSource.messages.count) {
         return nil;
     }
-    id<ZMConversationMessage> message = [self.dataSource.messages objectAtIndex:indexPath.row];
+    id<ZMConversationMessage> message = [self.dataSource.messages objectAtIndex:indexPath.section];
     return message;
 }
 

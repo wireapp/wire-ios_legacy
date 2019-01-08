@@ -213,6 +213,7 @@ extension IndexSet {
     
     func configure(in context: ConversationMessageContext, at sectionIndex: Int, in tableView: UITableView) {        
         self.context = context
+        tableView.beginUpdates()
         
         let old = ZMOrderedSetState(orderedSet: NSOrderedSet(array: tableViewCellDescriptions.map({ $0.baseType })))
         createCellDescriptions(in: context)
@@ -226,7 +227,8 @@ extension IndexSet {
         if let inserted = change?.insertedIndexes.indexPaths(in: sectionIndex) {
             tableView.insertRows(at: inserted, with: .fade)
         }
-        
+        tableView.endUpdates()
+
         for (index, description) in tableViewCellDescriptions.enumerated() {
             if let cell = tableView.cellForRow(at: IndexPath(row: index, section: sectionIndex)) {
                 cell.accessibilityCustomActions = self.actionController?.makeAccessibilityActions()

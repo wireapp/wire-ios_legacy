@@ -35,7 +35,7 @@ extension ConversationContentViewController: UIViewControllerPreviewingDelegate 
             return .none
         }
         
-        let message = self.dataSource.messages[cellIndexPath.row]
+        let message = self.dataSource.messages[cellIndexPath.section]
 
         guard message.isObfuscated == false else {
             return nil
