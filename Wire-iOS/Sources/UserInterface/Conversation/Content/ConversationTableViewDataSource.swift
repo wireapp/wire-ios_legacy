@@ -89,13 +89,13 @@ final class ConversationTableViewDataSource: NSObject {
     }
     
     public let conversation: ZMConversation
-    public let tableView: UITableView
+    public let tableView: UpsideDownTableView
     
     @objc public var firstUnreadMessage: ZMConversationMessage?
     @objc public var selectedMessage: ZMConversationMessage? = nil
     @objc public var editingMessage: ZMConversationMessage? = nil {
         didSet {
-            reconfigureVisibleSections(doBatchUpdate: true)
+            reconfigureVisibleSections()
         }
     }
     
@@ -104,7 +104,7 @@ final class ConversationTableViewDataSource: NSObject {
     
     @objc public var searchQueries: [String] = [] {
         didSet {
-            reconfigureVisibleSections(doBatchUpdate: true)
+            reconfigureVisibleSections()
         }
     }
     
@@ -112,7 +112,10 @@ final class ConversationTableViewDataSource: NSObject {
         return fetchController.fetchedObjects ?? []
     }
     
-    @objc public init(conversation: ZMConversation, tableView: UITableView) {
+    var messagesBeforeUpdate: [ZMConversationMessage] = []
+    var updatedMessages: [ZMConversationMessage] = []
+    
+    @objc public init(conversation: ZMConversation, tableView: UpsideDownTableView) {
         self.conversation = conversation
         self.tableView = tableView
         
@@ -246,10 +249,10 @@ final class ConversationTableViewDataSource: NSObject {
         readerPosition = topRow
     }
     
-    fileprivate func stopAudioPlayer(for indexPath: IndexPath) {
+    fileprivate func stopAudioPlayer(for messages: Set<ZMMessage>) {
         guard let audioTrackPlayer = AppDelegate.shared().mediaPlaybackManager?.audioTrackPlayer,
-              let sourceMessage = audioTrackPlayer.sourceMessage,
-              sourceMessage == self.messages[indexPath.row] else {
+              let sourceMessage = audioTrackPlayer.sourceMessage as? ZMMessage,
+              messages.contains(sourceMessage) else {
             return
         }
         
@@ -291,39 +294,26 @@ extension UITableView {
 
 extension ConversationTableViewDataSource: NSFetchedResultsControllerDelegate {
     
-    func reconfigureSectionController(at index: Int, tableView: UITableView, doBatchUpdate: Bool) {
+    func reconfigureSectionController(at index: Int, tableView: UITableView) {
         guard let sectionController = self.sectionController(at: index, in: tableView) else { return }
         
         let context = self.context(for: sectionController.message, at: index, firstUnreadMessage: firstUnreadMessage, searchQueries: self.searchQueries)
-        sectionController.configure(in: context, at: index, in: tableView, doBatchUpdate: doBatchUpdate)
+        sectionController.configure(in: context, at: index, in: tableView)
     }
     
     func reconfigureVisibleSections(doBatchUpdate: Bool) {
-        
-        func action() {
+        tableView.performWithBatchUpdate {
             if let indexPathsForVisibleRows = tableView.indexPathsForVisibleRows {
                 let visibleSections = Set(indexPathsForVisibleRows.map(\.section))
                 for section in visibleSections {
-                    reconfigureSectionController(at: section, tableView: tableView, doBatchUpdate: doBatchUpdate)
+                    reconfigureSectionController(at: section, tableView: tableView)
                 }
             }
         }
-        
-        if doBatchUpdate {
-            tableView.performWithBatchUpdate(action)
-        }
-        else {
-            action()
-        }
     }
     
-    // TODO: this does not wwork currently (batch updates)
-    static let doBatchUpdates = false
-    
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        if ConversationTableViewDataSource.doBatchUpdates {
-            tableView.beginUpdates()
-        }
+        messagesBeforeUpdate = messages
     }
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
@@ -331,40 +321,13 @@ extension ConversationTableViewDataSource: NSFetchedResultsControllerDelegate {
                     at indexPath: IndexPath?,
                     for changeType: NSFetchedResultsChangeType,
                     newIndexPath: IndexPath?) {
-        
-        func rowToSection(_ indexPath: IndexPath) -> Int {
-            return indexPath.row // self.messages.count - 1 -
-        }
-
-        switch changeType {
-        case .insert:
-            guard let insertedIndexPath = newIndexPath else {
-                fatal("Missing new index path")
-            }
-            tableView.insertSections([rowToSection(insertedIndexPath)], with: .fade)
-        case .delete:
-            guard let indexPathToRemove = indexPath else {
-                fatal("Missing index path")
-            }
-            let deletedMessage = anObject as! ZMMessage
-            
-            sectionControllers.removeValue(forKey: deletedMessage.objectIdentifier)
-            tableView.deleteSections([rowToSection(indexPathToRemove)], with: .fade)
-            
-            self.stopAudioPlayer(for: indexPathToRemove)
-        case .update:
+        if changeType == .update {
             guard let indexPathToUpdate = indexPath else {
                 return
             }
+            let message = messages[indexPathToUpdate.row]
             
-            reconfigureSectionController(at: rowToSection(indexPathToUpdate), tableView: tableView, doBatchUpdate: false)
-        case .move:
-            guard let indexPath = indexPath, let newIndexPath = newIndexPath else {
-                return
-            }
-            
-            tableView.moveSection(rowToSection(indexPath),
-                                  toSection: rowToSection(newIndexPath))
+            updatedMessages.append(message)
         }
     }
     
@@ -376,16 +339,102 @@ extension ConversationTableViewDataSource: NSFetchedResultsControllerDelegate {
     }
     
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-      
-        // Re-evalulate visible cells in all sections, this is necessary because if a message is inserted/moved the
-        // neighbouring messages may no longer want to display sender, toolbox or burst timestamp.
-        reconfigureVisibleSections(doBatchUpdate: false)
-        if ConversationTableViewDataSource.doBatchUpdates {
-            tableView.endUpdates()
+        applyDeltaChanges()
+    }
+    
+    func applyDeltaChanges() {
+        let old = ZMOrderedSetState(orderedSet: NSOrderedSet(array: messagesBeforeUpdate))
+        let new = ZMOrderedSetState(orderedSet: NSOrderedSet(array: messages))
+        let update = ZMOrderedSetState(orderedSet: NSOrderedSet(array: updatedMessages))
+
+        let changeInfo = ZMChangedIndexes(start: old, end: new, updatedState: update, moveType: .nsTableView)!
+        
+        let isLoadingInitialContent = messages.count == changeInfo.insertedIndexes.count && changeInfo.deletedIndexes.count == 0
+        let isExpandingMessageWindow = changeInfo.insertedIndexes.count > 0 && changeInfo.insertedIndexes.last == messages.count - 1
+        let shouldJumpToTheConversationEnd = changeInfo.insertedIndexes.compactMap { messages[$0] }.any(\.isSentFromThisDevice)
+        
+        if let deletedObjects = changeInfo.deletedObjects {
+            stopAudioPlayer(for: Set(deletedObjects.map { $0 as! ZMMessage }))
         }
-        else {
+        
+        if isLoadingInitialContent ||
+            (isExpandingMessageWindow && changeInfo.deletedIndexes.count == 0) ||
+            shouldJumpToTheConversationEnd {
+            
             tableView.reloadData()
+        } else {
+            tableView.beginUpdates()
+            
+            if changeInfo.deletedIndexes.count > 0 {
+                for deletedMessage in changeInfo.deletedObjects {
+                    if let deletedMessage = deletedMessage as? ZMConversationMessage {
+                        sectionControllers.removeValue(forKey: deletedMessage.objectIdentifier)
+                    }
+                }
+                tableView.deleteSections(changeInfo.deletedIndexes, with: .fade)
+            }
+            
+            if changeInfo.insertedIndexes.count > 0 {
+                tableView.insertSections(changeInfo.insertedIndexes, with: .fade)
+            }
+            
+            changeInfo.enumerateMovedIndexes { (from, to) in
+                self.tableView.moveSection(Int(from), toSection: Int(to))
+            }
+            
+            tableView.endUpdates()
+            
+            // Re-evalulate visible cells in all sections, this is necessary because if a message is inserted/moved the
+            // neighbouring messages may no longer want to display sender, toolbox or burst timestamp.
+            reconfigureVisibleSections()
         }
+        
+        if shouldJumpToTheConversationEnd {
+            // The action has to be performed on the next run loop, since the current one already has the call to scroll
+            // the table view back to the previous position.
+            tableView.scrollToBottom(animated: false)
+            tableView.lockContentOffset = true
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                self.tableView.lockContentOffset = false
+            }
+        }
+        
+        if changeInfo.insertedIndexes.count > 0 {
+            selectLastMessage()
+        }
+        
+        messagesBeforeUpdate = []
+    }
+    
+    @objc
+    func selectLastMessage() {
+        
+        if let lastMessage = conversation.recentMessages.last,
+            let lastIndex = self.indexPath(for: lastMessage) {
+            
+            if let selectedMessage = selectedMessage,
+                let selectedIndex = self.indexPath(for: selectedMessage) {
+                self.selectedMessage = nil
+                deselect(indexPath: selectedIndex)
+                tableView.deselectRow(at: selectedIndex, animated: true)
+            }
+            
+            self.selectedMessage = lastMessage
+            select(indexPath: lastIndex)
+            tableView.selectRow(at: lastIndex, animated: true, scrollPosition: .none)
+        }
+    }
+    
+    @objc
+    func reconfigureVisibleSections() {
+        tableView.beginUpdates()
+        if let indexPathsForVisibleRows = tableView.indexPathsForVisibleRows {
+            let visibleSections = Set(indexPathsForVisibleRows.map(\.section))
+            for section in visibleSections {
+                reconfigureSectionController(at: section, tableView: tableView)
+            }
+        }
+        tableView.endUpdates()
     }
 }
 

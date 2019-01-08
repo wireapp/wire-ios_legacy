@@ -239,15 +239,15 @@ extension IndexSet {
     }
     
     @objc func configure(at sectionIndex: Int, in tableView: UITableView) {
-        configure(in: context, at: sectionIndex, in: tableView, doBatchUpdate: true)
+        configure(in: context, at: sectionIndex, in: tableView)
     }
     
-    func configure(in context: ConversationMessageContext, at sectionIndex: Int, in tableView: UITableView, doBatchUpdate: Bool) {
+    func configure(in context: ConversationMessageContext, at sectionIndex: Int, in tableView: UITableView) {
         guard !hasLegacyContent else { return }
         
         self.context = context
-
-        func action() {
+        
+        tableView.performWithBatchUpdate {
             let old = ZMOrderedSetState(orderedSet: NSOrderedSet(array: tableViewCellDescriptions.map({ $0.baseType })))
             createCellDescriptions(in: context, layoutProperties: layoutProperties)
             let new = ZMOrderedSetState(orderedSet: NSOrderedSet(array: tableViewCellDescriptions.map({ $0.baseType })))
@@ -260,13 +260,6 @@ extension IndexSet {
             if let inserted = change?.insertedIndexes.indexPaths(in: sectionIndex), inserted.count > 0 {
                 tableView.insertRows(at: inserted, with: .fade)
             }
-        }
-        
-        if doBatchUpdate {
-            tableView.performWithBatchUpdate(action)
-        }
-        else {
-            action()
         }
         
         for (index, description) in tableViewCellDescriptions.enumerated() {
