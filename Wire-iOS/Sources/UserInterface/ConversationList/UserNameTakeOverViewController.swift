@@ -35,7 +35,7 @@ final class UserNameTakeOverViewController: UIViewController {
 
     public let displayNameLabel = UILabel()
     public let suggestedHandleLabel = UILabel()
-    public let subtitleLabel = WebLinkTextView()
+    public let subtitleTextView = WebLinkTextView()
 
     private let chooseOwnButton = Button(style: .full)
     private let keepSuggestedButton = Button(style: .empty, variant: .dark)
@@ -70,7 +70,7 @@ final class UserNameTakeOverViewController: UIViewController {
         view.backgroundColor = UIColor.clear
         view.addSubview(contentView)
         [displayNameLabel, suggestedHandleLabel].forEach(topContainer.addSubview)
-        [topContainer, subtitleLabel, chooseOwnButton, keepSuggestedButton].forEach(contentView.addSubview)
+        [topContainer, subtitleTextView, chooseOwnButton, keepSuggestedButton].forEach(contentView.addSubview)
         
         displayNameLabel.font = FontSpec(.large, .thin).font!
         displayNameLabel.textColor = UIColor.from(scheme: .textDimmed, variant: .light)
@@ -93,8 +93,8 @@ final class UserNameTakeOverViewController: UIViewController {
     }
 
     func setupSubtitleLabel() {
-        subtitleLabel.textAlignment = .natural
-        subtitleLabel.linkTextAttributes = [NSAttributedString.Key.underlineStyle: NSUnderlineStyle().rawValue as NSNumber]
+        subtitleTextView.textAlignment = .natural
+        subtitleTextView.linkTextAttributes = [NSAttributedString.Key.underlineStyle: NSUnderlineStyle().rawValue as NSNumber]
 
         let font = FontSpec(.large, .thin).font!
         let linkFont = FontSpec(.large, .none).font!
@@ -107,9 +107,9 @@ final class UserNameTakeOverViewController: UIViewController {
         ]
 
         let text = (subtitle && font && color) + " " + (learnMore && linkAttributes && color)
-        subtitleLabel.attributedText = text
-        subtitleLabel.accessibilityLabel = text.string
-        subtitleLabel.delegate = self
+        subtitleTextView.attributedText = text
+        subtitleTextView.accessibilityLabel = text.string
+        subtitleTextView.delegate = self
     }
 
     func createConstraints() {
@@ -122,7 +122,7 @@ final class UserNameTakeOverViewController: UIViewController {
             handleLabel.top == container.centerY + 4
         }
 
-        constrain(view, contentView, topContainer, subtitleLabel) { view, contentView, container, subtitleLabel in
+        constrain(view, contentView, topContainer, subtitleTextView) { view, contentView, container, subtitleLabel in
             contentView.edges == view.edges
             container.top == contentView.topMargin
             container.leading == contentView.leading
@@ -132,7 +132,7 @@ final class UserNameTakeOverViewController: UIViewController {
             subtitleLabel.trailing == contentView.trailingMargin
         }
 
-        constrain(contentView, subtitleLabel, chooseOwnButton, keepSuggestedButton) { contentView, subtitleLabel, chooseButton, keepButton in
+        constrain(contentView, subtitleTextView, chooseOwnButton, keepSuggestedButton) { contentView, subtitleLabel, chooseButton, keepButton in
             subtitleLabel.bottom == chooseButton.top - 28
             chooseButton.leading == contentView.leadingMargin
             chooseButton.trailing == contentView.trailingMargin
@@ -165,6 +165,7 @@ extension UserNameTakeOverViewController: UITextViewDelegate {
     public func textView(_ textView: UITextView, shouldInteractWith url: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
 
         guard url == learnMoreURL else { return false }
+
         delegate?.takeOverViewController(self, didPerformAction: .learnMore)
 
         return false
