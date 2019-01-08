@@ -18,6 +18,7 @@
 
 import Foundation
 
+// MARK: - Keyboard frame observer
 extension ProfileViewController {
     @objc func setupKeyboardFrameNotification() {
         NotificationCenter.default.addObserver(self,
@@ -39,9 +40,7 @@ extension ProfileViewController {
 
         self.viewControllerDismisser = viewControllerDismisser
     }
-}
 
-extension ProfileViewController {
     @objc
     func setupProfileDetailsViewController() -> ProfileDetailsViewController? {
         guard let profileDetailsViewController = ProfileDetailsViewController(user: bareUser, conversation: conversation, context: context) else { return nil }
