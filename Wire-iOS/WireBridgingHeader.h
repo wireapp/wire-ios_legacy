@@ -33,8 +33,6 @@
 #import "ParticipantDeviceCell+Internal.h"
 #import "ParticipantDeviceHeaderView.h"
 #import "ParticipantDeviceHeaderView+Internal.h"
-#import "ConversationCell.h"
-#import "ConversationCell+Private.h"
 #import "UIViewController+Errors.h"
 #import "ConversationViewController.h"
 #import "ConversationViewController+Private.h"
@@ -181,7 +179,6 @@
 #import "KeyboardFrameObserver+iOS.h"
 #import "UIColor+Mixing.h"
 #import "MessageType.h"
-#import "ZMConversationMessageWindow+Formatting.h"
 #import "EmoticonSubstitutionConfiguration.h"
 
 // Audio player

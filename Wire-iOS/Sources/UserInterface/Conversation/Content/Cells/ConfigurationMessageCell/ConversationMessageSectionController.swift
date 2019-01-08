@@ -26,6 +26,7 @@ struct ConversationMessageContext {
     let isLastMessage: Bool
     let searchQueries: [String]
     let previousMessageIsKnock: Bool
+    let spacing: Float
 }
 
 extension IndexSet {
@@ -65,8 +66,7 @@ extension IndexSet {
     }
     
     var context: ConversationMessageContext
-    var layoutProperties: ConversationCellLayoutProperties
-
+    
     /// Whether we need to use inverted indices. This is `true` when the table view is upside down.
     @objc var useInvertedIndices = false
 
@@ -77,7 +77,7 @@ extension IndexSet {
     @objc var message: ZMConversationMessage
 
     /// The delegate for cells injected by the list adapter.
-    @objc weak var cellDelegate: ConversationCellDelegate?
+    @objc weak var cellDelegate: ConversationMessageCellDelegate?
 
     /// The object that receives informations from the section.
     @objc weak var sectionDelegate: ConversationMessageSectionControllerDelegate?
@@ -87,26 +87,18 @@ extension IndexSet {
 
     private var changeObservers: [Any] = []
     
-    private var hasLegacyContent: Bool = false
-
     deinit {
         changeObservers.removeAll()
     }
 
-    init(message: ZMConversationMessage, context: ConversationMessageContext, layoutProperties: ConversationCellLayoutProperties, selected: Bool = false) {
+    init(message: ZMConversationMessage, context: ConversationMessageContext, selected: Bool = false) {
         self.message = message
         self.context = context
-        self.layoutProperties = layoutProperties
         self.selected = selected
         
         super.init()
         
-        if addLegacyContentIfNeeded(layoutProperties: layoutProperties) {
-            hasLegacyContent = true
-            return
-        }
-        
-        createCellDescriptions(in: context, layoutProperties: layoutProperties)
+        createCellDescriptions(in: context)
         
         startObservingChanges(for: message)
         
@@ -117,26 +109,7 @@ extension IndexSet {
     
     // MARK: - Content Types
     
-    private func addLegacyContentIfNeeded(layoutProperties: ConversationCellLayoutProperties) -> Bool {
-        
-        if message.isSystem, let systemMessageType = message.systemMessageData?.systemMessageType {
-            switch systemMessageType {
-                
-            case .newConversation:
-                let participantsCell = ConversationLegacyCellDescription<ParticipantsCell>(message: message, layoutProperties: layoutProperties)
-                add(description: participantsCell)
-                
-            default:
-                return false
-            }
-        } else {
-            return false
-        }
-        
-        return true
-    }
-    
-    private func addContent(context: ConversationMessageContext, layoutProperties: ConversationCellLayoutProperties, isSenderVisible: Bool) {
+    private func addContent(context: ConversationMessageContext, isSenderVisible: Bool) {
         
         var contentCellDescriptions: [AnyConversationMessageCellDescription]
 
@@ -155,7 +128,7 @@ extension IndexSet {
         } else if message.isFile {
             contentCellDescriptions = [AnyConversationMessageCellDescription(ConversationFileMessageCellDescription(message: message))]
         } else if message.isSystem {
-            contentCellDescriptions = ConversationSystemMessageCellDescription.cells(for: message, layoutProperties: layoutProperties)
+            contentCellDescriptions = ConversationSystemMessageCellDescription.cells(for: message)
         } else {
             contentCellDescriptions = [AnyConversationMessageCellDescription(UnknownMessageCellDescription())]
         }
@@ -202,20 +175,16 @@ extension IndexSet {
     }
     
     func didSelect(indexPath: IndexPath, tableView: UITableView) {
-        guard !hasLegacyContent else { return }
-        
         selected = true
         configure(at: indexPath.section, in: tableView)
     }
     
     func didDeselect(indexPath: IndexPath, tableView: UITableView) {
-        guard !hasLegacyContent else { return }
-        
         selected = false
         configure(at: indexPath.section, in: tableView)
     }
     
-    private func createCellDescriptions(in context: ConversationMessageContext, layoutProperties: ConversationCellLayoutProperties) {
+    private func createCellDescriptions(in context: ConversationMessageContext) {
         cellDescriptions.removeAll()
         
         let isSenderVisible = self.isSenderVisible(in: context) && message.sender != nil
@@ -227,14 +196,14 @@ extension IndexSet {
             add(description: ConversationSenderMessageCellDescription(sender: sender, message: message))
         }
         
-        addContent(context: context, layoutProperties: layoutProperties, isSenderVisible: isSenderVisible)
+        addContent(context: context, isSenderVisible: isSenderVisible)
         
         if isToolboxVisible(in: context) {
             add(description: ConversationMessageToolboxCellDescription(message: message, selected: selected))
         }
         
         if let topCelldescription = cellDescriptions.first {
-            topCelldescription.topMargin = Float(layoutProperties.topPadding)
+            topCelldescription.topMargin = context.spacing
         }
     }
     
@@ -242,14 +211,12 @@ extension IndexSet {
         configure(in: context, at: sectionIndex, in: tableView)
     }
     
-    func configure(in context: ConversationMessageContext, at sectionIndex: Int, in tableView: UITableView) {
-        guard !hasLegacyContent else { return }
-        
+    func configure(in context: ConversationMessageContext, at sectionIndex: Int, in tableView: UITableView) {        
         self.context = context
         tableView.beginUpdates()
         
         let old = ZMOrderedSetState(orderedSet: NSOrderedSet(array: tableViewCellDescriptions.map({ $0.baseType })))
-        createCellDescriptions(in: context, layoutProperties: layoutProperties)
+        createCellDescriptions(in: context)
         let new = ZMOrderedSetState(orderedSet: NSOrderedSet(array: tableViewCellDescriptions.map({ $0.baseType })))
         let change = ZMChangedIndexes(start: old, end: new, updatedState: new, moveType: .nsTableView)
         

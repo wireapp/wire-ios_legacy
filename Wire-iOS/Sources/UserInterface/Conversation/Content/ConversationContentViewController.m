@@ -63,7 +63,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 
 
 
-@interface ConversationContentViewController (ConversationCellDelegate) <ConversationCellDelegate>
+@interface ConversationContentViewController (ConversationMessageCellDelegate) <ConversationMessageCellDelegate>
 
 @end
 
@@ -216,11 +216,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 
                                                              options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew];
 
-    for (ConversationCell *cell in self.tableView.visibleCells) {
-        if ([cell isKindOfClass:ConversationCell.class]) {
-            [cell willDisplayInTableView];
-        }
-        
+    for (UITableViewCell *cell in self.tableView.visibleCells) {        
         if ([cell respondsToSelector:@selector(willDisplayCell)]) {
             [cell willDisplayCell];
         }
@@ -250,16 +246,6 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     self.onScreen = NO;
     [self removeHighlightsAndMenu];
     [super viewWillDisappear:animated];
-}
-
-- (void)viewDidDisappear:(BOOL)animated
-{
-    [super viewDidDisappear:animated];
-    for (ConversationCell *cell in self.tableView.visibleCells) {
-        if ([cell isKindOfClass:ConversationCell.class]) {
-            [cell cellDidEndBeingVisible];
-        }
-    }
 }
 
 - (void)viewDidLayoutSubviews {
@@ -571,15 +557,6 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     }
     
     UITableViewCell *cell = [self cellForMessage:message];
-    
-    // If the user tapped on a file or image and the menu controller is currently visible,
-    // we do not want to show the detail but instead hide the menu controller first.
-    // TODO: Remove when the file cell is ported to the new system
-    if ([cell isKindOfClass:ConversationCell.class] && [(ConversationCell *)cell showsMenu]) {
-        [self removeHighlightsAndMenu];
-        return;
-    }
-    
     [self.messagePresenter openMessage:message targetView:cell actionResponder:self];
 }
 
@@ -628,7 +605,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     [[UIMenuController sharedMenuController] setMenuVisible:NO animated:YES];
 }
 
-- (ConversationCell *)cellForMessage:(id<ZMConversationMessage>)message
+- (UITableViewCell *)cellForMessage:(id<ZMConversationMessage>)message
 {
     NSIndexPath *indexPath = [self.conversationMessageWindowTableViewAdapter indexPathForMessage:message];
     
@@ -636,8 +613,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
         return nil;
     }
     
-    ConversationCell *cell = (ConversationCell *)[self.tableView cellForRowAtIndexPath:indexPath];
-    return cell;
+    return [self.tableView cellForRowAtIndexPath:indexPath];
 }
 
 - (BOOL)displaysMessage:(id<ZMConversationMessage>)message
@@ -690,11 +666,6 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     if ([cell respondsToSelector:@selector(willDisplayCell)] && self.onScreen) {
         [(id)cell willDisplayCell];
     }
-
-    ConversationCell *conversationCell = nil;
-    if ([cell isKindOfClass:ConversationCell.class]) {
-        conversationCell = (ConversationCell *)cell;
-    }
     
 	// using dispatch_async because when this method gets run, the cell is not yet in visible cells,
 	// so the update will fail
@@ -703,7 +674,6 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 		[self updateVisibleMessagesWindow];
 	});
     
-    [conversationCell willDisplayInTableView];
     [self.cachedRowHeights setObject:@(cell.frame.size.height) forKey:indexPath];
 }
 
@@ -721,13 +691,6 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     if ([cell respondsToSelector:@selector(didEndDisplayingCell)]) {
         [(id)cell didEndDisplayingCell];
     }
-
-    ConversationCell *conversationCell = nil;
-    if ([cell isKindOfClass:ConversationCell.class]) {
-        conversationCell = (ConversationCell *)cell;
-    }
-    
-    [conversationCell didEndDisplayingInTableView];
     
     [self.cachedRowHeights setObject:@(cell.frame.size.height) forKey:indexPath];
 }
@@ -786,47 +749,25 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 
 
 
-@implementation ConversationContentViewController (ConversationCellDelegate)
+@implementation ConversationContentViewController (ConversationMessageCellDelegate)
 
 - (void)wantsToPerformAction:(MessageAction)action forMessage:(id<ZMConversationMessage>)message
 {
-    UITableViewCell<SelectableView> *cell = [self cellForMessage:message];
-    [self wantsToPerformAction:action forMessage:message cell:cell];
-}
-
-- (void)conversationCell:(UIView *)cell userTapped:(id<UserType>)user inView:(UIView *)view frame:(CGRect)frame
-{
-    if (!cell || !view) {
-        return;
-    }
-
-    if ([self.delegate respondsToSelector:@selector(didTapOnUserAvatar:view:frame:)]) {
-        [self.delegate didTapOnUserAvatar:user view:view frame:frame];
-    }
-}
-
-- (void)conversationCellDidTapResendMessage:(ConversationCell *)cell
-{
-    [self.delegate conversationContentViewController:self didTriggerResendingMessage:cell.message];
-}
-
-- (void)conversationCell:(ConversationCell *)cell didSelectAction:(MessageAction)actionId forMessage:(id<ZMConversationMessage>)message
-{
-    [self wantsToPerformAction:actionId forMessage:message cell:cell];
-}
-
-- (void)conversationCell:(ConversationCell *)cell didSelectURL:(NSURL *)url
-{
-    [self.tableView selectRowAtIndexPath:[self.tableView indexPathForCell:cell] animated:NO scrollPosition:UITableViewScrollPositionNone];
-    self.conversationMessageWindowTableViewAdapter.selectedMessage = cell.message;
-
-    [url open];
+    UITableViewCell *cell = [self cellForMessage:message];
     
-    [self.tableView beginUpdates];
-    [self.tableView endUpdates];
+    if ([cell conformsToProtocol:@protocol(SelectableView)]) {
+        [self wantsToPerformAction:action forMessage:message cell:(UITableViewCell<SelectableView> *)cell];
+    }
 }
 
-- (BOOL)conversationCellShouldBecomeFirstResponderWhenShowingMenuForCell:(UIView *)cell;
+- (void)conversationMessageWantsToOpenUserDetails:(UIView *)cell user:(id<UserType>)user sourceView:(UIView *)sourceView frame:(CGRect)frame
+{
+    if ([self.delegate respondsToSelector:@selector(didTapOnUserAvatar:view:frame:)]) {
+        [self.delegate didTapOnUserAvatar:user view:sourceView frame:frame];
+    }
+}
+
+- (BOOL)conversationMessageShouldBecomeFirstResponderWhenShowingMenuForCell:(UIView *)cell
 {
     BOOL shouldBecomeFirstResponder = YES;
     if ([self.delegate respondsToSelector:@selector(conversationContentViewController:shouldBecomeFirstResponderWhenShowMenuFromCell:)]) {
@@ -835,22 +776,17 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     return shouldBecomeFirstResponder;
 }
 
-- (void)conversationCellDidRequestOpeningMessageDetails:(UIView *)cell messageDetails:(MessageDetailsViewController *)messageDetails
+- (void)conversationMessageWantsToOpenMessageDetails:(UIView *)cell messageDetailsViewController:(MessageDetailsViewController *)messageDetailsViewController
 {
-    [self.parentViewController presentViewController:messageDetails animated:YES completion:nil];
+    [self.parentViewController presentViewController:messageDetailsViewController animated:YES completion:nil];
 }
 
-- (BOOL)conversationCellShouldStartDestructionTimer:(ConversationCell *)cell
-{
-    return self.onScreen;
-}
-    
-- (void)conversationCell:(ConversationCell *)cell openGuestOptionsFromView:(UIView *)sourceView
+- (void)conversationMessageWantsToOpenGuestOptionsFromView:(UIView *)cell sourceView:(UIView *)sourceView
 {
     [self.delegate conversationContentViewController:self presentGuestOptionsFromView:sourceView];
 }
 
-- (void)conversationCell:(ConversationCell *)cell openParticipantsDetailsWithSelectedUsers:(NSArray<ZMUser *> *)selectedUsers fromView:(UIView *)sourceView
+- (void)conversationMessageWantsToOpenParticipantsDetails:(UIView *)cell selectedUsers:(NSArray<ZMUser *> *)selectedUsers sourceView:(UIView *)sourceView
 {
     [self.delegate conversationContentViewController:self presentParticipantsDetailsWithSelectedUsers:selectedUsers fromView:sourceView];
 }
