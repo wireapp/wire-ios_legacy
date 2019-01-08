@@ -26,6 +26,8 @@ extension ProfileDevicesViewController {
     }
 }
 
+// MARK: - refresh table header size when frame size changes
+
 extension ProfileDevicesViewController {
     open override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)

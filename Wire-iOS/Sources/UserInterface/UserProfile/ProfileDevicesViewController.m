@@ -24,7 +24,6 @@
 #import "ParticipantDeviceCell.h"
 
 #import "Analytics.h"
-@import PureLayout;
 #import "Wire-Swift.h"
 
 @import WireSyncEngine;
