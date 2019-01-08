@@ -28,7 +28,7 @@ import UIKit
     init() {
         super.init(frame: .zero, textContainer: nil)
 
-        setupWebLinkTextView()
+        setup()
 
     }
 
@@ -36,13 +36,13 @@ import UIKit
         fatalError("init(coder:) has not been implemented")
     }
 
-    func setupWebLinkTextView() {
+    private func setup() {
         isSelectable = true
         isEditable = false
         isScrollEnabled = false
         bounces = false
         backgroundColor = UIColor.clear
-        textContainerInset = UIEdgeInsets(top: 0, left: -4, bottom: 0, right: 0)
+        textContainerInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
 
         setupConstraints()
     }
