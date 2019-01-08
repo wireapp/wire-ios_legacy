@@ -29,14 +29,43 @@ extension ZMConversationMessage {
     }
 }
 
+fileprivate enum Mode {
+    case attachedToBottom(count: Int)
+    case detached(offset: Int, count: Int)
+}
+
+extension Mode {
+    var offset: Int {
+        switch self {
+        case .attachedToBottom(_):
+            return 0
+        case .detached(let offset, _):
+            return offset
+        }
+    }
+    
+    var limit: Int {
+        switch self {
+        case .attachedToBottom(let count):
+            return count
+        case .detached(_, let count):
+            return count
+        }
+    }
+}
+
 final class ConversationTableViewDataSource: NSObject {
-    public static let defaultBatchSize = 30 // Magic number: amount of messages per screen (upper bound)
-    public static let maximumFetchLimitSize = 90 // Magic number: maximum amount of messages visible.
+    public static let defaultBatchSize = 30 // Magic number: amount of messages per screen (upper bound).
     
     private var fetchController: NSFetchedResultsController<ZMMessage>!
-    private var fetchOffset: Int = 0
-    private var fetchLimit: Int = ConversationTableViewDataSource.defaultBatchSize
-
+    
+    private var mode: Mode = .attachedToBottom(count: ConversationTableViewDataSource.defaultBatchSize) {
+        didSet {
+            createFetchController()
+            tableView.reloadData()
+        }
+    }
+    
     public var registeredCells: [AnyClass] = []
     public var sectionControllers: [String: ConversationMessageSectionController] = [:]
     
@@ -46,44 +75,22 @@ final class ConversationTableViewDataSource: NSObject {
     
     public var actionControllers: [String: ConversationMessageActionController] = [:]
     
-    private func performFetch() {
-        createFetchController()
-        tableView.reloadData()
-    }
-    
     private var readerPosition: Int = 0 {
         didSet {
             print("reader position is \(readerPosition)")
-            
-            // Check if user is about to see the oldest visible messages.
-            if readerPosition + 10 > messages.count && !oldestMessageFetched {
-                // Do we need to move the frame, or we can simply extend it up?
-                if fetchLimit < type(of: self).maximumFetchLimitSize {
-                    fetchLimit = fetchLimit + type(of: self).defaultBatchSize
-                    performFetch()
+            switch mode {
+            case .attachedToBottom(let messagesToDisplay):
+                // Check if user is about to see the oldest visible messages.
+                if readerPosition + 10 > messages.count && !oldestMessageFetched {
+                    mode = .attachedToBottom(count: messagesToDisplay + ConversationTableViewDataSource.defaultBatchSize)
                 }
-                else {
-                    // TODO: Problem: method called twice in the row, for message 80 and 81. We increase the frame for 80, so 81 must be ignored.
-                    
-                    let lastPersistedMessageFrame = tableView.rectForRow(at: IndexPath(row: type(of: self).defaultBatchSize, section: 0))
-                    let position = lastPersistedMessageFrame.origin.y
-                    // Change the content offset (move down) when adjusting the fetchOffset
-                    fetchOffset = fetchOffset + type(of: self).defaultBatchSize
-                    performFetch()
-                    tableView.contentOffset.y = tableView.contentOffset.y - position
+                // Check if user is about to see the newest visible message.
+                else if readerPosition < type(of: self).defaultBatchSize && !newestMessageFetched {
+                    // Move towards the newer messages.
+                    mode = .attachedToBottom(count: messagesToDisplay - ConversationTableViewDataSource.defaultBatchSize)
                 }
-                
-            }
-            
-            // Check if user is about to see the newest visible message.
-            if readerPosition < 10 && !newestMessageFetched {
-                
-                if fetchOffset > 0 {
-                    // TODO: Change the content offset (move up) when adjusting the fetchOffset
-                    fetchOffset = fetchOffset - type(of: self).defaultBatchSize
-                }
-                
-                performFetch()
+            case .detached(_, _):
+                break
             }
         }
     }
@@ -194,7 +201,8 @@ final class ConversationTableViewDataSource: NSObject {
 
         // Move the message window to show the message and previous
         let messagesShownBeforeGivenMessage = 5
-        fetchOffset = index > messagesShownBeforeGivenMessage ? index - messagesShownBeforeGivenMessage : index
+        let offset = index > messagesShownBeforeGivenMessage ? index - messagesShownBeforeGivenMessage : index
+        mode = .detached(offset: offset, count: ConversationTableViewDataSource.defaultBatchSize)
         
         completion?(index)
     }
@@ -207,11 +215,11 @@ final class ConversationTableViewDataSource: NSObject {
         let fetchRequest = self.fetchRequest()
         let totalCount = try! moc.count(for: fetchRequest)
     
-        return fetchOffset + ConversationTableViewDataSource.defaultBatchSize >= totalCount
+        return mode.offset + ConversationTableViewDataSource.defaultBatchSize >= totalCount
     }
     
     public var newestMessageFetched: Bool {
-        return fetchOffset == 0
+        return mode.offset == 0
     }
     
     @objc func indexOfMessage(_ message: ZMConversationMessage) -> Int {
@@ -242,7 +250,7 @@ final class ConversationTableViewDataSource: NSObject {
     @objc(tableViewDidScroll:) public func didScroll(tableView: UITableView) {
         let topRowLocationInTableViewCoordinates = CGPoint(x: tableView.bounds.width / 2, y: tableView.contentOffset.y + tableView.bounds.height)
         
-        let topRow = tableView.indexPathForRow(at: topRowLocationInTableViewCoordinates)?.row ?? tableView.numberOfRows(inSection: 0) - 1
+        let topRow = tableView.indexPathForRow(at: topRowLocationInTableViewCoordinates)?.section ?? tableView.numberOfSections - 1
         
         readerPosition = topRow
     }
@@ -267,8 +275,8 @@ final class ConversationTableViewDataSource: NSObject {
     
     private func createFetchController() {
         let fetchRequest = self.fetchRequest()
-        fetchRequest.fetchLimit = fetchLimit
-        fetchRequest.fetchOffset = fetchOffset
+        fetchRequest.fetchLimit = mode.limit
+        fetchRequest.fetchOffset = mode.offset
         
         fetchController = NSFetchedResultsController<ZMMessage>(fetchRequest: fetchRequest,
                                                                 managedObjectContext: conversation.managedObjectContext!,
