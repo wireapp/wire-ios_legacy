@@ -19,7 +19,6 @@
 
 import UIKit
 import Cartography
-import TTTAttributedLabel
 
 
 protocol UserNameTakeOverViewControllerDelegate: NSObjectProtocol {
@@ -36,7 +35,7 @@ final class UserNameTakeOverViewController: UIViewController {
 
     public let displayNameLabel = UILabel()
     public let suggestedHandleLabel = UILabel()
-    public let subtitleLabel = TTTAttributedLabel(frame: .zero)
+    public let subtitleLabel = WebLinkTextView()
 
     private let chooseOwnButton = Button(style: .full)
     private let keepSuggestedButton = Button(style: .empty, variant: .dark)
@@ -95,10 +94,8 @@ final class UserNameTakeOverViewController: UIViewController {
 
     func setupSubtitleLabel() {
         subtitleLabel.textAlignment = .natural
-        subtitleLabel.numberOfLines = 0
-        subtitleLabel.linkAttributes = [NSAttributedString.Key.underlineStyle: NSUnderlineStyle().rawValue as NSNumber]
-        subtitleLabel.extendsLinkTouchArea = true
-        
+        subtitleLabel.linkTextAttributes = [NSAttributedString.Key.underlineStyle: NSUnderlineStyle().rawValue as NSNumber]
+
         let font = FontSpec(.large, .thin).font!
         let linkFont = FontSpec(.large, .none).font!
         let color = UIColor.from(scheme: .textForeground, variant: .dark)
@@ -111,7 +108,6 @@ final class UserNameTakeOverViewController: UIViewController {
 
         let text = (subtitle && font && color) + " " + (learnMore && linkAttributes && color)
         subtitleLabel.attributedText = text
-        subtitleLabel.addLinks()
         subtitleLabel.accessibilityLabel = text.string
         subtitleLabel.delegate = self
     }
@@ -164,9 +160,14 @@ final class UserNameTakeOverViewController: UIViewController {
 
 }
 
-extension UserNameTakeOverViewController: TTTAttributedLabelDelegate {
-    func attributedLabel(_ label: TTTAttributedLabel!, didSelectLinkWith url: URL!) {
-        guard url == learnMoreURL else { return }
+extension UserNameTakeOverViewController: UITextViewDelegate {
+
+    public func textView(_ textView: UITextView, shouldInteractWith url: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+
+        guard url == learnMoreURL else { return false }
         delegate?.takeOverViewController(self, didPerformAction: .learnMore)
+
+        return false
     }
+
 }
