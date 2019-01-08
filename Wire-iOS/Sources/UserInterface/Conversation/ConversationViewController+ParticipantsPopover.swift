@@ -26,6 +26,7 @@ extension ConversationViewController: UIPopoverPresentationControllerDelegate {
                                                        contentViewController controller: UIViewController) {
 
         controller.modalPresentationStyle = .popover
+        controller.preferredContentSize = CGSize.IPadPopover.preferredContentSize
 
         guard let popover = controller.popoverPresentationController else { return }
         guard let rootViewController = UIApplication.shared.keyWindow?.rootViewController as? PopoverPresenter & UIViewController else { return }
