@@ -535,7 +535,7 @@
     NSIndexPath *firstIndexPath = indexPathsForVisibleRows.firstObject;
     
     if (firstIndexPath) {
-        id<ZMConversationMessage>lastVisibleMessage = [self.dataSource.messages objectAtIndex:firstIndexPath.row];
+        id<ZMConversationMessage>lastVisibleMessage = [self.dataSource.messages objectAtIndex:firstIndexPath.section];
 
         [self.conversation markMessagesAsReadUntil:lastVisibleMessage];
     }
