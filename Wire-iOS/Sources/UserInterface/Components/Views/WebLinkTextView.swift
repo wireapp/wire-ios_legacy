@@ -49,16 +49,12 @@ import UIKit
 
 
     override public var attributedText: NSAttributedString? {
-        get {
-            return super.attributedText
-        }
-
-        set {
-            super.attributedText = newValue
-
+        didSet {
             let size = sizeThatFits(CGSize(width: frame.size.width, height: UIView.noIntrinsicMetric))
 
             heightConstraint.constant = size.height
+
+            layoutIfNeeded()
         }
     }
 
