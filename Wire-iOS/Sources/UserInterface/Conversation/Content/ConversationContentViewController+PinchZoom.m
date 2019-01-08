@@ -51,6 +51,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)onPinchZoom:(UIPinchGestureRecognizer *)pinchGestureRecognizer
 {
+    // TODO: restore pinch to zoom
 //    switch(pinchGestureRecognizer.state) {
 //        case UIGestureRecognizerStateBegan:
 //        {

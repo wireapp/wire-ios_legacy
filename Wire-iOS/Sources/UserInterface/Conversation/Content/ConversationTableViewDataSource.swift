@@ -282,14 +282,6 @@ final class ConversationTableViewDataSource: NSObject {
     }
 }
 
-extension UITableView {
-    func performWithBatchUpdate(_ action: ()->()) {
-        self.beginUpdates()
-        action()
-        self.endUpdates()
-    }
-}
-
 extension ConversationTableViewDataSource: NSFetchedResultsControllerDelegate {
     
     func reconfigureSectionController(at index: Int, tableView: UITableView) {
@@ -300,14 +292,14 @@ extension ConversationTableViewDataSource: NSFetchedResultsControllerDelegate {
     }
     
     func reconfigureVisibleSections(doBatchUpdate: Bool) {
-        tableView.performWithBatchUpdate {
-            if let indexPathsForVisibleRows = tableView.indexPathsForVisibleRows {
-                let visibleSections = Set(indexPathsForVisibleRows.map(\.section))
-                for section in visibleSections {
-                    reconfigureSectionController(at: section, tableView: tableView)
-                }
+        tableView.beginUpdates()
+        if let indexPathsForVisibleRows = tableView.indexPathsForVisibleRows {
+            let visibleSections = Set(indexPathsForVisibleRows.map(\.section))
+            for section in visibleSections {
+                reconfigureSectionController(at: section, tableView: tableView)
             }
         }
+        tableView.endUpdates()
     }
     
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
@@ -333,7 +325,7 @@ extension ConversationTableViewDataSource: NSFetchedResultsControllerDelegate {
                     didChange sectionInfo: NSFetchedResultsSectionInfo,
                     atSectionIndex sectionIndex: Int,
                     for changeType: NSFetchedResultsChangeType) {
-        fatal("Unexpected change")
+        // no-op
     }
     
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
