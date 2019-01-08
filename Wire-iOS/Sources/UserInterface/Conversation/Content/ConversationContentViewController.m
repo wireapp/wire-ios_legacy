@@ -726,8 +726,7 @@
 
 - (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-
-    ZMMessage *message = (ZMMessage *)[self.dataSource.messages objectAtIndex:indexPath.row];
+    ZMMessage *message = (ZMMessage *)[self.dataSource.messages objectAtIndex:indexPath.section];
     NSIndexPath *selectedIndexPath = nil;
 
     // If the menu is visible, hide it and do nothing
