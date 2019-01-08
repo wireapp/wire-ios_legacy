@@ -374,16 +374,18 @@ extension ZMSnapshotTestCase {
     ///
     /// - Parameters:
     ///   - view: the view to verify
+    ///   - size: the customize view size, default is iPhone 4-inch's size
     ///   - file: source file
     ///   - line: source line
     func verifyInIPhoneSize(view: UIView,
                             extraLayoutPass: Bool = false,
+                            size: CGSize = XCTestCase.DeviceSizeIPhone5,
                             file: StaticString = #file,
                             line: UInt = #line) {
         view.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            view.heightAnchor.constraint(equalToConstant: defaultIPhoneSize.height),
-            view.widthAnchor.constraint(equalToConstant: defaultIPhoneSize.width)
+            view.heightAnchor.constraint(equalToConstant: size.height),
+            view.widthAnchor.constraint(equalToConstant: size.width)
             ])
 
         view.layoutIfNeeded()
