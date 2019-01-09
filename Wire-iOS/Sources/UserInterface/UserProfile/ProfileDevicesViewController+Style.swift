@@ -32,7 +32,6 @@ extension ProfileDevicesViewController {
     open override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         updateTableHeaderView()
-        tableView.reloadData()
     }
 
     @objc

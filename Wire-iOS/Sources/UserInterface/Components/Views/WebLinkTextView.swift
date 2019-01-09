@@ -26,6 +26,10 @@ import UIKit
     init() {
         super.init(frame: .zero, textContainer: nil)
 
+        if #available(iOS 11.0, *) {
+            textDragDelegate = self
+        }
+
         setup()
     }
 
@@ -42,4 +46,20 @@ import UIKit
         textContainerInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         textContainer.lineFragmentPadding = 0
     }
+
+
+    /// non-selectable textview
+    override public var selectedTextRange: UITextRange? {
+        get { return nil }
+        set { /* no-op */ }
+    }
+}
+
+@available(iOS 11.0, *)
+extension WebLinkTextView: UITextDragDelegate {
+
+    public func textDraggableView(_ textDraggableView: UIView & UITextDraggable, itemsForDrag dragRequest: UITextDragRequest) -> [UIDragItem] {
+        return []
+    }
+
 }
