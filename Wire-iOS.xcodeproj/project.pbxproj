@@ -1192,6 +1192,7 @@
 		EF27CDA020C161500077FE55 /* ClientListViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF27CD9D20C161500077FE55 /* ClientListViewControllerTests.swift */; };
 		EF27E85F21E60CA0001C7674 /* SettingsTableViewControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF27E85E21E60CA0001C7674 /* SettingsTableViewControllerSnapshotTests.swift */; };
 		EF27E86521E62F14001C7674 /* ZetaIconTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = EF27E86421E62F14001C7674 /* ZetaIconTypes.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EF27E86721E63A1F001C7674 /* WireStyleKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF27E86621E63124001C7674 /* WireStyleKit.swift */; };
 		EF2971582099AD8700EFE6A4 /* SelfProfileViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2971552099AD3000EFE6A4 /* SelfProfileViewControllerTests.swift */; };
 		EF297DD22131F2C20002983A /* MediaPreviewViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF297DD02131F2C20002983A /* MediaPreviewViewController+Extension.swift */; };
 		EF297DD42131F39F0002983A /* MediaPreviewViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF297DD32131F39F0002983A /* MediaPreviewViewControllerTests.swift */; };
@@ -7259,6 +7260,7 @@
 				5E672C942179D41100522E61 /* UserType+ZMUser.swift in Sources */,
 				5E672C8F2178D85200522E61 /* AvatarImageView.swift in Sources */,
 				1677FD341BBC19A400491481 /* ColorScheme.m in Sources */,
+				EF27E86721E63A1F001C7674 /* WireStyleKit.swift in Sources */,
 				5ED26CD420E7D08E00EB9ED4 /* VerticalColumnCollectionViewLayout.swift in Sources */,
 				EFE8062B1FDFF24C006A0EE7 /* NSDate+Format.swift in Sources */,
 			);
