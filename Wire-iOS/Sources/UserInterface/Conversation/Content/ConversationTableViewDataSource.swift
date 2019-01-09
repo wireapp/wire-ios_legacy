@@ -77,7 +77,6 @@ final class ConversationTableViewDataSource: NSObject {
     
     private var readerPosition: Int = 0 {
         didSet {
-            print("reader position is \(readerPosition)")
             switch mode {
             case .attachedToBottom(let messagesToDisplay):
                 // Check if user is about to see the oldest visible messages.
@@ -202,7 +201,9 @@ final class ConversationTableViewDataSource: NSObject {
         // Move the message window to show the message and previous
         let messagesShownBeforeGivenMessage = 5
         let offset = index > messagesShownBeforeGivenMessage ? index - messagesShownBeforeGivenMessage : index
-        mode = .detached(offset: offset, count: ConversationTableViewDataSource.defaultBatchSize)
+        // TODO: Develop detached conversation view mode.
+        // mode = .detached(offset: offset, count: ConversationTableViewDataSource.defaultBatchSize)
+        mode = .attachedToBottom(count: offset + ConversationTableViewDataSource.defaultBatchSize)
         
         completion?(index)
     }
