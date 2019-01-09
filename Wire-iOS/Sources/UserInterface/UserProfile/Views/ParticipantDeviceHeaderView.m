@@ -56,8 +56,7 @@
 - (void)createViews
 {
     self.textView = [[WebLinkTextView alloc] init];
-    [self.textView setTextContainerInset:UIEdgeInsetsMake(0, - 4, 0, 0)];
-
+    
     self.textView.textContainer.maximumNumberOfLines = 0;
     self.textView.delegate = self;
     self.textView.linkTextAttributes = @{};
