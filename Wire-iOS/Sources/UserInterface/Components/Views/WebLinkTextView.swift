@@ -53,7 +53,17 @@ import UIKit
         get { return nil }
         set { /* no-op */ }
     }
+
+    override func addGestureRecognizer(_ gestureRecognizer: UIGestureRecognizer) {
+        //Prevent long press to show the magnifying glass
+        if gestureRecognizer is UILongPressGestureRecognizer {
+            gestureRecognizer.isEnabled = false
+        }
+
+        super.addGestureRecognizer(gestureRecognizer)
+    }
 }
+
 
 @available(iOS 11.0, *)
 extension WebLinkTextView: UITextDragDelegate {
