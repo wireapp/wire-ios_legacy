@@ -21,6 +21,7 @@ import Foundation
 extension UIViewController {
 
     /// Present an action sheet for user removal confirmation
+    /// Notice: if the participant is not in the conversation, the action sheet still shows.
     ///
     /// - Parameters:
     ///   - participant: user to remove
