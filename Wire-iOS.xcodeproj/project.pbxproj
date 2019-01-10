@@ -1223,6 +1223,7 @@
 		EF32AB0321C15B0E002E4777 /* String+MessageToolBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF32AB0221C15B0E002E4777 /* String+MessageToolBox.swift */; };
 		EF33204C21496A0D0079E832 /* AVPlayerViewController+StatusBarAndNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF33204B21496A0D0079E832 /* AVPlayerViewController+StatusBarAndNotification.swift */; };
 		EF36168821E74D5C0041F0CC /* WireStyleKit+AboutIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF36168721E74D5C0041F0CC /* WireStyleKit+AboutIcon.swift */; };
+		EF36168A21E753310041F0CC /* SettingsTableViewControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF36168921E753300041F0CC /* SettingsTableViewControllerSnapshotTests.swift */; };
 		EF3976CE2114506E0030BE68 /* KeyboardAvoidingViewController+Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3976CD2114506E0030BE68 /* KeyboardAvoidingViewController+Animation.swift */; };
 		EF3BA5D421075FC60093048F /* ConversationInputBarViewController+Language.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3BA5D321075FC60093048F /* ConversationInputBarViewController+Language.swift */; };
 		EF3BA5D72107688D0093048F /* InputLanguageSettable.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3BA5D62107688D0093048F /* InputLanguageSettable.swift */; };
@@ -3005,6 +3006,7 @@
 		EF32AB0221C15B0E002E4777 /* String+MessageToolBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+MessageToolBox.swift"; sourceTree = "<group>"; };
 		EF33204B21496A0D0079E832 /* AVPlayerViewController+StatusBarAndNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVPlayerViewController+StatusBarAndNotification.swift"; sourceTree = "<group>"; };
 		EF36168721E74D5C0041F0CC /* WireStyleKit+AboutIcon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WireStyleKit+AboutIcon.swift"; sourceTree = "<group>"; };
+		EF36168921E753300041F0CC /* SettingsTableViewControllerSnapshotTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableViewControllerSnapshotTests.swift; sourceTree = "<group>"; };
 		EF3976CD2114506E0030BE68 /* KeyboardAvoidingViewController+Animation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KeyboardAvoidingViewController+Animation.swift"; sourceTree = "<group>"; };
 		EF3976CF21148A110030BE68 /* KeyboardAvoidingViewController+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "KeyboardAvoidingViewController+Internal.h"; sourceTree = "<group>"; };
 		EF3BA5D321075FC60093048F /* ConversationInputBarViewController+Language.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationInputBarViewController+Language.swift"; sourceTree = "<group>"; };
@@ -5975,6 +5977,7 @@
 				EFD5FC4021C94E9C00026E3A /* UrlTests.swift */,
 				5E53533F21B05BF60060DB38 /* MessageDetails */,
 				EF2172E821DF97CC00DA1671 /* URL+EncodeTests.swift */,
+				EF36168921E753300041F0CC /* SettingsTableViewControllerSnapshotTests.swift */,
 			);
 			path = "Wire-iOS Tests";
 			sourceTree = "<group>";
@@ -8458,6 +8461,7 @@
 				EF106E86204D8BDF00B9F0F6 /* MockDevice.swift in Sources */,
 				EFF92B6721A855050090DA66 /* String+PhoneNumberTests.swift in Sources */,
 				8732670E1D2D0C5C005A62C1 /* AudioRecordKeyboardViewControllerTests.swift in Sources */,
+				EF36168A21E753310041F0CC /* SettingsTableViewControllerSnapshotTests.swift in Sources */,
 				EF84DF4E2130565B00033702 /* ConversationListBottomBarControllerTests.swift in Sources */,
 				876041551F5451EA003CB161 /* AccountViewTests.swift in Sources */,
 				EF3052452087388000613C45 /* ConfirmEmailViewControllerTests.swift in Sources */,
