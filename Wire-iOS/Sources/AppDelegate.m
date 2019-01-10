@@ -140,6 +140,8 @@ static AppDelegate *sharedAppDelegate = nil;
             self.launchType = ApplicationLaunchDirect;
             break;
     }
+    
+    [self observeChangesOnShareExtension];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
