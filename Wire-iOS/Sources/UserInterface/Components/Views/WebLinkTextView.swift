@@ -54,6 +54,11 @@ import UIKit
         set { /* no-op */ }
     }
 
+    // Prevent double-tap to select 
+    override var canBecomeFirstResponder: Bool {
+        return false
+    }
+
     override func addGestureRecognizer(_ gestureRecognizer: UIGestureRecognizer) {
         //Prevent long press to show the magnifying glass
         if gestureRecognizer is UILongPressGestureRecognizer {
