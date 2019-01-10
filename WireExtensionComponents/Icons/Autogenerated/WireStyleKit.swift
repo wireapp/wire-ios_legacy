@@ -2752,58 +2752,6 @@ public class WireStyleKit : NSObject {
         supportPath.fill()
     }
 
-    @objc dynamic public class func drawIcon_0x202_32pt(color: UIColor = UIColor(red: 0.000, green: 0.000, blue: 0.000, alpha: 1.000)) {
-
-        //// w-symbol Drawing
-        let wsymbolPath = UIBezierPath()
-        wsymbolPath.move(to: CGPoint(x: 43.56, y: 59.4))
-        wsymbolPath.addCurve(to: CGPoint(x: 64, y: 38.88), controlPoint1: CGPoint(x: 54.82, y: 59.4), controlPoint2: CGPoint(x: 64, y: 50.2))
-        wsymbolPath.addLine(to: CGPoint(x: 64, y: 9.76))
-        wsymbolPath.addLine(to: CGPoint(x: 64, y: 7.76))
-        wsymbolPath.addLine(to: CGPoint(x: 62, y: 7.76))
-        wsymbolPath.addLine(to: CGPoint(x: 58.47, y: 7.76))
-        wsymbolPath.addLine(to: CGPoint(x: 56.47, y: 7.76))
-        wsymbolPath.addLine(to: CGPoint(x: 56.47, y: 9.76))
-        wsymbolPath.addLine(to: CGPoint(x: 56.47, y: 38.88))
-        wsymbolPath.addCurve(to: CGPoint(x: 43.56, y: 51.87), controlPoint1: CGPoint(x: 56.47, y: 46.08), controlPoint2: CGPoint(x: 50.73, y: 51.87))
-        wsymbolPath.addCurve(to: CGPoint(x: 35.84, y: 49.36), controlPoint1: CGPoint(x: 40.69, y: 51.87), controlPoint2: CGPoint(x: 38.01, y: 50.99))
-        wsymbolPath.addLine(to: CGPoint(x: 36.18, y: 52.24))
-        wsymbolPath.addCurve(to: CGPoint(x: 41.06, y: 38.88), controlPoint1: CGPoint(x: 39.3, y: 48.52), controlPoint2: CGPoint(x: 41.06, y: 43.81))
-        wsymbolPath.addLine(to: CGPoint(x: 41.06, y: 15.06))
-        wsymbolPath.addCurve(to: CGPoint(x: 32, y: 6), controlPoint1: CGPoint(x: 41.06, y: 10.07), controlPoint2: CGPoint(x: 36.98, y: 6))
-        wsymbolPath.addCurve(to: CGPoint(x: 22.94, y: 15.06), controlPoint1: CGPoint(x: 27.01, y: 6), controlPoint2: CGPoint(x: 22.94, y: 10.07))
-        wsymbolPath.addLine(to: CGPoint(x: 22.94, y: 38.88))
-        wsymbolPath.addCurve(to: CGPoint(x: 28.01, y: 52.27), controlPoint1: CGPoint(x: 22.94, y: 43.86), controlPoint2: CGPoint(x: 24.75, y: 48.5))
-        wsymbolPath.addLine(to: CGPoint(x: 28.36, y: 49.33))
-        wsymbolPath.addCurve(to: CGPoint(x: 20.53, y: 51.87), controlPoint1: CGPoint(x: 26.11, y: 50.94), controlPoint2: CGPoint(x: 23.33, y: 51.87))
-        wsymbolPath.addCurve(to: CGPoint(x: 7.53, y: 38.88), controlPoint1: CGPoint(x: 13.4, y: 51.87), controlPoint2: CGPoint(x: 7.53, y: 46.03))
-        wsymbolPath.addLine(to: CGPoint(x: 7.53, y: 9.76))
-        wsymbolPath.addLine(to: CGPoint(x: 7.53, y: 7.76))
-        wsymbolPath.addLine(to: CGPoint(x: 5.53, y: 7.76))
-        wsymbolPath.addLine(to: CGPoint(x: 2, y: 7.76))
-        wsymbolPath.addLine(to: CGPoint(x: 0, y: 7.76))
-        wsymbolPath.addLine(to: CGPoint(x: 0, y: 9.76))
-        wsymbolPath.addLine(to: CGPoint(x: 0, y: 38.88))
-        wsymbolPath.addCurve(to: CGPoint(x: 20.62, y: 59.4), controlPoint1: CGPoint(x: 0, y: 50.2), controlPoint2: CGPoint(x: 9.26, y: 59.4))
-        wsymbolPath.addCurve(to: CGPoint(x: 33.4, y: 55.01), controlPoint1: CGPoint(x: 25.28, y: 59.4), controlPoint2: CGPoint(x: 29.78, y: 57.82))
-        wsymbolPath.addLine(to: CGPoint(x: 30.92, y: 54.99))
-        wsymbolPath.addCurve(to: CGPoint(x: 43.56, y: 59.4), controlPoint1: CGPoint(x: 34.46, y: 57.82), controlPoint2: CGPoint(x: 38.89, y: 59.4))
-        wsymbolPath.addLine(to: CGPoint(x: 43.56, y: 59.4))
-        wsymbolPath.close()
-        wsymbolPath.move(to: CGPoint(x: 33.53, y: 15.06))
-        wsymbolPath.addLine(to: CGPoint(x: 33.53, y: 38.88))
-        wsymbolPath.addCurve(to: CGPoint(x: 30.46, y: 47.21), controlPoint1: CGPoint(x: 33.53, y: 41.92), controlPoint2: CGPoint(x: 32.43, y: 44.84))
-        wsymbolPath.addLine(to: CGPoint(x: 33.51, y: 47.19))
-        wsymbolPath.addCurve(to: CGPoint(x: 30.47, y: 38.88), controlPoint1: CGPoint(x: 31.56, y: 44.92), controlPoint2: CGPoint(x: 30.47, y: 42.01))
-        wsymbolPath.addLine(to: CGPoint(x: 30.47, y: 15.06))
-        wsymbolPath.addCurve(to: CGPoint(x: 32, y: 13.53), controlPoint1: CGPoint(x: 30.47, y: 14.22), controlPoint2: CGPoint(x: 31.16, y: 13.53))
-        wsymbolPath.addCurve(to: CGPoint(x: 33.53, y: 15.06), controlPoint1: CGPoint(x: 32.83, y: 13.53), controlPoint2: CGPoint(x: 33.53, y: 14.22))
-        wsymbolPath.addLine(to: CGPoint(x: 33.53, y: 15.06))
-        wsymbolPath.close()
-        color.setFill()
-        wsymbolPath.fill()
-    }
-
     @objc dynamic public class func drawIcon_0x235_32pt(color: UIColor = UIColor(red: 0.000, green: 0.000, blue: 0.000, alpha: 1.000)) {
 
         //// Send Drawing
