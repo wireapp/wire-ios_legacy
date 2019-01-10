@@ -19,5 +19,6 @@
 @interface ProfileViewController () <ZMUserObserver>
 
 @property (nonatomic, readonly) ProfileViewControllerContext context;
+@property (nonatomic, readonly) ZMConversation *conversation;
 
 @end

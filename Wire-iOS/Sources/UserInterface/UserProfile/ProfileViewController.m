@@ -47,12 +47,6 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
 @interface ProfileViewController (ProfileViewControllerDelegate) <ProfileViewControllerDelegate>
 @end
 
-@interface ProfileViewController (ViewControllerDismisser) <ViewControllerDismisser>
-@end
-
-@interface ProfileViewController (ProfileDetailsViewControllerDelegate) <ProfileDetailsViewControllerDelegate>
-@end
-
 @interface ProfileViewController (DevicesListDelegate) <ProfileDevicesViewControllerDelegate>
 @end
 
@@ -66,7 +60,6 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
 
 @interface ProfileViewController () <ZMUserObserver>
 
-@property (nonatomic, readonly) ZMConversation *conversation;
 @property (nonatomic) id observerToken;
 @property (nonatomic) UserNameDetailView *usernameDetailsView;
 @property (nonatomic) ProfileTitleView *profileTitleView;
@@ -157,10 +150,7 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
     NSMutableArray *viewControllers = [NSMutableArray array];
     
     if (self.context != ProfileViewControllerContextDeviceList) {
-        ProfileDetailsViewController *profileDetailsViewController = [[ProfileDetailsViewController alloc] initWithUser:self.bareUser conversation:self.conversation context:self.context];
-        profileDetailsViewController.delegate = self;
-        profileDetailsViewController.viewControllerDismisser = self;
-        profileDetailsViewController.title = NSLocalizedString(@"profile.details.title", nil);
+        ProfileDetailsViewController *profileDetailsViewController = [self setupProfileDetailsViewController];
         [viewControllers addObject:profileDetailsViewController];
     }
     
@@ -258,16 +248,6 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
 
 @end
 
-
-@implementation ProfileViewController (ViewControllerDismisser)
-
-- (void)dismissViewController:(UIViewController *)controller completion:(dispatch_block_t)completion
-{
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
-@end
-
 @implementation ProfileViewController (ProfileViewControllerDelegate)
 
 - (void)profileViewController:(ProfileViewController *)controller wantsToNavigateToConversation:(ZMConversation *)conversation
@@ -280,32 +260,6 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
 - (NSString *)suggestedBackButtonTitleForProfileViewController:(id)controller
 {
     return [self.bareUser.displayName uppercasedWithCurrentLocale];
-}
-
-@end
-
-
-@implementation ProfileViewController (ProfileDetailsViewControllerDelegate)
-
-- (void)profileDetailsViewController:(ProfileDetailsViewController *)profileDetailsViewController didSelectConversation:(ZMConversation *)conversation
-{
-    if ([self.delegate respondsToSelector:@selector(profileViewController:wantsToNavigateToConversation:)]) {
-        [self.delegate profileViewController:self wantsToNavigateToConversation:conversation];
-    }
-}
-
-- (void)profileDetailsViewController:(ProfileDetailsViewController *)profileDetailsViewController didPresentConversationCreationController:(ConversationCreationController *)conversationCreationController
-{
-    conversationCreationController.delegate = self;
-}
-
-- (void)profileDetailsViewController:(ProfileDetailsViewController *)profileDetailsViewController wantsToBeDismissedWithCompletion:(dispatch_block_t)completion
-{
-    if ([self.delegate respondsToSelector:@selector(dismissViewController:completion:)]) {
-        [self.viewControllerDismisser dismissViewController:self completion:completion];
-    } else if (completion != nil) {
-        completion();
-    }
 }
 
 @end
