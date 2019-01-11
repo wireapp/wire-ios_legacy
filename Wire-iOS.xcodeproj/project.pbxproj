@@ -614,7 +614,6 @@
 		876CC8991E966C5C00F6BABC /* IteratorProtocol+Histogram.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876CC8981E966C5C00F6BABC /* IteratorProtocol+Histogram.swift */; };
 		876E0C8B1EC5ED69007EF34E /* CameraPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876E0C8A1EC5ED69007EF34E /* CameraPicker.swift */; };
 		876EECB31F5078D200E269F3 /* AccountSelectorController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876EECB21F5078D200E269F3 /* AccountSelectorController.swift */; };
-		876FAEDB1C762CFC00EBA732 /* TTTAttributedLabel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 876FAEDA1C762CFC00EBA732 /* TTTAttributedLabel.framework */; };
 		8775BF1C2007C6B900A8AD93 /* SearchGroupSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8775BF1B2007C6B900A8AD93 /* SearchGroupSelector.swift */; };
 		8775BF1E2007CFB200A8AD93 /* UIControlBlockAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8775BF1D2007CFB200A8AD93 /* UIControlBlockAPI.swift */; };
 		8775BF212008CF3500A8AD93 /* ServiceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8775BF202008CF3500A8AD93 /* ServiceView.swift */; };
@@ -2196,7 +2195,6 @@
 		876CC8981E966C5C00F6BABC /* IteratorProtocol+Histogram.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "IteratorProtocol+Histogram.swift"; sourceTree = "<group>"; };
 		876E0C8A1EC5ED69007EF34E /* CameraPicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraPicker.swift; sourceTree = "<group>"; };
 		876EECB21F5078D200E269F3 /* AccountSelectorController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountSelectorController.swift; sourceTree = "<group>"; };
-		876FAEDA1C762CFC00EBA732 /* TTTAttributedLabel.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TTTAttributedLabel.framework; path = Carthage/Build/iOS/TTTAttributedLabel.framework; sourceTree = "<group>"; };
 		8774F0C61B4AB2DD002256A6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		8775BF1B2007C6B900A8AD93 /* SearchGroupSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchGroupSelector.swift; sourceTree = "<group>"; };
 		8775BF1D2007CFB200A8AD93 /* UIControlBlockAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIControlBlockAPI.swift; sourceTree = "<group>"; };
@@ -3279,7 +3277,6 @@
 				874A17482056D9FA001C6760 /* libcmark.framework in Frameworks */,
 				1EE85C671B5F96FC008E084B /* WireExtensionComponents.framework in Frameworks */,
 				5407B8C31A643CCE009090C6 /* UIKit.framework in Frameworks */,
-				876FAEDB1C762CFC00EBA732 /* TTTAttributedLabel.framework in Frameworks */,
 				54BB91E01E1FA6330039E91F /* WireShareEngine.framework in Frameworks */,
 				871608431E4DF7B000461934 /* HockeySDK.framework in Frameworks */,
 				87BEB0361D39018600DE9575 /* FormatterKit.framework in Frameworks */,
@@ -4290,7 +4287,6 @@
 				871BE9551CD0C2DD002267E8 /* FBSnapshotTestCase.framework */,
 				871BE9561CD0C2DD002267E8 /* OCMock.framework */,
 				169FF9321C57CB2100C5BF90 /* VideoToolbox.framework */,
-				876FAEDA1C762CFC00EBA732 /* TTTAttributedLabel.framework */,
 				87CA49EC1C467A710013A2A9 /* SafariServices.framework */,
 				8741DB611C1EFE2D00BDB470 /* CoreLocation.framework */,
 				1E3FA0321B78AD9500A9743D /* WireSystem.framework */,
@@ -7117,7 +7113,6 @@
 				"$(SRCROOT)/Carthage/Build/iOS/Ziphy.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/ProtocolBuffers.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Cartography.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/TTTAttributedLabel.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/libPhoneNumberiOS.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/PINCache.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/ZipArchive.framework",
