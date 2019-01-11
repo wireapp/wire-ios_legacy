@@ -25,8 +25,13 @@ import WireSyncEngine
 }
 
 extension SearchGroup {
+#if ADD_SERVICE_DISABLED
+    // remove service from the tab
+    static let all: [SearchGroup] = [.people]
+#else
     static let all: [SearchGroup] = [.people, .services]
-    
+#endif
+
     var name: String {
         switch self {
         case .people:
