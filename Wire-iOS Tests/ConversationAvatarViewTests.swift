@@ -103,6 +103,20 @@ class ConversationAvatarViewTests: CoreDataSnapshotTestCase {
         verify(view: sut.prepareForSnapshots())
     }
     
+    func testThatItRendersPendingConnection() {
+        // GIVEN
+        otherUser.accentColorValue = .strongLimeGreen
+        otherUserConversation.conversationType = .connection
+        otherUserConversation.connection?.status = .pending
+        uiMOC.saveOrRollback()
+        
+        // WHEN
+        sut.conversation = otherUserConversation
+        
+        // THEN
+        verify(view: sut.prepareForSnapshots())
+    }
+    
     func testThatItRendersASingleServiceUser() {
         // GIVEN
         otherUser.serviceIdentifier = "serviceIdentifier"

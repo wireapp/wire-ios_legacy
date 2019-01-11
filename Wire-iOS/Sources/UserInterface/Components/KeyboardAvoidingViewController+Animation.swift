@@ -30,6 +30,7 @@ extension KeyboardAvoidingViewController {
         if let shouldAdjustFrame = shouldAdjustFrame, !shouldAdjustFrame(self) {
             bottomEdgeConstraint.constant = 0
             view.layoutIfNeeded()
+
             return
         }
 
@@ -45,7 +46,7 @@ extension KeyboardAvoidingViewController {
         // When the keyboard is dismissed and then quickly revealed again, then
         // the dismiss animation will be cancelled.
         animator?.stopAnimation(true)
-        self.view.layoutIfNeeded()
+        view.layoutIfNeeded()
 
         animator = UIViewPropertyAnimator(duration: duration, timingParameters: UISpringTimingParameters())
 
@@ -54,7 +55,10 @@ extension KeyboardAvoidingViewController {
             self.view.layoutIfNeeded()
         }
         
-        animator?.addCompletion { [weak self] _ in self?.animator = nil }
+        animator?.addCompletion { [weak self] _ in
+            self?.animator = nil
+        }
+
         animator?.startAnimation()
     }
 }

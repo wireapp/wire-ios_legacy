@@ -26,7 +26,6 @@
 #import "AddEmailPasswordViewController.h"
 #import "AddPhoneNumberViewController.h"
 #import "RegistrationRootViewController.h"
-#import "NoHistoryViewController.h"
 #import "PopTransition.h"
 #import "PushTransition.h"
 #import "NavigationController.h"

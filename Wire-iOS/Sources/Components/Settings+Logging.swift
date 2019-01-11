@@ -51,7 +51,7 @@ extension Settings {
             if let savedTags = UserDefaults.shared().object(forKey: enabledLogsKey) as? Array<String> {
                 tagsToEnable.formUnion(savedTags)
             } else {
-                tagsToEnable.formUnion(["Network", "SessionManager", "Conversations", "calling", "link previews", "ephemeral", "event-processing", "SyncStatus", "OperationStatus", "Push"])
+                tagsToEnable.formUnion(["Network", "SessionManager", "Conversations", "calling", "link previews", "event-processing", "SyncStatus", "OperationStatus", "Push", "Crypto", "cryptobox"])
             }
             enableLogs(tagsToEnable)
         } else {

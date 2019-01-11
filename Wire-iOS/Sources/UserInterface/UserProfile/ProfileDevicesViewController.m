@@ -24,7 +24,6 @@
 #import "ParticipantDeviceCell.h"
 
 #import "Analytics.h"
-@import PureLayout;
 #import "Wire-Swift.h"
 
 @import WireSyncEngine;
@@ -92,23 +91,6 @@
     ParticipantDeviceHeaderView *headerView = [[ParticipantDeviceHeaderView alloc] initWithUserName:self.user.displayName];
     headerView.delegate = self;
     [self setParticipantDeviceHeaderView:headerView];
-}
-
-- (void)updateTableHeaderView
-{
-    if (CGRectEqualToRect(self.tableView.bounds, CGRectZero)) {
-        return;
-    }
-    
-    ParticipantDeviceHeaderView *headerView = (ParticipantDeviceHeaderView *)self.tableView.tableHeaderView;
-    headerView.showUnencryptedLabel = self.user.clients.count == 0;
-    CGSize fittingSize = CGSizeMake(CGRectGetWidth(self.tableView.bounds), 44);
-    CGSize requiredSize = [headerView systemLayoutSizeFittingSize:fittingSize
-                                    withHorizontalFittingPriority:UILayoutPriorityRequired
-                                          verticalFittingPriority:UILayoutPriorityDefaultLow];
-    
-    headerView.frame = CGRectMake(0, 0, requiredSize.width, requiredSize.height);
-    self.tableView.tableHeaderView = headerView;
 }
 
 - (void)setParticipantDeviceHeaderView:(ParticipantDeviceHeaderView *)headerView

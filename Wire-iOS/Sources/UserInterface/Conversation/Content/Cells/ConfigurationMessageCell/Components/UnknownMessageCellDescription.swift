@@ -38,7 +38,7 @@ class UnknownMessageCellDescription: ConversationMessageCellDescription {
     let configuration: String
 
     weak var message: ZMConversationMessage?
-    weak var delegate: ConversationCellDelegate?
+    weak var delegate: ConversationMessageCellDelegate?
     weak var actionController: ConversationMessageActionController?
     
     var showEphemeralTimer: Bool = false

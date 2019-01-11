@@ -17,21 +17,22 @@
 //
 
 import UIKit
-import TTTAttributedLabel
 
-class ConversationIconBasedCell: UIView, TTTAttributedLabelDelegate {
+class ConversationIconBasedCell: UIView, UITextViewDelegate {
 
     let imageContainer = UIView()
     let imageView = UIImageView()
-    let textLabel = TTTAttributedLabel(frame: .zero)
+    let textLabel = WebLinkTextView()
     let lineView = UIView()
 
-    let contentView = UIView()
+    let topContentView = UIView()
+    let bottomContentView = UIView()
     let labelFont: UIFont = .mediumFont
 
     private var containerWidthConstraint: NSLayoutConstraint!
-    private var labelTrailingConstraint: NSLayoutConstraint!
-    private var labelTopConstraint: NSLayoutConstraint!
+    private var textLabelTrailingConstraint: NSLayoutConstraint!
+    private var textLabelTopConstraint: NSLayoutConstraint!
+    private var topContentViewTrailingConstraint: NSLayoutConstraint!
 
     var isSelected: Bool = false
 
@@ -45,17 +46,20 @@ class ConversationIconBasedCell: UIView, TTTAttributedLabelDelegate {
 
     var attributedText: NSAttributedString? {
         didSet {
-            textLabel.text = attributedText
+            textLabel.attributedText = attributedText
             textLabel.accessibilityLabel = attributedText?.string
-            textLabel.addLinks()
-            
+
             let font = attributedText?.attributes(at: 0, effectiveRange: nil)[.font] as? UIFont
             if let lineHeight = font?.lineHeight {
-                labelTopConstraint.constant = (32 - lineHeight) / 2
+                textLabelTopConstraint.constant = (32 - lineHeight) / 2
             } else {
-                labelTopConstraint.constant = 0
+                textLabelTopConstraint.constant = 0
             }
         }
+    }
+    
+    private var trailingTextMargin: CGFloat {
+        return -UIView.conversationLayoutMargins.right * 2
     }
 
     override init(frame: CGRect) {
@@ -75,25 +79,23 @@ class ConversationIconBasedCell: UIView, TTTAttributedLabelDelegate {
         imageView.isAccessibilityElement = true
         imageView.accessibilityLabel = "Icon"
 
-        textLabel.numberOfLines = 0
         textLabel.isAccessibilityElement = true
         textLabel.backgroundColor = .clear
         textLabel.font = labelFont
+        textLabel.delegate = self
 
-        textLabel.extendsLinkTouchArea = true
-
-        textLabel.linkAttributes = [
+        textLabel.linkTextAttributes = [
             NSAttributedString.Key.underlineStyle: NSUnderlineStyle().rawValue as NSNumber,
             NSAttributedString.Key.foregroundColor: ZMUser.selfUser().accentColor
         ]
 
-        textLabel.delegate = self
         lineView.backgroundColor = .from(scheme: .separator)
 
         imageContainer.addSubview(imageView)
         addSubview(imageContainer)
         addSubview(textLabel)
-        addSubview(contentView)
+        addSubview(topContentView)
+        addSubview(bottomContentView)
         addSubview(lineView)
     }
 
@@ -101,22 +103,24 @@ class ConversationIconBasedCell: UIView, TTTAttributedLabelDelegate {
         imageContainer.translatesAutoresizingMaskIntoConstraints = false
         imageView.translatesAutoresizingMaskIntoConstraints = false
         textLabel.translatesAutoresizingMaskIntoConstraints = false
-        contentView.translatesAutoresizingMaskIntoConstraints = false
+        topContentView.translatesAutoresizingMaskIntoConstraints = false
+        bottomContentView.translatesAutoresizingMaskIntoConstraints = false
         lineView.translatesAutoresizingMaskIntoConstraints = false
 
+        topContentViewTrailingConstraint = topContentView.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant: trailingTextMargin)
         containerWidthConstraint = imageContainer.widthAnchor.constraint(equalToConstant: UIView.conversationLayoutMargins.left)
-        labelTrailingConstraint = textLabel.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant: -UIView.conversationLayoutMargins.right)
-        labelTopConstraint = textLabel.topAnchor.constraint(equalTo: topAnchor)
+        textLabelTrailingConstraint = textLabel.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant: trailingTextMargin)
+        textLabelTopConstraint = textLabel.topAnchor.constraint(equalTo: topContentView.bottomAnchor)
         
         // We want the content view to at least be below the image container
-        let contentViewTopConstraint = contentView.topAnchor.constraint(equalTo: imageContainer.bottomAnchor)
+        let contentViewTopConstraint = bottomContentView.topAnchor.constraint(equalTo: imageContainer.bottomAnchor)
         contentViewTopConstraint.priority = .defaultLow
 
         NSLayoutConstraint.activate([
             // imageContainer
             containerWidthConstraint,
             imageContainer.leadingAnchor.constraint(equalTo: leadingAnchor),
-            imageContainer.topAnchor.constraint(equalTo: topAnchor, constant: 0),
+            imageContainer.topAnchor.constraint(equalTo: topContentView.bottomAnchor, constant: 0),
             imageContainer.heightAnchor.constraint(equalTo: imageView.heightAnchor),
             imageContainer.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: 0),
 
@@ -126,22 +130,27 @@ class ConversationIconBasedCell: UIView, TTTAttributedLabelDelegate {
             imageView.centerXAnchor.constraint(equalTo: imageContainer.centerXAnchor),
             imageView.centerYAnchor.constraint(equalTo: imageContainer.centerYAnchor),
             
-            // label
+            // topContentView
+            topContentView.topAnchor.constraint(equalTo: topAnchor),
+            topContentView.leadingAnchor.constraint(equalTo: textLabel.leadingAnchor),
+            topContentViewTrailingConstraint,
+            
+            // textLabel
             textLabel.leadingAnchor.constraint(equalTo: imageContainer.trailingAnchor),
-            labelTopConstraint,
-            labelTrailingConstraint,
+            textLabelTopConstraint,
+            textLabelTrailingConstraint,
         
             // lineView
             lineView.leadingAnchor.constraint(equalTo: textLabel.trailingAnchor, constant: 16),
             lineView.heightAnchor.constraint(equalToConstant: .hairline),
             lineView.trailingAnchor.constraint(equalTo: trailingAnchor),
             lineView.centerYAnchor.constraint(equalTo: imageContainer.centerYAnchor),
-
-            // contentView
-            contentView.leadingAnchor.constraint(equalTo: textLabel.leadingAnchor),
-            contentView.topAnchor.constraint(greaterThanOrEqualTo: textLabel.bottomAnchor),
-            contentView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            contentView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            
+            // bottomContentView
+            bottomContentView.leadingAnchor.constraint(equalTo: textLabel.leadingAnchor),
+            bottomContentView.topAnchor.constraint(greaterThanOrEqualTo: textLabel.bottomAnchor),
+            bottomContentView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            bottomContentView.bottomAnchor.constraint(equalTo: bottomAnchor),
             contentViewTopConstraint
         ])
     }
@@ -149,7 +158,8 @@ class ConversationIconBasedCell: UIView, TTTAttributedLabelDelegate {
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         containerWidthConstraint.constant = UIView.conversationLayoutMargins.left
-        labelTrailingConstraint.constant = -UIView.conversationLayoutMargins.right
+        textLabelTrailingConstraint.constant = trailingTextMargin
+        topContentViewTrailingConstraint.constant = trailingTextMargin
     }
 
 }

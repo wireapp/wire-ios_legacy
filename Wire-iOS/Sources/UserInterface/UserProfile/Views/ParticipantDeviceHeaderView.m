@@ -19,14 +19,11 @@
 
 #import "ParticipantDeviceHeaderView.h"
 #import "ParticipantDeviceHeaderView+Internal.h"
-@import PureLayout;
-#import "WebLinkTextView.h"
 #import "WireExtensionComponents.h"
 #import "NSAttributedString+Wire.h"
 #import "Wire-Swift.h"
 
 @interface ParticipantDeviceHeaderView () <UITextViewDelegate>
-@property (strong, nonatomic) UITextView *textView;
 @property (strong, nonatomic, readwrite) NSString *userName;
 @end
 
@@ -57,6 +54,7 @@
 - (void)createViews
 {
     self.textView = [[WebLinkTextView alloc] init];
+
     self.textView.textContainer.maximumNumberOfLines = 0;
     self.textView.delegate = self;
     self.textView.linkTextAttributes = @{};
@@ -67,18 +65,6 @@
 - (void)setShowUnencryptedLabel:(BOOL)showUnencryptedLabel
 {
     self.textView.attributedText = [self attributedExplanationTextForUserName:self.userName showUnencryptedLabel:showUnencryptedLabel];
-}
-
-- (void)layoutSubviews
-{
-    [super layoutSubviews];
-    [self.textView setNeedsUpdateConstraints];
-    [self.textView updateConstraintsIfNeeded];
-}
-
-- (void)setupConstraints
-{
-    [self.textView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsMake(40, 24, 16, 24)];
 }
 
 #pragma mark - UITextViewDelegate

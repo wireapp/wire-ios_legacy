@@ -47,7 +47,6 @@ static const CGFloat MarginInset = 24;
 @property (nonatomic) Button *acceptImageButton;
 @property (nonatomic) Button *rejectImageButton;
 @property (nonatomic) FLAnimatedImageView *imagePreviewView;
-@property (nonatomic) AVPlayerViewController *playerViewController;
 
 @property (nonatomic) NSLayoutConstraint *topBarHeightConstraint;
 
@@ -137,18 +136,6 @@ static const CGFloat MarginInset = 24;
         [self.imageToolbarViewInsideImage.emojiButton addTarget:self action:@selector(emojiEdit:) forControlEvents:UIControlEventTouchUpInside];
         [self.imagePreviewView addSubview:self.imageToolbarViewInsideImage];
     }
-}
-
-- (void)createVideoPanel
-{
-    self.playerViewController = [[AVPlayerViewController alloc] init];
-    
-    self.playerViewController.player = [AVPlayer playerWithURL:self.videoURL];
-    [self.playerViewController.player play];
-    self.playerViewController.showsPlaybackControls = YES;
-    self.playerViewController.view.backgroundColor = [UIColor whiteColor];
-    
-    [self.view addSubview:self.playerViewController.view];
 }
 
 - (void)createTopPanel

@@ -162,9 +162,9 @@ extension ZClientViewController {
             let profileViewController = ProfileViewController(user: user, context: .deviceList)
 
             if let conversationViewController = (conversationRootViewController as? ConversationRootViewController)?.conversationViewController {
-                profileViewController.delegate = conversationViewController as? ProfileViewControllerDelegate
+                profileViewController.delegate = conversationViewController
 
-                profileViewController.viewControllerDismisser = conversationViewController as? ViewControllerDismisser
+                profileViewController.viewControllerDismisser = conversationViewController
             }
             viewController = profileViewController
         }

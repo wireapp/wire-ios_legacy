@@ -39,7 +39,7 @@ class ConversationImageMessageCell: UIView, ConversationMessageCell {
     var containerHeightConstraint: NSLayoutConstraint!
     
     weak var message: ZMConversationMessage?
-    weak var delegate: ConversationCellDelegate?
+    weak var delegate: ConversationMessageCellDelegate?
     
     var isSelected: Bool = false
     
@@ -138,7 +138,7 @@ class ConversationImageMessageCellDescription: ConversationMessageCellDescriptio
     let configuration: View.Configuration
     
     var message: ZMConversationMessage?
-    weak var delegate: ConversationCellDelegate?
+    weak var delegate: ConversationMessageCellDelegate?
     weak var actionController: ConversationMessageActionController?
     
     var showEphemeralTimer: Bool = false

@@ -36,31 +36,102 @@ struct EdgeInsets {
     }
 }
 
+enum Anchor {
+    case top
+    case bottom
+    case leading
+    case trailing
+}
+
 extension UIView {
-    @discardableResult func fitInSuperview(safely: Bool = false, with insets: EdgeInsets = .zero) -> [NSLayoutConstraint] {
-        guard let superview = self.superview else {
+
+    @discardableResult func centerInSuperview(activate: Bool = true) -> [NSLayoutConstraint] {
+        guard let superview = superview else {
             fatal("Not in view hierarchy: self.superview = nil")
         }
-        
+
         let constraints = [
-            self.leadingAnchor.constraint(
-                equalTo: safely ? superview.safeLeadingAnchor : superview.leadingAnchor,
-                constant: insets.leading),
-            
-            self.topAnchor.constraint(
-                equalTo: safely ? superview.safeTopAnchor : superview.topAnchor,
-                constant: insets.top),
-            
-            self.bottomAnchor.constraint(
-                equalTo: safely ? superview.safeBottomAnchor : superview.bottomAnchor,
-                constant: -insets.bottom),
-            
-            self.trailingAnchor.constraint(
-                equalTo: safely ? superview.safeTrailingAnchor : superview.trailingAnchor,
-                constant: -insets.trailing)
+            superview.centerXAnchor.constraint(equalTo: centerXAnchor),
+            superview.centerYAnchor.constraint(equalTo: centerYAnchor)
         ]
-        
-        NSLayoutConstraint.activate(constraints)
+
+        if activate {
+            NSLayoutConstraint.activate(constraints)
+        }
+
         return constraints
     }
+
+    @discardableResult func fitInSuperview(safely: Bool = false,
+                                           with insets: EdgeInsets = .zero,
+                                           exclude excludedAnchors: [Anchor] = [],
+                                           activate: Bool = true) -> [NSLayoutConstraint] {
+        guard let superview = superview else {
+            fatal("Not in view hierarchy: self.superview = nil")
+        }
+
+        return pin(to: superview, safely: safely, with: insets, exclude: excludedAnchors, activate: activate)
+    }
+
+    @discardableResult func pin(to view: UIView,
+                                  safely: Bool = false,
+                                  with insets: EdgeInsets = .zero,
+                                  exclude excludedAnchors: [Anchor] = [],
+                                  activate: Bool = true) -> [NSLayoutConstraint] {
+
+        var constraints: [NSLayoutConstraint] = []
+
+        if !excludedAnchors.contains(.leading) {
+            constraints.append(leadingAnchor.constraint(
+                equalTo: safely ? view.safeLeadingAnchor : view.leadingAnchor,
+                constant: insets.leading))
+        }
+
+        if !excludedAnchors.contains(.bottom) {
+            constraints.append(bottomAnchor.constraint(
+                equalTo: safely ? view.safeBottomAnchor : view.bottomAnchor,
+                constant: -insets.bottom))
+        }
+
+        if !excludedAnchors.contains(.top) {
+            constraints.append(topAnchor.constraint(
+                equalTo: safely ? view.safeTopAnchor : view.topAnchor,
+                constant: insets.top))
+        }
+
+        if !excludedAnchors.contains(.trailing) {
+            constraints.append(trailingAnchor.constraint(
+                equalTo: safely ? view.safeTrailingAnchor : view.trailingAnchor,
+                constant: -insets.trailing))
+        }
+
+        if activate {
+            NSLayoutConstraint.activate(constraints)
+        }
+        
+        return constraints
+    }
+
+    func setDimensions(length: CGFloat) {
+        setDimensions(width: length, height: length)
+    }
+
+    func setDimensions(width: CGFloat, height: CGFloat) {
+        let constraints = [
+            widthAnchor.constraint(equalToConstant: width),
+            heightAnchor.constraint(equalToConstant: height)
+        ]
+
+        NSLayoutConstraint.activate(constraints)
+    }
+
+    @discardableResult func topAndBottomEdgesToSuperviewEdges() -> [NSLayoutConstraint] {
+        guard let superview = superview else { return [] }
+
+        return [
+            superview.topAnchor.constraint(equalTo: topAnchor),
+            superview.bottomAnchor.constraint(equalTo: bottomAnchor)
+        ]
+    }
+
 }
