@@ -23,7 +23,7 @@ import WireExtensionComponents
 
 private let zmLog = ZMSLog(tag: "UI")
 
-@objcMembers class ClientListViewController: UIViewController,
+final class ClientListViewController: UIViewController,
                                 UITableViewDelegate,
                                 UITableViewDataSource,
                                 ZMClientUpdateObserver,
@@ -38,7 +38,7 @@ private let zmLog = ZMSLog(tag: "UI")
         }
     }
 
-    override open var showLoadingView: Bool {
+    override public var showLoadingView: Bool {
         set {
             if let navigationController = self.navigationController {
                 navigationController.showLoadingView = newValue

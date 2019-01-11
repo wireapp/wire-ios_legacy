@@ -20,7 +20,7 @@ import XCTest
 @testable import Wire
 
 final class ClientListViewControllerTests: ZMSnapshotTestCase {
-    
+
     var sut: ClientListViewController!
     var mockUser: MockUser!
     var client: UserClient!
@@ -35,7 +35,7 @@ final class ClientListViewControllerTests: ZMSnapshotTestCase {
         selfClient = mockUserClient()
         client = mockUserClient()
     }
-    
+
     override func tearDown() {
         sut = nil
         mockUser = nil
@@ -90,12 +90,15 @@ final class ClientListViewControllerTests: ZMSnapshotTestCase {
         self.verify(view: sut.view)
     }
 
-    func testForLightThemeWrappedInNavigationController(){
-        prepareSut(variant: .light)
+    func testForLightThemeWrappedInNavigationControllerAndScrollToBottom(){
+        prepareSut(variant: .light, numberOfClients: 7)
         let navWrapperController = sut.wrapInNavigationController()
         navWrapperController.navigationBar.tintColor = UIColor.accent()
 
-        self.verify(view: navWrapperController.view)
+        verify(view: navWrapperController.view,
+               configuration:{ _ in
+                self.sut.clientsTableView?.scrollToRow(at: IndexPath(row:6, section: 1), at: .bottom, animated: false)
+        })
     }
 
     func testForOneDeviceWithNoEditButton(){
