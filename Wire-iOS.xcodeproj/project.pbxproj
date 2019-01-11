@@ -7090,7 +7090,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "rm -rf \"${SOURCE_ROOT}\"/SnapshotResults/*";
+			shellScript = "rm -rf \"${SOURCE_ROOT}\"/SnapshotResults/*\n";
 		};
 		DBB1CF591A88C15600912518 /* Copy Frameworks and DSYMs */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -7145,7 +7145,6 @@
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Ziphy.framework/Ziphy",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/ProtocolBuffers.framework/ProtocolBuffers",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Cartography.framework/Cartography",
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/TTTAttributedLabel.framework/TTTAttributedLabel",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/libPhoneNumberiOS.framework/libPhoneNumberiOS",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/PINCache.framework/PINCache",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/ZipArchive.framework/ZipArchive",
