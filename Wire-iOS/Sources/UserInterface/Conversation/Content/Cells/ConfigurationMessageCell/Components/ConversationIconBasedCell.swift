@@ -17,13 +17,12 @@
 //
 
 import UIKit
-import TTTAttributedLabel
 
-class ConversationIconBasedCell: UIView, TTTAttributedLabelDelegate {
+class ConversationIconBasedCell: UIView, UITextViewDelegate {
 
     let imageContainer = UIView()
     let imageView = UIImageView()
-    let textLabel = TTTAttributedLabel(frame: .zero)
+    let textLabel = WebLinkTextView()
     let lineView = UIView()
 
     let topContentView = UIView()
@@ -47,10 +46,9 @@ class ConversationIconBasedCell: UIView, TTTAttributedLabelDelegate {
 
     var attributedText: NSAttributedString? {
         didSet {
-            textLabel.text = attributedText
+            textLabel.attributedText = attributedText
             textLabel.accessibilityLabel = attributedText?.string
-            textLabel.addLinks()
-            
+
             let font = attributedText?.attributes(at: 0, effectiveRange: nil)[.font] as? UIFont
             if let lineHeight = font?.lineHeight {
                 textLabelTopConstraint.constant = (32 - lineHeight) / 2
@@ -81,19 +79,16 @@ class ConversationIconBasedCell: UIView, TTTAttributedLabelDelegate {
         imageView.isAccessibilityElement = true
         imageView.accessibilityLabel = "Icon"
 
-        textLabel.numberOfLines = 0
         textLabel.isAccessibilityElement = true
         textLabel.backgroundColor = .clear
         textLabel.font = labelFont
+        textLabel.delegate = self
 
-        textLabel.extendsLinkTouchArea = true
-
-        textLabel.linkAttributes = [
+        textLabel.linkTextAttributes = [
             NSAttributedString.Key.underlineStyle: NSUnderlineStyle().rawValue as NSNumber,
             NSAttributedString.Key.foregroundColor: ZMUser.selfUser().accentColor
         ]
 
-        textLabel.delegate = self
         lineView.backgroundColor = .from(scheme: .separator)
 
         imageContainer.addSubview(imageView)

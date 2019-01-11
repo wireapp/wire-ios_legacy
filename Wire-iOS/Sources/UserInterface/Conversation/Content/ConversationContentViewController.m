@@ -605,17 +605,6 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     [[UIMenuController sharedMenuController] setMenuVisible:NO animated:YES];
 }
 
-- (UITableViewCell *)cellForMessage:(id<ZMConversationMessage>)message
-{
-    NSIndexPath *indexPath = [self.conversationMessageWindowTableViewAdapter indexPathForMessage:message];
-    
-    if (indexPath == nil) {
-        return nil;
-    }
-    
-    return [self.tableView cellForRowAtIndexPath:indexPath];
-}
-
 - (BOOL)displaysMessage:(id<ZMConversationMessage>)message
 {
     NSInteger index = [self.messageWindow.messages indexOfObject:message];

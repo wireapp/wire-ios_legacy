@@ -172,7 +172,11 @@ extension ConversationMessageWindowTableViewAdapter: UITableViewDataSource {
             return nil
         }
         
-        return IndexPath(row: 0, section: section)
+        guard let sectionController = sectionController(at: section, in: tableView) else {
+            return nil
+        }
+        
+        return IndexPath(row: sectionController.messageCellIndex, section: section)
     }
     
     public func numberOfSections(in tableView: UITableView) -> Int {

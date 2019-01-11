@@ -17,7 +17,6 @@
 //
 
 import UIKit
-import TTTAttributedLabel
 
 // MARK: - Cells
 
@@ -58,7 +57,7 @@ class ConversationStartedSystemMessageCell: ConversationIconBasedCell, Conversat
         
         titleLabel.numberOfLines = 0
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        
+
         topContentView.addSubview(titleLabel)
     }
     
@@ -73,11 +72,19 @@ class ConversationStartedSystemMessageCell: ConversationIconBasedCell, Conversat
         imageView.image = object.icon
         selectedUsers = object.selectedUsers
     }
-    
-    func attributedLabel(_ label: TTTAttributedLabel!, didSelectLinkWith url: URL!) {
+
+}
+
+// MARK: - UITextViewDelegate
+extension ConversationStartedSystemMessageCell {
+
+    public func textView(_ textView: UITextView, shouldInteractWith url: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+
         delegate?.conversationMessageWantsToOpenParticipantsDetails(self, selectedUsers: selectedUsers, sourceView: self)
+
+        return false
     }
-    
+
 }
 
 class ParticipantsConversationSystemMessageCell: ConversationIconBasedCell, ConversationMessageCell {
@@ -135,14 +142,23 @@ class LinkConversationSystemMessageCell: ConversationIconBasedCell, Conversation
         imageView.image = object.icon
         attributedText = object.attributedText
     }
+}
 
-    func attributedLabel(_ label: TTTAttributedLabel!, didSelectLinkWith url: URL!) {
+// MARK: - UITextViewDelegate
+
+extension LinkConversationSystemMessageCell {
+
+    public func textView(_ textView: UITextView, shouldInteractWith url: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+
         if let itemURL = lastConfiguration?.url {
             UIApplication.shared.open(itemURL)
         }
+
+        return false
     }
 
 }
+
 
 class NewDeviceSystemMessageCell: ConversationIconBasedCell, ConversationMessageCell {
     
@@ -183,12 +199,17 @@ class NewDeviceSystemMessageCell: ConversationIconBasedCell, ConversationMessage
         linkTarget = object.linkTarget
     }
     
-    // MARK: - TTTAttributedLabelDelegate
-    
-    func attributedLabel(_ label: TTTAttributedLabel!, didSelectLinkWith URL: URL!) {
-        guard let linkTarget = linkTarget  else { return }
-        
-        if URL == type(of: self).userClientURL {
+}
+
+// MARK: - UITextViewDelegate
+
+extension NewDeviceSystemMessageCell {
+
+    public func textView(_ textView: UITextView, shouldInteractWith url: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+
+        guard let linkTarget = linkTarget  else { return false }
+
+        if url == type(of: self).userClientURL {
             switch linkTarget {
             case .user(let user):
                 ZClientViewController.shared()?.openClientListScreen(for: user)
@@ -196,7 +217,10 @@ class NewDeviceSystemMessageCell: ConversationIconBasedCell, ConversationMessage
                 ZClientViewController.shared()?.openDetailScreen(for: conversation)
             }
         }
+
+        return false
     }
+
 }
 
 class ConversationRenamedSystemMessageCell: ConversationIconBasedCell, ConversationMessageCell {
