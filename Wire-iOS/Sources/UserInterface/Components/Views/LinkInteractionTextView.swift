@@ -110,7 +110,7 @@ extension LinkInteractionTextView: UITextViewDelegate {
             // if alert shown, link opening is handled in alert actions
             if showAlertIfNeeded(for: URL, in: characterRange) { return false }
             // data detector links should be handle by the system
-            return  dataDetectedURLSchemes.contains(URL.scheme ?? "") || !(interactionDelegate?.textView(self, open: URL) ?? false)
+            return dataDetectedURLSchemes.contains(URL.scheme ?? "") || !(interactionDelegate?.textView(self, open: URL) ?? false)
         case .presentActions:
             interactionDelegate?.textViewDidLongPress(self)
             return false

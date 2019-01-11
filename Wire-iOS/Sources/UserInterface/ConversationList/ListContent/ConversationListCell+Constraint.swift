@@ -30,7 +30,7 @@ extension ConversationListCell {
         [itemView, menuDotsView, menuView].forEach{$0.translatesAutoresizingMaskIntoConstraints = false}
 
 
-        itemView.pinEdgesToSuperviewEdges()
+        itemView.fitInSuperview()
 
 
         if let superview = menuDotsView.superview {

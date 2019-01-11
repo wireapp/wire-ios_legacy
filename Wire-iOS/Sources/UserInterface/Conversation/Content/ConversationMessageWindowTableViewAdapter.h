@@ -22,7 +22,7 @@
 #import "WireSyncEngine+iOS.h"
 #import "MessageAction.h"
 
-@protocol ConversationCellDelegate;
+@protocol ConversationMessageCellDelegate;
 @class AnyConversationMessageCellDescription;
 @class ConversationMessageActionController;
 @class UpsideDownTableView;
@@ -32,7 +32,7 @@
 @property (nonatomic) id<ZMConversationMessage> firstUnreadMessage;
 @property (nonatomic) id<ZMConversationMessage> selectedMessage;
 @property (nonatomic) id<ZMConversationMessage> editingMessage;
-@property (nonatomic, weak) id<ConversationCellDelegate> conversationCellDelegate;
+@property (nonatomic, weak) id<ConversationMessageCellDelegate> conversationCellDelegate;
 @property (nonatomic, weak) id<MessageActionResponder> messageActionResponder;
 
 @property (nonatomic) NSArray<NSString *> *searchQueries;

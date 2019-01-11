@@ -26,7 +26,7 @@ class ConversationMessageToolboxCell: UIView, ConversationMessageCell, MessageTo
     }
 
     let toolboxView = MessageToolboxView()
-    weak var delegate: ConversationCellDelegate?
+    weak var delegate: ConversationMessageCellDelegate?
     weak var message: ZMConversationMessage?
 
     var isSelected: Bool = false
@@ -68,19 +68,19 @@ class ConversationMessageToolboxCell: UIView, ConversationMessageCell, MessageTo
 
     func messageToolboxDidRequestOpeningDetails(_ messageToolboxView: MessageToolboxView, preferredDisplayMode: MessageDetailsDisplayMode) {
         let detailsViewController = MessageDetailsViewController(message: message!, preferredDisplayMode: preferredDisplayMode)
-        delegate?.conversationCellDidRequestOpeningMessageDetails?(self, messageDetails: detailsViewController)
+        delegate?.conversationMessageWantsToOpenMessageDetails(self, messageDetailsViewController: detailsViewController)
     }
 
     func messageToolboxViewDidRequestLike(_ messageToolboxView: MessageToolboxView) {
-        delegate?.conversationCell?(self, didSelect: .like, for: message)
+        delegate?.wants(toPerform: .like, for: message)
     }
 
     func messageToolboxViewDidSelectDelete(_ messageToolboxView: MessageToolboxView) {
-        delegate?.conversationCell?(self, didSelect: .delete, for: message)
+        delegate?.wants(toPerform: .delete, for: message)
     }
 
     func messageToolboxViewDidSelectResend(_ messageToolboxView: MessageToolboxView) {
-        delegate?.conversationCell?(self, didSelect: .resend, for: message)
+        delegate?.wants(toPerform: .resend, for: message)
     }
 
 }
@@ -90,7 +90,7 @@ class ConversationMessageToolboxCellDescription: ConversationMessageCellDescript
     let configuration: View.Configuration
 
     var message: ZMConversationMessage?
-    weak var delegate: ConversationCellDelegate? 
+    weak var delegate: ConversationMessageCellDelegate? 
     weak var actionController: ConversationMessageActionController?
 
     var showEphemeralTimer: Bool = false

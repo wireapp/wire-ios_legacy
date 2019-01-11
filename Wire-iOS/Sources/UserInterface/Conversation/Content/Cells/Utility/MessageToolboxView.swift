@@ -395,7 +395,7 @@ import WireSyncEngine
         likeButton.accessibilityLabel = message.liked ? "content.message.unlike".localized : "content.message.like".localized
         likeButton.setIcon(message.liked ? .liked : .like, with: .like, for: .normal)
         likeButton.setIcon(.liked, with: .like, for: .selected)
-        likeButton.setSelected(message.liked, animated: false)
+        likeButton.setSelected(message.liked, animated: animated)
 
         // Animate Changes
         if needsAnimation {

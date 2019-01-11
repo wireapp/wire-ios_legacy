@@ -584,6 +584,8 @@ CGFloat const accessoryButtonSize = 32.0f;
     
     if (anyTokenUpdated) {
         [self updateTokenAttachments];
+        NSRange wholeRange = NSMakeRange(0, self.textView.attributedText.length);
+        [self.textView.layoutManager invalidateLayoutForCharacterRange:wholeRange actualCharacterRange:NULL];
     }
 }
 

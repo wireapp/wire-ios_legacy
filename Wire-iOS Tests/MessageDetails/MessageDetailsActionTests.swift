@@ -24,14 +24,14 @@ class MessageDetailsActionTests: CoreDataSnapshotTestCase {
     // MARK: - One To One
 
     func testThatDetailsAreNotAvailableForOneToOne_Consumer() {
-        withOneToOneMessage(inTeam: false) { message in
+        withOneToOneMessage(belongsToTeam: false) { message in
             XCTAssertFalse(message.areMessageDetailsAvailable)
             XCTAssertFalse(message.areReadReceiptsDetailsAvailable)
         }
     }
 
     func testThatDetailsAreNotAvailableForOneToOne_Team() {
-        withOneToOneMessage(inTeam: true) { message in
+        withOneToOneMessage(belongsToTeam: true) { message in
             XCTAssertFalse(message.areMessageDetailsAvailable)
             XCTAssertFalse(message.areReadReceiptsDetailsAvailable)
         }
@@ -39,32 +39,32 @@ class MessageDetailsActionTests: CoreDataSnapshotTestCase {
 
     // MARK: - Groups
 
-    func testThatDetailsAreAvailableInGroup_WithoutReceipts_Consumer() {
-        withGroupMessage(inTeam: false) { message in
+    func testThatDetailsAreAvailableInGroup_WithoutReceipts() {
+        withGroupMessage(belongsToTeam: false, teamGroup: false) { message in
             XCTAssertTrue(message.areMessageDetailsAvailable)
             XCTAssertFalse(message.areReadReceiptsDetailsAvailable)
         }
     }
-
-    func testThatDetailsAreAvailableInGroup_WithReceipts_Team() {
-        withGroupMessage(inTeam: true) { message in
+    
+    func testThatDetailsAreAvailableInTeamGroup_Receipts() {
+        withGroupMessage(belongsToTeam: false, teamGroup: true) { message in
             XCTAssertTrue(message.areMessageDetailsAvailable)
             XCTAssertTrue(message.areReadReceiptsDetailsAvailable)
         }
     }
-
+    
     // MARK: - Messages Sent by Other User
 
-    func testThatDetailsAreNotAvailableInGroup_OtherUserMesaage_Consumer() {
-        withGroupMessage(inTeam: false) { message in
+    func testThatDetailsAreNotAvailableInGroup_OtherUserMesaage() {
+        withGroupMessage(belongsToTeam: false, teamGroup: false) { message in
             message.sender = self.otherUser
             XCTAssertTrue(message.areMessageDetailsAvailable)
             XCTAssertFalse(message.areReadReceiptsDetailsAvailable)
         }
     }
 
-    func testThatDetailsAreAvailableInGroup_WithoutReceipts_OtherUserMessage_Team() {
-        withGroupMessage(inTeam: true) { message in
+    func testThatDetailsAreAvailableInTeamGroup_WithoutReceipts_OtherUserMessage() {
+        withGroupMessage(belongsToTeam: true, teamGroup: true) { message in
             message.sender = self.otherUser
             XCTAssertTrue(message.areMessageDetailsAvailable)
             XCTAssertFalse(message.areReadReceiptsDetailsAvailable)
@@ -73,8 +73,8 @@ class MessageDetailsActionTests: CoreDataSnapshotTestCase {
 
     // MARK: - Ephemeral Message in Group
 
-    func testThatDetailsAreNotAvailableInGroup_Ephemeral_Consumer() {
-        withGroupMessage(inTeam: false) { message in
+    func testThatDetailsAreNotAvailableInGroup_Ephemeral() {
+        withGroupMessage(belongsToTeam: false, teamGroup: false) { message in
             message.isEphemeral = true
             XCTAssertFalse(message.canBeLiked)
             XCTAssertFalse(message.areMessageDetailsAvailable)
@@ -82,8 +82,8 @@ class MessageDetailsActionTests: CoreDataSnapshotTestCase {
         }
     }
 
-    func testThatDetailsAreAvailableInGroup_Ephemeral_Team() {
-        withGroupMessage(inTeam: true) { message in
+    func testThatDetailsAreAvailableInTeamGroup_Ephemeral() {
+        withGroupMessage(belongsToTeam: true, teamGroup: true) { message in
             message.isEphemeral = true
             XCTAssertFalse(message.canBeLiked)
             XCTAssertTrue(message.areMessageDetailsAvailable)
@@ -93,19 +93,19 @@ class MessageDetailsActionTests: CoreDataSnapshotTestCase {
 
     // MARK: - Helpers
 
-    private func withGroupMessage(inTeam: Bool, _ block: @escaping (MockMessage) -> Void) {
-        let context = inTeam ? teamTest : nonTeamTest
+    private func withGroupMessage(belongsToTeam: Bool, teamGroup: Bool, _ block: @escaping (MockMessage) -> Void) {
+        let context = belongsToTeam ? teamTest : nonTeamTest
 
         context {
             let message = MockMessageFactory.textMessage(withText: "Message")!
             message.sender = self.selfUser
-            message.conversation = self.createGroupConversation()
+            message.conversation = teamGroup ? self.createTeamGroupConversation() : self.createGroupConversation()
             block(message)
         }
     }
 
-    private func withOneToOneMessage(inTeam: Bool, _ block: @escaping (MockMessage) -> Void) {
-        let context = inTeam ? teamTest : nonTeamTest
+    private func withOneToOneMessage(belongsToTeam: Bool, _ block: @escaping (MockMessage) -> Void) {
+        let context = belongsToTeam ? teamTest : nonTeamTest
 
         context {
             let message = MockMessageFactory.textMessage(withText: "Message")!

@@ -26,15 +26,24 @@ protocol ConversationCreationValuesConfigurable: class {
 }
 
 final public class ConversationCreationValues {
+    private var unfilteredParticipants: Set<ZMUser>
+    
     var allowGuests: Bool
     var enableReceipts: Bool
     var name: String
-    var participants: Set<ZMUser>
+    var participants: Set<ZMUser> {
+        get {
+            let selfUser = ZMUser.selfUser()
+            return allowGuests ? unfilteredParticipants : unfilteredParticipants.filter({ $0.team == selfUser?.team})
+        }
+        set {
+            unfilteredParticipants = newValue
+        }
+    }
     
     init (name: String = "", participants: Set<ZMUser> = [], allowGuests: Bool = true, enableReceipts: Bool = true) {
         self.name = name
-        let selfUser = ZMUser.selfUser()!
-        self.participants = allowGuests ? participants : Set(Array(participants).filter { $0.team == selfUser.team })
+        self.unfilteredParticipants = participants
         self.allowGuests = allowGuests
         self.enableReceipts = enableReceipts
     }
@@ -52,7 +61,7 @@ final public class ConversationCreationValues {
     
 }
 
-@objcMembers final class ConversationCreationController: UIViewController {
+@objcMembers public final class ConversationCreationController: UIViewController {
 
     static let mainViewHeight: CGFloat = 56
     fileprivate let colorSchemeVariant = ColorScheme.default.variant
@@ -126,11 +135,11 @@ final public class ConversationCreationValues {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override var prefersStatusBarHidden: Bool {
+    override public var prefersStatusBarHidden: Bool {
         return false
     }
 
-    override func viewDidLoad() {
+    override public func viewDidLoad() {
         super.viewDidLoad()
         Analytics.shared().tagLinearGroupOpened(with: self.source)
 
@@ -146,16 +155,16 @@ final public class ConversationCreationValues {
         }
     }
 
-    override var preferredStatusBarStyle: UIStatusBarStyle {
+    override public var preferredStatusBarStyle: UIStatusBarStyle {
         return colorSchemeVariant == .light ? .default : .lightContent
     }
 
-    override func viewWillAppear(_ animated: Bool) {
+    override public func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(animated)
     }
     
-    override func viewDidAppear(_ animated: Bool) {
+    override public func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         nameSection.becomeFirstResponder()
     }
@@ -249,7 +258,7 @@ final public class ConversationCreationValues {
 
 extension ConversationCreationController: AddParticipantsConversationCreationDelegate {
     
-    func addParticipantsViewController(_ addParticipantsViewController: AddParticipantsViewController, didPerform action: AddParticipantsViewController.CreateAction) {
+    public func addParticipantsViewController(_ addParticipantsViewController: AddParticipantsViewController, didPerform action: AddParticipantsViewController.CreateAction) {
         switch action {
         case .updatedUsers(let users):
             values.participants = users

@@ -238,6 +238,15 @@ extension MockFileMessageData: MockFileMessageDataType { }
     var causedSecurityLevelDegradation: Bool = false
     var needsReadConfirmation: Bool = false
     let objectIdentifier: String = UUID().uuidString
+    
+    var isSent: Bool {
+        switch deliveryState {
+        case .failedToSend, .pending, .invalid:
+            return false
+        default:
+            return true
+        }
+    }
 
     var fileMessageData: ZMFileMessageData? {
         return backingFileMessageData

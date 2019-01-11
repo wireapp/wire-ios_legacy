@@ -20,11 +20,7 @@
 import XCTest
 @testable import Wire
 
-class UnknownMessageCellTests: ConversationCellSnapshotTestCase {
-
-    override func setUp() {
-        super.setUp()
-    }
+final class UnknownMessageCellTests: ConversationCellSnapshotTestCase {
 
     func testCell() {
         let systemMessage = otherUserConversation.appendInvalidSystemMessage(at: Date(), sender: selfUser)

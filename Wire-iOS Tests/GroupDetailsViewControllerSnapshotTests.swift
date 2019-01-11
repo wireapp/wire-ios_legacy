@@ -23,13 +23,25 @@ class GroupDetailsViewControllerSnapshotTests: CoreDataSnapshotTestCase {
     
     var sut: GroupDetailsViewController!
     
+    override func setUp() {
+        super.setUp()
+    }
+    
     override func tearDown() {
         sut = nil
         super.tearDown()
     }
 
-    func testForOptionsForTeamUser() {
+    func testForOptionsForTeamUserInNonTeamConversation() {
         teamTest {
+            sut = GroupDetailsViewController(conversation: otherUserConversation)
+            verify(view: sut.view)
+        }
+    }
+    
+    func testForOptionsForTeamUserInTeamConversation() {
+        teamTest {
+            otherUserConversation.team =  selfUser.team
             sut = GroupDetailsViewController(conversation: otherUserConversation)
             verify(view: sut.view)
         }

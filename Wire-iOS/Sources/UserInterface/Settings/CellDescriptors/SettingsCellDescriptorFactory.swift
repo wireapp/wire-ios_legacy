@@ -45,8 +45,11 @@ class SettingsCellDescriptorFactory {
         }
         
         rootElements.append(self.settingsGroup())
-        rootElements.append(self.addAccountOrTeamCell())
-        
+        #if MULTIPLE_ACCOUNTS_DISABLED
+            // We skip "add account" cell
+        #else
+            rootElements.append(self.addAccountOrTeamCell())
+        #endif
         let topSection = SettingsSectionDescriptor(cellDescriptors: rootElements)
         
         return SettingsGroupCellDescriptor(items: [topSection], title: "self.profile".localized, style: .plain)
@@ -374,7 +377,7 @@ class SettingsCellDescriptorFactory {
             style: .grouped,
             identifier: .none,
             previewGenerator: .none,
-            icon: .wireLogo
+            icon: .about
         )
     }
 

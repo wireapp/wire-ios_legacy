@@ -19,7 +19,6 @@
 
 #import "ConversationMessageWindowTableViewAdapter.h"
 #import "ConversationMessageWindowTableViewAdapter+Private.h"
-#import "ZMConversationMessageWindow+Formatting.h"
 #import "NSIndexSet+IndexPaths.h"
 #import "Analytics.h"
 #import "NSIndexSet+IndexPaths.h"
@@ -96,18 +95,6 @@
             [controller configureAt:sectionIndex in:self.tableView];
         }
     }
-}
-
-- (void)configureConversationCell:(ConversationCell *)conversationCell withMessage:(nullable id<ZMConversationMessage>)message
-{
-    // If a message has been deleted or nil, we don't try to configure it
-    if (message == nil || message.hasBeenDeleted) { return; }
-    
-    ConversationCellLayoutProperties *layoutProperties = [self.messageWindow layoutPropertiesForMessage:message firstUnreadMessage:self.firstUnreadMessage];
-    
-    conversationCell.selected = [message isEqual:self.selectedMessage];
-    conversationCell.beingEdited = [message isEqual:self.editingMessage];
-    [conversationCell configureForMessage:message layoutProperties:layoutProperties];
 }
 
 - (void)expandMessageWindow

@@ -23,15 +23,14 @@
 @class ZMUserSession;
 @protocol AudioTrack;
 @protocol AudioPlaylist;
-
+@protocol ProxiedURLRequester;
 
 
 @interface SoundcloudService : NSObject
 
 + (instancetype)sharedInstance;
 - (instancetype)init NS_UNAVAILABLE;
-- (instancetype)initWithUserSession:(ZMUserSession *)userSession NS_DESIGNATED_INITIALIZER;
-
+- (instancetype)initWithUserSession:(id<ProxiedURLRequester>)userSession NS_DESIGNATED_INITIALIZER;
 - (void)loadAudioResourceFromURL:(NSURL *)URL completion:(void (^)(id audioResource, NSError *error))completion;
 
 @end
