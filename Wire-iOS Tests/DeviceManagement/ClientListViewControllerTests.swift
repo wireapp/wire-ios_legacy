@@ -90,15 +90,12 @@ final class ClientListViewControllerTests: ZMSnapshotTestCase {
         self.verify(view: sut.view)
     }
 
-    func testForLightThemeWrappedInNavigationControllerAndScrollToBottom(){
-        prepareSut(variant: .light, numberOfClients: 7)
+    func testForLightThemeWrappedInNavigationController(){
+        prepareSut(variant: .light)
         let navWrapperController = sut.wrapInNavigationController()
         navWrapperController.navigationBar.tintColor = UIColor.accent()
 
-        verify(view: navWrapperController.view,
-               configuration:{ _ in
-                self.sut.clientsTableView?.scrollToRow(at: IndexPath(row:6, section: 1), at: .bottom, animated: false)
-        })
+        self.verify(view: navWrapperController.view)
     }
 
     func testForOneDeviceWithNoEditButton(){
