@@ -27,6 +27,8 @@ final class TextFieldDescription: NSObject, ValueSubmission {
     var acceptsInput: Bool = true
     var validationError: TextFieldValidator.ValidationError
     let uppercasePlaceholder: Bool
+    var showConfirmButton: Bool = true
+    var canSubmit: (() -> Bool)?
 
     fileprivate var currentValue: String = ""
 
@@ -50,6 +52,8 @@ extension TextFieldDescription: ViewDescriptor {
         textField.textFieldValidationDelegate = self
         textField.confirmButton.addTarget(self, action: #selector(TextFieldDescription.confirmButtonTapped(_:)), for: .touchUpInside)
         textField.confirmButton.accessibilityLabel = self.actionDescription
+        textField.showConfirmButton = showConfirmButton
+        textField.enableConfirmButton = canSubmit
         return textField
     }
 }

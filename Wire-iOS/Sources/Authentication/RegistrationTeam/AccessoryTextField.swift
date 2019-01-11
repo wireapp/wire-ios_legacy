@@ -69,6 +69,32 @@ class AccessoryTextField: UITextField, TextContainer {
         return text ?? ""
     }
 
+    /// Whether to display the confirm button.
+    var showConfirmButton: Bool = true {
+        didSet {
+            confirmButton.isHidden = !showConfirmButton
+        }
+    }
+
+    /// A block that is executed when the
+    private var bindingHandler: (() -> Void)?
+
+    func bindConfirmationButton(to textField: AccessoryTextField) {
+        assert(bindingHandler == nil, "A text field cannot be bound to another text field more than once.")
+
+        textField.bindingHandler = {
+            let newInputIsValid = !textField.input.isEmpty
+            self.confirmButton.isEnabled = !self.input.isEmpty && newInputIsValid
+        }
+
+        bindingHandler = {
+            let newInputIsValid = !textField.input.isEmpty
+            self.confirmButton.isEnabled = !self.input.isEmpty && newInputIsValid
+        }
+    }
+
+    var enableConfirmButton: (() -> Bool)?
+
     let confirmButton: IconButton = {
         let iconButton = IconButton(style: .circular, variant: .dark)
         iconButton.accessibilityIdentifier = "AccessoryTextFieldConfirmButton"
@@ -130,6 +156,10 @@ class AccessoryTextField: UITextField, TextContainer {
     override func layoutSubviews() {
         super.layoutSubviews()
         confirmButton.setNeedsLayout()
+    }
+
+    override var intrinsicContentSize: CGSize {
+        return CGSize(width: UIView.noIntrinsicMetric, height: 56)
     }
 
     private func setupTextFieldProperties() {
@@ -227,6 +257,11 @@ class AccessoryTextField: UITextField, TextContainer {
 
     func updateText(_ text: String) {
         self.text = text
+        bindingHandler?()
+
+        guard enableConfirmButton?() != false else {
+            return
+        }
 
         /// enable button if we have some text entered
         confirmButton.isEnabled = !text.isEmpty

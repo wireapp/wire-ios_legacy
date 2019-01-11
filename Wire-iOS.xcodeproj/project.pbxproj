@@ -219,6 +219,8 @@
 		5E21344B21E351D400273D0D /* LogInWithPhoneNumberStepDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E21344A21E351D400273D0D /* LogInWithPhoneNumberStepDescription.swift */; };
 		5E21344D21E3531500273D0D /* LoginButtonsDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E21344C21E3531500273D0D /* LoginButtonsDescription.swift */; };
 		5E21344F21E3628F00273D0D /* AuthenticationLoginCredentialsInputHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E21344E21E3628F00273D0D /* AuthenticationLoginCredentialsInputHandler.swift */; };
+		5E21345121E38A8400273D0D /* EmailPasswordFieldDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E21345021E38A8400273D0D /* EmailPasswordFieldDescription.swift */; };
+		5E21345321E39AE100273D0D /* EmailPasswordTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E21345221E39AE100273D0D /* EmailPasswordTextField.swift */; };
 		5E294595219081A80045ACFA /* Date+Generator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E294594219081A80045ACFA /* Date+Generator.swift */; };
 		5E294597219087CA0045ACFA /* ConversationReplyCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E294596219087CA0045ACFA /* ConversationReplyCellTests.swift */; };
 		5E2945992190A1680045ACFA /* SenderNameCellComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E2945982190A1680045ACFA /* SenderNameCellComponent.swift */; };
@@ -1741,6 +1743,8 @@
 		5E21344A21E351D400273D0D /* LogInWithPhoneNumberStepDescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInWithPhoneNumberStepDescription.swift; sourceTree = "<group>"; };
 		5E21344C21E3531500273D0D /* LoginButtonsDescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginButtonsDescription.swift; sourceTree = "<group>"; };
 		5E21344E21E3628F00273D0D /* AuthenticationLoginCredentialsInputHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationLoginCredentialsInputHandler.swift; sourceTree = "<group>"; };
+		5E21345021E38A8400273D0D /* EmailPasswordFieldDescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailPasswordFieldDescription.swift; sourceTree = "<group>"; };
+		5E21345221E39AE100273D0D /* EmailPasswordTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailPasswordTextField.swift; sourceTree = "<group>"; };
 		5E294594219081A80045ACFA /* Date+Generator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Generator.swift"; sourceTree = "<group>"; };
 		5E294596219087CA0045ACFA /* ConversationReplyCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationReplyCellTests.swift; sourceTree = "<group>"; };
 		5E2945982190A1680045ACFA /* SenderNameCellComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SenderNameCellComponent.swift; sourceTree = "<group>"; };
@@ -4617,6 +4621,7 @@
 				87CFDAB32044710400FD140D /* GuestIndicator.swift */,
 				EF40005620568C4400E03347 /* NetworkStatusBarConstants.swift */,
 				8750B1CA2124236200B807A9 /* InviteButton.swift */,
+				5E21345221E39AE100273D0D /* EmailPasswordTextField.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -6686,6 +6691,7 @@
 				F1199D3E1FC849440070FAC3 /* VerificationCodeFieldDescription.swift */,
 				5E21344521CCEF1700273D0D /* EmptyViewDescription.swift */,
 				5E21344C21E3531500273D0D /* LoginButtonsDescription.swift */,
+				5E21345021E38A8400273D0D /* EmailPasswordFieldDescription.swift */,
 			);
 			path = ViewDescriptions;
 			sourceTree = "<group>";
@@ -7401,6 +7407,7 @@
 				871067411C0DC5570035603B /* SettingsPropertyToggleCellDescriptor.swift in Sources */,
 				5E8DA788211C499900360979 /* AuthenticationCoordinator+PreLogin.swift in Sources */,
 				16E2A0A01F6BEDE7005F4DB1 /* ProximityMonitorManager.swift in Sources */,
+				5E21345321E39AE100273D0D /* EmailPasswordTextField.swift in Sources */,
 				1651F9B81D352B7B00A9FAE8 /* ArticleView.swift in Sources */,
 				5E35F7822183186A00D3F4FE /* ViewControllerBasedCell.swift in Sources */,
 				EF218AC520A9C123004977BF /* SettingsCellDescriptorFactory+DataUsagePermissions.swift in Sources */,
@@ -8162,6 +8169,7 @@
 				5E8DA751211AEFC800360979 /* AuthenticationStatusProvider.swift in Sources */,
 				871BC3641D34F94200DF0793 /* SoundcloudService.m in Sources */,
 				872E22201F5EA4B6007729D4 /* ProfileView.swift in Sources */,
+				5E21345121E38A8400273D0D /* EmailPasswordFieldDescription.swift in Sources */,
 				87C539561E8E516400084F94 /* BoundsAwareFlowLayout.swift in Sources */,
 				87CFDAB42044710400FD140D /* GuestIndicator.swift in Sources */,
 				D5D89782201A25E000FAF69C /* Analytics+Services.swift in Sources */,

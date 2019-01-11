@@ -28,7 +28,7 @@ final class LogInWithEmailStepDescription: TeamCreationStepDescription {
 
     init() {
         backButton = BackButtonDescription()
-        mainView = TextFieldDescription(placeholder: "registration.email.textfield.placeholder".localized, actionDescription: "registration.email.textfield.accessibility".localized, kind: .email)
+        mainView = EmailPasswordFieldDescription()
         headline = "Log In".localized
         subtext = "Enter your email address and password.".localized
         secondaryView = LogInSecondaryView(credentialsType: .email)
