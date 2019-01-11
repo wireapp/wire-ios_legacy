@@ -19,7 +19,6 @@
 
 import UIKit
 import WireSyncEngine
-import Cartography
 import WireExtensionComponents
 
 private let zmLog = ZMSLog(tag: "UI")
@@ -134,7 +133,7 @@ private let zmLog = ZMSLog(tag: "UI")
         }
 
         super.init(nibName: nil, bundle: nil)
-        self.title = "registration.devices.title".localized.uppercased()
+        title = "registration.devices.title".localized.uppercased()
 
         self.initalizeProperties(clientsList ?? Array(ZMUser.selfUser().clients.filter { !$0.isSelfClient() } ))
         self.clientsObserverToken = ZMUserSession.shared()?.add(self)
@@ -217,14 +216,7 @@ private let zmLog = ZMSLog(tag: "UI")
 
         clientsTableView.translatesAutoresizingMaskIntoConstraints = false
 
-        let constraints: [NSLayoutConstraint] = [
-            clientsTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            clientsTableView.topAnchor.constraint(equalTo: view.topAnchor),
-            clientsTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            clientsTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-        ]
-
-        NSLayoutConstraint.activate(constraints)
+        clientsTableView.fitInSuperview(safely: true)
     }
     
     fileprivate func convertSection(_ section: Int) -> Int {
