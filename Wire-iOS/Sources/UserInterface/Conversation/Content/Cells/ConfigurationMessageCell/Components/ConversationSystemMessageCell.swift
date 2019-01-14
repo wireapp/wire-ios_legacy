@@ -347,7 +347,7 @@ class ConversationSystemMessageCellDescription {
             let startedConversationCell = ConversationStartedSystemMessageCellDescription(message: message, data: systemMessageData)
             cells.append(AnyConversationMessageCellDescription(startedConversationCell))
             
-            if (ZMUser.selfUser()?.isTeamMember ?? false) && conversation.allowGuests {
+            if (ZMUser.selfUser()?.isTeamMember ?? false) && conversation.conversationType == .group && conversation.allowGuests {
                 cells.append(AnyConversationMessageCellDescription(GuestsAllowedCellDescription()))
             }
             
