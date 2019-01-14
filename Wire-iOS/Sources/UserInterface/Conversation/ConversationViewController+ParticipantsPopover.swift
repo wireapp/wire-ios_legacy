@@ -26,6 +26,7 @@ extension ConversationViewController: UIPopoverPresentationControllerDelegate {
                                                        contentViewController controller: UIViewController) {
 
         controller.modalPresentationStyle = .popover
+        controller.preferredContentSize = CGSize.IPadPopover.preferredContentSize
 
         guard let popover = controller.popoverPresentationController else { return }
         guard let rootViewController = UIApplication.shared.keyWindow?.rootViewController as? PopoverPresenter & UIViewController else { return }
@@ -46,7 +47,9 @@ extension ConversationViewController: UIPopoverPresentationControllerDelegate {
             return
         }
 
-        let profileViewController = ProfileViewController(user: user as! UserType & AccentColorProvider, conversation: conversation)
+        let profileViewController = ProfileViewController(user: user as! UserType & AccentColorProvider,
+                                                          conversation: conversation,
+                                                          viewControllerDismisser: self)
         profileViewController.preferredContentSize = CGSize.IPadPopover.preferredContentSize
 
         profileViewController.delegate = self
@@ -58,3 +61,8 @@ extension ConversationViewController: UIPopoverPresentationControllerDelegate {
 
 }
 
+extension ConversationViewController: ViewControllerDismisser {
+    func dismiss(viewController: UIViewController, completion: (() -> ())?) {
+        dismiss(animated: true, completion: completion)
+    }
+}

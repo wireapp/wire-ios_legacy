@@ -150,7 +150,7 @@ typedef NS_ENUM(NSInteger, ZetaIconType)
     ZetaIconTypeSettingsOptions                 = 0x135,
     ZetaIconTypeSettingsAdvanced                = 0x134,
     ZetaIconTypeSettingsSupport                 = 0x127,
-    ZetaIconTypeWireLogo                        = 0x202,
+    ZetaIconTypeAbout                           = 0x202,
 
     ZetaIconTypeSend                            = 0x235,
     ZetaIconTypeSendEphemeral                   = 0x735,

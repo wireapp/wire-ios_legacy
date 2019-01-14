@@ -22,4 +22,6 @@
 @property (strong, nonatomic) UIColor *textColor;
 @property (strong, nonatomic) UIColor *linkAttributeColor;
 
+@property (strong, nonatomic) UITextView *textView;
+
 @end

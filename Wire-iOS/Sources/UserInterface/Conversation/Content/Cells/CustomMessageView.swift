@@ -17,13 +17,11 @@
 //
 
 import Foundation
-import Cartography
-import TTTAttributedLabel
 
-class CustomMessageView: UIView, TTTAttributedLabelDelegate {
+class CustomMessageView: UIView {
     public var isSelected: Bool = false
 
-    public var messageLabel : TTTAttributedLabel = TTTAttributedLabel(frame: CGRect.zero)
+    public var messageLabel = WebLinkTextView()
     var messageText: String? {
         didSet {
             messageLabel.text = messageText?.applying(transform: .upper)
@@ -35,11 +33,9 @@ class CustomMessageView: UIView, TTTAttributedLabelDelegate {
     }
 
     override init(frame: CGRect) {
-        messageLabel.extendsLinkTouchArea = true
-        messageLabel.numberOfLines = 0
         messageLabel.isAccessibilityElement = true
         messageLabel.accessibilityLabel = "Text"
-        messageLabel.linkAttributes = [NSAttributedString.Key.underlineStyle: NSUnderlineStyle().rawValue as NSNumber,
+        messageLabel.linkTextAttributes = [NSAttributedString.Key.underlineStyle: NSUnderlineStyle().rawValue as NSNumber,
                                        NSAttributedString.Key.foregroundColor: ZMUser.selfUser().accentColor]
 
         super.init(frame: frame)
@@ -53,14 +49,16 @@ class CustomMessageView: UIView, TTTAttributedLabelDelegate {
             messageLabel.bottomAnchor.constraint(equalTo: bottomAnchor),
         ])
 
-        messageLabel.delegate = self
-
         messageLabel.font = FontSpec(.small, .light).font
         messageLabel.textColor = UIColor.from(scheme: .textForeground)
     }
+}
 
-    public func attributedLabel(_ label: TTTAttributedLabel!, didSelectLinkWith url: URL!) {
+// MARK: - UITextViewDelegate
+extension CustomMessageView: UITextViewDelegate {
+
+    public func textView(_ textView: UITextView, shouldInteractWith url: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
         UIApplication.shared.open(url)
+        return false
     }
-
 }

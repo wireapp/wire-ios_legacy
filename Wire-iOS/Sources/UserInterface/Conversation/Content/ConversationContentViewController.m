@@ -583,17 +583,6 @@
     [[UIMenuController sharedMenuController] setMenuVisible:NO animated:YES];
 }
 
-- (UITableViewCell *)cellForMessage:(id<ZMConversationMessage>)message
-{
-    NSUInteger messageIndex = [self.dataSource.messages indexOfObject:(id)message];
-    if (messageIndex == NSNotFound) {
-        return nil;
-    }
-    
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:messageIndex];
-    return [self.tableView cellForRowAtIndexPath:indexPath];
-}
-
 - (BOOL)displaysMessage:(id<ZMConversationMessage>)message
 {
     NSInteger index = [self.dataSource indexOfMessage:(id)message];

@@ -76,6 +76,9 @@ extension IndexSet {
     /// The message that is being presented.
     @objc var message: ZMConversationMessage
 
+    /// The index of the first cell that is displaying the message
+    var messageCellIndex: Int = 0
+    
     /// The delegate for cells injected by the list adapter.
     @objc weak var cellDelegate: ConversationMessageCellDelegate?
 
@@ -110,6 +113,8 @@ extension IndexSet {
     // MARK: - Content Types
     
     private func addContent(context: ConversationMessageContext, isSenderVisible: Bool) {
+        
+        messageCellIndex = cellDescriptions.count
         
         var contentCellDescriptions: [AnyConversationMessageCellDescription]
 

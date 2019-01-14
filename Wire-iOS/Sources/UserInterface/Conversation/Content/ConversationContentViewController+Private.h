@@ -48,7 +48,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) CGPoint initialPinchLocation;
 
 - (void)removeHighlightsAndMenu;
-- (nullable UITableViewCell *)cellForMessage:(id<ZMConversationMessage>)message;
 
 @end
 

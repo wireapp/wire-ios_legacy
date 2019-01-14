@@ -16,18 +16,31 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
+import XCTest
+@testable import Wire
 
-extension ProfileViewController {
-    @objc func setupKeyboardFrameNotification() {
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(keyboardFrameDidChange(notification:)),
-                                               name: UIResponder.keyboardDidChangeFrameNotification,
-                                               object: nil)
+final class SettingsTableViewControllerSnapshotTests: ZMSnapshotTestCase {
+    
+    var sut: SettingsTableViewController!
+    
+    override func setUp() {
+        super.setUp()
 
+        let settingsPropertyFactory = SettingsPropertyFactory(userSession: nil, selfUser: nil)
+
+        let group = SettingsCellDescriptorFactory(settingsPropertyFactory: settingsPropertyFactory).settingsGroup()
+        sut = SettingsTableViewController(group: group)
+
+        sut.view.backgroundColor = .black
+    }
+    
+    override func tearDown() {
+        sut = nil
+        super.tearDown()
     }
 
-    @objc func keyboardFrameDidChange(notification: Notification) {
-        updatePopoverFrame()
+    func testForSettingGroup() {
+
+        verify(view: sut.view)
     }
 }
