@@ -86,7 +86,10 @@ extension LoginButtonsDescription: ViewDescriptor {
         case .email:
             firstLineStack.addArrangedSubview(forgotPasswordButton.create())
             firstLineStack.addArrangedSubview(companyLoginButton.create())
+
+            #if !PHONE_AUTHENTICATION_DISABLED
             verticalStack.addArrangedSubview(changeFlowTypeButton.create())
+            #endif
 
         case .phone:
             firstLineStack.addArrangedSubview(companyLoginButton.create())
