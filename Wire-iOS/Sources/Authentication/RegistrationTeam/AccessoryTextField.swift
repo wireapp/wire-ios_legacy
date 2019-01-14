@@ -76,18 +76,25 @@ class AccessoryTextField: UITextField, TextContainer {
         }
     }
 
-    /// A block that is executed when the
+    /// A block that is executed to update the status of the text field the bound text field is updated.
     private var bindingHandler: (() -> Void)?
+
+    /**
+     * Binds the state of the confirmation button to the validity of another text field.
+     * The button will be enabled when both the current and bound fields are valid.
+     */
 
     func bindConfirmationButton(to textField: AccessoryTextField) {
         assert(bindingHandler == nil, "A text field cannot be bound to another text field more than once.")
 
-        textField.bindingHandler = {
+        textField.bindingHandler = { [weak self] in
+            guard let `self` = self else { return }
             let newInputIsValid = !textField.input.isEmpty
             self.confirmButton.isEnabled = !self.input.isEmpty && newInputIsValid
         }
 
-        bindingHandler = {
+        bindingHandler = { [weak self] in
+            guard let `self` = self else { return }
             let newInputIsValid = !textField.input.isEmpty
             self.confirmButton.isEnabled = !self.input.isEmpty && newInputIsValid
         }

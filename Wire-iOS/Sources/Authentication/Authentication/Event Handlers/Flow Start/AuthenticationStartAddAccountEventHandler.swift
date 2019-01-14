@@ -27,6 +27,7 @@ class AuthenticationStartAddAccountEventHandler: AuthenticationEventHandler {
     weak var statusProvider: AuthenticationStatusProvider?
 
     func handleEvent(currentStep: AuthenticationFlowStep, context: (NSError?, Int)) -> [AuthenticationCoordinatorAction]? {
+
         #if ACCOUNT_CREATION_DISABLED
         // Hide the landing screen if account creation is disabled.
         return [.hideLoadingView, .transition(.provideCredentials(.email), resetStack: true)]

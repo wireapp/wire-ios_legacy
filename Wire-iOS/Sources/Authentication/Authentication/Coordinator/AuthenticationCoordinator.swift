@@ -63,7 +63,8 @@ class AuthenticationCoordinator: NSObject, AuthenticationEventResponderChainDele
 
     let sessionManager: ObservableSessionManager
     let unauthenticatedSession: UnauthenticatedSession
-    let interfaceBuilder = AuthenticationInterfaceBuilder()
+    let featureProvider: AuthenticationFeatureProvider
+    let interfaceBuilder: AuthenticationInterfaceBuilder
     let companyLoginController = CompanyLoginController(withDefaultEnvironment: ())
 
     private var loginObservers: [Any] = []
@@ -74,12 +75,14 @@ class AuthenticationCoordinator: NSObject, AuthenticationEventResponderChainDele
 
     // MARK: - Initialization
 
-    init(presenter: UINavigationController, unauthenticatedSession: UnauthenticatedSession, sessionManager: ObservableSessionManager) {
+    init(presenter: UINavigationController, unauthenticatedSession: UnauthenticatedSession, sessionManager: ObservableSessionManager, featureProvider: AuthenticationFeatureProvider) {
         self.presenter = presenter
         self.sessionManager = sessionManager
         self.unauthenticatedSession = unauthenticatedSession
         self.registrationStatus = unauthenticatedSession.registrationStatus
         self.stateController = AuthenticationStateController()
+        self.featureProvider = featureProvider
+        self.interfaceBuilder = AuthenticationInterfaceBuilder(featureProvider: featureProvider)
         super.init()
 
         registrationStatus.delegate = self

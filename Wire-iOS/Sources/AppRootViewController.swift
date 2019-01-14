@@ -225,7 +225,8 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
 
             authenticationCoordinator = AuthenticationCoordinator(presenter: navigationController,
                                                                   unauthenticatedSession: UnauthenticatedSession.sharedSession!,
-                                                                  sessionManager: SessionManager.shared!)
+                                                                  sessionManager: SessionManager.shared!,
+                                                                  featureProvider: BuildSettingAuthenticationFeatureProvider())
 
             authenticationCoordinator!.delegate = appStateController
             authenticationCoordinator!.startAuthentication(with: error, numberOfAccounts: SessionManager.numberOfAccounts)

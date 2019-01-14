@@ -312,6 +312,8 @@
 		5E8DA786211C458600360979 /* AuthenticationEmailFallbackErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8DA785211C458600360979 /* AuthenticationEmailFallbackErrorHandler.swift */; };
 		5E8DA788211C499900360979 /* AuthenticationCoordinator+PreLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8DA787211C499900360979 /* AuthenticationCoordinator+PreLogin.swift */; };
 		5E8DA78C211C6FF700360979 /* AuthenticationLoginCodeAvailableEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8DA78B211C6FF700360979 /* AuthenticationLoginCodeAvailableEventHandler.swift */; };
+		5E8FFC0121ECC5270052DF03 /* ReauthenticateStepDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8FFC0021ECC5270052DF03 /* ReauthenticateStepDescription.swift */; };
+		5E8FFC0321ECC5CF0052DF03 /* AuthenticationFeatureProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8FFC0221ECC5CF0052DF03 /* AuthenticationFeatureProvider.swift */; };
 		5E936E8F20B590530060E6AA /* UIDevice+Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E936E8E20B590530060E6AA /* UIDevice+Platform.swift */; };
 		5E97C30420F4CFFF00C806B4 /* MockZiphyClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E97C30220F4CFDA00C806B4 /* MockZiphyClient.swift */; };
 		5E97C33120F5F17800C806B4 /* ExtensionSettingsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E97C32F20F5F17200C806B4 /* ExtensionSettingsTests.swift */; };
@@ -1027,7 +1029,6 @@
 		D5168F562010F25000F8222A /* TokenField.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EE9DCAE1B5F9A6D00E347DF /* TokenField.m */; };
 		D5168F572010F25400F8222A /* Token.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EE9DCAC1B5F9A6D00E347DF /* Token.m */; };
 		D5168F592010F2F700F8222A /* TokenField+DefaultAppearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5168F582010F2F700F8222A /* TokenField+DefaultAppearance.swift */; };
-		D51735712017640D00B473CE /* UIAlertController+PasswordVerification.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51735702017640D00B473CE /* UIAlertController+PasswordVerification.swift */; };
 		D5173573201764DD00B473CE /* UIAlertAction+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5173572201764DD00B473CE /* UIAlertAction+Convenience.swift */; };
 		D5189473204D543C00C095C1 /* InitialSyncObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5189472204D543C00C095C1 /* InitialSyncObserver.swift */; };
 		D5189477205045A100C095C1 /* LinkHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5189476205045A100C095C1 /* LinkHeaderCell.swift */; };
@@ -1152,7 +1153,6 @@
 		EF1A461C21AD955A0009B6B9 /* GroupDetailsDisclosureOptionsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1A461B21AD955A0009B6B9 /* GroupDetailsDisclosureOptionsCell.swift */; };
 		EF1A461E21ADACF50009B6B9 /* RightIconDetailsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1A461D21ADACF50009B6B9 /* RightIconDetailsCell.swift */; };
 		EF1EA4631FB0937000B53063 /* MockUser+filename.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1EA4611FB0934D00B53063 /* MockUser+filename.swift */; };
-		EF1EF1C320627075004DB245 /* SignInViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1EF1C220627075004DB245 /* SignInViewControllerTests.swift */; };
 		EF1F9A021FBB1FD800969DD1 /* LandingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1F9A011FBB1FD800969DD1 /* LandingButton.swift */; };
 		EF1FCE5021B69381003E0BE2 /* ReadReceiptViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1FCE4E21B69381003E0BE2 /* ReadReceiptViewModelTests.swift */; };
 		EF1FCE5221B6A84B003E0BE2 /* PhoneNumberViewController+RegistrationTextFieldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1FCE5121B6A84B003E0BE2 /* PhoneNumberViewController+RegistrationTextFieldDelegate.swift */; };
@@ -1164,7 +1164,6 @@
 		EF1FDC8621DE701000C9CEB1 /* SoundcloudServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1FDC8521DE701000C9CEB1 /* SoundcloudServiceTests.swift */; };
 		EF20B59221E3C3A800BE86F8 /* WebLinkTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF20B59121E3C3A800BE86F8 /* WebLinkTextView.swift */; };
 		EF2127031FB9DFE300625A9B /* CheckmarkView.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126B71FB9DFE300625A9B /* CheckmarkView.m */; };
-		EF2127041FB9DFE300625A9B /* RegistrationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126B81FB9DFE300625A9B /* RegistrationViewController.m */; };
 		EF2127051FB9DFE300625A9B /* RegistrationTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126B91FB9DFE300625A9B /* RegistrationTextField.m */; };
 		EF2127061FB9DFE300625A9B /* GuidanceDotView.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126BA1FB9DFE300625A9B /* GuidanceDotView.m */; };
 		EF2127081FB9DFE300625A9B /* PhoneNumberViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126BD1FB9DFE300625A9B /* PhoneNumberViewController.m */; };
@@ -1175,19 +1174,14 @@
 		EF21270D1FB9DFE300625A9B /* CountryCodeResultsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126CB1FB9DFE300625A9B /* CountryCodeResultsTableViewController.m */; };
 		EF21270E1FB9DFE300625A9B /* CountryCodeTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126CC1FB9DFE300625A9B /* CountryCodeTableViewController.m */; };
 		EF21270F1FB9DFE300625A9B /* CountryCodeBaseTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126CF1FB9DFE300625A9B /* CountryCodeBaseTableViewController.m */; };
-		EF2127101FB9DFE300625A9B /* SignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126D61FB9DFE300625A9B /* SignInViewController.m */; };
-		EF2127121FB9DFE300625A9B /* PhoneSignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126D91FB9DFE300625A9B /* PhoneSignInViewController.m */; };
-		EF2127131FB9DFE300625A9B /* EmailSignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126DC1FB9DFE300625A9B /* EmailSignInViewController.m */; };
 		EF2127141FB9DFE300625A9B /* EmailStepViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126E01FB9DFE300625A9B /* EmailStepViewController.m */; };
 		EF2127171FB9DFE300625A9B /* NoHistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126E81FB9DFE300625A9B /* NoHistoryViewController.m */; };
-		EF2127181FB9DFE300625A9B /* PhoneNumberStepViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126E91FB9DFE300625A9B /* PhoneNumberStepViewController.m */; };
 		EF21271D1FB9DFE300625A9B /* AddEmailPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126F31FB9DFE300625A9B /* AddEmailPasswordViewController.m */; };
 		EF21271E1FB9DFE300625A9B /* AddEmailStepViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126F41FB9DFE300625A9B /* AddEmailStepViewController.m */; };
 		EF2127201FB9DFE300625A9B /* NavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126F81FB9DFE300625A9B /* NavigationController.m */; };
 		EF2127211FB9DFE300625A9B /* GuidanceLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126F91FB9DFE300625A9B /* GuidanceLabel.m */; };
 		EF2127231FB9DFE300625A9B /* RegistrationFormController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126FE1FB9DFE300625A9B /* RegistrationFormController.m */; };
 		EF2127241FB9DFE300625A9B /* CountryCodeView.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126FF1FB9DFE300625A9B /* CountryCodeView.m */; };
-		EF2127261FB9DFE300625A9B /* RegistrationRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2127011FB9DFE300625A9B /* RegistrationRootViewController.m */; };
 		EF2127281FB9E06300625A9B /* LandingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2127271FB9E06300625A9B /* LandingViewController.swift */; };
 		EF2128EE2056D55400C1673B /* NetworkStatusViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2128EC2056D51600C1673B /* NetworkStatusViewControllerTests.swift */; };
 		EF2172EA21DF982400DA1671 /* URL+EncodeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2172E821DF97CC00DA1671 /* URL+EncodeTests.swift */; };
@@ -1244,7 +1238,6 @@
 		EF40005720568C4400E03347 /* NetworkStatusBarConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF40005620568C4400E03347 /* NetworkStatusBarConstants.swift */; };
 		EF4018BE205975C100CFBCB0 /* ApplicationProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4018BD205975C100CFBCB0 /* ApplicationProtocol.swift */; };
 		EF4018C02059761D00CFBCB0 /* MockApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4018BF2059761D00CFBCB0 /* MockApplication.swift */; };
-		EF40AAE62146C94600211FBF /* RegistrationRootViewControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF40AAE52146C94600211FBF /* RegistrationRootViewControllerSnapshotTests.swift */; };
 		EF4172AF210F5E9F00FF85C7 /* FullscreenImageViewControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4172AE210F5E9F00FF85C7 /* FullscreenImageViewControllerSnapshotTests.swift */; };
 		EF4172B12110A6E300FF85C7 /* SplitViewController+rightView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4172B02110A6E300FF85C7 /* SplitViewController+rightView.swift */; };
 		EF44784F20906DDD00BD9827 /* FullscreenImageViewController+Zoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF44784E20906DDD00BD9827 /* FullscreenImageViewController+Zoom.swift */; };
@@ -1821,6 +1814,8 @@
 		5E8DA785211C458600360979 /* AuthenticationEmailFallbackErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationEmailFallbackErrorHandler.swift; sourceTree = "<group>"; };
 		5E8DA787211C499900360979 /* AuthenticationCoordinator+PreLogin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AuthenticationCoordinator+PreLogin.swift"; sourceTree = "<group>"; };
 		5E8DA78B211C6FF700360979 /* AuthenticationLoginCodeAvailableEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationLoginCodeAvailableEventHandler.swift; sourceTree = "<group>"; };
+		5E8FFC0021ECC5270052DF03 /* ReauthenticateStepDescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReauthenticateStepDescription.swift; sourceTree = "<group>"; };
+		5E8FFC0221ECC5CF0052DF03 /* AuthenticationFeatureProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationFeatureProvider.swift; sourceTree = "<group>"; };
 		5E936E8E20B590530060E6AA /* UIDevice+Platform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+Platform.swift"; sourceTree = "<group>"; };
 		5E97C30220F4CFDA00C806B4 /* MockZiphyClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockZiphyClient.swift; sourceTree = "<group>"; };
 		5E97C32F20F5F17200C806B4 /* ExtensionSettingsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionSettingsTests.swift; sourceTree = "<group>"; };
@@ -2776,7 +2771,6 @@
 		D5168F42200F6F2300F8222A /* CABasicAnimation+Rotation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "CABasicAnimation+Rotation.m"; sourceTree = "<group>"; };
 		D5168F4C2010B61D00F8222A /* URL+Wire.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Wire.swift"; sourceTree = "<group>"; };
 		D5168F582010F2F700F8222A /* TokenField+DefaultAppearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TokenField+DefaultAppearance.swift"; sourceTree = "<group>"; };
-		D51735702017640D00B473CE /* UIAlertController+PasswordVerification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+PasswordVerification.swift"; sourceTree = "<group>"; };
 		D5173572201764DD00B473CE /* UIAlertAction+Convenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertAction+Convenience.swift"; sourceTree = "<group>"; };
 		D5189472204D543C00C095C1 /* InitialSyncObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialSyncObserver.swift; sourceTree = "<group>"; };
 		D5189476205045A100C095C1 /* LinkHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkHeaderCell.swift; sourceTree = "<group>"; };
@@ -2908,8 +2902,6 @@
 		EF1A461B21AD955A0009B6B9 /* GroupDetailsDisclosureOptionsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDetailsDisclosureOptionsCell.swift; sourceTree = "<group>"; };
 		EF1A461D21ADACF50009B6B9 /* RightIconDetailsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RightIconDetailsCell.swift; sourceTree = "<group>"; };
 		EF1EA4611FB0934D00B53063 /* MockUser+filename.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MockUser+filename.swift"; sourceTree = "<group>"; };
-		EF1EF1C220627075004DB245 /* SignInViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewControllerTests.swift; sourceTree = "<group>"; };
-		EF1EF1C420627305004DB245 /* SignInViewController+internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SignInViewController+internal.h"; sourceTree = "<group>"; };
 		EF1F9A011FBB1FD800969DD1 /* LandingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingButton.swift; sourceTree = "<group>"; };
 		EF1FCE4E21B69381003E0BE2 /* ReadReceiptViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadReceiptViewModelTests.swift; sourceTree = "<group>"; };
 		EF1FCE5121B6A84B003E0BE2 /* PhoneNumberViewController+RegistrationTextFieldDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PhoneNumberViewController+RegistrationTextFieldDelegate.swift"; sourceTree = "<group>"; };
@@ -2921,7 +2913,6 @@
 		EF1FDC8521DE701000C9CEB1 /* SoundcloudServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundcloudServiceTests.swift; sourceTree = "<group>"; };
 		EF20B59121E3C3A800BE86F8 /* WebLinkTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebLinkTextView.swift; sourceTree = "<group>"; };
 		EF2126B71FB9DFE300625A9B /* CheckmarkView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckmarkView.m; sourceTree = "<group>"; };
-		EF2126B81FB9DFE300625A9B /* RegistrationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegistrationViewController.m; sourceTree = "<group>"; };
 		EF2126B91FB9DFE300625A9B /* RegistrationTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegistrationTextField.m; sourceTree = "<group>"; };
 		EF2126BA1FB9DFE300625A9B /* GuidanceDotView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GuidanceDotView.m; sourceTree = "<group>"; };
 		EF2126BD1FB9DFE300625A9B /* PhoneNumberViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhoneNumberViewController.m; sourceTree = "<group>"; };
@@ -2931,7 +2922,6 @@
 		EF2126C21FB9DFE300625A9B /* CountryCodeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CountryCodeView.h; sourceTree = "<group>"; };
 		EF2126C31FB9DFE300625A9B /* RegistrationFormController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegistrationFormController.h; sourceTree = "<group>"; };
 		EF2126C41FB9DFE300625A9B /* CheckmarkViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckmarkViewController.m; sourceTree = "<group>"; };
-		EF2126C61FB9DFE300625A9B /* RegistrationRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegistrationRootViewController.h; sourceTree = "<group>"; };
 		EF2126C81FB9DFE300625A9B /* CountryCodes.plist */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = CountryCodes.plist; sourceTree = "<group>"; };
 		EF2126C91FB9DFE300625A9B /* Country.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Country.m; sourceTree = "<group>"; };
 		EF2126CA1FB9DFE300625A9B /* CountryCodeBaseTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CountryCodeBaseTableViewController.h; sourceTree = "<group>"; };
@@ -2943,20 +2933,12 @@
 		EF2126D01FB9DFE300625A9B /* CountryCodeTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CountryCodeTableViewController.h; sourceTree = "<group>"; };
 		EF2126D11FB9DFE300625A9B /* GuidanceDotView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GuidanceDotView.h; sourceTree = "<group>"; };
 		EF2126D21FB9DFE300625A9B /* RegistrationTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegistrationTextField.h; sourceTree = "<group>"; };
-		EF2126D31FB9DFE300625A9B /* RegistrationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegistrationViewController.h; sourceTree = "<group>"; };
 		EF2126D41FB9DFE300625A9B /* CheckmarkView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckmarkView.h; sourceTree = "<group>"; };
-		EF2126D61FB9DFE300625A9B /* SignInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignInViewController.m; sourceTree = "<group>"; };
-		EF2126D81FB9DFE300625A9B /* EmailSignInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmailSignInViewController.h; sourceTree = "<group>"; };
 		EF2126D91FB9DFE300625A9B /* PhoneSignInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhoneSignInViewController.m; sourceTree = "<group>"; };
-		EF2126DA1FB9DFE300625A9B /* SignInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignInViewController.h; sourceTree = "<group>"; };
-		EF2126DB1FB9DFE300625A9B /* PhoneSignInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhoneSignInViewController.h; sourceTree = "<group>"; };
-		EF2126DC1FB9DFE300625A9B /* EmailSignInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmailSignInViewController.m; sourceTree = "<group>"; };
-		EF2126DE1FB9DFE300625A9B /* PhoneNumberStepViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhoneNumberStepViewController.h; sourceTree = "<group>"; };
 		EF2126DF1FB9DFE300625A9B /* NoHistoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoHistoryViewController.h; sourceTree = "<group>"; };
 		EF2126E01FB9DFE300625A9B /* EmailStepViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmailStepViewController.m; sourceTree = "<group>"; };
 		EF2126E71FB9DFE300625A9B /* EmailStepViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmailStepViewController.h; sourceTree = "<group>"; };
 		EF2126E81FB9DFE300625A9B /* NoHistoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoHistoryViewController.m; sourceTree = "<group>"; };
-		EF2126E91FB9DFE300625A9B /* PhoneNumberStepViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhoneNumberStepViewController.m; sourceTree = "<group>"; };
 		EF2126F31FB9DFE300625A9B /* AddEmailPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddEmailPasswordViewController.m; sourceTree = "<group>"; };
 		EF2126F41FB9DFE300625A9B /* AddEmailStepViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddEmailStepViewController.m; sourceTree = "<group>"; };
 		EF2126F51FB9DFE300625A9B /* AddEmailPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddEmailPasswordViewController.h; sourceTree = "<group>"; };
@@ -2967,7 +2949,6 @@
 		EF2126FB1FB9DFE300625A9B /* PhoneNumberViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhoneNumberViewController.h; sourceTree = "<group>"; };
 		EF2126FE1FB9DFE300625A9B /* RegistrationFormController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegistrationFormController.m; sourceTree = "<group>"; };
 		EF2126FF1FB9DFE300625A9B /* CountryCodeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CountryCodeView.m; sourceTree = "<group>"; };
-		EF2127011FB9DFE300625A9B /* RegistrationRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegistrationRootViewController.m; sourceTree = "<group>"; };
 		EF2127021FB9DFE300625A9B /* CheckmarkViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckmarkViewController.h; sourceTree = "<group>"; };
 		EF2127271FB9E06300625A9B /* LandingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingViewController.swift; sourceTree = "<group>"; };
 		EF2128EC2056D51600C1673B /* NetworkStatusViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkStatusViewControllerTests.swift; sourceTree = "<group>"; };
@@ -3034,7 +3015,6 @@
 		EF40005620568C4400E03347 /* NetworkStatusBarConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkStatusBarConstants.swift; sourceTree = "<group>"; };
 		EF4018BD205975C100CFBCB0 /* ApplicationProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationProtocol.swift; sourceTree = "<group>"; };
 		EF4018BF2059761D00CFBCB0 /* MockApplication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockApplication.swift; sourceTree = "<group>"; };
-		EF40AAE52146C94600211FBF /* RegistrationRootViewControllerSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationRootViewControllerSnapshotTests.swift; sourceTree = "<group>"; };
 		EF4172AE210F5E9F00FF85C7 /* FullscreenImageViewControllerSnapshotTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullscreenImageViewControllerSnapshotTests.swift; sourceTree = "<group>"; };
 		EF4172B02110A6E300FF85C7 /* SplitViewController+rightView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SplitViewController+rightView.swift"; sourceTree = "<group>"; };
 		EF44784E20906DDD00BD9827 /* FullscreenImageViewController+Zoom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FullscreenImageViewController+Zoom.swift"; sourceTree = "<group>"; };
@@ -3781,6 +3761,7 @@
 			isa = PBXGroup;
 			children = (
 				5E21344821E34F5B00273D0D /* LogInWithEmailStepDescription.swift */,
+				5E8FFC0021ECC5270052DF03 /* ReauthenticateStepDescription.swift */,
 				5E21344A21E351D400273D0D /* LogInWithPhoneNumberStepDescription.swift */,
 			);
 			path = Login;
@@ -3976,6 +3957,7 @@
 				5E766D9A211472C0005242B4 /* AuthenticationFlowStep.swift */,
 				F1199D2F1FC8490A0070FAC3 /* TeamCreationState.swift */,
 				5E53B0DB211AB7AC009C7124 /* AuthenticationInterfaceBuilder.swift */,
+				5E8FFC0221ECC5CF0052DF03 /* AuthenticationFeatureProvider.swift */,
 				5E9E8AA2216284320058D6E1 /* Landing */,
 				5E8DA763211B2CF000360979 /* Coordinator */,
 				5E8DA753211AF7BA00360979 /* Delegates */,
@@ -4128,6 +4110,14 @@
 				5E8DA785211C458600360979 /* AuthenticationEmailFallbackErrorHandler.swift */,
 			);
 			path = "Pre-Login";
+			sourceTree = "<group>";
+		};
+		5E8FFC0421ECC7AF0052DF03 /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				EF2126D91FB9DFE300625A9B /* PhoneSignInViewController.m */,
+			);
+			name = "Recovered References";
 			sourceTree = "<group>";
 		};
 		5E9E8AA2216284320058D6E1 /* Landing */ = {
@@ -5240,6 +5230,7 @@
 				87A418BD1C0CAB1A006FA803 /* Cartfile.private */,
 				5E181908216B734C003659CB /* Cartfile.resolved */,
 				5EDD254221412ED200C0E254 /* EmbeddedDependencies.plist */,
+				5E8FFC0421ECC7AF0052DF03 /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -5950,7 +5941,6 @@
 				5EE115E0204EEC7D002AD6C2 /* CallQualityControllerTests.swift */,
 				16C02A11204EE5EC00811912 /* GroupConversationCellTests.swift */,
 				FE996D9B2032039100BDE573 /* LandingViewControllerTests.swift */,
-				EF1EF1C220627075004DB245 /* SignInViewControllerTests.swift */,
 				EF60FC402064FD400017D083 /* SplitViewControllerTests.swift */,
 				87C39A8F206BF00A008DA100 /* BackupViewControllerTests.swift */,
 				87C39A8D206BE83C008DA100 /* NoHistoryViewControllerTests.swift */,
@@ -5986,7 +5976,6 @@
 				EF2B74C92141699100FD2574 /* LandingViewControllerSnapshotTests.swift */,
 				EF9FC3EE2142A77500033ED0 /* ColorSchemeControllerTests.swift */,
 				EFE285452146B6A300720737 /* RegistrationTextFieldSnapshotTests.swift */,
-				EF40AAE52146C94600211FBF /* RegistrationRootViewControllerSnapshotTests.swift */,
 				7C25D75A21494E4B002E22BF /* UserSearchResultsViewControllerTests.swift */,
 				F1CB5D28215A3108001CCF5D /* MentionsHandlerTests.swift */,
 				EFE043972149CE7600BC3079 /* InviteContactsViewControllerSnapshotTests.swift */,
@@ -6405,12 +6394,9 @@
 			isa = PBXGroup;
 			children = (
 				EF2126C71FB9DFE300625A9B /* CountryCode */,
-				EF2126D51FB9DFE300625A9B /* SignIn */,
 				EF2126DD1FB9DFE300625A9B /* Steps */,
 				EF2126F11FB9DFE300625A9B /* NagScreen */,
 				EF2126B71FB9DFE300625A9B /* CheckmarkView.m */,
-				EF2126D31FB9DFE300625A9B /* RegistrationViewController.h */,
-				EF2126B81FB9DFE300625A9B /* RegistrationViewController.m */,
 				EF2126D21FB9DFE300625A9B /* RegistrationTextField.h */,
 				EFF92B6821A85A8B0090DA66 /* RegistrationTextFieldDelegate.swift */,
 				EFE285482146B7A200720737 /* RegistrationTextField+Internal.h */,
@@ -6435,8 +6421,6 @@
 				EF2126C31FB9DFE300625A9B /* RegistrationFormController.h */,
 				EF2126FE1FB9DFE300625A9B /* RegistrationFormController.m */,
 				EF2126FF1FB9DFE300625A9B /* CountryCodeView.m */,
-				EF2126C61FB9DFE300625A9B /* RegistrationRootViewController.h */,
-				EF2127011FB9DFE300625A9B /* RegistrationRootViewController.m */,
 				EF2127021FB9DFE300625A9B /* CheckmarkViewController.h */,
 				5EE73BF621242F0D0032986D /* BlueViewController.h */,
 				5EE73BF721242F0D0032986D /* BlueViewController.m */,
@@ -6462,21 +6446,6 @@
 			path = CountryCode;
 			sourceTree = "<group>";
 		};
-		EF2126D51FB9DFE300625A9B /* SignIn */ = {
-			isa = PBXGroup;
-			children = (
-				D51735702017640D00B473CE /* UIAlertController+PasswordVerification.swift */,
-				EF2126DA1FB9DFE300625A9B /* SignInViewController.h */,
-				EF1EF1C420627305004DB245 /* SignInViewController+internal.h */,
-				EF2126D61FB9DFE300625A9B /* SignInViewController.m */,
-				EF2126DB1FB9DFE300625A9B /* PhoneSignInViewController.h */,
-				EF2126D91FB9DFE300625A9B /* PhoneSignInViewController.m */,
-				EF2126D81FB9DFE300625A9B /* EmailSignInViewController.h */,
-				EF2126DC1FB9DFE300625A9B /* EmailSignInViewController.m */,
-			);
-			path = SignIn;
-			sourceTree = "<group>";
-		};
 		EF2126DD1FB9DFE300625A9B /* Steps */ = {
 			isa = PBXGroup;
 			children = (
@@ -6488,8 +6457,6 @@
 				D56A2D43207DFC9E00DB59F5 /* UIAlertController+Restore.swift */,
 				EF2126E71FB9DFE300625A9B /* EmailStepViewController.h */,
 				EF2126E01FB9DFE300625A9B /* EmailStepViewController.m */,
-				EF2126DE1FB9DFE300625A9B /* PhoneNumberStepViewController.h */,
-				EF2126E91FB9DFE300625A9B /* PhoneNumberStepViewController.m */,
 			);
 			path = Steps;
 			sourceTree = "<group>";
@@ -7398,7 +7365,6 @@
 				16719A1D1D9ABB7C00AA6B63 /* GiphyConfirmationViewController.swift in Sources */,
 				163495891F015389004E80DB /* AppDelegate+Network.swift in Sources */,
 				87DCF4791D34E95B00BB420F /* PermissionDeniedViewController.m in Sources */,
-				EF2127181FB9DFE300625A9B /* PhoneNumberStepViewController.m in Sources */,
 				BFAF4CB71CEDB9FC00780537 /* AudioButtonOverlayState.swift in Sources */,
 				8758220921B6999E00D68266 /* SelfProfileViewController+SettingsChangeAlert.swift in Sources */,
 				163BB8101EE1648100DF9384 /* ContactsDataSource+Searching.swift in Sources */,
@@ -7490,7 +7456,6 @@
 				5EBC343C20EE49D700AFB6DF /* DecodeImageOperation.swift in Sources */,
 				BF38FAF11C9B1D0500E2ACBB /* ConversationTitleView.swift in Sources */,
 				871BC2701D34F8F800DF0793 /* StackView.m in Sources */,
-				EF2127101FB9DFE300625A9B /* SignInViewController.m in Sources */,
 				5E8DA765211B2D0400360979 /* AuthenticationCoordinator+PostLogin.swift in Sources */,
 				871BC2391D34F8F800DF0793 /* KeyboardAvoidingViewController.m in Sources */,
 				8F89140D1A9F287E0056AB0C /* ConnectRequestsCell.m in Sources */,
@@ -7736,6 +7701,7 @@
 				5E8DA782211C3BF300360979 /* AuthenticationPhoneLoginErrorHandler.swift in Sources */,
 				EF3CBC0A2147D81800566295 /* ConversationListViewController+PushPermissions.swift in Sources */,
 				F16427081FCC5BF800D2ABFC /* SetPasswordStepDescription.swift in Sources */,
+				5E8FFC0321ECC5CF0052DF03 /* AuthenticationFeatureProvider.swift in Sources */,
 				5EC16B9120EB8C6F00955156 /* YouTubeService.swift in Sources */,
 				EF51C2BF211B2CAF0099A599 /* Data+HEIF.swift in Sources */,
 				BF2A74711CEB466A002608BF /* ConversationInputBarViewController+Audio.swift in Sources */,
@@ -7746,7 +7712,6 @@
 				5E65A7A021303FCE008BFCC0 /* AuthenticationCoordinator+CompanyLogin.swift in Sources */,
 				5E8C38B0212DC472002AE12B /* AuthenticationCoordinator+LandingScreen.swift in Sources */,
 				7C4789852021F40E00A38442 /* AddBotError+UIHandler.swift in Sources */,
-				EF2127131FB9DFE300625A9B /* EmailSignInViewController.m in Sources */,
 				5E65A79E21303F97008BFCC0 /* AuthenticationCoordinator+UserChange.swift in Sources */,
 				871BC2711D34F8F800DF0793 /* SwipeMenuCollectionCell.m in Sources */,
 				BF52C1591CAEBD8D0037331F /* ArchivedNavigationBar.swift in Sources */,
@@ -7911,6 +7876,7 @@
 				87DCF4F51D34EA4500BB420F /* StartUIViewController.m in Sources */,
 				8793250A1E83BB5C00190067 /* ZMConversation+Status.swift in Sources */,
 				D58191FD2091CAE8003BA7EC /* CallActionsView.swift in Sources */,
+				5E8FFC0121ECC5270052DF03 /* ReauthenticateStepDescription.swift in Sources */,
 				5EB45761204EA75300BA217A /* CallQualityDismissalTransition.swift in Sources */,
 				5EDD253C2140044D00C0E254 /* SettingsLicenseItem.swift in Sources */,
 				BF5DF5C520F4B0B8002BCB67 /* UICollectionView+UserList.swift in Sources */,
@@ -7996,7 +7962,6 @@
 				EEAC0A1221AD875900BE5F5D /* ConversationCreateNameSectionController.swift in Sources */,
 				870815881BF4EAD100D321BC /* SettingsTableViewController.swift in Sources */,
 				5E21344B21E351D400273D0D /* LogInWithPhoneNumberStepDescription.swift in Sources */,
-				EF2127261FB9DFE300625A9B /* RegistrationRootViewController.m in Sources */,
 				EF3CB75521DD157B0030C3E8 /* ProfileViewController+Extension.swift in Sources */,
 				F16426FE1FCC5A2C00D2ABFC /* TeamCreationStepDescription.swift in Sources */,
 				871BC2241D34F8F800DF0793 /* BottomOverlayViewController.m in Sources */,
@@ -8068,7 +8033,6 @@
 				8F5A3E9D19AE2C9E00D0E9DA /* AVSMediaManager+Additions.m in Sources */,
 				EF587164216669FD00E47E73 /* ConversationListViewController+ActionMenu.swift in Sources */,
 				5EFD914A21C931B600080599 /* PhoneNumberFieldDescription.swift in Sources */,
-				D51735712017640D00B473CE /* UIAlertController+PasswordVerification.swift in Sources */,
 				BF3A3DCE1EA75290005477F8 /* RotatingKeyboardAvoidingViewController.swift in Sources */,
 				87DCF49B1D34E9E600BB420F /* LocationSelectionViewController.swift in Sources */,
 				871067431C0DC78F0035603B /* SettingsExternalScreenCellDescriptor.swift in Sources */,
@@ -8087,7 +8051,6 @@
 				D5694B502044144500C84C8F /* ToggleView.swift in Sources */,
 				EF2127141FB9DFE300625A9B /* EmailStepViewController.m in Sources */,
 				871BC0591D34F60700DF0793 /* NSDate+Format.m in Sources */,
-				EF2127121FB9DFE300625A9B /* PhoneSignInViewController.m in Sources */,
 				16829EDF2010D60800F579A0 /* InviteTeamMemberSection.swift in Sources */,
 				5E35F7742180B98B00D3F4FE /* ConversationSoundCloudAttachmentCell.swift in Sources */,
 				8FC85452199245770008B66B /* ConversationContentViewController.m in Sources */,
@@ -8172,7 +8135,6 @@
 				5EE73BF3212323C70032986D /* RegistrationCredentialsVerifiedEventHandler.swift in Sources */,
 				EE8E926E2024F085000F4752 /* MarkdownTextView.swift in Sources */,
 				F12CDAE01E43868200CEFCEB /* ConfirmEmailViewController.swift in Sources */,
-				EF2127041FB9DFE300625A9B /* RegistrationViewController.m in Sources */,
 				EF3BA5D72107688D0093048F /* InputLanguageSettable.swift in Sources */,
 				EF66110F2121D00B00BDF57A /* UIImage+DownSize.swift in Sources */,
 				7CC085461F7AA30F0010F96B /* DotView.swift in Sources */,
@@ -8376,7 +8338,6 @@
 				EF68856820F611D50074CA0F /* CanvasViewControllerTests.swift in Sources */,
 				5EC16B9820EB9D3900955156 /* YouTubeServiceTests.swift in Sources */,
 				EF31DC7C2092020300A4F09F /* UIViewController+iPhoneSize.swift in Sources */,
-				EF40AAE62146C94600211FBF /* RegistrationRootViewControllerSnapshotTests.swift in Sources */,
 				EEE60E2C2179D99100D03346 /* GroupDetailsNotificationOptionsCellTests.swift in Sources */,
 				87DE06B41D2663960009411F /* AudioEffectsPickerViewControllerTests.swift in Sources */,
 				BFF9446C20F6480C00531BC3 /* ThumbnailCreationTests.swift in Sources */,
@@ -8410,7 +8371,6 @@
 				1658C19C20A1F07800148F6D /* MockCallInfoViewControllerInput.swift in Sources */,
 				EF21A07121305FD700B9120C /* DeleteMessageTests.swift in Sources */,
 				87FC0AEB1FC71C020036E029 /* CharacterInputFieldTests.swift in Sources */,
-				EF1EF1C320627075004DB245 /* SignInViewControllerTests.swift in Sources */,
 				7C23A26D20247500005FEB54 /* ShareViewControllerTests.swift in Sources */,
 				5EBBE96B21872060008BC1B7 /* MockCell.swift in Sources */,
 				EF2B74CA2141699100FD2574 /* LandingViewControllerSnapshotTests.swift in Sources */,

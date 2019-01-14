@@ -31,6 +31,20 @@ typealias AuthenticationStepViewController = UIViewController & AuthenticationCo
 class AuthenticationInterfaceBuilder {
 
     /**
+     * The object to use when checking for features. Defaults to the build settings.
+     */
+
+    let featureProvider: AuthenticationFeatureProvider
+
+    // MARK: - Initialization
+
+    init(featureProvider: AuthenticationFeatureProvider) {
+        self.featureProvider = featureProvider
+    }
+
+    // MARK: - Interface Building
+
+    /**
      * Returns the view controller that displays the interface of the authentication step.
      *
      * - note: When new steps are added to the list of steps, you need to handle them here,
@@ -47,10 +61,10 @@ class AuthenticationInterfaceBuilder {
             return LandingViewController()
 
         case .reauthenticate(let credentials, let numberOfAccounts):
-            let registrationViewController = RegistrationViewController(authenticationFlow: .onlyLogin)
-            registrationViewController.shouldHideCancelButton = numberOfAccounts < 2
-            registrationViewController.loginCredentials = credentials
-            return registrationViewController
+            print(credentials as Any)
+            print(numberOfAccounts as Any)
+            let emailLoginStep = ReauthenticateStepDescription()
+            return createViewController(for: emailLoginStep)
 
         case .provideCredentials(let credentialsFlowType):
             switch credentialsFlowType {

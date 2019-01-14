@@ -151,13 +151,9 @@ final class LandingViewController: AuthenticationStepViewController {
         [headerContainerView, buttonStackView, loginHintsLabel, loginButton].forEach(view.addSubview)
         headerContainerView.addSubview(logoView)
         
-        #if ACCOUNT_CREATION_DISABLED
-            // Do not show buttons for account and team creation
-        #else
-            [createAccountButton, createTeamButton].forEach { button in
-                buttonStackView.addArrangedSubview(button)
-            }
-        #endif
+        [createAccountButton, createTeamButton].forEach { button in
+            buttonStackView.addArrangedSubview(button)
+        }
 
         self.view.backgroundColor = UIColor.Team.background
         navigationBar.tintColor = .black
