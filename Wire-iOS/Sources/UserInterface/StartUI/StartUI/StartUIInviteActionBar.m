@@ -20,7 +20,7 @@
 #import "StartUIInviteActionBar.h"
 #import "IconButton.h"
 @import PureLayout;
-@import WireExtensionComponents;
+
 #import "Wire-Swift.h"
 
 @interface StartUIInviteActionBar ()

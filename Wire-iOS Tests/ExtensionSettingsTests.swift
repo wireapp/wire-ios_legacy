@@ -17,7 +17,7 @@
 //
 
 import XCTest
-@testable import WireExtensionComponents
+@testable 
 
 class ExtensionSettingsTests: XCTestCase {
 

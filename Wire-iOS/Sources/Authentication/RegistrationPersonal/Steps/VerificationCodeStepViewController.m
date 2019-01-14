@@ -17,7 +17,7 @@
 // 
 
 @import PureLayout;
-@import WireExtensionComponents;
+
 @import WireUtilities;
 
 #import "VerificationCodeStepViewController.h"

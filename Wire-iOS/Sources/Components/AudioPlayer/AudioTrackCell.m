@@ -18,7 +18,7 @@
 
 
 @import PureLayout;
-@import WireExtensionComponents;
+
 
 #import "AudioTrackCell.h"
 #import "AudioTrackView.h"

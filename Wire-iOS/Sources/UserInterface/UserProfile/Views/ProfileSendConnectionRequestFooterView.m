@@ -19,7 +19,7 @@
 
 #import "ProfileSendConnectionRequestFooterView.h"
 #import "Button.h"
-@import WireExtensionComponents;
+
 #import "NSLayoutConstraint+Helpers.h"
 
 

@@ -28,7 +28,6 @@
 #import "Message+UI.h"
 
 // UI
-@import WireExtensionComponents;
 #import "ParticipantDeviceCell.h"
 #import "ParticipantDeviceCell+Internal.h"
 #import "ParticipantDeviceHeaderView.h"

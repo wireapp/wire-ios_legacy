@@ -29,7 +29,7 @@
 #import <Foundation/Foundation.h>
 
 @import WireSyncEngine;
-@import WireExtensionComponents;
+
 @import AVKit;
 
 // model

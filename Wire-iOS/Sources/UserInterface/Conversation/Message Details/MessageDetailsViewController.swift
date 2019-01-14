@@ -17,7 +17,7 @@
 //
 
 import UIKit
-import WireExtensionComponents
+
 
 /**
  * A view controller wrapping the message details.

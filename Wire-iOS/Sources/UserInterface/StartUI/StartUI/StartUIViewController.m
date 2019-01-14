@@ -19,7 +19,7 @@
 
 @import PureLayout;
 
-@import WireExtensionComponents;
+
 #import "AccentColorProvider.h"
 
 #import "StartUIViewController.h"

@@ -55,7 +55,6 @@
 		1648EEEF20498F8900CC6B37 /* ContactsSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1648EEEE20498F8900CC6B37 /* ContactsSectionController.swift */; };
 		1648EEF12049A69800CC6B37 /* GroupConversationSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1648EEF02049A69800CC6B37 /* GroupConversationSectionController.swift */; };
 		1648EEF32049A6F800CC6B37 /* DirectorySectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1648EEF22049A6F800CC6B37 /* DirectorySectionController.swift */; };
-		164A55D120EFBD4500AE62A6 /* UIImage+Decoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164A55C920EFB90D00AE62A6 /* UIImage+Decoding.swift */; };
 		164B533C20A0A5E800EC8265 /* CallInfoConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164B533B20A0A5E800EC8265 /* CallInfoConfigurationTests.swift */; };
 		164C29AB1ED33A5F0026562A /* SearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164C29AA1ED33A5F0026562A /* SearchResultsViewController.swift */; };
 		164C29AD1ED446660026562A /* UserSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164C29AC1ED446660026562A /* UserSelection.swift */; };
@@ -159,13 +158,8 @@
 		1E80A3651B0DF6120049A809 /* MediaPlaybackManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E80A3641B0DF6120049A809 /* MediaPlaybackManager.m */; };
 		1E8772281B0C8CAB005BDDC6 /* emo-test-03.json in Resources */ = {isa = PBXBuildFile; fileRef = 1E8772271B0C8CAB005BDDC6 /* emo-test-03.json */; };
 		1E98C81B1BD1719500C7A7A2 /* ContactsDataSourceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E98C81A1BD1719500C7A7A2 /* ContactsDataSourceTests.m */; };
-		1EB9BF411BC7F796002EF0F3 /* WireExtensionComponents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1EE85C501B5F96FB008E084B /* WireExtensionComponents.framework */; };
-		1EE85C551B5F96FC008E084B /* WireExtensionComponents.h in Headers */ = {isa = PBXBuildFile; fileRef = 1EE85C541B5F96FC008E084B /* WireExtensionComponents.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		1EE85C671B5F96FC008E084B /* WireExtensionComponents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1EE85C501B5F96FB008E084B /* WireExtensionComponents.framework */; };
-		1EE85C691B5F96FC008E084B /* WireExtensionComponents.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1EE85C501B5F96FB008E084B /* WireExtensionComponents.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1EFB23DC1ACEDE5400244571 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = 1EFB23DE1ACEDE5400244571 /* Localizable.stringsdict */; };
 		5407B8C31A643CCE009090C6 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5407B8C21A643CCE009090C6 /* UIKit.framework */; };
-		5423EF6D1E9B85C8007091DE /* DeveloperMenuState.m in Sources */ = {isa = PBXBuildFile; fileRef = 544F73591E8D3A1800EADAF6 /* DeveloperMenuState.m */; };
 		543E0C641E2394F4000E2161 /* ConversationSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543E0C611E2394E7000E2161 /* ConversationSelectionViewController.swift */; };
 		543E0C661E23A72F000E2161 /* SendingProgressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543E0C651E23A72F000E2161 /* SendingProgressViewController.swift */; };
 		543E0C681E23A7C3000E2161 /* NotSignedInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543E0C671E23A7C3000E2161 /* NotSignedInViewController.swift */; };
@@ -913,9 +907,6 @@
 		BFFE943C1E7839D10025AD75 /* ConversationRenamedCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFE943B1E7839D10025AD75 /* ConversationRenamedCellTests.swift */; };
 		BFFE943E1E7839EB0025AD75 /* CoreDataSnapshotTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFE943D1E7839EB0025AD75 /* CoreDataSnapshotTestCase.swift */; };
 		CE2402811E0A992200665A91 /* AnalyticsConsoleProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2402801E0A992200665A91 /* AnalyticsConsoleProvider.swift */; };
-		CE8E4FAE1DF066860009F437 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE8E4FAD1DF066860009F437 /* MobileCoreServices.framework */; };
-		CE8E4FB01DF0668A0009F437 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE8E4FAF1DF0668A0009F437 /* ImageIO.framework */; };
-		CE8E4FB11DF0668F0009F437 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 873DC95B1D479A0500C1C9B0 /* AVFoundation.framework */; };
 		CEE02EAD1DDDEF3A00BA2BE2 /* avs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEE02EAB1DDDD15200BA2BE2 /* avs.framework */; };
 		CEEEAF071CB562BF00111759 /* PlaceholderConversationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEEAF061CB562BF00111759 /* PlaceholderConversationView.swift */; };
 		D503538C207B5DB900CE34A5 /* UIAlertController+RestorePassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = D503538B207B5DB900CE34A5 /* UIAlertController+RestorePassword.swift */; };
@@ -1308,7 +1299,6 @@
 		F15650A621DCF81C00210504 /* WireStyleKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEC7E821217620ED00E32835 /* WireStyleKit.swift */; };
 		F15650A721DCF82400210504 /* UIImage+ZetaIconsNeue.h in Headers */ = {isa = PBXBuildFile; fileRef = 1E5E0CEB1B6B8EDB003B0CAC /* UIImage+ZetaIconsNeue.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F15650A821DCF82E00210504 /* UIImage+ZetaIconsNeue.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E5E0CEC1B6B8EDB003B0CAC /* UIImage+ZetaIconsNeue.m */; };
-		F15650AB21DCFA2A00210504 /* WireCommonComponents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1FEA14A21DCEB1700790A54 /* WireCommonComponents.framework */; };
 		F15650AC21DCFBC000210504 /* SharedConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCBE24C1FC72FE500CBD55D /* SharedConstants.swift */; };
 		F15650AD21DCFC8700210504 /* AppLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8778AAEC1F6BC6AD0022F53F /* AppLock.swift */; };
 		F15650AE21DCFCED00210504 /* SettingsPropertyName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C98DCFF1FC32F41005C0042 /* SettingsPropertyName.swift */; };
@@ -1379,6 +1369,8 @@
 		F19C3A8F20513532004387E4 /* DatabaseStatisticsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F19C3A8E20513532004387E4 /* DatabaseStatisticsController.swift */; };
 		F19F066E21ECC24F00426BD1 /* EasingFunction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E52376A20E7F99500649241 /* EasingFunction.swift */; };
 		F19F066F21ECC25200426BD1 /* EasingAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E52376820E7F12B00649241 /* EasingAnimation.swift */; };
+		F19F067021ECC62A00426BD1 /* UIImage+Decoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164A55C920EFB90D00AE62A6 /* UIImage+Decoding.swift */; };
+		F19F067121ECC6B800426BD1 /* DeveloperMenuState.m in Sources */ = {isa = PBXBuildFile; fileRef = 544F73591E8D3A1800EADAF6 /* DeveloperMenuState.m */; };
 		F1A989D01FD1630300B8A82E /* SecondaryViewDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A989CF1FD1630300B8A82E /* SecondaryViewDescription.swift */; };
 		F1B5D54D2182096B00986911 /* NetworkConditionIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1B5D54C2182096B00986911 /* NetworkConditionIndicatorView.swift */; };
 		F1B5EAC72029AB9A0081D402 /* SimpleTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1B5EAC62029AB9A0081D402 /* SimpleTextField.swift */; };
@@ -1410,26 +1402,12 @@
 			remoteGlobalIDString = 168A16A81D9597C2005CFA6C;
 			remoteInfo = "Wire-iOS Share Extension";
 		};
-		5E4BC1C7218C8F0900A8682E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8F42C530199244A700288E4D /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 1EE85C4F1B5F96FB008E084B;
-			remoteInfo = WireExtensionComponents;
-		};
 		BACB88571AF7C48900DDCDB0 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 8F42C530199244A700288E4D /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 8F42C537199244A700288E4D;
 			remoteInfo = "ZClient-iOS";
-		};
-		F15650A921DCFA2400210504 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8F42C530199244A700288E4D /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = F1FEA14921DCEB1700790A54;
-			remoteInfo = WireCommonComponents;
 		};
 		F1FEA14F21DCEB1700790A54 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1455,7 +1433,6 @@
 			dstSubfolderSpec = 10;
 			files = (
 				F1FEA15221DCEB1700790A54 /* WireCommonComponents.framework in Embed Frameworks */,
-				1EE85C691B5F96FC008E084B /* WireExtensionComponents.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1675,9 +1652,6 @@
 		1E98C81A1BD1719500C7A7A2 /* ContactsDataSourceTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactsDataSourceTests.m; sourceTree = "<group>"; };
 		1EBA8C721B74EAB10089CC44 /* WireUtilities.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WireUtilities.framework; path = Carthage/Build/iOS/WireUtilities.framework; sourceTree = "<group>"; };
 		1EC71A271B6A1B9200700A14 /* WireImages.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WireImages.framework; path = Carthage/Build/iOS/WireImages.framework; sourceTree = "<group>"; };
-		1EE85C501B5F96FB008E084B /* WireExtensionComponents.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = WireExtensionComponents.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		1EE85C531B5F96FC008E084B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		1EE85C541B5F96FC008E084B /* WireExtensionComponents.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WireExtensionComponents.h; sourceTree = "<group>"; };
 		1EE9DCA81B5F9A6D00E347DF /* TextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextView.h; sourceTree = "<group>"; };
 		1EE9DCA91B5F9A6D00E347DF /* TextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextView.m; sourceTree = "<group>"; };
 		1EE9DCAB1B5F9A6D00E347DF /* Token.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Token.h; sourceTree = "<group>"; };
@@ -3160,9 +3134,6 @@
 		F10F46D320288CEB00261449 /* ConversationCreationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationCreationController.swift; sourceTree = "<group>"; };
 		F112C58520497860007C1E8F /* Analytics+Guests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Analytics+Guests.swift"; sourceTree = "<group>"; };
 		F1141C961F5EB2DC005340B3 /* WireApplication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WireApplication.swift; sourceTree = "<group>"; };
-		F114466321A2D8CC00B5FEBA /* ExtensionComponents-Base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "ExtensionComponents-Base.xcconfig"; sourceTree = "<group>"; };
-		F114466421A2D8CC00B5FEBA /* ExtensionComponents-Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "ExtensionComponents-Release.xcconfig"; sourceTree = "<group>"; };
-		F114466521A2D8CC00B5FEBA /* ExtensionComponents-Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "ExtensionComponents-Debug.xcconfig"; sourceTree = "<group>"; };
 		F114466821A2F8BC00B5FEBA /* Tests-Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Tests-Debug.xcconfig"; sourceTree = "<group>"; };
 		F114466921A56F3200B5FEBA /* Version.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Version.xcconfig; sourceTree = "<group>"; };
 		F1199D2F1FC8490A0070FAC3 /* TeamCreationState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeamCreationState.swift; sourceTree = "<group>"; };
@@ -3257,17 +3228,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		1EE85C4C1B5F96FB008E084B /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				F15650AB21DCFA2A00210504 /* WireCommonComponents.framework in Frameworks */,
-				CE8E4FB11DF0668F0009F437 /* AVFoundation.framework in Frameworks */,
-				CE8E4FB01DF0668A0009F437 /* ImageIO.framework in Frameworks */,
-				CE8E4FAE1DF066860009F437 /* MobileCoreServices.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		8F42C535199244A700288E4D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -3288,7 +3248,6 @@
 				87775AB41D9513F9000CAD4F /* WireRequestStrategy.framework in Frameworks */,
 				169FF9331C57CB2100C5BF90 /* VideoToolbox.framework in Frameworks */,
 				874A17482056D9FA001C6760 /* libcmark.framework in Frameworks */,
-				1EE85C671B5F96FC008E084B /* WireExtensionComponents.framework in Frameworks */,
 				5407B8C31A643CCE009090C6 /* UIKit.framework in Frameworks */,
 				54BB91E01E1FA6330039E91F /* WireShareEngine.framework in Frameworks */,
 				F1FEA15121DCEB1700790A54 /* WireCommonComponents.framework in Frameworks */,
@@ -3307,7 +3266,6 @@
 				873DC95C1D479A0500C1C9B0 /* AVFoundation.framework in Frameworks */,
 				873DC95A1D479A0000C1C9B0 /* Photos.framework in Frameworks */,
 				8741DB621C1EFE2D00BDB470 /* CoreLocation.framework in Frameworks */,
-				1EB9BF411BC7F796002EF0F3 /* WireExtensionComponents.framework in Frameworks */,
 				878D65C71C84664A0067E3D9 /* WireSyncEngine.framework in Frameworks */,
 				871BE95B1CD0C3A5002267E8 /* OCMock.framework in Frameworks */,
 				871BE95A1CD0C2E7002267E8 /* FBSnapshotTestCase.framework in Frameworks */,
@@ -3600,23 +3558,6 @@
 				1E8C25391BBC279B00FC373F /* UIViewController+LoadingView.m */,
 			);
 			path = Loading;
-			sourceTree = "<group>";
-		};
-		1EE85C511B5F96FC008E084B /* WireExtensionComponents */ = {
-			isa = PBXGroup;
-			children = (
-				1EE85C541B5F96FC008E084B /* WireExtensionComponents.h */,
-				1EE85C521B5F96FC008E084B /* Supporting Files */,
-			);
-			path = WireExtensionComponents;
-			sourceTree = "<group>";
-		};
-		1EE85C521B5F96FC008E084B /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				1EE85C531B5F96FC008E084B /* Info.plist */,
-			);
-			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		1EE9DCA51B5F9A6D00E347DF /* TextView */ = {
@@ -5132,7 +5073,6 @@
 				8FC850D8199245760008B66B /* Sources */,
 				8FC8564919924D4E0008B66B /* Supporting Files */,
 				BACB88521AF7C48900DDCDB0 /* Wire-iOS Tests */,
-				1EE85C511B5F96FC008E084B /* WireExtensionComponents */,
 				168A16AA1D9597C2005CFA6C /* Wire-iOS Share Extension */,
 				F1FEA14B21DCEB1700790A54 /* WireCommonComponents */,
 				8F42C539199244A700288E4D /* Products */,
@@ -5150,7 +5090,6 @@
 			children = (
 				8F42C538199244A700288E4D /* Wire.app */,
 				BACB88511AF7C48900DDCDB0 /* Wire-iOS-Tests.xctest */,
-				1EE85C501B5F96FB008E084B /* WireExtensionComponents.framework */,
 				168A16A91D9597C2005CFA6C /* Wire Share Extension.appex */,
 				F1FEA14A21DCEB1700790A54 /* WireCommonComponents.framework */,
 			);
@@ -6527,16 +6466,6 @@
 			path = Create;
 			sourceTree = "<group>";
 		};
-		F114466221A2D8B500B5FEBA /* ExtensionComponents */ = {
-			isa = PBXGroup;
-			children = (
-				F114466321A2D8CC00B5FEBA /* ExtensionComponents-Base.xcconfig */,
-				F114466521A2D8CC00B5FEBA /* ExtensionComponents-Debug.xcconfig */,
-				F114466421A2D8CC00B5FEBA /* ExtensionComponents-Release.xcconfig */,
-			);
-			path = ExtensionComponents;
-			sourceTree = "<group>";
-		};
 		F114466721A2F89D00B5FEBA /* Tests */ = {
 			isa = PBXGroup;
 			children = (
@@ -6645,7 +6574,6 @@
 				F1B24236219B2C9B00F7035C /* Project-Release.xcconfig */,
 				F1B24231219B2C9B00F7035C /* Wire-iOS */,
 				F156509521DCED3000210504 /* CommonComponents */,
-				F114466221A2D8B500B5FEBA /* ExtensionComponents */,
 				F1B24237219B2C9B00F7035C /* Share Extension */,
 				F114466721A2F89D00B5FEBA /* Tests */,
 			);
@@ -6723,14 +6651,6 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		1EE85C4D1B5F96FB008E084B /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				1EE85C551B5F96FC008E084B /* WireExtensionComponents.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		F1FEA14521DCEB1700790A54 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -6764,25 +6684,6 @@
 			productReference = 168A16A91D9597C2005CFA6C /* Wire Share Extension.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
-		1EE85C4F1B5F96FB008E084B /* WireExtensionComponents */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 1EE85C701B5F96FC008E084B /* Build configuration list for PBXNativeTarget "WireExtensionComponents" */;
-			buildPhases = (
-				1EE85C4D1B5F96FB008E084B /* Headers */,
-				1EE85C4B1B5F96FB008E084B /* Sources */,
-				1EE85C4C1B5F96FB008E084B /* Frameworks */,
-				1EE85C4E1B5F96FB008E084B /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				F15650AA21DCFA2400210504 /* PBXTargetDependency */,
-			);
-			name = WireExtensionComponents;
-			productName = ZetaFramework;
-			productReference = 1EE85C501B5F96FB008E084B /* WireExtensionComponents.framework */;
-			productType = "com.apple.product-type.framework";
-		};
 		8F42C537199244A700288E4D /* Wire-iOS */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8F42C558199244A700288E4D /* Build configuration list for PBXNativeTarget "Wire-iOS" */;
@@ -6801,7 +6702,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				5E4BC1C8218C8F0900A8682E /* PBXTargetDependency */,
 				F1FEA15021DCEB1700790A54 /* PBXTargetDependency */,
 				168A16B21D9597C2005CFA6C /* PBXTargetDependency */,
 			);
@@ -6871,12 +6771,6 @@
 							};
 						};
 					};
-					1EE85C4F1B5F96FB008E084B = {
-						CreatedOnToolsVersion = 6.4;
-						DevelopmentTeam = W5KEQBF9B5;
-						LastSwiftMigration = 1000;
-						ProvisioningStyle = Manual;
-					};
 					8F42C537199244A700288E4D = {
 						CreatedOnToolsVersion = 6.0;
 						DevelopmentTeam = W5KEQBF9B5;
@@ -6939,7 +6833,6 @@
 			projectRoot = "";
 			targets = (
 				8F42C537199244A700288E4D /* Wire-iOS */,
-				1EE85C4F1B5F96FB008E084B /* WireExtensionComponents */,
 				168A16A81D9597C2005CFA6C /* Wire Share Extension */,
 				BACB88501AF7C48900DDCDB0 /* Wire-iOS-Tests */,
 				F1FEA14921DCEB1700790A54 /* WireCommonComponents */,
@@ -6954,13 +6847,6 @@
 			files = (
 				168A16AF1D9597C2005CFA6C /* MainInterface.storyboard in Resources */,
 				BF2ADF461E27C3DB00E81B1E /* Localizable.strings in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		1EE85C4E1B5F96FB008E084B /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7243,15 +7129,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		1EE85C4B1B5F96FB008E084B /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				5423EF6D1E9B85C8007091DE /* DeveloperMenuState.m in Sources */,
-				164A55D120EFBD4500AE62A6 /* UIImage+Decoding.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		8F42C534199244A700288E4D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -7261,6 +7138,7 @@
 				BF0BDF881DABEF3B003C61DE /* DestructionCountdownView.swift in Sources */,
 				87B8C33F1DF9788B0015EC89 /* BrowserOpening.swift in Sources */,
 				87DCF49F1D34E9E600BB420F /* NSUserDefaults+Location.swift in Sources */,
+				F19F067021ECC62A00426BD1 /* UIImage+Decoding.swift in Sources */,
 				55DD5C341FA236F60082170C /* CallQualityViewController.swift in Sources */,
 				87AEF9351ECF38B0008CB9D9 /* WireStyleKit+Additions.m in Sources */,
 				BFAC71F920A1CC5C002711C4 /* CallInfoConfiguration.swift in Sources */,
@@ -8078,6 +7956,7 @@
 				EF883F2E215144B800B440CC /* Analytics+OptOut.swift in Sources */,
 				5EF4A6E220F3C4A300A9EF22 /* GiphyCollectionViewCell.swift in Sources */,
 				EFB23D0A1FC852380055B866 /* TextFieldValidator.swift in Sources */,
+				F19F067121ECC6B800426BD1 /* DeveloperMenuState.m in Sources */,
 				EEF28EEA1F1613DA007642E2 /* MarkdownBarView.swift in Sources */,
 				F12EAF73214FB6FF00B00AD9 /* MentionsHandler.swift in Sources */,
 				BF5DF5C320F4A51F002BCB67 /* GroupParticipantsDetailViewController.swift in Sources */,
@@ -8527,20 +8406,10 @@
 			target = 168A16A81D9597C2005CFA6C /* Wire Share Extension */;
 			targetProxy = 168A16B11D9597C2005CFA6C /* PBXContainerItemProxy */;
 		};
-		5E4BC1C8218C8F0900A8682E /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 1EE85C4F1B5F96FB008E084B /* WireExtensionComponents */;
-			targetProxy = 5E4BC1C7218C8F0900A8682E /* PBXContainerItemProxy */;
-		};
 		BACB88581AF7C48900DDCDB0 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 8F42C537199244A700288E4D /* Wire-iOS */;
 			targetProxy = BACB88571AF7C48900DDCDB0 /* PBXContainerItemProxy */;
-		};
-		F15650AA21DCFA2400210504 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = F1FEA14921DCEB1700790A54 /* WireCommonComponents */;
-			targetProxy = F15650A921DCFA2400210504 /* PBXContainerItemProxy */;
 		};
 		F1FEA15021DCEB1700790A54 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -8689,20 +8558,6 @@
 			};
 			name = Release;
 		};
-		1EE85C6A1B5F96FC008E084B /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = F114466521A2D8CC00B5FEBA /* ExtensionComponents-Debug.xcconfig */;
-			buildSettings = {
-			};
-			name = Debug;
-		};
-		1EE85C6B1B5F96FC008E084B /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = F114466421A2D8CC00B5FEBA /* ExtensionComponents-Release.xcconfig */;
-			buildSettings = {
-			};
-			name = Release;
-		};
 		8F42C556199244A700288E4D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -8776,15 +8631,6 @@
 			buildConfigurations = (
 				168A16B51D9597C2005CFA6C /* Debug */,
 				168A16B61D9597C2005CFA6C /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		1EE85C701B5F96FC008E084B /* Build configuration list for PBXNativeTarget "WireExtensionComponents" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				1EE85C6A1B5F96FC008E084B /* Debug */,
-				1EE85C6B1B5F96FC008E084B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

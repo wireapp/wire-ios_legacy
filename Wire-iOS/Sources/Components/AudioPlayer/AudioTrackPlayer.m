@@ -22,7 +22,7 @@
 #import "AudioTrack.h"
 #import "AudioPlaylist.h"
 #import "UIImage+ImageUtilities.h"
-@import WireExtensionComponents;
+
 @import WireCommonComponents;
 @import WireUtilities;
 #import "KeyValueObserver.h"

@@ -21,7 +21,7 @@
 
 @import PureLayout;
 #import "Constants.h"
-@import WireExtensionComponents;
+
 #import "Settings.h"
 #import "Wire-Swift.h"
 

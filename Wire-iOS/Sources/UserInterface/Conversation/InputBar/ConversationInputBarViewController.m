@@ -24,7 +24,7 @@
 #import "ConversationInputBarViewController.h"
 #import "ConversationInputBarViewController+Private.h"
 #import "ConversationInputBarViewController+Files.h"
-@import WireExtensionComponents;
+
 #import "ConfirmAssetViewController.h"
 #import "TextView.h"
 #import "UIViewController+Errors.h"

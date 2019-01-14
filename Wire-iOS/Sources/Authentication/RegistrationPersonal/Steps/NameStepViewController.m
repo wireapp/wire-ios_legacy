@@ -24,7 +24,7 @@
 #import "Wire-Swift.h"
 #import "WireSyncEngine+iOS.h"
 
-@import WireExtensionComponents;
+
 
 @interface NameStepViewController () <UITextFieldDelegate>
 

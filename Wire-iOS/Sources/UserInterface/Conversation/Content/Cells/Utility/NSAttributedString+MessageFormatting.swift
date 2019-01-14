@@ -18,7 +18,7 @@
 
 import Foundation
 import Down
-import WireExtensionComponents
+
 import WireLinkPreview
 import WireUtilities
 

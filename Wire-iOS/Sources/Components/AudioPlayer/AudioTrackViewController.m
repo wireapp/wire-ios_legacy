@@ -33,7 +33,7 @@
 
 static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
-@import WireExtensionComponents;
+
 @import AVFoundation;
 
 @interface AudioTrackViewController ()

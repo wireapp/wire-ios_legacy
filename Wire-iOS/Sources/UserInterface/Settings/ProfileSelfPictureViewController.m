@@ -29,7 +29,7 @@
 
 #import "UIImage+ZetaIconsNeue.h"
 #import "BottomOverlayViewController+Private.h"
-@import WireExtensionComponents;
+
 
 #import "ImagePickerConfirmationController.h"
 #import "Analytics.h"

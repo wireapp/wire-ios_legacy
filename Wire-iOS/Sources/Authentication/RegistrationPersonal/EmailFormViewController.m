@@ -20,7 +20,7 @@
 #import "EmailFormViewController.h"
 
 @import PureLayout;
-@import WireExtensionComponents;
+
 
 #import "RegistrationTextField.h"
 #import "GuidanceLabel.h"

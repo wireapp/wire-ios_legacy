@@ -19,7 +19,7 @@
 import Foundation
 import XCTest
 @testable import Wire
-@testable import WireExtensionComponents
+@testable 
 
 
 class FontSchemeTests: XCTestCase {

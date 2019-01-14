@@ -18,7 +18,7 @@
 
 #import "EmailSignInViewController.h"
 
-@import WireExtensionComponents;
+
 @import WireCommonComponents;
 @import OnePasswordExtension;
 

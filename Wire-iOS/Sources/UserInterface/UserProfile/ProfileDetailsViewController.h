@@ -18,7 +18,7 @@
 
 
 @import UIKit;
-@import WireExtensionComponents;
+
 #import "ProfileViewController.h"
 
 @class ZMConversation;

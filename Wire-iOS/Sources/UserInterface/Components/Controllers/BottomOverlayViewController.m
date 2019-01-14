@@ -21,7 +21,7 @@
 #import "BottomOverlayViewController.h"
 #import "BottomOverlayViewController+Private.h"
 #import "Wire-Swift.h"
-@import WireExtensionComponents;
+
 #import "NSLayoutConstraint+Helpers.h"
 
 

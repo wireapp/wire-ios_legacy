@@ -18,7 +18,7 @@
 
 
 #import <UIKit/UIKit.h>
-@import WireExtensionComponents;
+
 
 typedef NS_OPTIONS(NSUInteger, WRExtendedBlockAnimationsOptions) {
     WRExtendedBlockAnimationsOptionsNone = 0,

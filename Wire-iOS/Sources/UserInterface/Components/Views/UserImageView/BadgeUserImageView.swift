@@ -16,8 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import WireExtensionComponents
-
 /**
  * A user image view that can display a badge on top for different connection states.
  */

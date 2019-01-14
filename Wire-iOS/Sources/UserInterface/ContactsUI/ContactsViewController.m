@@ -19,7 +19,7 @@
 @import WireSyncEngine;
 
 @import PureLayout;
-@import WireExtensionComponents;
+
 
 #import "ContactsViewController.h"
 #import "ContactsViewController+Internal.h"

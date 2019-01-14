@@ -19,7 +19,7 @@
 
 @import AssetsLibrary;
 @import MobileCoreServices;
-@import WireExtensionComponents;
+
 
 #import "FullscreenImageViewController.h"
 #import "FullscreenImageViewController+PullToDismiss.h"

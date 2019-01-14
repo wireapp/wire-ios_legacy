@@ -17,7 +17,6 @@
 //
 
 import Foundation
-import WireExtensionComponents
 
 var defaultImageCache = ImageCache<MediaAsset>()
 
