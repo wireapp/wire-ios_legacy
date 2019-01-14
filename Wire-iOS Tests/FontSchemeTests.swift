@@ -19,8 +19,6 @@
 import Foundation
 import XCTest
 @testable import Wire
-@testable 
-
 
 class FontSchemeTests: XCTestCase {
 

@@ -17,7 +17,6 @@
 //
 
 import XCTest
-@testable 
 
 class ExtensionSettingsTests: XCTestCase {
 
