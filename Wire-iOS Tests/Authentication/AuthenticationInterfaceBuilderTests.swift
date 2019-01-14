@@ -52,7 +52,6 @@ class AuthenticationInterfaceBuilderTests: ZMSnapshotTestCase {
     }
 
     func testLoginScreen_Email_PhoneDisabled() {
-        XCTFail("TODO")
         featureProvider.phoneNumberSupported = false
         runSnapshotTest(for: .provideCredentials(.email))
     }
@@ -65,7 +64,7 @@ class AuthenticationInterfaceBuilderTests: ZMSnapshotTestCase {
                 return XCTFail("An interface was generated but we didn't expect one.", file: file, line: line)
             }
 
-            verify(view: viewController.view)
+            verify(view: viewController.view, file: file, line: line)
         } else {
             if step.needsInterface {
                 return XCTFail("Missing interface.", file: file, line: line)

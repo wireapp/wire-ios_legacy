@@ -26,12 +26,12 @@ final class LogInWithEmailStepDescription: TeamCreationStepDescription {
     let subtext: String?
     let secondaryView: TeamCreationSecondaryViewDescription?
 
-    init() {
+    init(enablePhoneLogin: Bool) {
         backButton = BackButtonDescription()
         mainView = EmailPasswordFieldDescription()
         headline = "Log In".localized
         subtext = "Enter your email address and password.".localized
-        secondaryView = LogInSecondaryView(credentialsType: .email)
+        secondaryView = LogInSecondaryView(credentialsType: .email, alternativeCredentialsType: enablePhoneLogin ? .phone : nil)
     }
 
 }

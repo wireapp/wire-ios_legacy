@@ -69,7 +69,7 @@ class AuthenticationInterfaceBuilder {
         case .provideCredentials(let credentialsFlowType):
             switch credentialsFlowType {
             case .email:
-                let emailLoginStep = LogInWithEmailStepDescription()
+                let emailLoginStep = LogInWithEmailStepDescription(enablePhoneLogin: featureProvider.phoneNumberSupported)
                 return createViewController(for: emailLoginStep)
             case .phone:
                 let phoneLoginStep = LogInWithPhoneNumberStepDescription()

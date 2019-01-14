@@ -36,7 +36,7 @@ final class ReauthenticateStepDescription: TeamCreationStepDescription {
         mainView = EmailPasswordFieldDescription()
         headline = "Log In".localized
         subtext = "Enter your email address and password.".localized
-        secondaryView = LogInSecondaryView(credentialsType: .email)
+        secondaryView = LogInSecondaryView(credentialsType: .email, alternativeCredentialsType: nil)
     }
 
 }

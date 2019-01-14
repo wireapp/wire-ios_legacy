@@ -31,7 +31,7 @@ final class LogInWithPhoneNumberStepDescription: TeamCreationStepDescription {
         mainView = EmptyViewDescription()
         headline = "Log In".localized
         subtext = "Enter your phone number.".localized
-        secondaryView = LogInSecondaryView(credentialsType: .phone)
+        secondaryView = LogInSecondaryView(credentialsType: .phone, alternativeCredentialsType: .email)
     }
 
 }
