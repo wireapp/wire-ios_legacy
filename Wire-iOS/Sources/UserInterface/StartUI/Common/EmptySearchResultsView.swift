@@ -108,7 +108,8 @@ extension EmptySearchResultsViewAction {
         
         addSubview(stackView)
         
-        stackView.fitInSuperview()
+        stackView.centerInSuperview()
+
         statusLabel.numberOfLines = 0
         statusLabel.preferredMaxLayoutWidth = 200
         statusLabel.textColor = UIColor.from(scheme: .textForeground, variant: self.variant)

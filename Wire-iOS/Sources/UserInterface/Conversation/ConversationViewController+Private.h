@@ -17,6 +17,7 @@
 // 
 
 #import "WireSyncEngine+iOS.h"
+#import "ProfileViewController.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -32,6 +33,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)onBackButtonPressed:(UIButton *)backButton;
 
+@end
+
+@interface ConversationViewController (ProfileViewController) <ProfileViewControllerDelegate>
 @end
 
 NS_ASSUME_NONNULL_END

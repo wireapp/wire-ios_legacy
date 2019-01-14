@@ -20,7 +20,7 @@ import XCTest
 @testable import Wire
 
 final class ClientListViewControllerTests: ZMSnapshotTestCase {
-    
+
     var sut: ClientListViewController!
     var mockUser: MockUser!
     var client: UserClient!
@@ -35,7 +35,7 @@ final class ClientListViewControllerTests: ZMSnapshotTestCase {
         selfClient = mockUserClient()
         client = mockUserClient()
     }
-    
+
     override func tearDown() {
         sut = nil
         mockUser = nil

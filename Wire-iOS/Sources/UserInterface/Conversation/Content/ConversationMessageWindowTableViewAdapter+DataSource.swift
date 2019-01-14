@@ -132,12 +132,9 @@ extension ConversationMessageWindowTableViewAdapter: UITableViewDataSource {
             return cachedEntry
         }
 
-        let context = messageWindow.context(for: message, firstUnreadMessage: firstUnreadMessage, searchQueries: self.searchQueries ?? [])
-        let layoutProperties = messageWindow.layoutProperties(for: message, firstUnreadMessage: firstUnreadMessage)
-        
+        let context = messageWindow.context(for: message, firstUnreadMessage: firstUnreadMessage, searchQueries: self.searchQueries ?? [])        
         let sectionController = ConversationMessageSectionController(message: message,
                                                                      context: context,
-                                                                     layoutProperties: layoutProperties,
                                                                      selected: message.isEqual(selectedMessage))
         sectionController.useInvertedIndices = true
         sectionController.cellDelegate = conversationCellDelegate
@@ -175,7 +172,11 @@ extension ConversationMessageWindowTableViewAdapter: UITableViewDataSource {
             return nil
         }
         
-        return IndexPath(row: 0, section: section)
+        guard let sectionController = sectionController(at: section, in: tableView) else {
+            return nil
+        }
+        
+        return IndexPath(row: sectionController.messageCellIndex, section: section)
     }
     
     public func numberOfSections(in tableView: UITableView) -> Int {

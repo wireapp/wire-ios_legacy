@@ -42,7 +42,7 @@ class ConversationYouTubeAttachmentCellDescription: ConversationMessageCellDescr
     let configuration: View.Configuration
 
     weak var message: ZMConversationMessage?
-    weak var delegate: ConversationCellDelegate?
+    weak var delegate: ConversationMessageCellDelegate?
     weak var actionController: ConversationMessageActionController?
     
     var showEphemeralTimer: Bool = false

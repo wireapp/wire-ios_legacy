@@ -86,10 +86,45 @@ extension NoHistoryViewController {
             performRestore(password, url)
         }
     }
-    
+
+    open override var spinnerView: SpinnerSubtitleView? {
+        get {
+            if let parent = self.parent {
+                return parent.spinnerView
+            } else {
+                return super.spinnerView
+            }
+        }
+
+        set {
+            if let parent = self.parent {
+                parent.spinnerView = newValue
+            }
+        }
+    }
+
+    override open var showLoadingView: Bool {
+        get {
+            if let parent = self.parent {
+                return parent.showLoadingView
+            } else {
+                return super.showLoadingView
+            }
+        }
+
+        set {
+            if let parent = self.parent {
+                parent.showLoadingView = newValue
+            } else {
+                super.showLoadingView = newValue
+            }
+        }
+    }
+
     fileprivate func performRestore(using password: String, from url: URL) {
         guard let sessionManager = SessionManager.shared else { return }
-        spinnerView.subtitle = "registration.no_history.restore_backup.restoring".localized.uppercased()
+
+        spinnerView?.subtitle = "registration.no_history.restore_backup.restoring".localized.uppercased()
         showLoadingView = true
         
         sessionManager.restoreFromBackup(at: url, password: password) { [weak self] result in
@@ -106,7 +141,7 @@ extension NoHistoryViewController {
                 self.showLoadingView = false
             case .success:
                 BackupEvent.importSucceeded.track()
-                self.spinnerView.subtitle = "registration.no_history.restore_backup.completed".localized.uppercased()
+                self.spinnerView?.subtitle = "registration.no_history.restore_backup.completed".localized.uppercased()
                 self.indicateLoadingSuccessRemovingCheckmark(false) {
                     self.authenticationCoordinator?.completeBackupStep()
                 }

@@ -18,34 +18,11 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-static NSString *const ConversationNameChangedCellId        = @"ConversationNameChangedCell";
-static NSString *const ConversationTextCellId               = @"ConversationTextCell";
-static NSString *const ConversationImageCellId              = @"ConversationImageCell";
-static NSString *const ConversationConnectionRequestCellId  = @"ConversationConnectionRequestCellId";
-static NSString *const ConversationMissedCallCellId         = @"ConversationMissedCallCell";
-static NSString *const ConversationPerformedCallCellId      = @"ConversationPerformedCallCellId";
-static NSString *const ConversationPingCellId               = @"conversationPingCellId";
-static NSString *const ConversationNewDeviceCellId          = @"ConversationNewDeviceCellId";
-static NSString *const ConversationVerifiedCellId           = @"conversationVerifiedCellId";
-static NSString *const ConversationMissingMessagesCellId    = @"conversationMissingMessagesCellId";
-static NSString *const ConversationIgnoredDeviceCellId      = @"conversationIgnoredDeviceCellId";
-static NSString *const ConversationCannotDecryptCellId      = @"conversationCannotDecryptCellId";
-static NSString *const ConversationFileTransferCellId       = @"conversationFileTransferCellId";
-static NSString *const ConversationVideoMessageCellId       = @"conversationVideoMessageCellId";
-static NSString *const ConversationAudioMessageCellId       = @"conversationAudioMessageCellId";
-static NSString *const ConversationLocationMessageCellId    = @"conversationLocationMessageCellId";
-static NSString *const ConversationMessageDeletedCellId     = @"conversationMessageDeletedCellId";
-static NSString *const ConversationUnknownMessageCellId     = @"conversationUnknownMessageCellId";
-static NSString *const ConversationMessageTimerUpdateCellId = @"ConversationMessageTimerUpdateCellId";
-
-@class ConversationCell;
 @class UpsideDownTableView;
 @class ConversationMessageActionController;
 @class ConversationMessageSectionController;
 
 @interface ConversationMessageWindowTableViewAdapter ()
-
-- (void)configureConversationCell:(ConversationCell *)conversationCell withMessage:(nullable id<ZMConversationMessage>)message;
 
 @property (nonatomic) UpsideDownTableView * _Nonnull tableView;
 @property (nonatomic) ZMConversationMessageWindow * _Nonnull messageWindow;

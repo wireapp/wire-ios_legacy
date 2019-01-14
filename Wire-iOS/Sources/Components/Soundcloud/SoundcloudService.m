@@ -26,7 +26,7 @@
 static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @interface SoundcloudService ()
-@property (nonatomic, weak) ZMUserSession *userSession;
+@property (nonatomic, weak) id<ProxiedURLRequester> userSession;
 @end
 
 
@@ -44,7 +44,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     return sharedInstance;
 }
 
-- (instancetype)initWithUserSession:(ZMUserSession *)userSession
+- (instancetype)initWithUserSession:(id<ProxiedURLRequester>)userSession
 {
     self = [super init];
     if (self != nil) {
@@ -53,7 +53,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     return self;
 }
 
-- (ZMUserSession *)userSession
+- (id<ProxiedURLRequester>)userSession
 {
     return _userSession ?: [ZMUserSession sharedSession];
 }

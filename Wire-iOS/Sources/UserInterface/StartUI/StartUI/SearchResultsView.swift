@@ -65,23 +65,20 @@ import Foundation
             view.translatesAutoresizingMaskIntoConstraints = false
         }
 
-        collectionView.fitInSuperview(exclude: .bottom)
+        collectionView.fitInSuperview(exclude: [.bottom])
+        emptyResultContainer.fitInSuperview(exclude: [.bottom])
 
         accessoryContainerHeightConstraint = accessoryContainer.heightAnchor.constraint(equalToConstant: 0)
         accessoryViewBottomOffsetConstraint = accessoryContainer.bottomAnchor.constraint(equalTo: bottomAnchor)
 
         NSLayoutConstraint.activate([
             collectionView.bottomAnchor.constraint(equalTo: accessoryContainer.topAnchor),
+            emptyResultContainer.bottomAnchor.constraint(equalTo: accessoryContainer.topAnchor),
 
             accessoryContainer.leadingAnchor.constraint(equalTo: leadingAnchor),
             accessoryContainer.trailingAnchor.constraint(equalTo: trailingAnchor),
             accessoryContainerHeightConstraint!,
             accessoryViewBottomOffsetConstraint!,
-
-            emptyResultContainer.centerYAnchor.constraint(equalTo: centerYAnchor, constant: -64),
-            emptyResultContainer.centerXAnchor.constraint(equalTo: centerXAnchor),
-            emptyResultContainer.leadingAnchor.constraint(greaterThanOrEqualTo: leadingAnchor),
-            emptyResultContainer.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor)
             ])
     }
     
@@ -128,6 +125,8 @@ import Foundation
                 emptyResultView.translatesAutoresizingMaskIntoConstraints = false
                 emptyResultView.fitInSuperview()
             }
+
+            emptyResultContainer.setNeedsLayout()
         }
     }
     

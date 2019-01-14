@@ -20,6 +20,16 @@ import XCTest
 @testable import Wire
 
 class ConversationSystemMessageTests: ConversationCellSnapshotTestCase {
+    
+    override func setUp() {
+        super.setUp()
+    }
+    
+    func testConversationIsSecure() {
+        let message = MockMessageFactory.systemMessage(with: .conversationIsSecure)!
+        
+        verify(message: message)
+    }
 
     func testRenameConversation() {
         let message = MockMessageFactory.systemMessage(with: .conversationNameChanged, users: 0, clients: 0)!
@@ -109,6 +119,12 @@ class ConversationSystemMessageTests: ConversationCellSnapshotTestCase {
 
         verify(message: message)
     }
+    
+    func testReactivatedDevice() {
+        let message = MockMessageFactory.systemMessage(with: .reactivatedDevice)!
+        
+        verify(message: message)
+    }
 
     // MARK: - read receipt
 
@@ -128,6 +144,55 @@ class ConversationSystemMessageTests: ConversationCellSnapshotTestCase {
     func testReadReceiptIsOffByYou() {
         let message = MockMessageFactory.systemMessage(with: .readReceiptsDisabled)!
 
+        verify(message: message)
+    }
+    
+    // MARK: - ignored client
+    
+    func testIgnoredClient_self() {
+        let message = MockMessageFactory.systemMessage(with: .ignoredClient)!
+        message.backingSystemMessageData?.users = Set<AnyHashable>([MockUser.mockSelf()]) as! Set<ZMUser>
+        
+        verify(message: message)
+    }
+    
+    func testIgnoredClient_other() {
+        let message = MockMessageFactory.systemMessage(with: .ignoredClient)!
+        message.backingSystemMessageData?.users = Set<AnyHashable>([MockUser.mockUsers()!.last]) as! Set<ZMUser>
+        
+        verify(message: message)
+    }
+    
+    // MARK: - potential gap
+    
+    func testPotentialGap() {
+        let message = MockMessageFactory.systemMessage(with: .potentialGap)!
+
+        verify(message: message)
+    }
+    
+    func testPotentialGap_addedUsers() {
+        let message = MockMessageFactory.systemMessage(with: .potentialGap)!
+        
+        message.backingSystemMessageData?.addedUsers = Set<AnyHashable>(Array(MockUser.mockUsers()!.prefix(1))) as! Set<ZMUser>
+        
+        verify(message: message)
+    }
+    
+    func testPotentialGap_removedUsers() {
+        let message = MockMessageFactory.systemMessage(with: .potentialGap)!
+        
+        message.backingSystemMessageData?.removedUsers = Set<AnyHashable>(Array(MockUser.mockUsers()!.prefix(1))) as! Set<ZMUser>
+        
+        verify(message: message)
+    }
+    
+    func testPotentialGap_addedAndRemovedUsers() {
+        let message = MockMessageFactory.systemMessage(with: .potentialGap)!
+        
+        message.backingSystemMessageData?.addedUsers = Set<AnyHashable>(Array(MockUser.mockUsers()!.prefix(1))) as! Set<ZMUser>
+        message.backingSystemMessageData?.removedUsers = Set<AnyHashable>(Array(MockUser.mockUsers()!.suffix(1))) as! Set<ZMUser>
+        
         verify(message: message)
     }
 

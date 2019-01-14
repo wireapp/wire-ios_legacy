@@ -18,7 +18,6 @@
 
 
 import XCTest
-import Cartography
 @testable import Wire
 
 
@@ -35,25 +34,7 @@ class UserNameTakeOverViewControllerTests: ZMSnapshotTestCase {
 
         sut.setNeedsStatusBarAppearanceUpdate()
 
-        verify(view: sut.prepareForSnapshots())
+        verifyInIPhoneSize(view: sut.view, size: XCTestCase.DeviceSizeIPhone6)
     }
 
-}
-
-fileprivate extension UIViewController {
-
-    func prepareForSnapshots() -> UIView {
-        constrain(view) { view in
-            view.height == 667
-            view.width == 375
-        }
-
-        beginAppearanceTransition(true, animated: false)
-        endAppearanceTransition()
-
-        view.setNeedsLayout()
-        view.layoutIfNeeded()
-        return view
-    }
-    
 }

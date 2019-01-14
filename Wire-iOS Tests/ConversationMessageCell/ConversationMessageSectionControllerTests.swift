@@ -24,18 +24,15 @@ class ConversationMessageSectionControllerTests: XCTestCase {
     // MARK: - Dequeuing
     
     var context: ConversationMessageContext!
-    var layoutProperties: ConversationCellLayoutProperties!
     
     override func setUp() {
         super.setUp()
         
-        context = ConversationMessageContext(isSameSenderAsPrevious: false, isTimeIntervalSinceLastMessageSignificant: false, isFirstMessageOfTheDay: false, isFirstUnreadMessage: false, isLastMessage: false, searchQueries: [], previousMessageIsKnock: false)
-        layoutProperties = ConversationCellLayoutProperties()
+        context = ConversationMessageContext(isSameSenderAsPrevious: false, isTimeIntervalSinceLastMessageSignificant: false, isFirstMessageOfTheDay: false, isFirstUnreadMessage: false, isLastMessage: false, searchQueries: [], previousMessageIsKnock: false, spacing: 0)
     }
     
     override func tearDown() {
         context = nil
-        layoutProperties = nil
         
         super.tearDown()
     }
@@ -43,7 +40,7 @@ class ConversationMessageSectionControllerTests: XCTestCase {
     func testThatItReturnsCellsInCorrectOrder_Normal() {
         
         // GIVEN
-        let section = ConversationMessageSectionController(message: MockMessage(), context: context, layoutProperties: layoutProperties)
+        let section = ConversationMessageSectionController(message: MockMessage(), context: context)
         section.cellDescriptions.removeAll()
         section.useInvertedIndices = false
 
@@ -61,7 +58,7 @@ class ConversationMessageSectionControllerTests: XCTestCase {
 
     func testThatItReturnsCellsInCorrectOrder_UpsideDown() {
         // GIVEN
-        let section = ConversationMessageSectionController(message: MockMessage(), context: context, layoutProperties: layoutProperties)
+        let section = ConversationMessageSectionController(message: MockMessage(), context: context)
         section.cellDescriptions.removeAll()
         section.useInvertedIndices = true
 
@@ -81,7 +78,7 @@ class ConversationMessageSectionControllerTests: XCTestCase {
 
     func testThatItConfiguresCellAfterDequeuing() {
         // GIVEN
-        let section = ConversationMessageSectionController(message: MockMessage(), context: context, layoutProperties: layoutProperties)
+        let section = ConversationMessageSectionController(message: MockMessage(), context: context)
         section.cellDescriptions.removeAll()
         let tableView = UITableView()
 

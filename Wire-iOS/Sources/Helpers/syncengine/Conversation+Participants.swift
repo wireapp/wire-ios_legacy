@@ -69,7 +69,8 @@ extension ZMConversation {
             self.showAlertForRemoval(for: NetworkError.offline)
             return
         }
-        
+
+        /// if the user is not in this conversation, result = .success
         self.removeParticipant(user,
                                userSession: ZMUserSession.shared()!) { result in
                                 switch result {

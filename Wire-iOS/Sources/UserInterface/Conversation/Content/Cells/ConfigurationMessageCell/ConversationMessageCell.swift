@@ -19,6 +19,17 @@
 import UIKit
 import WireUtilities
 
+
+@objc protocol ConversationMessageCellDelegate: MessageActionResponder {
+    
+    func conversationMessageShouldBecomeFirstResponderWhenShowingMenuForCell(_ cell: UIView) -> Bool
+    func conversationMessageWantsToOpenUserDetails(_ cell: UIView, user: UserType, sourceView: UIView, frame: CGRect)
+    func conversationMessageWantsToOpenMessageDetails(_ cell: UIView, messageDetailsViewController: MessageDetailsViewController)
+    func conversationMessageWantsToOpenGuestOptionsFromView(_ cell: UIView, sourceView: UIView)
+    func conversationMessageWantsToOpenParticipantsDetails(_ cell: UIView, selectedUsers: [ZMUser], sourceView: UIView)
+    
+}
+
 /**
  * A generic view that displays conversation contents.
  */
@@ -111,7 +122,7 @@ protocol ConversationMessageCellDescription: class {
     var message: ZMConversationMessage? { get set }
 
     /// The delegate for the cell.
-    var delegate: ConversationCellDelegate? { get set }
+    var delegate: ConversationMessageCellDelegate? { get set }
 
     /// The action controller that handles the menu item.
     var actionController: ConversationMessageActionController? { get set }
@@ -196,7 +207,7 @@ extension ConversationMessageCellDescription {
     private let configureBlock: (UITableViewCell, Bool) -> Void
     private let baseTypeGetter: () -> AnyClass
 
-    private let _delegate: AnyMutableProperty<ConversationCellDelegate?>
+    private let _delegate: AnyMutableProperty<ConversationMessageCellDelegate?>
     private let _message: AnyMutableProperty<ZMConversationMessage?>
     private let _actionController: AnyMutableProperty<ConversationMessageActionController?>
     private let _topMargin: AnyMutableProperty<Float>
@@ -242,7 +253,7 @@ extension ConversationMessageCellDescription {
         return baseTypeGetter()
     }
 
-    @objc var delegate: ConversationCellDelegate? {
+    @objc var delegate: ConversationMessageCellDelegate? {
         get { return _delegate.getter() }
         set { _delegate.setter(newValue) }
     }

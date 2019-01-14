@@ -173,10 +173,8 @@ extension ConversationTimeoutOptionsViewController: UICollectionViewDelegateFlow
             item.cancel()
             self.showLoadingView = false
 
-            switch result {
-            case .success:
-                self.dismisser?.dismiss(viewController: self, completion: nil)
-            case .failure(let error): self.handle(error: error)
+            if case .failure(let error) = result {
+                self.handle(error: error)
             }
         }
     }

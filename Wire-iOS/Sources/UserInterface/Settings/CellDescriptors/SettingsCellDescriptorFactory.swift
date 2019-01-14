@@ -377,7 +377,7 @@ class SettingsCellDescriptorFactory {
             style: .grouped,
             identifier: .none,
             previewGenerator: .none,
-            icon: .wireLogo
+            icon: .about
         )
     }
 

@@ -19,9 +19,11 @@
 import Foundation
 
 class MockProxiedURLRequester: NSObject, ProxiedURLRequester {
+    var proxyRequest: ProxyRequest?
 
     func doRequest(withPath path: String, method: ZMTransportRequestMethod, type: ProxiedRequestType, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) -> ProxyRequest {
-        return ProxyRequest(type: type, path: path, method: method, callback: completionHandler)
+        proxyRequest = ProxyRequest(type: type, path: path, method: method, callback: completionHandler)
+        return proxyRequest!
     }
 
     func respond(to request: ProxyRequest, data: Data?, response: HTTPURLResponse?, error: Error?) {

@@ -28,7 +28,7 @@ class ConversationTextMessageCell: UIView, ConversationMessageCell, TextViewInte
     var isSelected: Bool = false
 
     weak var message: ZMConversationMessage?
-    weak var delegate: ConversationCellDelegate?
+    weak var delegate: ConversationMessageCellDelegate?
     weak var menuPresenter: ConversationMessageCellMenuPresenter?
     
     var ephemeralTimerTopInset: CGFloat {
@@ -105,7 +105,7 @@ class ConversationTextMessageCell: UIView, ConversationMessageCell, TextViewInte
     }
 
     func openMention(_ mention: Mention) -> Bool {
-        self.delegate?.conversationCell?(self, userTapped: mention.user, in: messageTextView, frame: selectionRect)
+        delegate?.conversationMessageWantsToOpenUserDetails(self, user: mention.user, sourceView: messageTextView, frame: selectionRect)
         return true
     }
 
@@ -124,7 +124,7 @@ class ConversationTextMessageCellDescription: ConversationMessageCellDescription
     let configuration: View.Configuration
 
     weak var message: ZMConversationMessage?
-    weak var delegate: ConversationCellDelegate?
+    weak var delegate: ConversationMessageCellDelegate?
     weak var actionController: ConversationMessageActionController?
     
     var showEphemeralTimer: Bool = false
