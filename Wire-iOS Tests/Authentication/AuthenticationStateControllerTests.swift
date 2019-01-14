@@ -22,11 +22,11 @@ import XCTest
 class MockAuthenticationStateControllerDelegate: AuthenticationStateControllerDelegate {
 
     var lastKnownStep: AuthenticationFlowStep?
-    var lastKnownReset: Bool?
+    var lastKnownChangeMode: AuthenticationStateController.StateChangeMode?
 
-    func stateDidChange(_ newState: AuthenticationFlowStep, withReset resetStack: Bool) {
+    func stateDidChange(_ newState: AuthenticationFlowStep, mode: AuthenticationStateController.StateChangeMode) {
         lastKnownStep = newState
-        lastKnownReset = resetStack
+        lastKnownChangeMode = mode
     }
 
 }
@@ -61,7 +61,7 @@ class AuthenticationStateControllerTests: XCTestCase {
         // THEN
         XCTAssertEqual(stateController.currentStep, .landingScreen)
         XCTAssertEqual(stateController.stack, [.start, .landingScreen])
-        XCTAssertEqual(delegate.lastKnownReset, false)
+        XCTAssertEqual(delegate.lastKnownChangeMode, .normal)
         XCTAssertEqual(delegate.lastKnownStep, .landingScreen)
     }
 
@@ -76,7 +76,7 @@ class AuthenticationStateControllerTests: XCTestCase {
         // THEN
         XCTAssertEqual(stateController.currentStep, emailStep)
         XCTAssertEqual(stateController.stack, [.start, emailStep])
-        XCTAssertEqual(delegate.lastKnownReset, false)
+        XCTAssertEqual(delegate.lastKnownChangeMode, .normal)
         XCTAssertEqual(delegate.lastKnownStep, emailStep)
 
     }
@@ -88,7 +88,7 @@ class AuthenticationStateControllerTests: XCTestCase {
         // THEN
         XCTAssertEqual(stateController.currentStep, .landingScreen)
         XCTAssertEqual(stateController.stack, [.landingScreen])
-        XCTAssertEqual(delegate.lastKnownReset, true)
+        XCTAssertEqual(delegate.lastKnownChangeMode, .reset)
         XCTAssertEqual(delegate.lastKnownStep, .landingScreen)
     }
 
@@ -109,12 +109,12 @@ class AuthenticationStateControllerTests: XCTestCase {
         let phoneNumber = "+4912345678900"
 
         stateController.transition(to: .landingScreen, resetStack: true)
-        stateController.transition(to: .provideCredentials)
+        stateController.transition(to: .provideCredentials(.email))
         stateController.transition(to: .sendLoginCode(phoneNumber: phoneNumber, isResend: false))
 
         XCTAssertEqual(stateController.stack, [
             .landingScreen,
-            .provideCredentials,
+            .provideCredentials(.email),
             .sendLoginCode(phoneNumber: phoneNumber, isResend: false)
         ])
 
@@ -122,8 +122,8 @@ class AuthenticationStateControllerTests: XCTestCase {
         stateController.unwindState()
 
         // THEN
-        XCTAssertEqual(stateController.currentStep, .provideCredentials) // we should rewind to n-1 step
-        XCTAssertEqual(stateController.stack, [.landingScreen, .provideCredentials])
+        XCTAssertEqual(stateController.currentStep, .provideCredentials(.email)) // we should rewind to n-1 step
+        XCTAssertEqual(stateController.stack, [.landingScreen, .provideCredentials(.email)])
     }
 
     func testThatItUnwindsFromNonUIToUIState() {
@@ -131,13 +131,13 @@ class AuthenticationStateControllerTests: XCTestCase {
         let phoneNumber = "+4912345678900"
 
         stateController.transition(to: .landingScreen, resetStack: true)
-        stateController.transition(to: .provideCredentials) // user logs in with phone number
+        stateController.transition(to: .provideCredentials(.phone)) // user logs in with phone number
         stateController.transition(to: .sendLoginCode(phoneNumber: phoneNumber, isResend: false))
         stateController.transition(to: .enterLoginCode(phoneNumber: phoneNumber))
 
         XCTAssertEqual(stateController.stack, [
             .landingScreen,
-            .provideCredentials,
+            .provideCredentials(.phone),
             .sendLoginCode(phoneNumber: phoneNumber, isResend: false), // non-ui
             .enterLoginCode(phoneNumber: phoneNumber)
         ])
@@ -146,8 +146,8 @@ class AuthenticationStateControllerTests: XCTestCase {
         stateController.unwindState() // user taps back button on enter code screen
 
         // THEN
-        XCTAssertEqual(stateController.currentStep, .provideCredentials) // we should rewind to n-2, because n-1 is non-ui
-        XCTAssertEqual(stateController.stack, [.landingScreen, .provideCredentials])
+        XCTAssertEqual(stateController.currentStep, .provideCredentials(.phone)) // we should rewind to n-2, because n-1 is non-ui
+        XCTAssertEqual(stateController.stack, [.landingScreen, .provideCredentials(.phone)])
     }
 
 }

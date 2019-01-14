@@ -27,11 +27,11 @@ import Cartography
      This initializer must be used if you intend to call wr_addCustomSpacing.
      */
     init(customSpacedArrangedSubviews subviews : [UIView]) {
-        var subviewsWithSpacers : [UIView] = []
-
         if #available(iOS 11, *) {
             stackView = UIStackView(arrangedSubviews: subviews)
         } else {
+            var subviewsWithSpacers : [UIView] = []
+
             subviews.forEach { view in
                 subviewsWithSpacers.append(view)
                 subviewsWithSpacers.append(SpacingView(0))
@@ -53,18 +53,19 @@ import Cartography
     
     /**
      Add a custom spacing after a view.
-     
+
      This is a approximation of the addCustomSpacing method only available since iOS 11. This method
      has several constraints:
      
      - The stackview must be initialized with customSpacedArrangedSubviews
      - spacing dosesn't update if views are hidden after this method is called
      - custom spacing can't be smaller than 2x the minimum spacing
+
+     On iOS 11, it uses the default system implementation.
      */
     func wr_addCustomSpacing(_ customSpacing: CGFloat, after view: UIView) {
         if #available(iOS 11, *) {
-            stackView.setCustomSpacing(customSpacing, after: view)
-            return
+            return stackView.setCustomSpacing(customSpacing, after: view)
         }
 
         guard let spacerIndex = stackView.subviews.index(of: view)?.advanced(by: 1),
