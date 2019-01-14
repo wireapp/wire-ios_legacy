@@ -19,12 +19,21 @@
 import XCTest
 @testable import Wire
 
-final class SignInViewControllerTests: XCTestCase {
+class EmailOnlySignInViewController: SignInViewController {
+
+    override var supportsMultipleFlowTypes: Bool {
+        return false
+    }
+
+}
+
+final class SignInViewControllerTests: ZMSnapshotTestCase {
     
     var sut: SignInViewController!
     
     override func setUp() {
         super.setUp()
+        recordMode = true
         sut = SignInViewController()
     }
     
@@ -44,5 +53,43 @@ final class SignInViewControllerTests: XCTestCase {
 
         // THEN
         XCTAssertEqual(sut.presentedSignInViewController, sut.phoneSignInViewControllerContainer)
+    }
+
+    func testThatItHidesPhoneNumberButtonIfNeeded() {
+        // GIVEN
+        let sut = EmailOnlySignInViewController()
+
+        // THEN
+        let form = wrap(sut)
+        verify(view: form.view)
+    }
+
+    func testThatItDoesNotSwitchToPhoneScreenIfPhoneDisabled() {
+        // GIVEN
+        let sut = EmailOnlySignInViewController()
+        sut.loginCredentials = LoginCredentials(emailAddress: nil, phoneNumber: "+0123456789", hasPassword: false, usesCompanyLogin: false)
+
+        // THEN
+        let form = wrap(sut)
+        verify(view: form.view)
+    }
+
+    // MARK: - Helpers
+
+    private func wrap(_ child: UIViewController) -> UIViewController {
+        let container = BlueViewController()
+        container.addChild(child)
+        container.view.addSubview(child.view)
+        child.didMove(toParent: container)
+
+        child.view.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            child.view.leadingAnchor.constraint(equalTo: container.view.leadingAnchor),
+            child.view.trailingAnchor.constraint(equalTo: container.view.trailingAnchor),
+            child.view.bottomAnchor.constraint(equalTo: container.view.bottomAnchor),
+        ])
+
+        return container
     }
 }

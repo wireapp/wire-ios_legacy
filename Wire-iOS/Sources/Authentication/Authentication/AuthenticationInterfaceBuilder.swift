@@ -53,7 +53,12 @@ class AuthenticationInterfaceBuilder {
             return registrationViewController
 
         case .provideCredentials:
+            #if ACCOUNT_CREATION_DISABLED
+            let loginViewController = RegistrationViewController(authenticationFlow: .onlyLogin)
+            #else
             let loginViewController = RegistrationViewController(authenticationFlow: .login)
+            #endif
+
             loginViewController.shouldHideCancelButton = true
             return loginViewController
 
