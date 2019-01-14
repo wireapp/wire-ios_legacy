@@ -24,7 +24,6 @@ import MobileCoreServices
 import WireDataModel
 import WireCommonComponents
 import WireLinkPreview
-import WireSyncEngine
 
 private let zmLog = ZMSLog(tag: "UI")
 
