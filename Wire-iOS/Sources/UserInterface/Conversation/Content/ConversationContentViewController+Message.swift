@@ -21,10 +21,18 @@ import Foundation
 extension ConversationContentViewController {
     @objc(cellForMessage:)
     func cell(for message: ZMConversationMessage) -> UITableViewCell? {
-        guard let indexPath = self.conversationMessageWindowTableViewAdapter.indexPath(for: message) else {
+        guard let indexPath = conversationMessageWindowTableViewAdapter.indexPath(for: message) else {
             return nil
         }
-        
-        return self.tableView.cellForRow(at: indexPath)
+
+        // Notice: if the cell is not full visible in the table view, UITableView.cellForRow() may returns nil.
+        // To handle this case, get the cell from the tableView's dataSource delegate method.
+        var cell = tableView.cellForRow(at: indexPath)
+
+        if cell == .none {
+            cell = tableView.dataSource?.tableView(tableView, cellForRowAt: indexPath)
+        }
+
+        return cell
     }
 }
