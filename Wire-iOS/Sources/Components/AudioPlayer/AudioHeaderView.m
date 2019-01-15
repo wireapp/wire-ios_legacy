@@ -21,7 +21,7 @@
 
 #import "AudioHeaderView.h"
 #import "Wire-Swift.h"
-@import WireExtensionComponents;
+
 
 
 @interface AudioHeaderView ()

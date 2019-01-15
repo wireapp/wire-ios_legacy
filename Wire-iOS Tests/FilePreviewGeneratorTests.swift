@@ -17,7 +17,7 @@
 //
 
 import XCTest
-import WireExtensionComponents
+
 import MobileCoreServices
 
 class FilePreviewGeneratorTests : XCTestCase {

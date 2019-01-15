@@ -18,7 +18,8 @@
 
 
 import Foundation
-import WireExtensionComponents
+import WireCommonComponents
+import WireUtilities
 
 private let zmLog = ZMSLog(tag: "UI")
 

@@ -22,10 +22,9 @@
 
 #import "WireSyncEngine+iOS.h"
 #import "avs+iOS.h"
+#import "AccentColorProvider.h"
 
 
-@import WireExtensionComponents;
-#import <WireExtensionComponents/WireExtensionComponents-Swift.h>
 @import PureLayout;
 
 #import "Constants.h"

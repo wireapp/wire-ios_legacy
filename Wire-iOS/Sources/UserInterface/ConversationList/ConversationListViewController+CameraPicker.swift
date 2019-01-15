@@ -20,6 +20,7 @@ import Foundation
 import AVKit
 import MobileCoreServices
 import Cartography
+import WireCommonComponents
 
 func forward(_ image: UIImage, to conversations: [AnyObject]) {
     guard let imageData = image.jpegData(compressionQuality: 0.9),

@@ -17,7 +17,7 @@
 //
 
 import UIKit
-import WireExtensionComponents
+
 
 class GroupDetailsGuestOptionsCell: GroupDetailsDisclosureOptionsCell {
 

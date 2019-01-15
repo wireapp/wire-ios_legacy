@@ -18,7 +18,7 @@
 
 
 import Foundation
-import WireExtensionComponents
+
 
 
 final class DraftsRootViewController: UISplitViewController {

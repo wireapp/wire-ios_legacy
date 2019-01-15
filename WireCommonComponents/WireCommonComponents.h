@@ -1,6 +1,6 @@
-//
+////
 // Wire
-// Copyright (C) 2018 Wire Swiss GmbH
+// Copyright (C) 2019 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,15 +16,17 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-@import WireExtensionComponents;
+#import <UIKit/UIKit.h>
 
-@interface TextView ()
+//! Project version number for WireCommonComponents.
+FOUNDATION_EXPORT double WireCommonComponentsVersionNumber;
 
-@property (nonatomic, nonnull) TransformLabel *placeholderLabel;
+//! Project version string for WireCommonComponents.
+FOUNDATION_EXPORT const unsigned char WireCommonComponentsVersionString[];
 
-@property (nonatomic, nullable) NSLayoutConstraint *placeholderLabelLeftConstraint;
-@property (nonatomic, nullable) NSLayoutConstraint *placeholderLabelRightConstraint;
+// In this header, you should import all the public headers of your framework using statements like #import <WireCommonComponents/PublicHeader.h>
 
-@property (nonatomic) UIEdgeInsets _placeholderTextContainerInset;
-
-@end
+#import <WireCommonComponents/NetworkStatus.h>
+#import <WireCommonComponents/ZetaIconTypes.h>
+#import <WireCommonComponents/UIImage+ZetaIconsNeue.h>
+#import <WireCommonComponents/AVAsset+VideoConvert.h>

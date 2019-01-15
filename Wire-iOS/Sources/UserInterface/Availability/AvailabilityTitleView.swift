@@ -19,7 +19,7 @@
 
 import UIKit
 import Cartography
-import WireExtensionComponents
+
 import WireDataModel
 
 @objcMembers public class AvailabilityTitleView: TitleView {

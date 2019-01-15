@@ -21,7 +21,7 @@
 #import "RegistrationTextField.h"
 #import "RegistrationTextField+Internal.h"
 
-@import WireExtensionComponents;
+
 
 
 #import "UIImage+ZetaIconsNeue.h"

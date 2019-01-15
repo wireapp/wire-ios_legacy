@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import WireUtilities
 
 private enum ExtensionSettingsKey: String {
 

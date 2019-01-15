@@ -17,7 +17,7 @@
 //
 
 import UIKit
-import WireExtensionComponents
+
 
 protocol CallStatusViewInputType: CallTypeProvider, ColorVariantProvider {
     var state: CallStatusViewState { get }

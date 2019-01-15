@@ -19,7 +19,7 @@
 
 #import <UIKit/UIKit.h>
 
-@class ZMConversation, PeopleInputController, UserSelection;
+@class ZMConversation, PeopleInputController, UserSelection, ZMUser;
 
 @protocol StartUIDelegate;
 

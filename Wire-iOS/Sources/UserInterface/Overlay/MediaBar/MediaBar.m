@@ -20,7 +20,7 @@
 #import "MediaBar.h"
 
 @import PureLayout;
-@import WireExtensionComponents;
+
 #import "UIImage+ZetaIconsNeue.h"
 #import "Constants.h"
 #import "Wire-Swift.h"

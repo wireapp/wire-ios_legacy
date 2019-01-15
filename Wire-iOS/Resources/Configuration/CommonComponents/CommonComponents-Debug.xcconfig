@@ -16,16 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-// Build Options
-APPLICATION_EXTENSION_API_ONLY = YES
+#include "../Project-Debug.xcconfig"
+#include "CommonComponents-Base.xcconfig"
 
-// Deployment
-SKIP_INSTALL = YES
-
-// Linking
-DYLIB_INSTALL_NAME_BASE = @rpath
-
-// Packaging
-INFOPLIST_FILE = WireExtensionComponents/Info.plist
-PRODUCT_NAME = $(TARGET_NAME)
-PRODUCT_BUNDLE_IDENTIFIER = $(WIRE_BUNDLE_ID).$(PRODUCT_NAME:rfc1034identifier)

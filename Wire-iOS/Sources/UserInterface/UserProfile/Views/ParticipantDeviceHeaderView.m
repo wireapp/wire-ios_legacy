@@ -19,7 +19,6 @@
 
 #import "ParticipantDeviceHeaderView.h"
 #import "ParticipantDeviceHeaderView+Internal.h"
-#import "WireExtensionComponents.h"
 #import "NSAttributedString+Wire.h"
 #import "Wire-Swift.h"
 

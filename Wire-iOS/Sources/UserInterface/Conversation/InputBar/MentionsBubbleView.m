@@ -18,7 +18,7 @@
 
 
 #import "MentionsBubbleView.h"
-@import WireExtensionComponents;
+@import WireCommonComponents;
 
 @implementation MentionsBubbleView
 

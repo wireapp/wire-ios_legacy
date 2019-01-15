@@ -20,7 +20,7 @@
 #import "ConversationListCell+Internal.h"
 
 #import "ConversationListItemView.h"
-@import WireExtensionComponents;
+
 
 #import "Constants.h"
 #import "WireSyncEngine+iOS.h"

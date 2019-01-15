@@ -20,7 +20,7 @@
 @import ObjectiveC;
 
 #import "UIView+WR_ExtendedBlockAnimations.h"
-
+#import "Wire-Swift.h"
 
 
 @interface WRAnimationBlockDelegate : NSObject <CAAnimationDelegate>

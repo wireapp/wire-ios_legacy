@@ -43,9 +43,9 @@
     [self.connectRequestViewController.view removeFromSuperview];
     self.connectRequestViewController = [[IncomingConnectionViewController alloc] initWithUserSession:[ZMUserSession sharedSession] user:self.user];
 
-    @weakify(self);
+    ZM_WEAK(self);
     self.connectRequestViewController.onAction = ^(IncomingConnectionAction action) {
-        @strongify(self);
+        ZM_STRONG(self);
         switch(action) {
             case IncomingConnectionActionAccept:
                 self.acceptBlock();

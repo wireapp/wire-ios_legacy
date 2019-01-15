@@ -24,6 +24,7 @@
 #import "VerticalTransition.h"
 #import "UIView+WR_ExtendedBlockAnimations.h"
 #import "Constants.h"
+#import "Geometry.h"
 
 #import "Wire-Swift.h"
 
@@ -557,10 +558,10 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
             BOOL isRevealed = self.openPercentage > 0.5f;
             BOOL didCompleteTransition = isRevealed != self.leftViewControllerRevealed;
 
-            @weakify(self);
+            ZM_WEAK(self);
             [self setLeftViewControllerRevealed:isRevealed animated:YES completion:^{
                 
-                @strongify(self);
+                ZM_STRONG(self);
                 if (didCompleteTransition) {
                     [self.leftViewController endAppearanceTransition];
                     [self.rightViewController endAppearanceTransition];

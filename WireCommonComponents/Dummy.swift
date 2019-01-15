@@ -1,6 +1,6 @@
-//
+////
 // Wire
-// Copyright (C) 2016 Wire Swiss GmbH
+// Copyright (C) 2019 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,19 +16,4 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
-#import <Availability.h>
-
-#ifdef __OBJC__
-
-#import <UIKit/UIKit.h>
-#import <Foundation/Foundation.h>
-
-#ifndef NS_DESIGNATED_INITIALIZER
-#define NS_DESIGNATED_INITIALIZER
-#endif
-
-#define STRINGIZE_INTERNAL(x) #x
-#define STRINGIZE(x) STRINGIZE_INTERNAL(x)
-
-#endif
+import Foundation

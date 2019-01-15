@@ -19,7 +19,7 @@
 
 import Foundation
 import Cartography
-import WireExtensionComponents
+
 
 struct CallCellViewModel {
 

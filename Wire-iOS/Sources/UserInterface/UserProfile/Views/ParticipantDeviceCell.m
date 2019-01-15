@@ -22,7 +22,6 @@
 
 #import "WireSyncEngine+iOS.h"
 #import "UIImage+ZetaIconsNeue.h"
-#import "WireExtensionComponents.h"
 @import PureLayout;
 #import "NSString+Fingerprint.h"
 #import "Wire-Swift.h"

@@ -28,7 +28,7 @@
 #import "UIViewController+Errors.h"
 #import "AppDelegate.h"
 #import "Wire-Swift.h"
-@import WireExtensionComponents;
+
 
 @interface PhoneNumberStepViewController ()
 

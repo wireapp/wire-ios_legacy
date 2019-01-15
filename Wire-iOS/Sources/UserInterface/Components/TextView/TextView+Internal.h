@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2016 Wire Swiss GmbH
+// Copyright (C) 2018 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,19 +16,15 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+@class TransformLabel;
 
-#import <Availability.h>
+@interface TextView ()
 
-#ifdef __OBJC__
+@property (nonatomic, nonnull) TransformLabel *placeholderLabel;
 
-#import <UIKit/UIKit.h>
-#import <Foundation/Foundation.h>
+@property (nonatomic, nullable) NSLayoutConstraint *placeholderLabelLeftConstraint;
+@property (nonatomic, nullable) NSLayoutConstraint *placeholderLabelRightConstraint;
 
-#ifndef NS_DESIGNATED_INITIALIZER
-#define NS_DESIGNATED_INITIALIZER
-#endif
+@property (nonatomic) UIEdgeInsets _placeholderTextContainerInset;
 
-#define STRINGIZE_INTERNAL(x) #x
-#define STRINGIZE(x) STRINGIZE_INTERNAL(x)
-
-#endif
+@end

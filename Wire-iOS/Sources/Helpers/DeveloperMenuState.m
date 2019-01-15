@@ -17,18 +17,16 @@
 // 
 
 
-@import UIKit;
-#import "ZetaIconTypes.h"
+#import "DeveloperMenuState.h"
 
+@implementation DeveloperMenuState
 
-@interface ProgressSpinner : UIView
-
-@property (nonatomic, strong) UIColor *color;
-@property (nonatomic, assign) ZetaIconSize iconSize;
-@property (nonatomic, assign) BOOL hidesWhenStopped;
-@property (nonatomic, assign, getter=isAnimating) BOOL animating;
-
-- (IBAction)startAnimation:(id)sender;
-- (IBAction)stopAnimation:(id)sender;
++ (BOOL)developerMenuEnabled {
+#if ENABLE_DEVELOPER_MENU == 1
+    return YES;
+#else
+    return NO;
+#endif
+}
 
 @end

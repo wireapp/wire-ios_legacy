@@ -19,7 +19,7 @@
 import Foundation
 import WireSyncEngine
 import Cartography
-
+import WireCommonComponents
 
 extension ZMConversation: ShareDestination {
     

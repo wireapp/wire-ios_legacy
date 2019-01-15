@@ -22,6 +22,7 @@
 #import "WireSyncEngine+iOS.h"
 #import "avs+iOS.h"
 #import "Wire-Swift.h"
+@import WireCommonComponents;
 
 NSString * const SettingsColorSchemeChangedNotification = @"SettingsColorSchemeChangedNotification";
 

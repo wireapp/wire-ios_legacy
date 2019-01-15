@@ -20,7 +20,7 @@
 import UIKit
 import Cartography
 import WireSyncEngine
-import WireExtensionComponents
+
 
 final public class BackgroundViewController: UIViewController {
     

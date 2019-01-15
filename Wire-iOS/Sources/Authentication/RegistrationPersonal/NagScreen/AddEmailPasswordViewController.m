@@ -18,7 +18,7 @@
 
 #import "AddEmailPasswordViewController.h"
 
-#import <WireExtensionComponents/UIViewController+LoadingView.h>
+#import "UIViewController+LoadingView.h"
 
 #import "AddEmailStepViewController.h"
 #import "VerificationCodeStepViewController.h"

@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "1EE85C4F1B5F96FB008E084B"
-               BuildableName = "WireExtensionComponents.framework"
-               BlueprintName = "WireExtensionComponents"
+               BlueprintIdentifier = "F1FEA14921DCEB1700790A54"
+               BuildableName = "WireCommonComponents.framework"
+               BlueprintName = "WireCommonComponents"
                ReferencedContainer = "container:Wire-iOS.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -45,9 +45,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "1EE85C4F1B5F96FB008E084B"
-            BuildableName = "WireExtensionComponents.framework"
-            BlueprintName = "WireExtensionComponents"
+            BlueprintIdentifier = "F1FEA14921DCEB1700790A54"
+            BuildableName = "WireCommonComponents.framework"
+            BlueprintName = "WireCommonComponents"
             ReferencedContainer = "container:Wire-iOS.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -63,9 +63,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "1EE85C4F1B5F96FB008E084B"
-            BuildableName = "WireExtensionComponents.framework"
-            BlueprintName = "WireExtensionComponents"
+            BlueprintIdentifier = "F1FEA14921DCEB1700790A54"
+            BuildableName = "WireCommonComponents.framework"
+            BlueprintName = "WireCommonComponents"
             ReferencedContainer = "container:Wire-iOS.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

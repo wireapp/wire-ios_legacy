@@ -29,7 +29,7 @@
 #import "UIColor+WAZExtensions.h"
 #import "Constants.h"
 #import "AppDelegate.h"
-@import WireExtensionComponents;
+
 #import "UIImage+ImageUtilities.h"
 #import "MediaAsset.h"
 

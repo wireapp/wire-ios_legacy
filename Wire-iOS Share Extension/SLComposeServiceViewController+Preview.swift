@@ -19,7 +19,7 @@
 import UIKit
 import Social
 import MobileCoreServices
-import WireExtensionComponents
+import WireCommonComponents
 
 /**
  * The description of the preview that can be displayed for an attachment.

@@ -16,9 +16,8 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
-#import <WireExtensionComponents/WireExtensionComponents.h>
-#import <WireExtensionComponents/WireExtensionComponents-Swift.h>
+#import "UIImage+ZetaIconsNeue.h"
+#import <WireCommonComponents/WireCommonComponents-Swift.h>
 
 static CGFloat const ZetaIconDefaultSizes[] = {32, 16};
 

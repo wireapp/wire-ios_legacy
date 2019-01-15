@@ -28,7 +28,6 @@
 #import "Message+UI.h"
 
 // UI
-@import WireExtensionComponents;
 #import "ParticipantDeviceCell.h"
 #import "ParticipantDeviceCell+Internal.h"
 #import "ParticipantDeviceHeaderView.h"
@@ -76,6 +75,7 @@
 #import "SwipeMenuCollectionCell.h"
 #import "SwipeMenuCollectionCell+Internal.h"
 #import "TextView+Internal.h"
+#import "TextView.h"
 
 // View Controllers
 #import "ProfileDevicesViewController.h"
@@ -179,6 +179,13 @@
 #import "KeyboardFrameObserver+iOS.h"
 #import "UIColor+Mixing.h"
 #import "MessageType.h"
+#import "UIViewController+LoadingView.h"
+#import "ProgressSpinner.h"
+#import "CABasicAnimation+Rotation.h"
+#import "DeveloperMenuState.h"
+#import "ColorScheme.h"
+#import "UIImage+ImageUtilities.h"
+#import "KeyValueObserver.h"
 #import "EmoticonSubstitutionConfiguration.h"
 
 // Audio player

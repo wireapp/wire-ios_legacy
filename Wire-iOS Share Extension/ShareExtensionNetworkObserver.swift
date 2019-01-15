@@ -18,7 +18,7 @@
 
 
 import Foundation
-import WireExtensionComponents
+import WireCommonComponents
 
 class ShareExtensionNetworkObserver: NSObject, NetworkStatusObserver {
     

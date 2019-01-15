@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import WireSyncEngine
 
 fileprivate var ciContext = CIContext(options: nil)
 

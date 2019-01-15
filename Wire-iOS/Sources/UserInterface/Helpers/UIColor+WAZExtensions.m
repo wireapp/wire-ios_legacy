@@ -23,7 +23,7 @@
 #import "ColorScheme.h"
 #import "Wire-Swift.h"
 
-@import WireExtensionComponents;
+
 
 static NSString* ZMLogTag ZM_UNUSED = @"UI";
 static ZMAccentColor overridenAccentColor = ZMAccentColorUndefined;

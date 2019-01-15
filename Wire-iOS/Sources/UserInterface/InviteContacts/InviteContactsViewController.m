@@ -17,7 +17,7 @@
 // 
 
 
-@import WireExtensionComponents;
+
 
 #import "InviteContactsViewController.h"
 #import "InviteContactsViewController+Internal.h"

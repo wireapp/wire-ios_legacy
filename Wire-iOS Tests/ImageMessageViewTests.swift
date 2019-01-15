@@ -19,7 +19,7 @@
 import Foundation
 import XCTest
 import Cartography
-@testable import WireExtensionComponents
+@testable import Wire
 
 class ImageMessageViewTests: ZMSnapshotTestCase {
     var sut: ImageMessageView!

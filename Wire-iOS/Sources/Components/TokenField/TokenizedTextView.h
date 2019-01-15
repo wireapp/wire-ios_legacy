@@ -17,7 +17,7 @@
 // 
 
 
-#import <WireExtensionComponents/TextView.h>
+#import "TextView.h"
 
 
 

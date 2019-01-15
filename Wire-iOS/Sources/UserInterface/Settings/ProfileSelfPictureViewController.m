@@ -29,12 +29,13 @@
 
 #import "UIImage+ZetaIconsNeue.h"
 #import "BottomOverlayViewController+Private.h"
-@import WireExtensionComponents;
+
 
 #import "ImagePickerConfirmationController.h"
 #import "Analytics.h"
 #import "Constants.h"
 #import "AppDelegate.h"
+#import "NSLayoutConstraint+Helpers.h"
 
 #import "Wire-Swift.h"
 
@@ -57,9 +58,9 @@
     if (self) {
         _imagePickerConfirmationController = [[ImagePickerConfirmationController alloc] init];
         
-        @weakify(self);
+        ZM_WEAK(self);
         _imagePickerConfirmationController.imagePickedBlock = ^(NSData *imageData) {
-            @strongify(self);
+            ZM_STRONG(self);
             [self dismissViewControllerAnimated:YES completion:nil];
             [self setSelfImageToData:imageData];
         };
