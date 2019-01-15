@@ -29,37 +29,12 @@ extension ZMConversationMessage {
     }
 }
 
-fileprivate enum Mode {
-    case attachedToBottom(count: Int)
-    case detached(offset: Int, count: Int)
-}
-
-extension Mode {
-    var offset: Int {
-        switch self {
-        case .attachedToBottom(_):
-            return 0
-        case .detached(let offset, _):
-            return offset
-        }
-    }
-    
-    var limit: Int {
-        switch self {
-        case .attachedToBottom(let count):
-            return count
-        case .detached(_, let count):
-            return count
-        }
-    }
-}
-
 final class ConversationTableViewDataSource: NSObject {
     public static let defaultBatchSize = 30 // Magic number: amount of messages per screen (upper bound).
     
     private var fetchController: NSFetchedResultsController<ZMMessage>!
     
-    private var mode: Mode = .attachedToBottom(count: ConversationTableViewDataSource.defaultBatchSize) {
+    private var fetchLimit = defaultBatchSize {
         didSet {
             createFetchController()
             tableView.reloadData()
@@ -68,31 +43,13 @@ final class ConversationTableViewDataSource: NSObject {
     
     public var registeredCells: [AnyClass] = []
     public var sectionControllers: [String: ConversationMessageSectionController] = [:]
+    @objc private(set) var hasFetchedAllMessages: Bool = false
     
     @objc func resetSectionControllers() {
         sectionControllers = [:]
     }
     
     public var actionControllers: [String: ConversationMessageActionController] = [:]
-    
-    private var readerPosition: Int = 0 {
-        didSet {
-            switch mode {
-            case .attachedToBottom(let messagesToDisplay):
-                // Check if user is about to see the oldest visible messages.
-                if readerPosition + 10 > messages.count && !oldestMessageFetched {
-                    mode = .attachedToBottom(count: messagesToDisplay + ConversationTableViewDataSource.defaultBatchSize)
-                }
-                // Check if user is about to see the newest visible message.
-                else if readerPosition < type(of: self).defaultBatchSize && !newestMessageFetched {
-                    // Move towards the newer messages.
-                    mode = .attachedToBottom(count: messagesToDisplay - ConversationTableViewDataSource.defaultBatchSize)
-                }
-            case .detached(_, _):
-                break
-            }
-        }
-    }
     
     public let conversation: ZMConversation
     public let tableView: UpsideDownTableView
@@ -201,26 +158,9 @@ final class ConversationTableViewDataSource: NSObject {
         // Move the message window to show the message and previous
         let messagesShownBeforeGivenMessage = 5
         let offset = index > messagesShownBeforeGivenMessage ? index - messagesShownBeforeGivenMessage : index
-        // TODO: Develop detached conversation view mode.
-        // mode = .detached(offset: offset, count: ConversationTableViewDataSource.defaultBatchSize)
-        mode = .attachedToBottom(count: offset + ConversationTableViewDataSource.defaultBatchSize)
+        fetchLimit = offset + ConversationTableViewDataSource.defaultBatchSize
         
         completion?(index)
-    }
-    
-    @objc public var oldestMessageFetched: Bool {
-        guard let moc = conversation.managedObjectContext else {
-            fatal("conversation.managedObjectContext == nil")
-        }
-        
-        let fetchRequest = self.fetchRequest()
-        let totalCount = try! moc.count(for: fetchRequest)
-    
-        return mode.offset + ConversationTableViewDataSource.defaultBatchSize >= totalCount
-    }
-    
-    public var newestMessageFetched: Bool {
-        return mode.offset == 0
     }
     
     @objc func indexOfMessage(_ message: ZMConversationMessage) -> Int {
@@ -249,11 +189,11 @@ final class ConversationTableViewDataSource: NSObject {
     }
     
     @objc(tableViewDidScroll:) public func didScroll(tableView: UITableView) {
-        let topRowLocationInTableViewCoordinates = CGPoint(x: tableView.bounds.width / 2, y: tableView.contentOffset.y + tableView.bounds.height)
+        let scrolledToTop = (tableView.contentOffset.y + tableView.bounds.height) - tableView.contentSize.height > 0
         
-        let topRow = tableView.indexPathForRow(at: topRowLocationInTableViewCoordinates)?.section ?? tableView.numberOfSections - 1
-        
-        readerPosition = topRow
+        if scrolledToTop, !hasFetchedAllMessages {
+            fetchLimit = fetchLimit + ConversationTableViewDataSource.defaultBatchSize
+        }
     }
     
     fileprivate func stopAudioPlayer(for messages: Set<ZMMessage>) {
@@ -268,7 +208,6 @@ final class ConversationTableViewDataSource: NSObject {
     
     private func fetchRequest() -> NSFetchRequest<ZMMessage> {
         let fetchRequest = NSFetchRequest<ZMMessage>(entityName: ZMMessage.entityName())
-        fetchRequest.fetchBatchSize = type(of: self).defaultBatchSize
         fetchRequest.predicate = conversation.visibleMessagesPredicate
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(ZMMessage.serverTimestamp), ascending: false)]
         return fetchRequest
@@ -276,8 +215,8 @@ final class ConversationTableViewDataSource: NSObject {
     
     private func createFetchController() {
         let fetchRequest = self.fetchRequest()
-        fetchRequest.fetchLimit = mode.limit
-        fetchRequest.fetchOffset = mode.offset
+        fetchRequest.fetchLimit = fetchLimit
+        fetchRequest.fetchOffset = 0
         
         fetchController = NSFetchedResultsController<ZMMessage>(fetchRequest: fetchRequest,
                                                                 managedObjectContext: conversation.managedObjectContext!,
@@ -287,6 +226,7 @@ final class ConversationTableViewDataSource: NSObject {
         self.fetchController.delegate = self
         try! fetchController.performFetch()
         
+        hasFetchedAllMessages =  messages.count < fetchRequest.fetchLimit
         firstUnreadMessage = conversation.firstUnreadMessage
     }
 }
@@ -320,14 +260,7 @@ extension ConversationTableViewDataSource: NSFetchedResultsControllerDelegate {
                     at indexPath: IndexPath?,
                     for changeType: NSFetchedResultsChangeType,
                     newIndexPath: IndexPath?) {
-        if changeType == .update {
-            guard let indexPathToUpdate = indexPath else {
-                return
-            }
-            let message = messages[indexPathToUpdate.row]
-            
-            updatedMessages.append(message)
-        }
+        // no-op
     }
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
@@ -344,8 +277,10 @@ extension ConversationTableViewDataSource: NSFetchedResultsControllerDelegate {
     func applyDeltaChanges() {
         let old = ZMOrderedSetState(orderedSet: NSOrderedSet(array: messagesBeforeUpdate))
         let new = ZMOrderedSetState(orderedSet: NSOrderedSet(array: messages))
-        let update = ZMOrderedSetState(orderedSet: NSOrderedSet(array: updatedMessages))
-
+        
+        guard old != new else { return }
+        
+        let update = ZMOrderedSetState(orderedSet: NSOrderedSet())
         let changeInfo = ZMChangedIndexes(start: old, end: new, updatedState: update, moveType: .nsTableView)!
         
         let isLoadingInitialContent = messages.count == changeInfo.insertedIndexes.count && changeInfo.deletedIndexes.count == 0
@@ -396,10 +331,6 @@ extension ConversationTableViewDataSource: NSFetchedResultsControllerDelegate {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                 self.tableView.lockContentOffset = false
             }
-        }
-        
-        if changeInfo.insertedIndexes.count > 0 {
-            selectLastMessage()
         }
         
         messagesBeforeUpdate = []

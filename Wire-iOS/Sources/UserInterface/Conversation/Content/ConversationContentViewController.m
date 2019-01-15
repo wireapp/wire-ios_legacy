@@ -260,7 +260,7 @@
 
 - (void)updateTableViewHeaderView
 {
-    if (!self.dataSource.oldestMessageFetched) {
+    if (!self.dataSource.hasFetchedAllMessages) {
         // Don't display the conversation header if the message window doesn't include the first message.
         return;
     }
