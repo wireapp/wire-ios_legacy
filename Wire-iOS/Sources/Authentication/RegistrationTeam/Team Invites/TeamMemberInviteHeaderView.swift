@@ -50,7 +50,12 @@ final class TeamMemberInviteHeaderView: UIView {
         stackView.spacing = 24
         [titleLabel, subtitleLabel, bottomSpacerView].forEach(stackView.addArrangedSubview)
         titleLabel.textAlignment = .center
+
         subtitleLabel.textAlignment = .center
+        subtitleLabel.numberOfLines = 0
+        subtitleLabel.lineBreakMode = .byWordWrapping
+        subtitleLabel.setContentCompressionResistancePriority(UILayoutPriority.required, for: .vertical)
+
         titleLabel.textColor = UIColor.Team.textColor
         subtitleLabel.textColor = UIColor.Team.subtitleColor
         addSubview(stackView)

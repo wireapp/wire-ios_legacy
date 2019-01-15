@@ -23,14 +23,6 @@ final class TeamMemberInviteViewControllerSnapshotTests: ZMSnapshotTestCase {
     
     var sut: TeamMemberInviteViewController!
     
-    override func setUp() {
-        super.setUp()
-        sut = TeamMemberInviteViewController()
-
-        /// TODO: remove this after snapshot is created
-        recordMode = true
-    }
-    
     override func tearDown() {
         sut = nil
         super.tearDown()
