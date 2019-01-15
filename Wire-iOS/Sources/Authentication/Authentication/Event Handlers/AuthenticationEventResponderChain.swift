@@ -75,6 +75,14 @@ class AuthenticationEventResponderChain {
     /// The object assisting the responder chain.
     weak var delegate: AuthenticationEventResponderChainDelegate?
 
+    // MARK: - Initialization
+
+    let featureProvider: AuthenticationFeatureProvider
+
+    init(featureProvider: AuthenticationFeatureProvider) {
+        self.featureProvider = featureProvider
+    }
+
     // MARK: - Configuration
 
     var flowStartHandlers: [AnyAuthenticationEventHandler<(NSError?, Int)>] = []
@@ -107,7 +115,7 @@ class AuthenticationEventResponderChain {
         // flowStartHandlers
         registerHandler(AuthenticationStartMissingCredentialsErrorHandler(), to: &flowStartHandlers)
         registerHandler(AuthenticationStartReauthenticateErrorHandler(), to: &flowStartHandlers)
-        registerHandler(AuthenticationStartAddAccountEventHandler(), to: &flowStartHandlers)
+        registerHandler(AuthenticationStartAddAccountEventHandler(featureProvider: featureProvider), to: &flowStartHandlers)
 
         // initialSyncHandlers
         registerHandler(AuthenticationInitialSyncEventHandler(), to: &initialSyncHandlers)
@@ -156,6 +164,7 @@ class AuthenticationEventResponderChain {
         registerHandler(AuthenticationCredentialsCreationInputHandler(), to: &userInputObservers)
         registerHandler(AuthenticationIncrementalUserCreationInputHandler(), to: &userInputObservers)
         registerHandler(AuthenticationLoginCredentialsInputHandler(), to: &userInputObservers)
+        registerHandler(AuthenticationButtonTapInputHandler(), to: &userInputObservers)
     }
 
     /// Registers a handler inside the specified type erased array.

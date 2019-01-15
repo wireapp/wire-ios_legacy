@@ -18,20 +18,28 @@
 
 import Foundation
 
-final class LogInWithPhoneNumberStepDescription: TeamCreationStepDescription {
+/**
+ * Handles button taps in the authentication flow.
+ */
 
-    let backButton: BackButtonDescription?
-    let mainView: ViewDescriptor & ValueSubmission
-    let headline: String
-    let subtext: String?
-    let secondaryView: TeamCreationSecondaryViewDescription?
+class AuthenticationButtonTapInputHandler: AuthenticationEventHandler {
 
-    init() {
-        backButton = BackButtonDescription()
-        mainView = EmptyViewDescription()
-        headline = "registration.signin.title".localized
-        subtext = "signin.phone.subheadline".localized
-        secondaryView = LogInSecondaryView(credentialsType: .phone, alternativeCredentialsType: .email)
+    weak var statusProvider: AuthenticationStatusProvider?
+
+    func handleEvent(currentStep: AuthenticationFlowStep, context: Any) -> [AuthenticationCoordinatorAction]? {
+        // Only handle button taps values
+        guard context is Void else {
+            return nil
+        }
+
+        // Only handle input during specified steps.
+        switch currentStep {
+        case .noHistory:
+            return [.completeBackupStep]
+        default:
+            return nil
+        }
     }
 
 }
+

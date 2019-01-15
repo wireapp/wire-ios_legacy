@@ -1344,6 +1344,9 @@
 "signin.confirm" = "Log In";
 "signin.company_idp.button.title" = "For Companies";
 
+"signin.email.subheadline" = "Enter your email address and password";
+"signin.phone.subheadline" = "Enter your phone number.";
+
 "registration.phone_country" = "Country";
 "registration.phone_code" = "Country Code";
 "registration.phone_country.hint" = "Double tap to select another country.";

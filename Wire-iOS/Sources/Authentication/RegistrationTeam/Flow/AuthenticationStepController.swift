@@ -49,9 +49,12 @@ class AuthenticationStepController: AuthenticationStepViewController {
     private var contentStack: CustomSpacingStackView!
 
     private var headlineLabel: UILabel!
+    private var headlineLabelContainer: LabelSpacingView!
     private var subtextLabel: UILabel!
+    private var subtextLabelContainer: LabelSpacingView!
     private var mainView: UIView!
     fileprivate var errorLabel: UILabel!
+    fileprivate var errorLabelContainer: LabelSpacingView!
 
     fileprivate var secondaryViews: [UIView] = []
     fileprivate var secondaryErrorView: UIView?
@@ -124,14 +127,20 @@ class AuthenticationStepController: AuthenticationStepViewController {
     }
 
     private func createViews() {
+        let textPadding = UIEdgeInsets(top: 0, left: 32, bottom: 0, right: 32)
+
         headlineLabel = UILabel()
+        headlineLabelContainer = LabelSpacingView(headlineLabel, padding: textPadding)
         headlineLabel.textAlignment = .center
         headlineLabel.textColor = UIColor.Team.textColor
         headlineLabel.text = stepDescription.headline
         headlineLabel.translatesAutoresizingMaskIntoConstraints = false
+        headlineLabel.numberOfLines = 0
+        headlineLabel.lineBreakMode = .byWordWrapping
         updateHeadlineLabelFont()
 
         subtextLabel = UILabel()
+        subtextLabelContainer = LabelSpacingView(subtextLabel, padding: textPadding)
         subtextLabel.textAlignment = .center
         subtextLabel.text = stepDescription.subtext
         subtextLabel.font = AuthenticationStepController.subtextFont
@@ -142,6 +151,7 @@ class AuthenticationStepController: AuthenticationStepViewController {
         mainView = createMainView()
 
         errorLabel = UILabel()
+        errorLabelContainer = LabelSpacingView(errorLabel, padding: textPadding)
         errorLabel.textAlignment = .center
         errorLabel.font = AuthenticationStepController.errorFont
         errorLabel.textColor = UIColor.Team.errorMessageColor
@@ -156,10 +166,11 @@ class AuthenticationStepController: AuthenticationStepViewController {
         secondaryViewsStackView.spacing = 24
         secondaryViewsStackView.translatesAutoresizingMaskIntoConstraints = false
 
-        let subviews = [headlineLabel, subtextLabel, mainView, errorLabel, secondaryViewsStackView].compactMap { $0 }
+        let subviews = [headlineLabelContainer, subtextLabelContainer, mainView, errorLabelContainer, secondaryViewsStackView].compactMap { $0 }
         contentStack = CustomSpacingStackView(customSpacedArrangedSubviews: subviews)
         contentStack.axis = .vertical
         contentStack.distribution = .fill
+        contentStack.alignment = .fill
 
         view.addSubview(contentStack)
     }
@@ -194,20 +205,23 @@ class AuthenticationStepController: AuthenticationStepViewController {
         mainView.setContentHuggingPriority(.defaultLow, for: .horizontal)
 
         // Spacing
-        contentStack.wr_addCustomSpacing(16, after: headlineLabel)
-        contentStack.wr_addCustomSpacing(44, after: subtextLabel)
+        contentStack.wr_addCustomSpacing(16, after: headlineLabelContainer)
+        contentStack.wr_addCustomSpacing(44, after: subtextLabelContainer)
         contentStack.wr_addCustomSpacing(8, after: mainView)
-        contentStack.wr_addCustomSpacing(16, after: errorLabel)
+        contentStack.wr_addCustomSpacing(16, after: errorLabelContainer)
 
         // Fixed Constraints
         contentCenter = contentStack.centerYAnchor.constraint(equalTo: view.centerYAnchor)
 
         NSLayoutConstraint.activate([
             // contentStack
-            contentStack.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            contentStack.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            contentStack.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             contentStack.topAnchor.constraint(greaterThanOrEqualTo: safeTopAnchor),
             contentCenter,
+
+            // labels
+            headlineLabel.widthAnchor.constraint(equalTo: contentStack.widthAnchor, constant: -64),
+            subtextLabel.widthAnchor.constraint(equalTo: contentStack.widthAnchor, constant: -64),
 
             // height
             mainView.heightAnchor.constraint(greaterThanOrEqualToConstant: AuthenticationStepController.mainViewHeight),

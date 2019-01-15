@@ -16,22 +16,26 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
+import UIKit
 
-final class LogInWithPhoneNumberStepDescription: TeamCreationStepDescription {
+extension UIEdgeInsets {
 
-    let backButton: BackButtonDescription?
-    let mainView: ViewDescriptor & ValueSubmission
-    let headline: String
-    let subtext: String?
-    let secondaryView: TeamCreationSecondaryViewDescription?
+    /// The leading insets, that respect the layout direction.
+    var leading: CGFloat {
+        if UIApplication.isLeftToRightLayout {
+            return left
+        } else {
+            return right
+        }
+    }
 
-    init() {
-        backButton = BackButtonDescription()
-        mainView = EmptyViewDescription()
-        headline = "registration.signin.title".localized
-        subtext = "signin.phone.subheadline".localized
-        secondaryView = LogInSecondaryView(credentialsType: .phone, alternativeCredentialsType: .email)
+    /// The trailing insets, that respect the layout direction.
+    var trailing: CGFloat {
+        if UIApplication.isLeftToRightLayout {
+            return right
+        } else {
+            return left
+        }
     }
 
 }

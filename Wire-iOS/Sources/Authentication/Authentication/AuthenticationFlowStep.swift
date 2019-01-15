@@ -32,6 +32,18 @@ enum AuthenticationCredentialsType {
 }
 
 /**
+ * The context that caused the user to not have a complete history.
+ */
+
+enum NoHistoryContext {
+    /// The user signed into this device for the first time.
+    case newDevice
+
+    /// The user logged out.
+    case loggedOut
+}
+
+/**
  * Steps of the authentication flow.
  */
 
@@ -51,7 +63,7 @@ indirect enum AuthenticationFlowStep: Equatable {
     case companyLogin
 
     // Post Sign-In
-    case noHistory(credentials: ZMCredentials?, type: Wire.ContextType)
+    case noHistory(credentials: ZMCredentials?, context: NoHistoryContext)
     case clientManagement(clients: [UserClient], credentials: ZMCredentials?)
     case removeClient
     case addEmailAndPassword(user: ZMUser, profile: UserProfileUpdateStatus, canSkip: Bool)

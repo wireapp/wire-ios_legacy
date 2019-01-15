@@ -51,8 +51,8 @@ class AuthenticationBackupReadyEventHandler: AuthenticationEventHandler {
         }
 
         // Prepare the backup step
-        let type = existingAccount ? ContextType.loggedOut : .newDevice
-        let nextStep = AuthenticationFlowStep.noHistory(credentials: authenticationCredentials, type: type)
+        let context: NoHistoryContext = existingAccount ? .loggedOut : .newDevice
+        let nextStep = AuthenticationFlowStep.noHistory(credentials: authenticationCredentials, context: context)
 
         return [.hideLoadingView, .transition(nextStep, resetStack: true)]
     }

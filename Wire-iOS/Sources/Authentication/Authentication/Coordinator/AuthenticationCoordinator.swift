@@ -47,7 +47,7 @@ class AuthenticationCoordinator: NSObject, AuthenticationEventResponderChainDele
      * responsible for executing the actions provided by the selected event handler.
      */
 
-    let eventResponderChain = AuthenticationEventResponderChain()
+    let eventResponderChain: AuthenticationEventResponderChain
 
     /// Shortcut for accessing the authentication status provider (returns the delegate).
     var statusProvider: AuthenticationStatusProvider? {
@@ -83,6 +83,7 @@ class AuthenticationCoordinator: NSObject, AuthenticationEventResponderChainDele
         self.stateController = AuthenticationStateController()
         self.featureProvider = featureProvider
         self.interfaceBuilder = AuthenticationInterfaceBuilder(featureProvider: featureProvider)
+        self.eventResponderChain = AuthenticationEventResponderChain(featureProvider: featureProvider)
         super.init()
 
         registrationStatus.delegate = self

@@ -130,3 +130,37 @@ fileprivate class SpacingView : UIView {
     
 }
 
+/**
+ * A view that can contain a label with additional content insets.
+ */
+
+class LabelSpacingView: UIView {
+    let label: UILabel
+
+    init(_ label: UILabel, padding: UIEdgeInsets) {
+        self.label = label
+        super.init(frame: .zero)
+
+        setContentCompressionResistancePriority(UILayoutPriority(rawValue: 999), for: .vertical)
+        setContentCompressionResistancePriority(UILayoutPriority(rawValue: 999), for: .horizontal)
+
+        addSubview(label)
+        label.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            label.topAnchor.constraint(equalTo: topAnchor, constant: padding.top),
+            label.bottomAnchor.constraint(equalTo: bottomAnchor, constant: padding.bottom),
+            label.leadingAnchor.constraint(equalTo: leadingAnchor, constant: padding.leading),
+            label.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -padding.trailing)
+        ])
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    override var intrinsicContentSize: CGSize {
+        return label.intrinsicContentSize
+    }
+
+}

@@ -34,7 +34,7 @@ final class ReauthenticateStepDescription: TeamCreationStepDescription {
 
         backButton = BackButtonDescription()
         mainView = EmailPasswordFieldDescription()
-        headline = "Log In".localized
+        headline = "registration.signin.title".localized
         subtext = "Enter your email address and password.".localized
         secondaryView = LogInSecondaryView(credentialsType: .email, alternativeCredentialsType: nil)
     }

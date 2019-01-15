@@ -24,7 +24,6 @@
 #import "RegistrationFormController.h"
 #import "PopTransition.h"
 #import "PushTransition.h"
-#import "NavigationController.h"
 #import "WireSyncEngine+iOS.h"
 #import "UIViewController+Errors.h"
 #import "UIImage+ZetaIconsNeue.h"

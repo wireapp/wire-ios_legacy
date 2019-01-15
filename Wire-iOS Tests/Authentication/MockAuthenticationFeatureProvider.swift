@@ -19,6 +19,5 @@
 @testable import Wire
 
 class MockAuthenticationFeatureProvider: AuthenticationFeatureProvider {
-    var registrationSupported: Bool = true
-    var phoneNumberSupported: Bool = true
+    var allowOnlyEmailLogin: Bool = false
 }

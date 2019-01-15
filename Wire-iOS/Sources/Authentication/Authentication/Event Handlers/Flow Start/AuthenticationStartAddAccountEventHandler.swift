@@ -24,16 +24,20 @@ import Foundation
 
 class AuthenticationStartAddAccountEventHandler: AuthenticationEventHandler {
 
+    let featureProvider: AuthenticationFeatureProvider
     weak var statusProvider: AuthenticationStatusProvider?
 
-    func handleEvent(currentStep: AuthenticationFlowStep, context: (NSError?, Int)) -> [AuthenticationCoordinatorAction]? {
+    init(featureProvider: AuthenticationFeatureProvider) {
+        self.featureProvider = featureProvider
+    }
 
-        #if ACCOUNT_CREATION_DISABLED
-        // Hide the landing screen if account creation is disabled.
-        return [.hideLoadingView, .transition(.provideCredentials(.email), resetStack: true)]
-        #else
-        return [.hideLoadingView, .transition(.landingScreen, resetStack: true)]
-        #endif
+    func handleEvent(currentStep: AuthenticationFlowStep, context: (NSError?, Int)) -> [AuthenticationCoordinatorAction]? {
+        if featureProvider.allowOnlyEmailLogin {
+            // Hide the landing screen if account creation is disabled.
+            return [.hideLoadingView, .transition(.provideCredentials(.email), resetStack: true)]
+        } else {
+            return [.hideLoadingView, .transition(.landingScreen, resetStack: true)]
+        }
     }
 
 }

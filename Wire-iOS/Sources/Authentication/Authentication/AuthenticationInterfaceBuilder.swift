@@ -69,7 +69,7 @@ class AuthenticationInterfaceBuilder {
         case .provideCredentials(let credentialsFlowType):
             switch credentialsFlowType {
             case .email:
-                let emailLoginStep = LogInWithEmailStepDescription(enablePhoneLogin: featureProvider.phoneNumberSupported)
+                let emailLoginStep = LogInWithEmailStepDescription(enablePhoneLogin: !featureProvider.allowOnlyEmailLogin)
                 return createViewController(for: emailLoginStep)
             case .phone:
                 let phoneLoginStep = LogInWithPhoneNumberStepDescription()
@@ -91,9 +91,9 @@ class AuthenticationInterfaceBuilder {
             let flow = ClientUnregisterFlowViewController(clientsList: clients, credentials: emailCredentials)
             return AdaptiveFormViewController(childViewController: flow)
 
-        case .noHistory(_, let type):
-            let noHistory = NoHistoryViewController(contextType: type)
-            return AdaptiveFormViewController(childViewController: noHistory)
+        case .noHistory(_, let context):
+            let backupStep = BackupRestoreStepDescription(context: context)
+            return createViewController(for: backupStep)
 
         case .enterLoginCode(let phoneNumber):
             let verifyPhoneStep = VerifyPhoneStepDescription(phoneNumber: phoneNumber, allowChange: false)

@@ -316,6 +316,10 @@
 		5E8FFC0321ECC5CF0052DF03 /* AuthenticationFeatureProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8FFC0221ECC5CF0052DF03 /* AuthenticationFeatureProvider.swift */; };
 		5E8FFC0621ECCC7C0052DF03 /* AuthenticationInterfaceBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8FFC0521ECCC7C0052DF03 /* AuthenticationInterfaceBuilderTests.swift */; };
 		5E8FFC0821ECCC9B0052DF03 /* MockAuthenticationFeatureProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8FFC0721ECCC9B0052DF03 /* MockAuthenticationFeatureProvider.swift */; };
+		5E8FFC0A21ECE3920052DF03 /* BackupRestoreStepDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8FFC0921ECE3920052DF03 /* BackupRestoreStepDescription.swift */; };
+		5E8FFC0C21EDDB970052DF03 /* SolidButtonDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8FFC0B21EDDB970052DF03 /* SolidButtonDescription.swift */; };
+		5E8FFC0E21EE0B180052DF03 /* UIEdgeInsets+Direction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8FFC0D21EE0B180052DF03 /* UIEdgeInsets+Direction.swift */; };
+		5E8FFC1021EE0CA60052DF03 /* AuthenticationButtonTapInputHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8FFC0F21EE0CA60052DF03 /* AuthenticationButtonTapInputHandler.swift */; };
 		5E936E8F20B590530060E6AA /* UIDevice+Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E936E8E20B590530060E6AA /* UIDevice+Platform.swift */; };
 		5E97C30420F4CFFF00C806B4 /* MockZiphyClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E97C30220F4CFDA00C806B4 /* MockZiphyClient.swift */; };
 		5E97C33120F5F17800C806B4 /* ExtensionSettingsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E97C32F20F5F17200C806B4 /* ExtensionSettingsTests.swift */; };
@@ -1820,6 +1824,10 @@
 		5E8FFC0221ECC5CF0052DF03 /* AuthenticationFeatureProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationFeatureProvider.swift; sourceTree = "<group>"; };
 		5E8FFC0521ECCC7C0052DF03 /* AuthenticationInterfaceBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationInterfaceBuilderTests.swift; sourceTree = "<group>"; };
 		5E8FFC0721ECCC9B0052DF03 /* MockAuthenticationFeatureProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAuthenticationFeatureProvider.swift; sourceTree = "<group>"; };
+		5E8FFC0921ECE3920052DF03 /* BackupRestoreStepDescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupRestoreStepDescription.swift; sourceTree = "<group>"; };
+		5E8FFC0B21EDDB970052DF03 /* SolidButtonDescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolidButtonDescription.swift; sourceTree = "<group>"; };
+		5E8FFC0D21EE0B180052DF03 /* UIEdgeInsets+Direction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIEdgeInsets+Direction.swift"; sourceTree = "<group>"; };
+		5E8FFC0F21EE0CA60052DF03 /* AuthenticationButtonTapInputHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationButtonTapInputHandler.swift; sourceTree = "<group>"; };
 		5E936E8E20B590530060E6AA /* UIDevice+Platform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+Platform.swift"; sourceTree = "<group>"; };
 		5E97C30220F4CFDA00C806B4 /* MockZiphyClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockZiphyClient.swift; sourceTree = "<group>"; };
 		5E97C32F20F5F17200C806B4 /* ExtensionSettingsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionSettingsTests.swift; sourceTree = "<group>"; };
@@ -3767,6 +3775,7 @@
 				5E21344821E34F5B00273D0D /* LogInWithEmailStepDescription.swift */,
 				5E8FFC0021ECC5270052DF03 /* ReauthenticateStepDescription.swift */,
 				5E21344A21E351D400273D0D /* LogInWithPhoneNumberStepDescription.swift */,
+				5E8FFC0921ECE3920052DF03 /* BackupRestoreStepDescription.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -4270,6 +4279,7 @@
 				5EFD914D21C9325B00080599 /* AuthenticationCredentialsCreationInputHandler.swift */,
 				5E21344E21E3628F00273D0D /* AuthenticationLoginCredentialsInputHandler.swift */,
 				5EFD914F21CA688700080599 /* AuthenticationIncrementalUserCreationInputHandler.swift */,
+				5E8FFC0F21EE0CA60052DF03 /* AuthenticationButtonTapInputHandler.swift */,
 			);
 			path = Input;
 			sourceTree = "<group>";
@@ -5425,6 +5435,7 @@
 				5EFCB3BE21AAD46C00E892D9 /* Message+Pasteboard.swift */,
 				5E769C5321AD89A900785EB7 /* UIViewController+Dismiss.swift */,
 				5EFD915821CBCB5300080599 /* UIResponder+VoiceOver.swift */,
+				5E8FFC0D21EE0B180052DF03 /* UIEdgeInsets+Direction.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -6598,6 +6609,7 @@
 				F1A989CF1FD1630300B8A82E /* SecondaryViewDescription.swift */,
 				F1199D3B1FC849440070FAC3 /* BackButtonDescription.swift */,
 				F1199D3C1FC849440070FAC3 /* ButtonDescription.swift */,
+				5E8FFC0B21EDDB970052DF03 /* SolidButtonDescription.swift */,
 				F1199D3D1FC849440070FAC3 /* TextFieldDescription.swift */,
 				5EFD914921C931B600080599 /* PhoneNumberFieldDescription.swift */,
 				F1199D3E1FC849440070FAC3 /* VerificationCodeFieldDescription.swift */,
@@ -7315,6 +7327,7 @@
 				876B94821D7D8C870063AE89 /* UIView+SlideInState.swift in Sources */,
 				5E35F736217F417200D3F4FE /* BurstTimestampTableViewCell.swift in Sources */,
 				BFAF4CAD1CEB670F00780537 /* AudioRecordViewController.swift in Sources */,
+				5E8FFC0E21EE0B180052DF03 /* UIEdgeInsets+Direction.swift in Sources */,
 				1682AEC3204840E7003A052A /* SectionCollectionViewController.swift in Sources */,
 				BF86E11B1C245BF9001D9430 /* UserClient+Fingerprint.swift in Sources */,
 				871067411C0DC5570035603B /* SettingsPropertyToggleCellDescriptor.swift in Sources */,
@@ -7771,6 +7784,7 @@
 				872CB8B819E58816006752B4 /* ProfileSendConnectionRequestFooterView.m in Sources */,
 				877B07821E3B4C4A0070A6F2 /* ZMConversationMessage+Properties.swift in Sources */,
 				EF2127231FB9DFE300625A9B /* RegistrationFormController.m in Sources */,
+				5E8FFC0A21ECE3920052DF03 /* BackupRestoreStepDescription.swift in Sources */,
 				87DCF49C1D34E9E600BB420F /* LocationSendViewController.swift in Sources */,
 				F1199D421FC849450070FAC3 /* VerificationCodeFieldDescription.swift in Sources */,
 				BF808B4D1DE5AD1600718076 /* SettingsCellDescriptorFactory+Account.swift in Sources */,
@@ -7903,6 +7917,7 @@
 				EF21271E1FB9DFE300625A9B /* AddEmailStepViewController.m in Sources */,
 				87BEB03E1D3E44DE00DE9575 /* CameraCell.swift in Sources */,
 				5EC16B9020EB8C6F00955156 /* YouTubeService+DataTypes.swift in Sources */,
+				5E8FFC1021EE0CA60052DF03 /* AuthenticationButtonTapInputHandler.swift in Sources */,
 				5E8DA74F211AEE3D00360979 /* AuthenticationCoordinatorAction.swift in Sources */,
 				BAD4D0661B613D4E008585A5 /* ColorKnobView.m in Sources */,
 				871BC2521D34F8F800DF0793 /* MediaPreviewView.m in Sources */,
@@ -7991,6 +8006,7 @@
 				EF18D7C82102345B005B51A1 /* UpsideDownTableView.swift in Sources */,
 				8FC85454199245770008B66B /* ConversationViewController+ParticipantsPopover.m in Sources */,
 				5E33F0CC20AC39C800414EA6 /* CallVideoPlaceholderState.swift in Sources */,
+				5E8FFC0C21EDDB970052DF03 /* SolidButtonDescription.swift in Sources */,
 				5EA73D8A20D901000001D106 /* CheckmarkCell.swift in Sources */,
 				EFDE37FD213994750095DCA4 /* ContactsSectionHeaderView.swift in Sources */,
 				EE2538852166151C00932606 /* ConversationActionController+Notifications.swift in Sources */,

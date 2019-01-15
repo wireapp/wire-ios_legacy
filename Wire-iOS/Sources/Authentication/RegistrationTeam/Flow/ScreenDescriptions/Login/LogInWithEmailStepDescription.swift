@@ -29,8 +29,8 @@ final class LogInWithEmailStepDescription: TeamCreationStepDescription {
     init(enablePhoneLogin: Bool) {
         backButton = BackButtonDescription()
         mainView = EmailPasswordFieldDescription()
-        headline = "Log In".localized
-        subtext = "Enter your email address and password.".localized
+        headline = "registration.signin.title".localized
+        subtext = "signin.email.subheadline".localized
         secondaryView = LogInSecondaryView(credentialsType: .email, alternativeCredentialsType: enablePhoneLogin ? .phone : nil)
     }
 

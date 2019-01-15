@@ -52,8 +52,21 @@ class AuthenticationInterfaceBuilderTests: ZMSnapshotTestCase {
     }
 
     func testLoginScreen_Email_PhoneDisabled() {
-        featureProvider.phoneNumberSupported = false
+        featureProvider.allowOnlyEmailLogin = true
         runSnapshotTest(for: .provideCredentials(.email))
+    }
+
+    func testLoginScreen_PhoneNumberVerification() {
+        let phoneNumber = UnverifiedCredentials.phone("+0123456789")
+        runSnapshotTest(for: .enterActivationCode(phoneNumber, user: UnregisteredUser()))
+    }
+
+    func testBackupScreen_NewDevice() {
+        runSnapshotTest(for: .noHistory(credentials: nil, context: .newDevice))
+    }
+
+    func testBackupScreen_LoggedOut() {
+        runSnapshotTest(for: .noHistory(credentials: nil, context: .loggedOut))
     }
 
     // MARK: - Helpers

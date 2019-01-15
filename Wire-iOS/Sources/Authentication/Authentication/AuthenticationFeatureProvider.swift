@@ -23,11 +23,10 @@ import Foundation
  */
 
 protocol AuthenticationFeatureProvider {
-    /// Whether the user can log in or sign up with phone number.
-    var phoneNumberSupported: Bool { get }
 
-    /// Whether new accounts can be created.
-    var registrationSupported: Bool { get }
+    /// Whether to allow only email login.
+    var allowOnlyEmailLogin: Bool { get }
+
 }
 
 /**
@@ -36,16 +35,8 @@ protocol AuthenticationFeatureProvider {
 
 class BuildSettingAuthenticationFeatureProvider: AuthenticationFeatureProvider {
 
-    var phoneNumberSupported: Bool {
-        #if !PHONE_AUTHENTICATION_DISABLED
-        return true
-        #else
-        return false
-        #endif
-    }
-
-    var registrationSupported: Bool {
-        #if !ACCOUNT_CREATION_DISABLED
+    var allowOnlyEmailLogin: Bool {
+        #if ALLOW_ONLY_EMAIL_LOGIN
         return true
         #else
         return false
@@ -53,4 +44,3 @@ class BuildSettingAuthenticationFeatureProvider: AuthenticationFeatureProvider {
     }
 
 }
-
