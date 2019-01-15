@@ -43,6 +43,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, nullable) UIView *dimView;
 @property (nonatomic) CGPoint initialPinchLocation;
 
+@property (nonatomic, nullable) UIView<SelectableView> *_cellTappedForMenu;
+
 - (void)removeHighlightsAndMenu;
 
 - (void)wantsToPerformAction:(MessageAction)actionId forMessage:(id<ZMConversationMessage>)message cell:(UIView<SelectableView> *)cell;
@@ -60,9 +62,5 @@ NS_ASSUME_NONNULL_BEGIN
 @interface ConversationContentViewController (MessageActionResponder) <MessageActionResponder>
 
 @end
-
-//@interface ConversationContentViewController (ConversationMessageCellDelegate) <ConversationMessageCellDelegate>
-//
-//@end
 
 NS_ASSUME_NONNULL_END

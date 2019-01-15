@@ -19,13 +19,19 @@
 import UIKit
 
 extension ConversationContentViewController {
-    var headerHeight: CGFloat {
+    
+    fileprivate var headerHeight: CGFloat {
         var height: CGFloat = 20
-        if messageWindow.messages.count == 1,
-            let message = messageWindow.messages.firstObject as? ZMConversationMessage,
-            let cell = self.cell(for:message) {
 
-            height += cell.bounds.height
+        ///TODO: get section's height
+
+        if messageWindow.messages.count == 1 //,
+//            let message = messageWindow.messages.firstObject as? ZMConversationMessage
+//            let cell = self.cell(for:message)
+            {
+//
+//            height += cell.bounds.height
+                height += 0
         }
 
         if tableView.bounds.size.height <= 0 {

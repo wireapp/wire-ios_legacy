@@ -21,7 +21,8 @@ import WireUtilities
 
 
 @objc protocol ConversationMessageCellDelegate: MessageActionResponder {
-    
+    var cellTappedForMenu: (UIView & SelectableView)? { get set }
+
     func conversationMessageShouldBecomeFirstResponderWhenShowingMenuForCell(_ cell: UIView) -> Bool
     func conversationMessageWantsToOpenUserDetails(_ cell: UIView, user: UserType, sourceView: UIView, frame: CGRect)
     func conversationMessageWantsToOpenMessageDetails(_ cell: UIView, messageDetailsViewController: MessageDetailsViewController)

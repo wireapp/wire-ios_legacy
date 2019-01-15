@@ -183,6 +183,8 @@ class ConversationMessageCellTableViewAdapter<C: ConversationMessageCellDescript
         let needsFirstResponder = cellDescription?.delegate?.conversationMessageShouldBecomeFirstResponderWhenShowingMenuForCell(self)
         registerMenuObservers()
 
+        cellDescription?.delegate?.cellTappedForMenu = self
+
         let menu = UIMenuController.shared
         menu.menuItems = ConversationMessageActionController.allMessageActions
 

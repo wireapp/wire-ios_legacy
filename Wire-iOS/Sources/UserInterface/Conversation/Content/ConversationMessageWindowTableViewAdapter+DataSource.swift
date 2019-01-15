@@ -163,6 +163,7 @@ extension ConversationMessageWindowTableViewAdapter: UITableViewDataSource {
         let cellDescription = sectionController.tableViewCellDescriptions[indexPath.row]
         return cellDescription.supportsActions ? message : nil
     }
+
     
     @objc(indexPathForMessage:)
     public func indexPath(for message: ZMConversationMessage) -> IndexPath? {

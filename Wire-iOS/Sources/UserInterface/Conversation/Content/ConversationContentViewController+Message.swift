@@ -39,19 +39,25 @@ extension ConversationContentViewController {
 }
 
 extension ConversationContentViewController: ConversationMessageCellDelegate {
-    func wants(toPerform action: MessageAction, for message: ZMConversationMessage) {
-        ///TODO: get cell from a local var
-        guard let cell = self.cell(for: message) as? UIView & SelectableView else { return }
+    var cellTappedForMenu: (UIView & SelectableView)? {
+        get {
+            return _cellTappedForMenu
+        }
+        set {
+            _cellTappedForMenu = newValue
+        }
+    }
+
+//    @objc(wantsToPerformAction:forMessage:)
+    public func wants(toPerform action: MessageAction, for message: ZMConversationMessage!) {
+//    func wants(toPerform action: MessageAction, for message: ZMConversationMessage) {
+        guard let cell = cellTappedForMenu else { return }
 
         wants(toPerform: action, for: message, cell: cell)
     }
 
     func conversationMessageShouldBecomeFirstResponderWhenShowingMenuForCell(_ cell: UIView) -> Bool {
-        var shouldBecomeFirstResponder = true
-
-        shouldBecomeFirstResponder = delegate.conversationContentViewController(self, shouldBecomeFirstResponderWhenShowMenuFromCell: cell)
-
-        return shouldBecomeFirstResponder
+        return delegate.conversationContentViewController(self, shouldBecomeFirstResponderWhenShowMenuFromCell: cell)
     }
 
     func conversationMessageWantsToOpenUserDetails(_ cell: UIView, user: UserType, sourceView: UIView, frame: CGRect) {
