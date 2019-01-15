@@ -26,6 +26,7 @@
 @interface SignInViewController : UIViewController <AuthenticationCoordinatedViewController>
 
 @property (nonatomic, nullable) LoginCredentials *loginCredentials;
+@property (nonatomic, readonly) BOOL supportsMultipleFlowTypes;
 
 - (void)presentSignInViewControllerWithCredentials:(LoginCredentials * _Nonnull)credentials;
 
