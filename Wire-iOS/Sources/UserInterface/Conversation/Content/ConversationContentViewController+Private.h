@@ -45,6 +45,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)removeHighlightsAndMenu;
 
+- (void)wantsToPerformAction:(MessageAction)actionId forMessage:(id<ZMConversationMessage>)message cell:(UIView<SelectableView> *)cell;
 @end
 
 
@@ -59,5 +60,9 @@ NS_ASSUME_NONNULL_BEGIN
 @interface ConversationContentViewController (MessageActionResponder) <MessageActionResponder>
 
 @end
+
+//@interface ConversationContentViewController (ConversationMessageCellDelegate) <ConversationMessageCellDelegate>
+//
+//@end
 
 NS_ASSUME_NONNULL_END

@@ -18,6 +18,7 @@
 
 import Foundation
 
+
 extension ConversationContentViewController {
     @objc(cellForMessage:)
     func cell(for message: ZMConversationMessage) -> UITableViewCell? {
@@ -34,5 +35,38 @@ extension ConversationContentViewController {
         }
 
         return cell
+    }
+}
+
+extension ConversationContentViewController: ConversationMessageCellDelegate {
+    func wants(toPerform action: MessageAction, for message: ZMConversationMessage) {
+        ///TODO: get cell from a local var
+        guard let cell = self.cell(for: message) as? UIView & SelectableView else { return }
+
+        wants(toPerform: action, for: message, cell: cell)
+    }
+
+    func conversationMessageShouldBecomeFirstResponderWhenShowingMenuForCell(_ cell: UIView) -> Bool {
+        var shouldBecomeFirstResponder = true
+
+        shouldBecomeFirstResponder = delegate.conversationContentViewController(self, shouldBecomeFirstResponderWhenShowMenuFromCell: cell)
+
+        return shouldBecomeFirstResponder
+    }
+
+    func conversationMessageWantsToOpenUserDetails(_ cell: UIView, user: UserType, sourceView: UIView, frame: CGRect) {
+        delegate.didTap?(onUserAvatar: user, view: sourceView, frame: frame)
+    }
+
+    func conversationMessageWantsToOpenMessageDetails(_ cell: UIView, messageDetailsViewController: MessageDetailsViewController) {
+        parent?.present(messageDetailsViewController, animated: true)
+    }
+
+    func conversationMessageWantsToOpenGuestOptionsFromView(_ cell: UIView, sourceView: UIView) {
+        delegate.conversationContentViewController(self, presentGuestOptionsFrom: sourceView)
+    }
+
+    func conversationMessageWantsToOpenParticipantsDetails(_ cell: UIView, selectedUsers: [ZMUser], sourceView: UIView) {
+        delegate.conversationContentViewController(self, presentParticipantsDetailsWithSelectedUsers: selectedUsers, from: sourceView)
     }
 }

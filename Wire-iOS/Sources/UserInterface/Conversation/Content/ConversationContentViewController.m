@@ -63,12 +63,6 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 
 
 
-@interface ConversationContentViewController (ConversationMessageCellDelegate) <ConversationMessageCellDelegate>
-
-@end
-
-
-
 @interface ConversationContentViewController (ZMTypingChangeObserver) <ZMTypingChangeObserver>
 
 @end
@@ -740,15 +734,17 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 
 @implementation ConversationContentViewController (ConversationMessageCellDelegate)
 
-- (void)wantsToPerformAction:(MessageAction)action forMessage:(id<ZMConversationMessage>)message
-{
-    UITableViewCell *cell = [self cellForMessage:message];
-    
-    if ([cell conformsToProtocol:@protocol(SelectableView)]) {
-        [self wantsToPerformAction:action forMessage:message cell:(UITableViewCell<SelectableView> *)cell];
-    }
-}
+//- (void)wantsToPerformAction:(MessageAction)action forMessage:(id<ZMConversationMessage>)message
+//{
+//    ///TODO: get cell from a local var
+//    UITableViewCell *cell = [self cellForMessage:message];
+//    
+//    if ([cell conformsToProtocol:@protocol(SelectableView)]) {
+//        [self wantsToPerformAction:action forMessage:message cell:(UITableViewCell<SelectableView> *)cell];
+//    }
+//}
 
+/*
 - (void)conversationMessageWantsToOpenUserDetails:(UIView *)cell user:(id<UserType>)user sourceView:(UIView *)sourceView frame:(CGRect)frame
 {
     if ([self.delegate respondsToSelector:@selector(didTapOnUserAvatar:view:frame:)]) {
@@ -779,7 +775,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 {
     [self.delegate conversationContentViewController:self presentParticipantsDetailsWithSelectedUsers:selectedUsers fromView:sourceView];
 }
-
+*/
 @end
 
 
