@@ -39,7 +39,12 @@ class ImageResourceView: FLAnimatedImageView {
         }
     }
     
-    public func setImageResource(_ imageResource: ImageResource?, completion: (() -> Void)? = nil) {
+    public func setImageResource(_ imageResource: ImageResource?, completion: (() -> Void)? = nil) {        
+        guard imageResource?.cacheIdentifier != imageResourceInternal?.cacheIdentifier, imageResource?.cacheIdentifier != nil else {
+            // Return early if replacing with same image resource
+            return
+        }
+        
         let token = UUID()
         setMediaAsset(nil)
 
