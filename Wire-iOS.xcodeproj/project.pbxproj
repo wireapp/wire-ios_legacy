@@ -1047,6 +1047,7 @@
 		EF1A461A21AD60510009B6B9 /* ReceiptOptionsSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1A461921AD60510009B6B9 /* ReceiptOptionsSectionController.swift */; };
 		EF1A461C21AD955A0009B6B9 /* GroupDetailsDisclosureOptionsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1A461B21AD955A0009B6B9 /* GroupDetailsDisclosureOptionsCell.swift */; };
 		EF1A461E21ADACF50009B6B9 /* RightIconDetailsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1A461D21ADACF50009B6B9 /* RightIconDetailsCell.swift */; };
+		EF1D8BA821EE49550001A4CC /* TeamMemberInviteViewControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1D8BA721EE49550001A4CC /* TeamMemberInviteViewControllerSnapshotTests.swift */; };
 		EF1EA4631FB0937000B53063 /* MockUser+filename.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1EA4611FB0934D00B53063 /* MockUser+filename.swift */; };
 		EF1EF1C320627075004DB245 /* SignInViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1EF1C220627075004DB245 /* SignInViewControllerTests.swift */; };
 		EF1F9A021FBB1FD800969DD1 /* LandingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1F9A011FBB1FD800969DD1 /* LandingButton.swift */; };
@@ -2859,6 +2860,7 @@
 		EF1A461921AD60510009B6B9 /* ReceiptOptionsSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReceiptOptionsSectionController.swift; sourceTree = "<group>"; };
 		EF1A461B21AD955A0009B6B9 /* GroupDetailsDisclosureOptionsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDetailsDisclosureOptionsCell.swift; sourceTree = "<group>"; };
 		EF1A461D21ADACF50009B6B9 /* RightIconDetailsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RightIconDetailsCell.swift; sourceTree = "<group>"; };
+		EF1D8BA721EE49550001A4CC /* TeamMemberInviteViewControllerSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamMemberInviteViewControllerSnapshotTests.swift; sourceTree = "<group>"; };
 		EF1EA4611FB0934D00B53063 /* MockUser+filename.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MockUser+filename.swift"; sourceTree = "<group>"; };
 		EF1EF1C220627075004DB245 /* SignInViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewControllerTests.swift; sourceTree = "<group>"; };
 		EF1EF1C420627305004DB245 /* SignInViewController+internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SignInViewController+internal.h"; sourceTree = "<group>"; };
@@ -5886,6 +5888,7 @@
 				5E53533F21B05BF60060DB38 /* MessageDetails */,
 				EF2172E821DF97CC00DA1671 /* URL+EncodeTests.swift */,
 				EF36168921E753300041F0CC /* SettingsTableViewControllerSnapshotTests.swift */,
+				EF1D8BA721EE49550001A4CC /* TeamMemberInviteViewControllerSnapshotTests.swift */,
 			);
 			path = "Wire-iOS Tests";
 			sourceTree = "<group>";
@@ -8254,6 +8257,7 @@
 				5E35F78B2187069400D3F4FE /* ConversationCellSnapshotTestCase.swift in Sources */,
 				EF4018C02059761D00CFBCB0 /* MockApplication.swift in Sources */,
 				5E35F7722180B8CD00D3F4FE /* ConversationMessageSectionControllerTests.swift in Sources */,
+				EF1D8BA821EE49550001A4CC /* TeamMemberInviteViewControllerSnapshotTests.swift in Sources */,
 				8740205C1BF4CF7E001F2D4C /* AVSStub.m in Sources */,
 				1658C19C20A1F07800148F6D /* MockCallInfoViewControllerInput.swift in Sources */,
 				EF21A07121305FD700B9120C /* DeleteMessageTests.swift in Sources */,
