@@ -49,12 +49,12 @@ class AuthenticationStepController: AuthenticationStepViewController {
     private var contentStack: CustomSpacingStackView!
 
     private var headlineLabel: UILabel!
-    private var headlineLabelContainer: LabelSpacingView!
+    private var headlineLabelContainer: ContentInsetView!
     private var subtextLabel: UILabel!
-    private var subtextLabelContainer: LabelSpacingView!
+    private var subtextLabelContainer: ContentInsetView!
     private var mainView: UIView!
     fileprivate var errorLabel: UILabel!
-    fileprivate var errorLabelContainer: LabelSpacingView!
+    fileprivate var errorLabelContainer: ContentInsetView!
 
     fileprivate var secondaryViews: [UIView] = []
     fileprivate var secondaryErrorView: UIView?
@@ -63,6 +63,8 @@ class AuthenticationStepController: AuthenticationStepViewController {
     private var mainViewWidthRegular: NSLayoutConstraint!
     private var mainViewWidthCompact: NSLayoutConstraint!
     private var contentCenter: NSLayoutConstraint!
+
+    private var rightItemAction: AuthenticationCoordinatorAction?
 
     // MARK: - Initialization
 
@@ -94,6 +96,7 @@ class AuthenticationStepController: AuthenticationStepViewController {
         
         createViews()
         createConstraints()
+        updateBackButton()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -130,7 +133,7 @@ class AuthenticationStepController: AuthenticationStepViewController {
         let textPadding = UIEdgeInsets(top: 0, left: 32, bottom: 0, right: 32)
 
         headlineLabel = UILabel()
-        headlineLabelContainer = LabelSpacingView(headlineLabel, padding: textPadding)
+        headlineLabelContainer = ContentInsetView(headlineLabel, inset: textPadding)
         headlineLabel.textAlignment = .center
         headlineLabel.textColor = UIColor.Team.textColor
         headlineLabel.text = stepDescription.headline
@@ -140,7 +143,7 @@ class AuthenticationStepController: AuthenticationStepViewController {
         updateHeadlineLabelFont()
 
         subtextLabel = UILabel()
-        subtextLabelContainer = LabelSpacingView(subtextLabel, padding: textPadding)
+        subtextLabelContainer = ContentInsetView(subtextLabel, inset: textPadding)
         subtextLabel.textAlignment = .center
         subtextLabel.text = stepDescription.subtext
         subtextLabel.font = AuthenticationStepController.subtextFont
@@ -151,7 +154,7 @@ class AuthenticationStepController: AuthenticationStepViewController {
         mainView = createMainView()
 
         errorLabel = UILabel()
-        errorLabelContainer = LabelSpacingView(errorLabel, padding: textPadding)
+        errorLabelContainer = ContentInsetView(errorLabel, inset: textPadding)
         errorLabel.textAlignment = .center
         errorLabel.font = AuthenticationStepController.errorFont
         errorLabel.textColor = UIColor.Team.errorMessageColor
@@ -234,6 +237,44 @@ class AuthenticationStepController: AuthenticationStepViewController {
         mainViewWidthCompact = mainView.widthAnchor.constraint(equalTo: view.widthAnchor)
 
         updateConstraints(forRegularLayout: traitCollection.horizontalSizeClass == .regular)
+    }
+
+    // MARK: - Customization
+
+    func setRightItem(_ title: String, withAction action: AuthenticationCoordinatorAction) {
+        let button = UIBarButtonItem(title: title.localizedUppercase, style: .plain, target: self, action: #selector(rightItemTapped))
+        rightItemAction = action
+        navigationItem.rightBarButtonItem = button
+    }
+
+    @objc private func rightItemTapped() {
+        guard let rightItemAction = self.rightItemAction else {
+            return
+        }
+
+        authenticationCoordinator?.executeAction(rightItemAction)
+    }
+
+
+    // MARK: - Back Button
+
+    private func updateBackButton() {
+        guard navigationController?.viewControllers.count > 1 else {
+            return
+        }
+
+        let button = IconButton(style: .default)
+        button.setIcon(.backArrow, with: .tiny, for: .normal)
+        button.frame = CGRect(x: 0, y: 0, width: 32, height: 20)
+        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -16, bottom: 0, right: 0)
+        button.accessibilityIdentifier = "back"
+        button.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
+
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: button)
+    }
+
+    @objc private func backButtonTapped() {
+        navigationController?.popViewController(animated: true)
     }
 
     // MARK: - Keyboard

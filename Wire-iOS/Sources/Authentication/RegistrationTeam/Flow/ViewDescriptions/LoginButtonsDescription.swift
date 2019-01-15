@@ -31,10 +31,6 @@ class LogInSecondaryView: TeamCreationSecondaryViewDescription {
             self?.actioner?.executeAction(.switchCredentialsType(credentialsType == .phone ? .email : .phone))
         }
 
-        loginButtons.didTapCompanyLoginButton = { [weak self] in
-            self?.actioner?.executeAction(.startCompanyLogin)
-        }
-
         loginButtons.didTapResetPasswordButton = { [weak self] in
             self?.actioner?.executeAction(.openURL(.wr_passwordReset))
         }
@@ -43,19 +39,16 @@ class LogInSecondaryView: TeamCreationSecondaryViewDescription {
 
 
 final class LoginButtonsDescription {
-    let companyLoginButton: ButtonDescription
     let forgotPasswordButton: ButtonDescription
     let changeFlowTypeButton: ButtonDescription?
 
     var didTapResetPasswordButton: (() -> ())? = nil
-    var didTapCompanyLoginButton: (() -> ())? = nil
     var didTapCredentialsTypeChangeButton: (() -> ())? = nil
 
     let credentialsType: AuthenticationCredentialsType
 
     init(credentialsType: AuthenticationCredentialsType, alternativeCredentialsType: AuthenticationCredentialsType?) {
         self.credentialsType = credentialsType
-        companyLoginButton = ButtonDescription(title: "signin.company_idp.button.title".localized, accessibilityIdentifier: "companyLoginButton")
         forgotPasswordButton = ButtonDescription(title: "signin.forgot_password".localized, accessibilityIdentifier: "forgotPasswordButton")
 
         switch alternativeCredentialsType {
@@ -74,7 +67,6 @@ final class LoginButtonsDescription {
 
 extension LoginButtonsDescription: ViewDescriptor {
     func create() -> UIView {
-        companyLoginButton.buttonTapped = didTapCompanyLoginButton
         forgotPasswordButton.buttonTapped = didTapResetPasswordButton
         changeFlowTypeButton?.buttonTapped = didTapCredentialsTypeChangeButton
 
@@ -89,15 +81,12 @@ extension LoginButtonsDescription: ViewDescriptor {
         switch credentialsType {
         case .email:
             firstLineStack.addArrangedSubview(forgotPasswordButton.create())
-            firstLineStack.addArrangedSubview(companyLoginButton.create())
 
             if let changeFlowTypeButton = changeFlowTypeButton {
                 verticalStack.addArrangedSubview(changeFlowTypeButton.create())
             }
 
         case .phone:
-            firstLineStack.addArrangedSubview(companyLoginButton.create())
-
             if let changeFlowTypeButton = changeFlowTypeButton {
                 firstLineStack.addArrangedSubview(changeFlowTypeButton.create())
             }

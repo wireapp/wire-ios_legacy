@@ -53,13 +53,11 @@
     self.searchController.delegate = self;
     self.searchController.dimsBackgroundDuringPresentation = NO;
     self.searchController.searchBar.delegate = self;
-    
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
-                                                                                           target:self
-                                                                                           action:@selector(dismiss:)];
+
+    self.navigationItem.rightBarButtonItem = [self.navigationController closeItem];
     
     self.definesPresentationContext = YES;
-    self.title = NSLocalizedString(@"registration.country_select.title", @"");
+    self.title = NSLocalizedString(@"registration.country_select.title", @"").localizedUppercaseString;
 }
 
 -(void)viewWillAppear:(BOOL)animated

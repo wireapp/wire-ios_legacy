@@ -28,7 +28,7 @@ class EmailPasswordTextField: UIView {
     let emailField = AccessoryTextField(kind: .email)
     let passwordField = AccessoryTextField(kind: .password(isNew: false))
     let contentStack = UIStackView()
-    let separator = UIView()
+    let separatorContainer: ContentInsetView
 
     weak var delegate: EmailPasswordTextFieldDelegate?
 
@@ -38,13 +38,19 @@ class EmailPasswordTextField: UIView {
     // MARK: - Initialization
 
     override init(frame: CGRect) {
+        let separatorInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+        separatorContainer = ContentInsetView(UIView(), inset: separatorInset)
         super.init(frame: frame)
+
         configureSubviews()
         configureConstraints()
     }
 
     required init?(coder aDecoder: NSCoder) {
+        let separatorInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+        separatorContainer = ContentInsetView(UIView(), inset: separatorInset)
         super.init(coder: aDecoder)
+
         configureSubviews()
         configureConstraints()
     }
@@ -64,8 +70,9 @@ class EmailPasswordTextField: UIView {
 
         contentStack.addArrangedSubview(emailField)
 
-        separator.backgroundColor = UIColor.from(scheme: .separator)
-        contentStack.addArrangedSubview(separator)
+        separatorContainer.view.backgroundColor = .white
+        separatorContainer.view.backgroundColor = UIColor.from(scheme: .separator)
+        contentStack.addArrangedSubview(separatorContainer)
 
         passwordField.delegate = self
         passwordField.textFieldValidationDelegate = self
@@ -80,7 +87,7 @@ class EmailPasswordTextField: UIView {
     private func configureConstraints() {
         contentStack.translatesAutoresizingMaskIntoConstraints = false
         contentStack.fitInSuperview()
-        separator.heightAnchor.constraint(equalToConstant: CGFloat.hairline).isActive = true
+        separatorContainer.heightAnchor.constraint(equalToConstant: CGFloat.hairline).isActive = true
     }
 
     // MARK: - Responder

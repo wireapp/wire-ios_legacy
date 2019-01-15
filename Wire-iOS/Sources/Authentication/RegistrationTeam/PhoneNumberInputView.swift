@@ -43,8 +43,8 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
     // MARK: - Views
 
     private let countryPickerStack = UIStackView()
-    private let countryPickerButton = UIButton()
-    private let countryPickerIndicator = UIImageView()
+    private let countryPickerButton = IconButton()
+    private let countryPickerIndicator = IconButton()
 
     private let inputStack = UIStackView()
     private let countryCodeInputView = IconButton()
@@ -85,8 +85,10 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
         // countryPickerIndicator
         countryPickerIndicator.contentMode = .scaleAspectFit
         countryPickerIndicator.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        countryPickerIndicator.setIcon(.downArrow, with: .tiny, for: .normal)
+        countryPickerIndicator.showsTouchWhenHighlighted = true
+        countryPickerIndicator.addTarget(self, action: #selector(handleCountryButtonTap), for: .touchUpInside)
         countryPickerStack.addArrangedSubview(countryPickerIndicator)
-        reloadIcon()
 
         // inputStack
         inputStack.axis = .horizontal
@@ -116,20 +118,15 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
         selectCountry(.default)
     }
 
-    private func reloadIcon() {
-        let iconType: ZetaIconType = UIApplication.isLeftToRightLayout ? .chevronRight : .chevronLeft
-        countryPickerIndicator.image = UIImage(for: iconType, iconSize: .small, color: tintColor)
-    }
-
     private func configureConstraints() {
         countryPickerStack.translatesAutoresizingMaskIntoConstraints = false
         inputStack.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
             // countryPickerStack
-            countryPickerStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 28),
+            countryPickerStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             countryPickerStack.topAnchor.constraint(equalTo: topAnchor),
-            countryPickerStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -28),
+            countryPickerStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             countryPickerStack.heightAnchor.constraint(equalToConstant: 28),
 
             // inputStack
@@ -169,7 +166,7 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
     override var tintColor: UIColor! {
         didSet {
             countryPickerButton.setTitleColor(tintColor, for: .normal)
-            reloadIcon()
+            countryPickerButton.setTitleColor(tintColor, for: .normal)
         }
     }
 

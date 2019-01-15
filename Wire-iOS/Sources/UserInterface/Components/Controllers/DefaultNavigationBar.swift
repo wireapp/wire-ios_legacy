@@ -35,14 +35,18 @@ import UIKit
     func configure() {
         isTranslucent = false
         tintColor = UIColor.from(scheme: .textForeground)
-        barTintColor = UIColor.from(scheme: .barBackground)
-        setBackgroundImage(UIImage.singlePixelImage(with: UIColor.from(scheme: .barBackground)), for: .default)
-        shadowImage = UIImage.singlePixelImage(with: UIColor.clear)
         titleTextAttributes = DefaultNavigationBar.titleTextAttributes(for: ColorScheme.default.variant)
-        
+        configureBackground()
+
         let backIndicatorInsets = UIEdgeInsets(top: 0, left: 4, bottom: 2.5, right: 0)
         backIndicatorImage = UIImage(for: .backArrow, iconSize: .tiny, color: UIColor.from(scheme: .textForeground)).withInsets(backIndicatorInsets, backgroundColor: .clear)
         backIndicatorTransitionMaskImage = UIImage(for: .backArrow, iconSize: .tiny, color: .black).withInsets(backIndicatorInsets, backgroundColor: .clear)
+    }
+
+    func configureBackground() {
+        barTintColor = UIColor.from(scheme: .barBackground)
+        setBackgroundImage(UIImage.singlePixelImage(with: UIColor.from(scheme: .barBackground)), for: .default)
+        shadowImage = UIImage.singlePixelImage(with: UIColor.clear)
     }
     
     static func titleTextAttributes(for variant: ColorSchemeVariant) -> [NSAttributedString.Key : Any] {

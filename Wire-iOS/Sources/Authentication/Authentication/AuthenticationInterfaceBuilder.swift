@@ -67,14 +67,23 @@ class AuthenticationInterfaceBuilder {
             return createViewController(for: emailLoginStep)
 
         case .provideCredentials(let credentialsFlowType):
+            let viewController: AuthenticationStepController!
+
             switch credentialsFlowType {
             case .email:
                 let emailLoginStep = LogInWithEmailStepDescription(enablePhoneLogin: !featureProvider.allowOnlyEmailLogin)
-                return createViewController(for: emailLoginStep)
+                viewController = createViewController(for: emailLoginStep)
             case .phone:
                 let phoneLoginStep = LogInWithPhoneNumberStepDescription()
-                return createViewController(for: phoneLoginStep, viewControllerType: PhoneNumberAuthenticationStepController.self)
+                viewController = createViewController(for: phoneLoginStep, viewControllerType: PhoneNumberAuthenticationStepController.self)
             }
+
+            // Add the item to start company login.
+            if featureProvider.allowCompanyLogin {
+                viewController.setRightItem("signin.company_idp.button.title".localized, withAction: .startCompanyLogin)
+            }
+
+            return viewController
 
         case .createCredentials(_, let credentialsFlowType):
             switch credentialsFlowType {

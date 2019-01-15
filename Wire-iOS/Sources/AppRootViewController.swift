@@ -210,18 +210,19 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
             launchImageViewController.showLoadingScreen()
             viewController = launchImageViewController
         case .unauthenticated(error: let error):
-            UIColor.setAccentOverride(ZMUser.pickRandomAcceptableAccentColor())
-            mainWindow.tintColor = UIColor.accent()
+            mainWindow.tintColor = .black
+            AccessoryTextField.appearance(whenContainedInInstancesOf: [AuthenticationStepController.self]).tintColor = UIColor.Team.activeButton
 
             // Only execute handle events if there is no current flow
             guard authenticationCoordinator == nil else {
                 break
             }
 
-            let navigationController = UINavigationController()
+            let navigationController = UINavigationController(navigationBarClass: DefaultNavigationBar.self, toolbarClass: nil)
             navigationController.navigationBar.setBackgroundImage(UIImage(), for: .default)
             navigationController.navigationBar.shadowImage = UIImage()
             navigationController.navigationBar.tintColor = .black
+            navigationController.navigationBar.isTranslucent = true
 
             authenticationCoordinator = AuthenticationCoordinator(presenter: navigationController,
                                                                   unauthenticatedSession: UnauthenticatedSession.sharedSession!,

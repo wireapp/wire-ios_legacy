@@ -1317,7 +1317,7 @@
 "registration.push_access_denied.settings_button.title" = "Go to Settings";
 "registration.push_access_denied.maybe_later_button.title" = "Maybe later";
 
-"registration.signin.title" = "Log In";
+"registration.signin.title" = "Log in";
 "registration.signin.too_many_devices.title" = "";
 "registration.signin.too_many_devices.subtitle" = "Remove one of your other devices to start using Wire on this one.";
 "registration.signin.too_many_devices.manage_button.title" = "Manage devices";

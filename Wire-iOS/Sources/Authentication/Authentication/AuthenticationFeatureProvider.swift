@@ -27,6 +27,9 @@ protocol AuthenticationFeatureProvider {
     /// Whether to allow only email login.
     var allowOnlyEmailLogin: Bool { get }
 
+    /// Whether we allow company login.
+    var allowCompanyLogin: Bool { get }
+
 }
 
 /**
@@ -41,6 +44,10 @@ class BuildSettingAuthenticationFeatureProvider: AuthenticationFeatureProvider {
         #else
         return false
         #endif
+    }
+
+    var allowCompanyLogin: Bool {
+        return CompanyLoginController.isCompanyLoginEnabled
     }
 
 }

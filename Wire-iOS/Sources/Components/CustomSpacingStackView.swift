@@ -134,24 +134,24 @@ fileprivate class SpacingView : UIView {
  * A view that can contain a label with additional content insets.
  */
 
-class LabelSpacingView: UIView {
-    let label: UILabel
+class ContentInsetView: UIView {
+    let view: UIView
 
-    init(_ label: UILabel, padding: UIEdgeInsets) {
-        self.label = label
+    init(_ view: UIView, inset: UIEdgeInsets) {
+        self.view = view
         super.init(frame: .zero)
 
         setContentCompressionResistancePriority(UILayoutPriority(rawValue: 999), for: .vertical)
         setContentCompressionResistancePriority(UILayoutPriority(rawValue: 999), for: .horizontal)
 
-        addSubview(label)
-        label.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(view)
+        view.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            label.topAnchor.constraint(equalTo: topAnchor, constant: padding.top),
-            label.bottomAnchor.constraint(equalTo: bottomAnchor, constant: padding.bottom),
-            label.leadingAnchor.constraint(equalTo: leadingAnchor, constant: padding.leading),
-            label.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -padding.trailing)
+            view.topAnchor.constraint(equalTo: topAnchor, constant: inset.top),
+            view.bottomAnchor.constraint(equalTo: bottomAnchor, constant: inset.bottom),
+            view.leadingAnchor.constraint(equalTo: leadingAnchor, constant: inset.leading),
+            view.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -inset.trailing)
         ])
     }
 
@@ -160,7 +160,7 @@ class LabelSpacingView: UIView {
     }
 
     override var intrinsicContentSize: CGSize {
-        return label.intrinsicContentSize
+        return view.intrinsicContentSize
     }
 
 }
