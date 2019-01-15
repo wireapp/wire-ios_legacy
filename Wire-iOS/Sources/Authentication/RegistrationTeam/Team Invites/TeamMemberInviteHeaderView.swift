@@ -17,7 +17,6 @@
 //
 
 import UIKit
-import Cartography
 
 final class TeamMemberInviteHeaderView: UIView {
     
@@ -62,9 +61,13 @@ final class TeamMemberInviteHeaderView: UIView {
     }
     
     private func createConstraints() {
-        constrain(self, stackView, bottomSpacerView) { view, stackView, bottomSpacerView in
-            stackView.edges == view.edges
-            bottomSpacerViewHeightConstraint = bottomSpacerView.height == 0
+        [stackView, bottomSpacerView].forEach(){ $0.translatesAutoresizingMaskIntoConstraints = false }
+        stackView.fitInSuperview()
+
+        bottomSpacerViewHeightConstraint = bottomSpacerView.heightAnchor.constraint(equalToConstant: 0)
+
+        if let bottomSpacerViewHeightConstraint = bottomSpacerViewHeightConstraint {
+            NSLayoutConstraint.activate([bottomSpacerViewHeightConstraint])
         }
     }
 }
