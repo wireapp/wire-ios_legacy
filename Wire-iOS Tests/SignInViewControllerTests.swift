@@ -33,7 +33,6 @@ final class SignInViewControllerTests: ZMSnapshotTestCase {
     
     override func setUp() {
         super.setUp()
-        recordMode = true
         sut = SignInViewController()
     }
     
