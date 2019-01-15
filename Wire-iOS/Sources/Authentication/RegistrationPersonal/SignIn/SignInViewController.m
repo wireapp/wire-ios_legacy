@@ -99,7 +99,7 @@
 
 - (BOOL)supportsMultipleFlowTypes
 {
-#if PHONE_AUTHENTICATION_DISABLED
+#if ALLOW_ONLY_EMAIL_LOGIN
     return NO;
 #else
     return YES;

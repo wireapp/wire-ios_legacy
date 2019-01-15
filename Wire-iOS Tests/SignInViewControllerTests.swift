@@ -33,6 +33,7 @@ final class SignInViewControllerTests: ZMSnapshotTestCase {
     
     override func setUp() {
         super.setUp()
+        recordMode = true
         sut = SignInViewController()
     }
     
@@ -40,6 +41,8 @@ final class SignInViewControllerTests: ZMSnapshotTestCase {
         sut = nil
         super.tearDown()
     }
+
+    // MARK: - Logic
 
     func testThatSignInViewControllerCanHandleTheCaseWithLoginCredentialsHasNilEmailButPhoneNumber(){
         // GIVEN
@@ -54,19 +57,29 @@ final class SignInViewControllerTests: ZMSnapshotTestCase {
         XCTAssertEqual(sut.presentedSignInViewController, sut.phoneSignInViewControllerContainer)
     }
 
-    func testThatItHidesPhoneNumberButtonIfNeeded() {
+    func testThatItDoesNotSwitchToPhoneScreenIfPhoneDisabled() {
         // GIVEN
         let sut = EmailOnlySignInViewController()
+        sut.loginCredentials = LoginCredentials(emailAddress: nil, phoneNumber: "+0123456789", hasPassword: false, usesCompanyLogin: false)
+
+        // THEN
+        XCTAssertEqual(sut.presentedSignInViewController, sut.emailSignInViewControllerContainer)
+    }
+
+    // MARK: - Snapshot
+
+    func testThatItShowsPhoneNumberButtonIfNeeded() {
+        // GIVEN
+        let sut = SignInViewController()
 
         // THEN
         let form = wrap(sut)
         verify(view: form.view)
     }
 
-    func testThatItDoesNotSwitchToPhoneScreenIfPhoneDisabled() {
+    func testThatItHidesPhoneNumberButtonIfNeeded() {
         // GIVEN
         let sut = EmailOnlySignInViewController()
-        sut.loginCredentials = LoginCredentials(emailAddress: nil, phoneNumber: "+0123456789", hasPassword: false, usesCompanyLogin: false)
 
         // THEN
         let form = wrap(sut)
