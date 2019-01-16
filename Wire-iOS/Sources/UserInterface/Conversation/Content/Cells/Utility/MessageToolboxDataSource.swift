@@ -178,7 +178,8 @@ class MessageToolboxDataSource {
                 return "\(text)\n\(current)"
             }
 
-            return (finalText && attributes, deliveryStateString, countdownStatus)
+            
+            return (finalText && attributes, nil, countdownStatus)
         } else if let timestampString = self.timestampString(message), message.isSent {
             if let deliveryStateString = deliveryStateString, Message.shouldShowDeliveryState(message) {
                 return (timestampString && attributes, deliveryStateString, countdownStatus)

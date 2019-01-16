@@ -193,7 +193,6 @@ import WireSyncEngine
             // statusTextView align vertically center
             contentStack.leadingAnchor.constraint(equalTo: likeButtonContainer.trailingAnchor),
             contentStack.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant: -UIView.conversationLayoutMargins.right),
-            //contentStack.centerYAnchor.constraint(equalTo: centerYAnchor)
             contentStack.topAnchor.constraint(equalTo: topAnchor),
             contentStack.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
