@@ -29,27 +29,56 @@ extension ZMUser {
     
     /// Returns true if the self user has owner permissions.
     static func selfIsOwner() -> Bool {
-        return selfIs(role: .owner)
+        return selfUserHas(permissions: .owner)
     }
     
     /// Returns true if the self user has admin permissions.
     static func selfIsAdmin() -> Bool {
-        return selfIs(role: .admin)
+        return selfUserHas(permissions: .admin)
     }
     
     /// Returns true if the self user has member permissions.
     static func selfIsMember() -> Bool {
-        return selfIs(role: .member)
+        return selfUserHas(permissions: .member)
     }
     
-    // TODO: selfIsCollaborator()
+    // TODO: selfIsPartner()
     
-    /// Returns true if the self user's permission are encompassed by
-    /// the given role. Eg. An Owner is also a Member, but a Member is not
-    /// an owner.
-    private static func selfIs(role: Permissions) -> Bool {
-        guard let permissions = selfPermissions() else { return false }
-        return role.isSubset(of: permissions)
+    /// Returns true if the self user's permissions encompass the given
+    /// permissions.
+    static func selfUserHas(permissions: Permissions) -> Bool {
+        guard let selfPermissions = selfPermissions() else { return false }
+        return selfPermissions.isSuperset(of: permissions)
     }
 
+}
+
+/// Conform to this protocol to mark an object as being restricted. This
+/// indicates that the self user permissions need to be checked in order
+/// to use the object. By defining `requiredPermissions`, the rest of the
+/// protocol is implemented for free. For example, by marking a button as
+/// restricted to admins only, we can check hide the button if the self
+/// user is not authorized (is not an admin).
+///
+protocol Restricted {
+    
+    /// The minimum permissions required to access this object.
+    var requiredPermissions: Permissions { get }
+    
+    /// Returns true if the self user has the required permissions.
+    var selfUserIsAuthorized: Bool { get }
+    
+    /// Invokes the given callback if the self user is authorized.
+    func authorizeSelfUser(onSuccess: () -> Void)
+}
+
+extension Restricted {
+    
+    var selfUserIsAuthorized: Bool {
+        return ZMUser.selfUserHas(permissions: self.requiredPermissions)
+    }
+    
+    func authorizeSelfUser(onSuccess: () -> Void) {
+        if selfUserIsAuthorized { onSuccess() }
+    }
 }
