@@ -50,8 +50,20 @@ final class StartUIViewControllerSnapshotTests: ZMSnapshotTestCase {
         verifyInAllIPhoneSizes(view: sut.view)
     }
 
+
+    /// has create group and create guest room rows
     func testForNoContactWhenSelfIsTeamMember() {
         MockUser.mockSelf().isTeamMember = true
         verifyInAllIPhoneSizes(view: sut.view)
+    }
+
+    /// has no create group and create guest room rows
+    func testForNoContactWhenSelfIsPartner() {
+        MockUser.mockSelf().isTeamMember = true
+        let mockMembership = Member.insertNewObject(in: uiMOC)
+        mockMembership.permissions = .partner
+        MockUser.mockSelf().membership = mockMembership
+
+        verifyInIPhoneSize(view: sut.view)
     }
 }

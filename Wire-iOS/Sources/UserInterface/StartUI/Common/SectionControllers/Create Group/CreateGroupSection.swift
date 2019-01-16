@@ -34,9 +34,9 @@ class CreateGroupSection: NSObject, CollectionViewSectionController {
     private var data: [Row] {
         if ZMUser.selfUser().isTeamMember {
             if ZMUser.selfUserHas(permissions: requiredPermissions) {
-                return []
-            } else {
                 return [Row.createGroup, Row.createGuestRoom]
+            } else {
+                return []
             }
         } else {
             return [Row.createGroup]
