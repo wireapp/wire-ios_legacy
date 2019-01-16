@@ -63,7 +63,7 @@ final class ConversationTableViewDataSource: NSObject {
     }
     
     @objc public weak var conversationCellDelegate: ConversationMessageCellDelegate? = nil
-    @objc public weak var messageActionResponder: MessageActionResponder? = nil // TODO: assign it
+    @objc public weak var messageActionResponder: MessageActionResponder? = nil
     
     @objc public var searchQueries: [String] = [] {
         didSet {

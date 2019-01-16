@@ -146,6 +146,7 @@
     self.dataSource = [[ConversationTableViewDataSource alloc] initWithConversation:self.conversation
                                                                           tableView:self.tableView];
     self.dataSource.conversationCellDelegate = self;
+    self.dataSource.messageActionResponder = self;
 
     self.tableView.estimatedRowHeight = 80;
     self.tableView.translatesAutoresizingMaskIntoConstraints = NO;
