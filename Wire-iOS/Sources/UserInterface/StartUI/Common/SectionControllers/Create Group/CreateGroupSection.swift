@@ -18,6 +18,12 @@
 
 import Foundation
 
+extension CreateGroupSection: Restricted {
+    var requiredPermissions: Permissions {
+        return .member
+    }
+}
+
 class CreateGroupSection: NSObject, CollectionViewSectionController {
     
     enum Row {
@@ -26,11 +32,12 @@ class CreateGroupSection: NSObject, CollectionViewSectionController {
     }
     
     private var data: [Row] {
-        ///TODO: check for permission
-//        return ZMUser.selfUser().isTeamMember ? [Row.createGroup, Row.createGuestRoom] : [Row.createGroup]
-
         if ZMUser.selfUser().isTeamMember {
-            return [Row.createGroup, Row.createGuestRoom]
+            if ZMUser.selfUserHas(permissions: requiredPermissions) {
+                return []
+            } else {
+                return [Row.createGroup, Row.createGuestRoom]
+            }
         } else {
             return [Row.createGroup]
         }

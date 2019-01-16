@@ -27,6 +27,11 @@ extension ZMUser {
         return ZMUser.selfUser()?.permissions
     }
     
+    /// Returns true if the self user has partner permissions.
+    static func selfIsPartner() -> Bool {
+        return selfUserHas(permissions: .partner)
+    }
+
     /// Returns true if the self user has owner permissions.
     static func selfIsOwner() -> Bool {
         return selfUserHas(permissions: .owner)
@@ -41,8 +46,6 @@ extension ZMUser {
     static func selfIsMember() -> Bool {
         return selfUserHas(permissions: .member)
     }
-    
-    // TODO: selfIsPartner()
     
     /// Returns true if the self user's permissions encompass the given
     /// permissions.
