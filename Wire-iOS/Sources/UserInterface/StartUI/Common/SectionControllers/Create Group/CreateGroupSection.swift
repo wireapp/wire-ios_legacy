@@ -50,7 +50,6 @@ class CreateGroupSection: NSObject, CollectionViewSectionController {
     }
     
     func prepareForUse(in collectionView: UICollectionView?) {
-        ///TODO: check for permission
         collectionView?.register(CreateGroupCell.self, forCellWithReuseIdentifier: CreateGroupCell.zm_reuseIdentifier)
         collectionView?.register(CreateGuestRoomCell.self, forCellWithReuseIdentifier: CreateGuestRoomCell.zm_reuseIdentifier)
     }
