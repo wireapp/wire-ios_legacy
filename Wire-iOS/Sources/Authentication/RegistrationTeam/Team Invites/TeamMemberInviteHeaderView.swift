@@ -70,9 +70,6 @@ final class TeamMemberInviteHeaderView: UIView {
         stackView.fitInSuperview()
 
         bottomSpacerViewHeightConstraint = bottomSpacerView.heightAnchor.constraint(equalToConstant: 0)
-
-        if let bottomSpacerViewHeightConstraint = bottomSpacerViewHeightConstraint {
-            NSLayoutConstraint.activate([bottomSpacerViewHeightConstraint])
-        }
+        bottomSpacerViewHeightConstraint?.isActive = true
     }
 }
