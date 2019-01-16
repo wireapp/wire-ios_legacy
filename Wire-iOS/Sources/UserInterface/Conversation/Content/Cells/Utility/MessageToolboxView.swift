@@ -175,7 +175,7 @@ import WireSyncEngine
         contentStack.translatesAutoresizingMaskIntoConstraints = false
 
         heightConstraint = heightAnchor.constraint(greaterThanOrEqualToConstant: 28)
-        //heightConstraint.priority = UILayoutPriority(999)
+        heightConstraint.priority = UILayoutPriority(999)
 
         likeButtonWidth = likeButtonContainer.widthAnchor.constraint(equalToConstant: UIView.conversationLayoutMargins.left)
 
