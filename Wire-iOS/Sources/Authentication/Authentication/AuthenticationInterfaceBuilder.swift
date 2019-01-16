@@ -61,6 +61,7 @@ class AuthenticationInterfaceBuilder {
             return LandingViewController()
 
         case .reauthenticate(let credentials, let numberOfAccounts):
+            assertionFailure("UI not updated.")
             print(credentials as Any)
             print(numberOfAccounts as Any)
             let emailLoginStep = ReauthenticateStepDescription()
@@ -127,8 +128,8 @@ class AuthenticationInterfaceBuilder {
             return createViewController(for: step)
 
         case .pendingEmailLinkVerification(let emailCredentials):
-            let verification = EmailLinkVerificationViewController(credentials: emailCredentials)
-            return AdaptiveFormViewController(childViewController: verification)
+            let verifyEmailStep = EmailLinkVerificationStepDescription(emailAddress: emailCredentials.email!)
+            return createViewController(for: verifyEmailStep)
 
         case .incrementalUserCreation(let user, let registrationStep):
             return makeRegistrationStepViewController(for: registrationStep, user: user)

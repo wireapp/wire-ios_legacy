@@ -39,6 +39,8 @@ class AuthenticationButtonTapInputHandler: AuthenticationEventHandler {
         case .clientManagement(let clients, let credentials):
             let nextStep = AuthenticationFlowStep.deleteClient(clients: clients, credentials: credentials)
             return [AuthenticationCoordinatorAction.transition(nextStep, resetStack: false)]
+        case .pendingEmailLinkVerification:
+            return [.repeatAction]
         default:
             return nil
         }

@@ -267,7 +267,6 @@
 		5E65A7A721304B6B008BFCC0 /* UserEmailUpdateCodeSentEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E65A7A621304B6A008BFCC0 /* UserEmailUpdateCodeSentEventHandler.swift */; };
 		5E65A7AF213450D2008BFCC0 /* TeamEmailVerificationErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E65A7AE213450D2008BFCC0 /* TeamEmailVerificationErrorHandler.swift */; };
 		5E65A7B121345314008BFCC0 /* TeamEmailVerificationCodeAvailableEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E65A7B021345314008BFCC0 /* TeamEmailVerificationCodeAvailableEventHandler.swift */; };
-		5E67169C2176296E00522E61 /* AdaptiveFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E67169B2176296E00522E61 /* AdaptiveFormViewController.swift */; };
 		5E672C8F2178D85200522E61 /* AvatarImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E672C8E2178D85200522E61 /* AvatarImageView.swift */; };
 		5E672C922179C3E300522E61 /* BadgeUserImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E672C902179C3DB00522E61 /* BadgeUserImageView.swift */; };
 		5E672C942179D41100522E61 /* UserType+ZMUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E672C932179D41100522E61 /* UserType+ZMUser.swift */; };
@@ -288,8 +287,6 @@
 		5E8C38AE212DC44E002AE12B /* AuthenticationCoordinator+Navigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8C38AD212DC44E002AE12B /* AuthenticationCoordinator+Navigation.swift */; };
 		5E8C38B0212DC472002AE12B /* AuthenticationCoordinator+LandingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8C38AF212DC472002AE12B /* AuthenticationCoordinator+LandingScreen.swift */; };
 		5E8C38B2212E9799002AE12B /* AuthenticationStartMissingCredentialsErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8C38B1212E9799002AE12B /* AuthenticationStartMissingCredentialsErrorHandler.swift */; };
-		5E8C38B4212EE622002AE12B /* EmailLinkVerificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8C38B3212EE622002AE12B /* EmailLinkVerificationViewController.swift */; };
-		5E8C38B6212F136A002AE12B /* EmailLinkVerificationViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8C38B5212F136A002AE12B /* EmailLinkVerificationViewControllerTests.swift */; };
 		5E8C38B8212FDD68002AE12B /* ObservableSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8C38B7212FDD68002AE12B /* ObservableSessionManager.swift */; };
 		5E8C38BA212FE106002AE12B /* AuthenticationStateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8C38B9212FE106002AE12B /* AuthenticationStateController.swift */; };
 		5E8DA74D211AEB9E00360979 /* AuthenticationEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8DA74C211AEB9E00360979 /* AuthenticationEventHandler.swift */; };
@@ -327,6 +324,7 @@
 		5E8FFC1C21EF7CB50052DF03 /* AddEmailPasswordStepDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8FFC1B21EF7CB50052DF03 /* AddEmailPasswordStepDescription.swift */; };
 		5E8FFC1E21EF7D2E0052DF03 /* SignOutViewDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8FFC1D21EF7D2E0052DF03 /* SignOutViewDescription.swift */; };
 		5E8FFC2021EF83FF0052DF03 /* AuthenticationAddEmailPasswordInputHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8FFC1F21EF83FF0052DF03 /* AuthenticationAddEmailPasswordInputHandler.swift */; };
+		5E8FFC2221EF86000052DF03 /* EmailLinkVerificationStepDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8FFC2121EF86000052DF03 /* EmailLinkVerificationStepDescription.swift */; };
 		5E936E8F20B590530060E6AA /* UIDevice+Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E936E8E20B590530060E6AA /* UIDevice+Platform.swift */; };
 		5E97C30420F4CFFF00C806B4 /* MockZiphyClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E97C30220F4CFDA00C806B4 /* MockZiphyClient.swift */; };
 		5E97C33120F5F17800C806B4 /* ExtensionSettingsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E97C32F20F5F17200C806B4 /* ExtensionSettingsTests.swift */; };
@@ -396,7 +394,6 @@
 		5EE73BF1212319BB0032986D /* RegistrationIncrementalUserDataChangeHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE73BF0212319BB0032986D /* RegistrationIncrementalUserDataChangeHandler.swift */; };
 		5EE73BF3212323C70032986D /* RegistrationCredentialsVerifiedEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE73BF2212323C70032986D /* RegistrationCredentialsVerifiedEventHandler.swift */; };
 		5EE73BF5212419ED0032986D /* AuthenticationCoordinator+Registration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE73BF4212419ED0032986D /* AuthenticationCoordinator+Registration.swift */; };
-		5EE73BF821242F0D0032986D /* BlueViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EE73BF721242F0D0032986D /* BlueViewController.m */; };
 		5EEFC16820BEBE56007E8A79 /* BrowserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EEFC16720BEBE56007E8A79 /* BrowserViewController.swift */; };
 		5EEFC1A520C01C64007E8A79 /* ContinuousMaskLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EEFC1A420C01C64007E8A79 /* ContinuousMaskLayer.swift */; };
 		5EEFC1A720C01C85007E8A79 /* RoundedViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EEFC1A620C01C85007E8A79 /* RoundedViewProtocol.swift */; };
@@ -1184,8 +1181,6 @@
 		EF21270E1FB9DFE300625A9B /* CountryCodeTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126CC1FB9DFE300625A9B /* CountryCodeTableViewController.m */; };
 		EF21270F1FB9DFE300625A9B /* CountryCodeBaseTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126CF1FB9DFE300625A9B /* CountryCodeBaseTableViewController.m */; };
 		EF2127141FB9DFE300625A9B /* EmailStepViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126E01FB9DFE300625A9B /* EmailStepViewController.m */; };
-		EF21271D1FB9DFE300625A9B /* AddEmailPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126F31FB9DFE300625A9B /* AddEmailPasswordViewController.m */; };
-		EF21271E1FB9DFE300625A9B /* AddEmailStepViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126F41FB9DFE300625A9B /* AddEmailStepViewController.m */; };
 		EF2127211FB9DFE300625A9B /* GuidanceLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126F91FB9DFE300625A9B /* GuidanceLabel.m */; };
 		EF2127231FB9DFE300625A9B /* RegistrationFormController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126FE1FB9DFE300625A9B /* RegistrationFormController.m */; };
 		EF2127241FB9DFE300625A9B /* CountryCodeView.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126FF1FB9DFE300625A9B /* CountryCodeView.m */; };
@@ -1776,7 +1771,6 @@
 		5E65A7A621304B6A008BFCC0 /* UserEmailUpdateCodeSentEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserEmailUpdateCodeSentEventHandler.swift; sourceTree = "<group>"; };
 		5E65A7AE213450D2008BFCC0 /* TeamEmailVerificationErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamEmailVerificationErrorHandler.swift; sourceTree = "<group>"; };
 		5E65A7B021345314008BFCC0 /* TeamEmailVerificationCodeAvailableEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamEmailVerificationCodeAvailableEventHandler.swift; sourceTree = "<group>"; };
-		5E67169B2176296E00522E61 /* AdaptiveFormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdaptiveFormViewController.swift; sourceTree = "<group>"; };
 		5E672C8E2178D85200522E61 /* AvatarImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AvatarImageView.swift; sourceTree = "<group>"; };
 		5E672C902179C3DB00522E61 /* BadgeUserImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeUserImageView.swift; sourceTree = "<group>"; };
 		5E672C932179D41100522E61 /* UserType+ZMUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserType+ZMUser.swift"; sourceTree = "<group>"; };
@@ -1796,8 +1790,6 @@
 		5E8C38AD212DC44E002AE12B /* AuthenticationCoordinator+Navigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AuthenticationCoordinator+Navigation.swift"; sourceTree = "<group>"; };
 		5E8C38AF212DC472002AE12B /* AuthenticationCoordinator+LandingScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AuthenticationCoordinator+LandingScreen.swift"; sourceTree = "<group>"; };
 		5E8C38B1212E9799002AE12B /* AuthenticationStartMissingCredentialsErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationStartMissingCredentialsErrorHandler.swift; sourceTree = "<group>"; };
-		5E8C38B3212EE622002AE12B /* EmailLinkVerificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailLinkVerificationViewController.swift; sourceTree = "<group>"; };
-		5E8C38B5212F136A002AE12B /* EmailLinkVerificationViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailLinkVerificationViewControllerTests.swift; sourceTree = "<group>"; };
 		5E8C38B7212FDD68002AE12B /* ObservableSessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableSessionManager.swift; sourceTree = "<group>"; };
 		5E8C38B9212FE106002AE12B /* AuthenticationStateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationStateController.swift; sourceTree = "<group>"; };
 		5E8DA74C211AEB9E00360979 /* AuthenticationEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationEventHandler.swift; sourceTree = "<group>"; };
@@ -1835,6 +1827,7 @@
 		5E8FFC1B21EF7CB50052DF03 /* AddEmailPasswordStepDescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEmailPasswordStepDescription.swift; sourceTree = "<group>"; };
 		5E8FFC1D21EF7D2E0052DF03 /* SignOutViewDescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignOutViewDescription.swift; sourceTree = "<group>"; };
 		5E8FFC1F21EF83FF0052DF03 /* AuthenticationAddEmailPasswordInputHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationAddEmailPasswordInputHandler.swift; sourceTree = "<group>"; };
+		5E8FFC2121EF86000052DF03 /* EmailLinkVerificationStepDescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailLinkVerificationStepDescription.swift; sourceTree = "<group>"; };
 		5E936E8E20B590530060E6AA /* UIDevice+Platform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+Platform.swift"; sourceTree = "<group>"; };
 		5E97C30220F4CFDA00C806B4 /* MockZiphyClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockZiphyClient.swift; sourceTree = "<group>"; };
 		5E97C32F20F5F17200C806B4 /* ExtensionSettingsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionSettingsTests.swift; sourceTree = "<group>"; };
@@ -1903,8 +1896,6 @@
 		5EE73BF0212319BB0032986D /* RegistrationIncrementalUserDataChangeHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationIncrementalUserDataChangeHandler.swift; sourceTree = "<group>"; };
 		5EE73BF2212323C70032986D /* RegistrationCredentialsVerifiedEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationCredentialsVerifiedEventHandler.swift; sourceTree = "<group>"; };
 		5EE73BF4212419ED0032986D /* AuthenticationCoordinator+Registration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AuthenticationCoordinator+Registration.swift"; sourceTree = "<group>"; };
-		5EE73BF621242F0D0032986D /* BlueViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BlueViewController.h; sourceTree = "<group>"; };
-		5EE73BF721242F0D0032986D /* BlueViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BlueViewController.m; sourceTree = "<group>"; };
 		5EEFC16720BEBE56007E8A79 /* BrowserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserViewController.swift; sourceTree = "<group>"; };
 		5EEFC1A420C01C64007E8A79 /* ContinuousMaskLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContinuousMaskLayer.swift; sourceTree = "<group>"; };
 		5EEFC1A620C01C85007E8A79 /* RoundedViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedViewProtocol.swift; sourceTree = "<group>"; };
@@ -2951,10 +2942,6 @@
 		EF2126D91FB9DFE300625A9B /* PhoneSignInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhoneSignInViewController.m; sourceTree = "<group>"; };
 		EF2126E01FB9DFE300625A9B /* EmailStepViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmailStepViewController.m; sourceTree = "<group>"; };
 		EF2126E71FB9DFE300625A9B /* EmailStepViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmailStepViewController.h; sourceTree = "<group>"; };
-		EF2126F31FB9DFE300625A9B /* AddEmailPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddEmailPasswordViewController.m; sourceTree = "<group>"; };
-		EF2126F41FB9DFE300625A9B /* AddEmailStepViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddEmailStepViewController.m; sourceTree = "<group>"; };
-		EF2126F51FB9DFE300625A9B /* AddEmailPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddEmailPasswordViewController.h; sourceTree = "<group>"; };
-		EF2126F71FB9DFE300625A9B /* AddEmailStepViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddEmailStepViewController.h; sourceTree = "<group>"; };
 		EF2126F91FB9DFE300625A9B /* GuidanceLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GuidanceLabel.m; sourceTree = "<group>"; };
 		EF2126FA1FB9DFE300625A9B /* EmailFormViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmailFormViewController.h; sourceTree = "<group>"; };
 		EF2126FB1FB9DFE300625A9B /* PhoneNumberViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhoneNumberViewController.h; sourceTree = "<group>"; };
@@ -3776,6 +3763,7 @@
 				5E8FFC0921ECE3920052DF03 /* BackupRestoreStepDescription.swift */,
 				5E8FFC1721EF61A80052DF03 /* ClientUnregisterInvitationStepDescription.swift */,
 				5E8FFC1B21EF7CB50052DF03 /* AddEmailPasswordStepDescription.swift */,
+				5E8FFC2121EF86000052DF03 /* EmailLinkVerificationStepDescription.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -5982,7 +5970,6 @@
 				EF8DD90D211DE14300E970F1 /* MessagePresenterTests.swift */,
 				EF29E89B212302CD0023B80C /* AudioMessageViewTests.swift */,
 				EF29F1BA21271A9A00BE94E6 /* GroupDetailsViewControllerTests.swift */,
-				5E8C38B5212F136A002AE12B /* EmailLinkVerificationViewControllerTests.swift */,
 				EF297DD72131FABE0002983A /* LocationPreviewControllerTests.swift */,
 				EFAFCA812133FB59002B31A6 /* ArchivedNavigationBarTests.swift */,
 				EFAFCA8C213433D6002B31A6 /* ConversationListViewControllerTests.swift */,
@@ -6409,7 +6396,6 @@
 			children = (
 				EF2126C71FB9DFE300625A9B /* CountryCode */,
 				EF2126DD1FB9DFE300625A9B /* Steps */,
-				EF2126F11FB9DFE300625A9B /* NagScreen */,
 				EF2126B71FB9DFE300625A9B /* CheckmarkView.m */,
 				EF2126D21FB9DFE300625A9B /* RegistrationTextField.h */,
 				EFF92B6821A85A8B0090DA66 /* RegistrationTextFieldDelegate.swift */,
@@ -6436,10 +6422,6 @@
 				EF2126FE1FB9DFE300625A9B /* RegistrationFormController.m */,
 				EF2126FF1FB9DFE300625A9B /* CountryCodeView.m */,
 				EF2127021FB9DFE300625A9B /* CheckmarkViewController.h */,
-				5EE73BF621242F0D0032986D /* BlueViewController.h */,
-				5EE73BF721242F0D0032986D /* BlueViewController.m */,
-				5E67169B2176296E00522E61 /* AdaptiveFormViewController.swift */,
-				5E8C38B3212EE622002AE12B /* EmailLinkVerificationViewController.swift */,
 			);
 			path = RegistrationPersonal;
 			sourceTree = "<group>";
@@ -6470,17 +6452,6 @@
 				EF2126E01FB9DFE300625A9B /* EmailStepViewController.m */,
 			);
 			path = Steps;
-			sourceTree = "<group>";
-		};
-		EF2126F11FB9DFE300625A9B /* NagScreen */ = {
-			isa = PBXGroup;
-			children = (
-				EF2126F51FB9DFE300625A9B /* AddEmailPasswordViewController.h */,
-				EF2126F31FB9DFE300625A9B /* AddEmailPasswordViewController.m */,
-				EF2126F71FB9DFE300625A9B /* AddEmailStepViewController.h */,
-				EF2126F41FB9DFE300625A9B /* AddEmailStepViewController.m */,
-			);
-			path = NagScreen;
 			sourceTree = "<group>";
 		};
 		EF2128EB2056D4CB00C1673B /* NetworkStatusView */ = {
@@ -7300,6 +7271,7 @@
 				BF0BDF881DABEF3B003C61DE /* DestructionCountdownView.swift in Sources */,
 				87B8C33F1DF9788B0015EC89 /* BrowserOpening.swift in Sources */,
 				87DCF49F1D34E9E600BB420F /* NSUserDefaults+Location.swift in Sources */,
+				5E8FFC2221EF86000052DF03 /* EmailLinkVerificationStepDescription.swift in Sources */,
 				55DD5C341FA236F60082170C /* CallQualityViewController.swift in Sources */,
 				87AEF9351ECF38B0008CB9D9 /* WireStyleKit+Additions.m in Sources */,
 				BFAC71F920A1CC5C002711C4 /* CallInfoConfiguration.swift in Sources */,
@@ -7908,7 +7880,6 @@
 				5E769C5421AD89A900785EB7 /* UIViewController+Dismiss.swift in Sources */,
 				5E35F733217F147A00D3F4FE /* ConversationMessageSectionController.swift in Sources */,
 				87797C0B1FF3C849009FC9A9 /* SearchServicesSectionController.swift in Sources */,
-				EF21271E1FB9DFE300625A9B /* AddEmailStepViewController.m in Sources */,
 				87BEB03E1D3E44DE00DE9575 /* CameraCell.swift in Sources */,
 				5EC16B9020EB8C6F00955156 /* YouTubeService+DataTypes.swift in Sources */,
 				5E8FFC1021EE0CA60052DF03 /* AuthenticationButtonTapInputHandler.swift in Sources */,
@@ -7952,7 +7923,6 @@
 				BFE41871209C8AFD00503C7C /* CallInfoConfiguration+Debug.swift in Sources */,
 				871BC3631D34F94200DF0793 /* SoundcloudAudioTrack.m in Sources */,
 				5E8C38A8212D5AF7002AE12B /* RegistrationSessionAvailableEventHandler.swift in Sources */,
-				5EE73BF821242F0D0032986D /* BlueViewController.m in Sources */,
 				8797A9B42046D687009865D5 /* GuestsBarController.swift in Sources */,
 				161285DF1DD1E81E004728E9 /* NSString+URL.swift in Sources */,
 				16E2A0A21F6BEF6E005F4DB1 /* SoundEventListener.swift in Sources */,
@@ -7966,7 +7936,6 @@
 				5E8DA75C211B085A00360979 /* AnyAuthenticationEventHandler.swift in Sources */,
 				1682AEBD20483DA5003A052A /* ServicesSectionController.swift in Sources */,
 				7C6878DB201B3785003A0C7A /* StartUIViewController+SearchResults.swift in Sources */,
-				5E67169C2176296E00522E61 /* AdaptiveFormViewController.swift in Sources */,
 				D5D65A0F2074CFBB00D7F3C3 /* AuthenticationType.swift in Sources */,
 				5EFE9C19212C1D6E007932A6 /* RegistrationActivationCodeSentEventHandler.swift in Sources */,
 				BF79B0FE20A99762001BF4FE /* VideoPreviewView.swift in Sources */,
@@ -8172,7 +8141,6 @@
 				D5C34E93203D7B2E004A0986 /* CellConfiguration.swift in Sources */,
 				877A325E1E8912500017DD9A /* RoundedBadge.swift in Sources */,
 				F93D58431D7D9184003AE972 /* Analytics+ConversationEvents.swift in Sources */,
-				5E8C38B4212EE622002AE12B /* EmailLinkVerificationViewController.swift in Sources */,
 				D5168F552010F24C00F8222A /* TokenTextAttachment.m in Sources */,
 				EF4018BE205975C100CFBCB0 /* ApplicationProtocol.swift in Sources */,
 				EF21270F1FB9DFE300625A9B /* CountryCodeBaseTableViewController.m in Sources */,
@@ -8242,7 +8210,6 @@
 				163495871F010F91004E80DB /* UnauthenticatedSession+Shared.swift in Sources */,
 				F1199D401FC849450070FAC3 /* ButtonDescription.swift in Sources */,
 				87DCF48F1D34E9BA00BB420F /* ContactsEmptyResultView.m in Sources */,
-				EF21271D1FB9DFE300625A9B /* AddEmailPasswordViewController.m in Sources */,
 				871BC3591D34F94200DF0793 /* AudioTrackView.m in Sources */,
 				7C232CD91FE029BD00792E9B /* Analytics+Availability.swift in Sources */,
 				166390D41DC34CAB00D7BF1C /* ImageToolbarView.swift in Sources */,
@@ -8325,7 +8292,6 @@
 				EF68856A20F622C60074CA0F /* DraftSendInputAccessoryViewTests.swift in Sources */,
 				5E52376220E7E50F00649241 /* ColorTilesViewController.swift in Sources */,
 				EF1FCE5021B69381003E0BE2 /* ReadReceiptViewModelTests.swift in Sources */,
-				5E8C38B6212F136A002AE12B /* EmailLinkVerificationViewControllerTests.swift in Sources */,
 				EF4478522090BF8700BD9827 /* FullscreenImageViewControllerTests.swift in Sources */,
 				F127BD571E262E9F0093B2F1 /* CollectionsViewControllerTests.swift in Sources */,
 				EF4172AF210F5E9F00FF85C7 /* FullscreenImageViewControllerSnapshotTests.swift in Sources */,

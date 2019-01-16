@@ -22,13 +22,18 @@ class VerifyEmailStepSecondaryView: TeamCreationSecondaryViewDescription {
     let views: [ViewDescriptor]
     weak var actioner: AuthenticationActioner?
 
-    init(email: String) {
+    init(canResend: Bool = true) {
         let resendCode = ButtonDescription(title: "team.activation_code.button.resend".localized, accessibilityIdentifier: "resend_button")
         let changeEmail = ButtonDescription(title: "team.activation_code.button.change_email".localized, accessibilityIdentifier: "change_email_button")
-        views = [resendCode, changeEmail]
 
-        resendCode.buttonTapped = {
-            self.actioner?.repeatAction()
+        if canResend {
+            views = [resendCode, changeEmail]
+        } else {
+            views = [changeEmail]
+        }
+
+        resendCode.buttonTapped = { [weak self] in
+            self?.actioner?.repeatAction()
         }
 
         changeEmail.buttonTapped = { [weak self] in
@@ -51,7 +56,7 @@ final class VerifyEmailStepDescription: TeamCreationStepDescription {
         mainView = VerificationCodeFieldDescription()
         headline = "team.activation_code.headline".localized
         subtext = "team.activation_code.subheadline".localized(args: email)
-        secondaryView = VerifyEmailStepSecondaryView(email: email)
+        secondaryView = VerifyEmailStepSecondaryView()
     }
 
     func shouldSkipFromNavigation() -> Bool {

@@ -81,6 +81,11 @@ class AuthenticationInterfaceBuilderTests: ZMSnapshotTestCase {
         runSnapshotTest(for: .addEmailAndPassword)
     }
 
+    func testVerifyEmailLinkTests() {
+        let credentials = ZMEmailCredentials(email: "test@example.com", password: "12345678")
+        runSnapshotTest(for: .pendingEmailLinkVerification(credentials))
+    }
+
     // MARK: - Helpers
 
     private func runSnapshotTest(for step: AuthenticationFlowStep, file: StaticString = #file, line: UInt = #line) {

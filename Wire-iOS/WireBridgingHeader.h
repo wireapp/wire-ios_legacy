@@ -101,7 +101,6 @@
 #import "ConfirmAssetViewController.h"
 #import "ConfirmAssetViewController+Internal.h"
 #import "ProfileSelfPictureViewController.h"
-#import "AddEmailPasswordViewController.h"
 #import "VersionInfoViewController.h"
 #import "SketchColorPickerController.h"
 #import "ConversationListViewController.h"
@@ -123,7 +122,6 @@
 #import "StartUIViewController.h"
 #import "Button.h"
 #import "RegistrationFormController.h"
-#import "BlueViewController.h"
 #import "PermissionDeniedViewController.h"
 #import "ShareContactsViewController.h"
 
