@@ -22,6 +22,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @protocol ZMConversationMessage;
+@protocol MessageActionResponder;
+
 @class MessagePresenter;
 @class MediaPlayerController;
 

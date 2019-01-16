@@ -48,9 +48,8 @@ extension ConversationContentViewController: ConversationMessageCellDelegate {
         }
     }
 
-//    @objc(wantsToPerformAction:forMessage:)
+    @objc(wantsToPerformAction:forMessage:)
     public func wants(toPerform action: MessageAction, for message: ZMConversationMessage!) {
-//    func wants(toPerform action: MessageAction, for message: ZMConversationMessage) {
         guard let cell = cellTappedForMenu else { return }
 
         wants(toPerform: action, for: message, cell: cell)

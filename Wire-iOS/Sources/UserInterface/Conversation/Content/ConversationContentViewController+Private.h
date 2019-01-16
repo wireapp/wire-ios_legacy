@@ -59,8 +59,4 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 
-@interface ConversationContentViewController (MessageActionResponder) <MessageActionResponder>
-
-@end
-
 NS_ASSUME_NONNULL_END

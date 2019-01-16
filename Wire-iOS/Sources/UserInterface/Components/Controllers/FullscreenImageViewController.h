@@ -21,7 +21,9 @@
 #import "MessageAction.h"
 
 @class CenteredScrollView;
+
 @protocol ZMConversationMessage;
+@protocol MessageActionResponder;
 
 NS_ASSUME_NONNULL_BEGIN
 @class FullscreenImageViewController;

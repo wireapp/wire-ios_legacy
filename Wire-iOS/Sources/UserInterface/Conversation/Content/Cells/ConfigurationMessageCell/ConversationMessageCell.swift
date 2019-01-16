@@ -20,6 +20,11 @@ import UIKit
 import WireUtilities
 
 
+@objc public protocol MessageActionResponder: NSObjectProtocol {
+    @objc(wantsToPerformAction:forMessage:)
+    func wants(toPerform action: MessageAction, for message: ZMConversationMessage!)
+}
+
 @objc protocol ConversationMessageCellDelegate: MessageActionResponder {
     var cellTappedForMenu: (UIView & SelectableView)? { get set }
 
