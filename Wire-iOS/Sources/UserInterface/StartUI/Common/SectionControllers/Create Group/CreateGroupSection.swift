@@ -26,7 +26,14 @@ class CreateGroupSection: NSObject, CollectionViewSectionController {
     }
     
     private var data: [Row] {
-        return ZMUser.selfUser().isTeamMember ? [Row.createGroup, Row.createGuestRoom] : [Row.createGroup]
+        ///TODO: check for permission
+//        return ZMUser.selfUser().isTeamMember ? [Row.createGroup, Row.createGuestRoom] : [Row.createGroup]
+
+        if ZMUser.selfUser().isTeamMember {
+            return [Row.createGroup, Row.createGuestRoom]
+        } else {
+            return [Row.createGroup]
+        }
     }
     
     weak var delegate: SearchSectionControllerDelegate?
@@ -36,6 +43,7 @@ class CreateGroupSection: NSObject, CollectionViewSectionController {
     }
     
     func prepareForUse(in collectionView: UICollectionView?) {
+        ///TODO: check for permission
         collectionView?.register(CreateGroupCell.self, forCellWithReuseIdentifier: CreateGroupCell.zm_reuseIdentifier)
         collectionView?.register(CreateGuestRoomCell.self, forCellWithReuseIdentifier: CreateGuestRoomCell.zm_reuseIdentifier)
     }
