@@ -293,6 +293,9 @@ extension AuthenticationCoordinator: AuthenticationActioner, SessionManagerCreat
             case .signOut:
                 // TODO: Log the user out of the current account
                 break
+
+            case .addEmailAndPassword(let newCredentials):
+                self.setEmailCredentialsForCurrentUser(newCredentials)
             }
         }
     }
@@ -605,7 +608,12 @@ extension AuthenticationCoordinator {
      */
 
     @objc func setEmailCredentialsForCurrentUser(_ credentials: ZMEmailCredentials) {
-        guard case let .addEmailAndPassword(_, profile, _) = stateController.currentStep else {
+        guard case .addEmailAndPassword = stateController.currentStep else {
+            log.error("Cannot save e-mail and password outside of designated step.")
+            return
+        }
+
+        guard let profile = statusProvider?.selfUserProfile else {
             log.error("Cannot save e-mail and password outside of designated step.")
             return
         }

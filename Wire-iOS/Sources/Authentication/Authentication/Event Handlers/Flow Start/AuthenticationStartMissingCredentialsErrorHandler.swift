@@ -35,13 +35,12 @@ class AuthenticationStartMissingCredentialsErrorHandler: AuthenticationEventHand
             return nil
         }
 
-        guard let user = statusProvider?.selfUser, let profile = statusProvider?.selfUserProfile else {
+        guard statusProvider?.selfUser != nil && statusProvider?.selfUserProfile != nil else {
             return nil
         }
 
         // Prepare the next step
-        let nextStep = AuthenticationFlowStep.addEmailAndPassword(user: user, profile: profile, canSkip: false)
-        return [.startPostLoginFlow, .transition(nextStep, resetStack: true)]
+        return [.startPostLoginFlow, .transition(.addEmailAndPassword, resetStack: true)]
     }
 
 }

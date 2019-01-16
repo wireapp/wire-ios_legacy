@@ -18,7 +18,7 @@
 
 import Foundation
 
-final class LogInWithEmailStepDescription: TeamCreationStepDescription {
+class AddEmailPasswordStepDescription: TeamCreationStepDescription {
 
     let backButton: BackButtonDescription?
     let mainView: ViewDescriptor & ValueSubmission
@@ -26,12 +26,13 @@ final class LogInWithEmailStepDescription: TeamCreationStepDescription {
     let subtext: String?
     let secondaryView: TeamCreationSecondaryViewDescription?
 
-    init(enablePhoneLogin: Bool) {
+    init() {
         backButton = BackButtonDescription()
-        mainView = EmailPasswordFieldDescription(forRegistration: false)
-        headline = "registration.signin.title".localized
-        subtext = "signin.email.subheadline".localized
-        secondaryView = LogInSecondaryView(credentialsType: .email, alternativeCredentialsType: enablePhoneLogin ? .phone : nil)
+        mainView = EmailPasswordFieldDescription(forRegistration: true)
+        headline = "registration.add_email_password.hero.title".localized
+        subtext = "registration.add_email_password.hero.paragraph".localized
+        secondaryView = SignOutViewDescription()
     }
 
 }
+

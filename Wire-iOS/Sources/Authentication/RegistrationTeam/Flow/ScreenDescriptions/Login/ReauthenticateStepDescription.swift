@@ -33,7 +33,7 @@ final class ReauthenticateStepDescription: TeamCreationStepDescription {
 //        return registrationViewController
 
         backButton = BackButtonDescription()
-        mainView = EmailPasswordFieldDescription()
+        mainView = EmailPasswordFieldDescription(forRegistration: false)
         headline = "registration.signin.title".localized
         subtext = "Enter your email address and password.".localized
         secondaryView = LogInSecondaryView(credentialsType: .email, alternativeCredentialsType: nil)

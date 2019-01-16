@@ -110,10 +110,9 @@ class AuthenticationInterfaceBuilder {
             let verifyPhoneStep = VerifyPhoneStepDescription(phoneNumber: phoneNumber, allowChange: false)
             return createViewController(for: verifyPhoneStep)
 
-        case .addEmailAndPassword(_, _, let canSkip):
-            let addEmailPasswordViewController = AddEmailPasswordViewController()
-            addEmailPasswordViewController.canSkipStep = canSkip
-            return AdaptiveFormViewController(childViewController: addEmailPasswordViewController)
+        case .addEmailAndPassword:
+            let addCredentialsStep = AddEmailPasswordStepDescription()
+            return createViewController(for: addCredentialsStep)
 
         case .enterActivationCode(let credentials, _):
             let step: TeamCreationStepDescription

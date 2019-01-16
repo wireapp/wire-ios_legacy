@@ -19,25 +19,6 @@
 import Foundation
 
 /**
- * The view that displays the log out button when there are too many devices.
- */
-
-class ClientUnregisterInvitationSecondaryView: TeamCreationSecondaryViewDescription {
-
-    let views: [ViewDescriptor]
-    weak var actioner: AuthenticationActioner?
-
-    init() {
-        let logOutButton = ButtonDescription(title: "registration.signin.too_many_devices.sign_out_button.title".localized(uppercased: true), accessibilityIdentifier: "log_out")
-        views = [logOutButton]
-
-        logOutButton.buttonTapped = { [weak self] in
-            self?.actioner?.executeAction(.signOut)
-        }
-    }
-}
-
-/**
  * The view that displays the message to inform the user that they have too many devices.
  */
 
@@ -56,7 +37,7 @@ class ClientUnregisterInvitationStepDescription: TeamCreationStepDescription {
 
         mainView = SolidButtonDescription(title: "registration.signin.too_many_devices.manage_button.title".localized, accessibilityIdentifier: "ignore_backup")
 
-        secondaryView = ClientUnregisterInvitationSecondaryView()
+        secondaryView = SignOutViewDescription()
     }
 
 }

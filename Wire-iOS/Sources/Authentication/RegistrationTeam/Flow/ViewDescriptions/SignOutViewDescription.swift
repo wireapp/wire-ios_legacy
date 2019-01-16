@@ -18,20 +18,21 @@
 
 import Foundation
 
-final class LogInWithEmailStepDescription: TeamCreationStepDescription {
+/**
+ * The view that displays the log out button when there are too many devices.
+ */
 
-    let backButton: BackButtonDescription?
-    let mainView: ViewDescriptor & ValueSubmission
-    let headline: String
-    let subtext: String?
-    let secondaryView: TeamCreationSecondaryViewDescription?
+class SignOutViewDescription: TeamCreationSecondaryViewDescription {
 
-    init(enablePhoneLogin: Bool) {
-        backButton = BackButtonDescription()
-        mainView = EmailPasswordFieldDescription(forRegistration: false)
-        headline = "registration.signin.title".localized
-        subtext = "signin.email.subheadline".localized
-        secondaryView = LogInSecondaryView(credentialsType: .email, alternativeCredentialsType: enablePhoneLogin ? .phone : nil)
+    let views: [ViewDescriptor]
+    weak var actioner: AuthenticationActioner?
+
+    init() {
+        let logOutButton = ButtonDescription(title: "registration.signin.too_many_devices.sign_out_button.title".localized(uppercased: true), accessibilityIdentifier: "log_out")
+        views = [logOutButton]
+
+        logOutButton.buttonTapped = { [weak self] in
+            self?.actioner?.executeAction(.signOut)
+        }
     }
-
 }

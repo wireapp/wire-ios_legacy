@@ -77,6 +77,10 @@ class AuthenticationInterfaceBuilderTests: ZMSnapshotTestCase {
         runSnapshotTest(for: .deleteClient(clients: [mockUserClient()], credentials: nil))
     }
 
+    func testAddEmailPasswordScreen() {
+        runSnapshotTest(for: .addEmailAndPassword)
+    }
+
     // MARK: - Helpers
 
     private func runSnapshotTest(for step: AuthenticationFlowStep, file: StaticString = #file, line: UInt = #line) {

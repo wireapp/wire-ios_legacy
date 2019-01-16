@@ -43,17 +43,12 @@ class AuthenticationNoCredentialsErrorHandler: AuthenticationEventHandler {
             break
         }
 
-        // Get the credentials to start the deletion
-
-        guard
-            let user = statusProvider?.selfUser,
-            let profile = statusProvider?.selfUserProfile
-        else {
+        // Verify the state and ask the user to add a password
+        guard statusProvider?.selfUser != nil && statusProvider?.selfUserProfile != nil else {
             return nil
         }
 
-        let nextStep = AuthenticationFlowStep.addEmailAndPassword(user: user, profile: profile, canSkip: false)
-        return [.hideLoadingView, .startPostLoginFlow, .transition(nextStep, resetStack: true)]
+        return [.hideLoadingView, .startPostLoginFlow, .transition(.addEmailAndPassword, resetStack: true)]
     }
 
 }

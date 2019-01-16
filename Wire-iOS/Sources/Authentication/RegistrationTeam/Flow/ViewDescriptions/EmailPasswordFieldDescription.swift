@@ -32,10 +32,10 @@ final class EmailPasswordFieldDescription: ValueSubmission {
     var valueSubmitted: ValueSubmitted?
     var valueValidated: ValueValidated?
 
-    init() {
+    init(forRegistration: Bool) {
         emailField = TextFieldDescription(placeholder: "email.placeholder".localized, actionDescription: "", kind: .email)
         emailField.showConfirmButton = false
-        passwordField = TextFieldDescription(placeholder: "password.placeholder".localized, actionDescription: "", kind: .password(isNew: false))
+        passwordField = TextFieldDescription(placeholder: "password.placeholder".localized, actionDescription: "", kind: .password(isNew: forRegistration))
     }
 
 }

@@ -1360,7 +1360,7 @@
 "registration.add_phone_number.hero.paragraph" = "This helps us find people you may know. We never share it.";
 "registration.add_phone_number.skip_button.title" = "Not now";
 
-"registration.add_email_password.hero.title" = "Add your email and password.";
+"registration.add_email_password.hero.title" = "Add your email and password";
 "registration.add_email_password.hero.paragraph" = "This lets you use Wire on multiple devices.";
 
 "registration.email_invitation.title" = "Invitation";

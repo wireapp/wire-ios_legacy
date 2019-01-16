@@ -165,6 +165,7 @@ class AuthenticationEventResponderChain {
         registerHandler(AuthenticationIncrementalUserCreationInputHandler(), to: &userInputObservers)
         registerHandler(AuthenticationLoginCredentialsInputHandler(), to: &userInputObservers)
         registerHandler(AuthenticationButtonTapInputHandler(), to: &userInputObservers)
+        registerHandler(AuthenticationAddEmailPasswordInputHandler(), to: &userInputObservers)
     }
 
     /// Registers a handler inside the specified type erased array.

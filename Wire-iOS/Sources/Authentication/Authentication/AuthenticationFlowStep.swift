@@ -66,7 +66,7 @@ indirect enum AuthenticationFlowStep: Equatable {
     case noHistory(credentials: ZMCredentials?, context: NoHistoryContext)
     case clientManagement(clients: [UserClient], credentials: ZMCredentials?)
     case deleteClient(clients: [UserClient], credentials: ZMCredentials?)
-    case addEmailAndPassword(user: ZMUser, profile: UserProfileUpdateStatus, canSkip: Bool)
+    case addEmailAndPassword
     case registerEmailCredentials(ZMEmailCredentials, isResend: Bool)
     case pendingEmailLinkVerification(ZMEmailCredentials)
     case pendingInitialSync(next: AuthenticationFlowStep?)
