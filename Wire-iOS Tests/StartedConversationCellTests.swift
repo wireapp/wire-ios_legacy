@@ -131,6 +131,10 @@ class StartedConversationCellTests: ConversationCellSnapshotTestCase {
         verify(message: message)
     }
     
+    func testThatItRendersNewConversationCell_SelfIsGuest_AllowGuests() {
+        XCTFail()
+    }
+    
     // MARK: - Helper
 
     private func cell(for type: ZMSystemMessageType, text: String? = nil, fromSelf: Bool = false, fillUsers: Users = .one, allowGuests: Bool = false, allTeamUsers: Bool = false, numberOfGuests: Int16 = 0) -> ZMConversationMessage {
