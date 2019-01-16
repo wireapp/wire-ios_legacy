@@ -1318,10 +1318,12 @@
 "registration.push_access_denied.maybe_later_button.title" = "Maybe later";
 
 "registration.signin.title" = "Log in";
-"registration.signin.too_many_devices.title" = "";
+"registration.signin.too_many_devices.title" = "Too Many Devices";
 "registration.signin.too_many_devices.subtitle" = "Remove one of your other devices to start using Wire on this one.";
 "registration.signin.too_many_devices.manage_button.title" = "Manage devices";
 "registration.signin.too_many_devices.sign_out_button.title" = "Log out";
+
+"registration.signin.too_many_devices.manage_screen.title" = "Remove a Device";
 
 "registration.signin.email_button.title" = "Log In With Email";
 "registration.signin.phone_button.title" = "Log In With Phone Number";

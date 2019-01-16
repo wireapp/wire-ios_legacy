@@ -36,6 +36,9 @@ class AuthenticationButtonTapInputHandler: AuthenticationEventHandler {
         switch currentStep {
         case .noHistory:
             return [.completeBackupStep]
+        case .clientManagement(let clients, let credentials):
+            let nextStep = AuthenticationFlowStep.deleteClient(clients: clients, credentials: credentials)
+            return [AuthenticationCoordinatorAction.transition(nextStep, resetStack: false)]
         default:
             return nil
         }

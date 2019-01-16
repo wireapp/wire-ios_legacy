@@ -95,10 +95,12 @@ class AuthenticationInterfaceBuilder {
                 return createViewController(for: phoneStep, viewControllerType: PhoneNumberAuthenticationStepController.self)
             }
 
-        case .clientManagement(let clients, let credentials):
-            let emailCredentials = credentials.map { ZMEmailCredentials(email: $0.email!, password: $0.password!) }
-            let flow = ClientUnregisterFlowViewController(clientsList: clients, credentials: emailCredentials)
-            return AdaptiveFormViewController(childViewController: flow)
+        case .clientManagement:
+            let manageClientsInvitation = ClientUnregisterInvitationStepDescription()
+            return createViewController(for: manageClientsInvitation)
+
+        case .deleteClient(let clients, let credentials):
+            return RemoveClientStepViewController(clients: clients, credentials: credentials)
 
         case .noHistory(_, let context):
             let backupStep = BackupRestoreStepDescription(context: context)

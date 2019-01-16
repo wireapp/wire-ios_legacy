@@ -89,7 +89,6 @@
 #import "MediaPreviewViewController+Internal.h"
 #import "ZClientViewController.h"
 #import "ZClientViewController+Internal.h"
-#import "NavigationController.h"
 #import "ConversationInputBarViewController.h"
 #import "ConversationInputBarViewController+Files.h"
 #import "ConversationInputBarViewController+Private.h"

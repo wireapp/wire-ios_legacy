@@ -69,6 +69,14 @@ class AuthenticationInterfaceBuilderTests: ZMSnapshotTestCase {
         runSnapshotTest(for: .noHistory(credentials: nil, context: .loggedOut))
     }
 
+    func testTooManyDevicesScreen() {
+        runSnapshotTest(for: .clientManagement(clients: [], credentials: nil))
+    }
+
+    func testClientRemovalScreen() {
+        runSnapshotTest(for: .deleteClient(clients: [mockUserClient()], credentials: nil))
+    }
+
     // MARK: - Helpers
 
     private func runSnapshotTest(for step: AuthenticationFlowStep, file: StaticString = #file, line: UInt = #line) {
@@ -79,11 +87,7 @@ class AuthenticationInterfaceBuilderTests: ZMSnapshotTestCase {
 
             verify(view: viewController.view, file: file, line: line)
         } else {
-            if step.needsInterface {
-                return XCTFail("Missing interface.", file: file, line: line)
-            }
-
-            // no-op: no interface is expected
+            XCTAssertFalse(step.needsInterface, "Missing interface.", file: file, line: line)
         }
     }
 

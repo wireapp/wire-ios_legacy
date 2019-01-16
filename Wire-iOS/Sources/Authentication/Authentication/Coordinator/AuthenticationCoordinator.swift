@@ -289,6 +289,10 @@ extension AuthenticationCoordinator: AuthenticationActioner, SessionManagerCreat
 
             case .startBackupFlow:
                 backupRestoreController.startBackupFlow()
+
+            case .signOut:
+                // TODO: Log the user out of the current account
+                break
             }
         }
     }

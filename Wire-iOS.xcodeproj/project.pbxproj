@@ -322,6 +322,8 @@
 		5E8FFC1021EE0CA60052DF03 /* AuthenticationButtonTapInputHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8FFC0F21EE0CA60052DF03 /* AuthenticationButtonTapInputHandler.swift */; };
 		5E8FFC1421EF3F9B0052DF03 /* BackupRestoreController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8FFC1321EF3F9B0052DF03 /* BackupRestoreController.swift */; };
 		5E8FFC1621EF46600052DF03 /* AuthenticationCoordinator+Backup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8FFC1521EF46600052DF03 /* AuthenticationCoordinator+Backup.swift */; };
+		5E8FFC1821EF61A90052DF03 /* ClientUnregisterInvitationStepDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8FFC1721EF61A80052DF03 /* ClientUnregisterInvitationStepDescription.swift */; };
+		5E8FFC1A21EF6EB10052DF03 /* RemoveClientStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8FFC1921EF6EB10052DF03 /* RemoveClientStepViewController.swift */; };
 		5E936E8F20B590530060E6AA /* UIDevice+Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E936E8E20B590530060E6AA /* UIDevice+Platform.swift */; };
 		5E97C30420F4CFFF00C806B4 /* MockZiphyClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E97C30220F4CFDA00C806B4 /* MockZiphyClient.swift */; };
 		5E97C33120F5F17800C806B4 /* ExtensionSettingsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E97C32F20F5F17200C806B4 /* ExtensionSettingsTests.swift */; };
@@ -580,8 +582,6 @@
 		87371C1A1B7355C400807499 /* ConversationListViewController+StartUI.m in Sources */ = {isa = PBXBuildFile; fileRef = 87371C191B7355C400807499 /* ConversationListViewController+StartUI.m */; };
 		873C5FE71C10426A00D5132A /* ClientListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 873C5FE31C10426A00D5132A /* ClientListViewController.swift */; };
 		873C5FE81C10426A00D5132A /* ClientTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 873C5FE41C10426A00D5132A /* ClientTableViewCell.swift */; };
-		873C5FE91C10426A00D5132A /* ClientUnregisterFlowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 873C5FE51C10426A00D5132A /* ClientUnregisterFlowViewController.swift */; };
-		873C5FEA1C10426A00D5132A /* ClientUnregisterInvitationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 873C5FE61C10426A00D5132A /* ClientUnregisterInvitationViewController.swift */; };
 		873DC9591D4796C100C1C9B0 /* CameraKeyboardViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 873DC9581D4796C100C1C9B0 /* CameraKeyboardViewControllerTests.swift */; };
 		873DC95A1D479A0000C1C9B0 /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 874D0EB01D3E575E003DF418 /* Photos.framework */; };
 		873DC95C1D479A0500C1C9B0 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 873DC95B1D479A0500C1C9B0 /* AVFoundation.framework */; };
@@ -1183,7 +1183,6 @@
 		EF2127141FB9DFE300625A9B /* EmailStepViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126E01FB9DFE300625A9B /* EmailStepViewController.m */; };
 		EF21271D1FB9DFE300625A9B /* AddEmailPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126F31FB9DFE300625A9B /* AddEmailPasswordViewController.m */; };
 		EF21271E1FB9DFE300625A9B /* AddEmailStepViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126F41FB9DFE300625A9B /* AddEmailStepViewController.m */; };
-		EF2127201FB9DFE300625A9B /* NavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126F81FB9DFE300625A9B /* NavigationController.m */; };
 		EF2127211FB9DFE300625A9B /* GuidanceLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126F91FB9DFE300625A9B /* GuidanceLabel.m */; };
 		EF2127231FB9DFE300625A9B /* RegistrationFormController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126FE1FB9DFE300625A9B /* RegistrationFormController.m */; };
 		EF2127241FB9DFE300625A9B /* CountryCodeView.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126FF1FB9DFE300625A9B /* CountryCodeView.m */; };
@@ -1828,6 +1827,8 @@
 		5E8FFC0F21EE0CA60052DF03 /* AuthenticationButtonTapInputHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationButtonTapInputHandler.swift; sourceTree = "<group>"; };
 		5E8FFC1321EF3F9B0052DF03 /* BackupRestoreController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupRestoreController.swift; sourceTree = "<group>"; };
 		5E8FFC1521EF46600052DF03 /* AuthenticationCoordinator+Backup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AuthenticationCoordinator+Backup.swift"; sourceTree = "<group>"; };
+		5E8FFC1721EF61A80052DF03 /* ClientUnregisterInvitationStepDescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientUnregisterInvitationStepDescription.swift; sourceTree = "<group>"; };
+		5E8FFC1921EF6EB10052DF03 /* RemoveClientStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveClientStepViewController.swift; sourceTree = "<group>"; };
 		5E936E8E20B590530060E6AA /* UIDevice+Platform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+Platform.swift"; sourceTree = "<group>"; };
 		5E97C30220F4CFDA00C806B4 /* MockZiphyClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockZiphyClient.swift; sourceTree = "<group>"; };
 		5E97C32F20F5F17200C806B4 /* ExtensionSettingsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionSettingsTests.swift; sourceTree = "<group>"; };
@@ -2160,8 +2161,6 @@
 		87371C191B7355C400807499 /* ConversationListViewController+StartUI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ConversationListViewController+StartUI.m"; sourceTree = "<group>"; };
 		873C5FE31C10426A00D5132A /* ClientListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClientListViewController.swift; sourceTree = "<group>"; };
 		873C5FE41C10426A00D5132A /* ClientTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClientTableViewCell.swift; sourceTree = "<group>"; };
-		873C5FE51C10426A00D5132A /* ClientUnregisterFlowViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClientUnregisterFlowViewController.swift; sourceTree = "<group>"; };
-		873C5FE61C10426A00D5132A /* ClientUnregisterInvitationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClientUnregisterInvitationViewController.swift; sourceTree = "<group>"; };
 		873DC9581D4796C100C1C9B0 /* CameraKeyboardViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraKeyboardViewControllerTests.swift; sourceTree = "<group>"; };
 		873DC95B1D479A0500C1C9B0 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		873F91942189BB3C00E1DBB9 /* MessageReplyPreviewViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageReplyPreviewViewTests.swift; sourceTree = "<group>"; };
@@ -2928,7 +2927,6 @@
 		EF2126BD1FB9DFE300625A9B /* PhoneNumberViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhoneNumberViewController.m; sourceTree = "<group>"; };
 		EF2126BE1FB9DFE300625A9B /* EmailFormViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmailFormViewController.m; sourceTree = "<group>"; };
 		EF2126BF1FB9DFE300625A9B /* GuidanceLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GuidanceLabel.h; sourceTree = "<group>"; };
-		EF2126C01FB9DFE300625A9B /* NavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NavigationController.h; sourceTree = "<group>"; };
 		EF2126C21FB9DFE300625A9B /* CountryCodeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CountryCodeView.h; sourceTree = "<group>"; };
 		EF2126C31FB9DFE300625A9B /* RegistrationFormController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegistrationFormController.h; sourceTree = "<group>"; };
 		EF2126C41FB9DFE300625A9B /* CheckmarkViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckmarkViewController.m; sourceTree = "<group>"; };
@@ -2951,7 +2949,6 @@
 		EF2126F41FB9DFE300625A9B /* AddEmailStepViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddEmailStepViewController.m; sourceTree = "<group>"; };
 		EF2126F51FB9DFE300625A9B /* AddEmailPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddEmailPasswordViewController.h; sourceTree = "<group>"; };
 		EF2126F71FB9DFE300625A9B /* AddEmailStepViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddEmailStepViewController.h; sourceTree = "<group>"; };
-		EF2126F81FB9DFE300625A9B /* NavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NavigationController.m; sourceTree = "<group>"; };
 		EF2126F91FB9DFE300625A9B /* GuidanceLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GuidanceLabel.m; sourceTree = "<group>"; };
 		EF2126FA1FB9DFE300625A9B /* EmailFormViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmailFormViewController.h; sourceTree = "<group>"; };
 		EF2126FB1FB9DFE300625A9B /* PhoneNumberViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhoneNumberViewController.h; sourceTree = "<group>"; };
@@ -3771,6 +3768,7 @@
 				5E8FFC0021ECC5270052DF03 /* ReauthenticateStepDescription.swift */,
 				5E21344A21E351D400273D0D /* LogInWithPhoneNumberStepDescription.swift */,
 				5E8FFC0921ECE3920052DF03 /* BackupRestoreStepDescription.swift */,
+				5E8FFC1721EF61A80052DF03 /* ClientUnregisterInvitationStepDescription.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -4802,8 +4800,6 @@
 				8744D5BD1C41D6C2000F8F93 /* SettingsClientViewController.swift */,
 				87934E111C451C1100186A85 /* FingerprintTableViewCell.swift */,
 				873C5FE41C10426A00D5132A /* ClientTableViewCell.swift */,
-				873C5FE51C10426A00D5132A /* ClientUnregisterFlowViewController.swift */,
-				873C5FE61C10426A00D5132A /* ClientUnregisterInvitationViewController.swift */,
 				87F6D1BA1C1590B7000AB4D2 /* RequestPasswordViewController.swift */,
 			);
 			path = DeviceManagement;
@@ -6378,8 +6374,6 @@
 		EF2126B41FB9DFE300625A9B /* Authentication */ = {
 			isa = PBXGroup;
 			children = (
-				EF2126C01FB9DFE300625A9B /* NavigationController.h */,
-				EF2126F81FB9DFE300625A9B /* NavigationController.m */,
 				5E766D9721144DEC005242B4 /* Authentication */,
 				EF2126B51FB9DFE300625A9B /* RegistrationTeam */,
 				EF2126B61FB9DFE300625A9B /* RegistrationPersonal */,
@@ -6591,6 +6585,7 @@
 				F1199D3A1FC849440070FAC3 /* ViewDescriptions */,
 				F1199D301FC8490A0070FAC3 /* AuthenticationStepController.swift */,
 				5EFD915A21CBE36B00080599 /* PhoneNumberAuthenticationStepController.swift */,
+				5E8FFC1921EF6EB10052DF03 /* RemoveClientStepViewController.swift */,
 			);
 			path = Flow;
 			sourceTree = "<group>";
@@ -7460,6 +7455,7 @@
 				BA8DC27C1B5FF5CF00103262 /* SketchColorPickerController.m in Sources */,
 				871BC2871D34F8F800DF0793 /* UIFont+MonoSpaced.swift in Sources */,
 				EF71BFD820EBD0DC00894A7C /* UIPopoverPresentationController+config.swift in Sources */,
+				5E8FFC1A21EF6EB10052DF03 /* RemoveClientStepViewController.swift in Sources */,
 				D5490A1D20050AAA0057EAA8 /* TeamMemberInviteViewController.swift in Sources */,
 				87F280AA1D080E8400F813CA /* AVSMediaManager+CustomSounds.swift in Sources */,
 				873C5FE71C10426A00D5132A /* ClientListViewController.swift in Sources */,
@@ -7643,7 +7639,6 @@
 				8744D5BE1C41D6C2000F8F93 /* SettingsClientViewController.swift in Sources */,
 				D54224C620513BFD00526A57 /* CellConfiguration+ConversationOptions.swift in Sources */,
 				5EF5CDA520EF739200CC98B0 /* DataTaskSession.swift in Sources */,
-				873C5FEA1C10426A00D5132A /* ClientUnregisterInvitationViewController.swift in Sources */,
 				5E678061204E8BEB002F63FB /* CallQualityPresentationTransition.swift in Sources */,
 				D5168F282008ED0700F8222A /* KeyboardBlockObserver.swift in Sources */,
 				EF7E96EE214BB41800475C63 /* ContactsViewController+ContactsDataSourceDelegate.swift in Sources */,
@@ -7668,7 +7663,6 @@
 				876113E41DD1DD6B007F5969 /* SketchToolbar.swift in Sources */,
 				D5173573201764DD00B473CE /* UIAlertAction+Convenience.swift in Sources */,
 				EFC6F8A0213FCDE200B92D51 /* MenuConfigurationProperties.swift in Sources */,
-				EF2127201FB9DFE300625A9B /* NavigationController.m in Sources */,
 				EF297DE9213215210002983A /* ProfileDevicesViewController+Style.swift in Sources */,
 				EF1A461821AD5A270009B6B9 /* GroupDetailsReceiptOptionsCell.swift in Sources */,
 				871BC2971D34F8F800DF0793 /* UIViewController+WR_Additions.m in Sources */,
@@ -7923,6 +7917,7 @@
 				BFBDDBC61DB0D51C00BEED02 /* ConversationInputBarButtonState.swift in Sources */,
 				EE0DE1CD21B172BF00CF3C4E /* ConversationCreateGuestsSectionController.swift in Sources */,
 				5E7315352191EADF00255A78 /* Message+Formatters.swift in Sources */,
+				5E8FFC1821EF61A90052DF03 /* ClientUnregisterInvitationStepDescription.swift in Sources */,
 				8F8914111A9F287E0056AB0C /* ConversationListCell.m in Sources */,
 				5E21344621CCEF1700273D0D /* EmptyViewDescription.swift in Sources */,
 				EF13205521A7121F00E7EF21 /* RegistrationTextField+Paste.swift in Sources */,
@@ -8181,7 +8176,6 @@
 				5E769C5A21AE97E600785EB7 /* MessageDetailsViewController.swift in Sources */,
 				164C29AB1ED33A5F0026562A /* SearchResultsViewController.swift in Sources */,
 				D5168F522010F20700F8222A /* ShareDestinationCell.swift in Sources */,
-				873C5FE91C10426A00D5132A /* ClientUnregisterFlowViewController.swift in Sources */,
 				BFB5972320E62EB6008720ED /* CancelableItem.swift in Sources */,
 				5E35F74121804A9E00D3F4FE /* ConversationSenderMessageCell.swift in Sources */,
 				16D68E9B1CEF99C7003AB9E0 /* WaveformProgressView.swift in Sources */,
