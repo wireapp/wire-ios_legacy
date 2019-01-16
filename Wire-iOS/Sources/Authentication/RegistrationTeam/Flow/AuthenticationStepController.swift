@@ -264,9 +264,9 @@ class AuthenticationStepController: AuthenticationStepViewController {
         }
 
         let button = IconButton(style: .default)
-        button.setIcon(.backArrow, with: .tiny, for: .normal)
+        button.setIcon(UIApplication.isLeftToRightLayout ? .backArrow : .forwardArrow, with: .tiny, for: .normal)
+        button.contentHorizontalAlignment = UIApplication.isLeftToRightLayout ? .left : .right
         button.frame = CGRect(x: 0, y: 0, width: 32, height: 20)
-        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -16, bottom: 0, right: 0)
         button.accessibilityIdentifier = "back"
         button.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
 

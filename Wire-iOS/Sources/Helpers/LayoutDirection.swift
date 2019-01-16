@@ -18,6 +18,17 @@
 
 import UIKit
 
+extension UIApplication {
+
+    /// Check whether that app is in left to right layout.
+    @objc static var isLeftToRightLayout: Bool {
+        return UIApplication.shared.userInterfaceLayoutDirection == .leftToRight
+    }
+
+}
+
+// MARK: - UIEdgeInsets
+
 extension UIEdgeInsets {
 
     /// The leading insets, that respect the layout direction.
@@ -35,6 +46,28 @@ extension UIEdgeInsets {
             return right
         } else {
             return left
+        }
+    }
+
+}
+
+// MARK: - String
+
+extension String {
+
+    func addingTrailingAttachment(_ attachment: NSTextAttachment) -> NSAttributedString {
+        if UIApplication.isLeftToRightLayout {
+            return self + "  " + NSAttributedString(attachment: attachment)
+        } else {
+            return NSAttributedString(attachment: attachment) + "  " + self
+        }
+    }
+
+    func addingLeadingAttachment(_ attachment: NSTextAttachment) -> NSAttributedString {
+        if UIApplication.isLeftToRightLayout {
+            return NSAttributedString(attachment: attachment) + "  " + self
+        } else {
+            return self + "  " + NSAttributedString(attachment: attachment)
         }
     }
 

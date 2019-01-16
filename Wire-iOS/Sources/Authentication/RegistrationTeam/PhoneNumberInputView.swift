@@ -42,13 +42,12 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
 
     // MARK: - Views
 
-    private let countryPickerStack = UIStackView()
     private let countryPickerButton = IconButton()
     private let countryPickerIndicator = IconButton()
 
     private let inputStack = UIStackView()
     private let countryCodeInputView = IconButton()
-    private let textField = AccessoryTextField(kind: .phoneNumber)
+    private let textField = AccessoryTextField(kind: .phoneNumber, leftInset: 8)
 
     // MARK: - Initialization
 
@@ -67,28 +66,21 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
     }
 
     private func configureSubviews() {
-        // countryPickerStack
-        countryPickerStack.axis = .horizontal
-        countryPickerStack.spacing = 0
-        countryPickerStack.distribution = .fill
-        addSubview(countryPickerStack)
-
         // countryPickerButton
-        countryPickerButton.contentHorizontalAlignment = UIApplication.isLeftToRightLayout ? .left : .right
-        countryPickerButton.setTitleColor(UIColor.from(scheme: .buttonFaded), for: .highlighted)
-        countryPickerButton.titleLabel?.font = UIFont.normalLightFont
         countryPickerButton.accessibilityIdentifier = "CountryPickerButton"
+        countryPickerButton.titleLabel?.font = UIFont.normalLightFont
+        countryPickerButton.contentHorizontalAlignment = UIApplication.isLeftToRightLayout ? .left : .right
         countryPickerButton.addTarget(self, action: #selector(handleCountryButtonTap), for: .touchUpInside)
         countryPickerButton.setContentHuggingPriority(.defaultLow, for: .horizontal)
-        countryPickerStack.addArrangedSubview(countryPickerButton)
+        addSubview(countryPickerButton)
 
-        // countryPickerIndicator
-        countryPickerIndicator.contentMode = .scaleAspectFit
-        countryPickerIndicator.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-        countryPickerIndicator.setIcon(.downArrow, with: .tiny, for: .normal)
-        countryPickerIndicator.showsTouchWhenHighlighted = true
-        countryPickerIndicator.addTarget(self, action: #selector(handleCountryButtonTap), for: .touchUpInside)
-        countryPickerStack.addArrangedSubview(countryPickerIndicator)
+        // countryCodeButton
+        countryCodeInputView.setContentHuggingPriority(.required, for: .horizontal)
+        countryCodeInputView.setBackgroundImageColor(.white, for: .normal)
+        countryCodeInputView.setTitleColor(.black, for: .normal)
+        countryCodeInputView.titleLabel?.font = UIFont.normalLightFont
+        countryCodeInputView.isUserInteractionEnabled = false
+        inputStack.addArrangedSubview(countryCodeInputView)
 
         // inputStack
         inputStack.axis = .horizontal
@@ -97,15 +89,8 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
         inputStack.alignment = .fill
         addSubview(inputStack)
 
-        // countryCodeButton
-        countryCodeInputView.setContentHuggingPriority(.required, for: .horizontal)
-        countryCodeInputView.addTarget(self, action: #selector(handleCountryButtonTap), for: .touchUpInside)
-        countryCodeInputView.setBackgroundImageColor(UIColor.Team.activeButtonColor, for: .normal)
-        countryCodeInputView.setTitleColor(.white, for: .normal)
-        countryCodeInputView.titleLabel?.font = UIFont.normalLightFont
-        inputStack.addArrangedSubview(countryCodeInputView)
-
         // textField
+        textField.textInsets.left = 0
         textField.placeholder = "registration.enter_phone_number.placeholder".localized(uppercased: true)
         textField.accessibilityLabel = "registration.enter_phone_number.placeholder".localized
         textField.accessibilityIdentifier = "PhoneNumberField"
@@ -119,19 +104,19 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
     }
 
     private func configureConstraints() {
-        countryPickerStack.translatesAutoresizingMaskIntoConstraints = false
         inputStack.translatesAutoresizingMaskIntoConstraints = false
+        countryPickerButton.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
             // countryPickerStack
-            countryPickerStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            countryPickerStack.topAnchor.constraint(equalTo: topAnchor),
-            countryPickerStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            countryPickerStack.heightAnchor.constraint(equalToConstant: 28),
+            countryPickerButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            countryPickerButton.topAnchor.constraint(equalTo: topAnchor),
+            countryPickerButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            countryPickerButton.heightAnchor.constraint(equalToConstant: 28),
 
             // inputStack
             inputStack.leadingAnchor.constraint(equalTo: leadingAnchor),
-            inputStack.topAnchor.constraint(equalTo: countryPickerStack.bottomAnchor, constant: 16),
+            inputStack.topAnchor.constraint(equalTo: countryPickerButton.bottomAnchor, constant: 16),
             inputStack.trailingAnchor.constraint(equalTo: trailingAnchor),
             inputStack.bottomAnchor.constraint(equalTo: bottomAnchor),
 
@@ -197,7 +182,20 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
 
     func selectCountry(_ country: Country) {
         self.country = country
-        countryPickerButton.setTitle(country.displayName, for: .normal)
+
+        let title = country.displayName
+        let color = UIColor.black
+        let selectedColor = UIColor(white: 0, alpha: 0.4)
+
+        let icon = NSTextAttachment.downArrow(color: color)
+        let selectedIcon = NSTextAttachment.downArrow(color: selectedColor)
+
+        let normalLabel = title.addingTrailingAttachment(icon) && color
+        countryPickerButton.setAttributedTitle(normalLabel, for: .normal)
+
+        let selectedLabel = title.addingTrailingAttachment(selectedIcon) && selectedColor
+        countryPickerButton.setAttributedTitle(selectedLabel, for: .highlighted)
+
         countryPickerButton.accessibilityValue = country.displayName
         countryPickerButton.accessibilityLabel = "registration.phone_country".localized
         countryPickerButton.accessibilityHint = "registration.phone_country.hint".localized

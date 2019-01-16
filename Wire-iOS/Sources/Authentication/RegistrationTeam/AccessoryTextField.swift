@@ -109,15 +109,13 @@ class AccessoryTextField: UITextField, TextContainer {
         return iconButton
     }()
 
-    let textInsets: UIEdgeInsets = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 8)
+    var textInsets: UIEdgeInsets = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 8)
     let placeholderInsets: UIEdgeInsets
 
     /// Init with kind for keyboard style and validator type. Default is .unknown
     ///
     /// - Parameter kind: the type of text field
-    init(kind: Kind = .unknown) {
-        let leftInset: CGFloat = 8
-
+    init(kind: Kind = .unknown, leftInset: CGFloat = 8) {
         var topInset: CGFloat = 0
         if #available(iOS 11, *) {
             topInset = 0
