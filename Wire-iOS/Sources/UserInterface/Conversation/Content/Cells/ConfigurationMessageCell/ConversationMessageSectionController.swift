@@ -248,7 +248,7 @@ extension IndexSet {
     }
     
     func isToolboxVisible(in context: ConversationMessageContext) -> Bool {
-        guard !message.isSystem || message.isPerformedCall else {
+        guard !message.isSystem || message.isPerformedCall || message.isMissedCall else {
             return false
         }
 
