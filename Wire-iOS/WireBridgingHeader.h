@@ -124,7 +124,6 @@
 #import "StartUIViewController.h"
 #import "Button.h"
 #import "RegistrationFormController.h"
-#import "NoHistoryViewController.h"
 #import "BlueViewController.h"
 #import "PermissionDeniedViewController.h"
 #import "ShareContactsViewController.h"

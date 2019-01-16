@@ -66,6 +66,7 @@ class AuthenticationCoordinator: NSObject, AuthenticationEventResponderChainDele
     let featureProvider: AuthenticationFeatureProvider
     let interfaceBuilder: AuthenticationInterfaceBuilder
     let companyLoginController = CompanyLoginController(withDefaultEnvironment: ())
+    let backupRestoreController: BackupRestoreController
 
     private var loginObservers: [Any] = []
     private var postLoginObservers: [Any] = []
@@ -84,10 +85,12 @@ class AuthenticationCoordinator: NSObject, AuthenticationEventResponderChainDele
         self.featureProvider = featureProvider
         self.interfaceBuilder = AuthenticationInterfaceBuilder(featureProvider: featureProvider)
         self.eventResponderChain = AuthenticationEventResponderChain(featureProvider: featureProvider)
+        self.backupRestoreController = BackupRestoreController(target: presenter)
         super.init()
 
         registrationStatus.delegate = self
         companyLoginController?.delegate = self
+        backupRestoreController.delegate = self
 
         loginObservers = [
             PreLoginAuthenticationNotification.register(self, for: unauthenticatedSession),
@@ -283,6 +286,9 @@ extension AuthenticationCoordinator: AuthenticationActioner, SessionManagerCreat
 
             case .startLoginFlow(let request):
                 startLoginFlow(request: request)
+
+            case .startBackupFlow:
+                backupRestoreController.startBackupFlow()
             }
         }
     }

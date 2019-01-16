@@ -32,8 +32,7 @@ class BackupRestoreStepDescriptionSecondaryView: TeamCreationSecondaryViewDescri
         views = [restoreButton]
 
         restoreButton.buttonTapped = { [weak self] in
-            // TODO: Add "start backup" action, remove old view controller
-            self?.actioner?.executeAction(.completeBackupStep)
+            self?.actioner?.executeAction(.startBackupFlow)
         }
     }
 }

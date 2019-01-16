@@ -54,6 +54,6 @@ extension EmailPasswordFieldDescription: ViewDescriptor, EmailPasswordTextFieldD
     }
 
     func textField(_ textField: EmailPasswordTextField, didConfirmCredentials credentials: (String, String)) {
-        return
+        valueSubmitted?(credentials)
     }
 }

@@ -51,6 +51,7 @@ enum AuthenticationCoordinatorAction {
     case setUserName(String)
     case setUserPassword(String)
     case startCompanyLogin
+    case startBackupFlow
 
     var retainsModal: Bool {
         switch self {

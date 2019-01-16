@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2018 Wire Swiss GmbH
+// Copyright (C) 2019 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -17,27 +17,11 @@
 //
 
 import Foundation
-import XCTest
-@testable import Wire
 
-class NoHistoryViewControllerTests: ZMSnapshotTestCase {
-    
-    override func setUp() {
-        super.setUp()
-        self.snapshotBackgroundColor = .darkGray
-    }
-    
-    func testNoHistoryCase() {
-        // GIVEN
-        let sut = NoHistoryViewController(contextType: .newDevice)
-        // WHEN && THEN
-        self.verifyInIPhoneSize(view: sut.view)
+extension AuthenticationCoordinator: BackupRestoreControllerDelegate {
+
+    func backupResoreControllerDidFinishRestoring(_ controller: BackupRestoreController) {
+        self.executeAction(.completeBackupStep)
     }
 
-    func testHasHistoryCase() {
-        // GIVEN
-        let sut = NoHistoryViewController(contextType: .loggedOut)
-        // WHEN && THEN
-        self.verifyInIPhoneSize(view: sut.view)
-    }
 }
