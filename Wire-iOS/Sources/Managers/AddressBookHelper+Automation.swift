@@ -18,7 +18,7 @@
 
 
 import Foundation
-import WireExtensionComponents
+
 
 extension AutomationHelper : AddressBookHelperConfiguration {
     

@@ -18,7 +18,8 @@
 
 #import "EmailSignInViewController.h"
 
-@import WireExtensionComponents;
+
+@import WireCommonComponents;
 @import OnePasswordExtension;
 
 #import "EmailSignInViewController.h"
@@ -64,7 +65,7 @@
     [super viewDidAppear:animated];
 
     if (AutomationHelper.sharedHelper.automationEmailCredentials != nil) {
-        ZMEmailCredentials *emailCredentials = AutomationHelper.sharedHelper.automationEmailCredentials;
+        AutomationEmailCredentials *emailCredentials = AutomationHelper.sharedHelper.automationEmailCredentials;
         self.emailField.text = emailCredentials.email;
         self.passwordField.text = emailCredentials.password;
         [self.passwordField.confirmButton sendActionsForControlEvents:UIControlEventTouchUpInside];
@@ -314,14 +315,14 @@
 
 - (IBAction)openOnePasswordExtension:(id)sender
 {
-    @weakify(self);
+    ZM_WEAK(self);
     
     [[OnePasswordExtension sharedExtension] findLoginForURLString:NSURL.wr_websiteURL.absoluteString
                                                 forViewController:self
                                                            sender:self.passwordField
                                                        completion:^(NSDictionary *loginDict, NSError *error)
      {
-         @strongify(self);
+         ZM_STRONG(self);
          
          if (loginDict) {
              self.emailField.text = loginDict[AppExtensionUsernameKey];

@@ -18,7 +18,7 @@
 
 
 #import "AudioTrackView.h"
-@import WireExtensionComponents;
+
 #import "AudioErrorView.h"
 #import "Wire-Swift.h"
 

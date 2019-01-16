@@ -17,7 +17,7 @@
 // 
 
 
-@import WireExtensionComponents;
+
 @import WireDataModel;
 
 #import "ConversationInputBarSendController.h"

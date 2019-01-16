@@ -20,8 +20,6 @@
 #import <UIKit/UIKit.h>
 #import "ZetaIconTypes.h"
 
-
-
 @interface UIImage (ZetaIconsNeue)
 
 /// This returns an image the contains the icon with the specified *icon font* size.  The dimensions of the

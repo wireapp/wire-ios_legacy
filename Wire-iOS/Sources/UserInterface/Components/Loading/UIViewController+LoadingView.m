@@ -22,7 +22,7 @@
 #import <objc/runtime.h>
 #import "ProgressSpinner.h"
 #import "NSLayoutConstraint+Helpers.h"
-#import <WireExtensionComponents/WireExtensionComponents-Swift.h>
+#import "Wire-Swift.h"
 
 const NSString *ActivityIndicatorKey = @"activityIndicator";
 const NSString *LoadingViewKey = @"loadingView";

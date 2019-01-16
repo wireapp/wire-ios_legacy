@@ -16,9 +16,8 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 import WireShareEngine
-import WireExtensionComponents
+import WireCommonComponents
 import MobileCoreServices
 import WireDataModel
 

@@ -22,7 +22,7 @@
 #import "IconButton.h"
 #import "EmailFormViewController.h"
 #import "UIImage+ZetaIconsNeue.h"
-#import <WireExtensionComponents/ProgressSpinner.h>
+#import "ProgressSpinner.h"
 #import "RegistrationTextField.h"
 #import "WireSyncEngine+iOS.h"
 #import "CheckmarkViewController.h"

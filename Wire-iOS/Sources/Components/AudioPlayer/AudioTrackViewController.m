@@ -33,7 +33,7 @@
 
 static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
-@import WireExtensionComponents;
+
 @import AVFoundation;
 
 @interface AudioTrackViewController ()
@@ -173,9 +173,9 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     if (cachedResource != nil) {
         self.audioTrack = cachedResource;
     } else {
-        @weakify(self);
+        ZM_WEAK(self);
         [[SoundcloudService sharedInstance] loadAudioResourceFromURL:self.linkAttachment.URL completion:^(id audioResource, NSError *error) {
-            @strongify(self);
+            ZM_STRONG(self);
             if (error == nil && audioResource != nil) {
                 self.audioTrack = audioResource;
                 [cache setObject:audioResource forKey:self.linkAttachment.URL];
@@ -256,9 +256,9 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 - (IBAction)playPause:(id)sender
 {
     if (self.audioTrackPlayer.sourceMessage != self.sourceMessage) {
-        @weakify(self);
+        ZM_WEAK(self);
         [self.audioTrackPlayer loadTrack:self.audioTrack sourceMessage:self.sourceMessage completionHandler:^(BOOL loaded, NSError *error) {
-            @strongify(self);
+            ZM_STRONG(self);
             if (loaded) {
                 [self.audioTrackPlayer play];
             } else {

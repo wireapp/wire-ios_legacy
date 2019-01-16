@@ -19,7 +19,18 @@
 
 import Foundation
 import WireSystem
-import WireSyncEngine
+
+@objcMembers public class AutomationEmailCredentials: NSObject {
+    public var email: String
+    public var password: String
+    
+    init(email: String, password: String) {
+        self.email = email
+        self.password = password
+        super.init()
+    }
+}
+
 
 /// This class is used to retrieve specific arguments passed on the 
 /// command line when running automation tests. 
@@ -44,7 +55,7 @@ import WireSyncEngine
     }
     
     /// The login credentials provides by command line
-    @objc public let automationEmailCredentials: ZMEmailCredentials?
+    @objc public let automationEmailCredentials: AutomationEmailCredentials?
     
     /// Whether we push notification permissions alert is disabled
     @objc public let disablePushNotificationAlert : Bool
@@ -111,12 +122,12 @@ import WireSyncEngine
     }
     
     /// Returns the login email and password credentials if set in the given arguments
-    fileprivate static func credentials(_ arguments: ArgumentsType) -> ZMEmailCredentials? {
+    fileprivate static func credentials(_ arguments: ArgumentsType) -> AutomationEmailCredentials? {
         guard let email = arguments.flagValueIfPresent(AutomationKey.email.rawValue),
             let password = arguments.flagValueIfPresent(AutomationKey.password.rawValue) else {
             return nil
         }
-        return ZMEmailCredentials(email: email, password: password)
+        return AutomationEmailCredentials(email: email, password: password)
     }
     
     // Switches on all flags that you would like to log listed after `--debug-log=` tags should be separated by comma
@@ -205,7 +216,7 @@ extension AutomationHelper {
     @objc public func installDebugDataIfNeeded() {
         
         guard let packageURL = self.debugDataToInstall,
-            let appGroupIdentifier = Bundle.main.appGroupIdentifier else { return }
+            let appGroupIdentifier = Bundle.main.applicationGroupIdentifier else { return }
         let sharedContainerURL = FileManager.sharedContainerDirectory(for: appGroupIdentifier)
         
         // DELETE

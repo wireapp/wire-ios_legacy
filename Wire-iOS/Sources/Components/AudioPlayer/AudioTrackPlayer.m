@@ -21,7 +21,11 @@
 #import "AudioTrackPlayer.h"
 #import "AudioTrack.h"
 #import "AudioPlaylist.h"
-@import WireExtensionComponents;
+#import "UIImage+ImageUtilities.h"
+
+@import WireCommonComponents;
+@import WireUtilities;
+#import "KeyValueObserver.h"
 
 static NSString* EmptyStringIfNil(NSString *string) {
     return string == nil ? @"" : string;
@@ -237,9 +241,9 @@ static NSString* EmptyStringIfNil(NSString *string) {
         return NO;
     }
     
-    @weakify(self);
+    ZM_WEAK(self);
     [self loadTrack:nextAudioTrack playlist:self.audioPlaylist sourceMessage:self.sourceMessage completionHandler:^(BOOL loaded, NSError *error) {
-        @strongify(self);
+        ZM_STRONG(self);
         if (loaded) {
             [self play];
         }
@@ -263,9 +267,9 @@ static NSString* EmptyStringIfNil(NSString *string) {
         return NO;
     }
     
-    @weakify(self);
+    ZM_WEAK(self);
     [self loadTrack:previousAudioTrack playlist:self.audioPlaylist sourceMessage:self.sourceMessage completionHandler:^(BOOL loaded, NSError *error) {
-        @strongify(self);
+        ZM_STRONG(self);
         if (loaded) {
             [self play];
         }

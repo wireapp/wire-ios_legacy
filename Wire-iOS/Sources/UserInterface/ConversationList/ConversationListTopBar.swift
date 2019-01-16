@@ -18,7 +18,7 @@
 
 import UIKit
 import Cartography
-import WireExtensionComponents
+
 
 final class ConversationListTopBar: TopBar {
    

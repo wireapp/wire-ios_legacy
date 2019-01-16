@@ -151,7 +151,7 @@ final class LandingViewController: AuthenticationStepViewController {
         [headerContainerView, buttonStackView, loginHintsLabel, loginButton].forEach(view.addSubview)
         headerContainerView.addSubview(logoView)
         
-        #if ACCOUNT_CREATION_DISABLED
+        #if ALLOW_ONLY_EMAIL_LOGIN
             // Do not show buttons for account and team creation
         #else
             [createAccountButton, createTeamButton].forEach { button in

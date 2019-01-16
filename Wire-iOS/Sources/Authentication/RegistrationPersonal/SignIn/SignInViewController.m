@@ -68,22 +68,27 @@
     [self.view addSubview:self.viewControllerContainer];
     
     self.buttonContainer = [UIView new];
-    [self.view addSubview:self.buttonContainer];
-    
-    [self createEmailSignInButton];
-    [self setupEmailSignInViewController];
-    [self createPhoneSignInButton];
-    [self setupPhoneFlowViewController];
-    
-    BOOL hasAddedPhoneNumber = self.loginCredentials.phoneNumber.length > 0;
-    BOOL hasAddedEmailAddress = self.loginCredentials.emailAddress.length > 0;
 
-    if (hasAddedEmailAddress || ! hasAddedPhoneNumber) {
-        [self presentSignInViewController:self.emailSignInViewControllerContainer];
+    if (self.supportsMultipleFlowTypes) {
+        [self.view addSubview:self.buttonContainer];
+        [self createEmailSignInButton];
+        [self setupEmailSignInViewController];
+        [self createPhoneSignInButton];
+        [self setupPhoneFlowViewController];
+
+        BOOL hasAddedPhoneNumber = self.loginCredentials.phoneNumber.length > 0;
+        BOOL hasAddedEmailAddress = self.loginCredentials.emailAddress.length > 0;
+
+        if (hasAddedEmailAddress || ! hasAddedPhoneNumber) {
+            [self presentSignInViewController:self.emailSignInViewControllerContainer];
+        } else {
+            [self presentSignInViewController:self.phoneSignInViewControllerContainer];
+        }
     } else {
-        [self presentSignInViewController:self.phoneSignInViewControllerContainer];
+        [self setupEmailSignInViewController];
+        [self presentSignInViewController:self.emailSignInViewControllerContainer];
     }
-    
+
     self.view.opaque = NO;
     
     [self setupConstraints];
@@ -91,6 +96,15 @@
 }
 
 #pragma mark - Interface Configuration
+
+- (BOOL)supportsMultipleFlowTypes
+{
+#if ALLOW_ONLY_EMAIL_LOGIN
+    return NO;
+#else
+    return YES;
+#endif
+}
 
 - (void)createEmailSignInButton
 {
@@ -150,19 +164,23 @@
 
 - (void)setupConstraints
 {
-    [self.buttonContainer autoPinEdgeToSuperviewEdge:ALEdgeTop];
-    [self.buttonContainer autoSetDimension:ALDimensionHeight toSize:IS_IPAD_FULLSCREEN ? 80 : 64];
-    [self.buttonContainer autoAlignAxisToSuperviewAxis:ALAxisVertical];
+    if (self.supportsMultipleFlowTypes) {
+        [self.buttonContainer autoPinEdgeToSuperviewEdge:ALEdgeTop];
+        [self.buttonContainer autoSetDimension:ALDimensionHeight toSize:IS_IPAD_FULLSCREEN ? 80 : 64];
+        [self.buttonContainer autoAlignAxisToSuperviewAxis:ALAxisVertical];
 
-    [self.emailSignInButton autoPinEdgeToSuperviewEdge:ALEdgeLeft];
-    [self.emailSignInButton autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
-    [self.emailSignInButton autoPinEdge:ALEdgeRight toEdge:ALEdgeLeft ofView:self.phoneSignInButton withOffset:-16];
+        [self.emailSignInButton autoPinEdgeToSuperviewEdge:ALEdgeLeft];
+        [self.emailSignInButton autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
+        [self.emailSignInButton autoPinEdge:ALEdgeRight toEdge:ALEdgeLeft ofView:self.phoneSignInButton withOffset:-16];
 
-    [self.phoneSignInButton autoPinEdgeToSuperviewEdge:ALEdgeRight];
-    [self.phoneSignInButton autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
+        [self.phoneSignInButton autoPinEdgeToSuperviewEdge:ALEdgeRight];
+        [self.phoneSignInButton autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
 
-    [self.buttonContainer autoPinEdge:ALEdgeBottom toEdge:ALEdgeTop ofView:self.viewControllerContainer];
-    [self.viewControllerContainer autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeTop];
+        [self.buttonContainer autoPinEdge:ALEdgeBottom toEdge:ALEdgeTop ofView:self.viewControllerContainer];
+        [self.viewControllerContainer autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeTop];
+    } else {
+        [self.viewControllerContainer autoPinEdgesToSuperviewEdges];
+    }
 }
 
 - (void)takeFirstResponder
@@ -253,6 +271,10 @@
 
 - (void)updateSignInButtonsForPresentedViewController:(UIViewController *)viewController
 {
+    if (!self.supportsMultipleFlowTypes) {
+        return;
+    }
+
     Button *selectedButton;
     Button *deselectedButton;
     
@@ -279,7 +301,7 @@
     
     if(credentials.emailAddress != nil) {
         [self presentEmailSignInViewControllerToEnterPassword];
-    } else if (credentials.phoneNumber != nil) {
+    } else if (credentials.phoneNumber != nil && self.supportsMultipleFlowTypes) {
         [self presentPhoneSignInViewControllerToEnterPassword];
     }
 }

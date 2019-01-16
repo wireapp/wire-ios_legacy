@@ -19,7 +19,7 @@
 
 import UIKit
 import Cartography
-import WireExtensionComponents
+
 import Down
 
 extension Settings {

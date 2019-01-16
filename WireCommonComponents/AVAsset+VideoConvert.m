@@ -18,7 +18,6 @@
 
 
 #import "AVAsset+VideoConvert.h"
-#import "weakify.h"
 @import WireSystem;
 
 @implementation AVAsset (VideoConvert)
@@ -64,16 +63,16 @@
     exportSession.outputFileType = AVFileTypeMPEG4;
     exportSession.metadata = @[];
     exportSession.metadataItemFilter = [AVMetadataItemFilter metadataItemFilterForSharing];
-    @weakify(exportSession);
+    
+    __weak AVAssetExportSession *session = exportSession;
     [exportSession exportAsynchronouslyWithCompletionHandler:^(void) {
-        @strongify(exportSession);
-        if (exportSession.error) {
-            ZMLogError(@"Export session error: status=%ld error=%@ output=%@", (long)exportSession.status, exportSession.error, outputURL);
+        if (session.error) {
+            ZMLogError(@"Export session error: status=%ld error=%@ output=%@", (long)session.status, session.error, outputURL);
         }
         
         if (completion) {
             dispatch_async(dispatch_get_main_queue(), ^{
-                completion(outputURL, self, exportSession.error);
+                completion(outputURL, self, session.error);
             });
         }
         

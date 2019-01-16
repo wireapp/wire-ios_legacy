@@ -19,7 +19,7 @@
 
 import UIKit
 import WireSyncEngine
-import WireExtensionComponents
+
 
 private let zmLog = ZMSLog(tag: "UI")
 

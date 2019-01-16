@@ -17,7 +17,7 @@
 //
 
 import Foundation
-import WireExtensionComponents
+
 
 private let log = ZMSLog(tag: "Mentions")
 

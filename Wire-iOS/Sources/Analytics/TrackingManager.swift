@@ -18,7 +18,7 @@
 
 import Foundation
 import HockeySDK
-import WireExtensionComponents
+import WireCommonComponents
 
 
 @objc public class TrackingManager: NSObject, TrackingInterface {

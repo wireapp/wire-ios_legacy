@@ -19,7 +19,7 @@
 
 #import "NavigationController.h"
 
-@import WireExtensionComponents;
+
 
 
 #import "UIImage+ZetaIconsNeue.h"

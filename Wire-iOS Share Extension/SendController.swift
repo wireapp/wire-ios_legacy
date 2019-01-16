@@ -20,7 +20,7 @@
 import Foundation
 import WireShareEngine
 import WireDataModel
-import WireExtensionComponents
+import WireCommonComponents
 
 
 typealias DegradationStrategyChoice = (DegradationStrategy) -> ()

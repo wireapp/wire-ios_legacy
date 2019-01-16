@@ -17,17 +17,18 @@
 // 
 
 
-#import "DeveloperMenuState.h"
-#import <WireExtensionComponents/WireExtensionComponents-Swift.h>
+@import UIKit;
+@import WireCommonComponents;
 
-@implementation DeveloperMenuState
 
-+ (BOOL)developerMenuEnabled {
-#if ENABLE_DEVELOPER_MENU == 1
-    return YES;
-#else
-    return NO;
-#endif
-}
+@interface ProgressSpinner : UIView
+
+@property (nonatomic, strong) UIColor *color;
+@property (nonatomic, assign) ZetaIconSize iconSize;
+@property (nonatomic, assign) BOOL hidesWhenStopped;
+@property (nonatomic, assign, getter=isAnimating) BOOL animating;
+
+- (IBAction)startAnimation:(id)sender;
+- (IBAction)stopAnimation:(id)sender;
 
 @end
