@@ -18,14 +18,7 @@
 
 import Foundation
 
-extension ConversationContentViewController {
-    @objc(cellForMessage:)
-    func cell(for message: ZMConversationMessage) -> UITableViewCell? {
-        guard let indexPath = self.conversationMessageWindowTableViewAdapter.indexPath(for: message) else {
-            return nil
-        }
-        
-        return self.tableView.cellForRow(at: indexPath)
-    }
+@objc public protocol MessageActionResponder: NSObjectProtocol {
+    @objc(wantsToPerformAction:forMessage:)
+    func wants(toPerform action: MessageAction, for message: ZMConversationMessage!)
 }
-

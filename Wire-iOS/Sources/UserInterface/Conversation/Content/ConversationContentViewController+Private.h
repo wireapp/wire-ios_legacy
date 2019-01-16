@@ -28,6 +28,7 @@ NS_ASSUME_NONNULL_BEGIN
 @class MessagePresenter;
 @class FLAnimatedImageView;
 @protocol SelectableView;
+@protocol MessageActionResponder;
 
 @interface ConversationContentViewController ()
 
@@ -45,6 +46,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)removeHighlightsAndMenu;
 
+- (void)wantsToPerformAction:(MessageAction)actionId forMessage:(id<ZMConversationMessage>)message cell:(UIView<SelectableView> *)cell;
+
 @end
 
 
@@ -55,9 +58,5 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-
-@interface ConversationContentViewController (MessageActionResponder) <MessageActionResponder>
-
-@end
 
 NS_ASSUME_NONNULL_END
