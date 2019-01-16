@@ -53,7 +53,12 @@ class AuthenticationInterfaceBuilder {
             return registrationViewController
 
         case .provideCredentials:
+            #if ALLOW_ONLY_EMAIL_LOGIN
+            let loginViewController = RegistrationViewController(authenticationFlow: .onlyLogin)
+            #else
             let loginViewController = RegistrationViewController(authenticationFlow: .login)
+            #endif
+
             loginViewController.shouldHideCancelButton = true
             return loginViewController
 
