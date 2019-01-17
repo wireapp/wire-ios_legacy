@@ -22,36 +22,16 @@ extension ZMUser {
     
     // TODO: needs testing
     
-    /// Returns the permission of the self user, if any.
+    /// Returns the permissions of the self user, if any.
     static func selfPermissions() -> Permissions? {
-        return ZMUser.selfUser()?.permissions
+        return ZMUser.selfUser()?.teamRole.permissions
     }
     
-    /// Returns true if the self user has owner permissions.
-    static func selfIsOwner() -> Bool {
-        return selfUserHas(permissions: .owner)
-    }
-    
-    /// Returns true if the self user has admin permissions.
-    static func selfIsAdmin() -> Bool {
-        return selfUserHas(permissions: .admin)
-    }
-    
-    /// Returns true if the self user has member permissions.
-    static func selfIsMember() -> Bool {
-        return selfUserHas(permissions: .member)
-    }
-    
-    /// Returns true if the self user has partner permissions.
-    static func selfIsPartner() -> Bool {
-        return selfUserHas(permissions: .partner)
-    }
-    
-    /// Returns true if the self user's permissions encompass the given
+    /// Returns true if the self user's team role encompasses the given
     /// permissions.
     static func selfUserHas(permissions: Permissions) -> Bool {
-        guard let selfPermissions = selfPermissions() else { return false }
-        return selfPermissions.isSuperset(of: permissions)
+        guard let role = ZMUser.selfUser()?.teamRole else { return false }
+        return role.hasPermissions(permissions)
     }
 
 }
