@@ -22,16 +22,11 @@ import XCTest
 final class StartUIViewControllerSnapshotTests: ZMSnapshotTestCase {
     
     var sut: StartUIViewController!
-    var mockMembership: Member!
-
+    
     override func setUp() {
         super.setUp()
         sut = StartUIViewController()
         sut.view.backgroundColor = .black
-
-        if mockMembership == nil {
-            mockMembership = Member.insertNewObject(in: uiMOC)
-        }
     }
     
     override func tearDown() {
@@ -59,19 +54,14 @@ final class StartUIViewControllerSnapshotTests: ZMSnapshotTestCase {
     /// has create group and create guest room rows
     func testForNoContactWhenSelfIsTeamMember() {
         MockUser.mockSelf().isTeamMember = true
-        mockMembership.permissions = .member
-        MockUser.mockSelf().membership = mockMembership
-
+        MockUser.mockSelf()?.teamRole = .member
         verifyInAllIPhoneSizes(view: sut.view)
     }
 
     /// has no create group and create guest room rows
     func testForNoContactWhenSelfIsPartner() {
         MockUser.mockSelf().isTeamMember = true
-
-        mockMembership.permissions = .partner
-        MockUser.mockSelf().membership = mockMembership
-
+        MockUser.mockSelf()?.teamRole = .partner
         verifyInIPhoneSize(view: sut.view)
     }
 }
