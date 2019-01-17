@@ -33,6 +33,10 @@ extension ZMUser {
         guard let role = ZMUser.selfUser()?.teamRole else { return false }
         return role.hasPermissions(permissions)
     }
+    
+    static var selfUserIsTeamMember: Bool {
+        return selfUser()?.isTeamMember ?? false
+    }
 
 }
 
@@ -43,6 +47,10 @@ extension ZMUser {
 /// restricted to admins only, we can check hide the button if the self
 /// user is not authorized (is not an admin).
 ///
+/// NOTE: This relates only to team members. If the self user is not a
+///       team member, they are automatically authorized.
+///
+// TODO: maybe better to call this TeamRestricted
 protocol Restricted {
     
     /// The minimum permissions required to access this object.
@@ -58,9 +66,11 @@ protocol Restricted {
 extension Restricted {
     
     var selfUserIsAuthorized: Bool {
+        guard ZMUser.selfUserIsTeamMember else { return true }
         return ZMUser.selfUserHas(permissions: self.requiredPermissions)
     }
     
+    // TODO: consider calling this selfUserIsAuthorized
     func authorizeSelfUser(onSuccess: () -> Void) {
         if selfUserIsAuthorized { onSuccess() }
     }
