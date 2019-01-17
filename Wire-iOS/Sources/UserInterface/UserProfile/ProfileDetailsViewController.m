@@ -220,7 +220,7 @@ typedef NS_ENUM(NSUInteger, ProfileViewContentMode) {
         [sendConnectionRequestFooterView.sendButton addTarget:self action:@selector(sendConnectionRequest) forControlEvents:UIControlEventTouchUpInside];
         footerView = sendConnectionRequestFooterView;
     }
-    else { ///TODO:
+    else {
         ProfileFooterView *userActionsFooterView = [[ProfileFooterView alloc] init];
         userActionsFooterView.translatesAutoresizingMaskIntoConstraints = NO;
         
@@ -257,7 +257,7 @@ typedef NS_ENUM(NSUInteger, ProfileViewContentMode) {
             buttonText = NSLocalizedString(@"profile.connection_request_state.blocked", nil);
             break;
             
-        case ProfileUserActionAddPeople: ///TODO:
+        case ProfileUserActionAddPeople:
             buttonText = NSLocalizedString(@"profile.create_conversation_button_title", nil);
             break;
             
