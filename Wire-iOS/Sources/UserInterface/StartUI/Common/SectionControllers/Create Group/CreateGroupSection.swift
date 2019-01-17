@@ -18,6 +18,12 @@
 
 import Foundation
 
+extension CreateGroupSection: Restricted {
+    var requiredPermissions: Permissions {
+        return .member
+    }
+}
+
 class CreateGroupSection: NSObject, CollectionViewSectionController {
     
     enum Row {
@@ -32,7 +38,7 @@ class CreateGroupSection: NSObject, CollectionViewSectionController {
     weak var delegate: SearchSectionControllerDelegate?
 
     var isHidden: Bool {
-        return false
+        return ZMUser.selfUser().isTeamMember ? !selfUserIsAuthorized : false
     }
     
     func prepareForUse(in collectionView: UICollectionView?) {
