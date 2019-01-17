@@ -54,7 +54,7 @@ import WireSyncEngine
     private let detailsLabel: UILabel = {
         let label = UILabel()
         label.lineBreakMode = .byTruncatingMiddle
-        label.numberOfLines = 1
+        label.numberOfLines = 0
         label.accessibilityIdentifier = "Details"
         label.setContentHuggingPriority(.required, for: .horizontal)
         label.setContentCompressionResistancePriority(.required, for: .horizontal)
@@ -174,7 +174,7 @@ import WireSyncEngine
         likeButton.translatesAutoresizingMaskIntoConstraints = false
         contentStack.translatesAutoresizingMaskIntoConstraints = false
 
-        heightConstraint = heightAnchor.constraint(equalToConstant: 28)
+        heightConstraint = heightAnchor.constraint(greaterThanOrEqualToConstant: 28)
         heightConstraint.priority = UILayoutPriority(999)
 
         likeButtonWidth = likeButtonContainer.widthAnchor.constraint(equalToConstant: UIView.conversationLayoutMargins.left)
@@ -193,7 +193,8 @@ import WireSyncEngine
             // statusTextView align vertically center
             contentStack.leadingAnchor.constraint(equalTo: likeButtonContainer.trailingAnchor),
             contentStack.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant: -UIView.conversationLayoutMargins.right),
-            contentStack.centerYAnchor.constraint(equalTo: centerYAnchor)
+            contentStack.topAnchor.constraint(equalTo: topAnchor),
+            contentStack.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
     }
 
