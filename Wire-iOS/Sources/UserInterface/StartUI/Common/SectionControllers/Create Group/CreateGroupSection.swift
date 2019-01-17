@@ -32,21 +32,13 @@ class CreateGroupSection: NSObject, CollectionViewSectionController {
     }
     
     private var data: [Row] {
-        if ZMUser.selfUser().isTeamMember {
-            if ZMUser.selfUserHas(permissions: requiredPermissions) {
-                return [Row.createGroup, Row.createGuestRoom]
-            } else {
-                return []
-            }
-        } else {
-            return [Row.createGroup]
-        }
+        return ZMUser.selfUser().isTeamMember ? [Row.createGroup, Row.createGuestRoom] : [Row.createGroup]
     }
     
     weak var delegate: SearchSectionControllerDelegate?
 
     var isHidden: Bool {
-        return false
+        return ZMUser.selfUser().isTeamMember ? !selfUserIsAuthorized : false
     }
     
     func prepareForUse(in collectionView: UICollectionView?) {
