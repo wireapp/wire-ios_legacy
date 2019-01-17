@@ -26,11 +26,17 @@ protocol GroupOptionsSectionControllerDelegate: class {
 
 class GroupOptionsSectionController: GroupDetailsSectionController {
 
-    private enum Option: Int {
-
-        case notifications = 0
-        case guests = 1
-        case timeout = 2
+    private enum Option: Int, Restricted {
+        
+        case notifications = 0, guests, timeout
+        
+        var requiredPermissions: Permissions {
+            switch self {
+            case .notifications: return .partner
+            case .guests:        return .member
+            case .timeout:       return .member
+            }
+        }
 
         var cellReuseIdentifier: String {
             switch self {
@@ -60,19 +66,25 @@ class GroupOptionsSectionController: GroupDetailsSectionController {
         self.conversation = conversation
         self.syncCompleted = syncCompleted
         var options = [Option]()
-
-        if conversation.canManageAccess {
-            options = [Option.guests, Option.timeout]
-        }
-        else if !ZMUser.selfUser().isGuest(in: conversation) {
-            options = [Option.timeout]
-        }
-        else {
-            options = []
+        
+        let selfIsGuest = ZMUser.selfUser().isGuest(in: conversation)
+        
+        if ZMUser.selfUserIsTeamMember {
+            Option.notifications.authorizeSelfUser {
+                options.append(.notifications)
+            }
         }
         
-        if ZMUser.selfUser()?.isTeamMember ?? false {
-            options.insert(.notifications, at: 0)
+        if conversation.canManageAccess {
+            Option.guests.authorizeSelfUser {
+                options.append(.guests)
+            }
+        }
+        
+        if !selfIsGuest {
+            Option.timeout.authorizeSelfUser {
+                options.append(.timeout)
+            }
         }
         
         self.options = options
