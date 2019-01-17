@@ -56,23 +56,8 @@ typedef NS_ENUM(NSUInteger, ProfileViewContentMode) {
 };
 
 
-typedef NS_ENUM(NSUInteger, ProfileUserAction) {
-    ProfileUserActionNone,
-    ProfileUserActionOpenConversation,
-    ProfileUserActionAddPeople,
-    ProfileUserActionRemovePeople,
-    ProfileUserActionBlock,
-    ProfileUserActionPresentMenu,
-    ProfileUserActionUnblock,
-    ProfileUserActionAcceptConnectionRequest,
-    ProfileUserActionSendConnectionRequest,
-    ProfileUserActionCancelConnectionRequest
-};
-
-
 @interface ProfileDetailsViewController ()
 
-@property (nonatomic) ProfileViewControllerContext context;
 @property (nonatomic) id<UserType, AccentColorProvider> bareUser;
 
 @property (nonatomic) UserImageView *userImageView;
@@ -235,7 +220,7 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
         [sendConnectionRequestFooterView.sendButton addTarget:self action:@selector(sendConnectionRequest) forControlEvents:UIControlEventTouchUpInside];
         footerView = sendConnectionRequestFooterView;
     }
-    else {
+    else { ///TODO:
         ProfileFooterView *userActionsFooterView = [[ProfileFooterView alloc] init];
         userActionsFooterView.translatesAutoresizingMaskIntoConstraints = NO;
         
@@ -272,7 +257,7 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
             buttonText = NSLocalizedString(@"profile.connection_request_state.blocked", nil);
             break;
             
-        case ProfileUserActionAddPeople:
+        case ProfileUserActionAddPeople: ///TODO:
             buttonText = NSLocalizedString(@"profile.create_conversation_button_title", nil);
             break;
             
@@ -290,7 +275,7 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
 - (ZetaIconType)iconTypeForUserAction:(ProfileUserAction)userAction
 {
     switch (userAction) {
-        case ProfileUserActionAddPeople:
+        case ProfileUserActionAddPeople:///todo
             return ZetaIconTypeCreateConversation;
             break;
             
@@ -326,39 +311,6 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
         default:
             return ZetaIconTypeNone;
             break;
-    }
-}
-
-- (ProfileUserAction)leftButtonAction
-{
-    ZMUser *user = [self fullUser];
-    
-    if (user.isSelfUser) {
-        return ProfileUserActionNone;
-    }
-    else if ((user.isConnected || user.isTeamMember) && self.context == ProfileViewControllerContextOneToOneConversation) {
-        return ProfileUserActionAddPeople;
-    }
-    else if (user.isTeamMember) {
-        return ProfileUserActionOpenConversation;
-    }
-    else if (user.isBlocked) {
-        return ProfileUserActionUnblock;
-    }
-    else if (user.isPendingApprovalBySelfUser) {
-        return ProfileUserActionAcceptConnectionRequest;
-    }
-    else if (user.isPendingApprovalByOtherUser) {
-        return ProfileUserActionCancelConnectionRequest;
-    }
-    else if (user.canBeConnected) {
-        return ProfileUserActionSendConnectionRequest;
-    }
-    else if (user.isWirelessUser) {
-        return ProfileUserActionNone;
-    }
-    else {
-        return ProfileUserActionOpenConversation;
     }
 }
 
