@@ -17,7 +17,6 @@
 //
 
 import UIKit
-import Cartography
 
 final class TeamMemberInviteHeaderView: UIView {
     
@@ -51,7 +50,12 @@ final class TeamMemberInviteHeaderView: UIView {
         stackView.spacing = 24
         [titleLabel, subtitleLabel, bottomSpacerView].forEach(stackView.addArrangedSubview)
         titleLabel.textAlignment = .center
+
         subtitleLabel.textAlignment = .center
+        subtitleLabel.numberOfLines = 0
+        subtitleLabel.lineBreakMode = .byWordWrapping
+        subtitleLabel.setContentCompressionResistancePriority(UILayoutPriority.required, for: .vertical)
+
         titleLabel.textColor = UIColor.Team.textColor
         subtitleLabel.textColor = UIColor.Team.subtitleColor
         addSubview(stackView)
@@ -62,9 +66,10 @@ final class TeamMemberInviteHeaderView: UIView {
     }
     
     private func createConstraints() {
-        constrain(self, stackView, bottomSpacerView) { view, stackView, bottomSpacerView in
-            stackView.edges == view.edges
-            bottomSpacerViewHeightConstraint = bottomSpacerView.height == 0
-        }
+        [stackView, bottomSpacerView].forEach(){ $0.translatesAutoresizingMaskIntoConstraints = false }
+        stackView.fitInSuperview()
+
+        bottomSpacerViewHeightConstraint = bottomSpacerView.heightAnchor.constraint(equalToConstant: 0)
+        bottomSpacerViewHeightConstraint?.isActive = true
     }
 }
