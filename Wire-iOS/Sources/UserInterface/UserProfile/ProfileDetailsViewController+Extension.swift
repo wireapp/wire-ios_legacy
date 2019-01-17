@@ -96,7 +96,11 @@ extension ProfileDetailsViewController {
             return .none
         } else if (user.isConnected || user.isTeamMember) &&
             context == ProfileViewControllerContext.oneToOneConversation {
-            return .addPeople
+            if ZMUser.selfUserHas(permissions: .member) || !ZMUser.selfUser().isTeamMember {
+                return .addPeople
+            } else {
+                return .none
+            }
         } else if user.isTeamMember {
             return .openConversation
         } else if user.isBlocked {
