@@ -151,14 +151,15 @@ class AuthenticationStepController: AuthenticationStepViewController {
         subtextLabel.numberOfLines = 0
         subtextLabel.lineBreakMode = .byWordWrapping
 
-        mainView = createMainView()
-
         errorLabel = UILabel()
         errorLabelContainer = ContentInsetView(errorLabel, inset: textPadding)
         errorLabel.textAlignment = .center
         errorLabel.font = AuthenticationStepController.errorFont
         errorLabel.textColor = UIColor.Team.errorMessageColor
         errorLabel.translatesAutoresizingMaskIntoConstraints = false
+
+        mainView = createMainView()
+        
 
         if let secondaryView = stepDescription.secondaryView {
             secondaryViews = secondaryView.views.map { $0.create() }

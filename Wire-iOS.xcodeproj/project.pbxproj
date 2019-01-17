@@ -309,7 +309,6 @@
 		5E8DA786211C458600360979 /* AuthenticationEmailFallbackErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8DA785211C458600360979 /* AuthenticationEmailFallbackErrorHandler.swift */; };
 		5E8DA788211C499900360979 /* AuthenticationCoordinator+PreLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8DA787211C499900360979 /* AuthenticationCoordinator+PreLogin.swift */; };
 		5E8DA78C211C6FF700360979 /* AuthenticationLoginCodeAvailableEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8DA78B211C6FF700360979 /* AuthenticationLoginCodeAvailableEventHandler.swift */; };
-		5E8FFC0121ECC5270052DF03 /* ReauthenticateStepDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8FFC0021ECC5270052DF03 /* ReauthenticateStepDescription.swift */; };
 		5E8FFC0321ECC5CF0052DF03 /* AuthenticationFeatureProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8FFC0221ECC5CF0052DF03 /* AuthenticationFeatureProvider.swift */; };
 		5E8FFC0621ECCC7C0052DF03 /* AuthenticationInterfaceBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8FFC0521ECCC7C0052DF03 /* AuthenticationInterfaceBuilderTests.swift */; };
 		5E8FFC0821ECCC9B0052DF03 /* MockAuthenticationFeatureProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8FFC0721ECCC9B0052DF03 /* MockAuthenticationFeatureProvider.swift */; };
@@ -325,6 +324,8 @@
 		5E8FFC1E21EF7D2E0052DF03 /* SignOutViewDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8FFC1D21EF7D2E0052DF03 /* SignOutViewDescription.swift */; };
 		5E8FFC2021EF83FF0052DF03 /* AuthenticationAddEmailPasswordInputHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8FFC1F21EF83FF0052DF03 /* AuthenticationAddEmailPasswordInputHandler.swift */; };
 		5E8FFC2221EF86000052DF03 /* EmailLinkVerificationStepDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8FFC2121EF86000052DF03 /* EmailLinkVerificationStepDescription.swift */; };
+		5E8FFC2421F086240052DF03 /* AuthenticationReauthenticateInputHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8FFC2321F086230052DF03 /* AuthenticationReauthenticateInputHandler.swift */; };
+		5E8FFC2621F0879B0052DF03 /* ReauthenticateWithCompanyLoginStepDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8FFC2521F0879B0052DF03 /* ReauthenticateWithCompanyLoginStepDescription.swift */; };
 		5E936E8F20B590530060E6AA /* UIDevice+Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E936E8E20B590530060E6AA /* UIDevice+Platform.swift */; };
 		5E97C30420F4CFFF00C806B4 /* MockZiphyClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E97C30220F4CFDA00C806B4 /* MockZiphyClient.swift */; };
 		5E97C33120F5F17800C806B4 /* ExtensionSettingsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E97C32F20F5F17200C806B4 /* ExtensionSettingsTests.swift */; };
@@ -411,7 +412,6 @@
 		5EFD914421C918E400080599 /* AuthenticationCodeVerificationInputHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFD914321C918E400080599 /* AuthenticationCodeVerificationInputHandler.swift */; };
 		5EFD914621C926A900080599 /* SetPersonalEmailStepDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFD914521C926A900080599 /* SetPersonalEmailStepDescription.swift */; };
 		5EFD914821C92BF700080599 /* SetPhoneStepDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFD914721C92BF700080599 /* SetPhoneStepDescription.swift */; };
-		5EFD914A21C931B600080599 /* PhoneNumberFieldDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFD914921C931B600080599 /* PhoneNumberFieldDescription.swift */; };
 		5EFD914E21C9325B00080599 /* AuthenticationCredentialsCreationInputHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFD914D21C9325B00080599 /* AuthenticationCredentialsCreationInputHandler.swift */; };
 		5EFD915021CA688700080599 /* AuthenticationIncrementalUserCreationInputHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFD914F21CA688700080599 /* AuthenticationIncrementalUserCreationInputHandler.swift */; };
 		5EFD915921CBCB5300080599 /* UIResponder+VoiceOver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFD915821CBCB5300080599 /* UIResponder+VoiceOver.swift */; };
@@ -1812,7 +1812,6 @@
 		5E8DA785211C458600360979 /* AuthenticationEmailFallbackErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationEmailFallbackErrorHandler.swift; sourceTree = "<group>"; };
 		5E8DA787211C499900360979 /* AuthenticationCoordinator+PreLogin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AuthenticationCoordinator+PreLogin.swift"; sourceTree = "<group>"; };
 		5E8DA78B211C6FF700360979 /* AuthenticationLoginCodeAvailableEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationLoginCodeAvailableEventHandler.swift; sourceTree = "<group>"; };
-		5E8FFC0021ECC5270052DF03 /* ReauthenticateStepDescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReauthenticateStepDescription.swift; sourceTree = "<group>"; };
 		5E8FFC0221ECC5CF0052DF03 /* AuthenticationFeatureProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationFeatureProvider.swift; sourceTree = "<group>"; };
 		5E8FFC0521ECCC7C0052DF03 /* AuthenticationInterfaceBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationInterfaceBuilderTests.swift; sourceTree = "<group>"; };
 		5E8FFC0721ECCC9B0052DF03 /* MockAuthenticationFeatureProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAuthenticationFeatureProvider.swift; sourceTree = "<group>"; };
@@ -1828,6 +1827,8 @@
 		5E8FFC1D21EF7D2E0052DF03 /* SignOutViewDescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignOutViewDescription.swift; sourceTree = "<group>"; };
 		5E8FFC1F21EF83FF0052DF03 /* AuthenticationAddEmailPasswordInputHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationAddEmailPasswordInputHandler.swift; sourceTree = "<group>"; };
 		5E8FFC2121EF86000052DF03 /* EmailLinkVerificationStepDescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailLinkVerificationStepDescription.swift; sourceTree = "<group>"; };
+		5E8FFC2321F086230052DF03 /* AuthenticationReauthenticateInputHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationReauthenticateInputHandler.swift; sourceTree = "<group>"; };
+		5E8FFC2521F0879B0052DF03 /* ReauthenticateWithCompanyLoginStepDescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReauthenticateWithCompanyLoginStepDescription.swift; sourceTree = "<group>"; };
 		5E936E8E20B590530060E6AA /* UIDevice+Platform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+Platform.swift"; sourceTree = "<group>"; };
 		5E97C30220F4CFDA00C806B4 /* MockZiphyClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockZiphyClient.swift; sourceTree = "<group>"; };
 		5E97C32F20F5F17200C806B4 /* ExtensionSettingsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionSettingsTests.swift; sourceTree = "<group>"; };
@@ -1913,7 +1914,6 @@
 		5EFD914321C918E400080599 /* AuthenticationCodeVerificationInputHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationCodeVerificationInputHandler.swift; sourceTree = "<group>"; };
 		5EFD914521C926A900080599 /* SetPersonalEmailStepDescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetPersonalEmailStepDescription.swift; sourceTree = "<group>"; };
 		5EFD914721C92BF700080599 /* SetPhoneStepDescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetPhoneStepDescription.swift; sourceTree = "<group>"; };
-		5EFD914921C931B600080599 /* PhoneNumberFieldDescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneNumberFieldDescription.swift; sourceTree = "<group>"; };
 		5EFD914D21C9325B00080599 /* AuthenticationCredentialsCreationInputHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationCredentialsCreationInputHandler.swift; sourceTree = "<group>"; };
 		5EFD914F21CA688700080599 /* AuthenticationIncrementalUserCreationInputHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationIncrementalUserCreationInputHandler.swift; sourceTree = "<group>"; };
 		5EFD915821CBCB5300080599 /* UIResponder+VoiceOver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIResponder+VoiceOver.swift"; sourceTree = "<group>"; };
@@ -3758,12 +3758,12 @@
 			isa = PBXGroup;
 			children = (
 				5E21344821E34F5B00273D0D /* LogInWithEmailStepDescription.swift */,
-				5E8FFC0021ECC5270052DF03 /* ReauthenticateStepDescription.swift */,
 				5E21344A21E351D400273D0D /* LogInWithPhoneNumberStepDescription.swift */,
 				5E8FFC0921ECE3920052DF03 /* BackupRestoreStepDescription.swift */,
 				5E8FFC1721EF61A80052DF03 /* ClientUnregisterInvitationStepDescription.swift */,
 				5E8FFC1B21EF7CB50052DF03 /* AddEmailPasswordStepDescription.swift */,
 				5E8FFC2121EF86000052DF03 /* EmailLinkVerificationStepDescription.swift */,
+				5E8FFC2521F0879B0052DF03 /* ReauthenticateWithCompanyLoginStepDescription.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -4268,6 +4268,7 @@
 				5EFD914321C918E400080599 /* AuthenticationCodeVerificationInputHandler.swift */,
 				5EFD914D21C9325B00080599 /* AuthenticationCredentialsCreationInputHandler.swift */,
 				5E21344E21E3628F00273D0D /* AuthenticationLoginCredentialsInputHandler.swift */,
+				5E8FFC2321F086230052DF03 /* AuthenticationReauthenticateInputHandler.swift */,
 				5EFD914F21CA688700080599 /* AuthenticationIncrementalUserCreationInputHandler.swift */,
 				5E8FFC0F21EE0CA60052DF03 /* AuthenticationButtonTapInputHandler.swift */,
 				5E8FFC1F21EF83FF0052DF03 /* AuthenticationAddEmailPasswordInputHandler.swift */,
@@ -6577,7 +6578,6 @@
 				F1199D3C1FC849440070FAC3 /* ButtonDescription.swift */,
 				5E8FFC0B21EDDB970052DF03 /* SolidButtonDescription.swift */,
 				F1199D3D1FC849440070FAC3 /* TextFieldDescription.swift */,
-				5EFD914921C931B600080599 /* PhoneNumberFieldDescription.swift */,
 				F1199D3E1FC849440070FAC3 /* VerificationCodeFieldDescription.swift */,
 				5E21344521CCEF1700273D0D /* EmptyViewDescription.swift */,
 				5E21344C21E3531500273D0D /* LoginButtonsDescription.swift */,
@@ -7404,6 +7404,7 @@
 				8736F1841E4B67F0001CBA62 /* AppLockView.swift in Sources */,
 				D594343A203DCB8F006AA0C0 /* ConversationOptionsViewModel.swift in Sources */,
 				EEFF3E7A21B67990000834A6 /* ConversationCreateOptionsCell.swift in Sources */,
+				5E8FFC2621F0879B0052DF03 /* ReauthenticateWithCompanyLoginStepDescription.swift in Sources */,
 				5E8C38B2212E9799002AE12B /* AuthenticationStartMissingCredentialsErrorHandler.swift in Sources */,
 				8F8914131A9F287E0056AB0C /* ConversationListItemView.m in Sources */,
 				DBACFF7A1B3C96E1004062E0 /* MentionsBubbleView.m in Sources */,
@@ -7862,7 +7863,6 @@
 				87DCF4F51D34EA4500BB420F /* StartUIViewController.m in Sources */,
 				8793250A1E83BB5C00190067 /* ZMConversation+Status.swift in Sources */,
 				D58191FD2091CAE8003BA7EC /* CallActionsView.swift in Sources */,
-				5E8FFC0121ECC5270052DF03 /* ReauthenticateStepDescription.swift in Sources */,
 				5EB45761204EA75300BA217A /* CallQualityDismissalTransition.swift in Sources */,
 				5EDD253C2140044D00C0E254 /* SettingsLicenseItem.swift in Sources */,
 				BF5DF5C520F4B0B8002BCB67 /* UICollectionView+UserList.swift in Sources */,
@@ -8018,7 +8018,6 @@
 				87DCF4E01D34EA4500BB420F /* TopPeopleCell.m in Sources */,
 				8F5A3E9D19AE2C9E00D0E9DA /* AVSMediaManager+Additions.m in Sources */,
 				EF587164216669FD00E47E73 /* ConversationListViewController+ActionMenu.swift in Sources */,
-				5EFD914A21C931B600080599 /* PhoneNumberFieldDescription.swift in Sources */,
 				BF3A3DCE1EA75290005477F8 /* RotatingKeyboardAvoidingViewController.swift in Sources */,
 				87DCF49B1D34E9E600BB420F /* LocationSelectionViewController.swift in Sources */,
 				871067431C0DC78F0035603B /* SettingsExternalScreenCellDescriptor.swift in Sources */,
@@ -8105,6 +8104,7 @@
 				87D5E43E1C3E78A000EB8289 /* ProfileClientViewController.swift in Sources */,
 				5E15D31B219DB9060038439D /* ConversationFileMessageCell.swift in Sources */,
 				5E766D9F21147697005242B4 /* AuthenticationCoordinatorDelegate.swift in Sources */,
+				5E8FFC2421F086240052DF03 /* AuthenticationReauthenticateInputHandler.swift in Sources */,
 				BFE277631D5B4FC50074DC6D /* ConversationContentViewController+MessageDeletion.swift in Sources */,
 				7C5836661FD5ABFE001CC843 /* TitleView.swift in Sources */,
 				7C5DF2CC1FD7DEAD00B793B6 /* AvailabilityExtensions.swift in Sources */,

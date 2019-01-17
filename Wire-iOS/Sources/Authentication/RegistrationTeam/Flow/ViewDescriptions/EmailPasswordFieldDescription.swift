@@ -21,6 +21,7 @@ import UIKit
 final class EmailPasswordFieldDescription: ValueSubmission {
     let emailField: TextFieldDescription
     let passwordField: TextFieldDescription
+    var prefilledEmail: String?
 
     var acceptsInput: Bool = true {
         didSet {
@@ -32,7 +33,8 @@ final class EmailPasswordFieldDescription: ValueSubmission {
     var valueSubmitted: ValueSubmitted?
     var valueValidated: ValueValidated?
 
-    init(forRegistration: Bool) {
+    init(forRegistration: Bool, prefilledEmail: String? = nil) {
+        self.prefilledEmail = prefilledEmail
         emailField = TextFieldDescription(placeholder: "email.placeholder".localized, actionDescription: "", kind: .email)
         emailField.showConfirmButton = false
         passwordField = TextFieldDescription(placeholder: "password.placeholder".localized, actionDescription: "", kind: .password(isNew: forRegistration))
@@ -44,6 +46,7 @@ extension EmailPasswordFieldDescription: ViewDescriptor, EmailPasswordTextFieldD
     func create() -> UIView {
         let textField = EmailPasswordTextField()
         textField.delegate = self
+        textField.prefill(email: prefilledEmail)
         textField.emailField.validateInput()
         return textField
     }

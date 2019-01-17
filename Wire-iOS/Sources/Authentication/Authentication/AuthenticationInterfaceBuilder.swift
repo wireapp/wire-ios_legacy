@@ -60,12 +60,21 @@ class AuthenticationInterfaceBuilder {
         case .landingScreen:
             return LandingViewController()
 
-        case .reauthenticate(let credentials, let numberOfAccounts):
-            assertionFailure("UI not updated.")
-            print(credentials as Any)
-            print(numberOfAccounts as Any)
-            let emailLoginStep = ReauthenticateStepDescription()
-            return createViewController(for: emailLoginStep)
+        case .reauthenticate(let credentials, _):
+            let viewController: AuthenticationStepController
+
+            if credentials?.usesCompanyLogin == true {
+                let companyLoginStep = ReauthenticateWithCompanyLoginStepDescription()
+                viewController = createViewController(for: companyLoginStep)
+            } else if let phoneNumber = credentials?.phoneNumber, credentials?.emailAddress == nil {
+                let phoneLoginStep = LogInWithPhoneNumberStepDescription(prefilledNumber: phoneNumber)
+                viewController = createViewController(for: phoneLoginStep, viewControllerType: PhoneNumberAuthenticationStepController.self)
+            } else {
+                let emailLoginStep = LogInWithEmailStepDescription(enablePhoneLogin: !featureProvider.allowOnlyEmailLogin, prefilledEmail: credentials?.emailAddress)
+                viewController = createViewController(for: emailLoginStep)
+            }
+
+            return viewController
 
         case .provideCredentials(let credentialsFlowType):
             let viewController: AuthenticationStepController!

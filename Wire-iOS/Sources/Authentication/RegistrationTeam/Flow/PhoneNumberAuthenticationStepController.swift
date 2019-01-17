@@ -30,6 +30,12 @@ class PhoneNumberAuthenticationStepController: AuthenticationStepController, Pho
     override func createMainView() -> UIView {
         phoneInputView.delegate = self
         phoneInputView.tintColor = .black
+
+        // Prefill the phone number if available.
+        if let prefillProvider = stepDescription as? AuthenticationPrefilledNumberProvider {
+            phoneInputView.updatePhoneNumber(prefillProvider.prefilledNumber)
+        }
+
         return phoneInputView
     }
 

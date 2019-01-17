@@ -18,7 +18,7 @@
 
 import Foundation
 
-final class ReauthenticateStepDescription: TeamCreationStepDescription {
+class ReauthenticateWithCompanyLoginStepDescription: TeamCreationStepDescription {
 
     let backButton: BackButtonDescription?
     let mainView: ViewDescriptor & ValueSubmission
@@ -27,16 +27,14 @@ final class ReauthenticateStepDescription: TeamCreationStepDescription {
     let secondaryView: TeamCreationSecondaryViewDescription?
 
     init() {
-//        let registrationViewController = RegistrationViewController(authenticationFlow: .onlyLogin)
-//        registrationViewController.shouldHideCancelButton = numberOfAccounts < 2
-//        registrationViewController.loginCredentials = credentials
-//        return registrationViewController
-
         backButton = BackButtonDescription()
-        mainView = EmailPasswordFieldDescription(forRegistration: false)
         headline = "registration.signin.title".localized
-        subtext = "Enter your email address and password.".localized
-        secondaryView = LogInSecondaryView(credentialsType: .email, alternativeCredentialsType: nil)
+        subtext = "signin_logout.sso.subheadline".localized
+
+        mainView = SolidButtonDescription(title: "signin_logout.sso.buton".localized, accessibilityIdentifier: "company_login")
+
+        secondaryView = SignOutViewDescription(showAlert: true)
     }
 
 }
+

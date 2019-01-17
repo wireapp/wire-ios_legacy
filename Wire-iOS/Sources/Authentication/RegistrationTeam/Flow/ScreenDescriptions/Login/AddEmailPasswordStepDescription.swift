@@ -31,7 +31,7 @@ class AddEmailPasswordStepDescription: TeamCreationStepDescription {
         mainView = EmailPasswordFieldDescription(forRegistration: true)
         headline = "registration.add_email_password.hero.title".localized
         subtext = "registration.add_email_password.hero.paragraph".localized
-        secondaryView = SignOutViewDescription()
+        secondaryView = SignOutViewDescription(showAlert: true)
     }
 
 }

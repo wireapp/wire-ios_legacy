@@ -18,7 +18,11 @@
 
 import Foundation
 
-final class LogInWithPhoneNumberStepDescription: TeamCreationStepDescription {
+protocol AuthenticationPrefilledNumberProvider {
+    var prefilledNumber: String? { get }
+}
+
+final class LogInWithPhoneNumberStepDescription: TeamCreationStepDescription, AuthenticationPrefilledNumberProvider {
 
     let backButton: BackButtonDescription?
     let mainView: ViewDescriptor & ValueSubmission
@@ -26,12 +30,21 @@ final class LogInWithPhoneNumberStepDescription: TeamCreationStepDescription {
     let subtext: String?
     let secondaryView: TeamCreationSecondaryViewDescription?
 
-    init() {
+    let prefilledNumber: String?
+
+    init(prefilledNumber: String? = nil) {
         backButton = BackButtonDescription()
         mainView = EmptyViewDescription()
         headline = "registration.signin.title".localized
-        subtext = "signin.phone.subheadline".localized
-        secondaryView = LogInSecondaryView(credentialsType: .phone, alternativeCredentialsType: .email)
+        self.prefilledNumber = prefilledNumber
+
+        if prefilledNumber != nil {
+            subtext = "signin_logout.phone.subheadline".localized
+            secondaryView = SignOutViewDescription(showAlert: true)
+        } else {
+            subtext = "signin.phone.subheadline".localized
+            secondaryView = LogInSecondaryView(credentialsType: .phone, alternativeCredentialsType: .email)
+        }
     }
 
 }

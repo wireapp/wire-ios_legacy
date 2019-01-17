@@ -30,6 +30,8 @@ class EmailPasswordTextField: UIView {
     let contentStack = UIStackView()
     let separatorContainer: ContentInsetView
 
+    var hasPrefilledValue: Bool = false
+
     weak var delegate: EmailPasswordTextFieldDelegate?
 
     private var emailValidationError: TextFieldValidator.ValidationError = .none
@@ -90,6 +92,12 @@ class EmailPasswordTextField: UIView {
         separatorContainer.heightAnchor.constraint(equalToConstant: CGFloat.hairline).isActive = true
     }
 
+    /// Pre-fills the e-mail text field.
+    func prefill(email: String?) {
+        hasPrefilledValue = email != nil
+        emailField.text = email
+    }
+
     // MARK: - Responder
 
     override var isFirstResponder: Bool {
@@ -97,11 +105,11 @@ class EmailPasswordTextField: UIView {
     }
 
     override var canBecomeFirstResponder: Bool {
-        return emailField.canBecomeFirstResponder
+        return logicalFirstResponder.canBecomeFirstResponder
     }
 
     override func becomeFirstResponder() -> Bool {
-        return emailField.becomeFirstResponder()
+        return logicalFirstResponder.becomeFirstResponder()
     }
 
     override var canResignFirstResponder: Bool {
@@ -115,6 +123,16 @@ class EmailPasswordTextField: UIView {
             return passwordField.resignFirstResponder()
         } else {
             return false
+        }
+    }
+
+    /// Returns the text field that should be used to become first responder.
+    private var logicalFirstResponder: UITextField {
+        // If we have a pre-filled email and the password field is empty, start with the password field
+        if hasPrefilledValue && (passwordField.text ?? "").isEmpty {
+            return passwordField
+        } else {
+            return emailField
         }
     }
 

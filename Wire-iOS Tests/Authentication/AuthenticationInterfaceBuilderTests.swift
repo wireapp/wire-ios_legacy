@@ -86,6 +86,34 @@ class AuthenticationInterfaceBuilderTests: ZMSnapshotTestCase {
         runSnapshotTest(for: .pendingEmailLinkVerification(credentials))
     }
 
+    func testReauthenticate_Email() {
+        let credentials = LoginCredentials(emailAddress: "test@example.com", phoneNumber: nil, hasPassword: true, usesCompanyLogin: false)
+        runSnapshotTest(for: .reauthenticate(credentials: credentials, numberOfAccounts: 1))
+    }
+
+    func testReauthenticate_EmailAndPhone() {
+        let credentials = LoginCredentials(emailAddress: "test@example.com", phoneNumber: "+33123456789", hasPassword: true, usesCompanyLogin: false)
+
+        // Email should have priority
+        runSnapshotTest(for: .reauthenticate(credentials: credentials, numberOfAccounts: 1))
+    }
+
+    func testReauthenticate_Phone() {
+        let credentials = LoginCredentials(emailAddress: nil, phoneNumber: "+33123456789", hasPassword: true, usesCompanyLogin: false)
+
+        // Email should have priority
+        runSnapshotTest(for: .reauthenticate(credentials: credentials, numberOfAccounts: 1))
+    }
+
+    func testReauthenticate_CompanyLogin() {
+        let credentials = LoginCredentials(emailAddress: nil, phoneNumber: nil, hasPassword: false, usesCompanyLogin: true)
+        runSnapshotTest(for: .reauthenticate(credentials: credentials, numberOfAccounts: 1))
+    }
+
+    func testReauthenticate_NoCredentials() {
+        runSnapshotTest(for: .reauthenticate(credentials: nil, numberOfAccounts: 1))
+    }
+
     // MARK: - Helpers
 
     private func runSnapshotTest(for step: AuthenticationFlowStep, file: StaticString = #file, line: UInt = #line) {

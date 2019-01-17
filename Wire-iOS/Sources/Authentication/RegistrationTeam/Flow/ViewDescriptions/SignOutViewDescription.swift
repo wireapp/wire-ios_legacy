@@ -27,12 +27,22 @@ class SignOutViewDescription: TeamCreationSecondaryViewDescription {
     let views: [ViewDescriptor]
     weak var actioner: AuthenticationActioner?
 
-    init() {
+    init(showAlert: Bool) {
         let logOutButton = ButtonDescription(title: "registration.signin.too_many_devices.sign_out_button.title".localized(uppercased: true), accessibilityIdentifier: "log_out")
         views = [logOutButton]
 
         logOutButton.buttonTapped = { [weak self] in
-            self?.actioner?.executeAction(.signOut)
+            let signOutAction = AuthenticationCoordinatorAlertAction(title: "general.ok", coordinatorActions: [.signOut])
+
+            if showAlert {
+                let alert = AuthenticationCoordinatorAlert(title: "self.settings.account_details.log_out.alert.title".localized,
+                                                           message: "self.settings.account_details.log_out.alert.message".localized,
+                                                           actions: [signOutAction, .cancel])
+
+                self?.actioner?.executeAction(.presentAlert(alert))
+            } else {
+                self?.actioner?.executeAction(.signOut)
+            }
         }
     }
 }

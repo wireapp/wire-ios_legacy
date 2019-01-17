@@ -1346,8 +1346,14 @@
 "signin.confirm" = "Log In";
 "signin.company_idp.button.title" = "For Companies";
 
-"signin.email.subheadline" = "Enter your email address and password";
+"signin.email.subheadline" = "Enter your email address and password.";
 "signin.phone.subheadline" = "Enter your phone number.";
+
+"signin_logout.email.subheadline" = "Your session expired. Enter your email address and password to continue.";
+"signin_logout.phone.subheadline" = "Your session expired. Enter your phone number to continue.";
+
+"signin_logout.sso.subheadline" = "Your session expired. Log in with your company account to continue.";
+"signin_logout.sso.buton" = "Company Log In";
 
 "registration.phone_country" = "Country";
 "registration.phone_code" = "Country Code";

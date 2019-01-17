@@ -84,10 +84,19 @@ struct AuthenticationCoordinatorAlert {
 struct AuthenticationCoordinatorAlertAction {
     let title: String
     let coordinatorActions: [AuthenticationCoordinatorAction]
+    let style: UIAlertAction.Style
+
+    init(title: String, coordinatorActions: [AuthenticationCoordinatorAction], style: UIAlertAction.Style = .default) {
+        self.title = title
+        self.coordinatorActions = coordinatorActions
+        self.style = style
+    }
 }
 
 extension AuthenticationCoordinatorAlertAction {
     static let ok: AuthenticationCoordinatorAlertAction = AuthenticationCoordinatorAlertAction(title: "general.ok".localized, coordinatorActions: [])
+
+    static let cancel: AuthenticationCoordinatorAlertAction = AuthenticationCoordinatorAlertAction(title: "general.cancel".localized, coordinatorActions: [], style: .cancel)
 }
 
 /**

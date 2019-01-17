@@ -678,8 +678,10 @@ extension AuthenticationCoordinator {
 
     @objc var canStartCompanyLoginFlow: Bool {
         switch stateController.currentStep {
-        case .provideCredentials, .createCredentials, .reauthenticate:
+        case .provideCredentials, .createCredentials:
             return true
+        case .reauthenticate(let credentials, _):
+            return credentials?.usesCompanyLogin == true
         default:
             return false
         }

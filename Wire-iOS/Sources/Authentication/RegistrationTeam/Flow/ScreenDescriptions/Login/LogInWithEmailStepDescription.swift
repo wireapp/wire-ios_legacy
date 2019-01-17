@@ -26,12 +26,18 @@ final class LogInWithEmailStepDescription: TeamCreationStepDescription {
     let subtext: String?
     let secondaryView: TeamCreationSecondaryViewDescription?
 
-    init(enablePhoneLogin: Bool) {
+    init(enablePhoneLogin: Bool, prefilledEmail: String? = nil) {
         backButton = BackButtonDescription()
-        mainView = EmailPasswordFieldDescription(forRegistration: false)
         headline = "registration.signin.title".localized
-        subtext = "signin.email.subheadline".localized
-        secondaryView = LogInSecondaryView(credentialsType: .email, alternativeCredentialsType: enablePhoneLogin ? .phone : nil)
+        mainView = EmailPasswordFieldDescription(forRegistration: false, prefilledEmail: prefilledEmail)
+
+        if prefilledEmail != nil {
+            subtext = "signin_logout.email.subheadline".localized
+            secondaryView = SignOutViewDescription(showAlert: true)
+        } else {
+            subtext = "signin.email.subheadline".localized
+            secondaryView = LogInSecondaryView(credentialsType: .email, alternativeCredentialsType: enablePhoneLogin ? .phone : nil)
+        }
     }
 
 }

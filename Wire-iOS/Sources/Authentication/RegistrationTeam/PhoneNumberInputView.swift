@@ -203,6 +203,28 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
         countryCodeInputView.accessibilityValue = country.e164PrefixString
     }
 
+    // MARK: - Text Update
+
+    /// Updates the phone number with a new value.
+    @discardableResult func updatePhoneNumber(_ newString: String?) -> Bool {
+        guard let newString = newString else { return false }
+
+        // If the textField is empty and a replacementString with a +, it is likely to insert from autoFill.
+        if textField.text?.count == 0 && newString.contains("+") {
+            return shouldInsert(phoneNumber: newString)
+        }
+
+        let number = PhoneNumber(countryCode: country.e164.uintValue, numberWithoutCode: newString)
+
+        switch number.validate() {
+        case .containsInvalidCharacters, .tooLong:
+            return false
+        default:
+            removeValidationError()
+            return true
+        }
+    }
+
     // MARK: - Events
 
     @objc private func handleCountryButtonTap() {
@@ -228,22 +250,12 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
 
     /// Only insert text if we have a valid phone number.
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        guard let newString = (textField.text as NSString?)?.replacingCharacters(in: range, with: string) else { return false }
-
-        // If the textField is empty and a replacementString with a +, it is likely to insert from autoFill.
-        if textField.text?.count == 0 && newString.contains("+") {
-            return shouldInsert(phoneNumber: string)
-        }
-
-        let number = PhoneNumber(countryCode: country.e164.uintValue, numberWithoutCode: newString)
-
-        switch number.validate() {
-        case .containsInvalidCharacters, .tooLong:
+        guard let input = textField.text, let replacementRange = Range(range, in: input) else {
             return false
-        default:
-            removeValidationError()
-            return true
         }
+
+        let newString = input.replacingCharacters(in: replacementRange, with: string)
+        return updatePhoneNumber(newString)
     }
 
     /**
