@@ -34,22 +34,17 @@ final class ChangePhoneViewControllerSnapshotTests: ZMSnapshotTestCase {
         super.tearDown()
     }
 
-    func testForANumberPasted(){
+    func testForANumberPasted() {
         // call viewDidLoad
         sut.loadViewIfNeeded()
-
-        // make table view's cells visible
-        sut.view.frame = CGRect(origin: .zero, size: defaultIPhoneSize)
-        sut.view.layoutIfNeeded()
 
         UIPasteboard.general.string = "+41 86 079 209 36 37"
 
         let indexPath = IndexPath(row: 0, section: 0)
-        if let cell = sut.tableView.cellForRow(at: indexPath) as? RegistrationTextFieldCell {
-
-            cell.textField.paste(nil)
+        if let cell = sut.tableView.cellForRow(at: indexPath) as? PhoneNumberInputCell {
+            cell.phoneInputView.paste(nil)
         }
 
-        verifyInIPhoneSize(view: sut.view)
+        verify(view: sut.view)
     }
 }

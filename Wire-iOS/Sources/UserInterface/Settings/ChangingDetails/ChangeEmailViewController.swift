@@ -111,8 +111,8 @@ struct ChangeEmailState {
     }
     
     internal func setupViews() {
-        RegistrationTextFieldCell.register(in: tableView)
-        
+        AccessoryTextFieldCell.register(in: tableView)
+
         title = "self.settings.account_section.email.change.title".localized(uppercased: true)
         view.backgroundColor = .clear
         tableView.isScrollEnabled = false
@@ -170,31 +170,23 @@ struct ChangeEmailState {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: RegistrationTextFieldCell.zm_reuseIdentifier, for: indexPath) as! RegistrationTextFieldCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: AccessoryTextFieldCell.zm_reuseIdentifier, for: indexPath) as! AccessoryTextFieldCell
 
         switch Cell(rawValue: indexPath.row)! {
         case .emailField:
             cell.textField.accessibilityIdentifier = "EmailField"
-            cell.textField.placeholder = "email.placeholder".localized
             cell.textField.text = state.visibleEmail
-            cell.textField.keyboardType = .emailAddress
-            cell.textField.textContentType = .emailAddress
-            cell.textField.becomeFirstResponder()
+            cell.textField.kind = .email
 
         case .passwordField:
             cell.textField.accessibilityIdentifier = "PasswordField"
             cell.textField.placeholder = "password.placeholder".localized
-            cell.textField.isSecureTextEntry = true
             cell.textField.text = nil
-
-            if #available(iOS 12, *) {
-                cell.textField.textContentType = .newPassword
-            } else if #available(iOS 11, *) {
-                cell.textField.textContentType = .password
-            }
+            cell.textField.kind = .password(isNew: true)
         }
 
-        cell.delegate = self
+        cell.textField.showConfirmButton = false
+        cell.textField.textFieldValidationDelegate = self
         updateSaveButtonState()
         return cell
     }
@@ -233,19 +225,14 @@ extension ChangeEmailViewController: ConfirmEmailDelegate {
     }
 }
 
-extension ChangeEmailViewController: RegistrationTextFieldCellDelegate {
-    func tableViewCellDidChangeText(cell: RegistrationTextFieldCell, text: String) {
-        guard let index = tableView.indexPath(for: cell), let cellType = Cell(rawValue: index.row) else {
-            return
-        }
+extension ChangeEmailViewController: TextFieldValidationDelegate {
 
-        switch cellType {
-        case .emailField:
-            state.newEmail = text
-        case .passwordField:
-            state.newPassword = text
-        }
-
-        updateSaveButtonState()
+    @objc func textFieldEditingChanged(sender: AccessoryTextField) {
+        sender.validateInput()
     }
+
+    func validationUpdated(sender: UITextField, error: TextFieldValidator.ValidationError) {
+        print(error)
+    }
+
 }

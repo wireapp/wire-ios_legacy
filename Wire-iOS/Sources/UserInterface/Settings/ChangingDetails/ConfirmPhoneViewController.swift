@@ -77,7 +77,7 @@ protocol ConfirmPhoneDelegate: class {
     }
     
     fileprivate func setupViews() {
-        RegistrationTextFieldCell.register(in: tableView)
+        ConfirmationCodeCell.register(in: tableView)
         SettingsButtonCell.register(in: tableView)
         
         title = "self.settings.account_section.phone_number.change.verify.title".localized(uppercased: true)
@@ -161,12 +161,9 @@ protocol ConfirmPhoneDelegate: class {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch Section(rawValue: indexPath.section)! {
         case .verificationCode:
-            let cell = tableView.dequeueReusableCell(withIdentifier: RegistrationTextFieldCell.zm_reuseIdentifier, for: indexPath) as! RegistrationTextFieldCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: ConfirmationCodeCell.zm_reuseIdentifier, for: indexPath) as! ConfirmationCodeCell
             cell.textField.accessibilityIdentifier = "ConfirmationCodeField"
-            cell.textField.placeholder = "self.settings.account_section.phone_number.change.verify.code_placeholder".localized
-            cell.textField.keyboardType = .numberPad
-            cell.textField.becomeFirstResponder()
-            cell.delegate = self
+            cell.textField.delegate = self
             return cell
         case .buttons:
             let cell = tableView.dequeueReusableCell(withIdentifier: SettingsButtonCell.zm_reuseIdentifier, for: indexPath) as! SettingsButtonCell
@@ -229,11 +226,22 @@ extension ConfirmPhoneViewController: UserProfileUpdateObserver {
     }
 }
 
-extension ConfirmPhoneViewController: RegistrationTextFieldCellDelegate {
-    func tableViewCellDidChangeText(cell: RegistrationTextFieldCell, text: String) {
+extension ConfirmPhoneViewController: CharacterInputFieldDelegate {
+
+    func shouldAcceptChanges(_ inputField: CharacterInputField) -> Bool {
+        return inputField.text != nil
+    }
+
+    func didChangeText(_ inputField: CharacterInputField, to: String) {
+        // no-op
+    }
+
+    func didFillInput(inputField: CharacterInputField, text: String) {
+        // self.valueSubmitted?(text)
         verificationCode = text
         updateSaveButtonState()
     }
+
 }
 
 extension ConfirmPhoneViewController: ZMTimerClient {

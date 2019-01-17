@@ -112,6 +112,10 @@ class AccessoryTextField: UITextField, TextContainer {
     var textInsets: UIEdgeInsets = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 8)
     let placeholderInsets: UIEdgeInsets
 
+    convenience override init(frame: CGRect) {
+        self.init(kind: .unknown, leftInset: 8)
+    }
+
     /// Init with kind for keyboard style and validator type. Default is .unknown
     ///
     /// - Parameter kind: the type of text field

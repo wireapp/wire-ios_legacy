@@ -40,6 +40,13 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
     /// The validation error for the current input.
     private(set) var validationError: TextFieldValidator.ValidationError = .tooShort(kind: .phoneNumber)
 
+    /// Whether to show the confirm button.
+    var showConfirmButton: Bool = true {
+        didSet {
+            textField.showConfirmButton = showConfirmButton
+        }
+    }
+
     // MARK: - Views
 
     private let countryPickerButton = IconButton()
