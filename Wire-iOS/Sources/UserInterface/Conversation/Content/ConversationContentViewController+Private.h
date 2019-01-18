@@ -20,43 +20,38 @@
 /// Private material for conversationContentViewController.
 
 #import "ConversationContentViewController.h"
-#import <WireSyncEngine/WireSyncEngine.h>
 #import "MessageAction.h"
+
+@import WireSyncEngine;
 
 NS_ASSUME_NONNULL_BEGIN
 
 @class MessagePresenter;
 @class FLAnimatedImageView;
+@class ConversationTableViewDataSource;
 @protocol SelectableView;
-@protocol MessageActionResponder;
 
 @interface ConversationContentViewController ()
 
 /// The cell whose tools are expanded in the UI. Setting this automatically triggers the expanding in the UI.
 @property (nonatomic, strong, readwrite, nullable) id<ZMConversationMessage> messageWithExpandedTools;
 
-@property (nonatomic) ZMConversationMessageWindow *messageWindow;
+@property (nonatomic) ConversationTableViewDataSource* dataSource;
 @property (nonatomic) MessagePresenter* messagePresenter;
+
 @property (nonatomic, nullable) id<ZMConversationMessage> expectedMessageToShow;
 @property (nonatomic, copy, nullable) void (^onMessageShown)(UIView *);
 @property (nonatomic, nullable, weak) UITableViewCell<SelectableView> *pinchImageCell;
+
 @property (nonatomic, nullable) FLAnimatedImageView *pinchImageView;
 @property (nonatomic, nullable) UIView *dimView;
 @property (nonatomic) CGPoint initialPinchLocation;
 
 - (void)removeHighlightsAndMenu;
 
-- (void)wantsToPerformAction:(MessageAction)actionId forMessage:(id<ZMConversationMessage>)message cell:(UIView<SelectableView> *)cell;
-
 @end
 
-
-@interface ConversationContentViewController (MessageWindow) <ZMConversationMessageWindowObserver>
-
-- (void)expandMessageWindowUp;
-- (void)prefetchNextMessagesForIndexPaths:(NSArray<NSIndexPath *> *)indexPaths;
-
+@interface ConversationContentViewController (MessageActionResponder) <MessageActionResponder>
 @end
-
 
 NS_ASSUME_NONNULL_END

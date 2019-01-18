@@ -21,7 +21,7 @@ import Foundation
 extension ConversationContentViewController {
     @objc(cellForMessage:)
     func cell(for message: ZMConversationMessage) -> UITableViewCell? {
-        guard let indexPath = self.conversationMessageWindowTableViewAdapter.indexPath(for: message) else {
+        guard let indexPath = dataSource.indexPath(for: message) else {
             return nil
         }
         

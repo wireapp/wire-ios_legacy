@@ -114,7 +114,7 @@ class ConversationPingCell: ConversationIconBasedCell, ConversationMessageCell {
     func willDisplay() {
         
         if let conversation = self.configuration?.message?.conversation,
-           let lastMessage = conversation.messages.lastObject as? ZMConversationMessage,
+           let lastMessage = conversation.recentMessages.last,
            let message = self.configuration?.message {
             
             let isLastMessage = lastMessage.isEqual(message)

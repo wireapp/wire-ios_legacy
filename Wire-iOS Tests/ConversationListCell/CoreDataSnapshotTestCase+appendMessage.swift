@@ -20,7 +20,7 @@ import Foundation
 
 extension CoreDataSnapshotTestCase {
     func appendTextMessage(to conversation: ZMConversation) {
-        let message = conversation.append(text: "test \(conversation.messages.count + 1)") as! ZMMessage
+        let message = conversation.append(text: "test \(conversation.recentMessages.count + 1)") as! ZMMessage
         (message).sender = self.otherUser
 
         conversation.lastReadServerTimeStamp = Date.distantPast
@@ -56,7 +56,7 @@ extension CoreDataSnapshotTestCase {
         otherMessage.sender = self.otherUser
         otherMessage.systemMessageType = .missedCall
 
-        conversation.sortedAppendMessage(otherMessage)
+        conversation.append(otherMessage)
         conversation.lastReadServerTimeStamp = Date.distantPast
     }
 
