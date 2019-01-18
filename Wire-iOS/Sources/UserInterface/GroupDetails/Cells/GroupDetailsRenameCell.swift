@@ -19,8 +19,12 @@
 
 import Foundation
 
-class GroupDetailsRenameCell : UICollectionViewCell {
- 
+class GroupDetailsRenameCell : UICollectionViewCell, Restricted {
+    
+    var requiredPermissions: Permissions {
+        return .member
+    }
+    
     let verifiedIconView = UIImageView()
     let accessoryIconView = UIImageView()
     let titleTextField = SimpleTextField()
@@ -79,6 +83,11 @@ class GroupDetailsRenameCell : UICollectionViewCell {
         contentStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
         contentStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16).isActive = true
         contentStackView.spacing = 8
+        
+        if !selfUserIsAuthorized {
+            titleTextField.isUserInteractionEnabled = false
+            accessoryIconView.isHidden = true
+        }
         
         configureColors()
     }

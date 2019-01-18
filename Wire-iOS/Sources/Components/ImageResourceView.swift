@@ -39,7 +39,7 @@ class ImageResourceView: FLAnimatedImageView {
         }
     }
     
-    public func setImageResource(_ imageResource: ImageResource?, completion: (() -> Void)? = nil) {
+    public func setImageResource(_ imageResource: ImageResource?, completion: (() -> Void)? = nil) {                
         let token = UUID()
         setMediaAsset(nil)
 
