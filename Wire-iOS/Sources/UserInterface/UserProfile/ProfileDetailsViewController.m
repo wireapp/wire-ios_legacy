@@ -275,7 +275,7 @@ typedef NS_ENUM(NSUInteger, ProfileViewContentMode) {
 - (ZetaIconType)iconTypeForUserAction:(ProfileUserAction)userAction
 {
     switch (userAction) {
-        case ProfileUserActionAddPeople:///todo
+        case ProfileUserActionAddPeople:
             return ZetaIconTypeCreateConversation;
             break;
             
