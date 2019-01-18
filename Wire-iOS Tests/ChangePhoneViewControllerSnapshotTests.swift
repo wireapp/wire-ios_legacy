@@ -21,23 +21,27 @@ import XCTest
 
 class ChangePhoneViewControllerSnapshotTests: ZMSnapshotTestCase {
 
-    func testForANumberPasted() {
-        // GIVEN
+    override func setUp() {
+        super.setUp()
+    }
+
+    func testThatItShowsCurrentUserPhoneNumber() {
         let sut = ChangePhoneViewController()
         sut.view.backgroundColor = .black
-
-        // call viewDidLoad
-        sut.loadViewIfNeeded()
-
-        // make table view's cells visible
-        sut.view.frame = CGRect(origin: .zero, size: defaultIPhoneSize)
-        sut.view.layoutIfNeeded()
-
-        let indexPath = IndexPath(row: 0, section: 0)
-        if let cell = sut.tableView.cellForRow(at: indexPath) as? PhoneNumberInputCell {
-            cell.phoneInputView.paste(nil)
-        }
-
         verify(view: sut.view)
     }
+
+    func testThatItCanPastePhoneNumber() {
+        // GIVEN
+        let inputView = PhoneNumberInputView()
+
+        // WHEN
+        UIPasteboard.general.string = "+41 86 079 209 36 37"
+        inputView.paste(self)
+
+        // THEN
+        XCTAssertEqual(inputView.country.e164PrefixString, "+41")
+        XCTAssertEqual(inputView.input, "860792093637")
+    }
+
 }

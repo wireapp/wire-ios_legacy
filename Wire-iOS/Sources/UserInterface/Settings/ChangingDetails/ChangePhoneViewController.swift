@@ -135,8 +135,10 @@ final class ChangePhoneViewController: SettingsBaseTableViewController {
                 cell.phoneInputView.selectCountry(.default)
             }
 
-            cell.phoneInputView.tintColor = .white
             cell.phoneInputView.delegate = self
+            cell.phoneInputView.textColor = .white
+            cell.phoneInputView.inputBackgroundColor = .clear
+
             updateSaveButtonState()
             return cell
 

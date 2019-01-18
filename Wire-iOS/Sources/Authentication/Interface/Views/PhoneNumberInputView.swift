@@ -55,7 +55,6 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
     // MARK: - Views
 
     private let countryPickerButton = IconButton()
-    private let countryPickerIndicator = IconButton()
 
     private let inputStack = UIStackView()
     private let countryCodeInputView = IconButton()
@@ -89,8 +88,9 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
         // countryCodeButton
         countryCodeInputView.setContentHuggingPriority(.required, for: .horizontal)
         countryCodeInputView.setBackgroundImageColor(.white, for: .normal)
-        countryCodeInputView.setTitleColor(.black, for: .normal)
-        countryCodeInputView.titleLabel?.font = UIFont.normalLightFont
+        countryCodeInputView.setTitleColor(UIColor.Team.textColor, for: .normal)
+        countryCodeInputView.titleLabel?.font = FontSpec(.normal, .regular, .inputText).font
+        countryCodeInputView.titleEdgeInsets.top = -1
         countryCodeInputView.isUserInteractionEnabled = false
         inputStack.addArrangedSubview(countryCodeInputView)
 
@@ -158,14 +158,24 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
         }
     }
 
-    // MARK: - View Lifecycle
+    // MARK: - Customization
 
-    override var tintColor: UIColor! {
+    var inputBackgroundColor: UIColor = .white {
         didSet {
-            countryPickerButton.setTitleColor(tintColor, for: .normal)
-            countryPickerButton.setTitleColor(tintColor, for: .normal)
+            countryCodeInputView.setBackgroundImageColor(inputBackgroundColor, for: .normal)
+            textField.backgroundColor = inputBackgroundColor
         }
     }
+
+    var textColor: UIColor = UIColor.Team.textColor {
+        didSet {
+            countryCodeInputView.setTitleColor(textColor, for: .normal)
+            textField.textColor = textColor
+            updateCountryButtonLabel()
+        }
+    }
+
+    // MARK: - View Lifecycle
 
     override var canBecomeFirstResponder: Bool {
         return textField.canBecomeFirstResponder
@@ -194,25 +204,28 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
 
     func selectCountry(_ country: Country) {
         self.country = country
-
-        let title = country.displayName
-        let color = UIColor.black
-        let selectedColor = UIColor(white: 0, alpha: 0.4)
-
-        let icon = NSTextAttachment.downArrow(color: color)
-        let selectedIcon = NSTextAttachment.downArrow(color: selectedColor)
-
-        let normalLabel = title.addingTrailingAttachment(icon) && color
-        countryPickerButton.setAttributedTitle(normalLabel, for: .normal)
-
-        let selectedLabel = title.addingTrailingAttachment(selectedIcon) && selectedColor
-        countryPickerButton.setAttributedTitle(selectedLabel, for: .highlighted)
+        updateCountryButtonLabel()
 
         countryPickerButton.accessibilityValue = country.displayName
         countryPickerButton.accessibilityLabel = "registration.phone_country".localized
         countryPickerButton.accessibilityHint = "registration.phone_country.hint".localized
         countryCodeInputView.setTitle(country.e164PrefixString, for: .normal)
         countryCodeInputView.accessibilityValue = country.e164PrefixString
+    }
+
+    private func updateCountryButtonLabel() {
+        let title = country.displayName
+        let color = textColor
+        let selectedColor = textColor.withAlphaComponent(0.4)
+
+        let icon = NSTextAttachment.downArrow(color: color)
+        let selectedIcon = NSTextAttachment.downArrow(color: selectedColor)
+
+        let normalLabel = title.addingTrailingAttachment(icon, verticalOffset: 1) && color
+        countryPickerButton.setAttributedTitle(normalLabel, for: .normal)
+
+        let selectedLabel = title.addingTrailingAttachment(selectedIcon, verticalOffset: 1) && selectedColor
+        countryPickerButton.setAttributedTitle(selectedLabel, for: .highlighted)
     }
 
     // MARK: - Text Update
@@ -262,8 +275,8 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
     @objc override func paste(_ sender: Any?) {
         var shouldPaste = true
 
-        if let pastedString = UIPasteboard.general.string {
-            shouldPaste = shouldInsert(phoneNumber: pastedString)
+        if UIPasteboard.general.hasStrings {
+            shouldPaste = shouldInsert(phoneNumber: UIPasteboard.general.string ?? "")
         }
 
         if shouldPaste {

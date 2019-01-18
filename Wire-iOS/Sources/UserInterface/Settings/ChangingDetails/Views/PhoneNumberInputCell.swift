@@ -23,6 +23,7 @@ class PhoneNumberInputCell: UITableViewCell {
     let phoneInputView: PhoneNumberInputView = {
         let inputView = PhoneNumberInputView()
         inputView.showConfirmButton = false
+        inputView.tintColor = .white
         return inputView
     }()
 
