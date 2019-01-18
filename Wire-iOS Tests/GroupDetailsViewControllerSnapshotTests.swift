@@ -22,20 +22,32 @@ import XCTest
 class GroupDetailsViewControllerSnapshotTests: CoreDataSnapshotTestCase {
     
     var sut: GroupDetailsViewController!
+    var groupConversation: ZMConversation!
     
     override func setUp() {
         super.setUp()
+        
+        // Note, we explicitly don't add participants. Why? The participants
+        // list in the group details requires the shared user session, which
+        // isn't configured in these tests. As such, the participants list
+        // is missing from these snapshots.
+        // TODO: include participants list.
+        groupConversation = ZMConversation.insertNewObject(in: uiMOC)
+        groupConversation.remoteIdentifier = UUID.create()
+        groupConversation.conversationType = .group
+        groupConversation.userDefinedName = "📱 iOS Team"
     }
     
     override func tearDown() {
         sut = nil
+        groupConversation = nil
         super.tearDown()
     }
 
     func testForOptionsForTeamUserInNonTeamConversation() {
         teamTest {
             selfUser.membership?.setTeamRole(.member)
-            sut = GroupDetailsViewController(conversation: otherUserConversation)
+            sut = GroupDetailsViewController(conversation: groupConversation)
             verify(view: sut.view)
         }
     }
@@ -43,7 +55,7 @@ class GroupDetailsViewControllerSnapshotTests: CoreDataSnapshotTestCase {
     func testForOptionsForTeamUserInNonTeamConversation_Partner() {
         teamTest {
             selfUser.membership?.setTeamRole(.partner)
-            sut = GroupDetailsViewController(conversation: otherUserConversation)
+            sut = GroupDetailsViewController(conversation: groupConversation)
             verify(view: sut.view)
         }
     }
@@ -51,8 +63,9 @@ class GroupDetailsViewControllerSnapshotTests: CoreDataSnapshotTestCase {
     func testForOptionsForTeamUserInTeamConversation() {
         teamTest {
             selfUser.membership?.setTeamRole(.member)
-            otherUserConversation.team =  selfUser.team
-            sut = GroupDetailsViewController(conversation: otherUserConversation)
+            groupConversation.team =  selfUser.team
+            groupConversation.teamRemoteIdentifier = selfUser.team?.remoteIdentifier
+            sut = GroupDetailsViewController(conversation: groupConversation)
             verify(view: sut.view)
         }
     }
@@ -60,22 +73,23 @@ class GroupDetailsViewControllerSnapshotTests: CoreDataSnapshotTestCase {
     func testForOptionsForTeamUserInTeamConversation_Partner() {
         teamTest {
             selfUser.membership?.setTeamRole(.partner)
-            otherUserConversation.team =  selfUser.team
-            sut = GroupDetailsViewController(conversation: otherUserConversation)
+            groupConversation.team =  selfUser.team
+            groupConversation.teamRemoteIdentifier = selfUser.team?.remoteIdentifier
+            sut = GroupDetailsViewController(conversation: groupConversation)
             verify(view: sut.view)
         }
     }
 
     func testForOptionsForNonTeamUser() {
         nonTeamTest {
-            sut = GroupDetailsViewController(conversation: otherUserConversation)
+            sut = GroupDetailsViewController(conversation: groupConversation)
             verify(view: self.sut.view)
         }
     }
 
     func testForActionMenu() {
         teamTest {
-            sut = GroupDetailsViewController(conversation: otherUserConversation)
+            sut = GroupDetailsViewController(conversation: groupConversation)
             sut.detailsView(GroupDetailsFooterView(), performAction: .more)
             verifyAlertController((sut?.actionController?.alertController)!)
         }
@@ -83,7 +97,7 @@ class GroupDetailsViewControllerSnapshotTests: CoreDataSnapshotTestCase {
     
     func testForActionMenu_NonTeam() {
         nonTeamTest {
-            sut = GroupDetailsViewController(conversation: otherUserConversation)
+            sut = GroupDetailsViewController(conversation: groupConversation)
             sut.detailsView(GroupDetailsFooterView(), performAction: .more)
             verifyAlertController((sut?.actionController?.alertController)!)
         }
