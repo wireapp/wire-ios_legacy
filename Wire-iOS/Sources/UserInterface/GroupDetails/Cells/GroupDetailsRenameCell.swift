@@ -64,7 +64,6 @@ class GroupDetailsRenameCell : UICollectionViewCell, Restricted {
         accessoryIconView.setContentHuggingPriority(UILayoutPriority.required, for: .horizontal)
         accessoryIconView.setContentCompressionResistancePriority(UILayoutPriority.required, for: .horizontal)
         
-        titleTextField.isUserInteractionEnabled = selfUserIsAuthorized
         titleTextField.translatesAutoresizingMaskIntoConstraints = false
         titleTextField.font = FontSpec.init(.normal, .light).font!
         titleTextField.returnKeyType = .done
@@ -84,6 +83,12 @@ class GroupDetailsRenameCell : UICollectionViewCell, Restricted {
         contentStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
         contentStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16).isActive = true
         contentStackView.spacing = 8
+        
+        if !selfUserIsAuthorized {
+            // disable editing
+            titleTextField.isUserInteractionEnabled = false
+            accessoryIconView.isHidden = true
+        }
         
         configureColors()
     }
