@@ -104,6 +104,16 @@ class StartedConversationCellTests: ConversationCellSnapshotTestCase {
         verify(message: message)
     }
     
+    func testThatItRendersNewConversationCellWithOneParticipantAndWithoutName() {
+        let message = cell(for: .newConversation, fillUsers: .justYou)
+        verify(message: message)
+    }
+    
+    func testThatItRendersNewConversationCellStartedFromSelfWithOneParticipantAndWithoutName() {
+        let message = cell(for: .newConversation, fromSelf: true, fillUsers: .youAndAnother)
+        verify(message: message)
+    }
+    
     func testThatItRendersNewConversationCellWithParticipantsAndWithoutName() {
         let message = cell(for: .newConversation, fillUsers: .many)
         verify(message: message)
@@ -128,6 +138,12 @@ class StartedConversationCellTests: ConversationCellSnapshotTestCase {
     
     func testThatItRendersNewConversationCellWithoutParticipants_AllowGuests() {
         let message = cell(for: .newConversation, text: "Italy Trip", allowGuests: true)
+        verify(message: message)
+    }
+    
+    func testThatItRendersNewConversationCell_SelfIsGuest_AllowGuests() {
+        selfUserInTeam = false
+        let message = cell(for: .newConversation, text: "Italy Trip", allowGuests: true, numberOfGuests: 1)
         verify(message: message)
     }
     
@@ -157,11 +173,16 @@ class StartedConversationCellTests: ConversationCellSnapshotTestCase {
             }
         }()
         
-        uiMOC.markAsSyncContext()
-        let team = Team.fetchOrCreate(with: .create(), create: true, in: uiMOC, created: nil)
-        uiMOC.markAsUIContext()
-        let member = Member.getOrCreateMember(for: selfUser, in: team!, context: uiMOC)
-        member.permissions = .member
+        var team: Team? = nil
+        
+        if selfUserInTeam {
+            uiMOC.markAsSyncContext()
+            team = Team.fetchOrCreate(with: .create(), create: true, in: uiMOC, created: nil)
+            uiMOC.markAsUIContext()
+            let member = Member.getOrCreateMember(for: selfUser, in: team!, context: uiMOC)
+            member.permissions = .member
+        }
+        
         let users = Array(message.users).filter { $0 != selfUser }
         let conversation = ZMConversation.insertGroupConversation(into: uiMOC, withParticipants: users, in: team)
         conversation?.allowGuests = allowGuests

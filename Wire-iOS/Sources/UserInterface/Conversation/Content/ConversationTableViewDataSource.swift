@@ -148,8 +148,8 @@ final class ConversationTableViewDataSource: NSObject {
         
         let fetchRequest = NSFetchRequest<ZMMessage>(entityName: ZMMessage.entityName())
         let validMessage = conversation.visibleMessagesPredicate!
-        let beforeGivenMessage = NSPredicate(format: "%K < %@", ZMMessageServerTimestampKey, serverTimestamp as NSDate)
-    
+        let beforeGivenMessage = NSPredicate(format: "%K > %@", ZMMessageServerTimestampKey, serverTimestamp as NSDate)
+            
         fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [validMessage, beforeGivenMessage])
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(ZMMessage.serverTimestamp), ascending: false)]
         
