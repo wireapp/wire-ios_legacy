@@ -43,7 +43,7 @@ class GroupDetailsViewControllerSnapshotTests: CoreDataSnapshotTestCase {
         groupConversation = nil
         super.tearDown()
     }
-
+    
     func testForOptionsForTeamUserInNonTeamConversation() {
         teamTest {
             selfUser.membership?.setTeamRole(.member)
@@ -53,6 +53,7 @@ class GroupDetailsViewControllerSnapshotTests: CoreDataSnapshotTestCase {
     }
     
     func testForOptionsForTeamUserInNonTeamConversation_Partner() {
+        // TODO: footer view needs updating
         teamTest {
             selfUser.membership?.setTeamRole(.partner)
             sut = GroupDetailsViewController(conversation: groupConversation)
@@ -71,6 +72,7 @@ class GroupDetailsViewControllerSnapshotTests: CoreDataSnapshotTestCase {
     }
     
     func testForOptionsForTeamUserInTeamConversation_Partner() {
+        // TODO: footer view needs updating
         teamTest {
             selfUser.membership?.setTeamRole(.partner)
             groupConversation.team =  selfUser.team
@@ -88,6 +90,7 @@ class GroupDetailsViewControllerSnapshotTests: CoreDataSnapshotTestCase {
     }
 
     func testForActionMenu() {
+        // TODO: the menu is missing "mark unread" option at top
         teamTest {
             sut = GroupDetailsViewController(conversation: groupConversation)
             sut.detailsView(GroupDetailsFooterView(), performAction: .more)
@@ -96,6 +99,7 @@ class GroupDetailsViewControllerSnapshotTests: CoreDataSnapshotTestCase {
     }
     
     func testForActionMenu_NonTeam() {
+        // TODO: the menu is missing "mark unread" option at top
         nonTeamTest {
             sut = GroupDetailsViewController(conversation: groupConversation)
             sut.detailsView(GroupDetailsFooterView(), performAction: .more)
