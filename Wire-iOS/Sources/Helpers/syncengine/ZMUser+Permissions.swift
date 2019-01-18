@@ -67,7 +67,7 @@ extension Restricted {
     
     var selfUserIsAuthorized: Bool {
         guard ZMUser.selfUserIsTeamMember else { return true }
-        return ZMUser.selfUserHas(permissions: self.requiredPermissions)
+        return ZMUser.selfUserHas(permissions: requiredPermissions)
     }
     
     func authorizeSelfUser(onSuccess: () -> Void) {
