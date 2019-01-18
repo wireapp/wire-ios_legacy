@@ -46,11 +46,11 @@ class ConfirmationCodeCell: UITableViewCell {
         textField.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            textField.leadingAnchor.constraint(equalTo: leadingAnchor),
-            textField.trailingAnchor.constraint(equalTo: trailingAnchor),
+            textField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            textField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             textField.topAnchor.constraint(equalTo: topAnchor, constant: 8),
             textField.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 8)
-            ])
+        ])
     }
 
 }

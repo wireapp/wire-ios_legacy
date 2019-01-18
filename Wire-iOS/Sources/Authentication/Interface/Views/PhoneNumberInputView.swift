@@ -258,7 +258,8 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
     }
 
     /// Do not paste if we need to set the text manually.
-    override open func paste(_ sender: Any?) {
+
+    @objc override func paste(_ sender: Any?) {
         var shouldPaste = true
 
         if let pastedString = UIPasteboard.general.string {
@@ -266,7 +267,7 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
         }
 
         if shouldPaste {
-            super.paste(sender)
+            textField.paste(sender)
         }
     }
 
