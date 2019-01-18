@@ -19,7 +19,7 @@
 
 import Foundation
 import Cartography
-import WireExtensionComponents
+
 
 private let zmLog = ZMSLog(tag: "UI")
 

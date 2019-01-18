@@ -18,13 +18,41 @@
 
 
 #import <UIKit/UIKit.h>
-@import WireExtensionComponents;
+
 
 typedef NS_OPTIONS(NSUInteger, WRExtendedBlockAnimationsOptions) {
     WRExtendedBlockAnimationsOptionsNone = 0,
     WRExtendedBlockAnimationsOptionsBeginFromCurrentState = 1 << 0
 };
 
+
+typedef NS_ENUM(NSInteger, WREasingFunction) {
+    WREasingFunctionLinear,
+    WREasingFunctionEaseInSine,
+    WREasingFunctionEaseOutSine,
+    WREasingFunctionEaseInOutSine,
+    WREasingFunctionEaseInQuad,
+    WREasingFunctionEaseOutQuad,
+    WREasingFunctionEaseInOutQuad,
+    WREasingFunctionEaseInCubic,
+    WREasingFunctionEaseOutCubic,
+    WREasingFunctionEaseInOutCubic,
+    WREasingFunctionEaseInQuart,
+    WREasingFunctionEaseOutQuart,
+    WREasingFunctionEaseInOutQuart,
+    WREasingFunctionEaseInQuint,
+    WREasingFunctionEaseOutQuint,
+    WREasingFunctionEaseInOutQuint,
+    WREasingFunctionEaseInExpo,
+    WREasingFunctionEaseOutExpo,
+    WREasingFunctionEaseInOutExpo,
+    WREasingFunctionEaseInCirc,
+    WREasingFunctionEaseOutCirc,
+    WREasingFunctionEaseInOutCirc,
+    WREasingFunctionEaseInBack,
+    WREasingFunctionEaseOutBack,
+    WREasingFunctionEaseInOutBack
+} NS_SWIFT_NAME(EasingFunction);
 
 
 @interface UIView (WR_ExtendedBlockAnimations)

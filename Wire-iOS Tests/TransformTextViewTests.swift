@@ -17,6 +17,7 @@
 //
 
 import XCTest
+@testable import Wire
 
 class TransformTextViewTests: XCTestCase {
 

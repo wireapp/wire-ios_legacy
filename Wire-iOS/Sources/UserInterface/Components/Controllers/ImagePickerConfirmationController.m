@@ -59,7 +59,7 @@
     };
     
     [self assetPreviewFromMediaInfo:info resultBlock:^(id image) {
-        @weakify(self);
+        ZM_WEAK(self);
     
         // Other source type (camera) is alread showing the confirmation dialogue.
         if (picker.sourceType == UIImagePickerControllerSourceTypePhotoLibrary) {
@@ -77,7 +77,7 @@
             };
             
             confirmImageViewController.onConfirm = ^(UIImage *editedImage){
-                @strongify(self);
+                ZM_STRONG(self);
                 
                 if (editedImage != nil) {
                     self.imagePickedBlock(UIImagePNGRepresentation(editedImage));

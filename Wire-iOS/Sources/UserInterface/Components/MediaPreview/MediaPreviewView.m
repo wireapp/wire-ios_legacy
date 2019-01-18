@@ -20,7 +20,7 @@
 @import PureLayout;
 
 #import "MediaPreviewView.h"
-@import WireExtensionComponents;
+
 #import "Wire-Swift.h"
 
 

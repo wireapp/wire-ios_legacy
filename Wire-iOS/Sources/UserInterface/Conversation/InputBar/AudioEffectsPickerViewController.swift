@@ -19,7 +19,7 @@
 
 import Foundation
 import Cartography
-
+import WireCommonComponents
 
 @objc public protocol AudioEffectsPickerDelegate: NSObjectProtocol {
     func audioEffectsPickerDidPickEffect(_ picker: AudioEffectsPickerViewController, effect: AVSAudioEffectType, resultFilePath: String)

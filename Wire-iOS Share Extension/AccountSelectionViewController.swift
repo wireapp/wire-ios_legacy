@@ -17,9 +17,9 @@
 //
 
 import Foundation
-import WireExtensionComponents
+import WireCommonComponents
 import WireShareEngine
-
+import WireDataModel
 
 private let cellReuseIdentifier = "AccountCell"
 

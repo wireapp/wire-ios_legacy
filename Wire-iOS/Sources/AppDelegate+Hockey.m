@@ -23,7 +23,7 @@
 #import "Application+runDuration.h"
 #import "Settings.h"
 #import "Wire-Swift.h"
-@import WireExtensionComponents;
+
 
 static NSString* ZMLogTag ZM_UNUSED = @"UI";
 

@@ -17,6 +17,7 @@
 //
 
 import UIKit
+import WireCommonComponents
 
 protocol TeamMemberInviteViewControllerDelegate: class {
     func teamInviteViewControllerDidFinish(_ controller: TeamMemberInviteViewController)

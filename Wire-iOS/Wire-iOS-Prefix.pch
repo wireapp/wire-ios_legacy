@@ -31,6 +31,4 @@
 #define STRINGIZE_INTERNAL(x) #x
 #define STRINGIZE(x) STRINGIZE_INTERNAL(x)
 
-#import <WireExtensionComponents/weakify.h>
-
 #endif

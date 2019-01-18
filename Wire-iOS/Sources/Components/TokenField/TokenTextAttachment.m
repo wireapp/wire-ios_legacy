@@ -16,11 +16,12 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-@import WireExtensionComponents;
+
 
 #import "TokenTextAttachment.h"
 #import "Token.h"
 #import "TokenField.h"
+#import "Wire-Swift.h"
 
 @implementation TokenSeparatorAttachment
 

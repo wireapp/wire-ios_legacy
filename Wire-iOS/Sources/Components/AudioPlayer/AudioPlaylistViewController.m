@@ -18,7 +18,7 @@
 
 
 @import PureLayout;
-@import WireExtensionComponents;
+
 
 #import "AudioPlaylistViewController.h"
 #import "AudioHeaderView.h"
@@ -250,9 +250,9 @@ static const CGFloat SeparatorLineOverflow = 4;
     if (cachedResource != nil) {
         self.audioPlaylist = cachedResource;
     } else {
-        @weakify(self);
+        ZM_WEAK(self);
         [[SoundcloudService sharedInstance] loadAudioResourceFromURL:self.linkAttachment.URL completion:^(id audioResource, NSError *error) {
-            @strongify(self);
+            ZM_STRONG(self);
             if (error == nil && audioResource != nil) {
                 self.audioPlaylist = audioResource;
                 [cache setObject:audioResource forKey:self.linkAttachment.URL];

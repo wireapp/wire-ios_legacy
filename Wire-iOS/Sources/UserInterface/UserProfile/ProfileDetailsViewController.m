@@ -25,7 +25,7 @@
 #import "Settings.h"
 
 
-@import WireExtensionComponents;
+
 @import PureLayout;
 @import WireDataModel;
 
@@ -550,9 +550,9 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
 {
     NSString *message = [NSString stringWithFormat:NSLocalizedString(@"missive.connection_request.default_message",@"Default connect message to be shown"), self.bareUser.displayName, [ZMUser selfUser].name];
     
-    @weakify(self);
+    ZM_WEAK(self);
     [self dismissViewControllerWithCompletion:^{
-        @strongify(self);
+        ZM_STRONG(self);
         [[ZMUserSession sharedSession] enqueueChanges:^{
             [self.bareUser connectWithMessage:message];
         }];

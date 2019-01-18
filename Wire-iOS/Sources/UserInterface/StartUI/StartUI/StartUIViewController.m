@@ -19,7 +19,8 @@
 
 @import PureLayout;
 
-@import WireExtensionComponents;
+
+#import "AccentColorProvider.h"
 
 #import "StartUIViewController.h"
 #import "StartUIViewController+internal.h"
@@ -92,9 +93,9 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     self.groupSelector = [[SearchGroupSelector alloc] initWithStyle:ColorSchemeVariantDark];
     self.groupSelector.translatesAutoresizingMaskIntoConstraints = NO;
     self.groupSelector.backgroundColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorSearchBarBackground variant:ColorSchemeVariantDark];
-    @weakify(self);
+    ZM_WEAK(self);
     self.groupSelector.onGroupSelected = ^(SearchGroup group) {
-        @strongify(self);
+        ZM_STRONG(self);
         if (SearchGroupServices == group) {
             // Remove selected users when switching to services tab to avoid the user confusion: users in the field are
             // not going to be added to the new conversation with the bot.

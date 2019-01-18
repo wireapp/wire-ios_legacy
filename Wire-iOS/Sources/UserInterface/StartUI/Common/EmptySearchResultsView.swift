@@ -18,7 +18,7 @@
 
 import Foundation
 import UIKit
-import WireExtensionComponents
+
 
 fileprivate enum EmptySearchResultsViewState {
     case noUsersOrServices

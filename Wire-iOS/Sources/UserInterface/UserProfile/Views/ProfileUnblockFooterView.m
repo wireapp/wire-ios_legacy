@@ -19,8 +19,9 @@
 
 #import "ProfileUnblockFooterView.h"
 #import "Button.h"
+#import "NSLayoutConstraint+Helpers.h"
 
-@import WireExtensionComponents;
+
 
 @interface ProfileUnblockFooterView ()
 @property (nonatomic, strong, readwrite) UIButton *unblockButton;

@@ -18,12 +18,13 @@
 
 
 @import PureLayout;
-@import WireExtensionComponents;
+
 
 #import "AudioTrackCell.h"
 #import "AudioTrackView.h"
 #import "IconButton.h"
 #import "AudioTrack.h"
+#import "KeyValueObserver.h"
 
 
 @implementation AudioTrackCell

@@ -22,7 +22,7 @@ import WireShareEngine
 import Cartography
 import MobileCoreServices
 import WireDataModel
-import WireExtensionComponents
+import WireCommonComponents
 import WireLinkPreview
 
 private let zmLog = ZMSLog(tag: "UI")
@@ -83,16 +83,8 @@ class ShareExtensionViewController: SLComposeServiceViewController {
 
     // MARK: - Host App State
 
-    private var applicationGroupIdentifier: String? {
-        return Bundle.main.infoDictionary?["ApplicationGroupIdentifier"] as? String
-    }
-
-    private var hostBundleIdentifier: String? {
-        return Bundle.main.infoDictionary?["HostBundleIdentifier"] as? String
-    }
-
     private var accountManager: AccountManager? {
-        guard let applicationGroupIdentifier = applicationGroupIdentifier else { return nil }
+        guard let applicationGroupIdentifier = Bundle.main.applicationGroupIdentifier else { return nil }
         let sharedContainerURL = FileManager.sharedContainerDirectory(for: applicationGroupIdentifier)
         return AccountManager(sharedDirectory: sharedContainerURL)
     }
@@ -152,8 +144,8 @@ class ShareExtensionViewController: SLComposeServiceViewController {
     }
     
     private func recreateSharingSession(account: Account?) throws {
-        guard let applicationGroupIdentifier = applicationGroupIdentifier,
-            let hostBundleIdentifier = hostBundleIdentifier,
+        guard let applicationGroupIdentifier = Bundle.main.applicationGroupIdentifier,
+            let hostBundleIdentifier = Bundle.main.hostBundleIdentifier,
             let accountIdentifier = account?.userIdentifier
             else { return }
 

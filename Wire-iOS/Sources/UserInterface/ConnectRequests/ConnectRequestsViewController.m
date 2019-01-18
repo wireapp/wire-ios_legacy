@@ -154,10 +154,10 @@ static NSString *ConnectionRequestCellIdentifier = @"ConnectionRequestCell";
     cell.separatorInset = UIEdgeInsetsZero;
     cell.preservesSuperviewLayoutMargins = NO;
     cell.layoutMargins = UIEdgeInsetsMake(0, 0, 8, 0);
-    @weakify(self);
+    ZM_WEAK(self);
     
     cell.acceptBlock = ^{
-        @strongify(self);
+        ZM_STRONG(self);
         
         if (self.connectionRequests.count == 0) {
             [[ZClientViewController sharedZClientViewController] hideIncomingContactRequestsWithCompletion:^{

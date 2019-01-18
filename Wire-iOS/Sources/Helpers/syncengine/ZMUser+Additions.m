@@ -22,7 +22,7 @@
 #import "UIColor+WAZExtensions.h"
 #import "Analytics.h"
 #import "ColorScheme.h"
-@import WireExtensionComponents;
+#import "Wire-Swift.h"
 
 ZMUser *BareUserToUser(id bareUser) {
     ZMUser *user = nil;

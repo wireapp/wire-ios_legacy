@@ -19,7 +19,7 @@
 
 import Foundation
 import Cartography
-import WireExtensionComponents
+
 
 final public class CollectionFileCell: CollectionCell {
     private let fileTransferView = FileTransferView()

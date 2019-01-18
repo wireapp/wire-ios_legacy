@@ -17,7 +17,7 @@
 //
 
 import Foundation
-
+import WireCommonComponents
 
 extension AppDelegate {
 
