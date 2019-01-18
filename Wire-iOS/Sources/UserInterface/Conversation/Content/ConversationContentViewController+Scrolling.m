@@ -44,16 +44,13 @@
 {
     CGFloat bottomOffset = scrollView.contentOffset.y;
     
-    if (self.messageWindow.messages.count) {
-        [self.delegate conversationContentViewController:self didScrollWithOffsetFromBottom:bottomOffset withLatestMessage:self.messageWindow.messages.lastObject];
+    if (self.dataSource.messages.count) {
+        [self.delegate conversationContentViewController:self
+                           didScrollWithOffsetFromBottom:bottomOffset
+                                       withLatestMessage:self.dataSource.messages.lastObject];
     }
     
-    // if I am at top, try to load some more messages
-    BOOL atTheTop = scrollView.contentOffset.y >= scrollView.contentSize.height - scrollView.bounds.size.height;
-    
-    if (atTheTop) {
-        [self expandMessageWindowUp];
-    }
+    [self.dataSource tableViewDidScroll:self.tableView];
 }
 
 - (void)scrollToBottomAnimated:(BOOL)animated
@@ -63,7 +60,7 @@
 
 - (BOOL)scrollToMessage:(id<ZMConversationMessage>)message animated:(BOOL)animated
 {
-    NSUInteger index = [self.messageWindow.messages indexOfObject:message];
+    NSUInteger index = [self.dataSource indexOfMessage:(id)message];
     if (index != NSNotFound) {
         NSInteger rowIndex = [self.tableView numberOfRowsInSection:index] - 1;
         [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:rowIndex inSection:index]
@@ -76,7 +73,7 @@
 
 - (BOOL)scrollMessageToBottom:(id<ZMConversationMessage>)message withOffset:(CGFloat)offset
 {
-    NSUInteger index = [self.messageWindow.messages indexOfObject:message];
+    NSUInteger index = [self.dataSource indexOfMessage:(id)message];
     NSIndexPath *messageIndexPath = [NSIndexPath indexPathForRow:index inSection:0];
 
     if (messageIndexPath) {

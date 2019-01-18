@@ -31,10 +31,11 @@ extension ConversationContentViewController: UIViewControllerPreviewingDelegate 
         let cellLocation = view.convert(location, to: tableView)
 
         guard let cellIndexPath = tableView.indexPathForRow(at: cellLocation),
-              let message = self.conversationMessageWindowTableViewAdapter.previewableMessage(at: cellIndexPath, in: tableView),
               let cell = tableView.cellForRow(at: cellIndexPath) as? SelectableView & UIView else {
             return .none
         }
+        
+        let message = self.dataSource.messages[cellIndexPath.section]
 
         guard message.isObfuscated == false else {
             return nil

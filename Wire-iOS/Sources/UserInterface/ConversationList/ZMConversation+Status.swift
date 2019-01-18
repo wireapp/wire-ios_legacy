@@ -772,11 +772,11 @@ extension ZMConversation {
     
     var status: ConversationStatus {
         let isBlocked = self.conversationType == .oneOnOne ? (self.firstActiveParticipantOtherThanSelf()?.isBlocked ?? false) : false
-
+        
         var messagesRequiringAttention = unreadMessages
 
         if messagesRequiringAttention.count == 0,
-            let lastMessage = self.messages.lastObject as? ZMConversationMessage,
+            let lastMessage = recentMessages.last,
             let systemMessageData = lastMessage.systemMessageData,
             systemMessageData.systemMessageType == .participantsRemoved || systemMessageData.systemMessageType == .participantsAdded || systemMessageData.systemMessageType == .newConversation {
             messagesRequiringAttention.append(lastMessage)
@@ -789,9 +789,9 @@ extension ZMConversation {
         
         let hasMessages: Bool
         
-        if self.messages.count < 10 {
-            hasMessages = self.messages.compactMap {
-                StatusMessageType(message: $0 as! ZMConversationMessage)
+        if recentMessages.count < 10 {
+            hasMessages = recentMessages.compactMap {
+                StatusMessageType(message: $0)
             }.count > 0
         }
         else {

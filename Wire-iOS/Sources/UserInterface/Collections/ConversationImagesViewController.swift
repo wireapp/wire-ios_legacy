@@ -316,13 +316,7 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
     }
     
     fileprivate func indexOf(message messageToFind: ZMConversationMessage) -> Int? {
-        guard let messageToFind = messageToFind as? ZMMessage else {
-            return .none
-        }
         return self.imageMessages.index(where: { (message: ZMConversationMessage) -> (Bool) in
-            guard let message = message as? ZMMessage else {
-                return false
-            }
             return message == messageToFind
         })
     }

@@ -23,5 +23,4 @@ extension ZMConversationMessage {
     func canBePrefetched() -> Bool {
         return Message.canBePrefetched(self)
     }
-
 }

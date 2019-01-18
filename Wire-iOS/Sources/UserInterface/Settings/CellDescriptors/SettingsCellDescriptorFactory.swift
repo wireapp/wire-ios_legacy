@@ -252,7 +252,7 @@ class SettingsCellDescriptorFactory {
         let appendManyMessages = SettingsButtonCellDescriptor(title: "Append N messages to the top conv (not sending)", isDestructive: true) { _ in
             
             self.requestNumber() { count in
-                self.appendMessages(count: count)
+                self.appendMessagesInBatches(count: count)
             }
         }
         developerCellDescriptors.append(appendManyMessages)
@@ -292,7 +292,36 @@ class SettingsCellDescriptorFactory {
         controllerToPresentOver.present(controller, animated: true, completion: nil)
     }
     
+    func appendMessagesInBatches(count: Int) {
+        var left = count
+        let step = 10_000
+        
+        repeat {
+            let toAppendInThisStep = left < step ? left : step
+            
+            left = left - toAppendInThisStep
+            
+            appendMessages(count: toAppendInThisStep)
+        }
+        while(left > 0)
+    }
+    
     func appendMessages(count: Int) {
+        let batchSize = 5_000
+        
+        var currentCount = count
+        
+        repeat {
+            let thisBatchCount = currentCount > batchSize ? batchSize : currentCount
+
+            appendMessagesToDatabase(count: thisBatchCount)
+            
+            currentCount = currentCount - thisBatchCount
+        }
+        while (currentCount > 0)
+    }
+    
+    func appendMessagesToDatabase(count: Int) {
         let userSession = ZMUserSession.shared()!
         let conversation = ZMConversationList.conversations(inUserSession: userSession).firstObject! as! ZMConversation
         let conversationId = conversation.objectID

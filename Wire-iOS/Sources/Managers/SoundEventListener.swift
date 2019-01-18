@@ -28,7 +28,7 @@ extension ZMConversationMessage {
     }
     
     var isFirstMessage: Bool {
-        return (self.conversation?.messages.count ?? 0) == 1
+        return (self.conversation?.recentMessages.count ?? 0) == 1
     }
     
     var isSystemMessageWithSoundNotification: Bool {

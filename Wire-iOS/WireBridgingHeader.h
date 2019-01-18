@@ -64,8 +64,6 @@
 #import "TopPeopleLineCollectionViewController.h"
 #import "TopPeopleCell.h"
 #import "CollectionViewContainerCell.h"
-#import "ConversationMessageWindowTableViewAdapter.h"
-#import "ConversationMessageWindowTableViewAdapter+Private.h"
 #import "IconButton.h"
 #import "Button.h"
 #import "ButtonWithLargerHitArea.h"
