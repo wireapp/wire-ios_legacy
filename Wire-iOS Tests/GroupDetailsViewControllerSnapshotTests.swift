@@ -42,7 +42,6 @@ class GroupDetailsViewControllerSnapshotTests: CoreDataSnapshotTestCase {
     
     func testForOptionsForTeamUserInNonTeamConversation_Partner() {
         teamTest {
-//            recordMode = true
             selfUser.membership?.setTeamRole(.partner)
             sut = GroupDetailsViewController(conversation: otherUserConversation)
             verify(view: sut.view)
@@ -60,7 +59,6 @@ class GroupDetailsViewControllerSnapshotTests: CoreDataSnapshotTestCase {
     
     func testForOptionsForTeamUserInTeamConversation_Partner() {
         teamTest {
-//            recordMode = true
             selfUser.membership?.setTeamRole(.partner)
             otherUserConversation.team =  selfUser.team
             sut = GroupDetailsViewController(conversation: otherUserConversation)
