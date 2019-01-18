@@ -61,9 +61,9 @@ final class RestrictedButton: IconButton, Restricted {
         fatalError("init(coder:) has not been implemented")
     }
 
-//    override init(frame: CGRect) {
-//        super.init(frame: frame)
-//    }
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+    }
 
     func update(for conversation: ZMConversation) {
         isHidden = ZMUser.selfUser().isGuest(in: conversation)
