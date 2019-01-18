@@ -22,45 +22,84 @@ import XCTest
 final class GroupDetailsViewControllerSnapshotTests: CoreDataSnapshotTestCase {
     
     var sut: GroupDetailsViewController!
+    var groupConversation: ZMConversation!
+    
+    override func setUp() {
+        super.setUp()
+        
+        // Note, we explicitly don't add participants. Why? The participants
+        // list in the group details requires the shared user session, which
+        // isn't configured in these tests. As such, the participants list
+        // is missing from these snapshots.
+        // TODO: include participants list.
+        groupConversation = ZMConversation.insertNewObject(in: uiMOC)
+        groupConversation.remoteIdentifier = UUID.create()
+        groupConversation.conversationType = .group
+        groupConversation.userDefinedName = "📱 iOS Team"
+    }
     
     override func tearDown() {
         sut = nil
+        groupConversation = nil
         super.tearDown()
     }
-
+    
     func testForOptionsForTeamUserInNonTeamConversation() {
         teamTest {
-            sut = GroupDetailsViewController(conversation: otherUserConversation)
+            selfUser.membership?.setTeamRole(.member)
+            sut = GroupDetailsViewController(conversation: groupConversation)
+            verify(view: sut.view)
+        }
+    }
+    
+    func testForOptionsForTeamUserInNonTeamConversation_Partner() {
+        teamTest {
+            selfUser.membership?.setTeamRole(.partner)
+            sut = GroupDetailsViewController(conversation: groupConversation)
             verify(view: sut.view)
         }
     }
     
     func testForOptionsForTeamUserInTeamConversation() {
         teamTest {
-            otherUserConversation.team = selfUser.team
-            sut = GroupDetailsViewController(conversation: otherUserConversation)
+            selfUser.membership?.setTeamRole(.member)
+            groupConversation.team =  selfUser.team
+            groupConversation.teamRemoteIdentifier = selfUser.team?.remoteIdentifier
+            sut = GroupDetailsViewController(conversation: groupConversation)
+            verify(view: sut.view)
+        }
+    }
+    
+    func testForOptionsForTeamUserInTeamConversation_Partner() {
+        teamTest {
+            selfUser.membership?.setTeamRole(.partner)
+            groupConversation.team =  selfUser.team
+            groupConversation.teamRemoteIdentifier = selfUser.team?.remoteIdentifier
+            sut = GroupDetailsViewController(conversation: groupConversation)
             verify(view: sut.view)
         }
     }
 
     func testForOptionsForNonTeamUser() {
         nonTeamTest {
-            sut = GroupDetailsViewController(conversation: otherUserConversation)
+            sut = GroupDetailsViewController(conversation: groupConversation)
             verify(view: self.sut.view)
         }
     }
 
     func testForActionMenu() {
+        // TODO: the menu is missing "mark unread" option at top
         teamTest {
-            sut = GroupDetailsViewController(conversation: otherUserConversation)
+            sut = GroupDetailsViewController(conversation: groupConversation)
             sut.detailsView(GroupDetailsFooterView(), performAction: .more)
             verifyAlertController((sut?.actionController?.alertController)!)
         }
     }
     
     func testForActionMenu_NonTeam() {
+        // TODO: the menu is missing "mark unread" option at top
         nonTeamTest {
-            sut = GroupDetailsViewController(conversation: otherUserConversation)
+            sut = GroupDetailsViewController(conversation: groupConversation)
             sut.detailsView(GroupDetailsFooterView(), performAction: .more)
             verifyAlertController((sut?.actionController?.alertController)!)
         }
