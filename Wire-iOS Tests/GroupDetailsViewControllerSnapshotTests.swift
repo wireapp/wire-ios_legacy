@@ -35,7 +35,7 @@ final class GroupDetailsViewControllerSnapshotTests: CoreDataSnapshotTestCase {
         groupConversation = ZMConversation.insertNewObject(in: uiMOC)
         groupConversation.remoteIdentifier = UUID.create()
         groupConversation.conversationType = .group
-        groupConversation.userDefinedName = "📱 iOS Team"
+        groupConversation.userDefinedName = "iOS Team"
     }
     
     override func tearDown() {
