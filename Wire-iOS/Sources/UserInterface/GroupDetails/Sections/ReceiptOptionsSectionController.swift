@@ -18,8 +18,12 @@
 
 import Foundation
 
-class ReceiptOptionsSectionController: GroupDetailsSectionController {
+class ReceiptOptionsSectionController: GroupDetailsSectionController, Restricted {
 
+    var requiredPermissions: Permissions {
+        return .member
+    }
+    
     private let emptySectionHeaderHeight: CGFloat = 24
 
     let cellReuseIdentifier: String = GroupDetailsReceiptOptionsCell.zm_reuseIdentifier
@@ -31,6 +35,10 @@ class ReceiptOptionsSectionController: GroupDetailsSectionController {
 
     private var footerView = SectionFooter(frame: .zero)
     private weak var presentingViewController: UIViewController?
+    
+    override var isHidden: Bool {
+        return !selfUserIsAuthorized
+    }
 
     init(conversation: ZMConversation,
         syncCompleted: Bool,
