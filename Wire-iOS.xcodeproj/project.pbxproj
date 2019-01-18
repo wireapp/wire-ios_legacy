@@ -5857,8 +5857,7 @@
 				EF883F892152476900B440CC /* ConversationCreationControllerSnapshotTests.swift */,
 				87240381215B92F00094363B /* ZMUserMentionsTest.swift */,
 				EF883F8B215250B000B440CC /* AddParticipantsViewControllerSnapshotTests.swift */,
-				EF5871652166802B00E47E73 /* GroupDetailsViewControllerSnapshotTests.swift */,
-				EFB4FADE216B8C8800700505 /* ProfileDetailsViewControllerSnapshotTests.swift */,
+				EF5C844B21F2386A002481DE /* ConversationDetail */,
 				EFC0C7F021778FB000380C4B /* SettingsTextCellSnapshotTests.swift */,
 				873F91942189BB3C00E1DBB9 /* MessageReplyPreviewViewTests.swift */,
 				5EC7C87B21907D94004662AC /* ConversationReplyCellDescriptionTests.swift */,
@@ -6400,6 +6399,15 @@
 				872C823B214A9B8500236A76 /* TextMessageMentionsTests.swift */,
 			);
 			path = ConversationCell;
+			sourceTree = "<group>";
+		};
+		EF5C844B21F2386A002481DE /* ConversationDetail */ = {
+			isa = PBXGroup;
+			children = (
+				EF5871652166802B00E47E73 /* GroupDetailsViewControllerSnapshotTests.swift */,
+				EFB4FADE216B8C8800700505 /* ProfileDetailsViewControllerSnapshotTests.swift */,
+			);
+			path = ConversationDetail;
 			sourceTree = "<group>";
 		};
 		EF61B33E1FC8461200D8E631 /* AccessoryTextField */ = {
