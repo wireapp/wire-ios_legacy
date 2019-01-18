@@ -19,8 +19,12 @@
 
 import Foundation
 
-class GroupDetailsRenameCell : UICollectionViewCell {
- 
+class GroupDetailsRenameCell : UICollectionViewCell, Restricted {
+    
+    var requiredPermissions: Permissions {
+        return .member
+    }
+    
     let verifiedIconView = UIImageView()
     let accessoryIconView = UIImageView()
     let titleTextField = SimpleTextField()
@@ -60,6 +64,7 @@ class GroupDetailsRenameCell : UICollectionViewCell {
         accessoryIconView.setContentHuggingPriority(UILayoutPriority.required, for: .horizontal)
         accessoryIconView.setContentCompressionResistancePriority(UILayoutPriority.required, for: .horizontal)
         
+        titleTextField.isUserInteractionEnabled = selfUserIsAuthorized
         titleTextField.translatesAutoresizingMaskIntoConstraints = false
         titleTextField.font = FontSpec.init(.normal, .light).font!
         titleTextField.returnKeyType = .done
