@@ -53,7 +53,6 @@ final class GroupDetailsViewControllerSnapshotTests: CoreDataSnapshotTestCase {
     }
     
     func testForOptionsForTeamUserInNonTeamConversation_Partner() {
-        // TODO: footer view needs updating
         teamTest {
             selfUser.membership?.setTeamRole(.partner)
             sut = GroupDetailsViewController(conversation: groupConversation)
@@ -72,7 +71,6 @@ final class GroupDetailsViewControllerSnapshotTests: CoreDataSnapshotTestCase {
     }
     
     func testForOptionsForTeamUserInTeamConversation_Partner() {
-        // TODO: footer view needs updating
         teamTest {
             selfUser.membership?.setTeamRole(.partner)
             groupConversation.team =  selfUser.team
