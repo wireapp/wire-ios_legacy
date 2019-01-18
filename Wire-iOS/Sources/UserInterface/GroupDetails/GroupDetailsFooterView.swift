@@ -48,10 +48,9 @@ final class RestrictedButton: IconButton, Restricted {
     }
 
     init(requiredPermissions: Permissions) {
-        self.requiredPermissions = requiredPermissions
-
         super.init()
 
+        self.requiredPermissions = requiredPermissions
         if shouldHidden {
             isHidden = true
         }

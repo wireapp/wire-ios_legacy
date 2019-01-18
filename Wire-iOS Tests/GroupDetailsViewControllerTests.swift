@@ -23,25 +23,24 @@ final class GroupDetailsFooterViewTests: CoreDataSnapshotTestCase {
     
     var sut: GroupDetailsFooterView!
     
-    override func setUp() {
-        selfUserInTeam = true
-        super.setUp()
-    }
-    
     override func tearDown() {
         sut = nil
         super.tearDown()
     }
 
     func testForAllPhoneWidths(){
-        sut = GroupDetailsFooterView()
-        verifyInAllPhoneWidths(view: sut)
+        teamTest {
+            sut = GroupDetailsFooterView()
+            verifyInAllPhoneWidths(view: sut)
+        }
     }
 
     func testForPartnerRoleWithNoAddParticipantsButton(){
-        selfUser.membership?.setTeamRole(.partner)
-        sut = GroupDetailsFooterView()
+        teamTest {
+            selfUser.membership?.setTeamRole(.partner)
+            sut = GroupDetailsFooterView()
 
-        verifyInAllPhoneWidths(view: sut)
+            verifyInAllPhoneWidths(view: sut)
+        }
     }
 }
