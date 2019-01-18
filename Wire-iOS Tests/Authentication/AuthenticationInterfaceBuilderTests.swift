@@ -37,11 +37,80 @@ class AuthenticationInterfaceBuilderTests: ZMSnapshotTestCase {
         super.tearDown()
     }
 
-    // MARK: - Tests
+    // MARK: - General
 
     func testLandingScreen() {
         runSnapshotTest(for: .landingScreen)
     }
+
+    func testThatItDoesNotGenerateInterfaceForCompanyLoginFlow() {
+        runSnapshotTest(for: .companyLogin)
+    }
+
+    // MARK: - User Registration
+
+    func testRegistrationScreen_Phone() {
+        runSnapshotTest(for: .createCredentials(UnregisteredUser(), .phone))
+    }
+
+    func testRegistrationScreen_Email() {
+        runSnapshotTest(for: .createCredentials(UnregisteredUser(), .email))
+    }
+
+    func testActivationScreen_Phone() {
+        let phoneNumber = UnverifiedCredentials.phone("+0123456789")
+        runSnapshotTest(for: .enterActivationCode(phoneNumber, user: UnregisteredUser()))
+    }
+
+    func testActivationScreen_Email() {
+        let email = UnverifiedCredentials.email("test@example.com")
+        runSnapshotTest(for: .enterActivationCode(email, user: UnregisteredUser()))
+    }
+
+    func testSetNameScreen() {
+        runSnapshotTest(for: .incrementalUserCreation(UnregisteredUser(), .setName))
+    }
+
+    func testSetPasswordScreen() {
+        runSnapshotTest(for: .incrementalUserCreation(UnregisteredUser(), .setPassword))
+    }
+
+    func testThatItDoesNotGenerateInterfaceForMarketingConsentStep() {
+        runSnapshotTest(for: .incrementalUserCreation(UnregisteredUser(), .provideMarketingConsent))
+    }
+
+    // MARK: - Team Registration
+
+    func testTeamNameScreen() {
+        let state: TeamCreationState = .setTeamName
+        runSnapshotTest(for: .teamCreation(state))
+    }
+
+    func testTeamEmailScreen() {
+        let state: TeamCreationState = .setEmail(teamName: "Example")
+        runSnapshotTest(for: .teamCreation(state))
+    }
+
+    func testTeamVerificationScreen() {
+        let state: TeamCreationState = .verifyEmail(teamName: "Example", email: "test@example.com")
+        runSnapshotTest(for: .teamCreation(state))
+    }
+
+    func testTeamAdminNameScreen() {
+        let state: TeamCreationState = .setFullName(teamName: "Example", email: "test@example.com", activationCode: "123456", marketingConsent: false)
+        runSnapshotTest(for: .teamCreation(state))
+    }
+
+    func testTeamAdminPasswordScreen() {
+        let state: TeamCreationState = .setPassword(teamName: "Example", email: "example@wire.com", activationCode: "123456", marketingConsent: false, fullName: "Val")
+        runSnapshotTest(for: .teamCreation(state))
+    }
+
+    func testTeamInviteScreen() {
+        runSnapshotTest(for: .teamCreation(.inviteMembers))
+    }
+
+    // MARK: - Login
 
     func testLoginScreen_Phone() {
         runSnapshotTest(for: .provideCredentials(.phone))
@@ -57,8 +126,7 @@ class AuthenticationInterfaceBuilderTests: ZMSnapshotTestCase {
     }
 
     func testLoginScreen_PhoneNumberVerification() {
-        let phoneNumber = UnverifiedCredentials.phone("+0123456789")
-        runSnapshotTest(for: .enterActivationCode(phoneNumber, user: UnregisteredUser()))
+        runSnapshotTest(for: .enterLoginCode(phoneNumber: "+0123456789"))
     }
 
     func testBackupScreen_NewDevice() {
