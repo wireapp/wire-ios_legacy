@@ -46,7 +46,7 @@ final class PartnerRestrictedButton: IconButton, Restricted {
     }
 
     private var shouldHidden: Bool {
-        return !selfUserIsAuthorized
+        return ZMUser.selfUser().isTeamMember && !selfUserIsAuthorized
     }
 
     override init() {
