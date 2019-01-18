@@ -22,57 +22,6 @@ protocol GroupDetailsFooterViewDelegate: class {
     func detailsView(_ view: GroupDetailsFooterView, performAction: GroupDetailsFooterView.Action)
 }
 
-final class RestrictedButton: IconButton, Restricted {
-    var requiredPermissions: Permissions = []
-
-    override public var isHidden: Bool {
-        get {
-            if shouldHidden {
-                return true
-            } else {
-                return super.isHidden
-            }
-        }
-
-        set {
-            if shouldHidden {
-                super.isHidden = true
-            } else {
-                super.isHidden = newValue
-            }
-        }
-    }
-
-    private var shouldHidden: Bool {
-        return ZMUser.selfUser().isTeamMember && !selfUserIsAuthorized
-    }
-
-    init(requiredPermissions: Permissions) {
-        super.init()
-
-        self.requiredPermissions = requiredPermissions
-        if shouldHidden {
-            isHidden = true
-        }
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    // this is for fixing running error for init(frame:) mehtod not find.
-    // rewrite parent class to Swift and then remove this.
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-    }
-
-    func update(for conversation: ZMConversation) {
-        isHidden = ZMUser.selfUser().isGuest(in: conversation)
-        isEnabled = conversation.freeParticipantSlots > 0
-    }
-
-}
-
 final class GroupDetailsFooterView: UIView {
     enum Action {
         case more, invite
@@ -144,6 +93,7 @@ final class GroupDetailsFooterView: UIView {
     }
     
     func update(for conversation: ZMConversation) {
-        addButton.update(for: conversation)
+        addButton.isHidden = ZMUser.selfUser().isGuest(in: conversation)
+        addButton.isEnabled = conversation.freeParticipantSlots > 0
     }
 }
