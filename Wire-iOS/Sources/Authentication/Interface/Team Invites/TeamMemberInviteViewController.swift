@@ -17,25 +17,38 @@
 //
 
 import UIKit
-import Cartography
 
 protocol TeamMemberInviteViewControllerDelegate: class {
     func teamInviteViewControllerDidFinish(_ controller: TeamMemberInviteViewController)
 }
 
-final class TeamMemberInviteViewController: AuthenticationStepViewController, TeamInviteTopbarDelegate {
+final class TeamMemberInviteViewController: AuthenticationStepViewController {
+    enum ButtonMode {
+        case skip, done
+
+        var title: String {
+            switch self {
+            case .skip: return "team.invite.top_bar.skip".localized.uppercased()
+            case .done: return "team.invite.top_bar.done".localized.uppercased()
+            }
+        }
+    }
 
     weak var authenticationCoordinator: AuthenticationCoordinator?
 
-    private let topBarSpacerView = UIView()
-    private let topBar = TeamInviteTopBar()
     private let tableView = UpsideDownTableView() // So the insertion animation pushes content to the top.
-    private let compactWidth: CGFloat = 375, topOffset: CGFloat = 60, bottomOffset: CGFloat = 300
+    private let compactWidth: CGFloat = 375, topOffset: CGFloat = 120, bottomOffset: CGFloat = 300
     private let headerView = TeamMemberInviteHeaderView()
     private let footerTextFieldView = TeamInviteTextFieldFooterView()
     private var regularWidthConstraint: NSLayoutConstraint?, compactWidthConstraint: NSLayoutConstraint?
     private lazy var dataSource = ArrayDataSource<TeamMemberInviteTableViewCell, InviteResult>(for: self.tableView)
     private var invitationsCount: Int = 0
+
+    var buttonMode: ButtonMode = .skip {
+        didSet {
+            updateButtonMode()
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,32 +62,28 @@ final class TeamMemberInviteViewController: AuthenticationStepViewController, Te
     }
     
     private func setupViews() {
-        [tableView, topBar, topBarSpacerView].forEach(view.addSubview)
-        topBarSpacerView.backgroundColor = UIColor.Team.background
-        topBar.delegate = self
+        view.addSubview(tableView)
         view.backgroundColor = UIColor.Team.background
         setupTableView()
         setupHeaderView()
         setupFooterView()
         updateScrollIndicatorInsets()
+        updateButtonMode()
         dataSource.configure = { cell, content in cell.content = content }
     }
     
     private func createConstraints() {
-        constrain(view, topBarSpacerView, topBar, tableView) { view, topBarSpacerView, topBar, tableView in
-            topBarSpacerView.top == view.top
-            topBarSpacerView.leading == view.leading
-            topBarSpacerView.trailing == view.trailing
-            topBarSpacerView.bottom == view.topMargin
-            topBar.top == topBarSpacerView.bottom
-            topBar.leading == view.leading
-            topBar.trailing == view.trailing
-            tableView.top == topBar.bottom
-            tableView.bottom == view.bottom
-            tableView.centerX == view.centerX
-            regularWidthConstraint = tableView.width == compactWidth
-            compactWidthConstraint = tableView.width == view.width
-        }
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            tableView.topAnchor.constraint(equalTo: view.topAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            tableView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+        ])
+
+        // Adaptive constraints
+        regularWidthConstraint = tableView.widthAnchor.constraint(equalToConstant: compactWidth)
+        compactWidthConstraint = tableView.widthAnchor.constraint(equalTo: view.widthAnchor)
         updateMainViewWidthConstraint()
     }
     
@@ -104,6 +113,12 @@ final class TeamMemberInviteViewController: AuthenticationStepViewController, Te
         footerTextFieldView.size(fittingWidth: tableView.bounds.width)
         tableView.tableFooterView = footerTextFieldView
     }
+
+    private func updateButtonMode() {
+        let buttonItem = UIBarButtonItem(title: buttonMode.title, style: .plain, target: self, action: #selector(didTapContinueButton))
+        buttonItem.accessibilityIdentifier = "continue"
+        navigationItem.rightBarButtonItem = buttonItem
+    }
     
     private func sendInvite(to value: Any) {
         guard let email = value as? String else {
@@ -130,7 +145,7 @@ final class TeamMemberInviteViewController: AuthenticationStepViewController, Te
         }
         
         footerTextFieldView.isLoading = false
-        topBar.mode = dataSource.data.count == 0 ? .skip : .done
+        buttonMode = dataSource.data.count == 0 ? .skip : .done
         invitationsCount = invitationsCount + 1
     }
     
@@ -149,14 +164,14 @@ final class TeamMemberInviteViewController: AuthenticationStepViewController, Te
         dataSource.append(result)
         footerTextFieldView.clearInput()
     }
-    
-    func teamInviteTopBarDidTapButton(_ topBar: TeamInviteTopBar) {
+
+    @objc private func didTapContinueButton(_ sender: Button) {
         let inviteResult = invitationsCount == 0 ? Analytics.InviteResult.none : Analytics.InviteResult.invited(invitesCount: invitationsCount)
-        
+
         Analytics.shared().tagTeamFinishedInviteStep(with: inviteResult)
         authenticationCoordinator?.teamInviteViewControllerDidFinish(self)
     }
-    
+
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         updateMainViewWidthConstraint()

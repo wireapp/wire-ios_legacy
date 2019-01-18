@@ -1095,7 +1095,6 @@
 		D5F22D4C2048052900879444 /* UIAlertController+RemoveAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F22D4B2048052900879444 /* UIAlertController+RemoveAction.swift */; };
 		D5F4387B206BBBB9003F1F14 /* Analytics+HistoryBackup.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F4387A206BBBB9003F1F14 /* Analytics+HistoryBackup.swift */; };
 		D5F8BFF42007AC84008F8C3D /* UIView+TableViewHeaderFooterSizing.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F8BFF32007AC84008F8C3D /* UIView+TableViewHeaderFooterSizing.swift */; };
-		D5F8BFF62007C2DE008F8C3D /* TeamInviteTopBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F8BFF52007C2DE008F8C3D /* TeamInviteTopBar.swift */; };
 		DB3A47E01B4AD96C00391B5C /* MentionsCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DB3A47DF1B4AD96C00391B5C /* MentionsCollectionViewCell.m */; };
 		DB3E943A1B96EDBD00990482 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8741CFAE1A937EDF00A56A63 /* LaunchScreen.xib */; };
 		DB5206491B06355300138586 /* MentionsCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DB5206481B06355300138586 /* MentionsCollectionViewController.m */; };
@@ -2821,7 +2820,6 @@
 		D5F22D4B2048052900879444 /* UIAlertController+RemoveAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+RemoveAction.swift"; sourceTree = "<group>"; };
 		D5F4387A206BBBB9003F1F14 /* Analytics+HistoryBackup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Analytics+HistoryBackup.swift"; sourceTree = "<group>"; };
 		D5F8BFF32007AC84008F8C3D /* UIView+TableViewHeaderFooterSizing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+TableViewHeaderFooterSizing.swift"; sourceTree = "<group>"; };
-		D5F8BFF52007C2DE008F8C3D /* TeamInviteTopBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamInviteTopBar.swift; sourceTree = "<group>"; };
 		DB3A47DE1B4AD96C00391B5C /* MentionsCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MentionsCollectionViewCell.h; sourceTree = "<group>"; };
 		DB3A47DF1B4AD96C00391B5C /* MentionsCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MentionsCollectionViewCell.m; sourceTree = "<group>"; };
 		DB5206471B06355300138586 /* MentionsCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MentionsCollectionViewController.h; sourceTree = "<group>"; };
@@ -6276,7 +6274,6 @@
 			isa = PBXGroup;
 			children = (
 				D5490A1C20050AAA0057EAA8 /* TeamMemberInviteViewController.swift */,
-				D5F8BFF52007C2DE008F8C3D /* TeamInviteTopBar.swift */,
 				D5DBAAAF20064E3B00E9F65B /* TeamMemberInviteTableViewCell.swift */,
 				D5DBAAAB20064DD700E9F65B /* TeamMemberInviteHeaderView.swift */,
 				D5DBAAAD20064DFC00E9F65B /* TeamInviteTextFieldFooterView.swift */,
@@ -8024,7 +8021,6 @@
 				8F89141D1A9F287E0056AB0C /* ConversationListViewModel.m in Sources */,
 				BF10B58D1E6452B800E7036E /* ZMMessage+Likes.swift in Sources */,
 				5E2945992190A1680045ACFA /* SenderNameCellComponent.swift in Sources */,
-				D5F8BFF62007C2DE008F8C3D /* TeamInviteTopBar.swift in Sources */,
 				8751BA442069455E00DF8667 /* BackupViewController.swift in Sources */,
 				1610366F20616EBC008AFDD0 /* SelfProfileViewController+NewDeviceAlert.swift in Sources */,
 				D5674610208F39D200DC7F26 /* TintColorCorrectedViewController.swift in Sources */,
