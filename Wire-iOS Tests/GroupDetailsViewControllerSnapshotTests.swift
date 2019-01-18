@@ -23,18 +23,9 @@ final class GroupDetailsViewControllerSnapshotTests: CoreDataSnapshotTestCase {
     
     var sut: GroupDetailsViewController!
     
-    override func setUp() {
-        super.setUp()
-
-
-//        recordMode = true
-    }
-    
     override func tearDown() {
         sut = nil
         super.tearDown()
-
-        MockUser.mockSelf()?.teamRole = .member
     }
 
     func testForOptionsForTeamUserInNonTeamConversation() {
