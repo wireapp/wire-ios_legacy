@@ -23,10 +23,6 @@ final class ProfileDetailsViewControllerSnapshotTests: CoreDataSnapshotTestCase 
     
     var sut: ProfileDetailsViewController!
     
-    override func setUp() {
-        super.setUp()
-    }
-    
     override func tearDown() {
         sut = nil
         super.tearDown()
