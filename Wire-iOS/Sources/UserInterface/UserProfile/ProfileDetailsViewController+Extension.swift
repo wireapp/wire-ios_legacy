@@ -86,7 +86,8 @@ extension ProfileDetailsViewController {
         }
     }
 
-    // MARK: - footer left button
+    // MARK: - footer buttons types
+
 
     @objc
     func leftButtonAction() -> ProfileUserAction {
