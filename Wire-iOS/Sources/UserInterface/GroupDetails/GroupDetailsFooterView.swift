@@ -22,10 +22,8 @@ protocol GroupDetailsFooterViewDelegate: class {
     func detailsView(_ view: GroupDetailsFooterView, performAction: GroupDetailsFooterView.Action)
 }
 
-final class PartnerRestrictedButton: IconButton, Restricted {
-    var requiredPermissions: Permissions {
-        return .member
-    }
+final class RestrictedButton: IconButton, Restricted {
+    var requiredPermissions: Permissions
 
     override public var isHidden: Bool {
         get {
@@ -49,7 +47,9 @@ final class PartnerRestrictedButton: IconButton, Restricted {
         return ZMUser.selfUser().isTeamMember && !selfUserIsAuthorized
     }
 
-    override init() {
+    init(requiredPermissions: Permissions) {
+        self.requiredPermissions = requiredPermissions
+
         super.init()
 
         if shouldHidden {
@@ -61,9 +61,9 @@ final class PartnerRestrictedButton: IconButton, Restricted {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-    }
+//    override init(frame: CGRect) {
+//        super.init(frame: frame)
+//    }
 
     func update(for conversation: ZMConversation) {
         isHidden = ZMUser.selfUser().isGuest(in: conversation)
@@ -81,7 +81,7 @@ final class GroupDetailsFooterView: UIView {
     
     private let variant: ColorSchemeVariant
     public let moreButton = IconButton()
-    public let addButton = PartnerRestrictedButton()
+    public let addButton = RestrictedButton(requiredPermissions: .member)
     
     init(variant: ColorSchemeVariant = ColorScheme.default.variant) {
         self.variant = variant
