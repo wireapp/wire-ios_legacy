@@ -40,6 +40,7 @@ typedef NS_ENUM(NSUInteger, IconButtonStyle) {
 
 - (instancetype)initWithStyle:(IconButtonStyle)style variant:(ColorSchemeVariant)variant;
 - (instancetype)initWithStyle:(IconButtonStyle)style;
+- (instancetype)init;
 
 /// Default rendering mode is @c UIImageRenderingModeAlwaysTemplate
 - (void)setIcon:(ZetaIconType)icon withSize:(ZetaIconSize)iconSize forState:(UIControlState)state;

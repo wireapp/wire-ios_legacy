@@ -19,13 +19,9 @@
 import XCTest
 @testable import Wire
 
-class GroupDetailsViewControllerSnapshotTests: CoreDataSnapshotTestCase {
+final class GroupDetailsViewControllerSnapshotTests: CoreDataSnapshotTestCase {
     
     var sut: GroupDetailsViewController!
-    
-    override func setUp() {
-        super.setUp()
-    }
     
     override func tearDown() {
         sut = nil
@@ -41,7 +37,7 @@ class GroupDetailsViewControllerSnapshotTests: CoreDataSnapshotTestCase {
     
     func testForOptionsForTeamUserInTeamConversation() {
         teamTest {
-            otherUserConversation.team =  selfUser.team
+            otherUserConversation.team = selfUser.team
             sut = GroupDetailsViewController(conversation: otherUserConversation)
             verify(view: sut.view)
         }

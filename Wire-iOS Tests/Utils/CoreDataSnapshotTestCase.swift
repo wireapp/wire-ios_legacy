@@ -55,6 +55,18 @@ open class CoreDataSnapshotTestCase: ZMSnapshotTestCase {
 
     // MARK: – Setup
 
+    private func setupMember() {
+        let selfUser = ZMUser.selfUser(in: self.uiMOC)
+
+        let team = Team.insertNewObject(in: uiMOC)
+        team.remoteIdentifier = UUID()
+
+        let member = Member.insertNewObject(in: uiMOC)
+        member.user = selfUser
+        member.team = team
+        member.setTeamRole(.member)
+    }
+
     private func setupTestObjects() {
         selfUser = ZMUser.insertNewObject(in: uiMOC)
         selfUser.remoteIdentifier = UUID()
@@ -63,12 +75,7 @@ open class CoreDataSnapshotTestCase: ZMSnapshotTestCase {
 
         ZMUser.boxSelfUser(selfUser, inContextUserInfo: uiMOC)
         if selfUserInTeam {
-            let selfUser = ZMUser.selfUser(in: self.uiMOC)
-            let team = Team.insertNewObject(in: uiMOC)
-            team.remoteIdentifier = UUID()
-            let member = Member.insertNewObject(in: uiMOC)
-            member.user = selfUser
-            member.team = team
+            setupMember()
         }
 
         otherUser = ZMUser.insertNewObject(in: uiMOC)
@@ -94,12 +101,7 @@ open class CoreDataSnapshotTestCase: ZMSnapshotTestCase {
         }
 
         if selfUserInTeam {
-            let selfUser = ZMUser.selfUser(in: self.uiMOC)
-            let team = Team.insertNewObject(in: uiMOC)
-            team.remoteIdentifier = UUID()
-            let member = Member.insertNewObject(in: uiMOC)
-            member.user = selfUser
-            member.team = team
+            setupMember()
         } else {
             teamMember = nil
             team = nil

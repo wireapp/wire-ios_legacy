@@ -39,7 +39,7 @@ class BackgroundViewControllerTests: CoreDataSnapshotTestCase {
     }
 
     
-    func testThatItShowsUserWithImage() {
+    func DISABLE_testThatItShowsUserWithImage() {
         // GIVEN
         selfUser.imageMediumData = image(inTestBundleNamed: "unsplash_matterhorn.jpg").pngData()
         let sut = BackgroundViewController(user: selfUser, userSession: .none)
