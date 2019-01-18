@@ -19,13 +19,13 @@
 import XCTest
 @testable import Wire
 
-final class GroupDetailsFooterViewTests: CoreDataSnapshotTestCase {
+final class GroupDetailsFooterViewTests: ZMSnapshotTestCase {
     
     var sut: GroupDetailsFooterView!
     
     override func setUp() {
-        selfUserInTeam = true
         super.setUp()
+        sut = GroupDetailsFooterView()
     }
     
     override func tearDown() {
@@ -34,14 +34,6 @@ final class GroupDetailsFooterViewTests: CoreDataSnapshotTestCase {
     }
 
     func testForAllPhoneWidths(){
-        sut = GroupDetailsFooterView()
-        verifyInAllPhoneWidths(view: sut)
-    }
-
-    func testForPartnerRoleWithNoAddParticipantsButton(){
-        selfUser.membership?.setTeamRole(.partner)
-        sut = GroupDetailsFooterView()
-
         verifyInAllPhoneWidths(view: sut)
     }
 }
