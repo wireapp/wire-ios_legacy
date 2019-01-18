@@ -40,6 +40,15 @@ final class ProfileViewControllerTests: ZMSnapshotTestCase {
     }
 
     func testForContextOneToOneConversation(){
+        MockUser.mockSelf()?.teamRole = .member
+
+        sut = ProfileViewController(user: mockUser!, context: .oneToOneConversation)
+        self.verify(view: sut.view)
+    }
+
+    func testForContextOneToOneConversationForPartnerRole(){
+        MockUser.mockSelf()?.teamRole = .partner
+
         sut = ProfileViewController(user: mockUser!, context: .oneToOneConversation)
         self.verify(view: sut.view)
     }

@@ -25,5 +25,21 @@
 @property (nonatomic) ZMConversation *conversation;
 @property (nonatomic) UIView *footerView;
 @property (nonatomic) UILabel *readReceiptsEnabledLabel;
+@property (nonatomic) ProfileViewControllerContext context;
+
+- (ZMUser *)fullUser;
 
 @end
+
+typedef NS_ENUM(NSUInteger, ProfileUserAction) {
+    ProfileUserActionNone,
+    ProfileUserActionOpenConversation,
+    ProfileUserActionAddPeople,
+    ProfileUserActionRemovePeople,
+    ProfileUserActionBlock,
+    ProfileUserActionPresentMenu,
+    ProfileUserActionUnblock,
+    ProfileUserActionAcceptConnectionRequest,
+    ProfileUserActionSendConnectionRequest,
+    ProfileUserActionCancelConnectionRequest
+};
