@@ -116,7 +116,7 @@ class GroupOptionsSectionController: GroupDetailsSectionController {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: option.cellReuseIdentifier, for: indexPath) as! GroupDetailsDisclosureOptionsCell
 
         cell.configure(with: conversation)
-        cell.showSeparator = option.rawValue < (Option.count - 1)
+        cell.showSeparator = indexPath.row < options.count - 1
         cell.isUserInteractionEnabled = syncCompleted
         cell.alpha = syncCompleted ? 1 : 0.48
         return cell
