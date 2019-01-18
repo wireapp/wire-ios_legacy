@@ -95,7 +95,7 @@ extension ProfileDetailsViewController {
         if user.isSelfUser {
             return .none
         } else if (user.isConnected || user.isTeamMember) &&
-            context == ProfileViewControllerContext.oneToOneConversation {
+            context == .oneToOneConversation {
             if ZMUser.selfUserHas(permissions: .member) || !ZMUser.selfUser().isTeamMember {
                 return .addPeople
             } else {
@@ -115,6 +115,27 @@ extension ProfileDetailsViewController {
             return .none
         } else {
             return .openConversation
+        }
+    }
+
+    @objc
+    func rightButtonAction() -> ProfileUserAction {
+        guard let user = fullUser() else { return .none }
+
+        if user.isSelfUser {
+            return .none
+        } else if context == .groupConversation {
+            if ZMUser.selfUser().canRemoveUser(from: conversation) {
+                return .removePeople
+            } else {
+                return .none
+            }
+        } else if user.isConnected {
+            return .presentMenu
+        } else if nil != user.team {
+            return .presentMenu
+        } else {
+            return .none
         }
     }
 }
