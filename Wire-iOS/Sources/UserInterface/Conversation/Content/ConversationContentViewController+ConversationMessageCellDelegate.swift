@@ -27,12 +27,12 @@ extension ConversationContentViewController: ConversationMessageCellDelegate {
         wants(toPerform: action, for: message, cell: cell)
     }
 
-    func conversationMessageShouldBecomeFirstResponderWhenShowingMenuForCell(_ cell: UIView) -> Bool {
-        return delegate.conversationContentViewController(self, shouldBecomeFirstResponderWhenShowMenuFromCell: cell)
-    }
-
     func conversationMessageWantsToOpenUserDetails(_ cell: UIView, user: UserType, sourceView: UIView, frame: CGRect) {
         delegate.didTap?(onUserAvatar: user, view: sourceView, frame: frame)
+    }
+
+    func conversationMessageShouldBecomeFirstResponderWhenShowingMenuForCell(_ cell: UIView) -> Bool {
+        return delegate.conversationContentViewController(self, shouldBecomeFirstResponderWhenShowMenuFromCell: cell)
     }
 
     func conversationMessageWantsToOpenMessageDetails(_ cell: UIView, messageDetailsViewController: MessageDetailsViewController) {
@@ -46,4 +46,6 @@ extension ConversationContentViewController: ConversationMessageCellDelegate {
     func conversationMessageWantsToOpenParticipantsDetails(_ cell: UIView, selectedUsers: [ZMUser], sourceView: UIView) {
         delegate.conversationContentViewController(self, presentParticipantsDetailsWithSelectedUsers: selectedUsers, from: sourceView)
     }
+
 }
+
