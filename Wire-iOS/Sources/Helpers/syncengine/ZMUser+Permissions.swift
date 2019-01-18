@@ -70,7 +70,6 @@ extension Restricted {
         return ZMUser.selfUserHas(permissions: self.requiredPermissions)
     }
     
-    // TODO: consider calling this selfUserIsAuthorized
     func authorizeSelfUser(onSuccess: () -> Void) {
         if selfUserIsAuthorized { onSuccess() }
     }
