@@ -19,26 +19,19 @@
 import XCTest
 @testable import Wire
 
-final class ChangePhoneViewControllerSnapshotTests: ZMSnapshotTestCase {
-    
-    var sut: ChangePhoneViewController!
-    
-    override func setUp() {
-        super.setUp()
-        sut = ChangePhoneViewController()
-        sut.view.backgroundColor = .black
-    }
-    
-    override func tearDown() {
-        sut = nil
-        super.tearDown()
-    }
+class ChangePhoneViewControllerSnapshotTests: ZMSnapshotTestCase {
 
     func testForANumberPasted() {
+        // GIVEN
+        let sut = ChangePhoneViewController()
+        sut.view.backgroundColor = .black
+
         // call viewDidLoad
         sut.loadViewIfNeeded()
 
-        UIPasteboard.general.string = "+41 86 079 209 36 37"
+        // make table view's cells visible
+        sut.view.frame = CGRect(origin: .zero, size: defaultIPhoneSize)
+        sut.view.layoutIfNeeded()
 
         let indexPath = IndexPath(row: 0, section: 0)
         if let cell = sut.tableView.cellForRow(at: indexPath) as? PhoneNumberInputCell {

@@ -42,12 +42,14 @@ final class ChangePhoneViewControllerTests: XCTestCase {
         sut.view.layoutIfNeeded()
 
         let indexPath = IndexPath(row: 0, section: 0)
-        if let cell = sut.tableView.cellForRow(at: indexPath) as? ConfirmationCodeCell {
+        if let cell = sut.tableView.cellForRow(at: indexPath) as? PhoneNumberInputCell {
             // WHEN
-            cell.textField.insertText("8")
+            let input = cell.phoneInputView.input
+            let range = input.endIndex ..< input.endIndex
+            let changed = cell.phoneInputView.shouldChangeCharacters(in: NSRange(range, in: input), replacementString: "0")
 
             // THEN
-            XCTAssertEqual(cell.textField.text, "8")
+            XCTAssertTrue(changed)
         } else {
             XCTFail()
         }

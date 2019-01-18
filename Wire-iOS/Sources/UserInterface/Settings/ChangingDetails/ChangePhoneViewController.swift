@@ -22,10 +22,10 @@ import WireSyncEngine
 
 struct ChangePhoneNumberState {
     let currentNumber: PhoneNumber?
-    var newNumber: PhoneNumber?
-    
+    var updatedNumber: PhoneNumber?
+
     var visibleNumber: PhoneNumber? {
-        return newNumber ?? currentNumber
+        return updatedNumber ?? currentNumber
     }
     
     var isValid: Bool {
@@ -103,7 +103,7 @@ final class ChangePhoneViewController: SettingsBaseTableViewController {
     }
     
     @objc func saveButtonTapped() {
-        if let newNumber = state.newNumber?.fullNumber {
+        if let newNumber = state.updatedNumber?.fullNumber {
             userProfile?.requestPhoneVerificationCode(phoneNumber: newNumber)
             updateSaveButtonState(enabled: false)
             navigationController?.showLoadingView = true
@@ -135,6 +135,7 @@ final class ChangePhoneViewController: SettingsBaseTableViewController {
                 cell.phoneInputView.selectCountry(.default)
             }
 
+            cell.phoneInputView.tintColor = .white
             cell.phoneInputView.delegate = self
             updateSaveButtonState()
             return cell
@@ -202,7 +203,7 @@ extension ChangePhoneViewController: PhoneNumberInputViewDelegate {
 extension ChangePhoneViewController: CountryCodeTableViewControllerDelegate {
     func countryCodeTableViewController(_ viewController: UIViewController!, didSelect country: Country!) {
         viewController.dismiss(animated: true, completion: nil)
-        state.newNumber = PhoneNumber(countryCode: country.e164.uintValue, numberWithoutCode: state.visibleNumber?.numberWithoutCode ?? "")
+        state.updatedNumber = PhoneNumber(countryCode: country.e164.uintValue, numberWithoutCode: state.visibleNumber?.numberWithoutCode ?? "")
         updateSaveButtonState()
     }
 }
@@ -211,7 +212,7 @@ extension ChangePhoneViewController: UserProfileUpdateObserver {
     func phoneNumberVerificationCodeRequestDidSucceed() {
         navigationController?.showLoadingView = false
         updateSaveButtonState()
-        if let newNumber = state.newNumber?.fullNumber {
+        if let newNumber = state.updatedNumber?.fullNumber {
             let confirmController = ConfirmPhoneViewController(newNumber: newNumber, delegate: self)
             navigationController?.pushViewController(confirmController, animated: true)
         }
@@ -244,7 +245,7 @@ extension ChangePhoneViewController: UserProfileUpdateObserver {
 
 extension ChangePhoneViewController: ConfirmPhoneDelegate {
     func resendVerificationCode(inController controller: ConfirmPhoneViewController) {
-        if let newNumber = state.newNumber?.fullNumber {
+        if let newNumber = state.updatedNumber?.fullNumber {
             userProfile?.requestPhoneVerificationCode(phoneNumber: newNumber)
         }
     }

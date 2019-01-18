@@ -47,6 +47,11 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
         }
     }
 
+    /// The value entered by the user.
+    var input: String {
+        return textField.input
+    }
+
     // MARK: - Views
 
     private let countryPickerButton = IconButton()
@@ -212,16 +217,26 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
 
     // MARK: - Text Update
 
-    /// Updates the phone number with a new value.
-    @discardableResult func updatePhoneNumber(_ newString: String?) -> Bool {
-        guard let newString = newString else { return false }
-
-        // If the textField is empty and a replacementString with a +, it is likely to insert from autoFill.
-        if textField.text?.count == 0 && newString.contains("+") {
-            return shouldInsert(phoneNumber: newString)
+    /// Returns whether the text should be updated.
+    func shouldChangeCharacters(in range: NSRange, replacementString: String) -> Bool {
+        guard let replacementRange = Range(range, in: input) else {
+            return false
         }
 
-        let number = PhoneNumber(countryCode: country.e164.uintValue, numberWithoutCode: newString)
+        let updatedString = input.replacingCharacters(in: replacementRange, with: replacementString)
+        return updatePhoneNumber(updatedString)
+    }
+
+    /// Updates the phone number with a new value.
+    @discardableResult func updatePhoneNumber(_ updatedString: String?) -> Bool {
+        guard let updatedString = updatedString else { return false }
+
+        // If the textField is empty and a replacementString with a +, it is likely to insert from autoFill.
+        if textField.text?.count == 0 && updatedString.contains("+") {
+            return shouldInsert(phoneNumber: updatedString)
+        }
+
+        let number = PhoneNumber(countryCode: country.e164.uintValue, numberWithoutCode: updatedString)
 
         switch number.validate() {
         case .containsInvalidCharacters, .tooLong:
@@ -257,12 +272,7 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
 
     /// Only insert text if we have a valid phone number.
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        guard let input = textField.text, let replacementRange = Range(range, in: input) else {
-            return false
-        }
-
-        let newString = input.replacingCharacters(in: replacementRange, with: string)
-        return updatePhoneNumber(newString)
+        return shouldChangeCharacters(in: range, replacementString: string)
     }
 
     /**
