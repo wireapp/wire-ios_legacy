@@ -22,7 +22,14 @@ import XCTest
 final class GroupDetailsViewControllerSnapshotTests: CoreDataSnapshotTestCase {
     
     var sut: GroupDetailsViewController!
-        
+    
+    override func setUp() {
+        super.setUp()
+
+
+//        recordMode = true
+    }
+    
     override func tearDown() {
         sut = nil
         super.tearDown()
@@ -38,16 +45,6 @@ final class GroupDetailsViewControllerSnapshotTests: CoreDataSnapshotTestCase {
     }
     
     func testForOptionsForTeamUserInTeamConversation() {
-        teamTest {
-            otherUserConversation.team = selfUser.team
-            sut = GroupDetailsViewController(conversation: otherUserConversation)
-            verify(view: sut.view)
-        }
-    }
-
-    func testForOptionsForTeamPartnerInTeamConversation() {
-        MockUser.mockSelf()?.teamRole = .partner
-
         teamTest {
             otherUserConversation.team = selfUser.team
             sut = GroupDetailsViewController(conversation: otherUserConversation)

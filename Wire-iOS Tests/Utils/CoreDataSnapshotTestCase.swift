@@ -69,6 +69,7 @@ open class CoreDataSnapshotTestCase: ZMSnapshotTestCase {
             let member = Member.insertNewObject(in: uiMOC)
             member.user = selfUser
             member.team = team
+            member.setTeamRole(.member)
         }
 
         otherUser = ZMUser.insertNewObject(in: uiMOC)
