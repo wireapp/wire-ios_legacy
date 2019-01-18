@@ -58,7 +58,7 @@ protocol Restricted {
 extension Restricted {
     
     var selfUserIsAuthorized: Bool {
-        return ZMUser.selfUserHas(permissions: requiredPermissions)
+        return ZMUser.selfUserHas(permissions: self.requiredPermissions)
     }
     
     func authorizeSelfUser(onSuccess: () -> Void) {

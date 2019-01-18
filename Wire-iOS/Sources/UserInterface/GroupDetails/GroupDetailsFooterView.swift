@@ -22,56 +22,6 @@ protocol GroupDetailsFooterViewDelegate: class {
     func detailsView(_ view: GroupDetailsFooterView, performAction: GroupDetailsFooterView.Action)
 }
 
-final class PartnerRestrictedButton: IconButton, Restricted {
-    var requiredPermissions: Permissions {
-        return .member
-    }
-
-    override public var isHidden: Bool {
-        get {
-            if shouldHidden {
-                return true
-            } else {
-                return super.isHidden
-            }
-        }
-
-        set {
-            if shouldHidden {
-                super.isHidden = true
-            } else {
-                super.isHidden = newValue
-            }
-        }
-    }
-
-    private var shouldHidden: Bool {
-        return ZMUser.selfUser().isTeamMember && !selfUserIsAuthorized
-    }
-
-    override init() {
-        super.init()
-
-        if shouldHidden {
-            isHidden = true
-        }
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-    }
-
-    func update(for conversation: ZMConversation) {
-        isHidden = ZMUser.selfUser().isGuest(in: conversation)
-        isEnabled = conversation.freeParticipantSlots > 0
-    }
-
-}
-
 final class GroupDetailsFooterView: UIView {
     enum Action {
         case more, invite
@@ -81,7 +31,7 @@ final class GroupDetailsFooterView: UIView {
     
     private let variant: ColorSchemeVariant
     public let moreButton = IconButton()
-    public let addButton = PartnerRestrictedButton()
+    public let addButton = IconButton()
     
     init(variant: ColorSchemeVariant = ColorScheme.default.variant) {
         self.variant = variant
@@ -143,6 +93,7 @@ final class GroupDetailsFooterView: UIView {
     }
     
     func update(for conversation: ZMConversation) {
-        addButton.update(for: conversation)
+        addButton.isHidden = ZMUser.selfUser().isGuest(in: conversation)
+        addButton.isEnabled = conversation.freeParticipantSlots > 0
     }
 }
