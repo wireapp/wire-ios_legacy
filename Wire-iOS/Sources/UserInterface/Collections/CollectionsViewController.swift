@@ -637,8 +637,9 @@ extension CollectionsViewController: UICollectionViewDataSourcePrefetching {
 
 extension CollectionsViewController: CollectionCellMessageChangeDelegate {
     public func messageDidChange(_ cell: CollectionCell, changeInfo: MessageChangeInfo) {
+
         // Open the file when it is downloaded
-        guard let message = self.selectedMessage as? ZMMessage,
+        guard let message = self.selectedMessage,
               changeInfo.message == message,
               let fileMessageData = message.fileMessageData,
               fileMessageData.transferState == .downloaded,

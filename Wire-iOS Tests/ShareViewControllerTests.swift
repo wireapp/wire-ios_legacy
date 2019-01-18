@@ -85,7 +85,7 @@ class ShareViewControllerTests: CoreDataSnapshotTestCase {
         groupConversation.internalAddParticipants(Set([self.createUser(name: "John Appleseed")]))
         let oneToOneConversation = self.createGroupConversation()
         
-        guard let message = groupConversation.messages.firstObject as? ZMMessage else {
+        guard let message = groupConversation.recentMessages.first else {
             XCTFail("Cannot add test message to the group conversation")
             return
         }
@@ -117,7 +117,7 @@ class ShareViewControllerTests: CoreDataSnapshotTestCase {
         groupConversation.internalAddParticipants(Set([self.createUser(name: "John Appleseed")]))
         let oneToOneConversation = self.createGroupConversation()
 
-        guard let message = groupConversation.messages.firstObject as? ZMMessage else {
+        guard let message = groupConversation.recentMessages.first else {
             XCTFail("Cannot add test message to the group conversation")
             return
         }
@@ -144,7 +144,7 @@ class ShareViewControllerTests: CoreDataSnapshotTestCase {
         groupConversation.internalAddParticipants(Set([self.createUser(name: "John Appleseed")]))
         let oneToOneConversation = self.createGroupConversation()
 
-        guard let message = groupConversation.messages.firstObject as? ZMMessage else {
+        guard let message = groupConversation.recentMessages.first else {
             XCTFail("Cannot add test message to the group conversation")
             return
         }
@@ -181,7 +181,7 @@ class ShareViewControllerTests: CoreDataSnapshotTestCase {
         
         let oneToOneConversation = self.createGroupConversation()
         
-        guard let message = groupConversation.messages.firstObject as? ZMMessage else {
+        guard let message = groupConversation.recentMessages.first else {
             XCTFail("Cannot add test message to the group conversation")
             return
         }

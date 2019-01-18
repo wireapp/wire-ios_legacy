@@ -200,32 +200,21 @@ extension ConversationContentViewController: UIAdaptivePresentationControllerDel
 }
 
 extension ConversationContentViewController {
+
     @objc func scroll(to messageToShow: ZMConversationMessage, completion: ((UIView)->())? = .none) {
         guard messageToShow.conversation == self.conversation else {
             fatal("Message from the wrong conversation")
         }
         
-        let indexInConversation: Int = self.conversation.messages.index(of: messageToShow)
-        if !self.messageWindow.messages.contains(messageToShow) {
+        showLoadingView = true
         
-            let oldestMessageIndexInMessageWindow = self.conversation.messages.index(of: self.messageWindow.messages.firstObject!)
-            let newestMessageIndexInMessageWindow = self.conversation.messages.index(of: self.messageWindow.messages.lastObject!)
-
-            if oldestMessageIndexInMessageWindow > indexInConversation {
-                self.messageWindow.moveUp(byMessages: UInt(oldestMessageIndexInMessageWindow - indexInConversation))
+        dataSource.find(messageToShow) { index in
+            self.showLoadingView = false
+            
+            guard let indexToShow = index else {
+                return
             }
-            else {
-                self.messageWindow.moveDown(byMessages: UInt(indexInConversation - newestMessageIndexInMessageWindow))
-            }
-        }
-
-        let indexToShow = self.messageWindow.messages.index(of: messageToShow)
-
-        if indexToShow == NSNotFound {
-            self.expectedMessageToShow = messageToShow
-            self.onMessageShown = completion
-        }
-        else {
+            
             self.scroll(toIndex: indexToShow, completion: completion)
         }
     }

@@ -314,32 +314,6 @@ typedef NS_ENUM(NSUInteger, ProfileViewContentMode) {
     }
 }
 
-- (ProfileUserAction)rightButtonAction
-{
-    ZMUser *user = [self fullUser];
-    
-    if (user.isSelfUser) {
-        return ProfileUserActionNone;
-    }
-    else if (self.context == ProfileViewControllerContextGroupConversation) {
-        if ([[ZMUser selfUser] canRemoveUserFromConversation:self.conversation]) {
-            return ProfileUserActionRemovePeople;
-        }
-        else {
-            return ProfileUserActionNone;
-        }
-    }
-    else if (user.isConnected) {
-        return ProfileUserActionPresentMenu;
-    }
-    else if (nil != user.team) {
-        return ProfileUserActionPresentMenu;
-    }
-    else {
-        return ProfileUserActionNone;
-    }
-}
-
 #pragma mark - Actions
 
 - (void)performLeftButtonAction:(id)sender

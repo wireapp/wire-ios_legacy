@@ -32,10 +32,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (nullable id<ZMConversationMessage>)messageAtPoint:(CGPoint)point
 {
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:point];
-    if (indexPath == nil || indexPath.row >= (NSInteger)self.messageWindow.messages.count) {
+    if (indexPath == nil || indexPath.row >= (NSInteger)self.dataSource.messages.count) {
         return nil;
     }
-    id<ZMConversationMessage> message = [self.messageWindow.messages objectAtIndex:indexPath.row];
+    id<ZMConversationMessage> message = [self.dataSource.messages objectAtIndex:indexPath.section];
     return message;
 }
 

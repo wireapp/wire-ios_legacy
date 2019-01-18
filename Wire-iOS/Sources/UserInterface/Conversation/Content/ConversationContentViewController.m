@@ -34,7 +34,6 @@
 
 // model
 #import "WireSyncEngine+iOS.h"
-#import "ConversationMessageWindowTableViewAdapter.h"
 
 // ui
 #import "ZClientViewController.h"
@@ -53,37 +52,22 @@
 
 #import "Wire-Swift.h"
 
-
-const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
-
-
 @interface ConversationContentViewController (TableView) <UITableViewDelegate, UITableViewDataSourcePrefetching>
-
 @end
-
-
 
 @interface ConversationContentViewController (ConversationMessageCellDelegate) <ConversationMessageCellDelegate>
-
 @end
-
-
 
 @interface ConversationContentViewController (ZMTypingChangeObserver) <ZMTypingChangeObserver>
-
 @end
-
-
 
 @interface ConversationContentViewController () <CanvasViewControllerDelegate>
 
-@property (nonatomic, readwrite) ConversationMessageWindowTableViewAdapter *conversationMessageWindowTableViewAdapter;
 @property (nonatomic, assign) BOOL wasScrolledToBottomAtStartOfUpdate;
 @property (nonatomic) NSObject *activeMediaPlayerObserver;
 @property (nonatomic) MediaPlaybackManager *mediaPlaybackManager;
 @property (nonatomic) NSMutableDictionary *cachedRowHeights;
 @property (nonatomic) BOOL hasDoneInitialLayout;
-@property (nonatomic) id messageWindowObserverToken;
 @property (nonatomic) BOOL onScreen;
 @property (nonatomic) UserConnectionViewController *connectionViewController;
 @property (nonatomic) DeletionDialogPresenter *deletionDialogPresenter;
@@ -159,24 +143,16 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 {
     [super viewDidLoad];
     
-    self.messageWindow = [self.conversation conversationWindowWithSize:30];
-    self.conversationMessageWindowTableViewAdapter =
-    [[ConversationMessageWindowTableViewAdapter alloc] initWithTableView:self.tableView
-                                                           messageWindow:self.messageWindow];
-    self.conversationMessageWindowTableViewAdapter.conversationCellDelegate = self;
-    self.conversationMessageWindowTableViewAdapter.messageActionResponder = self;
-    
-    self.messageWindowObserverToken = [MessageWindowChangeInfo addObserver:self forWindow:self.messageWindow];
-    
+    self.dataSource = [[ConversationTableViewDataSource alloc] initWithConversation:self.conversation
+                                                                          tableView:self.tableView];
+    self.dataSource.conversationCellDelegate = self;
+    self.dataSource.messageActionResponder = self;
+
     self.tableView.estimatedRowHeight = 80;
     self.tableView.translatesAutoresizingMaskIntoConstraints = NO;
     self.tableView.allowsSelection = YES;
     self.tableView.allowsMultipleSelection = NO;
     self.tableView.delegate = self;
-    self.tableView.dataSource = self.conversationMessageWindowTableViewAdapter;
-    if ([self.tableView respondsToSelector:@selector(setPrefetchDataSource:)]) {
-        self.tableView.prefetchDataSource = self;
-    }
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.delaysContentTouches = NO;
     self.tableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeInteractive;
@@ -186,7 +162,8 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
         self.view.backgroundColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorContentBackground];
     }];
     
-    UIPinchGestureRecognizer *pinchImageGestureRecognizer = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(onPinchZoom:)];
+    UIPinchGestureRecognizer *pinchImageGestureRecognizer = [[UIPinchGestureRecognizer alloc] initWithTarget:self
+                                                                                                      action:@selector(onPinchZoom:)];
     pinchImageGestureRecognizer.delegate = self;
     [self.view addGestureRecognizer:pinchImageGestureRecognizer];
     
@@ -200,7 +177,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 
 - (void)applicationDidBecomeActive:(NSNotification *)notification
 {
-    self.conversationMessageWindowTableViewAdapter.sectionControllers = [[NSMutableDictionary alloc] init];
+    [self.dataSource resetSectionControllers];
     [self.tableView reloadData];
 }
 
@@ -259,6 +236,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     if (! self.hasDoneInitialLayout) {
         self.hasDoneInitialLayout = YES;
         [self updateTableViewHeaderView];
+
         if (self.messageVisibleOnLoad != nil) {
             [self scrollToMessage:self.messageVisibleOnLoad animated:NO];
         }
@@ -283,7 +261,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 
 - (void)updateTableViewHeaderView
 {
-    if (self.messageWindow.messages.count != self.conversation.messages.count) {
+    if (!self.dataSource.hasFetchedAllMessages) {
         // Don't display the conversation header if the message window doesn't include the first message.
         return;
     }
@@ -318,8 +296,8 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     }
     
     _searchQueries = searchQueries;
-    self.conversationMessageWindowTableViewAdapter.searchQueries = self.searchQueries;
-    [self.conversationMessageWindowTableViewAdapter reconfigureVisibleSections];
+
+    self.dataSource.searchQueries = self.searchQueries;
 }
 
 #pragma mark - Get/set
@@ -346,7 +324,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 
 - (void)highlightMessage:(id<ZMConversationMessage>)message;
 {
-    [self.conversationMessageWindowTableViewAdapter highlightMessage:message];
+    [self.dataSource highlightMessage:message];
 }
 
 - (void)wantsToPerformAction:(MessageAction)actionId forMessage:(id<ZMConversationMessage>)message cell:(UIView<SelectableView> *)cell
@@ -387,7 +365,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
                 break;
             case MessageActionPresent:
             {
-                self.conversationMessageWindowTableViewAdapter.selectedMessage = message;
+                self.dataSource.selectedMessage = message;
                 [self presentDetailsForMessage:message];
             }
                 break;
@@ -396,7 +374,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
                 if ([Message isImageMessage:message]) {
                     [self saveImageFromMessage:message cell:cell];
                 } else {
-                    self.conversationMessageWindowTableViewAdapter.selectedMessage = message;
+                    self.dataSource.selectedMessage = message;
                     UIView *targetView = cell.selectionView;
 
                     UIActivityViewController *saveController = [[UIActivityViewController alloc] initWithMessage:message from:targetView];
@@ -406,7 +384,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
                 break;
             case MessageActionEdit:
             {
-                self.conversationMessageWindowTableViewAdapter.editingMessage = message;
+                self.dataSource.editingMessage = message;
                 [self.delegate conversationContentViewController:self didTriggerEditingMessage:message];
             }
                 break;
@@ -429,7 +407,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
             {
                 BOOL liked = ![Message isLikedMessage:message];
                 
-                NSIndexPath *indexPath = [self.conversationMessageWindowTableViewAdapter indexPathForMessage:message];
+                NSIndexPath *indexPath = [self.dataSource indexPathForMessage:message];
                 
                 [[ZMUserSession sharedSession] performChanges:^{
                     [Message setLikedMessage:message liked:liked];
@@ -437,12 +415,12 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
                 
                 if (liked) {
                     // Deselect if necessary to show list of likers
-                    if (self.conversationMessageWindowTableViewAdapter.selectedMessage == message) {
+                    if (self.dataSource.selectedMessage == message) {
                         [self tableView:self.tableView willSelectRowAtIndexPath:indexPath];
                     }
                 } else {
                     // Select if necessary to prevent message from collapsing
-                    if (self.conversationMessageWindowTableViewAdapter.selectedMessage != message && ![Message hasReactions:message]) {
+                    if (self.dataSource.selectedMessage != message && ![Message hasReactions:message]) {
                         [self tableView:self.tableView willSelectRowAtIndexPath:indexPath];
                         [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
                     }
@@ -457,7 +435,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
             case MessageActionShowInConversation:
             {
                 [self scrollTo:message completion:^(UIView *cell) {
-                    [self.conversationMessageWindowTableViewAdapter highlightMessage:message];
+                    [self.dataSource highlightMessage:message];
                 }];
             }
                 break;
@@ -484,7 +462,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
                 if (message.textMessageData.quote) {
                     id<ZMConversationMessage> quote = message.textMessageData.quote;
                     [self scrollTo:quote completion:^(UIView *cell) {
-                        [self.conversationMessageWindowTableViewAdapter highlightMessage:quote];
+                        [self.dataSource highlightMessage:quote];
                     }];
                 }
             }
@@ -541,7 +519,8 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     NSIndexPath *firstIndexPath = indexPathsForVisibleRows.firstObject;
     
     if (firstIndexPath) {
-        id<ZMConversationMessage>lastVisibleMessage = [self.messageWindow.messages objectAtIndex:firstIndexPath.section];
+        id<ZMConversationMessage>lastVisibleMessage = [self.dataSource.messages objectAtIndex:firstIndexPath.section];
+
         [self.conversation markMessagesAsReadUntil:lastVisibleMessage];
     }
 }
@@ -607,7 +586,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 
 - (BOOL)displaysMessage:(id<ZMConversationMessage>)message
 {
-    NSInteger index = [self.messageWindow.messages indexOfObject:message];
+    NSInteger index = [self.dataSource indexOfMessage:(id)message];
 
     for (NSIndexPath *indexPath in self.tableView.indexPathsForVisibleRows) {
         if (indexPath.row == index) {
@@ -684,7 +663,6 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     [self.cachedRowHeights setObject:@(cell.frame.size.height) forKey:indexPath];
 }
 
-
 - (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSNumber *cachedHeight = [self.cachedRowHeights objectForKey:indexPath];
@@ -698,7 +676,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 
 - (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    ZMMessage *message = [self.messageWindow.messages objectAtIndex:indexPath.section];
+    ZMMessage *message = (ZMMessage *)[self.dataSource.messages objectAtIndex:indexPath.section];
     NSIndexPath *selectedIndexPath = nil;
 
     // If the menu is visible, hide it and do nothing
@@ -707,11 +685,11 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
         return nil;
     }
 
-    if ([message isEqual:self.conversationMessageWindowTableViewAdapter.selectedMessage]) {
+    if ([message isEqual:self.dataSource.selectedMessage]) {
         
         // If this cell is already selected, deselect it.
-        self.conversationMessageWindowTableViewAdapter.selectedMessage  = nil;
-        [self.conversationMessageWindowTableViewAdapter deselectWithIndexPath:indexPath];
+        self.dataSource.selectedMessage  = nil;
+        [self.dataSource deselectWithIndexPath:indexPath];
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
         
         // Make table view to update cells with animation (TODO can be removed when legacy cells are removed)
@@ -719,10 +697,10 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
         [tableView endUpdates];
     } else {
         if (tableView.indexPathForSelectedRow != nil) {
-            [self.conversationMessageWindowTableViewAdapter deselectWithIndexPath:tableView.indexPathForSelectedRow];
+            [self.dataSource deselectWithIndexPath:tableView.indexPathForSelectedRow];
         }
-        self.conversationMessageWindowTableViewAdapter.selectedMessage = message;
-        [self.conversationMessageWindowTableViewAdapter selectWithIndexPath:indexPath];
+        self.dataSource.selectedMessage = message;
+        [self.dataSource selectWithIndexPath:indexPath];
         selectedIndexPath = indexPath;
     }
     
@@ -731,12 +709,9 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 
 - (void)tableView:(UITableView *)tableView prefetchRowsAtIndexPaths:(NSArray<NSIndexPath *> *)indexPaths
 {
-    [self prefetchNextMessagesForIndexPaths:indexPaths];
 }
 
 @end
-
-
 
 @implementation ConversationContentViewController (ConversationMessageCellDelegate)
 
@@ -778,113 +753,6 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 - (void)conversationMessageWantsToOpenParticipantsDetails:(UIView *)cell selectedUsers:(NSArray<ZMUser *> *)selectedUsers sourceView:(UIView *)sourceView
 {
     [self.delegate conversationContentViewController:self presentParticipantsDetailsWithSelectedUsers:selectedUsers fromView:sourceView];
-}
-
-@end
-
-
-@implementation ConversationContentViewController (EditMessages)
-
-- (void)editLastMessage
-{
-    ZMMessage *lastEditableMessage = self.conversation.lastEditableMessage;
-    if (lastEditableMessage != nil) {
-        [self wantsToPerformAction:MessageActionEdit forMessage:lastEditableMessage];
-    }
-}
-
-- (void)didFinishEditingMessage:(id<ZMConversationMessage>)message
-{
-    self.conversationMessageWindowTableViewAdapter.editingMessage = nil;
-}
-
-@end
-
-
-@implementation ConversationContentViewController (MessageWindow)
-
-- (void)expandMessageWindowUp
-{
-    [self.conversationMessageWindowTableViewAdapter expandMessageWindow];
-}
-
-- (void)prefetchNextMessagesForIndexPaths:(NSArray<NSIndexPath *> *)indexPaths
-{
-    NSArray<NSIndexPath *> *sortedIndexPaths = [indexPaths sortedArrayUsingSelector:@selector(row)];
-
-    NSIndexPath* latestIndexPath = sortedIndexPaths.lastObject;
-
-    if (latestIndexPath.row + ConversationContentViewControllerMessagePrefetchDepth > (int)self.messageWindow.messages.count) {
-        [self expandMessageWindowUp];
-    }
-}
-
-- (void)messagesInsideWindow:(ZMConversationMessageWindow *)window didChange:(NSArray<MessageChangeInfo *> *)messageChangeInfos
-{
-    if (self.messagePresenter.waitingForFileDownload) {
-        id<ZMConversationMessage> selectedMessage = self.conversationMessageWindowTableViewAdapter.selectedMessage;
-        if (selectedMessage &&
-            ([Message isVideoMessage:selectedMessage] ||
-             [Message isAudioMessage:selectedMessage] ||
-             [Message isFileTransferMessage:selectedMessage])
-            && selectedMessage.fileMessageData.transferState == ZMFileTransferStateDownloaded) {
-            if ([self isVisible]) {
-                NSUInteger indexOfFileMessage = [[[self messageWindow] messages] indexOfObject:selectedMessage];
-                
-                BOOL __block expectedMessageUpdated = NO;
-                [messageChangeInfos enumerateObjectsUsingBlock:^(MessageChangeInfo * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                    if ([obj.message isEqual:selectedMessage]) {
-                        expectedMessageUpdated = YES;
-                        *stop = YES;
-                    }
-                }];
-                
-                if (expectedMessageUpdated) {
-                    NSIndexPath *cellIndexPath = [NSIndexPath indexPathForRow:indexOfFileMessage inSection:0];
-                    
-                    NSArray *indexes = [self.tableView indexPathsForVisibleRows];
-                    BOOL isVisibleCell = [indexes containsObjectMatchingWithBlock:^BOOL(NSIndexPath *obj) {
-                        return (obj.row == cellIndexPath.row) && (obj.section == cellIndexPath.section);
-                    }];
-                    
-                    if (isVisibleCell) {
-                        [self.messagePresenter openFileMessage:selectedMessage targetView:[self.tableView cellForRowAtIndexPath:cellIndexPath]];
-                    }
-                }
-            }
-        }
-    }
-}
-
-- (void)conversationWindowDidChange:(MessageWindowChangeInfo *)note
-{
-    [self updateHeaderHeight];
-
-    // Clear selectedMessage if it is going to be deleted.
-    if ([note.deletedObjects containsObject:self.conversationMessageWindowTableViewAdapter.selectedMessage]) {
-        self.conversationMessageWindowTableViewAdapter.selectedMessage = nil;
-    }
-    
-    if (note.insertedIndexes.count == 0) {
-        return;
-    }
-    
-    [self removeHighlightsAndMenu];
-    
-    if (note.insertedIndexes.firstIndex > 0) {
-        // Update table header when all messages in the conversation are loaded
-        [self updateTableViewHeaderView];
-    }
-    
-    if (nil != self.expectedMessageToShow) {
-        NSUInteger index = [self.messageWindow.messages indexOfObject:self.expectedMessageToShow];
-        if (index != NSNotFound) {
-            [self scrollToIndex:index completion:self.onMessageShown];
-            self.onMessageShown = nil;
-            self.expectedMessageToShow = nil;
-        }
-    }
-    
 }
 
 @end
