@@ -23,7 +23,7 @@ protocol GroupDetailsFooterViewDelegate: class {
 }
 
 final class RestrictedButton: IconButton, Restricted {
-    var requiredPermissions: Permissions
+    var requiredPermissions: Permissions = []
 
     override public var isHidden: Bool {
         get {
