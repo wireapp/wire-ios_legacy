@@ -84,17 +84,17 @@ class GroupDetailsRenameCell : UICollectionViewCell, Restricted {
         contentStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16).isActive = true
         contentStackView.spacing = 8
         
-        if !selfUserIsAuthorized {
-            titleTextField.isUserInteractionEnabled = false
-            accessoryIconView.isHidden = true
-        }
-        
         configureColors()
     }
     
     func configure(for conversation: ZMConversation) {
         titleTextField.text = conversation.displayName
         verifiedIconView.isHidden = conversation.securityLevel != .secure
+        
+        if !selfUserIsAuthorized {
+            titleTextField.isUserInteractionEnabled = false
+            accessoryIconView.isHidden = true
+        }
     }
     
     private func configureColors() {
