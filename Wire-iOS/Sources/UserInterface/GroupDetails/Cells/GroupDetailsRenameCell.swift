@@ -85,7 +85,6 @@ class GroupDetailsRenameCell : UICollectionViewCell, Restricted {
         contentStackView.spacing = 8
         
         if !selfUserIsAuthorized {
-            // disable editing
             titleTextField.isUserInteractionEnabled = false
             accessoryIconView.isHidden = true
         }
