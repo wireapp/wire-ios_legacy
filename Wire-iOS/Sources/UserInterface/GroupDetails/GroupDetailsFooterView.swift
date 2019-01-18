@@ -61,6 +61,8 @@ final class RestrictedButton: IconButton, Restricted {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // this is for fixing running error for init(frame:) mehtod not find.
+    // rewrite parent class to Swift and then remove this.
     override init(frame: CGRect) {
         super.init(frame: frame)
     }
