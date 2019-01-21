@@ -72,7 +72,7 @@ final class ProfileDetailsViewControllerSnapshotTests: CoreDataSnapshotTestCase 
 
     func testThatPartnerRoleHasNoRemovePartcipantButton() {
         teamTest {
-            selfUser.membership?.setTeamRole(.partner)
+            selfUser.membership?.setTeamRole(.collaborator)
 
             sut = ProfileDetailsViewController(user: self.otherUser, conversation: self.otherUserConversation, context: .groupConversation)
             verifyInIPhoneSize(view: sut.view)

@@ -37,7 +37,7 @@ final class GroupDetailsFooterViewTests: CoreDataSnapshotTestCase {
 
     func testForPartnerRoleWithNoAddParticipantsButton(){
         teamTest {
-            selfUser.membership?.setTeamRole(.partner)
+            selfUser.membership?.setTeamRole(.collaborator)
             sut = GroupDetailsFooterView()
 
             verifyInAllPhoneWidths(view: sut)
