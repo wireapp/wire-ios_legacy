@@ -84,7 +84,7 @@ final class ConversationTableViewDataSource: NSObject {
     
     @objc public var searchQueries: [String] = [] {
         didSet {
-            reloadSections(newSections: calculateSections())
+            currentSections = calculateSections()
             tableView.reloadData()
         }
     }
