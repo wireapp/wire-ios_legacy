@@ -19,12 +19,13 @@
 import Foundation
 
 @objc public protocol MessageActionResponder: NSObjectProtocol {
-    @objc(wantsToPerformAction:forMessage:)
+    @objc(wantsToPerformAction:forMessage:sourceView:)
 
     /// perform an action for the message
     ///
     /// - Parameters:
     ///   - action: a kind of MessageAction
     ///   - message: the ZMConversationMessage to perform the action
-    func perform(action: MessageAction, for message: ZMConversationMessage!)
+    ///   - sourceView: the source view which triggers the action
+    func perform(action: MessageAction, for message: ZMConversationMessage!, sourceView: UIView!)
 }

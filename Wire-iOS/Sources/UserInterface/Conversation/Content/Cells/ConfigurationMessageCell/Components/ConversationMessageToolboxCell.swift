@@ -72,15 +72,15 @@ class ConversationMessageToolboxCell: UIView, ConversationMessageCell, MessageTo
     }
 
     func messageToolboxViewDidRequestLike(_ messageToolboxView: MessageToolboxView) {
-        delegate?.perform(action: .like, for: message)
+        delegate?.perform(action: .like, for: message, sourceView: messageToolboxView)
     }
 
     func messageToolboxViewDidSelectDelete(_ messageToolboxView: MessageToolboxView) {
-        delegate?.perform(action: .delete, for: message)
+        delegate?.perform(action: .delete, for: message, sourceView: messageToolboxView)
     }
 
     func messageToolboxViewDidSelectResend(_ messageToolboxView: MessageToolboxView) {
-        delegate?.perform(action: .resend, for: message)
+        delegate?.perform(action: .resend, for: message, sourceView: messageToolboxView)
     }
 
 }

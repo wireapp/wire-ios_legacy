@@ -95,7 +95,8 @@ final class ConversationTableViewDataSource: NSObject {
         }
         let actionController = ConversationMessageActionController(responder: self.messageActionResponder,
                                                                    message: message,
-                                                                   context: .content)
+                                                                   context: .content,
+                                                                   sourceView: self.tableView) ///TODO: pass the cell
         actionControllers[message.objectIdentifier] = actionController
         
         return actionController

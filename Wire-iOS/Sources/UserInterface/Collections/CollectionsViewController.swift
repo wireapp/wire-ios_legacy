@@ -614,7 +614,7 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
         }
         
         let message = self.message(for: indexPath)
-        self.perform(.present, for: message, source: cell)
+        perform(action: .present, for: message, sourceView: cell)
     }
     
 }
@@ -667,22 +667,9 @@ extension CollectionsViewController: UIGestureRecognizerDelegate {
 
 // MARK: - Actions
 extension CollectionsViewController: MessageActionResponder {
-    public func perform(action: MessageAction, for message: ZMConversationMessage!) {
-        perform(action, for: message, source: nil)
-    }
-}
+    public func perform(action: MessageAction, for message: ZMConversationMessage!, sourceView: UIView!) {
+        let source: CollectionCell? = sourceView as? CollectionCell
 
-extension CollectionsViewController: CollectionCellDelegate {
-
-    func collectionCell(_ cell: CollectionCell, performAction action: MessageAction) {
-        guard let message = cell.message else {
-            fatal("Cell does not have a message: \(cell)")
-        }
-
-        self.perform(action, for: message, source: cell)
-    }
-
-    func perform(_ action: MessageAction, for message: ZMConversationMessage, source: CollectionCell?) {
         switch action {
         case .copy:
             if let cell = source {
@@ -753,6 +740,17 @@ extension CollectionsViewController: CollectionCellDelegate {
         default:
             self.delegate?.collectionsViewController(self, performAction: action, onMessage: message)
         }
+    }
+}
+
+extension CollectionsViewController: CollectionCellDelegate {
+
+    func collectionCell(_ cell: CollectionCell, performAction action: MessageAction) {
+        guard let message = cell.message else {
+            fatal("Cell does not have a message: \(cell)")
+        }
+
+        perform(action: action, for: message, sourceView: cell)
     }
 
 }

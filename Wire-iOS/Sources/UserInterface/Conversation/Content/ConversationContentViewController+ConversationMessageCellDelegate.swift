@@ -19,8 +19,8 @@
 import Foundation
 
 extension ConversationContentViewController: ConversationMessageCellDelegate {
-    public func perform(action: MessageAction, for message: ZMConversationMessage!) {
-        guard let cell = cell(for: message) as? UIView & SelectableView else { return }
+    public func perform(action: MessageAction, for message: ZMConversationMessage!, sourceView: UIView!) {
+        guard let cell = sourceView as? UIView & SelectableView else { return }
 
         wants(toPerform: action, for: message, cell: cell)
     }
