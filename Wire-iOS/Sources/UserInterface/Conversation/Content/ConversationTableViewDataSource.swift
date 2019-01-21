@@ -262,16 +262,6 @@ final class ConversationTableViewDataSource: NSObject {
         }
     }
     
-    fileprivate func stopAudioPlayer(for messages: Set<ZMMessage>) {
-        guard let audioTrackPlayer = AppDelegate.shared().mediaPlaybackManager?.audioTrackPlayer,
-              let sourceMessage = audioTrackPlayer.sourceMessage as? ZMMessage,
-              messages.contains(sourceMessage) else {
-            return
-        }
-        
-        audioTrackPlayer.stop()
-    }
-    
     private func fetchRequest() -> NSFetchRequest<ZMMessage> {
         let fetchRequest = NSFetchRequest<ZMMessage>(entityName: ZMMessage.entityName())
         fetchRequest.predicate = conversation.visibleMessagesPredicate
@@ -331,8 +321,6 @@ extension ConversationTableViewDataSource: NSFetchedResultsControllerDelegate {
         tableView.reload(using: stagedChangeset, with: .fade) { data in
             currentSections = data
         }
-        
-        // TODO jacob stop audio for deleted message (observe message?)
     }
     
 }
