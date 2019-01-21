@@ -142,14 +142,17 @@ class AuthenticationStepController: AuthenticationStepViewController {
         headlineLabel.lineBreakMode = .byWordWrapping
         updateHeadlineLabelFont()
 
-        subtextLabel = UILabel()
-        subtextLabelContainer = ContentInsetView(subtextLabel, inset: textPadding)
-        subtextLabel.textAlignment = .center
-        subtextLabel.text = stepDescription.subtext
-        subtextLabel.font = AuthenticationStepController.subtextFont
-        subtextLabel.textColor = UIColor.Team.subtitleColor
-        subtextLabel.numberOfLines = 0
-        subtextLabel.lineBreakMode = .byWordWrapping
+        if stepDescription.subtext != nil {
+            subtextLabel = UILabel()
+            subtextLabelContainer = ContentInsetView(subtextLabel, inset: textPadding)
+            subtextLabel.textAlignment = .center
+            subtextLabel.text = stepDescription.subtext
+            subtextLabel.font = AuthenticationStepController.subtextFont
+            subtextLabel.textColor = UIColor.Team.subtitleColor
+            subtextLabel.numberOfLines = 0
+            subtextLabel.lineBreakMode = .byWordWrapping
+            subtextLabel.isHidden = stepDescription.subtext == nil
+        }
 
         errorLabel = UILabel()
         errorLabelContainer = ContentInsetView(errorLabel, inset: textPadding)
@@ -171,6 +174,7 @@ class AuthenticationStepController: AuthenticationStepViewController {
         secondaryViewsStackView.translatesAutoresizingMaskIntoConstraints = false
 
         let subviews = [headlineLabelContainer, subtextLabelContainer, mainView, errorLabelContainer, secondaryViewsStackView].compactMap { $0 }
+
         contentStack = CustomSpacingStackView(customSpacedArrangedSubviews: subviews)
         contentStack.axis = .vertical
         contentStack.distribution = .fill
@@ -203,14 +207,20 @@ class AuthenticationStepController: AuthenticationStepViewController {
 
         // Arrangement
         headlineLabel.setContentCompressionResistancePriority(UILayoutPriority.required, for: .vertical)
-        subtextLabel.setContentCompressionResistancePriority(UILayoutPriority.required, for: .vertical)
         errorLabel.setContentCompressionResistancePriority(UILayoutPriority.required, for: .vertical)
         mainView.setContentCompressionResistancePriority(UILayoutPriority.required, for: .vertical)
         mainView.setContentHuggingPriority(.defaultLow, for: .horizontal)
 
         // Spacing
-        contentStack.wr_addCustomSpacing(16, after: headlineLabelContainer)
-        contentStack.wr_addCustomSpacing(44, after: subtextLabelContainer)
+        if stepDescription.subtext != nil {
+            subtextLabel.setContentCompressionResistancePriority(UILayoutPriority.required, for: .vertical)
+            subtextLabel.widthAnchor.constraint(equalTo: contentStack.widthAnchor, constant: -64).isActive = true
+            contentStack.wr_addCustomSpacing(16, after: headlineLabelContainer)
+            contentStack.wr_addCustomSpacing(44, after: subtextLabelContainer)
+        } else {
+            contentStack.wr_addCustomSpacing(44, after: headlineLabelContainer)
+        }
+
         contentStack.wr_addCustomSpacing(8, after: mainView)
         contentStack.wr_addCustomSpacing(16, after: errorLabelContainer)
 
@@ -225,7 +235,6 @@ class AuthenticationStepController: AuthenticationStepViewController {
 
             // labels
             headlineLabel.widthAnchor.constraint(equalTo: contentStack.widthAnchor, constant: -64),
-            subtextLabel.widthAnchor.constraint(equalTo: contentStack.widthAnchor, constant: -64),
 
             // height
             mainView.heightAnchor.constraint(greaterThanOrEqualToConstant: AuthenticationStepController.mainViewHeight),
@@ -311,6 +320,11 @@ class AuthenticationStepController: AuthenticationStepViewController {
         }
     }
 
+    func clearInputFields() {
+        (mainView as? TextContainer)?.text = nil
+        mainView.becomeFirstResponderIfPossible()
+    }
+
 }
 
 // MARK: - Event Handling
@@ -319,8 +333,7 @@ extension AuthenticationStepController {
     func executeErrorFeedbackAction(_ feedbackAction: AuthenticationErrorFeedbackAction) {
         switch feedbackAction {
         case .clearInputFields:
-            (mainView as? TextContainer)?.text = nil
-            mainView.becomeFirstResponderIfPossible()
+            clearInputFields()
         case .showGuidanceDot:
             break
         }

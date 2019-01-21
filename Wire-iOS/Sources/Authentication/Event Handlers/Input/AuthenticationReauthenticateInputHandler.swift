@@ -35,9 +35,9 @@ class AuthenticationReauthenticateInputHandler: AuthenticationEventHandler {
         if context is Void {
             // If we get `Void`, start the company login flow.
             return [.startCompanyLogin]
-        } else if let emailInput = context as? (String, String) {
+        } else if let (email, password) = context as? (String, String) {
             // If we get `(String, String)`, start the email flow
-            let request = AuthenticationLoginRequest.email(address: emailInput.0, password: emailInput.1)
+            let request = AuthenticationLoginRequest.email(address: email, password: password)
             return [.startLoginFlow(request)]
         } else if let phoneInput = context as? String {
             // If we get `String`, start the phone login flow

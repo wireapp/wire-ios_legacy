@@ -1204,8 +1204,8 @@
 "registration.close_phone_invitation_button.email_title" = "Register by email";
 "registration.close_phone_invitation_button.phone_title" = "Use another phone";
 
-"registration.register_by_phone" = "Register by phone";
-"registration.register_by_email" = "Register by email";
+"registration.register_by_phone" = "Phone";
+"registration.register_by_email" = "Email";
 "registration.email.subheadline" = "Enter your personal email address.";
 "registration.phone.subheadline" = "Enter your phone number.";
 "registration.email.textfield.placeholder" = "you@youremail.com";
@@ -1231,8 +1231,8 @@
 "registration.alert.account_exists.message_phone" = "The phone number you used to register is already linked to an account.\n\nUse another phone number, or try to log in if you own this account.";
 "registration.alert.account_exists.message_email" = "The email address you used to register is already linked to an account.\n\n Use another email address, or try to log in if you own this account.";
 "registration.alert.change_email_action" = "Change Email";
-"registration.alert.change_phone_action" = "Change Phone";
-"registration.alert.change_signin_action" = "Sign In";
+"registration.alert.change_phone_action" = "Register with Another Number";
+"registration.alert.change_signin_action" = "Log in";
 
 // Restore History Warning Alert
 "registration.no_history.restore_backup_warning.title" = "Restore history";
@@ -1317,6 +1317,7 @@
 "registration.push_access_denied.settings_button.title" = "Go to Settings";
 "registration.push_access_denied.maybe_later_button.title" = "Maybe later";
 
+"registration.personal.title" = "Create an account";
 "registration.signin.title" = "Log in";
 "registration.signin.too_many_devices.title" = "Too Many Devices";
 "registration.signin.too_many_devices.subtitle" = "Remove one of your other devices to start using Wire on this one.";
@@ -1346,12 +1347,9 @@
 "signin.confirm" = "Log In";
 "signin.company_idp.button.title" = "For Companies";
 
-"signin.email.subheadline" = "Enter your email address and password.";
-"signin.phone.subheadline" = "Enter your phone number.";
-
+"signin_logout.subheadline" = "Your session expired. You need to log in again to continue.";
 "signin_logout.email.subheadline" = "Your session expired. Enter your email address and password to continue.";
 "signin_logout.phone.subheadline" = "Your session expired. Enter your phone number to continue.";
-
 "signin_logout.sso.subheadline" = "Your session expired. Log in with your company account to continue.";
 "signin_logout.sso.buton" = "Company Log In";
 

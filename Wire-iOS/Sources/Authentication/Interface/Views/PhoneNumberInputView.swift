@@ -20,8 +20,8 @@ import Foundation
 
 /// An object that receives notification about the phone number input view.
 protocol PhoneNumberInputViewDelegate: class {
-    func phoneNumberInputView(_ inputView: PhoneNumberInputView, didPickPhoneNumber phoneNumber: String)
-    func phoneNumberInputView(_ inputView: PhoneNumberInputView, didValidatePhoneNumber phoneNumber: String, withResult validationError: TextFieldValidator.ValidationError)
+    func phoneNumberInputView(_ inputView: PhoneNumberInputView, didPickPhoneNumber phoneNumber: PhoneNumber)
+    func phoneNumberInputViewDidValidatePhoneNumber(_ inputView: PhoneNumberInputView, withResult validationError: TextFieldValidator.ValidationError)
     func phoneNumberInputViewDidRequestCountryPicker(_ inputView: PhoneNumberInputView)
 }
 
@@ -29,7 +29,7 @@ protocol PhoneNumberInputViewDelegate: class {
  * A view providing an input field for phone numbers and a.
  */
 
-class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDelegate {
+class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDelegate, TextContainer {
 
     /// The object receiving notifications about events from this view.
     weak var delegate: PhoneNumberInputViewDelegate?
@@ -50,6 +50,11 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
     /// The value entered by the user.
     var input: String {
         return textField.input
+    }
+
+    var text: String? {
+        get { return textField.text }
+        set { textField.text = newValue }
     }
 
     // MARK: - Views
@@ -270,8 +275,15 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
         submitValue()
     }
 
-    /// Do not paste if we need to set the text manually.
+    override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+        if action == #selector(UIResponderStandardEditActions.paste(_:)) {
+            return UIPasteboard.general.hasStrings
+        } else {
+            return super.canPerformAction(action, withSender: sender)
+        }
+    }
 
+    /// Do not paste if we need to set the text manually.
     @objc override func paste(_ sender: Any?) {
         var shouldPaste = true
 
@@ -320,21 +332,20 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
     }
 
     func submitValue() {
-        let phoneNumber = country.e164PrefixString + textField.input
+        let phoneNumber = PhoneNumber(countryCode: country.e164.uintValue, numberWithoutCode: textField.input)
 
         switch validationError {
         case .none:
-            delegate?.phoneNumberInputView(self, didValidatePhoneNumber: phoneNumber, withResult: .none)
+            delegate?.phoneNumberInputViewDidValidatePhoneNumber(self, withResult: .none)
             delegate?.phoneNumberInputView(self, didPickPhoneNumber: phoneNumber)
         default:
-            delegate?.phoneNumberInputView(self, didValidatePhoneNumber: phoneNumber, withResult: validationError)
+            delegate?.phoneNumberInputViewDidValidatePhoneNumber(self, withResult: validationError)
         }
     }
 
     func removeValidationError() {
         validationError = .none
-        let phoneNumber = country.e164PrefixString + textField.input
-        delegate?.phoneNumberInputView(self, didValidatePhoneNumber: phoneNumber, withResult: .none)
+        delegate?.phoneNumberInputViewDidValidatePhoneNumber(self, withResult: .none)
     }
 
 }

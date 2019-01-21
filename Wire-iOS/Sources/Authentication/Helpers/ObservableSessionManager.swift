@@ -36,6 +36,9 @@ protocol ObservableSessionManager: SessionManagerType {
 
     func addSessionManagerCreatedSessionObserver(_ observer: SessionManagerCreatedSessionObserver) -> Any
 
+    /// Deletes the selected account.
+    func delete(account: Account)
+
 }
 
 extension SessionManager: ObservableSessionManager {}

@@ -61,32 +61,28 @@ class AuthenticationInterfaceBuilder {
             return LandingViewController()
 
         case .reauthenticate(let credentials, _):
-            let viewController: AuthenticationStepController
-
             if credentials?.usesCompanyLogin == true {
+                // Is the user has SSO enabled, show the screen to log in with SSO
                 let companyLoginStep = ReauthenticateWithCompanyLoginStepDescription()
-                viewController = createViewController(for: companyLoginStep)
-            } else if let phoneNumber = credentials?.phoneNumber, credentials?.emailAddress == nil {
-                let phoneLoginStep = LogInWithPhoneNumberStepDescription(prefilledNumber: phoneNumber)
-                viewController = createViewController(for: phoneLoginStep, viewControllerType: PhoneNumberAuthenticationStepController.self)
-            } else {
-                let emailLoginStep = LogInWithEmailStepDescription(enablePhoneLogin: !featureProvider.allowOnlyEmailLogin, prefilledEmail: credentials?.emailAddress)
-                viewController = createViewController(for: emailLoginStep)
-            }
+                return makeViewController(for: companyLoginStep)
 
-            return viewController
+            } else {
+                let prefill: AuthenticationPrefilledCredentials?
+
+                if let credentials = credentials {
+                    // If we found the credentials of the expired session, pre-fill them
+                    let prefillType: AuthenticationCredentialsType = credentials.phoneNumber != nil && credentials.emailAddress == nil ? .phone : .email
+                    prefill = AuthenticationPrefilledCredentials(primaryCredentialsType: prefillType, credentials: credentials)
+                } else {
+                    // Otherwise, default to the email pre-fill screen.
+                    prefill = nil
+                }
+
+                return makeCredentialsViewController(for: .reauthentication(prefill))
+            }
 
         case .provideCredentials(let credentialsFlowType):
-            let viewController: AuthenticationStepController!
-
-            switch credentialsFlowType {
-            case .email:
-                let emailLoginStep = LogInWithEmailStepDescription(enablePhoneLogin: !featureProvider.allowOnlyEmailLogin)
-                viewController = createViewController(for: emailLoginStep)
-            case .phone:
-                let phoneLoginStep = LogInWithPhoneNumberStepDescription()
-                viewController = createViewController(for: phoneLoginStep, viewControllerType: PhoneNumberAuthenticationStepController.self)
-            }
+            let viewController = makeCredentialsViewController(for: .login(credentialsFlowType))
 
             // Add the item to start company login.
             if featureProvider.allowCompanyLogin {
@@ -96,33 +92,26 @@ class AuthenticationInterfaceBuilder {
             return viewController
 
         case .createCredentials(_, let credentialsFlowType):
-            switch credentialsFlowType {
-            case .email:
-                let emailStep = SetPersonalEmailStepDescription()
-                return createViewController(for: emailStep)
-            case .phone:
-                let phoneStep = SetPhoneStepDescription()
-                return createViewController(for: phoneStep, viewControllerType: PhoneNumberAuthenticationStepController.self)
-            }
+            return makeCredentialsViewController(for: .registration(credentialsFlowType))
 
         case .clientManagement:
             let manageClientsInvitation = ClientUnregisterInvitationStepDescription()
-            return createViewController(for: manageClientsInvitation)
+            return makeViewController(for: manageClientsInvitation)
 
         case .deleteClient(let clients, let credentials):
             return RemoveClientStepViewController(clients: clients, credentials: credentials)
 
         case .noHistory(_, let context):
             let backupStep = BackupRestoreStepDescription(context: context)
-            return createViewController(for: backupStep)
+            return makeViewController(for: backupStep)
 
         case .enterLoginCode(let phoneNumber):
             let verifyPhoneStep = VerifyPhoneStepDescription(phoneNumber: phoneNumber, allowChange: false)
-            return createViewController(for: verifyPhoneStep)
+            return makeViewController(for: verifyPhoneStep)
 
         case .addEmailAndPassword:
             let addCredentialsStep = AddEmailPasswordStepDescription()
-            return createViewController(for: addCredentialsStep)
+            return makeViewController(for: addCredentialsStep)
 
         case .enterActivationCode(let credentials, _):
             let step: TeamCreationStepDescription
@@ -134,11 +123,11 @@ class AuthenticationInterfaceBuilder {
                 step = VerifyPhoneStepDescription(phoneNumber: phoneNumber, allowChange: false)
             }
 
-            return createViewController(for: step)
+            return makeViewController(for: step)
 
         case .pendingEmailLinkVerification(let emailCredentials):
             let verifyEmailStep = EmailLinkVerificationStepDescription(emailAddress: emailCredentials.email!)
-            return createViewController(for: verifyEmailStep)
+            return makeViewController(for: verifyEmailStep)
 
         case .incrementalUserCreation(let user, let registrationStep):
             return makeRegistrationStepViewController(for: registrationStep, user: user)
@@ -165,10 +154,10 @@ class AuthenticationInterfaceBuilder {
         switch step {
         case .setName:
             let nameStep = SetFullNameStepDescription()
-            return createViewController(for: nameStep)
+            return makeViewController(for: nameStep)
         case .setPassword:
             let passwordStep = SetPasswordStepDescription()
-            return createViewController(for: passwordStep)
+            return makeViewController(for: passwordStep)
         default:
             return nil
         }
@@ -202,12 +191,12 @@ class AuthenticationInterfaceBuilder {
             return nil
         }
 
-        return createViewController(for: stepDescription)
+        return makeViewController(for: stepDescription)
     }
 
     /// Creates the view controller for team description.
-    private func createViewController(for description: TeamCreationStepDescription, viewControllerType: AuthenticationStepController.Type = AuthenticationStepController.self) -> AuthenticationStepController {
-        let controller = viewControllerType.init(description: description)
+    private func makeViewController(for description: TeamCreationStepDescription) -> AuthenticationStepController {
+        let controller = AuthenticationStepController(description: description)
 
         let mainView = description.mainView
         mainView.valueSubmitted = controller.valueSubmitted
@@ -222,6 +211,18 @@ class AuthenticationInterfaceBuilder {
         }
 
         return controller
+    }
+
+    /**
+     * Creates and configures an authentication credentials view controller for the specified flow type.
+     * - parameter flowType: The type of flow to use in the view controller.
+     * - returns: A credentials input view controller configured with the feature provider.
+     */
+
+    private func makeCredentialsViewController(for flowType: AuthenticationCredentialsViewController.FlowType) -> AuthenticationCredentialsViewController {
+        let viewController = AuthenticationCredentialsViewController(flowType: flowType)
+        viewController.configure(with: featureProvider)
+        return viewController
     }
 
 }

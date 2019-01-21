@@ -28,23 +28,17 @@ class AuthenticationCredentialsCreationInputHandler: AuthenticationEventHandler 
 
     func handleEvent(currentStep: AuthenticationFlowStep, context: Any) -> [AuthenticationCoordinatorAction]? {
         // Only handle input during the credentials creation.
-        guard case .createCredentials(_, let type) = currentStep else {
+        guard case .createCredentials = currentStep else {
             return nil
         }
 
-        // Only handle string values
-        guard let input = context as? String else {
+        // Only handle known values
+        if let email = context as? String {
+            return [.startRegistrationFlow(.email(email))]
+        } else if let phoneNumber = context as? PhoneNumber {
+            return [.startRegistrationFlow(.phone(phoneNumber.fullNumber))]
+        } else {
             return nil
-        }
-
-        // Only handle input during code validation
-        switch type {
-        case .email:
-            let email = UnverifiedCredentials.email(input)
-            return [.startRegistrationFlow(email)]
-        case .phone:
-            let phone = UnverifiedCredentials.phone(input)
-            return [.startRegistrationFlow(phone)]
         }
     }
 

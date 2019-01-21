@@ -28,28 +28,18 @@ class AuthenticationLoginCredentialsInputHandler: AuthenticationEventHandler {
 
     func handleEvent(currentStep: AuthenticationFlowStep, context: Any) -> [AuthenticationCoordinatorAction]? {
         // Only handle input during the credentials providing phase.
-        guard case .provideCredentials(let type) = currentStep else {
+        guard case .provideCredentials = currentStep else {
             return nil
         }
 
-        switch type {
-        case .email:
-            // Only handle email/password tuple values
-            guard let input = context as? (String, String) else {
-                return nil
-            }
-
-            let request = AuthenticationLoginRequest.email(address: input.0, password: input.1)
+        if let (email, password) = context as? (String, String) {
+            let request = AuthenticationLoginRequest.email(address: email, password: password)
             return [.startLoginFlow(request)]
-
-        case .phone:
-            // Only handle string values
-            guard let input = context as? String else {
-                return nil
-            }
-
-            let request = AuthenticationLoginRequest.phoneNumber(input)
+        } else if let phoneNumber = context as? PhoneNumber {
+            let request = AuthenticationLoginRequest.phoneNumber(phoneNumber.fullNumber)
             return [.startLoginFlow(request)]
+        } else {
+            return nil
         }
     }
 

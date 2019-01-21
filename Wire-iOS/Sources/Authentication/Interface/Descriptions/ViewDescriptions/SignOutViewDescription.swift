@@ -32,7 +32,7 @@ class SignOutViewDescription: TeamCreationSecondaryViewDescription {
         views = [logOutButton]
 
         logOutButton.buttonTapped = { [weak self] in
-            let signOutAction = AuthenticationCoordinatorAlertAction(title: "general.ok", coordinatorActions: [.signOut])
+            let signOutAction = AuthenticationCoordinatorAlertAction(title: "general.ok".localized, coordinatorActions: [.signOut])
 
             if showAlert {
                 let alert = AuthenticationCoordinatorAlert(title: "self.settings.account_details.log_out.alert.title".localized,

@@ -18,7 +18,6 @@
 
 import Foundation
 import UIKit
-import Cartography
 
 @objc protocol LandingViewControllerDelegate {
     func landingViewControllerDidChooseCreateAccount()
@@ -26,8 +25,11 @@ import Cartography
     func landingViewControllerDidChooseLogin()
 }
 
-/// Landing screen for choosing create team or personal account
-final class LandingViewController: AuthenticationStepViewController {
+/// Landing screen for choosing how to authenticate.
+class LandingViewController: AuthenticationStepViewController {
+
+    // MARK: - State
+
     weak var authenticationCoordinator: AuthenticationCoordinator?
 
     var delegate: LandingViewControllerDelegate? {
@@ -36,7 +38,7 @@ final class LandingViewController: AuthenticationStepViewController {
 
     fileprivate var device: DeviceProtocol
 
-    // MARK: - UI styles
+    // MARK: - UI Styles
 
     static let semiboldFont = FontSpec(.large, .semibold).font!
     static let regularFont = FontSpec(.normal, .regular).font!
@@ -58,14 +60,12 @@ final class LandingViewController: AuthenticationStepViewController {
         return [.foregroundColor: UIColor.Team.textColor, .paragraphStyle: alignCenterStyle, .font: lightFont]
     }()
 
-    // MARK: - constraints for iPad
+    // MARK: - Adaptive Constraints
 
-    private var logoAlignTop: NSLayoutConstraint!
-    private var loginButtonAlignBottom: NSLayoutConstraint!
     private var loginHintAlignTop: NSLayoutConstraint!
-    private var headlineAlignBottom: NSLayoutConstraint!
+    private var loginButtonAlignBottom: NSLayoutConstraint!
 
-    // MARK: - subviews
+    // MARK: - UI Elements
 
     let logoView: UIImageView = {
         let image = UIImage(named: "wire-logo-black")
@@ -123,16 +123,10 @@ final class LandingViewController: AuthenticationStepViewController {
         return button
     }()
 
-    let navigationBar: UINavigationBar = {
-        let bar = UINavigationBar()
-        bar.shadowImage = UIImage()
-        bar.setBackgroundImage(UIImage(), for: .default)
-        return bar
-    }()
+    // MARK: - Initialization
 
-    /// init method for injecting mock device
-    ///
-    /// - Parameter device: Provide this param for testing only
+    /// Init method for injecting a mock device.
+    /// - parameter device: Provide this param for testing only
     init(device: DeviceProtocol = UIDevice.current) {
         self.device = device
 
@@ -142,7 +136,9 @@ final class LandingViewController: AuthenticationStepViewController {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
+    // MARK: - Lifecycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -156,14 +152,11 @@ final class LandingViewController: AuthenticationStepViewController {
         }
 
         self.view.backgroundColor = UIColor.Team.background
-        navigationBar.tintColor = .black
-        view.addSubview(navigationBar)
 
         self.createConstraints()
         self.configureAccessibilityElements()
 
-        updateStackViewAxis()
-        updateConstraintsForIPad()
+        updateForCurrentSizeClass(isRegular: traitCollection.horizontalSizeClass == .regular)
         updateBarButtonItem()
         disableTrackingIfNeeded()
 
@@ -175,71 +168,54 @@ final class LandingViewController: AuthenticationStepViewController {
                 self.disableTrackingIfNeeded()
         }
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(animated)
+
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .default
     }
 
     public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-
-        updateStackViewAxis()
-        updateConstraintsForIPad()
+        let isRegular = traitCollection.horizontalSizeClass == .regular
+        updateForCurrentSizeClass(isRegular: isRegular)
     }
 
     private func createConstraints() {
+        headerContainerView.translatesAutoresizingMaskIntoConstraints = false
+        logoView.translatesAutoresizingMaskIntoConstraints = false
+        buttonStackView.translatesAutoresizingMaskIntoConstraints = false
+        loginHintsLabel.translatesAutoresizingMaskIntoConstraints = false
+        loginButton.translatesAutoresizingMaskIntoConstraints = false
 
-        let safeArea = view.safeAreaLayoutGuideOrFallback
-        navigationBar.topAnchor.constraint(equalTo: safeArea.topAnchor).isActive = true
+        loginHintAlignTop = loginHintsLabel.topAnchor.constraint(equalTo: buttonStackView.bottomAnchor, constant: 80)
+        loginButtonAlignBottom = loginButton.bottomAnchor.constraint(equalTo: safeBottomAnchor, constant: -32)
 
-        constrain(view, navigationBar) { selfView, navigationBar in
-            navigationBar.left == selfView.left
-            navigationBar.right == selfView.right
-        }
+        NSLayoutConstraint.activate([
+            // headerContainerView
+            headerContainerView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            headerContainerView.widthAnchor.constraint(equalTo: view.widthAnchor),
+            headerContainerView.bottomAnchor.constraint(equalTo: buttonStackView.topAnchor),
+            headerContainerView.topAnchor.constraint(equalTo: view.topAnchor),
 
-        constrain(logoView, headerContainerView) { logoView, headerContainerView in
+            // logoView
+            logoView.centerXAnchor.constraint(equalTo: headerContainerView.centerXAnchor),
+            logoView.centerYAnchor.constraint(equalTo: headerContainerView.centerYAnchor),
+            logoView.widthAnchor.constraint(equalToConstant: 96),
+            logoView.heightAnchor.constraint(equalToConstant: 31),
 
-            logoAlignTop = logoView.top == headerContainerView.top + 72 ~ 500.0
-            logoView.centerX == headerContainerView.centerX
-            logoView.width == 96
-            logoView.height == 31
+            // buttonStackView
+            buttonStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            buttonStackView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
 
-            logoView.bottom <= headerContainerView.bottom - 16
+            // loginHintsLabel
+            loginHintsLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            loginHintsLabel.bottomAnchor.constraint(equalTo: loginButton.topAnchor, constant: -16),
+            loginHintsLabel.topAnchor.constraint(greaterThanOrEqualTo: buttonStackView.bottomAnchor, constant: 16),
 
-            if UIDevice.current.userInterfaceIdiom == .pad {
-                headlineAlignBottom = logoView.bottom == headerContainerView.bottom - 80
-            }
-        }
+            // loginButton
+            loginButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            loginButton.heightAnchor.constraint(greaterThanOrEqualToConstant: 44),
 
-        constrain(self.view, headerContainerView, buttonStackView) { selfView, headerContainerView, buttonStackView in
-
-            headerContainerView.width == selfView.width
-            headerContainerView.centerX == selfView.centerX
-
-            buttonStackView.centerX == selfView.centerX
-            buttonStackView.centerY == selfView.centerY
-
-            headerContainerView.bottom == buttonStackView.top
-        }
-        
-        headerContainerView.topAnchor.constraint(equalTo: safeTopAnchor).isActive = true
-
-        constrain(self.view, buttonStackView, loginHintsLabel, loginButton) {
-            selfView, buttonStackView, loginHintsLabel, loginButton in
-            buttonStackView.bottom <= loginHintsLabel.top - 16
-
-            loginHintsLabel.bottom == loginButton.top - 16
-            loginHintsLabel.centerX == selfView.centerX
-            if UIDevice.current.userInterfaceIdiom == .pad {
-                loginHintAlignTop = loginHintsLabel.top == buttonStackView.bottom + 80
-            }
-
-            loginButton.centerX == selfView.centerX
-            loginButton.height >= 44
-            loginButton.width >= 44
-            loginButtonAlignBottom = loginButton.bottom == selfView.bottomMargin - 32 ~ 500.0
-        }
+        ])
 
         [createAccountButton, createTeamButton].forEach() { button in
             button.setContentCompressionResistancePriority(.required, for: .vertical)
@@ -247,26 +223,24 @@ final class LandingViewController: AuthenticationStepViewController {
         }
     }
 
-    fileprivate func updateConstraintsForIPad() {
-        guard UIDevice.current.userInterfaceIdiom == .pad else { return }
+    // MARK: - Adaptivity Events
 
-        switch self.traitCollection.horizontalSizeClass {
-        case .compact:
-            loginHintAlignTop.isActive = false
-            headlineAlignBottom.isActive = false
-            logoAlignTop.isActive = true
-            loginButtonAlignBottom.isActive = true
-        default:
-            logoAlignTop.isActive = false
+    func updateForCurrentSizeClass(isRegular: Bool) {
+        updateConstraints(isRegular: isRegular)
+        updateStackViewAxis(isRegular: isRegular)
+    }
+
+    private func updateConstraints(isRegular: Bool) {
+        if isRegular {
             loginButtonAlignBottom.isActive = false
             loginHintAlignTop.isActive = true
-            headlineAlignBottom.isActive = true
+        } else {
+            loginHintAlignTop.isActive = false
+            loginButtonAlignBottom.isActive = true
         }
     }
 
-    func updateStackViewAxis() {
-        guard device.userInterfaceIdiom == .pad else { return }
-
+    private func updateStackViewAxis(isRegular: Bool) {
         switch traitCollection.horizontalSizeClass {
         case .regular:
             buttonStackView.axis = .horizontal
@@ -348,18 +322,4 @@ final class LandingViewController: AuthenticationStepViewController {
         SessionManager.shared!.select(account)
     }
 
-    override var prefersStatusBarHidden: Bool {
-        // FIXME: We have to hide the status bar when running tests as we are not using a test host.
-        // Some view controllers we test using snapshots requets a status bar appearance update when
-        // they appear. If that happens we will query the topmost view controller which will be the
-        // LandingViewController in tests as we are using no test host application to run tests.
-        // Unfortunately this hack is needed until we either change how we manage the status bar or
-        // start using a test host to run tests.
-        return ProcessInfo.processInfo.isRunningTests
-    }
-    
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .default
-    }
-    
 }

@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2019 Wire Swiss GmbH
+// Copyright (C) 2018 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -18,11 +18,11 @@
 
 import Foundation
 
-protocol AuthenticationPrefilledNumberProvider {
-    var prefilledNumber: String? { get }
-}
+/**
+ * The step to start personal user registration.
+ */
 
-final class LogInWithPhoneNumberStepDescription: TeamCreationStepDescription, AuthenticationPrefilledNumberProvider {
+class PersonalRegistrationStepDescription: TeamCreationStepDescription {
 
     let backButton: BackButtonDescription?
     let mainView: ViewDescriptor & ValueSubmission
@@ -30,21 +30,12 @@ final class LogInWithPhoneNumberStepDescription: TeamCreationStepDescription, Au
     let subtext: String?
     let secondaryView: TeamCreationSecondaryViewDescription?
 
-    let prefilledNumber: String?
-
-    init(prefilledNumber: String? = nil) {
+    init() {
         backButton = BackButtonDescription()
         mainView = EmptyViewDescription()
-        headline = "registration.signin.title".localized
-        self.prefilledNumber = prefilledNumber
-
-        if prefilledNumber != nil {
-            subtext = "signin_logout.phone.subheadline".localized
-            secondaryView = SignOutViewDescription(showAlert: true)
-        } else {
-            subtext = "signin.phone.subheadline".localized
-            secondaryView = LogInSecondaryView(credentialsType: .phone, alternativeCredentialsType: .email)
-        }
+        headline = "registration.personal.title".localized
+        subtext = nil
+        secondaryView = nil
     }
 
 }

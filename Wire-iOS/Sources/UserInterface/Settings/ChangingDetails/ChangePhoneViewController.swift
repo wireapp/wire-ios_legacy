@@ -181,7 +181,7 @@ final class ChangePhoneViewController: SettingsBaseTableViewController {
 
 extension ChangePhoneViewController: PhoneNumberInputViewDelegate {
 
-    func phoneNumberInputView(_ inputView: PhoneNumberInputView, didPickPhoneNumber phoneNumber: String) {
+    func phoneNumberInputView(_ inputView: PhoneNumberInputView, didPickPhoneNumber phoneNumber: PhoneNumber) {
         // no-op: this will never be called because we hide the confirm button
     }
 
@@ -196,7 +196,7 @@ extension ChangePhoneViewController: PhoneNumberInputViewDelegate {
         present(navigationController, animated: true, completion: nil)
     }
 
-    func phoneNumberInputView(_ inputView: PhoneNumberInputView, didValidatePhoneNumber phoneNumber: String, withResult validationError: TextFieldValidator.ValidationError) {
+    func phoneNumberInputViewDidValidatePhoneNumber(_ inputView: PhoneNumberInputView, withResult validationError: TextFieldValidator.ValidationError) {
         // TODO: handle validation
     }
 

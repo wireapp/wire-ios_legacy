@@ -291,8 +291,11 @@ extension AuthenticationCoordinator: AuthenticationActioner, SessionManagerCreat
                 backupRestoreController.startBackupFlow()
 
             case .signOut:
-                // TODO: Log the user out of the current account
-                break
+                guard let selectedAccount = sessionManager.accountManager.selectedAccount else {
+                    fatal("No session manager and selected account to log out from")
+                }
+
+                sessionManager.delete(account: selectedAccount)
 
             case .addEmailAndPassword(let newCredentials):
                 self.setEmailCredentialsForCurrentUser(newCredentials)

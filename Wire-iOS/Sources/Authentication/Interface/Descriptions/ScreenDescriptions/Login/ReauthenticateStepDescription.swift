@@ -18,7 +18,11 @@
 
 import Foundation
 
-final class LogInWithEmailStepDescription: TeamCreationStepDescription {
+/**
+ * An authentication step to ask the user to log in again.
+ */
+
+class ReauthenticateStepDescription: TeamCreationStepDescription {
 
     let backButton: BackButtonDescription?
     let mainView: ViewDescriptor & ValueSubmission
@@ -26,18 +30,21 @@ final class LogInWithEmailStepDescription: TeamCreationStepDescription {
     let subtext: String?
     let secondaryView: TeamCreationSecondaryViewDescription?
 
-    init(enablePhoneLogin: Bool, prefilledEmail: String? = nil) {
+    init(prefilledCredentials: AuthenticationPrefilledCredentials?) {
         backButton = BackButtonDescription()
+        mainView = EmptyViewDescription()
         headline = "registration.signin.title".localized
-        mainView = EmailPasswordFieldDescription(forRegistration: false, prefilledEmail: prefilledEmail)
 
-        if prefilledEmail != nil {
+        switch prefilledCredentials?.primaryCredentialsType {
+        case .email?:
             subtext = "signin_logout.email.subheadline".localized
-            secondaryView = SignOutViewDescription(showAlert: true)
-        } else {
-            subtext = "signin.email.subheadline".localized
-            secondaryView = LogInSecondaryView(credentialsType: .email, alternativeCredentialsType: enablePhoneLogin ? .phone : nil)
+        case .phone?:
+            subtext = "signin_logout.phone.subheadline".localized
+        case .none:
+            subtext = "signin_logout.subheadline".localized
         }
+
+        secondaryView = SignOutViewDescription(showAlert: true)
     }
 
 }
