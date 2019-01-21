@@ -33,6 +33,6 @@ extension ZMUser {
     }
     
     @objc var canSeeServices: Bool {
-        return self.hasTeam
+        return hasTeam
     }
 }
