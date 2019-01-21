@@ -180,7 +180,7 @@ class ConversationReplyCell: UIView, ConversationMessageCell {
     }
 
     @objc func onTap() {
-        delegate?.wants(toPerform: .openQuote, for: message)
+        delegate?.perform(action: .openQuote, for: message)
     }
 
 }

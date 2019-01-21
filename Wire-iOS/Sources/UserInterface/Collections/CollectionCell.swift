@@ -236,9 +236,7 @@ extension CollectionCell: ZMMessageObserver {
 }
 
 extension CollectionCell: MessageActionResponder {
-
-    public func wants(toPerform action: MessageAction, for message: ZMConversationMessage!) {
+    public func perform(action: MessageAction, for message: ZMConversationMessage!) {
         delegate?.collectionCell(self, performAction: action)
     }
-
 }

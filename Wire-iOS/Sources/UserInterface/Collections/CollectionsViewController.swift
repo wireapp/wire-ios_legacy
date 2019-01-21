@@ -666,8 +666,13 @@ extension CollectionsViewController: UIGestureRecognizerDelegate {
 }
 
 // MARK: - Actions
+extension CollectionsViewController: MessageActionResponder {
+    public func perform(action: MessageAction, for message: ZMConversationMessage!) {
+        perform(action, for: message, source: nil)
+    }
+}
 
-extension CollectionsViewController: CollectionCellDelegate, MessageActionResponder {
+extension CollectionsViewController: CollectionCellDelegate {
 
     func collectionCell(_ cell: CollectionCell, performAction action: MessageAction) {
         guard let message = cell.message else {
@@ -675,10 +680,6 @@ extension CollectionsViewController: CollectionCellDelegate, MessageActionRespon
         }
 
         self.perform(action, for: message, source: cell)
-    }
-    
-    public func wants(toPerform action: MessageAction, for message: ZMConversationMessage!) {
-        self.perform(action, for: message, source: nil)
     }
 
     func perform(_ action: MessageAction, for message: ZMConversationMessage, source: CollectionCell?) {

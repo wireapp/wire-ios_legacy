@@ -349,14 +349,14 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
     @objc public func copyCurrent(_ sender: AnyObject!) {
         let text = "collections.image_viewer.copied.title".localized.uppercased()
         overlay.show(text: text)
-        self.messageActionDelegate?.wants(toPerform: .copy, for: self.currentMessage)
+        self.messageActionDelegate?.perform(action: .copy, for: self.currentMessage)
     }
     
     @objc public func saveCurrent(_ sender: UIButton!) {
         if sender != nil {
             self.currentController?.performSaveImageAnimation(from: sender)
         }
-        self.messageActionDelegate?.wants(toPerform: .save, for: self.currentMessage)
+        self.messageActionDelegate?.perform(action: .save, for: self.currentMessage)
     }
 
     @objc public func likeCurrent() {
@@ -368,32 +368,32 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
     }
     
     @objc public func shareCurrent(_ sender: AnyObject!) {
-        self.messageActionDelegate?.wants(toPerform: .forward, for: self.currentMessage)
+        self.messageActionDelegate?.perform(action: .forward, for: self.currentMessage)
     }
 
     @objc public func deleteCurrent(_ sender: AnyObject!) {
-        self.messageActionDelegate?.wants(toPerform: .delete, for: self.currentMessage)
+        self.messageActionDelegate?.perform(action: .delete, for: self.currentMessage)
     }
     
     @objc public func revealCurrent(_ sender: AnyObject!) {
-        self.messageActionDelegate?.wants(toPerform: .showInConversation, for: self.currentMessage)
+        self.messageActionDelegate?.perform(action: .showInConversation, for: self.currentMessage)
     }
     
     @objc public func sketchCurrent(_ sender: AnyObject!) {
-        self.messageActionDelegate?.wants(toPerform: .sketchDraw, for: self.currentMessage)
+        self.messageActionDelegate?.perform(action: .sketchDraw, for: self.currentMessage)
     }
     
     @objc public func sketchCurrentEmoji(_ sender: AnyObject!) {
-        self.messageActionDelegate?.wants(toPerform: .sketchEmoji, for: self.currentMessage)
+        self.messageActionDelegate?.perform(action: .sketchEmoji, for: self.currentMessage)
     }
 }
 
 extension ConversationImagesViewController: MessageActionResponder {
 
-    func wants(toPerform action: MessageAction, for message: ZMConversationMessage!) {
+    func perform(action: MessageAction, for message: ZMConversationMessage!) {
         switch action {
         case .like: likeCurrent()
-        default: self.messageActionDelegate?.wants(toPerform: action, for: message)
+        default: self.messageActionDelegate?.perform(action: action, for: message)
         }
     }
 
