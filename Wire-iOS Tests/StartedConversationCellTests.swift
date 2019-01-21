@@ -24,9 +24,9 @@ import XCTest
 class StartedConversationCellTests: ConversationCellSnapshotTestCase {
     
     override func setUp() {
+        selfUserInTeam = true
         super.setUp()
         
-        selfUserInTeam = true
         MockUser.mockSelf()?.accentColorValue = .strongBlue
     }
 
@@ -141,6 +141,13 @@ class StartedConversationCellTests: ConversationCellSnapshotTestCase {
         verify(message: message)
     }
     
+    func testThatItRendersNewConversationCell_SelfIsCollaborator_AllowGuests() {
+        selfUser.membership!.setTeamRole(.partner)
+        XCTAssertTrue(ZMUser.selfUserHas(permissions: .partner))
+        let message = cell(for: .newConversation, text: "Italy Trip", fillUsers: .youAndAnother, allowGuests: true)
+        verify(message: message)
+    }
+    
     func testThatItRendersNewConversationCell_SelfIsGuest_AllowGuests() {
         selfUserInTeam = false
         let message = cell(for: .newConversation, text: "Italy Trip", allowGuests: true, numberOfGuests: 1)
@@ -173,18 +180,8 @@ class StartedConversationCellTests: ConversationCellSnapshotTestCase {
             }
         }()
         
-        var team: Team? = nil
-        
-        if selfUserInTeam {
-            uiMOC.markAsSyncContext()
-            team = Team.fetchOrCreate(with: .create(), create: true, in: uiMOC, created: nil)
-            uiMOC.markAsUIContext()
-            let member = Member.getOrCreateMember(for: selfUser, in: team!, context: uiMOC)
-            member.permissions = .member
-        }
-        
         let users = Array(message.users).filter { $0 != selfUser }
-        let conversation = ZMConversation.insertGroupConversation(into: uiMOC, withParticipants: users, in: team)
+        let conversation = ZMConversation.insertGroupConversation(into: uiMOC, withParticipants: users, in: selfUser.team)
         conversation?.allowGuests = allowGuests
         conversation?.teamRemoteIdentifier = .create()
         conversation?.remoteIdentifier = .create()
