@@ -317,11 +317,11 @@ extension ConversationTableViewDataSource: NSFetchedResultsControllerDelegate {
             }
             
             tableView.endUpdates()
-            
-            // Re-evalulate visible cells in all sections, this is necessary because if a message is inserted/moved the
-            // neighbouring messages may no longer want to display sender, toolbox or burst timestamp.
-            reconfigureVisibleSections()
         }
+        
+        // Re-evalulate visible cells in all sections, this is necessary because if a message is inserted/moved the
+        // neighbouring messages may no longer want to display sender, toolbox or burst timestamp.
+        reconfigureVisibleSections()
         
         if shouldJumpToTheConversationEnd {
             // The action has to be performed on the next run loop, since the current one already has the call to scroll
