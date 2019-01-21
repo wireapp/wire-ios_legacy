@@ -143,6 +143,7 @@ class ConversationTextMessageCellDescription: ConversationMessageCellDescription
 
     func makeCell(for tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueConversationCell(with: self, for: indexPath)
+        cell.accessibilityCustomActions = actionController?.makeAccessibilityActions()
         cell.cellView.delegate = self.delegate
         cell.cellView.message = self.message
         cell.cellView.menuPresenter = cell

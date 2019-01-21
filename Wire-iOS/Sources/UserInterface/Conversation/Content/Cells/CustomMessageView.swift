@@ -20,6 +20,9 @@ import Foundation
 
 class CustomMessageView: UIView {
     public var isSelected: Bool = false
+    
+    weak var delegate: ConversationMessageCellDelegate? = nil
+    weak var message: ZMConversationMessage? = nil
 
     public var messageLabel = WebLinkTextView()
     var messageText: String? {

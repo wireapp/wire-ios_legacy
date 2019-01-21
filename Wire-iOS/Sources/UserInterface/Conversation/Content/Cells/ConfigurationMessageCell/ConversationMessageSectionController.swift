@@ -255,34 +255,7 @@ extension IndexSet {
         
         return !context.isSameSenderAsPrevious || context.previousMessageIsKnock || message.updatedAt != nil || isBurstTimestampVisible(in: context)
     }
-    
-    // MARK: - Data Source
-
-    /// The number of child cells in the section that compose the message.
-    var numberOfCells: Int {
-        return cellDescriptions.count
-    }
-
-    /**
-     * Create the cell for the child cell at the given index path.
-     * It is the responsibility of the section description to determine what the `row` represents,
-     * to dequeue the appropriate cell, and to configure it with a message.
-     * - parameter tableView: The table view where the cell will be displayed.
-     * - parameter indexPath: The index path of the child cell that will be displayed. Use the `row` property
-     * to determine the type of child cell that needs to be displayed.
-     */
-
-    func makeCell(for tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
-        let description = tableViewCellDescriptions[indexPath.row]
-        description.delegate = self.cellDelegate
-        description.message = self.message
-        description.actionController = self.actionController
-
-        let cell = description.makeCell(for: tableView, at: indexPath)
-        cell.accessibilityCustomActions = actionController?.makeAccessibilityActions()
-        return cell
-    }
-
+        
     // MARK: - Highlight
 
     @objc func highlight(in tableView: UITableView, sectionIndex: Int) {

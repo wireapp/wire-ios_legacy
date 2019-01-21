@@ -49,6 +49,12 @@ protocol ConversationMessageCell {
     
     /// Top inset for ephemeral timer relative to the cell content
     var ephemeralTimerTopInset: CGFloat { get }
+    
+    /// The message that is displayed.
+    var message: ZMConversationMessage? { get set }
+    
+    /// The delegate for the cell.
+    var delegate: ConversationMessageCellDelegate? { get set }
 
     /**
      * Configures the cell with the specified configuration object.
@@ -184,7 +190,9 @@ extension ConversationMessageCellDescription {
 
     func makeCell(for tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
         let cell =  tableView.dequeueConversationCell(with: self, for: indexPath)
-        cell.accessibilityCustomActions = actionController?.makeAccessibilityActions() // TODO jacob make sure this is also done for other implementations
+        cell.cellView.delegate = self.delegate
+        cell.cellView.message = self.message
+        cell.accessibilityCustomActions = actionController?.makeAccessibilityActions()
         return cell
     }
     

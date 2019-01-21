@@ -23,6 +23,9 @@ class ConversationYouTubeAttachmentCell: ViewControllerBasedCell<MediaPreviewVie
     struct Configuration {
         let attachment: LinkAttachment
     }
+    
+    weak var delegate: ConversationMessageCellDelegate? = nil
+    weak var message: ZMConversationMessage? = nil
 
     // MARK: - Initialization
 
