@@ -19,12 +19,10 @@
 import XCTest
 @testable import Wire
 
-class MockActionResponder: NSObject, MessageActionResponder {
-
-    func wants(toPerform action: MessageAction, for message: ZMConversationMessage!) {
+final class MockActionResponder: NSObject, MessageActionResponder {
+    func perform(action: MessageAction, for message: ZMConversationMessage!) {
         // no-op
     }
-        
 }
 
 final class LocationPreviewControllerTests: ZMSnapshotTestCase {
