@@ -67,7 +67,7 @@ final class StartUIViewControllerSnapshotTests: CoreDataSnapshotTestCase {
     /// has no create group and create guest room rows
     func testForNoContactWhenSelfIsPartner() {
         teamTest {
-            selfUser.membership?.setTeamRole(.partner)
+            selfUser.membership?.setTeamRole(.collaborator)
 
             setupSut()
 
