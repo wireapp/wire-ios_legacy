@@ -149,8 +149,8 @@ class ContentInsetView: UIView {
         NSLayoutConstraint.activate([
             view.topAnchor.constraint(equalTo: topAnchor, constant: inset.top),
             view.bottomAnchor.constraint(equalTo: bottomAnchor, constant: inset.bottom),
-            view.leadingAnchor.constraint(equalTo: leadingAnchor, constant: inset.leading),
-            view.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -inset.trailing)
+            view.leadingAnchor.constraint(equalTo: leadingAnchor, constant: inset.left),
+            view.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -inset.right)
         ])
     }
 
