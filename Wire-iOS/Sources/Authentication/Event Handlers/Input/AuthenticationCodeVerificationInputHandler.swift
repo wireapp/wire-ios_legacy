@@ -27,7 +27,7 @@ class AuthenticationCodeVerificationInputHandler: AuthenticationEventHandler {
     weak var statusProvider: AuthenticationStatusProvider?
 
     func handleEvent(currentStep: AuthenticationFlowStep, context: Any) -> [AuthenticationCoordinatorAction]? {
-        // Only handle string values
+        // Only handle string values.
         guard let code = context as? String else {
             return nil
         }

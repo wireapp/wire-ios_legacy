@@ -199,14 +199,17 @@ class AuthenticationInterfaceBuilder {
         let controller = AuthenticationStepController(description: description)
 
         let mainView = description.mainView
-        mainView.valueSubmitted = controller.valueSubmitted
 
-        mainView.valueValidated = { (error: TextFieldValidator.ValidationError) in
+        mainView.valueSubmitted = { [weak controller] value in
+            controller?.valueSubmitted(value)
+        }
+
+        mainView.valueValidated = { [weak controller] (error: TextFieldValidator.ValidationError) in
             switch error {
             case .none:
-                controller.clearError()
+                controller?.clearError()
             default:
-                controller.displayError(error)
+                controller?.displayError(error)
             }
         }
 

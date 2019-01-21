@@ -33,11 +33,11 @@ class AuthenticationAddEmailPasswordInputHandler: AuthenticationEventHandler {
         }
 
         // Only handle email/password tuple values
-        guard let input = context as? (String, String) else {
+        guard let (email, password) = context as? (String, String) else {
             return nil
         }
 
-        let credentials = ZMEmailCredentials(email: input.0, password: input.1)
+        let credentials = ZMEmailCredentials(email: email, password: password)
         return [.addEmailAndPassword(credentials)]
     }
 

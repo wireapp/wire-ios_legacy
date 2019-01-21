@@ -27,7 +27,7 @@ class AuthenticationButtonTapInputHandler: AuthenticationEventHandler {
     weak var statusProvider: AuthenticationStatusProvider?
 
     func handleEvent(currentStep: AuthenticationFlowStep, context: Any) -> [AuthenticationCoordinatorAction]? {
-        // Only handle button taps values
+        // Only handle button taps values.
         guard context is Void else {
             return nil
         }
