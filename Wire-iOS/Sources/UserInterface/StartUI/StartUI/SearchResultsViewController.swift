@@ -29,7 +29,13 @@ extension SearchGroup {
     // remove service from the tab
     static let all: [SearchGroup] = [.people]
 #else
-    static let all: [SearchGroup] = [.people, .services]
+    static var all: [SearchGroup] {
+        if ZMUser.selfUserHas(permissions: .member) {
+            return [.people, .services]
+        } else {
+            return [.people]
+        }
+    }
 #endif
 
     var name: String {
