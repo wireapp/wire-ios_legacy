@@ -38,7 +38,6 @@ import Foundation
     // MARK: - Initialization
     
     init(style: ColorSchemeVariant) {
-
         groups = SearchGroup.all
         self.style = style
 
@@ -51,7 +50,6 @@ import Foundation
 
         configureViews()
         configureConstraints()
-
     }
     
     required init?(coder aDecoder: NSCoder) {

@@ -18,9 +18,16 @@
 
 static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
 
+@class SearchHeaderViewController;
+@class SearchGroupSelector;
+@class SearchResultsViewController;
 @protocol UserType;
 
 @interface StartUIViewController ()
+
+@property (nonatomic) SearchHeaderViewController *searchHeaderViewController;
+@property (nonatomic) SearchGroupSelector *groupSelector;
+@property (nonatomic) SearchResultsViewController *searchResultsViewController;
 
 - (void)presentProfileViewControllerForUser:(id<UserType>)bareUser atIndexPath:(NSIndexPath *)indexPath;
 
