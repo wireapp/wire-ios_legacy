@@ -1206,10 +1206,6 @@
 
 "registration.register_by_phone" = "Phone";
 "registration.register_by_email" = "Email";
-"registration.email.subheadline" = "Enter your personal email address.";
-"registration.phone.subheadline" = "Enter your phone number.";
-"registration.email.textfield.placeholder" = "you@youremail.com";
-"registration.email.textfield.accessibility" = "Your personal email";
 
 "registration.enter_phone_number.title" = "Edit phone number";
 "registration.enter_phone_number.placeholder" = "Phone number";
@@ -1232,7 +1228,7 @@
 "registration.alert.account_exists.message_email" = "The email address you used to register is already linked to an account.\n\n Use another email address, or try to log in if you own this account.";
 "registration.alert.change_email_action" = "Change Email";
 "registration.alert.change_phone_action" = "Register with Another Number";
-"registration.alert.change_signin_action" = "Log in";
+"registration.alert.change_signin_action" = "Log In";
 
 // Restore History Warning Alert
 "registration.no_history.restore_backup_warning.title" = "Restore history";
@@ -1325,9 +1321,6 @@
 "registration.signin.too_many_devices.sign_out_button.title" = "Log out";
 
 "registration.signin.too_many_devices.manage_screen.title" = "Remove a Device";
-
-"registration.signin.email_button.title" = "Log In With Email";
-"registration.signin.phone_button.title" = "Log In With Phone Number";
 
 "registration.signin.alert.password_needed.title" = "Password needed";
 "registration.signin.alert.password_needed.message" = "Please enter your Password in order to log in.";
