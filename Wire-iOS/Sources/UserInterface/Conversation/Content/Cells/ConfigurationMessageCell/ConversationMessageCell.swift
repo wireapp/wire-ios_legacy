@@ -183,7 +183,9 @@ extension ConversationMessageCellDescription {
     }
 
     func makeCell(for tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
-        return tableView.dequeueConversationCell(with: self, for: indexPath)
+        let cell =  tableView.dequeueConversationCell(with: self, for: indexPath)
+        cell.accessibilityCustomActions = actionController?.makeAccessibilityActions() // TODO jacob make sure this is also done for other implementations
+        return cell
     }
     
     func configureCell(_ cell: UITableViewCell, animated: Bool = false) {

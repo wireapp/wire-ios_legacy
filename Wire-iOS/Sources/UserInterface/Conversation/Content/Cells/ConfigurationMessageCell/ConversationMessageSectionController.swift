@@ -18,7 +18,7 @@
 
 import Foundation
 
-struct ConversationMessageContext {
+struct ConversationMessageContext: Equatable {
     let isSameSenderAsPrevious: Bool
     let isTimeIntervalSinceLastMessageSignificant: Bool
     let isFirstMessageOfTheDay: Bool
@@ -71,17 +71,29 @@ extension IndexSet {
     @objc var useInvertedIndices = false
 
     /// The object that controls actions for the cell.
-    @objc var actionController: ConversationMessageActionController?
+    @objc var actionController: ConversationMessageActionController? {
+        didSet {
+            updateDelegates()
+        }
+    }
 
     /// The message that is being presented.
-    @objc var message: ZMConversationMessage
+    @objc var message: ZMConversationMessage {
+        didSet {
+            updateDelegates()
+        }
+    }
+    
+    /// The delegate for cells injected by the list adapter.
+    @objc weak var cellDelegate: ConversationMessageCellDelegate? {
+        didSet {
+            updateDelegates()
+        }
+    }
 
     /// The index of the first cell that is displaying the message
     var messageCellIndex: Int = 0
     
-    /// The delegate for cells injected by the list adapter.
-    @objc weak var cellDelegate: ConversationMessageCellDelegate?
-
     /// The object that receives informations from the section.
     @objc weak var sectionDelegate: ConversationMessageSectionControllerDelegate?
     
@@ -179,14 +191,12 @@ extension IndexSet {
         cellDescriptions.append(AnyConversationMessageCellDescription(description))
     }
     
-    func didSelect(indexPath: IndexPath, tableView: UITableView) {
+    func didSelect() {
         selected = true
-        configure(at: indexPath.section, in: tableView)
     }
     
-    func didDeselect(indexPath: IndexPath, tableView: UITableView) {
+    func didDeselect() {
         selected = false
-        configure(at: indexPath.section, in: tableView)
     }
     
     private func createCellDescriptions(in context: ConversationMessageContext) {
@@ -212,34 +222,18 @@ extension IndexSet {
         }
     }
     
-    @objc func configure(at sectionIndex: Int, in tableView: UITableView) {
-        configure(in: context, at: sectionIndex, in: tableView)
+    private func updateDelegates() {
+        cellDescriptions.forEach({
+            $0.message = message
+            $0.actionController = actionController
+            $0.delegate = cellDelegate
+        })
     }
     
-    func configure(in context: ConversationMessageContext, at sectionIndex: Int, in tableView: UITableView) {        
+    public func recreateCellDescriptions(in context: ConversationMessageContext) {
         self.context = context
-        tableView.beginUpdates()
-        
-        let old = ZMOrderedSetState(orderedSet: NSOrderedSet(array: tableViewCellDescriptions.map({ $0.baseType })))
         createCellDescriptions(in: context)
-        let new = ZMOrderedSetState(orderedSet: NSOrderedSet(array: tableViewCellDescriptions.map({ $0.baseType })))
-        let change = ZMChangedIndexes(start: old, end: new, updatedState: new, moveType: .nsTableView)
-        
-        if let deleted = change?.deletedIndexes.indexPaths(in: sectionIndex) {
-            tableView.deleteRows(at: deleted, with: .fade)
-        }
-        
-        if let inserted = change?.insertedIndexes.indexPaths(in: sectionIndex) {
-            tableView.insertRows(at: inserted, with: .fade)
-        }
-        tableView.endUpdates()
-
-        for (index, description) in tableViewCellDescriptions.enumerated() {
-            if let cell = tableView.cellForRow(at: IndexPath(row: index, section: sectionIndex)) {
-                cell.accessibilityCustomActions = self.actionController?.makeAccessibilityActions()
-                description.configure(cell: cell, animated: true)
-            }
-        }
+        updateDelegates()
     }
     
     func isBurstTimestampVisible(in context: ConversationMessageContext) -> Bool {
