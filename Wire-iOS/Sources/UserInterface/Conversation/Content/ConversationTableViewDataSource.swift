@@ -161,8 +161,7 @@ final class ConversationTableViewDataSource: NSObject {
                                                                    context: .content)
         actionControllers[message.objectIdentifier] = actionController
         
-        return actionController
-        
+        return actionController   
     }
     
     func sectionController(for message: ZMConversationMessage, at index: Int) -> ConversationMessageSectionController {
