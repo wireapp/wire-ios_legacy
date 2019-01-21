@@ -61,7 +61,7 @@ final class StartUIViewControllerSnapshotTests: ZMSnapshotTestCase {
     /// has no create group and create guest room rows
     func testForNoContactWhenSelfIsPartner() {
         MockUser.mockSelf().isTeamMember = true
-        MockUser.mockSelf()?.teamRole = .partner
+        MockUser.mockSelf()?.teamRole = .collaborator
         verifyInIPhoneSize(view: sut.view)
     }
 }

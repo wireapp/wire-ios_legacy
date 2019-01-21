@@ -20,8 +20,6 @@ import Foundation
 
 extension ZMUser {
     
-    // TODO: needs testing
-    
     /// Returns the permissions of the self user, if any.
     static func selfPermissions() -> Permissions? {
         return ZMUser.selfUser()?.teamRole.permissions
@@ -48,9 +46,8 @@ extension ZMUser {
 /// user is not authorized (is not an admin).
 ///
 /// NOTE: This relates only to team members. If the self user is not a
-///       team member, they are automatically authorized.
+/// team member, they are automatically authorized.
 ///
-// TODO: maybe better to call this TeamRestricted
 protocol Restricted {
     
     /// The minimum permissions required to access this object.
