@@ -58,13 +58,14 @@ open class CoreDataSnapshotTestCase: ZMSnapshotTestCase {
     private func setupMember() {
         let selfUser = ZMUser.selfUser(in: self.uiMOC)
 
-        let team = Team.insertNewObject(in: uiMOC)
-        team.remoteIdentifier = UUID()
+        team = Team.insertNewObject(in: uiMOC)
+        team!.remoteIdentifier = UUID()
+        
 
-        let member = Member.insertNewObject(in: uiMOC)
-        member.user = selfUser
-        member.team = team
-        member.setTeamRole(.member)
+        teamMember = Member.insertNewObject(in: uiMOC)
+        teamMember!.user = selfUser
+        teamMember!.team = team
+        teamMember!.setTeamRole(.member)
     }
 
     private func setupTestObjects() {
