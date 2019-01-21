@@ -24,17 +24,22 @@ import WireSyncEngine
     case services
 }
 
-extension SearchGroup {
+extension SearchGroup: Restricted {
+    var requiredPermissions: Permissions {
+        switch self {
+        case .people:
+            return []
+        case .services:
+            return .member
+        }
+    }
+
 #if ADD_SERVICE_DISABLED
     // remove service from the tab
     static let all: [SearchGroup] = [.people]
 #else
     static var all: [SearchGroup] {
-        if ZMUser.selfUserHas(permissions: .member) {
-            return [.people, .services]
-        } else {
-            return [.people]
-        }
+        return [.people, .services].filter { $0.selfUserIsAuthorized }
     }
 #endif
 
