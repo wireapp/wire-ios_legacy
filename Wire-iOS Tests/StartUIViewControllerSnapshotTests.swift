@@ -56,7 +56,7 @@ final class StartUIViewControllerSnapshotTests: CoreDataSnapshotTestCase {
 
 
     /// has create group and create guest room rows
-    func testForNoContactWhenSelfIsTeamMember() { ///TODO:
+    func testForNoContactWhenSelfIsTeamMember() {
         teamTest {
             setupSut()
 
@@ -65,7 +65,7 @@ final class StartUIViewControllerSnapshotTests: CoreDataSnapshotTestCase {
     }
 
     /// has no create group and create guest room rows
-    func testForNoContactWhenSelfIsPartner() { ///TODO:
+    func testForNoContactWhenSelfIsPartner() {
         teamTest {
             selfUser.membership?.setTeamRole(.partner)
 
