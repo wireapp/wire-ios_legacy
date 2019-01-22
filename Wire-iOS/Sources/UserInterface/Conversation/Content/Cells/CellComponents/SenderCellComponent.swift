@@ -112,7 +112,10 @@ class SenderCellComponent: UIView {
         self.avatar.user = user
         
         configureNameLabel(for: user, conversation: conversation)
-        observerToken = UserChangeInfo.add(observer: self, for: user, userSession: ZMUserSession.shared()!)
+        
+        if let userSession = ZMUserSession.shared() {
+            observerToken = UserChangeInfo.add(observer: self, for: user, userSession: userSession)
+        }
     }
     
     func configureNameLabel(for user: UserType, conversation: ZMConversation?) {
