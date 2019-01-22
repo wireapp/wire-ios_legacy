@@ -226,12 +226,12 @@ extension ConversationViewController: CollectionsViewControllerDelegate {
         case .reply:
             viewController.dismissIfNeeded(animated: true) {
                 self.contentViewController.scroll(to: message) { cell in
-                    self.contentViewController.wants(toPerform: .reply, for: message)
+                    self.contentViewController.perform(action: .reply, for: message)
                 }
             }
 
         default:
-            self.contentViewController.wants(toPerform: action, for: message)
+            self.contentViewController.perform(action: action, for: message)
             break
         }
     }
