@@ -38,7 +38,7 @@ import UIKit
                message: ZMConversationMessage,
                context: Context,
                tableView: UITableView,
-               sectionIndex: Int) {
+               sectionIndex: Int) { ///TODO: make a struct, make this non-objc
         self.responder = responder
         self.message = message
         self.context = context

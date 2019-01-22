@@ -152,13 +152,16 @@ final class ConversationTableViewDataSource: NSObject {
         return tableView.cellForRow(at: IndexPath(row: 0, section: section))
     }
     
-    @objc func actionController(for message: ZMConversationMessage) -> ConversationMessageActionController {
+    @objc func actionController(for message: ZMConversationMessage,
+                                sectionIndex: Int) -> ConversationMessageActionController {
         if let cachedEntry = actionControllers[message.objectIdentifier] {
             return cachedEntry
         }
         let actionController = ConversationMessageActionController(responder: self.messageActionResponder,
                                                                    message: message,
-                                                                   context: .content)
+                                                                   context: .content,
+                                                                   tableView: tableView,
+                                                                   sectionIndex: sectionIndex)
         actionControllers[message.objectIdentifier] = actionController
         
         return actionController   
@@ -166,6 +169,7 @@ final class ConversationTableViewDataSource: NSObject {
     
     func sectionController(for message: ZMConversationMessage, at index: Int) -> ConversationMessageSectionController {
         if let cachedEntry = sectionControllers[message.objectIdentifier] {
+            cachedEntry.actionController?.sectionIndex = index
             return cachedEntry
         }
         
@@ -176,7 +180,7 @@ final class ConversationTableViewDataSource: NSObject {
         sectionController.useInvertedIndices = true
         sectionController.cellDelegate = conversationCellDelegate
         sectionController.sectionDelegate = self
-        sectionController.actionController = actionController(for: message)
+        sectionController.actionController = actionController(for: message, sectionIndex: index)
         
         sectionControllers[message.objectIdentifier] = sectionController
         
