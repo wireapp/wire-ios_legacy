@@ -20,9 +20,9 @@ import Foundation
 
 extension ConversationContentViewController: ConversationMessageCellDelegate {
     public func perform(action: MessageAction, for message: ZMConversationMessage!, sourceView: UIView!) {
-        guard let cell = sourceView as? UIView & SelectableView else { return }
+        guard let selectableView = sourceView as? UIView & SelectableView else { return }
 
-        wants(toPerform: action, for: message, cell: cell)
+        wants(toPerform: action, for: message, cell: selectableView)
     }
 
     func conversationMessageWantsToOpenUserDetails(_ cell: UIView, user: UserType, sourceView: UIView, frame: CGRect) {

@@ -128,27 +128,28 @@ import UIKit
     // MARK: - Single Tap Action
 
     func actionSourceView() -> UIView! {
-        var sourceView: UIView! = nil
-        if let tableView = tableView, let sectionIndex = sectionIndex {
+        if let tableView = tableView,
+            let sectionIndex = sectionIndex { ///TODO: sectionIndex incorrect, should be 1 instead of 0 in 2nd message
             let cells = tableView.visibleCells
 
             for cell in cells {
                 let indexPath = tableView.indexPath(for: cell)
-                if indexPath?.section == sectionIndex && cell is SelectableView{
-                    sourceView = cell
-                    break
+                if indexPath?.section == sectionIndex &&
+                    cell is SelectableView {
+                    return cell
+                } else {
+                    ///TODO:
                 }
             }
         } else if self.sourceView != nil {
-            sourceView = self.sourceView
+            return sourceView
         }
 
-        return sourceView
+        return nil
     }
 
     @objc func performSingleTapAction() {
         guard let singleTapAction = singleTapAction else { return }
-
 
         responder?.perform(action: singleTapAction, for: message, sourceView: actionSourceView())
     }

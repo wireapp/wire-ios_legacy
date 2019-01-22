@@ -38,7 +38,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface FullscreenImageViewController : UIViewController
 
-@property (nonatomic, strong, readonly) UIScrollView *scrollView;
+@property (nonatomic, strong, readonly) UIScrollView *scrollView; ///TODO: extend Selectable
 @property (nonatomic, readonly) id<ZMConversationMessage> message;
 @property (nonatomic) UIView *snapshotBackgroundView;
 @property (nonatomic, weak)   id <MessageActionResponder, ScreenshotProvider, MenuVisibilityController> delegate;
