@@ -716,7 +716,7 @@
 {
     ZMMessage *lastEditableMessage = self.conversation.lastEditableMessage;
     if (lastEditableMessage != nil) {
-        [self wantsToPerformAction:MessageActionEdit forMessage:lastEditableMessage];
+        [self wantsToPerformAction:MessageActionEdit forMessage:lastEditableMessage sourceView:self.view]; ///TODO: pass the last cell?
     }
 }
 
