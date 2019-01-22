@@ -34,13 +34,13 @@ struct AuthenticationPrefilledCredentials {
  * An authentication step to ask the user for login credentials.
  */
 
-class LogInStepDescription: TeamCreationStepDescription {
+class LogInStepDescription: AuthenticationStepDescription {
 
     let backButton: BackButtonDescription?
     let mainView: ViewDescriptor & ValueSubmission
     let headline: String
     let subtext: String?
-    let secondaryView: TeamCreationSecondaryViewDescription?
+    let secondaryView: AuthenticationSecondaryViewDescription?
 
     init() {
         backButton = BackButtonDescription()

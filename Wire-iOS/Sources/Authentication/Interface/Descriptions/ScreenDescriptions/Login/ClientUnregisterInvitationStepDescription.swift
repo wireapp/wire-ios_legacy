@@ -22,13 +22,13 @@ import Foundation
  * The view that displays the message to inform the user that they have too many devices.
  */
 
-class ClientUnregisterInvitationStepDescription: TeamCreationStepDescription {
+class ClientUnregisterInvitationStepDescription: AuthenticationStepDescription {
 
     let backButton: BackButtonDescription?
     let mainView: ViewDescriptor & ValueSubmission
     let headline: String
     let subtext: String?
-    let secondaryView: TeamCreationSecondaryViewDescription?
+    let secondaryView: AuthenticationSecondaryViewDescription?
 
     init() {
         backButton = BackButtonDescription()

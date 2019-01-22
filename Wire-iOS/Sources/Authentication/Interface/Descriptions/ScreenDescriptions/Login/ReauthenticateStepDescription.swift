@@ -22,13 +22,13 @@ import Foundation
  * An authentication step to ask the user to log in again.
  */
 
-class ReauthenticateStepDescription: TeamCreationStepDescription {
+class ReauthenticateStepDescription: AuthenticationStepDescription {
 
     let backButton: BackButtonDescription?
     let mainView: ViewDescriptor & ValueSubmission
     let headline: String
     let subtext: String?
-    let secondaryView: TeamCreationSecondaryViewDescription?
+    let secondaryView: AuthenticationSecondaryViewDescription?
 
     init(prefilledCredentials: AuthenticationPrefilledCredentials?) {
         backButton = BackButtonDescription()

@@ -18,7 +18,7 @@
 
 import Foundation
 
-class VerifyPhoneStepSecondaryView: TeamCreationSecondaryViewDescription {
+class VerifyPhoneStepSecondaryView: AuthenticationSecondaryViewDescription {
     let views: [ViewDescriptor]
     weak var actioner: AuthenticationActioner?
 
@@ -37,13 +37,13 @@ class VerifyPhoneStepSecondaryView: TeamCreationSecondaryViewDescription {
     }
 }
 
-final class VerifyPhoneStepDescription: TeamCreationStepDescription {
+final class VerifyPhoneStepDescription: AuthenticationStepDescription {
     let phoneNumber: String
     let backButton: BackButtonDescription?
     let mainView: ViewDescriptor & ValueSubmission
     let headline: String
     let subtext: String?
-    let secondaryView: TeamCreationSecondaryViewDescription?
+    let secondaryView: AuthenticationSecondaryViewDescription?
 
     init(phoneNumber: String, allowChange: Bool) {
         self.phoneNumber = phoneNumber

@@ -18,7 +18,7 @@
 
 import Foundation
 
-typealias TeamCreationSecondaryViewDescription = SecondaryViewDescription & AuthenticationActionable
+typealias AuthenticationSecondaryViewDescription = SecondaryViewDescription & AuthenticationActionable
 
 typealias ValueSubmitted = (Any) -> ()
 typealias ValueValidated = (TextFieldValidator.ValidationError) -> ()
@@ -33,16 +33,16 @@ protocol ValueSubmission: class {
     var valueValidated: ValueValidated? { get set }
 }
 
-protocol TeamCreationStepDescription {
+protocol AuthenticationStepDescription {
     var backButton: BackButtonDescription? { get }
     var mainView: ViewDescriptor & ValueSubmission { get }
     var headline: String { get }
     var subtext: String? { get }
-    var secondaryView: TeamCreationSecondaryViewDescription? { get }
+    var secondaryView: AuthenticationSecondaryViewDescription? { get }
     func shouldSkipFromNavigation() -> Bool
 }
 
-extension TeamCreationStepDescription {
+extension AuthenticationStepDescription {
     func shouldSkipFromNavigation() -> Bool {
         return false
     }

@@ -18,19 +18,20 @@
 
 import Foundation
 
-final class SetPasswordStepDescription: TeamCreationStepDescription {
+final class SetFullNameStepDescription: AuthenticationStepDescription {
 
     let backButton: BackButtonDescription?
     let mainView: ViewDescriptor & ValueSubmission
     let headline: String
     let subtext: String?
-    let secondaryView: TeamCreationSecondaryViewDescription?
+    let secondaryView: AuthenticationSecondaryViewDescription?
 
     init() {
         backButton = BackButtonDescription()
-        mainView = TextFieldDescription(placeholder: "team.password.textfield.placeholder".localized, actionDescription: "team.password.textfield.accessibility".localized, kind: .password(isNew: true))
-        headline = "team.password.headline".localized
+        mainView = TextFieldDescription(placeholder: "team.full_name.textfield.placeholder".localized, actionDescription: "team.full_name.textfield.accessibility".localized, kind: .name(isTeam: false))
+        headline = "team.full_name.headline".localized
         subtext = nil
         secondaryView = nil
     }
 }
+

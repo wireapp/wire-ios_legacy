@@ -19,7 +19,7 @@
 import Foundation
 import SafariServices
 
-class SetEmailStepSecondaryView: TeamCreationSecondaryViewDescription {
+class SetEmailStepSecondaryView: AuthenticationSecondaryViewDescription {
     let views: [ViewDescriptor] = []
     let learnMore: ButtonDescription
 
@@ -42,13 +42,13 @@ class SetEmailStepSecondaryView: TeamCreationSecondaryViewDescription {
     }
 }
 
-final class SetEmailStepDescription: TeamCreationStepDescription {
+final class SetEmailStepDescription: AuthenticationStepDescription {
 
     let backButton: BackButtonDescription?
     let mainView: ViewDescriptor & ValueSubmission
     let headline: String
     let subtext: String?
-    let secondaryView: TeamCreationSecondaryViewDescription?
+    let secondaryView: AuthenticationSecondaryViewDescription?
 
     init() {
         backButton = BackButtonDescription()

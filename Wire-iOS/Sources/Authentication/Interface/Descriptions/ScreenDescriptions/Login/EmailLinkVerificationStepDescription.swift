@@ -18,13 +18,13 @@
 
 import Foundation
 
-class EmailLinkVerificationStepDescription: TeamCreationStepDescription {
+class EmailLinkVerificationStepDescription: AuthenticationStepDescription {
 
     let backButton: BackButtonDescription?
     let mainView: ViewDescriptor & ValueSubmission
     let headline: String
     let subtext: String?
-    let secondaryView: TeamCreationSecondaryViewDescription?
+    let secondaryView: AuthenticationSecondaryViewDescription?
 
     init(emailAddress: String) {
         backButton = BackButtonDescription()

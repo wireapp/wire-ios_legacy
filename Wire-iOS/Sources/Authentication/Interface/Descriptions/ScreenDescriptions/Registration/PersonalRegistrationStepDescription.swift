@@ -22,13 +22,13 @@ import Foundation
  * The step to start personal user registration.
  */
 
-class PersonalRegistrationStepDescription: TeamCreationStepDescription {
+class PersonalRegistrationStepDescription: AuthenticationStepDescription {
 
     let backButton: BackButtonDescription?
     let mainView: ViewDescriptor & ValueSubmission
     let headline: String
     let subtext: String?
-    let secondaryView: TeamCreationSecondaryViewDescription?
+    let secondaryView: AuthenticationSecondaryViewDescription?
 
     init() {
         backButton = BackButtonDescription()

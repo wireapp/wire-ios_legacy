@@ -19,7 +19,7 @@
 import Foundation
 import SafariServices
 
-class SetTeamNameStepSecondaryView: TeamCreationSecondaryViewDescription {
+class SetTeamNameStepSecondaryView: AuthenticationSecondaryViewDescription {
     let views: [ViewDescriptor]
     weak var actioner: AuthenticationActioner?
 
@@ -34,13 +34,13 @@ class SetTeamNameStepSecondaryView: TeamCreationSecondaryViewDescription {
     }
 }
 
-final class SetTeamNameStepDescription: TeamCreationStepDescription {
+final class SetTeamNameStepDescription: AuthenticationStepDescription {
 
     let backButton: BackButtonDescription?
     let mainView: ViewDescriptor & ValueSubmission
     let headline: String
     let subtext: String?
-    let secondaryView: TeamCreationSecondaryViewDescription?
+    let secondaryView: AuthenticationSecondaryViewDescription?
 
     init() {
         backButton = BackButtonDescription()

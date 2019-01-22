@@ -22,7 +22,7 @@ import Foundation
  * The view that displays the log out button when there are too many devices.
  */
 
-class SignOutViewDescription: TeamCreationSecondaryViewDescription {
+class SignOutViewDescription: AuthenticationSecondaryViewDescription {
 
     let views: [ViewDescriptor]
     weak var actioner: AuthenticationActioner?

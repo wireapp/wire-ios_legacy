@@ -18,7 +18,7 @@
 
 import Foundation
 
-class VerifyEmailStepSecondaryView: TeamCreationSecondaryViewDescription {
+class VerifyEmailStepSecondaryView: AuthenticationSecondaryViewDescription {
     let views: [ViewDescriptor]
     weak var actioner: AuthenticationActioner?
 
@@ -42,13 +42,13 @@ class VerifyEmailStepSecondaryView: TeamCreationSecondaryViewDescription {
     }
 }
 
-final class VerifyEmailStepDescription: TeamCreationStepDescription {
+final class VerifyEmailStepDescription: AuthenticationStepDescription {
     let email: String
     let backButton: BackButtonDescription?
     let mainView: ViewDescriptor & ValueSubmission
     let headline: String
     let subtext: String?
-    let secondaryView: TeamCreationSecondaryViewDescription?
+    let secondaryView: AuthenticationSecondaryViewDescription?
 
     init(email: String) {
         self.email = email

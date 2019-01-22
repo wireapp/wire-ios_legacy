@@ -26,7 +26,7 @@ protocol PhoneNumberInputViewDelegate: class {
 }
 
 /**
- * A view providing an input field for phone numbers and a.
+ * A view providing an input field for phone numbers and a button for choosing the country.
  */
 
 class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDelegate, TextContainer {

@@ -25,7 +25,7 @@ import UIKit
 class AuthenticationStepController: AuthenticationStepViewController {
 
     /// The step to display.
-    let stepDescription: TeamCreationStepDescription
+    let stepDescription: AuthenticationStepDescription
 
     /// The object that coordinates authentication.
     weak var authenticationCoordinator: AuthenticationCoordinator? {
@@ -73,7 +73,7 @@ class AuthenticationStepController: AuthenticationStepViewController {
      * - parameter description: The description of the step interface.
      */
 
-    required init(description: TeamCreationStepDescription) {
+    required init(description: AuthenticationStepDescription) {
         self.stepDescription = description
         super.init(nibName: nil, bundle: nil)
     }

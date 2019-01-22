@@ -22,7 +22,7 @@ import UIKit
  * The view that displays the restore from backup button.
  */
 
-class BackupRestoreStepDescriptionSecondaryView: TeamCreationSecondaryViewDescription {
+class BackupRestoreStepDescriptionSecondaryView: AuthenticationSecondaryViewDescription {
 
     let views: [ViewDescriptor]
     weak var actioner: AuthenticationActioner?
@@ -41,13 +41,13 @@ class BackupRestoreStepDescriptionSecondaryView: TeamCreationSecondaryViewDescri
  * The step that displays information about the history.
  */
 
-class BackupRestoreStepDescription: TeamCreationStepDescription {
+class BackupRestoreStepDescription: AuthenticationStepDescription {
 
     let backButton: BackButtonDescription?
     let mainView: ViewDescriptor & ValueSubmission
     let headline: String
     let subtext: String?
-    let secondaryView: TeamCreationSecondaryViewDescription?
+    let secondaryView: AuthenticationSecondaryViewDescription?
 
     init(context: NoHistoryContext) {
         backButton = BackButtonDescription()

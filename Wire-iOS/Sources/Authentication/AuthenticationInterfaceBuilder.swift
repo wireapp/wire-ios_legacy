@@ -116,7 +116,7 @@ class AuthenticationInterfaceBuilder {
             return makeViewController(for: addCredentialsStep)
 
         case .enterActivationCode(let credentials, _):
-            let step: TeamCreationStepDescription
+            let step: AuthenticationStepDescription
 
             switch credentials {
             case .email(let email):
@@ -174,7 +174,7 @@ class AuthenticationInterfaceBuilder {
      */
 
     private func makeTeamCreationStepViewController(for state: TeamCreationState) -> AuthenticationStepViewController? {
-        var stepDescription: TeamCreationStepDescription
+        var stepDescription: AuthenticationStepDescription
 
         switch state {
         case .setTeamName:
@@ -204,7 +204,7 @@ class AuthenticationInterfaceBuilder {
      * does not support this step.
      */
 
-    private func makeViewController(for description: TeamCreationStepDescription) -> AuthenticationStepController {
+    private func makeViewController(for description: AuthenticationStepDescription) -> AuthenticationStepController {
         let controller = AuthenticationStepController(description: description)
 
         let mainView = description.mainView

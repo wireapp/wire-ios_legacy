@@ -1338,7 +1338,7 @@
 		F15650FC21DD20D900210504 /* IteratorProtocol+Histogram.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876CC8981E966C5C00F6BABC /* IteratorProtocol+Histogram.swift */; };
 		F15650FD21DD20D900210504 /* UserType+ZMUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E672C932179D41100522E61 /* UserType+ZMUser.swift */; };
 		F15E9BFD1E4878AC00EA207F /* UINavigationController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15E9BFC1E4878AC00EA207F /* UINavigationController+Additions.swift */; };
-		F16426FE1FCC5A2C00D2ABFC /* TeamCreationStepDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16426FD1FCC5A2C00D2ABFC /* TeamCreationStepDescription.swift */; };
+		F16426FE1FCC5A2C00D2ABFC /* AuthenticationStepDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16426FD1FCC5A2C00D2ABFC /* AuthenticationStepDescription.swift */; };
 		F16427001FCC5B3C00D2ABFC /* SetTeamNameStepDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16426FF1FCC5B3C00D2ABFC /* SetTeamNameStepDescription.swift */; };
 		F16427021FCC5B9E00D2ABFC /* SetEmailStepDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16427011FCC5B9E00D2ABFC /* SetEmailStepDescription.swift */; };
 		F16427041FCC5BB600D2ABFC /* VerifyEmailStepDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16427031FCC5BB600D2ABFC /* VerifyEmailStepDescription.swift */; };
@@ -3109,7 +3109,7 @@
 		F15650B121DD018700210504 /* Bundle+Identifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Identifiers.swift"; sourceTree = "<group>"; };
 		F15E9BFC1E4878AC00EA207F /* UINavigationController+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Additions.swift"; sourceTree = "<group>"; };
 		F16426F51FCC0FE200D2ABFC /* UIColor+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Hex.swift"; sourceTree = "<group>"; };
-		F16426FD1FCC5A2C00D2ABFC /* TeamCreationStepDescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamCreationStepDescription.swift; sourceTree = "<group>"; };
+		F16426FD1FCC5A2C00D2ABFC /* AuthenticationStepDescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationStepDescription.swift; sourceTree = "<group>"; };
 		F16426FF1FCC5B3C00D2ABFC /* SetTeamNameStepDescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetTeamNameStepDescription.swift; sourceTree = "<group>"; };
 		F16427011FCC5B9E00D2ABFC /* SetEmailStepDescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetEmailStepDescription.swift; sourceTree = "<group>"; };
 		F16427031FCC5BB600D2ABFC /* VerifyEmailStepDescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyEmailStepDescription.swift; sourceTree = "<group>"; };
@@ -3587,14 +3587,25 @@
 			isa = PBXGroup;
 			children = (
 				5E21344A21E351D400273D0D /* LogInStepDescription.swift */,
+				5E90418A21F61CBF00C3B413 /* ReauthenticateStepDescription.swift */,
 				5E8FFC0921ECE3920052DF03 /* BackupRestoreStepDescription.swift */,
 				5E8FFC1721EF61A80052DF03 /* ClientUnregisterInvitationStepDescription.swift */,
 				5E8FFC1B21EF7CB50052DF03 /* AddEmailPasswordStepDescription.swift */,
 				5E8FFC2121EF86000052DF03 /* EmailLinkVerificationStepDescription.swift */,
 				5E8FFC2521F0879B0052DF03 /* ReauthenticateWithCompanyLoginStepDescription.swift */,
-				5E90418A21F61CBF00C3B413 /* ReauthenticateStepDescription.swift */,
 			);
 			path = Login;
+			sourceTree = "<group>";
+		};
+		5E22BA2021F72ED300BBE8FC /* Team */ = {
+			isa = PBXGroup;
+			children = (
+				F16426FF1FCC5B3C00D2ABFC /* SetTeamNameStepDescription.swift */,
+				F16427011FCC5B9E00D2ABFC /* SetEmailStepDescription.swift */,
+				F16427051FCC5BE400D2ABFC /* SetFullNameStepDescription.swift */,
+				F16427071FCC5BF800D2ABFC /* SetPasswordStepDescription.swift */,
+			);
+			path = Team;
 			sourceTree = "<group>";
 		};
 		5E2B13E520E67206002F27E2 /* CollectionLayouts */ = {
@@ -6460,13 +6471,10 @@
 		F16426FC1FCC5A1600D2ABFC /* ScreenDescriptions */ = {
 			isa = PBXGroup;
 			children = (
+				F16426FD1FCC5A2C00D2ABFC /* AuthenticationStepDescription.swift */,
 				5E21344721E34F0600273D0D /* Login */,
 				5EFD913B21C8F87D00080599 /* Registration */,
-				F16426FD1FCC5A2C00D2ABFC /* TeamCreationStepDescription.swift */,
-				F16426FF1FCC5B3C00D2ABFC /* SetTeamNameStepDescription.swift */,
-				F16427011FCC5B9E00D2ABFC /* SetEmailStepDescription.swift */,
-				F16427051FCC5BE400D2ABFC /* SetFullNameStepDescription.swift */,
-				F16427071FCC5BF800D2ABFC /* SetPasswordStepDescription.swift */,
+				5E22BA2021F72ED300BBE8FC /* Team */,
 			);
 			path = ScreenDescriptions;
 			sourceTree = "<group>";
@@ -7738,7 +7746,7 @@
 				870815881BF4EAD100D321BC /* SettingsTableViewController.swift in Sources */,
 				5E21344B21E351D400273D0D /* LogInStepDescription.swift in Sources */,
 				EF3CB75521DD157B0030C3E8 /* ProfileViewController+Extension.swift in Sources */,
-				F16426FE1FCC5A2C00D2ABFC /* TeamCreationStepDescription.swift in Sources */,
+				F16426FE1FCC5A2C00D2ABFC /* AuthenticationStepDescription.swift in Sources */,
 				871BC2241D34F8F800DF0793 /* BottomOverlayViewController.m in Sources */,
 				87D56DFA1E0046FE00DFF722 /* CollectionImageCell.swift in Sources */,
 				8750B1CB2124236200B807A9 /* InviteButton.swift in Sources */,
