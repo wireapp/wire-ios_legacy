@@ -147,6 +147,7 @@ protocol ConversationMessageCellDescription: class {
     func makeView() -> UIView
     func willDisplayCell()
     func didEndDisplayingCell()
+    func isConfigurationEqual(with other: Any) -> Bool
 }
 
 // MARK: - Table View Dequeuing
@@ -204,6 +205,10 @@ extension ConversationMessageCellDescription {
         _ = message?.startSelfDestructionIfNeeded()
     }
     
+    func isConfigurationEqual(with other: Any) -> Bool {
+        return type(of: self) == type(of: other)
+    }
+    
 }
 
 /**
@@ -216,6 +221,8 @@ extension ConversationMessageCellDescription {
     private let registrationBlock: (UITableView) -> Void
     private let configureBlock: (UITableViewCell, Bool) -> Void
     private let baseTypeGetter: () -> AnyClass
+    private let instanceGetter: () -> AnyObject
+    private let isConfigurationEqualBlock: (AnyConversationMessageCellDescription) -> Bool
 
     private let _delegate: AnyMutableProperty<ConversationMessageCellDelegate?>
     private let _message: AnyMutableProperty<ZMConversationMessage?>
@@ -248,6 +255,14 @@ extension ConversationMessageCellDescription {
             return T.self
         }
         
+        instanceGetter = {
+            return description
+        }
+        
+        isConfigurationEqualBlock = { otherDescription in
+            description.isConfigurationEqual(with: otherDescription.instance)
+        }
+        
         _delegate = AnyMutableProperty(description, keyPath: \.delegate)
         _message = AnyMutableProperty(description, keyPath: \.message)
         _actionController = AnyMutableProperty(description, keyPath: \.actionController)
@@ -257,6 +272,10 @@ extension ConversationMessageCellDescription {
         _axIdentifier = AnyConstantProperty(description, keyPath: \.accessibilityIdentifier)
         _axLabel = AnyConstantProperty(description, keyPath: \.accessibilityLabel)
         _supportsActions = AnyConstantProperty(description, keyPath: \.supportsActions)
+    }
+    
+    @objc var instance: AnyObject {
+        return instanceGetter()
     }
 
     @objc var baseType: AnyClass {
@@ -322,6 +341,10 @@ extension ConversationMessageCellDescription {
     
     func makeView() -> UIView {
         return viewGenerator()
+    }
+    
+    func isConfigurationEqual(with description: AnyConversationMessageCellDescription) -> Bool {
+        return isConfigurationEqualBlock(description)
     }
 
 }

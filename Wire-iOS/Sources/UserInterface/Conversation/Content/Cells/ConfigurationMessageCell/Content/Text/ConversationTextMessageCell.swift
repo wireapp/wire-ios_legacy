@@ -20,7 +20,7 @@ import Foundation
 
 class ConversationTextMessageCell: UIView, ConversationMessageCell, TextViewInteractionDelegate {
 
-    struct Configuration {
+    struct Configuration: Equatable {
         let attributedText: NSAttributedString
     }
 
@@ -149,7 +149,13 @@ class ConversationTextMessageCellDescription: ConversationMessageCellDescription
         cell.cellView.menuPresenter = cell
         return cell
     }
-
+    
+    func isConfigurationEqual(with other: Any) -> Bool {
+        guard let otherDescription = other as? ConversationTextMessageCellDescription else { return false }
+        
+        return configuration == otherDescription.configuration
+    }
+    
 }
 
 // MARK: - Factory

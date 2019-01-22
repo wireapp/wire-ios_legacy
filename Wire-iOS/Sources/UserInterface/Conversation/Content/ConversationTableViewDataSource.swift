@@ -36,7 +36,7 @@ extension AnyConversationMessageCellDescription: Differentiable {
     }
     
     func isContentEqual(to source: AnyConversationMessageCellDescription) -> Bool {
-        return true
+        return isConfigurationEqual(with: source)
     }
     
 }
