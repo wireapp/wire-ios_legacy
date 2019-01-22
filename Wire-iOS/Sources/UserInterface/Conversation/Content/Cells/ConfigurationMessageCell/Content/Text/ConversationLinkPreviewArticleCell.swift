@@ -27,6 +27,9 @@ class ConversationLinkPreviewArticleCell: UIView, ConversationMessageCell {
     }
 
     private let articleView = ArticleView(withImagePlaceholder: true)
+    
+    weak var delegate: ConversationMessageCellDelegate? = nil
+    weak var message: ZMConversationMessage? = nil
 
     var isSelected: Bool = false
 

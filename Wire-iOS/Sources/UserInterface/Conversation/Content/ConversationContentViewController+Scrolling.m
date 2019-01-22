@@ -41,15 +41,7 @@
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    CGFloat bottomOffset = scrollView.contentOffset.y;
-    
-    if (self.dataSource.messages.count) {
-        [self.delegate conversationContentViewController:self
-                           didScrollWithOffsetFromBottom:bottomOffset
-                                       withLatestMessage:self.dataSource.messages.lastObject];
-    }
-    
+{    
     [self.dataSource tableViewDidScroll:self.tableView];
 }
 

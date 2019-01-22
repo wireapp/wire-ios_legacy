@@ -35,10 +35,6 @@
 - (void)conversationContentViewController:(ConversationContentViewController *)contentViewController
 didEndDisplayingActiveMediaPlayerForMessage:(id<ZMConversationMessage>)message;
 
-- (void)conversationContentViewController:(ConversationContentViewController *)contentViewController
-            didScrollWithOffsetFromBottom:(CGFloat)offset
-                        withLatestMessage:(id<ZMConversationMessage>)message;
-
 - (void)conversationContentViewController:(ConversationContentViewController *)contentViewController didTriggerResendingMessage:(id<ZMConversationMessage>)message;
 
 - (void)conversationContentViewController:(ConversationContentViewController *)contentViewController didTriggerEditingMessage:(id<ZMConversationMessage>)message;

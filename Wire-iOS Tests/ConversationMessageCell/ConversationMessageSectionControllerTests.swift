@@ -74,23 +74,4 @@ class ConversationMessageSectionControllerTests: XCTestCase {
         XCTAssertEqual(String(describing: cell2.baseType), "MockCellDescription<Bool>")
     }
 
-    // MARK: - Configuration
-
-    func testThatItConfiguresCellAfterDequeuing() {
-        // GIVEN
-        let section = ConversationMessageSectionController(message: MockMessage(), context: context)
-        section.cellDescriptions.removeAll()
-        let tableView = UITableView()
-
-        section.add(description: MockCellDescription<Any>())
-        section.cellDescriptions[0].register(in: tableView)
-
-        // WHEN
-        let indexPath = IndexPath(row: 0, section: 0)
-        let cell = section.makeCell(for: tableView, at: indexPath) as? ConversationMessageCellTableViewAdapter<MockCellDescription<Any>>
-
-        // THEN
-        XCTAssertTrue(cell?.cellView.isConfigured == true)
-    }
-
 }

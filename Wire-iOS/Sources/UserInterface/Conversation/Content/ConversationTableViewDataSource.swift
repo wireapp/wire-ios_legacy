@@ -19,6 +19,27 @@
 import Foundation
 import WireDataModel
 import WireUtilities
+import DifferenceKit
+
+extension Int: Differentiable { }
+extension String: Differentiable { }
+extension AnyConversationMessageCellDescription: Differentiable {
+    
+    typealias DifferenceIdentifier = String
+    
+    var differenceIdentifier: String {
+        return message!.objectIdentifier + String(describing: baseType)
+    }
+    
+    override var debugDescription: String {
+        return differenceIdentifier
+    }
+    
+    func isContentEqual(to source: AnyConversationMessageCellDescription) -> Bool {
+        return isConfigurationEqual(with: source)
+    }
+    
+}
 
 extension ZMConversationMessage {
     var isSentFromThisDevice: Bool {
@@ -56,18 +77,15 @@ final class ConversationTableViewDataSource: NSObject {
     
     @objc public var firstUnreadMessage: ZMConversationMessage?
     @objc public var selectedMessage: ZMConversationMessage? = nil
-    @objc public var editingMessage: ZMConversationMessage? = nil {
-        didSet {
-            reconfigureVisibleSections()
-        }
-    }
+    @objc public var editingMessage: ZMConversationMessage? = nil
     
     @objc public weak var conversationCellDelegate: ConversationMessageCellDelegate? = nil
     @objc public weak var messageActionResponder: MessageActionResponder? = nil
     
     @objc public var searchQueries: [String] = [] {
         didSet {
-            reconfigureVisibleSections()
+            currentSections = calculateSections()
+            tableView.reloadData()
         }
     }
     
@@ -75,10 +93,48 @@ final class ConversationTableViewDataSource: NSObject {
         return fetchController.fetchedObjects ?? []
     }
     
-    var messagesBeforeUpdate: [ZMConversationMessage] = []
-    var updatedMessages: [ZMConversationMessage] = []
+    var previousSections: [ArraySection<String, AnyConversationMessageCellDescription>] = []
+    var currentSections: [ArraySection<String, AnyConversationMessageCellDescription>] = []
     
-    @objc public init(conversation: ZMConversation, tableView: UpsideDownTableView) {
+    func calculateSections() -> [ArraySection<String, AnyConversationMessageCellDescription>] {
+        return messages.enumerated().map { tuple in
+            let sectionIdentifier = tuple.element.objectIdentifier
+            let context = self.context(for: tuple.element, at: tuple.offset, firstUnreadMessage: firstUnreadMessage, searchQueries: searchQueries)
+            let sectionController = self.sectionController(for: tuple.element, at: tuple.offset)
+            
+            // Re-create cell description if the context has changed (message has been moved around or received new neighbours).
+            if sectionController.context != context {
+                sectionController.recreateCellDescriptions(in: context)
+            }
+            
+            return ArraySection(model: sectionIdentifier, elements: sectionController.tableViewCellDescriptions)
+        }
+    }
+    
+    func calculateSections(updating sectionController: ConversationMessageSectionController) -> [ArraySection<String, AnyConversationMessageCellDescription>] {
+        let sectionIdentifier = sectionController.message.objectIdentifier
+        
+        guard let section = currentSections.firstIndex(where: { $0.model == sectionIdentifier }) else { return currentSections }
+        
+        for (row, description ) in sectionController.tableViewCellDescriptions.enumerated() {
+            if let cell = tableView.cellForRow(at: IndexPath(row: row, section: section)) {
+                cell.accessibilityCustomActions = sectionController.actionController?.makeAccessibilityActions()
+                description.configure(cell: cell, animated: true)
+            }
+        }
+
+        let context = self.context(for: sectionController.message, at: section, firstUnreadMessage: firstUnreadMessage, searchQueries: searchQueries)
+        sectionController.recreateCellDescriptions(in: context)
+        
+        var updatedSections = currentSections
+        updatedSections[section] = ArraySection(model: sectionIdentifier, elements: sectionController.tableViewCellDescriptions)
+        
+        return updatedSections
+    }
+    
+    @objc public init(conversation: ZMConversation, tableView: UpsideDownTableView, actionResponder: MessageActionResponder, cellDelegate: ConversationMessageCellDelegate) {
+        self.messageActionResponder = actionResponder
+        self.conversationCellDelegate = cellDelegate
         self.conversation = conversation
         self.tableView = tableView
         
@@ -87,6 +143,13 @@ final class ConversationTableViewDataSource: NSObject {
         tableView.dataSource = self
         
         createFetchController()
+    }
+    
+    @objc(cellForMessage:)
+    func cell(for message: ZMConversationMessage) -> UITableViewCell? {
+        guard let section = currentSections.firstIndex(where: { $0.model == message.objectIdentifier }) else { return nil }
+        
+        return tableView.cellForRow(at: IndexPath(row: 0, section: section))
     }
     
     @objc func actionController(for message: ZMConversationMessage) -> ConversationMessageActionController {
@@ -98,19 +161,15 @@ final class ConversationTableViewDataSource: NSObject {
                                                                    context: .content)
         actionControllers[message.objectIdentifier] = actionController
         
-        return actionController
-        
+        return actionController   
     }
     
-    @objc func sectionController(at sectionIndex: Int, in tableView: UITableView) -> ConversationMessageSectionController? {
-        let message = messages[sectionIndex]
-        
+    func sectionController(for message: ZMConversationMessage, at index: Int) -> ConversationMessageSectionController {
         if let cachedEntry = sectionControllers[message.objectIdentifier] {
             return cachedEntry
         }
         
-        let context = self.context(for: message, at: sectionIndex, firstUnreadMessage: firstUnreadMessage, searchQueries: self.searchQueries)
-        
+        let context = self.context(for: message, at: index, firstUnreadMessage: firstUnreadMessage, searchQueries: self.searchQueries)
         let sectionController = ConversationMessageSectionController(message: message,
                                                                      context: context,
                                                                      selected: message.isEqual(selectedMessage))
@@ -122,6 +181,12 @@ final class ConversationTableViewDataSource: NSObject {
         sectionControllers[message.objectIdentifier] = sectionController
         
         return sectionController
+    }
+    
+    @objc func sectionController(at sectionIndex: Int, in tableView: UITableView) -> ConversationMessageSectionController {
+        let message = messages[sectionIndex]
+        
+        return sectionController(for: message, at: sectionIndex)
     }
     
     func previewableMessage(at indexPath: IndexPath, in tableView: UITableView) -> ZMConversationMessage? {
@@ -196,16 +261,6 @@ final class ConversationTableViewDataSource: NSObject {
         }
     }
     
-    fileprivate func stopAudioPlayer(for messages: Set<ZMMessage>) {
-        guard let audioTrackPlayer = AppDelegate.shared().mediaPlaybackManager?.audioTrackPlayer,
-              let sourceMessage = audioTrackPlayer.sourceMessage as? ZMMessage,
-              messages.contains(sourceMessage) else {
-            return
-        }
-        
-        audioTrackPlayer.stop()
-    }
-    
     private func fetchRequest() -> NSFetchRequest<ZMMessage> {
         let fetchRequest = NSFetchRequest<ZMMessage>(entityName: ZMMessage.entityName())
         fetchRequest.predicate = conversation.visibleMessagesPredicate
@@ -228,31 +283,14 @@ final class ConversationTableViewDataSource: NSObject {
         
         hasFetchedAllMessages =  messages.count < fetchRequest.fetchLimit
         firstUnreadMessage = conversation.firstUnreadMessage
+        currentSections = calculateSections()
     }
 }
 
 extension ConversationTableViewDataSource: NSFetchedResultsControllerDelegate {
     
-    func reconfigureSectionController(at index: Int, tableView: UITableView) {
-        guard let sectionController = self.sectionController(at: index, in: tableView) else { return }
-        
-        let context = self.context(for: sectionController.message, at: index, firstUnreadMessage: firstUnreadMessage, searchQueries: self.searchQueries)
-        sectionController.configure(in: context, at: index, in: tableView)
-    }
-    
-    func reconfigureVisibleSections(doBatchUpdate: Bool) {
-        tableView.beginUpdates()
-        if let indexPathsForVisibleRows = tableView.indexPathsForVisibleRows {
-            let visibleSections = Set(indexPathsForVisibleRows.map(\.section))
-            for section in visibleSections {
-                reconfigureSectionController(at: section, tableView: tableView)
-            }
-        }
-        tableView.endUpdates()
-    }
-    
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        messagesBeforeUpdate = messages
+        // no-op
     }
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
@@ -271,134 +309,53 @@ extension ConversationTableViewDataSource: NSFetchedResultsControllerDelegate {
     }
     
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        applyDeltaChanges()
+        reloadSections(newSections: calculateSections())
     }
     
-    func applyDeltaChanges() {
-        let old = ZMOrderedSetState(orderedSet: NSOrderedSet(array: messagesBeforeUpdate))
-        let new = ZMOrderedSetState(orderedSet: NSOrderedSet(array: messages))
+    func reloadSections(newSections: [ArraySection<String, AnyConversationMessageCellDescription>]) {
+        previousSections = currentSections
         
-        guard old != new else { return }
+        let stagedChangeset = StagedChangeset(source: previousSections, target: newSections)
         
-        let update = ZMOrderedSetState(orderedSet: NSOrderedSet())
-        let changeInfo = ZMChangedIndexes(start: old, end: new, updatedState: update, moveType: .nsTableView)!
-        
-        let isLoadingInitialContent = messages.count == changeInfo.insertedIndexes.count && changeInfo.deletedIndexes.count == 0
-        let isExpandingMessageWindow = changeInfo.insertedIndexes.count > 0 && changeInfo.insertedIndexes.last == messages.count - 1
-        let shouldJumpToTheConversationEnd = changeInfo.insertedIndexes.compactMap { messages[$0] }.any(\.isSentFromThisDevice)
-        
-        if let deletedObjects = changeInfo.deletedObjects {
-            stopAudioPlayer(for: Set(deletedObjects.map { $0 as! ZMMessage }))
-        }
-        
-        if isLoadingInitialContent ||
-            (isExpandingMessageWindow && changeInfo.deletedIndexes.count == 0) ||
-            shouldJumpToTheConversationEnd {
-            
-            tableView.reloadData()
-        } else {
-            tableView.beginUpdates()
-            
-            if changeInfo.deletedIndexes.count > 0 {
-                for deletedMessage in changeInfo.deletedObjects {
-                    if let deletedMessage = deletedMessage as? ZMConversationMessage {
-                        sectionControllers.removeValue(forKey: deletedMessage.objectIdentifier)
-                    }
-                }
-                tableView.deleteSections(changeInfo.deletedIndexes, with: .fade)
-            }
-            
-            if changeInfo.insertedIndexes.count > 0 {
-                tableView.insertSections(changeInfo.insertedIndexes, with: .fade)
-            }
-            
-            changeInfo.enumerateMovedIndexes { (from, to) in
-                self.tableView.moveSection(Int(from), toSection: Int(to))
-            }
-            
-            tableView.endUpdates()
-            
-            // Re-evalulate visible cells in all sections, this is necessary because if a message is inserted/moved the
-            // neighbouring messages may no longer want to display sender, toolbox or burst timestamp.
-            reconfigureVisibleSections()
-        }
-        
-        if shouldJumpToTheConversationEnd {
-            // The action has to be performed on the next run loop, since the current one already has the call to scroll
-            // the table view back to the previous position.
-            tableView.scrollToBottom(animated: false)
-            tableView.lockContentOffset = true
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                self.tableView.lockContentOffset = false
-            }
-        }
-        
-        messagesBeforeUpdate = []
-    }
-    
-    @objc
-    func selectLastMessage() {
-        
-        if let lastMessage = conversation.recentMessages.last,
-            let lastIndex = self.indexPath(for: lastMessage) {
-            
-            if let selectedMessage = selectedMessage,
-                let selectedIndex = self.indexPath(for: selectedMessage) {
-                self.selectedMessage = nil
-                deselect(indexPath: selectedIndex)
-                tableView.deselectRow(at: selectedIndex, animated: true)
-            }
-            
-            self.selectedMessage = lastMessage
-            select(indexPath: lastIndex)
-            tableView.selectRow(at: lastIndex, animated: true, scrollPosition: .none)
+        tableView.reload(using: stagedChangeset, with: .fade) { data in
+            currentSections = data
         }
     }
     
-    @objc
-    func reconfigureVisibleSections() {
-        tableView.beginUpdates()
-        if let indexPathsForVisibleRows = tableView.indexPathsForVisibleRows {
-            let visibleSections = Set(indexPathsForVisibleRows.map(\.section))
-            for section in visibleSections {
-                reconfigureSectionController(at: section, tableView: tableView)
-            }
-        }
-        tableView.endUpdates()
-    }
 }
 
 extension ConversationTableViewDataSource: UITableViewDataSource {
     
     public func numberOfSections(in tableView: UITableView) -> Int {
-        return messages.count
+        return currentSections.count
     }
     
     @objc
     func select(indexPath: IndexPath) {
-        sectionController(at: indexPath.section, in: tableView)?.didSelect(indexPath: indexPath, tableView: tableView)
+        let sectionController = self.sectionController(at: indexPath.section, in: tableView)
+        sectionController.didSelect()
+        reloadSections(newSections: calculateSections(updating: sectionController))
     }
     
     @objc
     func deselect(indexPath: IndexPath) {
-        sectionController(at: indexPath.section, in: tableView)?.didDeselect(indexPath: indexPath, tableView: tableView)
+        let sectionController = self.sectionController(at: indexPath.section, in: tableView)
+        sectionController.didDeselect()
+        reloadSections(newSections: calculateSections(updating: sectionController))
     }
     
     @objc(highlightMessage:)
     func highlight(message: ZMConversationMessage) {
-        guard
-            let section = indexPath(for: message)?.section,
-            let sectionController = self.sectionController(at: section, in: tableView)
-            else {
-                return
+        guard let section = indexPath(for: message)?.section else {
+            return
         }
         
+        let sectionController = self.sectionController(at: section, in: tableView)
         sectionController.highlight(in: tableView, sectionIndex: section)
     }
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let sectionController = self.sectionController(at: section, in: tableView)!
-        return sectionController.numberOfCells
+        return currentSections[section].elements.count
     }
     
     func registerCellIfNeeded(with description: AnyConversationMessageCellDescription, in tableView: UITableView) {
@@ -413,25 +370,19 @@ extension ConversationTableViewDataSource: UITableViewDataSource {
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let sectionController = self.sectionController(at: indexPath.section, in: tableView)!
+        let section = currentSections[indexPath.section]
+        let cellDescription = section.elements[indexPath.row]
         
-        for description in sectionController.cellDescriptions {
-            registerCellIfNeeded(with: description, in: tableView)
-        }
+        registerCellIfNeeded(with: cellDescription, in: tableView)
         
-        return sectionController.makeCell(for: tableView, at: indexPath)
+        return cellDescription.makeCell(for: tableView, at: indexPath)
     }
 }
 
 extension ConversationTableViewDataSource: ConversationMessageSectionControllerDelegate {
     
     func messageSectionController(_ controller: ConversationMessageSectionController, didRequestRefreshForMessage message: ZMConversationMessage) {
-        guard let section = self.index(of: message) else {
-            return
-        }
-        
-        let controller = self.sectionController(at: section, in: tableView)
-        controller?.configure(at: section, in: tableView)
+        reloadSections(newSections: calculateSections(updating: controller))
     }
     
 }

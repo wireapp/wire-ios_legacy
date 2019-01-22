@@ -33,6 +33,9 @@ class ConversationIconBasedCell: UIView, UITextViewDelegate {
     private var textLabelTrailingConstraint: NSLayoutConstraint!
     private var textLabelTopConstraint: NSLayoutConstraint!
     private var topContentViewTrailingConstraint: NSLayoutConstraint!
+    
+    weak var delegate: ConversationMessageCellDelegate? = nil
+    weak var message: ZMConversationMessage? = nil
 
     var isSelected: Bool = false
 
