@@ -62,7 +62,7 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
 
     public weak var messageActionDelegate: MessageActionResponder? = .none {
         didSet {
-            self.updateActionControllerForMessage()
+            updateActionControllerForMessage()
         }
     }
 

@@ -89,14 +89,16 @@ final class ConversationTableViewDataSource: NSObject {
         createFetchController()
     }
     
-    @objc func actionController(for message: ZMConversationMessage) -> ConversationMessageActionController {
+    @objc func actionController(for message: ZMConversationMessage,
+                                sectionIndex: Int) -> ConversationMessageActionController {
         if let cachedEntry = actionControllers[message.objectIdentifier] {
             return cachedEntry
         }
-        let actionController = ConversationMessageActionController(responder: self.messageActionResponder,
+        let actionController = ConversationMessageActionController(responder: messageActionResponder,
                                                                    message: message,
                                                                    context: .content,
-                                                                   sourceView: self.tableView) ///TODO: pass the cell
+                                                                   tableView: tableView,
+                                                                   sectionIndex: sectionIndex)
         actionControllers[message.objectIdentifier] = actionController
         
         return actionController
@@ -118,7 +120,7 @@ final class ConversationTableViewDataSource: NSObject {
         sectionController.useInvertedIndices = true
         sectionController.cellDelegate = conversationCellDelegate
         sectionController.sectionDelegate = self
-        sectionController.actionController = actionController(for: message)
+        sectionController.actionController = actionController(for: message, sectionIndex: sectionIndex)
         
         sectionControllers[message.objectIdentifier] = sectionController
         

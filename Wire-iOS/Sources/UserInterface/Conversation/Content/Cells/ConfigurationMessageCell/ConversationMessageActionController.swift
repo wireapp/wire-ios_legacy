@@ -28,7 +28,23 @@ import UIKit
     @objc let message: ZMConversationMessage
     @objc let context: Context
     @objc weak var responder: MessageActionResponder?
+
+    weak var tableView: UITableView?
+    var sectionIndex: Int?
+
     weak var sourceView: UIView?
+
+    @objc init(responder: MessageActionResponder?,
+               message: ZMConversationMessage,
+               context: Context,
+               tableView: UITableView,
+               sectionIndex: Int) {
+        self.responder = responder
+        self.message = message
+        self.context = context
+        self.tableView = tableView
+        self.sectionIndex = sectionIndex
+    }
 
     @objc init(responder: MessageActionResponder?,
                message: ZMConversationMessage,
@@ -110,11 +126,31 @@ import UIKit
     }
     
     // MARK: - Single Tap Action
-    
+
+    func actionSourceView() -> UIView! {
+        var sourceView: UIView! = nil
+        if let tableView = tableView, let sectionIndex = sectionIndex {
+            let cells = tableView.visibleCells
+
+            for cell in cells {
+                let indexPath = tableView.indexPath(for: cell)
+                if indexPath?.section == sectionIndex && cell is SelectableView{
+                    sourceView = cell
+                    break
+                }
+            }
+        } else if self.sourceView != nil {
+            sourceView = self.sourceView
+        }
+
+        return sourceView
+    }
+
     @objc func performSingleTapAction() {
         guard let singleTapAction = singleTapAction else { return }
 
-        responder?.perform(action: singleTapAction, for: message, sourceView: sourceView)
+
+        responder?.perform(action: singleTapAction, for: message, sourceView: actionSourceView())
     }
     
     var singleTapAction: MessageAction? {
@@ -135,11 +171,7 @@ import UIKit
     // MARK: - Double Tap Action
 
     private func perform(action: MessageAction) {
-        guard let doubleTapAction = doubleTapAction else { return }
-
-        if let sourceView = sourceView {
-            responder?.perform(action: doubleTapAction, for: message, sourceView: sourceView)
-        }
+        responder?.perform(action: action, for: message, sourceView: actionSourceView())
     }
 
     @objc func performDoubleTapAction() {
