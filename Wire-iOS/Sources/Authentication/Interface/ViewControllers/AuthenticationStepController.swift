@@ -187,6 +187,10 @@ class AuthenticationStepController: AuthenticationStepViewController {
         headlineLabel.font = self.view.frame.size.width > 320 ? AuthenticationStepController.headlineFont : AuthenticationStepController.headlineSmallFont
     }
 
+    func setSecondaryViewHidden(_ isHidden: Bool) {
+        secondaryViewsStackView.isHidden = isHidden
+    }
+
     /**
      * Updates the constrains for display in regular or compact latout.
      * - parameter isRegular: Whether the current size class is regular.

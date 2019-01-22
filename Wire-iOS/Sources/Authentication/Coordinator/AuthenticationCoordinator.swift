@@ -300,8 +300,8 @@ extension AuthenticationCoordinator: AuthenticationActioner, SessionManagerCreat
             case .startBackupFlow:
                 backupRestoreController.startBackupFlow()
 
-            case .signOut:
-                signOut()
+            case .signOut(let warn):
+                signOut(warn: warn)
 
             case .addEmailAndPassword(let newCredentials):
                 setEmailCredentialsForCurrentUser(newCredentials)
@@ -368,13 +368,23 @@ extension AuthenticationCoordinator {
         }
     }
 
-    /// Signs the current user out **without a warning**.
-    private func signOut() {
-        guard let selectedAccount = sessionManager.accountManager.selectedAccount else {
-            fatal("No session manager and selected account to log out from")
-        }
+    /// Signs the current user out with a warning.
+    private func signOut(warn: Bool) {
+        if warn {
+            let signOutAction = AuthenticationCoordinatorAlertAction(title: "general.ok".localized, coordinatorActions: [.signOut(warn: false)])
 
-        sessionManager.delete(account: selectedAccount)
+            let alertModel = AuthenticationCoordinatorAlert(title: "self.settings.account_details.log_out.alert.title".localized,
+                                                            message: "self.settings.account_details.log_out.alert.message".localized,
+                                                            actions: [signOutAction, .cancel])
+
+            presentAlert(for: alertModel)
+        } else {
+            guard let selectedAccount = sessionManager.accountManager.selectedAccount else {
+                fatal("No session manager and selected account to log out from")
+            }
+
+            sessionManager.delete(account: selectedAccount)
+        }
     }
 
     /// Repeats the current action.

@@ -30,6 +30,22 @@ struct AuthenticationPrefilledCredentials {
     let credentials: LoginCredentials
 }
 
+class LoginSecondaryView: AuthenticationSecondaryViewDescription {
+
+    let views: [ViewDescriptor]
+    weak var actioner: AuthenticationActioner?
+
+    init() {
+        let resetPasswordButton = ButtonDescription(title: "signin.forgot_password".localized(uppercased: true), accessibilityIdentifier: "forgot_password")
+        views = [resetPasswordButton]
+
+        resetPasswordButton.buttonTapped = { [weak self] in
+            self?.actioner?.executeAction(.openURL(.wr_passwordReset))
+        }
+    }
+
+}
+
 /**
  * An authentication step to ask the user for login credentials.
  */
@@ -47,7 +63,7 @@ class LogInStepDescription: AuthenticationStepDescription {
         mainView = EmptyViewDescription()
         headline = "registration.signin.title".localized
         subtext = nil
-        secondaryView = nil
+        secondaryView = LoginSecondaryView()
     }
 
 }

@@ -282,7 +282,6 @@
 		5E8FFC1821EF61A90052DF03 /* ClientUnregisterInvitationStepDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8FFC1721EF61A80052DF03 /* ClientUnregisterInvitationStepDescription.swift */; };
 		5E8FFC1A21EF6EB10052DF03 /* RemoveClientStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8FFC1921EF6EB10052DF03 /* RemoveClientStepViewController.swift */; };
 		5E8FFC1C21EF7CB50052DF03 /* AddEmailPasswordStepDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8FFC1B21EF7CB50052DF03 /* AddEmailPasswordStepDescription.swift */; };
-		5E8FFC1E21EF7D2E0052DF03 /* SignOutViewDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8FFC1D21EF7D2E0052DF03 /* SignOutViewDescription.swift */; };
 		5E8FFC2021EF83FF0052DF03 /* AuthenticationAddEmailPasswordInputHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8FFC1F21EF83FF0052DF03 /* AuthenticationAddEmailPasswordInputHandler.swift */; };
 		5E8FFC2221EF86000052DF03 /* EmailLinkVerificationStepDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8FFC2121EF86000052DF03 /* EmailLinkVerificationStepDescription.swift */; };
 		5E8FFC2421F086240052DF03 /* AuthenticationReauthenticateInputHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8FFC2321F086230052DF03 /* AuthenticationReauthenticateInputHandler.swift */; };
@@ -1775,7 +1774,6 @@
 		5E8FFC1721EF61A80052DF03 /* ClientUnregisterInvitationStepDescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientUnregisterInvitationStepDescription.swift; sourceTree = "<group>"; };
 		5E8FFC1921EF6EB10052DF03 /* RemoveClientStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveClientStepViewController.swift; sourceTree = "<group>"; };
 		5E8FFC1B21EF7CB50052DF03 /* AddEmailPasswordStepDescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEmailPasswordStepDescription.swift; sourceTree = "<group>"; };
-		5E8FFC1D21EF7D2E0052DF03 /* SignOutViewDescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignOutViewDescription.swift; sourceTree = "<group>"; };
 		5E8FFC1F21EF83FF0052DF03 /* AuthenticationAddEmailPasswordInputHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationAddEmailPasswordInputHandler.swift; sourceTree = "<group>"; };
 		5E8FFC2121EF86000052DF03 /* EmailLinkVerificationStepDescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailLinkVerificationStepDescription.swift; sourceTree = "<group>"; };
 		5E8FFC2321F086230052DF03 /* AuthenticationReauthenticateInputHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationReauthenticateInputHandler.swift; sourceTree = "<group>"; };
@@ -6406,7 +6404,6 @@
 				F1199D3E1FC849440070FAC3 /* VerificationCodeFieldDescription.swift */,
 				5E21344521CCEF1700273D0D /* EmptyViewDescription.swift */,
 				5E21345021E38A8400273D0D /* EmailPasswordFieldDescription.swift */,
-				5E8FFC1D21EF7D2E0052DF03 /* SignOutViewDescription.swift */,
 			);
 			path = ViewDescriptions;
 			sourceTree = "<group>";
@@ -7389,7 +7386,6 @@
 				871BC0581D34F60700DF0793 /* NSAttributedString+Wire.m in Sources */,
 				8710673F1C0DC5570035603B /* SettingsPropertySelectValueCellDescriptor.swift in Sources */,
 				87C1A7BC1D8FDFD8002630BB /* VersionInfoViewController.m in Sources */,
-				5E8FFC1E21EF7D2E0052DF03 /* SignOutViewDescription.swift in Sources */,
 				D525426F209363DC001C04C1 /* CallActionAppearance.swift in Sources */,
 				5E3A6C25206A4E4A00907484 /* LocationPreviewController.swift in Sources */,
 				EFD514AD21886CC600D7C7E0 /* ConversationListItemView+Constraints.swift in Sources */,

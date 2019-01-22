@@ -36,8 +36,7 @@ class ClientUnregisterInvitationStepDescription: AuthenticationStepDescription {
         subtext = "registration.signin.too_many_devices.subtitle".localized
 
         mainView = SolidButtonDescription(title: "registration.signin.too_many_devices.manage_button.title".localized, accessibilityIdentifier: "ignore_backup")
-
-        secondaryView = SignOutViewDescription(showAlert: true)
+        secondaryView = nil
     }
 
 }

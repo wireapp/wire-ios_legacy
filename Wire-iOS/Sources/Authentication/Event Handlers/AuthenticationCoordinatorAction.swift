@@ -52,7 +52,7 @@ enum AuthenticationCoordinatorAction {
     case setUserPassword(String)
     case startCompanyLogin
     case startBackupFlow
-    case signOut
+    case signOut(warn: Bool)
     case addEmailAndPassword(ZMEmailCredentials)
 
     var retainsModal: Bool {

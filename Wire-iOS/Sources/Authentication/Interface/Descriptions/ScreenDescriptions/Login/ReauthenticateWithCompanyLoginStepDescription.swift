@@ -32,8 +32,7 @@ class ReauthenticateWithCompanyLoginStepDescription: AuthenticationStepDescripti
         subtext = "signin_logout.sso.subheadline".localized
 
         mainView = SolidButtonDescription(title: "signin_logout.sso.buton".localized, accessibilityIdentifier: "company_login")
-
-        secondaryView = SignOutViewDescription(showAlert: true)
+        secondaryView = nil
     }
 
 }

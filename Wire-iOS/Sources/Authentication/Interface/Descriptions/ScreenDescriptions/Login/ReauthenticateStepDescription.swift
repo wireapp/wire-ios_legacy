@@ -44,7 +44,7 @@ class ReauthenticateStepDescription: AuthenticationStepDescription {
             subtext = "signin_logout.subheadline".localized
         }
 
-        secondaryView = SignOutViewDescription(showAlert: true)
+        secondaryView = LoginSecondaryView()
     }
 
 }

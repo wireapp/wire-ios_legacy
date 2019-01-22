@@ -63,10 +63,12 @@ class AuthenticationInterfaceBuilder {
             return LandingViewController()
 
         case .reauthenticate(let credentials, _):
+            let viewController: AuthenticationStepController
+
             if credentials?.usesCompanyLogin == true {
                 // Is the user has SSO enabled, show the screen to log in with SSO
                 let companyLoginStep = ReauthenticateWithCompanyLoginStepDescription()
-                return makeViewController(for: companyLoginStep)
+                viewController = makeViewController(for: companyLoginStep)
 
             } else {
                 let prefill: AuthenticationPrefilledCredentials?
@@ -80,8 +82,12 @@ class AuthenticationInterfaceBuilder {
                     prefill = nil
                 }
 
-                return makeCredentialsViewController(for: .reauthentication(prefill))
+                viewController = makeCredentialsViewController(for: .reauthentication(prefill))
             }
+
+            // Add the bar button item to sign out
+            viewController.setRightItem("registration.signin.too_many_devices.sign_out_button.title".localized, withAction: .signOut(warn: true))
+            return viewController
 
         case .provideCredentials(let credentialsFlowType):
             let viewController = makeCredentialsViewController(for: .login(credentialsFlowType))
@@ -98,7 +104,9 @@ class AuthenticationInterfaceBuilder {
 
         case .clientManagement:
             let manageClientsInvitation = ClientUnregisterInvitationStepDescription()
-            return makeViewController(for: manageClientsInvitation)
+            let viewController = makeViewController(for: manageClientsInvitation)
+            viewController.setRightItem("registration.signin.too_many_devices.sign_out_button.title".localized, withAction: .signOut(warn: true))
+            return viewController
 
         case .deleteClient(let clients, let credentials):
             return RemoveClientStepViewController(clients: clients, credentials: credentials)
@@ -113,7 +121,9 @@ class AuthenticationInterfaceBuilder {
 
         case .addEmailAndPassword:
             let addCredentialsStep = AddEmailPasswordStepDescription()
-            return makeViewController(for: addCredentialsStep)
+            let viewController = makeViewController(for: addCredentialsStep)
+            viewController.setRightItem("registration.signin.too_many_devices.sign_out_button.title".localized, withAction: .signOut(warn: true))
+            return viewController
 
         case .enterActivationCode(let credentials, _):
             let step: AuthenticationStepDescription

@@ -176,12 +176,14 @@ class AuthenticationCredentialsViewController: AuthenticationStepController, Tab
             emailInputField.isHidden = !isRegistering
             phoneInputView.isHidden = true
             tabBar.setSelectedIndex(0, animated: false)
+            setSecondaryViewHidden(false)
 
         case .phone:
             phoneInputView.isHidden = false
             emailPasswordInputField.isHidden = true
             emailInputField.isHidden = true
             tabBar.setSelectedIndex(1, animated: false)
+            setSecondaryViewHidden(true)
         }
     }
 
