@@ -286,9 +286,7 @@ final internal class CallingMatcher: ConversationStatusMatcher {
             return .none
         }
         
-        if case CallState.incoming(video: _, shouldRing: false, degraded: _) = state {
-            return .activeCall(showJoin: true)
-        } else if state.canJoinCall {
+        if case CallState.incoming(video: _, shouldRing: false, degraded: _) = state, state.canJoinCall {
             return .activeCall(showJoin: true)
         } else if state.isCallOngoing {
             return .activeCall(showJoin: false)
