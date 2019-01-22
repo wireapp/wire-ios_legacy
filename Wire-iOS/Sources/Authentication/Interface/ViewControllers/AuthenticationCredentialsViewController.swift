@@ -275,7 +275,7 @@ class AuthenticationCredentialsViewController: AuthenticationStepController, Cou
         stepDescription.mainView.valueSubmitted?(phoneNumber)
     }
 
-    func phoneNumberInputViewDidValidatePhoneNumber(_ inputView: PhoneNumberInputView, withResult validationError: TextFieldValidator.ValidationError) {
+    func phoneNumberInputView(_ inputView: PhoneNumberInputView, didValidatePhoneNumber phoneNumber: PhoneNumber, withResult validationError: TextFieldValidator.ValidationError) {
         updateValidationError(validationError)
     }
 

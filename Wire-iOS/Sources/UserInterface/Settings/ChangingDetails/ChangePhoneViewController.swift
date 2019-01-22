@@ -23,6 +23,7 @@ import WireSyncEngine
 struct ChangePhoneNumberState {
     let currentNumber: PhoneNumber?
     var updatedNumber: PhoneNumber?
+    var validationError: TextFieldValidator.ValidationError = .tooShort(kind: .phoneNumber)
 
     var visibleNumber: PhoneNumber? {
         return updatedNumber ?? currentNumber
@@ -30,8 +31,8 @@ struct ChangePhoneNumberState {
     
     var isValid: Bool {
         guard let phoneNumber = visibleNumber else { return false }
-        switch phoneNumber.validate() {
-        case .valid:
+        switch validationError {
+        case .none:
             // No current number -> it's a valid change
             guard let current = currentNumber else { return true }
             return phoneNumber != current
@@ -189,15 +190,16 @@ extension ChangePhoneViewController: PhoneNumberInputViewDelegate {
         let countryCodeController = CountryCodeTableViewController()
         countryCodeController.delegate = self
 
-
         let navigationController = countryCodeController.wrapInNavigationController()
         navigationController.modalPresentationStyle = .formSheet
 
         present(navigationController, animated: true, completion: nil)
     }
 
-    func phoneNumberInputViewDidValidatePhoneNumber(_ inputView: PhoneNumberInputView, withResult validationError: TextFieldValidator.ValidationError) {
-        // TODO: handle validation
+    func phoneNumberInputView(_ inputView: PhoneNumberInputView, didValidatePhoneNumber phoneNumber: PhoneNumber, withResult validationError: TextFieldValidator.ValidationError) {
+        state.updatedNumber = phoneNumber
+        state.validationError = validationError
+        updateSaveButtonState()
     }
 
 }
@@ -205,7 +207,6 @@ extension ChangePhoneViewController: PhoneNumberInputViewDelegate {
 extension ChangePhoneViewController: CountryCodeTableViewControllerDelegate {
     func countryCodeTableViewController(_ viewController: UIViewController!, didSelect country: Country!) {
         viewController.dismiss(animated: true, completion: nil)
-        state.updatedNumber = PhoneNumber(countryCode: country.e164.uintValue, numberWithoutCode: state.visibleNumber?.numberWithoutCode ?? "")
         updateSaveButtonState()
     }
 }

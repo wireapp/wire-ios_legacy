@@ -21,7 +21,7 @@ import Foundation
 /// An object that receives notification about the phone number input view.
 protocol PhoneNumberInputViewDelegate: class {
     func phoneNumberInputView(_ inputView: PhoneNumberInputView, didPickPhoneNumber phoneNumber: PhoneNumber)
-    func phoneNumberInputViewDidValidatePhoneNumber(_ inputView: PhoneNumberInputView, withResult validationError: TextFieldValidator.ValidationError)
+    func phoneNumberInputView(_ inputView: PhoneNumberInputView, didValidatePhoneNumber phoneNumber: PhoneNumber, withResult validationError: TextFieldValidator.ValidationError)
     func phoneNumberInputViewDidRequestCountryPicker(_ inputView: PhoneNumberInputView)
 }
 
@@ -264,7 +264,6 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
         case .containsInvalidCharacters, .tooLong:
             return false
         default:
-            removeValidationError()
             return true
         }
     }
@@ -319,7 +318,6 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
 
         selectCountry(country)
         textField.updateText(phoneNumberWithoutCountryCode)
-        removeValidationError()
         return false
     }
 
@@ -327,6 +325,8 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
 
     func validationUpdated(sender: UITextField, error: TextFieldValidator.ValidationError) {
         self.validationError = error
+        let phoneNumber = PhoneNumber(countryCode: country.e164.uintValue, numberWithoutCode: input)
+        delegate?.phoneNumberInputView(self, didValidatePhoneNumber: phoneNumber, withResult: validationError)
     }
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -340,16 +340,11 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
 
         switch validationError {
         case .none:
-            delegate?.phoneNumberInputViewDidValidatePhoneNumber(self, withResult: .none)
+            delegate?.phoneNumberInputView(self, didValidatePhoneNumber: phoneNumber, withResult: .none)
             delegate?.phoneNumberInputView(self, didPickPhoneNumber: phoneNumber)
         default:
-            delegate?.phoneNumberInputViewDidValidatePhoneNumber(self, withResult: validationError)
+            delegate?.phoneNumberInputView(self, didValidatePhoneNumber: phoneNumber, withResult: validationError)
         }
-    }
-
-    func removeValidationError() {
-        validationError = .none
-        delegate?.phoneNumberInputViewDidValidatePhoneNumber(self, withResult: .none)
     }
 
 }
