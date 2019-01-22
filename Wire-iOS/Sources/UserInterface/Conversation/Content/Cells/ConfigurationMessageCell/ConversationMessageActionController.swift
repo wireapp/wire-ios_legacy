@@ -167,12 +167,11 @@ import UIKit
         return nil
     }
 
-    // MARK: - Double Tap Action
-
     private func perform(action: MessageAction) {
         responder?.perform(action: action, for: message, sourceView: actionSourceView())
     }
 
+    // MARK: - Double Tap Action
     @objc func performDoubleTapAction() {
         guard let doubleTapAction = doubleTapAction else { return }
         perform(action: doubleTapAction)
