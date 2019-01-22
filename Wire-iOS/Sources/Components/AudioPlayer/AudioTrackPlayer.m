@@ -120,7 +120,10 @@ static NSString* EmptyStringIfNil(NSString *string) {
         weakSelf.progress = CMTimeGetSeconds(normalizedTime);
     }];
     
-    self.messageObserverToken = [MessageChangeInfo addObserver:self forMessage:sourceMessage userSession:[ZMUserSession sharedSession]];
+    ZMUserSession *userSession = [ZMUserSession sharedSession];
+    if (userSession != nil) {
+        self.messageObserverToken = [MessageChangeInfo addObserver:self forMessage:sourceMessage userSession:[ZMUserSession sharedSession]];
+    }
 }
 
 - (void)setIsRemoteCommandCenterEnabled:(BOOL)enabled
