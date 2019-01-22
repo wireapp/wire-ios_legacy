@@ -291,4 +291,6 @@ static id<UserType> mockSelfUser = nil;
 
 @synthesize isServiceUser;
 
+@synthesize teamRole;
+
 @end
