@@ -108,7 +108,7 @@ import UIKit
     
     @objc func performSingleTapAction() {
         guard let singleTapAction = singleTapAction else { return }
-        responder?.wants(toPerform: singleTapAction, for: message)
+        responder?.perform(action: singleTapAction, for: message)
     }
     
     var singleTapAction: MessageAction? {
@@ -130,7 +130,7 @@ import UIKit
 
     @objc func performDoubleTapAction() {
         guard let doubleTapAction = doubleTapAction else { return }
-        responder?.wants(toPerform: doubleTapAction, for: message)
+        responder?.perform(action: doubleTapAction, for: message)
     }
 
     var doubleTapAction: MessageAction? {
@@ -140,55 +140,55 @@ import UIKit
     // MARK: - Handler
 
     @objc func copyMessage() {
-        responder?.wants(toPerform: .copy, for: message)
+        responder?.perform(action: .copy, for: message)
     }
 
     @objc func editMessage() {
-        responder?.wants(toPerform: .edit, for: message)
+        responder?.perform(action: .edit, for: message)
     }
     
     @objc func quoteMessage() {
-        responder?.wants(toPerform: .reply, for: message)
+        responder?.perform(action: .reply, for: message)
     }
 
     @objc func openMessageDetails() {
-        responder?.wants(toPerform: .openDetails, for: message)
+        responder?.perform(action: .openDetails, for: message)
     }
 
     @objc func cancelDownloadingMessage() {
-        responder?.wants(toPerform: .cancel, for: message)
+        responder?.perform(action: .cancel, for: message)
     }
 
     @objc func downloadMessage() {
-        responder?.wants(toPerform: .download, for: message)
+        responder?.perform(action: .download, for: message)
     }
     
     @objc func saveMessage() {
-        responder?.wants(toPerform: .save, for: message)
+        responder?.perform(action: .save, for: message)
     }
 
     @objc func forwardMessage() {
-        responder?.wants(toPerform: .forward, for: message)
+        responder?.perform(action: .forward, for: message)
     }
     
     @objc func likeMessage() {
-        responder?.wants(toPerform: .like, for: message)
+        responder?.perform(action: .like, for: message)
     }
 
     @objc func unlikeMessage() {
-        responder?.wants(toPerform: .like, for: message)
+        responder?.perform(action: .like, for: message)
     }
     
     @objc func deleteMessage() {
-        responder?.wants(toPerform: .delete, for: message)
+        responder?.perform(action: .delete, for: message)
     }
     
     @objc func resendMessage() {
-        responder?.wants(toPerform: .resend, for: message)
+        responder?.perform(action: .resend, for: message)
     }
 
     @objc func revealMessage() {
-        responder?.wants(toPerform: .showInConversation, for: message)
+        responder?.perform(action: .showInConversation, for: message)
     }
 
 }
