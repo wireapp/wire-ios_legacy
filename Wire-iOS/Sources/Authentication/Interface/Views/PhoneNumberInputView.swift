@@ -144,6 +144,10 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
     }
 
     private func configureValidation() {
+        textField.enableConfirmButton = { [weak self] in
+            self?.validationError == TextFieldValidator.ValidationError.none
+        }
+
         textField.textFieldValidator.customValidator = { input in
             let phoneNumber = self.country.e164PrefixString + input
             let normalizedNumber = UnregisteredUser.normalizedPhoneNumber(phoneNumber)

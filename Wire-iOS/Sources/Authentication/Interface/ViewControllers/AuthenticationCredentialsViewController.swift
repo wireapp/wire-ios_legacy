@@ -22,7 +22,7 @@ import Foundation
  * The view controller to use to ask the user to enter their credentials.
  */
 
-class AuthenticationCredentialsViewController: AuthenticationStepController, TabBarDelegate, PhoneNumberInputViewDelegate, CountryCodeTableViewControllerDelegate {
+class AuthenticationCredentialsViewController: AuthenticationStepController, TabBarDelegate, PhoneNumberInputViewDelegate, EmailPasswordTextFieldDelegate, CountryCodeTableViewControllerDelegate {
 
     /// Types of flow provided by the view controller.
     enum FlowType {
@@ -133,9 +133,12 @@ class AuthenticationCredentialsViewController: AuthenticationStepController, Tab
         contentStack.addArrangedSubview(emailPasswordInputField)
         contentStack.addArrangedSubview(phoneInputView)
 
-        // Phone number view
+        // Phone Number View
         phoneInputView.delegate = self
         phoneInputView.tintColor = .black
+
+        // Email Password Input View
+        emailPasswordInputField.delegate = self
 
         // Email input view
 //        emailInputField.delegate = self
@@ -217,12 +220,19 @@ class AuthenticationCredentialsViewController: AuthenticationStepController, Tab
 
     // MARK: - Events
 
-    private func userDidSendPhoneNumber(_ input: Any) {
-        authenticationCoordinator?.handleUserInput(input)
-    }
-
     @objc private func emailTextInputDidChange(sender: AccessoryTextField) {
 
+    }
+
+    // MARK: - Email / Password Input
+
+    func textFieldDidUpdateText(_ textField: EmailPasswordTextField) {
+        // Reset the error message when the user changes the text
+        updateValidationError(.none)
+    }
+
+    func textField(_ textField: EmailPasswordTextField, didConfirmCredentials credentials: (String, String)) {
+        authenticationCoordinator?.handleUserInput(credentials)
     }
 
     // MARK: - Phone Number Input

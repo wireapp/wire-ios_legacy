@@ -75,8 +75,8 @@ class AccessoryTextField: UITextField, TextContainer {
         }
     }
 
-    /// A block that is executed to update the status of the text field the bound text field is updated.
-    private var bindingHandler: (() -> Void)?
+    /// The other text field that needs to be valid in order to enable the confirm button.
+    private weak var boundTextField: AccessoryTextField?
 
     /**
      * Binds the state of the confirmation button to the validity of another text field.
@@ -84,19 +84,9 @@ class AccessoryTextField: UITextField, TextContainer {
      */
 
     func bindConfirmationButton(to textField: AccessoryTextField) {
-        assert(bindingHandler == nil, "A text field cannot be bound to another text field more than once.")
-
-        textField.bindingHandler = { [weak self] in
-            guard let `self` = self else { return }
-            let newInputIsValid = !textField.input.isEmpty
-            self.confirmButton.isEnabled = !self.input.isEmpty && newInputIsValid
-        }
-
-        bindingHandler = { [weak self] in
-            guard let `self` = self else { return }
-            let newInputIsValid = !textField.input.isEmpty
-            self.confirmButton.isEnabled = !self.input.isEmpty && newInputIsValid
-        }
+        assert(boundTextField == nil, "A text field cannot be bound to another text field more than once.")
+        self.boundTextField = textField
+        textField.boundTextField = self
     }
 
     var enableConfirmButton: (() -> Bool)?
@@ -263,16 +253,23 @@ class AccessoryTextField: UITextField, TextContainer {
         updateText(input)
     }
 
+    /// Whether the input is valid.
+    var isInputValid: Bool {
+        return enableConfirmButton?() ?? !input.isEmpty
+    }
+
     func updateText(_ text: String) {
         self.text = text
-        bindingHandler?()
+        validateInput()
+        boundTextField?.validateInput()
+    }
 
-        guard enableConfirmButton?() != false else {
-            return
+    private func updateConfirmButton() {
+        if let boundTextField = self.boundTextField {
+            confirmButton.isEnabled = boundTextField.isInputValid && self.isInputValid
+        } else {
+            confirmButton.isEnabled = isInputValid
         }
-
-        /// enable button if we have some text entered
-        confirmButton.isEnabled = !text.isEmpty
     }
 
     // MARK: - text validation
@@ -284,6 +281,7 @@ class AccessoryTextField: UITextField, TextContainer {
     func validateInput() {
         let error = textFieldValidator.validate(text: text, kind: kind)
         textFieldValidationDelegate?.validationUpdated(sender: self, error: error)
+        updateConfirmButton()
     }
 
     // MARK: - placeholder

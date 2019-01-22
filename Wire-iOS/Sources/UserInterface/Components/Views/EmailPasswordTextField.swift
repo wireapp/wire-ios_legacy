@@ -70,6 +70,10 @@ class EmailPasswordTextField: UIView {
         emailField.showConfirmButton = false
         emailField.addTarget(self, action: #selector(textInputDidChange), for: .editingChanged)
 
+        emailField.enableConfirmButton = { [weak self] in
+            self?.emailValidationError == TextFieldValidator.ValidationError.none
+        }
+
         contentStack.addArrangedSubview(emailField)
 
         separatorContainer.view.backgroundColor = .white
@@ -82,6 +86,10 @@ class EmailPasswordTextField: UIView {
         passwordField.bindConfirmationButton(to: emailField)
         passwordField.addTarget(self, action: #selector(textInputDidChange), for: .editingChanged)
         passwordField.confirmButton.addTarget(self, action: #selector(confirmButtonTapped), for: .touchUpInside)
+
+        passwordField.enableConfirmButton = { [weak self] in
+            self?.passwordValidationError == TextFieldValidator.ValidationError.none
+        }
 
         contentStack.addArrangedSubview(passwordField)
     }
@@ -172,8 +180,11 @@ extension EmailPasswordTextField: UITextFieldDelegate {
 
 extension EmailPasswordTextField: TextFieldValidationDelegate {
     func validationUpdated(sender: UITextField, error: TextFieldValidator.ValidationError) {
-        print(error)
-        // self.validationError = error
+        if sender == emailField {
+            emailValidationError = error
+        } else {
+            passwordValidationError = error
+        }
     }
 }
 
