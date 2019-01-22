@@ -148,6 +148,11 @@ static id<UserType> mockSelfUser = nil;
 @synthesize teamRole;
 @synthesize readReceiptsEnabled;
 
+#pragma mark - ZMBareUserConnection
+
+@synthesize isPendingApprovalByOtherUser = _isPendingApprovalByOtherUser;
+@synthesize isServiceUser;
+
 - (BOOL)conformsToProtocol:(Protocol *)aProtocol
 {
     if (aProtocol == @protocol(UserType)) {
@@ -286,12 +291,5 @@ static id<UserType> mockSelfUser = nil;
     return nil;
 }
 
-#pragma mark - ZMBareUserConnection
-
-@synthesize isPendingApprovalByOtherUser = _isPendingApprovalByOtherUser;
-
-@synthesize isServiceUser;
-
-@synthesize teamRole;
 
 @end
