@@ -67,7 +67,6 @@
 @property (nonatomic) BOOL hasDoneInitialLayout;
 @property (nonatomic) BOOL onScreen;
 @property (nonatomic) UserConnectionViewController *connectionViewController;
-@property (nonatomic) DeletionDialogPresenter *deletionDialogPresenter;
 @property (nonatomic) id<ZMConversationMessage> messageVisibleOnLoad;
 @end
 
@@ -323,166 +322,6 @@
     [self.dataSource highlightMessage:message];
 }
 
-- (void)wantsToPerformAction:(MessageAction)actionId forMessage:(id<ZMConversationMessage>)message cell:(UIView<SelectableView> *)cell
-{
-    dispatch_block_t action = ^{
-        switch (actionId) {
-            case MessageActionCancel:
-            {
-                [[ZMUserSession sharedSession] enqueueChanges:^{
-                    [message.fileMessageData cancelTransfer];
-                }];
-            }
-                break;
-                
-            case MessageActionResend:
-            {
-                [[ZMUserSession sharedSession] enqueueChanges:^{
-                    [message resend];
-                }];
-            }
-                break;
-                
-            case MessageActionDelete:
-            {
-                assert([message canBeDeleted]);
-
-                self.deletionDialogPresenter = [[DeletionDialogPresenter alloc] initWithSourceViewController:self.presentedViewController ?: self];
-                [self.deletionDialogPresenter presentDeletionAlertControllerForMessage:message source:cell completion:^(BOOL deleted) {
-                    if (self.presentedViewController && deleted) {
-                        [self.presentedViewController dismissViewControllerAnimated:YES completion:nil];
-                    }
-                    if (!deleted) {
-                        // TODO 2838: Support editing
-                        // cell.beingEdited = NO;
-                    }
-                }];
-            }
-                break;
-            case MessageActionPresent:
-            {
-                self.dataSource.selectedMessage = message;
-                [self presentDetailsForMessage:message];
-            }
-                break;
-            case MessageActionSave:
-            {
-                if ([Message isImageMessage:message]) {
-                    [self saveImageFromMessage:message cell:cell];
-                } else {
-                    self.dataSource.selectedMessage = message;
-                    UIView *targetView = cell.selectionView;
-
-                    UIActivityViewController *saveController = [[UIActivityViewController alloc] initWithMessage:message from:targetView];
-                    [self presentViewController:saveController animated:YES completion:nil];
-                }
-            }
-                break;
-            case MessageActionEdit:
-            {
-                self.dataSource.editingMessage = message;
-                [self.delegate conversationContentViewController:self didTriggerEditingMessage:message];
-            }
-                break;
-            case MessageActionSketchDraw:
-            {
-                [self openSketchForMessage:message inEditMode:CanvasViewControllerEditModeDraw];
-            }
-                break;
-            case MessageActionSketchEmoji:
-            {
-                [self openSketchForMessage:message inEditMode:CanvasViewControllerEditModeEmoji];
-            }
-                break;
-            case MessageActionSketchText:
-            {
-                // Not implemented yet
-            }
-                break;
-            case MessageActionLike:
-            {
-                BOOL liked = ![Message isLikedMessage:message];
-                
-                NSIndexPath *indexPath = [self.dataSource indexPathForMessage:message];
-                
-                [[ZMUserSession sharedSession] performChanges:^{
-                    [Message setLikedMessage:message liked:liked];
-                }];
-                
-                if (liked) {
-                    // Deselect if necessary to show list of likers
-                    if (self.dataSource.selectedMessage == message) {
-                        [self tableView:self.tableView willSelectRowAtIndexPath:indexPath];
-                    }
-                } else {
-                    // Select if necessary to prevent message from collapsing
-                    if (self.dataSource.selectedMessage != message && ![Message hasReactions:message]) {
-                        [self tableView:self.tableView willSelectRowAtIndexPath:indexPath];
-                        [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
-                    }
-                }
-            }
-                break;
-            case MessageActionForward:
-            {
-                [self showForwardForMessage:message fromCell:cell];
-            }
-                break;
-            case MessageActionShowInConversation:
-            {
-                [self scrollTo:message completion:^(UIView *cell) {
-                    [self.dataSource highlightMessage:message];
-                }];
-            }
-                break;
-            case MessageActionCopy:
-            {
-                [Message copy:message in:UIPasteboard.generalPasteboard];
-            }
-                break;
-            
-            case MessageActionDownload:
-            {
-                [ZMUserSession.sharedSession enqueueChanges:^{
-                    [message.fileMessageData requestFileDownload];
-                }];
-            }
-                break;
-            case MessageActionReply:
-            {
-                [self.delegate conversationContentViewController:self didTriggerReplyingToMessage:message];
-            }
-                break;
-            case MessageActionOpenQuote:
-            {
-                if (message.textMessageData.quote) {
-                    id<ZMConversationMessage> quote = message.textMessageData.quote;
-                    [self scrollTo:quote completion:^(UIView *cell) {
-                        [self.dataSource highlightMessage:quote];
-                    }];
-                }
-            }
-                break;
-            case MessageActionOpenDetails:
-            {
-                MessageDetailsViewController *detailsViewController = [[MessageDetailsViewController alloc] initWithMessage:message];
-                [self.parentViewController presentViewController:detailsViewController animated:YES completion:nil];
-            }
-                break;
-        }
-    };
-
-    BOOL shouldDismissModal = actionId != MessageActionDelete && actionId != MessageActionCopy;
-
-    if (self.messagePresenter.modalTargetController.presentedViewController != nil && shouldDismissModal) {
-        [self.messagePresenter.modalTargetController dismissViewControllerAnimated:YES completion:^{
-            action();
-        }];
-    }
-    else {
-        action();
-    }
-}
 
 - (void)updateVisibleMessagesWindow
 {
@@ -715,7 +554,7 @@
 {
     ZMMessage *lastEditableMessage = self.conversation.lastEditableMessage;
     if (lastEditableMessage != nil) {
-        [self wantsToPerformAction:MessageActionEdit forMessage:lastEditableMessage sourceView:self.view]; ///TODO: pass the last cell?
+        [self wantsToPerformAction:MessageActionEdit forMessage:lastEditableMessage sourceView:self.view];
     }
 }
 

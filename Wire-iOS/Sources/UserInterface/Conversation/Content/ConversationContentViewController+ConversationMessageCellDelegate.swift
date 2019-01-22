@@ -47,3 +47,63 @@ extension ConversationContentViewController: ConversationMessageCellDelegate {
 
 }
 
+extension ConversationContentViewController {
+    func wants(toPerform actionId: MessageAction,
+               for message: ZMConversationMessage,
+               cell: (UIView & SelectableView)?) {
+        guard let session = ZMUserSession.shared() else { return }
+
+
+        let action: () -> () = {
+            switch actionId {
+            case .cancel:
+                session.enqueueChanges({
+                    message.fileMessageData?.cancelTransfer()
+                })
+            case .resend:
+                session.enqueueChanges({
+                    message.resend()
+                })
+            case .delete:
+                assert(message.canBeDeleted)
+
+                self.deletionDialogPresenter = DeletionDialogPresenter(sourceViewController: self.presentedViewController ?? self)
+                self.deletionDialogPresenter.presentDeletionAlertController(forMessage: message, source: cell) { deleted in
+                    if deleted {
+                        self.presentedViewController?.dismiss(animated: true)
+                    }
+                    if !deleted {
+                        // TODO 2838: Support editing
+                        // cell.beingEdited = NO;
+                    }
+                }
+            case .present:
+                self.dataSource?.selectedMessage = message
+                self.presentDetails(for: message)
+            case .save:
+                if Message.isImage(message) {
+                    self.saveImage(from: message, cell: cell)
+                } else {
+                    self.dataSource?.selectedMessage = message
+                    if let targetView: UIView = cell?.selectionView,
+                        let saveController = UIActivityViewController(message: message, from: targetView) {
+                        self.present(saveController, animated: true)
+                    }
+                }
+            default: ///TODO:
+                break
+            }
+        }
+
+
+        let shouldDismissModal: Bool = actionId != .delete && actionId != .copy
+
+        if messagePresenter.modalTargetController?.presentedViewController != nil && shouldDismissModal {
+            messagePresenter.modalTargetController?.dismiss(animated: true) {
+                action()
+            }
+        } else {
+            action()
+        }
+    }
+}
