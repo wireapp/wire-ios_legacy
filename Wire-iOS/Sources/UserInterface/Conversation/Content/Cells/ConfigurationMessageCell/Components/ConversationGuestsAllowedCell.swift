@@ -46,12 +46,6 @@ class GuestsAllowedCellDescription: ConversationMessageCellDescription {
         self.configuration = configuration
     }
     
-    func makeCell(for tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueConversationCell(with: self, for: indexPath)
-        cell.cellView.delegate = self.delegate
-        return cell
-    }
-    
 }
 
 class GuestsAllowedCell: UIView, ConversationMessageCell {
@@ -61,6 +55,7 @@ class GuestsAllowedCell: UIView, ConversationMessageCell {
     typealias Configuration = GuestsAllowedCellConfiguration
     
     weak var delegate: ConversationMessageCellDelegate? = nil
+    weak var message: ZMConversationMessage? = nil
     
     private let stackView = UIStackView()
     private let titleLabel = UILabel()

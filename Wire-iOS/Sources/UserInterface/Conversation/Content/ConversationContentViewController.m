@@ -141,10 +141,9 @@
     [super viewDidLoad];
     
     self.dataSource = [[ConversationTableViewDataSource alloc] initWithConversation:self.conversation
-                                                                          tableView:self.tableView];
-    self.dataSource.conversationCellDelegate = self;
-    self.dataSource.messageActionResponder = self;
-
+                                                                          tableView:self.tableView
+                                                                    actionResponder:self
+                                                                       cellDelegate:self];
     self.tableView.estimatedRowHeight = 80;
     self.tableView.translatesAutoresizingMaskIntoConstraints = NO;
     self.tableView.allowsSelection = YES;
@@ -532,7 +531,7 @@
         return;
     }
     
-    UITableViewCell *cell = [self cellForMessage:message];
+    UITableViewCell *cell = [self.dataSource cellForMessage:message];
     [self.messagePresenter openMessage:message targetView:cell actionResponder:self];
 }
 

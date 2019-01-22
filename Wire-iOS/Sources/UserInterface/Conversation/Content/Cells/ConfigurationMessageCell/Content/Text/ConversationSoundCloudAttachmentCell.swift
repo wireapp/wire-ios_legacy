@@ -27,6 +27,9 @@ extension AudioTrackViewController: PlayerViewControllerProtocol {}
 extension AudioPlaylistViewController: PlayerViewControllerProtocol {}
 
 class ConversationSoundCloudAttachmentCell<Player: UIViewController & PlayerViewControllerProtocol>: ViewControllerBasedCell<Player>, ConversationMessageCell {
+    
+    weak var delegate: ConversationMessageCellDelegate? = nil
+    weak var message: ZMConversationMessage? = nil
 
     struct Configuration {
         let attachment: LinkAttachment

@@ -47,8 +47,6 @@ class ConversationStartedSystemMessageCell: ConversationIconBasedCell, Conversat
         let icon: UIImage?
     }
     
-    weak var delegate: ConversationMessageCellDelegate?
-    
     private let titleLabel = UILabel()
     private var selectedUsers: [ZMUser] = []
     
@@ -563,12 +561,6 @@ class ConversationStartedSystemMessageCellDescription: ConversationMessageCellDe
                                             message: model.attributedTitle() ?? NSAttributedString(string: ""),
                                             selectedUsers: model.selectedUsers,
                                             icon: model.image())
-    }
-    
-    func makeCell(for tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueConversationCell(with: self, for: indexPath)
-        cell.cellView.delegate = self.delegate
-        return cell
     }
     
 }

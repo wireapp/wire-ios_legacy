@@ -51,6 +51,8 @@ class SenderCellComponent: UIView {
     let authorLabel = UILabel()
     var stackView: UIStackView!
     var avatarSpacerWidthConstraint: NSLayoutConstraint?
+    var observerToken: Any? = nil
+    var conversation: ZMConversation? = nil
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -105,8 +107,19 @@ class SenderCellComponent: UIView {
             ])
     }
     
-    func configure(with user: UserType) {
-        let displayName =  user.displayName // TODO jacob should be displayName(in: conversation but it's not exposed on UserType)
+    func configure(with user: UserType, conversation: ZMConversation?) {
+        self.conversation = conversation
+        self.avatar.user = user
+        
+        configureNameLabel(for: user, conversation: conversation)
+        
+        if let userSession = ZMUserSession.shared() {
+            observerToken = UserChangeInfo.add(observer: self, for: user, userSession: userSession)
+        }
+    }
+    
+    func configureNameLabel(for user: UserType, conversation: ZMConversation?) {
+        let displayName =  user.displayName // TODO should be user.displayName(in: conversation) but it's broken
         
         var attributedString: NSAttributedString
         if user.isServiceUser {
@@ -123,17 +136,28 @@ class SenderCellComponent: UIView {
             attributedString = attributedName(for: .userName(accent: accentColor), string: displayName)
         }
         
-        avatar.user = user
         authorLabel.attributedText = attributedString
     }
-
+    
     func prepareForReuse() {
+        observerToken = nil
         avatar.user = nil
-        authorLabel.attributedText = nil
     }
     
     private func attributedName(for kind: TextKind, string: String) -> NSAttributedString {
         return NSAttributedString(string: string, attributes: [.foregroundColor : kind.color, .font : kind.font])
+    }
+    
+}
+
+extension SenderCellComponent: ZMUserObserver {
+    
+    func userDidChange(_ changeInfo: UserChangeInfo) {
+        guard changeInfo.nameChanged || changeInfo.accentColorValueChanged else {
+            return
+        }
+        
+        configureNameLabel(for: changeInfo.user, conversation: conversation)
     }
     
 }

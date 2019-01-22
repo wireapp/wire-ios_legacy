@@ -35,6 +35,9 @@ class ConversationLocationMessageCell: UIView, ConversationMessageCell {
     private let addressLabel = UILabel()
     private var recognizer: UITapGestureRecognizer?
     private weak var locationAnnotation: MKPointAnnotation? = nil
+    
+    weak var delegate: ConversationMessageCellDelegate? = nil
+    weak var message: ZMConversationMessage? = nil
 
     var labelFont: UIFont? = .normalFont
     var labelTextColor: UIColor? = .from(scheme: .textForeground)
