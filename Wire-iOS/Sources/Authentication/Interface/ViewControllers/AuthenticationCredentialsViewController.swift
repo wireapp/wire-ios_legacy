@@ -22,7 +22,7 @@ import Foundation
  * The view controller to use to ask the user to enter their credentials.
  */
 
-class AuthenticationCredentialsViewController: AuthenticationStepController, TabBarDelegate, PhoneNumberInputViewDelegate, EmailPasswordTextFieldDelegate, CountryCodeTableViewControllerDelegate {
+class AuthenticationCredentialsViewController: AuthenticationStepController, CountryCodeTableViewControllerDelegate, EmailPasswordTextFieldDelegate, PhoneNumberInputViewDelegate, TabBarDelegate, TextFieldValidationDelegate, UITextFieldDelegate {
 
     /// Types of flow provided by the view controller.
     enum FlowType {
@@ -56,6 +56,8 @@ class AuthenticationCredentialsViewController: AuthenticationStepController, Tab
             return false
         }
     }
+
+    private var emailFieldValidationError: TextFieldValidator.ValidationError = .tooShort(kind: .email)
 
     convenience init(flowType: FlowType) {
         switch flowType {
@@ -141,10 +143,15 @@ class AuthenticationCredentialsViewController: AuthenticationStepController, Tab
         emailPasswordInputField.delegate = self
 
         // Email input view
-//        emailInputField.delegate = self
-//        emailInputField.textFieldValidationDelegate = self
+        emailInputField.delegate = self
+        emailInputField.textFieldValidationDelegate = self
         emailInputField.placeholder = "email.placeholder".localized(uppercased: true)
         emailInputField.addTarget(self, action: #selector(emailTextInputDidChange), for: .editingChanged)
+        emailInputField.confirmButton.addTarget(self, action: #selector(emailConfirmButtonTapped), for: .touchUpInside)
+
+        emailInputField.enableConfirmButton = { [weak self] in
+            self?.emailFieldValidationError == TextFieldValidator.ValidationError.none
+        }
 
         return contentStack
     }
@@ -220,8 +227,25 @@ class AuthenticationCredentialsViewController: AuthenticationStepController, Tab
 
     // MARK: - Events
 
-    @objc private func emailTextInputDidChange(sender: AccessoryTextField) {
+    @objc private func emailConfirmButtonTapped(sender: IconButton) {
+        authenticationCoordinator?.handleUserInput(emailInputField.input)
+    }
 
+    @objc private func emailTextInputDidChange(sender: AccessoryTextField) {
+        sender.validateInput()
+    }
+
+    func validationUpdated(sender: UITextField, error: TextFieldValidator.ValidationError) {
+        emailFieldValidationError = error
+    }
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        guard textField == self.emailInputField, self.emailInputField.isInputValid else {
+            return false
+        }
+
+        authenticationCoordinator?.handleUserInput(emailInputField.input)
+        return true
     }
 
     // MARK: - Email / Password Input

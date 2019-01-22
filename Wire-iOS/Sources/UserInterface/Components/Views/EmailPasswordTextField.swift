@@ -167,10 +167,16 @@ extension EmailPasswordTextField: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField == emailField {
             passwordField.becomeFirstResponder()
+            return true
         } else if textField == passwordField {
             emailField.validateInput()
             passwordField.validateInput()
-            confirmButtonTapped()
+
+            if emailField.isInputValid && passwordField.isInputValid {
+                confirmButtonTapped()
+            } else {
+                return false
+            }
         }
 
         return true
