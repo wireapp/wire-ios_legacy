@@ -19,39 +19,59 @@
 import XCTest
 @testable import Wire
 
-final class StartUIViewControllerSnapshotTests: ZMSnapshotTestCase {
+final class StartUIViewControllerSnapshotTests: CoreDataSnapshotTestCase {
     
     var sut: StartUIViewController!
-    
-    override func setUp() {
-        super.setUp()
-        sut = StartUIViewController()
-        sut.view.backgroundColor = .black
-    }
-    
+
+
     override func tearDown() {
         sut = nil
         super.tearDown()
     }
 
+    func setupSut() {
+        sut = StartUIViewController()
+        sut.view.backgroundColor = .black
+    }
+
     func testForWrappedInNavigationViewController() {
-        MockUser.mockSelf().isTeamMember = false
+        nonTeamTest {
+            setupSut()
 
-        let navigationController = UIViewController().wrapInNavigationController(ClearBackgroundNavigationController.self)
+            let navigationController = UIViewController().wrapInNavigationController(ClearBackgroundNavigationController.self)
 
+            navigationController.pushViewController(sut, animated: false)
 
-        navigationController.pushViewController(sut, animated: false)
-
-        verifyInAllIPhoneSizes(view: navigationController.view)
+            verifyInAllIPhoneSizes(view: navigationController.view)
+        }
     }
 
     func testForNoContact() {
-        MockUser.mockSelf().isTeamMember = false
-        verifyInAllIPhoneSizes(view: sut.view)
+        nonTeamTest {
+            setupSut()
+
+            verifyInAllIPhoneSizes(view: sut.view)
+        }
     }
 
+
+    /// has create group and create guest room rows
     func testForNoContactWhenSelfIsTeamMember() {
-        MockUser.mockSelf().isTeamMember = true
-        verifyInAllIPhoneSizes(view: sut.view)
+        teamTest {
+            setupSut()
+
+            verifyInAllIPhoneSizes(view: sut.view)
+        }
+    }
+
+    /// has no create group and create guest room rows
+    func testForNoContactWhenSelfIsPartner() {
+        teamTest {
+            selfUser.membership?.setTeamRole(.collaborator)
+
+            setupSut()
+
+            verifyInIPhoneSize(view: sut.view)
+        }
     }
 }

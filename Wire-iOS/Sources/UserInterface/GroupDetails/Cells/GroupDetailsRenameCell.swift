@@ -19,8 +19,12 @@
 
 import Foundation
 
-class GroupDetailsRenameCell : UICollectionViewCell {
- 
+class GroupDetailsRenameCell : UICollectionViewCell, Restricted {
+    
+    var requiredPermissions: Permissions {
+        return .member
+    }
+    
     let verifiedIconView = UIImageView()
     let accessoryIconView = UIImageView()
     let titleTextField = SimpleTextField()
@@ -86,6 +90,11 @@ class GroupDetailsRenameCell : UICollectionViewCell {
     func configure(for conversation: ZMConversation) {
         titleTextField.text = conversation.displayName
         verifiedIconView.isHidden = conversation.securityLevel != .secure
+        
+        if !selfUserIsAuthorized {
+            titleTextField.isUserInteractionEnabled = false
+            accessoryIconView.isHidden = true
+        }
     }
     
     private func configureColors() {

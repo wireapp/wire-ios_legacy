@@ -23,10 +23,6 @@ final class ProfileDetailsViewControllerSnapshotTests: CoreDataSnapshotTestCase 
     
     var sut: ProfileDetailsViewController!
     
-    override func setUp() {
-        super.setUp()
-    }
-    
     override func tearDown() {
         sut = nil
         super.tearDown()
@@ -73,7 +69,17 @@ final class ProfileDetailsViewControllerSnapshotTests: CoreDataSnapshotTestCase 
         // when & then
         verifyInAllIPhoneSizes(view: sut.view)
     }
-    
+
+    func testThatPartnerRoleHasNoRemovePartcipantButton() {
+        teamTest {
+            selfUser.membership?.setTeamRole(.collaborator)
+
+            sut = ProfileDetailsViewController(user: self.otherUser, conversation: self.otherUserConversation, context: .groupConversation)
+            verifyInIPhoneSize(view: sut.view)
+        }
+    }
+
+    // MARK: - action menu
     func testForActionMenu() {
         sut = ProfileDetailsViewController(user: self.otherUser, conversation: self.otherUserConversation, context: .oneToOneConversation)
         teamTest {

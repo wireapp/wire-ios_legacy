@@ -17,9 +17,6 @@
 // 
 
 
-@import PureLayout;
-
-
 #import "AccentColorProvider.h"
 
 #import "StartUIViewController.h"
@@ -52,10 +49,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 @property (nonatomic) ProfilePresenter *profilePresenter;
 @property (nonatomic) StartUIInviteActionBar *quickActionsBar;
 @property (nonatomic) EmptySearchResultsView *emptyResultView;
-@property (nonatomic) SearchGroupSelector *groupSelector;
-
-@property (nonatomic) SearchHeaderViewController *searchHeaderViewController;
-@property (nonatomic) SearchResultsViewController *searchResultsViewController;
 
 @property (nonatomic) BOOL addressBookUploadLogicHandled;
 @end
@@ -69,18 +62,25 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     self.view = [[StartUIView alloc] initWithFrame:CGRectZero];
 }
 
-- (void)viewDidLoad
+-(instancetype) init
 {
-    [super viewDidLoad];
-    
+    self = [super init];
+
+    [self setupViews];
+
+    return self;
+}
+
+-(void)setupViews
+{
     Team *team = ZMUser.selfUser.team;
-    
+
     self.profilePresenter = [[ProfilePresenter alloc] init];
-    
+
     self.emptyResultView = [[EmptySearchResultsView alloc] initWithVariant:ColorSchemeVariantDark
                                                            isSelfUserAdmin:[[ZMUser selfUser] canManageTeam]];
     self.emptyResultView.delegate = self;
-    
+
     self.searchHeaderViewController = [[SearchHeaderViewController alloc] initWithUserSelection:[[UserSelection alloc] init] variant:ColorSchemeVariantDark];
     self.title = (team != nil ? team.name : ZMUser.selfUser.displayName).localizedUppercaseString;
     self.searchHeaderViewController.delegate = self;
@@ -89,7 +89,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self addChildViewController:self.searchHeaderViewController];
     [self.view addSubview:self.searchHeaderViewController.view];
     [self.searchHeaderViewController didMoveToParentViewController:self];
-    
+
     self.groupSelector = [[SearchGroupSelector alloc] initWithStyle:ColorSchemeVariantDark];
     self.groupSelector.translatesAutoresizingMaskIntoConstraints = NO;
     self.groupSelector.backgroundColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorSearchBarBackground variant:ColorSchemeVariantDark];
@@ -120,12 +120,12 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self.searchResultsViewController didMoveToParentViewController:self];
     self.searchResultsViewController.searchResultsView.emptyResultView = self.emptyResultView;
     self.searchResultsViewController.searchResultsView.collectionView.accessibilityIdentifier = @"search.list";
-    
+
     self.quickActionsBar = [[StartUIInviteActionBar alloc] init];
     [self.quickActionsBar.inviteButton addTarget:self action:@selector(inviteMoreButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-    
+
     self.view.backgroundColor = [UIColor clearColor];
-    
+
     [self createConstraints];
     [self updateActionBar];
     [self handleUploadAddressBookLogicIfNeeded];
@@ -153,26 +153,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 - (UIStatusBarStyle)preferredStatusBarStyle
 {
     return UIStatusBarStyleLightContent;
-}
-
-- (void)createConstraints
-{
-    [self.searchHeaderViewController.view autoPinEdgeToSuperviewEdge:ALEdgeTop];
-    [self.searchHeaderViewController.view autoPinEdgeToSuperviewEdge:ALEdgeLeading];
-    [self.searchHeaderViewController.view autoPinEdgeToSuperviewEdge:ALEdgeTrailing];
-
-    if ([[ZMUser selfUser] canSeeServices]) {
-        [self.groupSelector autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.searchHeaderViewController.view];
-        [self.groupSelector autoPinEdgeToSuperviewEdge:ALEdgeLeading];
-        [self.groupSelector autoPinEdgeToSuperviewEdge:ALEdgeTrailing];
-        [self.searchResultsViewController.view autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.groupSelector];
-    } else {
-        [self.searchResultsViewController.view autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.searchHeaderViewController.view];
-    }
-
-    [self.searchResultsViewController.view autoPinEdgeToSuperviewEdge:ALEdgeTrailing];
-    [self.searchResultsViewController.view autoPinEdgeToSuperviewEdge:ALEdgeLeading];
-    [self.searchResultsViewController.view autoPinEdgeToSuperviewEdge:ALEdgeBottom];
 }
 
 - (void)handleUploadAddressBookLogicIfNeeded

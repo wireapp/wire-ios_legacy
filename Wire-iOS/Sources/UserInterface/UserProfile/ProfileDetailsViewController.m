@@ -56,23 +56,8 @@ typedef NS_ENUM(NSUInteger, ProfileViewContentMode) {
 };
 
 
-typedef NS_ENUM(NSUInteger, ProfileUserAction) {
-    ProfileUserActionNone,
-    ProfileUserActionOpenConversation,
-    ProfileUserActionAddPeople,
-    ProfileUserActionRemovePeople,
-    ProfileUserActionBlock,
-    ProfileUserActionPresentMenu,
-    ProfileUserActionUnblock,
-    ProfileUserActionAcceptConnectionRequest,
-    ProfileUserActionSendConnectionRequest,
-    ProfileUserActionCancelConnectionRequest
-};
-
-
 @interface ProfileDetailsViewController ()
 
-@property (nonatomic) ProfileViewControllerContext context;
 @property (nonatomic) id<UserType, AccentColorProvider> bareUser;
 
 @property (nonatomic) UserImageView *userImageView;
@@ -326,65 +311,6 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
         default:
             return ZetaIconTypeNone;
             break;
-    }
-}
-
-- (ProfileUserAction)leftButtonAction
-{
-    ZMUser *user = [self fullUser];
-    
-    if (user.isSelfUser) {
-        return ProfileUserActionNone;
-    }
-    else if ((user.isConnected || user.isTeamMember) && self.context == ProfileViewControllerContextOneToOneConversation) {
-        return ProfileUserActionAddPeople;
-    }
-    else if (user.isTeamMember) {
-        return ProfileUserActionOpenConversation;
-    }
-    else if (user.isBlocked) {
-        return ProfileUserActionUnblock;
-    }
-    else if (user.isPendingApprovalBySelfUser) {
-        return ProfileUserActionAcceptConnectionRequest;
-    }
-    else if (user.isPendingApprovalByOtherUser) {
-        return ProfileUserActionCancelConnectionRequest;
-    }
-    else if (user.canBeConnected) {
-        return ProfileUserActionSendConnectionRequest;
-    }
-    else if (user.isWirelessUser) {
-        return ProfileUserActionNone;
-    }
-    else {
-        return ProfileUserActionOpenConversation;
-    }
-}
-
-- (ProfileUserAction)rightButtonAction
-{
-    ZMUser *user = [self fullUser];
-    
-    if (user.isSelfUser) {
-        return ProfileUserActionNone;
-    }
-    else if (self.context == ProfileViewControllerContextGroupConversation) {
-        if ([[ZMUser selfUser] canRemoveUserFromConversation:self.conversation]) {
-            return ProfileUserActionRemovePeople;
-        }
-        else {
-            return ProfileUserActionNone;
-        }
-    }
-    else if (user.isConnected) {
-        return ProfileUserActionPresentMenu;
-    }
-    else if (nil != user.team) {
-        return ProfileUserActionPresentMenu;
-    }
-    else {
-        return ProfileUserActionNone;
     }
 }
 

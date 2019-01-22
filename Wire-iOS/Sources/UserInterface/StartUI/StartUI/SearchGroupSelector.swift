@@ -18,7 +18,6 @@
 
 
 import Foundation
-import Cartography
 
 @objcMembers final class SearchGroupSelector: UIView, TabBarDelegate {
     @objc public var onGroupSelected: ((SearchGroup)->())? = nil
@@ -39,20 +38,18 @@ import Cartography
     // MARK: - Initialization
     
     init(style: ColorSchemeVariant) {
-
-        self.groups = SearchGroup.all
+        groups = SearchGroup.all
         self.style = style
 
         let groupItems: [UITabBarItem] = groups.enumerated().map { index, group in
             UITabBarItem(title: group.name.uppercased(), image: nil, tag: index)
         }
 
-        self.tabBar = TabBar(items: groupItems, style: style, selectedIndex: 0)
+        tabBar = TabBar(items: groupItems, style: style, selectedIndex: 0)
         super.init(frame: .zero)
 
         configureViews()
         configureConstraints()
-
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -66,14 +63,7 @@ import Cartography
     }
 
     private func configureConstraints() {
-
-        constrain(self, tabBar) { selfView, tabBar in
-            tabBar.top == selfView.top
-            tabBar.left == selfView.left
-            tabBar.right == selfView.right
-            selfView.bottom == tabBar.bottom
-        }
-
+        tabBar.fitInSuperview()
     }
 
     // MARK: - Tab Bar Delegate

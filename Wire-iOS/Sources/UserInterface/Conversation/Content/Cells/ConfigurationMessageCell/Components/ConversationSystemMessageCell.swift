@@ -347,8 +347,9 @@ class ConversationSystemMessageCellDescription {
             
             let isOpenGroup = conversation.conversationType == .group && conversation.allowGuests
             let selfIsGuest = ZMUser.selfUser()?.isGuest(in: conversation) ?? false
+            let selfIsAuthorized = ZMUser.selfUserHas(permissions: .member)
             
-            if !selfIsGuest && isOpenGroup {
+            if !selfIsGuest && isOpenGroup && selfIsAuthorized {
                 cells.append(AnyConversationMessageCellDescription(GuestsAllowedCellDescription()))
             }
             

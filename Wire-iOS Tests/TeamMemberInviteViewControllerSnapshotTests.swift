@@ -1,6 +1,6 @@
-////
+//
 // Wire
-// Copyright (C) 2018 Wire Swiss GmbH
+// Copyright (C) 2019 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,19 +16,24 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
+import XCTest
+@testable import Wire
 
-@class SearchHeaderViewController;
-@class SearchGroupSelector;
-@class SearchResultsViewController;
-@protocol UserType;
+final class TeamMemberInviteViewControllerSnapshotTests: ZMSnapshotTestCase {
+    
+    var sut: TeamMemberInviteViewController!
+    
+    override func setUp() {
+        super.setUp()
+        sut = TeamMemberInviteViewController()
+    }
+    
+    override func tearDown() {
+        sut = nil
+        super.tearDown()
+    }
 
-@interface StartUIViewController ()
-
-@property (nonatomic) SearchHeaderViewController *searchHeaderViewController;
-@property (nonatomic) SearchGroupSelector *groupSelector;
-@property (nonatomic) SearchResultsViewController *searchResultsViewController;
-
-- (void)presentProfileViewControllerForUser:(id<UserType>)bareUser atIndexPath:(NSIndexPath *)indexPath;
-
-@end
+    func testForInitState(){
+        verify(view: sut.view)
+    }
+}
