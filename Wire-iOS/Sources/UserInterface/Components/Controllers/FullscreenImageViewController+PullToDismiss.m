@@ -19,6 +19,8 @@
 
 #import "FullscreenImageViewController+PullToDismiss.h"
 #import "FullscreenImageViewController+internal.h"
+#import "Wire-Swift.h"
+
 @import WireUtilities;
 
 @interface DynamicsProxy : NSObject <UIDynamicItem>

@@ -1144,6 +1144,7 @@
 		EF3CB75321DD0F0C0030C3E8 /* ConversationViewController+ParticipantsPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3CB75221DD0F0B0030C3E8 /* ConversationViewController+ParticipantsPopover.swift */; };
 		EF3CB75521DD157B0030C3E8 /* ProfileViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3CB75421DD157B0030C3E8 /* ProfileViewController+Extension.swift */; };
 		EF3CBC0A2147D81800566295 /* ConversationListViewController+PushPermissions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3CBC092147D81700566295 /* ConversationListViewController+PushPermissions.swift */; };
+		EF3F9F8921F764C600A0D47B /* FullscreenImageViewController+Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3F9F8821F764C600A0D47B /* FullscreenImageViewController+Action.swift */; };
 		EF40005720568C4400E03347 /* NetworkStatusBarConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF40005620568C4400E03347 /* NetworkStatusBarConstants.swift */; };
 		EF4018BE205975C100CFBCB0 /* ApplicationProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4018BD205975C100CFBCB0 /* ApplicationProtocol.swift */; };
 		EF4018C02059761D00CFBCB0 /* MockApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4018BF2059761D00CFBCB0 /* MockApplication.swift */; };
@@ -2991,6 +2992,7 @@
 		EF3CB75221DD0F0B0030C3E8 /* ConversationViewController+ParticipantsPopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationViewController+ParticipantsPopover.swift"; sourceTree = "<group>"; };
 		EF3CB75421DD157B0030C3E8 /* ProfileViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProfileViewController+Extension.swift"; sourceTree = "<group>"; };
 		EF3CBC092147D81700566295 /* ConversationListViewController+PushPermissions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConversationListViewController+PushPermissions.swift"; sourceTree = "<group>"; };
+		EF3F9F8821F764C600A0D47B /* FullscreenImageViewController+Action.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FullscreenImageViewController+Action.swift"; sourceTree = "<group>"; };
 		EF40005620568C4400E03347 /* NetworkStatusBarConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkStatusBarConstants.swift; sourceTree = "<group>"; };
 		EF4018BD205975C100CFBCB0 /* ApplicationProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationProtocol.swift; sourceTree = "<group>"; };
 		EF4018BF2059761D00CFBCB0 /* MockApplication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockApplication.swift; sourceTree = "<group>"; };
@@ -4319,6 +4321,7 @@
 				871BC13E1D34F8F800DF0793 /* FullscreenImageViewController+PullToDismiss.h */,
 				871BC13F1D34F8F800DF0793 /* FullscreenImageViewController+PullToDismiss.m */,
 				871BC1411D34F8F800DF0793 /* FullscreenImageViewController.m */,
+				EF3F9F8821F764C600A0D47B /* FullscreenImageViewController+Action.swift */,
 				EF44784E20906DDD00BD9827 /* FullscreenImageViewController+Zoom.swift */,
 				EF6ACA7E21318A640064047B /* FullscreenImageViewController+Style.swift */,
 				871BC1421D34F8F800DF0793 /* ImagePickerConfirmationController.h */,
@@ -7433,6 +7436,7 @@
 				EF066E1821EF997D00D56CAD /* ConversationContentViewController+ConversationMessageCellDelegate.swift in Sources */,
 				87F18BD21E03F13900C69D9B /* ZMLocationMessageData+Coordinates.swift in Sources */,
 				EF7D75A6201B6149003A8AF8 /* DeviceNativeBoundsSize.swift in Sources */,
+				EF3F9F8921F764C600A0D47B /* FullscreenImageViewController+Action.swift in Sources */,
 				EF18140C21B18846008F7DA8 /* IconToggleCell.swift in Sources */,
 				EF2127161FB9DFE300625A9B /* VerificationCodeStepViewController.m in Sources */,
 				F15650F321DD1B6D00210504 /* ZMUser+Images.swift in Sources */,

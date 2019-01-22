@@ -50,13 +50,6 @@ extension CGSize {
 }
 
 extension FullscreenImageViewController {
-    @objc(performForAction:)
-    func perform(action: MessageAction) {
-        delegate?.perform(action: action, for: message, sourceView: view)
-    }
-}
-
-extension FullscreenImageViewController {
 
     override open func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator?) {
         guard let imageSize = imageView?.image?.size else { return }

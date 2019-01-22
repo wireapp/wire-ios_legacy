@@ -333,7 +333,7 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
     }
 
     private func updateActionControllerForMessage() {
-        currentActionController = ConversationMessageActionController(responder: messageActionDelegate, message: currentMessage, context: .collection, sourceView: view)
+        currentActionController = ConversationMessageActionController(responder: messageActionDelegate, message: currentMessage, context: .collection, sourceView: view) ///TODO: scroll view in full screen???
     }
     
     var currentController: FullscreenImageViewController? {

@@ -16,6 +16,8 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+@class SelectableScrollView;
+
 static CGFloat const kZoomScaleDelta = 0.0003;
 
 @interface FullscreenImageViewController ()
@@ -24,6 +26,7 @@ static CGFloat const kZoomScaleDelta = 0.0003;
 @property (nullable, nonatomic, readwrite) UIImageView *imageView;
 @property (nonatomic) CGFloat minimumDismissMagnitude;
 @property (nonatomic, nullable) UIView *topOverlay;
+@property (nonatomic, readwrite, nonnull) SelectableScrollView *scrollView;
 
 - (void)centerScrollViewContent;
 - (void)setSelectedByMenu:(BOOL)selected animated:(BOOL)animated;

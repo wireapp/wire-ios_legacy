@@ -21,6 +21,7 @@
 #import "MessageAction.h"
 
 @class CenteredScrollView;
+@class SelectableScrollView;
 @protocol ZMConversationMessage;
 @protocol MessageActionResponder;
 
@@ -37,8 +38,7 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 @interface FullscreenImageViewController : UIViewController
-
-@property (nonatomic, strong, readonly) UIScrollView *scrollView; ///TODO: extend Selectable
+@property (nonatomic, strong, readonly, nonnull) SelectableScrollView *scrollView;
 @property (nonatomic, readonly) id<ZMConversationMessage> message;
 @property (nonatomic) UIView *snapshotBackgroundView;
 @property (nonatomic, weak)   id <MessageActionResponder, ScreenshotProvider, MenuVisibilityController> delegate;
