@@ -40,7 +40,7 @@ class AuthenticationStartMissingCredentialsErrorHandler: AuthenticationEventHand
         }
 
         // Prepare the next step
-        return [.startPostLoginFlow, .transition(.addEmailAndPassword, resetStack: true)]
+        return [.startPostLoginFlow, .transition(.addEmailAndPassword, mode: .reset)]
     }
 
 }

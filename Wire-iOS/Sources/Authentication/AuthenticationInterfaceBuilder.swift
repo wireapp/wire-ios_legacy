@@ -30,13 +30,15 @@ typealias AuthenticationStepViewController = UIViewController & AuthenticationCo
 
 class AuthenticationInterfaceBuilder {
 
-    /**
-     * The object to use when checking for features. Defaults to the build settings.
-     */
-
+    /// The object to use when checking for features.
     let featureProvider: AuthenticationFeatureProvider
 
     // MARK: - Initialization
+
+    /**
+     * Creates an interface builder with the specified set of features.
+     * - parameter featureProvider: The object to use when checking for features
+     */
 
     init(featureProvider: AuthenticationFeatureProvider) {
         self.featureProvider = featureProvider
@@ -47,8 +49,8 @@ class AuthenticationInterfaceBuilder {
     /**
      * Returns the view controller that displays the interface of the authentication step.
      *
-     * - note: When new steps are added to the list of steps, you need to handle them here,
-     * otherwise the method will return `nil`.
+     * - note: When new steps are added to the `AuthenticationFlowStep` enum, you need to
+     * add a case to handle them here, otherwise the method will return `nil`.
      *
      * - parameter step: The step to create an interface for.
      * - returns: The view controller to use for this step, or `nil` if the interface builder
@@ -84,7 +86,7 @@ class AuthenticationInterfaceBuilder {
         case .provideCredentials(let credentialsFlowType):
             let viewController = makeCredentialsViewController(for: .login(credentialsFlowType))
 
-            // Add the item to start company login.
+            // Add the item to start company login if needed.
             if featureProvider.allowCompanyLogin {
                 viewController.setRightItem("signin.company_idp.button.title".localized, withAction: .startCompanyLogin)
             }
@@ -166,9 +168,9 @@ class AuthenticationInterfaceBuilder {
     /**
      * Returns the view controller that displays the interface for the given team creation step.
      *
-     * - parameter step: The step to create an interface for.
-     * - returns: The view controller to use for this step, or `nil` if the interface builder
-     * does not support this step.
+     * - parameter state: The team creation step to create an interface for.
+     * - returns: The view controller to use for this state, or `nil` if the interface builder
+     * does not support this state.
      */
 
     private func makeTeamCreationStepViewController(for state: TeamCreationState) -> AuthenticationStepViewController? {
@@ -194,7 +196,14 @@ class AuthenticationInterfaceBuilder {
         return makeViewController(for: stepDescription)
     }
 
-    /// Creates the view controller for team description.
+    /**
+     * Creates a view controller for a step view description.
+     *
+     * - parameter description: The step to create an interface for.
+     * - returns: The view controller to use for this step, or `nil` if the interface builder
+     * does not support this step.
+     */
+
     private func makeViewController(for description: TeamCreationStepDescription) -> AuthenticationStepController {
         let controller = AuthenticationStepController(description: description)
 

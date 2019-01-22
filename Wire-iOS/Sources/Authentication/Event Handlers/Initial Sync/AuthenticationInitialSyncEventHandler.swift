@@ -48,7 +48,7 @@ class AuthenticationInitialSyncEventHandler: NSObject, AuthenticationEventHandle
         }
 
         if let nextStep = nextRegistrationStep {
-            actions.append(.transition(nextStep, resetStack: true))
+            actions.append(.transition(nextStep, mode: .reset))
         } else {
             actions.append(isRegistered ? .completeRegistrationFlow : .completeLoginFlow)
         }

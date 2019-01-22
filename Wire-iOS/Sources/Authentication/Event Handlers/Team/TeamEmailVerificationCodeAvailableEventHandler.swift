@@ -42,7 +42,7 @@ class TeamEmailVerificationCodeAvailableEventHandler: AuthenticationEventHandler
         if (!isResend) {
             let nextState: TeamCreationState = .verifyEmail(teamName: teamName, email: email)
             let nextStep: AuthenticationFlowStep = .teamCreation(nextState)
-            actions.append(.transition(nextStep, resetStack: false))
+            actions.append(.transition(nextStep, mode: .normal))
         } else {
             actions.append(.unwindState(withInterface: false))
         }

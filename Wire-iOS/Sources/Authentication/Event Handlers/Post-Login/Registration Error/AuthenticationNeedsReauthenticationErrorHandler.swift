@@ -44,7 +44,7 @@ class AuthenticationNeedsReauthenticationErrorHandler: AuthenticationEventHandle
                                                    message: "registration.signin.alert.password_needed.message".localized,
                                                    actions: [.ok])
 
-        return [.hideLoadingView, .transition(nextStep, resetStack: true), .presentAlert(alert)]
+        return [.hideLoadingView, .transition(nextStep, mode: .reset), .presentAlert(alert)]
     }
 
 }

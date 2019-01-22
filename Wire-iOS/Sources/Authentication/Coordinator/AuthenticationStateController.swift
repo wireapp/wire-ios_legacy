@@ -18,7 +18,21 @@
 
 import Foundation
 
+private let log = ZMSLog(tag: "Authentication")
+
+/**
+ * A type of object that observes changes from an authentication state controller.
+ */
+
 protocol AuthenticationStateControllerDelegate: class {
+
+    /**
+     * Called when the current state changes in the state controller.
+     * - parameter newState: The new state held by the state controller
+     * - parameter mode: The kind of change that occured in the state. This
+     * influences the way we display the new state.
+     */
+
     func stateDidChange(_ newState: AuthenticationFlowStep, mode: AuthenticationStateController.StateChangeMode)
 }
 
@@ -29,12 +43,34 @@ protocol AuthenticationStateControllerDelegate: class {
 
 class AuthenticationStateController {
 
-    enum StateChangeMode {
-        case reset, replace, normal
-    }
+    /**
+     * The type of change that occured.
+     */
 
-    /// The handle to the OS log for authentication.
-    let log = ZMSLog(tag: "Authentication")
+    enum StateChangeMode {
+        /**
+         * The state was reset to the new value. All the previous states are invalidated.
+         * You need to push the new interface to the stack and disable the back button.
+         */
+
+        case reset
+
+        /**
+         * The state was replaced to the new value. Only the top level state is invalidated,
+         * the stack remains available for unwinding. You need to replace the top view controller,
+         * and enable the back button.
+         */
+
+        case replace
+
+
+        /**
+         * The state was pushed onto the stack. You can enable the back button, if there are previous
+         * states in the stack.
+         */
+
+        case normal
+    }
 
     /// The object that receives update about the current state and provides visual response.
     weak var delegate: AuthenticationStateControllerDelegate?
@@ -47,6 +83,7 @@ class AuthenticationStateController {
 
     // MARK: - Initialization
 
+    /// Creates a new state controller with the first state.
     init() {
         currentStep = .start
         stack = [currentStep]
@@ -55,41 +92,30 @@ class AuthenticationStateController {
     // MARK: - Transitions
 
     /**
-     * Replaces the current step with another step.
-     * This is useful for cases where the user can switch between flows using a tab bar.
-     * - parameter newStep: The new step of the authentication.
-     * - note: The change will not be animated.
-     */
-
-    func replaceCurrentStep(with newStep: AuthenticationFlowStep) {
-        currentStep = newStep
-        stack[stack.endIndex - 1] = newStep
-        delegate?.stateDidChange(newStep, mode: .replace)
-    }
-
-    /**
      * Transitions to the next step in the stack.
      *
      * This method changes the current step, asks the delegate to generates a new
-     * interface if needed, and changes the stack (either appends the new step to the
-     * list of previous steps, or resets the stack if you request it).
+     * interface if needed, and changes the stack, depending on the mode you provide
+     * to perform that operation.
      *
      * - parameter step: The step to transition to.
-     * - parameter resetStack: Whether transitioning to this step resets the previous stack
-     * of view controllers in the navigation controller. You should pass `true` if your step
-     * is at the beginning of a new "logical flow" (ex: deleting clients). Defaults to `false`.
+     * - parameter mode: How we should perform the stack transition. See the documentation
+     * of `StateChangeMode` for more information. Defaults to `StateChangeMode.normal`.
      */
 
-    func transition(to step: AuthenticationFlowStep, resetStack: Bool = false) {
+    func transition(to step: AuthenticationFlowStep, mode: StateChangeMode = .normal) {
         currentStep = step
 
-        if resetStack {
-            stack = [step]
-        } else {
+        switch mode {
+        case .normal:
             stack.append(step)
+        case .reset:
+            stack = [step]
+        case .replace:
+            stack[stack.endIndex - 1] = step
         }
 
-        delegate?.stateDidChange(currentStep, mode: resetStack ? .reset : .normal)
+        delegate?.stateDidChange(currentStep, mode: mode)
     }
 
     /**

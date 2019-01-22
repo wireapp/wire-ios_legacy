@@ -22,6 +22,11 @@ import WireSyncEngine
 /**
  * Manages the flow of authentication for the user. Decides which steps to take for login, registration
  * and team creation.
+ *
+ * Interaction with the different components is abstracted away in the *actions*. You can execute actions
+ * yourself, in response to user interaction. However, most of the time, actions are passed by the responder
+ * chain, which is composed of objects that compute the actions to execute in response to a notification
+ * or delegate call from one of the abstracted components.
  */
 
 class AuthenticationCoordinator: NSObject, AuthenticationEventResponderChainDelegate {
@@ -34,6 +39,7 @@ class AuthenticationCoordinator: NSObject, AuthenticationEventResponderChainDele
 
     /// The object receiving updates from the authentication state and providing state.
     weak var delegate: AuthenticationCoordinatorDelegate?
+
 
     // MARK: - Event Handling Properties
 
@@ -56,26 +62,43 @@ class AuthenticationCoordinator: NSObject, AuthenticationEventResponderChainDele
 
     // MARK: - State
 
+    /// The displayed view controller.
     var currentViewController: AuthenticationStepViewController?
 
+    /// The object controlling the state of authentication.
     let stateController: AuthenticationStateController
+
+    /// The object to use to register users and teams.
     let registrationStatus: RegistrationStatus
 
+    /// The object that manages active user sessions.
     let sessionManager: ObservableSessionManager
+
+    /// The user session to use before authentication has finished.
     let unauthenticatedSession: UnauthenticatedSession
+
+    /// The object that determines what features are available.
     let featureProvider: AuthenticationFeatureProvider
+
+    /// The object to use to create the UI for authentication steps.
     let interfaceBuilder: AuthenticationInterfaceBuilder
+
+    /// The object to use to start and control the company login flow.
     let companyLoginController = CompanyLoginController(withDefaultEnvironment: ())
+
+    /// The object to use to restore backups.
     let backupRestoreController: BackupRestoreController
+
+    // MARK: - Internal State
 
     private var loginObservers: [Any] = []
     private var postLoginObservers: [Any] = []
     private var initialSyncObserver: Any?
-
     private var pendingAlert: AuthenticationCoordinatorAlert?
 
     // MARK: - Initialization
 
+    /// Creates a new authentication coordinator with the required supporting objects.
     init(presenter: UINavigationController, unauthenticatedSession: UnauthenticatedSession, sessionManager: ObservableSessionManager, featureProvider: AuthenticationFeatureProvider) {
         self.presenter = presenter
         self.sessionManager = sessionManager
@@ -88,16 +111,15 @@ class AuthenticationCoordinator: NSObject, AuthenticationEventResponderChainDele
         self.backupRestoreController = BackupRestoreController(target: presenter)
         super.init()
 
-        registrationStatus.delegate = self
-        companyLoginController?.delegate = self
-        backupRestoreController.delegate = self
-
         loginObservers = [
             PreLoginAuthenticationNotification.register(self, for: unauthenticatedSession),
             PostLoginAuthenticationNotification.addObserver(self),
             sessionManager.addSessionManagerCreatedSessionObserver(self)
         ]
 
+        registrationStatus.delegate = self
+        companyLoginController?.delegate = self
+        backupRestoreController.delegate = self
         presenter.delegate = self
         stateController.delegate = self
         eventResponderChain.configure(delegate: self)
@@ -162,17 +184,17 @@ extension AuthenticationCoordinator: AuthenticationActioner, SessionManagerCreat
         }
 
         guard let selfUser = delegate?.selfUser else {
-            log.warn("Post login observers were not registered because there is no self user.")
+            log.error("Post login observers were not registered because there is no self user.")
             return
         }
 
         guard let sharedSession = delegate?.sharedUserSession else {
-            log.warn("Post login observers were not registered because there is no user session.")
+            log.error("Post login observers were not registered because there is no user session.")
             return
         }
 
         guard let userProfile = delegate?.selfUserProfile else {
-            log.warn("Post login observers were not registered because there is no user profile.")
+            log.error("Post login observers were not registered because there is no user profile.")
             return
         }
 
@@ -184,6 +206,7 @@ extension AuthenticationCoordinator: AuthenticationActioner, SessionManagerCreat
 
     /**
      * Executes the actions in response to an event.
+     * - parameter actions: The actions to execute.
      */
 
     func executeActions(_ actions: [AuthenticationCoordinatorAction]) {
@@ -216,8 +239,8 @@ extension AuthenticationCoordinator: AuthenticationActioner, SessionManagerCreat
             case .startPostLoginFlow:
                 registerPostLoginObserversIfNeeded()
 
-            case .transition(let nextStep, let resetStack):
-                stateController.transition(to: nextStep, resetStack: resetStack)
+            case .transition(let nextStep, let mode):
+                stateController.transition(to: nextStep, mode: mode)
 
             case .performPhoneLoginFromRegistration(let phoneNumber):
                 sendLoginCode(phoneNumber: phoneNumber, isResend: false)
@@ -236,23 +259,10 @@ extension AuthenticationCoordinator: AuthenticationActioner, SessionManagerCreat
                 finishRegisteringUser()
 
             case .unwindState(let popController):
-                if popController {
-                    presenter?.popViewController(animated: true)
-                } else {
-                    stateController.unwindState()
-                }
+                unwindState(popController: popController)
 
             case .openURL(let url):
-                let browser = BrowserViewController(url: url)
-                browser.onDismiss = {
-                    if let alertModel = self.pendingAlert {
-                        self.presenter?.showLoadingView = false
-                        self.presentAlert(for: alertModel)
-                        self.pendingAlert = nil
-                    }
-                }
-
-                self.presenter?.present(browser, animated: true, completion: nil)
+                openURL(url)
 
             case .repeatAction:
                 repeatAction()
@@ -291,75 +301,19 @@ extension AuthenticationCoordinator: AuthenticationActioner, SessionManagerCreat
                 backupRestoreController.startBackupFlow()
 
             case .signOut:
-                guard let selectedAccount = sessionManager.accountManager.selectedAccount else {
-                    fatal("No session manager and selected account to log out from")
-                }
-
-                sessionManager.delete(account: selectedAccount)
+                signOut()
 
             case .addEmailAndPassword(let newCredentials):
-                self.setEmailCredentialsForCurrentUser(newCredentials)
+                setEmailCredentialsForCurrentUser(newCredentials)
             }
-        }
-    }
-
-    private func presentErrorAlert(for alertModel: AuthenticationCoordinatorErrorAlert) {
-        presenter?.showAlert(forError: alertModel.error) { _ in
-            self.executeActions(alertModel.completionActions)
-        }
-    }
-
-    private func presentAlert(for alertModel: AuthenticationCoordinatorAlert) {
-        let alert = UIAlertController(title: alertModel.title, message: alertModel.message, preferredStyle: .alert)
-
-        for actionModel in alertModel.actions {
-            let action = UIAlertAction(title: actionModel.title, style: .default) { _ in
-                if actionModel.coordinatorActions.contains(where: { $0.retainsModal }) {
-                    self.pendingAlert = alertModel
-                }
-
-                self.executeActions(actionModel.coordinatorActions)
-            }
-
-            alert.addAction(action)
-        }
-
-        presenter?.present(alert, animated: true)
-    }
-
-    /// Repeats the current action.
-    func repeatAction() {
-        switch stateController.currentStep {
-        case .teamCreation(.verifyEmail):
-            resendTeamEmailCode()
-        case .enterLoginCode, .enterActivationCode:
-            resendVerificationCode()
-        default:
-            return
-        }
-    }
-
-    /// Switches the type of credentials in the current step.
-    private func switchCredentialsType(_ newType: AuthenticationCredentialsType) {
-        switch stateController.currentStep {
-        case .createCredentials(let unregisteredUser, _):
-            let newStep = AuthenticationFlowStep.createCredentials(unregisteredUser, newType)
-            stateController.replaceCurrentStep(with: newStep)
-        case .provideCredentials:
-            let newStep = AuthenticationFlowStep.provideCredentials(newType)
-            stateController.replaceCurrentStep(with: newStep)
-        default:
-            log.warn("The current step does not support credential type switching")
         }
     }
 
 }
 
-// MARK: - Actions
+// MARK: - External Input
 
 extension AuthenticationCoordinator {
-
-    // MARK: Starting the Flow
 
     /**
      * Call this method when the application becomes unauthenticated and that the user
@@ -379,30 +333,119 @@ extension AuthenticationCoordinator {
 
     func makeUnregisteredUser() -> UnregisteredUser {
         let user = UnregisteredUser()
-        user.accentColorValue = UIColor.indexedAccentColor()
+        user.accentColorValue = ZMUser.pickRandomAccentColor()
         return user
     }
 
     /**
-     * Attempts to switch the from login to registration or registration to login.
-     * - note: This only works if the flow is on the `provideCredentials` or `createCredentials` step.
+     * Notifies the event responder chain that user input was provided.
+     *
+     * The responder chain will then go through all the input event handlers and
+     * pick the first that accepts the input.
+     *
+     * - parameter input: The input provided by the user.
      */
 
-    @objc func permuteCredentialProvidingFlowType() {
-        switch stateController.currentStep {
-        case .provideCredentials(let type):
-            let unregisteredUser = makeUnregisteredUser()
-            stateController.replaceCurrentStep(with: .createCredentials(unregisteredUser, type))
+    func handleUserInput(_ input: Any) {
+        eventResponderChain.handleEvent(ofType: .userInput(input))
+    }
 
-        case .createCredentials(_, let type):
-            stateController.replaceCurrentStep(with: .provideCredentials(type))
+}
 
-        default:
-            log.error("Cannot permute credential providing flow from step \(stateController.currentStep).")
+
+// MARK: - Actions
+
+extension AuthenticationCoordinator {
+
+    // MARK: - State
+
+    /// Unwinds the state.
+    private func unwindState(popController: Bool) {
+        if popController {
+            presenter?.popViewController(animated: true)
+        } else {
+            stateController.unwindState()
         }
     }
 
-    // MARK: Registration Code
+    /// Signs the current user out **without a warning**.
+    private func signOut() {
+        guard let selectedAccount = sessionManager.accountManager.selectedAccount else {
+            fatal("No session manager and selected account to log out from")
+        }
+
+        sessionManager.delete(account: selectedAccount)
+    }
+
+    /// Repeats the current action.
+    func repeatAction() {
+        switch stateController.currentStep {
+        case .teamCreation(.verifyEmail):
+            resendTeamEmailCode()
+        case .enterLoginCode, .enterActivationCode:
+            resendVerificationCode()
+        default:
+            return
+        }
+    }
+
+    // MARK: - Modals
+
+    /// Opens the browser and reopens the current alert upon dismissal if needed.
+    private func openURL(_ url: URL) {
+        let browser = BrowserViewController(url: url)
+        browser.onDismiss = {
+            if let alertModel = self.pendingAlert {
+                self.presenter?.showLoadingView = false
+                self.presentAlert(for: alertModel)
+                self.pendingAlert = nil
+            }
+        }
+
+        self.presenter?.present(browser, animated: true, completion: nil)
+    }
+
+    /// Presents an error alert.
+    private func presentErrorAlert(for alertModel: AuthenticationCoordinatorErrorAlert) {
+        presenter?.showAlert(forError: alertModel.error) { _ in
+            self.executeActions(alertModel.completionActions)
+        }
+    }
+
+    /// Presents an alert.
+    private func presentAlert(for alertModel: AuthenticationCoordinatorAlert) {
+        let alert = UIAlertController(title: alertModel.title, message: alertModel.message, preferredStyle: .alert)
+
+        for actionModel in alertModel.actions {
+            let action = UIAlertAction(title: actionModel.title, style: .default) { _ in
+                if actionModel.coordinatorActions.contains(where: { $0.retainsModal }) {
+                    self.pendingAlert = alertModel
+                }
+
+                self.executeActions(actionModel.coordinatorActions)
+            }
+
+            alert.addAction(action)
+        }
+
+        presenter?.present(alert, animated: true)
+    }
+
+    // MARK: - Registration Code
+
+    /// Switches the type of credentials in the current step.
+    private func switchCredentialsType(_ newType: AuthenticationCredentialsType) {
+        switch stateController.currentStep {
+        case .createCredentials(let unregisteredUser, _):
+            let newStep = AuthenticationFlowStep.createCredentials(unregisteredUser, newType)
+            stateController.transition(to: newStep, mode: .replace)
+        case .provideCredentials:
+            let newStep = AuthenticationFlowStep.provideCredentials(newType)
+            stateController.transition(to: newStep, mode: .replace)
+        default:
+            log.warn("The current step does not support credential type switching")
+        }
+    }
 
     /**
      * Starts the registration flow with the specified credentials.
@@ -410,10 +453,10 @@ extension AuthenticationCoordinator {
      * This step will ask the registration status to send the activation code
      * by text message or email. It will advance the state to `.sendActivationCode`.
      *
-     * - parameter credential: The unverified credential to register with.
+     * - parameter credentials: The unverified credentials to register with.
      */
 
-    func startRegistration(_ credentials: UnverifiedCredentials) {
+    private func startRegistration(_ credentials: UnverifiedCredentials) {
         guard case let .createCredentials(unregisteredUser, _) = stateController.currentStep, let presenter = self.presenter else {
             log.error("Cannot start phone registration outside of registration flow.")
             return
@@ -435,41 +478,31 @@ extension AuthenticationCoordinator {
         registrationStatus.sendActivationCode(to: credentials)
     }
 
-    /// Asks the registration
+    /// Asks the registration status to activate the credentials with the code provided by the user.
     private func activateCredentials(credentials: UnverifiedCredentials, user: UnregisteredUser, code: String) {
         presenter?.showLoadingView = true
         stateController.transition(to: .activateCredentials(credentials, user: user, code: code))
         registrationStatus.checkActivationCode(credentials: credentials, code: code)
     }
 
-    // MARK: Linear Registration
+    // MARK: - Linear Registration
 
-    func setMarketingConsent(_ consentValue: Bool) {
+    /// Sets the marketing consent value for the user to be registered.
+    private func setMarketingConsent(_ consentValue: Bool) {
         switch stateController.currentStep {
         case .incrementalUserCreation:
-            updateUnregisteredUser {
-                $0.marketingConsent = consentValue
-            }
+            updateUnregisteredUser(\.marketingConsent, consentValue)
+
         case .teamCreation(TeamCreationState.provideMarketingConsent(let teamName, let email, let activationCode)):
             let nextState: TeamCreationState = .setFullName(teamName: teamName, email: email, activationCode: activationCode, marketingConsent: consentValue)
-            stateController.transition(to: .teamCreation(nextState), resetStack: true)
+            stateController.transition(to: .teamCreation(nextState), mode: .reset)
         default:
             log.error("Cannot set marketing consent in current state \(stateController.currentStep)")
             return
         }
     }
 
-    /// Updates the fields of the unregistered user, and advances the state.
-    private func updateUnregisteredUser(_ updateBlock: (UnregisteredUser) -> Void) {
-        guard case let .incrementalUserCreation(unregisteredUser, _) = stateController.currentStep else {
-            log.error("Cannot update unregistered user outide of the incremental user creation flow")
-            return
-        }
-
-        updateBlock(unregisteredUser)
-        eventResponderChain.handleEvent(ofType: .registrationStepSuccess)
-    }
-
+    /// Updates a value of the unregistered user and notifies the responder chain of the success.
     private func updateUnregisteredUser<T>(_ keyPath: ReferenceWritableKeyPath<UnregisteredUser, T?>, _ newValue: T) {
         guard case let .incrementalUserCreation(unregisteredUser, _) = stateController.currentStep else {
             log.error("Cannot update unregistered user outide of the incremental user creation flow")
@@ -491,6 +524,9 @@ extension AuthenticationCoordinator {
         registrationStatus.create(user: unregisteredUser)
     }
 
+    // MARK: - Post Registration
+
+    /// Computes the post registration fields, if any.
     private func currentPostRegistrationFields() -> AuthenticationPostRegistrationFields? {
         switch stateController.currentStep {
         case .createUser(let unregisteredUser):
@@ -521,7 +557,7 @@ extension AuthenticationCoordinator {
     }
 
     /// Auto-assigns a random profile image to the user.
-    func assignRandomProfileImage() {
+    private func assignRandomProfileImage() {
         guard let userSession = statusProvider?.sharedUserSession else {
             log.error("Not assigning a random profile picture, because the user session does not exist.")
             return
@@ -533,11 +569,12 @@ extension AuthenticationCoordinator {
                     userSession.profileUpdate.updateImage(imageData: data)
                 }
             }
-            }.resume()
+        }.resume()
     }
 
-    // MARK: Login
+    // MARK: - Login
 
+    /// Starts the login flow with the specified request.
     private func startLoginFlow(request: AuthenticationLoginRequest) {
         switch request {
         case .email(let address, let password):
@@ -569,13 +606,10 @@ extension AuthenticationCoordinator {
         unauthenticatedSession.login(with: credentials)
     }
 
-    // MARK: Generic Verification
+    // MARK: - Generic Verification
 
-    /**
-     * Resends the verification code to the user, if allowed by the current state.
-     */
-
-    @objc func resendVerificationCode() {
+    /// Resends the verification code to the user, if allowed by the current state.
+    private func resendVerificationCode() {
         switch stateController.currentStep {
         case .enterLoginCode(let phoneNumber):
             sendLoginCode(phoneNumber: phoneNumber, isResend: true)
@@ -591,8 +625,7 @@ extension AuthenticationCoordinator {
      * - parameter code: The verification code provided by the user.
      */
 
-    @objc(continueFlowWithVerificationCode:)
-    func continueFlow(withVerificationCode code: String) {
+    private func continueFlow(withVerificationCode code: String) {
         switch stateController.currentStep {
         case .enterLoginCode(let phoneNumber):
             let credentials = ZMPhoneCredentials(phoneNumber: phoneNumber, verificationCode: code)
@@ -606,11 +639,8 @@ extension AuthenticationCoordinator {
 
     // MARK: - Add Email And Password
 
-    /**
-     * Sets th e-mail and password credentials for the current user.
-     */
-
-    @objc func setEmailCredentialsForCurrentUser(_ credentials: ZMEmailCredentials) {
+    /// Sets th e-mail and password credentials for the current user.
+     private func setEmailCredentialsForCurrentUser(_ credentials: ZMEmailCredentials) {
         guard case .addEmailAndPassword = stateController.currentStep else {
             log.error("Cannot save e-mail and password outside of designated step.")
             return
@@ -642,55 +672,18 @@ extension AuthenticationCoordinator {
         }
     }
 
-    // MARK: - E-Mail Verification
-
-    /**
-     * This method re-sends the e-mail verification code if possible.
-     */
-
-    @objc func resendEmailVerificationCode() {
-        guard case let .pendingEmailLinkVerification(credentials) = stateController.currentStep else {
-            return
-        }
-
-        guard let userProfile = delegate?.selfUserProfile else {
-            return
-        }
-
-        presenter?.showLoadingView = true
-        stateController.transition(to: .registerEmailCredentials(credentials, isResend: true))
-        setCredentialsWithProfile(userProfile, credentials: credentials)
-    }
-
     // MARK: - Backup
 
-    /**
-     * Call this method to mark the backup step as completed.
-     */
-
-    @objc func completeBackupStep() {
+    /// Call this method to mark the backup step as completed.
+    private func completeBackupStep() {
         presenter?.showLoadingView = true
         unauthenticatedSession.continueAfterBackupImportStep()
     }
 
-    // MARK: UI Events
+    // MARK: - Company Login
 
-    /**
-     * Manually display the company login flow.
-     */
-
-    @objc var canStartCompanyLoginFlow: Bool {
-        switch stateController.currentStep {
-        case .provideCredentials, .createCredentials:
-            return true
-        case .reauthenticate(let credentials, _):
-            return credentials?.usesCompanyLogin == true
-        default:
-            return false
-        }
-    }
-    
-    @objc func startCompanyLoginFlowIfPossible() {
+    /// Manually start the company login flow.
+    private func startCompanyLoginFlowIfPossible() {
         switch stateController.currentStep {
         case .provideCredentials, .createCredentials, .reauthenticate:
             companyLoginController?.displayLoginCodePrompt()
@@ -699,10 +692,7 @@ extension AuthenticationCoordinator {
         }
     }
 
-    /**
-     * Call this method when the corrdinated view controller appears, to detect the login code and display it if needed.
-     */
-
+    /// Call this method when the corrdinated view controller appears, to detect the login code and display it if needed.
     func detectLoginCodeIfPossible() {
         switch stateController.currentStep {
         case .landingScreen, .provideCredentials, .createCredentials:
@@ -714,10 +704,7 @@ extension AuthenticationCoordinator {
         }
     }
 
-    /**
-     * Call this method when company login fails.
-     */
-
+    /// Call this method when company login fails or is cancelled by the user.
     func cancelCompanyLogin() {
         guard case .companyLogin = stateController.currentStep else {
             log.error("Cannot cancel company login outside of the dedicated flow.")
@@ -727,14 +714,14 @@ extension AuthenticationCoordinator {
         stateController.unwindState()
     }
 
-    // MARK: - Team Input
+    // MARK: - User Input
 
     /**
      * Advances the team creation state with the user input.
      * - parameter value: The value provided by the user.
      */
 
-    func advanceTeamCreation(value: String) {
+    private func advanceTeamCreation(value: String) {
         guard case .teamCreation(let state) = stateController.currentStep else {
             log.error("Cannot advance team creation outside of the dedicated flow.")
             return
@@ -783,7 +770,8 @@ extension AuthenticationCoordinator {
 
     }
 
-    func resendTeamEmailCode() {
+    /// Resend the team activation code.
+    private func resendTeamEmailCode() {
         guard case let .teamCreation(teamState) = stateController.currentStep else {
             return
         }
@@ -797,19 +785,6 @@ extension AuthenticationCoordinator {
         stateController.transition(to: .teamCreation(nextTeamState))
 
         registrationStatus.sendActivationCode(to: .email(emailAddress))
-    }
-
-    /**
-     * Notifies the event responder chain that user input was provided.
-     *
-     * The responder chain will then go through all the input event handlers and
-     * pick the first that accepts the input.
-     *
-     * - parameter input: The input provided by the user.
-     */
-
-    func handleUserInput(_ input: Any) {
-        eventResponderChain.handleEvent(ofType: .userInput(input))
     }
 
 }

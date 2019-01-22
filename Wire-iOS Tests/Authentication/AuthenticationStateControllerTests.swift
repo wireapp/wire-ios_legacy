@@ -83,7 +83,7 @@ class AuthenticationStateControllerTests: XCTestCase {
 
     func testThatItAdvancesStateWithReset() {
         // WHEN
-        stateController.transition(to: .landingScreen, resetStack: true)
+        stateController.transition(to: .landingScreen, mode: .reset)
 
         // THEN
         XCTAssertEqual(stateController.currentStep, .landingScreen)
@@ -108,7 +108,7 @@ class AuthenticationStateControllerTests: XCTestCase {
         // GIVEN
         let phoneNumber = "+4912345678900"
 
-        stateController.transition(to: .landingScreen, resetStack: true)
+        stateController.transition(to: .landingScreen, mode: .reset)
         stateController.transition(to: .provideCredentials(.email))
         stateController.transition(to: .sendLoginCode(phoneNumber: phoneNumber, isResend: false))
 
@@ -130,7 +130,7 @@ class AuthenticationStateControllerTests: XCTestCase {
         // GIVEN
         let phoneNumber = "+4912345678900"
 
-        stateController.transition(to: .landingScreen, resetStack: true)
+        stateController.transition(to: .landingScreen, mode: .reset)
         stateController.transition(to: .provideCredentials(.phone)) // user logs in with phone number
         stateController.transition(to: .sendLoginCode(phoneNumber: phoneNumber, isResend: false))
         stateController.transition(to: .enterLoginCode(phoneNumber: phoneNumber))

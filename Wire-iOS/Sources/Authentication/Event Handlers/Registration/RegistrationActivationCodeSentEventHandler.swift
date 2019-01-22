@@ -37,7 +37,7 @@ class RegistrationActivationCodeSentEventHandler: AuthenticationEventHandler {
 
         if (!isResend) {
             let nextStep = AuthenticationFlowStep.enterActivationCode(credentials, user: user)
-            actions.append(AuthenticationCoordinatorAction.transition(nextStep, resetStack: false))
+            actions.append(AuthenticationCoordinatorAction.transition(nextStep, mode: .normal))
         } else {
             actions.append(.unwindState(withInterface: false))
         }

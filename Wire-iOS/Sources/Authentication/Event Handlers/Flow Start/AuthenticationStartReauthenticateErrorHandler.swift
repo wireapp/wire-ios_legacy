@@ -60,7 +60,7 @@ class AuthenticationStartReauthenticateErrorHandler: AuthenticationEventHandler 
 
         // Prepare the next step
         let nextStep = AuthenticationFlowStep.reauthenticate(credentials: loginCredentials, numberOfAccounts: numberOfAccounts)
-        return [.transition(nextStep, resetStack: true)]
+        return [.transition(nextStep, mode: .reset)]
     }
 
 }

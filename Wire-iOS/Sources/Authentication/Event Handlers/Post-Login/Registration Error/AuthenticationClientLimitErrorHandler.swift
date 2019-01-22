@@ -51,7 +51,7 @@ class AuthenticationClientLimitErrorHandler: AuthenticationEventHandler {
             return nil
         }
 
-        return [.hideLoadingView, .transition(nextStep, resetStack: true)]
+        return [.hideLoadingView, .transition(nextStep, mode: .reset)]
     }
 
 }

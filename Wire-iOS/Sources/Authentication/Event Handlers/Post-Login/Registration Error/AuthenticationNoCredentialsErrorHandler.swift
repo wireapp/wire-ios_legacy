@@ -48,7 +48,7 @@ class AuthenticationNoCredentialsErrorHandler: AuthenticationEventHandler {
             return nil
         }
 
-        return [.hideLoadingView, .startPostLoginFlow, .transition(.addEmailAndPassword, resetStack: true)]
+        return [.hideLoadingView, .startPostLoginFlow, .transition(.addEmailAndPassword, mode: .reset)]
     }
 
 }

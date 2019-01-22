@@ -33,7 +33,7 @@ enum AuthenticationCoordinatorAction {
     case completeLoginFlow
     case completeRegistrationFlow
     case startPostLoginFlow
-    case transition(AuthenticationFlowStep, resetStack: Bool)
+    case transition(AuthenticationFlowStep, mode: AuthenticationStateController.StateChangeMode)
     case performPhoneLoginFromRegistration(phoneNumber: String)
     case configureNotifications
     case startIncrementalUserCreation(UnregisteredUser)

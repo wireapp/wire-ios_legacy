@@ -18,6 +18,11 @@
 
 import Foundation
 
+/**
+ * The state of team creation. To advance to the next step, you need to provide the String
+ * input from the user.
+ */
+
 enum TeamCreationState: Equatable {
     case setTeamName
     case setEmail(teamName: String)
@@ -30,6 +35,7 @@ enum TeamCreationState: Equatable {
     case createTeam(teamName: String, email: String, activationCode: String, marketingConsent: Bool, fullName: String, password: String)
     case inviteMembers
 
+    /// Whether the step needs an interface.
     var needsInterface: Bool {
         switch self {
         case .sendEmailCode, .verifyActivationCode: return false
@@ -39,6 +45,7 @@ enum TeamCreationState: Equatable {
         }
     }
 
+    /// Whether it's possible to exit this step and .
     var allowsUnwind: Bool {
         switch self {
         case .setFullName: return false
@@ -49,7 +56,13 @@ enum TeamCreationState: Equatable {
 }
 
 // MARK: - State transitions
+
 extension TeamCreationState {
+
+    /**
+     * Advances to the next possible state with the given user input.
+     * - parameter value: The value provided by the user.
+     */
 
     func nextState(with value: String) -> TeamCreationState? {
         switch self {

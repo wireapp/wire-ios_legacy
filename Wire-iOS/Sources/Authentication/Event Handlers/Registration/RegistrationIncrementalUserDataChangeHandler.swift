@@ -52,7 +52,7 @@ class RegistrationIncrementalUserDataChangeHandler: AuthenticationEventHandler {
 
     private func requestIntermediateStep(_ step: IntermediateRegistrationStep, with user: UnregisteredUser) -> [AuthenticationCoordinatorAction] {
         let flowStep = AuthenticationFlowStep.incrementalUserCreation(user, step)
-        return [.hideLoadingView, .transition(flowStep, resetStack: true)]
+        return [.hideLoadingView, .transition(flowStep, mode: .reset)]
     }
 
     private func handleMissingMarketingConsent(with user: UnregisteredUser) -> [AuthenticationCoordinatorAction] {

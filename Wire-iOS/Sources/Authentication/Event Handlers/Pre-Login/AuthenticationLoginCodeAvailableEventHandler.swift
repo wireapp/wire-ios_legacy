@@ -37,7 +37,7 @@ class AuthenticationLoginCodeAvailableEventHandler: AuthenticationEventHandler {
         // Do not transition to a new state if the user asked the code manually
         if !isResend {
             let nextStep = AuthenticationFlowStep.enterLoginCode(phoneNumber: phoneNumber)
-            actions.append(.transition(nextStep, resetStack: false))
+            actions.append(.transition(nextStep, mode: .normal))
         } else {
             actions.append(.unwindState(withInterface: false))
         }
