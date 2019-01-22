@@ -129,7 +129,7 @@ import UIKit
 
     func actionSourceView() -> UIView! {
         if let tableView = tableView,
-            let sectionIndex = sectionIndex { ///TODO: sectionIndex incorrect, should be 1 instead of 0 in 2nd message
+            let sectionIndex = sectionIndex {
             let cells = tableView.visibleCells
 
             for cell in cells {
@@ -137,8 +137,6 @@ import UIKit
                 if indexPath?.section == sectionIndex &&
                     cell is SelectableView {
                     return cell
-                } else {
-                    ///TODO:
                 }
             }
         } else if self.sourceView != nil {
