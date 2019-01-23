@@ -42,28 +42,3 @@ final class RestrictedButton: Button, Restricted {
     }
 }
 
-extension RestrictedButton {
-
-    static func openServiceConversationButton() -> RestrictedButton {
-        return RestrictedButton(style: .full, title: "peoplepicker.services.open_conversation.item".localized)
-    }
-
-    static func createAddServiceButton() -> RestrictedButton {
-        return RestrictedButton(style: .full, title: "peoplepicker.services.add_service.button".localized)
-    }
-
-    static func createServiceConversationButton() -> RestrictedButton {
-        return RestrictedButton(style: .full, title: "peoplepicker.services.create_conversation.item".localized)
-    }
-
-    static func createDestructiveServiceButton() -> RestrictedButton {
-        let button = RestrictedButton(style: .full, title: "participants.services.remove_integration.button".localized)
-        button.setBackgroundImageColor(.vividRed, for: .normal)
-        return button
-    }
-
-    convenience init(style: ButtonStyle, title:String) {
-        self.init(style: style)
-        setTitle(title, for: .normal)
-    }
-}
