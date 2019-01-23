@@ -48,62 +48,125 @@ extension ConversationContentViewController: ConversationMessageCellDelegate {
 }
 
 extension ConversationContentViewController {
+    private func messageAction(actionId: MessageAction,
+                               for message: ZMConversationMessage,
+                               cell: (UIView & SelectableView)?) {
+        guard let session = ZMUserSession.shared() else { return }
+
+        switch actionId {
+        case .cancel:
+            session.enqueueChanges({
+                message.fileMessageData?.cancelTransfer()
+            })
+        case .resend:
+            session.enqueueChanges({
+                message.resend()
+            })
+        case .delete:
+            assert(message.canBeDeleted)
+
+            self.deletionDialogPresenter = DeletionDialogPresenter(sourceViewController: self.presentedViewController ?? self)
+            self.deletionDialogPresenter.presentDeletionAlertController(forMessage: message, source: cell) { deleted in
+                if deleted {
+                    self.presentedViewController?.dismiss(animated: true)
+                }
+                if !deleted {
+                    // TODO 2838: Support editing
+                    // cell.beingEdited = NO;
+                }
+            }
+        case .present:
+            self.dataSource?.selectedMessage = message
+            self.presentDetails(for: message)
+        case .save:
+            if Message.isImage(message) {
+                self.saveImage(from: message, cell: cell)
+            } else {
+                self.dataSource?.selectedMessage = message
+                if let targetView: UIView = cell?.selectionView,
+                    let saveController = UIActivityViewController(message: message, from: targetView) {
+                    self.present(saveController, animated: true)
+                }
+            }
+        case .edit:
+            dataSource?.editingMessage = message
+            delegate.conversationContentViewController(self, didTriggerEditing: message)
+        case .sketchDraw:
+            openSketch(for: message, inEditMode: .draw)
+        case .sketchEmoji:
+            openSketch(for: message, inEditMode: CanvasViewControllerEditModeEmoji)
+        case .sketchText:
+            // Not implemented yet
+        case .like:
+            let liked = !Message.isLikedMessage(message)
+
+            let indexPath: IndexPath? = dataSource?.indexPath(for: message)
+
+            ZMUserSession.shared.performChanges({
+                Message.setLiked(message, liked: liked)
+            })
+
+            if liked {
+                // Deselect if necessary to show list of likers
+                if dataSource?.selectedMessage == message {
+                    if let indexPath = indexPath {
+                        tableView(tableView, willSelectRowAt: indexPath)
+                    }
+                }
+            } else {
+                // Select if necessary to prevent message from collapsing
+                if dataSource?.selectedMessage != message && !Message.hasReactions(message) {
+                    if let indexPath = indexPath {
+                        tableView(tableView, willSelectRowAt: indexPath)
+                    }
+                    tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
+                }
+            }
+        case .forward:
+            showForward(for: message, fromCell: cell)
+        case ShowInConversation:
+            scroll(to: message) { cell in
+                self.dataSource?.highlight(message)
+            }
+        case .copy:
+            Message.copy(message, in: UIPasteboard.general)
+        case .download:
+            ZMUserSession.sharedSession.enqueueChanges({
+                message?.fileMessageData.requestFileDownload()
+            })
+        case .reply:
+            delegate.conversationContentViewController(self, didTriggerReplyingTo: message)
+
+        case .openQuote:
+            if message?.textMessageData.quote != nil {
+                let quote: ZMConversationMessage? = message?.textMessageData.quote
+                scroll(to: quote) { cell in
+                    self.dataSource?.highlight(quote)
+                }
+            }
+        case .openDetails:
+            let detailsViewController = MessageDetailsViewController(message: message)
+            parent?.present(detailsViewController, animated: true)
+        }
+    }
+
     func wants(toPerform actionId: MessageAction,
                for message: ZMConversationMessage,
                cell: (UIView & SelectableView)?) {
-        guard let session = ZMUserSession.shared() else { return }
-
-
-        let action: () -> () = {
-            switch actionId {
-            case .cancel:
-                session.enqueueChanges({
-                    message.fileMessageData?.cancelTransfer()
-                })
-            case .resend:
-                session.enqueueChanges({
-                    message.resend()
-                })
-            case .delete:
-                assert(message.canBeDeleted)
-
-                self.deletionDialogPresenter = DeletionDialogPresenter(sourceViewController: self.presentedViewController ?? self)
-                self.deletionDialogPresenter.presentDeletionAlertController(forMessage: message, source: cell) { deleted in
-                    if deleted {
-                        self.presentedViewController?.dismiss(animated: true)
-                    }
-                    if !deleted {
-                        // TODO 2838: Support editing
-                        // cell.beingEdited = NO;
-                    }
-                }
-            case .present:
-                self.dataSource?.selectedMessage = message
-                self.presentDetails(for: message)
-            case .save:
-                if Message.isImage(message) {
-                    self.saveImage(from: message, cell: cell)
-                } else {
-                    self.dataSource?.selectedMessage = message
-                    if let targetView: UIView = cell?.selectionView,
-                        let saveController = UIActivityViewController(message: message, from: targetView) {
-                        self.present(saveController, animated: true)
-                    }
-                }
-            default: ///TODO:
-                break
-            }
-        }
 
 
         let shouldDismissModal: Bool = actionId != .delete && actionId != .copy
 
         if messagePresenter.modalTargetController?.presentedViewController != nil && shouldDismissModal {
             messagePresenter.modalTargetController?.dismiss(animated: true) {
-                action()
+                self.messageAction(actionId: actionId,
+                              for: message,
+                              cell: cell)
             }
         } else {
-            action()
+            messageAction(actionId: actionId,
+                          for: message,
+                          cell: cell)
         }
     }
 }
