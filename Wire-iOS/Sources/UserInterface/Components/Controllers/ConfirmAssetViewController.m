@@ -37,7 +37,7 @@ static const CGFloat TopBarHeight = 44;
 static const CGFloat BottomBarMinHeight = 88;
 static const CGFloat MarginInset = 24;
 
-@interface ConfirmAssetViewController () <CanvasViewControllerDelegate>
+@interface ConfirmAssetViewController ()
 
 @property (nonatomic) UIView *bottomPanel;
 
@@ -284,32 +284,5 @@ static const CGFloat MarginInset = 24;
     [self openSketchInEditMode:CanvasViewControllerEditModeEmoji];
 }
 
-- (void)openSketchInEditMode:(CanvasViewControllerEditMode)editMode
-{
-    if (![self.image isKindOfClass:UIImage.class]) {
-        return;
-    }
-    
-    CanvasViewController *canvasViewController = [[CanvasViewController alloc] init];
-    canvasViewController.sketchImage = (UIImage *)self.image;
-    canvasViewController.delegate = self;
-    canvasViewController.title = self.previewTitle;
-    [canvasViewController selectWithEditMode:editMode animated:NO];
-    
-    UIViewController *navigationController = [canvasViewController wrapInNavigationController];
-    navigationController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-    
-    [self presentViewController:navigationController animated:YES completion:nil];
-}
-
-#pragma mark - CanvasViewControllerDelegate
-
-
-- (void)canvasViewController:(CanvasViewController *)canvasViewController didExportImage:(UIImage *)image
-{
-    if (self.onConfirm) {
-        self.onConfirm(image);
-    }
-}
 
 @end

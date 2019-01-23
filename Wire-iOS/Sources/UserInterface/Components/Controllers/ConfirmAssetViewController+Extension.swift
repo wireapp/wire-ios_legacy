@@ -44,4 +44,28 @@ extension ConfirmAssetViewController {
         view.addSubview(playerViewController.view)
     }
 
+
+    func openSketch(in editMode: CanvasViewControllerEditMode) {
+        guard let image = image as? UIImage else {
+            return
+        }
+
+        let canvasViewController = CanvasViewController()
+        canvasViewController.sketchImage = image
+        canvasViewController.delegate = self
+        canvasViewController.title = previewTitle
+        canvasViewController.select(editMode: editMode, animated: false)
+
+        let navigationController = canvasViewController.wrapInNavigationController()
+        navigationController.modalTransitionStyle = .crossDissolve
+
+        present(navigationController, animated: true)
+    }
+
+}
+
+extension ConfirmAssetViewController: CanvasViewControllerDelegate {
+    func canvasViewController(_ canvasViewController: CanvasViewController, didExportImage image: UIImage) {
+        onConfirm?(image)
+    }
 }
