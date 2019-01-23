@@ -30,9 +30,6 @@ final class ServiceDetailViewControllerSnapshotTests: CoreDataSnapshotTestCase {
         super.setUp()
         serviceUser = createServiceUser()
         groupConversation = createGroupConversation()
-
-        /// TODO: remove this after snapshot is created
-        recordMode = true
     }
     
     override func tearDown() {
