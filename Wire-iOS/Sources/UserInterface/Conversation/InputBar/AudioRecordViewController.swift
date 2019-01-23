@@ -88,25 +88,39 @@ private let zmLog = ZMSLog(tag: "UI")
     }
     
     func beginRecording() {
-        self.delegate?.audioRecordViewControllerDidStartRecording(self)
-
-        let feedbackGenerator = UINotificationFeedbackGenerator()
-        feedbackGenerator.prepare()
-        feedbackGenerator.notificationOccurred(.success)
-
-        self.recorder.startRecording()
+        
+        
+        self.recorder.startRecording { (success) in
+            let feedbackGenerator = UINotificationFeedbackGenerator()
+            feedbackGenerator.prepare()
+            feedbackGenerator.notificationOccurred(.success)
+            AppDelegate.shared().mediaPlaybackManager?.audioTrackPlayer.stop()
+            
+            self.delegate?.audioRecordViewControllerDidStartRecording(self)
+        }
     }
     
     func finishRecordingIfNeeded(_ sender: UIGestureRecognizer) {
+        guard recorder.state  != .initializing else {
+            recorder.stopRecording()
+            self.delegate?.audioRecordViewControllerDidCancel(self)
+            return
+        }
+        
         let location = sender.location(in: buttonOverlay)
         let upperThird = location.y < buttonOverlay.frame.height / 3
         let shouldSend = upperThird && sender.state == .ended
         
-        guard recorder.stopRecording() else { return zmLog.warn("Stopped recording but did not get file URL") }
+        guard recorder.stopRecording() else {
+            return zmLog.warn("Stopped recording but did not get file URL")
+        }
         
         if shouldSend {
             sendAudio()
         }
+        
+        setOverlayState(.default, animated: true)
+        setRecordingState(.finishedRecording, animated: true)
     }
     
     func updateWithChangedRecognizer(_ sender: UIGestureRecognizer) {
@@ -242,10 +256,6 @@ private let zmLog = ZMSLog(tag: "UI")
         recorder.recordTimerCallback = { [weak self] time in
             guard let `self` = self else { return }
             self.updateTimeLabel(time)
-        }
-        
-        recorder.recordStartedCallback = {
-            AppDelegate.shared().mediaPlaybackManager?.audioTrackPlayer.stop()
         }
         
         recorder.recordEndedCallback = { [weak self] result in

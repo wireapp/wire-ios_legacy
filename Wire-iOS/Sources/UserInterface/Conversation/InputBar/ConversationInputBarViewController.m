@@ -145,8 +145,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 {
     self = [super init];
     if (self) {
-        [self setupAudioSession];
-
         if (conversation != nil) {
             self.conversation = conversation;
             self.sendController = [[ConversationInputBarSendController alloc] initWithConversation:self.conversation];
