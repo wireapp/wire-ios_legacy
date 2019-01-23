@@ -25,6 +25,16 @@ struct ChangePhoneNumberState {
     var updatedNumber: PhoneNumber?
     var validationError: TextFieldValidator.ValidationError = .tooShort(kind: .phoneNumber)
 
+    var selectedCountry: Country {
+        didSet {
+            let newCode = selectedCountry.e164.uintValue
+
+            if let visible = visibleNumber, visible.countryCode != newCode {
+                updatedNumber = PhoneNumber(countryCode: newCode, numberWithoutCode: visible.numberWithoutCode)
+            }
+        }
+    }
+
     var visibleNumber: PhoneNumber? {
         return updatedNumber ?? currentNumber
     }
@@ -43,6 +53,7 @@ struct ChangePhoneNumberState {
     
     init(currentPhoneNumber: String? = ZMUser.selfUser().phoneNumber) {
         self.currentNumber = currentPhoneNumber.flatMap(PhoneNumber.init(fullNumber:))
+        self.selectedCountry = currentNumber?.country ?? .default
     }
     
 }
@@ -131,9 +142,9 @@ final class ChangePhoneViewController: SettingsBaseTableViewController {
             let cell = tableView.dequeueReusableCell(withIdentifier: PhoneNumberInputCell.zm_reuseIdentifier, for: indexPath) as! PhoneNumberInputCell
 
             if let current = state.visibleNumber {
-                cell.phoneInputView.updatePhoneNumber(current.fullNumber)
+                cell.phoneInputView.setPhoneNumber(current)
             } else {
-                cell.phoneInputView.selectCountry(.default)
+                cell.phoneInputView.selectCountry(state.selectedCountry)
             }
 
             cell.phoneInputView.delegate = self
@@ -206,6 +217,7 @@ extension ChangePhoneViewController: PhoneNumberInputViewDelegate {
 
 extension ChangePhoneViewController: CountryCodeTableViewControllerDelegate {
     func countryCodeTableViewController(_ viewController: UIViewController!, didSelect country: Country!) {
+        state.selectedCountry = country
         viewController.dismiss(animated: true, completion: nil)
         updateSaveButtonState()
     }

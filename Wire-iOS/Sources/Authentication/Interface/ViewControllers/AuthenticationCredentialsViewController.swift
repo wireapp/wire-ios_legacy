@@ -206,7 +206,9 @@ class AuthenticationCredentialsViewController: AuthenticationStepController, Cou
         case .email:
             emailPasswordInputField.prefill(email: prefilledCredentials.credentials.emailAddress)
         case .phone:
-            phoneInputView.updatePhoneNumber(prefilledCredentials.credentials.phoneNumber)
+            if let phoneNumber = prefilledCredentials.credentials.phoneNumber.flatMap(PhoneNumber.init(fullNumber:)) {
+                phoneInputView.setPhoneNumber(phoneNumber)
+            }
         }
     }
 

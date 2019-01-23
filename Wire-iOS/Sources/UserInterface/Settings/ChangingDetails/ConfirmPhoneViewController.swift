@@ -39,7 +39,6 @@ protocol ConfirmPhoneDelegate: class {
     fileprivate var observer: NSObjectProtocol?
     fileprivate var observerToken: Any?
     
-    fileprivate var verificationCode: String?
     fileprivate var resendEnabled: Bool = false
     fileprivate var timer: ZMTimer?
 
@@ -86,14 +85,7 @@ protocol ConfirmPhoneDelegate: class {
         
         tableView.sectionHeaderHeight = UITableView.automaticDimension
         tableView.estimatedSectionHeaderHeight = 60
-        
-        navigationItem.rightBarButtonItem = UIBarButtonItem(
-            title: "self.settings.account_section.phone_number.change.verify.save".localized(uppercased: true),
-            style: .done,
-            target: self,
-            action: #selector(saveButtonTapped)
-        )
-        
+
         // Create top header
         let description = DescriptionHeaderView()
         let format = "self.settings.account_section.phone_number.change.verify.description".localized
@@ -113,26 +105,15 @@ protocol ConfirmPhoneDelegate: class {
         timer = ZMTimer(target: self, operationQueue: .main)
         timer?.fire(afterTimeInterval: 30)
     }
+
+    fileprivate func clearCodeInput() {
+        let inputCode = IndexPath(item: 0, section: Section.verificationCode.rawValue)
+        tableView.reloadRows(at: [inputCode], with: .none)
+    }
     
     fileprivate func reloadResendCell() {
         let resend = IndexPath(item: 0, section: Section.buttons.rawValue)
         tableView.reloadRows(at: [resend], with: .none)
-    }
-    
-    @objc func saveButtonTapped() {
-        if let verificationCode = verificationCode {
-            let credentials = ZMPhoneCredentials(phoneNumber: newNumber, verificationCode: verificationCode)
-            userProfile?.requestPhoneNumberChange(credentials: credentials)
-            navigationController?.showLoadingView = true
-        }
-    }
-    
-    fileprivate func updateSaveButtonState(enabled: Bool? = nil) {
-        if let enabled = enabled {
-            navigationItem.rightBarButtonItem?.isEnabled = enabled
-        } else {
-            navigationItem.rightBarButtonItem?.isEnabled = (verificationCode != nil)
-        }
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -164,6 +145,7 @@ protocol ConfirmPhoneDelegate: class {
             let cell = tableView.dequeueReusableCell(withIdentifier: ConfirmationCodeCell.zm_reuseIdentifier, for: indexPath) as! ConfirmationCodeCell
             cell.textField.accessibilityIdentifier = "ConfirmationCodeField"
             cell.textField.delegate = self
+            cell.textField.becomeFirstResponderIfPossible()
             return cell
         case .buttons:
             let cell = tableView.dequeueReusableCell(withIdentifier: SettingsButtonCell.zm_reuseIdentifier, for: indexPath) as! SettingsButtonCell
@@ -223,6 +205,7 @@ extension ConfirmPhoneViewController: UserProfileUpdateObserver {
     func phoneNumberChangeDidFail(_ error: Error!) {
         navigationController?.showLoadingView = false
         showAlert(forError: error)
+        clearCodeInput()
     }
 }
 
@@ -237,9 +220,9 @@ extension ConfirmPhoneViewController: CharacterInputFieldDelegate {
     }
 
     func didFillInput(inputField: CharacterInputField, text: String) {
-        // self.valueSubmitted?(text)
-        verificationCode = text
-        updateSaveButtonState()
+        let credentials = ZMPhoneCredentials(phoneNumber: newNumber, verificationCode: text)
+        userProfile?.requestPhoneNumberChange(credentials: credentials)
+        navigationController?.showLoadingView = true
     }
 
 }

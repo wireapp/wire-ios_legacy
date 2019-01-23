@@ -63,7 +63,18 @@ NS_ASSUME_NONNULL_BEGIN
     }
 }
 
-+ (instancetype)countryWithISO:(NSString *)ISO e164:(NSNumber *)e164
++ (nullable instancetype)countryWithE164:(NSNumber *)e164
+{
+    for (Country *country in [self allCountries]) {
+        if ([country.e164 isEqualToNumber:e164]) {
+            return country;
+        }
+    }
+
+    return nil;
+}
+
++ (nullable instancetype)countryWithISO:(NSString *)ISO e164:(NSNumber *)e164
 {
     Country *country = [[Country alloc] init];
     country.ISO = ISO;

@@ -237,6 +237,12 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
         countryPickerButton.setAttributedTitle(selectedLabel, for: .highlighted)
     }
 
+    /// Sets the phone number to display.
+    func setPhoneNumber(_ phoneNumber: PhoneNumber) {
+        selectCountry(phoneNumber.country)
+        textField.updateText(phoneNumber.numberWithoutCode)
+    }
+
     // MARK: - Text Update
 
     /// Returns whether the text should be updated.
@@ -246,11 +252,11 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
         }
 
         let updatedString = input.replacingCharacters(in: replacementRange, with: replacementString)
-        return updatePhoneNumber(updatedString)
+        return shouldUpdatePhoneNumber(updatedString)
     }
 
     /// Updates the phone number with a new value.
-    @discardableResult func updatePhoneNumber(_ updatedString: String?) -> Bool {
+    private func shouldUpdatePhoneNumber(_ updatedString: String?) -> Bool {
         guard let updatedString = updatedString else { return false }
 
         // If the textField is empty and a replacementString with a +, it is likely to insert from autoFill.
