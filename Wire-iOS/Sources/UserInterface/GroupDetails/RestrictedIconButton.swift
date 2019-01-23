@@ -19,7 +19,13 @@
 import Foundation
 
 final class RestrictedIconButton: IconButton, Restricted {
-    var requiredPermissions: Permissions = []
+    var requiredPermissions: Permissions = [] {
+        didSet {
+            if shouldHide {
+                isHidden = true
+            }
+        }
+    }
 
     override public var isHidden: Bool {
         get {
@@ -39,9 +45,6 @@ final class RestrictedIconButton: IconButton, Restricted {
         self.init(frame: .zero)
 
         self.requiredPermissions = requiredPermissions
-        if shouldHide {
-            isHidden = true
-        }
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -52,11 +55,5 @@ final class RestrictedIconButton: IconButton, Restricted {
     // rewrite parent class to Swift and then remove this.
     override init(frame: CGRect) {
         super.init(frame: frame)
-    }
-}
-
-extension Restricted where Self: UIButton {
-    internal var shouldHide: Bool {
-        return ZMUser.selfUser().isTeamMember && !selfUserIsAuthorized
     }
 }

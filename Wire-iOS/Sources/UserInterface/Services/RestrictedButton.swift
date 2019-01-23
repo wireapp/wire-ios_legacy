@@ -19,7 +19,27 @@
 import Foundation
 
 final class RestrictedButton: Button, Restricted {
-    var requiredPermissions: Permissions = []
+    var requiredPermissions: Permissions = [] {
+        didSet {
+            if shouldHide {
+                isHidden = true
+            }
+        }
+    }
+
+    override public var isHidden: Bool {
+        get {
+            return shouldHide || super.isHidden
+        }
+
+        set {
+            if shouldHide {
+                super.isHidden = true
+            } else {
+                super.isHidden = newValue
+            }
+        }
+    }
 }
 
 extension RestrictedButton {

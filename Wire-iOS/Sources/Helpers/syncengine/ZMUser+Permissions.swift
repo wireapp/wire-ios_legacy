@@ -71,3 +71,9 @@ extension Restricted {
         if selfUserIsAuthorized { onSuccess() }
     }
 }
+
+extension Restricted where Self: UIButton {
+    internal var shouldHide: Bool {
+        return ZMUser.selfUser().isTeamMember && !selfUserIsAuthorized
+    }
+}
