@@ -66,6 +66,10 @@ class AuthenticationStepController: AuthenticationStepViewController {
 
     private var rightItemAction: AuthenticationCoordinatorAction?
 
+    var contentCenterXAnchor: NSLayoutYAxisAnchor {
+        return mainView!.centerYAnchor
+    }
+
     // MARK: - Initialization
 
     /**
@@ -229,7 +233,7 @@ class AuthenticationStepController: AuthenticationStepViewController {
         contentStack.wr_addCustomSpacing(16, after: errorLabelContainer)
 
         // Fixed Constraints
-        contentCenter = contentStack.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        contentCenter = contentCenterXAnchor.constraint(equalTo: view.centerYAnchor)
 
         NSLayoutConstraint.activate([
             // contentStack

@@ -126,6 +126,10 @@ class AuthenticationCredentialsViewController: AuthenticationStepController, Cou
         }
     }
 
+    override var contentCenterXAnchor: NSLayoutYAxisAnchor {
+        return tabBar.bottomAnchor
+    }
+
     override func createMainView() -> UIView {
         contentStack.axis = .vertical
         contentStack.spacing = 24
