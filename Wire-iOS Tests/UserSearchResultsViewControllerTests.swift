@@ -23,21 +23,15 @@ class UserSearchResultsViewControllerTests: CoreDataSnapshotTestCase {
 
     var sut: UserSearchResultsViewController!
     var serviceUser: ZMUser!
-    
+
+
     override func setUp() {
         // self user should be a team member and other participants should be guests, in order to show guest icon in the user cells
         selfUserInTeam = true
 
         super.setUp()
-        
-        serviceUser = ZMUser.insertNewObject(in: uiMOC)
-        serviceUser.remoteIdentifier = UUID()
-        serviceUser.name = "ServiceUser"
-        serviceUser.setHandle(name.lowercased())
-        serviceUser.accentColorValue = .brightOrange
-        serviceUser.serviceIdentifier = UUID.create().transportString()
-        serviceUser.providerIdentifier = UUID.create().transportString()
-        uiMOC.saveOrRollback()
+
+        serviceUser = createServiceUser()
 
         XCTAssert(ZMUser.selfUser().isTeamMember, "selfUser should be a team member to generate snapshots with guest icon")
 
