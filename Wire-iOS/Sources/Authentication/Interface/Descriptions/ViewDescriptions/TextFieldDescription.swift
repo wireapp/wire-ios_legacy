@@ -47,7 +47,7 @@ extension TextFieldDescription: ViewDescriptor {
         let textField = AccessoryTextField(kind: kind)
         textField.enablesReturnKeyAutomatically = true
         textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.placeholder = uppercasePlaceholder ? self.placeholder.uppercased() : self.placeholder
+        textField.placeholder = uppercasePlaceholder ? self.placeholder.localizedUppercase : self.placeholder
         textField.delegate = self
         textField.textFieldValidationDelegate = self
         textField.confirmButton.addTarget(self, action: #selector(TextFieldDescription.confirmButtonTapped(_:)), for: .touchUpInside)

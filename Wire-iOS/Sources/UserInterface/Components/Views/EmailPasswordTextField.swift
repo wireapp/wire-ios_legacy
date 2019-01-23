@@ -34,8 +34,8 @@ class EmailPasswordTextField: UIView {
 
     weak var delegate: EmailPasswordTextFieldDelegate?
 
-    private var emailValidationError: TextFieldValidator.ValidationError = .none
-    private var passwordValidationError: TextFieldValidator.ValidationError = .none
+    private var emailValidationError: TextFieldValidator.ValidationError = .tooShort(kind: .email)
+    private var passwordValidationError: TextFieldValidator.ValidationError = .tooShort(kind: .email)
 
     // MARK: - Initialization
 
