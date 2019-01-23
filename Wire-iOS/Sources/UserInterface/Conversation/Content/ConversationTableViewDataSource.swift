@@ -257,7 +257,11 @@ final class ConversationTableViewDataSource: NSObject {
         let scrolledToTop = (tableView.contentOffset.y + tableView.bounds.height) - tableView.contentSize.height > 0
         
         if scrolledToTop, !hasFetchedAllMessages {
-            fetchLimit = fetchLimit + ConversationTableViewDataSource.defaultBatchSize
+            // NOTE: we dispatch async because `didScroll(tableView:` can be called inside a `performBatchUpdate()`,
+            // which would cause data source inconsistency if change the fetchLimit.
+            DispatchQueue.main.async {
+                self.fetchLimit = self.fetchLimit + ConversationTableViewDataSource.defaultBatchSize
+            }
         }
     }
     
