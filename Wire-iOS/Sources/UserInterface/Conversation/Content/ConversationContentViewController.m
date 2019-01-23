@@ -52,9 +52,6 @@
 
 #import "Wire-Swift.h"
 
-@interface ConversationContentViewController (TableView) <UITableViewDelegate, UITableViewDataSourcePrefetching>
-@end
-
 @interface ConversationContentViewController (ZMTypingChangeObserver) <ZMTypingChangeObserver>
 @end
 
@@ -374,21 +371,6 @@
     [self.messagePresenter openMessage:message targetView:cell actionResponder:self];
 }
 
-- (void)canvasViewController:(CanvasViewController *)canvasViewController didExportImage:(UIImage *)image
-{
-    [self.parentViewController dismissViewControllerAnimated:YES completion:^{
-        if (image) {
-            NSData *imageData = UIImagePNGRepresentation(image);
-            
-            [[ZMUserSession sharedSession] enqueueChanges:^{
-                [self.conversation appendMessageWithImageData:imageData];
-            } completionHandler:^{
-                [[Analytics shared] tagMediaActionCompleted:ConversationMediaActionPhoto inConversation:self.conversation];
-            }];
-        }
-    }];
-}
-
 #pragma mark - Custom UI, utilities
 
 - (void)createMentionsResultsView
@@ -498,7 +480,7 @@
     }
 }
 
-- (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
+- (NSIndexPath *) willSelectRowAtIndexPath:(NSIndexPath *)indexPath tableView:(UITableView *)tableView
 {
     ZMMessage *message = (ZMMessage *)[self.dataSource.messages objectAtIndex:indexPath.section];
     NSIndexPath *selectedIndexPath = nil;
@@ -510,12 +492,12 @@
     }
 
     if ([message isEqual:self.dataSource.selectedMessage]) {
-        
+
         // If this cell is already selected, deselect it.
         self.dataSource.selectedMessage  = nil;
         [self.dataSource deselectWithIndexPath:indexPath];
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
-        
+
         // Make table view to update cells with animation (TODO can be removed when legacy cells are removed)
         [tableView beginUpdates];
         [tableView endUpdates];
@@ -527,8 +509,13 @@
         [self.dataSource selectWithIndexPath:indexPath];
         selectedIndexPath = indexPath;
     }
-    
+
     return selectedIndexPath;
+}
+
+- (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return [self willSelectRowAtIndexPath:indexPath tableView:tableView];
 }
 
 - (void)tableView:(UITableView *)tableView prefetchRowsAtIndexPaths:(NSArray<NSIndexPath *> *)indexPaths

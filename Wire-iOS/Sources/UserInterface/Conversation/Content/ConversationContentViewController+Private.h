@@ -54,4 +54,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+@interface ConversationContentViewController (TableView) <UITableViewDelegate, UITableViewDataSourcePrefetching>
+
+- (NSIndexPath *) willSelectRowAtIndexPath:(NSIndexPath *)indexPath tableView:(UITableView *)tableView;
+
+@end
+
+
 NS_ASSUME_NONNULL_END

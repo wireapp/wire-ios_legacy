@@ -48,20 +48,32 @@ extension ConversationContentViewController: ConversationMessageCellDelegate {
 }
 
 extension ConversationContentViewController: CanvasViewControllerDelegate {
+    func canvasViewController(_ canvasViewController: CanvasViewController, didExportImage image: UIImage) {
+        parent?.dismiss(animated: true) {
+            if let imageData = image.pngData() {
+
+            ZMUserSession.shared()?.enqueueChanges({
+                self.conversation.append(imageFromData: imageData)
+            }, completionHandler: {
+                Analytics.shared().tagMediaActionCompleted(.photo, inConversation: self.conversation)
+            })
+            }
+        }
+    }
 
 }
 
 extension ConversationContentViewController {
     func openSketch(for message: ZMConversationMessage, in editMode: CanvasViewControllerEditMode) {
         let canvasViewController = CanvasViewController()
-        if let imageData = message.imageMessageData.imageData {
+        if let imageData = message.imageMessageData?.imageData {
             canvasViewController.sketchImage = UIImage(data: imageData)
         }
         canvasViewController.delegate = self
-        canvasViewController.title = message.conversation.displayName.uppercased()
-        canvasViewController.select(with: editMode, animated: false)
+        canvasViewController.title = message.conversation?.displayName.uppercased()
+        canvasViewController.select(editMode: editMode, animated: false)
 
-        present(canvasViewController.wrapInNavigation(), animated: true)
+        present(canvasViewController.wrapInNavigationController(), animated: true)
     }
 
 
@@ -118,48 +130,46 @@ extension ConversationContentViewController {
         case .like:
             let liked = !Message.isLikedMessage(message)
 
-            let indexPath: IndexPath? = dataSource?.indexPath(for: message)
+            if let indexPath = dataSource?.indexPath(for: message),
+                let selectedMessage = dataSource?.selectedMessage {
 
-            ZMUserSession.shared.performChanges({
-                Message.setLiked(message, liked: liked)
-            })
+                session.performChanges({
+                    Message.setLikedMessage(message, liked: liked)
+                })
 
-            if liked {
-                // Deselect if necessary to show list of likers
-                if dataSource?.selectedMessage == message {
-                    if let indexPath = indexPath {
-                        tableView(tableView, willSelectRowAt: indexPath)
+                if liked {
+                    // Deselect if necessary to show list of likers
+                    if selectedMessage == message {
+                        willSelectRow(at: indexPath, tableView: tableView)
                     }
-                }
-            } else {
-                // Select if necessary to prevent message from collapsing
-                if dataSource?.selectedMessage != message && !Message.hasReactions(message) {
-                    if let indexPath = indexPath {
-                        tableView(tableView, willSelectRowAt: indexPath)
+                } else {
+                    // Select if necessary to prevent message from collapsing
+                    if !(selectedMessage == message) && !Message.hasReactions(message) {
+                        willSelectRow(at: indexPath, tableView: tableView)
+
+                        tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
                     }
-                    tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
                 }
             }
         case .forward:
-            showForward(for: message, fromCell: cell)
-        case ShowInConversation:
+            showForwardFor(message: message, fromCell: cell)
+        case .showInConversation:
             scroll(to: message) { cell in
-                self.dataSource?.highlight(message)
+                self.dataSource?.highlight(message: message)
             }
         case .copy:
             Message.copy(message, in: UIPasteboard.general)
         case .download:
-            ZMUserSession.sharedSession.enqueueChanges({
-                message?.fileMessageData.requestFileDownload()
+            session.enqueueChanges({
+                message.fileMessageData?.requestFileDownload()
             })
         case .reply:
             delegate.conversationContentViewController(self, didTriggerReplyingTo: message)
 
         case .openQuote:
-            if message?.textMessageData.quote != nil {
-                let quote: ZMConversationMessage? = message?.textMessageData.quote
+            if let quote = message.textMessageData?.quote {
                 scroll(to: quote) { cell in
-                    self.dataSource?.highlight(quote)
+                    self.dataSource?.highlight(message: quote)
                 }
             }
         case .openDetails:
@@ -178,8 +188,8 @@ extension ConversationContentViewController {
         if messagePresenter.modalTargetController?.presentedViewController != nil && shouldDismissModal {
             messagePresenter.modalTargetController?.dismiss(animated: true) {
                 self.messageAction(actionId: actionId,
-                              for: message,
-                              cell: cell)
+                                   for: message,
+                                   cell: cell)
             }
         } else {
             messageAction(actionId: actionId,

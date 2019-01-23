@@ -44,7 +44,7 @@ extension ConfirmAssetViewController {
         view.addSubview(playerViewController.view)
     }
 
-
+    @objc(openSketchInEditMode:)
     func openSketch(in editMode: CanvasViewControllerEditMode) {
         guard let image = image as? UIImage else {
             return
