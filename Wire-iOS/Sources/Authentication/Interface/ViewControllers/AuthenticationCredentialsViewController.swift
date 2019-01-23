@@ -261,6 +261,10 @@ class AuthenticationCredentialsViewController: AuthenticationStepController, Cou
         authenticationCoordinator?.handleUserInput(credentials)
     }
 
+    func textField(_ textField: EmailPasswordTextField, didUpdateValidation isValid: Bool) {
+        // no-op: we do not update the UI depending on the validity of the input
+    }
+
     // MARK: - Phone Number Input
 
     func phoneNumberInputViewDidRequestCountryPicker(_ phoneNumberInput: PhoneNumberInputView) {
@@ -278,7 +282,7 @@ class AuthenticationCredentialsViewController: AuthenticationStepController, Cou
     }
 
     func phoneNumberInputView(_ inputView: PhoneNumberInputView, didValidatePhoneNumber phoneNumber: PhoneNumber, withResult validationError: TextFieldValidator.ValidationError) {
-        updateValidationError(validationError)
+        // no-op: handled by the input view directly
     }
 
     func countryCodeTableViewController(_ viewController: UIViewController!, didSelect country: Country!) {

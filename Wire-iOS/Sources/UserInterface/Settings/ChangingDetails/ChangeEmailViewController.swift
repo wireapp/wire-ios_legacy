@@ -31,7 +31,7 @@ struct ChangeEmailState {
     var newPassword: String?
 
     var emailValidationError: TextFieldValidator.ValidationError
-    var passwordValidationError: TextFieldValidator.ValidationError
+    var isEmailPasswordInputValid: Bool
 
     var visibleEmail: String? {
         return newEmail ?? currentEmail
@@ -40,27 +40,22 @@ struct ChangeEmailState {
     var validatedEmail: String? {
         guard let newEmail = self.newEmail else { return nil }
 
-        switch emailValidationError {
-        case .none:
-            if let currentEmail = currentEmail, currentEmail == newEmail {
+        switch flowType {
+        case .changeExistingEmail:
+            guard case .none = emailValidationError else {
                 return nil
             }
 
             return newEmail
 
-        default:
-            return nil
+        case .setInitialEmail:
+            return isEmailPasswordInputValid ? newEmail : nil
         }
     }
 
     var validatedPassword: String? {
         guard let newPassword = self.newPassword else { return nil }
-
-        if case .none = passwordValidationError {
-            return newPassword
-        } else {
-            return nil
-        }
+        return isEmailPasswordInputValid ? newPassword : nil
     }
 
     var validatedCredentials: ZMEmailCredentials? {
@@ -84,7 +79,7 @@ struct ChangeEmailState {
         self.currentEmail = currentEmail
         flowType = currentEmail != nil ? .changeExistingEmail : .setInitialEmail
         emailValidationError = currentEmail != nil ? .none : .tooShort(kind: .email)
-        passwordValidationError = .tooShort(kind: .password(isNew: true))
+        isEmailPasswordInputValid = false
     }
 
 }
@@ -132,9 +127,13 @@ struct ChangeEmailState {
         emailCell.textField.textFieldValidationDelegate = self
         emailCell.textField.addTarget(self, action: #selector(emailTextFieldEditingChanged), for: .editingChanged)
 
-//        emailPasswordCell.textField.emailField.showConfirmButton = false
-//        emailPasswordCell.textField.passwordField.showConfirmButton = false
-//        emailPasswordCell.textField.delegate = self
+        emailPasswordCell.textField.emailField.showConfirmButton = false
+        emailPasswordCell.textField.passwordField.showConfirmButton = false
+        emailPasswordCell.textField.delegate = self
+
+        emailPasswordCell.textField.setBackgroundColor(.clear)
+        emailPasswordCell.textField.setTextColor(.white)
+        emailPasswordCell.textField.setSeparatorColor(.white)
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(
             title: "self.settings.account_section.email.change.save".localized(uppercased: true),
@@ -197,7 +196,12 @@ struct ChangeEmailState {
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 56
+        switch state.flowType {
+        case .changeExistingEmail:
+            return 56
+        case .setInitialEmail:
+            return (56 * 2) + CGFloat.hairline
+        }
     }
 
 }
@@ -244,12 +248,20 @@ extension ChangeEmailViewController: TextFieldValidationDelegate {
 
 }
 
-//extension ChangeEmailViewController: EmailPasswordTextFieldDelegate {
-//
-//    func textFieldDidUpdateText(_ textField: EmailPasswordTextField) {
-//        state.newEmail = textField.emailField.input
-//        state.newPassword = textField.passwordField.input
-//        updateSaveButtonState()
-//    }
-//
-//}
+extension ChangeEmailViewController: EmailPasswordTextFieldDelegate {
+
+    func textField(_ textField: EmailPasswordTextField, didConfirmCredentials credentials: (String, String)) {
+        // no-op: never called, we disable the confirm button
+    }
+
+    func textFieldDidUpdateText(_ textField: EmailPasswordTextField) {
+        state.newEmail = textField.emailField.input.trimmingCharacters(in: .whitespacesAndNewlines)
+        state.newPassword = textField.passwordField.input
+    }
+
+    func textField(_ textField: EmailPasswordTextField, didUpdateValidation isValid: Bool) {
+        state.isEmailPasswordInputValid = isValid
+        updateSaveButtonState()
+    }
+
+}

@@ -59,4 +59,8 @@ extension EmailPasswordFieldDescription: ViewDescriptor, EmailPasswordTextFieldD
     func textField(_ textField: EmailPasswordTextField, didConfirmCredentials credentials: (String, String)) {
         valueSubmitted?(credentials)
     }
+
+    func textField(_ textField: EmailPasswordTextField, didUpdateValidation isValid: Bool) {
+        // no-op: we do not observe the validity of the input here
+    }
 }

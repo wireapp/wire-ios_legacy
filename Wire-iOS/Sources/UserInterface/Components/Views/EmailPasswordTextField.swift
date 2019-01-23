@@ -20,6 +20,7 @@ import UIKit
 
 protocol EmailPasswordTextFieldDelegate: class {
     func textFieldDidUpdateText(_ textField: EmailPasswordTextField)
+    func textField(_ textField: EmailPasswordTextField, didUpdateValidation isValid: Bool)
     func textField(_ textField: EmailPasswordTextField, didConfirmCredentials credentials: (String, String))
 }
 
@@ -106,6 +107,22 @@ class EmailPasswordTextField: UIView {
         emailField.text = email
     }
 
+    // MARK: - Appearance
+
+    func setTextColor(_ color: UIColor) {
+        emailField.textColor = color
+        passwordField.textColor = color
+    }
+
+    func setBackgroundColor(_ color: UIColor) {
+        emailField.backgroundColor = color
+        passwordField.backgroundColor = color
+    }
+
+    func setSeparatorColor(_ color: UIColor) {
+        separatorContainer.view.backgroundColor = color
+    }
+
     // MARK: - Responder
 
     override var isFirstResponder: Bool {
@@ -158,6 +175,9 @@ class EmailPasswordTextField: UIView {
         }
 
         delegate?.textFieldDidUpdateText(self)
+
+        let isValid = emailField.isInputValid && passwordField.isInputValid
+        delegate?.textField(self, didUpdateValidation: isValid)
     }
 
 }
