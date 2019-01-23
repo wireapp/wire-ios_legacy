@@ -47,7 +47,24 @@ extension ConversationContentViewController: ConversationMessageCellDelegate {
 
 }
 
+extension ConversationContentViewController: CanvasViewControllerDelegate {
+
+}
+
 extension ConversationContentViewController {
+    func openSketch(for message: ZMConversationMessage, in editMode: CanvasViewControllerEditMode) {
+        let canvasViewController = CanvasViewController()
+        if let imageData = message.imageMessageData.imageData {
+            canvasViewController.sketchImage = UIImage(data: imageData)
+        }
+        canvasViewController.delegate = self
+        canvasViewController.title = message.conversation.displayName.uppercased()
+        canvasViewController.select(with: editMode, animated: false)
+
+        present(canvasViewController.wrapInNavigation(), animated: true)
+    }
+
+
     private func messageAction(actionId: MessageAction,
                                for message: ZMConversationMessage,
                                cell: (UIView & SelectableView)?) {
@@ -92,11 +109,12 @@ extension ConversationContentViewController {
             dataSource?.editingMessage = message
             delegate.conversationContentViewController(self, didTriggerEditing: message)
         case .sketchDraw:
-            openSketch(for: message, inEditMode: .draw)
+            openSketch(for: message, in: .draw)
         case .sketchEmoji:
-            openSketch(for: message, inEditMode: CanvasViewControllerEditModeEmoji)
+            openSketch(for: message, in: .emoji)
         case .sketchText:
             // Not implemented yet
+            break
         case .like:
             let liked = !Message.isLikedMessage(message)
 

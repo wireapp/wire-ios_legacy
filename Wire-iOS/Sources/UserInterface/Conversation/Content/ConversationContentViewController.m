@@ -58,7 +58,7 @@
 @interface ConversationContentViewController (ZMTypingChangeObserver) <ZMTypingChangeObserver>
 @end
 
-@interface ConversationContentViewController () <CanvasViewControllerDelegate>
+@interface ConversationContentViewController ()
 
 @property (nonatomic, assign) BOOL wasScrolledToBottomAtStartOfUpdate;
 @property (nonatomic) NSObject *activeMediaPlayerObserver;
@@ -372,17 +372,6 @@
     
     UITableViewCell *cell = [self.dataSource cellForMessage:message];
     [self.messagePresenter openMessage:message targetView:cell actionResponder:self];
-}
-
-- (void)openSketchForMessage:(id<ZMConversationMessage>)message inEditMode:(CanvasViewControllerEditMode)editMode
-{
-    CanvasViewController *canvasViewController = [[CanvasViewController alloc] init];
-    canvasViewController.sketchImage = [UIImage imageWithData:message.imageMessageData.imageData];
-    canvasViewController.delegate = self;
-    canvasViewController.title = message.conversation.displayName.uppercaseString;
-    [canvasViewController selectWithEditMode:editMode animated:NO];
-    
-    [self presentViewController:[canvasViewController wrapInNavigationController] animated:YES completion:nil];
 }
 
 - (void)canvasViewController:(CanvasViewController *)canvasViewController didExportImage:(UIImage *)image
