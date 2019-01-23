@@ -21,9 +21,7 @@ import Foundation
 final class RestrictedIconButton: IconButton, Restricted {
     var requiredPermissions: Permissions = [] {
         didSet {
-            if shouldHide {
-                isHidden = true
-            }
+            updateHidden()
         }
     }
 
@@ -41,10 +39,12 @@ final class RestrictedIconButton: IconButton, Restricted {
         }
     }
 
-    convenience init(requiredPermissions: Permissions) {
-        self.init(frame: .zero)
+    init(requiredPermissions: Permissions) {
+        super.init()
 
         self.requiredPermissions = requiredPermissions
+
+        updateHidden()
     }
 
     required init?(coder aDecoder: NSCoder) {

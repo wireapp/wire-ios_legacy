@@ -31,10 +31,6 @@ final class ServiceDetailViewControllerSnapshotTests: CoreDataSnapshotTestCase {
         serviceUser = createServiceUser()
         groupConversation = createGroupConversation()
 
-        let variant = ServiceDetailVariant(colorScheme: ColorScheme.default.variant, opaque: true)
-
-        sut = ServiceDetailViewController(serviceUser: serviceUser, actionType: .removeService(groupConversation), variant: variant, completion: nil)
-
         /// TODO: remove this after snapshot is created
         recordMode = true
     }
@@ -47,30 +43,24 @@ final class ServiceDetailViewControllerSnapshotTests: CoreDataSnapshotTestCase {
         super.tearDown()
     }
 
-    func testForInitState(){
-        verify(view: sut.view)
+    func createSut() {
+        let variant = ServiceDetailVariant(colorScheme: ColorScheme.default.variant, opaque: true)
+
+        sut = ServiceDetailViewController(serviceUser: serviceUser, actionType: .removeService(groupConversation), variant: variant, completion: nil)
     }
 
-    ///TODO:
-
-    /*
-    func testForOptionsForTeamUserInTeamConversation() {
+    func testForTeamMember() {
         teamTest {
-            selfUser.membership?.setTeamRole(.member)
-            groupConversation.team =  selfUser.team
-            groupConversation.teamRemoteIdentifier = selfUser.team?.remoteIdentifier
-            sut = GroupDetailsViewController(conversation: groupConversation)
+            createSut()
             verify(view: sut.view)
         }
     }
 
-    func testForOptionsForTeamUserInTeamConversation_Partner() {
+    func testForTeamPartner() {
         teamTest {
             selfUser.membership?.setTeamRole(.partner)
-            groupConversation.team =  selfUser.team
-            groupConversation.teamRemoteIdentifier = selfUser.team?.remoteIdentifier
-            sut = GroupDetailsViewController(conversation: groupConversation)
+            createSut()
             verify(view: sut.view)
         }
-    }*/
+    }
 }
