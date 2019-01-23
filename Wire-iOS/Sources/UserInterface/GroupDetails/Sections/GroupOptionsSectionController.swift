@@ -32,7 +32,7 @@ class GroupOptionsSectionController: GroupDetailsSectionController {
         
         var requiredPermissions: Permissions {
             switch self {
-            case .notifications: return .collaborator
+            case .notifications: return .partner
             case .guests:        return .member
             case .timeout:       return .member
             }
