@@ -26,15 +26,8 @@ final class GroupDetailsViewControllerSnapshotTests: CoreDataSnapshotTestCase {
     
     override func setUp() {
         super.setUp()
-        
-        // Note, we explicitly don't add participants. Why? The participants
-        // list in the group details requires the shared user session, which
-        // isn't configured in these tests. As such, the participants list
-        // is missing from these snapshots.
-        // TODO: include participants list.
-        groupConversation = ZMConversation.insertNewObject(in: uiMOC)
-        groupConversation.remoteIdentifier = UUID.create()
-        groupConversation.conversationType = .group
+
+        groupConversation = createGroupConversation()
         groupConversation.userDefinedName = "iOS Team"
     }
     
