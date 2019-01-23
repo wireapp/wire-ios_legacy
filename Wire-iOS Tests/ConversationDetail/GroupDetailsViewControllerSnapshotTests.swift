@@ -81,7 +81,6 @@ final class GroupDetailsViewControllerSnapshotTests: CoreDataSnapshotTestCase {
     }
 
     func testForActionMenu() {
-        // TODO: the menu is missing "mark unread" option at top
         teamTest {
             sut = GroupDetailsViewController(conversation: groupConversation)
             sut.detailsView(GroupDetailsFooterView(), performAction: .more)
@@ -90,7 +89,6 @@ final class GroupDetailsViewControllerSnapshotTests: CoreDataSnapshotTestCase {
     }
     
     func testForActionMenu_NonTeam() {
-        // TODO: the menu is missing "mark unread" option at top
         nonTeamTest {
             sut = GroupDetailsViewController(conversation: groupConversation)
             sut.detailsView(GroupDetailsFooterView(), performAction: .more)
