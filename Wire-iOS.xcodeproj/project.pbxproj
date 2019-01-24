@@ -173,6 +173,7 @@
 		55A42A701FC872600056752F /* CallQualityController+Budget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A42A6F1FC872600056752F /* CallQualityController+Budget.swift */; };
 		55DD5C341FA236F60082170C /* CallQualityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55DD5C331FA236F60082170C /* CallQualityViewController.swift */; };
 		5E028DEC21F883DF00E5512A /* EmailPasswordTextFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E028DEB21F883DF00E5512A /* EmailPasswordTextFieldCell.swift */; };
+		5E028DEE21F9C34D00E5512A /* TransparentNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E028DED21F9C34D00E5512A /* TransparentNavigationBar.swift */; };
 		5E0EB1FB2100D80B00B5DC2B /* CompanyLoginFlowOpener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E0EB1FA2100D80B00B5DC2B /* CompanyLoginFlowOpener.swift */; };
 		5E0FB21B2057F50C00FD9867 /* CallQualitySurveyReview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E0FB21A2057F50C00FD9867 /* CallQualitySurveyReview.swift */; };
 		5E144FFF213EA0EC00B65E14 /* PreviewImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E144FFD213E973B00B65E14 /* PreviewImageView.swift */; };
@@ -1659,6 +1660,7 @@
 		55A42A6F1FC872600056752F /* CallQualityController+Budget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CallQualityController+Budget.swift"; sourceTree = "<group>"; };
 		55DD5C331FA236F60082170C /* CallQualityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallQualityViewController.swift; sourceTree = "<group>"; };
 		5E028DEB21F883DF00E5512A /* EmailPasswordTextFieldCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailPasswordTextFieldCell.swift; sourceTree = "<group>"; };
+		5E028DED21F9C34D00E5512A /* TransparentNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransparentNavigationBar.swift; sourceTree = "<group>"; };
 		5E0EB1FA2100D80B00B5DC2B /* CompanyLoginFlowOpener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyLoginFlowOpener.swift; sourceTree = "<group>"; };
 		5E0FB21A2057F50C00FD9867 /* CallQualitySurveyReview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallQualitySurveyReview.swift; sourceTree = "<group>"; };
 		5E144FFD213E973B00B65E14 /* PreviewImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewImageView.swift; sourceTree = "<group>"; };
@@ -4325,6 +4327,7 @@
 				EF4172B02110A6E300FF85C7 /* SplitViewController+rightView.swift */,
 				87A1F9DA200CEDCA0040E9A9 /* ClearBackgroundNavigationController.swift */,
 				1682AEC2204840E7003A052A /* SectionCollectionViewController.swift */,
+				5E028DED21F9C34D00E5512A /* TransparentNavigationBar.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -7683,6 +7686,7 @@
 				8756CA141D2EBE1F002E7CB7 /* LaunchImageViewController.m in Sources */,
 				870C97C31D670C9A00F6FD7D /* NextResponderTextView.m in Sources */,
 				874D0EB31D3E6D77003DF418 /* ConversationInputBarViewController+Camera.swift in Sources */,
+				5E028DEE21F9C34D00E5512A /* TransparentNavigationBar.swift in Sources */,
 				871BC2561D34F8F800DF0793 /* PopTransition.m in Sources */,
 				EF21270E1FB9DFE300625A9B /* CountryCodeTableViewController.m in Sources */,
 				BFBDDBC61DB0D51C00BEED02 /* ConversationInputBarButtonState.swift in Sources */,

@@ -218,11 +218,7 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
                 break
             }
 
-            let navigationController = UINavigationController(navigationBarClass: DefaultNavigationBar.self, toolbarClass: nil)
-            navigationController.navigationBar.setBackgroundImage(UIImage(), for: .default)
-            navigationController.navigationBar.shadowImage = UIImage()
-            navigationController.navigationBar.tintColor = .black
-            navigationController.navigationBar.isTranslucent = true
+            let navigationController = UINavigationController(navigationBarClass: TransparentNavigationBar.self, toolbarClass: nil)
 
             authenticationCoordinator = AuthenticationCoordinator(presenter: navigationController,
                                                                   unauthenticatedSession: UnauthenticatedSession.sharedSession!,
