@@ -17,7 +17,6 @@
 //
 
 import Foundation
-import Cartography
 
 extension ZMConversation {
     var botCanBeAdded: Bool {
@@ -123,27 +122,7 @@ final class ServiceDetailViewController: UIViewController {
         view.addSubview(detailView)
         view.addSubview(actionButton)
 
-        var topMargin: CGFloat = 16
-        if #available(iOS 11.0, *) {
-            topMargin = 16
-        } else {
-            if let naviBarHeight = self.navigationController?.navigationBar.frame.height {
-                topMargin = 16 + naviBarHeight
-            }
-        }
-
-        constrain(self.view, detailView, actionButton) { selfView, detailView, confirmButton in
-            detailView.leading == selfView.leading + 16
-            detailView.top == selfView.topMargin + topMargin
-
-            detailView.trailing == selfView.trailing - 16
-
-            confirmButton.top == detailView.bottom + 16
-            confirmButton.height == 48
-            confirmButton.leading == selfView.leading + 16
-            confirmButton.trailing == selfView.trailing - 16
-            confirmButton.bottom == selfView.bottom - 16 - UIScreen.safeArea.bottom
-        }
+        createConstraints()
 
         guard let userSession = ZMUserSession.shared() else {
             return
@@ -157,6 +136,29 @@ final class ServiceDetailViewController: UIViewController {
             self?.detailView.service.serviceUserDetails = details
         }
     }
+
+    private func createConstraints() {
+        var topMargin: CGFloat = 16
+        if #available(iOS 11.0, *) {
+            topMargin = 16
+        } else {
+            if let naviBarHeight = self.navigationController?.navigationBar.frame.height {
+                topMargin = 16 + naviBarHeight
+            }
+        }
+
+        [self.view, detailView, actionButton].forEach(){ $0.translatesAutoresizingMaskIntoConstraints = false }
+
+        detailView.fitInSuperview(with: EdgeInsets(top: topMargin, leading: 16, bottom: 0, trailing: 16), exclude: [.bottom])
+
+        actionButton.fitInSuperview(with: EdgeInsets(top: 0, leading: 16, bottom: 16 + UIScreen.safeArea.bottom, trailing: 16), exclude: [.top])
+
+        NSLayoutConstraint.activate([
+            actionButton.topAnchor.constraint(equalTo: detailView.bottomAnchor, constant: 16),
+            actionButton.heightAnchor.constraint(equalToConstant: 48)
+            ])
+    }
+
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
