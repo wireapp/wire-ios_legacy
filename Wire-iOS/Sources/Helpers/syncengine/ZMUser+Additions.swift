@@ -33,6 +33,10 @@ extension ZMUser {
     }
     
     @objc var canSeeServices: Bool {
+        #if ADD_SERVICE_DISABLED
+        return false
+        #else
         return hasTeam
+        #endif
     }
 }

@@ -25,7 +25,7 @@ extension StartUIViewController {
 
         searchHeaderViewController.view.fitInSuperview(exclude: [.bottom])
 
-        if ZMUser.selfUser().canSeeServices {
+        if showsGroupSelector {
             NSLayoutConstraint.activate([
                 groupSelector.topAnchor.constraint(equalTo: searchHeaderViewController.view.bottomAnchor),
                 searchResultsViewController.view.topAnchor.constraint(equalTo: groupSelector.bottomAnchor)
@@ -39,5 +39,10 @@ extension StartUIViewController {
         }
 
         searchResultsViewController.view.fitInSuperview(exclude: [.top])
+    }
+
+    @objc
+    var showsGroupSelector: Bool {
+        return SearchGroup.all.count > 1 && ZMUser.selfUser().canSeeServices
     }
 }
