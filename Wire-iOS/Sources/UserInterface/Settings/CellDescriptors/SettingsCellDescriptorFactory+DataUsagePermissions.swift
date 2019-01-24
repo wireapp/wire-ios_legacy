@@ -27,15 +27,9 @@ extension SettingsCellDescriptorFactory {
 
         let receiveNewsAndOffersData = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.receiveNewsAndOffers))
         let receiveNewsAndOffersSection = SettingsSectionDescriptor(cellDescriptors: [receiveNewsAndOffersData], footer: "self.settings.receiveNews_and_offers.description.title".localized)
-        
-        #if !SEND_ANONYMOUS_DATA_DISABLED
-            items.append(sendAnonymousDataSection)
-        #endif
-        
-        #if !NEWSLETTER_DISABLED
-            items.append(receiveNewsAndOffersSection)
-        #endif
-        
+
+        items.append(contentsOf: [sendAnonymousDataSection, receiveNewsAndOffersSection])
+
         return SettingsGroupCellDescriptor(
             items: items,
             title: "self.settings.account.data_usage_permissions.title".localized

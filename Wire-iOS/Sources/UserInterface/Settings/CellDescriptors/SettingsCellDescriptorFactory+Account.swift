@@ -37,7 +37,7 @@ extension SettingsCellDescriptorFactory {
                                                          appearanceSection(),
                                                          privacySection()]
         
-        #if !SEND_ANONYMOUS_DATA_DISABLED || !NEWSLETTER_DISABLED
+        #if !DATA_COLLECTION_DISABLED
             sections.append(personalInformationSection())
         #endif
         
