@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2017 Wire Swiss GmbH
+// Copyright (C) 2019 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,27 +16,29 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import WireDataModel
+import Foundation
 
+final class RestrictedButton: Button, Restricted {
+    var requiredPermissions: Permissions = [] {
+        didSet {
+            if shouldHide {
+                isHidden = true
+            }
+        }
+    }
 
-extension ZMUser {
-    @objc var pov: PointOfView {
-        return self.isSelfUser ? .secondPerson : .thirdPerson
-    }
-    
-    @objc var canManageTeam: Bool {
-        return self.membership?.permissions.contains(.owner) ?? false || self.membership?.permissions.contains(.admin) ?? false
-    }
-    
-    @objc var hasUntrustedClients: Bool {
-        return nil != self.clients.first { !$0.verified }
-    }
-    
-    @objc var canSeeServices: Bool {
-        #if ADD_SERVICE_DISABLED
-        return false
-        #else
-        return hasTeam
-        #endif
+    override public var isHidden: Bool {
+        get {
+            return shouldHide || super.isHidden
+        }
+
+        set {
+            if shouldHide {
+                super.isHidden = true
+            } else {
+                super.isHidden = newValue
+            }
+        }
     }
 }
+

@@ -31,7 +31,7 @@
 "general.accept" = "承諾";
 "general.decline" = "不要です";
 "general.failure" = "何か問題があります";
-"general.service" = "Service";
+"general.service" = "サービス";
 "general.off" = "オフ";
 "general.on" = "オン";
 
@@ -46,7 +46,7 @@
 "peoplepicker.search_placeholder" = "名前またはユーザーネームで検索する";
 "peoplepicker.header.top_people" = "Top people";
 "peoplepicker.button.create_conversation" = "グループを作成";
-"peoplepicker.button.add_to_conversation" = "Add Participants to Group";
+"peoplepicker.button.add_to_conversation" = "参加者をグループに追加します。";
 "peoplepicker.header.conversations" = "グループ";
 "peoplepicker.header.team_conversations" = "%@ グループ";
 "peoplepicker.header.send_invitation" = "招待";
@@ -55,7 +55,7 @@
 "peoplepicker.header.directory" = "接続";
 
 "peoplepicker.group.title.singular" = "参加者を追加";
-"peoplepicker.group.title.plural" = "Add Participants (%d)";
+"peoplepicker.group.title.plural" = "参加者を追加 (%d)";
 "peoplepicker.group.skip" = "省略";
 "peoplepicker.group.done" = "完了";
 "peoplepicker.group.create" = "新規作成";
@@ -69,7 +69,7 @@
 "peoplepicker.services.add_service.error.full" = "会話数が上限に達しました。";
 
 "peoplepicker.title.create_conversation" = "グループを作成します";
-"peoplepicker.title.add_to_conversation" = "Add participants";
+"peoplepicker.title.add_to_conversation" = "参加者を追加";
 
 "peoplepicker.no_contacts_title" = "連絡先がありません";
 
@@ -81,9 +81,9 @@
 
 "peoplepicker.no_matching_results_provide_valid_email" = "有効なメール アドレスを入力してください";
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "結果はありません";
-"peoplepicker.no_matching_results_services_title" = "Services are helpers that can improve your workflow. To enable them, ask your administrator.";
-"peoplepicker.no_matching_results_services_admin_title" = "Services are helpers that can improve your workflow.";
-"peoplepicker.no_matching_results_services_manage_services_title" = "Manage Services";
+"peoplepicker.no_matching_results_services_title" = "あなたのワークフローを改善するサービスです。サービスを有効にするには、管理者に問い合わせてください。";
+"peoplepicker.no_matching_results_services_admin_title" = "サービスはあなたのワークフローを改善に役立ちます。";
+"peoplepicker.no_matching_results_services_manage_services_title" = "サービスを管理";
 /* This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button */
 "peoplepicker.no_matching_results_after_address_book_upload_message" = "メールアドレスを正確に入力します";
 /*  */
@@ -100,11 +100,11 @@
 "peoplepicker.quick-action.open-conversation" = "開く";
 "peoplepicker.quick-action.create-conversation" = "グループを作成します";
 "peoplepicker.quick-action.create-guest-room" = "ゲストルームを作成する";
-"peoplepicker.quick-action.admin-services" = "Manage Services";
+"peoplepicker.quick-action.admin-services" = "サービスを管理";
 
 "add_participants.all_contacts_added" = "全員います";
 
-"add_participants.alert.title" = "The group is full";
+"add_participants.alert.title" = "このグループは満員です";
 "add_participants.alert.message.new_conversation" = "グループ会話には %d 人まで参加することができます。";
 "add_participants.alert.message.existing_conversation" = "グループ会話には %1$d 人まで参加することができます。あと %2$d 人が参加できます。";
 
@@ -132,10 +132,10 @@
 "conversation_list.header.self_team.accessibility_value.has_new_messages" = "新しいメッセージ";
 
 // Conversation List Data Usage Permission Dialog
-"conversation_list.data_usage_permission_alert.title" = "Help us make Wire better";
-"conversation_list.data_usage_permission_alert.message" = "I agree that Wire may create and use anonymous usage and error reports to improve the Wire App. I can revoke this consent at any time.";
+"conversation_list.data_usage_permission_alert.title" = "Wire の改善にご協力を";
+"conversation_list.data_usage_permission_alert.message" = "私はWireに対して、匿名の利用状況およびアプリを改善するためのエラーレポートを提供することに同意します。私はこの同意をいつでも取り消すことができます。";
 "conversation_list.data_usage_permission_alert.disagree" = "いいえ";
-"conversation_list.data_usage_permission_alert.agree" = "I Agree";
+"conversation_list.data_usage_permission_alert.agree" = "同意する";
 
 // Profile Header View
 "conversation.connection_view.in_address_book" = "連絡先";
@@ -150,8 +150,8 @@
 "conversation_list.voiceover.status.silenced" = "マナーモード";
 "conversation_list.voiceover.status.typing" = "入力中";
 "conversation_list.voiceover.status.ping" = "ping";
-"conversation_list.voiceover.status.mention" = "you are mentioned";
-"conversation_list.voiceover.status.reply" = "reply";
+"conversation_list.voiceover.status.mention" = "あなたがメンションされました";
+"conversation_list.voiceover.status.reply" = "返信";
 "conversation_list.voiceover.bottom_bar.archived_button.label" = "アーカイブ済み";
 "conversation_list.voiceover.bottom_bar.archived_button.hint" = "アーカイブ済み会話一覧";
 "conversation_list.voiceover.bottom_bar.contacts_button.label" = "連絡先";
@@ -202,7 +202,7 @@
 "conversation.status.typing" = "メッセージを入力中";
 "conversation.status.typing.group" = "%@: メッセージの入力中";
 "conversation.status.silenced" = "ミュート";
-"conversation.status.poor_connection" = "Poor connection";
+"conversation.status.poor_connection" = "接続不良";
 "conversation.status.blocked" = "ブロック";
 
 "conversation.status.message.text" = "%@";
@@ -214,21 +214,21 @@
 "conversation.status.message.file" = "ファイルが共有されました";
 "conversation.status.message.knock" = "Ping されました";
 "conversation.status.message.missedcall" = "不在着信";
-"conversation.status.message.missedcall.groups" = "Missed call from %@";
+"conversation.status.message.missedcall.groups" = "%@ からの不在着信";
 "conversation.status.message.mention" = "%@";
 "conversation.status.message.reply" = "%@";
-"conversation.status.message.ephemeral" = "Sent a message";
-"conversation.status.message.ephemeral.group" = "Someone sent a message";
-"conversation.status.message.ephemeral.mention" = "Mentioned you";
-"conversation.status.message.ephemeral.mention.group" = "Someone mentioned you";
-"conversation.status.message.ephemeral.reply" = "Replied to your message";
-"conversation.status.message.ephemeral.reply.group" = "Someone replied to your message";
+"conversation.status.message.ephemeral" = "送信されたメッセージ";
+"conversation.status.message.ephemeral.group" = "誰かがメッセージを送信しました";
+"conversation.status.message.ephemeral.mention" = "あなたへのメンション";
+"conversation.status.message.ephemeral.mention.group" = "誰かがあなたにメンションしました";
+"conversation.status.message.ephemeral.reply" = "メッセージに返信しました";
+"conversation.status.message.ephemeral.reply.group" = "誰かがメッセージに返信しました";
 "conversation.status.message.ephemeral.knock" = "Ping されました";
-"conversation.status.message.ephemeral.knock.group" = "Someone pinged";
+"conversation.status.message.ephemeral.knock.group" = "誰かが ping しました";
 
 "conversation.status.unsent" = "⚠️ 未送信メッセージ";
 "conversation.status.you" = "あなた";
-"conversation.status.someone" = "Someone";
+"conversation.status.someone" = "誰か";
 "conversation.status.added_multiple" = "追加された人";
 "conversation.status.you_was_added" = "%@はあなたを追加しました";
 "conversation.status.added_users" = "%@は%@を追加しました";
@@ -280,7 +280,7 @@
 "conversation.connection_view.in_address_book" = "連絡先";
 
 "conversation.input_bar.shortcut.send" = "メッセージを送信";
-"conversation.input_bar.shortcut.newline" = "Insert line break";
+"conversation.input_bar.shortcut.newline" = "改行を挿入";
 "conversation.input_bar.shortcut.edit_last_message" = "最後のメッセージを編集";
 "conversation.input_bar.shortcut.cancel_editing_message" = "キャンセル";
 
@@ -291,12 +291,12 @@
 "conversation.create.group_name.placeholder" = "グループ名";
 "conversation.create.guidance.empty" = "１文字以上";
 "conversation.create.guidance.toolong" = "文字が多すぎます";
-"conversation.create.options.title" = "Conversation options";
-"conversation.create.options.subtitle" = "Allow guests: %@, Read receipts: %@";
-"conversation.create.guests.title" = "Allow guests and services";
-"conversation.create.guests.subtitle" = "Open this conversation to services and people outside your team.";
-"conversation.create.receipts.title" = "Read receipts";
-"conversation.create.receipts.subtitle" = "When this is on, people can see when their messages in this conversation are read.";
+"conversation.create.options.title" = "会話のオプション";
+"conversation.create.options.subtitle" = "ゲストとサービス: %@, 開封通知: %@";
+"conversation.create.guests.title" = "ゲストとサービスを許可します";
+"conversation.create.guests.subtitle" = "サービスとチーム外の人々にこの会話を公開します。";
+"conversation.create.receipts.title" = "開封通知";
+"conversation.create.receipts.subtitle" = "この設定がオンのとき、この会話内のメッセージが読まれたかどうか確認できます。";
 
 "conversation.input_bar.ongoing_call_alert.title" = "通話中";
 "conversation.input_bar.ongoing_call_alert.audio.message" = "音声メッセージは通話中に記録できません";
@@ -304,26 +304,26 @@
 "conversation.input_bar.ongoing_call_alert.photo.message" = "通話中に写真を撮ることはできません。";
 
 "conversation.guests_present" = "ゲストが存在します";
-"conversation.services_present" = "Services are active";
-"conversation.guests_services_present" = "Guests and services are present";
+"conversation.services_present" = "サービスは有効です";
+"conversation.guests_services_present" = "ゲストとサービスが参加中";
 "conversation.action.search" = "検索";
 
 // Reply message preview
-"conversation.input_bar.message_preview.image" = "Image";
-"conversation.input_bar.message_preview.location" = "Location";
+"conversation.input_bar.message_preview.image" = "画像";
+"conversation.input_bar.message_preview.location" = "位置情報";
 "conversation.input_bar.message_preview.video" = "ビデオ";
-"conversation.input_bar.message_preview.audio" = "Audio Message";
-"conversation.input_bar.message_preview.file" = "File";
-"conversation.input_bar.close_reply" = "Cancel reply";
+"conversation.input_bar.message_preview.audio" = "音声メッセージ";
+"conversation.input_bar.message_preview.file" = "ファイル";
+"conversation.input_bar.close_reply" = "返信をキャンセル";
 
-"conversation.input_bar.message_preview.accessibility_description" = "Replying to message: %@";
-"conversation.input_bar.message_preview.accessibility.image_message" = "Image message";
-"conversation.input_bar.message_preview.accessibility.location_message" = "Location message";
-"conversation.input_bar.message_preview.accessibility.video_message" = "Video message";
-"conversation.input_bar.message_preview.accessibility.audio_message" = "Audio message";
-"conversation.input_bar.message_preview.accessibility.file_message" = "File message (%@)";
-"conversation.input_bar.message_preview.accessibility.unknown_message" = "Unknown message";
-"conversation.input_bar.message_preview.accessibility.message_from" = "%@ from %@";
+"conversation.input_bar.message_preview.accessibility_description" = "メッセージに返信: %@";
+"conversation.input_bar.message_preview.accessibility.image_message" = "画像メッセージ";
+"conversation.input_bar.message_preview.accessibility.location_message" = "位置情報メッセージ";
+"conversation.input_bar.message_preview.accessibility.video_message" = "ビデオメッセージ";
+"conversation.input_bar.message_preview.accessibility.audio_message" = "音声メッセージ";
+"conversation.input_bar.message_preview.accessibility.file_message" = "ファイルメッセージ (%@)";
+"conversation.input_bar.message_preview.accessibility.unknown_message" = "不明なメッセージ";
+"conversation.input_bar.message_preview.accessibility.message_from" = "%@ から %@";
 
 "image_confirmer.confirm" = "OK";
 "image_confirmer.cancel" = "キャンセル";
@@ -387,7 +387,7 @@
 "content.system.other_removed_you" = "%@はあなたを削除しました";
 "content.system.you_removed_other" = "あなたは%@を削除しました";
 
-"content.system.services.warning" = "Services have access to the content of this conversation";
+"content.system.services.warning" = "サービスはこの会議のコンテンツにアクセスできます";
 
 // New conversation participants added / removed / started system message
 
@@ -403,7 +403,7 @@
 "content.system.conversation.team.member-leave" = "%@ がチームから削除されました";
 "content.system.conversation.guest.joined" = "%@ 参加済";
 
-"content.system.conversation.invite.title" = "Services and people outside your team can join this conversation.";
+"content.system.conversation.invite.title" = "サービスと外部ユーザは、あなたのチームの会話に参加できます。";
 "content.system.conversation.invite.button" = "招待する";
 
 "content.system.other_renamed_conv_to_nothing" = "%@が会話の名前を削除しました";
@@ -411,7 +411,7 @@
 "content.system.pending_message_timestamp" = "送信中…";
 "content.system.message_sent_timestamp" = "送信済み";
 "content.system.message_delivered_timestamp" = "配信済み";
-"content.system.message_read_timestamp" = "Seen";
+"content.system.message_read_timestamp" = "既読";
 "content.system.failedtosend_message_timestamp" = "送信できませんでした";
 "content.system.failedtosend_message_timestamp_resend" = "再送する";
 "content.system.failedtosend_message_timestamp_delete" = "削除";
@@ -448,13 +448,13 @@
 
 // read receipt
 
-"content.system.message_read_receipt_on" = "%@ turned read receipts on for everyone";
-"content.system.message_read_receipt_on-you" = "%@ turned read receipts on for everyone";
+"content.system.message_read_receipt_on" = "%@ は全員に対して開封通知をオンにしました";
+"content.system.message_read_receipt_on-you" = "%@ は全員に対して開封通知をオンにしました";
 
-"content.system.message_read_receipt_off" = "%@ turned read receipts off for everyone";
-"content.system.message_read_receipt_off-you" = "%@ turned read receipts off for everyone";
+"content.system.message_read_receipt_off" = "%@ は全員に対して開封通知をオフにしました";
+"content.system.message_read_receipt_off-you" = "%@ は全員に対して開封通知をオフにしました";
 
-"content.system.message_read_receipt_on_add_to_group" = "Read receipts are on";
+"content.system.message_read_receipt_on_add_to_group" = "開封通知はオンです";
 
 
 "content.system.reactivated_device" = "あなたは %@ を再び利用しています。いままでのメッセージはここには表示されません。";
@@ -511,22 +511,22 @@
 "content.message.forward.to" = "検索...";
 "content.message.open" = "開く";
 "content.message.copy" = "コピー";
-"content.message.download" = "Download";
+"content.message.download" = "ダウンロード";
 "content.message.details" = "詳細";
 
 // Reply
 "content.message.reply" = "返信";
-"content.message.original_label" = "Original message";
-"content.message.reply.original_timestamp.date" = "Original message from %@";
-"content.message.reply.original_timestamp.time" = "Original message from %@";
-"content.message.reply.broken_message" = "You cannot see this message.";
-"content.message.reply.edited_message" = "Edited";
+"content.message.original_label" = "オリジナルメッセージ";
+"content.message.reply.original_timestamp.date" = "%@ からのオリジナルメッセージ";
+"content.message.reply.original_timestamp.time" = "%@ からのオリジナルメッセージ";
+"content.message.reply.broken_message" = "このメッセージを見ることができません。";
+"content.message.reply.edited_message" = "編集済";
 
 "content.message.open_link_alert.title" = "リンクを開く";
 "content.message.open_link_alert.message" = "あなたは、%@ にアクセスしようとしています";
 "content.message.open_link_alert.open" = "開く";
 
-"content.message.audio_message.accessibility" = "Play the audio message";
+"content.message.audio_message.accessibility" = "オーディオ メッセージを再生します。";
 
 "content.reactions_list.likers" = "いいね！しました";
 
@@ -599,7 +599,7 @@
 "call.status.incoming.user" = "%@ を呼出中...";
 "call.status.incoming" = "発信中...";
 "call.status.outgoing" = "呼び出し中...";
-"call.status.outgoing.user" = "Calling %@…";
+"call.status.outgoing.user" = "%@ に発信中…";
 "call.status.reconnecting" = "再接続…";
 "call.status.terminating" = "通話終了中...";
 "call.status.constant_bitrate" = "固定ビットレート";
@@ -618,12 +618,12 @@
 "call.degraded.alert.message.unknown" = "新しいデバイスを使い始めた人がいます";
 "call.degraded.alert.action.continue" = "とにかく電話をする";
 
-"call.alert.ongoing.alert_title" = "This will end your other call.";
+"call.alert.ongoing.alert_title" = "他の通話を終了します";
 
 "call.alert.ongoing.start.message" = "他の会話で通話中です。\nここで呼び出すと、その他の通話は終了します。";
 "call.alert.ongoing.join.message" = "他の会話で通話中です。\nこの呼び出しに参加すると、その他の通話は終了します。";
 "call.alert.ongoing.start.button" = "とにかく電話をする";
-"call.alert.ongoing.join.button" = "Join anyway";
+"call.alert.ongoing.join.button" = "とにかく参加します。";
 
 // Call Actions (accessibility)
 
@@ -657,7 +657,7 @@
 "participants.section.services" = "サービス (%d)";
 "participants.section.settings" = "オプション";
 "participants.footer.add_title" = "参加者を追加";
-"participants.section.name.footer" = "Up to %1$d participants can join a group conversation. Video calls work with up to %2$d other people and you.";
+"participants.section.name.footer" = "グループ会話には %1$d 人まで参加できます。ビデオ通話はあなたと他 %2$d 名と通話できます。";
 
 // Meta Menu
 "meta.menu.rename" = "名前の変更";
@@ -672,7 +672,7 @@
 "meta.menu.mark_unread" = "未読にする";
 "meta.menu.mark_read" = "既読にする";
 "shortcut.mark_all_as_read.title" = "すべて既読にする";
-"meta.menu.configure_notifications" = "Notifications…";
+"meta.menu.configure_notifications" = "通知…";
 
 // Delete conversation
 "meta.menu.delete_content.dialog_title" = "コンテンツを削除しますか?";
@@ -683,10 +683,10 @@
 "meta.menu.delete_content.button_delete_and_leave" = "削除して退出";
 
 // Configure conversation notifications
-"meta.menu.configure_notification.dialog_message" = "Notify me about:";
-"meta.menu.configure_notification.button_everything" = "Everything";
-"meta.menu.configure_notification.button_mentions_and_replies" = "Mentions and Replies";
-"meta.menu.configure_notification.button_nothing" = "Nothing";
+"meta.menu.configure_notification.dialog_message" = "私宛に通知する:";
+"meta.menu.configure_notification.button_everything" = "全て";
+"meta.menu.configure_notification.button_mentions_and_replies" = "メンション と 返信";
+"meta.menu.configure_notification.button_nothing" = "なし";
 "meta.menu.configure_notification.button_cancel" = "キャンセル";
 
 // Leave conversation
@@ -747,9 +747,9 @@
 "profile.create_conversation_button_title" = "グループを作成します";
 "profile.open_conversation_button_title" = "会話を始めます";
 
-"profile.read_receipts_enabled_memo.header" = "YOU HAVE ENABLED READ RECEIPTS";
-"profile.read_receipts_disabled_memo.header" = "YOU HAVE DISABLED READ RECEIPTS";
-"profile.read_receipts_memo.body" = "If both sides turn on read receipts, you can see when messages are read.\nYou can change this option in your account settings.";
+"profile.read_receipts_enabled_memo.header" = "開封通知を有効にします";
+"profile.read_receipts_disabled_memo.header" = "開封通知を無効にします";
+"profile.read_receipts_memo.body" = "両者が開封通知をオンにした場合に、メッセージが開封されたかが分かります。\nあなたの アカウント設定 から、この設定を変更することができます。";
 
 // User Details
 "profile.details.title" = "詳細";
@@ -780,14 +780,14 @@
 "participants.services.remove_integration.button" = "連携を削除する";
 
 // Group details
-"group_details.guest_options_cell.title" = "Guests and services";
+"group_details.guest_options_cell.title" = "ゲストとサービス";
 "group_details.guest_options_cell.enabled" = "オン";
 "group_details.guest_options_cell.disabled" = "オフ";
 "group_details.timeout_options_cell.title" = "タイマーメッセージ";
 "group_details.notification_options_cell.title" = "通知センター";
-"group_details.notification_options_cell.description" = "You can be notified about everything (including audio and video calls) or only when someone mentions you or replies to one of your messages.";
-"group_details.receipt_options_cell.title" = "Read receipts";
-"group_details.receipt_options_cell.description" = "When this is on, people can see when their messages in this conversation are read.";
+"group_details.notification_options_cell.description" = "あなたは、すべて（オーディオとビデオ通話を含みます）または、メンションされた時のみに、通知をすることができます。";
+"group_details.receipt_options_cell.title" = "開封通知";
+"group_details.receipt_options_cell.description" = "この設定がオンのとき、この会話内のメッセージが読まれたかどうか確認できます。";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile
@@ -820,8 +820,8 @@
 
 // Licenses screen
 "about.license.project_header" = "詳細";
-"about.license.open_project_button" = "View Project Page";
-"about.license.license_header" = "Acknowledgements";
+"about.license.open_project_button" = "プロジェクトページを表示する";
+"about.license.license_header" = "謝辞";
 
 // Self new devices
 "self.new_device_alert.title" = "あなたのアカウントの使用:";
@@ -832,9 +832,9 @@
 
 // Settings changed alert
 
-"self.read_receipts_enabled.title" = "You have enabled read receipts";
-"self.read_receipts_disabled.title" = "You have disabled read receipts";
-"self.read_receipts_description.title" = "You can change this option in your account settings.";
+"self.read_receipts_enabled.title" = "開封通知を有効にします";
+"self.read_receipts_disabled.title" = "開封通知を無効にします";
+"self.read_receipts_description.title" = "あなたの アカウント設定 から、この設定を変更することができます。";
 
 // Settings - top level
 "self.settings.create_team.title" = "新しいチームを作成";
@@ -845,8 +845,8 @@
 "self.settings.add_account.error.title" = "3 つのアカウントがアクティブです";
 "self.settings.add_account.error.message" = "１度に３つのアカウントまでログインできます。新規にログインする為に、１つログアウトしてください。";
 
-"self.settings.switch_account.message" = "A call is active in this account.\nSwitching accounts will hang up the current call.";
-"self.settings.switch_account.action" = "Switch anyway";
+"self.settings.switch_account.message" = "このアカウントで通話中です。\nアカウントを切り替えると現在の通話が終了します。";
+"self.settings.switch_account.action" = "すぐに切り替える";
 
 // Settings - Account details
 "self.settings.account_section" = "アカウント";
@@ -871,9 +871,9 @@
 
 "self.settings.account_appearance_group.title" = "外観";
 
-"self.settings.privacy_section_group.title" = "Privacy";
-"self.settings.enable_read_receipts.title" = "Send read receipts";
-"self.settings.privacy_section_group.subtitle" = "When this is off, you won’t be able to see read receipts from other people.\nThis setting does not apply to group conversations.";
+"self.settings.privacy_section_group.title" = "プライバシー";
+"self.settings.enable_read_receipts.title" = "開封通知を送信";
+"self.settings.privacy_section_group.subtitle" = "オフの場合は、他の人の開封通知を見ることができません。\n\nこの設定はグループ会議には適用されません。";
 
 "self.settings.account_picture_group.picture" = "写真";
 "self.settings.account_picture_group.color" = "色";
@@ -1109,7 +1109,7 @@
 "landing.app_name" = "Wire";
 "landing.create_account.title" = "パーソナル";
 "landing.create_account.subtitle" = "アカウントを作成";
-"landing.create_team.title" = "Pro";
+"landing.create_team.title" = "プロ";
 "landing.create_team.subtitle" = "新しいチームを作成";
 "landing.login.hints" = "既にアカウントをお持ちですか？";
 "landing.login.button.title" = "ログイン";
@@ -1147,7 +1147,7 @@
 // Invite Team Members
 
 "team.invite.header.title" = "チームを作成します";
-"team.invite.header.subtitle" = "同僚を招待します";
+"team.invite.header.subtitle" = "Your Wire team is ready to go. Invite your colleagues as members.";
 "team.invite.textfield.placeholder" = "colleague@yourcompany.com";
 "team.invite.textfield.accesibility" = "同僚を招待するための電子メール アドレスを入力します。";
 "team.invite.learn_more.title" = "もっと知る";
@@ -1163,9 +1163,9 @@
 
 // Guest Room
 
-"guest_room.allow_guests.title" = "Allow guests and services";
-"guest_room.allow_guests.subtitle" = "Open this conversation to services and people outside your team.";
-"guest_room.remove_guests.message" = "Current guests and services will be removed from the conversation. New guests and services will not be allowed.";
+"guest_room.allow_guests.title" = "ゲストとサービスを許可します";
+"guest_room.allow_guests.subtitle" = "サービスとチーム外の人々にこの会話を公開します。";
+"guest_room.remove_guests.message" = "現在のゲストとサービスは、会話から削除されます。新しいゲストとサービスは許可されません。";
 "guest_room.remove_guests.action" = "削除";
 "guest_room.revoke_link.message" = "新しいゲストはこのリンクに参加することができません。現在のゲストはアクセス可能です。";
 "guest_room.revoke_link.action" = "リンク取消";
@@ -1221,12 +1221,12 @@
 "registration.no_history.got_it" = "OK";
 "registration.no_history.restore_backup" = "バックアップからリストアする";
 
-"registration.alert.account_exists.title" = "Account Exists";
-"registration.alert.account_exists.message_phone" = "The phone number you used to register is already linked to an account.\n\nUse another phone number, or try to log in if you own this account.";
-"registration.alert.account_exists.message_email" = "The email address you used to register is already linked to an account.\n\n Use another email address, or try to log in if you own this account.";
-"registration.alert.change_email_action" = "Change Email";
-"registration.alert.change_phone_action" = "Change Phone";
-"registration.alert.change_signin_action" = "Sign In";
+"registration.alert.account_exists.title" = "アカウントが存在します";
+"registration.alert.account_exists.message_phone" = "登録に使用した電話番号は既にアカウントにリンクされています。\n\n別の電話番号を登録するか、このアカウントを持っている場合はログインしてみてください。";
+"registration.alert.account_exists.message_email" = "登録に使用したメールアドレスは既にアカウントにリンクされています。\n\n別のメールアドレスを登録するか、このアカウントを持っている場合はログインしてみてください。";
+"registration.alert.change_email_action" = "Eメールを変更";
+"registration.alert.change_phone_action" = "電話番号を変更";
+"registration.alert.change_signin_action" = "サインイン";
 
 // Restore History Warning Alert
 "registration.no_history.restore_backup_warning.title" = "リストア履歴";
@@ -1326,7 +1326,7 @@
 "registration.devices.active_list_header" = "アクティブ";
 "registration.devices.current_list_header" = "最新";
 "registration.devices.active_list_subtitle" = "もし上のデバイスを知らない場合は、それを削除して、パスワードをリセットしてください。";
-"registration.devices.activated" = "Activated %@";
+"registration.devices.activated" = "アクティベート済 %@";
 "registration.devices.id" = "ID:";
 
 "signin.use_email.label" = "メールアドレス でログイン";
@@ -1402,7 +1402,7 @@
 "error.group_call.too_many_members_in_conversation.title" = "呼び出す人が多すぎます";
 "error.group_call.too_many_members_in_conversation" = "電話は最大%d人までとの間ですることができます。";
 "error.group_call.too_many_participants_in_the_call.title" = "この通話は満員です";
-"error.group_call.too_many_participants_in_the_call" = "There’s only room for %d participants in here.";
+"error.group_call.too_many_participants_in_the_call" = "この部屋にはあと%d 人まで入ることができます。";
 "error.call.gsm_ongoing.title" = "携帯電話通話";
 "error.call.gsm_ongoing" = "Wireでの通話の前に、携帯電話の通話を終わらせてください。";
 "error.call.general.title" = "呼び出しエラー";
@@ -1520,16 +1520,16 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Message Details
-"message_details.empty_likes" = "No one has liked this message yet.";
-"message_details.empty_read_receipts" = "No one has read this message yet.";
-"message_details.read_receipts_disabled" = "Read receipts were not on when this message was sent.";
-"message_details.combined_title" = "Message Details";
-"message_details.likes_title" = "Liked";
-"message_details.receipts_title" = "Read";
-"message_details.tabs.seen" = "Read (%d)";
-"message_details.tabs.likes" = "Liked (%d)";
-"message_details.subtitle_send_date" = "Sent: %@";
+"message_details.empty_likes" = "まだ、誰もこのメッセージにいいねしていません。";
+"message_details.empty_read_receipts" = "まだ、誰もこのメッセージを読んでいません。";
+"message_details.read_receipts_disabled" = "このメッセージが送信された時、開封通知はオフでした。";
+"message_details.combined_title" = "メッセージの詳細";
+"message_details.likes_title" = "いいね！済み";
+"message_details.receipts_title" = "開封通知";
+"message_details.tabs.seen" = "開封通知 (%d)";
+"message_details.tabs.likes" = "いいね (%d)";
+"message_details.subtitle_send_date" = "送信済: %@";
 "message_details.subtitle_edit_date" = "編集済: %@";
-"message_details.subtitle_label_voiceOver" = "Message Details";
+"message_details.subtitle_label_voiceOver" = "メッセージの詳細";
 "message_details.user_handle_subtitle_label" = "ユーザーネーム";
-"message_details.user_read_timestamp_subtitle_label" = "Read at";
+"message_details.user_read_timestamp_subtitle_label" = "既読";

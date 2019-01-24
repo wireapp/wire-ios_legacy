@@ -83,7 +83,10 @@ class ParticipantsSectionController: GroupDetailsSectionController {
         self.conversation = conversation
         self.delegate = delegate
         super.init()
-        token = UserChangeInfo.add(userObserver: self, for: nil, userSession: ZMUserSession.shared()!)
+        
+        if let userSession = ZMUserSession.shared() {
+            token = UserChangeInfo.add(userObserver: self, for: nil, userSession: userSession)
+        }
     }
     
     override func prepareForUse(in collectionView : UICollectionView?) {

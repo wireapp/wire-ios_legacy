@@ -106,7 +106,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         [self performSearch];
     };
 
-    if ([[ZMUser selfUser] canSeeServices]) {
+    if ([self showsGroupSelector]) {
         [self.view addSubview:self.groupSelector];
     }
 

@@ -71,3 +71,15 @@ extension Restricted {
         if selfUserIsAuthorized { onSuccess() }
     }
 }
+
+extension Restricted where Self: UIButton {
+    var shouldHide: Bool {
+        return !selfUserIsAuthorized
+    }
+
+    func updateHidden() {
+        if shouldHide {
+            isHidden = true
+        }
+    }
+}

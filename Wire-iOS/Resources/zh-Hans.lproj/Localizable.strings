@@ -55,7 +55,7 @@
 "peoplepicker.header.directory" = "添加好友";
 
 "peoplepicker.group.title.singular" = "添加参与者";
-"peoplepicker.group.title.plural" = "Add Participants (%d)";
+"peoplepicker.group.title.plural" = "添加参与者(%d)";
 "peoplepicker.group.skip" = "跳过";
 "peoplepicker.group.done" = "完成";
 "peoplepicker.group.create" = "创建";
@@ -292,7 +292,7 @@
 "conversation.create.guidance.empty" = "至少1个字符";
 "conversation.create.guidance.toolong" = "超出字符限制";
 "conversation.create.options.title" = "Conversation options";
-"conversation.create.options.subtitle" = "Allow guests: %@, Read receipts: %@";
+"conversation.create.options.subtitle" = "Guests and services: %@, Read receipts: %@";
 "conversation.create.guests.title" = "Allow guests and services";
 "conversation.create.guests.subtitle" = "Open this conversation to services and people outside your team.";
 "conversation.create.receipts.title" = "Read receipts";
@@ -309,7 +309,7 @@
 "conversation.action.search" = "搜索";
 
 // Reply message preview
-"conversation.input_bar.message_preview.image" = "Image";
+"conversation.input_bar.message_preview.image" = "图像";
 "conversation.input_bar.message_preview.location" = "Location";
 "conversation.input_bar.message_preview.video" = "视频";
 "conversation.input_bar.message_preview.audio" = "Audio Message";
@@ -872,8 +872,8 @@
 "self.settings.account_appearance_group.title" = "外观";
 
 "self.settings.privacy_section_group.title" = "Privacy";
-"self.settings.enable_read_receipts.title" = "Send read receipts";
-"self.settings.privacy_section_group.subtitle" = "When this is off, you won’t be able to see read receipts from other people.\nThis setting does not apply to group conversations.";
+"self.settings.enable_read_receipts.title" = "Send Read Receipts";
+"self.settings.privacy_section_group.subtitle" = "When this is off, you won’t be able to see read receipts from other people.\n\nThis setting does not apply to group conversations.";
 
 "self.settings.account_picture_group.picture" = "头像";
 "self.settings.account_picture_group.color" = "主色调";
@@ -1147,7 +1147,7 @@
 // Invite Team Members
 
 "team.invite.header.title" = "创建您的团队";
-"team.invite.header.subtitle" = "邀请你的同事加入。";
+"team.invite.header.subtitle" = "Your Wire team is ready to go. Invite your colleagues as members.";
 "team.invite.textfield.placeholder" = "colleague@yourcompany.com";
 "team.invite.textfield.accesibility" = "输入要邀请的同事的电子邮件地址。";
 "team.invite.learn_more.title" = "更多信息";

@@ -292,11 +292,11 @@
 "conversation.create.guidance.empty" = "Не менше 1 символу";
 "conversation.create.guidance.toolong" = "Занадто багато символів";
 "conversation.create.options.title" = "Налаштування розмови";
-"conversation.create.options.subtitle" = "Дозволити присутність гостей: %@, Звіти про прочитування: %@";
+"conversation.create.options.subtitle" = "Гості та сервіси: %@, Звіти про перегляд: %@";
 "conversation.create.guests.title" = "Дозволити гостей та сервіси";
 "conversation.create.guests.subtitle" = "Зробити цю розмову лоступною для серівсів та людей поза межами вашої команди.";
-"conversation.create.receipts.title" = "Повідомлення про перегляд";
-"conversation.create.receipts.subtitle" = "Якщо ця опція увімкнена, учасники розмови можуть бачити, коли їхні повідомлення в цій розмові були прочитані.";
+"conversation.create.receipts.title" = "Звіти про перегляд";
+"conversation.create.receipts.subtitle" = "Якщо ця опція увімкнена, учасники розмови можуть бачити, коли їхні повідомлення в цій розмові були переглянуті.";
 
 "conversation.input_bar.ongoing_call_alert.title" = "Активний дзвінок";
 "conversation.input_bar.ongoing_call_alert.audio.message" = "Ви не можете записувати аудіо під час дзвінка.";
@@ -448,13 +448,13 @@
 
 // read receipt
 
-"content.system.message_read_receipt_on" = "%@ turned read receipts on for everyone";
-"content.system.message_read_receipt_on-you" = "%@ turned read receipts on for everyone";
+"content.system.message_read_receipt_on" = "%@ увімкнув(-ла) звіти про перегляд для всіх";
+"content.system.message_read_receipt_on-you" = "%@ увімкнув(-ла) звіти про перегляд для всіх";
 
-"content.system.message_read_receipt_off" = "%@ turned read receipts off for everyone";
-"content.system.message_read_receipt_off-you" = "%@ turned read receipts off for everyone";
+"content.system.message_read_receipt_off" = "%@ вимкнув(-ла) звіти про перегляд для всіх";
+"content.system.message_read_receipt_off-you" = "%@ вимкнув(-ла) звіти про перегляд для всіх";
 
-"content.system.message_read_receipt_on_add_to_group" = "Read receipts are on";
+"content.system.message_read_receipt_on_add_to_group" = "Звіти про перегляд увімкнені";
 
 
 "content.system.reactivated_device" = "Ви почали використовувати %@ знову. Повідомлення, надіслані поки ви не користувалися ним, не з'являться тут.";
@@ -747,9 +747,9 @@
 "profile.create_conversation_button_title" = "Створити групу";
 "profile.open_conversation_button_title" = "Відкрити розмову";
 
-"profile.read_receipts_enabled_memo.header" = "ВИ УВІМКНУЛИ ЗВІТИ ПРО ПРОЧИТУВАННЯ";
-"profile.read_receipts_disabled_memo.header" = "ВИ ВИМКНУЛИ ЗВІТИ ПРО ПРОЧИТУВАННЯ";
-"profile.read_receipts_memo.body" = "Якщо обидві сторони увімкнуть звіти про прочитування, ви зможете бачити, коли повідомлення були прочитані.\nДану опцію можна змінити в налаштуваннях облікового запису.";
+"profile.read_receipts_enabled_memo.header" = "ВИ УВІМКНУЛИ ЗВІТИ ПРО ПЕРЕГЛЯД";
+"profile.read_receipts_disabled_memo.header" = "ВИ ВИМКНУЛИ ЗВІТИ ПРО ПЕРЕГЛЯД";
+"profile.read_receipts_memo.body" = "Якщо обидві сторони увімкнуть звіти про перегляд, ви зможете бачити, коли повідомлення були переглянуті.\nДану опцію можна змінити в налаштуваннях облікового запису.";
 
 // User Details
 "profile.details.title" = "Подробиці";
@@ -786,8 +786,8 @@
 "group_details.timeout_options_cell.title" = "Тимчасові повідомлення";
 "group_details.notification_options_cell.title" = "Сповіщення";
 "group_details.notification_options_cell.description" = "Ви можете отримувати нотифікації про всі події (включаючи аудіо- і відеодзвінки), або тільки тоді, коли хтось згадує вас або відповідає на одне з ваших повідомлень.";
-"group_details.receipt_options_cell.title" = "Повідомлення про перегляд";
-"group_details.receipt_options_cell.description" = "Якщо ця опція увімкнена, учасники розмови можуть бачити, коли їхні повідомлення в цій розмові були прочитані.";
+"group_details.receipt_options_cell.title" = "Звіти про перегляд";
+"group_details.receipt_options_cell.description" = "Якщо ця опція увімкнена, учасники розмови можуть бачити, коли їхні повідомлення в цій розмові були переглянуті.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile
@@ -832,9 +832,9 @@
 
 // Settings changed alert
 
-"self.read_receipts_enabled.title" = "You have enabled read receipts";
-"self.read_receipts_disabled.title" = "You have disabled read receipts";
-"self.read_receipts_description.title" = "You can change this option in your account settings.";
+"self.read_receipts_enabled.title" = "Ви увімкнули звіти про перегляд";
+"self.read_receipts_disabled.title" = "Ви вимкнули звіти про перегляд";
+"self.read_receipts_description.title" = "Дану опцію можна змінити в налаштуваннях акаунту.";
 
 // Settings - top level
 "self.settings.create_team.title" = "Створити команду";
@@ -872,8 +872,8 @@
 "self.settings.account_appearance_group.title" = "Оформлення";
 
 "self.settings.privacy_section_group.title" = "Політики конфіденційності";
-"self.settings.enable_read_receipts.title" = "Надсилати повідомлення про перегляд";
-"self.settings.privacy_section_group.subtitle" = "Ви не зможете отримувати звіти про прочитування від інших учасників розмови, якщо дана опція вимкнена. Це налаштування не застосовується до групових розмов.";
+"self.settings.enable_read_receipts.title" = "Надсилати звіти про перегляд";
+"self.settings.privacy_section_group.subtitle" = "Ви не зможете отримувати звіти про перегляд від інших учасників розмови, якщо дана опція вимкнена.\n\nЦе налаштування не застосовується до групових розмов.";
 
 "self.settings.account_picture_group.picture" = "Картинка";
 "self.settings.account_picture_group.color" = "Колір";
@@ -1147,7 +1147,7 @@
 // Invite Team Members
 
 "team.invite.header.title" = "Створіть свою власну команду";
-"team.invite.header.subtitle" = "Запросіть ваших колег приєднатися до команди.";
+"team.invite.header.subtitle" = "Your Wire team is ready to go. Invite your colleagues as members.";
 "team.invite.textfield.placeholder" = "колега@вашакомпанія.com";
 "team.invite.textfield.accesibility" = "Введіть адресу електронної пошти колеги, щоб надіслати запрошення.";
 "team.invite.learn_more.title" = "Дізнатися більше";
@@ -1521,15 +1521,15 @@
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Message Details
 "message_details.empty_likes" = "Це повідомлення поки що ніхто не лайкнув.";
-"message_details.empty_read_receipts" = "No one has read this message yet.";
-"message_details.read_receipts_disabled" = "Read receipts were not on when this message was sent.";
+"message_details.empty_read_receipts" = "Це повідомлення поки що ніхто не переглянув.";
+"message_details.read_receipts_disabled" = "Звіти про перегляд були вимкнені, коли це повідомлення було надіслано.";
 "message_details.combined_title" = "Деталі повідомлення";
-"message_details.likes_title" = "Liked";
-"message_details.receipts_title" = "Read";
-"message_details.tabs.seen" = "Read (%d)";
-"message_details.tabs.likes" = "Liked (%d)";
+"message_details.likes_title" = "Сподобалось";
+"message_details.receipts_title" = "Перегляди";
+"message_details.tabs.seen" = "Переглядів (%d)";
+"message_details.tabs.likes" = "Сподобалось (%d)";
 "message_details.subtitle_send_date" = "Відправлене: %@";
 "message_details.subtitle_edit_date" = "Відредаговано: %@";
 "message_details.subtitle_label_voiceOver" = "Деталі повідомлення";
 "message_details.user_handle_subtitle_label" = "Нік";
-"message_details.user_read_timestamp_subtitle_label" = "Read at";
+"message_details.user_read_timestamp_subtitle_label" = "Переглянуте о";

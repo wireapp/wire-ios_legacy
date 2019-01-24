@@ -18,8 +18,12 @@
 
 import Foundation
 
-final class RestrictedButton: IconButton, Restricted {
-    var requiredPermissions: Permissions = []
+final class RestrictedIconButton: IconButton, Restricted {
+    var requiredPermissions: Permissions = [] {
+        didSet {
+            updateHidden()
+        }
+    }
 
     override public var isHidden: Bool {
         get {
@@ -35,17 +39,12 @@ final class RestrictedButton: IconButton, Restricted {
         }
     }
 
-    private var shouldHide: Bool {
-        return ZMUser.selfUser().isTeamMember && !selfUserIsAuthorized
-    }
-
     init(requiredPermissions: Permissions) {
         super.init()
 
         self.requiredPermissions = requiredPermissions
-        if shouldHide {
-            isHidden = true
-        }
+
+        updateHidden()
     }
 
     required init?(coder aDecoder: NSCoder) {

@@ -31,7 +31,7 @@ final class GroupDetailsFooterView: UIView {
     
     private let variant: ColorSchemeVariant
     public let moreButton = IconButton()
-    public let addButton = RestrictedButton(requiredPermissions: .member)
+    public let addButton = RestrictedIconButton(requiredPermissions: .member)
     
     init(variant: ColorSchemeVariant = ColorScheme.default.variant) {
         self.variant = variant

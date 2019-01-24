@@ -292,7 +292,7 @@
 "conversation.create.guidance.empty" = "Au moins un caractère";
 "conversation.create.guidance.toolong" = "Trop de caractères";
 "conversation.create.options.title" = "Options";
-"conversation.create.options.subtitle" = "Invités: %@, Accusés de lecture: %@";
+"conversation.create.options.subtitle" = "Invités et services : %@, Accusés de lecture : %@";
 "conversation.create.guests.title" = "Autoriser les invités et les services";
 "conversation.create.guests.subtitle" = "Rendre cette conversation accessible à des personnes et services étrangères à votre équipe.";
 "conversation.create.receipts.title" = "Accusés de lecture";
@@ -512,7 +512,7 @@
 "content.message.open" = "Ouvrir";
 "content.message.copy" = "Copier";
 "content.message.download" = "Télécharger";
-"content.message.details" = "Informations";
+"content.message.details" = "Détails";
 
 // Reply
 "content.message.reply" = "Répondre";
@@ -752,7 +752,7 @@
 "profile.read_receipts_memo.body" = "Si les deux participants activent les accusés de lecture, vous pourrez voir quand les messages sont lus.\nVous pouvez changer cette option dans les paramètres de votre compte.";
 
 // User Details
-"profile.details.title" = "Informations";
+"profile.details.title" = "Détails";
 "profile.details.guest" = "Invité";
 
 "profile_view.accessibility.handle" = "Nom d'utilisateur";
@@ -819,7 +819,7 @@
 "about.copyright.title" = "© Wire Swiss GmbH";
 
 // Licenses screen
-"about.license.project_header" = "Informations";
+"about.license.project_header" = "Détails";
 "about.license.open_project_button" = "Ouvrir la Page du Projet";
 "about.license.license_header" = "Crédits";
 
@@ -872,8 +872,8 @@
 "self.settings.account_appearance_group.title" = "Apparence";
 
 "self.settings.privacy_section_group.title" = "Confidentialité";
-"self.settings.enable_read_receipts.title" = "Envoyer des accusés de lecture";
-"self.settings.privacy_section_group.subtitle" = "Si cette option est désactivée, vous ne pourrez pas voir les accusés de lecture d'autres destinataires.\nCette option ne s'applique pas aux conversations de groupe.";
+"self.settings.enable_read_receipts.title" = "Envoyer des Accusés de Lecture";
+"self.settings.privacy_section_group.subtitle" = "Si cette option est désactivée, vous ne pourrez pas voir les accusés de lecture d'autres destinataires.\n\nCette option ne s'applique pas aux conversations de groupe.";
 
 "self.settings.account_picture_group.picture" = "Image";
 "self.settings.account_picture_group.color" = "Couleur";
@@ -1147,7 +1147,7 @@
 // Invite Team Members
 
 "team.invite.header.title" = "Créez votre équipe";
-"team.invite.header.subtitle" = "Invitez vos collègues à nous rejoindre.";
+"team.invite.header.subtitle" = "Your Wire team is ready to go. Invite your colleagues as members.";
 "team.invite.textfield.placeholder" = "quelqun@votre-entreprise.fr";
 "team.invite.textfield.accesibility" = "Entrez l'adresse email de la personne à inviter.";
 "team.invite.learn_more.title" = "En savoir plus";

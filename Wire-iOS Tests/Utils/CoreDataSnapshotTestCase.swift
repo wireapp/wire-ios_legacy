@@ -153,3 +153,21 @@ open class CoreDataSnapshotTestCase: ZMSnapshotTestCase {
     }
 
 }
+
+//MARK: - mock service user
+
+extension CoreDataSnapshotTestCase {
+    func createServiceUser() -> ZMUser {
+        let serviceUser = ZMUser.insertNewObject(in: uiMOC)
+        serviceUser.remoteIdentifier = UUID()
+        serviceUser.name = "ServiceUser"
+        serviceUser.setHandle(name.lowercased())
+        serviceUser.accentColorValue = .brightOrange
+        serviceUser.serviceIdentifier = UUID.create().transportString()
+        serviceUser.providerIdentifier = UUID.create().transportString()
+        uiMOC.saveOrRollback()
+
+        return serviceUser
+    }
+}
+

@@ -184,7 +184,7 @@ class StartedConversationCellTests: ConversationCellSnapshotTestCase {
     
     func testThatItRendersNewConversationCell_SelfIsCollaborator_AllowGuests() {
         teamTest {
-            selfUser.membership!.setTeamRole(.collaborator)
+            selfUser.membership!.setTeamRole(.partner)
             let message = cell(for: .newConversation, text: "Italy Trip", fillUsers: .youAndAnother, allowGuests: true)
             verify(message: message)
         }

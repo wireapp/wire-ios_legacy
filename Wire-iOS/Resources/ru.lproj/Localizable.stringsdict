@@ -16,7 +16,7 @@
         <key>one</key>
         <string>устройство</string>
         <key>few</key>
-        <string>%lu устройств</string>
+        <string>%lu устройства</string>
         <key>many</key>
         <string>%lu устройств</string>
         <key>other</key>
@@ -36,7 +36,7 @@
         <key>one</key>
         <string>Один человек</string>
         <key>few</key>
-        <string>%lu человек</string>
+        <string>%lu человека</string>
         <key>many</key>
         <string>%lu человек</string>
         <key>other</key>
@@ -56,7 +56,7 @@
         <key>one</key>
         <string>был добавлен</string>
         <key>few</key>
-        <string>был добавлены</string>
+        <string>было добавлено</string>
         <key>many</key>
         <string>были добавлены</string>
         <key>other</key>
@@ -76,7 +76,7 @@
         <key>one</key>
         <string>был удален</string>
         <key>few</key>
-        <string>были удалены</string>
+        <string>было удалено</string>
         <key>many</key>
         <string>были удалены</string>
         <key>other</key>
@@ -86,7 +86,7 @@
     <key>list.connect_request.people_waiting</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
-      <string>%#@d_number_of_people@</string>
+      <string>%#@d_number_of_people@ ожидает</string>
       <key>d_number_of_people</key>
       <dict>
         <key>NSStringFormatSpecTypeKey</key>
@@ -94,13 +94,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Один человек</string>
+        <string>Один пользователь</string>
         <key>few</key>
-        <string>%d человек</string>
+        <string>%d пользователя</string>
         <key>many</key>
-        <string>%d человек ожидают</string>
+        <string>%d пользователей</string>
         <key>other</key>
-        <string>%d человек</string>
+        <string>%d пользователей</string>
       </dict>
     </dict>
     <key>content.system.participants_n_others</key>
@@ -114,7 +114,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>и еще один(-а)</string>
+        <string>и еще один</string>
         <key>few</key>
         <string>и %d других</string>
         <key>many</key>
@@ -171,9 +171,9 @@
         <key>one</key>
         <string>новое устройство</string>
         <key>few</key>
-        <string>новых устройств</string>
+        <string>новых устройства</string>
         <key>many</key>
-        <string>новые устройства</string>
+        <string>новых устройств</string>
         <key>other</key>
         <string>новых устройств</string>
       </dict>
@@ -193,9 +193,9 @@
         <key>few</key>
         <string>новые устройства</string>
         <key>many</key>
-        <string>новые устройства</string>
+        <string>новых устройств</string>
         <key>other</key>
-        <string>новые устройства</string>
+        <string>новых устройств</string>
       </dict>
     </dict>
     <key>conversation.silenced.status.message.generic_message</key>
@@ -291,7 +291,7 @@
         <key>one</key>
         <string>1 пропущенный вызов</string>
         <key>few</key>
-        <string>%d пропущенных вызовов</string>
+        <string>%d пропущенных вызова</string>
         <key>many</key>
         <string>%d пропущенных вызовов</string>
         <key>other</key>
@@ -309,13 +309,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Пропущенный звонок</string>
+        <string>Пропущенный вызов</string>
         <key>few</key>
-        <string>Пропущенных звонка</string>
+        <string>Пропущенных вызова</string>
         <key>many</key>
-        <string>Пропущенных звонков</string>
+        <string>Пропущенных вызовов</string>
         <key>other</key>
-        <string>Пропущенных звонков</string>
+        <string>Пропущенных вызовов</string>
       </dict>
     </dict>
     <key>content.system.call.missed-call.groups</key>

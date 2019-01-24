@@ -292,7 +292,7 @@
 "conversation.create.guidance.empty" = "Mindst 1 tegn";
 "conversation.create.guidance.toolong" = "For mange tegn";
 "conversation.create.options.title" = "Conversation options";
-"conversation.create.options.subtitle" = "Allow guests: %@, Read receipts: %@";
+"conversation.create.options.subtitle" = "Guests and services: %@, Read receipts: %@";
 "conversation.create.guests.title" = "Allow guests and services";
 "conversation.create.guests.subtitle" = "Open this conversation to services and people outside your team.";
 "conversation.create.receipts.title" = "Read receipts";
@@ -872,8 +872,8 @@
 "self.settings.account_appearance_group.title" = "Udseende";
 
 "self.settings.privacy_section_group.title" = "Privacy";
-"self.settings.enable_read_receipts.title" = "Send read receipts";
-"self.settings.privacy_section_group.subtitle" = "When this is off, you won’t be able to see read receipts from other people.\nThis setting does not apply to group conversations.";
+"self.settings.enable_read_receipts.title" = "Send Read Receipts";
+"self.settings.privacy_section_group.subtitle" = "When this is off, you won’t be able to see read receipts from other people.\n\nThis setting does not apply to group conversations.";
 
 "self.settings.account_picture_group.picture" = "Billede";
 "self.settings.account_picture_group.color" = "Farve";
@@ -1147,7 +1147,7 @@
 // Invite Team Members
 
 "team.invite.header.title" = "Build your team";
-"team.invite.header.subtitle" = "Invite your colleagues to join.";
+"team.invite.header.subtitle" = "Your Wire team is ready to go. Invite your colleagues as members.";
 "team.invite.textfield.placeholder" = "colleague@yourcompany.com";
 "team.invite.textfield.accesibility" = "Enter e-mail address for colleague to invite.";
 "team.invite.learn_more.title" = "Lær mere";

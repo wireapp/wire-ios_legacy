@@ -292,7 +292,7 @@
 "conversation.create.guidance.empty" = "Almeno 1 carattere";
 "conversation.create.guidance.toolong" = "Troppi caratteri";
 "conversation.create.options.title" = "Opzioni conversazione";
-"conversation.create.options.subtitle" = "Consenti ospiti: %@, Conferme di lettura: %@";
+"conversation.create.options.subtitle" = "Ospiti e servizi: %@, Conferme di lettura: %@";
 "conversation.create.guests.title" = "Consenti ospiti e servizi";
 "conversation.create.guests.subtitle" = "Apri questa conversazione a servizi e persone esterne al tuo team.";
 "conversation.create.receipts.title" = "Conferme di lettura";
@@ -1147,7 +1147,7 @@
 // Invite Team Members
 
 "team.invite.header.title" = "Costruisci il tuo team";
-"team.invite.header.subtitle" = "Invita i tuoi colleghi ad unirsi.";
+"team.invite.header.subtitle" = "Your Wire team is ready to go. Invite your colleagues as members.";
 "team.invite.textfield.placeholder" = "collega@organizzazione.it";
 "team.invite.textfield.accesibility" = "Inserisci l'indirizzo e-mail del collega da invitare.";
 "team.invite.learn_more.title" = "Ulteriori informazioni";

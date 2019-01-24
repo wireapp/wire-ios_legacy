@@ -292,7 +292,7 @@
 "conversation.create.guidance.empty" = "至少1個字元";
 "conversation.create.guidance.toolong" = "字數過多";
 "conversation.create.options.title" = "會話選項";
-"conversation.create.options.subtitle" = "允許訪客：%@，讀取回條：%@";
+"conversation.create.options.subtitle" = "訪客和服務：%@，讀取回條：%@";
 "conversation.create.guests.title" = "允許訪客和服務";
 "conversation.create.guests.subtitle" = "開放這個對話與團隊以外的訪客及服務。";
 "conversation.create.receipts.title" = "讀取回條";
@@ -873,7 +873,7 @@
 
 "self.settings.privacy_section_group.title" = "隱私設定";
 "self.settings.enable_read_receipts.title" = "傳送讀取回條";
-"self.settings.privacy_section_group.subtitle" = "當這是關閉, 你將無法看到從其他人是否已讀取你的訊息。\n此設定不適用於群組對話。";
+"self.settings.privacy_section_group.subtitle" = "當關閉這設定，你將無法看到從其他人是否已讀取你的訊息。\n此設定不適用於群組對話。";
 
 "self.settings.account_picture_group.picture" = "大頭照";
 "self.settings.account_picture_group.color" = "主色調";
@@ -1147,7 +1147,7 @@
 // Invite Team Members
 
 "team.invite.header.title" = "建立您的團隊";
-"team.invite.header.subtitle" = "邀請你的同事加入。";
+"team.invite.header.subtitle" = "你的Wire團隊已經準備好了。請邀請您的同事作為成員。";
 "team.invite.textfield.placeholder" = "colleague@yourcompany.com";
 "team.invite.textfield.accesibility" = "輸入同事的電子郵件地址以邀請。";
 "team.invite.learn_more.title" = "瞭解詳情";

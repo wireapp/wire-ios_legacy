@@ -31,7 +31,7 @@
 "general.accept" = "Priimti";
 "general.decline" = "Ne, dėkui";
 "general.failure" = "Kažkas atsitiko";
-"general.service" = "Tarnyba";
+"general.service" = "Paslauga";
 "general.off" = "Išjungta";
 "general.on" = "Įjungta";
 
@@ -81,9 +81,9 @@
 
 "peoplepicker.no_matching_results_provide_valid_email" = "Iveskite teisingą el. pašto adresą";
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "Rezultatų nėra.";
-"peoplepicker.no_matching_results_services_title" = "Tarnybos yra pagalbininkai, kurie padeda pagerinti darbo eigą. Norėdami jomis naudotis, prašykite savo administratoriaus.";
-"peoplepicker.no_matching_results_services_admin_title" = "Tarnybos yra pagalbininkai, kurie padeda pagerinti darbo eigą.";
-"peoplepicker.no_matching_results_services_manage_services_title" = "Valdyti tarnybas";
+"peoplepicker.no_matching_results_services_title" = "Paslaugos yra pagalbininkai, kurie padeda pagerinti darbo eigą. Norėdami jomis naudotis, prašykite savo administratoriaus.";
+"peoplepicker.no_matching_results_services_admin_title" = "Paslaugos yra pagalbininkai, kurie padeda pagerinti darbo eigą.";
+"peoplepicker.no_matching_results_services_manage_services_title" = "Valdyti paslaugas";
 /* This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button */
 "peoplepicker.no_matching_results_after_address_book_upload_message" = "Įveskite pilną el. pašto adresą arba";
 /*  */
@@ -100,7 +100,7 @@
 "peoplepicker.quick-action.open-conversation" = "Atverti";
 "peoplepicker.quick-action.create-conversation" = "Sukurti grupę";
 "peoplepicker.quick-action.create-guest-room" = "Kurti kambarį svečiams";
-"peoplepicker.quick-action.admin-services" = "Valdyti tarnybas";
+"peoplepicker.quick-action.admin-services" = "Valdyti paslaugas";
 
 "add_participants.all_contacts_added" = "Visi jau čia.";
 
@@ -292,9 +292,9 @@
 "conversation.create.guidance.empty" = "Bent 1 simbolis";
 "conversation.create.guidance.toolong" = "Per daug simbolių";
 "conversation.create.options.title" = "Susirašinėjimo parinktys";
-"conversation.create.options.subtitle" = "leisti svečius: %@, perskaitymo ataskaitos: %@";
-"conversation.create.guests.title" = "Leisti svečius ir tarnybas";
-"conversation.create.guests.subtitle" = "Leiskite šį susirašinėjimą matyti tarnyboms ir žmonėms, kurie nėra jūsų komandoje.";
+"conversation.create.options.subtitle" = "Svečiai ir paslaugos: %@, perskaitymo patvirtinimai: %@";
+"conversation.create.guests.title" = "Leisti svečius ir paslaugas";
+"conversation.create.guests.subtitle" = "Leiskite šį susirašinėjimą matyti paslaugoms ir žmonėms, kurie nėra jūsų komandoje.";
 "conversation.create.receipts.title" = "Perskaitymo patvirtinimai";
 "conversation.create.receipts.subtitle" = "Įjungus, žmonės gali matyti ar jų žinutės buvo perskaitytos.";
 
@@ -305,7 +305,7 @@
 
 "conversation.guests_present" = "Yra svečių";
 "conversation.services_present" = "Tarnybos aktyvios";
-"conversation.guests_services_present" = "Yra svečių ir tarnybų";
+"conversation.guests_services_present" = "Yra svečių ir paslaugų";
 "conversation.action.search" = "Ieškoti";
 
 // Reply message preview
@@ -387,7 +387,7 @@
 "content.system.other_removed_you" = "%@ jus pašalino";
 "content.system.you_removed_other" = "Jūs pašalinote pašnekovą %@";
 
-"content.system.services.warning" = "Tarnybos turi galimybę matyti šio susirašinėjimo turinį";
+"content.system.services.warning" = "Paslaugos turi galimybę matyti šio susirašinėjimo turinį";
 
 // New conversation participants added / removed / started system message
 
@@ -399,11 +399,11 @@
 "content.system.conversation.you.started" = "%@ pradėjo susirašinėjimą su %@";
 "content.system.conversation.you.added" = "%@ pridėjo pašnekovą %@";
 "content.system.conversation.you.removed" = "%@ pašalino pašnekovą %@";
-"content.system.conversation.you.left" = "%@ išėjo";
+"content.system.conversation.you.left" = "%@ išėjote";
 "content.system.conversation.team.member-leave" = "%@ buvo pašalintas iš komandos.";
 "content.system.conversation.guest.joined" = "%@ prisijungė";
 
-"content.system.conversation.invite.title" = "Tarnybos ir žmonės nesantys jūsų komandoje gali prisijungti prie susirašinėjimo.";
+"content.system.conversation.invite.title" = "Paslaugos ir žmonės nesantys jūsų komandoje gali prisijungti prie susirašinėjimo.";
 "content.system.conversation.invite.button" = "Pakviesti žmones";
 
 "content.system.other_renamed_conv_to_nothing" = "%@ ištrynė susirašinėjimo pavadinimą";
@@ -422,7 +422,7 @@
 "content.system.connected_to" = "Susijungta su %@\nPradėkite bendrauti";
 "content.system.other_wanted_to_talk" = "%@ skambino";
 "content.system.you_wanted_to_talk" = "Skambinote";
-"content.system.ephemeral_time_remaining" = "%@ liko";
+"content.system.ephemeral_time_remaining" = "Liko %@";
 
 "content.system.you_started" = "Jūs";
 "content.system.this_device" = "šį įrenginį";
@@ -780,7 +780,7 @@
 "participants.services.remove_integration.button" = "pašalinti integraciją";
 
 // Group details
-"group_details.guest_options_cell.title" = "Svečiai ir tarnybos";
+"group_details.guest_options_cell.title" = "Svečiai ir paslaugos";
 "group_details.guest_options_cell.enabled" = "Įjungta";
 "group_details.guest_options_cell.disabled" = "Išjungta";
 "group_details.timeout_options_cell.title" = "Laikinos žinutės";
@@ -873,7 +873,7 @@
 
 "self.settings.privacy_section_group.title" = "Privatumas";
 "self.settings.enable_read_receipts.title" = "Siųsti perskaitymo patvirtinimus";
-"self.settings.privacy_section_group.subtitle" = "Išjungus jūs nematysite perskaitymo patvirtinimų iš kitų žmonių. Šis nustatymas negalioja grupėse.";
+"self.settings.privacy_section_group.subtitle" = "Išjungus, jūs nematysite kada gavėjas perskaito jūsų siųstas žinutes.\n\nŠis nustatymas negalioja susirašinėjimams grupėje.";
 
 "self.settings.account_picture_group.picture" = "Paveikslas";
 "self.settings.account_picture_group.color" = "Spalva";
@@ -1147,7 +1147,7 @@
 // Invite Team Members
 
 "team.invite.header.title" = "Sukurkite savo komandą";
-"team.invite.header.subtitle" = "Kvieskite kolegas prisijungti.";
+"team.invite.header.subtitle" = "Jūsų „Wire“ komanda paruošta. Pakvieskite savo kolegas prisijungti.";
 "team.invite.textfield.placeholder" = "kolega@tavoorganizacija.lt";
 "team.invite.textfield.accesibility" = "Įrašykite el. pašto adresą, kad kolega galėtų prisijungti.";
 "team.invite.learn_more.title" = "Sužinoti daugiau";
@@ -1163,9 +1163,9 @@
 
 // Guest Room
 
-"guest_room.allow_guests.title" = "Leisti svečius ir tarnybas";
-"guest_room.allow_guests.subtitle" = "Leiskite šį susirašinėjimą matyti tarnyboms ir žmonėms, kurie nėra jūsų komandoje.";
-"guest_room.remove_guests.message" = "Dabar esantys svečiai ir tarnybos bus pašalintos iš šio susirašinėjimo. Nauji svečiai ir tarnybos negalės prisijungti.";
+"guest_room.allow_guests.title" = "Leisti svečius ir paslaugas";
+"guest_room.allow_guests.subtitle" = "Leiskite šį susirašinėjimą matyti paslaugoms ir žmonėms, kurie nėra jūsų komandoje.";
+"guest_room.remove_guests.message" = "Dabar esantys svečiai ir paslaugos bus pašalintos iš šio susirašinėjimo. Nauji svečiai ir tarnybos negalės prisijungti.";
 "guest_room.remove_guests.action" = "Šalinti";
 "guest_room.revoke_link.message" = "Nauji svečiai negalės prisijungti spustelėję nuorodą. Dabartiniai svečiai liks prisijungę.";
 "guest_room.revoke_link.action" = "Atšaukti nuorodą";

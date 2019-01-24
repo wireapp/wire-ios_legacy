@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2018 Wire Swiss GmbH
+// Copyright (C) 2019 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -19,28 +19,45 @@
 import XCTest
 @testable import Wire
 
-final class GroupDetailsFooterViewTests: CoreDataSnapshotTestCase {
+
+final class ServiceDetailViewControllerSnapshotTests: CoreDataSnapshotTestCase {
     
-    var sut: GroupDetailsFooterView!
+    var sut: ServiceDetailViewController!
+    var serviceUser: ZMUser!
+    var groupConversation: ZMConversation!
+
+    override func setUp() {
+        super.setUp()
+        serviceUser = createServiceUser()
+        groupConversation = createGroupConversation()
+    }
     
     override func tearDown() {
         sut = nil
+        serviceUser = nil
+        groupConversation = nil
+
         super.tearDown()
     }
 
-    func testForAllPhoneWidths(){
+    func createSut() {
+        let variant = ServiceDetailVariant(colorScheme: ColorScheme.default.variant, opaque: true)
+
+        sut = ServiceDetailViewController(serviceUser: serviceUser, actionType: .removeService(groupConversation), variant: variant, completion: nil)
+    }
+
+    func testForTeamMember() {
         teamTest {
-            sut = GroupDetailsFooterView()
-            verifyInAllPhoneWidths(view: sut)
+            createSut()
+            verify(view: sut.view)
         }
     }
 
-    func testForPartnerRoleWithNoAddParticipantsButton(){
+    func testForTeamPartner() {
         teamTest {
             selfUser.membership?.setTeamRole(.partner)
-            sut = GroupDetailsFooterView()
-
-            verifyInAllPhoneWidths(view: sut)
+            createSut()
+            verify(view: sut.view)
         }
     }
 }
