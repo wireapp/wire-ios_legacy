@@ -20,7 +20,10 @@ import Foundation
 
 extension ConversationListViewController {
     @objc func showDataUsagePermissionDialogIfNeeded() {
+        
         guard !AutomationHelper.sharedHelper.skipFirstLoginAlerts else { return }
+        
+        guard !dataCollectionDisabled else { return }
 
         // If the usage dialog was already displayed in this run, do not show it again
         guard !dataUsagePermissionDialogDisplayed else { return }
@@ -47,6 +50,14 @@ extension ConversationListViewController {
         ZClientViewController.shared()?.present(alertController, animated: true) { [weak self] in
             self?.dataUsagePermissionDialogDisplayed = true
         }
+    }
+    
+    private var dataCollectionDisabled: Bool {
+        #if DATA_COLLECTION_DISABLED
+        return true
+        #else
+        return false
+        #endif
     }
 
     private var userAcceptedAnalytics: Bool {
