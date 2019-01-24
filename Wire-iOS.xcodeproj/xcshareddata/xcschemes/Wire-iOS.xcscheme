@@ -120,7 +120,7 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-ZMBackendEnvironmentType staging"
-            isEnabled = "NO">
+            isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-UseAnalytics 1"
@@ -149,7 +149,7 @@
          </EnvironmentVariable>
          <EnvironmentVariable
             key = "ZMLOG_TAGS"
-            value = "Network,Authentication,Performance"
+            value = "Network,Authentication,Performance,event-processing"
             isEnabled = "YES">
          </EnvironmentVariable>
          <EnvironmentVariable
