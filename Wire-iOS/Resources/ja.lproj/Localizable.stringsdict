@@ -149,7 +149,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d messages</string>
+        <string>%d メッセージ</string>
       </dict>
     </dict>
     <key>conversation.silenced.status.message.mention</key>
@@ -163,7 +163,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d mentions</string>
+        <string>%d メンション</string>
       </dict>
     </dict>
     <key>conversation.silenced.status.message.reply</key>
@@ -177,7 +177,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d replies</string>
+        <string>%d 返信</string>
       </dict>
     </dict>
     <key>conversation.silenced.status.message.knock</key>
@@ -191,7 +191,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d pings</string>
+        <string>%d ping</string>
       </dict>
     </dict>
     <key>conversation.silenced.status.message.missedcall</key>
@@ -219,7 +219,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>Missed calls</string>
+        <string>不在着信</string>
       </dict>
     </dict>
     <key>content.system.call.missed-call.groups</key>
@@ -233,7 +233,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>Missed calls from %2$@</string>
+        <string>%2$@ からの不在着信</string>
       </dict>
     </dict>
   </dict>

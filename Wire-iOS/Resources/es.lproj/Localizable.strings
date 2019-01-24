@@ -31,9 +31,9 @@
 "general.accept" = "Aceptar";
 "general.decline" = "No, gracias";
 "general.failure" = "Algo salió mal";
-"general.service" = "Service";
+"general.service" = "Servicio";
 "general.off" = "Desactivar";
-"general.on" = "On";
+"general.on" = "En";
 
 // Language like Chinese does not use space to sperate words or sentences.
 "general.space_between_words" = " ";
@@ -46,7 +46,7 @@
 "peoplepicker.search_placeholder" = "Buscar por nombre o usuario";
 "peoplepicker.header.top_people" = "Contactos favoritos";
 "peoplepicker.button.create_conversation" = "Crear grupo";
-"peoplepicker.button.add_to_conversation" = "Add Participants to Group";
+"peoplepicker.button.add_to_conversation" = "Agregar participantes al grupo";
 "peoplepicker.header.conversations" = "Grupos";
 "peoplepicker.header.team_conversations" = "%@ grupos";
 "peoplepicker.header.send_invitation" = "Invitar";
@@ -55,21 +55,21 @@
 "peoplepicker.header.directory" = "Conectar";
 
 "peoplepicker.group.title.singular" = "Añadir Participantes";
-"peoplepicker.group.title.plural" = "Add Participants (%d)";
-"peoplepicker.group.skip" = "Skip";
+"peoplepicker.group.title.plural" = "Añadir Participantes (%d)";
+"peoplepicker.group.skip" = "Omitir";
 "peoplepicker.group.done" = "Listo";
 "peoplepicker.group.create" = "Crear";
 
 "peoplepicker.header.people" = "Personas";
 "peoplepicker.header.services" = "Servicios";
 "peoplepicker.services.open_conversation.item" = "Abrir chat";
-"peoplepicker.services.add_service.button" = "Add service";
-"peoplepicker.services.add_service.error.title" = "The service can’t be added";
+"peoplepicker.services.add_service.button" = "Añadir un servicio";
+"peoplepicker.services.add_service.error.title" = "El servicio no puede ser agregado";
 "peoplepicker.services.add_service.error.default" = "El servicio no está disponible en este momento";
 "peoplepicker.services.add_service.error.full" = "La conversación está llena";
 
 "peoplepicker.title.create_conversation" = "Crear grupo";
-"peoplepicker.title.add_to_conversation" = "Add participants";
+"peoplepicker.title.add_to_conversation" = "Agregar participantes";
 
 "peoplepicker.no_contacts_title" = "No hay contactos.";
 
@@ -81,9 +81,9 @@
 
 "peoplepicker.no_matching_results_provide_valid_email" = "Por favor, introduce una dirección de email válida";
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "No hay resultados.";
-"peoplepicker.no_matching_results_services_title" = "Services are helpers that can improve your workflow. To enable them, ask your administrator.";
-"peoplepicker.no_matching_results_services_admin_title" = "Services are helpers that can improve your workflow.";
-"peoplepicker.no_matching_results_services_manage_services_title" = "Manage Services";
+"peoplepicker.no_matching_results_services_title" = "Los servicios son auxiliares que pueden mejorar su flujo de trabajo. Para activarlos, póngase en contacto con el administrador.";
+"peoplepicker.no_matching_results_services_admin_title" = "Los servicios son auxiliares que pueden mejorar su flujo de trabajo.";
+"peoplepicker.no_matching_results_services_manage_services_title" = "Gestionar los servicios";
 /* This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button */
 "peoplepicker.no_matching_results_after_address_book_upload_message" = "Introduce un email completo o";
 /*  */
@@ -99,13 +99,13 @@
 "peoplepicker.invite_team_members" = "Invitar personas para unirse al equipo";
 "peoplepicker.quick-action.open-conversation" = "Abrir";
 "peoplepicker.quick-action.create-conversation" = "Crear grupo";
-"peoplepicker.quick-action.create-guest-room" = "Create guest room";
-"peoplepicker.quick-action.admin-services" = "Manage Services";
+"peoplepicker.quick-action.create-guest-room" = "Crear una sala de invitados";
+"peoplepicker.quick-action.admin-services" = "Gestionar los servicios";
 
 "add_participants.all_contacts_added" = "Todos están aquí.";
 
-"add_participants.alert.title" = "The group is full";
-"add_participants.alert.message.new_conversation" = "Up to %d people can join a conversation.";
+"add_participants.alert.title" = "Grupo completo";
+"add_participants.alert.message.new_conversation" = "Hasta %d personas pueden unirse a una conversación.";
 "add_participants.alert.message.existing_conversation" = "Up to %1$d people can join a conversation. Currently there is only room for %2$d more.";
 
 // Contacts UI
@@ -132,7 +132,7 @@
 "conversation_list.header.self_team.accessibility_value.has_new_messages" = "Tiene mensajes nuevos.";
 
 // Conversation List Data Usage Permission Dialog
-"conversation_list.data_usage_permission_alert.title" = "Help us make Wire better";
+"conversation_list.data_usage_permission_alert.title" = "¡Ayúdanos a mejorar!";
 "conversation_list.data_usage_permission_alert.message" = "I agree that Wire may create and use anonymous usage and error reports to improve the Wire App. I can revoke this consent at any time.";
 "conversation_list.data_usage_permission_alert.disagree" = "No";
 "conversation_list.data_usage_permission_alert.agree" = "I Agree";
@@ -292,7 +292,7 @@
 "conversation.create.guidance.empty" = "At least 1 character";
 "conversation.create.guidance.toolong" = "Demasiados caracteres";
 "conversation.create.options.title" = "Conversation options";
-"conversation.create.options.subtitle" = "Allow guests: %@, Read receipts: %@";
+"conversation.create.options.subtitle" = "Guests and services: %@, Read receipts: %@";
 "conversation.create.guests.title" = "Allow guests and services";
 "conversation.create.guests.subtitle" = "Open this conversation to services and people outside your team.";
 "conversation.create.receipts.title" = "Read receipts";
@@ -872,8 +872,8 @@
 "self.settings.account_appearance_group.title" = "Aspecto";
 
 "self.settings.privacy_section_group.title" = "Privacy";
-"self.settings.enable_read_receipts.title" = "Send read receipts";
-"self.settings.privacy_section_group.subtitle" = "When this is off, you won’t be able to see read receipts from other people.\nThis setting does not apply to group conversations.";
+"self.settings.enable_read_receipts.title" = "Send Read Receipts";
+"self.settings.privacy_section_group.subtitle" = "When this is off, you won’t be able to see read receipts from other people.\n\nThis setting does not apply to group conversations.";
 
 "self.settings.account_picture_group.picture" = "Imagen";
 "self.settings.account_picture_group.color" = "Color";
@@ -1147,7 +1147,7 @@
 // Invite Team Members
 
 "team.invite.header.title" = "Crear tu equipo";
-"team.invite.header.subtitle" = "Invite a sus colegas a unirse.";
+"team.invite.header.subtitle" = "Your Wire team is ready to go. Invite your colleagues as members.";
 "team.invite.textfield.placeholder" = "colleague@yourcompany.com";
 "team.invite.textfield.accesibility" = "Enter e-mail address for colleague to invite.";
 "team.invite.learn_more.title" = "Más información";
@@ -1245,17 +1245,17 @@
 "registration.no_history.restore_backup_failed.wrong_account.message" = "You cannot restore history from a different account.";
 
 // Incompatible Version
-"registration.no_history.restore_backup_failed.wrong_version.title" = "Incompatible backup";
-"registration.no_history.restore_backup_failed.wrong_version.message" = "This backup was created by a newer or outdated version of Wire and cannot be restored here.";
+"registration.no_history.restore_backup_failed.wrong_version.title" = "Copia de seguridad incompatible";
+"registration.no_history.restore_backup_failed.wrong_version.message" = "Esta copia de seguridad fue creada por una versión antigua o más reciente de Wire y no se puede restaurar aquí.";
 
 // SSO – Company Login
-"login.sso.alert.title" = "Company Log In";
-"login.sso.alert.message" = "Enter the company SSO access code.";
+"login.sso.alert.title" = "Acceso empresarial";
+"login.sso.alert.message" = "Escriba el código de acceso SSO de la empresa.";
 "login.sso.alert.action" = "Iniciar sesión";
 "login.sso.alert.text_field.placeholder" = "SSO access code";
 
 "login.sso.error.alert.title" = "Algo salió mal";
-"login.sso.error.alert.invalid_code.title" = "Invalid code.";
+"login.sso.error.alert.invalid_code.title" = "Código inválido.";
 "login.sso.error.alert.invalid_code.message" = "Please verify your company SSO access code and try again.";
 "login.sso.error.offline.alert.message" = "Please check your Internet connection and try again.";
 "login.sso.error.alert.message" = "Please contact your team administrator for details (error %@).";
@@ -1525,11 +1525,11 @@
 "message_details.read_receipts_disabled" = "Read receipts were not on when this message was sent.";
 "message_details.combined_title" = "Message Details";
 "message_details.likes_title" = "Liked";
-"message_details.receipts_title" = "Read";
-"message_details.tabs.seen" = "Read (%d)";
-"message_details.tabs.likes" = "Liked (%d)";
-"message_details.subtitle_send_date" = "Sent: %@";
+"message_details.receipts_title" = "Leido";
+"message_details.tabs.seen" = "Leido (%d)";
+"message_details.tabs.likes" = "le gusto (%d)";
+"message_details.subtitle_send_date" = "Enviado: %@";
 "message_details.subtitle_edit_date" = "Editado: %@";
-"message_details.subtitle_label_voiceOver" = "Message Details";
+"message_details.subtitle_label_voiceOver" = "Detalles del mensaje";
 "message_details.user_handle_subtitle_label" = "Nombre de usuario";
-"message_details.user_read_timestamp_subtitle_label" = "Read at";
+"message_details.user_read_timestamp_subtitle_label" = "Leido a las";
