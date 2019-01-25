@@ -39,12 +39,15 @@ class SettingsPropertyTextValueCellDescriptor: SettingsPropertyCellDescriptorTyp
         self.identifier = identifier
     }
     
-    func featureCell(_ cell: SettingsCellType) {
-        cell.titleText = self.title
-        if let textCell = cell as? SettingsTextCell,
-            let stringValue = self.settingsProperty.rawValue() as? String {
+    func featureCell(_ cell: SettingsCellType) { ///TODO: unit test disable property
+        cell.titleText = title
+        guard let textCell = cell as? SettingsTextCell else { return }
+
+        if let stringValue = settingsProperty.rawValue() as? String {
             textCell.textInput.text = stringValue
         }
+
+        textCell.textInput.isUserInteractionEnabled = settingsProperty.enabled
     }
     
     func select(_ value: SettingsPropertyValue?) {
