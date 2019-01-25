@@ -55,12 +55,14 @@ class MockAudioRecorder: AudioRecorderType {
     
     var startRecordingHitCount = 0
     func startRecording(_ completion: @escaping (Bool) -> Void) {
+        state = .recording(start: 0)
         startRecordingHitCount += 1
         completion(true)
     }
     
     var stopRecordingHitCount = 0
     @discardableResult func stopRecording() -> Bool {
+        state = .stopped
         stopRecordingHitCount += 1
         return true
     }

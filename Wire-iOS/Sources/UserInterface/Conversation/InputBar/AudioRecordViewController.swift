@@ -54,11 +54,8 @@ private let zmLog = ZMSLog(tag: "UI")
     let recordingDotView = RecordingDotView()
     var recordingDotViewVisible: ConstraintGroup?
     var recordingDotViewHidden: ConstraintGroup?
-
-    public let recorder = AudioRecorder(format: .wav,
-                                        maxRecordingDuration: ZMUserSession.shared()?.maxAudioLength(),
-                                        maxFileSize: ZMUserSession.shared()?.maxUploadFileSize())!
     
+    public let recorder: AudioRecorderType
     weak public var delegate: AudioRecordViewControllerDelegate?
     
     var recordingState: AudioRecordState = .recording {
@@ -71,11 +68,17 @@ private let zmLog = ZMSLog(tag: "UI")
         fatalError("init(coder:) has not been implemented")
     }
     
-    init() {
+    init(audioRecorder: AudioRecorderType? = nil) {
+        let maxAudioLength = ZMUserSession.shared()?.maxAudioLength()
+        let maxUploadSize = ZMUserSession.shared()?.maxUploadFileSize()
+        self.recorder = audioRecorder ?? AudioRecorder(format: .wav, maxRecordingDuration: maxAudioLength, maxFileSize: maxUploadSize)
+        
         super.init(nibName: nil, bundle: nil)
+        
         configureViews()
         configureAudioRecorder()
         createConstraints()
+        
 
         if DeveloperMenuState.developerMenuEnabled() && Settings.shared().maxRecordingDurationDebug != 0 {
             self.recorder.maxRecordingDuration = Settings.shared().maxRecordingDurationDebug
@@ -101,7 +104,7 @@ private let zmLog = ZMSLog(tag: "UI")
     }
     
     func finishRecordingIfNeeded(_ sender: UIGestureRecognizer) {
-        guard recorder.state  != .initializing else {
+        guard recorder.state != .initializing else {
             recorder.stopRecording()
             self.delegate?.audioRecordViewControllerDidCancel(self)
             return
