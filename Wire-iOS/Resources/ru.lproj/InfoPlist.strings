@@ -19,10 +19,10 @@
 "NSContactsUsageDescription" = "Мы используем данные о ваших контактах, чтобы вы могли найти людей, которых знаете. Мы анонимизируем всю информацию и не делимся ею с кем-либо еще.";
 "NSMicrophoneUsageDescription" = "Разрешить Wire доступ к микрофону для совершения звонков и отправки аудиосообщений.";
 "NSLocationWhenInUseUsageDescription" = "Разрешить Wire доступ к вашему местоположению, чтобы вы могли отправлять ваше местоположение другим людям.";
-"NSCameraUsageDescription" = "Разрешить Wire доступ к камере для размещения видео звонков и отправки фотографий.";
+"NSCameraUsageDescription" = "Разрешить Wire доступ к вашей камере, чтобы вы могли совершать видеозвонки и отправлять фотографии.";
 /* Showed after taking a picture with camera, but only when NSPhotoLibraryUsageDescription permission was declined. Asks permission for only writing to photo library. */
-"NSPhotoLibraryAddUsageDescription" = "Разрешить Wire сохранять снимки в библиотеку фотографий.";
+"NSPhotoLibraryAddUsageDescription" = "Разрешить Wire сохранять снимки в галерею.";
 /* Showed when trying to send picture from conversaiton list. Asks permissions for reading and writing to photo library */
-"NSPhotoLibraryUsageDescription" = "Разрешить Wire открывать изображения из библиотеки фотографий.";
+"NSPhotoLibraryUsageDescription" = "Разрешить Wire доступ к изображениям, хранящимся в галерее.";
 /* Is shown to the user when app is locked with AppLock feature on the phone that supports Face ID */
-"NSFaceIDUsageDescription" = "Чтобы выполнить проверку подлинности, Wire должен получить доступ к Face ID.";
+"NSFaceIDUsageDescription" = "Для аутентификации в приложении разрешите Wire доступ к функции Face ID.";

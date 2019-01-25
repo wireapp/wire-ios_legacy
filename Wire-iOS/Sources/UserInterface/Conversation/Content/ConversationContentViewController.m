@@ -55,9 +55,6 @@
 @interface ConversationContentViewController (TableView) <UITableViewDelegate, UITableViewDataSourcePrefetching>
 @end
 
-@interface ConversationContentViewController (ConversationMessageCellDelegate) <ConversationMessageCellDelegate>
-@end
-
 @interface ConversationContentViewController (ZMTypingChangeObserver) <ZMTypingChangeObserver>
 @end
 
@@ -144,10 +141,9 @@
     [super viewDidLoad];
     
     self.dataSource = [[ConversationTableViewDataSource alloc] initWithConversation:self.conversation
-                                                                          tableView:self.tableView];
-    self.dataSource.conversationCellDelegate = self;
-    self.dataSource.messageActionResponder = self;
-
+                                                                          tableView:self.tableView
+                                                                    actionResponder:self
+                                                                       cellDelegate:self];
     self.tableView.estimatedRowHeight = 80;
     self.tableView.translatesAutoresizingMaskIntoConstraints = NO;
     self.tableView.allowsSelection = YES;
@@ -535,7 +531,7 @@
         return;
     }
     
-    UITableViewCell *cell = [self cellForMessage:message];
+    UITableViewCell *cell = [self.dataSource cellForMessage:message];
     [self.messagePresenter openMessage:message targetView:cell actionResponder:self];
 }
 
@@ -713,46 +709,19 @@
 
 @end
 
-@implementation ConversationContentViewController (ConversationMessageCellDelegate)
+@implementation ConversationContentViewController (EditMessages)
 
-- (void)wantsToPerformAction:(MessageAction)action forMessage:(id<ZMConversationMessage>)message
+- (void)editLastMessage
 {
-    UITableViewCell *cell = [self cellForMessage:message];
-    
-    if ([cell conformsToProtocol:@protocol(SelectableView)]) {
-        [self wantsToPerformAction:action forMessage:message cell:(UITableViewCell<SelectableView> *)cell];
+    ZMMessage *lastEditableMessage = self.conversation.lastEditableMessage;
+    if (lastEditableMessage != nil) {
+        [self wantsToPerformAction:MessageActionEdit forMessage:lastEditableMessage];
     }
 }
 
-- (void)conversationMessageWantsToOpenUserDetails:(UIView *)cell user:(id<UserType>)user sourceView:(UIView *)sourceView frame:(CGRect)frame
+- (void)didFinishEditingMessage:(id<ZMConversationMessage>)message
 {
-    if ([self.delegate respondsToSelector:@selector(didTapOnUserAvatar:view:frame:)]) {
-        [self.delegate didTapOnUserAvatar:user view:sourceView frame:frame];
-    }
-}
-
-- (BOOL)conversationMessageShouldBecomeFirstResponderWhenShowingMenuForCell:(UIView *)cell
-{
-    BOOL shouldBecomeFirstResponder = YES;
-    if ([self.delegate respondsToSelector:@selector(conversationContentViewController:shouldBecomeFirstResponderWhenShowMenuFromCell:)]) {
-        shouldBecomeFirstResponder = [self.delegate conversationContentViewController:self shouldBecomeFirstResponderWhenShowMenuFromCell:cell];
-    }
-    return shouldBecomeFirstResponder;
-}
-
-- (void)conversationMessageWantsToOpenMessageDetails:(UIView *)cell messageDetailsViewController:(MessageDetailsViewController *)messageDetailsViewController
-{
-    [self.parentViewController presentViewController:messageDetailsViewController animated:YES completion:nil];
-}
-
-- (void)conversationMessageWantsToOpenGuestOptionsFromView:(UIView *)cell sourceView:(UIView *)sourceView
-{
-    [self.delegate conversationContentViewController:self presentGuestOptionsFromView:sourceView];
-}
-
-- (void)conversationMessageWantsToOpenParticipantsDetails:(UIView *)cell selectedUsers:(NSArray<ZMUser *> *)selectedUsers sourceView:(UIView *)sourceView
-{
-    [self.delegate conversationContentViewController:self presentParticipantsDetailsWithSelectedUsers:selectedUsers fromView:sourceView];
+    self.dataSource.editingMessage = nil;
 }
 
 @end

@@ -55,6 +55,19 @@ open class CoreDataSnapshotTestCase: ZMSnapshotTestCase {
 
     // MARK: – Setup
 
+    private func setupMember() {
+        let selfUser = ZMUser.selfUser(in: self.uiMOC)
+
+        team = Team.insertNewObject(in: uiMOC)
+        team!.remoteIdentifier = UUID()
+        
+
+        teamMember = Member.insertNewObject(in: uiMOC)
+        teamMember!.user = selfUser
+        teamMember!.team = team
+        teamMember!.setTeamRole(.member)
+    }
+
     private func setupTestObjects() {
         selfUser = ZMUser.insertNewObject(in: uiMOC)
         selfUser.remoteIdentifier = UUID()
@@ -63,12 +76,7 @@ open class CoreDataSnapshotTestCase: ZMSnapshotTestCase {
 
         ZMUser.boxSelfUser(selfUser, inContextUserInfo: uiMOC)
         if selfUserInTeam {
-            let selfUser = ZMUser.selfUser(in: self.uiMOC)
-            let team = Team.insertNewObject(in: uiMOC)
-            team.remoteIdentifier = UUID()
-            let member = Member.insertNewObject(in: uiMOC)
-            member.user = selfUser
-            member.team = team
+            setupMember()
         }
 
         otherUser = ZMUser.insertNewObject(in: uiMOC)
@@ -94,12 +102,7 @@ open class CoreDataSnapshotTestCase: ZMSnapshotTestCase {
         }
 
         if selfUserInTeam {
-            let selfUser = ZMUser.selfUser(in: self.uiMOC)
-            let team = Team.insertNewObject(in: uiMOC)
-            team.remoteIdentifier = UUID()
-            let member = Member.insertNewObject(in: uiMOC)
-            member.user = selfUser
-            member.team = team
+            setupMember()
         } else {
             teamMember = nil
             team = nil
@@ -150,3 +153,21 @@ open class CoreDataSnapshotTestCase: ZMSnapshotTestCase {
     }
 
 }
+
+//MARK: - mock service user
+
+extension CoreDataSnapshotTestCase {
+    func createServiceUser() -> ZMUser {
+        let serviceUser = ZMUser.insertNewObject(in: uiMOC)
+        serviceUser.remoteIdentifier = UUID()
+        serviceUser.name = "ServiceUser"
+        serviceUser.setHandle(name.lowercased())
+        serviceUser.accentColorValue = .brightOrange
+        serviceUser.serviceIdentifier = UUID.create().transportString()
+        serviceUser.providerIdentifier = UUID.create().transportString()
+        uiMOC.saveOrRollback()
+
+        return serviceUser
+    }
+}
+

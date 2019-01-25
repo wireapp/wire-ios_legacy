@@ -292,7 +292,7 @@
 "conversation.create.guidance.empty" = "Vähemalt 1 tähemärk";
 "conversation.create.guidance.toolong" = "Liiga pikk nimi";
 "conversation.create.options.title" = "Conversation options";
-"conversation.create.options.subtitle" = "Allow guests: %@, Read receipts: %@";
+"conversation.create.options.subtitle" = "Guests and services: %@, Read receipts: %@";
 "conversation.create.guests.title" = "Luba külalisi ja teenuseid";
 "conversation.create.guests.subtitle" = "Ava see vestlus teenustele ja meeskonnast väljas olevatele inimestele.";
 "conversation.create.receipts.title" = "Read receipts";
@@ -872,8 +872,8 @@
 "self.settings.account_appearance_group.title" = "Välimus";
 
 "self.settings.privacy_section_group.title" = "Privacy";
-"self.settings.enable_read_receipts.title" = "Send read receipts";
-"self.settings.privacy_section_group.subtitle" = "When this is off, you won’t be able to see read receipts from other people.\nThis setting does not apply to group conversations.";
+"self.settings.enable_read_receipts.title" = "Send Read Receipts";
+"self.settings.privacy_section_group.subtitle" = "When this is off, you won’t be able to see read receipts from other people.\n\nThis setting does not apply to group conversations.";
 
 "self.settings.account_picture_group.picture" = "Profiilipilt";
 "self.settings.account_picture_group.color" = "Värv";
@@ -1147,7 +1147,7 @@
 // Invite Team Members
 
 "team.invite.header.title" = "Ehita oma meeskond";
-"team.invite.header.subtitle" = "Kutsu kolleegid liituma.";
+"team.invite.header.subtitle" = "Your Wire team is ready to go. Invite your colleagues as members.";
 "team.invite.textfield.placeholder" = "nimi@firma.ee";
 "team.invite.textfield.accesibility" = "Teiste kutsumiseks sisesta nende eposti aadress.";
 "team.invite.learn_more.title" = "Loe lähemalt";

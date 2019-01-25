@@ -19,44 +19,70 @@
 import XCTest
 @testable import Wire
 
-class GroupDetailsViewControllerSnapshotTests: CoreDataSnapshotTestCase {
+final class GroupDetailsViewControllerSnapshotTests: CoreDataSnapshotTestCase {
     
     var sut: GroupDetailsViewController!
+    var groupConversation: ZMConversation!
     
     override func setUp() {
         super.setUp()
+
+        groupConversation = createGroupConversation()
+        groupConversation.userDefinedName = "iOS Team"
     }
     
     override func tearDown() {
         sut = nil
+        groupConversation = nil
         super.tearDown()
     }
-
+    
     func testForOptionsForTeamUserInNonTeamConversation() {
         teamTest {
-            sut = GroupDetailsViewController(conversation: otherUserConversation)
+            selfUser.membership?.setTeamRole(.member)
+            sut = GroupDetailsViewController(conversation: groupConversation)
+            verify(view: sut.view)
+        }
+    }
+    
+    func testForOptionsForTeamUserInNonTeamConversation_Partner() {
+        teamTest {
+            selfUser.membership?.setTeamRole(.partner)
+            sut = GroupDetailsViewController(conversation: groupConversation)
             verify(view: sut.view)
         }
     }
     
     func testForOptionsForTeamUserInTeamConversation() {
         teamTest {
-            otherUserConversation.team =  selfUser.team
-            sut = GroupDetailsViewController(conversation: otherUserConversation)
+            selfUser.membership?.setTeamRole(.member)
+            groupConversation.team =  selfUser.team
+            groupConversation.teamRemoteIdentifier = selfUser.team?.remoteIdentifier
+            sut = GroupDetailsViewController(conversation: groupConversation)
+            verify(view: sut.view)
+        }
+    }
+    
+    func testForOptionsForTeamUserInTeamConversation_Partner() {
+        teamTest {
+            selfUser.membership?.setTeamRole(.partner)
+            groupConversation.team =  selfUser.team
+            groupConversation.teamRemoteIdentifier = selfUser.team?.remoteIdentifier
+            sut = GroupDetailsViewController(conversation: groupConversation)
             verify(view: sut.view)
         }
     }
 
     func testForOptionsForNonTeamUser() {
         nonTeamTest {
-            sut = GroupDetailsViewController(conversation: otherUserConversation)
+            sut = GroupDetailsViewController(conversation: groupConversation)
             verify(view: self.sut.view)
         }
     }
 
     func testForActionMenu() {
         teamTest {
-            sut = GroupDetailsViewController(conversation: otherUserConversation)
+            sut = GroupDetailsViewController(conversation: groupConversation)
             sut.detailsView(GroupDetailsFooterView(), performAction: .more)
             verifyAlertController((sut?.actionController?.alertController)!)
         }
@@ -64,7 +90,7 @@ class GroupDetailsViewControllerSnapshotTests: CoreDataSnapshotTestCase {
     
     func testForActionMenu_NonTeam() {
         nonTeamTest {
-            sut = GroupDetailsViewController(conversation: otherUserConversation)
+            sut = GroupDetailsViewController(conversation: groupConversation)
             sut.detailsView(GroupDetailsFooterView(), performAction: .more)
             verifyAlertController((sut?.actionController?.alertController)!)
         }

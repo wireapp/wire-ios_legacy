@@ -47,8 +47,6 @@ class ConversationStartedSystemMessageCell: ConversationIconBasedCell, Conversat
         let icon: UIImage?
     }
     
-    weak var delegate: ConversationMessageCellDelegate?
-    
     private let titleLabel = UILabel()
     private var selectedUsers: [ZMUser] = []
     
@@ -347,9 +345,12 @@ class ConversationSystemMessageCellDescription {
             let startedConversationCell = ConversationStartedSystemMessageCellDescription(message: message, data: systemMessageData)
             cells.append(AnyConversationMessageCellDescription(startedConversationCell))
             
-            if conversation.allowGuests {
+            let isOpenGroup = conversation.conversationType == .group && conversation.allowGuests
+            let selfIsGuest = ZMUser.selfUser()?.isGuest(in: conversation) ?? false
+            let selfIsAuthorized = ZMUser.selfUserHas(permissions: .member)
+            
+            if !selfIsGuest && isOpenGroup && selfIsAuthorized {
                 cells.append(AnyConversationMessageCellDescription(GuestsAllowedCellDescription()))
-                
             }
             
             return cells
@@ -561,12 +562,6 @@ class ConversationStartedSystemMessageCellDescription: ConversationMessageCellDe
                                             message: model.attributedTitle() ?? NSAttributedString(string: ""),
                                             selectedUsers: model.selectedUsers,
                                             icon: model.image())
-    }
-    
-    func makeCell(for tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueConversationCell(with: self, for: indexPath)
-        cell.cellView.delegate = self.delegate
-        return cell
     }
     
 }

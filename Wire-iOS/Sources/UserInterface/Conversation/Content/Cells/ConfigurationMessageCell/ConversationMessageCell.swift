@@ -49,6 +49,12 @@ protocol ConversationMessageCell {
     
     /// Top inset for ephemeral timer relative to the cell content
     var ephemeralTimerTopInset: CGFloat { get }
+    
+    /// The message that is displayed.
+    var message: ZMConversationMessage? { get set }
+    
+    /// The delegate for the cell.
+    var delegate: ConversationMessageCellDelegate? { get set }
 
     /**
      * Configures the cell with the specified configuration object.
@@ -141,6 +147,7 @@ protocol ConversationMessageCellDescription: class {
     func makeView() -> UIView
     func willDisplayCell()
     func didEndDisplayingCell()
+    func isConfigurationEqual(with other: Any) -> Bool
 }
 
 // MARK: - Table View Dequeuing
@@ -183,7 +190,11 @@ extension ConversationMessageCellDescription {
     }
 
     func makeCell(for tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
-        return tableView.dequeueConversationCell(with: self, for: indexPath)
+        let cell =  tableView.dequeueConversationCell(with: self, for: indexPath)
+        cell.cellView.delegate = self.delegate
+        cell.cellView.message = self.message
+        cell.accessibilityCustomActions = actionController?.makeAccessibilityActions()
+        return cell
     }
     
     func configureCell(_ cell: UITableViewCell, animated: Bool = false) {
@@ -192,6 +203,10 @@ extension ConversationMessageCellDescription {
         adapterCell.cellView.configure(with: self.configuration, animated: animated)
         
         _ = message?.startSelfDestructionIfNeeded()
+    }
+    
+    func isConfigurationEqual(with other: Any) -> Bool {
+        return type(of: self) == type(of: other)
     }
     
 }
@@ -206,6 +221,8 @@ extension ConversationMessageCellDescription {
     private let registrationBlock: (UITableView) -> Void
     private let configureBlock: (UITableViewCell, Bool) -> Void
     private let baseTypeGetter: () -> AnyClass
+    private let instanceGetter: () -> AnyObject
+    private let isConfigurationEqualBlock: (AnyConversationMessageCellDescription) -> Bool
 
     private let _delegate: AnyMutableProperty<ConversationMessageCellDelegate?>
     private let _message: AnyMutableProperty<ZMConversationMessage?>
@@ -238,6 +255,14 @@ extension ConversationMessageCellDescription {
             return T.self
         }
         
+        instanceGetter = {
+            return description
+        }
+        
+        isConfigurationEqualBlock = { otherDescription in
+            description.isConfigurationEqual(with: otherDescription.instance)
+        }
+        
         _delegate = AnyMutableProperty(description, keyPath: \.delegate)
         _message = AnyMutableProperty(description, keyPath: \.message)
         _actionController = AnyMutableProperty(description, keyPath: \.actionController)
@@ -247,6 +272,10 @@ extension ConversationMessageCellDescription {
         _axIdentifier = AnyConstantProperty(description, keyPath: \.accessibilityIdentifier)
         _axLabel = AnyConstantProperty(description, keyPath: \.accessibilityLabel)
         _supportsActions = AnyConstantProperty(description, keyPath: \.supportsActions)
+    }
+    
+    @objc var instance: AnyObject {
+        return instanceGetter()
     }
 
     @objc var baseType: AnyClass {
@@ -312,6 +341,10 @@ extension ConversationMessageCellDescription {
     
     func makeView() -> UIView {
         return viewGenerator()
+    }
+    
+    func isConfigurationEqual(with description: AnyConversationMessageCellDescription) -> Bool {
+        return isConfigurationEqualBlock(description)
     }
 
 }

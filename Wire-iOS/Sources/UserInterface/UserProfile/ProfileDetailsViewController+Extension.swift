@@ -77,7 +77,7 @@ extension ProfileDetailsViewController {
 
         readReceiptsEnabledLabel.lineBreakMode = .byWordWrapping
         readReceiptsEnabledLabel.numberOfLines = 0
-    
+
         readReceiptsEnabledLabel.attributedText = NSAttributedString.readReceiptsText(selfUser.readReceiptsEnabled)
         
         // On small screens the label gets compressed for unknown reason.
@@ -86,4 +86,57 @@ extension ProfileDetailsViewController {
         }
     }
 
+    // MARK: - footer buttons types
+
+
+    @objc
+    func leftButtonAction() -> ProfileUserAction {
+        guard let user = fullUser() else { return .none }
+
+        if user.isSelfUser {
+            return .none
+        } else if (user.isConnected || user.isTeamMember) &&
+            context == .oneToOneConversation {
+            if ZMUser.selfUserHas(permissions: .member) || !ZMUser.selfUser().isTeamMember {
+                return .addPeople
+            } else {
+                return .none
+            }
+        } else if user.isTeamMember {
+            return .openConversation
+        } else if user.isBlocked {
+            return .unblock
+        } else if user.isPendingApprovalBySelfUser {
+            return .acceptConnectionRequest
+        } else if user.isPendingApprovalByOtherUser {
+            return .cancelConnectionRequest
+        } else if user.canBeConnected {
+            return .sendConnectionRequest
+        } else if user.isWirelessUser {
+            return .none
+        } else {
+            return .openConversation
+        }
+    }
+
+    @objc
+    func rightButtonAction() -> ProfileUserAction {
+        guard let user = fullUser() else { return .none }
+
+        if user.isSelfUser {
+            return .none
+        } else if context == .groupConversation {
+            if ZMUser.selfUser().canRemoveUser(from: conversation) {
+                return .removePeople
+            } else {
+                return .none
+            }
+        } else if user.isConnected {
+            return .presentMenu
+        } else if nil != user.team {
+            return .presentMenu
+        } else {
+            return .none
+        }
+    }
 }

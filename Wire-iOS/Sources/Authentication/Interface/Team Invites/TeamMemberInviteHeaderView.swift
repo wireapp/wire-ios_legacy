@@ -17,7 +17,6 @@
 //
 
 import UIKit
-import Cartography
 
 final class TeamMemberInviteHeaderView: UIView {
     
@@ -45,16 +44,24 @@ final class TeamMemberInviteHeaderView: UIView {
     
     private func setupViews() {
         subtitleLabel.font = FontSpec(.normal, .regular).font!
-        titleLabel.text = "team.invite.header.title".localized
-        subtitleLabel.text = "team.invite.header.subtitle".localized
         stackView.axis = .vertical
         stackView.spacing = 24
+
         [titleLabel, subtitleLabel, bottomSpacerView].forEach(stackView.addArrangedSubview)
-        titleLabel.textAlignment = .center
-        subtitleLabel.textAlignment = .center
+
+        [titleLabel, subtitleLabel].forEach(){
+            $0.textAlignment = .center
+            $0.numberOfLines = 0
+            $0.lineBreakMode = .byWordWrapping
+            $0.setContentCompressionResistancePriority(UILayoutPriority.required, for: .vertical)
+        }
+
         titleLabel.textColor = UIColor.Team.textColor
         subtitleLabel.textColor = UIColor.Team.subtitleColor
         addSubview(stackView)
+
+        titleLabel.text = "team.invite.header.title".localized
+        subtitleLabel.text = "team.invite.header.subtitle".localized
     }
     
     func updateHeadlineLabelFont(forWidth width: CGFloat) {
@@ -62,9 +69,11 @@ final class TeamMemberInviteHeaderView: UIView {
     }
     
     private func createConstraints() {
-        constrain(self, stackView, bottomSpacerView) { view, stackView, bottomSpacerView in
-            stackView.edges == view.edges
-            bottomSpacerViewHeightConstraint = bottomSpacerView.height == 0
-        }
+        [stackView, bottomSpacerView].forEach(){ $0.translatesAutoresizingMaskIntoConstraints = false }
+        stackView.fitInSuperview()
+
+        bottomSpacerViewHeightConstraint = bottomSpacerView.heightAnchor.constraint(equalToConstant: 0)
+        bottomSpacerViewHeightConstraint?.priority = .fittingSizeLevel
+        bottomSpacerViewHeightConstraint?.isActive = true
     }
 }

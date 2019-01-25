@@ -24,6 +24,9 @@ class MockCell: UIView, ConversationMessageCell {
         let backgroundColor: UIColor
     }
 
+    weak var message: ZMConversationMessage?
+    weak var delegate: ConversationMessageCellDelegate?
+    
     var isConfigured: Bool  = false
     var isSelected: Bool = false
 

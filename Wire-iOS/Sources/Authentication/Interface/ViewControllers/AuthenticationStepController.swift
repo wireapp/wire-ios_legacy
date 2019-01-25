@@ -67,7 +67,7 @@ class AuthenticationStepController: AuthenticationStepViewController {
     private var rightItemAction: AuthenticationCoordinatorAction?
 
     var contentCenterXAnchor: NSLayoutYAxisAnchor {
-        return mainView!.centerYAnchor
+        return contentStack.centerYAnchor
     }
 
     // MARK: - Initialization
@@ -238,7 +238,6 @@ class AuthenticationStepController: AuthenticationStepViewController {
         NSLayoutConstraint.activate([
             // contentStack
             contentStack.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            contentStack.topAnchor.constraint(greaterThanOrEqualTo: safeTopAnchor),
             contentCenter,
 
             // labels

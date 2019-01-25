@@ -22,9 +22,11 @@
 #import "AudioTrack.h"
 #import "AudioPlaylist.h"
 #import "UIImage+ImageUtilities.h"
+#import "WireSyncEngine+iOS.h"
 
 @import WireCommonComponents;
 @import WireUtilities;
+@import WireSyncEngine;
 #import "KeyValueObserver.h"
 
 static NSString* EmptyStringIfNil(NSString *string) {
@@ -37,13 +39,14 @@ static NSString* EmptyStringIfNil(NSString *string) {
 @import MediaPlayer;
 
 
-@interface AudioTrackPlayer ()
+@interface AudioTrackPlayer () <ZMMessageObserver>
 
 @property (nonatomic) AVPlayer *avPlayer;
 @property (nonatomic) NSObject<AudioTrack> *audioTrack;
 @property (nonatomic) id<AudioPlaylist> audioPlaylist;
 @property (nonatomic) CGFloat progress;
 @property (nonatomic) id timeObserverToken;
+@property (nonatomic) id messageObserverToken;
 @property (nonatomic, copy) void (^loadAudioTrackCompletionHandler)(BOOL loaded, NSError *error);
 @property (nonatomic) MediaPlayerState state;
 @property (nonatomic) id<ZMConversationMessage> sourceMessage;
@@ -116,6 +119,11 @@ static NSString* EmptyStringIfNil(NSString *string) {
         CMTime normalizedTime = CMTimeMapTimeFromRangeToRange(time, itemRange, normalizedRange);
         weakSelf.progress = CMTimeGetSeconds(normalizedTime);
     }];
+    
+    ZMUserSession *userSession = [ZMUserSession sharedSession];
+    if (userSession != nil) {
+        self.messageObserverToken = [MessageChangeInfo addObserver:self forMessage:sourceMessage userSession:[ZMUserSession sharedSession]];
+    }
 }
 
 - (void)setIsRemoteCommandCenterEnabled:(BOOL)enabled
@@ -215,6 +223,7 @@ static NSString* EmptyStringIfNil(NSString *string) {
     [self.avPlayer replaceCurrentItemWithPlayerItem:nil];
     self.artworkObserver = nil;
     self.audioTrack = nil;
+    self.messageObserverToken = nil;
     _sourceMessage = nil;
 }
 
@@ -305,6 +314,15 @@ static NSString* EmptyStringIfNil(NSString *string) {
     _audioTrack = audioTrack;
     if (_audioTrack != nil) {
         [_audioTrack addObserver:self forKeyPath:@"status" options:NSKeyValueObservingOptionNew context:NULL];
+    }
+}
+
+#pragma mark - ZMMessageObserver
+
+- (void)messageDidChange:(MessageChangeInfo *)changeInfo
+{
+    if (changeInfo.message.hasBeenDeleted) {
+        [self stop];
     }
 }
 

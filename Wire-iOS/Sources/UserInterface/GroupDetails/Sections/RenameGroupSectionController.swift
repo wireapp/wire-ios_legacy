@@ -54,8 +54,6 @@ class RenameGroupSectionController: NSObject, CollectionViewSectionController {
         let cell = collectionView.dequeueReusableCell(ofType: GroupDetailsRenameCell.self, for: indexPath)
         cell.configure(for: conversation)
         cell.titleTextField.textFieldDelegate = self
-        renameCell?.titleTextField.isUserInteractionEnabled = conversation.isSelfAnActiveMember
-        renameCell?.accessoryIconView.isHidden = !conversation.isSelfAnActiveMember
         renameCell = cell
         return cell
     }

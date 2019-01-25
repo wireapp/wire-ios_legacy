@@ -102,7 +102,7 @@ public extension ConversationViewController {
     @objc public func rightNavigationItems(forConversation conversation: ZMConversation) -> [UIBarButtonItem] {
         guard !conversation.isReadOnly, conversation.activeParticipants.count != 0 else { return [] }
 
-        if conversation.canJoinCall && conversation.mutedMessageTypes != .none {
+        if conversation.canJoinCall {
             return [joinCallButton]
         } else if conversation.isCallOngoing {
             return []
@@ -226,12 +226,12 @@ extension ConversationViewController: CollectionsViewControllerDelegate {
         case .reply:
             viewController.dismissIfNeeded(animated: true) {
                 self.contentViewController.scroll(to: message) { cell in
-                    self.contentViewController.wants(toPerform: .reply, for: message)
+                    self.contentViewController.perform(action: .reply, for: message)
                 }
             }
 
         default:
-            self.contentViewController.wants(toPerform: action, for: message)
+            self.contentViewController.perform(action: action, for: message)
             break
         }
     }

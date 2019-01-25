@@ -63,17 +63,6 @@ NS_ASSUME_NONNULL_BEGIN
     }
 }
 
-+ (nullable instancetype)countryWithE164:(NSNumber *)e164
-{
-    for (Country *country in [self allCountries]) {
-        if ([country.e164 isEqualToNumber:e164]) {
-            return country;
-        }
-    }
-
-    return nil;
-}
-
 + (nullable instancetype)countryWithISO:(NSString *)ISO e164:(NSNumber *)e164
 {
     Country *country = [[Country alloc] init];
@@ -94,35 +83,49 @@ NS_ASSUME_NONNULL_BEGIN
     return nil;
 }
 
++ (nullable instancetype)detectCountryFromCode:(NSUInteger)e164;
+{
+    return [self detectCountryWithMatcher:^(Country *country) {
+        return (BOOL)(country.e164.unsignedIntegerValue == e164);
+    }];
+}
+
 + (nullable instancetype)detectCountryForPhoneNumber:(NSString *)phoneNumber
+{
+    return [self detectCountryWithMatcher:^(Country *country) {
+        return [phoneNumber hasPrefix:country.e164PrefixString];
+    }];
+}
+
++ (nullable instancetype)detectCountryWithMatcher:(BOOL (^ _Nonnull)(Country *))matcher
 {
     NSMutableSet *matches = [NSMutableSet new];
     NSArray *allCountries = [self allCountries];
     for (Country *country in allCountries) {
-        if ([phoneNumber hasPrefix:country.e164PrefixString]) {
+        if (matcher(country)) {
             [matches addObject:country];
         }
     }
-    
+
     // One or no matches is trivial case
     if (matches.count <= 1) {
         return matches.anyObject;
     }
-    
+
     // If country from device is in match list, probably it is desired by user
     Country *countryFromDevice = [Country countryFromDevice];
     if (countryFromDevice != nil && [matches containsObject:countryFromDevice]) {
         return countryFromDevice;
     }
-    
-    
+
+
     // Many countries have e164 == "1", but user with phone number "+1..." is most probably from USA
     for (Country *country in matches) {
         if ([country.ISO isEqualToString:@"us"]) {
             return country;
         }
     }
-    
+
     // Feel free to add more smart heuristics here:
     return matches.anyObject;
 }

@@ -545,13 +545,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @implementation ConversationViewController (Content)
 
-- (void)conversationContentViewController:(ConversationContentViewController *)contentViewController
-            didScrollWithOffsetFromBottom:(CGFloat)offset
-                        withLatestMessage:(id<ZMConversationMessage>)message
-{
-    self.inputBarController.inputBarOverlapsContent = ! contentViewController.isScrolledToBottom;
-}
-
 - (void)conversationContentViewController:(ConversationContentViewController *)contentViewController willDisplayActiveMediaPlayerForMessage:(id<ZMConversationMessage>)message
 {
     [self.conversationBarController dismissBar:self.mediaBarViewController];

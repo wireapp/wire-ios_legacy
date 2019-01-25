@@ -291,12 +291,12 @@
 "conversation.create.group_name.placeholder" = "Gruppenname";
 "conversation.create.guidance.empty" = "Mindestens 1 Zeichen";
 "conversation.create.guidance.toolong" = "Zu viele Zeichen";
-"conversation.create.options.title" = "Konversations-Optionen";
-"conversation.create.options.subtitle" = "Gäste zulassen: %@, Lesebestätigungen: %@";
+"conversation.create.options.title" = "Optionen";
+"conversation.create.options.subtitle" = "Gäste und Dienste: %@, Lesebestätigungen: %@";
 "conversation.create.guests.title" = "Gäste und Dienste zulassen";
 "conversation.create.guests.subtitle" = "Öffne diese Unterhaltung für Dienste und Personen außerhalb des Teams.";
 "conversation.create.receipts.title" = "Lesebestätigungen";
-"conversation.create.receipts.subtitle" = "Wenn diese Option aktiviert ist, können Sender sehen wenn ihre Nachrichten gelesen werden.";
+"conversation.create.receipts.subtitle" = "Wenn diese Option aktiviert ist, können Sender sehen, wenn ihre Nachrichten gelesen werden.";
 
 "conversation.input_bar.ongoing_call_alert.title" = "Aktiver Anruf";
 "conversation.input_bar.ongoing_call_alert.audio.message" = "Audionachrichten können während eines Anrufs nicht aufgenommen werden.";
@@ -749,7 +749,7 @@
 
 "profile.read_receipts_enabled_memo.header" = "LESEBESTÄTIGUNGEN AKTIV";
 "profile.read_receipts_disabled_memo.header" = "LESEBESTÄTIGUNGEN AUS";
-"profile.read_receipts_memo.body" = "Wenn beide Seiten Lesebestätigungen aktivieren, können alle sehen wenn Nachrichten gelesen werden.\nDiese Option kann in den Kontoeinstellungen geändert werden.";
+"profile.read_receipts_memo.body" = "Wenn beide Seiten Lesebestätigungen aktivieren, können alle sehen, wenn Nachrichten gelesen werden.\nDiese Option kann in den Kontoeinstellungen geändert werden.";
 
 // User Details
 "profile.details.title" = "Details";
@@ -787,7 +787,7 @@
 "group_details.notification_options_cell.title" = "Benachrichtigungen";
 "group_details.notification_options_cell.description" = "Immer benachrichtigen (einschließlich Audio- und Videoanrufe) oder nur bei Erwähnungen oder wenn jemand auf eine deiner Nachrichten antwortet.";
 "group_details.receipt_options_cell.title" = "Lesebestätigungen";
-"group_details.receipt_options_cell.description" = "Wenn diese Option aktiviert ist, können Sender sehen wenn ihre Nachrichten gelesen werden.";
+"group_details.receipt_options_cell.description" = "Wenn diese Option aktiviert ist, können Sender sehen, wenn ihre Nachrichten gelesen werden.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile
@@ -873,7 +873,7 @@
 
 "self.settings.privacy_section_group.title" = "Datenschutz";
 "self.settings.enable_read_receipts.title" = "Lesebestätigungen senden";
-"self.settings.privacy_section_group.subtitle" = "Wenn diese Option deaktiviert ist, sieht man keine Lesebestätigungen von anderen.\nGilt nicht für Gruppen.";
+"self.settings.privacy_section_group.subtitle" = "Wenn diese Option deaktiviert ist, sieht man keine Lesebestätigungen von anderen.\nDies gilt nicht für Gruppen.";
 
 "self.settings.account_picture_group.picture" = "Bild";
 "self.settings.account_picture_group.color" = "Farbe";
@@ -1147,7 +1147,7 @@
 // Invite Team Members
 
 "team.invite.header.title" = "Erstelle dein Team";
-"team.invite.header.subtitle" = "Lade Kollegen ins Team ein.";
+"team.invite.header.subtitle" = "Das Wire-Team ist bereit. Jetzt alle Kollegen als Mitglieder einladen.";
 "team.invite.textfield.placeholder" = "name@unternehmen.com";
 "team.invite.textfield.accesibility" = "Gib die E-Mail-Adresse des Kollegen ein, den du einladen möchtest.";
 "team.invite.learn_more.title" = "Erfahre mehr";

@@ -32,14 +32,14 @@
 "share_extension.not_signed_in.title" = "Необходимо войти в Wire, чтобы поделиться чем-либо";
 "share_extension.not_signed_in.close_button" = "Закрыть";
 "share_extension.timeout.title" = "Время соединения истекло.";
-"share_extension.timeout.message" = "Проверьте подключение к Интернету и повторите попытку. Вложения были сохранены в беседе.";
+"share_extension.timeout.message" = "Проверьте подключение к интернету и повторите попытку. Вложения были сохранены в разговоре.";
 "share_extension.privacy_security.lock_app.description" = "Разблокировать Wire";
 "share_extension.logged_out.title" = "Вы вышли из этой учетной записи.";
 "share_extension.logged_out.message" = "Выберите другую учетную запись.";
 
-"conversation.displayname.emptygroup" = "Пустая групповая беседа";
+"conversation.displayname.emptygroup" = "Пустой групповой разговор";
 "meta.degraded.degradation_reason_message.singular" = "%@ начал(а) использовать новое устройство.";
 "meta.degraded.degradation_reason_message.plural" = "%@ начал(а) использовать новые устройства.";
-"meta.degraded.dialog_message" = "Вы все еще хотите отправить ваше сообщение?";
+"meta.degraded.dialog_message" = "Вы все еще хотите отправить свое сообщение?";
 "meta.degraded.cancel_sending_button" = "Не отправлять";
-"meta.degraded.send_anyway_button" = "Все равно отправить";
+"meta.degraded.send_anyway_button" = "Отправить в любом случае";

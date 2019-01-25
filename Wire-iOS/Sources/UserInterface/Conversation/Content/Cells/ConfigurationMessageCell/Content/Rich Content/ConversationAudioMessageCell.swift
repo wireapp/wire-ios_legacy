@@ -104,7 +104,7 @@ extension ConversationAudioMessageCell: TransferViewDelegate {
     func transferView(_ view: TransferView, didSelect action: MessageAction) {
         guard let message = message else { return }
         
-        delegate?.wants(toPerform: action, for: message)
+        delegate?.perform(action: action, for: message)
     }
 }
 
@@ -128,13 +128,6 @@ class ConversationAudioMessageCellDescription: ConversationMessageCellDescriptio
     
     init(message: ZMConversationMessage) {
         self.configuration = View.Configuration(message: message, isObfuscated: message.isObfuscated)
-    }
-    
-    func makeCell(for tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
-        let cell =  tableView.dequeueConversationCell(with: self, for: indexPath)
-        cell.cellView.message = message
-        cell.cellView.delegate = delegate
-        return cell
     }
     
 }

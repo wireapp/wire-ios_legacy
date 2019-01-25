@@ -145,7 +145,13 @@ static id<UserType> mockSelfUser = nil;
 @synthesize smallProfileImageCacheKey;
 @synthesize mediumProfileImageCacheKey;
 @synthesize isTeamMember;
+@synthesize teamRole;
 @synthesize readReceiptsEnabled;
+
+#pragma mark - ZMBareUserConnection
+
+@synthesize isPendingApprovalByOtherUser = _isPendingApprovalByOtherUser;
+@synthesize isServiceUser;
 
 - (BOOL)conformsToProtocol:(Protocol *)aProtocol
 {
@@ -285,10 +291,5 @@ static id<UserType> mockSelfUser = nil;
     return nil;
 }
 
-#pragma mark - ZMBareUserConnection
-
-@synthesize isPendingApprovalByOtherUser = _isPendingApprovalByOtherUser;
-
-@synthesize isServiceUser;
 
 @end

@@ -291,8 +291,8 @@
 "conversation.create.group_name.placeholder" = "Nome do grupo";
 "conversation.create.guidance.empty" = "Pelo menos 1 caractere";
 "conversation.create.guidance.toolong" = "Muitos caracteres";
-"conversation.create.options.title" = "Conversation options";
-"conversation.create.options.subtitle" = "Allow guests: %@, Read receipts: %@";
+"conversation.create.options.title" = "Opções de conversa";
+"conversation.create.options.subtitle" = "Os hóspedes e serviços: %@, recibos de leitura: %@";
 "conversation.create.guests.title" = "Permitir que os hóspedes e serviços";
 "conversation.create.guests.subtitle" = "Abra esta conversa para serviços e pessoas fora da sua equipe.";
 "conversation.create.receipts.title" = "Recibos de Leitura";
@@ -448,13 +448,13 @@
 
 // read receipt
 
-"content.system.message_read_receipt_on" = "%@ turned read receipts on for everyone";
-"content.system.message_read_receipt_on-you" = "%@ turned read receipts on for everyone";
+"content.system.message_read_receipt_on" = "%@ ativou confirmações de leitura para todos";
+"content.system.message_read_receipt_on-you" = "%@ ativou confirmações de leitura para todos";
 
-"content.system.message_read_receipt_off" = "%@ turned read receipts off for everyone";
-"content.system.message_read_receipt_off-you" = "%@ turned read receipts off for everyone";
+"content.system.message_read_receipt_off" = "%@ desativou confirmações de leitura para todos";
+"content.system.message_read_receipt_off-you" = "%@ desativou confirmações de leitura para todos";
 
-"content.system.message_read_receipt_on_add_to_group" = "Read receipts are on";
+"content.system.message_read_receipt_on_add_to_group" = "As confirmações de leitura estão ligadas";
 
 
 "content.system.reactivated_device" = "Você começou a usar o %@ novamente. Mensagens enviadas entretanto não aparecerão aqui.";
@@ -748,8 +748,8 @@
 "profile.open_conversation_button_title" = "Abrir conversa";
 
 "profile.read_receipts_enabled_memo.header" = "VOCÊ HABILITOU RECIBOS DE LEITURA";
-"profile.read_receipts_disabled_memo.header" = "YOU HAVE DISABLED READ RECEIPTS";
-"profile.read_receipts_memo.body" = "If both sides turn on read receipts, you can see when messages are read.\nYou can change this option in your account settings.";
+"profile.read_receipts_disabled_memo.header" = "VOCÊ DESATIVOU RECIBOS DE LEITURA";
+"profile.read_receipts_memo.body" = "Se ambos os lados ligarem as confirmações de leitura, você poderá ver quando as mensagens são lidas.\nVocê pode alterar essa opção nas configurações da sua conta.";
 
 // User Details
 "profile.details.title" = "Detalhes";
@@ -832,9 +832,9 @@
 
 // Settings changed alert
 
-"self.read_receipts_enabled.title" = "You have enabled read receipts";
-"self.read_receipts_disabled.title" = "You have disabled read receipts";
-"self.read_receipts_description.title" = "You can change this option in your account settings.";
+"self.read_receipts_enabled.title" = "Você ativou as confirmações de leitura";
+"self.read_receipts_disabled.title" = "Você ativou as confirmações de leitura";
+"self.read_receipts_description.title" = "Você pode alterar essa opção nas configurações da sua conta.";
 
 // Settings - top level
 "self.settings.create_team.title" = "Criar uma equipe";
@@ -872,8 +872,8 @@
 "self.settings.account_appearance_group.title" = "Aparência";
 
 "self.settings.privacy_section_group.title" = "Privacidade";
-"self.settings.enable_read_receipts.title" = "Enviar recibos de leitura";
-"self.settings.privacy_section_group.subtitle" = "Quando isso estiver desativado, você não poderá ver as confirmações de leitura de outras pessoas.\nEssa configuração não se aplica a conversas em grupo.";
+"self.settings.enable_read_receipts.title" = "Enviar Confirmações de Leitura";
+"self.settings.privacy_section_group.subtitle" = "Quando isso estiver desativado, você não poderá ver as confirmações de leitura de outras pessoas.\n\nEssa configuração não se aplica a conversas em grupo.";
 
 "self.settings.account_picture_group.picture" = "Foto";
 "self.settings.account_picture_group.color" = "Cor";
@@ -1147,7 +1147,7 @@
 // Invite Team Members
 
 "team.invite.header.title" = "Crie sua equipe";
-"team.invite.header.subtitle" = "Convide seus colegas para participar.";
+"team.invite.header.subtitle" = "Your Wire team is ready to go. Invite your colleagues as members.";
 "team.invite.textfield.placeholder" = "colega@suacompanhia.com";
 "team.invite.textfield.accesibility" = "Digite o endereço de e-mail do colega para convidar.";
 "team.invite.learn_more.title" = "Mais informação";
@@ -1520,16 +1520,16 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Message Details
-"message_details.empty_likes" = "No one has liked this message yet.";
-"message_details.empty_read_receipts" = "No one has read this message yet.";
-"message_details.read_receipts_disabled" = "Read receipts were not on when this message was sent.";
-"message_details.combined_title" = "Message Details";
-"message_details.likes_title" = "Liked";
-"message_details.receipts_title" = "Read";
-"message_details.tabs.seen" = "Read (%d)";
-"message_details.tabs.likes" = "Liked (%d)";
-"message_details.subtitle_send_date" = "Sent: %@";
+"message_details.empty_likes" = "Ninguém curtiu esta mensagem ainda.";
+"message_details.empty_read_receipts" = "Ninguém leu esta mensagem ainda.";
+"message_details.read_receipts_disabled" = "As confirmações de leitura não estavam ativadas quando esta mensagem foi enviada.";
+"message_details.combined_title" = "Detalhes da Mensagem";
+"message_details.likes_title" = "Curtiu";
+"message_details.receipts_title" = "Lido";
+"message_details.tabs.seen" = "Lido (%d)";
+"message_details.tabs.likes" = "Curtiu (%d)";
+"message_details.subtitle_send_date" = "Enviado: %@";
 "message_details.subtitle_edit_date" = "Editado: %@";
-"message_details.subtitle_label_voiceOver" = "Message Details";
+"message_details.subtitle_label_voiceOver" = "Detalhes da Mensagem";
 "message_details.user_handle_subtitle_label" = "Nome de usuário";
-"message_details.user_read_timestamp_subtitle_label" = "Read at";
+"message_details.user_read_timestamp_subtitle_label" = "Lido em";

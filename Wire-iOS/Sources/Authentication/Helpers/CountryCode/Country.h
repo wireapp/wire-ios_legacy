@@ -31,9 +31,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (class, nonatomic, readonly) Country *defaultCountry NS_SWIFT_NAME(default);
 
-+ (nullable instancetype)countryWithE164:(NSNumber *)e164;
 + (nullable instancetype)countryWithISO:(NSString *)ISO e164:(NSNumber *)e164;
 + (nullable instancetype)countryFromDevice;
+
++ (nullable instancetype)detectCountryFromCode:(NSUInteger)e164;
 
 // Normalized phone number required: "1234567890" instead of "+1 (23) 456-78-90"
 + (nullable instancetype)detectCountryForPhoneNumber:(NSString *)phoneNumber;

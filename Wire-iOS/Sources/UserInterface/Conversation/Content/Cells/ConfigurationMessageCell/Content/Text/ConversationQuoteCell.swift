@@ -180,7 +180,7 @@ class ConversationReplyCell: UIView, ConversationMessageCell {
     }
 
     @objc func onTap() {
-        delegate?.wants(toPerform: .openQuote, for: message)
+        delegate?.perform(action: .openQuote, for: message)
     }
 
 }
@@ -255,13 +255,6 @@ class ConversationReplyCellDescription: ConversationMessageCellDescription {
         }
 
         configuration = View.Configuration(showDetails: !isUnavailable, isEdited: isEdited, senderName: senderName, timestamp: timestamp, content: content, contentType: contentType)
-    }
-
-    func makeCell(for tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueConversationCell(with: self, for: indexPath)
-        cell.cellView.delegate = self.delegate
-        cell.cellView.message = self.message
-        return cell
     }
 
 }

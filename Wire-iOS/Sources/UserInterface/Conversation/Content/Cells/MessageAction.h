@@ -38,8 +38,3 @@ typedef NS_ENUM(NSUInteger, MessageAction) {
     MessageActionOpenQuote,
     MessageActionOpenDetails
 };
-
-@protocol MessageActionResponder <NSObject>
-@required
-- (void)wantsToPerformAction:(MessageAction)action forMessage:(id<ZMConversationMessage>)message;
-@end

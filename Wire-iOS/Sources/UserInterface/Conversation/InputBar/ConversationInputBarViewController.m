@@ -543,11 +543,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     self.quotedMessage = nil;
 }
 
-- (void)setInputBarOverlapsContent:(BOOL)inputBarOverlapsContent
-{
-    _inputBarOverlapsContent = inputBarOverlapsContent;
-}
-
 - (void)setTypingUsers:(NSSet *)typingUsers
 {
     _typingUsers = typingUsers;

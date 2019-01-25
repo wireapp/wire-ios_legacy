@@ -9,3 +9,4 @@ github "wireapp/HockeySDK-iOS" ~> 5.0
 github "wireapp/FLAnimatedImage" "1.0.12-wire"
 github "wireapp/PureLayout" "v3.0.0"
 github "wireapp/Down" "v2.1.0"
+github "wireapp/DifferenceKit" ~> 0.8

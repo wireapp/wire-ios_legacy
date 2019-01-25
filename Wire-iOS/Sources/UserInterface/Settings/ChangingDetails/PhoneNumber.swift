@@ -51,7 +51,7 @@ struct PhoneNumber: Equatable {
     let numberWithoutCode: String
 
     var country: Country {
-        return Country(e164: NSNumber(value: countryCode)) ?? .default
+        return Country.detect(fromCode: countryCode) ?? .default
     }
 
     init(countryCode: UInt, numberWithoutCode: String) {
