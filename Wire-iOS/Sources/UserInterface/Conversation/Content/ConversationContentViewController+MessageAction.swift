@@ -35,7 +35,7 @@ extension ConversationContentViewController {
 
     private func messageAction(actionId: MessageAction,
                                for message: ZMConversationMessage,
-                               cell: (UIView & SelectableView)?) {
+                               view: UIView) {
         guard let session = ZMUserSession.shared() else { return }
 
         switch actionId {
@@ -50,8 +50,8 @@ extension ConversationContentViewController {
         case .delete:
             assert(message.canBeDeleted)
 
-            self.deletionDialogPresenter = DeletionDialogPresenter(sourceViewController: self.presentedViewController ?? self)
-            self.deletionDialogPresenter.presentDeletionAlertController(forMessage: message, source: cell) { deleted in
+            deletionDialogPresenter = DeletionDialogPresenter(sourceViewController: presentedViewController ?? self)
+            deletionDialogPresenter.presentDeletionAlertController(forMessage: message, source: view) { deleted in
                 if deleted {
                     self.presentedViewController?.dismiss(animated: true)
                 }
@@ -61,16 +61,24 @@ extension ConversationContentViewController {
                 }
             }
         case .present:
-            self.dataSource?.selectedMessage = message
-            self.presentDetails(for: message)
+            dataSource?.selectedMessage = message
+            presentDetails(for: message)
         case .save:
             if Message.isImage(message) {
-                self.saveImage(from: message, cell: cell)
+                saveImage(from: message, view: view)
             } else {
-                self.dataSource?.selectedMessage = message
-                if let targetView: UIView = cell?.selectionView,
-                    let saveController = UIActivityViewController(message: message, from: targetView) {
-                    self.present(saveController, animated: true)
+                dataSource?.selectedMessage = message
+
+                let targetView: UIView
+
+                if let selectableView = view as? SelectableView {
+                    targetView = selectableView.selectionView
+                } else {
+                    targetView = view
+                }
+
+                if let saveController = UIActivityViewController(message: message, from: targetView) {
+                    present(saveController, animated: true)
                 }
             }
         case .edit:
@@ -108,7 +116,7 @@ extension ConversationContentViewController {
                 }
             }
         case .forward:
-            showForwardFor(message: message, fromCell: cell)
+            showForwardFor(message: message, fromCell: view)
         case .showInConversation:
             scroll(to: message) { cell in
                 self.dataSource?.highlight(message: message)
@@ -136,7 +144,7 @@ extension ConversationContentViewController {
 
     func wants(toPerform actionId: MessageAction,
                for message: ZMConversationMessage,
-               cell: (UIView & SelectableView)?) {
+               view: UIView) {
 
 
         let shouldDismissModal: Bool = actionId != .delete && actionId != .copy
@@ -145,11 +153,11 @@ extension ConversationContentViewController {
             messagePresenter.modalTargetController?.dismiss(animated: true) {
                 self.messageAction(actionId: actionId,
                                    for: message,
-                                   cell: cell)
+                                   view: view)
             }
         } else {
             messageAction(actionId: actionId,
                           for: message,
-                          cell: cell)
+                          view: view)
         }
     }}
