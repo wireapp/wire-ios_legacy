@@ -39,7 +39,7 @@ class SettingsPropertyTextValueCellDescriptor: SettingsPropertyCellDescriptorTyp
         self.identifier = identifier
     }
     
-    func featureCell(_ cell: SettingsCellType) { ///TODO: unit test disable property
+    func featureCell(_ cell: SettingsCellType) {
         cell.titleText = title
         guard let textCell = cell as? SettingsTextCell else { return }
 
