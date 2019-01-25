@@ -66,7 +66,7 @@ def main(original_folder, modified_folder, ignore_missing, destination_folder):
     # Verify
     for language in original_languages:
         if language in modified_languages: 
-            check_language_files(language, original_folder, modified_folder)
+            # check_language_files(language, original_folder, modified_folder)
         
     # Copy
     if destination_folder:

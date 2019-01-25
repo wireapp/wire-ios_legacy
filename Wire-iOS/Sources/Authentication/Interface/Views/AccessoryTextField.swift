@@ -233,6 +233,7 @@ class AccessoryTextField: UITextField, TextContainer {
 
     private func setup() {
         self.confirmButton.addTarget(self, action: #selector(confirmButtonTapped(button:)), for: .touchUpInside)
+        self.confirmButton.accessibilityIdentifier = "ConfirmButton"
         self.addTarget(self, action: #selector(textFieldDidChange(textField:)), for: .editingChanged)
     }
 

@@ -89,7 +89,11 @@ class AuthenticationCredentialsViewController: AuthenticationStepController, Cou
 
     let tabBar: TabBar = {
         let emailTab = UITabBarItem(title: "registration.register_by_email".localized(uppercased: true), image: nil, selectedImage: nil)
+        emailTab.accessibilityIdentifier = "UseEmail"
+
         let passwordTab = UITabBarItem(title: "registration.register_by_phone".localized(uppercased: true), image: nil, selectedImage: nil)
+        passwordTab.accessibilityIdentifier = "UsePhone"
+
         return TabBar(items: [emailTab, passwordTab], style: .light)
     }()
 
