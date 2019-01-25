@@ -69,17 +69,21 @@ extension ConversationInputBarViewController {
         if displayAudioMessageAlertIfNeeded() {
             return
         }
-
-        if self.mode != .audioRecord {
+        
+        switch self.mode {
+        case .audioRecord:
+            if self.inputBar.textView.isFirstResponder {
+                hideInKeyboardAudioRecordViewController()
+            } else {
+                self.inputBar.textView.becomeFirstResponder()
+            }
+        default:
             UIApplication.wr_requestOrWarnAboutMicrophoneAccess({ accepted in
                 if accepted {
                     self.mode = .audioRecord
                     self.inputBar.textView.becomeFirstResponder()
                 }
             })
-        }
-        else {
-            hideInKeyboardAudioRecordViewController()
         }
     }
     
