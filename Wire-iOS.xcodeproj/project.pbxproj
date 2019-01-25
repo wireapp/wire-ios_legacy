@@ -1221,6 +1221,8 @@
 		EF9C552720D2796A00D94EEB /* EphemeralTimeoutFormatterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9C552620D2796A00D94EEB /* EphemeralTimeoutFormatterTests.swift */; };
 		EF9FC3EF2142A77500033ED0 /* ColorSchemeControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9FC3EE2142A77500033ED0 /* ColorSchemeControllerTests.swift */; };
 		EF9FC3F12142AEDE00033ED0 /* ColorSchemeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9FC3F02142AEDE00033ED0 /* ColorSchemeController.swift */; };
+		EFA06E4521FB60AA00BF2E17 /* ConversationContentViewController+MessageAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA06E4421FB60AA00BF2E17 /* ConversationContentViewController+MessageAction.swift */; };
+		EFA06E4721FB639700BF2E17 /* ConversationContentViewController+CanvasViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA06E4621FB639700BF2E17 /* ConversationContentViewController+CanvasViewControllerDelegate.swift */; };
 		EFA6E24C2056E0DB008AB47E /* UIViewController+SizeClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA6E24B2056E0DA008AB47E /* UIViewController+SizeClass.swift */; };
 		EFA820AE2019075400FED370 /* UIViewController+addViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA820AD2019075400FED370 /* UIViewController+addViewController.swift */; };
 		EFABC922202085A6001F9866 /* UserDetailViewControllerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFABC921202085A6001F9866 /* UserDetailViewControllerFactory.swift */; };
@@ -3080,6 +3082,8 @@
 		EF9C552620D2796A00D94EEB /* EphemeralTimeoutFormatterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EphemeralTimeoutFormatterTests.swift; sourceTree = "<group>"; };
 		EF9FC3EE2142A77500033ED0 /* ColorSchemeControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorSchemeControllerTests.swift; sourceTree = "<group>"; };
 		EF9FC3F02142AEDE00033ED0 /* ColorSchemeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorSchemeController.swift; sourceTree = "<group>"; };
+		EFA06E4421FB60AA00BF2E17 /* ConversationContentViewController+MessageAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationContentViewController+MessageAction.swift"; sourceTree = "<group>"; };
+		EFA06E4621FB639700BF2E17 /* ConversationContentViewController+CanvasViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationContentViewController+CanvasViewControllerDelegate.swift"; sourceTree = "<group>"; };
 		EFA6E24B2056E0DA008AB47E /* UIViewController+SizeClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+SizeClass.swift"; sourceTree = "<group>"; };
 		EFA820AD2019075400FED370 /* UIViewController+addViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+addViewController.swift"; sourceTree = "<group>"; };
 		EFABC921202085A6001F9866 /* UserDetailViewControllerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailViewControllerFactory.swift; sourceTree = "<group>"; };
@@ -5452,6 +5456,8 @@
 				8FC851A9199245760008B66B /* ConversationContentViewController.h */,
 				8FC851A6199245760008B66B /* ConversationContentViewController+Private.h */,
 				8FC851AA199245760008B66B /* ConversationContentViewController.m */,
+				EFA06E4421FB60AA00BF2E17 /* ConversationContentViewController+MessageAction.swift */,
+				EFA06E4621FB639700BF2E17 /* ConversationContentViewController+CanvasViewControllerDelegate.swift */,
 				EF80461D20CA8B67001A1C53 /* ConversationContentViewController+TableHeader.swift */,
 				EF15A7AF20BC08C000A045C7 /* ConversationContentViewController+SaveImage.swift */,
 				BFE277621D5B4FC50074DC6D /* ConversationContentViewController+MessageDeletion.swift */,
@@ -7750,6 +7756,7 @@
 				162917C91F8BB991000F3E92 /* NetworkStatusView.swift in Sources */,
 				5E936E8F20B590530060E6AA /* UIDevice+Platform.swift in Sources */,
 				EF1A461A21AD60510009B6B9 /* ReceiptOptionsSectionController.swift in Sources */,
+				EFA06E4521FB60AA00BF2E17 /* ConversationContentViewController+MessageAction.swift in Sources */,
 				EEB8A2D01F628D1100958881 /* Settings+Account.swift in Sources */,
 				BF5C37981C0E0D9C00EA11E3 /* ParticipantDeviceHeaderView.m in Sources */,
 				5E0EB1FB2100D80B00B5DC2B /* CompanyLoginFlowOpener.swift in Sources */,
@@ -7784,6 +7791,7 @@
 				87BEB03E1D3E44DE00DE9575 /* CameraCell.swift in Sources */,
 				5EC16B9020EB8C6F00955156 /* YouTubeService+DataTypes.swift in Sources */,
 				5E8DA74F211AEE3D00360979 /* AuthenticationCoordinatorAction.swift in Sources */,
+				EFA06E4721FB639700BF2E17 /* ConversationContentViewController+CanvasViewControllerDelegate.swift in Sources */,
 				BAD4D0661B613D4E008585A5 /* ColorKnobView.m in Sources */,
 				871BC2521D34F8F800DF0793 /* MediaPreviewView.m in Sources */,
 				D58192022091E2C0003BA7EC /* IconLabelButton+CallActions.swift in Sources */,
