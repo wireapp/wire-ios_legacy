@@ -22,9 +22,21 @@ import Foundation
 private let zmLog = ZMSLog(tag: "UI")
 
 @objcMembers final public class AudioRecordKeyboardViewController: UIViewController, AudioRecordBaseViewController {
+    
     enum State {
         case ready, recording, effects
     }
+    
+    // MARK: - Properties
+    
+    private(set) var state: State = .ready {
+        didSet { if oldValue != state { updateRecordingState(self.state) }}
+    }
+    
+    var isRecording: Bool { return self.recorder.state == .recording }
+    
+    public let recorder: AudioRecorderType
+    public weak var delegate: AudioRecordViewControllerDelegate?
     
     let recordButton = IconButton()
     let stopRecordButton = IconButton()
@@ -47,29 +59,14 @@ private let zmLog = ZMSLog(tag: "UI")
     private var currentEffect: AVSAudioEffectType = .none
     private var currentEffectFilePath: String?
     
-    private(set) var state: State = .ready {
-        didSet {
-            if oldValue != state {
-                updateRecordingState(self.state)
-            }
-        }
-    }
-    
-    var isRecording: Bool {
-        return self.recorder.state == .recording
-    }
-    
-    public let recorder: AudioRecorderType
-    public weak var delegate: AudioRecordViewControllerDelegate?
-    
-    required public init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    // MARK: - Life Cycle
     
     @objc convenience init() {
-        self.init(audioRecorder: AudioRecorder(format: .wav,
-                                               maxRecordingDuration: ZMUserSession.shared()?.maxAudioLength() ,
-                                               maxFileSize: ZMUserSession.shared()?.maxUploadFileSize() )!)
+        self.init(audioRecorder: AudioRecorder(
+            format: .wav,
+            maxRecordingDuration: ZMUserSession.shared()?.maxAudioLength() ,
+            maxFileSize: ZMUserSession.shared()?.maxUploadFileSize()
+        ))
     }
     
     init(audioRecorder: AudioRecorderType) {
@@ -83,39 +80,88 @@ private let zmLog = ZMSLog(tag: "UI")
             self.recorder.maxRecordingDuration = Settings.shared().maxRecordingDurationDebug
         }
     }
+    
+    required public init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     public override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-
-        if AppLock.isActive {
-            UIApplication.shared.keyWindow?.endEditing(true)
-        }
+        if AppLock.isActive { UIApplication.shared.keyWindow?.endEditing(true) }
     }
     
+    // MARK: - View Configuration
+    
     func configureViews() {
-        let colorScheme = ColorScheme()
-        colorScheme.variant = .light
+        let backgroundColor = UIColor.from(scheme: .textForeground, variant: .light)
+        let textColor = UIColor.from(scheme: .textForeground, variant: .dark)
+        let separatorColor = UIColor.from(scheme: .separator, variant: .light)
         
-        self.view.backgroundColor = colorScheme.color(named: .textForeground)
+        self.view.backgroundColor = backgroundColor
         
         self.recordTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(recordButtonPressed))
         self.view.addGestureRecognizer(self.recordTapGestureRecognizer)
+        
+        self.audioPreviewView.gradientWidth = 20
+        self.audioPreviewView.gradientColor = backgroundColor
         
         self.accentColorChangeHandler = AccentColorChangeHandler.addObserver(self) { [unowned self] color, _ in
             self.audioPreviewView.color = color
         }
         
-        self.audioPreviewView.gradientWidth = 20
-        self.audioPreviewView.gradientColor = colorScheme.color(named: .textForeground)
+        self.timeLabel.font = FontSpec(.small, .light).font!
+        self.timeLabel.textColor = textColor
+        self.timeLabel.accessibilityLabel = "recordingTime"
         
         self.createTipLabel()
         
-        self.timeLabel.font = FontSpec(.small, .light).font!
-        self.timeLabel.textColor = colorScheme.color(named: .textForeground, variant: .dark)
-        self.timeLabel.accessibilityLabel = "recordingTime"
-        
         [self.audioPreviewView, self.timeLabel, self.tipLabel].forEach(self.topContainer.addSubview)
         
+        createButtons()
+        
+        [self.recordButton,
+         self.stopRecordButton,
+         self.confirmButton,
+         self.redoButton,
+         self.cancelButton].forEach(self.bottomToolbar.addSubview)
+        
+        self.topSeparator.backgroundColor = separatorColor
+        
+        [self.bottomToolbar, self.topContainer, self.topSeparator].forEach(self.view.addSubview)
+        updateRecordingState(self.state)
+    }
+    
+    private func createTipLabel() {
+        let color = UIColor.from(scheme: .textDimmed, variant: .light)
+        let text = "conversation.input_bar.audio_message.keyboard.record_tip".localized.uppercased()
+        let attrText = NSMutableAttributedString(string: text)
+        let atRange = (text as NSString).range(of: "%@")
+        
+        // insert random effect icon
+        if atRange.location != NSNotFound {
+            let effects = AVSAudioEffectType.displayedEffects.filter { $0 != .none }
+            let max = UInt32(effects.count)
+            let effect = effects[Int(arc4random_uniform(max))]
+            let image = UIImage(for: effect.icon, iconSize: .searchBar, color: color)
+            
+            let attachment = NSTextAttachment()
+            attachment.image = image
+            
+            attrText.replaceCharacters(in: atRange, with: NSAttributedString(attachment: attachment))
+        }
+        
+        let style = NSMutableParagraphStyle()
+        style.lineSpacing = 8
+        
+        attrText.addAttribute(.paragraphStyle, value: style, range: attrText.wholeRange)
+        self.tipLabel.attributedText = NSAttributedString(attributedString: attrText)
+        self.tipLabel.numberOfLines = 2
+        self.tipLabel.font = FontSpec(.small, .light).font!
+        self.tipLabel.textColor = color
+        self.tipLabel.textAlignment = .center
+    }
+    
+    private func createButtons() {
         self.recordButton.setIcon(.recordDot, with: .tiny, for: [])
         self.recordButton.setIconColor(.white, for: [])
         self.recordButton.addTarget(self, action: #selector(recordButtonPressed), for: .touchUpInside)
@@ -146,50 +192,6 @@ private let zmLog = ZMSLog(tag: "UI")
         self.cancelButton.setIconColor(.white, for: [])
         self.cancelButton.addTarget(self, action: #selector(cancelButtonPressed), for: .touchUpInside)
         self.cancelButton.accessibilityLabel = "cancelRecording"
-        
-        [self.recordButton,
-         self.stopRecordButton,
-         self.confirmButton,
-         self.redoButton,
-         self.cancelButton].forEach(self.bottomToolbar.addSubview)
-        
-        self.topSeparator.backgroundColor = colorScheme.color(named: .separator)
-        
-        [self.bottomToolbar,
-         self.topContainer,
-         self.topSeparator].forEach(self.view.addSubview)
-        
-        updateRecordingState(self.state)
-    }
-    
-    func createTipLabel() {
-        let color = UIColor.from(scheme: .textDimmed, variant: .light)
-        let text = "conversation.input_bar.audio_message.keyboard.record_tip".localized.uppercased()
-        let attrText = NSMutableAttributedString(string: text)
-        let atRange = (text as NSString).range(of: "%@")
-        
-        // insert random effect icon
-        if atRange.location != NSNotFound {
-            let effects = AVSAudioEffectType.displayedEffects.filter { $0 != .none }
-            let max = UInt32(effects.count)
-            let effect = effects[Int(arc4random_uniform(max))]
-            let image = UIImage(for: effect.icon, iconSize: .searchBar, color: color)
-            
-            let attachment = NSTextAttachment()
-            attachment.image = image
-            
-            attrText.replaceCharacters(in: atRange, with: NSAttributedString(attachment: attachment))
-        }
-        
-        let style = NSMutableParagraphStyle()
-        style.lineSpacing = 8
-        
-        attrText.addAttribute(.paragraphStyle, value: style, range: attrText.wholeRange)
-        self.tipLabel.attributedText = NSAttributedString(attributedString: attrText)
-        self.tipLabel.numberOfLines = 2
-        self.tipLabel.font = FontSpec(.small, .light).font!
-        self.tipLabel.textColor = color
-        self.tipLabel.textAlignment = .center
     }
     
     func createConstraints() {
@@ -259,12 +261,37 @@ private let zmLog = ZMSLog(tag: "UI")
         ])
     }
     
+    // MARK: - View Updates
+    
     public override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         self.confirmButton.layer.cornerRadius = self.confirmButton.bounds.size.width / 2
         self.recordButton.layer.cornerRadius = self.recordButton.bounds.size.width / 2
         self.stopRecordButton.layer.cornerRadius = self.stopRecordButton.bounds.size.width / 2
     }
+    
+    func updateTimeLabel(_ durationInSeconds: TimeInterval) {
+        let duration = Int(floor(durationInSeconds))
+        let (seconds, minutes) = (duration % 60, duration / 60)
+        timeLabel.text = String(format: "%d:%02d", minutes, seconds)
+        timeLabel.accessibilityValue = timeLabel.text
+    }
+    
+    private func visibleViews(forState: State) -> [UIView] {
+        var result = [self.topSeparator, self.topContainer, self.bottomToolbar]
+        switch state {
+        case .ready:
+            result.append(contentsOf: [self.tipLabel, self.recordButton])
+        case .recording:
+            result.append(contentsOf: [self.audioPreviewView, self.timeLabel, self.stopRecordButton])
+        case .effects:
+            result.append(contentsOf: [self.redoButton, self.confirmButton, self.cancelButton])
+        }
+        
+        return result
+    }
+    
+    // MARK: - Recording
     
     func configureAudioRecorder() {
         recorder.recordTimerCallback = { [weak self] time in
@@ -292,30 +319,9 @@ private let zmLog = ZMSLog(tag: "UI")
         }
     }
     
-    func updateTimeLabel(_ durationInSeconds: TimeInterval) {
-        let duration = Int(floor(durationInSeconds))
-        let (seconds, minutes) = (duration % 60, duration / 60)
-        timeLabel.text = String(format: "%d:%02d", minutes, seconds)
-        timeLabel.accessibilityValue = timeLabel.text
-    }
-    
-    private func visibleViews(forState: State) -> [UIView] {
-        var result = [self.topSeparator, self.topContainer, self.bottomToolbar]
-        switch state {
-        case .ready:
-            result.append(contentsOf: [self.tipLabel, self.recordButton])
-        case .recording:
-            result.append(contentsOf: [self.audioPreviewView, self.timeLabel, self.stopRecordButton])
-        case .effects:
-            result.append(contentsOf: [self.redoButton, self.confirmButton, self.cancelButton])
-        }
-        
-        return result
-    }
-    
     private func updateRecordingState(_ state: State) {
-        let visibleViews = self.visibleViews(forState: state)
         let allViews = Set(view.subviews.flatMap { $0.subviews })
+        let visibleViews = self.visibleViews(forState: state)
         let hiddenViews = allViews.subtracting(visibleViews)
         
         visibleViews.forEach { $0.isHidden = false }
@@ -352,6 +358,7 @@ private let zmLog = ZMSLog(tag: "UI")
         
         let noizeReducePath = (NSTemporaryDirectory() as NSString).appendingPathComponent("noize-reduce.wav")
         noizeReducePath.deleteFileAtPath()
+        
         // To apply noize reduction filter
         AVSAudioEffectType.none.apply(url.path, outPath: noizeReducePath) {
             self.currentEffectFilePath = noizeReducePath
@@ -361,21 +368,27 @@ private let zmLog = ZMSLog(tag: "UI")
                 self.closeEffectsPicker(animated: false)
             }
             
-            let newEffectPickerViewController = AudioEffectsPickerViewController(recordingPath: noizeReducePath, duration: self.recorder.currentDuration)
-            newEffectPickerViewController.delegate = self
-            self.addChild(newEffectPickerViewController)
-            newEffectPickerViewController.view.alpha = 0
+            let picker = AudioEffectsPickerViewController(recordingPath: noizeReducePath, duration: self.recorder.currentDuration)
+            self.addChild(picker)
+            picker.delegate = self
+            picker.view.alpha = 0
             
-            UIView.transition(with: self.view, duration: 0.35, options: [.curveEaseIn], animations: {
-                newEffectPickerViewController.view.translatesAutoresizingMaskIntoConstraints = false
-                self.topContainer.addSubview(newEffectPickerViewController.view)
-                newEffectPickerViewController.view.fitInSuperview()
-                newEffectPickerViewController.view.alpha = 1
-            }) { _ in
-                newEffectPickerViewController.didMove(toParent: self)
+            let changes: () -> Void = {
+                picker.view.translatesAutoresizingMaskIntoConstraints = false
+                self.topContainer.addSubview(picker.view)
+                picker.view.fitInSuperview()
+                picker.view.alpha = 1
             }
             
-            self.effectPickerViewController = newEffectPickerViewController
+            UIView.transition(
+                with: self.view,
+                duration: 0.35,
+                options: [.curveEaseIn],
+                animations: changes,
+                completion: { _ in picker.didMove(toParent: self)}
+            )
+            
+            self.effectPickerViewController = picker
         }
     }
     
@@ -387,7 +400,7 @@ private let zmLog = ZMSLog(tag: "UI")
         }
     }
     
-    // MARK: - Button actions
+    // MARK: - Button Actions
     
     @objc func recordButtonPressed(_ sender: AnyObject!) {
         self.state = .recording
@@ -400,7 +413,6 @@ private let zmLog = ZMSLog(tag: "UI")
     }
     
     @objc func confirmButtonPressed(_ button: UIButton?) {
-        
         guard let audioPath = self.currentEffectFilePath else {
             zmLog.error("No file to send")
             return
@@ -408,23 +420,21 @@ private let zmLog = ZMSLog(tag: "UI")
         
         button?.isEnabled = false
         
-        let effectName: String
-        
-        if self.currentEffect == .none {
-            effectName = "Original"
-        }
-        else {
-            effectName = self.currentEffect.description
-        }
+        let effectName = self.currentEffect == .none ? "Original" : self.currentEffect.description
         
         let filename = String.filenameForSelfUser(suffix: "-" + effectName).appendingPathExtension("m4a")!
         let convertedPath = (NSTemporaryDirectory() as NSString).appendingPathComponent(filename)
         convertedPath.deleteFileAtPath()
         
-        AVAsset.wr_convertAudioToUploadFormat(audioPath, outPath: convertedPath) { (success) in
+        AVAsset.wr_convertAudioToUploadFormat(audioPath, outPath: convertedPath) { success in
             if success {
                 audioPath.deleteFileAtPath()
-                self.delegate?.audioRecordViewControllerWantsToSendAudio(self, recordingURL: URL(fileURLWithPath: convertedPath), duration: self.recorder.currentDuration, filter: self.currentEffect)
+                self.delegate?.audioRecordViewControllerWantsToSendAudio(
+                    self,
+                    recordingURL: URL(fileURLWithPath: convertedPath),
+                    duration: self.recorder.currentDuration,
+                    filter: self.currentEffect
+                )
             }
         }
     }
@@ -438,10 +448,11 @@ private let zmLog = ZMSLog(tag: "UI")
     }
 }
 
+// MARK: - AudioEffectsPickerDelegate
+
 extension AudioRecordKeyboardViewController: AudioEffectsPickerDelegate {
     public func audioEffectsPickerDidPickEffect(_ picker: AudioEffectsPickerViewController, effect: AVSAudioEffectType, resultFilePath: String) {
         self.currentEffectFilePath = resultFilePath
         self.currentEffect = effect
     }
 }
-

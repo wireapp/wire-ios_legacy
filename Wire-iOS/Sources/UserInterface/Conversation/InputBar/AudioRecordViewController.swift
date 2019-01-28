@@ -57,7 +57,7 @@ private let zmLog = ZMSLog(tag: "UI")
 
     public let recorder = AudioRecorder(format: .wav,
                                         maxRecordingDuration: ZMUserSession.shared()?.maxAudioLength(),
-                                        maxFileSize: ZMUserSession.shared()?.maxUploadFileSize())!
+                                        maxFileSize: ZMUserSession.shared()?.maxUploadFileSize())
     
     weak public var delegate: AudioRecordViewControllerDelegate?
     
