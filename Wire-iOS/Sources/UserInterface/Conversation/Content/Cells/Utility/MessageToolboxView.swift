@@ -27,6 +27,20 @@ import WireSyncEngine
     func messageToolboxViewDidRequestLike(_ messageToolboxView: MessageToolboxView)
 }
 
+private extension UILabel {
+    static func createSeparatorLabel() -> UILabel{
+        let label = UILabel()
+        label.numberOfLines = 1
+        label.textColor = UIColor.from(scheme: .textDimmed)
+        label.font = UIFont.smallSemiboldFont
+        label.text = String.MessageToolbox.middleDot
+        label.isAccessibilityElement = false
+        label.setContentHuggingPriority(.required, for: .horizontal)
+        label.setContentCompressionResistancePriority(.required, for: .horizontal)
+        return label
+    }
+}
+
 /**
  * A view that displays information about a message.
  */
@@ -47,7 +61,7 @@ import WireSyncEngine
     private let contentStack: UIStackView = {
         let stack = UIStackView()
         stack.axis = .horizontal
-        stack.spacing = 6
+        stack.spacing = 0 ///TODO: try distribution??
         return stack
     }()
 
@@ -61,29 +75,8 @@ import WireSyncEngine
         return label
     }()
 
-    private let timestampSeparatorLabel: UILabel = {
-        let label = UILabel()
-        label.numberOfLines = 1
-        label.textColor = UIColor.from(scheme: .textDimmed)
-        label.font = UIFont.smallSemiboldFont
-        label.text = String.MessageToolbox.middleDot
-        label.isAccessibilityElement = false
-        label.setContentHuggingPriority(.required, for: .horizontal)
-        label.setContentCompressionResistancePriority(.required, for: .horizontal)
-        return label
-    }()
-
-    private let statusSeparatorLabel: UILabel = {
-        let label = UILabel()
-        label.numberOfLines = 1
-        label.textColor = UIColor.from(scheme: .textDimmed)
-        label.font = UIFont.smallSemiboldFont
-        label.text = String.MessageToolbox.middleDot
-        label.isAccessibilityElement = false
-        label.setContentHuggingPriority(.required, for: .horizontal)
-        label.setContentCompressionResistancePriority(.required, for: .horizontal)
-        return label
-    }()
+    private let timestampSeparatorLabel = UILabel.createSeparatorLabel()
+    private let statusSeparatorLabel = UILabel.createSeparatorLabel()
 
     private let resendButton: UIButton = {
         let button = UIButton()
@@ -128,7 +121,7 @@ import WireSyncEngine
         label.lineBreakMode = .byTruncatingMiddle
         label.numberOfLines = 1
         label.accessibilityIdentifier = "EphemeralCountdown"
-        label.setContentHuggingPriority(.defaultLow, for: .horizontal)
+        label.setContentHuggingPriority(.required, for: .horizontal)
         label.setContentCompressionResistancePriority(.required, for: .horizontal)
         return label
     }()
@@ -164,7 +157,13 @@ import WireSyncEngine
         resendButton.addTarget(self, action: #selector(resendMessage), for: .touchUpInside)
         deleteButton.addTarget(self, action: #selector(deleteMessage), for: .touchUpInside)
 
-        [detailsLabel, resendButton, timestampSeparatorLabel, deleteButton, statusLabel, statusSeparatorLabel, countdownLabel].forEach(contentStack.addArrangedSubview)
+        [detailsLabel,
+         resendButton,
+         timestampSeparatorLabel,
+         deleteButton,
+         statusLabel,
+         statusSeparatorLabel,
+         countdownLabel].forEach(contentStack.addArrangedSubview)
         [likeButtonContainer, likeButton, contentStack].forEach(addSubview)
     }
     
