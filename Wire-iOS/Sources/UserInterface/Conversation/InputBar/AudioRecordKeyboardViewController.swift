@@ -18,7 +18,6 @@
 
 
 import Foundation
-import Cartography
 
 private let zmLog = ZMSLog(tag: "UI")
 
@@ -105,18 +104,6 @@ private let zmLog = ZMSLog(tag: "UI")
         self.accentColorChangeHandler = AccentColorChangeHandler.addObserver(self) { [unowned self] color, _ in
             self.audioPreviewView.color = color
         }
-        
-        [self.audioPreviewView,
-         self.timeLabel,
-         self.tipLabel,
-         self.recordButton,
-         self.stopRecordButton,
-         self.confirmButton,
-         self.redoButton,
-         self.cancelButton,
-         self.bottomToolbar,
-         self.topContainer,
-         self.topSeparator].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
         
         self.audioPreviewView.gradientWidth = 20
         self.audioPreviewView.gradientColor = colorScheme.color(named: .textForeground)
@@ -206,67 +193,70 @@ private let zmLog = ZMSLog(tag: "UI")
     }
     
     func createConstraints() {
+        [self.audioPreviewView,
+         self.timeLabel,
+         self.tipLabel,
+         self.recordButton,
+         self.stopRecordButton,
+         self.confirmButton,
+         self.redoButton,
+         self.cancelButton,
+         self.bottomToolbar,
+         self.topContainer,
+         self.topSeparator
+        ].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
         
-        constrain(self.view, self.topContainer, self.bottomToolbar, self.topSeparator) { view, topContainer, bottomToolbar, topSeparator in
-            topContainer.left >= view.left + 16
-            topContainer.top >= view.top + 16
-            topContainer.right <= view.right - 16
+        NSLayoutConstraint.activate([
+            topContainer.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16),
+            topContainer.topAnchor.constraint(equalTo: view.topAnchor, constant: 16),
+            topContainer.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -16),
+            topContainer.widthAnchor.constraint(lessThanOrEqualToConstant: 400),
+            topContainer.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+
+            bottomToolbar.topAnchor.constraint(equalTo: topContainer.bottomAnchor),
+            bottomToolbar.leftAnchor.constraint(equalTo: topContainer.leftAnchor),
+            bottomToolbar.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -UIScreen.safeArea.bottom),
+            bottomToolbar.rightAnchor.constraint(equalTo: topContainer.rightAnchor),
+            bottomToolbar.heightAnchor.constraint(equalToConstant: 72),
+            bottomToolbar.centerXAnchor.constraint(equalTo: topContainer.centerXAnchor),
+
+            topSeparator.heightAnchor.constraint(equalToConstant: .hairline),
+            topSeparator.topAnchor.constraint(equalTo: view.topAnchor),
+            topSeparator.leftAnchor.constraint(equalTo: view.leftAnchor),
+            topSeparator.rightAnchor.constraint(equalTo: view.rightAnchor),
             
-            topContainer.left == view.left + 16 ~ 750.0
-            topContainer.top == view.top + 16 ~ 750.0
-            topContainer.right == view.right - 16 ~ 750.0
+            audioPreviewView.topAnchor.constraint(equalTo: topContainer.topAnchor, constant: 20),
+            audioPreviewView.leftAnchor.constraint(equalTo: topContainer.leftAnchor, constant: 8),
+            audioPreviewView.rightAnchor.constraint(equalTo: topContainer.rightAnchor, constant: -8),
+            audioPreviewView.heightAnchor.constraint(equalToConstant: 100),
             
-            topContainer.width <= 400
-            topContainer.centerX == view.centerX
+            timeLabel.centerXAnchor.constraint(equalTo: topContainer.centerXAnchor),
+            timeLabel.bottomAnchor.constraint(equalTo: stopRecordButton.topAnchor, constant: -16),
             
-            bottomToolbar.top == topContainer.bottom
-            bottomToolbar.left == topContainer.left
-            bottomToolbar.bottom == view.bottom - UIScreen.safeArea.bottom
-            bottomToolbar.right == topContainer.right
-            bottomToolbar.height == 72
-            bottomToolbar.centerX == topContainer.centerX
+            tipLabel.centerXAnchor.constraint(equalTo: topContainer.centerXAnchor),
+            tipLabel.centerYAnchor.constraint(equalTo: topContainer.centerYAnchor),
             
-            topSeparator.height == .hairline
-            topSeparator.top == view.top
-            topSeparator.left == view.left
-            topSeparator.right == view.right
-        }
-        
-        constrain(self.topContainer, self.audioPreviewView, self.timeLabel, self.tipLabel, self.stopRecordButton) { topContainer, audioPreviewView, timeLabel, tipLabel, stopRecordButton in
+            recordButton.centerXAnchor.constraint(equalTo: bottomToolbar.centerXAnchor),
+            recordButton.centerYAnchor.constraint(equalTo: bottomToolbar.centerYAnchor),
+            recordButton.heightAnchor.constraint(equalToConstant: 40),
+            recordButton.widthAnchor.constraint(equalTo: recordButton.heightAnchor),
             
-            audioPreviewView.top == topContainer.top + 20
-            audioPreviewView.left == topContainer.left + 8
-            audioPreviewView.right == topContainer.right - 8
-            audioPreviewView.height == 100
+            stopRecordButton.centerXAnchor.constraint(equalTo: bottomToolbar.centerXAnchor),
+            stopRecordButton.centerYAnchor.constraint(equalTo: bottomToolbar.centerYAnchor),
+            stopRecordButton.heightAnchor.constraint(equalToConstant: 40),
+            stopRecordButton.widthAnchor.constraint(equalTo: stopRecordButton.heightAnchor),
             
-            timeLabel.centerX == topContainer.centerX
-            timeLabel.bottom == stopRecordButton.top - 16
+            confirmButton.centerXAnchor.constraint(equalTo: bottomToolbar.centerXAnchor),
+            confirmButton.centerYAnchor.constraint(equalTo: bottomToolbar.centerYAnchor),
+            confirmButton.heightAnchor.constraint(equalToConstant: 40),
+            confirmButton.widthAnchor.constraint(equalTo: confirmButton.heightAnchor),
             
-            tipLabel.center == topContainer.center
-        }
-        
-        constrain(self.bottomToolbar, self.recordButton, self.stopRecordButton) { bottomToolbar, recordButton, stopRecordButton in
+            redoButton.centerYAnchor.constraint(equalTo: bottomToolbar.centerYAnchor),
+            redoButton.leftAnchor.constraint(equalTo: bottomToolbar.leftAnchor, constant: 8),
             
-            recordButton.center == bottomToolbar.center
-            recordButton.width == recordButton.height
-            recordButton.height == 40
-            
-            stopRecordButton.center == bottomToolbar.center
-            stopRecordButton.width == stopRecordButton.height
-            stopRecordButton.height == 40
-        }
-        
-        constrain(self.bottomToolbar, self.redoButton, self.confirmButton, self.cancelButton) { bottomToolbar, redoButton, confirmButton, cancelButton in
-            confirmButton.center == bottomToolbar.center
-            confirmButton.width == confirmButton.height
-            confirmButton.height == 40
-            
-            redoButton.centerY == bottomToolbar.centerY
-            redoButton.left == bottomToolbar.left + 8
-            
-            cancelButton.centerY == bottomToolbar.centerY
-            cancelButton.right == bottomToolbar.right - 8
-        }
+            cancelButton.centerYAnchor.constraint(equalTo: bottomToolbar.centerYAnchor),
+            cancelButton.rightAnchor.constraint(equalTo: bottomToolbar.rightAnchor, constant: -8)
+        ])
     }
     
     public override func viewDidLayoutSubviews() {
@@ -379,9 +369,7 @@ private let zmLog = ZMSLog(tag: "UI")
             UIView.transition(with: self.view, duration: 0.35, options: [.curveEaseIn], animations: {
                 newEffectPickerViewController.view.translatesAutoresizingMaskIntoConstraints = false
                 self.topContainer.addSubview(newEffectPickerViewController.view)
-                constrain(self.topContainer, newEffectPickerViewController.view) { topContainer, newControllerView in
-                    topContainer.edges == newControllerView.edges
-                }
+                newEffectPickerViewController.view.fitInSuperview()
                 newEffectPickerViewController.view.alpha = 1
             }) { _ in
                 newEffectPickerViewController.didMove(toParent: self)
