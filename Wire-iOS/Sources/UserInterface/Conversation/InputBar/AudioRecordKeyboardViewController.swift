@@ -90,69 +90,83 @@ private let zmLog = ZMSLog(tag: "UI")
     }
     
     func configureViews() {
-        
         let colorScheme = ColorScheme()
         colorScheme.variant = .light
         
         self.view.backgroundColor = colorScheme.color(named: .textForeground)
         
-        self.recordTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(recordButtonPressed(_:)))
+        self.recordTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(recordButtonPressed))
         self.view.addGestureRecognizer(self.recordTapGestureRecognizer)
         
         self.accentColorChangeHandler = AccentColorChangeHandler.addObserver(self) { [unowned self] color, _ in
             self.audioPreviewView.color = color
         }
         
-        [self.audioPreviewView, self.timeLabel, self.tipLabel, self.recordButton, self.stopRecordButton, self.confirmButton, self.redoButton, self.cancelButton, self.bottomToolbar, self.topContainer, self.topSeparator].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
+        [self.audioPreviewView,
+         self.timeLabel,
+         self.tipLabel,
+         self.recordButton,
+         self.stopRecordButton,
+         self.confirmButton,
+         self.redoButton,
+         self.cancelButton,
+         self.bottomToolbar,
+         self.topContainer,
+         self.topSeparator].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
         
         self.audioPreviewView.gradientWidth = 20
         self.audioPreviewView.gradientColor = colorScheme.color(named: .textForeground)
-        
-        self.topSeparator.backgroundColor = colorScheme.color(named: .separator)
         
         self.createTipLabel()
         
         self.timeLabel.font = FontSpec(.small, .light).font!
         self.timeLabel.textColor = colorScheme.color(named: .textForeground, variant: .dark)
+        self.timeLabel.accessibilityLabel = "recordingTime"
         
         [self.audioPreviewView, self.timeLabel, self.tipLabel].forEach(self.topContainer.addSubview)
         
         self.recordButton.setIcon(.recordDot, with: .tiny, for: [])
-        self.recordButton.accessibilityLabel = "record"
-        self.recordButton.addTarget(self, action: #selector(recordButtonPressed(_:)), for: .touchUpInside)
+        self.recordButton.setIconColor(.white, for: [])
+        self.recordButton.addTarget(self, action: #selector(recordButtonPressed), for: .touchUpInside)
         self.recordButton.setBackgroundImageColor(.vividRed, for: .normal)
-        self.recordButton.setIconColor(UIColor.white, for: [])
         self.recordButton.layer.masksToBounds = true
+        self.recordButton.accessibilityLabel = "record"
         
         self.stopRecordButton.setIcon(.stopRecording, with: .tiny, for: [])
-        self.stopRecordButton.accessibilityLabel = "stopRecording"
-        self.stopRecordButton.addTarget(self, action: #selector(stopRecordButtonPressed(_:)), for: .touchUpInside)
+        self.stopRecordButton.setIconColor(.white, for: [])
+        self.stopRecordButton.addTarget(self, action: #selector(stopRecordButtonPressed), for: .touchUpInside)
         self.stopRecordButton.setBackgroundImageColor(.vividRed, for: .normal)
-        self.stopRecordButton.setIconColor(UIColor.white, for: [])
         self.stopRecordButton.layer.masksToBounds = true
+        self.stopRecordButton.accessibilityLabel = "stopRecording"
         
         self.confirmButton.setIcon(.checkmark, with: .tiny, for: [])
-        self.confirmButton.accessibilityLabel = "confirmRecording"
-        self.confirmButton.addTarget(self, action: #selector(confirmButtonPressed(_:)), for: .touchUpInside)
+        self.confirmButton.setIconColor(.white, for: [])
+        self.confirmButton.addTarget(self, action: #selector(confirmButtonPressed), for: .touchUpInside)
         self.confirmButton.setBackgroundImageColor(.strongLimeGreen, for: .normal)
-        self.confirmButton.setIconColor(UIColor.white, for: [])
         self.confirmButton.layer.masksToBounds = true
+        self.confirmButton.accessibilityLabel = "confirmRecording"
         
         self.redoButton.setIcon(.undo, with: .tiny, for: [])
+        self.redoButton.setIconColor(.white, for: [])
+        self.redoButton.addTarget(self, action: #selector(redoButtonPressed), for: .touchUpInside)
         self.redoButton.accessibilityLabel = "redoRecording"
-        self.redoButton.addTarget(self, action: #selector(redoButtonPressed(_:)), for: .touchUpInside)
-        self.redoButton.setIconColor(UIColor.white, for: [])
         
         self.cancelButton.setIcon(.cancel, with: .tiny, for: [])
+        self.cancelButton.setIconColor(.white, for: [])
+        self.cancelButton.addTarget(self, action: #selector(cancelButtonPressed), for: .touchUpInside)
         self.cancelButton.accessibilityLabel = "cancelRecording"
-        self.cancelButton.addTarget(self, action: #selector(cancelButtonPressed(_:)), for: .touchUpInside)
-        self.cancelButton.setIconColor(UIColor.white, for: [])
         
-        [self.recordButton, self.stopRecordButton, self.confirmButton, self.redoButton, self.cancelButton].forEach(self.bottomToolbar.addSubview)
+        [self.recordButton,
+         self.stopRecordButton,
+         self.confirmButton,
+         self.redoButton,
+         self.cancelButton].forEach(self.bottomToolbar.addSubview)
         
-        [self.bottomToolbar, self.topContainer, self.topSeparator].forEach(self.view.addSubview)
+        self.topSeparator.backgroundColor = colorScheme.color(named: .separator)
         
-        self.timeLabel.accessibilityLabel = "recordingTime"
+        [self.bottomToolbar,
+         self.topContainer,
+         self.topSeparator].forEach(self.view.addSubview)
         
         updateRecordingState(self.state)
     }
