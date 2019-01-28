@@ -31,17 +31,16 @@ FOUNDATION_EXPORT BOOL UseAnalytics;
 
 @property (nonatomic, readonly) AnalyticsSessionSummaryEvent *sessionSummary;
 
-@property (nonatomic, nullable) Team* team;
-
 + (void)loadSharedWithOptedOut:(BOOL)optedOut;
 + (instancetype)shared;
 
 - (instancetype)init NS_UNAVAILABLE;
 - (instancetype)initWithOptedOut:(BOOL)optedOut NS_DESIGNATED_INITIALIZER;
 
+- (void)setTeam:(nullable Team *)team;
+
 /// Record an event with no attributes
 - (void)tagEvent:(NSString *)event;
-- (void)tagEvent:(NSString *)event attributes:(NSDictionary *)attributes team:(nullable Team *)team;
 
 /// Record an event with optional attributes.
 - (void)tagEvent:(NSString *)event attributes:(NSDictionary *)attributes;
