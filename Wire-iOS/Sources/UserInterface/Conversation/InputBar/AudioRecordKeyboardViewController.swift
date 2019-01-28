@@ -27,22 +27,20 @@ private let zmLog = ZMSLog(tag: "UI")
         case ready, recording, effects
     }
     
+    let recordButton = IconButton()
+    let stopRecordButton = IconButton()
+    let confirmButton = IconButton()
+    let redoButton = IconButton()
+    let cancelButton = IconButton()
+
     private let topContainer = UIView()
     private let topSeparator = UIView()
     private let bottomToolbar = UIView()
     
     private let tipLabel = UILabel()
-    private var recordTapGestureRecognizer: UITapGestureRecognizer!
-    
-    let recordButton = IconButton()
-    let stopRecordButton = IconButton()
-    
-    private let audioPreviewView = WaveFormView()
     private let timeLabel = UILabel()
-    
-    let confirmButton = IconButton()
-    let redoButton = IconButton()
-    let cancelButton = IconButton()
+    private let audioPreviewView = WaveFormView()
+    private var recordTapGestureRecognizer: UITapGestureRecognizer!
     
     private var accentColorChangeHandler: AccentColorChangeHandler?
     private var effectPickerViewController: AudioEffectsPickerViewController?
@@ -56,6 +54,10 @@ private let zmLog = ZMSLog(tag: "UI")
                 updateRecordingState(self.state)
             }
         }
+    }
+    
+    var isRecording: Bool {
+        return self.recorder.state == .recording
     }
     
     public let recorder: AudioRecorderType
@@ -271,10 +273,6 @@ private let zmLog = ZMSLog(tag: "UI")
             cancelButton.centerY == bottomToolbar.centerY
             cancelButton.right == bottomToolbar.right - 8
         }
-    }
-    
-    var isRecording: Bool {
-        return self.recorder.state == .recording
     }
     
     public override func viewDidLayoutSubviews() {
