@@ -115,9 +115,9 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
         fatalError("init() is not implemented for AudioRecorder")
     }
     
-    init?(format: AudioRecorderFormat = .m4A, maxRecordingDuration: TimeInterval?, maxFileSize: UInt64?) {
-        self.maxRecordingDuration = maxRecordingDuration
+    init(format: AudioRecorderFormat = .m4A, maxRecordingDuration: TimeInterval?, maxFileSize: UInt64?) {
         self.format = format
+        self.maxRecordingDuration = maxRecordingDuration
         self.maxFileSize = maxFileSize
         super.init()
         setupDidEnterBackgroundObserver()
