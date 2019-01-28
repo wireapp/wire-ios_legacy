@@ -86,7 +86,7 @@ class AuthenticationInterfaceBuilder {
             }
 
             // Add the bar button item to sign out
-            viewController.setRightItem("registration.signin.too_many_devices.sign_out_button.title".localized, withAction: .signOut(warn: true))
+            viewController.setRightItem("registration.signin.too_many_devices.sign_out_button.title".localized, withAction: .signOut(warn: true), accessibilityID: "signOutButton")
             return viewController
 
         case .provideCredentials(let credentialsFlowType):
@@ -94,7 +94,7 @@ class AuthenticationInterfaceBuilder {
 
             // Add the item to start company login if needed.
             if featureProvider.allowCompanyLogin {
-                viewController.setRightItem("signin.company_idp.button.title".localized, withAction: .startCompanyLogin)
+                viewController.setRightItem("signin.company_idp.button.title".localized, withAction: .startCompanyLogin, accessibilityID: "companyLoginButton")
             }
 
             return viewController
@@ -105,7 +105,7 @@ class AuthenticationInterfaceBuilder {
         case .clientManagement:
             let manageClientsInvitation = ClientUnregisterInvitationStepDescription()
             let viewController = makeViewController(for: manageClientsInvitation)
-            viewController.setRightItem("registration.signin.too_many_devices.sign_out_button.title".localized, withAction: .signOut(warn: true))
+            viewController.setRightItem("registration.signin.too_many_devices.sign_out_button.title".localized, withAction: .signOut(warn: true), accessibilityID: "signOutButton")
             return viewController
 
         case .deleteClient(let clients, let credentials):
@@ -122,7 +122,7 @@ class AuthenticationInterfaceBuilder {
         case .addEmailAndPassword:
             let addCredentialsStep = AddEmailPasswordStepDescription()
             let viewController = makeViewController(for: addCredentialsStep)
-            viewController.setRightItem("registration.signin.too_many_devices.sign_out_button.title".localized, withAction: .signOut(warn: true))
+            viewController.setRightItem("registration.signin.too_many_devices.sign_out_button.title".localized, withAction: .signOut(warn: true), accessibilityID: "signOutButton")
             return viewController
 
         case .enterActivationCode(let credentials, _):

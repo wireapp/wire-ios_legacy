@@ -21,7 +21,12 @@ import Foundation
 extension AuthenticationCoordinator: LandingViewControllerDelegate {
 
     func landingViewControllerDidChooseLogin() {
-        stateController.transition(to: .provideCredentials(.email))
+        if let fastloginCredentials = AutomationHelper.sharedHelper.automationEmailCredentials {
+            let loginRequest = AuthenticationLoginRequest.email(address: fastloginCredentials.email, password: fastloginCredentials.password)
+            executeActions([.showLoadingView, .startLoginFlow(loginRequest)])
+        } else {
+            stateController.transition(to: .provideCredentials(.email))
+        }
     }
 
     func landingViewControllerDidChooseCreateAccount() {

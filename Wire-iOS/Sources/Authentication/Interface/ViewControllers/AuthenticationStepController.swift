@@ -258,8 +258,9 @@ class AuthenticationStepController: AuthenticationStepViewController {
 
     // MARK: - Customization
 
-    func setRightItem(_ title: String, withAction action: AuthenticationCoordinatorAction) {
+    func setRightItem(_ title: String, withAction action: AuthenticationCoordinatorAction, accessibilityID: String) {
         let button = UIBarButtonItem(title: title.localizedUppercase, style: .plain, target: self, action: #selector(rightItemTapped))
+        button.accessibilityIdentifier = accessibilityID
         rightItemAction = action
         navigationItem.rightBarButtonItem = button
     }

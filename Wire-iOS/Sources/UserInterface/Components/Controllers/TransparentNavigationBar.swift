@@ -33,7 +33,7 @@ class TransparentNavigationBar: UINavigationBar {
     func configure() {
         isTranslucent = true
         tintColor = UIColor.from(scheme: .textForeground)
-        titleTextAttributes = DefaultNavigationBar.titleTextAttributes(for: ColorScheme.default.variant)
+        titleTextAttributes = TransparentNavigationBar.titleTextAttributes(for: ColorScheme.default.variant)
         configureBackground()
 
         let backIndicatorInsets = UIEdgeInsets(top: 0, left: 4, bottom: 2.5, right: 0)
