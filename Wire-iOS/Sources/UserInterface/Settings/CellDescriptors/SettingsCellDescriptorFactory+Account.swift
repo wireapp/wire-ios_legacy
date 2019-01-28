@@ -33,12 +33,15 @@ extension ZMUser {
 extension SettingsCellDescriptorFactory {
 
     func accountGroup() -> SettingsCellDescriptorType {
-        var sections: [SettingsSectionDescriptorType] = [
-            infoSection(),
-            appearanceSection(),
-            privacySection(),
-            personalInformationSection(),
-            conversationsSection()]
+        var sections: [SettingsSectionDescriptorType] = [infoSection(),
+                                                         appearanceSection(),
+                                                         privacySection()]
+        
+        #if !DATA_COLLECTION_DISABLED
+            sections.append(personalInformationSection())
+        #endif
+        
+        sections.append(conversationsSection())
         
         if let user = ZMUser.selfUser(), !user.usesCompanyLogin {
             sections.append(actionsSection())

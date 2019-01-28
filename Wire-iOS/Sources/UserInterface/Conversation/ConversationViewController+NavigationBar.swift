@@ -102,7 +102,7 @@ public extension ConversationViewController {
     @objc public func rightNavigationItems(forConversation conversation: ZMConversation) -> [UIBarButtonItem] {
         guard !conversation.isReadOnly, conversation.activeParticipants.count != 0 else { return [] }
 
-        if conversation.canJoinCall && conversation.mutedMessageTypes != .none {
+        if conversation.canJoinCall {
             return [joinCallButton]
         } else if conversation.isCallOngoing {
             return []
