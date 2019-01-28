@@ -176,39 +176,33 @@ private let zmLog = ZMSLog(tag: "UI")
     }
     
     func createTipLabel() {
-        let colorScheme = ColorScheme()
-        colorScheme.variant = .light
+        let color = UIColor.from(scheme: .textDimmed, variant: .light)
+        let text = "conversation.input_bar.audio_message.keyboard.record_tip".localized.uppercased()
+        let attrText = NSMutableAttributedString(string: text)
+        let atRange = (text as NSString).range(of: "%@")
         
-        let tipText = "conversation.input_bar.audio_message.keyboard.record_tip".localized.uppercased()
-        let attributedTipText = NSMutableAttributedString(string: tipText)
-        let atRange = (tipText as NSString).range(of: "%@")
-        
+        // insert random effect icon
         if atRange.location != NSNotFound {
-            let suitableEffects = AVSAudioEffectType.displayedEffects.filter {
-                $0 != .none
-            }
+            let effects = AVSAudioEffectType.displayedEffects.filter { $0 != .none }
+            let max = UInt32(effects.count)
+            let effect = effects[Int(arc4random_uniform(max))]
+            let image = UIImage(for: effect.icon, iconSize: .searchBar, color: color)
             
-            let maxEffect : UInt32 = UInt32(suitableEffects.count)
-            let randomEffect = suitableEffects[Int(arc4random_uniform(maxEffect))]
-            let randomEffectImage = UIImage(for: randomEffect.icon, iconSize: .searchBar, color: colorScheme.color(named: .textDimmed))
+            let attachment = NSTextAttachment()
+            attachment.image = image
             
-            let tipEffectImageAttachment = NSTextAttachment()
-            tipEffectImageAttachment.image = randomEffectImage
-            
-            let tipEffectImage = NSAttributedString(attachment: tipEffectImageAttachment)
-            
-            attributedTipText.replaceCharacters(in: atRange, with: tipEffectImage)
+            attrText.replaceCharacters(in: atRange, with: NSAttributedString(attachment: attachment))
         }
+        
         let style = NSMutableParagraphStyle()
         style.lineSpacing = 8
         
-        attributedTipText.addAttribute(.paragraphStyle, value: style, range: NSMakeRange(0, (attributedTipText.string as NSString).length))
-        self.tipLabel.attributedText = NSAttributedString(attributedString: attributedTipText)
+        attrText.addAttribute(.paragraphStyle, value: style, range: attrText.wholeRange)
+        self.tipLabel.attributedText = NSAttributedString(attributedString: attrText)
         self.tipLabel.numberOfLines = 2
         self.tipLabel.font = FontSpec(.small, .light).font!
-        self.tipLabel.textColor = colorScheme.color(named: .textDimmed)
+        self.tipLabel.textColor = color
         self.tipLabel.textAlignment = .center
-        
     }
     
     func createConstraints() {
