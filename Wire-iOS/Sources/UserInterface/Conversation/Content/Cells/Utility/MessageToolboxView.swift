@@ -129,7 +129,7 @@ import WireSyncEngine
         label.numberOfLines = 1
         label.accessibilityIdentifier = "EphemeralCountdown"
         label.setContentHuggingPriority(.defaultLow, for: .horizontal)
-        label.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        label.setContentCompressionResistancePriority(.required, for: .horizontal)
         return label
     }()
 
