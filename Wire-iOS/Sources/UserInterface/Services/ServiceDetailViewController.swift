@@ -79,10 +79,10 @@ final class ServiceDetailViewController: UIViewController {
     init(serviceUser: ServiceUser,
          actionType: ActionType,
          variant: ServiceDetailVariant,
-         completion: Completion?) {
+         completion: Completion? = nil) {
         self.service = Service(serviceUser: serviceUser)
         self.completion = completion
-        self.detailView = ServiceDetailView(service: service, variant: variant.colorScheme)
+        detailView = ServiceDetailView(service: service, variant: variant.colorScheme)
 
         switch actionType {
         case let .addService(conversation):
@@ -102,25 +102,24 @@ final class ServiceDetailViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
 
         self.title = self.service.serviceUser.name?.localizedUppercase
+
+        setupViews()
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    private func setupViews() {
+        actionButton.addCallback(for: .touchUpInside, callback: callback(for: actionType, completion: self.completion))
 
-        self.actionButton.addCallback(for: .touchUpInside, callback: callback(for: actionType, completion: self.completion))
-
-        if self.variant.opaque {
+        if variant.opaque {
             view.backgroundColor = UIColor.from(scheme: .background, variant: self.variant.colorScheme)
         } else {
             view.backgroundColor = .clear
         }
 
-        view.addSubview(detailView)
-        view.addSubview(actionButton)
+        [detailView, actionButton].forEach(view.addSubview)
 
         createConstraints()
 
@@ -138,22 +137,16 @@ final class ServiceDetailViewController: UIViewController {
     }
 
     private func createConstraints() {
-        var topMargin: CGFloat = 16
-        if #available(iOS 11.0, *) {
-            topMargin = 16
-        } else {
-            if let naviBarHeight = self.navigationController?.navigationBar.frame.height {
-                topMargin = 16 + naviBarHeight
-            }
+        [detailView, actionButton].forEach() {
+            $0.translatesAutoresizingMaskIntoConstraints = false
         }
 
-        [self.view, detailView, actionButton].forEach(){ $0.translatesAutoresizingMaskIntoConstraints = false }
-
-        detailView.fitInSuperview(with: EdgeInsets(top: topMargin, leading: 16, bottom: 0, trailing: 16), exclude: [.bottom])
+        detailView.fitInSuperview(with: EdgeInsets(margin: 16), exclude: [.top, .bottom])
 
         actionButton.fitInSuperview(with: EdgeInsets(top: 0, leading: 16, bottom: 16 + UIScreen.safeArea.bottom, trailing: 16), exclude: [.top])
 
         NSLayoutConstraint.activate([
+            detailView.topAnchor.constraint(equalTo: safeTopAnchor, constant: 16),
             actionButton.topAnchor.constraint(equalTo: detailView.bottomAnchor, constant: 16),
             actionButton.heightAnchor.constraint(equalToConstant: 48)
             ])
