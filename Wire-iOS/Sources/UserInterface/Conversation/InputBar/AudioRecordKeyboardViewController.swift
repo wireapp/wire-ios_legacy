@@ -27,35 +27,37 @@ private let zmLog = ZMSLog(tag: "UI")
         case ready, recording, effects
     }
     
-    fileprivate let topContainer = UIView()
-    fileprivate let topSeparator = UIView()
-    fileprivate let bottomToolbar = UIView()
+    private let topContainer = UIView()
+    private let topSeparator = UIView()
+    private let bottomToolbar = UIView()
     
-    fileprivate let tipLabel = UILabel()
-    fileprivate var recordTapGestureRecognizer: UITapGestureRecognizer!
-    internal let recordButton = IconButton()
-    internal let stopRecordButton = IconButton()
+    private let tipLabel = UILabel()
+    private var recordTapGestureRecognizer: UITapGestureRecognizer!
     
-    fileprivate let audioPreviewView = WaveFormView()
-    fileprivate let timeLabel = UILabel()
+    let recordButton = IconButton()
+    let stopRecordButton = IconButton()
     
-    internal let confirmButton = IconButton()
-    internal let redoButton = IconButton()
-    internal let cancelButton = IconButton()
+    private let audioPreviewView = WaveFormView()
+    private let timeLabel = UILabel()
     
-    fileprivate var accentColorChangeHandler: AccentColorChangeHandler?
-    fileprivate var effectPickerViewController: AudioEffectsPickerViewController?
+    let confirmButton = IconButton()
+    let redoButton = IconButton()
+    let cancelButton = IconButton()
     
-    fileprivate var currentEffect: AVSAudioEffectType = .none
-    fileprivate var currentEffectFilePath: String?
+    private var accentColorChangeHandler: AccentColorChangeHandler?
+    private var effectPickerViewController: AudioEffectsPickerViewController?
     
-    fileprivate(set) var state: State = .ready {
+    private var currentEffect: AVSAudioEffectType = .none
+    private var currentEffectFilePath: String?
+    
+    private(set) var state: State = .ready {
         didSet {
             if oldValue != state {
                 updateRecordingState(self.state)
             }
         }
     }
+    
     public let recorder: AudioRecorderType
     public weak var delegate: AudioRecordViewControllerDelegate?
     
@@ -315,7 +317,7 @@ private let zmLog = ZMSLog(tag: "UI")
         timeLabel.accessibilityValue = timeLabel.text
     }
     
-    fileprivate func visibleViews(forState: State) -> [UIView] {
+    private func visibleViews(forState: State) -> [UIView] {
         var result = [self.topSeparator, self.topContainer, self.bottomToolbar]
         switch state {
         case .ready:
@@ -329,7 +331,7 @@ private let zmLog = ZMSLog(tag: "UI")
         return result
     }
     
-    fileprivate func updateRecordingState(_ state: State) {
+    private func updateRecordingState(_ state: State) {
         let visibleViews = self.visibleViews(forState: state)
         let allViews = Set(view.subviews.flatMap { $0.subviews })
         let hiddenViews = allViews.subtracting(visibleViews)
@@ -363,7 +365,7 @@ private let zmLog = ZMSLog(tag: "UI")
         delegate?.audioRecordViewControllerWantsToSendAudio(self, recordingURL: url, duration: recorder.currentDuration, filter: .none)
     }
     
-    fileprivate func openEffectsPicker() {
+    private func openEffectsPicker() {
         guard let url = recorder.fileURL else { return zmLog.warn("Nil url passed to add effect to audio file") }
         
         let noizeReducePath = (NSTemporaryDirectory() as NSString).appendingPathComponent("noize-reduce.wav")
@@ -397,7 +399,7 @@ private let zmLog = ZMSLog(tag: "UI")
         }
     }
     
-    fileprivate func closeEffectsPicker(animated: Bool) {
+    private func closeEffectsPicker(animated: Bool) {
         if let picker = self.effectPickerViewController {
             picker.willMove(toParent: nil)
             picker.removeFromParent()
@@ -407,7 +409,7 @@ private let zmLog = ZMSLog(tag: "UI")
     
     // MARK: - Button actions
     
-    @objc internal func recordButtonPressed(_ sender: AnyObject!) {
+    @objc func recordButtonPressed(_ sender: AnyObject!) {
         self.state = .recording
         self.recorder.startRecording()
         self.delegate?.audioRecordViewControllerDidStartRecording(self)
