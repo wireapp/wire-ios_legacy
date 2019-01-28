@@ -101,6 +101,10 @@ import WireDataModel
                 let invalidConversationsCount = try syncMoc.count(for: allConversations)
                 self.addRow(title: "   Invalid", contents: "\(invalidConversationsCount)")
 
+                let users = ZMUser.fetchRequest()
+                let usersCount = try syncMoc.count(for: users)
+                self.addRow(title: "Number of users", contents: "\(usersCount)")
+                
                 let messages = ZMMessage.fetchRequest()
                 let messagesCount = try syncMoc.count(for: messages)
                 self.addRow(title: "Number of messages", contents: "\(messagesCount)")
