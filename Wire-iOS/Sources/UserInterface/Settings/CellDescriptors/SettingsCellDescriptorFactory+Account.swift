@@ -55,7 +55,13 @@ extension SettingsCellDescriptorFactory {
     // MARK: - Sections
 
     func infoSection() -> SettingsSectionDescriptorType {
-        var cellDescriptors = [nameElement(), handleElement()]
+        var cellDescriptors: [SettingsCellDescriptorType] = []
+        #if NAME_EDITING_DISABLED
+        let enabled = false
+        #else
+        let enabled = true
+        #endif
+        cellDescriptors = [nameElement(enabled: enabled), handleElement()]
         
         if let user = ZMUser.selfUser(), !user.usesCompanyLogin {
             if !ZMUser.selfUser().hasTeam || !(ZMUser.selfUser().phoneNumber?.isEmpty ?? true) {
@@ -119,8 +125,10 @@ extension SettingsCellDescriptorFactory {
 
     // MARK: - Elements
 
-    func nameElement() -> SettingsCellDescriptorType {
-        return SettingsPropertyTextValueCellDescriptor(settingsProperty: settingsPropertyFactory.property(.profileName))
+    func nameElement(enabled: Bool = true) -> SettingsPropertyTextValueCellDescriptor {
+        var settingsProperty = settingsPropertyFactory.property(.profileName)
+        settingsProperty.enabled = enabled
+        return SettingsPropertyTextValueCellDescriptor(settingsProperty: settingsProperty)
     }
 
     func emailElement() -> SettingsCellDescriptorType {

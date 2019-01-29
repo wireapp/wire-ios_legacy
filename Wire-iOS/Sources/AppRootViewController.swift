@@ -245,7 +245,7 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
                 clientViewController.needToShowDataUsagePermissionDialog = true
             }
 
-            Analytics.shared().team = ZMUser.selfUser().team
+            Analytics.shared().setTeam(ZMUser.selfUser().team)
 
             viewController = clientViewController
         case .headless:

@@ -40,11 +40,14 @@ class SettingsPropertyTextValueCellDescriptor: SettingsPropertyCellDescriptorTyp
     }
     
     func featureCell(_ cell: SettingsCellType) {
-        cell.titleText = self.title
-        if let textCell = cell as? SettingsTextCell,
-            let stringValue = self.settingsProperty.rawValue() as? String {
+        cell.titleText = title
+        guard let textCell = cell as? SettingsTextCell else { return }
+
+        if let stringValue = settingsProperty.rawValue() as? String {
             textCell.textInput.text = stringValue
         }
+
+        textCell.textInput.isUserInteractionEnabled = settingsProperty.enabled
     }
     
     func select(_ value: SettingsPropertyValue?) {
