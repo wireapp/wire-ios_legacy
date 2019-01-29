@@ -22,6 +22,7 @@ import XCTest
 final class SettingsTextCellSnapshotTests: CoreDataSnapshotTestCase {
     
     var sut: SettingsTextCell!
+    var settingsCellDescriptorFactory: SettingsCellDescriptorFactory!
     
     override func setUp() {
         super.setUp()
@@ -31,14 +32,8 @@ final class SettingsTextCellSnapshotTests: CoreDataSnapshotTestCase {
 
         let settingsPropertyFactory = SettingsPropertyFactory(userSession: SessionManager.shared?.activeUserSession, selfUser: ZMUser.selfUser())
 
-        let settingsCellDescriptorFactory = SettingsCellDescriptorFactory(settingsPropertyFactory: settingsPropertyFactory)
+        settingsCellDescriptorFactory = SettingsCellDescriptorFactory(settingsPropertyFactory: settingsPropertyFactory)
 
-        let cellDescriptor = settingsCellDescriptorFactory.nameElement()
-
-        sut.descriptor = cellDescriptor
-        cellDescriptor.featureCell(sut)
-
-        sut.backgroundColor = .black
     }
     
     override func tearDown() {
@@ -47,8 +42,27 @@ final class SettingsTextCellSnapshotTests: CoreDataSnapshotTestCase {
     }
 
     func testForNameElementWithALongName(){
+        let cellDescriptor = settingsCellDescriptorFactory.nameElement()
+        sut.descriptor = cellDescriptor
+        cellDescriptor.featureCell(sut)
+        sut.backgroundColor = .black
+
         let mockTableView = sut.wrapInTableView()
         mockTableView.backgroundColor = .black
+
+        XCTAssert(sut.textInput.isUserInteractionEnabled)
+
         verify(view: mockTableView)
+    }
+
+    func testThatTextFieldIsDisabledWhenEnabledFlagIsFalse(){
+        // GIVEN
+        let cellDescriptor = settingsCellDescriptorFactory.nameElement(enabled: false)
+
+        // WHEN
+        cellDescriptor.featureCell(sut)
+
+        //THEN
+        XCTAssertFalse(sut.textInput.isUserInteractionEnabled)
     }
 }

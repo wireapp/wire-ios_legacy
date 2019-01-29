@@ -92,17 +92,25 @@ import WireDataModel
                     }
                 }
 
-                let conversations = ZMConversation.sortedFetchRequest()!
-                let conversationsCount = try syncMoc.count(for: conversations)
+                let allConversations = ZMConversation.fetchRequest()
+                
+                let conversationsCount = try syncMoc.count(for: allConversations)
                 self.addRow(title: "Number of conversations", contents: "\(conversationsCount)")
+                
+                allConversations.predicate = NSPredicate(format: "conversationType == %d", ZMConversationType.invalid.rawValue)
+                let invalidConversationsCount = try syncMoc.count(for: allConversations)
+                self.addRow(title: "   Invalid", contents: "\(invalidConversationsCount)")
 
-
-                let messages = ZMMessage.sortedFetchRequest()!
+                let users = ZMUser.fetchRequest()
+                let usersCount = try syncMoc.count(for: users)
+                self.addRow(title: "Number of users", contents: "\(usersCount)")
+                
+                let messages = ZMMessage.fetchRequest()
                 let messagesCount = try syncMoc.count(for: messages)
                 self.addRow(title: "Number of messages", contents: "\(messagesCount)")
 
 
-                let assetMessages = ZMAssetClientMessage.sortedFetchRequest()!
+                let assetMessages = ZMAssetClientMessage.fetchRequest()
                 let allAssets = try syncMoc.fetch(assetMessages)
                     .compactMap {
                         $0 as? ZMAssetClientMessage

@@ -78,6 +78,7 @@ protocol SettingsProperty {
     var propertyName : SettingsPropertyName { get }
     func value() -> SettingsPropertyValue
     func set(newValue: SettingsPropertyValue) throws
+    var enabled: Bool { get set }
 }
 
 extension SettingsProperty {
@@ -122,6 +123,8 @@ func << (value: inout Any?, property: SettingsProperty) {
 
 /// Generic user defaults property
 class SettingsUserDefaultsProperty : SettingsProperty {
+    var enabled: Bool = true
+
     internal func set(newValue: SettingsPropertyValue) throws {
         self.userDefaults.set(newValue.value(), forKey: self.userDefaultsKey)
         NotificationCenter.default.post(name: Notification.Name(rawValue: self.propertyName.changeNotificationName), object: self)
@@ -160,6 +163,8 @@ typealias SetAction = (SettingsBlockProperty, SettingsPropertyValue) throws -> (
 
 /// Genetic block property
 open class SettingsBlockProperty : SettingsProperty {
+    var enabled: Bool = true
+
     let propertyName : SettingsPropertyName
     func value() -> SettingsPropertyValue {
         return self.getAction(self)
