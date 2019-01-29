@@ -54,8 +54,7 @@ extension ConversationContentViewController {
             deletionDialogPresenter.presentDeletionAlertController(forMessage: message, source: view) { deleted in
                 if deleted {
                     self.presentedViewController?.dismiss(animated: true)
-                }
-                if !deleted {
+                } else {
                     // TODO 2838: Support editing
                     // cell.beingEdited = NO;
                 }
@@ -92,27 +91,27 @@ extension ConversationContentViewController {
             // Not implemented yet
             break
         case .like:
-            let liked = !Message.isLikedMessage(message)
+            // The new liked state, the value is flipped
+            let updatedLikedState = !Message.isLikedMessage(message)
 
-            if let indexPath = dataSource?.indexPath(for: message),
-                let selectedMessage = dataSource?.selectedMessage {
+            guard let indexPath = dataSource?.indexPath(for: message),
+                let selectedMessage = dataSource?.selectedMessage else { break }
 
-                session.performChanges({
-                    Message.setLikedMessage(message, liked: liked)
-                })
+            session.performChanges({
+            Message.setLikedMessage(message, liked: updatedLikedState)
+            })
 
-                if liked {
-                    // Deselect if necessary to show list of likers
-                    if selectedMessage == message {
-                        willSelectRow(at: indexPath, tableView: tableView)
-                    }
-                } else {
-                    // Select if necessary to prevent message from collapsing
-                    if !(selectedMessage == message) && !Message.hasReactions(message) {
-                        willSelectRow(at: indexPath, tableView: tableView)
+            if updatedLikedState {
+                // Deselect if necessary to show list of likers
+                if selectedMessage == message {
+                    willSelectRow(at: indexPath, tableView: tableView)
+                }
+            } else {
+                // Select if necessary to prevent message from collapsing
+                if !(selectedMessage == message) && !Message.hasReactions(message) {
+                    willSelectRow(at: indexPath, tableView: tableView)
 
-                        tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
-                    }
+                    tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
                 }
             }
         case .forward:
