@@ -100,18 +100,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @interface ConversationInputBarViewController ()
 
-@property (nonatomic) IconButton *audioButton;
-@property (nonatomic) IconButton *photoButton;
-@property (nonatomic) IconButton *uploadFileButton;
-@property (nonatomic) IconButton *sketchButton;
-@property (nonatomic) IconButton *pingButton;
-@property (nonatomic) IconButton *locationButton;
-@property (nonatomic) IconButton *ephemeralIndicatorButton;
-@property (nonatomic) IconButton *emojiButton;
-@property (nonatomic) IconButton *markdownButton;
-@property (nonatomic) IconButton *gifButton;
-@property (nonatomic) IconButton *mentionButton;
-
 @property (nonatomic) UIGestureRecognizer *singleTapGestureRecognizer;
 
 @property (nonatomic) UserImageView *authorImageView;
@@ -325,32 +313,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     self.singleTapGestureRecognizer.delegate = self;
     self.singleTapGestureRecognizer.cancelsTouchesInView = YES;
     [self.view addGestureRecognizer:self.singleTapGestureRecognizer];
-}
-
-- (void)createAudioRecordViewController
-{
-    self.audioRecordViewController = [[AudioRecordViewController alloc] init];
-    self.audioRecordViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
-    self.audioRecordViewController.delegate = self;
-
-
-    self.audioRecordViewContainer = [UIView new];
-    self.audioRecordViewContainer.backgroundColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorBackground];
-    self.audioRecordViewContainer.hidden = YES;
-
-    [self addChildViewController:self.audioRecordViewController];
-    [self.inputBar addSubview:self.audioRecordViewContainer];
-    [self.audioRecordViewContainer autoPinEdgesToSuperviewEdges];
-
-    [self.audioRecordViewContainer addSubview:self.audioRecordViewController.view];
-
-    CGRect recordButtonFrame = [self.inputBar convertRect:self.audioButton.bounds fromView:self.audioButton];
-    CGFloat width = CGRectGetMaxX(recordButtonFrame) + 56;
-    [self.audioRecordViewController.view autoSetDimension:ALDimensionWidth toSize:width];
-
-    [self.audioRecordViewController.view autoPinEdgeToSuperviewEdge:ALEdgeLeading];
-    [self.audioRecordViewController.view autoPinEdgeToSuperviewEdge:ALEdgeBottom];
-    [self.audioRecordViewController.view autoPinEdge:ALEdgeTop toEdge:ALEdgeTop ofView:self.inputBar withOffset:0.5];
 }
 
 - (void)createEphemeralIndicatorButton
