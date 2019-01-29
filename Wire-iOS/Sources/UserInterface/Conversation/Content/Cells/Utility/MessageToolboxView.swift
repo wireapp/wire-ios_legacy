@@ -20,7 +20,7 @@ import Foundation
 import WireSyncEngine
 
 /// Observes events from the message toolbox.
-@objc protocol MessageToolboxViewDelegate: NSObjectProtocol {
+protocol MessageToolboxViewDelegate {
     func messageToolboxDidRequestOpeningDetails(_ messageToolboxView: MessageToolboxView, preferredDisplayMode: MessageDetailsDisplayMode)
     func messageToolboxViewDidSelectResend(_ messageToolboxView: MessageToolboxView)
     func messageToolboxViewDidSelectDelete(_ messageToolboxView: MessageToolboxView)
@@ -45,10 +45,10 @@ private extension UILabel {
  * A view that displays information about a message.
  */
 
-@objc class MessageToolboxView: UIView {
+final class MessageToolboxView: UIView {
 
     /// The object receiving events.
-    @objc weak var delegate: MessageToolboxViewDelegate?
+    weak var delegate: MessageToolboxViewDelegate?
 
     ///
     fileprivate(set) var dataSource: MessageToolboxDataSource?
@@ -218,8 +218,8 @@ private extension UILabel {
         }
     }
 
-    @objc func prepareForReuse() {
-        self.dataSource = nil
+    func prepareForReuse() {
+        dataSource = nil
         stopCountdownTimer()
     }
 
@@ -229,7 +229,7 @@ private extension UILabel {
         return bounds.width - UIView.conversationLayoutMargins.left - UIView.conversationLayoutMargins.right
     }
 
-    @objc func configureForMessage(_ message: ZMConversationMessage, forceShowTimestamp: Bool, animated: Bool = false) {
+    func configureForMessage(_ message: ZMConversationMessage, forceShowTimestamp: Bool, animated: Bool = false) {
         if dataSource?.message.nonce != message.nonce {
             dataSource = MessageToolboxDataSource(message: message)
 
@@ -300,7 +300,7 @@ private extension UILabel {
     // MARK: - Timer
 
     /// Starts the countdown timer.
-    @objc func startCountdownTimer() {
+    func startCountdownTimer() {
         stopCountdownTimer()
 
         guard let message = self.dataSource?.message else { return }
@@ -312,7 +312,7 @@ private extension UILabel {
     }
 
     /// Stops the countdown timer.
-    @objc func stopCountdownTimer() {
+    func stopCountdownTimer() {
         timestampTimer?.invalidate()
         timestampTimer = nil
     }
@@ -327,7 +327,7 @@ private extension UILabel {
 
     // MARK: - Hiding the Contents
 
-    @objc func setHidden(_ isHidden: Bool, animated: Bool) {
+    func setHidden(_ isHidden: Bool, animated: Bool) {
         let changes = {
             self.heightConstraint?.constant = isHidden ? 0 : 28
             self.alpha = isHidden ? 0 : 1
@@ -346,19 +346,21 @@ private extension UILabel {
 
     // MARK: - Actions
 
-    @objc private func requestLike() {
+    @objc
+    private func requestLike() {
         delegate?.messageToolboxViewDidRequestLike(self)
     }
 
-    @objc private func resendMessage() {
+    @objc
+    private func resendMessage() {
         delegate?.messageToolboxViewDidSelectResend(self)
     }
 
-    @objc private func deleteMessage() {
+    @objc
+    private func deleteMessage() {
         delegate?.messageToolboxViewDidSelectDelete(self)
     }
 
-    @objc(updateForMessage:)
     func update(for change: MessageChangeInfo) {
         if change.reactionsChanged {
             configureLikedState(change.message, animated: true)
@@ -412,7 +414,8 @@ private extension UILabel {
 
 extension MessageToolboxView: UIGestureRecognizerDelegate {
 
-    @objc func onTapContent(_ sender: UITapGestureRecognizer!) {
+    @objc
+    func onTapContent(_ sender: UITapGestureRecognizer!) {
         if let displayMode = preferredDetailsDisplayMode() {
             delegate?.messageToolboxDidRequestOpeningDetails(self, preferredDisplayMode: displayMode)
         }
