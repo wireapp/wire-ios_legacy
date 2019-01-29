@@ -61,7 +61,7 @@ private extension UILabel {
     private let contentStack: UIStackView = {
         let stack = UIStackView()
         stack.axis = .horizontal
-        stack.spacing = 0 ///TODO: try distribution??
+        stack.spacing = 3
         return stack
     }()
 
