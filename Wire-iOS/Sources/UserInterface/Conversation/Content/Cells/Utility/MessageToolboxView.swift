@@ -20,7 +20,7 @@ import Foundation
 import WireSyncEngine
 
 /// Observes events from the message toolbox.
-protocol MessageToolboxViewDelegate {
+protocol MessageToolboxViewDelegate: class {
     func messageToolboxDidRequestOpeningDetails(_ messageToolboxView: MessageToolboxView, preferredDisplayMode: MessageDetailsDisplayMode)
     func messageToolboxViewDidSelectResend(_ messageToolboxView: MessageToolboxView)
     func messageToolboxViewDidSelectDelete(_ messageToolboxView: MessageToolboxView)
