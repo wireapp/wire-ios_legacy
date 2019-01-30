@@ -270,12 +270,6 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
     public func playRecording() {
         guard let audioRecorder = self.audioRecorder else { return }
         
-        do {
-            try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
-        } catch let error {
-            zmLog.error("Failed change audio category for playback: \(error)")
-        }
-        
         setupDisplayLink()
         audioPlayer = try? AVAudioPlayer(contentsOf: audioRecorder.url)
         audioPlayer?.isMeteringEnabled = true

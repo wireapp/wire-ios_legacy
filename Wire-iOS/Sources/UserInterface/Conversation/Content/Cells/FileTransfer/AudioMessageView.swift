@@ -481,17 +481,11 @@ private let zmLog = ZMSLog(tag: "UI")
     }
     
     private func setAudioOutput(earpiece: Bool) {
-        do {
             if earpiece {
-                try AVAudioSession.sharedInstance().setCategory(.playAndRecord, mode: .default)
                 AVSMediaManager.sharedInstance().playbackRoute = .builtIn
             } else {
-                try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
                 AVSMediaManager.sharedInstance().playbackRoute = .speaker
             }
-        } catch {
-            zmLog.error("Cannot set AVAudioSession category: \(error)")
-        }
     }
     
     func proximityStateDidChange(_ raisedToEar: Bool) {
