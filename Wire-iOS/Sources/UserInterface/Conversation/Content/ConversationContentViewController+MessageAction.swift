@@ -54,9 +54,6 @@ extension ConversationContentViewController {
             deletionDialogPresenter.presentDeletionAlertController(forMessage: message, source: view) { deleted in
                 if deleted {
                     self.presentedViewController?.dismiss(animated: true)
-                } else {
-                    // TODO 2838: Support editing
-                    // cell.beingEdited = NO;
                 }
             }
         case .present:

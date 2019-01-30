@@ -438,10 +438,6 @@
         self.dataSource.selectedMessage  = nil;
         [self.dataSource deselectWithIndexPath:indexPath];
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
-
-        // Make table view to update cells with animation (TODO can be removed when legacy cells are removed)
-        [tableView beginUpdates];
-        [tableView endUpdates];
     } else {
         if (tableView.indexPathForSelectedRow != nil) {
             [self.dataSource deselectWithIndexPath:tableView.indexPathForSelectedRow];
@@ -462,16 +458,6 @@
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // TODO 2838: Support ping animation, ephemeral timer and media playback
-//    if ([cell isKindOfClass:[TextMessageCell class]] || [cell isKindOfClass:[AudioMessageCell class]]) {
-//        ConversationCell *messageCell = (ConversationCell *)cell;
-//        MediaPlaybackManager *mediaPlaybackManager = [AppDelegate sharedAppDelegate].mediaPlaybackManager;
-//
-//        if (mediaPlaybackManager.activeMediaPlayer != nil && mediaPlaybackManager.activeMediaPlayer.sourceMessage == messageCell.message) {
-//            [self.delegate conversationContentViewController:self willDisplayActiveMediaPlayerForMessage:messageCell.message];
-//        }
-//    }
-    
     if ([cell respondsToSelector:@selector(willDisplayCell)] && self.onScreen) {
         [(id)cell willDisplayCell];
     }
@@ -488,15 +474,6 @@
 
 - (void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // TODO 2838: Support ping animation, ephemeral timer and media playback
-//    if ([cell isKindOfClass:[TextMessageCell class]] || [cell isKindOfClass:[AudioMessageCell class]]) {
-//        ConversationCell *messageCell = (ConversationCell *)cell;
-//        MediaPlaybackManager *mediaPlaybackManager = [AppDelegate sharedAppDelegate].mediaPlaybackManager;
-//        if (mediaPlaybackManager.activeMediaPlayer != nil && mediaPlaybackManager.activeMediaPlayer.sourceMessage == messageCell.message) {
-//            [self.delegate conversationContentViewController:self didEndDisplayingActiveMediaPlayerForMessage:messageCell.message];
-//        }
-//    }
-    
     if ([cell respondsToSelector:@selector(didEndDisplayingCell)]) {
         [(id)cell didEndDisplayingCell];
     }
