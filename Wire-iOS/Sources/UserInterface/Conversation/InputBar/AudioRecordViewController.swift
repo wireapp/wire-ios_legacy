@@ -54,11 +54,8 @@ private let zmLog = ZMSLog(tag: "UI")
     let recordingDotView = RecordingDotView()
     var recordingDotViewVisible: ConstraintGroup?
     var recordingDotViewHidden: ConstraintGroup?
-
-    public let recorder = AudioRecorder(format: .wav,
-                                        maxRecordingDuration: ZMUserSession.shared()?.maxAudioLength(),
-                                        maxFileSize: ZMUserSession.shared()?.maxUploadFileSize())!
     
+    public let recorder: AudioRecorderType
     weak public var delegate: AudioRecordViewControllerDelegate?
     
     var recordingState: AudioRecordState = .recording {
@@ -71,11 +68,17 @@ private let zmLog = ZMSLog(tag: "UI")
         fatalError("init(coder:) has not been implemented")
     }
     
-    init() {
+    init(audioRecorder: AudioRecorderType? = nil) {
+        let maxAudioLength = ZMUserSession.shared()?.maxAudioLength()
+        let maxUploadSize = ZMUserSession.shared()?.maxUploadFileSize()
+        self.recorder = audioRecorder ?? AudioRecorder(format: .wav, maxRecordingDuration: maxAudioLength, maxFileSize: maxUploadSize)
+        
         super.init(nibName: nil, bundle: nil)
+        
         configureViews()
         configureAudioRecorder()
         createConstraints()
+        
 
         if DeveloperMenuState.developerMenuEnabled() && Settings.shared().maxRecordingDurationDebug != 0 {
             self.recorder.maxRecordingDuration = Settings.shared().maxRecordingDurationDebug
@@ -88,25 +91,39 @@ private let zmLog = ZMSLog(tag: "UI")
     }
     
     func beginRecording() {
-        self.delegate?.audioRecordViewControllerDidStartRecording(self)
-
-        let feedbackGenerator = UINotificationFeedbackGenerator()
-        feedbackGenerator.prepare()
-        feedbackGenerator.notificationOccurred(.success)
-
-        self.recorder.startRecording()
+        
+        
+        self.recorder.startRecording { (success) in
+            let feedbackGenerator = UINotificationFeedbackGenerator()
+            feedbackGenerator.prepare()
+            feedbackGenerator.notificationOccurred(.success)
+            AppDelegate.shared().mediaPlaybackManager?.audioTrackPlayer.stop()
+            
+            self.delegate?.audioRecordViewControllerDidStartRecording(self)
+        }
     }
     
     func finishRecordingIfNeeded(_ sender: UIGestureRecognizer) {
+        guard recorder.state != .initializing else {
+            recorder.stopRecording()
+            self.delegate?.audioRecordViewControllerDidCancel(self)
+            return
+        }
+        
         let location = sender.location(in: buttonOverlay)
         let upperThird = location.y < buttonOverlay.frame.height / 3
         let shouldSend = upperThird && sender.state == .ended
         
-        guard recorder.stopRecording() else { return zmLog.warn("Stopped recording but did not get file URL") }
+        guard recorder.stopRecording() else {
+            return zmLog.warn("Stopped recording but did not get file URL")
+        }
         
         if shouldSend {
             sendAudio()
         }
+        
+        setOverlayState(.default, animated: true)
+        setRecordingState(.finishedRecording, animated: true)
     }
     
     func updateWithChangedRecognizer(_ sender: UIGestureRecognizer) {
@@ -242,10 +259,6 @@ private let zmLog = ZMSLog(tag: "UI")
         recorder.recordTimerCallback = { [weak self] time in
             guard let `self` = self else { return }
             self.updateTimeLabel(time)
-        }
-        
-        recorder.recordStartedCallback = {
-            AppDelegate.shared().mediaPlaybackManager?.audioTrackPlayer.stop()
         }
         
         recorder.recordEndedCallback = { [weak self] result in

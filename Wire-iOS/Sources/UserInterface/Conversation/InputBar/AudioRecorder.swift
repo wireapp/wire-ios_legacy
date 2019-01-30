@@ -55,8 +55,8 @@ public enum AudioRecorderFormat {
     }
 }
 
-public enum AudioRecorderState {
-    case recording, playback
+public enum AudioRecorderState: Equatable {
+    case initializing, recording(start: TimeInterval), stopped
 }
 
 public enum RecordingError: Error {
@@ -73,10 +73,9 @@ public protocol AudioRecorderType: class {
     var recordTimerCallback: ((TimeInterval) -> Void)? { get set }
     var recordLevelCallBack: ((RecordingLevel) -> Void)? { get set }
     var playingStateCallback: ((PlayingState) -> Void)? { get set }
-    var recordStartedCallback: (() -> Void)? { get set }
     var recordEndedCallback: ((VoidResult) -> Void)? { get set }
     
-    func startRecording()
+    func startRecording(_ completion: @escaping (_ success: Bool) -> Void)
     @discardableResult func stopRecording() -> Bool
     func deleteRecording()
     func playRecording()
@@ -89,7 +88,7 @@ public protocol AudioRecorderType: class {
 public final class AudioRecorder: NSObject, AudioRecorderType {
     
     public let format: AudioRecorderFormat
-    public var state: AudioRecorderState = .recording
+    public var state: AudioRecorderState = .initializing
     
     var audioRecorder : AVAudioRecorder?
     
@@ -102,20 +101,17 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
     public var recordTimerCallback: ((TimeInterval) -> Void)?
     public var recordLevelCallBack: ((RecordingLevel) -> Void)?
     public var playingStateCallback: ((PlayingState) -> Void)?
-    public var recordStartedCallback: (() -> Void)?
     public var recordEndedCallback: ((VoidResult) -> Void)?
     public var fileURL: URL?
     public var maxFileSize: UInt64?
     
     private var token: Any?
     
-    fileprivate var recordingStartTime: TimeInterval?
-    
     override init() {
         fatalError("init() is not implemented for AudioRecorder")
     }
     
-    init?(format: AudioRecorderFormat = .m4A, maxRecordingDuration: TimeInterval?, maxFileSize: UInt64?) {
+    init(format: AudioRecorderFormat = .m4A, maxRecordingDuration: TimeInterval?, maxFileSize: UInt64?) {
         self.maxRecordingDuration = maxRecordingDuration
         self.format = format
         self.maxFileSize = maxFileSize
@@ -179,15 +175,18 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
     
     // MARK: Recording
     
-    public func startRecording() {
+    public func startRecording(_ completion: @escaping (_ success: Bool) -> Void) {
         createAudioRecorderIfNeeded()
         
         guard let audioRecorder = self.audioRecorder else { return }
 
         AVSMediaManager.sharedInstance().startRecording {
+            guard self.state == .initializing else {
+                return AVSMediaManager.sharedInstance().stopRecording()
+            }
+            
             UIApplication.shared.isIdleTimerDisabled = true
             
-            self.state = .recording
             self.recordTimerCallback?(0)
             self.setupDisplayLink()
             
@@ -195,21 +194,24 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
             
             if let maxDuration = self.maxRecordingDuration {
                 successfullyStarted = audioRecorder.record(forDuration: maxDuration)
-                if !successfullyStarted { zmLog.error("Failed to start audio recording") }
-                else { self.recordStartedCallback?() }
-            }
-            else {
+            } else {
                 successfullyStarted = audioRecorder.record()
-                if !successfullyStarted { zmLog.error("Failed to start audio recording") }
             }
             
-            self.recordingStartTime = successfullyStarted ? audioRecorder.deviceCurrentTime : nil
+            if successfullyStarted {
+                self.state = .recording(start: audioRecorder.deviceCurrentTime)
+            } else {
+                zmLog.error("Failed to start audio recording")
+            }
+            
+            completion(successfullyStarted)
         }
     }
     
     @discardableResult public func stopRecording() -> Bool {
         UIApplication.shared.isIdleTimerDisabled = false
         audioRecorder?.stop()
+        state = .stopped
         return postRecordingProcessing()
     }
     
@@ -274,7 +276,6 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
             zmLog.error("Failed change audio category for playback: \(error)")
         }
         
-        state = .playback
         setupDisplayLink()
         audioPlayer = try? AVAudioPlayer(contentsOf: audioRecorder.url)
         audioPlayer?.isMeteringEnabled = true
@@ -303,7 +304,7 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
     // MARK: Leveling & Duration
     
     public func levelForCurrentState() -> RecordingLevel {
-        let powerProvider: PowerProvider? = state == .recording ? audioRecorder : audioPlayer
+        let powerProvider: PowerProvider? = state == .stopped ? audioPlayer : audioRecorder
         powerProvider?.updateMeters()
         let level = powerProvider?.averagePowerForFirstActiveChannel() ?? minimumPower
         // This value is in dB (logarithmic, [-160, 0]) and varies between -160 and 0 so we need to normalize it, see
@@ -313,13 +314,12 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
     
     public func durationForCurrentState() -> TimeInterval? {
         switch state {
-        case .recording:
-            guard let recorder = audioRecorder, let startTime = recordingStartTime else {
-                return nil
-            }
+        case .initializing:
+            return nil
+        case .recording(let startTime):
+            guard let recorder = audioRecorder else { return nil }
             return recorder.deviceCurrentTime - startTime
-            
-        case .playback:
+        case .stopped:
             return audioPlayer?.currentTime
         }
     }
@@ -365,7 +365,6 @@ extension AudioRecorder: AVAudioRecorderDelegate {
         
         var recordedToMaxDuration = false
         let recordedToMaxSize = audioSizeIsCritical
-        recordingStartTime = nil
         
         if let maxRecordingDuration = self.maxRecordingDuration {
             let duration = AVURLAsset(url: recorder.url).duration.seconds

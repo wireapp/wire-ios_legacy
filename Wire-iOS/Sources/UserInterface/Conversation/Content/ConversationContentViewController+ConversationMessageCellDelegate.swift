@@ -22,7 +22,7 @@ extension ConversationContentViewController: ConversationMessageCellDelegate {
     public func perform(action: MessageAction, for message: ZMConversationMessage!) {
         guard let cell = dataSource.cell(for: message) as? UIView & SelectableView else { return }
 
-        wants(toPerform: action, for: message, cell: cell)
+        wants(toPerform: action, for: message, view: cell)
     }
 
     func conversationMessageWantsToOpenUserDetails(_ cell: UIView, user: UserType, sourceView: UIView, frame: CGRect) {

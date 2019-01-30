@@ -57,9 +57,7 @@ final class ConversationInputBarViewControllerAudioRecorderSnapshotTests: CoreDa
         sut = ConversationInputBarViewController(conversation: otherUserConversation)
         sut.audioSession = MockAudioSession()
         sut.loadViewIfNeeded()
-
-        sut.createAudioRecord()
-
+        
         mockLongPressGestureRecognizer = MockLongPressGestureRecognizer(location: .zero, state: .began)
     }
 
@@ -88,7 +86,8 @@ final class ConversationInputBarViewControllerAudioRecorderSnapshotTests: CoreDa
         verifyInAllPhoneWidths(view: sut.view,
                                configuration: { _ in
                                 // WHEN
-                                self.sut.audioButtonLongPressed(self.mockLongPressGestureRecognizer)
+                                self.sut.createAudioViewController(audioRecorder: MockAudioRecorder())
+                                self.sut.showAudioRecordViewController(animated: false)
         })
     }
 
@@ -99,7 +98,8 @@ final class ConversationInputBarViewControllerAudioRecorderSnapshotTests: CoreDa
         verifyInAllPhoneWidths(view: sut.view,
                                configuration: { _ in
                                 // WHEN
-                                self.sut.audioButtonLongPressed(self.mockLongPressGestureRecognizer)
+                                self.sut.createAudioViewController(audioRecorder: MockAudioRecorder())
+                                self.sut.showAudioRecordViewController(animated: false)
                                 self.longPressChanged()
         })
     }
@@ -111,7 +111,10 @@ final class ConversationInputBarViewControllerAudioRecorderSnapshotTests: CoreDa
         verifyInAllPhoneWidths(view: sut.view,
                                configuration: { _ in
                                 // WHEN
-                                self.sut.audioButtonLongPressed(self.mockLongPressGestureRecognizer)
+                                let audioRecorder = MockAudioRecorder()
+                                self.sut.createAudioViewController(audioRecorder: audioRecorder)
+                                self.sut.showAudioRecordViewController(animated: false)
+                                audioRecorder.state = .recording(start: 0)
                                 self.longPressEnded()
         })
     }

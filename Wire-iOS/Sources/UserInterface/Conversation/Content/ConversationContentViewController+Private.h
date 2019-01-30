@@ -29,6 +29,7 @@ NS_ASSUME_NONNULL_BEGIN
 @class MessagePresenter;
 @class FLAnimatedImageView;
 @class ConversationTableViewDataSource;
+@class DeletionDialogPresenter;
 @protocol SelectableView;
 
 @interface ConversationContentViewController ()
@@ -46,9 +47,15 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, nullable) UIView *dimView;
 @property (nonatomic) CGPoint initialPinchLocation;
 
+@property (nonatomic) DeletionDialogPresenter *deletionDialogPresenter;
+
 - (void)removeHighlightsAndMenu;
-- (void)wantsToPerformAction:(MessageAction)actionId forMessage:(id<ZMConversationMessage>)message cell:(UIView<SelectableView> *)cell;
+- (void)presentDetailsForMessage:(id<ZMConversationMessage>)message;
+- (NSIndexPath *) willSelectRowAtIndexPath:(NSIndexPath *)indexPath tableView:(UITableView *)tableView;
 
 @end
+
+
+
 
 NS_ASSUME_NONNULL_END

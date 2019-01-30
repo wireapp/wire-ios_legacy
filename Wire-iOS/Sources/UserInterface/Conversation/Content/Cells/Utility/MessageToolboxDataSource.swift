@@ -194,7 +194,11 @@ class MessageToolboxDataSource {
     }
 
     private func makeEphemeralCountdown() -> NSAttributedString? {
-        let showDestructionTimer = message.isEphemeral && !message.isObfuscated && nil != message.destructionDate
+        let showDestructionTimer = message.isEphemeral &&
+            !message.isObfuscated &&
+            nil != message.destructionDate &&
+            message.deliveryState != .pending
+
         if let destructionDate = message.destructionDate, showDestructionTimer {
             let remaining = destructionDate.timeIntervalSinceNow + 1 // We need to add one second to start with the correct value
 

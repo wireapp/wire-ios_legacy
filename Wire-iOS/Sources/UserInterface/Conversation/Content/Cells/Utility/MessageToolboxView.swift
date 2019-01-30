@@ -20,21 +20,35 @@ import Foundation
 import WireSyncEngine
 
 /// Observes events from the message toolbox.
-@objc protocol MessageToolboxViewDelegate: NSObjectProtocol {
+protocol MessageToolboxViewDelegate: class {
     func messageToolboxDidRequestOpeningDetails(_ messageToolboxView: MessageToolboxView, preferredDisplayMode: MessageDetailsDisplayMode)
     func messageToolboxViewDidSelectResend(_ messageToolboxView: MessageToolboxView)
     func messageToolboxViewDidSelectDelete(_ messageToolboxView: MessageToolboxView)
     func messageToolboxViewDidRequestLike(_ messageToolboxView: MessageToolboxView)
 }
 
+private extension UILabel {
+    static func createSeparatorLabel() -> UILabel{
+        let label = UILabel()
+        label.numberOfLines = 1
+        label.textColor = UIColor.from(scheme: .textDimmed)
+        label.font = UIFont.smallSemiboldFont
+        label.text = String.MessageToolbox.middleDot
+        label.isAccessibilityElement = false
+        label.setContentHuggingPriority(.required, for: .horizontal)
+        label.setContentCompressionResistancePriority(.required, for: .horizontal)
+        return label
+    }
+}
+
 /**
  * A view that displays information about a message.
  */
 
-@objc class MessageToolboxView: UIView {
+final class MessageToolboxView: UIView {
 
     /// The object receiving events.
-    @objc weak var delegate: MessageToolboxViewDelegate?
+    weak var delegate: MessageToolboxViewDelegate?
 
     ///
     fileprivate(set) var dataSource: MessageToolboxDataSource?
@@ -47,7 +61,7 @@ import WireSyncEngine
     private let contentStack: UIStackView = {
         let stack = UIStackView()
         stack.axis = .horizontal
-        stack.spacing = 6
+        stack.spacing = 3
         return stack
     }()
 
@@ -61,29 +75,8 @@ import WireSyncEngine
         return label
     }()
 
-    private let timestampSeparatorLabel: UILabel = {
-        let label = UILabel()
-        label.numberOfLines = 1
-        label.textColor = UIColor.from(scheme: .textDimmed)
-        label.font = UIFont.smallSemiboldFont
-        label.text = String.MessageToolbox.middleDot
-        label.isAccessibilityElement = false
-        label.setContentHuggingPriority(.required, for: .horizontal)
-        label.setContentCompressionResistancePriority(.required, for: .horizontal)
-        return label
-    }()
-
-    private let statusSeparatorLabel: UILabel = {
-        let label = UILabel()
-        label.numberOfLines = 1
-        label.textColor = UIColor.from(scheme: .textDimmed)
-        label.font = UIFont.smallSemiboldFont
-        label.text = String.MessageToolbox.middleDot
-        label.isAccessibilityElement = false
-        label.setContentHuggingPriority(.required, for: .horizontal)
-        label.setContentCompressionResistancePriority(.required, for: .horizontal)
-        return label
-    }()
+    private let timestampSeparatorLabel = UILabel.createSeparatorLabel()
+    private let statusSeparatorLabel = UILabel.createSeparatorLabel()
 
     private let resendButton: UIButton = {
         let button = UIButton()
@@ -128,8 +121,8 @@ import WireSyncEngine
         label.lineBreakMode = .byTruncatingMiddle
         label.numberOfLines = 1
         label.accessibilityIdentifier = "EphemeralCountdown"
-        label.setContentHuggingPriority(.defaultLow, for: .horizontal)
-        label.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        label.setContentHuggingPriority(.required, for: .horizontal)
+        label.setContentCompressionResistancePriority(.required, for: .horizontal)
         return label
     }()
 
@@ -164,7 +157,13 @@ import WireSyncEngine
         resendButton.addTarget(self, action: #selector(resendMessage), for: .touchUpInside)
         deleteButton.addTarget(self, action: #selector(deleteMessage), for: .touchUpInside)
 
-        [detailsLabel, resendButton, timestampSeparatorLabel, deleteButton, statusLabel, statusSeparatorLabel, countdownLabel].forEach(contentStack.addArrangedSubview)
+        [detailsLabel,
+         resendButton,
+         timestampSeparatorLabel,
+         deleteButton,
+         statusLabel,
+         statusSeparatorLabel,
+         countdownLabel].forEach(contentStack.addArrangedSubview)
         [likeButtonContainer, likeButton, contentStack].forEach(addSubview)
     }
     
@@ -219,8 +218,8 @@ import WireSyncEngine
         }
     }
 
-    @objc func prepareForReuse() {
-        self.dataSource = nil
+    func prepareForReuse() {
+        dataSource = nil
         stopCountdownTimer()
     }
 
@@ -230,7 +229,7 @@ import WireSyncEngine
         return bounds.width - UIView.conversationLayoutMargins.left - UIView.conversationLayoutMargins.right
     }
 
-    @objc func configureForMessage(_ message: ZMConversationMessage, forceShowTimestamp: Bool, animated: Bool = false) {
+    func configureForMessage(_ message: ZMConversationMessage, forceShowTimestamp: Bool, animated: Bool = false) {
         if dataSource?.message.nonce != message.nonce {
             dataSource = MessageToolboxDataSource(message: message)
 
@@ -301,7 +300,7 @@ import WireSyncEngine
     // MARK: - Timer
 
     /// Starts the countdown timer.
-    @objc func startCountdownTimer() {
+    func startCountdownTimer() {
         stopCountdownTimer()
 
         guard let message = self.dataSource?.message else { return }
@@ -313,7 +312,7 @@ import WireSyncEngine
     }
 
     /// Stops the countdown timer.
-    @objc func stopCountdownTimer() {
+    func stopCountdownTimer() {
         timestampTimer?.invalidate()
         timestampTimer = nil
     }
@@ -328,7 +327,7 @@ import WireSyncEngine
 
     // MARK: - Hiding the Contents
 
-    @objc func setHidden(_ isHidden: Bool, animated: Bool) {
+    func setHidden(_ isHidden: Bool, animated: Bool) {
         let changes = {
             self.heightConstraint?.constant = isHidden ? 0 : 28
             self.alpha = isHidden ? 0 : 1
@@ -347,19 +346,21 @@ import WireSyncEngine
 
     // MARK: - Actions
 
-    @objc private func requestLike() {
+    @objc
+    private func requestLike() {
         delegate?.messageToolboxViewDidRequestLike(self)
     }
 
-    @objc private func resendMessage() {
+    @objc
+    private func resendMessage() {
         delegate?.messageToolboxViewDidSelectResend(self)
     }
 
-    @objc private func deleteMessage() {
+    @objc
+    private func deleteMessage() {
         delegate?.messageToolboxViewDidSelectDelete(self)
     }
 
-    @objc(updateForMessage:)
     func update(for change: MessageChangeInfo) {
         if change.reactionsChanged {
             configureLikedState(change.message, animated: true)
@@ -413,7 +414,8 @@ import WireSyncEngine
 
 extension MessageToolboxView: UIGestureRecognizerDelegate {
 
-    @objc func onTapContent(_ sender: UITapGestureRecognizer!) {
+    @objc
+    func onTapContent(_ sender: UITapGestureRecognizer!) {
         if let displayMode = preferredDetailsDisplayMode() {
             delegate?.messageToolboxDidRequestOpeningDetails(self, preferredDisplayMode: displayMode)
         }
