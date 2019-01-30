@@ -29,6 +29,19 @@ NS_ASSUME_NONNULL_BEGIN
 @class ReplyComposingView;
 
 @interface ConversationInputBarViewController ()
+
+@property (nonatomic, nullable) IconButton *audioButton;
+@property (nonatomic, nullable) IconButton *photoButton;
+@property (nonatomic, nullable) IconButton *uploadFileButton;
+@property (nonatomic, nullable) IconButton *sketchButton;
+@property (nonatomic, nullable) IconButton *pingButton;
+@property (nonatomic, nullable) IconButton *locationButton;
+@property (nonatomic, nullable) IconButton *ephemeralIndicatorButton;
+@property (nonatomic, nullable) IconButton *emojiButton;
+@property (nonatomic, nullable) IconButton *markdownButton;
+@property (nonatomic, nullable) IconButton *gifButton;
+@property (nonatomic, nullable) IconButton *mentionButton;
+
 @property (nonatomic, nullable) AudioRecordViewController *audioRecordViewController;
 @property (nonatomic, nullable) UIView *audioRecordViewContainer;
 
@@ -62,7 +75,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, nullable, weak) UIPopoverPresentationController *presentedPopover;
 @property (nonatomic, nullable, weak) UIView *popoverPointToView;
 
-- (void)createAudioRecordViewController;
 - (void)updateRightAccessoryView;
 - (void)updateButtonIcons;
 - (void)updateAccessoryViews;

@@ -40,9 +40,9 @@ class MockAudioRecordKeyboardDelegate: AudioRecordViewControllerDelegate {
 }
 
 class MockAudioRecorder: AudioRecorderType {
-    
+
     var format: AudioRecorderFormat = .wav
-    var state: AudioRecorderState = .recording
+    var state: AudioRecorderState = .initializing
     var fileURL: URL? = Bundle(for: MockAudioRecorder.self).url(forResource: "audio_sample", withExtension: "m4a")
     var maxRecordingDuration: TimeInterval? = 25 * 60
     var maxFileSize: UInt64? = 25 * 1024 * 1024 - 32
@@ -54,29 +54,32 @@ class MockAudioRecorder: AudioRecorderType {
     var recordEndedCallback: ((VoidResult) -> Void)?
     
     var startRecordingHitCount = 0
-    func startRecording() {
-        startRecordingHitCount = startRecordingHitCount + 1
+    func startRecording(_ completion: @escaping (Bool) -> Void) {
+        state = .recording(start: 0)
+        startRecordingHitCount += 1
+        completion(true)
     }
     
     var stopRecordingHitCount = 0
     @discardableResult func stopRecording() -> Bool {
-        stopRecordingHitCount = stopRecordingHitCount + 1
+        state = .stopped
+        stopRecordingHitCount += 1
         return true
     }
     
     var deleteRecordingHitCount = 0
     func deleteRecording() {
-        deleteRecordingHitCount = deleteRecordingHitCount + 1
+        deleteRecordingHitCount += 1
     }
     
     var playRecordingHitCount = 0
     func playRecording() {
-        playRecordingHitCount = playRecordingHitCount + 1
+        playRecordingHitCount += 1
     }
     
     var stopPlayingHitCount = 0
     func stopPlaying() {
-        stopPlayingHitCount = stopPlayingHitCount + 1
+        stopPlayingHitCount += 1
     }
     
     func levelForCurrentState() -> RecordingLevel {
