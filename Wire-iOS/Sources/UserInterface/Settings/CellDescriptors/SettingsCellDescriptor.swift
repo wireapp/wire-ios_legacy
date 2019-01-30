@@ -209,7 +209,9 @@ func SettingsPropertyLabelText(_ name: SettingsPropertyName) -> String {
         // Profile
     case .profileName:
         return "self.settings.account_section.name.title".localized
-        
+    case .email:
+        return "self.settings.account_section.email.title".localized
+
         // AVS
     case .soundAlerts:
         return "self.settings.sound_menu.title".localized
