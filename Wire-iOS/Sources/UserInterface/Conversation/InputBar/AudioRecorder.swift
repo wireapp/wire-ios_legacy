@@ -268,7 +268,14 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
     // MARK: Playing
     
     public func playRecording() {
-        guard let audioRecorder = self.audioRecorder else { return }
+        guard let audioRecorder = self.audioRecorder,
+            ZMUserSession.shared()?.isCallOngoing == false else { return }
+        
+        do {
+            try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
+        } catch let error {
+            zmLog.error("Failed change audio category for playback: \(error)")
+        }
         
         setupDisplayLink()
         audioPlayer = try? AVAudioPlayer(contentsOf: audioRecorder.url)
