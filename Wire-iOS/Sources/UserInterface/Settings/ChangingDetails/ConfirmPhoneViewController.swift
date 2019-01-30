@@ -143,7 +143,6 @@ protocol ConfirmPhoneDelegate: class {
         switch Section(rawValue: indexPath.section)! {
         case .verificationCode:
             let cell = tableView.dequeueReusableCell(withIdentifier: ConfirmationCodeCell.zm_reuseIdentifier, for: indexPath) as! ConfirmationCodeCell
-            cell.textField.accessibilityIdentifier = "ConfirmationCodeField"
             cell.textField.delegate = self
             cell.textField.becomeFirstResponderIfPossible()
             return cell

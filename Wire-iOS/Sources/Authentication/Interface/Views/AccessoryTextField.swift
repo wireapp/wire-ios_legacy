@@ -93,7 +93,7 @@ class AccessoryTextField: UITextField, TextContainer {
 
     let confirmButton: IconButton = {
         let iconButton = IconButton(style: .circular, variant: .dark)
-        iconButton.accessibilityIdentifier = "AccessoryTextFieldConfirmButton"
+        iconButton.accessibilityIdentifier = "ConfirmButton"
         iconButton.isEnabled = false
         return iconButton
     }()
@@ -233,7 +233,6 @@ class AccessoryTextField: UITextField, TextContainer {
 
     private func setup() {
         self.confirmButton.addTarget(self, action: #selector(confirmButtonTapped(button:)), for: .touchUpInside)
-        self.confirmButton.accessibilityIdentifier = "ConfirmButton"
         self.addTarget(self, action: #selector(textFieldDidChange(textField:)), for: .editingChanged)
     }
 

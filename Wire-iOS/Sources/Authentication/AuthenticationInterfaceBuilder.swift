@@ -139,7 +139,10 @@ class AuthenticationInterfaceBuilder {
 
         case .pendingEmailLinkVerification(let emailCredentials):
             let verifyEmailStep = EmailLinkVerificationStepDescription(emailAddress: emailCredentials.email!)
-            return makeViewController(for: verifyEmailStep)
+
+            let viewController = makeViewController(for: verifyEmailStep)
+            viewController.setRightItem("registration.signin.too_many_devices.sign_out_button.title".localized, withAction: .signOut(warn: true), accessibilityID: "signOutButton")
+            return viewController
 
         case .incrementalUserCreation(let user, let registrationStep):
             return makeRegistrationStepViewController(for: registrationStep, user: user)

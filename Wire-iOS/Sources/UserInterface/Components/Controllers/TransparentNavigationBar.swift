@@ -18,38 +18,12 @@
 
 import UIKit
 
-class TransparentNavigationBar: UINavigationBar {
+class TransparentNavigationBar: DefaultNavigationBar {
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        configure()
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        configure()
-    }
-
-    func configure() {
+    override func configureBackground() {
         isTranslucent = true
-        tintColor = UIColor.from(scheme: .textForeground)
-        titleTextAttributes = TransparentNavigationBar.titleTextAttributes(for: ColorScheme.default.variant)
-        configureBackground()
-
-        let backIndicatorInsets = UIEdgeInsets(top: 0, left: 4, bottom: 2.5, right: 0)
-        backIndicatorImage = UIImage(for: .backArrow, iconSize: .tiny, color: UIColor.from(scheme: .textForeground)).withInsets(backIndicatorInsets, backgroundColor: .clear)
-        backIndicatorTransitionMaskImage = UIImage(for: .backArrow, iconSize: .tiny, color: .black).withInsets(backIndicatorInsets, backgroundColor: .clear)
-    }
-
-    func configureBackground() {
         setBackgroundImage(UIImage(), for: .default)
         shadowImage = UIImage()
-    }
-
-    static func titleTextAttributes(for variant: ColorSchemeVariant) -> [NSAttributedString.Key : Any] {
-        return [.font: UIFont.systemFont(ofSize: 11, weight: UIFont.Weight.semibold),
-                .foregroundColor: UIColor.from(scheme: .textForeground, variant: variant),
-                .baselineOffset: 1.0]
     }
 
 }

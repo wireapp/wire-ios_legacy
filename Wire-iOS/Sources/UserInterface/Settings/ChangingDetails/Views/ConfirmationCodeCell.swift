@@ -40,6 +40,15 @@ class ConfirmationCodeCell: UITableViewCell {
 
     private func setupViews() {
         addSubview(textField)
+
+        if #available(iOS 12, *) {
+            textField.textContentType = .oneTimeCode
+        }
+
+        textField.keyboardType = .decimalPad
+        textField.accessibilityIdentifier = "VerificationCode"
+        textField.accessibilityLabel = "team.email_code.input_field.accessbility_label".localized
+        textField.isAccessibilityElement = true
     }
 
     private func createConstraints() {

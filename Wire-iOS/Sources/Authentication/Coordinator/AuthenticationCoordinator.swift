@@ -377,7 +377,7 @@ extension AuthenticationCoordinator {
 
             let alertModel = AuthenticationCoordinatorAlert(title: "self.settings.account_details.log_out.alert.title".localized,
                                                             message: "self.settings.account_details.log_out.alert.message".localized,
-                                                            actions: [signOutAction, .cancel])
+                                                            actions: [signOutAction, .cancelDestructiveAction])
 
             presentAlert(for: alertModel)
         } else {
@@ -697,7 +697,7 @@ extension AuthenticationCoordinator {
     /// Manually start the company login flow.
     private func startCompanyLoginFlowIfPossible() {
         switch stateController.currentStep {
-        case .provideCredentials, .createCredentials, .reauthenticate:
+        case .provideCredentials, .createCredentials, .reauthenticate, .teamCreation(.setTeamName):
             companyLoginController?.displayLoginCodePrompt()
         default:
             return
@@ -707,7 +707,7 @@ extension AuthenticationCoordinator {
     /// Call this method when the corrdinated view controller appears, to detect the login code and display it if needed.
     func detectLoginCodeIfPossible() {
         switch stateController.currentStep {
-        case .landingScreen, .provideCredentials, .createCredentials:
+        case .landingScreen, .provideCredentials, .createCredentials, .teamCreation(.setTeamName):
             companyLoginController?.isAutoDetectionEnabled = true
             companyLoginController?.detectLoginCode()
 
