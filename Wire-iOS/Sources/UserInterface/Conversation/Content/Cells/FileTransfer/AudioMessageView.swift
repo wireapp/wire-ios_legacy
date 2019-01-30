@@ -339,10 +339,11 @@ private let zmLog = ZMSLog(tag: "UI")
     }
     
     private func playTrack() {
+        let userSession = ZMUserSession.shared()
         guard let fileMessage = self.fileMessage,
               let fileMessageData = fileMessage.fileMessageData,
               let audioTrackPlayer = self.audioTrackPlayer,
-              ZMUserSession.shared()?.isCallOngoing == false else {
+              userSession == nil || userSession!.isCallOngoing == false else {
             return
         }
         
