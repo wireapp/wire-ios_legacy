@@ -214,7 +214,7 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
             AccessoryTextField.appearance(whenContainedInInstancesOf: [AuthenticationStepController.self]).tintColor = UIColor.Team.activeButton
 
             // Only execute handle events if there is no current flow
-            guard authenticationCoordinator == nil else {
+            guard authenticationCoordinator == nil || error?.userSessionErrorCode == .addAccountRequested else {
                 break
             }
 

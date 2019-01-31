@@ -106,28 +106,9 @@ class AuthenticationCredentialsViewController: AuthenticationStepController, Cou
         updatePrefilledCredentials()
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-
-        switch flowType {
-        case .login?:
-            switch credentialsType {
-            case .phone: phoneInputView.becomeFirstResponderIfPossible()
-            case .email: emailPasswordInputField.becomeFirstResponderIfPossible()
-            }
-        case .registration?:
-            switch credentialsType {
-            case .phone: phoneInputView.becomeFirstResponderIfPossible()
-            case .email: emailInputField.becomeFirstResponderIfPossible()
-            }
-        case .reauthentication?:
-            switch credentialsType {
-            case .phone: break
-            case .email: emailPasswordInputField.becomeFirstResponderIfPossible()
-            }
-        default:
-            break
-        }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        updateFirstResponder()
     }
 
     override var contentCenterXAnchor: NSLayoutYAxisAnchor {
@@ -172,6 +153,37 @@ class AuthenticationCredentialsViewController: AuthenticationStepController, Cou
         }
     }
 
+    private func updateFirstResponder() {
+        switch flowType {
+        case .login?:
+            switch credentialsType {
+            case .phone: phoneInputView.becomeFirstResponderIfPossible()
+            case .email: emailPasswordInputField.becomeFirstResponderIfPossible()
+            }
+        case .registration?:
+            switch credentialsType {
+            case .phone: phoneInputView.becomeFirstResponderIfPossible()
+            case .email: emailInputField.becomeFirstResponderIfPossible()
+            }
+        case .reauthentication?:
+            switch credentialsType {
+            case .phone: break
+            case .email: emailPasswordInputField.becomeFirstResponderIfPossible()
+            }
+        default:
+            break
+        }
+    }
+
+    override func dismissKeyboard() {
+        switch credentialsType {
+        case .email:
+            emailPasswordInputField.resignFirstResponder()
+        case .phone:
+            phoneInputView.resignFirstResponder()
+        }
+    }
+
     // MARK: - Tab Bar
 
     func tabBar(_ tabBar: TabBar, didSelectItemAt index: Int) {
@@ -183,6 +195,8 @@ class AuthenticationCredentialsViewController: AuthenticationStepController, Cou
         default:
             fatal("Unknown tab index: \(index)")
         }
+
+        updateFirstResponder()
     }
 
     private func updateCredentialsType() {
@@ -254,7 +268,7 @@ class AuthenticationCredentialsViewController: AuthenticationStepController, Cou
             return false
         }
 
-        authenticationCoordinator?.handleUserInput(emailInputField.input)
+        valueSubmitted(emailInputField.input)
         return true
     }
 
@@ -266,7 +280,7 @@ class AuthenticationCredentialsViewController: AuthenticationStepController, Cou
     }
 
     func textField(_ textField: EmailPasswordTextField, didConfirmCredentials credentials: (String, String)) {
-        authenticationCoordinator?.handleUserInput(credentials)
+        valueSubmitted(credentials)
     }
 
     func textField(_ textField: EmailPasswordTextField, didUpdateValidation isValid: Bool) {
@@ -286,7 +300,7 @@ class AuthenticationCredentialsViewController: AuthenticationStepController, Cou
 
     func phoneNumberInputView(_ inputView: PhoneNumberInputView, didPickPhoneNumber phoneNumber: PhoneNumber) {
         authenticationCoordinator?.handleUserInput(phoneNumber)
-        stepDescription.mainView.valueSubmitted?(phoneNumber)
+        valueSubmitted(phoneNumber)
     }
 
     func phoneNumberInputView(_ inputView: PhoneNumberInputView, didValidatePhoneNumber phoneNumber: PhoneNumber, withResult validationError: TextFieldValidator.ValidationError) {

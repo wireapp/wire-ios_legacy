@@ -148,11 +148,9 @@ extension AuthenticationCoordinator: AuthenticationStateControllerDelegate {
             presenter.pushViewController(stepViewController, animated: true)
 
         case .reset:
-//            UIView.transition(with: presenter.view, duration: 0.25, options: .transitionCrossDissolve, animations: {
-//                presenter.viewControllers = [stepViewController]
-//            }, completion: nil)
-
-            presenter.viewControllers = [stepViewController]
+            UIView.transition(with: presenter.view, duration: 0.25, options: .transitionCrossDissolve, animations: {
+                presenter.viewControllers = [stepViewController]
+            }, completion: nil)
 
         case .replace:
             UIView.transition(with: presenter.view, duration: 0.25, options: .transitionCrossDissolve, animations: {
@@ -161,6 +159,11 @@ extension AuthenticationCoordinator: AuthenticationStateControllerDelegate {
                 presenter.viewControllers = viewControllers
             }, completion: nil)
         }
+    }
+
+    /// Come back to the landing page.
+    func reset() {
+        stateController.transition(to: .landingScreen, mode: .reset)
     }
 
 }
@@ -373,7 +376,7 @@ extension AuthenticationCoordinator {
     /// Signs the current user out with a warning.
     private func signOut(warn: Bool) {
         if warn {
-            let signOutAction = AuthenticationCoordinatorAlertAction(title: "general.ok".localized, coordinatorActions: [.signOut(warn: false)])
+            let signOutAction = AuthenticationCoordinatorAlertAction(title: "general.ok".localized, coordinatorActions: [.showLoadingView, .signOut(warn: false)])
 
             let alertModel = AuthenticationCoordinatorAlert(title: "self.settings.account_details.log_out.alert.title".localized,
                                                             message: "self.settings.account_details.log_out.alert.message".localized,
@@ -429,7 +432,7 @@ extension AuthenticationCoordinator {
         let alert = UIAlertController(title: alertModel.title, message: alertModel.message, preferredStyle: .alert)
 
         for actionModel in alertModel.actions {
-            let action = UIAlertAction(title: actionModel.title, style: .default) { _ in
+            let action = UIAlertAction(title: actionModel.title, style: actionModel.style) { _ in
                 if actionModel.coordinatorActions.contains(where: { $0.retainsModal }) {
                     self.pendingAlert = alertModel
                 }

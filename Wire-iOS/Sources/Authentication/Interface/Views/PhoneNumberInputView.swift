@@ -202,6 +202,7 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
         return textField.canResignFirstResponder
     }
 
+    @discardableResult
     override func resignFirstResponder() -> Bool {
         return textField.resignFirstResponder()
     }

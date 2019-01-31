@@ -106,7 +106,12 @@ class AuthenticationStepController: AuthenticationStepViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         configureObservers()
-        mainView.becomeFirstResponderIfPossible()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        showKeyboard()
+        updateKeyboard(with: KeyboardFrameObserver.shared.keyboardFrame)
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -299,6 +304,7 @@ class AuthenticationStepController: AuthenticationStepViewController {
 
     private func configureObservers() {
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardPresentation), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardPresentation), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
 
     private func removeObservers() {
@@ -310,9 +316,21 @@ class AuthenticationStepController: AuthenticationStepViewController {
     }
 
     private func updateOffsetForKeyboard(in notification: Notification) {
+        // Do not change the keyboard frame when there is a modal alert with a text field
+        guard presentedViewController == nil else { return }
+
         let keyboardFrame = UIView.keyboardFrame(in: view, forKeyboardNotification: notification)
+        updateKeyboard(with: keyboardFrame)
+    }
+
+    private func updateKeyboard(with keyboardFrame: CGRect) {
         let minimumKeyboardSpacing: CGFloat = 24
         let currentOffset = abs(contentCenter.constant)
+
+        // Reset the frame when the keyboard is dismissed
+        if keyboardFrame.height == 0 {
+            return contentCenter.constant = 0
+        }
 
         // Calculate the height of the content under the keyboard
         let contentRect = CGRect(x: contentStack.frame.origin.x,
@@ -333,6 +351,14 @@ class AuthenticationStepController: AuthenticationStepViewController {
         mainView.becomeFirstResponderIfPossible()
     }
 
+    func showKeyboard() {
+        mainView.becomeFirstResponderIfPossible()
+    }
+
+    func dismissKeyboard() {
+        mainView.resignFirstResponder()
+    }
+
 }
 
 // MARK: - Event Handling
@@ -348,7 +374,7 @@ extension AuthenticationStepController {
     }
 
     func valueSubmitted(_ value: Any) {
-        mainView.resignFirstResponder()
+        dismissKeyboard()
         authenticationCoordinator?.handleUserInput(value)
     }
 }

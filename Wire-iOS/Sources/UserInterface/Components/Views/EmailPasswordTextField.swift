@@ -141,7 +141,7 @@ class EmailPasswordTextField: UIView {
         return emailField.canResignFirstResponder || passwordField.canResignFirstResponder
     }
 
-    override func resignFirstResponder() -> Bool {
+    @discardableResult override func resignFirstResponder() -> Bool {
         if emailField.isFirstResponder {
             return emailField.resignFirstResponder()
         } else if passwordField.isFirstResponder {
