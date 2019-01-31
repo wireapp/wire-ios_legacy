@@ -18,10 +18,10 @@
 
 import UIKit
 
-struct SourceView {
+struct ActionSource {
     private var _view: UIView?
     private var tableView: UITableView?
-    private var section: Int?
+//    private var section: Int?
 
     var view: UIView {
         get {
@@ -29,7 +29,7 @@ struct SourceView {
                 return unwrappedView
             }
 
-            return tableView ///TODO: get view with section
+            return tableView! ///TODO: get view with section
         }
     }
 
@@ -37,9 +37,9 @@ struct SourceView {
         self._view = view
     }
 
-    init(tableView: UITableView, section: Int) {
+    init(tableView: UITableView) {
         self.tableView = tableView
-        self.section = section
+//        self.section = section
     }
 }
 
@@ -54,23 +54,23 @@ struct SourceView {
     @objc let message: ZMConversationMessage
     @objc let context: Context
     @objc weak var responder: MessageActionResponder?
-    var sourceView: SourceView
+    var actionSource: ActionSource
 
     @objc init(responder: MessageActionResponder?, message: ZMConversationMessage, context: Context, view: UIView) {
         self.responder = responder
         self.message = message
         self.context = context
-        self.sourceView = SourceView(view: view)
+        self.actionSource = ActionSource(view: view)
     }
 
     init(responder: MessageActionResponder?,
                message: ZMConversationMessage,
                context: Context,
-               sourceView: SourceView) {
+               actionSource: ActionSource) {
         self.responder = responder
         self.message = message
         self.context = context
-        self.sourceView = sourceView
+        self.actionSource = actionSource
     }
 
 
@@ -147,7 +147,8 @@ struct SourceView {
     
     @objc func performSingleTapAction() {
         guard let singleTapAction = singleTapAction else { return }
-        responder?.perform(action: singleTapAction, for: message, view: view)
+
+        perform(action: singleTapAction)
     }
     
     var singleTapAction: MessageAction? {
@@ -179,7 +180,7 @@ struct SourceView {
     // MARK: - Handler
 
     private func perform(action: MessageAction) {
-        responder?.perform(action: action, for: message, view: sourceView.view)
+        responder?.perform(action: action, for: message, view: actionSource.view)
     }
 
     @objc func copyMessage() {

@@ -21,6 +21,7 @@ import Foundation
 extension ConversationContentViewController: ConversationMessageCellDelegate {
     // MARK: - MessageActionResponder
 
+    ///TODO: change 3rd argument to Action Source, if it is a table view, find out the cell with message
     public func perform(action: MessageAction, for message: ZMConversationMessage!, view: UIView) {
 
         let shouldDismissModal = action != .delete && action != .copy
