@@ -109,6 +109,17 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         _forcePortraitMode = NO;
         _swipeToDismiss = YES;
         _showCloseButton = YES;
+
+        [self setupScrollView];
+        [self setupTopOverlay];
+        [self updateForMessage];
+
+        self.view.userInteractionEnabled = YES;
+        [self setupGestureRecognizers];
+        [self showChrome:YES];
+
+        [self setupStyle];
+
         self.actionController = [[ConversationMessageActionController alloc] initWithResponder:self message:message context:ConversationMessageActionControllerContextCollection view: self.scrollView];
         if (nil != [ZMUserSession sharedSession]) {
             self.messageObserverToken = [MessageChangeInfo addObserver:self forMessage:message userSession:[ZMUserSession sharedSession]];
@@ -142,21 +153,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 {
     [super viewDidLayoutSubviews];
     [self centerScrollViewContent];
-}
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    
-    [self setupScrollView];
-    [self setupTopOverlay];
-    [self updateForMessage];
-    
-    self.view.userInteractionEnabled = YES;
-    [self setupGestureRecognizers];
-    [self showChrome:YES];
-
-    [self setupStyle];
 }
 
 - (void)viewWillAppear:(BOOL)animated
