@@ -77,7 +77,7 @@ extension CollectionCell: SelectableView {
      - parameter source: The source view used for a potential popover presentation of the dialog.
      - parameter completion: A completion closure which will be invoked with `true` if a deletion occured and `false` otherwise.
      */
-    @objc public func presentDeletionAlertController(forMessage message: ZMConversationMessage?, source: SelectableView?, completion: ((Bool) -> Void)?) {
+    @objc public func presentDeletionAlertController(forMessage message: ZMConversationMessage?, source: UIView?, completion: ((Bool) -> Void)?) {
         guard let message = message, !message.hasBeenDeleted else { return }
         let alert = UIAlertController.forMessageDeletion(with: message.deletionConfiguration) { (action, alert) in
             
@@ -102,9 +102,15 @@ extension CollectionCell: SelectableView {
         }
 
         if let presentationController = alert.popoverPresentationController,
-            let source = source, source.selectionView != nil {
-            presentationController.sourceView = source.selectionView
-            presentationController.sourceRect = source.selectionRect
+            let source = source {
+            if let selectableView = source as? SelectableView,
+                selectableView.selectionView != nil {
+                presentationController.sourceView = selectableView.selectionView
+                presentationController.sourceRect = selectableView.selectionRect
+            } else {
+                presentationController.sourceView = source
+                presentationController.sourceRect = source.frame
+            }
         }
 
         sourceViewController?.present(alert, animated: true, completion: nil)

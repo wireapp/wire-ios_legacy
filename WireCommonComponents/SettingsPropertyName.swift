@@ -46,6 +46,7 @@ public enum SettingsPropertyName: String, CustomStringConvertible {
     
     // Profile
     case profileName = "ProfileName"
+    case email = "email"
     case accentColor = "AccentColor"
     
     // AVS

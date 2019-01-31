@@ -65,8 +65,8 @@ private let zmLog = ZMSLog(tag: "UI")
     
     @objc convenience init() {
         self.init(audioRecorder: AudioRecorder(format: .wav,
-                                               maxRecordingDuration: ZMUserSession.shared()?.maxAudioLength() ,
-                                               maxFileSize: ZMUserSession.shared()?.maxUploadFileSize() )!)
+                                               maxRecordingDuration: ZMUserSession.shared()?.maxAudioLength() , 
+                                               maxFileSize: ZMUserSession.shared()?.maxUploadFileSize()))
     }
     
     init(audioRecorder: AudioRecorderType) {
@@ -258,7 +258,12 @@ private let zmLog = ZMSLog(tag: "UI")
     }
     
     var isRecording: Bool {
-        return self.recorder.state == .recording
+        switch self.recorder.state {
+        case .recording:
+            return true
+        default:
+            return false
+        }
     }
     
     public override func viewDidLayoutSubviews() {
@@ -272,10 +277,6 @@ private let zmLog = ZMSLog(tag: "UI")
         recorder.recordTimerCallback = { [weak self] time in
             guard let `self` = self else { return }
             self.updateTimeLabel(time)
-        }
-        
-        recorder.recordStartedCallback = {
-            AppDelegate.shared().mediaPlaybackManager?.audioTrackPlayer.stop()
         }
         
         recorder.recordEndedCallback = { [weak self] result in
@@ -394,9 +395,11 @@ private let zmLog = ZMSLog(tag: "UI")
     // MARK: - Button actions
     
     @objc internal func recordButtonPressed(_ sender: AnyObject!) {
-        self.state = .recording
-        self.recorder.startRecording()
-        self.delegate?.audioRecordViewControllerDidStartRecording(self)
+        self.recorder.startRecording { success in
+            self.state = .recording
+            self.delegate?.audioRecordViewControllerDidStartRecording(self)
+            AppDelegate.shared().mediaPlaybackManager?.audioTrackPlayer.stop()
+        }
     }
     
     @objc func stopRecordButtonPressed(_ button: UIButton?) {

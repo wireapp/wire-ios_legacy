@@ -56,19 +56,19 @@ extension SettingsCellDescriptorFactory {
 
     func infoSection() -> SettingsSectionDescriptorType {
         var cellDescriptors: [SettingsCellDescriptorType] = []
-        #if NAME_EDITING_DISABLED
-        let enabled = false
-        #else
-        let enabled = true
-        #endif
-        cellDescriptors = [nameElement(enabled: enabled), handleElement()]
+        cellDescriptors = [nameElement(), handleElement()]
         
         if let user = ZMUser.selfUser(), !user.usesCompanyLogin {
             if !ZMUser.selfUser().hasTeam || !(ZMUser.selfUser().phoneNumber?.isEmpty ?? true) {
                 cellDescriptors.append(phoneElement())
             }
             
-            cellDescriptors.append(emailElement())
+            #if EMAIL_EDITING_DISABLED
+            let enabled = false
+            #else
+            let enabled = true
+            #endif
+            cellDescriptors.append(emailElement(enabled: enabled))
         }
         return SettingsSectionDescriptor(
             cellDescriptors: cellDescriptors,
@@ -131,23 +131,30 @@ extension SettingsCellDescriptorFactory {
         return SettingsPropertyTextValueCellDescriptor(settingsProperty: settingsProperty)
     }
 
-    func emailElement() -> SettingsCellDescriptorType {
-        return SettingsExternalScreenCellDescriptor(
-            title: "self.settings.account_section.email.title".localized,
-            isDestructive: false,
-            presentationStyle: .navigation,
-            presentationAction: { () -> (UIViewController?) in
-                return ChangeEmailViewController()
-            },
-            previewGenerator: { _ in
-                if let email = ZMUser.selfUser().emailAddress, !email.isEmpty {
-                    return SettingsCellPreview.text(email)
-                } else {
-                    return SettingsCellPreview.text("self.add_email_password".localized)
-                }
-            },
-            accessoryViewMode: .alwaysHide
-        )
+    func emailElement(enabled: Bool = true) -> SettingsCellDescriptorType {
+
+        if enabled {
+            return SettingsExternalScreenCellDescriptor(
+                title: "self.settings.account_section.email.title".localized,
+                isDestructive: false,
+                presentationStyle: .navigation,
+                presentationAction: { () -> (UIViewController?) in
+                    return ChangeEmailViewController()
+                },
+                previewGenerator: { _ in
+                    if let email = ZMUser.selfUser().emailAddress, !email.isEmpty {
+                        return SettingsCellPreview.text(email)
+                    } else {
+                        return SettingsCellPreview.text("self.add_email_password".localized)
+                    }
+                },
+                accessoryViewMode: .alwaysHide
+            )
+        } else {
+            var settingsProperty = settingsPropertyFactory.property(.email)
+            settingsProperty.enabled = false
+            return SettingsPropertyTextValueCellDescriptor(settingsProperty: settingsProperty)
+        }
     }
 
     func phoneElement() -> SettingsCellDescriptorType {

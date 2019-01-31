@@ -244,7 +244,7 @@ final class MessageToolboxViewTests: CoreDataSnapshotTestCase {
         sut.configureForMessage(message, forceShowTimestamp: true, animated: false)
 
         // THEN
-        verify(view: sut)
+        verifyInAllPhoneWidths(view: sut)
 
     }
 
