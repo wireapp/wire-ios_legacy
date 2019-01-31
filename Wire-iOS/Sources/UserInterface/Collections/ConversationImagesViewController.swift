@@ -347,7 +347,7 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
     }
     
     private func perform(action: MessageAction) {
-        messageActionDelegate?.perform(action: action, for: self.currentMessage, view: view)
+        messageActionDelegate?.perform(action: action, for: currentMessage, view: view)
     }
 
     @objc public func copyCurrent(_ sender: AnyObject!) {

@@ -19,6 +19,13 @@
 import Foundation
 
 extension ConversationContentViewController {
+    // MARK: - EditMessages
+    func editLastMessage() {
+        if let lastEditableMessage = conversation.lastEditableMessage {
+            perform(action: .edit, for: lastEditableMessage, view: tableView)
+        }
+    }
+
     func presentDetails(for message: ZMConversationMessage) {
         let isFile = Message.isFileTransfer(message)
         let isImage = Message.isImage(message)

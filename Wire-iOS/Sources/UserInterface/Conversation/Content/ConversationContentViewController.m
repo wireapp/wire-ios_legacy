@@ -491,14 +491,6 @@
 
 @implementation ConversationContentViewController (EditMessages)
 
-- (void)editLastMessage
-{
-    ZMMessage *lastEditableMessage = self.conversation.lastEditableMessage;
-    if (lastEditableMessage != nil) {
-        [self wantsToPerformAction:MessageActionEdit forMessage:lastEditableMessage view: self.view];
-    }
-}
-
 - (void)didFinishEditingMessage:(id<ZMConversationMessage>)message
 {
     self.dataSource.editingMessage = nil;

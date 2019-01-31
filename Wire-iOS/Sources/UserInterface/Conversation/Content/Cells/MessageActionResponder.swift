@@ -19,8 +19,6 @@
 import Foundation
 
 @objc public protocol MessageActionResponder: NSObjectProtocol {
-    @objc(wantsToPerformAction:forMessage:view:)
-
     /// perform an action for the message
     ///
     /// - Parameters:
