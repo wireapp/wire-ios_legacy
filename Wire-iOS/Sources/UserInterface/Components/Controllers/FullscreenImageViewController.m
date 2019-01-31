@@ -490,21 +490,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     return self.actionController;
 }
 
-- (void)saveImage
-{
-    [self.delegate wantsToPerformAction:MessageActionSave forMessage:self.message view: self.view];
-}
-
-- (void)likeImage
-{
-    [self.delegate wantsToPerformAction:MessageActionLike forMessage:self.message view: self.view];
-}
-
--(void)deleteImage
-{
-    [self.delegate wantsToPerformAction:MessageActionDelete forMessage:self.message view: self.view];
-}
-
 - (void)setSelectedByMenu:(BOOL)selected animated:(BOOL)animated
 {
     ZMLogDebug(@"Setting selected: %@ animated: %@", @(selected), @(animated));
