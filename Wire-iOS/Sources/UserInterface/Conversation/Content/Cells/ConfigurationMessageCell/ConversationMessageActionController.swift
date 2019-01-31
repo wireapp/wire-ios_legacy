@@ -18,6 +18,32 @@
 
 import UIKit
 
+struct SourceView {
+    private var _view: UIView?
+    private var tableView: UITableView?
+    private var section: Int?
+
+    var view: UIView {
+        get {
+            if let unwrappedView = _view {
+                return unwrappedView
+            }
+
+            return tableView ///TODO: get view with section
+        }
+    }
+
+    init(view: UIView) {
+        self._view = view
+    }
+
+    init(tableView: UITableView, section: Int) {
+        self.tableView = tableView
+        self.section = section
+    }
+}
+
+
 @objc class ConversationMessageActionController: NSObject {
 
     @objc(ConversationMessageActionControllerContext)
@@ -28,14 +54,25 @@ import UIKit
     @objc let message: ZMConversationMessage
     @objc let context: Context
     @objc weak var responder: MessageActionResponder?
-    weak var view: UIView!
+    var sourceView: SourceView
 
     @objc init(responder: MessageActionResponder?, message: ZMConversationMessage, context: Context, view: UIView) {
         self.responder = responder
         self.message = message
         self.context = context
-        self.view = view
+        self.sourceView = SourceView(view: view)
     }
+
+    init(responder: MessageActionResponder?,
+               message: ZMConversationMessage,
+               context: Context,
+               sourceView: SourceView) {
+        self.responder = responder
+        self.message = message
+        self.context = context
+        self.sourceView = sourceView
+    }
+
 
     // MARK: - List of Actions
 
@@ -132,7 +169,7 @@ import UIKit
 
     @objc func performDoubleTapAction() {
         guard let doubleTapAction = doubleTapAction else { return }
-        responder?.perform(action: doubleTapAction, for: message, view: view)
+        perform(action: doubleTapAction)
     }
 
     var doubleTapAction: MessageAction? {
@@ -141,56 +178,60 @@ import UIKit
 
     // MARK: - Handler
 
+    private func perform(action: MessageAction) {
+        responder?.perform(action: action, for: message, view: sourceView.view)
+    }
+
     @objc func copyMessage() {
-        responder?.perform(action: .copy, for: message, view: view)
+        perform(action: .copy)
     }
 
     @objc func editMessage() {
-        responder?.perform(action: .edit, for: message, view: view)
+        perform(action: .edit)
     }
     
     @objc func quoteMessage() {
-        responder?.perform(action: .reply, for: message, view: view)
+        perform(action: .reply)
     }
 
     @objc func openMessageDetails() {
-        responder?.perform(action: .openDetails, for: message, view: view)
+        perform(action: .openDetails)
     }
 
     @objc func cancelDownloadingMessage() {
-        responder?.perform(action: .cancel, for: message, view: view)
+        perform(action: .cancel)
     }
 
     @objc func downloadMessage() {
-        responder?.perform(action: .download, for: message, view: view)
+        perform(action: .download)
     }
     
     @objc func saveMessage() {
-        responder?.perform(action: .save, for: message, view: view)
+        perform(action: .save)
     }
 
     @objc func forwardMessage() {
-        responder?.perform(action: .forward, for: message, view: view)
+        perform(action: .forward)
     }
     
     @objc func likeMessage() {
-        responder?.perform(action: .like, for: message, view: view)
+        perform(action: .like)
     }
 
     @objc func unlikeMessage() {
-        responder?.perform(action: .like, for: message, view: view)
+        perform(action: .like)
     }
     
     @objc func deleteMessage() {
-        responder?.perform(action: .delete, for: message, view: view)
+        perform(action: .delete)
     }
     
     @objc func resendMessage() {
-        responder?.perform(action: .resend, for: message, view: view)
+        perform(action: .resend)
     }
 
     @objc func revealMessage() {
-        responder?.perform(action: .showInConversation, for: message, view: view)
+        perform(action: .showInConversation)
     }
 
 }
