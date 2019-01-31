@@ -18,32 +18,6 @@
 
 import UIKit
 
-struct ActionSource {
-    private var _view: UIView?
-    private var tableView: UITableView?
-//    private var section: Int?
-
-    var view: UIView {
-        get {
-            if let unwrappedView = _view {
-                return unwrappedView
-            }
-
-            return tableView! ///TODO: get view with section
-        }
-    }
-
-    init(view: UIView) {
-        self._view = view
-    }
-
-    init(tableView: UITableView) {
-        self.tableView = tableView
-//        self.section = section
-    }
-}
-
-
 @objc class ConversationMessageActionController: NSObject {
 
     @objc(ConversationMessageActionControllerContext)
@@ -54,23 +28,13 @@ struct ActionSource {
     @objc let message: ZMConversationMessage
     @objc let context: Context
     @objc weak var responder: MessageActionResponder?
-    var actionSource: ActionSource
+    weak var view: UIView!
 
     @objc init(responder: MessageActionResponder?, message: ZMConversationMessage, context: Context, view: UIView) {
         self.responder = responder
         self.message = message
         self.context = context
-        self.actionSource = ActionSource(view: view)
-    }
-
-    init(responder: MessageActionResponder?,
-               message: ZMConversationMessage,
-               context: Context,
-               actionSource: ActionSource) {
-        self.responder = responder
-        self.message = message
-        self.context = context
-        self.actionSource = actionSource
+        self.view = view
     }
 
 
@@ -180,7 +144,7 @@ struct ActionSource {
     // MARK: - Handler
 
     private func perform(action: MessageAction) {
-        responder?.perform(action: action, for: message, view: actionSource.view)
+        responder?.perform(action: action, for: message, view: view)
     }
 
     @objc func copyMessage() {

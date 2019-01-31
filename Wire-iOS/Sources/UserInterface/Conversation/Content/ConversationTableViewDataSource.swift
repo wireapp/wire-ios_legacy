@@ -162,17 +162,10 @@ final class ConversationTableViewDataSource: NSObject {
             return cachedEntry
         }
 
-        /*
-        guard let section = section(for: message) else {
-            assertionFailure("Section not find for message")
-
-            return //ConversationMessageActionController() ///TODO:
-        }*/
-
         let actionController = ConversationMessageActionController(responder: messageActionResponder,
                                                                    message: message,
                                                                    context: .content,
-                                                                   actionSource: ActionSource(tableView: tableView))
+                                                                   view: tableView)
 
         actionControllers[message.objectIdentifier] = actionController
         
