@@ -20,6 +20,7 @@ import Foundation
 
 extension ConversationContentViewController {
     // MARK: - EditMessages
+    @objc
     func editLastMessage() {
         if let lastEditableMessage = conversation.lastEditableMessage {
             perform(action: .edit, for: lastEditableMessage, view: tableView)
