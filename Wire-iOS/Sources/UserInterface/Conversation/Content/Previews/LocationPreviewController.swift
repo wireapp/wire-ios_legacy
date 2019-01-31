@@ -24,7 +24,7 @@ import Cartography
 class LocationPreviewController: TintColorCorrectedViewController {
 
     let message: ZMConversationMessage
-    var actionController: ConversationMessageActionController!
+    private var actionController: ConversationMessageActionController!
 
     private var mapView = MKMapView()
     private let containerView = UIView()

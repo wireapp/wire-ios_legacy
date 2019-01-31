@@ -231,8 +231,7 @@ extension ConversationViewController: CollectionsViewControllerDelegate {
             }
 
         default:
-            self.contentViewController.perform(action: action, for: message, view: view)
-            break
+            contentViewController.perform(action: action, for: message, view: view)
         }
     }
 }

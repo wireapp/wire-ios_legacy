@@ -393,13 +393,12 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
 }
 
 extension ConversationImagesViewController: MessageActionResponder {
-    func perform(action: MessageAction, for message: ZMConversationMessage!, view sourceView: UIView) {
+    func perform(action: MessageAction, for message: ZMConversationMessage!, view: UIView) {
         switch action {
         case .like: likeCurrent()
-        default: self.messageActionDelegate?.perform(action: action, for: message, view: sourceView)
+        default: self.messageActionDelegate?.perform(action: action, for: message, view: view)
         }
     }
-
 }
 
 extension ConversationImagesViewController: ScreenshotProvider {
