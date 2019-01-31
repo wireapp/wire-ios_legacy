@@ -22,18 +22,6 @@ extension FullscreenImageViewController {
     private func perform(action: MessageAction) {
         delegate?.perform(action: action, for: message, view: scrollView)
     }
-
-    func saveImage() {
-        perform(action: .save)
-    }
-
-    func likeImage() {
-        perform(action: .like)
-    }
-
-    func deleteImage() {
-        perform(action: .delete)
-    }
 }
 
 extension FullscreenImageViewController: MessageActionResponder {
