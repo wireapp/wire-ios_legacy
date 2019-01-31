@@ -62,7 +62,7 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
 
     public weak var messageActionDelegate: MessageActionResponder? = .none {
         didSet {
-            self.updateActionControllerForMessage()
+            updateActionControllerForMessage()
         }
     }
 
@@ -333,7 +333,7 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
     }
 
     private func updateActionControllerForMessage() {
-        currentActionController = ConversationMessageActionController(responder: messageActionDelegate, message: currentMessage, context: .collection)
+        currentActionController = ConversationMessageActionController(responder: messageActionDelegate, message: currentMessage, context: .collection, sourceView: view) ///TODO: scroll view in full screen???
     }
     
     var currentController: FullscreenImageViewController? {
@@ -346,17 +346,21 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
         }
     }
     
+    private func perform(action: MessageAction) {
+        messageActionDelegate?.perform(action: action, for: self.currentMessage, sourceView: view)
+    }
+
     @objc public func copyCurrent(_ sender: AnyObject!) {
         let text = "collections.image_viewer.copied.title".localized.uppercased()
         overlay.show(text: text)
-        self.messageActionDelegate?.perform(action: .copy, for: self.currentMessage)
+        perform(action: .copy)
     }
     
     @objc public func saveCurrent(_ sender: UIButton!) {
         if sender != nil {
             self.currentController?.performSaveImageAnimation(from: sender)
         }
-        self.messageActionDelegate?.perform(action: .save, for: self.currentMessage)
+        perform(action: .save)
     }
 
     @objc public func likeCurrent() {
@@ -366,34 +370,33 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
             self.updateLikeButton()
         })
     }
-    
+
     @objc public func shareCurrent(_ sender: AnyObject!) {
-        self.messageActionDelegate?.perform(action: .forward, for: self.currentMessage)
+        perform(action: .forward)
     }
 
     @objc public func deleteCurrent(_ sender: AnyObject!) {
-        self.messageActionDelegate?.perform(action: .delete, for: self.currentMessage)
+        perform(action: .delete)
     }
     
     @objc public func revealCurrent(_ sender: AnyObject!) {
-        self.messageActionDelegate?.perform(action: .showInConversation, for: self.currentMessage)
+        perform(action: .showInConversation)
     }
     
     @objc public func sketchCurrent(_ sender: AnyObject!) {
-        self.messageActionDelegate?.perform(action: .sketchDraw, for: self.currentMessage)
+        perform(action: .sketchDraw)
     }
     
     @objc public func sketchCurrentEmoji(_ sender: AnyObject!) {
-        self.messageActionDelegate?.perform(action: .sketchEmoji, for: self.currentMessage)
+        perform(action: .sketchEmoji)
     }
 }
 
 extension ConversationImagesViewController: MessageActionResponder {
-
-    func perform(action: MessageAction, for message: ZMConversationMessage!) {
+    func perform(action: MessageAction, for message: ZMConversationMessage!, sourceView: UIView!) {
         switch action {
         case .like: likeCurrent()
-        default: self.messageActionDelegate?.perform(action: action, for: message)
+        default: self.messageActionDelegate?.perform(action: action, for: message, sourceView: sourceView)
         }
     }
 
