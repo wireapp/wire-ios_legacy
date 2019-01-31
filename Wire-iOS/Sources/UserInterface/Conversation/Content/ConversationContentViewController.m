@@ -509,7 +509,7 @@
 {
     ZMMessage *lastEditableMessage = self.conversation.lastEditableMessage;
     if (lastEditableMessage != nil) {
-        [self wantsToPerformAction:MessageActionEdit forMessage:lastEditableMessage];
+        [self wantsToPerformAction:MessageActionEdit forMessage:lastEditableMessage view: self.view];
     }
 }
 

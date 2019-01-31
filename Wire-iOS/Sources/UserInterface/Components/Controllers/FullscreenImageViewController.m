@@ -114,7 +114,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         _forcePortraitMode = NO;
         _swipeToDismiss = YES;
         _showCloseButton = YES;
-        self.actionController = [[ConversationMessageActionController alloc] initWithResponder:self message:message context:ConversationMessageActionControllerContextCollection];
+        self.actionController = [[ConversationMessageActionController alloc] initWithResponder:self message:message context:ConversationMessageActionControllerContextCollection view: self.view];
         if (nil != [ZMUserSession sharedSession]) {
             self.messageObserverToken = [MessageChangeInfo addObserver:self forMessage:message userSession:[ZMUserSession sharedSession]];
         }
@@ -492,17 +492,17 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 - (void)saveImage
 {
-    [self.delegate wantsToPerformAction:MessageActionSave forMessage:self.message];
+    [self.delegate wantsToPerformAction:MessageActionSave forMessage:self.message view: self.view];
 }
 
 - (void)likeImage
 {
-    [self.delegate wantsToPerformAction:MessageActionLike forMessage:self.message];
+    [self.delegate wantsToPerformAction:MessageActionLike forMessage:self.message view: self.view];
 }
 
 -(void)deleteImage
 {
-    [self.delegate wantsToPerformAction:MessageActionDelete forMessage:self.message];
+    [self.delegate wantsToPerformAction:MessageActionDelete forMessage:self.message view: self.view];
 }
 
 - (void)setSelectedByMenu:(BOOL)selected animated:(BOOL)animated
@@ -583,14 +583,14 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 @end
 
 @implementation FullscreenImageViewController (ActionResponder)
-
-- (void)wantsToPerformAction:(MessageAction)action forMessage:(id<ZMConversationMessage>)message
-{
+- (void)wantsToPerformAction:(MessageAction)action
+                  forMessage:(id<ZMConversationMessage> _Null_unspecified)message
+                        view:(UIView * _Nonnull)view {
     switch (action) {
         case MessageActionForward:
         {
             [self dismissViewControllerAnimated:YES completion:^{
-                [self.delegate wantsToPerformAction:MessageActionForward forMessage:message];
+                [self.delegate wantsToPerformAction:MessageActionForward forMessage:message view: self.view];
             }];
         }
             break;
@@ -598,7 +598,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         case MessageActionShowInConversation:
         {
             [self dismissViewControllerAnimated:YES completion:^{
-                [self.delegate wantsToPerformAction:MessageActionShowInConversation forMessage:message];
+                [self.delegate wantsToPerformAction:MessageActionShowInConversation forMessage:message view: self.view];
             }];
         }
             break;
@@ -606,7 +606,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         case MessageActionReply:
         {
             [self dismissViewControllerAnimated:YES completion:^{
-                [self.delegate wantsToPerformAction:MessageActionReply forMessage:message];
+                [self.delegate wantsToPerformAction:MessageActionReply forMessage:message view: self.view];
             }];
         }
             break;
@@ -619,7 +619,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
         default:
         {
-            [self.delegate wantsToPerformAction:action forMessage:message];
+            [self.delegate wantsToPerformAction:action forMessage:message view: self.view];
         }
             break;
     }
