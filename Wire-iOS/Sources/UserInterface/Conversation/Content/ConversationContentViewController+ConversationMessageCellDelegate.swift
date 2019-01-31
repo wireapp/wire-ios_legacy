@@ -21,12 +21,11 @@ import Foundation
 extension ConversationContentViewController: ConversationMessageCellDelegate {
     // MARK: - MessageActionResponder
 
-    ///TODO: change 3rd argument to Action Source, if it is a table view, find out the cell with message
     public func perform(action: MessageAction, for message: ZMConversationMessage!, view: UIView) {
-        var actionView: UIView!
-        if let tableView: UITableView = view as? UITableView {
-            actionView = tableView
+        var actionView: UIView! = view
 
+        ///if the view is a tableView, search for a visible cell that contains the message and the cell is a SelectableView
+        if let tableView: UITableView = view as? UITableView {
             let section = dataSource.section(for: message)
 
             for cell in tableView.visibleCells {
@@ -37,10 +36,7 @@ extension ConversationContentViewController: ConversationMessageCellDelegate {
                     break
                 }
             }
-        } else {
-            actionView = view
         }
-
 
         let shouldDismissModal = action != .delete && action != .copy
 
