@@ -35,3 +35,21 @@ extension FullscreenImageViewController {
         perform(action: .delete)
     }
 }
+
+extension FullscreenImageViewController: MessageActionResponder {
+    public func perform(action: MessageAction, for message: ZMConversationMessage!, view: UIView) {
+        switch action {
+        case .forward,
+             .showInConversation,
+             .reply:
+            dismiss(animated: true) {
+                self.perform(action: action)
+            }
+        case .openDetails:
+            let detailsViewController = MessageDetailsViewController(message: message)
+            present(detailsViewController, animated: true)
+        default:
+            perform(action: action)
+        }
+    }
+}

@@ -73,11 +73,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @end
 
-@interface FullscreenImageViewController (ActionResponder) <MessageActionResponder>
-
-@end
-
-
 @interface FullscreenImageViewController () <UIScrollViewDelegate>
 
 @property (nonatomic, readwrite) UIScrollView *scrollView;
@@ -114,7 +109,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         _forcePortraitMode = NO;
         _swipeToDismiss = YES;
         _showCloseButton = YES;
-        self.actionController = [[ConversationMessageActionController alloc] initWithResponder:self message:message context:ConversationMessageActionControllerContextCollection view: self.view];
+        self.actionController = [[ConversationMessageActionController alloc] initWithResponder:self message:message context:ConversationMessageActionControllerContextCollection view: self.scrollView];
         if (nil != [ZMUserSession sharedSession]) {
             self.messageObserverToken = [MessageChangeInfo addObserver:self forMessage:message userSession:[ZMUserSession sharedSession]];
         }
@@ -562,51 +557,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         changeInfo.isObfuscatedChanged) {
         
         [self updateForMessage];
-    }
-}
-
-@end
-
-@implementation FullscreenImageViewController (ActionResponder)
-- (void)wantsToPerformAction:(MessageAction)action
-                  forMessage:(id<ZMConversationMessage> _Null_unspecified)message
-                        view:(UIView * _Nonnull)view {
-    switch (action) {
-        case MessageActionForward:
-        {
-            [self dismissViewControllerAnimated:YES completion:^{
-                [self.delegate wantsToPerformAction:MessageActionForward forMessage:message view: self.view];
-            }];
-        }
-            break;
-
-        case MessageActionShowInConversation:
-        {
-            [self dismissViewControllerAnimated:YES completion:^{
-                [self.delegate wantsToPerformAction:MessageActionShowInConversation forMessage:message view: self.view];
-            }];
-        }
-            break;
-
-        case MessageActionReply:
-        {
-            [self dismissViewControllerAnimated:YES completion:^{
-                [self.delegate wantsToPerformAction:MessageActionReply forMessage:message view: self.view];
-            }];
-        }
-            break;
-        case MessageActionOpenDetails:
-        {
-            MessageDetailsViewController *detailsViewController = [[MessageDetailsViewController alloc] initWithMessage:message];
-            [self presentViewController:detailsViewController animated:YES completion:nil];
-        }
-            break;
-
-        default:
-        {
-            [self.delegate wantsToPerformAction:action forMessage:message view: self.view];
-        }
-            break;
     }
 }
 
