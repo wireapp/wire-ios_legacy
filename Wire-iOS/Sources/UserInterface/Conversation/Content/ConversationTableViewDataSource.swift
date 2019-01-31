@@ -156,9 +156,10 @@ final class ConversationTableViewDataSource: NSObject {
         if let cachedEntry = actionControllers[message.objectIdentifier] {
             return cachedEntry
         }
-        let actionController = ConversationMessageActionController(responder: self.messageActionResponder,
+        let actionController = ConversationMessageActionController(responder: messageActionResponder,
                                                                    message: message,
-                                                                   context: .content)
+                                                                   context: .content,
+                                                                   view: cell(for: message)!)///TODO: 
         actionControllers[message.objectIdentifier] = actionController
         
         return actionController   
