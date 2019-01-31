@@ -69,7 +69,7 @@ final class DeleteMessageTests: XCTestCase {
 
     func actionController(for conversationType: ConversationCellType) -> ConversationMessageActionController {
         let message = self.message(for: conversationType)!
-        return ConversationMessageActionController(responder: nil, message: message, context: .content)
+        return ConversationMessageActionController(responder: nil, message: message, context: .content, view: UIView())
     }
 
     func testThatTheExpectedCellsCanBeDeleted() {
