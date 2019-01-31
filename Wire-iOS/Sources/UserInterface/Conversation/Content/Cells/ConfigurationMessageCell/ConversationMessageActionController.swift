@@ -108,7 +108,7 @@ import UIKit
     
     @objc func performSingleTapAction() {
         guard let singleTapAction = singleTapAction else { return }
-        responder?.perform(action: singleTapAction, for: message)
+        responder?.perform(action: singleTapAction, for: message, view: self)
     }
     
     var singleTapAction: MessageAction? {
@@ -130,7 +130,7 @@ import UIKit
 
     @objc func performDoubleTapAction() {
         guard let doubleTapAction = doubleTapAction else { return }
-        responder?.perform(action: doubleTapAction, for: message)
+        responder?.perform(action: doubleTapAction, for: message, view: self)
     }
 
     var doubleTapAction: MessageAction? {

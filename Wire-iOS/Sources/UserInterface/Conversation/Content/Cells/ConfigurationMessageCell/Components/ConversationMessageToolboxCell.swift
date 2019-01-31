@@ -72,7 +72,7 @@ final class ConversationMessageToolboxCell: UIView, ConversationMessageCell, Mes
     }
 
     private func perform(action: MessageAction) {
-        delegate?.perform(action: action, for: message, sourceView: self)///TODO: the brother cell
+        delegate?.perform(action: action, for: message, view: self)///TODO: pass the brother cell
     }
 
     func messageToolboxViewDidRequestLike(_ messageToolboxView: MessageToolboxView) {

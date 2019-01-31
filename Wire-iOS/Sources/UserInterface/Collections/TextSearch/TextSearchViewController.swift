@@ -158,7 +158,7 @@ extension TextSearchViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        delegate?.perform(action: .showInConversation, for: self.results[indexPath.row], sourceView: tableView.cellForRow(at: indexPath))
+        delegate?.perform(action: .showInConversation, for: self.results[indexPath.row], view: tableView.cellForRow(at: indexPath))
     }
 
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {

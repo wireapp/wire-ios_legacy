@@ -333,7 +333,7 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
     }
 
     private func updateActionControllerForMessage() {
-        currentActionController = ConversationMessageActionController(responder: messageActionDelegate, message: currentMessage, context: .collection, sourceView: view) ///TODO: scroll view in full screen???
+        currentActionController = ConversationMessageActionController(responder: messageActionDelegate, message: currentMessage, context: .collection, view: view)
     }
     
     var currentController: FullscreenImageViewController? {
@@ -347,7 +347,7 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
     }
     
     private func perform(action: MessageAction) {
-        messageActionDelegate?.perform(action: action, for: self.currentMessage, sourceView: view)
+        messageActionDelegate?.perform(action: action, for: self.currentMessage, view: view)
     }
 
     @objc public func copyCurrent(_ sender: AnyObject!) {
@@ -393,10 +393,10 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
 }
 
 extension ConversationImagesViewController: MessageActionResponder {
-    func perform(action: MessageAction, for message: ZMConversationMessage!, sourceView: UIView!) {
+    func perform(action: MessageAction, for message: ZMConversationMessage!, view sourceView: UIView) {
         switch action {
         case .like: likeCurrent()
-        default: self.messageActionDelegate?.perform(action: action, for: message, sourceView: sourceView)
+        default: self.messageActionDelegate?.perform(action: action, for: message, view: sourceView)
         }
     }
 
