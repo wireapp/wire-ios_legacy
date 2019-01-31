@@ -23,6 +23,24 @@ extension ConversationContentViewController: ConversationMessageCellDelegate {
 
     ///TODO: change 3rd argument to Action Source, if it is a table view, find out the cell with message
     public func perform(action: MessageAction, for message: ZMConversationMessage!, view: UIView) {
+        var actionView: UIView!
+        if let tableView: UITableView = view as? UITableView {
+            actionView = tableView
+
+            let section = dataSource.section(for: message)
+
+            for cell in tableView.visibleCells {
+                let indexPath = tableView.indexPath(for: cell)
+                if indexPath?.section == section,
+                   cell is SelectableView {
+                    actionView = view
+                    break
+                }
+            }
+        } else {
+            actionView = view
+        }
+
 
         let shouldDismissModal = action != .delete && action != .copy
 
@@ -31,12 +49,12 @@ extension ConversationContentViewController: ConversationMessageCellDelegate {
             messagePresenter.modalTargetController?.dismiss(animated: true) {
                 self.messageAction(actionId: action,
                                    for: message,
-                                   view: view)
+                                   view: actionView)
             }
         } else {
             messageAction(actionId: action,
                           for: message,
-                          view: view)
+                          view: actionView)
         }
     }
 
