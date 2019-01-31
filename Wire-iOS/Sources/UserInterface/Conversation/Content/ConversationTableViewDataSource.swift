@@ -149,15 +149,7 @@ final class ConversationTableViewDataSource: NSObject {
         return currentSections.firstIndex(where: { $0.model == message.objectIdentifier })
     }
 
-    ///TODO: prevent using this method
-    @objc(cellForMessage:)
-    func cell(for message: ZMConversationMessage) -> UITableViewCell? {
-        guard let section = section(for: message) else { return nil }
-        
-        return tableView.cellForRow(at: IndexPath(row: 0, section: section))
-    }
-    
-    @objc func actionController(for message: ZMConversationMessage) -> ConversationMessageActionController {
+    func actionController(for message: ZMConversationMessage) -> ConversationMessageActionController {
         if let cachedEntry = actionControllers[message.objectIdentifier] {
             return cachedEntry
         }

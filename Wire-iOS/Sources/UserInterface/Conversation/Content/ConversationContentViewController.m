@@ -359,20 +359,6 @@
     }
 }
 
-- (void)presentDetailsForMessage:(id<ZMConversationMessage>)message
-{
-    BOOL isFile = [Message isFileTransferMessage:message];
-    BOOL isImage = [Message isImageMessage:message];
-    BOOL isLocation = [Message isLocationMessage:message];
-    
-    if (! isFile && ! isImage && ! isLocation) {
-        return;
-    }
-    
-    UITableViewCell *cell = [self.dataSource cellForMessage:message];
-    [self.messagePresenter openMessage:message targetView:cell actionResponder:self];
-}
-
 #pragma mark - Custom UI, utilities
 
 - (void)createMentionsResultsView

@@ -50,7 +50,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) DeletionDialogPresenter *deletionDialogPresenter;
 
 - (void)removeHighlightsAndMenu;
-- (void)presentDetailsForMessage:(id<ZMConversationMessage>)message;
 - (NSIndexPath *) willSelectRowAtIndexPath:(NSIndexPath *)indexPath tableView:(UITableView *)tableView;
 
 @end
