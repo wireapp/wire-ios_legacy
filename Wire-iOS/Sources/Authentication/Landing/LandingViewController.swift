@@ -146,19 +146,6 @@ class LandingViewController: AuthenticationStepViewController {
 
         [headerContainerView, buttonStackView, loginHintsLabel, loginButton].forEach(view.addSubview)
         headerContainerView.addSubview(logoView)
-        
-        #if MULTIPLE_ACCOUNTS_DISABLED
-            // no need to see this if you can only have one account
-            loginHintsLabel.isHidden = true
-        #endif
-        
-        #if ALLOW_ONLY_EMAIL_LOGIN
-            // Do not show buttons for account and team creation
-        #else
-            [createAccountButton, createTeamButton].forEach { button in
-                buttonStackView.addArrangedSubview(button)
-            }
-        #endif
 
         self.view.backgroundColor = UIColor.Team.background
 
