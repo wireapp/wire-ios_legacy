@@ -91,11 +91,12 @@ extension ConversationContentViewController {
             // The new liked state, the value is flipped
             let updatedLikedState = !Message.isLikedMessage(message)
 
-            guard let indexPath = dataSource?.indexPath(for: message),
-                let selectedMessage = dataSource?.selectedMessage else { break }
+            guard let indexPath = dataSource?.indexPath(for: message) else { return }
+
+            let selectedMessage = dataSource?.selectedMessage
 
             session.performChanges({
-            Message.setLikedMessage(message, liked: updatedLikedState)
+                Message.setLikedMessage(message, liked: updatedLikedState)
             })
 
             if updatedLikedState {
@@ -145,7 +146,8 @@ extension ConversationContentViewController {
 
         let shouldDismissModal: Bool = actionId != .delete && actionId != .copy
 
-        if messagePresenter.modalTargetController?.presentedViewController != nil && shouldDismissModal {
+        if messagePresenter.modalTargetController?.presentedViewController != nil &&
+            shouldDismissModal {
             messagePresenter.modalTargetController?.dismiss(animated: true) {
                 self.messageAction(actionId: actionId,
                                    for: message,
