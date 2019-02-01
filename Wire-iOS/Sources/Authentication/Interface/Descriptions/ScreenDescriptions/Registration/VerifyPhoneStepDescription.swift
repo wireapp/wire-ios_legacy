@@ -27,8 +27,8 @@ class VerifyPhoneStepSecondaryView: AuthenticationSecondaryViewDescription {
         let changePhoneNumber = ButtonDescription(title: "team.activation_code.button.change_phone".localized, accessibilityIdentifier: "change_phone_button")
         views = allowChange ? [resendCode, changePhoneNumber] : [resendCode]
 
-        resendCode.buttonTapped = {
-            self.actioner?.repeatAction()
+        resendCode.buttonTapped = { [weak self] in
+            self?.actioner?.repeatAction()
         }
 
         changePhoneNumber.buttonTapped = { [weak self] in

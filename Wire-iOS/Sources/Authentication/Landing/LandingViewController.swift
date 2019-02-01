@@ -147,6 +147,10 @@ class LandingViewController: AuthenticationStepViewController {
         [headerContainerView, buttonStackView, loginHintsLabel, loginButton].forEach(view.addSubview)
         headerContainerView.addSubview(logoView)
 
+        [createAccountButton, createTeamButton].forEach { button in
+            buttonStackView.addArrangedSubview(button)
+        }
+
         self.view.backgroundColor = UIColor.Team.background
 
         self.createConstraints()
