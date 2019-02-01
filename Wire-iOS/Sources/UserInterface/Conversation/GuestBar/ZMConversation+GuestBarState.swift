@@ -20,12 +20,9 @@ extension ZMConversation {
     @objc var guestBarState: GuestBarState {
         guard conversationType != .oneOnOne else { return .hidden }
 
-        let otherUsers = activeParticipants
-            .array
-            .compactMap { $0 as? UserType }
-            .filter { !$0.isSelfUser }
+        let otherUsers = activeParticipants.filter { !$0.isSelfUser }
 
-        if otherUsers.count == 1, otherUsers[0].isServiceUser {
+        if otherUsers.count == 1, otherUsers.first!.isServiceUser {
             return .hidden
         }
 
@@ -42,14 +39,12 @@ extension ZMConversation {
         guard let selfUserTeam = ZMUser.selfUser().team, team == selfUserTeam else { return false }
         return activeParticipants
             .lazy
-            .compactMap { $0 as? UserType }
             .any { $0.isGuest(in: self) }
     }
     
     var areServicesPresent: Bool {
         return activeParticipants
             .lazy
-            .compactMap { $0 as? UserType }
             .any { $0.isServiceUser }
     }
 }

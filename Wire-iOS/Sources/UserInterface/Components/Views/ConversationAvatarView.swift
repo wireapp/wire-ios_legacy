@@ -74,7 +74,7 @@ extension ZMConversation {
     /// Stable random list of the participants in the conversation. The list would be consistent between platforms
     /// because the conversation UUID is used as the random indexes source.
     var stableRandomParticipants: [ZMUser] {
-        let allUsers = self.activeParticipants.array as! [ZMUser]
+        let allUsers = self.sortedActiveParticipants
         guard let remoteIdentifier = self.remoteIdentifier else {
             return allUsers
         }

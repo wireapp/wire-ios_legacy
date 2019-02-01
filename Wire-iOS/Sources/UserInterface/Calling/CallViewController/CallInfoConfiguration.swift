@@ -251,7 +251,7 @@ fileprivate extension VoiceChannel {
     }
 
     var firstDegradedUser: ZMUser? {
-        return conversation?.activeParticipants.compactMap({ $0 as? ZMUser }).first(where: { $0.untrusted() })
+        return conversation?.activeParticipants.first(where: { $0.untrusted() })
     }
 
     private var isIncomingVideoCall: Bool {

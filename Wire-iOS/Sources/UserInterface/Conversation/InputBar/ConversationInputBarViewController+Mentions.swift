@@ -87,7 +87,7 @@ extension ConversationInputBarViewController {
         }
 
         if let handler = mentionsHandler, let searchString = handler.searchString(in: textView.text) {
-            let participants = conversation.activeParticipants.array as! [UserType]
+            let participants = conversation.sortedActiveParticipants
             mentionsView?.users = ZMUser.searchForMentions(in: participants, with: searchString)
         } else {
             dismissMentionsIfNeeded()
