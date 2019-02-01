@@ -135,7 +135,6 @@
 #import "Analytics.h"
 #import "Analytics+Internal.h"
 #import "Application+runDuration.h"
-#import "NSURL+WireLocale.h"
 #import "DeveloperMenuState.h"
 #import "NSString+Fingerprint.h"
 #import "UIImage+ZetaIconsNeue.h"
