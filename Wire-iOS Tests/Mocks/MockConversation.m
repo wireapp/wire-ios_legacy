@@ -62,6 +62,11 @@
     return nil;
 }
 
+- (NSSet *)activeParticipants
+{
+    return [NSSet setWithArray:self.sortedActiveParticipants];
+}
+
 - (NSArray *)messages;
 {
     return nil;

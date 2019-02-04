@@ -457,7 +457,7 @@ class CallInfoConfigurationTests: XCTestCase {
         let fixture = CallInfoTestFixture(otherUser: otherUser, groupSize: .large)
         
         let mockGroupConversation = MockConversation.groupConversation()
-        mockGroupConversation.activeParticipants = NSOrderedSet(array: Array(mockUsers[0..<fixture.groupSize.rawValue]))
+        mockGroupConversation.sortedActiveParticipants = Array(mockUsers[0..<fixture.groupSize.rawValue])
         
         let mockConversation = ((mockGroupConversation as Any) as! ZMConversation)
         let mockVoiceChannel = MockVoiceChannel(conversation: mockConversation)
