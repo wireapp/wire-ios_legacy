@@ -650,7 +650,7 @@ extension AppRootViewController: SessionManagerURLHandlerDelegate {
         case .disallowStartingFlow:
             callback(false)
 
-        case.showDismissableAlert(let title, let message, let allowStartingFlow):
+        case .showDismissableAlert(let title, let message, let allowStartingFlow):
             if let controller = UIApplication.shared.wr_topmostController(onlyFullScreen: false) {
                 let alert = UIAlertController(title: title, message: message, preferredStyle: .alert )
                 let okAction = UIAlertAction(title: "general.ok".localized, style: .cancel) { _ in callback(allowStartingFlow) }
