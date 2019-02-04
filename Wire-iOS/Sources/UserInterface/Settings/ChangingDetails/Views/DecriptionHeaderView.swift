@@ -17,9 +17,8 @@
 //
 
 import UIKit
-import Cartography
 
-@objcMembers final class DescriptionHeaderView: UIView {
+class DescriptionHeaderView: UIView {
     let descriptionLabel = UILabel()
     
     override init(frame: CGRect) {
@@ -32,13 +31,15 @@ import Cartography
         descriptionLabel.textColor = .from(scheme: .textForeground, variant: .dark)
 
         addSubview(descriptionLabel)
-        
-        constrain(self, descriptionLabel) { container, label in
-            label.trailing <= container.trailing - 16
-            label.leading >= container.leading + 16
-            label.top == container.top + 24
-            label.bottom == container.bottom - 24
-        }
+
+        descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            descriptionLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            descriptionLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            descriptionLabel.topAnchor.constraint(equalTo: topAnchor, constant: 24),
+            descriptionLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -24)
+        ])
     }
     
     required init?(coder aDecoder: NSCoder) {

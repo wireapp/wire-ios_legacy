@@ -48,8 +48,6 @@ static Analytics *sharedAnalytics = nil;
 
 @implementation Analytics
 
-@synthesize team = _team;
-
 + (instancetype)shared
 {
     return sharedAnalytics;
@@ -81,7 +79,6 @@ static Analytics *sharedAnalytics = nil;
 
 - (void)setTeam:(Team *)team
 {
-    _team = team;
     if (nil == team) {
         [self.provider setSuperProperty:@"team.size" value:@"0"];
         [self.provider setSuperProperty:@"team.in_team" value:@(NO)];
@@ -102,14 +99,6 @@ static Analytics *sharedAnalytics = nil;
 - (void)tagEvent:(NSString *)event
 {
     [self.provider tagEvent:event attributes:[NSDictionary dictionary]];
-}
-
-- (void)tagEvent:(NSString *)event attributes:(NSDictionary *)attributes team:(nullable Team *)team
-{
-    Team *currentTeam = self.team;
-    self.team = team;
-    [self.provider tagEvent:event attributes:attributes];
-    self.team = currentTeam;
 }
 
 - (void)tagEvent:(NSString *)event attributes:(NSDictionary *)attributes

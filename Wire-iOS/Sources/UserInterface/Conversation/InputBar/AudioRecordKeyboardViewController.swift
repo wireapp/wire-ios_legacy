@@ -33,7 +33,14 @@ private let zmLog = ZMSLog(tag: "UI")
         didSet { if oldValue != state { updateRecordingState(self.state) }}
     }
     
-    var isRecording: Bool { return self.recorder.state == .recording }
+    var isRecording: Bool {
+        switch self.recorder.state {
+        case .recording:
+            return true
+        default:
+            return false
+        }
+    }
     
     public let recorder: AudioRecorderType
     public weak var delegate: AudioRecordViewControllerDelegate?
@@ -299,10 +306,6 @@ private let zmLog = ZMSLog(tag: "UI")
             self.updateTimeLabel(time)
         }
         
-        recorder.recordStartedCallback = {
-            AppDelegate.shared().mediaPlaybackManager?.audioTrackPlayer.stop()
-        }
-        
         recorder.recordEndedCallback = { [weak self] result in
             guard let `self` = self else { return }
             self.state = .effects
@@ -402,10 +405,12 @@ private let zmLog = ZMSLog(tag: "UI")
     
     // MARK: - Button Actions
     
-    @objc func recordButtonPressed(_ sender: AnyObject!) {
-        self.state = .recording
-        self.recorder.startRecording()
-        self.delegate?.audioRecordViewControllerDidStartRecording(self)
+    @objc internal func recordButtonPressed(_ sender: AnyObject!) {
+        self.recorder.startRecording { success in
+            self.state = .recording
+            self.delegate?.audioRecordViewControllerDidStartRecording(self)
+            AppDelegate.shared().mediaPlaybackManager?.audioTrackPlayer.stop()
+        }
     }
     
     @objc func stopRecordButtonPressed(_ button: UIButton?) {

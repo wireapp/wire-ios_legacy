@@ -50,6 +50,10 @@ struct PhoneNumber: Equatable {
     let fullNumber: String
     let numberWithoutCode: String
 
+    var country: Country {
+        return Country.detect(fromCode: countryCode) ?? .default
+    }
+
     init(countryCode: UInt, numberWithoutCode: String) {
         self.countryCode = countryCode
         self.numberWithoutCode = numberWithoutCode

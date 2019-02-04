@@ -19,13 +19,16 @@
 
 #import <Foundation/Foundation.h>
 
-
+NS_ASSUME_NONNULL_BEGIN
 
 @interface KeyboardFrameObserver : NSObject
 
-- (CGRect)keyboardFrame;
+@property (class, readonly) KeyboardFrameObserver *sharedObserver;
+@property (readonly) CGRect keyboardFrame;
+@property (readonly) BOOL keyboardIsVisible;
+
 - (CGRect)keyboardFrameInView:(UIView *)view;
 
-- (BOOL)keyboardIsVisible;
-
 @end
+
+NS_ASSUME_NONNULL_END

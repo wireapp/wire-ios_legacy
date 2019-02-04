@@ -17,7 +17,6 @@
 //
 
 import Foundation
-import Cartography
 
 extension ZMConversation {
     var botCanBeAdded: Bool {
@@ -80,10 +79,10 @@ final class ServiceDetailViewController: UIViewController {
     init(serviceUser: ServiceUser,
          actionType: ActionType,
          variant: ServiceDetailVariant,
-         completion: Completion?) {
+         completion: Completion? = nil) {
         self.service = Service(serviceUser: serviceUser)
         self.completion = completion
-        self.detailView = ServiceDetailView(service: service, variant: variant.colorScheme)
+        detailView = ServiceDetailView(service: service, variant: variant.colorScheme)
 
         switch actionType {
         case let .addService(conversation):
@@ -103,47 +102,26 @@ final class ServiceDetailViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
 
         self.title = self.service.serviceUser.name?.localizedUppercase
+
+        setupViews()
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    private func setupViews() {
+        actionButton.addCallback(for: .touchUpInside, callback: callback(for: actionType, completion: self.completion))
 
-        self.actionButton.addCallback(for: .touchUpInside, callback: callback(for: actionType, completion: self.completion))
-
-        if self.variant.opaque {
+        if variant.opaque {
             view.backgroundColor = UIColor.from(scheme: .background, variant: self.variant.colorScheme)
         } else {
             view.backgroundColor = .clear
         }
 
-        view.addSubview(detailView)
-        view.addSubview(actionButton)
+        [detailView, actionButton].forEach(view.addSubview)
 
-        var topMargin: CGFloat = 16
-        if #available(iOS 11.0, *) {
-            topMargin = 16
-        } else {
-            if let naviBarHeight = self.navigationController?.navigationBar.frame.height {
-                topMargin = 16 + naviBarHeight
-            }
-        }
-
-        constrain(self.view, detailView, actionButton) { selfView, detailView, confirmButton in
-            detailView.leading == selfView.leading + 16
-            detailView.top == selfView.topMargin + topMargin
-
-            detailView.trailing == selfView.trailing - 16
-
-            confirmButton.top == detailView.bottom + 16
-            confirmButton.height == 48
-            confirmButton.leading == selfView.leading + 16
-            confirmButton.trailing == selfView.trailing - 16
-            confirmButton.bottom == selfView.bottom - 16 - UIScreen.safeArea.bottom
-        }
+        createConstraints()
 
         guard let userSession = ZMUserSession.shared() else {
             return
@@ -157,6 +135,23 @@ final class ServiceDetailViewController: UIViewController {
             self?.detailView.service.serviceUserDetails = details
         }
     }
+
+    private func createConstraints() {
+        [detailView, actionButton].forEach() {
+            $0.translatesAutoresizingMaskIntoConstraints = false
+        }
+
+        detailView.fitInSuperview(with: EdgeInsets(margin: 16), exclude: [.top, .bottom])
+
+        actionButton.fitInSuperview(with: EdgeInsets(top: 0, leading: 16, bottom: 16 + UIScreen.safeArea.bottom, trailing: 16), exclude: [.top])
+
+        NSLayoutConstraint.activate([
+            detailView.topAnchor.constraint(equalTo: safeTopAnchor, constant: 16),
+            actionButton.topAnchor.constraint(equalTo: detailView.bottomAnchor, constant: 16),
+            actionButton.heightAnchor.constraint(equalToConstant: 48)
+            ])
+    }
+
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)

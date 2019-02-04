@@ -43,13 +43,16 @@ final class ServiceDetailViewControllerSnapshotTests: CoreDataSnapshotTestCase {
     func createSut() {
         let variant = ServiceDetailVariant(colorScheme: ColorScheme.default.variant, opaque: true)
 
-        sut = ServiceDetailViewController(serviceUser: serviceUser, actionType: .removeService(groupConversation), variant: variant, completion: nil)
+        sut = ServiceDetailViewController(serviceUser: serviceUser,
+                                          actionType: .removeService(groupConversation),
+                                          variant: variant)
     }
 
-    func testForTeamMember() {
+    func testForTeamMemberWrappedInNavigationController() {
         teamTest {
             createSut()
-            verify(view: sut.view)
+            let navigationController = sut.wrapInNavigationController()
+            verify(view: navigationController.view)
         }
     }
 

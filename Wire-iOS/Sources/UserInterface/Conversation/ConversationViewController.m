@@ -716,6 +716,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 - (void)conversationInputBarViewControllerDidComposeText:(NSString *)text mentions:(NSArray<Mention *> *)mentions replyingToMessage:(nullable id<ZMConversationMessage>)message
 {
+    [self.contentViewController scrollToBottomAnimated:NO];
     [self.inputBarController.sendController sendTextMessage:text mentions:mentions replyingToMessage:message];
 }
 

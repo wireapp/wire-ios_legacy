@@ -91,7 +91,17 @@ struct WireUrl: Codable {
 extension URL {
 
     var appendingLocaleParameter: URL {
-        return (self as NSURL).wr_URLByAppendingLocaleParameter() as URL
+        guard var components = URLComponents(url: self, resolvingAgainstBaseURL: false) else {
+            return self
+        }
+
+        let localeQueryItem = URLQueryItem(name: "hl", value: Locale.current.identifier)
+
+        var queryItems = components.queryItems ?? []
+        queryItems.append(localeQueryItem)
+        components.queryItems = queryItems
+
+        return components.url ?? self
     }
 
     static func manageTeam(source: TeamSource) -> URL {
@@ -200,16 +210,8 @@ extension URL {
 
 extension NSURL {
 
-    @objc class var wr_fingerprintLearnMoreURL: NSURL {
+    @objc static var wr_fingerprintLearnMoreURL: NSURL {
         return URL.wr_fingerprintLearnMore as NSURL
-    }
-
-    @objc class var wr_passwordResetURL: NSURL {
-        return URL.wr_passwordReset as NSURL
-    }
-
-    @objc class var wr_websiteURL: NSURL {
-        return URL.wr_website as NSURL
     }
 
 }

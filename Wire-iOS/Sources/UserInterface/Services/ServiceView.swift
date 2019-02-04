@@ -17,7 +17,6 @@
 //
 
 import Foundation
-import Cartography
 
 final class ServiceDetailView: UIView {
     private let serviceView: ServiceView
@@ -40,17 +39,8 @@ final class ServiceDetailView: UIView {
 
         [serviceView, descriptionTextView].forEach(addSubview)
 
-        constrain(self, serviceView, descriptionTextView) { selfView, serviceView, descriptionTextView in
-            serviceView.top == selfView.top
-            serviceView.leading == selfView.leading
-            serviceView.trailing == selfView.trailing
-            
-            descriptionTextView.top == serviceView.bottom + 16
-            descriptionTextView.leading == selfView.leading
-            descriptionTextView.trailing == selfView.trailing
-            descriptionTextView.bottom == selfView.bottom
-        }
-        
+        createConstraints()
+
         switch variant {
         case .dark:
             backgroundColor = .clear
@@ -69,7 +59,19 @@ final class ServiceDetailView: UIView {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
+    private func createConstraints() {
+        [self, serviceView, descriptionTextView].forEach(){ $0.translatesAutoresizingMaskIntoConstraints = false }
+
+        serviceView.fitInSuperview(exclude: [.bottom])
+
+        descriptionTextView.fitInSuperview(exclude: [.top])
+
+
+        NSLayoutConstraint.activate([
+            descriptionTextView.topAnchor.constraint(equalTo: serviceView.bottomAnchor, constant: 16)])
+    }
+
     private func updateForService() {
         descriptionTextView.text = service.serviceUserDetails?.serviceDescription
     }
@@ -93,23 +95,10 @@ final class ServiceView: UIView {
         self.variant = variant
         super.init(frame: .zero)
         [logoView, nameLabel, providerLabel].forEach(addSubview)
-        constrain(self, logoView, nameLabel, providerLabel) { selfView, logoView, nameLabel, providerLabel in
-            logoView.leading == selfView.leading
-            logoView.top == selfView.top
-            logoView.bottom == selfView.bottom
-            
-            logoView.width == 80
-            logoView.height == logoView.width
-            
-            nameLabel.leading == logoView.trailing + 16
-            nameLabel.top == selfView.top
-            nameLabel.trailing == selfView.trailing
-            
-            providerLabel.leading == logoView.trailing + 16
-            providerLabel.top == nameLabel.bottom + 8
-            providerLabel.trailing == selfView.trailing
-        }
-        
+
+        createConstraints()
+
+
         backgroundColor = .clear
         
         nameLabel.font = FontSpec(.large, .regular).font
@@ -125,7 +114,24 @@ final class ServiceView: UIView {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
+    private func createConstraints() {
+        [self, logoView, nameLabel, providerLabel].forEach(){ $0.translatesAutoresizingMaskIntoConstraints = false }
+
+        logoView.fitInSuperview(exclude: [.trailing])
+
+        logoView.setDimensions(length: 80)
+
+        nameLabel.fitInSuperview(exclude: [.leading, .bottom])
+
+        NSLayoutConstraint.activate([
+            nameLabel.leadingAnchor.constraint(equalTo: logoView.trailingAnchor, constant: 16),
+            providerLabel.leadingAnchor.constraint(equalTo: logoView.trailingAnchor, constant: 16),
+            providerLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 8),
+            providerLabel.trailingAnchor.constraint(equalTo: trailingAnchor)
+            ])
+    }
+
     private func updateForService() {
         logoView.user = service.serviceUser
         nameLabel.text = service.serviceUser.name

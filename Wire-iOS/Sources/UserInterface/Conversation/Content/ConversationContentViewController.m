@@ -58,7 +58,7 @@
 @interface ConversationContentViewController (ZMTypingChangeObserver) <ZMTypingChangeObserver>
 @end
 
-@interface ConversationContentViewController () <CanvasViewControllerDelegate>
+@interface ConversationContentViewController () 
 
 @property (nonatomic, assign) BOOL wasScrolledToBottomAtStartOfUpdate;
 @property (nonatomic) NSObject *activeMediaPlayerObserver;
@@ -67,7 +67,6 @@
 @property (nonatomic) BOOL hasDoneInitialLayout;
 @property (nonatomic) BOOL onScreen;
 @property (nonatomic) UserConnectionViewController *connectionViewController;
-@property (nonatomic) DeletionDialogPresenter *deletionDialogPresenter;
 @property (nonatomic) id<ZMConversationMessage> messageVisibleOnLoad;
 @end
 
@@ -323,167 +322,6 @@
     [self.dataSource highlightMessage:message];
 }
 
-- (void)wantsToPerformAction:(MessageAction)actionId forMessage:(id<ZMConversationMessage>)message cell:(UIView<SelectableView> *)cell
-{
-    dispatch_block_t action = ^{
-        switch (actionId) {
-            case MessageActionCancel:
-            {
-                [[ZMUserSession sharedSession] enqueueChanges:^{
-                    [message.fileMessageData cancelTransfer];
-                }];
-            }
-                break;
-                
-            case MessageActionResend:
-            {
-                [[ZMUserSession sharedSession] enqueueChanges:^{
-                    [message resend];
-                }];
-            }
-                break;
-                
-            case MessageActionDelete:
-            {
-                assert([message canBeDeleted]);
-
-                self.deletionDialogPresenter = [[DeletionDialogPresenter alloc] initWithSourceViewController:self.presentedViewController ?: self];
-                [self.deletionDialogPresenter presentDeletionAlertControllerForMessage:message source:cell completion:^(BOOL deleted) {
-                    if (self.presentedViewController && deleted) {
-                        [self.presentedViewController dismissViewControllerAnimated:YES completion:nil];
-                    }
-                    if (!deleted) {
-                        // TODO 2838: Support editing
-                        // cell.beingEdited = NO;
-                    }
-                }];
-            }
-                break;
-            case MessageActionPresent:
-            {
-                self.dataSource.selectedMessage = message;
-                [self presentDetailsForMessage:message];
-            }
-                break;
-            case MessageActionSave:
-            {
-                if ([Message isImageMessage:message]) {
-                    [self saveImageFromMessage:message cell:cell];
-                } else {
-                    self.dataSource.selectedMessage = message;
-                    UIView *targetView = cell.selectionView;
-
-                    UIActivityViewController *saveController = [[UIActivityViewController alloc] initWithMessage:message from:targetView];
-                    [self presentViewController:saveController animated:YES completion:nil];
-                }
-            }
-                break;
-            case MessageActionEdit:
-            {
-                self.dataSource.editingMessage = message;
-                [self.delegate conversationContentViewController:self didTriggerEditingMessage:message];
-            }
-                break;
-            case MessageActionSketchDraw:
-            {
-                [self openSketchForMessage:message inEditMode:CanvasViewControllerEditModeDraw];
-            }
-                break;
-            case MessageActionSketchEmoji:
-            {
-                [self openSketchForMessage:message inEditMode:CanvasViewControllerEditModeEmoji];
-            }
-                break;
-            case MessageActionSketchText:
-            {
-                // Not implemented yet
-            }
-                break;
-            case MessageActionLike:
-            {
-                BOOL liked = ![Message isLikedMessage:message];
-                
-                NSIndexPath *indexPath = [self.dataSource indexPathForMessage:message];
-                
-                [[ZMUserSession sharedSession] performChanges:^{
-                    [Message setLikedMessage:message liked:liked];
-                }];
-                
-                if (liked) {
-                    // Deselect if necessary to show list of likers
-                    if (self.dataSource.selectedMessage == message) {
-                        [self tableView:self.tableView willSelectRowAtIndexPath:indexPath];
-                    }
-                } else {
-                    // Select if necessary to prevent message from collapsing
-                    if (self.dataSource.selectedMessage != message && ![Message hasReactions:message]) {
-                        [self tableView:self.tableView willSelectRowAtIndexPath:indexPath];
-                        [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
-                    }
-                }
-            }
-                break;
-            case MessageActionForward:
-            {
-                [self showForwardForMessage:message fromCell:cell];
-            }
-                break;
-            case MessageActionShowInConversation:
-            {
-                [self scrollTo:message completion:^(UIView *cell) {
-                    [self.dataSource highlightMessage:message];
-                }];
-            }
-                break;
-            case MessageActionCopy:
-            {
-                [Message copy:message in:UIPasteboard.generalPasteboard];
-            }
-                break;
-            
-            case MessageActionDownload:
-            {
-                [ZMUserSession.sharedSession enqueueChanges:^{
-                    [message.fileMessageData requestFileDownload];
-                }];
-            }
-                break;
-            case MessageActionReply:
-            {
-                [self.delegate conversationContentViewController:self didTriggerReplyingToMessage:message];
-            }
-                break;
-            case MessageActionOpenQuote:
-            {
-                if (message.textMessageData.quote) {
-                    id<ZMConversationMessage> quote = message.textMessageData.quote;
-                    [self scrollTo:quote completion:^(UIView *cell) {
-                        [self.dataSource highlightMessage:quote];
-                    }];
-                }
-            }
-                break;
-            case MessageActionOpenDetails:
-            {
-                MessageDetailsViewController *detailsViewController = [[MessageDetailsViewController alloc] initWithMessage:message];
-                [self.parentViewController presentViewController:detailsViewController animated:YES completion:nil];
-            }
-                break;
-        }
-    };
-
-    BOOL shouldDismissModal = actionId != MessageActionDelete && actionId != MessageActionCopy;
-
-    if (self.messagePresenter.modalTargetController.presentedViewController != nil && shouldDismissModal) {
-        [self.messagePresenter.modalTargetController dismissViewControllerAnimated:YES completion:^{
-            action();
-        }];
-    }
-    else {
-        action();
-    }
-}
-
 - (void)updateVisibleMessagesWindow
 {
     BOOL isViewVisible = YES;
@@ -535,32 +373,6 @@
     [self.messagePresenter openMessage:message targetView:cell actionResponder:self];
 }
 
-- (void)openSketchForMessage:(id<ZMConversationMessage>)message inEditMode:(CanvasViewControllerEditMode)editMode
-{
-    CanvasViewController *canvasViewController = [[CanvasViewController alloc] init];
-    canvasViewController.sketchImage = [UIImage imageWithData:message.imageMessageData.imageData];
-    canvasViewController.delegate = self;
-    canvasViewController.title = message.conversation.displayName.uppercaseString;
-    [canvasViewController selectWithEditMode:editMode animated:NO];
-    
-    [self presentViewController:[canvasViewController wrapInNavigationController] animated:YES completion:nil];
-}
-
-- (void)canvasViewController:(CanvasViewController *)canvasViewController didExportImage:(UIImage *)image
-{
-    [self.parentViewController dismissViewControllerAnimated:YES completion:^{
-        if (image) {
-            NSData *imageData = UIImagePNGRepresentation(image);
-            
-            [[ZMUserSession sharedSession] enqueueChanges:^{
-                [self.conversation appendMessageWithImageData:imageData];
-            } completionHandler:^{
-                [[Analytics shared] tagMediaActionCompleted:ConversationMediaActionPhoto inConversation:self.conversation];
-            }];
-        }
-    }];
-}
-
 #pragma mark - Custom UI, utilities
 
 - (void)createMentionsResultsView
@@ -609,6 +421,35 @@
     });
 }
 
+- (NSIndexPath *) willSelectRowAtIndexPath:(NSIndexPath *)indexPath tableView:(UITableView *)tableView
+{
+    ZMMessage *message = (ZMMessage *)[self.dataSource.messages objectAtIndex:indexPath.section];
+    NSIndexPath *selectedIndexPath = nil;
+
+    // If the menu is visible, hide it and do nothing
+    if (UIMenuController.sharedMenuController.isMenuVisible) {
+        [UIMenuController.sharedMenuController setMenuVisible:NO animated:YES];
+        return nil;
+    }
+
+    if ([message isEqual:self.dataSource.selectedMessage]) {
+
+        // If this cell is already selected, deselect it.
+        self.dataSource.selectedMessage  = nil;
+        [self.dataSource deselectWithIndexPath:indexPath];
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    } else {
+        if (tableView.indexPathForSelectedRow != nil) {
+            [self.dataSource deselectWithIndexPath:tableView.indexPathForSelectedRow];
+        }
+        self.dataSource.selectedMessage = message;
+        [self.dataSource selectWithIndexPath:indexPath];
+        selectedIndexPath = indexPath;
+    }
+
+    return selectedIndexPath;
+}
+
 @end
 
 
@@ -617,16 +458,6 @@
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // TODO 2838: Support ping animation, ephemeral timer and media playback
-//    if ([cell isKindOfClass:[TextMessageCell class]] || [cell isKindOfClass:[AudioMessageCell class]]) {
-//        ConversationCell *messageCell = (ConversationCell *)cell;
-//        MediaPlaybackManager *mediaPlaybackManager = [AppDelegate sharedAppDelegate].mediaPlaybackManager;
-//
-//        if (mediaPlaybackManager.activeMediaPlayer != nil && mediaPlaybackManager.activeMediaPlayer.sourceMessage == messageCell.message) {
-//            [self.delegate conversationContentViewController:self willDisplayActiveMediaPlayerForMessage:messageCell.message];
-//        }
-//    }
-    
     if ([cell respondsToSelector:@selector(willDisplayCell)] && self.onScreen) {
         [(id)cell willDisplayCell];
     }
@@ -643,15 +474,6 @@
 
 - (void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // TODO 2838: Support ping animation, ephemeral timer and media playback
-//    if ([cell isKindOfClass:[TextMessageCell class]] || [cell isKindOfClass:[AudioMessageCell class]]) {
-//        ConversationCell *messageCell = (ConversationCell *)cell;
-//        MediaPlaybackManager *mediaPlaybackManager = [AppDelegate sharedAppDelegate].mediaPlaybackManager;
-//        if (mediaPlaybackManager.activeMediaPlayer != nil && mediaPlaybackManager.activeMediaPlayer.sourceMessage == messageCell.message) {
-//            [self.delegate conversationContentViewController:self didEndDisplayingActiveMediaPlayerForMessage:messageCell.message];
-//        }
-//    }
-    
     if ([cell respondsToSelector:@selector(didEndDisplayingCell)]) {
         [(id)cell didEndDisplayingCell];
     }
@@ -672,35 +494,7 @@
 
 - (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    ZMMessage *message = (ZMMessage *)[self.dataSource.messages objectAtIndex:indexPath.section];
-    NSIndexPath *selectedIndexPath = nil;
-
-    // If the menu is visible, hide it and do nothing
-    if (UIMenuController.sharedMenuController.isMenuVisible) {
-        [UIMenuController.sharedMenuController setMenuVisible:NO animated:YES];
-        return nil;
-    }
-
-    if ([message isEqual:self.dataSource.selectedMessage]) {
-        
-        // If this cell is already selected, deselect it.
-        self.dataSource.selectedMessage  = nil;
-        [self.dataSource deselectWithIndexPath:indexPath];
-        [tableView deselectRowAtIndexPath:indexPath animated:YES];
-        
-        // Make table view to update cells with animation (TODO can be removed when legacy cells are removed)
-        [tableView beginUpdates];
-        [tableView endUpdates];
-    } else {
-        if (tableView.indexPathForSelectedRow != nil) {
-            [self.dataSource deselectWithIndexPath:tableView.indexPathForSelectedRow];
-        }
-        self.dataSource.selectedMessage = message;
-        [self.dataSource selectWithIndexPath:indexPath];
-        selectedIndexPath = indexPath;
-    }
-    
-    return selectedIndexPath;
+    return [self willSelectRowAtIndexPath:indexPath tableView:tableView];
 }
 
 - (void)tableView:(UITableView *)tableView prefetchRowsAtIndexPaths:(NSArray<NSIndexPath *> *)indexPaths

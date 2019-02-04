@@ -23,16 +23,7 @@ import SafariServices
 class SettingsCellDescriptorFactory {
     static let settingsDevicesCellIdentifier: String = "devices"
     let settingsPropertyFactory: SettingsPropertyFactory
-    
-    class DismissStepDelegate: NSObject {
-        var strongCapture: DismissStepDelegate?
-        // TODO: Remove
-        @objc func didCompleteFormStep(_ viewController: UIViewController!) {
-            NotificationCenter.default.post(name: NSNotification.Name.DismissSettings, object: nil)
-            self.strongCapture = nil
-        }
-    }
-    
+        
     init(settingsPropertyFactory: SettingsPropertyFactory) {
         self.settingsPropertyFactory = settingsPropertyFactory
     }

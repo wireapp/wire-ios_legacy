@@ -122,7 +122,7 @@ class SettingsPropertyFactory {
                 switch(value) {
                 case .string(let stringValue):
                     guard let selfUser = self.selfUser else { requireInternal(false, "Attempt to modify a user property without a self user"); break }
-                    
+
                     var inOutString: NSString? = stringValue as NSString
                     try type(of: selfUser).validateName(&inOutString)
                     self.userSession?.enqueueChanges {
@@ -132,7 +132,16 @@ class SettingsPropertyFactory {
                     throw SettingsPropertyError.WrongValue("Incorrect type \(value) for key \(propertyName)")
                 }
             }
-            
+
+            return SettingsBlockProperty(propertyName: propertyName, getAction: getAction, setAction: setAction)
+        case .email:
+            // This is a read only item
+            let getAction: GetAction = { [unowned self] (property: SettingsBlockProperty) -> SettingsPropertyValue in
+                return SettingsPropertyValue.string(value: self.selfUser?.emailAddress ?? "")
+            }
+
+            let setAction: SetAction = { (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> () in }
+
             return SettingsBlockProperty(propertyName: propertyName, getAction: getAction, setAction: setAction)
 
         case .accentColor:

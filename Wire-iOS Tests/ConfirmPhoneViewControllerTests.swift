@@ -26,6 +26,7 @@ final class ConfirmPhoneViewControllerTests: CoreDataSnapshotTestCase {
 
     override func setUp() {
         super.setUp()
+
         if textFieldTint == nil {
             textFieldTint = UITextField.appearance().tintColor
         }
@@ -47,7 +48,8 @@ final class ConfirmPhoneViewControllerTests: CoreDataSnapshotTestCase {
         UITextField.appearance().tintColor = textFieldTint
     }
 
-    func testConfirmationSentToPhoneNumber(){
+    func testConfirmationSentToPhoneNumber() {
         verify(view: sut.view)
     }
+
 }

@@ -49,7 +49,7 @@ class BackgroundViewControllerTests: CoreDataSnapshotTestCase {
         ///TODO: hacks to make below line passes
         selfUser.accentColorValue = selfUser.accentColorValue
 
-        XCTAssertTrue(waitForGroupsToBeEmpty([sut.dispatchGroup]))
+        XCTAssertTrue(waitForGroupsToBeEmpty([sut.dispatchGroup], timeout: 10))
         
         // WHEN & THEN
         ///TODO: this tests sometime fails, the image is not loaded without above hack

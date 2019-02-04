@@ -18,7 +18,7 @@
 
 import UIKit
 
-class ConversationMessageToolboxCell: UIView, ConversationMessageCell, MessageToolboxViewDelegate {
+final class ConversationMessageToolboxCell: UIView, ConversationMessageCell, MessageToolboxViewDelegate {
 
     struct Configuration {
         let message: ZMConversationMessage

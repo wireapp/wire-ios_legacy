@@ -17,7 +17,6 @@
 //
 
 import UIKit
-import Cartography
 
 @objcMembers class CustomSpacingStackView: UIView {
 
@@ -27,15 +26,19 @@ import Cartography
      This initializer must be used if you intend to call wr_addCustomSpacing.
      */
     init(customSpacedArrangedSubviews subviews : [UIView]) {
-        var subviewsWithSpacers : [UIView] = []
-        
-        subviews.forEach { view in
-            subviewsWithSpacers.append(view)
-            subviewsWithSpacers.append(SpacingView(0))
+        if #available(iOS 11, *) {
+            stackView = UIStackView(arrangedSubviews: subviews)
+        } else {
+            var subviewsWithSpacers : [UIView] = []
+
+            subviews.forEach { view in
+                subviewsWithSpacers.append(view)
+                subviewsWithSpacers.append(SpacingView(0))
+            }
+
+            stackView = UIStackView(arrangedSubviews: subviewsWithSpacers)
         }
-        
-        stackView = UIStackView(arrangedSubviews: subviewsWithSpacers)
-        
+
         super.init(frame: .zero)
         
         addSubview(stackView)
@@ -49,15 +52,21 @@ import Cartography
     
     /**
      Add a custom spacing after a view.
-     
+
      This is a approximation of the addCustomSpacing method only available since iOS 11. This method
      has several constraints:
      
      - The stackview must be initialized with customSpacedArrangedSubviews
      - spacing dosesn't update if views are hidden after this method is called
      - custom spacing can't be smaller than 2x the minimum spacing
+
+     On iOS 11, it uses the default system implementation.
      */
     func wr_addCustomSpacing(_ customSpacing: CGFloat, after view: UIView) {
+        if #available(iOS 11, *) {
+            return stackView.setCustomSpacing(customSpacing, after: view)
+        }
+
         guard let spacerIndex = stackView.subviews.index(of: view)?.advanced(by: 1),
             let spacer = stackView.subviews[spacerIndex] as? SpacingView else { return }
         
@@ -69,9 +78,8 @@ import Cartography
     }
     
     private func createConstraints() {
-        constrain(self, stackView) { view, stackView in
-            stackView.edges == view.edges
-        }
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.fitInSuperview()
     }
     
     var alignment: UIStackView.Alignment {
@@ -121,3 +129,37 @@ fileprivate class SpacingView : UIView {
     
 }
 
+/**
+ * A view that can contain a label with additional content insets.
+ */
+
+class ContentInsetView: UIView {
+    let view: UIView
+
+    init(_ view: UIView, inset: UIEdgeInsets) {
+        self.view = view
+        super.init(frame: .zero)
+
+        setContentCompressionResistancePriority(UILayoutPriority(rawValue: 999), for: .vertical)
+        setContentCompressionResistancePriority(UILayoutPriority(rawValue: 999), for: .horizontal)
+
+        addSubview(view)
+        view.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            view.topAnchor.constraint(equalTo: topAnchor, constant: inset.top),
+            view.bottomAnchor.constraint(equalTo: bottomAnchor, constant: inset.bottom),
+            view.leadingAnchor.constraint(equalTo: leadingAnchor, constant: inset.left),
+            view.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -inset.right)
+        ])
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    override var intrinsicContentSize: CGSize {
+        return view.intrinsicContentSize
+    }
+
+}
