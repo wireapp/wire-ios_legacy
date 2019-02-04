@@ -140,7 +140,7 @@ class ConversationAvatarViewTests: CoreDataSnapshotTestCase {
         thirdUser.name = "Anna"
         let conversation = ZMConversation.insertGroupConversation(into: uiMOC, withParticipants: [otherUser, thirdUser])
         
-        (conversation?.activeParticipants.array as! [ZMUser]).assignSomeAccentColors()
+        conversation?.sortedActiveParticipants.assignSomeAccentColors()
         
         // WHEN
         sut.conversation = conversation
@@ -153,8 +153,8 @@ class ConversationAvatarViewTests: CoreDataSnapshotTestCase {
         // GIVEN
         let conversation = ZMConversation.insertGroupConversation(into: uiMOC, withParticipants: usernames.map(createUser))
         
-        (conversation?.activeParticipants.array as! [ZMUser]).assignSomeAccentColors()
-        
+        conversation?.sortedActiveParticipants.assignSomeAccentColors()
+
         // WHEN
         sut.conversation = conversation
         
