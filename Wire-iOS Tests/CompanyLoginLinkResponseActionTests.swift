@@ -47,7 +47,7 @@ class CompanyLoginLinkResponseActionTests: XCTestCase {
         let action = context.actionForValidLink()
 
         // THEN
-        XCTAssertEqual(action, .disallowStartingFlow)
+        XCTAssertEqual(action, .preventStartingFlow)
     }
 
     func testThatItDoesNotAllowCompanyLogin_ValidLink_3AccountsAndValidState() {
@@ -69,7 +69,7 @@ class CompanyLoginLinkResponseActionTests: XCTestCase {
         let action = context.actionForValidLink()
 
         // THEN
-        XCTAssertEqual(action, .disallowStartingFlow)
+        XCTAssertEqual(action, .preventStartingFlow)
     }
 
     // MARK: - Invalid Link
@@ -93,7 +93,7 @@ class CompanyLoginLinkResponseActionTests: XCTestCase {
         let action = context.actionForInvalidRequest(error: .invalidLink)
 
         // THEN
-        XCTAssertEqual(action, .disallowStartingFlow)
+        XCTAssertEqual(action, .preventStartingFlow)
     }
 
 }

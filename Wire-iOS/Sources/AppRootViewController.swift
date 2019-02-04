@@ -647,7 +647,7 @@ extension AppRootViewController: SessionManagerURLHandlerDelegate {
         case .allowStartingFlow:
             callback(true)
 
-        case .disallowStartingFlow:
+        case .preventStartingFlow:
             callback(false)
 
         case .showDismissableAlert(let title, let message, let allowStartingFlow):

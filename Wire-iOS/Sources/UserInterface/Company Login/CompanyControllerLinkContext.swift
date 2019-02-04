@@ -27,7 +27,7 @@ enum CompanyLoginLinkResponseAction: Equatable {
     case allowStartingFlow
 
     /// Do not start the company login flow.
-    case disallowStartingFlow
+    case preventStartingFlow
 
     /// Show an alert with a dismiss button.
     case showDismissableAlert(title: String, message: String, allowStartingFlow: Bool)
@@ -54,7 +54,7 @@ extension CompanyLoginLinkResponseContext {
     /// The action to execute in case of a valid link.
     func actionForValidLink() -> CompanyLoginLinkResponseAction {
         if userIsInIncompatibleState {
-            return .disallowStartingFlow
+            return .preventStartingFlow
         } else if numberOfAccounts < SessionManager.maxNumberAccounts {
             return .allowStartingFlow
         } else {
@@ -69,7 +69,7 @@ extension CompanyLoginLinkResponseContext {
     /// The action to execute in case of an invalid link.
     func actionForInvalidRequest(error: ConmpanyLoginRequestError) -> CompanyLoginLinkResponseAction {
         guard !userIsInIncompatibleState else {
-            return .disallowStartingFlow
+            return .preventStartingFlow
         }
 
         switch error {
