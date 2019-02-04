@@ -16,35 +16,17 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import XCTest
+import Foundation
 @testable import Wire
 
-final class ConversationContentViewControllerSnapshotTests: CoreDataSnapshotTestCase {
-    
-    var sut: ConversationContentViewController!
-    var mockConversation: ZMConversation!
-    
-    override func setUp() {
-        super.setUp()
-        mockConversation = createTeamGroupConversation()
-
-        sut = ConversationContentViewController(conversation: mockConversation)
-
-        ///Call the setup codes in viewDidLoad
-        sut.loadViewIfNeeded()
-
-        /// TODO: remove this after snapshot is created
-//        recordMode = true
-    }
-    
-    override func tearDown() {
-        sut = nil
-        mockConversation = nil
-
-        super.tearDown()
+final class MockZMUserSession: NSObject, ZMUserSessionInterface {
+    func performChanges(_ block: @escaping () -> Swift.Void) {
+        block()
     }
 
-    func testForInitState(){
-//        verify(view: sut.view)
+    func enqueueChanges(_ block: @escaping () -> Swift.Void) {
+        block()
     }
+
+    var isNotificationContentHidden: Bool = false
 }

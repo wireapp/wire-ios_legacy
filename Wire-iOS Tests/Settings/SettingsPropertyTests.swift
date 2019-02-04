@@ -34,18 +34,6 @@ import XCTest
     
 }
 
-class MockZMUserSession: ZMUserSessionInterface {
-    func performChanges(_ block: @escaping () -> Swift.Void) {
-        block()
-    }
-    
-    func enqueueChanges(_ block: @escaping () -> Swift.Void) {
-        block()
-    }
-    
-    var isNotificationContentHidden: Bool = false
-}
-
 class ZMMockAVSMediaManager: AVSMediaManagerInterface {
     var isMicrophoneMuted: Bool = false
 
