@@ -1256,6 +1256,9 @@
 "login.sso.alert.action" = "Log in";
 "login.sso.alert.text_field.placeholder" = "SSO access code";
 
+"login.sso.start_error_title" = "Cannot Start Company Login";
+"login.sso.link_error_message" = "The company login link you clicked is not valid. Please contact your administrator to resolve the issue.";
+
 "login.sso.error.alert.title" = "Something went wrong";
 "login.sso.error.alert.invalid_code.title" = "Invalid code.";
 "login.sso.error.alert.invalid_code.message" = "Please verify your company SSO access code and try again.";
