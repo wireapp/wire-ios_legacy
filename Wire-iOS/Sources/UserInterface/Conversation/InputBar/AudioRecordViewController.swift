@@ -78,7 +78,6 @@ private let zmLog = ZMSLog(tag: "UI")
         configureViews()
         configureAudioRecorder()
         createConstraints()
-        
 
         if DeveloperMenuState.developerMenuEnabled() && Settings.shared().maxRecordingDurationDebug != 0 {
             self.recorder.maxRecordingDuration = Settings.shared().maxRecordingDurationDebug
@@ -91,8 +90,6 @@ private let zmLog = ZMSLog(tag: "UI")
     }
     
     func beginRecording() {
-        
-        
         self.recorder.startRecording { (success) in
             let feedbackGenerator = UINotificationFeedbackGenerator()
             feedbackGenerator.prepare()

@@ -95,7 +95,7 @@ class CallInfoConfigurationTests: XCTestCase {
         let mockVoiceChannel = MockVoiceChannel(conversation: mockConversation)
         let fixture = CallInfoTestFixture(otherUser: mockConversation.connectedUser!)
         
-        (mockConversation.activeParticipants.lastObject as? MockUser)?.untrusted = true
+        ((mockConversation.sortedActiveParticipants.last as Any) as? MockUser)?.untrusted = true
         mockVoiceChannel.mockCallState = .incoming(video: false, shouldRing: true, degraded: true)
         mockVoiceChannel.mockInitiator = otherUser
         
@@ -112,7 +112,7 @@ class CallInfoConfigurationTests: XCTestCase {
         let mockVoiceChannel = MockVoiceChannel(conversation: mockConversation)
         let fixture = CallInfoTestFixture(otherUser: mockConversation.connectedUser!)
         
-        (mockConversation.activeParticipants.lastObject as? MockUser)?.untrusted = true
+        ((mockConversation.sortedActiveParticipants.last as Any) as? MockUser)?.untrusted = true
         mockVoiceChannel.mockCallState = .outgoing(degraded: true)
         mockVoiceChannel.mockInitiator = selfUser
         
@@ -457,7 +457,7 @@ class CallInfoConfigurationTests: XCTestCase {
         let fixture = CallInfoTestFixture(otherUser: otherUser, groupSize: .large)
         
         let mockGroupConversation = MockConversation.groupConversation()
-        mockGroupConversation.activeParticipants = NSOrderedSet(array: Array(mockUsers[0..<fixture.groupSize.rawValue]))
+        mockGroupConversation.sortedActiveParticipants = Array(mockUsers[0..<fixture.groupSize.rawValue])
         
         let mockConversation = ((mockGroupConversation as Any) as! ZMConversation)
         let mockVoiceChannel = MockVoiceChannel(conversation: mockConversation)

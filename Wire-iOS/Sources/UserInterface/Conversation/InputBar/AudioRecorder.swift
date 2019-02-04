@@ -112,8 +112,8 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
     }
     
     init(format: AudioRecorderFormat = .m4A, maxRecordingDuration: TimeInterval?, maxFileSize: UInt64?) {
-        self.maxRecordingDuration = maxRecordingDuration
         self.format = format
+        self.maxRecordingDuration = maxRecordingDuration
         self.maxFileSize = maxFileSize
         super.init()
         setupDidEnterBackgroundObserver()

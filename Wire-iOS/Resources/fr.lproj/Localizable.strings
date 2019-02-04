@@ -1104,6 +1104,10 @@
 "password.guidance.tooshort" = "Au moins 8 caractères";
 "password.guidance.toolong" = "Trop de caractères";
 
+"phone.guidance.invalid" = "Numéro de téléphone incorrect";
+"phone.guidance.tooshort" = "Le numéro est trop court";
+"phone.guidance.toolong" = "Trop de caractères";
+
 // Landing screen
 
 "landing.app_name" = "Wire";
@@ -1129,9 +1133,11 @@
 "team.email.button.learn_more" = "En savoir plus";
 
 "team.activation_code.headline" = "Vous avez du courrier";
+"team.phone_activation_code.headline" = "Vérification";
 "team.activation_code.subheadline" = "Saisir le code de vérification que nous avons envoyé à %@.";
 "team.activation_code.button.resend" = "Renvoyer le code";
 "team.activation_code.button.change_email" = "Modifier l’adresse e-mail";
+"team.activation_code.button.change_phone" = "Changer le numéro de téléphone";
 
 "team.full_name.headline" = "Votre nom";
 "team.full_name.textfield.placeholder" = "Nom complet";
@@ -1147,7 +1153,7 @@
 // Invite Team Members
 
 "team.invite.header.title" = "Créez votre équipe";
-"team.invite.header.subtitle" = "Your Wire team is ready to go. Invite your colleagues as members.";
+"team.invite.header.subtitle" = "Votre équipe Wire est prête. Invitez vos collègues à devenir membres.";
 "team.invite.textfield.placeholder" = "quelqun@votre-entreprise.fr";
 "team.invite.textfield.accesibility" = "Entrez l'adresse email de la personne à inviter.";
 "team.invite.learn_more.title" = "En savoir plus";
@@ -1198,6 +1204,9 @@
 "registration.close_phone_invitation_button.email_title" = "S’inscrire avec l'e-mail";
 "registration.close_phone_invitation_button.phone_title" = "Utiliser un autre téléphone";
 
+"registration.register_by_phone" = "Téléphone";
+"registration.register_by_email" = "E-mail";
+
 "registration.enter_phone_number.title" = "Modifier le numéro de téléphone";
 "registration.enter_phone_number.placeholder" = "Numéro de téléphone";
 
@@ -1209,13 +1218,6 @@
 "registration.verify_email.resend.instructions" = "Message non reçu ?";
 "registration.verify_email.resend.button_title" = "Renvoyer";
 
-"registration.select_picture.subtitle" = "Wire est tellement plus beau avec une image.";
-"registration.select_picture.button_title" = "Choisissez la vôtre";
-"registration.keep_picture.button_title" = "Garder celle-là";
-"registration.camera_action.title" = "Prendre une photo";
-"registration.photo_gallery_action.title" = "Choisissez une photo";
-"registration.cancel_action.title" = "Annuler";
-
 "registration.no_history.hero" = "C'est la première fois que vous utilisez Wire sur cet appareil.";
 "registration.no_history.subtitle" = "Pour des raisons de confidentialité, votre historique de conversation n'apparaîtra pas ici.";
 "registration.no_history.got_it" = "OK";
@@ -1225,8 +1227,8 @@
 "registration.alert.account_exists.message_phone" = "Le numéro de téléphone que vous avez utilisé pour vous inscrire est lié à un compte déjà existant.\n\nUtilisez un autre numéro, ou essayez de vous connecter si ce compte vous appartient.";
 "registration.alert.account_exists.message_email" = "L'adresse email que vous avez utilisé pour vous inscrire est lié à un compte déjà existant.\n\n Utilisez une autre adresse, ou essayez de vous connecter si ce compte vous appartient.";
 "registration.alert.change_email_action" = "Modifier l'adresse mail";
-"registration.alert.change_phone_action" = "Modifier le numéro de téléphone";
-"registration.alert.change_signin_action" = "Connexion";
+"registration.alert.change_phone_action" = "Utiliser un autre numéro";
+"registration.alert.change_signin_action" = "Se connecter";
 
 // Restore History Warning Alert
 "registration.no_history.restore_backup_warning.title" = "Restaurer l'historique";
@@ -1311,13 +1313,14 @@
 "registration.push_access_denied.settings_button.title" = "Allez dans les paramètres";
 "registration.push_access_denied.maybe_later_button.title" = "Peut-être plus tard";
 
+"registration.personal.title" = "Créer un compte";
 "registration.signin.title" = "Se connecter";
-"registration.signin.too_many_devices.title" = "";
+"registration.signin.too_many_devices.title" = "Trop d’Appareils";
 "registration.signin.too_many_devices.subtitle" = "Supprimez un de vos autres appareils pour commencer à utiliser Wire sur celui-ci.";
 "registration.signin.too_many_devices.manage_button.title" = "Gérer les appareils";
 "registration.signin.too_many_devices.sign_out_button.title" = "Se déconnecter";
-"registration.signin.email_button.title" = "E-mail";
-"registration.signin.phone_button.title" = "Téléphone";
+
+"registration.signin.too_many_devices.manage_screen.title" = "Supprimer un appareil";
 
 "registration.signin.alert.password_needed.title" = "Mot de passe requis";
 "registration.signin.alert.password_needed.message" = "Veuillez saisir votre mot de passe pour vous connecter.";
@@ -1337,6 +1340,12 @@
 "signin.confirm" = "Se connecter";
 "signin.company_idp.button.title" = "Entreprises";
 
+"signin_logout.subheadline" = "Votre session a expiré, veuillez vous reconnecter pour continuer.";
+"signin_logout.email.subheadline" = "Votre session a expiré. Entrez votre adresse email et votre mot de passe pour continuer.";
+"signin_logout.phone.subheadline" = "Votre session a expiré. Entrez votre numéro de téléphone de continuer.";
+"signin_logout.sso.subheadline" = "Votre session a expiré. Connectez-vous avec votre compte entreprise pour continuer.";
+"signin_logout.sso.buton" = "Connexion avec Entreprise";
+
 "registration.phone_country" = "Pays";
 "registration.phone_code" = "Indicatif du pays";
 "registration.phone_country.hint" = "Tapez deux fois pour sélectionner un autre pays.";
@@ -1348,7 +1357,7 @@
 "registration.add_phone_number.hero.paragraph" = "Cela nous aide à trouver des personnes que vous pouvez connaître. Ces informations ne seront jamais partagées.";
 "registration.add_phone_number.skip_button.title" = "Pas maintenant";
 
-"registration.add_email_password.hero.title" = "Ajouter votre e-mail et votre mot de passe.";
+"registration.add_email_password.hero.title" = "Ajouter votre e-mail et votre mot de passe";
 "registration.add_email_password.hero.paragraph" = "Cela vous permet d'utiliser Wire sur plusieurs appareils.";
 
 "registration.email_invitation.title" = "Invitation";

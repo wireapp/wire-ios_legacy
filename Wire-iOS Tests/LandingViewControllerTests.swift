@@ -50,6 +50,8 @@ final class LandingViewControllerTests: XCTestCase {
     
     func testThatStackViewAxisChanagesWhenSizeClassChanges() {
         // GIVEN
+        sut.loadViewIfNeeded()
+        
         mockDevice.userInterfaceIdiom = .pad
         var traitCollection = UITraitCollection(horizontalSizeClass: .regular)
         mockParentViewControler.setOverrideTraitCollection(traitCollection, forChild: sut)
@@ -65,20 +67,4 @@ final class LandingViewControllerTests: XCTestCase {
         XCTAssertEqual(sut.buttonStackView.axis, .vertical, "buttonStackView.axis is \(sut.buttonStackView.axis)")
     }
 
-    func testThatStackViewAxisDoesNotChanagesWhenSizeClassChangesOnIPhone() {
-        // GIVEN
-        mockDevice.userInterfaceIdiom = .phone
-        var traitCollection = UITraitCollection(horizontalSizeClass: .regular)
-        mockParentViewControler.setOverrideTraitCollection(traitCollection, forChild: sut)
-        sut.traitCollectionDidChange(nil)
-        XCTAssertEqual(sut.buttonStackView.axis, .vertical, "buttonStackView.axis is \(sut.buttonStackView.axis)")
-
-        // WHEN
-        traitCollection = UITraitCollection(horizontalSizeClass: .compact)
-        mockParentViewControler.setOverrideTraitCollection(traitCollection, forChild: sut)
-        sut.traitCollectionDidChange(nil)
-
-        // THEN
-        XCTAssertEqual(sut.buttonStackView.axis, .vertical, "buttonStackView.axis is \(sut.buttonStackView.axis)")
-    }
 }

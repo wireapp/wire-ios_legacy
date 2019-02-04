@@ -210,27 +210,25 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
             launchImageViewController.showLoadingScreen()
             viewController = launchImageViewController
         case .unauthenticated(error: let error):
-            UIColor.setAccentOverride(ZMUser.pickRandomAcceptableAccentColor())
-            mainWindow.tintColor = UIColor.accent()
+            mainWindow.tintColor = .black
+            AccessoryTextField.appearance(whenContainedInInstancesOf: [AuthenticationStepController.self]).tintColor = UIColor.Team.activeButton
 
             // Only execute handle events if there is no current flow
-            guard authenticationCoordinator == nil else {
+            guard authenticationCoordinator == nil || error?.userSessionErrorCode == .addAccountRequested else {
                 break
             }
 
-            let navigationController = NavigationController()
-            navigationController.backButtonEnabled = false
-            navigationController.logoEnabled = false
-            navigationController.isNavigationBarHidden = true
+            let navigationController = UINavigationController(navigationBarClass: TransparentNavigationBar.self, toolbarClass: nil)
 
             authenticationCoordinator = AuthenticationCoordinator(presenter: navigationController,
                                                                   unauthenticatedSession: UnauthenticatedSession.sharedSession!,
-                                                                  sessionManager: SessionManager.shared!)
+                                                                  sessionManager: SessionManager.shared!,
+                                                                  featureProvider: BuildSettingAuthenticationFeatureProvider())
 
             authenticationCoordinator!.delegate = appStateController
             authenticationCoordinator!.startAuthentication(with: error, numberOfAccounts: SessionManager.numberOfAccounts)
 
-            viewController = KeyboardAvoidingViewController(viewController: navigationController)
+            viewController = navigationController
 
         case .authenticated(completedRegistration: let completedRegistration):
             UIColor.setAccentOverride(.undefined)

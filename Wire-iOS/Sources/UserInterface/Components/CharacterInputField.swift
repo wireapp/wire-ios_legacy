@@ -160,6 +160,7 @@ public class CharacterInputField: UIControl, UITextInputTraits, TextContainer {
         
         stackView.spacing = 8
         stackView.axis = .horizontal
+        stackView.distribution = .fillEqually
         
         characterViews.forEach(self.stackView.addArrangedSubview)
         
@@ -256,6 +257,7 @@ public class CharacterInputField: UIControl, UITextInputTraits, TextContainer {
     
     // MARK: - UITextInputTraits
     public var keyboardType: UIKeyboardType = .default
+    public var textContentType: UITextContentType! = nil
 }
 
 extension CharacterInputField: UIKeyInput {

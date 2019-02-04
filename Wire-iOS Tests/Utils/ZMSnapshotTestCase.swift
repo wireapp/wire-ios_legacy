@@ -187,8 +187,8 @@ extension ZMSnapshotTestCase {
         container.backgroundColor = snapshotBackgroundColor
         container.addSubview(view)
 
-        view.fitInSuperview()
         view.translatesAutoresizingMaskIntoConstraints = false
+        view.fitInSuperview()
         return container
     }
 

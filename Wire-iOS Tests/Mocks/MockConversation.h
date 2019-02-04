@@ -27,7 +27,8 @@
 @property (nonatomic, copy) NSString *displayName;
 @property (nonatomic) ZMUser *connectedUser;
 @property (nonatomic) ZMConversationType conversationType;
-@property (nonatomic) NSOrderedSet *activeParticipants;
+@property (nonatomic) NSArray *sortedActiveParticipants;
+@property (nonatomic) NSSet *activeParticipants;
 @property (nonatomic) ZMConversationSecurityLevel securityLevel;
 @property (nonatomic) ZMConnectionStatus relatedConnectionState;
 @property (nonatomic) BOOL canStartVideoCall;

@@ -1104,6 +1104,10 @@
 "password.guidance.tooshort" = "At least 8 characters";
 "password.guidance.toolong" = "Too many characters";
 
+"phone.guidance.invalid" = "Invalid phone number";
+"phone.guidance.tooshort" = "Phone number is too short";
+"phone.guidance.toolong" = "Too many characters";
+
 // Landing screen
 
 "landing.app_name" = "Wire";
@@ -1129,9 +1133,11 @@
 "team.email.button.learn_more" = "Learn More";
 
 "team.activation_code.headline" = "You’ve got mail";
+"team.phone_activation_code.headline" = "Verification";
 "team.activation_code.subheadline" = "Enter the verification code we sent to %@.";
 "team.activation_code.button.resend" = "Resend code";
 "team.activation_code.button.change_email" = "Change email";
+"team.activation_code.button.change_phone" = "Change phone number";
 
 "team.full_name.headline" = "Your name";
 "team.full_name.textfield.placeholder" = "Full name";
@@ -1198,6 +1204,9 @@
 "registration.close_phone_invitation_button.email_title" = "Register by email";
 "registration.close_phone_invitation_button.phone_title" = "Use another phone";
 
+"registration.register_by_phone" = "Phone";
+"registration.register_by_email" = "Email";
+
 "registration.enter_phone_number.title" = "Edit phone number";
 "registration.enter_phone_number.placeholder" = "Phone number";
 
@@ -1209,13 +1218,6 @@
 "registration.verify_email.resend.instructions" = "Didn’t get the message?";
 "registration.verify_email.resend.button_title" = "Re-send";
 
-"registration.select_picture.subtitle" = "Wire is so much nicer with a picture.";
-"registration.select_picture.button_title" = "Choose your own";
-"registration.keep_picture.button_title" = "Keep this one";
-"registration.camera_action.title" = "Take photo";
-"registration.photo_gallery_action.title" = "Choose Photo";
-"registration.cancel_action.title" = "Cancel";
-
 "registration.no_history.hero" = "It’s the first time you’re using Wire on this device.";
 "registration.no_history.subtitle" = "For privacy reasons, your conversation history will not appear here.";
 "registration.no_history.got_it" = "OK";
@@ -1225,8 +1227,8 @@
 "registration.alert.account_exists.message_phone" = "The phone number you used to register is already linked to an account.\n\nUse another phone number, or try to log in if you own this account.";
 "registration.alert.account_exists.message_email" = "The email address you used to register is already linked to an account.\n\n Use another email address, or try to log in if you own this account.";
 "registration.alert.change_email_action" = "Change Email";
-"registration.alert.change_phone_action" = "Change Phone";
-"registration.alert.change_signin_action" = "Sign In";
+"registration.alert.change_phone_action" = "Register with Another Number";
+"registration.alert.change_signin_action" = "Log In";
 
 // Restore History Warning Alert
 "registration.no_history.restore_backup_warning.title" = "Restore history";
@@ -1311,13 +1313,14 @@
 "registration.push_access_denied.settings_button.title" = "Go to Settings";
 "registration.push_access_denied.maybe_later_button.title" = "Maybe later";
 
-"registration.signin.title" = "Log In";
-"registration.signin.too_many_devices.title" = "";
+"registration.personal.title" = "Create an account";
+"registration.signin.title" = "Log in";
+"registration.signin.too_many_devices.title" = "Too Many Devices";
 "registration.signin.too_many_devices.subtitle" = "Remove one of your other devices to start using Wire on this one.";
 "registration.signin.too_many_devices.manage_button.title" = "Manage devices";
 "registration.signin.too_many_devices.sign_out_button.title" = "Log out";
-"registration.signin.email_button.title" = "Email";
-"registration.signin.phone_button.title" = "Phone";
+
+"registration.signin.too_many_devices.manage_screen.title" = "Remove a Device";
 
 "registration.signin.alert.password_needed.title" = "Password needed";
 "registration.signin.alert.password_needed.message" = "Please enter your Password in order to log in.";
@@ -1337,6 +1340,12 @@
 "signin.confirm" = "Log In";
 "signin.company_idp.button.title" = "For Companies";
 
+"signin_logout.subheadline" = "Your session expired. You need to log in again to continue.";
+"signin_logout.email.subheadline" = "Your session expired. Enter your email address and password to continue.";
+"signin_logout.phone.subheadline" = "Your session expired. Enter your phone number to continue.";
+"signin_logout.sso.subheadline" = "Your session expired. Log in with your company account to continue.";
+"signin_logout.sso.buton" = "Company Log In";
+
 "registration.phone_country" = "Country";
 "registration.phone_code" = "Country Code";
 "registration.phone_country.hint" = "Double tap to select another country.";
@@ -1348,7 +1357,7 @@
 "registration.add_phone_number.hero.paragraph" = "This helps us find people you may know. We never share it.";
 "registration.add_phone_number.skip_button.title" = "Not now";
 
-"registration.add_email_password.hero.title" = "Add your email and password.";
+"registration.add_email_password.hero.title" = "Add your email and password";
 "registration.add_email_password.hero.paragraph" = "This lets you use Wire on multiple devices.";
 
 "registration.email_invitation.title" = "Invitation";

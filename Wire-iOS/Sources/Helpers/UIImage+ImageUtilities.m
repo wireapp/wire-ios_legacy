@@ -195,6 +195,7 @@
     
     const CGSize size = [self sizeForImageSource:source];
     if (size.width <= 0 || size.height <= 0) {
+        CFRelease(source);
         return nil;
     }
 

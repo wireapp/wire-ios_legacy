@@ -18,55 +18,62 @@
 
 
 import Foundation
-import Cartography
 
 private let zmLog = ZMSLog(tag: "UI")
 
 @objcMembers final public class AudioRecordKeyboardViewController: UIViewController, AudioRecordBaseViewController {
+    
     enum State {
         case ready, recording, effects
     }
     
-    fileprivate let topContainer = UIView()
-    fileprivate let topSeparator = UIView()
-    fileprivate let bottomToolbar = UIView()
+    // MARK: - Properties
     
-    fileprivate let tipLabel = UILabel()
-    fileprivate var recordTapGestureRecognizer: UITapGestureRecognizer!
-    internal let recordButton = IconButton()
-    internal let stopRecordButton = IconButton()
+    private(set) var state: State = .ready {
+        didSet { if oldValue != state { updateRecordingState(self.state) }}
+    }
     
-    fileprivate let audioPreviewView = WaveFormView()
-    fileprivate let timeLabel = UILabel()
-    
-    internal let confirmButton = IconButton()
-    internal let redoButton = IconButton()
-    internal let cancelButton = IconButton()
-    
-    fileprivate var accentColorChangeHandler: AccentColorChangeHandler?
-    fileprivate var effectPickerViewController: AudioEffectsPickerViewController?
-    
-    fileprivate var currentEffect: AVSAudioEffectType = .none
-    fileprivate var currentEffectFilePath: String?
-    
-    fileprivate(set) var state: State = .ready {
-        didSet {
-            if oldValue != state {
-                updateRecordingState(self.state)
-            }
+    var isRecording: Bool {
+        switch self.recorder.state {
+        case .recording:
+            return true
+        default:
+            return false
         }
     }
+    
     public let recorder: AudioRecorderType
     public weak var delegate: AudioRecordViewControllerDelegate?
     
-    required public init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    let recordButton = IconButton()
+    let stopRecordButton = IconButton()
+    let confirmButton = IconButton()
+    let redoButton = IconButton()
+    let cancelButton = IconButton()
+
+    private let topContainer = UIView()
+    private let topSeparator = UIView()
+    private let bottomToolbar = UIView()
+    
+    private let tipLabel = UILabel()
+    private let timeLabel = UILabel()
+    private let audioPreviewView = WaveFormView()
+    private var recordTapGestureRecognizer: UITapGestureRecognizer!
+    
+    private var accentColorChangeHandler: AccentColorChangeHandler?
+    private var effectPickerViewController: AudioEffectsPickerViewController?
+    
+    private var currentEffect: AVSAudioEffectType = .none
+    private var currentEffectFilePath: String?
+    
+    // MARK: - Life Cycle
     
     @objc convenience init() {
-        self.init(audioRecorder: AudioRecorder(format: .wav,
-                                               maxRecordingDuration: ZMUserSession.shared()?.maxAudioLength() , 
-                                               maxFileSize: ZMUserSession.shared()?.maxUploadFileSize()))
+        self.init(audioRecorder: AudioRecorder(
+            format: .wav,
+            maxRecordingDuration: ZMUserSession.shared()?.maxAudioLength() ,
+            maxFileSize: ZMUserSession.shared()?.maxUploadFileSize()
+        ))
     }
     
     init(audioRecorder: AudioRecorderType) {
@@ -80,191 +87,188 @@ private let zmLog = ZMSLog(tag: "UI")
             self.recorder.maxRecordingDuration = Settings.shared().maxRecordingDurationDebug
         }
     }
+    
+    required public init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     public override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-
-        if AppLock.isActive {
-            UIApplication.shared.keyWindow?.endEditing(true)
-        }
+        if AppLock.isActive { UIApplication.shared.keyWindow?.endEditing(true) }
     }
     
+    // MARK: - View Configuration
+    
     func configureViews() {
+        let backgroundColor = UIColor.from(scheme: .textForeground, variant: .light)
+        let textColor = UIColor.from(scheme: .textForeground, variant: .dark)
+        let separatorColor = UIColor.from(scheme: .separator, variant: .light)
         
-        let colorScheme = ColorScheme()
-        colorScheme.variant = .light
+        self.view.backgroundColor = backgroundColor
         
-        self.view.backgroundColor = colorScheme.color(named: .textForeground)
-        
-        self.recordTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(recordButtonPressed(_:)))
+        self.recordTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(recordButtonPressed))
         self.view.addGestureRecognizer(self.recordTapGestureRecognizer)
+        
+        self.audioPreviewView.gradientWidth = 20
+        self.audioPreviewView.gradientColor = backgroundColor
         
         self.accentColorChangeHandler = AccentColorChangeHandler.addObserver(self) { [unowned self] color, _ in
             self.audioPreviewView.color = color
         }
         
-        [self.audioPreviewView, self.timeLabel, self.tipLabel, self.recordButton, self.stopRecordButton, self.confirmButton, self.redoButton, self.cancelButton, self.bottomToolbar, self.topContainer, self.topSeparator].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
-        
-        self.audioPreviewView.gradientWidth = 20
-        self.audioPreviewView.gradientColor = colorScheme.color(named: .textForeground)
-        
-        self.topSeparator.backgroundColor = colorScheme.color(named: .separator)
+        self.timeLabel.font = FontSpec(.small, .light).font!
+        self.timeLabel.textColor = textColor
+        self.timeLabel.accessibilityLabel = "recordingTime"
         
         self.createTipLabel()
         
-        self.timeLabel.font = FontSpec(.small, .light).font!
-        self.timeLabel.textColor = colorScheme.color(named: .textForeground, variant: .dark)
-        
         [self.audioPreviewView, self.timeLabel, self.tipLabel].forEach(self.topContainer.addSubview)
         
-        self.recordButton.setIcon(.recordDot, with: .tiny, for: [])
-        self.recordButton.accessibilityLabel = "record"
-        self.recordButton.addTarget(self, action: #selector(recordButtonPressed(_:)), for: .touchUpInside)
-        self.recordButton.setBackgroundImageColor(.vividRed, for: .normal)
-        self.recordButton.setIconColor(UIColor.white, for: [])
-        self.recordButton.layer.masksToBounds = true
+        createButtons()
         
-        self.stopRecordButton.setIcon(.stopRecording, with: .tiny, for: [])
-        self.stopRecordButton.accessibilityLabel = "stopRecording"
-        self.stopRecordButton.addTarget(self, action: #selector(stopRecordButtonPressed(_:)), for: .touchUpInside)
-        self.stopRecordButton.setBackgroundImageColor(.vividRed, for: .normal)
-        self.stopRecordButton.setIconColor(UIColor.white, for: [])
-        self.stopRecordButton.layer.masksToBounds = true
+        [self.recordButton,
+         self.stopRecordButton,
+         self.confirmButton,
+         self.redoButton,
+         self.cancelButton].forEach(self.bottomToolbar.addSubview)
         
-        self.confirmButton.setIcon(.checkmark, with: .tiny, for: [])
-        self.confirmButton.accessibilityLabel = "confirmRecording"
-        self.confirmButton.addTarget(self, action: #selector(confirmButtonPressed(_:)), for: .touchUpInside)
-        self.confirmButton.setBackgroundImageColor(.strongLimeGreen, for: .normal)
-        self.confirmButton.setIconColor(UIColor.white, for: [])
-        self.confirmButton.layer.masksToBounds = true
-        
-        self.redoButton.setIcon(.undo, with: .tiny, for: [])
-        self.redoButton.accessibilityLabel = "redoRecording"
-        self.redoButton.addTarget(self, action: #selector(redoButtonPressed(_:)), for: .touchUpInside)
-        self.redoButton.setIconColor(UIColor.white, for: [])
-        
-        self.cancelButton.setIcon(.cancel, with: .tiny, for: [])
-        self.cancelButton.accessibilityLabel = "cancelRecording"
-        self.cancelButton.addTarget(self, action: #selector(cancelButtonPressed(_:)), for: .touchUpInside)
-        self.cancelButton.setIconColor(UIColor.white, for: [])
-        
-        [self.recordButton, self.stopRecordButton, self.confirmButton, self.redoButton, self.cancelButton].forEach(self.bottomToolbar.addSubview)
+        self.topSeparator.backgroundColor = separatorColor
         
         [self.bottomToolbar, self.topContainer, self.topSeparator].forEach(self.view.addSubview)
-        
-        self.timeLabel.accessibilityLabel = "recordingTime"
-        
         updateRecordingState(self.state)
     }
     
-    func createTipLabel() {
-        let colorScheme = ColorScheme()
-        colorScheme.variant = .light
+    private func createTipLabel() {
+        let color = UIColor.from(scheme: .textDimmed, variant: .light)
+        let text = "conversation.input_bar.audio_message.keyboard.record_tip".localized.uppercased()
+        let attrText = NSMutableAttributedString(string: text)
+        let atRange = (text as NSString).range(of: "%@")
         
-        let tipText = "conversation.input_bar.audio_message.keyboard.record_tip".localized.uppercased()
-        let attributedTipText = NSMutableAttributedString(string: tipText)
-        let atRange = (tipText as NSString).range(of: "%@")
-        
+        // insert random effect icon
         if atRange.location != NSNotFound {
-            let suitableEffects = AVSAudioEffectType.displayedEffects.filter {
-                $0 != .none
-            }
+            let effects = AVSAudioEffectType.displayedEffects.filter { $0 != .none }
+            let max = UInt32(effects.count)
+            let effect = effects[Int(arc4random_uniform(max))]
+            let image = UIImage(for: effect.icon, iconSize: .searchBar, color: color)
             
-            let maxEffect : UInt32 = UInt32(suitableEffects.count)
-            let randomEffect = suitableEffects[Int(arc4random_uniform(maxEffect))]
-            let randomEffectImage = UIImage(for: randomEffect.icon, iconSize: .searchBar, color: colorScheme.color(named: .textDimmed))
+            let attachment = NSTextAttachment()
+            attachment.image = image
             
-            let tipEffectImageAttachment = NSTextAttachment()
-            tipEffectImageAttachment.image = randomEffectImage
-            
-            let tipEffectImage = NSAttributedString(attachment: tipEffectImageAttachment)
-            
-            attributedTipText.replaceCharacters(in: atRange, with: tipEffectImage)
+            attrText.replaceCharacters(in: atRange, with: NSAttributedString(attachment: attachment))
         }
+        
         let style = NSMutableParagraphStyle()
         style.lineSpacing = 8
         
-        attributedTipText.addAttribute(.paragraphStyle, value: style, range: NSMakeRange(0, (attributedTipText.string as NSString).length))
-        self.tipLabel.attributedText = NSAttributedString(attributedString: attributedTipText)
+        attrText.addAttribute(.paragraphStyle, value: style, range: attrText.wholeRange)
+        self.tipLabel.attributedText = NSAttributedString(attributedString: attrText)
         self.tipLabel.numberOfLines = 2
         self.tipLabel.font = FontSpec(.small, .light).font!
-        self.tipLabel.textColor = colorScheme.color(named: .textDimmed)
+        self.tipLabel.textColor = color
         self.tipLabel.textAlignment = .center
+    }
+    
+    private func createButtons() {
+        self.recordButton.setIcon(.recordDot, with: .tiny, for: [])
+        self.recordButton.setIconColor(.white, for: [])
+        self.recordButton.addTarget(self, action: #selector(recordButtonPressed), for: .touchUpInside)
+        self.recordButton.setBackgroundImageColor(.vividRed, for: .normal)
+        self.recordButton.layer.masksToBounds = true
+        self.recordButton.accessibilityLabel = "record"
         
+        self.stopRecordButton.setIcon(.stopRecording, with: .tiny, for: [])
+        self.stopRecordButton.setIconColor(.white, for: [])
+        self.stopRecordButton.addTarget(self, action: #selector(stopRecordButtonPressed), for: .touchUpInside)
+        self.stopRecordButton.setBackgroundImageColor(.vividRed, for: .normal)
+        self.stopRecordButton.layer.masksToBounds = true
+        self.stopRecordButton.accessibilityLabel = "stopRecording"
+        
+        self.confirmButton.setIcon(.checkmark, with: .tiny, for: [])
+        self.confirmButton.setIconColor(.white, for: [])
+        self.confirmButton.addTarget(self, action: #selector(confirmButtonPressed), for: .touchUpInside)
+        self.confirmButton.setBackgroundImageColor(.strongLimeGreen, for: .normal)
+        self.confirmButton.layer.masksToBounds = true
+        self.confirmButton.accessibilityLabel = "confirmRecording"
+        
+        self.redoButton.setIcon(.undo, with: .tiny, for: [])
+        self.redoButton.setIconColor(.white, for: [])
+        self.redoButton.addTarget(self, action: #selector(redoButtonPressed), for: .touchUpInside)
+        self.redoButton.accessibilityLabel = "redoRecording"
+        
+        self.cancelButton.setIcon(.cancel, with: .tiny, for: [])
+        self.cancelButton.setIconColor(.white, for: [])
+        self.cancelButton.addTarget(self, action: #selector(cancelButtonPressed), for: .touchUpInside)
+        self.cancelButton.accessibilityLabel = "cancelRecording"
     }
     
     func createConstraints() {
+        [self.audioPreviewView,
+         self.timeLabel,
+         self.tipLabel,
+         self.recordButton,
+         self.stopRecordButton,
+         self.confirmButton,
+         self.redoButton,
+         self.cancelButton,
+         self.bottomToolbar,
+         self.topContainer,
+         self.topSeparator
+        ].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
         
-        constrain(self.view, self.topContainer, self.bottomToolbar, self.topSeparator) { view, topContainer, bottomToolbar, topSeparator in
-            topContainer.left >= view.left + 16
-            topContainer.top >= view.top + 16
-            topContainer.right <= view.right - 16
+        NSLayoutConstraint.activate([
+            topContainer.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16),
+            topContainer.topAnchor.constraint(equalTo: view.topAnchor, constant: 16),
+            topContainer.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -16),
+            topContainer.widthAnchor.constraint(lessThanOrEqualToConstant: 400),
+            topContainer.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+
+            bottomToolbar.topAnchor.constraint(equalTo: topContainer.bottomAnchor),
+            bottomToolbar.leftAnchor.constraint(equalTo: topContainer.leftAnchor),
+            bottomToolbar.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -UIScreen.safeArea.bottom),
+            bottomToolbar.rightAnchor.constraint(equalTo: topContainer.rightAnchor),
+            bottomToolbar.heightAnchor.constraint(equalToConstant: 72),
+            bottomToolbar.centerXAnchor.constraint(equalTo: topContainer.centerXAnchor),
+
+            topSeparator.heightAnchor.constraint(equalToConstant: .hairline),
+            topSeparator.topAnchor.constraint(equalTo: view.topAnchor),
+            topSeparator.leftAnchor.constraint(equalTo: view.leftAnchor),
+            topSeparator.rightAnchor.constraint(equalTo: view.rightAnchor),
             
-            topContainer.left == view.left + 16 ~ 750.0
-            topContainer.top == view.top + 16 ~ 750.0
-            topContainer.right == view.right - 16 ~ 750.0
+            audioPreviewView.topAnchor.constraint(equalTo: topContainer.topAnchor, constant: 20),
+            audioPreviewView.leftAnchor.constraint(equalTo: topContainer.leftAnchor, constant: 8),
+            audioPreviewView.rightAnchor.constraint(equalTo: topContainer.rightAnchor, constant: -8),
+            audioPreviewView.heightAnchor.constraint(equalToConstant: 100),
             
-            topContainer.width <= 400
-            topContainer.centerX == view.centerX
+            timeLabel.centerXAnchor.constraint(equalTo: topContainer.centerXAnchor),
+            timeLabel.bottomAnchor.constraint(equalTo: stopRecordButton.topAnchor, constant: -16),
             
-            bottomToolbar.top == topContainer.bottom
-            bottomToolbar.left == topContainer.left
-            bottomToolbar.bottom == view.bottom - UIScreen.safeArea.bottom
-            bottomToolbar.right == topContainer.right
-            bottomToolbar.height == 72
-            bottomToolbar.centerX == topContainer.centerX
+            tipLabel.centerXAnchor.constraint(equalTo: topContainer.centerXAnchor),
+            tipLabel.centerYAnchor.constraint(equalTo: topContainer.centerYAnchor),
             
-            topSeparator.height == .hairline
-            topSeparator.top == view.top
-            topSeparator.left == view.left
-            topSeparator.right == view.right
-        }
-        
-        constrain(self.topContainer, self.audioPreviewView, self.timeLabel, self.tipLabel, self.stopRecordButton) { topContainer, audioPreviewView, timeLabel, tipLabel, stopRecordButton in
+            recordButton.centerXAnchor.constraint(equalTo: bottomToolbar.centerXAnchor),
+            recordButton.centerYAnchor.constraint(equalTo: bottomToolbar.centerYAnchor),
+            recordButton.heightAnchor.constraint(equalToConstant: 40),
+            recordButton.widthAnchor.constraint(equalTo: recordButton.heightAnchor),
             
-            audioPreviewView.top == topContainer.top + 20
-            audioPreviewView.left == topContainer.left + 8
-            audioPreviewView.right == topContainer.right - 8
-            audioPreviewView.height == 100
+            stopRecordButton.centerXAnchor.constraint(equalTo: bottomToolbar.centerXAnchor),
+            stopRecordButton.centerYAnchor.constraint(equalTo: bottomToolbar.centerYAnchor),
+            stopRecordButton.heightAnchor.constraint(equalToConstant: 40),
+            stopRecordButton.widthAnchor.constraint(equalTo: stopRecordButton.heightAnchor),
             
-            timeLabel.centerX == topContainer.centerX
-            timeLabel.bottom == stopRecordButton.top - 16
+            confirmButton.centerXAnchor.constraint(equalTo: bottomToolbar.centerXAnchor),
+            confirmButton.centerYAnchor.constraint(equalTo: bottomToolbar.centerYAnchor),
+            confirmButton.heightAnchor.constraint(equalToConstant: 40),
+            confirmButton.widthAnchor.constraint(equalTo: confirmButton.heightAnchor),
             
-            tipLabel.center == topContainer.center
-        }
-        
-        constrain(self.bottomToolbar, self.recordButton, self.stopRecordButton) { bottomToolbar, recordButton, stopRecordButton in
+            redoButton.centerYAnchor.constraint(equalTo: bottomToolbar.centerYAnchor),
+            redoButton.leftAnchor.constraint(equalTo: bottomToolbar.leftAnchor, constant: 8),
             
-            recordButton.center == bottomToolbar.center
-            recordButton.width == recordButton.height
-            recordButton.height == 40
-            
-            stopRecordButton.center == bottomToolbar.center
-            stopRecordButton.width == stopRecordButton.height
-            stopRecordButton.height == 40
-        }
-        
-        constrain(self.bottomToolbar, self.redoButton, self.confirmButton, self.cancelButton) { bottomToolbar, redoButton, confirmButton, cancelButton in
-            confirmButton.center == bottomToolbar.center
-            confirmButton.width == confirmButton.height
-            confirmButton.height == 40
-            
-            redoButton.centerY == bottomToolbar.centerY
-            redoButton.left == bottomToolbar.left + 8
-            
-            cancelButton.centerY == bottomToolbar.centerY
-            cancelButton.right == bottomToolbar.right - 8
-        }
+            cancelButton.centerYAnchor.constraint(equalTo: bottomToolbar.centerYAnchor),
+            cancelButton.rightAnchor.constraint(equalTo: bottomToolbar.rightAnchor, constant: -8)
+        ])
     }
     
-    var isRecording: Bool {
-        switch self.recorder.state {
-        case .recording:
-            return true
-        default:
-            return false
-        }
-    }
+    // MARK: - View Updates
     
     public override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -272,6 +276,29 @@ private let zmLog = ZMSLog(tag: "UI")
         self.recordButton.layer.cornerRadius = self.recordButton.bounds.size.width / 2
         self.stopRecordButton.layer.cornerRadius = self.stopRecordButton.bounds.size.width / 2
     }
+    
+    func updateTimeLabel(_ durationInSeconds: TimeInterval) {
+        let duration = Int(floor(durationInSeconds))
+        let (seconds, minutes) = (duration % 60, duration / 60)
+        timeLabel.text = String(format: "%d:%02d", minutes, seconds)
+        timeLabel.accessibilityValue = timeLabel.text
+    }
+    
+    private func visibleViews(forState: State) -> [UIView] {
+        var result = [self.topSeparator, self.topContainer, self.bottomToolbar]
+        switch state {
+        case .ready:
+            result.append(contentsOf: [self.tipLabel, self.recordButton])
+        case .recording:
+            result.append(contentsOf: [self.audioPreviewView, self.timeLabel, self.stopRecordButton])
+        case .effects:
+            result.append(contentsOf: [self.redoButton, self.confirmButton, self.cancelButton])
+        }
+        
+        return result
+    }
+    
+    // MARK: - Recording
     
     func configureAudioRecorder() {
         recorder.recordTimerCallback = { [weak self] time in
@@ -295,30 +322,9 @@ private let zmLog = ZMSLog(tag: "UI")
         }
     }
     
-    func updateTimeLabel(_ durationInSeconds: TimeInterval) {
-        let duration = Int(floor(durationInSeconds))
-        let (seconds, minutes) = (duration % 60, duration / 60)
-        timeLabel.text = String(format: "%d:%02d", minutes, seconds)
-        timeLabel.accessibilityValue = timeLabel.text
-    }
-    
-    fileprivate func visibleViews(forState: State) -> [UIView] {
-        var result = [self.topSeparator, self.topContainer, self.bottomToolbar]
-        switch state {
-        case .ready:
-            result.append(contentsOf: [self.tipLabel, self.recordButton])
-        case .recording:
-            result.append(contentsOf: [self.audioPreviewView, self.timeLabel, self.stopRecordButton])
-        case .effects:
-            result.append(contentsOf: [self.redoButton, self.confirmButton, self.cancelButton])
-        }
-        
-        return result
-    }
-    
-    fileprivate func updateRecordingState(_ state: State) {
-        let visibleViews = self.visibleViews(forState: state)
+    private func updateRecordingState(_ state: State) {
         let allViews = Set(view.subviews.flatMap { $0.subviews })
+        let visibleViews = self.visibleViews(forState: state)
         let hiddenViews = allViews.subtracting(visibleViews)
         
         visibleViews.forEach { $0.isHidden = false }
@@ -350,11 +356,12 @@ private let zmLog = ZMSLog(tag: "UI")
         delegate?.audioRecordViewControllerWantsToSendAudio(self, recordingURL: url, duration: recorder.currentDuration, filter: .none)
     }
     
-    fileprivate func openEffectsPicker() {
+    private func openEffectsPicker() {
         guard let url = recorder.fileURL else { return zmLog.warn("Nil url passed to add effect to audio file") }
         
         let noizeReducePath = (NSTemporaryDirectory() as NSString).appendingPathComponent("noize-reduce.wav")
         noizeReducePath.deleteFileAtPath()
+        
         // To apply noize reduction filter
         AVSAudioEffectType.none.apply(url.path, outPath: noizeReducePath) {
             self.currentEffectFilePath = noizeReducePath
@@ -364,27 +371,31 @@ private let zmLog = ZMSLog(tag: "UI")
                 self.closeEffectsPicker(animated: false)
             }
             
-            let newEffectPickerViewController = AudioEffectsPickerViewController(recordingPath: noizeReducePath, duration: self.recorder.currentDuration)
-            newEffectPickerViewController.delegate = self
-            self.addChild(newEffectPickerViewController)
-            newEffectPickerViewController.view.alpha = 0
+            let picker = AudioEffectsPickerViewController(recordingPath: noizeReducePath, duration: self.recorder.currentDuration)
+            self.addChild(picker)
+            picker.delegate = self
+            picker.view.alpha = 0
             
-            UIView.transition(with: self.view, duration: 0.35, options: [.curveEaseIn], animations: {
-                newEffectPickerViewController.view.translatesAutoresizingMaskIntoConstraints = false
-                self.topContainer.addSubview(newEffectPickerViewController.view)
-                constrain(self.topContainer, newEffectPickerViewController.view) { topContainer, newControllerView in
-                    topContainer.edges == newControllerView.edges
-                }
-                newEffectPickerViewController.view.alpha = 1
-            }) { _ in
-                newEffectPickerViewController.didMove(toParent: self)
+            let changes: () -> Void = {
+                picker.view.translatesAutoresizingMaskIntoConstraints = false
+                self.topContainer.addSubview(picker.view)
+                picker.view.fitInSuperview()
+                picker.view.alpha = 1
             }
             
-            self.effectPickerViewController = newEffectPickerViewController
+            UIView.transition(
+                with: self.view,
+                duration: 0.35,
+                options: [.curveEaseIn],
+                animations: changes,
+                completion: { _ in picker.didMove(toParent: self)}
+            )
+            
+            self.effectPickerViewController = picker
         }
     }
     
-    fileprivate func closeEffectsPicker(animated: Bool) {
+    private func closeEffectsPicker(animated: Bool) {
         if let picker = self.effectPickerViewController {
             picker.willMove(toParent: nil)
             picker.removeFromParent()
@@ -392,7 +403,7 @@ private let zmLog = ZMSLog(tag: "UI")
         }
     }
     
-    // MARK: - Button actions
+    // MARK: - Button Actions
     
     @objc internal func recordButtonPressed(_ sender: AnyObject!) {
         self.recorder.startRecording { success in
@@ -407,7 +418,6 @@ private let zmLog = ZMSLog(tag: "UI")
     }
     
     @objc func confirmButtonPressed(_ button: UIButton?) {
-        
         guard let audioPath = self.currentEffectFilePath else {
             zmLog.error("No file to send")
             return
@@ -415,23 +425,21 @@ private let zmLog = ZMSLog(tag: "UI")
         
         button?.isEnabled = false
         
-        let effectName: String
-        
-        if self.currentEffect == .none {
-            effectName = "Original"
-        }
-        else {
-            effectName = self.currentEffect.description
-        }
+        let effectName = self.currentEffect == .none ? "Original" : self.currentEffect.description
         
         let filename = String.filenameForSelfUser(suffix: "-" + effectName).appendingPathExtension("m4a")!
         let convertedPath = (NSTemporaryDirectory() as NSString).appendingPathComponent(filename)
         convertedPath.deleteFileAtPath()
         
-        AVAsset.wr_convertAudioToUploadFormat(audioPath, outPath: convertedPath) { (success) in
+        AVAsset.wr_convertAudioToUploadFormat(audioPath, outPath: convertedPath) { success in
             if success {
                 audioPath.deleteFileAtPath()
-                self.delegate?.audioRecordViewControllerWantsToSendAudio(self, recordingURL: URL(fileURLWithPath: convertedPath), duration: self.recorder.currentDuration, filter: self.currentEffect)
+                self.delegate?.audioRecordViewControllerWantsToSendAudio(
+                    self,
+                    recordingURL: URL(fileURLWithPath: convertedPath),
+                    duration: self.recorder.currentDuration,
+                    filter: self.currentEffect
+                )
             }
         }
     }
@@ -445,10 +453,11 @@ private let zmLog = ZMSLog(tag: "UI")
     }
 }
 
+// MARK: - AudioEffectsPickerDelegate
+
 extension AudioRecordKeyboardViewController: AudioEffectsPickerDelegate {
     public func audioEffectsPickerDidPickEffect(_ picker: AudioEffectsPickerViewController, effect: AVSAudioEffectType, resultFilePath: String) {
         self.currentEffectFilePath = resultFilePath
         self.currentEffect = effect
     }
 }
-

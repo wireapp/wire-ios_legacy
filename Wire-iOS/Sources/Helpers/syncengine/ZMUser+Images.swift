@@ -65,13 +65,9 @@ extension UserType {
         
         switch size {
         case .preview:
-            session.enqueueChanges {
-                self.requestPreviewProfileImage()
-            }
+            self.requestPreviewProfileImage()
         default:
-            session.enqueueChanges {
-                self.requestCompleteProfileImage()
-            }
+            self.requestCompleteProfileImage()
         }
         
         imageData(for: size, queue: cache.processingQueue) { (imageData) in

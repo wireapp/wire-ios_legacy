@@ -19,37 +19,29 @@
 import XCTest
 @testable import Wire
 
-final class ChangePhoneViewControllerSnapshotTests: ZMSnapshotTestCase {
-    
-    var sut: ChangePhoneViewController!
-    
+class ChangePhoneViewControllerSnapshotTests: ZMSnapshotTestCase {
+
     override func setUp() {
         super.setUp()
-        sut = ChangePhoneViewController()
+    }
+
+    func testThatItShowsCurrentUserPhoneNumber() {
+        let sut = ChangePhoneViewController()
         sut.view.backgroundColor = .black
-    }
-    
-    override func tearDown() {
-        sut = nil
-        super.tearDown()
+        verify(view: sut.view)
     }
 
-    func testForANumberPasted(){
-        // call viewDidLoad
-        sut.loadViewIfNeeded()
+    func testThatItCanPastePhoneNumber() {
+        // GIVEN
+        let inputView = PhoneNumberInputView()
 
-        // make table view's cells visible
-        sut.view.frame = CGRect(origin: .zero, size: defaultIPhoneSize)
-        sut.view.layoutIfNeeded()
-
+        // WHEN
         UIPasteboard.general.string = "+41 86 079 209 36 37"
+        inputView.paste(self)
 
-        let indexPath = IndexPath(row: 0, section: 0)
-        if let cell = sut.tableView.cellForRow(at: indexPath) as? RegistrationTextFieldCell {
-
-            cell.textField.paste(nil)
-        }
-
-        verifyInIPhoneSize(view: sut.view)
+        // THEN
+        XCTAssertEqual(inputView.country.e164PrefixString, "+41")
+        XCTAssertEqual(inputView.input, "860792093637")
     }
+
 }

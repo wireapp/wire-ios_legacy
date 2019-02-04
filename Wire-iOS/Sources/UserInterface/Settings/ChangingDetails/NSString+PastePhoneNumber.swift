@@ -33,7 +33,7 @@ extension String {
     /// - Parameter presetCountry: the country preset if the phone number has no country code
     /// - Returns: If the number can be parsed, return a tuple of country and the phone number without country code. Otherwise return nil. country would be nil if self is a phone number without country
     @discardableResult
-    func shouldInsertAsPhoneNumber(presetCountry: Country) -> (country: Country?, phoneNumber: String)? {
+    func shouldInsertAsPhoneNumber(presetCountry: Country) -> (country: Country, phoneNumber: String)? {
 
         var illegalCharacters = CharacterSet.whitespaces
         illegalCharacters.formUnion(CharacterSet.decimalDigits)
