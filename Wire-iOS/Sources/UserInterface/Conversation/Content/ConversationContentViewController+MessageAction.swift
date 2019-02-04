@@ -55,7 +55,7 @@ extension ConversationContentViewController {
     func messageAction(actionId: MessageAction,
                                for message: ZMConversationMessage,
                                view: UIView) {
-        guard let session = ZMUserSession.shared() else { return }
+        guard let session = session else { return }
 
         switch actionId {
         case .cancel:

@@ -31,6 +31,7 @@ NS_ASSUME_NONNULL_BEGIN
 @class ConversationTableViewDataSource;
 @class DeletionDialogPresenter;
 @protocol SelectableView;
+@protocol ZMUserSessionInterface;
 
 @interface ConversationContentViewController ()
 
@@ -48,6 +49,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) CGPoint initialPinchLocation;
 
 @property (nonatomic) DeletionDialogPresenter *deletionDialogPresenter;
+
+@property (nonatomic, nullable) id<ZMUserSessionInterface> session;
 
 - (void)removeHighlightsAndMenu;
 - (NSIndexPath *) willSelectRowAtIndexPath:(NSIndexPath *)indexPath tableView:(UITableView *)tableView;

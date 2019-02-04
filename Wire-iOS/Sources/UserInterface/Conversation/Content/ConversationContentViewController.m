@@ -90,6 +90,7 @@
         self.messagePresenter = [[MessagePresenter alloc] init];
         self.messagePresenter.targetViewController = self;
         self.messagePresenter.modalTargetController = self.parentViewController;
+        self.session = [ZMUserSession sharedSession];
     }
     
     return self;
