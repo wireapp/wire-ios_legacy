@@ -697,24 +697,28 @@ extension AuthenticationCoordinator {
 
     // MARK: - Company Login
 
-    /// Manually start the company login flow.
-    private func startCompanyLoginFlowIfPossible() {
+    var canStartCompanyLogin: Bool {
         switch stateController.currentStep {
         case .provideCredentials, .createCredentials, .reauthenticate, .teamCreation(.setTeamName):
-            companyLoginController?.displayLoginCodePrompt()
+            return true
         default:
-            return
+            return false
+        }
+    }
+
+    /// Manually start the company login flow.
+    private func startCompanyLoginFlowIfPossible() {
+        if canStartCompanyLogin {
+            companyLoginController?.displayLoginCodePrompt()
         }
     }
 
     /// Call this method when the corrdinated view controller appears, to detect the login code and display it if needed.
     func detectLoginCodeIfPossible() {
-        switch stateController.currentStep {
-        case .landingScreen, .provideCredentials, .createCredentials, .teamCreation(.setTeamName):
+        if canStartCompanyLogin {
             companyLoginController?.isAutoDetectionEnabled = true
             companyLoginController?.detectLoginCode()
-
-        default:
+        } else {
             companyLoginController?.isAutoDetectionEnabled = false
         }
     }

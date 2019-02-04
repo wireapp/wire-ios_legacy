@@ -627,11 +627,38 @@ extension AppRootViewController: SessionManagerURLHandlerDelegate {
             }
 
             guard case .unauthenticated = appStateController.appState else {
-                callback(false)
-                return
+                return callback(false)
             }
 
             callback(true)
+
+        case .startCompanyLogin:
+            let context = DefaultCompanyControllerLinkResponseContext(sessionManager: SessionManager.shared!, appState: appStateController.appState, authenticationCoordinator: authenticationCoordinator)
+            executeCompanyLoginLinkAction(context.actionForValidLink(), callback: callback)
+
+        case .warnInvalidCompanyLogin(let error):
+            let context = DefaultCompanyControllerLinkResponseContext(sessionManager: SessionManager.shared!, appState: appStateController.appState, authenticationCoordinator: authenticationCoordinator)
+            executeCompanyLoginLinkAction(context.actionForInvalidRequest(error: error), callback: callback)
+        }
+    }
+
+    private func executeCompanyLoginLinkAction(_ action: CompanyLoginLinkResponseAction, callback: @escaping (Bool) -> Void) {
+        switch action {
+        case .allowStartingFlow:
+            callback(true)
+
+        case .preventStartingFlow:
+            callback(false)
+
+        case .showDismissableAlert(let title, let message, let allowStartingFlow):
+            if let controller = UIApplication.shared.wr_topmostController(onlyFullScreen: false) {
+                let alert = UIAlertController(title: title, message: message, preferredStyle: .alert )
+                let okAction = UIAlertAction(title: "general.ok".localized, style: .cancel) { _ in callback(allowStartingFlow) }
+                alert.addAction(okAction)
+                controller.present(alert, animated: true)
+            } else {
+                callback(allowStartingFlow)
+            }
         }
     }
 
