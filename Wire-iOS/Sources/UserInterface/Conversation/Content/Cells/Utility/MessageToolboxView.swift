@@ -68,7 +68,7 @@ final class MessageToolboxView: UIView {
     private let detailsLabel: UILabel = {
         let label = UILabel()
         label.lineBreakMode = .byTruncatingMiddle
-        label.numberOfLines = 0
+        label.numberOfLines = 1
         label.accessibilityIdentifier = "Details"
         label.setContentHuggingPriority(.required, for: .horizontal)
         label.setContentCompressionResistancePriority(.required, for: .horizontal)
