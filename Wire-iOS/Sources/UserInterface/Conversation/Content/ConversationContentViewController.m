@@ -75,11 +75,16 @@
 @implementation ConversationContentViewController
 
 - (instancetype)initWithConversation:(ZMConversation *)conversation
+                             session:(id<ZMUserSessionInterface>)session
 {
-    return [self initWithConversation:conversation message:conversation.firstUnreadMessage];
+    return [self initWithConversation:conversation
+                              message:conversation.firstUnreadMessage
+                              session:session];
 }
 
-- (instancetype)initWithConversation:(ZMConversation *)conversation message:(id<ZMConversationMessage>)message
+- (instancetype)initWithConversation:(ZMConversation *)conversation
+                             message:(id<ZMConversationMessage>)message
+                             session:(id<ZMUserSessionInterface>)session
 {
     self = [super initWithNibName:nil bundle:nil];
     
@@ -90,7 +95,7 @@
         self.messagePresenter = [[MessagePresenter alloc] init];
         self.messagePresenter.targetViewController = self;
         self.messagePresenter.modalTargetController = self.parentViewController;
-        self.session = [ZMUserSession sharedSession];
+        self.session = session;
     }
     
     return self;
