@@ -65,7 +65,7 @@ class AuthenticationInterfaceBuilder {
         case .reauthenticate(let credentials, _):
             let viewController: AuthenticationStepController
 
-            if credentials?.usesCompanyLogin == true {
+            if credentials?.usesCompanyLogin == true && credentials?.hasPassword == false {
                 // Is the user has SSO enabled, show the screen to log in with SSO
                 let companyLoginStep = ReauthenticateWithCompanyLoginStepDescription()
                 viewController = makeViewController(for: companyLoginStep)

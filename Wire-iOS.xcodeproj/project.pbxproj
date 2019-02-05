@@ -181,6 +181,7 @@
 		5E1314BA22087C61000FAFC5 /* CompanyControllerLinkContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E1314B922087C61000FAFC5 /* CompanyControllerLinkContext.swift */; };
 		5E1314BF22088405000FAFC5 /* CompanyLoginLinkResponseActionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E1314BB220882E4000FAFC5 /* CompanyLoginLinkResponseActionTests.swift */; };
 		5E1314C122097BEF000FAFC5 /* AuthenticationStartCompanyLoginLinkEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E1314C022097BEF000FAFC5 /* AuthenticationStartCompanyLoginLinkEventHandler.swift */; };
+		5E1314D12209A2CD000FAFC5 /* ClientRegistrationErrorEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E1314D02209A2CD000FAFC5 /* ClientRegistrationErrorEventHandler.swift */; };
 		5E144FFF213EA0EC00B65E14 /* PreviewImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E144FFD213E973B00B65E14 /* PreviewImageView.swift */; };
 		5E15D31B219DB9060038439D /* ConversationFileMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E15D31A219DB9060038439D /* ConversationFileMessageCell.swift */; };
 		5E21344421CCED3B00273D0D /* PhoneNumberInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E21344321CCED3B00273D0D /* PhoneNumberInputView.swift */; };
@@ -1679,6 +1680,7 @@
 		5E1314B922087C61000FAFC5 /* CompanyControllerLinkContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyControllerLinkContext.swift; sourceTree = "<group>"; };
 		5E1314BB220882E4000FAFC5 /* CompanyLoginLinkResponseActionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyLoginLinkResponseActionTests.swift; sourceTree = "<group>"; };
 		5E1314C022097BEF000FAFC5 /* AuthenticationStartCompanyLoginLinkEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationStartCompanyLoginLinkEventHandler.swift; sourceTree = "<group>"; };
+		5E1314D02209A2CD000FAFC5 /* ClientRegistrationErrorEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientRegistrationErrorEventHandler.swift; sourceTree = "<group>"; };
 		5E144FFD213E973B00B65E14 /* PreviewImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewImageView.swift; sourceTree = "<group>"; };
 		5E15D31A219DB9060038439D /* ConversationFileMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationFileMessageCell.swift; sourceTree = "<group>"; };
 		5E181908216B734C003659CB /* Cartfile.resolved */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cartfile.resolved; sourceTree = "<group>"; };
@@ -3894,6 +3896,7 @@
 				5E8DA757211B055100360979 /* AuthenticationClientLimitErrorHandler.swift */,
 				5E8DA759211B075E00360979 /* AuthenticationNoCredentialsErrorHandler.swift */,
 				5E8DA75D211B0E5800360979 /* AuthenticationNeedsReauthenticationErrorHandler.swift */,
+				5E1314D02209A2CD000FAFC5 /* ClientRegistrationErrorEventHandler.swift */,
 			);
 			path = "Registration Error";
 			sourceTree = "<group>";
@@ -7804,6 +7807,7 @@
 				87F18BC01E017B7F00C69D9B /* UIView+VisibleViews.swift in Sources */,
 				878A720C1E55D7D3008072B9 /* TextSearchResultFooter.swift in Sources */,
 				EF6ACA7F21318A640064047B /* FullscreenImageViewController+Style.swift in Sources */,
+				5E1314D12209A2CD000FAFC5 /* ClientRegistrationErrorEventHandler.swift in Sources */,
 				EF18D7C82102345B005B51A1 /* UpsideDownTableView.swift in Sources */,
 				8FC85454199245770008B66B /* ConversationViewController+ParticipantsPopover.m in Sources */,
 				5E33F0CC20AC39C800414EA6 /* CallVideoPlaceholderState.swift in Sources */,

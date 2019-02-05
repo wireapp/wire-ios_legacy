@@ -125,6 +125,7 @@ class AuthenticationEventResponderChain {
         registerHandler(AuthenticationClientLimitErrorHandler(), to: &clientRegistrationErrorHandlers)
         registerHandler(AuthenticationNoCredentialsErrorHandler(), to: &clientRegistrationErrorHandlers)
         registerHandler(AuthenticationNeedsReauthenticationErrorHandler(), to: &clientRegistrationErrorHandlers)
+        registerHandler(ClientRegistrationErrorEventHandler(), to: &clientRegistrationErrorHandlers)
 
         // backupEventHandlers
         registerHandler(AuthenticationBackupReadyEventHandler(), to: &backupEventHandlers)
