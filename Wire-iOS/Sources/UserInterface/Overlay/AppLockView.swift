@@ -56,13 +56,10 @@ import Cartography
         let loadedObjects = UINib(nibName: "LaunchScreen", bundle: nil).instantiate(withOwner: .none, options: .none)
         
         let nibView = loadedObjects.first as! UIView
-        self.shieldViewContainer.addSubview(nibView)
-        constrain(self.shieldViewContainer, nibView) { shieldViewContainer, nibView in
-            nibView.edges == shieldViewContainer.edges
-        }
-        
-        self.addSubview(self.shieldViewContainer)
-        self.addSubview(self.blurView)
+        shieldViewContainer.addSubview(nibView)
+
+        addSubview(shieldViewContainer)
+        addSubview(blurView)
         
         self.authenticateLabel.isHidden = true
         self.authenticateLabel.numberOfLines = 0
@@ -76,12 +73,9 @@ import Cartography
         self.authenticateLabel.text = "self.settings.privacy_security.lock_cancelled.description".localized
         self.authenticateButton.setTitle("self.settings.privacy_security.lock_cancelled.action".localized, for: .normal)
         self.authenticateButton.addTarget(self, action: #selector(AppLockView.onReauthenticatePressed(_:)), for: .touchUpInside)
-        
-        constrain(self, self.shieldViewContainer, self.blurView) { selfView, shieldViewContainer, blurView in
-            shieldViewContainer.edges == selfView.edges
-            blurView.edges == selfView.edges
-        }
-        
+
+        createConstraints(nibView: nibView)
+
         constrain(self, self.contentContainerView, self.authenticateLabel, self.authenticateButton) { selfView, contentContainerView, authenticateLabel, authenticateButton in
             contentContainerView.top == selfView.top
             contentContainerView.bottom == selfView.bottom
@@ -102,6 +96,15 @@ import Cartography
             authenticateButton.height == 40
         }
         updateConstraints(userInterfaceSizeClass: traitCollection.horizontalSizeClass)
+    }
+
+    private func createConstraints(nibView: UIView) {
+
+        [nibView, shieldViewContainer, blurView].forEach(){ $0.translatesAutoresizingMaskIntoConstraints = false }
+
+        nibView.fitInSuperview()
+        shieldViewContainer.fitInSuperview()
+        blurView.fitInSuperview()
     }
     
     public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
