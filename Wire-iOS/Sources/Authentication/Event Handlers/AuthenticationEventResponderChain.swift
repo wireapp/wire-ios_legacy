@@ -115,6 +115,7 @@ class AuthenticationEventResponderChain {
         // flowStartHandlers
         registerHandler(AuthenticationStartMissingCredentialsErrorHandler(), to: &flowStartHandlers)
         registerHandler(AuthenticationStartReauthenticateErrorHandler(), to: &flowStartHandlers)
+        registerHandler(AuthenticationStartCompanyLoginLinkEventHandler(), to: &flowStartHandlers)
         registerHandler(AuthenticationStartAddAccountEventHandler(featureProvider: featureProvider), to: &flowStartHandlers)
 
         // initialSyncHandlers

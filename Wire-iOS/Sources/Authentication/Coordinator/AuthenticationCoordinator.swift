@@ -161,11 +161,6 @@ extension AuthenticationCoordinator: AuthenticationStateControllerDelegate {
         }
     }
 
-    /// Come back to the landing page.
-    func reset() {
-        stateController.transition(to: .landingScreen, mode: .reset)
-    }
-
 }
 
 // MARK: - Event Handling
@@ -296,8 +291,8 @@ extension AuthenticationCoordinator: AuthenticationActioner, SessionManagerCreat
             case .setUserPassword(let password):
                 updateUnregisteredUser(\.password, password)
 
-            case .startCompanyLogin:
-                startCompanyLoginFlowIfPossible()
+            case .startCompanyLogin(let code):
+                startCompanyLoginFlowIfPossible(linkCode: code)
 
             case .startLoginFlow(let request):
                 startLoginFlow(request: request)
@@ -699,17 +694,22 @@ extension AuthenticationCoordinator {
 
     var canStartCompanyLogin: Bool {
         switch stateController.currentStep {
-        case .provideCredentials, .createCredentials, .reauthenticate, .teamCreation(.setTeamName):
+        case .landingScreen, .provideCredentials, .createCredentials, .reauthenticate, .teamCreation(.setTeamName):
             return true
         default:
+            log.warn("Cannot start company login in step: \(stateController.currentStep)")
             return false
         }
     }
 
     /// Manually start the company login flow.
-    private func startCompanyLoginFlowIfPossible() {
+    private func startCompanyLoginFlowIfPossible(linkCode: UUID?) {
         if canStartCompanyLogin {
-            companyLoginController?.displayLoginCodePrompt()
+            if let linkCode = linkCode {
+                companyLoginController?.attemptLoginWithCode(linkCode)
+            } else {
+                companyLoginController?.displayLoginCodePrompt()
+            }
         }
     }
 

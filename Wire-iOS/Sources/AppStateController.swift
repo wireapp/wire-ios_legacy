@@ -110,18 +110,18 @@ class AppStateController : NSObject {
             completion?()
         }
     }
-    
+
 }
 
 extension AppStateController : SessionManagerDelegate {
     
-    func sessionManagerWillLogout(error: Error?, userSessionCanBeTornDown: @escaping () -> Void) {
+    func sessionManagerWillLogout(error: Error?, userSessionCanBeTornDown: (() -> Void)?) {
         authenticationError = error as NSError?
 
         isLoggedIn = false
         isLoggedOut = true
         updateAppState {
-            userSessionCanBeTornDown()
+            userSessionCanBeTornDown?()
         }
     }
     

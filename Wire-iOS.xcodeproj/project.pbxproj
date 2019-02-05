@@ -180,6 +180,7 @@
 		5E1314B82204A041000FAFC5 /* URLWireLocaleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E1314B72204A041000FAFC5 /* URLWireLocaleTests.swift */; };
 		5E1314BA22087C61000FAFC5 /* CompanyControllerLinkContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E1314B922087C61000FAFC5 /* CompanyControllerLinkContext.swift */; };
 		5E1314BF22088405000FAFC5 /* CompanyLoginLinkResponseActionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E1314BB220882E4000FAFC5 /* CompanyLoginLinkResponseActionTests.swift */; };
+		5E1314C122097BEF000FAFC5 /* AuthenticationStartCompanyLoginLinkEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E1314C022097BEF000FAFC5 /* AuthenticationStartCompanyLoginLinkEventHandler.swift */; };
 		5E144FFF213EA0EC00B65E14 /* PreviewImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E144FFD213E973B00B65E14 /* PreviewImageView.swift */; };
 		5E15D31B219DB9060038439D /* ConversationFileMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E15D31A219DB9060038439D /* ConversationFileMessageCell.swift */; };
 		5E21344421CCED3B00273D0D /* PhoneNumberInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E21344321CCED3B00273D0D /* PhoneNumberInputView.swift */; };
@@ -1677,6 +1678,7 @@
 		5E1314B72204A041000FAFC5 /* URLWireLocaleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLWireLocaleTests.swift; sourceTree = "<group>"; };
 		5E1314B922087C61000FAFC5 /* CompanyControllerLinkContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyControllerLinkContext.swift; sourceTree = "<group>"; };
 		5E1314BB220882E4000FAFC5 /* CompanyLoginLinkResponseActionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyLoginLinkResponseActionTests.swift; sourceTree = "<group>"; };
+		5E1314C022097BEF000FAFC5 /* AuthenticationStartCompanyLoginLinkEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationStartCompanyLoginLinkEventHandler.swift; sourceTree = "<group>"; };
 		5E144FFD213E973B00B65E14 /* PreviewImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewImageView.swift; sourceTree = "<group>"; };
 		5E15D31A219DB9060038439D /* ConversationFileMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationFileMessageCell.swift; sourceTree = "<group>"; };
 		5E181908216B734C003659CB /* Cartfile.resolved */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cartfile.resolved; sourceTree = "<group>"; };
@@ -3927,6 +3929,7 @@
 			children = (
 				5E8C38B1212E9799002AE12B /* AuthenticationStartMissingCredentialsErrorHandler.swift */,
 				5E8DA76E211B422D00360979 /* AuthenticationStartReauthenticateErrorHandler.swift */,
+				5E1314C022097BEF000FAFC5 /* AuthenticationStartCompanyLoginLinkEventHandler.swift */,
 				5EE73BE52122C6DC0032986D /* AuthenticationStartAddAccountEventHandler.swift */,
 			);
 			path = "Flow Start";
@@ -7394,6 +7397,7 @@
 				872C8242214BFA8700236A76 /* UITextView+Range.swift in Sources */,
 				BF5DF5C720F4C1C5002BCB67 /* GroupParticipantsDetailViewModel.swift in Sources */,
 				EF297DE321320AC20002983A /* InviteContactsViewController+Swift.swift in Sources */,
+				5E1314C122097BEF000FAFC5 /* AuthenticationStartCompanyLoginLinkEventHandler.swift in Sources */,
 				F1199D361FC8490A0070FAC3 /* TeamCreationState.swift in Sources */,
 				BF7ED2D81DF1A30C003A4397 /* IncomingConnectionView.swift in Sources */,
 				EF106E83204D869B00B9F0F6 /* DeviceProtocol.swift in Sources */,

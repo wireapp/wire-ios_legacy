@@ -94,7 +94,7 @@ class AuthenticationInterfaceBuilder {
 
             // Add the item to start company login if needed.
             if featureProvider.allowCompanyLogin {
-                viewController.setRightItem("signin.company_idp.button.title".localized, withAction: .startCompanyLogin, accessibilityID: "companyLoginButton")
+                viewController.setRightItem("signin.company_idp.button.title".localized, withAction: .startCompanyLogin(code: nil), accessibilityID: "companyLoginButton")
             }
 
             return viewController
