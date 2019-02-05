@@ -104,7 +104,7 @@ extension ConversationAudioMessageCell: TransferViewDelegate {
     func transferView(_ view: TransferView, didSelect action: MessageAction) {
         guard let message = message else { return }
         
-        delegate?.perform(action: action, for: message)
+        delegate?.perform(action: action, for: message, view: self)
     }
 }
 

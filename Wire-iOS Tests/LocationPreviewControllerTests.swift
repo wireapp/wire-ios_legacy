@@ -20,7 +20,7 @@ import XCTest
 @testable import Wire
 
 final class MockActionResponder: NSObject, MessageActionResponder {
-    func perform(action: MessageAction, for message: ZMConversationMessage!) {
+    func perform(action: MessageAction, for message: ZMConversationMessage!, view: UIView) {
         // no-op
     }
 }

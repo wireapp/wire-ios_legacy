@@ -32,17 +32,6 @@ protocol AVSMediaManagerInterface {
 extension AVSMediaManager: AVSMediaManagerInterface {
 }
 
-protocol ZMUserSessionInterface: class {
-    func performChanges(_ block: @escaping () -> ())
-    func enqueueChanges(_ block: @escaping () -> ())
-    
-    var isNotificationContentHidden : Bool { get set }
-}
-
-
-extension ZMUserSession: ZMUserSessionInterface {
-}
-
 protocol ValidatorType {
     static func validateName(_ ioName: AutoreleasingUnsafeMutablePointer<NSString?>?) throws
 }

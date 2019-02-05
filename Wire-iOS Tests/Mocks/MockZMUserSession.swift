@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2018 Wire Swiss GmbH
+// Copyright (C) 2019 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -17,22 +17,16 @@
 //
 
 import Foundation
+@testable import Wire
 
-extension UIViewController {
-
-    /// return true if the view controler's view is in a window, not covered by a modelled VC and the bounds is intersects with the screen's bound
-    @objc var isVisible: Bool {
-        let isInWindow = view.window != nil
-        let notCoveredModally = presentedViewController == nil
-        let viewIsVisible = view.isVisible
-
-        return isInWindow && notCoveredModally && viewIsVisible
+final class MockZMUserSession: NSObject, ZMUserSessionInterface {
+    func performChanges(_ block: @escaping () -> Swift.Void) {
+        block()
     }
 
-}
-
-extension UIView {
-    @objc var isVisible: Bool {
-        return convert(bounds, to: nil).intersects(UIScreen.main.bounds)
+    func enqueueChanges(_ block: @escaping () -> Swift.Void) {
+        block()
     }
+
+    var isNotificationContentHidden: Bool = false
 }

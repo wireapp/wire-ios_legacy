@@ -43,7 +43,7 @@ open class CollectionCell: UICollectionViewCell {
             }
 
             actionController = message.map {
-                ConversationMessageActionController(responder: self, message: $0, context: .collection)
+                ConversationMessageActionController(responder: self, message: $0, context: .collection, view: self)
             }
 
             self.updateForMessage(changeInfo: .none)
@@ -236,7 +236,7 @@ extension CollectionCell: ZMMessageObserver {
 }
 
 extension CollectionCell: MessageActionResponder {
-    public func perform(action: MessageAction, for message: ZMConversationMessage!) {
+    public func perform(action: MessageAction, for message: ZMConversationMessage!, view: UIView) {
         delegate?.collectionCell(self, performAction: action)
     }
 }

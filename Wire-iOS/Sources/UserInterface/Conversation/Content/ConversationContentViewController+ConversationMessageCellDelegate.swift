@@ -18,11 +18,50 @@
 
 import Foundation
 
-extension ConversationContentViewController: ConversationMessageCellDelegate {
-    public func perform(action: MessageAction, for message: ZMConversationMessage!) {
-        guard let cell = dataSource.cell(for: message) as? UIView & SelectableView else { return }
+extension UIView {
+    func targetView(for message: ZMConversationMessage!, dataSource: ConversationTableViewDataSource) -> UIView {
 
-        wants(toPerform: action, for: message, view: cell)
+        ///if the view is a tableView, search for a visible cell that contains the message and the cell is a SelectableView
+        guard let tableView: UITableView = self as? UITableView else {
+            return self
+        }
+
+        var actionView: UIView! = tableView
+
+        let section = dataSource.section(for: message)
+
+        for cell in tableView.visibleCells {
+            let indexPath = tableView.indexPath(for: cell)
+            if indexPath?.section == section,
+                cell is SelectableView {
+                actionView = cell
+                break
+            }
+        }
+
+        return actionView
+    }
+}
+
+extension ConversationContentViewController: ConversationMessageCellDelegate {
+    // MARK: - MessageActionResponder
+
+    public func perform(action: MessageAction, for message: ZMConversationMessage!, view: UIView) {
+        let actionView = view.targetView(for: message, dataSource: dataSource)
+        let shouldDismissModal = action != .delete && action != .copy
+
+        if messagePresenter.modalTargetController?.presentedViewController != nil &&
+            shouldDismissModal {
+            messagePresenter.modalTargetController?.dismiss(animated: true) {
+                self.messageAction(actionId: action,
+                                   for: message,
+                                   view: actionView)
+            }
+        } else {
+            messageAction(actionId: action,
+                          for: message,
+                          view: actionView)
+        }
     }
 
     func conversationMessageWantsToOpenUserDetails(_ cell: UIView, user: UserType, sourceView: UIView, frame: CGRect) {
@@ -46,4 +85,3 @@ extension ConversationContentViewController: ConversationMessageCellDelegate {
     }
 
 }
-

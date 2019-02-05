@@ -144,21 +144,21 @@ final class ConversationTableViewDataSource: NSObject {
         
         createFetchController()
     }
-    
-    @objc(cellForMessage:)
-    func cell(for message: ZMConversationMessage) -> UITableViewCell? {
-        guard let section = currentSections.firstIndex(where: { $0.model == message.objectIdentifier }) else { return nil }
-        
-        return tableView.cellForRow(at: IndexPath(row: 0, section: section))
+
+    func section(for message: ZMConversationMessage) -> Int? {
+        return currentSections.firstIndex(where: { $0.model == message.objectIdentifier })
     }
-    
-    @objc func actionController(for message: ZMConversationMessage) -> ConversationMessageActionController {
+
+    func actionController(for message: ZMConversationMessage) -> ConversationMessageActionController {
         if let cachedEntry = actionControllers[message.objectIdentifier] {
             return cachedEntry
         }
-        let actionController = ConversationMessageActionController(responder: self.messageActionResponder,
+
+        let actionController = ConversationMessageActionController(responder: messageActionResponder,
                                                                    message: message,
-                                                                   context: .content)
+                                                                   context: .content,
+                                                                   view: tableView)
+
         actionControllers[message.objectIdentifier] = actionController
         
         return actionController   

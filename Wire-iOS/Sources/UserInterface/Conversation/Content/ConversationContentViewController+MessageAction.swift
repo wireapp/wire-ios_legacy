@@ -18,8 +18,27 @@
 
 import Foundation
 
-
 extension ConversationContentViewController {
+    // MARK: - EditMessages
+    @objc
+    func editLastMessage() {
+        if let lastEditableMessage = conversation.lastEditableMessage {
+            perform(action: .edit, for: lastEditableMessage, view: tableView)
+        }
+    }
+
+    func presentDetails(for message: ZMConversationMessage) {
+        let isFile = Message.isFileTransfer(message)
+        let isImage = Message.isImage(message)
+        let isLocation = Message.isLocation(message)
+
+        guard isFile || isImage || isLocation else {
+            return
+        }
+
+        messagePresenter.open(message, targetView: tableView.targetView(for: message, dataSource: dataSource), actionResponder: self)
+    }
+
     func openSketch(for message: ZMConversationMessage, in editMode: CanvasViewControllerEditMode) {
         let canvasViewController = CanvasViewController()
         if let imageData = message.imageMessageData?.imageData {
@@ -33,10 +52,10 @@ extension ConversationContentViewController {
     }
 
 
-    private func messageAction(actionId: MessageAction,
+    func messageAction(actionId: MessageAction,
                                for message: ZMConversationMessage,
                                view: UIView) {
-        guard let session = ZMUserSession.shared() else { return }
+        guard let session = session else { return }
 
         switch actionId {
         case .cancel:
@@ -138,24 +157,4 @@ extension ConversationContentViewController {
             parent?.present(detailsViewController, animated: true)
         }
     }
-
-    func wants(toPerform actionId: MessageAction,
-               for message: ZMConversationMessage,
-               view: UIView) {
-
-
-        let shouldDismissModal: Bool = actionId != .delete && actionId != .copy
-
-        if messagePresenter.modalTargetController?.presentedViewController != nil &&
-            shouldDismissModal {
-            messagePresenter.modalTargetController?.dismiss(animated: true) {
-                self.messageAction(actionId: actionId,
-                                   for: message,
-                                   view: view)
-            }
-        } else {
-            messageAction(actionId: actionId,
-                          for: message,
-                          view: view)
-        }
-    }}
+}

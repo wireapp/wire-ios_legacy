@@ -30,7 +30,7 @@ import Cartography
     init(conversation: ZMConversation, presentingViewController: UIViewController) {
         self.conversation = conversation
         self.actionController = ConversationActionController(conversation: conversation, target: presentingViewController)
-        contentViewController = ConversationContentViewController(conversation: conversation)
+        contentViewController = ConversationContentViewController(conversation: conversation, session: ZMUserSession.shared())
         super.init(nibName: nil, bundle: nil)
     }
 

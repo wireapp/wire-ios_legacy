@@ -30,7 +30,7 @@ class ConversationMessageActionControllerTests: CoreDataSnapshotTestCase {
         message.conversation = otherUserConversation
         
         // WHEN
-        let actionController = ConversationMessageActionController(responder: nil, message: message, context: .content)
+        let actionController = ConversationMessageActionController(responder: nil, message: message, context: .content, view: UIView())
         let singleTapAction = actionController.singleTapAction
         
         // THEN
@@ -44,7 +44,7 @@ class ConversationMessageActionControllerTests: CoreDataSnapshotTestCase {
         message.conversation = otherUserConversation
         
         // WHEN
-        let actionController = ConversationMessageActionController(responder: nil, message: message, context: .content)
+        let actionController = ConversationMessageActionController(responder: nil, message: message, context: .content, view: UIView())
         let singleTapAction = actionController.singleTapAction
         
         // THEN
@@ -60,7 +60,7 @@ class ConversationMessageActionControllerTests: CoreDataSnapshotTestCase {
         message.conversation = otherUserConversation
 
         // WHEN
-        let actionController = ConversationMessageActionController(responder: nil, message: message, context: .content)
+        let actionController = ConversationMessageActionController(responder: nil, message: message, context: .content, view: UIView())
         let doubleTapAction = actionController.doubleTapAction
 
         // THEN
@@ -75,7 +75,7 @@ class ConversationMessageActionControllerTests: CoreDataSnapshotTestCase {
         message.isEphemeral = true
 
         // WHEN
-        let actionController = ConversationMessageActionController(responder: nil, message: message, context: .content)
+        let actionController = ConversationMessageActionController(responder: nil, message: message, context: .content, view: UIView())
         let doubleTapAction = actionController.doubleTapAction
 
         // THEN
@@ -92,7 +92,7 @@ class ConversationMessageActionControllerTests: CoreDataSnapshotTestCase {
         message.deliveryState = .failedToSend
 
         // WHEN
-        let actionController = ConversationMessageActionController(responder: nil, message: message, context: .content)
+        let actionController = ConversationMessageActionController(responder: nil, message: message, context: .content, view: UIView())
         let supportsReply = actionController.canPerformAction(#selector(ConversationMessageActionController.quoteMessage))
 
         // THEN

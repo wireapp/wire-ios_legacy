@@ -75,11 +75,16 @@
 @implementation ConversationContentViewController
 
 - (instancetype)initWithConversation:(ZMConversation *)conversation
+                             session:(id<ZMUserSessionInterface>)session
 {
-    return [self initWithConversation:conversation message:conversation.firstUnreadMessage];
+    return [self initWithConversation:conversation
+                              message:conversation.firstUnreadMessage
+                              session:session];
 }
 
-- (instancetype)initWithConversation:(ZMConversation *)conversation message:(id<ZMConversationMessage>)message
+- (instancetype)initWithConversation:(ZMConversation *)conversation
+                             message:(id<ZMConversationMessage>)message
+                             session:(id<ZMUserSessionInterface>)session
 {
     self = [super initWithNibName:nil bundle:nil];
     
@@ -90,6 +95,7 @@
         self.messagePresenter = [[MessagePresenter alloc] init];
         self.messagePresenter.targetViewController = self;
         self.messagePresenter.modalTargetController = self.parentViewController;
+        self.session = session;
     }
     
     return self;
@@ -359,20 +365,6 @@
     }
 }
 
-- (void)presentDetailsForMessage:(id<ZMConversationMessage>)message
-{
-    BOOL isFile = [Message isFileTransferMessage:message];
-    BOOL isImage = [Message isImageMessage:message];
-    BOOL isLocation = [Message isLocationMessage:message];
-    
-    if (! isFile && ! isImage && ! isLocation) {
-        return;
-    }
-    
-    UITableViewCell *cell = [self.dataSource cellForMessage:message];
-    [self.messagePresenter openMessage:message targetView:cell actionResponder:self];
-}
-
 #pragma mark - Custom UI, utilities
 
 - (void)createMentionsResultsView
@@ -504,14 +496,6 @@
 @end
 
 @implementation ConversationContentViewController (EditMessages)
-
-- (void)editLastMessage
-{
-    ZMMessage *lastEditableMessage = self.conversation.lastEditableMessage;
-    if (lastEditableMessage != nil) {
-        [self wantsToPerformAction:MessageActionEdit forMessage:lastEditableMessage];
-    }
-}
 
 - (void)didFinishEditingMessage:(id<ZMConversationMessage>)message
 {
