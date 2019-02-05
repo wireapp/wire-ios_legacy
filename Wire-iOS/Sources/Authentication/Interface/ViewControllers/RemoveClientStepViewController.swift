@@ -86,8 +86,8 @@ final class RemoveClientStepViewController: UIViewController, AuthenticationCoor
             contentViewWidthCompact.isActive = false
             contentViewWidthRegular.isActive = true
         } else {
-            contentViewWidthCompact.isActive = false
-            contentViewWidthRegular.isActive = true
+            contentViewWidthRegular.isActive = false
+            contentViewWidthCompact.isActive = true
         }
     }
 
