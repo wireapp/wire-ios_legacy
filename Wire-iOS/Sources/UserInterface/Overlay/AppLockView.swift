@@ -17,8 +17,6 @@
 //
 
 import Foundation
-import Cartography
-
 
 @objcMembers final class AppLockView: UIView {
     public var onReauthRequested: (()->())?
@@ -81,7 +79,8 @@ import Cartography
 
     private func createConstraints(nibView: UIView) {
 
-        [nibView,
+        [self,
+         nibView,
          shieldViewContainer,
          blurView,
          contentContainerView,
@@ -109,28 +108,8 @@ import Cartography
 
         NSLayoutConstraint.activate([
             authenticateButton.heightAnchor.constraint(equalToConstant: 40),
-//            authenticateButton.topAnchor.constraint(equalTo: authenticateLabel.bottomAnchor, constant: -24)
+            authenticateButton.topAnchor.constraint(equalTo: authenticateLabel.bottomAnchor, constant: 24)
         ])
-
-        constrain(self, self.contentContainerView, self.authenticateLabel, self.authenticateButton) { selfView, contentContainerView, authenticateLabel, authenticateButton in
-//            contentContainerView.top == selfView.top
-//            contentContainerView.bottom == selfView.bottom
-//
-//            self.contentLeadingConstraint = contentContainerView.leading == selfView.leading
-//            self.contentTrailingConstraint = contentContainerView.trailing == selfView.trailing
-//
-//            self.contentCenterConstraint = contentContainerView.centerX == selfView.centerX
-//            self.contentWidthConstraint = contentContainerView.width == 320
-
-//            authenticateLabel.leading == contentContainerView.leading + 24
-//            authenticateLabel.trailing == contentContainerView.trailing - 24
-
-            authenticateButton.top == authenticateLabel.bottom + 24
-//            authenticateButton.leading == contentContainerView.leading + 24
-//            authenticateButton.trailing == contentContainerView.trailing - 24
-//            authenticateButton.bottom == contentContainerView.bottom - 24
-//            authenticateButton.height == 40
-        }
 
     }
     
