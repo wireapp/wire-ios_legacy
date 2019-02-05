@@ -73,15 +73,7 @@ class ConversationListCellTests: CoreDataSnapshotTestCase {
         // then
         verify(otherUserConversation)
     }
-    
-    func testThatItRendersConversationWithMessagesFromSelf() {
-        // when
-        otherUserConversation.append(text: "Hey there!")
         
-        // then
-        verify(otherUserConversation)
-    }
-    
     func testThatItRendersConversationWithNewMessage() {
         // when
         let message = otherUserConversation.append(text: "Hey there!")
@@ -191,14 +183,6 @@ class ConversationListCellTests: CoreDataSnapshotTestCase {
         (message as! ZMClientMessage).sender = otherUser
         otherUserConversation.setPrimitiveValue(1, forKey: ZMConversationInternalEstimatedUnreadCountKey)
         otherUserConversation.setPrimitiveValue(1, forKey: ZMConversationInternalEstimatedUnreadSelfMentionCountKey)
-        
-        // then
-        verify(otherUserConversation)
-    }
-    
-    func testThatItRendersConversationWithKnockFromSelf() {
-        // when
-        otherUserConversation.appendKnock()
         
         // then
         verify(otherUserConversation)
