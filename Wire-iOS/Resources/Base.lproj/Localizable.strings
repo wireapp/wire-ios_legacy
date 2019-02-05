@@ -231,6 +231,7 @@
 "conversation.status.someone" = "Someone";
 "conversation.status.you_was_added" = "%@ added you";
 "conversation.status.you_were_removed" = "You were removed";
+"conversation.status.you_left" = "You left";
 "conversation.status.started_conversation" = "%@ started a conversation";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
