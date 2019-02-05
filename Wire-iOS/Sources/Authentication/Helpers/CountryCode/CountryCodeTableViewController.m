@@ -213,4 +213,12 @@
     return [[UILocalizedIndexedCollation currentCollation] sectionIndexTitles];
 }
 
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return self.searchController.active ? 34 : 0;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    return [[UIView alloc] init];
+}
+
 @end
