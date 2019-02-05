@@ -43,6 +43,7 @@ extension ConversationStatusLineTests_Muting {
 
         appendReply(to: sut, selfMessage: selfMessage)
         sut.mutedMessageTypes = .regular
+        markAllMessagesAsUnread(in: sut)
 
         // WHEN
         let status = sut.status.description(for: sut)
@@ -60,6 +61,7 @@ extension ConversationStatusLineTests_Muting {
         let selfMessage = appendSelfMessage(to: sut)
 
         appendReply(to: sut, selfMessage: selfMessage)
+        markAllMessagesAsUnread(in: sut)
 
         sut.mutedMessageTypes = .regular
 
@@ -80,6 +82,7 @@ extension ConversationStatusLineTests_Muting {
         for _ in 1...5 {
             appendReply(to: sut, selfMessage: selfMessage)
         }
+        markAllMessagesAsUnread(in: sut)
         sut.mutedMessageTypes = .regular
 
         // WHEN
@@ -100,6 +103,7 @@ extension ConversationStatusLineTests_Muting {
         let selfMessage = appendSelfMessage(to: sut)
 
         appendReply(to: sut, selfMessage: selfMessage)
+        markAllMessagesAsUnread(in: sut)
 
         // WHEN
         let status = sut.status.description(for: sut)
@@ -115,6 +119,7 @@ extension ConversationStatusLineTests_Muting {
         let selfMessage = appendSelfMessage(to: sut)
 
         appendReply(to: sut, selfMessage: selfMessage)
+        markAllMessagesAsUnread(in: sut)
 
         // WHEN
         let status = sut.status.description(for: sut)
@@ -134,8 +139,9 @@ extension ConversationStatusLineTests_Muting {
         for _ in 1...5 {
             appendReply(to: sut, selfMessage: selfMessage)
         }
-
+        markAllMessagesAsUnread(in: sut)
         sut.mutedMessageTypes = .regular
+        
 
         // WHEN
         let status = sut.status.description(for: sut)
@@ -164,7 +170,8 @@ extension ConversationStatusLineTests_Muting {
         for _ in 1...5 {
             appendMention(to: sut)
         }
-
+        
+        markAllMessagesAsUnread(in: sut)
         sut.mutedMessageTypes = .regular
 
         // WHEN
@@ -182,6 +189,7 @@ extension ConversationStatusLineTests_Muting {
         // GIVEN
         let sut = self.otherUserConversation!
         appendTextMessage(to: sut)
+        markAllMessagesAsUnread(in: sut)
         sut.mutedMessageTypes = .regular
 
         // WHEN
@@ -196,6 +204,7 @@ extension ConversationStatusLineTests_Muting {
         let sut = self.otherUserConversation!
         sut.messageDestructionTimeout = .local(100)
         appendMention(to: sut)
+        markAllMessagesAsUnread(in: sut)
         sut.mutedMessageTypes = .regular
 
         // WHEN
@@ -211,6 +220,7 @@ extension ConversationStatusLineTests_Muting {
         sut.addParticipantIfMissing(createUser(name: "other"))
         sut.messageDestructionTimeout = .local(100)
         appendMention(to: sut)
+        markAllMessagesAsUnread(in: sut)
         sut.mutedMessageTypes = .regular
 
         // WHEN
@@ -227,6 +237,7 @@ extension ConversationStatusLineTests_Muting {
         for _ in 1...5 {
             appendMention(to: sut)
         }
+        markAllMessagesAsUnread(in: sut)
         sut.mutedMessageTypes = .regular
 
         // WHEN
@@ -240,6 +251,7 @@ extension ConversationStatusLineTests_Muting {
         // GIVEN
         let sut = self.otherUserConversation!
         appendTextMessage(to: sut)
+        markAllMessagesAsUnread(in: sut)
         sut.mutedMessageTypes = .regular
 
         // WHEN
@@ -255,6 +267,7 @@ extension ConversationStatusLineTests_Muting {
         for _ in 1...5 {
             appendMention(to: sut)
         }
+        markAllMessagesAsUnread(in: sut)
         sut.mutedMessageTypes = .regular
 
         // WHEN
@@ -273,6 +286,7 @@ extension ConversationStatusLineTests_Muting {
         for _ in 1...5 {
             appendMention(to: sut)
         }
+        markAllMessagesAsUnread(in: sut)
         sut.mutedMessageTypes = .regular
 
         // WHEN
@@ -289,6 +303,7 @@ extension ConversationStatusLineTests_Muting {
         // GIVEN
         let sut = self.otherUserConversation!
         appendMention(to: sut)
+        markAllMessagesAsUnread(in: sut)
         sut.mutedMessageTypes = .all
 
         // WHEN
@@ -303,6 +318,7 @@ extension ConversationStatusLineTests_Muting {
         let sut = self.otherUserConversation!
         sut.messageDestructionTimeout = .local(100)
         appendMention(to: sut)
+        markAllMessagesAsUnread(in: sut)
         sut.mutedMessageTypes = .all
 
         // WHEN
@@ -319,6 +335,7 @@ extension ConversationStatusLineTests_Muting {
         for _ in 1...5 {
             appendTextMessage(to: sut)
         }
+        markAllMessagesAsUnread(in: sut)
 
         // WHEN
         let status = sut.status.description(for: sut)
@@ -336,6 +353,7 @@ extension ConversationStatusLineTests_Muting {
         for _ in 1...5 {
             appendImage(to: sut)
         }
+        markAllMessagesAsUnread(in: sut)
 
         // WHEN
         let status = sut.status.description(for: sut)
@@ -351,6 +369,7 @@ extension ConversationStatusLineTests_Muting {
             appendTextMessage(to: sut)
         }
         appendMention(to: sut)
+        markAllMessagesAsUnread(in: sut)
 
         // WHEN
         let status = sut.status.description(for: sut)

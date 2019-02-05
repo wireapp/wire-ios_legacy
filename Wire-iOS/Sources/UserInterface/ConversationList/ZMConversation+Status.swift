@@ -461,9 +461,8 @@ final internal class NewMessagesMatcher: TypedConversationStatusMatcher {
         else {
             guard let message = status.messagesRequiringAttention.reversed().first(where: {
                     if let _ = $0.sender,
-                        let type = StatusMessageType(message: $0),
-                        let _ = matchedTypesDescriptions[type],
-                        $0.messageIsRelevantForConversationStatus {
+                       let type = StatusMessageType(message: $0),
+                       let _ = matchedTypesDescriptions[type] {
                         return true
                     } else {
                         return false
@@ -521,9 +520,8 @@ final internal class NewMessagesMatcher: TypedConversationStatusMatcher {
 
         guard let message = status.messagesRequiringAttention.reversed().first(where: {
                 if let _ = $0.sender,
-                    let type = StatusMessageType(message: $0),
-                     let _ = matchedTypesDescriptions[type],
-                     $0.messageIsRelevantForConversationStatus {
+                   let type = StatusMessageType(message: $0),
+                   let _ = matchedTypesDescriptions[type] {
                     return true
                 }
                 else {
@@ -576,70 +574,28 @@ final internal class GroupActivityMatcher: TypedConversationStatusMatcher {
     let matchedTypes: [StatusMessageType] = [.addParticipants, .removeParticipants]
     
     private func addedString(for messages: [ZMConversationMessage], in conversation: ZMConversation) -> NSAttributedString? {
-        if messages.count > 1 {
-            return "conversation.status.added_multiple".localized && type(of: self).regularStyle
-        }
-        else if let message = messages.last,
-                let systemMessage = message.systemMessageData,
-                let sender = message.sender,
-                !sender.isSelfUser {
+        if let message = messages.last,
+           let systemMessage = message.systemMessageData,
+           let sender = message.sender,
+           !sender.isSelfUser {
+            
             if systemMessage.users.contains(where: { $0.isSelfUser }) {
                 let result = String(format: "conversation.status.you_was_added".localized, sender.displayName(in: conversation)) && type(of: self).regularStyle
-                
                 return self.addEmphasis(to: result, for: sender.displayName(in: conversation))
-            }
-            else if systemMessage.userIsTheSender {
-                let senderName = sender.nameAsSender(in: conversation)
-                let result = "conversation.status.joined".localized(args: senderName) && type(of: self).regularStyle
-                return addEmphasis(to: result, for: senderName)
-            }
-            else {
-                let usersList = systemMessage.users.map { $0.displayName(in: conversation) }.joined(separator: ", ")
-                
-                let result = String(format: "conversation.status.added_users".localized, sender.nameAsSender(in: conversation), usersList) && type(of: self).regularStyle
-                
-                return self.addEmphasis(to: result, for: sender.nameAsSender(in: conversation))
             }
         }
         return .none
     }
     
-    private static let indicate3rdPartiesRemoval: Bool = false
-    
     private func removedString(for messages: [ZMConversationMessage], in conversation: ZMConversation) -> NSAttributedString? {
         
-        if messages.count > 1 {
-            if type(of: self).indicate3rdPartiesRemoval {
-                return "conversation.status.removed_multiple".localized && type(of: self).regularStyle
-            }
-            else {
-                return .none
-            }
-        }
-        else if let message = messages.last,
-                let systemMessage = message.systemMessageData,
-                let sender = message.sender {
+        if let message = messages.last,
+           let systemMessage = message.systemMessageData,
+           let sender = message.sender,
+           !sender.isSelfUser{
 
             if systemMessage.users.contains(where: { $0.isSelfUser }) {
-                if sender.isSelfUser {
-                    return "conversation.status.you_left".localized && type(of: self).regularStyle
-                }
-                else {
-                    return "conversation.status.you_were_removed".localized && type(of: self).regularStyle
-                }
-            }
-            else {
-                if conversation.lastServerSyncedActiveParticipants.count == 0 {
-                    return "conversation.status.everyone_left".localized && type(of: self).regularStyle
-                }
-                else if type(of: self).indicate3rdPartiesRemoval {
-                    let usersList = systemMessage.users.map { $0.displayName(in: conversation) }.joined(separator: ", ")
-                    let result = "conversation.status.removed_users".localized(args: sender.nameAsSender(in: conversation), usersList) && type(of: self).regularStyle
-                    return self.addEmphasis(to: result, for: sender.nameAsSender(in: conversation))
-                }
-                else {
-                    return .none
-                }
+                return "conversation.status.you_were_removed".localized && type(of: self).regularStyle
             }
         }
         return .none

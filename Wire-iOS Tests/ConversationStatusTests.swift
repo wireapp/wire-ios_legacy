@@ -29,8 +29,10 @@ class ConversationStatusTests: CoreDataSnapshotTestCase {
     func testThatItReturnsStatusForEmptyConversation() {
         // GIVEN
         let sut = self.otherUserConversation!
+        
         // WHEN
         let status = sut.status
+        
         // THEN
         XCTAssertFalse(status.hasMessages)
     }
@@ -38,8 +40,10 @@ class ConversationStatusTests: CoreDataSnapshotTestCase {
     func testThatItReturnsStatusForEmptyConversation_group() {
         // GIVEN
         let sut = self.createGroupConversation()
+        
         // WHEN
         let status = sut.status
+        
         // THEN
         XCTAssertFalse(status.hasMessages)
     }
@@ -48,9 +52,11 @@ class ConversationStatusTests: CoreDataSnapshotTestCase {
         // GIVEN
         let sut = self.otherUserConversation!
         (sut.append(text: "test") as! ZMMessage).sender = self.otherUser
-        sut.lastReadServerTimeStamp = Date.distantPast
+        markAllMessagesAsUnread(in: sut)
+        
         // WHEN
         let status = sut.status
+        
         // THEN
         XCTAssertTrue(status.hasMessages)
         XCTAssertEqual(status.messagesRequiringAttention.count, 1)
@@ -61,9 +67,11 @@ class ConversationStatusTests: CoreDataSnapshotTestCase {
         // GIVEN
         let sut = self.otherUserConversation!
         (sut.appendKnock() as! ZMMessage).sender = self.otherUser
-        sut.lastReadServerTimeStamp = Date.distantPast
+        markAllMessagesAsUnread(in: sut)
+        
         // WHEN
         let status = sut.status
+        
         // THEN
         XCTAssertTrue(status.hasMessages)
         XCTAssertEqual(status.messagesRequiringAttention.count, 1)
@@ -75,9 +83,11 @@ class ConversationStatusTests: CoreDataSnapshotTestCase {
         // GIVEN
         let sut = self.otherUserConversation!
         (sut.append(imageFromData: self.image(inTestBundleNamed: "unsplash_burger.jpg").jpegData(compressionQuality: 1.0)!) as! ZMMessage).sender = self.otherUser
-        sut.lastReadServerTimeStamp = Date.distantPast
+        markAllMessagesAsUnread(in: sut)
+        
         // WHEN
         let status = sut.status
+        
         // THEN
         XCTAssertTrue(status.hasMessages)
         XCTAssertEqual(status.messagesRequiringAttention.count, 1)
@@ -91,9 +101,11 @@ class ConversationStatusTests: CoreDataSnapshotTestCase {
         (sut.appendKnock() as! ZMMessage).sender = self.otherUser
         (sut.append(text: "test") as! ZMMessage).sender = self.otherUser
         (sut.append(imageFromData: self.image(inTestBundleNamed: "unsplash_burger.jpg").jpegData(compressionQuality: 1.0)!) as! ZMMessage).sender = self.otherUser
-        sut.lastReadServerTimeStamp = Date.distantPast
+        markAllMessagesAsUnread(in: sut)
+        
         // WHEN
         let status = sut.status
+        
         // THEN
         XCTAssertTrue(status.hasMessages)
         XCTAssertEqual(status.messagesRequiringAttention.count, 3)
@@ -108,9 +120,11 @@ class ConversationStatusTests: CoreDataSnapshotTestCase {
         (sut.append(text: "test 1") as! ZMMessage).sender = self.otherUser
         (sut.append(text: "test 2") as! ZMMessage).sender = self.otherUser
         (sut.append(text: "test 3") as! ZMMessage).sender = self.otherUser
-        sut.lastReadServerTimeStamp = Date.distantPast
+        markAllMessagesAsUnread(in: sut)
+        
         // WHEN
         let status = sut.status
+        
         // THEN
         XCTAssertTrue(status.hasMessages)
         XCTAssertEqual(status.messagesRequiringAttention.count, 3)
@@ -125,9 +139,11 @@ class ConversationStatusTests: CoreDataSnapshotTestCase {
         (sut.appendKnock() as! ZMMessage).sender = self.otherUser
         (sut.appendKnock() as! ZMMessage).sender = self.otherUser
         (sut.appendKnock() as! ZMMessage).sender = self.otherUser
-        sut.lastReadServerTimeStamp = Date.distantPast
+        markAllMessagesAsUnread(in: sut)
+        
         // WHEN
         let status = sut.status
+        
         // THEN
         XCTAssertTrue(status.hasMessages)
         XCTAssertEqual(status.messagesRequiringAttention.count, 3)
@@ -142,9 +158,11 @@ class ConversationStatusTests: CoreDataSnapshotTestCase {
         (sut.append(imageFromData: self.image(inTestBundleNamed: "unsplash_burger.jpg").jpegData(compressionQuality: 1.0)!) as! ZMMessage).sender = self.otherUser
         (sut.append(imageFromData: self.image(inTestBundleNamed: "unsplash_burger.jpg").jpegData(compressionQuality: 1.0)!) as! ZMMessage).sender = self.otherUser
         (sut.append(imageFromData: self.image(inTestBundleNamed: "unsplash_burger.jpg").jpegData(compressionQuality: 1.0)!) as! ZMMessage).sender = self.otherUser
-        sut.lastReadServerTimeStamp = Date.distantPast
+        markAllMessagesAsUnread(in: sut)
+        
         // WHEN
         let status = sut.status
+        
         // THEN
         XCTAssertTrue(status.hasMessages)
         XCTAssertEqual(status.messagesRequiringAttention.count, 3)
@@ -156,8 +174,10 @@ class ConversationStatusTests: CoreDataSnapshotTestCase {
         // GIVEN
         let sut = self.otherUserConversation!
         otherUser.connection?.status = .blocked
+        
         // WHEN
         let status = sut.status
+        
         // THEN
         XCTAssertFalse(status.hasMessages)
         XCTAssertTrue(status.isBlocked)
@@ -168,9 +188,11 @@ class ConversationStatusTests: CoreDataSnapshotTestCase {
         let sut = self.otherUserConversation!
         let selfMention = Mention(range: NSRange(location: 0, length: 5), user: self.selfUser)
         (sut.append(text: "@self test", mentions: [selfMention]) as! ZMMessage).sender = self.otherUser
-        sut.lastReadServerTimeStamp = Date.distantPast
+        markAllMessagesAsUnread(in: sut)
+        
         // WHEN
         let status = sut.status
+        
         // THEN
         XCTAssertTrue(status.hasMessages)
         XCTAssertEqual(status.messagesRequiringAttention.count, 1)
@@ -180,14 +202,15 @@ class ConversationStatusTests: CoreDataSnapshotTestCase {
     func testThatItDetectsReplies() {
         // GIVEN
         let sut = self.otherUserConversation!
-
         let selfMessage = sut.append(text: "I am a programmer") as! ZMMessage
 
         selfMessage.sender = selfUser
         (sut.append(text: "Yes, it is true", replyingTo: selfMessage) as! ZMMessage).sender = self.otherUser
-        sut.lastReadServerTimeStamp = Date.distantPast
+        markAllMessagesAsUnread(in: sut)
+        
         // WHEN
         let status = sut.status
+        
         // THEN
         XCTAssertTrue(status.hasMessages)
         XCTAssertEqual(status.messagesRequiringAttention.count, 1)
