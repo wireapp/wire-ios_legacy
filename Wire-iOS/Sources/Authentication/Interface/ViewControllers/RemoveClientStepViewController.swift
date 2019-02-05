@@ -70,34 +70,36 @@ final class RemoveClientStepViewController: UIViewController, AuthenticationCoor
             clientListController.view.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             clientListController.view.topAnchor.constraint(equalTo: safeTopAnchor),
             clientListController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-        ])
+            ])
 
         // Adaptive Constraints
         contentViewWidthRegular = clientListController.view.widthAnchor.constraint(equalToConstant: 375)
         contentViewWidthCompact = clientListController.view.widthAnchor.constraint(equalTo: view.widthAnchor)
 
-        updateConstraints()
+        updateConstraints(userInterfaceSizeClass: traitCollection.horizontalSizeClass)
     }
 
     // MARK: - Adaptive UI
 
-    func updateConstraints() {
-        updateConstraints(compactConstraints: [contentViewWidthCompact],
-                          regularConstraints: [contentViewWidthRegular])
+    func updateConstraints(userInterfaceSizeClass: UIUserInterfaceSizeClass) {
+        toggle(compactConstraints: [contentViewWidthCompact],
+               regularConstraints: [contentViewWidthRegular],
+               userInterfaceSizeClass: userInterfaceSizeClass)
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-        updateConstraints()
+        updateConstraints(userInterfaceSizeClass: traitCollection.horizontalSizeClass)
     }
 
 }
 
 
 extension UITraitEnvironment {
-    func updateConstraints(compactConstraints: [NSLayoutConstraint],
-                           regularConstraints: [NSLayoutConstraint]) {
-        let isRegular = traitCollection.horizontalSizeClass == .regular
+    func toggle(compactConstraints: [NSLayoutConstraint],
+                regularConstraints: [NSLayoutConstraint],
+                userInterfaceSizeClass: UIUserInterfaceSizeClass) {
+        let isRegular = userInterfaceSizeClass == .regular
 
         if isRegular {
             compactConstraints.forEach(){$0.isActive = false}
