@@ -65,10 +65,10 @@ import Cartography
         self.authenticateLabel.numberOfLines = 0
         self.authenticateButton.isHidden = true
         
-        self.addSubview(self.contentContainerView)
+        addSubview(contentContainerView)
         
-        self.contentContainerView.addSubview(self.authenticateLabel)
-        self.contentContainerView.addSubview(self.authenticateButton)
+        contentContainerView.addSubview(authenticateLabel)
+        contentContainerView.addSubview(authenticateButton)
         
         self.authenticateLabel.text = "self.settings.privacy_security.lock_cancelled.description".localized
         self.authenticateButton.setTitle("self.settings.privacy_security.lock_cancelled.action".localized, for: .normal)
@@ -76,35 +76,62 @@ import Cartography
 
         createConstraints(nibView: nibView)
 
-        constrain(self, self.contentContainerView, self.authenticateLabel, self.authenticateButton) { selfView, contentContainerView, authenticateLabel, authenticateButton in
-            contentContainerView.top == selfView.top
-            contentContainerView.bottom == selfView.bottom
-            
-            self.contentLeadingConstraint = contentContainerView.leading == selfView.leading
-            self.contentTrailingConstraint = contentContainerView.trailing == selfView.trailing
-            
-            self.contentCenterConstraint = contentContainerView.centerX == selfView.centerX
-            self.contentWidthConstraint = contentContainerView.width == 320
-            
-            authenticateLabel.leading == contentContainerView.leading + 24
-            authenticateLabel.trailing == contentContainerView.trailing - 24
-            
-            authenticateButton.top == authenticateLabel.bottom + 24
-            authenticateButton.leading == contentContainerView.leading + 24
-            authenticateButton.trailing == contentContainerView.trailing - 24
-            authenticateButton.bottom == contentContainerView.bottom - 24
-            authenticateButton.height == 40
-        }
         updateConstraints(userInterfaceSizeClass: traitCollection.horizontalSizeClass)
     }
 
     private func createConstraints(nibView: UIView) {
 
-        [nibView, shieldViewContainer, blurView].forEach(){ $0.translatesAutoresizingMaskIntoConstraints = false }
+        [nibView,
+         shieldViewContainer,
+         blurView,
+         contentContainerView,
+         authenticateButton,
+         authenticateLabel].forEach(){ $0.translatesAutoresizingMaskIntoConstraints = false }
 
         nibView.fitInSuperview()
         shieldViewContainer.fitInSuperview()
         blurView.fitInSuperview()
+
+        let constraints = contentContainerView.fitInSuperview()
+
+        ///for compact
+        contentLeadingConstraint = constraints[.leading]
+        contentTrailingConstraint = constraints[.trailing]
+
+        ///for regular
+        contentCenterConstraint = contentContainerView.centerXAnchor.constraint(equalTo: centerXAnchor)
+        contentWidthConstraint = contentContainerView.widthAnchor.constraint(equalToConstant: 320)
+
+        authenticateLabel.fitInSuperview(with: EdgeInsets(margin: 24), exclude: [.top, .bottom])
+
+        authenticateButton.fitInSuperview(with: EdgeInsets(margin: 24), exclude: [.top])
+
+
+        NSLayoutConstraint.activate([
+            authenticateButton.heightAnchor.constraint(equalToConstant: 40),
+            authenticateButton.topAnchor.constraint(equalTo: authenticateLabel.bottomAnchor, constant: 24)
+        ])
+
+        constrain(self, self.contentContainerView, self.authenticateLabel, self.authenticateButton) { selfView, contentContainerView, authenticateLabel, authenticateButton in
+//            contentContainerView.top == selfView.top
+//            contentContainerView.bottom == selfView.bottom
+//
+//            self.contentLeadingConstraint = contentContainerView.leading == selfView.leading
+//            self.contentTrailingConstraint = contentContainerView.trailing == selfView.trailing
+//
+//            self.contentCenterConstraint = contentContainerView.centerX == selfView.centerX
+//            self.contentWidthConstraint = contentContainerView.width == 320
+
+//            authenticateLabel.leading == contentContainerView.leading + 24
+//            authenticateLabel.trailing == contentContainerView.trailing - 24
+
+            authenticateButton.top == authenticateLabel.bottom + 24
+//            authenticateButton.leading == contentContainerView.leading + 24
+//            authenticateButton.trailing == contentContainerView.trailing - 24
+//            authenticateButton.bottom == contentContainerView.bottom - 24
+//            authenticateButton.height == 40
+        }
+
     }
     
     public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {

@@ -79,16 +79,14 @@ extension UIView {
                                   exclude excludedAnchors: [Anchor] = [],
                                   activate: Bool = true) -> [Anchor: NSLayoutConstraint] {
 
-        var constraints: [NSLayoutConstraint] = []
-        var constraintDict: [Anchor: NSLayoutConstraint] = [:]
+        var constraints: [Anchor: NSLayoutConstraint] = [:]
 
         if !excludedAnchors.contains(.leading) {
             let constraint = leadingAnchor.constraint(
                 equalTo: safely ? view.safeLeadingAnchor : view.leadingAnchor,
                 constant: insets.leading)
 
-            constraints.append(constraint)
-            constraintDict[.leading] = constraint
+            constraints[.leading] = constraint
         }
 
         if !excludedAnchors.contains(.bottom) {
@@ -96,8 +94,7 @@ extension UIView {
                 equalTo: safely ? view.safeBottomAnchor : view.bottomAnchor,
                 constant: -insets.bottom)
 
-            constraints.append(constraint)
-            constraintDict[.bottom] = constraint
+            constraints[.bottom] = constraint
         }
 
         if !excludedAnchors.contains(.top) {
@@ -105,8 +102,7 @@ extension UIView {
                 equalTo: safely ? view.safeTopAnchor : view.topAnchor,
                 constant: insets.top)
 
-            constraints.append(constraint)
-            constraintDict[.top] = constraint
+            constraints[.top] = constraint
         }
 
         if !excludedAnchors.contains(.trailing) {
@@ -114,15 +110,14 @@ extension UIView {
                 equalTo: safely ? view.safeTrailingAnchor : view.trailingAnchor,
                 constant: -insets.trailing)
 
-            constraints.append(constraint)
-            constraintDict[.trailing] = constraint
+            constraints[.trailing] = constraint
         }
 
         if activate {
-            NSLayoutConstraint.activate(constraintDict.map({$0.value}))
+            NSLayoutConstraint.activate(constraints.map({$0.value}))
         }
         
-        return constraintDict
+        return constraints
     }
 
     func setDimensions(length: CGFloat) {
