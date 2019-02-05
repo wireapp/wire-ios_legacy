@@ -769,33 +769,12 @@ extension ConversationStatus {
 extension ZMConversation {
     
     var status: ConversationStatus {
-        let isBlocked = self.conversationType == .oneOnOne ? (self.firstActiveParticipantOtherThanSelf()?.isBlocked ?? false) : false
         
-        var messagesRequiringAttention = unreadMessages
-
-        if messagesRequiringAttention.count == 0,
-            let lastMessage = recentMessages.last,
-            let systemMessageData = lastMessage.systemMessageData,
-            systemMessageData.systemMessageType == .participantsRemoved || systemMessageData.systemMessageType == .participantsAdded || systemMessageData.systemMessageType == .newConversation {
-            messagesRequiringAttention.append(lastMessage)
-        }
-        
+        let messagesRequiringAttention = estimatedUnreadCount > 0 ? unreadMessages : []
         let messagesRequiringAttentionTypes = messagesRequiringAttention.compactMap { StatusMessageType(message: $0) }
-        
         var iterator = messagesRequiringAttentionTypes.makeIterator()
         let messagesRequiringAttentionByType = iterator.histogram()
-        
-        let hasMessages: Bool
-        
-        if recentMessages.count < 10 {
-            hasMessages = recentMessages.compactMap {
-                StatusMessageType(message: $0)
-            }.count > 0
-        }
-        else {
-            hasMessages = true
-        }
-        
+                
         let isOngoingCall: Bool = {
             guard let state = voiceChannel?.state else { return false }
             switch state {
@@ -807,14 +786,14 @@ extension ZMConversation {
         
         return ConversationStatus(
             isGroup: conversationType == .group,
-            hasMessages: hasMessages,
+            hasMessages: estimatedHasMessages,
             hasUnsentMessages: hasUnreadUnsentMessage,
             messagesRequiringAttention: messagesRequiringAttention,
             messagesRequiringAttentionByType: messagesRequiringAttentionByType,
             isTyping: typingUsers().count > 0,
             mutedMessageTypes: mutedMessageTypes,
             isOngoingCall: isOngoingCall,
-            isBlocked: isBlocked,
+            isBlocked: connectedUser?.isBlocked ?? false,
             isSelfAnActiveMember: isSelfAnActiveMember,
             hasSelfMention: estimatedUnreadSelfMentionCount > 0,
             hasSelfReply: estimatedUnreadSelfReplyCount > 0
