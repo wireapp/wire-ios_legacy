@@ -18,7 +18,7 @@
 
 import Foundation
 
-class RemoveClientStepViewController: UIViewController, AuthenticationCoordinatedViewController {
+final class RemoveClientStepViewController: UIViewController, AuthenticationCoordinatedViewController {
 
     var authenticationCoordinator: AuthenticationCoordinator?
     let clientListController: ClientListViewController
@@ -76,7 +76,7 @@ class RemoveClientStepViewController: UIViewController, AuthenticationCoordinate
         ])
 
         // Adaptive Constraints
-        contentViewWidthCompact = clientListController.view.widthAnchor.constraint(equalToConstant: 375)
+        contentViewWidthRegular = clientListController.view.widthAnchor.constraint(equalToConstant: 375)
         contentViewWidthCompact = clientListController.view.widthAnchor.constraint(equalTo: view.widthAnchor)
 
         updateConstraints(forRegularLayout: traitCollection.horizontalSizeClass == .regular)
@@ -90,7 +90,7 @@ class RemoveClientStepViewController: UIViewController, AuthenticationCoordinate
             contentViewWidthRegular.isActive = true
         } else {
             contentViewWidthCompact.isActive = false
-            contentViewWidthCompact.isActive = true
+            contentViewWidthRegular.isActive = true
         }
     }
 
