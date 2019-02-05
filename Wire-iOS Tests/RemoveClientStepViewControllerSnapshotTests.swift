@@ -25,11 +25,12 @@ final class RemoveClientStepViewControllerSnapshotTests: ZMSnapshotTestCase {
     
     override func setUp() {
         super.setUp()
-        sut = RemoveClientStepViewController(clients: [mockUserClient(), mockUserClient(), mockUserClient(), mockUserClient(), mockUserClient()],
+        sut = RemoveClientStepViewController(clients: [mockUserClient(),
+                                                       mockUserClient(),
+                                                       mockUserClient(),
+                                                       mockUserClient(),
+                                                       mockUserClient()],
                                              credentials: ZMCredentials())
-
-        /// TODO: remove this after snapshot is created
-        recordMode = true
     }
     
     override func tearDown() {
@@ -37,9 +38,12 @@ final class RemoveClientStepViewControllerSnapshotTests: ZMSnapshotTestCase {
         super.tearDown()
     }
 
-    func testForiPhoneLayout(){
+    func testForWrappedInNavigationController(){
         let navigationController = UIViewController().wrapInNavigationController()
         navigationController.pushViewController(sut, animated: false)
-        verify(view: navigationController.view)
+
+        verifyInAllDeviceSizes(view: navigationController.view) { _, isPad in
+            self.sut.updateConstraints(forRegularLayout: isPad)
+        }
     }
 }

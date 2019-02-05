@@ -43,6 +43,10 @@ final class RemoveClientStepViewController: UIViewController, AuthenticationCoor
                                                         variant: .light)
 
         super.init(nibName: nil, bundle: nil)
+
+        title = "registration.signin.too_many_devices.manage_screen.title".localized(uppercased: true)
+        configureSubviews()
+        configureConstraints()
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -50,13 +54,6 @@ final class RemoveClientStepViewController: UIViewController, AuthenticationCoor
     }
 
     // MARK: - Lifecycle
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        title = "registration.signin.too_many_devices.manage_screen.title".localized(uppercased: true)
-        configureSubviews()
-        configureConstraints()
-    }
 
     private func configureSubviews() {
         view.backgroundColor = UIColor.Team.background
