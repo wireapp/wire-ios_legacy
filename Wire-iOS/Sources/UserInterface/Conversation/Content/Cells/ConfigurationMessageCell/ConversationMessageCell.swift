@@ -202,7 +202,9 @@ extension ConversationMessageCellDescription {
         
         adapterCell.cellView.configure(with: self.configuration, animated: animated)
         
-        _ = message?.startSelfDestructionIfNeeded()
+        if cell.isVisible {
+            _ = message?.startSelfDestructionIfNeeded()
+        }
     }
     
     func isConfigurationEqual(with other: Any) -> Bool {

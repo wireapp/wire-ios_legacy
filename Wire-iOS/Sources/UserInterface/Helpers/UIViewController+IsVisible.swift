@@ -24,9 +24,15 @@ extension UIViewController {
     @objc var isVisible: Bool {
         let isInWindow = view.window != nil
         let notCoveredModally = presentedViewController == nil
-        let viewIsVisible = view.convert(view.bounds, to: nil).intersects(UIScreen.main.bounds)
+        let viewIsVisible = view.isVisible
 
         return isInWindow && notCoveredModally && viewIsVisible
     }
 
+}
+
+extension UIView {
+    @objc var isVisible: Bool {
+        return convert(bounds, to: nil).intersects(UIScreen.main.bounds)
+    }
 }
