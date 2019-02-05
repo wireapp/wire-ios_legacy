@@ -82,13 +82,9 @@ final class RemoveClientStepViewController: UIViewController, AuthenticationCoor
     // MARK: - Adaptive UI
 
     func updateConstraints(forRegularLayout isRegular: Bool) {
-        if isRegular {
-            contentViewWidthCompact.isActive = false
-            contentViewWidthRegular.isActive = true
-        } else {
-            contentViewWidthRegular.isActive = false
-            contentViewWidthCompact.isActive = true
-        }
+        updateConstraints(forRegularLayout: isRegular,
+                          compactConstraints: [contentViewWidthCompact],
+                          regularConstraints: [contentViewWidthRegular])
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -97,6 +93,23 @@ final class RemoveClientStepViewController: UIViewController, AuthenticationCoor
     }
 
 }
+
+
+extension UIViewController {
+    func updateConstraints(forRegularLayout isRegular: Bool,
+                           compactConstraints: [NSLayoutConstraint],
+                           regularConstraints: [NSLayoutConstraint]) {
+        if isRegular {
+            compactConstraints.forEach(){$0.isActive = false}
+            regularConstraints.forEach(){$0.isActive = true}
+        } else {
+            regularConstraints.forEach(){$0.isActive = false}
+            compactConstraints.forEach(){$0.isActive = true}
+        }
+    }
+
+}
+
 
 // MARK: - ClientListViewControllerDelegate
 
