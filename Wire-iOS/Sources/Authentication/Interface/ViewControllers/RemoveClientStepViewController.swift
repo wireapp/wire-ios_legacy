@@ -95,23 +95,6 @@ final class RemoveClientStepViewController: UIViewController, AuthenticationCoor
 }
 
 
-extension UITraitEnvironment {
-    func toggle(compactConstraints: [NSLayoutConstraint],
-                regularConstraints: [NSLayoutConstraint],
-                userInterfaceSizeClass: UIUserInterfaceSizeClass) {
-        let isRegular = userInterfaceSizeClass == .regular
-
-        if isRegular {
-            compactConstraints.forEach(){$0.isActive = false}
-            regularConstraints.forEach(){$0.isActive = true}
-        } else {
-            regularConstraints.forEach(){$0.isActive = false}
-            compactConstraints.forEach(){$0.isActive = true}
-        }
-    }
-}
-
-
 // MARK: - ClientListViewControllerDelegate
 
 extension RemoveClientStepViewController: ClientListViewControllerDelegate {
