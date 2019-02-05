@@ -65,7 +65,7 @@ extension UIView {
     @discardableResult func fitInSuperview(safely: Bool = false,
                                            with insets: EdgeInsets = .zero,
                                            exclude excludedAnchors: [Anchor] = [],
-                                           activate: Bool = true) -> [NSLayoutConstraint] {
+                                           activate: Bool = true) -> [Anchor: NSLayoutConstraint] {
         guard let superview = superview else {
             fatal("Not in view hierarchy: self.superview = nil")
         }
@@ -77,39 +77,52 @@ extension UIView {
                                   safely: Bool = false,
                                   with insets: EdgeInsets = .zero,
                                   exclude excludedAnchors: [Anchor] = [],
-                                  activate: Bool = true) -> [NSLayoutConstraint] {
+                                  activate: Bool = true) -> [Anchor: NSLayoutConstraint] {
 
         var constraints: [NSLayoutConstraint] = []
+        var constraintDict: [Anchor: NSLayoutConstraint] = [:]
 
         if !excludedAnchors.contains(.leading) {
-            constraints.append(leadingAnchor.constraint(
+            let constraint = leadingAnchor.constraint(
                 equalTo: safely ? view.safeLeadingAnchor : view.leadingAnchor,
-                constant: insets.leading))
+                constant: insets.leading)
+
+            constraints.append(constraint)
+            constraintDict[.leading] = constraint
         }
 
         if !excludedAnchors.contains(.bottom) {
-            constraints.append(bottomAnchor.constraint(
+            let constraint = bottomAnchor.constraint(
                 equalTo: safely ? view.safeBottomAnchor : view.bottomAnchor,
-                constant: -insets.bottom))
+                constant: -insets.bottom)
+
+            constraints.append(constraint)
+            constraintDict[.bottom] = constraint
         }
 
         if !excludedAnchors.contains(.top) {
-            constraints.append(topAnchor.constraint(
+            let constraint = topAnchor.constraint(
                 equalTo: safely ? view.safeTopAnchor : view.topAnchor,
-                constant: insets.top))
+                constant: insets.top)
+
+            constraints.append(constraint)
+            constraintDict[.top] = constraint
         }
 
         if !excludedAnchors.contains(.trailing) {
-            constraints.append(trailingAnchor.constraint(
+            let constraint = trailingAnchor.constraint(
                 equalTo: safely ? view.safeTrailingAnchor : view.trailingAnchor,
-                constant: -insets.trailing))
+                constant: -insets.trailing)
+
+            constraints.append(constraint)
+            constraintDict[.trailing] = constraint
         }
 
         if activate {
-            NSLayoutConstraint.activate(constraints)
+            NSLayoutConstraint.activate(constraintDict.map({$0.value}))
         }
         
-        return constraints
+        return constraintDict
     }
 
     func setDimensions(length: CGFloat) {
