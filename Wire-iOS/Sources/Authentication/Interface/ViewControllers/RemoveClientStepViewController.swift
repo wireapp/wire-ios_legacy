@@ -76,29 +76,29 @@ final class RemoveClientStepViewController: UIViewController, AuthenticationCoor
         contentViewWidthRegular = clientListController.view.widthAnchor.constraint(equalToConstant: 375)
         contentViewWidthCompact = clientListController.view.widthAnchor.constraint(equalTo: view.widthAnchor)
 
-        updateConstraints(forRegularLayout: traitCollection.horizontalSizeClass == .regular)
+        updateConstraints()
     }
 
     // MARK: - Adaptive UI
 
-    func updateConstraints(forRegularLayout isRegular: Bool) {
-        updateConstraints(forRegularLayout: isRegular,
-                          compactConstraints: [contentViewWidthCompact],
+    func updateConstraints() {
+        updateConstraints(compactConstraints: [contentViewWidthCompact],
                           regularConstraints: [contentViewWidthRegular])
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-        updateConstraints(forRegularLayout: traitCollection.horizontalSizeClass == .regular)
+        updateConstraints()
     }
 
 }
 
 
-extension UIViewController {
-    func updateConstraints(forRegularLayout isRegular: Bool,
-                           compactConstraints: [NSLayoutConstraint],
+extension UITraitEnvironment {
+    func updateConstraints(compactConstraints: [NSLayoutConstraint],
                            regularConstraints: [NSLayoutConstraint]) {
+        let isRegular = traitCollection.horizontalSizeClass == .regular
+
         if isRegular {
             compactConstraints.forEach(){$0.isActive = false}
             regularConstraints.forEach(){$0.isActive = true}
@@ -107,7 +107,6 @@ extension UIViewController {
             compactConstraints.forEach(){$0.isActive = true}
         }
     }
-
 }
 
 
