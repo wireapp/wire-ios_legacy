@@ -109,7 +109,7 @@ import Cartography
 
         NSLayoutConstraint.activate([
             authenticateButton.heightAnchor.constraint(equalToConstant: 40),
-            authenticateButton.topAnchor.constraint(equalTo: authenticateLabel.bottomAnchor, constant: 24)
+//            authenticateButton.topAnchor.constraint(equalTo: authenticateLabel.bottomAnchor, constant: -24)
         ])
 
         constrain(self, self.contentContainerView, self.authenticateLabel, self.authenticateButton) { selfView, contentContainerView, authenticateLabel, authenticateButton in
