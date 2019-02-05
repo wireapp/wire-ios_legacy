@@ -20,7 +20,7 @@ import Foundation
 import Cartography
 
 
-@objcMembers internal final class AppLockView: UIView {
+@objcMembers final class AppLockView: UIView {
     public var onReauthRequested: (()->())?
     
     public let shieldViewContainer = UIView()
@@ -101,28 +101,20 @@ import Cartography
             authenticateButton.bottom == contentContainerView.bottom - 24
             authenticateButton.height == 40
         }
-        self.updateConstraintsForSizeClass()
+        updateConstraints(userInterfaceSizeClass: traitCollection.horizontalSizeClass)
     }
     
     public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-        self.updateConstraintsForSizeClass();
+
+        updateConstraints(userInterfaceSizeClass: traitCollection.horizontalSizeClass)
     }
     
-    private func updateConstraintsForSizeClass() {
-        if self.traitCollection.horizontalSizeClass == .compact {
-            self.contentCenterConstraint.isActive = false
-            self.contentWidthConstraint.isActive = false
-            
-            self.contentLeadingConstraint.isActive = true
-            self.contentTrailingConstraint.isActive = true
-        }
-        else {
-            self.contentLeadingConstraint.isActive = false
-            self.contentTrailingConstraint.isActive = false
-            self.contentCenterConstraint.isActive = true
-            self.contentWidthConstraint.isActive = true
-        }
+    func updateConstraints(userInterfaceSizeClass: UIUserInterfaceSizeClass) {
+
+        toggle(compactConstraints: [contentLeadingConstraint, contentTrailingConstraint],
+               regularConstraints: [contentCenterConstraint, contentWidthConstraint],
+               userInterfaceSizeClass: userInterfaceSizeClass)
     }
     
     required init?(coder aDecoder: NSCoder) {

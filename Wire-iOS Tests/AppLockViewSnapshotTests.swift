@@ -35,6 +35,17 @@ final class AppLockViewSnapshotTests: ZMSnapshotTestCase {
 
     func testForReauthUI(){
         sut.showReauth = true
-        verifyInAllDeviceSizes(view: sut)
+
+        /// workabout for "FBSnapshotTestCase calls traitCollectionDidChange with invalid argument - previousTraitCollection is unspecific and traitCollection is compact" issue
+        let mocVC = UIViewController()
+        mocVC.view.addSubview(sut)
+
+        sut.translatesAutoresizingMaskIntoConstraints = false
+        sut.fitInSuperview()
+
+
+        verifyInAllDeviceSizes(view: mocVC.view) { _, isPad in
+            self.sut.updateConstraints(userInterfaceSizeClass: isPad ? .regular: .compact)
+        }
     }
 }
