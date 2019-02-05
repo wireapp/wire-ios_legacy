@@ -178,6 +178,10 @@
 		5E0EB1FB2100D80B00B5DC2B /* CompanyLoginFlowOpener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E0EB1FA2100D80B00B5DC2B /* CompanyLoginFlowOpener.swift */; };
 		5E0FB21B2057F50C00FD9867 /* CallQualitySurveyReview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E0FB21A2057F50C00FD9867 /* CallQualitySurveyReview.swift */; };
 		5E1314B82204A041000FAFC5 /* URLWireLocaleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E1314B72204A041000FAFC5 /* URLWireLocaleTests.swift */; };
+		5E1314BA22087C61000FAFC5 /* CompanyControllerLinkContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E1314B922087C61000FAFC5 /* CompanyControllerLinkContext.swift */; };
+		5E1314BF22088405000FAFC5 /* CompanyLoginLinkResponseActionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E1314BB220882E4000FAFC5 /* CompanyLoginLinkResponseActionTests.swift */; };
+		5E1314C122097BEF000FAFC5 /* AuthenticationStartCompanyLoginLinkEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E1314C022097BEF000FAFC5 /* AuthenticationStartCompanyLoginLinkEventHandler.swift */; };
+		5E1314D12209A2CD000FAFC5 /* ClientRegistrationErrorEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E1314D02209A2CD000FAFC5 /* ClientRegistrationErrorEventHandler.swift */; };
 		5E144FFF213EA0EC00B65E14 /* PreviewImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E144FFD213E973B00B65E14 /* PreviewImageView.swift */; };
 		5E15D31B219DB9060038439D /* ConversationFileMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E15D31A219DB9060038439D /* ConversationFileMessageCell.swift */; };
 		5E21344421CCED3B00273D0D /* PhoneNumberInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E21344321CCED3B00273D0D /* PhoneNumberInputView.swift */; };
@@ -1679,6 +1683,10 @@
 		5E0EB1FA2100D80B00B5DC2B /* CompanyLoginFlowOpener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyLoginFlowOpener.swift; sourceTree = "<group>"; };
 		5E0FB21A2057F50C00FD9867 /* CallQualitySurveyReview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallQualitySurveyReview.swift; sourceTree = "<group>"; };
 		5E1314B72204A041000FAFC5 /* URLWireLocaleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLWireLocaleTests.swift; sourceTree = "<group>"; };
+		5E1314B922087C61000FAFC5 /* CompanyControllerLinkContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyControllerLinkContext.swift; sourceTree = "<group>"; };
+		5E1314BB220882E4000FAFC5 /* CompanyLoginLinkResponseActionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyLoginLinkResponseActionTests.swift; sourceTree = "<group>"; };
+		5E1314C022097BEF000FAFC5 /* AuthenticationStartCompanyLoginLinkEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationStartCompanyLoginLinkEventHandler.swift; sourceTree = "<group>"; };
+		5E1314D02209A2CD000FAFC5 /* ClientRegistrationErrorEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientRegistrationErrorEventHandler.swift; sourceTree = "<group>"; };
 		5E144FFD213E973B00B65E14 /* PreviewImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewImageView.swift; sourceTree = "<group>"; };
 		5E15D31A219DB9060038439D /* ConversationFileMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationFileMessageCell.swift; sourceTree = "<group>"; };
 		5E181908216B734C003659CB /* Cartfile.resolved */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cartfile.resolved; sourceTree = "<group>"; };
@@ -3900,6 +3908,7 @@
 				5E8DA757211B055100360979 /* AuthenticationClientLimitErrorHandler.swift */,
 				5E8DA759211B075E00360979 /* AuthenticationNoCredentialsErrorHandler.swift */,
 				5E8DA75D211B0E5800360979 /* AuthenticationNeedsReauthenticationErrorHandler.swift */,
+				5E1314D02209A2CD000FAFC5 /* ClientRegistrationErrorEventHandler.swift */,
 			);
 			path = "Registration Error";
 			sourceTree = "<group>";
@@ -3935,6 +3944,7 @@
 			children = (
 				5E8C38B1212E9799002AE12B /* AuthenticationStartMissingCredentialsErrorHandler.swift */,
 				5E8DA76E211B422D00360979 /* AuthenticationStartReauthenticateErrorHandler.swift */,
+				5E1314C022097BEF000FAFC5 /* AuthenticationStartCompanyLoginLinkEventHandler.swift */,
 				5EE73BE52122C6DC0032986D /* AuthenticationStartAddAccountEventHandler.swift */,
 			);
 			path = "Flow Start";
@@ -5907,6 +5917,7 @@
 				EF2172E821DF97CC00DA1671 /* URL+EncodeTests.swift */,
 				EF36168921E753300041F0CC /* SettingsTableViewControllerSnapshotTests.swift */,
 				EF1D8BA721EE49550001A4CC /* TeamMemberInviteViewControllerSnapshotTests.swift */,
+				5E1314BB220882E4000FAFC5 /* CompanyLoginLinkResponseActionTests.swift */,
 				EF207B36220839E000738E84 /* ConversationContentViewControllerTests.swift */,
 				EF2B255C22098C3D006712CA /* RemoveClientStepViewControllerSnapshotTests.swift */,
 			);
@@ -6105,6 +6116,7 @@
 			isa = PBXGroup;
 			children = (
 				BFFA182A20FDE93400F64377 /* CompanyLoginController.swift */,
+				5E1314B922087C61000FAFC5 /* CompanyControllerLinkContext.swift */,
 				BF841E292107212800CB09E4 /* URLSchemeHelper.h */,
 				BF841E2A2107212800CB09E4 /* URLSchemeHelper.m */,
 				BFFA182720FDE22B00F64377 /* UIAlertController+CompanyLogin.swift */,
@@ -7408,6 +7420,7 @@
 				872C8242214BFA8700236A76 /* UITextView+Range.swift in Sources */,
 				BF5DF5C720F4C1C5002BCB67 /* GroupParticipantsDetailViewModel.swift in Sources */,
 				EF297DE321320AC20002983A /* InviteContactsViewController+Swift.swift in Sources */,
+				5E1314C122097BEF000FAFC5 /* AuthenticationStartCompanyLoginLinkEventHandler.swift in Sources */,
 				F1199D361FC8490A0070FAC3 /* TeamCreationState.swift in Sources */,
 				BF7ED2D81DF1A30C003A4397 /* IncomingConnectionView.swift in Sources */,
 				EF106E83204D869B00B9F0F6 /* DeviceProtocol.swift in Sources */,
@@ -7814,6 +7827,7 @@
 				87F18BC01E017B7F00C69D9B /* UIView+VisibleViews.swift in Sources */,
 				878A720C1E55D7D3008072B9 /* TextSearchResultFooter.swift in Sources */,
 				EF6ACA7F21318A640064047B /* FullscreenImageViewController+Style.swift in Sources */,
+				5E1314D12209A2CD000FAFC5 /* ClientRegistrationErrorEventHandler.swift in Sources */,
 				EF18D7C82102345B005B51A1 /* UpsideDownTableView.swift in Sources */,
 				8FC85454199245770008B66B /* ConversationViewController+ParticipantsPopover.m in Sources */,
 				5E33F0CC20AC39C800414EA6 /* CallVideoPlaceholderState.swift in Sources */,
@@ -7978,6 +7992,7 @@
 				EF66110F2121D00B00BDF57A /* UIImage+DownSize.swift in Sources */,
 				7CC085461F7AA30F0010F96B /* DotView.swift in Sources */,
 				16A94AFB209C553A008A5718 /* CallViewController.swift in Sources */,
+				5E1314BA22087C61000FAFC5 /* CompanyControllerLinkContext.swift in Sources */,
 				5E65A7A721304B6B008BFCC0 /* UserEmailUpdateCodeSentEventHandler.swift in Sources */,
 				87DCF4931D34E9BA00BB420F /* ContactsViewController.m in Sources */,
 				16626504217DAE7400300F45 /* UIView+ArrangeSubviews.swift in Sources */,
@@ -8120,6 +8135,7 @@
 				EFE0439B2149D9CA00BC3079 /* ShareContactsViewControllerSnapshotTests.swift in Sources */,
 				BFC9149B1D181BE7001F068B /* LocationMessageCellTests.swift in Sources */,
 				5EC7C87C21907D94004662AC /* ConversationReplyCellDescriptionTests.swift in Sources */,
+				5E1314BF22088405000FAFC5 /* CompanyLoginLinkResponseActionTests.swift in Sources */,
 				EF6E3C7C208A02FE003F6752 /* GiphySearchViewControllerSnapshotTests.swift in Sources */,
 				EFC0C7F121778FB000380C4B /* SettingsTextCellSnapshotTests.swift in Sources */,
 				EFE806301FE006A7006A0EE7 /* DateFormatterTests.swift in Sources */,

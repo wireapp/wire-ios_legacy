@@ -65,7 +65,7 @@ class AuthenticationInterfaceBuilder {
         case .reauthenticate(let credentials, _):
             let viewController: AuthenticationStepController
 
-            if credentials?.usesCompanyLogin == true {
+            if credentials?.usesCompanyLogin == true && credentials?.hasPassword == false {
                 // Is the user has SSO enabled, show the screen to log in with SSO
                 let companyLoginStep = ReauthenticateWithCompanyLoginStepDescription()
                 viewController = makeViewController(for: companyLoginStep)
@@ -94,7 +94,7 @@ class AuthenticationInterfaceBuilder {
 
             // Add the item to start company login if needed.
             if featureProvider.allowCompanyLogin {
-                viewController.setRightItem("signin.company_idp.button.title".localized, withAction: .startCompanyLogin, accessibilityID: "companyLoginButton")
+                viewController.setRightItem("signin.company_idp.button.title".localized, withAction: .startCompanyLogin(code: nil), accessibilityID: "companyLoginButton")
             }
 
             return viewController

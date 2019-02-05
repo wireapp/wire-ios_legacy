@@ -166,18 +166,27 @@ import Foundation
     /// Attempt to login using the requester specified in `init`
     /// - parameter code: the code used to attempt the SSO login.
     private func attemptLogin(using code: String) {
-        guard !presentOfflineAlertIfNeeded() else { return }
-
         guard let uuid = CompanyLoginRequestDetector.requestCode(in: code) else {
             return requireInternalFailure("Should never try to login with invalid code.")
         }
 
+        attemptLoginWithCode(uuid)
+    }
+
+    /**
+     * Attemts to login with a SSO login code.
+     * - parameter code: The SSO team code that was extracted from the link.
+     */
+
+    func attemptLoginWithCode(_ code: UUID) {
+        guard !presentOfflineAlertIfNeeded() else { return }
+
         delegate?.controller(self, showLoadingView: true)
 
-        requester.validate(token: uuid) {
+        requester.validate(token: code) {
             self.delegate?.controller(self, showLoadingView: false)
             guard !self.handleValidationErrorIfNeeded($0) else { return }
-            self.requester.requestIdentity(for: uuid)
+            self.requester.requestIdentity(for: code)
         }
     }
 
