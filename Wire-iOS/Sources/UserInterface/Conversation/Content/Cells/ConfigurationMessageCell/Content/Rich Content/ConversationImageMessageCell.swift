@@ -100,10 +100,7 @@ class ConversationImageMessageCell: UIView, ConversationMessageCell {
     }
     
     func configure(with object: Configuration, animated: Bool) {
-        let showObfuscationView = object.isObfuscated
-
-        obfuscationView.isHidden = !showObfuscationView
-        let imageResource = showObfuscationView ? nil : object.image.image
+        obfuscationView.isHidden = !object.isObfuscated
 
         let scaleFactor: CGFloat = object.image.isAnimatedGIF ? 1 : 0.5
         let imageSize = object.image.originalSize.applying(CGAffineTransform.init(scaleX: scaleFactor, y: scaleFactor))
@@ -116,6 +113,8 @@ class ConversationImageMessageCell: UIView, ConversationMessageCell {
         
         containerView.backgroundColor = UIColor.from(scheme: .placeholderBackground)
         imageResourceView.layer.borderWidth = 0
+
+        let imageResource = object.isObfuscated ? nil : object.image.image
 
         imageResourceView.setImageResource(imageResource) { [weak self] in
             self?.updateImageContainerAppearance()
