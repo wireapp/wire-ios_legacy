@@ -39,6 +39,40 @@ platform :ios do
         )
     end
 
+    desc "Build for AppStore"
+    lane :build_app_store do
+        if ENV["BUILD_NUMBER"].nil?
+            UI.user_error! "Pass build number in environment variable BUILD_NUMBER"
+        end
+        build_app(
+            scheme: "Wire-iOS",
+            export_method: "app-store",
+            derived_data_path: "DerivedData",
+            buildlog_path: "appstore",
+            output_directory: "appstore",
+            include_bitcode: false,
+            include_symbols: true,
+            xcargs: "BUILD_NUMBER=#{ENV["BUILD_NUMBER"]}"
+        )
+    end
+
+    desc "Upload to AppStore"
+    lane :release_app_store do
+        sh "cp ../Configuration/Appfile ."
+        deliver(
+            ipa: "appstore/Wire.ipa",
+            submit_for_review: false,
+            automatic_release: false,
+            force: true, # Skip HTML report verification
+            skip_binary_upload: false,
+            run_precheck_before_submit: false,
+            precheck_include_in_app_purchases: false,
+            skip_app_version_update: true,
+            skip_metadata: true,
+            skip_screenshots: true,
+        )
+    end
+
     desc "Run post-test tasks"
     lane :post_test do
         sh "curl -s https://codecov.io/bash > codecov"
