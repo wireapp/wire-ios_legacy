@@ -20,9 +20,8 @@ import Foundation
 
 extension UITraitEnvironment {
     public func toggle(compactConstraints: [NSLayoutConstraint],
-                       regularConstraints: [NSLayoutConstraint],
-                       userInterfaceSizeClass: UIUserInterfaceSizeClass) {
-        switch userInterfaceSizeClass {
+                       regularConstraints: [NSLayoutConstraint]) {
+        switch traitCollection.horizontalSizeClass {
         case .regular:
             compactConstraints.forEach(){$0.isActive = false}
             regularConstraints.forEach(){$0.isActive = true}

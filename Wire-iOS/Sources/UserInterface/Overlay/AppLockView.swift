@@ -18,7 +18,7 @@
 
 import Foundation
 
-@objcMembers final class AppLockView: UIView {
+final class AppLockView: UIView {
     public var onReauthRequested: (()->())?
     
     public let shieldViewContainer = UIView()
@@ -74,7 +74,7 @@ import Foundation
 
         createConstraints(nibView: nibView)
 
-        updateConstraints(userInterfaceSizeClass: traitCollection.horizontalSizeClass)
+        toggleConstraints()
     }
 
     private func createConstraints(nibView: UIView) {
@@ -116,14 +116,14 @@ import Foundation
     public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
 
-        updateConstraints(userInterfaceSizeClass: traitCollection.horizontalSizeClass)
+        toggleConstraints()
     }
+
     
-    func updateConstraints(userInterfaceSizeClass: UIUserInterfaceSizeClass) {
+    func toggleConstraints() {
 
         toggle(compactConstraints: [contentLeadingConstraint, contentTrailingConstraint],
-               regularConstraints: [contentCenterConstraint, contentWidthConstraint],
-               userInterfaceSizeClass: userInterfaceSizeClass)
+               regularConstraints: [contentCenterConstraint, contentWidthConstraint])
     }
     
     required init?(coder aDecoder: NSCoder) {

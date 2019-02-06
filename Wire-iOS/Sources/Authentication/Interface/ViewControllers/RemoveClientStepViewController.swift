@@ -76,20 +76,19 @@ final class RemoveClientStepViewController: UIViewController, AuthenticationCoor
         contentViewWidthRegular = clientListController.view.widthAnchor.constraint(equalToConstant: 375)
         contentViewWidthCompact = clientListController.view.widthAnchor.constraint(equalTo: view.widthAnchor)
 
-        updateConstraints(userInterfaceSizeClass: traitCollection.horizontalSizeClass)
+        toggleConstraints()
     }
 
     // MARK: - Adaptive UI
 
-    func updateConstraints(userInterfaceSizeClass: UIUserInterfaceSizeClass) {
+    func toggleConstraints() {
         toggle(compactConstraints: [contentViewWidthCompact],
-               regularConstraints: [contentViewWidthRegular],
-               userInterfaceSizeClass: userInterfaceSizeClass)
+               regularConstraints: [contentViewWidthRegular])
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-        updateConstraints(userInterfaceSizeClass: traitCollection.horizontalSizeClass)
+        toggleConstraints()
     }
 
 }
