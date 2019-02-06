@@ -667,8 +667,8 @@ extension CollectionsViewController: UIGestureRecognizerDelegate {
 
 // MARK: - Actions
 extension CollectionsViewController: MessageActionResponder {
-    public func perform(action: MessageAction, for message: ZMConversationMessage!) {
-        perform(action, for: message, source: nil)
+    public func perform(action: MessageAction, for message: ZMConversationMessage!, view: UIView) {
+        perform(action, for: message, source: view as? CollectionCell)
     }
 }
 

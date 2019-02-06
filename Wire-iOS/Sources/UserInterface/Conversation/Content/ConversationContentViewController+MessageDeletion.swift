@@ -62,6 +62,7 @@ extension CollectionCell: SelectableView {
 @objcMembers final class DeletionDialogPresenter: NSObject {
 
     private weak var sourceViewController: UIViewController?
+    var alert: UIAlertController!
 
     public init(sourceViewController: UIViewController) {
         self.sourceViewController = sourceViewController
@@ -77,9 +78,9 @@ extension CollectionCell: SelectableView {
      - parameter source: The source view used for a potential popover presentation of the dialog.
      - parameter completion: A completion closure which will be invoked with `true` if a deletion occured and `false` otherwise.
      */
-    @objc public func presentDeletionAlertController(forMessage message: ZMConversationMessage?, source: UIView?, completion: ((Bool) -> Void)?) {
-        guard let message = message, !message.hasBeenDeleted else { return }
-        let alert = UIAlertController.forMessageDeletion(with: message.deletionConfiguration) { (action, alert) in
+    public func presentDeletionAlertController(forMessage message: ZMConversationMessage, source: UIView?, completion: ((Bool) -> Void)?) {
+        guard !message.hasBeenDeleted else { return }
+        alert = UIAlertController.forMessageDeletion(with: message.deletionConfiguration) { (action, alert) in
             
             // Tracking needs to be called before performing the action, since the content of the message is cleared
             if case .delete(let type) = action {

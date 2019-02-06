@@ -27,6 +27,8 @@
 @class UserSearchResultsViewController;
 @class ConversationTableViewDataSource;
 
+@protocol ZMUserSessionInterface;
+
 /// The main conversation view controller
 @interface ConversationContentViewController : UIViewController
 
@@ -41,8 +43,11 @@
 @property (nonatomic) UserSearchResultsViewController *mentionsSearchResultsViewController;
 @property (nonatomic) ConversationTableViewDataSource* dataSource;
 
-- (instancetype)initWithConversation:(ZMConversation *)conversation;
-- (instancetype)initWithConversation:(ZMConversation *)conversation message:(id<ZMConversationMessage>)message NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithConversation:(ZMConversation *)conversation
+                             session:(id<ZMUserSessionInterface>)session;
+- (instancetype)initWithConversation:(ZMConversation *)conversation
+                             message:(id<ZMConversationMessage>)message
+                             session:(id<ZMUserSessionInterface>) session NS_DESIGNATED_INITIALIZER;
 - (instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil NS_UNAVAILABLE;
 
@@ -54,7 +59,6 @@
 
 @interface ConversationContentViewController (EditMessages)
 
-- (void)editLastMessage;
 - (void)didFinishEditingMessage:(id<ZMConversationMessage>)message;
 
 @end

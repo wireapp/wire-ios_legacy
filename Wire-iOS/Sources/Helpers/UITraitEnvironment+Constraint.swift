@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2018 Wire Swiss GmbH
+// Copyright (C) 2019 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -18,21 +18,19 @@
 
 import Foundation
 
-extension UIViewController {
-
-    /// return true if the view controler's view is in a window, not covered by a modelled VC and the bounds is intersects with the screen's bound
-    @objc var isVisible: Bool {
-        let isInWindow = view.window != nil
-        let notCoveredModally = presentedViewController == nil
-        let viewIsVisible = view.isVisible
-
-        return isInWindow && notCoveredModally && viewIsVisible
-    }
-
-}
-
-extension UIView {
-    @objc var isVisible: Bool {
-        return convert(bounds, to: nil).intersects(UIScreen.main.bounds)
+extension UITraitEnvironment {
+    public func toggle(compactConstraints: [NSLayoutConstraint],
+                       regularConstraints: [NSLayoutConstraint],
+                       userInterfaceSizeClass: UIUserInterfaceSizeClass) {
+        switch userInterfaceSizeClass {
+        case .regular:
+            compactConstraints.forEach(){$0.isActive = false}
+            regularConstraints.forEach(){$0.isActive = true}
+        case .compact:
+            regularConstraints.forEach(){$0.isActive = false}
+            compactConstraints.forEach(){$0.isActive = true}
+        case .unspecified:
+            break
+        }
     }
 }

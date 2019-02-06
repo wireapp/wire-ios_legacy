@@ -50,7 +50,11 @@ NS_ASSUME_NONNULL_END
 
 - (instancetype)init
 {
-    return [self initWithSearchDirectory:[[SearchDirectory alloc] initWithUserSession:[ZMUserSession sharedSession]]];
+    if ([ZMUserSession sharedSession]) {
+        return [self initWithSearchDirectory:[[SearchDirectory alloc] initWithUserSession:[ZMUserSession sharedSession]]];
+    } else {
+        return [self initWithSearchDirectory:nil];
+    }
 }
 
 - (instancetype)initWithSearchDirectory:(SearchDirectory *)searchDirectory

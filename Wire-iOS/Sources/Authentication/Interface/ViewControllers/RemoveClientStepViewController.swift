@@ -18,7 +18,7 @@
 
 import Foundation
 
-class RemoveClientStepViewController: UIViewController, AuthenticationCoordinatedViewController {
+final class RemoveClientStepViewController: UIViewController, AuthenticationCoordinatedViewController {
 
     var authenticationCoordinator: AuthenticationCoordinator?
     let clientListController: ClientListViewController
@@ -43,6 +43,10 @@ class RemoveClientStepViewController: UIViewController, AuthenticationCoordinate
                                                         variant: .light)
 
         super.init(nibName: nil, bundle: nil)
+
+        title = "registration.signin.too_many_devices.manage_screen.title".localized(uppercased: true)
+        configureSubviews()
+        configureConstraints()
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -50,13 +54,6 @@ class RemoveClientStepViewController: UIViewController, AuthenticationCoordinate
     }
 
     // MARK: - Lifecycle
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        title = "registration.signin.too_many_devices.manage_screen.title".localized(uppercased: true)
-        configureSubviews()
-        configureConstraints()
-    }
 
     private func configureSubviews() {
         view.backgroundColor = UIColor.Team.background
@@ -73,33 +70,30 @@ class RemoveClientStepViewController: UIViewController, AuthenticationCoordinate
             clientListController.view.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             clientListController.view.topAnchor.constraint(equalTo: safeTopAnchor),
             clientListController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-        ])
+            ])
 
         // Adaptive Constraints
-        contentViewWidthCompact = clientListController.view.widthAnchor.constraint(equalToConstant: 375)
+        contentViewWidthRegular = clientListController.view.widthAnchor.constraint(equalToConstant: 375)
         contentViewWidthCompact = clientListController.view.widthAnchor.constraint(equalTo: view.widthAnchor)
 
-        updateConstraints(forRegularLayout: traitCollection.horizontalSizeClass == .regular)
+        updateConstraints(userInterfaceSizeClass: traitCollection.horizontalSizeClass)
     }
 
     // MARK: - Adaptive UI
 
-    func updateConstraints(forRegularLayout isRegular: Bool) {
-        if isRegular {
-            contentViewWidthCompact.isActive = false
-            contentViewWidthRegular.isActive = true
-        } else {
-            contentViewWidthCompact.isActive = false
-            contentViewWidthCompact.isActive = true
-        }
+    func updateConstraints(userInterfaceSizeClass: UIUserInterfaceSizeClass) {
+        toggle(compactConstraints: [contentViewWidthCompact],
+               regularConstraints: [contentViewWidthRegular],
+               userInterfaceSizeClass: userInterfaceSizeClass)
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-        updateConstraints(forRegularLayout: traitCollection.horizontalSizeClass == .regular)
+        updateConstraints(userInterfaceSizeClass: traitCollection.horizontalSizeClass)
     }
 
 }
+
 
 // MARK: - ClientListViewControllerDelegate
 

@@ -22,9 +22,10 @@ import Foundation
     @objc init(icon: ZetaIconType) {
         super.init(frame: .zero)
         backgroundColor = .accentDimmedFlat
-        self.isOpaque = true
-        self.contentMode = .center
-        self.image = UIImage.init(for: icon, iconSize: .tiny, color: UIColor.from(scheme: .background))
+        isOpaque = true
+        contentMode = .center
+        image = UIImage.init(for: icon, iconSize: .tiny, color: UIColor.from(scheme: .background))
+        accessibilityLabel = "obfuscation view"
     }
     
     required init(coder: NSCoder) {

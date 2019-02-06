@@ -73,11 +73,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @end
 
-@interface FullscreenImageViewController (ActionResponder) <MessageActionResponder>
-
-@end
-
-
 @interface FullscreenImageViewController () <UIScrollViewDelegate>
 
 @property (nonatomic, readwrite) UIScrollView *scrollView;
@@ -114,7 +109,18 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         _forcePortraitMode = NO;
         _swipeToDismiss = YES;
         _showCloseButton = YES;
-        self.actionController = [[ConversationMessageActionController alloc] initWithResponder:self message:message context:ConversationMessageActionControllerContextCollection];
+
+        [self setupScrollView];
+        [self setupTopOverlay];
+        [self updateForMessage];
+
+        self.view.userInteractionEnabled = YES;
+        [self setupGestureRecognizers];
+        [self showChrome:YES];
+
+        [self setupStyle];
+
+        self.actionController = [[ConversationMessageActionController alloc] initWithResponder:self message:message context:ConversationMessageActionControllerContextCollection view: self.scrollView];
         if (nil != [ZMUserSession sharedSession]) {
             self.messageObserverToken = [MessageChangeInfo addObserver:self forMessage:message userSession:[ZMUserSession sharedSession]];
         }
@@ -147,21 +153,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 {
     [super viewDidLayoutSubviews];
     [self centerScrollViewContent];
-}
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    
-    [self setupScrollView];
-    [self setupTopOverlay];
-    [self updateForMessage];
-    
-    self.view.userInteractionEnabled = YES;
-    [self setupGestureRecognizers];
-    [self showChrome:YES];
-
-    [self setupStyle];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -490,21 +481,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     return self.actionController;
 }
 
-- (void)saveImage
-{
-    [self.delegate wantsToPerformAction:MessageActionSave forMessage:self.message];
-}
-
-- (void)likeImage
-{
-    [self.delegate wantsToPerformAction:MessageActionLike forMessage:self.message];
-}
-
--(void)deleteImage
-{
-    [self.delegate wantsToPerformAction:MessageActionDelete forMessage:self.message];
-}
-
 - (void)setSelectedByMenu:(BOOL)selected animated:(BOOL)animated
 {
     ZMLogDebug(@"Setting selected: %@ animated: %@", @(selected), @(animated));
@@ -577,51 +553,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         changeInfo.isObfuscatedChanged) {
         
         [self updateForMessage];
-    }
-}
-
-@end
-
-@implementation FullscreenImageViewController (ActionResponder)
-
-- (void)wantsToPerformAction:(MessageAction)action forMessage:(id<ZMConversationMessage>)message
-{
-    switch (action) {
-        case MessageActionForward:
-        {
-            [self dismissViewControllerAnimated:YES completion:^{
-                [self.delegate wantsToPerformAction:MessageActionForward forMessage:message];
-            }];
-        }
-            break;
-
-        case MessageActionShowInConversation:
-        {
-            [self dismissViewControllerAnimated:YES completion:^{
-                [self.delegate wantsToPerformAction:MessageActionShowInConversation forMessage:message];
-            }];
-        }
-            break;
-
-        case MessageActionReply:
-        {
-            [self dismissViewControllerAnimated:YES completion:^{
-                [self.delegate wantsToPerformAction:MessageActionReply forMessage:message];
-            }];
-        }
-            break;
-        case MessageActionOpenDetails:
-        {
-            MessageDetailsViewController *detailsViewController = [[MessageDetailsViewController alloc] initWithMessage:message];
-            [self presentViewController:detailsViewController animated:YES completion:nil];
-        }
-            break;
-
-        default:
-        {
-            [self.delegate wantsToPerformAction:action forMessage:message];
-        }
-            break;
     }
 }
 

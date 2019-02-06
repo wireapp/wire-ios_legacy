@@ -88,6 +88,13 @@ class ConversationTextMessageCell: UIView, ConversationMessageCell, TextViewInte
 
     func configure(with object: Configuration, animated: Bool) {
         messageTextView.attributedText = object.attributedText
+
+        if let message = message,
+            message.isObfuscated {
+            messageTextView.accessibilityLabel = "obfuscated text"
+        } else {
+            messageTextView.accessibilityLabel = nil
+        }
     }
 
     func textView(_ textView: LinkInteractionTextView, open url: URL) -> Bool {

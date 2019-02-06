@@ -24,7 +24,7 @@ import Cartography
 class LocationPreviewController: TintColorCorrectedViewController {
 
     let message: ZMConversationMessage
-    let actionController: ConversationMessageActionController
+    private var actionController: ConversationMessageActionController!
 
     private var mapView = MKMapView()
     private let containerView = UIView()
@@ -39,8 +39,8 @@ class LocationPreviewController: TintColorCorrectedViewController {
 
     init(message: ZMConversationMessage, actionResponder: MessageActionResponder) {
         self.message = message
-        self.actionController = ConversationMessageActionController(responder: actionResponder, message: message, context: .content)
         super.init(nibName: nil, bundle: nil)
+        actionController = ConversationMessageActionController(responder: actionResponder, message: message, context: .content, view: view)
         containerView.translatesAutoresizingMaskIntoConstraints = false
         containerView.backgroundColor = .from(scheme: .placeholderBackground)
 
