@@ -91,9 +91,9 @@ import UIKit
             expandTransparentIconViewWidthConstraint,
             expandWidthConstraint
             ] +
-            badgeView.fitInSuperview(activate: false) +
             transparentIconView.topAndBottomEdgesToSuperviewEdges()
         )
+        badgeView.fitInSuperview()
     }
     
     required init?(coder aDecoder: NSCoder) {

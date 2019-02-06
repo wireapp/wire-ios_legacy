@@ -43,7 +43,8 @@ final class RemoveClientStepViewControllerSnapshotTests: ZMSnapshotTestCase {
         navigationController.pushViewController(sut, animated: false)
 
         verifyInAllDeviceSizes(view: navigationController.view) { _, isPad in
-            self.sut.updateConstraints(userInterfaceSizeClass: isPad ? .regular: .compact)
+            self.sut.userInterfaceSizeClass = { _ in return isPad ? .regular: .compact}
+            self.sut.toggleConstraints()
         }
     }
 }

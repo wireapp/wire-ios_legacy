@@ -22,13 +22,17 @@ final class RemoveClientStepViewController: UIViewController, AuthenticationCoor
 
     var authenticationCoordinator: AuthenticationCoordinator?
     let clientListController: ClientListViewController
+    var userInterfaceSizeClass :(UITraitEnvironment) -> UIUserInterfaceSizeClass = {traitEnvironment in
+       return traitEnvironment.traitCollection.horizontalSizeClass
+    }
 
     private var contentViewWidthRegular: NSLayoutConstraint!
     private var contentViewWidthCompact: NSLayoutConstraint!
 
     // MARK: - Initialization
 
-    init(clients: [UserClient], credentials: ZMCredentials?) {
+    init(clients: [UserClient],
+         credentials: ZMCredentials?) {
         let emailCredentials: ZMEmailCredentials? = credentials.flatMap {
             guard let email = $0.email, let password = $0.password else {
                 return nil
@@ -80,7 +84,7 @@ final class RemoveClientStepViewController: UIViewController, AuthenticationCoor
         contentViewWidthRegular = clientListController.view.widthAnchor.constraint(equalToConstant: 375)
         contentViewWidthCompact = clientListController.view.widthAnchor.constraint(equalTo: view.widthAnchor)
 
-        updateConstraints(userInterfaceSizeClass: traitCollection.horizontalSizeClass)
+        toggleConstraints()
     }
 
     // MARK: - Back Button
@@ -101,15 +105,14 @@ final class RemoveClientStepViewController: UIViewController, AuthenticationCoor
 
     // MARK: - Adaptive UI
 
-    func updateConstraints(userInterfaceSizeClass: UIUserInterfaceSizeClass) {
-        toggle(compactConstraints: [contentViewWidthCompact],
-               regularConstraints: [contentViewWidthRegular],
-               userInterfaceSizeClass: userInterfaceSizeClass)
+    func toggleConstraints() {
+        userInterfaceSizeClass(self).toggle(compactConstraints: [contentViewWidthCompact],
+               regularConstraints: [contentViewWidthRegular])
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-        updateConstraints(userInterfaceSizeClass: traitCollection.horizontalSizeClass)
+        toggleConstraints()
     }
 
 }
