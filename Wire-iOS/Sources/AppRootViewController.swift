@@ -218,7 +218,7 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
                 break
             }
 
-            let navigationController = UINavigationController(navigationBarClass: TransparentNavigationBar.self, toolbarClass: nil)
+            let navigationController = UINavigationController(navigationBarClass: AuthenticationNavigationBar.self, toolbarClass: nil)
 
             authenticationCoordinator = AuthenticationCoordinator(presenter: navigationController,
                                                                   unauthenticatedSession: UnauthenticatedSession.sharedSession!,

@@ -286,13 +286,8 @@ class AuthenticationStepController: AuthenticationStepViewController {
             return
         }
 
-        let button = IconButton(style: .default)
-        button.setIcon(UIApplication.isLeftToRightLayout ? .backArrow : .forwardArrow, with: .tiny, for: .normal)
-        button.contentHorizontalAlignment = UIApplication.isLeftToRightLayout ? .left : .right
-        button.frame = CGRect(x: 0, y: 0, width: 32, height: 20)
-        button.accessibilityIdentifier = "back"
+        let button = AuthenticationNavigationBar.makeBackButton()
         button.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
-
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: button)
     }
 

@@ -29,21 +29,25 @@ import UIKit
         super.init(coder: aDecoder)
         configure()
     }
+
+    var colorSchemeVariant: ColorSchemeVariant {
+        return ColorScheme.default.variant
+    }
     
     func configure() {
-        tintColor = UIColor.from(scheme: .textForeground)
-        titleTextAttributes = DefaultNavigationBar.titleTextAttributes(for: ColorScheme.default.variant)
+        tintColor = UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)
+        titleTextAttributes = DefaultNavigationBar.titleTextAttributes(for: colorSchemeVariant)
         configureBackground()
 
         let backIndicatorInsets = UIEdgeInsets(top: 0, left: 4, bottom: 2.5, right: 0)
-        backIndicatorImage = UIImage(for: .backArrow, iconSize: .tiny, color: UIColor.from(scheme: .textForeground)).withInsets(backIndicatorInsets, backgroundColor: .clear)
+        backIndicatorImage = UIImage(for: .backArrow, iconSize: .tiny, color: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)).withInsets(backIndicatorInsets, backgroundColor: .clear)
         backIndicatorTransitionMaskImage = UIImage(for: .backArrow, iconSize: .tiny, color: .black).withInsets(backIndicatorInsets, backgroundColor: .clear)
     }
 
     func configureBackground() {
         isTranslucent = false
-        barTintColor = UIColor.from(scheme: .barBackground)
-        setBackgroundImage(UIImage.singlePixelImage(with: UIColor.from(scheme: .barBackground)), for: .default)
+        barTintColor = UIColor.from(scheme: .barBackground, variant: colorSchemeVariant)
+        setBackgroundImage(UIImage.singlePixelImage(with: UIColor.from(scheme: .barBackground, variant: colorSchemeVariant)), for: .default)
         shadowImage = UIImage.singlePixelImage(with: UIColor.clear)
     }
     
