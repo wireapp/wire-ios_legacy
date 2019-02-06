@@ -91,15 +91,6 @@ struct DefaultCompanyControllerLinkResponseContext: CompanyLoginLinkResponseCont
         return SessionManager.shared?.accountManager.accounts.count ?? 0
     }
 
-    var userIsInIncompatibleState: Bool {
-        if case .unauthenticated = appState {
-            // Do not start the login if the user is currently signing in with SSO or in a different flow
-            return authenticationCoordinator?.canStartCompanyLogin != true
-        } else {
-            return false
-        }
-    }
-
     init(sessionManager: SessionManager, appState: AppState, authenticationCoordinator: AuthenticationCoordinator?) {
         self.sessionManager = sessionManager
         self.appState = appState
