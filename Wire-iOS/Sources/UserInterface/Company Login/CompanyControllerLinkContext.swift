@@ -44,18 +44,13 @@ enum CompanyLoginLinkResponseAction: Equatable {
 protocol CompanyLoginLinkResponseContext {
     /// The number of accounts currently logged into the app.
     var numberOfAccounts: Int { get }
-
-    /// Whether the user is in an incompatible state, such as registration or SSO login.
-    var userIsInIncompatibleState: Bool { get }
 }
 
 extension CompanyLoginLinkResponseContext {
 
     /// The action to execute in case of a valid link.
     func actionForValidLink() -> CompanyLoginLinkResponseAction {
-        if userIsInIncompatibleState {
-            return .preventStartingFlow
-        } else if numberOfAccounts < SessionManager.maxNumberAccounts {
+        if numberOfAccounts < SessionManager.maxNumberAccounts {
             return .allowStartingFlow
         } else {
             return .showDismissableAlert(
@@ -68,10 +63,6 @@ extension CompanyLoginLinkResponseContext {
 
     /// The action to execute in case of an invalid link.
     func actionForInvalidRequest(error: ConmpanyLoginRequestError) -> CompanyLoginLinkResponseAction {
-        guard !userIsInIncompatibleState else {
-            return .preventStartingFlow
-        }
-
         switch error {
         case .invalidLink:
             return .showDismissableAlert(

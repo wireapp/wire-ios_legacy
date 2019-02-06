@@ -21,16 +21,15 @@ import XCTest
 
 struct MockCompanyLoginLinkResponseContext: CompanyLoginLinkResponseContext {
     var numberOfAccounts: Int
-    var userIsInIncompatibleState: Bool
 }
 
 class CompanyLoginLinkResponseActionTests: XCTestCase {
 
     // MARK: - Valid Link
 
-    func testThatItAllowsCompanyLogin_ValidLink_1AccountAndValidState() {
+    func testThatItAllowsCompanyLogin_ValidLink_1Account() {
         // GIVEN
-        let context = MockCompanyLoginLinkResponseContext(numberOfAccounts: 0, userIsInIncompatibleState: false)
+        let context = MockCompanyLoginLinkResponseContext(numberOfAccounts: 0)
 
         // WHEN
         let action = context.actionForValidLink()
@@ -39,20 +38,9 @@ class CompanyLoginLinkResponseActionTests: XCTestCase {
         XCTAssertEqual(action, .allowStartingFlow)
     }
 
-    func testThatItDoesNotAllowCompanyLogin_ValidLink_NoAccountdAndInvalidState() {
+    func testThatItDoesNotAllowCompanyLogin_ValidLink_3Accounts() {
         // GIVEN
-        let context = MockCompanyLoginLinkResponseContext(numberOfAccounts: 0, userIsInIncompatibleState: true)
-
-        // WHEN
-        let action = context.actionForValidLink()
-
-        // THEN
-        XCTAssertEqual(action, .preventStartingFlow)
-    }
-
-    func testThatItDoesNotAllowCompanyLogin_ValidLink_3AccountsAndValidState() {
-        // GIVEN
-        let context = MockCompanyLoginLinkResponseContext(numberOfAccounts: 3, userIsInIncompatibleState: false)
+        let context = MockCompanyLoginLinkResponseContext(numberOfAccounts: 3)
 
         // WHEN
         let action = context.actionForValidLink()
@@ -61,39 +49,17 @@ class CompanyLoginLinkResponseActionTests: XCTestCase {
         XCTAssertEqual(action, .showDismissableAlert(title: "self.settings.add_account.error.title".localized, message: "self.settings.add_account.error.message".localized, allowStartingFlow: false))
     }
 
-    func testThatItDoesNotAllowCompanyLogin_ValidLink_3AccountsAndInvalidState() {
-        // GIVEN
-        let context = MockCompanyLoginLinkResponseContext(numberOfAccounts: 3, userIsInIncompatibleState: true)
-
-        // WHEN
-        let action = context.actionForValidLink()
-
-        // THEN
-        XCTAssertEqual(action, .preventStartingFlow)
-    }
-
     // MARK: - Invalid Link
 
     func testThatItShowsAlert_InvalidLink() {
         // GIVEN
-        let context = MockCompanyLoginLinkResponseContext(numberOfAccounts: 3, userIsInIncompatibleState: false)
+        let context = MockCompanyLoginLinkResponseContext(numberOfAccounts: 3)
 
         // WHEN
         let action = context.actionForInvalidRequest(error: .invalidLink)
 
         // THEN
         XCTAssertEqual(action, .showDismissableAlert(title: "login.sso.start_error_title".localized, message: "login.sso.link_error_message".localized, allowStartingFlow: false))
-    }
-
-    func testThatItDoesntShowAlert_InvalidLink_InvalidState() {
-        // GIVEN
-        let context = MockCompanyLoginLinkResponseContext(numberOfAccounts: 3, userIsInIncompatibleState: true)
-
-        // WHEN
-        let action = context.actionForInvalidRequest(error: .invalidLink)
-
-        // THEN
-        XCTAssertEqual(action, .preventStartingFlow)
     }
 
 }

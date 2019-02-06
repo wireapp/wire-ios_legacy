@@ -704,12 +704,10 @@ extension AuthenticationCoordinator {
 
     /// Manually start the company login flow.
     private func startCompanyLoginFlowIfPossible(linkCode: UUID?) {
-        if canStartCompanyLogin {
-            if let linkCode = linkCode {
-                companyLoginController?.attemptLoginWithCode(linkCode)
-            } else {
-                companyLoginController?.displayLoginCodePrompt()
-            }
+        if let linkCode = linkCode {
+            companyLoginController?.attemptLoginWithCode(linkCode)
+        } else {
+            companyLoginController?.displayLoginCodePrompt()
         }
     }
 
