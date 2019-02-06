@@ -22,13 +22,17 @@ final class RemoveClientStepViewController: UIViewController, AuthenticationCoor
 
     var authenticationCoordinator: AuthenticationCoordinator?
     let clientListController: ClientListViewController
+    var userInterfaceSizeClass :(UITraitEnvironment) -> UIUserInterfaceSizeClass = {traitEnvironment in
+       return traitEnvironment.traitCollection.horizontalSizeClass
+    }
 
     private var contentViewWidthRegular: NSLayoutConstraint!
     private var contentViewWidthCompact: NSLayoutConstraint!
 
     // MARK: - Initialization
 
-    init(clients: [UserClient], credentials: ZMCredentials?) {
+    init(clients: [UserClient],
+         credentials: ZMCredentials?) {
         let emailCredentials: ZMEmailCredentials? = credentials.flatMap {
             guard let email = $0.email, let password = $0.password else {
                 return nil
@@ -82,7 +86,7 @@ final class RemoveClientStepViewController: UIViewController, AuthenticationCoor
     // MARK: - Adaptive UI
 
     func toggleConstraints() {
-        toggle(compactConstraints: [contentViewWidthCompact],
+        userInterfaceSizeClass(self).toggle(compactConstraints: [contentViewWidthCompact],
                regularConstraints: [contentViewWidthRegular])
     }
 

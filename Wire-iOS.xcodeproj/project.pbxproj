@@ -1129,7 +1129,7 @@
 		EF2A8DEF214AAB13002C9058 /* ContactsCellSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2A8DEE214AAB13002C9058 /* ContactsCellSnapshotTests.swift */; };
 		EF2B0DD121CA8EF1003B2882 /* url.json in Resources */ = {isa = PBXBuildFile; fileRef = EF2B0DD021CA8DF7003B2882 /* url.json */; };
 		EF2B255D22098C3D006712CA /* RemoveClientStepViewControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2B255C22098C3D006712CA /* RemoveClientStepViewControllerSnapshotTests.swift */; };
-		EF2B255F2209C543006712CA /* UITraitEnvironment+Constraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2B255E2209C542006712CA /* UITraitEnvironment+Constraint.swift */; };
+		EF2B255F2209C543006712CA /* UIUserInterfaceSizeClass+Constraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2B255E2209C542006712CA /* UIUserInterfaceSizeClass+Constraint.swift */; };
 		EF2B74CA2141699100FD2574 /* LandingViewControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2B74C92141699100FD2574 /* LandingViewControllerSnapshotTests.swift */; };
 		EF2C59ED20DBF1BB00C5664F /* ConversationInputBarViewController+SendButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2C59EC20DBF1BB00C5664F /* ConversationInputBarViewController+SendButton.swift */; };
 		EF2C9545214983BB000E4960 /* video.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = EF2C9544214983BB000E4960 /* video.mp4 */; };
@@ -2948,7 +2948,7 @@
 		EF2A8DEE214AAB13002C9058 /* ContactsCellSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsCellSnapshotTests.swift; sourceTree = "<group>"; };
 		EF2B0DD021CA8DF7003B2882 /* url.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = url.json; sourceTree = "<group>"; };
 		EF2B255C22098C3D006712CA /* RemoveClientStepViewControllerSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveClientStepViewControllerSnapshotTests.swift; sourceTree = "<group>"; };
-		EF2B255E2209C542006712CA /* UITraitEnvironment+Constraint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITraitEnvironment+Constraint.swift"; sourceTree = "<group>"; };
+		EF2B255E2209C542006712CA /* UIUserInterfaceSizeClass+Constraint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIUserInterfaceSizeClass+Constraint.swift"; sourceTree = "<group>"; };
 		EF2B74C92141699100FD2574 /* LandingViewControllerSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingViewControllerSnapshotTests.swift; sourceTree = "<group>"; };
 		EF2C59EC20DBF1BB00C5664F /* ConversationInputBarViewController+SendButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationInputBarViewController+SendButton.swift"; sourceTree = "<group>"; };
 		EF2C9544214983BB000E4960 /* video.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = video.mp4; sourceTree = "<group>"; };
@@ -5338,7 +5338,7 @@
 				1677FD311BBC19A400491481 /* ColorScheme.h */,
 				1677FD321BBC19A400491481 /* ColorScheme.m */,
 				F174AAAE218A0B1A00AFCC4D /* ColorScheme.swift */,
-				EF2B255E2209C542006712CA /* UITraitEnvironment+Constraint.swift */,
+				EF2B255E2209C542006712CA /* UIUserInterfaceSizeClass+Constraint.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -8051,7 +8051,7 @@
 				871BC3521D34F94200DF0793 /* AggregateArray.m in Sources */,
 				873C5FE81C10426A00D5132A /* ClientTableViewCell.swift in Sources */,
 				87C39A8A206947A1008DA100 /* UIView+Constraints.swift in Sources */,
-				EF2B255F2209C543006712CA /* UITraitEnvironment+Constraint.swift in Sources */,
+				EF2B255F2209C543006712CA /* UIUserInterfaceSizeClass+Constraint.swift in Sources */,
 				87DCF4E71D34EA4500BB420F /* UIActivityViewController+Invite.m in Sources */,
 				EF1BEBCD21F5E8F5001128E0 /* StartUIViewController+Constraints.swift in Sources */,
 				160D691D212AC95A00096EAD /* ImageResourceView.swift in Sources */,

@@ -45,7 +45,8 @@ final class AppLockViewSnapshotTests: ZMSnapshotTestCase {
 
 
         verifyInAllDeviceSizes(view: mocViewController.view) { _, isPad in
-            self.sut.updateConstraints(userInterfaceSizeClass: isPad ? .regular: .compact)
+            self.sut.userInterfaceSizeClass = { _ in return isPad ? .regular: .compact}
+            self.sut.toggleConstraints()
         }
     }
 }

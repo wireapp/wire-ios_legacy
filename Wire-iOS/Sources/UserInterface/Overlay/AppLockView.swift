@@ -37,7 +37,11 @@ final class AppLockView: UIView {
     private var contentCenterConstraint: NSLayoutConstraint!
     private var contentLeadingConstraint: NSLayoutConstraint!
     private var contentTrailingConstraint: NSLayoutConstraint!
-    
+
+    var userInterfaceSizeClass :(UITraitEnvironment) -> UIUserInterfaceSizeClass = {traitEnvironment in
+        return traitEnvironment.traitCollection.horizontalSizeClass
+    }
+
     public var showReauth: Bool = false {
         didSet {
             self.authenticateLabel.isHidden = !showReauth
@@ -121,8 +125,7 @@ final class AppLockView: UIView {
 
     
     func toggleConstraints() {
-
-        toggle(compactConstraints: [contentLeadingConstraint, contentTrailingConstraint],
+        userInterfaceSizeClass(self).toggle(compactConstraints: [contentLeadingConstraint, contentTrailingConstraint],
                regularConstraints: [contentCenterConstraint, contentWidthConstraint])
     }
     
