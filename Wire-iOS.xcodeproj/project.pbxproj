@@ -1085,6 +1085,8 @@
 		EF1FDC8421DE68EF00C9CEB1 /* EmoticonSubstitutionConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1FDC8321DE68EF00C9CEB1 /* EmoticonSubstitutionConfigurationTests.swift */; };
 		EF1FDC8621DE701000C9CEB1 /* SoundcloudServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1FDC8521DE701000C9CEB1 /* SoundcloudServiceTests.swift */; };
 		EF201211220B3F4B004800DB /* ProgressSpinner+Constraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF20120F220B3F4B004800DB /* ProgressSpinner+Constraint.swift */; };
+		EF201214220B42C8004800DB /* ProfileSelfPictureViewController+SetupViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF201212220B42C8004800DB /* ProfileSelfPictureViewController+SetupViews.swift */; };
+		EF201216220B50F4004800DB /* ProfileSelfPictureViewControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF201215220B50F3004800DB /* ProfileSelfPictureViewControllerSnapshotTests.swift */; };
 		EF207B37220839E000738E84 /* ConversationContentViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF207B36220839E000738E84 /* ConversationContentViewControllerTests.swift */; };
 		EF207B3922083E8000738E84 /* ZMUserSessionInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF207B3822083E8000738E84 /* ZMUserSessionInterface.swift */; };
 		EF207B3B2208438700738E84 /* MockZMUserSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF207B3A2208438700738E84 /* MockZMUserSession.swift */; };
@@ -2892,6 +2894,9 @@
 		EF1FDC8521DE701000C9CEB1 /* SoundcloudServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundcloudServiceTests.swift; sourceTree = "<group>"; };
 		EF20120F220B3F4B004800DB /* ProgressSpinner+Constraint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProgressSpinner+Constraint.swift"; sourceTree = "<group>"; };
 		EF201210220B3F4B004800DB /* ProgressSpinner+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ProgressSpinner+Internal.h"; sourceTree = "<group>"; };
+		EF201212220B42C8004800DB /* ProfileSelfPictureViewController+SetupViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProfileSelfPictureViewController+SetupViews.swift"; sourceTree = "<group>"; };
+		EF201213220B42C8004800DB /* ProfileSelfPictureViewController+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ProfileSelfPictureViewController+Internal.h"; sourceTree = "<group>"; };
+		EF201215220B50F3004800DB /* ProfileSelfPictureViewControllerSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSelfPictureViewControllerSnapshotTests.swift; sourceTree = "<group>"; };
 		EF207B36220839E000738E84 /* ConversationContentViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationContentViewControllerTests.swift; sourceTree = "<group>"; };
 		EF207B3822083E8000738E84 /* ZMUserSessionInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZMUserSessionInterface.swift; sourceTree = "<group>"; };
 		EF207B3A2208438700738E84 /* MockZMUserSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockZMUserSession.swift; sourceTree = "<group>"; };
@@ -5692,7 +5697,9 @@
 				F12CDAD91E43868200CEFCEB /* ChangingDetails */,
 				BD979D2B1D8F3AF700E8E3CB /* SettingsTechnicalReportViewController.swift */,
 				8784B6251D89448700AB71BD /* ProfileSelfPictureViewController.h */,
+				EF201213220B42C8004800DB /* ProfileSelfPictureViewController+Internal.h */,
 				8784B6261D89448700AB71BD /* ProfileSelfPictureViewController.m */,
+				EF201212220B42C8004800DB /* ProfileSelfPictureViewController+SetupViews.swift */,
 				160FD05121085BDA00C517B5 /* ProfileSelfPictureViewController+UserObserver.swift */,
 				8784B6271D89448700AB71BD /* UIAlertController+NewSelfClients.h */,
 				8784B6281D89448700AB71BD /* UIAlertController+NewSelfClients.m */,
@@ -5920,6 +5927,7 @@
 				5E1314BB220882E4000FAFC5 /* CompanyLoginLinkResponseActionTests.swift */,
 				EF207B36220839E000738E84 /* ConversationContentViewControllerTests.swift */,
 				EF2B255C22098C3D006712CA /* RemoveClientStepViewControllerSnapshotTests.swift */,
+				EF201215220B50F3004800DB /* ProfileSelfPictureViewControllerSnapshotTests.swift */,
 			);
 			path = "Wire-iOS Tests";
 			sourceTree = "<group>";
@@ -8044,6 +8052,7 @@
 				5E766D9921144DFC005242B4 /* AuthenticationCoordinator.swift in Sources */,
 				F15650EC21DD1B4100210504 /* ImageCache.swift in Sources */,
 				D550F57020444924009E09DD /* ConversationActionController+Delete.swift in Sources */,
+				EF201214220B42C8004800DB /* ProfileSelfPictureViewController+SetupViews.swift in Sources */,
 				8784D4551E817D13007A6867 /* ConversationListTopBar.swift in Sources */,
 				5EC2C58921353FA100C6CE35 /* AuthenticationCoordinator+Teams.swift in Sources */,
 				1682AEB920483CC5003A052A /* RenameGroupSectionController.swift in Sources */,
@@ -8250,6 +8259,7 @@
 				5EC25A2F219ACB4B00F6214E /* ConversationTextMessageCellTests.swift in Sources */,
 				EFD43FFA21B82C500050ABC5 /* ChangePhoneViewControllerTests.swift in Sources */,
 				16BEBC3F1D006FB6006FFD3E /* ThreeDotsLoadingViewTests.swift in Sources */,
+				EF201216220B50F4004800DB /* ProfileSelfPictureViewControllerSnapshotTests.swift in Sources */,
 				876AE7601C159A9C00E3E743 /* NSStringFingerprintTests.m in Sources */,
 				5E8FFC0821ECCC9B0052DF03 /* MockAuthenticationFeatureProvider.swift in Sources */,
 				EFD5FC4221C94E9C00026E3A /* UrlTests.swift in Sources */,

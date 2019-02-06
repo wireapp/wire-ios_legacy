@@ -19,6 +19,11 @@
 import Foundation
 import UIKit
 
+struct Offset {
+    let x, y: CGFloat
+    static let zero = Offset(x: 0, y: 0)
+}
+
 struct EdgeInsets {
     let top, leading, bottom, trailing: CGFloat
     
@@ -50,9 +55,16 @@ extension UIView {
             fatal("Not in view hierarchy: self.superview = nil")
         }
 
+        return alignCenter(to: superview, activate: activate)
+    }
+
+    @discardableResult func alignCenter(to view: UIView,
+                                   with offset: Offset = .zero,
+                                   activate: Bool = true) -> [NSLayoutConstraint] {
+
         let constraints = [
-            superview.centerXAnchor.constraint(equalTo: centerXAnchor),
-            superview.centerYAnchor.constraint(equalTo: centerYAnchor)
+            view.centerXAnchor.constraint(equalTo: centerXAnchor, constant: offset.x),
+            view.centerYAnchor.constraint(equalTo: centerYAnchor, constant: offset.y)
         ]
 
         if activate {
