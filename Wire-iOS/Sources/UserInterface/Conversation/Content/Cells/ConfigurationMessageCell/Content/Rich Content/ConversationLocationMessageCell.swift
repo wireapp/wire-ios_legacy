@@ -130,6 +130,7 @@ class ConversationLocationMessageCell: UIView, ConversationMessageCell {
         lastConfiguration = object
         recognizer?.isEnabled = !object.isObfuscated
         obfuscationView.isHidden = !object.isObfuscated
+        mapView.isHidden = object.isObfuscated
 
         if let address = object.location.name {
             addressContainerView.isHidden = false
