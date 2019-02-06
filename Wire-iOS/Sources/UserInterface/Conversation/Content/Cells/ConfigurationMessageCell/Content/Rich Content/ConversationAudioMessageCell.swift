@@ -22,7 +22,9 @@ class ConversationAudioMessageCell: RoundedView, ConversationMessageCell {
     
     struct Configuration {
         let message: ZMConversationMessage
-        let isObfuscated: Bool
+        var isObfuscated: Bool {
+            return message.isObfuscated
+        }
     }
     
     private let transferView = AudioMessageView(frame: .zero)
@@ -127,7 +129,7 @@ class ConversationAudioMessageCellDescription: ConversationMessageCellDescriptio
     let accessibilityLabel: String? = nil
     
     init(message: ZMConversationMessage) {
-        self.configuration = View.Configuration(message: message, isObfuscated: message.isObfuscated)
+        self.configuration = View.Configuration(message: message)
     }
     
 }

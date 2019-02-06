@@ -23,6 +23,9 @@ class ConversationImageMessageCell: UIView, ConversationMessageCell {
     struct Configuration {
         let image: ZMImageMessageData
         let message: ZMConversationMessage
+        var isObfuscated: Bool {
+            return message.isObfuscated
+        }
     }
     
     private var containerView = UIView()
@@ -97,7 +100,7 @@ class ConversationImageMessageCell: UIView, ConversationMessageCell {
     }
     
     func configure(with object: Configuration, animated: Bool) {
-        let showObfuscationView = object.message.isObfuscated
+        let showObfuscationView = object.isObfuscated
 
         obfuscationView.isHidden = !showObfuscationView
         let imageResource = showObfuscationView ? nil : object.image.image
