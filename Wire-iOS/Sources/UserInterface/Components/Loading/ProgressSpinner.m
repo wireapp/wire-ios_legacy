@@ -18,16 +18,15 @@
 
 
 #import "ProgressSpinner.h"
+#import "ProgressSpinner+Internal.h"
 #import "UIImage+ZetaIconsNeue.h"
-#import "NSLayoutConstraint+Helpers.h"
-#import "NSLayoutConstraint+Helpers.h"
 #import "CABasicAnimation+Rotation.h"
+#import "Wire-Swift.h"
 @import QuartzCore;
 
 
 @interface ProgressSpinner () <CAAnimationDelegate>
 
-@property (nonatomic) UIImageView *spinner;
 @property (nonatomic, readonly) BOOL isAnimationRunning;
 
 @end
@@ -84,11 +83,6 @@
     [self addSubview:self.spinner];
     
     [self updateSpinnerIcon];
-}
-
-- (void)setupConstraints
-{
-    [self.spinner addConstraintsCenteringToView:self];
 }
 
 - (CGSize)intrinsicContentSize

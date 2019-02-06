@@ -1084,6 +1084,7 @@
 		EF1FDC8221DE677600C9CEB1 /* XCTestCase+EmoticonSubstitutionConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1FDC8121DE677600C9CEB1 /* XCTestCase+EmoticonSubstitutionConfiguration.swift */; };
 		EF1FDC8421DE68EF00C9CEB1 /* EmoticonSubstitutionConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1FDC8321DE68EF00C9CEB1 /* EmoticonSubstitutionConfigurationTests.swift */; };
 		EF1FDC8621DE701000C9CEB1 /* SoundcloudServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1FDC8521DE701000C9CEB1 /* SoundcloudServiceTests.swift */; };
+		EF201211220B3F4B004800DB /* ProgressSpinner+Constraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF20120F220B3F4B004800DB /* ProgressSpinner+Constraint.swift */; };
 		EF207B37220839E000738E84 /* ConversationContentViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF207B36220839E000738E84 /* ConversationContentViewControllerTests.swift */; };
 		EF207B3922083E8000738E84 /* ZMUserSessionInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF207B3822083E8000738E84 /* ZMUserSessionInterface.swift */; };
 		EF207B3B2208438700738E84 /* MockZMUserSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF207B3A2208438700738E84 /* MockZMUserSession.swift */; };
@@ -1350,7 +1351,6 @@
 		F15650F521DD1D8900210504 /* UIControl+Wire.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E5E0CF61B6B8EDB003B0CAC /* UIControl+Wire.m */; };
 		F15650F621DD1E0A00210504 /* UIImage+ImageUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E5E0CF81B6B8EDB003B0CAC /* UIImage+ImageUtilities.m */; };
 		F15650F721DD1ED600210504 /* KeyValueObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 878607051D33E3FF00971A19 /* KeyValueObserver.m */; };
-		F15650F821DD202400210504 /* NSLayoutConstraint+Helpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 8795A5A71D34CF7A0024101B /* NSLayoutConstraint+Helpers.m */; };
 		F15650F921DD20D900210504 /* Date+Format.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7EF5441D953B3F003E3999 /* Date+Format.swift */; };
 		F15650FA21DD20D900210504 /* NSDate+Format.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE8062A1FDFF24C006A0EE7 /* NSDate+Format.swift */; };
 		F15650FB21DD20D900210504 /* RawRepresentable+AllValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876376891E8413D900B2CCF0 /* RawRepresentable+AllValues.swift */; };
@@ -2248,8 +2248,6 @@
 		879489E21E5444A20071B2C1 /* NoResultsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoResultsView.swift; sourceTree = "<group>"; };
 		879489E41E54500A0071B2C1 /* TextSearchResultsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextSearchResultsView.swift; sourceTree = "<group>"; };
 		879489E61E5464CF0071B2C1 /* SearchResultLabelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultLabelTests.swift; sourceTree = "<group>"; };
-		8795A5A61D34CF7A0024101B /* NSLayoutConstraint+Helpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSLayoutConstraint+Helpers.h"; sourceTree = "<group>"; };
-		8795A5A71D34CF7A0024101B /* NSLayoutConstraint+Helpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSLayoutConstraint+Helpers.m"; sourceTree = "<group>"; };
 		879648FF2046EE5E00F46B4B /* BarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarController.swift; sourceTree = "<group>"; };
 		879718911D1C109900163C07 /* AudioRecordKeyboardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioRecordKeyboardViewController.swift; sourceTree = "<group>"; };
 		879718971D1C767600163C07 /* AudioEffectsPickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioEffectsPickerViewController.swift; sourceTree = "<group>"; };
@@ -2892,6 +2890,8 @@
 		EF1FDC8121DE677600C9CEB1 /* XCTestCase+EmoticonSubstitutionConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+EmoticonSubstitutionConfiguration.swift"; sourceTree = "<group>"; };
 		EF1FDC8321DE68EF00C9CEB1 /* EmoticonSubstitutionConfigurationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmoticonSubstitutionConfigurationTests.swift; sourceTree = "<group>"; };
 		EF1FDC8521DE701000C9CEB1 /* SoundcloudServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundcloudServiceTests.swift; sourceTree = "<group>"; };
+		EF20120F220B3F4B004800DB /* ProgressSpinner+Constraint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProgressSpinner+Constraint.swift"; sourceTree = "<group>"; };
+		EF201210220B3F4B004800DB /* ProgressSpinner+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ProgressSpinner+Internal.h"; sourceTree = "<group>"; };
 		EF207B36220839E000738E84 /* ConversationContentViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationContentViewControllerTests.swift; sourceTree = "<group>"; };
 		EF207B3822083E8000738E84 /* ZMUserSessionInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZMUserSessionInterface.swift; sourceTree = "<group>"; };
 		EF207B3A2208438700738E84 /* MockZMUserSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockZMUserSession.swift; sourceTree = "<group>"; };
@@ -3526,6 +3526,8 @@
 				D524BE62207BA15300542A4E /* SpinnerSubtitleView.swift */,
 				1E8C25361BBC279B00FC373F /* ProgressSpinner.h */,
 				1E8C25371BBC279B00FC373F /* ProgressSpinner.m */,
+				EF20120F220B3F4B004800DB /* ProgressSpinner+Constraint.swift */,
+				EF201210220B3F4B004800DB /* ProgressSpinner+Internal.h */,
 				D5168F41200F6F2300F8222A /* CABasicAnimation+Rotation.h */,
 				D5168F42200F6F2300F8222A /* CABasicAnimation+Rotation.m */,
 				1E8C25381BBC279B00FC373F /* UIViewController+LoadingView.h */,
@@ -5276,8 +5278,6 @@
 				87AAE41C1E42399E00E1D13A /* UIFont+DynamicType.swift */,
 				16A5FE24215CB64D00AEEBBD /* UIFont+Weight.swift */,
 				16FB2F6B20C0389800582137 /* Dictionary+Merge.swift */,
-				8795A5A61D34CF7A0024101B /* NSLayoutConstraint+Helpers.h */,
-				8795A5A71D34CF7A0024101B /* NSLayoutConstraint+Helpers.m */,
 				16E6C0FE1A837C0300AA2F32 /* NSIndexSet+IndexPaths.h */,
 				16E6C0FF1A837C0300AA2F32 /* NSIndexSet+IndexPaths.m */,
 				D5189472204D543C00C095C1 /* InitialSyncObserver.swift */,
@@ -7173,6 +7173,7 @@
 				871BC2891D34F8F800DF0793 /* UIImage+Transform.m in Sources */,
 				8784B6291D89448700AB71BD /* ProfileSelfPictureViewController.m in Sources */,
 				87B8C3421DF9788B0015EC89 /* TweetOpening.swift in Sources */,
+				EF201211220B3F4B004800DB /* ProgressSpinner+Constraint.swift in Sources */,
 				87CB36BA1D74782B007AB4E5 /* LikeButton.swift in Sources */,
 				875E7D192188BCA500E571B7 /* MessagePreviewView.swift in Sources */,
 				D5168F592010F2F700F8222A /* TokenField+DefaultAppearance.swift in Sources */,
@@ -7977,7 +7978,6 @@
 				5E35F786218340EB00D3F4FE /* ConversationLocationMessageCell.swift in Sources */,
 				87AC9F561C0749FB00E1ED6F /* TailEditingTextField.swift in Sources */,
 				5E8FFC1621EF46600052DF03 /* AuthenticationCoordinator+Backup.swift in Sources */,
-				F15650F821DD202400210504 /* NSLayoutConstraint+Helpers.m in Sources */,
 				F14FB864214941160012A131 /* MentionsTextAttachment.swift in Sources */,
 				EF2F6DA320ED11D2007B6D70 /* UIColor+Accent.swift in Sources */,
 				AF58EC851E9FC35A00EB94CD /* MessageDraft.xcdatamodeld in Sources */,
