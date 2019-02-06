@@ -21,6 +21,7 @@ import Foundation
 extension ProgressSpinner {
     @objc
     func setupConstraints() {
+        spinner.translatesAutoresizingMaskIntoConstraints = false
         spinner.centerInSuperview()
     }
 }

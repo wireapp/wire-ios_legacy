@@ -20,8 +20,6 @@
 #import "ProfileSendConnectionRequestFooterView.h"
 #import "Button.h"
 
-#import "NSLayoutConstraint+Helpers.h"
-
 
 @implementation ProfileSendConnectionRequestFooterView
 

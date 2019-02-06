@@ -21,7 +21,6 @@
 
 #import <objc/runtime.h>
 #import "ProgressSpinner.h"
-#import "NSLayoutConstraint+Helpers.h"
 #import "Wire-Swift.h"
 
 const NSString *ActivityIndicatorKey = @"activityIndicator";

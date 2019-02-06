@@ -24,7 +24,6 @@
 #import "FullscreenImageViewController.h"
 #import "FullscreenImageViewController+PullToDismiss.h"
 #import "FullscreenImageViewController+internal.h"
-#import "NSLayoutConstraint+Helpers.h"
 
 // ui
 #import "IconButton.h"
