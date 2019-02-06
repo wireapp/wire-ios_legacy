@@ -78,6 +78,9 @@ import WireSystem
     /// The name of the arguments file in the /tmp directory
     private let fileArgumentsName = "wire_arguments.txt"
 
+    /// Whether the backend environment type should be persisted as a setting.
+    @objc public let shouldPersistBackendType: Bool
+
     override init() {
         let url = URL(string: NSTemporaryDirectory())?.appendingPathComponent(fileArgumentsName)
         let arguments: ArgumentsType = url.flatMap(FileArguments.init) ?? CommandLineArguments()
@@ -86,6 +89,7 @@ import WireSystem
         self.disableAutocorrection = arguments.hasFlag(AutomationKey.disableAutocorrection)
         self.uploadAddressbookOnSimulator = arguments.hasFlag(AutomationKey.enableAddressBookOnSimulator)
         self.disableCallQualitySurvey = arguments.hasFlag(AutomationKey.disableCallQualitySurvey)
+        self.shouldPersistBackendType = arguments.hasFlag(AutomationKey.persistBackendType)
 
         self.automationEmailCredentials = AutomationHelper.credentials(arguments)
         if arguments.hasFlag(AutomationKey.logNetwork) {
@@ -119,6 +123,7 @@ import WireSystem
         case addressBookRemoteSearchDelay = "addressbook-search-delay"
         case debugDataToInstall = "debug-data-to-install"
         case disableCallQualitySurvey = "disable-call-quality-survey"
+        case persistBackendType = "persist-backend-type"
     }
     
     /// Returns the login email and password credentials if set in the given arguments
