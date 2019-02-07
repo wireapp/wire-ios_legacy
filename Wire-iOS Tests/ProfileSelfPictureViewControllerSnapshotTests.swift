@@ -31,9 +31,6 @@ final class ProfileSelfPictureViewControllerSnapshotTests: ZMSnapshotTestCase {
         let image = self.image(inTestBundleNamed: "unsplash_matterhorn.jpg")
 
         sut.selfUserImageView.image = image
-
-        /// TODO: remove this after snapshot is created
-//        recordMode = true
     }
     
     override func tearDown() {
