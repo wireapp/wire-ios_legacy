@@ -374,11 +374,11 @@ extension AuthenticationCoordinator {
     /// Signs the current user out with a warning.
     private func signOut(warn: Bool) {
         if warn {
-            let signOutAction = AuthenticationCoordinatorAlertAction(title: "general.ok".localized, coordinatorActions: [.showLoadingView, .signOut(warn: false)])
+            let signOutAction = AuthenticationCoordinatorAlertAction(title: "general.ok".localized, coordinatorActions: [.showLoadingView, .signOut(warn: false)], style: .destructive)
 
             let alertModel = AuthenticationCoordinatorAlert(title: "self.settings.account_details.log_out.alert.title".localized,
                                                             message: "self.settings.account_details.log_out.alert.message".localized,
-                                                            actions: [signOutAction, .cancelDestructiveAction])
+                                                            actions: [.cancel, signOutAction])
 
             presentAlert(for: alertModel)
         } else {
