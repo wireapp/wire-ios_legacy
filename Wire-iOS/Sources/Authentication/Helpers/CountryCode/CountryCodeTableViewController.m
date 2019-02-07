@@ -58,6 +58,7 @@
     
     self.definesPresentationContext = YES;
     self.title = NSLocalizedString(@"registration.country_select.title", @"").localizedUppercaseString;
+    
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -213,12 +214,13 @@
     return [[UILocalizedIndexedCollation currentCollation] sectionIndexTitles];
 }
 
--(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return self.searchController.active ? 34 : 0;
+#pragma mark - Search controller methods
+
+-(void)willPresentSearchController:(UISearchController *)searchController {
+    [self.tableView setContentInset:UIEdgeInsetsMake(44, 0, 0, 0)];
 }
 
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    return [[UIView alloc] init];
+-(void)willDismissSearchController:(UISearchController *)searchController {
+    [self.tableView setContentInset:UIEdgeInsetsZero];
 }
-
 @end
