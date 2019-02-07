@@ -19,7 +19,6 @@
 
 #import "ProfileFooterView.h"
 
-@import PureLayout;
 #import "IconButton.h"
 #import "Wire-Swift.h"
 
@@ -56,24 +55,6 @@
     self.rightButton.translatesAutoresizingMaskIntoConstraints = NO;
     self.rightButton.accessibilityIdentifier = @"right_button";
     [self addSubview:self.rightButton];
-}
-
-- (void)setupConstraints
-{
-    [self.leftButton addConstraintForLeftMargin:16 relativeToView:self];
-    [self.leftButton addConstraintForBottomMargin:12 relativeToView:self];
-    [self.leftButton addConstraintForTopMargin:0 relativeToView:self];
-    [self.leftButton autoSetDimension:ALDimensionHeight
-                               toSize:32];
-    
-    [self.rightButton addConstraintForRightMargin:8 relativeToView:self];
-    [self.rightButton addConstraintForBottomMargin:12 relativeToView:self];
-    [self.rightButton addConstraintForTopMargin:0 relativeToView:self];
-    [self.rightButton autoMatchDimension:ALDimensionWidth
-                             toDimension:ALDimensionHeight
-                                  ofView:self.rightButton];
-    [self.rightButton autoSetDimension:ALDimensionWidth
-                                toSize:32];
 }
 
 - (void)setIconTypeForLeftButton:(ZetaIconType)iconType

@@ -72,6 +72,7 @@
 #import "SwipeMenuCollectionCell+Internal.h"
 #import "TextView+Internal.h"
 #import "TextView.h"
+#import "ProfileFooterView.h"
 
 // View Controllers
 #import "ProfileDevicesViewController.h"

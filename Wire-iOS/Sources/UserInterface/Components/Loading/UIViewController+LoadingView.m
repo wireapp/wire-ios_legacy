@@ -77,9 +77,9 @@ const NSString *LoadingViewKey = @"loadingView";
         _loadingView.hidden = YES;
         _loadingView.translatesAutoresizingMaskIntoConstraints = NO;
         _loadingView.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.5f];
-        [_loadingView addConstraintsFittingToView:self.view];
         [_loadingView addSubview:self.spinnerView];
-        [self.spinnerView addConstraintsCenteringToView:_loadingView];
+        
+        [self setupLoadingViewConstraintsWithLoadingView:_loadingView spinnerView:self.spinnerView];
 
         self.loadingView = _loadingView;
     }

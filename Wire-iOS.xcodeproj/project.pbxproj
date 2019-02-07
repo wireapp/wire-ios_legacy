@@ -1087,6 +1087,9 @@
 		EF201211220B3F4B004800DB /* ProgressSpinner+Constraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF20120F220B3F4B004800DB /* ProgressSpinner+Constraint.swift */; };
 		EF201214220B42C8004800DB /* ProfileSelfPictureViewController+SetupViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF201212220B42C8004800DB /* ProfileSelfPictureViewController+SetupViews.swift */; };
 		EF201216220B50F4004800DB /* ProfileSelfPictureViewControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF201215220B50F3004800DB /* ProfileSelfPictureViewControllerSnapshotTests.swift */; };
+		EF201219220C3308004800DB /* ProfileFooterView+Constraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF201217220C3308004800DB /* ProfileFooterView+Constraints.swift */; };
+		EF20121B220C3839004800DB /* UIViewController+LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF20121A220C3839004800DB /* UIViewController+LoadingView.swift */; };
+		EF20121E220C39CA004800DB /* ProfileIncomingConnectionRequestFooterView+Constraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF20121C220C39CA004800DB /* ProfileIncomingConnectionRequestFooterView+Constraint.swift */; };
 		EF207B37220839E000738E84 /* ConversationContentViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF207B36220839E000738E84 /* ConversationContentViewControllerTests.swift */; };
 		EF207B3922083E8000738E84 /* ZMUserSessionInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF207B3822083E8000738E84 /* ZMUserSessionInterface.swift */; };
 		EF207B3B2208438700738E84 /* MockZMUserSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF207B3A2208438700738E84 /* MockZMUserSession.swift */; };
@@ -2897,6 +2900,11 @@
 		EF201212220B42C8004800DB /* ProfileSelfPictureViewController+SetupViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProfileSelfPictureViewController+SetupViews.swift"; sourceTree = "<group>"; };
 		EF201213220B42C8004800DB /* ProfileSelfPictureViewController+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ProfileSelfPictureViewController+Internal.h"; sourceTree = "<group>"; };
 		EF201215220B50F3004800DB /* ProfileSelfPictureViewControllerSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSelfPictureViewControllerSnapshotTests.swift; sourceTree = "<group>"; };
+		EF201217220C3308004800DB /* ProfileFooterView+Constraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProfileFooterView+Constraints.swift"; sourceTree = "<group>"; };
+		EF201218220C3308004800DB /* ProfileFooterView+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ProfileFooterView+Internal.h"; sourceTree = "<group>"; };
+		EF20121A220C3839004800DB /* UIViewController+LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+LoadingView.swift"; sourceTree = "<group>"; };
+		EF20121C220C39CA004800DB /* ProfileIncomingConnectionRequestFooterView+Constraint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProfileIncomingConnectionRequestFooterView+Constraint.swift"; sourceTree = "<group>"; };
+		EF20121D220C39CA004800DB /* ProfileIncomingConnectionRequestFooterView+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ProfileIncomingConnectionRequestFooterView+Internal.h"; sourceTree = "<group>"; };
 		EF207B36220839E000738E84 /* ConversationContentViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationContentViewControllerTests.swift; sourceTree = "<group>"; };
 		EF207B3822083E8000738E84 /* ZMUserSessionInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZMUserSessionInterface.swift; sourceTree = "<group>"; };
 		EF207B3A2208438700738E84 /* MockZMUserSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockZMUserSession.swift; sourceTree = "<group>"; };
@@ -3537,6 +3545,7 @@
 				D5168F42200F6F2300F8222A /* CABasicAnimation+Rotation.m */,
 				1E8C25381BBC279B00FC373F /* UIViewController+LoadingView.h */,
 				1E8C25391BBC279B00FC373F /* UIViewController+LoadingView.m */,
+				EF20121A220C3839004800DB /* UIViewController+LoadingView.swift */,
 			);
 			path = Loading;
 			sourceTree = "<group>";
@@ -4669,6 +4678,8 @@
 			children = (
 				872CB8A319E58816006752B4 /* ProfileFooterView.h */,
 				872CB8A419E58816006752B4 /* ProfileFooterView.m */,
+				EF201217220C3308004800DB /* ProfileFooterView+Constraints.swift */,
+				EF201218220C3308004800DB /* ProfileFooterView+Internal.h */,
 				167961AE20445FB400B72ACC /* ProfileTitleView.swift */,
 				BF7ED2D51DF18724003A4397 /* UserNameDetailView.swift */,
 				BF5C37961C0E0D9C00EA11E3 /* ParticipantDeviceHeaderView.h */,
@@ -4681,6 +4692,8 @@
 				EFAFCA86213417F0002B31A6 /* ParticipantDeviceCell+Style.swift */,
 				872CB8A719E58816006752B4 /* ProfileIncomingConnectionRequestFooterView.h */,
 				872CB8A819E58816006752B4 /* ProfileIncomingConnectionRequestFooterView.m */,
+				EF20121C220C39CA004800DB /* ProfileIncomingConnectionRequestFooterView+Constraint.swift */,
+				EF20121D220C39CA004800DB /* ProfileIncomingConnectionRequestFooterView+Internal.h */,
 				872CB8AD19E58816006752B4 /* ProfileSendConnectionRequestFooterView.h */,
 				872CB8AE19E58816006752B4 /* ProfileSendConnectionRequestFooterView.m */,
 				872CB8AF19E58816006752B4 /* ProfileUnblockFooterView.h */,
@@ -7779,6 +7792,7 @@
 				EEA9A76121B0244D001F7B5C /* ConversationCreateErrorSectionController.swift in Sources */,
 				160C311F1E4C78480012E4BC /* CustomMessageView.swift in Sources */,
 				EFF3DA432097548A007A3358 /* UIImage+MediaAssert.swift in Sources */,
+				EF20121E220C39CA004800DB /* ProfileIncomingConnectionRequestFooterView+Constraint.swift in Sources */,
 				87DCF4921D34E9BA00BB420F /* ContactsViewController+ShareContacts.m in Sources */,
 				5E35F7452180779D00D3F4FE /* ConversationPingCell.swift in Sources */,
 				D5DBAAAE20064DFC00E9F65B /* TeamInviteTextFieldFooterView.swift in Sources */,
@@ -7864,6 +7878,7 @@
 				EF297DD22131F2C20002983A /* MediaPreviewViewController+Extension.swift in Sources */,
 				BFA25DC91D9A8D0B0086DEBD /* EmojiKeyboardViewController.swift in Sources */,
 				EF15A7B020BC08C000A045C7 /* ConversationContentViewController+SaveImage.swift in Sources */,
+				EF201219220C3308004800DB /* ProfileFooterView+Constraints.swift in Sources */,
 				BAED82B91B307AEE004D027F /* ZMUserSession+RequestProxy.m in Sources */,
 				D53D39102059784900B87DAD /* ConversationActionController+CancelRequest.swift in Sources */,
 				AF36C59F1E9F67B600FADECC /* DraftListViewController.swift in Sources */,
@@ -7981,6 +7996,7 @@
 				7C5DF2CC1FD7DEAD00B793B6 /* AvailabilityExtensions.swift in Sources */,
 				16595CFF20BEE5E000E1340E /* Analytics+CallEvents.swift in Sources */,
 				BFAF4CB51CECEF3C00780537 /* WaveFormView.swift in Sources */,
+				EF20121B220C3839004800DB /* UIViewController+LoadingView.swift in Sources */,
 				5E8FFC2B21F08D5B0052DF03 /* PhoneNumberInputCell.swift in Sources */,
 				5E8FFC1C21EF7CB50052DF03 /* AddEmailPasswordStepDescription.swift in Sources */,
 				5E35F786218340EB00D3F4FE /* ConversationLocationMessageCell.swift in Sources */,
