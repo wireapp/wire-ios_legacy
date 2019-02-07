@@ -26,8 +26,6 @@
 @interface BottomOverlayViewController ()
 
 //To be called in subclasses in this order
-- (void)setupBottomOverlay __attribute__((objc_requires_super));
-- (void)setupTopView __attribute__((objc_requires_super));
 - (void)setupGestureRecognizers __attribute__((objc_requires_super));
 
 @end
