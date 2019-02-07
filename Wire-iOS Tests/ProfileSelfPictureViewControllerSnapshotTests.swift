@@ -27,6 +27,11 @@ final class ProfileSelfPictureViewControllerSnapshotTests: ZMSnapshotTestCase {
         super.setUp()
         sut = ProfileSelfPictureViewController()
 
+        sut.loadViewIfNeeded()
+        let image = self.image(inTestBundleNamed: "unsplash_matterhorn.jpg")
+
+        sut.selfUserImageView.image = image
+
         /// TODO: remove this after snapshot is created
         recordMode = true
     }
