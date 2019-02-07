@@ -24,6 +24,8 @@ import UIKit
     enum Context: Int {
         case content, collection
     }
+    
+    private var actions = [Selector : Bool]()
 
     @objc let message: ZMConversationMessage
     @objc let context: Context
@@ -55,8 +57,8 @@ import UIKit
         UIMenuItem(title: "content.message.resend".localized, action: #selector(ConversationMessageActionController.resendMessage)),
         UIMenuItem(title: "content.message.go_to_conversation".localized, action: #selector(ConversationMessageActionController.revealMessage))
     ]
-
-    @objc func canPerformAction(_ selector: Selector) -> Bool {
+    
+    private func message(_ message: ZMConversationMessage, canPerformAction selector: Selector) -> Bool {
         switch selector {
         case #selector(ConversationMessageActionController.copyMessage):
             return message.canBeCopied
@@ -87,6 +89,16 @@ import UIKit
         default:
             return false
         }
+    }
+
+    @objc func canPerformAction(_ selector: Selector) -> Bool {
+        if let result = actions[selector] {
+            return result
+        }
+        
+        let result = message(self.message, canPerformAction: selector)
+        actions[selector] = result
+        return result
     }
 
     @objc func makeAccessibilityActions() -> [UIAccessibilityCustomAction] {
