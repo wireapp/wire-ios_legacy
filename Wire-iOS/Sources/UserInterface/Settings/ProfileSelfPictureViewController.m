@@ -64,8 +64,10 @@
             [self dismissViewControllerAnimated:YES completion:nil];
             [self setSelfImageToData:imageData];
         };
-        
-        self.userObserverToken = [UserChangeInfo addObserver:self forUser:[ZMUser selfUser] userSession:[ZMUserSession sharedSession]];
+
+        if ([ZMUserSession sharedSession] != nil) {
+            self.userObserverToken = [UserChangeInfo addObserver:self forUser:[ZMUser selfUser] userSession:[ZMUserSession sharedSession]];
+        }
     }
     
     return self;
