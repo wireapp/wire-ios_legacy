@@ -1269,6 +1269,7 @@
 		EFE0439B2149D9CA00BC3079 /* ShareContactsViewControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE0439A2149D9C900BC3079 /* ShareContactsViewControllerSnapshotTests.swift */; };
 		EFE806301FE006A7006A0EE7 /* DateFormatterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE8062E1FE005A7006A0EE7 /* DateFormatterTests.swift */; };
 		EFEB2ED9220C40BB00519EDC /* ProfileSendConnectionRequestFooterView+Constraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFEB2ED7220C40BB00519EDC /* ProfileSendConnectionRequestFooterView+Constraint.swift */; };
+		EFEB2EDE220C65DD00519EDC /* BottomOverlayViewController+SetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFEB2EDC220C65DD00519EDC /* BottomOverlayViewController+SetupView.swift */; };
 		EFF3DA432097548A007A3358 /* UIImage+MediaAssert.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF3DA422097548A007A3358 /* UIImage+MediaAssert.swift */; };
 		EFF3DA452097587F007A3358 /* UIPasteboard+MediaAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF3DA442097587F007A3358 /* UIPasteboard+MediaAsset.swift */; };
 		EFF6DCB4206BE94600437C71 /* SplitViewController+leftView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF6DCB3206BE94600437C71 /* SplitViewController+leftView.swift */; };
@@ -3109,6 +3110,8 @@
 		EFE8062A1FDFF24C006A0EE7 /* NSDate+Format.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSDate+Format.swift"; sourceTree = "<group>"; };
 		EFE8062E1FE005A7006A0EE7 /* DateFormatterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatterTests.swift; sourceTree = "<group>"; };
 		EFEB2ED7220C40BB00519EDC /* ProfileSendConnectionRequestFooterView+Constraint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProfileSendConnectionRequestFooterView+Constraint.swift"; sourceTree = "<group>"; };
+		EFEB2EDC220C65DD00519EDC /* BottomOverlayViewController+SetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BottomOverlayViewController+SetupView.swift"; sourceTree = "<group>"; };
+		EFEB2EDD220C65DD00519EDC /* BottomOverlayViewController+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "BottomOverlayViewController+Internal.h"; sourceTree = "<group>"; };
 		EFEE84742180C8E900DD88F6 /* AnimatedListMenuView+Constraint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AnimatedListMenuView+Constraint.swift"; sourceTree = "<group>"; };
 		EFEE84752180C8E900DD88F6 /* AnimatedListMenuView+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AnimatedListMenuView+Internal.h"; sourceTree = "<group>"; };
 		EFF3DA422097548A007A3358 /* UIImage+MediaAssert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+MediaAssert.swift"; sourceTree = "<group>"; };
@@ -4359,6 +4362,8 @@
 				871BC1321D34F8F800DF0793 /* BottomOverlayViewController+Private.h */,
 				871BC1331D34F8F800DF0793 /* BottomOverlayViewController.h */,
 				871BC1341D34F8F800DF0793 /* BottomOverlayViewController.m */,
+				EFEB2EDC220C65DD00519EDC /* BottomOverlayViewController+SetupView.swift */,
+				EFEB2EDD220C65DD00519EDC /* BottomOverlayViewController+Internal.h */,
 				5EEFC16720BEBE56007E8A79 /* BrowserViewController.swift */,
 				16CB8DB81DC0F777000C5F47 /* DefaultNavigationBar.swift */,
 				871BC13C1D34F8F800DF0793 /* ConfirmAssetViewController.h */,
@@ -7285,6 +7290,7 @@
 				1648EEF32049A6F800CC6B37 /* DirectorySectionController.swift in Sources */,
 				5E9E8A9D21621FEC0058D6E1 /* AuthenticationActioner.swift in Sources */,
 				BF8EE5561D62FBCD00B0D6D7 /* ConversationInputBarViewController+Editing.swift in Sources */,
+				EFEB2EDE220C65DD00519EDC /* BottomOverlayViewController+SetupView.swift in Sources */,
 				16A94AEF2099DFEC008A5718 /* CallParticipantsViewController.swift in Sources */,
 				F15650E121DD11CA00210504 /* SpinnerSubtitleView.swift in Sources */,
 				160D691C212AC94100096EAD /* ImageResource.swift in Sources */,

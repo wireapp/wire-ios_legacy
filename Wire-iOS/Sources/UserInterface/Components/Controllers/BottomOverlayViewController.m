@@ -40,42 +40,6 @@
 
 #pragma mark - BottomOverlayViewController+Private
 
-
-- (void)setupBottomOverlay
-{
-    self.bottomOverlayView = [[UIView alloc] init];
-    self.bottomOverlayView.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.view addSubview:self.bottomOverlayView];
-    
-    CGFloat height;
-    if (self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular) {
-        height = 104;
-    } else {
-        height = 88;
-    }
-
-    [self.bottomOverlayView addConstraintForHeight:height + UIScreen.safeArea.bottom];
-    [self.bottomOverlayView addConstraintForLeftMargin:0 relativeToView:self.view];
-    [self.bottomOverlayView addConstraintForRightMargin:0 relativeToView:self.view];
-    [self.bottomOverlayView addConstraintForBottomMargin:0 relativeToView:self.view];
-
-    self.bottomOverlayView.backgroundColor = [UIColor.blackColor colorWithAlphaComponent:0.8];
-}
-
-- (void)setupTopView
-{
-    self.topView = [[UIView alloc] init];
-    self.topView.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.view addSubview:self.topView];
-
-    [self.topView addConstraintForAligningBottomToTopOfView:self.bottomOverlayView distance:0];
-    [self.topView addConstraintForRightMargin:0 relativeToView:self.view];
-    [self.topView addConstraintForLeftMargin:0 relativeToView:self.view];
-    [self.topView addConstraintForTopMargin:0 relativeToView:self.view];
-
-    self.topView.backgroundColor = [UIColor clearColor];
-}
-
 - (void)setupGestureRecognizers
 {
     self.tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTap:)];

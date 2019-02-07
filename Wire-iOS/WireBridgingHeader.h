@@ -124,7 +124,9 @@
 #import "Button.h"
 #import "PermissionDeniedViewController.h"
 #import "ShareContactsViewController.h"
+
 #import "BottomOverlayViewController+Private.h"
+#import "BottomOverlayViewController.h"
 
 // Helper objects
 #import "PushTransition.h"
