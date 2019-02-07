@@ -22,6 +22,7 @@
 
 @property (nonatomic) ButtonWithLargerHitArea *cameraButton;
 @property (nonatomic) ButtonWithLargerHitArea *libraryButton;
+@property (nonatomic) ButtonWithLargerHitArea *closeButton;
 @property (nonatomic) UIImageView *selfUserImageView;
 
 - (void)cameraButtonTapped:(id)sender;

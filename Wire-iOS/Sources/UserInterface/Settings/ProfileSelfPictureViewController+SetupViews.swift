@@ -42,7 +42,7 @@ extension ProfileSelfPictureViewController {
 
     @objc
     func addCloseButton() {
-        let closeButton = ButtonWithLargerHitArea()
+        closeButton = ButtonWithLargerHitArea()
         closeButton.accessibilityIdentifier = "CloseButton"
 
         bottomOverlayView.addSubview(closeButton)
@@ -52,7 +52,7 @@ extension ProfileSelfPictureViewController {
 
         NSLayoutConstraint.activate([
             closeButton.centerYAnchor.constraint(equalTo: cameraButton.centerYAnchor),
-            closeButton.rightAnchor.constraint(equalTo: bottomOverlayView.rightAnchor, constant: 18)
+            closeButton.rightAnchor.constraint(equalTo: bottomOverlayView.rightAnchor, constant: -18)
             ])
 
         closeButton.setImage(UIImage(for: .X, iconSize: .small, color: .white), for: .normal)
