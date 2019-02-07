@@ -73,6 +73,8 @@
 #import "TextView+Internal.h"
 #import "TextView.h"
 #import "ProfileFooterView.h"
+#import "ProfileIncomingConnectionRequestFooterView.h"
+#import "ProfileSendConnectionRequestFooterView.h"
 
 // View Controllers
 #import "ProfileDevicesViewController.h"
@@ -104,8 +106,11 @@
 #import "ConversationListViewController.h"
 #import "ConversationListViewController+Private.h"
 #import "ConversationListViewController+Internal.h"
+
 #import "FullscreenImageViewController.h"
 #import "FullscreenImageViewController+internal.h"
+#import "FullscreenImageViewController+PullToDismiss.h"
+
 #import "KeyboardAvoidingViewController.h"
 #import "KeyboardAvoidingViewController+Internal.h"
 #import "CountryCodeTableViewController.h"

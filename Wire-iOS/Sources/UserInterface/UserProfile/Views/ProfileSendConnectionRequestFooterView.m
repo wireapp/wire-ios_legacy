@@ -19,6 +19,7 @@
 
 #import "ProfileSendConnectionRequestFooterView.h"
 #import "Button.h"
+#import "Wire-Swift.h"
 
 
 @implementation ProfileSendConnectionRequestFooterView
@@ -42,13 +43,6 @@
     self.sendButton = [Button buttonWithStyle:ButtonStyleFull];
     [self.sendButton setTitle:NSLocalizedString(@"connection_request.send_button_title", @"") forState:UIControlStateNormal];
     [self addSubview:self.sendButton];
-}
-
-- (void)setupConstraints
-{
-    self.sendButton.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.sendButton addConstraintForHeight:40];
-    [self.sendButton addConstraintsFittingToView:self edgeInsets:UIEdgeInsetsMake(0, 24, 24, 24)];
 }
 
 @end

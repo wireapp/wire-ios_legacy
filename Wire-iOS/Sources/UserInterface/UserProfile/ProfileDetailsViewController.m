@@ -44,7 +44,6 @@
 #import "ProfileFooterView.h"
 #import "ProfileSendConnectionRequestFooterView.h"
 #import "ProfileIncomingConnectionRequestFooterView.h"
-#import "ProfileUnblockFooterView.h"
 
 static NSString* ZMLogTag ZM_UNUSED = @"UI";
 

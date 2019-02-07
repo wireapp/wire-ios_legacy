@@ -18,10 +18,8 @@
 
 import Foundation
 
-extension ProfileFooterView {
-
-    @objc
-    func setupConstraints() {
+extension UIView {
+    func setupConstraints(leftButton: UIView, rightButton: UIView, height: CGFloat) {
         [leftButton, rightButton].forEach(){ $0?.translatesAutoresizingMaskIntoConstraints = false}
 
         leftButton.fitInSuperview(
@@ -32,10 +30,23 @@ extension ProfileFooterView {
             with: EdgeInsets(top: 0, leading: .nan, bottom: 12, trailing: 8),
             exclude: [.leading])
 
+        let buttonSpacingConstraint = leftButton.rightAnchor.constraint(equalTo: rightButton.leftAnchor, constant: 16)
+        buttonSpacingConstraint.priority = .defaultHigh
+
         NSLayoutConstraint.activate([
-            leftButton.heightAnchor.constraint(equalToConstant: 32),
-            rightButton.heightAnchor.constraint(equalToConstant: 32),
-            rightButton.widthAnchor.constraint(equalTo: leftButton.widthAnchor)])
+            leftButton.heightAnchor.constraint(equalToConstant: height),
+            rightButton.heightAnchor.constraint(equalToConstant: height),
+
+            rightButton.widthAnchor.constraint(equalTo: leftButton.widthAnchor),
+            buttonSpacingConstraint])
     }
 
+}
+
+extension ProfileFooterView {
+
+    @objc
+    func setupConstraints() {
+        setupConstraints(leftButton: leftButton, rightButton: rightButton, height: 32)
+    }
 }

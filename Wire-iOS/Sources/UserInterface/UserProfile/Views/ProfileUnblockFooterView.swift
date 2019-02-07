@@ -16,12 +16,26 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
+@objcMembers
+final class ProfileUnblockFooterView: UIView {
 
-extension ProfileIncomingConnectionRequestFooterView {
+    let unblockButton = Button(style: .full)
 
-    @objc
-    func setupConstraints() {
-        setupConstraints(leftButton: ignoreButton, rightButton: acceptButton, height: 40)
+    init() {
+        super.init(frame: CGRect.zero)
+
+        unblockButton.translatesAutoresizingMaskIntoConstraints = false
+
+        addSubview(unblockButton)
+
+        unblockButton.fitInSuperview(with: EdgeInsets(margin: 24), exclude: [.top])
+        NSLayoutConstraint.activate([unblockButton.heightAnchor.constraint(equalToConstant: 40)])
+
+        unblockButton.setTitle("profile.unblock_button_title".localized(uppercased: true), for: .normal)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
+

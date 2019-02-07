@@ -50,6 +50,8 @@ enum Anchor {
 
 extension UIView {
 
+    // MARK: - center alignment
+
     @discardableResult func centerInSuperview(activate: Bool = true) -> [NSLayoutConstraint] {
         guard let superview = superview else {
             fatal("Not in view hierarchy: self.superview = nil")
@@ -73,6 +75,8 @@ extension UIView {
 
         return constraints
     }
+
+    // MARK: - edge alignment
 
     @discardableResult func fitInSuperview(safely: Bool = false,
                                            with insets: EdgeInsets = .zero,
@@ -124,14 +128,20 @@ extension UIView {
         return constraints
     }
 
+    // MARK: - dimensions
+
     func setDimensions(length: CGFloat) {
         setDimensions(width: length, height: length)
     }
 
     func setDimensions(width: CGFloat, height: CGFloat) {
+        setDimensions(size: CGSize(width: width, height: height))
+    }
+
+    func setDimensions(size: CGSize) {
         let constraints = [
-            widthAnchor.constraint(equalToConstant: width),
-            heightAnchor.constraint(equalToConstant: height)
+            widthAnchor.constraint(equalToConstant: size.width),
+            heightAnchor.constraint(equalToConstant: size.height)
         ]
 
         NSLayoutConstraint.activate(constraints)

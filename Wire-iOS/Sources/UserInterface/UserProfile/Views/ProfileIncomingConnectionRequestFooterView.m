@@ -19,6 +19,7 @@
 
 #import "ProfileIncomingConnectionRequestFooterView.h"
 #import "Button.h"
+#import "Wire-Swift.h"
 
 
 @implementation ProfileIncomingConnectionRequestFooterView

@@ -18,10 +18,5 @@
 
 import Foundation
 
-extension ProfileIncomingConnectionRequestFooterView {
-
-    @objc
-    func setupConstraints() {
-        setupConstraints(leftButton: ignoreButton, rightButton: acceptButton, height: 40)
-    }
+extension BottomOverlayViewController {
 }

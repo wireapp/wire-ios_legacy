@@ -18,10 +18,14 @@
 
 import Foundation
 
-extension ProfileIncomingConnectionRequestFooterView {
-
+extension ProfileSendConnectionRequestFooterView {
     @objc
     func setupConstraints() {
-        setupConstraints(leftButton: ignoreButton, rightButton: acceptButton, height: 40)
+        sendButton.translatesAutoresizingMaskIntoConstraints = false
+
+        let constraint = sendButton.heightAnchor.constraint(equalToConstant: 40)
+        constraint.isActive = true
+
+        sendButton.fitInSuperview(with: EdgeInsets(margin: 24), exclude: [.top])
     }
 }
