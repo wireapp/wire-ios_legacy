@@ -34,7 +34,7 @@ extension BottomOverlayViewController {
         }
 
         bottomOverlayView.fitInSuperview(exclude: [.top])
-        bottomOverlayView.heightAnchor.constraint(equalToConstant: height + UIScreen.safeArea.bottom)
+        bottomOverlayView.heightAnchor.constraint(equalToConstant: height + UIScreen.safeArea.bottom).isActive = true
 
         bottomOverlayView.backgroundColor = UIColor.black.withAlphaComponent(0.8)
     }
@@ -46,7 +46,7 @@ extension BottomOverlayViewController {
         view.addSubview(topView)
 
         topView.bottomAnchor.constraint(equalTo: bottomOverlayView.topAnchor).isActive = true
-        bottomOverlayView.fitInSuperview(exclude: [.bottom])
+        topView.fitInSuperview(exclude: [.bottom])
 
         topView.backgroundColor = .clear
     }

@@ -21,6 +21,10 @@ import Photos
 
 extension ProfileSelfPictureViewController {
 
+    override open var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return wr_supportedInterfaceOrientations
+    }
+
     @objc
     func addCameraButton() {
         cameraButton = ButtonWithLargerHitArea()
