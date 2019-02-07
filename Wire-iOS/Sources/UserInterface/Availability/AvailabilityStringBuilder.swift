@@ -47,7 +47,7 @@
             }
         }
         
-        guard let textColor = color else { return "".attributedString }
+        guard let textColor = color else { return NSAttributedString() }
         let icon = AvailabilityStringBuilder.icon(for: availability, with: textColor, and: fontSize)
         let attributedText = IconStringsBuilder.iconString(with: icon, title: title, interactive: false, color: textColor)
         return attributedText

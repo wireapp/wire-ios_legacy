@@ -43,11 +43,11 @@ extension ConversationListItemView {
         self.conversation = conversation
         
         guard let conversation = conversation else {
-            self.configure(with: "" && [:], subtitle: "" && [:])
+            self.configure(with: NSAttributedString(), subtitle: NSAttributedString())
             return
         }
         
-        var title = "".attributedString
+        let title: NSAttributedString
         
         if ZMUser.selfUser().isTeamMember, let connectedUser = conversation.connectedUser {
             title = AvailabilityStringBuilder.string(for: connectedUser, with: .list)
