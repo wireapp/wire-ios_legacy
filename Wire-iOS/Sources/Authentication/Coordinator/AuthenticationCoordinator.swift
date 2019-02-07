@@ -96,6 +96,9 @@ class AuthenticationCoordinator: NSObject, AuthenticationEventResponderChainDele
     private var initialSyncObserver: Any?
     private var pendingAlert: AuthenticationCoordinatorAlert?
 
+    /// Whether an account was added.
+    var addedAccount: Bool = false
+
     // MARK: - Initialization
 
     /// Creates a new authentication coordinator with the required supporting objects.
@@ -231,10 +234,10 @@ extension AuthenticationCoordinator: AuthenticationActioner, SessionManagerCreat
                 presentErrorAlert(for: alertModel)
 
             case .completeLoginFlow:
-                delegate?.userAuthenticationDidComplete(registered: false)
+                delegate?.userAuthenticationDidComplete(addedAccount: addedAccount)
 
             case .completeRegistrationFlow:
-                delegate?.userAuthenticationDidComplete(registered: true)
+                delegate?.userAuthenticationDidComplete(addedAccount: true)
 
             case .startPostLoginFlow:
                 registerPostLoginObserversIfNeeded()
