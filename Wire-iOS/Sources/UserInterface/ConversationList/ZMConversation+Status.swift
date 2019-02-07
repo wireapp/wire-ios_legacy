@@ -20,7 +20,6 @@ import Foundation
 
 // Describes the icon to be shown for the conversation in the list.
 enum ConversationStatusIcon: Equatable {
-    case none
     case pendingConnection
     
     case typing
@@ -145,7 +144,7 @@ extension StatusMessageType {
 protocol ConversationStatusMatcher {
     func isMatching(with status: ConversationStatus) -> Bool
     func description(with status: ConversationStatus, conversation: ZMConversation) -> NSAttributedString?
-    func icon(with status: ConversationStatus, conversation: ZMConversation) -> ConversationStatusIcon
+    func icon(with status: ConversationStatus, conversation: ZMConversation) -> ConversationStatusIcon?
     
     // An array of matchers that are compatible with the current one. Leads to display the description of all matching 
     // in one row, like "description1 | description2"
@@ -164,8 +163,8 @@ extension TypedConversationStatusMatcher {
 }
 
 extension ConversationStatusMatcher {
-    func icon(with status: ConversationStatus, conversation: ZMConversation) -> ConversationStatusIcon {
-        return .none
+    func icon(with status: ConversationStatus, conversation: ZMConversation) -> ConversationStatusIcon? {
+        return nil
     }
     
     func addEmphasis(to string: NSAttributedString, for substring: String) -> NSAttributedString {
@@ -246,8 +245,8 @@ final internal class SelfUserLeftMatcher: ConversationStatusMatcher {
         return "conversation.status.you_left".localized && type(of: self).regularStyle
     }
     
-    func icon(with status: ConversationStatus, conversation: ZMConversation) -> ConversationStatusIcon {
-        return .none
+    func icon(with status: ConversationStatus, conversation: ZMConversation) -> ConversationStatusIcon? {
+        return nil
     }
     
     var combinesWith: [ConversationStatusMatcher] = []
@@ -276,14 +275,14 @@ final internal class CallingMatcher: ConversationStatusMatcher {
         return .none
     }
     
-    func icon(with status: ConversationStatus, conversation: ZMConversation) -> ConversationStatusIcon {
+    func icon(with status: ConversationStatus, conversation: ZMConversation) -> ConversationStatusIcon? {
         return CallingMatcher.icon(for: conversation.voiceChannel?.state, conversation: conversation)
     }
     
-    public static func icon(for state: CallState?, conversation: ZMConversation?) -> ConversationStatusIcon {
+    public static func icon(for state: CallState?, conversation: ZMConversation?) -> ConversationStatusIcon? {
         
         guard let state = state else {
-            return .none
+            return nil
         }
         
         if case CallState.incoming(video: _, shouldRing: false, degraded: _) = state, state.canJoinCall {
@@ -292,7 +291,7 @@ final internal class CallingMatcher: ConversationStatusMatcher {
             return .activeCall(showJoin: false)
         }
         
-        return .none
+        return nil
     }
     
     var combinesWith: [ConversationStatusMatcher] = []
@@ -318,7 +317,7 @@ final internal class TypingMatcher: ConversationStatusMatcher {
         return statusString
     }
     
-    func icon(with status: ConversationStatus, conversation: ZMConversation) -> ConversationStatusIcon {
+    func icon(with status: ConversationStatus, conversation: ZMConversation) -> ConversationStatusIcon? {
         return .typing
     }
     
@@ -335,7 +334,7 @@ final internal class SilencedMatcher: ConversationStatusMatcher {
         return .none
     }
     
-    func icon(with status: ConversationStatus, conversation: ZMConversation) -> ConversationStatusIcon {
+    func icon(with status: ConversationStatus, conversation: ZMConversation) -> ConversationStatusIcon? {
         if status.showingOnlyMentionsAndReplies {
             if status.hasSelfMention {
                 return .mention
@@ -510,7 +509,7 @@ final internal class NewMessagesMatcher: TypedConversationStatusMatcher {
         }
     }
     
-    func icon(with status: ConversationStatus, conversation: ZMConversation) -> ConversationStatusIcon {
+    func icon(with status: ConversationStatus, conversation: ZMConversation) -> ConversationStatusIcon? {
         
         if status.hasSelfMention {
             return .mention
@@ -529,7 +528,7 @@ final internal class NewMessagesMatcher: TypedConversationStatusMatcher {
                 }
             }),
             let type = StatusMessageType(message: message) else {
-            return .none
+            return nil
         }
         
         switch type {
@@ -713,9 +712,9 @@ extension ConversationStatus {
         return allStrings.joined(separator: " | " && CallingMatcher.regularStyle)
     }
     
-    func icon(for conversation: ZMConversation) -> ConversationStatusIcon {
+    func icon(for conversation: ZMConversation) -> ConversationStatusIcon? {
         guard let topMatcher = self.appliedMatcherForIcon(for: conversation) else {
-            return .none
+            return nil
         }
         
         return topMatcher.icon(with: self, conversation: conversation)

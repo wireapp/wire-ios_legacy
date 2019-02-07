@@ -285,7 +285,7 @@ class ConversationListCellTests: CoreDataSnapshotTestCase {
     }
 
     
-    func verify(conversation: ZMConversation?, icon: ConversationStatusIcon) {
+    func verify(conversation: ZMConversation?, icon: ConversationStatusIcon?) {
         guard let conversation = conversation else { XCTFail(); return }
         sut.conversation = conversation
         sut.itemView.rightAccessory.icon = icon
