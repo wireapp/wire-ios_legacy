@@ -29,6 +29,4 @@
 @property (strong, nonatomic) SpinnerSubtitleView *spinnerView;
 @property (assign, nonatomic) BOOL showLoadingView;
 
-- (void)indicateLoadingSuccessRemovingCheckmark:(BOOL)removingCheckmark completion:(dispatch_block_t)completion;
-
 @end

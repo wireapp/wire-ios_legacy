@@ -73,8 +73,6 @@ class BackupRestoreController: NSObject {
 
     fileprivate func performRestore(using password: String, from url: URL) {
         guard let sessionManager = SessionManager.shared else { return }
-
-        target.spinnerView?.subtitle = "registration.no_history.restore_backup.restoring".localized.uppercased()
         target.showLoadingView = true
 
         sessionManager.restoreFromBackup(at: url, password: password) { [weak self] result in
@@ -85,16 +83,15 @@ class BackupRestoreController: NSObject {
                 self.showWrongPasswordAlert {
                     self.restore(with: url)
                 }
+
             case .failure(let error):
                 BackupEvent.importFailed.track()
                 self.showRestoreError(error)
                 self.target.showLoadingView = false
+
             case .success:
                 BackupEvent.importSucceeded.track()
-                self.target.spinnerView?.subtitle = "registration.no_history.restore_backup.completed".localized.uppercased()
-                self.target.indicateLoadingSuccessRemovingCheckmark(false) {
-                    self.delegate?.backupResoreControllerDidFinishRestoring(self)
-                }
+                self.delegate?.backupResoreControllerDidFinishRestoring(self)
             }
         }
     }
