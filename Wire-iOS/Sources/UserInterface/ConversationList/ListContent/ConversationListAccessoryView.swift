@@ -21,7 +21,9 @@ import UIKit
 @objcMembers final class ConversationListAccessoryView: UIView {
     var icon: ConversationStatusIcon = .none {
         didSet {
-            self.updateForIcon()
+            if icon != oldValue {
+                self.updateForIcon()
+            }
         }
     }
     
