@@ -129,17 +129,6 @@ static const NSTimeInterval OverscrollRatio = 2.5;
     }
 }
 
-- (void)prepareForReuse
-{
-    [super prepareForReuse];
-
-    [self.itemView setVisualDrawerOffset:0 notify:NO];
-    self.itemView.alpha = 1.0f;
-    self.overscrollStartDate = nil;
-
-    self.conversation = nil;
-}
-
 - (void)setConversation:(ZMConversation *)conversation
 {
     if (_conversation != conversation) {
