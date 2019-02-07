@@ -55,7 +55,7 @@ indirect enum AuthenticationFlowStep: Equatable {
     case reauthenticate(credentials: LoginCredentials?, numberOfAccounts: Int)
 
     // Sign-In
-    case provideCredentials(AuthenticationCredentialsType)
+    case provideCredentials(AuthenticationCredentialsType, AuthenticationPrefilledCredentials?)
     case sendLoginCode(phoneNumber: String, isResend: Bool)
     case enterLoginCode(phoneNumber: String)
     case authenticateEmailCredentials(ZMEmailCredentials)

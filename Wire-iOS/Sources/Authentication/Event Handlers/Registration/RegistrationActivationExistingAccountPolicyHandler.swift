@@ -46,9 +46,14 @@ class RegistrationActivationExistingAccountPolicyHandler: AuthenticationEventHan
         var actions: [AuthenticationCoordinatorAction] = [.hideLoadingView]
 
         switch user.credentials! {
-        case .email:
+        case .email(let email):
+            let prefilledCredentials = AuthenticationPrefilledCredentials(
+                primaryCredentialsType: .email, credentials:
+                LoginCredentials(emailAddress: email, phoneNumber: nil, hasPassword: true, usesCompanyLogin: false)
+            )
+
             let changeEmailAction = AuthenticationCoordinatorAlertAction(title: "registration.alert.change_email_action".localized, coordinatorActions: [.unwindState(withInterface: false), .executeFeedbackAction(.clearInputFields)])
-            let loginAction = AuthenticationCoordinatorAlertAction(title: "registration.alert.change_signin_action".localized, coordinatorActions: [])
+            let loginAction = AuthenticationCoordinatorAlertAction(title: "registration.alert.change_signin_action".localized, coordinatorActions: [.transition(.provideCredentials(.email, prefilledCredentials), mode: .replace)])
 
             let alert = AuthenticationCoordinatorAlert(title: "registration.alert.account_exists.title".localized,
                                                        message: "registration.alert.account_exists.message_email".localized,

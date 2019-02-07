@@ -26,7 +26,7 @@ class AuthenticationCredentialsViewController: AuthenticationStepController, Cou
 
     /// Types of flow provided by the view controller.
     enum FlowType {
-        case login(AuthenticationCredentialsType)
+        case login(AuthenticationCredentialsType, AuthenticationPrefilledCredentials?)
         case registration(AuthenticationCredentialsType)
         case reauthentication(AuthenticationPrefilledCredentials?)
     }
@@ -61,10 +61,11 @@ class AuthenticationCredentialsViewController: AuthenticationStepController, Cou
 
     convenience init(flowType: FlowType) {
         switch flowType {
-        case .login(let credentialsType):
+        case .login(let credentialsType, let credentials):
             let description = LogInStepDescription()
             self.init(description: description)
-            self.credentialsType = credentialsType
+            self.credentialsType = credentials?.primaryCredentialsType ?? credentialsType
+            self.prefilledCredentials = credentials
         case .reauthentication(let credentials):
             let description = ReauthenticateStepDescription(prefilledCredentials: credentials)
             self.init(description: description)
@@ -104,11 +105,6 @@ class AuthenticationCredentialsViewController: AuthenticationStepController, Cou
         tabBar.delegate = self
         updateCredentialsType()
         updatePrefilledCredentials()
-    }
-
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        updateFirstResponder()
     }
 
     override var contentCenterXAnchor: NSLayoutYAxisAnchor {
@@ -153,35 +149,34 @@ class AuthenticationCredentialsViewController: AuthenticationStepController, Cou
         }
     }
 
-    private func updateFirstResponder() {
+    private var contextualFirstResponder: UIResponder? {
         switch flowType {
         case .login?:
             switch credentialsType {
-            case .phone: phoneInputView.becomeFirstResponderIfPossible()
-            case .email: emailPasswordInputField.becomeFirstResponderIfPossible()
+            case .phone: return phoneInputView
+            case .email: return emailPasswordInputField
             }
         case .registration?:
             switch credentialsType {
-            case .phone: phoneInputView.becomeFirstResponderIfPossible()
-            case .email: emailInputField.becomeFirstResponderIfPossible()
+            case .phone: return phoneInputView
+            case .email: return emailInputField
             }
         case .reauthentication?:
             switch credentialsType {
-            case .phone: break
-            case .email: emailPasswordInputField.becomeFirstResponderIfPossible()
+            case .phone: return phoneInputView
+            case .email: return emailPasswordInputField
             }
         default:
-            break
+            return nil
         }
     }
 
+    override func showKeyboard() {
+        contextualFirstResponder?.becomeFirstResponderIfPossible()
+    }
+
     override func dismissKeyboard() {
-        switch credentialsType {
-        case .email:
-            emailPasswordInputField.resignFirstResponder()
-        case .phone:
-            phoneInputView.resignFirstResponder()
-        }
+        contextualFirstResponder?.resignFirstResponder()
     }
 
     // MARK: - Tab Bar
@@ -196,7 +191,7 @@ class AuthenticationCredentialsViewController: AuthenticationStepController, Cou
             fatal("Unknown tab index: \(index)")
         }
 
-        updateFirstResponder()
+        showKeyboard()
     }
 
     private func updateCredentialsType() {
@@ -247,12 +242,13 @@ class AuthenticationCredentialsViewController: AuthenticationStepController, Cou
         emailInputField.text = nil
         emailPasswordInputField.emailField.text = nil
         emailPasswordInputField.passwordField.text = nil
+        showKeyboard()
     }
 
     // MARK: - Events
 
     @objc private func emailConfirmButtonTapped(sender: IconButton) {
-        authenticationCoordinator?.handleUserInput(emailInputField.input)
+        valueSubmitted(emailInputField.input)
     }
 
     @objc private func emailTextInputDidChange(sender: AccessoryTextField) {
@@ -299,7 +295,6 @@ class AuthenticationCredentialsViewController: AuthenticationStepController, Cou
     }
 
     func phoneNumberInputView(_ inputView: PhoneNumberInputView, didPickPhoneNumber phoneNumber: PhoneNumber) {
-        authenticationCoordinator?.handleUserInput(phoneNumber)
         valueSubmitted(phoneNumber)
     }
 

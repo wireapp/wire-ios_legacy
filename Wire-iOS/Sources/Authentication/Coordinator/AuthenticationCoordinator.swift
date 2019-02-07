@@ -453,7 +453,7 @@ extension AuthenticationCoordinator {
             let newStep = AuthenticationFlowStep.createCredentials(unregisteredUser, newType)
             stateController.transition(to: newStep, mode: .replace)
         case .provideCredentials:
-            let newStep = AuthenticationFlowStep.provideCredentials(newType)
+            let newStep = AuthenticationFlowStep.provideCredentials(newType, nil)
             stateController.transition(to: newStep, mode: .replace)
         default:
             log.warn("The current step does not support credential type switching")

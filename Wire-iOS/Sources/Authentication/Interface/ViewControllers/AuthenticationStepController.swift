@@ -88,12 +88,6 @@ class AuthenticationStepController: AuthenticationStepViewController {
 
     // MARK: - View Lifecycle
 
-    override var showLoadingView: Bool {
-        didSet {
-            stepDescription.mainView.acceptsInput = !showLoadingView
-        }
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.Team.background
@@ -103,15 +97,10 @@ class AuthenticationStepController: AuthenticationStepViewController {
         updateBackButton()
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        configureObservers()
-    }
-
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        configureObservers()
         showKeyboard()
-        updateKeyboard(with: KeyboardFrameObserver.shared.keyboardFrame)
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -278,7 +267,6 @@ class AuthenticationStepController: AuthenticationStepViewController {
         authenticationCoordinator?.executeAction(rightItemAction)
     }
 
-
     // MARK: - Back Button
 
     private func updateBackButton() {
@@ -329,7 +317,7 @@ class AuthenticationStepController: AuthenticationStepViewController {
 
         // Calculate the height of the content under the keyboard
         let contentRect = CGRect(x: contentStack.frame.origin.x,
-                                 y: contentStack.frame.origin.y + currentOffset - minimumKeyboardSpacing / 2,
+                                 y: contentStack.frame.origin.y + currentOffset,
                                  width: contentStack.frame.width,
                                  height: contentStack.frame.height + minimumKeyboardSpacing)
 
@@ -343,7 +331,7 @@ class AuthenticationStepController: AuthenticationStepViewController {
 
     func clearInputFields() {
         (mainView as? TextContainer)?.text = nil
-        mainView.becomeFirstResponderIfPossible()
+        showKeyboard()
     }
 
     func showKeyboard() {

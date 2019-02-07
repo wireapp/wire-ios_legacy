@@ -89,8 +89,8 @@ class AuthenticationInterfaceBuilder {
             viewController.setRightItem("registration.signin.too_many_devices.sign_out_button.title".localized, withAction: .signOut(warn: true), accessibilityID: "signOutButton")
             return viewController
 
-        case .provideCredentials(let credentialsFlowType):
-            let viewController = makeCredentialsViewController(for: .login(credentialsFlowType))
+        case .provideCredentials(let credentialsFlowType, let prefill):
+            let viewController = makeCredentialsViewController(for: .login(credentialsFlowType, prefill))
 
             // Add the item to start company login if needed.
             if featureProvider.allowCompanyLogin {

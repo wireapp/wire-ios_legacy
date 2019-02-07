@@ -112,16 +112,16 @@ class AuthenticationInterfaceBuilderTests: ZMSnapshotTestCase {
     // MARK: - Login
 
     func testLoginScreen_Phone() {
-        runSnapshotTest(for: .provideCredentials(.phone))
+        runSnapshotTest(for: .provideCredentials(.phone, nil))
     }
 
     func testLoginScreen_Email() {
-        runSnapshotTest(for: .provideCredentials(.email))
+        runSnapshotTest(for: .provideCredentials(.email, nil))
     }
 
     func testLoginScreen_Email_PhoneDisabled() {
         featureProvider.allowOnlyEmailLogin = true
-        runSnapshotTest(for: .provideCredentials(.email))
+        runSnapshotTest(for: .provideCredentials(.email, nil))
     }
 
     func testLoginScreen_PhoneNumberVerification() {
