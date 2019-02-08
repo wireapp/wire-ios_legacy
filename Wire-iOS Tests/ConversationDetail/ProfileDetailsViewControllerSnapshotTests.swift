@@ -70,6 +70,13 @@ final class ProfileDetailsViewControllerSnapshotTests: CoreDataSnapshotTestCase 
         verifyInAllIPhoneSizes(view: sut.view)
     }
 
+    func testThatThreeDotMenuButtonIsShown() {
+        teamTest {
+            sut = ProfileDetailsViewController(user: self.otherUser, conversation: self.otherUserConversation, context: .groupConversation)
+            verifyInIPhoneSize(view: sut.view)
+        }
+    }
+
     func testThatPartnerRoleHasNoRemovePartcipantButton() {
         teamTest {
             selfUser.membership?.setTeamRole(.partner)

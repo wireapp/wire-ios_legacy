@@ -346,11 +346,7 @@ typedef NS_ENUM(NSUInteger, ProfileViewContentMode) {
             break;
             
         case ProfileUserActionRemovePeople:
-            ///TODO: present menu with one item
             [self presentRemoveUserMenuSheetController];
-//            [self presentRemoveDialogueForParticipant:[self fullUser]
-//                                     fromConversation:self.conversation
-//                                            dismisser:self.viewControllerDismisser];
             break;
             
         case ProfileUserActionAcceptConnectionRequest:
