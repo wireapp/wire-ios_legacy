@@ -75,9 +75,12 @@ struct PresentationContext {
 
         let controller = UIAlertController(title: showConverationNameInMenuTitle ? conversation.displayName: nil, message: nil, preferredStyle: .actionSheet)
 
-        var actions = [ZMConversation.Action]()
-        actions.append(.remove)
-        actions.map(alertAction).forEach(controller.addAction)
+        let action = ZMConversation.Action.remove
+        let alertAction = ZMConversation.Action.remove.alertAction { [weak self] in
+            guard let `self` = self else { return }
+            self.handleAction(action)
+        }
+        controller.addAction(alertAction)
 
         controller.addAction(.cancel())
         present(controller,
@@ -93,13 +96,6 @@ struct PresentationContext {
             target.presentRemoveDialogue(for: participant, from: conversation, dismisser: dismisser)
         default:
             break
-        }
-    }
-
-    private func alertAction(for action: ZMConversation.Action) -> UIAlertAction {
-        return action.alertAction { [weak self] in
-            guard let `self` = self else { return }
-            self.handleAction(action)
         }
     }
 }
