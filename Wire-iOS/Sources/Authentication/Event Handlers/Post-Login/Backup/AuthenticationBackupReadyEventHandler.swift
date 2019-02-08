@@ -31,7 +31,7 @@ class AuthenticationBackupReadyEventHandler: AuthenticationEventHandler {
 
         // Automatically complete the backup for @fastLogin automation
         guard AutomationHelper.sharedHelper.automationEmailCredentials == nil else {
-            return [.hideLoadingView, .completeBackupStep]
+            return [.showLoadingView, .configureNotifications, .completeBackupStep]
         }
 
         // Get the signed-in user credentials
