@@ -101,6 +101,7 @@ class AuthenticationStepController: AuthenticationStepViewController {
         super.viewDidAppear(animated)
         configureObservers()
         showKeyboard()
+        UIAccessibility.post(notification: .screenChanged, argument: headlineLabel)
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -138,6 +139,7 @@ class AuthenticationStepController: AuthenticationStepViewController {
         headlineLabel.translatesAutoresizingMaskIntoConstraints = false
         headlineLabel.numberOfLines = 0
         headlineLabel.lineBreakMode = .byWordWrapping
+        headlineLabel.accessibilityTraits.insert(.header)
         updateHeadlineLabelFont()
 
         if stepDescription.subtext != nil {
@@ -160,7 +162,6 @@ class AuthenticationStepController: AuthenticationStepViewController {
         errorLabel.translatesAutoresizingMaskIntoConstraints = false
 
         mainView = createMainView()
-        
 
         if let secondaryView = stepDescription.secondaryView {
             secondaryViews = secondaryView.views.map { $0.create() }
@@ -340,6 +341,10 @@ class AuthenticationStepController: AuthenticationStepViewController {
 
     func dismissKeyboard() {
         mainView.resignFirstResponder()
+    }
+
+    override func accessibilityPerformMagicTap() -> Bool {
+        return (mainView as? MagicTappable)?.performMagicTap() == true
     }
 
 }

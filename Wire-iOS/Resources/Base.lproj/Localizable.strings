@@ -34,6 +34,7 @@
 "general.service" = "Service";
 "general.off" = "Off";
 "general.on" = "On";
+"general.loading" = "Loading…";
 
 // Language like Chinese does not use space to sperate words or sentences.
 "general.space_between_words" = " ";
@@ -1110,7 +1111,7 @@
 
 // Landing screen
 
-"landing.app_name" = "Wire";
+"landing.header" = "Wire. Add your Account.";
 "landing.create_account.title" = "Personal";
 "landing.create_account.subtitle" = "create an account";
 "landing.create_team.title" = "Pro";
@@ -1124,7 +1125,7 @@
 "team.name.subheadline" = "You can always change it later.";
 "team.name.textfield.placeholder" = "team name";
 "team.name.textfield.accessibility" = "Set team name";
-"team.name.whatiswireforteams" = "What is Wire for teams?";
+"team.name.whatiswireforteams" = "What is Wire Pro?";
 
 "team.email.headline" = "Your account";
 "team.email.subheadline" = "Enter your work email address.";

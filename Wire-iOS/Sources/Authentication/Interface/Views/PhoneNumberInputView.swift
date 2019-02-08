@@ -97,6 +97,7 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
         countryCodeInputView.titleLabel?.font = FontSpec(.normal, .regular, .inputText).font
         countryCodeInputView.titleEdgeInsets.top = -1
         countryCodeInputView.isUserInteractionEnabled = false
+        countryCodeInputView.accessibilityTraits = [.staticText]
         inputStack.addArrangedSubview(countryCodeInputView)
 
         // inputStack
@@ -218,8 +219,9 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
 
         countryPickerButton.accessibilityValue = country.displayName
         countryPickerButton.accessibilityLabel = "registration.phone_country".localized
-        countryPickerButton.accessibilityHint = "registration.phone_country.hint".localized
+
         countryCodeInputView.setTitle(country.e164PrefixString, for: .normal)
+        countryCodeInputView.accessibilityLabel = "registration.phone_code".localized
         countryCodeInputView.accessibilityValue = country.e164PrefixString
     }
 
@@ -338,8 +340,13 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.textField.validateInput()
-        submitValue()
-        return true
+
+        if self.validationError == .none {
+            submitValue()
+            return true
+        } else {
+            return false
+        }
     }
 
     func submitValue() {

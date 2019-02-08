@@ -247,6 +247,10 @@ class AuthenticationCredentialsViewController: AuthenticationStepController, Cou
 
     // MARK: - Events
 
+    override func accessibilityPerformMagicTap() -> Bool {
+        return (contextualFirstResponder as? MagicTappable)?.performMagicTap() == true
+    }
+
     @objc private func emailConfirmButtonTapped(sender: IconButton) {
         valueSubmitted(emailInputField.input)
     }
