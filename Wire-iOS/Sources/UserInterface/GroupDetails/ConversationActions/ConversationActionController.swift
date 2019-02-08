@@ -28,13 +28,20 @@
     }
 
     private let conversation: ZMConversation
+    private let participant: ZMUser
     unowned let target: UIViewController
     private var currentContext: PresentationContext?
     weak var alertController: UIAlertController?
+    weak var dismisser: ViewControllerDismisser?
 
-    @objc init(conversation: ZMConversation, target: UIViewController) {
+    @objc init(conversation: ZMConversation,
+               participant: ZMUser,
+               dismisser: ViewControllerDismisser?,
+               target: UIViewController) {
         self.conversation = conversation
         self.target = target
+        self.participant = participant
+        self.dismisser = dismisser
         super.init()
     }
 
@@ -48,16 +55,9 @@
 
         let controller = UIAlertController(title: showConverationNameInMenuTitle ? conversation.displayName: nil, message: nil, preferredStyle: .actionSheet)
 
-        // TODO: we need to exclude the notification settings action if the menu is being presented from the conversation details.
-//        conversation.actions.map(alertAction).forEach(controller.addAction)
-
         var actions = [ZMConversation.Action]()
         actions.append(.remove)
         actions.map(alertAction).forEach(controller.addAction)
-
-
-//        controller.addAction(Action.remove.alertAction)
-//        controller.addAction(.remove)
 
         controller.addAction(.cancel())
         present(controller)
@@ -92,10 +92,7 @@
     func handleAction(_ action: ZMConversation.Action) {
         switch action {
         case .remove:
-            //            [self presentRemoveDialogueForParticipant:[self fullUser]
-            //                                     fromConversation:self.conversation
-            //                                            dismisser:self.viewControllerDismisser];
-        break ///TODO: show another menu
+            target.presentRemoveDialogue(for: participant, from: conversation, dismisser: dismisser)
         default:
             break
         }

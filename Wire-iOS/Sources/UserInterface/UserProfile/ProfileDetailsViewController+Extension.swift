@@ -60,7 +60,11 @@ extension ProfileDetailsViewController {
     }
 
     @objc func presentRemoveUserMenuSheetController() {
-        actionsController = RemoveUserActionController(conversation: conversation, target: self)
+        actionsController = RemoveUserActionController(conversation: conversation,
+                                                       participant: fullUser(),
+                                                       dismisser: viewControllerDismisser,
+                                                       target: self)
+
         actionsController.presentMenu(from: footerView, showConverationNameInMenuTitle: false)
     }
 
