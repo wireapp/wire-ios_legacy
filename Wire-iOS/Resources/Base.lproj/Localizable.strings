@@ -35,6 +35,7 @@
 "general.off" = "Off";
 "general.on" = "On";
 "general.loading" = "Loading…";
+"general.paste" = "Paste";
 
 // Language like Chinese does not use space to sperate words or sentences.
 "general.space_between_words" = " ";
@@ -1149,7 +1150,8 @@
 "team.password.textfield.accessibility" = "Set password, at least 8 characters";
 
 
-"team.email_code.input_field.accessbility_label" = "Please enter the six-digit code from the email.";
+"verification.code_label" = "Six-digit code.";
+"verification.code_hint" = "Double tap to edit.";
 
 // Invite Team Members
 
