@@ -19,11 +19,6 @@
 import Foundation
 import UIKit
 
-struct Offset {
-    let x, y: CGFloat
-    static let zero = Offset(x: 0, y: 0)
-}
-
 struct EdgeInsets {
     let top, leading, bottom, trailing: CGFloat
 
@@ -61,7 +56,7 @@ extension UIView {
     }
 
     @discardableResult func alignCenter(to view: UIView,
-                                   with offset: Offset = .zero,
+                                   with offset: CGPoint = .zero,
                                    activate: Bool = true) -> [NSLayoutConstraint] {
 
         let constraints = [

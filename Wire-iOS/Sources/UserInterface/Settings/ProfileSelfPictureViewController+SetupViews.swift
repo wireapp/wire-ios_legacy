@@ -37,7 +37,7 @@ extension ProfileSelfPictureViewController {
             bottomOffset = -UIScreen.safeArea.bottom + 20.0
         }
 
-        cameraButton.alignCenter(to: bottomOverlayView, with: Offset(x:0, y:bottomOffset))
+        cameraButton.alignCenter(to: bottomOverlayView, with: CGPoint(x:0, y:bottomOffset))
 
         cameraButton.setImage(UIImage(for: .cameraLens, iconSize: .camera, color: .white), for: .normal)
         cameraButton.addTarget(self, action: #selector(self.cameraButtonTapped(_:)), for: .touchUpInside)
