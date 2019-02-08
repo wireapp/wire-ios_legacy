@@ -52,7 +52,7 @@ final class SetEmailStepDescription: AuthenticationStepDescription {
 
     init() {
         backButton = BackButtonDescription()
-        mainView = TextFieldDescription(placeholder: "team.email.textfield.placeholder".localized, actionDescription: "team.email.textfield.accessibility".localized, kind: .email)
+        mainView = TextFieldDescription(placeholder: "team.email.textfield.placeholder".localized, actionDescription: "general.next".localized, kind: .email)
         headline = "team.email.headline".localized
         subtext = "team.email.subheadline".localized
         secondaryView = SetEmailStepSecondaryView()

@@ -31,8 +31,6 @@ final class TextFieldDescription: NSObject, ValueSubmission {
     var canSubmit: (() -> Bool)?
     var textField: AccessoryTextField?
 
-    fileprivate var currentValue: String = ""
-
     init(placeholder: String, actionDescription: String, kind: AccessoryTextField.Kind, uppercasePlaceholder: Bool = true) {
         self.placeholder = placeholder
         self.actionDescription = actionDescription
@@ -68,7 +66,8 @@ extension TextFieldDescription: ViewDescriptor {
 extension TextFieldDescription: UITextFieldDelegate {
 
     @objc func confirmButtonTapped(_ sender: AnyObject) {
-        submitValue(with: currentValue)
+        guard let textField = self.textField, acceptsInput else { return }
+        submitValue(with: textField.input)
     }
 
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {

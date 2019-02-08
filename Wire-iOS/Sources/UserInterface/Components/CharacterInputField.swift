@@ -158,6 +158,8 @@ public class CharacterInputField: UIControl, UITextInputTraits, TextContainer {
         self.isAccessibilityElement = true
         self.shouldGroupAccessibilityChildren = true
 
+        accessibilityHint = "verification.code_hint".localized
+
         accessibilityCustomActions = [
             UIAccessibilityCustomAction(name: "general.paste".localized, target: self, selector: #selector(UIResponderStandardEditActions.paste))
         ]

@@ -1130,8 +1130,7 @@
 
 "team.email.headline" = "Your account";
 "team.email.subheadline" = "Enter your work email address.";
-"team.email.textfield.placeholder" = "you@yourcompany.com";
-"team.email.textfield.accessibility" = "Your company email";
+"team.email.textfield.placeholder" = "Your company email";
 "team.email.button.learn_more" = "Learn More";
 
 "team.activation_code.headline" = "You’ve got mail";
@@ -1150,8 +1149,8 @@
 "team.password.textfield.accessibility" = "Set password, at least 8 characters";
 
 
-"verification.code_label" = "Six-digit code.";
-"verification.code_hint" = "Double tap to edit.";
+"verification.code_label" = "Six-digit code. Text field.";
+"verification.code_hint" = "Double tap to enter the code.";
 
 // Invite Team Members
 
