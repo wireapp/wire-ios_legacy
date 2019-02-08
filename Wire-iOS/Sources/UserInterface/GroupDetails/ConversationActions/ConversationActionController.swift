@@ -22,6 +22,21 @@
 }
 
 extension ActionController {
+    private func prepare(viewController: UIViewController, with context: PresentationContext) {
+        viewController.popoverPresentationController.apply {
+            $0.sourceView = context.view
+            $0.sourceRect = context.rect
+        }
+    }
+
+    func present(_ controller: UIViewController,
+                 currentContext: PresentationContext?,
+                 target: UIViewController) {
+        currentContext.apply {
+            prepare(viewController: controller, with: $0)
+        }
+        target.present(controller, animated: true, completion: nil)
+    }
 
 }
 
@@ -65,29 +80,11 @@ struct PresentationContext {
         actions.map(alertAction).forEach(controller.addAction)
 
         controller.addAction(.cancel())
-        present(controller)
+        present(controller,
+                currentContext: currentContext,
+                target: target)
 
         alertController = controller
-    }
-
-    func transitionToListAndEnqueue(_ block: @escaping () -> Void) {
-        ZClientViewController.shared()?.transitionToList(animated: true) {
-            ZMUserSession.shared()?.enqueueChanges(block)
-        }
-    }
-
-    private func prepare(viewController: UIViewController, with context: PresentationContext) {
-        viewController.popoverPresentationController.apply {
-            $0.sourceView = context.view
-            $0.sourceRect = context.rect
-        }
-    }
-
-    func present(_ controller: UIViewController) {
-        currentContext.apply {
-            prepare(viewController: controller, with: $0)
-        }
-        target.present(controller, animated: true, completion: nil)
     }
 
     func handleAction(_ action: ZMConversation.Action) {
@@ -111,7 +108,7 @@ struct PresentationContext {
 
     private let conversation: ZMConversation
     unowned let target: UIViewController
-    private var currentContext: PresentationContext?
+    var currentContext: PresentationContext?
     weak var alertController: UIAlertController?
     
     @objc init(conversation: ZMConversation, target: UIViewController) {
@@ -145,20 +142,6 @@ struct PresentationContext {
         ZClientViewController.shared()?.transitionToList(animated: true) {
             ZMUserSession.shared()?.enqueueChanges(block)
         }
-    }
-    
-    private func prepare(viewController: UIViewController, with context: PresentationContext) {
-        viewController.popoverPresentationController.apply {
-            $0.sourceView = context.view
-            $0.sourceRect = context.rect
-        }
-    }
-    
-    func present(_ controller: UIViewController) {
-        currentContext.apply {
-            prepare(viewController: controller, with: $0)
-        }
-        target.present(controller, animated: true, completion: nil)
     }
 
     func handleAction(_ action: ZMConversation.Action) {
@@ -202,5 +185,10 @@ struct PresentationContext {
             self.handleAction(action)
         }
     }
-    
+
+    func present(_ controller: UIViewController) {
+        present(controller,
+                currentContext: currentContext,
+                target: target)
+    }
 }
