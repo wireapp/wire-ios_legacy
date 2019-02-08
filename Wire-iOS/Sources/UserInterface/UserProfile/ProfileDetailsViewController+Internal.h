@@ -17,11 +17,12 @@
 //
 
 @class ConversationActionController;
+@protocol ActionController;
 
 @interface ProfileDetailsViewController ()
 
 @property (nonatomic) UILabel *remainingTimeLabel;
-@property (nonatomic) ConversationActionController *actionsController;
+@property (nonatomic) id<ActionController> actionsController;
 @property (nonatomic) ZMConversation *conversation;
 @property (nonatomic) UIView *footerView;
 @property (nonatomic) UILabel *readReceiptsEnabledLabel;

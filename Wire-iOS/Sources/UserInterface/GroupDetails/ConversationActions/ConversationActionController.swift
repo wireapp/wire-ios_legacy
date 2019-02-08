@@ -16,7 +16,100 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-@objcMembers final class ConversationActionController: NSObject {
+@objc protocol ActionController: NSObjectProtocol {
+    var alertController: UIAlertController? {get}
+    func presentMenu(from sourceView: UIView?, showConverationNameInMenuTitle: Bool)
+}
+
+@objcMembers final class RemoveUserActionController: NSObject, ActionController {
+    struct PresentationContext {
+        let view: UIView
+        let rect: CGRect
+    }
+
+    private let conversation: ZMConversation
+    unowned let target: UIViewController
+    private var currentContext: PresentationContext?
+    weak var alertController: UIAlertController?
+
+    @objc init(conversation: ZMConversation, target: UIViewController) {
+        self.conversation = conversation
+        self.target = target
+        super.init()
+    }
+
+    func presentMenu(from sourceView: UIView?, showConverationNameInMenuTitle: Bool = true) {
+        currentContext = sourceView.map {
+            .init(
+                view: target.view,
+                rect: target.view.convert($0.frame, from: $0.superview).insetBy(dx: 8, dy: 8)
+            )
+        }
+
+        let controller = UIAlertController(title: showConverationNameInMenuTitle ? conversation.displayName: nil, message: nil, preferredStyle: .actionSheet)
+
+        // TODO: we need to exclude the notification settings action if the menu is being presented from the conversation details.
+//        conversation.actions.map(alertAction).forEach(controller.addAction)
+
+        var actions = [ZMConversation.Action]()
+        actions.append(.remove)
+        actions.map(alertAction).forEach(controller.addAction)
+
+
+//        controller.addAction(Action.remove.alertAction)
+//        controller.addAction(.remove)
+
+        controller.addAction(.cancel())
+        present(controller)
+
+        alertController = controller
+    }
+
+    func enqueue(_ block: @escaping () -> Void) {
+        ZMUserSession.shared()?.enqueueChanges(block)
+    }
+
+    func transitionToListAndEnqueue(_ block: @escaping () -> Void) {
+        ZClientViewController.shared()?.transitionToList(animated: true) {
+            ZMUserSession.shared()?.enqueueChanges(block)
+        }
+    }
+
+    private func prepare(viewController: UIViewController, with context: PresentationContext) {
+        viewController.popoverPresentationController.apply {
+            $0.sourceView = context.view
+            $0.sourceRect = context.rect
+        }
+    }
+
+    func present(_ controller: UIViewController) {
+        currentContext.apply {
+            prepare(viewController: controller, with: $0)
+        }
+        target.present(controller, animated: true, completion: nil)
+    }
+
+    func handleAction(_ action: ZMConversation.Action) {
+        switch action {
+        case .remove:
+            //            [self presentRemoveDialogueForParticipant:[self fullUser]
+            //                                     fromConversation:self.conversation
+            //                                            dismisser:self.viewControllerDismisser];
+        break ///TODO: show another menu
+        default:
+            break
+        }
+    }
+
+    private func alertAction(for action: ZMConversation.Action) -> UIAlertAction {
+        return action.alertAction { [weak self] in
+            guard let `self` = self else { return }
+            self.handleAction(action)
+        }
+    }
+}
+
+@objcMembers final class ConversationActionController: NSObject, ActionController {
     
     struct PresentationContext {
         let view: UIView

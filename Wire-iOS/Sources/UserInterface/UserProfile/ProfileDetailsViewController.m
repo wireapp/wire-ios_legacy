@@ -292,7 +292,7 @@ typedef NS_ENUM(NSUInteger, ProfileViewContentMode) {
             break;
             
         case ProfileUserActionRemovePeople:
-            return ZetaIconTypeMinus;
+            return ZetaIconTypeEllipsis;
             break;
             
         case ProfileUserActionCancelConnectionRequest:
@@ -346,9 +346,11 @@ typedef NS_ENUM(NSUInteger, ProfileViewContentMode) {
             break;
             
         case ProfileUserActionRemovePeople:
-            [self presentRemoveDialogueForParticipant:[self fullUser]
-                                     fromConversation:self.conversation
-                                            dismisser:self.viewControllerDismisser];
+            ///TODO: present menu with one item
+            [self presentRemoveUserMenuSheetController];
+//            [self presentRemoveDialogueForParticipant:[self fullUser]
+//                                     fromConversation:self.conversation
+//                                            dismisser:self.viewControllerDismisser];
             break;
             
         case ProfileUserActionAcceptConnectionRequest:

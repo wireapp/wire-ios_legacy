@@ -58,7 +58,12 @@ extension ProfileDetailsViewController {
         actionsController = ConversationActionController(conversation: conversation, target: self)
         actionsController.presentMenu(from: footerView, showConverationNameInMenuTitle: false)
     }
-    
+
+    @objc func presentRemoveUserMenuSheetController() {
+        actionsController = RemoveUserActionController(conversation: conversation, target: self)
+        actionsController.presentMenu(from: footerView, showConverationNameInMenuTitle: false)
+    }
+
     // MARK: - Bottom labels
     
     @objc func createReadReceiptsEnabledLabel() {
