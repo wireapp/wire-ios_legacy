@@ -87,10 +87,19 @@ final class ProfileDetailsViewControllerSnapshotTests: CoreDataSnapshotTestCase 
     }
 
     // MARK: - action menu
-    func testForActionMenu() {
-        sut = ProfileDetailsViewController(user: self.otherUser, conversation: self.otherUserConversation, context: .oneToOneConversation)
+    func testForGroupConversationActionMenuShowsRemoveUserItem() {
         teamTest {
-            sut.presentMenuSheetController()
+            sut = ProfileDetailsViewController(user: self.otherUser, conversation: self.otherUserConversation, context: .groupConversation)
+            sut.performRightButtonAction(nil)
+            verifyAlertController((sut?.actionsController?.alertController)!)
+        }
+    }
+
+    /// test for 1-to-1 conversation
+    func testForActionMenu() {
+        teamTest {
+            sut = ProfileDetailsViewController(user: self.otherUser, conversation: self.otherUserConversation, context: .oneToOneConversation)
+            sut.performRightButtonAction(nil)
             verifyAlertController((sut?.actionsController?.alertController)!)
         }
     }

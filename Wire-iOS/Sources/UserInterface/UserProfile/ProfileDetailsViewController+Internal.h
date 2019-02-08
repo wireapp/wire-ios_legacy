@@ -29,6 +29,7 @@
 @property (nonatomic) ProfileViewControllerContext context;
 
 - (ZMUser *)fullUser;
+- (void)performRightButtonAction:(id)sender;
 
 @end
 
