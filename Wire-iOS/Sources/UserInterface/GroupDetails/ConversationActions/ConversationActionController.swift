@@ -21,11 +21,16 @@
     func presentMenu(from sourceView: UIView?, showConverationNameInMenuTitle: Bool)
 }
 
+extension ActionController {
+
+}
+
+struct PresentationContext {
+    let view: UIView
+    let rect: CGRect
+}
+
 @objcMembers final class RemoveUserActionController: NSObject, ActionController {
-    struct PresentationContext {
-        let view: UIView
-        let rect: CGRect
-    }
 
     private let conversation: ZMConversation
     private let participant: ZMUser
@@ -63,10 +68,6 @@
         present(controller)
 
         alertController = controller
-    }
-
-    func enqueue(_ block: @escaping () -> Void) {
-        ZMUserSession.shared()?.enqueueChanges(block)
     }
 
     func transitionToListAndEnqueue(_ block: @escaping () -> Void) {
@@ -107,12 +108,7 @@
 }
 
 @objcMembers final class ConversationActionController: NSObject, ActionController {
-    
-    struct PresentationContext {
-        let view: UIView
-        let rect: CGRect
-    }
-    
+
     private let conversation: ZMConversation
     unowned let target: UIViewController
     private var currentContext: PresentationContext?
