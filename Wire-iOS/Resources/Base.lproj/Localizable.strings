@@ -1156,7 +1156,7 @@
 
 "team.invite.header.title" = "Build your team";
 "team.invite.header.subtitle" = "Your Wire team is ready to go. Invite your colleagues as members.";
-"team.invite.textfield.placeholder" = "colleague@yourcompany.com";
+"team.invite.textfield.placeholder" = "Colleague's e-mail";
 "team.invite.textfield.accesibility" = "Enter e-mail address for colleague to invite.";
 "team.invite.learn_more.title" = "Learn more";
 "team.invite.top_bar.skip" = "Skip";

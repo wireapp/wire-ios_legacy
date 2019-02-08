@@ -25,7 +25,7 @@ final class TeamInviteTextFieldFooterView: UIView {
         placeholder: "team.invite.textfield.placeholder".localized,
         actionDescription: "team.invite.textfield.accesibility".localized,
         kind: .email,
-        uppercasePlaceholder: false
+        uppercasePlaceholder: true
     )
     
     var isLoading = false {
