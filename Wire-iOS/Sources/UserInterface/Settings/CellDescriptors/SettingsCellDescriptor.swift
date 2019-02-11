@@ -195,7 +195,7 @@ class SettingsGroupCellDescriptor: SettingsInternalGroupCellDescriptorType, Sett
 
 // MARK: - Helpers
 
-func SettingsPropertyLabelText(_ name: SettingsPropertyName) -> String {
+func SettingsPropertyLabelText(_ name: SettingsPropertyName) -> String { ///TODO: SettingsPropertyName's method
     switch (name) {
     case .chatHeadsDisabled:
         return "self.settings.notifications.chat_alerts.toggle".localized
@@ -209,8 +209,14 @@ func SettingsPropertyLabelText(_ name: SettingsPropertyName) -> String {
         // Profile
     case .profileName:
         return "self.settings.account_section.name.title".localized
+
+    case .handle:
+        return "self.settings.account_section.handle.title".localized
+
     case .email:
         return "self.settings.account_section.email.title".localized
+    case .phone:
+        return "self.settings.account_section.phone.title".localized
 
         // AVS
     case .soundAlerts:
