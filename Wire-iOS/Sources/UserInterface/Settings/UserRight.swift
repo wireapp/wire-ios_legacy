@@ -50,7 +50,7 @@ final class UserRight {
              .editProfilePicture,
              .editAccentColor:
             ///TODO: wait for DM update
-            return false
+            return true
         }
 
         return false
