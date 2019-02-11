@@ -33,10 +33,15 @@ extension ZMUser {
 extension SettingsCellDescriptorFactory {
 
     func accountGroup() -> SettingsCellDescriptorType {
-        var sections: [SettingsSectionDescriptorType] = [infoSection(),
-                                                         appearanceSection(),
-                                                         privacySection()]
-        
+        var sections: [SettingsSectionDescriptorType] = [infoSection()]
+
+        if UserRight.selfUserIsPermitted(to: .editAccentColor) &&
+           UserRight.selfUserIsPermitted(to: .editProfilePicture) {
+            sections.append(appearanceSection())
+        }
+
+        sections.append(privacySection())
+
         #if !DATA_COLLECTION_DISABLED
             sections.append(personalInformationSection())
         #endif
