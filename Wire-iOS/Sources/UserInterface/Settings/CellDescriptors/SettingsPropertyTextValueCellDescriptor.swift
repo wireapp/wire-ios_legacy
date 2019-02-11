@@ -26,7 +26,7 @@ class SettingsPropertyTextValueCellDescriptor: SettingsPropertyCellDescriptorTyp
     static let cellType: SettingsTableCell.Type = SettingsTextCell.self
     var title: String {
         get {
-            return SettingsPropertyLabelText(self.settingsProperty.propertyName)
+            return settingsProperty.propertyName.settingsPropertyLabelText
         }
     }
     var visible: Bool = true

@@ -128,13 +128,13 @@ extension SettingsCellDescriptorFactory {
         let soundsHeader = "self.settings.sound_menu.sounds.title".localized
 
         let callSoundProperty = self.settingsPropertyFactory.property(.callSoundName)
-        let callSoundGroup = self.soundGroupForSetting(callSoundProperty, title: SettingsPropertyLabelText(callSoundProperty.propertyName), customSounds: ZMSound.ringtones, defaultSound: ZMSound.WireCall)
+        let callSoundGroup = self.soundGroupForSetting(callSoundProperty, title: callSoundProperty.propertyName.settingsPropertyLabelText, customSounds: ZMSound.ringtones, defaultSound: ZMSound.WireCall)
 
         let messageSoundProperty = self.settingsPropertyFactory.property(.messageSoundName)
-        let messageSoundGroup = self.soundGroupForSetting(messageSoundProperty, title: SettingsPropertyLabelText(messageSoundProperty.propertyName), customSounds: ZMSound.soundEffects, defaultSound: ZMSound.WireText)
+        let messageSoundGroup = self.soundGroupForSetting(messageSoundProperty, title: messageSoundProperty.propertyName.settingsPropertyLabelText, customSounds: ZMSound.soundEffects, defaultSound: ZMSound.WireText)
 
         let pingSoundProperty = self.settingsPropertyFactory.property(.pingSoundName)
-        let pingSoundGroup = self.soundGroupForSetting(pingSoundProperty, title: SettingsPropertyLabelText(pingSoundProperty.propertyName), customSounds: ZMSound.soundEffects, defaultSound: ZMSound.WirePing)
+        let pingSoundGroup = self.soundGroupForSetting(pingSoundProperty, title: pingSoundProperty.propertyName.settingsPropertyLabelText, customSounds: ZMSound.soundEffects, defaultSound: ZMSound.WirePing)
 
         let soundsSection = SettingsSectionDescriptor(cellDescriptors: [callSoundGroup, messageSoundGroup, pingSoundGroup], header: soundsHeader)
         cellDescriptors.append(soundsSection)
@@ -227,7 +227,7 @@ extension SettingsCellDescriptorFactory {
             guard let option = value.flatMap ({ TweetOpeningOption(rawValue: $0) }) else { return .text(TweetOpeningOption.none.displayString) }
             return .text(option.displayString)
         }
-        return SettingsGroupCellDescriptor(items: [section], title: SettingsPropertyLabelText(property.propertyName), identifier: nil, previewGenerator: preview)
+        return SettingsGroupCellDescriptor(items: [section], title: property.propertyName.settingsPropertyLabelText, identifier: nil, previewGenerator: preview)
     }
 
     func mapsOpeningGroup(for property: SettingsProperty) -> SettingsCellDescriptorType {
@@ -246,7 +246,7 @@ extension SettingsCellDescriptorFactory {
             guard let option = value.flatMap ({ MapsOpeningOption(rawValue: $0) }) else { return .text(MapsOpeningOption.apple.displayString) }
             return .text(option.displayString)
         }
-        return SettingsGroupCellDescriptor(items: [section], title: SettingsPropertyLabelText(property.propertyName), identifier: nil, previewGenerator: preview)
+        return SettingsGroupCellDescriptor(items: [section], title: property.propertyName.settingsPropertyLabelText, identifier: nil, previewGenerator: preview)
     }
 
     func browserOpeningGroup(for property: SettingsProperty) -> SettingsCellDescriptorType {
@@ -265,7 +265,7 @@ extension SettingsCellDescriptorFactory {
             guard let option = value.flatMap ({ BrowserOpeningOption(rawValue: $0) }) else { return .text(BrowserOpeningOption.safari.displayString) }
             return .text(option.displayString)
         }
-        return SettingsGroupCellDescriptor(items: [section], title: SettingsPropertyLabelText(property.propertyName), identifier: nil, previewGenerator: preview)
+        return SettingsGroupCellDescriptor(items: [section], title: property.propertyName.settingsPropertyLabelText, identifier: nil, previewGenerator: preview)
     }
     
 
