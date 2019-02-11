@@ -255,6 +255,7 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
         if let viewController = viewController {
             transition(to: viewController, animated: true) {
                 self.showContentDelegate = viewController as? ShowContentDelegate
+                self.authenticationCoordinator?.completePresentation()
                 completionHandler?()
             }
         } else {

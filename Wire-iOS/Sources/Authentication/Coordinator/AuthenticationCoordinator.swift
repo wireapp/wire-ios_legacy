@@ -95,6 +95,7 @@ class AuthenticationCoordinator: NSObject, AuthenticationEventResponderChainDele
     private var postLoginObservers: [Any] = []
     private var initialSyncObserver: Any?
     private var pendingAlert: AuthenticationCoordinatorAlert?
+    var pendingModal: UIViewController?
 
     /// Whether an account was added.
     var addedAccount: Bool = false
@@ -133,6 +134,14 @@ class AuthenticationCoordinator: NSObject, AuthenticationEventResponderChainDele
 // MARK: - State Management
 
 extension AuthenticationCoordinator: AuthenticationStateControllerDelegate {
+
+    /// Call this when the presented finished presenting.
+    func completePresentation() {
+        if let pendingModal = pendingModal {
+            presenter?.present(pendingModal, animated: true)
+            self.pendingModal = nil
+        }
+    }
 
     func stateDidChange(_ newState: AuthenticationFlowStep, mode: AuthenticationStateController.StateChangeMode) {
         guard let presenter = self.presenter, newState.needsInterface else {
