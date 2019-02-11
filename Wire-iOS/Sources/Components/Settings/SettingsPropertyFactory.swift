@@ -138,7 +138,7 @@ class SettingsPropertyFactory {
 
         case .phone:
             let getAction: GetAction = { [unowned self] (property: SettingsBlockProperty) -> SettingsPropertyValue in
-                return SettingsPropertyValue.string(value: self.selfUser?.phoneNumber ?? "")///TODO: nil??
+                return SettingsPropertyValue.string(value: self.selfUser?.phoneNumber ?? "")
             }
 
             return getOnlyProperty(propertyName: propertyName, getAction: getAction)
