@@ -184,6 +184,8 @@ final internal class SelfProfileViewController: UIViewController {
     }
     
     @objc func userDidTapProfileImage(sender: UserImageView) {
+        guard UserRight.selfUserIsPermitted(to: .editProfilePicture) else { return }
+        
         let profileImageController = ProfileSelfPictureViewController()
         self.present(profileImageController, animated: true, completion: .none)
     }
