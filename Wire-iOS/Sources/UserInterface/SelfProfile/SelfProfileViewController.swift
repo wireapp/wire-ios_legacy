@@ -37,7 +37,9 @@ extension SelfProfileViewController: SettingsPropertyFactoryDelegate {
 
 final internal class SelfProfileViewController: UIViewController {
     
-     static let dismissNotificationName = "SettingsNavigationControllerDismissNotificationName"
+    var userRightInterfaceType: UserRightInterface.Type = UserRight.self
+
+    static let dismissNotificationName = "SettingsNavigationControllerDismissNotificationName"
     
     private let settingsController: SettingsTableViewController
     private let accountSelectorController = AccountSelectorController()
@@ -184,7 +186,7 @@ final internal class SelfProfileViewController: UIViewController {
     }
     
     @objc func userDidTapProfileImage(sender: UserImageView) {
-        guard UserRight.selfUserIsPermitted(to: .editProfilePicture) else { return }
+        guard userRightInterfaceType.selfUserIsPermitted(to: .editProfilePicture) else { return }
         
         let profileImageController = ProfileSelfPictureViewController()
         self.present(profileImageController, animated: true, completion: .none)

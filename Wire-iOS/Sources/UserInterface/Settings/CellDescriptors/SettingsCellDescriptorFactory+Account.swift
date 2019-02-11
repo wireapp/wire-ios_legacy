@@ -35,8 +35,8 @@ extension SettingsCellDescriptorFactory {
     func accountGroup() -> SettingsCellDescriptorType {
         var sections: [SettingsSectionDescriptorType] = [infoSection()]
 
-        if UserRight.selfUserIsPermitted(to: .editAccentColor) &&
-           UserRight.selfUserIsPermitted(to: .editProfilePicture) {
+        if userRightInterfaceType.selfUserIsPermitted(to: .editAccentColor) &&
+           userRightInterfaceType.selfUserIsPermitted(to: .editProfilePicture) {
             sections.append(appearanceSection())
         }
 
@@ -61,16 +61,16 @@ extension SettingsCellDescriptorFactory {
 
     func infoSection() -> SettingsSectionDescriptorType {
         var cellDescriptors: [SettingsCellDescriptorType] = []
-        cellDescriptors = [nameElement(enabled: UserRight.selfUserIsPermitted(to: .editName)),
-                           handleElement(enabled: UserRight.selfUserIsPermitted(to: .editHandle))]
+        cellDescriptors = [nameElement(enabled: userRightInterfaceType.selfUserIsPermitted(to: .editName)),
+                           handleElement(enabled: userRightInterfaceType.selfUserIsPermitted(to: .editHandle))]
         
         if let user = ZMUser.selfUser(), !user.usesCompanyLogin {
             if !ZMUser.selfUser().hasTeam || !(ZMUser.selfUser().phoneNumber?.isEmpty ?? true),
-               let phoneElement = phoneElement(enabled: UserRight.selfUserIsPermitted(to: .editPhone)){
+               let phoneElement = phoneElement(enabled: userRightInterfaceType.selfUserIsPermitted(to: .editPhone)){
                 cellDescriptors.append(phoneElement)
             }
             
-            cellDescriptors.append(emailElement(enabled: UserRight.selfUserIsPermitted(to: .editEmail)))
+            cellDescriptors.append(emailElement(enabled: userRightInterfaceType.selfUserIsPermitted(to: .editEmail)))
         }
         return SettingsSectionDescriptor(
             cellDescriptors: cellDescriptors,

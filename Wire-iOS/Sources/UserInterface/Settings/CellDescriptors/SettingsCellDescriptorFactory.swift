@@ -23,7 +23,8 @@ import SafariServices
 class SettingsCellDescriptorFactory {
     static let settingsDevicesCellIdentifier: String = "devices"
     let settingsPropertyFactory: SettingsPropertyFactory
-        
+    var userRightInterfaceType: UserRightInterface.Type = UserRight.self
+
     init(settingsPropertyFactory: SettingsPropertyFactory) {
         self.settingsPropertyFactory = settingsPropertyFactory
     }

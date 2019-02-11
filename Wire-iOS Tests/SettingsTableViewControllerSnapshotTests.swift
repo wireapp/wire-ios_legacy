@@ -23,24 +23,49 @@ final class SettingsTableViewControllerSnapshotTests: ZMSnapshotTestCase {
     
     var sut: SettingsTableViewController!
     
-    override func setUp() {
-        super.setUp()
-
-        let settingsPropertyFactory = SettingsPropertyFactory(userSession: nil, selfUser: nil)
-
-        let group = SettingsCellDescriptorFactory(settingsPropertyFactory: settingsPropertyFactory).settingsGroup()
-        sut = SettingsTableViewController(group: group)
-
-        sut.view.backgroundColor = .black
-    }
-    
     override func tearDown() {
         sut = nil
         super.tearDown()
     }
 
     func testForSettingGroup() {
+        let settingsPropertyFactory = SettingsPropertyFactory(userSession: nil, selfUser: nil)
+
+        let group = SettingsCellDescriptorFactory(settingsPropertyFactory: settingsPropertyFactory).settingsGroup()
+        sut = SettingsTableViewController(group: group)
+
+        sut.view.backgroundColor = .black
 
         verify(view: sut.view)
+    }
+
+    func testForAccountGroup() {
+        let settingsPropertyFactory = SettingsPropertyFactory(userSession: nil, selfUser: nil)
+
+        let group = SettingsCellDescriptorFactory(settingsPropertyFactory: settingsPropertyFactory).accountGroup()
+        sut = SettingsTableViewController(group: group as! SettingsInternalGroupCellDescriptorType)
+
+        sut.view.backgroundColor = .black
+
+        verify(view: sut.view)
+    }
+
+    func testForAccountGroupWithDisabledEditing() {
+        let settingsPropertyFactory = SettingsPropertyFactory(userSession: nil, selfUser: nil)
+        let settingsCellDescriptorFactory = SettingsCellDescriptorFactory(settingsPropertyFactory: settingsPropertyFactory)
+        settingsCellDescriptorFactory.userRightInterfaceType = MockUserRight.self
+
+        let group = settingsCellDescriptorFactory.accountGroup()
+        sut = SettingsTableViewController(group: group as! SettingsInternalGroupCellDescriptorType)
+
+        sut.view.backgroundColor = .black
+
+        verify(view: sut.view)
+    }
+}
+
+final class MockUserRight: UserRightInterface {
+    static func selfUserIsPermitted(to permission: UserRight.Permission) -> Bool {
+        return false
     }
 }

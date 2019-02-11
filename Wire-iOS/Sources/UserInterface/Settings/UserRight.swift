@@ -18,10 +18,11 @@
 
 import Foundation
 
-final class UserRight {
-    static let sharedInstance = UserRight()
-    private init() {}
+protocol UserRightInterface {
+    static func selfUserIsPermitted(to permission: UserRight.Permission) -> Bool
+}
 
+final class UserRight: UserRightInterface {
     enum Permission {
         case resetPassword,
              editName,
@@ -32,7 +33,7 @@ final class UserRight {
              editAccentColor
     }
 
-    class func selfUserIsPermitted(to permission: UserRight.Permission) -> Bool {
+    static func selfUserIsPermitted(to permission: UserRight.Permission) -> Bool {
         switch permission {
         case .editEmail:
         #if EMAIL_EDITING_DISABLED
