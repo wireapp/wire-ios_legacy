@@ -52,7 +52,7 @@ indirect enum AuthenticationFlowStep: Equatable {
     // Initial Steps
     case start
     case landingScreen
-    case reauthenticate(credentials: LoginCredentials?, numberOfAccounts: Int)
+    case reauthenticate(credentials: LoginCredentials?, numberOfAccounts: Int, isSignedOut: Bool)
 
     // Sign-In
     case provideCredentials(AuthenticationCredentialsType, AuthenticationPrefilledCredentials?)

@@ -153,32 +153,37 @@ class AuthenticationInterfaceBuilderTests: ZMSnapshotTestCase {
         runSnapshotTest(for: .pendingEmailLinkVerification(credentials))
     }
 
-    func testReauthenticate_Email() {
+    func testReauthenticate_Email_TokenExpired() {
         let credentials = LoginCredentials(emailAddress: "test@example.com", phoneNumber: nil, hasPassword: true, usesCompanyLogin: false)
-        runSnapshotTest(for: .reauthenticate(credentials: credentials, numberOfAccounts: 1))
+        runSnapshotTest(for: .reauthenticate(credentials: credentials, numberOfAccounts: 1, isSignedOut: true))
     }
 
-    func testReauthenticate_EmailAndPhone() {
+    func testReauthenticate_Email_DuringLogin() {
+        let credentials = LoginCredentials(emailAddress: "test@example.com", phoneNumber: nil, hasPassword: true, usesCompanyLogin: false)
+        runSnapshotTest(for: .reauthenticate(credentials: credentials, numberOfAccounts: 1, isSignedOut: false))
+    }
+    
+    func testReauthenticate_EmailAndPhone_TokenExpired() {
         let credentials = LoginCredentials(emailAddress: "test@example.com", phoneNumber: "+33123456789", hasPassword: true, usesCompanyLogin: false)
 
         // Email should have priority
-        runSnapshotTest(for: .reauthenticate(credentials: credentials, numberOfAccounts: 1))
+        runSnapshotTest(for: .reauthenticate(credentials: credentials, numberOfAccounts: 1, isSignedOut: true))
     }
 
-    func testReauthenticate_Phone() {
+    func testReauthenticate_Phone_DuringLogin() {
         let credentials = LoginCredentials(emailAddress: nil, phoneNumber: "+33123456789", hasPassword: true, usesCompanyLogin: false)
 
         // Email should have priority
-        runSnapshotTest(for: .reauthenticate(credentials: credentials, numberOfAccounts: 1))
+        runSnapshotTest(for: .reauthenticate(credentials: credentials, numberOfAccounts: 1, isSignedOut: false))
     }
 
     func testReauthenticate_CompanyLogin() {
         let credentials = LoginCredentials(emailAddress: nil, phoneNumber: nil, hasPassword: false, usesCompanyLogin: true)
-        runSnapshotTest(for: .reauthenticate(credentials: credentials, numberOfAccounts: 1))
+        runSnapshotTest(for: .reauthenticate(credentials: credentials, numberOfAccounts: 1, isSignedOut: true))
     }
 
     func testReauthenticate_NoCredentials() {
-        runSnapshotTest(for: .reauthenticate(credentials: nil, numberOfAccounts: 1))
+        runSnapshotTest(for: .reauthenticate(credentials: nil, numberOfAccounts: 1, isSignedOut: true))
     }
 
     // MARK: - Helpers

@@ -1156,8 +1156,8 @@
 
 "team.invite.header.title" = "Build your team";
 "team.invite.header.subtitle" = "Your Wire team is ready to go. Invite your colleagues as members.";
-"team.invite.textfield.placeholder" = "Colleague's e-mail";
-"team.invite.textfield.accesibility" = "Enter e-mail address for colleague to invite.";
+"team.invite.textfield.placeholder" = "Colleague's email";
+"team.invite.textfield.accesibility" = "Enter email address for colleague to invite.";
 "team.invite.learn_more.title" = "Learn more";
 "team.invite.top_bar.skip" = "Skip";
 "team.invite.top_bar.done" = "Done";
@@ -1350,6 +1350,9 @@
 "signin_logout.phone.subheadline" = "Your session expired. Enter your phone number to continue.";
 "signin_logout.sso.subheadline" = "Your session expired. Log in with your company account to continue.";
 "signin_logout.sso.buton" = "Company Log In";
+
+"signin.email.missing_password.subtitle" = "Enter your email address and password to continue.";
+"signin.phone.missing_password.subtitle" = "Enter your phone number to continue.";
 
 "registration.phone_country" = "Country";
 "registration.phone_code" = "Country Code";
