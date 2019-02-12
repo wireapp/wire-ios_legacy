@@ -62,7 +62,7 @@ class AuthenticationInterfaceBuilder {
         case .landingScreen:
             return LandingViewController()
 
-        case .reauthenticate(let credentials, _):
+        case .reauthenticate(let credentials, _, let isSignedOut):
             let viewController: AuthenticationStepController
 
             if credentials?.usesCompanyLogin == true && credentials?.hasPassword == false {
@@ -76,7 +76,7 @@ class AuthenticationInterfaceBuilder {
                 if let credentials = credentials {
                     // If we found the credentials of the expired session, pre-fill them
                     let prefillType: AuthenticationCredentialsType = credentials.phoneNumber != nil && credentials.emailAddress == nil ? .phone : .email
-                    prefill = AuthenticationPrefilledCredentials(primaryCredentialsType: prefillType, credentials: credentials)
+                    prefill = AuthenticationPrefilledCredentials(primaryCredentialsType: prefillType, credentials: credentials, isExpired: isSignedOut)
                 } else {
                     // Otherwise, default to the email pre-fill screen.
                     prefill = nil
