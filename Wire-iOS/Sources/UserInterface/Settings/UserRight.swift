@@ -39,21 +39,24 @@ final class UserRight: UserRightInterface {
         #if EMAIL_EDITING_DISABLED
             return false
         #else
-            ///TODO: wait for DM update
-            return true
+			return isProfileEditable
         #endif
         case .resetPassword:
-        ///TODO: For SSO user we don't allow setting or resetting the password
+        	///TODO: For SSO user we don't allow setting or resetting the password
             break
         case .editName,
              .editHandle,
              .editPhone,
              .editProfilePicture,
              .editAccentColor:
-            ///TODO: wait for DM update
-            return true
+			return isProfileEditable
         }
 
         return false
     }
+	
+	private static var isProfileEditable: Bool {
+		return ZMUser.selfUser()?.managedBy == "wire"
+	}
 }
+
