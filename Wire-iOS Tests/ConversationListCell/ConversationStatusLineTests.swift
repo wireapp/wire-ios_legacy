@@ -338,6 +338,7 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         otherMessage.sender = self.otherUser
         otherMessage.users = Set([self.otherUser, self.selfUser])
         otherMessage.addedUsers = Set([self.otherUser, self.selfUser])
+        sut.lastServerTimeStamp = Date()
         sut.append(otherMessage)
         markAllMessagesAsUnread(in: sut)
         
