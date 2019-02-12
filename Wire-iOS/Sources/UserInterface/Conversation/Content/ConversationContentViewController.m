@@ -331,7 +331,7 @@
 - (void)updateVisibleMessagesWindow
 {
     if (UIApplication.sharedApplication.applicationState != UIApplicationStateActive) {
-        return; // We only update the last if the app is active
+        return; // We only update the last read if the app is active
     }
     
     BOOL isViewVisible = YES;
