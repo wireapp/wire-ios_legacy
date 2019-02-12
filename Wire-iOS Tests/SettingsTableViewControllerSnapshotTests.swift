@@ -28,8 +28,7 @@ final class SettingsTableViewControllerSnapshotTests: ZMSnapshotTestCase {
 		super.setUp()
 
 		let settingsPropertyFactory = SettingsPropertyFactory(userSession: nil, selfUser: nil)
-		settingsCellDescriptorFactory = SettingsCellDescriptorFactory(settingsPropertyFactory: settingsPropertyFactory)
-		settingsCellDescriptorFactory.userRightInterfaceType = MockUserRight.self
+		settingsCellDescriptorFactory = SettingsCellDescriptorFactory(settingsPropertyFactory: settingsPropertyFactory, userRightInterfaceType: MockUserRight.self)
 		
 		MockUserRight.isPermitted = true
 	}
@@ -68,12 +67,5 @@ final class SettingsTableViewControllerSnapshotTests: ZMSnapshotTestCase {
         sut.view.backgroundColor = .black
 
         verify(view: sut.view)
-    }
-}
-
-final class MockUserRight: UserRightInterface {
-	static var isPermitted = true
-    static func selfUserIsPermitted(to permission: UserRight.Permission) -> Bool {
-        return isPermitted
     }
 }
