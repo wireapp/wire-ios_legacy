@@ -321,10 +321,8 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
 
     func applicationWillTransition(to appState: AppState) {
 
-        if appState == .authenticated(completedRegistration: false) {
+        if case .authenticated = appState {
             callWindow.callController.transitionToLoggedInSession()
-        } else {
-            overlayWindow.rootViewController = NotificationWindowRootViewController()
         }
 
         let colorScheme = ColorScheme.default
@@ -333,7 +331,7 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
     }
     
     func applicationDidTransition(to appState: AppState) {
-        if appState == .authenticated(completedRegistration: false) {
+        if case .authenticated = appState {
             callWindow.callController.presentCallCurrentlyInProgress()
         }
     }
