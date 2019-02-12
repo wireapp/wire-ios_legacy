@@ -308,12 +308,6 @@
     return startUIViewController;
 }
 
-- (UIViewController *)createSettingsViewController
-{
-    SelfProfileViewController *selfProfileViewController = [[SelfProfileViewController alloc] init];
-    return [selfProfileViewController wrapInNavigationController:ClearBackgroundNavigationController.class];
-}
-
 - (void)createListContentController
 {
     self.listContentController = [[ConversationListContentController alloc] init];
