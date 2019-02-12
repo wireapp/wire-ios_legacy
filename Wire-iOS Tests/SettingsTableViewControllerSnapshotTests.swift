@@ -22,16 +22,27 @@ import XCTest
 final class SettingsTableViewControllerSnapshotTests: ZMSnapshotTestCase {
     
     var sut: SettingsTableViewController!
-    
+	var settingsCellDescriptorFactory: SettingsCellDescriptorFactory!
+	
+	override func setUp() {
+		super.setUp()
+
+		let settingsPropertyFactory = SettingsPropertyFactory(userSession: nil, selfUser: nil)
+		settingsCellDescriptorFactory = SettingsCellDescriptorFactory(settingsPropertyFactory: settingsPropertyFactory)
+		settingsCellDescriptorFactory.userRightInterfaceType = MockUserRight.self
+		
+		MockUserRight.isPermitted = true
+	}
+
     override func tearDown() {
         sut = nil
+		settingsCellDescriptorFactory = nil
+		
         super.tearDown()
-    }
+	}
 
     func testForSettingGroup() {
-        let settingsPropertyFactory = SettingsPropertyFactory(userSession: nil, selfUser: nil)
-
-        let group = SettingsCellDescriptorFactory(settingsPropertyFactory: settingsPropertyFactory).settingsGroup()
+        let group = settingsCellDescriptorFactory.settingsGroup()
         sut = SettingsTableViewController(group: group)
 
         sut.view.backgroundColor = .black
@@ -40,9 +51,7 @@ final class SettingsTableViewControllerSnapshotTests: ZMSnapshotTestCase {
     }
 
     func testForAccountGroup() {
-        let settingsPropertyFactory = SettingsPropertyFactory(userSession: nil, selfUser: nil)
-
-        let group = SettingsCellDescriptorFactory(settingsPropertyFactory: settingsPropertyFactory).accountGroup()
+        let group = settingsCellDescriptorFactory.accountGroup()
         sut = SettingsTableViewController(group: group as! SettingsInternalGroupCellDescriptorType)
 
         sut.view.backgroundColor = .black
@@ -51,11 +60,9 @@ final class SettingsTableViewControllerSnapshotTests: ZMSnapshotTestCase {
     }
 
     func testForAccountGroupWithDisabledEditing() {
-        let settingsPropertyFactory = SettingsPropertyFactory(userSession: nil, selfUser: nil)
-        let settingsCellDescriptorFactory = SettingsCellDescriptorFactory(settingsPropertyFactory: settingsPropertyFactory)
-        settingsCellDescriptorFactory.userRightInterfaceType = MockUserRight.self
+		MockUserRight.isPermitted = false
 
-        let group = settingsCellDescriptorFactory.accountGroup()
+		let group = settingsCellDescriptorFactory.accountGroup()
         sut = SettingsTableViewController(group: group as! SettingsInternalGroupCellDescriptorType)
 
         sut.view.backgroundColor = .black
@@ -65,7 +72,8 @@ final class SettingsTableViewControllerSnapshotTests: ZMSnapshotTestCase {
 }
 
 final class MockUserRight: UserRightInterface {
+	static var isPermitted = true
     static func selfUserIsPermitted(to permission: UserRight.Permission) -> Bool {
-        return false
+        return isPermitted
     }
 }
