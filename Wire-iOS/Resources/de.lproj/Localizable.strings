@@ -34,6 +34,8 @@
 "general.service" = "Dienst";
 "general.off" = "Aus";
 "general.on" = "An";
+"general.loading" = "Wird geladen…";
+"general.paste" = "Einfügen";
 
 // Language like Chinese does not use space to sperate words or sentences.
 "general.space_between_words" = " ";
@@ -229,16 +231,10 @@
 "conversation.status.unsent" = "⚠️ Nicht gesendete Nachricht";
 "conversation.status.you" = "Du";
 "conversation.status.someone" = "Jemand";
-"conversation.status.added_multiple" = "Teilnehmer hinzugefügt";
 "conversation.status.you_was_added" = "%@ hat dich hinzugefügt";
-"conversation.status.added_users" = "%@ hat %@ hinzugefügt";
-"conversation.status.joined" = "%@ ist beigetreten";
-"conversation.status.removed_multiple" = "Teilnehmer entfernt";
 "conversation.status.you_were_removed" = "Du wurdest entfernt";
 "conversation.status.you_left" = "Du hast die Unterhaltung verlassen";
 "conversation.status.started_conversation" = "%@ hat eine Unterhaltung begonnen";
-"conversation.status.removed_users" = "%@ hat %@ entfernt";
-"conversation.status.everyone_left" = "Leere Unterhaltung";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Compose Entry Point
@@ -1104,9 +1100,13 @@
 "password.guidance.tooshort" = "Mindestens 8 Zeichen";
 "password.guidance.toolong" = "Zu viele Zeichen";
 
+"phone.guidance.invalid" = "Ungültige Telefonnummer";
+"phone.guidance.tooshort" = "Telefonnummer ist zu kurz";
+"phone.guidance.toolong" = "Zu viele Zeichen";
+
 // Landing screen
 
-"landing.app_name" = "Wire";
+"landing.header" = "Wire. Konto hinzufügen.";
 "landing.create_account.title" = "Privat";
 "landing.create_account.subtitle" = "Konto erstellen";
 "landing.create_team.title" = "Pro";
@@ -1120,18 +1120,19 @@
 "team.name.subheadline" = "Der Name kann später jederzeit geändert werden.";
 "team.name.textfield.placeholder" = "Team Name";
 "team.name.textfield.accessibility" = "Team benennen";
-"team.name.whatiswireforteams" = "Was ist Wire für Teams?";
+"team.name.whatiswireforteams" = "Was ist Wire Pro?";
 
 "team.email.headline" = "Dein Konto";
 "team.email.subheadline" = "Deine Unternehmens-E-Mail-Adresse eingeben.";
-"team.email.textfield.placeholder" = "name@unternehmen.de";
-"team.email.textfield.accessibility" = "Deine Unternehmens-E-Mail-Adresse";
+"team.email.textfield.placeholder" = "E-Mail-Adresse des Unternehmens";
 "team.email.button.learn_more" = "Erfahre mehr";
 
 "team.activation_code.headline" = "Posteingang prüfen";
+"team.phone_activation_code.headline" = "Bestätigung";
 "team.activation_code.subheadline" = "Bitte gib den Verifizierungs-Code ein, den wir an %@ gesendet haben.";
 "team.activation_code.button.resend" = "Code erneut senden";
 "team.activation_code.button.change_email" = "E-Mail ändern";
+"team.activation_code.button.change_phone" = "Telefonnummer ändern";
 
 "team.full_name.headline" = "Dein Name";
 "team.full_name.textfield.placeholder" = "Vollständiger Name";
@@ -1142,14 +1143,15 @@
 "team.password.textfield.accessibility" = "Passwort (min. 8 Zeichen)";
 
 
-"team.email_code.input_field.accessbility_label" = "Bitte den 6-stelligen Code aus der E-Mail eingeben.";
+"verification.code_label" = "Sechsstelliger Code. Textfeld.";
+"verification.code_hint" = "Doppeltippen, um den Code einzugeben.";
 
 // Invite Team Members
 
 "team.invite.header.title" = "Erstelle dein Team";
 "team.invite.header.subtitle" = "Das Wire-Team ist bereit. Jetzt alle Kollegen als Mitglieder einladen.";
-"team.invite.textfield.placeholder" = "name@unternehmen.com";
-"team.invite.textfield.accesibility" = "Gib die E-Mail-Adresse des Kollegen ein, den du einladen möchtest.";
+"team.invite.textfield.placeholder" = "E-Mail-Adresse des Kollegen";
+"team.invite.textfield.accesibility" = "E-Mail-Adresse des Kollegen eingeben.";
 "team.invite.learn_more.title" = "Erfahre mehr";
 "team.invite.top_bar.skip" = "Überspringen";
 "team.invite.top_bar.done" = "Fertig";
@@ -1198,6 +1200,9 @@
 "registration.close_phone_invitation_button.email_title" = "Mit E-Mail registrieren";
 "registration.close_phone_invitation_button.phone_title" = "Andere Tel.-Nr. verwenden";
 
+"registration.register_by_phone" = "Telefon";
+"registration.register_by_email" = "E-Mail";
+
 "registration.enter_phone_number.title" = "Telefonnummer bearbeiten";
 "registration.enter_phone_number.placeholder" = "Telefonnummer";
 
@@ -1209,13 +1214,6 @@
 "registration.verify_email.resend.instructions" = "E-Mail nicht erhalten?";
 "registration.verify_email.resend.button_title" = "Erneut senden";
 
-"registration.select_picture.subtitle" = "Wire ist so viel netter mit einem Bild.";
-"registration.select_picture.button_title" = "Wähle dein eigenes";
-"registration.keep_picture.button_title" = "Behalte dieses";
-"registration.camera_action.title" = "Foto aufnehmen";
-"registration.photo_gallery_action.title" = "Foto auswählen";
-"registration.cancel_action.title" = "Abbrechen";
-
 "registration.no_history.hero" = "Du benutzt Wire zum ersten Mal auf diesem Gerät.";
 "registration.no_history.subtitle" = "Aus Datenschutzgründen wird der bisherige Gesprächsverlauf nicht angezeigt.";
 "registration.no_history.got_it" = "OK";
@@ -1225,8 +1223,8 @@
 "registration.alert.account_exists.message_phone" = "Die für die Registrierung verwendete Telefonnummer ist bereits mit einem Konto verknüpft.\n\nBitte andere Telefonnummer nutzen oder versuchen, sich mit dieser Telefonnummer einzuloggen.";
 "registration.alert.account_exists.message_email" = "Die für die Registrierung verwendete E-Mail-Adresse ist bereits mit einem Konto verknüpft.\n\nBitte andere E-Mail-Adresse nutzen oder versuchen, sich mit dieser E-Mail-Adresse einzuloggen.";
 "registration.alert.change_email_action" = "E-Mail-Adresse ändern";
-"registration.alert.change_phone_action" = "Telefonnummer ändern";
-"registration.alert.change_signin_action" = "Login";
+"registration.alert.change_phone_action" = "Bitte mit anderer Nummer registrieren";
+"registration.alert.change_signin_action" = "Einloggen";
 
 // Restore History Warning Alert
 "registration.no_history.restore_backup_warning.title" = "Gesprächsverlauf wiederherstellen";
@@ -1253,6 +1251,9 @@
 "login.sso.alert.message" = "SSO-Zugangscode des Unternehmens eingeben.";
 "login.sso.alert.action" = "Login";
 "login.sso.alert.text_field.placeholder" = "SSO Zugangscode";
+
+"login.sso.start_error_title" = "Login kann nicht gestartet werden";
+"login.sso.link_error_message" = "Der angeklickte Link zum Login ist nicht gültig. Um das Problem zu lösen, bitte an den Administrator wenden.";
 
 "login.sso.error.alert.title" = "Ein Fehler ist aufgetreten";
 "login.sso.error.alert.invalid_code.title" = "Ungültiger Code.";
@@ -1311,13 +1312,14 @@
 "registration.push_access_denied.settings_button.title" = "Einstellungen öffnen";
 "registration.push_access_denied.maybe_later_button.title" = "Vielleicht später";
 
-"registration.signin.title" = "Einloggen";
-"registration.signin.too_many_devices.title" = "";
+"registration.personal.title" = "Ein Konto erstellen";
+"registration.signin.title" = "Login";
+"registration.signin.too_many_devices.title" = "Zu viele Geräte";
 "registration.signin.too_many_devices.subtitle" = "Entferne eines deiner anderen Geräte, um Wire hier zu nutzen.";
 "registration.signin.too_many_devices.manage_button.title" = "Geräte verwalten";
 "registration.signin.too_many_devices.sign_out_button.title" = "Ausloggen";
-"registration.signin.email_button.title" = "Email";
-"registration.signin.phone_button.title" = "Telefon";
+
+"registration.signin.too_many_devices.manage_screen.title" = "Bitte ein Gerät entfernen";
 
 "registration.signin.alert.password_needed.title" = "Passwort erforderlich";
 "registration.signin.alert.password_needed.message" = "Bitte zum Anmelden Passwort eingeben.";
@@ -1337,6 +1339,15 @@
 "signin.confirm" = "Einloggen";
 "signin.company_idp.button.title" = "Für Unternehmen";
 
+"signin_logout.subheadline" = "Die Session ist abgelaufen. Zum Fortfahren bitte erneut einloggen.";
+"signin_logout.email.subheadline" = "Die Session ist abgelaufen. Zum Fortfahren bitte E-Mail-Adresse und Passwort eingeben.";
+"signin_logout.phone.subheadline" = "Die Session ist abgelaufen. Zum Fortfahren bitte Telefonnummer eingeben.";
+"signin_logout.sso.subheadline" = "Die Session ist abgelaufen. Zum Fortfahren bitte mit dem Konto des Unternehmens einloggen.";
+"signin_logout.sso.buton" = "Login für Unternehmen";
+
+"signin.email.missing_password.subtitle" = "Um fortzufahren, bitte E-Mail-Adresse und Passwort eingeben.";
+"signin.phone.missing_password.subtitle" = "Um fortzufahren, bitte Telefonnummer eingeben.";
+
 "registration.phone_country" = "Land";
 "registration.phone_code" = "Landesvorwahl";
 "registration.phone_country.hint" = "Doppelt antippen, um ein anderes Land auszuwählen.";
@@ -1348,7 +1359,7 @@
 "registration.add_phone_number.hero.paragraph" = "Dies hilft dir, Leute zu finden, die du kennst.";
 "registration.add_phone_number.skip_button.title" = "Jetzt nicht";
 
-"registration.add_email_password.hero.title" = "Füge E-Mail-Adresse und Passwort hinzu.";
+"registration.add_email_password.hero.title" = "Bitte E-Mail-Adresse und Passwort hinzufügen";
 "registration.add_email_password.hero.paragraph" = "Hiermit kannst du Wire auf mehreren Geräten verwenden.";
 
 "registration.email_invitation.title" = "Einladung";

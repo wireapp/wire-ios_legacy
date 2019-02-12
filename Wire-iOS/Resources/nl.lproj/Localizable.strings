@@ -34,6 +34,8 @@
 "general.service" = "Dienst";
 "general.off" = "Uit";
 "general.on" = "Aan";
+"general.loading" = "Loading…";
+"general.paste" = "Paste";
 
 // Language like Chinese does not use space to sperate words or sentences.
 "general.space_between_words" = " ";
@@ -229,16 +231,10 @@
 "conversation.status.unsent" = "⚠️ On verstuurt bericht";
 "conversation.status.you" = "Jij";
 "conversation.status.someone" = "Iemand";
-"conversation.status.added_multiple" = "Personen toegevoegd";
 "conversation.status.you_was_added" = "%@ heeft jou toegevoegd";
-"conversation.status.added_users" = "%@ heeft %@ toegevoegd";
-"conversation.status.joined" = "%@ joined";
-"conversation.status.removed_multiple" = "Personen verwijderd";
 "conversation.status.you_were_removed" = "Je bent verwijderd";
 "conversation.status.you_left" = "Jij verliet";
 "conversation.status.started_conversation" = "%@ begon een gesprek";
-"conversation.status.removed_users" = "%@ verwijderde %@";
-"conversation.status.everyone_left" = "Verlaten door iedereen";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Compose Entry Point
@@ -1104,9 +1100,13 @@
 "password.guidance.tooshort" = "Minimaal 8 tekens";
 "password.guidance.toolong" = "Te veel tekens";
 
+"phone.guidance.invalid" = "Invalid phone number";
+"phone.guidance.tooshort" = "Phone number is too short";
+"phone.guidance.toolong" = "Te veel tekens";
+
 // Landing screen
 
-"landing.app_name" = "Wire";
+"landing.header" = "Wire. Add your Account.";
 "landing.create_account.title" = "Persoonlijk";
 "landing.create_account.subtitle" = "account aanmaken";
 "landing.create_team.title" = "Pro";
@@ -1120,18 +1120,19 @@
 "team.name.subheadline" = "Dit kun je later altijd nog aanpassen.";
 "team.name.textfield.placeholder" = "team naam";
 "team.name.textfield.accessibility" = "Stel je team naam in";
-"team.name.whatiswireforteams" = "Wat is Wire voor teams?";
+"team.name.whatiswireforteams" = "What is Wire Pro?";
 
 "team.email.headline" = "Je account";
 "team.email.subheadline" = "Voer je werk-e-mailadres in.";
-"team.email.textfield.placeholder" = "jij@jouwbedrijf.eu";
-"team.email.textfield.accessibility" = "Je bedrijfs email";
+"team.email.textfield.placeholder" = "Your company email";
 "team.email.button.learn_more" = "Leer meer";
 
 "team.activation_code.headline" = "Je hebt een e-mail ontvangen";
+"team.phone_activation_code.headline" = "Verification";
 "team.activation_code.subheadline" = "Voer de verificatiecode in die we naar %@ gestuurde hebben.";
 "team.activation_code.button.resend" = "Code opnieuw verzenden";
 "team.activation_code.button.change_email" = "E-mailadres wijzigen";
+"team.activation_code.button.change_phone" = "Change phone number";
 
 "team.full_name.headline" = "Jouw naam";
 "team.full_name.textfield.placeholder" = "Volledige naam";
@@ -1142,14 +1143,15 @@
 "team.password.textfield.accessibility" = "Kies een wachtwoord van minimaal 8 tekens";
 
 
-"team.email_code.input_field.accessbility_label" = "Vul hier je 6 caracter code in van je email.";
+"verification.code_label" = "Six-digit code. Text field.";
+"verification.code_hint" = "Double tap to enter the code.";
 
 // Invite Team Members
 
 "team.invite.header.title" = "Maak je team aan";
 "team.invite.header.subtitle" = "Your Wire team is ready to go. Invite your colleagues as members.";
-"team.invite.textfield.placeholder" = "collega@joubedrijf.nl";
-"team.invite.textfield.accesibility" = "Vul het e-mail adres in van een collega, om deze uit te nodigen.";
+"team.invite.textfield.placeholder" = "Colleague's email";
+"team.invite.textfield.accesibility" = "Enter email address for colleague to invite.";
 "team.invite.learn_more.title" = "Leer meer";
 "team.invite.top_bar.skip" = "Sla over";
 "team.invite.top_bar.done" = "Klaar";
@@ -1198,6 +1200,9 @@
 "registration.close_phone_invitation_button.email_title" = "Registreer via e-mail";
 "registration.close_phone_invitation_button.phone_title" = "Gebruik een andere telefoon";
 
+"registration.register_by_phone" = "Telefoonnummer";
+"registration.register_by_email" = "E-mail";
+
 "registration.enter_phone_number.title" = "Bewerk telefoonnummer";
 "registration.enter_phone_number.placeholder" = "Telefoonnummer";
 
@@ -1209,13 +1214,6 @@
 "registration.verify_email.resend.instructions" = "Bericht niet ontvangen?";
 "registration.verify_email.resend.button_title" = "Verstuur opniew";
 
-"registration.select_picture.subtitle" = "Wire is veel mooier met een foto.";
-"registration.select_picture.button_title" = "Kies je eigen";
-"registration.keep_picture.button_title" = "Behoud deze";
-"registration.camera_action.title" = "Maak een foto";
-"registration.photo_gallery_action.title" = "Kies een foto";
-"registration.cancel_action.title" = "Annuleer";
-
 "registration.no_history.hero" = "Het is de eerste keer dat je Wire op dit apparaat gebruikt.";
 "registration.no_history.subtitle" = "Om privacyredenen wordt je gespreksgeschiedenis hier niet getoond.";
 "registration.no_history.got_it" = "OK";
@@ -1225,8 +1223,8 @@
 "registration.alert.account_exists.message_phone" = "The phone number you used to register is already linked to an account.\n\nUse another phone number, or try to log in if you own this account.";
 "registration.alert.account_exists.message_email" = "The email address you used to register is already linked to an account.\n\n Use another email address, or try to log in if you own this account.";
 "registration.alert.change_email_action" = "Wijzig e-mail";
-"registration.alert.change_phone_action" = "Wijzig Telefoon nummer";
-"registration.alert.change_signin_action" = "Log in";
+"registration.alert.change_phone_action" = "Register with Another Number";
+"registration.alert.change_signin_action" = "Inloggen";
 
 // Restore History Warning Alert
 "registration.no_history.restore_backup_warning.title" = "Geschiedenis terug zetten";
@@ -1253,6 +1251,9 @@
 "login.sso.alert.message" = "Enter the company SSO access code.";
 "login.sso.alert.action" = "Inloggen";
 "login.sso.alert.text_field.placeholder" = "SSO toegangs code";
+
+"login.sso.start_error_title" = "Cannot Start Company Login";
+"login.sso.link_error_message" = "The company login link you clicked is not valid. Please contact your administrator to resolve the issue.";
 
 "login.sso.error.alert.title" = "Er is iets mis gegaan";
 "login.sso.error.alert.invalid_code.title" = "Ongeldige code.";
@@ -1311,13 +1312,14 @@
 "registration.push_access_denied.settings_button.title" = "Ga naar Instellingen";
 "registration.push_access_denied.maybe_later_button.title" = "Misschien later";
 
+"registration.personal.title" = "Create an account";
 "registration.signin.title" = "Inloggen";
-"registration.signin.too_many_devices.title" = "";
+"registration.signin.too_many_devices.title" = "Too Many Devices";
 "registration.signin.too_many_devices.subtitle" = "Verwijder een van je andere apparaten om Wire op dit apparaat te gebruiken.";
 "registration.signin.too_many_devices.manage_button.title" = "Beheer apparaten";
 "registration.signin.too_many_devices.sign_out_button.title" = "Uitloggen";
-"registration.signin.email_button.title" = "E-mail";
-"registration.signin.phone_button.title" = "Telefoonnummer";
+
+"registration.signin.too_many_devices.manage_screen.title" = "Remove a Device";
 
 "registration.signin.alert.password_needed.title" = "Wachtwoord is nodig";
 "registration.signin.alert.password_needed.message" = "Vul je wachtwoord in om in te loggen.";
@@ -1337,6 +1339,15 @@
 "signin.confirm" = "Inloggen";
 "signin.company_idp.button.title" = "Voor bedrijven";
 
+"signin_logout.subheadline" = "Your session expired. You need to log in again to continue.";
+"signin_logout.email.subheadline" = "Your session expired. Enter your email address and password to continue.";
+"signin_logout.phone.subheadline" = "Your session expired. Enter your phone number to continue.";
+"signin_logout.sso.subheadline" = "Your session expired. Log in with your company account to continue.";
+"signin_logout.sso.buton" = "Bedrijfs login";
+
+"signin.email.missing_password.subtitle" = "Enter your email address and password to continue.";
+"signin.phone.missing_password.subtitle" = "Enter your phone number to continue.";
+
 "registration.phone_country" = "Land";
 "registration.phone_code" = "Landcode";
 "registration.phone_country.hint" = "Dubbel tap om een ander land te selecteren.";
@@ -1348,7 +1359,7 @@
 "registration.add_phone_number.hero.paragraph" = "Dit helpt ons mensen te vinden die je misschien kent. Wij delen deze gegevens nooit.";
 "registration.add_phone_number.skip_button.title" = "Niet nu";
 
-"registration.add_email_password.hero.title" = "Voeg je e-mailadres en een wachtwoord toe.";
+"registration.add_email_password.hero.title" = "Add your email and password";
 "registration.add_email_password.hero.paragraph" = "Dit zorgt ervoor dat je Wire op meerdere apparaten kunt gebruiken.";
 
 "registration.email_invitation.title" = "Uitnodiging";

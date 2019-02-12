@@ -34,6 +34,8 @@
 "general.service" = "Service";
 "general.off" = "Kapalı";
 "general.on" = "On";
+"general.loading" = "Loading…";
+"general.paste" = "Paste";
 
 // Language like Chinese does not use space to sperate words or sentences.
 "general.space_between_words" = " ";
@@ -229,16 +231,10 @@
 "conversation.status.unsent" = "⚠️ Mesaj gönderilemedi";
 "conversation.status.you" = "Sen";
 "conversation.status.someone" = "Someone";
-"conversation.status.added_multiple" = "Kişiler eklendi";
 "conversation.status.you_was_added" = "%@, seni ekledi";
-"conversation.status.added_users" = "%@, %@'i ekledi";
-"conversation.status.joined" = "%@ joined";
-"conversation.status.removed_multiple" = "Kişiler çıkarıldı";
 "conversation.status.you_were_removed" = "Çıkarıldınız";
 "conversation.status.you_left" = "Ayrıldın";
 "conversation.status.started_conversation" = "%@ bir konuşma başlattı";
-"conversation.status.removed_users" = "%@, %@'i sildi";
-"conversation.status.everyone_left" = "Herkes ayrıldı";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Compose Entry Point
@@ -1104,9 +1100,13 @@
 "password.guidance.tooshort" = "En az 8 karakter";
 "password.guidance.toolong" = "Çok fazla karakter";
 
+"phone.guidance.invalid" = "Invalid phone number";
+"phone.guidance.tooshort" = "Phone number is too short";
+"phone.guidance.toolong" = "Çok fazla karakter";
+
 // Landing screen
 
-"landing.app_name" = "Wire";
+"landing.header" = "Wire. Add your Account.";
 "landing.create_account.title" = "Kişisel";
 "landing.create_account.subtitle" = "create an account";
 "landing.create_team.title" = "Pro";
@@ -1120,18 +1120,19 @@
 "team.name.subheadline" = "Bunu istediğiniz zaman değiştirebilirsiniz.";
 "team.name.textfield.placeholder" = "takım adı";
 "team.name.textfield.accessibility" = "Takım adınızı ayarlayın";
-"team.name.whatiswireforteams" = "Takımlar için Wire nedir?";
+"team.name.whatiswireforteams" = "What is Wire Pro?";
 
 "team.email.headline" = "Sizin heabınız";
 "team.email.subheadline" = "İş e-postanızı girin.";
-"team.email.textfield.placeholder" = "siz@sizinisletmeniz.com";
-"team.email.textfield.accessibility" = "İşletmenizin e-postası";
+"team.email.textfield.placeholder" = "Your company email";
 "team.email.button.learn_more" = "Daha Fazla";
 
 "team.activation_code.headline" = "Posta geldi";
+"team.phone_activation_code.headline" = "Verification";
 "team.activation_code.subheadline" = "%@'a gönderdiğimiz doğrulama kodunu girin.";
 "team.activation_code.button.resend" = "Kodu yeniden gönder";
 "team.activation_code.button.change_email" = "E-postayı değiştir";
+"team.activation_code.button.change_phone" = "Change phone number";
 
 "team.full_name.headline" = "Adınız";
 "team.full_name.textfield.placeholder" = "Tam adınız";
@@ -1142,14 +1143,15 @@
 "team.password.textfield.accessibility" = "En az 8 karakterlik şifre ayarlayın";
 
 
-"team.email_code.input_field.accessbility_label" = "E-postanıza gönderilen altı haneli kodu girin.";
+"verification.code_label" = "Six-digit code. Text field.";
+"verification.code_hint" = "Double tap to enter the code.";
 
 // Invite Team Members
 
 "team.invite.header.title" = "Takımını kur";
 "team.invite.header.subtitle" = "Your Wire team is ready to go. Invite your colleagues as members.";
-"team.invite.textfield.placeholder" = "colleague@yourcompany.com";
-"team.invite.textfield.accesibility" = "Enter e-mail address for colleague to invite.";
+"team.invite.textfield.placeholder" = "Colleague's email";
+"team.invite.textfield.accesibility" = "Enter email address for colleague to invite.";
 "team.invite.learn_more.title" = "Daha fazla bilgi";
 "team.invite.top_bar.skip" = "Skip";
 "team.invite.top_bar.done" = "Yapıldı";
@@ -1198,6 +1200,9 @@
 "registration.close_phone_invitation_button.email_title" = "E-posta ile kaydol";
 "registration.close_phone_invitation_button.phone_title" = "Başka bir telefon kullan";
 
+"registration.register_by_phone" = "Telefon";
+"registration.register_by_email" = "E-posta";
+
 "registration.enter_phone_number.title" = "Telefon numarası edüzenleyin";
 "registration.enter_phone_number.placeholder" = "Telefon numarası";
 
@@ -1209,13 +1214,6 @@
 "registration.verify_email.resend.instructions" = "E-posta gelmedi mi?";
 "registration.verify_email.resend.button_title" = "Yeniden gönder";
 
-"registration.select_picture.subtitle" = "Wire bir fotoğrafla çok daha iyi.";
-"registration.select_picture.button_title" = "Kendininkini seç";
-"registration.keep_picture.button_title" = "Bunu sakla";
-"registration.camera_action.title" = "Fotoğraf çek";
-"registration.photo_gallery_action.title" = "Fotoğraf Seçin";
-"registration.cancel_action.title" = "İptal";
-
 "registration.no_history.hero" = "Wire'ı bu aygıtta ilk defa kullanıyorsunuz.";
 "registration.no_history.subtitle" = "Gizlilik nedenleriyle, konuşma geçmişiniz burada görünmeyecek.";
 "registration.no_history.got_it" = "TAMAM";
@@ -1225,8 +1223,8 @@
 "registration.alert.account_exists.message_phone" = "The phone number you used to register is already linked to an account.\n\nUse another phone number, or try to log in if you own this account.";
 "registration.alert.account_exists.message_email" = "The email address you used to register is already linked to an account.\n\n Use another email address, or try to log in if you own this account.";
 "registration.alert.change_email_action" = "Change Email";
-"registration.alert.change_phone_action" = "Change Phone";
-"registration.alert.change_signin_action" = "Sign In";
+"registration.alert.change_phone_action" = "Register with Another Number";
+"registration.alert.change_signin_action" = "Oturum Aç";
 
 // Restore History Warning Alert
 "registration.no_history.restore_backup_warning.title" = "Restore history";
@@ -1253,6 +1251,9 @@
 "login.sso.alert.message" = "Enter the company SSO access code.";
 "login.sso.alert.action" = "Giriş yap";
 "login.sso.alert.text_field.placeholder" = "SSO access code";
+
+"login.sso.start_error_title" = "Cannot Start Company Login";
+"login.sso.link_error_message" = "The company login link you clicked is not valid. Please contact your administrator to resolve the issue.";
 
 "login.sso.error.alert.title" = "Bir şeyler yanlış gitti";
 "login.sso.error.alert.invalid_code.title" = "Invalid code.";
@@ -1311,13 +1312,14 @@
 "registration.push_access_denied.settings_button.title" = "Ayarlara git";
 "registration.push_access_denied.maybe_later_button.title" = "Belki sonra";
 
-"registration.signin.title" = "Oturum Aç";
-"registration.signin.too_many_devices.title" = "";
+"registration.personal.title" = "Create an account";
+"registration.signin.title" = "Giriş yap";
+"registration.signin.too_many_devices.title" = "Too Many Devices";
 "registration.signin.too_many_devices.subtitle" = "Wire'ı bu cihazda kullanmak için diğer cihazlarınızdan birini silin.";
 "registration.signin.too_many_devices.manage_button.title" = "Cihazları yönet";
 "registration.signin.too_many_devices.sign_out_button.title" = "Çıkış yap";
-"registration.signin.email_button.title" = "E-posta";
-"registration.signin.phone_button.title" = "Telefon";
+
+"registration.signin.too_many_devices.manage_screen.title" = "Remove a Device";
 
 "registration.signin.alert.password_needed.title" = "Password needed";
 "registration.signin.alert.password_needed.message" = "Please enter your Password in order to log in.";
@@ -1337,6 +1339,15 @@
 "signin.confirm" = "Oturum Aç";
 "signin.company_idp.button.title" = "For Companies";
 
+"signin_logout.subheadline" = "Your session expired. You need to log in again to continue.";
+"signin_logout.email.subheadline" = "Your session expired. Enter your email address and password to continue.";
+"signin_logout.phone.subheadline" = "Your session expired. Enter your phone number to continue.";
+"signin_logout.sso.subheadline" = "Your session expired. Log in with your company account to continue.";
+"signin_logout.sso.buton" = "Company Log In";
+
+"signin.email.missing_password.subtitle" = "Enter your email address and password to continue.";
+"signin.phone.missing_password.subtitle" = "Enter your phone number to continue.";
+
 "registration.phone_country" = "Ülke";
 "registration.phone_code" = "Ülke Kodu";
 "registration.phone_country.hint" = "Double tap to select another country.";
@@ -1348,7 +1359,7 @@
 "registration.add_phone_number.hero.paragraph" = "Bu bildiğiniz insanlar bulmamıza yardımcı olur. Asla paylaşmayız.";
 "registration.add_phone_number.skip_button.title" = "Şimdi değil";
 
-"registration.add_email_password.hero.title" = "E-posta adresinizi ve parolanızı ekleyin.";
+"registration.add_email_password.hero.title" = "Add your email and password";
 "registration.add_email_password.hero.paragraph" = "Birden çok cihazda Wire kullanmanıza imkan tanır.";
 
 "registration.email_invitation.title" = "Davetiye";

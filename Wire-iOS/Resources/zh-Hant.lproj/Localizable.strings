@@ -34,6 +34,8 @@
 "general.service" = "服務";
 "general.off" = "關閉";
 "general.on" = "開啟";
+"general.loading" = "Loading…";
+"general.paste" = "Paste";
 
 // Language like Chinese does not use space to sperate words or sentences.
 "general.space_between_words" = "\U200B";
@@ -229,16 +231,10 @@
 "conversation.status.unsent" = "⚠️ 未發信息";
 "conversation.status.you" = "您";
 "conversation.status.someone" = "某人";
-"conversation.status.added_multiple" = "聯絡人已加入";
 "conversation.status.you_was_added" = "%@加入了您";
-"conversation.status.added_users" = "%@加了%@到對話";
-"conversation.status.joined" = "%@已加入";
-"conversation.status.removed_multiple" = "聯絡人已删除";
 "conversation.status.you_were_removed" = "您被移除了";
 "conversation.status.you_left" = "您已離開";
 "conversation.status.started_conversation" = "%@開啓了聊天室";
-"conversation.status.removed_users" = "%@移除了%@";
-"conversation.status.everyone_left" = "所有人都離開了";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Compose Entry Point
@@ -1104,9 +1100,13 @@
 "password.guidance.tooshort" = "至少8個字元";
 "password.guidance.toolong" = "字數太多";
 
+"phone.guidance.invalid" = "無效的手機號碼";
+"phone.guidance.tooshort" = "電話號碼太短";
+"phone.guidance.toolong" = "字數太多";
+
 // Landing screen
 
-"landing.app_name" = "Wire";
+"landing.header" = "Wire. Add your Account.";
 "landing.create_account.title" = "個人版";
 "landing.create_account.subtitle" = "新增帳號";
 "landing.create_team.title" = "專業版";
@@ -1120,18 +1120,19 @@
 "team.name.subheadline" = "之後您可隨時更改。";
 "team.name.textfield.placeholder" = "團隊名稱";
 "team.name.textfield.accessibility" = "設定團隊名稱";
-"team.name.whatiswireforteams" = "甚麼是Wire團隊？";
+"team.name.whatiswireforteams" = "What is Wire Pro?";
 
 "team.email.headline" = "您的帳戶";
 "team.email.subheadline" = "請輸入您的工作電子郵件地址。";
-"team.email.textfield.placeholder" = "you@yourcompany.com";
-"team.email.textfield.accessibility" = "您的公司電子郵件地址";
+"team.email.textfield.placeholder" = "Your company email";
 "team.email.button.learn_more" = "瞭解更多";
 
 "team.activation_code.headline" = "您收到了郵件";
+"team.phone_activation_code.headline" = "驗證";
 "team.activation_code.subheadline" = "輸入我們發送到%@的驗證碼。";
 "team.activation_code.button.resend" = "重新發送驗證碼";
 "team.activation_code.button.change_email" = "更改電子郵件地址";
+"team.activation_code.button.change_phone" = "更改電話號碼";
 
 "team.full_name.headline" = "您的名字";
 "team.full_name.textfield.placeholder" = "全名";
@@ -1142,14 +1143,15 @@
 "team.password.textfield.accessibility" = "設定密碼，最少要有八個字元";
 
 
-"team.email_code.input_field.accessbility_label" = "請輸入電子郵件中之六位驗證碼。";
+"verification.code_label" = "Six-digit code. Text field.";
+"verification.code_hint" = "Double tap to enter the code.";
 
 // Invite Team Members
 
 "team.invite.header.title" = "建立您的團隊";
 "team.invite.header.subtitle" = "你的Wire團隊已經準備好了。請邀請您的同事作為成員。";
-"team.invite.textfield.placeholder" = "colleague@yourcompany.com";
-"team.invite.textfield.accesibility" = "輸入同事的電子郵件地址以邀請。";
+"team.invite.textfield.placeholder" = "Colleague's email";
+"team.invite.textfield.accesibility" = "Enter email address for colleague to invite.";
 "team.invite.learn_more.title" = "瞭解詳情";
 "team.invite.top_bar.skip" = "略過";
 "team.invite.top_bar.done" = "完成";
@@ -1198,6 +1200,9 @@
 "registration.close_phone_invitation_button.email_title" = "通過電子郵件註冊";
 "registration.close_phone_invitation_button.phone_title" = "使用其他電話";
 
+"registration.register_by_phone" = "手機";
+"registration.register_by_email" = "電子郵件";
+
 "registration.enter_phone_number.title" = "編輯電話號碼";
 "registration.enter_phone_number.placeholder" = "電話號碼";
 
@@ -1209,13 +1214,6 @@
 "registration.verify_email.resend.instructions" = "沒收到驗證電郵嗎?";
 "registration.verify_email.resend.button_title" = "重新發送";
 
-"registration.select_picture.subtitle" = "有了圖片，Wire變得更生色。";
-"registration.select_picture.button_title" = "自行選擇";
-"registration.keep_picture.button_title" = "使用";
-"registration.camera_action.title" = "拍攝照片";
-"registration.photo_gallery_action.title" = "選擇照片";
-"registration.cancel_action.title" = "取消";
-
 "registration.no_history.hero" = "這是您首次在此設備使用Wire。";
 "registration.no_history.subtitle" = "基於隱私，將不會顯示您的聊天紀錄。";
 "registration.no_history.got_it" = "確認";
@@ -1225,7 +1223,7 @@
 "registration.alert.account_exists.message_phone" = "您註冊的電話號碼已連結到帳戶。\n\n請使用其他電話號碼，或者如果您擁有此帳戶，請嘗試登錄。";
 "registration.alert.account_exists.message_email" = "您註冊的電郵地址已連結到帳戶。\n\n請使用其他電郵地址，或者如果您擁有此帳戶，請嘗試登錄。";
 "registration.alert.change_email_action" = "更改電子郵箱";
-"registration.alert.change_phone_action" = "更改電話號碼";
+"registration.alert.change_phone_action" = "使用另一手機號碼註冊";
 "registration.alert.change_signin_action" = "登入";
 
 // Restore History Warning Alert
@@ -1253,6 +1251,9 @@
 "login.sso.alert.message" = "輸入公司的單一登入(SSO)存取碼。";
 "login.sso.alert.action" = "登入";
 "login.sso.alert.text_field.placeholder" = "單一登入(SSO)存取碼";
+
+"login.sso.start_error_title" = "無法開始公司登錄";
+"login.sso.link_error_message" = "您按下的公司登錄連結無效。請與管理員聯繫以解決此問題。";
 
 "login.sso.error.alert.title" = "出了點問題";
 "login.sso.error.alert.invalid_code.title" = "驗證碼無效。";
@@ -1311,13 +1312,14 @@
 "registration.push_access_denied.settings_button.title" = "開啟設定";
 "registration.push_access_denied.maybe_later_button.title" = "現在略過";
 
+"registration.personal.title" = "新增帳號";
 "registration.signin.title" = "登入";
-"registration.signin.too_many_devices.title" = "";
+"registration.signin.too_many_devices.title" = "設備登錄數超過限定";
 "registration.signin.too_many_devices.subtitle" = "在此設備使用Wire前，請先移除您任一其他設備。";
 "registration.signin.too_many_devices.manage_button.title" = "管理設備";
 "registration.signin.too_many_devices.sign_out_button.title" = "登出";
-"registration.signin.email_button.title" = "電子郵件";
-"registration.signin.phone_button.title" = "手機";
+
+"registration.signin.too_many_devices.manage_screen.title" = "移除設備";
 
 "registration.signin.alert.password_needed.title" = "需要輸入密碼";
 "registration.signin.alert.password_needed.message" = "請輸入您的密碼以登入。";
@@ -1337,6 +1339,15 @@
 "signin.confirm" = "登入";
 "signin.company_idp.button.title" = "供公司使用";
 
+"signin_logout.subheadline" = "Your session expired. You need to log in again to continue.";
+"signin_logout.email.subheadline" = "Your session expired. Enter your email address and password to continue.";
+"signin_logout.phone.subheadline" = "Your session expired. Enter your phone number to continue.";
+"signin_logout.sso.subheadline" = "Your session expired. Log in with your company account to continue.";
+"signin_logout.sso.buton" = "公司登錄";
+
+"signin.email.missing_password.subtitle" = "Enter your email address and password to continue.";
+"signin.phone.missing_password.subtitle" = "Enter your phone number to continue.";
+
 "registration.phone_country" = "國家";
 "registration.phone_code" = "國家/地區代碼";
 "registration.phone_country.hint" = "雙擊可選擇其他國家。";
@@ -1348,7 +1359,7 @@
 "registration.add_phone_number.hero.paragraph" = "這將幫助我們找到您可能認識的人。我們不會和其他人分享您的手機號碼。";
 "registration.add_phone_number.skip_button.title" = "現在略過";
 
-"registration.add_email_password.hero.title" = "新增電子郵件信箱和密碼。";
+"registration.add_email_password.hero.title" = "加入您的電子郵件地址及密碼";
 "registration.add_email_password.hero.paragraph" = "這可以讓您在多個設備上使用Wire。";
 
 "registration.email_invitation.title" = "邀請";
