@@ -28,7 +28,7 @@ class SettingsCellDescriptorFactory {
     init(settingsPropertyFactory: SettingsPropertyFactory,
 		 userRightInterfaceType: UserRightInterface.Type = UserRight.self) {
         self.settingsPropertyFactory = settingsPropertyFactory
-		self.userRightInterfaceType = userRightInterfaceType
+        self.userRightInterfaceType = userRightInterfaceType
     }
     
     func rootGroup() -> SettingsControllerGeneratorType & SettingsInternalGroupCellDescriptorType {
