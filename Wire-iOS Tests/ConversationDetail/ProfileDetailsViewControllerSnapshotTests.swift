@@ -28,11 +28,17 @@ final class ProfileDetailsViewControllerSnapshotTests: CoreDataSnapshotTestCase 
         super.tearDown()
     }
 
-    func testForInitState() {
+    func testForOneToOneConversation() {
         sut = ProfileDetailsViewController(user: self.otherUser, conversation: self.otherUserConversation, context: .oneToOneConversation)
         verify(view: sut.view)
     }
-    
+
+    // no read receipt label is shown
+    func testForGroupConversation() {
+        sut = ProfileDetailsViewController(user: self.otherUser, conversation: self.otherUserConversation, context: .groupConversation)
+        verify(view: sut.view)
+    }
+
     func testSmallScreen_expiringUser() {
         sut = ProfileDetailsViewController(user: self.otherUser, conversation: self.otherUserConversation, context: .oneToOneConversation)
         self.otherUser.setValue(Date(timeIntervalSinceNow: 3600), forKey: "expiresAt")

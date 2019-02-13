@@ -70,7 +70,7 @@ extension ProfileDetailsViewController {
         remainingTimeLabel.isHidden = nil == remainingTimeString
 
         createReadReceiptsEnabledLabel()
-        readReceiptsEnabledLabel.isHidden = conversation.conversationType != .oneOnOne
+        readReceiptsEnabledLabel.isHidden = context != .oneToOneConversation
 
         let userImageViewWrapper = UIView(frame: CGRect.zero)
         userImageViewWrapper.translatesAutoresizingMaskIntoConstraints = false
