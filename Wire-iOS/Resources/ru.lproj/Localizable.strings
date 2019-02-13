@@ -34,6 +34,8 @@
 "general.service" = "Сервис";
 "general.off" = "Откл.";
 "general.on" = "Вкл.";
+"general.loading" = "Загрузка…";
+"general.paste" = "Вставить";
 
 // Language like Chinese does not use space to sperate words or sentences.
 "general.space_between_words" = " ";
@@ -229,16 +231,10 @@
 "conversation.status.unsent" = "⚠️ Неотправленное сообщение";
 "conversation.status.you" = "Вы";
 "conversation.status.someone" = "Кто-то";
-"conversation.status.added_multiple" = "Добавлены участники";
 "conversation.status.you_was_added" = "%@ добавил(а) вас";
-"conversation.status.added_users" = "%@ добавил(а) %@";
-"conversation.status.joined" = "%@ присоединился";
-"conversation.status.removed_multiple" = "Удалены участники";
 "conversation.status.you_were_removed" = "Вы были удалены";
 "conversation.status.you_left" = "Вы покинули";
 "conversation.status.started_conversation" = "%@ начал разговор";
-"conversation.status.removed_users" = "%@ удалил(а) %@";
-"conversation.status.everyone_left" = "Все вышли";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Compose Entry Point
@@ -1104,9 +1100,13 @@
 "password.guidance.tooshort" = "Не менее 8 символов";
 "password.guidance.toolong" = "Слишком много символов";
 
+"phone.guidance.invalid" = "Некорректный номер телефона";
+"phone.guidance.tooshort" = "Номер телефона слишком короткий";
+"phone.guidance.toolong" = "Слишком много символов";
+
 // Landing screen
 
-"landing.app_name" = "Wire";
+"landing.header" = "Wire. Добавьте свой аккаунт.";
 "landing.create_account.title" = "Personal";
 "landing.create_account.subtitle" = "создать учетную запись";
 "landing.create_team.title" = "Pro";
@@ -1120,18 +1120,19 @@
 "team.name.subheadline" = "Вы всегда сможете изменить название позже.";
 "team.name.textfield.placeholder" = "название команды";
 "team.name.textfield.accessibility" = "Задать имя команды";
-"team.name.whatiswireforteams" = "Что такое Wire для команд?";
+"team.name.whatiswireforteams" = "Что такое Wire Pro?";
 
 "team.email.headline" = "Ваш аккаунт";
 "team.email.subheadline" = "Введите свой рабочий адрес email.";
-"team.email.textfield.placeholder" = "you@yourcompany.com";
-"team.email.textfield.accessibility" = "Email вашей компании";
+"team.email.textfield.placeholder" = "Email вашей компании";
 "team.email.button.learn_more" = "Подробнее";
 
 "team.activation_code.headline" = "Вам письмо";
+"team.phone_activation_code.headline" = "Верификация";
 "team.activation_code.subheadline" = "Введите код подтверждения, который мы отправили на %@.";
 "team.activation_code.button.resend" = "Отправить код еще раз";
 "team.activation_code.button.change_email" = "Изменить email";
+"team.activation_code.button.change_phone" = "Изменить номер телефона";
 
 "team.full_name.headline" = "Ваше имя";
 "team.full_name.textfield.placeholder" = "Полное имя";
@@ -1142,13 +1143,14 @@
 "team.password.textfield.accessibility" = "Задать пароль, не менее 8 символов";
 
 
-"team.email_code.input_field.accessbility_label" = "Введите шестизначный код из письма.";
+"verification.code_label" = "Шестизначный код. Текстовое поле.";
+"verification.code_hint" = "Нажмите дважды, чтобы ввести код.";
 
 // Invite Team Members
 
 "team.invite.header.title" = "Создайте свою команду";
 "team.invite.header.subtitle" = "Ваша команда Wire готова к работе. Пригласите своих коллег в качестве членов.";
-"team.invite.textfield.placeholder" = "colleague@yourcompany.com";
+"team.invite.textfield.placeholder" = "Email коллеги";
 "team.invite.textfield.accesibility" = "Введите адрес электронной почты для приглашения коллеги.";
 "team.invite.learn_more.title" = "Подробнее";
 "team.invite.top_bar.skip" = "Пропустить";
@@ -1198,6 +1200,9 @@
 "registration.close_phone_invitation_button.email_title" = "Регистрация по email";
 "registration.close_phone_invitation_button.phone_title" = "Использовать другой номер телефона";
 
+"registration.register_by_phone" = "Телефон";
+"registration.register_by_email" = "Email";
+
 "registration.enter_phone_number.title" = "Изменить номер телефона";
 "registration.enter_phone_number.placeholder" = "Номер телефона";
 
@@ -1209,13 +1214,6 @@
 "registration.verify_email.resend.instructions" = "Не получили сообщение?";
 "registration.verify_email.resend.button_title" = "Отправить повторно";
 
-"registration.select_picture.subtitle" = "Wire выглядит лучше с вашей фотографией.";
-"registration.select_picture.button_title" = "Выбрать свое";
-"registration.keep_picture.button_title" = "Оставить это";
-"registration.camera_action.title" = "Сделать фото";
-"registration.photo_gallery_action.title" = "Выберите фото";
-"registration.cancel_action.title" = "Отмена";
-
 "registration.no_history.hero" = "Вы впервые используете Wire на этом устройстве.";
 "registration.no_history.subtitle" = "История разговоров не отображается из соображений конфиденциальности.";
 "registration.no_history.got_it" = "OK";
@@ -1225,7 +1223,7 @@
 "registration.alert.account_exists.message_phone" = "Номер телефона, который вы использовали для регистрации, уже связан с учетной записью. \n\nИспользуйте другой номер телефона или попробуйте войти, если это ваша учетная запись.";
 "registration.alert.account_exists.message_email" = "Адрес email, который вы использовали для регистрации, уже связан с учетной записью. \n\n Используйте другой email или попробуйте войти, если это ваша учетная запись.";
 "registration.alert.change_email_action" = "Изменить адрес email";
-"registration.alert.change_phone_action" = "Изменить номер телефона";
+"registration.alert.change_phone_action" = "Зарегистрироваться с другим номером";
 "registration.alert.change_signin_action" = "Войти";
 
 // Restore History Warning Alert
@@ -1253,6 +1251,9 @@
 "login.sso.alert.message" = "Введите код доступа SSO вашей компании.";
 "login.sso.alert.action" = "Войти";
 "login.sso.alert.text_field.placeholder" = "Код доступа SSO";
+
+"login.sso.start_error_title" = "Не удается авторизоваться при входе для компании";
+"login.sso.link_error_message" = "Ссылка входа для компаний, на которую вы нажали, недействительна. Пожалуйста, свяжитесь с вашим администратором, чтобы решить проблему.";
 
 "login.sso.error.alert.title" = "Что-то пошло не так";
 "login.sso.error.alert.invalid_code.title" = "Неверный код.";
@@ -1311,13 +1312,14 @@
 "registration.push_access_denied.settings_button.title" = "Перейти в настройки";
 "registration.push_access_denied.maybe_later_button.title" = "Может быть позже";
 
+"registration.personal.title" = "Создать учетную запись";
 "registration.signin.title" = "Войти";
-"registration.signin.too_many_devices.title" = "";
+"registration.signin.too_many_devices.title" = "Слишком много устройств";
 "registration.signin.too_many_devices.subtitle" = "Удалите одно из ваших устройств, чтобы начать использовать Wire на этом.";
 "registration.signin.too_many_devices.manage_button.title" = "Управление устройствами";
 "registration.signin.too_many_devices.sign_out_button.title" = "Выйти";
-"registration.signin.email_button.title" = "Email";
-"registration.signin.phone_button.title" = "Телефон";
+
+"registration.signin.too_many_devices.manage_screen.title" = "Удалить устройство";
 
 "registration.signin.alert.password_needed.title" = "Введите пароль";
 "registration.signin.alert.password_needed.message" = "Для входа необходимо ввести пароль.";
@@ -1337,6 +1339,15 @@
 "signin.confirm" = "Войти";
 "signin.company_idp.button.title" = "Для компаний";
 
+"signin_logout.subheadline" = "Ваш сеанс истек. Вы должны войти снова, чтобы продолжить.";
+"signin_logout.email.subheadline" = "Ваш сеанс истек. Введите адрес электронной почты и пароль, чтобы продолжить.";
+"signin_logout.phone.subheadline" = "Ваш сеанс истек. Введите номер телефона, чтобы продолжить.";
+"signin_logout.sso.subheadline" = "Ваш сеанс истек. Войдите, используя свой корпоративный аккаунт.";
+"signin_logout.sso.buton" = "Вход для компаний";
+
+"signin.email.missing_password.subtitle" = "Для продолжения введите адрес электронной почты и пароль.";
+"signin.phone.missing_password.subtitle" = "Для продолжения введите номер телефона.";
+
 "registration.phone_country" = "Страна";
 "registration.phone_code" = "Код страны";
 "registration.phone_country.hint" = "Дважды кликните, чтобы выбрать другую страну.";
@@ -1348,7 +1359,7 @@
 "registration.add_phone_number.hero.paragraph" = "Это поможет нам найти людей, которых вы, возможно, знаете. Мы не разглашаем информацию о вас.";
 "registration.add_phone_number.skip_button.title" = "Не сейчас";
 
-"registration.add_email_password.hero.title" = "Добавьте ваш email и пароль.";
+"registration.add_email_password.hero.title" = "Добавьте ваш email и пароль";
 "registration.add_email_password.hero.paragraph" = "Это позволит использовать Wire на нескольких устройствах.";
 
 "registration.email_invitation.title" = "Приглашение";

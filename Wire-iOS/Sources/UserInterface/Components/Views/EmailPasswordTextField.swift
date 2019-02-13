@@ -24,7 +24,7 @@ protocol EmailPasswordTextFieldDelegate: class {
     func textField(_ textField: EmailPasswordTextField, didConfirmCredentials credentials: (String, String))
 }
 
-class EmailPasswordTextField: UIView {
+class EmailPasswordTextField: UIView, MagicTappable {
 
     let emailField = AccessoryTextField(kind: .email)
     let passwordField = AccessoryTextField(kind: .password(isNew: false))
@@ -165,6 +165,15 @@ class EmailPasswordTextField: UIView {
 
     @objc private func confirmButtonTapped() {
         delegate?.textField(self, didConfirmCredentials: (emailField.input, passwordField.input))
+    }
+
+    func performMagicTap() -> Bool {
+        guard emailField.isInputValid && passwordField.isInputValid else {
+            return false
+        }
+
+        confirmButtonTapped()
+        return true
     }
 
     @objc private func textInputDidChange(sender: UITextField) {

@@ -28,7 +28,7 @@ final class SetPasswordStepDescription: AuthenticationStepDescription {
 
     init() {
         backButton = BackButtonDescription()
-        mainView = TextFieldDescription(placeholder: "team.password.textfield.placeholder".localized, actionDescription: "team.password.textfield.accessibility".localized, kind: .password(isNew: true))
+        mainView = TextFieldDescription(placeholder: "team.password.textfield.placeholder".localized, actionDescription: "general.next".localized, kind: .password(isNew: true))
         headline = "team.password.headline".localized
         subtext = nil
         secondaryView = nil

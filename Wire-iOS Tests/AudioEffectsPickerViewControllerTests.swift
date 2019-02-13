@@ -16,9 +16,7 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
-import Foundation
-import Cartography
+import XCTest
 @testable import Wire
 
 class AudioEffectsPickerViewControllerTests: ZMSnapshotTestCase {
@@ -46,15 +44,18 @@ class AudioEffectsPickerViewControllerTests: ZMSnapshotTestCase {
         let container = UIView()
         container.addSubview(self.sut.view)
         container.backgroundColor = UIColor.from(scheme: .textForeground, variant: .light)
-
-        constrain(self.sut.view, container) { view, container in
-            container.height == 216
-            container.width == 320
-            view.top == container.top
-            view.bottom == container.bottom
-            view.left == container.left
-            view.right == container.right
-        }
+        container.translatesAutoresizingMaskIntoConstraints = false
+        sut.view.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            container.heightAnchor.constraint(equalToConstant: 216),
+            container.widthAnchor.constraint(equalToConstant: 320),
+            sut.view.topAnchor.constraint(equalTo: container.topAnchor),
+            sut.view.bottomAnchor.constraint(equalTo: container.bottomAnchor),
+            sut.view.leadingAnchor.constraint(equalTo: container.leadingAnchor),
+            sut.view.trailingAnchor.constraint(equalTo: container.trailingAnchor)
+        ])
+        
         container.setNeedsLayout()
         container.layoutIfNeeded()
         return container

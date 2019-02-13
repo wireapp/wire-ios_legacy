@@ -47,6 +47,74 @@ extension NSAttributedString {
 }
 
 extension ProfileDetailsViewController {
+
+    @objc
+    func setupViews() {
+        createUserImageView()
+        createFooter()
+        createGuestIndicator()
+
+        view.backgroundColor = UIColor.from(scheme: .contentBackground)
+        stackViewContainer = UIView()
+        view.addSubview(stackViewContainer)
+
+        teamsGuestIndicator.isHidden = !showGuestLabel
+        availabilityView.isHidden = !ZMUser.selfUser().isTeamMember || fullUser().availability == .none
+
+        let remainingTimeString = fullUser().expirationDisplayString
+        remainingTimeLabel = UILabel()
+        remainingTimeLabel.setContentCompressionResistancePriority(.required, for: .vertical)
+        remainingTimeLabel.text = remainingTimeString
+        remainingTimeLabel.textColor = ColorScheme.default.color(named: .textForeground)
+        remainingTimeLabel.font = UIFont.mediumSemiboldFont
+        remainingTimeLabel.isHidden = nil == remainingTimeString
+
+        createReadReceiptsEnabledLabel()
+        readReceiptsEnabledLabel.isHidden = context != .oneToOneConversation
+
+        let userImageViewWrapper = UIView(frame: CGRect.zero)
+        userImageViewWrapper.translatesAutoresizingMaskIntoConstraints = false
+        userImageViewWrapper.addSubview(userImageView)
+
+        NSLayoutConstraint.activate([
+            userImageView.leadingAnchor.constraint(equalTo: userImageViewWrapper.leadingAnchor, constant: 40),
+            userImageView.trailingAnchor.constraint(equalTo: userImageViewWrapper.trailingAnchor, constant: -40),
+            userImageView.topAnchor.constraint(equalTo: userImageViewWrapper.topAnchor),
+            userImageView.bottomAnchor.constraint(equalTo: userImageViewWrapper.bottomAnchor)
+            ])
+
+        stackView = CustomSpacingStackView(customSpacedArrangedSubviews: [
+            userImageViewWrapper,
+            teamsGuestIndicator,
+            remainingTimeLabel,
+            availabilityView,
+            readReceiptsEnabledLabel
+            ])
+        stackView.axis = NSLayoutConstraint.Axis.vertical
+        stackView.spacing = 0
+        stackView.alignment = UIStackView.Alignment.center
+        stackViewContainer.addSubview(stackView)
+
+        let verticalSpacing: CGFloat
+
+        if UIScreen.main.isSmall {
+            verticalSpacing = 16
+        } else {
+            verticalSpacing = 32
+        }
+
+        stackView.wr_addCustomSpacing(verticalSpacing, after: userImageViewWrapper)
+
+        if remainingTimeLabel.isHidden {
+            stackView.wr_addCustomSpacing((availabilityView.isHidden ? (verticalSpacing + 8) : verticalSpacing), after: teamsGuestIndicator)
+        } else {
+            stackView.wr_addCustomSpacing(8, after: teamsGuestIndicator)
+            stackView.wr_addCustomSpacing((availabilityView.isHidden ? (verticalSpacing + 8) : verticalSpacing), after: remainingTimeLabel)
+        }
+
+        stackView.wr_addCustomSpacing(verticalSpacing, after: availabilityView)
+    }
+
     @objc func setupStyle() {
         remainingTimeLabel.textColor = .from(scheme: .textDimmed)
         remainingTimeLabel.font = .mediumSemiboldFont
@@ -70,7 +138,7 @@ extension ProfileDetailsViewController {
 
     // MARK: - Bottom labels
     
-    @objc func createReadReceiptsEnabledLabel() {
+    func createReadReceiptsEnabledLabel() {
         guard let selfUser = ZMUser.selfUser() else {
             return
         }

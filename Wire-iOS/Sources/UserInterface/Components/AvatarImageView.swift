@@ -28,7 +28,7 @@ open class AvatarImageView: UIControl {
      * The different, mutually-exclusive forms of avatars
      */
 
-    public enum Avatar {
+    public enum Avatar: Equatable {
         case image(UIImage)
         case text(String)
     }
@@ -46,21 +46,27 @@ open class AvatarImageView: UIControl {
     /// The avatar to display.
     public var avatar: Avatar? {
         didSet {
-            updateAvatar()
+            if avatar != oldValue {
+                updateAvatar()
+            }
         }
     }
 
     /// The shape of the avatar
     public var shape: Shape = .circle {
         didSet {
-            updateShape()
+            if shape != oldValue {
+                updateShape()
+            }
         }
     }
 
     /// Whether to allow initials.
     public var allowsInitials: Bool = true {
         didSet {
-            updateAvatar()
+            if allowsInitials != oldValue {
+                updateAvatar()
+            }
         }
     }
 
@@ -84,7 +90,9 @@ open class AvatarImageView: UIControl {
 
     open override var contentMode: UIView.ContentMode {
         didSet {
-            imageView.contentMode = contentMode
+            if contentMode != oldValue {
+                imageView.contentMode = contentMode
+            }
         }
     }
 

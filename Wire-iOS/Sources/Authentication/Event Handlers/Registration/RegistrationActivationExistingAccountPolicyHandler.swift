@@ -49,7 +49,7 @@ class RegistrationActivationExistingAccountPolicyHandler: AuthenticationEventHan
         case .email(let email):
             let prefilledCredentials = AuthenticationPrefilledCredentials(
                 primaryCredentialsType: .email, credentials:
-                LoginCredentials(emailAddress: email, phoneNumber: nil, hasPassword: true, usesCompanyLogin: false)
+                LoginCredentials(emailAddress: email, phoneNumber: nil, hasPassword: true, usesCompanyLogin: false), isExpired: false
             )
 
             let changeEmailAction = AuthenticationCoordinatorAlertAction(title: "registration.alert.change_email_action".localized, coordinatorActions: [.unwindState(withInterface: false), .executeFeedbackAction(.clearInputFields)])

@@ -17,7 +17,6 @@
 //
 
 import XCTest
-import Cartography
 import WireLinkPreview
 @testable import Wire
 

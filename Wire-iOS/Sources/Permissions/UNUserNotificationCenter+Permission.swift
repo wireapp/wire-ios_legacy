@@ -29,12 +29,9 @@ import Foundation
      * value is true iff the pushes are disabled.
      */
     func checkPushesDisabled(_ handler: @escaping (Bool) -> Void) {
-        let notRegistered = !UIApplication.shared.isRegisteredForRemoteNotifications
-
         getNotificationSettings { settings in
-            let notAuthorized = settings.authorizationStatus != .authorized
-            let pushedDisabled = notRegistered || notAuthorized
-            handler(pushedDisabled)
+            let pushesDisabled = settings.authorizationStatus == .denied
+            handler(pushesDisabled)
         }
     }
 }

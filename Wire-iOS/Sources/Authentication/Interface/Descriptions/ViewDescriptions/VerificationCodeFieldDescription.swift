@@ -76,7 +76,7 @@ extension VerificationCodeFieldDescription: ViewDescriptor {
         inputField.translatesAutoresizingMaskIntoConstraints = false
         inputField.delegate = self
         inputField.accessibilityIdentifier = "VerificationCode"
-        inputField.accessibilityLabel = "team.email_code.input_field.accessbility_label".localized
+        inputField.accessibilityLabel = "verification.code_label".localized
 
         if #available(iOS 12, *) {
             inputField.textContentType = .oneTimeCode

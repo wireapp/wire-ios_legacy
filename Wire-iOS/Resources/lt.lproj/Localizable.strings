@@ -34,6 +34,8 @@
 "general.service" = "Paslauga";
 "general.off" = "Išjungta";
 "general.on" = "Įjungta";
+"general.loading" = "Kraunama…";
+"general.paste" = "Įdėti";
 
 // Language like Chinese does not use space to sperate words or sentences.
 "general.space_between_words" = " ";
@@ -229,16 +231,10 @@
 "conversation.status.unsent" = "⚠ Neišsiųsta žinutė";
 "conversation.status.you" = "Jūs";
 "conversation.status.someone" = "Kažkas";
-"conversation.status.added_multiple" = "Žmonės pridėti";
 "conversation.status.you_was_added" = "%@ pridėjo jus";
-"conversation.status.added_users" = "%@ pridėjo pašnekovą %@";
-"conversation.status.joined" = "%@ prisijungė";
-"conversation.status.removed_multiple" = "Žmonės pašalinti";
 "conversation.status.you_were_removed" = "Jūs buvote pašalinti";
 "conversation.status.you_left" = "Jūs išėjote";
 "conversation.status.started_conversation" = "%@ pradėjo susirašinėjimą";
-"conversation.status.removed_users" = "%@ pašalino pašnekovą %@";
-"conversation.status.everyone_left" = "Visi išėjo";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Compose Entry Point
@@ -1104,9 +1100,13 @@
 "password.guidance.tooshort" = "Bent 8 simbolių";
 "password.guidance.toolong" = "Per daug simbolių";
 
+"phone.guidance.invalid" = "Neteisingas telefono numeris";
+"phone.guidance.tooshort" = "Telefono numeris yra per trumpas";
+"phone.guidance.toolong" = "Per daug simbolių";
+
 // Landing screen
 
-"landing.app_name" = "„Wire“";
+"landing.header" = "\"Wire\". Pridėkite savo paskyrą.";
 "landing.create_account.title" = "Asmeninis";
 "landing.create_account.subtitle" = "kurti paskyrą";
 "landing.create_team.title" = "Pro";
@@ -1120,18 +1120,19 @@
 "team.name.subheadline" = "Bet kada vėliau galėsite pakeisti.";
 "team.name.textfield.placeholder" = "komandos pavadinimas";
 "team.name.textfield.accessibility" = "Suteikite komandai pavadinimą";
-"team.name.whatiswireforteams" = "Kas yra „Wire“ komandoms?";
+"team.name.whatiswireforteams" = "Kas yra „Wire Pro“?";
 
 "team.email.headline" = "Jūsų paskyra";
 "team.email.subheadline" = "Įrašykite darbo el. pašto adresą.";
-"team.email.textfield.placeholder" = "tu@tavoorganizacija.lt";
-"team.email.textfield.accessibility" = "Jūsų darbo el. pašto adresas";
+"team.email.textfield.placeholder" = "Jūsų įmonės el. paštas";
 "team.email.button.learn_more" = "Sužinokite daugiau";
 
 "team.activation_code.headline" = "Gavote el. laišką";
+"team.phone_activation_code.headline" = "Patvirtinimas";
 "team.activation_code.subheadline" = "Įrašykite patvirtinimo kodą, kuris buvo išsiųstas į %@.";
 "team.activation_code.button.resend" = "Siųsti kodą dar kartą";
 "team.activation_code.button.change_email" = "Pakeisti el. pašto adresą";
+"team.activation_code.button.change_phone" = "Pakeisti telefono numerį";
 
 "team.full_name.headline" = "Jūsų vardas";
 "team.full_name.textfield.placeholder" = "Vardas pavardė";
@@ -1142,14 +1143,15 @@
 "team.password.textfield.accessibility" = "Įrašykite slaptažodį, mažiausiai 8 simbolių";
 
 
-"team.email_code.input_field.accessbility_label" = "Įrašykite šešių skaitmenų kodą, kurį gavote el. laišku.";
+"verification.code_label" = "Šešių skaitmenų kodas.";
+"verification.code_hint" = "Du kart paspauskite kad įvesti kodą.";
 
 // Invite Team Members
 
 "team.invite.header.title" = "Sukurkite savo komandą";
 "team.invite.header.subtitle" = "Jūsų „Wire“ komanda paruošta. Pakvieskite savo kolegas prisijungti.";
-"team.invite.textfield.placeholder" = "kolega@tavoorganizacija.lt";
-"team.invite.textfield.accesibility" = "Įrašykite el. pašto adresą, kad kolega galėtų prisijungti.";
+"team.invite.textfield.placeholder" = "Kolegos el. paštas";
+"team.invite.textfield.accesibility" = "Įrašykite kolegos el. pašto adresą pakvietimui išsiųsti.";
 "team.invite.learn_more.title" = "Sužinoti daugiau";
 "team.invite.top_bar.skip" = "Praleisti";
 "team.invite.top_bar.done" = "Baigta";
@@ -1198,6 +1200,9 @@
 "registration.close_phone_invitation_button.email_title" = "Registruotis el. paštu";
 "registration.close_phone_invitation_button.phone_title" = "Naudoti kitą telefono numerį";
 
+"registration.register_by_phone" = "Telefonas";
+"registration.register_by_email" = "El. paštas";
+
 "registration.enter_phone_number.title" = "Keisti telefono numerį";
 "registration.enter_phone_number.placeholder" = "Telefono numeris";
 
@@ -1209,13 +1214,6 @@
 "registration.verify_email.resend.instructions" = "Negavote el. laiško?";
 "registration.verify_email.resend.button_title" = "Siųsti iš naujo";
 
-"registration.select_picture.subtitle" = "„Wire“ yra kur kas gražesnė kai naudojate paveikslėlį.";
-"registration.select_picture.button_title" = "Pasirinkti savo asmeninį";
-"registration.keep_picture.button_title" = "Palikti šį";
-"registration.camera_action.title" = "Nufotografuokite";
-"registration.photo_gallery_action.title" = "Pasirinkite nuotrauką";
-"registration.cancel_action.title" = "Atsisakyti";
-
 "registration.no_history.hero" = "Pirmą kartą naudojate „Wire“ šiame įrenginyje.";
 "registration.no_history.subtitle" = "Privatumo sumetimais, jūsų pokalbio istorija čia nebus rodoma.";
 "registration.no_history.got_it" = "GERAI";
@@ -1225,7 +1223,7 @@
 "registration.alert.account_exists.message_phone" = "Šis telefono numeris jau yra susietas su paskyra.\n\nNaudokite kitą telefono numerį arba bandykite prisijungti jei tai jūsų paskyra.";
 "registration.alert.account_exists.message_email" = "Šis el. pašto adresas jau yra susietas su paskyra.\n\nNaudokite kitą el. pašto adresą arba bandykite prisijungti jei tai jūsų paskyra.";
 "registration.alert.change_email_action" = "Keisti el. paštą";
-"registration.alert.change_phone_action" = "Keisti telefono numerį";
+"registration.alert.change_phone_action" = "Registruokitės su kitu numeriu";
 "registration.alert.change_signin_action" = "Prisijungti";
 
 // Restore History Warning Alert
@@ -1253,6 +1251,9 @@
 "login.sso.alert.message" = "Įrašykite įmonės SSO prieigos kodą.";
 "login.sso.alert.action" = "Prisijungti";
 "login.sso.alert.text_field.placeholder" = "SSO prieigos kodas";
+
+"login.sso.start_error_title" = "Nepavyko pradėti kompanijos prisijungimo";
+"login.sso.link_error_message" = "Kompanijos prisijungimo nuoroda negalioja. Prašome susisiekti su savo komandos administratoriumi.";
 
 "login.sso.error.alert.title" = "Kažkas atsitiko";
 "login.sso.error.alert.invalid_code.title" = "Neteisingas kodas.";
@@ -1311,13 +1312,14 @@
 "registration.push_access_denied.settings_button.title" = "Eiti į Nustatymus";
 "registration.push_access_denied.maybe_later_button.title" = "Gal vėliau";
 
+"registration.personal.title" = "Sukurti paskyrą";
 "registration.signin.title" = "Prisijungti";
-"registration.signin.too_many_devices.title" = "";
+"registration.signin.too_many_devices.title" = "Per daug įrenginių";
 "registration.signin.too_many_devices.subtitle" = "Norėdami naudotis „Wire“ šiame įrenginyje, pašalinkite vieną iš savo įrenginių.";
 "registration.signin.too_many_devices.manage_button.title" = "Tvarkyti įrenginius";
 "registration.signin.too_many_devices.sign_out_button.title" = "Atsijungti";
-"registration.signin.email_button.title" = "El. paštas";
-"registration.signin.phone_button.title" = "Telefonas";
+
+"registration.signin.too_many_devices.manage_screen.title" = "Pašalinti įrenginį";
 
 "registration.signin.alert.password_needed.title" = "Slaptažodis būtinas";
 "registration.signin.alert.password_needed.message" = "Įrašę slaptažodį galėsite prisijungti.";
@@ -1337,6 +1339,15 @@
 "signin.confirm" = "Prisijungti";
 "signin.company_idp.button.title" = "Įmonėms";
 
+"signin_logout.subheadline" = "Jūsų seansui skirtasis laikas baigėsi. Norėdami tęsti prisijunkite iš naujo.";
+"signin_logout.email.subheadline" = "Jūsų seansui skirtasis laikas baigėsi. Norėdami tęsti įveskite savo el. paštą ir slaptažodį.";
+"signin_logout.phone.subheadline" = "Jūsų seansui skirtasis laikas baigėsi. Norėdami tęsti įveskite savo telefono numerį.";
+"signin_logout.sso.subheadline" = "Jūsų seansui skirtasis laikas baigėsi. Norėdami tęsti prisijunkite su savo kompanijos paskyra.";
+"signin_logout.sso.buton" = "Įmonės prisijungimas";
+
+"signin.email.missing_password.subtitle" = "Norėdami tęsti įveskite savo el. paštą ir slaptažodį.";
+"signin.phone.missing_password.subtitle" = "Norėdami tęsti įveskite savo telefono numerį.";
+
 "registration.phone_country" = "Šalis";
 "registration.phone_code" = "Šalies kodas";
 "registration.phone_country.hint" = "Dukart spustelėję galėsite pasirinkti kitą šalį.";
@@ -1348,7 +1359,7 @@
 "registration.add_phone_number.hero.paragraph" = "Tai padės mums rasti jūsų pažįstamus. Niekada šituo nesidaliname.";
 "registration.add_phone_number.skip_button.title" = "Vėliau";
 
-"registration.add_email_password.hero.title" = "Pridėkite el. pašto adresą ir slaptažodį.";
+"registration.add_email_password.hero.title" = "Pridėkite el. pašto adresą ir slaptažodį";
 "registration.add_email_password.hero.paragraph" = "Tai leidžia jums naudoti Wire keliuose įrenginiuose.";
 
 "registration.email_invitation.title" = "Kvietimas";

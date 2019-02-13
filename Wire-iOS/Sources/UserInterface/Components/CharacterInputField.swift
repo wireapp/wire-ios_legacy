@@ -154,9 +154,15 @@ public class CharacterInputField: UIControl, UITextInputTraits, TextContainer {
         characterViews = (0..<maxLength).map { _ in CharacterView(parentSize: size) }
 
         super.init(frame: .zero)
-        
+
         self.isAccessibilityElement = true
         self.shouldGroupAccessibilityChildren = true
+
+        accessibilityHint = "verification.code_hint".localized
+
+        accessibilityCustomActions = [
+            UIAccessibilityCustomAction(name: "general.paste".localized, target: self, selector: #selector(UIResponderStandardEditActions.paste))
+        ]
         
         stackView.spacing = 8
         stackView.axis = .horizontal
@@ -179,7 +185,7 @@ public class CharacterInputField: UIControl, UITextInputTraits, TextContainer {
     public required init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     public override var canBecomeFirstResponder: Bool {
         return true
     }
@@ -204,15 +210,9 @@ public class CharacterInputField: UIControl, UITextInputTraits, TextContainer {
         super.touchesBegan(touches, with: event)
         self.becomeFirstResponder()
     }
-    
-    public override func accessibilityElementIsFocused() -> Bool {
-        return self.becomeFirstResponder()
-    }
-    
+
     public override func accessibilityActivate() -> Bool {
-        self.showMenu()
-        
-        return true
+        return self.becomeFirstResponder()
     }
     
     // MARK: - Paste support
@@ -222,10 +222,10 @@ public class CharacterInputField: UIControl, UITextInputTraits, TextContainer {
     }
     
     public override func paste(_ sender: Any?) {
-        guard let valueToPaste = UIPasteboard.general.string else {
+        guard UIPasteboard.general.hasStrings, let valueToPaste = UIPasteboard.general.string else {
             return
         }
-        
+
         notifyingDelegate {
             self.text = valueToPaste
         }

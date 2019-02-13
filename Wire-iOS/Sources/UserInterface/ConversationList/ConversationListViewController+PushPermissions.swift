@@ -54,7 +54,7 @@ extension ConversationListViewController {
     @objc func showPushPermissionDeniedDialogIfNeeded() {
         // We only want to present the notification takeover when the user already has a handle
         // and is not coming from the registration flow (where we alreday ask for permissions).
-        if !isComingFromRegistration || nil == ZMUser.selfUser().handle {
+        if isComingFromRegistration || nil == ZMUser.selfUser().handle {
             return
         }
 

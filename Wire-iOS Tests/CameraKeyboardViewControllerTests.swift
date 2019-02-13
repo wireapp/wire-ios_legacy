@@ -16,13 +16,10 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
 import XCTest
 import Photos
-import Cartography
 import AVFoundation
 @testable import Wire
-
 
 class CameraKeyboardViewControllerDelegateMock: CameraKeyboardViewControllerDelegate {
     
@@ -95,15 +92,18 @@ final class CameraKeyboardViewControllerTests: CoreDataSnapshotTestCase {
         let container = UIView()
         container.addSubview(self.sut.view)
         container.backgroundColor = UIColor.from(scheme: .textForeground, variant: .light)
+        container.translatesAutoresizingMaskIntoConstraints = false
+        sut.view.translatesAutoresizingMaskIntoConstraints = false
         
-        constrain(self.sut.view, container) { view, container in
-            container.height == size.height
-            container.width == size.width
-            view.top == container.top
-            view.bottom == container.bottom
-            view.left == container.left
-            view.right == container.right
-        }
+        NSLayoutConstraint.activate([
+            container.heightAnchor.constraint(equalToConstant: size.height),
+            container.widthAnchor.constraint(equalToConstant: size.width),
+            sut.view.topAnchor.constraint(equalTo: container.topAnchor),
+            sut.view.bottomAnchor.constraint(equalTo: container.bottomAnchor),
+            sut.view.leadingAnchor.constraint(equalTo: container.leadingAnchor),
+            sut.view.trailingAnchor.constraint(equalTo: container.trailingAnchor)
+        ])
+        
         container.setNeedsLayout()
         container.layoutIfNeeded()
         return container

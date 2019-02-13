@@ -58,11 +58,14 @@ const NSString *LoadingViewKey = @"loadingView";
 {
     self.loadingView.hidden = ! shouldShow;
     if (shouldShow) {
+        UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, NSLocalizedString(@"general.loading", @""));
         self.spinnerView.hidden = NO;
+        self.view.userInteractionEnabled = NO;
         [self.spinnerView.spinner startAnimation:nil];
     }
     else {
         self.spinnerView.hidden = YES;
+        self.view.userInteractionEnabled = YES;
         [self.spinnerView.spinner stopAnimation:nil];
     }
 }

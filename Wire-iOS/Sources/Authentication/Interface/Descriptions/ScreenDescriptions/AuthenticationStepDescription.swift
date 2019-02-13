@@ -33,6 +33,11 @@ protocol ValueSubmission: class {
     var valueValidated: ValueValidated? { get set }
 }
 
+/// A protocol for views that support performing the magic tap.
+protocol MagicTappable: class {
+    func performMagicTap() -> Bool
+}
+
 protocol AuthenticationStepDescription {
     var backButton: BackButtonDescription? { get }
     var mainView: ViewDescriptor & ValueSubmission { get }

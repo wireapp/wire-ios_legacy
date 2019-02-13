@@ -473,8 +473,6 @@ static NSString * const CellReuseIdConversation = @"CellId";
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    // Close open drawers in the cells
-    [[NSNotificationCenter defaultCenter] postNotificationName:SwipeMenuCollectionCellCloseDrawerNotification object:nil];
     if ([self.contentDelegate respondsToSelector:@selector(conversationListDidScroll:)]) {
         [self.contentDelegate conversationListDidScroll:self];
     }

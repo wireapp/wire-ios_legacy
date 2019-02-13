@@ -60,12 +60,6 @@ typedef NS_ENUM(NSUInteger, ProfileViewContentMode) {
 
 @property (nonatomic) id<UserType, AccentColorProvider> bareUser;
 
-@property (nonatomic) UserImageView *userImageView;
-@property (nonatomic) UIView *stackViewContainer;
-@property (nonatomic) GuestLabelIndicator *teamsGuestIndicator;
-@property (nonatomic) BOOL showGuestLabel;
-@property (nonatomic) AvailabilityTitleView *availabilityView;
-@property (nonatomic) CustomSpacingStackView *stackView;
 @end
 
 @implementation ProfileDetailsViewController
@@ -89,63 +83,6 @@ typedef NS_ENUM(NSUInteger, ProfileViewContentMode) {
     [super viewDidLoad];
     [self setupViews];
     [self setupConstraints];
-}
-
-- (void)setupViews
-{
-    [self createUserImageView];
-    [self createFooter];
-    [self createGuestIndicator];
-    
-    self.view.backgroundColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorContentBackground];
-    self.stackViewContainer = [[UIView alloc] initForAutoLayout];
-    [self.view addSubview:self.stackViewContainer];
-    
-    self.teamsGuestIndicator.hidden = !self.showGuestLabel;
-    self.availabilityView.hidden = !ZMUser.selfUser.isTeamMember || self.fullUser.availability == AvailabilityNone;
-    
-    NSString *remainingTimeString = self.fullUser.expirationDisplayString;
-    self.remainingTimeLabel = [[UILabel alloc] initForAutoLayout];
-    [self.remainingTimeLabel setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisVertical];
-    self.remainingTimeLabel.text = remainingTimeString;
-    self.remainingTimeLabel.textColor = [ColorScheme.defaultColorScheme colorWithName:ColorSchemeColorTextForeground];
-    self.remainingTimeLabel.font = [UIFont mediumSemiboldFont];
-    self.remainingTimeLabel.hidden = nil == remainingTimeString;
-
-    [self createReadReceiptsEnabledLabel];
-    
-    UIView *userImageViewWrapper = [[UIView alloc] initWithFrame:CGRectZero];
-    userImageViewWrapper.translatesAutoresizingMaskIntoConstraints = NO;
-    [userImageViewWrapper addSubview:self.userImageView];
-    
-    [NSLayoutConstraint activateConstraints:
-    @[[self.userImageView.leadingAnchor constraintEqualToAnchor:userImageViewWrapper.leadingAnchor constant:40],
-      [self.userImageView.trailingAnchor constraintEqualToAnchor:userImageViewWrapper.trailingAnchor constant:-40],
-      [self.userImageView.topAnchor constraintEqualToAnchor:userImageViewWrapper.topAnchor],
-      [self.userImageView.bottomAnchor constraintEqualToAnchor:userImageViewWrapper.bottomAnchor]
-      ]];
-    
-    self.stackView = [[CustomSpacingStackView alloc] initWithCustomSpacedArrangedSubviews:@[userImageViewWrapper, self.teamsGuestIndicator, self.remainingTimeLabel, self.availabilityView, self.readReceiptsEnabledLabel]];
-    self.stackView.axis = UILayoutConstraintAxisVertical;
-    self.stackView.spacing = 0;
-    self.stackView.alignment = UIStackViewAlignmentCenter;
-    [self.stackViewContainer addSubview:self.stackView];
-    
-    CGFloat verticalSpacing = 32;
-    if (UIScreen.mainScreen.isSmall) {
-        verticalSpacing = 16;
-    }
-    
-    [self.stackView wr_addCustomSpacing:verticalSpacing after:userImageViewWrapper];
-
-    if (self.remainingTimeLabel.isHidden) {
-        [self.stackView wr_addCustomSpacing:(self.availabilityView.isHidden ? (verticalSpacing + 8) : verticalSpacing) after:self.teamsGuestIndicator];
-    } else {
-        [self.stackView wr_addCustomSpacing:8 after:self.teamsGuestIndicator];
-        [self.stackView wr_addCustomSpacing:(self.availabilityView.isHidden ? (verticalSpacing + 8) : verticalSpacing) after:self.remainingTimeLabel];
-    }
-    
-    [self.stackView wr_addCustomSpacing:verticalSpacing after:self.availabilityView];
 }
 
 - (void)setupConstraints

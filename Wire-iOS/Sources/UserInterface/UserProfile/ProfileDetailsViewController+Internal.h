@@ -19,6 +19,11 @@
 @class ConversationActionController;
 @protocol ActionController;
 
+@class UserImageView;
+@class GuestLabelIndicator;
+@class AvailabilityTitleView;
+@class CustomSpacingStackView;
+
 @interface ProfileDetailsViewController ()
 
 @property (nonatomic) UILabel *remainingTimeLabel;
@@ -27,9 +32,19 @@
 @property (nonatomic) UIView *footerView;
 @property (nonatomic) UILabel *readReceiptsEnabledLabel;
 @property (nonatomic) ProfileViewControllerContext context;
+@property (nonatomic) UserImageView *userImageView;
+@property (nonatomic) UIView *stackViewContainer;
+@property (nonatomic) GuestLabelIndicator *teamsGuestIndicator;
+@property (nonatomic) BOOL showGuestLabel;
+@property (nonatomic) AvailabilityTitleView *availabilityView;
+@property (nonatomic) CustomSpacingStackView *stackView;
 
 - (ZMUser *)fullUser;
 - (void)performRightButtonAction:(id)sender;
+
+- (void)createUserImageView;
+- (void)createFooter;
+- (void)createGuestIndicator;
 
 @end
 

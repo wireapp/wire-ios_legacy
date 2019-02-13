@@ -240,6 +240,8 @@ class SettingsCellDescriptorFactory {
         developerCellDescriptors.append(shareCryptobox)
         let reloadUIButton = SettingsButtonCellDescriptor(title: "Reload user interface", isDestructive: false, selectAction: SettingsCellDescriptorFactory.reloadUserInterface)
         developerCellDescriptors.append(reloadUIButton)
+        let recalculateBadgeCountButton = SettingsButtonCellDescriptor(title: "Re-calculate badge count", isDestructive: false, selectAction: SettingsCellDescriptorFactory.recalculateBadgeCount)
+        developerCellDescriptors.append(recalculateBadgeCountButton)
         let appendManyMessages = SettingsButtonCellDescriptor(title: "Append N messages to the top conv (not sending)", isDestructive: true) { _ in
             
             self.requestNumber() { count in
@@ -457,6 +459,25 @@ class SettingsCellDescriptorFactory {
         
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         controller.present(alert, animated: false)
+    }
+    
+    private static func recalculateBadgeCount(_ type: SettingsCellDescriptorType) {
+        guard let userSession = ZMUserSession.shared() else { return }
+        guard let controller = UIApplication.shared.wr_topmostController(onlyFullScreen: false) else { return }
+        
+        var conversations: [ZMConversation]? = nil
+        userSession.syncManagedObjectContext.performGroupedBlock {
+            conversations = try? userSession.syncManagedObjectContext.fetch(NSFetchRequest<ZMConversation>(entityName: ZMConversation.entityName()))
+            conversations?.forEach({ _ = $0.estimatedUnreadCount })
+        }
+        userSession.syncManagedObjectContext.dispatchGroup.wait(forInterval: 5)
+        userSession.syncManagedObjectContext.performGroupedBlockAndWait {
+            conversations = nil
+            userSession.syncManagedObjectContext.saveOrRollback()
+        }
+        
+        let alertController = UIAlertController(title: "Updated", message: "Badge count  has been re-calculated", cancelButtonTitle: "OK")
+        controller.show(alertController, sender: nil)
     }
     
     /// Check if there is any unread conversation, if there is, show an alert with the name and ID of the conversation
