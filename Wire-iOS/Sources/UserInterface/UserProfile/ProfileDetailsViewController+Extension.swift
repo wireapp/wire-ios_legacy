@@ -216,4 +216,29 @@ extension ProfileDetailsViewController {
             return .none
         }
     }
+
+    @objc(iconTypeForUserAction:)
+    func iconType(for userAction: ProfileUserAction) -> ZetaIconType {
+        switch userAction {
+            case .addPeople:
+                return .createConversation
+            case .presentMenu:
+                return .ellipsis
+            case .unblock:
+                return .block
+            case .block:
+                return .block
+            case .removePeople:
+                return .ellipsis
+            case .cancelConnectionRequest:
+                return .undo
+            case .openConversation:
+                return .conversation
+            case .sendConnectionRequest,
+                 .acceptConnectionRequest:
+                return .plus
+            default:
+                return .none
+        }
+    }
 }

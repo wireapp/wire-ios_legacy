@@ -209,48 +209,6 @@ typedef NS_ENUM(NSUInteger, ProfileViewContentMode) {
     return buttonText;
 }
 
-- (ZetaIconType)iconTypeForUserAction:(ProfileUserAction)userAction
-{
-    switch (userAction) {
-        case ProfileUserActionAddPeople:
-            return ZetaIconTypeCreateConversation;
-            break;
-            
-        case ProfileUserActionPresentMenu:
-            return ZetaIconTypeEllipsis;
-            break;
-            
-        case ProfileUserActionUnblock:
-            return ZetaIconTypeBlock;
-            break;
-            
-        case ProfileUserActionBlock:
-            return ZetaIconTypeBlock;
-            break;
-            
-        case ProfileUserActionRemovePeople:
-            return ZetaIconTypeEllipsis;
-            break;
-            
-        case ProfileUserActionCancelConnectionRequest:
-            return ZetaIconTypeUndo;
-            break;
-            
-        case ProfileUserActionOpenConversation:
-            return ZetaIconTypeConversation;
-            break;
-            
-        case ProfileUserActionSendConnectionRequest:
-        case ProfileUserActionAcceptConnectionRequest:
-            return ZetaIconTypePlus;
-            break;
-            
-        default:
-            return ZetaIconTypeNone;
-            break;
-    }
-}
-
 #pragma mark - Actions
 
 - (void)performLeftButtonAction:(id)sender
