@@ -30,13 +30,14 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
     override var needsCaches: Bool {
         return true
     }
-
-
+    
     func testStatusForNotActiveConversationWithHandle() {
         // GIVEN
         let sut = self.otherUserConversation!
+        
         // WHEN
         let status = sut.status.description(for: sut)
+        
         // THEN
         XCTAssertEqual(status.string, "@" + otherUser.handle!)
     }
@@ -44,8 +45,10 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
     func testStatusForNotActiveConversationGroup() {
         // GIVEN
         let sut = self.createGroupConversation()
+        
         // WHEN
         let status = sut.status.description(for: sut)
+        
         // THEN
         XCTAssertEqual(status.string, "")
     }
@@ -55,8 +58,10 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         let sut = self.otherUserConversation!
         let message = sut.append(text: "text") as! ZMMessage
         message.expire()
+        
         // WHEN
         let status = sut.status.description(for: sut)
+        
         // THEN
         XCTAssertEqual(status.string, "⚠️ Unsent message")
     }
@@ -65,8 +70,10 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         // GIVEN
         let sut = self.otherUserConversation!
         self.otherUser.block()
+        
         // WHEN
         let status = sut.status.description(for: sut)
+        
         // THEN
         XCTAssertEqual(status.string, "Blocked")
     }
@@ -75,9 +82,11 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         // GIVEN
         let sut = self.otherUserConversation!
         appendMissedCall(to: sut)
+        markAllMessagesAsUnread(in: sut)
 
         // WHEN
         let status = sut.status.description(for: sut)
+        
         // THEN
         XCTAssertEqual(status.string, "Missed call")
     }
@@ -86,6 +95,7 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         // GIVEN
         let sut = createGroupConversation()
         appendMissedCall(to: sut)
+        markAllMessagesAsUnread(in: sut)
 
         // WHEN
         let status = sut.status.description(for: sut)
@@ -115,10 +125,11 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         for index in 1...5 {
             (sut.append(text: "test \(index)") as! ZMMessage).sender = self.otherUser
         }
-        sut.lastReadServerTimeStamp = Date.distantPast
+        markAllMessagesAsUnread(in: sut)
 
         // WHEN
         let status = sut.status.description(for: sut)
+        
         // THEN
         XCTAssertEqual(status.string, "test 5")
     }
@@ -132,9 +143,12 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         for index in 1...2 {
             appendReply(to: sut, selfMessage: selfMessage, text: "reply test \(index)")
         }
+        
+        markAllMessagesAsUnread(in: sut)
 
         // WHEN
         let status = sut.status.description(for: sut)
+        
         // THEN
         XCTAssertEqual(status.string, "reply test 2")
     }
@@ -159,10 +173,11 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
             (sut.append(text: "test \(index)") as! ZMMessage).sender = self.otherUser
         }
 
-        sut.lastReadServerTimeStamp = Date.distantPast
+        markAllMessagesAsUnread(in: sut)
 
         // WHEN
         let status = sut.status.description(for: sut)
+        
         // THEN
         XCTAssertEqual(status.string, "3 replies, 1 missed call, 2 messages")
     }
@@ -178,10 +193,11 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         (sut.append(text: "@self test", mentions: [selfMention]) as! ZMMessage).sender = self.otherUser
         sut.setPrimitiveValue(1, forKey: ZMConversationInternalEstimatedUnreadSelfMentionCountKey)
         
-        sut.lastReadServerTimeStamp = Date.distantPast
+        markAllMessagesAsUnread(in: sut)
         
         // WHEN
         let status = sut.status.description(for: sut)
+        
         // THEN
         XCTAssertEqual(status.string, "1 mention, 5 messages")
     }
@@ -197,10 +213,11 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         otherMessage.systemMessageType = .conversationNameChanged
         sut.append(otherMessage)
         
-        sut.lastReadServerTimeStamp = Date.distantPast
+        markAllMessagesAsUnread(in: sut)
         
         // WHEN
         let status = sut.status.description(for: sut)
+        
         // THEN
         XCTAssertEqual(status.string, "test 5")
     }
@@ -212,6 +229,7 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         
         // WHEN
         let status = sut.status.description(for: sut)
+        
         // THEN
         XCTAssertEqual(status.string, "You left")
     }
@@ -225,10 +243,12 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         otherMessage.users = Set([self.selfUser])
         otherMessage.addedUsers = Set([self.selfUser])
         sut.append(otherMessage)
-        sut.lastReadServerTimeStamp = Date.distantPast
+        
+        markAllMessagesAsUnread(in: sut)
         
         // WHEN
         let status = sut.status.description(for: sut)
+        
         // THEN
         XCTAssertEqual(status.string, "\(self.otherUser.displayName) added you")
     }
@@ -242,10 +262,12 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         otherMessage.users = Set([self.otherUser])
         otherMessage.addedUsers = Set([self.otherUser])
         sut.append(otherMessage)
-        sut.lastReadServerTimeStamp = Date.distantPast
+        
+        markAllMessagesAsUnread(in: sut)
         
         // WHEN
         let status = sut.status.description(for: sut)
+        
         // THEN
         XCTAssertEqual(status.string, "")
     }
@@ -260,68 +282,14 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         otherMessage.users = Set([self.otherUser])
         otherMessage.removedUsers = Set([self.otherUser])
         sut.append(otherMessage)
-        sut.lastReadServerTimeStamp = Date.distantPast
+        
+        markAllMessagesAsUnread(in: sut)
         
         // WHEN
         let status = sut.status.description(for: sut)
+        
         // THEN
         XCTAssertEqual(status.string, "")
-    }
-
-    func testEveryoneLeftStatusAfterLastPersonLeft() {
-        // Given
-        let sut = ZMConversation.insertNewObject(in: uiMOC)
-        sut.conversationType = .group
-
-        let otherMessage = ZMSystemMessage(nonce: UUID(), managedObjectContext: uiMOC)
-        otherMessage.systemMessageType = .participantsRemoved
-        otherMessage.sender = selfUser
-        otherMessage.users = [otherUser]
-        otherMessage.removedUsers = [otherUser]
-        sut.append(otherMessage)
-        sut.lastReadServerTimeStamp = .distantPast
-
-        // When
-        let status = sut.status.description(for: sut)
-
-        // Then
-        XCTAssertEqual(status.string, "Everyone left")
-    }
-    
-    func testStatusForSystemMessageSomeoneWasAdded() {
-        // GIVEN
-        let sut = createGroupConversation()
-        let otherMessage = ZMSystemMessage(nonce: UUID(), managedObjectContext: uiMOC)
-        otherMessage.systemMessageType = .participantsAdded
-        let anotherUser = ZMUser.insertNewObject(in: uiMOC)
-        anotherUser.name = "Marie"
-        otherMessage.sender = self.otherUser
-        otherMessage.users = [anotherUser]
-        otherMessage.addedUsers = [anotherUser]
-        sut.append(otherMessage)
-        sut.lastReadServerTimeStamp = Date.distantPast
-        
-        // WHEN
-        let status = sut.status.description(for: sut)
-        // THEN
-        XCTAssertEqual(status.string, "\(self.otherUser.displayName) added \(anotherUser.displayName)")
-    }
-    
-    func testStatusForSystemMessageSomeoneJoined() {
-        // GIVEN
-        let sut = createGroupConversation()
-        let otherMessage = ZMSystemMessage(nonce: UUID(), managedObjectContext: uiMOC)
-        otherMessage.systemMessageType = .participantsAdded
-        otherMessage.sender = self.otherUser
-        otherMessage.users = Set([self.otherUser])
-        otherMessage.addedUsers = Set([self.otherUser])
-        sut.append(otherMessage)
-        sut.lastReadServerTimeStamp = Date.distantPast
-        
-        // WHEN
-        let status = sut.status.description(for: sut)
-        // THEN
-        XCTAssertEqual(status.string, "\(self.otherUser.displayName) joined")
     }
     
     func testStatusForSystemMessageIWasRemoved() {
@@ -333,7 +301,8 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         otherMessage.users = Set([self.selfUser])
         otherMessage.removedUsers = Set([self.selfUser])
         sut.append(otherMessage)
-        sut.lastReadServerTimeStamp = Date.distantPast
+        
+        markAllMessagesAsUnread(in: sut)
         
         // WHEN
         let status = sut.status.description(for: sut)
@@ -352,7 +321,8 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         otherMessage.users = Set([self.otherUser])
         otherMessage.removedUsers = Set([self.otherUser])
         sut.append(otherMessage)
-        sut.lastReadServerTimeStamp = Date.distantPast
+        
+        markAllMessagesAsUnread(in: sut)
         
         // WHEN
         let status = sut.status.description(for: sut)
@@ -368,7 +338,9 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         otherMessage.sender = self.otherUser
         otherMessage.users = Set([self.otherUser, self.selfUser])
         otherMessage.addedUsers = Set([self.otherUser, self.selfUser])
+        sut.lastServerTimeStamp = Date()
         sut.append(otherMessage)
+        markAllMessagesAsUnread(in: sut)
         
         // WHEN
         let status = sut.status.description(for: sut)
@@ -396,14 +368,16 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         // GIVEN
         let sut = self.createGroupConversation()
         sut.managedObjectContext?.saveOrRollback()
-        
         sut.managedObjectContext?.typingUsers.update([otherUser], in: sut)
         
         let selfMention = Mention(range: NSRange(location: 0, length: 5), user: self.selfUser)
         (sut.append(text: "@self test", mentions: [selfMention]) as! ZMMessage).sender = self.otherUser
-        sut.lastReadServerTimeStamp = Date.distantPast
+        
+        markAllMessagesAsUnread(in: sut)
+        
         // WHEN
         let status = sut.status
+        
         // THEN
         XCTAssertEqual(status.isTyping, true)
         XCTAssertEqual(status.messagesRequiringAttentionByType[.mention]!, 1)
