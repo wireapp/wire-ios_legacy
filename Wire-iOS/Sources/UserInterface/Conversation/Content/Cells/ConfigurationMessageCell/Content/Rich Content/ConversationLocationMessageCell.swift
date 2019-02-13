@@ -23,10 +23,7 @@ class ConversationLocationMessageCell: UIView, ConversationMessageCell {
 
     struct Configuration {
         let location: LocationMessageData
-        let message: ZMConversationMessage
-        var isObfuscated: Bool {
-            return message.isObfuscated
-        }
+        let isObfuscated: Bool
     }
 
     private var lastConfiguration: Configuration?
@@ -130,7 +127,6 @@ class ConversationLocationMessageCell: UIView, ConversationMessageCell {
         lastConfiguration = object
         recognizer?.isEnabled = !object.isObfuscated
         obfuscationView.isHidden = !object.isObfuscated
-        mapView.isHidden = object.isObfuscated
 
         if let address = object.location.name {
             addressContainerView.isHidden = false
@@ -193,6 +189,6 @@ class ConversationLocationMessageCellDescription: ConversationMessageCellDescrip
     let accessibilityLabel: String? = nil
 
     init(message: ZMConversationMessage, location: LocationMessageData) {
-        configuration = View.Configuration(location: location, message: message)
+        configuration = View.Configuration(location: location, isObfuscated: message.isObfuscated)
     }
 }

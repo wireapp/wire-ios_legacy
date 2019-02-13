@@ -16,4 +16,10 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-WIRE_SHORT_VERSION = 3.27
+
+#import <UIKit/UIKit.h>
+
+
+@interface UIView (RemoveAnimations)
+- (void)removeAllAnimationsRecursive;
+@end

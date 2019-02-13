@@ -22,9 +22,7 @@ class ConversationFileMessageCell: RoundedView, ConversationMessageCell {
 
     struct Configuration {
         let message: ZMConversationMessage
-        var isObfuscated: Bool {
-            return message.isObfuscated
-        }
+        let isObfuscated: Bool
     }
 
     private let fileTransferView = FileTransferView(frame: .zero)
@@ -129,7 +127,7 @@ class ConversationFileMessageCellDescription: ConversationMessageCellDescription
     let accessibilityLabel: String? = nil
 
     init(message: ZMConversationMessage) {
-        self.configuration = View.Configuration(message: message)
+        self.configuration = View.Configuration(message: message, isObfuscated: message.isObfuscated)
     }
         
 }

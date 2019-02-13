@@ -22,10 +22,8 @@ class ConversationImageMessageCell: UIView, ConversationMessageCell {
     
     struct Configuration {
         let image: ZMImageMessageData
-        let message: ZMConversationMessage
-        var isObfuscated: Bool {
-            return message.isObfuscated
-        }
+        let isObfuscated: Bool
+        let message: ZMConversationMessage?
     }
     
     private var containerView = UIView()
@@ -101,7 +99,7 @@ class ConversationImageMessageCell: UIView, ConversationMessageCell {
     
     func configure(with object: Configuration, animated: Bool) {
         obfuscationView.isHidden = !object.isObfuscated
-
+        
         let scaleFactor: CGFloat = object.image.isAnimatedGIF ? 1 : 0.5
         let imageSize = object.image.originalSize.applying(CGAffineTransform.init(scaleX: scaleFactor, y: scaleFactor))
         
@@ -118,7 +116,7 @@ class ConversationImageMessageCell: UIView, ConversationMessageCell {
 
         imageResourceView.setImageResource(imageResource) { [weak self] in
             self?.updateImageContainerAppearance()
-            _ = object.message.startSelfDestructionIfNeeded()
+            _ = object.message?.startSelfDestructionIfNeeded()
         }
     }
     
@@ -155,7 +153,7 @@ class ConversationImageMessageCellDescription: ConversationMessageCellDescriptio
     
     init(message: ZMConversationMessage, image: ZMImageMessageData) {
         self.message = message
-        self.configuration = View.Configuration(image: image, message: message)
+        self.configuration = View.Configuration(image: image, isObfuscated: message.isObfuscated, message: message)
     }
     
 }

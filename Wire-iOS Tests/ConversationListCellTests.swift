@@ -73,12 +73,19 @@ class ConversationListCellTests: CoreDataSnapshotTestCase {
         // then
         verify(otherUserConversation)
     }
+    
+    func testThatItRendersConversationWithMessagesFromSelf() {
+        // when
+        otherUserConversation.append(text: "Hey there!")
         
+        // then
+        verify(otherUserConversation)
+    }
+    
     func testThatItRendersConversationWithNewMessage() {
         // when
         let message = otherUserConversation.append(text: "Hey there!")
         (message as! ZMClientMessage).sender = otherUser
-        otherUserConversation.setPrimitiveValue(1, forKey: ZMConversationInternalEstimatedUnreadCountKey)
         
         // then
         verify(otherUserConversation)
@@ -90,7 +97,6 @@ class ConversationListCellTests: CoreDataSnapshotTestCase {
             let message = otherUserConversation.append(text: "Hey there!")
             (message as! ZMClientMessage).sender = otherUser
         }
-        otherUserConversation.setPrimitiveValue(1, forKey: ZMConversationInternalEstimatedUnreadCountKey)
         
         // then
         verify(otherUserConversation)
@@ -103,7 +109,6 @@ class ConversationListCellTests: CoreDataSnapshotTestCase {
         
         let selfMention = Mention(range: NSRange(location: 0, length: 5), user: self.selfUser)
         (otherUserConversation.append(text: "@self test", mentions: [selfMention]) as! ZMMessage).sender = self.otherUser
-        otherUserConversation.setPrimitiveValue(1, forKey: ZMConversationInternalEstimatedUnreadCountKey)
         otherUserConversation.setPrimitiveValue(1, forKey: ZMConversationInternalEstimatedUnreadSelfMentionCountKey)
         
         // then
@@ -124,7 +129,6 @@ class ConversationListCellTests: CoreDataSnapshotTestCase {
         let replyMessage = otherUserConversation.append(text: "Pong!", replyingTo: selfMessage)
         (replyMessage as! ZMMessage).sender = otherUser
 
-        otherUserConversation.setPrimitiveValue(1, forKey: ZMConversationInternalEstimatedUnreadCountKey)
         otherUserConversation.setPrimitiveValue(1, forKey: ZMConversationInternalEstimatedUnreadSelfMentionCountKey)
         otherUserConversation.setPrimitiveValue(1, forKey: ZMConversationInternalEstimatedUnreadSelfReplyCountKey)
 
@@ -140,7 +144,6 @@ class ConversationListCellTests: CoreDataSnapshotTestCase {
         let replyMessage = otherUserConversation.append(text: "reply test", replyingTo: message)
         (replyMessage as! ZMMessage).sender = otherUser
 
-        otherUserConversation.setPrimitiveValue(1, forKey: ZMConversationInternalEstimatedUnreadCountKey)
         otherUserConversation.setPrimitiveValue(1, forKey: ZMConversationInternalEstimatedUnreadSelfReplyCountKey)
 
         // then
@@ -153,7 +156,6 @@ class ConversationListCellTests: CoreDataSnapshotTestCase {
         (otherUserConversation.append(text: "@self test", mentions: [selfMention]) as! ZMMessage).sender = self.otherUser
         let message = otherUserConversation.append(text: "Hey there!")
         (message as! ZMClientMessage).sender = otherUser
-        otherUserConversation.setPrimitiveValue(1, forKey: ZMConversationInternalEstimatedUnreadCountKey)
         otherUserConversation.setPrimitiveValue(1, forKey: ZMConversationInternalEstimatedUnreadSelfMentionCountKey)
         
         // then
@@ -167,7 +169,6 @@ class ConversationListCellTests: CoreDataSnapshotTestCase {
         (message as! ZMClientMessage).sender = otherUser
         let selfMention = Mention(range: NSRange(location: 0, length: 5), user: self.selfUser)
         (otherUserConversation.append(text: "@self test", mentions: [selfMention]) as! ZMMessage).sender = self.otherUser
-        otherUserConversation.setPrimitiveValue(1, forKey: ZMConversationInternalEstimatedUnreadCountKey)
         otherUserConversation.setPrimitiveValue(1, forKey: ZMConversationInternalEstimatedUnreadSelfMentionCountKey)
         
         // then
@@ -181,8 +182,15 @@ class ConversationListCellTests: CoreDataSnapshotTestCase {
         (otherUserConversation.append(text: "@self test", mentions: [selfMention]) as! ZMMessage).sender = self.otherUser
         let message = otherUserConversation.append(text: "Hey there!")
         (message as! ZMClientMessage).sender = otherUser
-        otherUserConversation.setPrimitiveValue(1, forKey: ZMConversationInternalEstimatedUnreadCountKey)
         otherUserConversation.setPrimitiveValue(1, forKey: ZMConversationInternalEstimatedUnreadSelfMentionCountKey)
+        
+        // then
+        verify(otherUserConversation)
+    }
+    
+    func testThatItRendersConversationWithKnockFromSelf() {
+        // when
+        otherUserConversation.appendKnock()
         
         // then
         verify(otherUserConversation)
@@ -192,7 +200,6 @@ class ConversationListCellTests: CoreDataSnapshotTestCase {
         // when
         let knock = otherUserConversation.appendKnock()
         (knock as! ZMClientMessage).sender = otherUser
-        otherUserConversation.setPrimitiveValue(1, forKey: ZMConversationInternalEstimatedUnreadCountKey)
         
         // then
         verify(otherUserConversation)
@@ -285,7 +292,7 @@ class ConversationListCellTests: CoreDataSnapshotTestCase {
     }
 
     
-    func verify(conversation: ZMConversation?, icon: ConversationStatusIcon?) {
+    func verify(conversation: ZMConversation?, icon: ConversationStatusIcon) {
         guard let conversation = conversation else { XCTFail(); return }
         sut.conversation = conversation
         sut.itemView.rightAccessory.icon = icon
