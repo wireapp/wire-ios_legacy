@@ -48,9 +48,7 @@ class ConversationStatusTests_Icon: CoreDataSnapshotTestCase {
             (conversation.append(text: "@self test", mentions: [selfMention]) as! ZMMessage).sender = self.otherUser
             conversation.setPrimitiveValue(1, forKey: ZMConversationInternalEstimatedUnreadSelfMentionCountKey)
         }
-        
-        markAllMessagesAsUnread(in: conversation)
-        
+        conversation.lastReadServerTimeStamp = Date.distantPast
         return conversation
     }
 

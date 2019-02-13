@@ -151,11 +151,6 @@ open class CoreDataSnapshotTestCase: ZMSnapshotTestCase {
         updateTeamStatus(wasInTeam: wasInTeam)
         block()
     }
-    
-    func markAllMessagesAsUnread(in conversation: ZMConversation) {
-        conversation.lastReadServerTimeStamp = Date.distantPast
-        conversation.setPrimitiveValue(1, forKey: ZMConversationInternalEstimatedUnreadCountKey)
-    }
 
 }
 

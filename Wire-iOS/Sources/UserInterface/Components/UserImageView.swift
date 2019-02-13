@@ -242,13 +242,10 @@ import WireSyncEngine
 
     /// Updates the interface to reflect if the user is a service user or not.
     private func updateForServiceUserIfNeeded(_ user: UserType) {
-        let oldValue = shape
         shape = shape(for: user)
-        if oldValue != shape {
-            container.layer.borderColor = borderColor(for: user)
-            container.layer.borderWidth = borderWidth(for: user)
-            container.backgroundColor = containerBackgroundColor(for: user)
-        }
+        container.layer.borderColor = borderColor(for: user)
+        container.layer.borderWidth = borderWidth(for: user)
+        container.backgroundColor = containerBackgroundColor(for: user)
     }
 
 }

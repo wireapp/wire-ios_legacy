@@ -16,4 +16,36 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-WIRE_SHORT_VERSION = 3.27
+
+#import "UIView+RemoveAnimations.h"
+
+
+@interface CALayer (AnimationRemoval)
+- (void)removeAllAnimationsRecursive;
+@end
+
+@implementation CALayer (AnimationRemoval)
+
+- (void)removeAllAnimationsRecursive
+{
+    for (CALayer *layer in self.sublayers) {
+        [layer removeAllAnimationsRecursive];
+    }
+
+    [self removeAllAnimations];
+}
+
+@end
+
+@implementation UIView (RemoveAnimations)
+
+- (void)removeAllAnimationsRecursive
+{
+    for (UIView *subview in self.subviews) {
+        [subview removeAllAnimationsRecursive];
+    }
+
+    [self.layer removeAllAnimationsRecursive];
+}
+
+@end

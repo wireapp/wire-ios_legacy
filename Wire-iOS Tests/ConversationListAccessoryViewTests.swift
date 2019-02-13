@@ -36,7 +36,7 @@ class ConversationListAccessoryViewTests: ZMSnapshotTestCase {
 
     func testThatItIsEmptyForNoStatus() {
         // WHEN
-        sut.icon = nil
+        sut.icon = ConversationStatusIcon.none
         // THEN
         sut.setNeedsLayout()
         sut.layoutIfNeeded()
