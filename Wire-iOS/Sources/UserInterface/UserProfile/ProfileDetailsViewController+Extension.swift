@@ -69,7 +69,8 @@ extension ProfileDetailsViewController {
         remainingTimeLabel.font = UIFont.mediumSemiboldFont
         remainingTimeLabel.isHidden = nil == remainingTimeString
 
-        createReadReceiptsEnabledLabel() ///TODO: do not show for group conversaton
+        createReadReceiptsEnabledLabel()
+        readReceiptsEnabledLabel.isHidden = conversation.conversationType != .oneOnOne
 
         let userImageViewWrapper = UIView(frame: CGRect.zero)
         userImageViewWrapper.translatesAutoresizingMaskIntoConstraints = false
@@ -128,7 +129,7 @@ extension ProfileDetailsViewController {
     
     // MARK: - Bottom labels
     
-    @objc func createReadReceiptsEnabledLabel() {
+    func createReadReceiptsEnabledLabel() {
         guard let selfUser = ZMUser.selfUser() else {
             return
         }
