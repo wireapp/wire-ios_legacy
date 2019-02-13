@@ -46,6 +46,13 @@
 - (void)createFooter;
 - (void)createGuestIndicator;
 
+- (void)presentAddParticipantsViewController;
+- (void)unblockUser;
+- (void)openOneToOneConversation;
+- (void)bringUpConnectionRequestSheet;
+- (void)sendConnectionRequest;
+- (void)bringUpCancelConnectionRequestSheet;
+
 @end
 
 typedef NS_ENUM(NSUInteger, ProfileUserAction) {

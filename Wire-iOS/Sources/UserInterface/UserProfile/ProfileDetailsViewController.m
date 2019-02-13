@@ -221,45 +221,6 @@ typedef NS_ENUM(NSUInteger, ProfileViewContentMode) {
     [self performUserAction:[self rightButtonAction]];
 }
 
-- (void)performUserAction:(ProfileUserAction)action
-{
-    switch (action) {
-        case ProfileUserActionAddPeople:
-            [self presentAddParticipantsViewController];
-            break;
-            
-        case ProfileUserActionPresentMenu:
-            [self presentMenuSheetController];
-            break;
-            
-        case ProfileUserActionUnblock:
-            [self unblockUser];
-            break;
-            
-        case ProfileUserActionOpenConversation:
-            [self openOneToOneConversation];
-            break;
-            
-        case ProfileUserActionRemovePeople:
-            [self presentRemoveUserMenuSheetController];
-            break;
-            
-        case ProfileUserActionAcceptConnectionRequest:
-            [self bringUpConnectionRequestSheet];
-            break;
-            
-        case ProfileUserActionSendConnectionRequest:
-            [self sendConnectionRequest];
-            break;
-            
-        case ProfileUserActionCancelConnectionRequest:
-            [self bringUpCancelConnectionRequestSheet];
-            break;
-        default:
-            break;
-    }
-}
-
 - (void)presentAddParticipantsViewController
 {
     NSSet *selectedUsers = nil;

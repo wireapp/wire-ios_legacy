@@ -122,6 +122,31 @@ extension ProfileDetailsViewController {
 
     // MARK: - action menu
 
+    @objc(performUserAction:)
+    func perform(action: ProfileUserAction) {
+        switch action {
+            case .addPeople:
+                presentAddParticipantsViewController()
+            case .presentMenu:
+                presentMenuSheetController()
+            case .unblock:
+                unblockUser()
+            case .openConversation:
+                openOneToOneConversation()
+            case .removePeople:
+                presentRemoveUserMenuSheetController()
+            case .acceptConnectionRequest:
+                bringUpConnectionRequestSheet()
+            case .sendConnectionRequest:
+                sendConnectionRequest()
+            case .cancelConnectionRequest:
+                bringUpCancelConnectionRequestSheet()
+            case .none,
+                 .block:
+                break
+        }
+    }
+
     @objc func presentMenuSheetController() {
         actionsController = ConversationActionController(conversation: conversation, target: self)
         actionsController.presentMenu(from: footerView, showConverationNameInMenuTitle: false)
