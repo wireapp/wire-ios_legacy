@@ -27,6 +27,7 @@ final class ProfileSelfPictureViewControllerSnapshotTests: ZMSnapshotTestCase {
         super.setUp()
         sut = ProfileSelfPictureViewController()
 
+        // call viewDidLoad
         sut.loadViewIfNeeded()
         let image = self.image(inTestBundleNamed: "unsplash_matterhorn.jpg")
 
@@ -38,7 +39,7 @@ final class ProfileSelfPictureViewControllerSnapshotTests: ZMSnapshotTestCase {
         super.tearDown()
     }
 
-    func testForInitState(){
+    func testForInitState() {
         verify(view: sut.view)
     }
 }
