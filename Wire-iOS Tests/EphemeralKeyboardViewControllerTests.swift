@@ -16,11 +16,8 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 import XCTest
-import Cartography
 @testable import Wire
-
 
 class EphemeralKeyboardViewControllerTests: CoreDataSnapshotTestCase {
 
@@ -56,10 +53,12 @@ class EphemeralKeyboardViewControllerTests: CoreDataSnapshotTestCase {
 fileprivate extension UIViewController {
 
     func prepareForSnapshots() -> UIView {
-        constrain(view) { view in
-            view.height == 290
-            view.width == 375
-        }
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            view.heightAnchor.constraint(equalToConstant: 290),
+            view.widthAnchor.constraint(equalToConstant: 375)
+        ])
 
         beginAppearanceTransition(true, animated: false)
         endAppearanceTransition()

@@ -16,9 +16,7 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
 import XCTest
-import Cartography
 @testable import Wire
 
 class TestCharacterInputFieldDelegate: NSObject, CharacterInputFieldDelegate {
@@ -265,16 +263,18 @@ final class CharacterInputFieldScreenshotTests: ZMSnapshotTestCase {
 fileprivate extension UIView {
     func snapshotView() -> UIView {
         let topView = UIApplication.shared.keyWindow!.rootViewController!.view!
-            
         topView.addSubview(self)
-
-        constrain(self, topView) { selfView, topView in
-            selfView.center == topView.center
-        }
+        translatesAutoresizingMaskIntoConstraints = false
+        topView.translatesAutoresizingMaskIntoConstraints = false
         
-        self.layer.speed = 0
-        self.setNeedsLayout()
-        self.layoutIfNeeded()
+        NSLayoutConstraint.activate([
+            topView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            topView.centerYAnchor.constraint(equalTo: centerYAnchor)
+        ])
+        
+        layer.speed = 0
+        setNeedsLayout()
+        layoutIfNeeded()
         return self
     }
 }

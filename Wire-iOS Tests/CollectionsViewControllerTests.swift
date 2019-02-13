@@ -17,9 +17,8 @@
 //
 
 import XCTest
-import Cartography
-@testable import Wire
 import WireDataModel
+@testable import Wire
 
 extension MockMessage {
     var message: ZMConversationMessage {

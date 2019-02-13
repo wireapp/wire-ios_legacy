@@ -16,9 +16,7 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 import XCTest
-import Cartography
 @testable import Wire
 
 @objc private class MockAudioRecordViewControllerDelegate: NSObject, AudioRecordViewControllerDelegate {
@@ -133,14 +131,16 @@ private extension UIViewController {
 
         let container = UIView()
         container.addSubview(view)
-
-        constrain(view, container) { view, container in
-            view.height == 112
-            container.height == 130
-            view.bottom == container.bottom
-            view.left == container.left
-            view.right == container.right
-        }
+        container.translatesAutoresizingMaskIntoConstraints = false
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            view.heightAnchor.constraint(equalToConstant: 112),
+            container.heightAnchor.constraint(equalToConstant: 130),
+            view.bottomAnchor.constraint(equalTo: container.bottomAnchor),
+            view.leadingAnchor.constraint(equalTo: container.leadingAnchor),
+            view.trailingAnchor.constraint(equalTo: container.trailingAnchor)
+        ])
 
         return container
     }

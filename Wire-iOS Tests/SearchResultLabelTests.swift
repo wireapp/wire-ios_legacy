@@ -16,9 +16,7 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
 import XCTest
-import Cartography
 @testable import Wire
 
 class SearchResultLabelTests: ZMSnapshotTestCase {
@@ -63,13 +61,11 @@ class SearchResultLabelTests: ZMSnapshotTestCase {
             print("Testing combination " + identifier)
 
             $0.result.configure(with: $0.result.resultText!, queries: $0.result.queries)
-
-            constrain($0.result) { label in
-                label.width <= 320
-            }
             $0.result.numberOfLines = 1
+            $0.result.translatesAutoresizingMaskIntoConstraints = false
             $0.result.setContentCompressionResistancePriority(.required, for: .vertical)
             $0.result.setContentHuggingPriority(.required, for: .vertical)
+            $0.result.widthAnchor.constraint(lessThanOrEqualToConstant: 320).isActive = true
 
             $0.result.layoutForTest()
             let mockBackgroundView = UIView(frame: $0.result.frame)
