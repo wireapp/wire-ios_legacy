@@ -1120,7 +1120,7 @@
 "team.name.subheadline" = "Vous pourrez toujours le modifier plus tard.";
 "team.name.textfield.placeholder" = "nom de l'équipe";
 "team.name.textfield.accessibility" = "Définir le nom de l'équipe";
-"team.name.whatiswireforteams" = "Qu'est ce que Wire Pro ?";
+"team.name.whatiswireforteams" = "Qu'est-ce que Wire Pro ?";
 
 "team.email.headline" = "Votre compte";
 "team.email.subheadline" = "Saisissez votre adresse e-mail professionnelle.";
