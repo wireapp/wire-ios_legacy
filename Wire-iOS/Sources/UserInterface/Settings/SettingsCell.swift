@@ -372,7 +372,8 @@ protocol SettingsCellType: class {
         textInput.textAlignment = .right
         textInput.textColor = UIColor.lightGray
         textInput.setContentCompressionResistancePriority(UILayoutPriority.defaultLow, for: .horizontal)
-
+        textInput.isAccessibilityElement = true
+        
         contentView.addSubview(textInput)
 
         createConstraints()
@@ -401,7 +402,7 @@ protocol SettingsCellType: class {
         super.setupAccessibiltyElements()
         
         var currentElements = accessibilityElements ?? []
-        currentElements.append(contentsOf: [textInput!])
+        currentElements.append(textInput)
         accessibilityElements = currentElements
     }
     

@@ -34,16 +34,18 @@ final class UserRight: UserRightInterface {
     }
 
     static func selfUserIsPermitted(to permission: UserRight.Permission) -> Bool {
+        let selfUser = ZMUser.selfUser()
+        let usesCompanyLogin = selfUser?.usesCompanyLogin == true
+        
         switch permission {
         case .editEmail:
         #if EMAIL_EDITING_DISABLED
             return false
         #else
-            return isProfileEditable
+            return isProfileEditable && !usesCompanyLogin
         #endif
         case .resetPassword:
-        	///TODO: For SSO user we don't allow setting or resetting the password
-            break
+            return isProfileEditable && !usesCompanyLogin
         case .editName,
              .editHandle,
              .editPhone,
@@ -51,8 +53,6 @@ final class UserRight: UserRightInterface {
              .editAccentColor:
 			return isProfileEditable
         }
-
-        return false
     }
 	
 	private static var isProfileEditable: Bool {

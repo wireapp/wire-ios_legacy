@@ -46,8 +46,17 @@ class SettingsPropertyTextValueCellDescriptor: SettingsPropertyCellDescriptorTyp
         if let stringValue = settingsProperty.rawValue() as? String {
             textCell.textInput.text = stringValue
         }
-
-        textCell.textInput.isUserInteractionEnabled = settingsProperty.enabled
+        
+        if settingsProperty.enabled {
+            textCell.textInput.isUserInteractionEnabled = true
+            textCell.textInput.accessibilityTraits.remove(.staticText)
+        } else {
+            textCell.textInput.isUserInteractionEnabled = false
+            textCell.textInput.accessibilityTraits.insert(.staticText)
+        }
+        
+        textCell.textInput.accessibilityIdentifier = title + "Field"
+        textCell.textInput.isAccessibilityElement = true
     }
     
     func select(_ value: SettingsPropertyValue?) {
