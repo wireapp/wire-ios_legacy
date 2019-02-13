@@ -16,8 +16,7 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
-import Cartography
+import XCTest
 @testable import Wire
 
 class LocationSendViewControllerTests: ZMSnapshotTestCase {
@@ -53,7 +52,7 @@ class LocationSendViewControllerTests: ZMSnapshotTestCase {
 
 private extension UIViewController {
     func prepareForSnapshot() -> UIView {
-        constrain(self.view) { $0.height == 56 }
-        return self.view
+        view.heightAnchor.constraint(equalToConstant: 56).isActive = true
+        return view
     }
 }

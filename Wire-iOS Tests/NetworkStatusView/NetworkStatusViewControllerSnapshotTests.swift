@@ -16,8 +16,7 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
-import Cartography
+import XCTest
 @testable import Wire
 
 class MockContainerViewController: UIViewController, NetworkStatusBarDelegate {
@@ -55,13 +54,14 @@ final class NetworkStatusViewControllerSnapshotTests: ZMSnapshotTestCase {
         mockContainerViewController.view.addSubview(mockContentView)
 
         sut.createConstraintsInParentController(bottomView: mockContentView, controller: mockContainerViewController)
-
-        constrain(mockContentView, mockContainerViewController.view) { mockContentView, view in
-            mockContentView.left == view.left
-            mockContentView.right == view.right
-
-            mockContentView.bottom == view.bottom - UIScreen.safeArea.bottom
-        }
+        
+        mockContentView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            mockContentView.leadingAnchor.constraint(equalTo: mockContainerViewController.view.leadingAnchor),
+            mockContentView.trailingAnchor.constraint(equalTo: mockContainerViewController.view.trailingAnchor),
+            mockContentView.bottomAnchor.constraint(equalTo: mockContainerViewController.safeBottomAnchor)
+        ])
     }
 
     override func tearDown() {
