@@ -120,6 +120,11 @@ class SettingsExternalScreenCellDescriptor: SettingsExternalScreenCellDescriptor
         cell.titleText = self.title
         cell.titleColor = UIColor.white
         
+        if let tableCell = cell as? SettingsTableCell {
+            tableCell.valueLabel.accessibilityIdentifier = title + "Field"
+            tableCell.valueLabel.isAccessibilityElement = true
+        }
+
         if let previewGenerator = self.previewGenerator {
             let preview = previewGenerator(self)
             cell.preview = preview
