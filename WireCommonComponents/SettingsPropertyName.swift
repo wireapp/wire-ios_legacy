@@ -43,10 +43,14 @@ public enum SettingsPropertyName: String, CustomStringConvertible {
     case disableSendButton = "DisableSendButton"
     
     case disableLinkPreviews = "DisableLinkPreviews"
-    
+	
     // Profile
     case profileName = "ProfileName"
+    case handle = "handle"
+
     case email = "email"
+    case phone = "phone"
+
     case accentColor = "AccentColor"
     
     // AVS

@@ -35,9 +35,11 @@ extension SelfProfileViewController: SettingsPropertyFactoryDelegate {
 
 }
 
-final internal class SelfProfileViewController: UIViewController {
+final class SelfProfileViewController: UIViewController {
     
-     static let dismissNotificationName = "SettingsNavigationControllerDismissNotificationName"
+    var userRightInterfaceType: UserRightInterface.Type = UserRight.self
+
+    static let dismissNotificationName = "SettingsNavigationControllerDismissNotificationName"
     
     private let settingsController: SettingsTableViewController
     private let accountSelectorController = AccountSelectorController()
@@ -47,14 +49,20 @@ final internal class SelfProfileViewController: UIViewController {
     internal var settingsCellDescriptorFactory: SettingsCellDescriptorFactory? = nil
     internal var rootGroup: (SettingsControllerGeneratorType & SettingsInternalGroupCellDescriptorType)? = nil
 
-    convenience init() {
+    convenience init(userRightInterfaceType: UserRightInterface.Type = UserRight.self) {
+		
         let settingsPropertyFactory = SettingsPropertyFactory(userSession: SessionManager.shared?.activeUserSession, selfUser: ZMUser.selfUser())
 
-        let settingsCellDescriptorFactory = SettingsCellDescriptorFactory(settingsPropertyFactory: settingsPropertyFactory)
-        let rootGroup = settingsCellDescriptorFactory.rootGroup()
-        
-        self.init(rootGroup: settingsCellDescriptorFactory.rootGroup())
-        self.settingsCellDescriptorFactory = settingsCellDescriptorFactory
+		
+
+		let settingsCellDescriptorFactory = SettingsCellDescriptorFactory(settingsPropertyFactory: settingsPropertyFactory, userRightInterfaceType: userRightInterfaceType)
+
+		let rootGroup = settingsCellDescriptorFactory.rootGroup()
+
+		self.init(rootGroup: rootGroup)
+
+		self.userRightInterfaceType = userRightInterfaceType
+		self.settingsCellDescriptorFactory = settingsCellDescriptorFactory
         self.rootGroup = rootGroup
 
         settingsPropertyFactory.delegate = self
@@ -184,6 +192,8 @@ final internal class SelfProfileViewController: UIViewController {
     }
     
     @objc func userDidTapProfileImage(sender: UserImageView) {
+        guard userRightInterfaceType.selfUserIsPermitted(to: .editProfilePicture) else { return }
+        
         let profileImageController = ProfileSelfPictureViewController()
         self.present(profileImageController, animated: true, completion: .none)
     }

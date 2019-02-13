@@ -195,65 +195,72 @@ class SettingsGroupCellDescriptor: SettingsInternalGroupCellDescriptorType, Sett
 
 // MARK: - Helpers
 
-func SettingsPropertyLabelText(_ name: SettingsPropertyName) -> String {
-    switch (name) {
-    case .chatHeadsDisabled:
-        return "self.settings.notifications.chat_alerts.toggle".localized
-    case .notificationContentVisible:
-        return "self.settings.notifications.push_notification.toogle".localized
-    case .disableMarkdown:
-        return "Disable Markdown support"
-        
-    case .darkMode:
-        return "self.settings.account_picture_group.theme".localized
-        // Profile
-    case .profileName:
-        return "self.settings.account_section.name.title".localized
-    case .email:
-        return "self.settings.account_section.email.title".localized
+extension SettingsPropertyName {
+    var settingsPropertyLabelText: String {
+        switch self {
+        case .chatHeadsDisabled:
+            return "self.settings.notifications.chat_alerts.toggle".localized
+        case .notificationContentVisible:
+            return "self.settings.notifications.push_notification.toogle".localized
+        case .disableMarkdown:
+            return "Disable Markdown support"
 
-        // AVS
-    case .soundAlerts:
-        return "self.settings.sound_menu.title".localized
+        case .darkMode:
+            return "self.settings.account_picture_group.theme".localized
+            // Profile
+        case .profileName:
+            return "self.settings.account_section.name.title".localized
 
-    case .messageSoundName:
-        return "self.settings.sound_menu.message.title".localized
-    case .callSoundName:
-        return "self.settings.sound_menu.ringtone.title".localized
-    case .pingSoundName:
-        return "self.settings.sound_menu.ping.title".localized
-    case .accentColor:
-        return "self.settings.account_picture_group.color".localized
-    case .disableSendButton:
-        return "self.settings.popular_demand.send_button.title".localized
-    case .disableCallKit:
-        return "self.settings.callkit.caption".localized
-    case .tweetOpeningOption:
-        return "self.settings.link_options.twitter.title".localized
-    case .mapsOpeningOption:
-        return "self.settings.link_options.maps.title".localized
-    case .browserOpeningOption:
-        return "self.settings.link_options.browser.title".localized
-    case .callingProtocolStrategy:
-        return "Calling protocol"
-    case .enableBatchCollections:
-        return "Use AssetCollectionBatched"
-    case .lockApp:
-        return "self.settings.privacy_security.lock_app".localized
-    case .lockAppLastDate:
-        return "Last app lock date"
-    case .callingConstantBitRate:
-        return "self.settings.vbr.title".localized
-    case .disableLinkPreviews:
-        return "self.settings.privacy_security.disable_link_previews.title".localized
+        case .handle:
+            return "self.settings.account_section.handle.title".localized
 
-        // personal information - Analytics
-    case .disableCrashAndAnalyticsSharing:
-        return "self.settings.privacy_analytics.title".localized
-    case .receiveNewsAndOffers:
-        return "self.settings.receiveNews_and_offers.title".localized
-    case .readReceiptsEnabled:
-        return "self.settings.enable_read_receipts.title".localized
+        case .email:
+            return "self.settings.account_section.email.title".localized
+        case .phone:
+            return "self.settings.account_section.phone.title".localized
+
+            // AVS
+        case .soundAlerts:
+            return "self.settings.sound_menu.title".localized
+
+        case .messageSoundName:
+            return "self.settings.sound_menu.message.title".localized
+        case .callSoundName:
+            return "self.settings.sound_menu.ringtone.title".localized
+        case .pingSoundName:
+            return "self.settings.sound_menu.ping.title".localized
+        case .accentColor:
+            return "self.settings.account_picture_group.color".localized
+        case .disableSendButton:
+            return "self.settings.popular_demand.send_button.title".localized
+        case .disableCallKit:
+            return "self.settings.callkit.caption".localized
+        case .tweetOpeningOption:
+            return "self.settings.link_options.twitter.title".localized
+        case .mapsOpeningOption:
+            return "self.settings.link_options.maps.title".localized
+        case .browserOpeningOption:
+            return "self.settings.link_options.browser.title".localized
+        case .callingProtocolStrategy:
+            return "Calling protocol"
+        case .enableBatchCollections:
+            return "Use AssetCollectionBatched"
+        case .lockApp:
+            return "self.settings.privacy_security.lock_app".localized
+        case .lockAppLastDate:
+            return "Last app lock date"
+        case .callingConstantBitRate:
+            return "self.settings.vbr.title".localized
+        case .disableLinkPreviews:
+            return "self.settings.privacy_security.disable_link_previews.title".localized
+
+            // personal information - Analytics
+        case .disableCrashAndAnalyticsSharing:
+            return "self.settings.privacy_analytics.title".localized
+        case .receiveNewsAndOffers:
+            return "self.settings.receiveNews_and_offers.title".localized
+        case .readReceiptsEnabled:
+            return "self.settings.enable_read_receipts.title".localized
+        }
     }
 }
-
