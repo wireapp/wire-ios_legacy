@@ -47,10 +47,6 @@ final class RemoveClientStepViewController: UIViewController, AuthenticationCoor
                                                         variant: .light)
 
         super.init(nibName: nil, bundle: nil)
-
-        title = "registration.signin.too_many_devices.manage_screen.title".localized(uppercased: true)
-        configureSubviews()
-        configureConstraints()
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -59,9 +55,18 @@ final class RemoveClientStepViewController: UIViewController, AuthenticationCoor
 
     // MARK: - Lifecycle
 
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        title = "registration.signin.too_many_devices.manage_screen.title".localized(uppercased: true)
+        configureSubviews()
+        configureConstraints()
+        updateBackButton()
+    }
+
     private func configureSubviews() {
         view.backgroundColor = UIColor.Team.background
 
+        clientListController.view.backgroundColor = .clear
         clientListController.editingList = true
         clientListController.delegate = self
         addToSelf(clientListController)
@@ -74,13 +79,29 @@ final class RemoveClientStepViewController: UIViewController, AuthenticationCoor
             clientListController.view.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             clientListController.view.topAnchor.constraint(equalTo: safeTopAnchor),
             clientListController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            ])
+        ])
 
         // Adaptive Constraints
         contentViewWidthRegular = clientListController.view.widthAnchor.constraint(equalToConstant: 375)
         contentViewWidthCompact = clientListController.view.widthAnchor.constraint(equalTo: view.widthAnchor)
 
         toggleConstraints()
+    }
+
+    // MARK: - Back Button
+
+    private func updateBackButton() {
+        guard navigationController?.viewControllers.count > 1 else {
+            return
+        }
+
+        let button = AuthenticationNavigationBar.makeBackButton()
+        button.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: button)
+    }
+
+    @objc private func backButtonTapped() {
+        navigationController?.popViewController(animated: true)
     }
 
     // MARK: - Adaptive UI

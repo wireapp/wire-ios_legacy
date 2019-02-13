@@ -34,6 +34,8 @@
 "general.service" = "Teenus";
 "general.off" = "Väljas";
 "general.on" = "Sees";
+"general.loading" = "Loading…";
+"general.paste" = "Paste";
 
 // Language like Chinese does not use space to sperate words or sentences.
 "general.space_between_words" = " ";
@@ -229,16 +231,10 @@
 "conversation.status.unsent" = "⚠️ Saatmata sõnum";
 "conversation.status.you" = "Sina";
 "conversation.status.someone" = "Keegi";
-"conversation.status.added_multiple" = "Lisatud mitu inimest";
 "conversation.status.you_was_added" = "%@ lisas sinu";
-"conversation.status.added_users" = "%@ lisas kasutaja %@";
-"conversation.status.joined" = "%@ liitus";
-"conversation.status.removed_multiple" = "Mitu inimest eemaldatud";
 "conversation.status.you_were_removed" = "Sind eemaldati vestlusest";
 "conversation.status.you_left" = "Lahkusid vestlusest";
 "conversation.status.started_conversation" = "%@ alustas vestlust";
-"conversation.status.removed_users" = "%@ eemaldas kasutaja %@";
-"conversation.status.everyone_left" = "Kõik lahkusid";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Compose Entry Point
@@ -1104,9 +1100,13 @@
 "password.guidance.tooshort" = "Vähemalt 8 tähte";
 "password.guidance.toolong" = "Liiga pikk nimi";
 
+"phone.guidance.invalid" = "Invalid phone number";
+"phone.guidance.tooshort" = "Phone number is too short";
+"phone.guidance.toolong" = "Liiga pikk nimi";
+
 // Landing screen
 
-"landing.app_name" = "Wire";
+"landing.header" = "Wire. Add your Account.";
 "landing.create_account.title" = "Isiklik";
 "landing.create_account.subtitle" = "loo konto";
 "landing.create_team.title" = "Pro";
@@ -1120,18 +1120,19 @@
 "team.name.subheadline" = "Saad seda hiljem muuta.";
 "team.name.textfield.placeholder" = "tiimi nimi";
 "team.name.textfield.accessibility" = "Määra tiimi nimi";
-"team.name.whatiswireforteams" = "Mis on Wire versioon tiimidele?";
+"team.name.whatiswireforteams" = "What is Wire Pro?";
 
 "team.email.headline" = "Sinu konto";
 "team.email.subheadline" = "Sinu töö meiliaadress.";
-"team.email.textfield.placeholder" = "sina@sinufirma.ee";
-"team.email.textfield.accessibility" = "Sinu töö meiliaadress";
+"team.email.textfield.placeholder" = "Your company email";
 "team.email.button.learn_more" = "Loe lähemalt";
 
 "team.activation_code.headline" = "Sulle tuli kiri";
+"team.phone_activation_code.headline" = "Verification";
 "team.activation_code.subheadline" = "Sisesta kinnituskood, mille saatsime aadressile %@";
 "team.activation_code.button.resend" = "Saada kood uuesti";
 "team.activation_code.button.change_email" = "Muuda e-posti aadress";
+"team.activation_code.button.change_phone" = "Change phone number";
 
 "team.full_name.headline" = "Sinu nimi";
 "team.full_name.textfield.placeholder" = "Täisnimi";
@@ -1142,14 +1143,15 @@
 "team.password.textfield.accessibility" = "Sisesta vähemalt 8-märgiline parool";
 
 
-"team.email_code.input_field.accessbility_label" = "Sisestage e-postiga saabunud 6-kohaline kood.";
+"verification.code_label" = "Six-digit code. Text field.";
+"verification.code_hint" = "Double tap to enter the code.";
 
 // Invite Team Members
 
 "team.invite.header.title" = "Ehita oma meeskond";
 "team.invite.header.subtitle" = "Your Wire team is ready to go. Invite your colleagues as members.";
-"team.invite.textfield.placeholder" = "nimi@firma.ee";
-"team.invite.textfield.accesibility" = "Teiste kutsumiseks sisesta nende eposti aadress.";
+"team.invite.textfield.placeholder" = "Colleague's email";
+"team.invite.textfield.accesibility" = "Enter email address for colleague to invite.";
 "team.invite.learn_more.title" = "Loe lähemalt";
 "team.invite.top_bar.skip" = "Jäta vahele";
 "team.invite.top_bar.done" = "Valmis";
@@ -1198,6 +1200,9 @@
 "registration.close_phone_invitation_button.email_title" = "Registreeri e-postiga";
 "registration.close_phone_invitation_button.phone_title" = "Kasuta teist telefoninumbrit";
 
+"registration.register_by_phone" = "Telefon";
+"registration.register_by_email" = "E-post";
+
 "registration.enter_phone_number.title" = "Muuda telefoninumbrit";
 "registration.enter_phone_number.placeholder" = "Telefoninumber";
 
@@ -1209,13 +1214,6 @@
 "registration.verify_email.resend.instructions" = "Ei saanud kinnituskirja?";
 "registration.verify_email.resend.button_title" = "Saada uuesti";
 
-"registration.select_picture.subtitle" = "Wire on palju mõnusam, kui profiilipildi lisad.";
-"registration.select_picture.button_title" = "Vali galeriist";
-"registration.keep_picture.button_title" = "Vali see sama";
-"registration.camera_action.title" = "Tee uus profiilipilt";
-"registration.photo_gallery_action.title" = "Vali foto";
-"registration.cancel_action.title" = "Tühista";
-
 "registration.no_history.hero" = "Kasutad sellel seadmel Wire’t esimest korda.";
 "registration.no_history.subtitle" = "Privaatuse tagamiseks ei ilmu siia sinu varasemad vestlused.";
 "registration.no_history.got_it" = "OK";
@@ -1225,8 +1223,8 @@
 "registration.alert.account_exists.message_phone" = "The phone number you used to register is already linked to an account.\n\nUse another phone number, or try to log in if you own this account.";
 "registration.alert.account_exists.message_email" = "The email address you used to register is already linked to an account.\n\n Use another email address, or try to log in if you own this account.";
 "registration.alert.change_email_action" = "Change Email";
-"registration.alert.change_phone_action" = "Change Phone";
-"registration.alert.change_signin_action" = "Sign In";
+"registration.alert.change_phone_action" = "Register with Another Number";
+"registration.alert.change_signin_action" = "Logi sisse";
 
 // Restore History Warning Alert
 "registration.no_history.restore_backup_warning.title" = "Taasta ajalugu";
@@ -1253,6 +1251,9 @@
 "login.sso.alert.message" = "Sisesta ettevõtte SSO ligipääsukood.";
 "login.sso.alert.action" = "Logi sisse";
 "login.sso.alert.text_field.placeholder" = "SSO ligipääsukood";
+
+"login.sso.start_error_title" = "Cannot Start Company Login";
+"login.sso.link_error_message" = "The company login link you clicked is not valid. Please contact your administrator to resolve the issue.";
 
 "login.sso.error.alert.title" = "Midagi läks valesti";
 "login.sso.error.alert.invalid_code.title" = "Sobimatu kood.";
@@ -1311,13 +1312,14 @@
 "registration.push_access_denied.settings_button.title" = "Ava Seaded";
 "registration.push_access_denied.maybe_later_button.title" = "Võibolla hiljem";
 
+"registration.personal.title" = "Create an account";
 "registration.signin.title" = "Logi sisse";
-"registration.signin.too_many_devices.title" = "";
+"registration.signin.too_many_devices.title" = "Too Many Devices";
 "registration.signin.too_many_devices.subtitle" = "Eemalda üks oma teistest seadest, et sellel Wire’t kasutada.";
 "registration.signin.too_many_devices.manage_button.title" = "Halda seadmeid";
 "registration.signin.too_many_devices.sign_out_button.title" = "Logi välja";
-"registration.signin.email_button.title" = "E-post";
-"registration.signin.phone_button.title" = "Telefon";
+
+"registration.signin.too_many_devices.manage_screen.title" = "Remove a Device";
 
 "registration.signin.alert.password_needed.title" = "Parool on nõutud";
 "registration.signin.alert.password_needed.message" = "Sisselogimiseks sisesta palun oma parool.";
@@ -1337,6 +1339,15 @@
 "signin.confirm" = "Logi sisse";
 "signin.company_idp.button.title" = "Ettevõtetele";
 
+"signin_logout.subheadline" = "Your session expired. You need to log in again to continue.";
+"signin_logout.email.subheadline" = "Your session expired. Enter your email address and password to continue.";
+"signin_logout.phone.subheadline" = "Your session expired. Enter your phone number to continue.";
+"signin_logout.sso.subheadline" = "Your session expired. Log in with your company account to continue.";
+"signin_logout.sso.buton" = "Ettevõtte sisselogimine";
+
+"signin.email.missing_password.subtitle" = "Enter your email address and password to continue.";
+"signin.phone.missing_password.subtitle" = "Enter your phone number to continue.";
+
 "registration.phone_country" = "Riik";
 "registration.phone_code" = "Riigi kood";
 "registration.phone_country.hint" = "Topelttoksa, et maavalikut muuta.";
@@ -1348,7 +1359,7 @@
 "registration.add_phone_number.hero.paragraph" = "See aitab meil leida inimesi, keda sa võid tunda. Me ei jaga seda kunagi.";
 "registration.add_phone_number.skip_button.title" = "Mitte praegu";
 
-"registration.add_email_password.hero.title" = "Lisa oma e-posti aadress ja parool.";
+"registration.add_email_password.hero.title" = "Add your email and password";
 "registration.add_email_password.hero.paragraph" = "Saad kasutada Wire'it mitmes seadmes.";
 
 "registration.email_invitation.title" = "Kutse";

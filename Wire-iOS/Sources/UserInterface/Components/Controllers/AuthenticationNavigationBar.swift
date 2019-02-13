@@ -42,6 +42,7 @@ extension AuthenticationNavigationBar {
         button.contentHorizontalAlignment = UIApplication.isLeftToRightLayout ? .left : .right
         button.frame = CGRect(x: 0, y: 0, width: 32, height: 20)
         button.accessibilityIdentifier = "back"
+        button.accessibilityLabel = "general.back".localized
         return button
     }
 

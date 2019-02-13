@@ -28,7 +28,7 @@ final class SetFullNameStepDescription: AuthenticationStepDescription {
 
     init() {
         backButton = BackButtonDescription()
-        mainView = TextFieldDescription(placeholder: "team.full_name.textfield.placeholder".localized, actionDescription: "team.full_name.textfield.accessibility".localized, kind: .name(isTeam: false))
+        mainView = TextFieldDescription(placeholder: "team.full_name.textfield.placeholder".localized, actionDescription: "general.next".localized, kind: .name(isTeam: false))
         headline = "team.full_name.headline".localized
         subtext = nil
         secondaryView = nil

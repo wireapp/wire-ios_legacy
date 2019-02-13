@@ -29,6 +29,21 @@ protocol AppStateControllerDelegate : class {
 }
 
 class AppStateController : NSObject {
+
+    /**
+     * The possible states of authentication.
+     */
+
+    enum AuthenticationState {
+        /// The user is not logged in.
+        case loggedOut
+
+        /// The user logged in. This contains a flag to check if the account is new in the database.
+        case loggedIn(addedAccount: Bool)
+
+        /// The state is not determnined yet. This is the default, until we hear about the state from the session manager.
+        case undetermined
+    }
     
     private(set) var appState : AppState = .headless
     private(set) var lastAppState : AppState = .headless
@@ -36,15 +51,15 @@ class AppStateController : NSObject {
     public weak var delegate : AppStateControllerDelegate? = nil
     
     fileprivate var isBlacklisted = false
-    fileprivate var isLoggedIn = false
-    fileprivate var isLoggedOut = false
     fileprivate var hasEnteredForeground = false
     fileprivate var isMigrating = false
-    fileprivate var hasCompletedRegistration = false
     fileprivate var loadingAccount : Account?
     fileprivate var authenticationError : NSError?
     fileprivate var isRunningTests = ProcessInfo.processInfo.isRunningTests
     var isRunningSelfUnitTest = false
+
+    /// The state of authentication.
+    fileprivate(set) var authenticationState: AuthenticationState = .undetermined
     
     override init() {
         super.init()
@@ -75,16 +90,15 @@ class AppStateController : NSObject {
         if let account = loadingAccount {
             return .loading(account: account, from: SessionManager.shared?.accountManager.selectedAccount)
         }
-        
-        if isLoggedIn {
-            return .authenticated(completedRegistration: hasCompletedRegistration)
-        }
-        
-        if isLoggedOut {
+
+        switch authenticationState {
+        case .loggedIn(let addedAccount):
+            return .authenticated(completedRegistration: addedAccount)
+        case .loggedOut:
             return .unauthenticated(error: authenticationError)
+        case .undetermined:
+            return .headless
         }
-        
-        return .headless
     }
     
     func updateAppState(completion: (() -> Void)? = nil) {
@@ -117,9 +131,8 @@ extension AppStateController : SessionManagerDelegate {
     
     func sessionManagerWillLogout(error: Error?, userSessionCanBeTornDown: (() -> Void)?) {
         authenticationError = error as NSError?
+        authenticationState = .loggedOut
 
-        isLoggedIn = false
-        isLoggedOut = true
         updateAppState {
             userSessionCanBeTornDown?()
         }
@@ -138,8 +151,7 @@ extension AppStateController : SessionManagerDelegate {
         }
 
         loadingAccount = nil
-        isLoggedIn = false
-        isLoggedOut = true
+        authenticationState = .loggedOut
         updateAppState()
     }
         
@@ -173,9 +185,8 @@ extension AppStateController : SessionManagerDelegate {
             
             // NOTE: we don't enter the unauthenticated state here if we are not logged in
             //       because we will receive `sessionManagerDidLogout()` with an auth error
-            
-            self?.isLoggedIn = true
-            self?.isLoggedOut = !false
+
+            self?.authenticationState = .loggedIn(addedAccount: false)
             self?.loadingAccount = nil
             self?.isMigrating = false
             self?.updateAppState()
@@ -219,10 +230,8 @@ extension AppStateController : AuthenticationCoordinatorDelegate {
         return SessionManager.numberOfAccounts
     }
 
-    func userAuthenticationDidComplete(registered: Bool) {
-        isLoggedIn = true
-        isLoggedOut = false
-        hasCompletedRegistration = registered
+    func userAuthenticationDidComplete(addedAccount: Bool) {
+        authenticationState = .loggedIn(addedAccount: addedAccount)
         updateAppState()
     }
     

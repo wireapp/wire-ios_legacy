@@ -38,13 +38,20 @@ final class RemoveClientStepViewControllerSnapshotTests: ZMSnapshotTestCase {
         super.tearDown()
     }
 
-    func testForWrappedInNavigationController(){
-        let navigationController = UIViewController().wrapInNavigationController()
-        navigationController.pushViewController(sut, animated: false)
+    func testForWrappedInNavigationController() {
+        // GIVEN
+        let navigationController = UINavigationController(navigationBarClass: AuthenticationNavigationBar.self, toolbarClass: nil)
+        navigationController.viewControllers = [UIViewController(), sut]
+
+        // WHEN
+        presentViewController(navigationController)
 
         verifyInAllDeviceSizes(view: navigationController.view) { _, isPad in
             self.sut.userInterfaceSizeClass = { _ in return isPad ? .regular: .compact}
             self.sut.toggleConstraints()
         }
+
+        // CLEANUP
+        dismissViewController(navigationController)
     }
 }

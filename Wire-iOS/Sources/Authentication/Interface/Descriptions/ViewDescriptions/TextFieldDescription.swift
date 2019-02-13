@@ -29,8 +29,7 @@ final class TextFieldDescription: NSObject, ValueSubmission {
     let uppercasePlaceholder: Bool
     var showConfirmButton: Bool = true
     var canSubmit: (() -> Bool)?
-
-    fileprivate var currentValue: String = ""
+    var textField: AccessoryTextField?
 
     init(placeholder: String, actionDescription: String, kind: AccessoryTextField.Kind, uppercasePlaceholder: Bool = true) {
         self.placeholder = placeholder
@@ -39,6 +38,10 @@ final class TextFieldDescription: NSObject, ValueSubmission {
         self.kind = kind
         validationError = .tooShort(kind: kind)
         super.init()
+
+        canSubmit = { [weak self] in
+            return (self?.acceptsInput == true) && (self?.validationError == TextFieldValidator.ValidationError.none)
+        }
     }
 }
 
@@ -54,6 +57,8 @@ extension TextFieldDescription: ViewDescriptor {
         textField.confirmButton.accessibilityLabel = self.actionDescription
         textField.showConfirmButton = showConfirmButton
         textField.enableConfirmButton = canSubmit
+
+        self.textField = textField
         return textField
     }
 }
@@ -61,26 +66,25 @@ extension TextFieldDescription: ViewDescriptor {
 extension TextFieldDescription: UITextFieldDelegate {
 
     @objc func confirmButtonTapped(_ sender: AnyObject) {
-        submitValue(with: currentValue)
+        guard let textField = self.textField, acceptsInput else { return }
+        submitValue(with: textField.input)
     }
 
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        guard acceptsInput else { return false }
-        let oldValue = textField.text as NSString?
-        let result = oldValue?.replacingCharacters(in: range, with: string)
-        currentValue = (result as String?) ?? ""
-        self.valueValidated?(.none)
-        self.validationError = .none
-        return true
+        return acceptsInput
     }
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        guard acceptsInput else { return false }
-        guard let text = textField.text else { return true }
-        (textField as? AccessoryTextField)?.validateInput()
+        guard let textField = self.textField, acceptsInput else { return false }
 
-        submitValue(with: text)
-        return true
+        textField.validateInput()
+
+        if validationError == .none {
+            submitValue(with: textField.input)
+            return true
+        } else {
+            return false
+        }
     }
 
     func submitValue(with text: String) {

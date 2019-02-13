@@ -56,10 +56,11 @@ final class TeamMemberInviteViewController: AuthenticationStepViewController {
         setupViews()
         createConstraints()
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        footerTextFieldView.becomeFirstResponder()
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        footerTextFieldView.becomeFirstResponderIfPossible()
+        UIAccessibility.post(notification: .screenChanged, argument: headerView.header)
     }
     
     private func setupViews() {

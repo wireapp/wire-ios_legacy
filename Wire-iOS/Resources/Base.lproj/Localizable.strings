@@ -34,6 +34,8 @@
 "general.service" = "Service";
 "general.off" = "Off";
 "general.on" = "On";
+"general.loading" = "Loading…";
+"general.paste" = "Paste";
 
 // Language like Chinese does not use space to sperate words or sentences.
 "general.space_between_words" = " ";
@@ -1104,7 +1106,7 @@
 
 // Landing screen
 
-"landing.app_name" = "Wire";
+"landing.header" = "Wire. Add your Account.";
 "landing.create_account.title" = "Personal";
 "landing.create_account.subtitle" = "create an account";
 "landing.create_team.title" = "Pro";
@@ -1118,12 +1120,11 @@
 "team.name.subheadline" = "You can always change it later.";
 "team.name.textfield.placeholder" = "team name";
 "team.name.textfield.accessibility" = "Set team name";
-"team.name.whatiswireforteams" = "What is Wire for teams?";
+"team.name.whatiswireforteams" = "What is Wire Pro?";
 
 "team.email.headline" = "Your account";
 "team.email.subheadline" = "Enter your work email address.";
-"team.email.textfield.placeholder" = "you@yourcompany.com";
-"team.email.textfield.accessibility" = "Your company email";
+"team.email.textfield.placeholder" = "Your company email";
 "team.email.button.learn_more" = "Learn More";
 
 "team.activation_code.headline" = "You’ve got mail";
@@ -1142,14 +1143,15 @@
 "team.password.textfield.accessibility" = "Set password, at least 8 characters";
 
 
-"team.email_code.input_field.accessbility_label" = "Please enter the six-digit code from the email.";
+"verification.code_label" = "Six-digit code. Text field.";
+"verification.code_hint" = "Double tap to enter the code.";
 
 // Invite Team Members
 
 "team.invite.header.title" = "Build your team";
 "team.invite.header.subtitle" = "Your Wire team is ready to go. Invite your colleagues as members.";
-"team.invite.textfield.placeholder" = "colleague@yourcompany.com";
-"team.invite.textfield.accesibility" = "Enter e-mail address for colleague to invite.";
+"team.invite.textfield.placeholder" = "Colleague's email";
+"team.invite.textfield.accesibility" = "Enter email address for colleague to invite.";
 "team.invite.learn_more.title" = "Learn more";
 "team.invite.top_bar.skip" = "Skip";
 "team.invite.top_bar.done" = "Done";
@@ -1342,6 +1344,9 @@
 "signin_logout.phone.subheadline" = "Your session expired. Enter your phone number to continue.";
 "signin_logout.sso.subheadline" = "Your session expired. Log in with your company account to continue.";
 "signin_logout.sso.buton" = "Company Log In";
+
+"signin.email.missing_password.subtitle" = "Enter your email address and password to continue.";
+"signin.phone.missing_password.subtitle" = "Enter your phone number to continue.";
 
 "registration.phone_country" = "Country";
 "registration.phone_code" = "Country Code";

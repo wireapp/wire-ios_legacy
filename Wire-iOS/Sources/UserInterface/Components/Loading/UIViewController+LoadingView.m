@@ -58,11 +58,14 @@ const NSString *LoadingViewKey = @"loadingView";
 {
     self.loadingView.hidden = ! shouldShow;
     if (shouldShow) {
+        UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, NSLocalizedString(@"general.loading", @""));
         self.spinnerView.hidden = NO;
+        self.view.userInteractionEnabled = NO;
         [self.spinnerView.spinner startAnimation:nil];
     }
     else {
         self.spinnerView.hidden = YES;
+        self.view.userInteractionEnabled = YES;
         [self.spinnerView.spinner stopAnimation:nil];
     }
 }
@@ -91,39 +94,6 @@ const NSString *LoadingViewKey = @"loadingView";
 - (void)setLoadingView:(UIView *)loadingView
 {
     objc_setAssociatedObject(self, (__bridge void *) LoadingViewKey, loadingView, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
-
-- (void)indicateLoadingSuccessRemovingCheckmark:(BOOL)removingCheckmark completion:(dispatch_block_t)completion
-{
-    CheckAnimationView __block *checkView = nil;
-    
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        checkView = [[CheckAnimationView alloc] init];
-        checkView.center = self.loadingView.center;
-        [self.loadingView addSubview:checkView];
-        checkView.alpha = 0;
-        
-        [UIView animateWithDuration:0.5f animations:^{
-            checkView.alpha = 1;
-        } completion:nil];
-    });
-    
-    [UIView animateWithDuration:0.75f animations:^{
-        self.spinnerView.spinner.alpha = 0;
-        self.spinnerView.spinner.transform = CGAffineTransformMakeScale(0.01, 0.01);
-    } completion:^(BOOL completed){
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            if (completion != nil) {
-                completion();
-            }
-            if (removingCheckmark) {
-                self.spinnerView.spinner.alpha = 1;
-                self.spinnerView.spinner.transform = CGAffineTransformIdentity;
-                [self setShowLoadingView:NO];
-                [checkView removeFromSuperview];
-            }
-        });
-    }];
 }
 
 @end

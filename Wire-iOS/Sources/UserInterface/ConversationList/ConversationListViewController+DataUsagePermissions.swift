@@ -32,10 +32,7 @@ extension ConversationListViewController {
         guard needToShowDataUsagePermissionDialog else { return }
 
         // If the user registers, show the alert.
-        // If the user logs in and hasn't accepted analytics yet, show the alert.
-        guard isComingFromRegistration ||
-              (isComingFromSetUsername && ZMUser.selfUser().isTeamMember) ||
-              !userAcceptedAnalytics else { return }
+        guard isComingFromRegistration else { return }
 
         let alertController = UIAlertController(title: "conversation_list.data_usage_permission_alert.title".localized, message: "conversation_list.data_usage_permission_alert.message".localized, preferredStyle: .alert)
 
@@ -60,7 +57,4 @@ extension ConversationListViewController {
         #endif
     }
 
-    private var userAcceptedAnalytics: Bool {
-        return TrackingManager.shared.disableCrashAndAnalyticsSharing == false
-    }
 }

@@ -26,11 +26,10 @@ protocol AuthenticationCoordinatorDelegate: AuthenticationStatusProvider {
 
     /**
      * The coordinator finished authenticating the user.
-     *
-     * - parameter registered: Whether the current user was registered (`true`),
-     * or simply logged in (`false`).
+     * - parameter addedAccount: Whether the authentication action added a new account
+     * to this device.
      */
 
-    func userAuthenticationDidComplete(registered: Bool)
+    func userAuthenticationDidComplete(addedAccount: Bool)
 
 }

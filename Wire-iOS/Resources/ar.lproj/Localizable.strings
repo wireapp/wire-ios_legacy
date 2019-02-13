@@ -34,6 +34,8 @@
 "general.service" = "Service";
 "general.off" = "غير مفعل";
 "general.on" = "مفعل";
+"general.loading" = "Loading…";
+"general.paste" = "Paste";
 
 // Language like Chinese does not use space to sperate words or sentences.
 "general.space_between_words" = " ";
@@ -229,16 +231,10 @@
 "conversation.status.unsent" = "⚠️ رسالة غير مرسلة";
 "conversation.status.you" = "أنت";
 "conversation.status.someone" = "Someone";
-"conversation.status.added_multiple" = "تم إضافة أشخاص";
 "conversation.status.you_was_added" = "%@ أضافك";
-"conversation.status.added_users" = "%@ أضاف %@";
-"conversation.status.joined" = "انضم %@";
-"conversation.status.removed_multiple" = "أزيل أشخاص";
 "conversation.status.you_were_removed" = "تمت إزالتك";
 "conversation.status.you_left" = "أنت غادرت";
 "conversation.status.started_conversation" = "بدأ %@ محادثة جديدة";
-"conversation.status.removed_users" = "قام %@ بإزالة %@";
-"conversation.status.everyone_left" = "غادر الكُلّ";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Compose Entry Point
@@ -1104,9 +1100,13 @@
 "password.guidance.tooshort" = "8 أحرف على الأقل";
 "password.guidance.toolong" = "حروف كثيرة عن الحد";
 
+"phone.guidance.invalid" = "Invalid phone number";
+"phone.guidance.tooshort" = "Phone number is too short";
+"phone.guidance.toolong" = "حروف كثيرة عن الحد";
+
 // Landing screen
 
-"landing.app_name" = "Wire";
+"landing.header" = "Wire. Add your Account.";
 "landing.create_account.title" = "شخصي";
 "landing.create_account.subtitle" = "أنشئ حسابًا";
 "landing.create_team.title" = "Pro";
@@ -1120,18 +1120,19 @@
 "team.name.subheadline" = "بإمكانك تغييره لاحقًا.";
 "team.name.textfield.placeholder" = "اسم الفريق";
 "team.name.textfield.accessibility" = "ضع اسم للفريق";
-"team.name.whatiswireforteams" = "ما هو واير للفِرَق؟";
+"team.name.whatiswireforteams" = "What is Wire Pro?";
 
 "team.email.headline" = "حسابك";
 "team.email.subheadline" = "Enter your work email address.";
-"team.email.textfield.placeholder" = "you@yourcompany.com";
-"team.email.textfield.accessibility" = "ايميل الشركه";
+"team.email.textfield.placeholder" = "Your company email";
 "team.email.button.learn_more" = "معرفة المزيد";
 
 "team.activation_code.headline" = "وصلك بريد";
+"team.phone_activation_code.headline" = "Verification";
 "team.activation_code.subheadline" = "أدخل رمز التحقق الذي أرسلناه إلى: %@.";
 "team.activation_code.button.resend" = "أعد إرسال الكود";
 "team.activation_code.button.change_email" = "تغيير البريد الإلكتروني";
+"team.activation_code.button.change_phone" = "Change phone number";
 
 "team.full_name.headline" = "اسمك";
 "team.full_name.textfield.placeholder" = "الاسم الكامل";
@@ -1142,14 +1143,15 @@
 "team.password.textfield.accessibility" = "Set password, at least 8 characters";
 
 
-"team.email_code.input_field.accessbility_label" = "Please enter the six-digit code from the email.";
+"verification.code_label" = "Six-digit code. Text field.";
+"verification.code_hint" = "Double tap to enter the code.";
 
 // Invite Team Members
 
 "team.invite.header.title" = "أنشئ فريقك";
 "team.invite.header.subtitle" = "Your Wire team is ready to go. Invite your colleagues as members.";
-"team.invite.textfield.placeholder" = "colleague@yourcompany.com";
-"team.invite.textfield.accesibility" = "Enter e-mail address for colleague to invite.";
+"team.invite.textfield.placeholder" = "Colleague's email";
+"team.invite.textfield.accesibility" = "Enter email address for colleague to invite.";
 "team.invite.learn_more.title" = "معرفة المزيد";
 "team.invite.top_bar.skip" = "تخطِ";
 "team.invite.top_bar.done" = "تـم";
@@ -1198,6 +1200,9 @@
 "registration.close_phone_invitation_button.email_title" = "تسجيل بواسطة بريد إلكتروني";
 "registration.close_phone_invitation_button.phone_title" = "استخدام رقم هاتف آخر";
 
+"registration.register_by_phone" = "الهاتف";
+"registration.register_by_email" = "البريد الإلكتروني";
+
 "registration.enter_phone_number.title" = "تعديل رقم الهاتف";
 "registration.enter_phone_number.placeholder" = "رقم الهاتف";
 
@@ -1209,13 +1214,6 @@
 "registration.verify_email.resend.instructions" = "لم تستلم الرسالة؟";
 "registration.verify_email.resend.button_title" = "إعادة إرسال";
 
-"registration.select_picture.subtitle" = "واير أجمل بكثير مع صورة.";
-"registration.select_picture.button_title" = "اختيار الخاصة بك";
-"registration.keep_picture.button_title" = "إبقاء هذه";
-"registration.camera_action.title" = "إلتقط صورة";
-"registration.photo_gallery_action.title" = "إختيار صورة";
-"registration.cancel_action.title" = "إلغاء";
-
 "registration.no_history.hero" = "أنها المرة الأولى التي تستخدم فيها واير على هذا الجهاز.";
 "registration.no_history.subtitle" = "لأسباب تتعلق بالخصوصية، لن يظهر تاريخ المحادثات الخاصة بك هنا.";
 "registration.no_history.got_it" = "موافق";
@@ -1225,8 +1223,8 @@
 "registration.alert.account_exists.message_phone" = "The phone number you used to register is already linked to an account.\n\nUse another phone number, or try to log in if you own this account.";
 "registration.alert.account_exists.message_email" = "The email address you used to register is already linked to an account.\n\n Use another email address, or try to log in if you own this account.";
 "registration.alert.change_email_action" = "Change Email";
-"registration.alert.change_phone_action" = "Change Phone";
-"registration.alert.change_signin_action" = "Sign In";
+"registration.alert.change_phone_action" = "Register with Another Number";
+"registration.alert.change_signin_action" = "تسجيل الدخول";
 
 // Restore History Warning Alert
 "registration.no_history.restore_backup_warning.title" = "استعادة التاريخ";
@@ -1253,6 +1251,9 @@
 "login.sso.alert.message" = "Enter the company SSO access code.";
 "login.sso.alert.action" = "تسجيل الدخول";
 "login.sso.alert.text_field.placeholder" = "SSO access code";
+
+"login.sso.start_error_title" = "Cannot Start Company Login";
+"login.sso.link_error_message" = "The company login link you clicked is not valid. Please contact your administrator to resolve the issue.";
 
 "login.sso.error.alert.title" = "حدث خطأ";
 "login.sso.error.alert.invalid_code.title" = "Invalid code.";
@@ -1311,13 +1312,14 @@
 "registration.push_access_denied.settings_button.title" = "اذهب للإعدادات";
 "registration.push_access_denied.maybe_later_button.title" = "ربما في وقت لاحق";
 
+"registration.personal.title" = "Create an account";
 "registration.signin.title" = "تسجيل الدخول";
-"registration.signin.too_many_devices.title" = "";
+"registration.signin.too_many_devices.title" = "Too Many Devices";
 "registration.signin.too_many_devices.subtitle" = "قم بإزالة أحد الأجهزة الأخرى الخاصة بك لبدء استخدام واير على هذا الجهاز.";
 "registration.signin.too_many_devices.manage_button.title" = "إدارة الأجهزة";
 "registration.signin.too_many_devices.sign_out_button.title" = "تسجيل الخروج";
-"registration.signin.email_button.title" = "البريد الإلكتروني";
-"registration.signin.phone_button.title" = "الهاتف";
+
+"registration.signin.too_many_devices.manage_screen.title" = "Remove a Device";
 
 "registration.signin.alert.password_needed.title" = "Password needed";
 "registration.signin.alert.password_needed.message" = "Please enter your Password in order to log in.";
@@ -1337,6 +1339,15 @@
 "signin.confirm" = "تسجيل الدخول";
 "signin.company_idp.button.title" = "For Companies";
 
+"signin_logout.subheadline" = "Your session expired. You need to log in again to continue.";
+"signin_logout.email.subheadline" = "Your session expired. Enter your email address and password to continue.";
+"signin_logout.phone.subheadline" = "Your session expired. Enter your phone number to continue.";
+"signin_logout.sso.subheadline" = "Your session expired. Log in with your company account to continue.";
+"signin_logout.sso.buton" = "Company Log In";
+
+"signin.email.missing_password.subtitle" = "Enter your email address and password to continue.";
+"signin.phone.missing_password.subtitle" = "Enter your phone number to continue.";
+
 "registration.phone_country" = "البلد";
 "registration.phone_code" = "رمز الدولة";
 "registration.phone_country.hint" = "انقر مرتين لاختيار دولة أخرى.";
@@ -1348,7 +1359,7 @@
 "registration.add_phone_number.hero.paragraph" = "يساعدنا هذا على إيجاد أشخاص لربما تعرفهم. نحن لا نشارك هذه المعلومات.";
 "registration.add_phone_number.skip_button.title" = "ليس الآن";
 
-"registration.add_email_password.hero.title" = "قم بإضافة عنوان بريدك الإلكتروني وكلمة مرور.";
+"registration.add_email_password.hero.title" = "Add your email and password";
 "registration.add_email_password.hero.paragraph" = "هذا يمكنك من استخدام واير على أجهزة متعددة.";
 
 "registration.email_invitation.title" = "دعوة";

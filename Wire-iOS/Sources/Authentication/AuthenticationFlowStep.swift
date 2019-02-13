@@ -52,10 +52,10 @@ indirect enum AuthenticationFlowStep: Equatable {
     // Initial Steps
     case start
     case landingScreen
-    case reauthenticate(credentials: LoginCredentials?, numberOfAccounts: Int)
+    case reauthenticate(credentials: LoginCredentials?, numberOfAccounts: Int, isSignedOut: Bool)
 
     // Sign-In
-    case provideCredentials(AuthenticationCredentialsType)
+    case provideCredentials(AuthenticationCredentialsType, AuthenticationPrefilledCredentials?)
     case sendLoginCode(phoneNumber: String, isResend: Bool)
     case enterLoginCode(phoneNumber: String)
     case authenticateEmailCredentials(ZMEmailCredentials)

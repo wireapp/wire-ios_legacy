@@ -37,9 +37,17 @@ class ReauthenticateStepDescription: AuthenticationStepDescription {
 
         switch prefilledCredentials?.primaryCredentialsType {
         case .email?:
-            subtext = "signin_logout.email.subheadline".localized
+            if prefilledCredentials?.isExpired == true {
+                subtext = "signin_logout.email.subheadline".localized
+            } else {
+                subtext = "signin.email.missing_password.subtitle".localized
+            }
         case .phone?:
-            subtext = "signin_logout.phone.subheadline".localized
+            if prefilledCredentials?.isExpired == true {
+                subtext = "signin_logout.phone.subheadline".localized
+            } else {
+                subtext = "signin.phone.missing_password.subtitle".localized
+            }
         case .none:
             subtext = "signin_logout.subheadline".localized
         }

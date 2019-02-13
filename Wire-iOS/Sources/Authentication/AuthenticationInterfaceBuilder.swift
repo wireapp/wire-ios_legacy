@@ -62,7 +62,7 @@ class AuthenticationInterfaceBuilder {
         case .landingScreen:
             return LandingViewController()
 
-        case .reauthenticate(let credentials, _):
+        case .reauthenticate(let credentials, _, let isSignedOut):
             let viewController: AuthenticationStepController
 
             if credentials?.usesCompanyLogin == true && credentials?.hasPassword == false {
@@ -76,7 +76,7 @@ class AuthenticationInterfaceBuilder {
                 if let credentials = credentials {
                     // If we found the credentials of the expired session, pre-fill them
                     let prefillType: AuthenticationCredentialsType = credentials.phoneNumber != nil && credentials.emailAddress == nil ? .phone : .email
-                    prefill = AuthenticationPrefilledCredentials(primaryCredentialsType: prefillType, credentials: credentials)
+                    prefill = AuthenticationPrefilledCredentials(primaryCredentialsType: prefillType, credentials: credentials, isExpired: isSignedOut)
                 } else {
                     // Otherwise, default to the email pre-fill screen.
                     prefill = nil
@@ -89,8 +89,8 @@ class AuthenticationInterfaceBuilder {
             viewController.setRightItem("registration.signin.too_many_devices.sign_out_button.title".localized, withAction: .signOut(warn: true), accessibilityID: "signOutButton")
             return viewController
 
-        case .provideCredentials(let credentialsFlowType):
-            let viewController = makeCredentialsViewController(for: .login(credentialsFlowType))
+        case .provideCredentials(let credentialsFlowType, let prefill):
+            let viewController = makeCredentialsViewController(for: .login(credentialsFlowType, prefill))
 
             // Add the item to start company login if needed.
             if featureProvider.allowCompanyLogin {

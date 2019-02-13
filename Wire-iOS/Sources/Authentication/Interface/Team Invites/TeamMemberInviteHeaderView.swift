@@ -25,6 +25,10 @@ final class TeamMemberInviteHeaderView: UIView {
     private let subtitleLabel = UILabel()
     private let bottomSpacerView = UIView()
     private var bottomSpacerViewHeightConstraint: NSLayoutConstraint?
+
+    var header: UIView {
+        return titleLabel
+    }
     
     var bottomSpacing: CGFloat = 0 {
         didSet {
