@@ -50,12 +50,13 @@ class SettingsPropertyTextValueCellDescriptor: SettingsPropertyCellDescriptorTyp
         if settingsProperty.enabled {
             textCell.textInput.isUserInteractionEnabled = true
             textCell.textInput.accessibilityTraits.remove(.staticText)
+            textCell.textInput.accessibilityIdentifier = title + "Field"
         } else {
             textCell.textInput.isUserInteractionEnabled = false
             textCell.textInput.accessibilityTraits.insert(.staticText)
+            textCell.textInput.accessibilityIdentifier = title + "FieldDisabled"
         }
         
-        textCell.textInput.accessibilityIdentifier = title + "Field"
         textCell.textInput.isAccessibilityElement = true
     }
     
