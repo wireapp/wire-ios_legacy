@@ -23,9 +23,12 @@ import SafariServices
 class SettingsCellDescriptorFactory {
     static let settingsDevicesCellIdentifier: String = "devices"
     let settingsPropertyFactory: SettingsPropertyFactory
-        
-    init(settingsPropertyFactory: SettingsPropertyFactory) {
+    let userRightInterfaceType: UserRightInterface.Type
+
+    init(settingsPropertyFactory: SettingsPropertyFactory,
+		 userRightInterfaceType: UserRightInterface.Type = UserRight.self) {
         self.settingsPropertyFactory = settingsPropertyFactory
+        self.userRightInterfaceType = userRightInterfaceType
     }
     
     func rootGroup() -> SettingsControllerGeneratorType & SettingsInternalGroupCellDescriptorType {
