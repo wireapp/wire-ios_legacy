@@ -231,10 +231,16 @@
 "conversation.status.unsent" = "⚠️ Mesaj gönderilemedi";
 "conversation.status.you" = "Sen";
 "conversation.status.someone" = "Someone";
+"conversation.status.added_multiple" = "Kişiler eklendi";
 "conversation.status.you_was_added" = "%@, seni ekledi";
+"conversation.status.added_users" = "%@, %@'i ekledi";
+"conversation.status.joined" = "%@ joined";
+"conversation.status.removed_multiple" = "Kişiler çıkarıldı";
 "conversation.status.you_were_removed" = "Çıkarıldınız";
 "conversation.status.you_left" = "Ayrıldın";
 "conversation.status.started_conversation" = "%@ bir konuşma başlattı";
+"conversation.status.removed_users" = "%@, %@'i sildi";
+"conversation.status.everyone_left" = "Herkes ayrıldı";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Compose Entry Point

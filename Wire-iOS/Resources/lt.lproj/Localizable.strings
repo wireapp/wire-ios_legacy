@@ -231,10 +231,16 @@
 "conversation.status.unsent" = "⚠ Neišsiųsta žinutė";
 "conversation.status.you" = "Jūs";
 "conversation.status.someone" = "Kažkas";
+"conversation.status.added_multiple" = "Žmonės pridėti";
 "conversation.status.you_was_added" = "%@ pridėjo jus";
+"conversation.status.added_users" = "%@ pridėjo pašnekovą %@";
+"conversation.status.joined" = "%@ prisijungė";
+"conversation.status.removed_multiple" = "Žmonės pašalinti";
 "conversation.status.you_were_removed" = "Jūs buvote pašalinti";
 "conversation.status.you_left" = "Jūs išėjote";
 "conversation.status.started_conversation" = "%@ pradėjo susirašinėjimą";
+"conversation.status.removed_users" = "%@ pašalino pašnekovą %@";
+"conversation.status.everyone_left" = "Visi išėjo";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Compose Entry Point

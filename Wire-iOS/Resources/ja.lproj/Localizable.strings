@@ -231,10 +231,16 @@
 "conversation.status.unsent" = "⚠️ 未送信メッセージ";
 "conversation.status.you" = "あなた";
 "conversation.status.someone" = "誰か";
+"conversation.status.added_multiple" = "追加された人";
 "conversation.status.you_was_added" = "%@はあなたを追加しました";
+"conversation.status.added_users" = "%@は%@を追加しました";
+"conversation.status.joined" = "%@ 参加済";
+"conversation.status.removed_multiple" = "削除された人";
 "conversation.status.you_were_removed" = "あなたは削除されました";
 "conversation.status.you_left" = "あなたは退出しました";
 "conversation.status.started_conversation" = "%@ 会話を始めました";
+"conversation.status.removed_users" = "%@は%@を削除しました";
+"conversation.status.everyone_left" = "全員退出しました";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Compose Entry Point

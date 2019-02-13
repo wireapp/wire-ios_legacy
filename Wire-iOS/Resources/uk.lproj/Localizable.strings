@@ -231,10 +231,16 @@
 "conversation.status.unsent" = "⚠️ Ненадіслане повідомлення";
 "conversation.status.you" = "Ви";
 "conversation.status.someone" = "Хтось";
+"conversation.status.added_multiple" = "Додані нові учасники";
 "conversation.status.you_was_added" = "%@ додав(-ла) вас";
+"conversation.status.added_users" = "%@ додав(-ла) %@";
+"conversation.status.joined" = "%@ приєднався(-лася)";
+"conversation.status.removed_multiple" = "Учасники видалені";
 "conversation.status.you_were_removed" = "Вас видалили";
 "conversation.status.you_left" = "Ви вийшли";
 "conversation.status.started_conversation" = "%@ почав(-ла) розмову";
+"conversation.status.removed_users" = "%@ видалив(-ла) %@";
+"conversation.status.everyone_left" = "Всі вийшли";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Compose Entry Point

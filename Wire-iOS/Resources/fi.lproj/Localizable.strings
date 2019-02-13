@@ -231,10 +231,16 @@
 "conversation.status.unsent" = "⚠ Lähettämätön viesti";
 "conversation.status.you" = "Sinä";
 "conversation.status.someone" = "Someone";
+"conversation.status.added_multiple" = "Ihmiset lisätty";
 "conversation.status.you_was_added" = "%@ lisäsi sinut";
+"conversation.status.added_users" = "%@ lisäsi %@ n";
+"conversation.status.joined" = "%@ joined";
+"conversation.status.removed_multiple" = "Ihmiset poistettu";
 "conversation.status.you_were_removed" = "Sinut poistettiin";
 "conversation.status.you_left" = "Sinä poistuit";
 "conversation.status.started_conversation" = "%@ aloitti keskustelun";
+"conversation.status.removed_users" = "%@ poisti %@ n";
+"conversation.status.everyone_left" = "Kaikki poistuivat";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Compose Entry Point

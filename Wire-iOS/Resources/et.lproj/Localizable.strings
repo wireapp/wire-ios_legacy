@@ -231,10 +231,16 @@
 "conversation.status.unsent" = "⚠️ Saatmata sõnum";
 "conversation.status.you" = "Sina";
 "conversation.status.someone" = "Keegi";
+"conversation.status.added_multiple" = "Lisatud mitu inimest";
 "conversation.status.you_was_added" = "%@ lisas sinu";
+"conversation.status.added_users" = "%@ lisas kasutaja %@";
+"conversation.status.joined" = "%@ liitus";
+"conversation.status.removed_multiple" = "Mitu inimest eemaldatud";
 "conversation.status.you_were_removed" = "Sind eemaldati vestlusest";
 "conversation.status.you_left" = "Lahkusid vestlusest";
 "conversation.status.started_conversation" = "%@ alustas vestlust";
+"conversation.status.removed_users" = "%@ eemaldas kasutaja %@";
+"conversation.status.everyone_left" = "Kõik lahkusid";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Compose Entry Point

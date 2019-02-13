@@ -231,10 +231,16 @@
 "conversation.status.unsent" = "⚠️ Message non envoyé";
 "conversation.status.you" = "Vous";
 "conversation.status.someone" = "Quelqu’un";
+"conversation.status.added_multiple" = "Personnes ajoutées";
 "conversation.status.you_was_added" = "%@ vous a ajouté";
+"conversation.status.added_users" = "%@ a ajouté %@";
+"conversation.status.joined" = "%@ a rejoint la conversation";
+"conversation.status.removed_multiple" = "Personnes exclues";
 "conversation.status.you_were_removed" = "Vous avez été exclu";
 "conversation.status.you_left" = "Vous êtes parti";
 "conversation.status.started_conversation" = "%@ a commencé une conversation";
+"conversation.status.removed_users" = "%@ a exclu %@";
+"conversation.status.everyone_left" = "Tout le monde est parti";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Compose Entry Point

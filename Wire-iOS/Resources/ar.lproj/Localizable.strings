@@ -231,10 +231,16 @@
 "conversation.status.unsent" = "⚠️ رسالة غير مرسلة";
 "conversation.status.you" = "أنت";
 "conversation.status.someone" = "Someone";
+"conversation.status.added_multiple" = "تم إضافة أشخاص";
 "conversation.status.you_was_added" = "%@ أضافك";
+"conversation.status.added_users" = "%@ أضاف %@";
+"conversation.status.joined" = "انضم %@";
+"conversation.status.removed_multiple" = "أزيل أشخاص";
 "conversation.status.you_were_removed" = "تمت إزالتك";
 "conversation.status.you_left" = "أنت غادرت";
 "conversation.status.started_conversation" = "بدأ %@ محادثة جديدة";
+"conversation.status.removed_users" = "قام %@ بإزالة %@";
+"conversation.status.everyone_left" = "غادر الكُلّ";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Compose Entry Point

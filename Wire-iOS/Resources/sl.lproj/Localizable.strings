@@ -231,10 +231,16 @@
 "conversation.status.unsent" = "⚠️ Neposlano sporočilo";
 "conversation.status.you" = "Ti";
 "conversation.status.someone" = "Someone";
+"conversation.status.added_multiple" = "Dodanih oseb";
 "conversation.status.you_was_added" = "%@ te je dodal(-a)";
+"conversation.status.added_users" = "%@ je dodal(-a) %@";
+"conversation.status.joined" = "%@ joined";
+"conversation.status.removed_multiple" = "Odstranjenih oseb";
 "conversation.status.you_were_removed" = "Bil(-a) si odstranjen(-a)";
 "conversation.status.you_left" = "Si zapustil(-a)";
 "conversation.status.started_conversation" = "%@ je začel(-a) pogovor";
+"conversation.status.removed_users" = "%@ je odstranil(-a) %@";
+"conversation.status.everyone_left" = "Vsi so zapustili pogovor";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Compose Entry Point

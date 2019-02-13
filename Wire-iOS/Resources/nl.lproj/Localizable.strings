@@ -231,10 +231,16 @@
 "conversation.status.unsent" = "⚠️ On verstuurt bericht";
 "conversation.status.you" = "Jij";
 "conversation.status.someone" = "Iemand";
+"conversation.status.added_multiple" = "Personen toegevoegd";
 "conversation.status.you_was_added" = "%@ heeft jou toegevoegd";
+"conversation.status.added_users" = "%@ heeft %@ toegevoegd";
+"conversation.status.joined" = "%@ joined";
+"conversation.status.removed_multiple" = "Personen verwijderd";
 "conversation.status.you_were_removed" = "Je bent verwijderd";
 "conversation.status.you_left" = "Jij verliet";
 "conversation.status.started_conversation" = "%@ begon een gesprek";
+"conversation.status.removed_users" = "%@ verwijderde %@";
+"conversation.status.everyone_left" = "Verlaten door iedereen";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Compose Entry Point

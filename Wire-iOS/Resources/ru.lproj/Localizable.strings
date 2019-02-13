@@ -231,10 +231,16 @@
 "conversation.status.unsent" = "⚠️ Неотправленное сообщение";
 "conversation.status.you" = "Вы";
 "conversation.status.someone" = "Кто-то";
+"conversation.status.added_multiple" = "Добавлены участники";
 "conversation.status.you_was_added" = "%@ добавил(а) вас";
+"conversation.status.added_users" = "%@ добавил(а) %@";
+"conversation.status.joined" = "%@ присоединился";
+"conversation.status.removed_multiple" = "Удалены участники";
 "conversation.status.you_were_removed" = "Вы были удалены";
 "conversation.status.you_left" = "Вы покинули";
 "conversation.status.started_conversation" = "%@ начал разговор";
+"conversation.status.removed_users" = "%@ удалил(а) %@";
+"conversation.status.everyone_left" = "Все вышли";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Compose Entry Point

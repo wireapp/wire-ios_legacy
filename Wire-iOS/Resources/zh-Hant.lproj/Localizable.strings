@@ -231,10 +231,16 @@
 "conversation.status.unsent" = "⚠️ 未發信息";
 "conversation.status.you" = "您";
 "conversation.status.someone" = "某人";
+"conversation.status.added_multiple" = "聯絡人已加入";
 "conversation.status.you_was_added" = "%@加入了您";
+"conversation.status.added_users" = "%@加了%@到對話";
+"conversation.status.joined" = "%@已加入";
+"conversation.status.removed_multiple" = "聯絡人已删除";
 "conversation.status.you_were_removed" = "您被移除了";
 "conversation.status.you_left" = "您已離開";
 "conversation.status.started_conversation" = "%@開啓了聊天室";
+"conversation.status.removed_users" = "%@移除了%@";
+"conversation.status.everyone_left" = "所有人都離開了";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Compose Entry Point

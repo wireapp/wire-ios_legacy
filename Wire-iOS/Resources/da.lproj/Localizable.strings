@@ -231,10 +231,16 @@
 "conversation.status.unsent" = "⚠️ Unsent message";
 "conversation.status.you" = "Dig";
 "conversation.status.someone" = "Someone";
+"conversation.status.added_multiple" = "People added";
 "conversation.status.you_was_added" = "%@ har tilføjet dig";
+"conversation.status.added_users" = "%@ har tilføjet %@";
+"conversation.status.joined" = "%@ joined";
+"conversation.status.removed_multiple" = "People removed";
 "conversation.status.you_were_removed" = "Du blev fjernet";
 "conversation.status.you_left" = "Du forlod";
 "conversation.status.started_conversation" = "%@ started a conversation";
+"conversation.status.removed_users" = "%@ har fjernet %@";
+"conversation.status.everyone_left" = "Alle forlod gruppen";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Compose Entry Point
