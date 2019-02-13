@@ -20,6 +20,15 @@ import Foundation
 import Photos
 
 extension ProfileSelfPictureViewController {
+    override open func viewDidLoad() {
+        super.viewDidLoad()
+
+        view.backgroundColor = .clear
+
+        setupBottomOverlay()
+        setupTopView()
+        setupGestureRecognizers()
+    }
 
     override open var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return wr_supportedInterfaceOrientations
@@ -112,9 +121,15 @@ extension ProfileSelfPictureViewController {
 
     }
 
-    @objc
-    override open func setupTopView() {
-        super.setupTopView()
+    open func setupTopView() {
+        topView = UIView()
+        topView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(topView)
+
+        topView.bottomAnchor.constraint(equalTo: bottomOverlayView.topAnchor).isActive = true
+        topView.fitInSuperview(exclude: [.bottom])
+
+        topView.backgroundColor = .clear
 
         selfUserImageView = UIImageView()
         selfUserImageView.clipsToBounds = true
@@ -128,6 +143,41 @@ extension ProfileSelfPictureViewController {
 
         selfUserImageView.translatesAutoresizingMaskIntoConstraints = false
         selfUserImageView.fitInSuperview()
+    }
+
+    func setupBottomOverlay() {
+        bottomOverlayView = UIView()
+        bottomOverlayView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(bottomOverlayView)
+
+        var height: CGFloat
+        ///TODO: response to size class update
+        if traitCollection.horizontalSizeClass == .regular {
+            height = 104
+        } else {
+            height = 88
+        }
+
+        bottomOverlayView.fitInSuperview(exclude: [.top])
+        bottomOverlayView.heightAnchor.constraint(equalToConstant: height + UIScreen.safeArea.bottom).isActive = true
+
+        bottomOverlayView.backgroundColor = UIColor.black.withAlphaComponent(0.8)
+
+        addCameraButton()
+        addLibraryButton()
+        addCloseButton()
+    }
+
+
+// MARK: - Gesture
+
+    func setupGestureRecognizers() {
+        tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.didTap(_:)))
+        topView.addGestureRecognizer(tapGestureRecognizer)
+    }
+
+    @objc func didTap(_ gestureRecognizer: UITapGestureRecognizer?) {
+        delegate.bottomOverlayViewControllerBackgroundTapped(self)
     }
 
 }

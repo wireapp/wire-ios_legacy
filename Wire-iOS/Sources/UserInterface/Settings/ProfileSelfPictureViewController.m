@@ -26,7 +26,6 @@
 #import "WireSyncEngine+iOS.h"
 
 #import "UIImage+ZetaIconsNeue.h"
-#import "BottomOverlayViewController+Private.h"
 
 
 #import "ImagePickerConfirmationController.h"
@@ -127,17 +126,6 @@
 - (void)closeButtonTapped:(id)sender
 {
     [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
-}
-
-#pragma mark - Overrides
-
-- (void)setupBottomOverlay
-{
-    [super setupBottomOverlay];
-    
-    [self addCameraButton];
-    [self addLibraryButton];
-    [self addCloseButton];
 }
 
 @end
