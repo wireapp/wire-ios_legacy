@@ -34,6 +34,8 @@
 "general.service" = "Service";
 "general.off" = "Izklopljeno";
 "general.on" = "On";
+"general.loading" = "Loading…";
+"general.paste" = "Paste";
 
 // Language like Chinese does not use space to sperate words or sentences.
 "general.space_between_words" = " ";
@@ -229,16 +231,10 @@
 "conversation.status.unsent" = "⚠️ Neposlano sporočilo";
 "conversation.status.you" = "Ti";
 "conversation.status.someone" = "Someone";
-"conversation.status.added_multiple" = "Dodanih oseb";
 "conversation.status.you_was_added" = "%@ te je dodal(-a)";
-"conversation.status.added_users" = "%@ je dodal(-a) %@";
-"conversation.status.joined" = "%@ joined";
-"conversation.status.removed_multiple" = "Odstranjenih oseb";
 "conversation.status.you_were_removed" = "Bil(-a) si odstranjen(-a)";
 "conversation.status.you_left" = "Si zapustil(-a)";
 "conversation.status.started_conversation" = "%@ je začel(-a) pogovor";
-"conversation.status.removed_users" = "%@ je odstranil(-a) %@";
-"conversation.status.everyone_left" = "Vsi so zapustili pogovor";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Compose Entry Point
@@ -1104,9 +1100,13 @@
 "password.guidance.tooshort" = "Vsaj 8 znakov";
 "password.guidance.toolong" = "Preveč znakov";
 
+"phone.guidance.invalid" = "Invalid phone number";
+"phone.guidance.tooshort" = "Phone number is too short";
+"phone.guidance.toolong" = "Preveč znakov";
+
 // Landing screen
 
-"landing.app_name" = "Wire";
+"landing.header" = "Wire. Add your Account.";
 "landing.create_account.title" = "Osebno";
 "landing.create_account.subtitle" = "create an account";
 "landing.create_team.title" = "Pro";
@@ -1120,18 +1120,19 @@
 "team.name.subheadline" = "You can always change it later.";
 "team.name.textfield.placeholder" = "team name";
 "team.name.textfield.accessibility" = "Set team name";
-"team.name.whatiswireforteams" = "What is Wire for teams?";
+"team.name.whatiswireforteams" = "What is Wire Pro?";
 
 "team.email.headline" = "Your account";
 "team.email.subheadline" = "Enter your work email address.";
-"team.email.textfield.placeholder" = "you@yourcompany.com";
-"team.email.textfield.accessibility" = "Your company email";
+"team.email.textfield.placeholder" = "Your company email";
 "team.email.button.learn_more" = "Nauči se več";
 
 "team.activation_code.headline" = "You’ve got mail";
+"team.phone_activation_code.headline" = "Verification";
 "team.activation_code.subheadline" = "Vnesite verifikacijsko kodo, ki smo jo poslali na %@.";
 "team.activation_code.button.resend" = "Resend code";
 "team.activation_code.button.change_email" = "Ponastavitev elektronskega naslova";
+"team.activation_code.button.change_phone" = "Change phone number";
 
 "team.full_name.headline" = "Your name";
 "team.full_name.textfield.placeholder" = "Full name";
@@ -1142,14 +1143,15 @@
 "team.password.textfield.accessibility" = "Set password, at least 8 characters";
 
 
-"team.email_code.input_field.accessbility_label" = "Please enter the six-digit code from the email.";
+"verification.code_label" = "Six-digit code. Text field.";
+"verification.code_hint" = "Double tap to enter the code.";
 
 // Invite Team Members
 
 "team.invite.header.title" = "Build your team";
 "team.invite.header.subtitle" = "Your Wire team is ready to go. Invite your colleagues as members.";
-"team.invite.textfield.placeholder" = "colleague@yourcompany.com";
-"team.invite.textfield.accesibility" = "Enter e-mail address for colleague to invite.";
+"team.invite.textfield.placeholder" = "Colleague's email";
+"team.invite.textfield.accesibility" = "Enter email address for colleague to invite.";
 "team.invite.learn_more.title" = "Nauči se več";
 "team.invite.top_bar.skip" = "Skip";
 "team.invite.top_bar.done" = "Done";
@@ -1198,6 +1200,9 @@
 "registration.close_phone_invitation_button.email_title" = "Registriraj po e-pošti";
 "registration.close_phone_invitation_button.phone_title" = "Uporabi drugi telefon";
 
+"registration.register_by_phone" = "Telefon";
+"registration.register_by_email" = "E-pošta";
+
 "registration.enter_phone_number.title" = "Uredi telefonsko številko";
 "registration.enter_phone_number.placeholder" = "Telefonska številka";
 
@@ -1209,13 +1214,6 @@
 "registration.verify_email.resend.instructions" = "Niste dobili sporočila?";
 "registration.verify_email.resend.button_title" = "Pošlji ponovno";
 
-"registration.select_picture.subtitle" = "Wire je lepši s sliko.";
-"registration.select_picture.button_title" = "Izberi svojo";
-"registration.keep_picture.button_title" = "Obdrži to";
-"registration.camera_action.title" = "Zajemi fotografijo";
-"registration.photo_gallery_action.title" = "Izberi fotografijo";
-"registration.cancel_action.title" = "Prekliči";
-
 "registration.no_history.hero" = "Prvič uporabljate Wire na tej napravi.";
 "registration.no_history.subtitle" = "Zaradi zasebnosti se vaša zgodovina pogovorov ne bo pojavila tukaj.";
 "registration.no_history.got_it" = "V redu";
@@ -1225,8 +1223,8 @@
 "registration.alert.account_exists.message_phone" = "The phone number you used to register is already linked to an account.\n\nUse another phone number, or try to log in if you own this account.";
 "registration.alert.account_exists.message_email" = "The email address you used to register is already linked to an account.\n\n Use another email address, or try to log in if you own this account.";
 "registration.alert.change_email_action" = "Change Email";
-"registration.alert.change_phone_action" = "Change Phone";
-"registration.alert.change_signin_action" = "Sign In";
+"registration.alert.change_phone_action" = "Register with Another Number";
+"registration.alert.change_signin_action" = "Prijava";
 
 // Restore History Warning Alert
 "registration.no_history.restore_backup_warning.title" = "Restore history";
@@ -1253,6 +1251,9 @@
 "login.sso.alert.message" = "Enter the company SSO access code.";
 "login.sso.alert.action" = "Prijava";
 "login.sso.alert.text_field.placeholder" = "SSO access code";
+
+"login.sso.start_error_title" = "Cannot Start Company Login";
+"login.sso.link_error_message" = "The company login link you clicked is not valid. Please contact your administrator to resolve the issue.";
 
 "login.sso.error.alert.title" = "Nekaj je šlo narobe";
 "login.sso.error.alert.invalid_code.title" = "Invalid code.";
@@ -1311,13 +1312,14 @@
 "registration.push_access_denied.settings_button.title" = "Pojdi v nastavitve";
 "registration.push_access_denied.maybe_later_button.title" = "Morda kasneje";
 
+"registration.personal.title" = "Create an account";
 "registration.signin.title" = "Prijava";
-"registration.signin.too_many_devices.title" = "";
+"registration.signin.too_many_devices.title" = "Too Many Devices";
 "registration.signin.too_many_devices.subtitle" = "Odstranite eno izmed vaših naprav za začetek uporabe Wire na tej.";
 "registration.signin.too_many_devices.manage_button.title" = "Upravljanje naprav";
 "registration.signin.too_many_devices.sign_out_button.title" = "Odjava";
-"registration.signin.email_button.title" = "E-pošta";
-"registration.signin.phone_button.title" = "Telefon";
+
+"registration.signin.too_many_devices.manage_screen.title" = "Remove a Device";
 
 "registration.signin.alert.password_needed.title" = "Password needed";
 "registration.signin.alert.password_needed.message" = "Please enter your Password in order to log in.";
@@ -1337,6 +1339,15 @@
 "signin.confirm" = "Prijava";
 "signin.company_idp.button.title" = "For Companies";
 
+"signin_logout.subheadline" = "Your session expired. You need to log in again to continue.";
+"signin_logout.email.subheadline" = "Your session expired. Enter your email address and password to continue.";
+"signin_logout.phone.subheadline" = "Your session expired. Enter your phone number to continue.";
+"signin_logout.sso.subheadline" = "Your session expired. Log in with your company account to continue.";
+"signin_logout.sso.buton" = "Company Log In";
+
+"signin.email.missing_password.subtitle" = "Enter your email address and password to continue.";
+"signin.phone.missing_password.subtitle" = "Enter your phone number to continue.";
+
 "registration.phone_country" = "Država";
 "registration.phone_code" = "Koda države";
 "registration.phone_country.hint" = "Double tap to select another country.";
@@ -1348,7 +1359,7 @@
 "registration.add_phone_number.hero.paragraph" = "To nam pomaga najti osebe, ki jih morda poznate. Nikoli tega ne delimo.";
 "registration.add_phone_number.skip_button.title" = "Ne zdaj";
 
-"registration.add_email_password.hero.title" = "Dodajte e-poštni naslov in geslo.";
+"registration.add_email_password.hero.title" = "Add your email and password";
 "registration.add_email_password.hero.paragraph" = "To vam omogoča uporabo Wire na večih napravah.";
 
 "registration.email_invitation.title" = "Povabilo";

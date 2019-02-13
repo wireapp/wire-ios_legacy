@@ -34,6 +34,8 @@
 "general.service" = "Сервіс";
 "general.off" = "Вимкнений";
 "general.on" = "Увімк.";
+"general.loading" = "Завантаження…";
+"general.paste" = "Вставити";
 
 // Language like Chinese does not use space to sperate words or sentences.
 "general.space_between_words" = " ";
@@ -229,16 +231,10 @@
 "conversation.status.unsent" = "⚠️ Ненадіслане повідомлення";
 "conversation.status.you" = "Ви";
 "conversation.status.someone" = "Хтось";
-"conversation.status.added_multiple" = "Додані нові учасники";
 "conversation.status.you_was_added" = "%@ додав(-ла) вас";
-"conversation.status.added_users" = "%@ додав(-ла) %@";
-"conversation.status.joined" = "%@ приєднався(-лася)";
-"conversation.status.removed_multiple" = "Учасники видалені";
 "conversation.status.you_were_removed" = "Вас видалили";
 "conversation.status.you_left" = "Ви вийшли";
 "conversation.status.started_conversation" = "%@ почав(-ла) розмову";
-"conversation.status.removed_users" = "%@ видалив(-ла) %@";
-"conversation.status.everyone_left" = "Всі вийшли";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Compose Entry Point
@@ -1104,9 +1100,13 @@
 "password.guidance.tooshort" = "Не менше 8 символів";
 "password.guidance.toolong" = "Занадто багато символів";
 
+"phone.guidance.invalid" = "Невірний номер телефону";
+"phone.guidance.tooshort" = "Номер телефону занадто короткий";
+"phone.guidance.toolong" = "Занадто багато символів";
+
 // Landing screen
 
-"landing.app_name" = "Wire";
+"landing.header" = "Wire. Додати акаунт.";
 "landing.create_account.title" = "Персональний акаунт";
 "landing.create_account.subtitle" = "створити акаунт";
 "landing.create_team.title" = "Pro акаунт";
@@ -1120,18 +1120,19 @@
 "team.name.subheadline" = "Команду завжди можна перейменувати пізніше.";
 "team.name.textfield.placeholder" = "назва команди";
 "team.name.textfield.accessibility" = "Задайте ім'я команди";
-"team.name.whatiswireforteams" = "Що таке Wire для команд?";
+"team.name.whatiswireforteams" = "Що таке Wire Pro?";
 
 "team.email.headline" = "Ваш акаунт";
 "team.email.subheadline" = "Введіть робочу адресу електронної пошти.";
-"team.email.textfield.placeholder" = "ви@вашаКомпанія.com";
-"team.email.textfield.accessibility" = "Електронна пошта вашої компанії";
+"team.email.textfield.placeholder" = "Email вашої компанії";
 "team.email.button.learn_more" = "Дізнатися більше";
 
 "team.activation_code.headline" = "Ви отримали нового листа";
+"team.phone_activation_code.headline" = "Верифікація";
 "team.activation_code.subheadline" = "Введіть код, який ми вислали на %@.";
 "team.activation_code.button.resend" = "Надіслати код повторно";
 "team.activation_code.button.change_email" = "Змінити електронну пошту";
+"team.activation_code.button.change_phone" = "Змінити номер телефону";
 
 "team.full_name.headline" = "Ваше ім’я";
 "team.full_name.textfield.placeholder" = "Повне ім'я";
@@ -1142,14 +1143,15 @@
 "team.password.textfield.accessibility" = "Задайте пароль, мінімум 8 символів";
 
 
-"team.email_code.input_field.accessbility_label" = "Будь ласка, введіть шестизначний код з емейлу.";
+"verification.code_label" = "Шестизначний код. Текстове поле.";
+"verification.code_hint" = "Торкніться двічі, щоб ввести код.";
 
 // Invite Team Members
 
 "team.invite.header.title" = "Створіть свою власну команду";
-"team.invite.header.subtitle" = "Your Wire team is ready to go. Invite your colleagues as members.";
-"team.invite.textfield.placeholder" = "колега@вашакомпанія.com";
-"team.invite.textfield.accesibility" = "Введіть адресу електронної пошти колеги, щоб надіслати запрошення.";
+"team.invite.header.subtitle" = "Ваша команда в Wire готова до використання. Запросіть ваших колег стати її учасниками.";
+"team.invite.textfield.placeholder" = "Colleague's email";
+"team.invite.textfield.accesibility" = "Enter email address for colleague to invite.";
 "team.invite.learn_more.title" = "Дізнатися більше";
 "team.invite.top_bar.skip" = "Пропустити";
 "team.invite.top_bar.done" = "Готово";
@@ -1198,6 +1200,9 @@
 "registration.close_phone_invitation_button.email_title" = "Реєстрація з Email";
 "registration.close_phone_invitation_button.phone_title" = "За допомогою іншого телефону";
 
+"registration.register_by_phone" = "Номер телефону";
+"registration.register_by_email" = "Email";
+
 "registration.enter_phone_number.title" = "Редагувати номер телефону";
 "registration.enter_phone_number.placeholder" = "Номер телефону";
 
@@ -1209,13 +1214,6 @@
 "registration.verify_email.resend.instructions" = "Не прийшло повідомлення?";
 "registration.verify_email.resend.button_title" = "Надіслати ще раз";
 
-"registration.select_picture.subtitle" = "Wire виглядає краще з вашою фотографією.";
-"registration.select_picture.button_title" = "Вибрати власне фото";
-"registration.keep_picture.button_title" = "Залишити це";
-"registration.camera_action.title" = "Сфотографувати";
-"registration.photo_gallery_action.title" = "Вибрати фото";
-"registration.cancel_action.title" = "Скасувати";
-
 "registration.no_history.hero" = "Це перший раз, коли ви використовуєте Wire на цьому пристрої.";
 "registration.no_history.subtitle" = "З міркувань конфіденційності, історія ваших розмов тут не показується.";
 "registration.no_history.got_it" = "OK";
@@ -1225,7 +1223,7 @@
 "registration.alert.account_exists.message_phone" = "Номер телефону, який використовується для реєстрації, вже зв'язано з іншим акаунтом.\n\nСпробуйте використати інший номер телефону або залогіньтесь, якщо ви є власником цього акаунту.";
 "registration.alert.account_exists.message_email" = "Адреса електронної пошти, яка використовується для реєстрації, вже зв'язана з іншим акаунтом.\n\n Спробуйте використати іншу адресу або залогіньтесь, якщо ви є власником цього акаунту.";
 "registration.alert.change_email_action" = "Змінити email-адресу";
-"registration.alert.change_phone_action" = "Змінити номер телефону";
+"registration.alert.change_phone_action" = "Зареєструватися з іншим номером";
 "registration.alert.change_signin_action" = "Увійти";
 
 // Restore History Warning Alert
@@ -1253,6 +1251,9 @@
 "login.sso.alert.message" = "Введіть код доступу для вашої компанії.";
 "login.sso.alert.action" = "Увійти";
 "login.sso.alert.text_field.placeholder" = "Код доступу SSO";
+
+"login.sso.start_error_title" = "Cannot Start Company Login";
+"login.sso.link_error_message" = "The company login link you clicked is not valid. Please contact your administrator to resolve the issue.";
 
 "login.sso.error.alert.title" = "Щось пішло не так";
 "login.sso.error.alert.invalid_code.title" = "Невірний код.";
@@ -1311,13 +1312,14 @@
 "registration.push_access_denied.settings_button.title" = "Перейти до налаштувань";
 "registration.push_access_denied.maybe_later_button.title" = "Можливо, пізніше";
 
+"registration.personal.title" = "Створити акаунт";
 "registration.signin.title" = "Увійти";
-"registration.signin.too_many_devices.title" = "";
+"registration.signin.too_many_devices.title" = "Забагато пристроїв";
 "registration.signin.too_many_devices.subtitle" = "Видаліть один з ваших пристроїв, щоб почати використовувати Wire на цьому.";
 "registration.signin.too_many_devices.manage_button.title" = "Керування пристроями";
 "registration.signin.too_many_devices.sign_out_button.title" = "Вийти";
-"registration.signin.email_button.title" = "Email";
-"registration.signin.phone_button.title" = "Телефон";
+
+"registration.signin.too_many_devices.manage_screen.title" = "Видалити пристрій";
 
 "registration.signin.alert.password_needed.title" = "Необхідно ввести пароль";
 "registration.signin.alert.password_needed.message" = "Будь ласка, введіть ваш пароль для того, щоб увійти.";
@@ -1337,6 +1339,15 @@
 "signin.confirm" = "Увійти";
 "signin.company_idp.button.title" = "Для компаній";
 
+"signin_logout.subheadline" = "Термін дійсності вашого сеансу завершився. Залогіньтеся ще раз, щоб продовжити.";
+"signin_logout.email.subheadline" = "Термін дійсності вашого сеансу завершився. Введіть ваш email та пароль, щоб продовжити.";
+"signin_logout.phone.subheadline" = "Термін дійсності вашого сеансу завершився. Введіть ваш номер телефону, щоб продовжити.";
+"signin_logout.sso.subheadline" = "Термін дійсності вашого сеансу завершився. Залогіньтеся в акаунт вашої команди, щоб продовжити.";
+"signin_logout.sso.buton" = "Вхід для компаній";
+
+"signin.email.missing_password.subtitle" = "Enter your email address and password to continue.";
+"signin.phone.missing_password.subtitle" = "Enter your phone number to continue.";
+
 "registration.phone_country" = "Країна";
 "registration.phone_code" = "Код країни";
 "registration.phone_country.hint" = "Торкніться двічі, щоб вибрати іншу країну.";
@@ -1348,7 +1359,7 @@
 "registration.add_phone_number.hero.paragraph" = "Це допомагає нам знайти людей, яких ви знаєте. Ми ніколи не ділимося цими даними.";
 "registration.add_phone_number.skip_button.title" = "Не зараз";
 
-"registration.add_email_password.hero.title" = "Додайте ваш email та пароль.";
+"registration.add_email_password.hero.title" = "Додайте ваш email та пароль";
 "registration.add_email_password.hero.paragraph" = "Це дасть вам можливість використовувати Wire на різних пристроях.";
 
 "registration.email_invitation.title" = "Запрошення";
