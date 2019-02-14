@@ -98,7 +98,7 @@ final class MockMessageFactory: NSObject {
         var userClients: [AnyHashable] = []
 
         for user: Any in mockSystemMessageData.users {
-            if let client = (user as? MockUser)?.feature(withUserClients: UInt(numClients)) {
+            if let client = (user as? MockUser)?.feature(withUserClients: numClients) {
                 userClients.append(contentsOf: client)
             }
         }
