@@ -476,7 +476,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
         return chooseContactDetailController;
     }
-    
+
     return nil;
 }
 
