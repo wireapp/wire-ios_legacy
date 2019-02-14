@@ -20,7 +20,6 @@
 @import Foundation;
 @import WireSyncEngine;
 #import "MockLoader.h"
-#import "MockUserClient.h"
 
 @class MockConversation;
 
@@ -69,7 +68,6 @@
 @property (nonatomic, readwrite) Availability availability;
 @property (nonatomic, readonly) NSSet<UserClient *> * clientsRequiringUserAttention;
 
-- (NSArray<MockUserClient *> *)featureWithUserClients:(NSUInteger)numClients;
 - (NSString *)displayNameInConversation:(MockConversation *)conversation;
 - (void)fetchUserClients;
 

@@ -676,7 +676,6 @@
 		87CFDAB42044710400FD140D /* GuestIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87CFDAB32044710400FD140D /* GuestIndicator.swift */; };
 		87D21AD71D8A98620075AB7A /* AccentColorPickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87D21AD61D8A98620075AB7A /* AccentColorPickerController.swift */; };
 		87D38F9C1E5D9EE0004C5730 /* Analytics+Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87D38F9B1E5D9EE0004C5730 /* Analytics+Settings.swift */; };
-		87D553681C86F0450026573C /* MockUserClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D553671C86F0450026573C /* MockUserClient.m */; };
 		87D56DF61E003A5300DFF722 /* CollectionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87D56DF51E003A5300DFF722 /* CollectionsViewController.swift */; };
 		87D56DF81E003D9300DFF722 /* CollectionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87D56DF71E003D9300DFF722 /* CollectionsView.swift */; };
 		87D56DFA1E0046FE00DFF722 /* CollectionImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87D56DF91E0046FE00DFF722 /* CollectionImageCell.swift */; };
@@ -1156,6 +1155,7 @@
 		EF4172B12110A6E300FF85C7 /* SplitViewController+rightView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4172B02110A6E300FF85C7 /* SplitViewController+rightView.swift */; };
 		EF44784F20906DDD00BD9827 /* FullscreenImageViewController+Zoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF44784E20906DDD00BD9827 /* FullscreenImageViewController+Zoom.swift */; };
 		EF4478522090BF8700BD9827 /* FullscreenImageViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4478512090BF8700BD9827 /* FullscreenImageViewControllerTests.swift */; };
+		EF44C6A42215861F007C5CDC /* MockUserClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87D553661C86F0450026573C /* MockUserClient.swift */; };
 		EF4795AD2077847E00334E32 /* ConversationInputBarViewController+UITextViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4795AC2077847E00334E32 /* ConversationInputBarViewController+UITextViewDelegate.swift */; };
 		EF47971E211E398000EDFC15 /* MessagePresenter+OpenFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF47971D211E398000EDFC15 /* MessagePresenter+OpenFile.swift */; };
 		EF51C2BF211B2CAF0099A599 /* Data+HEIF.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF51C2BE211B2CAF0099A599 /* Data+HEIF.swift */; };
@@ -2326,8 +2326,7 @@
 		87CFDAB32044710400FD140D /* GuestIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuestIndicator.swift; sourceTree = "<group>"; };
 		87D21AD61D8A98620075AB7A /* AccentColorPickerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccentColorPickerController.swift; sourceTree = "<group>"; };
 		87D38F9B1E5D9EE0004C5730 /* Analytics+Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Analytics+Settings.swift"; sourceTree = "<group>"; };
-		87D553661C86F0450026573C /* MockUserClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MockUserClient.h; sourceTree = "<group>"; };
-		87D553671C86F0450026573C /* MockUserClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MockUserClient.m; sourceTree = "<group>"; };
+		87D553661C86F0450026573C /* MockUserClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockUserClient.swift; sourceTree = "<group>"; };
 		87D56DF51E003A5300DFF722 /* CollectionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionsViewController.swift; sourceTree = "<group>"; };
 		87D56DF71E003D9300DFF722 /* CollectionsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionsView.swift; sourceTree = "<group>"; };
 		87D56DF91E0046FE00DFF722 /* CollectionImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionImageCell.swift; sourceTree = "<group>"; };
@@ -4863,8 +4862,7 @@
 				87BEB0DF1C734DA60094BFE9 /* MockLoader.m */,
 				87BEB0E11C734DB60094BFE9 /* MockMessage.swift */,
 				EF8DD910211E02BE00E970F1 /* MockMessage+Creation.swift */,
-				87D553661C86F0450026573C /* MockUserClient.h */,
-				87D553671C86F0450026573C /* MockUserClient.m */,
+				87D553661C86F0450026573C /* MockUserClient.swift */,
 				EF01AF8320BED38300E5E5B4 /* MockUserClient+RemoteIdentifier.swift */,
 				F127BD581E265FB40093B2F1 /* MockCollection.swift */,
 				EF106E84204D8B4200B9F0F6 /* MockDevice.swift */,
@@ -8231,7 +8229,6 @@
 				EF883F8A2152476900B440CC /* ConversationCreationControllerSnapshotTests.swift in Sources */,
 				EF18140A21B17FB3008F7DA8 /* GroupDetailsReceiptOptionsCellTests.swift in Sources */,
 				EF8D7D4920D8FCA500F98666 /* MockConversation+TimedMessage.swift in Sources */,
-				87D553681C86F0450026573C /* MockUserClient.m in Sources */,
 				879489E71E5464CF0071B2C1 /* SearchResultLabelTests.swift in Sources */,
 				16A2026A1B66A0040095BBD1 /* SoundcloudAudioTrackTests.m in Sources */,
 				870C92671E8CE55800A10995 /* RandomGeneratorFromDataTests.swift in Sources */,
@@ -8240,6 +8237,7 @@
 				16030DAD21A846A200F8032E /* ConversationVideoMessageCellTests.swift in Sources */,
 				BF4D99D01E79AF8100A7B08F /* StartedConversationCellTests.swift in Sources */,
 				160C31211E4C7E770012E4BC /* UnknownMessageCellTests.swift in Sources */,
+				EF44C6A42215861F007C5CDC /* MockUserClient.swift in Sources */,
 				BF58ABED1D23F00000D5FF14 /* LocationSendViewControllerTests.swift in Sources */,
 				5EC25A2F219ACB4B00F6214E /* ConversationTextMessageCellTests.swift in Sources */,
 				EFD43FFA21B82C500050ABC5 /* ChangePhoneViewControllerTests.swift in Sources */,

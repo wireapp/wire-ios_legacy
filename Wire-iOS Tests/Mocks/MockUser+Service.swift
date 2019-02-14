@@ -22,4 +22,17 @@ extension MockUser {
     @objc var canSeeServices: Bool {
         return self.hasTeam
     }
+
+    //MARK: - clients
+    @discardableResult
+    func feature(withUserClients numClients: Int) -> [MockUserClient]? {
+        var newClients: [AnyHashable] = []
+        for _ in 0..<numClients {
+            let mockClient = MockUserClient()
+            mockClient.user = (self as Any as! ZMUser)
+            newClients.append(mockClient)
+        }
+        clients = Set(newClients)
+        return newClients as? [MockUserClient]
+    }
 }

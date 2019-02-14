@@ -73,7 +73,9 @@ final class InviteContactsViewControllerSnapshotTests: ZMSnapshotTestCase {
     func DISABLE_testForNoEmailClientAlert() {
         let contact = ZMAddressBookContact()
 
-        let alert = sut.invite(contact, from: UIView())
+        guard let alert = sut.invite(contact, from: UIView()) else {
+            return XCTFail("No alert generated for the contact.")
+        }
 
         verifyAlertController(alert)
     }

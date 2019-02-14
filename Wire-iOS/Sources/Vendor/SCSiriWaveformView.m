@@ -135,20 +135,23 @@ static const CGFloat kDefaultSecondaryLineWidth = 1.0f;
 		
 		CGFloat multiplier = MIN(1.0, (progress / 3.0f * 2.0f) + (1.0f / 3.0f));
 		[[self.waveColor colorWithAlphaComponent:multiplier * CGColorGetAlpha(self.waveColor.CGColor)] set];
-		
-		for (CGFloat x = 0; x<width + self.density; x += self.density) {
-			// We use a parable to scale the sinus wave, that has its peak in the middle of the view.
-			CGFloat scaling = -pow(1 / mid * (x - mid), 2) + 1;
-			
-			CGFloat y = scaling * maxAmplitude * normedAmplitude * sinf(2 * M_PI *(x / width) * self.frequency + self.phase) + halfHeight;
-			
-			if (x == 0) {
-				CGContextMoveToPoint(context, x, y);
-			} else {
-				CGContextAddLineToPoint(context, x, y);
-			}
-		}
-		
+
+        CGFloat x = 0;
+        while (x < width + self.density) {
+            // We use a parable to scale the sinus wave, that has its peak in the middle of the view.
+            CGFloat scaling = -pow(1 / mid * (x - mid), 2) + 1;
+            
+            CGFloat y = scaling * maxAmplitude * normedAmplitude * sinf(2 * M_PI *(x / width) * self.frequency + self.phase) + halfHeight;
+            
+            if (x == 0) {
+                CGContextMoveToPoint(context, x, y);
+            } else {
+                CGContextAddLineToPoint(context, x, y);
+            }
+            
+            x += self.density;
+        }
+        
 		CGContextStrokePath(context);
 	}
 }
