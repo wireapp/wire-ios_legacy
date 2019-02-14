@@ -231,7 +231,7 @@
     }
     
     CFDictionaryRef options = (__bridge CFDictionaryRef)@{ (id)kCGImageSourceShouldCache: (id)kCFBooleanTrue };
-    NSDictionary *properties = (__bridge NSDictionary *)CGImageSourceCopyPropertiesAtIndex(source, 0, options);
+    NSDictionary *properties = CFBridgingRelease(CGImageSourceCopyPropertiesAtIndex(source, 0, options));
     
     if (!properties) {
         return size;

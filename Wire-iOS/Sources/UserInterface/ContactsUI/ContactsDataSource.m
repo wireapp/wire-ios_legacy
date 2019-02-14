@@ -32,7 +32,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface ContactsDataSource ()
 
 // Search
-@property (nonatomic) SearchDirectory *searchDirectory;
+@property (nonatomic, readwrite, nullable) SearchDirectory *searchDirectory;
 
 // Group
 @property (nonatomic, readonly) UILocalizedIndexedCollation *indexedCollation;
