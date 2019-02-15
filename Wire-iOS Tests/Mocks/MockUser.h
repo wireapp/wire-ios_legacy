@@ -29,7 +29,6 @@
 + (MockUser *)mockSelfUser;
 + (MockUser *)mockServiceUser;
 + (MockUser *)mockUserFor:(ZMUser *)user;
-+ (ZMUser<ZMEditableUser> *)selfUserInUserSession:(ZMUserSession *)session;
 
 + (void)setMockSelfUser:(id<UserType>)newMockUser;
 
