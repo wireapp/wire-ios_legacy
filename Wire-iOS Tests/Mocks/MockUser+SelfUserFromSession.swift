@@ -20,7 +20,7 @@ import Foundation
 @testable import Wire
 
 extension MockUser: SelfUserProvider {
-    public static func selfUser() -> EditableUser {
+    public static var selfUser: EditableUser {
         return (mockSelf() as Any as! ZMUser)
     }
 }
