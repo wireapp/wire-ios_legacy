@@ -31,7 +31,7 @@ extension ZMUser {
     static func selfUser() -> (ZMUser & ZMEditableUser)! {
 
         if let mockUserClass = NSClassFromString("MockUser") as? SelfUserFromSession.Type {
-            return mockUserClass.selfUser(inUserSession: ZMUserSession.shared())
+            return mockUserClass.selfUser(inUserSession: nil)
         } else {
             guard let session = ZMUserSession.shared() else { return nil }
 

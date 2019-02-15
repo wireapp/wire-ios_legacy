@@ -1142,7 +1142,7 @@
 		EF32AB0321C15B0E002E4777 /* String+MessageToolBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF32AB0221C15B0E002E4777 /* String+MessageToolBox.swift */; };
 		EF33204C21496A0D0079E832 /* AVPlayerViewController+StatusBarAndNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF33204B21496A0D0079E832 /* AVPlayerViewController+StatusBarAndNotification.swift */; };
 		EF3371C22216D9D9005ED048 /* ZMUser+Self.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3371C12216D9D9005ED048 /* ZMUser+Self.swift */; };
-		EF3371C42216EEE2005ED048 /* MockUser+SelfUserFromSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3371C32216EEE2005ED048 /* MockUser+SelfUserFromSession.swift */; };
+		EF3371C52216F067005ED048 /* MockUser+SelfUserFromSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3371C32216EEE2005ED048 /* MockUser+SelfUserFromSession.swift */; };
 		EF36168A21E753310041F0CC /* SettingsTableViewControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF36168921E753300041F0CC /* SettingsTableViewControllerSnapshotTests.swift */; };
 		EF3976CE2114506E0030BE68 /* KeyboardAvoidingViewController+Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3976CD2114506E0030BE68 /* KeyboardAvoidingViewController+Animation.swift */; };
 		EF3BA5D421075FC60093048F /* ConversationInputBarViewController+Language.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3BA5D321075FC60093048F /* ConversationInputBarViewController+Language.swift */; };
@@ -7398,7 +7398,6 @@
 				87DCF4E91D34EA4500BB420F /* ProfilePresenter.m in Sources */,
 				EF066E1821EF997D00D56CAD /* ConversationContentViewController+ConversationMessageCellDelegate.swift in Sources */,
 				87F18BD21E03F13900C69D9B /* ZMLocationMessageData+Coordinates.swift in Sources */,
-				EF3371C42216EEE2005ED048 /* MockUser+SelfUserFromSession.swift in Sources */,
 				EF7D75A6201B6149003A8AF8 /* DeviceNativeBoundsSize.swift in Sources */,
 				EF18140C21B18846008F7DA8 /* IconToggleCell.swift in Sources */,
 				F15650F321DD1B6D00210504 /* ZMUser+Images.swift in Sources */,
@@ -8205,6 +8204,7 @@
 				162AE74D219DB1BD00581D98 /* ConversationImageMessageTests.swift in Sources */,
 				EF15A7B420BC304A00A045C7 /* SavableImageTests.swift in Sources */,
 				5E294597219087CA0045ACFA /* ConversationReplyCellTests.swift in Sources */,
+				EF3371C52216F067005ED048 /* MockUser+SelfUserFromSession.swift in Sources */,
 				BFE2542720BE9EA200F62041 /* CallHapticsControllerTests.swift in Sources */,
 				D58192052091F34E003BA7EC /* CallActionsViewTests.swift in Sources */,
 				BF5DF5CA20F4C7C2002BCB67 /* GroupParticipantsDetailViewControllerTests.swift in Sources */,
