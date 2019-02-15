@@ -33,10 +33,15 @@ extension ZMUser {
 extension SettingsCellDescriptorFactory {
 
     func accountGroup() -> SettingsCellDescriptorType {
-        var sections: [SettingsSectionDescriptorType] = [infoSection(),
-                                                         appearanceSection(),
-                                                         privacySection()]
-        
+        var sections: [SettingsSectionDescriptorType] = [infoSection()]
+
+        if userRightInterfaceType.selfUserIsPermitted(to: .editAccentColor) &&
+           userRightInterfaceType.selfUserIsPermitted(to: .editProfilePicture) {
+            sections.append(appearanceSection())
+        }
+
+        sections.append(privacySection())
+
         #if !DATA_COLLECTION_DISABLED
             sections.append(personalInformationSection())
         #endif
@@ -56,19 +61,16 @@ extension SettingsCellDescriptorFactory {
 
     func infoSection() -> SettingsSectionDescriptorType {
         var cellDescriptors: [SettingsCellDescriptorType] = []
-        cellDescriptors = [nameElement(), handleElement()]
+        cellDescriptors = [nameElement(enabled: userRightInterfaceType.selfUserIsPermitted(to: .editName)),
+                           handleElement(enabled: userRightInterfaceType.selfUserIsPermitted(to: .editHandle))]
         
         if let user = ZMUser.selfUser(), !user.usesCompanyLogin {
-            if !ZMUser.selfUser().hasTeam || !(ZMUser.selfUser().phoneNumber?.isEmpty ?? true) {
-                cellDescriptors.append(phoneElement())
+            if !ZMUser.selfUser().hasTeam || !(ZMUser.selfUser().phoneNumber?.isEmpty ?? true),
+               let phoneElement = phoneElement(enabled: userRightInterfaceType.selfUserIsPermitted(to: .editPhone)){
+                cellDescriptors.append(phoneElement)
             }
             
-            #if EMAIL_EDITING_DISABLED
-            let enabled = false
-            #else
-            let enabled = true
-            #endif
-            cellDescriptors.append(emailElement(enabled: enabled))
+            cellDescriptors.append(emailElement(enabled: userRightInterfaceType.selfUserIsPermitted(to: .editEmail)))
         }
         return SettingsSectionDescriptor(
             cellDescriptors: cellDescriptors,
@@ -124,15 +126,19 @@ extension SettingsCellDescriptorFactory {
     }
 
     // MARK: - Elements
-
-    func nameElement(enabled: Bool = true) -> SettingsPropertyTextValueCellDescriptor {
-        var settingsProperty = settingsPropertyFactory.property(.profileName)
+    private func textValueCellDescriptor(propertyName: SettingsPropertyName, enabled: Bool = true) -> SettingsPropertyTextValueCellDescriptor {
+        var settingsProperty = settingsPropertyFactory.property(propertyName)
         settingsProperty.enabled = enabled
+
         return SettingsPropertyTextValueCellDescriptor(settingsProperty: settingsProperty)
     }
 
-    func emailElement(enabled: Bool = true) -> SettingsCellDescriptorType {
 
+    func nameElement(enabled: Bool = true) -> SettingsPropertyTextValueCellDescriptor {
+        return textValueCellDescriptor(propertyName: .profileName, enabled: enabled)
+    }
+
+    func emailElement(enabled: Bool = true) -> SettingsCellDescriptorType {
         if enabled {
             return SettingsExternalScreenCellDescriptor(
                 title: "self.settings.account_section.email.title".localized,
@@ -151,56 +157,65 @@ extension SettingsCellDescriptorFactory {
                 accessoryViewMode: .alwaysHide
             )
         } else {
-            var settingsProperty = settingsPropertyFactory.property(.email)
-            settingsProperty.enabled = false
-            return SettingsPropertyTextValueCellDescriptor(settingsProperty: settingsProperty)
+            return textValueCellDescriptor(propertyName: .email, enabled: enabled)
         }
     }
 
-    func phoneElement() -> SettingsCellDescriptorType {
-        return SettingsExternalScreenCellDescriptor(
-            title: "self.settings.account_section.phone.title".localized,
-            isDestructive: false,
-            presentationStyle: .navigation,
-            presentationAction: {
-                return ChangePhoneViewController()
-            },
-            previewGenerator: { _ in
-                if let phoneNumber = ZMUser.selfUser().phoneNumber, !phoneNumber.isEmpty {
-                    return SettingsCellPreview.text(phoneNumber)
-                } else {
-                    return SettingsCellPreview.text("self.add_phone_number".localized)
-                }
-        },
-            accessoryViewMode: .alwaysHide
-        )
-
-    }
-
-    func handleElement() -> SettingsCellDescriptorType {
-        let presentation: () -> ChangeHandleViewController = {
-            return ChangeHandleViewController()
-        }
-
-        if nil != ZMUser.selfUser().handle {
-            let preview: PreviewGeneratorType = { _ in
-                guard let handle = ZMUser.selfUser().handle else { return .none }
-                return .text("@" + handle)
-            }
+    func phoneElement(enabled: Bool = true) -> SettingsCellDescriptorType? {
+        if enabled {
             return SettingsExternalScreenCellDescriptor(
-                title: "self.settings.account_section.handle.title".localized,
+                title: "self.settings.account_section.phone.title".localized,
                 isDestructive: false,
                 presentationStyle: .navigation,
-                presentationAction: presentation,
-                previewGenerator: preview,
+                presentationAction: {
+                    return ChangePhoneViewController()
+                },
+                previewGenerator: { _ in
+                    if let phoneNumber = ZMUser.selfUser().phoneNumber, !phoneNumber.isEmpty {
+                        return SettingsCellPreview.text(phoneNumber)
+                    } else {
+                        return SettingsCellPreview.text("self.add_phone_number".localized)
+                    }
+            },
                 accessoryViewMode: .alwaysHide
             )
+        } else {
+            if let phoneNumber = ZMUser.selfUser().phoneNumber, !phoneNumber.isEmpty {
+                return textValueCellDescriptor(propertyName: .phone, enabled: enabled)
+            } else {
+                return nil
+            }
         }
+    }
 
-        return SettingsExternalScreenCellDescriptor(
-            title: "self.settings.account_section.add_handle.title".localized,
-            presentationAction: presentation
-        )
+    func handleElement(enabled: Bool = true) -> SettingsCellDescriptorType {
+        if enabled {
+            let presentation: () -> ChangeHandleViewController = {
+                return ChangeHandleViewController()
+            }
+
+            if nil != ZMUser.selfUser().handle {
+                let preview: PreviewGeneratorType = { _ in
+                    guard let handleDisplayString = ZMUser.selfUser()?.handleDisplayString else { return .none }
+                    return .text(handleDisplayString)
+                }
+                return SettingsExternalScreenCellDescriptor(
+                    title: "self.settings.account_section.handle.title".localized,
+                    isDestructive: false,
+                    presentationStyle: .navigation,
+                    presentationAction: presentation,
+                    previewGenerator: preview,
+                    accessoryViewMode: .alwaysHide
+                )
+            }
+
+            return SettingsExternalScreenCellDescriptor(
+                title: "self.settings.account_section.add_handle.title".localized,
+                presentationAction: presentation
+            )
+        } else {
+            return textValueCellDescriptor(propertyName: .handle, enabled: enabled)
+        }
     }
 
     func pictureElement() -> SettingsCellDescriptorType {

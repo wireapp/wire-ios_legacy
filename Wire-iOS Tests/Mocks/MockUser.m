@@ -97,11 +97,6 @@ static id<UserType> mockSelfUser = nil;
     return self.isGuestInConversation;
 }
 
-+ (ZMUser<ZMEditableUser> *)selfUserInUserSession:(ZMUserSession *)session
-{
-    return mockSelfUser ? : (id)self.mockSelfUser;
-}
-
 - (NSString *)emailAddress
 {
     return @"test@email.com";

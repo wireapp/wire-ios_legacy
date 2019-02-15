@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2018 Wire Swiss GmbH
+// Copyright (C) 2019 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,26 +16,11 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import XCTest
-@testable import Wire
+import Foundation
 
-final class SelfProfileViewControllerTests: ZMSnapshotTestCase {
-    
-    var sut: SelfProfileViewController!
-    
-    override func setUp() {
-        super.setUp()
-		
-        sut = SelfProfileViewController(userRightInterfaceType: MockUserRight.self)
-        sut.view.backgroundColor = .black
-    }
-    
-    override func tearDown() {
-        sut = nil
-        super.tearDown()
-    }
-
-    func testTestForAUserWithNoTeam() {
-        verify(view: sut.view)
+extension UserType {
+    var handleDisplayString: String? {
+        guard let handle = handle else { return .none }
+        return "@" + handle
     }
 }

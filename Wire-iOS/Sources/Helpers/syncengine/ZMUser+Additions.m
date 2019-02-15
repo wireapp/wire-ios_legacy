@@ -69,22 +69,6 @@ ZMUser *BareUserToUser(id bareUser) {
     return [UIColor nameColorForZMAccentColor:self.accentColorValue variant:[[ColorScheme defaultColorScheme] variant]];
 }
 
-/**
- Return self's User object
-
- @return a ZMUser<ZMEditableUser> object for app target, or a MockUser object for test.
- */
-+ (instancetype)selfUser
-{
-    Class mockUserClass = NSClassFromString(@"MockUser");
-    if (mockUserClass != nil) {
-        return [mockUserClass selfUserInUserSession:[ZMUserSession sharedSession]];
-    }
-    else {
-        return [ZMUser selfUserInUserSession:[ZMUserSession sharedSession]];
-    }
-}
-
 + (ZMUser<ZMEditableUser> *)editableSelfUser
 {
     return [ZMUser selfUserInUserSession:[ZMUserSession sharedSession]];
