@@ -74,7 +74,8 @@ extension KeyboardAvoidingViewController {
     @objc
     func createInitialConstraints() {
         viewController.view.translatesAutoresizingMaskIntoConstraints = false
-        let constraints = viewController.view.fitInSuperview(with: EdgeInsets(top: topInset, leading: 0, bottom: .nan, trailing: 0), exclude: [.bottom])
+        let constraints = viewController.view.fitInSuperview(with: EdgeInsets(top: topInset, leading: 0, bottom: .nan, trailing: 0),
+                                                             exclude: [.bottom])
 
         topEdgeConstraint = constraints[.top]
 
