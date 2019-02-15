@@ -22,8 +22,11 @@ class ConversationLinkPreviewArticleCell: UIView, ConversationMessageCell {
 
     struct Configuration {
         let textMessageData: ZMTextMessageData
-        let isObfuscated: Bool
         let showImage: Bool
+        let message: ZMConversationMessage
+        var isObfuscated: Bool {
+            return message.isObfuscated
+        }
     }
 
     private let articleView = ArticleView(withImagePlaceholder: true)
@@ -110,6 +113,6 @@ class ConversationLinkPreviewArticleCellDescription: ConversationMessageCellDesc
 
     init(message: ZMConversationMessage, data: ZMTextMessageData) {
         let showImage = data.linkPreviewHasImage
-        configuration = View.Configuration(textMessageData: data, isObfuscated: message.isObfuscated, showImage: showImage)
+        configuration = View.Configuration(textMessageData: data, showImage: showImage, message: message)
     }
 }

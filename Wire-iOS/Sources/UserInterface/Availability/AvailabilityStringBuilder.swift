@@ -18,7 +18,7 @@
 
 @objcMembers public class AvailabilityStringBuilder: NSObject {
 
-    static func string(for user: ZMUser, with style: AvailabilityLabelStyle, color: UIColor? = nil) -> NSAttributedString {
+    static func string(for user: ZMUser, with style: AvailabilityLabelStyle, color: UIColor? = nil) -> NSAttributedString? {
         
         var title: String = ""
         var color = color
@@ -47,7 +47,7 @@
             }
         }
         
-        guard let textColor = color else { return "".attributedString }
+        guard let textColor = color else { return nil }
         let icon = AvailabilityStringBuilder.icon(for: availability, with: textColor, and: fontSize)
         let attributedText = IconStringsBuilder.iconString(with: icon, title: title, interactive: false, color: textColor)
         return attributedText

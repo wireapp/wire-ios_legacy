@@ -19,12 +19,7 @@
 
 #import "SwipeMenuCollectionCell.h"
 #import "SwipeMenuCollectionCell+Internal.h"
-#import "UIView+RemoveAnimations.h"
 #import "Wire-Swift.h"
-
-
-NSString * const SwipeMenuCollectionCellCloseDrawerNotification = @"SwipeMenuCollectionCellCloseDrawerNotification";
-NSString * const SwipeMenuCollectionCellIDToCloseKey = @"IDToClose";
 
 @interface SwipeMenuCollectionCell () <UIGestureRecognizerDelegate>
 
@@ -67,21 +62,6 @@ NSString * const SwipeMenuCollectionCellIDToCloseKey = @"IDToClose";
     return self;
 }
 
-- (void)prepareForReuse
-{
-    [super prepareForReuse];
-    [self removeAllAnimationsRecursive];
-
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(closeDrawer:) name:SwipeMenuCollectionCellCloseDrawerNotification object:nil];
-    [UIView performWithoutAnimation:^{
-        self.separatorLine.alpha = 1.0f;
-        self.visualDrawerOffset = 0.0f;
-        self.revealDrawerOverscrolled = NO;
-        self.userInteractionHorizontalOffset = 0.0f;
-        [self setDrawerOpen:NO animated:NO];
-    }];
-}
-
 - (void)setupSwipeMenuCollectionCell
 {
     self.canOpenDrawer = YES;
@@ -109,8 +89,6 @@ NSString * const SwipeMenuCollectionCellIDToCloseKey = @"IDToClose";
     
     [self.contentView addGestureRecognizer:self.revealDrawerGestureRecognizer];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(closeDrawer:) name:SwipeMenuCollectionCellCloseDrawerNotification object:nil];
-
     [self setNeedsUpdateConstraints];
     
     if (nil != [UIImpactFeedbackGenerator class]) {
@@ -147,9 +125,6 @@ NSString * const SwipeMenuCollectionCellIDToCloseKey = @"IDToClose";
             
             self.initialDrawerOffset = self.visualDrawerOffset;
             self.initialDragPoint = [pan locationInView:self];
-            if (self.visualDrawerOffset == 0) {
-                [self sendCellWillOpenNotification];
-            }
             break;
         case UIGestureRecognizerStateChanged:
             self.userInteractionHorizontalOffset = offset.x;
@@ -333,30 +308,6 @@ NSString * const SwipeMenuCollectionCellIDToCloseKey = @"IDToClose";
     else {
         action();
     }
-}
-
-- (void)closeDrawer:(NSNotification *)note
-{
-    if (note.object != self && self.mutuallyExclusiveSwipeIdentifier != nil) {
-        
-        NSDictionary *userInfo = note.userInfo;
-        NSString *IDToClose = userInfo[SwipeMenuCollectionCellIDToCloseKey];
-        if ((IDToClose != nil && [IDToClose isEqualToString:self.mutuallyExclusiveSwipeIdentifier]) || IDToClose == nil) {
-            [self setDrawerOpen:NO animated:YES];
-        }
-    }
-}
-
-- (void)sendCellWillOpenNotification
-{
-    if (self.mutuallyExclusiveSwipeIdentifier == nil) {
-        return;
-    }
-    NSNotification *note = [[NSNotification alloc] initWithName:SwipeMenuCollectionCellCloseDrawerNotification
-                                                         object:self
-                                                       userInfo:@{SwipeMenuCollectionCellIDToCloseKey : self.mutuallyExclusiveSwipeIdentifier}];
-    
-    [[NSNotificationCenter defaultCenter] postNotification:note];
 }
 
 #pragma mark - UIGestureRecognizerDelegate

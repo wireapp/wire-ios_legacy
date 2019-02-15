@@ -19,9 +19,11 @@
 import UIKit
 
 @objcMembers final class ConversationListAccessoryView: UIView {
-    var icon: ConversationStatusIcon = .none {
+    var icon: ConversationStatusIcon? = nil {
         didSet {
-            self.updateForIcon()
+            if icon != oldValue {
+                self.updateForIcon()
+            }
         }
     }
     
@@ -65,6 +67,7 @@ import UIKit
         [badgeView, transparentIconView].forEach(addSubview)
 
         createConstraints()
+        updateForIcon()
     }
 
     func createConstraints() {
@@ -103,7 +106,9 @@ import UIKit
     private var viewForState: UIView? {
         let iconSize: CGFloat = 12
         
-        switch self.icon {
+        guard let icon = icon else { return nil }
+        
+        switch icon {
         case .pendingConnection:
             iconView.image = UIImage(for: .clock, fontSize: iconSize, color: .white)
             accessibilityValue = "conversation_list.voiceover.status.pending_connection".localized
@@ -152,8 +157,6 @@ import UIKit
             iconView.image = UIImage(for: .ping, fontSize: iconSize, color: .black)
             accessibilityValue = "conversation_list.voiceover.status.ping".localized
             return iconView
-        default:
-            return .none
         }
     }
 
@@ -183,14 +186,16 @@ import UIKit
         
         self.textLabel.textColor = UIColor.from(scheme: .textForeground, variant: .dark)
         
-        switch self.icon {
-        case .none:
+        guard let icon = icon else {
             self.badgeView.isHidden = true
             self.transparentIconView.isHidden = true
-
+            
             updateCollapseConstraints(isCollapsed: true)
-
+            
             return
+        }
+        
+        switch icon {
         case .activeCall(false):
             self.badgeView.isHidden = true
             self.transparentIconView.isHidden = false
