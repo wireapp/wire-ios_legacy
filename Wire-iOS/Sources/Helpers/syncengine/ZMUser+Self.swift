@@ -18,8 +18,10 @@
 
 import Foundation
 
-protocol SelfUserFromSession {
-    static func selfUser(inUserSession session: ZMManagedObjectContextProvider?) -> ZMUser & ZMEditableUser
+typealias EditableUser = ZMUser & ZMEditableUser
+
+protocol SelfUserProvider {
+    static func selfUser() -> EditableUser
 }
 
 extension ZMUser {
@@ -28,10 +30,10 @@ extension ZMUser {
     ///
     /// - Returns: a ZMUser<ZMEditableUser> object for app target, or a MockUser object for test.
     @objc
-    static func selfUser() -> (ZMUser & ZMEditableUser)! {
+    static func selfUser() -> EditableUser! {
 
-        if let mockUserClass = NSClassFromString("MockUser") as? SelfUserFromSession.Type {
-            return mockUserClass.selfUser(inUserSession: nil)
+        if let mockUserClass = NSClassFromString("MockUser") as? SelfUserProvider.Type {
+            return mockUserClass.selfUser()
         } else {
             guard let session = ZMUserSession.shared() else { return nil }
 

@@ -17,9 +17,10 @@
 //
 
 import Foundation
+@testable import Wire
 
-extension MockUser: SelfUserFromSession {
-    public static func selfUser(inUserSession session: ZMManagedObjectContextProvider?) -> ZMUser & ZMEditableUser {
+extension MockUser: SelfUserProvider {
+    public static func selfUser() -> EditableUser {
         return (mockSelf() as Any as! ZMUser)
     }
 }
