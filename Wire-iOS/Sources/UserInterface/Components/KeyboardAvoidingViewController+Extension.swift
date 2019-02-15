@@ -35,7 +35,7 @@ extension KeyboardAvoidingViewController {
         }
 
         guard let userInfo = notification?.userInfo,
-              let duration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? TimeInterval
+            let duration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? TimeInterval
             else { return }
         
         let keyboardFrameInView = UIView.keyboardFrame(in: self.view, forKeyboardNotification: notification)
@@ -43,7 +43,7 @@ extension KeyboardAvoidingViewController {
 
         // When this controller's view is presented at a form sheet style on iPad, the view is has a top offset and the bottomOffset should be reduced.
         if modalPresentationStyle == .formSheet,
-           let frame = presentationController?.frameOfPresentedViewInContainerView {
+            let frame = presentationController?.frameOfPresentedViewInContainerView {
 
             bottomOffset += frame.minY
         }
@@ -67,5 +67,21 @@ extension KeyboardAvoidingViewController {
         }
 
         animator?.startAnimation()
+    }
+
+    //MARK: constraint
+
+    @objc
+    func createInitialConstraints() {
+        viewController.view.translatesAutoresizingMaskIntoConstraints = false
+        let constraints = viewController.view.fitInSuperview(with: EdgeInsets(top: topInset, leading: 0, bottom: .nan, trailing: 0), exclude: [.bottom])
+
+        topEdgeConstraint = constraints[.top]
+
+        let bottomEdgeConstraint = viewController.bottomLayoutGuide.bottomAnchor.constraint(equalTo: bottomLayoutGuide.bottomAnchor)
+
+        NSLayoutConstraint.activate([bottomEdgeConstraint])
+
+        self.bottomEdgeConstraint = bottomEdgeConstraint
     }
 }

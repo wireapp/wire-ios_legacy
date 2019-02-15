@@ -22,5 +22,7 @@
 
 @property (nonatomic, nullable) NSLayoutConstraint *bottomEdgeConstraint;
 @property (nonatomic, nullable) UIViewPropertyAnimator *animator;
+@property (nonatomic, readwrite) UIViewController *viewController;
+@property (nonatomic) NSLayoutConstraint *topEdgeConstraint;
 
 @end

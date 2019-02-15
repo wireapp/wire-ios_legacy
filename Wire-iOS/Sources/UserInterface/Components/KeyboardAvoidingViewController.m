@@ -20,22 +20,10 @@
 #import "KeyboardAvoidingViewController.h"
 #import "KeyboardAvoidingViewController+Internal.h"
 
-@import PureLayout;
-
 #import "UIView+Zeta.h"
 #import "Constants.h"
 #import "KeyboardFrameObserver.h"
 #import "Wire-Swift.h"
-
-
-
-@interface KeyboardAvoidingViewController ()
-
-@property (nonatomic, readwrite) UIViewController *viewController;
-@property (nonatomic) NSLayoutConstraint *topEdgeConstraint;
-
-@end
-
 
 
 @implementation KeyboardAvoidingViewController
@@ -101,16 +89,6 @@
     [self.viewController didMoveToParentViewController:self];
     
     [self createInitialConstraints];
-}
-
-- (void)createInitialConstraints
-{
-    [self.viewController.view autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:0];
-    [self.viewController.view autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:0];
-    self.topEdgeConstraint = [self.viewController.view autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:self.topInset];
-    
-    self.bottomEdgeConstraint = [self.viewController.bottomLayoutGuide.bottomAnchor constraintEqualToAnchor:self.bottomLayoutGuide.bottomAnchor constant:0];
-    [self.bottomEdgeConstraint setActive:YES];
 }
 
 - (void)setTopInset:(CGFloat)topInset
