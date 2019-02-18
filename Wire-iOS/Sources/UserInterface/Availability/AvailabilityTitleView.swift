@@ -37,17 +37,17 @@ class AvailabilityTitleView: TitleView, Themeable, ZMUserObserver {
         /// Whether to display the user name instead of the availability.
         static let displayUserName = Options(rawValue: 1 << 2)
         
-        /// Whether to use a small text font instead of the default one.
-        static let useSmallFont = Options(rawValue: 1 << 3)
+        /// Whether to use a large text font instead of the default small one.
+        static let useLargeFont = Options(rawValue: 1 << 3)
         
         /// The default options for using the view inside the header of the home page.
-        static var header: Options = [.allowSettingStatus, .hideActionHint, .displayUserName]
+        static var header: Options = [.allowSettingStatus, .hideActionHint, .displayUserName, .useLargeFont]
         
         /// The default option for using the view inside the profile screen of the settings.
-        static var selfProfile: Options = [.allowSettingStatus, .useSmallFont]
+        static var selfProfile: Options = [.allowSettingStatus]
         
         /// The default option for using the view inside the profile details screen of a conversation.
-        static var profileDetails: Options = [.hideActionHint, .useSmallFont]
+        static var profileDetails: Options = [.hideActionHint]
         
     }
     
@@ -120,7 +120,7 @@ class AvailabilityTitleView: TitleView, Themeable, ZMUserObserver {
     /// Refreshes the content of the view, based on the user data and the options.
     private func updateContent() {
         let availability = user.availability
-        let fontStyle: FontSize = options.contains(.useSmallFont) ? .small : .normal
+        let fontStyle: FontSize = options.contains(.useLargeFont) ? .normal : .small
         let icon = AvailabilityStringBuilder.icon(for: availability, with: self.titleColor!, and: fontStyle)
         let isInteractive = options.contains(.allowSettingStatus)
         var title = ""
@@ -141,10 +141,10 @@ class AvailabilityTitleView: TitleView, Themeable, ZMUserObserver {
     
     /// Refreshes the appearance of the view, based on the options.
     private func updateAppearance() {
-        if options.contains(.useSmallFont) {
-            titleFont = FontSpec(.small, .semibold).font
-        } else {
+        if options.contains(.useLargeFont) {
             titleFont = FontSpec(.normal, .semibold).font
+        } else {
+            titleFont = FontSpec(.small, .semibold).font
         }
         
         titleColor = UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)
