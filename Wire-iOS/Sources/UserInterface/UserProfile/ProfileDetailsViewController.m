@@ -73,7 +73,7 @@ typedef NS_ENUM(NSUInteger, ProfileViewContentMode) {
         _bareUser = user;
         _conversation = conversation;
         _showGuestLabel = [user isGuestIn:conversation];
-        _availabilityView = [[AvailabilityTitleView alloc] initWithUser:[self fullUser] style:AvailabilityTitleViewStyleOtherProfile];
+        _availabilityView = [AvailabilityTitleView profileDetailsAvailabilityTitleViewForUser:[self fullUser]];
     }
     return self;
 }

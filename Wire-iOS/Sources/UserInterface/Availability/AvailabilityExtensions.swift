@@ -18,10 +18,6 @@
 
 import Foundation
 
-@objc public enum AvailabilityTitleViewStyle: Int {
-    case selfProfile, otherProfile, header
-}
-
 @objc public enum AvailabilityLabelStyle: Int {
     case list, participants, placeholder
 }
