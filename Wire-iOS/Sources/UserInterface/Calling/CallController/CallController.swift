@@ -106,6 +106,10 @@ extension CallController: WireCallCenterCallStateObserver {
         viewController.dismisser = self
         activeCallViewController = viewController
         
+        // NOTE: We resign first reponder for the input bar since it will attempt to restore
+        // first responder when the call overlay is interactively dismissed but canceled.
+        UIResponder.wr_currentFirst()?.resignFirstResponder()
+        
         let modalVC = ModalPresentationViewController(viewController: viewController)
         targetViewController?.present(modalVC, animated: animated)
     }
