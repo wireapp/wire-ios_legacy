@@ -76,27 +76,28 @@ class AvailabilityTitleViewTests: ZMSnapshotTestCase {
     // MARK: - Other profile
     
     func testThatItRendersCorrectly_OtherProfile_NoneAvailability() {
-        createTest(for: .profileDetails, with: .none, on: otherUser!)
+        createTest(for: .profileDetails, with: .none, on: otherUser!, colorSchemeVariant: .light)
     }
     
     func testThatItRendersCorrectly_OtherProfile_AvailableAvailability() {
-        createTest(for: .profileDetails, with: .available, on: otherUser!)
+        createTest(for: .profileDetails, with: .available, on: otherUser!, colorSchemeVariant: .light)
     }
     
     func testThatItRendersCorrectly_OtherProfile_AwayAvailability() {
-        createTest(for: .profileDetails, with: .away, on: otherUser!)
+        createTest(for: .profileDetails, with: .away, on: otherUser!, colorSchemeVariant: .light)
     }
     
     func testThatItRendersCorrectly_OtherProfile_BusyAvailability() {
-        createTest(for: .profileDetails, with: .busy, on: otherUser!)
+        createTest(for: .profileDetails, with: .busy, on: otherUser!, colorSchemeVariant: .light)
     }
     
     // MARK: - Common methods
     
-    private func createTest(for options: AvailabilityTitleView.Options, with availability: Availability, on user: ZMUser, file: StaticString = #file, line: UInt = #line) {
+    private func createTest(for options: AvailabilityTitleView.Options, with availability: Availability, on user: ZMUser, colorSchemeVariant: ColorSchemeVariant = .dark, file: StaticString = #file, line: UInt = #line) {
         updateAvailability(for: user, newValue: availability)
         let sut = AvailabilityTitleView(user: user, options: options)
-        sut.backgroundColor = options.contains(.useDarkAppearance) ? .black : .white
+        sut.colorSchemeVariant = colorSchemeVariant
+        sut.backgroundColor = colorSchemeVariant == .light ? .white : .black
         verify(view: sut, file: file, line: line)
     }
     

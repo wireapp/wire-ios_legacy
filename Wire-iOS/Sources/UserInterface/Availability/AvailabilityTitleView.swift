@@ -22,7 +22,7 @@ import UIKit
  * A title view subclass that displays the availability of the user.
  */
 
-class AvailabilityTitleView: TitleView, ZMUserObserver {
+class AvailabilityTitleView: TitleView, Themeable, ZMUserObserver {
     
     /// The available options for this view.
     struct Options: OptionSet {
@@ -31,23 +31,20 @@ class AvailabilityTitleView: TitleView, ZMUserObserver {
         /// Whether we allow the user to update the status by tapping this view.
         static let allowSettingStatus = Options(rawValue: 1 << 0)
         
-        /// Whether to use the apparence for dark mode (light text).
-        static let useDarkAppearance = Options(rawValue: 1 << 1)
-        
         /// Whether to hide the action hint (down arrow) next to the status.
-        static let hideActionHint = Options(rawValue: 1 << 2)
+        static let hideActionHint = Options(rawValue: 1 << 1)
         
         /// Whether to display the user name instead of the availability.
-        static let displayUserName = Options(rawValue: 1 << 3)
+        static let displayUserName = Options(rawValue: 1 << 2)
         
         /// Whether to use a small text font instead of the default one.
-        static let useSmallFont = Options(rawValue: 1 << 4)
+        static let useSmallFont = Options(rawValue: 1 << 3)
         
         /// The default options for using the view inside the header of the home page.
-        static var header: Options = [.allowSettingStatus, .useDarkAppearance, .hideActionHint, .displayUserName]
+        static var header: Options = [.allowSettingStatus, .hideActionHint, .displayUserName]
         
         /// The default option for using the view inside the profile screen of the settings.
-        static var selfProfile: Options = [.allowSettingStatus, .useDarkAppearance, .useSmallFont]
+        static var selfProfile: Options = [.allowSettingStatus, .useSmallFont]
         
         /// The default option for using the view inside the profile details screen of a conversation.
         static var profileDetails: Options = [.hideActionHint, .useSmallFont]
@@ -60,6 +57,13 @@ class AvailabilityTitleView: TitleView, ZMUserObserver {
     private var observerToken: Any?
     
     private let feedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
+    
+    @objc dynamic var colorSchemeVariant: ColorSchemeVariant = ColorScheme.default.variant {
+        didSet {
+            guard colorSchemeVariant != oldValue else { return }
+            applyColorScheme(colorSchemeVariant)
+        }
+    }
     
     /// The options to apply to this view.
     var options: Options {
@@ -103,6 +107,10 @@ class AvailabilityTitleView: TitleView, ZMUserObserver {
     
     // MARK: - Configuration
     
+    func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
+        updateConfiguration()
+    }
+    
     /// Refreshes the content and appearance of the view.
     private func updateConfiguration() {
         updateAppearance()
@@ -139,15 +147,8 @@ class AvailabilityTitleView: TitleView, ZMUserObserver {
             titleFont = FontSpec(.normal, .semibold).font
         }
         
-        if options.contains(.useDarkAppearance) {
-            let variant = ColorSchemeVariant.dark
-            titleColor = UIColor.from(scheme: .textForeground, variant: variant)
-            titleColorSelected = UIColor.from(scheme: .textDimmed, variant: variant)
-        } else {
-            //otherwise, take the default variant
-            titleColor = UIColor.from(scheme: .textForeground)
-            titleColorSelected = UIColor.from(scheme: .textDimmed)
-        }
+        titleColor = UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)
+        titleColorSelected = UIColor.from(scheme: .textDimmed, variant: colorSchemeVariant)
     }
     
     // MARK: - Events

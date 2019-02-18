@@ -87,7 +87,7 @@ class ProfileView: UIView {
     init(user: ZMUser, options: Options) {
         self.user = user
         self.options = options
-        self.availabilityView = AvailabilityTitleView(user: user, options: .selfProfile)
+        self.availabilityView = AvailabilityTitleView(user: user, options: [])
         super.init(frame: .zero)
         configureSubviews()
         configureConstraints()

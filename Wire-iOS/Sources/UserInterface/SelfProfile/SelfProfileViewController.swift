@@ -73,6 +73,7 @@ final class SelfProfileViewController: UIViewController {
         
         let user = ZMUser.selfUser()!
         profileView = ProfileView(user: user, options: user.isTeamMember ? [.allowEditingAvailability] : [.hideAvailability])
+        profileView.availabilityView.options = .selfProfile
         
         super.init(nibName: .none, bundle: .none)
                 
