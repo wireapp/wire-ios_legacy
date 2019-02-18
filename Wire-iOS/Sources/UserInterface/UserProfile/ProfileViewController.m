@@ -63,6 +63,7 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
 @property (nonatomic) UserNameDetailView *usernameDetailsView;
 @property (nonatomic) ProfileTitleView *profileTitleView;
 @property (nonatomic) TabBarController *tabsController;
+@property (nonatomic) ProfileFooterView *profileFooterView;
 
 @end
 
@@ -116,6 +117,7 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
     [self setupNavigationItems];
     [self setupHeader];
     [self setupTabsController];
+    [self setupFooterView];
     [self setupConstraints];
     [self updateShowVerifiedShield];
 }
@@ -166,6 +168,20 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
     [self addChildViewController:self.tabsController];
     [self.view addSubview:self.tabsController.view];
     [self.tabsController didMoveToParentViewController:self];
+}
+
+- (void)setupFooterView {
+    
+    ProfileFooterView *userActionsFooterView = [[ProfileFooterView alloc] init];
+    userActionsFooterView.translatesAutoresizingMaskIntoConstraints = NO;
+    
+    [userActionsFooterView setLeftIcon:[self iconTypeForUserAction:[self leftButtonAction]]];
+    [userActionsFooterView setRightIcon:[self iconTypeForUserAction:[self rightButtonAction]]];
+    [userActionsFooterView.leftButton setTitle:[[self buttonTextForUserAction:[self leftButtonAction]] uppercasedWithCurrentLocale] forState:UIControlStateNormal];
+    
+    [userActionsFooterView.leftButton addTarget:self action:@selector(performLeftButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+    [userActionsFooterView.rightButton addTarget:self action:@selector(performRightButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:userActionsFooterView];
 }
 
 - (void)setupConstraints

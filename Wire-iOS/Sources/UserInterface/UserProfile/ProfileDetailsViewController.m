@@ -41,7 +41,6 @@
 #import "Wire-Swift.h"
 
 #import "ZClientViewController.h"
-#import "ProfileFooterView.h"
 #import "ProfileSendConnectionRequestFooterView.h"
 #import "ProfileIncomingConnectionRequestFooterView.h"
 #import "ProfileUnblockFooterView.h"
@@ -161,8 +160,8 @@ typedef NS_ENUM(NSUInteger, ProfileViewContentMode) {
         ProfileFooterView *userActionsFooterView = [[ProfileFooterView alloc] init];
         userActionsFooterView.translatesAutoresizingMaskIntoConstraints = NO;
         
-        [userActionsFooterView setIconTypeForLeftButton:[self iconTypeForUserAction:[self leftButtonAction]]];
-        [userActionsFooterView setIconTypeForRightButton:[self iconTypeForUserAction:[self rightButtonAction]]];
+        [userActionsFooterView setLeftIcon:[self iconTypeForUserAction:[self leftButtonAction]]];
+        [userActionsFooterView setRightIcon:[self iconTypeForUserAction:[self rightButtonAction]]];
         [userActionsFooterView.leftButton setTitle:[[self buttonTextForUserAction:[self leftButtonAction]] uppercasedWithCurrentLocale] forState:UIControlStateNormal];
         
         [userActionsFooterView.leftButton addTarget:self action:@selector(performLeftButtonAction:) forControlEvents:UIControlEventTouchUpInside];

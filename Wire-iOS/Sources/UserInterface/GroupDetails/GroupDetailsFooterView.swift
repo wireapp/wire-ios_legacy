@@ -22,78 +22,46 @@ protocol GroupDetailsFooterViewDelegate: class {
     func detailsView(_ view: GroupDetailsFooterView, performAction: GroupDetailsFooterView.Action)
 }
 
-final class GroupDetailsFooterView: UIView {
+final class GroupDetailsFooterView: ConversationDetailFooterView {
+    
+    weak var delegate: GroupDetailsFooterViewDelegate?
+    
     enum Action {
         case more, invite
     }
     
-    weak var delegate: GroupDetailsFooterViewDelegate?
-    
-    private let variant: ColorSchemeVariant
-    public let moreButton = IconButton()
-    public let addButton = RestrictedIconButton(requiredPermissions: .member)
-    
-    init(variant: ColorSchemeVariant = ColorScheme.default.variant) {
-        self.variant = variant
-        super.init(frame: .zero)
-        setupViews()
-        createConstraints()
+    init() {
+        super.init(mainButton: RestrictedIconButton(requiredPermissions: .member))
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setupViews() {
-        [addButton, moreButton].forEach {
-            addSubview($0)
-            $0.translatesAutoresizingMaskIntoConstraints = false
-            $0.setIconColor(UIColor.from(scheme: .iconNormal), for: .normal)
-            $0.setIconColor(UIColor.from(scheme: .iconHighlighted), for: .highlighted)
-            $0.setIconColor(UIColor.from(scheme: .buttonFaded), for: .disabled)
-            $0.setTitleColor(UIColor.from(scheme: .iconNormal), for: .normal)
-            $0.setTitleColor(UIColor.from(scheme: .textDimmed), for: .highlighted)
-            $0.setTitleColor(UIColor.from(scheme: .buttonFaded), for: .disabled)
-            $0.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
-        }
-        
-        moreButton.setIcon(.ellipsis, with: .tiny, for: .normal)
-        addButton.setIcon(.plus, with: .tiny, for: .normal)
-        addButton.setTitle("participants.footer.add_title".localized.uppercased(), for: .normal)
-        addButton.titleImageSpacing = 16
-        addButton.titleLabel?.font = FontSpec(.small, .regular).font
-        backgroundColor = UIColor.from(scheme: .barBackground)
-        addButton.accessibilityIdentifier = "OtherUserMetaControllerLeftButton"
-        moreButton.accessibilityIdentifier = "OtherUserMetaControllerRightButton"
-    }
-    
-    private func createConstraints() {
-        NSLayoutConstraint.activate([
-            heightAnchor.constraint(equalToConstant: 56),
-            addButton.centerYAnchor.constraint(equalTo: centerYAnchor),
-            moreButton.centerYAnchor.constraint(equalTo: centerYAnchor),
-            addButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            moreButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            moreButton.leadingAnchor.constraint(greaterThanOrEqualTo: addButton.leadingAnchor, constant: 16)
-        ])
-    }
-    
-    @objc private func buttonTapped(_ sender: IconButton) {
-        action(for: sender).apply {
-            delegate?.detailsView(self, performAction: $0)
-        }
-    }
-    
     private func action(for button: IconButton) -> Action? {
         switch button {
-        case moreButton: return .more
-        case addButton: return .invite
+        case rightButton: return .more
+        case leftButton: return .invite
         default: return nil
         }
     }
     
     func update(for conversation: ZMConversation) {
-        addButton.isHidden = ZMUser.selfUser().isGuest(in: conversation)
-        addButton.isEnabled = conversation.freeParticipantSlots > 0
+        leftButton.isHidden = ZMUser.selfUser().isGuest(in: conversation)
+        leftButton.isEnabled = conversation.freeParticipantSlots > 0
+    }
+    
+    override func setupButtons() {
+        leftIcon = .plus
+        leftButton.setTitle("participants.footer.add_title".localized.uppercased(), for: .normal)
+        leftButton.accessibilityIdentifier = "OtherUserMetaControllerLeftButton"
+        rightIcon = .ellipsis
+        rightButton.accessibilityIdentifier = "OtherUserMetaControllerRightButton"
+    }
+    
+    override func buttonTapped(_ sender: IconButton) {
+        action(for: sender).apply {
+            delegate?.detailsView(self, performAction: $0)
+        }
     }
 }
