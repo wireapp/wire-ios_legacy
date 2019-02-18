@@ -125,8 +125,6 @@ class AvailabilityTitleView: TitleView, ZMUserObserver {
             title = "availability.message.set_status".localized(uppercased: true)
         } else if availability != .none {
             title = availability.localizedName.localizedUppercase
-        } else {
-            isHidden = true
         }
         
         let showInteractiveIcon = isInteractive && !options.contains(.hideActionHint)
