@@ -55,6 +55,8 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
 @interface ProfileViewController (ConversationCreationDelegate) <ConversationCreationControllerDelegate>
 @end
 
+@interface ProfileViewController (ProfileFooterViewDelegate) <ProfileFooterViewDelegate>
+@end
 
 
 @interface ProfileViewController () <ZMUserObserver>
@@ -63,7 +65,6 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
 @property (nonatomic) UserNameDetailView *usernameDetailsView;
 @property (nonatomic) ProfileTitleView *profileTitleView;
 @property (nonatomic) TabBarController *tabsController;
-@property (nonatomic) ProfileFooterView *profileFooterView;
 
 @end
 
@@ -172,23 +173,21 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
 
 - (void)setupFooterView {
     
-    ProfileFooterView *userActionsFooterView = [[ProfileFooterView alloc] init];
+    ProfileFooterView *userActionsFooterView = [[ProfileFooterView alloc] initWithUser:self.fullUser conversation:self.conversation context:self.context];
     userActionsFooterView.translatesAutoresizingMaskIntoConstraints = NO;
-    
-    [userActionsFooterView setLeftIcon:[self iconTypeForUserAction:[self leftButtonAction]]];
-    [userActionsFooterView setRightIcon:[self iconTypeForUserAction:[self rightButtonAction]]];
-    [userActionsFooterView.leftButton setTitle:[[self buttonTextForUserAction:[self leftButtonAction]] uppercasedWithCurrentLocale] forState:UIControlStateNormal];
-    
-    [userActionsFooterView.leftButton addTarget:self action:@selector(performLeftButtonAction:) forControlEvents:UIControlEventTouchUpInside];
-    [userActionsFooterView.rightButton addTarget:self action:@selector(performRightButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+    userActionsFooterView.delegate = self;
+    self.profileFooterView = userActionsFooterView;
     [self.view addSubview:userActionsFooterView];
 }
 
 - (void)setupConstraints
 {
     [self.usernameDetailsView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeBottom];
-    [self.tabsController.view autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeTop];
+    [self.tabsController.view autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:0.0];
+    [self.tabsController.view autoPinEdgeToSuperviewEdge:ALEdgeLeading withInset:0.0];
     [self.tabsController.view autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.usernameDetailsView];
+    [self.tabsController.view autoPinEdge:ALEdgeBottom toEdge:ALEdgeTop ofView:self.profileFooterView];
+    [self.profileFooterView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeTop];
 }
 
 #pragma mark - Header
@@ -246,6 +245,142 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
         [self updateShowVerifiedShield];
     }
 }
+
+#pragma mark - Actions
+
+- (void)presentAddParticipantsViewController
+{
+    NSSet *selectedUsers = nil;
+    if (nil != self.conversation.connectedUser) {
+        selectedUsers = [NSSet setWithObject:self.conversation.connectedUser];
+    } else {
+        selectedUsers = [NSSet set];
+    }
+    
+    ConversationCreationController *conversationCreationController = [[ConversationCreationController alloc] initWithPreSelectedParticipants:selectedUsers];
+    
+    if ([[[UIScreen mainScreen] traitCollection] horizontalSizeClass] == UIUserInterfaceSizeClassRegular) {
+        [self dismissViewControllerAnimated:YES completion:^{
+            UINavigationController *presentedViewController = [conversationCreationController wrapInNavigationController];
+            
+            presentedViewController.modalPresentationStyle = UIModalPresentationFormSheet;
+            
+            [[ZClientViewController sharedZClientViewController] presentViewController:presentedViewController
+                                                                              animated:YES
+                                                                            completion:nil];
+        }];
+    }
+    else {
+        KeyboardAvoidingViewController *avoiding = [[KeyboardAvoidingViewController alloc] initWithViewController:conversationCreationController];
+        UINavigationController *presentedViewController = [avoiding wrapInNavigationController];
+        
+        presentedViewController.modalPresentationStyle = UIModalPresentationOverCurrentContext;
+        presentedViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+        
+        [self presentViewController:presentedViewController
+                           animated:YES
+                         completion:^{
+                             [UIApplication.sharedApplication wr_updateStatusBarForCurrentControllerAnimated:YES];
+                         }];
+    }
+    
+    //[self.delegate profileDetailsViewController:self didPresentConversationCreationController:conversationCreationController];
+}
+
+- (void)bringUpConnectionRequestSheet
+{
+    UIAlertController *controller = [UIAlertController controllerForAcceptingConnectionRequestForUser:self.fullUser completion:^(BOOL accept){
+        if (accept) {
+            [self acceptConnectionRequest];
+        } else {
+            [self cancelConnectionRequest];
+        }
+    }];
+    
+    controller.popoverPresentationController.sourceView = self.view;
+    controller.popoverPresentationController.sourceRect = [self.view convertRect:self.profileFooterView.frame fromView:self.profileFooterView.superview];
+    [self presentViewController:controller animated:YES completion:nil];
+}
+
+- (void)bringUpCancelConnectionRequestSheet
+{
+    UIAlertController *controller = [UIAlertController cancelConnectionRequestControllerForUser:self.fullUser completion:^(BOOL canceled) {
+        if (!canceled) {
+            [self cancelConnectionRequest];
+        }
+    }];
+    
+    [self presentViewController:controller animated:YES completion:nil];
+}
+
+- (void)unblockUser
+{
+    [[ZMUserSession sharedSession] enqueueChanges:^{
+        [[self fullUser] accept];
+    }];
+    
+    [self openOneToOneConversation];
+}
+
+- (void)acceptConnectionRequest
+{
+    ZMUser *user = [self fullUser];
+    [self dismissViewControllerAnimated:YES completion:^{
+        [[ZMUserSession sharedSession] enqueueChanges:^{
+            [user accept];
+        }];
+    }];
+}
+
+- (void)ignoreConnectionRequest
+{
+    ZMUser *user = [self fullUser];
+    
+    [self dismissViewControllerAnimated:YES completion:^{
+        [[ZMUserSession sharedSession] enqueueChanges:^{
+            [user ignore];
+        }];
+    }];
+}
+
+- (void)cancelConnectionRequest
+{
+    [self dismissViewControllerAnimated:YES completion:^{
+        ZMUser *user = [self fullUser];
+        [[ZMUserSession sharedSession] enqueueChanges:^{
+            [user cancelConnectionRequest];
+        }];
+    }];
+}
+
+- (void)sendConnectionRequest
+{
+    NSString *message = [NSString stringWithFormat:NSLocalizedString(@"missive.connection_request.default_message",@"Default connect message to be shown"), self.bareUser.displayName, [ZMUser selfUser].name];
+    
+    ZM_WEAK(self);
+    [self dismissViewControllerAnimated:YES completion:^{
+        ZM_STRONG(self);
+        [[ZMUserSession sharedSession] enqueueChanges:^{
+            [self.bareUser connectWithMessage:message];
+        }];
+    }];
+}
+
+- (void)openOneToOneConversation
+{
+    if (self.fullUser == nil) {
+        ZMLogError(@"No user to open conversation with");
+        return;
+    }
+    ZMConversation __block *conversation = nil;
+    
+    [[ZMUserSession sharedSession] enqueueChanges:^{
+        conversation = self.fullUser.oneToOneConversation;
+    } completionHandler:^{
+        //[self.delegate profileDetailsViewController:self didSelectConversation:conversation];
+    }];
+}
+
 
 #pragma mark - Utilities
 

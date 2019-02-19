@@ -76,3 +76,43 @@ extension ProfileViewController: ProfileDetailsViewControllerDelegate {
         }
     }
 }
+
+extension ProfileViewController: ProfileFooterViewDelegate {
+    func detailsView(_ view: ProfileFooterView, performAction: ProfileFooterView.Action) {
+        switch performAction {
+        case .addPeople:
+            presentAddParticipantsViewController()
+        case .presentMenu:
+            presentMenuSheetController()
+        case .unblock:
+            unblockUser()
+        case .openConversation:
+            openOneToOneConversation()
+        case .removePeople:
+            presentRemoveUserMenuSheetController()
+        case .acceptConnectionRequest:
+            bringUpConnectionRequestSheet()
+        case .sendConnectionRequest:
+            sendConnectionRequest()
+        case .cancelConnectionRequest:
+            bringUpCancelConnectionRequestSheet()
+        case .none,
+             .block:
+            break
+        }
+    }
+    
+    @objc func presentMenuSheetController() {
+        actionsController = ConversationActionController(conversation: conversation, target: self)
+        actionsController.presentMenu(from: profileFooterView, showConverationNameInMenuTitle: false)
+    }
+    
+    @objc func presentRemoveUserMenuSheetController() {
+        actionsController = RemoveUserActionController(conversation: conversation,
+                                                       participant: fullUser(),
+                                                       dismisser: viewControllerDismisser,
+                                                       target: self)
+        
+        actionsController.presentMenu(from: profileFooterView, showConverationNameInMenuTitle: false)
+    }
+}

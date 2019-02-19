@@ -40,30 +40,10 @@
 @property (nonatomic) CustomSpacingStackView *stackView;
 
 - (ZMUser *)fullUser;
-- (void)performRightButtonAction:(id)sender;
 
 - (void)createUserImageView;
 - (void)createFooter;
 - (void)createGuestIndicator;
 
-- (void)presentAddParticipantsViewController;
-- (void)unblockUser;
-- (void)openOneToOneConversation;
-- (void)bringUpConnectionRequestSheet;
-- (void)sendConnectionRequest;
-- (void)bringUpCancelConnectionRequestSheet;
 
 @end
-
-typedef NS_ENUM(NSUInteger, ProfileUserAction) {
-    ProfileUserActionNone,
-    ProfileUserActionOpenConversation,
-    ProfileUserActionAddPeople,
-    ProfileUserActionRemovePeople,
-    ProfileUserActionBlock,
-    ProfileUserActionPresentMenu,
-    ProfileUserActionUnblock,
-    ProfileUserActionAcceptConnectionRequest,
-    ProfileUserActionSendConnectionRequest,
-    ProfileUserActionCancelConnectionRequest
-};

@@ -100,10 +100,12 @@ typedef NS_ENUM(NSUInteger, ProfileViewContentMode) {
         [self.stackView autoPinEdge:ALEdgeBottom toEdge:ALEdgeBottom ofView:self.stackViewContainer withOffset:-offset relation:NSLayoutRelationLessThanOrEqual];
     }];
     
+    /*
     [self.stackViewContainer autoPinEdgeToSuperviewEdge:ALEdgeTop];
     [self.stackViewContainer autoPinEdgeToSuperviewEdge:ALEdgeLeading];
     [self.stackViewContainer autoPinEdgeToSuperviewEdge:ALEdgeTrailing];
-    [self.stackViewContainer autoPinEdge:ALEdgeBottom toEdge:ALEdgeTop ofView:self.footerView];
+    [self.stackViewContainer autoPinEdge:ALEdgeBottom toEdge:ALEdgeTop ofView:self.footerView];*/
+    [self.stackViewContainer autoPinEdgesToSuperviewEdges];
     
     UIEdgeInsets bottomInset = UIEdgeInsetsMake(0, 0, UIScreen.safeArea.bottom, 0);
     [self.footerView autoPinEdgesToSuperviewEdgesWithInsets:bottomInset excludingEdge:ALEdgeTop];
@@ -156,147 +158,15 @@ typedef NS_ENUM(NSUInteger, ProfileViewContentMode) {
         [sendConnectionRequestFooterView.sendButton addTarget:self action:@selector(sendConnectionRequest) forControlEvents:UIControlEventTouchUpInside];
         footerView = sendConnectionRequestFooterView;
     }
-    else {
-        ProfileFooterView *userActionsFooterView = [[ProfileFooterView alloc] init];
-        userActionsFooterView.translatesAutoresizingMaskIntoConstraints = NO;
-        
-        [userActionsFooterView setLeftIcon:[self iconTypeForUserAction:[self leftButtonAction]]];
-        [userActionsFooterView setRightIcon:[self iconTypeForUserAction:[self rightButtonAction]]];
-        [userActionsFooterView.leftButton setTitle:[[self buttonTextForUserAction:[self leftButtonAction]] uppercasedWithCurrentLocale] forState:UIControlStateNormal];
-        
-        [userActionsFooterView.leftButton addTarget:self action:@selector(performLeftButtonAction:) forControlEvents:UIControlEventTouchUpInside];
-        [userActionsFooterView.rightButton addTarget:self action:@selector(performRightButtonAction:) forControlEvents:UIControlEventTouchUpInside];
-        
-        footerView = userActionsFooterView;
-    }
     
     [self.view addSubview:footerView];
     footerView.opaque = NO;
     self.footerView = footerView;
 }
 
-- (NSString *)buttonTextForUserAction:(ProfileUserAction)userAction
-{
-    NSString *buttonText = @"";
-    
-    switch (userAction) {
-        case ProfileUserActionSendConnectionRequest:
-        case ProfileUserActionAcceptConnectionRequest:
-            buttonText = NSLocalizedString(@"profile.connection_request_dialog.button_connect", nil);
-            break;
-            
-        case ProfileUserActionCancelConnectionRequest:
-            buttonText = NSLocalizedString(@"profile.cancel_connection_button_title", nil);
-            break;
-            
-        case ProfileUserActionUnblock:
-            buttonText = NSLocalizedString(@"profile.connection_request_state.blocked", nil);
-            break;
-            
-        case ProfileUserActionAddPeople:
-            buttonText = NSLocalizedString(@"profile.create_conversation_button_title", nil);
-            break;
-            
-        case ProfileUserActionOpenConversation:
-            buttonText = NSLocalizedString(@"profile.open_conversation_button_title", nil);
-            break;
-            
-        default:
-            break;
-    }
-    
-    return buttonText;
-}
-
-#pragma mark - Actions
-
-- (void)performLeftButtonAction:(id)sender
-{
-    [self performUserAction:[self leftButtonAction]];
-}
-
-- (void)performRightButtonAction:(id)sender
-{
-    [self performUserAction:[self rightButtonAction]];
-}
-
-- (void)presentAddParticipantsViewController
-{
-    NSSet *selectedUsers = nil;
-    if (nil != self.conversation.connectedUser) {
-        selectedUsers = [NSSet setWithObject:self.conversation.connectedUser];
-    } else {
-        selectedUsers = [NSSet set];
-    }
-    
-    ConversationCreationController *conversationCreationController = [[ConversationCreationController alloc] initWithPreSelectedParticipants:selectedUsers];
-    
-    if ([[[UIScreen mainScreen] traitCollection] horizontalSizeClass] == UIUserInterfaceSizeClassRegular) {
-        [self dismissViewControllerAnimated:YES completion:^{
-            UINavigationController *presentedViewController = [conversationCreationController wrapInNavigationController];
-            
-            presentedViewController.modalPresentationStyle = UIModalPresentationFormSheet;
-            
-            [[ZClientViewController sharedZClientViewController] presentViewController:presentedViewController
-                                                                              animated:YES
-                                                                            completion:nil];
-        }];
-    }
-    else {
-        KeyboardAvoidingViewController *avoiding = [[KeyboardAvoidingViewController alloc] initWithViewController:conversationCreationController];
-        UINavigationController *presentedViewController = [avoiding wrapInNavigationController];
-        
-        presentedViewController.modalPresentationStyle = UIModalPresentationOverCurrentContext;
-        presentedViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-        
-        [self presentViewController:presentedViewController
-                           animated:YES
-                         completion:^{
-            [UIApplication.sharedApplication wr_updateStatusBarForCurrentControllerAnimated:YES];
-        }];
-    }
-    [self.delegate profileDetailsViewController:self didPresentConversationCreationController:conversationCreationController];
-}
-
-- (void)bringUpConnectionRequestSheet
-{
-    UIAlertController *controller = [UIAlertController controllerForAcceptingConnectionRequestForUser:self.fullUser completion:^(BOOL accept){
-        if (accept) {
-            [self acceptConnectionRequest];
-        } else {
-            [self cancelConnectionRequest];
-        }
-    }];
-    
-    controller.popoverPresentationController.sourceView = self.view;
-    controller.popoverPresentationController.sourceRect = [self.view convertRect:self.footerView.frame fromView:self.footerView.superview];
-    [self presentViewController:controller animated:YES completion:nil];
-}
-
-- (void)bringUpCancelConnectionRequestSheet
-{
-    UIAlertController *controller = [UIAlertController cancelConnectionRequestControllerForUser:self.fullUser completion:^(BOOL canceled) {
-        if (!canceled) {
-            [self cancelConnectionRequest];
-        }
-    }];
-
-    [self presentViewController:controller animated:YES completion:nil];
-}
-
-- (void)unblockUser
-{
-    [[ZMUserSession sharedSession] enqueueChanges:^{
-        [[self fullUser] accept];
-    }];
-    
-    [self openOneToOneConversation];
-}
-
 - (void)acceptConnectionRequest
 {
     ZMUser *user = [self fullUser];
-    
     [self dismissViewControllerWithCompletion:^{
         [[ZMUserSession sharedSession] enqueueChanges:^{
             [user accept];
@@ -312,44 +182,6 @@ typedef NS_ENUM(NSUInteger, ProfileViewContentMode) {
         [[ZMUserSession sharedSession] enqueueChanges:^{
             [user ignore];
         }];
-    }];
-}
-
-- (void)cancelConnectionRequest
-{
-    [self dismissViewControllerWithCompletion:^{
-        ZMUser *user = [self fullUser];
-        [[ZMUserSession sharedSession] enqueueChanges:^{
-            [user cancelConnectionRequest];
-        }];
-    }];
-}
-
-- (void)sendConnectionRequest
-{
-    NSString *message = [NSString stringWithFormat:NSLocalizedString(@"missive.connection_request.default_message",@"Default connect message to be shown"), self.bareUser.displayName, [ZMUser selfUser].name];
-    
-    ZM_WEAK(self);
-    [self dismissViewControllerWithCompletion:^{
-        ZM_STRONG(self);
-        [[ZMUserSession sharedSession] enqueueChanges:^{
-            [self.bareUser connectWithMessage:message];
-        }];
-    }];
-}
-
-- (void)openOneToOneConversation
-{
-    if (self.fullUser == nil) {
-        ZMLogError(@"No user to open conversation with");
-        return;
-    }
-    ZMConversation __block *conversation = nil;
-    
-    [[ZMUserSession sharedSession] enqueueChanges:^{
-        conversation = self.fullUser.oneToOneConversation;
-    } completionHandler:^{
-        [self.delegate profileDetailsViewController:self didSelectConversation:conversation];
     }];
 }
 
