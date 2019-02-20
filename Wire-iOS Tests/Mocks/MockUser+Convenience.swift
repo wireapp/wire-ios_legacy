@@ -25,38 +25,23 @@ import XCTest
  * parameters.
  */
 
-class MockUserTests: ZMSnapshotTestCase {
-
-    /// The ID of the current team.
-    var teamIdentifier: UUID!
-    
-    override func setUp() {
-        super.setUp()
-        teamIdentifier = UUID()
-    }
-    
-    override func tearDown() {
-        teamIdentifier = nil
-        super.tearDown()
-    }
-
-    // MARK: - Helpers
+extension MockUser {
 
     /**
      * Creates a self-user with the specified name and team membership.
      * - parameter name: The name of the user.
-     * - parameter inTeam: Whether the user is a member of the current team.
+     * - parameter teamID: The ID of the team of the user, or `nil` if they're not on a team.
      * - returns: A configured mock user object to use as a self-user.
      * - note: The accent color of a self user is red by default.
      */
     
-    func createSelfUser(name: String, inTeam: Bool) -> MockUser {
+    @objc static func createSelfUser(name: String, inTeam teamID: UUID?) -> MockUser {
         let user = MockUser()
         user.name = name
         user.initials = PersonName.person(withName: name, schemeTagger: nil).initials
         user.isSelfUser = true
-        user.isTeamMember = inTeam
-        user.teamIdentifier = inTeam ? teamIdentifier : nil
+        user.isTeamMember = teamID != nil
+        user.teamIdentifier = teamID
         user.accentColorValue = .vividRed
         return user
     }
@@ -64,26 +49,18 @@ class MockUserTests: ZMSnapshotTestCase {
     /**
      * Creates a connected user with the specified name and team membership.
      * - parameter name: The name of the user.
-     * - parameter inTeam: Whether the user is a member of a team.
-     * - parameter overrideTeamIdentifier: The team ID to use if you don't want the created user
-     * to be a member of the current team. If `inTeam` is `false`, this parameter is ignored.
+     * - parameter teamID: The ID of the team of the user, or `nil` if they're not on a team.
      * - returns: A configured mock user object to use as a user the self-user can interact with.
-     * - note: The accent color of a self user is red by default.
+     * - note: The accent color of a self user is orange by default.
      */
 
-    func createConnectedUser(name: String, inTeam: Bool, overrideTeamIdentifier: UUID? = nil) -> MockUser {
+    @objc static func createConnectedUser(name: String, inTeam teamID: UUID?) -> MockUser {
         let user = MockUser()
         user.name = name
         user.initials = PersonName.person(withName: name, schemeTagger: nil).initials
         user.isConnected = true
-        user.isTeamMember = inTeam
-        
-        if inTeam {
-            user.teamIdentifier = overrideTeamIdentifier ?? teamIdentifier
-        } else {
-            user.teamIdentifier = nil
-        }
-        
+        user.isTeamMember = teamID != nil
+        user.teamIdentifier = teamID
         user.accentColorValue = .brightOrange
         return user
     }

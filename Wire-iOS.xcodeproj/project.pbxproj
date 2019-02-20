@@ -372,7 +372,7 @@
 		5EF7BA65221AEB1B00815625 /* ProfileDetailsContentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF7BA64221AEB1B00815625 /* ProfileDetailsContentController.swift */; };
 		5EF7BA69221B042200815625 /* UserPropertyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF7BA68221B042200815625 /* UserPropertyCell.swift */; };
 		5EF7BA6C221B273900815625 /* ProfileDetailsViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF7BA6A221B272200815625 /* ProfileDetailsViewControllerTests.swift */; };
-		5EF7BA72221C74ED00815625 /* MockUserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF7BA70221C74D200815625 /* MockUserTests.swift */; };
+		5EF7BA72221C74ED00815625 /* MockUser+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF7BA70221C74D200815625 /* MockUser+Convenience.swift */; };
 		5EFCB3BF21AAD46C00E892D9 /* Message+Pasteboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFCB3BE21AAD46C00E892D9 /* Message+Pasteboard.swift */; };
 		5EFD4526215A78E800BEE703 /* IndexedListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFD4525215A78E800BEE703 /* IndexedListView.swift */; };
 		5EFD913F21C8F98500080599 /* VerifyPhoneStepDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFD913E21C8F98500080599 /* VerifyPhoneStepDescription.swift */; };
@@ -1900,7 +1900,7 @@
 		5EF7BA64221AEB1B00815625 /* ProfileDetailsContentController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDetailsContentController.swift; sourceTree = "<group>"; };
 		5EF7BA68221B042200815625 /* UserPropertyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPropertyCell.swift; sourceTree = "<group>"; };
 		5EF7BA6A221B272200815625 /* ProfileDetailsViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDetailsViewControllerTests.swift; sourceTree = "<group>"; };
-		5EF7BA70221C74D200815625 /* MockUserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockUserTests.swift; sourceTree = "<group>"; };
+		5EF7BA70221C74D200815625 /* MockUser+Convenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MockUser+Convenience.swift"; sourceTree = "<group>"; };
 		5EFCB3BE21AAD46C00E892D9 /* Message+Pasteboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Message+Pasteboard.swift"; sourceTree = "<group>"; };
 		5EFD4525215A78E800BEE703 /* IndexedListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexedListView.swift; sourceTree = "<group>"; };
 		5EFD913E21C8F98500080599 /* VerifyPhoneStepDescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyPhoneStepDescription.swift; sourceTree = "<group>"; };
@@ -4889,7 +4889,7 @@
 				BF16FC4D1DAFCE9300FF4325 /* MockConversationFactory.h */,
 				BF16FC4E1DAFCE9300FF4325 /* MockConversationFactory.m */,
 				87BEB0D81C734D710094BFE9 /* MockConversation.h */,
-				5EF7BA70221C74D200815625 /* MockUserTests.swift */,
+				5EF7BA70221C74D200815625 /* MockUser+Convenience.swift */,
 				87BEB0D91C734D710094BFE9 /* MockConversation.m */,
 				EF6E3C7D208A0355003F6752 /* MockConversation+factory.swift */,
 				EF8D7D4720D8FC7100F98666 /* MockConversation+TimedMessage.swift */,
@@ -8217,7 +8217,7 @@
 				BF7ED2DC1DF1D1CF003A4397 /* IncomingConnectionViewTests.swift in Sources */,
 				EF29E89C212302CD0023B80C /* AudioMessageViewTests.swift in Sources */,
 				EF10CB20215105A400AEA8EA /* UITableViewCell+Snapshot.swift in Sources */,
-				5EF7BA72221C74ED00815625 /* MockUserTests.swift in Sources */,
+				5EF7BA72221C74ED00815625 /* MockUser+Convenience.swift in Sources */,
 				BA79B0A91B62851F00F23AFB /* SoundEventRulesWatchDogTests.m in Sources */,
 				5EBC344220EE5EBF00AFB6DF /* DecodeImageOperationTests.swift in Sources */,
 				BF8EE5581D6351B100B0D6D7 /* InputBarEditViewTests.swift in Sources */,

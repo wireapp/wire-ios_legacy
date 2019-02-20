@@ -19,14 +19,16 @@
 import XCTest
 @testable import Wire
 
-class ProfileDetailsViewControllerTests: MockUserTests {
-    
+class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
+
+    var selfUserTeam: UUID!
     var selfUser: MockUser!
     var defaultExtendedMetadata: [[String: String]]!
     
     override func setUp() {
         super.setUp()
-        selfUser = createSelfUser(name: "George Johnson", inTeam: true)
+        selfUserTeam = UUID()
+        selfUser = MockUser.createSelfUser(name: "George Johnson", inTeam: selfUserTeam)
         
         defaultExtendedMetadata = [
             ["key": "Title", "value": "Chief Design Officer"],
@@ -36,6 +38,7 @@ class ProfileDetailsViewControllerTests: MockUserTests {
     
     override func tearDown() {
         selfUser = nil
+        selfUserTeam = nil
         defaultExtendedMetadata = nil
         super.tearDown()
     }
@@ -46,7 +49,7 @@ class ProfileDetailsViewControllerTests: MockUserTests {
 
     func test_OneToOne_OtherUser_SCIM() {
         // GIVEN
-        let otherUser = createConnectedUser(name: "Catherine Jackson", inTeam: true)
+        let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
         otherUser.availability = .busy
         otherUser.extendedMetadata = defaultExtendedMetadata
 
@@ -65,7 +68,7 @@ class ProfileDetailsViewControllerTests: MockUserTests {
 
     func test_OneToOne_OtherUser_NoSCIM() {
         // GIVEN
-        let otherUser = createConnectedUser(name: "Catherine Jackson", inTeam: true)
+        let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
         otherUser.availability = .busy
         otherUser.extendedMetadata = []
 
@@ -83,7 +86,7 @@ class ProfileDetailsViewControllerTests: MockUserTests {
 
     func test_OneToOne_OtherUserIsPartner_SCIM() {
         // GIVEN
-        let otherUser = createConnectedUser(name: "Catherine Jackson", inTeam: true)
+        let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
         otherUser.availability = .busy
         otherUser.extendedMetadata = defaultExtendedMetadata
         otherUser.teamRole = .partner
@@ -103,7 +106,7 @@ class ProfileDetailsViewControllerTests: MockUserTests {
 
     func test_OneToOne_OtherUserIsPartner_NoSCIM() {
         // GIVEN
-        let otherUser = createConnectedUser(name: "Catherine Jackson", inTeam: true)
+        let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
         otherUser.availability = .busy
         otherUser.extendedMetadata = []
         otherUser.teamRole = .partner
@@ -157,7 +160,7 @@ class ProfileDetailsViewControllerTests: MockUserTests {
         // GIVEN
         selfUser.readReceiptsEnabled = true
 
-        let guest = self.createConnectedUser(name: "Catherine Jackson", inTeam: false)
+        let guest = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: nil)
         guest.isGuestInConversation = true
         guest.extendedMetadata = defaultExtendedMetadata
         guest.readReceiptsEnabled = true
@@ -179,7 +182,7 @@ class ProfileDetailsViewControllerTests: MockUserTests {
         selfUser.teamRole = .partner
         selfUser.readReceiptsEnabled = true
 
-        let otherUser = createConnectedUser(name: "Catherine Jackson", inTeam: true)
+        let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
         otherUser.availability = .busy
         otherUser.extendedMetadata = defaultExtendedMetadata
 
@@ -199,7 +202,7 @@ class ProfileDetailsViewControllerTests: MockUserTests {
         selfUser.teamRole = .partner
         selfUser.readReceiptsEnabled = true
 
-        let otherUser = createConnectedUser(name: "Catherine Jackson", inTeam: true)
+        let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
         otherUser.availability = .busy
         otherUser.extendedMetadata = defaultExtendedMetadata
         otherUser.teamRole = .partner
@@ -220,7 +223,7 @@ class ProfileDetailsViewControllerTests: MockUserTests {
         selfUser.teamRole = .partner
         selfUser.readReceiptsEnabled = true
 
-        let otherUser = createConnectedUser(name: "Catherine Jackson", inTeam: false)
+        let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: nil)
         otherUser.isGuestInConversation = true
         otherUser.availability = .busy
         otherUser.extendedMetadata = defaultExtendedMetadata
@@ -239,12 +242,12 @@ class ProfileDetailsViewControllerTests: MockUserTests {
 
     func test_OneToOne_OtherUserInTeam_ViewerIsGuest_SCIM() {
         // GIVEN
-        let otherUser = createConnectedUser(name: "Catherine Jackson", inTeam: true)
+        let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
         otherUser.availability = .busy
         otherUser.readReceiptsEnabled = true
         otherUser.extendedMetadata = defaultExtendedMetadata
 
-        let guest = createConnectedUser(name: "Bob the Guest", inTeam: false)
+        let guest = MockUser.createConnectedUser(name: "Bob the Guest", inTeam: nil)
         guest.isGuestInConversation = true
         guest.readReceiptsEnabled = true
 
@@ -260,13 +263,13 @@ class ProfileDetailsViewControllerTests: MockUserTests {
 
     func test_OneToOne_OtherUserIsPartner_ViewerIsGuest_SCIM() {
         // GIVEN
-        let otherUser = createConnectedUser(name: "Catherine Jackson", inTeam: true)
+        let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
         otherUser.availability = .busy
         otherUser.readReceiptsEnabled = true
         otherUser.extendedMetadata = defaultExtendedMetadata
         otherUser.teamRole = .partner
 
-        let guest = createConnectedUser(name: "Bob the Guest", inTeam: false)
+        let guest = MockUser.createConnectedUser(name: "Bob the Guest", inTeam: nil)
         guest.isGuestInConversation = true
         guest.readReceiptsEnabled = true
 
@@ -282,13 +285,13 @@ class ProfileDetailsViewControllerTests: MockUserTests {
 
     func test_OneToOne_OtherUserIsGuest_ViewerIsGuest_SCIM() {
         // GIVEN
-        let otherUser = createConnectedUser(name: "Catherine Jackson", inTeam: false)
+        let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
         otherUser.availability = .busy
         otherUser.readReceiptsEnabled = true
         otherUser.extendedMetadata = defaultExtendedMetadata
         otherUser.isGuestInConversation = true
 
-        let guest = createConnectedUser(name: "Bob the Guest", inTeam: false)
+        let guest = MockUser.createConnectedUser(name: "Bob the Guest", inTeam: nil)
         guest.isGuestInConversation = true
         guest.readReceiptsEnabled = true
 
@@ -308,7 +311,7 @@ class ProfileDetailsViewControllerTests: MockUserTests {
     
     func test_Group_OtherUser_SCIM() {
         // GIVEN
-        let otherUser = createConnectedUser(name: "Catherine Jackson", inTeam: true)
+        let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
         otherUser.availability = .busy
         otherUser.extendedMetadata = defaultExtendedMetadata
         
@@ -326,7 +329,7 @@ class ProfileDetailsViewControllerTests: MockUserTests {
 
     func test_Group_OtherUser_NoSCIM() {
         // GIVEN
-        let otherUser = createConnectedUser(name: "Catherine Jackson", inTeam: true)
+        let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
         otherUser.availability = .busy
         otherUser.extendedMetadata = []
         
@@ -342,7 +345,7 @@ class ProfileDetailsViewControllerTests: MockUserTests {
 
     func test_Group_OtherUserIsPartner_SCIM() {
         // GIVEN
-        let otherUser = createConnectedUser(name: "Catherine Jackson", inTeam: true)
+        let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
         otherUser.availability = .busy
         otherUser.extendedMetadata = defaultExtendedMetadata
         otherUser.teamRole = .partner
@@ -361,7 +364,7 @@ class ProfileDetailsViewControllerTests: MockUserTests {
 
     func test_Group_OtherUserIsPartner_NoSCIM() {
         // GIVEN
-        let otherUser = createConnectedUser(name: "Catherine Jackson", inTeam: true)
+        let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
         otherUser.availability = .busy
         otherUser.extendedMetadata = []
         otherUser.teamRole = .partner
@@ -408,7 +411,7 @@ class ProfileDetailsViewControllerTests: MockUserTests {
 
     func test_Group_OtherUserIsGuest_SCIM() {
         // GIVEN
-        let guest = self.createConnectedUser(name: "Catherine Jackson", inTeam: false)
+        let guest = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: nil)
         guest.isGuestInConversation = true
         guest.extendedMetadata = defaultExtendedMetadata
 
@@ -422,7 +425,7 @@ class ProfileDetailsViewControllerTests: MockUserTests {
 
     func test_Group_OtherUserIsExpiringGuest_SCIM() {
         // GIVEN
-        let guest = createConnectedUser(name: "Catherine Jackson", inTeam: false)
+        let guest = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: nil)
         guest.isGuestInConversation = true
         guest.expiresAfter = 3600
         guest.extendedMetadata = defaultExtendedMetadata
@@ -441,7 +444,7 @@ class ProfileDetailsViewControllerTests: MockUserTests {
         // GIVEM
         selfUser.teamRole = .partner
 
-        let otherUser = createConnectedUser(name: "Catherine Jackson", inTeam: true)
+        let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
         otherUser.availability = .busy
         otherUser.extendedMetadata = defaultExtendedMetadata
 
@@ -459,7 +462,7 @@ class ProfileDetailsViewControllerTests: MockUserTests {
         // GIVEM
         selfUser.teamRole = .partner
 
-        let otherUser = createConnectedUser(name: "Catherine Jackson", inTeam: true)
+        let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
         otherUser.availability = .busy
         otherUser.extendedMetadata = defaultExtendedMetadata
         otherUser.teamRole = .partner
@@ -478,7 +481,7 @@ class ProfileDetailsViewControllerTests: MockUserTests {
         // GIVEM
         selfUser.teamRole = .partner
 
-        let otherUser = createConnectedUser(name: "Catherine Jackson", inTeam: false)
+        let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: nil)
         otherUser.isGuestInConversation = true
         otherUser.availability = .busy
         otherUser.extendedMetadata = defaultExtendedMetadata
@@ -495,12 +498,12 @@ class ProfileDetailsViewControllerTests: MockUserTests {
 
     func test_Group_OtherUserInTeam_ViewerIsGuest_SCIM() {
         // GIVEN
-        let otherUser = createConnectedUser(name: "Catherine Jackson", inTeam: true)
+        let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
         otherUser.availability = .busy
         otherUser.readReceiptsEnabled = true
         otherUser.extendedMetadata = defaultExtendedMetadata
         
-        let guest = createConnectedUser(name: "Bob the Guest", inTeam: false)
+        let guest = MockUser.createConnectedUser(name: "Bob the Guest", inTeam: nil)
         guest.isGuestInConversation = true
         
         let group = MockConversation.groupConversation()
@@ -513,13 +516,13 @@ class ProfileDetailsViewControllerTests: MockUserTests {
 
     func test_Group_OtherUserIsPartner_ViewerIsGuest_SCIM() {
         // GIVEN
-        let otherUser = createConnectedUser(name: "Catherine Jackson", inTeam: true)
+        let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
         otherUser.availability = .busy
         otherUser.readReceiptsEnabled = true
         otherUser.extendedMetadata = defaultExtendedMetadata
         otherUser.teamRole = .partner
 
-        let guest = createConnectedUser(name: "Bob the Guest", inTeam: false)
+        let guest = MockUser.createConnectedUser(name: "Bob the Guest", inTeam: nil)
         guest.isGuestInConversation = true
 
         let group = MockConversation.groupConversation()
@@ -532,13 +535,13 @@ class ProfileDetailsViewControllerTests: MockUserTests {
 
     func test_Group_OtherUserIsGuest_ViewerIsGuest_SCIM() {
         // GIVEN
-        let otherUser = createConnectedUser(name: "Catherine Jackson", inTeam: false)
+        let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: nil)
         otherUser.availability = .busy
         otherUser.readReceiptsEnabled = true
         otherUser.extendedMetadata = defaultExtendedMetadata
         otherUser.isGuestInConversation = true
 
-        let guest = createConnectedUser(name: "Bob the Guest", inTeam: false)
+        let guest = MockUser.createConnectedUser(name: "Bob the Guest", inTeam: nil)
         guest.isGuestInConversation = true
 
         let group = MockConversation.groupConversation()
@@ -551,12 +554,12 @@ class ProfileDetailsViewControllerTests: MockUserTests {
     
     func test_Group_OtherUserInTeam_ViewerIsGuestFromOtherTeam_SCIM() {
         // GIVEN
-        let otherUser = createConnectedUser(name: "Catherine Jackson", inTeam: true)
+        let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: nil)
         otherUser.availability = .busy
         otherUser.readReceiptsEnabled = true
         otherUser.extendedMetadata = defaultExtendedMetadata
 
-        let guest = createConnectedUser(name: "Bob the Guest", inTeam: true, overrideTeamIdentifier: UUID())
+        let guest = MockUser.createConnectedUser(name: "Bob the Guest", inTeam: UUID())
         guest.isGuestInConversation = true
         
         let group = MockConversation.groupConversation()
@@ -571,10 +574,10 @@ class ProfileDetailsViewControllerTests: MockUserTests {
         // GIVEN
         let otherTeamID = UUID()
         
-        let otherUser = createConnectedUser(name: "Catherine Jackson", inTeam: true, overrideTeamIdentifier: otherTeamID)
+        let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: otherTeamID)
         otherUser.isGuestInConversation = true
 
-        let guest = self.createConnectedUser(name: "Bob the Guest", inTeam: true, overrideTeamIdentifier: otherTeamID)
+        let guest = MockUser.createConnectedUser(name: "Bob the Guest", inTeam: otherTeamID)
         guest.isGuestInConversation = true
         guest.extendedMetadata = defaultExtendedMetadata
         
@@ -592,7 +595,7 @@ class ProfileDetailsViewControllerTests: MockUserTests {
 
     func test_Group_ConnectionRequest() {
         // GIVEN
-        let otherUser = createConnectedUser(name: "Catherine Jackson", inTeam: false)
+        let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: nil)
         otherUser.isConnected = false
         otherUser.readReceiptsEnabled = true
         otherUser.isGuestInConversation = true
