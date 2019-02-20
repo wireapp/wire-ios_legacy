@@ -131,6 +131,8 @@ static id<UserType> mockSelfUser = nil;
 @synthesize teamRole;
 @synthesize readReceiptsEnabled;
 @synthesize isAccountDeleted;
+@synthesize managedByWire;
+@synthesize extendedMetadata;
 
 #pragma mark - ZMBareUserConnection
 

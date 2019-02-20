@@ -70,7 +70,10 @@ final class SelfProfileViewController: UIViewController {
     
     init(rootGroup: SettingsControllerGeneratorType & SettingsInternalGroupCellDescriptorType) {
         settingsController = rootGroup.generateViewController()! as! SettingsTableViewController
-        profileView = ProfileView(user: ZMUser.selfUser())
+        
+        let user = ZMUser.selfUser()!
+        profileView = ProfileView(user: user, options: user.isTeamMember ? [.allowEditingAvailability] : [.hideAvailability])
+        profileView.availabilityView.options = .selfProfile
         
         super.init(nibName: .none, bundle: .none)
                 

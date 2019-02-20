@@ -67,6 +67,9 @@
 @property (nonatomic, readwrite) Availability availability;
 @property (nonatomic, readonly) NSSet<UserClient *> * clientsRequiringUserAttention;
 
+@property (nonatomic, readwrite) BOOL managedByWire;
+@property (nonatomic, readwrite, copy) NSArray<NSDictionary<NSString *, NSString *> *> *extendedMetadata;
+
 - (NSString *)displayNameInConversation:(MockConversation *)conversation;
 - (void)fetchUserClients;
 
