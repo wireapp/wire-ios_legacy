@@ -91,30 +91,4 @@ final class ProfileDetailsViewControllerSnapshotTests: CoreDataSnapshotTestCase 
             verifyInIPhoneSize(view: sut.view)
         }
     }
-
-    // MARK: - action menu
-    func testForGroupConversationActionMenuShowsRemoveUserItem() {
-        teamTest {
-            sut = ProfileDetailsViewController(user: self.otherUser, conversation: self.otherUserConversation, context: .groupConversation)
-            sut.performRightButtonAction(nil)
-            verifyAlertController((sut?.actionsController?.alertController)!)
-        }
-    }
-
-    /// test for 1-to-1 conversation
-    func testForActionMenu() {
-        teamTest {
-            sut = ProfileDetailsViewController(user: self.otherUser, conversation: self.otherUserConversation, context: .oneToOneConversation)
-            sut.performRightButtonAction(nil)
-            verifyAlertController((sut?.actionsController?.alertController)!)
-        }
-    }
-
-    func testForActionMenu_NoTeam() {
-        sut = ProfileDetailsViewController(user: self.otherUser, conversation: self.otherUserConversation, context: .oneToOneConversation)
-        nonTeamTest {
-            sut.presentMenuSheetController()
-            verifyAlertController((sut?.actionsController?.alertController)!)
-        }
-    }
 }

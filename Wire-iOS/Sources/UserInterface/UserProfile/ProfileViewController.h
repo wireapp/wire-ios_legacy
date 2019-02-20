@@ -63,7 +63,6 @@ typedef NS_ENUM(NSInteger, ProfileViewControllerContext) {
 @property (nonatomic, nullable) id<UINavigationControllerDelegate> navigationControllerDelegate;
 
 - (void)presentAddParticipantsViewController;
-- (void)unblockUser;
 - (void)openOneToOneConversation;
 - (void)bringUpConnectionRequestSheet;
 - (void)sendConnectionRequest;

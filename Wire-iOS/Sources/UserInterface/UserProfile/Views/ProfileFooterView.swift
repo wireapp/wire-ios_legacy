@@ -9,7 +9,7 @@
 import UIKit
 
 @objc protocol ProfileFooterViewDelegate: class {
-    func detailsView(_ view: ProfileFooterView, performAction: ProfileFooterView.Action)
+    func footerView(_ view: ProfileFooterView, performs action: ProfileFooterView.Action)
 }
 
 @objcMembers
@@ -42,7 +42,7 @@ final class ProfileFooterView: ConversationDetailFooterView {
     
     override func buttonTapped(_ sender: IconButton) {
         action(for: sender).apply {
-            delegate?.detailsView(self, performAction: $0)
+            delegate?.footerView(self, performs: $0)
         }
     }
     
@@ -67,7 +67,7 @@ final class ProfileFooterView: ConversationDetailFooterView {
         } else if user.isTeamMember {
             return .openConversation
         } else if user.isBlocked {
-            return .unblock
+            return .none
         } else if user.isPendingApprovalBySelfUser {
             return .acceptConnectionRequest
         } else if user.isPendingApprovalByOtherUser {
@@ -101,8 +101,8 @@ final class ProfileFooterView: ConversationDetailFooterView {
     
 
     @objc enum Action: Int {
-        case none, openConversation, addPeople, removePeople, block, presentMenu,
-        unblock, acceptConnectionRequest, sendConnectionRequest, cancelConnectionRequest
+        case none, openConversation, addPeople, removePeople, presentMenu,
+        acceptConnectionRequest, sendConnectionRequest, cancelConnectionRequest //block, unblock,
         
         var buttonText: String {
             switch self {
@@ -110,8 +110,6 @@ final class ProfileFooterView: ConversationDetailFooterView {
                 return "profile.connection_request_dialog.button_connect".localized
             case .cancelConnectionRequest:
                 return "profile.cancel_connection_button_title".localized
-            case .unblock:
-                return "profile.connection_request_state.blocked".localized
             case .addPeople:
                 return "profile.create_conversation_button_title".localized
             case .openConversation:
@@ -126,10 +124,6 @@ final class ProfileFooterView: ConversationDetailFooterView {
                 return .createConversation
             case .presentMenu:
                 return .ellipsis
-            case .unblock:
-                return .block
-            case .block:
-                return .block
             case .removePeople:
                 return .ellipsis
             case .cancelConnectionRequest:

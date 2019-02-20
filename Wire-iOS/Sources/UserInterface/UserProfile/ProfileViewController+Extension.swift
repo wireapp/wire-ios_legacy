@@ -78,14 +78,12 @@ extension ProfileViewController: ProfileDetailsViewControllerDelegate {
 }
 
 extension ProfileViewController: ProfileFooterViewDelegate {
-    func detailsView(_ view: ProfileFooterView, performAction: ProfileFooterView.Action) {
-        switch performAction {
+    func footerView(_ view: ProfileFooterView, performs action: ProfileFooterView.Action) {
+        switch action {
         case .addPeople:
             presentAddParticipantsViewController()
         case .presentMenu:
             presentMenuSheetController()
-        case .unblock:
-            unblockUser()
         case .openConversation:
             openOneToOneConversation()
         case .removePeople:
@@ -96,8 +94,9 @@ extension ProfileViewController: ProfileFooterViewDelegate {
             sendConnectionRequest()
         case .cancelConnectionRequest:
             bringUpCancelConnectionRequestSheet()
-        case .none,
-             .block:
+        case .none:
+             //.block,
+             //.unblock:
             break
         }
     }

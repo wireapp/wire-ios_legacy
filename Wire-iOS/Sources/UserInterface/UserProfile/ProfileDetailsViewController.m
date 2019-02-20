@@ -164,6 +164,15 @@ typedef NS_ENUM(NSUInteger, ProfileViewContentMode) {
     self.footerView = footerView;
 }
 
+- (void)unblockUser
+{
+    [[ZMUserSession sharedSession] enqueueChanges:^{
+        [[self fullUser] accept];
+    }];
+    
+    [self openOneToOneConversation];
+}
+
 - (void)acceptConnectionRequest
 {
     ZMUser *user = [self fullUser];
@@ -182,6 +191,21 @@ typedef NS_ENUM(NSUInteger, ProfileViewContentMode) {
         [[ZMUserSession sharedSession] enqueueChanges:^{
             [user ignore];
         }];
+    }];
+}
+
+- (void)openOneToOneConversation
+{
+    if (self.fullUser == nil) {
+        ZMLogError(@"No user to open conversation with");
+        return;
+    }
+    ZMConversation __block *conversation = nil;
+    
+    [[ZMUserSession sharedSession] enqueueChanges:^{
+        conversation = self.fullUser.oneToOneConversation;
+    } completionHandler:^{
+        [self.delegate profileDetailsViewController:self didSelectConversation:conversation];
     }];
 }
 

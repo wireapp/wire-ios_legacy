@@ -174,20 +174,33 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
 - (void)setupFooterView {
     
     ProfileFooterView *userActionsFooterView = [[ProfileFooterView alloc] initWithUser:self.fullUser conversation:self.conversation context:self.context];
-    userActionsFooterView.translatesAutoresizingMaskIntoConstraints = NO;
-    userActionsFooterView.delegate = self;
-    self.profileFooterView = userActionsFooterView;
-    [self.view addSubview:userActionsFooterView];
+    
+    if(userActionsFooterView.leftButtonAction != ActionNone) {
+        userActionsFooterView.translatesAutoresizingMaskIntoConstraints = NO;
+        userActionsFooterView.delegate = self;
+        self.profileFooterView = userActionsFooterView;
+        [self.view addSubview:userActionsFooterView];
+    }
 }
 
 - (void)setupConstraints
 {
     [self.usernameDetailsView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeBottom];
-    [self.tabsController.view autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:0.0];
-    [self.tabsController.view autoPinEdgeToSuperviewEdge:ALEdgeLeading withInset:0.0];
+    [self.tabsController.view autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeTop];
     [self.tabsController.view autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.usernameDetailsView];
-    [self.tabsController.view autoPinEdge:ALEdgeBottom toEdge:ALEdgeTop ofView:self.profileFooterView];
-    [self.profileFooterView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeTop];
+    
+     /*
+      [self.tabsController.view autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeTop];
+    [self.tabsController.view autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.usernameDetailsView];
+   
+    if(self.profileFooterView != nil) {
+        [self.tabsController.view autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:0.0];
+        [self.tabsController.view autoPinEdgeToSuperviewEdge:ALEdgeLeading withInset:0.0];
+        [self.tabsController.view autoPinEdge:ALEdgeBottom toEdge:ALEdgeTop ofView:self.profileFooterView];
+        [self.profileFooterView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeTop];
+    } else {
+        [self.tabsController.view autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeTop];
+    }*/
 }
 
 #pragma mark - Header
@@ -313,15 +326,6 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
     [self presentViewController:controller animated:YES completion:nil];
 }
 
-- (void)unblockUser
-{
-    [[ZMUserSession sharedSession] enqueueChanges:^{
-        [[self fullUser] accept];
-    }];
-    
-    [self openOneToOneConversation];
-}
-
 - (void)acceptConnectionRequest
 {
     ZMUser *user = [self fullUser];
@@ -366,6 +370,7 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
     }];
 }
 
+
 - (void)openOneToOneConversation
 {
     if (self.fullUser == nil) {
@@ -377,9 +382,12 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
     [[ZMUserSession sharedSession] enqueueChanges:^{
         conversation = self.fullUser.oneToOneConversation;
     } completionHandler:^{
+        
         //[self.delegate profileDetailsViewController:self didSelectConversation:conversation];
+        [self.delegate profileViewController:self wantsToNavigateToConversation:conversation];
     }];
 }
+
 
 
 #pragma mark - Utilities
