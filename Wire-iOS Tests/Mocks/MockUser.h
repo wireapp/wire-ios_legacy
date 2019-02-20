@@ -33,6 +33,7 @@
 + (void)setMockSelfUser:(id<UserType>)newMockUser;
 
 @property (nonatomic, readwrite, copy) NSString *name;
+@property (nonatomic, readwrite, copy) NSString *initials;
 @property (nonatomic, readwrite) NSString *emailAddress;
 @property (nonatomic, readwrite) NSString *phoneNumber;
 @property (nonatomic, readwrite, copy) NSString *handle;
@@ -66,6 +67,8 @@
 @property (nonatomic) NSUUID *remoteIdentifier;
 @property (nonatomic, readwrite) Availability availability;
 @property (nonatomic, readonly) NSSet<UserClient *> * clientsRequiringUserAttention;
+
+@property (nonatomic) NSUUID *teamIdentifier;
 
 @property (nonatomic, readwrite) BOOL managedByWire;
 @property (nonatomic, readwrite, copy) NSArray<NSDictionary<NSString *, NSString *> *> *extendedMetadata;

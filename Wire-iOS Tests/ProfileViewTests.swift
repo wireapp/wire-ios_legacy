@@ -70,7 +70,7 @@ class ProfileViewTests: CoreDataSnapshotTestCase {
             selfUser.availability = availability
             
             let sut = ProfileView(user: selfUser, options: options)
-            sut.availabilityView.colorSchemeVariant = .dark
+            sut.colorSchemeVariant = .dark
             sut.frame.size = sut.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
             sut.backgroundColor = .black
             verify(view: sut, file: file, line: line)

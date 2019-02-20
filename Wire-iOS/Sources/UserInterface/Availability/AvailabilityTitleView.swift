@@ -53,7 +53,7 @@ class AvailabilityTitleView: TitleView, Themeable, ZMUserObserver {
     
     // MARK: - Properties
     
-    private let user: ZMUser
+    private let user: GenericUser
     private var observerToken: Any?
     
     private let feedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
@@ -86,7 +86,7 @@ class AvailabilityTitleView: TitleView, Themeable, ZMUserObserver {
      * - note: You can change the options later, through the `options` property.
      */
     
-    init(user: ZMUser, options: Options) {
+    init(user: GenericUser, options: Options) {
         self.options = options
         self.user = user
         super.init()
@@ -183,9 +183,15 @@ class AvailabilityTitleView: TitleView, Themeable, ZMUserObserver {
     }
     
     private func didSelectAvailability(_ availability: Availability) {
-        ZMUserSession.shared()?.performChanges { [weak self] in
-            ZMUser.selfUser().availability = availability
+        let changes = { [weak self] in
+            self?.user.availability = availability
             self?.provideHapticFeedback()
+        }
+        
+        if let session = ZMUserSession.shared() {
+            session.performChanges(changes)
+        } else {
+            changes()
         }
     }
     
@@ -196,7 +202,7 @@ class AvailabilityTitleView: TitleView, Themeable, ZMUserObserver {
     
 }
 
-extension ZMUser {
+extension UserType {
     
     /// Returns if the user's availability can be displayed.
     func canDisplayAvailability(with options: AvailabilityTitleView.Options) -> Bool {
