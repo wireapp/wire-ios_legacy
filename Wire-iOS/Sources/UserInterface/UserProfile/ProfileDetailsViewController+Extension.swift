@@ -59,9 +59,9 @@ extension ProfileDetailsViewController {
         view.addSubview(stackViewContainer)
 
         teamsGuestIndicator.isHidden = !showGuestLabel
-        availabilityView.isHidden = !ZMUser.selfUser().isTeamMember || fullUser().availability == .none
+        availabilityView.isHidden = !ZMUser.selfUser().isTeamMember || fullUser()?.availability == .none
 
-        let remainingTimeString = fullUser().expirationDisplayString
+        let remainingTimeString = fullUser()?.expirationDisplayString
         remainingTimeLabel = UILabel()
         remainingTimeLabel.setContentCompressionResistancePriority(.required, for: .vertical)
         remainingTimeLabel.text = remainingTimeString
@@ -153,8 +153,9 @@ extension ProfileDetailsViewController {
     }
 
     @objc func presentRemoveUserMenuSheetController() {
+        guard let user = fullUser() else { return }
         actionsController = RemoveUserActionController(conversation: conversation,
-                                                       participant: fullUser(),
+                                                       participant: user,
                                                        dismisser: viewControllerDismisser,
                                                        target: self)
 
