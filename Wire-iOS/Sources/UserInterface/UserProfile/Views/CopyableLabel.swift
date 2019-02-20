@@ -20,7 +20,7 @@
 import Foundation
 
 
-/// This class is a drop-in replacement for UILabel which can be copyied
+/// This class is a drop-in replacement for UILabel which can be copied.
 class CopyableLabel: UILabel {
 
     private let dimmedAlpha: CGFloat = 0.4

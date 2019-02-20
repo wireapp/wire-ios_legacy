@@ -31,8 +31,6 @@ import FLAnimatedImage
     private var aspectRatioConstraint: NSLayoutConstraint? = .none
     private var imageSize: CGSize = .zero
     
-    typealias GenericUser = UserType & AccentColorProvider
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.createViews()

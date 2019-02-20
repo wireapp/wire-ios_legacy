@@ -99,7 +99,7 @@
     
     self.onDismiss = onDismiss;
     
-    ProfileViewController *profileViewController = [[ProfileViewController alloc] initWithUser:user context:ProfileViewControllerContextSearch];
+    ProfileViewController *profileViewController = [[ProfileViewController alloc] initWithUser:user viewer:[ZMUser selfUser] context:ProfileViewControllerContextSearch];
     profileViewController = profileViewController;
     profileViewController.delegate = self;
     profileViewController.viewControllerDismisser = self;

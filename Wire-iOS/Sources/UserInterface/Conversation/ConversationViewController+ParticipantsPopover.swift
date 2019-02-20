@@ -41,13 +41,13 @@ extension ConversationViewController: UIPopoverPresentationControllerDelegate {
         rootViewController.present(controller, animated: true)
     }
 
-    @objc
-    func didTap(onUserAvatar user: UserType?, view: UIView?, frame: CGRect) {
-        if user == nil || view == nil {
+    @objc func didTap(onUserAvatar user: GenericUser, view: UIView?, frame: CGRect) {
+        if view == nil {
             return
         }
 
-        let profileViewController = ProfileViewController(user: user as! UserType & AccentColorProvider,
+        let profileViewController = ProfileViewController(user: user,
+                                                          viewer: ZMUser.selfUser(),
                                                           conversation: conversation,
                                                           viewControllerDismisser: self)
         profileViewController.preferredContentSize = CGSize.IPadPopover.preferredContentSize

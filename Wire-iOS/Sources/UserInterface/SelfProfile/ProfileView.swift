@@ -23,7 +23,7 @@ import UIKit
  */
 
 
-class ProfileView: UIView {
+class ProfileView: UIView, Themeable {
     
     /**
      * The options to customize the appearance and behavior of the view.
@@ -51,10 +51,17 @@ class ProfileView: UIView {
     }
     
     /// The user that is displayed.
-    let user: ZMUser
+    let user: GenericUser
     
     /// The view controller that displays the view.
     weak var source: UIViewController?
+    
+    @objc dynamic var colorSchemeVariant: ColorSchemeVariant = ColorScheme.default.variant {
+        didSet {
+            guard colorSchemeVariant != oldValue else { return }
+            applyColorScheme(colorSchemeVariant)
+        }
+    }
     
     /// The options to customize the appearance and behavior of the view.
     var options: Options {
@@ -65,13 +72,17 @@ class ProfileView: UIView {
     
     // MARKL: - Properties
     
-    let stackView = UIStackView()
+    var stackView: CustomSpacingStackView!
     
     let nameLabel = UILabel()
     let handleLabel = UILabel()
     let teamNameLabel = UILabel()
     let imageView =  UserImageView(size: .big)
     let availabilityView: AvailabilityTitleView
+    
+    let guestIndicatorStack = UIStackView()
+    let guestIndicator = GuestLabelIndicator()
+    let remainingTimeLabel = UILabel()
     
     private var userObserverToken: NSObjectProtocol?
     
@@ -84,7 +95,7 @@ class ProfileView: UIView {
      * - note: You can change the options later through the `options` property.
      */
     
-    init(user: ZMUser, options: Options) {
+    init(user: GenericUser, options: Options) {
         self.user = user
         self.options = options
         self.availabilityView = AvailabilityTitleView(user: user, options: [])
@@ -102,6 +113,7 @@ class ProfileView: UIView {
         let session = SessionManager.shared?.activeUserSession
         
         imageView.accessibilityIdentifier = "user image"
+        imageView.initialsFont = UIFont.systemFont(ofSize: 55, weight: .semibold).monospaced()
         imageView.userSession = session
         imageView.user = user
         imageView.isAccessibilityElement = true
@@ -126,14 +138,12 @@ class ProfileView: UIView {
         nameLabel.accessibilityIdentifier = "name"
         nameLabel.setContentHuggingPriority(UILayoutPriority.required, for: .vertical)
         nameLabel.setContentCompressionResistancePriority(UILayoutPriority.required, for: .vertical)
-        nameLabel.textColor = UIColor.from(scheme: .textForeground, variant: .dark)
         nameLabel.font = FontSpec(.large, .medium).font!
         
         handleLabel.accessibilityLabel = "profile_view.accessibility.handle".localized
         handleLabel.accessibilityIdentifier = "username"
         handleLabel.setContentHuggingPriority(UILayoutPriority.required, for: .vertical)
         handleLabel.setContentCompressionResistancePriority(UILayoutPriority.required, for: .vertical)
-        handleLabel.textColor = UIColor.from(scheme: .textForeground, variant: .dark)
         handleLabel.font = FontSpec(.small, .regular).font!
         
         let nameHandleStack = UIStackView(arrangedSubviews: [nameLabel, handleLabel])
@@ -145,20 +155,34 @@ class ProfileView: UIView {
         teamNameLabel.accessibilityIdentifier = "team name"
         teamNameLabel.setContentHuggingPriority(UILayoutPriority.required, for: .vertical)
         teamNameLabel.setContentCompressionResistancePriority(UILayoutPriority.required, for: .vertical)
-        teamNameLabel.textColor = UIColor.from(scheme: .textForeground, variant: .dark)
         teamNameLabel.font = FontSpec(.small, .regular).font!
         
         nameLabel.text = user.name
         nameLabel.accessibilityValue = nameLabel.text
         
+        remainingTimeLabel.font = UIFont.mediumSemiboldFont
+        
+        guestIndicatorStack.addArrangedSubview(guestIndicator)
+        guestIndicatorStack.addArrangedSubview(remainingTimeLabel)
+        guestIndicatorStack.spacing = 12
+        guestIndicatorStack.axis = .vertical
+        guestIndicatorStack.alignment = .center
+        guestIndicatorStack.isHidden = true
+        
         updateHandleLabel()
         updateTeamLabel()
         
-        [nameHandleStack, teamNameLabel, imageView, availabilityView].forEach(stackView.addArrangedSubview)
+        stackView = CustomSpacingStackView(customSpacedArrangedSubviews: [nameHandleStack, teamNameLabel, imageView, availabilityView, guestIndicatorStack])
+        
         stackView.alignment = .center
         stackView.axis = .vertical
-        stackView.spacing = 32
+        
+        stackView.wr_addCustomSpacing(32, after: nameHandleStack)
+        stackView.wr_addCustomSpacing(32, after: teamNameLabel)
+        stackView.wr_addCustomSpacing(24, after: imageView)
+
         addSubview(stackView)
+        applyColorScheme(colorSchemeVariant)
     }
     
     private func configureConstraints() {
@@ -180,6 +204,24 @@ class ProfileView: UIView {
     
     // MARK: - Content and Options
     
+    func prepareForDisplay(in conversation: ZMConversation) {
+        guestIndicatorStack.isHidden = !user.isGuest(in: conversation)
+        
+        let remainingTimeString = user.expirationDisplayString
+        remainingTimeLabel.text = remainingTimeString
+        remainingTimeLabel.isHidden = remainingTimeString == nil
+    }
+    
+    func applyColorScheme(_ variant: ColorSchemeVariant) {
+        availabilityView.colorSchemeVariant = variant
+        guestIndicator.colorSchemeVariant = variant
+        
+        handleLabel.textColor = UIColor.from(scheme: .textForeground, variant: variant)
+        nameLabel.textColor = UIColor.from(scheme: .textForeground, variant: variant)
+        teamNameLabel.textColor = UIColor.from(scheme: .textForeground, variant: variant)
+        remainingTimeLabel.textColor = ColorScheme.default.color(named: .textForeground, variant: variant)
+    }
+    
     private func updateHandleLabel() {
         if let handle = user.handle, !handle.isEmpty, !options.contains(.hideHandle) {
             handleLabel.text = "@" + handle
@@ -191,7 +233,7 @@ class ProfileView: UIView {
     }
     
     private func updateTeamLabel() {
-        if let team = user.team, let teamName = team.name, !options.contains(.hideTeamName) {
+        if let teamName = user.teamName, !options.contains(.hideTeamName) {
             teamNameLabel.text = teamName.localizedUppercase
             teamNameLabel.accessibilityValue = teamNameLabel.text
         } else {
