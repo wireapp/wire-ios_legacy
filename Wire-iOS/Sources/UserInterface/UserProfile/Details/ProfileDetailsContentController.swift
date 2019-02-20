@@ -162,7 +162,7 @@ class ProfileDetailsContentController: NSObject, UITableViewDataSource, UITableV
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch contents[section] {
         case .extendedMetadata:
-            return "profile.extended_metatadata.header".localized
+            return "profile.extended_metadata.header".localized
         case .readReceiptsStatus(let enabled):
             if enabled {
                 return "profile.read_receipts_enabled_memo.header".localized

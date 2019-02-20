@@ -747,7 +747,7 @@
 "profile.read_receipts_disabled_memo.header" = "YOU HAVE DISABLED READ RECEIPTS";
 "profile.read_receipts_memo.body" = "If both sides turn on read receipts, you can see when messages are read.\n\nYou can change this option in your account settings.";
 
-"profile.extended_metatadata.header" = "Information";
+"profile.extended_metadata.header" = "Information";
 
 // User Details
 "profile.details.title" = "Details";
