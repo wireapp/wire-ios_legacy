@@ -117,7 +117,6 @@ static id<UserType> mockSelfUser = nil;
 
 @synthesize name;
 @synthesize displayName;
-@synthesize initials;
 @synthesize isSelfUser;
 @synthesize isConnected;
 @synthesize accentColorValue;
@@ -133,6 +132,7 @@ static id<UserType> mockSelfUser = nil;
 @synthesize isAccountDeleted;
 @synthesize managedByWire;
 @synthesize extendedMetadata;
+@synthesize teamName;
 
 #pragma mark - ZMBareUserConnection
 
@@ -240,7 +240,7 @@ static id<UserType> mockSelfUser = nil;
 
 - (BOOL)hasTeam
 {
-    return false;
+    return isTeamMember;
 }
 
 - (BOOL)usesCompanyLogin
@@ -277,5 +277,16 @@ static id<UserType> mockSelfUser = nil;
     return nil;
 }
 
+- (BOOL)canAccessCompanyInformationOf:(id<UserType>)user
+{
+    if ([user isKindOfClass:MockUser.class]) {
+        MockUser *otherMockUser = (MockUser *)user;
+        if (self.teamIdentifier && otherMockUser.teamIdentifier) {
+            return [self.teamIdentifier isEqual:otherMockUser.teamIdentifier];
+        }
+    }
+    
+    return NO;
+}
 
 @end
