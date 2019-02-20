@@ -23,9 +23,11 @@ final class ProfileViewControllerTests: ZMSnapshotTestCase {
 
     var sut: ProfileViewController!
     var mockUser: MockUser!
+    var selfUser: MockUser!
     
     override func setUp() {
         super.setUp()
+        selfUser = MockUser.mockSelf()!
 
         let user = MockUser.mockUsers()[0]
         mockUser = MockUser(for: user)
@@ -35,31 +37,34 @@ final class ProfileViewControllerTests: ZMSnapshotTestCase {
     override func tearDown() {
         sut = nil
         mockUser = nil
+        selfUser = nil
 
         super.tearDown()
     }
 
-    func testForContextOneToOneConversation(){
-        MockUser.mockSelf()?.teamRole = .member
+    func testForContextOneToOneConversation() {
+        selfUser.teamRole = .member
 
-        sut = ProfileViewController(user: mockUser!, context: .oneToOneConversation)
+        let conversation = MockConversation.oneOnOneConversation().convertToRegularConversation()
+        sut = ProfileViewController(user: mockUser, viewer: selfUser, conversation: conversation, context: .oneToOneConversation)
         self.verify(view: sut.view)
     }
 
-    func testForContextOneToOneConversationForPartnerRole(){
-        MockUser.mockSelf()?.teamRole = .partner
+    func testForContextOneToOneConversationForPartnerRole() {
+        selfUser.teamRole = .partner
 
-        sut = ProfileViewController(user: mockUser!, context: .oneToOneConversation)
+        let conversation = MockConversation.oneOnOneConversation().convertToRegularConversation()
+        sut = ProfileViewController(user: mockUser, viewer: selfUser, conversation: conversation, context: .oneToOneConversation)
         self.verify(view: sut.view)
     }
 
-    func testForDeviceListContext(){
-        sut = ProfileViewController(user: mockUser!, context: .deviceList)
+    func testForDeviceListContext() {
+        sut = ProfileViewController(user: mockUser, viewer: selfUser, context: .deviceList)
         self.verify(view: sut.view)
     }
 
-    func testForWrapInNavigationController(){
-        sut = ProfileViewController(user: mockUser!, context: .deviceList)
+    func testForWrapInNavigationController() {
+        sut = ProfileViewController(user: mockUser, viewer:selfUser, context: .deviceList)
         let navWrapperController = sut.wrapInNavigationController()
 
         self.verify(view: navWrapperController.view)
