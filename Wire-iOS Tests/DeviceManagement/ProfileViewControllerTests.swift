@@ -67,33 +67,26 @@ final class ProfileViewControllerTests: ZMSnapshotTestCase {
     
     // MARK: - action menu
     func testForGroupConversationActionMenuShowsRemoveUserItem() {
-        //teamTest {
         recordMode = true
             sut = ProfileViewController(user: mockUser!, context: .groupConversation)
-            //sut.performRightButtonAction(nil)
         sut.footerView(sut.profileFooterView, performs: sut.profileFooterView.rightButtonAction)
             verifyAlertController((sut?.actionsController?.alertController)!)
-        //}
     }
     
     /// test for 1-to-1 conversation
     func testForActionMenu() {
-        //teamTest {
         recordMode = true
             sut = ProfileViewController(user: mockUser!, context: .oneToOneConversation)
         sut.viewDidLoad()
         sut.footerView(sut.profileFooterView, performs: sut.profileFooterView.rightButtonAction)
-            verifyAlertController((sut?.actionsController?.alertController)!)
-        //}
+        verifyAlertController((sut?.actionsController?.alertController)!)
     }
     
     func testForActionMenu_NoTeam() {
         recordMode = true
         sut = ProfileViewController(user: mockUser!, context: .oneToOneConversation)
         sut.viewDidLoad()
-        //nonTeamTest {
-            sut.presentMenuSheetController()
-            verifyAlertController((sut?.actionsController?.alertController)!)
-        //}
+        sut.presentMenuSheetController()
+        verifyAlertController((sut?.actionsController?.alertController)!)
     }
 }

@@ -95,8 +95,6 @@ extension ProfileViewController: ProfileFooterViewDelegate {
         case .cancelConnectionRequest:
             bringUpCancelConnectionRequestSheet()
         case .none:
-             //.block,
-             //.unblock:
             break
         }
     }

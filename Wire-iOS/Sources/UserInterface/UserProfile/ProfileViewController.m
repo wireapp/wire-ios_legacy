@@ -186,11 +186,7 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
 - (void)setupConstraints
 {
     [self.usernameDetailsView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeBottom];
-    [self.tabsController.view autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeTop];
-    [self.tabsController.view autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.usernameDetailsView];
-    
-     /*
-      [self.tabsController.view autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeTop];
+    //[self.tabsController.view autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeTop];
     [self.tabsController.view autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.usernameDetailsView];
    
     if(self.profileFooterView != nil) {
@@ -200,7 +196,7 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
         [self.profileFooterView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeTop];
     } else {
         [self.tabsController.view autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeTop];
-    }*/
+    }
 }
 
 #pragma mark - Header
@@ -296,8 +292,6 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
                              [UIApplication.sharedApplication wr_updateStatusBarForCurrentControllerAnimated:YES];
                          }];
     }
-    
-    //[self.delegate profileDetailsViewController:self didPresentConversationCreationController:conversationCreationController];
 }
 
 - (void)bringUpConnectionRequestSheet
@@ -382,8 +376,6 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
     [[ZMUserSession sharedSession] enqueueChanges:^{
         conversation = self.fullUser.oneToOneConversation;
     } completionHandler:^{
-        
-        //[self.delegate profileDetailsViewController:self didSelectConversation:conversation];
         [self.delegate profileViewController:self wantsToNavigateToConversation:conversation];
     }];
 }

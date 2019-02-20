@@ -100,12 +100,10 @@ typedef NS_ENUM(NSUInteger, ProfileViewContentMode) {
         [self.stackView autoPinEdge:ALEdgeBottom toEdge:ALEdgeBottom ofView:self.stackViewContainer withOffset:-offset relation:NSLayoutRelationLessThanOrEqual];
     }];
     
-    /*
     [self.stackViewContainer autoPinEdgeToSuperviewEdge:ALEdgeTop];
     [self.stackViewContainer autoPinEdgeToSuperviewEdge:ALEdgeLeading];
     [self.stackViewContainer autoPinEdgeToSuperviewEdge:ALEdgeTrailing];
-    [self.stackViewContainer autoPinEdge:ALEdgeBottom toEdge:ALEdgeTop ofView:self.footerView];*/
-    [self.stackViewContainer autoPinEdgesToSuperviewEdges];
+    [self.stackViewContainer autoPinEdge:ALEdgeBottom toEdge:ALEdgeTop ofView:self.footerView];
     
     UIEdgeInsets bottomInset = UIEdgeInsetsMake(0, 0, UIScreen.safeArea.bottom, 0);
     [self.footerView autoPinEdgesToSuperviewEdgesWithInsets:bottomInset excludingEdge:ALEdgeTop];
