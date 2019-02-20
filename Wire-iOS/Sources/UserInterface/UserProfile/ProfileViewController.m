@@ -233,7 +233,7 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
 
 #pragma mark - Utilities
 
-- (ZMUser * _Nullable)fullUser
+- (ZMUser *)fullUser
 {
     if ([self.bareUser isKindOfClass:[ZMUser class]]) {
         return (ZMUser *)self.bareUser;

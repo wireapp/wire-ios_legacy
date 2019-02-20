@@ -59,7 +59,7 @@ extension ProfileDetailsViewController {
         view.addSubview(stackViewContainer)
 
         teamsGuestIndicator.isHidden = !showGuestLabel
-        availabilityView.isHidden = !ZMUser.selfUser().isTeamMember || fullUser()?.availability == .none
+        availabilityView.isHidden = !ZMUser.selfUser().isTeamMember || fullUser()?.availability == Availability.none
 
         let remainingTimeString = fullUser()?.expirationDisplayString
         remainingTimeLabel = UILabel()
