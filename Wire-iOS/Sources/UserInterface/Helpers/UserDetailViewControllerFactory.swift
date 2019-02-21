@@ -37,7 +37,7 @@ final class UserDetailViewControllerFactory: NSObject {
             serviceDetailViewController.viewControllerDismisser = viewControllerDismisser
             return serviceDetailViewController
         } else {
-            let profileViewController = ProfileViewController(user: user, conversation: conversation)
+            let profileViewController = ProfileViewController(user: user, viewer: ZMUser.selfUser(), conversation: conversation)
             profileViewController.delegate = profileViewControllerDelegate
             profileViewController.viewControllerDismisser = viewControllerDismisser
             return profileViewController

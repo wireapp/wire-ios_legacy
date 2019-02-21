@@ -33,7 +33,6 @@
 
 #import "ContactsDataSource.h"
 #import "ProfileDevicesViewController.h"
-#import "ProfileDetailsViewController.h"
 
 
 typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
@@ -72,25 +71,26 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
 
 @implementation ProfileViewController
 
-- (id)initWithUser:(id<UserType, AccentColorProvider>)user context:(ProfileViewControllerContext)context
+- (id)initWithUser:(id<UserType, AccentColorProvider>)user viewer:(id<UserType, AccentColorProvider>)viewer context:(ProfileViewControllerContext)context
 {
-    return [self initWithUser:user conversation:nil context:context];
+    return [self initWithUser:user viewer:viewer conversation:nil context:context];
 }
 
-- (id)initWithUser:(id<UserType, AccentColorProvider>)user conversation:(ZMConversation *)conversation
+- (id)initWithUser:(id<UserType, AccentColorProvider>)user viewer:(id<UserType, AccentColorProvider>)viewer conversation:(ZMConversation *)conversation
 {
     if (conversation.conversationType == ZMConversationTypeGroup) {
-        return [self initWithUser:user conversation:conversation context:ProfileViewControllerContextGroupConversation];
+        return [self initWithUser:user viewer:viewer conversation:conversation context:ProfileViewControllerContextGroupConversation];
     }
     else {
-        return [self initWithUser:user conversation:conversation context:ProfileViewControllerContextOneToOneConversation];
+        return [self initWithUser:user viewer:viewer conversation:conversation context:ProfileViewControllerContextOneToOneConversation];
     }
 }
 
-- (id)initWithUser:(id<UserType, AccentColorProvider>)user conversation:(ZMConversation *)conversation context:(ProfileViewControllerContext)context
+- (id)initWithUser:(id<UserType, AccentColorProvider>)user viewer:(id<UserType, AccentColorProvider>)viewer conversation:(ZMConversation *)conversation context:(ProfileViewControllerContext)context
 {
     if (self = [super init]) {
         _bareUser = user;
+        _viewer = viewer;
         _conversation = conversation;
         _context = context;
 

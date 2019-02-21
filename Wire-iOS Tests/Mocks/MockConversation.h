@@ -34,4 +34,6 @@
 @property (nonatomic) BOOL canStartVideoCall;
 @property (nonatomic) BOOL isConversationEligibleForVideoCalls;
 
+- (ZMConversation *)convertToRegularConversation;
+
 @end

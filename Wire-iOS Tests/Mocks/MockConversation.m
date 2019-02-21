@@ -92,4 +92,9 @@
     return YES;
 }
 
+- (ZMConversation *)convertToRegularConversation
+{
+    return (ZMConversation *)self;
+}
+
 @end

@@ -21,6 +21,6 @@ import Foundation
 
 extension MockUser: AccentColorProvider {
     @objc public var accentColor: UIColor {
-        return UIColor(red: 0.141, green: 0.552, blue: 0.827, alpha: 1.0)
+        return UIColor(fromZMAccentColor: accentColorValue)
     }
 }
