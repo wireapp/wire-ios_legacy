@@ -171,8 +171,8 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
     [self.tabsController didMoveToParentViewController:self];
 }
 
-- (void)setupFooterView {
-    
+- (void)setupFooterView
+{
     ProfileFooterView *userActionsFooterView = [[ProfileFooterView alloc] initWithUser:self.fullUser conversation:self.conversation context:self.context];
     
     if(userActionsFooterView.leftButtonAction != ActionNone) {

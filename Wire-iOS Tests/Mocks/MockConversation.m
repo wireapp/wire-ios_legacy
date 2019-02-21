@@ -43,6 +43,7 @@
     
     if (self) {
         self.isConversationEligibleForVideoCalls = YES;
+        self.unreadMessages = @[];
     }
     
     return self;
@@ -89,7 +90,13 @@
 
 - (BOOL)isSelfAnActiveMember
 {
-    return YES;
+    NSPredicate *selfUserPredicate = [NSPredicate predicateWithFormat:@"isSelfUser == YES"];
+    return ![self.activeParticipants filteredSetUsingPredicate:selfUserPredicate].isEmpty;
+}
+
+- (BOOL)canMarkAsUnread
+{
+    return self.unreadMessages.count > 0;
 }
 
 - (ZMConversation *)convertToRegularConversation

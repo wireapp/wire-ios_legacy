@@ -26,11 +26,11 @@ import UIKit
 final class ProfileFooterView: ConversationDetailFooterView {
 
     weak var delegate: ProfileFooterViewDelegate?
-    var user: ZMUser
+    var user: GenericUser
     var conversation: ZMConversation
     var context: ProfileViewControllerContext
     
-    public init(user: ZMUser, conversation: ZMConversation, context: ProfileViewControllerContext) {
+    public init(user: GenericUser, conversation: ZMConversation, context: ProfileViewControllerContext) {
         self.user = user
         self.conversation = conversation
         self.context = context
@@ -69,7 +69,7 @@ final class ProfileFooterView: ConversationDetailFooterView {
             return .none
         } else if (user.isConnected || user.isTeamMember) &&
             context == .oneToOneConversation {
-            if ZMUser.selfUserHas(permissions: .member) || !ZMUser.selfUser().isTeamMember {
+            if user.has(permissions: .member) || !user.isTeamMember {
                 return .addPeople
             } else {
                 return .none
@@ -97,14 +97,14 @@ final class ProfileFooterView: ConversationDetailFooterView {
         if user.isSelfUser {
             return .none
         } else if context == .groupConversation {
-            if ZMUser.selfUser().canRemoveUser(from: conversation) {
+            if user.canRemoveUser(from: conversation) {
                 return .removePeople
             } else {
                 return .none
             }
         } else if user.isConnected {
             return .presentMenu
-        } else if nil != user.team {
+        } else if user.isTeamMember {
             return .presentMenu
         } else {
             return .none

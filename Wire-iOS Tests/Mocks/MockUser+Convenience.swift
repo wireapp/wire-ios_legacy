@@ -27,6 +27,8 @@ import XCTest
 
 extension MockUser {
 
+    // MARK: - Factory
+
     /**
      * Creates a self-user with the specified name and team membership.
      * - parameter name: The name of the user.
@@ -42,6 +44,7 @@ extension MockUser {
         user.isSelfUser = true
         user.isTeamMember = teamID != nil
         user.teamIdentifier = teamID
+        user.teamRole = teamID != nil ? .member : .none
         user.accentColorValue = .vividRed
         return user
     }
@@ -61,6 +64,7 @@ extension MockUser {
         user.isConnected = true
         user.isTeamMember = teamID != nil
         user.teamIdentifier = teamID
+        user.teamRole = teamID != nil ? .member : .none
         user.accentColorValue = .brightOrange
         return user
     }

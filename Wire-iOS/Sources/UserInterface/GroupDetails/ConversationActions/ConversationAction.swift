@@ -45,7 +45,7 @@ extension ZMConversation {
         var actions = [Action]()
         actions.append(contentsOf: availableStandardActions())
         actions.append(.delete)
-        if nil == team, let connectedUser = connectedUser {
+        if teamRemoteIdentifier == nil, let connectedUser = connectedUser {
             actions.append(.block(isBlocked: connectedUser.isBlocked))
         }
         return actions

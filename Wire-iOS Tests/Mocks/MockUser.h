@@ -43,6 +43,8 @@
 @property (nonatomic, readwrite) BOOL isPendingApprovalByOtherUser;
 @property (nonatomic, readwrite) BOOL isPendingApprovalBySelfUser;
 @property (nonatomic, readwrite) BOOL isConnected;
+@property (nonatomic, readwrite) BOOL isExpired;
+@property (nonatomic, readwrite) BOOL canBeConnected;
 @property (nonatomic, readwrite) BOOL untrusted;
 @property (nonatomic, readwrite) BOOL trusted;
 @property (nonatomic, readwrite) NSUInteger totalCommonConnections;
