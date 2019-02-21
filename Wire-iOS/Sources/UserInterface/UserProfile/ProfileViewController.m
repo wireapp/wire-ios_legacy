@@ -351,20 +351,6 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
     }];
 }
 
-- (void)sendConnectionRequest
-{
-    NSString *message = [NSString stringWithFormat:NSLocalizedString(@"missive.connection_request.default_message",@"Default connect message to be shown"), self.bareUser.displayName, [ZMUser selfUser].name];
-    
-    ZM_WEAK(self);
-    [self dismissViewControllerAnimated:YES completion:^{
-        ZM_STRONG(self);
-        [[ZMUserSession sharedSession] enqueueChanges:^{
-            [self.bareUser connectWithMessage:message];
-        }];
-    }];
-}
-
-
 - (void)openOneToOneConversation
 {
     if (self.fullUser == nil) {

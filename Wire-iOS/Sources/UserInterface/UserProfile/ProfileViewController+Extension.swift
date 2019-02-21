@@ -90,11 +90,9 @@ extension ProfileViewController: ProfileFooterViewDelegate {
             presentRemoveUserMenuSheetController()
         case .acceptConnectionRequest:
             bringUpConnectionRequestSheet()
-        case .sendConnectionRequest:
-            sendConnectionRequest()
         case .cancelConnectionRequest:
             bringUpCancelConnectionRequestSheet()
-        case .none:
+        default:
             break
         }
     }

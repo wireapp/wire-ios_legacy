@@ -65,7 +65,6 @@ typedef NS_ENUM(NSInteger, ProfileViewControllerContext) {
 - (void)presentAddParticipantsViewController;
 - (void)openOneToOneConversation;
 - (void)bringUpConnectionRequestSheet;
-- (void)sendConnectionRequest;
 - (void)bringUpCancelConnectionRequestSheet;
 @end
 

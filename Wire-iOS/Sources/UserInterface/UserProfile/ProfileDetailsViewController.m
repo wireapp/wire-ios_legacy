@@ -103,7 +103,12 @@ typedef NS_ENUM(NSUInteger, ProfileViewContentMode) {
     [self.stackViewContainer autoPinEdgeToSuperviewEdge:ALEdgeTop];
     [self.stackViewContainer autoPinEdgeToSuperviewEdge:ALEdgeLeading];
     [self.stackViewContainer autoPinEdgeToSuperviewEdge:ALEdgeTrailing];
-    [self.stackViewContainer autoPinEdge:ALEdgeBottom toEdge:ALEdgeTop ofView:self.footerView];
+    
+    if(self.footerView == nil) {
+        [self.stackViewContainer autoPinEdgeToSuperviewEdge:ALEdgeBottom];
+    } else {
+        [self.stackViewContainer autoPinEdge:ALEdgeBottom toEdge:ALEdgeTop ofView:self.footerView];
+    }
     
     UIEdgeInsets bottomInset = UIEdgeInsetsMake(0, 0, UIScreen.safeArea.bottom, 0);
     [self.footerView autoPinEdgesToSuperviewEdgesWithInsets:bottomInset excludingEdge:ALEdgeTop];
@@ -188,6 +193,20 @@ typedef NS_ENUM(NSUInteger, ProfileViewContentMode) {
     [self dismissViewControllerWithCompletion:^{
         [[ZMUserSession sharedSession] enqueueChanges:^{
             [user ignore];
+        }];
+    }];
+}
+
+
+- (void)sendConnectionRequest
+{
+    NSString *message = [NSString stringWithFormat:NSLocalizedString(@"missive.connection_request.default_message",@"Default connect message to be shown"), self.bareUser.displayName, [ZMUser selfUser].name];
+    
+    ZM_WEAK(self);
+    [self dismissViewControllerWithCompletion:^{
+        ZM_STRONG(self);
+        [[ZMUserSession sharedSession] enqueueChanges:^{
+            [self.bareUser connectWithMessage:message];
         }];
     }];
 }

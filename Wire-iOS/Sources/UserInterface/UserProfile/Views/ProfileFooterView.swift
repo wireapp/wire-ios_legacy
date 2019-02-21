@@ -86,6 +86,8 @@ final class ProfileFooterView: ConversationDetailFooterView {
             return .sendConnectionRequest
         } else if user.isWirelessUser {
             return .none
+        } else if !user.isConnected {
+            return .none
         } else {
             return .openConversation
         }
