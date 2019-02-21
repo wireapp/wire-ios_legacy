@@ -655,6 +655,9 @@
 "participants.footer.add_title" = "Add Participants";
 "participants.section.name.footer" = "Up to %1$d participants can join a group conversation. Video calls work with up to %2$d other people and you.";
 
+"profile_details.action.notifications" = "Notifications";
+"profile_details.action.delete" = "Delete Content";
+
 // Meta Menu
 "meta.menu.rename" = "Rename";
 "meta.menu.leave" = "Leave Group…";

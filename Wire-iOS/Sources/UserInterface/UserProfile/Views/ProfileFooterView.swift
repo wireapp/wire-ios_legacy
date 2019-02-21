@@ -18,138 +18,78 @@
 
 import UIKit
 
-@objc protocol ProfileFooterViewDelegate: class {
-    func footerView(_ view: ProfileFooterView, performs action: ProfileFooterView.Action)
+protocol ProfileFooterViewDelegate: class {
+
+    /// Called when the footer wants to perform a single action, from the left button.
+    func footerView(_ footerView: ProfileFooterView, shouldPerformAction action: ProfileAction)
+
+    /// Called when the footer wants to present the list of actions, from the right button.
+    func footerView(_ footerView: ProfileFooterView, shouldPresentMenuWithActions actions: [ProfileAction])
+
 }
 
-@objcMembers
-final class ProfileFooterView: ConversationDetailFooterView {
+/**
+ * The footer of to use in the profile details screen.
+ */
 
+class ProfileFooterView: ConversationDetailFooterView {
+
+    /// The object that will perform the actions on demand.
     weak var delegate: ProfileFooterViewDelegate?
-    var user: GenericUser
-    var conversation: ZMConversation
-    var context: ProfileViewControllerContext
-    
-    public init(user: GenericUser, conversation: ZMConversation, context: ProfileViewControllerContext) {
-        self.user = user
-        self.conversation = conversation
-        self.context = context
-        super.init(mainButton: IconButton())
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
+
+    /// The action on the left button.
+    var leftAction: ProfileAction?
+
+    /// The actions hidden behind the ellipsis on the right.
+    var rightActions: [ProfileAction]?
+
+    // MARK: - Configuration
+
     override func setupButtons() {
         leftButton.accessibilityIdentifier = "left_button"
         rightButton.accessibilityIdentifier = "right_button"
-        
-        leftButton.setTitle(leftButtonAction.buttonText.uppercased(), for: .normal)
-        leftIcon = leftButtonAction.iconType
-        rightIcon = rightButtonAction.iconType
     }
-    
-    override func buttonTapped(_ sender: IconButton) {
-        action(for: sender).apply {
-            delegate?.footerView(self, performs: $0)
+
+    /**
+     * Configures the footer to display the specified actions.
+     * - parameter actions: The actions to display in the footer.
+     */
+
+    func configure(with actions: [ProfileAction]) {
+        // Separate the last and first actions
+        let leftAction = actions.first
+        let rightActions = Array(actions.dropFirst())
+
+        self.leftAction = leftAction
+        self.rightActions = rightActions
+
+        // Display the left action
+        if let leftAction = leftAction {
+            leftButton.setTitle(leftAction.buttonText.localizedUppercase, for: .normal)
+            leftIcon = leftAction.buttonIcon
         }
-    }
-    
-    private func action(for button: IconButton) -> Action? {
-        switch button {
-        case rightButton: return rightButtonAction
-        case leftButton: return leftButtonAction
-        default: return nil
+
+        // Display or hide the right action ellipsis
+        if rightActions.isEmpty {
+            rightIcon = .none
+            rightButton.isHidden = true
+        } else {
+            rightIcon = .ellipsis
+            rightButton.isHidden = false
         }
     }
 
-    var leftButtonAction: Action {
-        if user.isSelfUser {
-            return .none
-        } else if (user.isConnected || user.isTeamMember) &&
-            context == .oneToOneConversation {
-            if user.has(permissions: .member) || !user.isTeamMember {
-                return .addPeople
-            } else {
-                return .none
-            }
-        } else if user.isTeamMember {
-            return .openConversation
-        } else if user.isBlocked {
-            return .none
-        } else if user.isPendingApprovalBySelfUser {
-            return .acceptConnectionRequest
-        } else if user.isPendingApprovalByOtherUser {
-            return .cancelConnectionRequest
-        } else if user.canBeConnected {
-            return .sendConnectionRequest
-        } else if user.isWirelessUser {
-            return .none
-        } else if !user.isConnected {
-            return .none
-        } else {
-            return .openConversation
-        }
-    }
-    
-    var rightButtonAction: Action {
-        if user.isSelfUser {
-            return .none
-        } else if context == .groupConversation {
-            if user.canRemoveUser(from: conversation) {
-                return .removePeople
-            } else {
-                return .none
-            }
-        } else if user.isConnected {
-            return .presentMenu
-        } else if user.isTeamMember {
-            return .presentMenu
-        } else {
-            return .none
-        }
-    }
-    
+    // MARK: - Events
 
-    @objc enum Action: Int {
-        case none, openConversation, addPeople, removePeople, presentMenu,
-        acceptConnectionRequest, sendConnectionRequest, cancelConnectionRequest //block, unblock,
-        
-        var buttonText: String {
-            switch self {
-            case .sendConnectionRequest, .acceptConnectionRequest:
-                return "profile.connection_request_dialog.button_connect".localized
-            case .cancelConnectionRequest:
-                return "profile.cancel_connection_button_title".localized
-            case .addPeople:
-                return "profile.create_conversation_button_title".localized
-            case .openConversation:
-                return "profile.open_conversation_button_title".localized
-            default: return ""
-            }
-        }
-        
-        var iconType: ZetaIconType {
-            switch self {
-            case .addPeople:
-                return .createConversation
-            case .presentMenu:
-                return .ellipsis
-            case .removePeople:
-                return .ellipsis
-            case .cancelConnectionRequest:
-                return .undo
-            case .openConversation:
-                return .conversation
-            case .sendConnectionRequest,
-                 .acceptConnectionRequest:
-                return .plus
-            default:
-                return .none
-            }
-        }
-        
+    override func leftButtonTapped(_ sender: IconButton) {
+        guard let leftAction = self.leftAction else { return }
+        delegate?.footerView(self, shouldPerformAction: leftAction)
     }
+
+    override func rightButtonTapped(_ sender: IconButton) {
+        guard let rightActions = self.rightActions else { return }
+        delegate?.footerView(self, shouldPresentMenuWithActions: rightActions)
+    }
+
 }
 

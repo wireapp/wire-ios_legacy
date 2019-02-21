@@ -31,9 +31,46 @@ enum ProfileAction: Equatable {
     case openOneToOne
     case removeFromGroup
     case connect
-    case acceptConnectionRequest
-    case declineConnectionRequest
     case cancelConnectionRequest
+
+    /// Whether the action is destructive.
+    var isDestructive: Bool {
+        switch self {
+        case .deleteContents, .block, .removeFromGroup: return true
+        default: return false
+        }
+    }
+
+    /// The text of the button for this action.
+    var buttonText: String {
+        switch self {
+        case .createGroup: return "profile.create_conversation_button_title".localized
+        case .manageNotifications: return "profile_details.action.notifications".localized
+        case .archive: return "meta.menu.archive".localized
+        case .deleteContents: return "profile_details.action.delete".localized
+        case .block: return "profile.block_dialog.button_block".localized
+        case .openOneToOne: return "profile.open_conversation_button_title".localized
+        case .removeFromGroup: return "profile.remove_dialog_button_remove".localized
+        case .connect: return "profile.connection_request_dialog.button_connect".localized
+        case .cancelConnectionRequest: return "meta.menu.cancel_connection_request".localized
+        }
+    }
+
+    /// The icon of the button for this action.
+    var buttonIcon: ZetaIconType {
+        switch self {
+        case .createGroup: return .createConversation
+        case .manageNotifications: return .bell
+        case .archive: return .archive
+        case .deleteContents: return .delete
+        case .block: return .block
+        case .openOneToOne: return .conversation
+        case .removeFromGroup: return .minus
+        case .connect: return .plus
+        case .cancelConnectionRequest: return .undo
+        }
+    }
+
 }
 
 /**
@@ -109,7 +146,8 @@ class ProfileActionsFactory: NSObject {
 
             // Show connection request actions for unconnected users from different teams.
             if user.isPendingApprovalBySelfUser {
-                actions.append(contentsOf: [.acceptConnectionRequest, .declineConnectionRequest])
+                // Do not show the action bar if the user is not connected.
+                break
             } else if user.isPendingApprovalByOtherUser {
                 actions.append(.cancelConnectionRequest)
             } else if user.isConnected || isOnSameTeam {
@@ -128,20 +166,11 @@ class ProfileActionsFactory: NSObject {
                 actions.append(.block)
             }
 
-        case .connection:
-            if user.isPendingApprovalBySelfUser {
-                actions.append(contentsOf: [.acceptConnectionRequest, .declineConnectionRequest])
-            } else if user.isPendingApprovalByOtherUser {
-                actions.append(.cancelConnectionRequest)
-            }
-
-        case .invalid, .self:
+        default:
             break
         }
 
         return actions
     }
-
-
 
 }

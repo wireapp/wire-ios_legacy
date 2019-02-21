@@ -54,9 +54,6 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
 @interface ProfileViewController (ConversationCreationDelegate) <ConversationCreationControllerDelegate>
 @end
 
-@interface ProfileViewController (ProfileFooterViewDelegate) <ProfileFooterViewDelegate>
-@end
-
 
 @interface ProfileViewController () <ZMUserObserver>
 
@@ -107,8 +104,10 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    self.navigationController.delegate = self.navigationControllerDelegate;
+
+    self.profileFooterView = [[ProfileFooterView alloc] init];
+    [self.view addSubview:self.profileFooterView];
+
     self.view.backgroundColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorBarBackground];
     
     if (nil != self.fullUser && nil != [ZMUserSession sharedSession]) {
@@ -121,11 +120,6 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
     [self setupFooterView];
     [self setupConstraints];
     [self updateShowVerifiedShield];
-}
-
-- (UIInterfaceOrientationMask)supportedInterfaceOrientations
-{
-    return UIInterfaceOrientationMaskPortrait;
 }
 
 - (void)dismissButtonClicked
@@ -171,22 +165,9 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
     [self.tabsController didMoveToParentViewController:self];
 }
 
-- (void)setupFooterView
-{
-    ProfileFooterView *userActionsFooterView = [[ProfileFooterView alloc] initWithUser:self.fullUser conversation:self.conversation context:self.context];
-    
-    if(userActionsFooterView.leftButtonAction != ActionNone) {
-        userActionsFooterView.translatesAutoresizingMaskIntoConstraints = NO;
-        userActionsFooterView.delegate = self;
-        self.profileFooterView = userActionsFooterView;
-        [self.view addSubview:userActionsFooterView];
-    }
-}
-
 - (void)setupConstraints
 {
     [self.usernameDetailsView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeBottom];
-    //[self.tabsController.view autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeTop];
     [self.tabsController.view autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.usernameDetailsView];
    
     if(self.profileFooterView != nil) {

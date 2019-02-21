@@ -18,6 +18,10 @@
 
 import UIKit
 
+/**
+ * A footer view to use to display a bar of actions to perform for a conversation.
+ */
+
 @objc class ConversationDetailFooterView: UIView {
     
     private let variant: ColorSchemeVariant
@@ -65,27 +69,34 @@ import UIKit
     }
     
     private func setupViews() {
-        
-        [leftButton, rightButton].forEach {
-            addSubview($0)
-            $0.translatesAutoresizingMaskIntoConstraints = false
-            $0.setIconColor(UIColor.from(scheme: .iconNormal), for: .normal)
-            $0.setIconColor(UIColor.from(scheme: .iconHighlighted), for: .highlighted)
-            $0.setIconColor(UIColor.from(scheme: .buttonFaded), for: .disabled)
-            $0.setTitleColor(UIColor.from(scheme: .iconNormal), for: .normal)
-            $0.setTitleColor(UIColor.from(scheme: .textDimmed), for: .highlighted)
-            $0.setTitleColor(UIColor.from(scheme: .buttonFaded), for: .disabled)
-            $0.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+        let configureButton = { (button: IconButton) in
+            self.addSubview(button)
+            button.setIconColor(UIColor.from(scheme: .iconNormal), for: .normal)
+            button.setIconColor(UIColor.from(scheme: .iconHighlighted), for: .highlighted)
+            button.setIconColor(UIColor.from(scheme: .buttonFaded), for: .disabled)
+            button.setTitleColor(UIColor.from(scheme: .iconNormal), for: .normal)
+            button.setTitleColor(UIColor.from(scheme: .textDimmed), for: .highlighted)
+            button.setTitleColor(UIColor.from(scheme: .buttonFaded), for: .disabled)
         }
-        
+
+        configureButton(leftButton)
+        configureButton(rightButton)
+
         leftButton.titleImageSpacing = 16
         leftButton.titleLabel?.font = FontSpec(.small, .regular).font
+        leftButton.addTarget(self, action: #selector(leftButtonTapped), for: .touchUpInside)
+
+        rightButton.addTarget(self, action: #selector(rightButtonTapped), for: .touchUpInside)
+
         backgroundColor = UIColor.from(scheme: .barBackground)
         
         setupButtons()
     }
     
     private func createConstraints() {
+        leftButton.translatesAutoresizingMaskIntoConstraints = false
+        rightButton.translatesAutoresizingMaskIntoConstraints = false
+
         NSLayoutConstraint.activate([
             heightAnchor.constraint(equalToConstant: 56),
             leftButton.centerYAnchor.constraint(equalTo: centerYAnchor),
@@ -93,15 +104,21 @@ import UIKit
             leftButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             rightButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             rightButton.leadingAnchor.constraint(greaterThanOrEqualTo: leftButton.leadingAnchor, constant: 16)
-            ])
+        ])
+    }
+
+    // MARK: - Events
+    
+    @objc func setupButtons() {
+        // no-op
     }
     
-    @objc internal func setupButtons() {
-        //no-op
+    @objc func leftButtonTapped(_ sender: IconButton) {
+        // no-op
     }
-    
-    @objc internal func buttonTapped(_ sender: IconButton) {
-        //no-op
+
+    @objc func rightButtonTapped(_ sender: IconButton) {
+        // no-op
     }
-    
+
 }

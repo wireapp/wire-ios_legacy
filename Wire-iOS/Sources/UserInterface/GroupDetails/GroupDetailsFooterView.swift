@@ -58,10 +58,13 @@ final class GroupDetailsFooterView: ConversationDetailFooterView {
         rightIcon = .ellipsis
         rightButton.accessibilityIdentifier = "OtherUserMetaControllerRightButton"
     }
-    
-    override func buttonTapped(_ sender: IconButton) {
-        action(for: sender).apply {
-            delegate?.footerView(self, performs: $0)
-        }
+
+    override func leftButtonTapped(_ sender: IconButton) {
+        delegate?.footerView(self, performs: .invite)
     }
+
+    override func rightButtonTapped(_ sender: IconButton) {
+        delegate?.footerView(self, performs: .more)
+    }
+    
 }

@@ -54,26 +54,72 @@ extension ProfileViewController: ViewControllerDismisser {
     }
 }
 
+// MARK: - Footer View
+
 extension ProfileViewController: ProfileFooterViewDelegate {
-    func footerView(_ view: ProfileFooterView, performs action: ProfileFooterView.Action) {
-        switch action {
-        case .addPeople:
-            presentAddParticipantsViewController()
-        case .presentMenu:
-            presentMenuSheetController()
-        case .openConversation:
-            openOneToOneConversation()
-        case .removePeople:
-            presentRemoveUserMenuSheetController()
-        case .acceptConnectionRequest:
-            bringUpConnectionRequestSheet()
-        case .cancelConnectionRequest:
-            bringUpCancelConnectionRequestSheet()
-        default:
-            break
+
+    @objc func setupFooterView() {
+        let factory = ProfileActionsFactory(user: bareUser, viewer: viewer, conversation: self.conversation)
+        let actions = factory.makeActionsList()
+
+        guard !actions.isEmpty else {
+            return profileFooterView.isHidden = true
         }
+
+        profileFooterView.delegate = self
+        profileFooterView.configure(with: actions)
     }
-    
+
+    func footerView(_ footerView: ProfileFooterView, shouldPerformAction action: ProfileAction) {
+        performAction(action, targetView: footerView.leftButton)
+    }
+
+    func footerView(_ footerView: ProfileFooterView, shouldPresentMenuWithActions actions: [ProfileAction]) {
+        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+
+        for action in actions {
+            let sheetAction = UIAlertAction(title: action.buttonText, style: action.isDestructive ? .destructive : .default) { _ in
+                self.performAction(action, targetView: footerView.rightButton)
+            }
+
+            actionSheet.addAction(sheetAction)
+        }
+
+        actionSheet.addAction(.cancel())
+        presentAlert(actionSheet, targetView: footerView.rightButton)
+    }
+
+    func performAction(_ action: ProfileAction, targetView: UIView) {
+        dump(action)
+        // no-op yet
+    }
+
+    private func presentAlert(_ alert: UIAlertController, targetView: UIView) {
+        let buttonFrame = view.convert(targetView.frame, from: targetView.superview).insetBy(dx: 8, dy: 8)
+        alert.popoverPresentationController?.sourceView = targetView
+        alert.popoverPresentationController?.sourceRect = buttonFrame
+        present(alert, animated: true)
+    }
+
+//    func footerView(_ view: ProfileFooterView, performs action: ProfileFooterView.Action) {
+//        switch action {
+//        case .addPeople:
+//            presentAddParticipantsViewController()
+//        case .presentMenu:
+//            presentMenuSheetController()
+//        case .openConversation:
+//            openOneToOneConversation()
+//        case .removePeople:
+//            presentRemoveUserMenuSheetController()
+//        case .acceptConnectionRequest:
+//            bringUpConnectionRequestSheet()
+//        case .cancelConnectionRequest:
+//            bringUpCancelConnectionRequestSheet()
+//        default:
+//            break
+//        }
+//    }
+
     @objc func presentMenuSheetController() {
         actionsController = ConversationActionController(conversation: conversation, target: self)
         actionsController.presentMenu(from: profileFooterView, showConverationNameInMenuTitle: false)
