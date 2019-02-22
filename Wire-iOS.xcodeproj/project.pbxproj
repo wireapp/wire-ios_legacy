@@ -232,6 +232,7 @@
 		5E53B0DC211AB7AC009C7124 /* AuthenticationInterfaceBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E53B0DB211AB7AC009C7124 /* AuthenticationInterfaceBuilder.swift */; };
 		5E628021221ED0A60039A8AB /* ProfileActionsFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E628020221ED0A60039A8AB /* ProfileActionsFactory.swift */; };
 		5E628025221EEA3B0039A8AB /* ProfileActionsFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E628024221EEA3B0039A8AB /* ProfileActionsFactoryTests.swift */; };
+		5E628028222021970039A8AB /* ProfileFooterViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E628026222021600039A8AB /* ProfileFooterViewTests.swift */; };
 		5E65A79A212FF7CD008BFCC0 /* AuthenticationStateControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E65A799212FF7CD008BFCC0 /* AuthenticationStateControllerTests.swift */; };
 		5E65A79E21303F97008BFCC0 /* AuthenticationCoordinator+UserChange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E65A79D21303F97008BFCC0 /* AuthenticationCoordinator+UserChange.swift */; };
 		5E65A7A021303FCE008BFCC0 /* AuthenticationCoordinator+CompanyLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E65A79F21303FCE008BFCC0 /* AuthenticationCoordinator+CompanyLogin.swift */; };
@@ -1752,6 +1753,7 @@
 		5E53B0DB211AB7AC009C7124 /* AuthenticationInterfaceBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationInterfaceBuilder.swift; sourceTree = "<group>"; };
 		5E628020221ED0A60039A8AB /* ProfileActionsFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileActionsFactory.swift; sourceTree = "<group>"; };
 		5E628024221EEA3B0039A8AB /* ProfileActionsFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileActionsFactoryTests.swift; sourceTree = "<group>"; };
+		5E628026222021600039A8AB /* ProfileFooterViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileFooterViewTests.swift; sourceTree = "<group>"; };
 		5E65A799212FF7CD008BFCC0 /* AuthenticationStateControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationStateControllerTests.swift; sourceTree = "<group>"; };
 		5E65A79D21303F97008BFCC0 /* AuthenticationCoordinator+UserChange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AuthenticationCoordinator+UserChange.swift"; sourceTree = "<group>"; };
 		5E65A79F21303FCE008BFCC0 /* AuthenticationCoordinator+CompanyLogin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AuthenticationCoordinator+CompanyLogin.swift"; sourceTree = "<group>"; };
@@ -5960,6 +5962,7 @@
 				EF2B255C22098C3D006712CA /* RemoveClientStepViewControllerSnapshotTests.swift */,
 				5EF7BA6A221B272200815625 /* ProfileDetailsViewControllerTests.swift */,
 				5E628024221EEA3B0039A8AB /* ProfileActionsFactoryTests.swift */,
+				5E628026222021600039A8AB /* ProfileFooterViewTests.swift */,
 			);
 			path = "Wire-iOS Tests";
 			sourceTree = "<group>";
@@ -8247,6 +8250,7 @@
 				BFF9446C20F6480C00531BC3 /* ThumbnailCreationTests.swift in Sources */,
 				EF7F74041FCC033D0059C13F /* EmailAdresssValidatorTests.swift in Sources */,
 				EF6251D421392FFE00943708 /* MockTapGestureRecognizer.swift in Sources */,
+				5E628028222021970039A8AB /* ProfileFooterViewTests.swift in Sources */,
 				EF1EA4631FB0937000B53063 /* MockUser+filename.swift in Sources */,
 				162AE74D219DB1BD00581D98 /* ConversationImageMessageTests.swift in Sources */,
 				EF15A7B420BC304A00A045C7 /* SavableImageTests.swift in Sources */,
