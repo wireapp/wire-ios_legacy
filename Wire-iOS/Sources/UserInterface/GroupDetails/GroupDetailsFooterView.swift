@@ -47,7 +47,7 @@ final class GroupDetailsFooterView: ConversationDetailFooterView {
     }
     
     func update(for conversation: ZMConversation) {
-        leftButton.isHidden = ZMUser.selfUser().isGuest(in: conversation)
+        leftButton.isHidden = ZMUser.selfUser()?.has(permissions: .addRemoveConversationMember) == false
         leftButton.isEnabled = conversation.freeParticipantSlots > 0
     }
     
