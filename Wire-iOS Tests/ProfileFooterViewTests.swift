@@ -25,6 +25,30 @@ class ProfileFooterViewTests: ZMSnapshotTestCase {
         super.setUp()
     }
 
+    func testThatItOnlyAllowsEligibleActionsAsKey() {
+        let view = ProfileFooterView()
+
+        // WHEN: the first action is eligible
+        view.configure(with: [.openOneToOne, .archive])
+        XCTAssertEqual(view.leftAction, .openOneToOne)
+        XCTAssertEqual(view.rightActions, [.archive])
+
+        // WHEN: the first action is not eligible
+        view.configure(with: [.archive, .openOneToOne])
+        XCTAssertEqual(view.leftAction, nil)
+        XCTAssertEqual(view.rightActions, [.archive, .openOneToOne])
+
+        // WHEN: the only action is eligible
+        view.configure(with: [.openOneToOne])
+        XCTAssertEqual(view.leftAction, .openOneToOne)
+        XCTAssertEqual(view.rightActions, [])
+
+        // WHEN: the only action is not eligible
+        view.configure(with: [.archive])
+        XCTAssertEqual(view.leftAction, nil)
+        XCTAssertEqual(view.rightActions, [.archive])
+    }
+
     func testWithOneAction() {
         let view = ProfileFooterView()
         view.configure(with: [.openOneToOne])

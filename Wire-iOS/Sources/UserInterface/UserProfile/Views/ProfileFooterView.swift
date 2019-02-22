@@ -58,8 +58,17 @@ class ProfileFooterView: ConversationDetailFooterView {
 
     func configure(with actions: [ProfileAction]) {
         // Separate the last and first actions
-        let leftAction = actions.first
-        let rightActions = Array(actions.dropFirst())
+        var leftAction = actions.first
+        var rightActions: [ProfileAction]
+
+        if leftAction?.isEligibleForKeyAction == true {
+            rightActions = Array(actions.dropFirst())
+        } else {
+            // If the first action is not eligible for key action, display
+            // everything on the right
+            leftAction = nil
+            rightActions = actions
+        }
 
         self.leftAction = leftAction
         self.rightActions = rightActions

@@ -215,12 +215,24 @@ extension ProfileViewController: ProfileFooterViewDelegate {
     // MARK: Remove User
 
     private func presentRemoveUserMenuSheetController(from view: UIView) {
-        actionsController = RemoveUserActionController(conversation: conversation,
-                                                       participant: fullUser(),
-                                                       dismisser: viewControllerDismisser,
-                                                       target: self)
-        
-        actionsController.presentMenu(from: view, showConverationNameInMenuTitle: false)
+        guard let otherUser = self.fullUser() else {
+            return
+        }
+
+        let controller = UIAlertController.remove(otherUser) { [weak self] remove in
+            guard let `self` = self, remove else { return }
+
+            self.conversation.removeOrShowError(participnant: otherUser) { result in
+                switch result {
+                case .success:
+                    self.dismiss(animated: true, completion: nil)
+                case .failure(_):
+                    break
+                }
+            }
+        }
+
+        presentAlert(controller, targetView: view)
     }
 
 }

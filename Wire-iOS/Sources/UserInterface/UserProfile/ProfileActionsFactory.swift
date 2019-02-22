@@ -73,6 +73,21 @@ enum ProfileAction: Equatable {
         }
     }
 
+    /// Whether the action can be used as a key action.
+    var isEligibleForKeyAction: Bool {
+        switch self {
+        case .createGroup: return true
+        case .manageNotifications, .mute: return false
+        case .archive: return false
+        case .deleteContents: return false
+        case .block: return false
+        case .openOneToOne: return true
+        case .removeFromGroup: return false
+        case .connect: return true
+        case .cancelConnectionRequest: return true
+        }
+    }
+
 }
 
 /**
@@ -141,7 +156,7 @@ class ProfileActionsFactory: NSObject {
             actions.append(contentsOf: [notificationAction, .archive, .deleteContents])
 
             // If the viewer is not on the same team as the other user, allow blocking
-            if !viewer.canAccessCompanyInformation(of: user) {
+            if !viewer.canAccessCompanyInformation(of: user) && !user.isWirelessUser {
                 actions.append(.block(isBlocked: false))
             }
 
@@ -171,7 +186,7 @@ class ProfileActionsFactory: NSObject {
             }
 
             // If the user is not from the same team as the other user, allow blocking
-            if user.isConnected && !isOnSameTeam {
+            if user.isConnected && !isOnSameTeam && !user.isWirelessUser {
                 actions.append(.block(isBlocked: false))
             }
 
