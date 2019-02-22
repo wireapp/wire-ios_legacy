@@ -212,7 +212,7 @@ extension ProfileDetailsContentController {
     var useDefaultData: Bool {
         // Set this to true to use the sample extended fields instead of the data
         // saved in the user model.
-        return false
+        return true
     }
     
     var defaultData: [[String: String]] {
