@@ -19,7 +19,7 @@
 import UIKit
 
 protocol GroupDetailsFooterViewDelegate: class {
-    func footerView(_ view: GroupDetailsFooterView, performs action: GroupDetailsFooterView.Action)
+    func footerView(_ view: GroupDetailsFooterView, shouldPerformAction action: GroupDetailsFooterView.Action)
 }
 
 final class GroupDetailsFooterView: ConversationDetailFooterView {
@@ -60,11 +60,11 @@ final class GroupDetailsFooterView: ConversationDetailFooterView {
     }
 
     override func leftButtonTapped(_ sender: IconButton) {
-        delegate?.footerView(self, performs: .invite)
+        delegate?.footerView(self, shouldPerformAction: .invite)
     }
 
     override func rightButtonTapped(_ sender: IconButton) {
-        delegate?.footerView(self, performs: .more)
+        delegate?.footerView(self, shouldPerformAction: .more)
     }
     
 }

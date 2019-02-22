@@ -68,6 +68,11 @@
     return [NSSet setWithArray:self.sortedActiveParticipants];
 }
 
+- (void)setActiveParticipants:(NSSet *)activeParticipants
+{
+    self.sortedActiveParticipants = [activeParticipants allObjects];
+}
+
 - (NSArray *)messages;
 {
     return nil;

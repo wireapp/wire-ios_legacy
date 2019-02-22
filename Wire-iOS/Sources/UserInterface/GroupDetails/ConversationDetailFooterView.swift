@@ -110,15 +110,15 @@ import UIKit
     // MARK: - Events
     
     @objc func setupButtons() {
-        // no-op
+        fatal("Should be overridden in subclasses")
     }
     
     @objc func leftButtonTapped(_ sender: IconButton) {
-        // no-op
+        fatal("Should be overridden in subclasses")
     }
 
     @objc func rightButtonTapped(_ sender: IconButton) {
-        // no-op
+        fatal("Should be overridden in subclasses")
     }
 
 }

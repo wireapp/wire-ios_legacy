@@ -157,7 +157,7 @@ import Cartography
         footerView.update(for: conversation)
     }
     
-    func footerView(_ view: GroupDetailsFooterView, performs action: GroupDetailsFooterView.Action) {
+    func footerView(_ view: GroupDetailsFooterView, shouldPerformAction action: GroupDetailsFooterView.Action) {
         switch action {
         case .invite:
             let addParticipantsViewController = AddParticipantsViewController(conversation: conversation)
