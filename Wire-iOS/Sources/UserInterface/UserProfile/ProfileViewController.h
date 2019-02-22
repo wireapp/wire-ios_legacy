@@ -63,6 +63,10 @@ typedef NS_ENUM(NSInteger, ProfileViewControllerContext) {
 @property (nonatomic, weak, nullable) id<ViewControllerDismisser> viewControllerDismisser;
 @property (nonatomic, nullable) id<UINavigationControllerDelegate> navigationControllerDelegate;
 
+- (void)openOneToOneConversation;
+- (void)bringUpCancelConnectionRequestSheetFromView:(UIView *)targetView;
+- (void)bringUpConversationCreationFlow;
+
 @end
 
 NS_ASSUME_NONNULL_END

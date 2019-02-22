@@ -62,7 +62,7 @@
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     self.tableView.backgroundColor = UIColor.clearColor;
     [ParticipantDeviceCell registerIn:self.tableView];
-    self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 32, 0);
+    self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 88, 0);
     self.tableView.separatorInset = UIEdgeInsetsMake(0, 56, 0, 0);
     [self setupTableHeaderView];
 

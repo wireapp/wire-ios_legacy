@@ -656,6 +656,7 @@
 "participants.section.name.footer" = "Up to %1$d participants can join a group conversation. Video calls work with up to %2$d other people and you.";
 
 // Meta Menu
+"meta.menu.accessibility_more_options_button" = "More";
 "meta.menu.rename" = "Rename";
 "meta.menu.leave" = "Leave Group…";
 "meta.menu.archive" = "Archive";
@@ -664,7 +665,7 @@
 "meta.menu.silence.mute" = "Mute";
 "meta.menu.silence.unmute" = "Unmute";
 "meta.menu.cancel" = "Cancel";
-"meta.menu.cancel_connection_request" = "Cancel Request…";
+"meta.menu.cancel_connection_request" = "Cancel Request";
 "meta.menu.mark_unread" = "Mark as Unread";
 "meta.menu.mark_read" = "Mark as Read";
 "shortcut.mark_all_as_read.title" = "Mark All as Read";
@@ -705,7 +706,7 @@
 "profile.remove_dialog_title" = "Remove?";
 "profile.remove_dialog_message" = "%@ won’t be able to send or receive messages in this conversation.";
 "profile.remove_dialog_button_cancel" = "Cancel";
-"profile.remove_dialog_button_remove" = "Remove";
+"profile.remove_dialog_button_remove" = "Remove…";
 
 // Block dialog
 "profile.block_dialog.title" = "Block?";
@@ -737,6 +738,9 @@
 // Unblock button
 "profile.block_button_title" = "Block…";
 "profile.unblock_button_title" = "Unblock…";
+
+"profile.block_button_title_action" = "Block";
+"profile.unblock_button_title_action" = "Unblock";
 
 "profile.cancel_connection_button_title" = "CANCEL REQUEST";
 "profile.connection_request_state.blocked" = "BLOCKED";

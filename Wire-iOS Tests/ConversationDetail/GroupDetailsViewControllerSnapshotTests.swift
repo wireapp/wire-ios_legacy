@@ -83,7 +83,7 @@ final class GroupDetailsViewControllerSnapshotTests: CoreDataSnapshotTestCase {
     func testForActionMenu() {
         teamTest {
             sut = GroupDetailsViewController(conversation: groupConversation)
-            sut.detailsView(GroupDetailsFooterView(), performAction: .more)
+            sut.footerView(GroupDetailsFooterView(), shouldPerformAction: .more)
             verifyAlertController((sut?.actionController?.alertController)!)
         }
     }
@@ -91,7 +91,7 @@ final class GroupDetailsViewControllerSnapshotTests: CoreDataSnapshotTestCase {
     func testForActionMenu_NonTeam() {
         nonTeamTest {
             sut = GroupDetailsViewController(conversation: groupConversation)
-            sut.detailsView(GroupDetailsFooterView(), performAction: .more)
+            sut.footerView(GroupDetailsFooterView(), shouldPerformAction: .more)
             verifyAlertController((sut?.actionController?.alertController)!)
         }
     }

@@ -42,6 +42,7 @@ extension MockUser {
         user.isSelfUser = true
         user.isTeamMember = teamID != nil
         user.teamIdentifier = teamID
+        user.teamRole = teamID != nil ? .member : .none
         user.accentColorValue = .vividRed
         return user
     }
@@ -61,6 +62,7 @@ extension MockUser {
         user.isConnected = true
         user.isTeamMember = teamID != nil
         user.teamIdentifier = teamID
+        user.teamRole = teamID != nil ? .member : .none
         user.accentColorValue = .brightOrange
         return user
     }

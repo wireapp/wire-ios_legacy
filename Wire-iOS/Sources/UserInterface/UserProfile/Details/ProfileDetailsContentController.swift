@@ -105,11 +105,8 @@ class ProfileDetailsContentController: NSObject, UITableViewDataSource, UITableV
     private func updateContent() {
         switch conversation.conversationType {
         case .group:
-            guard !useDefaultData else {
-                return contents = [.extendedMetadata(defaultData)]
-            }
-
-            if let extendedMetadata = user.extendedMetadata, viewerCanAccessExtendedMetadata, !extendedMetadata.isEmpty {
+            let _extendedMetadata: [[String: String]]? = useDefaultData ? defaultData : user.extendedMetadata
+            if let extendedMetadata = _extendedMetadata, viewerCanAccessExtendedMetadata, !extendedMetadata.isEmpty {
                 // If there is extended metadata and the user is allowed to see it, display it.
                 contents = [.extendedMetadata(extendedMetadata)]
             } else {
@@ -119,12 +116,8 @@ class ProfileDetailsContentController: NSObject, UITableViewDataSource, UITableV
             
         case .oneOnOne:
             let readReceiptsEnabled = viewer.readReceiptsEnabled
-            
-            guard !useDefaultData else {
-                return contents = [.extendedMetadata(defaultData), .readReceiptsStatus(enabled: readReceiptsEnabled)]
-            }
-            
-            if let extendedMetadata = user.extendedMetadata, viewerCanAccessExtendedMetadata, !extendedMetadata.isEmpty {
+            let _extendedMetadata: [[String: String]]? = useDefaultData ? defaultData : user.extendedMetadata
+            if let extendedMetadata = _extendedMetadata, viewerCanAccessExtendedMetadata, !extendedMetadata.isEmpty {
                 // If there is extended metadata and the user is allowed to see it, display it and the read receipts status.
                 contents = [.extendedMetadata(extendedMetadata), .readReceiptsStatus(enabled: readReceiptsEnabled)]
             } else {

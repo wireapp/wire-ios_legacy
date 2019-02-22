@@ -16,11 +16,18 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+@class ConversationActionController;
+@class ProfileFooterView;
+@protocol ActionController;
+
 #import "AccentColorProvider.h"
 
 @interface ProfileViewController () <ZMUserObserver>
 
 @property (nonatomic, readonly) ProfileViewControllerContext context;
 @property (nonatomic, readonly) ZMConversation *conversation;
+@property (nonatomic) id<ActionController> actionsController;
+@property (nonatomic) ProfileFooterView *profileFooterView;
+- (ZMUser *)fullUser;
 
 @end

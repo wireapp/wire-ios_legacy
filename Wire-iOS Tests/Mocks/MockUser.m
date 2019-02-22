@@ -130,13 +130,10 @@ static id<UserType> mockSelfUser = nil;
 @synthesize teamRole;
 @synthesize readReceiptsEnabled;
 @synthesize isAccountDeleted;
-@synthesize managedByWire;
-@synthesize extendedMetadata;
 @synthesize teamName;
 
 #pragma mark - ZMBareUserConnection
 
-@synthesize isPendingApprovalByOtherUser = _isPendingApprovalByOtherUser;
 @synthesize isServiceUser;
 
 - (BOOL)conformsToProtocol:(Protocol *)aProtocol
@@ -287,6 +284,25 @@ static id<UserType> mockSelfUser = nil;
     }
     
     return NO;
+}
+
+- (BOOL)canCreateConversation
+{
+    return YES;
+}
+
+- (BOOL)canAddUserToConversation:(ZMConversation * _Nonnull)conversation
+{
+    if (self.isGuestInConversation || !conversation.isSelfAnActiveMember) {
+        return NO;
+    }
+
+    return self.teamRole != TeamRoleNone && self.teamRole != TeamRolePartner;
+}
+
+- (BOOL)canRemoveUserFromConversation:(ZMConversation * _Nonnull)conversation
+{
+    return [self canAddUserToConversation:conversation];
 }
 
 @end

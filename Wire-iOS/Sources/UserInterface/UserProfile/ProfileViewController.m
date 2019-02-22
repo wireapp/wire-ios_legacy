@@ -55,7 +55,6 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
 @end
 
 
-
 @interface ProfileViewController () <ZMUserObserver>
 
 @property (nonatomic) id observerToken;
@@ -105,8 +104,10 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    self.navigationController.delegate = self.navigationControllerDelegate;
+
+    self.profileFooterView = [[ProfileFooterView alloc] init];
+    [self.view addSubview:self.profileFooterView];
+
     self.view.backgroundColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorBarBackground];
     
     if (nil != self.fullUser && nil != [ZMUserSession sharedSession]) {
@@ -117,12 +118,8 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
     [self setupHeader];
     [self setupTabsController];
     [self setupConstraints];
+    [self updateFooterView];
     [self updateShowVerifiedShield];
-}
-
-- (UIInterfaceOrientationMask)supportedInterfaceOrientations
-{
-    return UIInterfaceOrientationMaskPortrait;
 }
 
 - (void)dismissButtonClicked
@@ -171,8 +168,9 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
 - (void)setupConstraints
 {
     [self.usernameDetailsView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeBottom];
-    [self.tabsController.view autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeTop];
     [self.tabsController.view autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.usernameDetailsView];
+    [self.tabsController.view autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeTop];
+    [self.profileFooterView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeTop];
 }
 
 #pragma mark - Header
@@ -230,6 +228,56 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
         [self updateShowVerifiedShield];
     }
 }
+
+#pragma mark - Actions
+
+- (void)bringUpConversationCreationFlow
+{
+    NSSet<ZMUser *> *users = [[NSSet alloc] initWithObjects:[self fullUser], nil];
+    ConversationCreationController *controller = [[ConversationCreationController alloc] initWithPreSelectedParticipants:users];
+    controller.delegate = self;
+    UINavigationController *wrappedController = [controller wrapInNavigationController];
+    wrappedController.modalPresentationStyle = UIModalPresentationFormSheet;
+    [self presentViewController:wrappedController animated:true completion:nil];
+}
+
+- (void)bringUpCancelConnectionRequestSheetFromView:(UIView *)targetView
+{
+    UIAlertController *controller = [UIAlertController cancelConnectionRequestControllerForUser:self.fullUser completion:^(BOOL canceled) {
+        if (!canceled) {
+            [self cancelConnectionRequest];
+        }
+    }];
+
+    [self presentAlert:controller fromTargetView:targetView];
+}
+
+- (void)cancelConnectionRequest
+{
+    [self dismissViewControllerAnimated:YES completion:^{
+        ZMUser *user = [self fullUser];
+        [[ZMUserSession sharedSession] enqueueChanges:^{
+            [user cancelConnectionRequest];
+        }];
+    }];
+}
+
+- (void)openOneToOneConversation
+{
+    if (self.fullUser == nil) {
+        ZMLogError(@"No user to open conversation with");
+        return;
+    }
+    ZMConversation __block *conversation = nil;
+    
+    [[ZMUserSession sharedSession] enqueueChanges:^{
+        conversation = self.fullUser.oneToOneConversation;
+    } completionHandler:^{
+        [self.delegate profileViewController:self wantsToNavigateToConversation:conversation];
+    }];
+}
+
+
 
 #pragma mark - Utilities
 

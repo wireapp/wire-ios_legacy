@@ -28,8 +28,8 @@ enum BlockResult {
     private var localizationKey: String {
         switch self {
         case .cancel: return "profile.block_dialog.button_cancel"
-        case .block(isBlocked: false): return "profile.block_dialog.button_block"
-        case .block(isBlocked: true): return "profile.unblock_button_title"
+        case .block(isBlocked: false): return "profile.block_button_title_action"
+        case .block(isBlocked: true): return "profile.unblock_button_title_action"
         }
     }
     
@@ -42,7 +42,12 @@ enum BlockResult {
         return .init(title: title, style: style) { _ in handler(self) }
     }
     
-    static func title(for user: ZMUser) -> String {
+    static func title(for user: GenericUser) -> String? {
+        // Do not show the title if the user is already blocked and we want to unblock them.
+        if user.isBlocked {
+            return nil
+        }
+
         return "profile.block_dialog.message".localized(args: user.displayName)
     }
     

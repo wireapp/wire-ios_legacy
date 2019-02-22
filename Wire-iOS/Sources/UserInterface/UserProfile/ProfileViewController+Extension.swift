@@ -53,3 +53,186 @@ extension ProfileViewController: ViewControllerDismisser {
         navigationController?.popViewController(animated: true)
     }
 }
+
+// MARK: - Footer View
+
+extension ProfileViewController: ProfileFooterViewDelegate {
+
+    @objc func updateFooterView() {
+        guard let conversation = self.conversation else {
+            profileFooterView.isHidden = true
+            return
+        }
+
+        let factory = ProfileActionsFactory(user: bareUser, viewer: viewer, conversation: conversation)
+        let actions = factory.makeActionsList()
+
+        profileFooterView.delegate = self
+        profileFooterView.isHidden = actions.isEmpty
+        profileFooterView.configure(with: actions)
+        view.bringSubviewToFront(profileFooterView)
+    }
+
+    func footerView(_ footerView: ProfileFooterView, shouldPerformAction action: ProfileAction) {
+        performAction(action, targetView: footerView.leftButton)
+    }
+
+    func footerView(_ footerView: ProfileFooterView, shouldPresentMenuWithActions actions: [ProfileAction]) {
+        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+
+        for action in actions {
+            let sheetAction = UIAlertAction(title: action.buttonText, style: action.isDestructive ? .destructive : .default) { _ in
+                self.performAction(action, targetView: footerView.rightButton)
+            }
+
+            actionSheet.addAction(sheetAction)
+        }
+
+        actionSheet.addAction(.cancel())
+        presentAlert(actionSheet, targetView: footerView.rightButton)
+    }
+
+    func performAction(_ action: ProfileAction, targetView: UIView) {
+        switch action {
+        case .createGroup:
+            bringUpConversationCreationFlow()
+        case .mute(let isMuted):
+            updateMute(enableNotifications: isMuted)
+        case .manageNotifications:
+            presentNotificationsOptions(from: targetView)
+        case .archive:
+            archiveConversation()
+        case .deleteContents:
+            presentDeleteConfirmationPrompt(from: targetView)
+        case .block:
+            presentBlockRequest(from: targetView)
+        case .openOneToOne:
+            openOneToOneConversation()
+        case .removeFromGroup:
+            presentRemoveUserMenuSheetController(from: targetView)
+        case .connect:
+            sendConnectionRequest()
+        case .cancelConnectionRequest:
+            bringUpCancelConnectionRequestSheet(from: targetView)
+        }
+    }
+
+    // MARK: - Helpers
+
+    private func transitionToListAndEnqueue(_ block: @escaping () -> Void) {
+        ZClientViewController.shared()?.transitionToList(animated: true) {
+            ZMUserSession.shared()?.enqueueChanges(block)
+        }
+    }
+
+    /// Presents an alert as a popover if needed.
+    @objc(presentAlert:fromTargetView:)
+    func presentAlert(_ alert: UIAlertController, targetView: UIView) {
+        let buttonFrame = view.convert(targetView.frame, from: targetView.superview).insetBy(dx: 8, dy: 8)
+        alert.popoverPresentationController?.sourceView = targetView
+        alert.popoverPresentationController?.sourceRect = buttonFrame
+        present(alert, animated: true)
+    }
+
+    // MARK: - Action Handlers
+
+    private func archiveConversation() {
+        transitionToListAndEnqueue {
+            self.conversation.isArchived.toggle()
+        }
+    }
+
+    // MARK: Connect
+
+    private func sendConnectionRequest() {
+        guard let user = self.fullUser() else { return }
+        ZMUserSession.shared()?.enqueueChanges {
+            let messageText = "missive.connection_request.default_message".localized(args: user.displayName, self.viewer.name ?? "")
+            user.connect(message: messageText)
+            // update the footer view to display the cancel request button
+            self.updateFooterView()
+        }
+    }
+
+    // MARK: Block
+
+    private func presentBlockRequest(from targetView: UIView) {
+        let controller = UIAlertController(title: BlockResult.title(for: bareUser), message: nil, preferredStyle: .actionSheet)
+        BlockResult.all(isBlocked: bareUser.isBlocked).map { $0.action(handleBlockResult) }.forEach(controller.addAction)
+        presentAlert(controller, targetView: targetView)
+    }
+
+    private func handleBlockResult(_ result: BlockResult) {
+        guard case .block = result else { return }
+        transitionToListAndEnqueue {
+            self.fullUser()?.toggleBlocked()
+        }
+    }
+
+    // MARK: Notifications
+
+    private func updateMute(enableNotifications: Bool) {
+        ZMUserSession.shared()?.enqueueChanges {
+            self.conversation.mutedMessageTypes = enableNotifications ? .none : .all
+            // update the footer view to display the correct mute/unmute button
+            self.updateFooterView()
+        }
+    }
+
+    private func presentNotificationsOptions(from targetView: UIView) {
+        let title = "\(conversation.displayName) • \(NotificationResult.title)"
+        let controller = UIAlertController(title: title, message: nil, preferredStyle: .actionSheet)
+        NotificationResult.allCases.map { $0.action(for: conversation, handler: handleNotificationResult) }.forEach(controller.addAction)
+        presentAlert(controller, targetView: targetView)
+    }
+
+    func handleNotificationResult(_ result: NotificationResult) {
+        if let mutedMessageTypes = result.mutedMessageTypes {
+            ZMUserSession.shared()?.performChanges {
+                self.conversation.mutedMessageTypes = mutedMessageTypes
+            }
+        }
+    }
+
+    // MARK: Delete Contents
+
+    private func presentDeleteConfirmationPrompt(from targetView: UIView) {
+        let controller = UIAlertController(title: DeleteResult.title, message: nil, preferredStyle: .actionSheet)
+        DeleteResult.options(for: conversation) .map { $0.action(handleDeleteResult) }.forEach(controller.addAction)
+        presentAlert(controller, targetView: targetView)
+    }
+
+    func handleDeleteResult(_ result: DeleteResult) {
+        guard case .delete(leave: let leave) = result else { return }
+        transitionToListAndEnqueue {
+            self.conversation.clearMessageHistory()
+            if leave {
+                self.conversation.removeOrShowError(participnant: .selfUser())
+            }
+        }
+    }
+
+    // MARK: Remove User
+
+    private func presentRemoveUserMenuSheetController(from view: UIView) {
+        guard let otherUser = self.fullUser() else {
+            return
+        }
+
+        let controller = UIAlertController.remove(otherUser) { [weak self] remove in
+            guard let `self` = self, remove else { return }
+
+            self.conversation.removeOrShowError(participnant: otherUser) { result in
+                switch result {
+                case .success:
+                    self.dismiss(animated: true, completion: nil)
+                case .failure(_):
+                    break
+                }
+            }
+        }
+
+        presentAlert(controller, targetView: view)
+    }
+
+}
