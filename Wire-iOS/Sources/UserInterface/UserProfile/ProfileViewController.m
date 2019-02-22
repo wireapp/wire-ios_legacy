@@ -117,8 +117,8 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
     [self setupNavigationItems];
     [self setupHeader];
     [self setupTabsController];
-    [self setupFooterView];
     [self setupConstraints];
+    [self updateFooterView];
     [self updateShowVerifiedShield];
 }
 
@@ -169,15 +169,8 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
 {
     [self.usernameDetailsView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeBottom];
     [self.tabsController.view autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.usernameDetailsView];
-   
-    if(self.profileFooterView != nil) {
-        [self.tabsController.view autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:0.0];
-        [self.tabsController.view autoPinEdgeToSuperviewEdge:ALEdgeLeading withInset:0.0];
-        [self.tabsController.view autoPinEdge:ALEdgeBottom toEdge:ALEdgeTop ofView:self.profileFooterView];
-        [self.profileFooterView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeTop];
-    } else {
-        [self.tabsController.view autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeTop];
-    }
+    [self.tabsController.view autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeTop];
+    [self.profileFooterView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeTop];
 }
 
 #pragma mark - Header
@@ -238,88 +231,25 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
 
 #pragma mark - Actions
 
-- (void)presentAddParticipantsViewController
+- (void)bringUpConversationCreationFlow
 {
-    NSSet *selectedUsers = nil;
-    if (nil != self.conversation.connectedUser) {
-        selectedUsers = [NSSet setWithObject:self.conversation.connectedUser];
-    } else {
-        selectedUsers = [NSSet set];
-    }
-    
-    ConversationCreationController *conversationCreationController = [[ConversationCreationController alloc] initWithPreSelectedParticipants:selectedUsers];
-    
-    if ([[[UIScreen mainScreen] traitCollection] horizontalSizeClass] == UIUserInterfaceSizeClassRegular) {
-        [self dismissViewControllerAnimated:YES completion:^{
-            UINavigationController *presentedViewController = [conversationCreationController wrapInNavigationController];
-            
-            presentedViewController.modalPresentationStyle = UIModalPresentationFormSheet;
-            
-            [[ZClientViewController sharedZClientViewController] presentViewController:presentedViewController
-                                                                              animated:YES
-                                                                            completion:nil];
-        }];
-    }
-    else {
-        KeyboardAvoidingViewController *avoiding = [[KeyboardAvoidingViewController alloc] initWithViewController:conversationCreationController];
-        UINavigationController *presentedViewController = [avoiding wrapInNavigationController];
-        
-        presentedViewController.modalPresentationStyle = UIModalPresentationOverCurrentContext;
-        presentedViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-        
-        [self presentViewController:presentedViewController
-                           animated:YES
-                         completion:^{
-                             [UIApplication.sharedApplication wr_updateStatusBarForCurrentControllerAnimated:YES];
-                         }];
-    }
+    NSSet<ZMUser *> *users = [[NSSet alloc] initWithObjects:[self fullUser], nil];
+    ConversationCreationController *controller = [[ConversationCreationController alloc] initWithPreSelectedParticipants:users];
+    controller.delegate = self;
+    UINavigationController *wrappedController = [controller wrapInNavigationController];
+    wrappedController.modalPresentationStyle = UIModalPresentationFormSheet;
+    [self presentViewController:wrappedController animated:true completion:nil];
 }
 
-- (void)bringUpConnectionRequestSheet
-{
-    UIAlertController *controller = [UIAlertController controllerForAcceptingConnectionRequestForUser:self.fullUser completion:^(BOOL accept){
-        if (accept) {
-            [self acceptConnectionRequest];
-        } else {
-            [self cancelConnectionRequest];
-        }
-    }];
-    
-    controller.popoverPresentationController.sourceView = self.view;
-    controller.popoverPresentationController.sourceRect = [self.view convertRect:self.profileFooterView.frame fromView:self.profileFooterView.superview];
-    [self presentViewController:controller animated:YES completion:nil];
-}
-
-- (void)bringUpCancelConnectionRequestSheet
+- (void)bringUpCancelConnectionRequestSheetFromView:(UIView *)targetView
 {
     UIAlertController *controller = [UIAlertController cancelConnectionRequestControllerForUser:self.fullUser completion:^(BOOL canceled) {
         if (!canceled) {
             [self cancelConnectionRequest];
         }
     }];
-    
-    [self presentViewController:controller animated:YES completion:nil];
-}
 
-- (void)acceptConnectionRequest
-{
-    ZMUser *user = [self fullUser];
-    [self dismissViewControllerAnimated:YES completion:^{
-        [[ZMUserSession sharedSession] enqueueChanges:^{
-            [user accept];
-        }];
-    }];
-}
-
-- (void)ignoreConnectionRequest
-{
-    ZMUser *user = [self fullUser];
-    
-    [self dismissViewControllerAnimated:YES completion:^{
-        [[ZMUserSession sharedSession] enqueueChanges:^{
-            [user ignore];
-        }];
-    }];
+    [self presentAlert:controller fromTargetView:targetView];
 }
 
 - (void)cancelConnectionRequest

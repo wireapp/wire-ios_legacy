@@ -58,16 +58,19 @@ extension ProfileViewController: ViewControllerDismisser {
 
 extension ProfileViewController: ProfileFooterViewDelegate {
 
-    @objc func setupFooterView() {
-        let factory = ProfileActionsFactory(user: bareUser, viewer: viewer, conversation: self.conversation)
-        let actions = factory.makeActionsList()
-
-        guard !actions.isEmpty else {
-            return profileFooterView.isHidden = true
+    @objc func updateFooterView() {
+        guard let conversation = self.conversation else {
+            profileFooterView.isHidden = true
+            return
         }
 
+        let factory = ProfileActionsFactory(user: bareUser, viewer: viewer, conversation: conversation)
+        let actions = factory.makeActionsList()
+
         profileFooterView.delegate = self
+        profileFooterView.isHidden = actions.isEmpty
         profileFooterView.configure(with: actions)
+        view.bringSubviewToFront(profileFooterView)
     }
 
     func footerView(_ footerView: ProfileFooterView, shouldPerformAction action: ProfileAction) {
@@ -90,47 +93,134 @@ extension ProfileViewController: ProfileFooterViewDelegate {
     }
 
     func performAction(_ action: ProfileAction, targetView: UIView) {
-        dump(action)
-        // no-op yet
+        switch action {
+        case .createGroup:
+            bringUpConversationCreationFlow()
+        case .mute(let isMuted):
+            updateMute(enableNotifications: isMuted)
+        case .manageNotifications:
+            presentNotificationsOptions(from: targetView)
+        case .archive:
+            archiveConversation()
+        case .deleteContents:
+            presentDeleteConfirmationPrompt(from: targetView)
+        case .block:
+            presentBlockRequest(from: targetView)
+        case .openOneToOne:
+            openOneToOneConversation()
+        case .removeFromGroup:
+            presentRemoveUserMenuSheetController(from: targetView)
+        case .connect:
+            sendConnectionRequest()
+        case .cancelConnectionRequest:
+            bringUpCancelConnectionRequestSheet(from: targetView)
+        }
     }
 
-    private func presentAlert(_ alert: UIAlertController, targetView: UIView) {
+    // MARK: - Helpers
+
+    private func transitionToListAndEnqueue(_ block: @escaping () -> Void) {
+        ZClientViewController.shared()?.transitionToList(animated: true) {
+            ZMUserSession.shared()?.enqueueChanges(block)
+        }
+    }
+
+    /// Presents an alert as a popover if needed.
+    @objc(presentAlert:fromTargetView:)
+    func presentAlert(_ alert: UIAlertController, targetView: UIView) {
         let buttonFrame = view.convert(targetView.frame, from: targetView.superview).insetBy(dx: 8, dy: 8)
         alert.popoverPresentationController?.sourceView = targetView
         alert.popoverPresentationController?.sourceRect = buttonFrame
         present(alert, animated: true)
     }
 
-//    func footerView(_ view: ProfileFooterView, performs action: ProfileFooterView.Action) {
-//        switch action {
-//        case .addPeople:
-//            presentAddParticipantsViewController()
-//        case .presentMenu:
-//            presentMenuSheetController()
-//        case .openConversation:
-//            openOneToOneConversation()
-//        case .removePeople:
-//            presentRemoveUserMenuSheetController()
-//        case .acceptConnectionRequest:
-//            bringUpConnectionRequestSheet()
-//        case .cancelConnectionRequest:
-//            bringUpCancelConnectionRequestSheet()
-//        default:
-//            break
-//        }
-//    }
+    // MARK: - Action Handlers
 
-    @objc func presentMenuSheetController() {
-        actionsController = ConversationActionController(conversation: conversation, target: self)
-        actionsController.presentMenu(from: profileFooterView, showConverationNameInMenuTitle: false)
+    private func archiveConversation() {
+        transitionToListAndEnqueue {
+            self.conversation.isArchived.toggle()
+        }
     }
-    
-    @objc func presentRemoveUserMenuSheetController() {
+
+    // MARK: Connect
+
+    private func sendConnectionRequest() {
+        guard let user = self.fullUser() else { return }
+        ZMUserSession.shared()?.enqueueChanges {
+            let messageText = "missive.connection_request.default_message".localized(args: user.displayName, self.viewer.name ?? "")
+            user.connect(message: messageText)
+            // update the footer view to display the cancel request button
+            self.updateFooterView()
+        }
+    }
+
+    // MARK: Block
+
+    private func presentBlockRequest(from targetView: UIView) {
+        let controller = UIAlertController(title: BlockResult.title(for: bareUser), message: nil, preferredStyle: .actionSheet)
+        BlockResult.all(isBlocked: bareUser.isBlocked).map { $0.action(handleBlockResult) }.forEach(controller.addAction)
+        presentAlert(controller, targetView: targetView)
+    }
+
+    private func handleBlockResult(_ result: BlockResult) {
+        guard case .block = result else { return }
+        transitionToListAndEnqueue {
+            self.fullUser()?.toggleBlocked()
+        }
+    }
+
+    // MARK: Notifications
+
+    private func updateMute(enableNotifications: Bool) {
+        ZMUserSession.shared()?.enqueueChanges {
+            self.conversation.mutedMessageTypes = enableNotifications ? .none : .all
+            // update the footer view to display the correct mute/unmute button
+            self.updateFooterView()
+        }
+    }
+
+    private func presentNotificationsOptions(from targetView: UIView) {
+        let title = "\(conversation.displayName) • \(NotificationResult.title)"
+        let controller = UIAlertController(title: title, message: nil, preferredStyle: .actionSheet)
+        NotificationResult.allCases.map { $0.action(for: conversation, handler: handleNotificationResult) }.forEach(controller.addAction)
+        presentAlert(controller, targetView: targetView)
+    }
+
+    func handleNotificationResult(_ result: NotificationResult) {
+        if let mutedMessageTypes = result.mutedMessageTypes {
+            ZMUserSession.shared()?.performChanges {
+                self.conversation.mutedMessageTypes = mutedMessageTypes
+            }
+        }
+    }
+
+    // MARK: Delete Contents
+
+    private func presentDeleteConfirmationPrompt(from targetView: UIView) {
+        let controller = UIAlertController(title: DeleteResult.title, message: nil, preferredStyle: .actionSheet)
+        DeleteResult.options(for: conversation) .map { $0.action(handleDeleteResult) }.forEach(controller.addAction)
+        presentAlert(controller, targetView: targetView)
+    }
+
+    func handleDeleteResult(_ result: DeleteResult) {
+        guard case .delete(leave: let leave) = result else { return }
+        transitionToListAndEnqueue {
+            self.conversation.clearMessageHistory()
+            if leave {
+                self.conversation.removeOrShowError(participnant: .selfUser())
+            }
+        }
+    }
+
+    // MARK: Remove User
+
+    private func presentRemoveUserMenuSheetController(from view: UIView) {
         actionsController = RemoveUserActionController(conversation: conversation,
                                                        participant: fullUser(),
                                                        dismisser: viewControllerDismisser,
                                                        target: self)
         
-        actionsController.presentMenu(from: profileFooterView, showConverationNameInMenuTitle: false)
+        actionsController.presentMenu(from: view, showConverationNameInMenuTitle: false)
     }
+
 }

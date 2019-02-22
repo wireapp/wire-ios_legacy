@@ -90,7 +90,7 @@ class ProfileDetailsViewController: UIViewController, Themeable {
         tableView.delegate = contentController
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 56
-        tableView.contentInset.bottom = 16
+        tableView.contentInset.bottom = 88
         view.addSubview(tableView)
         
         // Create the profile header

@@ -89,7 +89,7 @@ class ProfileActionsFactoryTests: XCTestCase {
             .manageNotifications,
             .archive,
             .deleteContents,
-            .block
+            .block(isBlocked: false)
         ])
     }
 
@@ -107,7 +107,7 @@ class ProfileActionsFactoryTests: XCTestCase {
             .manageNotifications,
             .archive,
             .deleteContents,
-            .block
+            .block(isBlocked: false)
         ])
     }
 
@@ -160,7 +160,7 @@ class ProfileActionsFactoryTests: XCTestCase {
             .manageNotifications,
             .archive,
             .deleteContents,
-            .block
+            .block(isBlocked: false)
         ])
     }
 
@@ -178,7 +178,7 @@ class ProfileActionsFactoryTests: XCTestCase {
             .manageNotifications,
             .archive,
             .deleteContents,
-            .block
+            .block(isBlocked: false)
         ])
     }
 
@@ -197,10 +197,10 @@ class ProfileActionsFactoryTests: XCTestCase {
         // THEN
         verifyActions(user: otherUser, viewer: guest, conversation: conversation, expectedActions: [
             .createGroup,
-            .manageNotifications,
+            .mute(isMuted: false),
             .archive,
             .deleteContents,
-            .block
+            .block(isBlocked: false)
         ])
     }
 
@@ -218,10 +218,10 @@ class ProfileActionsFactoryTests: XCTestCase {
         // THEN
         verifyActions(user: otherUser, viewer: guest, conversation: conversation, expectedActions: [
             .createGroup,
-            .manageNotifications,
+            .mute(isMuted: false),
             .archive,
             .deleteContents,
-            .block
+            .block(isBlocked: false)
         ])
     }
 
@@ -239,10 +239,28 @@ class ProfileActionsFactoryTests: XCTestCase {
         // THEN
         verifyActions(user: otherUser, viewer: guest, conversation: conversation, expectedActions: [
             .createGroup,
-            .manageNotifications,
+            .mute(isMuted: false),
             .archive,
             .deleteContents,
-            .block
+            .block(isBlocked: false)
+        ])
+    }
+
+    func test_OneToOne_GuestToGuest_Blocked() {
+        // GIVEN
+        let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: nil)
+        otherUser.isGuestInConversation = true
+        otherUser.isBlocked = true
+
+        let guest = MockUser.createConnectedUser(name: "Bob the Guest", inTeam: nil)
+        guest.isGuestInConversation = true
+
+        let conversation = MockConversation.oneOnOneConversation()
+        conversation.activeParticipants = [guest, otherUser]
+
+        // THEN
+        verifyActions(user: otherUser, viewer: guest, conversation: conversation, expectedActions: [
+            .block(isBlocked: true)
         ])
     }
 
@@ -260,10 +278,10 @@ class ProfileActionsFactoryTests: XCTestCase {
         // THEN
         verifyActions(user: otherUser, viewer: guest, conversation: conversation, expectedActions: [
             .createGroup,
-            .manageNotifications,
+            .mute(isMuted: false),
             .archive,
             .deleteContents,
-            .block
+            .block(isBlocked: false)
         ])
     }
 
@@ -312,7 +330,7 @@ class ProfileActionsFactoryTests: XCTestCase {
         verifyActions(user: otherUser, viewer: selfUser, conversation: conversation, expectedActions: [
             .openOneToOne,
             .removeFromGroup,
-            .block
+            .block(isBlocked: false)
         ])
     }
 
@@ -328,7 +346,7 @@ class ProfileActionsFactoryTests: XCTestCase {
         verifyActions(user: otherUser, viewer: selfUser, conversation: conversation, expectedActions: [
             .openOneToOne,
             .removeFromGroup,
-            .block
+            .block(isBlocked: false)
         ])
     }
 
@@ -425,7 +443,7 @@ class ProfileActionsFactoryTests: XCTestCase {
         // THEN
         verifyActions(user: otherUser, viewer: selfUser, conversation: conversation, expectedActions: [
             .openOneToOne,
-            .block
+            .block(isBlocked: false)
         ])
     }
 
@@ -441,7 +459,7 @@ class ProfileActionsFactoryTests: XCTestCase {
         // THEN
         verifyActions(user: otherUser, viewer: selfUser, conversation: conversation, expectedActions: [
             .openOneToOne,
-            .block
+            .block(isBlocked: false)
         ])
     }
 
@@ -510,7 +528,7 @@ class ProfileActionsFactoryTests: XCTestCase {
         // THEN
         verifyActions(user: otherUser, viewer: guest, conversation: conversation, expectedActions: [
             .openOneToOne,
-            .block
+            .block(isBlocked: false)
         ])
     }
 
@@ -546,7 +564,7 @@ class ProfileActionsFactoryTests: XCTestCase {
         // THEN
         verifyActions(user: otherUser, viewer: guest, conversation: conversation, expectedActions: [
             .openOneToOne,
-            .block
+            .block(isBlocked: false)
         ])
     }
 
@@ -564,7 +582,25 @@ class ProfileActionsFactoryTests: XCTestCase {
         // THEN
         verifyActions(user: otherUser, viewer: guest, conversation: conversation, expectedActions: [
             .openOneToOne,
-            .block
+            .block(isBlocked: false)
+        ])
+    }
+
+    func test_Group_GuestToGuest_Blocked() {
+        // GIVEN
+        let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: nil)
+        otherUser.isGuestInConversation = true
+        otherUser.isBlocked = true
+
+        let guest = MockUser.createConnectedUser(name: "Bob the Guest", inTeam: nil)
+        guest.isGuestInConversation = true
+
+        let conversation = MockConversation.groupConversation()
+        conversation.activeParticipants = [guest, otherUser]
+
+        // THEN
+        verifyActions(user: otherUser, viewer: guest, conversation: conversation, expectedActions: [
+            .block(isBlocked: true)
         ])
     }
 
@@ -582,7 +618,7 @@ class ProfileActionsFactoryTests: XCTestCase {
         // THEN
         verifyActions(user: otherUser, viewer: guest, conversation: conversation, expectedActions: [
             .openOneToOne,
-            .block
+            .block(isBlocked: false)
         ])
     }
 

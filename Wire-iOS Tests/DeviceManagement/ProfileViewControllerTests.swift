@@ -19,7 +19,7 @@
 import XCTest
 @testable import Wire
 
-final class ProfileViewControllerTests: ZMSnapshotTestCase {
+class ProfileViewControllerTests: ZMSnapshotTestCase {
 
     var sut: ProfileViewController!
     var mockUser: MockUser!
@@ -28,7 +28,6 @@ final class ProfileViewControllerTests: ZMSnapshotTestCase {
     
     override func setUp() {
         super.setUp()
-        recordMode = true
         teamIdentifier = UUID()
         selfUser = MockUser.createSelfUser(name: "George Johnson", inTeam: teamIdentifier)
         selfUser.handle = "georgejohnson"
@@ -83,50 +82,5 @@ final class ProfileViewControllerTests: ZMSnapshotTestCase {
 
         self.verify(view: navWrapperController.view)
     }
-    
-    // MARK: - Action Menu
 
-    func testForGroupConversationActionMenuShowsRemoveUserItem() {
-        let group = MockConversation.groupConversation()
-        group.activeParticipants = [selfUser, mockUser]
-
-        sut = ProfileViewController(user: mockUser, viewer: selfUser,
-                                    conversation: group.convertToRegularConversation(), context: .groupConversation)
-
-        sut.loadViewIfNeeded()
-
-        sut.footerView(sut.profileFooterView, performs: .presentMenu)
-        verifyAlertController((sut?.actionsController?.alertController)!)
-    }
-    
-    /// test for 1-to-1 conversation
-    func testForActionMenu() {
-        let conversation = MockConversation.oneOnOneConversation()
-        conversation.activeParticipants = [selfUser, mockUser]
-
-        sut = ProfileViewController(user: mockUser, viewer: selfUser,
-                                    conversation: conversation.convertToRegularConversation(), context: .oneToOneConversation)
-
-        sut.loadViewIfNeeded()
-
-        sut.footerView(sut.profileFooterView, performs: .presentMenu)
-        verifyAlertController((sut?.actionsController?.alertController)!)
-    }
-    
-    func testForActionMenu_NoTeam() {
-        selfUser.isTeamMember = false
-        selfUser.teamIdentifier = nil
-
-        let conversation = MockConversation.oneOnOneConversation()
-        conversation.activeParticipants = [selfUser, mockUser]
-
-        sut = ProfileViewController(user: mockUser, viewer: selfUser,
-                                    conversation: conversation.convertToRegularConversation(), context: .oneToOneConversation)
-
-        sut.loadViewIfNeeded()
-
-        sut.presentMenuSheetController()
-        verifyAlertController((sut?.actionsController?.alertController)!)
-    }
- 
 }

@@ -24,10 +24,11 @@ import Foundation
 
 enum ProfileAction: Equatable {
     case createGroup
+    case mute(isMuted: Bool)
     case manageNotifications
     case archive
     case deleteContents
-    case block
+    case block(isBlocked: Bool)
     case openOneToOne
     case removeFromGroup
     case connect
@@ -36,7 +37,7 @@ enum ProfileAction: Equatable {
     /// Whether the action is destructive.
     var isDestructive: Bool {
         switch self {
-        case .deleteContents, .block, .removeFromGroup: return true
+        case .deleteContents, .block(isBlocked: false), .removeFromGroup: return true
         default: return false
         }
     }
@@ -45,10 +46,11 @@ enum ProfileAction: Equatable {
     var buttonText: String {
         switch self {
         case .createGroup: return "profile.create_conversation_button_title".localized
-        case .manageNotifications: return "profile_details.action.notifications".localized
+        case .mute(let isMuted): return isMuted ? "meta.menu.silence.unmute".localized : "meta.menu.silence.mute".localized
+        case .manageNotifications: return "meta.menu.configure_notifications".localized
         case .archive: return "meta.menu.archive".localized
-        case .deleteContents: return "profile_details.action.delete".localized
-        case .block: return "profile.block_dialog.button_block".localized
+        case .deleteContents: return "meta.menu.delete".localized
+        case .block(let isBlocked): return isBlocked ? "profile.unblock_button_title".localized : "profile.block_button_title".localized
         case .openOneToOne: return "profile.open_conversation_button_title".localized
         case .removeFromGroup: return "profile.remove_dialog_button_remove".localized
         case .connect: return "profile.connection_request_dialog.button_connect".localized
@@ -60,7 +62,7 @@ enum ProfileAction: Equatable {
     var buttonIcon: ZetaIconType {
         switch self {
         case .createGroup: return .createConversation
-        case .manageNotifications: return .bell
+        case .manageNotifications, .mute: return .bell
         case .archive: return .archive
         case .deleteContents: return .delete
         case .block: return .block
@@ -119,21 +121,28 @@ class ProfileActionsFactory: NSObject {
             return []
         }
 
+        // Do not show any action if the user is blocked
+        if user.isBlocked {
+            return [.block(isBlocked: true)]
+        }
+
         var actions: [ProfileAction] = []
 
         switch conversation.conversationType {
         case .oneOnOne:
+
             // All viewers except partners can start conversations
             if viewer.teamRole != .partner {
                 actions.append(.createGroup)
             }
 
             // Notifications, Archive, Delete Contents if available for every 1:1
-            actions.append(contentsOf: [.manageNotifications, .archive, .deleteContents])
+            let notificationAction: ProfileAction = viewer.isTeamMember ? .manageNotifications : .mute(isMuted: conversation.mutedMessageTypes != .none)
+            actions.append(contentsOf: [notificationAction, .archive, .deleteContents])
 
             // If the viewer is not on the same team as the other user, allow blocking
             if !viewer.canAccessCompanyInformation(of: user) {
-                actions.append(.block)
+                actions.append(.block(isBlocked: false))
             }
 
         case .group:
@@ -163,7 +172,7 @@ class ProfileActionsFactory: NSObject {
 
             // If the user is not from the same team as the other user, allow blocking
             if user.isConnected && !isOnSameTeam {
-                actions.append(.block)
+                actions.append(.block(isBlocked: false))
             }
 
         default:

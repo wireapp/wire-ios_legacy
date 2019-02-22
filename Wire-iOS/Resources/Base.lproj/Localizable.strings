@@ -655,10 +655,8 @@
 "participants.footer.add_title" = "Add Participants";
 "participants.section.name.footer" = "Up to %1$d participants can join a group conversation. Video calls work with up to %2$d other people and you.";
 
-"profile_details.action.notifications" = "Notifications";
-"profile_details.action.delete" = "Delete Content";
-
 // Meta Menu
+"meta.menu.accessibility_more_options_button" = "More";
 "meta.menu.rename" = "Rename";
 "meta.menu.leave" = "Leave Group…";
 "meta.menu.archive" = "Archive";
@@ -740,6 +738,9 @@
 // Unblock button
 "profile.block_button_title" = "Block…";
 "profile.unblock_button_title" = "Unblock…";
+
+"profile.block_button_title_action" = "Block";
+"profile.unblock_button_title_action" = "Unblock";
 
 "profile.cancel_connection_button_title" = "CANCEL REQUEST";
 "profile.connection_request_state.blocked" = "BLOCKED";

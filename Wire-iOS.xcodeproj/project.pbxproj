@@ -231,7 +231,6 @@
 		5E53534421B14A8A0060DB38 /* MessageDetailsCellDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E53534321B14A8A0060DB38 /* MessageDetailsCellDescription.swift */; };
 		5E53B0DC211AB7AC009C7124 /* AuthenticationInterfaceBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E53B0DB211AB7AC009C7124 /* AuthenticationInterfaceBuilder.swift */; };
 		5E628021221ED0A60039A8AB /* ProfileActionsFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E628020221ED0A60039A8AB /* ProfileActionsFactory.swift */; };
-		5E628023221EDB320039A8AB /* _ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E628022221EDB320039A8AB /* _ProfileViewController.swift */; };
 		5E628025221EEA3B0039A8AB /* ProfileActionsFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E628024221EEA3B0039A8AB /* ProfileActionsFactoryTests.swift */; };
 		5E65A79A212FF7CD008BFCC0 /* AuthenticationStateControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E65A799212FF7CD008BFCC0 /* AuthenticationStateControllerTests.swift */; };
 		5E65A79E21303F97008BFCC0 /* AuthenticationCoordinator+UserChange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E65A79D21303F97008BFCC0 /* AuthenticationCoordinator+UserChange.swift */; };
@@ -1752,7 +1751,6 @@
 		5E53B0CD21187469009C7124 /* AuthenticationCoordinatedViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AuthenticationCoordinatedViewController.h; sourceTree = "<group>"; };
 		5E53B0DB211AB7AC009C7124 /* AuthenticationInterfaceBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationInterfaceBuilder.swift; sourceTree = "<group>"; };
 		5E628020221ED0A60039A8AB /* ProfileActionsFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileActionsFactory.swift; sourceTree = "<group>"; };
-		5E628022221EDB320039A8AB /* _ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = _ProfileViewController.swift; sourceTree = "<group>"; };
 		5E628024221EEA3B0039A8AB /* ProfileActionsFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileActionsFactoryTests.swift; sourceTree = "<group>"; };
 		5E65A799212FF7CD008BFCC0 /* AuthenticationStateControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationStateControllerTests.swift; sourceTree = "<group>"; };
 		5E65A79D21303F97008BFCC0 /* AuthenticationCoordinator+UserChange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AuthenticationCoordinator+UserChange.swift"; sourceTree = "<group>"; };
@@ -5756,7 +5754,6 @@
 			isa = PBXGroup;
 			children = (
 				8FC852BE199245760008B66B /* ProfileViewController.h */,
-				5E628022221EDB320039A8AB /* _ProfileViewController.swift */,
 				EF538FE02028AB6600EA4048 /* ProfileViewController+internal.h */,
 				8FC852BF199245760008B66B /* ProfileViewController.m */,
 				EF3CB75421DD157B0030C3E8 /* ProfileViewController+Extension.swift */,
@@ -7981,7 +7978,6 @@
 				DBD990561B39BEDF000ACF94 /* MentionsCollectionView.m in Sources */,
 				871BC25A1D34F8F800DF0793 /* ZoomTransition.m in Sources */,
 				F15650FB21DD20D900210504 /* RawRepresentable+AllValues.swift in Sources */,
-				5E628023221EDB320039A8AB /* _ProfileViewController.swift in Sources */,
 				16C02A0D204D407100811912 /* TopPeopleSectionController.swift in Sources */,
 				EE8E9267202496C2000F4752 /* NSAttributedString+Down.swift in Sources */,
 				16CB8DB91DC0F777000C5F47 /* DefaultNavigationBar.swift in Sources */,
