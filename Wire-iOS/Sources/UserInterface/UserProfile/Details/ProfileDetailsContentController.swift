@@ -151,20 +151,26 @@ class ProfileDetailsContentController: NSObject, UITableViewDataSource, UITableV
             return 0
         }
     }
-    
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let header = SectionTableHeader()
+
         switch contents[section] {
         case .extendedMetadata:
-            return "profile.extended_metadata.header".localized
+            header.titleLabel.text = "profile.extended_metadata.header".localized
+            header.accessibilityIdentifier = "InformationHeader"
         case .readReceiptsStatus(let enabled):
+            header.accessibilityIdentifier = "ReadReceiptsStatusHeader"
             if enabled {
-                return "profile.read_receipts_enabled_memo.header".localized
+                header.titleLabel.text = "profile.read_receipts_enabled_memo.header".localized
             } else {
-                return "profile.read_receipts_disabled_memo.header".localized
+                header.titleLabel.text = "profile.read_receipts_disabled_memo.header".localized
             }
         }
+
+        return header
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch contents[indexPath.section] {
         case .extendedMetadata(let fields):
@@ -178,23 +184,21 @@ class ProfileDetailsContentController: NSObject, UITableViewDataSource, UITableV
             fatalError("We do not create cells for the readReceiptsStatus section.")
         }
     }
-    
-    func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         switch contents[section] {
         case .extendedMetadata:
             return nil
         case .readReceiptsStatus:
-            return "profile.read_receipts_memo.body".localized
+            let footer = SectionTableFooter()
+            footer.titleLabel.text = "profile.read_receipts_memo.body".localized
+            footer.accessibilityIdentifier = "ReadReceiptsStatusFooter"
+            return footer
         }
     }
-    
-    func tableView(_ tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
-        switch contents[section] {
-        case .extendedMetadata:
-            view.accessibilityIdentifier = "InformationFooter"
-        case .readReceiptsStatus:
-            view.accessibilityIdentifier = "ReadReceiptsStatusFooter"
-        }
+
+    func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
+        return false
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -212,7 +216,7 @@ extension ProfileDetailsContentController {
     var useDefaultData: Bool {
         // Set this to true to use the sample extended fields instead of the data
         // saved in the user model.
-        return false
+        return true
     }
     
     var defaultData: [[String: String]] {
