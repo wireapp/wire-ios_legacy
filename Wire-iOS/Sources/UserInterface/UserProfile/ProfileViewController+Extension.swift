@@ -76,7 +76,7 @@ extension ProfileViewController: ProfileFooterViewDelegate {
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 
         for action in actions {
-            let sheetAction = UIAlertAction(title: action.buttonText, style: action.isDestructive ? .destructive : .default) { _ in
+            let sheetAction = UIAlertAction(title: action.buttonText, style: .default) { _ in
                 self.performAction(action, targetView: footerView.rightButton)
             }
 

@@ -34,14 +34,6 @@ enum ProfileAction: Equatable {
     case connect
     case cancelConnectionRequest
 
-    /// Whether the action is destructive.
-    var isDestructive: Bool {
-        switch self {
-        case .deleteContents, .block(isBlocked: false), .removeFromGroup: return true
-        default: return false
-        }
-    }
-
     /// The text of the button for this action.
     var buttonText: String {
         switch self {
