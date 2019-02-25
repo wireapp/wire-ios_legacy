@@ -34,6 +34,8 @@
 "general.service" = "サービス";
 "general.off" = "オフ";
 "general.on" = "オン";
+"general.loading" = "Loading…";
+"general.paste" = "Paste";
 
 // Language like Chinese does not use space to sperate words or sentences.
 "general.space_between_words" = "\U200B";
@@ -229,16 +231,10 @@
 "conversation.status.unsent" = "⚠️ 未送信メッセージ";
 "conversation.status.you" = "あなた";
 "conversation.status.someone" = "誰か";
-"conversation.status.added_multiple" = "追加された人";
 "conversation.status.you_was_added" = "%@はあなたを追加しました";
-"conversation.status.added_users" = "%@は%@を追加しました";
-"conversation.status.joined" = "%@ 参加済";
-"conversation.status.removed_multiple" = "削除された人";
 "conversation.status.you_were_removed" = "あなたは削除されました";
 "conversation.status.you_left" = "あなたは退出しました";
 "conversation.status.started_conversation" = "%@ 会話を始めました";
-"conversation.status.removed_users" = "%@は%@を削除しました";
-"conversation.status.everyone_left" = "全員退出しました";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Compose Entry Point
@@ -1104,9 +1100,13 @@
 "password.guidance.tooshort" = "8 文字以上";
 "password.guidance.toolong" = "文字が多すぎます";
 
+"phone.guidance.invalid" = "Invalid phone number";
+"phone.guidance.tooshort" = "Phone number is too short";
+"phone.guidance.toolong" = "文字が多すぎます";
+
 // Landing screen
 
-"landing.app_name" = "Wire";
+"landing.header" = "Wire. Add your Account.";
 "landing.create_account.title" = "パーソナル";
 "landing.create_account.subtitle" = "アカウントを作成";
 "landing.create_team.title" = "プロ";
@@ -1120,18 +1120,19 @@
 "team.name.subheadline" = "後でいつでも変更することができます。";
 "team.name.textfield.placeholder" = "チーム名";
 "team.name.textfield.accessibility" = "設定するチーム名";
-"team.name.whatiswireforteams" = "ワイヤでのチームとは何ですか？";
+"team.name.whatiswireforteams" = "What is Wire Pro?";
 
 "team.email.headline" = "アカウント";
 "team.email.subheadline" = "業務用メールアドレスを入力してください。";
-"team.email.textfield.placeholder" = "you@yourcompany.com";
-"team.email.textfield.accessibility" = "あなたの会社のメール アドレス";
+"team.email.textfield.placeholder" = "Your company email";
 "team.email.button.learn_more" = "もっと知る";
 
 "team.activation_code.headline" = "メール受信しました。";
+"team.phone_activation_code.headline" = "Verification";
 "team.activation_code.subheadline" = "%@ に送信した認証コードを入力してください";
 "team.activation_code.button.resend" = "コードを再送する";
 "team.activation_code.button.change_email" = "メールアドレス変更";
+"team.activation_code.button.change_phone" = "Change phone number";
 
 "team.full_name.headline" = "あなたの名前";
 "team.full_name.textfield.placeholder" = "フルネーム";
@@ -1142,14 +1143,15 @@
 "team.password.textfield.accessibility" = "最低８文字以上でパスワードを入力してください";
 
 
-"team.email_code.input_field.accessbility_label" = "メールに記載された６桁のコードを入力してください。";
+"verification.code_label" = "Six-digit code. Text field.";
+"verification.code_hint" = "Double tap to enter the code.";
 
 // Invite Team Members
 
 "team.invite.header.title" = "チームを作成します";
 "team.invite.header.subtitle" = "Your Wire team is ready to go. Invite your colleagues as members.";
-"team.invite.textfield.placeholder" = "colleague@yourcompany.com";
-"team.invite.textfield.accesibility" = "同僚を招待するための電子メール アドレスを入力します。";
+"team.invite.textfield.placeholder" = "Colleague's email";
+"team.invite.textfield.accesibility" = "Enter email address for colleague to invite.";
 "team.invite.learn_more.title" = "もっと知る";
 "team.invite.top_bar.skip" = "省略";
 "team.invite.top_bar.done" = "完了";
@@ -1198,6 +1200,9 @@
 "registration.close_phone_invitation_button.email_title" = "メールで登録する";
 "registration.close_phone_invitation_button.phone_title" = "別の携帯電話を使用する";
 
+"registration.register_by_phone" = "携帯電話";
+"registration.register_by_email" = "メール";
+
 "registration.enter_phone_number.title" = "電話番号を編集する";
 "registration.enter_phone_number.placeholder" = "電話番号";
 
@@ -1209,13 +1214,6 @@
 "registration.verify_email.resend.instructions" = "メッセージを取得できませんでしたか?";
 "registration.verify_email.resend.button_title" = "再送信";
 
-"registration.select_picture.subtitle" = "Wire は写真があると素敵です。";
-"registration.select_picture.button_title" = "自分で選ぶ";
-"registration.keep_picture.button_title" = "これにする";
-"registration.camera_action.title" = "写真を撮影する";
-"registration.photo_gallery_action.title" = "写真を選択してください。";
-"registration.cancel_action.title" = "キャンセル";
-
 "registration.no_history.hero" = "このデバイスで Wire を使用するのは初めてです。";
 "registration.no_history.subtitle" = "プライバシー上の理由から、会話の履歴はここに表示されません。";
 "registration.no_history.got_it" = "OK";
@@ -1225,8 +1223,8 @@
 "registration.alert.account_exists.message_phone" = "登録に使用した電話番号は既にアカウントにリンクされています。\n\n別の電話番号を登録するか、このアカウントを持っている場合はログインしてみてください。";
 "registration.alert.account_exists.message_email" = "登録に使用したメールアドレスは既にアカウントにリンクされています。\n\n別のメールアドレスを登録するか、このアカウントを持っている場合はログインしてみてください。";
 "registration.alert.change_email_action" = "Eメールを変更";
-"registration.alert.change_phone_action" = "電話番号を変更";
-"registration.alert.change_signin_action" = "サインイン";
+"registration.alert.change_phone_action" = "Register with Another Number";
+"registration.alert.change_signin_action" = "ログイン";
 
 // Restore History Warning Alert
 "registration.no_history.restore_backup_warning.title" = "リストア履歴";
@@ -1253,6 +1251,9 @@
 "login.sso.alert.message" = "企業用シングルサインオン アクセスコードを入力します。";
 "login.sso.alert.action" = "ログイン";
 "login.sso.alert.text_field.placeholder" = "シングルサインオン アクセスコード";
+
+"login.sso.start_error_title" = "Cannot Start Company Login";
+"login.sso.link_error_message" = "The company login link you clicked is not valid. Please contact your administrator to resolve the issue.";
 
 "login.sso.error.alert.title" = "何か問題があります";
 "login.sso.error.alert.invalid_code.title" = "コードが無効です。";
@@ -1311,13 +1312,14 @@
 "registration.push_access_denied.settings_button.title" = "設定に移動する";
 "registration.push_access_denied.maybe_later_button.title" = "後で";
 
+"registration.personal.title" = "Create an account";
 "registration.signin.title" = "ログイン";
-"registration.signin.too_many_devices.title" = "";
+"registration.signin.too_many_devices.title" = "Too Many Devices";
 "registration.signin.too_many_devices.subtitle" = "このデバイスで Wire を使用するため、他のデバイスを 1 つ削除してください。";
 "registration.signin.too_many_devices.manage_button.title" = "デバイスを管理";
 "registration.signin.too_many_devices.sign_out_button.title" = "ログアウト";
-"registration.signin.email_button.title" = "メール";
-"registration.signin.phone_button.title" = "携帯電話";
+
+"registration.signin.too_many_devices.manage_screen.title" = "Remove a Device";
 
 "registration.signin.alert.password_needed.title" = "パスワードが必要";
 "registration.signin.alert.password_needed.message" = "ログインするためにパスワードを入力してください。";
@@ -1337,6 +1339,15 @@
 "signin.confirm" = "ログイン";
 "signin.company_idp.button.title" = "法人向け";
 
+"signin_logout.subheadline" = "Your session expired. You need to log in again to continue.";
+"signin_logout.email.subheadline" = "Your session expired. Enter your email address and password to continue.";
+"signin_logout.phone.subheadline" = "Your session expired. Enter your phone number to continue.";
+"signin_logout.sso.subheadline" = "Your session expired. Log in with your company account to continue.";
+"signin_logout.sso.buton" = "企業ログイン";
+
+"signin.email.missing_password.subtitle" = "Enter your email address and password to continue.";
+"signin.phone.missing_password.subtitle" = "Enter your phone number to continue.";
+
 "registration.phone_country" = "国";
 "registration.phone_code" = "国コード";
 "registration.phone_country.hint" = "ダブルタップして他の国を選択します。";
@@ -1348,7 +1359,7 @@
 "registration.add_phone_number.hero.paragraph" = "これはあなたが友人を探すことを容易にします。私たちは決して第三者とシェアいません。";
 "registration.add_phone_number.skip_button.title" = "いまは行わない";
 
-"registration.add_email_password.hero.title" = "メールアドレスとパスワードを追加してください。";
+"registration.add_email_password.hero.title" = "Add your email and password";
 "registration.add_email_password.hero.paragraph" = "これにより、複数のデバイスで Wire を使用できます。";
 
 "registration.email_invitation.title" = "招待状";

@@ -20,7 +20,6 @@
 @import Foundation;
 @import WireSyncEngine;
 #import "MockLoader.h"
-#import "MockUserClient.h"
 
 @class MockConversation;
 
@@ -30,7 +29,6 @@
 + (MockUser *)mockSelfUser;
 + (MockUser *)mockServiceUser;
 + (MockUser *)mockUserFor:(ZMUser *)user;
-+ (ZMUser<ZMEditableUser> *)selfUserInUserSession:(ZMUserSession *)session;
 
 + (void)setMockSelfUser:(id<UserType>)newMockUser;
 
@@ -69,7 +67,9 @@
 @property (nonatomic, readwrite) Availability availability;
 @property (nonatomic, readonly) NSSet<UserClient *> * clientsRequiringUserAttention;
 
-- (NSArray<MockUserClient *> *)featureWithUserClients:(NSUInteger)numClients;
+@property (nonatomic, readwrite) BOOL managedByWire;
+@property (nonatomic, readwrite, copy) NSArray<NSDictionary<NSString *, NSString *> *> *extendedMetadata;
+
 - (NSString *)displayNameInConversation:(MockConversation *)conversation;
 - (void)fetchUserClients;
 

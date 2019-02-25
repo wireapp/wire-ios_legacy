@@ -36,16 +36,17 @@ extension UIAlertController {
         }
         alert.addAction(viewAction)
         
-        let cancelAction = UIAlertAction(title: "general.cancel".localized, style: .default) { action in
+        let cancelAction = UIAlertAction(title: "general.cancel".localized, style: .cancel) { action in
             completion(false)
         }
         alert.addAction(cancelAction)
         
-        let acceptAction = UIAlertAction(title: "registration.terms_of_use.accept".localized, style: .cancel) { action in
+        let acceptAction = UIAlertAction(title: "registration.terms_of_use.accept".localized, style: .default) { action in
             completion(true)
         }
         alert.addAction(acceptAction)
-        
+        alert.preferredAction = acceptAction
+
         controller.present(alert, animated: true, completion: nil)
     }
 }

@@ -123,6 +123,10 @@
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
+            argument = "--persist-backend-type"
+            isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
             argument = "-UseAnalytics 1"
             isEnabled = "NO">
          </CommandLineArgument>

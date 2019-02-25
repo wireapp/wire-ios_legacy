@@ -17,10 +17,8 @@
 //
 
 import Foundation
-import Cartography
 
-
-@objcMembers internal final class AppLockView: UIView {
+final class AppLockView: UIView {
     public var onReauthRequested: (()->())?
     
     public let shieldViewContainer = UIView()
@@ -39,7 +37,11 @@ import Cartography
     private var contentCenterConstraint: NSLayoutConstraint!
     private var contentLeadingConstraint: NSLayoutConstraint!
     private var contentTrailingConstraint: NSLayoutConstraint!
-    
+
+    var userInterfaceSizeClass :(UITraitEnvironment) -> UIUserInterfaceSizeClass = {traitEnvironment in
+        return traitEnvironment.traitCollection.horizontalSizeClass
+    }
+
     public var showReauth: Bool = false {
         didSet {
             self.authenticateLabel.isHidden = !showReauth
@@ -56,73 +58,75 @@ import Cartography
         let loadedObjects = UINib(nibName: "LaunchScreen", bundle: nil).instantiate(withOwner: .none, options: .none)
         
         let nibView = loadedObjects.first as! UIView
-        self.shieldViewContainer.addSubview(nibView)
-        constrain(self.shieldViewContainer, nibView) { shieldViewContainer, nibView in
-            nibView.edges == shieldViewContainer.edges
-        }
-        
-        self.addSubview(self.shieldViewContainer)
-        self.addSubview(self.blurView)
+        shieldViewContainer.addSubview(nibView)
+
+        addSubview(shieldViewContainer)
+        addSubview(blurView)
         
         self.authenticateLabel.isHidden = true
         self.authenticateLabel.numberOfLines = 0
         self.authenticateButton.isHidden = true
         
-        self.addSubview(self.contentContainerView)
+        addSubview(contentContainerView)
         
-        self.contentContainerView.addSubview(self.authenticateLabel)
-        self.contentContainerView.addSubview(self.authenticateButton)
+        contentContainerView.addSubview(authenticateLabel)
+        contentContainerView.addSubview(authenticateButton)
         
         self.authenticateLabel.text = "self.settings.privacy_security.lock_cancelled.description".localized
         self.authenticateButton.setTitle("self.settings.privacy_security.lock_cancelled.action".localized, for: .normal)
         self.authenticateButton.addTarget(self, action: #selector(AppLockView.onReauthenticatePressed(_:)), for: .touchUpInside)
-        
-        constrain(self, self.shieldViewContainer, self.blurView) { selfView, shieldViewContainer, blurView in
-            shieldViewContainer.edges == selfView.edges
-            blurView.edges == selfView.edges
-        }
-        
-        constrain(self, self.contentContainerView, self.authenticateLabel, self.authenticateButton) { selfView, contentContainerView, authenticateLabel, authenticateButton in
-            contentContainerView.top == selfView.top
-            contentContainerView.bottom == selfView.bottom
-            
-            self.contentLeadingConstraint = contentContainerView.leading == selfView.leading
-            self.contentTrailingConstraint = contentContainerView.trailing == selfView.trailing
-            
-            self.contentCenterConstraint = contentContainerView.centerX == selfView.centerX
-            self.contentWidthConstraint = contentContainerView.width == 320
-            
-            authenticateLabel.leading == contentContainerView.leading + 24
-            authenticateLabel.trailing == contentContainerView.trailing - 24
-            
-            authenticateButton.top == authenticateLabel.bottom + 24
-            authenticateButton.leading == contentContainerView.leading + 24
-            authenticateButton.trailing == contentContainerView.trailing - 24
-            authenticateButton.bottom == contentContainerView.bottom - 24
-            authenticateButton.height == 40
-        }
-        self.updateConstraintsForSizeClass()
+
+        createConstraints(nibView: nibView)
+
+        toggleConstraints()
+    }
+
+    private func createConstraints(nibView: UIView) {
+
+        [self,
+         nibView,
+         shieldViewContainer,
+         blurView,
+         contentContainerView,
+         authenticateButton,
+         authenticateLabel].forEach(){ $0.translatesAutoresizingMaskIntoConstraints = false }
+
+        nibView.fitInSuperview()
+        shieldViewContainer.fitInSuperview()
+        blurView.fitInSuperview()
+
+        let constraints = contentContainerView.fitInSuperview()
+
+        ///for compact
+        contentLeadingConstraint = constraints[.leading]
+        contentTrailingConstraint = constraints[.trailing]
+
+        ///for regular
+        contentCenterConstraint = contentContainerView.centerXAnchor.constraint(equalTo: centerXAnchor)
+        contentWidthConstraint = contentContainerView.widthAnchor.constraint(equalToConstant: 320)
+
+        authenticateLabel.fitInSuperview(with: EdgeInsets(margin: 24), exclude: [.top, .bottom])
+
+        authenticateButton.fitInSuperview(with: EdgeInsets(margin: 24), exclude: [.top])
+
+
+        NSLayoutConstraint.activate([
+            authenticateButton.heightAnchor.constraint(equalToConstant: 40),
+            authenticateButton.topAnchor.constraint(equalTo: authenticateLabel.bottomAnchor, constant: 24)
+        ])
+
     }
     
     public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-        self.updateConstraintsForSizeClass();
+
+        toggleConstraints()
     }
+
     
-    private func updateConstraintsForSizeClass() {
-        if self.traitCollection.horizontalSizeClass == .compact {
-            self.contentCenterConstraint.isActive = false
-            self.contentWidthConstraint.isActive = false
-            
-            self.contentLeadingConstraint.isActive = true
-            self.contentTrailingConstraint.isActive = true
-        }
-        else {
-            self.contentLeadingConstraint.isActive = false
-            self.contentTrailingConstraint.isActive = false
-            self.contentCenterConstraint.isActive = true
-            self.contentWidthConstraint.isActive = true
-        }
+    func toggleConstraints() {
+        userInterfaceSizeClass(self).toggle(compactConstraints: [contentLeadingConstraint, contentTrailingConstraint],
+               regularConstraints: [contentCenterConstraint, contentWidthConstraint])
     }
     
     required init?(coder aDecoder: NSCoder) {

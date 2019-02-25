@@ -69,6 +69,10 @@ static AppDelegate *sharedAppDelegate = nil;
     NSString *BackendEnvironmentTypeKey = @"ZMBackendEnvironmentType";
     NSString *backendEnvironment = [[NSUserDefaults standardUserDefaults] stringForKey:BackendEnvironmentTypeKey];
     [[NSUserDefaults sharedUserDefaults] setObject:backendEnvironment forKey:BackendEnvironmentTypeKey];
+
+    if (AutomationHelper.sharedHelper.shouldPersistBackendType) {
+        [[NSUserDefaults standardUserDefaults] setObject:backendEnvironment forKey:BackendEnvironmentTypeKey];
+    }
     
     if (backendEnvironment.length == 0 || [backendEnvironment isEqualToString:@"default"]) {
         NSString *defaultBackend = @STRINGIZE(DEFAULT_BACKEND);

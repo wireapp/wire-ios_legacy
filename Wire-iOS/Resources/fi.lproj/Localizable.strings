@@ -34,6 +34,8 @@
 "general.service" = "Service";
 "general.off" = "Pois päältä";
 "general.on" = "On";
+"general.loading" = "Loading…";
+"general.paste" = "Paste";
 
 // Language like Chinese does not use space to sperate words or sentences.
 "general.space_between_words" = " ";
@@ -229,16 +231,10 @@
 "conversation.status.unsent" = "⚠ Lähettämätön viesti";
 "conversation.status.you" = "Sinä";
 "conversation.status.someone" = "Someone";
-"conversation.status.added_multiple" = "Ihmiset lisätty";
 "conversation.status.you_was_added" = "%@ lisäsi sinut";
-"conversation.status.added_users" = "%@ lisäsi %@ n";
-"conversation.status.joined" = "%@ joined";
-"conversation.status.removed_multiple" = "Ihmiset poistettu";
 "conversation.status.you_were_removed" = "Sinut poistettiin";
 "conversation.status.you_left" = "Sinä poistuit";
 "conversation.status.started_conversation" = "%@ aloitti keskustelun";
-"conversation.status.removed_users" = "%@ poisti %@ n";
-"conversation.status.everyone_left" = "Kaikki poistuivat";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Compose Entry Point
@@ -1104,9 +1100,13 @@
 "password.guidance.tooshort" = "Vähintään 8 merkkiä";
 "password.guidance.toolong" = "Liian monta merkkiä";
 
+"phone.guidance.invalid" = "Invalid phone number";
+"phone.guidance.tooshort" = "Phone number is too short";
+"phone.guidance.toolong" = "Liian monta merkkiä";
+
 // Landing screen
 
-"landing.app_name" = "Wire";
+"landing.header" = "Wire. Add your Account.";
 "landing.create_account.title" = "Henkilökohtainen";
 "landing.create_account.subtitle" = "create an account";
 "landing.create_team.title" = "Pro";
@@ -1120,18 +1120,19 @@
 "team.name.subheadline" = "You can always change it later.";
 "team.name.textfield.placeholder" = "team name";
 "team.name.textfield.accessibility" = "Set team name";
-"team.name.whatiswireforteams" = "What is Wire for teams?";
+"team.name.whatiswireforteams" = "What is Wire Pro?";
 
 "team.email.headline" = "Your account";
 "team.email.subheadline" = "Enter your work email address.";
-"team.email.textfield.placeholder" = "you@yourcompany.com";
-"team.email.textfield.accessibility" = "Your company email";
+"team.email.textfield.placeholder" = "Your company email";
 "team.email.button.learn_more" = "Lisätietoja";
 
 "team.activation_code.headline" = "You’ve got mail";
+"team.phone_activation_code.headline" = "Verification";
 "team.activation_code.subheadline" = "Enter the verification code we sent to %@.";
 "team.activation_code.button.resend" = "Resend code";
 "team.activation_code.button.change_email" = "Vaihda sähköpostiosoite";
+"team.activation_code.button.change_phone" = "Change phone number";
 
 "team.full_name.headline" = "Your name";
 "team.full_name.textfield.placeholder" = "Full name";
@@ -1142,14 +1143,15 @@
 "team.password.textfield.accessibility" = "Set password, at least 8 characters";
 
 
-"team.email_code.input_field.accessbility_label" = "Please enter the six-digit code from the email.";
+"verification.code_label" = "Six-digit code. Text field.";
+"verification.code_hint" = "Double tap to enter the code.";
 
 // Invite Team Members
 
 "team.invite.header.title" = "Rakenna tiimisi";
 "team.invite.header.subtitle" = "Your Wire team is ready to go. Invite your colleagues as members.";
-"team.invite.textfield.placeholder" = "colleague@yourcompany.com";
-"team.invite.textfield.accesibility" = "Enter e-mail address for colleague to invite.";
+"team.invite.textfield.placeholder" = "Colleague's email";
+"team.invite.textfield.accesibility" = "Enter email address for colleague to invite.";
 "team.invite.learn_more.title" = "Lue lisää";
 "team.invite.top_bar.skip" = "Skip";
 "team.invite.top_bar.done" = "Valmis";
@@ -1198,6 +1200,9 @@
 "registration.close_phone_invitation_button.email_title" = "Rekisteröidy sähköpostilla";
 "registration.close_phone_invitation_button.phone_title" = "Käytä toista puhelinta";
 
+"registration.register_by_phone" = "Puhelinnumero";
+"registration.register_by_email" = "Sähköposti";
+
 "registration.enter_phone_number.title" = "Muokkaa puhelinnumeroa";
 "registration.enter_phone_number.placeholder" = "Puhelinnumero";
 
@@ -1209,13 +1214,6 @@
 "registration.verify_email.resend.instructions" = "Etkö saanut sähköpostiviestiä?";
 "registration.verify_email.resend.button_title" = "Lähetä uudelleen";
 
-"registration.select_picture.subtitle" = "Wire on niin paljon mukavampi kuvalla.";
-"registration.select_picture.button_title" = "Valitse omasi";
-"registration.keep_picture.button_title" = "Pidä tämä";
-"registration.camera_action.title" = "Ota valokuva";
-"registration.photo_gallery_action.title" = "Valitse valokuva";
-"registration.cancel_action.title" = "Peruuta";
-
 "registration.no_history.hero" = "Käytät Wireä ensimmäistä kertaa tällä laitteella.";
 "registration.no_history.subtitle" = "Tietosuojasyistä keskusteluhistoriasi ei näy täällä.";
 "registration.no_history.got_it" = "OK";
@@ -1225,8 +1223,8 @@
 "registration.alert.account_exists.message_phone" = "The phone number you used to register is already linked to an account.\n\nUse another phone number, or try to log in if you own this account.";
 "registration.alert.account_exists.message_email" = "The email address you used to register is already linked to an account.\n\n Use another email address, or try to log in if you own this account.";
 "registration.alert.change_email_action" = "Change Email";
-"registration.alert.change_phone_action" = "Change Phone";
-"registration.alert.change_signin_action" = "Sign In";
+"registration.alert.change_phone_action" = "Register with Another Number";
+"registration.alert.change_signin_action" = "Kirjaudu sisään";
 
 // Restore History Warning Alert
 "registration.no_history.restore_backup_warning.title" = "Restore history";
@@ -1253,6 +1251,9 @@
 "login.sso.alert.message" = "Enter the company SSO access code.";
 "login.sso.alert.action" = "Kirjaudu sisään";
 "login.sso.alert.text_field.placeholder" = "SSO access code";
+
+"login.sso.start_error_title" = "Cannot Start Company Login";
+"login.sso.link_error_message" = "The company login link you clicked is not valid. Please contact your administrator to resolve the issue.";
 
 "login.sso.error.alert.title" = "Jokin meni pieleen";
 "login.sso.error.alert.invalid_code.title" = "Invalid code.";
@@ -1311,13 +1312,14 @@
 "registration.push_access_denied.settings_button.title" = "Mene Asetuksiin";
 "registration.push_access_denied.maybe_later_button.title" = "Ehkä myöhemmin";
 
+"registration.personal.title" = "Create an account";
 "registration.signin.title" = "Kirjaudu sisään";
-"registration.signin.too_many_devices.title" = "";
+"registration.signin.too_many_devices.title" = "Too Many Devices";
 "registration.signin.too_many_devices.subtitle" = "Poista yksi laitteistasi aloittaaksesi Wiren käytön tässä laiteessa.";
 "registration.signin.too_many_devices.manage_button.title" = "Hallitse laitteita";
 "registration.signin.too_many_devices.sign_out_button.title" = "Kirjaudu ulos";
-"registration.signin.email_button.title" = "Sähköposti";
-"registration.signin.phone_button.title" = "Puhelinnumero";
+
+"registration.signin.too_many_devices.manage_screen.title" = "Remove a Device";
 
 "registration.signin.alert.password_needed.title" = "Password needed";
 "registration.signin.alert.password_needed.message" = "Please enter your Password in order to log in.";
@@ -1337,6 +1339,15 @@
 "signin.confirm" = "Kirjaudu sisään";
 "signin.company_idp.button.title" = "For Companies";
 
+"signin_logout.subheadline" = "Your session expired. You need to log in again to continue.";
+"signin_logout.email.subheadline" = "Your session expired. Enter your email address and password to continue.";
+"signin_logout.phone.subheadline" = "Your session expired. Enter your phone number to continue.";
+"signin_logout.sso.subheadline" = "Your session expired. Log in with your company account to continue.";
+"signin_logout.sso.buton" = "Company Log In";
+
+"signin.email.missing_password.subtitle" = "Enter your email address and password to continue.";
+"signin.phone.missing_password.subtitle" = "Enter your phone number to continue.";
+
 "registration.phone_country" = "Maa";
 "registration.phone_code" = "Maakoodi";
 "registration.phone_country.hint" = "Double tap to select another country.";
@@ -1348,7 +1359,7 @@
 "registration.add_phone_number.hero.paragraph" = "Tämä auttaa meitä löytämään ihmisiä joita saatat tuntea. Emme koskaan jaa sitä.";
 "registration.add_phone_number.skip_button.title" = "Ei nyt";
 
-"registration.add_email_password.hero.title" = "Lisää sähköpostiosoitteesi ja salasanasi.";
+"registration.add_email_password.hero.title" = "Add your email and password";
 "registration.add_email_password.hero.paragraph" = "Tämä mahdollistaa Wiren käytön useilla laitteilla.";
 
 "registration.email_invitation.title" = "Kutsu";

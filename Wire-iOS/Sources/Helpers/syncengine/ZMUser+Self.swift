@@ -18,19 +18,26 @@
 
 import Foundation
 
-extension UITraitEnvironment {
-    public func toggle(compactConstraints: [NSLayoutConstraint],
-                       regularConstraints: [NSLayoutConstraint],
-                       userInterfaceSizeClass: UIUserInterfaceSizeClass) {
-        switch userInterfaceSizeClass {
-        case .regular:
-            compactConstraints.forEach(){$0.isActive = false}
-            regularConstraints.forEach(){$0.isActive = true}
-        case .compact:
-            regularConstraints.forEach(){$0.isActive = false}
-            compactConstraints.forEach(){$0.isActive = true}
-        case .unspecified:
-            break
+typealias EditableUser = ZMUser & ZMEditableUser
+
+protocol SelfUserProvider {
+    static var selfUser: EditableUser { get }
+}
+
+extension ZMUser {
+
+    /// Return self's User object
+    ///
+    /// - Returns: a ZMUser<ZMEditableUser> object for app target, or a MockUser object for test.
+    @objc
+    static func selfUser() -> EditableUser! {
+
+        if let mockUserClass = NSClassFromString("MockUser") as? SelfUserProvider.Type {
+            return mockUserClass.selfUser
+        } else {
+            guard let session = ZMUserSession.shared() else { return nil }
+
+            return ZMUser.selfUser(inUserSession: session)
         }
     }
 }

@@ -34,6 +34,8 @@
 "general.service" = "Service";
 "general.off" = "Fra";
 "general.on" = "Aktiv";
+"general.loading" = "Loading…";
+"general.paste" = "Paste";
 
 // Language like Chinese does not use space to sperate words or sentences.
 "general.space_between_words" = " ";
@@ -229,16 +231,10 @@
 "conversation.status.unsent" = "⚠️ Unsent message";
 "conversation.status.you" = "Dig";
 "conversation.status.someone" = "Someone";
-"conversation.status.added_multiple" = "People added";
 "conversation.status.you_was_added" = "%@ har tilføjet dig";
-"conversation.status.added_users" = "%@ har tilføjet %@";
-"conversation.status.joined" = "%@ joined";
-"conversation.status.removed_multiple" = "People removed";
 "conversation.status.you_were_removed" = "Du blev fjernet";
 "conversation.status.you_left" = "Du forlod";
 "conversation.status.started_conversation" = "%@ started a conversation";
-"conversation.status.removed_users" = "%@ har fjernet %@";
-"conversation.status.everyone_left" = "Alle forlod gruppen";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Compose Entry Point
@@ -1104,9 +1100,13 @@
 "password.guidance.tooshort" = "Mindst 8 tegn";
 "password.guidance.toolong" = "For mange tegn";
 
+"phone.guidance.invalid" = "Invalid phone number";
+"phone.guidance.tooshort" = "Phone number is too short";
+"phone.guidance.toolong" = "For mange tegn";
+
 // Landing screen
 
-"landing.app_name" = "Wire";
+"landing.header" = "Wire. Add your Account.";
 "landing.create_account.title" = "Personligt";
 "landing.create_account.subtitle" = "create an account";
 "landing.create_team.title" = "Pro";
@@ -1120,18 +1120,19 @@
 "team.name.subheadline" = "You can always change it later.";
 "team.name.textfield.placeholder" = "team name";
 "team.name.textfield.accessibility" = "Set team name";
-"team.name.whatiswireforteams" = "What is Wire for teams?";
+"team.name.whatiswireforteams" = "What is Wire Pro?";
 
 "team.email.headline" = "Your account";
 "team.email.subheadline" = "Enter your work email address.";
-"team.email.textfield.placeholder" = "you@yourcompany.com";
-"team.email.textfield.accessibility" = "Your company email";
+"team.email.textfield.placeholder" = "Your company email";
 "team.email.button.learn_more" = "Få flere oplysninger";
 
 "team.activation_code.headline" = "You’ve got mail";
+"team.phone_activation_code.headline" = "Verification";
 "team.activation_code.subheadline" = "Enter the verification code we sent to %@.";
 "team.activation_code.button.resend" = "Resend code";
 "team.activation_code.button.change_email" = "Ændre email";
+"team.activation_code.button.change_phone" = "Change phone number";
 
 "team.full_name.headline" = "Your name";
 "team.full_name.textfield.placeholder" = "Full name";
@@ -1142,14 +1143,15 @@
 "team.password.textfield.accessibility" = "Set password, at least 8 characters";
 
 
-"team.email_code.input_field.accessbility_label" = "Please enter the six-digit code from the email.";
+"verification.code_label" = "Six-digit code. Text field.";
+"verification.code_hint" = "Double tap to enter the code.";
 
 // Invite Team Members
 
 "team.invite.header.title" = "Build your team";
 "team.invite.header.subtitle" = "Your Wire team is ready to go. Invite your colleagues as members.";
-"team.invite.textfield.placeholder" = "colleague@yourcompany.com";
-"team.invite.textfield.accesibility" = "Enter e-mail address for colleague to invite.";
+"team.invite.textfield.placeholder" = "Colleague's email";
+"team.invite.textfield.accesibility" = "Enter email address for colleague to invite.";
 "team.invite.learn_more.title" = "Lær mere";
 "team.invite.top_bar.skip" = "Spring over";
 "team.invite.top_bar.done" = "Færdig";
@@ -1198,6 +1200,9 @@
 "registration.close_phone_invitation_button.email_title" = "Registrer via e-mail";
 "registration.close_phone_invitation_button.phone_title" = "Brug en anden telefon";
 
+"registration.register_by_phone" = "Telefon";
+"registration.register_by_email" = "E-mail";
+
 "registration.enter_phone_number.title" = "Rediger telefonnummer";
 "registration.enter_phone_number.placeholder" = "Telefonnummer";
 
@@ -1209,13 +1214,6 @@
 "registration.verify_email.resend.instructions" = "Fik du ikke beskeden?";
 "registration.verify_email.resend.button_title" = "Gensend";
 
-"registration.select_picture.subtitle" = "Wire er så meget pænere med et billede.";
-"registration.select_picture.button_title" = "Vælg dit eget";
-"registration.keep_picture.button_title" = "Behold denne";
-"registration.camera_action.title" = "Tag foto";
-"registration.photo_gallery_action.title" = "Vælg foto";
-"registration.cancel_action.title" = "Annuller";
-
 "registration.no_history.hero" = "Det er første gang du bruger Wire på denne enhed.";
 "registration.no_history.subtitle" = "Af hensyn til fortrolighed, vil din samtalehistorik ikke vises her.";
 "registration.no_history.got_it" = "OK";
@@ -1225,8 +1223,8 @@
 "registration.alert.account_exists.message_phone" = "The phone number you used to register is already linked to an account.\n\nUse another phone number, or try to log in if you own this account.";
 "registration.alert.account_exists.message_email" = "The email address you used to register is already linked to an account.\n\n Use another email address, or try to log in if you own this account.";
 "registration.alert.change_email_action" = "Change Email";
-"registration.alert.change_phone_action" = "Change Phone";
-"registration.alert.change_signin_action" = "Sign In";
+"registration.alert.change_phone_action" = "Register with Another Number";
+"registration.alert.change_signin_action" = "Log ind";
 
 // Restore History Warning Alert
 "registration.no_history.restore_backup_warning.title" = "Restore history";
@@ -1253,6 +1251,9 @@
 "login.sso.alert.message" = "Enter the company SSO access code.";
 "login.sso.alert.action" = "Log ind";
 "login.sso.alert.text_field.placeholder" = "SSO access code";
+
+"login.sso.start_error_title" = "Cannot Start Company Login";
+"login.sso.link_error_message" = "The company login link you clicked is not valid. Please contact your administrator to resolve the issue.";
 
 "login.sso.error.alert.title" = "Noget gik galt";
 "login.sso.error.alert.invalid_code.title" = "Invalid code.";
@@ -1311,13 +1312,14 @@
 "registration.push_access_denied.settings_button.title" = "Gå til Indstillinger";
 "registration.push_access_denied.maybe_later_button.title" = "Måske senere";
 
+"registration.personal.title" = "Create an account";
 "registration.signin.title" = "Log ind";
-"registration.signin.too_many_devices.title" = "";
+"registration.signin.too_many_devices.title" = "Too Many Devices";
 "registration.signin.too_many_devices.subtitle" = "Fjern en af dine andre enheder for at begynde at bruge Wire med denne enhed.";
 "registration.signin.too_many_devices.manage_button.title" = "Administrer enheder";
 "registration.signin.too_many_devices.sign_out_button.title" = "Log ud";
-"registration.signin.email_button.title" = "E-mail";
-"registration.signin.phone_button.title" = "Telefon";
+
+"registration.signin.too_many_devices.manage_screen.title" = "Remove a Device";
 
 "registration.signin.alert.password_needed.title" = "Password needed";
 "registration.signin.alert.password_needed.message" = "Please enter your Password in order to log in.";
@@ -1337,6 +1339,15 @@
 "signin.confirm" = "Log ind";
 "signin.company_idp.button.title" = "For Companies";
 
+"signin_logout.subheadline" = "Your session expired. You need to log in again to continue.";
+"signin_logout.email.subheadline" = "Your session expired. Enter your email address and password to continue.";
+"signin_logout.phone.subheadline" = "Your session expired. Enter your phone number to continue.";
+"signin_logout.sso.subheadline" = "Your session expired. Log in with your company account to continue.";
+"signin_logout.sso.buton" = "Company Log In";
+
+"signin.email.missing_password.subtitle" = "Enter your email address and password to continue.";
+"signin.phone.missing_password.subtitle" = "Enter your phone number to continue.";
+
 "registration.phone_country" = "Land";
 "registration.phone_code" = "Landekode";
 "registration.phone_country.hint" = "Double tap to select another country.";
@@ -1348,7 +1359,7 @@
 "registration.add_phone_number.hero.paragraph" = "Dette hjælper os med at finde folk du måske kender. Vi deler det aldrig.";
 "registration.add_phone_number.skip_button.title" = "Ikke nu";
 
-"registration.add_email_password.hero.title" = "Tilføj din e-mail og adgangskode.";
+"registration.add_email_password.hero.title" = "Add your email and password";
 "registration.add_email_password.hero.paragraph" = "Dette gør at du kan bruge Wire på flere enheder.";
 
 "registration.email_invitation.title" = "Invitation";

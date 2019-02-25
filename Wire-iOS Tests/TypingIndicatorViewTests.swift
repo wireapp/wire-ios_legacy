@@ -17,9 +17,7 @@
 //
 
 import XCTest
-
 @testable import Wire
-import Cartography
 
 class TypingIndicatorViewTests: ZMSnapshotTestCase {
 
@@ -51,9 +49,8 @@ class TypingIndicatorViewTests: ZMSnapshotTestCase {
     
     func testManyTypingUsers() {
         // limit width to test overflow behaviour
-        constrain(sut) { typingIndicator in
-            typingIndicator.width == 320
-        }
+        sut.translatesAutoresizingMaskIntoConstraints = false
+        sut.widthAnchor.constraint(equalToConstant: 320).isActive = true
         
         sut.typingUsers = Array(MockUser.mockUsers().prefix(5))
         sut.layoutIfNeeded()

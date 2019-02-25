@@ -34,11 +34,20 @@ class AuthenticationNeedsReauthenticationErrorHandler: AuthenticationEventHandle
         guard error.userSessionErrorCode == .needsPasswordToRegisterClient else {
             return nil
         }
-
+        
+        var isSignedOut: Bool = true
+        
+        // If the error comes from the "no history" step, it means that we show
+        // the "password needed" screen, and that we should hide the "your session
+        // is expired" text.
+        if case .noHistory = currentStep {
+            isSignedOut = false
+        }
+        
         let numberOfAccounts = statusProvider?.numberOfAccounts ?? 0
         let credentials = error.userInfo[ZMUserLoginCredentialsKey] as? LoginCredentials
 
-        let nextStep = AuthenticationFlowStep.reauthenticate(credentials: credentials, numberOfAccounts: numberOfAccounts)
+        let nextStep = AuthenticationFlowStep.reauthenticate(credentials: credentials, numberOfAccounts: numberOfAccounts, isSignedOut: isSignedOut)
 
         let alert = AuthenticationCoordinatorAlert(title: "registration.signin.alert.password_needed.title".localized,
                                                    message: "registration.signin.alert.password_needed.message".localized,

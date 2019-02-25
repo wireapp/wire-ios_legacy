@@ -16,9 +16,7 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
 import XCTest
-import Cartography
 @testable import Wire
 
 class ImageMessageViewTests: ZMSnapshotTestCase {
@@ -68,12 +66,10 @@ class ImageMessageViewTests: ZMSnapshotTestCase {
 
 fileprivate extension ImageMessageView {
     func snapshotView() -> UIView {
-        constrain(self) { cell in
-            cell.width == 320
-        }
-        self.layer.speed = 0
-        self.setNeedsLayout()
-        self.layoutIfNeeded()
+        widthAnchor.constraint(equalToConstant: 320).isActive = true
+        layer.speed = 0
+        setNeedsLayout()
+        layoutIfNeeded()
         return self
     }
 }

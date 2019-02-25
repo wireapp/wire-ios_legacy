@@ -17,17 +17,41 @@
 //
 
 @class ConversationActionController;
+@protocol ActionController;
+
+@class UserImageView;
+@class GuestLabelIndicator;
+@class AvailabilityTitleView;
+@class CustomSpacingStackView;
 
 @interface ProfileDetailsViewController ()
 
 @property (nonatomic) UILabel *remainingTimeLabel;
-@property (nonatomic) ConversationActionController *actionsController;
+@property (nonatomic) id<ActionController> actionsController;
 @property (nonatomic) ZMConversation *conversation;
 @property (nonatomic) UIView *footerView;
 @property (nonatomic) UILabel *readReceiptsEnabledLabel;
 @property (nonatomic) ProfileViewControllerContext context;
+@property (nonatomic) UserImageView *userImageView;
+@property (nonatomic) UIView *stackViewContainer;
+@property (nonatomic) GuestLabelIndicator *teamsGuestIndicator;
+@property (nonatomic) BOOL showGuestLabel;
+@property (nonatomic) AvailabilityTitleView *availabilityView;
+@property (nonatomic) CustomSpacingStackView *stackView;
 
 - (ZMUser *)fullUser;
+- (void)performRightButtonAction:(id)sender;
+
+- (void)createUserImageView;
+- (void)createFooter;
+- (void)createGuestIndicator;
+
+- (void)presentAddParticipantsViewController;
+- (void)unblockUser;
+- (void)openOneToOneConversation;
+- (void)bringUpConnectionRequestSheet;
+- (void)sendConnectionRequest;
+- (void)bringUpCancelConnectionRequestSheet;
 
 @end
 

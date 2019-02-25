@@ -21,7 +21,7 @@ import UIKit
 extension AuthenticationCoordinator: TeamMemberInviteViewControllerDelegate {
 
     func teamInviteViewControllerDidFinish(_ controller: TeamMemberInviteViewController) {
-        delegate?.userAuthenticationDidComplete(registered: true)
+        delegate?.userAuthenticationDidComplete(addedAccount: true)
     }
 
 }

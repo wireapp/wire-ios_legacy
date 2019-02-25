@@ -35,7 +35,7 @@ class AuthenticationButtonTapInputHandler: AuthenticationEventHandler {
         // Only handle input during specified steps.
         switch currentStep {
         case .noHistory:
-            return [.completeBackupStep]
+            return [.showLoadingView, .configureNotifications, .completeBackupStep]
         case .clientManagement(let clients, let credentials):
             let nextStep = AuthenticationFlowStep.deleteClient(clients: clients, credentials: credentials)
             return [AuthenticationCoordinatorAction.transition(nextStep, mode: .normal)]

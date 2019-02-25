@@ -40,7 +40,7 @@ class RegistrationSessionAvailableEventHandler: AuthenticationEventHandler {
         }
 
         // Send the post-registration fields and wait for initial sync
-        return [.hideLoadingView, .transition(.pendingInitialSync(next: nextStep), mode: .normal)]
+        return [.transition(.pendingInitialSync(next: nextStep), mode: .normal)]
     }
 
 }

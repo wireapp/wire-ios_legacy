@@ -22,12 +22,15 @@ import Foundation
  * An object holding the configuration of the login prefill.
  */
 
-struct AuthenticationPrefilledCredentials {
+struct AuthenticationPrefilledCredentials: Equatable {
     /// The primary type of credentials held in the value.
     let primaryCredentialsType: AuthenticationCredentialsType
 
     /// The raw credentials value.
     let credentials: LoginCredentials
+    
+    /// Whether the credentials are expired.
+    let isExpired: Bool
 }
 
 class LoginSecondaryView: AuthenticationSecondaryViewDescription {

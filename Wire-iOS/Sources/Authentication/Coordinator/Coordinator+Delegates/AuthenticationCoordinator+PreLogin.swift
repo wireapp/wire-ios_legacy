@@ -33,6 +33,7 @@ extension AuthenticationCoordinator: PreLoginAuthenticationObserver {
 
     /// Called when the backup is ready to be imported.
     func authenticationReadyToImportBackup(existingAccount: Bool) {
+        addedAccount = !existingAccount
         eventResponderChain.handleEvent(ofType: .backupReady(existingAccount))
     }
 

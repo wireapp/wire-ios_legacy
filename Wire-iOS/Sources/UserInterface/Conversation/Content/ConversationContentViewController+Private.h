@@ -53,7 +53,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, nullable) id<ZMUserSessionInterface> session;
 
 - (void)removeHighlightsAndMenu;
-- (NSIndexPath *) willSelectRowAtIndexPath:(NSIndexPath *)indexPath tableView:(UITableView *)tableView;
+- (NSIndexPath * _Nullable)willSelectRowAtIndexPath:(NSIndexPath *)indexPath tableView:(UITableView *)tableView;
 
 @end
 

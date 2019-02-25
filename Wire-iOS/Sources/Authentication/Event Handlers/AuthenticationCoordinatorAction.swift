@@ -96,7 +96,6 @@ struct AuthenticationCoordinatorAlertAction {
 extension AuthenticationCoordinatorAlertAction {
     static let ok: AuthenticationCoordinatorAlertAction = AuthenticationCoordinatorAlertAction(title: "general.ok".localized, coordinatorActions: [])
     static let cancel: AuthenticationCoordinatorAlertAction = AuthenticationCoordinatorAlertAction(title: "general.cancel".localized, coordinatorActions: [], style: .cancel)
-    static let cancelDestructiveAction: AuthenticationCoordinatorAlertAction = AuthenticationCoordinatorAlertAction(title: "general.cancel".localized, coordinatorActions: [], style: .destructive)
 }
 
 /**

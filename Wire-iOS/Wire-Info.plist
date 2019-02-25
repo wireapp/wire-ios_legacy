@@ -58,7 +58,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>wire</string>
+				<string>${WIRE_URL_SCHEME}</string>
 			</array>
 		</dict>
 	</array>

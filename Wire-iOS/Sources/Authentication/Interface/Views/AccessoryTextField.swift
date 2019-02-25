@@ -94,6 +94,7 @@ class AccessoryTextField: UITextField, TextContainer {
     let confirmButton: IconButton = {
         let iconButton = IconButton(style: .circular, variant: .dark)
         iconButton.accessibilityIdentifier = "ConfirmButton"
+        iconButton.accessibilityLabel = "general.next".localized
         iconButton.isEnabled = false
         return iconButton
     }()
@@ -277,7 +278,7 @@ class AccessoryTextField: UITextField, TextContainer {
     @objc func confirmButtonTapped(button: UIButton) {
         validateInput()
     }
-    
+
     func validateInput() {
         let error = textFieldValidator.validate(text: text, kind: kind)
         textFieldValidationDelegate?.validationUpdated(sender: self, error: error)

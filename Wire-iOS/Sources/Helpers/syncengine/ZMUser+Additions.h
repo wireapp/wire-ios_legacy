@@ -32,9 +32,6 @@ FOUNDATION_EXPORT ZMUser *BareUserToUser(id bareUser);
 
 @property (nonatomic, readonly) UIColor *nameAccentColor;
 
-/// Returns the current self user
-+ (instancetype)selfUser;
-
 + (ZMUser<ZMEditableUser> *)editableSelfUser;
 
 + (BOOL)isSelfUserActiveParticipantOfConversation:(ZMConversation *)conversation;

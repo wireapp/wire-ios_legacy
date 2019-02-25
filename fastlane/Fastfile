@@ -44,6 +44,8 @@ platform :ios do
         if ENV["BUILD_NUMBER"].nil?
             UI.user_error! "Pass build number in environment variable BUILD_NUMBER"
         end
+        # Remove debug settings
+        sh "echo '' > ../Wire-iOS/Resources/Settings.bundle/Root.plist"
         build_app(
             scheme: "Wire-iOS",
             export_method: "app-store",

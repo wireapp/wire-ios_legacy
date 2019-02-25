@@ -153,14 +153,11 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
             sessionManager.updateCallNotificationStyleFromSettings()
             sessionManager.useConstantBitRateAudio = Settings.shared().callingConstantBitRate
             sessionManager.start(launchOptions: launchOptions)
-                
+
             self.quickActionsManager = QuickActionsManager(sessionManager: sessionManager,
                                                            application: UIApplication.shared)
                 
             sessionManager.urlHandler.delegate = self
-            if let url = launchOptions[UIApplication.LaunchOptionsKey.url] as? URL {
-                sessionManager.urlHandler.openURL(url, options: [:])
-            }
         }
     }
 
@@ -218,7 +215,7 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
                 break
             }
 
-            let navigationController = UINavigationController(navigationBarClass: TransparentNavigationBar.self, toolbarClass: nil)
+            let navigationController = UINavigationController(navigationBarClass: AuthenticationNavigationBar.self, toolbarClass: nil)
 
             authenticationCoordinator = AuthenticationCoordinator(presenter: navigationController,
                                                                   unauthenticatedSession: UnauthenticatedSession.sharedSession!,
@@ -255,6 +252,7 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
         if let viewController = viewController {
             transition(to: viewController, animated: true) {
                 self.showContentDelegate = viewController as? ShowContentDelegate
+                self.authenticationCoordinator?.completePresentation()
                 completionHandler?()
             }
         } else {
@@ -320,10 +318,8 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
 
     func applicationWillTransition(to appState: AppState) {
 
-        if appState == .authenticated(completedRegistration: false) {
+        if case .authenticated = appState {
             callWindow.callController.transitionToLoggedInSession()
-        } else {
-            overlayWindow.rootViewController = NotificationWindowRootViewController()
         }
 
         let colorScheme = ColorScheme.default
@@ -332,7 +328,7 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
     }
     
     func applicationDidTransition(to appState: AppState) {
-        if appState == .authenticated(completedRegistration: false) {
+        if case .authenticated = appState {
             callWindow.callController.presentCallCurrentlyInProgress()
         }
     }

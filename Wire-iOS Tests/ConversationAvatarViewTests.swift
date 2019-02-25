@@ -16,9 +16,7 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 import XCTest
-import Cartography
 @testable import Wire
 
 private let accentColors: [ZMAccentColor] = [.vividRed, .softPink, .brightYellow, .strongBlue, .strongLimeGreen]
@@ -169,12 +167,17 @@ fileprivate extension UIView {
     func prepareForSnapshots() -> UIView {
         let container = UIView()
         container.addSubview(self)
-
-        constrain(container, self) { container, view in
-            container.height == 24
-            container.width == 24
-            view.edges == container.edges
-        }
+        translatesAutoresizingMaskIntoConstraints = false
+        container.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            container.heightAnchor.constraint(equalToConstant: 24),
+            container.widthAnchor.constraint(equalToConstant: 24),
+            container.topAnchor.constraint(equalTo: topAnchor),
+            container.bottomAnchor.constraint(equalTo: bottomAnchor),
+            container.leadingAnchor.constraint(equalTo: leadingAnchor),
+            container.trailingAnchor.constraint(equalTo: trailingAnchor)
+        ])
 
         container.setNeedsLayout()
         container.layoutIfNeeded()

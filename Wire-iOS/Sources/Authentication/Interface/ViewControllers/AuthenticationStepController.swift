@@ -88,12 +88,6 @@ class AuthenticationStepController: AuthenticationStepViewController {
 
     // MARK: - View Lifecycle
 
-    override var showLoadingView: Bool {
-        didSet {
-            stepDescription.mainView.acceptsInput = !showLoadingView
-        }
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.Team.background
@@ -103,15 +97,11 @@ class AuthenticationStepController: AuthenticationStepViewController {
         updateBackButton()
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        configureObservers()
-    }
-
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        configureObservers()
         showKeyboard()
-        updateKeyboard(with: KeyboardFrameObserver.shared.keyboardFrame)
+        UIAccessibility.post(notification: .screenChanged, argument: headlineLabel)
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -149,6 +139,7 @@ class AuthenticationStepController: AuthenticationStepViewController {
         headlineLabel.translatesAutoresizingMaskIntoConstraints = false
         headlineLabel.numberOfLines = 0
         headlineLabel.lineBreakMode = .byWordWrapping
+        headlineLabel.accessibilityTraits.insert(.header)
         updateHeadlineLabelFont()
 
         if stepDescription.subtext != nil {
@@ -171,7 +162,6 @@ class AuthenticationStepController: AuthenticationStepViewController {
         errorLabel.translatesAutoresizingMaskIntoConstraints = false
 
         mainView = createMainView()
-        
 
         if let secondaryView = stepDescription.secondaryView {
             secondaryViews = secondaryView.views.map { $0.create() }
@@ -278,7 +268,6 @@ class AuthenticationStepController: AuthenticationStepViewController {
         authenticationCoordinator?.executeAction(rightItemAction)
     }
 
-
     // MARK: - Back Button
 
     private func updateBackButton() {
@@ -286,13 +275,8 @@ class AuthenticationStepController: AuthenticationStepViewController {
             return
         }
 
-        let button = IconButton(style: .default)
-        button.setIcon(UIApplication.isLeftToRightLayout ? .backArrow : .forwardArrow, with: .tiny, for: .normal)
-        button.contentHorizontalAlignment = UIApplication.isLeftToRightLayout ? .left : .right
-        button.frame = CGRect(x: 0, y: 0, width: 32, height: 20)
-        button.accessibilityIdentifier = "back"
+        let button = AuthenticationNavigationBar.makeBackButton()
         button.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
-
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: button)
     }
 
@@ -334,7 +318,7 @@ class AuthenticationStepController: AuthenticationStepViewController {
 
         // Calculate the height of the content under the keyboard
         let contentRect = CGRect(x: contentStack.frame.origin.x,
-                                 y: contentStack.frame.origin.y + currentOffset - minimumKeyboardSpacing / 2,
+                                 y: contentStack.frame.origin.y + currentOffset,
                                  width: contentStack.frame.width,
                                  height: contentStack.frame.height + minimumKeyboardSpacing)
 
@@ -348,7 +332,7 @@ class AuthenticationStepController: AuthenticationStepViewController {
 
     func clearInputFields() {
         (mainView as? TextContainer)?.text = nil
-        mainView.becomeFirstResponderIfPossible()
+        showKeyboard()
     }
 
     func showKeyboard() {
@@ -357,6 +341,10 @@ class AuthenticationStepController: AuthenticationStepViewController {
 
     func dismissKeyboard() {
         mainView.resignFirstResponder()
+    }
+
+    override func accessibilityPerformMagicTap() -> Bool {
+        return (mainView as? MagicTappable)?.performMagicTap() == true
     }
 
 }

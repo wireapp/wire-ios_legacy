@@ -430,16 +430,21 @@ extension ZMSnapshotTestCase {
     /// Performs multiple assertions with the given view using the screen sizes of
     /// the common iPhones in Portrait and iPad in Landscape and Portrait.
     /// This method only makes sense for views that will be on presented fullscreen.
-    func verifyMultipleSize(view: UIView, extraLayoutPass: Bool, inSizes sizes: [String:CGSize], configuration: ConfigurationWithDeviceType?,
-                            file: StaticString = #file, line: UInt = #line) {
+    func verifyMultipleSize(view: UIView,
+                            extraLayoutPass: Bool,
+                            inSizes sizes: [String:CGSize],
+                            configuration: ConfigurationWithDeviceType?,
+                            file: StaticString = #file,
+                            line: UInt = #line) {
         for (deviceName, size) in sizes {
             view.frame = CGRect(origin: .zero, size: size)
             if let configuration = configuration {
-                let iPad = size.equalTo(XCTestCase.DeviceSizeIPadLandscape) || size.equalTo(XCTestCase.DeviceSizeIPadPortrait)
+                let isIPad = XCTestCase.tabletScreenSizes.values.contains(size)
                 UIView.performWithoutAnimation({
-                    configuration(view, iPad)
+                    configuration(view, isIPad)
                 })
             }
+
             verify(view: view,
                    extraLayoutPass: extraLayoutPass,
                    deviceName: deviceName,

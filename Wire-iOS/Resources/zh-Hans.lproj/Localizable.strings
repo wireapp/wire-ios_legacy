@@ -34,6 +34,8 @@
 "general.service" = "服务";
 "general.off" = "关闭";
 "general.on" = "开启";
+"general.loading" = "Loading…";
+"general.paste" = "Paste";
 
 // Language like Chinese does not use space to sperate words or sentences.
 "general.space_between_words" = "\U200B";
@@ -229,16 +231,10 @@
 "conversation.status.unsent" = "⚠️ 未发信息";
 "conversation.status.you" = "你";
 "conversation.status.someone" = "Someone";
-"conversation.status.added_multiple" = "联系人已添加";
 "conversation.status.you_was_added" = "%@加了您";
-"conversation.status.added_users" = "%@加了%@";
-"conversation.status.joined" = "%@已加入";
-"conversation.status.removed_multiple" = "联系人已删除";
 "conversation.status.you_were_removed" = "你被删除";
 "conversation.status.you_left" = "您退出了";
 "conversation.status.started_conversation" = "%@开始了对话";
-"conversation.status.removed_users" = "%@移除了%@";
-"conversation.status.everyone_left" = "所有人都已离开";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Compose Entry Point
@@ -1104,9 +1100,13 @@
 "password.guidance.tooshort" = "至少8个字符";
 "password.guidance.toolong" = "超出字符限制";
 
+"phone.guidance.invalid" = "Invalid phone number";
+"phone.guidance.tooshort" = "Phone number is too short";
+"phone.guidance.toolong" = "超出字符限制";
+
 // Landing screen
 
-"landing.app_name" = "Wire";
+"landing.header" = "Wire. Add your Account.";
 "landing.create_account.title" = "个人信息";
 "landing.create_account.subtitle" = "新增帐户";
 "landing.create_team.title" = "Pro";
@@ -1120,18 +1120,19 @@
 "team.name.subheadline" = "您之后可以在变更。";
 "team.name.textfield.placeholder" = "团队名称";
 "team.name.textfield.accessibility" = "设置团队名称";
-"team.name.whatiswireforteams" = "什么是Wire团队？";
+"team.name.whatiswireforteams" = "What is Wire Pro?";
 
 "team.email.headline" = "你的账户";
 "team.email.subheadline" = "请输入您的工作电子邮件地址。";
-"team.email.textfield.placeholder" = "you@yourcompany.com";
-"team.email.textfield.accessibility" = "您公司的电子邮箱";
+"team.email.textfield.placeholder" = "Your company email";
 "team.email.button.learn_more" = "了解更多信息";
 
 "team.activation_code.headline" = "您有新邮件";
+"team.phone_activation_code.headline" = "Verification";
 "team.activation_code.subheadline" = "输入我们发送到 %@ 的验证码";
 "team.activation_code.button.resend" = "重新发送验证码";
 "team.activation_code.button.change_email" = "更改电邮地址";
+"team.activation_code.button.change_phone" = "Change phone number";
 
 "team.full_name.headline" = "您的名字";
 "team.full_name.textfield.placeholder" = "全名";
@@ -1142,14 +1143,15 @@
 "team.password.textfield.accessibility" = "设定密码，最少要有八个字元";
 
 
-"team.email_code.input_field.accessbility_label" = "请输入电子邮件中之六位验证码。";
+"verification.code_label" = "Six-digit code. Text field.";
+"verification.code_hint" = "Double tap to enter the code.";
 
 // Invite Team Members
 
 "team.invite.header.title" = "创建您的团队";
 "team.invite.header.subtitle" = "Your Wire team is ready to go. Invite your colleagues as members.";
-"team.invite.textfield.placeholder" = "colleague@yourcompany.com";
-"team.invite.textfield.accesibility" = "输入要邀请的同事的电子邮件地址。";
+"team.invite.textfield.placeholder" = "Colleague's email";
+"team.invite.textfield.accesibility" = "Enter email address for colleague to invite.";
 "team.invite.learn_more.title" = "更多信息";
 "team.invite.top_bar.skip" = "跳过";
 "team.invite.top_bar.done" = "完成";
@@ -1198,6 +1200,9 @@
 "registration.close_phone_invitation_button.email_title" = "通过电邮箱地址注册";
 "registration.close_phone_invitation_button.phone_title" = "使用其他手机";
 
+"registration.register_by_phone" = "电话";
+"registration.register_by_email" = "电邮箱地址";
+
 "registration.enter_phone_number.title" = "编辑手机号码";
 "registration.enter_phone_number.placeholder" = "手机号码";
 
@@ -1209,13 +1214,6 @@
 "registration.verify_email.resend.instructions" = "没有收到验证邮件？";
 "registration.verify_email.resend.button_title" = "重新发送";
 
-"registration.select_picture.subtitle" = "Wire有了您的头像图片就更酷炫了。";
-"registration.select_picture.button_title" = "自行选择";
-"registration.keep_picture.button_title" = "使用预设名称";
-"registration.camera_action.title" = "拍张照片";
-"registration.photo_gallery_action.title" = "选择照片";
-"registration.cancel_action.title" = "取消";
-
 "registration.no_history.hero" = "这是您第一次在此设备使用Wire。";
 "registration.no_history.subtitle" = "基于隐私考虑，您的历史聊天记录将不会被显示。";
 "registration.no_history.got_it" = "好";
@@ -1225,8 +1223,8 @@
 "registration.alert.account_exists.message_phone" = "The phone number you used to register is already linked to an account.\n\nUse another phone number, or try to log in if you own this account.";
 "registration.alert.account_exists.message_email" = "The email address you used to register is already linked to an account.\n\n Use another email address, or try to log in if you own this account.";
 "registration.alert.change_email_action" = "Change Email";
-"registration.alert.change_phone_action" = "Change Phone";
-"registration.alert.change_signin_action" = "Sign In";
+"registration.alert.change_phone_action" = "Register with Another Number";
+"registration.alert.change_signin_action" = "登录";
 
 // Restore History Warning Alert
 "registration.no_history.restore_backup_warning.title" = "Restore history";
@@ -1253,6 +1251,9 @@
 "login.sso.alert.message" = "Enter the company SSO access code.";
 "login.sso.alert.action" = "登录";
 "login.sso.alert.text_field.placeholder" = "SSO access code";
+
+"login.sso.start_error_title" = "Cannot Start Company Login";
+"login.sso.link_error_message" = "The company login link you clicked is not valid. Please contact your administrator to resolve the issue.";
 
 "login.sso.error.alert.title" = "好像出了点问题。";
 "login.sso.error.alert.invalid_code.title" = "Invalid code.";
@@ -1311,13 +1312,14 @@
 "registration.push_access_denied.settings_button.title" = "打开设置";
 "registration.push_access_denied.maybe_later_button.title" = "稍后再说";
 
+"registration.personal.title" = "Create an account";
 "registration.signin.title" = "登录";
-"registration.signin.too_many_devices.title" = "";
+"registration.signin.too_many_devices.title" = "Too Many Devices";
 "registration.signin.too_many_devices.subtitle" = "使用此设备前请先移除一个您的其他设备。";
 "registration.signin.too_many_devices.manage_button.title" = "设备管理";
 "registration.signin.too_many_devices.sign_out_button.title" = "登出";
-"registration.signin.email_button.title" = "电邮箱地址";
-"registration.signin.phone_button.title" = "电话";
+
+"registration.signin.too_many_devices.manage_screen.title" = "Remove a Device";
 
 "registration.signin.alert.password_needed.title" = "需要输入密码";
 "registration.signin.alert.password_needed.message" = "请输入您的密码以登入。";
@@ -1337,6 +1339,15 @@
 "signin.confirm" = "登录";
 "signin.company_idp.button.title" = "For Companies";
 
+"signin_logout.subheadline" = "Your session expired. You need to log in again to continue.";
+"signin_logout.email.subheadline" = "Your session expired. Enter your email address and password to continue.";
+"signin_logout.phone.subheadline" = "Your session expired. Enter your phone number to continue.";
+"signin_logout.sso.subheadline" = "Your session expired. Log in with your company account to continue.";
+"signin_logout.sso.buton" = "Company Log In";
+
+"signin.email.missing_password.subtitle" = "Enter your email address and password to continue.";
+"signin.phone.missing_password.subtitle" = "Enter your phone number to continue.";
+
 "registration.phone_country" = "国家";
 "registration.phone_code" = "国家代码";
 "registration.phone_country.hint" = "Double tap to select another country.";
@@ -1348,7 +1359,7 @@
 "registration.add_phone_number.hero.paragraph" = "这将帮助我们找到您可能认识的人。我们不会向任何第三方泄漏您的信息。";
 "registration.add_phone_number.skip_button.title" = "先跳过";
 
-"registration.add_email_password.hero.title" = "添加电子邮箱和密码。";
+"registration.add_email_password.hero.title" = "Add your email and password";
 "registration.add_email_password.hero.paragraph" = "这可以让您在多个设备上使用Wire。";
 
 "registration.email_invitation.title" = "邀请";

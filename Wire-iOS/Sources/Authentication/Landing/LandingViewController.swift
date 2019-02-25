@@ -169,6 +169,11 @@ class LandingViewController: AuthenticationStepViewController {
         }
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        UIAccessibility.post(notification: .screenChanged, argument: headerContainerView)
+    }
+
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .default
     }
@@ -272,8 +277,8 @@ class LandingViewController: AuthenticationStepViewController {
         logoView.isAccessibilityElement = false
 
         headerContainerView.isAccessibilityElement = true
-        headerContainerView.accessibilityLabel = "landing.app_name".localized + " " + "landing.title".localized
-        headerContainerView.accessibilityTraits = .header
+        headerContainerView.accessibilityLabel = "landing.header".localized
+        headerContainerView.accessibilityTraits.insert(.header)
         headerContainerView.shouldGroupAccessibilityChildren = true
     }
 

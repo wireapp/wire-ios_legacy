@@ -19,12 +19,6 @@
 
 #import <UIKit/UIKit.h>
 
-
-// Notification to close the open drawers in cells of @c SwipeMenuCollectionCell
-FOUNDATION_EXTERN NSString * const SwipeMenuCollectionCellCloseDrawerNotification;
-// SwipeMenuCollectionCellCloseDrawerNotification userInfo key to suggest which cells should not be closedSee @p mutuallyExclusiveSwipeIdentifier of @c SwipeMenuCollectionCell.
-FOUNDATION_EXTERN NSString * const SwipeMenuCollectionCellIDToCloseKey;
-
 @interface SwipeMenuCollectionCell : UICollectionViewCell
 
 @property (nonatomic, assign) BOOL canOpenDrawer;

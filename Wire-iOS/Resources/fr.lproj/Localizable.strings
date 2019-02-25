@@ -22,7 +22,7 @@
 "general.next" = "Suivant";
 "general.cancel" = "Annuler";
 "general.close" = "Fermer";
-"general.back" = "Annuler";
+"general.back" = "Précédent";
 "general.open_settings" = "Ouvrir les paramètres de Wire";
 "general.edit" = "Modifier";
 "general.done" = "Terminé";
@@ -34,6 +34,8 @@
 "general.service" = "Service";
 "general.off" = "Désactivé";
 "general.on" = "Activé";
+"general.loading" = "Chargement…";
+"general.paste" = "Coller";
 
 // Language like Chinese does not use space to sperate words or sentences.
 "general.space_between_words" = " ";
@@ -229,16 +231,10 @@
 "conversation.status.unsent" = "⚠️ Message non envoyé";
 "conversation.status.you" = "Vous";
 "conversation.status.someone" = "Quelqu’un";
-"conversation.status.added_multiple" = "Personnes ajoutées";
 "conversation.status.you_was_added" = "%@ vous a ajouté";
-"conversation.status.added_users" = "%@ a ajouté %@";
-"conversation.status.joined" = "%@ a rejoint la conversation";
-"conversation.status.removed_multiple" = "Personnes exclues";
 "conversation.status.you_were_removed" = "Vous avez été exclu";
 "conversation.status.you_left" = "Vous êtes parti";
 "conversation.status.started_conversation" = "%@ a commencé une conversation";
-"conversation.status.removed_users" = "%@ a exclu %@";
-"conversation.status.everyone_left" = "Tout le monde est parti";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Compose Entry Point
@@ -1110,7 +1106,7 @@
 
 // Landing screen
 
-"landing.app_name" = "Wire";
+"landing.header" = "Wire. Ajoutez votre compte.";
 "landing.create_account.title" = "Personnel";
 "landing.create_account.subtitle" = "créer un compte";
 "landing.create_team.title" = "Pro";
@@ -1124,12 +1120,11 @@
 "team.name.subheadline" = "Vous pourrez toujours le modifier plus tard.";
 "team.name.textfield.placeholder" = "nom de l'équipe";
 "team.name.textfield.accessibility" = "Définir le nom de l'équipe";
-"team.name.whatiswireforteams" = "Qu'est-ce que Wire pour les équipes ?";
+"team.name.whatiswireforteams" = "Qu'est-ce que Wire Pro ?";
 
 "team.email.headline" = "Votre compte";
 "team.email.subheadline" = "Saisissez votre adresse e-mail professionnelle.";
-"team.email.textfield.placeholder" = "vous@votreentreprise.com";
-"team.email.textfield.accessibility" = "Votre adresse e-mail professionnelle";
+"team.email.textfield.placeholder" = "Votre adresse e-mail pro";
 "team.email.button.learn_more" = "En savoir plus";
 
 "team.activation_code.headline" = "Vous avez du courrier";
@@ -1148,13 +1143,14 @@
 "team.password.textfield.accessibility" = "Définir le mot de passe, au moins 8 caractères";
 
 
-"team.email_code.input_field.accessbility_label" = "Veuillez entrer le code à six chiffres qui se trouve dans l’e-mail.";
+"verification.code_label" = "Code à six chiffres. Champ de texte.";
+"verification.code_hint" = "Appuyez deux fois pour entrer le code.";
 
 // Invite Team Members
 
 "team.invite.header.title" = "Créez votre équipe";
 "team.invite.header.subtitle" = "Votre équipe Wire est prête. Invitez vos collègues à devenir membres.";
-"team.invite.textfield.placeholder" = "quelqun@votre-entreprise.fr";
+"team.invite.textfield.placeholder" = "E-mail d'un collègue";
 "team.invite.textfield.accesibility" = "Entrez l'adresse email de la personne à inviter.";
 "team.invite.learn_more.title" = "En savoir plus";
 "team.invite.top_bar.skip" = "Passer";
@@ -1256,6 +1252,9 @@
 "login.sso.alert.action" = "Se connecter";
 "login.sso.alert.text_field.placeholder" = "Code d’accès SSO";
 
+"login.sso.start_error_title" = "Connexion Entreprise Impossible";
+"login.sso.link_error_message" = "Le lien de connexion de votre entreprise n'est pas valide. Veuillez contacter votre administrateur pour résoudre le problème.";
+
 "login.sso.error.alert.title" = "Une erreur est survenue";
 "login.sso.error.alert.invalid_code.title" = "Code incorrect.";
 "login.sso.error.alert.invalid_code.message" = "Vérifiez le code d'accès SSO de votre entreprise et réessayez.";
@@ -1345,6 +1344,9 @@
 "signin_logout.phone.subheadline" = "Votre session a expiré. Entrez votre numéro de téléphone de continuer.";
 "signin_logout.sso.subheadline" = "Votre session a expiré. Connectez-vous avec votre compte entreprise pour continuer.";
 "signin_logout.sso.buton" = "Connexion avec Entreprise";
+
+"signin.email.missing_password.subtitle" = "Entrez votre adresse email et votre mot de passe pour continuer.";
+"signin.phone.missing_password.subtitle" = "Entrez votre numéro de téléphone pour continuer.";
 
 "registration.phone_country" = "Pays";
 "registration.phone_code" = "Indicatif du pays";

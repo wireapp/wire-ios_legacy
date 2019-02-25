@@ -25,7 +25,7 @@ extension AuthenticationCoordinator: LandingViewControllerDelegate {
             let loginRequest = AuthenticationLoginRequest.email(address: fastloginCredentials.email, password: fastloginCredentials.password)
             executeActions([.showLoadingView, .startLoginFlow(loginRequest)])
         } else {
-            stateController.transition(to: .provideCredentials(.email))
+            stateController.transition(to: .provideCredentials(.email, nil))
         }
     }
 
