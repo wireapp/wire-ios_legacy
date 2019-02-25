@@ -40,7 +40,7 @@ class ProfileDetailsContentController: NSObject, UITableViewDataSource, UITableV
      */
     
     enum Content: Equatable {
-        /// Display extended user metadata from SCIM.
+        /// Display rich profile data from SCIM.
         case richProfile([UserRichProfileField])
         
         /// Display the status of read receipts for a 1:1 conversation.
@@ -93,9 +93,9 @@ class ProfileDetailsContentController: NSObject, UITableViewDataSource, UITableV
     
     // MARK: - Calculating the Content
     
-    /// Whether the viewer can access the extended metadata of the displayed user.
+    /// Whether the viewer can access the rich profile data of the displayed user.
     var viewerCanAccessRichProfile: Bool {
-        return true//viewer.canAccessCompanyInformation(of: user)
+        return viewer.canAccessCompanyInformation(of: user)
     }
     
     /// Starts observing changes in the user profile.
@@ -114,7 +114,7 @@ class ProfileDetailsContentController: NSObject, UITableViewDataSource, UITableV
                 // If there is rich profile data and the user is allowed to see it, display it.
                 contents = [.richProfile(richProfile)]
             } else {
-                // If there is no extended metadata, show nothing.
+                // If there is no rich profile data, show nothing.
                 contents = []
             }
             
@@ -125,7 +125,7 @@ class ProfileDetailsContentController: NSObject, UITableViewDataSource, UITableV
                 // If there is rich profile data and the user is allowed to see it, display it and the read receipts status.
                 contents = [.richProfile(richProfile), .readReceiptsStatus(enabled: readReceiptsEnabled)]
             } else {
-                // If there is no extended metadata, show the read receipts.
+                // If there is no rich profile data, show the read receipts.
                 contents = [.readReceiptsStatus(enabled: readReceiptsEnabled)]
             }
 

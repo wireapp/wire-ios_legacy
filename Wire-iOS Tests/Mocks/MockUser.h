@@ -73,7 +73,7 @@
 @property (nonatomic) NSUUID *teamIdentifier;
 
 @property (nonatomic, readwrite) BOOL managedByWire;
-@property (nonatomic, readwrite, copy) NSArray<NSDictionary<NSString *, NSString *> *> *extendedMetadata;
+@property (nonatomic, readwrite, copy) NSArray<UserRichProfileField *> *richProfile;
 
 - (NSString *)displayNameInConversation:(MockConversation *)conversation;
 - (void)fetchUserClients;

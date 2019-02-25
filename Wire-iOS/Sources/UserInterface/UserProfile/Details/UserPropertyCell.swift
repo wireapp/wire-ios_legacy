@@ -19,7 +19,7 @@
 import UIKit
 
 /**
- * A cell that displays a user property as part of the extended profile metadata.
+ * A cell that displays a user property as part of the rich profile data.
  */
 
 class UserPropertyCell: UITableViewCell, Themeable {

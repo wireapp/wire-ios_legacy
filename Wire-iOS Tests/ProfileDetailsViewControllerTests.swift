@@ -23,23 +23,23 @@ class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
 
     var selfUserTeam: UUID!
     var selfUser: MockUser!
-    var defaultExtendedMetadata: [[String: String]]!
+    var defaultRichProfile: [UserRichProfileField]!
     
     override func setUp() {
         super.setUp()
         selfUserTeam = UUID()
         selfUser = MockUser.createSelfUser(name: "George Johnson", inTeam: selfUserTeam)
         
-        defaultExtendedMetadata = [
-            ["key": "Title", "value": "Chief Design Officer"],
-            ["key": "Entity", "value": "ACME/OBS/EQUANT/CSO/IBO/OEC/SERVICE OP/CS MGT/CSM EEMEA"],
+        defaultRichProfile = [
+            UserRichProfileField(type: "Title", value: "Chief Design Officer"),
+            UserRichProfileField(type: "Entity",  value: "ACME/OBS/EQUANT/CSO/IBO/OEC/SERVICE OP/CS MGT/CSM EEMEA")
         ]
     }
     
     override func tearDown() {
         selfUser = nil
         selfUserTeam = nil
-        defaultExtendedMetadata = nil
+        defaultRichProfile = nil
         super.tearDown()
     }
     
@@ -51,7 +51,7 @@ class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
         // GIVEN
         let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
         otherUser.availability = .busy
-        otherUser.extendedMetadata = defaultExtendedMetadata
+        otherUser.richProfile = defaultRichProfile
 
         selfUser.readReceiptsEnabled = true
 
@@ -61,7 +61,7 @@ class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
         // THEN
         verifyProfile(user: otherUser, viewer: selfUser, conversation: conversation)
         verifyContents(user: otherUser, viewer: selfUser, conversation: conversation, expectedContents: [
-            .extendedMetadata(defaultExtendedMetadata),
+            .richProfile(defaultRichProfile),
             .readReceiptsStatus(enabled: true)
         ])
     }
@@ -70,7 +70,7 @@ class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
         // GIVEN
         let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
         otherUser.availability = .busy
-        otherUser.extendedMetadata = []
+        otherUser.richProfile = []
 
         selfUser.readReceiptsEnabled = true
 
@@ -88,7 +88,7 @@ class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
         // GIVEN
         let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
         otherUser.availability = .busy
-        otherUser.extendedMetadata = defaultExtendedMetadata
+        otherUser.richProfile = defaultRichProfile
         otherUser.teamRole = .partner
 
         selfUser.readReceiptsEnabled = false
@@ -99,7 +99,7 @@ class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
         // THEN
         verifyProfile(user: otherUser, viewer: selfUser, conversation: conversation)
         verifyContents(user: otherUser, viewer: selfUser, conversation: conversation, expectedContents: [
-            .extendedMetadata(defaultExtendedMetadata),
+            .richProfile(defaultRichProfile),
             .readReceiptsStatus(enabled: false)
         ])
     }
@@ -108,7 +108,7 @@ class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
         // GIVEN
         let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
         otherUser.availability = .busy
-        otherUser.extendedMetadata = []
+        otherUser.richProfile = []
         otherUser.teamRole = .partner
 
         selfUser.readReceiptsEnabled = false
@@ -127,7 +127,7 @@ class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
         // GIVEN
         selfUser.availability = .busy
         selfUser.readReceiptsEnabled = true
-        selfUser.extendedMetadata = defaultExtendedMetadata
+        selfUser.richProfile = defaultRichProfile
 
         let conversation = MockConversation.oneOnOneConversation()
         conversation.activeParticipants = [selfUser]
@@ -135,7 +135,7 @@ class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
         // THEN
         verifyProfile(user: selfUser, viewer: selfUser, conversation: conversation)
         verifyContents(user: selfUser, viewer: selfUser, conversation: conversation, expectedContents: [
-            .extendedMetadata(defaultExtendedMetadata),
+            .richProfile(defaultRichProfile),
             .readReceiptsStatus(enabled: true)
         ])
     }
@@ -144,7 +144,7 @@ class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
         // GIVEN
         selfUser.availability = .busy
         selfUser.readReceiptsEnabled = false
-        selfUser.extendedMetadata = nil
+        selfUser.richProfile = nil
 
         let conversation = MockConversation.oneOnOneConversation()
         conversation.activeParticipants = [selfUser]
@@ -162,7 +162,7 @@ class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
 
         let guest = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: nil)
         guest.isGuestInConversation = true
-        guest.extendedMetadata = defaultExtendedMetadata
+        guest.richProfile = defaultRichProfile
         guest.readReceiptsEnabled = true
 
         let conversation = MockConversation.oneOnOneConversation()
@@ -184,7 +184,7 @@ class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
 
         let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
         otherUser.availability = .busy
-        otherUser.extendedMetadata = defaultExtendedMetadata
+        otherUser.richProfile = defaultRichProfile
 
         let conversation = MockConversation.oneOnOneConversation()
         conversation.activeParticipants = [selfUser, otherUser]
@@ -192,7 +192,7 @@ class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
         // THEN
         verifyProfile(user: otherUser, viewer: selfUser, conversation: conversation)
         verifyContents(user: otherUser, viewer: selfUser, conversation: conversation, expectedContents: [
-            .extendedMetadata(defaultExtendedMetadata),
+            .richProfile(defaultRichProfile),
             .readReceiptsStatus(enabled: true)
         ])
     }
@@ -204,7 +204,7 @@ class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
 
         let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
         otherUser.availability = .busy
-        otherUser.extendedMetadata = defaultExtendedMetadata
+        otherUser.richProfile = defaultRichProfile
         otherUser.teamRole = .partner
 
         let conversation = MockConversation.oneOnOneConversation()
@@ -213,7 +213,7 @@ class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
         // THEN
         verifyProfile(user: otherUser, viewer: selfUser, conversation: conversation)
         verifyContents(user: otherUser, viewer: selfUser, conversation: conversation, expectedContents: [
-            .extendedMetadata(defaultExtendedMetadata),
+            .richProfile(defaultRichProfile),
             .readReceiptsStatus(enabled: true)
         ])
     }
@@ -226,7 +226,7 @@ class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
         let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: nil)
         otherUser.isGuestInConversation = true
         otherUser.availability = .busy
-        otherUser.extendedMetadata = defaultExtendedMetadata
+        otherUser.richProfile = defaultRichProfile
 
         let conversation = MockConversation.oneOnOneConversation()
         conversation.activeParticipants = [selfUser, otherUser]
@@ -245,7 +245,7 @@ class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
         let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
         otherUser.availability = .busy
         otherUser.readReceiptsEnabled = true
-        otherUser.extendedMetadata = defaultExtendedMetadata
+        otherUser.richProfile = defaultRichProfile
 
         let guest = MockUser.createConnectedUser(name: "Bob the Guest", inTeam: nil)
         guest.isGuestInConversation = true
@@ -266,7 +266,7 @@ class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
         let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
         otherUser.availability = .busy
         otherUser.readReceiptsEnabled = true
-        otherUser.extendedMetadata = defaultExtendedMetadata
+        otherUser.richProfile = defaultRichProfile
         otherUser.teamRole = .partner
 
         let guest = MockUser.createConnectedUser(name: "Bob the Guest", inTeam: nil)
@@ -288,7 +288,7 @@ class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
         let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
         otherUser.availability = .busy
         otherUser.readReceiptsEnabled = true
-        otherUser.extendedMetadata = defaultExtendedMetadata
+        otherUser.richProfile = defaultRichProfile
         otherUser.isGuestInConversation = true
 
         let guest = MockUser.createConnectedUser(name: "Bob the Guest", inTeam: nil)
@@ -313,7 +313,7 @@ class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
         // GIVEN
         let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
         otherUser.availability = .busy
-        otherUser.extendedMetadata = defaultExtendedMetadata
+        otherUser.richProfile = defaultRichProfile
         
         selfUser.readReceiptsEnabled = true
         
@@ -323,7 +323,7 @@ class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
         // THEN
         verifyProfile(user: otherUser, viewer: selfUser, conversation: group)
         verifyContents(user: otherUser, viewer: selfUser, conversation: group, expectedContents: [
-            .extendedMetadata(defaultExtendedMetadata)
+            .richProfile(defaultRichProfile)
         ])
     }
 
@@ -331,7 +331,7 @@ class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
         // GIVEN
         let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
         otherUser.availability = .busy
-        otherUser.extendedMetadata = []
+        otherUser.richProfile = []
         
         selfUser.readReceiptsEnabled = true
         
@@ -347,7 +347,7 @@ class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
         // GIVEN
         let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
         otherUser.availability = .busy
-        otherUser.extendedMetadata = defaultExtendedMetadata
+        otherUser.richProfile = defaultRichProfile
         otherUser.teamRole = .partner
 
         selfUser.readReceiptsEnabled = true
@@ -358,7 +358,7 @@ class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
         // THEN
         verifyProfile(user: otherUser, viewer: selfUser, conversation: group)
         verifyContents(user: otherUser, viewer: selfUser, conversation: group, expectedContents: [
-            .extendedMetadata(defaultExtendedMetadata)
+            .richProfile(defaultRichProfile)
         ])
     }
 
@@ -366,7 +366,7 @@ class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
         // GIVEN
         let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
         otherUser.availability = .busy
-        otherUser.extendedMetadata = []
+        otherUser.richProfile = []
         otherUser.teamRole = .partner
 
         selfUser.readReceiptsEnabled = true
@@ -383,7 +383,7 @@ class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
         // GIVEN
         selfUser.availability = .busy
         selfUser.readReceiptsEnabled = true
-        selfUser.extendedMetadata = defaultExtendedMetadata
+        selfUser.richProfile = defaultRichProfile
 
         let group = MockConversation.groupConversation()
         group.activeParticipants = [selfUser]
@@ -391,7 +391,7 @@ class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
         // THEN
         verifyProfile(user: selfUser, viewer: selfUser, conversation: group)
         verifyContents(user: selfUser, viewer: selfUser, conversation: group, expectedContents: [
-            .extendedMetadata(defaultExtendedMetadata)
+            .richProfile(defaultRichProfile)
         ])
     }
 
@@ -399,7 +399,7 @@ class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
         // GIVEN
         selfUser.availability = .busy
         selfUser.readReceiptsEnabled = false
-        selfUser.extendedMetadata = nil
+        selfUser.richProfile = nil
 
         let group = MockConversation.groupConversation()
         group.activeParticipants = [selfUser]
@@ -413,7 +413,7 @@ class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
         // GIVEN
         let guest = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: nil)
         guest.isGuestInConversation = true
-        guest.extendedMetadata = defaultExtendedMetadata
+        guest.richProfile = defaultRichProfile
 
         let group = MockConversation.groupConversation()
         group.activeParticipants = [selfUser, guest]
@@ -428,7 +428,7 @@ class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
         let guest = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: nil)
         guest.isGuestInConversation = true
         guest.expiresAfter = 3600
-        guest.extendedMetadata = defaultExtendedMetadata
+        guest.richProfile = defaultRichProfile
 
         let group = MockConversation.groupConversation()
         group.activeParticipants = [selfUser, guest]
@@ -446,7 +446,7 @@ class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
 
         let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
         otherUser.availability = .busy
-        otherUser.extendedMetadata = defaultExtendedMetadata
+        otherUser.richProfile = defaultRichProfile
 
         let group = MockConversation.groupConversation()
         group.activeParticipants = [selfUser, otherUser]
@@ -454,7 +454,7 @@ class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
         // THEN
         verifyProfile(user: otherUser, viewer: selfUser, conversation: group)
         verifyContents(user: otherUser, viewer: selfUser, conversation: group, expectedContents: [
-            .extendedMetadata(defaultExtendedMetadata)
+            .richProfile(defaultRichProfile)
         ])
     }
 
@@ -464,7 +464,7 @@ class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
 
         let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
         otherUser.availability = .busy
-        otherUser.extendedMetadata = defaultExtendedMetadata
+        otherUser.richProfile = defaultRichProfile
         otherUser.teamRole = .partner
 
         let group = MockConversation.groupConversation()
@@ -473,7 +473,7 @@ class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
         // THEN
         verifyProfile(user: otherUser, viewer: selfUser, conversation: group)
         verifyContents(user: otherUser, viewer: selfUser, conversation: group, expectedContents: [
-            .extendedMetadata(defaultExtendedMetadata)
+            .richProfile(defaultRichProfile)
         ])
     }
 
@@ -484,7 +484,7 @@ class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
         let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: nil)
         otherUser.isGuestInConversation = true
         otherUser.availability = .busy
-        otherUser.extendedMetadata = defaultExtendedMetadata
+        otherUser.richProfile = defaultRichProfile
 
         let group = MockConversation.groupConversation()
         group.activeParticipants = [selfUser, otherUser]
@@ -501,7 +501,7 @@ class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
         let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
         otherUser.availability = .busy
         otherUser.readReceiptsEnabled = true
-        otherUser.extendedMetadata = defaultExtendedMetadata
+        otherUser.richProfile = defaultRichProfile
         
         let guest = MockUser.createConnectedUser(name: "Bob the Guest", inTeam: nil)
         guest.isGuestInConversation = true
@@ -519,7 +519,7 @@ class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
         let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
         otherUser.availability = .busy
         otherUser.readReceiptsEnabled = true
-        otherUser.extendedMetadata = defaultExtendedMetadata
+        otherUser.richProfile = defaultRichProfile
         otherUser.teamRole = .partner
 
         let guest = MockUser.createConnectedUser(name: "Bob the Guest", inTeam: nil)
@@ -538,7 +538,7 @@ class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
         let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: nil)
         otherUser.availability = .busy
         otherUser.readReceiptsEnabled = true
-        otherUser.extendedMetadata = defaultExtendedMetadata
+        otherUser.richProfile = defaultRichProfile
         otherUser.isGuestInConversation = true
 
         let guest = MockUser.createConnectedUser(name: "Bob the Guest", inTeam: nil)
@@ -557,7 +557,7 @@ class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
         let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: nil)
         otherUser.availability = .busy
         otherUser.readReceiptsEnabled = true
-        otherUser.extendedMetadata = defaultExtendedMetadata
+        otherUser.richProfile = defaultRichProfile
 
         let guest = MockUser.createConnectedUser(name: "Bob the Guest", inTeam: UUID())
         guest.isGuestInConversation = true
@@ -579,7 +579,7 @@ class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
 
         let guest = MockUser.createConnectedUser(name: "Bob the Guest", inTeam: otherTeamID)
         guest.isGuestInConversation = true
-        guest.extendedMetadata = defaultExtendedMetadata
+        guest.richProfile = defaultRichProfile
         
         let group = MockConversation.groupConversation()
         group.activeParticipants = [otherUser, guest]
@@ -587,7 +587,7 @@ class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
         // THEN
         verifyProfile(user: guest, viewer: otherUser, conversation: group)
         verifyContents(user: guest, viewer: otherUser, conversation: group, expectedContents: [
-            .extendedMetadata(defaultExtendedMetadata)
+            .richProfile(defaultRichProfile)
         ])
     }
 
@@ -599,7 +599,7 @@ class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
         otherUser.isConnected = false
         otherUser.readReceiptsEnabled = true
         otherUser.isGuestInConversation = true
-        otherUser.extendedMetadata = defaultExtendedMetadata
+        otherUser.richProfile = defaultRichProfile
 
         let conversation = MockConversation.groupConversation()
         conversation.activeParticipants = [selfUser, otherUser]
