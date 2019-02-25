@@ -459,7 +459,6 @@
 		871BC0281D34F5D200DF0793 /* EmoticonSubstitutionConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC0251D34F5D200DF0793 /* EmoticonSubstitutionConfiguration.m */; };
 		871BC0581D34F60700DF0793 /* NSAttributedString+Wire.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC0341D34F60700DF0793 /* NSAttributedString+Wire.m */; };
 		871BC0591D34F60700DF0793 /* NSDate+Format.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC0361D34F60700DF0793 /* NSDate+Format.m */; };
-		871BC2241D34F8F800DF0793 /* BottomOverlayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1341D34F8F800DF0793 /* BottomOverlayViewController.m */; };
 		871BC2291D34F8F800DF0793 /* ConfirmAssetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC13D1D34F8F800DF0793 /* ConfirmAssetViewController.m */; };
 		871BC22A1D34F8F800DF0793 /* FullscreenImageViewController+PullToDismiss.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC13F1D34F8F800DF0793 /* FullscreenImageViewController+PullToDismiss.m */; };
 		871BC22B1D34F8F800DF0793 /* FullscreenImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1411D34F8F800DF0793 /* FullscreenImageViewController.m */; };
@@ -1110,6 +1109,7 @@
 		EF218AC920AC76DB004977BF /* UIAlertController+Newsletter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF218AC820AC76DB004977BF /* UIAlertController+Newsletter.swift */; };
 		EF21A06B21305C4000B9120C /* ConversationTitleViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF21A06A21305C4000B9120C /* ConversationTitleViewTests.swift */; };
 		EF21A07121305FD700B9120C /* DeleteMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF21A06F21305F6A00B9120C /* DeleteMessageTests.swift */; };
+		EF21CAA8220C832800D3FEE4 /* ProfileSelfPictureViewController+SetupViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF21CAA6220C832600D3FEE4 /* ProfileSelfPictureViewController+SetupViews.swift */; };
 		EF2388862211A67900331C07 /* UserRight.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2388852211A67900331C07 /* UserRight.swift */; };
 		EF2388882211B8C500331C07 /* UserType+DisplayString.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2388872211B8C500331C07 /* UserType+DisplayString.swift */; };
 		EF24036A20A198CC002813BE /* UIImagePickerController+iPadPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF24036920A198CC002813BE /* UIImagePickerController+iPadPopover.swift */; };
@@ -1274,6 +1274,7 @@
 		EFE043992149CE8D00BC3079 /* InviteContactsViewControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE043972149CE7600BC3079 /* InviteContactsViewControllerSnapshotTests.swift */; };
 		EFE0439B2149D9CA00BC3079 /* ShareContactsViewControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE0439A2149D9C900BC3079 /* ShareContactsViewControllerSnapshotTests.swift */; };
 		EFE806301FE006A7006A0EE7 /* DateFormatterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE8062E1FE005A7006A0EE7 /* DateFormatterTests.swift */; };
+		EFEB2EE0220C7E5500519EDC /* ProfileSelfPictureViewControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFEB2EDF220C7E5500519EDC /* ProfileSelfPictureViewControllerSnapshotTests.swift */; };
 		EFF3DA432097548A007A3358 /* UIImage+MediaAssert.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF3DA422097548A007A3358 /* UIImage+MediaAssert.swift */; };
 		EFF3DA452097587F007A3358 /* UIPasteboard+MediaAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF3DA442097587F007A3358 /* UIPasteboard+MediaAsset.swift */; };
 		EFF6DCB4206BE94600437C71 /* SplitViewController+leftView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF6DCB3206BE94600437C71 /* SplitViewController+leftView.swift */; };
@@ -2005,9 +2006,6 @@
 		871BC0351D34F60700DF0793 /* NSDate+Format.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Format.h"; sourceTree = "<group>"; };
 		871BC0361D34F60700DF0793 /* NSDate+Format.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Format.m"; sourceTree = "<group>"; };
 		871BC06A1D34F64B00DF0793 /* ApplicationLaunchType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApplicationLaunchType.h; sourceTree = "<group>"; };
-		871BC1321D34F8F800DF0793 /* BottomOverlayViewController+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BottomOverlayViewController+Private.h"; sourceTree = "<group>"; };
-		871BC1331D34F8F800DF0793 /* BottomOverlayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BottomOverlayViewController.h; sourceTree = "<group>"; };
-		871BC1341D34F8F800DF0793 /* BottomOverlayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BottomOverlayViewController.m; sourceTree = "<group>"; };
 		871BC13C1D34F8F800DF0793 /* ConfirmAssetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfirmAssetViewController.h; sourceTree = "<group>"; };
 		871BC13D1D34F8F800DF0793 /* ConfirmAssetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfirmAssetViewController.m; sourceTree = "<group>"; };
 		871BC13E1D34F8F800DF0793 /* FullscreenImageViewController+PullToDismiss.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "FullscreenImageViewController+PullToDismiss.h"; sourceTree = "<group>"; };
@@ -2932,6 +2930,8 @@
 		EF218AC820AC76DB004977BF /* UIAlertController+Newsletter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Newsletter.swift"; sourceTree = "<group>"; };
 		EF21A06A21305C4000B9120C /* ConversationTitleViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationTitleViewTests.swift; sourceTree = "<group>"; };
 		EF21A06F21305F6A00B9120C /* DeleteMessageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteMessageTests.swift; sourceTree = "<group>"; };
+		EF21CAA6220C832600D3FEE4 /* ProfileSelfPictureViewController+SetupViews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ProfileSelfPictureViewController+SetupViews.swift"; sourceTree = "<group>"; };
+		EF21CAA7220C832600D3FEE4 /* ProfileSelfPictureViewController+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ProfileSelfPictureViewController+Internal.h"; sourceTree = "<group>"; };
 		EF2388852211A67900331C07 /* UserRight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRight.swift; sourceTree = "<group>"; };
 		EF2388872211B8C500331C07 /* UserType+DisplayString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserType+DisplayString.swift"; sourceTree = "<group>"; };
 		EF24036920A198CC002813BE /* UIImagePickerController+iPadPopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "UIImagePickerController+iPadPopover.swift"; path = "../Conversation/InputBar/UIImagePickerController+iPadPopover.swift"; sourceTree = "<group>"; };
@@ -3114,6 +3114,7 @@
 		EFE0439A2149D9C900BC3079 /* ShareContactsViewControllerSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareContactsViewControllerSnapshotTests.swift; sourceTree = "<group>"; };
 		EFE8062A1FDFF24C006A0EE7 /* NSDate+Format.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSDate+Format.swift"; sourceTree = "<group>"; };
 		EFE8062E1FE005A7006A0EE7 /* DateFormatterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatterTests.swift; sourceTree = "<group>"; };
+		EFEB2EDF220C7E5500519EDC /* ProfileSelfPictureViewControllerSnapshotTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileSelfPictureViewControllerSnapshotTests.swift; sourceTree = "<group>"; };
 		EFEE84742180C8E900DD88F6 /* AnimatedListMenuView+Constraint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AnimatedListMenuView+Constraint.swift"; sourceTree = "<group>"; };
 		EFEE84752180C8E900DD88F6 /* AnimatedListMenuView+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AnimatedListMenuView+Internal.h"; sourceTree = "<group>"; };
 		EFF3DA422097548A007A3358 /* UIImage+MediaAssert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+MediaAssert.swift"; sourceTree = "<group>"; };
@@ -4382,9 +4383,6 @@
 			isa = PBXGroup;
 			children = (
 				55DD5C321FA231000082170C /* CallQualityController */,
-				871BC1321D34F8F800DF0793 /* BottomOverlayViewController+Private.h */,
-				871BC1331D34F8F800DF0793 /* BottomOverlayViewController.h */,
-				871BC1341D34F8F800DF0793 /* BottomOverlayViewController.m */,
 				5EEFC16720BEBE56007E8A79 /* BrowserViewController.swift */,
 				16CB8DB81DC0F777000C5F47 /* DefaultNavigationBar.swift */,
 				871BC13C1D34F8F800DF0793 /* ConfirmAssetViewController.h */,
@@ -5737,7 +5735,9 @@
 				F12CDAD91E43868200CEFCEB /* ChangingDetails */,
 				BD979D2B1D8F3AF700E8E3CB /* SettingsTechnicalReportViewController.swift */,
 				8784B6251D89448700AB71BD /* ProfileSelfPictureViewController.h */,
+				EF21CAA7220C832600D3FEE4 /* ProfileSelfPictureViewController+Internal.h */,
 				8784B6261D89448700AB71BD /* ProfileSelfPictureViewController.m */,
+				EF21CAA6220C832600D3FEE4 /* ProfileSelfPictureViewController+SetupViews.swift */,
 				160FD05121085BDA00C517B5 /* ProfileSelfPictureViewController+UserObserver.swift */,
 				8784B6271D89448700AB71BD /* UIAlertController+NewSelfClients.h */,
 				8784B6281D89448700AB71BD /* UIAlertController+NewSelfClients.m */,
@@ -5963,6 +5963,7 @@
 				5EF7BA6A221B272200815625 /* ProfileDetailsViewControllerTests.swift */,
 				5E628024221EEA3B0039A8AB /* ProfileActionsFactoryTests.swift */,
 				5E628026222021600039A8AB /* ProfileFooterViewTests.swift */,
+				EFEB2EDF220C7E5500519EDC /* ProfileSelfPictureViewControllerSnapshotTests.swift */,
 			);
 			path = "Wire-iOS Tests";
 			sourceTree = "<group>";
@@ -7516,6 +7517,7 @@
 				8744D5BE1C41D6C2000F8F93 /* SettingsClientViewController.swift in Sources */,
 				D54224C620513BFD00526A57 /* CellConfiguration+ConversationOptions.swift in Sources */,
 				5EF5CDA520EF739200CC98B0 /* DataTaskSession.swift in Sources */,
+				EF21CAA8220C832800D3FEE4 /* ProfileSelfPictureViewController+SetupViews.swift in Sources */,
 				5E678061204E8BEB002F63FB /* CallQualityPresentationTransition.swift in Sources */,
 				D5168F282008ED0700F8222A /* KeyboardBlockObserver.swift in Sources */,
 				EF7E96EE214BB41800475C63 /* ContactsViewController+ContactsDataSourceDelegate.swift in Sources */,
@@ -7855,7 +7857,6 @@
 				5E21344B21E351D400273D0D /* LogInStepDescription.swift in Sources */,
 				EF3CB75521DD157B0030C3E8 /* ProfileViewController+Extension.swift in Sources */,
 				F16426FE1FCC5A2C00D2ABFC /* AuthenticationStepDescription.swift in Sources */,
-				871BC2241D34F8F800DF0793 /* BottomOverlayViewController.m in Sources */,
 				87D56DFA1E0046FE00DFF722 /* CollectionImageCell.swift in Sources */,
 				8750B1CB2124236200B807A9 /* InviteButton.swift in Sources */,
 				EF25F7DE1FC45F8E0040C3CC /* AccessoryTextField.swift in Sources */,
@@ -8303,6 +8304,7 @@
 				5EC25A2F219ACB4B00F6214E /* ConversationTextMessageCellTests.swift in Sources */,
 				EFD43FFA21B82C500050ABC5 /* ChangePhoneViewControllerTests.swift in Sources */,
 				16BEBC3F1D006FB6006FFD3E /* ThreeDotsLoadingViewTests.swift in Sources */,
+				EFEB2EE0220C7E5500519EDC /* ProfileSelfPictureViewControllerSnapshotTests.swift in Sources */,
 				876AE7601C159A9C00E3E743 /* NSStringFingerprintTests.m in Sources */,
 				5E8FFC0821ECCC9B0052DF03 /* MockAuthenticationFeatureProvider.swift in Sources */,
 				EFD5FC4221C94E9C00026E3A /* UrlTests.swift in Sources */,
