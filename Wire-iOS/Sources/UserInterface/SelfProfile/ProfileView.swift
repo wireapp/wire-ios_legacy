@@ -137,7 +137,7 @@ class ProfileView: UIView, Themeable {
         nameLabel.accessibilityIdentifier = "name"
         nameLabel.setContentHuggingPriority(UILayoutPriority.required, for: .vertical)
         nameLabel.setContentCompressionResistancePriority(UILayoutPriority.required, for: .vertical)
-        nameLabel.font = FontSpec(.large, .medium).font!
+        nameLabel.font = FontSpec(.large, .light).font!
         
         handleLabel.accessibilityLabel = "profile_view.accessibility.handle".localized
         handleLabel.accessibilityIdentifier = "username"
