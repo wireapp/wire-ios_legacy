@@ -94,7 +94,7 @@ class ProfileDetailsViewController: UIViewController, Themeable {
         view.addSubview(tableView)
         
         // Create the profile header
-        if user.isSelfUser || !contentController.viewerCanAccessExtendedMetadata {
+        if user.isSelfUser || !contentController.viewerCanAccessRichProfile {
             profileView.options.insert(.hideAvailability)
         }
         
