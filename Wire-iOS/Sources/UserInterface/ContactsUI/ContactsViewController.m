@@ -386,14 +386,14 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
  */
 - (UIAlertController *)inviteContact:(ZMAddressBookContact *)contact fromView:(UIView *)view
 {
-    UIAlertController * alertController;
-
     if (contact.contactDetails.count == 1) {
         if (contact.emailAddresses.count == 1 && [ZMAddressBookContact canInviteLocallyWithEmail]) {
             [contact inviteLocallyWithEmail:contact.emailAddresses[0]];
+            return nil;
         }
         else if (contact.rawPhoneNumbers.count == 1 && [ZMAddressBookContact canInviteLocallyWithPhoneNumber]) {
             [contact inviteLocallyWithPhoneNumber:contact.rawPhoneNumbers[0]];
+            return nil;
         }
         else {
             // Cannot invite
@@ -423,7 +423,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
                                                                  }];
                 [unableToSendController addAction:okAction];
 
-                alertController = unableToSendController;
+                return unableToSendController;
             }
         }
     }
@@ -474,10 +474,10 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
             [chooseContactDetailController dismissViewControllerAnimated:YES completion:nil];
         }]];
 
-        alertController = chooseContactDetailController;
+        return chooseContactDetailController;
     }
 
-    return alertController;
+    return nil;
 }
 
 @end

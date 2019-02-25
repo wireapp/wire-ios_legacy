@@ -97,23 +97,6 @@ static id<UserType> mockSelfUser = nil;
     return self.isGuestInConversation;
 }
 
-+ (ZMUser<ZMEditableUser> *)selfUserInUserSession:(ZMUserSession *)session
-{
-    return mockSelfUser ? : (id)self.mockSelfUser;
-}
-
-- (NSArray<MockUserClient *> *)featureWithUserClients:(NSUInteger)numClients
-{
-    NSMutableArray *newClients = [NSMutableArray array];
-    for (NSUInteger i = 0; i < numClients; i++) {
-        MockUserClient *mockClient = [[MockUserClient alloc] init];
-        mockClient.user = (id)self;
-        [newClients addObject:mockClient];
-    }
-    self.clients = newClients.set;
-    return newClients;
-}
-
 - (NSString *)emailAddress
 {
     return @"test@email.com";
@@ -148,6 +131,8 @@ static id<UserType> mockSelfUser = nil;
 @synthesize teamRole;
 @synthesize readReceiptsEnabled;
 @synthesize isAccountDeleted;
+@synthesize managedByWire;
+@synthesize extendedMetadata;
 
 #pragma mark - ZMBareUserConnection
 

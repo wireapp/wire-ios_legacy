@@ -26,7 +26,7 @@ class SettingsPropertyTextValueCellDescriptor: SettingsPropertyCellDescriptorTyp
     static let cellType: SettingsTableCell.Type = SettingsTextCell.self
     var title: String {
         get {
-            return SettingsPropertyLabelText(self.settingsProperty.propertyName)
+            return settingsProperty.propertyName.settingsPropertyLabelText
         }
     }
     var visible: Bool = true
@@ -46,8 +46,18 @@ class SettingsPropertyTextValueCellDescriptor: SettingsPropertyCellDescriptorTyp
         if let stringValue = settingsProperty.rawValue() as? String {
             textCell.textInput.text = stringValue
         }
-
-        textCell.textInput.isUserInteractionEnabled = settingsProperty.enabled
+        
+        if settingsProperty.enabled {
+            textCell.textInput.isUserInteractionEnabled = true
+            textCell.textInput.accessibilityTraits.remove(.staticText)
+            textCell.textInput.accessibilityIdentifier = title + "Field"
+        } else {
+            textCell.textInput.isUserInteractionEnabled = false
+            textCell.textInput.accessibilityTraits.insert(.staticText)
+            textCell.textInput.accessibilityIdentifier = title + "FieldDisabled"
+        }
+        
+        textCell.textInput.isAccessibilityElement = true
     }
     
     func select(_ value: SettingsPropertyValue?) {

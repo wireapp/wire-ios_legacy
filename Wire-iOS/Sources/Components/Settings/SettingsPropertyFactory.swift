@@ -98,7 +98,13 @@ class SettingsPropertyFactory {
             })
         }
     }
-    
+
+    private func getOnlyProperty(propertyName: SettingsPropertyName, getAction: @escaping GetAction) -> SettingsBlockProperty {
+        let setAction: SetAction = { (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> () in }
+
+        return SettingsBlockProperty(propertyName: propertyName, getAction: getAction, setAction: setAction)
+    }
+
     func property(_ propertyName: SettingsPropertyName) -> SettingsProperty {
         
         switch(propertyName) {
@@ -124,14 +130,25 @@ class SettingsPropertyFactory {
 
             return SettingsBlockProperty(propertyName: propertyName, getAction: getAction, setAction: setAction)
         case .email:
-            // This is a read only item
             let getAction: GetAction = { [unowned self] (property: SettingsBlockProperty) -> SettingsPropertyValue in
                 return SettingsPropertyValue.string(value: self.selfUser?.emailAddress ?? "")
             }
 
-            let setAction: SetAction = { (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> () in }
+            return getOnlyProperty(propertyName: propertyName, getAction: getAction)
 
-            return SettingsBlockProperty(propertyName: propertyName, getAction: getAction, setAction: setAction)
+        case .phone:
+            let getAction: GetAction = { [unowned self] (property: SettingsBlockProperty) -> SettingsPropertyValue in
+                return SettingsPropertyValue.string(value: self.selfUser?.phoneNumber ?? "")
+            }
+
+            return getOnlyProperty(propertyName: propertyName, getAction: getAction)
+
+        case .handle:
+            let getAction: GetAction = { [unowned self] (property: SettingsBlockProperty) -> SettingsPropertyValue in
+                return SettingsPropertyValue.string(value: self.selfUser?.handleDisplayString ?? "")
+            }
+
+            return getOnlyProperty(propertyName: propertyName, getAction: getAction)
 
         case .accentColor:
             let getAction : GetAction = { [unowned self] (property: SettingsBlockProperty) -> SettingsPropertyValue in

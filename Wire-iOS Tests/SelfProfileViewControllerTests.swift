@@ -25,7 +25,9 @@ final class SelfProfileViewControllerTests: ZMSnapshotTestCase {
     
     override func setUp() {
         super.setUp()
-        sut = SelfProfileViewController()
+		
+        AvailabilityTitleView.appearance(whenContainedInInstancesOf: [SelfProfileViewController.self]).colorSchemeVariant = .dark
+        sut = SelfProfileViewController(userRightInterfaceType: MockUserRight.self)
         sut.view.backgroundColor = .black
     }
     
@@ -34,7 +36,7 @@ final class SelfProfileViewControllerTests: ZMSnapshotTestCase {
         super.tearDown()
     }
 
-    func testTestForAUserWithNoTeam(){
-        self.verify(view: sut.view)
+    func testTestForAUserWithNoTeam() {
+        verify(view: sut.view)
     }
 }

@@ -153,14 +153,11 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
             sessionManager.updateCallNotificationStyleFromSettings()
             sessionManager.useConstantBitRateAudio = Settings.shared().callingConstantBitRate
             sessionManager.start(launchOptions: launchOptions)
-                
+
             self.quickActionsManager = QuickActionsManager(sessionManager: sessionManager,
                                                            application: UIApplication.shared)
                 
             sessionManager.urlHandler.delegate = self
-            if let url = launchOptions[UIApplication.LaunchOptionsKey.url] as? URL {
-                sessionManager.urlHandler.openURL(url, options: [:])
-            }
         }
     }
 

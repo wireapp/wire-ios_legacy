@@ -46,7 +46,12 @@
     self.searchController = [[UISearchController alloc] initWithSearchResultsController:self.resultsTableViewController];
     self.searchController.searchResultsUpdater = self;
     [self.searchController.searchBar sizeToFit];
-    self.tableView.tableHeaderView = self.searchController.searchBar;
+    if (@available(iOS 11.0, *)) {
+        self.navigationItem.searchController = self.searchController;
+        self.navigationItem.hidesSearchBarWhenScrolling = false;
+    } else {
+        self.tableView.tableHeaderView = self.searchController.searchBar;
+    }
     self.tableView.sectionIndexBackgroundColor = [UIColor clearColor];
 
     self.resultsTableViewController.tableView.delegate = self;
@@ -214,13 +219,4 @@
     return [[UILocalizedIndexedCollation currentCollation] sectionIndexTitles];
 }
 
-#pragma mark - Search controller methods
-
--(void)willPresentSearchController:(UISearchController *)searchController {
-    [self.tableView setContentInset:UIEdgeInsetsMake(44, 0, 0, 0)];
-}
-
--(void)willDismissSearchController:(UISearchController *)searchController {
-    [self.tableView setContentInset:UIEdgeInsetsZero];
-}
 @end

@@ -22,24 +22,49 @@ import XCTest
 final class SettingsTableViewControllerSnapshotTests: ZMSnapshotTestCase {
     
     var sut: SettingsTableViewController!
-    
-    override func setUp() {
-        super.setUp()
+	var settingsCellDescriptorFactory: SettingsCellDescriptorFactory!
+	
+	override func setUp() {
+		super.setUp()
 
-        let settingsPropertyFactory = SettingsPropertyFactory(userSession: nil, selfUser: nil)
+		let settingsPropertyFactory = SettingsPropertyFactory(userSession: nil, selfUser: nil)
+		settingsCellDescriptorFactory = SettingsCellDescriptorFactory(settingsPropertyFactory: settingsPropertyFactory, userRightInterfaceType: MockUserRight.self)
+		
+		MockUserRight.isPermitted = true
+	}
 
-        let group = SettingsCellDescriptorFactory(settingsPropertyFactory: settingsPropertyFactory).settingsGroup()
+    override func tearDown() {
+        sut = nil
+		settingsCellDescriptorFactory = nil
+		
+        super.tearDown()
+	}
+
+    func testForSettingGroup() {
+        let group = settingsCellDescriptorFactory.settingsGroup()
         sut = SettingsTableViewController(group: group)
 
         sut.view.backgroundColor = .black
-    }
-    
-    override func tearDown() {
-        sut = nil
-        super.tearDown()
+
+        verify(view: sut.view)
     }
 
-    func testForSettingGroup() {
+    func testForAccountGroup() {
+        let group = settingsCellDescriptorFactory.accountGroup()
+        sut = SettingsTableViewController(group: group as! SettingsInternalGroupCellDescriptorType)
+
+        sut.view.backgroundColor = .black
+
+        verify(view: sut.view)
+    }
+
+    func testForAccountGroupWithDisabledEditing() {
+		MockUserRight.isPermitted = false
+
+		let group = settingsCellDescriptorFactory.accountGroup()
+        sut = SettingsTableViewController(group: group as! SettingsInternalGroupCellDescriptorType)
+
+        sut.view.backgroundColor = .black
 
         verify(view: sut.view)
     }

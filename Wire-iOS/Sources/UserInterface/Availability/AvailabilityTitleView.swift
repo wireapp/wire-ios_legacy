@@ -16,106 +16,157 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 import UIKit
-import Cartography
 
-import WireDataModel
+/**
+ * A title view subclass that displays the availability of the user.
+ */
 
-@objcMembers public class AvailabilityTitleView: TitleView {
+class AvailabilityTitleView: TitleView, Themeable, ZMUserObserver {
     
-    fileprivate var user: ZMUser?
-    fileprivate var style: AvailabilityTitleViewStyle
+    /// The available options for this view.
+    struct Options: OptionSet {
+        let rawValue: Int
+        
+        /// Whether we allow the user to update the status by tapping this view.
+        static let allowSettingStatus = Options(rawValue: 1 << 0)
+        
+        /// Whether to hide the action hint (down arrow) next to the status.
+        static let hideActionHint = Options(rawValue: 1 << 1)
+        
+        /// Whether to display the user name instead of the availability.
+        static let displayUserName = Options(rawValue: 1 << 2)
+        
+        /// Whether to use a large text font instead of the default small one.
+        static let useLargeFont = Options(rawValue: 1 << 3)
+        
+        /// The default options for using the view inside the header of the home page.
+        static var header: Options = [.allowSettingStatus, .hideActionHint, .displayUserName, .useLargeFont]
+        
+        /// The default option for using the view inside the profile screen of the settings.
+        static var selfProfile: Options = [.allowSettingStatus]
+        
+        /// The default option for using the view inside the profile details screen of a conversation.
+        static var profileDetails: Options = [.hideActionHint]
+        
+    }
+    
+    // MARK: - Properties
+    
+    private let user: ZMUser
     private var observerToken: Any?
     
-    public init(user: ZMUser, style: AvailabilityTitleViewStyle) {
-        self.style = style
-        
-        var titleColor: UIColor
-        var titleColorSelected: UIColor
-        
-        if style == .selfProfile || style == .header {
-            let variant = ColorSchemeVariant.dark
-            titleColor = UIColor.from(scheme: .textForeground, variant: variant)
-            titleColorSelected = UIColor.from(scheme: .textDimmed, variant: variant)
-        } else {
-            //otherwise, take the default variant
-            titleColor = UIColor.from(scheme: .textForeground)
-            titleColorSelected = UIColor.from(scheme: .textDimmed)
+    private let feedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
+    
+    @objc dynamic var colorSchemeVariant: ColorSchemeVariant = ColorScheme.default.variant {
+        didSet {
+            guard colorSchemeVariant != oldValue else { return }
+            applyColorScheme(colorSchemeVariant)
         }
-        
-        var titleFont : UIFont?
-        if style == .header {
-            titleFont = FontSpec(.normal, .semibold).font
-        } else {
-            titleFont = FontSpec(.small, .semibold).font
+    }
+    
+    /// The options to apply to this view.
+    var options: Options {
+        didSet {
+            updateConfiguration()
         }
-        
-        super.init(color: titleColor, selectedColor: titleColorSelected, font: titleFont)
+    }
+    
+    // MARK: - Initialization
+    
+    @objc(profileDetailsAvailabilityTitleViewForUser:)
+    static func makeProfileDetailsAvailabilityTitleView(for user: ZMUser) -> AvailabilityTitleView {
+        return AvailabilityTitleView(user: user, options: .profileDetails)
+    }
+    
+    /**
+     * Creates a view for the specific user and options.
+     * - parameter user: The user to display the availability of.
+     * - parameter options: The options to display the availability.
+     * - note: You can change the options later, through the `options` property.
+     */
+    
+    init(user: ZMUser, options: Options) {
+        self.options = options
+        self.user = user
+        super.init()
         
         if let sharedSession = ZMUserSession.shared() {
             self.observerToken = UserChangeInfo.add(observer: self, for: user, userSession: sharedSession)
         }
         
-        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive),
+                                               name: UIApplication.didBecomeActiveNotification, object: nil)
         
-        configure(user: user)
+        updateConfiguration()
     }
     
     public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(user: ZMUser) {
+    // MARK: - Configuration
+    
+    func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
+        updateConfiguration()
+    }
+    
+    /// Refreshes the content and appearance of the view.
+    private func updateConfiguration() {
+        updateAppearance()
+        updateContent()
+    }
+    
+    /// Refreshes the content of the view, based on the user data and the options.
+    private func updateContent() {
         let availability = user.availability
-        let fontStyle: FontSize = (style == .header) ? .normal : .small
+        let fontStyle: FontSize = options.contains(.useLargeFont) ? .normal : .small
         let icon = AvailabilityStringBuilder.icon(for: availability, with: self.titleColor!, and: fontStyle)
-        let interactive = (style == .selfProfile || style == .header)
+        let isInteractive = options.contains(.allowSettingStatus)
         var title = ""
         
-        if self.style == .header {
+        if options.contains(.displayUserName) {
             title = user.name ?? ""
-        } else if user == ZMUser.selfUser() && availability == .none {
-            title = "availability.message.set_status".localized.uppercased()
+            accessibilityLabel = title
+            accessibilityValue = title
+        } else if availability == .none && options.contains(.allowSettingStatus) {
+            title = "availability.message.set_status".localized(uppercased: true)
         } else if availability != .none {
-            title = availability.localizedName.uppercased()
+            title = availability.localizedName.localizedUppercase
         }
         
-        self.user = user
-        super.configure(icon: icon, title: title, interactive: interactive, showInteractiveIcon: style == .selfProfile)
+        let showInteractiveIcon = isInteractive && !options.contains(.hideActionHint)
+        super.configure(icon: icon, title: title, interactive: isInteractive, showInteractiveIcon: showInteractiveIcon)
+    }
+    
+    /// Refreshes the appearance of the view, based on the options.
+    private func updateAppearance() {
+        if options.contains(.useLargeFont) {
+            titleFont = FontSpec(.normal, .semibold).font
+        } else {
+            titleFont = FontSpec(.small, .semibold).font
+        }
+        
+        titleColor = UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)
+        titleColorSelected = UIColor.from(scheme: .textDimmed, variant: colorSchemeVariant)
+    }
+    
+    // MARK: - Events
+    
+    @objc private func applicationDidBecomeActive() {
+        updateConfiguration()
     }
     
     override func updateAccessibilityLabel() {
-        guard let user = user else { return }
         self.accessibilityLabel = "\(user.name ?? "")_is_\(user.availability.localizedName)".localized
     }
     
-    func provideHapticFeedback() {
-        UIImpactFeedbackGenerator(style: .medium).impactOccurred()
-    }
-}
-
-extension AvailabilityTitleView {
-    
-    @objc
-    fileprivate func applicationDidBecomeActive() {
-        guard let user = self.user else { return }
-        
-        configure(user: user)
+    func userDidChange(_ changeInfo: UserChangeInfo) {
+        guard changeInfo.availabilityChanged || changeInfo.nameChanged else { return }
+        updateConfiguration()
     }
     
-}
-
-extension AvailabilityTitleView: ZMUserObserver {
-    
-    public func userDidChange(_ changeInfo: UserChangeInfo) {
-        guard changeInfo.availabilityChanged || changeInfo.nameChanged,
-            let user = changeInfo.user as? ZMUser else { return }
-        configure(user: user)
-    }
-}
-
-extension AvailabilityTitleView {
+    // MARK: - Actions
     
     var actionSheet: UIAlertController {
         get {
@@ -134,17 +185,24 @@ extension AvailabilityTitleView {
     private func didSelectAvailability(_ availability: Availability) {
         ZMUserSession.shared()?.performChanges { [weak self] in
             ZMUser.selfUser().availability = availability
-            self?.trackChanges(with: availability)
             self?.provideHapticFeedback()
         }
     }
     
-    private func trackChanges(with availability: Availability) {
-        switch style {
-            case .header:       do { Analytics.shared().tagAvailabilityChanged(to: availability, source: .listHeader)   }
-            case .selfProfile:  do { Analytics.shared().tagAvailabilityChanged(to: availability, source: .settings)     }
-            default: break
-        }
+    private func provideHapticFeedback() {
+        feedbackGenerator.prepare()
+        feedbackGenerator.impactOccurred()
+    }
+    
+}
+
+extension ZMUser {
+    
+    /// Returns if the user's availability can be displayed.
+    func canDisplayAvailability(with options: AvailabilityTitleView.Options) -> Bool {
+        return availability != .none
+            || options.contains(.displayUserName)
+            || availability == .none && options.contains(.allowSettingStatus)
     }
     
 }

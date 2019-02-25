@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Cartography
 @testable import Wire
 
 class InputBarEditViewTests: ZMSnapshotTestCase {
@@ -27,7 +26,8 @@ class InputBarEditViewTests: ZMSnapshotTestCase {
         super.setUp()
         snapshotBackgroundColor = UIColor.white
         sut = InputBarEditView()
-        constrain(sut) { $0.height == 56 }
+        sut.translatesAutoresizingMaskIntoConstraints = false
+        sut.heightAnchor.constraint(equalToConstant: 56).isActive = true
     }
 
     override func tearDown() {

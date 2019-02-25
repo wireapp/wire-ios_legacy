@@ -84,7 +84,9 @@
     } else {
         UIAlertController * alertController = [self inviteContact:user.contact fromView:view];
 
-        [alertController presentInNotificationsWindow];
+        if (alertController) {
+            [alertController presentInNotificationsWindow];
+        }
     }
 }
 

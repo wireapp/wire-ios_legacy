@@ -60,12 +60,6 @@ typedef NS_ENUM(NSUInteger, ProfileViewContentMode) {
 
 @property (nonatomic) id<UserType, AccentColorProvider> bareUser;
 
-@property (nonatomic) UserImageView *userImageView;
-@property (nonatomic) UIView *stackViewContainer;
-@property (nonatomic) GuestLabelIndicator *teamsGuestIndicator;
-@property (nonatomic) BOOL showGuestLabel;
-@property (nonatomic) AvailabilityTitleView *availabilityView;
-@property (nonatomic) CustomSpacingStackView *stackView;
 @end
 
 @implementation ProfileDetailsViewController
@@ -79,7 +73,7 @@ typedef NS_ENUM(NSUInteger, ProfileViewContentMode) {
         _bareUser = user;
         _conversation = conversation;
         _showGuestLabel = [user isGuestIn:conversation];
-        _availabilityView = [[AvailabilityTitleView alloc] initWithUser:[self fullUser] style:AvailabilityTitleViewStyleOtherProfile];
+        _availabilityView = [AvailabilityTitleView profileDetailsAvailabilityTitleViewForUser:[self fullUser]];
     }
     return self;
 }
@@ -89,63 +83,6 @@ typedef NS_ENUM(NSUInteger, ProfileViewContentMode) {
     [super viewDidLoad];
     [self setupViews];
     [self setupConstraints];
-}
-
-- (void)setupViews
-{
-    [self createUserImageView];
-    [self createFooter];
-    [self createGuestIndicator];
-    
-    self.view.backgroundColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorContentBackground];
-    self.stackViewContainer = [[UIView alloc] initForAutoLayout];
-    [self.view addSubview:self.stackViewContainer];
-    
-    self.teamsGuestIndicator.hidden = !self.showGuestLabel;
-    self.availabilityView.hidden = !ZMUser.selfUser.isTeamMember || self.fullUser.availability == AvailabilityNone;
-    
-    NSString *remainingTimeString = self.fullUser.expirationDisplayString;
-    self.remainingTimeLabel = [[UILabel alloc] initForAutoLayout];
-    [self.remainingTimeLabel setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisVertical];
-    self.remainingTimeLabel.text = remainingTimeString;
-    self.remainingTimeLabel.textColor = [ColorScheme.defaultColorScheme colorWithName:ColorSchemeColorTextForeground];
-    self.remainingTimeLabel.font = [UIFont mediumSemiboldFont];
-    self.remainingTimeLabel.hidden = nil == remainingTimeString;
-
-    [self createReadReceiptsEnabledLabel];
-    
-    UIView *userImageViewWrapper = [[UIView alloc] initWithFrame:CGRectZero];
-    userImageViewWrapper.translatesAutoresizingMaskIntoConstraints = NO;
-    [userImageViewWrapper addSubview:self.userImageView];
-    
-    [NSLayoutConstraint activateConstraints:
-    @[[self.userImageView.leadingAnchor constraintEqualToAnchor:userImageViewWrapper.leadingAnchor constant:40],
-      [self.userImageView.trailingAnchor constraintEqualToAnchor:userImageViewWrapper.trailingAnchor constant:-40],
-      [self.userImageView.topAnchor constraintEqualToAnchor:userImageViewWrapper.topAnchor],
-      [self.userImageView.bottomAnchor constraintEqualToAnchor:userImageViewWrapper.bottomAnchor]
-      ]];
-    
-    self.stackView = [[CustomSpacingStackView alloc] initWithCustomSpacedArrangedSubviews:@[userImageViewWrapper, self.teamsGuestIndicator, self.remainingTimeLabel, self.availabilityView, self.readReceiptsEnabledLabel]];
-    self.stackView.axis = UILayoutConstraintAxisVertical;
-    self.stackView.spacing = 0;
-    self.stackView.alignment = UIStackViewAlignmentCenter;
-    [self.stackViewContainer addSubview:self.stackView];
-    
-    CGFloat verticalSpacing = 32;
-    if (UIScreen.mainScreen.isSmall) {
-        verticalSpacing = 16;
-    }
-    
-    [self.stackView wr_addCustomSpacing:verticalSpacing after:userImageViewWrapper];
-
-    if (self.remainingTimeLabel.isHidden) {
-        [self.stackView wr_addCustomSpacing:(self.availabilityView.isHidden ? (verticalSpacing + 8) : verticalSpacing) after:self.teamsGuestIndicator];
-    } else {
-        [self.stackView wr_addCustomSpacing:8 after:self.teamsGuestIndicator];
-        [self.stackView wr_addCustomSpacing:(self.availabilityView.isHidden ? (verticalSpacing + 8) : verticalSpacing) after:self.remainingTimeLabel];
-    }
-    
-    [self.stackView wr_addCustomSpacing:verticalSpacing after:self.availabilityView];
 }
 
 - (void)setupConstraints
@@ -272,48 +209,6 @@ typedef NS_ENUM(NSUInteger, ProfileViewContentMode) {
     return buttonText;
 }
 
-- (ZetaIconType)iconTypeForUserAction:(ProfileUserAction)userAction
-{
-    switch (userAction) {
-        case ProfileUserActionAddPeople:
-            return ZetaIconTypeCreateConversation;
-            break;
-            
-        case ProfileUserActionPresentMenu:
-            return ZetaIconTypeEllipsis;
-            break;
-            
-        case ProfileUserActionUnblock:
-            return ZetaIconTypeBlock;
-            break;
-            
-        case ProfileUserActionBlock:
-            return ZetaIconTypeBlock;
-            break;
-            
-        case ProfileUserActionRemovePeople:
-            return ZetaIconTypeMinus;
-            break;
-            
-        case ProfileUserActionCancelConnectionRequest:
-            return ZetaIconTypeUndo;
-            break;
-            
-        case ProfileUserActionOpenConversation:
-            return ZetaIconTypeConversation;
-            break;
-            
-        case ProfileUserActionSendConnectionRequest:
-        case ProfileUserActionAcceptConnectionRequest:
-            return ZetaIconTypePlus;
-            break;
-            
-        default:
-            return ZetaIconTypeNone;
-            break;
-    }
-}
-
 #pragma mark - Actions
 
 - (void)performLeftButtonAction:(id)sender
@@ -324,47 +219,6 @@ typedef NS_ENUM(NSUInteger, ProfileViewContentMode) {
 - (void)performRightButtonAction:(id)sender
 {
     [self performUserAction:[self rightButtonAction]];
-}
-
-- (void)performUserAction:(ProfileUserAction)action
-{
-    switch (action) {
-        case ProfileUserActionAddPeople:
-            [self presentAddParticipantsViewController];
-            break;
-            
-        case ProfileUserActionPresentMenu:
-            [self presentMenuSheetController];
-            break;
-            
-        case ProfileUserActionUnblock:
-            [self unblockUser];
-            break;
-            
-        case ProfileUserActionOpenConversation:
-            [self openOneToOneConversation];
-            break;
-            
-        case ProfileUserActionRemovePeople:
-            [self presentRemoveDialogueForParticipant:[self fullUser]
-                                     fromConversation:self.conversation
-                                            dismisser:self.viewControllerDismisser];
-            break;
-            
-        case ProfileUserActionAcceptConnectionRequest:
-            [self bringUpConnectionRequestSheet];
-            break;
-            
-        case ProfileUserActionSendConnectionRequest:
-            [self sendConnectionRequest];
-            break;
-            
-        case ProfileUserActionCancelConnectionRequest:
-            [self bringUpCancelConnectionRequestSheet];
-            break;
-        default:
-            break;
-    }
 }
 
 - (void)presentAddParticipantsViewController
