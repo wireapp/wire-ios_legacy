@@ -24,7 +24,6 @@ import Cartography
     fileprivate let collectionViewController: SectionCollectionViewController
     fileprivate let conversation: ZMConversation
     fileprivate let footerView = GroupDetailsFooterView()
-    fileprivate let bottomSpacer = UIView()
     fileprivate var token: NSObjectProtocol?
     var actionController: ConversationActionController?
     fileprivate var renameGroupSectionController: RenameGroupSectionController?
@@ -70,27 +69,16 @@ import Cartography
             collectionView.contentInsetAdjustmentBehavior = .never
         }
 
-        [collectionView, footerView, bottomSpacer].forEach(view.addSubview)
-        bottomSpacer.backgroundColor = UIColor.from(scheme: .barBackground)
+        [collectionView, footerView].forEach(view.addSubview)
 
-        constrain(view, collectionView, footerView, bottomSpacer) { container, collectionView, footerView, bottomSpacer in
+        constrain(view, collectionView, footerView) { container, collectionView, footerView in
             collectionView.top == container.top
             collectionView.leading == container.leading
             collectionView.trailing == container.trailing
             collectionView.bottom == footerView.top
             footerView.leading == container.leading
             footerView.trailing == container.trailing
-            footerView.bottom == bottomSpacer.top
-
-            if #available(iOS 11, *) {
-                bottomSpacer.top == container.safeAreaLayoutGuide.bottom
-            } else {
-                bottomSpacer.top == container.bottom
-            }
-
-            bottomSpacer.bottom == container.bottom
-            bottomSpacer.leading == container.leading
-            bottomSpacer.trailing == container.trailing
+            footerView.bottom == container.bottom
         }
 
         collectionViewController.collectionView = collectionView

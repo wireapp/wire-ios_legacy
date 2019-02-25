@@ -27,7 +27,8 @@ import UIKit
     private let variant: ColorSchemeVariant
     @objc public let rightButton = IconButton()
     @objc public var leftButton: IconButton
-    
+    private let containerView = UIView()
+
     @objc public var leftIcon: ZetaIconType {
         get {
             return leftButton.iconType(for: .normal)
@@ -70,7 +71,7 @@ import UIKit
     
     private func setupViews() {
         let configureButton = { (button: IconButton) in
-            self.addSubview(button)
+            self.containerView.addSubview(button)
             button.setIconColor(UIColor.from(scheme: .iconNormal), for: .normal)
             button.setIconColor(UIColor.from(scheme: .iconHighlighted), for: .highlighted)
             button.setIconColor(UIColor.from(scheme: .buttonFaded), for: .disabled)
@@ -89,6 +90,7 @@ import UIKit
         rightButton.addTarget(self, action: #selector(rightButtonTapped), for: .touchUpInside)
 
         backgroundColor = UIColor.from(scheme: .barBackground)
+        addSubview(containerView)
         
         setupButtons()
     }
@@ -96,13 +98,24 @@ import UIKit
     private func createConstraints() {
         leftButton.translatesAutoresizingMaskIntoConstraints = false
         rightButton.translatesAutoresizingMaskIntoConstraints = false
+        containerView.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            heightAnchor.constraint(equalToConstant: 56),
-            leftButton.centerYAnchor.constraint(equalTo: centerYAnchor),
-            rightButton.centerYAnchor.constraint(equalTo: centerYAnchor),
-            leftButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            rightButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            topAnchor.constraint(equalTo: containerView.topAnchor),
+
+            // containerView
+            containerView.heightAnchor.constraint(equalToConstant: 56),
+            containerView.leadingAnchor.constraint(equalTo: safeLeadingAnchor),
+            containerView.trailingAnchor.constraint(equalTo: safeTrailingAnchor),
+            containerView.bottomAnchor.constraint(equalTo: safeBottomAnchor),
+
+            // leftButton
+            leftButton.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
+            leftButton.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
+
+            // leftButton
+            rightButton.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
+            rightButton.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
             rightButton.leadingAnchor.constraint(greaterThanOrEqualTo: leftButton.leadingAnchor, constant: 16)
         ])
     }
