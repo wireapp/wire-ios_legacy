@@ -707,6 +707,7 @@
 "profile.remove_dialog_message" = "%@ won’t be able to send or receive messages in this conversation.";
 "profile.remove_dialog_button_cancel" = "Cancel";
 "profile.remove_dialog_button_remove" = "Remove…";
+"profile.remove_dialog_button_remove_confirm" = "Remove";
 
 // Block dialog
 "profile.block_dialog.title" = "Block?";

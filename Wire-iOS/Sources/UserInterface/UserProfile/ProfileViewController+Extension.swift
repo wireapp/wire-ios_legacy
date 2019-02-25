@@ -219,18 +219,29 @@ extension ProfileViewController: ProfileFooterViewDelegate {
             return
         }
 
-        let controller = UIAlertController.remove(otherUser) { [weak self] remove in
-            guard let `self` = self, remove else { return }
+        let controller = UIAlertController(
+            title: "profile.remove_dialog_message".localized(args: otherUser.displayName),
+            message: nil,
+            preferredStyle: .actionSheet
+        )
 
+        let removeAction = UIAlertAction(title: "profile.remove_dialog_button_remove_confirm".localized, style: .destructive) { _ in
             self.conversation.removeOrShowError(participnant: otherUser) { result in
                 switch result {
                 case .success:
-                    self.dismiss(animated: true, completion: nil)
+                    if let navigationController = self.navigationController, navigationController.viewControllers.first != self {
+                        navigationController.popViewController(animated: true)
+                    } else {
+                        self.dismiss(animated: true, completion: nil)
+                    }
                 case .failure(_):
                     break
                 }
             }
         }
+
+        controller.addAction(removeAction)
+        controller.addAction(.cancel())
 
         presentAlert(controller, targetView: view)
     }
