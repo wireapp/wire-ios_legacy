@@ -178,6 +178,7 @@ class ProfileDetailsContentController: NSObject, UITableViewDataSource, UITableV
             let cell = tableView.dequeueReusableCell(withIdentifier: userPropertyCellID) as? UserPropertyCell ?? UserPropertyCell(style: .default, reuseIdentifier: userPropertyCellID)
             cell.propertyName = field["key"]
             cell.propertyValue = field["value"]
+            cell.showSeparator = indexPath.row < fields.count - 1
             return cell
 
         case .readReceiptsStatus:

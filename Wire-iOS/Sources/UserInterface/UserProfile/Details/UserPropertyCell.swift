@@ -22,7 +22,7 @@ import UIKit
  * A cell that displays a user property as part of the extended profile metadata.
  */
 
-class UserPropertyCell: UITableViewCell, Themeable {
+class UserPropertyCell: SeparatorTableViewCell {
     
     private let contentStack = UIStackView()
 
@@ -41,13 +41,6 @@ class UserPropertyCell: UITableViewCell, Themeable {
     }()
     
     // MARK: - Contents
-    
-    @objc dynamic var colorSchemeVariant: ColorSchemeVariant = ColorScheme.default.variant {
-        didSet {
-            guard oldValue != colorSchemeVariant else { return }
-            applyColorScheme(colorSchemeVariant)
-        }
-    }
     
     /// The name of the user property.
     var propertyName: String? {
@@ -73,17 +66,13 @@ class UserPropertyCell: UITableViewCell, Themeable {
     }
     
     // MARK: - Initialization
-    
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+
+    override func setUp() {
+        super.setUp()
         configureSubviews()
         configureConstraints()
     }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
+        
     private func configureSubviews() {
         contentStack.addArrangedSubview(propertyNameLabel)
         contentStack.addArrangedSubview(propertyValueLabel)
@@ -110,7 +99,8 @@ class UserPropertyCell: UITableViewCell, Themeable {
     
     // MARK: - Configuration
     
-    func applyColorScheme(_ variant: ColorSchemeVariant) {
+    override func applyColorScheme(_ variant: ColorSchemeVariant) {
+        super.applyColorScheme(variant)
         propertyNameLabel.textColor = UIColor.from(scheme: .textDimmed, variant: variant)
         propertyValueLabel.textColor = UIColor.from(scheme: .textForeground, variant: variant)
         backgroundColor = UIColor.from(scheme: .background, variant: variant)

@@ -89,6 +89,7 @@ class ProfileDetailsViewController: UIViewController, Themeable {
         tableView.dataSource = contentController
         tableView.delegate = contentController
         tableView.rowHeight = UITableView.automaticDimension
+        tableView.separatorStyle = .none
         tableView.estimatedRowHeight = 56
         tableView.contentInset.bottom = 88
         view.addSubview(tableView)
