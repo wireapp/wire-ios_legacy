@@ -157,14 +157,14 @@ class ProfileDetailsContentController: NSObject, UITableViewDataSource, UITableV
 
         switch contents[section] {
         case .extendedMetadata:
-            header.titleLabel.text = "profile.extended_metadata.header".localized
+            header.titleLabel.text = "profile.extended_metadata.header".localized(uppercased: true)
             header.accessibilityIdentifier = "InformationHeader"
         case .readReceiptsStatus(let enabled):
             header.accessibilityIdentifier = "ReadReceiptsStatusHeader"
             if enabled {
-                header.titleLabel.text = "profile.read_receipts_enabled_memo.header".localized
+                header.titleLabel.text = "profile.read_receipts_enabled_memo.header".localized(uppercased: true)
             } else {
-                header.titleLabel.text = "profile.read_receipts_disabled_memo.header".localized
+                header.titleLabel.text = "profile.read_receipts_disabled_memo.header".localized(uppercased: true)
             }
         }
 

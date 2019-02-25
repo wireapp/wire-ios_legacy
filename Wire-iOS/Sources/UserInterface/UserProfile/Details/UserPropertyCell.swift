@@ -29,7 +29,7 @@ class UserPropertyCell: UITableViewCell, Themeable {
     private let propertyNameLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 1
-        label.font = .smallMediumFont
+        label.font = FontSpec(.small, .regular).font!
         return label
     }()
     
