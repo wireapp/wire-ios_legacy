@@ -132,6 +132,7 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
 {
     [super viewDidAppear:animated];
     [UIApplication.sharedApplication wr_updateStatusBarForCurrentControllerAnimated:animated];
+    UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, self.navigationItem.titleView);
 }
 
 - (void)dismissButtonClicked

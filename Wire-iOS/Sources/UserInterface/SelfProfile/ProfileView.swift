@@ -116,7 +116,6 @@ class ProfileView: UIView, Themeable {
         imageView.initialsFont = UIFont.systemFont(ofSize: 55, weight: .semibold).monospaced()
         imageView.userSession = session
         imageView.user = user
-        imageView.isAccessibilityElement = true
         imageView.accessibilityLabel = "self.profile.change_user_image.accessibility".localized
         imageView.accessibilityTraits = .button
         imageView.accessibilityElementsHidden = false

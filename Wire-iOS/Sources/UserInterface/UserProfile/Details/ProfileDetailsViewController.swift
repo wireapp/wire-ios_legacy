@@ -100,6 +100,8 @@ class ProfileDetailsViewController: UIViewController, Themeable {
         
         profileView.prepareForDisplay(in: conversation)
         profileView.availabilityView.options = .profileDetails
+        profileView.imageView.isAccessibilityElement = false
+        profileView.imageView.isUserInteractionEnabled = false
         profileViewContainer.addSubview(profileView)
         tableView.tableHeaderView = profileViewContainer
         
