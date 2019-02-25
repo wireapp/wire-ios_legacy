@@ -526,7 +526,6 @@
 		872CB8B319E58816006752B4 /* ProfileFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 872CB8A419E58816006752B4 /* ProfileFooterView.m */; };
 		872CB8B519E58816006752B4 /* ProfileIncomingConnectionRequestFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 872CB8A819E58816006752B4 /* ProfileIncomingConnectionRequestFooterView.m */; };
 		872CB8B819E58816006752B4 /* ProfileSendConnectionRequestFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 872CB8AE19E58816006752B4 /* ProfileSendConnectionRequestFooterView.m */; };
-		872CB8B919E58816006752B4 /* ProfileUnblockFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 872CB8B019E58816006752B4 /* ProfileUnblockFooterView.m */; };
 		872E22201F5EA4B6007729D4 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872E221F1F5EA4B6007729D4 /* ProfileView.swift */; };
 		872E22221F600347007729D4 /* Cartography+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872E22211F600347007729D4 /* Cartography+Additions.swift */; };
 		8732670E1D2D0C5C005A62C1 /* AudioRecordKeyboardViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8732670C1D2D0C49005A62C1 /* AudioRecordKeyboardViewControllerTests.swift */; };
@@ -762,6 +761,10 @@
 		8FC854CC199245770008B66B /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FC852BF199245760008B66B /* ProfileViewController.m */; };
 		8FC8563E19924CBA0008B66B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8FC8564019924CBA0008B66B /* Localizable.strings */; };
 		A952848722242B260054E970 /* ProgressSpinner+Constraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = A952848522242B210054E970 /* ProgressSpinner+Constraint.swift */; };
+		A952848A22242D700054E970 /* UIViewController+LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A952848822242D6D0054E970 /* UIViewController+LoadingView.swift */; };
+		A952848C22242E9E0054E970 /* ProfileUnblockFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A952848B22242E9E0054E970 /* ProfileUnblockFooterView.swift */; };
+		A952849022242F2F0054E970 /* ProfileSendConnectionRequestFooterView+Constraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = A952848F22242F2E0054E970 /* ProfileSendConnectionRequestFooterView+Constraint.swift */; };
+		A952849222242FBB0054E970 /* ProfileIncomingConnectionRequestFooterView+Constraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = A952849122242FBA0054E970 /* ProfileIncomingConnectionRequestFooterView+Constraint.swift */; };
 		A97192B3221302DD00E72AD1 /* MockUserRight.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97192B2221302DD00E72AD1 /* MockUserRight.swift */; };
 		A97192B52213225F00E72AD1 /* ConversationListViewController+Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97192B42213225E00E72AD1 /* ConversationListViewController+Setting.swift */; };
 		AF36C59F1E9F67B600FADECC /* DraftListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF36C59E1E9F67B600FADECC /* DraftListViewController.swift */; };
@@ -2129,8 +2132,6 @@
 		872CB8A819E58816006752B4 /* ProfileIncomingConnectionRequestFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileIncomingConnectionRequestFooterView.m; sourceTree = "<group>"; };
 		872CB8AD19E58816006752B4 /* ProfileSendConnectionRequestFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileSendConnectionRequestFooterView.h; sourceTree = "<group>"; };
 		872CB8AE19E58816006752B4 /* ProfileSendConnectionRequestFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileSendConnectionRequestFooterView.m; sourceTree = "<group>"; };
-		872CB8AF19E58816006752B4 /* ProfileUnblockFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileUnblockFooterView.h; sourceTree = "<group>"; };
-		872CB8B019E58816006752B4 /* ProfileUnblockFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileUnblockFooterView.m; sourceTree = "<group>"; };
 		872E221F1F5EA4B6007729D4 /* ProfileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		872E22211F600347007729D4 /* Cartography+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Cartography+Additions.swift"; sourceTree = "<group>"; };
 		8732670C1D2D0C49005A62C1 /* AudioRecordKeyboardViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioRecordKeyboardViewControllerTests.swift; sourceTree = "<group>"; };
@@ -2476,6 +2477,10 @@
 		8FC856B019925B680008B66B /* WireSyncEngine+iOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WireSyncEngine+iOS.h"; sourceTree = "<group>"; };
 		A952848322242B050054E970 /* ProgressSpinner+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ProgressSpinner+Internal.h"; sourceTree = "<group>"; };
 		A952848522242B210054E970 /* ProgressSpinner+Constraint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ProgressSpinner+Constraint.swift"; sourceTree = "<group>"; };
+		A952848822242D6D0054E970 /* UIViewController+LoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+LoadingView.swift"; sourceTree = "<group>"; };
+		A952848B22242E9E0054E970 /* ProfileUnblockFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileUnblockFooterView.swift; sourceTree = "<group>"; };
+		A952848F22242F2E0054E970 /* ProfileSendConnectionRequestFooterView+Constraint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ProfileSendConnectionRequestFooterView+Constraint.swift"; sourceTree = "<group>"; };
+		A952849122242FBA0054E970 /* ProfileIncomingConnectionRequestFooterView+Constraint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ProfileIncomingConnectionRequestFooterView+Constraint.swift"; sourceTree = "<group>"; };
 		A97192B2221302DD00E72AD1 /* MockUserRight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockUserRight.swift; sourceTree = "<group>"; };
 		A97192B42213225E00E72AD1 /* ConversationListViewController+Setting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationListViewController+Setting.swift"; sourceTree = "<group>"; };
 		A9B02231209B6E4E00DF25D8 /* Hockey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hockey.swift; sourceTree = "<group>"; };
@@ -3546,6 +3551,7 @@
 				D5168F42200F6F2300F8222A /* CABasicAnimation+Rotation.m */,
 				1E8C25381BBC279B00FC373F /* UIViewController+LoadingView.h */,
 				1E8C25391BBC279B00FC373F /* UIViewController+LoadingView.m */,
+				A952848822242D6D0054E970 /* UIViewController+LoadingView.swift */,
 			);
 			path = Loading;
 			sourceTree = "<group>";
@@ -4686,10 +4692,11 @@
 				EFAFCA86213417F0002B31A6 /* ParticipantDeviceCell+Style.swift */,
 				872CB8A719E58816006752B4 /* ProfileIncomingConnectionRequestFooterView.h */,
 				872CB8A819E58816006752B4 /* ProfileIncomingConnectionRequestFooterView.m */,
+				A952849122242FBA0054E970 /* ProfileIncomingConnectionRequestFooterView+Constraint.swift */,
 				872CB8AD19E58816006752B4 /* ProfileSendConnectionRequestFooterView.h */,
 				872CB8AE19E58816006752B4 /* ProfileSendConnectionRequestFooterView.m */,
-				872CB8AF19E58816006752B4 /* ProfileUnblockFooterView.h */,
-				872CB8B019E58816006752B4 /* ProfileUnblockFooterView.m */,
+				A952848F22242F2E0054E970 /* ProfileSendConnectionRequestFooterView+Constraint.swift */,
+				A952848B22242E9E0054E970 /* ProfileUnblockFooterView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -7359,6 +7366,7 @@
 				16626500217DAC4F00300F45 /* ConversationMessageCell.swift in Sources */,
 				163E8C7921E363FE0030BD8D /* ConversationGuestsAllowedCell.swift in Sources */,
 				8FC85459199245770008B66B /* InvisibleInputAccessoryView.m in Sources */,
+				A952849222242FBB0054E970 /* ProfileIncomingConnectionRequestFooterView+Constraint.swift in Sources */,
 				549D55AC1DBE03990035EB66 /* Settings+Logging.swift in Sources */,
 				EEC7E82A2178B55100E32835 /* ConversationNotificationOptionsViewController.swift in Sources */,
 				F15650DD21DD10DD00210504 /* ThreeDotsLoadingView.swift in Sources */,
@@ -7639,6 +7647,7 @@
 				87DCF49C1D34E9E600BB420F /* LocationSendViewController.swift in Sources */,
 				F1199D421FC849450070FAC3 /* VerificationCodeFieldDescription.swift in Sources */,
 				BF808B4D1DE5AD1600718076 /* SettingsCellDescriptorFactory+Account.swift in Sources */,
+				A952848A22242D700054E970 /* UIViewController+LoadingView.swift in Sources */,
 				871BC36D1D34F96000DF0793 /* DeviceOrientationObserver.m in Sources */,
 				8710673D1C0DC5570035603B /* SettingsCellDescriptor.swift in Sources */,
 				EEA9A75F21B01F28001F7B5C /* ConversationCreateErrorCell.swift in Sources */,
@@ -7720,7 +7729,6 @@
 				879E5E991F0104A6007A88A3 /* UITextView+Autocorrect.swift in Sources */,
 				877798AC205A8EF500898A5E /* ZClientViewController.swift in Sources */,
 				EF297DDD213209220002983A /* ContactsViewController+Style.swift in Sources */,
-				872CB8B919E58816006752B4 /* ProfileUnblockFooterView.m in Sources */,
 				DB3A47E01B4AD96C00391B5C /* MentionsCollectionViewCell.m in Sources */,
 				BF5FAC0120B6B738004CEB45 /* UIAlertController+OngoingCall.swift in Sources */,
 				AF36C5A11E9F67E400FADECC /* MessageComposeViewController.swift in Sources */,
@@ -7920,6 +7928,7 @@
 				871BC0591D34F60700DF0793 /* NSDate+Format.m in Sources */,
 				16829EDF2010D60800F579A0 /* InviteTeamMemberSection.swift in Sources */,
 				5E35F7742180B98B00D3F4FE /* ConversationSoundCloudAttachmentCell.swift in Sources */,
+				A952849022242F2F0054E970 /* ProfileSendConnectionRequestFooterView+Constraint.swift in Sources */,
 				8FC85452199245770008B66B /* ConversationContentViewController.m in Sources */,
 				87E8D0BD21821E6F00BD26AC /* ConversationContentViewController+Reply.swift in Sources */,
 				D525426D209363AF001C04C1 /* IconLabelButton.swift in Sources */,
@@ -8077,6 +8086,7 @@
 				87C39A8A206947A1008DA100 /* UIView+Constraints.swift in Sources */,
 				EF2B255F2209C543006712CA /* UIUserInterfaceSizeClass+Constraint.swift in Sources */,
 				87DCF4E71D34EA4500BB420F /* UIActivityViewController+Invite.m in Sources */,
+				A952848C22242E9E0054E970 /* ProfileUnblockFooterView.swift in Sources */,
 				EF1BEBCD21F5E8F5001128E0 /* StartUIViewController+Constraints.swift in Sources */,
 				160D691D212AC95A00096EAD /* ImageResourceView.swift in Sources */,
 				EFF6DCB4206BE94600437C71 /* SplitViewController+leftView.swift in Sources */,
