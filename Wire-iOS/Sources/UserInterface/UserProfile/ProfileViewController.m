@@ -122,6 +122,18 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
     [self updateShowVerifiedShield];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [UIApplication.sharedApplication wr_updateStatusBarForCurrentControllerAnimated:animated];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [UIApplication.sharedApplication wr_updateStatusBarForCurrentControllerAnimated:animated];
+}
+
 - (void)dismissButtonClicked
 {
     [self requestDismissalWithCompletion:nil];

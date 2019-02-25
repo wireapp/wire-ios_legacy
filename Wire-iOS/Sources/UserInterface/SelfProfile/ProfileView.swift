@@ -204,8 +204,8 @@ class ProfileView: UIView, Themeable {
     
     // MARK: - Content and Options
     
-    func prepareForDisplay(in conversation: ZMConversation) {
-        guestIndicatorStack.isHidden = !user.isGuest(in: conversation)
+    func prepareForDisplay(in conversation: ZMConversation?) {
+        guestIndicatorStack.isHidden = conversation.map(user.isGuest) != true
         
         let remainingTimeString = user.expirationDisplayString
         remainingTimeLabel.text = remainingTimeString

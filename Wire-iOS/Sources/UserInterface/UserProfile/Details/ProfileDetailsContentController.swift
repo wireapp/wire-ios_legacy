@@ -53,7 +53,7 @@ class ProfileDetailsContentController: NSObject, UITableViewDataSource, UITableV
     let viewer: GenericUser
     
     /// The conversation where the profile details will be displayed.
-    let conversation: ZMConversation
+    let conversation: ZMConversation?
         
     // MARK: - Accessing the Content
     
@@ -78,7 +78,7 @@ class ProfileDetailsContentController: NSObject, UITableViewDataSource, UITableV
      * - parameter conversation: The conversation where the profile details will be displayed.
      */
     
-    init(user: GenericUser, viewer: GenericUser, conversation: ZMConversation) {
+    init(user: GenericUser, viewer: GenericUser, conversation: ZMConversation?) {
         self.user = user
         self.viewer = viewer
         self.conversation = conversation
@@ -103,8 +103,8 @@ class ProfileDetailsContentController: NSObject, UITableViewDataSource, UITableV
     
     /// Updates the content for the current configuration.
     private func updateContent() {
-        switch conversation.conversationType {
-        case .group:
+        switch conversation?.conversationType {
+        case .group?:
             let _extendedMetadata: [[String: String]]? = useDefaultData ? defaultData : user.extendedMetadata
             if let extendedMetadata = _extendedMetadata, viewerCanAccessExtendedMetadata, !extendedMetadata.isEmpty {
                 // If there is extended metadata and the user is allowed to see it, display it.
@@ -114,7 +114,7 @@ class ProfileDetailsContentController: NSObject, UITableViewDataSource, UITableV
                 contents = []
             }
             
-        case .oneOnOne:
+        case .oneOnOne?:
             let readReceiptsEnabled = viewer.readReceiptsEnabled
             let _extendedMetadata: [[String: String]]? = useDefaultData ? defaultData : user.extendedMetadata
             if let extendedMetadata = _extendedMetadata, viewerCanAccessExtendedMetadata, !extendedMetadata.isEmpty {

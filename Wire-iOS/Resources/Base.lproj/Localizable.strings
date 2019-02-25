@@ -732,7 +732,7 @@
 
 // Cancel connection request
 "profile.cancel_connection_request_dialog.title" = "Cancel Request?";
-"profile.cancel_connection_request_dialog.message" = "Remove connection request to %@.";
+"profile.cancel_connection_request_dialog.message" = "Cancel your connection request to %@?";
 "profile.cancel_connection_request_dialog.button_no" = "No";
 "profile.cancel_connection_request_dialog.button_yes" = "Yes";
 

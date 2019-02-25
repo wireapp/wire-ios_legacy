@@ -31,7 +31,7 @@ class ProfileDetailsViewController: UIViewController, Themeable {
     let viewer: GenericUser
 
     /// The conversation where the profile is displayed.
-    let conversation: ZMConversation
+    let conversation: ZMConversation?
 
     /**
      * The object that calculates and controls the content to display in the user
@@ -64,7 +64,7 @@ class ProfileDetailsViewController: UIViewController, Themeable {
      * - parameter conversation: The conversation where the profile is displayed.
      */
     
-    init(user: GenericUser, viewer: GenericUser, conversation: ZMConversation) {
+    init(user: GenericUser, viewer: GenericUser, conversation: ZMConversation?) {
         self.user = user
         self.viewer = viewer
         self.conversation = conversation

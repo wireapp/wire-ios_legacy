@@ -41,7 +41,7 @@ extension ProfileViewController {
     }
 
     @objc func setupProfileDetailsViewController() -> ProfileDetailsViewController? {
-        let profileDetailsViewController = ProfileDetailsViewController(user: bareUser, viewer: viewer, conversation: conversation!)
+        let profileDetailsViewController = ProfileDetailsViewController(user: bareUser, viewer: viewer, conversation: conversation)
         profileDetailsViewController.title = "profile.details.title".localized
 
         return profileDetailsViewController
@@ -59,11 +59,6 @@ extension ProfileViewController: ViewControllerDismisser {
 extension ProfileViewController: ProfileFooterViewDelegate {
 
     @objc func updateFooterView() {
-        guard let conversation = self.conversation else {
-            profileFooterView.isHidden = true
-            return
-        }
-
         let factory = ProfileActionsFactory(user: bareUser, viewer: viewer, conversation: conversation)
         let actions = factory.makeActionsList()
 
@@ -145,10 +140,17 @@ extension ProfileViewController: ProfileFooterViewDelegate {
     // MARK: Connect
 
     private func sendConnectionRequest() {
-        guard let user = self.fullUser() else { return }
+        let connect: (String) -> Void = {
+            if let user = self.fullUser() {
+                user.connect(message: $0)
+            } else if let searchUser = self.bareUser as? ZMSearchUser {
+                searchUser.connect(message: $0)
+            }
+        }
+
         ZMUserSession.shared()?.enqueueChanges {
-            let messageText = "missive.connection_request.default_message".localized(args: user.displayName, self.viewer.name ?? "")
-            user.connect(message: messageText)
+            let messageText = "missive.connection_request.default_message".localized(args: self.bareUser.displayName, self.viewer.name ?? "")
+            connect(messageText)
             // update the footer view to display the cancel request button
             self.updateFooterView()
         }
