@@ -87,7 +87,7 @@ class ProfileDetailsContentController: NSObject, UITableViewDataSource, UITableV
         configureObservers()
         updateContent()
         ZMUserSession.shared()?.performChanges {
-            (user as! ZMUser).needsRichProfileUpdate = true
+            user.needsRichProfileUpdate = true
         }
     }
     
