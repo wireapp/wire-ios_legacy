@@ -24,7 +24,7 @@ extension ProfileFooterView {
     func setupConstraints() {
         let buttonHeight: CGFloat = 32
 
-        [leftButton, leftButton].forEach(){ $0.translatesAutoresizingMaskIntoConstraints = false}
+        [leftButton, rightButton].forEach(){ $0.translatesAutoresizingMaskIntoConstraints = false}
 
         leftButton.fitInSuperview(
             with: EdgeInsets(top: 0,
