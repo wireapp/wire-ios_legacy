@@ -23,14 +23,43 @@ class IncomingRequestFooterTests: ZMSnapshotTestCase {
 
     override func setUp() {
         super.setUp()
-        recordMode = true
     }
 
-    func testIncomingRequestFooter() {
+    func testIncomingRequestFooter_Light() {
         let footer = IncomingRequestFooterView()
-        footer.widthAnchor.constraint(equalToConstant: 375).isActive = true
-//        footer.frame.size = footer.systemLayoutSizeFitting(CGSize(width: 375, height: 0))
-        verifyInAllColorSchemes(view: footer)
+        footer.colorSchemeVariant = .light
+        let view = footer.prepareForSnapshots()
+        verify(view: view)
+    }
+
+    func testIncomingRequestFooter_Dark() {
+        let footer = IncomingRequestFooterView()
+        footer.colorSchemeVariant = .dark
+        let view = footer.prepareForSnapshots()
+        verify(view: view)
+    }
+
+}
+
+fileprivate extension IncomingRequestFooterView {
+
+    func prepareForSnapshots() -> UIView {
+        let container = UIView()
+        container.addSubview(self)
+        translatesAutoresizingMaskIntoConstraints = false
+        container.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            container.widthAnchor.constraint(equalToConstant: 375),
+            container.topAnchor.constraint(equalTo: topAnchor),
+            container.bottomAnchor.constraint(equalTo: bottomAnchor),
+            container.leadingAnchor.constraint(equalTo: leadingAnchor),
+            container.trailingAnchor.constraint(equalTo: trailingAnchor)
+        ])
+
+        container.setNeedsLayout()
+        container.layoutIfNeeded()
+        return container
     }
 
 }
