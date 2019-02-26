@@ -770,7 +770,6 @@
 		8FC854CC199245770008B66B /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FC852BF199245760008B66B /* ProfileViewController.m */; };
 		8FC8563E19924CBA0008B66B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8FC8564019924CBA0008B66B /* Localizable.strings */; };
 		A95284982224E6A50054E970 /* ProgressSpinner+Constraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95284972224E6A50054E970 /* ProgressSpinner+Constraint.swift */; };
-		A952849B2224E79F0054E970 /* ProfileUnblockFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A952849A2224E79E0054E970 /* ProfileUnblockFooterView.swift */; };
 		A952849D2224E8190054E970 /* UIViewController+LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A952849C2224E8190054E970 /* UIViewController+LoadingView.swift */; };
 		A952849F2224E8AB0054E970 /* ProfileSendConnectionRequestFooterView+Constraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = A952849E2224E8AB0054E970 /* ProfileSendConnectionRequestFooterView+Constraint.swift */; };
 		A95284A12224E8F90054E970 /* ProfileIncomingConnectionRequestFooterView+Constraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95284A02224E8F90054E970 /* ProfileIncomingConnectionRequestFooterView+Constraint.swift */; };
@@ -2488,7 +2487,6 @@
 		8FC856B019925B680008B66B /* WireSyncEngine+iOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WireSyncEngine+iOS.h"; sourceTree = "<group>"; };
 		A95284972224E6A50054E970 /* ProgressSpinner+Constraint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ProgressSpinner+Constraint.swift"; sourceTree = "<group>"; };
 		A95284992224E6B60054E970 /* ProgressSpinner+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ProgressSpinner+Internal.h"; sourceTree = "<group>"; };
-		A952849A2224E79E0054E970 /* ProfileUnblockFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileUnblockFooterView.swift; sourceTree = "<group>"; };
 		A952849C2224E8190054E970 /* UIViewController+LoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+LoadingView.swift"; sourceTree = "<group>"; };
 		A952849E2224E8AB0054E970 /* ProfileSendConnectionRequestFooterView+Constraint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ProfileSendConnectionRequestFooterView+Constraint.swift"; sourceTree = "<group>"; };
 		A95284A02224E8F90054E970 /* ProfileIncomingConnectionRequestFooterView+Constraint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ProfileIncomingConnectionRequestFooterView+Constraint.swift"; sourceTree = "<group>"; };
@@ -4728,7 +4726,6 @@
 				872CB8AD19E58816006752B4 /* ProfileSendConnectionRequestFooterView.h */,
 				872CB8AE19E58816006752B4 /* ProfileSendConnectionRequestFooterView.m */,
 				A952849E2224E8AB0054E970 /* ProfileSendConnectionRequestFooterView+Constraint.swift */,
-				A952849A2224E79E0054E970 /* ProfileUnblockFooterView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -7604,7 +7601,6 @@
 				F16427081FCC5BF800D2ABFC /* SetPasswordStepDescription.swift in Sources */,
 				5E8FFC0321ECC5CF0052DF03 /* AuthenticationFeatureProvider.swift in Sources */,
 				5EC16B9120EB8C6F00955156 /* YouTubeService.swift in Sources */,
-				A952849B2224E79F0054E970 /* ProfileUnblockFooterView.swift in Sources */,
 				EF51C2BF211B2CAF0099A599 /* Data+HEIF.swift in Sources */,
 				BF2A74711CEB466A002608BF /* ConversationInputBarViewController+Audio.swift in Sources */,
 				EF44784F20906DDD00BD9827 /* FullscreenImageViewController+Zoom.swift in Sources */,
