@@ -174,14 +174,11 @@ class ProfileActionsFactory: NSObject {
             let isOnSameTeam = viewer.canAccessCompanyInformation(of: user)
 
             // Show connection request actions for unconnected users from different teams.
-            if user.isPendingApprovalBySelfUser {
-                // Do not show the action bar if the user is not connected.
-                break
-            } else if user.isPendingApprovalByOtherUser {
+            if user.isPendingApprovalByOtherUser {
                 actions.append(.cancelConnectionRequest)
             } else if user.isConnected || isOnSameTeam {
                 actions.append(.openOneToOne)
-            } else if user.canBeConnected {
+            } else if user.canBeConnected && !user.isPendingApprovalBySelfUser {
                 actions.append(.connect)
             }
 
