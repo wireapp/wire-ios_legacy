@@ -56,9 +56,10 @@ extension ProfileViewController: ViewControllerDismisser {
 
 // MARK: - Footer View
 
-extension ProfileViewController: ProfileFooterViewDelegate {
+extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFooterViewDelegate {
 
-    @objc func updateFooterView() {
+    @objc func updateFooterViews() {
+        // Actions
         let factory = ProfileActionsFactory(user: bareUser, viewer: viewer, conversation: conversation)
         let actions = factory.makeActionsList()
 
@@ -66,6 +67,21 @@ extension ProfileViewController: ProfileFooterViewDelegate {
         profileFooterView.isHidden = actions.isEmpty
         profileFooterView.configure(with: actions)
         view.bringSubviewToFront(profileFooterView)
+
+        // Incoming Request Footer
+        incomingRequestFooter.isHidden = !bareUser.isPendingApprovalBySelfUser
+        incomingRequestFooter.delegate = self
+        view.bringSubviewToFront(incomingRequestFooter)
+    }
+
+    func footerView(_ footerView: IncomingRequestFooterView, didRespondToRequestWithAction action: IncomingConnectionAction) {
+        switch action {
+        case .accept:
+            acceptConnectionRequest()
+        case .ignore:
+            ignoreConnectionRequest()
+        }
+        
     }
 
     func footerView(_ footerView: ProfileFooterView, shouldPerformAction action: ProfileAction) {
@@ -120,6 +136,14 @@ extension ProfileViewController: ProfileFooterViewDelegate {
         }
     }
 
+    @objc func returnToPreviousScreen() {
+        if let navigationController = self.navigationController, navigationController.viewControllers.first != self {
+            navigationController.popViewController(animated: true)
+        } else {
+            self.dismiss(animated: true, completion: nil)
+        }
+    }
+
     /// Presents an alert as a popover if needed.
     @objc(presentAlert:fromTargetView:)
     func presentAlert(_ alert: UIAlertController, targetView: UIView) {
@@ -152,7 +176,24 @@ extension ProfileViewController: ProfileFooterViewDelegate {
             let messageText = "missive.connection_request.default_message".localized(args: self.bareUser.displayName, self.viewer.name ?? "")
             connect(messageText)
             // update the footer view to display the cancel request button
-            self.updateFooterView()
+            self.updateFooterViews()
+        }
+    }
+
+    private func acceptConnectionRequest() {
+        guard let user = self.fullUser() else { return }
+        ZMUserSession.shared()?.enqueueChanges {
+            user.accept()
+            user.refreshData()
+            self.updateFooterViews()
+        }
+    }
+
+    private func ignoreConnectionRequest() {
+        guard let user = self.fullUser() else { return }
+        ZMUserSession.shared()?.enqueueChanges {
+            user.ignore()
+            self.returnToPreviousScreen()
         }
     }
 
@@ -177,7 +218,7 @@ extension ProfileViewController: ProfileFooterViewDelegate {
         ZMUserSession.shared()?.enqueueChanges {
             self.conversation.mutedMessageTypes = enableNotifications ? .none : .all
             // update the footer view to display the correct mute/unmute button
-            self.updateFooterView()
+            self.updateFooterViews()
         }
     }
 
@@ -231,11 +272,7 @@ extension ProfileViewController: ProfileFooterViewDelegate {
             self.conversation.removeOrShowError(participnant: otherUser) { result in
                 switch result {
                 case .success:
-                    if let navigationController = self.navigationController, navigationController.viewControllers.first != self {
-                        navigationController.popViewController(animated: true)
-                    } else {
-                        self.dismiss(animated: true, completion: nil)
-                    }
+                    self.returnToPreviousScreen()
                 case .failure(_):
                     break
                 }

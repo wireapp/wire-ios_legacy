@@ -30,7 +30,6 @@ NS_ASSUME_NONNULL_BEGIN
 @class ProfileViewController;
 
 
-
 typedef NS_ENUM(NSInteger, ProfileViewControllerContext) {
     ProfileViewControllerContextSearch,
     ProfileViewControllerContextGroupConversation,

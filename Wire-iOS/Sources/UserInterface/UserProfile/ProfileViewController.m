@@ -108,6 +108,9 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
     self.profileFooterView = [[ProfileFooterView alloc] init];
     [self.view addSubview:self.profileFooterView];
 
+    self.incomingRequestFooter = [[IncomingRequestFooterView alloc] init];
+    [self.view addSubview:self.incomingRequestFooter];
+
     self.view.backgroundColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorBarBackground];
     
     if (nil != self.fullUser && nil != [ZMUserSession sharedSession]) {
@@ -118,7 +121,7 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
     [self setupHeader];
     [self setupTabsController];
     [self setupConstraints];
-    [self updateFooterView];
+    [self updateFooterViews];
     [self updateShowVerifiedShield];
 }
 
@@ -184,6 +187,16 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
     [self.tabsController.view autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.usernameDetailsView];
     [self.tabsController.view autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeTop];
     [self.profileFooterView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeTop];
+
+    self.incomingRequestFooter.translatesAutoresizingMaskIntoConstraints = NO;
+
+    [NSLayoutConstraint activateConstraints:
+  @[
+    [self.incomingRequestFooter.bottomAnchor constraintEqualToAnchor:self.profileFooterView.topAnchor],
+    [self.incomingRequestFooter.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor],
+    [self.incomingRequestFooter.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor]
+    ]
+     ];
 }
 
 #pragma mark - Header
@@ -267,11 +280,10 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
 
 - (void)cancelConnectionRequest
 {
-    [self dismissViewControllerAnimated:YES completion:^{
-        ZMUser *user = [self fullUser];
-        [[ZMUserSession sharedSession] enqueueChanges:^{
-            [user cancelConnectionRequest];
-        }];
+    ZMUser *user = [self fullUser];
+    [[ZMUserSession sharedSession] enqueueChanges:^{
+        [user cancelConnectionRequest];
+        [self returnToPreviousScreen];
     }];
 }
 

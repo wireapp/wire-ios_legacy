@@ -18,6 +18,7 @@
 
 @class ConversationActionController;
 @class ProfileFooterView;
+@class IncomingRequestFooterView;
 @protocol ActionController;
 
 #import "AccentColorProvider.h"
@@ -28,6 +29,8 @@
 @property (nonatomic, readonly) ZMConversation *conversation;
 @property (nonatomic) id<ActionController> actionsController;
 @property (nonatomic) ProfileFooterView *profileFooterView;
+@property (nonatomic) IncomingRequestFooterView *incomingRequestFooter;
+
 - (ZMUser *)fullUser;
 
 @end

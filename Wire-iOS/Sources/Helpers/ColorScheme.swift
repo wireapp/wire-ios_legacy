@@ -116,6 +116,9 @@ public extension UIColor {
     
     case replyBorder
     case replyHighlight
+
+    case secondaryAction
+    case secondaryActionDimmed
 }
 
 extension UIColor {
@@ -234,6 +237,11 @@ extension ColorSchemeColor {
         case .replyHighlight:
             return ColorPair(light: UIColor(rgb: 0x33373A, alpha: 0.24),
                              dark: UIColor(white: 1, alpha: 0.24))
+
+        case .secondaryAction:
+            return ColorPair(light: UIColor(rgb: 0xE8ECEE), dark: .backgroundLightGraphite)
+        case .secondaryActionDimmed:
+            return ColorPair(light: UIColor(rgb: 0xE8ECEE, alpha: 0.24), dark: UIColor.backgroundLightGraphite.withAlphaComponent(0.24))
         }
     }
 }
