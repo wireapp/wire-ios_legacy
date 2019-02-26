@@ -28,7 +28,6 @@ class ProfileViewControllerTests: ZMSnapshotTestCase {
     
     override func setUp() {
         super.setUp()
-        recordMode = true
         teamIdentifier = UUID()
         selfUser = MockUser.createSelfUser(name: "George Johnson", inTeam: teamIdentifier)
         selfUser.handle = "georgejohnson"
