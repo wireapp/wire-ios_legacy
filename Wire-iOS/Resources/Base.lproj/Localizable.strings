@@ -707,8 +707,8 @@
 "profile.remove_dialog_title" = "Remove?";
 "profile.remove_dialog_message" = "%@ won’t be able to send or receive messages in this conversation.";
 "profile.remove_dialog_button_cancel" = "Cancel";
-"profile.remove_dialog_button_remove" = "Remove from Group…";
-"profile.remove_dialog_button_remove_confirm" = "Remove from Group";
+"profile.remove_dialog_button_remove" = "Remove From Group…";
+"profile.remove_dialog_button_remove_confirm" = "Remove From Group";
 
 // Block dialog
 "profile.block_dialog.title" = "Block?";
