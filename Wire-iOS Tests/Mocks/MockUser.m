@@ -307,4 +307,6 @@ static id<UserType> mockSelfUser = nil;
 
 @synthesize richProfile;
 
+@synthesize needsRichProfileUpdate;
+
 @end
