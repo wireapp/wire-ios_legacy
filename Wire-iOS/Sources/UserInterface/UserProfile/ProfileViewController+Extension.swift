@@ -209,6 +209,7 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
         guard case .block = result else { return }
         transitionToListAndEnqueue {
             self.fullUser()?.toggleBlocked()
+            self.updateFooterViews()
         }
     }
 

@@ -103,8 +103,8 @@ class IncomingRequestFooterView: UIView, Themeable {
 
         NSLayoutConstraint.activate([
             // buttons
-            ignoreButton.heightAnchor.constraint(equalToConstant: 56),
-            acceptButton.heightAnchor.constraint(equalToConstant: 56),
+            ignoreButton.heightAnchor.constraint(equalToConstant: 48),
+            acceptButton.heightAnchor.constraint(equalToConstant: 48),
 
             // contentStack
             contentStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
