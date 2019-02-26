@@ -19,49 +19,68 @@
 import XCTest
 @testable import Wire
 
-final class ProfileViewControllerTests: ZMSnapshotTestCase {
+class ProfileViewControllerTests: ZMSnapshotTestCase {
 
     var sut: ProfileViewController!
     var mockUser: MockUser!
+    var selfUser: MockUser!
+    var teamIdentifier: UUID!
     
     override func setUp() {
         super.setUp()
+        teamIdentifier = UUID()
+        selfUser = MockUser.createSelfUser(name: "George Johnson", inTeam: teamIdentifier)
+        selfUser.handle = "georgejohnson"
+        selfUser.feature(withUserClients: 6)
 
-        let user = MockUser.mockUsers()[0]
-        mockUser = MockUser(for: user)
+        mockUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: teamIdentifier)
+        mockUser.handle = "catherinejackson"
         mockUser.feature(withUserClients: 6)
     }
     
     override func tearDown() {
         sut = nil
         mockUser = nil
+        selfUser = nil
+        teamIdentifier = nil
 
         super.tearDown()
     }
 
-    func testForContextOneToOneConversation(){
-        MockUser.mockSelf()?.teamRole = .member
+    func testForContextOneToOneConversation() {
+        selfUser.teamRole = .member
 
-        sut = ProfileViewController(user: mockUser!, context: .oneToOneConversation)
+        let conversation = MockConversation.oneOnOneConversation()
+        conversation.activeParticipants = [selfUser, mockUser]
+
+        sut = ProfileViewController(user: mockUser, viewer: selfUser,
+                                    conversation: conversation.convertToRegularConversation(), context: .oneToOneConversation)
+
         self.verify(view: sut.view)
     }
 
-    func testForContextOneToOneConversationForPartnerRole(){
-        MockUser.mockSelf()?.teamRole = .partner
+    func testForContextOneToOneConversationForPartnerRole() {
+        selfUser.teamRole = .partner
 
-        sut = ProfileViewController(user: mockUser!, context: .oneToOneConversation)
+        let conversation = MockConversation.oneOnOneConversation()
+        conversation.activeParticipants = [selfUser, mockUser]
+
+        sut = ProfileViewController(user: mockUser, viewer: selfUser,
+                                    conversation: conversation.convertToRegularConversation(), context: .oneToOneConversation)
+
         self.verify(view: sut.view)
     }
 
-    func testForDeviceListContext(){
-        sut = ProfileViewController(user: mockUser!, context: .deviceList)
+    func testForDeviceListContext() {
+        sut = ProfileViewController(user: mockUser, viewer: selfUser, context: .deviceList)
         self.verify(view: sut.view)
     }
 
-    func testForWrapInNavigationController(){
-        sut = ProfileViewController(user: mockUser!, context: .deviceList)
+    func testForWrapInNavigationController() {
+        sut = ProfileViewController(user: mockUser, viewer: selfUser, context: .deviceList)
         let navWrapperController = sut.wrapInNavigationController()
 
         self.verify(view: navWrapperController.view)
     }
+
 }

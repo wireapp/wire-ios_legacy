@@ -159,7 +159,7 @@ extension ZClientViewController {
             clientListViewController.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(dismissClientListController(_:)))
             viewController = clientListViewController
         } else {
-            let profileViewController = ProfileViewController(user: user, context: .deviceList)
+            let profileViewController = ProfileViewController(user: user, viewer: ZMUser.selfUser(), context: .deviceList)
 
             if let conversationViewController = (conversationRootViewController as? ConversationRootViewController)?.conversationViewController {
                 profileViewController.delegate = conversationViewController

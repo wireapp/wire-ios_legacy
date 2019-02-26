@@ -52,7 +52,8 @@ public final class IncomingConnectionView: UIView {
         self.user = user
         super.init(frame: .zero)
 
-        self.userImageView.userSession = ZMUserSession.shared()
+        userImageView.userSession = ZMUserSession.shared()
+        userImageView.initialsFont = UIFont.systemFont(ofSize: 55, weight: .semibold).monospaced()
         self.setup()
         self.createConstraints()
     }

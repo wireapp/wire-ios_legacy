@@ -17,7 +17,8 @@
 //
 
 import Foundation
-final class UserDetailViewControllerFactory: NSObject {
+
+class UserDetailViewControllerFactory: NSObject {
 
     /// Create a ServiceDetailViewController if the user is a serviceUser, otherwise return a ProfileViewController
     ///
@@ -37,7 +38,8 @@ final class UserDetailViewControllerFactory: NSObject {
             serviceDetailViewController.viewControllerDismisser = viewControllerDismisser
             return serviceDetailViewController
         } else {
-            let profileViewController = ProfileViewController(user: user, conversation: conversation)
+            // TODO: Do not present the details if the user is not connected.
+            let profileViewController = ProfileViewController(user: user, viewer: ZMUser.selfUser(), conversation: conversation)
             profileViewController.delegate = profileViewControllerDelegate
             profileViewController.viewControllerDismisser = viewControllerDismisser
             return profileViewController

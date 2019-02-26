@@ -138,6 +138,12 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     self.navigationItem.rightBarButtonItem.accessibilityIdentifier = @"close";
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [UIApplication.sharedApplication wr_updateStatusBarForCurrentControllerAnimated:animated];
+}
+
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
@@ -146,7 +152,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self.navigationController.navigationBar setTranslucent:YES];
     self.navigationController.navigationBar.tintColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:ColorSchemeVariantDark];
     self.navigationController.navigationBar.titleTextAttributes = [DefaultNavigationBar titleTextAttributesFor:ColorSchemeVariantDark];
-    
+
     [UIApplication.sharedApplication wr_updateStatusBarForCurrentControllerAnimated:animated];
 }
 

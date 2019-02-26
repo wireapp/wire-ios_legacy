@@ -72,7 +72,6 @@
 #import "SwipeMenuCollectionCell+Internal.h"
 #import "TextView+Internal.h"
 #import "TextView.h"
-#import "ProfileFooterView.h"
 #import "ProfileIncomingConnectionRequestFooterView.h"
 #import "ProfileSendConnectionRequestFooterView.h"
 
@@ -118,8 +117,6 @@
 #import "CountryCodeTableViewController.h"
 #import "UIViewController+WR_Invite.h"
 #import "UIActivityViewController+Invite.h"
-#import "ProfileDetailsViewController.h"
-#import "ProfileDetailsViewController+Internal.h"
 #import "ContactsDataSource.h"
 #import "LaunchImageViewController.h"
 #import "StartUIViewController.h"

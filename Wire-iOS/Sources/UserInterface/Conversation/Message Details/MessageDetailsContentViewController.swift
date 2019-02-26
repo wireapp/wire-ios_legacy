@@ -267,7 +267,7 @@ extension MessageDetailsContentViewController: UICollectionViewDataSource, UICol
         let user = cells[indexPath.item].user
         let cell = collectionView.cellForItem(at: indexPath) as! UserCell
 
-        let profileViewController = ProfileViewController(user: user, conversation: conversation)
+        let profileViewController = ProfileViewController(user: user, viewer: ZMUser.selfUser(), conversation: conversation)
         profileViewController.delegate = self
         profileViewController.viewControllerDismisser = self
 
