@@ -235,6 +235,7 @@
 		5E628028222021970039A8AB /* ProfileFooterViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E628026222021600039A8AB /* ProfileFooterViewTests.swift */; };
 		5E62802A2224090D0039A8AB /* SeparatorTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E6280292224090D0039A8AB /* SeparatorTableViewCell.swift */; };
 		5E62802C222551CF0039A8AB /* IncomingRequestFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E62802B222551CE0039A8AB /* IncomingRequestFooterView.swift */; };
+		5E62802E22258A120039A8AB /* IncomingRequestFooterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E62802D22258A110039A8AB /* IncomingRequestFooterTests.swift */; };
 		5E65A79A212FF7CD008BFCC0 /* AuthenticationStateControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E65A799212FF7CD008BFCC0 /* AuthenticationStateControllerTests.swift */; };
 		5E65A79E21303F97008BFCC0 /* AuthenticationCoordinator+UserChange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E65A79D21303F97008BFCC0 /* AuthenticationCoordinator+UserChange.swift */; };
 		5E65A7A021303FCE008BFCC0 /* AuthenticationCoordinator+CompanyLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E65A79F21303FCE008BFCC0 /* AuthenticationCoordinator+CompanyLogin.swift */; };
@@ -1759,6 +1760,7 @@
 		5E628026222021600039A8AB /* ProfileFooterViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileFooterViewTests.swift; sourceTree = "<group>"; };
 		5E6280292224090D0039A8AB /* SeparatorTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeparatorTableViewCell.swift; sourceTree = "<group>"; };
 		5E62802B222551CE0039A8AB /* IncomingRequestFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomingRequestFooterView.swift; sourceTree = "<group>"; };
+		5E62802D22258A110039A8AB /* IncomingRequestFooterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomingRequestFooterTests.swift; sourceTree = "<group>"; };
 		5E65A799212FF7CD008BFCC0 /* AuthenticationStateControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationStateControllerTests.swift; sourceTree = "<group>"; };
 		5E65A79D21303F97008BFCC0 /* AuthenticationCoordinator+UserChange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AuthenticationCoordinator+UserChange.swift"; sourceTree = "<group>"; };
 		5E65A79F21303FCE008BFCC0 /* AuthenticationCoordinator+CompanyLogin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AuthenticationCoordinator+CompanyLogin.swift"; sourceTree = "<group>"; };
@@ -5969,6 +5971,7 @@
 				5EF7BA6A221B272200815625 /* ProfileDetailsViewControllerTests.swift */,
 				5E628024221EEA3B0039A8AB /* ProfileActionsFactoryTests.swift */,
 				5E628026222021600039A8AB /* ProfileFooterViewTests.swift */,
+				5E62802D22258A110039A8AB /* IncomingRequestFooterTests.swift */,
 				EFEB2EDF220C7E5500519EDC /* ProfileSelfPictureViewControllerSnapshotTests.swift */,
 			);
 			path = "Wire-iOS Tests";
@@ -8350,6 +8353,7 @@
 				8787BDD91BF374420096B1B5 /* SettingsPropertyTests.swift in Sources */,
 				D5943440203DCECA006AA0C0 /* ConversationOptionsViewControllerTests.swift in Sources */,
 				EF27CDA020C161500077FE55 /* ClientListViewControllerTests.swift in Sources */,
+				5E62802E22258A120039A8AB /* IncomingRequestFooterTests.swift in Sources */,
 				EF297DD42131F39F0002983A /* MediaPreviewViewControllerTests.swift in Sources */,
 				5EC0870D20EF530D000366B7 /* MockURLSession.swift in Sources */,
 				7C25D75B21494E4B002E22BF /* UserSearchResultsViewControllerTests.swift in Sources */,

@@ -28,6 +28,7 @@ class ProfileViewControllerTests: ZMSnapshotTestCase {
     
     override func setUp() {
         super.setUp()
+        recordMode = true
         teamIdentifier = UUID()
         selfUser = MockUser.createSelfUser(name: "George Johnson", inTeam: teamIdentifier)
         selfUser.handle = "georgejohnson"
@@ -74,6 +75,24 @@ class ProfileViewControllerTests: ZMSnapshotTestCase {
     func testForDeviceListContext() {
         sut = ProfileViewController(user: mockUser, viewer: selfUser, context: .deviceList)
         self.verify(view: sut.view)
+    }
+
+
+    func testForIncomingRequest() {
+        // GIVEN
+        mockUser.isConnected = false
+        mockUser.canBeConnected = true
+        mockUser.isPendingApprovalBySelfUser = true
+
+        let conversation = MockConversation.groupConversation()
+        conversation.activeParticipants = [selfUser, mockUser]
+
+        // WHEN
+        sut = ProfileViewController(user: mockUser, viewer: selfUser,
+                                    conversation: conversation.convertToRegularConversation(), context: .groupConversation)
+
+        // THEN
+        verify(view: sut.view)
     }
 
     func testForWrapInNavigationController() {
