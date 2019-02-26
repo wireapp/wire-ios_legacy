@@ -113,7 +113,7 @@ extension FullscreenImageViewController {
             obfuscationView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             obfuscationView.heightAnchor.constraint(equalTo: obfuscationView.widthAnchor),
             closeButton.centerYAnchor.constraint(equalTo: topOverlay.centerYAnchor, constant: 10),
-            closeButton.rightAnchor.constraint(equalTo: topOverlay.rightAnchor, constant: 8),
+            closeButton.rightAnchor.constraint(equalTo: topOverlay.rightAnchor, constant: -8),
             ])
         
         closeButton.setDimensions(length: 32)
