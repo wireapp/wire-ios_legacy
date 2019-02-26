@@ -23,6 +23,6 @@ extension UIViewController {
         [loadingView, spinnerView].forEach(){ $0.translatesAutoresizingMaskIntoConstraints = false }
 
         loadingView.fitInSuperview()
-        spinnerView.fitInSuperview()
+        spinnerView.centerInSuperview()
     }
 }
