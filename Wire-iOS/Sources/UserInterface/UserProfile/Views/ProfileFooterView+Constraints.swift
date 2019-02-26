@@ -22,6 +22,25 @@ extension ProfileFooterView {
 
     @objc
     func setupConstraints() {
-        setupConstraints(leftButton: leftButton, rightButton: rightButton, height: 32)
+        let buttonHeight: CGFloat = 32
+
+        [leftButton, leftButton].forEach(){ $0.translatesAutoresizingMaskIntoConstraints = false}
+
+        leftButton.fitInSuperview(
+            with: EdgeInsets(top: 0,
+                             leading: 16,
+                             bottom: 12),
+            exclude: [.trailing])
+        
+        rightButton.fitInSuperview(
+            with: EdgeInsets(top: 0,
+                             bottom: 12,
+                             trailing: 8),
+            exclude: [.leading])
+        
+        rightButton.setDimensions(length: buttonHeight)
+        
+        NSLayoutConstraint.activate([
+            leftButton.heightAnchor.constraint(equalToConstant: buttonHeight)])
     }
 }

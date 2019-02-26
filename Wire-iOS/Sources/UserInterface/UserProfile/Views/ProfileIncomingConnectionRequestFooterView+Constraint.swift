@@ -19,9 +19,31 @@
 import Foundation
 
 extension ProfileIncomingConnectionRequestFooterView {
-
+    
     @objc
     func setupConstraints() {
-        setupConstraints(leftButton: ignoreButton, rightButton: acceptButton, height: 40)
+        let buttonHeight: CGFloat = 40
+        
+        [ignoreButton, acceptButton].forEach(){ $0.translatesAutoresizingMaskIntoConstraints = false}
+        
+        ignoreButton.fitInSuperview(
+            with: EdgeInsets(top: 0,
+                             leading: 16,
+                             bottom: 12),
+            exclude: [.trailing])
+        
+        acceptButton.fitInSuperview(
+            with: EdgeInsets(top: 0,
+                             bottom: 12,
+                             trailing: 8),
+            exclude: [.leading])
+        
+        let buttonSpacingConstraint = ignoreButton.rightAnchor.constraint(greaterThanOrEqualTo: acceptButton.leftAnchor, constant: 16)
+        buttonSpacingConstraint.priority = .defaultHigh
+        
+        acceptButton.setDimensions(length: buttonHeight)
+        
+        NSLayoutConstraint.activate([buttonSpacingConstraint,
+            ignoreButton.heightAnchor.constraint(equalToConstant: buttonHeight)])
     }
 }

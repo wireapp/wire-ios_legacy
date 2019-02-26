@@ -43,7 +43,6 @@
 - (void)createViews
 {
     self.leftButton = [[IconButton alloc] initWithStyle:IconButtonStyleDefault];
-    self.leftButton.translatesAutoresizingMaskIntoConstraints = NO;
     self.leftButton.accessibilityIdentifier = @"left_button";
     [self.leftButton setTitleColor:[UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground] forState:UIControlStateNormal];
     [self.leftButton setTitleColor:[UIColor wr_colorFromColorScheme:ColorSchemeColorTextDimmed] forState:UIControlStateHighlighted];
@@ -52,7 +51,6 @@
     [self addSubview:self.leftButton];
     
     self.rightButton = [[IconButton alloc] initWithStyle:IconButtonStyleCircular];
-    self.rightButton.translatesAutoresizingMaskIntoConstraints = NO;
     self.rightButton.accessibilityIdentifier = @"right_button";
     [self addSubview:self.rightButton];
 }

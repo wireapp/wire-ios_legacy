@@ -24,7 +24,10 @@ struct EdgeInsets {
 
     static let zero = EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
 
-    init(top: CGFloat, leading: CGFloat, bottom: CGFloat, trailing: CGFloat) {
+    init(top: CGFloat = .nan,
+         leading: CGFloat = .nan,
+         bottom: CGFloat = .nan,
+         trailing: CGFloat = .nan) {
         self.top = top
         self.leading = leading
         self.bottom = bottom
@@ -81,7 +84,11 @@ extension UIView {
             fatal("Not in view hierarchy: self.superview = nil")
         }
 
-        return pin(to: superview, safely: safely, with: insets, exclude: excludedAnchors, activate: activate)
+        return pin(to: superview,
+                   safely: safely,
+                   with: insets,
+                   exclude: excludedAnchors,
+                   activate: activate)
     }
 
     @discardableResult func pin(to view: UIView,

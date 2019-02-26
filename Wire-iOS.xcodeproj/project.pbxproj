@@ -766,7 +766,6 @@
 		A952849022242F2F0054E970 /* ProfileSendConnectionRequestFooterView+Constraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = A952848F22242F2E0054E970 /* ProfileSendConnectionRequestFooterView+Constraint.swift */; };
 		A952849222242FBB0054E970 /* ProfileIncomingConnectionRequestFooterView+Constraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = A952849122242FBA0054E970 /* ProfileIncomingConnectionRequestFooterView+Constraint.swift */; };
 		A9528494222430A80054E970 /* ProfileFooterView+Constraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9528493222430A80054E970 /* ProfileFooterView+Constraints.swift */; };
-		A9528496222430E00054E970 /* UIView+FooterButtonConstraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9528495222430E00054E970 /* UIView+FooterButtonConstraints.swift */; };
 		A97192B3221302DD00E72AD1 /* MockUserRight.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97192B2221302DD00E72AD1 /* MockUserRight.swift */; };
 		A97192B52213225F00E72AD1 /* ConversationListViewController+Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97192B42213225E00E72AD1 /* ConversationListViewController+Setting.swift */; };
 		AF36C59F1E9F67B600FADECC /* DraftListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF36C59E1E9F67B600FADECC /* DraftListViewController.swift */; };
@@ -2481,7 +2480,6 @@
 		A952848F22242F2E0054E970 /* ProfileSendConnectionRequestFooterView+Constraint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ProfileSendConnectionRequestFooterView+Constraint.swift"; sourceTree = "<group>"; };
 		A952849122242FBA0054E970 /* ProfileIncomingConnectionRequestFooterView+Constraint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ProfileIncomingConnectionRequestFooterView+Constraint.swift"; sourceTree = "<group>"; };
 		A9528493222430A80054E970 /* ProfileFooterView+Constraints.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ProfileFooterView+Constraints.swift"; sourceTree = "<group>"; };
-		A9528495222430E00054E970 /* UIView+FooterButtonConstraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+FooterButtonConstraints.swift"; sourceTree = "<group>"; };
 		A97192B2221302DD00E72AD1 /* MockUserRight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockUserRight.swift; sourceTree = "<group>"; };
 		A97192B42213225E00E72AD1 /* ConversationListViewController+Setting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationListViewController+Setting.swift"; sourceTree = "<group>"; };
 		A9B02231209B6E4E00DF25D8 /* Hockey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hockey.swift; sourceTree = "<group>"; };
@@ -4682,7 +4680,6 @@
 				872CB8A319E58816006752B4 /* ProfileFooterView.h */,
 				872CB8A419E58816006752B4 /* ProfileFooterView.m */,
 				A9528493222430A80054E970 /* ProfileFooterView+Constraints.swift */,
-				A9528495222430E00054E970 /* UIView+FooterButtonConstraints.swift */,
 				167961AE20445FB400B72ACC /* ProfileTitleView.swift */,
 				BF7ED2D51DF18724003A4397 /* UserNameDetailView.swift */,
 				BF5C37961C0E0D9C00EA11E3 /* ParticipantDeviceHeaderView.h */,
@@ -8005,7 +8002,6 @@
 				87372F5221E3917600405D12 /* ConversationContentViewController+PinchZoom.m in Sources */,
 				7C5DF2CC1FD7DEAD00B793B6 /* AvailabilityExtensions.swift in Sources */,
 				16595CFF20BEE5E000E1340E /* Analytics+CallEvents.swift in Sources */,
-				A9528496222430E00054E970 /* UIView+FooterButtonConstraints.swift in Sources */,
 				BFAF4CB51CECEF3C00780537 /* WaveFormView.swift in Sources */,
 				5E8FFC2B21F08D5B0052DF03 /* PhoneNumberInputCell.swift in Sources */,
 				5E8FFC1C21EF7CB50052DF03 /* AddEmailPasswordStepDescription.swift in Sources */,
