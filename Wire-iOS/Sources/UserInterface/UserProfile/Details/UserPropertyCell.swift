@@ -29,13 +29,17 @@ class UserPropertyCell: SeparatorTableViewCell {
     private let propertyNameLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 1
-        label.font = FontSpec(.small, .regular).font!
+        label.setContentCompressionResistancePriority(.required, for: .vertical)
+        label.setContentHuggingPriority(.defaultLow, for: .vertical)
+        label.font = .smallRegularFont
         return label
     }()
     
     private let propertyValueLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
+        label.setContentCompressionResistancePriority(.required, for: .vertical)
+        label.setContentHuggingPriority(.defaultLow, for: .vertical)
         label.font = .normalLightFont
         return label
     }()
@@ -77,9 +81,9 @@ class UserPropertyCell: SeparatorTableViewCell {
         contentStack.addArrangedSubview(propertyNameLabel)
         contentStack.addArrangedSubview(propertyValueLabel)
         contentStack.spacing = 2
-        contentStack.alignment = .fill
-        contentStack.distribution = .fill
         contentStack.axis = .vertical
+        contentStack.distribution = .equalSpacing
+        contentStack.alignment = .leading
         contentView.addSubview(contentStack)
         
         applyColorScheme(colorSchemeVariant)
@@ -91,9 +95,9 @@ class UserPropertyCell: SeparatorTableViewCell {
         
         NSLayoutConstraint.activate([
             contentStack.leadingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.leadingAnchor),
-            contentStack.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
+            contentStack.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
             contentStack.trailingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.trailingAnchor),
-            contentStack.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8)
+            contentStack.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16)
         ])
     }
     

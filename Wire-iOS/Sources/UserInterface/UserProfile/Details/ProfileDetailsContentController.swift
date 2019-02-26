@@ -113,7 +113,7 @@ class ProfileDetailsContentController: NSObject, UITableViewDataSource, UITableV
                 // If there is no extended metadata, show nothing.
                 contents = []
             }
-            
+
         case .oneOnOne?:
             let readReceiptsEnabled = viewer.readReceiptsEnabled
             let _extendedMetadata: [[String: String]]? = useDefaultData ? defaultData : user.extendedMetadata
