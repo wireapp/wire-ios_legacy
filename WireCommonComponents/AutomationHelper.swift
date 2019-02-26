@@ -81,9 +81,6 @@ import WireSystem
     /// Whether the backend environment type should be persisted as a setting.
     @objc public let shouldPersistBackendType: Bool
 
-    /// Whether we should use the mock rich profile.
-    @objc public let shouldUseMockRichProfile: Bool
-
     override init() {
         let url = URL(string: NSTemporaryDirectory())?.appendingPathComponent(fileArgumentsName)
         let arguments: ArgumentsType = url.flatMap(FileArguments.init) ?? CommandLineArguments()
@@ -93,7 +90,6 @@ import WireSystem
         self.uploadAddressbookOnSimulator = arguments.hasFlag(AutomationKey.enableAddressBookOnSimulator)
         self.disableCallQualitySurvey = arguments.hasFlag(AutomationKey.disableCallQualitySurvey)
         self.shouldPersistBackendType = arguments.hasFlag(AutomationKey.persistBackendType)
-        self.shouldUseMockRichProfile = arguments.hasFlag(AutomationKey.mockRichProfile)
 
         self.automationEmailCredentials = AutomationHelper.credentials(arguments)
         if arguments.hasFlag(AutomationKey.logNetwork) {
@@ -128,7 +124,6 @@ import WireSystem
         case debugDataToInstall = "debug-data-to-install"
         case disableCallQualitySurvey = "disable-call-quality-survey"
         case persistBackendType = "persist-backend-type"
-        case mockRichProfile = "mock-rich-profile"
     }
     
     /// Returns the login email and password credentials if set in the given arguments

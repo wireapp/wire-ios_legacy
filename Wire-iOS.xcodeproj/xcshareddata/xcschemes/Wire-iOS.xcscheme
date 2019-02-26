@@ -134,10 +134,6 @@
             argument = "-ConsoleAnalytics"
             isEnabled = "NO">
          </CommandLineArgument>
-         <CommandLineArgument
-            argument = "--mock-rich-profile"
-            isEnabled = "NO">
-         </CommandLineArgument>
       </CommandLineArguments>
       <EnvironmentVariables>
          <EnvironmentVariable
