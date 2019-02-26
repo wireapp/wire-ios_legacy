@@ -71,6 +71,7 @@ class ProfileDetailsViewController: UIViewController, Themeable {
         self.profileView = ProfileView(user: user, options: [.hideUsername, .hideHandle, .hideTeamName])
         self.contentController = ProfileDetailsContentController(user: user, viewer: viewer, conversation: conversation)
         super.init(nibName: nil, bundle: nil)
+        self.contentController.delegate = self
     }
     
     required init?(coder aDecoder: NSCoder) {
