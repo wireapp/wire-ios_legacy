@@ -1,2 +1,2 @@
-github "wireapp/ios-snapshot-test-case" ~> 4.0
-github "wireapp/wire-ios-testing" ~> 17.0
+github "wireapp/ios-snapshot-test-case" "4.0.0-xcode_10_1"
+github "wireapp/wire-ios-testing" ~> 18.0

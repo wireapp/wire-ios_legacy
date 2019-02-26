@@ -31,7 +31,7 @@ class ProfileDetailsViewController: UIViewController, Themeable {
     let viewer: GenericUser
 
     /// The conversation where the profile is displayed.
-    let conversation: ZMConversation
+    let conversation: ZMConversation?
 
     /**
      * The object that calculates and controls the content to display in the user
@@ -64,7 +64,7 @@ class ProfileDetailsViewController: UIViewController, Themeable {
      * - parameter conversation: The conversation where the profile is displayed.
      */
     
-    init(user: GenericUser, viewer: GenericUser, conversation: ZMConversation) {
+    init(user: GenericUser, viewer: GenericUser, conversation: ZMConversation?) {
         self.user = user
         self.viewer = viewer
         self.conversation = conversation
@@ -89,6 +89,7 @@ class ProfileDetailsViewController: UIViewController, Themeable {
         tableView.dataSource = contentController
         tableView.delegate = contentController
         tableView.rowHeight = UITableView.automaticDimension
+        tableView.separatorStyle = .none
         tableView.estimatedRowHeight = 56
         tableView.contentInset.bottom = 88
         view.addSubview(tableView)
@@ -100,6 +101,8 @@ class ProfileDetailsViewController: UIViewController, Themeable {
         
         profileView.prepareForDisplay(in: conversation)
         profileView.availabilityView.options = .profileDetails
+        profileView.imageView.isAccessibilityElement = false
+        profileView.imageView.isUserInteractionEnabled = false
         profileViewContainer.addSubview(profileView)
         tableView.tableHeaderView = profileViewContainer
         

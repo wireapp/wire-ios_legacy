@@ -107,7 +107,7 @@
     UINavigationController *navigationController = profileViewController.wrapInNavigationController;
     navigationController.transitioningDelegate = self.transitionDelegate;
     navigationController.modalPresentationStyle = UIModalPresentationPopover;
-    
+
     [controller presentViewController:navigationController animated:YES completion:nil];
     
     // Get the popover presentation controller and configure it.

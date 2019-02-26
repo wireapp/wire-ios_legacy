@@ -242,6 +242,7 @@
 "compose.contact.title" = "Conversation";
 "compose.message.title" = "Message";
 
+"conversation_details.open_button.accessibility_hint" = "Double tap to view the details of the conversation.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Conversation
@@ -656,7 +657,7 @@
 "participants.section.name.footer" = "Up to %1$d participants can join a group conversation. Video calls work with up to %2$d other people and you.";
 
 // Meta Menu
-"meta.menu.accessibility_more_options_button" = "More";
+"meta.menu.accessibility_more_options_button" = "More actions";
 "meta.menu.rename" = "Rename";
 "meta.menu.leave" = "Leave Group…";
 "meta.menu.archive" = "Archive";
@@ -706,7 +707,8 @@
 "profile.remove_dialog_title" = "Remove?";
 "profile.remove_dialog_message" = "%@ won’t be able to send or receive messages in this conversation.";
 "profile.remove_dialog_button_cancel" = "Cancel";
-"profile.remove_dialog_button_remove" = "Remove…";
+"profile.remove_dialog_button_remove" = "Remove From Group…";
+"profile.remove_dialog_button_remove_confirm" = "Remove From Group";
 
 // Block dialog
 "profile.block_dialog.title" = "Block?";
@@ -731,7 +733,7 @@
 
 // Cancel connection request
 "profile.cancel_connection_request_dialog.title" = "Cancel Request?";
-"profile.cancel_connection_request_dialog.message" = "Remove connection request to %@.";
+"profile.cancel_connection_request_dialog.message" = "Cancel your connection request to %@?";
 "profile.cancel_connection_request_dialog.button_no" = "No";
 "profile.cancel_connection_request_dialog.button_yes" = "Yes";
 

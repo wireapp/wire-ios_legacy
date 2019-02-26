@@ -233,6 +233,7 @@
 		5E628021221ED0A60039A8AB /* ProfileActionsFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E628020221ED0A60039A8AB /* ProfileActionsFactory.swift */; };
 		5E628025221EEA3B0039A8AB /* ProfileActionsFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E628024221EEA3B0039A8AB /* ProfileActionsFactoryTests.swift */; };
 		5E628028222021970039A8AB /* ProfileFooterViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E628026222021600039A8AB /* ProfileFooterViewTests.swift */; };
+		5E62802A2224090D0039A8AB /* SeparatorTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E6280292224090D0039A8AB /* SeparatorTableViewCell.swift */; };
 		5E65A79A212FF7CD008BFCC0 /* AuthenticationStateControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E65A799212FF7CD008BFCC0 /* AuthenticationStateControllerTests.swift */; };
 		5E65A79E21303F97008BFCC0 /* AuthenticationCoordinator+UserChange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E65A79D21303F97008BFCC0 /* AuthenticationCoordinator+UserChange.swift */; };
 		5E65A7A021303FCE008BFCC0 /* AuthenticationCoordinator+CompanyLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E65A79F21303FCE008BFCC0 /* AuthenticationCoordinator+CompanyLogin.swift */; };
@@ -1755,6 +1756,7 @@
 		5E628020221ED0A60039A8AB /* ProfileActionsFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileActionsFactory.swift; sourceTree = "<group>"; };
 		5E628024221EEA3B0039A8AB /* ProfileActionsFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileActionsFactoryTests.swift; sourceTree = "<group>"; };
 		5E628026222021600039A8AB /* ProfileFooterViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileFooterViewTests.swift; sourceTree = "<group>"; };
+		5E6280292224090D0039A8AB /* SeparatorTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeparatorTableViewCell.swift; sourceTree = "<group>"; };
 		5E65A799212FF7CD008BFCC0 /* AuthenticationStateControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationStateControllerTests.swift; sourceTree = "<group>"; };
 		5E65A79D21303F97008BFCC0 /* AuthenticationCoordinator+UserChange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AuthenticationCoordinator+UserChange.swift"; sourceTree = "<group>"; };
 		5E65A79F21303FCE008BFCC0 /* AuthenticationCoordinator+CompanyLogin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AuthenticationCoordinator+CompanyLogin.swift"; sourceTree = "<group>"; };
@@ -4470,6 +4472,7 @@
 				EF1A461D21ADACF50009B6B9 /* RightIconDetailsCell.swift */,
 				5EA73D8520D900FF0001D106 /* ImageContainer.swift */,
 				5EA73D8320D900FE0001D106 /* SeparatorCollectionViewCell.swift */,
+				5E6280292224090D0039A8AB /* SeparatorTableViewCell.swift */,
 				EF2A8DEC214AA36E002C9058 /* SeparatorViewProtocol.swift */,
 				EF266C602003B75C00A8C136 /* BreathLoadingBar.swift */,
 				871BC1CE1D34F8F800DF0793 /* PassthroughTouchesView.h */,
@@ -7859,6 +7862,7 @@
 				F16426FE1FCC5A2C00D2ABFC /* AuthenticationStepDescription.swift in Sources */,
 				87D56DFA1E0046FE00DFF722 /* CollectionImageCell.swift in Sources */,
 				8750B1CB2124236200B807A9 /* InviteButton.swift in Sources */,
+				5E62802A2224090D0039A8AB /* SeparatorTableViewCell.swift in Sources */,
 				EF25F7DE1FC45F8E0040C3CC /* AccessoryTextField.swift in Sources */,
 				F15650DA21DD107B00210504 /* UIView+Rounded.swift in Sources */,
 				BFE65AB320A047EB00689063 /* CallAccessoryViewController.swift in Sources */,

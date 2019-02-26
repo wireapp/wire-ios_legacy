@@ -34,14 +34,6 @@ enum ProfileAction: Equatable {
     case connect
     case cancelConnectionRequest
 
-    /// Whether the action is destructive.
-    var isDestructive: Bool {
-        switch self {
-        case .deleteContents, .block(isBlocked: false), .removeFromGroup: return true
-        default: return false
-        }
-    }
-
     /// The text of the button for this action.
     var buttonText: String {
         switch self {
@@ -106,7 +98,7 @@ class ProfileActionsFactory: NSObject {
     let viewer: GenericUser
 
     /// The conversation that the user wants to perform the actions in.
-    let conversation: ZMConversation
+    let conversation: ZMConversation?
 
     // MARK: - Initialization
 
@@ -118,7 +110,7 @@ class ProfileActionsFactory: NSObject {
      * perform the actions in.
      */
 
-    init(user: GenericUser, viewer: GenericUser, conversation: ZMConversation) {
+    init(user: GenericUser, viewer: GenericUser, conversation: ZMConversation?) {
         self.user = user
         self.viewer = viewer
         self.conversation = conversation
@@ -139,6 +131,19 @@ class ProfileActionsFactory: NSObject {
         // Do not show any action if the user is blocked
         if user.isBlocked {
             return [.block(isBlocked: true)]
+        }
+
+        // If there is no conversation, offer to connect to the user if possible
+        guard let conversation = self.conversation else {
+            if !user.isConnected {
+                if user.isPendingApprovalByOtherUser {
+                    return [.cancelConnectionRequest]
+                } else {
+                    return [.connect]
+                }
+            }
+
+            return []
         }
 
         var actions: [ProfileAction] = []

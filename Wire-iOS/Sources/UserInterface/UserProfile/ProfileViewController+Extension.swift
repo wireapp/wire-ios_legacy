@@ -41,7 +41,7 @@ extension ProfileViewController {
     }
 
     @objc func setupProfileDetailsViewController() -> ProfileDetailsViewController? {
-        let profileDetailsViewController = ProfileDetailsViewController(user: bareUser, viewer: viewer, conversation: conversation!)
+        let profileDetailsViewController = ProfileDetailsViewController(user: bareUser, viewer: viewer, conversation: conversation)
         profileDetailsViewController.title = "profile.details.title".localized
 
         return profileDetailsViewController
@@ -59,11 +59,6 @@ extension ProfileViewController: ViewControllerDismisser {
 extension ProfileViewController: ProfileFooterViewDelegate {
 
     @objc func updateFooterView() {
-        guard let conversation = self.conversation else {
-            profileFooterView.isHidden = true
-            return
-        }
-
         let factory = ProfileActionsFactory(user: bareUser, viewer: viewer, conversation: conversation)
         let actions = factory.makeActionsList()
 
@@ -81,7 +76,7 @@ extension ProfileViewController: ProfileFooterViewDelegate {
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 
         for action in actions {
-            let sheetAction = UIAlertAction(title: action.buttonText, style: action.isDestructive ? .destructive : .default) { _ in
+            let sheetAction = UIAlertAction(title: action.buttonText, style: .default) { _ in
                 self.performAction(action, targetView: footerView.rightButton)
             }
 
@@ -145,10 +140,17 @@ extension ProfileViewController: ProfileFooterViewDelegate {
     // MARK: Connect
 
     private func sendConnectionRequest() {
-        guard let user = self.fullUser() else { return }
+        let connect: (String) -> Void = {
+            if let user = self.fullUser() {
+                user.connect(message: $0)
+            } else if let searchUser = self.bareUser as? ZMSearchUser {
+                searchUser.connect(message: $0)
+            }
+        }
+
         ZMUserSession.shared()?.enqueueChanges {
-            let messageText = "missive.connection_request.default_message".localized(args: user.displayName, self.viewer.name ?? "")
-            user.connect(message: messageText)
+            let messageText = "missive.connection_request.default_message".localized(args: self.bareUser.displayName, self.viewer.name ?? "")
+            connect(messageText)
             // update the footer view to display the cancel request button
             self.updateFooterView()
         }
@@ -219,18 +221,29 @@ extension ProfileViewController: ProfileFooterViewDelegate {
             return
         }
 
-        let controller = UIAlertController.remove(otherUser) { [weak self] remove in
-            guard let `self` = self, remove else { return }
+        let controller = UIAlertController(
+            title: "profile.remove_dialog_message".localized(args: otherUser.displayName),
+            message: nil,
+            preferredStyle: .actionSheet
+        )
 
+        let removeAction = UIAlertAction(title: "profile.remove_dialog_button_remove_confirm".localized, style: .destructive) { _ in
             self.conversation.removeOrShowError(participnant: otherUser) { result in
                 switch result {
                 case .success:
-                    self.dismiss(animated: true, completion: nil)
+                    if let navigationController = self.navigationController, navigationController.viewControllers.first != self {
+                        navigationController.popViewController(animated: true)
+                    } else {
+                        self.dismiss(animated: true, completion: nil)
+                    }
                 case .failure(_):
                     break
                 }
             }
         }
+
+        controller.addAction(removeAction)
+        controller.addAction(.cancel())
 
         presentAlert(controller, targetView: view)
     }

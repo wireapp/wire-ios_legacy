@@ -54,7 +54,7 @@ class ProfileDetailsContentController: NSObject, UITableViewDataSource, UITableV
     let viewer: GenericUser
     
     /// The conversation where the profile details will be displayed.
-    let conversation: ZMConversation
+    let conversation: ZMConversation?
         
     // MARK: - Accessing the Content
     
@@ -79,7 +79,7 @@ class ProfileDetailsContentController: NSObject, UITableViewDataSource, UITableV
      * - parameter conversation: The conversation where the profile details will be displayed.
      */
     
-    init(user: GenericUser, viewer: GenericUser, conversation: ZMConversation) {
+    init(user: GenericUser, viewer: GenericUser, conversation: ZMConversation?) {
         self.user = user
         self.viewer = viewer
         self.conversation = conversation
@@ -107,8 +107,8 @@ class ProfileDetailsContentController: NSObject, UITableViewDataSource, UITableV
     
     /// Updates the content for the current configuration.
     private func updateContent() {
-        switch conversation.conversationType {
-        case .group:
+        switch conversation?.conversationType {
+        case .group?:
             let richProfile = user.richProfile
             if viewerCanAccessRichProfile, !richProfile.isEmpty {
                 // If there is rich profile data and the user is allowed to see it, display it.
@@ -117,8 +117,8 @@ class ProfileDetailsContentController: NSObject, UITableViewDataSource, UITableV
                 // If there is no rich profile data, show nothing.
                 contents = []
             }
-            
-        case .oneOnOne:
+
+        case .oneOnOne?:
             let readReceiptsEnabled = viewer.readReceiptsEnabled
             let richProfile = user.richProfile
             if viewerCanAccessRichProfile, !richProfile.isEmpty {
@@ -155,20 +155,27 @@ class ProfileDetailsContentController: NSObject, UITableViewDataSource, UITableV
             return 0
         }
     }
-    
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let header = SectionTableHeader()
+
         switch contents[section] {
+
         case .richProfile:
-            return "profile.extended_metadata.header".localized
+            header.titleLabel.text = "profile.extended_metadata.header".localized(uppercased: true)
+            header.accessibilityIdentifier = "InformationHeader"
         case .readReceiptsStatus(let enabled):
+            header.accessibilityIdentifier = "ReadReceiptsStatusHeader"
             if enabled {
-                return "profile.read_receipts_enabled_memo.header".localized
+                header.titleLabel.text = "profile.read_receipts_enabled_memo.header".localized(uppercased: true)
             } else {
-                return "profile.read_receipts_disabled_memo.header".localized
+                header.titleLabel.text = "profile.read_receipts_disabled_memo.header".localized(uppercased: true)
             }
         }
+
+        return header
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch contents[indexPath.section] {
         case .richProfile(let fields):
@@ -176,29 +183,28 @@ class ProfileDetailsContentController: NSObject, UITableViewDataSource, UITableV
             let cell = tableView.dequeueReusableCell(withIdentifier: userPropertyCellID) as? UserPropertyCell ?? UserPropertyCell(style: .default, reuseIdentifier: userPropertyCellID)
             cell.propertyName = field.type
             cell.propertyValue = field.value
+            cell.showSeparator = indexPath.row < fields.count - 1
             return cell
 
         case .readReceiptsStatus:
             fatalError("We do not create cells for the readReceiptsStatus section.")
         }
     }
-    
-    func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         switch contents[section] {
         case .richProfile:
             return nil
         case .readReceiptsStatus:
-            return "profile.read_receipts_memo.body".localized
+            let footer = SectionTableFooter()
+            footer.titleLabel.text = "profile.read_receipts_memo.body".localized
+            footer.accessibilityIdentifier = "ReadReceiptsStatusFooter"
+            return footer
         }
     }
-    
-    func tableView(_ tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
-        switch contents[section] {
-        case .richProfile:
-            view.accessibilityIdentifier = "InformationFooter"
-        case .readReceiptsStatus:
-            view.accessibilityIdentifier = "ReadReceiptsStatusFooter"
-        }
+
+    func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
+        return false
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

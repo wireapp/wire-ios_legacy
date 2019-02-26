@@ -22,32 +22,29 @@ import UIKit
  * A cell that displays a user property as part of the rich profile data.
  */
 
-class UserPropertyCell: UITableViewCell, Themeable {
+class UserPropertyCell: SeparatorTableViewCell {
     
     private let contentStack = UIStackView()
 
     private let propertyNameLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 1
-        label.font = .smallMediumFont
+        label.setContentCompressionResistancePriority(.required, for: .vertical)
+        label.setContentHuggingPriority(.defaultLow, for: .vertical)
+        label.font = .smallRegularFont
         return label
     }()
     
     private let propertyValueLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
+        label.setContentCompressionResistancePriority(.required, for: .vertical)
+        label.setContentHuggingPriority(.defaultLow, for: .vertical)
         label.font = .normalLightFont
         return label
     }()
     
     // MARK: - Contents
-    
-    @objc dynamic var colorSchemeVariant: ColorSchemeVariant = ColorScheme.default.variant {
-        didSet {
-            guard oldValue != colorSchemeVariant else { return }
-            applyColorScheme(colorSchemeVariant)
-        }
-    }
     
     /// The name of the user property.
     var propertyName: String? {
@@ -73,24 +70,20 @@ class UserPropertyCell: UITableViewCell, Themeable {
     }
     
     // MARK: - Initialization
-    
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+
+    override func setUp() {
+        super.setUp()
         configureSubviews()
         configureConstraints()
     }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
+        
     private func configureSubviews() {
         contentStack.addArrangedSubview(propertyNameLabel)
         contentStack.addArrangedSubview(propertyValueLabel)
         contentStack.spacing = 2
-        contentStack.alignment = .fill
-        contentStack.distribution = .fill
         contentStack.axis = .vertical
+        contentStack.distribution = .equalSpacing
+        contentStack.alignment = .leading
         contentView.addSubview(contentStack)
         
         applyColorScheme(colorSchemeVariant)
@@ -102,15 +95,16 @@ class UserPropertyCell: UITableViewCell, Themeable {
         
         NSLayoutConstraint.activate([
             contentStack.leadingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.leadingAnchor),
-            contentStack.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
+            contentStack.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
             contentStack.trailingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.trailingAnchor),
-            contentStack.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8)
+            contentStack.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16)
         ])
     }
     
     // MARK: - Configuration
     
-    func applyColorScheme(_ variant: ColorSchemeVariant) {
+    override func applyColorScheme(_ variant: ColorSchemeVariant) {
+        super.applyColorScheme(variant)
         propertyNameLabel.textColor = UIColor.from(scheme: .textDimmed, variant: variant)
         propertyValueLabel.textColor = UIColor.from(scheme: .textForeground, variant: variant)
         backgroundColor = UIColor.from(scheme: .background, variant: variant)
