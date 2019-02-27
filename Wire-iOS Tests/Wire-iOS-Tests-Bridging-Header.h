@@ -31,7 +31,6 @@
 #import <avs/AVSAudioEffect.h>
 #import "Message+UI.h"
 #import "MockConversation.h"
-#import "MockConversationFactory.h"
 #import "SoundcloudService.h"
 #import "SoundcloudService+Testing.h"
 #import "EmoticonSubstitutionConfiguration+Tests.h"

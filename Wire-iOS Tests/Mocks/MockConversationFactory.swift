@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2016 Wire Swiss GmbH
+// Copyright (C) 2019 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -15,14 +15,10 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
+import WireSyncEngine
 
-
-@import WireSyncEngine;
-@class MockConversation;
-
-
-@interface MockConversationFactory: NSObject
-
-+ (MockConversation *)mockConversation;
-
-@end
+final class MockConversationFactory {
+    class func mockConversation() -> MockConversation? {
+        return (MockLoader.mockObjects(of: MockConversation.self, fromFile: "conversations-01.json")?[0] as? MockConversation)
+    }
+}
