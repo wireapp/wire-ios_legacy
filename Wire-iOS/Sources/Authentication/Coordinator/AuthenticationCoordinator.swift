@@ -68,14 +68,8 @@ class AuthenticationCoordinator: NSObject, AuthenticationEventResponderChainDele
     /// The object controlling the state of authentication.
     let stateController: AuthenticationStateController
 
-    /// The object to use to register users and teams.
-    let registrationStatus: RegistrationStatus
-
     /// The object that manages active user sessions.
     let sessionManager: ObservableSessionManager
-
-    /// The user session to use before authentication has finished.
-    let unauthenticatedSession: UnauthenticatedSession
 
     /// The object that determines what features are available.
     let featureProvider: AuthenticationFeatureProvider
@@ -92,6 +86,7 @@ class AuthenticationCoordinator: NSObject, AuthenticationEventResponderChainDele
     // MARK: - Internal State
 
     private var loginObservers: [Any] = []
+    private var unauthenticatedSessionObserver: Any?
     private var postLoginObservers: [Any] = []
     private var initialSyncObserver: Any?
     private var pendingAlert: AuthenticationCoordinatorAlert?
@@ -100,14 +95,22 @@ class AuthenticationCoordinator: NSObject, AuthenticationEventResponderChainDele
     /// Whether an account was added.
     var addedAccount: Bool = false
 
+    /// The object to use to register users and teams.
+    var registrationStatus: RegistrationStatus {
+        return unauthenticatedSession.registrationStatus
+    }
+
+    /// The user session to use before authentication has finished.
+    var unauthenticatedSession: UnauthenticatedSession {
+        return sessionManager.activeUnauthenticatedSession
+    }
+
     // MARK: - Initialization
 
     /// Creates a new authentication coordinator with the required supporting objects.
-    init(presenter: UINavigationController, unauthenticatedSession: UnauthenticatedSession, sessionManager: ObservableSessionManager, featureProvider: AuthenticationFeatureProvider) {
+    init(presenter: UINavigationController, sessionManager: ObservableSessionManager, featureProvider: AuthenticationFeatureProvider) {
         self.presenter = presenter
         self.sessionManager = sessionManager
-        self.unauthenticatedSession = unauthenticatedSession
-        self.registrationStatus = unauthenticatedSession.registrationStatus
         self.stateController = AuthenticationStateController()
         self.featureProvider = featureProvider
         self.interfaceBuilder = AuthenticationInterfaceBuilder(featureProvider: featureProvider)
@@ -115,13 +118,8 @@ class AuthenticationCoordinator: NSObject, AuthenticationEventResponderChainDele
         self.backupRestoreController = BackupRestoreController(target: presenter)
         super.init()
 
-        loginObservers = [
-            PreLoginAuthenticationNotification.register(self, for: unauthenticatedSession),
-            PostLoginAuthenticationNotification.addObserver(self),
-            sessionManager.addSessionManagerCreatedSessionObserver(self)
-        ]
-
-        registrationStatus.delegate = self
+        updateLoginObservers()
+        unauthenticatedSessionObserver = sessionManager.addUnauthenticatedSessionManagerCreatedSessionObserver(self)
         companyLoginController?.delegate = self
         backupRestoreController.delegate = self
         presenter.delegate = self
@@ -183,6 +181,20 @@ extension AuthenticationCoordinator: AuthenticationActioner, SessionManagerCreat
         log.info("Session manager created session: \(userSession)")
         currentPostRegistrationFields().apply(sendPostRegistrationFields)
         initialSyncObserver = ZMUserSession.addInitialSyncCompletionObserver(self, userSession: userSession)
+    }
+
+    func sessionManagerCreated(unauthenticatedSession: UnauthenticatedSession) {
+        updateLoginObservers()
+    }
+
+    func updateLoginObservers() {
+        loginObservers = [
+            PreLoginAuthenticationNotification.register(self, for: unauthenticatedSession),
+            PostLoginAuthenticationNotification.addObserver(self),
+            sessionManager.addSessionManagerCreatedSessionObserver(self)
+        ]
+
+        registrationStatus.delegate = self
     }
 
     /**

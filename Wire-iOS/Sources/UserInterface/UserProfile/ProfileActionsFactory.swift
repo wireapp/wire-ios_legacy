@@ -138,7 +138,7 @@ class ProfileActionsFactory: NSObject {
             if !user.isConnected {
                 if user.isPendingApprovalByOtherUser {
                     return [.cancelConnectionRequest]
-                } else {
+                } else if !user.isPendingApprovalBySelfUser {
                     return [.connect]
                 }
             }
