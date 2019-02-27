@@ -242,6 +242,7 @@
 "compose.contact.title" = "Разговор";
 "compose.message.title" = "Сообщение";
 
+"conversation_details.open_button.accessibility_hint" = "Нажмите дважды для просмотра деталей разговора.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Conversation
@@ -462,7 +463,7 @@
 "content.system.new_users" = "Присоединился новый участник.";
 "content.system.verify_devices" = "Верифицируйте устройства";
 
-"content.system.unverified" = "%@ деверифицировал(а) одно из %@"; // example "You unverified one of Jule’s devices"
+"content.system.unverified" = "%@ деверифицировали одно из %@"; // example "You unverified one of Jule’s devices"
 "content.system.your_devices" = "ваши устройства";
 "content.system.other_devices" = "Устройства %@";
 
@@ -541,6 +542,7 @@
 "connection_request.title" = "Подключиться к %@"; // check UPPERCASE implementation in code
 "missive.connection_request.default_message" = "Привет %@,\nдавай общаться в Wire!\n%@";
 
+"connection_request_pending_title" = "Запрос на добавление";
 "connection_request.send_button_title" = "Связаться";
 "inbox.connection_request.connect_button_title" = "Связаться";
 "inbox.connection_request.ignore_button_title" = "Игнорировать";
@@ -656,6 +658,7 @@
 "participants.section.name.footer" = "К групповому разговору может присоединиться до %1$d участников. Видеозвонки возможны между вами и еще %2$d участниками.";
 
 // Meta Menu
+"meta.menu.accessibility_more_options_button" = "Дополнительные действия";
 "meta.menu.rename" = "Переименовать";
 "meta.menu.leave" = "Покинуть группу…";
 "meta.menu.archive" = "Архивировать";
@@ -664,7 +667,7 @@
 "meta.menu.silence.mute" = "Отключить уведомления";
 "meta.menu.silence.unmute" = "Включить уведомления";
 "meta.menu.cancel" = "Отмена";
-"meta.menu.cancel_connection_request" = "Отменить запрос…";
+"meta.menu.cancel_connection_request" = "Отменить запрос";
 "meta.menu.mark_unread" = "Отметить как непрочитанное";
 "meta.menu.mark_read" = "Отметить как прочитанное";
 "shortcut.mark_all_as_read.title" = "Отметить все как прочитанные";
@@ -705,7 +708,8 @@
 "profile.remove_dialog_title" = "Удалить?";
 "profile.remove_dialog_message" = "%@ больше не сможет отправлять и получать сообщения в этом разговоре.";
 "profile.remove_dialog_button_cancel" = "Отмена";
-"profile.remove_dialog_button_remove" = "Удалить";
+"profile.remove_dialog_button_remove" = "Удалить из группы…";
+"profile.remove_dialog_button_remove_confirm" = "Удалить из группы";
 
 // Block dialog
 "profile.block_dialog.title" = "Заблокировать?";
@@ -730,13 +734,16 @@
 
 // Cancel connection request
 "profile.cancel_connection_request_dialog.title" = "Отменить запрос?";
-"profile.cancel_connection_request_dialog.message" = "Удалить запрос на добавление %@.";
+"profile.cancel_connection_request_dialog.message" = "Отменить запрос на добавление %@?";
 "profile.cancel_connection_request_dialog.button_no" = "Нет";
 "profile.cancel_connection_request_dialog.button_yes" = "Да";
 
 // Unblock button
 "profile.block_button_title" = "Блокировать…";
 "profile.unblock_button_title" = "Разблокировать…";
+
+"profile.block_button_title_action" = "Заблокировать";
+"profile.unblock_button_title_action" = "Разблокировать";
 
 "profile.cancel_connection_button_title" = "ОТМЕНИТЬ ЗАПРОС";
 "profile.connection_request_state.blocked" = "ЗАБЛОКИРОВАН";
@@ -745,7 +752,9 @@
 
 "profile.read_receipts_enabled_memo.header" = "ВЫ ВКЛЮЧИЛИ ОТЧЕТЫ О ПРОЧТЕНИИ";
 "profile.read_receipts_disabled_memo.header" = "У ВАС ОТКЛЮЧЕНЫ ОТЧЕТЫ О ПРОЧТЕНИИ";
-"profile.read_receipts_memo.body" = "Если обе стороны включат отчеты о прочтении, вы сможете видеть когда были прочитаны ваши сообщения. Этот параметр можно изменить в настройках учетной записи.";
+"profile.read_receipts_memo.body" = "Если обе стороны включат отчеты о прочтении, вы сможете видеть когда были прочитаны ваши сообщения.\n\nЭтот параметр можно изменить в настройках вашего аккаунта.";
+
+"profile.extended_metadata.header" = "Информация";
 
 // User Details
 "profile.details.title" = "Детали";

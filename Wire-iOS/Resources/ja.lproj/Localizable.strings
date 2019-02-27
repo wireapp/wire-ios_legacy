@@ -242,6 +242,7 @@
 "compose.contact.title" = "会話";
 "compose.message.title" = "メッセージ";
 
+"conversation_details.open_button.accessibility_hint" = "Double tap to view the details of the conversation.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Conversation
@@ -541,6 +542,7 @@
 "connection_request.title" = "%@とつながる"; // check UPPERCASE implementation in code
 "missive.connection_request.default_message" = "こんにちは。%@\nWireでつながりましょう。\n%@";
 
+"connection_request_pending_title" = "Connection Request";
 "connection_request.send_button_title" = "接続";
 "inbox.connection_request.connect_button_title" = "接続";
 "inbox.connection_request.ignore_button_title" = "無視";
@@ -656,6 +658,7 @@
 "participants.section.name.footer" = "グループ会話には %1$d 人まで参加できます。ビデオ通話はあなたと他 %2$d 名と通話できます。";
 
 // Meta Menu
+"meta.menu.accessibility_more_options_button" = "More actions";
 "meta.menu.rename" = "名前の変更";
 "meta.menu.leave" = "グループを退出...";
 "meta.menu.archive" = "アーカイブ";
@@ -664,7 +667,7 @@
 "meta.menu.silence.mute" = "ミュート";
 "meta.menu.silence.unmute" = "ミュート解除します。";
 "meta.menu.cancel" = "キャンセル";
-"meta.menu.cancel_connection_request" = "リクエストをキャンセル...";
+"meta.menu.cancel_connection_request" = "Cancel Request";
 "meta.menu.mark_unread" = "未読にする";
 "meta.menu.mark_read" = "既読にする";
 "shortcut.mark_all_as_read.title" = "すべて既読にする";
@@ -705,7 +708,8 @@
 "profile.remove_dialog_title" = "削除しますか?";
 "profile.remove_dialog_message" = "%@ は、この会話でメッセージを送受信することができません。";
 "profile.remove_dialog_button_cancel" = "キャンセル";
-"profile.remove_dialog_button_remove" = "削除";
+"profile.remove_dialog_button_remove" = "Remove From Group…";
+"profile.remove_dialog_button_remove_confirm" = "Remove From Group";
 
 // Block dialog
 "profile.block_dialog.title" = "ブロックしますか?";
@@ -730,13 +734,16 @@
 
 // Cancel connection request
 "profile.cancel_connection_request_dialog.title" = "リクエストを取り消しますか？";
-"profile.cancel_connection_request_dialog.message" = "%@への接続リクエストを削除します。";
+"profile.cancel_connection_request_dialog.message" = "Cancel your connection request to %@?";
 "profile.cancel_connection_request_dialog.button_no" = "いいえ";
 "profile.cancel_connection_request_dialog.button_yes" = "はい";
 
 // Unblock button
 "profile.block_button_title" = "ブロック...";
 "profile.unblock_button_title" = "ブロック解除中...";
+
+"profile.block_button_title_action" = "ブロック";
+"profile.unblock_button_title_action" = "Unblock";
 
 "profile.cancel_connection_button_title" = "リクエストをキャンセルします";
 "profile.connection_request_state.blocked" = "ブロックしています";
@@ -745,7 +752,9 @@
 
 "profile.read_receipts_enabled_memo.header" = "開封通知を有効にします";
 "profile.read_receipts_disabled_memo.header" = "開封通知を無効にします";
-"profile.read_receipts_memo.body" = "両者が開封通知をオンにした場合に、メッセージが開封されたかが分かります。\nあなたの アカウント設定 から、この設定を変更することができます。";
+"profile.read_receipts_memo.body" = "If both sides turn on read receipts, you can see when messages are read.\n\nYou can change this option in your account settings.";
+
+"profile.extended_metadata.header" = "Information";
 
 // User Details
 "profile.details.title" = "詳細";

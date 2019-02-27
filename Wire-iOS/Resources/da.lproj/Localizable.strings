@@ -242,6 +242,7 @@
 "compose.contact.title" = "Samtale";
 "compose.message.title" = "Besked";
 
+"conversation_details.open_button.accessibility_hint" = "Double tap to view the details of the conversation.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Conversation
@@ -541,6 +542,7 @@
 "connection_request.title" = "Forbind til %@"; // check UPPERCASE implementation in code
 "missive.connection_request.default_message" = "Hej %@\nLad os forbinde os med Wire.\n%@";
 
+"connection_request_pending_title" = "Connection Request";
 "connection_request.send_button_title" = "Forbind";
 "inbox.connection_request.connect_button_title" = "Forbind";
 "inbox.connection_request.ignore_button_title" = "Ignorer";
@@ -656,6 +658,7 @@
 "participants.section.name.footer" = "Up to %1$d participants can join a group conversation. Video calls work with up to %2$d other people and you.";
 
 // Meta Menu
+"meta.menu.accessibility_more_options_button" = "More actions";
 "meta.menu.rename" = "Omdøb";
 "meta.menu.leave" = "Leave Group…";
 "meta.menu.archive" = "Arkiv";
@@ -664,7 +667,7 @@
 "meta.menu.silence.mute" = "Lyd fra";
 "meta.menu.silence.unmute" = "Lyd til";
 "meta.menu.cancel" = "Annuller";
-"meta.menu.cancel_connection_request" = "Cancel Request…";
+"meta.menu.cancel_connection_request" = "Cancel Request";
 "meta.menu.mark_unread" = "Mark as Unread";
 "meta.menu.mark_read" = "Mark as Read";
 "shortcut.mark_all_as_read.title" = "Mark All as Read";
@@ -705,7 +708,8 @@
 "profile.remove_dialog_title" = "Fjern?";
 "profile.remove_dialog_message" = "%@ vil ikke være i stand til at sende eller modtage beskeder i denne samtale.";
 "profile.remove_dialog_button_cancel" = "Annuller";
-"profile.remove_dialog_button_remove" = "Fjern";
+"profile.remove_dialog_button_remove" = "Remove From Group…";
+"profile.remove_dialog_button_remove_confirm" = "Remove From Group";
 
 // Block dialog
 "profile.block_dialog.title" = "Blokér?";
@@ -730,13 +734,16 @@
 
 // Cancel connection request
 "profile.cancel_connection_request_dialog.title" = "Annuller anmodning?";
-"profile.cancel_connection_request_dialog.message" = "Fjern anmodning om forbindelse til %@.";
+"profile.cancel_connection_request_dialog.message" = "Cancel your connection request to %@?";
 "profile.cancel_connection_request_dialog.button_no" = "Nej";
 "profile.cancel_connection_request_dialog.button_yes" = "Ja";
 
 // Unblock button
 "profile.block_button_title" = "Block…";
 "profile.unblock_button_title" = "Unblock…";
+
+"profile.block_button_title_action" = "Blokér";
+"profile.unblock_button_title_action" = "Unblock";
 
 "profile.cancel_connection_button_title" = "ANNULER ANMODNING";
 "profile.connection_request_state.blocked" = "BLOKERET";
@@ -745,7 +752,9 @@
 
 "profile.read_receipts_enabled_memo.header" = "YOU HAVE ENABLED READ RECEIPTS";
 "profile.read_receipts_disabled_memo.header" = "YOU HAVE DISABLED READ RECEIPTS";
-"profile.read_receipts_memo.body" = "If both sides turn on read receipts, you can see when messages are read.\nYou can change this option in your account settings.";
+"profile.read_receipts_memo.body" = "If both sides turn on read receipts, you can see when messages are read.\n\nYou can change this option in your account settings.";
+
+"profile.extended_metadata.header" = "Information";
 
 // User Details
 "profile.details.title" = "Detaljer";

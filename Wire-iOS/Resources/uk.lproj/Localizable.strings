@@ -242,6 +242,7 @@
 "compose.contact.title" = "Розмова";
 "compose.message.title" = "Повідомлення";
 
+"conversation_details.open_button.accessibility_hint" = "Торкніться двічі, щоб переглянути детальну інформацію про розмову.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Conversation
@@ -541,6 +542,7 @@
 "connection_request.title" = "Додати %@ до контактів"; // check UPPERCASE implementation in code
 "missive.connection_request.default_message" = "Привіт %@,\nдавай спілкуватися в Wire.\n%@";
 
+"connection_request_pending_title" = "Запит на додавання до контактів";
 "connection_request.send_button_title" = "Додати";
 "inbox.connection_request.connect_button_title" = "Додати до контактів";
 "inbox.connection_request.ignore_button_title" = "Ігнорувати";
@@ -656,6 +658,7 @@
 "participants.section.name.footer" = "До цієї розмови може прєднатись не більше %1$d учасників. Відеодзвінки будуть працювати тільки в розмовах, що містять до %2$d учасників, окрім вас.";
 
 // Meta Menu
+"meta.menu.accessibility_more_options_button" = "Додаткові дії";
 "meta.menu.rename" = "Перейменувати";
 "meta.menu.leave" = "Вийти з групи…";
 "meta.menu.archive" = "Архівувати";
@@ -664,7 +667,7 @@
 "meta.menu.silence.mute" = "Вимкнути звук";
 "meta.menu.silence.unmute" = "Увімкнути звук";
 "meta.menu.cancel" = "Скасувати";
-"meta.menu.cancel_connection_request" = "Скасувати запит…";
+"meta.menu.cancel_connection_request" = "Скасувати запит";
 "meta.menu.mark_unread" = "Позначити як непрочитане";
 "meta.menu.mark_read" = "Позначити як прочитане";
 "shortcut.mark_all_as_read.title" = "Позначити все як прочитане";
@@ -705,7 +708,8 @@
 "profile.remove_dialog_title" = "Видалити?";
 "profile.remove_dialog_message" = "%@ більше не зможе надсилати або отримувати повідомлення в цій розмові.";
 "profile.remove_dialog_button_cancel" = "Скасувати";
-"profile.remove_dialog_button_remove" = "Видалити";
+"profile.remove_dialog_button_remove" = "Видалити з групи…";
+"profile.remove_dialog_button_remove_confirm" = "Видалити з групи";
 
 // Block dialog
 "profile.block_dialog.title" = "Заблокувати?";
@@ -730,13 +734,16 @@
 
 // Cancel connection request
 "profile.cancel_connection_request_dialog.title" = "Скасувати запит?";
-"profile.cancel_connection_request_dialog.message" = "Видалити запит на додавання до %@.";
+"profile.cancel_connection_request_dialog.message" = "Скасувати ваш запит на додавання до контактів %@?";
 "profile.cancel_connection_request_dialog.button_no" = "Ні";
 "profile.cancel_connection_request_dialog.button_yes" = "Так";
 
 // Unblock button
 "profile.block_button_title" = "Заблокувати…";
 "profile.unblock_button_title" = "Розблокувати…";
+
+"profile.block_button_title_action" = "Заблокувати";
+"profile.unblock_button_title_action" = "Розблокувати";
 
 "profile.cancel_connection_button_title" = "СКАСУВАТИ ЗАПИТ";
 "profile.connection_request_state.blocked" = "ЗАБЛОКОВАНИЙ(-А)";
@@ -745,7 +752,9 @@
 
 "profile.read_receipts_enabled_memo.header" = "ВИ УВІМКНУЛИ ЗВІТИ ПРО ПЕРЕГЛЯД";
 "profile.read_receipts_disabled_memo.header" = "ВИ ВИМКНУЛИ ЗВІТИ ПРО ПЕРЕГЛЯД";
-"profile.read_receipts_memo.body" = "Якщо обидві сторони увімкнуть звіти про перегляд, ви зможете бачити, коли повідомлення були переглянуті.\nДану опцію можна змінити в налаштуваннях облікового запису.";
+"profile.read_receipts_memo.body" = "Якщо обидві сторони увімкнуть звіти про перегляд, ви зможете бачити, коли повідомлення були переглянуті.\n\nДану опцію можна змінити в налаштуваннях акаунта.";
+
+"profile.extended_metadata.header" = "Інформація";
 
 // User Details
 "profile.details.title" = "Подробиці";
@@ -1150,8 +1159,8 @@
 
 "team.invite.header.title" = "Створіть свою власну команду";
 "team.invite.header.subtitle" = "Ваша команда в Wire готова до використання. Запросіть ваших колег стати її учасниками.";
-"team.invite.textfield.placeholder" = "Colleague's email";
-"team.invite.textfield.accesibility" = "Enter email address for colleague to invite.";
+"team.invite.textfield.placeholder" = "Email колеги";
+"team.invite.textfield.accesibility" = "Введіть адресу електронної пошти колеги, щоб надіслати запрошення.";
 "team.invite.learn_more.title" = "Дізнатися більше";
 "team.invite.top_bar.skip" = "Пропустити";
 "team.invite.top_bar.done" = "Готово";
@@ -1252,8 +1261,8 @@
 "login.sso.alert.action" = "Увійти";
 "login.sso.alert.text_field.placeholder" = "Код доступу SSO";
 
-"login.sso.start_error_title" = "Cannot Start Company Login";
-"login.sso.link_error_message" = "The company login link you clicked is not valid. Please contact your administrator to resolve the issue.";
+"login.sso.start_error_title" = "Не вдалося здійснити вхід з корпоративного акаунта";
+"login.sso.link_error_message" = "Корпоративний акаунт, який ви вибрали, невалідний. Будь ласка, зверніться до вашого адміністратора для вирішення проблеми.";
 
 "login.sso.error.alert.title" = "Щось пішло не так";
 "login.sso.error.alert.invalid_code.title" = "Невірний код.";
@@ -1345,8 +1354,8 @@
 "signin_logout.sso.subheadline" = "Термін дійсності вашого сеансу завершився. Залогіньтеся в акаунт вашої команди, щоб продовжити.";
 "signin_logout.sso.buton" = "Вхід для компаній";
 
-"signin.email.missing_password.subtitle" = "Enter your email address and password to continue.";
-"signin.phone.missing_password.subtitle" = "Enter your phone number to continue.";
+"signin.email.missing_password.subtitle" = "Введіть ваш email та пароль для продовження.";
+"signin.phone.missing_password.subtitle" = "Введіть ваш номер телефону для продовження.";
 
 "registration.phone_country" = "Країна";
 "registration.phone_code" = "Код країни";
