@@ -60,6 +60,7 @@
 @property (nonatomic, readwrite) BOOL isWirelessUser;
 @property (nonatomic, readwrite) BOOL usesCompanyLogin;
 @property (nonatomic, readwrite) BOOL readReceiptsEnabled;
+@property (nonatomic, readwrite) BOOL isAccountDeleted;
 @property (nonatomic) ZMUser * user;
 
 @property (nonatomic) NSSet <id<UserClientType>> * clients;
