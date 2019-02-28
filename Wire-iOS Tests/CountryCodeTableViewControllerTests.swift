@@ -26,9 +26,7 @@ final class CountryCodeTableViewControllerTests: ZMSnapshotTestCase {
     override func setUp() {
         super.setUp()
         sut = CountryCodeTableViewController()
-        sut.loadViewIfNeeded()
-
-        recordMode = true
+        sut.viewDidLoad()
     }
     
     override func tearDown() {
@@ -37,6 +35,6 @@ final class CountryCodeTableViewControllerTests: ZMSnapshotTestCase {
     }
 
     func testForWirestanAppearInFirstRow(){
-        verifyInAllColorSchemes(view: sut.view)
+        verify(view: sut.view)
     }
 }
