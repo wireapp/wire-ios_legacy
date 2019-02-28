@@ -28,7 +28,6 @@
 + (NSArray <MockUser *> *)realMockUsers;
 + (MockUser *)mockSelfUser;
 + (MockUser *)mockServiceUser;
-+ (MockUser *)mockUserFor:(ZMUser *)user;
 
 + (void)setMockSelfUser:(id<UserType>)newMockUser;
 
