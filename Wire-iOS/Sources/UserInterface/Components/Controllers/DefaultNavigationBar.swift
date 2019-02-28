@@ -67,7 +67,8 @@ import UIKit
 
 extension UIViewController {
     
-    @objc func wrapInNavigationController() -> UINavigationController {
+    @objc
+    func wrapInNavigationController() -> UINavigationController {
         return wrapInNavigationController(navigationControllerClass: RotationAwareNavigationController.self, navigationBarClass: DefaultNavigationBar.self)
     }
     
@@ -77,5 +78,4 @@ extension UIViewController {
         navigationController.setViewControllers([self], animated: false)
         return navigationController
     }
-    
 }
