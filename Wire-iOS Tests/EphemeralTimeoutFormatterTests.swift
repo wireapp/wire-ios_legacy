@@ -35,22 +35,6 @@ final class EphemeralTimeoutFormatterTests: XCTestCase {
         super.tearDown()
     }
 
-    func testForClampingLongerThan1YearTimeInterval(){
-        // GIVEN & WHEN
-        let formattedString = sut.string(from: secondsInYear * 2)
-
-        // THEN
-        XCTAssertEqual(formattedString, "1 year left")
-    }
-
-    func testFor1YearLeft(){
-        // GIVEN & WHEN
-        let formattedString = sut.string(from: secondsInYear)
-
-        // THEN
-        XCTAssertEqual(formattedString, "1 year left")
-    }
-
     func testFor1SecondLessThanAYearLeft(){
         // GIVEN & WHEN
         let formattedString = sut.string(from: secondsInYear - 1)
