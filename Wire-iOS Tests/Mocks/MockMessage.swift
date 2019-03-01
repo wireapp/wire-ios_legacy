@@ -73,15 +73,19 @@ import WireLinkPreview
     var previewData: Data? { get set }
     var durationMilliseconds: UInt64 { get set }
     var normalizedLoudness: [Float]? { get set }
+    var transferState: AssetTransferState { get set }
+    var downloadState: AssetDownloadState { get set }
 }
 
 extension MockPassFileMessageData: MockFileMessageDataType { }
 extension MockFileMessageData: MockFileMessageDataType { }
 
 @objcMembers class MockPassFileMessageData: NSObject, ZMFileMessageData {
+    
     var mimeType: String? = "application/vnd.apple.pkpass"
     var size: UInt64 = 1024 * 1024 * 2
-    var transferState: ZMFileTransferState = .uploaded
+    var transferState: AssetTransferState = .uploaded
+    var downloadState: AssetDownloadState = .remote
     var filename: String? = "ticket.pkpass"
     var progress: Float = 0
     var fileURL: URL? {
@@ -137,7 +141,8 @@ extension MockFileMessageData: MockFileMessageDataType { }
 @objcMembers class MockFileMessageData: NSObject, ZMFileMessageData {
     var mimeType: String? = "application/pdf"
     var size: UInt64 = 1024 * 1024 * 2
-    var transferState: ZMFileTransferState = .uploaded
+    var transferState: AssetTransferState = .uploaded
+    var downloadState: AssetDownloadState = .remote
     var filename: String? = "TestFile.pdf"
     var progress: Float = 0
     var fileURL: URL? = .none
@@ -207,7 +212,7 @@ extension MockFileMessageData: MockFileMessageDataType { }
         completionHandler(imageData)
     }
     
-    func requestImageDownload() {
+    func requestFileDownload() {
         // no-op
     }
 }
