@@ -20,24 +20,13 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol BottomOverlayViewControllerDelegate <NSObject>
-
-- (void)bottomOverlayViewControllerBackgroundTapped:(id)controller;
-
-@end
-
-
 @class ZMUser;
 
 @interface ProfileSelfPictureViewController : UIViewController
 
 @property (nonatomic) ZMUser *user;
 @property (nonatomic, readonly) UIImageView *selfUserImageView;
-
-@property (nonatomic, strong) UITapGestureRecognizer *tapGestureRecognizer;
 @property (nonatomic, strong) UIView *bottomOverlayView;
 @property (nonatomic, strong) UIView *topView;
-
-@property (weak, nonatomic) id <BottomOverlayViewControllerDelegate> delegate;
 
 @end
