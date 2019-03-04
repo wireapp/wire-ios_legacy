@@ -27,7 +27,6 @@ extension ProfileSelfPictureViewController {
 
         setupBottomOverlay()
         setupTopView()
-        setupGestureRecognizers()
     }
 
     override open var supportedInterfaceOrientations: UIInterfaceOrientationMask {
@@ -160,24 +159,11 @@ extension ProfileSelfPictureViewController {
 
         bottomOverlayView.fitInSuperview(exclude: [.top])
         bottomOverlayView.heightAnchor.constraint(equalToConstant: height + UIScreen.safeArea.bottom).isActive = true
-
         bottomOverlayView.backgroundColor = UIColor.black.withAlphaComponent(0.8)
 
         addCameraButton()
         addLibraryButton()
         addCloseButton()
-    }
-
-
-// MARK: - Gesture
-
-    func setupGestureRecognizers() {
-        tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.didTap(_:)))
-        topView.addGestureRecognizer(tapGestureRecognizer)
-    }
-
-    @objc func didTap(_ gestureRecognizer: UITapGestureRecognizer?) {
-        delegate.bottomOverlayViewControllerBackgroundTapped(self)
     }
 
 }

@@ -76,7 +76,6 @@
     
     [[ZMUserSession sharedSession] enqueueChanges:^{
         [[ZMUserSession sharedSession].profileUpdate updateImageWithImageData:jpegData];
-        [self.delegate bottomOverlayViewControllerBackgroundTapped:self];
     }];
 }
 
