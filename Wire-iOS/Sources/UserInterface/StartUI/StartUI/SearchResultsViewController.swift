@@ -242,8 +242,14 @@ extension UIViewController {
     }
 
     private func performSearch(query: String, options: SearchOptions) {
+        var options = options
+        
         pendingSearchTask?.cancel()
         searchResultsView?.emptyResultContainer.isHidden = true
+        
+        if ZMUser.selfUser().teamRole == .partner {
+            options.insert(.onlyIncludeActiveTeamMembers)
+        }
 
         let request = SearchRequest(query: query, searchOptions: options, team: ZMUser.selfUser().team)
         if let task = searchDirectory?.perform(request) {
@@ -271,14 +277,7 @@ extension UIViewController {
 
     @objc
     func searchContactList() {
-        pendingSearchTask?.cancel()
-
-        let request = SearchRequest(query: "", searchOptions: [.contacts, .teamMembers], team: ZMUser.selfUser().team)
-        if let task = searchDirectory?.perform(request) {
-            task.onResult({ [weak self] in self?.handleSearchResult(result: $0, isCompleted: $1)})
-            task.start()
-            pendingSearchTask = task
-        }
+        searchForLocalUsers(withQuery: "")
     }
 
     var isResultEmpty: Bool = true {
