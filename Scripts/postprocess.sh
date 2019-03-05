@@ -25,10 +25,10 @@ cd $DIR/..
 POSTPROCESS_SCRIPT="Configuration/postprocess.sh"
 
 if [ -e "${POSTPROCESS_SCRIPT}" ]; then
-    echo "Doing extra postprocessing by ${POSTPROCESS_SCRIPT}"
+    echo "Running ${POSTPROCESS_SCRIPT}"
     ./"${POSTPROCESS_SCRIPT}"
 else
-    echo "No extra postprocess script in ${POSTPROCESS_SCRIPT}, skipping..."
+    echo "No postprocess script found in ${POSTPROCESS_SCRIPT}, skipping..."
 fi
 
 echo "✅  Done"
