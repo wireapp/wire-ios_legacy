@@ -248,7 +248,10 @@ extension UIViewController {
         searchResultsView?.emptyResultContainer.isHidden = true
         
         if ZMUser.selfUser().teamRole == .partner {
-            options.insert(.onlyIncludeActiveTeamMembers)
+            options.insert(.excludeNonActiveTeamMembers)
+            options.remove(.directory)
+        } else {
+            options.insert(.excludeNonActivePartners)
         }
 
         let request = SearchRequest(query: query, searchOptions: options, team: ZMUser.selfUser().team)
