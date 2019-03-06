@@ -16,7 +16,7 @@ platform :ios do
 
     desc "Build for testing"
     lane :build do
-        scan(
+        build_app(
             scheme: "Wire-iOS",
             configuration: "Debug",
             build_for_testing: true,
@@ -45,21 +45,30 @@ platform :ios do
     end
 
     desc "Build for AppStore"
-    lane :build_app_store do
-        if ENV["BUILD_NUMBER"].nil?
+    lane :build_for_release do |options|
+        build_type = options[:build_type]
+        if build_type.nil? 
+            UI.user_error! "Pass buid_type parameter, e.g. fastlane build_for_release build_type:Development"
+        end
+        build_number = ENV["BUILD_NUMBER"]
+        if build_number.nil?
             UI.user_error! "Pass build number in environment variable BUILD_NUMBER"
         end
-        # Remove debug settings
-        sh "echo '' > ../Wire-iOS/Resources/Settings.bundle/Root.plist"
+
+        build = Build.new(build_type: build_type, branch: git_branch, build_number: build_number)
+
         build_app(
             scheme: "Wire-iOS",
-            export_method: "app-store",
+            export_method: build.export_method,
+            export_options: {"iCloudContainerEnvironment": "Production"},
             derived_data_path: "DerivedData",
-            buildlog_path: "appstore",
-            output_directory: "appstore",
+            archive_path: "release/#{build.filename}",
+            buildlog_path: "release",
+            output_directory: "release",
+            output_name: build.filename,
             include_bitcode: false,
             include_symbols: true,
-            xcargs: "BUILD_NUMBER=#{ENV["BUILD_NUMBER"]}"
+            xcargs: "BUILD_NUMBER=#{build_number}"
         )
     end
 
@@ -103,4 +112,33 @@ platform :ios do
         sh codecov
 
     end
+end
+
+class Build
+    attr_reader :build_type
+    attr_reader :git_branch
+    attr_reader :build_number
+
+    def initialize(build_type:, branch:, build_number:)
+        if build_type.nil? 
+            return nil
+        end
+        @build_type = build_type
+        @git_branch = branch
+        @build_number = build_number
+    end
+
+    def export_method
+        if @build_type == "AppStore"
+            return "app-store"
+        else 
+            return "enterprise"
+        end
+    end
+
+    def filename
+        normalized_branch_name = @git_branch.gsub("/", "_")
+        return "Wire-#{@build_type.downcase}-#{normalized_branch_name}-#{@build_number}"
+    end
+
 end
