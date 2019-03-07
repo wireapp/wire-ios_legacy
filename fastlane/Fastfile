@@ -44,7 +44,7 @@ platform :ios do
         )
     end
 
-    desc "Build for AppStore"
+    desc "Build for release to AppStore or Hockey/S3"
     lane :build_for_release do |options|
         build_type = options[:build_type]
         if build_type.nil? 
@@ -57,6 +57,7 @@ platform :ios do
 
         build = Build.new(build_type: build_type, branch: git_branch, build_number: build_number)
 
+        build.process_icon()
         build_app(
             scheme: "Wire-iOS",
             export_method: build.export_method,
@@ -128,17 +129,55 @@ class Build
         @build_number = build_number
     end
 
+    def appstore_build
+        @build_type == "AppStore"
+    end
+
     def export_method
-        if @build_type == "AppStore"
-            return "app-store"
+        if appstore_build
+            "app-store"
         else 
-            return "enterprise"
+            "enterprise"
         end
     end
 
     def filename
         normalized_branch_name = @git_branch.gsub("/", "_")
-        return "Wire-#{@build_type.downcase}-#{normalized_branch_name}-#{@build_number}"
+        "Wire-#{@build_type.downcase}-#{normalized_branch_name}-#{@build_number}"
+    end
+
+    def process_icon
+        # No preprocessing needed for AppStore icons
+        if appstore_build
+            return
+        end
+
+        # Loop over all icons in the iconset
+        Dir.glob("../#{iconset_location}/*.png") do |image|
+            width = %x( identify -format %w #{image} )
+            image_height = %x( identify -format %h #{image} )
+            height = Integer(image_height) / 4.0
+
+            # Add build number to the icon
+            %x( convert -background '#0008' -fill white -gravity center -size #{width}x#{height} caption:"#{extra_info}" "#{image}" +swap -gravity south -composite "#{image}" )
+        end
+    end
+
+    def extra_info
+        @build_number
+    end
+
+    def iconset_location
+        "Configuration/Images.xcassets/AppIcon-#{iconset_name}.appiconset"
+    end
+
+    def iconset_name
+        case @build_type
+        when "Playground"
+            "Development"
+        else
+            @build_type
+        end
     end
 
 end
