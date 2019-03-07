@@ -96,13 +96,28 @@ platform :ios do
         if build_number.nil?
             UI.user_error! "Pass build number in environment variable BUILD_NUMBER"
         end
+        build_type = options[:build_type]
+        if build_type.nil? 
+            UI.user_error! "Pass buid_type parameter, e.g. fastlane release build_type:Development"
+        end
 
+        changelog = "Changelog not available"
+        last_commit = options[:last_commit]
+        if !last_commit.nil? 
+            changelog = "Changes Since Last Build:\n" + changelog_from_git_commits(
+                between: [last_commit, "HEAD"],
+                pretty: "* [%an] %s",
+            )
+        end
+
+        puts("Log: #{changelog}")
         build = Build.new(build_type: build_type, branch: git_branch, build_number: build_number)
 
         hockey(
           api_token: ENV["HOCKEY_APP_TOKEN"],
-          ipa: build.filename,
-          notes: "Changelog"
+          public_identifier: build.hockey_app_id,
+          ipa: "release/#{build.filename}.ipa",
+          notes: changelog
         )
     end
 
@@ -194,6 +209,25 @@ class Build
             "Development"
         else
             @build_type
+        end
+    end
+
+    def hockey_app_id
+        case @build_type
+        when "Playground"
+            ENV["HOCKEY_IOS_PLAYGROUND_ID"]
+        when "Development"
+            ENV["HOCKEY_IOS_DEV_ID"]
+        when "Internal"
+            ENV["HOCKEY_IOS_INT_ID"]
+        when "AppStore"
+            ENV["HOCKEY_IOS_APPSTORE_ID"]
+        when "AVS"
+            ENV["HOCKEY_IOS_AVS_ID"]
+        when "RC"
+            ENV["HOCKEY_IOS_RELEASE_ID"]
+        else
+            UI.user_error! "Unknown build type: #{@build_type}"
         end
     end
 
