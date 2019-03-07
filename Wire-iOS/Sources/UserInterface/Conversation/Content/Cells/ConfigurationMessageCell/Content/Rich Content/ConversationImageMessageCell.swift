@@ -104,9 +104,10 @@ class ConversationImageMessageCell: UIView, ConversationMessageCell {
 
         let scaleFactor: CGFloat = object.image.isAnimatedGIF ? 1 : 0.5
         let imageSize = object.image.originalSize.applying(CGAffineTransform.init(scaleX: scaleFactor, y: scaleFactor))
+        let imageAspectRatio = imageSize.width > 0 ? imageSize.height / imageSize.width : 1.0
         
         aspectConstraint.apply({ containerView.removeConstraint($0) })
-        aspectConstraint = containerView.heightAnchor.constraint(equalTo: containerView.widthAnchor, multiplier: imageSize.height / imageSize.width)
+        aspectConstraint = containerView.heightAnchor.constraint(equalTo: containerView.widthAnchor, multiplier: imageAspectRatio)
         aspectConstraint?.isActive = true
         widthConstraint?.constant = imageSize.width
         heightConstraint?.constant = imageSize.height
