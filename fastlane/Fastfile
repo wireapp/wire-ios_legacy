@@ -118,13 +118,13 @@ platform :ios do
     end
 
     desc "Upload to S3"
-    lane :release do |options|
+    lane :upload_s3 do |options|
         build = Build.new(options: options, branch: git_branch)
         sh "Upload of debug/#{build.filename}.ipa done!"
     end
 
-    desc "Release for internal use"
-    lane :release do |options|
+    desc "Upload for internal use"
+    lane :upload_hockey do |options|
         build = Build.new(options: options, branch: git_branch)
         hockey(
           api_token: ENV["HOCKEY_APP_TOKEN"],
