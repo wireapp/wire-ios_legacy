@@ -17,11 +17,8 @@
 // 
 
 
-@import PureLayout;
-
 #import "AudioTrackViewController.h"
-#import "AudioHeaderView.h"
-#import "AudioTrackView.h"
+#import "AudioTrackViewController+Internal.h"
 #import "AudioTrackPlayer.h"
 #import "SoundcloudAudioTrack.h"
 
@@ -37,12 +34,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 @import AVFoundation;
 
 @interface AudioTrackViewController ()
-
-@property (nonatomic, readonly) UIImageView *backgroundView;
-@property (nonatomic, readonly) UIVisualEffectView *blurEffectView;
-@property (nonatomic, readonly) AudioHeaderView *audioHeaderView;
-@property (nonatomic, readonly) AudioTrackView *audioTrackView;
-@property (nonatomic, readonly) UILabel *subtitleLabel;
 
 @property (nonatomic, readonly) AudioTrackPlayer *audioTrackPlayer;
 @property (nonatomic, readonly) BOOL isTrackPlayingInAudioPlayer;
@@ -86,7 +77,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     self.view.translatesAutoresizingMaskIntoConstraints = NO;
     self.view.preservesSuperviewLayoutMargins = YES;
     
-    _backgroundView = [[UIImageView alloc] initForAutoLayout];
+    _backgroundView = [[UIImageView alloc] init];
     self.backgroundView.contentMode = UIViewContentModeScaleAspectFill;
     self.backgroundView.accessibilityIdentifier = @"BackgroundView";
     self.backgroundView.clipsToBounds = YES;
@@ -98,14 +89,14 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     self.blurEffectView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:self.blurEffectView];
     
-    _audioTrackView = [[AudioTrackView alloc] initForAutoLayout];
+    _audioTrackView = [[AudioTrackView alloc] init];
     [self.blurEffectView.contentView addSubview:self.audioTrackView];
     
-    _audioHeaderView = [[AudioHeaderView alloc] initForAutoLayout];
+    _audioHeaderView = [[AudioHeaderView alloc] init];
     self.audioHeaderView.preservesSuperviewLayoutMargins = YES;
     [self.blurEffectView.contentView addSubview:self.audioHeaderView];
     
-    _subtitleLabel = [[UILabel alloc] initForAutoLayout];
+    _subtitleLabel = [[UILabel alloc] init];
     self.subtitleLabel.textAlignment = NSTextAlignmentCenter;
     self.subtitleLabel.textColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:ColorSchemeVariantDark];
     self.subtitleLabel.font = UIFont.smallRegularFont;
@@ -136,33 +127,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 - (UIView *)touchableView
 {
     return self.view;
-}
-
-- (void)createInitialConstraints
-{
-    [self.backgroundView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
-    [self.blurEffectView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
-    
-    [self.audioHeaderView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeBottom];
-    [self.audioHeaderView autoSetDimension:ALDimensionHeight toSize:64];
-    
-    [self.audioTrackView autoCenterInSuperview];
-    [self.audioTrackView autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:64];
-    [self.audioTrackView autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:64];
-    [self.audioTrackView autoMatchDimension:ALDimensionHeight toDimension:ALDimensionWidth ofView:self.audioTrackView];
-    
-    [self.subtitleLabel autoPinEdgeToSuperviewEdge:ALEdgeLeft];
-    [self.subtitleLabel autoPinEdgeToSuperviewEdge:ALEdgeRight];
-    [self.subtitleLabel autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.audioTrackView];
-    [self.subtitleLabel autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:0];
-    
-    [NSLayoutConstraint autoSetPriority:UILayoutPriorityRequired forConstraints:^{
-        [self.view autoSetDimension:ALDimensionHeight toSize:375 relation:NSLayoutRelationLessThanOrEqual];
-    }];
-    
-    [NSLayoutConstraint autoSetPriority:UILayoutPriorityDefaultHigh forConstraints:^{
-        [self.view autoMatchDimension:ALDimensionHeight toDimension:ALDimensionWidth ofView:self.view];
-    }];
 }
 
 - (void)fetchAttachment

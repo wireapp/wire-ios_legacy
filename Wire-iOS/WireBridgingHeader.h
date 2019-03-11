@@ -175,7 +175,10 @@
 #import "AudioTrackPlayer.h"
 #import "MediaPlaybackManager.h"
 #import "AudioTrackViewController.h"
+#import "AudioTrackViewController+Internal.h"
 #import "AudioPlaylistViewController.h"
+#import "AudioHeaderView.h"
+#import "AudioTrackView.h"
 
 // Media
 #import "MediaPreviewData.h"
