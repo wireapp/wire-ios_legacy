@@ -46,6 +46,11 @@ final class AudioTrackViewControllerSnapshotTests: ZMSnapshotTestCase {
 
         sut = AudioTrackViewController()
         sut.audioTrack = audioTrack
+
+        let image = self.image(inTestBundleNamed: "unsplash_square.jpg")
+        sut.backgroundView.image = image
+        sut.audioTrackView.artworkImageView.image = image
+
         sut.view.frame = CGRect(x: 0, y: 0, width: 375, height: 375)
 
         verify(view: sut.view)
