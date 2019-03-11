@@ -1219,6 +1219,7 @@
 		EF7FD9492236798E000ABFA0 /* AudioTrackViewControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7FD9482236798E000ABFA0 /* AudioTrackViewControllerSnapshotTests.swift */; };
 		EF7FD94B22367D0E000ABFA0 /* SoundcloudAudioTrack+LoadFromJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7FD94A22367D0E000ABFA0 /* SoundcloudAudioTrack+LoadFromJSON.swift */; };
 		EF7FD95122369E71000ABFA0 /* AudioTrackViewController+Constraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7FD94F22369E71000ABFA0 /* AudioTrackViewController+Constraint.swift */; };
+		EF7FD9542236AC27000ABFA0 /* AudioTrackView+Constraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7FD9522236AC27000ABFA0 /* AudioTrackView+Constraint.swift */; };
 		EF80461E20CA8B67001A1C53 /* ConversationContentViewController+TableHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF80461D20CA8B67001A1C53 /* ConversationContentViewController+TableHeader.swift */; };
 		EF80466520D17130001A1C53 /* MessageDestructionTimeoutValueTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF80466320D1712B001A1C53 /* MessageDestructionTimeoutValueTests.swift */; };
 		EF82E1C020EE79EC001B5196 /* ZMConversationMessage+CountDown.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF82E1BF20EE79EC001B5196 /* ZMConversationMessage+CountDown.swift */; };
@@ -3061,6 +3062,8 @@
 		EF7FD94A22367D0E000ABFA0 /* SoundcloudAudioTrack+LoadFromJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SoundcloudAudioTrack+LoadFromJSON.swift"; sourceTree = "<group>"; };
 		EF7FD94F22369E71000ABFA0 /* AudioTrackViewController+Constraint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AudioTrackViewController+Constraint.swift"; sourceTree = "<group>"; };
 		EF7FD95022369E71000ABFA0 /* AudioTrackViewController+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AudioTrackViewController+Internal.h"; sourceTree = "<group>"; };
+		EF7FD9522236AC27000ABFA0 /* AudioTrackView+Constraint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AudioTrackView+Constraint.swift"; sourceTree = "<group>"; };
+		EF7FD9532236AC27000ABFA0 /* AudioTrackView+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AudioTrackView+Internal.h"; sourceTree = "<group>"; };
 		EF80461D20CA8B67001A1C53 /* ConversationContentViewController+TableHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationContentViewController+TableHeader.swift"; sourceTree = "<group>"; };
 		EF80466320D1712B001A1C53 /* MessageDestructionTimeoutValueTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageDestructionTimeoutValueTests.swift; sourceTree = "<group>"; };
 		EF82E1BF20EE79EC001B5196 /* ZMConversationMessage+CountDown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ZMConversationMessage+CountDown.swift"; sourceTree = "<group>"; };
@@ -4677,7 +4680,9 @@
 				871BC32A1D34F94200DF0793 /* AudioTrackPlayer.h */,
 				871BC32B1D34F94200DF0793 /* AudioTrackPlayer.m */,
 				871BC32C1D34F94200DF0793 /* AudioTrackView.h */,
+				EF7FD9532236AC27000ABFA0 /* AudioTrackView+Internal.h */,
 				871BC32D1D34F94200DF0793 /* AudioTrackView.m */,
+				EF7FD9522236AC27000ABFA0 /* AudioTrackView+Constraint.swift */,
 				871BC32E1D34F94200DF0793 /* AudioTrackViewController.h */,
 				EF7FD95022369E71000ABFA0 /* AudioTrackViewController+Internal.h */,
 				871BC32F1D34F94200DF0793 /* AudioTrackViewController.m */,
@@ -7696,6 +7701,7 @@
 				EF6251D2213844D400943708 /* ConversationListItemView+Style.swift in Sources */,
 				871BBFFF1D34F56300DF0793 /* Analytics.m in Sources */,
 				BF7ED2D61DF18724003A4397 /* UserNameDetailView.swift in Sources */,
+				EF7FD9542236AC27000ABFA0 /* AudioTrackView+Constraint.swift in Sources */,
 				87BEB0401D3E44E600DE9575 /* AssetCell.swift in Sources */,
 				BFCCA4FE20A0A03D000A4F33 /* CallInfoRootViewController.swift in Sources */,
 				D5168F542010F24500F8222A /* TokenizedTextView.m in Sources */,

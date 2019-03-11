@@ -18,12 +18,9 @@
 
 
 #import "AudioTrackView.h"
+#import "AudioTrackView+Internal.h"
 
-#import "AudioErrorView.h"
 #import "Wire-Swift.h"
-
-@import PureLayout;
-
 
 
 @interface AudioTrackView ()
@@ -32,8 +29,6 @@
 @property (nonatomic) UIImageView *artworkImageView;
 @property (nonatomic) CAShapeLayer *progressLayer;
 @property (nonatomic) CAShapeLayer *progressBackgroundLayer;
-@property (nonatomic) AudioErrorView *errorView;
-@property (nonatomic) BOOL initialConstraintsCreated;
 
 @end
 
@@ -44,7 +39,7 @@
     self = [super init];
     
     if (self) {
-        self.artworkImageView = [[UIImageView alloc] initForAutoLayout];
+        self.artworkImageView = [[UIImageView alloc] init];
         self.artworkImageView.contentMode = UIViewContentModeScaleAspectFill;
         self.artworkImageView.layer.masksToBounds = YES;
         [self addSubview:self.artworkImageView];
@@ -63,7 +58,7 @@
         self.progressLayer.strokeColor = UIColor.soundcloudOrange.CGColor;
         [self.layer addSublayer:self.progressLayer];
         
-        self.playPauseButton = [[IconButton alloc] initForAutoLayout];
+        self.playPauseButton = [[IconButton alloc] init];
         [self.playPauseButton setIcon:ZetaIconTypePlay withSize:ZetaIconSizeLarge forState:UIControlStateNormal];
         self.playPauseButton.layer.shadowOpacity = 1;
         self.playPauseButton.layer.shadowColor = UIColor.blackColor.CGColor;
@@ -77,19 +72,6 @@
     return self;
 }
 
-- (void)updateConstraints
-{
-    if (! self.initialConstraintsCreated) {
-        
-        self.initialConstraintsCreated = YES;
-        
-        [self.artworkImageView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
-        [self.playPauseButton autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
-    }
-    
-    [super updateConstraints];
-}
-
 - (void)layoutSubviews
 {
     [super layoutSubviews];
@@ -101,7 +83,7 @@
     self.progressLayer.path = [self progressBeizerPath].CGPath;
     
     self.artworkImageView.layer.cornerRadius = self.artworkImageView.bounds.size.width / 2;
-    _errorView.layer.cornerRadius = self.artworkImageView.bounds.size.width / 2;
+    self.lazyErrorView.layer.cornerRadius = self.artworkImageView.bounds.size.width / 2;
 }
 
 - (void)setTintColor:(UIColor *)tintColor
@@ -138,19 +120,6 @@
 - (CGRect)progressLayerBounds
 {
     return self.artworkImageView.bounds;
-}
-
-- (AudioErrorView *)errorView
-{
-    if (nil == _errorView) {
-        _errorView = [[AudioErrorView alloc] initForAutoLayout];
-        _errorView.layer.cornerRadius = self.artworkImageView.bounds.size.width / 2;
-
-        [self addSubview:_errorView];
-        [_errorView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
-    }
-    
-    return _errorView;
 }
 
 - (UIBezierPath *)progressBeizerPath
