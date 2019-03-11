@@ -19,13 +19,15 @@
 import XCTest
 @testable import Wire
 
-final class AudioTrackViewControllerSnapshotTests: ZMSnapshotTestCase {
+final class AudioErrorViewSnapshotTests: ZMSnapshotTestCase {
     
-    var sut: AudioTrackViewController!
+    var sut: AudioErrorView!
     
     override func setUp() {
         super.setUp()
+        sut = AudioErrorView()
 
+        /// TODO: remove this after snapshot is created
         recordMode = true
     }
     
@@ -35,24 +37,6 @@ final class AudioTrackViewControllerSnapshotTests: ZMSnapshotTestCase {
     }
 
     func testForInitState(){
-        sut = AudioTrackViewController()
-        sut.view.frame = CGRect(x: 0, y: 0, width: 375, height: 375)
-
-        verify(view: sut.view)
-    }
-
-    func testForDummyTrackLoaded(){
-        let audioTrack = audioTrackFromJSON(filename: "soundcloud-track1.json")
-
-        sut = AudioTrackViewController()
-        sut.audioTrack = audioTrack
-
-        let image = self.image(inTestBundleNamed: "unsplash_square.jpg")
-        sut.backgroundView.image = image
-        sut.audioTrackView.artworkImageView.image = image
-
-        sut.view.frame = CGRect(x: 0, y: 0, width: 375, height: 375)
-
-        verify(view: sut.view)
+        verify(view: sut)
     }
 }

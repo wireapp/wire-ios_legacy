@@ -1220,6 +1220,7 @@
 		EF7FD94B22367D0E000ABFA0 /* SoundcloudAudioTrack+LoadFromJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7FD94A22367D0E000ABFA0 /* SoundcloudAudioTrack+LoadFromJSON.swift */; };
 		EF7FD95122369E71000ABFA0 /* AudioTrackViewController+Constraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7FD94F22369E71000ABFA0 /* AudioTrackViewController+Constraint.swift */; };
 		EF7FD9542236AC27000ABFA0 /* AudioTrackView+Constraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7FD9522236AC27000ABFA0 /* AudioTrackView+Constraint.swift */; };
+		EF7FD9572236B9F6000ABFA0 /* AudioErrorViewSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7FD9562236B9F6000ABFA0 /* AudioErrorViewSnapshotTests.swift */; };
 		EF80461E20CA8B67001A1C53 /* ConversationContentViewController+TableHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF80461D20CA8B67001A1C53 /* ConversationContentViewController+TableHeader.swift */; };
 		EF80466520D17130001A1C53 /* MessageDestructionTimeoutValueTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF80466320D1712B001A1C53 /* MessageDestructionTimeoutValueTests.swift */; };
 		EF82E1C020EE79EC001B5196 /* ZMConversationMessage+CountDown.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF82E1BF20EE79EC001B5196 /* ZMConversationMessage+CountDown.swift */; };
@@ -3064,6 +3065,7 @@
 		EF7FD95022369E71000ABFA0 /* AudioTrackViewController+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AudioTrackViewController+Internal.h"; sourceTree = "<group>"; };
 		EF7FD9522236AC27000ABFA0 /* AudioTrackView+Constraint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AudioTrackView+Constraint.swift"; sourceTree = "<group>"; };
 		EF7FD9532236AC27000ABFA0 /* AudioTrackView+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AudioTrackView+Internal.h"; sourceTree = "<group>"; };
+		EF7FD9562236B9F6000ABFA0 /* AudioErrorViewSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioErrorViewSnapshotTests.swift; sourceTree = "<group>"; };
 		EF80461D20CA8B67001A1C53 /* ConversationContentViewController+TableHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationContentViewController+TableHeader.swift"; sourceTree = "<group>"; };
 		EF80466320D1712B001A1C53 /* MessageDestructionTimeoutValueTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageDestructionTimeoutValueTests.swift; sourceTree = "<group>"; };
 		EF82E1BF20EE79EC001B5196 /* ZMConversationMessage+CountDown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ZMConversationMessage+CountDown.swift"; sourceTree = "<group>"; };
@@ -5986,7 +5988,7 @@
 				5E628026222021600039A8AB /* ProfileFooterViewTests.swift */,
 				5E62802D22258A110039A8AB /* IncomingRequestFooterTests.swift */,
 				EFEB2EDF220C7E5500519EDC /* ProfileSelfPictureViewControllerSnapshotTests.swift */,
-				EF7FD9482236798E000ABFA0 /* AudioTrackViewControllerSnapshotTests.swift */,
+				EF7FD9552236B9D9000ABFA0 /* AudioPlayer */,
 			);
 			path = "Wire-iOS Tests";
 			sourceTree = "<group>";
@@ -6475,6 +6477,15 @@
 				EF4172AE210F5E9F00FF85C7 /* FullscreenImageViewControllerSnapshotTests.swift */,
 			);
 			path = FullscreenImageViewController;
+			sourceTree = "<group>";
+		};
+		EF7FD9552236B9D9000ABFA0 /* AudioPlayer */ = {
+			isa = PBXGroup;
+			children = (
+				EF7FD9482236798E000ABFA0 /* AudioTrackViewControllerSnapshotTests.swift */,
+				EF7FD9562236B9F6000ABFA0 /* AudioErrorViewSnapshotTests.swift */,
+			);
+			path = AudioPlayer;
 			sourceTree = "<group>";
 		};
 		EFC57A1121BABD4F0008DBE6 /* ConversationInputBarViewController */ = {
@@ -8217,6 +8228,7 @@
 				EFE806301FE006A7006A0EE7 /* DateFormatterTests.swift in Sources */,
 				EF1FDC8221DE677600C9CEB1 /* XCTestCase+EmoticonSubstitutionConfiguration.swift in Sources */,
 				87BEB0DC1C734D710094BFE9 /* MockConversation.m in Sources */,
+				EF7FD9572236B9F6000ABFA0 /* AudioErrorViewSnapshotTests.swift in Sources */,
 				EE118C012031D1C300BC68D6 /* MarkdownTextViewTests.swift in Sources */,
 				BFFE943E1E7839EB0025AD75 /* CoreDataSnapshotTestCase.swift in Sources */,
 				EF6EB1CE20A5C296002F720D /* AppStateControllerTests.swift in Sources */,
