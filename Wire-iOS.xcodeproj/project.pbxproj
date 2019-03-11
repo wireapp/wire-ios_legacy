@@ -5814,6 +5814,7 @@
 		BACB88521AF7C48900DDCDB0 /* Wire-iOS Tests */ = {
 			isa = PBXGroup;
 			children = (
+				EF7FD9552236B9D9000ABFA0 /* AudioPlayer */,
 				EFC57A1121BABD4F0008DBE6 /* ConversationInputBarViewController */,
 				EF18140721B17F7A008F7DA8 /* ConversationOption */,
 				EF6A33D02192F47200970698 /* ConversationListCell */,
@@ -5988,7 +5989,6 @@
 				5E628026222021600039A8AB /* ProfileFooterViewTests.swift */,
 				5E62802D22258A110039A8AB /* IncomingRequestFooterTests.swift */,
 				EFEB2EDF220C7E5500519EDC /* ProfileSelfPictureViewControllerSnapshotTests.swift */,
-				EF7FD9552236B9D9000ABFA0 /* AudioPlayer */,
 			);
 			path = "Wire-iOS Tests";
 			sourceTree = "<group>";

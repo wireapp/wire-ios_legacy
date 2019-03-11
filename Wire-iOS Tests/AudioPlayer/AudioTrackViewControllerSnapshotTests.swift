@@ -64,6 +64,8 @@ final class AudioTrackViewControllerSnapshotTests: ZMSnapshotTestCase {
         createSutWithTrack()
         
         sut.audioTrackView.failedToLoad = true
+//        sut.audioTrackView.layoutIfNeeded()
+//        sut.view.layoutIfNeeded()
 
         verify(view: sut.view)
     }

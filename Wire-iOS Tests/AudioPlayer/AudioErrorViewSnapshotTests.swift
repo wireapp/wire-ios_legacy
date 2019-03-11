@@ -26,6 +26,8 @@ final class AudioErrorViewSnapshotTests: ZMSnapshotTestCase {
     override func setUp() {
         super.setUp()
         sut = AudioErrorView()
+        sut.frame = CGRect(origin: .zero, size: CGSize(width: 375, height: 375))
+        sut.layoutIfNeeded()
 
         /// TODO: remove this after snapshot is created
         recordMode = true
