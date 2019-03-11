@@ -18,15 +18,12 @@
 
 
 #import "AudioErrorView.h"
+#import "AudioErrorView+Internal.h"
+#import "Wire-Swift.h"
+
 @import WireCommonComponents;
 
-@import PureLayout;
-
-@interface AudioErrorView ()
-@property (nonatomic) UIImageView *errorIconView;
-@end
-
-@implementation AudioErrorView
+@implementation AudioErrorView ///TODO: test
 
 - (instancetype)init
 {
@@ -34,13 +31,12 @@
     if (self) {
         self.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.32f];
 
-        self.errorIconView = [[UIImageView alloc] initForAutoLayout];
+        self.errorIconView = [[UIImageView alloc] init];
         self.errorIconView.image = [UIImage imageForIcon:ZetaIconTypeAudio iconSize:ZetaIconSizeCamera color:[UIColor colorWithWhite:1 alpha:0.16]];
         self.errorIconView.transform = CGAffineTransformMakeRotation(M_PI);
         [self addSubview:self.errorIconView];
-        
-        [self.errorIconView autoAlignAxisToSuperviewMarginAxis:ALAxisHorizontal];
-        [self.errorIconView autoAlignAxisToSuperviewMarginAxis:ALAxisVertical];
+
+        [self createConstraints];
     }
     return self;
 }
