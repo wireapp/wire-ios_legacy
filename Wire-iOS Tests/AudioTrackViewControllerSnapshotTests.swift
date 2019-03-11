@@ -26,9 +26,7 @@ final class AudioTrackViewControllerSnapshotTests: ZMSnapshotTestCase {
     override func setUp() {
         super.setUp()
         sut = AudioTrackViewController()
-
-        /// TODO: remove this after snapshot is created
-        recordMode = true
+        sut.view.frame = CGRect(x: 0, y: 0, width: 375, height: 375)
     }
     
     override func tearDown() {
