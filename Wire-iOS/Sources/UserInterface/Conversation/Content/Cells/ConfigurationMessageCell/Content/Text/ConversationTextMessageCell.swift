@@ -91,9 +91,9 @@ class ConversationTextMessageCell: UIView, ConversationMessageCell, TextViewInte
 
         if let message = message,
             message.isObfuscated {
-            messageTextView.accessibilityLabel = "obfuscated text"
+            messageTextView.accessibilityIdentifier = "Obfuscated message"
         } else {
-            messageTextView.accessibilityLabel = nil
+            messageTextView.accessibilityIdentifier = "Message"
         }
     }
 
