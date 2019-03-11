@@ -218,7 +218,6 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
             let navigationController = UINavigationController(navigationBarClass: AuthenticationNavigationBar.self, toolbarClass: nil)
 
             authenticationCoordinator = AuthenticationCoordinator(presenter: navigationController,
-                                                                  unauthenticatedSession: UnauthenticatedSession.sharedSession!,
                                                                   sessionManager: SessionManager.shared!,
                                                                   featureProvider: BuildSettingAuthenticationFeatureProvider())
 
@@ -487,6 +486,10 @@ extension AppRootViewController: SessionManagerCreatedSessionObserver, SessionMa
                 soundEventListeners[accountId] = SoundEventListener(userSession: userSession)
             }
         }
+    }
+
+    func sessionManagerCreated(unauthenticatedSession: UnauthenticatedSession) {
+        // no-op
     }
 
     func sessionManagerDestroyedUserSession(for accountId: UUID) {

@@ -25,29 +25,18 @@ extension ConversationViewController: UIPopoverPresentationControllerDelegate {
                                                        from view: UIView,
                                                        contentViewController controller: UIViewController) {
 
-        controller.modalPresentationStyle = .popover
-        controller.preferredContentSize = CGSize.IPadPopover.preferredContentSize
-
-        guard let popover = controller.popoverPresentationController else { return }
-        guard let rootViewController = UIApplication.shared.keyWindow?.rootViewController as? PopoverPresenter & UIViewController else { return }
-
-        popover.delegate = self
-        popover.config(from: rootViewController,
-                       pointToView: view,
-                       sourceView: rootViewController.view)
-
-        popover.backgroundColor = .white
-
-        rootViewController.present(controller, animated: true)
+        endEditing()
+        controller.modalPresentationStyle = .formSheet
+        present(controller, animated: true)
     }
 
-    @objc
-    func didTap(onUserAvatar user: UserType?, view: UIView?, frame: CGRect) {
-        if user == nil || view == nil {
+    @objc func didTap(onUserAvatar user: GenericUser, view: UIView?, frame: CGRect) {
+        if view == nil {
             return
         }
 
-        let profileViewController = ProfileViewController(user: user as! UserType & AccentColorProvider,
+        let profileViewController = ProfileViewController(user: user,
+                                                          viewer: ZMUser.selfUser(),
                                                           conversation: conversation,
                                                           viewControllerDismisser: self)
         profileViewController.preferredContentSize = CGSize.IPadPopover.preferredContentSize

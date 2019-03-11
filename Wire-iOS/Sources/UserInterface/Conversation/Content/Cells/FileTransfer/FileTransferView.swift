@@ -165,36 +165,28 @@ final public class FileTransferView: UIView, TransferView {
         
         switch fileMessageData.transferState {
             
-        case .downloaded:
-            let firstLine = fileNameAttributed
-            let secondLine = fileSizeAttributed + dot + extAttributed
-            self.topLabel.attributedText = firstLine
-            self.bottomLabel.attributedText = secondLine
-            
-        case .downloading:
-            let statusText = "content.file.downloading".localized.uppercased() && labelFont && labelTextBlendedColor
-            
-            let firstLine = fileNameAttributed
-            let secondLine = fileSizeAttributed + dot + statusText
-            self.topLabel.attributedText = firstLine
-            self.bottomLabel.attributedText = secondLine
-            
         case .uploading:
             let statusText = "content.file.uploading".localized.uppercased() && labelFont && labelTextBlendedColor
-            
             let firstLine = fileNameAttributed
             let secondLine = fileSizeAttributed + dot + statusText
             self.topLabel.attributedText = firstLine
             self.bottomLabel.attributedText = secondLine
-            
-        case .uploaded, .failedDownload, .unavailable:
-            let firstLine = fileNameAttributed
-            let secondLine = fileSizeAttributed + dot + extAttributed
-            self.topLabel.attributedText = firstLine
-            self.bottomLabel.attributedText = secondLine
-            
-        case .failedUpload, .cancelledUpload:
-            let statusText = fileMessageData.transferState == .failedUpload ? "content.file.upload_failed".localized : "content.file.upload_cancelled".localized
+        case .uploaded:
+            switch fileMessageData.downloadState {
+            case .downloaded, .remote:
+                let firstLine = fileNameAttributed
+                let secondLine = fileSizeAttributed + dot + extAttributed
+                self.topLabel.attributedText = firstLine
+                self.bottomLabel.attributedText = secondLine
+            case .downloading:
+                let statusText = "content.file.downloading".localized.uppercased() && labelFont && labelTextBlendedColor
+                let firstLine = fileNameAttributed
+                let secondLine = fileSizeAttributed + dot + statusText
+                self.topLabel.attributedText = firstLine
+                self.bottomLabel.attributedText = secondLine
+            }
+        case .uploadingFailed, .uploadingCancelled:
+            let statusText = fileMessageData.transferState == .uploadingFailed ? "content.file.upload_failed".localized : "content.file.upload_cancelled".localized
             let attributedStatusText = statusText.uppercased() && labelFont && UIColor.vividRed
             
             let firstLine = fileNameAttributed
@@ -255,23 +247,19 @@ final public class FileTransferView: UIView, TransferView {
         }
         
         switch(fileMessageData.transferState) {
-        case .downloading:
-            self.progressView.setProgress(0, animated: false)
-            self.delegate?.transferView(self, didSelect: .cancel)
         case .uploading:
             if .none != message.fileMessageData!.fileURL {
                 self.delegate?.transferView(self, didSelect: .cancel)
             }
-        case .failedUpload, .cancelledUpload:
+        case .uploadingFailed, .uploadingCancelled:
             self.delegate?.transferView(self, didSelect: .resend)
-        case .failedDownload:
-            self.delegate?.transferView(self, didSelect: .present)
-        case .downloaded:
-            self.delegate?.transferView(self, didSelect: .present)
         case .uploaded:
-            self.delegate?.transferView(self, didSelect: .present)
-        case .unavailable:
-            break
+            if case .downloading = fileMessageData.downloadState {
+                self.progressView.setProgress(0, animated: false)
+                self.delegate?.transferView(self, didSelect: .cancel)
+            } else {
+                self.delegate?.transferView(self, didSelect: .present)
+            }
         }
     }
 }

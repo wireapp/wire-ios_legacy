@@ -56,29 +56,30 @@ public enum FileMessageViewState {
         guard !message.isObfuscated else { return .obfuscated }
         
         switch fileMessageData.transferState {
-        case .uploaded: return .uploaded
-        case .downloaded: return .downloaded
+        case .uploaded:
+            switch fileMessageData.downloadState {
+            case .downloaded: return .downloaded
+            case .downloading: return .downloading
+            default: return .uploaded
+            }
         case .uploading:
             if fileMessageData.fileURL != nil {
                 return .uploading
             } else {
                 return .unavailable
             }
-            
-        case .downloading: return .downloading
-        case .failedUpload:
+        case .uploadingFailed:
             if fileMessageData.fileURL != nil {
                 return .failedUpload
             } else {
                 return .unavailable
             }
-        case .cancelledUpload:
+        case .uploadingCancelled:
             if fileMessageData.fileURL != nil {
                 return .cancelledUpload
             } else {
                 return .unavailable
             }
-        case .failedDownload, .unavailable: return .failedDownload
         }
     }
     

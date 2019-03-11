@@ -242,6 +242,7 @@
 "compose.contact.title" = "Pokalbis";
 "compose.message.title" = "Žinutė";
 
+"conversation_details.open_button.accessibility_hint" = "Double tap to view the details of the conversation.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Conversation
@@ -541,6 +542,7 @@
 "connection_request.title" = "Prisijungti prie %@"; // check UPPERCASE implementation in code
 "missive.connection_request.default_message" = "Labas %@,\nBendraukime per „Wire“.\n%@";
 
+"connection_request_pending_title" = "Connection Request";
 "connection_request.send_button_title" = "Užmegzti kontaktą";
 "inbox.connection_request.connect_button_title" = "Užmegzti kontaktą";
 "inbox.connection_request.ignore_button_title" = "Nepaisyti";
@@ -656,6 +658,7 @@
 "participants.section.name.footer" = "Prie grupės susirašinėjimo gali prisijungti iki %1$d dalyvių. Bendrauti vaizdu gali iki %2$d žmonių ir jumis.";
 
 // Meta Menu
+"meta.menu.accessibility_more_options_button" = "More actions";
 "meta.menu.rename" = "Pervadinti";
 "meta.menu.leave" = "Išeiti iš grupės…";
 "meta.menu.archive" = "Archyvuoti";
@@ -664,7 +667,7 @@
 "meta.menu.silence.mute" = "Išjungti pranešimus";
 "meta.menu.silence.unmute" = "Įjungti pranešimus";
 "meta.menu.cancel" = "Atsisakyti";
-"meta.menu.cancel_connection_request" = "Atšaukti prašymą…";
+"meta.menu.cancel_connection_request" = "Cancel Request";
 "meta.menu.mark_unread" = "Žymėti kaip neskaitytą";
 "meta.menu.mark_read" = "Žymėti kaip skaitytą";
 "shortcut.mark_all_as_read.title" = "Žymėti visus kaip skaitytus";
@@ -705,7 +708,8 @@
 "profile.remove_dialog_title" = "Šalinti?";
 "profile.remove_dialog_message" = "%@ negalės siųsti ir gauti žinučių šiame susirašinėjime.";
 "profile.remove_dialog_button_cancel" = "Atsisakyti";
-"profile.remove_dialog_button_remove" = "Šalinti";
+"profile.remove_dialog_button_remove" = "Remove From Group…";
+"profile.remove_dialog_button_remove_confirm" = "Remove From Group";
 
 // Block dialog
 "profile.block_dialog.title" = "Užblokuoti?";
@@ -730,13 +734,16 @@
 
 // Cancel connection request
 "profile.cancel_connection_request_dialog.title" = "Atsisakyti užklausos?";
-"profile.cancel_connection_request_dialog.message" = "Pašalinti prašymą prisijungti prie %@.";
+"profile.cancel_connection_request_dialog.message" = "Cancel your connection request to %@?";
 "profile.cancel_connection_request_dialog.button_no" = "Ne";
 "profile.cancel_connection_request_dialog.button_yes" = "Taip";
 
 // Unblock button
 "profile.block_button_title" = "Blokuoti…";
 "profile.unblock_button_title" = "Atblokuoti…";
+
+"profile.block_button_title_action" = "Užblokuoti";
+"profile.unblock_button_title_action" = "Unblock";
 
 "profile.cancel_connection_button_title" = "ATŠAUKTI PRAŠYMĄ";
 "profile.connection_request_state.blocked" = "UŽBLOKUOTA";
@@ -745,7 +752,9 @@
 
 "profile.read_receipts_enabled_memo.header" = "JŪS ĮJUNGĖTE PERSKAITYMO PATVIRTINIMUS";
 "profile.read_receipts_disabled_memo.header" = "JŪS IŠUNGĖTE PERSKAITYMO PATVIRTINIMUS";
-"profile.read_receipts_memo.body" = "Jei abi pusės įjungia perskaitymo patvirtinimus, jūs galite matyti kai žinutė buvo perskaityta. Galite tai pakeisti paskyros nustatymuose.";
+"profile.read_receipts_memo.body" = "If both sides turn on read receipts, you can see when messages are read.\n\nYou can change this option in your account settings.";
+
+"profile.extended_metadata.header" = "Information";
 
 // User Details
 "profile.details.title" = "Išsamiau";

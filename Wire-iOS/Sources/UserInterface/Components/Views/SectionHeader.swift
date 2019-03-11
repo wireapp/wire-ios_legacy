@@ -18,7 +18,7 @@
 
 import Foundation
 
-final class SectionHeader: UICollectionReusableView, Themeable {
+final class SectionHeaderView: UIView, Themeable {
     
     let titleLabel = UILabel()
  
@@ -60,4 +60,74 @@ final class SectionHeader: UICollectionReusableView, Themeable {
         titleLabel.textColor = UIColor.from(scheme: .sectionText, variant: colorSchemeVariant)
     }
     
+}
+
+class SectionHeader: UICollectionReusableView, Themeable {
+
+    let headerView = SectionHeaderView()
+
+    var titleLabel: UILabel {
+        return headerView.titleLabel
+    }
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        addSubview(headerView)
+        headerView.translatesAutoresizingMaskIntoConstraints = false
+        headerView.fitInSuperview()
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        addSubview(headerView)
+        headerView.translatesAutoresizingMaskIntoConstraints = false
+        headerView.fitInSuperview()
+    }
+
+    @objc dynamic var colorSchemeVariant: ColorSchemeVariant = ColorScheme.default.variant {
+        didSet {
+            guard oldValue != colorSchemeVariant else { return }
+            applyColorScheme(colorSchemeVariant)
+        }
+    }
+
+    func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
+        headerView.applyColorScheme(colorSchemeVariant)
+    }
+
+}
+
+class SectionTableHeader: UITableViewHeaderFooterView, Themeable {
+
+    let headerView = SectionHeaderView()
+
+    var titleLabel: UILabel {
+        return headerView.titleLabel
+    }
+
+    override init(reuseIdentifier: String?) {
+        super.init(reuseIdentifier: reuseIdentifier)
+        contentView.addSubview(headerView)
+        headerView.translatesAutoresizingMaskIntoConstraints = false
+        headerView.fitInSuperview()
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        addSubview(headerView)
+        headerView.translatesAutoresizingMaskIntoConstraints = false
+        headerView.fitInSuperview()
+    }
+
+    @objc dynamic var colorSchemeVariant: ColorSchemeVariant = ColorScheme.default.variant {
+        didSet {
+            guard oldValue != colorSchemeVariant else { return }
+            applyColorScheme(colorSchemeVariant)
+        }
+    }
+
+    func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
+        headerView.applyColorScheme(colorSchemeVariant)
+    }
+
 }

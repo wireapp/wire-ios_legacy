@@ -19,23 +19,36 @@
 import Foundation
 
 extension ZMUser {
-    
+
     /// Returns the permissions of the self user, if any.
     static func selfPermissions() -> Permissions? {
         return ZMUser.selfUser()?.teamRole.permissions
     }
-    
+
     /// Returns true if the self user's team role encompasses the given
     /// permissions.
     static func selfUserHas(permissions: Permissions) -> Bool {
-        guard let role = ZMUser.selfUser()?.teamRole else { return false }
-        return role.hasPermissions(permissions)
+        guard let user = ZMUser.selfUser() else { return false }
+        return user.has(permissions: permissions)
     }
-    
+
     static var selfUserIsTeamMember: Bool {
         return selfUser()?.isTeamMember ?? false
     }
 
+}
+
+extension UserType {
+
+    var permissions: Permissions {
+        return teamRole.permissions
+    }
+
+    /// Returns true if the user's team role encompasses the given permissions.
+    func has(permissions: Permissions) -> Bool {
+        return teamRole.hasPermissions(permissions)
+    }
+    
 }
 
 /// Conform to this protocol to mark an object as being restricted. This

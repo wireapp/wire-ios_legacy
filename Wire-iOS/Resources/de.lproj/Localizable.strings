@@ -242,6 +242,7 @@
 "compose.contact.title" = "Unterhaltung";
 "compose.message.title" = "Nachricht";
 
+"conversation_details.open_button.accessibility_hint" = "Doppeltippen, um die Details der Unterhaltung anzuzeigen.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Conversation
@@ -541,6 +542,7 @@
 "connection_request.title" = "Füge %@ als Kontakt hinzu"; // check UPPERCASE implementation in code
 "missive.connection_request.default_message" = "Hallo %@,\nbitte füge mich als Kontakt hinzu.\n%@";
 
+"connection_request_pending_title" = "Kontaktanfrage";
 "connection_request.send_button_title" = "Kontaktanfrage";
 "inbox.connection_request.connect_button_title" = "Akzeptieren";
 "inbox.connection_request.ignore_button_title" = "Ignorieren";
@@ -656,6 +658,7 @@
 "participants.section.name.footer" = "Bis zu %1$d Personen können an einer Unterhaltung teilnehmen. Videoanrufe funktionieren mit bis zu %2$d anderen Personen und dir.";
 
 // Meta Menu
+"meta.menu.accessibility_more_options_button" = "Weitere Aktionen";
 "meta.menu.rename" = "Umbenennen";
 "meta.menu.leave" = "Gruppe verlassen…";
 "meta.menu.archive" = "Archivieren";
@@ -664,7 +667,7 @@
 "meta.menu.silence.mute" = "Stumm";
 "meta.menu.silence.unmute" = "Benachrichtigen";
 "meta.menu.cancel" = "Abbrechen";
-"meta.menu.cancel_connection_request" = "Anfrage abbrechen…";
+"meta.menu.cancel_connection_request" = "Kontaktanfrage abbrechen";
 "meta.menu.mark_unread" = "Als ungelesen markieren";
 "meta.menu.mark_read" = "Als gelesen markieren";
 "shortcut.mark_all_as_read.title" = "Alle als gelesen markieren";
@@ -705,7 +708,8 @@
 "profile.remove_dialog_title" = "Entfernen?";
 "profile.remove_dialog_message" = "%@ wird in dieser Unterhaltung keine Nachrichten senden oder empfangen können";
 "profile.remove_dialog_button_cancel" = "Abbrechen";
-"profile.remove_dialog_button_remove" = "Entfernen";
+"profile.remove_dialog_button_remove" = "Aus Gruppe entfernen…";
+"profile.remove_dialog_button_remove_confirm" = "Aus Gruppe entfernen";
 
 // Block dialog
 "profile.block_dialog.title" = "Blockieren?";
@@ -730,13 +734,16 @@
 
 // Cancel connection request
 "profile.cancel_connection_request_dialog.title" = "Kontaktanfrage abbrechen?";
-"profile.cancel_connection_request_dialog.message" = "Ziehe die Kontaktanfrage an %@ zurück.";
+"profile.cancel_connection_request_dialog.message" = "Die Kontaktanfrage an %@ abbrechen?";
 "profile.cancel_connection_request_dialog.button_no" = "Nein";
 "profile.cancel_connection_request_dialog.button_yes" = "Ja";
 
 // Unblock button
 "profile.block_button_title" = "Blockieren…";
 "profile.unblock_button_title" = "Freigeben…";
+
+"profile.block_button_title_action" = "Blockieren";
+"profile.unblock_button_title_action" = "Freigeben";
 
 "profile.cancel_connection_button_title" = "Anfrage abbrechen";
 "profile.connection_request_state.blocked" = "Blockiert";
@@ -746,6 +753,8 @@
 "profile.read_receipts_enabled_memo.header" = "LESEBESTÄTIGUNGEN AKTIV";
 "profile.read_receipts_disabled_memo.header" = "LESEBESTÄTIGUNGEN AUS";
 "profile.read_receipts_memo.body" = "Wenn beide Seiten Lesebestätigungen aktivieren, können alle sehen, wenn Nachrichten gelesen werden.\nDiese Option kann in den Kontoeinstellungen geändert werden.";
+
+"profile.extended_metadata.header" = "Informationen";
 
 // User Details
 "profile.details.title" = "Details";

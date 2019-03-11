@@ -242,6 +242,7 @@
 "compose.contact.title" = "Conversa";
 "compose.message.title" = "Mensagem";
 
+"conversation_details.open_button.accessibility_hint" = "Double tap to view the details of the conversation.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Conversation
@@ -541,6 +542,7 @@
 "connection_request.title" = "Conectar a %@"; // check UPPERCASE implementation in code
 "missive.connection_request.default_message" = "Olá %@,\nVamos nos conectar no Wire.\n%@";
 
+"connection_request_pending_title" = "Connection Request";
 "connection_request.send_button_title" = "Conectar";
 "inbox.connection_request.connect_button_title" = "Conectar";
 "inbox.connection_request.ignore_button_title" = "Ignorar";
@@ -656,6 +658,7 @@
 "participants.section.name.footer" = "Até %1$d participantes podem participar de uma conversa em grupo. As videochamadas funcionam com até %2$d outras pessoas e você.";
 
 // Meta Menu
+"meta.menu.accessibility_more_options_button" = "More actions";
 "meta.menu.rename" = "Renomear";
 "meta.menu.leave" = "Deixar Grupo…";
 "meta.menu.archive" = "Arquivar";
@@ -664,7 +667,7 @@
 "meta.menu.silence.mute" = "Silenciar";
 "meta.menu.silence.unmute" = "Notificar";
 "meta.menu.cancel" = "Cancelar";
-"meta.menu.cancel_connection_request" = "Cancelar Pedido…";
+"meta.menu.cancel_connection_request" = "Cancel Request";
 "meta.menu.mark_unread" = "Marcar como Não Lida";
 "meta.menu.mark_read" = "Marcar como Lida";
 "shortcut.mark_all_as_read.title" = "Marcar Todas como Lidas";
@@ -705,7 +708,8 @@
 "profile.remove_dialog_title" = "Remover?";
 "profile.remove_dialog_message" = "%@ não será capaz de enviar ou receber mensagens nesta conversa.";
 "profile.remove_dialog_button_cancel" = "Cancelar";
-"profile.remove_dialog_button_remove" = "Remover";
+"profile.remove_dialog_button_remove" = "Remove From Group…";
+"profile.remove_dialog_button_remove_confirm" = "Remove From Group";
 
 // Block dialog
 "profile.block_dialog.title" = "Bloquear?";
@@ -730,13 +734,16 @@
 
 // Cancel connection request
 "profile.cancel_connection_request_dialog.title" = "Cancelar pedido?";
-"profile.cancel_connection_request_dialog.message" = "Remova a solicitação de conexão com %@.";
+"profile.cancel_connection_request_dialog.message" = "Cancel your connection request to %@?";
 "profile.cancel_connection_request_dialog.button_no" = "Não";
 "profile.cancel_connection_request_dialog.button_yes" = "Sim";
 
 // Unblock button
 "profile.block_button_title" = "Bloquear…";
 "profile.unblock_button_title" = "Desbloquear…";
+
+"profile.block_button_title_action" = "Bloquear";
+"profile.unblock_button_title_action" = "Unblock";
 
 "profile.cancel_connection_button_title" = "CANCELAR PEDIDO";
 "profile.connection_request_state.blocked" = "BLOQUEADO";
@@ -745,7 +752,9 @@
 
 "profile.read_receipts_enabled_memo.header" = "VOCÊ HABILITOU RECIBOS DE LEITURA";
 "profile.read_receipts_disabled_memo.header" = "VOCÊ DESATIVOU RECIBOS DE LEITURA";
-"profile.read_receipts_memo.body" = "Se ambos os lados ligarem as confirmações de leitura, você poderá ver quando as mensagens são lidas.\nVocê pode alterar essa opção nas configurações da sua conta.";
+"profile.read_receipts_memo.body" = "If both sides turn on read receipts, you can see when messages are read.\n\nYou can change this option in your account settings.";
+
+"profile.extended_metadata.header" = "Information";
 
 // User Details
 "profile.details.title" = "Detalhes";

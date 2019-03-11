@@ -242,6 +242,7 @@
 "compose.contact.title" = "Gesprek";
 "compose.message.title" = "Stuur bericht";
 
+"conversation_details.open_button.accessibility_hint" = "Double tap to view the details of the conversation.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Conversation
@@ -541,6 +542,7 @@
 "connection_request.title" = "Verbind met %@"; // check UPPERCASE implementation in code
 "missive.connection_request.default_message" = "Hallo %@, \nLaten we chatten via Wire.\n%@";
 
+"connection_request_pending_title" = "Connection Request";
 "connection_request.send_button_title" = "Uitnodigen";
 "inbox.connection_request.connect_button_title" = "Uitnodigen";
 "inbox.connection_request.ignore_button_title" = "Negeer";
@@ -656,6 +658,7 @@
 "participants.section.name.footer" = "Up to %1$d participants can join a group conversation. Video calls work with up to %2$d other people and you.";
 
 // Meta Menu
+"meta.menu.accessibility_more_options_button" = "More actions";
 "meta.menu.rename" = "Wijzig naam";
 "meta.menu.leave" = "Verlaat groep…";
 "meta.menu.archive" = "Archiveren";
@@ -664,7 +667,7 @@
 "meta.menu.silence.mute" = "Dempen";
 "meta.menu.silence.unmute" = "Dempen opheffen";
 "meta.menu.cancel" = "Annuleer";
-"meta.menu.cancel_connection_request" = "Verzoek annuleren…";
+"meta.menu.cancel_connection_request" = "Cancel Request";
 "meta.menu.mark_unread" = "Markeer als ongelezen";
 "meta.menu.mark_read" = "Markeren als gelezen";
 "shortcut.mark_all_as_read.title" = "Alles markeren als gelezen";
@@ -705,7 +708,8 @@
 "profile.remove_dialog_title" = "Verwijder?";
 "profile.remove_dialog_message" = "%@ kan geen berichten versturen of ontvangen in dit gesprek.";
 "profile.remove_dialog_button_cancel" = "Annuleer";
-"profile.remove_dialog_button_remove" = "Verwijderen";
+"profile.remove_dialog_button_remove" = "Remove From Group…";
+"profile.remove_dialog_button_remove_confirm" = "Remove From Group";
 
 // Block dialog
 "profile.block_dialog.title" = "Blokkeren?";
@@ -730,13 +734,16 @@
 
 // Cancel connection request
 "profile.cancel_connection_request_dialog.title" = "Verzoek annuleren?";
-"profile.cancel_connection_request_dialog.message" = "Verwijder verzoek aan %@.";
+"profile.cancel_connection_request_dialog.message" = "Cancel your connection request to %@?";
 "profile.cancel_connection_request_dialog.button_no" = "Nee";
 "profile.cancel_connection_request_dialog.button_yes" = "Ja";
 
 // Unblock button
 "profile.block_button_title" = "Blokeer…";
 "profile.unblock_button_title" = "Deblokkeer…";
+
+"profile.block_button_title_action" = "Blokkeer";
+"profile.unblock_button_title_action" = "Unblock";
 
 "profile.cancel_connection_button_title" = "VERZOEK ANNULEREN";
 "profile.connection_request_state.blocked" = "GEBLOKKEERD";
@@ -745,7 +752,9 @@
 
 "profile.read_receipts_enabled_memo.header" = "YOU HAVE ENABLED READ RECEIPTS";
 "profile.read_receipts_disabled_memo.header" = "YOU HAVE DISABLED READ RECEIPTS";
-"profile.read_receipts_memo.body" = "If both sides turn on read receipts, you can see when messages are read.\nYou can change this option in your account settings.";
+"profile.read_receipts_memo.body" = "If both sides turn on read receipts, you can see when messages are read.\n\nYou can change this option in your account settings.";
+
+"profile.extended_metadata.header" = "Information";
 
 // User Details
 "profile.details.title" = "Beschrijving";

@@ -18,6 +18,12 @@
 
 import UIKit
 
+@objcMembers class LightNavigationBar : DefaultNavigationBar {
+    override var colorSchemeVariant: ColorSchemeVariant {
+        return .light
+    }
+}
+
 @objcMembers class DefaultNavigationBar : UINavigationBar {
 
     override init(frame: CGRect) {
@@ -60,15 +66,21 @@ import UIKit
 }
 
 extension UIViewController {
-    
-    @objc func wrapInNavigationController() -> UINavigationController {
-        return wrapInNavigationController(RotationAwareNavigationController.self)
+
+    @objc
+    func wrapInNavigationController(_ navigationControllerClass: UINavigationController.Type) -> UINavigationController {
+        return wrapInNavigationController(navigationControllerClass: navigationControllerClass, navigationBarClass: DefaultNavigationBar.self)
+    }
+
+    @objc
+    func wrapInNavigationController() -> UINavigationController {
+        return wrapInNavigationController(navigationControllerClass: RotationAwareNavigationController.self, navigationBarClass: DefaultNavigationBar.self)
     }
     
-    @objc func wrapInNavigationController(_ navigationControllerClass: UINavigationController.Type) -> UINavigationController {
-        let navigationController = navigationControllerClass.init(navigationBarClass: DefaultNavigationBar.self, toolbarClass: nil)
+    func wrapInNavigationController(navigationControllerClass: UINavigationController.Type = RotationAwareNavigationController.self,
+                                    navigationBarClass: AnyClass? = DefaultNavigationBar.self) -> UINavigationController {
+        let navigationController = navigationControllerClass.init(navigationBarClass: navigationBarClass, toolbarClass: nil)
         navigationController.setViewControllers([self], animated: false)
         return navigationController
     }
-    
 }

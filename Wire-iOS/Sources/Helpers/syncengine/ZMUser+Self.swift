@@ -18,6 +18,7 @@
 
 import Foundation
 
+typealias GenericUser = UserType & AccentColorProvider
 typealias EditableUser = ZMUser & ZMEditableUser
 
 protocol SelfUserProvider {

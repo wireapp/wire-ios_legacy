@@ -19,14 +19,14 @@
 
 
 #import <Foundation/Foundation.h>
-#import "BottomOverlayViewController.h"
-
 
 @class ZMUser;
 
-@interface ProfileSelfPictureViewController : BottomOverlayViewController
+@interface ProfileSelfPictureViewController : UIViewController
 
 @property (nonatomic) ZMUser *user;
 @property (nonatomic, readonly) UIImageView *selfUserImageView;
+@property (nonatomic, strong) UIView *bottomOverlayView;
+@property (nonatomic, strong) UIView *topView;
 
 @end

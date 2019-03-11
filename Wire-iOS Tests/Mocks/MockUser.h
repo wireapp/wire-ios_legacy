@@ -33,6 +33,7 @@
 + (void)setMockSelfUser:(id<UserType>)newMockUser;
 
 @property (nonatomic, readwrite, copy) NSString *name;
+@property (nonatomic, readwrite, copy) NSString *initials;
 @property (nonatomic, readwrite) NSString *emailAddress;
 @property (nonatomic, readwrite) NSString *phoneNumber;
 @property (nonatomic, readwrite, copy) NSString *handle;
@@ -42,6 +43,8 @@
 @property (nonatomic, readwrite) BOOL isPendingApprovalByOtherUser;
 @property (nonatomic, readwrite) BOOL isPendingApprovalBySelfUser;
 @property (nonatomic, readwrite) BOOL isConnected;
+@property (nonatomic, readwrite) BOOL isExpired;
+@property (nonatomic, readwrite) BOOL canBeConnected;
 @property (nonatomic, readwrite) BOOL untrusted;
 @property (nonatomic, readwrite) BOOL trusted;
 @property (nonatomic, readwrite) NSUInteger totalCommonConnections;
@@ -57,6 +60,7 @@
 @property (nonatomic, readwrite) BOOL isWirelessUser;
 @property (nonatomic, readwrite) BOOL usesCompanyLogin;
 @property (nonatomic, readwrite) BOOL readReceiptsEnabled;
+@property (nonatomic, readwrite) BOOL isAccountDeleted;
 @property (nonatomic) ZMUser * user;
 
 @property (nonatomic) NSSet <id<UserClientType>> * clients;
@@ -66,6 +70,11 @@
 @property (nonatomic) NSUUID *remoteIdentifier;
 @property (nonatomic, readwrite) Availability availability;
 @property (nonatomic, readonly) NSSet<UserClient *> * clientsRequiringUserAttention;
+
+@property (nonatomic) NSUUID *teamIdentifier;
+
+@property (nonatomic, readwrite) BOOL managedByWire;
+@property (nonatomic, readwrite, copy) NSArray<UserRichProfileField *> *richProfile;
 
 - (NSString *)displayNameInConversation:(MockConversation *)conversation;
 - (void)fetchUserClients;

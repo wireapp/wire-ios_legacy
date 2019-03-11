@@ -33,7 +33,6 @@
 
 #import "ContactsDataSource.h"
 #import "ProfileDevicesViewController.h"
-#import "ProfileDetailsViewController.h"
 
 
 typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
@@ -56,7 +55,6 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
 @end
 
 
-
 @interface ProfileViewController () <ZMUserObserver>
 
 @property (nonatomic) id observerToken;
@@ -70,25 +68,26 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
 
 @implementation ProfileViewController
 
-- (id)initWithUser:(id<UserType, AccentColorProvider>)user context:(ProfileViewControllerContext)context
+- (id)initWithUser:(id<UserType, AccentColorProvider>)user viewer:(id<UserType, AccentColorProvider>)viewer context:(ProfileViewControllerContext)context
 {
-    return [self initWithUser:user conversation:nil context:context];
+    return [self initWithUser:user viewer:viewer conversation:nil context:context];
 }
 
-- (id)initWithUser:(id<UserType, AccentColorProvider>)user conversation:(ZMConversation *)conversation
+- (id)initWithUser:(id<UserType, AccentColorProvider>)user viewer:(id<UserType, AccentColorProvider>)viewer conversation:(ZMConversation *)conversation
 {
     if (conversation.conversationType == ZMConversationTypeGroup) {
-        return [self initWithUser:user conversation:conversation context:ProfileViewControllerContextGroupConversation];
+        return [self initWithUser:user viewer:viewer conversation:conversation context:ProfileViewControllerContextGroupConversation];
     }
     else {
-        return [self initWithUser:user conversation:conversation context:ProfileViewControllerContextOneToOneConversation];
+        return [self initWithUser:user viewer:viewer conversation:conversation context:ProfileViewControllerContextOneToOneConversation];
     }
 }
 
-- (id)initWithUser:(id<UserType, AccentColorProvider>)user conversation:(ZMConversation *)conversation context:(ProfileViewControllerContext)context
+- (id)initWithUser:(id<UserType, AccentColorProvider>)user viewer:(id<UserType, AccentColorProvider>)viewer conversation:(ZMConversation *)conversation context:(ProfileViewControllerContext)context
 {
     if (self = [super init]) {
         _bareUser = user;
+        _viewer = viewer;
         _conversation = conversation;
         _context = context;
 
@@ -105,8 +104,13 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    self.navigationController.delegate = self.navigationControllerDelegate;
+
+    self.profileFooterView = [[ProfileFooterView alloc] init];
+    [self.view addSubview:self.profileFooterView];
+
+    self.incomingRequestFooter = [[IncomingRequestFooterView alloc] init];
+    [self.view addSubview:self.incomingRequestFooter];
+
     self.view.backgroundColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorBarBackground];
     
     if (nil != self.fullUser && nil != [ZMUserSession sharedSession]) {
@@ -117,12 +121,21 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
     [self setupHeader];
     [self setupTabsController];
     [self setupConstraints];
+    [self updateFooterViews];
     [self updateShowVerifiedShield];
 }
 
-- (UIInterfaceOrientationMask)supportedInterfaceOrientations
+- (void)viewWillAppear:(BOOL)animated
 {
-    return UIInterfaceOrientationMaskPortrait;
+    [super viewWillAppear:animated];
+    [UIApplication.sharedApplication wr_updateStatusBarForCurrentControllerAnimated:animated];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [UIApplication.sharedApplication wr_updateStatusBarForCurrentControllerAnimated:animated];
+    UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, self.navigationItem.titleView);
 }
 
 - (void)dismissButtonClicked
@@ -171,8 +184,19 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
 - (void)setupConstraints
 {
     [self.usernameDetailsView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeBottom];
-    [self.tabsController.view autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeTop];
     [self.tabsController.view autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.usernameDetailsView];
+    [self.tabsController.view autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeTop];
+    [self.profileFooterView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeTop];
+
+    self.incomingRequestFooter.translatesAutoresizingMaskIntoConstraints = NO;
+
+    [NSLayoutConstraint activateConstraints:
+  @[
+    [self.incomingRequestFooter.bottomAnchor constraintEqualToAnchor:self.profileFooterView.topAnchor],
+    [self.incomingRequestFooter.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor],
+    [self.incomingRequestFooter.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor]
+    ]
+     ];
 }
 
 #pragma mark - Header
@@ -230,6 +254,55 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
         [self updateShowVerifiedShield];
     }
 }
+
+#pragma mark - Actions
+
+- (void)bringUpConversationCreationFlow
+{
+    NSSet<ZMUser *> *users = [[NSSet alloc] initWithObjects:[self fullUser], nil];
+    ConversationCreationController *controller = [[ConversationCreationController alloc] initWithPreSelectedParticipants:users];
+    controller.delegate = self;
+    UINavigationController *wrappedController = [controller wrapInNavigationController];
+    wrappedController.modalPresentationStyle = UIModalPresentationFormSheet;
+    [self presentViewController:wrappedController animated:true completion:nil];
+}
+
+- (void)bringUpCancelConnectionRequestSheetFromView:(UIView *)targetView
+{
+    UIAlertController *controller = [UIAlertController cancelConnectionRequestControllerForUser:self.fullUser completion:^(BOOL canceled) {
+        if (!canceled) {
+            [self cancelConnectionRequest];
+        }
+    }];
+
+    [self presentAlert:controller fromTargetView:targetView];
+}
+
+- (void)cancelConnectionRequest
+{
+    ZMUser *user = [self fullUser];
+    [[ZMUserSession sharedSession] enqueueChanges:^{
+        [user cancelConnectionRequest];
+        [self returnToPreviousScreen];
+    }];
+}
+
+- (void)openOneToOneConversation
+{
+    if (self.fullUser == nil) {
+        ZMLogError(@"No user to open conversation with");
+        return;
+    }
+    ZMConversation __block *conversation = nil;
+    
+    [[ZMUserSession sharedSession] enqueueChanges:^{
+        conversation = self.fullUser.oneToOneConversation;
+    } completionHandler:^{
+        [self.delegate profileViewController:self wantsToNavigateToConversation:conversation];
+    }];
+}
+
+
 
 #pragma mark - Utilities
 

@@ -46,7 +46,12 @@
     self.searchController = [[UISearchController alloc] initWithSearchResultsController:self.resultsTableViewController];
     self.searchController.searchResultsUpdater = self;
     [self.searchController.searchBar sizeToFit];
-    self.tableView.tableHeaderView = self.searchController.searchBar;
+    if (@available(iOS 11.0, *)) {
+        self.navigationItem.searchController = self.searchController;
+        self.navigationItem.hidesSearchBarWhenScrolling = false;
+    } else {
+        self.tableView.tableHeaderView = self.searchController.searchBar;
+    }
     self.tableView.sectionIndexBackgroundColor = [UIColor clearColor];
 
     self.resultsTableViewController.tableView.delegate = self;
@@ -58,7 +63,6 @@
     
     self.definesPresentationContext = YES;
     self.title = NSLocalizedString(@"registration.country_select.title", @"").localizedUppercaseString;
-    
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -67,6 +71,8 @@
     if(UIScreen.hasNotch) {
         [[UIApplication sharedApplication] wr_updateStatusBarForCurrentControllerAnimated:YES];
     }
+
+    [self updateStatusBar];
 }
 
 -(void)viewDidDisappear:(BOOL)animated
@@ -75,6 +81,8 @@
     if(UIScreen.hasNotch) {
         [[UIApplication sharedApplication] wr_updateStatusBarForCurrentControllerAnimated:NO];
     }
+
+    [self updateStatusBar];
 }
 
 - (void)createDataSource
@@ -214,13 +222,4 @@
     return [[UILocalizedIndexedCollation currentCollation] sectionIndexTitles];
 }
 
-#pragma mark - Search controller methods
-
--(void)willPresentSearchController:(UISearchController *)searchController {
-    [self.tableView setContentInset:UIEdgeInsetsMake(44, 0, 0, 0)];
-}
-
--(void)willDismissSearchController:(UISearchController *)searchController {
-    [self.tableView setContentInset:UIEdgeInsetsZero];
-}
 @end

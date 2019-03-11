@@ -855,7 +855,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
                             userClientController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithIcon:ZetaIconTypeX style:UIBarButtonItemStylePlain target:self action:@selector(dismissProfileClientViewController:)];
                             [self presentViewController:navigationController animated:YES completion:nil];
                         } else {
-                            ProfileViewController *profileViewController = [[ProfileViewController alloc] initWithUser:user context:ProfileViewControllerContextDeviceList];
+                            ProfileViewController *profileViewController = [[ProfileViewController alloc] initWithUser:user viewer:[ZMUser selfUser] context:ProfileViewControllerContextDeviceList];
                             profileViewController.delegate = self;
                             profileViewController.viewControllerDismisser = self;
                             UINavigationController *navigationController = profileViewController.wrapInNavigationController;

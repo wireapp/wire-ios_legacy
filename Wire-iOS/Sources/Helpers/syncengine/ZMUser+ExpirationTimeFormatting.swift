@@ -37,7 +37,6 @@ final class WirelessExpirationTimeFormatter {
     }()
     
     func string(for user: UserType) -> String? {
-        guard let user = user as? ZMUser else { return nil }
         return string(for: user.expiresAfter)
     }
     
@@ -69,8 +68,10 @@ final class WirelessExpirationTimeFormatter {
     }
 }
 
-extension ZMUser {
-    @objc var expirationDisplayString: String? {
+extension UserType {
+    
+    var expirationDisplayString: String? {
         return WirelessExpirationTimeFormatter.shared.string(for: self)
     }
+    
 }

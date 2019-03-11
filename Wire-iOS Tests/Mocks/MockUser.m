@@ -117,7 +117,6 @@ static id<UserType> mockSelfUser = nil;
 
 @synthesize name;
 @synthesize displayName;
-@synthesize initials;
 @synthesize isSelfUser;
 @synthesize isConnected;
 @synthesize accentColorValue;
@@ -130,11 +129,11 @@ static id<UserType> mockSelfUser = nil;
 @synthesize isTeamMember;
 @synthesize teamRole;
 @synthesize readReceiptsEnabled;
-@synthesize isAccountDeleted;
+@synthesize teamName;
+@synthesize activeConversations;
 
 #pragma mark - ZMBareUserConnection
 
-@synthesize isPendingApprovalByOtherUser = _isPendingApprovalByOtherUser;
 @synthesize isServiceUser;
 
 - (BOOL)conformsToProtocol:(Protocol *)aProtocol
@@ -238,7 +237,7 @@ static id<UserType> mockSelfUser = nil;
 
 - (BOOL)hasTeam
 {
-    return false;
+    return isTeamMember;
 }
 
 - (BOOL)usesCompanyLogin
@@ -275,5 +274,39 @@ static id<UserType> mockSelfUser = nil;
     return nil;
 }
 
+- (BOOL)canAccessCompanyInformationOf:(id<UserType>)user
+{
+    if ([user isKindOfClass:MockUser.class]) {
+        MockUser *otherMockUser = (MockUser *)user;
+        if (self.teamIdentifier && otherMockUser.teamIdentifier) {
+            return [self.teamIdentifier isEqual:otherMockUser.teamIdentifier];
+        }
+    }
+    
+    return NO;
+}
+
+- (BOOL)canCreateConversation
+{
+    return YES;
+}
+
+- (BOOL)canAddUserToConversation:(ZMConversation * _Nonnull)conversation
+{
+    if (self.isGuestInConversation || !conversation.isSelfAnActiveMember) {
+        return NO;
+    }
+
+    return self.teamRole != TeamRoleNone && self.teamRole != TeamRolePartner;
+}
+
+- (BOOL)canRemoveUserFromConversation:(ZMConversation * _Nonnull)conversation
+{
+    return [self canAddUserToConversation:conversation];
+}
+
+@synthesize richProfile;
+
+@synthesize needsRichProfileUpdate;
 
 @end

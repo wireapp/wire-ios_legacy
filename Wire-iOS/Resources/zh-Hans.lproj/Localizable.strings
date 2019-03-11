@@ -242,6 +242,7 @@
 "compose.contact.title" = "聊天";
 "compose.message.title" = "信息";
 
+"conversation_details.open_button.accessibility_hint" = "Double tap to view the details of the conversation.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Conversation
@@ -289,8 +290,8 @@
 "conversation.create.guidance.toolong" = "超出字符限制";
 "conversation.create.options.title" = "Conversation options";
 "conversation.create.options.subtitle" = "Guests and services: %@, Read receipts: %@";
-"conversation.create.guests.title" = "Allow guests and services";
-"conversation.create.guests.subtitle" = "Open this conversation to services and people outside your team.";
+"conversation.create.guests.title" = "允许的访客与服务";
+"conversation.create.guests.subtitle" = "向团队外的服务和人员开放此对话";
 "conversation.create.receipts.title" = "Read receipts";
 "conversation.create.receipts.subtitle" = "When this is on, people can see when their messages in this conversation are read.";
 
@@ -365,7 +366,7 @@
 "content.system.continued_conversation" = "开始和 %@ 聊天";
 "content.system.started_conversation.truncated_people" = "and %@";
 "content.system.started_conversation.truncated_people.others" = "%@ others";
-"content.system.started_conversation.complete_team" = "all team members";
+"content.system.started_conversation.complete_team" = "所有团队成员";
 "content.system.started_conversation.complete_team.guests" = "all team members and %@ guests";
 
 "content.system.other_started_conversation" = "%@ 和 %@ 开始了聊天";
@@ -383,7 +384,7 @@
 "content.system.other_removed_you" = "%@移除了您";
 "content.system.you_removed_other" = "您移除了%@";
 
-"content.system.services.warning" = "Services have access to the content of this conversation";
+"content.system.services.warning" = "服务有权访问此对话的内容";
 
 // New conversation participants added / removed / started system message
 
@@ -399,7 +400,7 @@
 "content.system.conversation.team.member-leave" = "%@从团队中被移除了";
 "content.system.conversation.guest.joined" = "%@已加入";
 
-"content.system.conversation.invite.title" = "Services and people outside your team can join this conversation.";
+"content.system.conversation.invite.title" = "服务和团队外的人员可以加入此对话。";
 "content.system.conversation.invite.button" = "邀请联系人";
 
 "content.system.other_renamed_conv_to_nothing" = "%@ 删除聊天名称";
@@ -407,7 +408,7 @@
 "content.system.pending_message_timestamp" = "正在发送...";
 "content.system.message_sent_timestamp" = "发送";
 "content.system.message_delivered_timestamp" = "已送达";
-"content.system.message_read_timestamp" = "Seen";
+"content.system.message_read_timestamp" = "已读";
 "content.system.failedtosend_message_timestamp" = "发送失败。";
 "content.system.failedtosend_message_timestamp_resend" = "重新发送";
 "content.system.failedtosend_message_timestamp_delete" = "删除";
@@ -434,23 +435,23 @@
 "content.system.conversation.with_name.title" = "%@开始了对话";
 "content.system.conversation.with_name.title-you" = "%@开始了对话";
 
-"content.system.conversation.with_name.participants" = "with";
+"content.system.conversation.with_name.participants" = "与";
 
-"content.system.message_timer_changes" = "%@ set the message timer to %@";
+"content.system.message_timer_changes" = "%@ 将消息计时器设置为 %@";
 "content.system.message_timer_changes-you" = "%@ set the message timer to %@";
 
-"content.system.message_timer_off" = "%@ turned off the message timer";
+"content.system.message_timer_off" = "%@关闭了消息计时器";
 "content.system.message_timer_off-you" = "%@ turned off the message timer";
 
 // read receipt
 
-"content.system.message_read_receipt_on" = "%@ turned read receipts on for everyone";
-"content.system.message_read_receipt_on-you" = "%@ turned read receipts on for everyone";
+"content.system.message_read_receipt_on" = "%@为所有人打开了已读提示";
+"content.system.message_read_receipt_on-you" = "%@为所有人打开了已读提示";
 
 "content.system.message_read_receipt_off" = "%@ turned read receipts off for everyone";
-"content.system.message_read_receipt_off-you" = "%@ turned read receipts off for everyone";
+"content.system.message_read_receipt_off-you" = "%@关闭了所有人的已读提示";
 
-"content.system.message_read_receipt_on_add_to_group" = "Read receipts are on";
+"content.system.message_read_receipt_on_add_to_group" = "已读提示已打开";
 
 
 "content.system.reactivated_device" = "您再次开始使用%@。在此期间发送的信息将不会在这里显示。";
@@ -481,7 +482,7 @@
 "content.system.cannot_decrypt.otherDevice_part" = "(设备 %@)"; // example " (device d1b23c54f34a)".
 // Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
 
-"content.system.unknown_message.body" = "This message can’t be displayed. You may be using an older version of Wire.";
+"content.system.unknown_message.body" = "此消息无法显示，您可能在使用旧版本Wire。";
 
 "content.file.uploading" = "上传...";
 "content.file.downloading" = "正在下载...";
@@ -507,22 +508,22 @@
 "content.message.forward.to" = "搜索";
 "content.message.open" = "开启";
 "content.message.copy" = "复制";
-"content.message.download" = "Download";
+"content.message.download" = "下载";
 "content.message.details" = "详细信息";
 
 // Reply
 "content.message.reply" = "回复";
-"content.message.original_label" = "Original message";
-"content.message.reply.original_timestamp.date" = "Original message from %@";
-"content.message.reply.original_timestamp.time" = "Original message from %@";
-"content.message.reply.broken_message" = "You cannot see this message.";
-"content.message.reply.edited_message" = "Edited";
+"content.message.original_label" = "原始消息";
+"content.message.reply.original_timestamp.date" = "来自 %@ 的原始消息";
+"content.message.reply.original_timestamp.time" = "来自 %@ 的原始消息";
+"content.message.reply.broken_message" = "您不能看到此消息。";
+"content.message.reply.edited_message" = "已编辑";
 
 "content.message.open_link_alert.title" = "打开链接";
 "content.message.open_link_alert.message" = "这会带你去\n%@";
 "content.message.open_link_alert.open" = "开启";
 
-"content.message.audio_message.accessibility" = "Play the audio message";
+"content.message.audio_message.accessibility" = "播放音频消息";
 
 "content.reactions_list.likers" = "赞好";
 
@@ -541,6 +542,7 @@
 "connection_request.title" = "加 %@为好友"; // check UPPERCASE implementation in code
 "missive.connection_request.default_message" = "嗨%@，在Wire和我一起聊天吧。 %@";
 
+"connection_request_pending_title" = "Connection Request";
 "connection_request.send_button_title" = "新增好友";
 "inbox.connection_request.connect_button_title" = "新增好友";
 "inbox.connection_request.ignore_button_title" = "取消";
@@ -574,7 +576,7 @@
 "voice.speaker_button.title" = "免提";
 "voice.cancel_button.title" = "取消";
 "voice.call_button.title" = "通话";
-"voice.end_call_button.title" = "End Call";
+"voice.end_call_button.title" = "结束通话";
 
 "voice.alert.call_in_progress.title" = "通话中";
 "voice.alert.call_in_progress.message" = "仅限一条通话";
@@ -586,59 +588,59 @@
 "voice.alert.camera_warning.title" = "Wire需要使用相机的权限。";
 "voice.alert.camera_warning.explanation" = "请前往手机「设定」并允许Wire使用摄像头权限。";
 
-"voice.top_overlay.tap_to_return" = "Tap to return to call";
+"voice.top_overlay.tap_to_return" = "点击返回通话";
 "voice.top_overlay.accessibility_title" = "正在呼叫";
 
 // Voice New
 
 "call.status.connecting" = "正在连接...";
-"call.status.incoming.user" = "%@ is calling…";
+"call.status.incoming.user" = "%@ 正在呼叫…";
 "call.status.incoming" = "正在呼叫...";
 "call.status.outgoing" = "响铃中...";
-"call.status.outgoing.user" = "Calling %@…";
-"call.status.reconnecting" = "Reconnecting…";
-"call.status.terminating" = "Hanging up…";
+"call.status.outgoing.user" = "正在呼叫%@...";
+"call.status.reconnecting" = "重连中...";
+"call.status.terminating" = "正在挂断...";
 "call.status.constant_bitrate" = "固定码率";
 
-"call.participants.show_all" = "Show All (%@)";
+"call.participants.show_all" = "全部显示 (%@)";
 "call.participants.list.title" = "参与者";
 
-"call.video.paused" = "Video paused";
+"call.video.paused" = "视频已暂停";
 
-"call.video.too_many.alert.title" = "Too many people for Video";
-"call.video.too_many.alert.message" = "Video calls only work in groups of 4 or less.";
+"call.video.too_many.alert.title" = "视频的人数太多";
+"call.video.too_many.alert.message" = "视频通话群不能超过4个人";
 
-"call.degraded.alert.title" = "New Device";
+"call.degraded.alert.title" = "新设备";
 "call.degraded.alert.message.self" = "您开始使用新的设备。";
 "call.degraded.alert.message.user" = "%@ 开始使用新的设备。";
 "call.degraded.alert.message.unknown" = "有人开始使用新的设备。";
 "call.degraded.alert.action.continue" = "仍然要通话";
 
-"call.alert.ongoing.alert_title" = "This will end your other call.";
+"call.alert.ongoing.alert_title" = "这将结束您的其他通话。";
 
-"call.alert.ongoing.start.message" = "A call is active in another conversation.\nCalling here will hang up the other call.";
-"call.alert.ongoing.join.message" = "A call is active in another conversation.\nJoining this call will hang up the other one.";
+"call.alert.ongoing.start.message" = "另一个对话中的呼叫正处在活跃状态，在这里呼叫会挂断那个呼叫。";
+"call.alert.ongoing.join.message" = "另一个对话中的呼叫正处在活跃状态，加入这个呼叫会挂断那个呼叫。";
 "call.alert.ongoing.start.button" = "仍然要通话";
-"call.alert.ongoing.join.button" = "Join anyway";
+"call.alert.ongoing.join.button" = "仍要加入";
 
 // Call Actions (accessibility)
 
-"call.announcement.incoming" = "Incoming call from %@";
+"call.announcement.incoming" = "收到来自%@的呼叫";
 "call.actions.label.toggle_mute_on" = "静音";
 "call.actions.label.toggle_mute_off" = "关闭静音";
-"call.actions.label.flip_camera" = "Flip camera";
-"call.actions.label.toggle_speaker_on" = "Enable speaker";
-"call.actions.label.toggle_speaker_off" = "Disable speaker";
+"call.actions.label.flip_camera" = "切换摄像头";
+"call.actions.label.toggle_speaker_on" = "开启扬声器";
+"call.actions.label.toggle_speaker_off" = "禁用扬声器";
 "call.actions.label.accept_call" = "接受呼叫";
 "call.actions.label.reject_call" = "拒接来电";
 "call.actions.label.terminate_call" = "结束通话";
 "call.actions.label.toggle_video_on" = "打开摄像头";
-"call.actions.label.toggle_video_off" = "Turn off camera";
-"call.actions.label.switch_to_back_camera" = "Switch to back camera";
-"call.actions.label.switch_to_front_camera" = "Switch to front camera";
+"call.actions.label.toggle_video_off" = "关闭相机";
+"call.actions.label.switch_to_back_camera" = "切换到后置摄像头";
+"call.actions.label.switch_to_front_camera" = "切换到前置摄像头";
 "call.actions.label.minimize_call" = "最小化通话画面";
-"call.actions.label.make_audio_call" = "Start audio call";
-"call.actions.label.make_video_call" = "Start video call";
+"call.actions.label.make_audio_call" = "开始语音呼叫";
+"call.actions.label.make_video_call" = "开始视频通话";
 "call.actions.label.join_call" = "加入通话";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -653,22 +655,23 @@
 "participants.section.services" = "服务 (%d)";
 "participants.section.settings" = "选项";
 "participants.footer.add_title" = "添加参与者";
-"participants.section.name.footer" = "Up to %1$d participants can join a group conversation. Video calls work with up to %2$d other people and you.";
+"participants.section.name.footer" = "一个群组最多%1$d个人，您最多可与%2$d个人同时视频通话。";
 
 // Meta Menu
+"meta.menu.accessibility_more_options_button" = "More actions";
 "meta.menu.rename" = "重新命名";
-"meta.menu.leave" = "Leave Group…";
+"meta.menu.leave" = "退出群组";
 "meta.menu.archive" = "归档";
 "meta.menu.unarchive" = "取消归档";
-"meta.menu.delete" = "Delete Content…";
+"meta.menu.delete" = "删除内容…";
 "meta.menu.silence.mute" = "静音";
 "meta.menu.silence.unmute" = "关闭静音";
 "meta.menu.cancel" = "取消";
-"meta.menu.cancel_connection_request" = "Cancel Request…";
+"meta.menu.cancel_connection_request" = "Cancel Request";
 "meta.menu.mark_unread" = "标记为未读";
 "meta.menu.mark_read" = "标记为已读";
 "shortcut.mark_all_as_read.title" = "标记所有为已读";
-"meta.menu.configure_notifications" = "Notifications…";
+"meta.menu.configure_notifications" = "通知…";
 
 // Delete conversation
 "meta.menu.delete_content.dialog_title" = "删除内容？";
@@ -705,7 +708,8 @@
 "profile.remove_dialog_title" = "移除？";
 "profile.remove_dialog_message" = "%@将不能够在此聊天发送或接收消息。";
 "profile.remove_dialog_button_cancel" = "取消";
-"profile.remove_dialog_button_remove" = "移除";
+"profile.remove_dialog_button_remove" = "Remove From Group…";
+"profile.remove_dialog_button_remove_confirm" = "Remove From Group";
 
 // Block dialog
 "profile.block_dialog.title" = "拉黑？";
@@ -730,13 +734,16 @@
 
 // Cancel connection request
 "profile.cancel_connection_request_dialog.title" = "取消请求？";
-"profile.cancel_connection_request_dialog.message" = "移除与 %@ 的好友请求";
+"profile.cancel_connection_request_dialog.message" = "Cancel your connection request to %@?";
 "profile.cancel_connection_request_dialog.button_no" = "否";
 "profile.cancel_connection_request_dialog.button_yes" = "是";
 
 // Unblock button
 "profile.block_button_title" = "封锁...";
 "profile.unblock_button_title" = "解除封锁...";
+
+"profile.block_button_title_action" = "加入黑名单";
+"profile.unblock_button_title_action" = "Unblock";
 
 "profile.cancel_connection_button_title" = "取消请求";
 "profile.connection_request_state.blocked" = "已加入黑名单";
@@ -745,7 +752,9 @@
 
 "profile.read_receipts_enabled_memo.header" = "YOU HAVE ENABLED READ RECEIPTS";
 "profile.read_receipts_disabled_memo.header" = "YOU HAVE DISABLED READ RECEIPTS";
-"profile.read_receipts_memo.body" = "If both sides turn on read receipts, you can see when messages are read.\nYou can change this option in your account settings.";
+"profile.read_receipts_memo.body" = "If both sides turn on read receipts, you can see when messages are read.\n\nYou can change this option in your account settings.";
+
+"profile.extended_metadata.header" = "Information";
 
 // User Details
 "profile.details.title" = "详细信息";
@@ -1124,15 +1133,15 @@
 
 "team.email.headline" = "你的账户";
 "team.email.subheadline" = "请输入您的工作电子邮件地址。";
-"team.email.textfield.placeholder" = "Your company email";
+"team.email.textfield.placeholder" = "您公司的电子邮箱";
 "team.email.button.learn_more" = "了解更多信息";
 
 "team.activation_code.headline" = "您有新邮件";
-"team.phone_activation_code.headline" = "Verification";
+"team.phone_activation_code.headline" = "验证";
 "team.activation_code.subheadline" = "输入我们发送到 %@ 的验证码";
 "team.activation_code.button.resend" = "重新发送验证码";
 "team.activation_code.button.change_email" = "更改电邮地址";
-"team.activation_code.button.change_phone" = "Change phone number";
+"team.activation_code.button.change_phone" = "更改手机号码";
 
 "team.full_name.headline" = "您的名字";
 "team.full_name.textfield.placeholder" = "全名";
@@ -1143,15 +1152,15 @@
 "team.password.textfield.accessibility" = "设定密码，最少要有八个字元";
 
 
-"verification.code_label" = "Six-digit code. Text field.";
-"verification.code_hint" = "Double tap to enter the code.";
+"verification.code_label" = "六位数字。文本区域。";
+"verification.code_hint" = "双击输入密码";
 
 // Invite Team Members
 
 "team.invite.header.title" = "创建您的团队";
-"team.invite.header.subtitle" = "Your Wire team is ready to go. Invite your colleagues as members.";
-"team.invite.textfield.placeholder" = "Colleague's email";
-"team.invite.textfield.accesibility" = "Enter email address for colleague to invite.";
+"team.invite.header.subtitle" = "您的Wire团队已准备就绪。邀请您的同事作为成员。";
+"team.invite.textfield.placeholder" = "同事的电子邮箱";
+"team.invite.textfield.accesibility" = "输入要邀请的同事的邮箱地址";
 "team.invite.learn_more.title" = "更多信息";
 "team.invite.top_bar.skip" = "跳过";
 "team.invite.top_bar.done" = "完成";
@@ -1165,9 +1174,9 @@
 
 // Guest Room
 
-"guest_room.allow_guests.title" = "Allow guests and services";
-"guest_room.allow_guests.subtitle" = "Open this conversation to services and people outside your team.";
-"guest_room.remove_guests.message" = "Current guests and services will be removed from the conversation. New guests and services will not be allowed.";
+"guest_room.allow_guests.title" = "允许的访客与服务";
+"guest_room.allow_guests.subtitle" = "向团队外的服务和人员开放此对话";
+"guest_room.remove_guests.message" = "当前对话中的访客与服务将会被清除，新的访客与服务也不能再加入。";
 "guest_room.remove_guests.action" = "移除";
 "guest_room.revoke_link.message" = "新访客将无法加入此连结。 目前访客仍可使用。";
 "guest_room.revoke_link.action" = "撤销连结";
@@ -1183,7 +1192,7 @@
 "guest_room.actions.copy_link" = "复制链接";
 "guest_room.actions.copied_link" = "链接已复制！";
 "guest_room.actions.share_link" = "分享链接";
-"guest_room.actions.revoke_link" = "Revoke Link…";
+"guest_room.actions.revoke_link" = "撤销链接…";
 
 "guest_room.share.message" = "加我到Wire对话:\n%@";
 
@@ -1217,17 +1226,17 @@
 "registration.no_history.hero" = "这是您第一次在此设备使用Wire。";
 "registration.no_history.subtitle" = "基于隐私考虑，您的历史聊天记录将不会被显示。";
 "registration.no_history.got_it" = "好";
-"registration.no_history.restore_backup" = "Restore from backup";
+"registration.no_history.restore_backup" = "从备份还原";
 
-"registration.alert.account_exists.title" = "Account Exists";
-"registration.alert.account_exists.message_phone" = "The phone number you used to register is already linked to an account.\n\nUse another phone number, or try to log in if you own this account.";
-"registration.alert.account_exists.message_email" = "The email address you used to register is already linked to an account.\n\n Use another email address, or try to log in if you own this account.";
-"registration.alert.change_email_action" = "Change Email";
-"registration.alert.change_phone_action" = "Register with Another Number";
+"registration.alert.account_exists.title" = "帐户已存在";
+"registration.alert.account_exists.message_phone" = "这个用于注册的电话号码已经关联了一个帐户。\n\n使用另一个电话号码，或者如果您拥有此帐户，请尝试登录。";
+"registration.alert.account_exists.message_email" = "这个用于注册的电子邮箱地址已经关联了一个帐户。\n\n使用另一个电子邮箱地址，或者如果您拥有此帐户，请尝试登录。";
+"registration.alert.change_email_action" = "更改电子邮箱";
+"registration.alert.change_phone_action" = "用另一个号码注册";
 "registration.alert.change_signin_action" = "登录";
 
 // Restore History Warning Alert
-"registration.no_history.restore_backup_warning.title" = "Restore history";
+"registration.no_history.restore_backup_warning.title" = "恢复历史";
 "registration.no_history.restore_backup_warning.message" = "The backup contents will replace the conversation history on this device.\nYou can only restore history from a backup of the same platform.";
 "registration.no_history.restore_backup_warning.proceed" = "Choose Backup File";
 

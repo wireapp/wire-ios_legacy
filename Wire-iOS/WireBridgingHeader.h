@@ -96,7 +96,10 @@
 #import "SplitViewController+internal.h"
 #import "ConfirmAssetViewController.h"
 #import "ConfirmAssetViewController+Internal.h"
+
 #import "ProfileSelfPictureViewController.h"
+#import "ProfileSelfPictureViewController+Internal.h"
+
 #import "VersionInfoViewController.h"
 #import "SketchColorPickerController.h"
 #import "ConversationListViewController.h"
@@ -109,8 +112,6 @@
 #import "CountryCodeTableViewController.h"
 #import "UIViewController+WR_Invite.h"
 #import "UIActivityViewController+Invite.h"
-#import "ProfileDetailsViewController.h"
-#import "ProfileDetailsViewController+Internal.h"
 #import "ContactsDataSource.h"
 #import "LaunchImageViewController.h"
 #import "StartUIViewController.h"

@@ -99,15 +99,15 @@
     
     self.onDismiss = onDismiss;
     
-    ProfileViewController *profileViewController = [[ProfileViewController alloc] initWithUser:user context:ProfileViewControllerContextSearch];
+    ProfileViewController *profileViewController = [[ProfileViewController alloc] initWithUser:user viewer:[ZMUser selfUser] context:ProfileViewControllerContextSearch];
     profileViewController = profileViewController;
     profileViewController.delegate = self;
     profileViewController.viewControllerDismisser = self;
 
     UINavigationController *navigationController = profileViewController.wrapInNavigationController;
     navigationController.transitioningDelegate = self.transitionDelegate;
-    navigationController.modalPresentationStyle = UIModalPresentationPopover;
-    
+    navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
+
     [controller presentViewController:navigationController animated:YES completion:nil];
     
     // Get the popover presentation controller and configure it.

@@ -70,7 +70,11 @@ final class SelfProfileViewController: UIViewController {
     
     init(rootGroup: SettingsControllerGeneratorType & SettingsInternalGroupCellDescriptorType) {
         settingsController = rootGroup.generateViewController()! as! SettingsTableViewController
-        profileView = ProfileView(user: ZMUser.selfUser())
+        
+        let user = ZMUser.selfUser()!
+        profileView = ProfileView(user: user, options: user.isTeamMember ? [.allowEditingAvailability] : [.hideAvailability])
+        profileView.availabilityView.options = .selfProfile
+        profileView.colorSchemeVariant = .dark
         
         super.init(nibName: .none, bundle: .none)
                 
@@ -93,7 +97,11 @@ final class SelfProfileViewController: UIViewController {
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
-    
+
+    private var userCanSetProfilePicture: Bool {
+        return userRightInterfaceType.selfUserIsPermitted(to: .editProfilePicture)
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -101,7 +109,10 @@ final class SelfProfileViewController: UIViewController {
         profileContainerView.isAccessibilityElement = false
         profileContainerView.addSubview(profileView)
         view.addSubview(profileContainerView)
-        
+
+        profileView.imageView.isAccessibilityElement = userCanSetProfilePicture
+        profileView.imageView.isUserInteractionEnabled = userCanSetProfilePicture
+
         settingsController.willMove(toParent: self)
         view.addSubview(settingsController.view)
         addChild(settingsController)
@@ -192,8 +203,7 @@ final class SelfProfileViewController: UIViewController {
     }
     
     @objc func userDidTapProfileImage(sender: UserImageView) {
-        guard userRightInterfaceType.selfUserIsPermitted(to: .editProfilePicture) else { return }
-        
+        guard userCanSetProfilePicture else { return }
         let profileImageController = ProfileSelfPictureViewController()
         self.present(profileImageController, animated: true, completion: .none)
     }

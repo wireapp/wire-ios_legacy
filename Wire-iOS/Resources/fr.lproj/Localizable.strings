@@ -242,6 +242,7 @@
 "compose.contact.title" = "Conversation";
 "compose.message.title" = "Message";
 
+"conversation_details.open_button.accessibility_hint" = "Toucher 2 fois pour afficher les détails de la conversation.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Conversation
@@ -541,6 +542,7 @@
 "connection_request.title" = "Se connecter à %@"; // check UPPERCASE implementation in code
 "missive.connection_request.default_message" = "Bonjour %@\nConnectons-nous sur Wire. \n%@";
 
+"connection_request_pending_title" = "Demande de Connexion";
 "connection_request.send_button_title" = "Se connecter";
 "inbox.connection_request.connect_button_title" = "Se connecter";
 "inbox.connection_request.ignore_button_title" = "Ignorer";
@@ -656,6 +658,7 @@
 "participants.section.name.footer" = "Les conversations de groupe peuvent contenir jusqu'à %1$d participants. Les appels vidéo fonctionnent avec jusqu'à %2$d destinataires.";
 
 // Meta Menu
+"meta.menu.accessibility_more_options_button" = "Plus d’actions";
 "meta.menu.rename" = "Renommer";
 "meta.menu.leave" = "Quitter le groupe…";
 "meta.menu.archive" = "Archiver";
@@ -664,7 +667,7 @@
 "meta.menu.silence.mute" = "Mettre en sourdine";
 "meta.menu.silence.unmute" = "Désactiver la sourdine";
 "meta.menu.cancel" = "Annuler";
-"meta.menu.cancel_connection_request" = "Annuler la Demande…";
+"meta.menu.cancel_connection_request" = "Annuler la Demande";
 "meta.menu.mark_unread" = "Marquer comme non lu";
 "meta.menu.mark_read" = "Marquer comme lu";
 "shortcut.mark_all_as_read.title" = "Tout marquer comme lu";
@@ -705,7 +708,8 @@
 "profile.remove_dialog_title" = "Supprimer ?";
 "profile.remove_dialog_message" = "%@ ne pourra ni envoyer ni recevoir de messages dans cette conversation.";
 "profile.remove_dialog_button_cancel" = "Annuler";
-"profile.remove_dialog_button_remove" = "Supprimer";
+"profile.remove_dialog_button_remove" = "Retirer Du Groupe…";
+"profile.remove_dialog_button_remove_confirm" = "Retirer Du Groupe";
 
 // Block dialog
 "profile.block_dialog.title" = "Bloquer ?";
@@ -730,13 +734,16 @@
 
 // Cancel connection request
 "profile.cancel_connection_request_dialog.title" = "Annuler votre demande ?";
-"profile.cancel_connection_request_dialog.message" = "Supprimer la demande de connexion à %@.";
+"profile.cancel_connection_request_dialog.message" = "Supprimer votre demande de connexion à %@ ?";
 "profile.cancel_connection_request_dialog.button_no" = "Non";
 "profile.cancel_connection_request_dialog.button_yes" = "Oui";
 
 // Unblock button
 "profile.block_button_title" = "Bloquer…";
 "profile.unblock_button_title" = "Débloquer…";
+
+"profile.block_button_title_action" = "Bloquer";
+"profile.unblock_button_title_action" = "Débloquer";
 
 "profile.cancel_connection_button_title" = "ANNULER LA DEMANDE";
 "profile.connection_request_state.blocked" = "BLOQUÉ";
@@ -745,7 +752,9 @@
 
 "profile.read_receipts_enabled_memo.header" = "VOUS AVEZ ACTIVÉ LES ACCUSÉS DE LECTURE";
 "profile.read_receipts_disabled_memo.header" = "VOUS AVEZ DÉSACTIVÉ LES ACCUSÉS DE LECTURE";
-"profile.read_receipts_memo.body" = "Si les deux participants activent les accusés de lecture, vous pourrez voir quand les messages sont lus.\nVous pouvez changer cette option dans les paramètres de votre compte.";
+"profile.read_receipts_memo.body" = "Si les deux participants activent les accusés de lecture, vous pourrez voir quand les messages sont lus.\n\nVous pouvez changer cette option dans les paramètres de votre compte.";
+
+"profile.extended_metadata.header" = "Informations";
 
 // User Details
 "profile.details.title" = "Détails";

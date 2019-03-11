@@ -54,11 +54,9 @@ final class UserRight: UserRightInterface {
 			return isProfileEditable
         }
     }
-	
-	private static var isProfileEditable: Bool {
-        guard let managedBy = ZMUser.selfUser()?.managedBy else { return true }
-        
-        return managedBy == "wire"
-	}
+    
+    private static var isProfileEditable: Bool {
+        return ZMUser.selfUser()?.managedByWire ?? true
+    }
 }
 

@@ -21,16 +21,16 @@ import UIKit
 
 struct EdgeInsets {
     let top, leading, bottom, trailing: CGFloat
-    
+
     static let zero = EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
-    
+
     init(top: CGFloat, leading: CGFloat, bottom: CGFloat, trailing: CGFloat) {
         self.top = top
         self.leading = leading
         self.bottom = bottom
         self.trailing = trailing
     }
-    
+
     init(margin: CGFloat) {
         self = EdgeInsets(top: margin, leading: margin, bottom: margin, trailing: margin)
     }
@@ -45,14 +45,23 @@ enum Anchor {
 
 extension UIView {
 
+    // MARK: - center alignment
+
     @discardableResult func centerInSuperview(activate: Bool = true) -> [NSLayoutConstraint] {
         guard let superview = superview else {
             fatal("Not in view hierarchy: self.superview = nil")
         }
 
+        return alignCenter(to: superview, activate: activate)
+    }
+
+    @discardableResult func alignCenter(to view: UIView,
+                                   with offset: CGPoint = .zero,
+                                   activate: Bool = true) -> [NSLayoutConstraint] {
+
         let constraints = [
-            superview.centerXAnchor.constraint(equalTo: centerXAnchor),
-            superview.centerYAnchor.constraint(equalTo: centerYAnchor)
+            view.centerXAnchor.constraint(equalTo: centerXAnchor, constant: offset.x),
+            view.centerYAnchor.constraint(equalTo: centerYAnchor, constant: offset.y)
         ]
 
         if activate {
@@ -61,6 +70,8 @@ extension UIView {
 
         return constraints
     }
+
+    // MARK: - edge alignment
 
     @discardableResult func fitInSuperview(safely: Bool = false,
                                            with insets: EdgeInsets = .zero,
@@ -116,18 +127,24 @@ extension UIView {
         if activate {
             NSLayoutConstraint.activate(constraints.map({$0.value}))
         }
-        
+
         return constraints
     }
+
+    // MARK: - dimensions
 
     func setDimensions(length: CGFloat) {
         setDimensions(width: length, height: length)
     }
 
     func setDimensions(width: CGFloat, height: CGFloat) {
+        setDimensions(size: CGSize(width: width, height: height))
+    }
+
+    func setDimensions(size: CGSize) {
         let constraints = [
-            widthAnchor.constraint(equalToConstant: width),
-            heightAnchor.constraint(equalToConstant: height)
+            widthAnchor.constraint(equalToConstant: size.width),
+            heightAnchor.constraint(equalToConstant: size.height)
         ]
 
         NSLayoutConstraint.activate(constraints)

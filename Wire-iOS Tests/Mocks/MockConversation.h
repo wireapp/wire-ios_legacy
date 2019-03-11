@@ -33,5 +33,11 @@
 @property (nonatomic) ZMConnectionStatus relatedConnectionState;
 @property (nonatomic) BOOL canStartVideoCall;
 @property (nonatomic) BOOL isConversationEligibleForVideoCalls;
+@property (nonatomic) NSArray<id<ZMConversationMessage>> *unreadMessages;
+@property (nonatomic) BOOL isReadOnly;
+@property (nonatomic) BOOL isArchived;
+@property (nonatomic) NSUUID *teamRemoteIdentifier;
+
+- (ZMConversation *)convertToRegularConversation;
 
 @end

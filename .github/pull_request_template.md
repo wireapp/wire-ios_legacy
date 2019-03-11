@@ -12,7 +12,7 @@ _Briefly describe the causes behind the issues. This could be helpful to underst
 
 _Briefly describe the solutions you have implemented for the issues explained above._
 
-## Dependencies
+### Dependencies
 
 _If there are some other pull requests related to this one (e.g. new releases of frameworks), specify them here. (Optional)_
 
@@ -20,7 +20,7 @@ Needs releases with:
 
 - [ ] GitHub link to the pull request
 
-## Notes
+### Notes
 
 _Specify here any other facts that you think are important for this issue. (Optional)_
 

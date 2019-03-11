@@ -267,7 +267,7 @@ extension MessageDetailsContentViewController: UICollectionViewDataSource, UICol
         let user = cells[indexPath.item].user
         let cell = collectionView.cellForItem(at: indexPath) as! UserCell
 
-        let profileViewController = ProfileViewController(user: user, conversation: conversation)
+        let profileViewController = ProfileViewController(user: user, viewer: ZMUser.selfUser(), conversation: conversation)
         profileViewController.delegate = self
         profileViewController.viewControllerDismisser = self
 
@@ -303,7 +303,7 @@ extension MessageDetailsContentViewController {
     /// Presents a profile view controller as a popover or a modal depending on the context.
     fileprivate func presentDetailsViewController(_ controller: ProfileViewController, above cell: UserCell) {
         let presentedController = controller.wrapInNavigationController()
-        presentedController.modalPresentationStyle = .popover
+        presentedController.modalPresentationStyle = .formSheet
 
         if let popover = presentedController.popoverPresentationController {
             popover.sourceRect = cell.avatar.bounds
