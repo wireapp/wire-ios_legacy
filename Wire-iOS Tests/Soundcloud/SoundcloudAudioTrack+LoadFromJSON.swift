@@ -19,35 +19,28 @@
 import XCTest
 @testable import Wire
 
-final class AudioTrackViewControllerSnapshotTests: ZMSnapshotTestCase {
-    
-    var sut: AudioTrackViewController!
-    
-    override func setUp() {
-        super.setUp()
+extension XCTestCase {
+    func jsonObject(fromFile file: String) -> [AnyHashable : Any]? {
+        let url = urlForResource(inTestBundleNamed: file)
 
-        recordMode = true
-    }
-    
-    override func tearDown() {
-        sut = nil
-        super.tearDown()
-    }
+        var JSON: [AnyHashable : Any]? = nil
 
-    func testForInitState(){
-        sut = AudioTrackViewController()
-        sut.view.frame = CGRect(x: 0, y: 0, width: 375, height: 375)
+        if let data = NSData(contentsOf: url) {
+            do {
+                JSON = try JSONSerialization.jsonObject(with: data as Data, options: []) as? [AnyHashable : Any]
+            } catch {
+                XCTFail("Error parsing JSON: \(error)")
+            }
+        }
 
-        verify(view: sut.view)
+        return JSON
     }
 
-    func testForDummyTrackLoaded(){
-        let audioTrack = audioTrackFromJSON(filename: "soundcloud-track1.json")
+    func audioTrackFromJSON(filename: String) -> SoundcloudAudioTrack? {
+        let JSON = jsonObject(fromFile: filename)
+        let audioTrack = SoundcloudAudioTrack(fromJSON: JSON, soundcloudService: nil)
 
-        sut = AudioTrackViewController()
-        sut.audioTrack = audioTrack
-        sut.view.frame = CGRect(x: 0, y: 0, width: 375, height: 375)
-
-        verify(view: sut.view)
+        return audioTrack
     }
 }
+

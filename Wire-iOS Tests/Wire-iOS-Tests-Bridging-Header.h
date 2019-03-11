@@ -35,3 +35,4 @@
 #import "SoundcloudService.h"
 #import "SoundcloudService+Testing.h"
 #import "EmoticonSubstitutionConfiguration+Tests.h"
+#import "SoundcloudAudioTrack.h"
