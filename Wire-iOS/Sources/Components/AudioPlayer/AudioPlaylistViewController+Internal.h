@@ -16,8 +16,21 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+#import "AudioHeaderView.h"
+#import "AudioTrackView.h"
+
 @interface AudioPlaylistViewController ()
 
 @property (nonatomic, readonly) UIImageView *backgroundView;
+@property (nonatomic, readonly) UIVisualEffectView *blurEffectView;
+@property (nonatomic, readonly) AudioHeaderView *audioHeaderView;
+@property (nonatomic, readonly) UIView *contentContainer;
+@property (nonatomic, readonly) UITableView *playlistTableView;
+@property (nonatomic, readonly) UICollectionView *tracksCollectionView;
+@property (nonatomic, readonly) UIView *tracksSeparatorLine;
+@property (nonatomic, readonly) UIView *playlistSeparatorLine;
+@property (nonatomic) NSLayoutConstraint *tracksSeparatorLineHeightConstraint;
+
++ (CGFloat)separatorLineOverflow;
 
 @end

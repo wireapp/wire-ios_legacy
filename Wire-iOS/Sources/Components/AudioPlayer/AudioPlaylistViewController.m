@@ -20,8 +20,6 @@
 #import "AudioPlaylistViewController.h"
 #import "AudioPlaylistViewController+Internal.h"
 
-#import "AudioHeaderView.h"
-#import "AudioTrackView.h"
 #import "AudioTrackPlayer.h"
 #import "SoundcloudAudioTrack.h"
 
@@ -45,18 +43,9 @@ static const CGFloat SeparatorLineOverflow = 4;
 
 @interface AudioPlaylistViewController () <UITableViewDelegate, UITableViewDataSource, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, AudioTrackCellDelegate>
 
-@property (nonatomic, readonly) UIVisualEffectView *blurEffectView;
 @property (nonatomic, readonly) AudioTrackPlayer *audioTrackPlayer;
 @property (nonatomic, readonly) BOOL isTrackPlayingInAudioPlayer;
 @property (nonatomic) BOOL loadingFailed;
-
-@property (nonatomic, readonly) UIView *contentContainer;
-@property (nonatomic, readonly) UITableView *playlistTableView;
-@property (nonatomic, readonly) UICollectionView *tracksCollectionView;
-@property (nonatomic, readonly) AudioHeaderView *audioHeaderView;
-@property (nonatomic, readonly) UIView *tracksSeparatorLine;
-@property (nonatomic, readonly) UIView *playlistSeparatorLine;
-@property (nonatomic, readonly) NSLayoutConstraint *tracksSeparatorLineHeightConstraint;
 
 @property (nonatomic) NSObject *artworkObserver;
 @property (nonatomic) NSObject *audioTrackObserver;
@@ -193,6 +182,11 @@ static const CGFloat SeparatorLineOverflow = 4;
     // NOTE Workaround for layoutMargins bug in <= iOS 8.2
     // http://stackoverflow.com/a/29712427/203073
     self.contentContainer.layoutMargins = self.view.layoutMargins;
+}
+
++ (CGFloat)separatorLineOverflow
+{
+    return SeparatorLineOverflow;
 }
 
 - (UIView *)touchableView

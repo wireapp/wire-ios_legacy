@@ -1290,7 +1290,8 @@
 		EFF74F4421A45E5700CCF3DD /* SplitViewController+UIGestureRecognizerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF74F4321A45E5700CCF3DD /* SplitViewController+UIGestureRecognizerDelegate.swift */; };
 		EFF92B6421A84E210090DA66 /* PhoneNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF92B6321A84E210090DA66 /* PhoneNumber.swift */; };
 		EFF92B6721A855050090DA66 /* String+PhoneNumberTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF92B6521A854BA0090DA66 /* String+PhoneNumberTests.swift */; };
-		EFF9A6492237E72A00CCEC85 /* AudioPlaylistViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF9A6472237E72900CCEC85 /* AudioPlaylistViewController+Extension.swift */; };
+		EFF9A6492237E72A00CCEC85 /* AudioPlaylistViewController+Constraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF9A6472237E72900CCEC85 /* AudioPlaylistViewController+Constraint.swift */; };
+		EFF9A64C2237F73B00CCEC85 /* AudioPlaylistViewControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF9A64B2237F73A00CCEC85 /* AudioPlaylistViewControllerSnapshotTests.swift */; };
 		F10F46D420288CEB00261449 /* ConversationCreationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10F46D320288CEB00261449 /* ConversationCreationController.swift */; };
 		F112C58620497860007C1E8F /* Analytics+Guests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F112C58520497860007C1E8F /* Analytics+Guests.swift */; };
 		F1141C971F5EB2DC005340B3 /* WireApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1141C961F5EB2DC005340B3 /* WireApplication.swift */; };
@@ -3144,8 +3145,9 @@
 		EFF74F4321A45E5700CCF3DD /* SplitViewController+UIGestureRecognizerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SplitViewController+UIGestureRecognizerDelegate.swift"; sourceTree = "<group>"; };
 		EFF92B6321A84E210090DA66 /* PhoneNumber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneNumber.swift; sourceTree = "<group>"; };
 		EFF92B6521A854BA0090DA66 /* String+PhoneNumberTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+PhoneNumberTests.swift"; sourceTree = "<group>"; };
-		EFF9A6472237E72900CCEC85 /* AudioPlaylistViewController+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AudioPlaylistViewController+Extension.swift"; sourceTree = "<group>"; };
+		EFF9A6472237E72900CCEC85 /* AudioPlaylistViewController+Constraint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AudioPlaylistViewController+Constraint.swift"; sourceTree = "<group>"; };
 		EFF9A6482237E72A00CCEC85 /* AudioPlaylistViewController+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AudioPlaylistViewController+Internal.h"; sourceTree = "<group>"; };
+		EFF9A64B2237F73A00CCEC85 /* AudioPlaylistViewControllerSnapshotTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioPlaylistViewControllerSnapshotTests.swift; sourceTree = "<group>"; };
 		EFFF9E841FBF335700491F9A /* UIColor+TeamCreation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+TeamCreation.swift"; sourceTree = "<group>"; };
 		F10D5A6921A83793008BBD29 /* Bundle+Backend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Backend.swift"; sourceTree = "<group>"; };
 		F10F46D320288CEB00261449 /* ConversationCreationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationCreationController.swift; sourceTree = "<group>"; };
@@ -4683,7 +4685,7 @@
 				871BC3251D34F94200DF0793 /* AudioPlaylistViewController.h */,
 				EFF9A6482237E72A00CCEC85 /* AudioPlaylistViewController+Internal.h */,
 				871BC3261D34F94200DF0793 /* AudioPlaylistViewController.m */,
-				EFF9A6472237E72900CCEC85 /* AudioPlaylistViewController+Extension.swift */,
+				EFF9A6472237E72900CCEC85 /* AudioPlaylistViewController+Constraint.swift */,
 				871BC3271D34F94200DF0793 /* AudioTrack.h */,
 				871BC3281D34F94200DF0793 /* AudioTrackCell.h */,
 				871BC3291D34F94200DF0793 /* AudioTrackCell.m */,
@@ -5822,6 +5824,7 @@
 		BACB88521AF7C48900DDCDB0 /* Wire-iOS Tests */ = {
 			isa = PBXGroup;
 			children = (
+				EFF9A64A2237F73A00CCEC85 /* AudioPlayList */,
 				EF7FD9552236B9D9000ABFA0 /* AudioPlayer */,
 				EFC57A1121BABD4F0008DBE6 /* ConversationInputBarViewController */,
 				EF18140721B17F7A008F7DA8 /* ConversationOption */,
@@ -6503,6 +6506,14 @@
 				EFC57A0F21BABCC90008DBE6 /* ConversationInputBarViewControllerAudioRecorderSnapshotTests.swift */,
 			);
 			path = ConversationInputBarViewController;
+			sourceTree = "<group>";
+		};
+		EFF9A64A2237F73A00CCEC85 /* AudioPlayList */ = {
+			isa = PBXGroup;
+			children = (
+				EFF9A64B2237F73A00CCEC85 /* AudioPlaylistViewControllerSnapshotTests.swift */,
+			);
+			path = AudioPlayList;
 			sourceTree = "<group>";
 		};
 		F10F46D02028857C00261449 /* Create */ = {
@@ -7850,7 +7861,7 @@
 				871BC2561D34F8F800DF0793 /* PopTransition.m in Sources */,
 				EF21270E1FB9DFE300625A9B /* CountryCodeTableViewController.m in Sources */,
 				BFBDDBC61DB0D51C00BEED02 /* ConversationInputBarButtonState.swift in Sources */,
-				EFF9A6492237E72A00CCEC85 /* AudioPlaylistViewController+Extension.swift in Sources */,
+				EFF9A6492237E72A00CCEC85 /* AudioPlaylistViewController+Constraint.swift in Sources */,
 				EE0DE1CD21B172BF00CF3C4E /* ConversationCreateGuestsSectionController.swift in Sources */,
 				5E7315352191EADF00255A78 /* Message+Formatters.swift in Sources */,
 				5E8FFC1821EF61A90052DF03 /* ClientUnregisterInvitationStepDescription.swift in Sources */,
@@ -8443,6 +8454,7 @@
 				EF9FC3EF2142A77500033ED0 /* ColorSchemeControllerTests.swift in Sources */,
 				872C823C214A9B8500236A76 /* TextMessageMentionsTests.swift in Sources */,
 				16A94AF6209B04A5008A5718 /* GridViewTests.swift in Sources */,
+				EFF9A64C2237F73B00CCEC85 /* AudioPlaylistViewControllerSnapshotTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
