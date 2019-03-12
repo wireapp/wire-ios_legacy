@@ -121,7 +121,6 @@ static const CGFloat MarginInset = 24;
 - (void)createPreviewPanel
 {
     self.imagePreviewView = [[FLAnimatedImageView alloc] init];
-    self.imagePreviewView.translatesAutoresizingMaskIntoConstraints = NO;
     self.imagePreviewView.contentMode = UIViewContentModeScaleAspectFit;
     self.imagePreviewView.userInteractionEnabled = YES;
     [self.view addSubview:self.imagePreviewView];
@@ -130,7 +129,6 @@ static const CGFloat MarginInset = 24;
     
     if ([self showEditingOptions] && [self imageToolbarFitsInsideImage]) {
         self.imageToolbarViewInsideImage = [[ImageToolbarView alloc] initWithConfiguraton:ImageToolbarConfigurationPreview];
-        self.imageToolbarViewInsideImage.translatesAutoresizingMaskIntoConstraints = NO;
         self.imageToolbarViewInsideImage.isPlacedOnImage = YES;
         [self.imageToolbarViewInsideImage.sketchButton addTarget:self action:@selector(sketchEdit:) forControlEvents:UIControlEventTouchUpInside];
         [self.imageToolbarViewInsideImage.emojiButton addTarget:self action:@selector(emojiEdit:) forControlEvents:UIControlEventTouchUpInside];
@@ -141,11 +139,9 @@ static const CGFloat MarginInset = 24;
 - (void)createTopPanel
 {
     self.topPanel = [[UIView alloc] init];
-    self.topPanel.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:self.topPanel];
     
     self.titleLabel = [[UILabel alloc] init];
-    self.titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
     self.titleLabel.text = self.previewTitle;
     [self.topPanel addSubview:self.titleLabel];
 }
@@ -153,33 +149,27 @@ static const CGFloat MarginInset = 24;
 - (void)createBottomPanel
 {
     self.bottomPanel = [[UIView alloc] init];
-    self.bottomPanel.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:self.bottomPanel];
     
     if ([self showEditingOptions] && ![self imageToolbarFitsInsideImage]) {
         self.imageToolbarView = [[ImageToolbarView alloc] initWithConfiguraton:ImageToolbarConfigurationPreview];
-        self.imageToolbarView.translatesAutoresizingMaskIntoConstraints = NO;
         [self.imageToolbarView.sketchButton addTarget:self action:@selector(sketchEdit:) forControlEvents:UIControlEventTouchUpInside];
         [self.imageToolbarView.emojiButton addTarget:self action:@selector(emojiEdit:) forControlEvents:UIControlEventTouchUpInside];
         [self.bottomPanel addSubview:self.imageToolbarView];
         
         self.imageToolbarSeparatorView = [[UIView alloc] init];
-        self.imageToolbarSeparatorView.translatesAutoresizingMaskIntoConstraints = NO;
         [self.imageToolbarView addSubview:self.imageToolbarSeparatorView];
     }
     
     self.confirmButtonsContainer = [[UIView alloc] init];
-    self.confirmButtonsContainer.translatesAutoresizingMaskIntoConstraints = NO;
     [self.bottomPanel addSubview:self.confirmButtonsContainer];
     
     self.acceptImageButton = [Button buttonWithStyle:ButtonStyleFull];
-    self.acceptImageButton.translatesAutoresizingMaskIntoConstraints = NO;
     [self.acceptImageButton addTarget:self action:@selector(acceptImage:) forControlEvents:UIControlEventTouchUpInside];
     [self.acceptImageButton setTitle:NSLocalizedString(@"image_confirmer.confirm", @"") forState:UIControlStateNormal];
     [self.confirmButtonsContainer addSubview:self.acceptImageButton];
     
     self.rejectImageButton = [Button buttonWithStyle:ButtonStyleEmpty];
-    self.rejectImageButton.translatesAutoresizingMaskIntoConstraints = NO;
     [self.rejectImageButton addTarget:self action:@selector(rejectImage:) forControlEvents:UIControlEventTouchUpInside];
     [self.rejectImageButton setTitle:NSLocalizedString(@"image_confirmer.cancel", @"") forState:UIControlStateNormal];
     [self.confirmButtonsContainer addSubview:self.rejectImageButton];

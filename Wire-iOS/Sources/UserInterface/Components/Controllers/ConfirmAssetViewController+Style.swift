@@ -94,13 +94,13 @@ extension ConfirmAssetViewController {
         if let imageToolbarView = imageToolbarView {
             confirmButtonsContainer.topAnchor.constraint(equalTo: imageToolbarView.bottomAnchor).isActive = true
         } else {
-            confirmButtonsContainer.topAnchor.constraint(equalTo: confirmButtonsContainer.superview!.bottomAnchor).isActive = true
+            confirmButtonsContainer.topAnchor.constraint(equalTo: confirmButtonsContainer.superview!.topAnchor).isActive = true
         }
         
         NSLayoutConstraint.activate([
             acceptImageButton.heightAnchor.constraint(equalToConstant: 40),
             acceptImageButton.centerYAnchor.constraint(equalTo: acceptImageButton.superview!.centerYAnchor),
-            acceptImageButton.rightAnchor.constraint(equalTo: acceptImageButton.superview!.rightAnchor, constant: ConfirmAssetViewController.marginInset())
+            acceptImageButton.rightAnchor.constraint(equalTo: acceptImageButton.superview!.rightAnchor, constant: -ConfirmAssetViewController.marginInset())
             ])
         
         acceptImageButton.setContentHuggingPriority(.defaultLow, for: .horizontal)
@@ -123,7 +123,7 @@ extension ConfirmAssetViewController {
         acceptImageButton.widthAnchor.constraint(equalTo: rejectImageButton.widthAnchor).isActive = true
         
         // Preview image
-        let imageSize: CGSize = image?.size ?? .zero
+        let imageSize: CGSize = image?.size ?? CGSize(width: 1, height: 1)
         
         if let imagePreviewView = imagePreviewView {
             imagePreviewView.centerInSuperview()
@@ -138,7 +138,7 @@ extension ConfirmAssetViewController {
         }
         
         if let playerView = playerViewController?.view {
-            playerView.fitInSuperview(exclude: [.leading, .trailing])
+            playerView.fitInSuperview(exclude: [.top, .bottom])
             NSLayoutConstraint.activate([playerView.topAnchor.constraint(equalTo: topPanel.bottomAnchor),
                                          playerView.bottomAnchor.constraint(equalTo: bottomPanel.topAnchor)
                 ])
