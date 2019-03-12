@@ -22,6 +22,7 @@ class ConversationTextMessageCell: UIView, ConversationMessageCell, TextViewInte
 
     struct Configuration: Equatable {
         let attributedText: NSAttributedString
+        let isObfuscated: Bool
     }
 
     let messageTextView = LinkInteractionTextView()
@@ -89,8 +90,7 @@ class ConversationTextMessageCell: UIView, ConversationMessageCell, TextViewInte
     func configure(with object: Configuration, animated: Bool) {
         messageTextView.attributedText = object.attributedText
 
-        if let message = message,
-            message.isObfuscated {
+        if object.isObfuscated {
             messageTextView.accessibilityIdentifier = "Obfuscated message"
         } else {
             messageTextView.accessibilityIdentifier = "Message"
@@ -144,8 +144,8 @@ class ConversationTextMessageCellDescription: ConversationMessageCellDescription
     let accessibilityIdentifier: String? = nil
     let accessibilityLabel: String? = nil
 
-    init(attributedString: NSAttributedString) {
-        configuration = View.Configuration(attributedText: attributedString)
+    init(attributedString: NSAttributedString, isObfuscated: Bool) {
+        configuration = View.Configuration(attributedText: attributedString, isObfuscated: isObfuscated)
     }
 
     func makeCell(for tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
@@ -197,7 +197,7 @@ extension ConversationTextMessageCellDescription {
 
         // Text
         if messageText.length > 0 {
-            let textCell = ConversationTextMessageCellDescription(attributedString: messageText)
+            let textCell = ConversationTextMessageCellDescription(attributedString: messageText, isObfuscated: message.isObfuscated)
             cells.append(AnyConversationMessageCellDescription(textCell))
         }
 
