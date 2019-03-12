@@ -23,7 +23,7 @@
 
 @import WireCommonComponents;
 
-@implementation AudioErrorView ///TODO: test
+@implementation AudioErrorView
 
 - (instancetype)init
 {
