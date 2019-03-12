@@ -27,16 +27,16 @@
 @property (nonatomic, nullable) NSURL *videoURL;
 @property (nonatomic, nullable) AVPlayerViewController *playerViewController;
 
-@property (nonatomic, nonnull) UIView *imageToolbarSeparatorView;
+@property (nonatomic, nullable) UIView *imageToolbarSeparatorView;
 @property (nonatomic, nonnull) UIView *topPanel;
 @property (nonatomic, null_unspecified) UILabel *titleLabel;
 @property (nonatomic, nonnull) UIView *bottomPanel;
 @property (nonatomic, nonnull) UIView *confirmButtonsContainer;
 @property (nonatomic, nonnull) Button *acceptImageButton;
 @property (nonatomic, nonnull) Button *rejectImageButton;
-@property (nonatomic, nonnull) FLAnimatedImageView *imagePreviewView;
-@property (nonatomic, nonnull) ImageToolbarView *imageToolbarViewInsideImage;
-@property (nonatomic, null_unspecified) ImageToolbarView *imageToolbarView;
+@property (nonatomic, nullable) FLAnimatedImageView *imagePreviewView;
+@property (nonatomic, nullable) ImageToolbarView *imageToolbarViewInsideImage;
+@property (nonatomic, nullable) ImageToolbarView *imageToolbarView;
 
 @property (nonatomic, nonnull) NSLayoutConstraint *topBarHeightConstraint;
 
