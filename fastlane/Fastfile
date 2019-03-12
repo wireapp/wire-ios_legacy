@@ -120,7 +120,7 @@ platform :ios do
     desc "Upload to S3"
     lane :upload_s3 do |options|
         build = Build.new(options: options, branch: git_branch)
-        sh "Upload of debug/#{build.filename}.ipa done!"
+        sh "echo 'Upload of debug/#{build.filename}.ipa done!'"
     end
 
     desc "Upload for internal use"
