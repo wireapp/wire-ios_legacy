@@ -130,7 +130,7 @@ platform :ios do
           api_token: ENV["HOCKEY_APP_TOKEN"],
           public_identifier: build.hockey_app_id,
           ipa: "release/#{build.filename}.ipa",
-          notes: changelog
+          notes: build.changelog
         )
     end
 
