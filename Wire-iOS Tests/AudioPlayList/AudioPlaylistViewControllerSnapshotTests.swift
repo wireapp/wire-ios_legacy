@@ -38,22 +38,16 @@ final class AudioPlaylistViewControllerSnapshotTests: ZMSnapshotTestCase {
     }
 
     func testForPlayListLoaded(){
-        let JSON = jsonObject(fromFile: "soundcloud-playlist1.json")
-        let audioPlaylist = SoundcloudPlaylist.audioPlaylist(fromJSON: JSON, soundcloudService: nil)
-        sut.audioPlaylist = audioPlaylist
-
         let image = self.image(inTestBundleNamed: "unsplash_square.jpg")
 
-//        let dictionary = [NSKeyValueChangeNewKey: image]
-//        sut.backgr
+        let JSON = jsonObject(fromFile: "soundcloud-playlist1.json")
+        let audioPlaylist = SoundcloudPlaylist.audioPlaylist(fromJSON: JSON, soundcloudService: nil)
+        (audioPlaylist?.tracks.first as? SoundcloudAudioTrack)?.artwork = image
+        (audioPlaylist?.tracks[1] as? SoundcloudAudioTrack)?.artwork = image
 
-//            - (void)backgroundArtworkChanged:(NSDictionary *)change
-//        {
-//            UIImage *artwork = [change valueForKey:NSKeyValueChangeNewKey];
-
+        sut.audioPlaylist = audioPlaylist
 
         sut.backgroundView.image = image
-//        sut.audioTrackView.artworkImageView.image = image
         sut.providerImage = image
 
         verify(view: sut.view)
