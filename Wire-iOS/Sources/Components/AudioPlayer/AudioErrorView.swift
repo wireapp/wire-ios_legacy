@@ -21,8 +21,7 @@ import UIKit
 @objc class AudioErrorView: UIView {
     private let errorIconView: UIImageView = {
         let imageView = UIImageView()
-        //TODO: .audio icon is missing. Update snapshot test after the resource is updated.
-        let image =  UIImage(for: .audio, iconSize: .camera, color: UIColor(white: 1, alpha: 0.16))
+        let image =  UIImage(for: .mediaBarPlay, iconSize: .camera, color: UIColor(white: 1, alpha: 0.16))
         imageView.image = image
         imageView.transform = CGAffineTransform(rotationAngle: .pi)
 

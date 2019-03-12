@@ -69,6 +69,8 @@
         [self addSubview:self.playPauseButton];
 
         [self setupErrorView];
+
+        [self updateUI];
     }
     
     return self;
@@ -102,17 +104,23 @@
         return;
     }
     _failedToLoad = failedToLoad;
-    
+
+    [self updateUI];
+}
+
+- (void)updateUI
+{
     self.errorView.hidden = ! self.failedToLoad;
     self.playPauseButton.hidden = self.failedToLoad;
     self.artworkImageView.hidden = self.failedToLoad;
-    
+
     self.progressBackgroundLayer.fillColor = self.failedToLoad ? [UIColor colorWithWhite:0.0f alpha:0.4f].CGColor : UIColor.clearColor.CGColor;
     self.progressBackgroundLayer.hidden = self.progress == 0 && ! self.failedToLoad;
     if (self.failedToLoad) {
         [self setProgress:0];
     }
 }
+
 
 - (CGRect)progressLayerFrame
 {
