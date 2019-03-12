@@ -25,7 +25,6 @@
 
 #import "AudioPlaylist.h"
 #import "AudioTrack.h"
-#import "AudioTrackCell.h"
 #import "WireSyncEngine+iOS.h"
 #import "LinkAttachmentCache.h"
 #import "SoundcloudService.h"

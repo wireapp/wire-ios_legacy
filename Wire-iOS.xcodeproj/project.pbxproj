@@ -508,7 +508,6 @@
 		871BC3521D34F94200DF0793 /* AggregateArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC31C1D34F94200DF0793 /* AggregateArray.m */; };
 		871BC3541D34F94200DF0793 /* AudioHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC3211D34F94200DF0793 /* AudioHeaderView.m */; };
 		871BC3561D34F94200DF0793 /* AudioPlaylistViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC3261D34F94200DF0793 /* AudioPlaylistViewController.m */; };
-		871BC3571D34F94200DF0793 /* AudioTrackCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC3291D34F94200DF0793 /* AudioTrackCell.m */; };
 		871BC3581D34F94200DF0793 /* AudioTrackPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC32B1D34F94200DF0793 /* AudioTrackPlayer.m */; };
 		871BC3591D34F94200DF0793 /* AudioTrackView.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC32D1D34F94200DF0793 /* AudioTrackView.m */; };
 		871BC35A1D34F94200DF0793 /* AudioTrackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC32F1D34F94200DF0793 /* AudioTrackViewController.m */; };
@@ -1292,6 +1291,7 @@
 		EFF9A6492237E72A00CCEC85 /* AudioPlaylistViewController+Constraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF9A6472237E72900CCEC85 /* AudioPlaylistViewController+Constraint.swift */; };
 		EFF9A64C2237F73B00CCEC85 /* AudioPlaylistViewControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF9A64B2237F73A00CCEC85 /* AudioPlaylistViewControllerSnapshotTests.swift */; };
 		EFF9A6502238020400CCEC85 /* AudioPlaylistCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF9A64E2238020400CCEC85 /* AudioPlaylistCell.swift */; };
+		EFF9A6512238093700CCEC85 /* AudioTrackCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BC3281D34F94200DF0793 /* AudioTrackCell.swift */; };
 		F10F46D420288CEB00261449 /* ConversationCreationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10F46D320288CEB00261449 /* ConversationCreationController.swift */; };
 		F112C58620497860007C1E8F /* Analytics+Guests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F112C58520497860007C1E8F /* Analytics+Guests.swift */; };
 		F1141C971F5EB2DC005340B3 /* WireApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1141C961F5EB2DC005340B3 /* WireApplication.swift */; };
@@ -2110,8 +2110,7 @@
 		871BC3251D34F94200DF0793 /* AudioPlaylistViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioPlaylistViewController.h; sourceTree = "<group>"; };
 		871BC3261D34F94200DF0793 /* AudioPlaylistViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioPlaylistViewController.m; sourceTree = "<group>"; };
 		871BC3271D34F94200DF0793 /* AudioTrack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioTrack.h; sourceTree = "<group>"; };
-		871BC3281D34F94200DF0793 /* AudioTrackCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioTrackCell.h; sourceTree = "<group>"; };
-		871BC3291D34F94200DF0793 /* AudioTrackCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioTrackCell.m; sourceTree = "<group>"; };
+		871BC3281D34F94200DF0793 /* AudioTrackCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioTrackCell.swift; sourceTree = "<group>"; };
 		871BC32A1D34F94200DF0793 /* AudioTrackPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioTrackPlayer.h; sourceTree = "<group>"; };
 		871BC32B1D34F94200DF0793 /* AudioTrackPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioTrackPlayer.m; sourceTree = "<group>"; };
 		871BC32C1D34F94200DF0793 /* AudioTrackView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioTrackView.h; sourceTree = "<group>"; };
@@ -4686,8 +4685,7 @@
 				871BC3261D34F94200DF0793 /* AudioPlaylistViewController.m */,
 				EFF9A6472237E72900CCEC85 /* AudioPlaylistViewController+Constraint.swift */,
 				871BC3271D34F94200DF0793 /* AudioTrack.h */,
-				871BC3281D34F94200DF0793 /* AudioTrackCell.h */,
-				871BC3291D34F94200DF0793 /* AudioTrackCell.m */,
+				871BC3281D34F94200DF0793 /* AudioTrackCell.swift */,
 				871BC32A1D34F94200DF0793 /* AudioTrackPlayer.h */,
 				871BC32B1D34F94200DF0793 /* AudioTrackPlayer.m */,
 				871BC32C1D34F94200DF0793 /* AudioTrackView.h */,
@@ -7290,7 +7288,6 @@
 				871BC22A1D34F8F800DF0793 /* FullscreenImageViewController+PullToDismiss.m in Sources */,
 				879718981D1C767600163C07 /* AudioEffectsPickerViewController.swift in Sources */,
 				8708C6821F50860100845C7D /* AccountSelectorView.swift in Sources */,
-				871BC3571D34F94200DF0793 /* AudioTrackCell.m in Sources */,
 				BF1A81281C9848DB00A96CAA /* ConversationViewController+NavigationBar.swift in Sources */,
 				F15650F421DD1C8B00210504 /* UIColor+Mixing.m in Sources */,
 				87F18BB61E0154FB00C69D9B /* FileTransferView.swift in Sources */,
@@ -7462,6 +7459,7 @@
 				5EF7BA65221AEB1B00815625 /* ProfileDetailsContentController.swift in Sources */,
 				F12CDADE1E43868200CEFCEB /* ChangeEmailViewController.swift in Sources */,
 				87D679E81EBC8D1E005BEB4C /* ConversationListViewController+CameraPicker.swift in Sources */,
+				EFF9A6512238093700CCEC85 /* AudioTrackCell.swift in Sources */,
 				EF80461E20CA8B67001A1C53 /* ConversationContentViewController+TableHeader.swift in Sources */,
 				8745476B1E9E54E600C206E5 /* SelfProfileViewController.swift in Sources */,
 				871BC2591D34F8F800DF0793 /* VerticalTransition.m in Sources */,
