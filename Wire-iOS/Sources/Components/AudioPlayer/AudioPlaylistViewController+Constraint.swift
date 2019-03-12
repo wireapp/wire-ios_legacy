@@ -41,12 +41,15 @@ extension AudioPlaylistViewController {
         
         tracksCollectionView.fitInSuperview(exclude: [.top, .bottom])
 
-        playlistTableView.fitInSuperview(exclude: [.top])
+        playlistTableView.fitInSuperview(exclude: [.top, .trailing])
         NSLayoutConstraint.activate([
             playlistTableView.topAnchor.constraint(equalTo: tracksCollectionView.bottomAnchor, constant: 16),
+            playlistTableView.rightAnchor.constraint(equalTo: view.layoutMarginsGuide.rightAnchor),
             playlistTableView.heightAnchor.constraint(equalToConstant: playlistTableView.rowHeight * 2.5)])
 
-        contentContainer.fitInSuperview(safely: true)
+        contentContainer.fitInSuperview(exclude: [.leading])
+        NSLayoutConstraint.activate([
+            contentContainer.leftAnchor.constraint(equalTo: view.layoutMarginsGuide.leftAnchor)])
 
         tracksSeparatorLineHeightConstraint = tracksSeparatorLine.heightAnchor.constraint(equalToConstant: 0)
 
