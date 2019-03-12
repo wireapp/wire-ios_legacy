@@ -21,6 +21,8 @@
 
 
 #import "AudioPlaylistViewController.h"
+#import "AudioPlaylistViewController+Internal.h"
+
 #import "AudioHeaderView.h"
 #import "AudioTrackView.h"
 #import "AudioTrackPlayer.h"
@@ -46,7 +48,6 @@ static const CGFloat SeparatorLineOverflow = 4;
 
 @interface AudioPlaylistViewController () <UITableViewDelegate, UITableViewDataSource, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, AudioTrackCellDelegate>
 
-@property (nonatomic, readonly) UIImageView *backgroundView;
 @property (nonatomic, readonly) UIVisualEffectView *blurEffectView;
 @property (nonatomic, readonly) AudioTrackPlayer *audioTrackPlayer;
 @property (nonatomic, readonly) BOOL isTrackPlayingInAudioPlayer;
