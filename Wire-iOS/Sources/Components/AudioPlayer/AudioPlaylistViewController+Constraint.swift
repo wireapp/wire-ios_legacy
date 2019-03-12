@@ -39,31 +39,31 @@ extension AudioPlaylistViewController {
             audioHeaderView.heightAnchor.constraint(equalToConstant: 64),
             tracksCollectionView.topAnchor.constraint(equalTo: audioHeaderView.bottomAnchor)])
         
-        tracksCollectionView.fitInSuperview(exclude: [.leading, .trailing])
-        
+        tracksCollectionView.fitInSuperview(exclude: [.top, .bottom])
+
         playlistTableView.fitInSuperview(exclude: [.top])
         NSLayoutConstraint.activate([
             playlistTableView.topAnchor.constraint(equalTo: tracksCollectionView.bottomAnchor, constant: 16),
             playlistTableView.heightAnchor.constraint(equalToConstant: playlistTableView.rowHeight * 2.5)])
-        
-        contentContainer.fitInSuperview()
-        
+
+        contentContainer.fitInSuperview(safely: true)
+
         tracksSeparatorLineHeightConstraint = tracksSeparatorLine.heightAnchor.constraint(equalToConstant: 0)
-        
+
         let constraint = view.heightAnchor.constraint(equalTo: view.widthAnchor)
         constraint.priority = .defaultLow
-        
+
         NSLayoutConstraint.activate([
             tracksSeparatorLine.widthAnchor.constraint(equalToConstant:0.5),
-            tracksSeparatorLine.centerXAnchor.constraint(equalTo: tracksCollectionView.centerXAnchor),
+            tracksSeparatorLine.centerYAnchor.constraint(equalTo: tracksCollectionView.centerYAnchor),
             tracksSeparatorLine.rightAnchor.constraint(equalTo: tracksCollectionView.leftAnchor),
             tracksSeparatorLineHeightConstraint,
-            
+
             playlistSeparatorLine.heightAnchor.constraint(equalToConstant:0.5),
             playlistSeparatorLine.widthAnchor.constraint(equalTo: playlistTableView.widthAnchor, constant: CGFloat(2) * AudioPlaylistViewController.separatorLineOverflow()),
             playlistSeparatorLine.bottomAnchor.constraint(equalTo: playlistTableView.topAnchor),
             playlistSeparatorLine.leftAnchor.constraint(equalTo: tracksCollectionView.leftAnchor, constant: -AudioPlaylistViewController.separatorLineOverflow()),
-            
+
             view.heightAnchor.constraint(lessThanOrEqualToConstant: 375),
             constraint
             ])

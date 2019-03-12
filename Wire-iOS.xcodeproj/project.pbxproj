@@ -3148,6 +3148,7 @@
 		EFF9A6472237E72900CCEC85 /* AudioPlaylistViewController+Constraint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AudioPlaylistViewController+Constraint.swift"; sourceTree = "<group>"; };
 		EFF9A6482237E72A00CCEC85 /* AudioPlaylistViewController+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AudioPlaylistViewController+Internal.h"; sourceTree = "<group>"; };
 		EFF9A64B2237F73A00CCEC85 /* AudioPlaylistViewControllerSnapshotTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioPlaylistViewControllerSnapshotTests.swift; sourceTree = "<group>"; };
+		EFF9A64D2237F86100CCEC85 /* SoundcloudAudioTrack+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SoundcloudAudioTrack+Internal.h"; sourceTree = "<group>"; };
 		EFFF9E841FBF335700491F9A /* UIColor+TeamCreation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+TeamCreation.swift"; sourceTree = "<group>"; };
 		F10D5A6921A83793008BBD29 /* Bundle+Backend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Backend.swift"; sourceTree = "<group>"; };
 		F10F46D320288CEB00261449 /* ConversationCreationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationCreationController.swift; sourceTree = "<group>"; };
@@ -4720,6 +4721,7 @@
 			isa = PBXGroup;
 			children = (
 				871BC33F1D34F94200DF0793 /* SoundcloudAudioTrack.h */,
+				EFF9A64D2237F86100CCEC85 /* SoundcloudAudioTrack+Internal.h */,
 				871BC3401D34F94200DF0793 /* SoundcloudAudioTrack.m */,
 				871BC3411D34F94200DF0793 /* SoundcloudService.h */,
 				871BC3421D34F94200DF0793 /* SoundcloudService.m */,
