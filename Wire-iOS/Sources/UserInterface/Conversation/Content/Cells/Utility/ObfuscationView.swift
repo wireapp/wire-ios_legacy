@@ -25,7 +25,23 @@ import Foundation
         isOpaque = true
         contentMode = .center
         image = UIImage.init(for: icon, iconSize: .tiny, color: UIColor.from(scheme: .background))
-        accessibilityLabel = "obfuscation view"
+
+        switch icon {
+        case .locationPin:
+            accessibilityLabel = "Obfuscated location message"
+        case .paperclip:
+            accessibilityLabel = "Obfuscated file message"
+        case .photo:
+            accessibilityLabel = "Obfuscated image message"
+        case .microphone:
+            accessibilityLabel = "Obfuscated audio message"
+        case .videoMessage:
+            accessibilityLabel = "Obfuscated video message"
+        case .link:
+            accessibilityLabel = "Obfuscated link message"
+        default:
+            accessibilityLabel = "Obfuscated view"
+        }
     }
     
     required init(coder: NSCoder) {
