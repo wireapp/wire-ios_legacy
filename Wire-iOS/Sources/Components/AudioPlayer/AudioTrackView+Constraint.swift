@@ -34,19 +34,13 @@ extension AudioTrackView {
     }
 
     @objc
-    var errorView: AudioErrorView {
-        if nil == lazyErrorView {
-            let errorView = AudioErrorView()
-            errorView.layer.cornerRadius = artworkImageView.bounds.size.width / 2
-            errorView.translatesAutoresizingMaskIntoConstraints = false
+    func setupErrorView() {
+        errorView = AudioErrorView()
+        errorView.layer.cornerRadius = artworkImageView.bounds.size.width / 2
 
-            addSubview(errorView)
+        addSubview(errorView)
 
-            errorView.fitInSuperview()
-
-            lazyErrorView = errorView
-        }
-
-        return lazyErrorView!
+        errorView.translatesAutoresizingMaskIntoConstraints = false
+        errorView.fitInSuperview()
     }
 }

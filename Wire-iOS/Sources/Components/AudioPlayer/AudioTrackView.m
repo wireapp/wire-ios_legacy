@@ -67,6 +67,8 @@
         self.playPauseButton.accessibilityIdentifier = @"soundcloudPlayPauseButton";
         [self.playPauseButton setIconColor:UIColor.whiteColor forState:UIControlStateNormal];
         [self addSubview:self.playPauseButton];
+
+        [self setupErrorView];
     }
     
     return self;
@@ -83,7 +85,7 @@
     self.progressLayer.path = [self progressBeizerPath].CGPath;
     
     self.artworkImageView.layer.cornerRadius = self.artworkImageView.bounds.size.width / 2;
-    self.lazyErrorView.layer.cornerRadius = self.artworkImageView.bounds.size.width / 2;
+    self.errorView.layer.cornerRadius = self.artworkImageView.bounds.size.width / 2;
 }
 
 - (void)setTintColor:(UIColor *)tintColor

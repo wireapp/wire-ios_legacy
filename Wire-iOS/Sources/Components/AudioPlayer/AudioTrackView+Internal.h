@@ -21,6 +21,6 @@
 @interface AudioTrackView ()
 
 @property (nonatomic) BOOL initialConstraintsCreated;
-@property (nonatomic, nullable) AudioErrorView *lazyErrorView;
+@property (nonatomic, nonnull) AudioErrorView *errorView;
 
 @end
