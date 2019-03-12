@@ -16,7 +16,7 @@ platform :ios do
 
     desc "Build for testing"
     lane :build do
-        build_app(
+        run_tests(
             scheme: "Wire-iOS",
             configuration: "Debug",
             build_for_testing: true,
@@ -31,7 +31,7 @@ platform :ios do
 
     desc "Test without building"
     lane :test do
-        scan(
+        run_tests(
             scheme: "Wire-iOS",
             configuration: "Debug",
             test_without_building: true,
