@@ -17,9 +17,6 @@
 // 
 
 
-@import PureLayout;
-
-
 #import "AudioPlaylistViewController.h"
 #import "AudioPlaylistViewController+Internal.h"
 
@@ -106,7 +103,7 @@ static const CGFloat SeparatorLineOverflow = 4;
     self.view.translatesAutoresizingMaskIntoConstraints = NO;
     self.view.preservesSuperviewLayoutMargins = YES;
     self.view.backgroundColor = UIColor.soundcloudOrange;
-    _backgroundView = [[UIImageView alloc] initForAutoLayout];
+    _backgroundView = [[UIImageView alloc] init];
     self.backgroundView.contentMode = UIViewContentModeScaleAspectFill;
     self.backgroundView.clipsToBounds = YES;
     [self.view addSubview:self.backgroundView];
@@ -117,17 +114,17 @@ static const CGFloat SeparatorLineOverflow = 4;
     self.blurEffectView.contentView.preservesSuperviewLayoutMargins = YES;
     [self.view addSubview:self.blurEffectView];
     
-    _audioHeaderView = [[AudioHeaderView alloc] initForAutoLayout];
+    _audioHeaderView = [[AudioHeaderView alloc] init];
     self.audioHeaderView.preservesSuperviewLayoutMargins = YES;
     [self.audioHeaderView.providerButton addTarget:self action:@selector(openInBrowser:) forControlEvents:UIControlEventTouchUpInside];
     [self.audioHeaderView.providerButton setImage:self.providerImage forState:UIControlStateNormal];
     [self.blurEffectView.contentView addSubview:self.audioHeaderView];
     
-    _contentContainer = [[UIView alloc] initForAutoLayout];
+    _contentContainer = [[UIView alloc] init];
     self.contentContainer.preservesSuperviewLayoutMargins = YES;
     [self.view addSubview:self.contentContainer];
     
-    _playlistTableView = [[UITableView alloc] initForAutoLayout];
+    _playlistTableView = [[UITableView alloc] init];
     [self.contentContainer addSubview:self.playlistTableView];
     self.playlistTableView.dataSource = self;
     self.playlistTableView.delegate = self;
@@ -152,11 +149,11 @@ static const CGFloat SeparatorLineOverflow = 4;
     self.tracksCollectionView.showsHorizontalScrollIndicator = NO;
     [self.tracksCollectionView registerClass:AudioTrackCell.class forCellWithReuseIdentifier:AudioTrackCellReuseIdentifier];
     
-    _tracksSeparatorLine = [[UIView alloc] initForAutoLayout];
+    _tracksSeparatorLine = [[UIView alloc] init];
     [self.blurEffectView.contentView addSubview:self.tracksSeparatorLine];
     self.tracksSeparatorLine.backgroundColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorSeparator variant:ColorSchemeVariantDark];
     
-    _playlistSeparatorLine = [[UIView alloc] initForAutoLayout];
+    _playlistSeparatorLine = [[UIView alloc] init];
     [self.blurEffectView.contentView addSubview:self.playlistSeparatorLine];
     self.playlistSeparatorLine.backgroundColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorSeparator variant:ColorSchemeVariantDark];
     
@@ -201,44 +198,6 @@ static const CGFloat SeparatorLineOverflow = 4;
 - (UIView *)touchableView
 {
     return self.view;
-}
-
-- (void)createInitialConstraints
-{
-    [self.backgroundView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
-    [self.blurEffectView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
-    
-    [self.audioHeaderView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeBottom];
-    [self.audioHeaderView autoSetDimension:ALDimensionHeight toSize:64];
-
-    [self.tracksCollectionView autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.audioHeaderView];
-    [self.tracksCollectionView autoPinEdgeToSuperviewEdge:ALEdgeLeft];
-    [self.tracksCollectionView autoPinEdgeToSuperviewEdge:ALEdgeRight];
-    
-    [self.playlistTableView autoPinEdgeToSuperviewEdge:ALEdgeLeft];
-    [self.playlistTableView autoPinEdgeToSuperviewEdge:ALEdgeBottom];
-    [self.playlistTableView autoPinEdgeToSuperviewMargin:ALEdgeRight];
-    [self.playlistTableView autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.tracksCollectionView withOffset:16];
-    [self.playlistTableView autoSetDimension:ALDimensionHeight toSize:self.playlistTableView.rowHeight * 2.5];
-    
-    [self.contentContainer autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeLeft];
-    [self.contentContainer autoPinEdgeToSuperviewMargin:ALEdgeLeft];
-    
-    [self.tracksSeparatorLine autoSetDimension:ALDimensionWidth toSize:0.5];
-    [self.tracksSeparatorLine autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.tracksCollectionView];
-    [self.tracksSeparatorLine autoPinEdge:ALEdgeRight toEdge:ALEdgeLeft ofView:self.tracksCollectionView];
-    _tracksSeparatorLineHeightConstraint = [self.tracksSeparatorLine autoSetDimension:ALDimensionHeight toSize:0];
-    
-    [self.playlistSeparatorLine autoSetDimension:ALDimensionHeight toSize:0.5];
-    [self.playlistSeparatorLine autoMatchDimension:ALDimensionWidth toDimension:ALDimensionWidth ofView:self.playlistTableView withOffset:2 * SeparatorLineOverflow];
-    [self.playlistSeparatorLine autoPinEdge:ALEdgeBottom toEdge:ALEdgeTop ofView:self.playlistTableView];
-    [self.playlistSeparatorLine autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self.tracksCollectionView withOffset:-SeparatorLineOverflow];
-    
-    [self.view autoSetDimension:ALDimensionHeight toSize:375 relation:NSLayoutRelationLessThanOrEqual];
-    
-    [NSLayoutConstraint autoSetPriority:UILayoutPriorityDefaultHigh forConstraints:^{
-        [self.view autoMatchDimension:ALDimensionHeight toDimension:ALDimensionWidth ofView:self.view];
-    }];
 }
 
 - (void)fetchAttachment
