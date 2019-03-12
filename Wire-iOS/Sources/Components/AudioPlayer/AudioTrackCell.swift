@@ -1,4 +1,3 @@
-//  Converted to Swift 4 by Swiftify v4.2.35826 - https://objectivec2swift.com/
 //
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH

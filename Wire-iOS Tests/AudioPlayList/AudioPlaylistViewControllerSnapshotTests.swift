@@ -27,9 +27,6 @@ final class AudioPlaylistViewControllerSnapshotTests: ZMSnapshotTestCase {
         super.setUp()
         sut = AudioPlaylistViewController()
         sut.view.frame = CGRect(x: 0, y: 0, width: 375, height: 375)
-
-        /// TODO: remove this after snapshot is created
-        recordMode = true
     }
     
     override func tearDown() {
