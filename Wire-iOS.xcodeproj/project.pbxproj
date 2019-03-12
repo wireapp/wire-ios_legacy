@@ -506,6 +506,7 @@
 		871BC2971D34F8F800DF0793 /* UIViewController+WR_Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC21F1D34F8F800DF0793 /* UIViewController+WR_Additions.m */; };
 		871BC3511D34F94200DF0793 /* AccentColorChangeHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC31A1D34F94200DF0793 /* AccentColorChangeHandler.m */; };
 		871BC3521D34F94200DF0793 /* AggregateArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC31C1D34F94200DF0793 /* AggregateArray.m */; };
+		871BC3531D34F94200DF0793 /* AudioErrorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC31F1D34F94200DF0793 /* AudioErrorView.m */; };
 		871BC3541D34F94200DF0793 /* AudioHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC3211D34F94200DF0793 /* AudioHeaderView.m */; };
 		871BC3551D34F94200DF0793 /* AudioPlaylistCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC3241D34F94200DF0793 /* AudioPlaylistCell.m */; };
 		871BC3561D34F94200DF0793 /* AudioPlaylistViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC3261D34F94200DF0793 /* AudioPlaylistViewController.m */; };
@@ -1215,15 +1216,6 @@
 		EF7ECE1B211111B4003786C6 /* XCTestCase+FullscreenImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7ECE1A211111B2003786C6 /* XCTestCase+FullscreenImageViewController.swift */; };
 		EF7F74041FCC033D0059C13F /* EmailAdresssValidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7F74021FCC01140059C13F /* EmailAdresssValidatorTests.swift */; };
 		EF7F8FC121B5761C00D7723C /* ConversationReadReceiptSettingChangedCellDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7F8FC021B5761C00D7723C /* ConversationReadReceiptSettingChangedCellDescription.swift */; };
-		EF7FD9492236798E000ABFA0 /* AudioTrackViewControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7FD9482236798E000ABFA0 /* AudioTrackViewControllerSnapshotTests.swift */; };
-		EF7FD94B22367D0E000ABFA0 /* SoundcloudAudioTrack+LoadFromJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7FD94A22367D0E000ABFA0 /* SoundcloudAudioTrack+LoadFromJSON.swift */; };
-		EF7FD95122369E71000ABFA0 /* AudioTrackViewController+Constraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7FD94F22369E71000ABFA0 /* AudioTrackViewController+Constraint.swift */; };
-		EF7FD9542236AC27000ABFA0 /* AudioTrackView+Constraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7FD9522236AC27000ABFA0 /* AudioTrackView+Constraint.swift */; };
-		EF7FD9572236B9F6000ABFA0 /* AudioErrorViewSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7FD9562236B9F6000ABFA0 /* AudioErrorViewSnapshotTests.swift */; };
-		EF7FD95A2236C801000ABFA0 /* AudioErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7FD9582236C801000ABFA0 /* AudioErrorView.swift */; };
-		EF7FD95D2236CEF5000ABFA0 /* AudioHeaderView+Constraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7FD95B2236CEF5000ABFA0 /* AudioHeaderView+Constraints.swift */; };
-		EF7FD95F2237C55D000ABFA0 /* AudioPlaylistViewControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7FD95E2237C55D000ABFA0 /* AudioPlaylistViewControllerSnapshotTests.swift */; };
-		EF7FD9632237C7FE000ABFA0 /* AudioPlaylistViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7FD9612237C7FE000ABFA0 /* AudioPlaylistViewController+Extension.swift */; };
 		EF80461E20CA8B67001A1C53 /* ConversationContentViewController+TableHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF80461D20CA8B67001A1C53 /* ConversationContentViewController+TableHeader.swift */; };
 		EF80466520D17130001A1C53 /* MessageDestructionTimeoutValueTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF80466320D1712B001A1C53 /* MessageDestructionTimeoutValueTests.swift */; };
 		EF82E1C020EE79EC001B5196 /* ZMConversationMessage+CountDown.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF82E1BF20EE79EC001B5196 /* ZMConversationMessage+CountDown.swift */; };
@@ -2104,6 +2096,8 @@
 		871BC31A1D34F94200DF0793 /* AccentColorChangeHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccentColorChangeHandler.m; sourceTree = "<group>"; };
 		871BC31B1D34F94200DF0793 /* AggregateArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AggregateArray.h; sourceTree = "<group>"; };
 		871BC31C1D34F94200DF0793 /* AggregateArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AggregateArray.m; sourceTree = "<group>"; };
+		871BC31E1D34F94200DF0793 /* AudioErrorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioErrorView.h; sourceTree = "<group>"; };
+		871BC31F1D34F94200DF0793 /* AudioErrorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioErrorView.m; sourceTree = "<group>"; };
 		871BC3201D34F94200DF0793 /* AudioHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioHeaderView.h; sourceTree = "<group>"; };
 		871BC3211D34F94200DF0793 /* AudioHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioHeaderView.m; sourceTree = "<group>"; };
 		871BC3221D34F94200DF0793 /* AudioPlaylist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioPlaylist.h; sourceTree = "<group>"; };
@@ -3060,19 +3054,6 @@
 		EF7ECE1A211111B2003786C6 /* XCTestCase+FullscreenImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "XCTestCase+FullscreenImageViewController.swift"; sourceTree = "<group>"; };
 		EF7F74021FCC01140059C13F /* EmailAdresssValidatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailAdresssValidatorTests.swift; sourceTree = "<group>"; };
 		EF7F8FC021B5761C00D7723C /* ConversationReadReceiptSettingChangedCellDescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationReadReceiptSettingChangedCellDescription.swift; sourceTree = "<group>"; };
-		EF7FD9482236798E000ABFA0 /* AudioTrackViewControllerSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioTrackViewControllerSnapshotTests.swift; sourceTree = "<group>"; };
-		EF7FD94A22367D0E000ABFA0 /* SoundcloudAudioTrack+LoadFromJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SoundcloudAudioTrack+LoadFromJSON.swift"; sourceTree = "<group>"; };
-		EF7FD94F22369E71000ABFA0 /* AudioTrackViewController+Constraint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AudioTrackViewController+Constraint.swift"; sourceTree = "<group>"; };
-		EF7FD95022369E71000ABFA0 /* AudioTrackViewController+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AudioTrackViewController+Internal.h"; sourceTree = "<group>"; };
-		EF7FD9522236AC27000ABFA0 /* AudioTrackView+Constraint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AudioTrackView+Constraint.swift"; sourceTree = "<group>"; };
-		EF7FD9532236AC27000ABFA0 /* AudioTrackView+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AudioTrackView+Internal.h"; sourceTree = "<group>"; };
-		EF7FD9562236B9F6000ABFA0 /* AudioErrorViewSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioErrorViewSnapshotTests.swift; sourceTree = "<group>"; };
-		EF7FD9582236C801000ABFA0 /* AudioErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioErrorView.swift; sourceTree = "<group>"; };
-		EF7FD95B2236CEF5000ABFA0 /* AudioHeaderView+Constraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AudioHeaderView+Constraints.swift"; sourceTree = "<group>"; };
-		EF7FD95C2236CEF5000ABFA0 /* AudioHeaderView+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AudioHeaderView+Internal.h"; sourceTree = "<group>"; };
-		EF7FD95E2237C55D000ABFA0 /* AudioPlaylistViewControllerSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlaylistViewControllerSnapshotTests.swift; sourceTree = "<group>"; };
-		EF7FD9612237C7FE000ABFA0 /* AudioPlaylistViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AudioPlaylistViewController+Extension.swift"; sourceTree = "<group>"; };
-		EF7FD9622237C7FE000ABFA0 /* AudioPlaylistViewController+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AudioPlaylistViewController+Internal.h"; sourceTree = "<group>"; };
 		EF80461D20CA8B67001A1C53 /* ConversationContentViewController+TableHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationContentViewController+TableHeader.swift"; sourceTree = "<group>"; };
 		EF80466320D1712B001A1C53 /* MessageDestructionTimeoutValueTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageDestructionTimeoutValueTests.swift; sourceTree = "<group>"; };
 		EF82E1BF20EE79EC001B5196 /* ZMConversationMessage+CountDown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ZMConversationMessage+CountDown.swift"; sourceTree = "<group>"; };
@@ -3404,7 +3385,6 @@
 				16A2027B1B677A5D0095BBD1 /* soundcloud-track4.json */,
 				16A202651B66A0040095BBD1 /* SoundcloudAudioTrackTests.m */,
 				EF1FDC8521DE701000C9CEB1 /* SoundcloudServiceTests.swift */,
-				EF7FD94A22367D0E000ABFA0 /* SoundcloudAudioTrack+LoadFromJSON.swift */,
 			);
 			path = Soundcloud;
 			sourceTree = "<group>";
@@ -4674,31 +4654,24 @@
 		871BC31D1D34F94200DF0793 /* AudioPlayer */ = {
 			isa = PBXGroup;
 			children = (
-				EF7FD9582236C801000ABFA0 /* AudioErrorView.swift */,
+				871BC31E1D34F94200DF0793 /* AudioErrorView.h */,
+				871BC31F1D34F94200DF0793 /* AudioErrorView.m */,
 				871BC3201D34F94200DF0793 /* AudioHeaderView.h */,
-				EF7FD95C2236CEF5000ABFA0 /* AudioHeaderView+Internal.h */,
 				871BC3211D34F94200DF0793 /* AudioHeaderView.m */,
-				EF7FD95B2236CEF5000ABFA0 /* AudioHeaderView+Constraints.swift */,
 				871BC3221D34F94200DF0793 /* AudioPlaylist.h */,
 				871BC3231D34F94200DF0793 /* AudioPlaylistCell.h */,
 				871BC3241D34F94200DF0793 /* AudioPlaylistCell.m */,
 				871BC3251D34F94200DF0793 /* AudioPlaylistViewController.h */,
-				EF7FD9622237C7FE000ABFA0 /* AudioPlaylistViewController+Internal.h */,
 				871BC3261D34F94200DF0793 /* AudioPlaylistViewController.m */,
-				EF7FD9612237C7FE000ABFA0 /* AudioPlaylistViewController+Extension.swift */,
 				871BC3271D34F94200DF0793 /* AudioTrack.h */,
 				871BC3281D34F94200DF0793 /* AudioTrackCell.h */,
 				871BC3291D34F94200DF0793 /* AudioTrackCell.m */,
 				871BC32A1D34F94200DF0793 /* AudioTrackPlayer.h */,
 				871BC32B1D34F94200DF0793 /* AudioTrackPlayer.m */,
 				871BC32C1D34F94200DF0793 /* AudioTrackView.h */,
-				EF7FD9532236AC27000ABFA0 /* AudioTrackView+Internal.h */,
 				871BC32D1D34F94200DF0793 /* AudioTrackView.m */,
-				EF7FD9522236AC27000ABFA0 /* AudioTrackView+Constraint.swift */,
 				871BC32E1D34F94200DF0793 /* AudioTrackViewController.h */,
-				EF7FD95022369E71000ABFA0 /* AudioTrackViewController+Internal.h */,
 				871BC32F1D34F94200DF0793 /* AudioTrackViewController.m */,
-				EF7FD94F22369E71000ABFA0 /* AudioTrackViewController+Constraint.swift */,
 				1660F2391FBF32D400A0EE54 /* MediaPlayerController.swift */,
 				16460A41206412410096B616 /* UIColor+AudioPlayer.swift */,
 			);
@@ -5824,8 +5797,6 @@
 		BACB88521AF7C48900DDCDB0 /* Wire-iOS Tests */ = {
 			isa = PBXGroup;
 			children = (
-				EF7FD9602237C566000ABFA0 /* AudioPlayList */,
-				EF7FD9552236B9D9000ABFA0 /* AudioPlayer */,
 				EFC57A1121BABD4F0008DBE6 /* ConversationInputBarViewController */,
 				EF18140721B17F7A008F7DA8 /* ConversationOption */,
 				EF6A33D02192F47200970698 /* ConversationListCell */,
@@ -6488,23 +6459,6 @@
 				EF4172AE210F5E9F00FF85C7 /* FullscreenImageViewControllerSnapshotTests.swift */,
 			);
 			path = FullscreenImageViewController;
-			sourceTree = "<group>";
-		};
-		EF7FD9552236B9D9000ABFA0 /* AudioPlayer */ = {
-			isa = PBXGroup;
-			children = (
-				EF7FD9482236798E000ABFA0 /* AudioTrackViewControllerSnapshotTests.swift */,
-				EF7FD9562236B9F6000ABFA0 /* AudioErrorViewSnapshotTests.swift */,
-			);
-			path = AudioPlayer;
-			sourceTree = "<group>";
-		};
-		EF7FD9602237C566000ABFA0 /* AudioPlayList */ = {
-			isa = PBXGroup;
-			children = (
-				EF7FD95E2237C55D000ABFA0 /* AudioPlaylistViewControllerSnapshotTests.swift */,
-			);
-			path = AudioPlayList;
 			sourceTree = "<group>";
 		};
 		EFC57A1121BABD4F0008DBE6 /* ConversationInputBarViewController */ = {
@@ -7607,6 +7561,7 @@
 				8FC8549D199245770008B66B /* NotificationWindowRootViewController.m in Sources */,
 				F15650D521DD0FC200210504 /* VerticalColumnPositioningContext.swift in Sources */,
 				7CCA7CC2221AEC7B00A7CA2A /* ConversationDetailFooterView.swift in Sources */,
+				871BC3531D34F94200DF0793 /* AudioErrorView.m in Sources */,
 				87DCF4E61D34EA4500BB420F /* ShareItemProvider.m in Sources */,
 				BFE4186A209B6E3700503C7C /* UserImageViewContainer.swift in Sources */,
 				F15650E421DD11DD00210504 /* UIViewController+LoadingView.m in Sources */,
@@ -7689,7 +7644,6 @@
 				F15650E521DD13C100210504 /* TextView.m in Sources */,
 				871BC22E1D34F8F800DF0793 /* SplitViewController.m in Sources */,
 				BFAF4CB31CECA68200780537 /* AudioRecorder.swift in Sources */,
-				EF7FD95A2236C801000ABFA0 /* AudioErrorView.swift in Sources */,
 				877A32601E892A100017DD9A /* ConversationListAccessoryView.swift in Sources */,
 				5EE73BF5212419ED0032986D /* AuthenticationCoordinator+Registration.swift in Sources */,
 				EE7E0E762109FE9200787C65 /* ParticipantsStringFormatter.swift in Sources */,
@@ -7719,7 +7673,6 @@
 				871BC36D1D34F96000DF0793 /* DeviceOrientationObserver.m in Sources */,
 				8710673D1C0DC5570035603B /* SettingsCellDescriptor.swift in Sources */,
 				EEA9A75F21B01F28001F7B5C /* ConversationCreateErrorCell.swift in Sources */,
-				EF7FD95122369E71000ABFA0 /* AudioTrackViewController+Constraint.swift in Sources */,
 				EEF28EEF1F168039007642E2 /* ConversationInputBarViewController+Markdown.swift in Sources */,
 				EF297DEC213340CF0002983A /* ParticipantDeviceHeaderView+Style.swift in Sources */,
 				5E8FFC2021EF83FF0052DF03 /* AuthenticationAddEmailPasswordInputHandler.swift in Sources */,
@@ -7731,7 +7684,6 @@
 				EF6251D2213844D400943708 /* ConversationListItemView+Style.swift in Sources */,
 				871BBFFF1D34F56300DF0793 /* Analytics.m in Sources */,
 				BF7ED2D61DF18724003A4397 /* UserNameDetailView.swift in Sources */,
-				EF7FD9542236AC27000ABFA0 /* AudioTrackView+Constraint.swift in Sources */,
 				87BEB0401D3E44E600DE9575 /* AssetCell.swift in Sources */,
 				BFCCA4FE20A0A03D000A4F33 /* CallInfoRootViewController.swift in Sources */,
 				D5168F542010F24500F8222A /* TokenizedTextView.m in Sources */,
@@ -7861,7 +7813,6 @@
 				871BC2561D34F8F800DF0793 /* PopTransition.m in Sources */,
 				EF21270E1FB9DFE300625A9B /* CountryCodeTableViewController.m in Sources */,
 				BFBDDBC61DB0D51C00BEED02 /* ConversationInputBarButtonState.swift in Sources */,
-				EF7FD9632237C7FE000ABFA0 /* AudioPlaylistViewController+Extension.swift in Sources */,
 				EE0DE1CD21B172BF00CF3C4E /* ConversationCreateGuestsSectionController.swift in Sources */,
 				5E7315352191EADF00255A78 /* Message+Formatters.swift in Sources */,
 				5E8FFC1821EF61A90052DF03 /* ClientUnregisterInvitationStepDescription.swift in Sources */,
@@ -8002,7 +7953,6 @@
 				5E35F7742180B98B00D3F4FE /* ConversationSoundCloudAttachmentCell.swift in Sources */,
 				8FC85452199245770008B66B /* ConversationContentViewController.m in Sources */,
 				87E8D0BD21821E6F00BD26AC /* ConversationContentViewController+Reply.swift in Sources */,
-				EF7FD95D2236CEF5000ABFA0 /* AudioHeaderView+Constraints.swift in Sources */,
 				D525426D209363AF001C04C1 /* IconLabelButton.swift in Sources */,
 				871BC0071D34F56300DF0793 /* Application+runDuration.m in Sources */,
 				F12CDAEB1E43886A00CEFCEB /* DecriptionHeaderView.swift in Sources */,
@@ -8249,7 +8199,6 @@
 				EFE806301FE006A7006A0EE7 /* DateFormatterTests.swift in Sources */,
 				EF1FDC8221DE677600C9CEB1 /* XCTestCase+EmoticonSubstitutionConfiguration.swift in Sources */,
 				87BEB0DC1C734D710094BFE9 /* MockConversation.m in Sources */,
-				EF7FD9572236B9F6000ABFA0 /* AudioErrorViewSnapshotTests.swift in Sources */,
 				EE118C012031D1C300BC68D6 /* MarkdownTextViewTests.swift in Sources */,
 				BFFE943E1E7839EB0025AD75 /* CoreDataSnapshotTestCase.swift in Sources */,
 				EF6EB1CE20A5C296002F720D /* AppStateControllerTests.swift in Sources */,
@@ -8272,7 +8221,6 @@
 				EF68856A20F622C60074CA0F /* DraftSendInputAccessoryViewTests.swift in Sources */,
 				5E52376220E7E50F00649241 /* ColorTilesViewController.swift in Sources */,
 				EF1FCE5021B69381003E0BE2 /* ReadReceiptViewModelTests.swift in Sources */,
-				EF7FD94B22367D0E000ABFA0 /* SoundcloudAudioTrack+LoadFromJSON.swift in Sources */,
 				EF4478522090BF8700BD9827 /* FullscreenImageViewControllerTests.swift in Sources */,
 				F127BD571E262E9F0093B2F1 /* CollectionsViewControllerTests.swift in Sources */,
 				EF4172AF210F5E9F00FF85C7 /* FullscreenImageViewControllerSnapshotTests.swift in Sources */,
@@ -8289,7 +8237,6 @@
 				5E294595219081A80045ACFA /* Date+Generator.swift in Sources */,
 				EF207B37220839E000738E84 /* ConversationContentViewControllerTests.swift in Sources */,
 				BF7ED2DC1DF1D1CF003A4397 /* IncomingConnectionViewTests.swift in Sources */,
-				EF7FD9492236798E000ABFA0 /* AudioTrackViewControllerSnapshotTests.swift in Sources */,
 				EF29E89C212302CD0023B80C /* AudioMessageViewTests.swift in Sources */,
 				EF10CB20215105A400AEA8EA /* UITableViewCell+Snapshot.swift in Sources */,
 				5EF7BA72221C74ED00815625 /* MockUser+Convenience.swift in Sources */,
@@ -8454,7 +8401,6 @@
 				EF9FC3EF2142A77500033ED0 /* ColorSchemeControllerTests.swift in Sources */,
 				872C823C214A9B8500236A76 /* TextMessageMentionsTests.swift in Sources */,
 				16A94AF6209B04A5008A5718 /* GridViewTests.swift in Sources */,
-				EF7FD95F2237C55D000ABFA0 /* AudioPlaylistViewControllerSnapshotTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
