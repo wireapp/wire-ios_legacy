@@ -181,8 +181,6 @@
 #import "AudioHeaderView+Internal.h"
 #import "AudioTrackView.h"
 #import "AudioTrackView+Internal.h"
-#import "AudioErrorView.h"
-#import "AudioErrorView+Internal.h"
 
 // Media
 #import "MediaPreviewData.h"

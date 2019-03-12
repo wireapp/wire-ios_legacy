@@ -16,12 +16,27 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
+import UIKit
 
-extension AudioErrorView {
-    @objc
+@objc class AudioErrorView: UIView {
+    private var errorIconView: UIImageView!
+
+    init() {
+        super.init(frame: .zero)
+
+        backgroundColor = UIColor(white: 0.0, alpha: 0.32)
+        errorIconView = UIImageView()
+        errorIconView.image = UIImage(for: .audio, iconSize: .camera, color: UIColor(white: 1, alpha: 0.16))
+        errorIconView.transform = CGAffineTransform(rotationAngle: .pi)
+        addSubview(errorIconView)
+        createConstraints()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     func createConstraints() {
-
         errorIconView.translatesAutoresizingMaskIntoConstraints = false
         errorIconView.centerInSuperview()
     }
