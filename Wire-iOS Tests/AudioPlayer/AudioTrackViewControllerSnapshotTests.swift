@@ -23,10 +23,6 @@ final class AudioTrackViewControllerSnapshotTests: ZMSnapshotTestCase {
     
     var sut: AudioTrackViewController!
     
-    override func setUp() {
-        super.setUp()
-    }
-    
     override func tearDown() {
         sut = nil
         super.tearDown()
