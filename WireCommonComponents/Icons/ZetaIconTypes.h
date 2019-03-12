@@ -92,7 +92,6 @@ typedef NS_ENUM(NSInteger, ZetaIconType)
     ZetaIconTypeArchive                         = 0x212,
     ZetaIconTypeSave                            = 0x197,
     ZetaIconTypeExport                          = 0x198,
-    ZetaIconTypeAudio                           = 0x155,
     ZetaIconTypeMovie                           = 0x146,
     ZetaIconTypeSadMan                          = 0x208,
     ZetaIconTypePlusCircled                     = 0x216,
