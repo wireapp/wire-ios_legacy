@@ -18,10 +18,8 @@
 
 
 #import "Wire-Swift.h"
-@import PureLayout;
 
 #import "AudioPlaylistCell.h"
-
 
 
 @implementation AudioPlaylistCell
@@ -72,28 +70,15 @@
 
 - (void)createViews
 {
-    self.titleLabel = [[UILabel alloc] initForAutoLayout];
+    self.titleLabel = [[UILabel alloc] init];
     self.titleLabel.font = UIFont.smallRegularFont;
     self.titleLabel.textColor =  [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:ColorSchemeVariantDark];
     [self.contentView addSubview:self.titleLabel];
     
-    self.durationLabel = [[UILabel alloc] initForAutoLayout];
+    self.durationLabel = [[UILabel alloc] init];
     self.durationLabel.font = UIFont.smallRegularFont;
     self.durationLabel.textColor =  [UIColor wr_colorFromColorScheme:ColorSchemeColorTextDimmed variant:ColorSchemeVariantLight];
     [self.contentView addSubview:self.durationLabel];
-}
-
-- (void)createConstraints
-{
-    [self.titleLabel autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeRight];
-    [self.durationLabel autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeLeft];
-    
-    [NSLayoutConstraint autoSetPriority:999 forConstraints:^{
-        [self.titleLabel autoPinEdge:ALEdgeRight toEdge:ALEdgeLeft ofView:self.durationLabel withOffset:-8 relation:NSLayoutRelationLessThanOrEqual];
-    }];
-    
-    [self.durationLabel setContentCompressionResistancePriority:UILayoutPriorityDefaultHigh forAxis:UILayoutConstraintAxisHorizontal];
-    [self.titleLabel setContentCompressionResistancePriority:UILayoutPriorityDefaultLow forAxis:UILayoutConstraintAxisHorizontal];
 }
 
 @end
