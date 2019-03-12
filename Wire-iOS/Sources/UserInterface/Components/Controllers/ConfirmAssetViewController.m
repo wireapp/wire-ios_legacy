@@ -20,7 +20,6 @@
 #import "ConfirmAssetViewController.h"
 #import "ConfirmAssetViewController+Internal.h"
 
-@import PureLayout;
 @import AVKit;
 @import AVFoundation;
 @import FLAnimatedImage;
@@ -39,24 +38,25 @@ static const CGFloat MarginInset = 24;
 
 @interface ConfirmAssetViewController () <CanvasViewControllerDelegate>
 
-@property (nonatomic) UIView *bottomPanel;
-
-@property (nonatomic) UIView *confirmButtonsContainer;
-
-
-@property (nonatomic) Button *acceptImageButton;
-@property (nonatomic) Button *rejectImageButton;
-@property (nonatomic) FLAnimatedImageView *imagePreviewView;
-
-@property (nonatomic) NSLayoutConstraint *topBarHeightConstraint;
-
-@property (nonatomic) ImageToolbarView *imageToolbarViewInsideImage;
-@property (nonatomic) ImageToolbarView *imageToolbarView;
-
 @end
 
 
 @implementation ConfirmAssetViewController
+
++ (CGFloat) marginInset
+{
+    return MarginInset;
+}
+
++ (CGFloat) topBarHeight
+{
+    return TopBarHeight;
+}
+
++ (CGFloat) bottomBarMinHeight
+{
+    return BottomBarMinHeight;
+}
 
 - (void)viewDidLoad
 {
@@ -185,78 +185,6 @@ static const CGFloat MarginInset = 24;
     [self.confirmButtonsContainer addSubview:self.rejectImageButton];
 }
 
-- (void)createConstraints
-{
-    CGFloat safeTopBarHeight = TopBarHeight + UIScreen.safeArea.top;
-    
-    // Top panel
-    [self.topPanel autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeBottom];
-    self.topBarHeightConstraint = [self.topPanel autoSetDimension:ALDimensionHeight toSize:safeTopBarHeight];
-    
-    [self.titleLabel autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:UIScreen.safeArea.top];
-    [self.titleLabel autoPinEdgeToSuperviewEdge:ALEdgeBottom];
-    [self.titleLabel autoAlignAxisToSuperviewAxis:ALAxisVertical];
-    
-    // Bottom panel
-    [self.bottomPanel autoPinEdgesToSuperviewEdgesWithInsets:UIScreen.safeArea excludingEdge:ALEdgeTop];
-    
-    [self.imageToolbarView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeBottom];
-    [self.imageToolbarView autoSetDimension:ALDimensionHeight toSize:48];
-    
-    [self.imageToolbarSeparatorView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeTop];
-    [self.imageToolbarSeparatorView autoSetDimension:ALDimensionHeight toSize:0.5];
-    
-    // Accept/Reject panel
-    [self.confirmButtonsContainer autoAlignAxisToSuperviewAxis:ALAxisVertical];
-    [self.confirmButtonsContainer autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:0 relation:NSLayoutRelationGreaterThanOrEqual];
-    [self.confirmButtonsContainer autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:0 relation:NSLayoutRelationGreaterThanOrEqual];
-    [self.confirmButtonsContainer autoPinEdgeToSuperviewEdge:ALEdgeBottom];
-    [self.confirmButtonsContainer autoSetDimension:ALDimensionHeight toSize:BottomBarMinHeight];
-    
-    if (self.imageToolbarView) {
-        [self.confirmButtonsContainer autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.imageToolbarView withOffset:0];
-    } else {
-        [self.confirmButtonsContainer autoPinEdgeToSuperviewEdge:ALEdgeTop];
-    }
-    
-    [self.acceptImageButton autoSetDimension:ALDimensionHeight toSize:40];
-    [self.acceptImageButton autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
-    [self.acceptImageButton autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:MarginInset];
-    [self.acceptImageButton setContentHuggingPriority:UILayoutPriorityDefaultLow forAxis:UILayoutConstraintAxisHorizontal];
-    
-    [self.rejectImageButton autoSetDimension:ALDimensionHeight toSize:40];
-    [self.rejectImageButton autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
-    [self.rejectImageButton autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:MarginInset];
-    [self.rejectImageButton setContentHuggingPriority:UILayoutPriorityDefaultLow forAxis:UILayoutConstraintAxisHorizontal];
-    
-    [NSLayoutConstraint autoSetPriority:UILayoutPriorityDefaultHigh forConstraints:^{
-        [self.acceptImageButton autoSetDimension:ALDimensionWidth toSize:184];
-        [self.rejectImageButton autoSetDimension:ALDimensionWidth toSize:184];
-        [self.acceptImageButton autoPinEdge:ALEdgeLeft toEdge:ALEdgeRight ofView:self.rejectImageButton withOffset:16];
-    }];
-    [self.acceptImageButton autoMatchDimension:ALDimensionWidth toDimension:ALDimensionWidth ofView:self.rejectImageButton];
-    
-    // Preview image
-    CGSize imageSize = self.image.size;
-    [self.imagePreviewView autoCenterInSuperview];
-    [self.imagePreviewView autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.topPanel withOffset:0 relation:NSLayoutRelationGreaterThanOrEqual];
-    [self.imagePreviewView autoPinEdge:ALEdgeBottom  toEdge:ALEdgeTop ofView:self.bottomPanel withOffset:0 relation:NSLayoutRelationLessThanOrEqual];
-    [self.imagePreviewView autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:0 relation:NSLayoutRelationGreaterThanOrEqual];
-    [self.imagePreviewView autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:0 relation:NSLayoutRelationGreaterThanOrEqual];
-    [self.imagePreviewView autoMatchDimension:ALDimensionHeight toDimension:ALDimensionWidth ofView:self.imagePreviewView withMultiplier: imageSize.height / imageSize.width];
-
-    [self.playerViewController.view autoPinEdgeToSuperviewEdge:ALEdgeLeft];
-    [self.playerViewController.view autoPinEdgeToSuperviewEdge:ALEdgeRight];
-
-    [self.playerViewController.view autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.topPanel];
-    [self.playerViewController.view autoPinEdge:ALEdgeBottom toEdge:ALEdgeTop ofView:self.bottomPanel];
-    
-    self.topBarHeightConstraint.constant = (self.titleLabel.text != nil) ? safeTopBarHeight : 0;
-    
-    // Image toolbar
-    [self.imageToolbarViewInsideImage autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeTop];
-    [self.imageToolbarViewInsideImage autoSetDimension:ALDimensionHeight toSize:48];
-}
 
 #pragma mark - Actions
 
