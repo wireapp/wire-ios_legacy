@@ -86,8 +86,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 @property (nonatomic) UITapGestureRecognizer *doubleTapGestureRecognizer;
 @property (nonatomic) UILongPressGestureRecognizer *longPressGestureRecognizer;
 
-@property (nonatomic) UIActivityIndicatorView *loadingSpinner;
-
 @property (nonatomic) BOOL isShowingChrome;
 @property (nonatomic) BOOL assetWriteInProgress;
 
@@ -210,25 +208,8 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         self.obfuscationView.hidden = NO;
     } else {
         self.obfuscationView.hidden = YES;
-        [self removeSpinner];
         [self loadImageAndSetupImageView];
     }
-}
-
-- (void)setupSpinner
-{
-    self.loadingSpinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:[[ColorScheme defaultColorScheme] variant] == ColorSchemeVariantDark ? UIActivityIndicatorViewStyleWhite : UIActivityIndicatorViewStyleGray];
-    self.loadingSpinner.hidesWhenStopped = YES;
-    [self.view addSubview:self.loadingSpinner];
-    [self.loadingSpinner startAnimating];
-    
-    [self.loadingSpinner autoCenterInSuperview];
-}
-
-- (void)removeSpinner
-{
-    [self.loadingSpinner removeFromSuperview];
-    self.loadingSpinner = nil;
 }
 
 - (void)loadImageAndSetupImageView
