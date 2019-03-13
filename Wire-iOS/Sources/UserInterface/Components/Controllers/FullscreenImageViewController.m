@@ -40,7 +40,6 @@
 
 #import "Constants.h"
 #import "UIImage+ZetaIconsNeue.h"
-@import PureLayout;
 
 #import "Analytics.h"
 
@@ -183,23 +182,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 - (BOOL)shouldAutorotate
 {
     return YES;
-}
-
-- (void)setupSnapshotBackgroundView
-{
-    UIView *snapshotBackgroundView = [self.delegate respondsToSelector:@selector(backgroundScreenshotForController:)] ? [self.delegate backgroundScreenshotForController:self] : nil;
-    if (nil == snapshotBackgroundView) {
-        return;
-    }
-    self.snapshotBackgroundView = snapshotBackgroundView;
-    snapshotBackgroundView.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.view addSubview:snapshotBackgroundView];
-
-    const CGFloat topBarHeight = CGRectGetMaxY(self.navigationController.navigationBar.frame);
-    [snapshotBackgroundView autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:-topBarHeight];
-    [snapshotBackgroundView autoPinEdgeToSuperviewEdge:ALEdgeLeading];
-    [snapshotBackgroundView autoSetDimensionsToSize:[[UIScreen mainScreen] bounds].size];
-    snapshotBackgroundView.alpha = 0;
 }
 
 - (void)setupScrollView
