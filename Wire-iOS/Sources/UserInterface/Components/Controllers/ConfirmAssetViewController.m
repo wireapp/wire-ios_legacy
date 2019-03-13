@@ -239,19 +239,22 @@ static const CGFloat MarginInset = 24;
     [self.imagePreviewView autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:0 relation:NSLayoutRelationGreaterThanOrEqual];
     [self.imagePreviewView autoMatchDimension:ALDimensionHeight toDimension:ALDimensionWidth ofView:self.imagePreviewView withMultiplier: imageSize.height / imageSize.width];
     
+    /*
     [self.playerViewController.view autoPinEdgeToSuperviewEdge:ALEdgeLeft];
     [self.playerViewController.view autoPinEdgeToSuperviewEdge:ALEdgeRight];
     
     [self.playerViewController.view autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.topPanel];
     [self.playerViewController.view autoPinEdge:ALEdgeBottom toEdge:ALEdgeTop ofView:self.bottomPanel];
 
-    CGFloat safeTopBarHeight = TopBarHeight + UIScreen.safeArea.top;
 
-    self.topBarHeightConstraint.constant = (self.titleLabel.text != nil) ? safeTopBarHeight : 0;
-    
+     CGFloat safeTopBarHeight = TopBarHeight + UIScreen.safeArea.top;
+
+     self.topBarHeightConstraint.constant = (self.titleLabel.text != nil) ? safeTopBarHeight : 0;
+
     // Image toolbar
     [self.imageToolbarViewInsideImage autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeTop];
     [self.imageToolbarViewInsideImage autoSetDimension:ALDimensionHeight toSize:48];
+     */
 }
 
 #pragma mark - Actions

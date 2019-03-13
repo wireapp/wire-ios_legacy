@@ -137,7 +137,8 @@ extension ConfirmAssetViewController {
                 imagePreviewView.heightAnchor.constraint(equalTo: imagePreviewView.widthAnchor, multiplier: imageSize.height / imageSize.width)
                 ])
         }
-        
+         */
+
         if let playerView = playerViewController?.view {
             playerView.fitInSuperview(exclude: [.top, .bottom])
             NSLayoutConstraint.activate([playerView.topAnchor.constraint(equalTo: topPanel.bottomAnchor),
@@ -150,7 +151,7 @@ extension ConfirmAssetViewController {
         } else {
             topBarHeightConstraint.constant = 0
         }
-        
+
         // Image toolbar
         if let imageToolbarViewInsideImage = imageToolbarViewInsideImage {
             imageToolbarViewInsideImage.fitInSuperview(exclude: [.top])
@@ -158,6 +159,5 @@ extension ConfirmAssetViewController {
             
             imageToolbarViewInsideImage.heightAnchor.constraint(equalToConstant: 48).isActive = true
         }
-        */
     }
 }
