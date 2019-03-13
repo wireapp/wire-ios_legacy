@@ -27,4 +27,14 @@ extension MediaPreviewViewController {
             viewHeight = 160
         }
     }
+
+    override open func viewDidLoad() {
+        super.viewDidLoad()
+
+        setupStyle()
+
+        mediaPreviewView.playButton.addTarget(self, action: #selector(self.playVideo(_:)), for: .touchUpInside)
+
+        view.heightAnchor.constraint(equalToConstant: viewHeight)
+    }
 }
