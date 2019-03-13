@@ -39,10 +39,9 @@ extension ConfirmAssetViewController {
         topPanel.fitInSuperview(exclude: [.bottom])
         topBarHeightConstraint = topPanel.heightAnchor.constraint(equalToConstant: safeTopBarHeight)
         topBarHeightConstraint.isActive = true
-        
-        titleLabel.fitInSuperview(with: EdgeInsets(top: UIScreen.safeArea.top, leading: .nan, bottom: 0, trailing: .nan),
-                                  exclude: [.leading, .trailing])
-        
+
+        titleLabel.pinToSuperview(anchor: .top, constant: UIScreen.safeArea.top)
+        titleLabel.pinToSuperview(anchor: .bottom)
         titleLabel.pinToSuperview(axisAnchor: .centerX)
         
         // Bottom panel
