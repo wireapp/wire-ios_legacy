@@ -76,5 +76,25 @@ extension FullscreenImageViewController {
         self.topOverlay = topOverlay
         self.obfuscationView = obfuscationView
     }
+
+    @objc
+    func setupScrollView() {
+        scrollView = UIScrollView()
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(scrollView)
+
+        scrollView.fitInSuperview()
+
+        if #available(iOS 11, *) {
+            scrollView.contentInsetAdjustmentBehavior = .never
+        }
+
+        automaticallyAdjustsScrollViewInsets = false
+        scrollView.delegate = self
+        scrollView.accessibilityIdentifier = "fullScreenPage"
+
+        animator = UIDynamicAnimator(referenceView: scrollView)
+    }
+
 }
 

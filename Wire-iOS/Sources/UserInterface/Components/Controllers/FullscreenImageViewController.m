@@ -24,7 +24,6 @@
 #import "FullscreenImageViewController.h"
 #import "FullscreenImageViewController+PullToDismiss.h"
 #import "FullscreenImageViewController+internal.h"
-#import "NSLayoutConstraint+Helpers.h"
 
 // ui
 #import "IconButton.h"
@@ -176,25 +175,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 - (BOOL)shouldAutorotate
 {
     return YES;
-}
-
-- (void)setupScrollView
-{
-    self.scrollView = [[UIScrollView alloc] init];
-    self.scrollView.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.view addSubview:self.scrollView];
-
-    [self.scrollView addConstraintsFittingToView:self.view];
-
-    if (@available(iOS 11, *)) {
-        self.scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
-    }
-
-    self.automaticallyAdjustsScrollViewInsets = NO;
-    self.scrollView.delegate = self;
-    self.scrollView.accessibilityIdentifier = @"fullScreenPage";
-    
-    self.animator = [[UIDynamicAnimator alloc] initWithReferenceView:self.scrollView];
 }
 
 - (void)updateForMessage
