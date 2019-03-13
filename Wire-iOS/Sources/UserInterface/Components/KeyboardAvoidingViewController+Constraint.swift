@@ -1,6 +1,6 @@
-////
+//
 // Wire
-// Copyright (C) 2018 Wire Swiss GmbH
+// Copyright (C) 2019 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,14 +16,19 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-#import <UIKit/UIKit.h>
+import Foundation
 
-@interface KeyboardAvoidingViewController ()
+extension KeyboardAvoidingViewController {
+    @objc
+    func createInitialConstraints() {
 
-@property (nonatomic, nullable) UIViewPropertyAnimator *animator;
-@property (nonatomic, nullable) UIViewController *viewController;
+        let constraints = viewController.view.fitInSuperview(exclude: [.bottom])
 
-@property (nonatomic, nullable) NSLayoutConstraint *bottomEdgeConstraint;
-@property (nonatomic, nullable) NSLayoutConstraint *topEdgeConstraint;
+        topEdgeConstraint = constraints[.top]
+        topEdgeConstraint?.constant = topInset
 
-@end
+        bottomEdgeConstraint = viewController.bottomLayoutGuide.bottomAnchor.constraint(equalTo: bottomLayoutGuide.bottomAnchor, constant: 0)
+        bottomEdgeConstraint?.isActive = true
+    }
+}
+
