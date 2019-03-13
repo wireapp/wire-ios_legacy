@@ -198,7 +198,6 @@ static const CGFloat MarginInset = 24;
     
     [self.imageToolbarSeparatorView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeTop];
     [self.imageToolbarSeparatorView autoSetDimension:ALDimensionHeight toSize:0.5];
-     */
 
     // Accept/Reject panel
     [self.confirmButtonsContainer autoAlignAxisToSuperviewAxis:ALAxisVertical];
@@ -229,7 +228,8 @@ static const CGFloat MarginInset = 24;
         [self.acceptImageButton autoPinEdge:ALEdgeLeft toEdge:ALEdgeRight ofView:self.rejectImageButton withOffset:16];
     }];
     [self.acceptImageButton autoMatchDimension:ALDimensionWidth toDimension:ALDimensionWidth ofView:self.rejectImageButton];
-    
+     */
+
     // Preview image
     CGSize imageSize = self.image.size;
     [self.imagePreviewView autoCenterInSuperview];

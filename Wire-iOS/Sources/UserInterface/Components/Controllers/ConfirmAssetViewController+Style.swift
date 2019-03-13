@@ -80,7 +80,6 @@ extension ConfirmAssetViewController {
         imageToolbarSeparatorView?.fitInSuperview(exclude: [.top])
         imageToolbarSeparatorView?.heightAnchor.constraint(equalToConstant: 0.5).isActive = true
 
-        /*
         NSLayoutConstraint.activate([
             
             // Accept/Reject panel
@@ -123,6 +122,7 @@ extension ConfirmAssetViewController {
         acceptImageButton.widthAnchor.constraint(equalTo: rejectImageButton.widthAnchor).isActive = true
         
         
+        /*
         // Preview image
         let imageSize: CGSize = image?.size ?? CGSize(width: 1, height: 1)
         
