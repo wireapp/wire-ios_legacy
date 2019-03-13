@@ -72,6 +72,7 @@ extension ConfirmAssetViewController {
             titleLabel.centerXAnchor.constraint(equalTo: titleLabel.superview!.centerXAnchor)])
         
         // Bottom panel
+        /*
         bottomPanel.fitInSuperview(with: EdgeInsets(edgeInsets: UIScreen.safeArea), exclude: [.top])
         
         imageToolbarView?.fitInSuperview(exclude: [.bottom])
@@ -122,7 +123,7 @@ extension ConfirmAssetViewController {
         
         acceptImageButton.widthAnchor.constraint(equalTo: rejectImageButton.widthAnchor).isActive = true
         
-        /*
+        
         // Preview image
         let imageSize: CGSize = image?.size ?? CGSize(width: 1, height: 1)
         

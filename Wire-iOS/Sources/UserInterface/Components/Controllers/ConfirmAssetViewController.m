@@ -190,7 +190,7 @@ static const CGFloat MarginInset = 24;
     [self.titleLabel autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:UIScreen.safeArea.top];
     [self.titleLabel autoPinEdgeToSuperviewEdge:ALEdgeBottom];
     [self.titleLabel autoAlignAxisToSuperviewAxis:ALAxisVertical];
-    
+    */
     // Bottom panel
     [self.bottomPanel autoPinEdgesToSuperviewEdgesWithInsets:UIScreen.safeArea excludingEdge:ALEdgeTop];
     
@@ -229,7 +229,7 @@ static const CGFloat MarginInset = 24;
         [self.acceptImageButton autoPinEdge:ALEdgeLeft toEdge:ALEdgeRight ofView:self.rejectImageButton withOffset:16];
     }];
     [self.acceptImageButton autoMatchDimension:ALDimensionWidth toDimension:ALDimensionWidth ofView:self.rejectImageButton];
-    */
+    
     // Preview image
     CGSize imageSize = self.image.size;
     [self.imagePreviewView autoCenterInSuperview];
