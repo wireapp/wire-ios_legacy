@@ -20,8 +20,6 @@
 #import "ConfirmAssetViewController.h"
 #import "ConfirmAssetViewController+Internal.h"
 
-@import PureLayout;
-
 @import AVKit;
 @import AVFoundation;
 @import FLAnimatedImage;
