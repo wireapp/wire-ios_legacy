@@ -80,7 +80,7 @@ platform :ios do
     end
 
     desc "Upload to AppStore"
-    lane :release_app_store do
+    lane :upload_app_store do
         build = Build.new(options: options, branch: git_branch)
 
         sh "cp ../Configuration/Appfile ."
