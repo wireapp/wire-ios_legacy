@@ -100,18 +100,16 @@ extension ConfirmAssetViewController {
         // Preview image
         let imageSize: CGSize = image?.size ?? CGSize(width: 1, height: 1)
 
-        if let imagePreviewView = imagePreviewView {
-            imagePreviewView.centerInSuperview()
-            
-            NSLayoutConstraint.activate([
-                imagePreviewView.topAnchor.constraint(greaterThanOrEqualTo: topPanel.bottomAnchor),
-                imagePreviewView.bottomAnchor.constraint(lessThanOrEqualTo: bottomPanel.topAnchor),
-                imagePreviewView.rightAnchor.constraint(lessThanOrEqualTo: imagePreviewView.superview!.rightAnchor),
-                imagePreviewView.leftAnchor.constraint(greaterThanOrEqualTo: imagePreviewView.superview!.leftAnchor),
-                imagePreviewView.heightAnchor.constraint(equalTo: imagePreviewView.widthAnchor, multiplier: imageSize.height / imageSize.width)
-                ])
-        }
+        imagePreviewView.centerInSuperview()
 
+        NSLayoutConstraint.activate([
+            imagePreviewView.topAnchor.constraint(greaterThanOrEqualTo: topPanel.bottomAnchor),
+            imagePreviewView.bottomAnchor.constraint(lessThanOrEqualTo: bottomPanel.topAnchor),
+            imagePreviewView.rightAnchor.constraint(lessThanOrEqualTo: imagePreviewView.superview!.rightAnchor),
+            imagePreviewView.leftAnchor.constraint(greaterThanOrEqualTo: imagePreviewView.superview!.leftAnchor),
+            imagePreviewView.heightAnchor.constraint(equalTo: imagePreviewView.widthAnchor, multiplier: imageSize.height / imageSize.width)
+            ])
+        
         if let playerView = playerViewController?.view {
             playerView.fitInSuperview(exclude: [.top, .bottom])
             NSLayoutConstraint.activate([playerView.topAnchor.constraint(equalTo: topPanel.bottomAnchor),
@@ -119,7 +117,7 @@ extension ConfirmAssetViewController {
                 ])
         }
         
-        if let titleLabel = titleLabel, titleLabel.text != nil {
+        if titleLabel.text != nil {
             topBarHeightConstraint.constant = safeTopBarHeight
         } else {
             topBarHeightConstraint.constant = 0
