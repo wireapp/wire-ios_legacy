@@ -98,17 +98,19 @@ extension ConfirmAssetViewController {
         
         
         // Preview image
-        let imageSize: CGSize = image?.size ?? CGSize(width: 1, height: 1)
+        if let imagePreviewView = imagePreviewView {
+            let imageSize: CGSize = image?.size ?? CGSize(width: 1, height: 1)
 
-        imagePreviewView.centerInSuperview()
+            imagePreviewView.centerInSuperview()
 
-        NSLayoutConstraint.activate([
-            imagePreviewView.topAnchor.constraint(greaterThanOrEqualTo: topPanel.bottomAnchor),
-            imagePreviewView.bottomAnchor.constraint(lessThanOrEqualTo: bottomPanel.topAnchor),
-            imagePreviewView.rightAnchor.constraint(lessThanOrEqualTo: imagePreviewView.superview!.rightAnchor),
-            imagePreviewView.leftAnchor.constraint(greaterThanOrEqualTo: imagePreviewView.superview!.leftAnchor),
-            imagePreviewView.heightAnchor.constraint(equalTo: imagePreviewView.widthAnchor, multiplier: imageSize.height / imageSize.width)
-            ])
+            NSLayoutConstraint.activate([
+                imagePreviewView.topAnchor.constraint(greaterThanOrEqualTo: topPanel.bottomAnchor),
+                imagePreviewView.bottomAnchor.constraint(lessThanOrEqualTo: bottomPanel.topAnchor),
+                imagePreviewView.rightAnchor.constraint(lessThanOrEqualTo: imagePreviewView.superview!.rightAnchor),
+                imagePreviewView.leftAnchor.constraint(greaterThanOrEqualTo: imagePreviewView.superview!.leftAnchor),
+                imagePreviewView.heightAnchor.constraint(equalTo: imagePreviewView.widthAnchor, multiplier: imageSize.height / imageSize.width)
+                ])
+        }
         
         if let playerView = playerViewController?.view {
             playerView.fitInSuperview(exclude: [.top, .bottom])

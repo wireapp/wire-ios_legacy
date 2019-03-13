@@ -33,9 +33,9 @@
 @property (nonatomic, nonnull) UIView *confirmButtonsContainer;
 @property (nonatomic, nonnull) Button *acceptImageButton;
 @property (nonatomic, nonnull) Button *rejectImageButton;
-@property (nonatomic, nonnull) FLAnimatedImageView *imagePreviewView;
 
-// The image toolbar is optional
+// The preview view and image toolbar are optional
+@property (nonatomic, nullable) FLAnimatedImageView *imagePreviewView;
 @property (nonatomic, nullable) UIView *imageToolbarSeparatorView;
 @property (nonatomic, nullable) ImageToolbarView *imageToolbarViewInsideImage;
 @property (nonatomic, nullable) ImageToolbarView *imageToolbarView;
