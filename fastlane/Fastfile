@@ -53,7 +53,7 @@ platform :ios do
         if build.for_simulator
             Dir.chdir("..") do
                 # Build the app for simulator
-                # sh "xcodebuild -scheme 'Wire-iOS' -configuration 'Debug' -sdk 'iphonesimulator' -derivedDataPath DerivedData -quiet build BUILD_NUMBER=#{build.build_number}"
+                sh "xcodebuild -scheme 'Wire-iOS' -configuration 'Debug' -sdk 'iphonesimulator' -derivedDataPath DerivedData -quiet build BUILD_NUMBER=#{build.build_number}"
 
                 # make a "fake" .ipa package that QA will use for installing to simulator
                 sh "mkdir -p debug/Payload"
@@ -184,19 +184,7 @@ class Build
         end
     end
 
-    def changelog
-        if @build_type == "Playground"
-            "Playground build for #{@git_branch}"
-        elsif @last_commit.nil? || @last_commit.empty?
-            "No changelog available"
-        else
-            "Changes Since Last Build:\n" + changelog_from_git_commits(
-                between: [last_commit, "HEAD"],
-                pretty: "* [%an] %s",
-            )
-        end
-
-    end
+    # Helpers
 
     def appstore_build
         @build_type == "AppStore"
@@ -204,6 +192,10 @@ class Build
 
     def debug_build
         @configuration == "Debug"
+    end
+
+    def normalized_branch_name
+        @git_branch.gsub("/", "_")
     end
 
     def export_method
@@ -216,9 +208,7 @@ class Build
         end
     end
 
-    def normalized_branch_name
-        @git_branch.gsub("/", "_")
-    end
+    # Paths
 
     def artifact_path(with_filename: true)
         "artifacts/#{artifact_directory}" + (with_filename ? "/#{filename}" : "")
@@ -242,14 +232,14 @@ class Build
         "Wire-#{@build_type.downcase}-#{normalized_branch_name}#{simulator}-#{@build_number}"
     end
 
-    def ipa_location
-        "#{build_path}/#{filename}.ipa"
-    end
-
     def artifact_directory
-        device = for_simulator ? "simulator" : "device"
-        configuration = debug_build ? "debug" : "release"
-        suffix = "#{device}/#{configuration}"
+        suffix = "" 
+        if for_simulator 
+            suffix = "simulator" 
+        else 
+            suffix = "device" + (debug_build ? "debug" : "release")
+        end
+
         case @build_type
         when "Playground"
             "playground-#{normalized_branch_name}/#{suffix}"
@@ -267,6 +257,8 @@ class Build
             UI.user_error! "Unknown build type: #{@build_type}"
         end
     end
+
+    # Adding build number to icon
 
     def process_icon
         # No preprocessing needed for AppStore icons
@@ -300,6 +292,22 @@ class Build
         else
             @build_type
         end
+    end
+
+    # Hockey
+
+    def changelog
+        if @build_type == "Playground"
+            "Playground build for #{@git_branch}"
+        elsif @last_commit.nil? || @last_commit.empty?
+            "No changelog available"
+        else
+            "Changes Since Last Build:\n" + changelog_from_git_commits(
+                between: [last_commit, "HEAD"],
+                pretty: "* [%an] %s",
+            )
+        end
+
     end
 
     def hockey_app_id
