@@ -43,7 +43,7 @@ extension ConfirmAssetViewController {
         titleLabel.fitInSuperview(with: EdgeInsets(top: UIScreen.safeArea.top, leading: .nan, bottom: 0, trailing: .nan),
                                   exclude: [.leading, .trailing])
         
-        titleLabel.pinToSuperView(axisAnchor: .centerX)
+        titleLabel.pinToSuperview(axisAnchor: .centerX)
         
         // Bottom panel
         bottomPanel.fitInSuperview(with: EdgeInsets(edgeInsets: UIScreen.safeArea), exclude: [.top])
@@ -56,8 +56,8 @@ extension ConfirmAssetViewController {
         imageToolbarSeparatorView?.heightAnchor.constraint(equalToConstant: 0.5).isActive = true
 
 
-        confirmButtonsContainer.pinToSuperView(axisAnchor: .centerX)
-        confirmButtonsContainer.pinToSuperView(anchor: .bottom)
+        confirmButtonsContainer.pinToSuperview(axisAnchor: .centerX)
+        confirmButtonsContainer.pinToSuperview(anchor: .bottom)
 
         NSLayoutConstraint.activate([
             // Accept/Reject panel
@@ -69,19 +69,19 @@ extension ConfirmAssetViewController {
         if let imageToolbarView = imageToolbarView {
             confirmButtonsContainer.topAnchor.constraint(equalTo: imageToolbarView.bottomAnchor).isActive = true
         } else {
-            confirmButtonsContainer.pinToSuperView(anchor: .top)
+            confirmButtonsContainer.pinToSuperview(anchor: .top)
         }
         
-        acceptImageButton.pinToSuperView(axisAnchor: .centerY)
-        acceptImageButton.pinToSuperView(anchor: .trailing, constant: -ConfirmAssetViewController.marginInset())
+        acceptImageButton.pinToSuperview(axisAnchor: .centerY)
+        acceptImageButton.pinToSuperview(anchor: .trailing, constant: -ConfirmAssetViewController.marginInset())
 
         NSLayoutConstraint.activate([
             acceptImageButton.heightAnchor.constraint(equalToConstant: 40)])
         
         acceptImageButton.setContentHuggingPriority(.defaultLow, for: .horizontal)
         
-        rejectImageButton.pinToSuperView(axisAnchor: .centerY)
-        rejectImageButton.pinToSuperView(anchor: .leading, constant: ConfirmAssetViewController.marginInset())
+        rejectImageButton.pinToSuperview(axisAnchor: .centerY)
+        rejectImageButton.pinToSuperview(anchor: .leading, constant: ConfirmAssetViewController.marginInset())
         NSLayoutConstraint.activate([
             rejectImageButton.heightAnchor.constraint(equalToConstant: 40)])
         rejectImageButton.setContentHuggingPriority(.defaultLow, for: .horizontal)
