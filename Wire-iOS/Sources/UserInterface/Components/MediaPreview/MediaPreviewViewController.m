@@ -34,7 +34,7 @@
 
 - (void)loadView
 {
-    self.view = [[MediaPreviewView alloc] initForAutoLayout];
+    self.view = [[MediaPreviewView alloc] init];
 }
 
 - (void)tearDown;
