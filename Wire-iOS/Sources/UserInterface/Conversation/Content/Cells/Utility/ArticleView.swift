@@ -152,6 +152,7 @@ import WireLinkPreview
         }
 
         obfuscationView.isHidden = !obfuscated
+        [imageView, authorLabel, messageLabel].forEach() {$0.isHidden = obfuscated}
 
         if obfuscated {
             imageView.image = UIImage(for: .link, iconSize: .tiny, color: UIColor.from(scheme: .background))
