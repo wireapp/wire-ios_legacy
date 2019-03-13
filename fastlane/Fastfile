@@ -116,7 +116,8 @@ platform :ios do
           api_token: ENV["HOCKEY_APP_TOKEN"],
           public_identifier: build.hockey_app_id,
           ipa: "#{build.artifact_path(with_filename: true)}.ipa",
-          notes: build.changelog
+          notes: build.changelog,
+          notify: 0
         )
     end
 
