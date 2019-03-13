@@ -82,7 +82,7 @@ extension UIView {
         return constraints
     }
 
-    @discardableResult func pinToSuperView(axisAnchor: AxisAnchor,
+    @discardableResult func pinToSuperview(axisAnchor: AxisAnchor,
                                            constant: CGFloat = 0,
                                            activate: Bool = true) -> NSLayoutConstraint {
         guard let superview = superview else {
@@ -108,7 +108,7 @@ extension UIView {
     }
 
     // MARK: - signal edge alignment
-    @discardableResult func pinToSuperView(anchor: Anchor,
+    @discardableResult func pinToSuperview(anchor: Anchor,
                                            constant: CGFloat = 0,
                                            activate: Bool = true) -> NSLayoutConstraint {
         guard let superview = superview else {
