@@ -76,7 +76,7 @@ class ConversationTimeoutOptionsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = "group_details.timeout_options_cell.title".localized.uppercased()
+        title = "group_details.timeout_options_cell.title".localized(uppercased: true)
         navigationItem.rightBarButtonItem = navigationController?.closeItem()
 
         configureSubviews()

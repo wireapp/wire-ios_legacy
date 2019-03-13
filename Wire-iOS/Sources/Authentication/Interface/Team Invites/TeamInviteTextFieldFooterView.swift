@@ -41,7 +41,7 @@ final class TeamInviteTextFieldFooterView: UIView {
     var shouldConfirm: ((String) -> Bool)? {
         didSet {
             textField.textFieldValidator.customValidator = { [weak self] email in
-                (self?.shouldConfirm?(email) ?? true) ? nil : .custom("team.invite.error.already_invited".localized.uppercased())
+                (self?.shouldConfirm?(email) ?? true) ? nil : .custom("team.invite.error.already_invited".localized(uppercased: true))
             }
         }
     }
@@ -82,13 +82,13 @@ final class TeamInviteTextFieldFooterView: UIView {
         errorLabel.textColor = UIColor.Team.errorMessageColor
         textField.overrideButtonIcon = .send
         textFieldDescriptor.valueValidated = { [weak self] error in
-            self?.errorMessage = error.errorDescription?.uppercased()
+            self?.errorMessage = error.errorDescription?.localizedUppercase
             if error == .none {
                 self?.errorButton.isHidden = true
             }
         }
 
-        errorButton.setTitle("team.invite.learn_more.title".localized.uppercased(), for: .normal)
+        errorButton.setTitle("team.invite.learn_more.title".localized(uppercased: true), for: .normal)
         errorButton.titleLabel?.font = FontSpec(.medium, .semibold).font!
         errorButton.setTitleColor(.black, for: .normal)
         errorButton.setTitleColor(.darkGray, for: .highlighted)

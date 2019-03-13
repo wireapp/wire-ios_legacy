@@ -39,7 +39,7 @@ import WireDataModel
 
         edgesForExtendedLayout = []
 
-        self.title = "Database Statistics".uppercased()
+        self.title = "Database Statistics".localizedUppercase
 
         view.addSubview(stackView)
 

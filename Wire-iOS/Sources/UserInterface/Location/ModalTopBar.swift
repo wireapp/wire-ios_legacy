@@ -66,7 +66,7 @@ import Cartography
     
     private var title: String? {
         didSet {
-            titleLabel.text = title?.uppercased()
+            titleLabel.text = title?.localizedUppercase
             titleLabel.isHidden = title == nil
             titleLabel.accessibilityLabel = title
             titleLabel.accessibilityTraits.insert(.header)
@@ -75,7 +75,7 @@ import Cartography
 
     private var subtitle: String? {
         didSet {
-            subtitleLabel.text = subtitle?.uppercased()
+            subtitleLabel.text = subtitle?.localizedUppercase
             subtitleLabel.isHidden = subtitle == nil
             subtitleLabel.accessibilityLabel = subtitle
         }

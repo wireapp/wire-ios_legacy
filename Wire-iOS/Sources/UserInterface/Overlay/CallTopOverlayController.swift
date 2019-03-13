@@ -203,7 +203,7 @@ final class CallTopOverlayController: UIViewController {
     }
     
     private func updateLabel() {
-        durationLabel.text = statusString.uppercased()
+        durationLabel.text = statusString.localizedUppercase
         view.accessibilityValue = durationLabel.text
     }
     

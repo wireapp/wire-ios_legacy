@@ -40,7 +40,7 @@ import Cartography
         self.addSubview(self.tableView)
 
         self.noResultsView.label.accessibilityLabel = "no text messages"
-        self.noResultsView.label.text = "collections.search.no_items".localized.uppercased()
+        self.noResultsView.label.text = "collections.search.no_items".localized(uppercased: true)
         self.noResultsView.icon = .search
         self.addSubview(self.noResultsView)
     }

@@ -119,7 +119,7 @@ final class MessageComposeViewController: UIViewController {
         subjectTextField.tintColor = .accent()
         subjectTextField.textAlignment = .center
         subjectTextField.font = FontSpec(.medium, .semibold).font!
-        let placeholder = "compose.drafts.compose.subject.placeholder".localized.uppercased()
+        let placeholder = "compose.drafts.compose.subject.placeholder".localized(uppercased: true)
         subjectTextField.attributedPlaceholder = placeholder && UIColor.from(scheme: .separator) && FontSpec(.medium, .semibold).font!
         subjectTextField.bounds = CGRect(x: 0, y: 0, width: 200, height: 44)
         subjectTextField.accessibilityLabel = "subjectTextField"

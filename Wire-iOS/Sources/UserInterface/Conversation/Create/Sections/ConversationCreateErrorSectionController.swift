@@ -37,7 +37,7 @@ class ConversationCreateErrorSectionController: NSObject, CollectionViewSectionC
     }
     
     func displayError(_ error: Error) {
-        errorCell?.label.text = error.localizedDescription.uppercased()
+        errorCell?.label.text = error.localizedDescription.localizedUppercase
 
     }
 }

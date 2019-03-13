@@ -140,7 +140,7 @@ private let zmLog = ZMSLog(tag: "UI")
     
     private func createTipLabel() {
         let color = UIColor.from(scheme: .textDimmed, variant: .light)
-        let text = "conversation.input_bar.audio_message.keyboard.record_tip".localized.uppercased()
+        let text = "conversation.input_bar.audio_message.keyboard.record_tip".localized(uppercased: true)
         let attrText = NSMutableAttributedString(string: text)
         let atRange = (text as NSString).range(of: "%@")
         

@@ -65,8 +65,8 @@ final class DraftListViewController: CoreDataTableViewController<MessageDraft, D
         paragraphStyle.paragraphSpacing = 4
         let paragraphAttributes = [NSAttributedString.Key.paragraphStyle: paragraphStyle]
         let color = UIColor.from(scheme: .textDimmed)
-        let title = "compose.drafts.empty.title".localized.uppercased() && FontSpec(.small, .semibold).font!
-        let subtitle = "compose.drafts.empty.subtitle".localized.uppercased() && FontSpec(.small, .light).font!
+        let title = "compose.drafts.empty.title".localized(uppercased: true) && FontSpec(.small, .semibold).font!
+        let subtitle = "compose.drafts.empty.subtitle".localized(uppercased: true) && FontSpec(.small, .light).font!
         emptyLabel.attributedText = (title + "\n" + subtitle) && color && paragraphAttributes
         emptyLabel.numberOfLines = 0
         view.addSubview(emptyLabel)
@@ -87,7 +87,7 @@ final class DraftListViewController: CoreDataTableViewController<MessageDraft, D
     }
 
     private func setupViews() {
-        title = "compose.drafts.title".localized.uppercased()
+        title = "compose.drafts.title".localized(uppercased: true)
         tableView.backgroundColor = UIColor.from(scheme: .background)
         navigationItem.rightBarButtonItem = UIBarButtonItem(icon: .X, style: .done, target: self, action: #selector(closeTapped))
         navigationItem.rightBarButtonItem?.accessibilityLabel = "closeButton"
