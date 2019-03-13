@@ -30,7 +30,7 @@ class BackgroundViewControllerTests: CoreDataSnapshotTestCase {
 
     func testThatItShowsUserWithoutImage() {
         // GIVEN
-        selfUser.imageMediumData = .none
+        selfUser.setImage(data: nil, size: .complete)
         let sut = BackgroundViewController(user: selfUser, userSession: .none)
         XCTAssertTrue(waitForGroupsToBeEmpty([sut.dispatchGroup]))
         
@@ -41,7 +41,7 @@ class BackgroundViewControllerTests: CoreDataSnapshotTestCase {
     
     func DISABLE_testThatItShowsUserWithImage() {
         // GIVEN
-        selfUser.imageMediumData = image(inTestBundleNamed: "unsplash_matterhorn.jpg").pngData()
+        selfUser.setImage(data: image(inTestBundleNamed: "unsplash_matterhorn.jpg").pngData(), size: .complete)
         let sut = BackgroundViewController(user: selfUser, userSession: .none)
         // make sure view is loaded
         _ = sut.view
@@ -58,7 +58,7 @@ class BackgroundViewControllerTests: CoreDataSnapshotTestCase {
     
     func testThatItUpdatesForUserAccentColorUpdate_fromAccentColor() {
         // GIVEN
-        selfUser.imageMediumData = .none
+        selfUser.setImage(data: nil, size: .complete)
         let sut = BackgroundViewController(user: selfUser, userSession: .none)
         _ = sut.view
         // WHEN
@@ -71,11 +71,11 @@ class BackgroundViewControllerTests: CoreDataSnapshotTestCase {
     
     func testThatItUpdatesForUserAccentColorUpdate_fromUserImageRemoved() {
         // GIVEN
-        selfUser.imageMediumData = image(inTestBundleNamed: "unsplash_matterhorn.jpg").pngData()
+        selfUser.setImage(data: image(inTestBundleNamed: "unsplash_matterhorn.jpg").pngData(), size: .complete)
         let sut = BackgroundViewController(user: selfUser, userSession: .none)
         _ = sut.view
         // WHEN
-        selfUser.imageMediumData = .none
+        selfUser.setImage(data: nil, size: .complete)
         selfUser.accentColorValue = .brightOrange
         sut.updateFor(imageMediumDataChanged: true, accentColorValueChanged: true)
         // THEN
@@ -84,7 +84,7 @@ class BackgroundViewControllerTests: CoreDataSnapshotTestCase {
     
     func testThatItUpdatesForUserAccentColorUpdate_fromUserImage() {
         // GIVEN
-        selfUser.imageMediumData = image(inTestBundleNamed: "unsplash_matterhorn.jpg").pngData()
+        selfUser.setImage(data: image(inTestBundleNamed: "unsplash_matterhorn.jpg").pngData(), size: .complete)
         let sut = BackgroundViewController(user: selfUser, userSession: .none)
         _ = sut.view
         // WHEN
@@ -98,11 +98,11 @@ class BackgroundViewControllerTests: CoreDataSnapshotTestCase {
     
     func testThatItUpdatesForUserImageUpdate_fromAccentColor() {
         // GIVEN
-        selfUser.imageMediumData = .none
+        selfUser.setImage(data: nil, size: .complete)
         let sut = BackgroundViewController(user: selfUser, userSession: .none)
         _ = sut.view
         // WHEN
-        selfUser.imageMediumData = image(inTestBundleNamed: "unsplash_burger.jpg").pngData()
+        selfUser.setImage(data: image(inTestBundleNamed: "unsplash_matterhorn.jpg").pngData(), size: .complete)
         sut.updateFor(imageMediumDataChanged: true, accentColorValueChanged: false)
         XCTAssertTrue(waitForGroupsToBeEmpty([sut.dispatchGroup]))
         // THEN
@@ -111,11 +111,11 @@ class BackgroundViewControllerTests: CoreDataSnapshotTestCase {
     
     func testThatItUpdatesForUserImageUpdate_fromUserImage() {
         // GIVEN
-        selfUser.imageMediumData = image(inTestBundleNamed: "unsplash_matterhorn.jpg").pngData()
+        selfUser.setImage(data: image(inTestBundleNamed: "unsplash_matterhorn.jpg").pngData(), size: .complete)
         let sut = BackgroundViewController(user: selfUser, userSession: .none)
         _ = sut.view
         // WHEN
-        selfUser.imageMediumData = image(inTestBundleNamed: "unsplash_burger.jpg").pngData()
+        selfUser.setImage(data: image(inTestBundleNamed: "unsplash_burger.jpg").pngData(), size: .complete)
         sut.updateFor(imageMediumDataChanged: true, accentColorValueChanged: false)
         XCTAssertTrue(waitForGroupsToBeEmpty([sut.dispatchGroup]))
         // THEN
