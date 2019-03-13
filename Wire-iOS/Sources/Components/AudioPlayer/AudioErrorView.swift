@@ -21,9 +21,8 @@ import UIKit
 @objc class AudioErrorView: UIView {
     private let errorIconView: UIImageView = {
         let imageView = UIImageView()
-        let image =  UIImage(for: .mediaBarPlay, iconSize: .camera, color: UIColor(white: 1, alpha: 0.16))
+        let image =  UIImage(for: .block, iconSize: .camera, color: UIColor(white: 1, alpha: 0.16))
         imageView.image = image
-        imageView.transform = CGAffineTransform(rotationAngle: .pi)
 
         return imageView
     }()

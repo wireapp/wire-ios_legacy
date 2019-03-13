@@ -177,6 +177,7 @@
 #import "AudioTrackViewController.h"
 #import "AudioTrackViewController+Internal.h"
 #import "AudioPlaylistViewController.h"
+#import "AudioPlaylistViewController+Internal.h"
 #import "AudioHeaderView.h"
 #import "AudioHeaderView+Internal.h"
 #import "AudioTrackView.h"
