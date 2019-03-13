@@ -162,7 +162,10 @@
 #import "UIColor+Mixing.h"
 #import "MessageType.h"
 #import "UIViewController+LoadingView.h"
+
 #import "ProgressSpinner.h"
+#import "ProgressSpinner+Internal.h"
+
 #import "CABasicAnimation+Rotation.h"
 #import "DeveloperMenuState.h"
 #import "ColorScheme.h"
