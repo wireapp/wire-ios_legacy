@@ -35,6 +35,6 @@ extension MediaPreviewViewController {
         mediaPreviewView.playButton.addTarget(self, action: #selector(self.playVideo(_:)), for: .touchUpInside)
         
         mediaPreviewView.translatesAutoresizingMaskIntoConstraints = false
-        mediaPreviewView.heightAnchor.constraint(equalToConstant: viewHeight)
+        mediaPreviewView.heightAnchor.constraint(equalToConstant: viewHeight).isActive = true
     }
 }
