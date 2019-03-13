@@ -29,8 +29,8 @@ extension FullscreenImageViewController {
 
         let topBarHeight: CGFloat = navigationController?.navigationBar.frame.maxY ?? 0
 
-        snapshotBackgroundView.pinToSuperView(anchor: .top, constant: -topBarHeight)
-        snapshotBackgroundView.pinToSuperView(anchor: .leading)
+        snapshotBackgroundView.pinToSuperview(anchor: .top, constant: -topBarHeight)
+        snapshotBackgroundView.pinToSuperview(anchor: .leading)
         snapshotBackgroundView.setDimensions(size: UIScreen.main.bounds.size)
 
         snapshotBackgroundView.alpha = 0
