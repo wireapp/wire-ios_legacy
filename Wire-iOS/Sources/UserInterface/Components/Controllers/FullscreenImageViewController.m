@@ -74,13 +74,9 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @interface FullscreenImageViewController () <UIScrollViewDelegate>
 
-@property (nonatomic, readwrite) UIScrollView *scrollView;
 @property (nonatomic, strong) ConversationMessageActionController *actionController;
 
 @property (nonatomic) CALayer *highlightLayer;
-@property (nonatomic, strong) ObfuscationView *obfuscationView;
-
-@property (nonatomic) IconButton *closeButton;
 
 @property (nonatomic) UITapGestureRecognizer *tapGestureRecognzier;
 @property (nonatomic) UITapGestureRecognizer *doubleTapGestureRecognizer;
@@ -247,43 +243,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 {
     [self.imageView removeFromSuperview];
     self.imageView = nil;
-}
-
-- (void)setupTopOverlay
-{
-    self.topOverlay = [[UIView alloc] init];
-    self.topOverlay.translatesAutoresizingMaskIntoConstraints = NO;
-    self.topOverlay.hidden = !self.showCloseButton;
-    [self.view addSubview:self.topOverlay];
-
-    self.obfuscationView = [[ObfuscationView alloc] initWithIcon:ZetaIconTypePhoto];
-    self.obfuscationView.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.view addSubview:self.obfuscationView];
-
-    // Close button
-    self.closeButton = [[IconButton alloc] initWithStyle:IconButtonStyleCircular];
-    self.closeButton.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.closeButton setIcon:ZetaIconTypeX withSize:ZetaIconSizeTiny forState:UIControlStateNormal];
-    [self.topOverlay addSubview:self.closeButton];
-    [self.closeButton addTarget:self action:@selector(closeButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-    self.closeButton.accessibilityIdentifier = @"fullScreenCloseButton";
-    
-    // Constraints
-    CGFloat topOverlayHeight = self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular ? 104 : 60;
-    [self.topOverlay addConstraintForRightMargin:0 relativeToView:self.view];
-    [self.topOverlay addConstraintForLeftMargin:0 relativeToView:self.view];
-    [self.topOverlay addConstraintForTopMargin:0 relativeToView:self.view];
-    [self.topOverlay addConstraintForHeight:topOverlayHeight];
-
-    [self.obfuscationView.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor].active = YES;
-    [self.obfuscationView.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor].active = YES;
-    [self.obfuscationView.centerYAnchor constraintEqualToAnchor:self.view.centerYAnchor].active = YES;
-    [self.obfuscationView.heightAnchor constraintEqualToAnchor:self.obfuscationView.widthAnchor].active = YES;
-
-    [self.closeButton addConstraintForAligningVerticallyWithView:self.topOverlay offset:10];
-    [self.closeButton addConstraintForRightMargin:8 relativeToView:self.topOverlay];
-    [self.closeButton autoSetDimension:ALDimensionWidth toSize:32];
-    [self.closeButton autoMatchDimension:ALDimensionWidth toDimension:ALDimensionHeight ofView:self.closeButton];
 }
 
 - (void)showChrome:(BOOL)shouldShow
