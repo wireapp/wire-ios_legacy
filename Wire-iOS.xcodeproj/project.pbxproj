@@ -1285,13 +1285,14 @@
 		EFF74F4421A45E5700CCF3DD /* SplitViewController+UIGestureRecognizerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF74F4321A45E5700CCF3DD /* SplitViewController+UIGestureRecognizerDelegate.swift */; };
 		EFF92B6421A84E210090DA66 /* PhoneNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF92B6321A84E210090DA66 /* PhoneNumber.swift */; };
 		EFF92B6721A855050090DA66 /* String+PhoneNumberTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF92B6521A854BA0090DA66 /* String+PhoneNumberTests.swift */; };
-		EFF9A653223903B200CCEC85 /* ConfirmAssetViewController+Constraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF9A652223903B100CCEC85 /* ConfirmAssetViewController+Constraint.swift */; };
 		EFF9A6492237E72A00CCEC85 /* AudioPlaylistViewController+Constraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF9A6472237E72900CCEC85 /* AudioPlaylistViewController+Constraint.swift */; };
 		EFF9A64C2237F73B00CCEC85 /* AudioPlaylistViewControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF9A64B2237F73A00CCEC85 /* AudioPlaylistViewControllerSnapshotTests.swift */; };
 		EFF9A6502238020400CCEC85 /* AudioPlaylistCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF9A64E2238020400CCEC85 /* AudioPlaylistCell.swift */; };
 		EFF9A6512238093700CCEC85 /* AudioTrackCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BC3281D34F94200DF0793 /* AudioTrackCell.swift */; };
+		EFF9A653223903B200CCEC85 /* ConfirmAssetViewController+Constraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF9A652223903B100CCEC85 /* ConfirmAssetViewController+Constraint.swift */; };
 		EFF9A66022394E1B00CCEC85 /* ProgressSpinner+Constraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF9A65E22394E1900CCEC85 /* ProgressSpinner+Constraint.swift */; };
 		EFF9A6622239503D00CCEC85 /* UIViewController+LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF9A6612239503C00CCEC85 /* UIViewController+LoadingView.swift */; };
+		EFF9A66822396B9500CCEC85 /* KeyboardAvoidingViewController+Constraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF9A66722396B9400CCEC85 /* KeyboardAvoidingViewController+Constraint.swift */; };
 		F10F46D420288CEB00261449 /* ConversationCreationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10F46D320288CEB00261449 /* ConversationCreationController.swift */; };
 		F112C58620497860007C1E8F /* Analytics+Guests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F112C58520497860007C1E8F /* Analytics+Guests.swift */; };
 		F1141C971F5EB2DC005340B3 /* WireApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1141C961F5EB2DC005340B3 /* WireApplication.swift */; };
@@ -3136,15 +3137,16 @@
 		EFF74F4321A45E5700CCF3DD /* SplitViewController+UIGestureRecognizerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SplitViewController+UIGestureRecognizerDelegate.swift"; sourceTree = "<group>"; };
 		EFF92B6321A84E210090DA66 /* PhoneNumber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneNumber.swift; sourceTree = "<group>"; };
 		EFF92B6521A854BA0090DA66 /* String+PhoneNumberTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+PhoneNumberTests.swift"; sourceTree = "<group>"; };
-		EFF9A652223903B100CCEC85 /* ConfirmAssetViewController+Constraint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConfirmAssetViewController+Constraint.swift"; sourceTree = "<group>"; };
 		EFF9A6472237E72900CCEC85 /* AudioPlaylistViewController+Constraint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AudioPlaylistViewController+Constraint.swift"; sourceTree = "<group>"; };
 		EFF9A6482237E72A00CCEC85 /* AudioPlaylistViewController+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AudioPlaylistViewController+Internal.h"; sourceTree = "<group>"; };
 		EFF9A64B2237F73A00CCEC85 /* AudioPlaylistViewControllerSnapshotTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioPlaylistViewControllerSnapshotTests.swift; sourceTree = "<group>"; };
 		EFF9A64D2237F86100CCEC85 /* SoundcloudAudioTrack+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SoundcloudAudioTrack+Internal.h"; sourceTree = "<group>"; };
 		EFF9A64E2238020400CCEC85 /* AudioPlaylistCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlaylistCell.swift; sourceTree = "<group>"; };
+		EFF9A652223903B100CCEC85 /* ConfirmAssetViewController+Constraint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConfirmAssetViewController+Constraint.swift"; sourceTree = "<group>"; };
 		EFF9A65E22394E1900CCEC85 /* ProgressSpinner+Constraint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ProgressSpinner+Constraint.swift"; sourceTree = "<group>"; };
 		EFF9A65F22394E1A00CCEC85 /* ProgressSpinner+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ProgressSpinner+Internal.h"; sourceTree = "<group>"; };
 		EFF9A6612239503C00CCEC85 /* UIViewController+LoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+LoadingView.swift"; sourceTree = "<group>"; };
+		EFF9A66722396B9400CCEC85 /* KeyboardAvoidingViewController+Constraint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "KeyboardAvoidingViewController+Constraint.swift"; sourceTree = "<group>"; };
 		EFFF9E841FBF335700491F9A /* UIColor+TeamCreation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+TeamCreation.swift"; sourceTree = "<group>"; };
 		F10D5A6921A83793008BBD29 /* Bundle+Backend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Backend.swift"; sourceTree = "<group>"; };
 		F10F46D320288CEB00261449 /* ConversationCreationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationCreationController.swift; sourceTree = "<group>"; };
@@ -4381,6 +4383,7 @@
 				EF3976CF21148A110030BE68 /* KeyboardAvoidingViewController+Internal.h */,
 				871BC15F1D34F8F800DF0793 /* KeyboardAvoidingViewController.m */,
 				EF3976CD2114506E0030BE68 /* KeyboardAvoidingViewController+Animation.swift */,
+				EFF9A66722396B9400CCEC85 /* KeyboardAvoidingViewController+Constraint.swift */,
 				871BC1621D34F8F800DF0793 /* KeyboardFrameObserver.h */,
 				871BC1631D34F8F800DF0793 /* KeyboardFrameObserver.m */,
 				871BC18D1D34F8F800DF0793 /* MediaAsset.h */,
@@ -7217,6 +7220,7 @@
 				5E8DA75A211B075E00360979 /* AuthenticationNoCredentialsErrorHandler.swift in Sources */,
 				876B94821D7D8C870063AE89 /* UIView+SlideInState.swift in Sources */,
 				5E35F736217F417200D3F4FE /* BurstTimestampTableViewCell.swift in Sources */,
+				EFF9A66822396B9500CCEC85 /* KeyboardAvoidingViewController+Constraint.swift in Sources */,
 				BFAF4CAD1CEB670F00780537 /* AudioRecordViewController.swift in Sources */,
 				5E8FFC0E21EE0B180052DF03 /* LayoutDirection.swift in Sources */,
 				1682AEC3204840E7003A052A /* SectionCollectionViewController.swift in Sources */,
