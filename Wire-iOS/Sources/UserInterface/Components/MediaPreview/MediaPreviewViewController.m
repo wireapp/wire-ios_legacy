@@ -105,7 +105,7 @@
 
 #pragma mark - Actions
 
-- (IBAction)playVideo:(id)sender
+- (void)playVideo:(id)sender
 {
     if (! self.linkAttachment.URL) {
         return;

@@ -23,4 +23,6 @@
 @property (nonatomic) CGFloat viewHeight;
 @property (nonatomic, readonly) MediaPreviewView *mediaPreviewView;
 
+- (void)playVideo:(id)sender;
+
 @end
