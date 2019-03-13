@@ -43,7 +43,7 @@ extension ConfirmAssetViewController {
         titleLabel.fitInSuperview(with: EdgeInsets(top: UIScreen.safeArea.top, leading: .nan, bottom: 0, trailing: .nan),
                                   exclude: [.leading, .trailing])
         
-        titleLabel.centerXAnchor.constraint(equalTo: titleLabel.superview!.centerXAnchor).isActive = true
+        titleLabel.pinToSuperView(axisAnchor: .centerX)
         
         // Bottom panel
         bottomPanel.fitInSuperview(with: EdgeInsets(edgeInsets: UIScreen.safeArea), exclude: [.top])

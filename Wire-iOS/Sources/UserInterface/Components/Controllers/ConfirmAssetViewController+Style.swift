@@ -42,5 +42,5 @@ extension ConfirmAssetViewController {
         playerViewController.view.backgroundColor = UIColor.from(scheme: .textBackground)
         
         view.addSubview(playerViewController.view)
-    }    
+    }
 }

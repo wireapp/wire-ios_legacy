@@ -49,6 +49,11 @@ enum Anchor {
     case trailing
 }
 
+enum AxisAnchor {
+    case centerX
+    case centerY
+}
+
 extension UIView {
 
     // MARK: - center alignment
@@ -77,7 +82,64 @@ extension UIView {
         return constraints
     }
 
-    // MARK: - edge alignment
+    @discardableResult func pinToSuperView(inset: CGFloat = 0,
+                                           axisAnchor: AxisAnchor,
+                                           activate: Bool = true) -> NSLayoutConstraint {
+        guard let superview = superview else {
+            fatal("Not in view hierarchy: self.superview = nil")
+        }
+
+        var selfAnchor: NSObject!
+        var superAnchor: NSObject!
+
+        switch axisAnchor {
+        case .centerX:
+            selfAnchor = centerXAnchor
+            superAnchor = superview.centerXAnchor
+        case .centerY:
+            selfAnchor = centerYAnchor
+            superAnchor = superview.centerYAnchor
+        }
+
+        let constraint = (selfAnchor as! NSLayoutAnchor<AnyObject>).constraint(equalTo: (superAnchor as! NSLayoutAnchor<AnyObject>), constant: inset)
+        constraint.isActive = activate
+
+        return constraint
+    }
+
+    // MARK: - signal edge alignment
+    @discardableResult func pinToSuperView(inset: CGFloat = 0,
+                                anchor: Anchor,
+                                activate: Bool = true) -> NSLayoutConstraint {
+        guard let superview = superview else {
+            fatal("Not in view hierarchy: self.superview = nil")
+        }
+
+        var selfAnchor: NSObject!
+        var superAnchor: NSObject!
+
+        switch anchor {
+        case .top:
+            selfAnchor = topAnchor
+            superAnchor = superview.topAnchor
+        case .bottom:
+            selfAnchor = bottomAnchor
+            superAnchor = superview.bottomAnchor
+        case .leading:
+            selfAnchor = leadingAnchor
+            superAnchor = superview.leadingAnchor
+        case .trailing:
+            selfAnchor = trailingAnchor
+            superAnchor = superview.trailingAnchor
+        }
+
+        let constraint = (selfAnchor as! NSLayoutAnchor<AnyObject>).constraint(equalTo: (superAnchor as! NSLayoutAnchor<AnyObject>), constant: inset)
+        constraint.isActive = activate
+
+        return constraint
+    }
+
+    // MARK: - all edges alignment
 
     @discardableResult func fitInSuperview(safely: Bool = false,
                                            with insets: EdgeInsets = .zero,
