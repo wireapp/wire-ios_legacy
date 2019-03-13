@@ -82,8 +82,10 @@ class ConversationVideoMessageCell: RoundedView, ConversationMessageCell {
     
     func configure(with object: Configuration, animated: Bool) {
         transferView.configure(for: object.message, isInitial: false)
-        self.obfuscationView.isHidden = !object.isObfuscated
-        
+
+        obfuscationView.isHidden = !object.isObfuscated
+        transferView.isHidden = object.isObfuscated
+
     }
     
     override public var tintColor: UIColor! {
