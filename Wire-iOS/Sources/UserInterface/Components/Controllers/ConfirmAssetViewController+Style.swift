@@ -131,8 +131,8 @@ extension ConfirmAssetViewController {
             NSLayoutConstraint.activate([
                 imagePreviewView.topAnchor.constraint(greaterThanOrEqualTo: topPanel.bottomAnchor),
                 imagePreviewView.bottomAnchor.constraint(lessThanOrEqualTo: bottomPanel.topAnchor),
-//                imagePreviewView.rightAnchor.constraint(greaterThanOrEqualTo: imagePreviewView.superview!.rightAnchor),
-//                imagePreviewView.leftAnchor.constraint(greaterThanOrEqualTo: imagePreviewView.superview!.leftAnchor),
+                imagePreviewView.rightAnchor.constraint(lessThanOrEqualTo: imagePreviewView.superview!.rightAnchor),
+                imagePreviewView.leftAnchor.constraint(greaterThanOrEqualTo: imagePreviewView.superview!.leftAnchor),
                 imagePreviewView.heightAnchor.constraint(equalTo: imagePreviewView.widthAnchor, multiplier: imageSize.height / imageSize.width)
                 ])
         }
