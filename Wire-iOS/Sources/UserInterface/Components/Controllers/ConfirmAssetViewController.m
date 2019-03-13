@@ -231,14 +231,14 @@ static const CGFloat MarginInset = 24;
      */
 
     // Preview image
-    CGSize imageSize = self.image.size;
-    [self.imagePreviewView autoCenterInSuperview];
-    [self.imagePreviewView autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.topPanel withOffset:0 relation:NSLayoutRelationGreaterThanOrEqual];
-    [self.imagePreviewView autoPinEdge:ALEdgeBottom  toEdge:ALEdgeTop ofView:self.bottomPanel withOffset:0 relation:NSLayoutRelationLessThanOrEqual];
+//    CGSize imageSize = self.image.size;
+//    [self.imagePreviewView autoCenterInSuperview];
+//    [self.imagePreviewView autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.topPanel withOffset:0 relation:NSLayoutRelationGreaterThanOrEqual];
+//    [self.imagePreviewView autoPinEdge:ALEdgeBottom  toEdge:ALEdgeTop ofView:self.bottomPanel withOffset:0 relation:NSLayoutRelationLessThanOrEqual];
     [self.imagePreviewView autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:0 relation:NSLayoutRelationGreaterThanOrEqual];
     [self.imagePreviewView autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:0 relation:NSLayoutRelationGreaterThanOrEqual];
-    [self.imagePreviewView autoMatchDimension:ALDimensionHeight toDimension:ALDimensionWidth ofView:self.imagePreviewView withMultiplier: imageSize.height / imageSize.width];
-    
+//    [self.imagePreviewView autoMatchDimension:ALDimensionHeight toDimension:ALDimensionWidth ofView:self.imagePreviewView withMultiplier: imageSize.height / imageSize.width];
+
     /*
     [self.playerViewController.view autoPinEdgeToSuperviewEdge:ALEdgeLeft];
     [self.playerViewController.view autoPinEdgeToSuperviewEdge:ALEdgeRight];

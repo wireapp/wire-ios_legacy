@@ -122,22 +122,20 @@ extension ConfirmAssetViewController {
         acceptImageButton.widthAnchor.constraint(equalTo: rejectImageButton.widthAnchor).isActive = true
         
         
-        /*
         // Preview image
         let imageSize: CGSize = image?.size ?? CGSize(width: 1, height: 1)
-        
+
         if let imagePreviewView = imagePreviewView {
             imagePreviewView.centerInSuperview()
             
             NSLayoutConstraint.activate([
                 imagePreviewView.topAnchor.constraint(greaterThanOrEqualTo: topPanel.bottomAnchor),
                 imagePreviewView.bottomAnchor.constraint(lessThanOrEqualTo: bottomPanel.topAnchor),
-                imagePreviewView.rightAnchor.constraint(greaterThanOrEqualTo: imagePreviewView.superview!.rightAnchor),
-                imagePreviewView.leftAnchor.constraint(greaterThanOrEqualTo: imagePreviewView.superview!.leftAnchor),
+//                imagePreviewView.rightAnchor.constraint(greaterThanOrEqualTo: imagePreviewView.superview!.rightAnchor),
+//                imagePreviewView.leftAnchor.constraint(greaterThanOrEqualTo: imagePreviewView.superview!.leftAnchor),
                 imagePreviewView.heightAnchor.constraint(equalTo: imagePreviewView.widthAnchor, multiplier: imageSize.height / imageSize.width)
                 ])
         }
-         */
 
         if let playerView = playerViewController?.view {
             playerView.fitInSuperview(exclude: [.top, .bottom])
