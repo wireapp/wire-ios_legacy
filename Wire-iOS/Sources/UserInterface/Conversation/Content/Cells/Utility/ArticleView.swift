@@ -152,11 +152,9 @@ import WireLinkPreview
         }
 
         obfuscationView.isHidden = !obfuscated
+        imageView.isHidden = obfuscated
 
-        if obfuscated {
-            imageView.image = UIImage(for: .link, iconSize: .tiny, color: UIColor.from(scheme: .background))
-            imageView.contentMode = .center
-        } else {
+        if !obfuscated {
             imageView.image = nil
             imageView.contentMode = .scaleAspectFill
             imageView.setImageResource(textMessageData.linkPreviewImage) { [weak self] in
