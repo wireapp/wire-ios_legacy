@@ -67,8 +67,8 @@ extension UIView {
     }
 
     @discardableResult func alignCenter(to view: UIView,
-                                   with offset: CGPoint = .zero,
-                                   activate: Bool = true) -> [NSLayoutConstraint] {
+                                        with offset: CGPoint = .zero,
+                                        activate: Bool = true) -> [NSLayoutConstraint] {
 
         let constraints = [
             view.centerXAnchor.constraint(equalTo: centerXAnchor, constant: offset.x),
@@ -82,8 +82,8 @@ extension UIView {
         return constraints
     }
 
-    @discardableResult func pinToSuperView(inset: CGFloat = 0,
-                                           axisAnchor: AxisAnchor,
+    @discardableResult func pinToSuperView(axisAnchor: AxisAnchor,
+                                           constant: CGFloat = 0,
                                            activate: Bool = true) -> NSLayoutConstraint {
         guard let superview = superview else {
             fatal("Not in view hierarchy: self.superview = nil")
@@ -101,16 +101,16 @@ extension UIView {
             superAnchor = superview.centerYAnchor
         }
 
-        let constraint = (selfAnchor as! NSLayoutAnchor<AnyObject>).constraint(equalTo: (superAnchor as! NSLayoutAnchor<AnyObject>), constant: inset)
+        let constraint = (selfAnchor as! NSLayoutAnchor<AnyObject>).constraint(equalTo: (superAnchor as! NSLayoutAnchor<AnyObject>), constant: constant)
         constraint.isActive = activate
 
         return constraint
     }
 
     // MARK: - signal edge alignment
-    @discardableResult func pinToSuperView(inset: CGFloat = 0,
-                                anchor: Anchor,
-                                activate: Bool = true) -> NSLayoutConstraint {
+    @discardableResult func pinToSuperView(anchor: Anchor,
+                                           constant: CGFloat = 0,
+                                           activate: Bool = true) -> NSLayoutConstraint {
         guard let superview = superview else {
             fatal("Not in view hierarchy: self.superview = nil")
         }
@@ -133,7 +133,7 @@ extension UIView {
             superAnchor = superview.trailingAnchor
         }
 
-        let constraint = (selfAnchor as! NSLayoutAnchor<AnyObject>).constraint(equalTo: (superAnchor as! NSLayoutAnchor<AnyObject>), constant: inset)
+        let constraint = (selfAnchor as! NSLayoutAnchor<AnyObject>).constraint(equalTo: (superAnchor as! NSLayoutAnchor<AnyObject>), constant: constant)
         constraint.isActive = activate
 
         return constraint
@@ -153,10 +153,10 @@ extension UIView {
     }
 
     @discardableResult func pin(to view: UIView,
-                                  safely: Bool = false,
-                                  with insets: EdgeInsets = .zero,
-                                  exclude excludedAnchors: [Anchor] = [],
-                                  activate: Bool = true) -> [Anchor: NSLayoutConstraint] {
+                                safely: Bool = false,
+                                with insets: EdgeInsets = .zero,
+                                exclude excludedAnchors: [Anchor] = [],
+                                activate: Bool = true) -> [Anchor: NSLayoutConstraint] {
 
         var constraints: [Anchor: NSLayoutConstraint] = [:]
 

@@ -55,35 +55,35 @@ extension ConfirmAssetViewController {
         imageToolbarSeparatorView?.fitInSuperview(exclude: [.top])
         imageToolbarSeparatorView?.heightAnchor.constraint(equalToConstant: 0.5).isActive = true
 
+
+        confirmButtonsContainer.pinToSuperView(axisAnchor: .centerX)
+        confirmButtonsContainer.pinToSuperView(anchor: .bottom)
+
         NSLayoutConstraint.activate([
-            
             // Accept/Reject panel
-            confirmButtonsContainer.centerXAnchor.constraint(equalTo: confirmButtonsContainer.superview!.centerXAnchor),
             confirmButtonsContainer.leadingAnchor.constraint(greaterThanOrEqualTo: confirmButtonsContainer.superview!.leadingAnchor),
             confirmButtonsContainer.trailingAnchor.constraint(greaterThanOrEqualTo: confirmButtonsContainer.superview!.trailingAnchor),
-            confirmButtonsContainer.bottomAnchor.constraint(equalTo: confirmButtonsContainer.superview!.bottomAnchor),
             confirmButtonsContainer.heightAnchor.constraint(equalToConstant: ConfirmAssetViewController.bottomBarMinHeight())
             ])
         
         if let imageToolbarView = imageToolbarView {
             confirmButtonsContainer.topAnchor.constraint(equalTo: imageToolbarView.bottomAnchor).isActive = true
         } else {
-            confirmButtonsContainer.topAnchor.constraint(equalTo: confirmButtonsContainer.superview!.topAnchor).isActive = true
+            confirmButtonsContainer.pinToSuperView(anchor: .top)
         }
         
+        acceptImageButton.pinToSuperView(axisAnchor: .centerY)
+        acceptImageButton.pinToSuperView(anchor: .trailing, constant: -ConfirmAssetViewController.marginInset())
+
         NSLayoutConstraint.activate([
-            acceptImageButton.heightAnchor.constraint(equalToConstant: 40),
-            acceptImageButton.centerYAnchor.constraint(equalTo: acceptImageButton.superview!.centerYAnchor),
-            acceptImageButton.rightAnchor.constraint(equalTo: acceptImageButton.superview!.rightAnchor, constant: -ConfirmAssetViewController.marginInset())
-            ])
+            acceptImageButton.heightAnchor.constraint(equalToConstant: 40)])
         
         acceptImageButton.setContentHuggingPriority(.defaultLow, for: .horizontal)
         
+        rejectImageButton.pinToSuperView(axisAnchor: .centerY)
+        rejectImageButton.pinToSuperView(anchor: .leading, constant: ConfirmAssetViewController.marginInset())
         NSLayoutConstraint.activate([
-            rejectImageButton.heightAnchor.constraint(equalToConstant: 40),
-            rejectImageButton.centerYAnchor.constraint(equalTo: rejectImageButton.superview!.centerYAnchor),
-            rejectImageButton.leftAnchor.constraint(equalTo: rejectImageButton.superview!.leftAnchor, constant: ConfirmAssetViewController.marginInset())
-            ])
+            rejectImageButton.heightAnchor.constraint(equalToConstant: 40)])
         rejectImageButton.setContentHuggingPriority(.defaultLow, for: .horizontal)
         
         
