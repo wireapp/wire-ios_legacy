@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
 import UIKit
 
 struct EdgeInsets {
@@ -33,6 +32,13 @@ struct EdgeInsets {
 
     init(margin: CGFloat) {
         self = EdgeInsets(top: margin, leading: margin, bottom: margin, trailing: margin)
+    }
+    
+    init(edgeInsets: UIEdgeInsets) {
+        top = edgeInsets.top
+        leading = edgeInsets.leading
+        bottom = edgeInsets.bottom
+        trailing = edgeInsets.trailing
     }
 }
 
