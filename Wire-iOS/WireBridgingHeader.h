@@ -105,8 +105,11 @@
 #import "ConversationListViewController.h"
 #import "ConversationListViewController+Private.h"
 #import "ConversationListViewController+Internal.h"
+
 #import "FullscreenImageViewController.h"
+#import "FullscreenImageViewController+PullToDismiss.h"
 #import "FullscreenImageViewController+internal.h"
+
 #import "KeyboardAvoidingViewController.h"
 #import "KeyboardAvoidingViewController+Internal.h"
 #import "CountryCodeTableViewController.h"
