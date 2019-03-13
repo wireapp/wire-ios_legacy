@@ -68,20 +68,19 @@ extension ConfirmAssetViewController {
         titleLabel.fitInSuperview(with: EdgeInsets(top: UIScreen.safeArea.top, leading: .nan, bottom: 0, trailing: .nan),
                                   exclude: [.leading, .trailing])
         
-        NSLayoutConstraint.activate([
-            titleLabel.centerXAnchor.constraint(equalTo: titleLabel.superview!.centerXAnchor)])
+        titleLabel.centerXAnchor.constraint(equalTo: titleLabel.superview!.centerXAnchor).isActive = true
         
         // Bottom panel
-        /*
         bottomPanel.fitInSuperview(with: EdgeInsets(edgeInsets: UIScreen.safeArea), exclude: [.top])
         
         imageToolbarView?.fitInSuperview(exclude: [.bottom])
         
-        NSLayoutConstraint.activate([
-            titleLabel.heightAnchor.constraint(equalToConstant: 48)])
+        imageToolbarView?.heightAnchor.constraint(equalToConstant: 48).isActive = true
         
         imageToolbarSeparatorView?.fitInSuperview(exclude: [.top])
         imageToolbarSeparatorView?.heightAnchor.constraint(equalToConstant: 0.5).isActive = true
+
+        /*
         NSLayoutConstraint.activate([
             
             // Accept/Reject panel
