@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
 import UIKit
 
 struct EdgeInsets {
@@ -34,6 +33,13 @@ struct EdgeInsets {
     init(margin: CGFloat) {
         self = EdgeInsets(top: margin, leading: margin, bottom: margin, trailing: margin)
     }
+    
+    init(edgeInsets: UIEdgeInsets) {
+        top = edgeInsets.top
+        leading = edgeInsets.leading
+        bottom = edgeInsets.bottom
+        trailing = edgeInsets.trailing
+    }
 }
 
 enum Anchor {
@@ -41,6 +47,11 @@ enum Anchor {
     case bottom
     case leading
     case trailing
+}
+
+enum AxisAnchor {
+    case centerX
+    case centerY
 }
 
 extension UIView {
@@ -56,8 +67,8 @@ extension UIView {
     }
 
     @discardableResult func alignCenter(to view: UIView,
-                                   with offset: CGPoint = .zero,
-                                   activate: Bool = true) -> [NSLayoutConstraint] {
+                                        with offset: CGPoint = .zero,
+                                        activate: Bool = true) -> [NSLayoutConstraint] {
 
         let constraints = [
             view.centerXAnchor.constraint(equalTo: centerXAnchor, constant: offset.x),
@@ -71,7 +82,64 @@ extension UIView {
         return constraints
     }
 
-    // MARK: - edge alignment
+    @discardableResult func pinToSuperview(axisAnchor: AxisAnchor,
+                                           constant: CGFloat = 0,
+                                           activate: Bool = true) -> NSLayoutConstraint {
+        guard let superview = superview else {
+            fatal("Not in view hierarchy: self.superview = nil")
+        }
+
+        var selfAnchor: NSObject!
+        var superAnchor: NSObject!
+
+        switch axisAnchor {
+        case .centerX:
+            selfAnchor = centerXAnchor
+            superAnchor = superview.centerXAnchor
+        case .centerY:
+            selfAnchor = centerYAnchor
+            superAnchor = superview.centerYAnchor
+        }
+
+        let constraint = (selfAnchor as! NSLayoutAnchor<AnyObject>).constraint(equalTo: (superAnchor as! NSLayoutAnchor<AnyObject>), constant: constant)
+        constraint.isActive = activate
+
+        return constraint
+    }
+
+    // MARK: - signal edge alignment
+    @discardableResult func pinToSuperview(anchor: Anchor,
+                                           constant: CGFloat = 0,
+                                           activate: Bool = true) -> NSLayoutConstraint {
+        guard let superview = superview else {
+            fatal("Not in view hierarchy: self.superview = nil")
+        }
+
+        var selfAnchor: NSObject!
+        var superAnchor: NSObject!
+
+        switch anchor {
+        case .top:
+            selfAnchor = topAnchor
+            superAnchor = superview.topAnchor
+        case .bottom:
+            selfAnchor = bottomAnchor
+            superAnchor = superview.bottomAnchor
+        case .leading:
+            selfAnchor = leadingAnchor
+            superAnchor = superview.leadingAnchor
+        case .trailing:
+            selfAnchor = trailingAnchor
+            superAnchor = superview.trailingAnchor
+        }
+
+        let constraint = (selfAnchor as! NSLayoutAnchor<AnyObject>).constraint(equalTo: (superAnchor as! NSLayoutAnchor<AnyObject>), constant: constant)
+        constraint.isActive = activate
+
+        return constraint
+    }
+
+    // MARK: - all edges alignment
 
     @discardableResult func fitInSuperview(safely: Bool = false,
                                            with insets: EdgeInsets = .zero,
@@ -85,10 +153,10 @@ extension UIView {
     }
 
     @discardableResult func pin(to view: UIView,
-                                  safely: Bool = false,
-                                  with insets: EdgeInsets = .zero,
-                                  exclude excludedAnchors: [Anchor] = [],
-                                  activate: Bool = true) -> [Anchor: NSLayoutConstraint] {
+                                safely: Bool = false,
+                                with insets: EdgeInsets = .zero,
+                                exclude excludedAnchors: [Anchor] = [],
+                                activate: Bool = true) -> [Anchor: NSLayoutConstraint] {
 
         var constraints: [Anchor: NSLayoutConstraint] = [:]
 
