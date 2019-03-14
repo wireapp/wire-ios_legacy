@@ -9,9 +9,9 @@ platform :ios do
         if build_type.nil? 
             sh "cd .. && ./setup.sh"
         else
+            sh "cd .. && ./setup.sh --override_with wire-ios-build-assets/CI\ configuration/#{build_type}"
             build = Build.new(options: options, branch: git_branch)
             build.process_icon()
-            sh "cd .. && ./setup.sh --override_with wire-ios-build-assets/CI\ configuration/#{build_type}"
         end
     end
 
@@ -282,8 +282,8 @@ class Build
         if appstore_build
             return
         end
-
         # Loop over all icons in the iconset
+        processed = 0
         Dir.glob("../#{iconset_location}/*.png") do |image|
             width = %x( identify -format %w #{image} )
             image_height = %x( identify -format %h #{image} )
@@ -291,7 +291,9 @@ class Build
 
             # Add build number to the icon
             %x( convert -background '#0008' -fill white -gravity center -size #{width}x#{height} caption:"#{extra_info}" "#{image}" +swap -gravity south -composite "#{image}" )
+            processed += 1
         end
+        UI.important("Proccessed #{processed} icons in #{iconset_location}")
     end
 
     def extra_info
