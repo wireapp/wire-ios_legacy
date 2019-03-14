@@ -38,3 +38,4 @@
 #import "SoundcloudAudioTrack.h"
 #import "SoundcloudAudioTrack+Internal.h"
 #import "ConnectRequestsViewController.h"
+#import "ConnectRequestsViewController+Internal.h"

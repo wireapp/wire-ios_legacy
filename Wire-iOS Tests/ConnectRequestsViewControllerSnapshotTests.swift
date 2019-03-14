@@ -19,14 +19,29 @@
 import XCTest
 @testable import Wire
 
-final class ConnectRequestsViewControllerSnapshotTests: ZMSnapshotTestCase {
+//
+//    var sut: ConversationContentViewController!
+//    var mockZMUserSession: MockZMUserSession!
+//    var mockMessage: MockMessage!
+//
+//    override func setUp() {
+//        super.setUp()
+//
+//        mockConversation = createTeamGroupConversation()
+
+
+
+final class ConnectRequestsViewControllerSnapshotTests: CoreDataSnapshotTestCase {
     
     var sut: ConnectRequestsViewController!
-    
+    var mockConversation: ZMConversation!
+
     override func setUp() {
         super.setUp()
         sut = ConnectRequestsViewController()
-        sut.view.frame = CGRect(origin: .zero, size: CGSize.iPhoneSize.iPhone4_7)
+        sut.connectionRequests = [mockConversation]
+
+//        sut.view.frame = CGRect(origin: .zero, size: CGSize.iPhoneSize.iPhone4_7)
 
         /// TODO: remove this after snapshot is created
         recordMode = true

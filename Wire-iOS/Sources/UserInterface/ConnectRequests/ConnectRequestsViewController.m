@@ -37,7 +37,6 @@ static NSString *ConnectionRequestCellIdentifier = @"ConnectionRequestCell";
 
 @interface ConnectRequestsViewController () <ZMConversationListObserver, ZMUserObserver, UITableViewDataSource, UITableViewDelegate>
 
-@property (nonatomic, strong) NSArray *connectionRequests;
 @property (nonatomic) id userObserverToken;
 @property (nonatomic) id pendingConnectionsListObserverToken;
 

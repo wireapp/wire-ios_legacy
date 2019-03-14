@@ -1070,6 +1070,7 @@
 		EF15A7B620BC34F700A045C7 /* XCTestCase+ImageFromBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF15A7B520BC34F700A045C7 /* XCTestCase+ImageFromBundle.swift */; };
 		EF17B0CE223A5D67006252A8 /* KeyboardAvoidingViewController+Constraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF17B0CD223A5D66006252A8 /* KeyboardAvoidingViewController+Constraint.swift */; };
 		EF17B0DB223A9B87006252A8 /* ConnectRequestsViewControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF17B0DA223A9B87006252A8 /* ConnectRequestsViewControllerSnapshotTests.swift */; };
+		EF17B0DE223AAC26006252A8 /* ConnectRequestsViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF17B0DC223AAC26006252A8 /* ConnectRequestsViewController+Extension.swift */; };
 		EF18140A21B17FB3008F7DA8 /* GroupDetailsReceiptOptionsCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF18140821B17F94008F7DA8 /* GroupDetailsReceiptOptionsCellTests.swift */; };
 		EF18140C21B18846008F7DA8 /* IconToggleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF18140B21B18846008F7DA8 /* IconToggleCell.swift */; };
 		EF18C7E41F9E4DA00085A832 /* NSString+FileNameForZMUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF18C7E31F9E4DA00085A832 /* NSString+FileNameForZMUser.swift */; };
@@ -2892,6 +2893,8 @@
 		EF15A7B520BC34F700A045C7 /* XCTestCase+ImageFromBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+ImageFromBundle.swift"; sourceTree = "<group>"; };
 		EF17B0CD223A5D66006252A8 /* KeyboardAvoidingViewController+Constraint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "KeyboardAvoidingViewController+Constraint.swift"; sourceTree = "<group>"; };
 		EF17B0DA223A9B87006252A8 /* ConnectRequestsViewControllerSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectRequestsViewControllerSnapshotTests.swift; sourceTree = "<group>"; };
+		EF17B0DC223AAC26006252A8 /* ConnectRequestsViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConnectRequestsViewController+Extension.swift"; sourceTree = "<group>"; };
+		EF17B0DD223AAC26006252A8 /* ConnectRequestsViewController+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ConnectRequestsViewController+Internal.h"; sourceTree = "<group>"; };
 		EF18140821B17F94008F7DA8 /* GroupDetailsReceiptOptionsCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDetailsReceiptOptionsCellTests.swift; sourceTree = "<group>"; };
 		EF18140B21B18846008F7DA8 /* IconToggleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconToggleCell.swift; sourceTree = "<group>"; };
 		EF18C7E31F9E4DA00085A832 /* NSString+FileNameForZMUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSString+FileNameForZMUser.swift"; sourceTree = "<group>"; };
@@ -5513,6 +5516,8 @@
 			isa = PBXGroup;
 			children = (
 				8FC85179199245760008B66B /* ConnectRequestsViewController.h */,
+				EF17B0DC223AAC26006252A8 /* ConnectRequestsViewController+Extension.swift */,
+				EF17B0DD223AAC26006252A8 /* ConnectRequestsViewController+Internal.h */,
 				8FC8517A199245760008B66B /* ConnectRequestsViewController.m */,
 				DBCBD19019F10A1F000510C1 /* ConnectRequestCell.h */,
 				DBCBD19119F10A1F000510C1 /* ConnectRequestCell.m */,
@@ -7703,6 +7708,7 @@
 				EFF3DA452097587F007A3358 /* UIPasteboard+MediaAsset.swift in Sources */,
 				BAEF10FA1B8C8849005BFA48 /* AnimatedListMenuView.m in Sources */,
 				1682AEB620480C80003A052A /* UIViewController+Navigation.swift in Sources */,
+				EF17B0DE223AAC26006252A8 /* ConnectRequestsViewController+Extension.swift in Sources */,
 				5E33F0D020AD629D00414EA6 /* CallPermissionsConfiguration.swift in Sources */,
 				EF2388862211A67900331C07 /* UserRight.swift in Sources */,
 				871BC2551D34F8F800DF0793 /* CrossfadeTransition.m in Sources */,
