@@ -144,14 +144,11 @@ extension UIView {
     @discardableResult func fitInSuperview(safely: Bool = false,
                                            with insets: EdgeInsets = .zero,
                                            exclude excludedAnchors: [Anchor] = [],
-                                           translatesAutoresizingMaskIntoConstraints: Bool = false,
                                            activate: Bool = true) -> [Anchor: NSLayoutConstraint] {
 
         guard let superview = superview else {
             fatal("Not in view hierarchy: self.superview = nil")
         }
-
-        self.translatesAutoresizingMaskIntoConstraints = translatesAutoresizingMaskIntoConstraints
 
         return pin(to: superview,
                    safely: safely,
@@ -218,8 +215,6 @@ extension UIView {
     }
 
     func setDimensions(size: CGSize) {
-        translatesAutoresizingMaskIntoConstraints = false
-
         let constraints = [
             widthAnchor.constraint(equalToConstant: size.width),
             heightAnchor.constraint(equalToConstant: size.height)

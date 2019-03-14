@@ -21,7 +21,7 @@ import UIKit
 final class SketchColorCollectionViewCell: UICollectionViewCell {
     var sketchColor: UIColor? {
         didSet {
-            if sketchColor == oldValue {
+            guard sketchColor != oldValue else {
                 return
             }
 
@@ -33,7 +33,7 @@ final class SketchColorCollectionViewCell: UICollectionViewCell {
 
     var brushWidth: Int = 0 {
         didSet {
-            if brushWidth == oldValue {
+            guard brushWidth != oldValue else {
                 return
             }
 
