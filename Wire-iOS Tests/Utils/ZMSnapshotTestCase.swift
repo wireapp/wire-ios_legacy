@@ -396,6 +396,8 @@ extension ZMSnapshotTestCase {
                line: line)
     }
 
+    // MARK: - verify the snapshots in both dark and light scheme
+
     func verifyInAllColorSchemes(view: UIView,
                                  tolerance: CGFloat = 0,
                                  file: StaticString = #file,

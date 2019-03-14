@@ -31,7 +31,6 @@ extension SketchColorPickerController {
 
         colorsCollectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
         colorsCollectionView.showsHorizontalScrollIndicator = false
-        colorsCollectionView.translatesAutoresizingMaskIntoConstraints = false
         colorsCollectionView.backgroundColor = .from(scheme: .background)
         view.addSubview(colorsCollectionView)
 

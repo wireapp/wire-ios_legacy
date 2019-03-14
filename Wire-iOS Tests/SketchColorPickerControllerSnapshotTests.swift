@@ -46,9 +46,6 @@ final class SketchColorPickerControllerSnapshotTests: ZMSnapshotTestCase {
                             UIColor(red: 0.44,  green: 0.44,  blue: 0.44,  alpha: 1)]
 
         sut.view.frame = CGRect(x: 0, y: 0, width: 375, height: 48)
-
-        /// TODO: remove this after snapshot is created
-        recordMode = true
     }
     
     override func tearDown() {
@@ -57,6 +54,6 @@ final class SketchColorPickerControllerSnapshotTests: ZMSnapshotTestCase {
     }
 
     func testForInitState(){
-        verify(view: sut.view) ///TODO: dark and white
+        verify(view: sut.view)
     }
 }

@@ -154,7 +154,7 @@ extension UIView {
                    safely: safely,
                    with: insets,
                    exclude: excludedAnchors,
-                   translatesAutoresizingMaskIntoConstraints: translatesAutoresizingMaskIntoConstraints
+                   translatesAutoresizingMaskIntoConstraints: translatesAutoresizingMaskIntoConstraints,
                    activate: activate)
     }
 
@@ -162,7 +162,7 @@ extension UIView {
                                 safely: Bool = false,
                                 with insets: EdgeInsets = .zero,
                                 exclude excludedAnchors: [Anchor] = [],
-                                translatesAutoresizingMaskIntoConstraints: Bool = false
+                                translatesAutoresizingMaskIntoConstraints: Bool = false,
                                 activate: Bool = true) -> [Anchor: NSLayoutConstraint] {
 
         self.translatesAutoresizingMaskIntoConstraints = translatesAutoresizingMaskIntoConstraints
