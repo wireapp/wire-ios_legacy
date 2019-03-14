@@ -154,7 +154,7 @@ extension UIView {
         return pin(to: superview,
                    safely: safely,
                    with: insets,
-                   exclude: excludedAnchors
+                   exclude: excludedAnchors,
                    activate: activate)
     }
 
