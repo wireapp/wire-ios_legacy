@@ -61,6 +61,8 @@
 @property (nonatomic, readwrite) BOOL usesCompanyLogin;
 @property (nonatomic, readwrite) BOOL readReceiptsEnabled;
 @property (nonatomic, readwrite) BOOL isAccountDeleted;
+@property (nonatomic, readwrite, copy) NSData *previewImageData;
+@property (nonatomic, readwrite, copy) NSData *completeImageData;
 @property (nonatomic) ZMUser * user;
 
 @property (nonatomic) NSSet <id<UserClientType>> * clients;
