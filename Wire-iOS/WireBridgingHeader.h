@@ -72,7 +72,6 @@
 #import "SwipeMenuCollectionCell+Internal.h"
 #import "TextView+Internal.h"
 #import "TextView.h"
-#import "MediaPreviewView.h"
 
 // View Controllers
 #import "ProfileDevicesViewController.h"
