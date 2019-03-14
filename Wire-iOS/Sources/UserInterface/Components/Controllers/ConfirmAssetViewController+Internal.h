@@ -16,15 +16,35 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+@class ImageToolbarView;
+@class Button;
+@class FLAnimatedImageView;
+
 @import AVKit;
 
 @interface ConfirmAssetViewController ()
 
-@property (nonatomic, nullable) UIView *imageToolbarSeparatorView;
-@property (nonatomic, nullable) UIView *topPanel;
-@property (nonatomic, nullable) UILabel *titleLabel;
 @property (nonatomic, nullable) NSURL *videoURL;
-
 @property (nonatomic, nullable) AVPlayerViewController *playerViewController;
+
+@property (nonatomic, nonnull) UIView *topPanel;
+@property (nonatomic, nonnull) UILabel *titleLabel;
+@property (nonatomic, nonnull) UIView *bottomPanel;
+@property (nonatomic, nonnull) UIView *confirmButtonsContainer;
+@property (nonatomic, nonnull) Button *acceptImageButton;
+@property (nonatomic, nonnull) Button *rejectImageButton;
+
+// The preview view and image toolbar are optional
+@property (nonatomic, nullable) FLAnimatedImageView *imagePreviewView;
+@property (nonatomic, nullable) UIView *imageToolbarSeparatorView;
+@property (nonatomic, nullable) ImageToolbarView *imageToolbarViewInsideImage;
+@property (nonatomic, nullable) ImageToolbarView *imageToolbarView;
+
+@property (nonatomic, nonnull) NSLayoutConstraint *topBarHeightConstraint;
+
+// constants
++ (CGFloat) topBarHeight;
++ (CGFloat) bottomBarMinHeight;
++ (CGFloat) marginInset;
 
 @end

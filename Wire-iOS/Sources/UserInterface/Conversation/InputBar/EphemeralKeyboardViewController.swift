@@ -164,7 +164,7 @@ extension UIAlertController {
         titleLabel.textColor = UIColor.from(scheme: .textForeground, variant: .dark)
         titleLabel.font = .smallSemiboldFont
 
-        titleLabel.text = "input.ephemeral.title".localized.uppercased()
+        titleLabel.text = "input.ephemeral.title".localized(uppercased: true)
         titleLabel.numberOfLines = 0
         [titleLabel, picker].forEach(view.addSubview)
     }

@@ -50,7 +50,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)showChrome:(BOOL)shouldShow;
 
-- (void)setupSnapshotBackgroundView;
 - (void)dismissWithCompletion:(nullable dispatch_block_t)completion;
 - (void)performSaveImageAnimationFromView:(UIView *)saveView;
 @end

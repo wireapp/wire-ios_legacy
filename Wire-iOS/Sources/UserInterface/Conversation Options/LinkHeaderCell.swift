@@ -45,7 +45,7 @@ final class LinkHeaderCell: UITableViewCell, CellConfigurationConfigurable {
     private func setupViews() {
         [topSeparator, titleLabel, subtitleLabel].forEach(contentView.addSubview)
         titleLabel.font = FontSpec(.small, .semibold).font
-        titleLabel.text = "guest_room.link.header.title".localized.uppercased()
+        titleLabel.text = "guest_room.link.header.title".localized(uppercased: true)
         subtitleLabel.numberOfLines = 0
         subtitleLabel.font = FontSpec(.medium, .regular).font
         subtitleLabel.text = "guest_room.link.header.subtitle".localized

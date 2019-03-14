@@ -42,7 +42,7 @@ import Foundation
         self.style = style
 
         let groupItems: [UITabBarItem] = groups.enumerated().map { index, group in
-            UITabBarItem(title: group.name.uppercased(), image: nil, tag: index)
+            UITabBarItem(title: group.name.localizedUppercase, image: nil, tag: index)
         }
 
         tabBar = TabBar(items: groupItems, style: style, selectedIndex: 0)

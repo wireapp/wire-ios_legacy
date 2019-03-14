@@ -18,6 +18,7 @@
 
 
 #import "SoundcloudAudioTrack.h"
+#import "SoundcloudAudioTrack+Internal.h"
 #import "SoundcloudService.h"
 
 
@@ -26,7 +27,6 @@
 
 @property (nonatomic) SoundcloudService *soundcloudService;
 @property (nonatomic) NSURL *avatarURL;
-@property (nonatomic) UIImage *artwork;
 
 @end
 

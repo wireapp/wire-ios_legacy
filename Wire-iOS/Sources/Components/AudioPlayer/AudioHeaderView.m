@@ -17,25 +17,9 @@
 // 
 
 
-@import PureLayout;
-
 #import "AudioHeaderView.h"
+#import "AudioHeaderView+Internal.h"
 #import "Wire-Swift.h"
-
-
-
-@interface AudioHeaderView ()
-
-@property (nonatomic) UIView *providerImageContainer;
-@property (nonatomic) UILabel *artistLabel;
-@property (nonatomic) UILabel *trackTitleLabel;
-@property (nonatomic) ButtonWithLargerHitArea *providerButton;
-@property (nonatomic) UIStackView *textStackView;
-
-@property (nonatomic) NSLayoutConstraint *providerImageContainerWidthConstraint;
-@property (nonatomic) NSLayoutConstraint *textTrailingConstraint;
-
-@end
 
 
 
@@ -46,17 +30,17 @@
     self = [super init];
     
     if (self) {
-        self.artistLabel = [[UILabel alloc] initForAutoLayout];
+        self.artistLabel = [[UILabel alloc] init];
         self.artistLabel.lineBreakMode = NSLineBreakByTruncatingTail;
         self.artistLabel.textColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:ColorSchemeVariantDark];
         self.artistLabel.font = UIFont.smallLightFont;
 
-        self.trackTitleLabel = [[UILabel alloc] initForAutoLayout];
+        self.trackTitleLabel = [[UILabel alloc] init];
         self.trackTitleLabel.lineBreakMode = NSLineBreakByTruncatingMiddle;
         self.trackTitleLabel.textColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:ColorSchemeVariantDark];
         self.trackTitleLabel.font = UIFont.smallSemiboldFont;
 
-        self.providerImageContainer = [[UIView alloc] initForAutoLayout];
+        self.providerImageContainer = [[UIView alloc] init];
         [self addSubview:self.providerImageContainer];
         
         self.providerButton = [ButtonWithLargerHitArea buttonWithType:UIButtonTypeCustom];
@@ -71,36 +55,6 @@
     }
     
     return self;
-}
-
-- (void)configureConstraints
-{
-    self.providerImageContainer.translatesAutoresizingMaskIntoConstraints = NO;
-    self.providerButton.translatesAutoresizingMaskIntoConstraints = NO;
-    self.textStackView.translatesAutoresizingMaskIntoConstraints = NO;
-
-    self.providerImageContainerWidthConstraint = [self.providerImageContainer.widthAnchor constraintEqualToConstant:UIView.conversationLayoutMargins.left];
-    self.textTrailingConstraint = [self.textStackView.trailingAnchor constraintEqualToAnchor:self.trailingAnchor constant:-UIView.conversationLayoutMargins.right];
-
-    [NSLayoutConstraint activateConstraints:
-  @[
-    // providerImageContainer
-    self.providerImageContainerWidthConstraint,
-    [self.providerImageContainer.topAnchor constraintEqualToAnchor:self.topAnchor],
-    [self.providerImageContainer.leadingAnchor constraintEqualToAnchor:self.leadingAnchor],
-    [self.providerImageContainer.bottomAnchor constraintEqualToAnchor:self.bottomAnchor],
-
-    // providerButton
-    [self.providerButton.centerXAnchor constraintEqualToAnchor:self.providerImageContainer.centerXAnchor],
-    [self.providerButton.centerYAnchor constraintEqualToAnchor:self.providerImageContainer.centerYAnchor],
-    [self.providerButton.widthAnchor constraintEqualToConstant:28],
-    [self.providerButton.heightAnchor constraintEqualToConstant:28],
-
-    // textStackView
-    [self.textStackView.leadingAnchor constraintEqualToAnchor:self.providerImageContainer.trailingAnchor],
-    [self.textStackView.centerYAnchor constraintEqualToAnchor:self.providerImageContainer.centerYAnchor],
-    self.textTrailingConstraint,
-    ]];
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection
