@@ -19,7 +19,7 @@
 import Foundation
 
 extension MediaBar {
-    override func updateConstraints() {
+    override open func updateConstraints() {
         if !initialConstraintsCreated {
             initialConstraintsCreated = true
 
