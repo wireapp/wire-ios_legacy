@@ -145,11 +145,16 @@ extension UIView {
                                            with insets: EdgeInsets = .zero,
                                            exclude excludedAnchors: [Anchor] = [],
                                            activate: Bool = true) -> [Anchor: NSLayoutConstraint] {
+
         guard let superview = superview else {
             fatal("Not in view hierarchy: self.superview = nil")
         }
 
-        return pin(to: superview, safely: safely, with: insets, exclude: excludedAnchors, activate: activate)
+        return pin(to: superview,
+                   safely: safely,
+                   with: insets,
+                   exclude: excludedAnchors,
+                   activate: activate)
     }
 
     @discardableResult func pin(to view: UIView,
