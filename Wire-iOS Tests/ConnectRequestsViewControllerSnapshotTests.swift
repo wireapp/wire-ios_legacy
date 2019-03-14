@@ -19,17 +19,6 @@
 import XCTest
 @testable import Wire
 
-//
-//    var sut: ConversationContentViewController!
-//    var mockZMUserSession: MockZMUserSession!
-//    var mockMessage: MockMessage!
-//
-//    override func setUp() {
-//        super.setUp()
-//
-//        mockConversation = createTeamGroupConversation()
-
-
 
 final class ConnectRequestsViewControllerSnapshotTests: CoreDataSnapshotTestCase {
     
@@ -39,16 +28,21 @@ final class ConnectRequestsViewControllerSnapshotTests: CoreDataSnapshotTestCase
     override func setUp() {
         super.setUp()
         sut = ConnectRequestsViewController()
+
+        sut.loadViewIfNeeded()
+
+        mockConversation = otherUserConversation
+
         sut.connectionRequests = [mockConversation]
+        sut.reload()
 
-//        sut.view.frame = CGRect(origin: .zero, size: CGSize.iPhoneSize.iPhone4_7)
-
-        /// TODO: remove this after snapshot is created
-        recordMode = true
+        sut.view.frame = CGRect(origin: .zero, size: CGSize.iPhoneSize.iPhone4_7)
     }
     
     override func tearDown() {
         sut = nil
+        mockConversation = nil
+        
         super.tearDown()
     }
 

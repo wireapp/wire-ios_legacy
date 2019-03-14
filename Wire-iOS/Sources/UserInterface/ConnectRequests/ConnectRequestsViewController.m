@@ -18,6 +18,9 @@
 
 
 #import "ConnectRequestsViewController.h"
+#import "ConnectRequestsViewController+Internal.h"
+
+#import "ZClientViewController.h"
 
 // ui
 #import "TextView.h"

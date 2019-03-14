@@ -20,4 +20,6 @@
 
 @property (nonatomic, strong) NSArray *connectionRequests;
 
+- (void)reload;
+
 @end
