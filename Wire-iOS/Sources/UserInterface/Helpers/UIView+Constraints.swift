@@ -145,6 +145,7 @@ extension UIView {
                                            with insets: EdgeInsets = .zero,
                                            exclude excludedAnchors: [Anchor] = [],
                                            activate: Bool = true) -> [Anchor: NSLayoutConstraint] {
+
         guard let superview = superview else {
             fatal("Not in view hierarchy: self.superview = nil")
         }
@@ -216,6 +217,8 @@ extension UIView {
     }
 
     func setDimensions(size: CGSize) {
+        translatesAutoresizingMaskIntoConstraints = false
+
         let constraints = [
             widthAnchor.constraint(equalToConstant: size.width),
             heightAnchor.constraint(equalToConstant: size.height)

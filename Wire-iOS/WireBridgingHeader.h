@@ -73,7 +73,7 @@
 #import "TextView+Internal.h"
 #import "TextView.h"
 #import "MediaPreviewView.h"
-#import "SketchColorCollectionViewCell.h"
+#import "ColorKnobView.h"
 
 // View Controllers
 #import "ProfileDevicesViewController.h"

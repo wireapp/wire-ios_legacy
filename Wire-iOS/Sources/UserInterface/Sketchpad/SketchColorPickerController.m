@@ -20,7 +20,6 @@
 #import "SketchColorPickerController.h"
 #import "SketchColorPickerController+Internal.h"
 
-#import "SketchColorCollectionViewCell.h"
 #import "Wire-Swift.h"
 
 static NSString* ZMLogTag ZM_UNUSED = @"UI";
