@@ -19,11 +19,11 @@
 
 import Foundation
 
-@objc public enum IncomingConnectionAction: UInt {
+public enum IncomingConnectionAction: UInt {
     case ignore, accept
 }
 
-@objcMembers final public class IncomingConnectionViewController: UIViewController {
+final public class IncomingConnectionViewController: UIViewController {
 
     fileprivate var connectionView: IncomingConnectionView!
 

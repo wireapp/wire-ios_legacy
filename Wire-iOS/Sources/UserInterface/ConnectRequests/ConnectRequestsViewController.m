@@ -24,7 +24,6 @@
 
 // ui
 #import "TextView.h"
-#import "ConnectRequestCell.h"
 #import "ProfileViewController.h"
 #import "UIView+PopoverBorder.h"
 #import "ProfilePresenter.h"
