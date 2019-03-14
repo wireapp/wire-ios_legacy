@@ -69,20 +69,4 @@ extension KeyboardAvoidingViewController {
         animator?.startAnimation()
     }
 
-    //MARK: constraint
-
-    @objc
-    func createInitialConstraints() {
-        viewController.view.translatesAutoresizingMaskIntoConstraints = false
-        let constraints = viewController.view.fitInSuperview(with: EdgeInsets(top: topInset, leading: 0, bottom: .nan, trailing: 0),
-                                                             exclude: [.bottom])
-
-        topEdgeConstraint = constraints[.top]
-
-        let bottomEdgeConstraint = viewController.bottomLayoutGuide.bottomAnchor.constraint(equalTo: bottomLayoutGuide.bottomAnchor)
-
-        bottomEdgeConstraint.isActive = true
-
-        self.bottomEdgeConstraint = bottomEdgeConstraint
-    }
 }
