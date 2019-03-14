@@ -57,6 +57,6 @@ final class SketchColorPickerControllerSnapshotTests: ZMSnapshotTestCase {
     }
 
     func testForInitState(){
-        verify(view: sut.view)
+        verify(view: sut.view) ///TODO: dark and white
     }
 }
