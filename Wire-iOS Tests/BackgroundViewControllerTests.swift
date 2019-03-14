@@ -20,17 +20,25 @@ import Foundation
 import XCTest
 @testable import Wire
 
-class BackgroundViewControllerTests: CoreDataSnapshotTestCase {
+class BackgroundViewControllerTests: ZMSnapshotTestCase {
+    
+    var selfUser: MockUser!
     
     override func setUp() {
         super.setUp()
-        selfUser.accentColorValue = .violet
         accentColor = .violet
+        selfUser = MockUser.mockSelf()
+        selfUser.accentColorValue = .violet
+    }
+    
+    override func tearDown() {
+        selfUser = nil
+        
+        super.tearDown()
     }
 
     func testThatItShowsUserWithoutImage() {
         // GIVEN
-        selfUser.setImage(data: nil, size: .complete)
         let sut = BackgroundViewController(user: selfUser, userSession: .none)
         XCTAssertTrue(waitForGroupsToBeEmpty([sut.dispatchGroup]))
         
@@ -41,7 +49,7 @@ class BackgroundViewControllerTests: CoreDataSnapshotTestCase {
     
     func DISABLE_testThatItShowsUserWithImage() {
         // GIVEN
-        selfUser.setImage(data: image(inTestBundleNamed: "unsplash_matterhorn.jpg").pngData(), size: .complete)
+        selfUser.completeImageData = image(inTestBundleNamed: "unsplash_matterhorn.jpg").pngData()
         let sut = BackgroundViewController(user: selfUser, userSession: .none)
         // make sure view is loaded
         _ = sut.view
@@ -58,7 +66,6 @@ class BackgroundViewControllerTests: CoreDataSnapshotTestCase {
     
     func testThatItUpdatesForUserAccentColorUpdate_fromAccentColor() {
         // GIVEN
-        selfUser.setImage(data: nil, size: .complete)
         let sut = BackgroundViewController(user: selfUser, userSession: .none)
         _ = sut.view
         // WHEN
@@ -71,11 +78,11 @@ class BackgroundViewControllerTests: CoreDataSnapshotTestCase {
     
     func testThatItUpdatesForUserAccentColorUpdate_fromUserImageRemoved() {
         // GIVEN
-        selfUser.setImage(data: image(inTestBundleNamed: "unsplash_matterhorn.jpg").pngData(), size: .complete)
+        selfUser.completeImageData = image(inTestBundleNamed: "unsplash_matterhorn.jpg").pngData()
         let sut = BackgroundViewController(user: selfUser, userSession: .none)
         _ = sut.view
         // WHEN
-        selfUser.setImage(data: nil, size: .complete)
+        selfUser.completeImageData = nil
         selfUser.accentColorValue = .brightOrange
         sut.updateFor(imageMediumDataChanged: true, accentColorValueChanged: true)
         // THEN
@@ -84,7 +91,7 @@ class BackgroundViewControllerTests: CoreDataSnapshotTestCase {
     
     func testThatItUpdatesForUserAccentColorUpdate_fromUserImage() {
         // GIVEN
-        selfUser.setImage(data: image(inTestBundleNamed: "unsplash_matterhorn.jpg").pngData(), size: .complete)
+        selfUser.completeImageData = image(inTestBundleNamed: "unsplash_matterhorn.jpg").pngData()
         let sut = BackgroundViewController(user: selfUser, userSession: .none)
         _ = sut.view
         // WHEN
@@ -98,11 +105,11 @@ class BackgroundViewControllerTests: CoreDataSnapshotTestCase {
     
     func testThatItUpdatesForUserImageUpdate_fromAccentColor() {
         // GIVEN
-        selfUser.setImage(data: nil, size: .complete)
+        selfUser.completeImageData = nil
         let sut = BackgroundViewController(user: selfUser, userSession: .none)
         _ = sut.view
         // WHEN
-        selfUser.setImage(data: image(inTestBundleNamed: "unsplash_matterhorn.jpg").pngData(), size: .complete)
+        selfUser.completeImageData = image(inTestBundleNamed: "unsplash_matterhorn.jpg").pngData()
         sut.updateFor(imageMediumDataChanged: true, accentColorValueChanged: false)
         XCTAssertTrue(waitForGroupsToBeEmpty([sut.dispatchGroup]))
         // THEN
@@ -111,11 +118,11 @@ class BackgroundViewControllerTests: CoreDataSnapshotTestCase {
     
     func testThatItUpdatesForUserImageUpdate_fromUserImage() {
         // GIVEN
-        selfUser.setImage(data: image(inTestBundleNamed: "unsplash_matterhorn.jpg").pngData(), size: .complete)
+        selfUser.completeImageData = image(inTestBundleNamed: "unsplash_matterhorn.jpg").pngData()
         let sut = BackgroundViewController(user: selfUser, userSession: .none)
         _ = sut.view
         // WHEN
-        selfUser.setImage(data: image(inTestBundleNamed: "unsplash_burger.jpg").pngData(), size: .complete)
+        selfUser.completeImageData = image(inTestBundleNamed: "unsplash_burger.jpg").pngData()
         sut.updateFor(imageMediumDataChanged: true, accentColorValueChanged: false)
         XCTAssertTrue(waitForGroupsToBeEmpty([sut.dispatchGroup]))
         // THEN
