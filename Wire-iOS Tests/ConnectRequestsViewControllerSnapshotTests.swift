@@ -35,6 +35,8 @@ final class ConnectRequestsViewControllerSnapshotTests: CoreDataSnapshotTestCase
 
         sut.connectionRequests = [mockConversation]
         sut.reload()
+
+        sut.view.frame = CGRect(origin: .zero, size: CGSize.iPhoneSize.iPhone4_7)
     }
     
     override func tearDown() {
