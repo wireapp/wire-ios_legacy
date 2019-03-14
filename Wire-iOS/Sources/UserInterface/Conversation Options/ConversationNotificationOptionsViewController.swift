@@ -52,7 +52,7 @@ class ConversationNotificationOptionsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = "group_details.notification_options_cell.title".localized.uppercased()
+        title = "group_details.notification_options_cell.title".localized(uppercased: true)
         navigationItem.rightBarButtonItem = navigationController?.closeItem()
         
         configureSubviews()

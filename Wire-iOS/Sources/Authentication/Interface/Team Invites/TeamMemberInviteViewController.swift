@@ -29,8 +29,8 @@ final class TeamMemberInviteViewController: AuthenticationStepViewController {
 
         var title: String {
             switch self {
-            case .skip: return "team.invite.top_bar.skip".localized.uppercased()
-            case .done: return "team.invite.top_bar.done".localized.uppercased()
+            case .skip: return "team.invite.top_bar.skip".localized(uppercased: true)
+            case .done: return "team.invite.top_bar.done".localized(uppercased: true)
             }
         }
     }
@@ -128,7 +128,7 @@ final class TeamMemberInviteViewController: AuthenticationStepViewController {
         }
 
         if case .unreachable = NetworkStatus.shared().reachability() {
-            return footerTextFieldView.errorMessage = "team.invite.error.no_internet".localized.uppercased()
+            return footerTextFieldView.errorMessage = "team.invite.error.no_internet".localized(uppercased: true)
         }
         
         guard let userSession = ZMUserSession.shared() else { return }
@@ -157,7 +157,7 @@ final class TeamMemberInviteViewController: AuthenticationStepViewController {
             dataSource.append(result)
             footerTextFieldView.clearInput()
         case let .failure(_, error: error):
-            footerTextFieldView.errorMessage = error.errorDescription.uppercased()
+            footerTextFieldView.errorMessage = error.errorDescription.localizedUppercase
             footerTextFieldView.errorButton.isHidden = error != .alreadyRegistered
         }
     }

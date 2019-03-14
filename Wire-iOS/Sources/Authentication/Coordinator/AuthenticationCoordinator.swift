@@ -158,16 +158,12 @@ extension AuthenticationCoordinator: AuthenticationStateControllerDelegate {
             presenter.pushViewController(stepViewController, animated: true)
 
         case .reset:
-            UIView.transition(with: presenter.view, duration: 0.25, options: .transitionCrossDissolve, animations: {
-                presenter.viewControllers = [stepViewController]
-            }, completion: nil)
+            presenter.setViewControllers([stepViewController], animated: true)
 
         case .replace:
-            UIView.transition(with: presenter.view, duration: 0.25, options: .transitionCrossDissolve, animations: {
-                var viewControllers = presenter.viewControllers
-                viewControllers[viewControllers.count - 1] = stepViewController
-                presenter.viewControllers = viewControllers
-            }, completion: nil)
+            var viewControllers = presenter.viewControllers
+            viewControllers[viewControllers.count - 1] = stepViewController
+            presenter.setViewControllers(viewControllers, animated: true)
         }
     }
 

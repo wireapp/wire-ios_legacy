@@ -85,7 +85,7 @@ import Ziphy
 
         extendedLayoutIncludesOpaqueBars = true
 
-        noResultsLabel.text = "giphy.error.no_result".localized.uppercased()
+        noResultsLabel.text = "giphy.error.no_result".localized(uppercased: true)
         noResultsLabel.isHidden = true
         view.addSubview(noResultsLabel)
 
@@ -289,7 +289,7 @@ extension GiphySearchViewController {
     @discardableResult
     func pushConfirmationViewController(ziph: Ziph?, previewImage: FLAnimatedImage?, animated: Bool = true) -> GiphyConfirmationViewController {
         let confirmationController = GiphyConfirmationViewController(withZiph: ziph, previewImage: previewImage, searchResultController: searchResultsController)
-        confirmationController.title = conversation.displayName.uppercased()
+        confirmationController.title = conversation.displayName.localizedUppercase
         confirmationController.delegate = self
         navigationController?.pushViewController(confirmationController, animated: animated)
 

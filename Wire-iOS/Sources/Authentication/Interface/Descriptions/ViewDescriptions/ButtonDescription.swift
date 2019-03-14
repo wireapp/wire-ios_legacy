@@ -40,7 +40,7 @@ extension ButtonDescription: ViewDescriptor {
         button.contentEdgeInsets = UIEdgeInsets(top: 4, left: 12, bottom: 4, right: 12)
         button.setContentCompressionResistancePriority(UILayoutPriority.required, for: .horizontal)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle(title.uppercased(), for: .normal)
+        button.setTitle(title.localizedUppercase, for: .normal)
         button.accessibilityIdentifier = self.accessibilityIdentifier
         button.addTarget(self, action: #selector(ButtonDescription.buttonTapped(_:)), for: .touchUpInside)
         return button

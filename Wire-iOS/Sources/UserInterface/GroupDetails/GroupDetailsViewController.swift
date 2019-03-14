@@ -90,7 +90,7 @@ import Cartography
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "participants.title".localized.uppercased()
+        title = "participants.title".localized(uppercased: true)
         view.backgroundColor = UIColor.from(scheme: .contentBackground)
     }
     

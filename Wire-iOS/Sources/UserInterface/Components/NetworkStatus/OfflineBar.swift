@@ -47,7 +47,7 @@ class OfflineBar: UIView {
 
         offlineLabel.font = FontSpec(FontSize.small, .medium).font
         offlineLabel.textColor = UIColor.white
-        offlineLabel.text = "system_status_bar.no_internet.title".localized.uppercased()
+        offlineLabel.text = "system_status_bar.no_internet.title".localized(uppercased: true)
 
         addSubview(offlineLabel)
 

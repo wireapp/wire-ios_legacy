@@ -45,8 +45,8 @@ struct AddParticipantsViewModel {
     
     func title(with users: Set<ZMUser>) -> String {
         return users.isEmpty
-            ? "peoplepicker.group.title.singular".localized.uppercased()
-            : "peoplepicker.group.title.plural".localized(args: users.count).uppercased()
+            ? "peoplepicker.group.title.singular".localized(uppercased: true)
+            : "peoplepicker.group.title.plural".localized(uppercased: true, args: users.count)
     }
     
     var filterConversation: ZMConversation? {
@@ -68,9 +68,9 @@ struct AddParticipantsViewModel {
         case .create: return nil
         case .add(let conversation):
             if conversation.conversationType == .oneOnOne {
-                return "peoplepicker.button.create_conversation".localized.uppercased()
+                return "peoplepicker.button.create_conversation".localized(uppercased: true)
             } else {
-                return "peoplepicker.button.add_to_conversation".localized.uppercased()
+                return "peoplepicker.button.add_to_conversation".localized(uppercased: true)
             }
         }
     }
@@ -83,7 +83,7 @@ struct AddParticipantsViewModel {
             return item
         case .create(let values):
             let key = values.participants.isEmpty ? "peoplepicker.group.skip" : "peoplepicker.group.done"
-            let item = UIBarButtonItem(title: key.localized.uppercased(), style: .plain, target: target, action: action)
+            let item = UIBarButtonItem(title: key.localized(uppercased: true), style: .plain, target: target, action: action)
             item.tintColor = UIColor.accent()
             item.accessibilityIdentifier = values.participants.isEmpty ? "button.addpeople.skip" : "button.addpeople.create"
             return item

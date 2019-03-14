@@ -54,7 +54,7 @@ final class GroupDetailsFooterView: ConversationDetailFooterView {
     
     override func setupButtons() {
         leftIcon = .plus
-        leftButton.setTitle("participants.footer.add_title".localized.uppercased(), for: .normal)
+        leftButton.setTitle("participants.footer.add_title".localized(uppercased: true), for: .normal)
         leftButton.accessibilityIdentifier = "OtherUserMetaControllerLeftButton"
         rightIcon = .ellipsis
         rightButton.accessibilityIdentifier = "OtherUserMetaControllerRightButton"

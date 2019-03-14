@@ -156,7 +156,7 @@ final class SelfProfileViewController: UIViewController {
         if SessionManager.shared?.accountManager.accounts.count > 1 {
             navigationItem.titleView = accountSelectorController.view
         } else {
-            title = "self.account".localized.uppercased()
+            title = "self.account".localized(uppercased: true)
         }
     }
     

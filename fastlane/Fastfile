@@ -9,6 +9,8 @@ platform :ios do
         if build_type.nil? 
             sh "cd .. && ./setup.sh"
         else
+            build = Build.new(options: options, branch: git_branch)
+            build.process_icon()
             sh "cd .. && ./setup.sh --override_with wire-ios-build-assets/CI\ configuration/#{build_type}"
         end
     end
@@ -16,7 +18,7 @@ platform :ios do
 
     desc "Build for testing"
     lane :build do
-        scan(
+        run_tests(
             scheme: "Wire-iOS",
             configuration: "Debug",
             build_for_testing: true,
@@ -31,7 +33,7 @@ platform :ios do
 
     desc "Test without building"
     lane :test do
-        scan(
+        run_tests(
             scheme: "Wire-iOS",
             configuration: "Debug",
             test_without_building: true,
@@ -44,30 +46,46 @@ platform :ios do
         )
     end
 
-    desc "Build for AppStore"
-    lane :build_app_store do
-        if ENV["BUILD_NUMBER"].nil?
-            UI.user_error! "Pass build number in environment variable BUILD_NUMBER"
+    desc "Build for release to AppStore or Hockey/S3"
+    lane :build_for_release do |options|
+        build = Build.new(options: options, branch: git_branch)
+
+        if build.for_simulator
+            Dir.chdir("..") do
+                # Build the app for simulator
+                sh "xcodebuild -scheme 'Wire-iOS' -configuration 'Debug' -sdk 'iphonesimulator' -derivedDataPath DerivedData -quiet build BUILD_NUMBER=#{build.build_number}"
+
+                # make a "fake" .ipa package that QA will use for installing to simulator
+                sh "mkdir -p debug/Payload"
+                sh "mkdir -p #{build.artifact_path(with_filename: false)}"
+                sh "cp -r DerivedData/Build/Products/Debug-iphonesimulator/*.app debug/Payload/"
+                sh "cd debug && zip -r ../#{build.artifact_path(with_filename: true)}.ipa Payload/"
+            end
+        else
+            build_app(
+                scheme: "Wire-iOS",
+                configuration: build.configuration,
+                export_method: build.export_method,
+                export_options: {"iCloudContainerEnvironment": "Production"},
+                derived_data_path: "DerivedData",
+                archive_path: build.archive_path(with_filename: true),
+                buildlog_path: build.build_path,
+                output_directory: build.artifact_path(with_filename: false),
+                output_name: build.filename,
+                include_bitcode: false,
+                include_symbols: true,
+                xcargs: "BUILD_NUMBER=#{build.build_number}"
+            )
         end
-        # Remove debug settings
-        sh "echo '' > ../Wire-iOS/Resources/Settings.bundle/Root.plist"
-        build_app(
-            scheme: "Wire-iOS",
-            export_method: "app-store",
-            derived_data_path: "DerivedData",
-            buildlog_path: "appstore",
-            output_directory: "appstore",
-            include_bitcode: false,
-            include_symbols: true,
-            xcargs: "BUILD_NUMBER=#{ENV["BUILD_NUMBER"]}"
-        )
     end
 
     desc "Upload to AppStore"
-    lane :release_app_store do
+    lane :upload_app_store do
+        build = Build.new(options: options, branch: git_branch)
+
         sh "cp ../Configuration/Appfile ."
         deliver(
-            ipa: "appstore/Wire.ipa",
+            ipa: build.filename,
             submit_for_review: false,
             automatic_release: false,
             force: true, # Skip HTML report verification
@@ -79,6 +97,30 @@ platform :ios do
             skip_screenshots: true,
         )
     end
+
+    desc "Upload to S3 (Automation builds)"
+    lane :upload_s3 do |options|
+        build = Build.new(options: options, branch: git_branch)
+
+        if build.appstore_build
+            sh "cd ../#{build.archive_path(with_filename: false)} && tar -czf #{build.filename}.xcarchive.tgz #{build.filename}.xcarchive"
+        end
+        
+        sh "cd .. && aws s3 cp --recursive --exclude '*'  --include '*.ipa' --include '*.xcarchive.tgz' artifacts/ s3://#{ENV['S3_BUCKET']}/ios/"
+    end
+
+    desc "Upload for internal use"
+    lane :upload_hockey do |options|
+        build = Build.new(options: options, branch: git_branch)
+        hockey(
+          api_token: ENV["HOCKEY_APP_TOKEN"],
+          public_identifier: build.hockey_app_id,
+          ipa: "#{build.artifact_path(with_filename: true)}.ipa",
+          notes: build.changelog,
+          notify: "0"
+        )
+    end
+
 
     desc "Run post-test tasks"
     lane :post_test do
@@ -103,4 +145,189 @@ platform :ios do
         sh codecov
 
     end
+end
+
+class Build
+    attr_reader :build_type
+    attr_reader :git_branch
+    attr_reader :build_number
+    attr_reader :last_commit
+    attr_reader :for_simulator
+    attr_reader :configuration
+
+    def initialize(options:, branch:)
+        build_number = options[:build_number]
+        if build_number.nil?
+            UI.user_error! "Pass build_number parameter to fastlane e.g. fastlane build build_number:1234"
+        end
+        build_type = options[:build_type]
+        if build_type.nil? 
+            UI.user_error! "Pass buid_type parameter, e.g. fastlane build build_type:Development"
+        end
+
+        @last_commit = options[:last_commit]
+        @build_type = build_type
+        @git_branch = branch
+        @build_number = build_number
+
+        for_simulator = options[:for_simulator]
+        if for_simulator.nil? 
+            @for_simulator = false
+        else
+            @for_simulator = for_simulator.to_s == 'true'
+        end
+
+        configuration = options[:configuration]
+        if configuration.nil? 
+            @configuration = "Release"
+        else
+            @configuration = configuration
+        end
+    end
+
+    # Helpers
+
+    def appstore_build
+        @build_type == "AppStore"
+    end
+
+    def debug_build
+        @configuration == "Debug"
+    end
+
+    def normalized_branch_name
+        @git_branch.gsub("/", "_")
+    end
+
+    def export_method
+        if debug_build
+            "development"
+        elsif appstore_build
+            "app-store"
+        else 
+            "enterprise"
+        end
+    end
+
+    # Paths
+
+    def artifact_path(with_filename: true)
+        "artifacts/#{artifact_directory}" + (with_filename ? "/#{filename}" : "")
+    end
+
+    def build_path
+        "build"
+    end
+
+    def archive_path(with_filename: true)
+        # Put AppStore archive next to .ipa for futher processing
+        if appstore_build
+            "artifacts/#{artifact_directory}" + (with_filename ? "/#{filename}" : "")
+        else 
+            "#{build_path}" + (with_filename ? "/#{filename}" : "")
+        end
+    end
+
+    def filename
+        simulator = @for_simulator ? "-simulator" : ""
+        "Wire-#{@build_type.downcase}-#{normalized_branch_name}#{simulator}-#{@build_number}"
+    end
+
+    def artifact_directory
+        suffix = "" 
+        if for_simulator 
+            suffix = "simulator" 
+        else 
+            suffix = "device/" + (debug_build ? "debug" : "release")
+        end
+
+        case @build_type
+        when "Playground"
+            "playground-#{normalized_branch_name}/#{suffix}"
+        when "Development"
+            "development/#{suffix}"
+        when "Internal"
+            "internal/#{suffix}"
+        when "AppStore"
+            "release/appstore"
+        when "AVS"
+            "avs-experimental/#{suffix}"
+        when "RC"
+            "release/#{suffix}"
+        else
+            UI.user_error! "Unknown build type: #{@build_type}"
+        end
+    end
+
+    # Adding build number to icon
+
+    def process_icon
+        # No preprocessing needed for AppStore icons
+        if appstore_build
+            return
+        end
+
+        # Loop over all icons in the iconset
+        Dir.glob("../#{iconset_location}/*.png") do |image|
+            width = %x( identify -format %w #{image} )
+            image_height = %x( identify -format %h #{image} )
+            height = Integer(image_height) / 4.0
+
+            # Add build number to the icon
+            %x( convert -background '#0008' -fill white -gravity center -size #{width}x#{height} caption:"#{extra_info}" "#{image}" +swap -gravity south -composite "#{image}" )
+        end
+    end
+
+    def extra_info
+        @build_number
+    end
+
+    def iconset_location
+        "Configuration/Images.xcassets/AppIcon-#{iconset_name}.appiconset"
+    end
+
+    def iconset_name
+        case @build_type
+        when "Playground"
+            "Development"
+        else
+            @build_type
+        end
+    end
+
+    # Hockey
+
+    def changelog
+        if @build_type == "Playground"
+            "Playground build for #{@git_branch}"
+        elsif @last_commit.nil? || @last_commit.empty?
+            "No changelog available"
+        else
+            "Changes Since Last Build:\n" + changelog_from_git_commits(
+                between: [last_commit, "HEAD"],
+                pretty: "* [%an] %s",
+            )
+        end
+
+    end
+
+    def hockey_app_id
+        case @build_type
+        when "Playground"
+            ENV["HOCKEY_IOS_PLAYGROUND_ID"]
+        when "Development"
+            ENV["HOCKEY_IOS_DEV_ID"]
+        when "Internal"
+            ENV["HOCKEY_IOS_INT_ID"]
+        when "AppStore"
+            ENV["HOCKEY_IOS_APPSTORE_ID"]
+        when "AVS"
+            ENV["HOCKEY_IOS_AVS_ID"]
+        when "RC"
+            ENV["HOCKEY_IOS_RELEASE_ID"]
+        else
+            UI.user_error! "Unknown build type: #{@build_type}"
+        end
+    end
+
 end

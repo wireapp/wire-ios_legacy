@@ -56,7 +56,7 @@ public extension ConversationViewController {
         let button = IconButton()
         button.adjustsTitleWhenHighlighted = true
         button.adjustBackgroundImageWhenHighlighted = true
-        button.setTitle("conversation_list.right_accessory.join_button.title".localized.uppercased(), for: .normal)
+        button.setTitle("conversation_list.right_accessory.join_button.title".localized(uppercased: true), for: .normal)
         button.accessibilityLabel = "conversation.join_call.voiceover".localized
         button.accessibilityTraits.insert(.startsMediaSession)
         button.titleLabel?.font = FontSpec(.small, .semibold).font

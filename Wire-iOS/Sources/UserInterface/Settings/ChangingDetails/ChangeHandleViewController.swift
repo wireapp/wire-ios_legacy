@@ -228,7 +228,7 @@ struct HandleChangeState {
     }
 
     private func setupViews() {
-        title = "self.settings.account_section.handle.change.title".localized.uppercased()
+        title = "self.settings.account_section.handle.change.title".localized(uppercased: true)
         view.backgroundColor = .clear
         ChangeHandleTableViewCell.register(in: tableView)
         tableView.allowsSelection = false

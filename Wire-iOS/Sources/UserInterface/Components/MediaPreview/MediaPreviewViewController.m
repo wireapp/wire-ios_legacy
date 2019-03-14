@@ -32,11 +32,6 @@
 
 @synthesize linkAttachment = _linkAttachment;
 
-- (void)loadView
-{
-    self.view = [[MediaPreviewView alloc] initForAutoLayout];
-}
-
 - (void)tearDown;
 {
     //NO-OP
