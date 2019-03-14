@@ -37,3 +37,4 @@
 #import "EmoticonSubstitutionConfiguration+Tests.h"
 #import "SoundcloudAudioTrack.h"
 #import "SoundcloudAudioTrack+Internal.h"
+#import "ConnectRequestsViewController.h"

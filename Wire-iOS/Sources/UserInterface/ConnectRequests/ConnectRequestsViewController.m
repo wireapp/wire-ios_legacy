@@ -64,11 +64,15 @@ static NSString *ConnectionRequestCellIdentifier = @"ConnectionRequestCell";
     self.tableView.dataSource = self;
     
     ZMConversationList *pendingConnectionsList = [ZMConversationList pendingConnectionConversationsInUserSession:[ZMUserSession sharedSession]];
-    self.pendingConnectionsListObserverToken = [ConversationListChangeInfo addObserver:self
-                                                                               forList:pendingConnectionsList
-                                                                           userSession:[ZMUserSession sharedSession]];
+
+    if ([ZMUserSession sharedSession]) {
+        self.pendingConnectionsListObserverToken = [ConversationListChangeInfo addObserver:self
+                                                                                   forList:pendingConnectionsList
+                                                                               userSession:[ZMUserSession sharedSession]];
+
+        self.userObserverToken = [UserChangeInfo addObserver:self forUser:[ZMUser selfUser] userSession:[ZMUserSession sharedSession]];
+    }
     
-    self.userObserverToken = [UserChangeInfo addObserver:self forUser:[ZMUser selfUser] userSession:[ZMUserSession sharedSession]];
     self.connectionRequests = pendingConnectionsList;
     
     [self reload];
