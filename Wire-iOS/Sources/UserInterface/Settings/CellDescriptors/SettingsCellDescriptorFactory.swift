@@ -138,10 +138,21 @@ class SettingsCellDescriptorFactory {
 
     func soundGroupForSetting(_ settingsProperty: SettingsProperty, title: String, customSounds: [ZMSound], defaultSound: ZMSound) -> SettingsCellDescriptorType {
         let items: [ZMSound] = [ZMSound.None, defaultSound] + customSounds
+        let previewPlayer: SoundPreviewPlayer = SoundPreviewPlayer(mediaManager: AVSMediaManager.sharedInstance())
         
         let cells: [SettingsPropertySelectValueCellDescriptor] = items.map { item in
             let playSoundAction: SettingsPropertySelectValueCellDescriptor.SelectActionType = { cellDescriptor in
-                item.playPreview()
+                
+                switch settingsProperty.propertyName {
+                case .callSoundName:
+                    previewPlayer.playPreview(MediaManagerSoundRingingFromThemSound)
+                case .pingSoundName:
+                    previewPlayer.playPreview(MediaManagerSoundIncomingKnockSound)
+                case .messageSoundName:
+                    previewPlayer.playPreview(MediaManagerSoundMessageReceivedSound)
+                default:
+                    break
+                }
             }
             
             let propertyValue = item == defaultSound ? SettingsPropertyValue.none : SettingsPropertyValue.string(value: item.rawValue)

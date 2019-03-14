@@ -75,6 +75,7 @@
 		165FDC4B1DD5D447009D75A2 /* NSItemProvider+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 165FDC4A1DD5D447009D75A2 /* NSItemProvider+Helper.m */; };
 		1660F2381FBC6E2E00A0EE54 /* silence.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 1660F2371FBC6E2D00A0EE54 /* silence.m4a */; };
 		1660F23A1FBF32D400A0EE54 /* MediaPlayerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1660F2391FBF32D400A0EE54 /* MediaPlayerController.swift */; };
+		16616752223AAA5F00779AE3 /* SoundPreviewPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16616751223AAA5F00779AE3 /* SoundPreviewPlayer.swift */; };
 		1661C71B21A7113A003DCE1C /* ConversationFileMessageCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1661C71A21A7113A003DCE1C /* ConversationFileMessageCellTests.swift */; };
 		1661C71D21A71853003DCE1C /* ConversationVideoMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1661C71C21A71853003DCE1C /* ConversationVideoMessageCell.swift */; };
 		1661C71F21A71F15003DCE1C /* ConversationAudioMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1661C71E21A71F15003DCE1C /* ConversationAudioMessageCell.swift */; };
@@ -1561,6 +1562,7 @@
 		165FDC4A1DD5D447009D75A2 /* NSItemProvider+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSItemProvider+Helper.m"; sourceTree = "<group>"; };
 		1660F2371FBC6E2D00A0EE54 /* silence.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = silence.m4a; sourceTree = "<group>"; };
 		1660F2391FBF32D400A0EE54 /* MediaPlayerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaPlayerController.swift; sourceTree = "<group>"; };
+		16616751223AAA5F00779AE3 /* SoundPreviewPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundPreviewPlayer.swift; sourceTree = "<group>"; };
 		1661C71A21A7113A003DCE1C /* ConversationFileMessageCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationFileMessageCellTests.swift; sourceTree = "<group>"; };
 		1661C71C21A71853003DCE1C /* ConversationVideoMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationVideoMessageCell.swift; sourceTree = "<group>"; };
 		1661C71E21A71F15003DCE1C /* ConversationAudioMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationAudioMessageCell.swift; sourceTree = "<group>"; };
@@ -5222,6 +5224,7 @@
 				8F5A3E9C19AE2C9E00D0E9DA /* AVSMediaManager+Additions.m */,
 				87F280A91D080E8400F813CA /* AVSMediaManager+CustomSounds.swift */,
 				8784AE3D1FC2DE5300AAEAB8 /* MediaManagerLoader.swift */,
+				16616751223AAA5F00779AE3 /* SoundPreviewPlayer.swift */,
 			);
 			path = sound;
 			sourceTree = "<group>";
@@ -8196,6 +8199,7 @@
 				87DCF48F1D34E9BA00BB420F /* ContactsEmptyResultView.m in Sources */,
 				871BC3591D34F94200DF0793 /* AudioTrackView.m in Sources */,
 				7C232CD91FE029BD00792E9B /* Analytics+Availability.swift in Sources */,
+				16616752223AAA5F00779AE3 /* SoundPreviewPlayer.swift in Sources */,
 				166390D41DC34CAB00D7BF1C /* ImageToolbarView.swift in Sources */,
 				F15650F621DD1E0A00210504 /* UIImage+ImageUtilities.m in Sources */,
 				EF6DAD6A2150F2C400D9BA70 /* ContactsViewController+SearchHeader.swift in Sources */,
