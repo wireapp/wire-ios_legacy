@@ -32,7 +32,7 @@ final class MediaBarSnapshotTests: ZMSnapshotTestCase {
         sut.frame = CGRect(x: 0, y: 0, width: 375, height: sut.intrinsicContentSize.height)
 
         /// TODO: remove this after snapshot is created
-        recordMode = true
+//        recordMode = true
     }
     
     override func tearDown() {

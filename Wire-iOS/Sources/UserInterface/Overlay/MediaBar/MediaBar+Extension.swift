@@ -20,34 +20,39 @@ import Foundation
 
 extension MediaBar {
     override open func updateConstraints() {
-        if !initialConstraintsCreated {
-            initialConstraintsCreated = true
-
-            let iconSize: CGFloat = 16
-            let buttonInsets: CGFloat = traitCollection.horizontalSizeClass == .regular ? 32 : 16
-
-            contentView.translatesAutoresizingMaskIntoConstraints = false
-            contentView.fitInSuperview()
-
-            titleLabel.pinToSuperview(axisAnchor: .centerY)
-
-//            titleLabel?.autoAlignAxis(ALAxisHorizontal, toSameAxisOf: contentView)
-            titleLabel?.autoPinEdge(ALEdgeLeft, toEdge: ALEdgeRight, ofView: playPauseButton, withOffset: 8.0)
-
-            playPauseButton.autoSetDimensions(to: [iconSize, iconSize])
-            playPauseButton.autoAlignAxis(ALAxisHorizontal, toSameAxisOf: contentView)
-            playPauseButton.autoPinEdge(toSuperviewEdge: ALEdgeLeft, withInset: buttonInsets)
-
-            closeButton.autoSetDimensions(to: [iconSize, iconSize])
-            closeButton.autoAlignAxis(ALAxisHorizontal, toSameAxisOf: contentView)
-            closeButton.autoPinEdge(ALEdgeLeft, toEdge: ALEdgeRight, ofView: titleLabel, withOffset: 8.0)
-            closeButton.autoPinEdge(toSuperviewEdge: ALEdgeRight, withInset: buttonInsets)
-
-            bottomSeparatorLine.autoSetDimension(ALDimensionHeight, toSize: 0.5)
-            bottomSeparatorLine.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets.zero, excludingEdge: ALEdgeTop)
-        }
-
         super.updateConstraints()
-    }
+        
+        guard !initialConstraintsCreated else {
+            return
+        }
+        
+        initialConstraintsCreated = true
+        
+        let iconSize: CGFloat = 16
+        let buttonInsets: CGFloat = traitCollection.horizontalSizeClass == .regular ? 32 : 16
+        
+        [contentView,
+         titleLabel,
+         playPauseButton,
+         closeButton].forEach() {$0.translatesAutoresizingMaskIntoConstraints = false}
+        contentView.fitInSuperview()
+        
+        titleLabel.pinToSuperview(axisAnchor: .centerY)
+        
+        playPauseButton.setDimensions(length: iconSize)
+        playPauseButton.pinToSuperview(axisAnchor: .centerY)
+        playPauseButton.pinToSuperview(anchor: .leading, constant: buttonInsets)
+        
+        closeButton.setDimensions(length: iconSize)
+        closeButton.pinToSuperview(axisAnchor: .centerY)
+        closeButton.pinToSuperview(anchor: .trailing, constant: -buttonInsets)
 
+        titleLabel.leftAnchor.constraint(equalTo: playPauseButton.rightAnchor, constant: 8).isActive = true
+        closeButton.leftAnchor.constraint(equalTo: titleLabel.rightAnchor, constant: 8).isActive = true
+
+        bottomSeparatorLine.heightAnchor.constraint(equalToConstant: 0.5).isActive = true
+        bottomSeparatorLine.fitInSuperview(exclude: [.top])
+        
+    }
+    
 }
