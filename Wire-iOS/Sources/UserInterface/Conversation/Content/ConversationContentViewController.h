@@ -26,6 +26,7 @@
 @class UpsideDownTableView;
 @class UserSearchResultsViewController;
 @class ConversationTableViewDataSource;
+@class MediaPlaybackManager;
 
 @protocol ZMUserSessionInterface;
 
@@ -44,9 +45,11 @@
 @property (nonatomic) ConversationTableViewDataSource* dataSource;
 
 - (instancetype)initWithConversation:(ZMConversation *)conversation
+                mediaPlaybackManager:(MediaPlaybackManager *)mediaPlaybackManager
                              session:(id<ZMUserSessionInterface>)session;
 - (instancetype)initWithConversation:(ZMConversation *)conversation
                              message:(id<ZMConversationMessage>)message
+                mediaPlaybackManager:(MediaPlaybackManager *)mediaPlaybackManager
                              session:(id<ZMUserSessionInterface>) session NS_DESIGNATED_INITIALIZER;
 - (instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil NS_UNAVAILABLE;
