@@ -21,14 +21,18 @@ import UIKit
 @objcMembers
 final class ConnectRequestCell: UITableViewCell {
 
-    private var connectRequestViewController: IncomingConnectionViewController!
+    var acceptBlock: (() -> Void)?
+    var ignoreBlock: (() -> Void)?
+
+    private var connectRequestViewController: IncomingConnectionViewController?
 
     var user: ZMUser! {
         didSet {
-            connectRequestViewController.view.removeFromSuperview()
-            connectRequestViewController = IncomingConnectionViewController(userSession: ZMUserSession.shared()!, user: user)
+            connectRequestViewController?.view.removeFromSuperview()
 
-            connectRequestViewController.onAction = {[weak self] action in
+            let incomingConnectionViewController = IncomingConnectionViewController(userSession: ZMUserSession.shared(), user: user)
+
+            incomingConnectionViewController.onAction = {[weak self] action in
                 switch action {
                 case .accept:
                     self?.acceptBlock?()
@@ -37,17 +41,18 @@ final class ConnectRequestCell: UITableViewCell {
                 }
             }
 
-            contentView.addSubview(connectRequestViewController.view)
+            let view = incomingConnectionViewController.view!
 
-            connectRequestViewController.view.translatesAutoresizingMaskIntoConstraints = false
-            connectRequestViewController.view.pinToSuperview(axisAnchor: .centerX)
-            connectRequestViewController.view.fitInSuperview()
-            connectRequestViewController.view.widthAnchor.constraint(lessThanOrEqualToConstant: 420)
+            contentView.addSubview(view)
+
+            view.translatesAutoresizingMaskIntoConstraints = false
+            view.pinToSuperview(axisAnchor: .centerX)
+            view.fitInSuperview()
+            view.widthAnchor.constraint(lessThanOrEqualToConstant: 420)
+
+            connectRequestViewController = incomingConnectionViewController
         }
     }
-
-    var acceptBlock: (() -> Void)?
-    var ignoreBlock: (() -> Void)?
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
