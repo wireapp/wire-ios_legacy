@@ -25,12 +25,12 @@ class MessageKeyPathObserver: NSObject, ZMMessageObserver {
     
     typealias ChangedBlock = (_ message: ZMConversationMessage) -> Void
     
-    private let keypath: PartialKeyPath<MessageChangeInfo>
+    private let keypath: KeyPath<MessageChangeInfo, Bool>
     private var token: Any?
     
     var onChanged: ChangedBlock?
     
-    init?(message: ZMConversationMessage, keypath: PartialKeyPath<MessageChangeInfo>, _ changed: ChangedBlock? = nil) {
+    init?(message: ZMConversationMessage, keypath: KeyPath<MessageChangeInfo, Bool>, _ changed: ChangedBlock? = nil) {
         guard let session = ZMUserSession.shared() else { return nil }
         
         self.keypath = keypath
@@ -42,7 +42,7 @@ class MessageKeyPathObserver: NSObject, ZMMessageObserver {
     }
     
     func messageDidChange(_ changeInfo: MessageChangeInfo) {
-        guard changeInfo[keyPath: keypath] as? Bool == true else { return }
+        guard changeInfo[keyPath: keypath] else { return }
     
         onChanged?(changeInfo.message)
     }
