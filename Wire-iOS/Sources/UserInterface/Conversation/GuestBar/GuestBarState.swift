@@ -25,7 +25,7 @@
 
 extension GuestBarState {
     var displayString: String {
-        return localizationKey.localized.uppercased()
+        return localizationKey.localized(uppercased: true)
     }
     
     private var localizationKey: String {

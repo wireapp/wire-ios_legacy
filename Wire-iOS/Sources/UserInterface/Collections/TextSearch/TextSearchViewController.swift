@@ -58,7 +58,7 @@ import Cartography
         
         self.searchBar = TextSearchInputView()
         self.searchBar.delegate = self
-        self.searchBar.placeholderString = "collections.search.field.placeholder".localized.uppercased()
+        self.searchBar.placeholderString = "collections.search.field.placeholder".localized(uppercased: true)
     }
 
     public func teardown() {

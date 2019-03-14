@@ -22,13 +22,13 @@ set -e
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd $DIR/..
 
-ORIGINAL_TRANSLATIONS="Wire-iOS/Resources"
-MODIFIED_TRANSLATIONS="Configuration/Translations"
+POSTPROCESS_SCRIPT="Configuration/postprocess.sh"
 
-if [ -e "${MODIFIED_TRANSLATIONS}" ]; then
-    ./Scripts/compare-translations.py "${ORIGINAL_TRANSLATIONS}" "${MODIFIED_TRANSLATIONS}" --copy-to "${ORIGINAL_TRANSLATIONS}" --ignore-missing
+if [ -e "${POSTPROCESS_SCRIPT}" ]; then
+    echo "Running ${POSTPROCESS_SCRIPT}"
+    ./"${POSTPROCESS_SCRIPT}"
 else
-    echo "No need to modify any translations, skipping..."
+    echo "No postprocess script found in ${POSTPROCESS_SCRIPT}, skipping..."
 fi
 
 echo "✅  Done"

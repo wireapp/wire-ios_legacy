@@ -27,16 +27,16 @@ import Cartography
             
             switch(section) {
             case CollectionsSectionSet.images:
-                self.titleLabel.text = "collections.section.images.title".localized.uppercased()
+                self.titleLabel.text = "collections.section.images.title".localized(uppercased: true)
                 icon = .photo
             case CollectionsSectionSet.filesAndAudio:
-                self.titleLabel.text = "collections.section.files.title".localized.uppercased()
+                self.titleLabel.text = "collections.section.files.title".localized(uppercased: true)
                 icon = .document
             case CollectionsSectionSet.videos:
-                self.titleLabel.text = "collections.section.videos.title".localized.uppercased()
+                self.titleLabel.text = "collections.section.videos.title".localized(uppercased: true)
                 icon = .movie
             case CollectionsSectionSet.links:
-                self.titleLabel.text = "collections.section.links.title".localized.uppercased()
+                self.titleLabel.text = "collections.section.links.title".localized(uppercased: true)
                 icon = .link
             default: fatal("Unknown section")
             }

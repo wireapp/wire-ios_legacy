@@ -144,7 +144,7 @@ final public class ConversationCreationValues {
         Analytics.shared().tagLinearGroupOpened(with: self.source)
 
         view.backgroundColor = UIColor.from(scheme: .contentBackground, variant: colorSchemeVariant)
-        title = "conversation.create.group_name.title".localized.uppercased()
+        title = "conversation.create.group_name.title".localized(uppercased: true)
         
         setupNavigationBar()
         setupViews()
@@ -213,7 +213,7 @@ final public class ConversationCreationValues {
             navigationItem.leftBarButtonItem = navigationController?.closeItem()
         }
         
-        let nextButtonItem = UIBarButtonItem(title: "general.next".localized.uppercased(), style: .plain, target: self, action: #selector(tryToProceed))
+        let nextButtonItem = UIBarButtonItem(title: "general.next".localized(uppercased: true), style: .plain, target: self, action: #selector(tryToProceed))
         nextButtonItem.accessibilityIdentifier = "button.newgroup.next"
         nextButtonItem.tintColor = UIColor.accent()
         nextButtonItem.isEnabled = false

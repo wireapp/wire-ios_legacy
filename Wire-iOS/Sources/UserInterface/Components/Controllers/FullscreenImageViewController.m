@@ -24,7 +24,6 @@
 #import "FullscreenImageViewController.h"
 #import "FullscreenImageViewController+PullToDismiss.h"
 #import "FullscreenImageViewController+internal.h"
-#import "NSLayoutConstraint+Helpers.h"
 
 // ui
 #import "IconButton.h"
@@ -40,7 +39,6 @@
 
 #import "Constants.h"
 #import "UIImage+ZetaIconsNeue.h"
-@import PureLayout;
 
 #import "Analytics.h"
 
@@ -75,19 +73,13 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @interface FullscreenImageViewController () <UIScrollViewDelegate>
 
-@property (nonatomic, readwrite) UIScrollView *scrollView;
 @property (nonatomic, strong) ConversationMessageActionController *actionController;
 
 @property (nonatomic) CALayer *highlightLayer;
-@property (nonatomic, strong) ObfuscationView *obfuscationView;
-
-@property (nonatomic) IconButton *closeButton;
 
 @property (nonatomic) UITapGestureRecognizer *tapGestureRecognzier;
 @property (nonatomic) UITapGestureRecognizer *doubleTapGestureRecognizer;
 @property (nonatomic) UILongPressGestureRecognizer *longPressGestureRecognizer;
-
-@property (nonatomic) UIActivityIndicatorView *loadingSpinner;
 
 @property (nonatomic) BOOL isShowingChrome;
 @property (nonatomic) BOOL assetWriteInProgress;
@@ -185,42 +177,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     return YES;
 }
 
-- (void)setupSnapshotBackgroundView
-{
-    UIView *snapshotBackgroundView = [self.delegate respondsToSelector:@selector(backgroundScreenshotForController:)] ? [self.delegate backgroundScreenshotForController:self] : nil;
-    if (nil == snapshotBackgroundView) {
-        return;
-    }
-    self.snapshotBackgroundView = snapshotBackgroundView;
-    snapshotBackgroundView.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.view addSubview:snapshotBackgroundView];
-
-    const CGFloat topBarHeight = CGRectGetMaxY(self.navigationController.navigationBar.frame);
-    [snapshotBackgroundView autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:-topBarHeight];
-    [snapshotBackgroundView autoPinEdgeToSuperviewEdge:ALEdgeLeading];
-    [snapshotBackgroundView autoSetDimensionsToSize:[[UIScreen mainScreen] bounds].size];
-    snapshotBackgroundView.alpha = 0;
-}
-
-- (void)setupScrollView
-{
-    self.scrollView = [[UIScrollView alloc] init];
-    self.scrollView.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.view addSubview:self.scrollView];
-
-    [self.scrollView addConstraintsFittingToView:self.view];
-
-    if (@available(iOS 11, *)) {
-        self.scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
-    }
-
-    self.automaticallyAdjustsScrollViewInsets = NO;
-    self.scrollView.delegate = self;
-    self.scrollView.accessibilityIdentifier = @"fullScreenPage";
-    
-    self.animator = [[UIDynamicAnimator alloc] initWithReferenceView:self.scrollView];
-}
-
 - (void)updateForMessage
 {
     if (self.message.isObfuscated || self.message.hasBeenDeleted) {
@@ -228,25 +184,8 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         self.obfuscationView.hidden = NO;
     } else {
         self.obfuscationView.hidden = YES;
-        [self removeSpinner];
         [self loadImageAndSetupImageView];
     }
-}
-
-- (void)setupSpinner
-{
-    self.loadingSpinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:[[ColorScheme defaultColorScheme] variant] == ColorSchemeVariantDark ? UIActivityIndicatorViewStyleWhite : UIActivityIndicatorViewStyleGray];
-    self.loadingSpinner.hidesWhenStopped = YES;
-    [self.view addSubview:self.loadingSpinner];
-    [self.loadingSpinner startAnimating];
-    
-    [self.loadingSpinner autoCenterInSuperview];
-}
-
-- (void)removeSpinner
-{
-    [self.loadingSpinner removeFromSuperview];
-    self.loadingSpinner = nil;
 }
 
 - (void)loadImageAndSetupImageView
@@ -284,43 +223,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 {
     [self.imageView removeFromSuperview];
     self.imageView = nil;
-}
-
-- (void)setupTopOverlay
-{
-    self.topOverlay = [[UIView alloc] init];
-    self.topOverlay.translatesAutoresizingMaskIntoConstraints = NO;
-    self.topOverlay.hidden = !self.showCloseButton;
-    [self.view addSubview:self.topOverlay];
-
-    self.obfuscationView = [[ObfuscationView alloc] initWithIcon:ZetaIconTypePhoto];
-    self.obfuscationView.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.view addSubview:self.obfuscationView];
-
-    // Close button
-    self.closeButton = [[IconButton alloc] initWithStyle:IconButtonStyleCircular];
-    self.closeButton.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.closeButton setIcon:ZetaIconTypeX withSize:ZetaIconSizeTiny forState:UIControlStateNormal];
-    [self.topOverlay addSubview:self.closeButton];
-    [self.closeButton addTarget:self action:@selector(closeButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-    self.closeButton.accessibilityIdentifier = @"fullScreenCloseButton";
-    
-    // Constraints
-    CGFloat topOverlayHeight = self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular ? 104 : 60;
-    [self.topOverlay addConstraintForRightMargin:0 relativeToView:self.view];
-    [self.topOverlay addConstraintForLeftMargin:0 relativeToView:self.view];
-    [self.topOverlay addConstraintForTopMargin:0 relativeToView:self.view];
-    [self.topOverlay addConstraintForHeight:topOverlayHeight];
-
-    [self.obfuscationView.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor].active = YES;
-    [self.obfuscationView.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor].active = YES;
-    [self.obfuscationView.centerYAnchor constraintEqualToAnchor:self.view.centerYAnchor].active = YES;
-    [self.obfuscationView.heightAnchor constraintEqualToAnchor:self.obfuscationView.widthAnchor].active = YES;
-
-    [self.closeButton addConstraintForAligningVerticallyWithView:self.topOverlay offset:10];
-    [self.closeButton addConstraintForRightMargin:8 relativeToView:self.topOverlay];
-    [self.closeButton autoSetDimension:ALDimensionWidth toSize:32];
-    [self.closeButton autoMatchDimension:ALDimensionWidth toDimension:ALDimensionHeight ofView:self.closeButton];
 }
 
 - (void)showChrome:(BOOL)shouldShow

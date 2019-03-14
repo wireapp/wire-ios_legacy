@@ -43,7 +43,7 @@ class ConversationCreateNameCell: UICollectionViewCell {
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.isAccessibilityElement = true
         textField.accessibilityIdentifier = "textfield.newgroup.name"
-        textField.placeholder = "conversation.create.group_name.placeholder".localized.uppercased()
+        textField.placeholder = "conversation.create.group_name.placeholder".localized(uppercased: true)
                 
         contentView.addSubview(textField)
         textField.fitInSuperview()

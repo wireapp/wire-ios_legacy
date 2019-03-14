@@ -216,18 +216,19 @@ import Cartography
         guard let fileMessageData = self.fileMessage?.fileMessageData else { return }
         
         switch(fileMessageData.transferState) {
-        case .downloading:
-            self.progressView.setProgress(0, animated: false)
-            self.delegate?.transferView(self, didSelect: .cancel)
         case .uploading:
             if .none != fileMessageData.fileURL {
                 self.delegate?.transferView(self, didSelect: .cancel)
             }
-        case .cancelledUpload, .failedUpload:
+        case .uploadingCancelled, .uploadingFailed:
             self.delegate?.transferView(self, didSelect: .resend)
-        case .uploaded, .downloaded, .failedDownload:
-            self.delegate?.transferView(self, didSelect: .present)
-        case .unavailable: break
+        case .uploaded:
+            if case .downloading = fileMessageData.downloadState {
+                self.progressView.setProgress(0, animated: false)
+                self.delegate?.transferView(self, didSelect: .cancel)
+            } else {
+                self.delegate?.transferView(self, didSelect: .present)
+            }
         }
     }
     

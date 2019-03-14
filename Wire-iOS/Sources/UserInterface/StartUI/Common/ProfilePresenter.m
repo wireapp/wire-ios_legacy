@@ -106,7 +106,7 @@
 
     UINavigationController *navigationController = profileViewController.wrapInNavigationController;
     navigationController.transitioningDelegate = self.transitionDelegate;
-    navigationController.modalPresentationStyle = UIModalPresentationPopover;
+    navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
 
     [controller presentViewController:navigationController animated:YES completion:nil];
     

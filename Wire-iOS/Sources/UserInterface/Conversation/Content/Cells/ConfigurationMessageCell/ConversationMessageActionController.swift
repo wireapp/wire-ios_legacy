@@ -120,7 +120,7 @@ import UIKit
             return .present
         } else if message.isFile, !message.isAudio, let transferState = message.fileMessageData?.transferState {
             switch transferState {
-            case .downloaded, .uploaded, .failedDownload:
+            case .uploaded:
                 return .present
             default:
                 return nil

@@ -133,7 +133,7 @@ final class ClientListViewController: UIViewController,
         }
 
         super.init(nibName: nil, bundle: nil)
-        title = "registration.devices.title".localized.uppercased()
+        title = "registration.devices.title".localized(uppercased: true)
 
         self.initalizeProperties(clientsList ?? Array(ZMUser.selfUser().clients.filter { !$0.isSelfClient() } ))
         self.clientsObserverToken = ZMUserSession.shared()?.add(self)

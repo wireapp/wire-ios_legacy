@@ -82,7 +82,9 @@ class ConversationFileMessageCell: RoundedView, ConversationMessageCell {
 
     func configure(with object: Configuration, animated: Bool) {
         fileTransferView.configure(for: object.message, isInitial: false)
-        self.obfuscationView.isHidden = !object.isObfuscated
+
+        obfuscationView.isHidden = !object.isObfuscated
+        fileTransferView.isHidden = object.isObfuscated
 
     }
 

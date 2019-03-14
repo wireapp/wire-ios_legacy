@@ -116,7 +116,7 @@ final class BackupViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "self.settings.history_backup.title".localized.uppercased()
+        title = "self.settings.history_backup.title".localized(uppercased: true)
         setupViews()
         setupLayout()
     }

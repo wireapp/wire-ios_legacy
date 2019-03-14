@@ -93,7 +93,8 @@ final class AudioMessageViewTests: XCTestCase {
         let url = Bundle(for: type(of: self)).url(forResource: "audio_sample", withExtension: "m4a")!
 
         let audioMessage = MockMessageFactory.audioMessage(config: {
-            $0.fileMessageData?.transferState = .downloaded
+            $0.backingFileMessageData?.transferState = .uploaded
+            $0.backingFileMessageData?.downloadState = .downloaded
             $0.backingFileMessageData.fileURL = url
         })
 

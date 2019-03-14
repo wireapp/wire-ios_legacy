@@ -18,7 +18,7 @@
 
 @testable import Wire
 
-class ConfirmAssetViewControllerTests: ZMSnapshotTestCase {
+final class ConfirmAssetViewControllerTests: ZMSnapshotTestCase {
 
     var sut: ConfirmAssetViewController!
     

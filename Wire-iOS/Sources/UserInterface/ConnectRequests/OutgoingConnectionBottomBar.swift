@@ -52,7 +52,7 @@ import Cartography
     private func setupCancelButton() {
         cancelButton.accessibilityLabel = "cancel connection"
         cancelButton.setIcon(.undo, with: .tiny, for: .normal)
-        cancelButton.setTitle("profile.cancel_connection_button_title".localized.uppercased(), for: .normal)
+        cancelButton.setTitle("profile.cancel_connection_button_title".localized(uppercased: true), for: .normal)
         cancelButton.titleLabel?.font = FontSpec(.small, .light).font!
         cancelButton.setTitleColor(UIColor.from(scheme: .textForeground), for: .normal)
         cancelButton.titleImageSpacing = 24

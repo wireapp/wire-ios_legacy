@@ -195,7 +195,7 @@ private let zmLog = ZMSLog(tag: "UI")
             self.expectingDownload = false
         }
         else {
-            if fileMessageData.transferState == .downloaded && self.expectingDownload {
+            if fileMessageData.downloadState == .downloaded && self.expectingDownload {
                 self.playTrack()
                 self.expectingDownload = false
             }
@@ -415,23 +415,25 @@ private let zmLog = ZMSLog(tag: "UI")
         guard let fileMessage = self.fileMessage, let fileMessageData = fileMessage.fileMessageData else { return }
         
         switch(fileMessageData.transferState) {
-        case .downloading:
-            self.downloadProgressView.setProgress(0, animated: false)
-            self.delegate?.transferView(self, didSelect: .cancel)
         case .uploading:
             if .none != fileMessageData.fileURL {
                 self.delegate?.transferView(self, didSelect: .cancel)
             }
-        case .cancelledUpload, .failedUpload:
+        case .uploadingCancelled, .uploadingFailed:
             if .none != fileMessageData.fileURL {
                 self.delegate?.transferView(self, didSelect: .resend)
             }
-        case .uploaded, .failedDownload:
-            self.expectingDownload = true
-            ZMUserSession.shared()?.enqueueChanges(fileMessageData.requestFileDownload)
-        case .downloaded:
-            playTrack()
-        case .unavailable: return
+        case .uploaded:
+            switch fileMessageData.downloadState {
+            case .remote:
+                self.expectingDownload = true
+                ZMUserSession.shared()?.enqueueChanges(fileMessageData.requestFileDownload)
+            case .downloaded:
+                playTrack()
+            case .downloading:
+                self.downloadProgressView.setProgress(0, animated: false)
+                self.delegate?.transferView(self, didSelect: .cancel)
+            }
         }
     }
     

@@ -154,7 +154,7 @@ private let zmLog = ZMSLog(tag: "UI")
         timeLabel.font = FontSpec(.small, .none).font!
         timeLabel.textColor = UIColor.from(scheme: .textForeground)
         
-        topTooltipLabel.text = "conversation.input_bar.audio_message.tooltip.pull_send".localized.uppercased()
+        topTooltipLabel.text = "conversation.input_bar.audio_message.tooltip.pull_send".localized(uppercased: true)
         topTooltipLabel.accessibilityLabel = "audioRecorderTopTooltipLabel"
         topTooltipLabel.font = FontSpec(.small, .none).font!
         topTooltipLabel.textColor = UIColor.from(scheme: .textDimmed)
@@ -308,7 +308,7 @@ private let zmLog = ZMSLog(tag: "UI")
         self.recordingDotView.animating = !finished
         
         let pathComponent = finished ? "tooltip.tap_send" : "tooltip.pull_send"
-        topTooltipLabel.text = "\(localizationBasePath).\(pathComponent)".localized.uppercased()
+        topTooltipLabel.text = "\(localizationBasePath).\(pathComponent)".localized(uppercased: true)
         
         if self.recordingState == .recording {
             self.recordingDotViewHidden?.active = false

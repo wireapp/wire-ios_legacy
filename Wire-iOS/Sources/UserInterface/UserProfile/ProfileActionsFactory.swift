@@ -123,8 +123,8 @@ class ProfileActionsFactory: NSObject {
      */
 
     func makeActionsList() -> [ProfileAction] {
-        // Do nothing if the user is viewing their own profile
-        if viewer.isSelfUser && user.isSelfUser {
+        // Do nothing if the user is viewing their own profile or in case the user was deleted
+        if viewer.isSelfUser && user.isSelfUser || user.isAccountDeleted {
             return []
         }
 

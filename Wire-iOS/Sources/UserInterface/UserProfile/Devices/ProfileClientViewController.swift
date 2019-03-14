@@ -129,7 +129,7 @@ import Cartography
     
     private func setupShowMyDeviceButton() {
         showMyDeviceButton.accessibilityIdentifier = "show my device"
-        showMyDeviceButton.setTitle(NSLocalizedString("profile.devices.detail.show_my_device.title", comment: "").uppercased(), for: [])
+        showMyDeviceButton.setTitle("profile.devices.detail.show_my_device.title".localized(uppercased: true), for: [])
         showMyDeviceButton.addTarget(self, action: #selector(ProfileClientViewController.onShowMyDeviceTapped(_:)), for: .touchUpInside)
         showMyDeviceButton.setTitleColor(UIColor.accent(), for: .normal)
         showMyDeviceButton.titleLabel?.font = FontSpec(.small, .light).font!
@@ -163,7 +163,7 @@ import Cartography
     }
     
     private func setupTypeLabel() {
-        typeLabel.text = self.userClient.deviceClass?.uppercased()
+        typeLabel.text = self.userClient.deviceClass?.localizedUppercase
         typeLabel.numberOfLines = 1
         typeLabel.font = FontSpec(.small, .semibold).font!
         typeLabel.textColor = UIColor.from(scheme: .textForeground)
@@ -228,7 +228,7 @@ import Cartography
     private func setupVerifiedToggleLabel() {
         verifiedToggleLabel.font = FontSpec(.small, .light).font!
         verifiedToggleLabel.textColor = UIColor.from(scheme: .textForeground)
-        verifiedToggleLabel.text = NSLocalizedString("device.verified", comment: "").uppercased()
+        verifiedToggleLabel.text = "device.verified".localized(uppercased: true)
         verifiedToggleLabel.numberOfLines = 0
         self.contentView.addSubview(verifiedToggleLabel)
     }
@@ -236,7 +236,7 @@ import Cartography
     private func setupResetButton() {
         resetButton.setTitleColor(UIColor.accent(), for: .normal)
         resetButton.titleLabel?.font = FontSpec(.small, .light).font!
-        resetButton.setTitle(NSLocalizedString("profile.devices.detail.reset_session.title", comment: "").uppercased(), for: [])
+        resetButton.setTitle("profile.devices.detail.reset_session.title".localized(uppercased: true), for: [])
         resetButton.addTarget(self, action: #selector(ProfileClientViewController.onResetTapped(_:)), for: .touchUpInside)
         resetButton.accessibilityIdentifier = "reset session"
         self.contentView.addSubview(resetButton)

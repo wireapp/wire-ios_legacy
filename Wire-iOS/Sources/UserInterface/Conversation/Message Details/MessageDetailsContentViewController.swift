@@ -177,17 +177,17 @@ class MessageDetailsContentViewController: UIViewController {
         switch contentType {
         case .reactions:
             noResultsView.label.accessibilityIdentifier = "placeholder.no_likes"
-            noResultsView.placeholderText = "message_details.empty_likes".localized.uppercased()
+            noResultsView.placeholderText = "message_details.empty_likes".localized(uppercased: true)
             noResultsView.icon = .like
 
         case .receipts(enabled: true):
             noResultsView.label.accessibilityIdentifier = "placeholder.no_read_receipts"
-            noResultsView.placeholderText = "message_details.empty_read_receipts".localized.uppercased()
+            noResultsView.placeholderText = "message_details.empty_read_receipts".localized(uppercased: true)
             noResultsView.icon = .eye
 
         case .receipts(enabled: false):
             noResultsView.label.accessibilityIdentifier = "placeholder.read_receipts_disabled"
-            noResultsView.placeholderText = "message_details.read_receipts_disabled".localized.uppercased()
+            noResultsView.placeholderText = "message_details.read_receipts_disabled".localized(uppercased: true)
             noResultsView.icon = .eye
         }
     }
@@ -303,7 +303,7 @@ extension MessageDetailsContentViewController {
     /// Presents a profile view controller as a popover or a modal depending on the context.
     fileprivate func presentDetailsViewController(_ controller: ProfileViewController, above cell: UserCell) {
         let presentedController = controller.wrapInNavigationController()
-        presentedController.modalPresentationStyle = .popover
+        presentedController.modalPresentationStyle = .formSheet
 
         if let popover = presentedController.popoverPresentationController {
             popover.sourceRect = cell.avatar.bounds

@@ -46,15 +46,15 @@ class ConversationTitleView: TitleView {
             attachment = .verifiedShield()
         }
         super.configure(icon: attachment,
-                        title: conversation.displayName.uppercased(),
+                        title: conversation.displayName.localizedUppercase,
                         interactive: self.interactive && conversation.relatedConnectionState != .sent)
     }
 
     override func updateAccessibilityLabel() {
         if conversation.securityLevel == .secure {
-            self.accessibilityLabel = conversation.displayName.uppercased() + ", " + "conversation.voiceover.verified".localized
+            self.accessibilityLabel = conversation.displayName.localizedUppercase + ", " + "conversation.voiceover.verified".localized
         } else {
-            self.accessibilityLabel = conversation.displayName.uppercased()
+            self.accessibilityLabel = conversation.displayName.localizedUppercase
         }
     }
     
