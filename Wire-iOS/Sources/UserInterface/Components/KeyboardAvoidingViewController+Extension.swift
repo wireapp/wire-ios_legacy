@@ -25,7 +25,7 @@ extension KeyboardAvoidingViewController {
     }
 
     @objc func keyboardFrameWillChange(_ notification: Notification?) {
-        guard let bottomEdgeConstraint = self.bottomEdgeConstraint else { return }
+        guard let bottomEdgeConstraint = bottomEdgeConstraint else { return }
 
         if let shouldAdjustFrame = shouldAdjustFrame, !shouldAdjustFrame(self) {
             bottomEdgeConstraint.constant = 0
@@ -34,13 +34,20 @@ extension KeyboardAvoidingViewController {
             return
         }
 
-        guard
-            let userInfo = notification?.userInfo,
+        guard let userInfo = notification?.userInfo,
             let duration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? TimeInterval
             else { return }
         
         let keyboardFrameInView = UIView.keyboardFrame(in: self.view, forKeyboardNotification: notification)
-        let bottomOffset: CGFloat = -abs(keyboardFrameInView.size.height)
+        var bottomOffset: CGFloat = -abs(keyboardFrameInView.size.height)
+
+        // When this controller's view is presented at a form sheet style on iPad, the view is has a top offset and the bottomOffset should be reduced.
+        if modalPresentationStyle == .formSheet,
+            let frame = presentationController?.frameOfPresentedViewInContainerView {
+
+            bottomOffset += frame.minY
+        }
+
         guard bottomEdgeConstraint.constant != bottomOffset else { return }
         
         // When the keyboard is dismissed and then quickly revealed again, then
@@ -61,4 +68,5 @@ extension KeyboardAvoidingViewController {
 
         animator?.startAnimation()
     }
+
 }
