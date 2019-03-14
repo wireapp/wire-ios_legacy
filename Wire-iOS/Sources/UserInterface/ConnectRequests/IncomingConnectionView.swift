@@ -64,11 +64,11 @@ public final class IncomingConnectionView: UIView {
 
     private func setup() {
         self.acceptButton.accessibilityLabel = "accept"
-        self.acceptButton.setTitle("inbox.connection_request.connect_button_title".localized.uppercased(), for: .normal)
+        self.acceptButton.setTitle("inbox.connection_request.connect_button_title".localized(uppercased: true), for: .normal)
         self.acceptButton.addTarget(self, action: #selector(onAcceptButton), for: .touchUpInside)
 
         self.ignoreButton.accessibilityLabel = "ignore"
-        self.ignoreButton.setTitle("inbox.connection_request.ignore_button_title".localized.uppercased(), for: .normal)
+        self.ignoreButton.setTitle("inbox.connection_request.ignore_button_title".localized(uppercased: true), for: .normal)
         self.ignoreButton.addTarget(self, action: #selector(onIgnoreButton), for: .touchUpInside)
 
         self.userImageView.accessibilityLabel = "user image"

@@ -100,7 +100,7 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
             let confirmVideoViewController = ConfirmAssetViewController()
             confirmVideoViewController.transitioningDelegate = FastTransitioningDelegate.sharedDelegate
             confirmVideoViewController.videoURL = videoURL as URL
-            confirmVideoViewController.previewTitle = self.conversation.displayName.uppercased()
+            confirmVideoViewController.previewTitle = self.conversation.displayName.localizedUppercase
             confirmVideoViewController.onConfirm = { [unowned self] (editedImage: UIImage?)in
                 self.dismiss(animated: true, completion: .none)
                 self.uploadFile(at: videoURL as URL)
@@ -163,7 +163,7 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
         let confirmImageViewController = ConfirmAssetViewController()
         confirmImageViewController.transitioningDelegate = FastTransitioningDelegate.sharedDelegate
         confirmImageViewController.image = image
-        confirmImageViewController.previewTitle = self.conversation.displayName.uppercased()
+        confirmImageViewController.previewTitle = self.conversation.displayName.localizedUppercase
         confirmImageViewController.onConfirm = { [unowned self] (editedImage: UIImage?) in
             self.dismiss(animated: true) {
                 if isFromCamera {

@@ -16,7 +16,7 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
+import WireCommonComponents
 
 class ConversationCreateOptionsCell: RightIconDetailsCell {
     
@@ -51,8 +51,8 @@ class ConversationCreateOptionsCell: RightIconDetailsCell {
 
 extension ConversationCreateOptionsCell: ConversationCreationValuesConfigurable {
     func configure(with values: ConversationCreationValues) {
-        let guests = values.allowGuests.localized.uppercased()
-        let receipts = values.enableReceipts.localized.uppercased()
+        let guests = values.allowGuests.localized.localizedUppercase
+        let receipts = values.enableReceipts.localized.localizedUppercase
         status = "conversation.create.options.subtitle".localized(args: guests, receipts)
     }
 }

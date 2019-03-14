@@ -35,7 +35,7 @@ extension ZMConversation {
         }
         
         var title: String {
-            return conversation.displayName.uppercased()
+            return conversation.displayName.localizedUppercase
         }
         
         var allowGuests: Bool {

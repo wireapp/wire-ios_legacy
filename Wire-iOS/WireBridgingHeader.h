@@ -72,6 +72,7 @@
 #import "SwipeMenuCollectionCell+Internal.h"
 #import "TextView+Internal.h"
 #import "TextView.h"
+#import "MediaPreviewView.h"
 
 // View Controllers
 #import "ProfileDevicesViewController.h"
@@ -81,8 +82,10 @@
 #import "ContactsViewController.h"
 #import "ContactsViewController+Internal.h"
 #import "ContactsViewController+Private.h"
+
 #import "MediaPreviewViewController.h"
 #import "MediaPreviewViewController+Internal.h"
+
 #import "ZClientViewController.h"
 #import "ZClientViewController+Internal.h"
 #import "ConversationInputBarViewController.h"
@@ -105,8 +108,11 @@
 #import "ConversationListViewController.h"
 #import "ConversationListViewController+Private.h"
 #import "ConversationListViewController+Internal.h"
+
 #import "FullscreenImageViewController.h"
+#import "FullscreenImageViewController+PullToDismiss.h"
 #import "FullscreenImageViewController+internal.h"
+
 #import "KeyboardAvoidingViewController.h"
 #import "KeyboardAvoidingViewController+Internal.h"
 #import "CountryCodeTableViewController.h"
@@ -162,7 +168,10 @@
 #import "UIColor+Mixing.h"
 #import "MessageType.h"
 #import "UIViewController+LoadingView.h"
+
 #import "ProgressSpinner.h"
+#import "ProgressSpinner+Internal.h"
+
 #import "CABasicAnimation+Rotation.h"
 #import "DeveloperMenuState.h"
 #import "ColorScheme.h"

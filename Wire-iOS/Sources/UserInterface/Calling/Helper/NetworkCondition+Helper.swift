@@ -26,7 +26,7 @@ extension NetworkQuality {
             let attachment = NSTextAttachment()
             attachment.image = UIImage(for: .networkCondition, iconSize: .tiny, color: color)
             attachment.bounds = CGRect(x: 0.0, y: -4, width: attachment.image!.size.width, height: attachment.image!.size.height)
-            let text = "conversation.status.poor_connection".localized.uppercased()
+            let text = "conversation.status.poor_connection".localized(uppercased: true)
             let attributedText = text.attributedString.adding(font: FontSpec(.small, .semibold).font!, to: text).adding(color: color, to: text)
             return NSAttributedString(attachment: attachment) + " " + attributedText
         }

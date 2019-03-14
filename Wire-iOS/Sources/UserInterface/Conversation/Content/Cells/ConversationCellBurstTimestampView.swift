@@ -139,12 +139,12 @@ import Cartography
             isSeparatorExpanded = true
             isSeparatorHidden = false
             label.font = burstBoldFont
-            label.text = timestamp.olderThanOneWeekdateFormatter.string(from: timestamp).uppercased()
+            label.text = timestamp.olderThanOneWeekdateFormatter.string(from: timestamp).localizedUppercase
         } else {
             isSeparatorExpanded = false
             isSeparatorHidden = false
             label.font = burstNormalFont
-            label.text = timestamp.formattedDate.uppercased()
+            label.text = timestamp.formattedDate.localizedUppercase
         }
         
         isShowingUnreadDot = showUnreadDot

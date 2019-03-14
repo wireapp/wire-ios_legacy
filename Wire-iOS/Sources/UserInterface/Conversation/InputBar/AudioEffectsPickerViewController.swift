@@ -229,7 +229,7 @@ import WireCommonComponents
         
         switch self.state {
         case .tip:
-            self.subtitleLabel.text = "conversation.input_bar.audio_message.keyboard.filter_tip".localized.uppercased()
+            self.subtitleLabel.text = "conversation.input_bar.audio_message.keyboard.filter_tip".localized(uppercased: true)
             self.subtitleLabel.textColor = colorScheme.color(named: .textForeground)
         case .time:
             let duration: Int

@@ -325,7 +325,7 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
         guard let sender = currentMessage.sender, let serverTimestamp = currentMessage.serverTimestamp else {
             return
         }
-        self.navigationItem.titleView = TwoLineTitleView(first: sender.displayName.uppercased(), second: serverTimestamp.formattedDate)
+        self.navigationItem.titleView = TwoLineTitleView(first: sender.displayName.localizedUppercase, second: serverTimestamp.formattedDate)
     }
     
     private func updateButtonsForMessage() {
@@ -351,7 +351,7 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
     }
 
     @objc public func copyCurrent(_ sender: AnyObject!) {
-        let text = "collections.image_viewer.copied.title".localized.uppercased()
+        let text = "collections.image_viewer.copied.title".localized(uppercased: true)
         overlay.show(text: text)
         perform(action: .copy)
     }

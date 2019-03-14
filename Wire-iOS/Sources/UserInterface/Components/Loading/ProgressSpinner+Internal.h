@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2018 Wire Swiss GmbH
+// Copyright (C) 2019 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,25 +16,8 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
+@interface ProgressSpinner ()
 
-extension MediaPreviewViewController {
+@property (nonatomic) UIImageView *spinner;
 
-    var viewHeight: CGFloat {
-        switch UIDevice.current.userInterfaceIdiom {
-        case .pad:
-            return 240
-        default:
-            return 160
-        }
-    }
-
-    override open func loadView() {
-        view = MediaPreviewView()
-        
-        mediaPreviewView.playButton.addTarget(self, action: #selector(self.playVideo(_:)), for: .touchUpInside)
-        
-        mediaPreviewView.translatesAutoresizingMaskIntoConstraints = false
-        mediaPreviewView.heightAnchor.constraint(equalToConstant: viewHeight).isActive = true
-    }
-}
+@end

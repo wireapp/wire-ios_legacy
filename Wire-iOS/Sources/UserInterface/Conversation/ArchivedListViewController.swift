@@ -34,7 +34,7 @@ import Cartography
     override var preferredStatusBarStyle: UIStatusBarStyle { return .lightContent }
     
     fileprivate var collectionView: UICollectionView!
-    fileprivate let archivedNavigationBar = ArchivedNavigationBar(title: "archived_list.title".localized.uppercased())
+    fileprivate let archivedNavigationBar = ArchivedNavigationBar(title: "archived_list.title".localized(uppercased: true))
     fileprivate let cellReuseIdentifier = "ConversationListCellArchivedIdentifier"
     fileprivate let swipeIdentifier = "ArchivedList"
     fileprivate let viewModel = ArchivedListViewModel()

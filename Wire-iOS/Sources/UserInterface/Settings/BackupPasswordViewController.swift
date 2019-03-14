@@ -125,15 +125,15 @@ final class BackupPasswordViewController: UIViewController {
         navigationController?.navigationBar.barTintColor = UIColor.from(scheme: .textForeground, variant: .light)
         navigationController?.navigationBar.titleTextAttributes = DefaultNavigationBar.titleTextAttributes(for: .light)
         
-        title = "self.settings.history_backup.password.title".localized.uppercased()
+        title = "self.settings.history_backup.password.title".localized(uppercased: true)
         navigationItem.leftBarButtonItem = UIBarButtonItem(
-            title: "self.settings.history_backup.password.cancel".localized.uppercased(),
+            title: "self.settings.history_backup.password.cancel".localized(uppercased: true),
             style: .plain,
             target: self,
             action: #selector(cancel)
         )
         navigationItem.rightBarButtonItem = UIBarButtonItem(
-            title: "self.settings.history_backup.password.next".localized.uppercased(),
+            title: "self.settings.history_backup.password.next".localized(uppercased: true),
             style: .done,
             target: self,
             action: #selector(completeWithCurrentResult)
