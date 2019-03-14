@@ -81,7 +81,7 @@ extension KeyboardAvoidingViewController {
 
         let bottomEdgeConstraint = viewController.bottomLayoutGuide.bottomAnchor.constraint(equalTo: bottomLayoutGuide.bottomAnchor)
 
-        NSLayoutConstraint.activate([bottomEdgeConstraint])
+        bottomEdgeConstraint.isActive = true
 
         self.bottomEdgeConstraint = bottomEdgeConstraint
     }
