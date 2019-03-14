@@ -174,7 +174,7 @@ class Build
         end
         build_type = options[:build_type]
         if build_type.nil? 
-            UI.user_error! "Pass buid_type parameter, e.g. fastlane build build_type:Development"
+            UI.user_error! "Pass build_type parameter, e.g. fastlane build build_type:Development"
         end
 
         @last_commit = options[:last_commit]
