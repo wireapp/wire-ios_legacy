@@ -1070,6 +1070,7 @@
 		EF15A7B620BC34F700A045C7 /* XCTestCase+ImageFromBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF15A7B520BC34F700A045C7 /* XCTestCase+ImageFromBundle.swift */; };
 		EF17B0CE223A5D67006252A8 /* KeyboardAvoidingViewController+Constraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF17B0CD223A5D66006252A8 /* KeyboardAvoidingViewController+Constraint.swift */; };
 		EF17B0D8223A7385006252A8 /* SketchColorPickerControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF17B0D7223A7385006252A8 /* SketchColorPickerControllerSnapshotTests.swift */; };
+		EF17B0D6223A70D1006252A8 /* SketchColorPickerController+SetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF17B0D4223A70D1006252A8 /* SketchColorPickerController+SetupView.swift */; };
 		EF18140A21B17FB3008F7DA8 /* GroupDetailsReceiptOptionsCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF18140821B17F94008F7DA8 /* GroupDetailsReceiptOptionsCellTests.swift */; };
 		EF18140C21B18846008F7DA8 /* IconToggleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF18140B21B18846008F7DA8 /* IconToggleCell.swift */; };
 		EF18C7E41F9E4DA00085A832 /* NSString+FileNameForZMUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF18C7E31F9E4DA00085A832 /* NSString+FileNameForZMUser.swift */; };
@@ -2892,6 +2893,8 @@
 		EF15A7B520BC34F700A045C7 /* XCTestCase+ImageFromBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+ImageFromBundle.swift"; sourceTree = "<group>"; };
 		EF17B0CD223A5D66006252A8 /* KeyboardAvoidingViewController+Constraint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "KeyboardAvoidingViewController+Constraint.swift"; sourceTree = "<group>"; };
 		EF17B0D7223A7385006252A8 /* SketchColorPickerControllerSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SketchColorPickerControllerSnapshotTests.swift; sourceTree = "<group>"; };
+		EF17B0D4223A70D1006252A8 /* SketchColorPickerController+SetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SketchColorPickerController+SetupView.swift"; sourceTree = "<group>"; };
+		EF17B0D5223A70D1006252A8 /* SketchColorPickerController+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SketchColorPickerController+Internal.h"; sourceTree = "<group>"; };
 		EF18140821B17F94008F7DA8 /* GroupDetailsReceiptOptionsCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDetailsReceiptOptionsCellTests.swift; sourceTree = "<group>"; };
 		EF18140B21B18846008F7DA8 /* IconToggleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconToggleCell.swift; sourceTree = "<group>"; };
 		EF18C7E31F9E4DA00085A832 /* NSString+FileNameForZMUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSString+FileNameForZMUser.swift"; sourceTree = "<group>"; };
@@ -6703,7 +6706,9 @@
 				876113E11DD1DD4D007F5969 /* CanvasViewController.swift */,
 				876113E31DD1DD6B007F5969 /* SketchToolbar.swift */,
 				BA8DC27A1B5FF5CF00103262 /* SketchColorPickerController.h */,
+				EF17B0D5223A70D1006252A8 /* SketchColorPickerController+Internal.h */,
 				BA8DC27B1B5FF5CF00103262 /* SketchColorPickerController.m */,
+				EF17B0D4223A70D1006252A8 /* SketchColorPickerController+SetupView.swift */,
 				BAA1F7E21B610D89002402B6 /* SketchColorCollectionViewCell.h */,
 				BAA1F7E31B610D89002402B6 /* SketchColorCollectionViewCell.m */,
 				BAD4D0641B613D4E008585A5 /* ColorKnobView.h */,
@@ -7995,6 +8000,7 @@
 				5E65A7A32130412E008BFCC0 /* UserEmailChangeEventHandler.swift in Sources */,
 				5E8DA784211C3F2D00360979 /* AuthenticationEmailLoginUnknownErrorHandler.swift in Sources */,
 				87AAD74C1CF2E312002760FF /* ConversationInputBarViewController+Files.m in Sources */,
+				EF17B0D6223A70D1006252A8 /* SketchColorPickerController+SetupView.swift in Sources */,
 				D5694B502044144500C84C8F /* ToggleView.swift in Sources */,
 				871BC0591D34F60700DF0793 /* NSDate+Format.m in Sources */,
 				16829EDF2010D60800F579A0 /* InviteTeamMemberSection.swift in Sources */,
