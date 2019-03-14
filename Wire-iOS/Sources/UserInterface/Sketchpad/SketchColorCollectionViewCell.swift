@@ -73,6 +73,7 @@ final class SketchColorCollectionViewCell: UICollectionViewCell {
             return
         }
 
+        knobView.translatesAutoresizingMaskIntoConstraints = false
         knobView.centerInSuperview()
         knobView.setDimensions(length: 25)
 

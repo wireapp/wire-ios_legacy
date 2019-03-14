@@ -38,6 +38,7 @@ extension SketchColorPickerController {
         colorsCollectionView.dataSource = self
         colorsCollectionView.delegate = self
 
+        colorsCollectionView.translatesAutoresizingMaskIntoConstraints = false
         colorsCollectionView.fitInSuperview()
     }
 }
