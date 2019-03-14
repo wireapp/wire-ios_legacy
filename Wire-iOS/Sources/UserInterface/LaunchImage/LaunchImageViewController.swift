@@ -68,6 +68,10 @@ class LaunchImageViewController: UIViewController {
         view.addSubview(loadingScreenLabel)
 
         // Constraints
+        [contentView, loadingScreenLabel, activityIndicator].forEach() {
+            $0.translatesAutoresizingMaskIntoConstraints = false
+        }
+
         contentView.fitInSuperview()
 
         loadingScreenLabel.pinToSuperview(axisAnchor: .centerX)
