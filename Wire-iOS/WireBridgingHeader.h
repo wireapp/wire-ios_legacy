@@ -119,7 +119,6 @@
 #import "UIViewController+WR_Invite.h"
 #import "UIActivityViewController+Invite.h"
 #import "ContactsDataSource.h"
-#import "LaunchImageViewController.h"
 #import "StartUIViewController.h"
 #import "Button.h"
 #import "PermissionDeniedViewController.h"
