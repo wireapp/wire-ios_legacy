@@ -73,6 +73,7 @@
 @interface IconButton ()
 
 @property (nonatomic, readonly) NSMutableDictionary *iconColorsByState;
+@property (nonatomic, readonly) NSMutableDictionary *iconBackgroundColorsByState;
 @property (nonatomic, readonly) NSMutableDictionary *borderColorByState;
 @property (nonatomic, readonly) NSMutableDictionary *iconDefinitionsByState;
 @property (nonatomic) UIControlState priorState;
@@ -125,6 +126,7 @@
         self.hitAreaPadding = CGSizeMake(20, 20);
         _borderWidth = 0.5f;
         _iconColorsByState = [NSMutableDictionary dictionary];
+        _iconBackgroundColorsByState = [NSMutableDictionary dictionary];
         _borderColorByState = [NSMutableDictionary dictionary];
         _iconDefinitionsByState = [NSMutableDictionary dictionary];
     }
@@ -201,11 +203,23 @@
     [self updateCircularCornerRadius];
 }
 
+- (UIColor *)backgroundImageColorForState:(UIControlState)state
+{
+    UIColor *backgroundColor = self.iconBackgroundColorsByState[@(state)];
+
+    if (backgroundColor == nil) {
+        backgroundColor = self.iconBackgroundColorsByState[@(UIControlStateNormal)];
+    }
+
+    return backgroundColor;
+}
+
 - (void)setBackgroundImageColor:(UIColor *)color forState:(UIControlState)state
 {
+    [self.iconBackgroundColorsByState setObject:[color copy] forKey:@(state)];
     [self setBackgroundImage:[UIImage singlePixelImageWithColor:color] forState:state];
     if (self.adjustBackgroundImageWhenHighlighted && (state & UIControlStateNormal) == UIControlStateNormal) {
-        [self setBackgroundImage:[UIImage singlePixelImageWithColor:[color mix:UIColor.blackColor amount:0.4]] forState:UIControlStateHighlighted];
+        [self setBackgroundImageColor:[color mix:UIColor.blackColor amount:0.4] forState:UIControlStateHighlighted];
     }
 }
 

@@ -106,7 +106,7 @@ class LandingViewController: AuthenticationStepViewController {
         let label = UILabel()
         label.text = "landing.login.hints".localized
         label.font = LandingViewController.regularFont
-        label.textColor = UIColor.Team.subtitleColor
+        label.textColor = UIColor.Team.textColor
 
         return label
     }()

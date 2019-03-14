@@ -67,4 +67,20 @@ final class LandingViewControllerTests: XCTestCase {
         XCTAssertEqual(sut.buttonStackView.axis, .vertical, "buttonStackView.axis is \(sut.buttonStackView.axis)")
     }
 
+    func testContrast() {
+        sut.loadViewIfNeeded()
+
+        // buttons
+        // TODO: Fix contrast with design (2.23:1 instead of 3:1)
+        // WRValidateIconButtonContrast(sut.createAccountButton.iconButton)
+        WRValidateLabelContrast(sut.createAccountButton.subtitleLabel, background: sut.view.backgroundColor)
+
+        WRValidateIconButtonContrast(sut.createTeamButton.iconButton)
+        WRValidateLabelContrast(sut.createTeamButton.subtitleLabel, background: sut.view.backgroundColor)
+
+        // footer
+        WRValidateLabelContrast(sut.loginHintsLabel, background: sut.view.backgroundColor)
+        WRValidateTextButtonContrast(sut.loginButton, background: sut.view.backgroundColor)
+    }
+
 }

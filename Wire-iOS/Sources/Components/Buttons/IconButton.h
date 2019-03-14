@@ -48,6 +48,7 @@ typedef NS_ENUM(NSUInteger, IconButtonStyle) {
 - (ZetaIconType)iconTypeForState:(UIControlState)state;
 - (void)setIconColor:(UIColor *)color forState:(UIControlState)state;
 - (nullable UIColor *)iconColorForState:(UIControlState)state;
+- (nullable UIColor *)backgroundImageColorForState:(UIControlState)state;
 - (void)setBackgroundImageColor:(UIColor *)color forState:(UIControlState)state;
 - (void)setBorderColor:(UIColor *)color forState:(UIControlState)state;
 - (void)setTitleImageSpacing:(CGFloat)titleImageSpacing horizontalMargin:(CGFloat)horizontalMargin;
