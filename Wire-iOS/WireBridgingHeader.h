@@ -74,6 +74,7 @@
 #import "TextView.h"
 #import "MediaPreviewView.h"
 #import "ColorKnobView.h"
+#import "MediaBar.h"
 
 // View Controllers
 #import "ProfileDevicesViewController.h"

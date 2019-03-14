@@ -19,4 +19,35 @@
 import Foundation
 
 extension MediaBar {
+    override func updateConstraints() {
+        if !initialConstraintsCreated {
+            initialConstraintsCreated = true
+
+            let iconSize: CGFloat = 16
+            let buttonInsets: CGFloat = traitCollection.horizontalSizeClass == .regular ? 32 : 16
+
+            contentView.translatesAutoresizingMaskIntoConstraints = false
+            contentView.fitInSuperview()
+
+            titleLabel.pinToSuperview(axisAnchor: .centerY)
+
+//            titleLabel?.autoAlignAxis(ALAxisHorizontal, toSameAxisOf: contentView)
+            titleLabel?.autoPinEdge(ALEdgeLeft, toEdge: ALEdgeRight, ofView: playPauseButton, withOffset: 8.0)
+
+            playPauseButton.autoSetDimensions(to: [iconSize, iconSize])
+            playPauseButton.autoAlignAxis(ALAxisHorizontal, toSameAxisOf: contentView)
+            playPauseButton.autoPinEdge(toSuperviewEdge: ALEdgeLeft, withInset: buttonInsets)
+
+            closeButton.autoSetDimensions(to: [iconSize, iconSize])
+            closeButton.autoAlignAxis(ALAxisHorizontal, toSameAxisOf: contentView)
+            closeButton.autoPinEdge(ALEdgeLeft, toEdge: ALEdgeRight, ofView: titleLabel, withOffset: 8.0)
+            closeButton.autoPinEdge(toSuperviewEdge: ALEdgeRight, withInset: buttonInsets)
+
+            bottomSeparatorLine.autoSetDimension(ALDimensionHeight, toSize: 0.5)
+            bottomSeparatorLine.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets.zero, excludingEdge: ALEdgeTop)
+        }
+
+        super.updateConstraints()
+    }
+
 }

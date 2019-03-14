@@ -18,4 +18,11 @@
 
 @interface MediaBar ()
 
+@property (nonatomic, readwrite) UILabel *titleLabel;
+@property (nonatomic) IconButton *playPauseButton;
+@property (nonatomic) IconButton *closeButton;
+@property (nonatomic) UIView *bottomSeparatorLine;
+@property (nonatomic) UIView *contentView;
+@property (nonatomic) BOOL initialConstraintsCreated;
+
 @end

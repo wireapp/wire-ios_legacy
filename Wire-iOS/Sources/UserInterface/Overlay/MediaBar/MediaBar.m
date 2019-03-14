@@ -18,23 +18,11 @@
 
 
 #import "MediaBar.h"
-
-@import PureLayout;
+#import "MediaBar+Internal.h"
 
 #import "UIImage+ZetaIconsNeue.h"
 #import "Constants.h"
 #import "Wire-Swift.h"
-
-@interface MediaBar ()
-
-@property (nonatomic, readwrite) UILabel *titleLabel;
-@property (nonatomic) IconButton *playPauseButton;
-@property (nonatomic) IconButton *closeButton;
-@property (nonatomic) UIView *bottomSeparatorLine;
-@property (nonatomic) UIView *contentView;
-@property (nonatomic) BOOL initialConstraintsCreated;
-
-@end
 
 
 
@@ -45,7 +33,7 @@
     self = [super init];
     
     if (self) {
-        self.contentView = [[UIView alloc] initForAutoLayout];
+        self.contentView = [[UIView alloc] init];
         [self addSubview:self.contentView];
         
         [self createTitleLabel];
@@ -60,7 +48,7 @@
 
 - (void)createTitleLabel
 {
-    self.titleLabel = [[UILabel alloc] initForAutoLayout];
+    self.titleLabel = [[UILabel alloc] init];
     self.titleLabel.backgroundColor = [UIColor clearColor];
     self.titleLabel.textAlignment = NSTextAlignmentCenter;
     self.titleLabel.lineBreakMode = NSLineBreakByTruncatingMiddle;
@@ -97,33 +85,6 @@
     [self addSubview:self.bottomSeparatorLine];
 }
 
-- (void)updateConstraints
-{
-    if (! self.initialConstraintsCreated) {
-        self.initialConstraintsCreated = YES;
-        
-        CGFloat iconSize = 16;
-        CGFloat buttonInsets = self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular ? 32 : 16;
-        [self.contentView autoPinEdgesToSuperviewEdges];
-        
-        [self.titleLabel autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.contentView];
-        [self.titleLabel autoPinEdge:ALEdgeLeft toEdge:ALEdgeRight ofView:self.playPauseButton withOffset:8.0f];
-        
-        [self.playPauseButton autoSetDimensionsToSize:(CGSize) {iconSize, iconSize}];
-        [self.playPauseButton autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.contentView];
-        [self.playPauseButton autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:buttonInsets];
-        
-        [self.closeButton autoSetDimensionsToSize:(CGSize) {iconSize, iconSize}];
-        [self.closeButton autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.contentView];
-        [self.closeButton autoPinEdge:ALEdgeLeft toEdge:ALEdgeRight ofView:self.titleLabel withOffset:8.0f];
-        [self.closeButton autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:buttonInsets];
-        
-        [self.bottomSeparatorLine autoSetDimension:ALDimensionHeight toSize:0.5f];
-        [self.bottomSeparatorLine autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeTop];
-    }
-    
-    [super updateConstraints];
-}
 
 - (CGSize)intrinsicContentSize
 {
