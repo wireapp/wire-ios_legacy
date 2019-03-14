@@ -30,10 +30,6 @@
 // model
 #import "WireSyncEngine+iOS.h"
 
-// helpers
-@import PureLayout;
-
-
 @class ZMConversation;
 
 static NSString *ConnectionRequestCellIdentifier = @"ConnectionRequestCell";
