@@ -1070,8 +1070,8 @@
 		EF15A7B420BC304A00A045C7 /* SavableImageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF15A7B320BC304A00A045C7 /* SavableImageTests.swift */; };
 		EF15A7B620BC34F700A045C7 /* XCTestCase+ImageFromBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF15A7B520BC34F700A045C7 /* XCTestCase+ImageFromBundle.swift */; };
 		EF17B0CE223A5D67006252A8 /* KeyboardAvoidingViewController+Constraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF17B0CD223A5D66006252A8 /* KeyboardAvoidingViewController+Constraint.swift */; };
-		EF17B0D8223A7385006252A8 /* SketchColorPickerControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF17B0D7223A7385006252A8 /* SketchColorPickerControllerSnapshotTests.swift */; };
 		EF17B0D6223A70D1006252A8 /* SketchColorPickerController+SetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF17B0D4223A70D1006252A8 /* SketchColorPickerController+SetupView.swift */; };
+		EF17B0D8223A7385006252A8 /* SketchColorPickerControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF17B0D7223A7385006252A8 /* SketchColorPickerControllerSnapshotTests.swift */; };
 		EF17B0D9223A8F7C006252A8 /* SketchColorCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA1F7E21B610D89002402B6 /* SketchColorCollectionViewCell.swift */; };
 		EF18140A21B17FB3008F7DA8 /* GroupDetailsReceiptOptionsCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF18140821B17F94008F7DA8 /* GroupDetailsReceiptOptionsCellTests.swift */; };
 		EF18140C21B18846008F7DA8 /* IconToggleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF18140B21B18846008F7DA8 /* IconToggleCell.swift */; };
@@ -1205,6 +1205,7 @@
 		EF6E3C7E208A0355003F6752 /* MockConversation+factory.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6E3C7D208A0355003F6752 /* MockConversation+factory.swift */; };
 		EF6E3C80208A262B003F6752 /* not_animated.gif in Resources */ = {isa = PBXBuildFile; fileRef = EF6E3C7F208A262B003F6752 /* not_animated.gif */; };
 		EF6EB1CE20A5C296002F720D /* AppStateControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6EB1CD20A5C296002F720D /* AppStateControllerTests.swift */; };
+		EF701A35223C00E0007165E4 /* ConversationContentViewController+CreateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF701A34223C00E0007165E4 /* ConversationContentViewController+CreateView.swift */; };
 		EF71BFD420EBC39000894A7C /* ConversationInputBarViewController+Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF71BFD320EBC39000894A7C /* ConversationInputBarViewController+Location.swift */; };
 		EF71BFD620EBCC5F00894A7C /* UIView+IPadPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF71BFD520EBCC5F00894A7C /* UIView+IPadPopover.swift */; };
 		EF71BFD820EBD0DC00894A7C /* UIPopoverPresentationController+config.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF71BFD720EBD0DC00894A7C /* UIPopoverPresentationController+config.swift */; };
@@ -2895,9 +2896,9 @@
 		EF15A7B320BC304A00A045C7 /* SavableImageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavableImageTests.swift; sourceTree = "<group>"; };
 		EF15A7B520BC34F700A045C7 /* XCTestCase+ImageFromBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+ImageFromBundle.swift"; sourceTree = "<group>"; };
 		EF17B0CD223A5D66006252A8 /* KeyboardAvoidingViewController+Constraint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "KeyboardAvoidingViewController+Constraint.swift"; sourceTree = "<group>"; };
-		EF17B0D7223A7385006252A8 /* SketchColorPickerControllerSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SketchColorPickerControllerSnapshotTests.swift; sourceTree = "<group>"; };
 		EF17B0D4223A70D1006252A8 /* SketchColorPickerController+SetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SketchColorPickerController+SetupView.swift"; sourceTree = "<group>"; };
 		EF17B0D5223A70D1006252A8 /* SketchColorPickerController+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SketchColorPickerController+Internal.h"; sourceTree = "<group>"; };
+		EF17B0D7223A7385006252A8 /* SketchColorPickerControllerSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SketchColorPickerControllerSnapshotTests.swift; sourceTree = "<group>"; };
 		EF18140821B17F94008F7DA8 /* GroupDetailsReceiptOptionsCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDetailsReceiptOptionsCellTests.swift; sourceTree = "<group>"; };
 		EF18140B21B18846008F7DA8 /* IconToggleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconToggleCell.swift; sourceTree = "<group>"; };
 		EF18C7E31F9E4DA00085A832 /* NSString+FileNameForZMUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSString+FileNameForZMUser.swift"; sourceTree = "<group>"; };
@@ -3048,6 +3049,7 @@
 		EF6E3C7D208A0355003F6752 /* MockConversation+factory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MockConversation+factory.swift"; sourceTree = "<group>"; };
 		EF6E3C7F208A262B003F6752 /* not_animated.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = not_animated.gif; sourceTree = "<group>"; };
 		EF6EB1CD20A5C296002F720D /* AppStateControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStateControllerTests.swift; sourceTree = "<group>"; };
+		EF701A34223C00E0007165E4 /* ConversationContentViewController+CreateView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConversationContentViewController+CreateView.swift"; sourceTree = "<group>"; };
 		EF70E202201F7B7600083BCB /* StartUIViewController+internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "StartUIViewController+internal.h"; sourceTree = "<group>"; };
 		EF71BFD320EBC39000894A7C /* ConversationInputBarViewController+Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationInputBarViewController+Location.swift"; sourceTree = "<group>"; };
 		EF71BFD520EBCC5F00894A7C /* UIView+IPadPopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+IPadPopover.swift"; sourceTree = "<group>"; };
@@ -5564,6 +5566,7 @@
 				8FC851A9199245760008B66B /* ConversationContentViewController.h */,
 				8FC851A6199245760008B66B /* ConversationContentViewController+Private.h */,
 				8FC851AA199245760008B66B /* ConversationContentViewController.m */,
+				EF701A34223C00E0007165E4 /* ConversationContentViewController+CreateView.swift */,
 				EFA06E4621FB639700BF2E17 /* ConversationContentViewController+CanvasViewControllerDelegate.swift */,
 				EF80461D20CA8B67001A1C53 /* ConversationContentViewController+TableHeader.swift */,
 				EF15A7AF20BC08C000A045C7 /* ConversationContentViewController+SaveImage.swift */,
@@ -7622,6 +7625,7 @@
 				F15650E421DD11DD00210504 /* UIViewController+LoadingView.m in Sources */,
 				8719FD691C888044005FBEC0 /* NSData+MD5.swift in Sources */,
 				BA79B0A51B6284D900F23AFB /* SoundEventRulesWatchDog.m in Sources */,
+				EF701A35223C00E0007165E4 /* ConversationContentViewController+CreateView.swift in Sources */,
 				AF58EC7E1E9FA01700EB94CD /* UIBarButtonItem+ZetaIcon.swift in Sources */,
 				EF834B862203600500E92F13 /* FullscreenImageViewController+MessageActionResponder.swift in Sources */,
 				EFF9A6502238020400CCEC85 /* AudioPlaylistCell.swift in Sources */,

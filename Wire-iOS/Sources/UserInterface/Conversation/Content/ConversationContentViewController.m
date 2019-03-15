@@ -42,7 +42,6 @@
 // helpers
 #import "Constants.h"
 
-@import PureLayout;
 #import "UIView+Zeta.h"
 #import "Analytics.h"
 #import "AppDelegate.h"
@@ -373,18 +372,6 @@
 }
 
 #pragma mark - Custom UI, utilities
-
-- (void)createMentionsResultsView
-{    
-    self.mentionsSearchResultsViewController = [[UserSearchResultsViewController alloc] init];
-    self.mentionsSearchResultsViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
-    // delegate here
-    
-    [self addChildViewController:self.mentionsSearchResultsViewController];
-    [self.view addSubview:self.mentionsSearchResultsViewController.view];
-    
-    [self.mentionsSearchResultsViewController.view autoPinEdgesToSuperviewEdges];
-}
 
 - (void)removeHighlightsAndMenu
 {
