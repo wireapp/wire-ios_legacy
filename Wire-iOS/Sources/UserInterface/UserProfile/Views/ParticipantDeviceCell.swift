@@ -79,13 +79,16 @@ final class ParticipantDeviceCell: UITableViewCell {
 
     // MARK: - Configuration
 
-    func configure(for client: UserClient?) {
+    @objc(configureForClient:)
+    func configure(for client: UserClient) {
         let attributes: [NSAttributedString.Key: AnyObject] = [NSAttributedString.Key.font: fingerprintFont.monospaced()]
         let boldAttributes: [NSAttributedString.Key: AnyObject] = [NSAttributedString.Key.font: boldFingerprintFont.monospaced()]
-        
-        identifierLabel.attributedText = client?.attributedRemoteIdentifier(attributes, boldAttributes: boldAttributes, uppercase: true)
-        nameLabel.text = client?.deviceClass?.uppercased() ?? client?.type.uppercased()
-        trustLevelImageView.image = client?.verified != nil ? WireStyleKit.imageOfShieldverified : WireStyleKit.imageOfShieldnotverified
+
+        identifierLabel.attributedText = client.attributedRemoteIdentifier(attributes, boldAttributes: boldAttributes, uppercase: true)
+        nameLabel.text = client.deviceClass?.uppercased() ?? client.type.uppercased()
+
+
+        trustLevelImageView.image = client.verified ? WireStyleKit.imageOfShieldverified : WireStyleKit.imageOfShieldnotverified
     }
 
     private func setupStyle() {
