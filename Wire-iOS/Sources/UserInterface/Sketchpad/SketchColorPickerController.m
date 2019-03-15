@@ -18,9 +18,8 @@
 
 
 #import "SketchColorPickerController.h"
+#import "SketchColorPickerController+Internal.h"
 
-#import "SketchColorCollectionViewCell.h"
-@import PureLayout;
 #import "Wire-Swift.h"
 
 static NSString* ZMLogTag ZM_UNUSED = @"UI";
@@ -28,14 +27,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 /// Used only as fallback in case no brush width is set
 static NSUInteger const SketchColorPickerDefaultBrushWidth = 6;
 
-
-@interface SketchColorPickerController () <UICollectionViewDataSource, UICollectionViewDelegate>
-
-@property (nonatomic) NSMutableDictionary *colorToBrushWidthMapper;
-@property (nonatomic) UICollectionView *colorsCollectionView;
-@property (nonatomic) UICollectionViewFlowLayout *colorsCollectionViewLayout;
-
-@end
 
 @implementation SketchColorPickerController
 
@@ -59,29 +50,6 @@ static NSUInteger const SketchColorPickerDefaultBrushWidth = 6;
 {
     [super viewDidLayoutSubviews];
     [self.colorsCollectionViewLayout invalidateLayout];
-}
-
-- (void)setUpColorsCollectionView
-{
-    UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
-    flowLayout.itemSize = CGSizeMake(44, 40);
-    flowLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
-    flowLayout.minimumInteritemSpacing = 0;
-    flowLayout.minimumLineSpacing = 0;
-    self.colorsCollectionViewLayout = flowLayout;
-    
-    self.colorsCollectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:flowLayout];
-    self.colorsCollectionView.showsHorizontalScrollIndicator = NO;
-    self.colorsCollectionView.translatesAutoresizingMaskIntoConstraints = NO;
-    self.colorsCollectionView.backgroundColor = [UIColor  wr_colorFromColorScheme:ColorSchemeColorBackground];
-    [self.view addSubview:self.colorsCollectionView];
-    
-    [self.colorsCollectionView registerClass:[SketchColorCollectionViewCell class] forCellWithReuseIdentifier:@"SketchColorCollectionViewCell"];
-    self.colorsCollectionView.dataSource = self;
-    self.colorsCollectionView.delegate = self;
-    
-    ALEdgeInsets insets = (ALEdgeInsets){0, 0, 0, 0};
-    [self.colorsCollectionView autoPinEdgesToSuperviewEdgesWithInsets:insets];
 }
 
 - (void)setSketchColors:(NSArray *)sketchColors
