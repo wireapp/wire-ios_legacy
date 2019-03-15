@@ -21,7 +21,7 @@
 @interface KeyboardAvoidingViewController ()
 
 @property (nonatomic, nullable) UIViewPropertyAnimator *animator;
-@property (nonatomic, nullable) UIViewController *viewController;
+@property (nonatomic, readwrite, nonnull) UIViewController *viewController;
 
 @property (nonatomic, nullable) NSLayoutConstraint *bottomEdgeConstraint;
 @property (nonatomic, nullable) NSLayoutConstraint *topEdgeConstraint;

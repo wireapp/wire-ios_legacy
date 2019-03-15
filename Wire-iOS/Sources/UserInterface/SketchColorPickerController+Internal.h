@@ -1,6 +1,6 @@
-////
+//
 // Wire
-// Copyright (C) 2018 Wire Swiss GmbH
+// Copyright (C) 2019 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,15 +16,10 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-#import "MessagePresenter.h"
+@interface SketchColorPickerController () <UICollectionViewDataSource, UICollectionViewDelegate>
 
-@class MediaPlaybackManager;
-
-@interface MessagePresenter ()
-
-@property (nonatomic, nullable) MediaPlayerController *mediaPlayerController;
-@property (nonatomic, nullable) MediaPlaybackManager *mediaPlaybackManager;
-@property (nonatomic, nullable) id<NSObject> videoPlayerObserver;
-@property (nonatomic, nullable) id fileAvailabilityObserver;
+@property (nonatomic) NSMutableDictionary *colorToBrushWidthMapper;
+@property (nonatomic) UICollectionView *colorsCollectionView;
+@property (nonatomic) UICollectionViewFlowLayout *colorsCollectionViewLayout;
 
 @end

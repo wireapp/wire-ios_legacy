@@ -138,10 +138,21 @@ class SettingsCellDescriptorFactory {
 
     func soundGroupForSetting(_ settingsProperty: SettingsProperty, title: String, customSounds: [ZMSound], defaultSound: ZMSound) -> SettingsCellDescriptorType {
         let items: [ZMSound] = [ZMSound.None, defaultSound] + customSounds
+        let previewPlayer: SoundPreviewPlayer = SoundPreviewPlayer(mediaManager: AVSMediaManager.sharedInstance())
         
         let cells: [SettingsPropertySelectValueCellDescriptor] = items.map { item in
             let playSoundAction: SettingsPropertySelectValueCellDescriptor.SelectActionType = { cellDescriptor in
-                item.playPreview()
+                
+                switch settingsProperty.propertyName {
+                case .callSoundName:
+                    previewPlayer.playPreview(MediaManagerSoundRingingFromThemSound)
+                case .pingSoundName:
+                    previewPlayer.playPreview(MediaManagerSoundIncomingKnockSound)
+                case .messageSoundName:
+                    previewPlayer.playPreview(MediaManagerSoundMessageReceivedSound)
+                default:
+                    break
+                }
             }
             
             let propertyValue = item == defaultSound ? SettingsPropertyValue.none : SettingsPropertyValue.string(value: item.rawValue)
@@ -445,9 +456,11 @@ class SettingsCellDescriptorFactory {
         guard let controller = UIApplication.shared.wr_topmostController(onlyFullScreen: false) else { return }
         let alert = UIAlertController(title: nil, message: "", preferredStyle: .alert)
 
-        if let convo = (ZMConversationList.conversations(inUserSession: userSession) as! [ZMConversation])
-            .first(where: { predicate.evaluate(with: $0) })
-        {
+        let uiMOC = userSession.managedObjectContext
+        let fetchRequest = NSFetchRequest<ZMConversation>(entityName: ZMConversation.entityName())
+        let allConversations = uiMOC?.fetchOrAssert(request: fetchRequest)
+        
+        if let convo = allConversations?.first(where: { predicate.evaluate(with: $0) }) {
             alert.message = ["Found an unread conversation:",
                        "\(convo.displayName)",
                         "<\(convo.remoteIdentifier?.uuidString ?? "n/a")>"
