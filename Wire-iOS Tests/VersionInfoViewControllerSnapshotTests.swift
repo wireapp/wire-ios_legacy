@@ -28,7 +28,6 @@ final class VersionInfoViewControllerSnapshotTests: ZMSnapshotTestCase {
         sut = VersionInfoViewController()
         let path = Bundle(for: type(of: self)).path(forResource: "DummyComponentsVersions", ofType: "plist")!
 
-//        let path = Bundle.main.path(forResource: "ComponentsVersions", ofType: "plist")
         sut = VersionInfoViewController(componentsVersionsFilepath: path)!
 
         /// TODO: remove this after snapshot is created

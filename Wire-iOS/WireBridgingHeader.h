@@ -104,8 +104,6 @@
 #import "ProfileSelfPictureViewController.h"
 #import "ProfileSelfPictureViewController+Internal.h"
 
-#import "VersionInfoViewController.h"
-
 #import "SketchColorPickerController.h"
 #import "SketchColorPickerController+Internal.h"
 

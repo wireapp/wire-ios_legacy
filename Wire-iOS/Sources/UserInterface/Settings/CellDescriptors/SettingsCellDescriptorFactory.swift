@@ -211,8 +211,8 @@ class SettingsCellDescriptorFactory {
         let versionCell = SettingsButtonCellDescriptor(title: versionTitle, isDestructive: false) { _ in
             ///TODO: default path
 
-            let path = Bundle.main.path(forResource: "ComponentsVersions", ofType: "plist")
-            let versionInfoViewController = VersionInfoViewController(componentsVersionsFilepath: path)!
+            let path = Bundle.main.path(forResource: "ComponentsVersions", ofType: "plist")!
+            let versionInfoViewController = VersionInfoViewController(versionsPlist: path)
             var superViewController = UIApplication.shared.keyWindow?.rootViewController
             if let presentedViewController = superViewController?.presentedViewController {
                 superViewController = presentedViewController
