@@ -456,9 +456,11 @@ class SettingsCellDescriptorFactory {
         guard let controller = UIApplication.shared.wr_topmostController(onlyFullScreen: false) else { return }
         let alert = UIAlertController(title: nil, message: "", preferredStyle: .alert)
 
-        if let convo = (ZMConversationList.conversations(inUserSession: userSession) as! [ZMConversation])
-            .first(where: { predicate.evaluate(with: $0) })
-        {
+        let uiMOC = userSession.managedObjectContext
+        let fetchRequest = NSFetchRequest<ZMConversation>(entityName: ZMConversation.entityName())
+        let allConversations = uiMOC?.fetchOrAssert(request: fetchRequest)
+        
+        if let convo = allConversations?.first(where: { predicate.evaluate(with: $0) }) {
             alert.message = ["Found an unread conversation:",
                        "\(convo.displayName)",
                         "<\(convo.remoteIdentifier?.uuidString ?? "n/a")>"
