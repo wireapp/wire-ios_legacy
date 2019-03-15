@@ -38,9 +38,27 @@ final class VersionInfoViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor.white
+
+        view.backgroundColor = .white
+
         setupCloseButton()
         setupVersionInfo()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        updateStatusBar()
+    }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+
+        updateStatusBar()
+    }
+
+    private func updateStatusBar() {
+        UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
     }
 
     private func setupCloseButton() {
