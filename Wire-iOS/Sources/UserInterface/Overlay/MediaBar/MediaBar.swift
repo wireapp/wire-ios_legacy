@@ -16,19 +16,17 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-@objcMembers
 final class MediaBar: UIView {
-    private(set) var titleLabel: UILabel!
-    private(set) var playPauseButton: IconButton!
-    private(set) var closeButton: IconButton!
+    @objc private(set) var titleLabel: UILabel!
+    @objc private(set) var playPauseButton: IconButton!
+    @objc private(set) var closeButton: IconButton!
 
     private var bottomSeparatorLine: UIView!
     private let contentView = UIView()
     private var initialConstraintsCreated = false
 
-
-    init() {
-        super.init(frame: .zero)
+    override init(frame: CGRect) {
+        super.init(frame: frame)
 
         addSubview(contentView)
 
