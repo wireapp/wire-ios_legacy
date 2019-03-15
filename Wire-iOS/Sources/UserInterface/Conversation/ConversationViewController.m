@@ -25,7 +25,6 @@
 #import "Settings.h"
 
 #import "AppDelegate.h"
-#import "NotificationWindowRootViewController.h"
 
 // helpers
 #import "Analytics.h"

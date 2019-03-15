@@ -37,7 +37,6 @@
 
 // ui
 #import "ZClientViewController.h"
-#import "NotificationWindowRootViewController.h"
 
 // helpers
 #import "Constants.h"
