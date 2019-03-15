@@ -79,8 +79,9 @@ final class VersionInfoViewController: UIViewController {
 
         var versionString: String = ""
 
+        let dictKeySorted = carthageInfo.sorted(by: <)
 
-        for (dependency, version) in carthageInfo {
+        for (dependency, version) in dictKeySorted {
             versionString += "\n\(dependency) \(version)"
         }
 
@@ -92,5 +93,8 @@ final class VersionInfoViewController: UIViewController {
         dismiss(animated: true)
     }
 
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .default
+    }
 }
 

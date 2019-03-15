@@ -25,10 +25,9 @@ final class VersionInfoViewControllerSnapshotTests: ZMSnapshotTestCase {
     
     override func setUp() {
         super.setUp()
-        sut = VersionInfoViewController()
         let path = Bundle(for: type(of: self)).path(forResource: "DummyComponentsVersions", ofType: "plist")!
 
-        sut = VersionInfoViewController(componentsVersionsFilepath: path)!
+        sut = VersionInfoViewController(versionsPlist: path)
 
         /// TODO: remove this after snapshot is created
         recordMode = true
