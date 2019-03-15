@@ -105,7 +105,7 @@ final class MediaPreviewView: UIView {
         providerImageView.pinToSuperview(anchor: .trailing, inset: 12)
 
         titleLabel?.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
-        providerImageView.leadingAnchor.constraint(greaterThanOrEqualTo: titleLabel.trailingAnchor, constant: 8)
+        providerImageView.leadingAnchor.constraint(greaterThanOrEqualTo: titleLabel.trailingAnchor, constant: 8).isActive = true
 
         playButton.centerInSuperview()
     }
