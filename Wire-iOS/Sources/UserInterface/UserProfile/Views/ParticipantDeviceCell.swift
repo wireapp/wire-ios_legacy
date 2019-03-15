@@ -80,7 +80,7 @@ final class ParticipantDeviceCell: UITableViewCell {
     // MARK: - Configuration
 
     @objc(configureForClient:)
-    func configure(for client: UserClient) {
+    func configure(for client: UserClientType & UserClientTypeAttributedString) {
         let attributes: [NSAttributedString.Key: AnyObject] = [NSAttributedString.Key.font: fingerprintFont.monospaced()]
         let boldAttributes: [NSAttributedString.Key: AnyObject] = [NSAttributedString.Key.font: boldFingerprintFont.monospaced()]
 
