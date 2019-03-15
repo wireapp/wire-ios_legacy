@@ -19,6 +19,7 @@
 import Foundation
 
 extension ConversationContentViewController {
+    @objc
     func createMentionsResultsView() {
         mentionsSearchResultsViewController = UserSearchResultsViewController()
         mentionsSearchResultsViewController.view.translatesAutoresizingMaskIntoConstraints = false
