@@ -75,24 +75,28 @@
 @implementation ConversationContentViewController
 
 - (instancetype)initWithConversation:(ZMConversation *)conversation
+                mediaPlaybackManager:(MediaPlaybackManager *)mediaPlaybackManager
                              session:(id<ZMUserSessionInterface>)session
 {
     return [self initWithConversation:conversation
                               message:conversation.firstUnreadMessage
+                 mediaPlaybackManager:mediaPlaybackManager
                               session:session];
 }
 
 - (instancetype)initWithConversation:(ZMConversation *)conversation
                              message:(id<ZMConversationMessage>)message
+                mediaPlaybackManager:(MediaPlaybackManager *)mediaPlaybackManager
                              session:(id<ZMUserSessionInterface>)session
 {
     self = [super initWithNibName:nil bundle:nil];
     
     if (self) {
         _conversation = conversation;
+        self.mediaPlaybackManager = mediaPlaybackManager;
         self.messageVisibleOnLoad = message ?: conversation.firstUnreadMessage;
         self.cachedRowHeights = [NSMutableDictionary dictionary];
-        self.messagePresenter = [[MessagePresenter alloc] init];
+        self.messagePresenter = [[MessagePresenter alloc] initWithMediaPlaybackManager:mediaPlaybackManager];
         self.messagePresenter.targetViewController = self;
         self.messagePresenter.modalTargetController = self.parentViewController;
         self.session = session;
@@ -186,7 +190,6 @@
 {
     [super viewWillAppear:animated];
     self.onScreen = YES;
-    self.mediaPlaybackManager = [AppDelegate sharedAppDelegate].mediaPlaybackManager;
     self.activeMediaPlayerObserver = [KeyValueObserver observeObject:self.mediaPlaybackManager
                                                              keyPath:@"activeMediaPlayer"
                                                               target:self

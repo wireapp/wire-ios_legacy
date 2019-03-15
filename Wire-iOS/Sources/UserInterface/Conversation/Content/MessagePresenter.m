@@ -33,7 +33,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 @end
 
 @interface MessagePresenter ()
-@property (nonatomic, readwrite) BOOL waitingForFileDownload;
 @property (nonatomic) UIDocumentInteractionController *documentInteractionController;
 @end
 
@@ -41,22 +40,14 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 - (void)openMessage:(id<ZMConversationMessage>)message targetView:(UIView *)targetView actionResponder:(nullable id<MessageActionResponder>)delegate
 {
-    self.waitingForFileDownload = NO;
+    self.fileAvailabilityObserver = nil;
     [self.modalTargetController.view.window endEditing:YES];
 
     if ([Message isLocationMessage:message]) {
         [self openLocationMessage:message];
     }
     else if ([Message isFileTransferMessage:message]) {
-        if (message.fileMessageData.fileURL == nil) {
-            self.waitingForFileDownload = YES;
-            [[ZMUserSession sharedSession] performChanges:^{
-                [message.fileMessageData requestFileDownload];
-            }];
-        }
-        else {
-            [self openFileMessage:message targetView:targetView];
-        }
+        [self openFileMessage:message targetView:targetView];
     }
     else if ([Message isImageMessage:message]) {
         [self openImageMessage:message actionResponder:delegate];
