@@ -24,9 +24,20 @@
 @interface VersionInfoViewController ()
 @property (nonatomic, strong) IconButton *closeButton;
 @property (nonatomic, strong) UILabel *versionInfoLabel;
+@property (nonatomic, strong) NSString *componentsVersionsFilepath;
 @end
 
 @implementation VersionInfoViewController
+
+- (instancetype) initWithComponentsVersionsFilepath: (NSString *)path
+{
+
+    self = [super initWithNibName:nil bundle:nil];
+
+    self.componentsVersionsFilepath = path;
+
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -54,7 +65,45 @@
 
 - (void)setupVersionInfo
 {
-    NSDictionary *versionsPlist = [NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"ComponentsVersions" ofType:@"plist"]];
+    NSDictionary *versionsPlist = [NSDictionary dictionaryWithContentsOfFile:self.componentsVersionsFilepath]; ///TODO: inject a dummy plist
+
+    /*
+     {
+     CarthageBuildInfo =     {
+     Cartography = "3.0.3";
+     DifferenceKit = "0.8.1";
+     Down = "v2.1.1";
+     FLAnimatedImage = "1.0.12-wire";
+     FormatterKit = "1.8.1-swift3.0.2";
+     HTMLString = "4.0.2-xcode_10_1";
+     "HockeySDK-iOS" = "5.1.4";
+     PINCache = "2.3-swift3.1";
+     PureLayout = "v3.0.0";
+     ZipArchive = "v2.1.3";
+     "avs-ios-binaries" = "4.9.12";
+     "ios-snapshot-test-case" = "4.0.0-xcode_10_1";
+     "libPhoneNumber-iOS" = "0.9.3";
+     ocmock = "v3.4.3";
+     ono = "1.4.0";
+     "protobuf-objc" = "1.9.14";
+     "swift-protobuf" = "1.2.1";
+     "wire-ios-canvas" = "9.0.2";
+     "wire-ios-cryptobox" = "17.0.0";
+     "wire-ios-data-model" = "160.0.0";
+     "wire-ios-images" = "23.0.0";
+     "wire-ios-link-preview" = "17.0.0";
+     "wire-ios-protos" = "19.0.0";
+     "wire-ios-request-strategy" = "139.0.0";
+     "wire-ios-share-engine" = "128.0.0";
+     "wire-ios-sync-engine" = "239.0.1";
+     "wire-ios-system" = "26.0.0";
+     "wire-ios-testing" = "18.0.0";
+     "wire-ios-transport" = "53.0.0";
+     "wire-ios-utilities" = "28.1.0";
+     "wire-ios-ziphy" = "12.0.2";
+     };
+     }
+     */
 
     self.versionInfoLabel = [[UILabel alloc] initForAutoLayout];
     self.versionInfoLabel.numberOfLines = 0;
