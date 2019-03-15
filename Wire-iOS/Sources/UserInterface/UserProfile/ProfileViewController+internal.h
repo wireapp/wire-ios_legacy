@@ -19,6 +19,10 @@
 @class ConversationActionController;
 @class ProfileFooterView;
 @class IncomingRequestFooterView;
+@class UserNameDetailView;
+@class ProfileTitleView;
+@class TabBarController;
+
 @protocol ActionController;
 
 #import "AccentColorProvider.h"
@@ -30,6 +34,10 @@
 @property (nonatomic) id<ActionController> actionsController;
 @property (nonatomic) ProfileFooterView *profileFooterView;
 @property (nonatomic) IncomingRequestFooterView *incomingRequestFooter;
+
+@property (nonatomic) UserNameDetailView *usernameDetailsView;
+@property (nonatomic) ProfileTitleView *profileTitleView;
+@property (nonatomic) TabBarController *tabsController;
 
 - (ZMUser *)fullUser;
 
