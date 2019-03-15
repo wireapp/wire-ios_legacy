@@ -45,38 +45,28 @@ final class NotificationWindowRootViewController: UIViewController {
         appLockViewController?.view.fitInSuperview()
     }
 
-    override var prefersStatusBarHidden: Bool {
-        return true
-    }
-
     // MARK: - Rotation handling (should match up with root)
 
     private func topmostViewController() -> UIViewController? {
-        let topmostViewController: UIViewController? = UIApplication.shared.wr_topmostViewController()
+        guard let topmostViewController = UIApplication.shared.wr_topmostViewController() else { return nil}
 
-        if topmostViewController != nil && topmostViewController != self && !(topmostViewController is NotificationWindowRootViewController) {
+        if topmostViewController != self && !(topmostViewController is NotificationWindowRootViewController) {
             return topmostViewController
         } else {
             return nil
         }
     }
 
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
+
     override var shouldAutorotate: Bool {
-        let topmostViewController: UIViewController? = self.topmostViewController()
-        if topmostViewController != nil {
-            return topmostViewController?.shouldAutorotate ?? false
-        } else {
-            return true
-        }
+        return topmostViewController()?.shouldAutorotate ?? true
     }
 
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        let topmostViewController: UIViewController? = self.topmostViewController()
-        if topmostViewController != nil {
-            return (topmostViewController?.supportedInterfaceOrientations)!
-        } else {
-            return wr_supportedInterfaceOrientations
-        }
+        return topmostViewController()?.supportedInterfaceOrientations ?? wr_supportedInterfaceOrientations
     }
 
 }
