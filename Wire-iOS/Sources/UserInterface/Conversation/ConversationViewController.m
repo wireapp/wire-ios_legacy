@@ -42,7 +42,6 @@
 
 #import "ZClientViewController.h"
 #import "ConversationViewController+ParticipantsPopover.h"
-#import "MediaBar.h"
 #import "MediaPlayer.h"
 #import "MediaBarViewController.h"
 #import "InvisibleInputAccessoryView.h"

@@ -30,9 +30,6 @@ final class MediaBarSnapshotTests: ZMSnapshotTestCase {
 
         sut.backgroundColor = .black
         sut.frame = CGRect(x: 0, y: 0, width: 375, height: sut.intrinsicContentSize.height)
-
-        /// TODO: remove this after snapshot is created
-//        recordMode = true
     }
     
     override func tearDown() {
