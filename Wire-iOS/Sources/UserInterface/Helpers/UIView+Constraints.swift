@@ -108,7 +108,8 @@ extension UIView {
     }
 
     // MARK: - signal edge alignment
-    @discardableResult func pinToSuperview(anchor: Anchor,
+    @discardableResult func pinToSuperview(safely: Bool = false,
+                                           anchor: Anchor,
                                            constant: CGFloat = 0,
                                            activate: Bool = true) -> NSLayoutConstraint {
         guard let superview = superview else {
@@ -121,16 +122,17 @@ extension UIView {
         switch anchor {
         case .top:
             selfAnchor = topAnchor
-            superAnchor = superview.topAnchor
+            superAnchor = safely ? superview.safeTopAnchor: superview.topAnchor
         case .bottom:
             selfAnchor = bottomAnchor
-            superAnchor = superview.bottomAnchor
+            superAnchor = safely ? superview.safeBottomAnchor: superview.bottomAnchor
         case .leading:
             selfAnchor = leadingAnchor
-            superAnchor = superview.leadingAnchor
+            superAnchor = safely ? superview.safeLeadingAnchor: superview.leadingAnchor
         case .trailing:
             selfAnchor = trailingAnchor
             superAnchor = superview.trailingAnchor
+            superAnchor = safely ? superview.safeTrailingAnchor: superview.trailingAnchor
         }
 
         let constraint = (selfAnchor as! NSLayoutAnchor<AnyObject>).constraint(equalTo: (superAnchor as! NSLayoutAnchor<AnyObject>), constant: constant)
