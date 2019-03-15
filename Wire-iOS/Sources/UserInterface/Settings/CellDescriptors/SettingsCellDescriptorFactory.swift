@@ -212,7 +212,7 @@ class SettingsCellDescriptorFactory {
             ///TODO: default path
 
             let path = Bundle.main.path(forResource: "ComponentsVersions", ofType: "plist")
-            let versionInfoViewController = VersionInfoViewController(componentsVersionsFilepath: path)
+            let versionInfoViewController = VersionInfoViewController(componentsVersionsFilepath: path)!
             var superViewController = UIApplication.shared.keyWindow?.rootViewController
             if let presentedViewController = superViewController?.presentedViewController {
                 superViewController = presentedViewController
