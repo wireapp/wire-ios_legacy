@@ -25,7 +25,7 @@ final class VersionInfoViewController: UIViewController {
     private let componentsVersionsFilepath: String
 
 
-    init(versionsPlist path: String) {
+    init(versionsPlist path: String = Bundle.main.path(forResource: "ComponentsVersions", ofType: "plist")!) {
         componentsVersionsFilepath = path
 
         super.init(nibName: nil, bundle: nil)

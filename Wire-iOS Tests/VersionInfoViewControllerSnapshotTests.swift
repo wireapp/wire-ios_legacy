@@ -28,9 +28,6 @@ final class VersionInfoViewControllerSnapshotTests: ZMSnapshotTestCase {
         let path = Bundle(for: type(of: self)).path(forResource: "DummyComponentsVersions", ofType: "plist")!
 
         sut = VersionInfoViewController(versionsPlist: path)
-
-        /// TODO: remove this after snapshot is created
-        recordMode = true
     }
     
     override func tearDown() {
