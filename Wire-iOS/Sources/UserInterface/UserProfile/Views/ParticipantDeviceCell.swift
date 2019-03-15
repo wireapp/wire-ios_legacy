@@ -20,21 +20,26 @@ import UIKit
 
 final class ParticipantDeviceCell: UITableViewCell {
 
-    private var nameLabel: UILabel?
-    private var boldFingerprintFont: UIFont?
-    private var fingerprintFont: UIFont?
-    private var identifierLabel: UILabel?
-    private var trustLevelImageView: UIImageView?
+    private var nameLabel: UILabel!
+    private let boldFingerprintFont: UIFont = .smallSemiboldFont
+    private let fingerprintFont: UIFont = .smallFont
+    private var identifierLabel: UILabel!
+    private var trustLevelImageView: UIImageView!
 
-    init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
         backgroundColor = UIColor.clear
-        selectionStyle = EKCalendarChooserSelectionStyle(rawValue: UITableViewCell.SelectionStyle.none.rawValue)
+        selectionStyle = .none
         accessoryType = .disclosureIndicator
+
         createViews()
         setupConstraints()
         setupStyle()
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     private func createViews() {
@@ -51,16 +56,30 @@ final class ParticipantDeviceCell: UITableViewCell {
     }
 
     private func setupConstraints() {
-        trustLevelImageView.autoSetDimensions(toSize: CGSize(width: 16, height: 16))
-        trustLevelImageView.autoPinEdge(toSuperviewEdge: ALEdgeLeading, withInset: 24)
-        trustLevelImageView.autoAlignAxis(ALAxisHorizontal, toSameAxisOfView: nameLabel)
+        [trustLevelImageView,
+         nameLabel,
+         identifierLabel].forEach() { $0.translatesAutoresizingMaskIntoConstraints = false }
 
-        nameLabel.autoPinEdge(toSuperviewEdge: ALEdgeTop, withInset: 16)
-        nameLabel.autoPinEdge(ALEdgeLeading, toEdge: ALEdgeTrailing, ofView: trustLevelImageView, withOffset: 16)
+        trustLevelImageView.setDimensions(length: 16)
+        trustLevelImageView.pinToSuperview(anchor: .leading, constant: 24)
+        trustLevelImageView.pin(to: nameLabel, axisAnchor: .centerY)
 
-        identifierLabel.autoPinEdge(ALEdgeLeading, toEdge: ALEdgeLeading, ofView: nameLabel)
-        identifierLabel.autoPinEdge(ALEdgeTop, toEdge: ALEdgeBottom, ofView: nameLabel, withOffset: 0, relation: NSLayoutConstraint.Relation.greaterThanOrEqual)
-        identifierLabel.autoPinEdge(toSuperviewEdge: ALEdgeBottom, withInset: 16)
+//        trustLevelImageView.autoSetDimensions(toSize: CGSize(width: 16, height: 16))
+//        trustLevelImageView.autoPinEdge(toSuperviewEdge: ALEdgeLeading, withInset: 24)
+//        trustLevelImageView.autoAlignAxis(ALAxisHorizontal, toSameAxisOfView: nameLabel)
+
+        nameLabel.pinToSuperview(anchor: .top, constant: 16)
+        nameLabel.leadingAnchor.constraint(equalTo: trustLevelImageView.trailingAnchor, constant: 16).isActive = true
+
+//        nameLabel.autoPinEdge(toSuperviewEdge: ALEdgeTop, withInset: 16)
+//        nameLabel.autoPinEdge(ALEdgeLeading, toEdge: ALEdgeTrailing, ofView: trustLevelImageView, withOffset: 16)
+
+        identifierLabel.pin(to: nameLabel, anchor: .leading)
+        identifierLabel.topAnchor.constraint(greaterThanOrEqualTo: nameLabel.bottomAnchor).isActive = true
+        identifierLabel.pinToSuperview(anchor: .bottom, constant: -16)
+//        identifierLabel.autoPinEdge(ALEdgeLeading, toEdge: ALEdgeLeading, ofView: nameLabel)
+//        identifierLabel.autoPinEdge(ALEdgeTop, toEdge: ALEdgeBottom, ofView: nameLabel, withOffset: 0, relation: NSLayoutConstraint.Relation.greaterThanOrEqual)
+//        identifierLabel.autoPinEdge(toSuperviewEdge: ALEdgeBottom, withInset: 16)
     }
 
     private func setHighlighted(_ highlighted: Bool, animated: Bool) {
@@ -83,9 +102,6 @@ final class ParticipantDeviceCell: UITableViewCell {
     }
 
     private func setupStyle() {
-        boldFingerprintFont = .smallSemiboldFont
-        fingerprintFont = .smallFont
-
         nameLabel.textColor = .from(scheme: .textForeground)
         nameLabel.font = .smallSemiboldFont
 
