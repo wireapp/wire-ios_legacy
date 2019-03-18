@@ -104,7 +104,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 @property (nonatomic) UserImageView *authorImageView;
 @property (nonatomic) TypingIndicatorView *typingIndicatorView;
 
-@property (nonatomic) InputBar *inputBar;
 @property (nonatomic) ZMConversation *conversation;
 
 @property (nonatomic) NSSet *typingUsers;
@@ -259,26 +258,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     self.singleTapGestureRecognizer.delegate = self;
     self.singleTapGestureRecognizer.cancelsTouchesInView = YES;
     [self.view addGestureRecognizer:self.singleTapGestureRecognizer];
-}
-
-- (void)createEphemeralIndicatorButton
-{
-    self.ephemeralIndicatorButton = [[IconButton alloc] initForAutoLayout];
-    self.ephemeralIndicatorButton.layer.borderWidth = 0.5;
-
-    self.ephemeralIndicatorButton.accessibilityIdentifier = @"ephemeralTimeIndicatorButton";
-    self.ephemeralIndicatorButton.adjustsTitleWhenHighlighted = YES;
-    self.ephemeralIndicatorButton.adjustsBorderColorWhenHighlighted = YES;
-
-    [self.inputBar.rightAccessoryStackView insertArrangedSubview:self.ephemeralIndicatorButton atIndex:0];
-    [self.ephemeralIndicatorButton autoSetDimensionsToSize:CGSizeMake(InputBar.rightIconSize, InputBar.rightIconSize)];
-
-    [self.ephemeralIndicatorButton setTitleColor:[UIColor lightGraphite]
-                                        forState:UIControlStateDisabled];
-    [self.ephemeralIndicatorButton setTitleColor:[UIColor accentColor]
-                                        forState:UIControlStateNormal];
-
-    [self updateEphemeralIndicatorButtonTitle:self.ephemeralIndicatorButton];
 }
 
 - (void)createEmojiButton

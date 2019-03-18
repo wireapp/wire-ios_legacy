@@ -21,7 +21,7 @@ import Foundation
 extension ConversationInputBarViewController {
 
     @objc
-    func createInputBar() {
+    private func createInputBar() {
         audioButton = IconButton()
         audioButton.hitAreaPadding = CGSize.zero
         audioButton.accessibilityIdentifier = "audioButton"
@@ -69,15 +69,15 @@ extension ConversationInputBarViewController {
             pingButton,
             uploadFileButton,
             locationButton,
-            videoButton
-            ])
+            videoButton])
+
         inputBar.translatesAutoresizingMaskIntoConstraints = false
         inputBar.textView.delegate = self
         registerForTextFieldSelectionChange()
 
         view.addSubview(inputBar)
 
-        let constraints: [NSLayoutConstraint] = []
+        var constraints: [NSLayoutConstraint] = []
 
         constraints += inputBar.fitInSuperview(exclude: [.bottom], activate: false).values
 
@@ -89,6 +89,25 @@ extension ConversationInputBarViewController {
         NSLayoutConstraint.activate(constraints)
 
         inputBar.editingView.delegate = self
+    }
+
+    @objc
+    private func createEphemeralIndicatorButton() {
+        ephemeralIndicatorButton = IconButton()
+        ephemeralIndicatorButton.layer.borderWidth = 0.5
+
+        ephemeralIndicatorButton.accessibilityIdentifier = "ephemeralTimeIndicatorButton"
+        ephemeralIndicatorButton.adjustsTitleWhenHighlighted = true
+        ephemeralIndicatorButton.adjustsBorderColorWhenHighlighted = true
+
+        inputBar.rightAccessoryStackView.insertArrangedSubview(ephemeralIndicatorButton, at: 0)
+
+        ephemeralIndicatorButton.setDimensions(length: InputBar.rightIconSize)
+
+        ephemeralIndicatorButton.setTitleColor(UIColor.lightGraphite, for: .disabled)
+        ephemeralIndicatorButton.setTitleColor(UIColor.accent(), for: .normal)
+
+        updateEphemeralIndicatorButtonTitle(ephemeralIndicatorButton)
     }
 
 }

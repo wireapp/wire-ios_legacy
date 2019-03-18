@@ -43,6 +43,8 @@
 @property (nonatomic, null_unspecified) IconButton *hourglassButton;
 @property (nonatomic, null_unspecified) IconButton *videoButton;
 
+@property (nonatomic, null_unspecified) InputBar *inputBar;
+
 @property (nonatomic, nullable) AudioRecordViewController *audioRecordViewController;
 @property (nonatomic, nullable) UIView *audioRecordViewContainer;
 
