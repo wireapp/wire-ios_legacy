@@ -60,17 +60,20 @@ final class ParticipantDeviceCell: UITableViewCell {
          nameLabel,
          identifierLabel].forEach() { $0.translatesAutoresizingMaskIntoConstraints = false }
 
-        ///TODO: activate in a batch
-        trustLevelImageView.setDimensions(length: 16)
-        trustLevelImageView.pinToSuperview(anchor: .leading, constant: 24)
-        trustLevelImageView.pin(to: nameLabel, axisAnchor: .centerY)
+        var constraints: [NSLayoutConstraint] = []
 
-        nameLabel.pinToSuperview(anchor: .top, constant: 16)
-        nameLabel.leadingAnchor.constraint(equalTo: trustLevelImageView.trailingAnchor, constant: 16).isActive = true
+        constraints += trustLevelImageView.setDimensions(length: 16, activate: false)
+        constraints.append(trustLevelImageView.pinToSuperview(anchor: .leading, inset: 24, activate: false))
+        constraints.append(trustLevelImageView.pin(to: nameLabel, axisAnchor: .centerY, activate: false))
 
-        identifierLabel.pin(to: nameLabel, anchor: .leading)
-        identifierLabel.topAnchor.constraint(greaterThanOrEqualTo: nameLabel.bottomAnchor).isActive = true
-        identifierLabel.pinToSuperview(anchor: .bottom, constant: -16)
+        constraints.append(nameLabel.pinToSuperview(anchor: .top, inset: 16, activate: false))
+        constraints.append(nameLabel.leadingAnchor.constraint(equalTo: trustLevelImageView.trailingAnchor, constant: 16))
+
+        constraints.append(identifierLabel.pin(to: nameLabel, anchor: .leading, activate: false))
+        constraints.append(identifierLabel.topAnchor.constraint(greaterThanOrEqualTo: nameLabel.bottomAnchor))
+        constraints.append(identifierLabel.pinToSuperview(anchor: .bottom, inset: 16, activate: false))
+
+        NSLayoutConstraint.activate(constraints)
     }
 
     override func setHighlighted(_ highlighted: Bool, animated: Bool) {

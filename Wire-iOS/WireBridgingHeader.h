@@ -70,7 +70,6 @@
 #import "SwipeMenuCollectionCell+Internal.h"
 #import "TextView+Internal.h"
 #import "TextView.h"
-#import "MediaPreviewView.h"
 #import "ColorKnobView.h"
 
 // View Controllers

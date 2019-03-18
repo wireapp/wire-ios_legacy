@@ -33,7 +33,7 @@ struct EdgeInsets {
     init(margin: CGFloat) {
         self = EdgeInsets(top: margin, leading: margin, bottom: margin, trailing: margin)
     }
-    
+
     init(edgeInsets: UIEdgeInsets) {
         top = edgeInsets.top
         leading = edgeInsets.leading
@@ -94,8 +94,8 @@ extension UIView {
 
     @discardableResult func pin(to view: UIView,
                                 axisAnchor: AxisAnchor,
-                                           constant: CGFloat = 0,
-                                           activate: Bool = true) -> NSLayoutConstraint {
+                                constant: CGFloat = 0,
+                                activate: Bool = true) -> NSLayoutConstraint {
 
         var selfAnchor: NSObject!
         var otherAnchor: NSObject!
@@ -116,20 +116,38 @@ extension UIView {
     }
 
     // MARK: - signal edge alignment
+
+    /// Pin this view's specific edge to superview's same edge with custom inset
+    ///
+    /// - Parameters:
+    ///   - anchor: the edge to pin
+    ///   - inset: the inset to the edge
+    ///   - activate: true by default, set to false if do not activate the NSLayoutConstraint
+    /// - Returns: the NSLayoutConstraint created
     @discardableResult func pinToSuperview(anchor: Anchor,
-                                           constant: CGFloat = 0,
+                                           inset: CGFloat = 0,
                                            activate: Bool = true) -> NSLayoutConstraint {
         guard let superview = superview else {
             fatal("Not in view hierarchy: self.superview = nil")
         }
 
-        return pin(to: superview, anchor: anchor, constant: constant, activate: activate)
+        return pin(to: superview,
+                   anchor: anchor,
+                   inset: inset,
+                   activate: activate)
     }
 
     @discardableResult func pin(to view: UIView,
                                 anchor: Anchor,
-                                           constant: CGFloat = 0,
-                                           activate: Bool = true) -> NSLayoutConstraint {
+                                inset: CGFloat = 0,
+                                activate: Bool = true) -> NSLayoutConstraint {
+        let constant: CGFloat
+        switch anchor {
+        case .top, .leading:
+            constant = inset
+        case .bottom, .trailing:
+            constant = -inset
+        }
 
         var selfAnchor: NSObject!
         var otherAnchor: NSObject!
@@ -222,24 +240,36 @@ extension UIView {
 
     // MARK: - dimensions
 
-    func setDimensions(length: CGFloat) {
-        setDimensions(width: length, height: length)
+    @discardableResult
+    func setDimensions(length: CGFloat,
+                       activate: Bool = true) -> [NSLayoutConstraint] {
+        return setDimensions(width: length, height: length, activate: activate)
     }
 
-    func setDimensions(width: CGFloat, height: CGFloat) {
-        setDimensions(size: CGSize(width: width, height: height))
+    @discardableResult
+    func setDimensions(width: CGFloat,
+                       height: CGFloat,
+                       activate: Bool = true) -> [NSLayoutConstraint] {
+        return setDimensions(size: CGSize(width: width, height: height), activate: activate)
     }
 
-    func setDimensions(size: CGSize) {
-        let constraints = [
+    @discardableResult
+    func setDimensions(size: CGSize,
+                       activate: Bool = true) -> [NSLayoutConstraint] {
+        let constraints: [NSLayoutConstraint] = [
             widthAnchor.constraint(equalToConstant: size.width),
             heightAnchor.constraint(equalToConstant: size.height)
         ]
 
-        NSLayoutConstraint.activate(constraints)
+        if activate {
+            NSLayoutConstraint.activate(constraints)
+        }
+
+        return constraints
     }
 
-    @discardableResult func topAndBottomEdgesToSuperviewEdges() -> [NSLayoutConstraint] {
+    @discardableResult
+    func topAndBottomEdgesToSuperviewEdges() -> [NSLayoutConstraint] {
         guard let superview = superview else { return [] }
 
         return [
