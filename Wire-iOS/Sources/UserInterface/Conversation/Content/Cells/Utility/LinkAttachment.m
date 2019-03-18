@@ -40,9 +40,9 @@
 - (LinkAttachmentType)linkAttachmentTypeForURL:(NSURL *)URL
 {
     LinkAttachmentType linkAttachmentType = LinkAttachmentTypeNone;
-    
+
     NSString *URLString = [URL absoluteString];
-    
+
     if ([self.class regularExpression:self.class.youtubeMatcher matchesString:URLString]) {
         linkAttachmentType = LinkAttachmentTypeYoutubeVideo;
     }
