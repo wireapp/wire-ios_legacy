@@ -19,7 +19,7 @@
 
 import Foundation
 
-//TODO: merge to UserClientType
+//TODO: merge to UserClientType or stay in UI project? It is depends on localized string resource
 @objc protocol UserClientTypeAttributedString {
     @objc func attributedRemoteIdentifier(_ attributes: [NSAttributedString.Key : AnyObject], boldAttributes: [NSAttributedString.Key : AnyObject], uppercase: Bool) -> NSAttributedString
 }
