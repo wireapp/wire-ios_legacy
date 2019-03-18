@@ -30,6 +30,9 @@ protocol AuthenticationFeatureProvider {
     /// Whether we allow company login.
     var allowCompanyLogin: Bool { get }
 
+    /// Whether we allow the users to log in with their company manually, or only enable SSO links.
+    var allowDirectCompanyLogin: Bool { get }
+
 }
 
 /**
@@ -48,6 +51,10 @@ class BuildSettingAuthenticationFeatureProvider: AuthenticationFeatureProvider {
 
     var allowCompanyLogin: Bool {
         return CompanyLoginController.isCompanyLoginEnabled
+    }
+
+    var allowDirectCompanyLogin: Bool {
+        return allowCompanyLogin && !allowOnlyEmailLogin
     }
 
 }
