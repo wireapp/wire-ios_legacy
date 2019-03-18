@@ -60,6 +60,7 @@ final class ParticipantDeviceCell: UITableViewCell {
          nameLabel,
          identifierLabel].forEach() { $0.translatesAutoresizingMaskIntoConstraints = false }
 
+        ///TODO: activate in a batch
         trustLevelImageView.setDimensions(length: 16)
         trustLevelImageView.pinToSuperview(anchor: .leading, constant: 24)
         trustLevelImageView.pin(to: nameLabel, axisAnchor: .centerY)
