@@ -40,7 +40,7 @@ extension ConfirmAssetViewController {
         topBarHeightConstraint = topPanel.heightAnchor.constraint(equalToConstant: safeTopBarHeight)
         topBarHeightConstraint.isActive = true
 
-        titleLabel.pinToSuperview(anchor: .top, constant: UIScreen.safeArea.top)
+        titleLabel.pinToSuperview(anchor: .top, inset: UIScreen.safeArea.top)
         titleLabel.pinToSuperview(anchor: .bottom)
         titleLabel.pinToSuperview(axisAnchor: .centerX)
         
@@ -72,7 +72,7 @@ extension ConfirmAssetViewController {
         }
         
         acceptImageButton.pinToSuperview(axisAnchor: .centerY)
-        acceptImageButton.pinToSuperview(anchor: .trailing, constant: -ConfirmAssetViewController.marginInset())
+        acceptImageButton.pinToSuperview(anchor: .trailing, inset: ConfirmAssetViewController.marginInset())
 
         NSLayoutConstraint.activate([
             acceptImageButton.heightAnchor.constraint(equalToConstant: 40)])
@@ -80,7 +80,7 @@ extension ConfirmAssetViewController {
         acceptImageButton.setContentHuggingPriority(.defaultLow, for: .horizontal)
         
         rejectImageButton.pinToSuperview(axisAnchor: .centerY)
-        rejectImageButton.pinToSuperview(anchor: .leading, constant: ConfirmAssetViewController.marginInset())
+        rejectImageButton.pinToSuperview(anchor: .leading, inset: ConfirmAssetViewController.marginInset())
         NSLayoutConstraint.activate([
             rejectImageButton.heightAnchor.constraint(equalToConstant: 40)])
         rejectImageButton.setContentHuggingPriority(.defaultLow, for: .horizontal)

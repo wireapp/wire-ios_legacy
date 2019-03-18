@@ -33,7 +33,7 @@ struct EdgeInsets {
     init(margin: CGFloat) {
         self = EdgeInsets(top: margin, leading: margin, bottom: margin, trailing: margin)
     }
-    
+
     init(edgeInsets: UIEdgeInsets) {
         top = edgeInsets.top
         leading = edgeInsets.leading
@@ -108,11 +108,27 @@ extension UIView {
     }
 
     // MARK: - signal edge alignment
+
+    /// Pin this view's specific edge to superview's same edge with custom inset
+    ///
+    /// - Parameters:
+    ///   - anchor: the edge to pin
+    ///   - inset: the inset to the edge
+    ///   - activate: true by default, set to false if do not activate the NSLayoutConstraint
+    /// - Returns: the NSLayoutConstraint created
     @discardableResult func pinToSuperview(anchor: Anchor,
-                                           constant: CGFloat = 0,
+                                           inset: CGFloat = 0,
                                            activate: Bool = true) -> NSLayoutConstraint {
         guard let superview = superview else {
             fatal("Not in view hierarchy: self.superview = nil")
+        }
+
+        let constant: CGFloat
+        switch anchor {
+        case .top, .leading:
+            constant = inset
+        case .bottom, .trailing:
+            constant = -inset
         }
 
         var selfAnchor: NSObject!

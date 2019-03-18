@@ -115,7 +115,7 @@ platform :ios do
         changelog = ""
 
         if build.playground_build
-            changelog = "Playground build for #{@git_branch}"
+            changelog = "Playground build for #{build.git_branch}"
         elsif build.last_commit.nil? || build.last_commit.empty? 
             changelog = "No changelog available"
         else
