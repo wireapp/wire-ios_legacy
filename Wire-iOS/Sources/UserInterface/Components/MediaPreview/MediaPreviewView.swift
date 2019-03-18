@@ -94,20 +94,24 @@ final class MediaPreviewView: UIView {
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
 
+        var constraints: [NSLayoutConstraint] = []
+
         [contentView, containerView, previewImageView, overlayView].forEach() {
-            $0.fitInSuperview()
+            constraints += $0.fitInSuperview(activate: false).values
         }
 
-        titleLabel.pinToSuperview(anchor: .top, inset: 12)
-        titleLabel.pinToSuperview(anchor: .leading, inset: 12)
 
-        providerImageView.pinToSuperview(anchor: .top, inset: 15)
-        providerImageView.pinToSuperview(anchor: .trailing, inset: 12)
+        constraints += [titleLabel.pinToSuperview(anchor: .top, inset: 12, activate: false),
+                        titleLabel.pinToSuperview(anchor: .leading, inset: 12, activate: false),
+                        providerImageView.pinToSuperview(anchor: .top, inset: 15, activate: false),
+                        providerImageView.pinToSuperview(anchor: .trailing, inset: 12, activate: false),
+                        providerImageView.leadingAnchor.constraint(greaterThanOrEqualTo: titleLabel.trailingAnchor, constant: 8)]
 
         titleLabel?.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
-        providerImageView.leadingAnchor.constraint(greaterThanOrEqualTo: titleLabel.trailingAnchor, constant: 8)
 
-        playButton.centerInSuperview()
+        constraints += playButton.centerInSuperview(activate: false)
+
+        NSLayoutConstraint.activate(constraints)
     }
 }
 

@@ -25,7 +25,6 @@ final class AppLockViewSnapshotTests: ZMSnapshotTestCase {
     
     override func setUp() {
         super.setUp()
-        sut = AppLockView()
     }
     
     override func tearDown() {
@@ -33,7 +32,8 @@ final class AppLockViewSnapshotTests: ZMSnapshotTestCase {
         super.tearDown()
     }
 
-    func testForReauthUI(){
+    func testForReauthUI_TouchID() {
+        sut = AppLockView(authenticationType: .touchID)
         sut.showReauth = true
 
         verifyInAllDeviceSizes(view: sut) { _, isPad in
@@ -41,4 +41,25 @@ final class AppLockViewSnapshotTests: ZMSnapshotTestCase {
             self.sut.toggleConstraints()
         }
     }
+
+    func testForReauthUI_FaceID() {
+        sut = AppLockView(authenticationType: .faceID)
+        sut.showReauth = true
+
+        verifyInAllDeviceSizes(view: sut) { _, isPad in
+            self.sut.userInterfaceSizeClass = { _ in return isPad ? .regular: .compact}
+            self.sut.toggleConstraints()
+        }
+    }
+
+    func testForReauthUI_Password() {
+        sut = AppLockView(authenticationType: .none)
+        sut.showReauth = true
+
+        verifyInAllDeviceSizes(view: sut) { _, isPad in
+            self.sut.userInterfaceSizeClass = { _ in return isPad ? .regular: .compact}
+            self.sut.toggleConstraints()
+        }
+    }
+
 }
