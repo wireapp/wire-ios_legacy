@@ -26,6 +26,7 @@ final class LaunchImageViewControllerSnapshotTests: ZMSnapshotTestCase {
     override func setUp() {
         super.setUp()
         sut = LaunchImageViewController()
+        sut.loadViewIfNeeded()
     }
     
     override func tearDown() {
@@ -34,6 +35,12 @@ final class LaunchImageViewControllerSnapshotTests: ZMSnapshotTestCase {
     }
 
     func testForInitState(){
+        verify(view: sut.view)
+    }
+
+    func testForShowingSpinner(){
+        sut.showLoadingScreen()
+
         verify(view: sut.view)
     }
 }

@@ -67,23 +67,30 @@ class LaunchImageViewController: UIViewController {
 
         view.addSubview(loadingScreenLabel)
 
-        // Constraints
-        [contentView, loadingScreenLabel, activityIndicator].forEach() {
-            $0.translatesAutoresizingMaskIntoConstraints = false
-        }
-
-        contentView.fitInSuperview()
-
-        loadingScreenLabel.pinToSuperview(axisAnchor: .centerX)
-        loadingScreenLabel.pinToSuperview(anchor: .bottom, inset: 40)
-
-        activityIndicator.pinToSuperview(axisAnchor: .centerX)
-        activityIndicator.bottomAnchor.constraint(equalTo: loadingScreenLabel.topAnchor, constant: -24)
+        createConstraints()
 
         // Start the spinner in case of it was requested right after the init
         if shouldShowLoadingScreenOnViewDidLoad {
             showLoadingScreen()
         }
+    }
+
+    private func createConstraints() {
+        [contentView, loadingScreenLabel, activityIndicator].forEach() {
+            $0.translatesAutoresizingMaskIntoConstraints = false
+        }
+
+        var constraints: [NSLayoutConstraint] = []
+
+        constraints += contentView.fitInSuperview(activate: false).values
+
+        constraints.append(loadingScreenLabel.pinToSuperview(axisAnchor: .centerX, activate: false))
+        constraints.append(loadingScreenLabel.pinToSuperview(anchor: .bottom, inset: 40, activate: false))
+
+        constraints.append(activityIndicator.pinToSuperview(axisAnchor: .centerX, activate: false))
+        constraints.append(activityIndicator.bottomAnchor.constraint(equalTo: loadingScreenLabel.topAnchor, constant: -24))
+
+        NSLayoutConstraint.activate(constraints)
     }
 
     override var prefersStatusBarHidden: Bool {
