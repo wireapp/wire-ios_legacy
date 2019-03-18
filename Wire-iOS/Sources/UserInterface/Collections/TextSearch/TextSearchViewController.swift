@@ -21,7 +21,7 @@ import WireSyncEngine
 import WireDataModel
 import Cartography
 
-@objcMembers final public class TextSearchViewController: NSObject {
+public final class TextSearchViewController: NSObject {
     public var resultsView: TextSearchResultsView!
     public var searchBar: TextSearchInputView!
     
@@ -82,7 +82,6 @@ import Cartography
             return
         }
 
-        ///TODO:
         textSearchQuery = TextSearchQuery(conversation: conversation, query: query, delegate: self)
         if let query = textSearchQuery {
             searchStartedDate = Date()
@@ -94,7 +93,7 @@ import Cartography
     fileprivate func reloadResults() {
         let query = searchQuery ?? ""
         let noResults = results.isEmpty
-        let validQuery = query.isValidQuery
+        let validQuery = TextSearchQuery.isValid(query: query)
 
         // We hide the results when we either have none or the query is too short
         resultsView.tableView.isHidden = noResults || !validQuery
@@ -127,19 +126,13 @@ extension TextSearchViewController: TextSearchQueryDelegate {
     }
 }
 
-fileprivate extension String {
-    var isValidQuery: Bool {
-        return count >= 1
-    }
-}
-
 extension TextSearchViewController: TextSearchInputViewDelegate {
     public func searchView(_ searchView: TextSearchInputView, didChangeQueryTo query: String) {
         textSearchQuery?.cancel()
         searchStartedDate = nil
         hideLoadingSpinner()
 
-        if query.isValidQuery {
+        if TextSearchQuery.isValid(query: query) {
             scheduleSearch()
         } else {
             // We reset the results to avoid showing the previous
@@ -149,7 +142,7 @@ extension TextSearchViewController: TextSearchInputViewDelegate {
     }
 
     public func searchViewShouldReturn(_ searchView: TextSearchInputView) -> Bool {
-        return searchView.query.isValidQuery
+        return TextSearchQuery.isValid(query: searchView.query)
     }
 }
 
