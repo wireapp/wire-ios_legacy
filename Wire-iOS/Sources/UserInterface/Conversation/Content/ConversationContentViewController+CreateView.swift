@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2018 Wire Swiss GmbH
+// Copyright (C) 2019 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,11 +16,19 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-@interface ParticipantDeviceCell ()
+import Foundation
 
-@property (strong, nonatomic) UILabel *nameLabel;
-@property (strong, nonatomic) UIFont *boldFingerprintFont;
-@property (strong, nonatomic) UIFont *fingerprintFont;
-@property (strong, nonatomic) UILabel *identifierLabel;
+extension ConversationContentViewController {
+    @objc
+    func createMentionsResultsView() {
+        mentionsSearchResultsViewController = UserSearchResultsViewController()
+        mentionsSearchResultsViewController.view.translatesAutoresizingMaskIntoConstraints = false
 
-@end
+        addChild(mentionsSearchResultsViewController)
+        view.addSubview(mentionsSearchResultsViewController.view)
+
+        mentionsSearchResultsViewController.view.fitInSuperview()
+    }
+}
+
+

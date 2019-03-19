@@ -16,10 +16,32 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+import XCTest
 @testable import Wire
 
-class MockAuthenticationFeatureProvider: AuthenticationFeatureProvider {
-    var allowOnlyEmailLogin: Bool = false
-    var allowCompanyLogin: Bool = true
-    var allowDirectCompanyLogin: Bool = true
+final class MediaPreviewViewSnapshotTests: ZMSnapshotTestCase {
+
+    var sut: MediaPreviewView!
+
+    override func setUp() {
+        super.setUp()
+        sut = MediaPreviewView()
+        sut.titleLabel.text = "Demo Media"
+
+
+        sut.providerImageView.image = WireStyleKit.imageOfYoutube(color: UIColor.white)
+        sut.previewImageView.image = image(inTestBundleNamed: "unsplash_matterhorn.jpg")
+
+        //MediaPreviewView is portrait in messsage cell
+        sut.frame = CGRect(x: 0, y: 0, width: 320, height: 480)
+    }
+
+    override func tearDown() {
+        sut = nil
+        super.tearDown()
+    }
+
+    func testForInitState(){
+        verify(view: sut)
+    }
 }

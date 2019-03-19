@@ -72,8 +72,8 @@ final class VersionInfoViewController: UIViewController {
         //Layout
         closeButton.translatesAutoresizingMaskIntoConstraints = false
 
-        closeButton.pinToSuperview(safely: true, anchor: .top, constant: 24)
-        closeButton.pinToSuperview(safely: true, anchor: .trailing, constant: -18)
+        closeButton.pinToSuperview(safely: true, anchor: .top, inset: 24)
+        closeButton.pinToSuperview(safely: true, anchor: .trailing, inset: 18)
 
         //Target
         closeButton.addTarget(self, action: #selector(self.closeButtonTapped(_:)), for: .touchUpInside)
