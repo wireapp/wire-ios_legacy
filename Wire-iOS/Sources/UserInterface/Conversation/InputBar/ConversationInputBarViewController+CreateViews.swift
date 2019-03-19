@@ -21,7 +21,7 @@ import Foundation
 extension ConversationInputBarViewController {
 
     @objc
-    private func createInputBar() {
+    func createInputBar() {
         audioButton = IconButton()
         audioButton.hitAreaPadding = CGSize.zero
         audioButton.accessibilityIdentifier = "audioButton"
@@ -92,7 +92,7 @@ extension ConversationInputBarViewController {
     }
 
     @objc
-    private func createEphemeralIndicatorButton() {
+    func createEphemeralIndicatorButton() {
         ephemeralIndicatorButton = IconButton()
         ephemeralIndicatorButton.layer.borderWidth = 0.5
 
@@ -109,5 +109,18 @@ extension ConversationInputBarViewController {
 
         updateEphemeralIndicatorButtonTitle(ephemeralIndicatorButton)
     }
+
+func createEmojiButton() {
+    let senderDiameter: CGFloat = 28
+
+    emojiButton = IconButton(style: IconButtonStyleCircular)
+    emojiButton.translatesAutoresizingMaskIntoConstraints = false
+    emojiButton.accessibilityIdentifier = "emojiButton"
+
+    inputBar.leftAccessoryView.addSubview(emojiButton)
+    emojiButton.autoAlignAxis(toSuperviewAxis: ALAxisVertical)
+    emojiButton.autoPinEdge(toSuperviewEdge: ALEdgeBottom, withInset: 14)
+    emojiButton.autoSetDimensions(toSize: CGSize(width: senderDiameter, height: senderDiameter))
+}
 
 }

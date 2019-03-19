@@ -260,20 +260,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self.view addGestureRecognizer:self.singleTapGestureRecognizer];
 }
 
-- (void)createEmojiButton
-{
-    const CGFloat senderDiameter = 28;
-
-    self.emojiButton = [[IconButton alloc] initWithStyle:IconButtonStyleCircular];
-    self.emojiButton.translatesAutoresizingMaskIntoConstraints = NO;
-    self.emojiButton.accessibilityIdentifier = @"emojiButton";
-
-    [self.inputBar.leftAccessoryView addSubview:self.emojiButton];
-    [self.emojiButton autoAlignAxisToSuperviewAxis:ALAxisVertical];
-    [self.emojiButton autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:14];
-    [self.emojiButton autoSetDimensionsToSize:CGSizeMake(senderDiameter, senderDiameter)];
-}
-
 - (void)createMarkdownButton
 {
     const CGFloat senderDiameter = 28;
