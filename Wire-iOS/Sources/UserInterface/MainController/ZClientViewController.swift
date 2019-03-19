@@ -151,6 +151,7 @@ extension ZClientViewController {
 
     func openProfileScreen(for user: ZMUser) {
         let profileViewController = ProfileViewController(user: user, viewer: ZMUser.selfUser(), context: .profileViewer)
+        profileViewController.delegate = self
 
         let navWrapperController: UINavigationController = profileViewController.wrapInNavigationController()
         navWrapperController.modalPresentationStyle = .formSheet
