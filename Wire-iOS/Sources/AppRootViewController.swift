@@ -565,6 +565,19 @@ public extension SessionManager {
 extension AppRootViewController: SessionManagerURLHandlerDelegate {
     func sessionManagerShouldExecuteURLAction(_ action: URLAction, callback: @escaping (Bool) -> Void) {
         switch action {
+        case .openConversation(_):
+        ///TODO: open a conversation if id is valid
+            break
+        case .openUserProfile(let id):
+            if let moc = ZMUserSession.shared()?.managedObjectContext,
+                let user = ZMUser.init(remoteID: id, createIfNeeded: false, in: moc) {
+                ZClientViewController.shared()?.openProfileScreen(for: user)
+            } else {
+                ///TODO: error
+            }
+        case .warnInvalidDeepLink(_):
+            callback(false)
+            ///TODO: show a warning alert
         case .connectBot:
             guard let _ = ZMUser.selfUser().team else {
                 callback(false)
