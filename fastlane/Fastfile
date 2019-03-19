@@ -9,8 +9,11 @@ platform :ios do
         if build_type.nil? 
             sh "cd .. && ./setup.sh"
         else
-            sh "cd .. && ./setup.sh --override_with wire-ios-build-assets/CI\ configuration/#{build_type}"
             build = Build.new(options: options)
+            # We need to update the AVS version before running setup script
+            build.update_avs_version()
+            sh "cd .. && ./setup.sh --override_with wire-ios-build-assets/CI\ configuration/#{build_type}"
+            # Adding extra information to the icon must be done after we check them out in setup script
             build.process_icon()
         end
     end
@@ -116,6 +119,8 @@ platform :ios do
 
         if build.playground_build
             changelog = "Playground build for #{build.git_branch}"
+        elsif build.avs_build
+            changelog = "AVS #{build.avs_version}"
         elsif build.last_commit.nil? || build.last_commit.empty? 
             changelog = "No changelog available"
         else
@@ -166,6 +171,7 @@ class Build
     attr_reader :last_commit
     attr_reader :for_simulator
     attr_reader :configuration
+    attr_reader :avs_version
 
     def initialize(options:)
         build_number = options[:build_number]
@@ -189,6 +195,11 @@ class Build
             @for_simulator = for_simulator.to_s == 'true'
         end
 
+        avs_version = options[:avs_version]
+        if !avs_version.nil? && !avs_version.empty?
+            @avs_version = avs_version
+        end
+
         configuration = options[:configuration]
         if configuration.nil? 
             @configuration = "Release"
@@ -205,6 +216,10 @@ class Build
 
     def appstore_build
         @build_type == "AppStore"
+    end
+
+    def avs_build
+        @build_type == "AVS"
     end
 
     def debug_build
@@ -275,6 +290,17 @@ class Build
         end
     end
 
+    # Force custom AVS version
+
+    def update_avs_version
+        if @avs_version.nil?
+            UI.important("Using AVS version specified in source control")
+        else
+            %x( sed -i '' 's/^export APPSTORE_AVS_VERSION=.*/export APPSTORE_AVS_VERSION='"#{@avs_version}"'/g' ../avs-versions )
+            UI.important("Using custom AVS version: #{@avs_version}")
+        end
+    end
+
     # Adding build number to icon
 
     def process_icon
@@ -293,11 +319,15 @@ class Build
             %x( convert -background '#0008' -fill white -gravity center -size #{width}x#{height} caption:"#{extra_info}" "#{image}" +swap -gravity south -composite "#{image}" )
             processed += 1
         end
-        UI.important("Proccessed #{processed} icons in #{iconset_location}")
+        UI.important("Proccessed #{processed} icons in #{iconset_location} by adding '#{extra_info}'")
     end
 
     def extra_info
-        @build_number
+        prefix = ""
+        if !@avs_version.nil?
+            prefix = "AVS:#{@avs_version}-"
+        end
+        prefix + @build_number
     end
 
     def iconset_location
