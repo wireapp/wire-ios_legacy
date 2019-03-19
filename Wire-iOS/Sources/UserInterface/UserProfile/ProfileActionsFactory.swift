@@ -158,10 +158,8 @@ final class ProfileActionsFactory: NSObject {
 
         var actions: [ProfileAction] = []
 
-        switch conversation?.conversationType {
-        case .none:
-            break
-        case .oneOnOne?:
+        switch (context, conversation?.conversationType) {
+        case (_, .oneOnOne?):
 
             // All viewers except partners can start conversations
             if viewer.teamRole != .partner {
@@ -179,7 +177,8 @@ final class ProfileActionsFactory: NSObject {
                 actions.append(.block(isBlocked: false))
             }
 
-        case .group?:
+        case (.profileViewer, .none),
+             (_, .group?):
             // Do nothing if the viewer is a wireless user because they can't have 1:1's
             if viewer.isWirelessUser {
                 break
