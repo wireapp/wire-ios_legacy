@@ -150,17 +150,12 @@ extension ZClientViewController {
     // MARK: - present a ProfileViewController
 
     func openProfileScreen(for user: ZMUser) {
-        var viewController: UIViewController?
+        let profileViewController = ProfileViewController(user: user, viewer: ZMUser.selfUser(), context: .profileViewer)
 
-        let profileViewController = ProfileViewController(user: user, viewer: ZMUser.selfUser(), context: .oneToOneConversation) ///TODO: a new context for button config
+        let navWrapperController: UINavigationController = profileViewController.wrapInNavigationController()
+        navWrapperController.modalPresentationStyle = .formSheet
 
-        viewController = profileViewController
-
-        let navWrapperController: UINavigationController? = viewController?.wrapInNavigationController()
-        navWrapperController?.modalPresentationStyle = .formSheet
-        if let aController = navWrapperController {
-            present(aController, animated: true)
-        }
+        present(navWrapperController, animated: true)
     }
 
     /// Open the user client list screen

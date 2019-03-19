@@ -87,7 +87,7 @@ enum ProfileAction: Equatable {
  * of a conversation.
  */
 
-class ProfileActionsFactory: NSObject {
+final class ProfileActionsFactory: NSObject {
 
     // MARK: - Environmemt
 
@@ -100,6 +100,9 @@ class ProfileActionsFactory: NSObject {
     /// The conversation that the user wants to perform the actions in.
     let conversation: ZMConversation?
 
+    /// The context of the Profile VC
+    let context: ProfileViewControllerContext
+
     // MARK: - Initialization
 
     /**
@@ -110,10 +113,11 @@ class ProfileActionsFactory: NSObject {
      * perform the actions in.
      */
 
-    init(user: GenericUser, viewer: GenericUser, conversation: ZMConversation?) {
+    init(user: GenericUser, viewer: GenericUser, conversation: ZMConversation?, context: ProfileViewControllerContext) {
         self.user = user
         self.viewer = viewer
         self.conversation = conversation
+        self.context = context
     }
 
     // MARK: - Calculating the Actions
@@ -133,8 +137,14 @@ class ProfileActionsFactory: NSObject {
             return [.block(isBlocked: true)]
         }
 
-        // If there is no conversation, offer to connect to the user if possible
-        guard let conversation = self.conversation else {
+        var conversation: ZMConversation?
+
+        // If there is no conversation and open profile from a conversation, offer to connect to the user if possible
+        if let selfConversation = self.conversation {
+            conversation = selfConversation
+        } else if context == .profileViewer {
+            conversation = nil
+        } else {
             if !user.isConnected {
                 if user.isPendingApprovalByOtherUser {
                     return [.cancelConnectionRequest]
@@ -148,8 +158,10 @@ class ProfileActionsFactory: NSObject {
 
         var actions: [ProfileAction] = []
 
-        switch conversation.conversationType {
-        case .oneOnOne:
+        switch conversation?.conversationType {
+        case .none:
+            break
+        case .oneOnOne?:
 
             // All viewers except partners can start conversations
             if viewer.teamRole != .partner {
@@ -157,15 +169,17 @@ class ProfileActionsFactory: NSObject {
             }
 
             // Notifications, Archive, Delete Contents if available for every 1:1
-            let notificationAction: ProfileAction = viewer.isTeamMember ? .manageNotifications : .mute(isMuted: conversation.mutedMessageTypes != .none)
-            actions.append(contentsOf: [notificationAction, .archive, .deleteContents])
+            if let conversation = conversation {
+                let notificationAction: ProfileAction = viewer.isTeamMember ? .manageNotifications : .mute(isMuted: conversation.mutedMessageTypes != .none)
+                actions.append(contentsOf: [notificationAction, .archive, .deleteContents])
+            }
 
             // If the viewer is not on the same team as the other user, allow blocking
             if !viewer.canAccessCompanyInformation(of: user) && !user.isWirelessUser {
                 actions.append(.block(isBlocked: false))
             }
 
-        case .group:
+        case .group?:
             // Do nothing if the viewer is a wireless user because they can't have 1:1's
             if viewer.isWirelessUser {
                 break
@@ -183,7 +197,8 @@ class ProfileActionsFactory: NSObject {
             }
 
             // Only non-guests and non-partners are allowed to remove
-            if !viewer.isGuest(in: conversation) && viewer.teamRole != .partner {
+            if let conversation = conversation,
+                !viewer.isGuest(in: conversation) && viewer.teamRole != .partner {
                 actions.append(.removeFromGroup)
             }
 

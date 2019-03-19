@@ -60,7 +60,7 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
 
     @objc func updateFooterViews() {
         // Actions
-        let factory = ProfileActionsFactory(user: bareUser, viewer: viewer, conversation: conversation)
+        let factory = ProfileActionsFactory(user: bareUser, viewer: viewer, conversation: conversation, context: context)
         let actions = factory.makeActionsList()
 
         profileFooterView.delegate = self
