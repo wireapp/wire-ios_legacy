@@ -20,6 +20,7 @@ import XCTest
 @testable import Wire
 import WireDataModel
 
+///TODO:
 final class ParticipantDeviceCellTests: ZMSnapshotTestCase {
 
     var sut: ParticipantDeviceCell!

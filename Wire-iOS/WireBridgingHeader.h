@@ -28,8 +28,6 @@
 #import "Message+UI.h"
 
 // UI
-#import "ParticipantDeviceCell.h"
-#import "ParticipantDeviceCell+Internal.h"
 #import "ParticipantDeviceHeaderView.h"
 #import "ParticipantDeviceHeaderView+Internal.h"
 #import "UIViewController+Errors.h"

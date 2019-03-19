@@ -89,19 +89,27 @@ extension UIView {
             fatal("Not in view hierarchy: self.superview = nil")
         }
 
+        return pin(to: superview, axisAnchor: axisAnchor, constant: constant, activate: activate)
+    }
+
+    @discardableResult func pin(to view: UIView,
+                                axisAnchor: AxisAnchor,
+                                constant: CGFloat = 0,
+                                activate: Bool = true) -> NSLayoutConstraint {
+
         var selfAnchor: NSObject!
-        var superAnchor: NSObject!
+        var otherAnchor: NSObject!
 
         switch axisAnchor {
         case .centerX:
             selfAnchor = centerXAnchor
-            superAnchor = superview.centerXAnchor
+            otherAnchor = view.centerXAnchor
         case .centerY:
             selfAnchor = centerYAnchor
-            superAnchor = superview.centerYAnchor
+            otherAnchor = view.centerYAnchor
         }
 
-        let constraint = (selfAnchor as! NSLayoutAnchor<AnyObject>).constraint(equalTo: (superAnchor as! NSLayoutAnchor<AnyObject>), constant: constant)
+        let constraint = (selfAnchor as! NSLayoutAnchor<AnyObject>).constraint(equalTo: (otherAnchor as! NSLayoutAnchor<AnyObject>), constant: constant)
         constraint.isActive = activate
 
         return constraint
@@ -123,6 +131,16 @@ extension UIView {
             fatal("Not in view hierarchy: self.superview = nil")
         }
 
+        return pin(to: superview,
+                   anchor: anchor,
+                   inset: inset,
+                   activate: activate)
+    }
+
+    @discardableResult func pin(to view: UIView,
+                                anchor: Anchor,
+                                inset: CGFloat = 0,
+                                activate: Bool = true) -> NSLayoutConstraint {
         let constant: CGFloat
         switch anchor {
         case .top, .leading:
@@ -132,24 +150,24 @@ extension UIView {
         }
 
         var selfAnchor: NSObject!
-        var superAnchor: NSObject!
+        var otherAnchor: NSObject!
 
         switch anchor {
         case .top:
             selfAnchor = topAnchor
-            superAnchor = superview.topAnchor
+            otherAnchor = view.topAnchor
         case .bottom:
             selfAnchor = bottomAnchor
-            superAnchor = superview.bottomAnchor
+            otherAnchor = view.bottomAnchor
         case .leading:
             selfAnchor = leadingAnchor
-            superAnchor = superview.leadingAnchor
+            otherAnchor = view.leadingAnchor
         case .trailing:
             selfAnchor = trailingAnchor
-            superAnchor = superview.trailingAnchor
+            otherAnchor = view.trailingAnchor
         }
 
-        let constraint = (selfAnchor as! NSLayoutAnchor<AnyObject>).constraint(equalTo: (superAnchor as! NSLayoutAnchor<AnyObject>), constant: constant)
+        let constraint = (selfAnchor as! NSLayoutAnchor<AnyObject>).constraint(equalTo: (otherAnchor as! NSLayoutAnchor<AnyObject>), constant: constant)
         constraint.isActive = activate
 
         return constraint
@@ -222,24 +240,36 @@ extension UIView {
 
     // MARK: - dimensions
 
-    func setDimensions(length: CGFloat) {
-        setDimensions(width: length, height: length)
+    @discardableResult
+    func setDimensions(length: CGFloat,
+                       activate: Bool = true) -> [NSLayoutConstraint] {
+        return setDimensions(width: length, height: length, activate: activate)
     }
 
-    func setDimensions(width: CGFloat, height: CGFloat) {
-        setDimensions(size: CGSize(width: width, height: height))
+    @discardableResult
+    func setDimensions(width: CGFloat,
+                       height: CGFloat,
+                       activate: Bool = true) -> [NSLayoutConstraint] {
+        return setDimensions(size: CGSize(width: width, height: height), activate: activate)
     }
 
-    func setDimensions(size: CGSize) {
-        let constraints = [
+    @discardableResult
+    func setDimensions(size: CGSize,
+                       activate: Bool = true) -> [NSLayoutConstraint] {
+        let constraints: [NSLayoutConstraint] = [
             widthAnchor.constraint(equalToConstant: size.width),
             heightAnchor.constraint(equalToConstant: size.height)
         ]
 
-        NSLayoutConstraint.activate(constraints)
+        if activate {
+            NSLayoutConstraint.activate(constraints)
+        }
+
+        return constraints
     }
 
-    @discardableResult func topAndBottomEdgesToSuperviewEdges() -> [NSLayoutConstraint] {
+    @discardableResult
+    func topAndBottomEdgesToSuperviewEdges() -> [NSLayoutConstraint] {
         guard let superview = superview else { return [] }
 
         return [
