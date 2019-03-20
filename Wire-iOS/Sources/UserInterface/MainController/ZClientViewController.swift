@@ -208,7 +208,7 @@ extension ZClientViewController {
     }
 
     @objc
-    func openProfileViewerIfNeeded() {
+    private func openProfileViewerIfNeeded() {
         if let session = ZMUserSession.shared() {
             SessionManager.shared?.urlHandler.executePendingAction(userSession: session)
         }

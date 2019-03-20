@@ -564,13 +564,6 @@ public extension SessionManager {
 
 extension AppRootViewController: SessionManagerURLHandlerDelegate {
 
-
-    /// Execute URL action
-    ///
-    /// - Parameters:
-    ///   - action: action to execute
-    ///   - callback: callback after execution
-    /// - Returns: return false if not executed
     func sessionManagerShouldExecuteURLAction(_ action: URLAction, callback: @escaping (Bool) -> Void) -> Bool {
         switch action {
         case .openConversation(_):
