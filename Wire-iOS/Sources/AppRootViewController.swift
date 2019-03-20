@@ -129,6 +129,7 @@ final class AppRootViewController: UIViewController {
         view.frame = mainWindow.bounds
     }
 
+    
     public func launch(with launchOptions: LaunchOptions) {
         let bundle = Bundle.main
         let appVersion = bundle.infoDictionary?[kCFBundleVersionKey as String] as? String
@@ -571,13 +572,13 @@ extension AppRootViewController: SessionManagerURLHandlerDelegate {
         ///TODO: open a conversation if id is valid
             break
         case .openUserProfile(let user):
-                if let zClientViewController = ZClientViewController.shared(),
-                    let user = user.user {
-                        zClientViewController.openProfileScreen(for: user)
-                        return true
-                } else {
-                    return false
-                }
+            if let zClientViewController = ZClientViewController.shared(),
+                let user = user.user {
+                    zClientViewController.openProfileScreen(for: user)
+                    return true
+            } else {
+                return false
+            }
         case .warnInvalidDeepLink(_):
             break
             ///TODO: show a warning alert
