@@ -31,7 +31,6 @@
 #import "MediaAsset.h"
 
 #import "AppDelegate.h"
-#import "NotificationWindowRootViewController.h"
 
 // helpers
 #import "NSDate+Format.h"
