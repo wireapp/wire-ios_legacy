@@ -18,7 +18,6 @@
 
 
 #import "ConversationContentViewController+Private.h"
-#import "ConversationContentViewController+Scrolling.h"
 #import "ConversationContentViewController+PinchZoom.h"
 
 #import "ConversationViewController.h"
@@ -240,7 +239,7 @@
         [self updateTableViewHeaderView];
 
         if (self.messageVisibleOnLoad != nil) {
-            [self scrollToMessage:self.messageVisibleOnLoad animated:NO];
+            [self scrollToMessage:self.messageVisibleOnLoad completion:nil];
         }
     }
 }

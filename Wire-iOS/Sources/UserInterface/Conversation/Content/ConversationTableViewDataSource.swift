@@ -55,16 +55,11 @@ final class ConversationTableViewDataSource: NSObject {
     
     private var fetchController: NSFetchedResultsController<ZMMessage>!
     
-    private var fetchLimit = defaultBatchSize {
-        didSet {
-            createFetchController()
-            tableView.reloadData()
-        }
-    }
-    
     public var registeredCells: [AnyClass] = []
     public var sectionControllers: [String: ConversationMessageSectionController] = [:]
-    @objc private(set) var hasFetchedAllMessages: Bool = false
+
+    @objc public private(set) var hasFetchedAllMessages = false
+    fileprivate var hasNewerMessagesToLoad = false
     
     @objc func resetSectionControllers() {
         sectionControllers = [:]
@@ -142,7 +137,7 @@ final class ConversationTableViewDataSource: NSObject {
         
         tableView.dataSource = self
         
-        createFetchController()
+        loadMessages()
     }
 
     func section(for message: ZMConversationMessage) -> Int? {
@@ -206,27 +201,80 @@ final class ConversationTableViewDataSource: NSObject {
         return cellDescription.supportsActions ? message : nil
     }
     
-    public func find(_ message: ZMConversationMessage, completion: ((Int?)->())? = nil) {
+    public func find(_ message: ZMConversationMessage, completion: ((IndexPath?)->())? = nil) {
         guard let moc = conversation.managedObjectContext, let serverTimestamp = message.serverTimestamp else {
             fatal("conversation.managedObjectContext == nil or serverTimestamp == nil")
         }
         
         let fetchRequest = NSFetchRequest<ZMMessage>(entityName: ZMMessage.entityName())
         let validMessage = conversation.visibleMessagesPredicate!
+    
         let beforeGivenMessage = NSPredicate(format: "%K > %@", ZMMessageServerTimestampKey, serverTimestamp as NSDate)
             
         fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [validMessage, beforeGivenMessage])
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(ZMMessage.serverTimestamp), ascending: false)]
-        
+    
+        // It's the number of messages that are newer than the `message`
         let index = try! moc.count(for: fetchRequest)
-
-        // Move the message window to show the message and previous
-        let messagesShownBeforeGivenMessage = 5
-        let offset = index > messagesShownBeforeGivenMessage ? index - messagesShownBeforeGivenMessage : index
-        fetchLimit = offset + ConversationTableViewDataSource.defaultBatchSize
         
-        completion?(index)
+        let offset = max(0, index - ConversationTableViewDataSource.defaultBatchSize)
+        let limit = ConversationTableViewDataSource.defaultBatchSize * 2
+        
+        loadMessages(offset: offset, limit: limit)
+        
+        let indexPath = self.indexPath(for: message)
+        
+        completion?(indexPath)
     }
+    
+    private func loadMessages(offset: Int = 0, limit: Int = ConversationTableViewDataSource.defaultBatchSize) {
+        let fetchRequest = self.fetchRequest()
+        fetchRequest.fetchLimit = limit
+        fetchRequest.fetchOffset = offset
+        
+        fetchController = NSFetchedResultsController<ZMMessage>(fetchRequest: fetchRequest,
+                                                                managedObjectContext: conversation.managedObjectContext!,
+                                                                sectionNameKeyPath: nil,
+                                                                cacheName: nil)
+        
+        self.fetchController.delegate = self
+        try! fetchController.performFetch()
+        
+        hasFetchedAllMessages = messages.count < limit
+        hasNewerMessagesToLoad = offset > 0
+        firstUnreadMessage = conversation.firstUnreadMessage
+        currentSections = calculateSections()
+        tableView.reloadData()
+    }
+    
+    private func loadOlderMessages() {
+        let currentOffset = self.fetchController.fetchRequest.fetchOffset
+        let currentLimit = self.fetchController.fetchRequest.fetchLimit
+        
+        let newLimit = currentLimit + ConversationTableViewDataSource.defaultBatchSize
+        
+        loadMessages(offset: currentOffset, limit: newLimit)
+    }
+    
+    private func loadNewerMessages() {
+        let currentOffset = self.fetchController.fetchRequest.fetchOffset
+        let currentLimit = self.fetchController.fetchRequest.fetchLimit
+
+        let newOffset = max(0, currentOffset - ConversationTableViewDataSource.defaultBatchSize)
+        
+        loadMessages(offset: newOffset, limit: currentLimit)
+    }
+    
+    func scroll(toIndex indexToShow: Int, completion: ((UIView)->())? = .none) {
+        let rowIndex = tableView.numberOfCells(inSection: indexToShow) - 1
+        let cellIndexPath = IndexPath(row: rowIndex, section: indexToShow)
+        
+        self.tableView.scrollToRow(at: cellIndexPath, at: .top, animated: false)
+        if let cell = self.tableView.cellForRow(at: cellIndexPath) {
+            completion?(cell)
+        }
+    }
+
     
     @objc func indexOfMessage(_ message: ZMConversationMessage) -> Int {
         guard let index = index(of: message) else {
@@ -255,12 +303,17 @@ final class ConversationTableViewDataSource: NSObject {
     
     @objc(tableViewDidScroll:) public func didScroll(tableView: UITableView) {
         let scrolledToTop = (tableView.contentOffset.y + tableView.bounds.height) - tableView.contentSize.height > 0
-        
-        if scrolledToTop, !hasFetchedAllMessages {
-            // NOTE: we dispatch async because `didScroll(tableView:` can be called inside a `performBatchUpdate()`,
+        let scrolledToBottom = tableView.contentOffset.y <= 0
+
+        if scrolledToTop && !hasFetchedAllMessages {
+            // NOTE: we dispatch async because `didScroll(tableView:)` can be called inside a `performBatchUpdate()`,
             // which would cause data source inconsistency if change the fetchLimit.
             DispatchQueue.main.async {
-                self.fetchLimit = self.fetchLimit + ConversationTableViewDataSource.defaultBatchSize
+                self.loadOlderMessages()
+            }
+        } else if scrolledToBottom && !hasFetchedAllMessages {
+            DispatchQueue.main.async {
+                self.loadNewerMessages()
             }
         }
     }
@@ -270,24 +323,6 @@ final class ConversationTableViewDataSource: NSObject {
         fetchRequest.predicate = conversation.visibleMessagesPredicate
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(ZMMessage.serverTimestamp), ascending: false)]
         return fetchRequest
-    }
-    
-    private func createFetchController() {
-        let fetchRequest = self.fetchRequest()
-        fetchRequest.fetchLimit = fetchLimit
-        fetchRequest.fetchOffset = 0
-        
-        fetchController = NSFetchedResultsController<ZMMessage>(fetchRequest: fetchRequest,
-                                                                managedObjectContext: conversation.managedObjectContext!,
-                                                                sectionNameKeyPath: nil,
-                                                                cacheName: nil)
-        
-        self.fetchController.delegate = self
-        try! fetchController.performFetch()
-        
-        hasFetchedAllMessages =  messages.count < fetchRequest.fetchLimit
-        firstUnreadMessage = conversation.firstUnreadMessage
-        currentSections = calculateSections()
     }
 }
 
@@ -453,4 +488,11 @@ extension ConversationTableViewDataSource {
         return !Calendar.current.isDate(current, inSameDayAs: previous)
     }
     
+}
+
+extension ConversationTableViewDataSource {
+    func scrollToBottom() {
+        loadMessages(offset: 0, limit: ConversationTableViewDataSource.defaultBatchSize)
+        scroll(toIndex: 0, completion: nil)
+    }
 }

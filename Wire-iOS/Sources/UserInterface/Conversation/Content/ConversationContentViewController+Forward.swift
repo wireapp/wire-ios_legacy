@@ -198,34 +198,3 @@ extension ConversationContentViewController: UIAdaptivePresentationControllerDel
         return traitCollection.horizontalSizeClass == .regular ? .popover : .overFullScreen
     }
 }
-
-extension ConversationContentViewController {
-
-    @objc func scroll(to messageToShow: ZMConversationMessage, completion: ((UIView)->())? = .none) {
-        guard messageToShow.conversation == self.conversation else {
-            fatal("Message from the wrong conversation")
-        }
-        
-        showLoadingView = true
-        
-        dataSource.find(messageToShow) { index in
-            self.showLoadingView = false
-            
-            guard let indexToShow = index else {
-                return
-            }
-            
-            self.scroll(toIndex: indexToShow, completion: completion)
-        }
-    }
-    
-    @objc func scroll(toIndex indexToShow: Int, completion: ((UIView)->())? = .none) {
-        let rowIndex = tableView.numberOfCells(inSection: indexToShow) - 1
-        let cellIndexPath = IndexPath(row: rowIndex, section: indexToShow)
-
-        self.tableView.scrollToRow(at: cellIndexPath, at: .top, animated: false)
-        if let cell = self.tableView.cellForRow(at: cellIndexPath) {
-            completion?(cell)
-        }
-    }
-}
