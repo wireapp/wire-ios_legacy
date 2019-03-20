@@ -164,7 +164,7 @@ static AppDelegate *sharedAppDelegate = nil;
             openURL:(NSURL *)url
             options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options
 {
-    return [self.sessionManager.urlHandler openURL:url options:options];
+    return [self openWithUrl:url options:options];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
@@ -230,11 +230,6 @@ performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem
 - (CallWindowRootViewController *)callWindowRootViewController
 {
     return (CallWindowRootViewController *)self.rootViewController.callWindow.rootViewController;
-}
-
-- (SessionManager *)sessionManager
-{
-    return self.rootViewController.sessionManager;
 }
 
 - (UIWindow *)window

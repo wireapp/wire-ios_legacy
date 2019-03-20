@@ -27,7 +27,6 @@
 @class FirstTimeUsageAgent;
 @class ZMConversation;
 @class MediaPlaybackManager;
-@class SessionManager;
 @class AppRootViewController;
 
 FOUNDATION_EXPORT NSString * _Nonnull const ZMUserSessionDidBecomeAvailableNotification;
@@ -38,7 +37,6 @@ FOUNDATION_EXPORT NSString * _Nonnull const ZMUserSessionDidBecomeAvailableNotif
 
 // Singletons
 @property (readonly, nullable) UnauthenticatedSession *unauthenticatedSession;
-@property (readonly, nonnull) SessionManager *sessionManager;
 @property (readonly, nonnull) AppRootViewController *rootViewController;
 
 @property (readonly, nullable) CallWindowRootViewController *callWindowRootViewController;

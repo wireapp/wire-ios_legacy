@@ -26,5 +26,13 @@ extension AppDelegate {
         return .unreachable == NetworkStatus.shared().reachability()
     }
 
+    var sessionManager: SessionManager? {
+        return rootViewController.sessionManager
+    }
+
+    @objc
+    func open(url: URL, options: [UIApplication.OpenURLOptionsKey : AnyObject]) -> Bool {
+        return sessionManager?.urlHandler.openURL(url, options: options) ?? false
+    }
 }
 

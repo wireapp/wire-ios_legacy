@@ -576,7 +576,7 @@ extension AppRootViewController: SessionManagerURLHandlerDelegate {
                 ///TODO: error
             }
         case .warnInvalidDeepLink(_):
-            callback(false)
+            break
             ///TODO: show a warning alert
         case .connectBot:
             guard let _ = ZMUser.selfUser().team else {
