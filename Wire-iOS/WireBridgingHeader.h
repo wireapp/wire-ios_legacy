@@ -28,8 +28,6 @@
 #import "Message+UI.h"
 
 // UI
-#import "ParticipantDeviceCell.h"
-#import "ParticipantDeviceCell+Internal.h"
 #import "ParticipantDeviceHeaderView.h"
 #import "ParticipantDeviceHeaderView+Internal.h"
 #import "UIViewController+Errors.h"
@@ -94,7 +92,6 @@
 #import "ConversationListContentController.h"
 #import "ConversationListViewModel.h"
 #import "ConversationListViewModel+Private.h"
-#import "NotificationWindowRootViewController.h"
 #import "SplitViewController.h"
 #import "SplitViewController+internal.h"
 #import "ConfirmAssetViewController.h"
@@ -102,8 +99,6 @@
 
 #import "ProfileSelfPictureViewController.h"
 #import "ProfileSelfPictureViewController+Internal.h"
-
-#import "VersionInfoViewController.h"
 
 #import "SketchColorPickerController.h"
 #import "SketchColorPickerController+Internal.h"
@@ -122,7 +117,6 @@
 #import "UIViewController+WR_Invite.h"
 #import "UIActivityViewController+Invite.h"
 #import "ContactsDataSource.h"
-#import "LaunchImageViewController.h"
 #import "StartUIViewController.h"
 #import "Button.h"
 #import "PermissionDeniedViewController.h"

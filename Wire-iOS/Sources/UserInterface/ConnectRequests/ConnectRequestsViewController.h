@@ -18,8 +18,6 @@
 
 
 #import <UIKit/UIKit.h>
-#import "ZClientViewController.h"
-
 
 @interface ConnectRequestsViewController : UIViewController
 @end
