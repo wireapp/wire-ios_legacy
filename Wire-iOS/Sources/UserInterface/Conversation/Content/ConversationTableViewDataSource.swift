@@ -217,8 +217,11 @@ final class ConversationTableViewDataSource: NSObject {
         // It's the number of messages that are newer than the `message`
         let index = try! moc.count(for: fetchRequest)
         
-        let offset = max(0, index - ConversationTableViewDataSource.defaultBatchSize)
-        let limit = ConversationTableViewDataSource.defaultBatchSize * 2
+        // Let's load more messages than needed because scrolling down to reveal newer messages is disabled
+        let extraMessagesToLoad = searchQueries.isEmpty ? 0 : ConversationTableViewDataSource.defaultBatchSize * 2
+        
+        let offset = max(0, index - ConversationTableViewDataSource.defaultBatchSize - extraMessagesToLoad)
+        let limit = ConversationTableViewDataSource.defaultBatchSize * 2 + extraMessagesToLoad
         
         loadMessages(offset: offset, limit: limit)
         
@@ -303,17 +306,12 @@ final class ConversationTableViewDataSource: NSObject {
     
     @objc(tableViewDidScroll:) public func didScroll(tableView: UITableView) {
         let scrolledToTop = (tableView.contentOffset.y + tableView.bounds.height) - tableView.contentSize.height > 0
-        let scrolledToBottom = tableView.contentOffset.y <= 0
 
         if scrolledToTop && !hasFetchedAllMessages {
             // NOTE: we dispatch async because `didScroll(tableView:)` can be called inside a `performBatchUpdate()`,
             // which would cause data source inconsistency if change the fetchLimit.
             DispatchQueue.main.async {
                 self.loadOlderMessages()
-            }
-        } else if scrolledToBottom && !hasFetchedAllMessages {
-            DispatchQueue.main.async {
-                self.loadNewerMessages()
             }
         }
     }
