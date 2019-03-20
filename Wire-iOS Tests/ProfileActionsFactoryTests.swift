@@ -19,7 +19,7 @@
 import XCTest
 @testable import Wire
 
-class ProfileActionsFactoryTests: XCTestCase {
+final class ProfileActionsFactoryTests: XCTestCase {
 
     var selfUserTeam: UUID!
     var selfUser: MockUser!
@@ -692,8 +692,14 @@ class ProfileActionsFactoryTests: XCTestCase {
 
     // MARK: - Helpers
 
-    func verifyActions(user: GenericUser, viewer: GenericUser, conversation: MockConversation, expectedActions: [ProfileAction], file: StaticString = #file, line: UInt = #line) {
-        let factory = ProfileActionsFactory(user: user, viewer: viewer, conversation: conversation.convertToRegularConversation())
+    func verifyActions(user: GenericUser,
+                       viewer: GenericUser,
+                       conversation: MockConversation,
+                       expectedActions: [ProfileAction],
+                       context: ProfileViewControllerContext = .oneToOneConversation,
+                       file: StaticString = #file,
+                       line: UInt = #line) {
+        let factory = ProfileActionsFactory(user: user, viewer: viewer, conversation: conversation.convertToRegularConversation(), context: context)
         let actions = factory.makeActionsList()
         XCTAssertEqual(actions, expectedActions, file: file, line: line)
     }
