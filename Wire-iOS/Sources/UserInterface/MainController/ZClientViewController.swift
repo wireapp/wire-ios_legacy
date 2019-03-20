@@ -149,7 +149,9 @@ extension ZClientViewController {
 
     // MARK: - present a ProfileViewController
 
-    func openProfileScreen(for user: ZMUser) {
+    func openProfileScreen(for user: UserType) {
+        guard let user = user as? UserType & AccentColorProvider else { return }
+
         let profileViewController = ProfileViewController(user: user, viewer: ZMUser.selfUser(), context: .profileViewer)
         profileViewController.delegate = self
 
@@ -208,7 +210,7 @@ extension ZClientViewController {
     }
 
     @objc
-    private func openProfileViewerIfNeeded() {
+    func openProfileViewerIfNeeded() {
         if let session = ZMUserSession.shared() {
             SessionManager.shared?.urlHandler.executePendingAction(userSession: session)
         }

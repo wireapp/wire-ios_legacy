@@ -22,7 +22,8 @@ import SafariServices
 
 var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplication.shared.preferredContentSizeCategory)
 
-@objcMembers class AppRootViewController: UIViewController {
+@objcMembers
+final class AppRootViewController: UIViewController {
 
     public let mainWindow: UIWindow
     public let callWindow: CallWindow
@@ -569,19 +570,14 @@ extension AppRootViewController: SessionManagerURLHandlerDelegate {
         case .openConversation(_):
         ///TODO: open a conversation if id is valid
             break
-        case .openUserProfile(let id):
-            if let moc = ZMUserSession.shared()?.managedObjectContext,
-                let user = ZMUser.init(remoteID: id, createIfNeeded: false, in: moc) {
-
-                if let zClientViewController = ZClientViewController.shared() {
-                    zClientViewController.openProfileScreen(for: user) ///TODO: do it when view appeared??
-                    return true
+        case .openUserProfile(let user):
+                if let zClientViewController = ZClientViewController.shared(),
+                    let user = user.user {
+                        zClientViewController.openProfileScreen(for: user)
+                        return true
                 } else {
                     return false
                 }
-            } else {
-                ///TODO: error
-            }
         case .warnInvalidDeepLink(_):
             break
             ///TODO: show a warning alert
