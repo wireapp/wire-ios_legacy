@@ -25,6 +25,7 @@
 @class ConversationInputBarButtonState;
 @class ZMClientMessage;
 @class ReplyComposingView;
+@class TypingIndicatorView;
 
 @interface ConversationInputBarViewController ()
 
@@ -44,6 +45,8 @@
 @property (nonatomic, null_unspecified) IconButton *videoButton;
 
 @property (nonatomic, null_unspecified) InputBar *inputBar;
+
+@property (nonatomic, null_unspecified) TypingIndicatorView *typingIndicatorView;
 
 @property (nonatomic, nullable) AudioRecordViewController *audioRecordViewController;
 @property (nonatomic, nullable) UIView *audioRecordViewContainer;
@@ -73,6 +76,8 @@
 // PopoverPresenter
 @property (nonatomic, nullable, weak) UIPopoverPresentationController *presentedPopover;
 @property (nonatomic, nullable, weak) UIView *popoverPointToView;
+
+@property (nonatomic, nullable) NSSet *typingUsers;
 
 - (void)updateRightAccessoryView;
 - (void)updateButtonIcons;

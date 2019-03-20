@@ -102,11 +102,9 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 @property (nonatomic) UIGestureRecognizer *singleTapGestureRecognizer;
 
 @property (nonatomic) UserImageView *authorImageView;
-@property (nonatomic) TypingIndicatorView *typingIndicatorView;
 
 @property (nonatomic) ZMConversation *conversation;
 
-@property (nonatomic) NSSet *typingUsers;
 @property (nonatomic) id conversationObserverToken;
 @property (nonatomic) id userObserverToken;
 
@@ -258,47 +256,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     self.singleTapGestureRecognizer.delegate = self;
     self.singleTapGestureRecognizer.cancelsTouchesInView = YES;
     [self.view addGestureRecognizer:self.singleTapGestureRecognizer];
-}
-
-- (void)createMarkdownButton
-{
-    const CGFloat senderDiameter = 28;
-
-    self.markdownButton = [[IconButton alloc] initWithStyle:IconButtonStyleCircular];
-    self.markdownButton.translatesAutoresizingMaskIntoConstraints = NO;
-    self.markdownButton.accessibilityIdentifier = @"markdownButton";
-    [self.inputBar.leftAccessoryView addSubview:self.markdownButton];
-    [self.markdownButton autoAlignAxisToSuperviewAxis:ALAxisVertical];
-    [self.markdownButton autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:14];
-    [self.markdownButton autoSetDimensionsToSize:CGSizeMake(senderDiameter, senderDiameter)];
-}
-
-- (void)createHourglassButton
-{
-    self.hourglassButton = [[IconButton alloc] initWithStyle:IconButtonStyleDefault];
-    self.hourglassButton.translatesAutoresizingMaskIntoConstraints = NO;
-
-    [self.hourglassButton setIcon:ZetaIconTypeHourglass withSize:ZetaIconSizeTiny forState:UIControlStateNormal];
-
-    self.hourglassButton.accessibilityIdentifier = @"ephemeralTimeSelectionButton";
-    [self.inputBar.rightAccessoryStackView addArrangedSubview:self.hourglassButton];
-
-    [self.hourglassButton autoSetDimensionsToSize:CGSizeMake(InputBar.rightIconSize, InputBar.rightIconSize)];
-}
-
-- (void)createTypingIndicatorView
-{
-    self.typingIndicatorView = [[TypingIndicatorView alloc] init];
-    self.typingIndicatorView.translatesAutoresizingMaskIntoConstraints = NO;
-    self.typingIndicatorView.accessibilityIdentifier = @"typingIndicator";
-    self.typingIndicatorView.typingUsers = self.typingUsers.allObjects;
-    [self.typingIndicatorView setHidden:YES animated:NO];
-    
-    [self.inputBar  addSubview:self.typingIndicatorView];
-    [self.typingIndicatorView  autoConstrainAttribute:(ALAttribute)ALAxisHorizontal toAttribute:ALAttributeTop ofView:self.inputBar];
-    [self.typingIndicatorView autoAlignAxisToSuperviewAxis:ALAxisVertical];
-    [self.typingIndicatorView autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:48 relation:NSLayoutRelationGreaterThanOrEqual];
-    [self.typingIndicatorView autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:48 relation:NSLayoutRelationGreaterThanOrEqual];
 }
 
 - (void)updateAvailabilityPlaceholder

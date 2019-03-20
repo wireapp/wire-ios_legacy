@@ -110,17 +110,67 @@ extension ConversationInputBarViewController {
         updateEphemeralIndicatorButtonTitle(ephemeralIndicatorButton)
     }
 
-func createEmojiButton() {
-    let senderDiameter: CGFloat = 28
+    @objc
+    func createEmojiButton() {
+        let senderDiameter: CGFloat = 28
 
-    emojiButton = IconButton(style: IconButtonStyleCircular)
-    emojiButton.translatesAutoresizingMaskIntoConstraints = false
-    emojiButton.accessibilityIdentifier = "emojiButton"
+        emojiButton = IconButton(style: .circular)
+        emojiButton.accessibilityIdentifier = "emojiButton"
 
-    inputBar.leftAccessoryView.addSubview(emojiButton)
-    emojiButton.autoAlignAxis(toSuperviewAxis: ALAxisVertical)
-    emojiButton.autoPinEdge(toSuperviewEdge: ALEdgeBottom, withInset: 14)
-    emojiButton.autoSetDimensions(toSize: CGSize(width: senderDiameter, height: senderDiameter))
-}
+        inputBar.leftAccessoryView.addSubview(emojiButton)
+
+        emojiButton.translatesAutoresizingMaskIntoConstraints = false
+        emojiButton.pinToSuperview(axisAnchor: .centerX)
+        emojiButton.pinToSuperview(anchor: .bottom, inset: 14)
+        emojiButton.setDimensions(length: senderDiameter)
+    }
+
+    @objc
+    func createMarkdownButton() {
+        let senderDiameter: CGFloat = 28
+
+        markdownButton = IconButton(style: .circular)
+        markdownButton.accessibilityIdentifier = "markdownButton"
+        inputBar.leftAccessoryView.addSubview(markdownButton)
+
+        markdownButton.translatesAutoresizingMaskIntoConstraints = false
+        markdownButton.pinToSuperview(axisAnchor: .centerX)
+        markdownButton.pinToSuperview(anchor: .bottom, inset: 14)
+        markdownButton.setDimensions(length: senderDiameter)
+    }
+
+    @objc
+    func createHourglassButton() {
+        hourglassButton = IconButton(style: .default)
+        hourglassButton.translatesAutoresizingMaskIntoConstraints = false
+
+        hourglassButton.setIcon(.hourglass, with: .tiny, for: UIControl.State.normal)
+
+        hourglassButton.accessibilityIdentifier = "ephemeralTimeSelectionButton"
+        inputBar.rightAccessoryStackView.addArrangedSubview(hourglassButton)
+
+        hourglassButton.setDimensions(length: InputBar.rightIconSize)
+    }
+
+    @objc
+    func createTypingIndicatorView() {
+        typingIndicatorView = TypingIndicatorView()
+        typingIndicatorView.translatesAutoresizingMaskIntoConstraints = false
+        typingIndicatorView.accessibilityIdentifier = "typingIndicator"
+        typingIndicatorView.typingUsers = (Array(typingUsers ?? []) as? [ZMUser]) ?? []
+        typingIndicatorView.setHidden(true, animated: false)
+
+        inputBar.addSubview(typingIndicatorView)
+
+        var constraints = [NSLayoutConstraint]()
+        constraints.append(typingIndicatorView.centerYAnchor.constraint(equalTo: inputBar.topAnchor))
+
+        constraints.append(typingIndicatorView.pinToSuperview(axisAnchor: .centerX, activate: false))
+
+        constraints.append(typingIndicatorView.leftAnchor.constraint(greaterThanOrEqualTo: typingIndicatorView.superview!.leftAnchor, constant: 48))
+        constraints.append(typingIndicatorView.rightAnchor.constraint(greaterThanOrEqualTo: typingIndicatorView.superview!.rightAnchor, constant: 48))
+
+        NSLayoutConstraint.activate(constraints)
+    }
 
 }
