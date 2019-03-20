@@ -563,7 +563,15 @@ public extension SessionManager {
 }
 
 extension AppRootViewController: SessionManagerURLHandlerDelegate {
-    func sessionManagerShouldExecuteURLAction(_ action: URLAction, callback: @escaping (Bool) -> Void) {
+
+
+    /// Execute URL action
+    ///
+    /// - Parameters:
+    ///   - action: action to execute
+    ///   - callback: callback after execution
+    /// - Returns: return false if not executed
+    func sessionManagerShouldExecuteURLAction(_ action: URLAction, callback: @escaping (Bool) -> Void) -> Bool {
         switch action {
         case .openConversation(_):
         ///TODO: open a conversation if id is valid
@@ -571,7 +579,12 @@ extension AppRootViewController: SessionManagerURLHandlerDelegate {
         case .openUserProfile(let id):
             if let moc = ZMUserSession.shared()?.managedObjectContext,
                 let user = ZMUser.init(remoteID: id, createIfNeeded: false, in: moc) {
-                ZClientViewController.shared()?.openProfileScreen(for: user)
+
+                if let zClientViewController = ZClientViewController.shared() {
+                    zClientViewController.openProfileScreen(for: user) ///TODO: do it when view appeared??
+                } else {
+                    
+                }
             } else {
                 ///TODO: error
             }
@@ -581,7 +594,7 @@ extension AppRootViewController: SessionManagerURLHandlerDelegate {
         case .connectBot:
             guard let _ = ZMUser.selfUser().team else {
                 callback(false)
-                return
+                return true
             }
             
             let alert = UIAlertController(title: "url_action.title".localized,
@@ -612,7 +625,7 @@ extension AppRootViewController: SessionManagerURLHandlerDelegate {
             
             guard case .unauthenticated = appStateController.appState else {
                 callback(false)
-                return
+                return true
             }
 
             let message = "login.sso.error.alert.message".localized(args: error.displayCode)
@@ -639,7 +652,8 @@ extension AppRootViewController: SessionManagerURLHandlerDelegate {
             }
 
             guard case .unauthenticated = appStateController.appState else {
-                return callback(false)
+                callback(false)
+                return true
             }
 
             callback(true)
@@ -652,6 +666,8 @@ extension AppRootViewController: SessionManagerURLHandlerDelegate {
             let context = DefaultCompanyControllerLinkResponseContext(sessionManager: SessionManager.shared!, appState: appStateController.appState, authenticationCoordinator: authenticationCoordinator)
             executeCompanyLoginLinkAction(context.actionForInvalidRequest(error: error), callback: callback)
         }
+
+        return true
     }
 
     private func executeCompanyLoginLinkAction(_ action: CompanyLoginLinkResponseAction, callback: @escaping (Bool) -> Void) {
