@@ -25,7 +25,6 @@
 #import "Settings.h"
 
 #import "AppDelegate.h"
-#import "NotificationWindowRootViewController.h"
 
 // helpers
 #import "Analytics.h"
@@ -42,7 +41,6 @@
 
 #import "ZClientViewController.h"
 #import "ConversationViewController+ParticipantsPopover.h"
-#import "MediaBar.h"
 #import "MediaPlayer.h"
 #import "MediaBarViewController.h"
 #import "InvisibleInputAccessoryView.h"

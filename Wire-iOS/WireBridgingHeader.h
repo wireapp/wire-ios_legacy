@@ -92,7 +92,6 @@
 #import "ConversationListContentController.h"
 #import "ConversationListViewModel.h"
 #import "ConversationListViewModel+Private.h"
-#import "NotificationWindowRootViewController.h"
 #import "SplitViewController.h"
 #import "SplitViewController+internal.h"
 #import "ConfirmAssetViewController.h"

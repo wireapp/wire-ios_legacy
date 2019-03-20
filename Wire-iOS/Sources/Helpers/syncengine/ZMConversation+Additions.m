@@ -26,7 +26,6 @@
 #import "Analytics.h"
 #import "UIAlertController+Wire.h"
 #import "AppDelegate.h"
-#import "NotificationWindowRootViewController.h"
 #import "ZClientViewController.h"
 #import "UIApplication+Permissions.h"
 #import "Wire-Swift.h"

@@ -23,7 +23,6 @@
 #import "SplitViewController.h"
 
 #import "AppDelegate.h"
-#import "NotificationWindowRootViewController.h"
 
 #import "ConversationListViewController.h"
 #import "ConversationViewController.h"
