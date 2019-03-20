@@ -582,8 +582,9 @@ extension AppRootViewController: SessionManagerURLHandlerDelegate {
 
                 if let zClientViewController = ZClientViewController.shared() {
                     zClientViewController.openProfileScreen(for: user) ///TODO: do it when view appeared??
+                    return true
                 } else {
-                    
+                    return false
                 }
             } else {
                 ///TODO: error

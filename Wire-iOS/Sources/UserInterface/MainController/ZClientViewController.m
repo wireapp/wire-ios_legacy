@@ -169,6 +169,8 @@
     }
     
     self.userObserverToken = [UserChangeInfo addObserver:self forUser:[ZMUser selfUser] userSession:[ZMUserSession sharedSession]];
+
+    [self openProfileViewerIfNeeded];
 }
 
 - (void)createBackgroundViewController
