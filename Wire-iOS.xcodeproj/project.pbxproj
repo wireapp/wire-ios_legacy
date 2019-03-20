@@ -2902,7 +2902,6 @@
 		EF17B0DD223AAC26006252A8 /* ConnectRequestsViewController+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ConnectRequestsViewController+Internal.h"; sourceTree = "<group>"; };
 		EF17B0D1223A6936006252A8 /* LaunchImageViewControllerSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchImageViewControllerSnapshotTests.swift; sourceTree = "<group>"; };
 		EF17B0CF223A6692006252A8 /* MediaPreviewViewSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaPreviewViewSnapshotTests.swift; sourceTree = "<group>"; };
->>>>>>> 7dfc1cb3eb840a79a4a9172a41926ec11f7b6b7e
 		EF18140821B17F94008F7DA8 /* GroupDetailsReceiptOptionsCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDetailsReceiptOptionsCellTests.swift; sourceTree = "<group>"; };
 		EF18140B21B18846008F7DA8 /* IconToggleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconToggleCell.swift; sourceTree = "<group>"; };
 		EF18C7E31F9E4DA00085A832 /* NSString+FileNameForZMUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSString+FileNameForZMUser.swift"; sourceTree = "<group>"; };
