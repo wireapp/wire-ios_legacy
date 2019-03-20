@@ -21,7 +21,6 @@
 #import "ProfileDevicesViewController+Internal.h"
 
 #import "ParticipantDeviceHeaderView.h"
-#import "ParticipantDeviceCell.h"
 
 #import "Analytics.h"
 #import "Wire-Swift.h"

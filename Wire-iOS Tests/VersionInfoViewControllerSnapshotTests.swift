@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2016 Wire Swiss GmbH
+// Copyright (C) 2019 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,13 +16,26 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+import XCTest
+@testable import Wire
 
-@import WireSyncEngine;
-@class MockConversation;
+final class VersionInfoViewControllerSnapshotTests: ZMSnapshotTestCase {
+    
+    var sut: VersionInfoViewController!
+    
+    override func setUp() {
+        super.setUp()
+        let path = Bundle(for: type(of: self)).path(forResource: "DummyComponentsVersions", ofType: "plist")!
 
+        sut = VersionInfoViewController(versionsPlist: path)
+    }
+    
+    override func tearDown() {
+        sut = nil
+        super.tearDown()
+    }
 
-@interface MockConversationFactory: NSObject
-
-+ (MockConversation *)mockConversation;
-
-@end
+    func testForInitState(){
+        verify(view: sut.view)
+    }
+}

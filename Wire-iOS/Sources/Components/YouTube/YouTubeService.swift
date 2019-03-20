@@ -48,7 +48,6 @@ enum YouTubeServiceError: Error {
     // MARK: - Video Lookup
 
     @objc func fetchMediaPreviewDataForVideo(at videoURL: URL, completion: @escaping (MediaPreviewData?, Error?) -> Void) {
-
         guard let videoID = self.videoID(for: videoURL) else {
             completion(nil, YouTubeServiceError.invalidVideoID)
             return
@@ -59,11 +58,9 @@ enum YouTubeServiceError: Error {
         currentRequester?.doRequest(withPath: path, method: .methodGET, type: .youTube) {
             self.handleVideoLookupResponse($0, $1, $2, completion: completion)
         }
-
     }
 
     func handleVideoLookupResponse(_ data: Data?, _ response: URLResponse?, _ err: Error?, completion: @escaping (MediaPreviewData?, Error?) -> Void) {
-
         do {
             let data = try validateJSONResponse(data, response, err)
             let mediaPreview = try makeVideoMediaPreview(from: data)
@@ -71,7 +68,6 @@ enum YouTubeServiceError: Error {
         } catch {
             completion(nil, error)
         }
-
     }
 
     // MARK: - Utilities
@@ -87,21 +83,19 @@ enum YouTubeServiceError: Error {
      */
 
     func videoID(for url: URL) -> String? {
-
         guard let components = URLComponents(url: url, resolvingAgainstBaseURL: false) else {
             return nil
         }
 
         if let idComponent = components.queryItems?.first(where: { $0.name == "v" }) {
-            return idComponent.value
+            return idComponent.value?.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
         }
 
         if let lastPathComponent = url.pathComponents.last, !lastPathComponent.isEmpty {
-            return lastPathComponent
+            return lastPathComponent.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
         }
 
         return nil
-
     }
 
     /**
@@ -109,7 +103,6 @@ enum YouTubeServiceError: Error {
      */
 
     func validateJSONResponse(_ data: Data?, _ response: URLResponse?, _ error: Error?) throws -> Data {
-
         if let error = error {
             throw error
         }
@@ -123,7 +116,6 @@ enum YouTubeServiceError: Error {
         }
 
         return data
-
     }
 
     /**
@@ -137,7 +129,6 @@ enum YouTubeServiceError: Error {
      */
 
     func makeVideoMediaPreview(from data: Data) throws -> MediaPreviewData {
-
         let decoder = JSONDecoder()
         let response = try decoder.decode(YouTubeVideoLookupResponse.self, from: data)
 
@@ -150,7 +141,6 @@ enum YouTubeServiceError: Error {
         }
 
         return MediaPreviewData(title: snippet.title, thumbnails: thumbnails, provider: .youtube)
-
     }
 
 }

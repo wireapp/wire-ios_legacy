@@ -19,19 +19,19 @@
 
 import Foundation
 
-@objc public enum IncomingConnectionAction: UInt {
+public enum IncomingConnectionAction: UInt {
     case ignore, accept
 }
 
-@objcMembers final public class IncomingConnectionViewController: UIViewController {
+final public class IncomingConnectionViewController: UIViewController {
 
     fileprivate var connectionView: IncomingConnectionView!
 
-    public let userSession: ZMUserSession
+    public let userSession: ZMUserSession!
     public let user: ZMUser
     public var onAction: ((IncomingConnectionAction) -> ())?
 
-    public init(userSession: ZMUserSession, user: ZMUser) {
+    public init(userSession: ZMUserSession!, user: ZMUser) {
         self.userSession = userSession
         self.user = user
         super.init(nibName: .none, bundle: .none)
