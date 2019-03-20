@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2018 Wire Swiss GmbH
+// Copyright (C) 2019 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,11 +16,25 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-@interface ParticipantDeviceCell ()
+import Foundation
 
-@property (strong, nonatomic) UILabel *nameLabel;
-@property (strong, nonatomic) UIFont *boldFingerprintFont;
-@property (strong, nonatomic) UIFont *fingerprintFont;
-@property (strong, nonatomic) UILabel *identifierLabel;
-
-@end
+class SoundPreviewPlayer {
+    
+    fileprivate var mediaManager: AVSMediaManager
+    fileprivate var stopTimer: Timer?
+    
+    init(mediaManager: AVSMediaManager) {
+        self.mediaManager = mediaManager
+    }
+    
+    func playPreview(_ sound: String, limit: TimeInterval = 3) {
+        stopTimer?.fire()
+        mediaManager.playSound(sound)
+        
+        stopTimer = Timer.scheduledTimer(withTimeInterval: limit, repeats: false) { [weak self] _ in
+            self?.mediaManager.stopSound(sound)
+            self?.stopTimer = nil
+        }
+    }
+    
+}

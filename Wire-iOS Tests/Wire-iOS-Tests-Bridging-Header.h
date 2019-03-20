@@ -23,7 +23,6 @@
 @import WireSyncEngine;
 
 #import "Analytics.h"
-#import "ParticipantDeviceCell.h"
 #import "NSString+Fingerprint.h"
 #import "ZMSnapshotTestCase+Internal.h"
 #import "MockUser.h"
@@ -31,7 +30,6 @@
 #import <avs/AVSAudioEffect.h>
 #import "Message+UI.h"
 #import "MockConversation.h"
-#import "MockConversationFactory.h"
 #import "SoundcloudService.h"
 #import "SoundcloudService+Testing.h"
 #import "EmoticonSubstitutionConfiguration+Tests.h"

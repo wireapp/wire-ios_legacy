@@ -41,7 +41,7 @@ final class ConversationContentViewControllerTests: CoreDataSnapshotTestCase {
         mockZMUserSession = MockZMUserSession()
         
 
-        sut = ConversationContentViewController(conversation: mockConversation, session: mockZMUserSession)
+        sut = ConversationContentViewController(conversation: mockConversation, mediaPlaybackManager: nil, session: mockZMUserSession)
 
         ///Call the setup codes in viewDidLoad
         sut.loadViewIfNeeded()
