@@ -30,9 +30,10 @@
 #import <avs/AVSAudioEffect.h>
 #import "Message+UI.h"
 #import "MockConversation.h"
-#import "MockConversationFactory.h"
 #import "SoundcloudService.h"
 #import "SoundcloudService+Testing.h"
 #import "EmoticonSubstitutionConfiguration+Tests.h"
 #import "SoundcloudAudioTrack.h"
 #import "SoundcloudAudioTrack+Internal.h"
+#import "ConnectRequestsViewController.h"
+#import "ConnectRequestsViewController+Internal.h"

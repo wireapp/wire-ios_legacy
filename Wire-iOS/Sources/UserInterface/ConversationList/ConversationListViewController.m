@@ -47,7 +47,6 @@
 
 // Transitions
 #import "AppDelegate.h"
-#import "NotificationWindowRootViewController.h"
 #import "PassthroughTouchesView.h"
 
 #import "Wire-Swift.h"
