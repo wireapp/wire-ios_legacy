@@ -16,8 +16,12 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+@class MediaPreviewView;
+
 @interface MediaPreviewViewController ()
 
-@property (nonatomic) CGFloat viewHeight;
+@property (nonatomic, readonly) MediaPreviewView *mediaPreviewView;
+
+- (void)playVideo:(id)sender;
 
 @end

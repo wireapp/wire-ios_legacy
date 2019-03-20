@@ -76,6 +76,28 @@ class YouTubeServiceTests: XCTestCase {
         XCTAssertEqual(id, "tzod7hyX03I")
     }
 
+    func testThatItExtractsID_SpecialCharacter_ShortURL() {
+        // given
+        let url = URL(string: "https://youtu.be/tzod7hyX%C3%B63I")!
+
+        // when
+        let id = service.videoID(for: url)
+
+        // then
+        XCTAssertEqual(id, "tzod7hyX%C3%B63I")
+    }
+
+    func testThatItExtractsID_SpecialCharacter_LongURL() {
+        // given
+        let url = URL(string: "https://youtube.com/watch?v=tzod7hyX%C3%B63I")!
+
+        // when
+        let id = service.videoID(for: url)
+
+        // then
+        XCTAssertEqual(id, "tzod7hyX%C3%B63I")
+    }
+
     // MARK: - JSON Validation
 
     func testThatItFailsValidation_ErrorProvided() {

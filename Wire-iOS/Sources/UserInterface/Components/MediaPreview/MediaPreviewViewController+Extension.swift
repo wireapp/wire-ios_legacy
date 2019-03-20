@@ -19,12 +19,22 @@
 import Foundation
 
 extension MediaPreviewViewController {
-    @objc func setupStyle() {
+
+    var viewHeight: CGFloat {
         switch UIDevice.current.userInterfaceIdiom {
         case .pad:
-            viewHeight = 240
+            return 240
         default:
-            viewHeight = 160
+            return 160
         }
+    }
+
+    override open func loadView() {
+        view = MediaPreviewView()
+        
+        mediaPreviewView.playButton.addTarget(self, action: #selector(self.playVideo(_:)), for: .touchUpInside)
+        
+        mediaPreviewView.translatesAutoresizingMaskIntoConstraints = false
+        mediaPreviewView.heightAnchor.constraint(equalToConstant: viewHeight).isActive = true
     }
 }

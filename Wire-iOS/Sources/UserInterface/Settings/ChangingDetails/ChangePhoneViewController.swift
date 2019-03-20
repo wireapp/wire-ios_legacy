@@ -201,7 +201,8 @@ extension ChangePhoneViewController: PhoneNumberInputViewDelegate {
         let countryCodeController = CountryCodeTableViewController()
         countryCodeController.delegate = self
 
-        let navigationController = countryCodeController.wrapInNavigationController()
+        let navigationController = countryCodeController.wrapInNavigationController(navigationBarClass: LightNavigationBar.self)
+
         navigationController.modalPresentationStyle = .formSheet
 
         present(navigationController, animated: true, completion: nil)

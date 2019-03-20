@@ -22,6 +22,6 @@ extension ConversationListViewController {
     @objc
     func createSettingsViewController() -> UIViewController {
         let selfProfileViewController = SelfProfileViewController()
-        return selfProfileViewController.wrapInNavigationController(ClearBackgroundNavigationController.self)
+        return selfProfileViewController.wrapInNavigationController(navigationControllerClass: ClearBackgroundNavigationController.self)
     }
 }

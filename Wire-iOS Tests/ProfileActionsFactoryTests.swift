@@ -399,6 +399,18 @@ class ProfileActionsFactoryTests: XCTestCase {
             .removeFromGroup
         ])
     }
+    
+    func test_Group_TeamToGuest_UserDeleted() {
+        // GIVEN
+        let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: UUID())
+        otherUser.isAccountDeleted = true
+        
+        let conversation = MockConversation.groupConversation()
+        conversation.activeParticipants = [selfUser, otherUser]
+        
+        // THEN
+        verifyActions(user: otherUser, viewer: selfUser, conversation: conversation, expectedActions: [])
+    }
 
     // MARK: Viewer is partner
 

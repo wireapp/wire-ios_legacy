@@ -63,7 +63,6 @@
     
     self.definesPresentationContext = YES;
     self.title = NSLocalizedString(@"registration.country_select.title", @"").localizedUppercaseString;
-    
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -72,6 +71,8 @@
     if(UIScreen.hasNotch) {
         [[UIApplication sharedApplication] wr_updateStatusBarForCurrentControllerAnimated:YES];
     }
+
+    [self updateStatusBar];
 }
 
 -(void)viewDidDisappear:(BOOL)animated
@@ -80,6 +81,8 @@
     if(UIScreen.hasNotch) {
         [[UIApplication sharedApplication] wr_updateStatusBarForCurrentControllerAnimated:NO];
     }
+
+    [self updateStatusBar];
 }
 
 - (void)createDataSource

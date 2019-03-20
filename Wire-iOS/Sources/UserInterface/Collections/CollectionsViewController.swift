@@ -642,7 +642,7 @@ extension CollectionsViewController: CollectionCellMessageChangeDelegate {
         guard let message = self.selectedMessage,
               changeInfo.message == message,
               let fileMessageData = message.fileMessageData,
-              fileMessageData.transferState == .downloaded,
+              fileMessageData.downloadState == .downloaded,
               self.messagePresenter.waitingForFileDownload,
               message.isFile || message.isVideo || message.isAudio else {
             return

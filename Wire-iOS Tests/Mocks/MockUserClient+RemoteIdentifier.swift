@@ -17,15 +17,16 @@
 //
 
 import Foundation
+@testable import Wire
 
-extension MockUserClient {
+extension MockUserClient: UserClientTypeAttributedString {
 
     @objc public func attributedRemoteIdentifier(_ attributes: [NSAttributedString.Key : AnyObject], boldAttributes: [NSAttributedString.Key : AnyObject], uppercase: Bool = false) -> NSAttributedString {
         let displayIdentifier = "0011223344556677"
 
         let identifierPrefixString = NSLocalizedString("registration.devices.id", comment: "") + " "
         let identifierString = NSMutableAttributedString(string: identifierPrefixString, attributes: attributes)
-        let identifier = uppercase ? displayIdentifier.uppercased() : displayIdentifier
+        let identifier = uppercase ? displayIdentifier.localizedUppercase : displayIdentifier
         let attributedRemoteIdentifier = identifier.fingerprintStringWithSpaces().fingerprintString(attributes: attributes,
                                                                                                     boldAttributes:boldAttributes)
         identifierString.append(attributedRemoteIdentifier!)

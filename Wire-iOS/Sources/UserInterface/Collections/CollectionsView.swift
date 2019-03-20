@@ -57,7 +57,7 @@ public final class CollectionsView: UIView {
         self.addSubview(self.collectionView)
    
         self.noResultsView.label.accessibilityLabel = "no items"
-        self.noResultsView.label.text = "collections.section.no_items".localized.uppercased()
+        self.noResultsView.label.text = "collections.section.no_items".localized(uppercased: true)
         self.noResultsView.icon = .library
         self.noResultsView.isHidden = true
         self.addSubview(self.noResultsView)

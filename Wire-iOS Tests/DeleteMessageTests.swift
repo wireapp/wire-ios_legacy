@@ -57,7 +57,8 @@ final class DeleteMessageTests: XCTestCase {
             message = MockMessageFactory.pingMessage()
         case .fileTransfer:
             message = MockMessageFactory.fileTransferMessage()
-            message?.fileMessageData?.transferState = .downloaded
+            message?.backingFileMessageData?.transferState = .uploaded
+            message?.backingFileMessageData?.downloadState = .downloaded
         case .systemMessage:
             message = MockMessageFactory.systemMessage(with: .missedCall, users: 1, clients: 1)
         case .count:

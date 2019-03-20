@@ -97,7 +97,7 @@ final class CallStatusView: UIView {
         subtitleLabel.font = FontSpec(.normal, .semibold).font
         subtitleLabel.alpha = 0.64
 
-        bitrateLabel.text = "call.status.constant_bitrate".localized.uppercased()
+        bitrateLabel.text = "call.status.constant_bitrate".localized(uppercased: true)
         bitrateLabel.font = FontSpec(.small, .semibold).font
         bitrateLabel.alpha = 0.64
     }

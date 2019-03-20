@@ -93,14 +93,14 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
 
         for action in actions {
             let sheetAction = UIAlertAction(title: action.buttonText, style: .default) { _ in
-                self.performAction(action, targetView: footerView.rightButton)
+                self.performAction(action, targetView: footerView)
             }
 
             actionSheet.addAction(sheetAction)
         }
 
         actionSheet.addAction(.cancel())
-        presentAlert(actionSheet, targetView: footerView.rightButton)
+        presentAlert(actionSheet, targetView: footerView)
     }
 
     func performAction(_ action: ProfileAction, targetView: UIView) {
@@ -147,9 +147,9 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
     /// Presents an alert as a popover if needed.
     @objc(presentAlert:fromTargetView:)
     func presentAlert(_ alert: UIAlertController, targetView: UIView) {
-        let buttonFrame = view.convert(targetView.frame, from: targetView.superview).insetBy(dx: 8, dy: 8)
         alert.popoverPresentationController?.sourceView = targetView
-        alert.popoverPresentationController?.sourceRect = buttonFrame
+        alert.popoverPresentationController?.sourceRect = targetView.bounds.insetBy(dx: 8, dy: 8)
+        alert.popoverPresentationController?.permittedArrowDirections = .down
         present(alert, animated: true)
     }
 
@@ -285,5 +285,29 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
 
         presentAlert(controller, targetView: view)
     }
+}
 
+// MARK : - constraints
+
+extension ProfileViewController {
+
+    @objc
+    func setupConstraints() {
+        usernameDetailsView.translatesAutoresizingMaskIntoConstraints = false
+        tabsController.view.translatesAutoresizingMaskIntoConstraints = false
+        profileFooterView.translatesAutoresizingMaskIntoConstraints = false
+
+        usernameDetailsView.fitInSuperview(exclude: [.bottom])
+        tabsController.view?.topAnchor.constraint(equalTo: usernameDetailsView.bottomAnchor).isActive = true
+        tabsController.view.fitInSuperview(exclude: [.top])
+        profileFooterView.fitInSuperview(exclude: [.top])
+
+        incomingRequestFooter.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            incomingRequestFooter.bottomAnchor.constraint(equalTo: profileFooterView.topAnchor),
+            incomingRequestFooter.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            incomingRequestFooter.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+            ])
+    }
 }

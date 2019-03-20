@@ -17,11 +17,8 @@
 // 
 
 
-@import PureLayout;
-
 #import "MediaPreviewViewController.h"
 #import "MediaPreviewViewController+Internal.h"
-#import "MediaPreviewView.h"
 
 #import "MediaPreviewData.h"
 #import "MediaThumbnail.h"
@@ -30,33 +27,9 @@
 #import "Wire-Swift.h"
 
 
-@interface MediaPreviewViewController ()
-
-@property (nonatomic, readonly) MediaPreviewView *mediaPreviewView;
-
-@end
-
 @implementation MediaPreviewViewController
 
 @synthesize linkAttachment = _linkAttachment;
-
-- (void)loadView
-{
-    self.view = [[MediaPreviewView alloc] initForAutoLayout];
-}
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    
-    [self setupStyle];
-
-    [self.mediaPreviewView.playButton addTarget:self action:@selector(playVideo:) forControlEvents:UIControlEventTouchUpInside];
-
-    [self.view autoSetDimension:ALDimensionHeight toSize:self.viewHeight relation:NSLayoutRelationEqual];
-
-    
-}
 
 - (void)tearDown;
 {
@@ -126,7 +99,7 @@
 
 #pragma mark - Actions
 
-- (IBAction)playVideo:(id)sender
+- (void)playVideo:(id)sender
 {
     if (! self.linkAttachment.URL) {
         return;

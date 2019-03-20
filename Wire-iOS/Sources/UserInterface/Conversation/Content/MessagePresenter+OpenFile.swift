@@ -26,6 +26,7 @@ extension MessagePresenter {
     /// init method for injecting MediaPlaybackManager for testing
     ///
     /// - Parameter mediaPlaybackManager: for testing only
+    @objc
     convenience init(mediaPlaybackManager: MediaPlaybackManager? = AppDelegate.shared().mediaPlaybackManager) {
         self.init()
 
@@ -53,18 +54,20 @@ extension MessagePresenter {
 extension MessagePresenter {
 
     @objc func openFileMessage(_ message: ZMConversationMessage, targetView: UIView) {
-
-        let fileURL = message.fileMessageData?.fileURL
-
-        if fileURL == nil || fileURL?.isFileURL == nil || fileURL?.path.count == 0 {
-            assert(false, "File URL is missing: \(String(describing: fileURL)) (\(String(describing: message.fileMessageData)))")
-
-            zmLog.error("File URL is missing: \(String(describing: fileURL)) (\(String(describing: message.fileMessageData))")
-            ZMUserSession.shared()?.enqueueChanges({
-                message.fileMessageData?.requestFileDownload()
-            })
+        
+        if !message.isFileDownloaded() {
+            message.fileMessageData?.requestFileDownload()
+            
+            fileAvailabilityObserver = MessageKeyPathObserver(message: message, keypath: \.fileAvailabilityChanged) { [weak self] (message) in
+                guard message.isFileDownloaded() else { return }
+            
+                self?.openFileMessage(message, targetView: targetView)
+            }
+            
             return
         }
+
+        guard let fileURL = message.fileMessageData?.fileURL else { return }
 
         _ = message.startSelfDestructionIfNeeded()
 
@@ -73,7 +76,6 @@ extension MessagePresenter {
             targetViewController?.present(addPassesViewController, animated: true)
 
         } else if let fileMessageData = message.fileMessageData, fileMessageData.isVideo,
-                  let fileURL = fileURL,
                   let mediaPlaybackManager = mediaPlaybackManager {
             let player = AVPlayer(url: fileURL)
             mediaPlayerController = MediaPlayerController(player: player, message: message, delegate: mediaPlaybackManager)

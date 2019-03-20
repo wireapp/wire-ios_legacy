@@ -186,7 +186,10 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 - (void)createContentViewController
 {
-    self.contentViewController = [[ConversationContentViewController alloc] initWithConversation:self.conversation message:self.visibleMessage session: [ZMUserSession sharedSession]];
+    self.contentViewController = [[ConversationContentViewController alloc] initWithConversation:self.conversation
+                                                                                         message:self.visibleMessage
+                                                                            mediaPlaybackManager:self.zClientViewController.mediaPlaybackManager
+                                                                                         session: [ZMUserSession sharedSession]];
     self.contentViewController.delegate = self;
     self.contentViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
     self.contentViewController.bottomMargin = 16;

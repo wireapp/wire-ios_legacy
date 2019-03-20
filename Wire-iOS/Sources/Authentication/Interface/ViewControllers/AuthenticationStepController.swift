@@ -376,7 +376,7 @@ extension AuthenticationStepController {
     }
 
     func displayError(_ error: Error) {
-        errorLabel.text = error.localizedDescription.uppercased()
+        errorLabel.text = error.localizedDescription.localizedUppercase
         showSecondaryView(for: error)
     }
 

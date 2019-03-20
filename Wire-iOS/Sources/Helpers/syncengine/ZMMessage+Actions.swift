@@ -92,14 +92,14 @@ extension ZMConversationMessage {
         guard let fileMessageData = self.fileMessageData else {
             return false
         }
-        return isFile && fileMessageData.transferState.isOne(of: .uploaded, .failedDownload)
+        return isFile && fileMessageData.transferState == .uploaded && fileMessageData.downloadState == .remote
     }
 
     var canCancelDownload: Bool {
         guard let fileMessageData = self.fileMessageData else {
             return false
         }
-        return isFile && fileMessageData.transferState == .downloading
+        return isFile && fileMessageData.downloadState == .downloading
     }
     
     /// Wether the content of the message can be saved to the disk.

@@ -117,7 +117,7 @@ struct ImageMessageImageResourceAdaptor: PreviewableImageResource {
     }
     
     func requestImageDownload() {
-        imageMessageData.requestImageDownload()
+        imageMessageData.requestFileDownload()
     }
     
     func fetchImageData(queue: DispatchQueue, completionHandler: @escaping (Data?) -> Void) {

@@ -56,7 +56,7 @@ public extension ConversationViewController {
         let button = IconButton()
         button.adjustsTitleWhenHighlighted = true
         button.adjustBackgroundImageWhenHighlighted = true
-        button.setTitle("conversation_list.right_accessory.join_button.title".localized.uppercased(), for: .normal)
+        button.setTitle("conversation_list.right_accessory.join_button.title".localized(uppercased: true), for: .normal)
         button.accessibilityLabel = "conversation.join_call.voiceover".localized
         button.accessibilityTraits.insert(.startsMediaSession)
         button.titleLabel?.font = FontSpec(.small, .semibold).font
@@ -192,7 +192,7 @@ public extension ConversationViewController {
 
         collectionController?.shouldTrackOnNextOpen = true
 
-        let navigationController = KeyboardAvoidingViewController(viewController: self.collectionController!).wrapInNavigationController(RotationAwareNavigationController.self)
+        let navigationController = KeyboardAvoidingViewController(viewController: self.collectionController!).wrapInNavigationController()
 
         ZClientViewController.shared()?.present(navigationController, animated: true, completion: {
             UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)

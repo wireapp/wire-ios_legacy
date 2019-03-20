@@ -48,12 +48,12 @@ final class AppLockView: UIView {
             self.authenticateButton.isHidden = !showReauth
         }
     }
-    
-    override init(frame: CGRect) {
+
+    init(authenticationType: AuthenticationType = .current) {
         let blurEffect = UIBlurEffect(style: .dark)
         self.blurView = UIVisualEffectView(effect: blurEffect)
         
-        super.init(frame: frame)
+        super.init(frame: .zero)
         
         let loadedObjects = UINib(nibName: "LaunchScreen", bundle: nil).instantiate(withOwner: .none, options: .none)
         
@@ -71,8 +71,16 @@ final class AppLockView: UIView {
         
         contentContainerView.addSubview(authenticateLabel)
         contentContainerView.addSubview(authenticateButton)
-        
-        self.authenticateLabel.text = "self.settings.privacy_security.lock_cancelled.description".localized
+
+        switch authenticationType {
+        case .touchID:
+            self.authenticateLabel.text = "self.settings.privacy_security.lock_cancelled.description_touch_id".localized
+        case .faceID:
+            self.authenticateLabel.text = "self.settings.privacy_security.lock_cancelled.description_face_id".localized
+        case .none:
+            self.authenticateLabel.text = "self.settings.privacy_security.lock_cancelled.description_passcode".localized
+        }
+
         self.authenticateButton.setTitle("self.settings.privacy_security.lock_cancelled.action".localized, for: .normal)
         self.authenticateButton.addTarget(self, action: #selector(AppLockView.onReauthenticatePressed(_:)), for: .touchUpInside)
 

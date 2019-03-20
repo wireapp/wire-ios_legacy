@@ -129,19 +129,6 @@ extension ConversationInputBarViewControllerTests {
         self.verifyInAllPhoneWidths(view: sut.view)
     }
 
-    func testEphemeralTime1Year() {
-        // GIVEN
-
-        // WHEN
-        sut.mode = .timeoutConfguration
-        otherUserConversation.messageDestructionTimeout = .local(31540000)
-
-        sut.inputBar.setInputBarState(.writing(ephemeral: .message), animated: false)
-
-        // THEN
-        self.verifyInAllPhoneWidths(view: sut.view)
-    }
-
     func testEphemeralModeWhenTyping() {
         // GIVEN
 

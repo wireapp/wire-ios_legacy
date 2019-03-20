@@ -119,13 +119,7 @@ class EphemeralTimeoutFormatter {
         } else if date < Calendar.current.date(byAdding: .day, value: 1, to: now) {
             return hourFormatter.string(from: interval)
         } else {
-            // clamp time interval longer than 1 year
-            let oneYearFormNow = Calendar.current.date(byAdding: .year, value: 1, to: now)
-            if date > oneYearFormNow {
-                return dayFormatter.string(from: (oneYearFormNow?.timeIntervalSince(now))!)
-            } else {
-                return dayFormatter.string(from: interval)
-            }
+           return dayFormatter.string(from: interval)
         }
     }
     

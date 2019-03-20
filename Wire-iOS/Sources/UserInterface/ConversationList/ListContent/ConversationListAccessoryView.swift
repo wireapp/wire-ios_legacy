@@ -117,7 +117,7 @@ import UIKit
             accessibilityValue = "conversation_list.voiceover.status.active_call".localized
             return .none
         case .activeCall(true):
-            textLabel.text = "conversation_list.right_accessory.join_button.title".localized.uppercased()
+            textLabel.text = "conversation_list.right_accessory.join_button.title".localized(uppercased: true)
             accessibilityValue = textLabel.text
             return textLabel
         case .missedCall:
