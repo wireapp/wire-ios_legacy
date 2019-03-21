@@ -47,6 +47,7 @@ extension ProfileViewController {
         return profileDetailsViewController
     }
 
+    @objc
     func setupTabsController() {
         var viewControllers = [UIViewController]()
 
@@ -55,20 +56,20 @@ extension ProfileViewController {
             viewControllers.append(profileDetailsViewController)
         }
 
-        if (fullUser().isConnected ||
+        if context != .profileViewer,
+            (fullUser().isConnected ||
             fullUser().isTeamMember ||
             fullUser().isWirelessUser),
             let profileDevicesViewController = ProfileDevicesViewController(user: fullUser()) {
-            profileDevicesViewController.title = NSLocalizedString("profile.devices.title", comment: "")
+            profileDevicesViewController.title = "profile.devices.title".localized
             profileDevicesViewController.delegate = self
             viewControllers.append(profileDevicesViewController)
         }
 
         tabsController = TabBarController(viewControllers: viewControllers)
         tabsController.delegate = self
-        addChild(tabsController)
-        view.addSubview(tabsController.view)
-        tabsController.didMove(toParent: self)
+
+        addToSelf(tabsController)
     }
 
 }
