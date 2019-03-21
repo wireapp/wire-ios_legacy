@@ -315,21 +315,21 @@ final class ConversationTableViewDataSource: NSObject {
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         let scrolledToBottom = scrollView.contentOffset.y < 0
-        if scrolledToBottom && hasNewerMessagesToLoad {
-            // We are at the bottom and should load new messages
-            
-            // To avoid loosing scroll position:
-            // 1. Remember the newest message now
-            let newestMessageBeforeReload = messages.first!
-            // 2. Load more messages
-            loadNewerMessages()
-            // 3. Get the index path of the message that should stay displayed
-            let indexPath = self.indexPath(for: newestMessageBeforeReload)!
-            // 4. Get the frame of that message
-            let indexPathRect = tableView.rectForRow(at: indexPath)
-            // 5. Update content offset so it stays visible. To reduce flickering compensate for empty space below the message
-            scrollView.contentOffset = CGPoint(x: 0, y: indexPathRect.minY - 16)
-        }
+        guard scrolledToBottom && hasNewerMessagesToLoad else { return }
+        
+        // We are at the bottom and should load new messages
+        
+        // To avoid loosing scroll position:
+        // 1. Remember the newest message now
+        let newestMessageBeforeReload = messages.first!
+        // 2. Load more messages
+        loadNewerMessages()
+        // 3. Get the index path of the message that should stay displayed
+        let indexPath = self.indexPath(for: newestMessageBeforeReload)!
+        // 4. Get the frame of that message
+        let indexPathRect = tableView.rectForRow(at: indexPath)
+        // 5. Update content offset so it stays visible. To reduce flickering compensate for empty space below the message
+        scrollView.contentOffset = CGPoint(x: 0, y: indexPathRect.minY - 16)        
     }
     
     private func fetchRequest() -> NSFetchRequest<ZMMessage> {
