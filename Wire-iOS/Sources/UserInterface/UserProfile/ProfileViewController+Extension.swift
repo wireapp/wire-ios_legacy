@@ -40,12 +40,37 @@ extension ProfileViewController {
         self.viewControllerDismisser = viewControllerDismisser
     }
 
-    @objc func setupProfileDetailsViewController() -> ProfileDetailsViewController? {
+    func setupProfileDetailsViewController() -> ProfileDetailsViewController {
         let profileDetailsViewController = ProfileDetailsViewController(user: bareUser, viewer: viewer, conversation: conversation)
         profileDetailsViewController.title = "profile.details.title".localized
 
         return profileDetailsViewController
     }
+
+    func setupTabsController() {
+        var viewControllers = [UIViewController]()
+
+        if context != .deviceList {
+            let profileDetailsViewController = setupProfileDetailsViewController()
+            viewControllers.append(profileDetailsViewController)
+        }
+
+        if (fullUser().isConnected ||
+            fullUser().isTeamMember ||
+            fullUser().isWirelessUser),
+            let profileDevicesViewController = ProfileDevicesViewController(user: fullUser()) {
+            profileDevicesViewController.title = NSLocalizedString("profile.devices.title", comment: "")
+            profileDevicesViewController.delegate = self
+            viewControllers.append(profileDevicesViewController)
+        }
+
+        tabsController = TabBarController(viewControllers: viewControllers)
+        tabsController.delegate = self
+        addChild(tabsController)
+        view.addSubview(tabsController.view)
+        tabsController.didMove(toParent: self)
+    }
+
 }
 
 extension ProfileViewController: ViewControllerDismisser {
