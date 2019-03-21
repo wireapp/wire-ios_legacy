@@ -723,6 +723,8 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 - (BOOL)conversationInputBarViewControllerShouldBeginEditing:(ConversationInputBarViewController *)controller
 {
     if (! self.contentViewController.isScrolledToBottom && !controller.isEditingMessage && !controller.isReplyingToMessage) {
+        self.collectionController = nil;
+        self.contentViewController.searchQueries = @[];
         [self.contentViewController scrollToBottom];
     }
     

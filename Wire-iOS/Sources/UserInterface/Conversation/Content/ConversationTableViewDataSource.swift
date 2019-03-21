@@ -59,7 +59,7 @@ final class ConversationTableViewDataSource: NSObject {
     public var sectionControllers: [String: ConversationMessageSectionController] = [:]
 
     @objc public private(set) var hasOlderMessagesToLoad = false
-    fileprivate var hasNewerMessagesToLoad = false
+    @objc public private(set) var hasNewerMessagesToLoad = false
     
     @objc func resetSectionControllers() {
         sectionControllers = [:]
