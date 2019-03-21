@@ -19,7 +19,8 @@
 import Foundation
 
 extension ZClientViewController: ShowContentDelegate {
-    
+
+    ///TODO: return false if the conversaion is invalid (conversation.conversationType == .self)
     public func showConversation(_ conversation: ZMConversation, at message: ZMConversationMessage?) {
         switch conversation.conversationType {
         case .connection:
