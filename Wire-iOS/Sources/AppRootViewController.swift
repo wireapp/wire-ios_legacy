@@ -576,12 +576,13 @@ extension AppRootViewController: SessionManagerURLHandlerDelegate {
 
     func sessionManagerShouldExecuteURLAction(_ action: URLAction, callback: @escaping (Bool) -> Void) -> Bool {
         switch action {
-        case .openConversation(let id):
-            if let moc = ZMUserSession.shared()?.managedObjectContext,
-                let conversation = ZMConversation(remoteID: id, createIfNeeded: false, in: moc) {
-                self.sessionManager?.showConversation(conversation, at: nil, in: ZMUserSession.shared()!)
+        case .openConversation(_, let conversation):
+            if let conversation = conversation,
+               let userSession = ZMUserSession.shared() {
+                sessionManager?.showConversation(conversation, at: nil, in: userSession)
+                return true
             } else {
-                callback(false)
+                return false
             }
         case .openUserProfile(let id, let user):
             if let zClientViewController = ZClientViewController.shared(),
