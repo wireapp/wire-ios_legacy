@@ -71,7 +71,6 @@ extension ProfileViewController {
 
         addToSelf(tabsController)
     }
-
 }
 
 extension ProfileViewController: ViewControllerDismisser {
@@ -84,7 +83,8 @@ extension ProfileViewController: ViewControllerDismisser {
 
 extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFooterViewDelegate {
 
-    @objc func updateFooterViews() {
+    @objc
+    func updateFooterViews() {
         // Actions
         let factory = ProfileActionsFactory(user: bareUser, viewer: viewer, conversation: conversation, context: context)
         let actions = factory.makeActionsList()
@@ -151,6 +151,14 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
             sendConnectionRequest()
         case .cancelConnectionRequest:
             bringUpCancelConnectionRequestSheet(from: targetView)
+        case .openSelfProfile:
+            openSelfProfile()
+        }
+    }
+
+    private func openSelfProfile() {
+        transitionToListAndEnqueue {
+            ZClientViewController.shared()?.conversationListViewController.presentSettings()
         }
     }
 
