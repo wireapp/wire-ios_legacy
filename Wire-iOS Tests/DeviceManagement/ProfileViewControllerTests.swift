@@ -47,6 +47,16 @@ final class ProfileViewControllerTests: ZMSnapshotTestCase {
         super.tearDown()
     }
 
+    func testForContextProfileViewer() {
+        selfUser.teamRole = .member
+
+        sut = ProfileViewController(user: mockUser,
+                                    viewer: selfUser,
+                                    context: .profileViewer)
+
+        verify(view: sut.view)
+    }
+
     func testForContextOneToOneConversation() {
         selfUser.teamRole = .member
 
