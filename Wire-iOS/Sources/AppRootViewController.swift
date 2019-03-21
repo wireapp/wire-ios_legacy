@@ -581,7 +581,7 @@ extension AppRootViewController: SessionManagerURLHandlerDelegate {
             break
         case .openUserProfile(let id, let user):
             if let zClientViewController = ZClientViewController.shared(),
-                let user = user {
+               let user = user {
                     zClientViewController.openProfileScreen(for: user)
                     return true
             } else {
