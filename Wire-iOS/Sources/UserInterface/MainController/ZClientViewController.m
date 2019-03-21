@@ -23,7 +23,6 @@
 #import "SplitViewController.h"
 
 #import "AppDelegate.h"
-#import "NotificationWindowRootViewController.h"
 
 #import "ConversationListViewController.h"
 #import "ConversationViewController.h"
@@ -169,6 +168,8 @@
     }
     
     self.userObserverToken = [UserChangeInfo addObserver:self forUser:[ZMUser selfUser] userSession:[ZMUserSession sharedSession]];
+
+    [self openProfileViewerIfNeeded];
 }
 
 - (void)createBackgroundViewController
@@ -331,17 +332,6 @@
     }
     
     [self.splitViewController setLeftViewControllerRevealed:YES animated:YES completion:completion];
-}
-
-- (void)transitionToListAnimated:(BOOL)animated completion:(dispatch_block_t)completion
-{
-    if (self.splitViewController.rightViewController.presentedViewController != nil) {
-        [self.splitViewController.rightViewController.presentedViewController dismissViewControllerAnimated:animated completion:^{
-            [self.splitViewController setLeftViewControllerRevealed:YES animated:animated completion:completion];
-        }];
-    } else {
-        [self.splitViewController setLeftViewControllerRevealed:YES animated:animated completion:completion];
-    }
 }
 
 - (BOOL)pushContentViewController:(UIViewController *)viewController focusOnView:(BOOL)focus animated:(BOOL)animated completion:(dispatch_block_t)completion

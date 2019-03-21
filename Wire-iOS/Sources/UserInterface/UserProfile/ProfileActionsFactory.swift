@@ -33,6 +33,7 @@ enum ProfileAction: Equatable {
     case removeFromGroup
     case connect
     case cancelConnectionRequest
+    case openSelfProfile
 
     /// The text of the button for this action.
     var buttonText: String {
@@ -47,6 +48,7 @@ enum ProfileAction: Equatable {
         case .removeFromGroup: return "profile.remove_dialog_button_remove".localized
         case .connect: return "profile.connection_request_dialog.button_connect".localized
         case .cancelConnectionRequest: return "meta.menu.cancel_connection_request".localized
+        case .openSelfProfile: return "meta.menu.open_self_profile".localized
         }
     }
 
@@ -62,6 +64,7 @@ enum ProfileAction: Equatable {
         case .removeFromGroup: return .minus
         case .connect: return .plus
         case .cancelConnectionRequest: return .undo
+        case .openSelfProfile: return .selfProfile
         }
     }
 
@@ -77,6 +80,7 @@ enum ProfileAction: Equatable {
         case .removeFromGroup: return false
         case .connect: return true
         case .cancelConnectionRequest: return true
+        case .openSelfProfile: return true
         }
     }
 
@@ -127,9 +131,14 @@ final class ProfileActionsFactory: NSObject {
      */
 
     func makeActionsList() -> [ProfileAction] {
-        // Do nothing if the user is viewing their own profile or in case the user was deleted
-        if viewer.isSelfUser && user.isSelfUser || user.isAccountDeleted {
+        // Do nothing if the user was deleted
+        if user.isAccountDeleted {
             return []
+        }
+
+        // if the user is viewing their own profile, add the open self-profile screen button
+        if viewer.isSelfUser && user.isSelfUser {
+            return [.openSelfProfile]
         }
 
         // Do not show any action if the user is blocked

@@ -18,10 +18,12 @@
 
 
 #import "ConnectRequestsViewController.h"
+#import "ConnectRequestsViewController+Internal.h"
+
+#import "ZClientViewController.h"
 
 // ui
 #import "TextView.h"
-#import "ConnectRequestCell.h"
 #import "ProfileViewController.h"
 #import "UIView+PopoverBorder.h"
 #import "ProfilePresenter.h"
@@ -30,10 +32,6 @@
 // model
 #import "WireSyncEngine+iOS.h"
 
-// helpers
-@import PureLayout;
-
-
 @class ZMConversation;
 
 static NSString *ConnectionRequestCellIdentifier = @"ConnectionRequestCell";
@@ -41,7 +39,6 @@ static NSString *ConnectionRequestCellIdentifier = @"ConnectionRequestCell";
 
 @interface ConnectRequestsViewController () <ZMConversationListObserver, ZMUserObserver, UITableViewDataSource, UITableViewDelegate>
 
-@property (nonatomic, strong) NSArray *connectionRequests;
 @property (nonatomic) id userObserverToken;
 @property (nonatomic) id pendingConnectionsListObserverToken;
 
@@ -68,11 +65,15 @@ static NSString *ConnectionRequestCellIdentifier = @"ConnectionRequestCell";
     self.tableView.dataSource = self;
     
     ZMConversationList *pendingConnectionsList = [ZMConversationList pendingConnectionConversationsInUserSession:[ZMUserSession sharedSession]];
-    self.pendingConnectionsListObserverToken = [ConversationListChangeInfo addObserver:self
-                                                                               forList:pendingConnectionsList
-                                                                           userSession:[ZMUserSession sharedSession]];
+
+    if ([ZMUserSession sharedSession]) {
+        self.pendingConnectionsListObserverToken = [ConversationListChangeInfo addObserver:self
+                                                                                   forList:pendingConnectionsList
+                                                                               userSession:[ZMUserSession sharedSession]];
+
+        self.userObserverToken = [UserChangeInfo addObserver:self forUser:[ZMUser selfUser] userSession:[ZMUserSession sharedSession]];
+    }
     
-    self.userObserverToken = [UserChangeInfo addObserver:self forUser:[ZMUser selfUser] userSession:[ZMUserSession sharedSession]];
     self.connectionRequests = pendingConnectionsList;
     
     [self reload];

@@ -335,8 +335,7 @@ class Build
     end
 
     def iconset_name
-        case @build_type
-        when "Playground"
+        if playground_build || avs_build
             "Development"
         else
             @build_type

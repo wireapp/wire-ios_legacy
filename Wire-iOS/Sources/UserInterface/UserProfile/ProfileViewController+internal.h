@@ -16,6 +16,7 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+
 @class ConversationActionController;
 @class ProfileFooterView;
 @class IncomingRequestFooterView;
@@ -26,6 +27,7 @@
 @protocol ActionController;
 
 #import "AccentColorProvider.h"
+#import "ProfileDevicesViewController.h"
 
 @interface ProfileViewController () <ZMUserObserver>
 
@@ -40,5 +42,11 @@
 @property (nonatomic) TabBarController *tabsController;
 
 - (ZMUser *)fullUser;
+- (void)updateShowVerifiedShield;
 
 @end
+
+@interface ProfileViewController (DevicesListDelegate) <ProfileDevicesViewControllerDelegate>
+@end
+
+
