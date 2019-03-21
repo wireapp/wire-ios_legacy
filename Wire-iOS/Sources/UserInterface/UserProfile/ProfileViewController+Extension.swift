@@ -157,15 +157,24 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
     }
 
     private func openSelfProfile() {
-        transitionToListAndEnqueue {
+        ///do not reveal list view for iPad regular mode
+        let leftViewControllerRevealed: Bool
+        if let presentingViewController = presentingViewController {
+            leftViewControllerRevealed = !presentingViewController.isIPadRegular(device: UIDevice.current)
+        } else {
+            leftViewControllerRevealed = true
+        }
+
+        transitionToListAndEnqueue(leftViewControllerRevealed: leftViewControllerRevealed) {
             ZClientViewController.shared()?.conversationListViewController.presentSettings()
         }
     }
 
     // MARK: - Helpers
 
-    private func transitionToListAndEnqueue(_ block: @escaping () -> Void) {
-        ZClientViewController.shared()?.transitionToList(animated: true) {
+    private func transitionToListAndEnqueue(leftViewControllerRevealed: Bool = true, _ block: @escaping () -> Void) {
+        ZClientViewController.shared()?.transitionToList(animated: true,
+                                                         leftViewControllerRevealed: leftViewControllerRevealed) {
             ZMUserSession.shared()?.enqueueChanges(block)
         }
     }

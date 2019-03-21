@@ -85,8 +85,6 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)hideIncomingContactRequestsWithCompletion:(__nullable dispatch_block_t)completion;
 
-- (void)transitionToListAnimated:(BOOL)animated completion:(__nullable dispatch_block_t)completion;
-
 - (void)dismissAllModalControllersWithCallback:(__nullable dispatch_block_t)callback;
 
 @end
