@@ -566,22 +566,40 @@ public extension SessionManager {
 
 extension AppRootViewController: SessionManagerURLHandlerDelegate {
 
+    private func presentAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title,
+                                      message: message,
+                                      cancelButtonTitle: "general.ok".localized)
+
+        present(alert, animated: true, completion: nil)
+    }
+
     func sessionManagerShouldExecuteURLAction(_ action: URLAction, callback: @escaping (Bool) -> Void) -> Bool {
         switch action {
-        case .openConversation(_):
+        case .openConversation(_, _):
         ///TODO: open a conversation if id is valid
             break
-        case .openUserProfile(let user):
+        case .openUserProfile(let id, let user):
             if let zClientViewController = ZClientViewController.shared(),
-                let user = user.user {
+                let user = user {
                     zClientViewController.openProfileScreen(for: user)
                     return true
             } else {
                 return false
             }
-        case .warnInvalidDeepLink(_):
-            break
-            ///TODO: show a warning alert
+
+        case .warnInvalidDeepLink(let error):
+            switch error {
+            case .invalidUserLink:
+                presentAlert(title: "url_action.invalid_user.title".localized,
+                             message: "url_action.invalid_user.message".localized)
+            case .invalidConversationLink:
+                presentAlert(title: "url_action.invalid_conversation.title".localized,
+                             message: "url_action.invalid_conversation.message".localized)
+            case .notLoggedIn:
+                ///TODO: alert for this case
+                break
+            }
         case .connectBot:
             guard let _ = ZMUser.selfUser().team else {
                 callback(false)
