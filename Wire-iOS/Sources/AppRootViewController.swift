@@ -583,8 +583,10 @@ extension AppRootViewController: SessionManagerURLHandlerDelegate {
     func sessionManagerShouldExecuteURLAction(_ action: URLAction, callback: @escaping (Bool) -> Void) {
         switch action {
         case .openConversation(_, let conversation):
-        ///TODO:
-            break
+            if let conversation = conversation,
+               let userSession = ZMUserSession.shared() {
+                sessionManager?.showConversation(conversation, at: nil, in: userSession)
+            }
         case .openUserProfile(_, let user):
             if let user = user {
                 sessionManager?.showUserProfile(user: user)
