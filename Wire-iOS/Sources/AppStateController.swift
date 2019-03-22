@@ -28,13 +28,13 @@ protocol AppStateControllerDelegate : class {
     
 }
 
-class AppStateController : NSObject {
+final class AppStateController : NSObject {
 
     /**
      * The possible states of authentication.
      */
 
-    enum AuthenticationState {
+    enum AuthenticationState: Equatable {
         /// The user is not logged in.
         case loggedOut
 
