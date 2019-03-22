@@ -55,6 +55,7 @@ import WireCommonComponents
         titleLabel.numberOfLines = 2
         addSubview(titleLabel)
 
+        playButton.isUserInteractionEnabled = false
         playButton.setIcon(.play, with: .large, for: .normal)
         playButton.setIconColor(UIColor.white, for: UIControl.State.normal)
         addSubview(playButton)

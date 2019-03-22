@@ -386,6 +386,12 @@
 
 "content.system.services.warning" = "Services have access to the content of this conversation";
 
+// Link attachment messages
+
+"content.message.link_attachment.accessibility_label.youtube" = "YouTube video preview";
+"content.message.link_attachment.accessibility_label.soundcloud_song" = "SoundCloud song preview";
+"content.message.link_attachment.accessibility_label.soundcloud_set" = "SoundCloud playlist preview";
+
 // New conversation participants added / removed / started system message
 
 "content.system.conversation.other.started" = "%@ started a conversation with %@";

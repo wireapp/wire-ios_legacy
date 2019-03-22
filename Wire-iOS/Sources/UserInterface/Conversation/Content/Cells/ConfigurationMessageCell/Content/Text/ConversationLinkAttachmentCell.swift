@@ -18,7 +18,7 @@
 
 import UIKit
 
-class ConversationLinkAttachmentCell: UIView, ConversationMessageCell {
+class ConversationLinkAttachmentCell: UIView, ConversationMessageCell, HighlightableView {
 
     struct Configuration {
         let attachment: LinkAttachment
@@ -47,6 +47,10 @@ class ConversationLinkAttachmentCell: UIView, ConversationMessageCell {
     }
 
     private func configureSubviews() {
+        isAccessibilityElement = true
+        shouldGroupAccessibilityChildren = true
+        accessibilityIdentifier = "link-attachment"
+        accessibilityTraits = [.link]
         addSubview(attachmentView)
 
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture))
@@ -75,16 +79,30 @@ class ConversationLinkAttachmentCell: UIView, ConversationMessageCell {
         currentAttachment = object.attachment
         attachmentView.titleLabel.text = object.attachment.title
         attachmentView.previewImageView.setImageResource(object.thumbnailResource, hideLoadingView: true)
+        accessibilityValue = object.attachment.title
 
         switch object.attachment.type {
         case .youTubeVideo:
             widthConstraint?.constant = 356
             attachmentView.providerImageView.image = WireStyleKit.imageOfYoutube(color: .white)
+            accessibilityLabel = "content.message.link_attachment.accessibility_label.youtube".localized
 
-        case .soundCloudPlaylist, .soundCloudTrack:
+        case .soundCloudTrack:
             widthConstraint?.constant = 200
             attachmentView.providerImageView.image = UIImage(named: "soundcloud")
+            accessibilityLabel = "content.message.link_attachment.accessibility_label.soundcloud_song".localized
+
+        case .soundCloudPlaylist:
+            widthConstraint?.constant = 200
+            attachmentView.providerImageView.image = UIImage(named: "soundcloud")
+            accessibilityLabel = "content.message.link_attachment.accessibility_label.soundcloud_set".localized
         }
+    }
+
+    // MARK: - HighlightableView
+
+    var highlightContainer: UIView {
+        return attachmentView
     }
 
     // MARK: - Events
