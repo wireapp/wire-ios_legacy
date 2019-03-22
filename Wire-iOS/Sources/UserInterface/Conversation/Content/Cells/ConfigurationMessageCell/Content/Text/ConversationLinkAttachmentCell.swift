@@ -32,7 +32,7 @@ class ConversationLinkAttachmentCell: UIView, ConversationMessageCell, Highlight
 
     var isSelected: Bool = false
     var currentAttachment: LinkAttachment?
-    var widthConstraint: NSLayoutConstraint?
+    var heightRatioConstraint: NSLayoutConstraint?
 
     // MARK: - Initialization
 
@@ -60,7 +60,7 @@ class ConversationLinkAttachmentCell: UIView, ConversationMessageCell, Highlight
     private func configureConstraints() {
         attachmentView.translatesAutoresizingMaskIntoConstraints = false
 
-        let widthConstraint = attachmentView.widthAnchor.constraint(equalToConstant: 0)
+        let widthConstraint = attachmentView.widthAnchor.constraint(equalToConstant: 414)
         widthConstraint.priority = .defaultHigh
 
         NSLayoutConstraint.activate([
@@ -68,9 +68,18 @@ class ConversationLinkAttachmentCell: UIView, ConversationMessageCell, Highlight
             attachmentView.topAnchor.constraint(equalTo: topAnchor),
             attachmentView.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor),
             attachmentView.bottomAnchor.constraint(equalTo: bottomAnchor),
-            attachmentView.heightAnchor.constraint(equalToConstant: 200),
             widthConstraint
         ])
+    }
+
+    private func updateAspectRatio(_ heightRatio: CGFloat) {
+        if let currentConstraint = self.heightRatioConstraint {
+            currentConstraint.isActive = false
+        }
+
+        let heightRatioConstraint = heightAnchor.constraint(equalTo: widthAnchor, multiplier: heightRatio)
+        heightRatioConstraint.isActive = true
+        self.heightRatioConstraint = heightRatioConstraint
     }
 
     // MARK: - Configuration
@@ -83,17 +92,17 @@ class ConversationLinkAttachmentCell: UIView, ConversationMessageCell, Highlight
 
         switch object.attachment.type {
         case .youTubeVideo:
-            widthConstraint?.constant = 356
+            updateAspectRatio(3/4)
             attachmentView.providerImageView.image = WireStyleKit.imageOfYoutube(color: .white)
             accessibilityLabel = "content.message.link_attachment.accessibility_label.youtube".localized
 
         case .soundCloudTrack:
-            widthConstraint?.constant = 200
+            updateAspectRatio(1/1)
             attachmentView.providerImageView.image = UIImage(named: "soundcloud")
             accessibilityLabel = "content.message.link_attachment.accessibility_label.soundcloud_song".localized
 
         case .soundCloudPlaylist:
-            widthConstraint?.constant = 200
+            updateAspectRatio(1/1)
             attachmentView.providerImageView.image = UIImage(named: "soundcloud")
             accessibilityLabel = "content.message.link_attachment.accessibility_label.soundcloud_set".localized
         }

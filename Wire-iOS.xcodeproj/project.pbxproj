@@ -341,7 +341,6 @@
 		5EC0870D20EF530D000366B7 /* MockURLSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC0870C20EF530D000366B7 /* MockURLSession.swift */; };
 		5EC0871020EF5C89000366B7 /* ImageDownloadCacheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC0870F20EF5C89000366B7 /* ImageDownloadCacheTests.swift */; };
 		5EC16BA120EBB93A00955156 /* MockProxyRequester.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC16B9F20EBB86900955156 /* MockProxyRequester.swift */; };
-		5EC25A2F219ACB4B00F6214E /* ConversationTextMessageCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC25A2E219ACB4B00F6214E /* ConversationTextMessageCellTests.swift */; };
 		5EC2C58921353FA100C6CE35 /* AuthenticationCoordinator+Teams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC2C58821353FA100C6CE35 /* AuthenticationCoordinator+Teams.swift */; };
 		5EC7C87A219038F6004662AC /* ImageResourceThumbnailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC7C879219038F6004662AC /* ImageResourceThumbnailView.swift */; };
 		5EC7C87C21907D94004662AC /* ConversationReplyCellDescriptionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC7C87B21907D94004662AC /* ConversationReplyCellDescriptionTests.swift */; };
@@ -351,6 +350,8 @@
 		5EDD25412140240B00C0E254 /* SettingsStaticTextCellDescriptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EDD25402140240B00C0E254 /* SettingsStaticTextCellDescriptor.swift */; };
 		5EDD25442141555600C0E254 /* LicensesLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EDD25432141555600C0E254 /* LicensesLoader.swift */; };
 		5EDD25462141571600C0E254 /* LicensesLoaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EDD25452141571600C0E254 /* LicensesLoaderTests.swift */; };
+		5EDF03EA22453AE400C04007 /* ConversationLinkAttachmentMessageCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EDF03E822453AC200C04007 /* ConversationLinkAttachmentMessageCellTests.swift */; };
+		5EDF03EF22455C4E00C04007 /* MockImageResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EDF03ED22455BD200C04007 /* MockImageResource.swift */; };
 		5EE115E1204EEC7D002AD6C2 /* CallQualityControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE115E0204EEC7D002AD6C2 /* CallQualityControllerTests.swift */; };
 		5EE51CBD2099B915008BA4B1 /* ThumbnailCornerPinningBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE51CBC2099B915008BA4B1 /* ThumbnailCornerPinningBehavior.swift */; };
 		5EE73BE62122C6DC0032986D /* AuthenticationStartAddAccountEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE73BE52122C6DC0032986D /* AuthenticationStartAddAccountEventHandler.swift */; };
@@ -1876,7 +1877,6 @@
 		5EC0870C20EF530D000366B7 /* MockURLSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockURLSession.swift; sourceTree = "<group>"; };
 		5EC0870F20EF5C89000366B7 /* ImageDownloadCacheTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDownloadCacheTests.swift; sourceTree = "<group>"; };
 		5EC16B9F20EBB86900955156 /* MockProxyRequester.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockProxyRequester.swift; sourceTree = "<group>"; };
-		5EC25A2E219ACB4B00F6214E /* ConversationTextMessageCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationTextMessageCellTests.swift; sourceTree = "<group>"; };
 		5EC2C58821353FA100C6CE35 /* AuthenticationCoordinator+Teams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AuthenticationCoordinator+Teams.swift"; sourceTree = "<group>"; };
 		5EC7C879219038F6004662AC /* ImageResourceThumbnailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageResourceThumbnailView.swift; sourceTree = "<group>"; };
 		5EC7C87B21907D94004662AC /* ConversationReplyCellDescriptionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationReplyCellDescriptionTests.swift; sourceTree = "<group>"; };
@@ -1889,6 +1889,8 @@
 		5EDD254221412ED200C0E254 /* EmbeddedDependencies.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = EmbeddedDependencies.plist; sourceTree = "<group>"; };
 		5EDD25432141555600C0E254 /* LicensesLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicensesLoader.swift; sourceTree = "<group>"; };
 		5EDD25452141571600C0E254 /* LicensesLoaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicensesLoaderTests.swift; sourceTree = "<group>"; };
+		5EDF03E822453AC200C04007 /* ConversationLinkAttachmentMessageCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationLinkAttachmentMessageCellTests.swift; sourceTree = "<group>"; };
+		5EDF03ED22455BD200C04007 /* MockImageResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockImageResource.swift; sourceTree = "<group>"; };
 		5EE115E0204EEC7D002AD6C2 /* CallQualityControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallQualityControllerTests.swift; sourceTree = "<group>"; };
 		5EE51CBC2099B915008BA4B1 /* ThumbnailCornerPinningBehavior.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThumbnailCornerPinningBehavior.swift; sourceTree = "<group>"; };
 		5EE73BE52122C6DC0032986D /* AuthenticationStartAddAccountEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationStartAddAccountEventHandler.swift; sourceTree = "<group>"; };
@@ -3744,10 +3746,10 @@
 				162AE739219AC4C100581D98 /* ConversationTextMessageTests.swift */,
 				162AE747219B26AF00581D98 /* ConversationSystemMessageTests.swift */,
 				162AE74B219DB1B600581D98 /* ConversationImageMessageTests.swift */,
-				5EC25A2E219ACB4B00F6214E /* ConversationTextMessageCellTests.swift */,
 				1661C71A21A7113A003DCE1C /* ConversationFileMessageCellTests.swift */,
 				1661C74221A83B25003DCE1C /* ConversationAudioMessageCellTests.swift */,
 				16030DAC21A846A200F8032E /* ConversationVideoMessageCellTests.swift */,
+				5EDF03E822453AC200C04007 /* ConversationLinkAttachmentMessageCellTests.swift */,
 			);
 			path = ConversationMessageCell;
 			sourceTree = "<group>";
@@ -4816,6 +4818,7 @@
 				EF10CB1E2151057D00AEA8EA /* UITableViewCell+Snapshot.swift */,
 				BFFE943D1E7839EB0025AD75 /* CoreDataSnapshotTestCase.swift */,
 				5E294594219081A80045ACFA /* Date+Generator.swift */,
+				5EDF03ED22455BD200C04007 /* MockImageResource.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -8139,11 +8142,13 @@
 				BF27AE4E1E9E513400809A2B /* MessageDraftTests.swift in Sources */,
 				5EC16BA120EBB93A00955156 /* MockProxyRequester.swift in Sources */,
 				F1F5E57E216CC94A006BF3D5 /* ConversationStatusLineTests+Muting.swift in Sources */,
+				5EDF03EA22453AE400C04007 /* ConversationLinkAttachmentMessageCellTests.swift in Sources */,
 				FE996D9C2032039100BDE573 /* LandingViewControllerTests.swift in Sources */,
 				876376881E840E9C00B2CCF0 /* ConversationStatusTests.swift in Sources */,
 				EF6251D621395F7F00943708 /* VideoGridViewControllerSnapshotTests.swift in Sources */,
 				873F91952189BB3C00E1DBB9 /* MessageReplyPreviewViewTests.swift in Sources */,
 				87AAE4211E42441B00E1D13A /* FontSchemeTests.swift in Sources */,
+				5EDF03EF22455C4E00C04007 /* MockImageResource.swift in Sources */,
 				5EA73D9120D903B90001D106 /* GroupDetailsTimeoutOptionsCellTests.swift in Sources */,
 				8759DB851E6B696C000A832D /* ImageMessageViewTests.swift in Sources */,
 				EF159F381FD59607006E0A9C /* TextFieldValidatorTests.swift in Sources */,
@@ -8287,7 +8292,6 @@
 				160C31211E4C7E770012E4BC /* UnknownMessageCellTests.swift in Sources */,
 				EF44C6A42215861F007C5CDC /* MockUserClient.swift in Sources */,
 				BF58ABED1D23F00000D5FF14 /* LocationSendViewControllerTests.swift in Sources */,
-				5EC25A2F219ACB4B00F6214E /* ConversationTextMessageCellTests.swift in Sources */,
 				EFD43FFA21B82C500050ABC5 /* ChangePhoneViewControllerTests.swift in Sources */,
 				16BEBC3F1D006FB6006FFD3E /* ThreeDotsLoadingViewTests.swift in Sources */,
 				EFEB2EE0220C7E5500519EDC /* ProfileSelfPictureViewControllerSnapshotTests.swift in Sources */,

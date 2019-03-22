@@ -154,11 +154,14 @@ extension NSAttributedString {
         
         // Highlight mentions using previously inserted text markers
         markdownText.highlight(mentions: mentionTextObjects)
-        
+
         // Remove trailing link if we show a link preview
-        let links = markdownText.links()
+        if let linkPreview = message.linkPreview {
+            markdownText.removeTrailingLink(for: linkPreview)
+        }
 
         // Do emoji substition (but not inside link or mentions)
+        let links = markdownText.links()
         let linkAttachmentRanges = links.compactMap { Range<Int>($0.range) }
         let mentionRanges = mentionTextObjects.compactMap{ $0.range(in: markdownText.string as String)}
         markdownText.replaceEmoticons(excluding: linkAttachmentRanges + mentionRanges)
