@@ -266,6 +266,8 @@ final class ConversationTableViewDataSource: NSObject {
     }
     
     func scroll(toIndex indexToShow: Int, completion: ((UIView)->())? = .none) {
+        guard tableView.numberOfSections > 0 else { return }
+        
         let rowIndex = tableView.numberOfCells(inSection: indexToShow) - 1
         let cellIndexPath = IndexPath(row: rowIndex, section: indexToShow)
         
