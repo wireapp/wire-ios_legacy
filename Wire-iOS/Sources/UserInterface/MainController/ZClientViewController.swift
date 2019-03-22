@@ -167,19 +167,6 @@ extension ZClientViewController {
 
     }
 
-    // MARK: - present a ProfileViewController
-
-    func openProfileScreen(for user: UserType) {
-        guard let user = user as? UserType & AccentColorProvider else { return }
-
-        let profileViewController = ProfileViewController(user: user, viewer: ZMUser.selfUser(), context: .profileViewer)
-        profileViewController.delegate = self
-
-        let navWrapperController: UINavigationController = profileViewController.wrapInNavigationController()
-        navWrapperController.modalPresentationStyle = .formSheet
-
-        present(navWrapperController, animated: true)
-    }
 
     /// Open the user client list screen
     ///
@@ -226,13 +213,6 @@ extension ZClientViewController {
         if let viewController = viewController {
             viewController.modalPresentationStyle = .formSheet
             present(viewController, animated: true)
-        }
-    }
-
-    @objc
-    func openProfileViewerIfNeeded() {
-        if let session = ZMUserSession.shared() {
-            SessionManager.shared?.urlHandler.executePendingAction(userSession: session)
         }
     }
 }
