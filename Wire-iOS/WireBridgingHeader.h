@@ -81,9 +81,6 @@
 #import "ContactsViewController+Internal.h"
 #import "ContactsViewController+Private.h"
 
-#import "MediaPreviewViewController.h"
-#import "MediaPreviewViewController+Internal.h"
-
 #import "ZClientViewController.h"
 #import "ZClientViewController+Internal.h"
 #import "ConversationInputBarViewController.h"
@@ -149,7 +146,7 @@
 #import "UIView+Zeta.h"
 #import "AVAsset+VideoConvert.h"
 #import "DeviceOrientationObserver.h"
-#import "LinkAttachment.h"
+#import "LinkAttachmentPresenter.h"
 #import "UIImagePickerController+GetImage.h"
 #import "MessagePresenter.h"
 #import "MessagePresenter+Internal.h"
@@ -188,7 +185,3 @@
 #import "AudioHeaderView+Internal.h"
 #import "AudioTrackView.h"
 #import "AudioTrackView+Internal.h"
-
-// Media
-#import "MediaPreviewData.h"
-#import "MediaThumbnail.h"
