@@ -243,6 +243,8 @@ extension MockFileMessageData: MockFileMessageDataType { }
     var causedSecurityLevelDegradation: Bool = false
     var needsReadConfirmation: Bool = false
     let objectIdentifier: String = UUID().uuidString
+    var linkAttachments: [LinkAttachment]? = nil
+    var needsLinkAttachmentsUpdate: Bool = false
     
     var isSent: Bool {
         switch deliveryState {
