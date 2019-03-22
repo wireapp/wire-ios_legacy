@@ -19,6 +19,18 @@
 import Foundation
 
 extension ZClientViewController: ShowContentDelegate {
+    public func showUserProfile(user: UserType) {
+        guard let user = user as? UserType & AccentColorProvider else { return }
+
+        let profileViewController = ProfileViewController(user: user, viewer: ZMUser.selfUser(), context: .profileViewer)
+        profileViewController.delegate = self
+
+        let navWrapperController: UINavigationController = profileViewController.wrapInNavigationController()
+        navWrapperController.modalPresentationStyle = .formSheet
+
+        present(navWrapperController, animated: true)
+    }
+
     
     public func showConversation(_ conversation: ZMConversation, at message: ZMConversationMessage?) {
         switch conversation.conversationType {

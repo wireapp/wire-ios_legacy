@@ -169,7 +169,8 @@
     
     self.userObserverToken = [UserChangeInfo addObserver:self forUser:[ZMUser selfUser] userSession:[ZMUserSession sharedSession]];
 
-    [self openProfileViewerIfNeeded];
+    // open deep link pending action
+//    [self openProfileViewerIfNeeded];
 }
 
 - (void)createBackgroundViewController

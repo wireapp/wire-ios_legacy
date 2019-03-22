@@ -400,6 +400,12 @@ extension AppRootViewController: AppStateControllerDelegate {
 // MARK: - ShowContentDelegate
 
 extension AppRootViewController: ShowContentDelegate {
+    func showUserProfile(user: UserType) {
+        whenShowContentDelegateIsAvailable { delegate in
+            delegate.showUserProfile(user: user)
+        }
+    }
+
 
     func showConversation(_ conversation: ZMConversation, at message: ZMConversationMessage?) {
         whenShowContentDelegateIsAvailable { delegate in
@@ -576,17 +582,18 @@ extension AppRootViewController: SessionManagerURLHandlerDelegate {
 
     func sessionManagerShouldExecuteURLAction(_ action: URLAction, callback: @escaping (Bool) -> Void) -> Bool {
         switch action {
-        case .openConversation(_, _):
-        ///TODO: open a conversation if id is valid
-            break
-        case .openUserProfile(let id, let user):
-            if let zClientViewController = ZClientViewController.shared(),
-               let user = user {
-                    zClientViewController.openProfileScreen(for: user)
-                    return true
-            } else {
-                return false
+        case .openConversation(_, let conversation):
+            if let conversation = conversation {
+                sessionManager?.showConversation(conversation)
             }
+
+            return true
+        case .openUserProfile(_, let user):
+            if let user = user {
+                sessionManager?.showUserProfile(user: user)
+            }
+
+            return true
 
         case .warnInvalidDeepLink(let error):
             switch error {
