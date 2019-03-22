@@ -21,7 +21,27 @@ import Foundation
 import PureLayout
 
 extension ZClientViewController {
-    
+
+    @objc(transitionToListAnimated:completion:)
+    func transitionToList(animated: Bool, completion: (() -> ())?) {
+        transitionToList(animated: animated,
+                         leftViewControllerRevealed: true,
+                         completion: completion)
+    }
+
+    func transitionToList(animated: Bool,
+                          leftViewControllerRevealed: Bool = true,
+                          completion: (() -> ())?) {
+        if let presentedViewController = splitViewController.rightViewController?.presentedViewController {
+            presentedViewController.dismiss(animated: animated) {
+                self.splitViewController.setLeftViewControllerRevealed(leftViewControllerRevealed, animated: animated, completion: completion)
+            }
+        } else {
+            splitViewController.setLeftViewControllerRevealed(leftViewControllerRevealed, animated: animated, completion: completion)
+        }
+    }
+
+
     func setTopOverlay(to viewController: UIViewController?, animated: Bool = true) {
         topOverlayViewController?.willMove(toParent: nil)
         
@@ -146,6 +166,7 @@ extension ZClientViewController {
         }
 
     }
+
 
     /// Open the user client list screen
     ///

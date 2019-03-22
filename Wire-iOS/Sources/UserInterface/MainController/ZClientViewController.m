@@ -332,17 +332,6 @@
     [self.splitViewController setLeftViewControllerRevealed:YES animated:YES completion:completion];
 }
 
-- (void)transitionToListAnimated:(BOOL)animated completion:(dispatch_block_t)completion
-{
-    if (self.splitViewController.rightViewController.presentedViewController != nil) {
-        [self.splitViewController.rightViewController.presentedViewController dismissViewControllerAnimated:animated completion:^{
-            [self.splitViewController setLeftViewControllerRevealed:YES animated:animated completion:completion];
-        }];
-    } else {
-        [self.splitViewController setLeftViewControllerRevealed:YES animated:animated completion:completion];
-    }
-}
-
 - (BOOL)pushContentViewController:(UIViewController *)viewController focusOnView:(BOOL)focus animated:(BOOL)animated completion:(dispatch_block_t)completion
 {
     self.conversationRootViewController = viewController;

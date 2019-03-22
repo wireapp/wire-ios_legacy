@@ -33,6 +33,7 @@ enum ProfileAction: Equatable {
     case removeFromGroup
     case connect
     case cancelConnectionRequest
+    case openSelfProfile
 
     /// The text of the button for this action.
     var buttonText: String {
@@ -47,6 +48,7 @@ enum ProfileAction: Equatable {
         case .removeFromGroup: return "profile.remove_dialog_button_remove".localized
         case .connect: return "profile.connection_request_dialog.button_connect".localized
         case .cancelConnectionRequest: return "meta.menu.cancel_connection_request".localized
+        case .openSelfProfile: return "meta.menu.open_self_profile".localized
         }
     }
 
@@ -62,6 +64,7 @@ enum ProfileAction: Equatable {
         case .removeFromGroup: return .minus
         case .connect: return .plus
         case .cancelConnectionRequest: return .undo
+        case .openSelfProfile: return .selfProfile
         }
     }
 
@@ -77,6 +80,7 @@ enum ProfileAction: Equatable {
         case .removeFromGroup: return false
         case .connect: return true
         case .cancelConnectionRequest: return true
+        case .openSelfProfile: return true
         }
     }
 
@@ -87,7 +91,7 @@ enum ProfileAction: Equatable {
  * of a conversation.
  */
 
-class ProfileActionsFactory: NSObject {
+final class ProfileActionsFactory: NSObject {
 
     // MARK: - Environmemt
 
@@ -100,6 +104,9 @@ class ProfileActionsFactory: NSObject {
     /// The conversation that the user wants to perform the actions in.
     let conversation: ZMConversation?
 
+    /// The context of the Profile VC
+    let context: ProfileViewControllerContext
+
     // MARK: - Initialization
 
     /**
@@ -110,10 +117,11 @@ class ProfileActionsFactory: NSObject {
      * perform the actions in.
      */
 
-    init(user: GenericUser, viewer: GenericUser, conversation: ZMConversation?) {
+    init(user: GenericUser, viewer: GenericUser, conversation: ZMConversation?, context: ProfileViewControllerContext) {
         self.user = user
         self.viewer = viewer
         self.conversation = conversation
+        self.context = context
     }
 
     // MARK: - Calculating the Actions
@@ -123,9 +131,14 @@ class ProfileActionsFactory: NSObject {
      */
 
     func makeActionsList() -> [ProfileAction] {
-        // Do nothing if the user is viewing their own profile or in case the user was deleted
-        if viewer.isSelfUser && user.isSelfUser || user.isAccountDeleted {
+        // Do nothing if the user was deleted
+        if user.isAccountDeleted {
             return []
+        }
+
+        // if the user is viewing their own profile, add the open self-profile screen button
+        if viewer.isSelfUser && user.isSelfUser {
+            return [.openSelfProfile]
         }
 
         // Do not show any action if the user is blocked
@@ -133,8 +146,14 @@ class ProfileActionsFactory: NSObject {
             return [.block(isBlocked: true)]
         }
 
-        // If there is no conversation, offer to connect to the user if possible
-        guard let conversation = self.conversation else {
+        var conversation: ZMConversation?
+
+        // If there is no conversation and open profile from a conversation, offer to connect to the user if possible
+        if let selfConversation = self.conversation {
+            conversation = selfConversation
+        } else if context == .profileViewer {
+            conversation = nil
+        } else {
             if !user.isConnected {
                 if user.isPendingApprovalByOtherUser {
                     return [.cancelConnectionRequest]
@@ -148,8 +167,8 @@ class ProfileActionsFactory: NSObject {
 
         var actions: [ProfileAction] = []
 
-        switch conversation.conversationType {
-        case .oneOnOne:
+        switch (context, conversation?.conversationType) {
+        case (_, .oneOnOne?):
 
             // All viewers except partners can start conversations
             if viewer.teamRole != .partner {
@@ -157,15 +176,18 @@ class ProfileActionsFactory: NSObject {
             }
 
             // Notifications, Archive, Delete Contents if available for every 1:1
-            let notificationAction: ProfileAction = viewer.isTeamMember ? .manageNotifications : .mute(isMuted: conversation.mutedMessageTypes != .none)
-            actions.append(contentsOf: [notificationAction, .archive, .deleteContents])
+            if let conversation = conversation {
+                let notificationAction: ProfileAction = viewer.isTeamMember ? .manageNotifications : .mute(isMuted: conversation.mutedMessageTypes != .none)
+                actions.append(contentsOf: [notificationAction, .archive, .deleteContents])
+            }
 
             // If the viewer is not on the same team as the other user, allow blocking
             if !viewer.canAccessCompanyInformation(of: user) && !user.isWirelessUser {
                 actions.append(.block(isBlocked: false))
             }
 
-        case .group:
+        case (.profileViewer, .none),
+             (_, .group?):
             // Do nothing if the viewer is a wireless user because they can't have 1:1's
             if viewer.isWirelessUser {
                 break
@@ -183,7 +205,8 @@ class ProfileActionsFactory: NSObject {
             }
 
             // Only non-guests and non-partners are allowed to remove
-            if !viewer.isGuest(in: conversation) && viewer.teamRole != .partner {
+            if let conversation = conversation,
+                !viewer.isGuest(in: conversation) && viewer.teamRole != .partner {
                 actions.append(.removeFromGroup)
             }
 

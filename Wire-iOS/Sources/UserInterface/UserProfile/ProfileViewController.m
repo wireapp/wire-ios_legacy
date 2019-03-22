@@ -43,12 +43,6 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
 @interface ProfileViewController (ProfileViewControllerDelegate) <ProfileViewControllerDelegate>
 @end
 
-@interface ProfileViewController (DevicesListDelegate) <ProfileDevicesViewControllerDelegate>
-@end
-
-@interface ProfileViewController (TabBarControllerDelegate) <TabBarControllerDelegate>
-@end
-
 @interface ProfileViewController (ConversationCreationDelegate) <ConversationCreationControllerDelegate>
 @end
 
@@ -150,29 +144,6 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
     if (self.navigationController.viewControllers.count == 1) {
         self.navigationItem.rightBarButtonItem = [self.navigationController closeItem];
     }
-}
-
-- (void)setupTabsController
-{
-    NSMutableArray *viewControllers = [NSMutableArray array];
-    
-    if (self.context != ProfileViewControllerContextDeviceList) {
-        ProfileDetailsViewController *profileDetailsViewController = [self setupProfileDetailsViewController];
-        [viewControllers addObject:profileDetailsViewController];
-    }
-    
-    if (self.fullUser.isConnected || self.fullUser.isTeamMember || self.fullUser.isWirelessUser) {
-        ProfileDevicesViewController *profileDevicesViewController = [[ProfileDevicesViewController alloc] initWithUser:self.fullUser];
-        profileDevicesViewController.title = NSLocalizedString(@"profile.devices.title", nil);
-        profileDevicesViewController.delegate = self;
-        [viewControllers addObject:profileDevicesViewController];
-    }
-
-    self.tabsController = [[TabBarController alloc] initWithViewControllers:viewControllers];
-    self.tabsController.delegate = self;
-    [self addChildViewController:self.tabsController];
-    [self.view addSubview:self.tabsController.view];
-    [self.tabsController didMoveToParentViewController:self];
 }
 
 #pragma mark - Header
@@ -337,12 +308,3 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
 
 @end
 
-
-@implementation ProfileViewController (TabBarControllerDelegate)
-
-- (void)tabBarController:(TabBarController *)controller tabBarDidSelectIndex:(NSInteger)index
-{
-    [self updateShowVerifiedShield];
-}
-
-@end
