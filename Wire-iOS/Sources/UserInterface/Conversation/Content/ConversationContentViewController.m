@@ -319,7 +319,7 @@
 
 - (BOOL)isScrolledToBottom
 {
-    return self.dataSource.hasNewerMessagesToLoad && self.tableView.contentOffset.y + self.tableView.correctedContentInset.bottom <= 0;
+    return !self.dataSource.hasNewerMessagesToLoad && self.tableView.contentOffset.y + self.tableView.correctedContentInset.bottom <= 0;
 }
 #pragma mark - Actions
 
