@@ -59,7 +59,6 @@ import WireCommonComponents
         playButton.setIconColor(UIColor.white, for: UIControl.State.normal)
         addSubview(playButton)
 
-        providerImageView.alpha = 0.4
         addSubview(providerImageView)
     }
 
@@ -87,11 +86,11 @@ import WireCommonComponents
             // titleLabel
             titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 12),
             titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 12),
+            titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -12),
 
             // providerImageView
-            providerImageView.centerYAnchor.constraint(equalTo: titleLabel.centerYAnchor),
-            providerImageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -12),
-            providerImageView.leadingAnchor.constraint(equalTo: titleLabel.trailingAnchor, constant: 8),
+            providerImageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -12),
+            providerImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 12),
 
             // playButton
             playButton.centerXAnchor.constraint(equalTo: centerXAnchor),

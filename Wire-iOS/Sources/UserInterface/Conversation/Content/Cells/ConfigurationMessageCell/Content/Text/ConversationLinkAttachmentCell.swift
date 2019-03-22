@@ -79,9 +79,11 @@ class ConversationLinkAttachmentCell: UIView, ConversationMessageCell {
         switch object.attachment.type {
         case .youTubeVideo:
             widthConstraint?.constant = 356
+            attachmentView.providerImageView.image = WireStyleKit.imageOfYoutube(color: .white)
 
         case .soundCloudPlaylist, .soundCloudTrack:
             widthConstraint?.constant = 200
+            attachmentView.providerImageView.image = UIImage(named: "soundcloud")
         }
     }
 
