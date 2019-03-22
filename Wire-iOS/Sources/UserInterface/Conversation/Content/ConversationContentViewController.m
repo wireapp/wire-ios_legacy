@@ -18,7 +18,6 @@
 
 
 #import "ConversationContentViewController+Private.h"
-#import "ConversationContentViewController+Scrolling.h"
 #import "ConversationContentViewController+PinchZoom.h"
 
 #import "ConversationViewController.h"
@@ -240,7 +239,7 @@
         [self updateTableViewHeaderView];
 
         if (self.messageVisibleOnLoad != nil) {
-            [self scrollToMessage:self.messageVisibleOnLoad animated:NO];
+            [self scrollToMessage:self.messageVisibleOnLoad completion:nil];
         }
     }
 }
@@ -263,7 +262,7 @@
 
 - (void)updateTableViewHeaderView
 {
-    if (!self.dataSource.hasFetchedAllMessages) {
+    if (self.dataSource.hasOlderMessagesToLoad) {
         // Don't display the conversation header if the message window doesn't include the first message.
         return;
     }
@@ -320,7 +319,7 @@
 
 - (BOOL)isScrolledToBottom
 {
-    return self.tableView.contentOffset.y + self.tableView.correctedContentInset.bottom <= 0;
+    return self.dataSource.hasNewerMessagesToLoad && self.tableView.contentOffset.y + self.tableView.correctedContentInset.bottom <= 0;
 }
 #pragma mark - Actions
 
