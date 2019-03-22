@@ -176,6 +176,11 @@ extension ConversationTextMessageCellDescription {
 
         var cells: [AnyConversationMessageCellDescription] = []
 
+        // Refetch the link attachments if needed
+        if Settings.shared()?.disableLinkPreviews != true {
+            message.refetchLinkAttachmentsIfNeeded()
+        }
+
         // Text parsing
 
         let attachments = message.linkAttachments ?? []
