@@ -25,8 +25,6 @@ import WireCommonComponents
     let titleLabel = UILabel()
     let providerImageView = UIImageView()
     let previewImageView = ImageResourceView()
-    let containerView = UIView()
-    let contentView = UIView()
     let overlayView = UIView()
 
     // MARK: - Initialization
@@ -43,34 +41,29 @@ import WireCommonComponents
 
     private func setupSubviews() {
         shape = .rounded(radius: 4)
-        addSubview(contentView)
-
-        containerView.clipsToBounds = true
-        contentView.addSubview(containerView)
+        layer.masksToBounds = true
 
         previewImageView.contentMode = .scaleAspectFill
         previewImageView.clipsToBounds = true
-        containerView.addSubview(previewImageView)
+        addSubview(previewImageView)
 
         overlayView.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.48)
-        containerView.addSubview(overlayView)
+        addSubview(overlayView)
 
         titleLabel.font = UIFont.normalLightFont
         titleLabel.textColor = UIColor.white
         titleLabel.numberOfLines = 2
-        containerView.addSubview(titleLabel)
+        addSubview(titleLabel)
 
         playButton.setIcon(.play, with: .large, for: .normal)
         playButton.setIconColor(UIColor.white, for: UIControl.State.normal)
-        containerView.addSubview(playButton)
+        addSubview(playButton)
 
         providerImageView.alpha = 0.4
-        containerView.addSubview(providerImageView)
+        addSubview(providerImageView)
     }
 
     private func setupLayout() {
-        contentView.translatesAutoresizingMaskIntoConstraints = false
-        containerView.translatesAutoresizingMaskIntoConstraints = false
         previewImageView.translatesAutoresizingMaskIntoConstraints = false
         overlayView.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -79,41 +72,30 @@ import WireCommonComponents
 
         NSLayoutConstraint.activate([
             // contentView
-            contentView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            contentView.topAnchor.constraint(equalTo: topAnchor),
-            contentView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            contentView.bottomAnchor.constraint(equalTo: bottomAnchor),
-
-            // containerView
-            containerView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
-            contentView.topAnchor.constraint(equalTo: containerView.topAnchor),
-            contentView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
-            contentView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
-
             // previewImageView
-            previewImageView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
-            previewImageView.topAnchor.constraint(equalTo: containerView.topAnchor),
-            previewImageView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
-            previewImageView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
+            previewImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            previewImageView.topAnchor.constraint(equalTo: topAnchor),
+            previewImageView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            previewImageView.bottomAnchor.constraint(equalTo: bottomAnchor),
 
             // overlayView
-            overlayView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
-            overlayView.topAnchor.constraint(equalTo: containerView.topAnchor),
-            overlayView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
-            overlayView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
+            overlayView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            overlayView.topAnchor.constraint(equalTo: topAnchor),
+            overlayView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            overlayView.bottomAnchor.constraint(equalTo: bottomAnchor),
 
             // titleLabel
-            titleLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 12),
-            titleLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 12),
+            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 12),
+            titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 12),
 
             // providerImageView
             providerImageView.centerYAnchor.constraint(equalTo: titleLabel.centerYAnchor),
-            providerImageView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -12),
+            providerImageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -12),
             providerImageView.leadingAnchor.constraint(equalTo: titleLabel.trailingAnchor, constant: 8),
 
             // playButton
-            playButton.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
-            playButton.centerYAnchor.constraint(equalTo: playButton.centerYAnchor)
+            playButton.centerXAnchor.constraint(equalTo: centerXAnchor),
+            playButton.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
     }
 

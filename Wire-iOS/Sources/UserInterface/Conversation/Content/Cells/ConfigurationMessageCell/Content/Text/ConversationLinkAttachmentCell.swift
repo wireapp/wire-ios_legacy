@@ -57,13 +57,14 @@ class ConversationLinkAttachmentCell: UIView, ConversationMessageCell {
         attachmentView.translatesAutoresizingMaskIntoConstraints = false
 
         let widthConstraint = attachmentView.widthAnchor.constraint(equalToConstant: 0)
+        widthConstraint.priority = .defaultHigh
 
         NSLayoutConstraint.activate([
             attachmentView.leadingAnchor.constraint(equalTo: leadingAnchor),
             attachmentView.topAnchor.constraint(equalTo: topAnchor),
             attachmentView.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor),
             attachmentView.bottomAnchor.constraint(equalTo: bottomAnchor),
-            attachmentView.heightAnchor.constraint(equalToConstant: 160),
+            attachmentView.heightAnchor.constraint(equalToConstant: 200),
             widthConstraint
         ])
     }
@@ -77,10 +78,10 @@ class ConversationLinkAttachmentCell: UIView, ConversationMessageCell {
 
         switch object.attachment.type {
         case .youTubeVideo:
-            widthConstraint?.constant = 60
+            widthConstraint?.constant = 356
 
         case .soundCloudPlaylist, .soundCloudTrack:
-            widthConstraint?.constant = 60
+            widthConstraint?.constant = 200
         }
     }
 
