@@ -26,5 +26,8 @@ extension AppDelegate {
         return .unreachable == NetworkStatus.shared().reachability()
     }
 
+    var sessionManager: SessionManager? {
+        return rootViewController.sessionManager
+    }
 }
 

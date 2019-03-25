@@ -19,7 +19,12 @@
 
 import Foundation
 
-extension UserClient {
+//TODO: merge to UserClientType or stay in UI project? It is depends on localized string resource
+@objc protocol UserClientTypeAttributedString {
+    @objc func attributedRemoteIdentifier(_ attributes: [NSAttributedString.Key : AnyObject], boldAttributes: [NSAttributedString.Key : AnyObject], uppercase: Bool) -> NSAttributedString
+}
+
+extension UserClient: UserClientTypeAttributedString {
     
     @objc public func attributedRemoteIdentifier(_ attributes: [NSAttributedString.Key : AnyObject], boldAttributes: [NSAttributedString.Key : AnyObject], uppercase: Bool = false) -> NSAttributedString {
         let identifierPrefixString = NSLocalizedString("registration.devices.id", comment: "") + " "

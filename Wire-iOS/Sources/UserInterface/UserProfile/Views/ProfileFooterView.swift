@@ -32,7 +32,7 @@ protocol ProfileFooterViewDelegate: class {
  * The footer of to use in the profile details screen.
  */
 
-class ProfileFooterView: ConversationDetailFooterView {
+final class ProfileFooterView: ConversationDetailFooterView {
 
     /// The object that will perform the actions on demand.
     weak var delegate: ProfileFooterViewDelegate?

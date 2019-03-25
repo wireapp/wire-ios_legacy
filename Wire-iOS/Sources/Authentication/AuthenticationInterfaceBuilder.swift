@@ -93,7 +93,7 @@ class AuthenticationInterfaceBuilder {
             let viewController = makeCredentialsViewController(for: .login(credentialsFlowType, prefill))
 
             // Add the item to start company login if needed.
-            if featureProvider.allowCompanyLogin {
+            if featureProvider.allowDirectCompanyLogin {
                 viewController.setRightItem("signin.company_idp.button.title".localized, withAction: .startCompanyLogin(code: nil), accessibilityID: "companyLoginButton")
             }
 

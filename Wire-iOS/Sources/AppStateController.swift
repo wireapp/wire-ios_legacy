@@ -28,7 +28,7 @@ protocol AppStateControllerDelegate : class {
     
 }
 
-class AppStateController : NSObject {
+final class AppStateController : NSObject {
 
     /**
      * The possible states of authentication.

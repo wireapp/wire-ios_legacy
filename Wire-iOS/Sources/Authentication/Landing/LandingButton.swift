@@ -16,115 +16,81 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
-import Cartography
+import UIKit
 
-class LandingButton: ButtonWithLargerHitArea {
+class LandingButton: UIView {
     var priorState: UIControl.State?
 
-    public var iconButton: IconButton!
-    public var subtitleLabel: UILabel!
+    let contentStack = UIStackView()
+    let iconButton = IconButton(style: .circular, variant: .dark)
+    let subtitleLabel = UILabel()
 
-    public init() {
-        super.init(frame: CGRect.zero)
-        iconButton = IconButton(style: .circular, variant: .dark)
-        iconButton.isUserInteractionEnabled = false
-        addSubview(iconButton)
-
-        subtitleLabel = UILabel()
-        addSubview(subtitleLabel)
-    }
-
-    convenience init(title: NSAttributedString, icon: ZetaIconType, iconBackgroundColor: UIColor) {
-        self.init()
-
-        subtitleLabel.numberOfLines = 2
-        subtitleLabel.text = nil
-        subtitleLabel.attributedText = title
-        // smaller icon for iPhone4s screen size
-        self.iconButton.setIcon(icon, with: UIScreen.main.bounds.size.height <= 480 ? ZetaIconSize.small : ZetaIconSize.registrationButton, for: .normal)
-        self.iconButton.setBackgroundImageColor(iconBackgroundColor, for: .normal)
-        self.iconButton.setIconColor(.white, for: .normal)
-        self.iconButton.setIconColor(.white, for: .selected)
-        self.iconButton.setIconColor(.white, for: .highlighted)
-
-        self.isAccessibilityElement = true
-        self.accessibilityLabel = title.string
-        self.setup()
-    }
-
-    private func createConstraints() {
-        constrain(self, iconButton, subtitleLabel) { selfView, iconButton, subtitleLabel in
-            iconButton.width == iconButton.height
-
-            // smaller button for iPhone4s screen size
-            iconButton.width == 72 ~ 750.0
-            iconButton.top == selfView.top
-            iconButton.centerX == selfView.centerX
-
-            subtitleLabel.bottom == selfView.bottom
-            subtitleLabel.centerX == selfView.centerX
-
-            subtitleLabel.top == iconButton.bottom + 16
-
-            selfView.width >= subtitleLabel.width
-            selfView.width >= iconButton.width
-        }
-
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        configureSubviews()
+        createConstraints()
     }
 
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private func setup() {
-        self.iconButton.circular = true
-
-        createConstraints()
+    convenience init(title: NSAttributedString, icon: ZetaIconType, iconBackgroundColor: UIColor) {
+        self.init(frame: .zero)
+        accessibilityLabel = title.string
+        subtitleLabel.attributedText = title
+        iconButton.setIcon(icon, with: .registrationButton, for: .normal)
+        iconButton.setBackgroundImageColor(iconBackgroundColor, for: .normal)
     }
 
-    override open func didMoveToWindow() {
-        super.didMoveToWindow()
-        updateForNewState()
+    private func configureSubviews() {
+        isAccessibilityElement = true
+        accessibilityTraits.insert(.button)
+
+        // contentStack
+        contentStack.axis = .vertical
+        contentStack.spacing = 16
+        contentStack.alignment = .center
+        addSubview(contentStack)
+
+        // iconButton
+        iconButton.setIconColor(.white, for: .normal)
+        iconButton.setIconColor(.white, for: .selected)
+        iconButton.setIconColor(.white, for: .highlighted)
+        iconButton.setContentCompressionResistancePriority(.required, for: .vertical)
+        contentStack.addArrangedSubview(iconButton)
+
+        // subtitleLabel
+        subtitleLabel.numberOfLines = 0
+        subtitleLabel.setContentCompressionResistancePriority(.required, for: .vertical)
+        contentStack.addArrangedSubview(subtitleLabel)
     }
 
-    // MARK: - Observing state
-    override open var isHighlighted: Bool {
-        didSet {
-            priorState = state
-            super.isHighlighted = isHighlighted
-            iconButton.isHighlighted = isHighlighted
-            updateForNewStateIfNeeded()
-        }
+    private func createConstraints() {
+        contentStack.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            // iconButton
+            iconButton.widthAnchor.constraint(equalToConstant: 72),
+            iconButton.heightAnchor.constraint(equalToConstant: 72),
+
+            // subtitleLabel
+            contentStack.leadingAnchor.constraint(equalTo: leadingAnchor),
+            contentStack.topAnchor.constraint(equalTo: topAnchor),
+            contentStack.trailingAnchor.constraint(equalTo: trailingAnchor),
+            contentStack.bottomAnchor.constraint(equalTo: bottomAnchor)
+        ])
     }
 
-    override open var isSelected: Bool {
-        didSet {
-            priorState = state
-            super.isSelected = isSelected
-            iconButton.isSelected = isSelected
-            updateForNewStateIfNeeded()
-        }
+    // MARK: - Event Forwarding
+
+    override func accessibilityActivate() -> Bool {
+        iconButton.sendActions(for: .touchUpInside)
+        return true
     }
 
-    override open var isEnabled: Bool {
-        didSet {
-            priorState = state
-            super.isEnabled = isEnabled
-            iconButton.isEnabled  = isEnabled
-            updateForNewStateIfNeeded()
-        }
-    }
-
-    func updateForNewStateIfNeeded() {
-        if state != priorState {
-            priorState = state
-            updateForNewState()
-        }
-    }
-
-    func updateForNewState() {
-        
+    func addTapTarget(_ target: Any, action: Selector) {
+        iconButton.addTarget(target, action: action, for: .touchUpInside)
     }
 
 }

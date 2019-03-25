@@ -22,7 +22,7 @@ import UIKit
  * A view controller that displays the details for a user.
  */
 
-class ProfileDetailsViewController: UIViewController, Themeable {
+final class ProfileDetailsViewController: UIViewController, Themeable {
 
     /// The user whose profile is displayed.
     let user: GenericUser

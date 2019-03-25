@@ -33,18 +33,16 @@ final class LandingViewControllerTests: XCTestCase {
     
     var sut: LandingViewController!
     var mockParentViewControler: UIViewController! = UIViewController()
-    var mockDevice: MockDevice! = MockDevice()
 
     override func setUp() {
         super.setUp()
-        sut = LandingViewController(device: mockDevice)
+        sut = LandingViewController()
         mockParentViewControler.addChild(sut)
     }
     
     override func tearDown() {
         sut = nil
         mockParentViewControler = nil
-        mockDevice = nil
         super.tearDown()
     }
     
@@ -52,7 +50,6 @@ final class LandingViewControllerTests: XCTestCase {
         // GIVEN
         sut.loadViewIfNeeded()
         
-        mockDevice.userInterfaceIdiom = .pad
         var traitCollection = UITraitCollection(horizontalSizeClass: .regular)
         mockParentViewControler.setOverrideTraitCollection(traitCollection, forChild: sut)
         sut.traitCollectionDidChange(nil)

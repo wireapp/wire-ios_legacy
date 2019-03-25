@@ -17,8 +17,9 @@
 //
 
 import Foundation
+@testable import Wire
 
-extension MockUserClient {
+extension MockUserClient: UserClientTypeAttributedString {
 
     @objc public func attributedRemoteIdentifier(_ attributes: [NSAttributedString.Key : AnyObject], boldAttributes: [NSAttributedString.Key : AnyObject], uppercase: Bool = false) -> NSAttributedString {
         let displayIdentifier = "0011223344556677"

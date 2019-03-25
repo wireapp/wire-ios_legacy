@@ -19,7 +19,6 @@
 
 
 #import "MediaBarViewController.h"
-#import "MediaBar.h"
 #import "MediaPlaybackManager.h"
 #import "Wire-Swift.h"
 

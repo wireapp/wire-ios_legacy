@@ -25,8 +25,6 @@
 #import "AccentColorProvider.h"
 
 
-@import PureLayout;
-
 #import "Constants.h"
 #import "UIColor+WAZExtensions.h"
 #import "Wire-Swift.h"
@@ -45,12 +43,6 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
 @interface ProfileViewController (ProfileViewControllerDelegate) <ProfileViewControllerDelegate>
 @end
 
-@interface ProfileViewController (DevicesListDelegate) <ProfileDevicesViewControllerDelegate>
-@end
-
-@interface ProfileViewController (TabBarControllerDelegate) <TabBarControllerDelegate>
-@end
-
 @interface ProfileViewController (ConversationCreationDelegate) <ConversationCreationControllerDelegate>
 @end
 
@@ -58,9 +50,6 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
 @interface ProfileViewController () <ZMUserObserver>
 
 @property (nonatomic) id observerToken;
-@property (nonatomic) UserNameDetailView *usernameDetailsView;
-@property (nonatomic) ProfileTitleView *profileTitleView;
-@property (nonatomic) TabBarController *tabsController;
 
 @end
 
@@ -157,48 +146,6 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
     }
 }
 
-- (void)setupTabsController
-{
-    NSMutableArray *viewControllers = [NSMutableArray array];
-    
-    if (self.context != ProfileViewControllerContextDeviceList) {
-        ProfileDetailsViewController *profileDetailsViewController = [self setupProfileDetailsViewController];
-        [viewControllers addObject:profileDetailsViewController];
-    }
-    
-    if (self.fullUser.isConnected || self.fullUser.isTeamMember || self.fullUser.isWirelessUser) {
-        ProfileDevicesViewController *profileDevicesViewController = [[ProfileDevicesViewController alloc] initWithUser:self.fullUser];
-        profileDevicesViewController.title = NSLocalizedString(@"profile.devices.title", nil);
-        profileDevicesViewController.delegate = self;
-        [viewControllers addObject:profileDevicesViewController];
-    }
-
-    self.tabsController = [[TabBarController alloc] initWithViewControllers:viewControllers];
-    self.tabsController.view.translatesAutoresizingMaskIntoConstraints = NO;
-    self.tabsController.delegate = self;
-    [self addChildViewController:self.tabsController];
-    [self.view addSubview:self.tabsController.view];
-    [self.tabsController didMoveToParentViewController:self];
-}
-
-- (void)setupConstraints
-{
-    [self.usernameDetailsView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeBottom];
-    [self.tabsController.view autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.usernameDetailsView];
-    [self.tabsController.view autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeTop];
-    [self.profileFooterView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeTop];
-
-    self.incomingRequestFooter.translatesAutoresizingMaskIntoConstraints = NO;
-
-    [NSLayoutConstraint activateConstraints:
-  @[
-    [self.incomingRequestFooter.bottomAnchor constraintEqualToAnchor:self.profileFooterView.topAnchor],
-    [self.incomingRequestFooter.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor],
-    [self.incomingRequestFooter.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor]
-    ]
-     ];
-}
-
 #pragma mark - Header
 
 - (void)setupHeader
@@ -207,7 +154,6 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
     
     UserNameDetailViewModel *viewModel = [[UserNameDetailViewModel alloc] initWithUser:user fallbackName:user.displayName addressBookName:BareUserToUser(user).addressBookEntry.cachedName];
     UserNameDetailView *usernameDetailsView = [[UserNameDetailView alloc] init];
-    usernameDetailsView.translatesAutoresizingMaskIntoConstraints = NO;
     [usernameDetailsView configureWith:viewModel];
     [self.view addSubview:usernameDetailsView];
     self.usernameDetailsView = usernameDetailsView;
@@ -362,12 +308,3 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
 
 @end
 
-
-@implementation ProfileViewController (TabBarControllerDelegate)
-
-- (void)tabBarController:(TabBarController *)controller tabBarDidSelectIndex:(NSInteger)index
-{
-    [self updateShowVerifiedShield];
-}
-
-@end

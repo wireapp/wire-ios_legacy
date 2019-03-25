@@ -19,7 +19,7 @@
 import UIKit
 import Cartography
 
-@objc protocol TabBarControllerDelegate: class {
+protocol TabBarControllerDelegate: class {
     func tabBarController(_ controller: TabBarController, tabBarDidSelectIndex: Int)
 }
 

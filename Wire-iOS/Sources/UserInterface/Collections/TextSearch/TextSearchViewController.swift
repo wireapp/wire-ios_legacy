@@ -21,7 +21,7 @@ import WireSyncEngine
 import WireDataModel
 import Cartography
 
-@objcMembers final public class TextSearchViewController: NSObject {
+public final class TextSearchViewController: NSObject {
     public var resultsView: TextSearchResultsView!
     public var searchBar: TextSearchInputView!
     
@@ -93,7 +93,7 @@ import Cartography
     fileprivate func reloadResults() {
         let query = searchQuery ?? ""
         let noResults = results.isEmpty
-        let validQuery = query.count >= 2
+        let validQuery = TextSearchQuery.isValid(query: query)
 
         // We hide the results when we either have none or the query is too short
         resultsView.tableView.isHidden = noResults || !validQuery
@@ -132,17 +132,17 @@ extension TextSearchViewController: TextSearchInputViewDelegate {
         searchStartedDate = nil
         hideLoadingSpinner()
 
-        if query.count < 2 {
-            // We reset the results to avoid showing the previous 
+        if TextSearchQuery.isValid(query: query) {
+            scheduleSearch()
+        } else {
+            // We reset the results to avoid showing the previous
             // results for a short period for subsequential searches
             results = []
-        } else {
-            scheduleSearch()
         }
     }
 
     public func searchViewShouldReturn(_ searchView: TextSearchInputView) -> Bool {
-        return searchView.query.count >= 2
+        return TextSearchQuery.isValid(query: searchView.query)
     }
 }
 

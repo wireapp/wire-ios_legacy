@@ -19,7 +19,7 @@
 import XCTest
 @testable import Wire
 
-class ProfileViewControllerTests: ZMSnapshotTestCase {
+final class ProfileViewControllerTests: ZMSnapshotTestCase {
 
     var sut: ProfileViewController!
     var mockUser: MockUser!
@@ -45,6 +45,26 @@ class ProfileViewControllerTests: ZMSnapshotTestCase {
         teamIdentifier = nil
 
         super.tearDown()
+    }
+
+    func testForContextProfileViewer() {
+        selfUser.teamRole = .member
+
+        sut = ProfileViewController(user: mockUser,
+                                    viewer: selfUser,
+                                    context: .profileViewer)
+
+        verify(view: sut.view)
+    }
+
+    func testForContextProfileViewerForSelfUser() {
+        selfUser.teamRole = .member
+
+        sut = ProfileViewController(user: selfUser,
+                                    viewer: selfUser,
+                                    context: .profileViewer)
+
+        verify(view: sut.view)
     }
 
     func testForContextOneToOneConversation() {

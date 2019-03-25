@@ -25,5 +25,6 @@
 @property (nonatomic, nullable) MediaPlayerController *mediaPlayerController;
 @property (nonatomic, nullable) MediaPlaybackManager *mediaPlaybackManager;
 @property (nonatomic, nullable) id<NSObject> videoPlayerObserver;
+@property (nonatomic, nullable) id fileAvailabilityObserver;
 
 @end

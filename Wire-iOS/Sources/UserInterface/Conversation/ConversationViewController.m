@@ -25,7 +25,6 @@
 #import "Settings.h"
 
 #import "AppDelegate.h"
-#import "NotificationWindowRootViewController.h"
 
 // helpers
 #import "Analytics.h"
@@ -37,12 +36,10 @@
 
 // ui
 #import "ConversationContentViewController.h"
-#import "ConversationContentViewController+Scrolling.h"
 #import "TextView.h"
 
 #import "ZClientViewController.h"
 #import "ConversationViewController+ParticipantsPopover.h"
-#import "MediaBar.h"
 #import "MediaPlayer.h"
 #import "MediaBarViewController.h"
 #import "InvisibleInputAccessoryView.h"
@@ -186,7 +183,10 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 - (void)createContentViewController
 {
-    self.contentViewController = [[ConversationContentViewController alloc] initWithConversation:self.conversation message:self.visibleMessage session: [ZMUserSession sharedSession]];
+    self.contentViewController = [[ConversationContentViewController alloc] initWithConversation:self.conversation
+                                                                                         message:self.visibleMessage
+                                                                            mediaPlaybackManager:self.zClientViewController.mediaPlaybackManager
+                                                                                         session: [ZMUserSession sharedSession]];
     self.contentViewController.delegate = self;
     self.contentViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
     self.contentViewController.bottomMargin = 16;
@@ -335,7 +335,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 - (void)scrollToMessage:(id<ZMConversationMessage>)message
 {
-    [self.contentViewController scrollToMessage:message animated:YES];
+    [self.contentViewController scrollToMessage:message completion:nil];
 }
 
 #pragma mark - Device orientation
@@ -483,7 +483,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     id<ZMConversationMessage>mediaPlayingMessage = mediaPlaybackManager.activeMediaPlayer.sourceMessage;
 
     if ([self.conversation isEqual:mediaPlayingMessage.conversation]) {
-        [self.contentViewController scrollToMessage:mediaPlayingMessage animated:YES];
+        [self.contentViewController scrollToMessage:mediaPlayingMessage completion:nil];
     }
 }
 
@@ -716,14 +716,16 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 - (void)conversationInputBarViewControllerDidComposeText:(NSString *)text mentions:(NSArray<Mention *> *)mentions replyingToMessage:(nullable id<ZMConversationMessage>)message
 {
-    [self.contentViewController scrollToBottomAnimated:NO];
+    [self.contentViewController scrollToBottom];
     [self.inputBarController.sendController sendTextMessage:text mentions:mentions replyingToMessage:message];
 }
 
 - (BOOL)conversationInputBarViewControllerShouldBeginEditing:(ConversationInputBarViewController *)controller
 {
     if (! self.contentViewController.isScrolledToBottom && !controller.isEditingMessage && !controller.isReplyingToMessage) {
-        [self.contentViewController scrollToBottomAnimated:NO];
+        self.collectionController = nil;
+        self.contentViewController.searchQueries = @[];
+        [self.contentViewController scrollToBottom];
     }
     
     [self.guestsBarController setState:GuestBarStateHidden animated:YES];
@@ -757,7 +759,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 - (void)conversationInputBarViewControllerWantsToShowMessage:(id<ZMConversationMessage>)message
 {
-    [self.contentViewController scrollTo:message completion:^(UIView * cell) {
+    [self.contentViewController scrollToMessage:message completion:^(UIView * cell) {
         [self.contentViewController highlightMessage:message];
     }];
 }
