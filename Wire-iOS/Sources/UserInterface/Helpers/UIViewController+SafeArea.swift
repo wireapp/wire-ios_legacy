@@ -16,8 +16,7 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
-import Foundation
+import UIKit
 
 extension UIViewController {
 
@@ -36,6 +35,15 @@ extension UIViewController {
         }
         else {
             return self.topLayoutGuide.bottomAnchor
+        }
+    }
+
+    @objc var safeCenterYAnchor: NSLayoutYAxisAnchor {
+        if #available(iOS 11, *) {
+            return view.safeAreaLayoutGuide.centerYAnchor
+        }
+        else {
+            return view.centerYAnchor
         }
     }
 
@@ -110,6 +118,5 @@ extension UIView {
             return centerXAnchor
         }
     }
-
 
 }

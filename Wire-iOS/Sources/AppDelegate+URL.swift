@@ -20,9 +20,10 @@ import Foundation
 
 extension AppDelegate {
     @objc
-    func open(url: URL,
-              options: [UIApplication.OpenURLOptionsKey : AnyObject]) -> Bool {
-        return sessionManager?.urlHandler.openURL(url, options: options) ?? false
+    func open(url: URL, options: [UIApplication.OpenURLOptionsKey : AnyObject]) -> Bool {
+        guard let urlHandler = sessionManager?.urlHandler else { return false }
+
+        return urlHandler.openURL(url, options: options)
     }
 
     @objc

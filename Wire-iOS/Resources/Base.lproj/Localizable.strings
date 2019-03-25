@@ -1120,9 +1120,9 @@
 
 "landing.header" = "Wire. Add your Account.";
 "landing.create_account.title" = "Personal";
-"landing.create_account.subtitle" = "create an account";
+"landing.create_account.subtitle" = "Chat privately with groups of friends and family";
 "landing.create_team.title" = "Pro";
-"landing.create_team.subtitle" = "create a team";
+"landing.create_team.subtitle" = "Secure collaboration for businesses, institutions and professional organizations";
 "landing.login.hints" = "Already have an account?";
 "landing.login.button.title" = "Log in";
 

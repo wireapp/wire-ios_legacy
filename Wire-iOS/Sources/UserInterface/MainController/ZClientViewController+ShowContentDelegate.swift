@@ -28,7 +28,9 @@ extension ZClientViewController: ShowContentDelegate {
         let navWrapperController: UINavigationController = profileViewController.wrapInNavigationController()
         navWrapperController.modalPresentationStyle = .formSheet
 
-        present(navWrapperController, animated: true)
+        dismissAllModalControllers(callback: { [weak self] in
+            self?.present(navWrapperController, animated: true)
+        })
     }
 
     
