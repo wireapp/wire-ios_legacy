@@ -115,9 +115,8 @@ final class ProfileDetailsContentController: NSObject, UITableViewDataSource, UI
     
     /// Updates the content for the current configuration.
     private func updateContent() {
-        switch conversation?.conversationType ?? .oneOnOne {
-        case (.group?, _),
-             (_, .profileViewer):
+        switch conversation?.conversationType ?? .group {
+        case .group:
             let richProfile = user.richProfile
             if viewerCanAccessRichProfile, !richProfile.isEmpty {
                 // If there is rich profile data and the user is allowed to see it, display it.
@@ -127,7 +126,7 @@ final class ProfileDetailsContentController: NSObject, UITableViewDataSource, UI
                 contents = []
             }
 
-        case (.oneOnOne?, _):
+        case .oneOnOne:
             let readReceiptsEnabled = viewer.readReceiptsEnabled
             let richProfile = user.richProfile
             if viewerCanAccessRichProfile, !richProfile.isEmpty {
@@ -137,6 +136,7 @@ final class ProfileDetailsContentController: NSObject, UITableViewDataSource, UI
                 // If there is no rich profile data, show the read receipts.
                 contents = [.readReceiptsStatus(enabled: readReceiptsEnabled)]
             }
+
         default:
             contents = []
         }
