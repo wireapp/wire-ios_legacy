@@ -42,14 +42,13 @@
 
 - (instancetype)initWithUser:(ZMUser *)user
 {
-    if (!(self = [super init])) {
-        return nil;
+    if (self = [super initWithStyle:UITableViewStylePlain]) {
+        self.user = user;
+        if ([ZMUserSession sharedSession] != nil) {
+            self.userObserverToken = [UserChangeInfo addObserver:self forUser:self.user userSession:[ZMUserSession sharedSession]];
+        }
+        [self refreshSortedClientsWithSet:user.clients];
     }
-    self.user = user;
-    if ([ZMUserSession sharedSession] != nil) {
-        self.userObserverToken = [UserChangeInfo addObserver:self forUser:self.user userSession:[ZMUserSession sharedSession]];
-    }
-    [self refreshSortedClientsWithSet:user.clients];
     return self;
 }
 

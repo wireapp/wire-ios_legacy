@@ -23,6 +23,7 @@
 @class ZMUser;
 @protocol ProfileDevicesViewControllerDelegate;
 
+NS_ASSUME_NONNULL_BEGIN
 
 @interface ProfileDevicesViewController : UITableViewController
 
@@ -39,3 +40,5 @@
 - (void)profileDevicesViewController:(ProfileDevicesViewController *)profileDevicesViewController didTapDetailForClient:(id)client;
 
 @end
+
+NS_ASSUME_NONNULL_END

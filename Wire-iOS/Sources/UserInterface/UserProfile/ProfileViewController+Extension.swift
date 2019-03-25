@@ -56,11 +56,8 @@ extension ProfileViewController {
             viewControllers.append(profileDetailsViewController)
         }
 
-        if context != .profileViewer,
-            (fullUser().isConnected ||
-            fullUser().isTeamMember ||
-            fullUser().isWirelessUser),
-            let profileDevicesViewController = ProfileDevicesViewController(user: fullUser()) {
+        if let fullUser = self.fullUser(), context != .profileViewer, viewer.canSeeDevices(of: bareUser) {
+            let profileDevicesViewController = ProfileDevicesViewController(user: fullUser)
             profileDevicesViewController.title = "profile.devices.title".localized
             profileDevicesViewController.delegate = self
             viewControllers.append(profileDevicesViewController)
@@ -68,7 +65,6 @@ extension ProfileViewController {
 
         tabsController = TabBarController(viewControllers: viewControllers)
         tabsController.delegate = self
-
         addToSelf(tabsController)
     }
 }
@@ -200,7 +196,7 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
 
     private func archiveConversation() {
         transitionToListAndEnqueue {
-            self.conversation.isArchived.toggle()
+            self.conversation?.isArchived.toggle()
         }
     }
 
@@ -260,13 +256,14 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
 
     private func updateMute(enableNotifications: Bool) {
         ZMUserSession.shared()?.enqueueChanges {
-            self.conversation.mutedMessageTypes = enableNotifications ? .none : .all
+            self.conversation?.mutedMessageTypes = enableNotifications ? .none : .all
             // update the footer view to display the correct mute/unmute button
             self.updateFooterViews()
         }
     }
 
     private func presentNotificationsOptions(from targetView: UIView) {
+        guard let conversation = self.conversation else { return }
         let title = "\(conversation.displayName) • \(NotificationResult.title)"
         let controller = UIAlertController(title: title, message: nil, preferredStyle: .actionSheet)
         NotificationResult.allCases.map { $0.action(for: conversation, handler: handleNotificationResult) }.forEach(controller.addAction)
@@ -276,7 +273,7 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
     func handleNotificationResult(_ result: NotificationResult) {
         if let mutedMessageTypes = result.mutedMessageTypes {
             ZMUserSession.shared()?.performChanges {
-                self.conversation.mutedMessageTypes = mutedMessageTypes
+                self.conversation?.mutedMessageTypes = mutedMessageTypes
             }
         }
     }
@@ -284,6 +281,7 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
     // MARK: Delete Contents
 
     private func presentDeleteConfirmationPrompt(from targetView: UIView) {
+        guard let conversation = self.conversation else { return }
         let controller = UIAlertController(title: DeleteResult.title, message: nil, preferredStyle: .actionSheet)
         DeleteResult.options(for: conversation) .map { $0.action(handleDeleteResult) }.forEach(controller.addAction)
         presentAlert(controller, targetView: targetView)
@@ -292,9 +290,9 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
     func handleDeleteResult(_ result: DeleteResult) {
         guard case .delete(leave: let leave) = result else { return }
         transitionToListAndEnqueue {
-            self.conversation.clearMessageHistory()
+            self.conversation?.clearMessageHistory()
             if leave {
-                self.conversation.removeOrShowError(participnant: .selfUser())
+                self.conversation?.removeOrShowError(participnant: .selfUser())
             }
         }
     }
@@ -313,7 +311,7 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
         )
 
         let removeAction = UIAlertAction(title: "profile.remove_dialog_button_remove_confirm".localized, style: .destructive) { _ in
-            self.conversation.removeOrShowError(participnant: otherUser) { result in
+            self.conversation?.removeOrShowError(participnant: otherUser) { result in
                 switch result {
                 case .success:
                     self.returnToPreviousScreen()
