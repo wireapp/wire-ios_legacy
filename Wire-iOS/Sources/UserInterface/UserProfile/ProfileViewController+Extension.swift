@@ -41,7 +41,10 @@ extension ProfileViewController {
     }
 
     func setupProfileDetailsViewController() -> ProfileDetailsViewController {
-        let profileDetailsViewController = ProfileDetailsViewController(user: bareUser, viewer: viewer, conversation: conversation)
+        let profileDetailsViewController = ProfileDetailsViewController(user: bareUser,
+                                                                        viewer: viewer,
+                                                                        conversation: conversation,
+                                                                        context: context)
         profileDetailsViewController.title = "profile.details.title".localized
 
         return profileDetailsViewController
