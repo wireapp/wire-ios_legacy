@@ -266,6 +266,8 @@ final class ConversationTableViewDataSource: NSObject {
     }
     
     func scroll(toIndex indexToShow: Int, completion: ((UIView)->())? = .none) {
+        guard tableView.numberOfSections > 0 else { return }
+        
         let rowIndex = tableView.numberOfCells(inSection: indexToShow) - 1
         let cellIndexPath = IndexPath(row: rowIndex, section: indexToShow)
         
@@ -477,7 +479,7 @@ extension ConversationTableViewDataSource {
             isTimeIntervalSinceLastMessageSignificant = false
         }
         
-        let isLastMessage = (index == 0) && !hasOlderMessagesToLoad
+        let isLastMessage = (index == 0) && !hasNewerMessagesToLoad
         return ConversationMessageContext(
             isSameSenderAsPrevious: isPreviousSenderSame(forMessage: message, at: index),
             isTimeIntervalSinceLastMessageSignificant: isTimeIntervalSinceLastMessageSignificant,

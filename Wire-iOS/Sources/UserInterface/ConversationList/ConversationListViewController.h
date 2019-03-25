@@ -65,4 +65,6 @@ typedef NS_ENUM(NSUInteger, ConversationListState) {
 
 - (void)updateNoConversationVisibility;
 
+- (void)presentSettings;
+
 @end

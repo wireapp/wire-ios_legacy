@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2017 Wire Swiss GmbH
+// Copyright (C) 2019 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -17,17 +17,10 @@
 //
 
 import Foundation
-import WireCommonComponents
 
-extension AppDelegate {
-
-    /// @return YES if network is offline
-    @objc static var isOffline: Bool {
-        return .unreachable == NetworkStatus.shared().reachability()
-    }
-
-    var sessionManager: SessionManager? {
-        return rootViewController.sessionManager
+extension ProfileViewController: TabBarControllerDelegate {
+    func tabBarController(_ controller: TabBarController, tabBarDidSelectIndex: Int) {
+        updateShowVerifiedShield()
     }
 }
 

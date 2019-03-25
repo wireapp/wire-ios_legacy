@@ -40,11 +40,36 @@ extension ProfileViewController {
         self.viewControllerDismisser = viewControllerDismisser
     }
 
-    @objc func setupProfileDetailsViewController() -> ProfileDetailsViewController? {
+    func setupProfileDetailsViewController() -> ProfileDetailsViewController {
         let profileDetailsViewController = ProfileDetailsViewController(user: bareUser, viewer: viewer, conversation: conversation)
         profileDetailsViewController.title = "profile.details.title".localized
 
         return profileDetailsViewController
+    }
+
+    @objc
+    func setupTabsController() {
+        var viewControllers = [UIViewController]()
+
+        if context != .deviceList {
+            let profileDetailsViewController = setupProfileDetailsViewController()
+            viewControllers.append(profileDetailsViewController)
+        }
+
+        if context != .profileViewer,
+            (fullUser().isConnected ||
+            fullUser().isTeamMember ||
+            fullUser().isWirelessUser),
+            let profileDevicesViewController = ProfileDevicesViewController(user: fullUser()) {
+            profileDevicesViewController.title = "profile.devices.title".localized
+            profileDevicesViewController.delegate = self
+            viewControllers.append(profileDevicesViewController)
+        }
+
+        tabsController = TabBarController(viewControllers: viewControllers)
+        tabsController.delegate = self
+
+        addToSelf(tabsController)
     }
 }
 
@@ -58,9 +83,10 @@ extension ProfileViewController: ViewControllerDismisser {
 
 extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFooterViewDelegate {
 
-    @objc func updateFooterViews() {
+    @objc
+    func updateFooterViews() {
         // Actions
-        let factory = ProfileActionsFactory(user: bareUser, viewer: viewer, conversation: conversation)
+        let factory = ProfileActionsFactory(user: bareUser, viewer: viewer, conversation: conversation, context: context)
         let actions = factory.makeActionsList()
 
         profileFooterView.delegate = self
@@ -125,13 +151,30 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
             sendConnectionRequest()
         case .cancelConnectionRequest:
             bringUpCancelConnectionRequestSheet(from: targetView)
+        case .openSelfProfile:
+            openSelfProfile()
+        }
+    }
+
+    private func openSelfProfile() {
+        ///do not reveal list view for iPad regular mode
+        let leftViewControllerRevealed: Bool
+        if let presentingViewController = presentingViewController {
+            leftViewControllerRevealed = !presentingViewController.isIPadRegular(device: UIDevice.current)
+        } else {
+            leftViewControllerRevealed = true
+        }
+
+        transitionToListAndEnqueue(leftViewControllerRevealed: leftViewControllerRevealed) {
+            ZClientViewController.shared()?.conversationListViewController.presentSettings()
         }
     }
 
     // MARK: - Helpers
 
-    private func transitionToListAndEnqueue(_ block: @escaping () -> Void) {
-        ZClientViewController.shared()?.transitionToList(animated: true) {
+    private func transitionToListAndEnqueue(leftViewControllerRevealed: Bool = true, _ block: @escaping () -> Void) {
+        ZClientViewController.shared()?.transitionToList(animated: true,
+                                                         leftViewControllerRevealed: leftViewControllerRevealed) {
             ZMUserSession.shared()?.enqueueChanges(block)
         }
     }
