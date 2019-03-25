@@ -581,10 +581,18 @@ extension UIViewController {
 }
 
 extension AppRootViewController: SessionManagerURLHandlerDelegate {
-    func presentDeepLinkAlertIfNeeded() {
-        let authenticationState: AppStateController.AuthenticationState = appStateController.authenticationState
+    var isLoggedIn: Bool {
+        switch appStateController.authenticationState {
+        case .loggedOut,
+             .undetermined:
+            return false
+        case .loggedIn(_):
+            return true
+        }
+    }
 
-        guard authenticationState != .loggedIn(_),
+    func presentDeepLinkAlertIfNeeded() {
+        guard !isLoggedIn,
             let urlHandler = sessionManager?.urlHandler,
             urlHandler.hasUnhandledDeepLink else {
             return
