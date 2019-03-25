@@ -1541,6 +1541,8 @@
 "url_action.invalid_conversation.title" = "Wire can't open this conversation.";
 "url_action.invalid_conversation.message" = "You may not have permission with this account or the person may not be on Wire.";
 
+"url_action.authorization_required.title" = "Authorization required.";
+"url_action.authorization_required.message" = "You need to log in to view this content.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // News and offers consent prompt

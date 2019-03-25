@@ -590,8 +590,8 @@ extension AppRootViewController {
             return
         }
 
-        ///TODO: update text copy
-        presentAlert(title: "not logged in", message: "pleae loggin")
+        presentAlert(title: "url_action.authorization_required.title".localized,
+                     message: "url_action.authorization_required.message".localized)
     }
 }
 
