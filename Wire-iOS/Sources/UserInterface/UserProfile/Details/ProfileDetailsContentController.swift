@@ -56,9 +56,6 @@ final class ProfileDetailsContentController: NSObject, UITableViewDataSource, UI
     /// The conversation where the profile details will be displayed.
     let conversation: ZMConversation?
 
-    /// The context of this screen
-    let context: ProfileViewControllerContext
-
     // MARK: - Accessing the Content
     
     /// The contents to display for the current configuration.
@@ -84,12 +81,10 @@ final class ProfileDetailsContentController: NSObject, UITableViewDataSource, UI
     
     init(user: GenericUser,
          viewer: GenericUser,
-         conversation: ZMConversation?,
-         context: ProfileViewControllerContext) {
+         conversation: ZMConversation?) {
         self.user = user
         self.viewer = viewer
         self.conversation = conversation
-        self.context = context
 
         super.init()
         configureObservers()

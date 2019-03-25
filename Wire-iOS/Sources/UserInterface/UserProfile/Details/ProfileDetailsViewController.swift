@@ -33,9 +33,6 @@ final class ProfileDetailsViewController: UIViewController, Themeable {
     /// The conversation where the profile is displayed.
     let conversation: ZMConversation?
 
-    /// The context of this screen
-    let context: ProfileViewControllerContext
-
     /**
      * The object that calculates and controls the content to display in the user
      * details screen. It is also responsible for reacting to user profile updates
@@ -69,17 +66,14 @@ final class ProfileDetailsViewController: UIViewController, Themeable {
     
     init(user: GenericUser,
          viewer: GenericUser,
-         conversation: ZMConversation?,
-         context: ProfileViewControllerContext) {
+         conversation: ZMConversation?) {
         self.user = user
         self.viewer = viewer
         self.conversation = conversation
-        self.context = context
         self.profileView = ProfileView(user: user, options: [.hideUsername, .hideHandle, .hideTeamName])
         self.contentController = ProfileDetailsContentController(user: user,
                                                                  viewer: viewer,
-                                                                 conversation: conversation,
-                                                                 context: context)
+                                                                 conversation: conversation)
         super.init(nibName: nil, bundle: nil)
         self.contentController.delegate = self
     }
