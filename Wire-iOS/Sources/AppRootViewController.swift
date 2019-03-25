@@ -599,6 +599,9 @@ extension AppRootViewController: SessionManagerURLHandlerDelegate {
             case .invalidConversationLink:
                 presentAlert(title: "url_action.invalid_conversation.title".localized,
                              message: "url_action.invalid_conversation.message".localized)
+            case .notLoggedIn:
+                ///TODO: alert for this case
+                break
             }
         case .connectBot:
             guard let _ = ZMUser.selfUser().team else {
