@@ -165,8 +165,10 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
             leftViewControllerRevealed = true
         }
 
-        transitionToListAndEnqueue(leftViewControllerRevealed: leftViewControllerRevealed) {
-            ZClientViewController.shared()?.conversationListViewController.presentSettings()
+        dismiss(animated: true){ [weak self] in
+            self?.transitionToListAndEnqueue(leftViewControllerRevealed: leftViewControllerRevealed) {
+                ZClientViewController.shared()?.conversationListViewController.presentSettings()
+            }
         }
     }
 
