@@ -479,7 +479,7 @@ extension ConversationTableViewDataSource {
             isTimeIntervalSinceLastMessageSignificant = false
         }
         
-        let isLastMessage = (index == 0) && !hasOlderMessagesToLoad
+        let isLastMessage = (index == 0) && !hasNewerMessagesToLoad
         return ConversationMessageContext(
             isSameSenderAsPrevious: isPreviousSenderSame(forMessage: message, at: index),
             isTimeIntervalSinceLastMessageSignificant: isTimeIntervalSinceLastMessageSignificant,
