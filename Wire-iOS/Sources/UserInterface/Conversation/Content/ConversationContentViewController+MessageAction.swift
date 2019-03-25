@@ -109,8 +109,7 @@ extension ConversationContentViewController {
         case .like:
             // The new liked state, the value is flipped
             let updatedLikedState = !Message.isLikedMessage(message)
-
-            guard let indexPath = dataSource?.indexPath(for: message) else { return }
+            guard let indexPath = dataSource?.topIndexPath(for: message) else { return }
 
             let selectedMessage = dataSource?.selectedMessage
 

@@ -222,8 +222,7 @@ final class ConversationTableViewDataSource: NSObject {
         
         loadMessages(offset: offset, limit: limit)
         
-        let indexPath = self.indexPath(for: message)
-        
+        let indexPath = self.topIndexPath(for: message)
         completion?(indexPath)
     }
     
@@ -293,14 +292,18 @@ final class ConversationTableViewDataSource: NSObject {
             return nil
         }
     }
-    
-    @objc(indexPathForMessage:)
-    public func indexPath(for message: ZMConversationMessage) -> IndexPath? {
+
+    @objc(topIndexPathForMessage:)
+    public func topIndexPath(for message: ZMConversationMessage) -> IndexPath? {
         guard let section = index(of: message) else {
             return nil
         }
-        
-        return IndexPath(row: 0, section: section)
+
+        // The table view is upside down. The first visible cell of the message has the last index
+        // in the message section.
+        let numberOfMessageComponents = tableView.numberOfRows(inSection: section)
+
+        return IndexPath(row: numberOfMessageComponents - 1, section: section)
     }
     
     @objc(tableViewDidScroll:) public func didScroll(tableView: UITableView) {
@@ -329,10 +332,10 @@ final class ConversationTableViewDataSource: NSObject {
         
         // 3. Get the index path of the message that should stay displayed
         if let newestMessageBeforeReload = newestMessageBeforeReload,
-           let indexPath = self.indexPath(for: newestMessageBeforeReload) {
+           let sectionIndex = self.index(of: newestMessageBeforeReload) {
             
             // 4. Get the frame of that message
-            let indexPathRect = tableView.rectForRow(at: indexPath)
+            let indexPathRect = tableView.rect(forSection: sectionIndex)
             
             // 5. Update content offset so it stays visible. To reduce flickering compensate for empty space below the message
             scrollView.contentOffset = CGPoint(x: 0, y: indexPathRect.minY - 16)
@@ -406,7 +409,7 @@ extension ConversationTableViewDataSource: UITableViewDataSource {
     
     @objc(highlightMessage:)
     func highlight(message: ZMConversationMessage) {
-        guard let section = indexPath(for: message)?.section else {
+        guard let section = index(of: message) else {
             return
         }
         
