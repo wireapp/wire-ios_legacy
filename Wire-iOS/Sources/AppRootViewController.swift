@@ -580,28 +580,16 @@ extension AppRootViewController: SessionManagerURLHandlerDelegate {
         present(alert, animated: true, completion: nil)
     }
 
-    private func presentRequireLoginAlert() {
-        ///TODO: update localized rsc
-        presentAlert(title: "url_action.require_login.title".localized,
-                     message: "url_action.require_login.message".localized)
-    }
-
     func sessionManagerShouldExecuteURLAction(_ action: URLAction, callback: @escaping (Bool) -> Void) {
         switch action {
         case .openConversation(_, let conversation):
             if let conversation = conversation,
-               let userSession = ZMUserSession.shared(),
-               appStateController.authenticationState != AppStateController.AuthenticationState.loggedOut {
+               let userSession = ZMUserSession.shared() {
                 sessionManager?.showConversation(conversation, at: nil, in: userSession)
-            } else {
-                presentRequireLoginAlert()
             }
         case .openUserProfile(_, let user):
-            if let user = user,
-               appStateController.authenticationState != AppStateController.AuthenticationState.loggedOut {
+            if let user = user {
                 sessionManager?.showUserProfile(user: user)
-            } else {
-                presentRequireLoginAlert()
             }
         case .warnInvalidDeepLink(let error):
             switch error {
