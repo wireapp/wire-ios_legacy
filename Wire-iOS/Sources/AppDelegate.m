@@ -135,6 +135,9 @@ static AppDelegate *sharedAppDelegate = nil;
 - (void)applicationDidBecomeActive:(UIApplication *)application;
 {
     ZMLogInfo(@"applicationDidBecomeActive (applicationState = %ld)", (long)application.applicationState);
+
+    ///TODO: deep link?
+    [self checkPendingDeepLink];
     
     switch (self.launchType) {
         case ApplicationLaunchURL:

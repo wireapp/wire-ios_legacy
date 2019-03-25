@@ -570,15 +570,30 @@ public extension SessionManager {
 
 }
 
-extension AppRootViewController: SessionManagerURLHandlerDelegate {
-
-    private func presentAlert(title: String, message: String) {
+extension UIViewController {
+    func presentAlert(title: String, message: String) {
         let alert = UIAlertController(title: title,
                                       message: message,
                                       cancelButtonTitle: "general.ok".localized)
 
         present(alert, animated: true, completion: nil)
     }
+}
+
+extension AppRootViewController: SessionManagerURLHandlerDelegate {
+    func presentDeepLinkAlertIfNeeded() {
+        let authenticationState: AppStateController.AuthenticationState = appStateController.authenticationState
+
+        guard authenticationState != .loggedIn(_),
+            let urlHandler = sessionManager?.urlHandler,
+            urlHandler.hasUnhandledDeepLink else {
+            return
+        }
+
+        ///TODO: update text copy
+        presentAlert(title: "not logged in", message: "pleae loggin")
+    }
+
 
     func sessionManagerShouldExecuteURLAction(_ action: URLAction, callback: @escaping (Bool) -> Void) {
         switch action {
