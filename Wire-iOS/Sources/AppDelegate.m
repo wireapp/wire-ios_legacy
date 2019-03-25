@@ -136,7 +136,7 @@ static AppDelegate *sharedAppDelegate = nil;
 {
     ZMLogInfo(@"applicationDidBecomeActive (applicationState = %ld)", (long)application.applicationState);
 
-    ///TODO: deep link?
+    // When the app was launch and the user opens a deep link, we have to check is there any logged-in session
     [self checkPendingDeepLink];
     
     switch (self.launchType) {

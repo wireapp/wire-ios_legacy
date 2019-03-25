@@ -570,17 +570,9 @@ public extension SessionManager {
 
 }
 
-extension UIViewController {
-    func presentAlert(title: String, message: String) {
-        let alert = UIAlertController(title: title,
-                                      message: message,
-                                      cancelButtonTitle: "general.ok".localized)
+// MARK: - opens deep link when not logged in
 
-        present(alert, animated: true, completion: nil)
-    }
-}
-
-extension AppRootViewController: SessionManagerURLHandlerDelegate {
+extension AppRootViewController {
     var isLoggedIn: Bool {
         switch appStateController.authenticationState {
         case .loggedOut,
@@ -601,7 +593,9 @@ extension AppRootViewController: SessionManagerURLHandlerDelegate {
         ///TODO: update text copy
         presentAlert(title: "not logged in", message: "pleae loggin")
     }
+}
 
+extension AppRootViewController: SessionManagerURLHandlerDelegate {
 
     func sessionManagerShouldExecuteURLAction(_ action: URLAction, callback: @escaping (Bool) -> Void) {
         switch action {
@@ -730,4 +724,15 @@ extension AppRootViewController: SessionManagerURLHandlerDelegate {
 
 extension Notification.Name {
     static let companyLoginDidFinish = Notification.Name("Wire.CompanyLoginDidFinish")
+}
+
+extension UIViewController {
+    func presentAlert(title: String,
+                      message: String) {
+        let alert = UIAlertController(title: title,
+                                      message: message,
+                                      cancelButtonTitle: "general.ok".localized)
+
+        present(alert, animated: true, completion: nil)
+    }
 }
