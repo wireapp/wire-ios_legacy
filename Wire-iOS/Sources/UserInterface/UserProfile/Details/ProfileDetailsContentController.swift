@@ -115,7 +115,7 @@ final class ProfileDetailsContentController: NSObject, UITableViewDataSource, UI
     
     /// Updates the content for the current configuration.
     private func updateContent() {
-        switch (conversation?.conversationType, context) {
+        switch conversation?.conversationType ?? .oneOnOne {
         case (.group?, _),
              (_, .profileViewer):
             let richProfile = user.richProfile
