@@ -34,7 +34,7 @@ final class AppStateController : NSObject {
      * The possible states of authentication.
      */
 
-    enum AuthenticationState: Equatable {
+    enum AuthenticationState {
         /// The user is not logged in.
         case loggedOut
 

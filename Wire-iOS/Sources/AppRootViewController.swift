@@ -570,31 +570,6 @@ public extension SessionManager {
 
 }
 
-// MARK: - opens deep link when not logged in
-
-extension AppRootViewController {
-    var isLoggedIn: Bool {
-        switch appStateController.authenticationState {
-        case .loggedOut,
-             .undetermined:
-            return false
-        case .loggedIn(_):
-            return true
-        }
-    }
-
-    func presentDeepLinkAlertIfNeeded() {
-        guard !isLoggedIn,
-            let urlHandler = sessionManager?.urlHandler,
-            urlHandler.hasUnhandledDeepLink else {
-            return
-        }
-
-        presentAlert(title: "url_action.authorization_required.title".localized,
-                     message: "url_action.authorization_required.message".localized)
-    }
-}
-
 extension AppRootViewController: SessionManagerURLHandlerDelegate {
 
     func sessionManagerShouldExecuteURLAction(_ action: URLAction, callback: @escaping (Bool) -> Void) {
@@ -617,8 +592,8 @@ extension AppRootViewController: SessionManagerURLHandlerDelegate {
                 presentAlert(title: "url_action.invalid_conversation.title".localized,
                              message: "url_action.invalid_conversation.message".localized)
             case .notLoggedIn:
-                ///TODO: alert for this case
-                break
+                presentAlert(title: "url_action.authorization_required.title".localized,
+                             message: "url_action.authorization_required.message".localized)
             }
         case .connectBot:
             guard let _ = ZMUser.selfUser().team else {

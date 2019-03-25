@@ -25,10 +25,5 @@ extension AppDelegate {
 
         return urlHandler.openURL(url, options: options)
     }
-
-    @objc
-    func checkPendingDeepLink() {
-        rootViewController.presentDeepLinkAlertIfNeeded()
-    }
 }
 
