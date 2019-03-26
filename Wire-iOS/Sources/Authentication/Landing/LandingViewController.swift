@@ -51,7 +51,7 @@ class LandingViewController: AuthenticationStepViewController {
         let alignCenterStyle = NSMutableParagraphStyle()
         alignCenterStyle.alignment = .center
         alignCenterStyle.paragraphSpacingBefore = 4
-        alignCenterStyle.minimumLineHeight = 20
+        alignCenterStyle.lineSpacing = 4
 
         let lightFont = FontSpec(.normal, .light).font!
 
@@ -240,8 +240,8 @@ class LandingViewController: AuthenticationStepViewController {
         if view.frame.height <= 640 {
             // Small-height devices
             logoView.isHidden = true
-            contentStack.spacing = 32
-            buttonStackView.spacing = 32
+            contentStack.spacing = 24
+            buttonStackView.spacing = 24
 
             if #available(iOS 11, *) {
                 contentStack.setCustomSpacing(0, after: logoView)
@@ -250,11 +250,11 @@ class LandingViewController: AuthenticationStepViewController {
         } else {
             // Normal-height devices
             logoView.isHidden = false
-            contentStack.spacing = 44
-            buttonStackView.spacing = 44
+            contentStack.spacing = 32
+            buttonStackView.spacing = 32
 
             if #available(iOS 11, *) {
-                contentStack.setCustomSpacing(64, after: logoView)
+                contentStack.setCustomSpacing(40, after: logoView)
             }
         }
     }
