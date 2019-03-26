@@ -35,10 +35,6 @@ class LandingViewController: AuthenticationStepViewController {
         return authenticationCoordinator
     }
 
-    private var contentWidthRegular: NSLayoutConstraint!
-    private var contentWidthCompact: NSLayoutConstraint!
-    private var logoHeight: NSLayoutConstraint!
-
     // MARK: - UI Styles
 
     static let semiboldFont = FontSpec(.large, .semibold).font!
@@ -55,6 +51,7 @@ class LandingViewController: AuthenticationStepViewController {
         let alignCenterStyle = NSMutableParagraphStyle()
         alignCenterStyle.alignment = .center
         alignCenterStyle.paragraphSpacingBefore = 4
+        alignCenterStyle.lineSpacing = 4
 
         let lightFont = FontSpec(.normal, .light).font!
 
@@ -72,7 +69,6 @@ class LandingViewController: AuthenticationStepViewController {
         let stackView = UIStackView()
         stackView.distribution = .fill
         stackView.alignment = .center
-        stackView.spacing = 48
         stackView.axis = .vertical
 
         return stackView
@@ -90,9 +86,7 @@ class LandingViewController: AuthenticationStepViewController {
     
     let buttonStackView: UIStackView = {
         let stackView = UIStackView()
-        stackView.distribution = .fill
-        stackView.alignment = .center
-        stackView.spacing = 24
+        stackView.distribution = .fillEqually
         stackView.axis = .vertical
         stackView.setContentCompressionResistancePriority(.required, for: .vertical)
         stackView.setContentCompressionResistancePriority(.required, for: .horizontal)
@@ -138,6 +132,8 @@ class LandingViewController: AuthenticationStepViewController {
         let label = UILabel()
         label.text = "landing.login.hints".localized
         label.font = LandingViewController.regularFont
+        label.numberOfLines = 0
+        label.textAlignment = .center
         label.textColor = UIColor.Team.subtitleColor
         label.setContentHuggingPriority(.required, for: .vertical)
         label.setContentCompressionResistancePriority(.required, for: .vertical)
@@ -218,19 +214,22 @@ class LandingViewController: AuthenticationStepViewController {
 
     private func createConstraints() {
         contentStack.translatesAutoresizingMaskIntoConstraints = false
-        contentWidthRegular = contentStack.widthAnchor.constraint(equalToConstant: 375)
-        contentWidthCompact = contentStack.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -44)
-        logoHeight = logoView.heightAnchor.constraint(lessThanOrEqualToConstant: 31)
 
         NSLayoutConstraint.activate([
             // contentStack
             contentStack.topAnchor.constraint(greaterThanOrEqualTo: safeTopAnchor, constant: 12),
             contentStack.bottomAnchor.constraint(lessThanOrEqualTo: safeBottomAnchor, constant: -12),
-            contentStack.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            contentStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
+            contentStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
             contentStack.centerYAnchor.constraint(equalTo: safeCenterYAnchor),
 
+            // buttons width
+            createAccountButton.widthAnchor.constraint(lessThanOrEqualToConstant: 256),
+            createTeamButton.widthAnchor.constraint(lessThanOrEqualToConstant: 256),
+            loginButtonsStackView.widthAnchor.constraint(lessThanOrEqualToConstant: 256),
+
             // logoView
-            logoHeight
+            logoView.heightAnchor.constraint(lessThanOrEqualToConstant: 31)
         ])
     }
 
@@ -240,36 +239,39 @@ class LandingViewController: AuthenticationStepViewController {
         super.viewDidLayoutSubviews()
         if view.frame.height <= 640 {
             // Small-height devices
-            logoHeight.constant = 25
-            contentStack.spacing = 32
+            logoView.isHidden = true
+            contentStack.spacing = 24
+            buttonStackView.spacing = 24
+
+            if #available(iOS 11, *) {
+                contentStack.setCustomSpacing(0, after: logoView)
+            }
+
         } else {
             // Normal-height devices
-            logoHeight.constant = 31
-            contentStack.spacing = 48
+            logoView.isHidden = false
+            contentStack.spacing = 32
+            buttonStackView.spacing = 32
+
+            if #available(iOS 11, *) {
+                contentStack.setCustomSpacing(40, after: logoView)
+            }
         }
     }
 
     func updateForCurrentSizeClass(isRegular: Bool) {
-        updateConstraints(isRegular: isRegular)
         updateStackViewAxis(isRegular: isRegular)
-    }
-
-    private func updateConstraints(isRegular: Bool) {
-        if isRegular {
-            contentWidthCompact.isActive = false
-            contentWidthRegular.isActive = true
-        } else {
-            contentWidthRegular.isActive = false
-            contentWidthCompact.isActive = true
-        }
     }
 
     private func updateStackViewAxis(isRegular: Bool) {
         switch traitCollection.horizontalSizeClass {
         case .regular:
             buttonStackView.axis = .horizontal
+            buttonStackView.alignment = .top
+
         default:
             buttonStackView.axis = .vertical
+            buttonStackView.alignment = .center
         }
     }
 
