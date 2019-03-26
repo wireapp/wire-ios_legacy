@@ -36,7 +36,6 @@ final class LandingViewControllerSnapshotTests: ZMSnapshotTestCase {
     func testForInitState() {
         let navigationController = UINavigationController(navigationBarClass: AuthenticationNavigationBar.self, toolbarClass: nil)
         navigationController.viewControllers = [sut]
-
         verify(view: navigationController.view)
     }
 }
