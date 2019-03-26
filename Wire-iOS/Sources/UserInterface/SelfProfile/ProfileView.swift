@@ -205,12 +205,19 @@ final class ProfileView: UIView, Themeable {
     
     func prepareForDisplay(in conversation: ZMConversation?, context: ProfileViewControllerContext) {
 
+        let guestIndicatorHidden: Bool
         switch context {
             case .profileViewer:
-                guestIndicatorStack.isHidden = !(ZMUser.selfUser()?.isTeamMember ?? false && !user.isTeamMember)
+                if let selfUser = ZMUser.selfUser() {
+                    guestIndicatorHidden = !(selfUser.isAHost(of: user))
+                } else {
+                    guestIndicatorHidden = true
+                }
             default:
-                guestIndicatorStack.isHidden = conversation.map(user.isGuest) != true
+                guestIndicatorHidden = conversation.map(user.isGuest) != true
         }
+
+        guestIndicatorStack.isHidden = guestIndicatorHidden
 
         let remainingTimeString = user.expirationDisplayString
         remainingTimeLabel.text = remainingTimeString
