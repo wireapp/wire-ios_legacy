@@ -672,6 +672,7 @@
 "meta.menu.mark_read" = "Marquer comme lu";
 "shortcut.mark_all_as_read.title" = "Tout marquer comme lu";
 "meta.menu.configure_notifications" = "Notifications…";
+"meta.menu.open_self_profile" = "Ouvrir le Profil";
 
 // Delete conversation
 "meta.menu.delete_content.dialog_title" = "Supprimer le contenu ?";
@@ -1031,7 +1032,9 @@
 
 "self.settings.privacy_security.lock_app.description" = "Déverrouiller Wire";
 
-"self.settings.privacy_security.lock_cancelled.description" = "Veuillez déverrouiller Wire avec Touch ID ou le code";
+"self.settings.privacy_security.lock_cancelled.description_face_id" = "Déverrouillez Wire avec Face ID ou votre Code";
+"self.settings.privacy_security.lock_cancelled.description_touch_id" = "Déverrouillez Wire avec Touch ID ou votre Code";
+"self.settings.privacy_security.lock_cancelled.description_passcode" = "Déverrouillez Wire avec votre Code";
 "self.settings.privacy_security.lock_cancelled.action" = "Déverrouiller";
 
 "self.settings.privacy_security.disable_link_previews.title" = "Créer un aperçu des liens";
@@ -1117,9 +1120,9 @@
 
 "landing.header" = "Wire. Ajoutez votre compte.";
 "landing.create_account.title" = "Personnel";
-"landing.create_account.subtitle" = "créer un compte";
+"landing.create_account.subtitle" = "Discussions privées avec vos groupes d’amis et votre famille";
 "landing.create_team.title" = "Pro";
-"landing.create_team.subtitle" = "créer une équipe";
+"landing.create_team.subtitle" = "Collaboration sécurisée pour les entreprises, institutions et organisations professionnelles";
 "landing.login.hints" = "Vous avez déjà un compte ?";
 "landing.login.button.title" = "Se connecter";
 
@@ -1530,6 +1533,16 @@
 "url_action.confirm" = "Confirmer";
 "url_action.title" = "Confirmer";
 "url_action.connect_to_bot.message" = "Voulez-vous vous connecter à ce service ?";
+
+// Deep Link
+"url_action.invalid_user.title" = "Wire ne peut pas trouver cette personne.";
+"url_action.invalid_user.message" = "Il est possible que vous ne soyez pas autorisé à voir ce compte, ou qu'il n’existe plus.";
+
+"url_action.invalid_conversation.title" = "Wire ne peut pas ouvrir cette conversation.";
+"url_action.invalid_conversation.message" = "Il est possible que vous n'ayez pas l'autorisation de voir ce compte, ou que cette personne ne soit pas sur Wire.";
+
+"url_action.authorization_required.title" = "Autorisation requise.";
+"url_action.authorization_required.message" = "Vous devez vous connecter pour voir ce contenu.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // News and offers consent prompt

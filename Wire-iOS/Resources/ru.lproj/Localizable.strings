@@ -672,6 +672,7 @@
 "meta.menu.mark_read" = "Отметить как прочитанное";
 "shortcut.mark_all_as_read.title" = "Отметить все как прочитанные";
 "meta.menu.configure_notifications" = "Уведомления…";
+"meta.menu.open_self_profile" = "Открыть профиль";
 
 // Delete conversation
 "meta.menu.delete_content.dialog_title" = "Удалить контент?";
@@ -1031,7 +1032,9 @@
 
 "self.settings.privacy_security.lock_app.description" = "Разблокировать Wire";
 
-"self.settings.privacy_security.lock_cancelled.description" = "Разблокируйте Wire с помощью Touch ID или кода доступа";
+"self.settings.privacy_security.lock_cancelled.description_face_id" = "Разблокировать Wire с помощью Face ID или кода доступа";
+"self.settings.privacy_security.lock_cancelled.description_touch_id" = "Разблокировать Wire с помощью Touch ID или кода доступа";
+"self.settings.privacy_security.lock_cancelled.description_passcode" = "Разблокировать Wire с помощью кода доступа";
 "self.settings.privacy_security.lock_cancelled.action" = "Разблокировать";
 
 "self.settings.privacy_security.disable_link_previews.title" = "Генерировать предпросмотр для ссылок";
@@ -1117,9 +1120,9 @@
 
 "landing.header" = "Wire. Добавьте свой аккаунт.";
 "landing.create_account.title" = "Personal";
-"landing.create_account.subtitle" = "создать учетную запись";
+"landing.create_account.subtitle" = "Приватный чат с группами друзей и семьей";
 "landing.create_team.title" = "Pro";
-"landing.create_team.subtitle" = "создать команду";
+"landing.create_team.subtitle" = "Безопасное сотрудничество для предприятий, учреждений и профессиональных организаций";
 "landing.login.hints" = "Уже зарегистрированы?";
 "landing.login.button.title" = "Войти";
 
@@ -1185,7 +1188,7 @@
 "guest_room.error.generic.message" = "Проверьте подключение и попробуйте еще раз";
 
 "guest_room.link.header.title" = "Пригласить других пользователей ссылкой";
-"guest_room.link.header.subtitle" = "Любой, у кого есть ссылка, может присоединиться к разговору, даже если у них нет Wire.";
+"guest_room.link.header.subtitle" = "Любой, у кого есть ссылка, может присоединиться к разговору, даже если у него нет Wire.";
 
 "guest_room.link.button.title" = "Создать ссылку";
 
@@ -1530,6 +1533,16 @@
 "url_action.confirm" = "Подтвердить";
 "url_action.title" = "Подтвердить действие по URL";
 "url_action.connect_to_bot.message" = "Вы хотите подключиться к боту?";
+
+// Deep Link
+"url_action.invalid_user.title" = "Wire не может найти этого человека.";
+"url_action.invalid_user.message" = "Возможно, у вас нет разрешения на использование этой учетной записи или она больше не существует.";
+
+"url_action.invalid_conversation.title" = "Wire не может открыть этот разговор.";
+"url_action.invalid_conversation.message" = "Возможно, у вас нет разрешения на использование этой учетной записи, либо этот человек отсутствует в Wire.";
+
+"url_action.authorization_required.title" = "Authorization required.";
+"url_action.authorization_required.message" = "You need to log in to view this content.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // News and offers consent prompt

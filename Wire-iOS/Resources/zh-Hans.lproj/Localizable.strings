@@ -242,7 +242,7 @@
 "compose.contact.title" = "聊天";
 "compose.message.title" = "信息";
 
-"conversation_details.open_button.accessibility_hint" = "Double tap to view the details of the conversation.";
+"conversation_details.open_button.accessibility_hint" = "双击查看对话详情";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Conversation
@@ -658,7 +658,7 @@
 "participants.section.name.footer" = "一个群组最多%1$d个人，您最多可与%2$d个人同时视频通话。";
 
 // Meta Menu
-"meta.menu.accessibility_more_options_button" = "More actions";
+"meta.menu.accessibility_more_options_button" = "更多操作";
 "meta.menu.rename" = "重新命名";
 "meta.menu.leave" = "退出群组";
 "meta.menu.archive" = "归档";
@@ -667,11 +667,12 @@
 "meta.menu.silence.mute" = "静音";
 "meta.menu.silence.unmute" = "关闭静音";
 "meta.menu.cancel" = "取消";
-"meta.menu.cancel_connection_request" = "Cancel Request";
+"meta.menu.cancel_connection_request" = "取消请求";
 "meta.menu.mark_unread" = "标记为未读";
 "meta.menu.mark_read" = "标记为已读";
 "shortcut.mark_all_as_read.title" = "标记所有为已读";
 "meta.menu.configure_notifications" = "通知…";
+"meta.menu.open_self_profile" = "Open Profile";
 
 // Delete conversation
 "meta.menu.delete_content.dialog_title" = "删除内容？";
@@ -734,7 +735,7 @@
 
 // Cancel connection request
 "profile.cancel_connection_request_dialog.title" = "取消请求？";
-"profile.cancel_connection_request_dialog.message" = "Cancel your connection request to %@?";
+"profile.cancel_connection_request_dialog.message" = "取消连接到 %@的请求？";
 "profile.cancel_connection_request_dialog.button_no" = "否";
 "profile.cancel_connection_request_dialog.button_yes" = "是";
 
@@ -742,8 +743,8 @@
 "profile.block_button_title" = "封锁...";
 "profile.unblock_button_title" = "解除封锁...";
 
-"profile.block_button_title_action" = "加入黑名单";
-"profile.unblock_button_title_action" = "Unblock";
+"profile.block_button_title_action" = "屏蔽";
+"profile.unblock_button_title_action" = "取消屏蔽";
 
 "profile.cancel_connection_button_title" = "取消请求";
 "profile.connection_request_state.blocked" = "已加入黑名单";
@@ -752,9 +753,9 @@
 
 "profile.read_receipts_enabled_memo.header" = "YOU HAVE ENABLED READ RECEIPTS";
 "profile.read_receipts_disabled_memo.header" = "YOU HAVE DISABLED READ RECEIPTS";
-"profile.read_receipts_memo.body" = "If both sides turn on read receipts, you can see when messages are read.\n\nYou can change this option in your account settings.";
+"profile.read_receipts_memo.body" = "如果双方都打开已读回执，你可以查看消息的阅读时间。\n\n您可以在帐户设置中更改此选项。";
 
-"profile.extended_metadata.header" = "Information";
+"profile.extended_metadata.header" = "信息";
 
 // User Details
 "profile.details.title" = "详细信息";
@@ -1031,7 +1032,9 @@
 
 "self.settings.privacy_security.lock_app.description" = "解锁Wire";
 
-"self.settings.privacy_security.lock_cancelled.description" = "通过Touch ID或Passcode解锁";
+"self.settings.privacy_security.lock_cancelled.description_face_id" = "Unlock Wire with Face ID or Passcode";
+"self.settings.privacy_security.lock_cancelled.description_touch_id" = "Unlock Wire with Touch ID or Passcode";
+"self.settings.privacy_security.lock_cancelled.description_passcode" = "Unlock Wire with Passcode";
 "self.settings.privacy_security.lock_cancelled.action" = "解锁";
 
 "self.settings.privacy_security.disable_link_previews.title" = "创建链接预览";
@@ -1117,9 +1120,9 @@
 
 "landing.header" = "Wire. Add your Account.";
 "landing.create_account.title" = "个人信息";
-"landing.create_account.subtitle" = "新增帐户";
+"landing.create_account.subtitle" = "Chat privately with groups of friends and family";
 "landing.create_team.title" = "Pro";
-"landing.create_team.subtitle" = "创建团队";
+"landing.create_team.subtitle" = "Secure collaboration for businesses, institutions and professional organizations";
 "landing.login.hints" = "已有帐户？";
 "landing.login.button.title" = "登录";
 
@@ -1530,6 +1533,16 @@
 "url_action.confirm" = "确认";
 "url_action.title" = "Confirm URL action";
 "url_action.connect_to_bot.message" = "Would you like to connect to the bot?";
+
+// Deep Link
+"url_action.invalid_user.title" = "Wire can't find this person.";
+"url_action.invalid_user.message" = "You may not have permission with this account or it no longer exists.";
+
+"url_action.invalid_conversation.title" = "Wire can't open this conversation.";
+"url_action.invalid_conversation.message" = "You may not have permission with this account or the person may not be on Wire.";
+
+"url_action.authorization_required.title" = "Authorization required.";
+"url_action.authorization_required.message" = "You need to log in to view this content.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // News and offers consent prompt

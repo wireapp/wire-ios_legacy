@@ -672,6 +672,7 @@
 "meta.menu.mark_read" = "Mark as Read";
 "shortcut.mark_all_as_read.title" = "Mark All as Read";
 "meta.menu.configure_notifications" = "Notifications…";
+"meta.menu.open_self_profile" = "Open Profile";
 
 // Delete conversation
 "meta.menu.delete_content.dialog_title" = "İçerik silinsin?";
@@ -1031,7 +1032,9 @@
 
 "self.settings.privacy_security.lock_app.description" = "Wire'ın kilidini aç";
 
-"self.settings.privacy_security.lock_cancelled.description" = "Lütfen Wire'ın Touch ID veya şifre ile kilidini açın";
+"self.settings.privacy_security.lock_cancelled.description_face_id" = "Unlock Wire with Face ID or Passcode";
+"self.settings.privacy_security.lock_cancelled.description_touch_id" = "Unlock Wire with Touch ID or Passcode";
+"self.settings.privacy_security.lock_cancelled.description_passcode" = "Unlock Wire with Passcode";
 "self.settings.privacy_security.lock_cancelled.action" = "Kilidi aç";
 
 "self.settings.privacy_security.disable_link_previews.title" = "Bağlantı Önizlemeleri Oluştur";
@@ -1117,9 +1120,9 @@
 
 "landing.header" = "Wire. Add your Account.";
 "landing.create_account.title" = "Kişisel";
-"landing.create_account.subtitle" = "create an account";
+"landing.create_account.subtitle" = "Chat privately with groups of friends and family";
 "landing.create_team.title" = "Pro";
-"landing.create_team.subtitle" = "create a team";
+"landing.create_team.subtitle" = "Secure collaboration for businesses, institutions and professional organizations";
 "landing.login.hints" = "Zaten bir hesabınız var mı?";
 "landing.login.button.title" = "Giriş yap";
 
@@ -1530,6 +1533,16 @@
 "url_action.confirm" = "Onay";
 "url_action.title" = "Confirm URL action";
 "url_action.connect_to_bot.message" = "Would you like to connect to the bot?";
+
+// Deep Link
+"url_action.invalid_user.title" = "Wire can't find this person.";
+"url_action.invalid_user.message" = "You may not have permission with this account or it no longer exists.";
+
+"url_action.invalid_conversation.title" = "Wire can't open this conversation.";
+"url_action.invalid_conversation.message" = "You may not have permission with this account or the person may not be on Wire.";
+
+"url_action.authorization_required.title" = "Authorization required.";
+"url_action.authorization_required.message" = "You need to log in to view this content.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // News and offers consent prompt

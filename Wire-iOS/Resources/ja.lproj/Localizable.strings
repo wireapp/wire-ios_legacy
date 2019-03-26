@@ -34,8 +34,8 @@
 "general.service" = "サービス";
 "general.off" = "オフ";
 "general.on" = "オン";
-"general.loading" = "Loading…";
-"general.paste" = "Paste";
+"general.loading" = "読み込み中…";
+"general.paste" = "貼り付け";
 
 // Language like Chinese does not use space to sperate words or sentences.
 "general.space_between_words" = "\U200B";
@@ -242,7 +242,7 @@
 "compose.contact.title" = "会話";
 "compose.message.title" = "メッセージ";
 
-"conversation_details.open_button.accessibility_hint" = "Double tap to view the details of the conversation.";
+"conversation_details.open_button.accessibility_hint" = "会話の詳細を表示するにはダブルタップします。";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Conversation
@@ -542,7 +542,7 @@
 "connection_request.title" = "%@とつながる"; // check UPPERCASE implementation in code
 "missive.connection_request.default_message" = "こんにちは。%@\nWireでつながりましょう。\n%@";
 
-"connection_request_pending_title" = "Connection Request";
+"connection_request_pending_title" = "接続リクエスト";
 "connection_request.send_button_title" = "接続";
 "inbox.connection_request.connect_button_title" = "接続";
 "inbox.connection_request.ignore_button_title" = "無視";
@@ -658,7 +658,7 @@
 "participants.section.name.footer" = "グループ会話には %1$d 人まで参加できます。ビデオ通話はあなたと他 %2$d 名と通話できます。";
 
 // Meta Menu
-"meta.menu.accessibility_more_options_button" = "More actions";
+"meta.menu.accessibility_more_options_button" = "その他の操作";
 "meta.menu.rename" = "名前の変更";
 "meta.menu.leave" = "グループを退出...";
 "meta.menu.archive" = "アーカイブ";
@@ -667,11 +667,12 @@
 "meta.menu.silence.mute" = "ミュート";
 "meta.menu.silence.unmute" = "ミュート解除します。";
 "meta.menu.cancel" = "キャンセル";
-"meta.menu.cancel_connection_request" = "Cancel Request";
+"meta.menu.cancel_connection_request" = "リクエストを取り消す";
 "meta.menu.mark_unread" = "未読にする";
 "meta.menu.mark_read" = "既読にする";
 "shortcut.mark_all_as_read.title" = "すべて既読にする";
 "meta.menu.configure_notifications" = "通知…";
+"meta.menu.open_self_profile" = "Open Profile";
 
 // Delete conversation
 "meta.menu.delete_content.dialog_title" = "コンテンツを削除しますか?";
@@ -708,8 +709,8 @@
 "profile.remove_dialog_title" = "削除しますか?";
 "profile.remove_dialog_message" = "%@ は、この会話でメッセージを送受信することができません。";
 "profile.remove_dialog_button_cancel" = "キャンセル";
-"profile.remove_dialog_button_remove" = "Remove From Group…";
-"profile.remove_dialog_button_remove_confirm" = "Remove From Group";
+"profile.remove_dialog_button_remove" = "グループから削除";
+"profile.remove_dialog_button_remove_confirm" = "グループから削除";
 
 // Block dialog
 "profile.block_dialog.title" = "ブロックしますか?";
@@ -734,7 +735,7 @@
 
 // Cancel connection request
 "profile.cancel_connection_request_dialog.title" = "リクエストを取り消しますか？";
-"profile.cancel_connection_request_dialog.message" = "Cancel your connection request to %@?";
+"profile.cancel_connection_request_dialog.message" = "%@ への接続リクエストをキャンセルします。";
 "profile.cancel_connection_request_dialog.button_no" = "いいえ";
 "profile.cancel_connection_request_dialog.button_yes" = "はい";
 
@@ -743,7 +744,7 @@
 "profile.unblock_button_title" = "ブロック解除中...";
 
 "profile.block_button_title_action" = "ブロック";
-"profile.unblock_button_title_action" = "Unblock";
+"profile.unblock_button_title_action" = "ブロック解除";
 
 "profile.cancel_connection_button_title" = "リクエストをキャンセルします";
 "profile.connection_request_state.blocked" = "ブロックしています";
@@ -752,9 +753,9 @@
 
 "profile.read_receipts_enabled_memo.header" = "開封通知を有効にします";
 "profile.read_receipts_disabled_memo.header" = "開封通知を無効にします";
-"profile.read_receipts_memo.body" = "If both sides turn on read receipts, you can see when messages are read.\n\nYou can change this option in your account settings.";
+"profile.read_receipts_memo.body" = "両者が開封通知をオンにした場合に、メッセージが開封されたかが分かります。\nあなたの アカウント設定 から、この設定を変更することができます。";
 
-"profile.extended_metadata.header" = "Information";
+"profile.extended_metadata.header" = "情報";
 
 // User Details
 "profile.details.title" = "詳細";
@@ -1031,7 +1032,9 @@
 
 "self.settings.privacy_security.lock_app.description" = "Wireのロックを解除する";
 
-"self.settings.privacy_security.lock_cancelled.description" = "Touch ID またはパスコードでWireのロックを解除する";
+"self.settings.privacy_security.lock_cancelled.description_face_id" = "Face ID またはパスコードでWireのロックを解除する";
+"self.settings.privacy_security.lock_cancelled.description_touch_id" = "Touch ID またはパスコードでWireのロックを解除する";
+"self.settings.privacy_security.lock_cancelled.description_passcode" = "パスコードでWireのロックを解除する";
 "self.settings.privacy_security.lock_cancelled.action" = "ロックを解除";
 
 "self.settings.privacy_security.disable_link_previews.title" = "リンク プレビューを作成します。";
@@ -1109,17 +1112,17 @@
 "password.guidance.tooshort" = "8 文字以上";
 "password.guidance.toolong" = "文字が多すぎます";
 
-"phone.guidance.invalid" = "Invalid phone number";
-"phone.guidance.tooshort" = "Phone number is too short";
+"phone.guidance.invalid" = "無効な電話番号です";
+"phone.guidance.tooshort" = "電話番号が短すぎます";
 "phone.guidance.toolong" = "文字が多すぎます";
 
 // Landing screen
 
-"landing.header" = "Wire. Add your Account.";
+"landing.header" = "Wire。あなたのアカウントを追加します。";
 "landing.create_account.title" = "パーソナル";
-"landing.create_account.subtitle" = "アカウントを作成";
+"landing.create_account.subtitle" = "Chat privately with groups of friends and family";
 "landing.create_team.title" = "プロ";
-"landing.create_team.subtitle" = "新しいチームを作成";
+"landing.create_team.subtitle" = "Secure collaboration for businesses, institutions and professional organizations";
 "landing.login.hints" = "既にアカウントをお持ちですか？";
 "landing.login.button.title" = "ログイン";
 
@@ -1129,19 +1132,19 @@
 "team.name.subheadline" = "後でいつでも変更することができます。";
 "team.name.textfield.placeholder" = "チーム名";
 "team.name.textfield.accessibility" = "設定するチーム名";
-"team.name.whatiswireforteams" = "What is Wire Pro?";
+"team.name.whatiswireforteams" = "Wire Pro とはなんですか？";
 
 "team.email.headline" = "アカウント";
 "team.email.subheadline" = "業務用メールアドレスを入力してください。";
-"team.email.textfield.placeholder" = "Your company email";
+"team.email.textfield.placeholder" = "あなたの会社のメール アドレス";
 "team.email.button.learn_more" = "もっと知る";
 
 "team.activation_code.headline" = "メール受信しました。";
-"team.phone_activation_code.headline" = "Verification";
+"team.phone_activation_code.headline" = "認証";
 "team.activation_code.subheadline" = "%@ に送信した認証コードを入力してください";
 "team.activation_code.button.resend" = "コードを再送する";
 "team.activation_code.button.change_email" = "メールアドレス変更";
-"team.activation_code.button.change_phone" = "Change phone number";
+"team.activation_code.button.change_phone" = "電話番号を変更する";
 
 "team.full_name.headline" = "あなたの名前";
 "team.full_name.textfield.placeholder" = "フルネーム";
@@ -1152,15 +1155,15 @@
 "team.password.textfield.accessibility" = "最低８文字以上でパスワードを入力してください";
 
 
-"verification.code_label" = "Six-digit code. Text field.";
-"verification.code_hint" = "Double tap to enter the code.";
+"verification.code_label" = "6 桁のコードです。テキスト フィールドです。";
+"verification.code_hint" = "ダブルタップすると、コードを入力します。";
 
 // Invite Team Members
 
 "team.invite.header.title" = "チームを作成します";
-"team.invite.header.subtitle" = "Your Wire team is ready to go. Invite your colleagues as members.";
-"team.invite.textfield.placeholder" = "Colleague's email";
-"team.invite.textfield.accesibility" = "Enter email address for colleague to invite.";
+"team.invite.header.subtitle" = "あなたのWireチームの準備ができました。メンバーとしてあなたの同僚を招待します。";
+"team.invite.textfield.placeholder" = "同僚のメール";
+"team.invite.textfield.accesibility" = "同僚を招待するための電子メール アドレスを入力します。";
 "team.invite.learn_more.title" = "もっと知る";
 "team.invite.top_bar.skip" = "省略";
 "team.invite.top_bar.done" = "完了";
@@ -1232,7 +1235,7 @@
 "registration.alert.account_exists.message_phone" = "登録に使用した電話番号は既にアカウントにリンクされています。\n\n別の電話番号を登録するか、このアカウントを持っている場合はログインしてみてください。";
 "registration.alert.account_exists.message_email" = "登録に使用したメールアドレスは既にアカウントにリンクされています。\n\n別のメールアドレスを登録するか、このアカウントを持っている場合はログインしてみてください。";
 "registration.alert.change_email_action" = "Eメールを変更";
-"registration.alert.change_phone_action" = "Register with Another Number";
+"registration.alert.change_phone_action" = "別の番号で登録します。";
 "registration.alert.change_signin_action" = "ログイン";
 
 // Restore History Warning Alert
@@ -1261,8 +1264,8 @@
 "login.sso.alert.action" = "ログイン";
 "login.sso.alert.text_field.placeholder" = "シングルサインオン アクセスコード";
 
-"login.sso.start_error_title" = "Cannot Start Company Login";
-"login.sso.link_error_message" = "The company login link you clicked is not valid. Please contact your administrator to resolve the issue.";
+"login.sso.start_error_title" = "企業アカウントでのログインを開始できませんでした。";
+"login.sso.link_error_message" = "あなたがクリックした企業ログインのリンクは無効です。問題を解決するにはあなたの管理者に問い合わせてください。";
 
 "login.sso.error.alert.title" = "何か問題があります";
 "login.sso.error.alert.invalid_code.title" = "コードが無効です。";
@@ -1321,14 +1324,14 @@
 "registration.push_access_denied.settings_button.title" = "設定に移動する";
 "registration.push_access_denied.maybe_later_button.title" = "後で";
 
-"registration.personal.title" = "Create an account";
+"registration.personal.title" = "アカウントを作成";
 "registration.signin.title" = "ログイン";
-"registration.signin.too_many_devices.title" = "Too Many Devices";
+"registration.signin.too_many_devices.title" = "デバイスが多すぎます。";
 "registration.signin.too_many_devices.subtitle" = "このデバイスで Wire を使用するため、他のデバイスを 1 つ削除してください。";
 "registration.signin.too_many_devices.manage_button.title" = "デバイスを管理";
 "registration.signin.too_many_devices.sign_out_button.title" = "ログアウト";
 
-"registration.signin.too_many_devices.manage_screen.title" = "Remove a Device";
+"registration.signin.too_many_devices.manage_screen.title" = "デバイスの削除";
 
 "registration.signin.alert.password_needed.title" = "パスワードが必要";
 "registration.signin.alert.password_needed.message" = "ログインするためにパスワードを入力してください。";
@@ -1348,14 +1351,14 @@
 "signin.confirm" = "ログイン";
 "signin.company_idp.button.title" = "法人向け";
 
-"signin_logout.subheadline" = "Your session expired. You need to log in again to continue.";
-"signin_logout.email.subheadline" = "Your session expired. Enter your email address and password to continue.";
-"signin_logout.phone.subheadline" = "Your session expired. Enter your phone number to continue.";
-"signin_logout.sso.subheadline" = "Your session expired. Log in with your company account to continue.";
+"signin_logout.subheadline" = "セッションが期限切れです。継続のため再度ログインする必要があります。";
+"signin_logout.email.subheadline" = "セッションの期限が切れました。メール アドレスとパスワードを入力して続行してください。";
+"signin_logout.phone.subheadline" = "セッションの期限が切れました。電話番号を入力して続行してください。";
+"signin_logout.sso.subheadline" = "セッションの期限が切れました。あなたの企業アカウントでログインして続行してください。";
 "signin_logout.sso.buton" = "企業ログイン";
 
-"signin.email.missing_password.subtitle" = "Enter your email address and password to continue.";
-"signin.phone.missing_password.subtitle" = "Enter your phone number to continue.";
+"signin.email.missing_password.subtitle" = "続行するにはメールアドレスとパスワードを入力します。";
+"signin.phone.missing_password.subtitle" = "続行するにはあなたの電話番号を入力します。";
 
 "registration.phone_country" = "国";
 "registration.phone_code" = "国コード";
@@ -1368,7 +1371,7 @@
 "registration.add_phone_number.hero.paragraph" = "これはあなたが友人を探すことを容易にします。私たちは決して第三者とシェアいません。";
 "registration.add_phone_number.skip_button.title" = "いまは行わない";
 
-"registration.add_email_password.hero.title" = "Add your email and password";
+"registration.add_email_password.hero.title" = "メールアドレスとパスワードを追加してください。";
 "registration.add_email_password.hero.paragraph" = "これにより、複数のデバイスで Wire を使用できます。";
 
 "registration.email_invitation.title" = "招待状";
@@ -1530,6 +1533,16 @@
 "url_action.confirm" = "確認";
 "url_action.title" = "このURLを確認します";
 "url_action.connect_to_bot.message" = "Bot に接続しますか？";
+
+// Deep Link
+"url_action.invalid_user.title" = "Wire can't find this person.";
+"url_action.invalid_user.message" = "You may not have permission with this account or it no longer exists.";
+
+"url_action.invalid_conversation.title" = "Wire can't open this conversation.";
+"url_action.invalid_conversation.message" = "You may not have permission with this account or the person may not be on Wire.";
+
+"url_action.authorization_required.title" = "Authorization required.";
+"url_action.authorization_required.message" = "You need to log in to view this content.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // News and offers consent prompt

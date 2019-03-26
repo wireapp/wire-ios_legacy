@@ -672,6 +672,7 @@
 "meta.menu.mark_read" = "Позначити як прочитане";
 "shortcut.mark_all_as_read.title" = "Позначити все як прочитане";
 "meta.menu.configure_notifications" = "Нотифікації…";
+"meta.menu.open_self_profile" = "Open Profile";
 
 // Delete conversation
 "meta.menu.delete_content.dialog_title" = "Видалити вміст?";
@@ -1031,7 +1032,9 @@
 
 "self.settings.privacy_security.lock_app.description" = "Розблокувати Wire";
 
-"self.settings.privacy_security.lock_cancelled.description" = "Розблокуйте Wire за допомогою Touch ID або коду допуску";
+"self.settings.privacy_security.lock_cancelled.description_face_id" = "Unlock Wire with Face ID or Passcode";
+"self.settings.privacy_security.lock_cancelled.description_touch_id" = "Unlock Wire with Touch ID or Passcode";
+"self.settings.privacy_security.lock_cancelled.description_passcode" = "Unlock Wire with Passcode";
 "self.settings.privacy_security.lock_cancelled.action" = "Розблокувати";
 
 "self.settings.privacy_security.disable_link_previews.title" = "Генерувати попередній перегляд для посилань";
@@ -1117,9 +1120,9 @@
 
 "landing.header" = "Wire. Додати акаунт.";
 "landing.create_account.title" = "Персональний акаунт";
-"landing.create_account.subtitle" = "створити акаунт";
+"landing.create_account.subtitle" = "Chat privately with groups of friends and family";
 "landing.create_team.title" = "Pro акаунт";
-"landing.create_team.subtitle" = "створити команду";
+"landing.create_team.subtitle" = "Secure collaboration for businesses, institutions and professional organizations";
 "landing.login.hints" = "Вже зареєстровані?";
 "landing.login.button.title" = "Увійти";
 
@@ -1530,6 +1533,16 @@
 "url_action.confirm" = "Підтвердити";
 "url_action.title" = "Підтвердження дії з URL";
 "url_action.connect_to_bot.message" = "Чи Ви хотіли б підключитися до бота?";
+
+// Deep Link
+"url_action.invalid_user.title" = "Wire can't find this person.";
+"url_action.invalid_user.message" = "You may not have permission with this account or it no longer exists.";
+
+"url_action.invalid_conversation.title" = "Wire can't open this conversation.";
+"url_action.invalid_conversation.message" = "You may not have permission with this account or the person may not be on Wire.";
+
+"url_action.authorization_required.title" = "Authorization required.";
+"url_action.authorization_required.message" = "You need to log in to view this content.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // News and offers consent prompt

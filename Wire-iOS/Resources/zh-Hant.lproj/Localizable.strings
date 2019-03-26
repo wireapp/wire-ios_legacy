@@ -242,7 +242,7 @@
 "compose.contact.title" = "對話";
 "compose.message.title" = "訊息";
 
-"conversation_details.open_button.accessibility_hint" = "Double tap to view the details of the conversation.";
+"conversation_details.open_button.accessibility_hint" = "按兩下以查看對話的詳細資訊。";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Conversation
@@ -542,7 +542,7 @@
 "connection_request.title" = "連接到%@"; // check UPPERCASE implementation in code
 "missive.connection_request.default_message" = "%@您好，\n在Wire和我一起聊天吧。\n%@";
 
-"connection_request_pending_title" = "Connection Request";
+"connection_request_pending_title" = "連接請求";
 "connection_request.send_button_title" = "加為連絡人";
 "inbox.connection_request.connect_button_title" = "加為連絡人";
 "inbox.connection_request.ignore_button_title" = "忽略";
@@ -658,7 +658,7 @@
 "participants.section.name.footer" = "最多%1$d參與者可以加入群組對話。視像通話可用以你與另外%2$d人。";
 
 // Meta Menu
-"meta.menu.accessibility_more_options_button" = "More actions";
+"meta.menu.accessibility_more_options_button" = "更多動作";
 "meta.menu.rename" = "重新命名";
 "meta.menu.leave" = "離開群組";
 "meta.menu.archive" = "封存";
@@ -667,11 +667,12 @@
 "meta.menu.silence.mute" = "關閉訊息通知";
 "meta.menu.silence.unmute" = "開啟訊息通知";
 "meta.menu.cancel" = "取消";
-"meta.menu.cancel_connection_request" = "Cancel Request";
+"meta.menu.cancel_connection_request" = "取消請求";
 "meta.menu.mark_unread" = "標示為未讀";
 "meta.menu.mark_read" = "標示成已讀";
 "shortcut.mark_all_as_read.title" = "將全部標記為已讀";
 "meta.menu.configure_notifications" = "通知…";
+"meta.menu.open_self_profile" = "開啟個人資料";
 
 // Delete conversation
 "meta.menu.delete_content.dialog_title" = "確定刪除內容？";
@@ -708,8 +709,8 @@
 "profile.remove_dialog_title" = "確定移除？";
 "profile.remove_dialog_message" = "%@ 將無法發送至或接收此聊天室的訊息。";
 "profile.remove_dialog_button_cancel" = "取消";
-"profile.remove_dialog_button_remove" = "Remove From Group…";
-"profile.remove_dialog_button_remove_confirm" = "Remove From Group";
+"profile.remove_dialog_button_remove" = "從群組移除…";
+"profile.remove_dialog_button_remove_confirm" = "從群組移除";
 
 // Block dialog
 "profile.block_dialog.title" = "確定封鎖？";
@@ -734,7 +735,7 @@
 
 // Cancel connection request
 "profile.cancel_connection_request_dialog.title" = "取消請求？";
-"profile.cancel_connection_request_dialog.message" = "Cancel your connection request to %@?";
+"profile.cancel_connection_request_dialog.message" = "取消與%@的連結請求？";
 "profile.cancel_connection_request_dialog.button_no" = "不好";
 "profile.cancel_connection_request_dialog.button_yes" = "好";
 
@@ -743,7 +744,7 @@
 "profile.unblock_button_title" = "解除封鎖...";
 
 "profile.block_button_title_action" = "封鎖";
-"profile.unblock_button_title_action" = "Unblock";
+"profile.unblock_button_title_action" = "解除封鎖";
 
 "profile.cancel_connection_button_title" = "取消請求";
 "profile.connection_request_state.blocked" = "封鎖";
@@ -752,9 +753,9 @@
 
 "profile.read_receipts_enabled_memo.header" = "你已啓用讀取回條";
 "profile.read_receipts_disabled_memo.header" = "您已停用讀取回條";
-"profile.read_receipts_memo.body" = "If both sides turn on read receipts, you can see when messages are read.\n\nYou can change this option in your account settings.";
+"profile.read_receipts_memo.body" = "如果雙方都打開讀取回條，則可以查看何時讀取信息。您可以在帳戶設置中更改此選項。";
 
-"profile.extended_metadata.header" = "Information";
+"profile.extended_metadata.header" = "資訊";
 
 // User Details
 "profile.details.title" = "詳細資訊";
@@ -1031,7 +1032,9 @@
 
 "self.settings.privacy_security.lock_app.description" = "解鎖Wire";
 
-"self.settings.privacy_security.lock_cancelled.description" = "請使用Touch ID或Passcode解鎖Wire";
+"self.settings.privacy_security.lock_cancelled.description_face_id" = "請使用Face ID或密碼解鎖Wire";
+"self.settings.privacy_security.lock_cancelled.description_touch_id" = "請使用Touch ID或密碼解鎖Wire";
+"self.settings.privacy_security.lock_cancelled.description_passcode" = "用密碼解鎖Wire";
 "self.settings.privacy_security.lock_cancelled.action" = "解鎖";
 
 "self.settings.privacy_security.disable_link_previews.title" = "製作連結預覽";
@@ -1117,9 +1120,9 @@
 
 "landing.header" = "Wire。加入您的帳戶。";
 "landing.create_account.title" = "個人版";
-"landing.create_account.subtitle" = "新增帳號";
+"landing.create_account.subtitle" = "與朋友和家人私密聊天";
 "landing.create_team.title" = "專業版";
-"landing.create_team.subtitle" = "建立團隊";
+"landing.create_team.subtitle" = "保密企業、機構和專業組織的協作";
 "landing.login.hints" = "已有帳號？";
 "landing.login.button.title" = "登入";
 
@@ -1530,6 +1533,16 @@
 "url_action.confirm" = "確認";
 "url_action.title" = "確認 URL 動作";
 "url_action.connect_to_bot.message" = "你想要連接到Bot嗎？";
+
+// Deep Link
+"url_action.invalid_user.title" = "Wire找不到這個人。";
+"url_action.invalid_user.message" = "您可能沒有此帳戶的權限或此帳戶已不再存在。";
+
+"url_action.invalid_conversation.title" = "Wire無法打開此對話。";
+"url_action.invalid_conversation.message" = "您可能沒有此帳戶的許可，或該人可能不在線上。";
+
+"url_action.authorization_required.title" = "需要授權。";
+"url_action.authorization_required.message" = "您需要登錄才能查看此內容。";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // News and offers consent prompt

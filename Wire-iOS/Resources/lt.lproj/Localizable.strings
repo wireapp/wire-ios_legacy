@@ -242,7 +242,7 @@
 "compose.contact.title" = "Pokalbis";
 "compose.message.title" = "Žinutė";
 
-"conversation_details.open_button.accessibility_hint" = "Double tap to view the details of the conversation.";
+"conversation_details.open_button.accessibility_hint" = "Spustelėję dukart pamatysite susirašinėjimo duomenis.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Conversation
@@ -542,7 +542,7 @@
 "connection_request.title" = "Prisijungti prie %@"; // check UPPERCASE implementation in code
 "missive.connection_request.default_message" = "Labas %@,\nBendraukime per „Wire“.\n%@";
 
-"connection_request_pending_title" = "Connection Request";
+"connection_request_pending_title" = "Prašymas susijungti";
 "connection_request.send_button_title" = "Užmegzti kontaktą";
 "inbox.connection_request.connect_button_title" = "Užmegzti kontaktą";
 "inbox.connection_request.ignore_button_title" = "Nepaisyti";
@@ -658,7 +658,7 @@
 "participants.section.name.footer" = "Prie grupės susirašinėjimo gali prisijungti iki %1$d dalyvių. Bendrauti vaizdu gali iki %2$d žmonių ir jumis.";
 
 // Meta Menu
-"meta.menu.accessibility_more_options_button" = "More actions";
+"meta.menu.accessibility_more_options_button" = "Daugiau veiksmų";
 "meta.menu.rename" = "Pervadinti";
 "meta.menu.leave" = "Išeiti iš grupės…";
 "meta.menu.archive" = "Archyvuoti";
@@ -667,11 +667,12 @@
 "meta.menu.silence.mute" = "Išjungti pranešimus";
 "meta.menu.silence.unmute" = "Įjungti pranešimus";
 "meta.menu.cancel" = "Atsisakyti";
-"meta.menu.cancel_connection_request" = "Cancel Request";
+"meta.menu.cancel_connection_request" = "Atšaukti prašymą";
 "meta.menu.mark_unread" = "Žymėti kaip neskaitytą";
 "meta.menu.mark_read" = "Žymėti kaip skaitytą";
 "shortcut.mark_all_as_read.title" = "Žymėti visus kaip skaitytus";
 "meta.menu.configure_notifications" = "Pranešimai…";
+"meta.menu.open_self_profile" = "Open Profile";
 
 // Delete conversation
 "meta.menu.delete_content.dialog_title" = "Ištrinti turinį?";
@@ -708,8 +709,8 @@
 "profile.remove_dialog_title" = "Šalinti?";
 "profile.remove_dialog_message" = "%@ negalės siųsti ir gauti žinučių šiame susirašinėjime.";
 "profile.remove_dialog_button_cancel" = "Atsisakyti";
-"profile.remove_dialog_button_remove" = "Remove From Group…";
-"profile.remove_dialog_button_remove_confirm" = "Remove From Group";
+"profile.remove_dialog_button_remove" = "Šalinti iš grupės…";
+"profile.remove_dialog_button_remove_confirm" = "Šalinti iš grupės";
 
 // Block dialog
 "profile.block_dialog.title" = "Užblokuoti?";
@@ -734,7 +735,7 @@
 
 // Cancel connection request
 "profile.cancel_connection_request_dialog.title" = "Atsisakyti užklausos?";
-"profile.cancel_connection_request_dialog.message" = "Cancel your connection request to %@?";
+"profile.cancel_connection_request_dialog.message" = "Atšaukti prašymą susijungti su %@?";
 "profile.cancel_connection_request_dialog.button_no" = "Ne";
 "profile.cancel_connection_request_dialog.button_yes" = "Taip";
 
@@ -743,7 +744,7 @@
 "profile.unblock_button_title" = "Atblokuoti…";
 
 "profile.block_button_title_action" = "Užblokuoti";
-"profile.unblock_button_title_action" = "Unblock";
+"profile.unblock_button_title_action" = "Atblokuoti";
 
 "profile.cancel_connection_button_title" = "ATŠAUKTI PRAŠYMĄ";
 "profile.connection_request_state.blocked" = "UŽBLOKUOTA";
@@ -752,9 +753,9 @@
 
 "profile.read_receipts_enabled_memo.header" = "JŪS ĮJUNGĖTE PERSKAITYMO PATVIRTINIMUS";
 "profile.read_receipts_disabled_memo.header" = "JŪS IŠUNGĖTE PERSKAITYMO PATVIRTINIMUS";
-"profile.read_receipts_memo.body" = "If both sides turn on read receipts, you can see when messages are read.\n\nYou can change this option in your account settings.";
+"profile.read_receipts_memo.body" = "Jei abi pusės įjungia perskaitymo patvirtinimus, jūs galite matyti kai žinutė buvo perskaityta. \n\nGalite tai pakeisti paskyros nustatymuose.";
 
-"profile.extended_metadata.header" = "Information";
+"profile.extended_metadata.header" = "Informacija";
 
 // User Details
 "profile.details.title" = "Išsamiau";
@@ -1031,7 +1032,9 @@
 
 "self.settings.privacy_security.lock_app.description" = "Atrakinti „Wire“";
 
-"self.settings.privacy_security.lock_cancelled.description" = "Atrakinti „Wire“ naudojant „Touch ID“ arba slaptąjį kodą";
+"self.settings.privacy_security.lock_cancelled.description_face_id" = "Atrakinti „Wire“ naudojant „Face ID“ arba slaptąjį kodą";
+"self.settings.privacy_security.lock_cancelled.description_touch_id" = "Atrakinti „Wire“ naudojant „Touch ID“ arba slaptąjį kodą";
+"self.settings.privacy_security.lock_cancelled.description_passcode" = "Atrakinti „Wire“ naudojant slaptąjį kodą";
 "self.settings.privacy_security.lock_cancelled.action" = "Atrakinti";
 
 "self.settings.privacy_security.disable_link_previews.title" = "Rodyti svetainių vaizdą";
@@ -1115,11 +1118,11 @@
 
 // Landing screen
 
-"landing.header" = "\"Wire\". Pridėkite savo paskyrą.";
+"landing.header" = "„Wire“. Pridėkite paskyrą.";
 "landing.create_account.title" = "Asmeninis";
-"landing.create_account.subtitle" = "kurti paskyrą";
+"landing.create_account.subtitle" = "Chat privately with groups of friends and family";
 "landing.create_team.title" = "Pro";
-"landing.create_team.subtitle" = "kurti komandą";
+"landing.create_team.subtitle" = "Secure collaboration for businesses, institutions and professional organizations";
 "landing.login.hints" = "Jau turite paskyrą?";
 "landing.login.button.title" = "Prisijungti";
 
@@ -1152,7 +1155,7 @@
 "team.password.textfield.accessibility" = "Įrašykite slaptažodį, mažiausiai 8 simbolių";
 
 
-"verification.code_label" = "Šešių skaitmenų kodas.";
+"verification.code_label" = "Šešių skaitmenų kodas. Teksto laukas.";
 "verification.code_hint" = "Du kart paspauskite kad įvesti kodą.";
 
 // Invite Team Members
@@ -1530,6 +1533,16 @@
 "url_action.confirm" = "Patvirtinti";
 "url_action.title" = "Patvirtinti URL adresą";
 "url_action.connect_to_bot.message" = "Ar norite prisijungti prie roboto?";
+
+// Deep Link
+"url_action.invalid_user.title" = "Wire can't find this person.";
+"url_action.invalid_user.message" = "You may not have permission with this account or it no longer exists.";
+
+"url_action.invalid_conversation.title" = "Wire can't open this conversation.";
+"url_action.invalid_conversation.message" = "You may not have permission with this account or the person may not be on Wire.";
+
+"url_action.authorization_required.title" = "Authorization required.";
+"url_action.authorization_required.message" = "You need to log in to view this content.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // News and offers consent prompt

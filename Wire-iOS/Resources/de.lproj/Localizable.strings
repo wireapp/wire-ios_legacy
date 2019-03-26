@@ -672,6 +672,7 @@
 "meta.menu.mark_read" = "Als gelesen markieren";
 "shortcut.mark_all_as_read.title" = "Alle als gelesen markieren";
 "meta.menu.configure_notifications" = "Benachrichtigungen…";
+"meta.menu.open_self_profile" = "Profil öffnen";
 
 // Delete conversation
 "meta.menu.delete_content.dialog_title" = "Gesprächsverlauf löschen?";
@@ -1031,7 +1032,9 @@
 
 "self.settings.privacy_security.lock_app.description" = "Wire entsperren";
 
-"self.settings.privacy_security.lock_cancelled.description" = "Entsperre Wire mit Touch ID oder Passcode";
+"self.settings.privacy_security.lock_cancelled.description_face_id" = "Wire mit Face ID oder Passwort entsperren";
+"self.settings.privacy_security.lock_cancelled.description_touch_id" = "Wire mit Touch ID oder Passwort entsperren";
+"self.settings.privacy_security.lock_cancelled.description_passcode" = "Wire mit Passwort entsperren";
 "self.settings.privacy_security.lock_cancelled.action" = "Entsperren";
 
 "self.settings.privacy_security.disable_link_previews.title" = "Link-Vorschau erstellen";
@@ -1117,9 +1120,9 @@
 
 "landing.header" = "Wire. Konto hinzufügen.";
 "landing.create_account.title" = "Privat";
-"landing.create_account.subtitle" = "Konto erstellen";
+"landing.create_account.subtitle" = "Privat mit Freunden und der Familie chatten";
 "landing.create_team.title" = "Pro";
-"landing.create_team.subtitle" = "Team erstellen";
+"landing.create_team.subtitle" = "Sichere Zusammenarbeit für Unternehmen, Institutionen und Organisationen";
 "landing.login.hints" = "Hast du bereits ein Benutzerkonto?";
 "landing.login.button.title" = "Login";
 
@@ -1530,6 +1533,16 @@
 "url_action.confirm" = "Bestätigen";
 "url_action.title" = "URL-Aktion bestätigen";
 "url_action.connect_to_bot.message" = "Möchten Sie sich mit dem Bot verbinden?";
+
+// Deep Link
+"url_action.invalid_user.title" = "Wire kann diese Person nicht finden.";
+"url_action.invalid_user.message" = "Entweder fehlt die Berechtigung für dieses Konto oder es existiert nicht mehr.";
+
+"url_action.invalid_conversation.title" = "Wire kann diese Unterhaltung nicht öffnen.";
+"url_action.invalid_conversation.message" = "Entweder fehlt die Berechtigung für dieses Konto oder die Person nutzt Wire nicht.";
+
+"url_action.authorization_required.title" = "Berechtigung erforderlich.";
+"url_action.authorization_required.message" = "Bitte einloggen, um diesen Inhalt zu sehen.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // News and offers consent prompt

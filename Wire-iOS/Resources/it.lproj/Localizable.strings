@@ -34,8 +34,8 @@
 "general.service" = "Servizio";
 "general.off" = "Disattivo";
 "general.on" = "On";
-"general.loading" = "Loading…";
-"general.paste" = "Paste";
+"general.loading" = "Caricamento…";
+"general.paste" = "Incolla";
 
 // Language like Chinese does not use space to sperate words or sentences.
 "general.space_between_words" = " ";
@@ -242,7 +242,7 @@
 "compose.contact.title" = "Conversazione";
 "compose.message.title" = "Messaggio";
 
-"conversation_details.open_button.accessibility_hint" = "Double tap to view the details of the conversation.";
+"conversation_details.open_button.accessibility_hint" = "Tocca due volte per visualizzare i dettagli della conversazione.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Conversation
@@ -542,7 +542,7 @@
 "connection_request.title" = "Connettiti a %@"; // check UPPERCASE implementation in code
 "missive.connection_request.default_message" = "Ciao %@,\nConnettiamoci su Wire.\n%@";
 
-"connection_request_pending_title" = "Connection Request";
+"connection_request_pending_title" = "Richiesta di connessione";
 "connection_request.send_button_title" = "Connetti";
 "inbox.connection_request.connect_button_title" = "Connetti";
 "inbox.connection_request.ignore_button_title" = "Ignora";
@@ -658,7 +658,7 @@
 "participants.section.name.footer" = "Fino a %1$d persone possono partecipare ad una conversazione di gruppo. Le videochiamate funzionano con altre %2$d persone oltre a te.";
 
 // Meta Menu
-"meta.menu.accessibility_more_options_button" = "More actions";
+"meta.menu.accessibility_more_options_button" = "Altre azioni";
 "meta.menu.rename" = "Rinomina";
 "meta.menu.leave" = "Abbandona il gruppo…";
 "meta.menu.archive" = "Archivia";
@@ -667,11 +667,12 @@
 "meta.menu.silence.mute" = "Silenzia";
 "meta.menu.silence.unmute" = "Riattiva audio";
 "meta.menu.cancel" = "Annulla";
-"meta.menu.cancel_connection_request" = "Cancel Request";
+"meta.menu.cancel_connection_request" = "Annulla richiesta";
 "meta.menu.mark_unread" = "Segna come non letto";
 "meta.menu.mark_read" = "Segna come letto";
 "shortcut.mark_all_as_read.title" = "Segna tutti come letti";
 "meta.menu.configure_notifications" = "Notifiche…";
+"meta.menu.open_self_profile" = "Open Profile";
 
 // Delete conversation
 "meta.menu.delete_content.dialog_title" = "Eliminare il contenuto?";
@@ -708,8 +709,8 @@
 "profile.remove_dialog_title" = "Rimuovere?";
 "profile.remove_dialog_message" = "%@ non sarà più in grado di inviare o ricevere messaggi in questa conversazione.";
 "profile.remove_dialog_button_cancel" = "Annulla";
-"profile.remove_dialog_button_remove" = "Remove From Group…";
-"profile.remove_dialog_button_remove_confirm" = "Remove From Group";
+"profile.remove_dialog_button_remove" = "Rimuovi dal gruppo…";
+"profile.remove_dialog_button_remove_confirm" = "Rimuovi dal gruppo";
 
 // Block dialog
 "profile.block_dialog.title" = "Blocca?";
@@ -734,7 +735,7 @@
 
 // Cancel connection request
 "profile.cancel_connection_request_dialog.title" = "Annullare la richiesta?";
-"profile.cancel_connection_request_dialog.message" = "Cancel your connection request to %@?";
+"profile.cancel_connection_request_dialog.message" = "Rimuovere la richiesta di connessione a %@?";
 "profile.cancel_connection_request_dialog.button_no" = "No";
 "profile.cancel_connection_request_dialog.button_yes" = "Sì";
 
@@ -743,7 +744,7 @@
 "profile.unblock_button_title" = "Sblocca…";
 
 "profile.block_button_title_action" = "Blocca";
-"profile.unblock_button_title_action" = "Unblock";
+"profile.unblock_button_title_action" = "Sblocca";
 
 "profile.cancel_connection_button_title" = "ANNULLA RICHIESTA";
 "profile.connection_request_state.blocked" = "BLOCCATO";
@@ -752,9 +753,9 @@
 
 "profile.read_receipts_enabled_memo.header" = "HAI ABILITATO LE CONFERME DI LETTURA";
 "profile.read_receipts_disabled_memo.header" = "HAI DISABILITATO LE CONFERME DI LETTURA";
-"profile.read_receipts_memo.body" = "If both sides turn on read receipts, you can see when messages are read.\n\nYou can change this option in your account settings.";
+"profile.read_receipts_memo.body" = "Se entrambe le parti attivano le conferme di lettura, è possibile vedere quando vengono letti i messaggi.\nPuoi cambiare questa opzione nelle impostazioni del tuo account.";
 
-"profile.extended_metadata.header" = "Information";
+"profile.extended_metadata.header" = "Informazioni";
 
 // User Details
 "profile.details.title" = "Dettagli";
@@ -1031,7 +1032,9 @@
 
 "self.settings.privacy_security.lock_app.description" = "Sblocca Wire";
 
-"self.settings.privacy_security.lock_cancelled.description" = "Sblocca Wire con Touch ID o Passcode";
+"self.settings.privacy_security.lock_cancelled.description_face_id" = "Unlock Wire with Face ID or Passcode";
+"self.settings.privacy_security.lock_cancelled.description_touch_id" = "Unlock Wire with Touch ID or Passcode";
+"self.settings.privacy_security.lock_cancelled.description_passcode" = "Unlock Wire with Passcode";
 "self.settings.privacy_security.lock_cancelled.action" = "Sblocca";
 
 "self.settings.privacy_security.disable_link_previews.title" = "Crea anteprime dei link";
@@ -1109,17 +1112,17 @@
 "password.guidance.tooshort" = "Almeno 8 caratteri";
 "password.guidance.toolong" = "Troppi caratteri";
 
-"phone.guidance.invalid" = "Invalid phone number";
-"phone.guidance.tooshort" = "Phone number is too short";
+"phone.guidance.invalid" = "Numero di telefono non valido";
+"phone.guidance.tooshort" = "Il numero di telefono è troppo corto";
 "phone.guidance.toolong" = "Troppi caratteri";
 
 // Landing screen
 
-"landing.header" = "Wire. Add your Account.";
+"landing.header" = "Wire. Aggiungi il tuo account.";
 "landing.create_account.title" = "Personale";
-"landing.create_account.subtitle" = "crea un account";
+"landing.create_account.subtitle" = "Chat privately with groups of friends and family";
 "landing.create_team.title" = "Pro";
-"landing.create_team.subtitle" = "crea un team";
+"landing.create_team.subtitle" = "Secure collaboration for businesses, institutions and professional organizations";
 "landing.login.hints" = "Hai già un account?";
 "landing.login.button.title" = "Log in";
 
@@ -1129,19 +1132,19 @@
 "team.name.subheadline" = "Potrai cambiarlo in seguito.";
 "team.name.textfield.placeholder" = "nome del team";
 "team.name.textfield.accessibility" = "Inserisci il nome del team";
-"team.name.whatiswireforteams" = "What is Wire Pro?";
+"team.name.whatiswireforteams" = "Cos'è Wire Pro?";
 
 "team.email.headline" = "Il tuo account";
 "team.email.subheadline" = "Inserisci il tuo indirizzo email di lavoro.";
-"team.email.textfield.placeholder" = "Your company email";
+"team.email.textfield.placeholder" = "Email aziendale";
 "team.email.button.learn_more" = "Ulteriori informazioni";
 
 "team.activation_code.headline" = "C'è posta per te";
-"team.phone_activation_code.headline" = "Verification";
+"team.phone_activation_code.headline" = "Verifica";
 "team.activation_code.subheadline" = "Inserisci il codice di verifica che abbiamo inviato a %@.";
 "team.activation_code.button.resend" = "Invia di nuovo il codice";
 "team.activation_code.button.change_email" = "Cambia email";
-"team.activation_code.button.change_phone" = "Change phone number";
+"team.activation_code.button.change_phone" = "Cambia numero di telefono";
 
 "team.full_name.headline" = "Il tuo nome";
 "team.full_name.textfield.placeholder" = "Nome e cognome";
@@ -1152,15 +1155,15 @@
 "team.password.textfield.accessibility" = "Password (almeno 8 caratteri)";
 
 
-"verification.code_label" = "Six-digit code. Text field.";
-"verification.code_hint" = "Double tap to enter the code.";
+"verification.code_label" = "Codice a sei cifre. Campo di testo.";
+"verification.code_hint" = "Tocca due volte per inserire il codice.";
 
 // Invite Team Members
 
 "team.invite.header.title" = "Costruisci il tuo team";
 "team.invite.header.subtitle" = "Il tuo team Wire è pronto per partire. Invita i tuoi colleghi come membri.";
-"team.invite.textfield.placeholder" = "Colleague's email";
-"team.invite.textfield.accesibility" = "Enter email address for colleague to invite.";
+"team.invite.textfield.placeholder" = "Email del collega";
+"team.invite.textfield.accesibility" = "Inserisci l'indirizzo email del collega da invitare.";
 "team.invite.learn_more.title" = "Ulteriori informazioni";
 "team.invite.top_bar.skip" = "Salta";
 "team.invite.top_bar.done" = "Fatto";
@@ -1232,7 +1235,7 @@
 "registration.alert.account_exists.message_phone" = "Il numero di telefono che hai usato per registrarti è già collegato ad un account.\n\nUtilizza un altro numero di telefono oppure prova ad entrare, nel caso l'account sia tuo.";
 "registration.alert.account_exists.message_email" = "L'indirizzo email che hai usato per registrarti è già collegato ad un account.\n\nUtilizza un altro indirizzo email oppure prova ad entrare, nel caso l'account sia tuo.";
 "registration.alert.change_email_action" = "Modifica email";
-"registration.alert.change_phone_action" = "Register with Another Number";
+"registration.alert.change_phone_action" = "Registrati con un'altro numero";
 "registration.alert.change_signin_action" = "Log in";
 
 // Restore History Warning Alert
@@ -1261,8 +1264,8 @@
 "login.sso.alert.action" = "Log in";
 "login.sso.alert.text_field.placeholder" = "Codice d'accesso SSO";
 
-"login.sso.start_error_title" = "Cannot Start Company Login";
-"login.sso.link_error_message" = "The company login link you clicked is not valid. Please contact your administrator to resolve the issue.";
+"login.sso.start_error_title" = "Impossibile avviare il login aziendale";
+"login.sso.link_error_message" = "Il link di login aziendale che hai cliccato non è valido. Contatta l'amministratore per risolvere il problema.";
 
 "login.sso.error.alert.title" = "Qualcosa è andato storto";
 "login.sso.error.alert.invalid_code.title" = "Codice non valido.";
@@ -1321,14 +1324,14 @@
 "registration.push_access_denied.settings_button.title" = "Vai nelle Impostazioni";
 "registration.push_access_denied.maybe_later_button.title" = "Forse dopo";
 
-"registration.personal.title" = "Create an account";
+"registration.personal.title" = "Crea un account";
 "registration.signin.title" = "Log in";
-"registration.signin.too_many_devices.title" = "Too Many Devices";
+"registration.signin.too_many_devices.title" = "Troppi dispositivi";
 "registration.signin.too_many_devices.subtitle" = "Rimuovere uno dei tuoi altri dispositivi per iniziare a utilizzare Wire su questo.";
 "registration.signin.too_many_devices.manage_button.title" = "Gestisci dispositivi";
 "registration.signin.too_many_devices.sign_out_button.title" = "Logout";
 
-"registration.signin.too_many_devices.manage_screen.title" = "Remove a Device";
+"registration.signin.too_many_devices.manage_screen.title" = "Rimuovi un dispositivo";
 
 "registration.signin.alert.password_needed.title" = "Password necessaria";
 "registration.signin.alert.password_needed.message" = "Inserisci la password per effettuare il login.";
@@ -1348,14 +1351,14 @@
 "signin.confirm" = "Log in";
 "signin.company_idp.button.title" = "Per le aziende";
 
-"signin_logout.subheadline" = "Your session expired. You need to log in again to continue.";
-"signin_logout.email.subheadline" = "Your session expired. Enter your email address and password to continue.";
-"signin_logout.phone.subheadline" = "Your session expired. Enter your phone number to continue.";
-"signin_logout.sso.subheadline" = "Your session expired. Log in with your company account to continue.";
+"signin_logout.subheadline" = "La sessione è scaduta. Esegui nuovamente l'accesso per continuare.";
+"signin_logout.email.subheadline" = "La sessione è scaduta. Inserisci indirizzo email e password per continuare.";
+"signin_logout.phone.subheadline" = "La sessione è scaduta. Inserisci il numero di telefono per continuare.";
+"signin_logout.sso.subheadline" = "La sessione è scaduta. Accedi con il tuo account aziendale per continuare.";
 "signin_logout.sso.buton" = "Login aziendale";
 
-"signin.email.missing_password.subtitle" = "Enter your email address and password to continue.";
-"signin.phone.missing_password.subtitle" = "Enter your phone number to continue.";
+"signin.email.missing_password.subtitle" = "Inserisci il tuo indirizzo email e la password per continuare.";
+"signin.phone.missing_password.subtitle" = "Inserisci il tuo numero di telefono per continuare.";
 
 "registration.phone_country" = "Paese";
 "registration.phone_code" = "Codice del paese";
@@ -1368,7 +1371,7 @@
 "registration.add_phone_number.hero.paragraph" = "Questo ci aiuta a trovare persone che potresti conoscere. Non lo condivideremo mai.";
 "registration.add_phone_number.skip_button.title" = "Non ora";
 
-"registration.add_email_password.hero.title" = "Add your email and password";
+"registration.add_email_password.hero.title" = "Aggiungi il tuo indirizzo email e la password";
 "registration.add_email_password.hero.paragraph" = "Questo ti consente di usare Wire su più dispositivi.";
 
 "registration.email_invitation.title" = "Invito";
@@ -1530,6 +1533,16 @@
 "url_action.confirm" = "Conferma";
 "url_action.title" = "Conferma azione URL";
 "url_action.connect_to_bot.message" = "Vorresti connetterti al bot?";
+
+// Deep Link
+"url_action.invalid_user.title" = "Wire can't find this person.";
+"url_action.invalid_user.message" = "You may not have permission with this account or it no longer exists.";
+
+"url_action.invalid_conversation.title" = "Wire can't open this conversation.";
+"url_action.invalid_conversation.message" = "You may not have permission with this account or the person may not be on Wire.";
+
+"url_action.authorization_required.title" = "Authorization required.";
+"url_action.authorization_required.message" = "You need to log in to view this content.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // News and offers consent prompt
