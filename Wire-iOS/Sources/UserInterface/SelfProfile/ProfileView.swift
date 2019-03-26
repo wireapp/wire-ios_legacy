@@ -23,7 +23,7 @@ import UIKit
  */
 
 
-class ProfileView: UIView, Themeable {
+final class ProfileView: UIView, Themeable {
     
     /**
      * The options to customize the appearance and behavior of the view.
@@ -203,9 +203,15 @@ class ProfileView: UIView, Themeable {
     
     // MARK: - Content and Options
     
-    func prepareForDisplay(in conversation: ZMConversation?) {
-        guestIndicatorStack.isHidden = conversation.map(user.isGuest) != true
-        
+    func prepareForDisplay(in conversation: ZMConversation?, context: ProfileViewControllerContext) {
+
+        switch context {
+            case .profileViewer:
+                guestIndicatorStack.isHidden = !(ZMUser.selfUser()?.isTeamMember ?? false && !user.isTeamMember)
+            default:
+                guestIndicatorStack.isHidden = conversation.map(user.isGuest) != true
+        }
+
         let remainingTimeString = user.expirationDisplayString
         remainingTimeLabel.text = remainingTimeString
         remainingTimeLabel.isHidden = remainingTimeString == nil
