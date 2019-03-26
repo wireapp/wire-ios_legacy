@@ -614,6 +614,7 @@ final class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
     func test_ProfileViewer_OtherUserIsGuest() {
         // GIVEN
         let guest = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: nil)
+        /// Notice: rich profile is not visible in this case
         guest.richProfile = defaultRichProfile
 
         // THEN
