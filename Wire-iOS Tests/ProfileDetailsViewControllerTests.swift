@@ -609,17 +609,30 @@ final class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
         verifyContents(user: otherUser, viewer: selfUser, conversation: conversation, expectedContents: [])
     }
 
+    // MARK: Deep Link
+
+    func test_ProfileViewer_OtherUserIsGuest() {
+        // GIVEN
+        let guest = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: nil)
+        guest.richProfile = defaultRichProfile
+
+        // THEN
+        verifyProfile(user: guest, viewer: selfUser, conversation: nil, context: .profileViewer)
+    }
+
+
+
     // MARK: - Helpers
     
     private func verifyProfile(user: GenericUser,
                                viewer: GenericUser,
-                               conversation: MockConversation,
+                               conversation: MockConversation?,
                                context: ProfileViewControllerContext,
                                file: StaticString = #file,
                                line: UInt = #line) {
         let details = ProfileDetailsViewController(user: user,
                                                    viewer: viewer,
-                                                   conversation: conversation.convertToRegularConversation(),
+                                                   conversation: conversation?.convertToRegularConversation(),
                                                    context: context)
 
         verify(view: details.view, file: file, line: line)
