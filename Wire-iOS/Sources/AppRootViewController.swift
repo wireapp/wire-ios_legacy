@@ -572,6 +572,15 @@ public extension SessionManager {
 
 extension AppRootViewController: SessionManagerURLHandlerDelegate {
 
+    private func presentAlert(title: String,
+                      message: String) {
+        let alert = UIAlertController(title: title,
+                                      message: message,
+                                      cancelButtonTitle: "general.ok".localized)
+
+        present(alert, animated: true, completion: nil)
+    }
+
     func sessionManagerShouldExecuteURLAction(_ action: URLAction, callback: @escaping (Bool) -> Void) {
         switch action {
         case .openConversation(_, let conversation):
@@ -699,15 +708,4 @@ extension AppRootViewController: SessionManagerURLHandlerDelegate {
 
 extension Notification.Name {
     static let companyLoginDidFinish = Notification.Name("Wire.CompanyLoginDidFinish")
-}
-
-extension UIViewController {
-    func presentAlert(title: String,
-                      message: String) {
-        let alert = UIAlertController(title: title,
-                                      message: message,
-                                      cancelButtonTitle: "general.ok".localized)
-
-        present(alert, animated: true, completion: nil)
-    }
 }
