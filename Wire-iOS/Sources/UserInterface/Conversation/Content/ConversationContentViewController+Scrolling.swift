@@ -43,6 +43,7 @@ extension ConversationContentViewController {
     }
     
     @objc public func scrollToBottom() {
+        guard !isScrolledToBottom else { return }
         self.dataSource.scrollToBottom()
     }
 }
