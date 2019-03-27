@@ -50,6 +50,22 @@ final class AppRootViewController: UIViewController {
     weak var popoverPointToView: UIView?
 
 
+    /// For SessionManagerURLHandlerDelegate
+    lazy var searchDirectory: SearchDirectory! = {
+        if let userSession = ZMUserSession.shared() {
+            return SearchDirectory(userSession: userSession)
+        }
+
+        return nil
+    }()
+
+    var pendingSearchTask: SearchTask? = nil
+
+    public func cancelPreviousSearch() {
+        pendingSearchTask?.cancel()
+        pendingSearchTask = nil
+    }
+
     fileprivate weak var showContentDelegate: ShowContentDelegate? {
         didSet {
             if let delegate = showContentDelegate {
@@ -121,6 +137,10 @@ final class AppRootViewController: UIViewController {
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    deinit {
+        searchDirectory?.tearDown()
     }
 
     public override func viewWillAppear(_ animated: Bool) {
@@ -581,8 +601,20 @@ extension AppRootViewController: SessionManagerURLHandlerDelegate {
         present(alert, animated: true, completion: nil)
     }
 
+    private func handleSearchResult(searchResult: SearchResult, isCompleted: Bool) {
+        if let user = searchResult.directory.first {
+            sessionManager?.showUserProfile(user: user)
+        }
+    }
+
     func sessionManagerShouldExecuteURLAction(_ action: URLAction, callback: @escaping (Bool) -> Void) {
         switch action {
+        case .connectToUser(_, let searchTask):
+            cancelPreviousSearch()
+            searchTask.onResult({ [weak self] in self?.handleSearchResult(searchResult: $0, isCompleted: $1)})
+            searchTask.start()
+
+            pendingSearchTask = searchTask
         case .openConversation(_, let conversation):
             if let conversation = conversation,
                let userSession = ZMUserSession.shared() {
