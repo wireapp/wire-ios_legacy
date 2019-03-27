@@ -59,12 +59,16 @@ import Cartography
 
     public override func layoutSublayers(of layer: CALayer) {
         super.layoutSublayers(of: layer)
-        elapsedTimeLayer.frame = bounds
-        elapsedTimeLayer.path = makePath(for: bounds)
-        elapsedTimeLayer.fillColor = nil
-        elapsedTimeLayer.lineWidth = min(bounds.width, bounds.height) / 2 + 0.25
+        let backgroundFrame = bounds
+        let borderWidth = 0.10 * backgroundFrame.width
+        let elapsedFrame = CGRect(x: borderWidth, y: borderWidth, width: backgroundFrame.width - borderWidth * 2, height: backgroundFrame.height - borderWidth * 2)
 
-        remainingTimeLayer.frame = bounds
+        elapsedTimeLayer.frame = backgroundFrame
+        elapsedTimeLayer.path = makePath(for: elapsedFrame)
+        elapsedTimeLayer.fillColor = nil
+        elapsedTimeLayer.lineWidth = min(elapsedFrame.width, elapsedFrame.height) / 2
+
+        remainingTimeLayer.frame = backgroundFrame
         remainingTimeLayer.path = CGPath(ellipseIn: bounds, transform: nil)
     }
 
