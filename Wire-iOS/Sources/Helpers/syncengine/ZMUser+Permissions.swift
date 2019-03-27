@@ -63,6 +63,10 @@ extension UserType {
         return canAccessCompanyInformation(of: otherUser)
     }
 
+    var isAGuestOfSelfUser: Bool {
+        return true
+    }
+
 }
 
 /// Conform to this protocol to mark an object as being restricted. This
