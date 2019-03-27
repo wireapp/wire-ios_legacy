@@ -25,6 +25,9 @@ enum MessageToolboxContent: Equatable {
 
     /// Display the list of reactions.
     case reactions(NSAttributedString, likers: [ZMUser])
+    
+    /// Display list of calls
+    case callList(NSAttributedString)
 
     /// Display the message details (timestamp and/or status and/or countdown).
     case details(timestamp: NSAttributedString?, status: NSAttributedString?, countdown: NSAttributedString?, likers: [ZMUser])
@@ -101,8 +104,13 @@ class MessageToolboxDataSource {
 
         // Determine the content by priority
 
+        // 1) Call list
+        if message.systemMessageData?.systemMessageType == .performedCall ||
+           message.systemMessageData?.systemMessageType == .missedCall {
+            content = .callList(makeCallList())
+        }
         // 1) Failed to send
-        if failedToSend && isSentBySelfUser {
+        else if failedToSend && isSentBySelfUser {
             let detailsString = "content.system.failedtosend_message_timestamp".localized && attributes
             content = .sendFailure(detailsString)
         }
@@ -157,30 +165,33 @@ class MessageToolboxDataSource {
     }
 
     // MARK: - Details Text
+    
+    /// Create a timestamp list for all calls associated with a call system message
+    private func makeCallList() -> NSAttributedString {
+        if let childMessages = message.systemMessageData?.childMessages, !childMessages.isEmpty, let timestamp = timestampString(message) {
+            
+            let childrenTimestamps = childMessages.compactMap {
+                $0 as? ZMConversationMessage
+                }.sorted { left, right in
+                    left.serverTimestamp < right.serverTimestamp
+                }.compactMap(timestampString)
+            
+            let finalText = childrenTimestamps.reduce(timestamp) { (text, current) in
+                return "\(text)\n\(current)"
+            }
+            
+            return finalText && attributes
+        } else {
+            return timestampString(message) ?? "-" && attributes
+        }
+    }
 
     /// Creates a label that display the status of the message.
     private func makeDetailsString() -> (NSAttributedString?, NSAttributedString?, NSAttributedString?) {
         let deliveryStateString: NSAttributedString? = selfStatus(for: message)
         let countdownStatus = makeEphemeralCountdown()
 
-        // System message overrides
-
-        if let childMessages = message.systemMessageData?.childMessages,
-            !childMessages.isEmpty,
-            let timestamp = timestampString(message) {
-            let childrenTimestamps = childMessages.compactMap {
-                $0 as? ZMConversationMessage
-                }.sorted { left, right in
-                    left.serverTimestamp < right.serverTimestamp
-                }.compactMap(timestampString)
-
-            let finalText = childrenTimestamps.reduce(timestamp) { (text, current) in
-                return "\(text)\n\(current)"
-            }
-
-            
-            return (finalText && attributes, nil, countdownStatus)
-        } else if let timestampString = self.timestampString(message), message.isSent {
+        if let timestampString = self.timestampString(message), message.isSent {
             if let deliveryStateString = deliveryStateString, Message.shouldShowDeliveryState(message) {
                 return (timestampString && attributes, deliveryStateString, countdownStatus)
             }
