@@ -596,13 +596,13 @@ extension AppRootViewController: SessionManagerURLHandlerDelegate {
                 presentInvalidUserProfileLinkAlert()
             case .invalidConversationLink:
                 presentAlertWithOKButton(title: "url_action.invalid_conversation.title".localized,
-                             message: "url_action.invalid_conversation.message".localized)
+                                         message: "url_action.invalid_conversation.message".localized)
             case .notLoggedIn:
                 presentAlertWithOKButton(title: "url_action.authorization_required.title".localized,
-                             message: "url_action.authorization_required.message".localized)
+                                         message: "url_action.authorization_required.message".localized)
             case .malformedLink:
-                presentAlert(title: "url_action.invalid_link.title".localized,
-                             message: "url_action.invalid_link.message".localized)
+                presentAlertWithOKButton(title: "url_action.invalid_link.title".localized,
+                                         message: "url_action.invalid_link.message".localized)
             }
         case .connectBot:
             guard let _ = ZMUser.selfUser().team else {
