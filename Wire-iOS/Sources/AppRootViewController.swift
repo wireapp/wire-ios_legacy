@@ -420,6 +420,12 @@ extension AppRootViewController: AppStateControllerDelegate {
 // MARK: - ShowContentDelegate
 
 extension AppRootViewController: ShowContentDelegate {
+    func showConnectionRequest(userId: UUID) {
+        whenShowContentDelegateIsAvailable { delegate in
+            delegate.showConnectionRequest(userId: userId)
+        }
+    }
+
     func showUserProfile(user: UserType) {
         whenShowContentDelegateIsAvailable { delegate in
             delegate.showUserProfile(user: user)
@@ -609,13 +615,8 @@ extension AppRootViewController: SessionManagerURLHandlerDelegate {
 
     func sessionManagerShouldExecuteURLAction(_ action: URLAction, callback: @escaping (Bool) -> Void) {
         switch action {
-        case .connectToUser(_, let searchTask):
-            cancelPreviousSearch()
-
-            searchTask.onResult({ [weak self] in self?.handleSearchResult(searchResult: $0, isCompleted: $1)})
-            searchTask.start() ///TODO pop up an empty view with spinner first
-
-            pendingSearchTask = searchTask
+        case .connectToUser(let id):
+            sessionManager?.showConnectionRequest(userId: id)
         case .openConversation(_, let conversation):
             if let conversation = conversation,
                let userSession = ZMUserSession.shared() {
