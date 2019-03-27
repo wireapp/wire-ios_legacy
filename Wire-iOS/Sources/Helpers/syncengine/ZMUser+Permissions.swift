@@ -57,16 +57,6 @@ extension UserType {
     func canSeeDevices(of otherUser: UserType) -> Bool {
         return otherUser.isConnected || self.canAccessCompanyInformation(of: otherUser) || otherUser.isWirelessUser
     }
-
-    /// Returns whether the current user (viewer) can see guest label in profile screen of another user.
-    func isAHost(of otherUser: UserType) -> Bool {
-        return canAccessCompanyInformation(of: otherUser)
-    }
-
-    var isAGuestOfSelfUser: Bool {
-        return true
-    }
-
 }
 
 /// Conform to this protocol to mark an object as being restricted. This
