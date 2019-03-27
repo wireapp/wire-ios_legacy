@@ -20,18 +20,23 @@ import Foundation
 
 extension UIViewController {
     func presentAlertWithOKButton(title: String,
-                              message: String) {
+                                  message: String,
+                                  okActionHandler: ((UIAlertAction) -> Void)? = nil) {
         let alert = UIAlertController(title: title,
                                       message: message,
-                                      cancelButtonTitle: "general.ok".localized)
+                                      preferredStyle: .alert)
+
+        let okAction = UIAlertAction(title: "general.ok".localized, style: .cancel, handler: okActionHandler)
+        alert.addAction(okAction)
 
         present(alert, animated: true, completion: nil)
     }
-
-    func presentInvalidUserProfileLinkAlert() {
-        presentAlert(title: "url_action.invalid_user.title".localized,
-                     message: "url_action.invalid_user.message".localized)
-
+    
+    func presentInvalidUserProfileLinkAlert(okActionHandler: ((UIAlertAction) -> Void)? = nil) {
+        presentAlertWithOKButton(title: "url_action.invalid_user.title".localized,
+                                 message: "url_action.invalid_user.message".localized,
+                                 okActionHandler: okActionHandler)
     }
-
+    
 }
+

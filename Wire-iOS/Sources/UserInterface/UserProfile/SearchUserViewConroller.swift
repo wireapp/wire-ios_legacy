@@ -19,21 +19,11 @@
 import Foundation
 
 final class SearchUserViewConroller: UIViewController {
-    ///TODO: close button
+
     private var searchDirectory: SearchDirectory!
     private weak var profileViewControllerDelegate: ProfileViewControllerDelegate?
     private let userId: UUID
     private var pendingSearchTask: SearchTask? = nil
-
-//    private let closeButton: IconButton = {
-//        let button = IconButton(style: .default, variant: .dark)
-//
-//        button.accessibilityLabel = "close"
-//        button.setIcon(.X, with: .tiny, for: .normal)
-//        button.addTarget(self, action: #selector(SearchUserViewConroller.onCloseButtonPressed(sender:)), for: .touchUpInside)
-//
-//        return button
-//    }()
 
     public init(userId: UUID, profileViewControllerDelegate: ProfileViewControllerDelegate?) {
         self.userId = userId
@@ -78,21 +68,24 @@ final class SearchUserViewConroller: UIViewController {
     }
 
     private func handleSearchResult(searchResult: SearchResult, isCompleted: Bool) {
+        showLoadingView = false
+
         if let user = searchResult.directory.first {
             let profileViewController = ProfileViewController(user: user, viewer: ZMUser.selfUser(), context: .profileViewer)
             profileViewController.delegate = profileViewControllerDelegate
 
-            ///TODO:
-//            navigationController?.setViewControllers([profileViewController], animated: true)
+            navigationController?.setViewControllers([profileViewController], animated: true)
         } else {
-            presentInvalidUserProfileLinkAlert()
+
+            presentInvalidUserProfileLinkAlert(okActionHandler: { [weak self] (_) in
+                self?.dismiss(animated: true)
+            })
         }
     }
 
     // MARK: - Actions
 
     @objc private func cancelButtonTapped(sender: AnyObject?) {
-//        self.onDismiss?(self, false)
         pendingSearchTask?.cancel()
         pendingSearchTask = nil
 
