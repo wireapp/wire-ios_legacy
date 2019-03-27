@@ -85,7 +85,7 @@ final class SearchUserViewConroller: UIViewController {
             ///TODO:
 //            navigationController?.setViewControllers([profileViewController], animated: true)
         } else {
-            ///TODO: show error
+            presentInvalidUserProfileLinkAlert()
         }
     }
 

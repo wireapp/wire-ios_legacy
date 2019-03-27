@@ -597,16 +597,6 @@ public extension SessionManager {
 }
 
 extension AppRootViewController: SessionManagerURLHandlerDelegate {
-
-    private func presentAlert(title: String,
-                      message: String) {
-        let alert = UIAlertController(title: title,
-                                      message: message,
-                                      cancelButtonTitle: "general.ok".localized)
-
-        present(alert, animated: true, completion: nil)
-    }
-
     private func handleSearchResult(searchResult: SearchResult, isCompleted: Bool) {
         if let user = searchResult.directory.first {
             sessionManager?.showUserProfile(user: user)
@@ -629,13 +619,12 @@ extension AppRootViewController: SessionManagerURLHandlerDelegate {
         case .warnInvalidDeepLink(let error):
             switch error {
             case .invalidUserLink:
-                presentAlert(title: "url_action.invalid_user.title".localized,
-                             message: "url_action.invalid_user.message".localized)
+                presentInvalidUserProfileLinkAlert()
             case .invalidConversationLink:
-                presentAlert(title: "url_action.invalid_conversation.title".localized,
+                presentAlertWithOKButton(title: "url_action.invalid_conversation.title".localized,
                              message: "url_action.invalid_conversation.message".localized)
             case .notLoggedIn:
-                presentAlert(title: "url_action.authorization_required.title".localized,
+                presentAlertWithOKButton(title: "url_action.authorization_required.title".localized,
                              message: "url_action.authorization_required.message".localized)
             }
         case .connectBot:
