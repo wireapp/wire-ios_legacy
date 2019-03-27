@@ -18,19 +18,30 @@
 
 import Foundation
 
+
 extension ZClientViewController: ShowContentDelegate {
+    private func wrapInNavigationControllerAndPresent(viewController: UIViewController) {
+        let navWrapperController: UINavigationController = viewController.wrapInNavigationController()
+        navWrapperController.modalPresentationStyle = .formSheet
+
+        dismissAllModalControllers(callback: { [weak self] in
+            self?.present(navWrapperController, animated: true)
+        })
+    }
+
+    public func showConnectionRequest(userId: UUID) {
+        let searchUserViewConroller = SearchUserViewConroller(userId: userId, profileViewControllerDelegate: self)
+
+        wrapInNavigationControllerAndPresent(viewController: searchUserViewConroller)
+    }
+
     public func showUserProfile(user: UserType) {
         guard let user = user as? UserType & AccentColorProvider else { return }
 
         let profileViewController = ProfileViewController(user: user, viewer: ZMUser.selfUser(), context: .profileViewer)
         profileViewController.delegate = self
 
-        let navWrapperController: UINavigationController = profileViewController.wrapInNavigationController()
-        navWrapperController.modalPresentationStyle = .formSheet
-
-        dismissAllModalControllers(callback: { [weak self] in
-            self?.present(navWrapperController, animated: true)
-        })
+        wrapInNavigationControllerAndPresent(viewController: profileViewController)
     }
 
     
