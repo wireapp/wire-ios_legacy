@@ -49,7 +49,6 @@ final class AppRootViewController: UIViewController {
     weak var presentedPopover: UIPopoverPresentationController?
     weak var popoverPointToView: UIView?
 
-
     fileprivate weak var showContentDelegate: ShowContentDelegate? {
         didSet {
             if let delegate = showContentDelegate {
@@ -400,6 +399,12 @@ extension AppRootViewController: AppStateControllerDelegate {
 // MARK: - ShowContentDelegate
 
 extension AppRootViewController: ShowContentDelegate {
+    func showConnectionRequest(userId: UUID) {
+        whenShowContentDelegateIsAvailable { delegate in
+            delegate.showConnectionRequest(userId: userId)
+        }
+    }
+
     func showUserProfile(user: UserType) {
         whenShowContentDelegateIsAvailable { delegate in
             delegate.showUserProfile(user: user)
@@ -572,17 +577,10 @@ public extension SessionManager {
 
 extension AppRootViewController: SessionManagerURLHandlerDelegate {
 
-    private func presentAlert(title: String,
-                      message: String) {
-        let alert = UIAlertController(title: title,
-                                      message: message,
-                                      cancelButtonTitle: "general.ok".localized)
-
-        present(alert, animated: true, completion: nil)
-    }
-
     func sessionManagerShouldExecuteURLAction(_ action: URLAction, callback: @escaping (Bool) -> Void) {
         switch action {
+        case .connectToUser(let id):
+            sessionManager?.showConnectionRequest(userId: id)
         case .openConversation(_, let conversation):
             if let conversation = conversation,
                let userSession = ZMUserSession.shared() {
@@ -595,17 +593,16 @@ extension AppRootViewController: SessionManagerURLHandlerDelegate {
         case .warnInvalidDeepLink(let error):
             switch error {
             case .invalidUserLink:
-                presentAlert(title: "url_action.invalid_user.title".localized,
-                             message: "url_action.invalid_user.message".localized)
+                presentInvalidUserProfileLinkAlert()
             case .invalidConversationLink:
-                presentAlert(title: "url_action.invalid_conversation.title".localized,
-                             message: "url_action.invalid_conversation.message".localized)
+                presentAlertWithOKButton(title: "url_action.invalid_conversation.title".localized,
+                                         message: "url_action.invalid_conversation.message".localized)
             case .notLoggedIn:
-                presentAlert(title: "url_action.authorization_required.title".localized,
-                             message: "url_action.authorization_required.message".localized)
+                presentAlertWithOKButton(title: "url_action.authorization_required.title".localized,
+                                         message: "url_action.authorization_required.message".localized)
             case .malformedLink:
-                presentAlert(title: "url_action.invalid_link.title".localized,
-                             message: "url_action.invalid_link.message".localized)
+                presentAlertWithOKButton(title: "url_action.invalid_link.title".localized,
+                                         message: "url_action.invalid_link.message".localized)
             }
         case .connectBot:
             guard let _ = ZMUser.selfUser().team else {
