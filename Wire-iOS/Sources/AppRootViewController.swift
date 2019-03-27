@@ -603,6 +603,9 @@ extension AppRootViewController: SessionManagerURLHandlerDelegate {
             case .notLoggedIn:
                 presentAlert(title: "url_action.authorization_required.title".localized,
                              message: "url_action.authorization_required.message".localized)
+            case .malformedLink:
+                presentAlert(title: "url_action.invalid_link.title".localized,
+                             message: "url_action.invalid_link.message".localized)
             }
         case .connectBot:
             guard let _ = ZMUser.selfUser().team else {
