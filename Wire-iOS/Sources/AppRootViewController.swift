@@ -611,8 +611,9 @@ extension AppRootViewController: SessionManagerURLHandlerDelegate {
         switch action {
         case .connectToUser(_, let searchTask):
             cancelPreviousSearch()
+
             searchTask.onResult({ [weak self] in self?.handleSearchResult(searchResult: $0, isCompleted: $1)})
-            searchTask.start()
+            searchTask.start() ///TODO pop up an empty view with spinner first
 
             pendingSearchTask = searchTask
         case .openConversation(_, let conversation):
