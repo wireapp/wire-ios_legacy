@@ -109,17 +109,17 @@ class MessageToolboxDataSource {
            message.systemMessageData?.systemMessageType == .missedCall {
             content = .callList(makeCallList())
         }
-        // 1) Failed to send
+        // 2) Failed to send
         else if failedToSend && isSentBySelfUser {
             let detailsString = "content.system.failedtosend_message_timestamp".localized && attributes
             content = .sendFailure(detailsString)
         }
-        // 2) Likers
+        // 3) Likers
         else if !showTimestamp {
             let text = makeReactionsLabel(with: likers, widthConstraint: widthConstraint)
             content = .reactions(text, likers: likers)
         }
-        // 3) Timestamp
+        // 4) Timestamp
         else {
             let (timestamp, status, countdown) = makeDetailsString()
             content = .details(timestamp: timestamp, status: status, countdown: countdown, likers: likers)
