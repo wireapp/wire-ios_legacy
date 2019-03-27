@@ -16,11 +16,9 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+import UIKit
 
-import Foundation
-import Cartography
-
-@objcMembers public final class DestructionCountdownView: UIView {
+final class DestructionCountdownView: UIView {
 
     private let remainingTimeLayer = CAShapeLayer()
     private let elapsedTimeLayer = CAShapeLayer()
@@ -28,12 +26,12 @@ import Cartography
 
     // MARK: - Initialization
 
-    public override init(frame: CGRect) {
+    override init(frame: CGRect) {
         super.init(frame: frame)
         configureSublayers()
     }
 
-    public required init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         configureSublayers()
     }
@@ -57,11 +55,11 @@ import Cartography
 
     // MARK: - Layout
 
-    public override func layoutSublayers(of layer: CALayer) {
+    override func layoutSublayers(of layer: CALayer) {
         super.layoutSublayers(of: layer)
         let backgroundFrame = bounds
         let borderWidth = 0.10 * backgroundFrame.width
-        let elapsedFrame = CGRect(x: borderWidth, y: borderWidth, width: backgroundFrame.width - borderWidth * 2, height: backgroundFrame.height - borderWidth * 2)
+        let elapsedFrame = bounds.insetBy(dx: borderWidth, dy: borderWidth)
 
         elapsedTimeLayer.frame = backgroundFrame
         elapsedTimeLayer.path = makePath(for: elapsedFrame)
@@ -80,11 +78,11 @@ import Cartography
 
     // MARK: - Animation
 
-    @objc public var isAnimatingProgress: Bool {
+    var isAnimatingProgress: Bool {
         return elapsedTimeLayer.animation(forKey: elapsedTimeAnimationKey) != nil
     }
 
-    @objc public var remainingTimeColor: UIColor? {
+    var remainingTimeColor: UIColor? {
         get {
             return remainingTimeLayer.fillColor.flatMap(UIColor.init)
         }
@@ -93,7 +91,7 @@ import Cartography
         }
     }
 
-    @objc public var elapsedTimeColor: UIColor? {
+    var elapsedTimeColor: UIColor? {
         get {
             return elapsedTimeLayer.strokeColor.flatMap(UIColor.init)
         }
@@ -103,7 +101,7 @@ import Cartography
         }
     }
 
-    @objc public func startAnimating(duration: TimeInterval, currentProgress: CGFloat) {
+    func startAnimating(duration: TimeInterval, currentProgress: CGFloat) {
 
         let elapsedTimeAnimation = CABasicAnimation(keyPath: #keyPath(CAShapeLayer.strokeEnd))
         elapsedTimeAnimation.duration = duration
@@ -116,11 +114,11 @@ import Cartography
 
     }
 
-    @objc public func stopAnimating() {
+    func stopAnimating() {
         elapsedTimeLayer.removeAllAnimations()
     }
 
-    @objc public func setProgress(_ newValue: CGFloat) {
+    func setProgress(_ newValue: CGFloat) {
         elapsedTimeLayer.strokeEnd = newValue
     }
 
