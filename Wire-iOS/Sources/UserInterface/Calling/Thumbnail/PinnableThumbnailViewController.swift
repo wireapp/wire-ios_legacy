@@ -48,7 +48,7 @@ final class PinnableThumbnailViewController: UIViewController {
         contentView = nil
     }
 
-    private func setThumbnailContentView(_ contentView: UIView, contentSize: CGSize) {
+    func setThumbnailContentView(_ contentView: UIView, contentSize: CGSize) {
         removeCurrentThumbnailContentView()
         thumbnailView.addSubview(contentView)
         contentView.translatesAutoresizingMaskIntoConstraints = false
