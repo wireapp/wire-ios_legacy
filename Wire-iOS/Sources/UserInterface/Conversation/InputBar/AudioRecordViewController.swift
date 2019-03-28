@@ -195,7 +195,6 @@ public final class AudioRecordViewController: UIViewController, AudioRecordBaseV
          audioPreviewView,
          cancelButton].forEach(){ $0.translatesAutoresizingMaskIntoConstraints = false }
         
-        /*
         var constraints = [NSLayoutConstraint]()
         
         constraints.append(bottomContainerView.heightAnchor.constraint(equalToConstant: 56))
@@ -216,7 +215,7 @@ public final class AudioRecordViewController: UIViewController, AudioRecordBaseV
         constraints.append(topSeparator.rightAnchor.constraint(equalTo: buttonOverlay.leftAnchor, constant: -8))
         constraints.append(topSeparator.leftAnchor.constraint(equalTo: bottomContainerView.leftAnchor, constant: 16))
         constraints.append(topSeparator.topAnchor.constraint(equalTo: bottomContainerView.topAnchor))
-        */
+
         recordingDotViewHidden = [timeLabel.centerYAnchor.constraint(equalTo: bottomContainerView.centerYAnchor),
                                   timeLabel.leftAnchor.constraint(equalTo: bottomContainerView.leftAnchor, constant: margin)]
         
@@ -247,14 +246,15 @@ public final class AudioRecordViewController: UIViewController, AudioRecordBaseV
         constraints.append(contentsOf: cancelButton.setDimensions(length: 56, activate: false))
         constraints.append(buttonOverlay.rightAnchor.constraint(equalTo: cancelButton.leftAnchor, constant: -12))
         
-        NSLayoutConstraint.activate(constraints)
  */
+        NSLayoutConstraint.activate(constraints)
     }
     
     func createConstraints2() {
+        /*
         let button = buttonOverlay.audioButton
 //        let margin = (UIView.conversationLayoutMargins.left / 2) - (UIImage.size(for: .tiny) / 2)
-        
+
         constrain(view, bottomContainerView, topContainerView, button) { view, bottomContainer, topContainer, overlayButton in
             bottomContainer.height == 56
             bottomContainer.left == view.left
@@ -280,7 +280,6 @@ public final class AudioRecordViewController: UIViewController, AudioRecordBaseV
             separator.left == container.left + 16
             separator.top == container.top
         }
-        /*
         self.recordingDotViewHidden = constrain(bottomContainerView, timeLabel) { container, timeLabel in
             timeLabel.centerY == container.centerY
             timeLabel.left == container.left + margin
