@@ -23,44 +23,35 @@ extension ConversationInputBarViewController {
     @objc
     func createInputBar() {
         audioButton = IconButton()
-        audioButton.hitAreaPadding = CGSize.zero
         audioButton.accessibilityIdentifier = "audioButton"
         audioButton.setIconColor(UIColor.accent(), for: UIControl.State.selected)
 
         videoButton = IconButton()
-        videoButton.hitAreaPadding = CGSize.zero
         videoButton.accessibilityIdentifier = "videoButton"
 
         photoButton = IconButton()
-        photoButton.hitAreaPadding = CGSize.zero
         photoButton.accessibilityIdentifier = "photoButton"
         photoButton.setIconColor(UIColor.accent(), for: UIControl.State.selected)
 
         uploadFileButton = IconButton()
-        uploadFileButton.hitAreaPadding = CGSize.zero
         uploadFileButton.accessibilityIdentifier = "uploadFileButton"
 
         sketchButton = IconButton()
-        sketchButton.hitAreaPadding = CGSize.zero
         sketchButton.accessibilityIdentifier = "sketchButton"
 
         pingButton = IconButton()
-        pingButton.hitAreaPadding = CGSize.zero
         pingButton.accessibilityIdentifier = "pingButton"
 
         locationButton = IconButton()
-        locationButton.hitAreaPadding = CGSize.zero
         locationButton.accessibilityIdentifier = "locationButton"
 
         gifButton = IconButton()
-        gifButton.hitAreaPadding = CGSize.zero
         gifButton.accessibilityIdentifier = "gifButton"
 
         mentionButton = IconButton()
-        mentionButton.hitAreaPadding = CGSize.zero
         mentionButton.accessibilityIdentifier = "mentionButton"
 
-        inputBar = InputBar(buttons: [
+        let buttons: [IconButton] = [
             photoButton,
             mentionButton,
             sketchButton,
@@ -69,7 +60,11 @@ extension ConversationInputBarViewController {
             pingButton,
             uploadFileButton,
             locationButton,
-            videoButton])
+            videoButton]
+
+        buttons.forEach(){ $0.hitAreaPadding = CGSize.zero }
+
+        inputBar = InputBar(buttons: buttons)
 
         inputBar.translatesAutoresizingMaskIntoConstraints = false
         inputBar.textView.delegate = self
@@ -81,7 +76,7 @@ extension ConversationInputBarViewController {
 
         constraints += inputBar.fitInSuperview(exclude: [.bottom], activate: false).values
 
-        let bottomConstraint = inputBar.pinToSuperview(anchor: .bottom )
+        let bottomConstraint = inputBar.pinToSuperview(anchor: .bottom, activate: false)
         bottomConstraint.priority = .defaultLow
 
         constraints.append(bottomConstraint)
