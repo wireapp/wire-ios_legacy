@@ -1120,9 +1120,9 @@
 
 "landing.header" = "Wire。加入您的帳戶。";
 "landing.create_account.title" = "個人版";
-"landing.create_account.subtitle" = "與朋友和家人私密聊天";
+"landing.create_account.subtitle" = "與朋友\U00A0和\U00A0家人私密聊天";
 "landing.create_team.title" = "專業版";
-"landing.create_team.subtitle" = "保密企業、機構和專業組織的協作";
+"landing.create_team.subtitle" = "保密企業、機構和l\U00A0專業組織的協作";
 "landing.login.hints" = "已有帳號？";
 "landing.login.button.title" = "登入";
 
@@ -1543,6 +1543,9 @@
 
 "url_action.authorization_required.title" = "需要授權。";
 "url_action.authorization_required.message" = "您需要登錄才能查看此內容。";
+
+"url_action.invalid_link.title" = "無效的鏈接。";
+"url_action.invalid_link.message" = "你想打開的連結無效。";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // News and offers consent prompt

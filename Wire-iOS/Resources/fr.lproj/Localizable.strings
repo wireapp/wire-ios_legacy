@@ -1120,9 +1120,9 @@
 
 "landing.header" = "Wire. Ajoutez votre compte.";
 "landing.create_account.title" = "Personnel";
-"landing.create_account.subtitle" = "Discussions privées avec vos groupes d’amis et votre famille";
+"landing.create_account.subtitle" = "Discussions privées avec vos groupes d’amis\U00A0et\U00A0votre\U00A0famille";
 "landing.create_team.title" = "Pro";
-"landing.create_team.subtitle" = "Collaboration sécurisée pour les entreprises, institutions et organisations professionnelles";
+"landing.create_team.subtitle" = "Collaboration sécurisée pour les entreprises, institutions et organisations\U00A0professionnelles";
 "landing.login.hints" = "Vous avez déjà un compte ?";
 "landing.login.button.title" = "Se connecter";
 
@@ -1543,6 +1543,9 @@
 
 "url_action.authorization_required.title" = "Autorisation requise.";
 "url_action.authorization_required.message" = "Vous devez vous connecter pour voir ce contenu.";
+
+"url_action.invalid_link.title" = "Lien invalide.";
+"url_action.invalid_link.message" = "Le lien que vous avez ouvert n'est pas valide.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // News and offers consent prompt

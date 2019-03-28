@@ -1120,9 +1120,9 @@
 
 "landing.header" = "Wire. Добавьте свой аккаунт.";
 "landing.create_account.title" = "Personal";
-"landing.create_account.subtitle" = "Приватный чат с группами друзей и семьей";
+"landing.create_account.subtitle" = "Приватный чат с группами друзей\U00A0и\U00A0семьей";
 "landing.create_team.title" = "Pro";
-"landing.create_team.subtitle" = "Безопасное сотрудничество для предприятий, учреждений и профессиональных организаций";
+"landing.create_team.subtitle" = "Безопасное сотрудничество для предприятий, учреждений и профессиональных\U00A0организаций";
 "landing.login.hints" = "Уже зарегистрированы?";
 "landing.login.button.title" = "Войти";
 
@@ -1541,8 +1541,11 @@
 "url_action.invalid_conversation.title" = "Wire не может открыть этот разговор.";
 "url_action.invalid_conversation.message" = "Возможно, у вас нет разрешения на использование этой учетной записи, либо этот человек отсутствует в Wire.";
 
-"url_action.authorization_required.title" = "Authorization required.";
-"url_action.authorization_required.message" = "You need to log in to view this content.";
+"url_action.authorization_required.title" = "Требуется авторизация.";
+"url_action.authorization_required.message" = "Для просмотра этого содержимого необходимо войти в систему.";
+
+"url_action.invalid_link.title" = "Недействительная ссылка.";
+"url_action.invalid_link.message" = "Открытая вами ссылка недействительна.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // News and offers consent prompt

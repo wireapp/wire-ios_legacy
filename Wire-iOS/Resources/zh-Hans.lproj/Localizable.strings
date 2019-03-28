@@ -34,8 +34,8 @@
 "general.service" = "服务";
 "general.off" = "关闭";
 "general.on" = "开启";
-"general.loading" = "Loading…";
-"general.paste" = "Paste";
+"general.loading" = "载入中...";
+"general.paste" = "粘贴";
 
 // Language like Chinese does not use space to sperate words or sentences.
 "general.space_between_words" = "\U200B";
@@ -153,7 +153,7 @@
 "conversation_list.voiceover.status.typing" = "输入中";
 "conversation_list.voiceover.status.ping" = "打招呼";
 "conversation_list.voiceover.status.mention" = "you are mentioned";
-"conversation_list.voiceover.status.reply" = "reply";
+"conversation_list.voiceover.status.reply" = "回复";
 "conversation_list.voiceover.bottom_bar.archived_button.label" = "已归档";
 "conversation_list.voiceover.bottom_bar.archived_button.hint" = "已归档的聊天列表";
 "conversation_list.voiceover.bottom_bar.contacts_button.label" = "联系人";
@@ -607,7 +607,7 @@
 
 "call.video.paused" = "视频已暂停";
 
-"call.video.too_many.alert.title" = "视频的人数太多";
+"call.video.too_many.alert.title" = "超出群组通话人数";
 "call.video.too_many.alert.message" = "视频通话群不能超过4个人";
 
 "call.degraded.alert.title" = "新设备";
@@ -1120,9 +1120,9 @@
 
 "landing.header" = "Wire. Add your Account.";
 "landing.create_account.title" = "个人信息";
-"landing.create_account.subtitle" = "Chat privately with groups of friends and family";
+"landing.create_account.subtitle" = "Chat privately with groups of friends\U00A0and\U00A0family";
 "landing.create_team.title" = "Pro";
-"landing.create_team.subtitle" = "Secure collaboration for businesses, institutions and professional organizations";
+"landing.create_team.subtitle" = "Secure collaboration for businesses, institutions and professional\U00A0organizations";
 "landing.login.hints" = "已有帐户？";
 "landing.login.button.title" = "登录";
 
@@ -1155,7 +1155,7 @@
 "team.password.textfield.accessibility" = "设定密码，最少要有八个字元";
 
 
-"verification.code_label" = "六位数字。文本区域。";
+"verification.code_label" = "六位数代码。文本字段。";
 "verification.code_hint" = "双击输入密码";
 
 // Invite Team Members
@@ -1543,6 +1543,9 @@
 
 "url_action.authorization_required.title" = "Authorization required.";
 "url_action.authorization_required.message" = "You need to log in to view this content.";
+
+"url_action.invalid_link.title" = "Invalid link.";
+"url_action.invalid_link.message" = "The link you opened is not valid.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // News and offers consent prompt
