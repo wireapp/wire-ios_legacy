@@ -72,9 +72,9 @@ extension ConversationInputBarViewController {
 
         view.addSubview(inputBar)
 
-        var constraints: [NSLayoutConstraint] = []
+        let values: [NSLayoutConstraint] = inputBar.fitInSuperview(exclude: [.bottom], activate: false).map{$0.value}
 
-        constraints += inputBar.fitInSuperview(exclude: [.bottom], activate: false).values
+        var constraints: [NSLayoutConstraint] = values
 
         let bottomConstraint = inputBar.pinToSuperview(anchor: .bottom, activate: false)
         bottomConstraint.priority = .defaultLow
