@@ -254,10 +254,24 @@ final class MessageToolboxView: UIView {
         }
 
         switch dataSource.content {
+            
+        case .callList(let callListString):
+            updateContentStack(to: newPosition, animated: animated) {
+                self.detailsLabel.attributedText = callListString
+                self.detailsLabel.isHidden = false
+                self.detailsLabel.numberOfLines = 0
+                self.statusLabel.isHidden = true
+                self.timestampSeparatorLabel.isHidden = true
+                self.deleteButton.isHidden = true
+                self.resendButton.isHidden = true
+                self.statusSeparatorLabel.isHidden = true
+                self.countdownLabel.isHidden = true
+            }
         case .reactions(let reactionsString, _):
             updateContentStack(to: newPosition, animated: animated) {
                 self.detailsLabel.attributedText = reactionsString
                 self.detailsLabel.isHidden = false
+                self.detailsLabel.numberOfLines = 1
                 self.statusLabel.isHidden = true
                 self.timestampSeparatorLabel.isHidden = true
                 self.deleteButton.isHidden = true
@@ -270,6 +284,7 @@ final class MessageToolboxView: UIView {
             updateContentStack(to: newPosition, animated: animated) {
                 self.detailsLabel.attributedText = detailsString
                 self.detailsLabel.isHidden = false
+                self.detailsLabel.numberOfLines = 1
                 self.statusLabel.isHidden = true
                 self.timestampSeparatorLabel.isHidden = false
                 self.deleteButton.isHidden = false
@@ -282,6 +297,7 @@ final class MessageToolboxView: UIView {
             updateContentStack(to: newPosition, animated: animated) {
                 self.detailsLabel.attributedText = timestamp
                 self.detailsLabel.isHidden = timestamp == nil
+                self.detailsLabel.numberOfLines = 1
                 self.statusLabel.attributedText = status
                 self.statusLabel.isHidden = status == nil
                 self.timestampSeparatorLabel.isHidden = timestamp == nil || status == nil

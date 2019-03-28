@@ -19,7 +19,7 @@
 import XCTest
 @testable import Wire
 
-class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
+final class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
 
     var selfUserTeam: UUID!
     var selfUser: MockUser!
@@ -59,7 +59,7 @@ class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
         conversation.activeParticipants = [selfUser, otherUser]
 
         // THEN
-        verifyProfile(user: otherUser, viewer: selfUser, conversation: conversation)
+        verifyProfile(user: otherUser, viewer: selfUser, conversation: conversation, context: .oneToOneConversation)
         verifyContents(user: otherUser, viewer: selfUser, conversation: conversation, expectedContents: [
             .richProfile(defaultRichProfile),
             .readReceiptsStatus(enabled: true)
@@ -78,7 +78,7 @@ class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
         conversation.activeParticipants = [selfUser, otherUser]
 
         // THEN
-        verifyProfile(user: otherUser, viewer: selfUser, conversation: conversation)
+        verifyProfile(user: otherUser, viewer: selfUser, conversation: conversation, context: .oneToOneConversation)
         verifyContents(user: otherUser, viewer: selfUser, conversation: conversation, expectedContents: [
             .readReceiptsStatus(enabled: true)
         ])
@@ -97,7 +97,7 @@ class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
         conversation.activeParticipants = [selfUser, otherUser]
 
         // THEN
-        verifyProfile(user: otherUser, viewer: selfUser, conversation: conversation)
+        verifyProfile(user: otherUser, viewer: selfUser, conversation: conversation, context: .oneToOneConversation)
         verifyContents(user: otherUser, viewer: selfUser, conversation: conversation, expectedContents: [
             .richProfile(defaultRichProfile),
             .readReceiptsStatus(enabled: false)
@@ -117,7 +117,7 @@ class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
         conversation.activeParticipants = [selfUser, otherUser]
 
         // THEN
-        verifyProfile(user: otherUser, viewer: selfUser, conversation: conversation)
+        verifyProfile(user: otherUser, viewer: selfUser, conversation: conversation, context: .oneToOneConversation)
         verifyContents(user: otherUser, viewer: selfUser, conversation: conversation, expectedContents: [
             .readReceiptsStatus(enabled: false)
         ])
@@ -133,7 +133,7 @@ class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
         conversation.activeParticipants = [selfUser]
 
         // THEN
-        verifyProfile(user: selfUser, viewer: selfUser, conversation: conversation)
+        verifyProfile(user: selfUser, viewer: selfUser, conversation: conversation, context: .oneToOneConversation)
         verifyContents(user: selfUser, viewer: selfUser, conversation: conversation, expectedContents: [
             .richProfile(defaultRichProfile),
             .readReceiptsStatus(enabled: true)
@@ -150,7 +150,7 @@ class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
         conversation.activeParticipants = [selfUser]
 
         // THEN
-        verifyProfile(user: selfUser, viewer: selfUser, conversation: conversation)
+        verifyProfile(user: selfUser, viewer: selfUser, conversation: conversation, context: .oneToOneConversation)
         verifyContents(user: selfUser, viewer: selfUser, conversation: conversation, expectedContents: [
             .readReceiptsStatus(enabled: false)
         ])
@@ -169,7 +169,7 @@ class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
         conversation.activeParticipants = [selfUser, guest]
 
         // THEN
-        verifyProfile(user: guest, viewer: selfUser, conversation: conversation)
+        verifyProfile(user: guest, viewer: selfUser, conversation: conversation, context: .oneToOneConversation)
         verifyContents(user: guest, viewer: selfUser, conversation: conversation, expectedContents: [
             .readReceiptsStatus(enabled: true)
         ])
@@ -190,7 +190,7 @@ class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
         conversation.activeParticipants = [selfUser, otherUser]
 
         // THEN
-        verifyProfile(user: otherUser, viewer: selfUser, conversation: conversation)
+        verifyProfile(user: otherUser, viewer: selfUser, conversation: conversation, context: .oneToOneConversation)
         verifyContents(user: otherUser, viewer: selfUser, conversation: conversation, expectedContents: [
             .richProfile(defaultRichProfile),
             .readReceiptsStatus(enabled: true)
@@ -211,7 +211,7 @@ class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
         conversation.activeParticipants = [selfUser, otherUser]
 
         // THEN
-        verifyProfile(user: otherUser, viewer: selfUser, conversation: conversation)
+        verifyProfile(user: otherUser, viewer: selfUser, conversation: conversation, context: .oneToOneConversation)
         verifyContents(user: otherUser, viewer: selfUser, conversation: conversation, expectedContents: [
             .richProfile(defaultRichProfile),
             .readReceiptsStatus(enabled: true)
@@ -232,7 +232,7 @@ class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
         conversation.activeParticipants = [selfUser, otherUser]
 
         // THEN
-        verifyProfile(user: otherUser, viewer: selfUser, conversation: conversation)
+        verifyProfile(user: otherUser, viewer: selfUser, conversation: conversation, context: .oneToOneConversation)
         verifyContents(user: otherUser, viewer: selfUser, conversation: conversation, expectedContents: [
             .readReceiptsStatus(enabled: true)
         ])
@@ -255,7 +255,7 @@ class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
         conversation.activeParticipants = [otherUser, guest]
 
         // THEN
-        verifyProfile(user: otherUser, viewer: guest, conversation: conversation)
+        verifyProfile(user: otherUser, viewer: guest, conversation: conversation, context: .oneToOneConversation)
         verifyContents(user: otherUser, viewer: guest, conversation: conversation, expectedContents: [
             .readReceiptsStatus(enabled: true)
         ])
@@ -277,7 +277,7 @@ class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
         conversation.activeParticipants = [otherUser, guest]
 
         // THEN
-        verifyProfile(user: otherUser, viewer: guest, conversation: conversation)
+        verifyProfile(user: otherUser, viewer: guest, conversation: conversation, context: .oneToOneConversation)
         verifyContents(user: otherUser, viewer: guest, conversation: conversation, expectedContents: [
             .readReceiptsStatus(enabled: true)
         ])
@@ -299,7 +299,7 @@ class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
         conversation.activeParticipants = [otherUser, guest]
 
         // THEN
-        verifyProfile(user: otherUser, viewer: guest, conversation: conversation)
+        verifyProfile(user: otherUser, viewer: guest, conversation: conversation, context: .oneToOneConversation)
         verifyContents(user: otherUser, viewer: guest, conversation: conversation, expectedContents: [
             .readReceiptsStatus(enabled: true)
         ])
@@ -321,7 +321,7 @@ class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
         group.activeParticipants = [selfUser, otherUser]
         
         // THEN
-        verifyProfile(user: otherUser, viewer: selfUser, conversation: group)
+        verifyProfile(user: otherUser, viewer: selfUser, conversation: group, context: .groupConversation)
         verifyContents(user: otherUser, viewer: selfUser, conversation: group, expectedContents: [
             .richProfile(defaultRichProfile)
         ])
@@ -339,7 +339,7 @@ class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
         group.activeParticipants = [selfUser, otherUser]
         
         // THEN
-        verifyProfile(user: otherUser, viewer: selfUser, conversation: group)
+        verifyProfile(user: otherUser, viewer: selfUser, conversation: group, context: .groupConversation)
         verifyContents(user: otherUser, viewer: selfUser, conversation: group, expectedContents: [])
     }
 
@@ -356,7 +356,7 @@ class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
         group.activeParticipants = [selfUser, otherUser]
 
         // THEN
-        verifyProfile(user: otherUser, viewer: selfUser, conversation: group)
+        verifyProfile(user: otherUser, viewer: selfUser, conversation: group, context: .groupConversation)
         verifyContents(user: otherUser, viewer: selfUser, conversation: group, expectedContents: [
             .richProfile(defaultRichProfile)
         ])
@@ -375,7 +375,7 @@ class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
         group.activeParticipants = [selfUser, otherUser]
 
         // THEN
-        verifyProfile(user: otherUser, viewer: selfUser, conversation: group)
+        verifyProfile(user: otherUser, viewer: selfUser, conversation: group, context: .groupConversation)
         verifyContents(user: otherUser, viewer: selfUser, conversation: group, expectedContents: [])
     }
     
@@ -389,7 +389,7 @@ class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
         group.activeParticipants = [selfUser]
 
         // THEN
-        verifyProfile(user: selfUser, viewer: selfUser, conversation: group)
+        verifyProfile(user: selfUser, viewer: selfUser, conversation: group, context: .groupConversation)
         verifyContents(user: selfUser, viewer: selfUser, conversation: group, expectedContents: [
             .richProfile(defaultRichProfile)
         ])
@@ -405,7 +405,7 @@ class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
         group.activeParticipants = [selfUser]
 
         // THEN
-        verifyProfile(user: selfUser, viewer: selfUser, conversation: group)
+        verifyProfile(user: selfUser, viewer: selfUser, conversation: group, context: .groupConversation)
         verifyContents(user: selfUser, viewer: selfUser, conversation: group, expectedContents: [])
     }
 
@@ -419,7 +419,7 @@ class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
         group.activeParticipants = [selfUser, guest]
 
         // THEN
-        verifyProfile(user: guest, viewer: selfUser, conversation: group)
+        verifyProfile(user: guest, viewer: selfUser, conversation: group, context: .groupConversation)
         verifyContents(user: guest, viewer: selfUser, conversation: group, expectedContents: [])
     }
 
@@ -434,7 +434,7 @@ class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
         group.activeParticipants = [selfUser, guest]
 
         // THEN
-        verifyProfile(user: guest, viewer: selfUser, conversation: group)
+        verifyProfile(user: guest, viewer: selfUser, conversation: group, context: .groupConversation)
         verifyContents(user: guest, viewer: selfUser, conversation: group, expectedContents: [])
     }
 
@@ -452,7 +452,7 @@ class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
         group.activeParticipants = [selfUser, otherUser]
         
         // THEN
-        verifyProfile(user: otherUser, viewer: selfUser, conversation: group)
+        verifyProfile(user: otherUser, viewer: selfUser, conversation: group, context: .groupConversation)
         verifyContents(user: otherUser, viewer: selfUser, conversation: group, expectedContents: [
             .richProfile(defaultRichProfile)
         ])
@@ -471,7 +471,7 @@ class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
         group.activeParticipants = [selfUser, otherUser]
 
         // THEN
-        verifyProfile(user: otherUser, viewer: selfUser, conversation: group)
+        verifyProfile(user: otherUser, viewer: selfUser, conversation: group, context: .groupConversation)
         verifyContents(user: otherUser, viewer: selfUser, conversation: group, expectedContents: [
             .richProfile(defaultRichProfile)
         ])
@@ -490,7 +490,7 @@ class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
         group.activeParticipants = [selfUser, otherUser]
 
         // THEN
-        verifyProfile(user: otherUser, viewer: selfUser, conversation: group)
+        verifyProfile(user: otherUser, viewer: selfUser, conversation: group, context: .groupConversation)
         verifyContents(user: otherUser, viewer: selfUser, conversation: group, expectedContents: [])
     }
 
@@ -510,7 +510,7 @@ class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
         group.activeParticipants = [otherUser, guest]
         
         // THEN
-        verifyProfile(user: otherUser, viewer: guest, conversation: group)
+        verifyProfile(user: otherUser, viewer: guest, conversation: group, context: .groupConversation)
         verifyContents(user: otherUser, viewer: guest, conversation: group, expectedContents: [])
     }
 
@@ -529,7 +529,7 @@ class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
         group.activeParticipants = [otherUser, guest]
 
         // THEN
-        verifyProfile(user: otherUser, viewer: guest, conversation: group)
+        verifyProfile(user: otherUser, viewer: guest, conversation: group, context: .groupConversation)
         verifyContents(user: otherUser, viewer: guest, conversation: group, expectedContents: [])
     }
 
@@ -548,7 +548,7 @@ class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
         group.activeParticipants = [otherUser, guest]
 
         // THEN
-        verifyProfile(user: otherUser, viewer: guest, conversation: group)
+        verifyProfile(user: otherUser, viewer: guest, conversation: group, context: .groupConversation)
         verifyContents(user: otherUser, viewer: guest, conversation: group, expectedContents: [])
     }
     
@@ -566,7 +566,7 @@ class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
         group.activeParticipants = [selfUser, otherUser, guest]
 
         // THEN
-        verifyProfile(user: otherUser, viewer: guest, conversation: group)
+        verifyProfile(user: otherUser, viewer: guest, conversation: group, context: .groupConversation)
         verifyContents(user: otherUser, viewer: guest, conversation: group, expectedContents: [])
     }
 
@@ -585,7 +585,7 @@ class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
         group.activeParticipants = [otherUser, guest]
         
         // THEN
-        verifyProfile(user: guest, viewer: otherUser, conversation: group)
+        verifyProfile(user: guest, viewer: otherUser, conversation: group, context: .groupConversation)
         verifyContents(user: guest, viewer: otherUser, conversation: group, expectedContents: [
             .richProfile(defaultRichProfile)
         ])
@@ -605,15 +605,36 @@ class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
         conversation.activeParticipants = [selfUser, otherUser]
 
         // THEN
-        verifyProfile(user: otherUser, viewer: selfUser, conversation: conversation)
+        verifyProfile(user: otherUser, viewer: selfUser, conversation: conversation, context: .groupConversation)
         verifyContents(user: otherUser, viewer: selfUser, conversation: conversation, expectedContents: [])
     }
 
+    // MARK: Deep Link
+
+    func test_ProfileViewer_OtherUserIsGuest() {
+        // GIVEN
+        let guest = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: nil)
+        /// Notice: rich profile is not visible in this case
+        guest.richProfile = defaultRichProfile
+
+        // THEN
+        verifyProfile(user: guest, viewer: selfUser, conversation: nil, context: .profileViewer)
+    }
+
+
+
     // MARK: - Helpers
     
-    private func verifyProfile(user: GenericUser, viewer: GenericUser, conversation: MockConversation, file: StaticString = #file, line: UInt = #line) {
-        let details = ProfileDetailsViewController(user: user, viewer: viewer,
-                                                      conversation: conversation.convertToRegularConversation())
+    private func verifyProfile(user: GenericUser,
+                               viewer: GenericUser,
+                               conversation: MockConversation?,
+                               context: ProfileViewControllerContext,
+                               file: StaticString = #file,
+                               line: UInt = #line) {
+        let details = ProfileDetailsViewController(user: user,
+                                                   viewer: viewer,
+                                                   conversation: conversation?.convertToRegularConversation(),
+                                                   context: context)
 
         verify(view: details.view, file: file, line: line)
     }

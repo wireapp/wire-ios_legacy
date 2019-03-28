@@ -34,7 +34,9 @@ typedef NS_ENUM(NSInteger, ProfileViewControllerContext) {
     ProfileViewControllerContextSearch,
     ProfileViewControllerContextGroupConversation,
     ProfileViewControllerContextOneToOneConversation,
-    ProfileViewControllerContextDeviceList
+    ProfileViewControllerContextDeviceList,
+    // when open a URL scheme, not link to a specific conversation
+    ProfileViewControllerContextProfileViewer
 };
 
 @protocol ProfileViewControllerDelegate <NSObject>
@@ -47,8 +49,6 @@ typedef NS_ENUM(NSInteger, ProfileViewControllerContext) {
 - (void)profileViewController:(nullable ProfileViewController *)controller wantsToCreateConversationWithName:(nullable NSString *)name users:(nonnull NSSet <ZMUser *>*)users;
 
 @end
-
-
 
 @interface ProfileViewController : UIViewController
 

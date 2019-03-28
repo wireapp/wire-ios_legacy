@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
 import UIKit
 
 @objc protocol LandingViewControllerDelegate {
@@ -36,8 +35,6 @@ class LandingViewController: AuthenticationStepViewController {
         return authenticationCoordinator
     }
 
-    fileprivate var device: DeviceProtocol
-
     // MARK: - UI Styles
 
     static let semiboldFont = FontSpec(.large, .semibold).font!
@@ -54,6 +51,7 @@ class LandingViewController: AuthenticationStepViewController {
         let alignCenterStyle = NSMutableParagraphStyle()
         alignCenterStyle.alignment = .center
         alignCenterStyle.paragraphSpacingBefore = 4
+        alignCenterStyle.lineSpacing = 4
 
         let lightFont = FontSpec(.normal, .light).font!
 
@@ -67,19 +65,31 @@ class LandingViewController: AuthenticationStepViewController {
 
     // MARK: - UI Elements
 
+    let contentStack: UIStackView = {
+        let stackView = UIStackView()
+        stackView.distribution = .fill
+        stackView.alignment = .center
+        stackView.axis = .vertical
+
+        return stackView
+    }()
+
     let logoView: UIImageView = {
         let image = UIImage(named: "wire-logo-black")
         let imageView = UIImageView(image: image)
-        imageView.contentMode = .center
+        imageView.contentMode = .scaleAspectFit
         imageView.tintColor = UIColor.Team.textColor
+        imageView.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
+
         return imageView
     }()
     
     let buttonStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.distribution = .fillEqually
-        stackView.spacing = 24
         stackView.axis = .vertical
+        stackView.setContentCompressionResistancePriority(.required, for: .vertical)
+        stackView.setContentCompressionResistancePriority(.required, for: .horizontal)
 
         return stackView
     }()
@@ -87,7 +97,10 @@ class LandingViewController: AuthenticationStepViewController {
     let createAccountButton: LandingButton = {
         let button = LandingButton(title: createAccountButtonTitle, icon: .selfProfile, iconBackgroundColor: UIColor.Team.createTeamGreen)
         button.accessibilityIdentifier = "CreateAccountButton"
-        button.addTarget(self, action: #selector(LandingViewController.createAccountButtonTapped(_:)), for: .touchUpInside)
+        button.addTapTarget(self, action: #selector(LandingViewController.createAccountButtonTapped(_:)))
+        button.setContentCompressionResistancePriority(.required, for: .vertical)
+        button.setContentCompressionResistancePriority(.required, for: .horizontal)
+        button.setContentHuggingPriority(.required, for: .vertical)
 
         return button
     }()
@@ -95,18 +108,35 @@ class LandingViewController: AuthenticationStepViewController {
     let createTeamButton: LandingButton = {
         let button = LandingButton(title: createTeamButtonTitle, icon: .team, iconBackgroundColor: UIColor.Team.createAccountBlue)
         button.accessibilityIdentifier = "CreateTeamButton"
-        button.addTarget(self, action: #selector(LandingViewController.createTeamButtonTapped(_:)), for: .touchUpInside)
+        button.addTapTarget(self, action: #selector(LandingViewController.createTeamButtonTapped(_:)))
+        button.setContentCompressionResistancePriority(.required, for: .vertical)
+        button.setContentCompressionResistancePriority(.required, for: .horizontal)
+        button.setContentHuggingPriority(.required, for: .vertical)
 
         return button
     }()
 
-    let headerContainerView = UIView()
+    let loginButtonsStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.alignment = .fill
+        stackView.distribution = .fill
+        stackView.spacing = 4
+        stackView.axis = .vertical
+        stackView.setContentCompressionResistancePriority(.required, for: .vertical)
+        stackView.setContentCompressionResistancePriority(.required, for: .horizontal)
+
+        return stackView
+    }()
 
     let loginHintsLabel: UILabel = {
         let label = UILabel()
         label.text = "landing.login.hints".localized
         label.font = LandingViewController.regularFont
+        label.numberOfLines = 0
+        label.textAlignment = .center
         label.textColor = UIColor.Team.subtitleColor
+        label.setContentHuggingPriority(.required, for: .vertical)
+        label.setContentCompressionResistancePriority(.required, for: .vertical)
 
         return label
     }()
@@ -117,44 +147,24 @@ class LandingViewController: AuthenticationStepViewController {
         button.accessibilityIdentifier = "LoginButton"
         button.setTitleColor(UIColor.Team.textColor, for: .normal)
         button.titleLabel?.font = LandingViewController.semiboldFont
+        button.setContentHuggingPriority(.required, for: .vertical)
+        button.setContentCompressionResistancePriority(.required, for: .vertical)
 
         button.addTarget(self, action: #selector(LandingViewController.loginButtonTapped(_:)), for: .touchUpInside)
 
         return button
     }()
 
-    // MARK: - Initialization
-
-    /// Init method for injecting a mock device.
-    /// - parameter device: Provide this param for testing only
-    init(device: DeviceProtocol = UIDevice.current) {
-        self.device = device
-
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
     // MARK: - Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         Analytics.shared().tagOpenedLandingScreen(context: "email")
-
-        [headerContainerView, buttonStackView, loginHintsLabel, loginButton].forEach(view.addSubview)
-        headerContainerView.addSubview(logoView)
-
-        [createAccountButton, createTeamButton].forEach { button in
-            buttonStackView.addArrangedSubview(button)
-        }
-
         self.view.backgroundColor = UIColor.Team.background
 
-        self.createConstraints()
-        self.configureAccessibilityElements()
+        configureSubviews()
+        createConstraints()
+        configureAccessibilityElements()
 
         updateForCurrentSizeClass(isRegular: traitCollection.horizontalSizeClass == .regular)
         updateBarButtonItem()
@@ -171,7 +181,7 @@ class LandingViewController: AuthenticationStepViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        UIAccessibility.post(notification: .screenChanged, argument: headerContainerView)
+        UIAccessibility.post(notification: .screenChanged, argument: logoView)
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -184,73 +194,84 @@ class LandingViewController: AuthenticationStepViewController {
         updateForCurrentSizeClass(isRegular: isRegular)
     }
 
-    private func createConstraints() {
-        headerContainerView.translatesAutoresizingMaskIntoConstraints = false
-        logoView.translatesAutoresizingMaskIntoConstraints = false
-        buttonStackView.translatesAutoresizingMaskIntoConstraints = false
-        loginHintsLabel.translatesAutoresizingMaskIntoConstraints = false
-        loginButton.translatesAutoresizingMaskIntoConstraints = false
+    private func configureSubviews() {
+        if #available(iOS 11, *) {
+            additionalSafeAreaInsets.top = -44
+        }
 
-        loginHintAlignTop = loginHintsLabel.topAnchor.constraint(equalTo: buttonStackView.bottomAnchor, constant: 80)
-        loginButtonAlignBottom = loginButton.bottomAnchor.constraint(equalTo: safeBottomAnchor, constant: -32)
+        contentStack.addArrangedSubview(logoView)
+
+        buttonStackView.addArrangedSubview(createAccountButton)
+        buttonStackView.addArrangedSubview(createTeamButton)
+        contentStack.addArrangedSubview(buttonStackView)
+
+        loginButtonsStackView.addArrangedSubview(loginHintsLabel)
+        loginButtonsStackView.addArrangedSubview(loginButton)
+        contentStack.addArrangedSubview(loginButtonsStackView)
+
+        view.addSubview(contentStack)
+    }
+
+    private func createConstraints() {
+        contentStack.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            // headerContainerView
-            headerContainerView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            headerContainerView.widthAnchor.constraint(equalTo: view.widthAnchor),
-            headerContainerView.bottomAnchor.constraint(equalTo: buttonStackView.topAnchor),
-            headerContainerView.topAnchor.constraint(equalTo: view.topAnchor),
+            // contentStack
+            contentStack.topAnchor.constraint(greaterThanOrEqualTo: safeTopAnchor, constant: 12),
+            contentStack.bottomAnchor.constraint(lessThanOrEqualTo: safeBottomAnchor, constant: -12),
+            contentStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
+            contentStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
+            contentStack.centerYAnchor.constraint(equalTo: safeCenterYAnchor),
+
+            // buttons width
+            createAccountButton.widthAnchor.constraint(lessThanOrEqualToConstant: 256),
+            createTeamButton.widthAnchor.constraint(lessThanOrEqualToConstant: 256),
+            loginButtonsStackView.widthAnchor.constraint(lessThanOrEqualToConstant: 256),
 
             // logoView
-            logoView.centerXAnchor.constraint(equalTo: headerContainerView.centerXAnchor),
-            logoView.centerYAnchor.constraint(equalTo: headerContainerView.centerYAnchor),
-            logoView.widthAnchor.constraint(equalToConstant: 96),
-            logoView.heightAnchor.constraint(equalToConstant: 31),
-
-            // buttonStackView
-            buttonStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            buttonStackView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-
-            // loginHintsLabel
-            loginHintsLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            loginHintsLabel.bottomAnchor.constraint(equalTo: loginButton.topAnchor, constant: -16),
-            loginHintsLabel.topAnchor.constraint(greaterThanOrEqualTo: buttonStackView.bottomAnchor, constant: 16),
-
-            // loginButton
-            loginButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            loginButton.heightAnchor.constraint(greaterThanOrEqualToConstant: 44),
-
+            logoView.heightAnchor.constraint(lessThanOrEqualToConstant: 31)
         ])
-
-        [createAccountButton, createTeamButton].forEach() { button in
-            button.setContentCompressionResistancePriority(.required, for: .vertical)
-            button.setContentCompressionResistancePriority(.required, for: .horizontal)
-        }
     }
 
     // MARK: - Adaptivity Events
 
-    func updateForCurrentSizeClass(isRegular: Bool) {
-        updateConstraints(isRegular: isRegular)
-        updateStackViewAxis(isRegular: isRegular)
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        if view.frame.height <= 640 {
+            // Small-height devices
+            logoView.isHidden = true
+            contentStack.spacing = 24
+            buttonStackView.spacing = 24
+
+            if #available(iOS 11, *) {
+                contentStack.setCustomSpacing(0, after: logoView)
+            }
+
+        } else {
+            // Normal-height devices
+            logoView.isHidden = false
+            contentStack.spacing = 32
+            buttonStackView.spacing = 32
+
+            if #available(iOS 11, *) {
+                contentStack.setCustomSpacing(40, after: logoView)
+            }
+        }
     }
 
-    private func updateConstraints(isRegular: Bool) {
-        if isRegular {
-            loginButtonAlignBottom.isActive = false
-            loginHintAlignTop.isActive = true
-        } else {
-            loginHintAlignTop.isActive = false
-            loginButtonAlignBottom.isActive = true
-        }
+    func updateForCurrentSizeClass(isRegular: Bool) {
+        updateStackViewAxis(isRegular: isRegular)
     }
 
     private func updateStackViewAxis(isRegular: Bool) {
         switch traitCollection.horizontalSizeClass {
         case .regular:
             buttonStackView.axis = .horizontal
+            buttonStackView.alignment = .top
+
         default:
             buttonStackView.axis = .vertical
+            buttonStackView.alignment = .center
         }
     }
 
@@ -274,12 +295,9 @@ class LandingViewController: AuthenticationStepViewController {
     // MARK: - Accessibility
 
     private func configureAccessibilityElements() {
-        logoView.isAccessibilityElement = false
-
-        headerContainerView.isAccessibilityElement = true
-        headerContainerView.accessibilityLabel = "landing.header".localized
-        headerContainerView.accessibilityTraits.insert(.header)
-        headerContainerView.shouldGroupAccessibilityChildren = true
+        logoView.isAccessibilityElement = true
+        logoView.accessibilityLabel = "landing.header".localized
+        logoView.accessibilityTraits.insert(.header)
     }
 
     private static let createAccountButtonTitle: NSAttributedString = {

@@ -22,7 +22,8 @@ import SafariServices
 
 var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplication.shared.preferredContentSizeCategory)
 
-@objcMembers class AppRootViewController: UIViewController {
+@objcMembers
+final class AppRootViewController: UIViewController {
 
     public let mainWindow: UIWindow
     public let callWindow: CallWindow
@@ -47,7 +48,6 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
 
     weak var presentedPopover: UIPopoverPresentationController?
     weak var popoverPointToView: UIView?
-
 
     fileprivate weak var showContentDelegate: ShowContentDelegate? {
         didSet {
@@ -128,6 +128,7 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
         view.frame = mainWindow.bounds
     }
 
+    
     public func launch(with launchOptions: LaunchOptions) {
         let bundle = Bundle.main
         let appVersion = bundle.infoDictionary?[kCFBundleVersionKey as String] as? String
@@ -398,6 +399,18 @@ extension AppRootViewController: AppStateControllerDelegate {
 // MARK: - ShowContentDelegate
 
 extension AppRootViewController: ShowContentDelegate {
+    func showConnectionRequest(userId: UUID) {
+        whenShowContentDelegateIsAvailable { delegate in
+            delegate.showConnectionRequest(userId: userId)
+        }
+    }
+
+    func showUserProfile(user: UserType) {
+        whenShowContentDelegateIsAvailable { delegate in
+            delegate.showUserProfile(user: user)
+        }
+    }
+
 
     func showConversation(_ conversation: ZMConversation, at message: ZMConversationMessage?) {
         whenShowContentDelegateIsAvailable { delegate in
@@ -563,8 +576,34 @@ public extension SessionManager {
 }
 
 extension AppRootViewController: SessionManagerURLHandlerDelegate {
+
     func sessionManagerShouldExecuteURLAction(_ action: URLAction, callback: @escaping (Bool) -> Void) {
         switch action {
+        case .connectToUser(let id):
+            sessionManager?.showConnectionRequest(userId: id)
+        case .openConversation(_, let conversation):
+            if let conversation = conversation,
+               let userSession = ZMUserSession.shared() {
+                sessionManager?.showConversation(conversation, at: nil, in: userSession)
+            }
+        case .openUserProfile(_, let user):
+            if let user = user {
+                sessionManager?.showUserProfile(user: user)
+            }
+        case .warnInvalidDeepLink(let error):
+            switch error {
+            case .invalidUserLink:
+                presentInvalidUserProfileLinkAlert()
+            case .invalidConversationLink:
+                presentAlertWithOKButton(title: "url_action.invalid_conversation.title".localized,
+                                         message: "url_action.invalid_conversation.message".localized)
+            case .notLoggedIn:
+                presentAlertWithOKButton(title: "url_action.authorization_required.title".localized,
+                                         message: "url_action.authorization_required.message".localized)
+            case .malformedLink:
+                presentAlertWithOKButton(title: "url_action.invalid_link.title".localized,
+                                         message: "url_action.invalid_link.message".localized)
+            }
         case .connectBot:
             guard let _ = ZMUser.selfUser().team else {
                 callback(false)
@@ -626,7 +665,8 @@ extension AppRootViewController: SessionManagerURLHandlerDelegate {
             }
 
             guard case .unauthenticated = appStateController.appState else {
-                return callback(false)
+                callback(false)
+                return
             }
 
             callback(true)

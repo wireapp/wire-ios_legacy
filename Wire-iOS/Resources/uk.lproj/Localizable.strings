@@ -672,6 +672,7 @@
 "meta.menu.mark_read" = "Позначити як прочитане";
 "shortcut.mark_all_as_read.title" = "Позначити все як прочитане";
 "meta.menu.configure_notifications" = "Нотифікації…";
+"meta.menu.open_self_profile" = "Відкрити профіль";
 
 // Delete conversation
 "meta.menu.delete_content.dialog_title" = "Видалити вміст?";
@@ -1031,7 +1032,9 @@
 
 "self.settings.privacy_security.lock_app.description" = "Розблокувати Wire";
 
-"self.settings.privacy_security.lock_cancelled.description" = "Розблокуйте Wire за допомогою Touch ID або коду допуску";
+"self.settings.privacy_security.lock_cancelled.description_face_id" = "Розблокувати Wire за допомогою Face ID або коду допуску";
+"self.settings.privacy_security.lock_cancelled.description_touch_id" = "Розблокувати Wire за допомогою Touch ID або коду допуску";
+"self.settings.privacy_security.lock_cancelled.description_passcode" = "Розблокувати Wire за допомогою коду допуску";
 "self.settings.privacy_security.lock_cancelled.action" = "Розблокувати";
 
 "self.settings.privacy_security.disable_link_previews.title" = "Генерувати попередній перегляд для посилань";
@@ -1117,9 +1120,9 @@
 
 "landing.header" = "Wire. Додати акаунт.";
 "landing.create_account.title" = "Персональний акаунт";
-"landing.create_account.subtitle" = "створити акаунт";
+"landing.create_account.subtitle" = "Розмовляйте приватно з групою друзів\U00A0та\U00A0сім'єю";
 "landing.create_team.title" = "Pro акаунт";
-"landing.create_team.subtitle" = "створити команду";
+"landing.create_team.subtitle" = "Безпечна співпраця для бізнесу, органів влади та профільних\U00A0організацій";
 "landing.login.hints" = "Вже зареєстровані?";
 "landing.login.button.title" = "Увійти";
 
@@ -1530,6 +1533,19 @@
 "url_action.confirm" = "Підтвердити";
 "url_action.title" = "Підтвердження дії з URL";
 "url_action.connect_to_bot.message" = "Чи Ви хотіли б підключитися до бота?";
+
+// Deep Link
+"url_action.invalid_user.title" = "Wire не вдалося знайти такого користувача.";
+"url_action.invalid_user.message" = "У вас відсутні необхідні права доступу для цього акаунту або його було видалено.";
+
+"url_action.invalid_conversation.title" = "Wire не може відкрити дану розмову.";
+"url_action.invalid_conversation.message" = "У вас відсутні необхідні права доступу для цього акаунту або особа не зареєстрована в Wire.";
+
+"url_action.authorization_required.title" = "Необхідна авторизація.";
+"url_action.authorization_required.message" = "Ви повинні увійти, щоб переглянути цей вміст.";
+
+"url_action.invalid_link.title" = "Невалідний лінк.";
+"url_action.invalid_link.message" = "Ви відкрили невалідний лінк.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // News and offers consent prompt

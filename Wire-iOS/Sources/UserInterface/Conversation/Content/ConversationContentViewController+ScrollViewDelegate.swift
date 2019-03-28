@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2018 Wire Swiss GmbH
+// Copyright (C) 2019 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,26 +16,19 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import XCTest
-@testable import Wire
+import Foundation
 
-final class LandingViewControllerSnapshotTests: ZMSnapshotTestCase {
+extension ConversationContentViewController: UIScrollViewDelegate {
     
-    var sut: LandingViewController!
-    
-    override func setUp() {
-        super.setUp()
-        sut = LandingViewController()
+    public func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        removeHighlightsAndMenu()
     }
     
-    override func tearDown() {
-        sut = nil
-        super.tearDown()
+    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        dataSource.didScroll(tableView: scrollView as! UITableView)
     }
-
-    func testForInitState() {
-        let navigationController = UINavigationController(navigationBarClass: AuthenticationNavigationBar.self, toolbarClass: nil)
-        navigationController.viewControllers = [sut]
-        verify(view: navigationController.view)
+    
+    public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        dataSource.scrollViewDidEndDecelerating(scrollView)
     }
 }

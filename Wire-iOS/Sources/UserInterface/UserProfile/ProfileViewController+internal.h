@@ -16,6 +16,7 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+
 @class ConversationActionController;
 @class ProfileFooterView;
 @class IncomingRequestFooterView;
@@ -26,19 +27,27 @@
 @protocol ActionController;
 
 #import "AccentColorProvider.h"
+#import "ProfileDevicesViewController.h"
+
+NS_ASSUME_NONNULL_BEGIN
 
 @interface ProfileViewController () <ZMUserObserver>
 
 @property (nonatomic, readonly) ProfileViewControllerContext context;
-@property (nonatomic, readonly) ZMConversation *conversation;
-@property (nonatomic) id<ActionController> actionsController;
+@property (nonatomic, readonly, nullable) ZMConversation *conversation;
+
 @property (nonatomic) ProfileFooterView *profileFooterView;
 @property (nonatomic) IncomingRequestFooterView *incomingRequestFooter;
-
 @property (nonatomic) UserNameDetailView *usernameDetailsView;
 @property (nonatomic) ProfileTitleView *profileTitleView;
 @property (nonatomic) TabBarController *tabsController;
 
-- (ZMUser *)fullUser;
+- (ZMUser * _Nullable)fullUser;
+- (void)updateShowVerifiedShield;
 
 @end
+
+@interface ProfileViewController (DevicesListDelegate) <ProfileDevicesViewControllerDelegate>
+@end
+
+NS_ASSUME_NONNULL_END

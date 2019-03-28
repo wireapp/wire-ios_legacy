@@ -37,8 +37,8 @@ class EphemeralCountdownView: UIView {
             destructionCountdownView.centerXAnchor.constraint(equalTo: centerXAnchor),
             destructionCountdownView.topAnchor.constraint(equalTo: topAnchor),
             destructionCountdownView.bottomAnchor.constraint(equalTo: bottomAnchor),
-            destructionCountdownView.widthAnchor.constraint(equalToConstant: 8),
-            destructionCountdownView.heightAnchor.constraint(equalToConstant: 8),
+            destructionCountdownView.widthAnchor.constraint(equalToConstant: 10),
+            destructionCountdownView.heightAnchor.constraint(equalToConstant: 10),
         ])
     }
     

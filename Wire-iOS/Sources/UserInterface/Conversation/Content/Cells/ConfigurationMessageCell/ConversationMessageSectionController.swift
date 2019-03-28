@@ -151,7 +151,7 @@ extension IndexSet {
         }
         
         if let topContentCellDescription = contentCellDescriptions.first {
-            topContentCellDescription.showEphemeralTimer = message.isEphemeral
+            topContentCellDescription.showEphemeralTimer = message.isEphemeral && !message.isObfuscated
             
             if isSenderVisible && topContentCellDescription.baseType == ConversationTextMessageCellDescription.self {
                 topContentCellDescription.topMargin = 0 // We only do this for text content since the text label already contains the spacing
