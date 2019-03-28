@@ -184,6 +184,22 @@ extension UIView {
 
     // MARK: - all edges alignment
 
+    func superviewFittingArray(safely: Bool = false,
+                        with insets: EdgeInsets = .zero,
+                        exclude excludedAnchors: [Anchor] = [],
+                        activate: Bool = false) -> [NSLayoutConstraint] {
+        guard let superview = superview else {
+            fatal("Not in view hierarchy: self.superview = nil")
+        }
+        
+        return pinArray(to: superview,
+                   safely: safely,
+                   with: insets,
+                   exclude: excludedAnchors,
+                   activate: activate)
+
+    }
+    
     @discardableResult
     func fitInSuperview(safely: Bool = false,
                         with insets: EdgeInsets = .zero,
@@ -199,6 +215,53 @@ extension UIView {
                    with: insets,
                    exclude: excludedAnchors,
                    activate: activate)
+    }
+
+    func pinArray(to view: UIView,
+             safely: Bool = false,
+             with insets: EdgeInsets = .zero,
+             exclude excludedAnchors: [Anchor] = [],
+             activate: Bool = true) -> [NSLayoutConstraint] {
+        
+        var constraints = [NSLayoutConstraint]()
+        
+        if !excludedAnchors.contains(.leading) {
+            let constraint = leadingAnchor.constraint(
+                equalTo: safely ? view.safeLeadingAnchor : view.leadingAnchor,
+                constant: insets.leading)
+            
+            constraints.append(constraint)
+        }
+        
+        if !excludedAnchors.contains(.bottom) {
+            let constraint = bottomAnchor.constraint(
+                equalTo: safely ? view.safeBottomAnchor : view.bottomAnchor,
+                constant: -insets.bottom)
+            
+            constraints.append(constraint)
+        }
+        
+        if !excludedAnchors.contains(.top) {
+            let constraint = topAnchor.constraint(
+                equalTo: safely ? view.safeTopAnchor : view.topAnchor,
+                constant: insets.top)
+            
+            constraints.append(constraint)
+        }
+        
+        if !excludedAnchors.contains(.trailing) {
+            let constraint = trailingAnchor.constraint(
+                equalTo: safely ? view.safeTrailingAnchor : view.trailingAnchor,
+                constant: -insets.trailing)
+            
+            constraints.append(constraint)
+        }
+        
+        if activate {
+            NSLayoutConstraint.activate(constraints)
+        }
+        
+        return constraints
     }
 
     @discardableResult
