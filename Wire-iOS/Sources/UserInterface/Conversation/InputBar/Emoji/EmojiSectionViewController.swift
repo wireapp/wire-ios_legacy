@@ -18,7 +18,6 @@
 
 
 import Foundation
-import Cartography
 
 
 protocol EmojiSectionViewControllerDelegate: class {
@@ -26,7 +25,7 @@ protocol EmojiSectionViewControllerDelegate: class {
 }
 
 
-class EmojiSectionViewController: UIViewController {
+final class EmojiSectionViewController: UIViewController {
 
     private var typesByButton = [IconButton: EmojiSectionType]()
     private var sectionButtons = [IconButton]()
@@ -135,24 +134,40 @@ class EmojiSectionViewController: UIViewController {
         let inset: CGFloat = 16
         let count = CGFloat(sectionButtons.count)
         let fullSpacing = (view.bounds.width - 2 * inset) - iconSize
-        let padding = fullSpacing / (count - 1)
+        let padding: CGFloat = fullSpacing / (count - 1)
 
-        constrain(view, sectionButtons.first!) { view, firstButton in
-            firstButton.leading == view.leading + inset
-            view.height == iconSize + inset
+        var constraints = [NSLayoutConstraint]()
+        
+//        constrain(view, sectionButtons.first!) { view, firstButton in
+//            firstButton.leading == view.leading + inset
+//            view.height == iconSize + inset
+//        }
+        
+        sectionButtons.enumerated().forEach { idx, button in
+            
+            if idx == 0 {
+                constraints.append(button.pinToSuperview(anchor: .leading, inset: inset, activate: false))
+                constraints.append(view.heightAnchor.constraint(equalToConstant: iconSize + inset))
+
+            } else {
+            let previous = sectionButtons[idx - 1]
+            constraints.append(button.centerXAnchor.constraint(equalTo: previous.centerXAnchor, constant: padding))
+            }
+            
+//            constrain(button, sectionButtons[idx - 1], view) { button, previous, view in
+//                button.centerX == previous.centerX + padding
+//            }
+            
+            constraints.append(button.pinToSuperview(anchor: .top, activate: false))
         }
         
-        sectionButtons.enumerated().dropFirst().forEach { idx, button in
-            constrain(button, sectionButtons[idx - 1], view) { button, previous, view in
-                button.centerX == previous.centerX + padding
-            }
-        }
+//        sectionButtons.forEach {
+//            constrain($0, view) { button, view in
+//                button.top == view.top
+//            }
+//        }
         
-        sectionButtons.forEach {
-            constrain($0, view) { button, view in
-                button.top == view.top
-            }
-        }
+        NSLayoutConstraint.activate(constraints)
     }
     
 }
