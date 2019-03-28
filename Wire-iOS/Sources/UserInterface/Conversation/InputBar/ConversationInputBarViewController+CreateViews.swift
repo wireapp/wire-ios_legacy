@@ -72,9 +72,7 @@ extension ConversationInputBarViewController {
 
         view.addSubview(inputBar)
 
-        let values: [NSLayoutConstraint] = inputBar.fitInSuperview(exclude: [.bottom], activate: false).map{$0.value}
-
-        var constraints: [NSLayoutConstraint] = values
+        var constraints: [NSLayoutConstraint] = inputBar.fitInSuperview(exclude: [.bottom], activate: false).map{$0.value}
 
         let bottomConstraint = inputBar.pinToSuperview(anchor: .bottom, activate: false)
         bottomConstraint.priority = .defaultLow
@@ -152,21 +150,21 @@ extension ConversationInputBarViewController {
         typingIndicatorView = TypingIndicatorView()
         typingIndicatorView.translatesAutoresizingMaskIntoConstraints = false
         typingIndicatorView.accessibilityIdentifier = "typingIndicator"
-        typingIndicatorView.typingUsers = (Array(typingUsers ?? []) as? [ZMUser]) ?? []
+        if let typingUsers = typingUsers,
+            let typingUsersArray = Array(typingUsers) as? [ZMUser] {
+            typingIndicatorView.typingUsers = typingUsersArray
+        } else {
+            typingIndicatorView.typingUsers = []
+        }
         typingIndicatorView.setHidden(true, animated: false)
 
         inputBar.addSubview(typingIndicatorView)
 
-        var constraints = [NSLayoutConstraint]()
-        constraints.append(typingIndicatorView.centerYAnchor.constraint(equalTo: inputBar.topAnchor))
-
-        constraints.append(typingIndicatorView.pinToSuperview(axisAnchor: .centerX, activate: false))
-
-        ///TODO: a helper method
-        constraints.append(typingIndicatorView.leftAnchor.constraint(greaterThanOrEqualTo: typingIndicatorView.superview!.leftAnchor, constant: 48))
-        constraints.append(typingIndicatorView.rightAnchor.constraint(greaterThanOrEqualTo: typingIndicatorView.superview!.rightAnchor, constant: 48))
-
-        NSLayoutConstraint.activate(constraints)
+        NSLayoutConstraint.activate([typingIndicatorView.centerYAnchor.constraint(equalTo: inputBar.topAnchor),
+                                     typingIndicatorView.pinToSuperview(axisAnchor: .centerX, activate: false),
+                                     typingIndicatorView.leftAnchor.constraint(greaterThanOrEqualTo: typingIndicatorView.superview!.leftAnchor, constant: 48),
+                                     typingIndicatorView.rightAnchor.constraint(greaterThanOrEqualTo: typingIndicatorView.superview!.rightAnchor, constant: 48)
+                                     ])
     }
 
 }
