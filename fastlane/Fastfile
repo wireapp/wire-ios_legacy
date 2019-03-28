@@ -83,7 +83,7 @@ platform :ios do
     end
 
     desc "Upload to AppStore"
-    lane :upload_app_store do
+    lane :upload_app_store do |options|
         build = Build.new(options: options)
 
         sh "cp ../Configuration/Appfile ."
