@@ -1120,7 +1120,7 @@
 
 "landing.header" = "Wire. Konto hinzufügen.";
 "landing.create_account.title" = "Privat";
-"landing.create_account.subtitle" = "Privat mit Freunden und der Familie chatten";
+"landing.create_account.subtitle" = "Privat mit Freunden und der Familie\U00A0chatten";
 "landing.create_team.title" = "Pro";
 "landing.create_team.subtitle" = "Sichere Zusammenarbeit für Unternehmen, Institutionen und Organisationen";
 "landing.login.hints" = "Hast du bereits ein Benutzerkonto?";
@@ -1543,6 +1543,9 @@
 
 "url_action.authorization_required.title" = "Berechtigung erforderlich.";
 "url_action.authorization_required.message" = "Bitte einloggen, um diesen Inhalt zu sehen.";
+
+"url_action.invalid_link.title" = "Ungültiger Link.";
+"url_action.invalid_link.message" = "Der geöffnete Link ist ungültig.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // News and offers consent prompt
