@@ -52,7 +52,10 @@ final class ProfileView: UIView, Themeable {
     
     /// The user that is displayed.
     let user: GenericUser
-    
+
+    /// The user who is viewing this view
+    let viewer: GenericUser
+
     /// The view controller that displays the view.
     weak var source: UIViewController?
     
@@ -95,8 +98,11 @@ final class ProfileView: UIView, Themeable {
      * - note: You can change the options later through the `options` property.
      */
     
-    init(user: GenericUser, options: Options) {
+    init(user: GenericUser,
+         viewer: GenericUser,
+         options: Options) {
         self.user = user
+        self.viewer = viewer
         self.options = options
         self.availabilityView = AvailabilityTitleView(user: user, options: [])
         super.init(frame: .zero)
@@ -208,8 +214,9 @@ final class ProfileView: UIView, Themeable {
         let guestIndicatorHidden: Bool
         switch context {
             case .profileViewer:
-                if let zmUser = user.zmUser {
-                    guestIndicatorHidden = !zmUser.isProfileViewerGuestOfSelfUser
+                if let zmUser = user.zmUser,
+                    let zmViewer = viewer.zmUser{
+                    guestIndicatorHidden = !zmUser.isProfileViewerGuestOf(viewer: zmViewer)
                 } else {
                     guestIndicatorHidden = true
                 }
@@ -293,15 +300,10 @@ extension ProfileView: ZMUserObserver {
 extension ZMUser {
     
     /// return true if self user is a team member and the user to check is not a team member of the same team
-    var isProfileViewerGuestOfSelfUser: Bool {
-        guard ZMUser.selfUserIsTeamMember,
-            let selfUser = ZMUser.selfUser()
-            else {
-                return false
-        }
-        
+    func isProfileViewerGuestOf(viewer: ZMUser) -> Bool {
         if isTeamMember,
-            teamIdentifier == selfUser.teamIdentifier {
+            viewer.isTeamMember,
+            teamIdentifier == viewer.teamIdentifier {
             return false
         }
         

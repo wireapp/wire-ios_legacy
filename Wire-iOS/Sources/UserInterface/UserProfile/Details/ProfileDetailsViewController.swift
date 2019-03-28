@@ -75,7 +75,9 @@ final class ProfileDetailsViewController: UIViewController, Themeable {
         self.viewer = viewer
         self.conversation = conversation
         self.context = context
-        self.profileView = ProfileView(user: user, options: [.hideUsername, .hideHandle, .hideTeamName])
+        self.profileView = ProfileView(user: user,
+                                       viewer: viewer,
+                                       options: [.hideUsername, .hideHandle, .hideTeamName])
         self.contentController = ProfileDetailsContentController(user: user,
                                                                  viewer: viewer,
                                                                  conversation: conversation)
