@@ -20,7 +20,6 @@
 
 import Foundation
 import MobileCoreServices
-import Cartography
 
 private let zmLog = ZMSLog(tag: "UI")
 
@@ -78,7 +77,6 @@ public final class AudioRecordViewController: UIViewController, AudioRecordBaseV
         configureViews()
         configureAudioRecorder()
         createConstraints()
-        createConstraints2()
 
         if DeveloperMenuState.developerMenuEnabled() && Settings.shared().maxRecordingDurationDebug != 0 {
             self.recorder.maxRecordingDuration = Settings.shared().maxRecordingDurationDebug
@@ -193,7 +191,8 @@ public final class AudioRecordViewController: UIViewController, AudioRecordBaseV
          topSeparator,
          timeLabel,
          audioPreviewView,
-         cancelButton].forEach(){ $0.translatesAutoresizingMaskIntoConstraints = false }
+         cancelButton,
+         rightSeparator].forEach(){ $0.translatesAutoresizingMaskIntoConstraints = false }
         
         var constraints = [NSLayoutConstraint]()
         
@@ -230,7 +229,6 @@ public final class AudioRecordViewController: UIViewController, AudioRecordBaseV
             recordingDotView.setDimensions(length: 8, activate: false))
         NSLayoutConstraint.activate(recordingDotViewVisible)
         
-        /*
         constraints.append(rightSeparator.rightAnchor.constraint(equalTo: bottomContainerView.rightAnchor))
         constraints.append(rightSeparator.leftAnchor.constraint(equalTo: buttonOverlay.rightAnchor, constant: 8))
         constraints.append(rightSeparator.topAnchor.constraint(equalTo: bottomContainerView.topAnchor))
@@ -246,82 +244,9 @@ public final class AudioRecordViewController: UIViewController, AudioRecordBaseV
         constraints.append(contentsOf: cancelButton.setDimensions(length: 56, activate: false))
         constraints.append(buttonOverlay.rightAnchor.constraint(equalTo: cancelButton.leftAnchor, constant: -12))
         
- */
         NSLayoutConstraint.activate(constraints)
     }
     
-    func createConstraints2() {
-        /*
-        let button = buttonOverlay.audioButton
-//        let margin = (UIView.conversationLayoutMargins.left / 2) - (UIImage.size(for: .tiny) / 2)
-
-        constrain(view, bottomContainerView, topContainerView, button) { view, bottomContainer, topContainer, overlayButton in
-            bottomContainer.height == 56
-            bottomContainer.left == view.left
-            bottomContainer.right == view.right
-            bottomContainer.bottom == view.bottom
-            
-            overlayButton.centerY == bottomContainer.centerY
-            
-            topContainer.left == view.left
-            topContainer.top == view.top
-            topContainer.right == view.right
-            topContainer.bottom == bottomContainer.top
-        }
-        
-        constrain(topContainerView, topTooltipLabel, buttonOverlay) { topContainer, topTooltip, overlay in
-            topContainer.centerY == topTooltip.centerY
-            topTooltip.right == overlay.left - 12
-        }
-        
-        constrain(bottomContainerView, buttonOverlay, topSeparator) { container, overlay, separator in
-            separator.height == .hairline
-            separator.right == overlay.left - 8
-            separator.left == container.left + 16
-            separator.top == container.top
-        }
-        self.recordingDotViewHidden = constrain(bottomContainerView, timeLabel) { container, timeLabel in
-            timeLabel.centerY == container.centerY
-            timeLabel.left == container.left + margin
-        }
-        
-        self.recordingDotViewHidden?.active = false
-        
-        self.recordingDotViewVisible = constrain(bottomContainerView, timeLabel, recordingDotView) { container, timeLabel, recordingDotView in
-            
-            timeLabel.centerY == container.centerY
-            timeLabel.left == recordingDotView.right + 24
-            
-            recordingDotView.width == recordingDotView.height
-            recordingDotView.width == 8
-            
-            recordingDotView.left == container.left + margin + 8
-            recordingDotView.centerY == container.centerY
-        }
-        self.recordingDotViewVisible?.active = true
-        */
-        
-        constrain(bottomContainerView, buttonOverlay, rightSeparator) { container, overlay, rightSeparator in
-            rightSeparator.right == container.right
-            rightSeparator.left == overlay.right + 8
-            rightSeparator.top == container.top
-            rightSeparator.height == .hairline
-        }
-        
-        constrain(bottomContainerView, timeLabel, audioPreviewView, cancelButton, buttonOverlay) { container, timeLabel, previewView, cancelButton, overlay in
-            previewView.left == timeLabel.right + 8
-            previewView.top == container.top + 12
-            previewView.bottom == container.bottom - 12
-            previewView.right == overlay.left - 12
-            
-            cancelButton.centerY == container.centerY
-            cancelButton.right == container.right
-            cancelButton.width == cancelButton.height
-            cancelButton.width == 56
-            overlay.right == cancelButton.left - 12
-        }
-    }
-
     
     func configureAudioRecorder() {
         recorder.recordTimerCallback = { [weak self] time in
