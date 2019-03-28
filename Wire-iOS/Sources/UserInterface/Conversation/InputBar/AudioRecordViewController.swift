@@ -39,7 +39,7 @@ private let zmLog = ZMSLog(tag: "UI")
     case recording, finishedRecording
 }
 
-@objcMembers public final class AudioRecordViewController: UIViewController, AudioRecordBaseViewController {
+public final class AudioRecordViewController: UIViewController, AudioRecordBaseViewController {
     
     let buttonOverlay = AudioButtonOverlay()
     let topSeparator = UIView()
@@ -180,17 +180,31 @@ private let zmLog = ZMSLog(tag: "UI")
         }
     }
     
-    func createConstraints() {
+    private func createConstraints() {
         let button = buttonOverlay.audioButton
-        let margin = (UIView.conversationLayoutMargins.left / 2) - (UIImage.size(for: .tiny) / 2)
+        let margin: CGFloat = (UIView.conversationLayoutMargins.left / 2) - (UIImage.size(for: .tiny) / 2)
 
+        [bottomContainerView, topContainerView, button].forEach(){ $0.translatesAutoresizingMaskIntoConstraints = false }
+        
+        var constraints = [NSLayoutConstraint]()
+        
+        constraints.append(bottomContainerView.heightAnchor.constraint(equalToConstant: 56))
+        
+        let bottomContainerViewConstraints: [NSLayoutConstraint] = bottomContainerView.fitInSuperview(exclude: [.top], activate: false).map{$0.value}
+        
+        constraints.append(contentsOf: bottomContainerViewConstraints)
+        
+//        constraint.append(bottomContainerView.fitInSuperview(exclude:[.top], activate: false).map{$0.value})
+        
+        constraints.append(button.centerYAnchor.constraint(equalTo: bottomContainerView.centerYAnchor))
+        
         constrain(view, bottomContainerView, topContainerView, button) { view, bottomContainer, topContainer, overlayButton in
-            bottomContainer.height == 56
-            bottomContainer.left == view.left
-            bottomContainer.right == view.right
-            bottomContainer.bottom == view.bottom
+//            bottomContainer.height == 56
+//            bottomContainer.left == view.left
+//            bottomContainer.right == view.right
+//            bottomContainer.bottom == view.bottom
             
-            overlayButton.centerY == bottomContainer.centerY
+//            overlayButton.centerY == bottomContainer.centerY
             
             topContainer.left == view.left
             topContainer.top == view.top
@@ -250,6 +264,8 @@ private let zmLog = ZMSLog(tag: "UI")
             cancelButton.width == 56
             overlay.right == cancelButton.left - 12
         }
+        
+        NSLayoutConstraint.activate(constraints)
     }
     
     func configureAudioRecorder() {
