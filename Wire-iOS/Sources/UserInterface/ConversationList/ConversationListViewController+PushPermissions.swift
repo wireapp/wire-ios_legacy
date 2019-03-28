@@ -76,11 +76,10 @@ extension ConversationListViewController {
                     if let permissions = PermissionDeniedViewController.push() {
                         permissions.delegate = self
 
-                        self.addChild(permissions)
-                        self.view.addSubview(permissions.view)
-                        permissions.didMove(toParent: self)
+                        self.addToSelf(permissions)
 
-                        permissions.view.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets.zero)
+                        permissions.view.translatesAutoresizingMaskIntoConstraints = false
+                        permissions.view.fitInSuperview()
                         self.pushPermissionDeniedViewController = permissions
                     }
 

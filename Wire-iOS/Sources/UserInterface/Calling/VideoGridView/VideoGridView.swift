@@ -59,7 +59,7 @@ fileprivate extension CGSize {
 }
 
 
-class VideoGridViewController: UIViewController {
+final class VideoGridViewController: UIViewController {
 
     private var gridVideoStreams: [UUID] = []
     private let gridView = GridView()
