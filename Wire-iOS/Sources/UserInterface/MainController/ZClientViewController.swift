@@ -18,7 +18,6 @@
 
 
 import Foundation
-import PureLayout
 
 extension ZClientViewController {
 
@@ -81,7 +80,7 @@ extension ZClientViewController {
                     self.view.setNeedsLayout()
                     self.view.layoutIfNeeded()
                 }) { _ in
-                    heightConstraint.autoRemove()
+                    heightConstraint.isActive = false
                     
                     self.topOverlayViewController?.removeFromParent()
                     previousViewController.view.removeFromSuperview()
@@ -116,7 +115,7 @@ extension ZClientViewController {
                 self.view.layoutIfNeeded()
                 
                 UIView.animate(withDuration: 0.35, delay: 0, options: [.curveEaseOut, .beginFromCurrentState], animations: {
-                    heightConstraint.autoRemove()
+                    heightConstraint.isActive = false
                     self.view.setNeedsLayout()
                     self.view.layoutIfNeeded()
                 }) { _ in
