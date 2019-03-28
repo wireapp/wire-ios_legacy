@@ -214,12 +214,7 @@ final class ProfileView: UIView, Themeable {
         let guestIndicatorHidden: Bool
         switch context {
             case .profileViewer:
-                if let zmUser = user.zmUser,
-                    let zmViewer = viewer.zmUser{
-                    guestIndicatorHidden = !zmUser.isProfileViewerGuestOf(viewer: zmViewer)
-                } else {
-                    guestIndicatorHidden = true
-                }
+                guestIndicatorHidden = !viewer.isTeamMember || viewer.canAccessCompanyInformation(of: user)
             default:
                 guestIndicatorHidden = conversation.map(user.isGuest) != true
         }
@@ -294,19 +289,5 @@ extension ProfileView: ZMUserObserver {
         if changeInfo.availabilityChanged {
             updateAvailabilityVisibility()
         }
-    }
-}
-
-extension ZMUser {
-    
-    /// return true if self user is a team member and the user to check is not a team member of the same team
-    func isProfileViewerGuestOf(viewer: ZMUser) -> Bool {
-        if isTeamMember,
-            viewer.isTeamMember,
-            teamIdentifier == viewer.teamIdentifier {
-            return false
-        }
-        
-        return true
     }
 }
