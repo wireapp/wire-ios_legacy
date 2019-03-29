@@ -19,7 +19,6 @@
 
 
 import Foundation
-import Cartography
 import MobileCoreServices
 
 private let zmLog = ZMSLog(tag: "UI")
@@ -39,8 +38,8 @@ private let zmLog = ZMSLog(tag: "UI")
     case recording, finishedRecording
 }
 
-@objcMembers public final class AudioRecordViewController: UIViewController, AudioRecordBaseViewController {
-    
+public final class AudioRecordViewController: UIViewController, AudioRecordBaseViewController {
+
     let buttonOverlay = AudioButtonOverlay()
     let topSeparator = UIView()
     let rightSeparator = UIView()
@@ -52,9 +51,8 @@ private let zmLog = ZMSLog(tag: "UI")
     let topContainerView = UIView()
     let cancelButton = IconButton()
     let recordingDotView = RecordingDotView()
-    var recordingDotViewVisible: ConstraintGroup?
-    var recordingDotViewHidden: ConstraintGroup?
-    
+    var recordingDotViewVisible = [NSLayoutConstraint]()
+    var recordingDotViewHidden = [NSLayoutConstraint]()
     public let recorder: AudioRecorderType
     weak public var delegate: AudioRecordViewControllerDelegate?
     
@@ -179,79 +177,76 @@ private let zmLog = ZMSLog(tag: "UI")
             }
         }
     }
-    
-    func createConstraints() {
+
+    private func createConstraints() {
         let button = buttonOverlay.audioButton
-        let margin = (UIView.conversationLayoutMargins.left / 2) - (UIImage.size(for: .tiny) / 2)
+        let margin: CGFloat = (UIView.conversationLayoutMargins.left / 2) - (UIImage.size(for: .tiny) / 2)
 
-        constrain(view, bottomContainerView, topContainerView, button) { view, bottomContainer, topContainer, overlayButton in
-            bottomContainer.height == 56
-            bottomContainer.left == view.left
-            bottomContainer.right == view.right
-            bottomContainer.bottom == view.bottom
-            
-            overlayButton.centerY == bottomContainer.centerY
-            
-            topContainer.left == view.left
-            topContainer.top == view.top
-            topContainer.right == view.right
-            topContainer.bottom == bottomContainer.top
-        }
-        
-        constrain(topContainerView, topTooltipLabel, buttonOverlay) { topContainer, topTooltip, overlay in
-            topContainer.centerY == topTooltip.centerY
-            topTooltip.right == overlay.left - 12
-        }
-        
-        constrain(bottomContainerView, buttonOverlay, topSeparator) { container, overlay, separator in
-            separator.height == .hairline
-            separator.right == overlay.left - 8
-            separator.left == container.left + 16
-            separator.top == container.top
-        }
-        
-        self.recordingDotViewHidden = constrain(bottomContainerView, timeLabel) { container, timeLabel in
-            timeLabel.centerY == container.centerY
-            timeLabel.left == container.left + margin
-        }
-        
-        self.recordingDotViewHidden?.active = false
-        
-        self.recordingDotViewVisible = constrain(bottomContainerView, timeLabel, recordingDotView) { container, timeLabel, recordingDotView in
-            
-            timeLabel.centerY == container.centerY
-            timeLabel.left == recordingDotView.right + 24
-            
-            recordingDotView.width == recordingDotView.height
-            recordingDotView.width == 8
-            
-            recordingDotView.left == container.left + margin + 8
-            recordingDotView.centerY == container.centerY
-        }
-        self.recordingDotViewVisible?.active = true
-        
-        
-        constrain(bottomContainerView, buttonOverlay, rightSeparator) { container, overlay, rightSeparator in
-            rightSeparator.right == container.right
-            rightSeparator.left == overlay.right + 8
-            rightSeparator.top == container.top
-            rightSeparator.height == .hairline
-        }
-        
-        constrain(bottomContainerView, timeLabel, audioPreviewView, cancelButton, buttonOverlay) { container, timeLabel, previewView, cancelButton, overlay in
-            previewView.left == timeLabel.right + 8
-            previewView.top == container.top + 12
-            previewView.bottom == container.bottom - 12
-            previewView.right == overlay.left - 12
+        [bottomContainerView,
+         topContainerView,
+         button,
+         topTooltipLabel,
+         buttonOverlay,
+         topSeparator,
+         timeLabel,
+         audioPreviewView,
+         cancelButton,
+         rightSeparator].forEach(){ $0.translatesAutoresizingMaskIntoConstraints = false }
 
-            cancelButton.centerY == container.centerY
-            cancelButton.right == container.right
-            cancelButton.width == cancelButton.height
-            cancelButton.width == 56
-            overlay.right == cancelButton.left - 12
-        }
+        var constraints = [NSLayoutConstraint]()
+
+        constraints.append(bottomContainerView.heightAnchor.constraint(equalToConstant: 56))
+
+        constraints.append(contentsOf: bottomContainerView.superviewFittingArray(exclude: [.top]))
+
+        constraints.append(button.centerYAnchor.constraint(equalTo: bottomContainerView.centerYAnchor))
+
+        constraints.append(contentsOf: topContainerView.superviewFittingArray(exclude: [.bottom]))
+
+        constraints.append(topContainerView.bottomAnchor.constraint(equalTo: bottomContainerView.topAnchor))
+
+        constraints.append(topContainerView.centerYAnchor.constraint(equalTo: topTooltipLabel.centerYAnchor))
+        constraints.append(topTooltipLabel.rightAnchor.constraint(equalTo: buttonOverlay.leftAnchor, constant: -12))
+
+
+        constraints.append(topSeparator.heightAnchor.constraint(equalToConstant: .hairline))
+        constraints.append(topSeparator.rightAnchor.constraint(equalTo: buttonOverlay.leftAnchor, constant: -8))
+        constraints.append(topSeparator.leftAnchor.constraint(equalTo: bottomContainerView.leftAnchor, constant: 16))
+        constraints.append(topSeparator.topAnchor.constraint(equalTo: bottomContainerView.topAnchor))
+
+        recordingDotViewHidden = [timeLabel.centerYAnchor.constraint(equalTo: bottomContainerView.centerYAnchor),
+                                  timeLabel.leftAnchor.constraint(equalTo: bottomContainerView.leftAnchor, constant: margin)]
+
+        recordingDotViewVisible = [
+            timeLabel.centerYAnchor.constraint(equalTo: bottomContainerView.centerYAnchor),
+            timeLabel.leftAnchor.constraint(equalTo: recordingDotView.rightAnchor, constant: 24),
+            recordingDotView.leftAnchor.constraint(equalTo: bottomContainerView.leftAnchor, constant: margin + 8),
+            recordingDotView.centerYAnchor.constraint(equalTo: bottomContainerView.centerYAnchor)
+        ]
+
+        recordingDotViewVisible.append(contentsOf:
+            recordingDotView.setDimensions(length: 8, activate: false))
+        NSLayoutConstraint.activate(recordingDotViewVisible)
+
+        constraints.append(rightSeparator.rightAnchor.constraint(equalTo: bottomContainerView.rightAnchor))
+        constraints.append(rightSeparator.leftAnchor.constraint(equalTo: buttonOverlay.rightAnchor, constant: 8))
+        constraints.append(rightSeparator.topAnchor.constraint(equalTo: bottomContainerView.topAnchor))
+        constraints.append(rightSeparator.heightAnchor.constraint(equalToConstant: .hairline))
+
+        constraints.append(audioPreviewView.leftAnchor.constraint(equalTo: timeLabel.rightAnchor, constant: 8))
+        constraints.append(audioPreviewView.topAnchor.constraint(equalTo: bottomContainerView.topAnchor, constant: 12))
+        constraints.append(audioPreviewView.bottomAnchor.constraint(equalTo: bottomContainerView.bottomAnchor, constant: -12))
+        constraints.append(audioPreviewView.rightAnchor.constraint(equalTo: buttonOverlay.leftAnchor, constant: -12))
+
+        constraints.append(cancelButton.centerYAnchor.constraint(equalTo: bottomContainerView.centerYAnchor))
+        constraints.append(cancelButton.rightAnchor.constraint(equalTo: bottomContainerView.rightAnchor))
+        constraints.append(contentsOf: cancelButton.setDimensions(length: 56, activate: false))
+        constraints.append(buttonOverlay.rightAnchor.constraint(equalTo: cancelButton.leftAnchor, constant: -12))
+
+        NSLayoutConstraint.activate(constraints)
     }
-    
+
+
     func configureAudioRecorder() {
         recorder.recordTimerCallback = { [weak self] time in
             guard let `self` = self else { return }
@@ -311,12 +306,16 @@ private let zmLog = ZMSLog(tag: "UI")
         topTooltipLabel.text = "\(localizationBasePath).\(pathComponent)".localized(uppercased: true)
         
         if self.recordingState == .recording {
-            self.recordingDotViewHidden?.active = false
-            self.recordingDotViewVisible?.active = true
+            //            self.recordingDotViewHidden?.active = false
+            NSLayoutConstraint.deactivate(recordingDotViewHidden)
+            //            self.recordingDotViewVisible?.active = true
+            NSLayoutConstraint.activate(self.recordingDotViewVisible)
         }
         else {
-            self.recordingDotViewVisible?.active = false
-            self.recordingDotViewHidden?.active = true
+            //            self.recordingDotViewVisible?.active = false
+            NSLayoutConstraint.deactivate(self.recordingDotViewVisible)
+            //            self.recordingDotViewHidden?.active = true
+            NSLayoutConstraint.activate(recordingDotViewHidden)
         }
     }
     
