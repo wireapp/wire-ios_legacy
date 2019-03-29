@@ -194,7 +194,10 @@ class AuthenticationInterfaceBuilderTests: ZMSnapshotTestCase {
                 return XCTFail("An interface was generated but we didn't expect one.", file: file, line: line)
             }
 
-            verify(view: viewController.view, file: file, line: line)
+            let navigationController = UINavigationController(navigationBarClass: AuthenticationNavigationBar.self, toolbarClass: nil)
+            navigationController.viewControllers = [viewController]
+
+            verify(view: navigationController.view, file: file, line: line)
         } else {
             XCTAssertFalse(step.needsInterface, "Missing interface.", file: file, line: line)
         }

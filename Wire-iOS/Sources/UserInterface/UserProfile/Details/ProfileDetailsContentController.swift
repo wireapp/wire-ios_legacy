@@ -33,7 +33,7 @@ protocol ProfileDetailsContentControllerDelegate: class {
  * An object that controls the content to display in the user details screen.
  */
 
-class ProfileDetailsContentController: NSObject, UITableViewDataSource, UITableViewDelegate, ZMUserObserver {
+final class ProfileDetailsContentController: NSObject, UITableViewDataSource, UITableViewDelegate, ZMUserObserver {
     
     /**
      * The type of content that can be displayed in the profile details.
@@ -55,7 +55,7 @@ class ProfileDetailsContentController: NSObject, UITableViewDataSource, UITableV
     
     /// The conversation where the profile details will be displayed.
     let conversation: ZMConversation?
-        
+
     // MARK: - Accessing the Content
     
     /// The contents to display for the current configuration.
@@ -79,10 +79,13 @@ class ProfileDetailsContentController: NSObject, UITableViewDataSource, UITableV
      * - parameter conversation: The conversation where the profile details will be displayed.
      */
     
-    init(user: GenericUser, viewer: GenericUser, conversation: ZMConversation?) {
+    init(user: GenericUser,
+         viewer: GenericUser,
+         conversation: ZMConversation?) {
         self.user = user
         self.viewer = viewer
         self.conversation = conversation
+
         super.init()
         configureObservers()
         updateContent()
@@ -107,8 +110,8 @@ class ProfileDetailsContentController: NSObject, UITableViewDataSource, UITableV
     
     /// Updates the content for the current configuration.
     private func updateContent() {
-        switch conversation?.conversationType {
-        case .group?:
+        switch conversation?.conversationType ?? .group {
+        case .group:
             let richProfile = user.richProfile
             if viewerCanAccessRichProfile, !richProfile.isEmpty {
                 // If there is rich profile data and the user is allowed to see it, display it.
@@ -118,7 +121,7 @@ class ProfileDetailsContentController: NSObject, UITableViewDataSource, UITableV
                 contents = []
             }
 
-        case .oneOnOne?:
+        case .oneOnOne:
             let readReceiptsEnabled = viewer.readReceiptsEnabled
             let richProfile = user.richProfile
             if viewerCanAccessRichProfile, !richProfile.isEmpty {

@@ -72,7 +72,9 @@ final class SelfProfileViewController: UIViewController {
         settingsController = rootGroup.generateViewController()! as! SettingsTableViewController
         
         let user = ZMUser.selfUser()!
-        profileView = ProfileView(user: user, options: user.isTeamMember ? [.allowEditingAvailability] : [.hideAvailability])
+        profileView = ProfileView(user: user,
+                                  viewer: user,
+                                  options: user.isTeamMember ? [.allowEditingAvailability] : [.hideAvailability])
         profileView.availabilityView.options = .selfProfile
         profileView.colorSchemeVariant = .dark
         

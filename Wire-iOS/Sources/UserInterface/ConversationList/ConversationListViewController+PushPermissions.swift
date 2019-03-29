@@ -25,7 +25,8 @@ extension Settings {
         guard let date = self.lastPushAlertDate else {
             return true
         }
-        return abs(Float(date.timeIntervalSinceNow)) > 60 * 60 * 24
+
+        return date.timeIntervalSinceNow < -86400
     }
 }
 

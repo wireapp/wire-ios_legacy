@@ -135,7 +135,7 @@ static AppDelegate *sharedAppDelegate = nil;
 - (void)applicationDidBecomeActive:(UIApplication *)application;
 {
     ZMLogInfo(@"applicationDidBecomeActive (applicationState = %ld)", (long)application.applicationState);
-    
+
     switch (self.launchType) {
         case ApplicationLaunchURL:
         case ApplicationLaunchPush:

@@ -19,7 +19,7 @@
 import XCTest
 @testable import Wire
 
-class ProfileViewTests: CoreDataSnapshotTestCase {
+final class ProfileViewTests: CoreDataSnapshotTestCase {
     
     override func setUp() {
         super.setUp()
@@ -69,7 +69,9 @@ class ProfileViewTests: CoreDataSnapshotTestCase {
             selfUser.setHandle("browncow")
             selfUser.availability = availability
             
-            let sut = ProfileView(user: selfUser, options: options)
+            let sut = ProfileView(user: selfUser,
+                                  viewer: selfUser,
+                                  options: options)
             sut.colorSchemeVariant = .dark
             sut.frame.size = sut.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
             sut.backgroundColor = .black
