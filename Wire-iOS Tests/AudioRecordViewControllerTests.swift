@@ -32,7 +32,7 @@ import XCTest
     @objc func audioRecordViewControllerWantsToSendAudio(_ audioRecordViewController: AudioRecordBaseViewController, recordingURL: URL, duration: TimeInterval, filter: AVSAudioEffectType) {}
 }
 
-final class AudioRecordViewControllerTests: ZMSnapshotTestCase {
+class AudioRecordViewControllerTests: ZMSnapshotTestCase {
 
     var sut: AudioRecordViewController!
     fileprivate var delegate: MockAudioRecordViewControllerDelegate!
