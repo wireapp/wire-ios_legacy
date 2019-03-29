@@ -25,7 +25,7 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
     
     let collection: AssetCollectionWrapper
     
-    fileprivate var navBarContainer: UINavigationBarContainer?
+//    fileprivate var navBarContainer: UINavigationBarContainer?
 
     var pageViewController: UIPageViewController = UIPageViewController(transitionStyle:.scroll, navigationOrientation:.horizontal, options: [:])
     var buttonsBar: InputBarButtonsView!
@@ -110,34 +110,34 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//
+//        createNavBarIfNeeded()
+//    }
 
-        createNavBarIfNeeded()
-    }
-
-    private func createNavBarIfNeeded() {
-        if !(parent is UINavigationController) && navBarContainer == nil {
-            // Adds the navigation bar only if the parent view controller is not a navigation controller
-            let navigationBar = UINavigationBar()
-            navigationBar.items = [navigationItem]
-            navigationBar.isTranslucent = false
-            navigationBar.barTintColor = UIColor.from(scheme: .barBackground)
-
-            navBarContainer = UINavigationBarContainer(navigationBar)
-
-            if let navBarContainer = navBarContainer,
-                let navigationBar = navBarContainer.view {
-                addToSelf(navBarContainer)
-
-                navigationBar.translatesAutoresizingMaskIntoConstraints = false
-                NSLayoutConstraint.activate([
-                    navigationBar.pinToSuperview(anchor: .top, activate: false),
-                    navigationBar.widthAnchor.constraint(equalTo: view.widthAnchor),
-                    navigationBar.pinToSuperview(axisAnchor: .centerX, activate: false)])
-            }
-        }
-    }
+//    private func createNavBarIfNeeded() {
+//        if !(parent is UINavigationController) && navBarContainer == nil {
+//            // Adds the navigation bar only if the parent view controller is not a navigation controller
+//            let navigationBar = UINavigationBar()
+//            navigationBar.items = [navigationItem]
+//            navigationBar.isTranslucent = false
+//            navigationBar.barTintColor = UIColor.from(scheme: .barBackground)
+//
+//            navBarContainer = UINavigationBarContainer(navigationBar)
+//
+//            if let navBarContainer = navBarContainer,
+//                let navigationBar = navBarContainer.view {
+//                addToSelf(navBarContainer)
+//
+//                navigationBar.translatesAutoresizingMaskIntoConstraints = false
+//                NSLayoutConstraint.activate([
+//                    navigationBar.pinToSuperview(anchor: .top, activate: false),
+//                    navigationBar.widthAnchor.constraint(equalTo: view.widthAnchor),
+//                    navigationBar.pinToSuperview(axisAnchor: .centerX, activate: false)])
+//            }
+//        }
+//    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -287,7 +287,7 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
     }
 
     fileprivate func updateBarsForPreview() {
-        navBarContainer?.view.isHidden = isPreviewing
+//        navBarContainer?.view.isHidden = isPreviewing
         buttonsBar?.isHidden = isPreviewing
         separator.isHidden = isPreviewing
     }
@@ -471,12 +471,13 @@ extension ConversationImagesViewController: MenuVisibilityController {
         if !UIScreen.hasNotch {
             isVisible = isVisible && UIApplication.shared.isStatusBarHidden
         }
-        return  (navBarContainer?.view.isHidden ?? isVisible) && isVisible
+
+        return isVisible
     }
     
     func fadeAndHideMenu(_ hidden: Bool) {
         let duration = UIApplication.shared.statusBarOrientationAnimationDuration
-        navBarContainer?.view.fadeAndHide(hidden, duration: duration)
+//        navBarContainer?.view.fadeAndHide(hidden, duration: duration)
         buttonsBar.fadeAndHide(hidden, duration: duration)
         separator.fadeAndHide(hidden, duration: duration)
         

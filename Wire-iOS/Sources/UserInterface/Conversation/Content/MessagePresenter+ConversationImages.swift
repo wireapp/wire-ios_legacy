@@ -20,7 +20,17 @@ import Foundation
 
 extension MessagePresenter {
 
-    @objc func imagesViewController(for message: ZMConversationMessage, actionResponder: MessageActionResponder, isPreviewing: Bool) -> UIViewController {
+
+    /// return a view controller for viewing image messge
+    ///
+    /// - Parameters:
+    ///   - message: a message with image data
+    ///   - actionResponder: a action responder
+    ///   - isPreviewing: is peeking with 3D touch?
+    /// - Returns: if isPreviewing, return a ConversationImagesViewController otherwise return a the view wrapped in navigation controller
+    @objc func imagesViewController(for message: ZMConversationMessage,
+                                    actionResponder: MessageActionResponder,
+                                    isPreviewing: Bool) -> UIViewController {
         
         guard let conversation = message.conversation else {
             fatal("Message has no conversation.")
@@ -44,6 +54,7 @@ extension MessagePresenter {
 
             imagesController.preferredContentSize = preferredContentSize
         }
+
         if (UIDevice.current.userInterfaceIdiom == .phone) {
             imagesController.modalPresentationStyle = .fullScreen;
             imagesController.snapshotBackgroundView = UIScreen.main.snapshotView(afterScreenUpdates: true)
@@ -66,7 +77,12 @@ extension MessagePresenter {
             }
             self.modalTargetController?.dismiss(animated: true, completion: completion)
         }
-        return imagesController
+
+        if isPreviewing {
+            return imagesController
+        } else {
+            return imagesController.wrapInNavigationController()
+        }
     }
     
     @objc func closeImagesButtonPressed(_ sender: AnyObject!) {
