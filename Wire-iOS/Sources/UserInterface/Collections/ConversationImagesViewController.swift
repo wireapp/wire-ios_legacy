@@ -17,24 +17,9 @@
 //
 
 import Foundation
-import Cartography
 import WireSyncEngine
 
 typealias DismissAction = (_ completion: (()->())?)->()
-
-
-fileprivate extension UIView {
-    func wr_wrapForSnapshotBackground() -> UIView {
-        let innerSnapshot = UIView()
-        innerSnapshot.addSubview(self)
-        let topInset: CGFloat = -64
-
-        innerSnapshot.translatesAutoresizingMaskIntoConstraints = false
-        innerSnapshot.fitInSuperview(with: EdgeInsets(top: topInset, leading: 0, bottom: topInset, trailing: 0))
-
-        return innerSnapshot
-    }
-}
 
 final class ConversationImagesViewController: TintColorCorrectedViewController {
     
@@ -327,7 +312,7 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
         guard let sender = currentMessage.sender, let serverTimestamp = currentMessage.serverTimestamp else {
             return
         }
-        self.navigationItem.titleView = TwoLineTitleView(first: sender.displayName.localizedUppercase, second: serverTimestamp.formattedDate)
+        navigationItem.titleView = TwoLineTitleView(first: sender.displayName.localizedUppercase, second: serverTimestamp.formattedDate)
     }
     
     private func updateButtonsForMessage() {
