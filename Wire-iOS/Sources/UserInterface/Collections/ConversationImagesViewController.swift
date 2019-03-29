@@ -28,14 +28,10 @@ fileprivate extension UIView {
         let innerSnapshot = UIView()
         innerSnapshot.addSubview(self)
         let topInset: CGFloat = -64
-        
-        constrain(innerSnapshot, self) { innerSnapshot, selfView in
-            selfView.leading == innerSnapshot.leading
-            selfView.top == innerSnapshot.top + topInset
-            selfView.trailing == innerSnapshot.trailing
-            selfView.bottom == innerSnapshot.bottom + topInset
-        }
-        
+
+        innerSnapshot.translatesAutoresizingMaskIntoConstraints = false
+        innerSnapshot.fitInSuperview(with: EdgeInsets(top: topInset, leading: 0, bottom: topInset, trailing: 0))
+
         return innerSnapshot
     }
 }
@@ -145,16 +141,16 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
 
             navBarContainer = UINavigationBarContainer(navigationBar)
 
-            if let navBarContainer = navBarContainer {
+            if let navBarContainer = navBarContainer,
+                let navigationBar = navBarContainer.view {
                 addToSelf(navBarContainer)
 
-                constrain(view, navBarContainer.view) { view, navigationBar in
-                    navigationBar.top == view.top
-                    navigationBar.width == view.width
-                    navigationBar.centerX == view.centerX
-                }
+                navigationBar.translatesAutoresizingMaskIntoConstraints = false
+                NSLayoutConstraint.activate([
+                    navigationBar.pinToSuperview(anchor: .top, activate: false),
+                    navigationBar.widthAnchor.constraint(equalTo: view.widthAnchor),
+                    navigationBar.pinToSuperview(axisAnchor: .centerX, activate: false)])
             }
-
         }
     }
 
@@ -166,27 +162,25 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
         view.addSubview(overlay)
         view.addSubview(separator)
 
-        constrain(view, pageViewController.view) { view, pageControllerView in
-            pageControllerView.edges == view.edges
-        }
-        
-        constrain(view, buttonsBar, overlay, separator) { view, buttonsBar, overlay, separator in
-            
-            buttonsBar.leading == view.leading
-            buttonsBar.trailing == view.trailing
-            buttonsBar.bottom == view.bottom
-
-            overlay.edges == buttonsBar.edges
-
-            separator.height == .hairline
-            separator.top == buttonsBar.top
-            separator.leading == buttonsBar.leading
-            separator.trailing == buttonsBar.trailing
-        }
+        createConstraints()
 
         updateBarsForPreview()
 
         view.backgroundColor = .from(scheme: .background)
+    }
+
+    private func createConstraints() {
+        [pageViewController.view,
+         buttonsBar,
+         overlay,
+         separator].forEach(){ $0.translatesAutoresizingMaskIntoConstraints = false }
+
+        pageViewController.view.fitInSuperview()
+        buttonsBar.fitInSuperview(exclude: [.top])
+        overlay.pin(to: buttonsBar)
+
+        separator.heightAnchor.constraint(equalToConstant: .hairline).isActive = true
+        separator.pin(to: buttonsBar, exclude: [.bottom])
     }
     
     private func createPageController() {
