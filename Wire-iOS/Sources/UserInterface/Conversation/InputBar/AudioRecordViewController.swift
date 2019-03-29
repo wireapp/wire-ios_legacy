@@ -77,6 +77,8 @@ public final class AudioRecordViewController: UIViewController, AudioRecordBaseV
         configureAudioRecorder()
         createConstraints()
 
+        updateRecordingState(recordingState)
+
         if DeveloperMenuState.developerMenuEnabled() && Settings.shared().maxRecordingDurationDebug != 0 {
             self.recorder.maxRecordingDuration = Settings.shared().maxRecordingDurationDebug
         }
@@ -130,7 +132,7 @@ public final class AudioRecordViewController: UIViewController, AudioRecordBaseV
         setOverlayState(.expanded(offset.clamp(0, upper: 1)), animated: false)
     }
     
-    func configureViews() {
+    private func configureViews() {
         accentColorChangeHandler = AccentColorChangeHandler.addObserver(self) { [unowned self] color, _ in
             self.audioPreviewView.color = color
         }
@@ -161,8 +163,7 @@ public final class AudioRecordViewController: UIViewController, AudioRecordBaseV
         cancelButton.setIconColor(UIColor.from(scheme: .textForeground), for: .normal)
         cancelButton.addTarget(self, action: #selector(cancelButtonPressed(_:)), for: .touchUpInside)
         cancelButton.accessibilityLabel = "audioRecorderCancel"
-        updateRecordingState(recordingState)
-        
+
         
         buttonOverlay.buttonHandler = { [weak self] buttonType in
             guard let `self` = self else {
@@ -189,6 +190,7 @@ public final class AudioRecordViewController: UIViewController, AudioRecordBaseV
          buttonOverlay,
          topSeparator,
          timeLabel,
+         recordingDotView,
          audioPreviewView,
          cancelButton,
          rightSeparator].forEach(){ $0.translatesAutoresizingMaskIntoConstraints = false }
@@ -218,12 +220,14 @@ public final class AudioRecordViewController: UIViewController, AudioRecordBaseV
         recordingDotViewVisible = [
             timeLabel.centerYAnchor.constraint(equalTo: bottomContainerView.centerYAnchor),
             timeLabel.leftAnchor.constraint(equalTo: recordingDotView.rightAnchor, constant: 24),
+
             recordingDotView.leftAnchor.constraint(equalTo: bottomContainerView.leftAnchor, constant: margin + 8),
             recordingDotView.centerYAnchor.constraint(equalTo: bottomContainerView.centerYAnchor)
         ]
 
         recordingDotViewVisible.append(contentsOf:
             recordingDotView.setDimensions(length: 8, activate: false))
+
         NSLayoutConstraint.activate(recordingDotViewVisible)
 
         constraints.append(contentsOf: [rightSeparator.rightAnchor.constraint(equalTo: bottomContainerView.rightAnchor),
@@ -246,7 +250,7 @@ public final class AudioRecordViewController: UIViewController, AudioRecordBaseV
     }
 
 
-    func configureAudioRecorder() {
+    private func configureAudioRecorder() {
         recorder.recordTimerCallback = { [weak self] time in
             guard let `self` = self else { return }
             self.updateTimeLabel(time)
@@ -277,17 +281,17 @@ public final class AudioRecordViewController: UIViewController, AudioRecordBaseV
         delegate?.audioRecordViewControllerDidCancel(self)
     }
     
-    func setRecordingState(_ state: AudioRecordState, animated: Bool) {
+    private func setRecordingState(_ state: AudioRecordState, animated: Bool) {
         updateRecordingState(state)
         
         if animated {
-            UIView.animate(withDuration: 0.2, animations: {
-                self.view.layoutIfNeeded()
+            UIView.animate(withDuration: 0.2, animations: { [weak self] in
+                self?.view.layoutIfNeeded()
             }) 
         }
     }
     
-    func updateRecordingState(_ state: AudioRecordState) {
+    private func updateRecordingState(_ state: AudioRecordState) {
         
         let visible = visibleViewsForState(state)
         let allViews = Set(view.subviews.flatMap { $0.subviews }) // Well, 2 levels 'all'
@@ -304,12 +308,12 @@ public final class AudioRecordViewController: UIViewController, AudioRecordBaseV
         let pathComponent = finished ? "tooltip.tap_send" : "tooltip.pull_send"
         topTooltipLabel.text = "\(localizationBasePath).\(pathComponent)".localized(uppercased: true)
         
-        if self.recordingState == .recording {
+        if recordingState == .recording {
             NSLayoutConstraint.deactivate(recordingDotViewHidden)
-            NSLayoutConstraint.activate(self.recordingDotViewVisible)
+            NSLayoutConstraint.activate(recordingDotViewVisible)
         }
         else {
-            NSLayoutConstraint.deactivate(self.recordingDotViewVisible)
+            NSLayoutConstraint.deactivate(recordingDotViewVisible)
             NSLayoutConstraint.activate(recordingDotViewHidden)
         }
     }
