@@ -198,21 +198,19 @@ public final class AudioRecordViewController: UIViewController, AudioRecordBaseV
         constraints.append(bottomContainerView.heightAnchor.constraint(equalToConstant: 56))
 
         constraints.append(contentsOf: bottomContainerView.superviewFittingArray(exclude: [.top]))
-
         constraints.append(button.centerYAnchor.constraint(equalTo: bottomContainerView.centerYAnchor))
 
         constraints.append(contentsOf: topContainerView.superviewFittingArray(exclude: [.bottom]))
 
-        constraints.append(topContainerView.bottomAnchor.constraint(equalTo: bottomContainerView.topAnchor))
+        constraints.append(contentsOf: [topContainerView.bottomAnchor.constraint(equalTo: bottomContainerView.topAnchor),
 
-        constraints.append(topContainerView.centerYAnchor.constraint(equalTo: topTooltipLabel.centerYAnchor))
-        constraints.append(topTooltipLabel.rightAnchor.constraint(equalTo: buttonOverlay.leftAnchor, constant: -12))
+                                        topContainerView.centerYAnchor.constraint(equalTo: topTooltipLabel.centerYAnchor),
+                                        topTooltipLabel.rightAnchor.constraint(equalTo: buttonOverlay.leftAnchor, constant: -12),
 
-
-        constraints.append(topSeparator.heightAnchor.constraint(equalToConstant: .hairline))
-        constraints.append(topSeparator.rightAnchor.constraint(equalTo: buttonOverlay.leftAnchor, constant: -8))
-        constraints.append(topSeparator.leftAnchor.constraint(equalTo: bottomContainerView.leftAnchor, constant: 16))
-        constraints.append(topSeparator.topAnchor.constraint(equalTo: bottomContainerView.topAnchor))
+                                        topSeparator.heightAnchor.constraint(equalToConstant: .hairline),
+                                        topSeparator.rightAnchor.constraint(equalTo: buttonOverlay.leftAnchor, constant: -8),
+                                        topSeparator.leftAnchor.constraint(equalTo: bottomContainerView.leftAnchor, constant: 16),
+                                        topSeparator.topAnchor.constraint(equalTo: bottomContainerView.topAnchor)])
 
         recordingDotViewHidden = [timeLabel.centerYAnchor.constraint(equalTo: bottomContainerView.centerYAnchor),
                                   timeLabel.leftAnchor.constraint(equalTo: bottomContainerView.leftAnchor, constant: margin)]
@@ -228,20 +226,21 @@ public final class AudioRecordViewController: UIViewController, AudioRecordBaseV
             recordingDotView.setDimensions(length: 8, activate: false))
         NSLayoutConstraint.activate(recordingDotViewVisible)
 
-        constraints.append(rightSeparator.rightAnchor.constraint(equalTo: bottomContainerView.rightAnchor))
-        constraints.append(rightSeparator.leftAnchor.constraint(equalTo: buttonOverlay.rightAnchor, constant: 8))
-        constraints.append(rightSeparator.topAnchor.constraint(equalTo: bottomContainerView.topAnchor))
-        constraints.append(rightSeparator.heightAnchor.constraint(equalToConstant: .hairline))
+        constraints.append(contentsOf: [rightSeparator.rightAnchor.constraint(equalTo: bottomContainerView.rightAnchor),
+                                        rightSeparator.leftAnchor.constraint(equalTo: buttonOverlay.rightAnchor, constant: 8),
+                                        rightSeparator.topAnchor.constraint(equalTo: bottomContainerView.topAnchor),
+                                        rightSeparator.heightAnchor.constraint(equalToConstant: .hairline),
 
-        constraints.append(audioPreviewView.leftAnchor.constraint(equalTo: timeLabel.rightAnchor, constant: 8))
-        constraints.append(audioPreviewView.topAnchor.constraint(equalTo: bottomContainerView.topAnchor, constant: 12))
-        constraints.append(audioPreviewView.bottomAnchor.constraint(equalTo: bottomContainerView.bottomAnchor, constant: -12))
-        constraints.append(audioPreviewView.rightAnchor.constraint(equalTo: buttonOverlay.leftAnchor, constant: -12))
+                                        audioPreviewView.leftAnchor.constraint(equalTo: timeLabel.rightAnchor, constant: 8),
+                                        audioPreviewView.topAnchor.constraint(equalTo: bottomContainerView.topAnchor, constant: 12),
+                                        audioPreviewView.bottomAnchor.constraint(equalTo: bottomContainerView.bottomAnchor, constant: -12),
+                                        audioPreviewView.rightAnchor.constraint(equalTo: buttonOverlay.leftAnchor, constant: -12),
 
-        constraints.append(cancelButton.centerYAnchor.constraint(equalTo: bottomContainerView.centerYAnchor))
-        constraints.append(cancelButton.rightAnchor.constraint(equalTo: bottomContainerView.rightAnchor))
+                                        cancelButton.centerYAnchor.constraint(equalTo: bottomContainerView.centerYAnchor),
+                                        cancelButton.rightAnchor.constraint(equalTo: bottomContainerView.rightAnchor),
+                                        buttonOverlay.rightAnchor.constraint(equalTo: cancelButton.leftAnchor, constant: -12)])
+
         constraints.append(contentsOf: cancelButton.setDimensions(length: 56, activate: false))
-        constraints.append(buttonOverlay.rightAnchor.constraint(equalTo: cancelButton.leftAnchor, constant: -12))
 
         NSLayoutConstraint.activate(constraints)
     }
