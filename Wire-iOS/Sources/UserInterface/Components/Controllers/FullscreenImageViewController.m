@@ -120,6 +120,14 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     return self;
 }
 
+-(void)setShowCloseButton:(BOOL)showCloseButton
+{
+    _showCloseButton = showCloseButton;
+
+    self.closeButton.hidden = !self.showCloseButton;
+    self.topOverlay.hidden = !self.showCloseButton;
+}
+
 - (void)loadView {
     self.view = [[FirstReponderView alloc] init];
 }
