@@ -306,15 +306,11 @@ public final class AudioRecordViewController: UIViewController, AudioRecordBaseV
         topTooltipLabel.text = "\(localizationBasePath).\(pathComponent)".localized(uppercased: true)
         
         if self.recordingState == .recording {
-            //            self.recordingDotViewHidden?.active = false
             NSLayoutConstraint.deactivate(recordingDotViewHidden)
-            //            self.recordingDotViewVisible?.active = true
             NSLayoutConstraint.activate(self.recordingDotViewVisible)
         }
         else {
-            //            self.recordingDotViewVisible?.active = false
             NSLayoutConstraint.deactivate(self.recordingDotViewVisible)
-            //            self.recordingDotViewHidden?.active = true
             NSLayoutConstraint.activate(recordingDotViewHidden)
         }
     }
