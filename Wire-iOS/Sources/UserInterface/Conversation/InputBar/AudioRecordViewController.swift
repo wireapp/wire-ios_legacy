@@ -23,8 +23,8 @@ import MobileCoreServices
 
 private let zmLog = ZMSLog(tag: "UI")
 
-public protocol AudioRecordBaseViewController: class {
-    var delegate: AudioRecordViewControllerDelegate? { get set }
+@objc public protocol AudioRecordBaseViewController: NSObjectProtocol {
+    weak var delegate: AudioRecordViewControllerDelegate? { get set }
 }
 
 @objc public protocol AudioRecordViewControllerDelegate: class {
