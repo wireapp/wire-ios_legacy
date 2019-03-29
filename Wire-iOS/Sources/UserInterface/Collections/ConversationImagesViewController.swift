@@ -23,7 +23,7 @@ import WireSyncEngine
 typealias DismissAction = (_ completion: (()->())?)->()
 
 
-extension UIView {
+fileprivate extension UIView {
     func wr_wrapForSnapshotBackground() -> UIView {
         let innerSnapshot = UIView()
         innerSnapshot.addSubview(self)
@@ -45,6 +45,7 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
     let collection: AssetCollectionWrapper
     
     fileprivate var navBarContainer: UINavigationBarContainer?
+
     var pageViewController: UIPageViewController = UIPageViewController(transitionStyle:.scroll, navigationOrientation:.horizontal, options: [:])
     var buttonsBar: InputBarButtonsView!
     let deleteButton = IconButton(style: .default)
@@ -143,6 +144,17 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
             navigationBar.barTintColor = UIColor.from(scheme: .barBackground)
 
             navBarContainer = UINavigationBarContainer(navigationBar)
+
+            if let navBarContainer = navBarContainer {
+                addToSelf(navBarContainer)
+
+                constrain(view, navBarContainer.view) { view, navigationBar in
+                    navigationBar.top == view.top
+                    navigationBar.width == view.width
+                    navigationBar.centerX == view.centerX
+                }
+            }
+
         }
     }
 
@@ -170,18 +182,6 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
             separator.top == buttonsBar.top
             separator.leading == buttonsBar.leading
             separator.trailing == buttonsBar.trailing
-        }
-        
-        if let navBarContainer = navBarContainer {
-            addChild(navBarContainer)
-            view.addSubview(navBarContainer.view)
-            navBarContainer.didMove(toParent: self)
-
-            constrain(view, navBarContainer.view) { view, navigationBar in
-                navigationBar.top == view.top
-                navigationBar.width == view.width
-                navigationBar.centerX == view.centerX
-            }
         }
 
         updateBarsForPreview()

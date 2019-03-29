@@ -60,6 +60,10 @@ final class ConversationImagesViewControllerTests: CoreDataSnapshotTestCase {
 
     func testThatItDisplaysCorrectToolbarForImage_Normal() {
         sut.setBoundsSizeAsIPhone4_7Inch()
+
+        ///calls viewWillAppear
+        sut.beginAppearanceTransition(true, animated: false)
+
         verify(view: sut.view)
     }
     
@@ -70,6 +74,10 @@ final class ConversationImagesViewControllerTests: CoreDataSnapshotTestCase {
         sut.currentMessage = message
         
         sut.setBoundsSizeAsIPhone4_7Inch()
+
+        ///calls viewWillAppear
+        sut.beginAppearanceTransition(true, animated: false)
+
         verify(view: sut.view)
     }
 
