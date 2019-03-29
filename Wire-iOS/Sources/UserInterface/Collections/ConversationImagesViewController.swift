@@ -127,11 +127,15 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        if !(parent is UINavigationController) {
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        createNavBarIfNeeded()
+    }
+
+    func createNavBarIfNeeded() {
+        if !(parent is UINavigationController) && navBarContainer == nil {
             // Adds the navigation bar only if the parent view controller is not a navigation controller
             let navigationBar = UINavigationBar()
             navigationBar.items = [navigationItem]
@@ -140,7 +144,11 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
 
             navBarContainer = UINavigationBarContainer(navigationBar)
         }
-        
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
         self.createPageController()
         self.createControlsBar()
         view.addSubview(overlay)

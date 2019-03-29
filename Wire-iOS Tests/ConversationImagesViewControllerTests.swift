@@ -20,7 +20,7 @@
 import XCTest
 @testable import Wire
 
-class ConversationImagesViewControllerTests: CoreDataSnapshotTestCase {
+final class ConversationImagesViewControllerTests: CoreDataSnapshotTestCase {
     
     var sut: ConversationImagesViewController! = nil
     
