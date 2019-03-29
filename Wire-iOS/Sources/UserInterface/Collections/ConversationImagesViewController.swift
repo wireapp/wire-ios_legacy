@@ -134,7 +134,7 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
         createNavBarIfNeeded()
     }
 
-    func createNavBarIfNeeded() {
+    private func createNavBarIfNeeded() {
         if !(parent is UINavigationController) && navBarContainer == nil {
             // Adds the navigation bar only if the parent view controller is not a navigation controller
             let navigationBar = UINavigationBar()

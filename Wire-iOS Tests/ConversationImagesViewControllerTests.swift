@@ -50,7 +50,13 @@ final class ConversationImagesViewControllerTests: CoreDataSnapshotTestCase {
         super.tearDown()
     }
 
-    
+
+    func testForWrappedInNavigationController() {
+        let navWrapperController = sut.wrapInNavigationController()
+
+        verify(view: navWrapperController.view)
+    }
+
     func testThatItDisplaysCorrectToolbarForImage_Normal() {
         sut.setBoundsSizeAsIPhone4_7Inch()
         verify(view: sut.view)
