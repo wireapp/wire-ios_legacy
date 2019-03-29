@@ -52,6 +52,7 @@ final class ConversationImagesViewControllerTests: CoreDataSnapshotTestCase {
 
 
     func testForWrappedInNavigationController() {
+        sut.loadViewIfNeeded()
         let navWrapperController = sut.wrapInNavigationController()
 
         verify(view: navWrapperController.view)
