@@ -57,7 +57,6 @@ extension UserType {
     func canSeeDevices(of otherUser: UserType) -> Bool {
         return otherUser.isConnected || self.canAccessCompanyInformation(of: otherUser) || otherUser.isWirelessUser
     }
-
 }
 
 /// Conform to this protocol to mark an object as being restricted. This

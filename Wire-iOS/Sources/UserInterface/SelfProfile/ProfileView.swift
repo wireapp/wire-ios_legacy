@@ -23,7 +23,7 @@ import UIKit
  */
 
 
-class ProfileView: UIView, Themeable {
+final class ProfileView: UIView, Themeable {
     
     /**
      * The options to customize the appearance and behavior of the view.
@@ -52,7 +52,10 @@ class ProfileView: UIView, Themeable {
     
     /// The user that is displayed.
     let user: GenericUser
-    
+
+    /// The user who is viewing this view
+    let viewer: GenericUser
+
     /// The view controller that displays the view.
     weak var source: UIViewController?
     
@@ -95,8 +98,11 @@ class ProfileView: UIView, Themeable {
      * - note: You can change the options later through the `options` property.
      */
     
-    init(user: GenericUser, options: Options) {
+    init(user: GenericUser,
+         viewer: GenericUser,
+         options: Options) {
         self.user = user
+        self.viewer = viewer
         self.options = options
         self.availabilityView = AvailabilityTitleView(user: user, options: [])
         super.init(frame: .zero)
@@ -203,9 +209,18 @@ class ProfileView: UIView, Themeable {
     
     // MARK: - Content and Options
     
-    func prepareForDisplay(in conversation: ZMConversation?) {
-        guestIndicatorStack.isHidden = conversation.map(user.isGuest) != true
-        
+    func prepareForDisplay(in conversation: ZMConversation?, context: ProfileViewControllerContext) {
+
+        let guestIndicatorHidden: Bool
+        switch context {
+            case .profileViewer:
+                guestIndicatorHidden = !viewer.isTeamMember || viewer.canAccessCompanyInformation(of: user)
+            default:
+                guestIndicatorHidden = conversation.map(user.isGuest) != true
+        }
+
+        guestIndicatorStack.isHidden = guestIndicatorHidden
+
         let remainingTimeString = user.expirationDisplayString
         remainingTimeLabel.text = remainingTimeString
         remainingTimeLabel.isHidden = remainingTimeString == nil
