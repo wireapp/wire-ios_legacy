@@ -50,7 +50,7 @@ NSString * const UserDefaultSendButtonDisabled = @"SendButtonDisabled";
 NSString * const UserDefaultDisableCallKit = @"UserDefaultDisableCallKit";
 
 NSString * const UserDefaultEnableBatchCollections = @"UserDefaultEnableBatchCollections";
-
+NSString * const UserDefaultEnableNewAttachedLinkPreviews = @"UserDefaultEnableNewAttachedLinkPreviews";
 
 NSString * const UserDefaultCallingProtocolStrategy = @"CallingProtocolStrategy";
 
@@ -107,6 +107,7 @@ NSString * const UserDefaultDisableLinkPreviews = @"DisableLinkPreviews";
              UserDefaultDidMigrateHockeySettingInitially,
              UserDefaultCallingConstantBitRate,
              UserDefaultDisableLinkPreviews,
+             UserDefaultEnableNewAttachedLinkPreviews
              ];
 }
 
@@ -352,6 +353,16 @@ NSString * const UserDefaultDisableLinkPreviews = @"DisableLinkPreviews";
 - (void)setEnableBatchCollections:(BOOL)enableBatchCollections
 {
     [self.defaults setBool:enableBatchCollections forKey:UserDefaultEnableBatchCollections];
+}
+
+- (BOOL)enableNewAttachedLinkPreviews
+{
+    return [self.defaults boolForKey:UserDefaultEnableNewAttachedLinkPreviews];
+}
+
+- (void)setEnableNewAttachedLinkPreviews:(BOOL)enableNewAttachedLinkPreviews
+{
+    [self.defaults setBool:enableNewAttachedLinkPreviews forKey:UserDefaultEnableNewAttachedLinkPreviews];
 }
 
 #pragma mark - Link opening options

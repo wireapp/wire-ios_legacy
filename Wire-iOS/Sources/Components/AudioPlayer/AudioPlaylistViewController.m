@@ -28,8 +28,9 @@
 #import "WireSyncEngine+iOS.h"
 #import "LinkAttachmentCache.h"
 #import "SoundcloudService.h"
-#import "LinkAttachment.h"
 #import "Wire-Swift.h"
+
+@import WireLinkPreview;
 
 static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
@@ -195,7 +196,7 @@ static const CGFloat SeparatorLineOverflow = 4;
 - (void)fetchAttachment
 {
     LinkAttachmentCache *cache = [LinkAttachmentCache sharedInstance];
-    id cachedResource = [cache objectForKey:self.linkAttachment.URL];
+    id cachedResource = [cache objectForKey:self.linkAttachment.permalink];
     
     self.loadingFailed = NO;
 
@@ -203,11 +204,11 @@ static const CGFloat SeparatorLineOverflow = 4;
         self.audioPlaylist = cachedResource;
     } else {
         ZM_WEAK(self);
-        [[SoundcloudService sharedInstance] loadAudioResourceFromURL:self.linkAttachment.URL completion:^(id audioResource, NSError *error) {
+        [[SoundcloudService sharedInstance] loadAudioResourceFromURL:self.linkAttachment.permalink completion:^(id audioResource, NSError *error) {
             ZM_STRONG(self);
             if (error == nil && audioResource != nil) {
                 self.audioPlaylist = audioResource;
-                [cache setObject:audioResource forKey:self.linkAttachment.URL];
+                [cache setObject:audioResource forKey:self.linkAttachment.permalink];
                 
                 self.loadingFailed = NO;
             }

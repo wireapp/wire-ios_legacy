@@ -176,10 +176,15 @@ extension ConversationTextMessageCellDescription {
 
         var cells: [AnyConversationMessageCellDescription] = []
 
+        // Refetch the link attachments if needed
+        if Settings.shared()?.disableLinkPreviews != true {
+            message.refetchLinkAttachmentsIfNeeded()
+        }
+
         // Text parsing
 
-        var lastKnownLinkAttachment: LinkAttachment?
-        var messageText = NSAttributedString.format(message: textMessageData, isObfuscated: message.isObfuscated, linkAttachment: &lastKnownLinkAttachment)
+        let attachments = message.linkAttachments ?? []
+        var messageText = NSAttributedString.format(message: textMessageData, isObfuscated: message.isObfuscated)
 
         // Search queries
 
@@ -206,20 +211,26 @@ extension ConversationTextMessageCellDescription {
         }
 
         // Link Attachment
-        if let attachment = lastKnownLinkAttachment, attachment.type != .none {
-            switch attachment.type {
-            case .youtubeVideo:
-                let youtubeCell = ConversationYouTubeAttachmentCellDescription(attachment: attachment)
-                cells.append(AnyConversationMessageCellDescription(youtubeCell))
-            case .soundcloudTrack:
-                let trackCell = ConversationSoundCloudCellDescription<AudioTrackViewController>(message: message, attachment: attachment)
-                cells.append(AnyConversationMessageCellDescription(trackCell))
-            case .soundcloudSet:
-                let playlistCell = ConversationSoundCloudCellDescription<AudioPlaylistViewController>(message: message, attachment: attachment)
-                cells.append(AnyConversationMessageCellDescription(playlistCell))
-            default:
-                break
+        if let attachment = attachments.first {
+            if Settings.shared().enableNewAttachedLinkPreviews {
+                // If internal users enable the new attachment cells, use them for all types
+                let attachmentCell = ConversationLinkAttachmentCellDescription(attachment: attachment, thumbnailResource: message.linkAttachmentImage)
+                cells.append(AnyConversationMessageCellDescription(attachmentCell))
+
+            } else {
+                switch attachment.type {
+                case .youTubeVideo:
+                    let youtubeCell = ConversationLinkAttachmentCellDescription(attachment: attachment, thumbnailResource: message.linkAttachmentImage)
+                    cells.append(AnyConversationMessageCellDescription(youtubeCell))
+                case .soundCloudTrack:
+                    let trackCell = ConversationSoundCloudCellDescription<AudioTrackViewController>(message: message, attachment: attachment)
+                    cells.append(AnyConversationMessageCellDescription(trackCell))
+                case .soundCloudPlaylist:
+                    let playlistCell = ConversationSoundCloudCellDescription<AudioPlaylistViewController>(message: message, attachment: attachment)
+                    cells.append(AnyConversationMessageCellDescription(playlistCell))
+                }
             }
+
         } else if textMessageData.linkPreview != nil {
             // Link Preview
             let linkPreviewCell = ConversationLinkPreviewArticleCellDescription(message: message, data: textMessageData)

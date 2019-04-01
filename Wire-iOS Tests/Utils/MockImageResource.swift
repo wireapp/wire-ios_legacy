@@ -1,45 +1,39 @@
-// 
+//
 // Wire
-// Copyright (C) 2016 Wire Swiss GmbH
-// 
+// Copyright (C) 2019 Wire Swiss GmbH
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see http://www.gnu.org/licenses/.
-// 
+//
 
+import Foundation
+@testable import Wire
 
-#import "MediaThumbnail.h"
+class MockImageResource: NSObject, ImageResource {
 
-@implementation MediaThumbnail
+    var isAnimatedGIF: Bool = false
+    var cacheIdentifier: String? = UUID().uuidString
 
-- (instancetype)initWithURL:(NSURL *)URL size:(CGSize)size;
-{
-    self = [super init];
-    if (self) {
-        self.URL = URL;
-        self.size = size;
+    var imageData: Data?
+
+    func requestImageDownload() {
+        // no-op
     }
-    return self;
-}
 
-- (BOOL)isEqual:(id)object
-{
-    MediaThumbnail *otherThumbnail = (MediaThumbnail *)object;
-    return [self.URL isEqual:otherThumbnail.URL] && CGSizeEqualToSize(self.size, otherThumbnail.size);
-}
+    func fetchImageData(queue: DispatchQueue, completionHandler: @escaping (Data?) -> Void) {
+        queue.async {
+            completionHandler(self.imageData)
+        }
+    }
 
-- (NSUInteger)hash
-{
-    return ((NSUInteger)self.size.width << 10 ^ (NSUInteger)self.size.height) + self.URL.hash;
 }
-
-@end

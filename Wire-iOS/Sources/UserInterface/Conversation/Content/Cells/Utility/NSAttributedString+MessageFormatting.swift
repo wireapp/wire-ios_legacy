@@ -117,10 +117,10 @@ extension NSAttributedString {
         markdownText.highlight(mentions: mentionTextObjects)
         
         // Remove trailing link if we show a link preview
-        let linkAttachments = markdownText.linksAttachments()
+        let links = markdownText.links()
 
         // Do emoji substition (but not inside link or mentions)
-        let linkAttachmentRanges = linkAttachments.compactMap { Range<Int>($0.range) }
+        let linkAttachmentRanges = links.compactMap { Range<Int>($0.range) }
         let mentionRanges = mentionTextObjects.compactMap{ $0.range(in: markdownText.string as String)}
         markdownText.replaceEmoticons(excluding: linkAttachmentRanges + mentionRanges)
         markdownText.removeTrailingWhitespace()
@@ -135,7 +135,7 @@ extension NSAttributedString {
     }
     
     @objc
-    static func format(message: ZMTextMessageData, isObfuscated: Bool, linkAttachment: UnsafeMutablePointer<LinkAttachment?>?) -> NSAttributedString {
+    static func format(message: ZMTextMessageData, isObfuscated: Bool) -> NSAttributedString {
         
         var plainText = message.messageText ?? ""
         
@@ -154,37 +154,26 @@ extension NSAttributedString {
         
         // Highlight mentions using previously inserted text markers
         markdownText.highlight(mentions: mentionTextObjects)
-        
+
         // Remove trailing link if we show a link preview
-        var linkAttachments = markdownText.linksAttachments()
         if let linkPreview = message.linkPreview {
-            linkAttachments = markdownText.removeTrailingLink(for: linkPreview, linkAttachments: linkAttachments)
+            markdownText.removeTrailingLink(for: linkPreview)
         }
-        
+
         // Do emoji substition (but not inside link or mentions)
-        let linkAttachmentRanges = linkAttachments.compactMap { Range<Int>($0.range) }
+        let links = markdownText.links()
+        let linkAttachmentRanges = links.compactMap { Range<Int>($0.range) }
         let mentionRanges = mentionTextObjects.compactMap{ $0.range(in: markdownText.string as String)}
         markdownText.replaceEmoticons(excluding: linkAttachmentRanges + mentionRanges)
-        
-        if let firstKnownLinkAttachment = linkAttachments.first(where: { $0.type != .none }) {
-            linkAttachment?.initialize(to: firstKnownLinkAttachment)
-        }
-        
+
         markdownText.removeTrailingWhitespace()
         markdownText.changeFontSizeIfMessageContainsOnlyEmoticons()
-
         
         return markdownText
     }
     
-    func linksAttachments() -> [LinkAttachment] {
-        guard let matches = type(of: self).linkDataDetector?.matches(in: self.string, options: [], range: wholeRange) else { return [] }
-        
-        return matches.compactMap { match in
-            guard let url = match.url else { return nil }
-            self.attributedSubstring(from: match.range)
-            return LinkAttachment(url: url, range: match.range, string: attributedSubstring(from: match.range).string)
-        }
+    func links() -> [URLWithRange] {
+        return NSDataDetector.linkDetector?.detectLinksAndRanges(in: self.string, excluding: []) ?? []
     }
     
 }
@@ -217,19 +206,18 @@ extension NSMutableAttributedString {
         }
     }
     
-    func removeTrailingLink(for linkPreview: LinkMetadata, linkAttachments: [LinkAttachment]) -> [LinkAttachment] {
-    
-        // Don't remove trailing link if we embed content
-        guard linkAttachments.first?.type == LinkAttachmentType.none,
-              linkPreview.originalURLString.lowercased() != "giphy.com", // Don't remove giphy links
-              let linkPreviewAttachment = linkAttachments.reversed().first(where: { $0.string == linkPreview.originalURLString }),
-              linkPreviewAttachment.range.upperBound == self.length
+    func removeTrailingLink(for linkPreview: LinkMetadata) {
+        let text = self.string
+        let linkPreviewStartIndex = text.index(text.startIndex, offsetBy: linkPreview.characterOffsetInText)
+
+        guard
+            let linkPreviewRange = text.range(of: linkPreview.originalURLString, range: linkPreviewStartIndex ..< text.endIndex),
+            linkPreviewRange.upperBound == text.endIndex
         else {
-            return linkAttachments
+            return
         }
-        
-        self.mutableString.replaceCharacters(in: linkPreviewAttachment.range, with: "")
-        return linkAttachments.filter({ $0 != linkPreviewAttachment })
+
+        mutableString.replaceCharacters(in: NSRange(linkPreviewRange, in: text), with: "")
     }
 
 }

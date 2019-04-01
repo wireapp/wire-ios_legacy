@@ -23,7 +23,6 @@
 #import "ConversationInputBarSendController.h"
 #import "ZMUserSession+iOS.h"
 #import "Analytics.h"
-#import "LinkAttachment.h"
 #import "Settings.h"
 #import "Wire-Swift.h"
 
