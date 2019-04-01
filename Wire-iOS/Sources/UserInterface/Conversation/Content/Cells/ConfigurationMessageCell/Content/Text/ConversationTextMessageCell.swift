@@ -203,7 +203,7 @@ extension ConversationTextMessageCellDescription {
         }
 
         // Text
-        if messageText.length > 0 {
+        if !messageText.string.isEmpty {
             let textCell = ConversationTextMessageCellDescription(attributedString: messageText, isObfuscated: message.isObfuscated)
             cells.append(AnyConversationMessageCellDescription(textCell))
         }
@@ -212,27 +212,11 @@ extension ConversationTextMessageCellDescription {
             return cells
         }
 
-        // Link Attachment
+        // Links
         if let attachment = attachments.first {
-            if Settings.shared().enableNewAttachedLinkPreviews {
-                // If internal users enable the new attachment cells, use them for all types
-                let attachmentCell = ConversationLinkAttachmentCellDescription(attachment: attachment, thumbnailResource: message.linkAttachmentImage)
-                cells.append(AnyConversationMessageCellDescription(attachmentCell))
-
-            } else {
-                switch attachment.type {
-                case .youTubeVideo:
-                    let youtubeCell = ConversationLinkAttachmentCellDescription(attachment: attachment, thumbnailResource: message.linkAttachmentImage)
-                    cells.append(AnyConversationMessageCellDescription(youtubeCell))
-                case .soundCloudTrack:
-                    let trackCell = ConversationSoundCloudCellDescription<AudioTrackViewController>(message: message, attachment: attachment)
-                    cells.append(AnyConversationMessageCellDescription(trackCell))
-                case .soundCloudPlaylist:
-                    let playlistCell = ConversationSoundCloudCellDescription<AudioPlaylistViewController>(message: message, attachment: attachment)
-                    cells.append(AnyConversationMessageCellDescription(playlistCell))
-                }
-            }
-
+            // Link Attachment
+            let attachmentCell = ConversationLinkAttachmentCellDescription(attachment: attachment, thumbnailResource: message.linkAttachmentImage)
+            cells.append(AnyConversationMessageCellDescription(attachmentCell))
         } else if textMessageData.linkPreview != nil {
             // Link Preview
             let linkPreviewCell = ConversationLinkPreviewArticleCellDescription(message: message, data: textMessageData)
