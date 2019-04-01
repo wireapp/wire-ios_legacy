@@ -17,15 +17,12 @@
 //
 
 import Foundation
-import WireSyncEngine
 
 typealias DismissAction = (_ completion: (()->())?)->()
 
 final class ConversationImagesViewController: TintColorCorrectedViewController {
     
     let collection: AssetCollectionWrapper
-    
-//    fileprivate var navBarContainer: UINavigationBarContainer?
 
     var pageViewController: UIPageViewController = UIPageViewController(transitionStyle:.scroll, navigationOrientation:.horizontal, options: [:])
     var buttonsBar: InputBarButtonsView!
@@ -114,10 +111,6 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
         super.viewWillAppear(animated)
 
         if let navigationBar = navigationController?.navigationBar {
-//            navigationBar.items = [navigationItem]
-
-            ///TODO: share with other navigationBar
-            ///TODO: isTranslucent is true to prevent image move up when nav bar hides
             navigationBar.isTranslucent = true
             navigationBar.barTintColor = UIColor.from(scheme: .barBackground)
         }
@@ -269,7 +262,6 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
     }
 
     fileprivate func updateBarsForPreview() {
-//        navBarContainer?.view.isHidden = isPreviewing
         buttonsBar?.isHidden = isPreviewing
         separator.isHidden = isPreviewing
     }
@@ -413,8 +405,8 @@ extension ConversationImagesViewController: UIPageViewControllerDelegate, UIPage
         }
         
         guard let messageIndex = self.indexOf(message: imageController.message),
-              let nextIndex = self.logicalNextIndex(for: messageIndex) else {
-            return .none
+            let nextIndex = self.logicalNextIndex(for: messageIndex) else {
+                return .none
         }
         
         return self.imageController(for: self.imageMessages[nextIndex])
@@ -426,8 +418,8 @@ extension ConversationImagesViewController: UIPageViewControllerDelegate, UIPage
         }
         
         guard let messageIndex = self.indexOf(message: imageController.message),
-              let previousIndex = self.logicalPreviousIndex(for: messageIndex) else {
-            return .none
+            let previousIndex = self.logicalPreviousIndex(for: messageIndex) else {
+                return .none
         }
         
         return self.imageController(for: self.imageMessages[previousIndex])
@@ -459,9 +451,10 @@ extension ConversationImagesViewController: MenuVisibilityController {
     
     func fadeAndHideMenu(_ hidden: Bool) {
         let duration = UIApplication.shared.statusBarOrientationAnimationDuration
-//        navBarContainer?.view.fadeAndHide(hidden, duration: duration)
 
-        navigationController?.setNavigationBarHidden(hidden, animated: true)
+        ///TODO: custom hiding aniamtion
+//        navigationController?.setNavigationBarHidden(hidden, animated: true)
+        showNavigationBarVisible(hidden: hidden)
 
         buttonsBar.fadeAndHide(hidden, duration: duration)
         separator.fadeAndHide(hidden, duration: duration)
@@ -469,6 +462,16 @@ extension ConversationImagesViewController: MenuVisibilityController {
         // Don't hide the status bar on iPhone X, otherwise the navbar will go behind the notch
         if !UIScreen.hasNotch {
             UIApplication.shared.wr_setStatusBarHidden(hidden, with: .fade)
+        }
+    }
+
+    private func showNavigationBarVisible(hidden: Bool) {
+        let duration = UIApplication.shared.statusBarOrientationAnimationDuration
+
+        UIView.animate(withDuration: duration, animations: {
+            self.navigationController?.navigationBar.alpha = hidden ? 0 : 1
+        }) { _ in
+            self.navigationController?.setNavigationBarHidden(hidden, animated: false)
         }
     }
 }
