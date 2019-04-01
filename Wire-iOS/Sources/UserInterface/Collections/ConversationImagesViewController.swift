@@ -110,34 +110,18 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-//    override func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(animated)
-//
-//        createNavBarIfNeeded()
-//    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
 
-//    private func createNavBarIfNeeded() {
-//        if !(parent is UINavigationController) && navBarContainer == nil {
-//            // Adds the navigation bar only if the parent view controller is not a navigation controller
-//            let navigationBar = UINavigationBar()
+        if let navigationBar = navigationController?.navigationBar {
 //            navigationBar.items = [navigationItem]
-//            navigationBar.isTranslucent = false
-//            navigationBar.barTintColor = UIColor.from(scheme: .barBackground)
-//
-//            navBarContainer = UINavigationBarContainer(navigationBar)
-//
-//            if let navBarContainer = navBarContainer,
-//                let navigationBar = navBarContainer.view {
-//                addToSelf(navBarContainer)
-//
-//                navigationBar.translatesAutoresizingMaskIntoConstraints = false
-//                NSLayoutConstraint.activate([
-//                    navigationBar.pinToSuperview(anchor: .top, activate: false),
-//                    navigationBar.widthAnchor.constraint(equalTo: view.widthAnchor),
-//                    navigationBar.pinToSuperview(axisAnchor: .centerX, activate: false)])
-//            }
-//        }
-//    }
+
+            ///TODO: share with other navigationBar
+            ///TODO: isTranslucent is true to prevent image move up when nav bar hides
+            navigationBar.isTranslucent = true
+            navigationBar.barTintColor = UIColor.from(scheme: .barBackground)
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -173,9 +157,7 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
         pageViewController.dataSource = self
         pageViewController.setViewControllers([self.imageController(for: self.currentMessage)], direction: .forward, animated: false, completion: .none)
         
-        self.addChild(pageViewController)
-        self.view.addSubview(pageViewController.view)
-        pageViewController.didMove(toParent: self)
+        addToSelf(pageViewController)
     }
     
     fileprivate func logicalPreviousIndex(for index: Int) -> Int? {
@@ -478,6 +460,9 @@ extension ConversationImagesViewController: MenuVisibilityController {
     func fadeAndHideMenu(_ hidden: Bool) {
         let duration = UIApplication.shared.statusBarOrientationAnimationDuration
 //        navBarContainer?.view.fadeAndHide(hidden, duration: duration)
+
+        navigationController?.setNavigationBarHidden(hidden, animated: true)
+
         buttonsBar.fadeAndHide(hidden, duration: duration)
         separator.fadeAndHide(hidden, duration: duration)
         
