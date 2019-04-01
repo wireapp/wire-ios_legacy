@@ -178,7 +178,9 @@ extension ConversationTextMessageCellDescription {
 
         // Refetch the link attachments if needed
         if Settings.shared()?.disableLinkPreviews != true {
-            message.refetchLinkAttachmentsIfNeeded()
+            ZMUserSession.shared()?.performChanges {
+                message.refetchLinkAttachmentsIfNeeded()
+            }
         }
 
         // Text parsing
