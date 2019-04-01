@@ -23,7 +23,8 @@ import XCTest
 final class ConversationImagesViewControllerTests: CoreDataSnapshotTestCase {
     
     var sut: ConversationImagesViewController! = nil
-    
+    var navigatorController: UINavigationController! = nil
+
     override var needsCaches: Bool {
         return true
     }
@@ -43,6 +44,8 @@ final class ConversationImagesViewControllerTests: CoreDataSnapshotTestCase {
         
         let assetWrapper = AssetCollectionWrapper(conversation: otherUserConversation, assetCollection: collection, assetCollectionDelegate: delegate, matchingCategories: [imagesCategoryMatch])
         sut = ConversationImagesViewController(collection: assetWrapper, initialMessage: initialMessage, inverse: true)
+
+        navigatorController = sut.wrapInNavigationController(navigationBarClass: UINavigationBar.self)
     }
 
     override func tearDown() {
@@ -52,19 +55,13 @@ final class ConversationImagesViewControllerTests: CoreDataSnapshotTestCase {
 
 
     func testForWrappedInNavigationController() {
-        sut.loadViewIfNeeded()
-        let navWrapperController = sut.wrapInNavigationController()
-
-        verify(view: navWrapperController.view)
+        verify(view: navigatorController.view)
     }
 
     func testThatItDisplaysCorrectToolbarForImage_Normal() {
         sut.setBoundsSizeAsIPhone4_7Inch()
 
-        ///calls viewWillAppear
-        sut.beginAppearanceTransition(true, animated: false)
-
-        verify(view: sut.view)
+        verify(view: navigatorController.view)
     }
     
     func testThatItDisplaysCorrectToolbarForImage_Ephemeral() {
@@ -78,7 +75,7 @@ final class ConversationImagesViewControllerTests: CoreDataSnapshotTestCase {
         ///calls viewWillAppear
         sut.beginAppearanceTransition(true, animated: false)
 
-        verify(view: sut.view)
+        verify(view: navigatorController.view)
     }
 
     // MARK: - Update toolbar buttons for switching between ephemeral/normal messages
