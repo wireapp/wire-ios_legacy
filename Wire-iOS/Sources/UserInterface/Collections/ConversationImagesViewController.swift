@@ -17,34 +17,13 @@
 //
 
 import Foundation
-import Cartography
-import WireSyncEngine
 
 typealias DismissAction = (_ completion: (()->())?)->()
-
-
-extension UIView {
-    func wr_wrapForSnapshotBackground() -> UIView {
-        let innerSnapshot = UIView()
-        innerSnapshot.addSubview(self)
-        let topInset: CGFloat = -64
-        
-        constrain(innerSnapshot, self) { innerSnapshot, selfView in
-            selfView.leading == innerSnapshot.leading
-            selfView.top == innerSnapshot.top + topInset
-            selfView.trailing == innerSnapshot.trailing
-            selfView.bottom == innerSnapshot.bottom + topInset
-        }
-        
-        return innerSnapshot
-    }
-}
 
 final class ConversationImagesViewController: TintColorCorrectedViewController {
     
     let collection: AssetCollectionWrapper
-    
-    fileprivate var navBarContainer: UINavigationBarContainer?
+
     var pageViewController: UIPageViewController = UIPageViewController(transitionStyle:.scroll, navigationOrientation:.horizontal, options: [:])
     var buttonsBar: InputBarButtonsView!
     let deleteButton = IconButton(style: .default)
@@ -127,58 +106,43 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        if let navigationBar = navigationController?.navigationBar {
+            navigationBar.isTranslucent = true
+            navigationBar.barTintColor = UIColor.from(scheme: .barBackground)
+        }
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        if !(parent is UINavigationController) {
-            // Adds the navigation bar only if the parent view controller is not a navigation controller
-            let navigationBar = UINavigationBar()
-            navigationBar.items = [navigationItem]
-            navigationBar.isTranslucent = false
-            navigationBar.barTintColor = UIColor.from(scheme: .barBackground)
 
-            navBarContainer = UINavigationBarContainer(navigationBar)
-        }
-        
         self.createPageController()
         self.createControlsBar()
         view.addSubview(overlay)
         view.addSubview(separator)
 
-        constrain(view, pageViewController.view) { view, pageControllerView in
-            pageControllerView.edges == view.edges
-        }
-        
-        constrain(view, buttonsBar, overlay, separator) { view, buttonsBar, overlay, separator in
-            
-            buttonsBar.leading == view.leading
-            buttonsBar.trailing == view.trailing
-            buttonsBar.bottom == view.bottom
-
-            overlay.edges == buttonsBar.edges
-
-            separator.height == .hairline
-            separator.top == buttonsBar.top
-            separator.leading == buttonsBar.leading
-            separator.trailing == buttonsBar.trailing
-        }
-        
-        if let navBarContainer = navBarContainer {
-            addChild(navBarContainer)
-            view.addSubview(navBarContainer.view)
-            navBarContainer.didMove(toParent: self)
-
-            constrain(view, navBarContainer.view) { view, navigationBar in
-                navigationBar.top == view.top
-                navigationBar.width == view.width
-                navigationBar.centerX == view.centerX
-            }
-        }
+        createConstraints()
 
         updateBarsForPreview()
 
         view.backgroundColor = .from(scheme: .background)
+    }
+
+    private func createConstraints() {
+        [pageViewController.view,
+         buttonsBar,
+         overlay,
+         separator].forEach(){ $0.translatesAutoresizingMaskIntoConstraints = false }
+
+        pageViewController.view.fitInSuperview()
+        buttonsBar.fitInSuperview(exclude: [.top])
+        overlay.pin(to: buttonsBar)
+
+        separator.heightAnchor.constraint(equalToConstant: .hairline).isActive = true
+        separator.pin(to: buttonsBar, exclude: [.bottom])
     }
     
     private func createPageController() {
@@ -186,9 +150,7 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
         pageViewController.dataSource = self
         pageViewController.setViewControllers([self.imageController(for: self.currentMessage)], direction: .forward, animated: false, completion: .none)
         
-        self.addChild(pageViewController)
-        self.view.addSubview(pageViewController.view)
-        pageViewController.didMove(toParent: self)
+        addToSelf(pageViewController)
     }
     
     fileprivate func logicalPreviousIndex(for index: Int) -> Int? {
@@ -300,7 +262,6 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
     }
 
     fileprivate func updateBarsForPreview() {
-        navBarContainer?.view.isHidden = isPreviewing
         buttonsBar?.isHidden = isPreviewing
         separator.isHidden = isPreviewing
     }
@@ -325,7 +286,7 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
         guard let sender = currentMessage.sender, let serverTimestamp = currentMessage.serverTimestamp else {
             return
         }
-        self.navigationItem.titleView = TwoLineTitleView(first: sender.displayName.localizedUppercase, second: serverTimestamp.formattedDate)
+        navigationItem.titleView = TwoLineTitleView(first: sender.displayName.localizedUppercase, second: serverTimestamp.formattedDate)
     }
     
     private func updateButtonsForMessage() {
@@ -444,8 +405,8 @@ extension ConversationImagesViewController: UIPageViewControllerDelegate, UIPage
         }
         
         guard let messageIndex = self.indexOf(message: imageController.message),
-              let nextIndex = self.logicalNextIndex(for: messageIndex) else {
-            return .none
+            let nextIndex = self.logicalNextIndex(for: messageIndex) else {
+                return .none
         }
         
         return self.imageController(for: self.imageMessages[nextIndex])
@@ -457,8 +418,8 @@ extension ConversationImagesViewController: UIPageViewControllerDelegate, UIPage
         }
         
         guard let messageIndex = self.indexOf(message: imageController.message),
-              let previousIndex = self.logicalPreviousIndex(for: messageIndex) else {
-            return .none
+            let previousIndex = self.logicalPreviousIndex(for: messageIndex) else {
+                return .none
         }
         
         return self.imageController(for: self.imageMessages[previousIndex])
@@ -484,18 +445,31 @@ extension ConversationImagesViewController: MenuVisibilityController {
         if !UIScreen.hasNotch {
             isVisible = isVisible && UIApplication.shared.isStatusBarHidden
         }
-        return  (navBarContainer?.view.isHidden ?? isVisible) && isVisible
+
+        return isVisible
     }
     
     func fadeAndHideMenu(_ hidden: Bool) {
         let duration = UIApplication.shared.statusBarOrientationAnimationDuration
-        navBarContainer?.view.fadeAndHide(hidden, duration: duration)
+
+        showNavigationBarVisible(hidden: hidden)
+
         buttonsBar.fadeAndHide(hidden, duration: duration)
         separator.fadeAndHide(hidden, duration: duration)
         
         // Don't hide the status bar on iPhone X, otherwise the navbar will go behind the notch
         if !UIScreen.hasNotch {
             UIApplication.shared.wr_setStatusBarHidden(hidden, with: .fade)
+        }
+    }
+
+    private func showNavigationBarVisible(hidden: Bool) {
+        let duration = UIApplication.shared.statusBarOrientationAnimationDuration
+
+        UIView.animate(withDuration: duration, animations: {
+            self.navigationController?.navigationBar.alpha = hidden ? 0 : 1
+        }) { _ in
+            self.navigationController?.setNavigationBarHidden(hidden, animated: false)
         }
     }
 }
