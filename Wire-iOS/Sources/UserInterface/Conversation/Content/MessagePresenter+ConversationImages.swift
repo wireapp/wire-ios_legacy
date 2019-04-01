@@ -86,6 +86,6 @@ extension MessagePresenter {
     }
     
     @objc func closeImagesButtonPressed(_ sender: AnyObject!) {
-        self.modalTargetController?.dismiss(animated: true, completion: .none)
+        modalTargetController?.dismiss(animated: true, completion: .none)
     }
 }
