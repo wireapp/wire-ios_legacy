@@ -245,8 +245,6 @@ extension SettingsPropertyName {
             return "Calling protocol"
         case .enableBatchCollections:
             return "Use AssetCollectionBatched"
-        case .enableNewAttachedLinkPreviews:
-            return "Use New SoundCloud Link Attachments"
         case .lockApp:
             return "self.settings.privacy_security.lock_app".localized
         case .lockAppLastDate:
