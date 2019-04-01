@@ -452,8 +452,6 @@ extension ConversationImagesViewController: MenuVisibilityController {
     func fadeAndHideMenu(_ hidden: Bool) {
         let duration = UIApplication.shared.statusBarOrientationAnimationDuration
 
-        ///TODO: custom hiding aniamtion
-//        navigationController?.setNavigationBarHidden(hidden, animated: true)
         showNavigationBarVisible(hidden: hidden)
 
         buttonsBar.fadeAndHide(hidden, duration: duration)

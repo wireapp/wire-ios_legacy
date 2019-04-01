@@ -81,7 +81,7 @@ extension MessagePresenter {
         if isPreviewing {
             return imagesController
         } else {
-            return imagesController.wrapInNavigationController()
+            return imagesController.wrapInNavigationController(navigationBarClass: UINavigationBar.self)
         }
     }
     
