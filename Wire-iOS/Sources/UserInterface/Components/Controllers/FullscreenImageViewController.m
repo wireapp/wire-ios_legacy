@@ -145,15 +145,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self centerScrollViewContent];
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-
-    if(self.parentViewController != nil) {
-        [self updateZoom];
-    }
-}
-
 - (BOOL)prefersStatusBarHidden
 {
     return NO;
