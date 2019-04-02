@@ -69,18 +69,27 @@ final class SearchUserViewConroller: UIViewController {
 
     private func handleSearchResult(searchResult: SearchResult, isCompleted: Bool) {
         showLoadingView = false
+        var showProfileView = true
 
-        if let user = searchResult.directory.first {
+        if ZMUser.selfUser().teamRole == .partner,
+            searchResult.conversations.count == 0,
+            searchResult.directory.first?.teamRole == .partner {
+            showProfileView = false
+        }
+
+        if showProfileView,
+            let user = searchResult.directory.first {
             let profileViewController = ProfileViewController(user: user, viewer: ZMUser.selfUser(), context: .profileViewer)
             profileViewController.delegate = profileViewControllerDelegate
 
             navigationController?.setViewControllers([profileViewController], animated: true)
         } else {
-
             presentInvalidUserProfileLinkAlert(okActionHandler: { [weak self] (_) in
                 self?.dismiss(animated: true)
             })
         }
+
+
     }
 
     // MARK: - Actions

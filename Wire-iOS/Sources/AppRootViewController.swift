@@ -587,8 +587,13 @@ extension AppRootViewController: SessionManagerURLHandlerDelegate {
                 sessionManager?.showConversation(conversation, at: nil, in: userSession)
             }
         case .openUserProfile(_, let user):
-            if let user = user {
-                sessionManager?.showUserProfile(user: user)
+            if let user = user { ///TODO: check role of the user here? permissionsRawValue is 0 here.
+                ///partner restriction - not allow to see other partner(w/o converation)'s profile
+                if ZMUser.selfUser().teamRole == .partner {
+                    sessionManager?.showConnectionRequest(userId: user.remoteIdentifier)
+                } else {
+                    sessionManager?.showUserProfile(user: user)
+                }
             }
         case .warnInvalidDeepLink(let error):
             switch error {
