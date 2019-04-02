@@ -195,7 +195,7 @@ public final class AudioRecordViewController: UIViewController, AudioRecordBaseV
          cancelButton,
          rightSeparator].forEach(){ $0.translatesAutoresizingMaskIntoConstraints = false }
 
-        var constraints = [NSLayoutConstraint]()
+        var constraints: [NSLayoutConstraint] = []
 
         constraints.append(bottomContainerView.heightAnchor.constraint(equalToConstant: 56))
 
