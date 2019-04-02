@@ -47,7 +47,10 @@ final class ProfileView: UIView, Themeable {
 
         /// Whether to allow the user to change their availability.
         static let allowEditingAvailability = Options(rawValue: 1 << 4)
-        
+
+        /// Whether to allow the user to change their availability.
+        static let allowEditingProfilePicture = Options(rawValue: 1 << 5)
+
     }
     
     /// The user that is displayed.
@@ -117,15 +120,12 @@ final class ProfileView: UIView, Themeable {
     
     private func configureSubviews() {
         let session = SessionManager.shared?.activeUserSession
-        
+
         imageView.accessibilityIdentifier = "user image"
         imageView.initialsFont = UIFont.systemFont(ofSize: 55, weight: .semibold).monospaced()
         imageView.userSession = session
         imageView.user = user
-        imageView.accessibilityLabel = "self.profile.change_user_image.accessibility".localized
-        imageView.accessibilityTraits = .button
-        imageView.accessibilityElementsHidden = false
-        
+
         availabilityView.tapHandler = { [weak self] button in
             guard let `self` = self else { return }
             guard self.options.contains(.allowEditingAvailability) else { return }
@@ -257,19 +257,31 @@ final class ProfileView: UIView, Themeable {
     
     private func updateAvailabilityVisibility() {
         availabilityView.isHidden = options.contains(.hideAvailability) || !user.canDisplayAvailability(with: availabilityView.options)
+
+        if options.contains(.allowEditingAvailability) {
+            availabilityView.options.insert(.allowSettingStatus)
+        } else {
+            availabilityView.options.remove(.allowSettingStatus)
+        }
+    }
+
+    private func updateImageButton() {
+        if options.contains(.allowEditingProfilePicture) {
+            imageView.accessibilityLabel = "self.accessibility.profile_photo_edit_button".localized
+            imageView.accessibilityTraits = [.button, .image]
+            imageView.isUserInteractionEnabled = true
+        } else {
+            imageView.accessibilityLabel = "self.accessibility.profile_photo_image".localized
+            imageView.accessibilityTraits = [.image]
+            imageView.isUserInteractionEnabled = false
+        }
     }
     
     private func applyOptions() {
         nameLabel.isHidden = options.contains(.hideUsername)
         updateHandleLabel()
         updateTeamLabel()
-        
-        if options.contains(.allowEditingAvailability) {
-            availabilityView.options.insert(.allowSettingStatus)
-        } else {
-            availabilityView.options.remove(.allowSettingStatus)
-        }
-        
+        updateImageButton()
         updateAvailabilityVisibility()
     }
     

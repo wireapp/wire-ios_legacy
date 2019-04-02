@@ -39,7 +39,7 @@ protocol ValidatorType {
 extension ZMUser: ValidatorType {
 }
 
-typealias SettingsSelfUser = ValidatorType & ZMEditableUser & UserType
+typealias SettingsSelfUser = ValidatorType & ZMEditableUser & UserType & AccentColorProvider
 
 enum SettingsPropertyError: Error {
     case WrongValue(String)
