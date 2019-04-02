@@ -714,7 +714,7 @@ extension CollectionsViewController: CollectionCellDelegate {
                 imagesController.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: closeButton)
                 imagesController.swipeToDismiss = false
                 imagesController.messageActionDelegate = self
-                self.navigationController?.pushViewController(imagesController, animated: true)
+                navigationController?.pushViewController(imagesController, animated: true)
             } else {
                 self.messagePresenter.open(message, targetView: view, actionResponder: self)
             }

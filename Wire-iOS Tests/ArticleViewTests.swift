@@ -44,7 +44,7 @@ class ArticleViewTests: ZMSnapshotTestCase {
         article.summary = "Summary summary summary summary summary summary summary summary summary summary summary summary summary summary summary"
         
         let textMessageData = MockTextMessageData()
-        textMessageData.linkPreview = article
+        textMessageData.backingLinkPreview = article
         return textMessageData
     }
     
@@ -58,7 +58,7 @@ class ArticleViewTests: ZMSnapshotTestCase {
         article.summary = "Summary summary summary summary summary summary summary summary summary summary summary summary summary summary summary"
         
         let textMessageData = MockTextMessageData()
-        textMessageData.linkPreview = article
+        textMessageData.backingLinkPreview = article
         textMessageData.linkPreviewImageCacheKey = "image-id-\(imageNamed)"
         textMessageData.imageData = image(inTestBundleNamed: imageNamed).jpegData(compressionQuality: 0.9)
         textMessageData.linkPreviewHasImage = true
@@ -76,7 +76,7 @@ class ArticleViewTests: ZMSnapshotTestCase {
         article.summary = "Summary summary summary summary summary summary summary summary summary summary summary summary summary summary summary"
         
         let textMessageData = MockTextMessageData()
-        textMessageData.linkPreview = article
+        textMessageData.backingLinkPreview = article
         textMessageData.linkPreviewImageCacheKey = "image-id"
         textMessageData.imageData = image(inTestBundleNamed: "unsplash_matterhorn.jpg").jpegData(compressionQuality: 0.9)
         textMessageData.linkPreviewHasImage = true
@@ -96,7 +96,7 @@ class ArticleViewTests: ZMSnapshotTestCase {
         twitterStatus.message = "Message message message message message message message message message message message message message message message message message message"
         
         let textMessageData = MockTextMessageData()
-        textMessageData.linkPreview = twitterStatus
+        textMessageData.backingLinkPreview = twitterStatus
         
         return textMessageData
     }

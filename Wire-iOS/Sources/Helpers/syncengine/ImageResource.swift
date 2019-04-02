@@ -20,6 +20,18 @@ import Foundation
 
 var defaultImageCache = ImageCache<MediaAsset>()
 
+extension ZMConversationMessage {
+
+    var linkAttachmentImage: ImageResource? {
+        guard let attachment = self.linkAttachments?.first, let textMessage = self.textMessageData else {
+            return nil
+        }
+
+        return LinkAttachmentImageResourceAdaptor(attachment: attachment, textMessageData: textMessage, urlSession: URLSession.shared)
+    }
+
+}
+
 extension ZMTextMessageData {
     
     var linkPreviewImage: ImageResource {
@@ -64,6 +76,54 @@ struct LinkPreviewImageResourceAdaptor: ImageResource {
         textMessageData.fetchLinkPreviewImageData(with: queue, completionHandler: completionHandler)
     }
     
+}
+
+struct LinkAttachmentImageResourceAdaptor: ImageResource {
+
+    let attachment: LinkAttachment
+    let textMessageData: ZMTextMessageData
+    let urlSession: URLSessionProtocol
+
+    var cacheIdentifier: String? {
+        return textMessageData.linkPreviewImageCacheKey?.appending("-linkattachment")
+    }
+
+    var isAnimatedGIF: Bool {
+        return false
+    }
+
+    init(attachment: LinkAttachment, textMessageData: ZMTextMessageData, urlSession: URLSessionProtocol) {
+        self.attachment = attachment
+        self.textMessageData = textMessageData
+        self.urlSession = urlSession
+    }
+
+    func requestImageDownload() {
+        // no-op
+    }
+
+    func fetchImageData(queue: DispatchQueue, completionHandler: @escaping (Data?) -> Void) {
+        let complete: (Data?) -> Void = { data in
+            queue.async {
+                completionHandler(data)
+            }
+        }
+
+        // Download the thumbnail
+        guard let thumbnailURL = attachment.thumbnails.first else {
+            return complete(nil)
+        }
+
+        let getRequest = URLRequest(url: thumbnailURL)
+
+        // Download the image
+        let task = urlSession.dataTask(with: getRequest) { data, _, _ in
+            complete(data)
+        }
+
+        task.resume()
+    }
+
 }
 
 struct FileMessageImageResourceAdaptor: PreviewableImageResource {

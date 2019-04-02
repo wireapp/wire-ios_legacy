@@ -61,19 +61,20 @@ class SettingsPropertyFactory {
     weak var delegate: SettingsPropertyFactoryDelegate?
     
     static let userDefaultsPropertiesToKeys: [SettingsPropertyName: String] = [
-        SettingsPropertyName.disableMarkdown            : UserDefaultDisableMarkdown,
-        SettingsPropertyName.chatHeadsDisabled          : UserDefaultChatHeadsDisabled,
-        SettingsPropertyName.messageSoundName           : UserDefaultMessageSoundName,
-        SettingsPropertyName.callSoundName              : UserDefaultCallSoundName,
-        SettingsPropertyName.pingSoundName              : UserDefaultPingSoundName,
-        SettingsPropertyName.disableSendButton          : UserDefaultSendButtonDisabled,
-        SettingsPropertyName.mapsOpeningOption          : UserDefaultMapsOpeningRawValue,
-        SettingsPropertyName.browserOpeningOption       : UserDefaultBrowserOpeningRawValue,
-        SettingsPropertyName.tweetOpeningOption         : UserDefaultTwitterOpeningRawValue,
-        SettingsPropertyName.callingProtocolStrategy    : UserDefaultCallingProtocolStrategy,
-        SettingsPropertyName.enableBatchCollections     : UserDefaultEnableBatchCollections,
-        SettingsPropertyName.callingConstantBitRate     : UserDefaultCallingConstantBitRate,
-        SettingsPropertyName.disableLinkPreviews        : UserDefaultDisableLinkPreviews,
+        SettingsPropertyName.disableMarkdown                : UserDefaultDisableMarkdown,
+        SettingsPropertyName.chatHeadsDisabled              : UserDefaultChatHeadsDisabled,
+        SettingsPropertyName.messageSoundName               : UserDefaultMessageSoundName,
+        SettingsPropertyName.callSoundName                  : UserDefaultCallSoundName,
+        SettingsPropertyName.pingSoundName                  : UserDefaultPingSoundName,
+        SettingsPropertyName.disableSendButton              : UserDefaultSendButtonDisabled,
+        SettingsPropertyName.mapsOpeningOption              : UserDefaultMapsOpeningRawValue,
+        SettingsPropertyName.browserOpeningOption           : UserDefaultBrowserOpeningRawValue,
+        SettingsPropertyName.tweetOpeningOption             : UserDefaultTwitterOpeningRawValue,
+        SettingsPropertyName.callingProtocolStrategy        : UserDefaultCallingProtocolStrategy,
+        SettingsPropertyName.enableBatchCollections         : UserDefaultEnableBatchCollections,
+        SettingsPropertyName.callingConstantBitRate         : UserDefaultCallingConstantBitRate,
+        SettingsPropertyName.disableLinkPreviews            : UserDefaultDisableLinkPreviews,
+        SettingsPropertyName.enableNewAttachedLinkPreviews  : UserDefaultEnableNewAttachedLinkPreviews
     ]
     
     convenience init(userSession: ZMUserSessionInterface?, selfUser: SettingsSelfUser?) {
