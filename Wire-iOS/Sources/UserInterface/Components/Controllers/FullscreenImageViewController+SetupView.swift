@@ -39,45 +39,6 @@ extension FullscreenImageViewController {
     }
 
     @objc
-    func setupTopOverlay() {
-        let topOverlay = UIView()
-        topOverlay.translatesAutoresizingMaskIntoConstraints = false
-        topOverlay.isHidden = !showCloseButton
-        view.addSubview(topOverlay)
-
-        let obfuscationView = ObfuscationView(icon: .photo)
-        obfuscationView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(obfuscationView)
-
-        // Close button
-        closeButton = IconButton(style: .circular)
-        closeButton.translatesAutoresizingMaskIntoConstraints = false
-        closeButton.setIcon(.X, with: .tiny, for: UIControl.State.normal)
-        topOverlay.addSubview(closeButton)
-        closeButton.addTarget(self, action: #selector(self.closeButtonTapped(_:)), for: .touchUpInside)
-        closeButton.accessibilityIdentifier = "fullScreenCloseButton"
-
-        // Constraints
-        let topOverlayHeight: CGFloat = traitCollection.horizontalSizeClass == .regular ? 104 : 60
-        topOverlay.fitInSuperview(exclude: [.bottom])
-
-        obfuscationView.fitInSuperview(exclude: [.bottom, .top])
-
-        NSLayoutConstraint.activate([
-            topOverlay.heightAnchor.constraint(equalToConstant: topOverlayHeight),
-            obfuscationView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            obfuscationView.heightAnchor.constraint(equalTo: obfuscationView.widthAnchor),
-            closeButton.centerYAnchor.constraint(equalTo: topOverlay.centerYAnchor, constant: 10),
-            closeButton.rightAnchor.constraint(equalTo: topOverlay.rightAnchor, constant: -8),
-            ])
-
-        closeButton.setDimensions(length: 32)
-
-        self.topOverlay = topOverlay
-        self.obfuscationView = obfuscationView
-    }
-
-    @objc
     func setupScrollView() {
         scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false

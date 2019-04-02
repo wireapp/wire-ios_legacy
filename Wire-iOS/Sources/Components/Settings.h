@@ -65,6 +65,7 @@ extern NSString * const UserDefaultPingSoundName;
 extern NSString * const UserDefaultDisableCallKit;
 
 extern NSString * const UserDefaultEnableBatchCollections;
+extern NSString * const UserDefaultEnableNewAttachedLinkPreviews;
 
 extern NSString * const UserDefaultSendButtonDisabled;
 
@@ -91,6 +92,7 @@ extern NSString * const UserDefaultDisableLinkPreviews;
 @property (nonatomic) BOOL callingConstantBitRate;
 
 @property (nonatomic) BOOL enableBatchCollections; // develop option
+@property (nonatomic) BOOL enableNewAttachedLinkPreviews; // develop option
 
 @property (nonatomic) NSDate *lastPushAlertDate;
 

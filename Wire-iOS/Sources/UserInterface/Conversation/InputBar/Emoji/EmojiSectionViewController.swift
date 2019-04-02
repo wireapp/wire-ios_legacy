@@ -18,7 +18,6 @@
 
 
 import Foundation
-import Cartography
 
 
 protocol EmojiSectionViewControllerDelegate: class {
@@ -26,13 +25,13 @@ protocol EmojiSectionViewControllerDelegate: class {
 }
 
 
-class EmojiSectionViewController: UIViewController {
-
+final class EmojiSectionViewController: UIViewController {
+    
     private var typesByButton = [IconButton: EmojiSectionType]()
     private var sectionButtons = [IconButton]()
     private let iconSize = UIImage.size(for: .tiny)
     private var ignoreSelectionUpdates = false
-
+    
     private var selectedType: EmojiSectionType? {
         willSet(value) {
             guard let type = value else { return }
@@ -47,7 +46,7 @@ class EmojiSectionViewController: UIViewController {
     init(types: [EmojiSectionType]) {
         super.init(nibName: nil, bundle: nil)
         createButtons(types)
-
+        
         setupViews()
         createConstraints()
         view.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(didPan)))
@@ -57,7 +56,7 @@ class EmojiSectionViewController: UIViewController {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     private func createButtons(_ types: [EmojiSectionType]) {
         sectionButtons = types.map(createSectionButton)
         zip(types, sectionButtons).forEach { (type, button) in
@@ -70,7 +69,7 @@ class EmojiSectionViewController: UIViewController {
     }
     
     private func createSectionButton(for type: EmojiSectionType) -> IconButton {
-
+        
         let button: IconButton = {
             let button = IconButton(style: .default)
             button.setIconColor(UIColor.from(scheme: .textDimmed, variant: .dark), for: .normal)
@@ -80,12 +79,12 @@ class EmojiSectionViewController: UIViewController {
             button.setBorderColor(.clear, for: .normal)
             button.circular = false
             button.borderWidth = 0
-
+            
             button.setIcon(type.icon, with: .tiny, for: .normal)
-
+            
             return button
         }()
-
+        
         button.addTarget(self, action: #selector(didTappButton), for: .touchUpInside)
         return button
     }
@@ -99,7 +98,7 @@ class EmojiSectionViewController: UIViewController {
         guard let type = typesByButton[sender] else { return }
         sectionDelegate?.sectionViewController(self, didSelect: type, scrolling: false)
     }
-
+    
     @objc private func didPan(_ recognizer: UIPanGestureRecognizer) {
         switch recognizer.state {
         case .possible: break
@@ -116,14 +115,14 @@ class EmojiSectionViewController: UIViewController {
             ignoreSelectionUpdates = false
         }
     }
-
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         sectionButtons.forEach {
             $0.removeFromSuperview()
             view.addSubview($0)
         }
-
+        
         createConstraints()
         sectionButtons.forEach {
             $0.hitAreaPadding = CGSize(width: 5, height: view.bounds.height / 2)
@@ -135,24 +134,27 @@ class EmojiSectionViewController: UIViewController {
         let inset: CGFloat = 16
         let count = CGFloat(sectionButtons.count)
         let fullSpacing = (view.bounds.width - 2 * inset) - iconSize
-        let padding = fullSpacing / (count - 1)
-
-        constrain(view, sectionButtons.first!) { view, firstButton in
-            firstButton.leading == view.leading + inset
-            view.height == iconSize + inset
+        let padding: CGFloat = fullSpacing / (count - 1)
+        
+        var constraints = [NSLayoutConstraint]()
+        
+        sectionButtons.enumerated().forEach { idx, button in
+            
+            button.translatesAutoresizingMaskIntoConstraints = false
+            
+            switch idx {
+            case 0:
+                constraints.append(button.pinToSuperview(anchor: .leading, inset: inset, activate: false))
+                constraints.append(view.heightAnchor.constraint(equalToConstant: iconSize + inset))
+            default:
+                let previous = sectionButtons[idx - 1]
+                constraints.append(button.centerXAnchor.constraint(equalTo: previous.centerXAnchor, constant: padding))
+            }
+            
+            constraints.append(button.pinToSuperview(anchor: .top, activate: false))
         }
         
-        sectionButtons.enumerated().dropFirst().forEach { idx, button in
-            constrain(button, sectionButtons[idx - 1], view) { button, previous, view in
-                button.centerX == previous.centerX + padding
-            }
-        }
-        
-        sectionButtons.forEach {
-            constrain($0, view) { button, view in
-                button.top == view.top
-            }
-        }
+        NSLayoutConstraint.activate(constraints)
     }
     
 }

@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2018 Wire Swiss GmbH
+// Copyright (C) 2019 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -17,24 +17,23 @@
 //
 
 import Foundation
+@testable import Wire
 
-extension MediaPreviewViewController {
+class MockImageResource: NSObject, ImageResource {
 
-    var viewHeight: CGFloat {
-        switch UIDevice.current.userInterfaceIdiom {
-        case .pad:
-            return 240
-        default:
-            return 160
+    var isAnimatedGIF: Bool = false
+    var cacheIdentifier: String? = UUID().uuidString
+
+    var imageData: Data?
+
+    func requestImageDownload() {
+        // no-op
+    }
+
+    func fetchImageData(queue: DispatchQueue, completionHandler: @escaping (Data?) -> Void) {
+        queue.async {
+            completionHandler(self.imageData)
         }
     }
 
-    override open func loadView() {
-        view = MediaPreviewView()
-        
-        mediaPreviewView.playButton.addTarget(self, action: #selector(self.playVideo(_:)), for: .touchUpInside)
-        
-        mediaPreviewView.translatesAutoresizingMaskIntoConstraints = false
-        mediaPreviewView.heightAnchor.constraint(equalToConstant: viewHeight).isActive = true
-    }
 }

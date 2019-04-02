@@ -25,8 +25,9 @@
 #import "Wire-Swift.h"
 #import "WireSyncEngine+iOS.h"
 #import "LinkAttachmentCache.h"
-#import "LinkAttachment.h"
 #import "SoundcloudService.h"
+
+@import WireLinkPreview;
 
 static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
@@ -46,7 +47,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @implementation AudioTrackViewController
 
-@synthesize linkAttachment = _linkAttachment;
+@synthesize linkAttachment;
 
 - (void)dealloc
 {
@@ -132,17 +133,17 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 - (void)fetchAttachment
 {
     LinkAttachmentCache *cache = [LinkAttachmentCache sharedInstance];
-    id cachedResource = [cache objectForKey:self.linkAttachment.URL];
+    id cachedResource = [cache objectForKey:self.linkAttachment.permalink];
     
     if (cachedResource != nil) {
         self.audioTrack = cachedResource;
     } else {
         ZM_WEAK(self);
-        [[SoundcloudService sharedInstance] loadAudioResourceFromURL:self.linkAttachment.URL completion:^(id audioResource, NSError *error) {
+        [[SoundcloudService sharedInstance] loadAudioResourceFromURL:self.linkAttachment.permalink completion:^(id audioResource, NSError *error) {
             ZM_STRONG(self);
             if (error == nil && audioResource != nil) {
                 self.audioTrack = audioResource;
-                [cache setObject:audioResource forKey:self.linkAttachment.URL];
+                [cache setObject:audioResource forKey:self.linkAttachment.permalink];
             }
             else {
                 self.audioTrack = nil;
