@@ -148,7 +148,6 @@ class ConversationTextMessageTests: ConversationCellSnapshotTestCase {
 
         // THEN
         verify(message: message)
-
     }
 
 }
