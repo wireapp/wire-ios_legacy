@@ -38,6 +38,7 @@ extension ConversationViewController {
 
             addToSelf(outgoingConnectionViewController)
 
+            outgoingConnectionViewController.view.translatesAutoresizingMaskIntoConstraints = false
             outgoingConnectionViewController.view.fitInSuperview(exclude: [.top])
         } else {
             outgoingConnectionViewController.willMove(toParent: nil)
@@ -45,5 +46,22 @@ extension ConversationViewController {
             outgoingConnectionViewController.removeFromParent()
             self.outgoingConnectionViewController = nil
         }
+    }
+
+    @objc
+    func createConstraints() {
+        [conversationBarController.view,
+         contentViewController.view,
+         inputBarController.view].forEach(){$0?.translatesAutoresizingMaskIntoConstraints = false}
+
+        conversationBarController.view.fitInSuperview(exclude: [.bottom])
+        contentViewController.view.fitInSuperview(exclude: [.bottom])
+
+        contentViewController.view.bottomAnchor.constraint(equalTo: inputBarController.view.topAnchor).isActive = true
+        let constraints = inputBarController.view.fitInSuperview(exclude:[.top])
+
+        inputBarBottomMargin = constraints[.bottom]
+
+        inputBarZeroHeight = inputBarController.view.heightAnchor.constraint(equalToConstant: 0)
     }
 }

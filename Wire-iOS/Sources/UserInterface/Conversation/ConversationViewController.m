@@ -77,7 +77,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @interface ConversationViewController ()
 
-@property (nonatomic) BarController *conversationBarController;
 @property (nonatomic) MediaBarViewController *mediaBarViewController;
 
 @property (nonatomic) ConversationContentViewController *contentViewController;
@@ -85,8 +84,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @property (nonatomic) ConversationInputBarViewController *inputBarController;
 
-@property (nonatomic) NSLayoutConstraint *inputBarBottomMargin;
-@property (nonatomic) NSLayoutConstraint *inputBarZeroHeight;
 @property (nonatomic) InvisibleInputAccessoryView *invisibleInputAccessoryView;
 
 @property (nonatomic) GuestsBarController *guestsBarController;
@@ -243,21 +240,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     else {
         [self.conversationBarController dismissBar:self.guestsBarController];
     }
-}
-
-- (void)createConstraints
-{
-    [self.conversationBarController.view autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeBottom];
-    
-    [self.contentViewController.view autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeBottom];
-    [self.contentViewController.view autoPinEdge:ALEdgeBottom toEdge:ALEdgeTop ofView:self.inputBarController.view];
-    [self.inputBarController.view autoPinEdgeToSuperviewEdge:ALEdgeLeft];
-    [self.inputBarController.view autoPinEdgeToSuperviewEdge:ALEdgeRight];
-    self.inputBarBottomMargin = [self.inputBarController.view autoPinEdgeToSuperviewEdge:ALEdgeBottom];
-    
-    self.inputBarZeroHeight = [[NSLayoutConstraint autoCreateConstraintsWithoutInstalling:^{
-        [self.inputBarController.view autoSetDimension:ALDimensionHeight toSize:0];
-    }] firstObject];
 }
 
 - (void)viewWillAppear:(BOOL)animated
