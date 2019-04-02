@@ -213,6 +213,7 @@ typedef NS_ENUM(NSInteger, ZetaIconType)
     ZetaIconTypeMention                         = 0x760,
     ZetaIconTypeAlerts                          = 0x761,
     ZetaIconTypeReply                           = 0x762,
+    ZetaIconTypeExternalLink                    = 0x763,
 };
 
 typedef NS_ENUM(NSInteger, ZetaIconSize) {

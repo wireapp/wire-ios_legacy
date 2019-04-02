@@ -73,8 +73,7 @@ class SettingsPropertyFactory {
         SettingsPropertyName.callingProtocolStrategy        : UserDefaultCallingProtocolStrategy,
         SettingsPropertyName.enableBatchCollections         : UserDefaultEnableBatchCollections,
         SettingsPropertyName.callingConstantBitRate         : UserDefaultCallingConstantBitRate,
-        SettingsPropertyName.disableLinkPreviews            : UserDefaultDisableLinkPreviews,
-        SettingsPropertyName.enableNewAttachedLinkPreviews  : UserDefaultEnableNewAttachedLinkPreviews
+        SettingsPropertyName.disableLinkPreviews            : UserDefaultDisableLinkPreviews
     ]
     
     convenience init(userSession: ZMUserSessionInterface?, selfUser: SettingsSelfUser?) {

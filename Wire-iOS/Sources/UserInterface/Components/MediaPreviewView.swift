@@ -23,7 +23,6 @@ import WireCommonComponents
 
     let playButton = IconButton()
     let titleLabel = UILabel()
-    let providerImageView = UIImageView()
     let previewImageView = ImageResourceView()
     let overlayView = UIView()
 
@@ -56,18 +55,15 @@ import WireCommonComponents
         addSubview(titleLabel)
 
         playButton.isUserInteractionEnabled = false
-        playButton.setIcon(.play, with: .large, for: .normal)
+        playButton.setIcon(.externalLink, with: .large, for: .normal)
         playButton.setIconColor(UIColor.white, for: UIControl.State.normal)
         addSubview(playButton)
-
-        addSubview(providerImageView)
     }
 
     private func setupLayout() {
         previewImageView.translatesAutoresizingMaskIntoConstraints = false
         overlayView.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        providerImageView.translatesAutoresizingMaskIntoConstraints = false
         playButton.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
@@ -88,10 +84,6 @@ import WireCommonComponents
             titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 12),
             titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 12),
             titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -12),
-
-            // providerImageView
-            providerImageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -12),
-            providerImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 12),
 
             // playButton
             playButton.centerXAnchor.constraint(equalTo: centerXAnchor),
