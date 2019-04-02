@@ -994,12 +994,9 @@
 		D5F22D4C2048052900879444 /* UIAlertController+RemoveAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F22D4B2048052900879444 /* UIAlertController+RemoveAction.swift */; };
 		D5F4387B206BBBB9003F1F14 /* Analytics+HistoryBackup.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F4387A206BBBB9003F1F14 /* Analytics+HistoryBackup.swift */; };
 		D5F8BFF42007AC84008F8C3D /* UIView+TableViewHeaderFooterSizing.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F8BFF32007AC84008F8C3D /* UIView+TableViewHeaderFooterSizing.swift */; };
-		DB3A47E01B4AD96C00391B5C /* MentionsCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DB3A47DF1B4AD96C00391B5C /* MentionsCollectionViewCell.m */; };
 		DB3E943A1B96EDBD00990482 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8741CFAE1A937EDF00A56A63 /* LaunchScreen.xib */; };
-		DB5206491B06355300138586 /* MentionsCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DB5206481B06355300138586 /* MentionsCollectionViewController.m */; };
 		DB7FEC921B8729AD00BA72DE /* ConversationInputBarSendController.m in Sources */ = {isa = PBXBuildFile; fileRef = DB7FEC911B8729AD00BA72DE /* ConversationInputBarSendController.m */; };
 		DBACFF7A1B3C96E1004062E0 /* MentionsBubbleView.m in Sources */ = {isa = PBXBuildFile; fileRef = DBACFF781B3C96E1004062E0 /* MentionsBubbleView.m */; };
-		DBD990561B39BEDF000ACF94 /* MentionsCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = DBD990551B39BEDF000ACF94 /* MentionsCollectionView.m */; };
 		DBF7235F1B5566B80036F4C5 /* a_lot_of_people.json in Resources */ = {isa = PBXBuildFile; fileRef = DBF7235E1B5566B80036F4C5 /* a_lot_of_people.json */; };
 		EE0DE1CD21B172BF00CF3C4E /* ConversationCreateGuestsSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE0DE1CC21B172BF00CF3C4E /* ConversationCreateGuestsSectionController.swift */; };
 		EE118C012031D1C300BC68D6 /* MarkdownTextViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE118BFF2031D17000BC68D6 /* MarkdownTextViewTests.swift */; };
@@ -2805,18 +2802,12 @@
 		D5F22D4B2048052900879444 /* UIAlertController+RemoveAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+RemoveAction.swift"; sourceTree = "<group>"; };
 		D5F4387A206BBBB9003F1F14 /* Analytics+HistoryBackup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Analytics+HistoryBackup.swift"; sourceTree = "<group>"; };
 		D5F8BFF32007AC84008F8C3D /* UIView+TableViewHeaderFooterSizing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+TableViewHeaderFooterSizing.swift"; sourceTree = "<group>"; };
-		DB3A47DE1B4AD96C00391B5C /* MentionsCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MentionsCollectionViewCell.h; sourceTree = "<group>"; };
-		DB3A47DF1B4AD96C00391B5C /* MentionsCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MentionsCollectionViewCell.m; sourceTree = "<group>"; };
-		DB5206471B06355300138586 /* MentionsCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MentionsCollectionViewController.h; sourceTree = "<group>"; };
-		DB5206481B06355300138586 /* MentionsCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MentionsCollectionViewController.m; sourceTree = "<group>"; };
 		DB7FEC901B8729AD00BA72DE /* ConversationInputBarSendController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConversationInputBarSendController.h; sourceTree = "<group>"; };
 		DB7FEC911B8729AD00BA72DE /* ConversationInputBarSendController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConversationInputBarSendController.m; sourceTree = "<group>"; };
 		DBACFF781B3C96E1004062E0 /* MentionsBubbleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MentionsBubbleView.m; sourceTree = "<group>"; };
 		DBACFF791B3C96E1004062E0 /* MentionsBubbleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MentionsBubbleView.h; sourceTree = "<group>"; };
 		DBCBD19019F10A1F000510C1 /* ConnectRequestCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectRequestCell.swift; sourceTree = "<group>"; };
 		DBD990481B39927A000ACF94 /* InputBarRightMenuButtonPresenterTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InputBarRightMenuButtonPresenterTests.m; sourceTree = "<group>"; };
-		DBD990541B39BEDF000ACF94 /* MentionsCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MentionsCollectionView.h; sourceTree = "<group>"; };
-		DBD990551B39BEDF000ACF94 /* MentionsCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MentionsCollectionView.m; sourceTree = "<group>"; };
 		DBF7235E1B5566B80036F4C5 /* a_lot_of_people.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = a_lot_of_people.json; sourceTree = "<group>"; };
 		EA28157E1A0BA2C5001D6124 /* ConversationViewController+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ConversationViewController+Private.h"; sourceTree = "<group>"; };
 		EE0DE1CC21B172BF00CF3C4E /* ConversationCreateGuestsSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationCreateGuestsSectionController.swift; sourceTree = "<group>"; };
@@ -5610,12 +5601,6 @@
 				BF732A691D9C114D003077DB /* Emoji */,
 				8FC851BA199245760008B66B /* InvisibleInputAccessoryView.h */,
 				8FC851BB199245760008B66B /* InvisibleInputAccessoryView.m */,
-				DB5206471B06355300138586 /* MentionsCollectionViewController.h */,
-				DB5206481B06355300138586 /* MentionsCollectionViewController.m */,
-				DBD990541B39BEDF000ACF94 /* MentionsCollectionView.h */,
-				DBD990551B39BEDF000ACF94 /* MentionsCollectionView.m */,
-				DB3A47DE1B4AD96C00391B5C /* MentionsCollectionViewCell.h */,
-				DB3A47DF1B4AD96C00391B5C /* MentionsCollectionViewCell.m */,
 				870A8C6A1CF719C400874B16 /* RecordingDotView.swift */,
 			);
 			path = InputBar;
@@ -7745,7 +7730,6 @@
 				879E5E991F0104A6007A88A3 /* UITextView+Autocorrect.swift in Sources */,
 				877798AC205A8EF500898A5E /* ZClientViewController.swift in Sources */,
 				EF297DDD213209220002983A /* ContactsViewController+Style.swift in Sources */,
-				DB3A47E01B4AD96C00391B5C /* MentionsCollectionViewCell.m in Sources */,
 				BF5FAC0120B6B738004CEB45 /* UIAlertController+OngoingCall.swift in Sources */,
 				EFF9A66022394E1B00CCEC85 /* ProgressSpinner+Constraint.swift in Sources */,
 				AF36C5A11E9F67E400FADECC /* MessageComposeViewController.swift in Sources */,
@@ -7776,7 +7760,6 @@
 				5EDD253C2140044D00C0E254 /* SettingsLicenseItem.swift in Sources */,
 				BF5DF5C520F4B0B8002BCB67 /* UICollectionView+UserList.swift in Sources */,
 				8742C2E21E51BD7900329FB6 /* TextSearchInputView.swift in Sources */,
-				DB5206491B06355300138586 /* MentionsCollectionViewController.m in Sources */,
 				8711A5A21E0D395A00043ACF /* CollectionCellHeader.swift in Sources */,
 				D5F22D4C2048052900879444 /* UIAlertController+RemoveAction.swift in Sources */,
 				F1B5EAC92029AC7E0081D402 /* SimpleTextFieldValidator.swift in Sources */,
@@ -7984,7 +7967,6 @@
 				BFAC71FE20A1CE0D002711C4 /* VideoConfiguration.swift in Sources */,
 				87A540AA1E094BA3009028C5 /* CollectionCell.swift in Sources */,
 				BF8ECC331E5AED6C0015177D /* UIMenuItem+MessageActions.swift in Sources */,
-				DBD990561B39BEDF000ACF94 /* MentionsCollectionView.m in Sources */,
 				871BC25A1D34F8F800DF0793 /* ZoomTransition.m in Sources */,
 				F15650FB21DD20D900210504 /* RawRepresentable+AllValues.swift in Sources */,
 				16C02A0D204D407100811912 /* TopPeopleSectionController.swift in Sources */,

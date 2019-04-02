@@ -126,8 +126,11 @@ open class CollectionCell: UICollectionViewCell {
         self.contentView.addSubview(secureContentsView)
         self.contentView.addSubview(obfuscationView)
 
-        secureContentsView.autoPinEdgesToSuperviewEdges()
-        obfuscationView.autoPinEdgesToSuperviewEdges()
+        secureContentsView.translatesAutoresizingMaskIntoConstraints = false
+        obfuscationView.translatesAutoresizingMaskIntoConstraints = false
+
+        secureContentsView.fitInSuperview()
+        obfuscationView.fitInSuperview()
     }
 
     override open func prepareForReuse() {
