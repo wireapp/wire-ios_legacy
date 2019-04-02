@@ -18,8 +18,19 @@
 
 import Foundation
 
-extension CountryCodeTableViewController {
-    open override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .default
+extension FullscreenImageViewController {
+    override open func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        if parent != nil {
+            updateZoom()
+        }
+
+        updateStatusBar()
     }
+
+    override open var preferredStatusBarStyle: UIStatusBarStyle {
+        return ColorScheme.default.statusBarStyle
+    }
+
 }
