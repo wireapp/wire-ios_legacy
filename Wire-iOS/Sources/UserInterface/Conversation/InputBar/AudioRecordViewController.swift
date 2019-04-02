@@ -38,7 +38,7 @@ private let zmLog = ZMSLog(tag: "UI")
     case recording, finishedRecording
 }
 
-public final class AudioRecordViewController: UIViewController, AudioRecordBaseViewController {
+final class AudioRecordViewController: UIViewController, AudioRecordBaseViewController {
 
     let buttonOverlay = AudioButtonOverlay()
     let topSeparator = UIView()
@@ -52,7 +52,7 @@ public final class AudioRecordViewController: UIViewController, AudioRecordBaseV
     let cancelButton = IconButton()
     let recordingDotView = RecordingDotView()
     var recordingDotViewVisible: [NSLayoutConstraint] = []
-    var recordingDotViewHidden = [NSLayoutConstraint]()
+    var recordingDotViewHidden: [NSLayoutConstraint] = []
     public let recorder: AudioRecorderType
     weak public var delegate: AudioRecordViewControllerDelegate?
     
@@ -285,8 +285,8 @@ public final class AudioRecordViewController: UIViewController, AudioRecordBaseV
         updateRecordingState(state)
         
         if animated {
-            UIView.animate(withDuration: 0.2, animations: { [weak self] in
-                self?.view.layoutIfNeeded()
+            UIView.animate(withDuration: 0.2, animations: {
+                self.view.layoutIfNeeded()
             }) 
         }
     }

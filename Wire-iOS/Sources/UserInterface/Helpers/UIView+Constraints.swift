@@ -217,7 +217,7 @@ extension UIView {
                    activate: activate)
     }
 
-    func pinArray(to view: UIView,
+    private func pinArray(to view: UIView,
                   safely: Bool = false,
                   with insets: EdgeInsets = .zero,
                   exclude excludedAnchors: [Anchor] = [],
