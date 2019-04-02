@@ -20,8 +20,6 @@
 #import "ConversationViewController.h"
 #import "ConversationViewController+Private.h"
 
-@import PureLayout;
-
 #import "Settings.h"
 
 #import "AppDelegate.h"
@@ -86,7 +84,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 @property (nonatomic) UIViewController *participantsController;
 
 @property (nonatomic) ConversationInputBarViewController *inputBarController;
-@property (nonatomic) OutgoingConnectionViewController *outgoingConnectionViewController;
 
 @property (nonatomic) NSLayoutConstraint *inputBarBottomMargin;
 @property (nonatomic) NSLayoutConstraint *inputBarZeroHeight;
@@ -215,33 +212,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     };
 
     self.outgoingConnectionViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
-}
-
-- (void)updateOutgoingConnectionVisibility
-{
-    if (nil == self.conversation) {
-        return;
-    }
-
-    BOOL outgoingConnection = self.conversation.relatedConnectionState == ZMConnectionStatusSent;
-    self.contentViewController.tableView.scrollEnabled = !outgoingConnection;
-
-    if (outgoingConnection) {
-        if (nil != self.outgoingConnectionViewController) {
-            return;
-        }
-        [self createOutgoingConnectionViewController];
-        [self.outgoingConnectionViewController willMoveToParentViewController:self];
-        [self.view addSubview:self.outgoingConnectionViewController.view];
-        [self addChildViewController:self.outgoingConnectionViewController];
-        [self.outgoingConnectionViewController.view autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero
-                                                                             excludingEdge:ALEdgeTop];
-    } else {
-        [self.outgoingConnectionViewController willMoveToParentViewController:nil];
-        [self.outgoingConnectionViewController.view removeFromSuperview];
-        [self.outgoingConnectionViewController removeFromParentViewController];
-        self.outgoingConnectionViewController = nil;
-    }
 }
 
 - (void)createConversationBarController

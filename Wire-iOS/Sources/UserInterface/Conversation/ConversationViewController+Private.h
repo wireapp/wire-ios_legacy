@@ -23,6 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @class ConversationInputBarViewController;
 @class CollectionsViewController;
+@class OutgoingConnectionViewController;
 
 @interface ConversationViewController (Private)
 
@@ -30,8 +31,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly) ConversationInputBarViewController *inputBarController;
 @property (nonatomic, readonly) UIViewController *participantsController;
 @property (nonatomic, nullable) CollectionsViewController *collectionController;
+@property (nonatomic, nullable) OutgoingConnectionViewController *outgoingConnectionViewController;
 
 - (void)onBackButtonPressed:(UIButton *)backButton;
+- (void)createOutgoingConnectionViewController;
 
 @end
 
