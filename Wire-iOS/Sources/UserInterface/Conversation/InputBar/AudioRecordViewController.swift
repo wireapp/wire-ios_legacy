@@ -51,7 +51,7 @@ public final class AudioRecordViewController: UIViewController, AudioRecordBaseV
     let topContainerView = UIView()
     let cancelButton = IconButton()
     let recordingDotView = RecordingDotView()
-    var recordingDotViewVisible = [NSLayoutConstraint]()
+    var recordingDotViewVisible: [NSLayoutConstraint] = []
     var recordingDotViewHidden = [NSLayoutConstraint]()
     public let recorder: AudioRecorderType
     weak public var delegate: AudioRecordViewControllerDelegate?
