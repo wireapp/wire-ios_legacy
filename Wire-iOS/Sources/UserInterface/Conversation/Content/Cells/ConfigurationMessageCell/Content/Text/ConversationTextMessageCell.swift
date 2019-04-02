@@ -71,6 +71,7 @@ class ConversationTextMessageCell: UIView, ConversationMessageCell, TextViewInte
         messageTextView.accessibilityIdentifier = "Message"
         messageTextView.accessibilityElementsHidden = false
         messageTextView.dataDetectorTypes = [.link, .address, .phoneNumber, .flightNumber, .calendarEvent, .shipmentTrackingNumber]
+        messageTextView.linkTextAttributes = [.foregroundColor : UIColor.accent()]
         messageTextView.setContentHuggingPriority(.required, for: .vertical)
         messageTextView.setContentCompressionResistancePriority(.required, for: .vertical)
         messageTextView.interactionDelegate = self
@@ -162,7 +163,6 @@ class ConversationTextMessageCellDescription: ConversationMessageCellDescription
         
         return configuration == otherDescription.configuration
     }
-    
 }
 
 // MARK: - Factory
@@ -184,12 +184,10 @@ extension ConversationTextMessageCellDescription {
         }
 
         // Text parsing
-
         let attachments = message.linkAttachments ?? []
         var messageText = NSAttributedString.format(message: textMessageData, isObfuscated: message.isObfuscated)
 
         // Search queries
-
         if !searchQueries.isEmpty {
             let highlightStyle: [NSAttributedString.Key: AnyObject] = [.backgroundColor: UIColor.accentDarken]
             messageText = messageText.highlightingAppearances(of: searchQueries, with: highlightStyle, upToWidth: 0, totalMatches: nil)

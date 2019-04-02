@@ -87,6 +87,10 @@ class ConversationCellSnapshotTestCase: CoreDataSnapshotTestCase {
                 XCTAssertTrue(waitForGroupsToBeEmpty([defaultImageCache.dispatchGroup]))
             }
 
+            // We need to run the run loop for UITextView to highlight detected links
+            let delay = Date().addingTimeInterval(1)
+            RunLoop.main.run(until: delay)
+
             return stackView
         },
            tolerance: tolerance,
