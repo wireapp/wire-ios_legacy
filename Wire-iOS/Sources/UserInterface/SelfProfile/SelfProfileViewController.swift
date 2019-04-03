@@ -133,11 +133,6 @@ final class SelfProfileViewController: UIViewController {
         settingsController.view.translatesAutoresizingMaskIntoConstraints = false
         accountSelectorController.view.translatesAutoresizingMaskIntoConstraints = false
 
-        settingsController.view.setContentHuggingPriority(UILayoutPriority.required, for: .vertical)
-        settingsController.view.setContentCompressionResistancePriority(UILayoutPriority.required, for: .vertical)
-        settingsController.tableView.setContentHuggingPriority(UILayoutPriority.required, for: .vertical)
-        settingsController.tableView.setContentCompressionResistancePriority(UILayoutPriority.required, for: .vertical)
-
         NSLayoutConstraint.activate([
             // accountSelectorController
             accountSelectorController.view.heightAnchor.constraint(equalToConstant: 44),
