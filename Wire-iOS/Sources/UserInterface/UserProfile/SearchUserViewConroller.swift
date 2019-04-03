@@ -69,13 +69,14 @@ final class SearchUserViewConroller: UIViewController {
 
     private func handleSearchResult(searchResult: SearchResult, isCompleted: Bool) {
         showLoadingView = false
-        var showProfileView = true
+        let showProfileView = true
 
-        if ZMUser.selfUser().teamRole == .partner,
-            searchResult.conversations.count == 0,
-            searchResult.directory.first?.teamRole == .partner {
-            showProfileView = false
-        }
+        ///TODO: move to SE
+//        if ZMUser.selfUser().teamRole == .partner,
+//            searchResult.conversations.count == 0,
+//            searchResult.directory.first?.teamRole == .partner {
+//            showProfileView = false
+//        }
 
         if showProfileView,
             let user = searchResult.directory.first {
