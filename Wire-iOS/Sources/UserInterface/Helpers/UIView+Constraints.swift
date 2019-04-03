@@ -42,16 +42,23 @@ struct EdgeInsets {
     }
 }
 
-enum Anchor {
-    case top
-    case bottom
-    case leading
-    case trailing
+protocol AnchorType {}
+
+enum Anchor: AnchorType {
+    case top,
+         bottom,
+         leading,
+         trailing
 }
 
-enum AxisAnchor {
-    case centerX
-    case centerY
+enum AxisAnchor: AnchorType {
+    case centerX,
+         centerY
+}
+
+struct AnchorInput {
+    let anchorType: AnchorType
+    let inset: CGFloat
 }
 
 struct FittingConstraints {
@@ -91,6 +98,26 @@ extension UIView {
 
         if activate {
             NSLayoutConstraint.activate(constraints)
+        }
+
+        return constraints
+    }
+
+    @discardableResult
+    func pinToSuperview(anchorInputs: [AnchorInput],
+                        activate: Bool = true) -> [NSLayoutConstraint] {
+        guard let superview = superview else {
+            fatal("Not in view hierarchy: self.superview = nil")
+        }
+
+        var constraints: [NSLayoutConstraint] = []
+
+        for anchorInput in anchorInputs {
+            if let anchor = anchorInput.anchorType as? Anchor {
+                constraints.append(pin(to: superview, anchor: anchor, inset: anchorInput.inset, activate: activate))
+            } else if let anchor = anchorInput.anchorType as? AxisAnchor {
+                constraints.append(pin(to: superview, axisAnchor: anchor, constant: anchorInput.inset, activate: activate))
+            }
         }
 
         return constraints
