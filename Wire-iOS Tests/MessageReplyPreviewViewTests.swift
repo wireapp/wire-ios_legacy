@@ -143,7 +143,7 @@ class MessageReplyPreviewViewTests: ZMSnapshotTestCase {
         article.title = "You won't believe what happened next!"
 
         let message = MockMessageFactory.textMessage(withText: "https://www.example.com/article/1")!
-        message.backingTextMessageData.linkPreview = article
+        message.backingTextMessageData.backingLinkPreview = article
         message.backingTextMessageData.linkPreviewImageCacheKey = "image-id-unsplash_matterhorn.jpg"
         message.backingTextMessageData.imageData = image(inTestBundleNamed: "unsplash_matterhorn.jpg").jpegData(compressionQuality: 0.9)
         message.backingTextMessageData.linkPreviewHasImage = true
