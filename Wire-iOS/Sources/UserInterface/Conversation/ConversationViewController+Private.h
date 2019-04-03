@@ -25,6 +25,7 @@ NS_ASSUME_NONNULL_BEGIN
 @class CollectionsViewController;
 @class OutgoingConnectionViewController;
 @class BarController;
+@class InvisibleInputAccessoryView;
 
 @interface ConversationViewController (Private)
 
@@ -33,9 +34,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly) UIViewController *participantsController;
 @property (nonatomic, nullable) CollectionsViewController *collectionController;
 @property (nonatomic, nullable) OutgoingConnectionViewController *outgoingConnectionViewController;
-@property (nonatomic, null_unspecified) BarController *conversationBarController;
+@property (nonatomic, readonly, null_unspecified) BarController *conversationBarController;
+@property (nonatomic, null_unspecified) InvisibleInputAccessoryView *invisibleInputAccessoryView;
+
 @property (nonatomic, nullable) NSLayoutConstraint *inputBarBottomMargin;
-@property (nonatomic) NSLayoutConstraint *inputBarZeroHeight;;
+@property (nonatomic, nullable) NSLayoutConstraint *inputBarZeroHeight;;
 
 - (void)onBackButtonPressed:(UIButton *)backButton;
 - (void)createOutgoingConnectionViewController;

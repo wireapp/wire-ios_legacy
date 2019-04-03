@@ -59,8 +59,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @interface ConversationViewController (Keyboard) <InvisibleInputAccessoryViewDelegate>
 
-- (void)keyboardFrameWillChange:(NSNotification *)notification;
-
 @end
 
 @interface ConversationViewController (InputBar) <ConversationInputBarViewControllerDelegate>
@@ -77,17 +75,21 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @interface ConversationViewController ()
 
+@property (nonatomic) BarController *conversationBarController;
 @property (nonatomic) MediaBarViewController *mediaBarViewController;
 
 @property (nonatomic) ConversationContentViewController *contentViewController;
 @property (nonatomic) UIViewController *participantsController;
 
 @property (nonatomic) ConversationInputBarViewController *inputBarController;
+@property (nonatomic) OutgoingConnectionViewController *outgoingConnectionViewController;
 
+@property (nonatomic) NSLayoutConstraint *inputBarBottomMargin;
+@property (nonatomic) NSLayoutConstraint *inputBarZeroHeight;
 @property (nonatomic) InvisibleInputAccessoryView *invisibleInputAccessoryView;
 
 @property (nonatomic) GuestsBarController *guestsBarController;
-    
+
 @property (nonatomic) id voiceChannelStateObserverToken;
 @property (nonatomic) id conversationObserverToken;
 
@@ -96,7 +98,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 @property (nonatomic) CollectionsViewController *collectionController;
 @property (nonatomic) id conversationListObserverToken;
 @property (nonatomic, readwrite) ConversationCallController *startCallController;
-    
+
 @end
 
 
@@ -180,7 +182,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     self.contentViewController = [[ConversationContentViewController alloc] initWithConversation:self.conversation
                                                                                          message:self.visibleMessage
                                                                             mediaPlaybackManager:self.zClientViewController.mediaPlaybackManager
-                                                                                         session: [ZMUserSession sharedSession]];
+                                                                                         session: self.session];
     self.contentViewController.delegate = self;
     self.contentViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
     self.contentViewController.bottomMargin = 16;
@@ -602,27 +604,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 
 @implementation ConversationViewController (Keyboard)
-
-- (void)keyboardFrameWillChange:(NSNotification *)notification
-{
-    // We only respond to keyboard will change frame if the first responder is not the input bar
-    if (self.invisibleInputAccessoryView.window == nil) {
-        [UIView animateWithKeyboardNotification:notification
-                                         inView:self.view
-                                     animations:^(CGRect keyboardFrameInView) {
-                                         self.inputBarBottomMargin.constant = -keyboardFrameInView.size.height;
-                                     }
-                                     completion:nil];
-    }
-    else {
-        CGRect screenRect = [[notification.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
-        UIResponder *currentFirstResponder = [UIResponder wr_currentFirstResponder];
-        if (currentFirstResponder != nil) {
-            CGSize keyboardSize = CGSizeMake(screenRect.size.width, currentFirstResponder.inputAccessoryView.bounds.size.height);
-            [UIView wr_setLastKeyboardSize:keyboardSize];
-        }
-    }
-}
 
 - (void)invisibleInputAccessoryView:(InvisibleInputAccessoryView *)view didMoveToWindow:(UIWindow *)window
 {

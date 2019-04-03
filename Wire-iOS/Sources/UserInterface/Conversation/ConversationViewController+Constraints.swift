@@ -21,8 +21,9 @@ import Foundation
 extension ConversationViewController {
     @objc
     func updateOutgoingConnectionVisibility() {
-        guard let conversation = conversation else {
-            return
+        guard let conversation = conversation,
+            contentViewController.tableView != nil else {
+                return
         }
 
         let outgoingConnection: Bool = conversation.relatedConnectionState == .sent
@@ -64,4 +65,46 @@ extension ConversationViewController {
 
         inputBarZeroHeight = inputBarController.view.heightAnchor.constraint(equalToConstant: 0)
     }
+
+    @objc
+    func keyboardFrameWillChange(_ notification: Notification) {
+        // We only respond to keyboard will change frame if the first responder is not the input bar
+        if invisibleInputAccessoryView.window == nil {
+            UIView.animate(withKeyboardNotification: notification, in: view, animations: { keyboardFrameInView in
+                self.inputBarBottomMargin?.constant = -keyboardFrameInView.size.height
+            }, completion: nil)
+        } else {
+            if let screenRect: CGRect = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue,
+                let currentFirstResponder = UIResponder.wr_currentFirst(),
+            let height = currentFirstResponder.inputAccessoryView?.bounds.size.height {
+
+                let keyboardSize = CGSize(width: screenRect.size.width, height: height)
+                UIView.wr_setLastKeyboardSize(keyboardSize)
+            }
+        }
+    }
+
 }
+/*
+ - (void)keyboardFrameWillChange:(NSNotification *)notification
+ {
+ // We only respond to keyboard will change frame if the first responder is not the input bar
+ if (self.invisibleInputAccessoryView.window == nil) {
+ [UIView animateWithKeyboardNotification:notification
+ inView:self.view
+ animations:^(CGRect keyboardFrameInView) {
+ self.inputBarBottomMargin.constant = -keyboardFrameInView.size.height;
+ }
+ completion:nil];
+ }
+ else {
+ CGRect screenRect = [[notification.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+ UIResponder *currentFirstResponder = [UIResponder wr_currentFirstResponder];
+ if (currentFirstResponder != nil) {
+ CGSize keyboardSize = CGSizeMake(screenRect.size.width, currentFirstResponder.inputAccessoryView.bounds.size.height);
+ [UIView wr_setLastKeyboardSize:keyboardSize];
+ }
+ }
+ }
+
+ */
