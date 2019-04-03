@@ -25,18 +25,11 @@ final class ConversationViewControllerSnapshotTests: CoreDataSnapshotTestCase {
 
     var mockConversation: ZMConversation!
     var mockZMUserSession: MockZMUserSession!
-//    var mockMessage: MockMessage!
 
     override func setUp() {
         super.setUp()
 
         mockConversation = createTeamGroupConversation()
-
-//        mockMessage = MockMessageFactory.textMessage(withText: "Message")!
-//        mockMessage.sender = selfUser
-//        mockMessage.conversation = mockConversation
-//        mockMessage.deliveryState = .read
-//        mockMessage.needsReadConfirmation = true
 
         mockZMUserSession = MockZMUserSession()
 
@@ -44,11 +37,6 @@ final class ConversationViewControllerSnapshotTests: CoreDataSnapshotTestCase {
 
         sut.conversation = mockConversation
         sut.session = mockZMUserSession
-
-        sut.loadViewIfNeeded()
-
-        ///injection after the viewDidLoad
-
 
         /// TODO: remove this after snapshot is created
         recordMode = true
