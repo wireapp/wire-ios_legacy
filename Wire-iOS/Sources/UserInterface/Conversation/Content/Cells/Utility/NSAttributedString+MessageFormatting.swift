@@ -208,10 +208,9 @@ extension NSMutableAttributedString {
     
     func removeTrailingLink(for linkPreview: LinkMetadata) {
         let text = self.string
-        let linkPreviewStartIndex = text.index(text.startIndex, offsetBy: linkPreview.characterOffsetInText)
-
+        
         guard
-            let linkPreviewRange = text.range(of: linkPreview.originalURLString, range: linkPreviewStartIndex ..< text.endIndex),
+            let linkPreviewRange = text.range(of: linkPreview.originalURLString, options: .backwards, range: nil, locale: nil),
             linkPreviewRange.upperBound == text.endIndex
         else {
             return

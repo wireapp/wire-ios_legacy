@@ -44,6 +44,12 @@ final class ConversationListViewControllerTests: CoreDataSnapshotTestCase {
         verify(view: sut.view)
     }
 
+    func testForPremissionDeniedViewController() {
+        sut.showPermissionDeniedViewController()
+
+        verify(view: sut.view)
+    }
+
     func testForActionMenu() {
         teamTest {
             sut.showActionMenu(for: otherUserConversation, from: sut.view)

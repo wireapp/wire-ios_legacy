@@ -41,7 +41,7 @@ class ConversationTextMessageTests: ConversationCellSnapshotTestCase {
         let article = ArticleMetadata(protocolBuffer: ZMLinkPreview.linkPreview(withOriginalURL: linkURL, permanentURL: linkURL, offset: 0, title: "Biggest catastrophe in history", summary: "", imageAsset: nil))
         let message = MockMessageFactory.textMessage(withText: "http://www.example.com")!
         message.sender = otherUser
-        message.backingTextMessageData.linkPreview = article
+        message.backingTextMessageData.backingLinkPreview = article
         
         // THEN
         verify(message: message)
@@ -54,7 +54,7 @@ class ConversationTextMessageTests: ConversationCellSnapshotTestCase {
             , title: "Biggest catastrophe in history", summary: "", imageAsset: nil))
         let message = MockMessageFactory.textMessage(withText: "What do you think about this http://www.example.com")!
         message.sender = otherUser
-        message.backingTextMessageData.linkPreview = article
+        message.backingTextMessageData.backingLinkPreview = article
         
         // THEN
         verify(message: message)
@@ -83,7 +83,7 @@ class ConversationTextMessageTests: ConversationCellSnapshotTestCase {
         (quote as? ZMMessage)?.serverTimestamp = Date.distantPast
         let message = MockMessageFactory.textMessage(withText: "I am http://www.example.com")!
         message.sender = otherUser
-        message.backingTextMessageData.linkPreview = article
+        message.backingTextMessageData.backingLinkPreview = article
         message.backingTextMessageData.hasQuote = true
         message.backingTextMessageData.quote = (quote as Any as! ZMMessage)
         
@@ -127,6 +127,23 @@ class ConversationTextMessageTests: ConversationCellSnapshotTestCase {
             LinkAttachment(type: .soundCloudPlaylist, title: "Artists To Watch 2019",
                            permalink: URL(string: "https://soundcloud.com/playback/sets/2019-artists-to-watch")!,
                            thumbnails: [], originalRange: NSRange(location: 0, length: 58))
+        ]
+
+        // THEN
+        verify(message: message)
+    }
+
+    func testBlacklistedLinkPreview_YouTube() {
+        // GIVEN
+        let linkURL = "https://youtube.com/watch"
+        let article = ArticleMetadata(protocolBuffer: ZMLinkPreview.linkPreview(withOriginalURL: linkURL, permanentURL: linkURL, offset: 14, title: "Lagar mat med Fernando Di Luca", summary: "", imageAsset: nil))
+        let message = MockMessageFactory.textMessage(withText: "Look at this! https://www.youtube.com/watch?v=l7aqpSTa234")!
+        message.sender = otherUser
+        message.backingTextMessageData.backingLinkPreview = article
+        message.linkAttachments = [
+            LinkAttachment(type: .youTubeVideo, title: "Lagar mat med Fernando Di Luca",
+                           permalink: URL(string: "https://www.youtube.com/watch?v=l7aqpSTa234")!,
+                           thumbnails: [], originalRange: NSRange(location: 14, length: 43))
         ]
 
         // THEN
