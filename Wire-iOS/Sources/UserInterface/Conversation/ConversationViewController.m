@@ -120,10 +120,12 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    self.conversationListObserverToken = [ConversationListChangeInfo addObserver:self
-                                                                         forList:[ZMConversationList conversationsInUserSession:[ZMUserSession sharedSession]]
-                                                                     userSession:[ZMUserSession sharedSession]];
+
+    if ([self.session isKindOfClass:[ZMUserSession class]]) {
+        self.conversationListObserverToken = [ConversationListChangeInfo addObserver:self
+                                                                             forList:[ZMConversationList conversationsInUserSession:(ZMUserSession *)self.session]
+                                                                         userSession:(ZMUserSession *)self.session];
+    }
 
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardFrameWillChange:)
