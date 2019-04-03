@@ -247,7 +247,7 @@ extension UIViewController {
         pendingSearchTask?.cancel()
         searchResultsView?.emptyResultContainer.isHidden = true
         
-        if ZMUser.selfUser().teamRole == .partner {
+        if ZMUser.selfUser().teamRole == .partner { /// TODO: copy to SE
             options.insert(.excludeNonActiveTeamMembers)
             options.remove(.directory)
         } else {

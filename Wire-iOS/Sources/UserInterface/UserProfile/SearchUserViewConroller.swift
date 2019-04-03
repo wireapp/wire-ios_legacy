@@ -68,18 +68,13 @@ final class SearchUserViewConroller: UIViewController {
     }
 
     private func handleSearchResult(searchResult: SearchResult, isCompleted: Bool) {
+        guard isCompleted else { return } ///TODO: check local result is nil, teamMember has value at that point
+
         showLoadingView = false
         let showProfileView = true
 
-        ///TODO: move to SE
-//        if ZMUser.selfUser().teamRole == .partner,
-//            searchResult.conversations.count == 0,
-//            searchResult.directory.first?.teamRole == .partner {
-//            showProfileView = false
-//        }
-
         if showProfileView,
-            let user = searchResult.directory.first {
+            let user = searchResult.directory.first { ///TODO: search for team user also
             let profileViewController = ProfileViewController(user: user, viewer: ZMUser.selfUser(), context: .profileViewer)
             profileViewController.delegate = profileViewControllerDelegate
 
