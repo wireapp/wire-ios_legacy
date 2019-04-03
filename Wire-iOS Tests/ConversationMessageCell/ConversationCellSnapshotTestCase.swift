@@ -90,7 +90,7 @@ class ConversationCellSnapshotTestCase: CoreDataSnapshotTestCase {
 
             if waitForTextViewToLoad {
                 // We need to run the run loop for UITextView to highlight detected links
-                let delay = Date().addingTimeInterval(1)
+                let delay = Date().addingTimeInterval(0.1)
                 RunLoop.main.run(until: delay)
             }
 
