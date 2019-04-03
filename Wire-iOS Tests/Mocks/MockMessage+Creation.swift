@@ -153,7 +153,7 @@ final class MockMessageFactory: NSObject {
 
         let textData = MockTextMessageData()
         let article = ArticleMetadata(originalURLString: "http://foo.bar/baz", permanentURLString: "http://foo.bar/baz", resolvedURLString: "http://foo.bar/baz", offset: 0)
-        textData.linkPreview = article
+        textData.backingLinkPreview = article
         message.backingTextMessageData = textData
 
         return message

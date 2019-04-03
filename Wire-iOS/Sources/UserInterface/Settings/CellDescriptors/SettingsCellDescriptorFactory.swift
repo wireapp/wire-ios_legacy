@@ -242,8 +242,6 @@ class SettingsCellDescriptorFactory {
         
         let enableBatchCollections = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.enableBatchCollections))
         developerCellDescriptors.append(enableBatchCollections)
-        let enableNewLinkPreviews = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.enableNewAttachedLinkPreviews))
-        developerCellDescriptors.append(enableNewLinkPreviews)
         let sendBrokenMessageButton = SettingsButtonCellDescriptor(title: "Send broken message", isDestructive: true, selectAction: SettingsCellDescriptorFactory.sendBrokenMessage)
         developerCellDescriptors.append(sendBrokenMessageButton)
         let findUnreadBadgeConversationButton = SettingsButtonCellDescriptor(title: "First unread conversation (badge count)", isDestructive: false, selectAction: SettingsCellDescriptorFactory.findUnreadConversationContributingToBadgeCount)

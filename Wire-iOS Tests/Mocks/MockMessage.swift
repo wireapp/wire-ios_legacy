@@ -23,7 +23,7 @@ import WireLinkPreview
 @objcMembers class MockTextMessageData : NSObject, ZMTextMessageData {
     
     var messageText: String? = ""
-    var linkPreview: LinkMetadata? = nil
+    var backingLinkPreview: LinkMetadata? = nil
     var imageData: Data? = nil
     var linkPreviewHasImage: Bool = false
     var linkPreviewImageCacheKey: String? = nil
@@ -31,7 +31,12 @@ import WireLinkPreview
     var quote: ZMMessage? = nil
     var isQuotingSelf: Bool = false
     var hasQuote: Bool = false
-    
+
+    var linkPreview: LinkMetadata? {
+        guard let linkPreview = self.backingLinkPreview, !linkPreview.isBlacklisted else { return nil }
+        return linkPreview
+    }
+
     func fetchLinkPreviewImageData(with queue: DispatchQueue, completionHandler: @escaping ((Data?) -> Void)) {
         completionHandler(imageData)
     }

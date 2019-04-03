@@ -17,85 +17,33 @@
 //
 
 import UIKit
-import Cartography
 
-extension Notification.Name {
-    static let DismissSettings = Notification.Name("DismissSettings")
-}
-
-extension SelfProfileViewController: SettingsPropertyFactoryDelegate {
-    func asyncMethodDidStart(_ settingsPropertyFactory: SettingsPropertyFactory) {
-        self.navigationController?.topViewController?.showLoadingView = true
-    }
-
-    func asyncMethodDidComplete(_ settingsPropertyFactory: SettingsPropertyFactory) {
-        self.navigationController?.topViewController?.showLoadingView = false
-    }
-
-
-}
+/**
+ * The first page of the user settings.
+ */
 
 final class SelfProfileViewController: UIViewController {
-    
-    var userRightInterfaceType: UserRightInterface.Type = UserRight.self
 
-    static let dismissNotificationName = "SettingsNavigationControllerDismissNotificationName"
-    
+    /// The user that is viewing their settings.
+    let selfUser: SettingsSelfUser
+
+    var userRightInterfaceType: UserRightInterface.Type = UserRight.self
+    var settingsCellDescriptorFactory: SettingsCellDescriptorFactory? = nil
+    var rootGroup: (SettingsControllerGeneratorType & SettingsInternalGroupCellDescriptorType)? = nil
+
+    // MARK: - Views
+
     private let settingsController: SettingsTableViewController
     private let accountSelectorController = AccountSelectorController()
     private let profileContainerView = UIView()
     private let profileView: ProfileView
-    
-    internal var settingsCellDescriptorFactory: SettingsCellDescriptorFactory? = nil
-    internal var rootGroup: (SettingsControllerGeneratorType & SettingsInternalGroupCellDescriptorType)? = nil
 
-    convenience init(userRightInterfaceType: UserRightInterface.Type = UserRight.self) {
-		
-        let settingsPropertyFactory = SettingsPropertyFactory(userSession: SessionManager.shared?.activeUserSession, selfUser: ZMUser.selfUser())
+    // MARK: - Configuration
 
-		
-
-		let settingsCellDescriptorFactory = SettingsCellDescriptorFactory(settingsPropertyFactory: settingsPropertyFactory, userRightInterfaceType: userRightInterfaceType)
-
-		let rootGroup = settingsCellDescriptorFactory.rootGroup()
-
-		self.init(rootGroup: rootGroup)
-
-		self.userRightInterfaceType = userRightInterfaceType
-		self.settingsCellDescriptorFactory = settingsCellDescriptorFactory
-        self.rootGroup = rootGroup
-
-        settingsPropertyFactory.delegate = self
-    }
-    
-    init(rootGroup: SettingsControllerGeneratorType & SettingsInternalGroupCellDescriptorType) {
-        settingsController = rootGroup.generateViewController()! as! SettingsTableViewController
-        
-        let user = ZMUser.selfUser()!
-        profileView = ProfileView(user: user,
-                                  viewer: user,
-                                  options: user.isTeamMember ? [.allowEditingAvailability] : [.hideAvailability])
-        profileView.availabilityView.options = .selfProfile
-        profileView.colorSchemeVariant = .dark
-        
-        super.init(nibName: .none, bundle: .none)
-                
-        profileView.source = self
-        profileView.imageView.addTarget(self, action: #selector(userDidTapProfileImage), for: .touchUpInside)
-        
-        settingsController.tableView.isScrollEnabled = false
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(SelfProfileViewController.dismissNotification(_:)), name: NSNotification.Name.DismissSettings, object: nil)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     override var supportedInterfaceOrientations : UIInterfaceOrientationMask {
         return [.portrait]
     }
-    
+
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
@@ -104,27 +52,61 @@ final class SelfProfileViewController: UIViewController {
         return userRightInterfaceType.selfUserIsPermitted(to: .editProfilePicture)
     }
 
+    // MARK: - Initialization
+
+    /**
+     * Creates the settings screen with the specified user and permissions.
+     * - parameter selfUser: The current user.
+     * - parameter userRightInterfaceType: The type of object to determine the user permissions.
+     */
+
+    init(selfUser: SettingsSelfUser, userRightInterfaceType: UserRightInterface.Type = UserRight.self) {
+        self.selfUser = selfUser
+
+        // Create the settings hierarchy
+        let settingsPropertyFactory = SettingsPropertyFactory(userSession: SessionManager.shared?.activeUserSession, selfUser: ZMUser.selfUser())
+		let settingsCellDescriptorFactory = SettingsCellDescriptorFactory(settingsPropertyFactory: settingsPropertyFactory, userRightInterfaceType: userRightInterfaceType)
+		let rootGroup = settingsCellDescriptorFactory.rootGroup()
+        settingsController = rootGroup.generateViewController()! as! SettingsTableViewController
+        profileView = ProfileView(user: selfUser, viewer: selfUser, options: selfUser.isTeamMember ? [.allowEditingAvailability] : [.hideAvailability])
+
+		self.userRightInterfaceType = userRightInterfaceType
+		self.settingsCellDescriptorFactory = settingsCellDescriptorFactory
+        self.rootGroup = rootGroup
+
+        super.init(nibName: nil, bundle: nil)
+        settingsPropertyFactory.delegate = self
+    }
+
+    @available(*, unavailable)
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    // MARK: - View Lifecycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        profileContainerView.shouldGroupAccessibilityChildren = false
-        profileContainerView.isAccessibilityElement = false
+
+        profileView.colorSchemeVariant = .dark
+        profileView.source = self
+        profileView.imageView.addTarget(self, action: #selector(userDidTapProfileImage), for: .touchUpInside)
+
         profileContainerView.addSubview(profileView)
         view.addSubview(profileContainerView)
 
-        profileView.imageView.isAccessibilityElement = userCanSetProfilePicture
-        profileView.imageView.isUserInteractionEnabled = userCanSetProfilePicture
+        if userCanSetProfilePicture {
+            profileView.options.insert(.allowEditingProfilePicture)
+        }
 
         settingsController.willMove(toParent: self)
-        view.addSubview(settingsController.view)
         addChild(settingsController)
-        
-        settingsController.view.setContentHuggingPriority(UILayoutPriority.required, for: .vertical)
-        settingsController.view.setContentCompressionResistancePriority(UILayoutPriority.required, for: .vertical)
-        settingsController.tableView.setContentHuggingPriority(UILayoutPriority.required, for: .vertical)
-        settingsController.tableView.setContentCompressionResistancePriority(UILayoutPriority.required, for: .vertical)
-        
-        createCloseButton()
+        view.addSubview(settingsController.view)
+        settingsController.didMove(toParent: self)
+
+        settingsController.tableView.isScrollEnabled = false
+
+        navigationItem.rightBarButtonItem = navigationController?.closeItem()
         configureAccountTitle()
         createConstraints()
     }
@@ -136,24 +118,7 @@ final class SelfProfileViewController: UIViewController {
             presentUserSettingChangeControllerIfNeeded()
         }
     }
-    
-    override func accessibilityPerformEscape() -> Bool {
-        dismiss()
-        return true
-    }
-    
-    private func dismiss() {
-        dismiss(animated: true)
-    }
-    
-    @objc func dismissNotification(_ notification: NSNotification) {
-        dismiss()
-    }
-    
-    private func createCloseButton() {
-        navigationItem.rightBarButtonItem = navigationController?.closeItem()
-    }
-    
+
     private func configureAccountTitle() {
         if SessionManager.shared?.accountManager.accounts.count > 1 {
             navigationItem.titleView = accountSelectorController.view
@@ -163,51 +128,60 @@ final class SelfProfileViewController: UIViewController {
     }
     
     private func createConstraints() {
-        var selfViewTopMargin: CGFloat = 12
+        profileView.translatesAutoresizingMaskIntoConstraints = false
+        profileContainerView.translatesAutoresizingMaskIntoConstraints = false
+        settingsController.view.translatesAutoresizingMaskIntoConstraints = false
+        accountSelectorController.view.translatesAutoresizingMaskIntoConstraints = false
 
-        if #available(iOS 11, *) {
-        } else {
-            if let navBarFrame = self.navigationController?.navigationBar.frame {
-                selfViewTopMargin = 32 + navBarFrame.size.height
-            }
-        }
+        NSLayoutConstraint.activate([
+            // accountSelectorController
+            accountSelectorController.view.heightAnchor.constraint(equalToConstant: 44),
 
-        constrain(view, profileContainerView) { selfView, profileContainerView in
-            profileContainerView.top == selfView.topMargin + selfViewTopMargin
-        }
+            // profileContainerView
+            profileContainerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            profileContainerView.topAnchor.constraint(equalTo: safeTopAnchor),
+            profileContainerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
 
-        constrain(accountSelectorController.view) { accountSelectorControllerView in
-            accountSelectorControllerView.height == 44
-        }
+            // profileView
+            profileView.leadingAnchor.constraint(equalTo: profileContainerView.leadingAnchor),
+            profileView.topAnchor.constraint(greaterThanOrEqualTo: profileContainerView.topAnchor),
+            profileView.trailingAnchor.constraint(equalTo: profileContainerView.trailingAnchor),
+            profileView.bottomAnchor.constraint(lessThanOrEqualTo: profileContainerView.bottomAnchor),
+            profileView.centerYAnchor.constraint(equalTo: profileContainerView.centerYAnchor),
 
-        // Sometimes (i.e. after coming from background) the cells are not loaded yet. Reloading to calculate correct height.
-        settingsController.tableView.reloadData()
-        let height = CGFloat(56 * settingsController.tableView.numberOfRows(inSection: 0))
-        
-        constrain(view, settingsController.view, profileView, profileContainerView, settingsController.tableView) { view, settingsControllerView, profileView, profileContainerView, tableView in
-            profileContainerView.leading == view.leading
-            profileContainerView.trailing == view.trailing
-            profileContainerView.bottom == settingsControllerView.top
-            
-            profileView.top >= profileContainerView.top
-            profileView.centerY == profileContainerView.centerY
-            profileView.leading == profileContainerView.leading
-            profileView.trailing == profileContainerView.trailing
-            profileView.bottom <= profileContainerView.bottom
-            
-            settingsControllerView.height == height
-            settingsControllerView.leading == view.leading
-            settingsControllerView.trailing == view.trailing
-            settingsControllerView.bottom == view.bottom - UIScreen.safeArea.bottom
-            
-            tableView.edges == settingsControllerView.edges
-        }
+            // settingsControllerView
+            settingsController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            settingsController.view.topAnchor.constraint(equalTo: profileContainerView.bottomAnchor),
+            settingsController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            settingsController.view.bottomAnchor.constraint(equalTo: safeBottomAnchor),
+        ])
     }
-    
+
+    // MARK: - Events
+
     @objc func userDidTapProfileImage(sender: UserImageView) {
         guard userCanSetProfilePicture else { return }
         let profileImageController = ProfileSelfPictureViewController()
         self.present(profileImageController, animated: true, completion: .none)
     }
+
+    override func accessibilityPerformEscape() -> Bool {
+        dismiss(animated: true)
+        return true
+    }
+
 }
 
+// MARK: - SettingsPropertyFactoryDelegate
+
+extension SelfProfileViewController: SettingsPropertyFactoryDelegate {
+
+    func asyncMethodDidStart(_ settingsPropertyFactory: SettingsPropertyFactory) {
+        self.navigationController?.topViewController?.showLoadingView = true
+    }
+
+    func asyncMethodDidComplete(_ settingsPropertyFactory: SettingsPropertyFactory) {
+        self.navigationController?.topViewController?.showLoadingView = false
+    }
+
+}

@@ -19,11 +19,6 @@
 import Foundation
 
 extension CountryCodeTableViewController {
-    @objc
-    func updateStatusBar() {
-        UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(false)
-    }
-
     open override var preferredStatusBarStyle: UIStatusBarStyle {
         return .default
     }

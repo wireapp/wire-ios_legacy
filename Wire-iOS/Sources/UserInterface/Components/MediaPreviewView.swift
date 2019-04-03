@@ -19,7 +19,7 @@
 import UIKit
 import WireCommonComponents
 
-@objc final class MediaPreviewView: RoundedView {
+final class MediaPreviewView: RoundedView {
 
     let playButton = IconButton()
     let titleLabel = UILabel()
@@ -56,7 +56,7 @@ import WireCommonComponents
         addSubview(titleLabel)
 
         playButton.isUserInteractionEnabled = false
-        playButton.setIcon(.play, with: .large, for: .normal)
+        playButton.setIcon(.externalLink, with: .medium, for: .normal)
         playButton.setIconColor(UIColor.white, for: UIControl.State.normal)
         addSubview(playButton)
 

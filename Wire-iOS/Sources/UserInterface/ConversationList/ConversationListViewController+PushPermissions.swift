@@ -69,26 +69,31 @@ extension ConversationListViewController {
             return
         }
 
-        UNUserNotificationCenter.current().checkPushesDisabled({ pushesDisabled in
+        UNUserNotificationCenter.current().checkPushesDisabled({ [weak self] pushesDisabled in
             DispatchQueue.main.async {
-                if pushesDisabled {
-                    NotificationCenter.default.addObserver(self, selector: #selector(self.applicationDidBecomeActive(_:)), name: UIApplication.didBecomeActiveNotification, object: nil)
+                if pushesDisabled,
+                    let weakSelf = self {
+                    NotificationCenter.default.addObserver(weakSelf, selector: #selector(weakSelf.applicationDidBecomeActive(_:)), name: UIApplication.didBecomeActiveNotification, object: nil)
                     Settings.shared().lastPushAlertDate = Date()
-                    if let permissions = PermissionDeniedViewController.push() {
-                        permissions.delegate = self
 
-                        self.addChild(permissions)
-                        self.view.addSubview(permissions.view)
-                        permissions.didMove(toParent: self)
+                    weakSelf.showPermissionDeniedViewController()
 
-                        permissions.view.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets.zero)
-                        self.pushPermissionDeniedViewController = permissions
-                    }
-
-                    self.contentContainer.alpha = 0.0
+                    weakSelf.contentContainer.alpha = 0.0
                 }
             }
         })
+    }
+
+    func showPermissionDeniedViewController() {
+        if let permissions = PermissionDeniedViewController.push() {
+            permissions.delegate = self
+
+            addToSelf(permissions)
+
+            permissions.view.translatesAutoresizingMaskIntoConstraints = false
+            permissions.view.fitInSuperview()
+            pushPermissionDeniedViewController = permissions
+        }
     }
 
     @objc func applicationDidBecomeActive(_ notif: Notification) {
