@@ -85,26 +85,3 @@ extension ConversationViewController {
     }
 
 }
-/*
- - (void)keyboardFrameWillChange:(NSNotification *)notification
- {
- // We only respond to keyboard will change frame if the first responder is not the input bar
- if (self.invisibleInputAccessoryView.window == nil) {
- [UIView animateWithKeyboardNotification:notification
- inView:self.view
- animations:^(CGRect keyboardFrameInView) {
- self.inputBarBottomMargin.constant = -keyboardFrameInView.size.height;
- }
- completion:nil];
- }
- else {
- CGRect screenRect = [[notification.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
- UIResponder *currentFirstResponder = [UIResponder wr_currentFirstResponder];
- if (currentFirstResponder != nil) {
- CGSize keyboardSize = CGSizeMake(screenRect.size.width, currentFirstResponder.inputAccessoryView.bounds.size.height);
- [UIView wr_setLastKeyboardSize:keyboardSize];
- }
- }
- }
-
- */
