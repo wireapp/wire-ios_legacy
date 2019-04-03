@@ -54,6 +54,7 @@
 @property (nonatomic, readwrite) BOOL isTeamMember;
 @property (nonatomic, readwrite) TeamRole teamRole;
 @property (nonatomic, assign) BOOL isGuestInConversation;
+@property (nonatomic, copy) NSString *teamName;
 @property (nonatomic, readwrite) BOOL canManageTeam;
 @property (nonatomic, readwrite) BOOL hasTeam;
 @property (nonatomic, readwrite) NSString *expirationDisplayString;

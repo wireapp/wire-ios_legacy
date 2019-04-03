@@ -266,13 +266,13 @@ final class ProfileView: UIView, Themeable {
     }
     
     private func updateAvailabilityVisibility() {
-        availabilityView.isHidden = options.contains(.hideAvailability) || !user.canDisplayAvailability(with: availabilityView.options)
-
         if options.contains(.allowEditingAvailability) {
             availabilityView.options.insert(.allowSettingStatus)
         } else {
             availabilityView.options.remove(.allowSettingStatus)
         }
+
+        availabilityView.isHidden = options.contains(.hideAvailability) || !user.canDisplayAvailability(with: availabilityView.options)
     }
 
     private func updateImageButton() {
