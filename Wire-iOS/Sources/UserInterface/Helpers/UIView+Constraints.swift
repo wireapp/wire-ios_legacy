@@ -108,6 +108,13 @@ extension UIView {
         return constraints
     }
 
+
+    /// Pin to super view with an array of anchor parameters
+    ///
+    /// - Parameters:
+    ///   - anchorInputs: array of anchor parameters
+    ///   - activate: if true, activate the constrants
+    /// - Returns: the constraints created
     @discardableResult
     func pinToSuperview(anchorInputs: [AnchorInput],
                         activate: Bool = true) -> [NSLayoutConstraint] {
