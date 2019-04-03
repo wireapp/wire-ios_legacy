@@ -78,9 +78,7 @@ class LaunchImageViewController: UIViewController {
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
 
-        var constraints: [NSLayoutConstraint] = []
-
-        constraints += contentView.fitInSuperview(activate: false).values
+        var constraints: [NSLayoutConstraint] = contentView.fitInSuperview(activate: false).array
 
         constraints.append(loadingScreenLabel.pinToSuperview(axisAnchor: .centerX, activate: false))
         constraints.append(loadingScreenLabel.pinToSuperview(anchor: .bottom, inset: 40, activate: false))

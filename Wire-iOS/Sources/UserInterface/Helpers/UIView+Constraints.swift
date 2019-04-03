@@ -54,6 +54,18 @@ enum AxisAnchor {
     case centerY
 }
 
+struct FittingConstraints {
+    let constraints: [Anchor: NSLayoutConstraint]
+
+    subscript(anchor: Anchor) -> NSLayoutConstraint? {
+        return constraints[anchor]
+    }
+
+    var array: [NSLayoutConstraint] {
+        return constraints.values.map{ $0 }
+    }
+}
+
 extension UIView {
 
     // MARK: - center alignment
@@ -188,7 +200,7 @@ extension UIView {
     func fitInSuperview(safely: Bool = false,
                         with insets: EdgeInsets = .zero,
                         exclude excludedAnchors: [Anchor] = [],
-                        activate: Bool = true) -> [Anchor: NSLayoutConstraint] {
+                        activate: Bool = true) -> FittingConstraints {
 
         guard let superview = superview else {
             fatal("Not in view hierarchy: self.superview = nil")
@@ -206,7 +218,7 @@ extension UIView {
              safely: Bool = false,
              with insets: EdgeInsets = .zero,
              exclude excludedAnchors: [Anchor] = [],
-             activate: Bool = true) -> [Anchor: NSLayoutConstraint] {
+             activate: Bool = true) -> FittingConstraints {
 
         var constraints: [Anchor: NSLayoutConstraint] = [:]
 
@@ -246,7 +258,7 @@ extension UIView {
             NSLayoutConstraint.activate(constraints.map({$0.value}))
         }
 
-        return constraints
+        return FittingConstraints(constraints: constraints)
     }
 
     // MARK: - dimensions
