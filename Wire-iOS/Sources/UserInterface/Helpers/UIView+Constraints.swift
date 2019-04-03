@@ -59,6 +59,11 @@ enum AxisAnchor: AnchorType {
 struct AnchorInput {
     let anchorType: AnchorType
     let inset: CGFloat
+
+    init(anchorType: AnchorType, inset: CGFloat = 0) {
+        self.anchorType = anchorType
+        self.inset = inset
+    }
 }
 
 struct FittingConstraints {
