@@ -37,9 +37,6 @@ final class ConversationViewControllerSnapshotTests: CoreDataSnapshotTestCase {
 
         sut.conversation = mockConversation
         sut.session = mockZMUserSession
-
-        /// TODO: remove this after snapshot is created
-        recordMode = true
     }
     
     override func tearDown() {
