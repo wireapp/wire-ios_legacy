@@ -5634,7 +5634,6 @@
 		BACB88521AF7C48900DDCDB0 /* Wire-iOS Tests */ = {
 			isa = PBXGroup;
 			children = (
-				EFF9A64A2237F73A00CCEC85 /* AudioPlayList */,
 				EFC57A1121BABD4F0008DBE6 /* ConversationInputBarViewController */,
 				EF18140721B17F7A008F7DA8 /* ConversationOption */,
 				EF6A33D02192F47200970698 /* ConversationListCell */,
@@ -6310,13 +6309,6 @@
 				EFC57A0F21BABCC90008DBE6 /* ConversationInputBarViewControllerAudioRecorderSnapshotTests.swift */,
 			);
 			path = ConversationInputBarViewController;
-			sourceTree = "<group>";
-		};
-		EFF9A64A2237F73A00CCEC85 /* AudioPlayList */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = AudioPlayList;
 			sourceTree = "<group>";
 		};
 		F10F46D02028857C00261449 /* Create */ = {
