@@ -32,7 +32,7 @@ class ConversationTextMessageTests: ConversationCellSnapshotTestCase {
         message.sender = otherUser
         
         // THEN
-        verify(message: message)
+        verify(message: message, waitForTextViewToLoad: true)
     }
     
     func testLinkPreview() {
@@ -57,7 +57,7 @@ class ConversationTextMessageTests: ConversationCellSnapshotTestCase {
         message.backingTextMessageData.backingLinkPreview = article
         
         // THEN
-        verify(message: message)
+        verify(message: message, waitForTextViewToLoad: true)
     }
     
     func testTextWithQuote() {
@@ -71,7 +71,7 @@ class ConversationTextMessageTests: ConversationCellSnapshotTestCase {
         message.backingTextMessageData.quote = (quote as Any as! ZMMessage)
         
         // THEN
-        verify(message: message)
+        verify(message: message, waitForTextViewToLoad: true)
     }
     
     func testTextWithLinkPreviewAndQuote() {
@@ -88,7 +88,7 @@ class ConversationTextMessageTests: ConversationCellSnapshotTestCase {
         message.backingTextMessageData.quote = (quote as Any as! ZMMessage)
         
         // THEN
-        verify(message: message)
+        verify(message: message, waitForTextViewToLoad: true)
     }
     
     func testMediaPreviewAttachment() {
@@ -102,7 +102,7 @@ class ConversationTextMessageTests: ConversationCellSnapshotTestCase {
         ]
         
         // THEN
-        verify(message: message)
+        verify(message: message, waitForTextViewToLoad: true)
     }
 
     func testSoundCloudMediaPreviewAttachment() {
@@ -116,7 +116,7 @@ class ConversationTextMessageTests: ConversationCellSnapshotTestCase {
         ]
 
         // THEN
-        verify(message: message)
+        verify(message: message, waitForTextViewToLoad: true)
     }
 
     func testSoundCloudSetMediaPreviewAttachment() {
@@ -130,7 +130,7 @@ class ConversationTextMessageTests: ConversationCellSnapshotTestCase {
         ]
 
         // THEN
-        verify(message: message)
+        verify(message: message, waitForTextViewToLoad: true)
     }
 
     func testBlacklistedLinkPreview_YouTube() {

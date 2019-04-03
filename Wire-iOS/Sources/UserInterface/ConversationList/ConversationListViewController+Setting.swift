@@ -21,7 +21,7 @@ import Foundation
 extension ConversationListViewController {
     @objc
     func createSettingsViewController() -> UIViewController {
-        let selfProfileViewController = SelfProfileViewController()
+        let selfProfileViewController = SelfProfileViewController(selfUser: ZMUser.selfUser())
         return selfProfileViewController.wrapInNavigationController(navigationControllerClass: ClearBackgroundNavigationController.self)
     }
 }

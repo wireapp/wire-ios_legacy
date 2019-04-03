@@ -47,7 +47,10 @@ final class ProfileView: UIView, Themeable {
 
         /// Whether to allow the user to change their availability.
         static let allowEditingAvailability = Options(rawValue: 1 << 4)
-        
+
+        /// Whether to allow the user to change their availability.
+        static let allowEditingProfilePicture = Options(rawValue: 1 << 5)
+
     }
     
     /// The user that is displayed.
@@ -117,15 +120,14 @@ final class ProfileView: UIView, Themeable {
     
     private func configureSubviews() {
         let session = SessionManager.shared?.activeUserSession
-        
+
+        imageView.isAccessibilityElement = true
+        imageView.accessibilityElementsHidden = false
         imageView.accessibilityIdentifier = "user image"
         imageView.initialsFont = UIFont.systemFont(ofSize: 55, weight: .semibold).monospaced()
         imageView.userSession = session
         imageView.user = user
-        imageView.accessibilityLabel = "self.profile.change_user_image.accessibility".localized
-        imageView.accessibilityTraits = .button
-        imageView.accessibilityElementsHidden = false
-        
+
         availabilityView.tapHandler = { [weak self] button in
             guard let `self` = self else { return }
             guard self.options.contains(.allowEditingAvailability) else { return }
@@ -144,7 +146,8 @@ final class ProfileView: UIView, Themeable {
         nameLabel.setContentHuggingPriority(UILayoutPriority.required, for: .vertical)
         nameLabel.setContentCompressionResistancePriority(UILayoutPriority.required, for: .vertical)
         nameLabel.font = FontSpec(.large, .light).font!
-        
+        nameLabel.accessibilityTraits.insert(.header)
+
         handleLabel.accessibilityLabel = "profile_view.accessibility.handle".localized
         handleLabel.accessibilityIdentifier = "username"
         handleLabel.setContentHuggingPriority(UILayoutPriority.required, for: .vertical)
@@ -193,24 +196,30 @@ final class ProfileView: UIView, Themeable {
     private func configureConstraints() {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        
+
+        let leadingSpaceConstraint = stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 40)
+        let topSpaceConstraint = stackView.topAnchor.constraint(equalTo: topAnchor, constant: 20)
+        let trailingSpaceConstraint = stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -40)
+        let bottomSpaceConstraint = stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -20)
+
+        leadingSpaceConstraint.priority = .defaultLow
+        topSpaceConstraint.priority = .defaultLow
+        trailingSpaceConstraint.priority = .defaultLow
+        bottomSpaceConstraint.priority = .defaultLow
+
         NSLayoutConstraint.activate([
             // imageView
             imageView.widthAnchor.constraint(equalToConstant: 164),
             imageView.heightAnchor.constraint(equalToConstant: 164),
             
             // stackView
-            stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 40),
-            stackView.topAnchor.constraint(equalTo: topAnchor, constant: 20),
-            stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -40),
-            stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -20)
+            leadingSpaceConstraint, topSpaceConstraint, trailingSpaceConstraint, bottomSpaceConstraint
         ])
     }
     
     // MARK: - Content and Options
     
     func prepareForDisplay(in conversation: ZMConversation?, context: ProfileViewControllerContext) {
-
         let guestIndicatorHidden: Bool
         switch context {
             case .profileViewer:
@@ -250,26 +259,39 @@ final class ProfileView: UIView, Themeable {
         if let teamName = user.teamName, !options.contains(.hideTeamName) {
             teamNameLabel.text = teamName.localizedUppercase
             teamNameLabel.accessibilityValue = teamNameLabel.text
+            teamNameLabel.isHidden = false
         } else {
             teamNameLabel.isHidden = true
         }
     }
     
     private func updateAvailabilityVisibility() {
+        if options.contains(.allowEditingAvailability) {
+            availabilityView.options.insert(.allowSettingStatus)
+        } else {
+            availabilityView.options.remove(.allowSettingStatus)
+        }
+
         availabilityView.isHidden = options.contains(.hideAvailability) || !user.canDisplayAvailability(with: availabilityView.options)
+    }
+
+    private func updateImageButton() {
+        if options.contains(.allowEditingProfilePicture) {
+            imageView.accessibilityLabel = "self.accessibility.profile_photo_edit_button".localized
+            imageView.accessibilityTraits = [.image, .button]
+            imageView.isUserInteractionEnabled = true
+        } else {
+            imageView.accessibilityLabel = "self.accessibility.profile_photo_image".localized
+            imageView.accessibilityTraits = [.image]
+            imageView.isUserInteractionEnabled = false
+        }
     }
     
     private func applyOptions() {
         nameLabel.isHidden = options.contains(.hideUsername)
         updateHandleLabel()
         updateTeamLabel()
-        
-        if options.contains(.allowEditingAvailability) {
-            availabilityView.options.insert(.allowSettingStatus)
-        } else {
-            availabilityView.options.remove(.allowSettingStatus)
-        }
-        
+        updateImageButton()
         updateAvailabilityVisibility()
     }
     
