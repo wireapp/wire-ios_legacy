@@ -70,6 +70,7 @@ class ConversationCellSnapshotTestCase: CoreDataSnapshotTestCase {
     func verify(message: ZMConversationMessage,
                 context: ConversationMessageContext? = nil,
                 waitForImagesToLoad: Bool = false,
+                waitForTextViewToLoad: Bool = false,
                 tolerance: CGFloat = 0,
                 colorSchemes: Set<ColorSchemeVariant> = [],
                 file: StaticString = #file,
@@ -85,6 +86,12 @@ class ConversationCellSnapshotTestCase: CoreDataSnapshotTestCase {
 
             if waitForImagesToLoad {
                 XCTAssertTrue(waitForGroupsToBeEmpty([defaultImageCache.dispatchGroup]))
+            }
+
+            if waitForTextViewToLoad {
+                // We need to run the run loop for UITextView to highlight detected links
+                let delay = Date().addingTimeInterval(1)
+                RunLoop.main.run(until: delay)
             }
 
             return stackView
