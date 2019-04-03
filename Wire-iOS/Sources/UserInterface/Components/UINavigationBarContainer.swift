@@ -19,7 +19,7 @@
 import UIKit
 import Cartography
 
-class UINavigationBarContainer: UIViewController {
+final class UINavigationBarContainer: UIViewController {
 
     let landscapeTopMargin: CGFloat = 20.0
     let landscapeNavbarHeight: CGFloat = 30.0

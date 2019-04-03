@@ -28,6 +28,5 @@ extension FullscreenImageViewController {
         }
 
         view.backgroundColor = .from(scheme: .background)
-        topOverlay?.backgroundColor = .from(scheme: .background)
     }
 }

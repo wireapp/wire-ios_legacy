@@ -26,15 +26,12 @@ static CGFloat const kZoomScaleDelta = 0.0003;
 @property (nonatomic) CGFloat lastZoomScale;
 @property (nullable, nonatomic, readwrite) UIImageView *imageView;
 @property (nonatomic) CGFloat minimumDismissMagnitude;
-@property (nonatomic, nullable) UIView *topOverlay;
 @property (nonatomic, readwrite, nonnull) UIScrollView *scrollView;
 @property (nonatomic, nullable) UIActivityIndicatorView *loadingSpinner;
-@property (nonatomic, nonnull) IconButton *closeButton;
 @property (nonatomic, nonnull) ObfuscationView *obfuscationView;
 
 - (void)centerScrollViewContent;
 - (void)setSelectedByMenu:(BOOL)selected animated:(BOOL)animated;
-- (void)closeButtonTapped:(_Nonnull id)sender;
 
 @end
 

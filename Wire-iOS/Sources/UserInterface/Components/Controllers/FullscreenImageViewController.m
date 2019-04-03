@@ -102,7 +102,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         _showCloseButton = YES;
 
         [self setupScrollView];
-        [self setupTopOverlay];
         [self updateForMessage];
 
         self.view.userInteractionEnabled = YES;
@@ -144,15 +143,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 {
     [super viewDidLayoutSubviews];
     [self centerScrollViewContent];
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    self.closeButton.hidden = !self.showCloseButton;
-    if(self.parentViewController != nil) {
-        [self updateZoom];
-    }
 }
 
 - (BOOL)prefersStatusBarHidden
@@ -227,7 +217,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 - (void)showChrome:(BOOL)shouldShow
 {
     self.isShowingChrome = shouldShow;
-    self.topOverlay.hidden = !self.showCloseButton || !shouldShow;
 }
 
 - (void)setSwipeToDismiss:(BOOL)swipeToDismiss

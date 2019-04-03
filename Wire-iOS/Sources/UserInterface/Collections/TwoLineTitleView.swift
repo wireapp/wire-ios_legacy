@@ -51,6 +51,7 @@ public final class TwoLineTitleView: UIView {
         self.addSubview(self.titleLabel)
         self.addSubview(self.subtitleLabel)
         
+        translatesAutoresizingMaskIntoConstraints = false
         constrain(self, self.titleLabel, self.subtitleLabel) { selfView, titleLabel, subtitleLabel in
             titleLabel.leading == selfView.leading
             titleLabel.trailing == selfView.trailing
@@ -60,14 +61,6 @@ public final class TwoLineTitleView: UIView {
             subtitleLabel.trailing == selfView.trailing
             subtitleLabel.bottom == selfView.bottom
         }
-
-        
-
-        setNeedsLayout()
-        layoutIfNeeded()
-        
-        let size = self.systemLayoutSizeFitting(CGSize(width: 320, height: 44))
-        self.frame = CGRect(x: 0, y: 0, width: size.width, height: size.height)
     }
     
     public required init?(coder aDecoder: NSCoder) {

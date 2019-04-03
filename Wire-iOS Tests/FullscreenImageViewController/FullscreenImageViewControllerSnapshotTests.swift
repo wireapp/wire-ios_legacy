@@ -26,13 +26,11 @@ final class FullscreenImageViewControllerSnapshotTests: ZMSnapshotTestCase {
 
     override func setUp() {
         super.setUp()
-        UIView.setAnimationsEnabled(false)
     }
     
     
     override func tearDown() {
         sut = nil
-        UIView.setAnimationsEnabled(true)
         super.tearDown()
     }
 

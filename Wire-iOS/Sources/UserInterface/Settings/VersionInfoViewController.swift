@@ -57,10 +57,6 @@ final class VersionInfoViewController: UIViewController {
         updateStatusBar()
     }
 
-    private func updateStatusBar() {
-        UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
-    }
-
     private func setupCloseButton() {
         closeButton = IconButton()
         view.addSubview(closeButton)
