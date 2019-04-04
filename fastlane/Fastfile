@@ -239,6 +239,10 @@ class Build
         @build_type == "AVS"
     end
 
+    def rc_build
+        @build_type == "RC"
+    end
+
     def debug_build
         @configuration == "Debug"
     end
@@ -344,6 +348,11 @@ class Build
         if !@avs_version.nil?
             prefix = "AVS:#{@avs_version}-"
         end
+        if rc_build
+            version = IO.foreach('../Wire-iOS/Resources/Configuration/Version.xcconfig').grep(/WIRE_SHORT_VERSION/).first.split(" = ")[1].chomp
+            prefix = "#{version}-"
+        end
+
         prefix + @build_number
     end
 
@@ -354,6 +363,8 @@ class Build
     def iconset_name
         if playground_build || avs_build
             "Development"
+        elsif rc_build
+            "Release"
         else
             @build_type
         end
