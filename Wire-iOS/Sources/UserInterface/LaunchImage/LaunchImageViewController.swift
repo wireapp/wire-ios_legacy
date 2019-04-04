@@ -78,16 +78,14 @@ class LaunchImageViewController: UIViewController {
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
 
-        var constraints: [NSLayoutConstraint] = contentView.fitInSuperview(activate: false).array
+        let constraints: [Any] = [contentView.fitInSuperview(activate: false).array,
+                                 loadingScreenLabel.pinToSuperview(anchorInputs:[AnchorInput(anchorType: AxisAnchor.centerX),
+                                                                       AnchorInput(anchorType: Anchor.bottom, inset: 40)],
+                                                                   activate: false),
+                                 activityIndicator.pinToSuperview(axisAnchor: .centerX, activate: false),
+                                 activityIndicator.bottomAnchor.constraint(equalTo: loadingScreenLabel.topAnchor, constant: -24)]
 
-        constraints.append(contentsOf: loadingScreenLabel.pinToSuperview(anchorInputs:[AnchorInput(anchorType: AxisAnchor.centerX),
-                                                                                       AnchorInput(anchorType: Anchor.bottom, inset: 40)],
-                                                                        activate: false))
-
-        constraints.append(activityIndicator.pinToSuperview(axisAnchor: .centerX, activate: false))
-        constraints.append(activityIndicator.bottomAnchor.constraint(equalTo: loadingScreenLabel.topAnchor, constant: -24))
-
-        NSLayoutConstraint.activate(constraints)
+        NSLayoutConstraint.activate(constraints.flatten())
     }
 
     override var prefersStatusBarHidden: Bool {
@@ -96,5 +94,23 @@ class LaunchImageViewController: UIViewController {
 
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return wr_supportedInterfaceOrientations
+    }
+}
+
+
+extension Collection {
+
+    /// resurivly reduce the demension array elements
+    ///
+    /// - Returns: a 1-D array with elements of Any
+    private func joined() -> [Any] {
+        return flatMap { ($0 as? [Any])?.joined() ?? [$0] }
+    }
+
+    /// flatten a array and filter out non type T elements
+    ///
+    /// - Returns: a 1-D array with elements of T
+    func flatten<T>() -> [T] {
+        return joined().compactMap { $0 as? T }
     }
 }
