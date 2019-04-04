@@ -1135,6 +1135,7 @@
 		EF3371C22216D9D9005ED048 /* ZMUser+Self.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3371C12216D9D9005ED048 /* ZMUser+Self.swift */; };
 		EF3371C52216F067005ED048 /* MockUser+SelfUserFromSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3371C32216EEE2005ED048 /* MockUser+SelfUserFromSession.swift */; };
 		EF36168A21E753310041F0CC /* SettingsTableViewControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF36168921E753300041F0CC /* SettingsTableViewControllerSnapshotTests.swift */; };
+		EF37C3892256614300EA0C32 /* ConnectRequestsCellSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF37C3882256614300EA0C32 /* ConnectRequestsCellSnapshotTests.swift */; };
 		EF3976CE2114506E0030BE68 /* KeyboardAvoidingViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3976CD2114506E0030BE68 /* KeyboardAvoidingViewController+Extension.swift */; };
 		EF3BA5D421075FC60093048F /* ConversationInputBarViewController+Language.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3BA5D321075FC60093048F /* ConversationInputBarViewController+Language.swift */; };
 		EF3BA5D72107688D0093048F /* InputLanguageSettable.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3BA5D62107688D0093048F /* InputLanguageSettable.swift */; };
@@ -2918,6 +2919,7 @@
 		EF3371C12216D9D9005ED048 /* ZMUser+Self.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ZMUser+Self.swift"; sourceTree = "<group>"; };
 		EF3371C32216EEE2005ED048 /* MockUser+SelfUserFromSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MockUser+SelfUserFromSession.swift"; sourceTree = "<group>"; };
 		EF36168921E753300041F0CC /* SettingsTableViewControllerSnapshotTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableViewControllerSnapshotTests.swift; sourceTree = "<group>"; };
+		EF37C3882256614300EA0C32 /* ConnectRequestsCellSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectRequestsCellSnapshotTests.swift; sourceTree = "<group>"; };
 		EF3976CD2114506E0030BE68 /* KeyboardAvoidingViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KeyboardAvoidingViewController+Extension.swift"; sourceTree = "<group>"; };
 		EF3976CF21148A110030BE68 /* KeyboardAvoidingViewController+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "KeyboardAvoidingViewController+Internal.h"; sourceTree = "<group>"; };
 		EF3BA5D321075FC60093048F /* ConversationInputBarViewController+Language.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationInputBarViewController+Language.swift"; sourceTree = "<group>"; };
@@ -5811,6 +5813,7 @@
 				EF17B0E3223AB9F5006252A8 /* MediaBarSnapshotTests.swift */,
 				EF2E2F70223BC4A60038D7D9 /* VersionInfoViewControllerSnapshotTests.swift */,
 				EF1C2E4C2254A1E2007E1CAC /* ConversationViewControllerSnapshotTests.swift */,
+				EF37C3882256614300EA0C32 /* ConnectRequestsCellSnapshotTests.swift */,
 			);
 			path = "Wire-iOS Tests";
 			sourceTree = "<group>";
@@ -6881,7 +6884,7 @@
 			files = (
 			);
 			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/iOS/WireSyncEngine.framework",
+				"$(BUILT_PRODUCTS_DIR)/WireSyncEngine.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/WireDataModel.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/WireSystem.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/WireUtilities.framework",
@@ -8032,6 +8035,7 @@
 				D50892FD2056C2AA004D3AE2 /* WirelessExpirationTimeFormatterTests.swift in Sources */,
 				D524BE5F207B99B800542A4E /* UIViewController+LoadingTests.swift in Sources */,
 				EF29F1BB21271A9A00BE94E6 /* GroupDetailsViewControllerTests.swift in Sources */,
+				EF37C3892256614300EA0C32 /* ConnectRequestsCellSnapshotTests.swift in Sources */,
 				87BEB0E01C734DA60094BFE9 /* MockLoader.m in Sources */,
 				EF883F8C215250B000B440CC /* AddParticipantsViewControllerSnapshotTests.swift in Sources */,
 				EF9C552720D2796A00D94EEB /* EphemeralTimeoutFormatterTests.swift in Sources */,

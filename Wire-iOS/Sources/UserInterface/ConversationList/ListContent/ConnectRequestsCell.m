@@ -57,9 +57,12 @@
     self.itemView = [[ConversationListItemView alloc] initForAutoLayout];
     [self addSubview:self.itemView];
     [self updateAppearance];
-    self.conversationListObserverToken = [ConversationListChangeInfo addObserver:self
-                                                                         forList:[ZMConversationList pendingConnectionConversationsInUserSession:[ZMUserSession sharedSession]]
-                                                                     userSession:[ZMUserSession sharedSession]];
+
+    if ([ZMUserSession sharedSession] != nil) {
+        self.conversationListObserverToken = [ConversationListChangeInfo addObserver:self
+                                                                             forList:[ZMConversationList pendingConnectionConversationsInUserSession:[ZMUserSession sharedSession]]
+                                                                         userSession:[ZMUserSession sharedSession]];
+    }
     
     [self setNeedsUpdateConstraints];
 }
@@ -98,7 +101,7 @@
     NSUInteger newCount = connectionRequests.count;
     
     if (newCount != self.currentConnectionRequestsCount) {
-        NSArray<ZMUser *> *connectionUsers = [connectionRequests mapWithBlock:^ZMUser *(ZMConversation *conversation) {
+        NSArray<ZMUser *> *connectionUsers = [connectionRequests mapWithBlock:^ZMUser *(ZMConversation *conversation) { ///TODO: inject a conversation
             return conversation.connection.to;
         }];
         
