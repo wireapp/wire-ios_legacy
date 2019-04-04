@@ -36,6 +36,7 @@ import Cartography
 
     public init(conversation: ZMConversation, message: ZMConversationMessage?, clientViewController: ZClientViewController) {
         let conversationController = ConversationViewController()
+        conversationController.session = ZMUserSession.shared()
         conversationController.conversation = conversation
         conversationController.visibleMessage = message
         conversationController.zClientViewController = clientViewController

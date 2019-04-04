@@ -24,7 +24,7 @@ protocol Bar {
     var weight: Float { get }
 }
 
-class BarController: UIViewController {
+final class BarController: UIViewController {
     private let stackView = UIStackView()
     
     public private(set) var bars: [UIViewController] = []

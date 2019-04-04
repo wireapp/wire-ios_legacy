@@ -31,7 +31,7 @@ void debugLogUpdate (ConversationListChangeInfo *note);
 @end
 
 
-@interface ConversationListViewModel () <ZMConversationListObserver>
+@interface ConversationListViewModel () <ZMConversationListObserver, ZMConversationListReloadObserver>
 
 @property (nonatomic, strong) ConversationListConnectRequestsItem *contactRequestsItem;
 @property (nonatomic, strong) AggregateArray *aggregatedItems;
@@ -43,6 +43,7 @@ void debugLogUpdate (ConversationListChangeInfo *note);
 @property (nonatomic) id pendingConversationListObserverToken;
 @property (nonatomic) id conversationListObserverToken;
 @property (nonatomic) id clearedConversationListObserverToken;
+@property (nonatomic) id conversationListsReloadObserverToken;
 
 @end
 
@@ -57,20 +58,22 @@ void debugLogUpdate (ConversationListChangeInfo *note);
         self.contactRequestsItem = [[ConversationListConnectRequestsItem alloc] init];
 
         [self updateSection:SectionIndexAll];
-        
+        [self setupObserversForListReloading];
         [self setupObserversForActiveTeam];
-        [NSNotificationCenter.defaultCenter addObserver:self
-                                               selector:@selector(applicationWillEnterForeground:)
-                                                   name:UIApplicationWillEnterForegroundNotification
-                                                 object:nil];
         [self subscribeToTeamsUpdates];
     }
     return self;
 }
 
-- (void)dealloc
+- (void)setupObserversForListReloading
 {
-    [NSNotificationCenter.defaultCenter removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
+    ZMUserSession *userSession = [ZMUserSession sharedSession];
+    
+    if (userSession == nil) {
+        return;
+    }
+    
+    self.conversationListsReloadObserverToken = [ConversationListChangeInfo addConversationListReloadObserver:self userSession:userSession];
 }
 
 - (void)setupObserversForActiveTeam
@@ -294,9 +297,8 @@ void debugLogUpdate (ConversationListChangeInfo *note);
     [self.delegate listViewModelShouldBeReloaded];
 }
 
-- (void)applicationWillEnterForeground:(NSNotification *)note
+- (void)conversationListsDidReload
 {
-    [ZMConversationList refetchAllListsInUserSession:ZMUserSession.sharedSession];
     [self reloadConversationListViewModel];
 }
 
