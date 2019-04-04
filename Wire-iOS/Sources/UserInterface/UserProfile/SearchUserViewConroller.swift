@@ -72,8 +72,7 @@ final class SearchUserViewConroller: UIViewController {
 
     private func handleSearchResult(searchResult: SearchResult, isCompleted: Bool) {
         guard !resultHandled,
-            (searchResult.count > 0 ||
-            isCompleted)
+              isCompleted
             else { return }
 
         let profileUser: GenericUser?

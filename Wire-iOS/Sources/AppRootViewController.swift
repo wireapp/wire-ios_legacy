@@ -579,7 +579,7 @@ extension AppRootViewController: SessionManagerURLHandlerDelegate {
 
     func sessionManagerShouldExecuteURLAction(_ action: URLAction, callback: @escaping (Bool) -> Void) {
         switch action {
-        case .connectToUser(let id):
+        case .openUserProfile(let id):
             sessionManager?.showConnectionRequest(userId: id)
         case .openConversation(_, let conversation):
             if let conversation = conversation,
