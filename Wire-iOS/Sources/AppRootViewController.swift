@@ -579,16 +579,12 @@ extension AppRootViewController: SessionManagerURLHandlerDelegate {
 
     func sessionManagerShouldExecuteURLAction(_ action: URLAction, callback: @escaping (Bool) -> Void) {
         switch action {
-        case .connectToUser(let id):
+        case .openUserProfile(let id):
             sessionManager?.showConnectionRequest(userId: id)
         case .openConversation(_, let conversation):
             if let conversation = conversation,
                let userSession = ZMUserSession.shared() {
                 sessionManager?.showConversation(conversation, at: nil, in: userSession)
-            }
-        case .openUserProfile(_, let user):
-            if let user = user {
-                sessionManager?.showUserProfile(user: user)
             }
         case .warnInvalidDeepLink(let error):
             switch error {

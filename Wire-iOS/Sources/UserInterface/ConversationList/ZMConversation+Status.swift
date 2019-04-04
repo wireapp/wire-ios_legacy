@@ -634,6 +634,10 @@ final internal class StartConversationMatcher: TypedConversationStatusMatcher {
         return (resultString && type(of: self).regularStyle).addAttributes(type(of: self).emphasisStyle, toSubstring: senderString)
     }
     
+    func icon(with status: ConversationStatus, conversation: ZMConversation) -> ConversationStatusIcon? {
+        return ConversationStatusIcon.unreadMessages(count: 1)
+    }
+    
     var combinesWith: [ConversationStatusMatcher] = []
 }
 
