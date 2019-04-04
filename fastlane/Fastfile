@@ -83,12 +83,12 @@ platform :ios do
     end
 
     desc "Upload to AppStore"
-    lane :upload_app_store do
+    lane :upload_app_store do |options|
         build = Build.new(options: options)
 
         sh "cp ../Configuration/Appfile ."
         deliver(
-            ipa: build.filename,
+            ipa: "#{build.artifact_path(with_filename: true)}.ipa",
             submit_for_review: false,
             automatic_release: false,
             force: true, # Skip HTML report verification
