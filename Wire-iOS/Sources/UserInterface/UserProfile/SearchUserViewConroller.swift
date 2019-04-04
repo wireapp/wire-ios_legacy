@@ -25,6 +25,9 @@ final class SearchUserViewConroller: UIViewController {
     private let userId: UUID
     private var pendingSearchTask: SearchTask? = nil
 
+    /// flag for handleSearchResult. Only allow to display the result once
+    private var resultHandled = false
+
     public init(userId: UUID, profileViewControllerDelegate: ProfileViewControllerDelegate?) {
         self.userId = userId
         self.profileViewControllerDelegate = profileViewControllerDelegate
@@ -68,24 +71,32 @@ final class SearchUserViewConroller: UIViewController {
     }
 
     private func handleSearchResult(searchResult: SearchResult, isCompleted: Bool) {
-        guard isCompleted else { return } ///TODO: check local result is nil, teamMember has value at that point
+        guard !resultHandled,
+            (searchResult.count > 0 ||
+            isCompleted)
+            else { return }
 
-        showLoadingView = false
-        let showProfileView = true
+        let profileUser: GenericUser?
+        if let searchUser = searchResult.directory.first {
+            profileUser = searchUser
+        } else if let memberUser = searchResult.teamMembers.first?.user {
+            profileUser = memberUser
+        } else {
+            profileUser = nil
+        }
 
-        if showProfileView,
-            let user = searchResult.directory.first { ///TODO: search for team user also
-            let profileViewController = ProfileViewController(user: user, viewer: ZMUser.selfUser(), context: .profileViewer)
+
+        if let profileUser = profileUser {
+            let profileViewController = ProfileViewController(user: profileUser, viewer: ZMUser.selfUser(), context: .profileViewer) ///TODO: context
             profileViewController.delegate = profileViewControllerDelegate
 
             navigationController?.setViewControllers([profileViewController], animated: true)
-        } else {
+            resultHandled = true
+        } else if isCompleted {
             presentInvalidUserProfileLinkAlert(okActionHandler: { [weak self] (_) in
                 self?.dismiss(animated: true)
             })
         }
-
-
     }
 
     // MARK: - Actions
@@ -98,3 +109,13 @@ final class SearchUserViewConroller: UIViewController {
     }
 }
 
+extension SearchResult {
+    var count: Int {
+        return contacts.count +
+        teamMembers.count +
+        addressBook.count +
+        directory.count +
+        conversations.count +
+        services.count
+    }
+}
