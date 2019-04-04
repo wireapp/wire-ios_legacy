@@ -108,13 +108,3 @@ final class SearchUserViewConroller: UIViewController {
     }
 }
 
-extension SearchResult {
-    var count: Int {
-        return contacts.count +
-        teamMembers.count +
-        addressBook.count +
-        directory.count +
-        conversations.count +
-        services.count
-    }
-}
