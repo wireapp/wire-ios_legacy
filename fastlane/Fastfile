@@ -138,6 +138,23 @@ platform :ios do
         )
     end
 
+    desc "Upload dSYMs for AppStore crash tracking"
+    lane :upload_hockey_appstore do |options|
+        build = Build.new(options: options)
+
+        if !build.appstore_build
+            UI.user_error! "This step is only relevant for AppStore builds"
+        end
+
+        hockey(
+          api_token: ENV["HOCKEY_APP_TOKEN"],
+          public_identifier: build.hockey_app_id,
+          dsym: "#{build.artifact_path(with_filename: true)}.app.dSYM.zip",
+          upload_dsym_only: true,
+          release_type: "1",
+          notify: "0"
+        )
+    end
 
     desc "Run post-test tasks"
     lane :post_test do
