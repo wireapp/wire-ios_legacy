@@ -242,17 +242,12 @@ extension UIViewController {
     }
 
     private func performSearch(query: String, options: SearchOptions) {
-        var options = options
-        
+
         pendingSearchTask?.cancel()
         searchResultsView?.emptyResultContainer.isHidden = true
-        
-        if ZMUser.selfUser().teamRole == .partner {
-            options.insert(.excludeNonActiveTeamMembers)
-            options.remove(.directory)
-        } else {
-            options.insert(.excludeNonActivePartners)
-        }
+
+        var options = options
+        options.updateForSelfUserTeamRole(selfUser: ZMUser.selfUser())
 
         let request = SearchRequest(query: query, searchOptions: options, team: ZMUser.selfUser().team)
         if let task = searchDirectory?.perform(request) {

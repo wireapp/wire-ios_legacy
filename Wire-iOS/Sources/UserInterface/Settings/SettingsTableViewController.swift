@@ -34,10 +34,15 @@ class SettingsBaseTableViewController: UIViewController {
     }
 
     final fileprivate class IntrinsicSizeTableView: UITableView {
-        override var intrinsicContentSize: CGSize {
-            get {
-                return CGSize(width: UIView.noIntrinsicMetric, height: self.contentSize.height)
+        override var contentSize: CGSize {
+            didSet {
+                invalidateIntrinsicContentSize()
             }
+        }
+
+        override var intrinsicContentSize: CGSize {
+            layoutIfNeeded()
+            return CGSize(width: UIView.noIntrinsicMetric, height: contentSize.height)
         }
     }
     

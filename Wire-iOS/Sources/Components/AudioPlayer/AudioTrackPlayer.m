@@ -20,7 +20,6 @@
 
 #import "AudioTrackPlayer.h"
 #import "AudioTrack.h"
-#import "AudioPlaylist.h"
 #import "UIImage+ImageUtilities.h"
 #import "WireSyncEngine+iOS.h"
 
@@ -43,7 +42,6 @@ static NSString* EmptyStringIfNil(NSString *string) {
 
 @property (nonatomic) AVPlayer *avPlayer;
 @property (nonatomic) NSObject<AudioTrack> *audioTrack;
-@property (nonatomic) id<AudioPlaylist> audioPlaylist;
 @property (nonatomic) CGFloat progress;
 @property (nonatomic) id timeObserverToken;
 @property (nonatomic) id messageObserverToken;
@@ -75,15 +73,9 @@ static NSString* EmptyStringIfNil(NSString *string) {
 
 - (void)loadTrack:(NSObject<AudioTrack> *)track sourceMessage:(id<ZMConversationMessage>)sourceMessage completionHandler:(void(^)(BOOL loaded, NSError *error))completionHandler
 {
-    [self loadTrack:track playlist:nil sourceMessage:sourceMessage completionHandler:completionHandler];
-}
-
-- (void)loadTrack:(NSObject<AudioTrack> *)track playlist:(id<AudioPlaylist>)playlist sourceMessage:(id<ZMConversationMessage>)sourceMessage completionHandler:(void(^)(BOOL loaded, NSError *error))completionHandler
-{
     _progress = 0;
     self.artworkObserver = nil;
     self.audioTrack = track;
-    self.audioPlaylist = playlist;
     self.sourceMessage = sourceMessage;
     self.loadAudioTrackCompletionHandler = completionHandler;
     
@@ -162,27 +154,6 @@ static NSString* EmptyStringIfNil(NSString *string) {
             return MPRemoteCommandHandlerStatusCommandFailed;
         }
     }];
-    
-    if (self.audioPlaylist != nil) {
-        
-        self.nextTrackHandler = [commandCenter.nextTrackCommand addTargetWithHandler:^MPRemoteCommandHandlerStatus(MPRemoteCommandEvent *event) {
-            ZM_STRONG(self);
-            if ([self skipToNextTrack]) {
-                return MPRemoteCommandHandlerStatusSuccess;
-            } else {
-                return MPRemoteCommandHandlerStatusNoSuchContent;
-            }
-        }];
-        
-        self.previousTrackHandler = [commandCenter.previousTrackCommand addTargetWithHandler:^MPRemoteCommandHandlerStatus(MPRemoteCommandEvent *event) {
-            ZM_STRONG(self);
-            if ([self skipToPreviousTrack]) {
-                return MPRemoteCommandHandlerStatusSuccess;
-            } else {
-                return MPRemoteCommandHandlerStatusNoSuchContent;
-            }
-        }];
-    }
 }
 
 - (NSTimeInterval)elapsedTime {
@@ -225,66 +196,6 @@ static NSString* EmptyStringIfNil(NSString *string) {
     self.audioTrack = nil;
     self.messageObserverToken = nil;
     _sourceMessage = nil;
-}
-
-- (BOOL)skipToNextTrack
-{
-    id<AudioTrack> nextAudioTrack = nil;
-    
-    if (self.audioPlaylist != nil && self.audioTrack != nil) {
-        NSUInteger indexOfCurrentTrack = [self.audioPlaylist.tracks indexOfObject:self.audioTrack];
-        if (self.audioPlaylist.tracks.count > indexOfCurrentTrack + 1) {
-            
-            for (NSUInteger candidateIndex = indexOfCurrentTrack + 1; candidateIndex < self.audioPlaylist.tracks.count; candidateIndex++) {                
-                id<AudioTrack> candidate = [self.audioPlaylist.tracks objectAtIndex:candidateIndex];
-                if (! nextAudioTrack.failedToLoad) {
-                    nextAudioTrack = candidate;
-                    break;
-                }
-            }
-            
-        }
-    }
-    
-    if (nextAudioTrack == nil) {
-        return NO;
-    }
-    
-    ZM_WEAK(self);
-    [self loadTrack:nextAudioTrack playlist:self.audioPlaylist sourceMessage:self.sourceMessage completionHandler:^(BOOL loaded, NSError *error) {
-        ZM_STRONG(self);
-        if (loaded) {
-            [self play];
-        }
-    }];
-    
-    return YES;
-}
-
-- (BOOL)skipToPreviousTrack
-{
-    id<AudioTrack> previousAudioTrack = nil;
-    
-    if (self.audioPlaylist != nil && self.audioTrack != nil) {
-        NSUInteger indexOfCurrentTrack = [self.audioPlaylist.tracks indexOfObject:self.audioTrack];
-        if ( (NSInteger)indexOfCurrentTrack - 1 >= 0) {
-            previousAudioTrack = [self.audioPlaylist.tracks objectAtIndex:indexOfCurrentTrack - 1];
-        }
-    }
-    
-    if (previousAudioTrack == nil) {
-        return NO;
-    }
-    
-    ZM_WEAK(self);
-    [self loadTrack:previousAudioTrack playlist:self.audioPlaylist sourceMessage:self.sourceMessage completionHandler:^(BOOL loaded, NSError *error) {
-        ZM_STRONG(self);
-        if (loaded) {
-            [self play];
-        }
-    }];
-    
-    return YES;
 }
 
 - (NSString *)title
@@ -335,10 +246,6 @@ static NSString* EmptyStringIfNil(NSString *string) {
             self.state = MediaPlayerStateError;
             self.audioTrack.failedToLoad = YES;
             [self.mediaPlayerDelegate mediaPlayer:self didChangeToState:self.state];
-            
-            if (IsNetworkReachable()) {
-                [self skipToNextTrack];
-            }
         }
     }
     
@@ -450,11 +357,9 @@ static NSString* EmptyStringIfNil(NSString *string) {
 {
     // AUDIO-557 workaround for AVSMediaManager trying to pause already paused tracks.
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        if (! [self skipToNextTrack]) {
-            [self clearNowPlayingState];
-            self.state = MediaPlayerStateCompleted;
-            [self.mediaPlayerDelegate mediaPlayer:self didChangeToState:self.state];
-        }
+        [self clearNowPlayingState];
+        self.state = MediaPlayerStateCompleted;
+        [self.mediaPlayerDelegate mediaPlayer:self didChangeToState:self.state];
     });
 }
 

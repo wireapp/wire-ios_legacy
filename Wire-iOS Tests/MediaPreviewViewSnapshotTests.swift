@@ -25,14 +25,12 @@ final class MediaPreviewViewSnapshotTests: ZMSnapshotTestCase {
 
     override func setUp() {
         super.setUp()
+
         sut = MediaPreviewView()
         sut.titleLabel.text = "Demo Media"
-
-
-        sut.providerImageView.image = WireStyleKit.imageOfYoutube(color: UIColor.white)
         sut.previewImageView.image = image(inTestBundleNamed: "unsplash_matterhorn.jpg")
 
-        //MediaPreviewView is portrait in messsage cell
+        // MediaPreviewView is portrait in messsage cell
         sut.frame = CGRect(x: 0, y: 0, width: 320, height: 480)
     }
 

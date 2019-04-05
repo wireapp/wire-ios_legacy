@@ -16,15 +16,35 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-@interface AudioHeaderView ()
+import XCTest
+@testable import Wire
 
-@property (nonatomic) UIView *providerImageContainer;
-@property (nonatomic) UILabel *artistLabel;
-@property (nonatomic) UILabel *trackTitleLabel;
-@property (nonatomic) ButtonWithLargerHitArea *providerButton;
-@property (nonatomic) UIStackView *textStackView;
+final class ConversationViewControllerSnapshotTests: CoreDataSnapshotTestCase {
+    
+    var sut: ConversationViewController!
 
-@property (nonatomic) NSLayoutConstraint *providerImageContainerWidthConstraint;
-@property (nonatomic) NSLayoutConstraint *textTrailingConstraint;
+    var mockConversation: ZMConversation!
+    var mockZMUserSession: MockZMUserSession!
 
-@end
+    override func setUp() {
+        super.setUp()
+
+        mockConversation = createTeamGroupConversation()
+
+        mockZMUserSession = MockZMUserSession()
+
+        sut = ConversationViewController()
+
+        sut.conversation = mockConversation
+        sut.session = mockZMUserSession
+    }
+    
+    override func tearDown() {
+        sut = nil
+        super.tearDown()
+    }
+
+    func testForInitState(){
+        verify(view: sut.view)
+    }
+}

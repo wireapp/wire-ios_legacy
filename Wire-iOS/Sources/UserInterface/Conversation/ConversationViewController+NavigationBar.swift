@@ -18,7 +18,6 @@
 
 import UIKit
 import WireSyncEngine
-import Cartography
 
 // MARK: - Update left navigator bar item when size class changes
 extension ConversationViewController {
