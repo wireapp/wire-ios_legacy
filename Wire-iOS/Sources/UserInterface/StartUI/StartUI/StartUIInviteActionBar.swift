@@ -20,7 +20,8 @@ final class StartUIInviteActionBar: UIView {
 
     var backgroundView: UIVisualEffectView?
     var bottomEdgeConstraint: NSLayoutConstraint!
-    private(set) var inviteButton: Button!
+
+    @objc private(set) var inviteButton: Button!
 
     private let padding:CGFloat = 12
 
