@@ -25,7 +25,7 @@ class CallController: NSObject {
 
     fileprivate let callQualityController = CallQualityController()
     fileprivate var scheduledPostCallAction: (()->Void)?
-    fileprivate var token: Any?
+    fileprivate var observerTokens: [Any] = []
     fileprivate var minimizedCall: ZMConversation? = nil
     fileprivate var topOverlayCall: ZMConversation? = nil {
         didSet {
@@ -46,7 +46,8 @@ class CallController: NSObject {
         callQualityController.delegate = self
 
         if let userSession = ZMUserSession.shared() {
-            token = WireCallCenterV3.addCallStateObserver(observer: self, userSession: userSession)
+            observerTokens.append(WireCallCenterV3.addCallStateObserver(observer: self, userSession: userSession))
+            observerTokens.append(WireCallCenterV3.addCallErrorObserver(observer: self, userSession: userSession))
         }
     }
 }
@@ -182,4 +183,20 @@ extension CallController: CallQualityControllerDelegate {
         }
     }
 
+}
+
+
+extension CallController: WireCallCenterCallErrorObserver {
+    
+    func callCenterDidReceiveCallError(_ error: CallError) {
+        guard error == .unknownProtocol else { return }
+        
+        let alertController = UIAlertController(title: "voice.call_error.unsupported_version.title".localized, message: "voice.call_error.unsupported_version.message".localized, preferredStyle: .alert)
+        let alertAction = UIAlertAction(title: "force.update.ok_button".localized, style: .default) { (_) in
+            UIApplication.shared.open(URL.wr_wireAppOnItunes)
+        }
+        alertController.addAction(alertAction)
+        alertController.addAction(UIAlertAction(title: "voice.call_error.unsupported_version.dismiss".localized, style: .default, handler: nil))
+        targetViewController?.present(alertController, animated: true, completion: nil)
+    }
 }

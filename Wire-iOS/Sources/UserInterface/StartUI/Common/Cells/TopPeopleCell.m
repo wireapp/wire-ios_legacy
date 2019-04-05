@@ -18,24 +18,10 @@
 
 
 #import "TopPeopleCell.h"
-@import PureLayout;
+#import "TopPeopleCell+Internal.h"
 #import "Constants.h"
 #import "WireSyncEngine+iOS.h"
 #import "Wire-Swift.h"
-
-@interface TopPeopleCell ()
-
-@property (nonatomic, strong) BadgeUserImageView *badgeUserImageView;
-@property (nonatomic, strong) UIImageView *conversationImageView;
-@property (nonatomic, strong) UILabel *nameLabel;
-@property (nonatomic, strong) UIView *avatarContainer;
-
-@property (nonatomic, assign) BOOL initialConstraintsCreated;
-@property (nonatomic, strong) NSLayoutConstraint *avatarViewSizeConstraint;
-@property (nonatomic, strong) NSLayoutConstraint *conversationImageViewSize;
-
-@end
-
 
 @implementation TopPeopleCell
 
@@ -43,19 +29,15 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        self.contentView.translatesAutoresizingMaskIntoConstraints = NO;
         self.accessibilityIdentifier = @"TopPeopleCell";
         self.isAccessibilityElement = YES;
         self.avatarContainer = [[UIView alloc] initWithFrame:CGRectZero];
-        self.avatarContainer.translatesAutoresizingMaskIntoConstraints = NO;
         [self.contentView addSubview:self.avatarContainer];
 
         self.conversationImageView = [[UIImageView alloc] initWithFrame:CGRectZero];
-        self.conversationImageView.translatesAutoresizingMaskIntoConstraints = NO;
         [self.avatarContainer addSubview:self.conversationImageView];
 
         self.nameLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-        self.nameLabel.translatesAutoresizingMaskIntoConstraints = NO;
         self.nameLabel.lineBreakMode = NSLineBreakByTruncatingTail;
         self.nameLabel.textAlignment = NSTextAlignmentCenter;
         [self.contentView addSubview:self.nameLabel];
@@ -81,40 +63,11 @@
     self.badgeUserImageView.initialsFont = [UIFont systemFontOfSize:11 weight:UIFontWeightLight];
     self.badgeUserImageView.userSession = [ZMUserSession sharedSession];
     self.badgeUserImageView.size = UserImageViewSizeSmall;
-    self.badgeUserImageView.translatesAutoresizingMaskIntoConstraints = NO;
     self.badgeUserImageView.userInteractionEnabled = NO;
     self.badgeUserImageView.badgeIconSize = ZetaIconSizeTiny;
     self.badgeUserImageView.accessibilityIdentifier = @"TopPeopleAvatar";
 
     [self.avatarContainer addSubview:self.badgeUserImageView];
-}
-
-- (void)updateConstraints
-{
-    if (! self.initialConstraintsCreated) {
-        [self.contentView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
-        [self.badgeUserImageView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
-
-        self.conversationImageViewSize = [self.conversationImageView autoSetDimension:ALDimensionWidth toSize:80];
-        [self.conversationImageView autoMatchDimension:ALDimensionWidth toDimension:ALDimensionHeight ofView:self.conversationImageView];
-
-        self.avatarViewSizeConstraint = [self.avatarContainer autoSetDimension:ALDimensionWidth toSize:80];
-        [self.avatarContainer autoMatchDimension:ALDimensionWidth toDimension:ALDimensionHeight ofView:self.avatarContainer];
-
-        [self.avatarContainer autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:0];
-        [self.avatarContainer autoPinEdgeToSuperviewEdge:ALEdgeLeft];
-
-        [self.conversationImageView autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:0];
-        [self.conversationImageView autoPinEdgeToSuperviewEdge:ALEdgeLeft];
-
-        [self.nameLabel autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.avatarContainer withOffset:8];
-        [self.nameLabel autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self.avatarContainer];
-        [self.nameLabel autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:self.avatarContainer];
-
-        self.initialConstraintsCreated = YES;
-        [self updateForContext];
-    }
-    [super updateConstraints];
 }
 
 - (void)updateForContext

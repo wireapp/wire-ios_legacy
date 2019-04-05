@@ -57,8 +57,11 @@
 #import "ProfileViewController+internal.h"
 #import "StartUIViewController.h"
 #import "StartUIViewController+internal.h"
+
 #import "TopPeopleLineCollectionViewController.h"
 #import "TopPeopleCell.h"
+#import "TopPeopleCell+Internal.h"
+
 #import "CollectionViewContainerCell.h"
 #import "IconButton.h"
 #import "Button.h"
