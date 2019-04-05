@@ -31,7 +31,6 @@
 
 @interface ConnectRequestsCell () <ZMConversationListObserver>
 
-@property (nonatomic, strong) ConversationListItemView *itemView;
 @property (nonatomic, assign) BOOL hasCreatedInitialConstraints;
 @property (nonatomic, assign) NSUInteger currentConnectionRequestsCount;
 @property (nonatomic) id conversationListObserverToken;

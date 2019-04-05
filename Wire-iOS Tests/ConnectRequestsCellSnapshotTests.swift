@@ -19,17 +19,17 @@
 import XCTest
 @testable import Wire
 
-final class ConnectRequestsCellSnapshotTests: ZMSnapshotTestCase {
+final class ConnectRequestsCellSnapshotTests: CoreDataSnapshotTestCase {
     
     var sut: ConnectRequestsCell!
     
     override func setUp() {
         super.setUp()
         sut = ConnectRequestsCell(frame: CGRect(x: 0, y: 0, width: 375, height: 56))
-        sut.layoutIfNeeded()
-
-        /// TODO: remove this after snapshot is created
-        recordMode = true
+        let titleString = String(format: "list.connect_request.people_waiting".localized, 1)
+        let title = NSAttributedString(string: titleString)
+        sut.itemView.configure(with: title, subtitle: nil, users: [otherUser])
+        sut.backgroundColor = .black
     }
     
     override func tearDown() {
@@ -37,7 +37,7 @@ final class ConnectRequestsCellSnapshotTests: ZMSnapshotTestCase {
         super.tearDown()
     }
 
-    func testForInitState(){
-        verify(view: sut) ///TODO: bg color, data
+    func testForInitState() {
+        verify(view: sut)
     }
 }

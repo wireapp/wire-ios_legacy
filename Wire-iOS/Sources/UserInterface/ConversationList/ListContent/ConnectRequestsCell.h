@@ -16,7 +16,8 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
+@class ConversationListItemView;
 
 @interface ConnectRequestsCell : UICollectionViewCell
+@property (nonatomic, strong) ConversationListItemView *itemView;
 @end
