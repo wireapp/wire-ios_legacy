@@ -38,55 +38,71 @@ final class ConnectRequestsCell : UICollectionViewCell {
         addSubview(itemView)
         updateAppearance()
 
-        if ZMUserSession.shared != nil {
-            conversationListObserverToken = ConversationListChangeInfo.addObserver(self, forList: ZMConversationList.pendingConnectionConversations(inUserSession: ZMUserSession.shared), userSession: ZMUserSession.shared)
+        if let userSession = ZMUserSession.shared() {
+            conversationListObserverToken = ConversationListChangeInfo.add(observer: self, for: ZMConversationList.pendingConnectionConversations(inUserSession: userSession), userSession: userSession)
         }
 
         setNeedsUpdateConstraints()
     }
 
-    private
-    func updateConstraints() {
+    override func updateConstraints() {
         if !hasCreatedInitialConstraints {
             hasCreatedInitialConstraints = true
-            itemView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets.zero)
+            itemView.fitInSuperview()
         }
         super.updateConstraints()
     }
 
-    ///TODO: override
-    func setSelected(_ selected: Bool) {
-        super.setSelected(selected)
-        if IS_IPAD_FULLSCREEN {
-            itemView.selected = self.selected || highlighted
+    private var isIPadFullScreen: Bool {
+        return UIDevice.current.userInterfaceIdiom == .pad && traitCollection.horizontalSizeClass == .regular
+    }
+
+    private func updateItemViewSelected() {
+        itemView.selected = isSelected || isHighlighted
+    }
+
+    override var isSelected: Bool {
+        didSet {
+            if isIPadFullScreen {
+                updateItemViewSelected()
+            }
         }
     }
 
-    ///TODO: override
-    func setHighlighted(_ highlighted: Bool) {
-        super.setHighlighted(highlighted)
-        if IS_IPAD_FULLSCREEN {
-            itemView.selected = selected || self.highlighted
-        } else {
-            itemView.selected = self.highlighted
+    override var isHighlighted: Bool {
+        didSet {
+            if isIPadFullScreen {
+                updateItemViewSelected()
+            } else {
+                itemView.selected = isHighlighted
+            }
         }
     }
+
 
     private
     func updateAppearance() {
-        let connectionRequests = ZMConversationList.pendingConnectionConversations(inUserSession: ZMUserSession.shared)
+        guard let userSession = ZMUserSession.shared() else { return }
+
+
+        let connectionRequests = ZMConversationList.pendingConnectionConversations(inUserSession: userSession)
 
         let newCount: Int = connectionRequests.count
 
         if newCount != currentConnectionRequestsCount {
-            let connectionUsers = connectionRequests.map(withBlock: { conversation in
-                ///TODO: inject a conversation
-                return (conversation?.connection.to)!
-            })
+            let connectionUsers = connectionRequests.map{ conversation in
+                if let conversation = conversation as? ZMConversation {
+                    return conversation.connection?.to
+                } else {
+                    return nil
+                }
+            }
 
-            currentConnectionRequestsCount = newCount
-            let title = String(format: NSLocalizedString("list.connect_request.people_waiting", comment: ""), newCount)
-            itemView.configure(with: NSAttributedString(string: title), subtitle: NSAttributedString(), users: connectionUsers)
+            if let users = connectionUsers as? [ZMUser] {
+                currentConnectionRequestsCount = newCount
+                let title = String(format: NSLocalizedString("list.connect_request.people_waiting", comment: ""), newCount)
+                itemView.configure(with: NSAttributedString(string: title), subtitle: NSAttributedString(), users: users)
+            }
         }
     }
 
