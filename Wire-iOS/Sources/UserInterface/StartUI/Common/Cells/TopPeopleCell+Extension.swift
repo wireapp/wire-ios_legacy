@@ -25,20 +25,30 @@ extension TopPeopleCell {
                 $0.translatesAutoresizingMaskIntoConstraints = false
             }
 
-            contentView.fitInSuperview()
-            badgeUserImageView.fitInSuperview()
+            var constraints: [NSLayoutConstraint] = []
 
-            conversationImageViewSize = conversationImageView.setDimensions(length: 80)[.width]
-            avatarViewSizeConstraint = conversationImageView.setDimensions(length: 80)[.width]
+            constraints.append(contentsOf: contentView.fitInSuperview(activate: false).values)
+            constraints.append(contentsOf: badgeUserImageView.fitInSuperview(activate: false).values)
 
-            avatarContainer.fitInSuperview(exclude: [.bottom, .trailing])
-            conversationImageView.fitInSuperview(exclude: [.bottom, .trailing])
+            conversationImageViewSize = conversationImageView.setDimensions(length: 80, activate: false)[.width]
+            avatarViewSizeConstraint = avatarContainer.setDimensions(length: 80, activate: false)[.width]
 
-            nameLabel.pin(to: avatarContainer,
-                          with: EdgeInsets(top: 8, leading: 0, bottom: .nan, trailing: 0),
-                          exclude: [.bottom])
+            constraints.append(conversationImageViewSize)
+            constraints.append(avatarViewSizeConstraint)
+
+            constraints.append(contentsOf: avatarContainer.fitInSuperview(exclude: [.bottom, .trailing], activate: false).values)
+            constraints.append(contentsOf: conversationImageView.fitInSuperview(exclude: [.bottom, .trailing], activate: false).values)
+
+            constraints.append(nameLabel.topAnchor.constraint(equalTo: avatarContainer.bottomAnchor, constant: 8))
+
+            constraints.append(contentsOf: nameLabel.pin(to: avatarContainer,
+                          with: EdgeInsets(top: .nan, leading: 0, bottom: .nan, trailing: 0),
+                          exclude: [.top, .bottom], activate: false).values)
+
+            NSLayoutConstraint.activate(constraints)
 
             initialConstraintsCreated = true
+
             updateForContext()
         }
         super.updateConstraints()
