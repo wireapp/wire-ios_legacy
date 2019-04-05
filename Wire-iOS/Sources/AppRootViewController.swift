@@ -580,7 +580,13 @@ extension AppRootViewController: SessionManagerURLHandlerDelegate {
     func sessionManagerShouldExecuteURLAction(_ action: URLAction, callback: @escaping (Bool) -> Void) {
         switch action {
         case .openUserProfile(let id):
-            sessionManager?.showConnectionRequest(userId: id)
+            /// For self user, open the profile viewer without searching
+            if let selfUser = ZMUser.selfUser(),
+                id == selfUser.remoteIdentifier {
+                sessionManager?.showUserProfile(user: selfUser)
+            } else {
+                sessionManager?.showConnectionRequest(userId: id)
+            }
         case .openConversation(_, let conversation):
             if let conversation = conversation,
                let userSession = ZMUserSession.shared() {
