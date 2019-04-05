@@ -195,6 +195,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 - (void)createOutgoingConnectionViewController
 {
     self.outgoingConnectionViewController = [[OutgoingConnectionViewController alloc] init];
+    self.outgoingConnectionViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
     ZM_WEAK(self);
     self.outgoingConnectionViewController.buttonCallback = ^(OutgoingConnectionBottomBarAction action) {
         ZM_STRONG(self);
@@ -211,8 +212,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
         [self openConversationList];
     };
-
-    self.outgoingConnectionViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
 }
 
 - (void)createConversationBarController
