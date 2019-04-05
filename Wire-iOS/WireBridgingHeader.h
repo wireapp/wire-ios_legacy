@@ -62,7 +62,6 @@
 #import "TopPeopleCell.h"
 #import "TopPeopleCell+Internal.h"
 
-#import "CollectionViewContainerCell.h"
 #import "IconButton.h"
 #import "Button.h"
 #import "ButtonWithLargerHitArea.h"

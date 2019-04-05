@@ -16,28 +16,24 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import XCTest
-@testable import Wire
+final class CollectionViewContainerCell: UICollectionViewCell {
+    var collectionView: UICollectionView? {
+        didSet {
+            guard let collectionView = collectionView else { return }
 
-final class CollectionViewContainerCellSnapshotTests: ZMSnapshotTestCase {
-    
-    var sut: CollectionViewContainerCell!
-    
-    override func setUp() {
-        super.setUp()
-        sut = CollectionViewContainerCell(frame: CGRect(x: 0, y: 0, width: 375, height: 97))
-        sut.collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
-        sut.collectionView.backgroundColor = .black
+            contentView.addSubview(collectionView)
+
+            collectionView.translatesAutoresizingMaskIntoConstraints = false
+            collectionView.fitInSuperview()
+        }
     }
     
-    override func tearDown() {
-        sut = nil
-        super.tearDown()
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        accessibilityIdentifier = "topPeopleSection"
     }
 
-    func testForInitState(){
-        verify(view: sut)
-
-        XCTAssertEqual(sut.frame, sut.collectionView.frame)
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
