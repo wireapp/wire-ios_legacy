@@ -18,8 +18,8 @@
 
 import Foundation
 
-extension UIViewController {
-    @objc var isHorizontalSizeClassRegular: Bool {
+extension UITraitEnvironment {
+    var isHorizontalSizeClassRegular: Bool {
         return traitCollection.horizontalSizeClass == .regular
     }
 

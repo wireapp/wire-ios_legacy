@@ -53,17 +53,13 @@ final class ConnectRequestsCell : UICollectionViewCell {
         super.updateConstraints()
     }
 
-    private var isIPadFullScreen: Bool {
-        return UIDevice.current.userInterfaceIdiom == .pad && traitCollection.horizontalSizeClass == .regular
-    }
-
     private func updateItemViewSelected() {
         itemView.selected = isSelected || isHighlighted
     }
 
     override var isSelected: Bool {
         didSet {
-            if isIPadFullScreen {
+            if isIPadRegular() {
                 updateItemViewSelected()
             }
         }
@@ -71,7 +67,7 @@ final class ConnectRequestsCell : UICollectionViewCell {
 
     override var isHighlighted: Bool {
         didSet {
-            if isIPadFullScreen {
+            if isIPadRegular() {
                 updateItemViewSelected()
             } else {
                 itemView.selected = isHighlighted
