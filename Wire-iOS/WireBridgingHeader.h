@@ -71,7 +71,6 @@
 #import "TextView+Internal.h"
 #import "TextView.h"
 #import "ColorKnobView.h"
-#import "ConnectRequestsCell.h"
 
 // View Controllers
 #import "ProfileDevicesViewController.h"
