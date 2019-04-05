@@ -48,6 +48,7 @@ final class ConnectRequestsCell : UICollectionViewCell {
     override func updateConstraints() {
         if !hasCreatedInitialConstraints {
             hasCreatedInitialConstraints = true
+            itemView.translatesAutoresizingMaskIntoConstraints = false
             itemView.fitInSuperview()
         }
         super.updateConstraints()
