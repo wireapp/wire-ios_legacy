@@ -2369,7 +2369,6 @@
 		8F5A3E9B19AE2C9E00D0E9DA /* AVSMediaManager+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AVSMediaManager+Additions.h"; sourceTree = "<group>"; };
 		8F5A3E9C19AE2C9E00D0E9DA /* AVSMediaManager+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AVSMediaManager+Additions.m"; sourceTree = "<group>"; };
 		8F8913EA1A9F287E0056AB0C /* ConnectRequestsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectRequestsCell.swift; sourceTree = "<group>"; };
-		8F8913EB1A9F287E0056AB0C /* ConnectRequestsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConnectRequestsCell.m; sourceTree = "<group>"; };
 		8F8913F11A9F287E0056AB0C /* ConversationListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConversationListCell.h; sourceTree = "<group>"; };
 		8F8913F21A9F287E0056AB0C /* ConversationListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConversationListCell.m; sourceTree = "<group>"; };
 		8F8913F31A9F287E0056AB0C /* ConversationListContentController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConversationListContentController.h; sourceTree = "<group>"; };
@@ -5044,7 +5043,6 @@
 			children = (
 				8F8914061A9F287E0056AB0C /* Model */,
 				8F8913EA1A9F287E0056AB0C /* ConnectRequestsCell.swift */,
-				8F8913EB1A9F287E0056AB0C /* ConnectRequestsCell.m */,
 				EFDB3134217F5E0300D2A7CE /* ConversationListCell+Internal.h */,
 				8F8913F11A9F287E0056AB0C /* ConversationListCell.h */,
 				8F8913F21A9F287E0056AB0C /* ConversationListCell.m */,
