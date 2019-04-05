@@ -302,7 +302,7 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
             ZMUserSession.shared()?.isCallOngoing == false else { return }
         
         do {
-            try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
+            try AVAudioSession.sharedInstance().setCategory(.playback, mode: .spokenAudio)
         } catch let error {
             zmLog.error("Failed change audio category for playback: \(error)")
         }

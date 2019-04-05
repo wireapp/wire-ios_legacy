@@ -70,6 +70,10 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 @interface ConversationViewController (ZMConversationObserver) <ZMConversationObserver>
 @end
 
+@interface ConversationViewController (ZMUserObserver) <ZMUserObserver>
+@end
+
+
 @interface ConversationViewController (ConversationListObserver) <ZMConversationListObserver>
 @end
 
@@ -92,6 +96,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @property (nonatomic) id voiceChannelStateObserverToken;
 @property (nonatomic) id conversationObserverToken;
+@property (nonatomic) NSMutableDictionary<NSUUID *, id> *userObserverTokens;
 
 @property (nonatomic) BOOL isAppearing;
 @property (nonatomic) ConversationTitleView *titleView;
@@ -231,17 +236,13 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     self.guestsBarController = [[GuestsBarController alloc] init];
 }
 
-- (void)updateGuestsBarVisibilityAndShowIfNeeded:(BOOL)showIfNeeded
+- (void)updateGuestsBarVisibility
 {
     GuestBarState state = self.conversation.guestBarState;
     if (state != GuestBarStateHidden) {
-        BOOL isPresented = nil != self.guestsBarController.parentViewController;
-        if (!isPresented || showIfNeeded) {
-            [self.conversationBarController presentBar:self.guestsBarController];
-            [self.guestsBarController setState:state animated:NO];
-        }
-    }
-    else {
+        [self.conversationBarController presentBar:self.guestsBarController];
+        [self.guestsBarController setState:state animated:NO];
+    } else {
         [self.conversationBarController dismissBar:self.guestsBarController];
     }
 }
@@ -250,7 +251,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 {
     [super viewWillAppear:animated];
     self.isAppearing = YES;
-    [self updateGuestsBarVisibilityAndShowIfNeeded:YES];
+    [self updateGuestsBarVisibility];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -360,6 +361,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         self.voiceChannelStateObserverToken = [self addCallStateObserver];
         self.conversationObserverToken = [ConversationChangeInfo addObserver:self forConversation:self.conversation];
         self.startCallController = [[ConversationCallController alloc] initWithConversation:self.conversation target: self];
+        [self updateObservedUsersForParticipantsInConversation:conversation];
     }
 }
 
@@ -388,6 +390,33 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self createAndPresentParticipantsPopoverControllerWithRect:sourceView.bounds
                                                        fromView:sourceView
                                           contentViewController:viewController];
+}
+
+- (void)updateObservedUsersForParticipantsInConversation:(ZMConversation *)conversation
+{
+    if (self.userObserverTokens == nil) {
+        self.userObserverTokens = [[NSMutableDictionary alloc] init];
+    }
+
+    if (conversation == nil) {
+        [self.userObserverTokens removeAllObjects];
+        return;
+    }
+
+    // Stop observing the removed users
+    for (NSUUID *observedUserID in self.userObserverTokens.allKeys) {
+        NSPredicate *matchingUserPredicate = [NSPredicate predicateWithFormat:@"remoteIdentifier.UUIDString == %@", observedUserID];
+        if (![conversation.activeParticipants containsObjectMatchingPredicate:matchingUserPredicate]) {
+            self.userObserverTokens[observedUserID] = nil;
+        }
+    }
+
+    // Observe the new users
+    for (ZMUser *participant in conversation.activeParticipants) {
+        if (![self.userObserverTokens.allKeys containsObject:participant.remoteIdentifier]) {
+            self.userObserverTokens[participant.remoteIdentifier] = [UserChangeInfo addObserver:self forUser:participant userSession:(ZMUserSession *)self.session];
+        }
+    }
 }
 
 - (void)updateInputBarVisibility
@@ -741,6 +770,14 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @end
 
+@implementation ConversationViewController (ZMUserObserver)
+
+- (void)userDidChange:(UserChangeInfo *)changeInfo
+{
+    [self updateGuestsBarVisibility];
+}
+
+@end
 
 @implementation ConversationViewController (ZMConversationObserver)
 
@@ -756,9 +793,10 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         [self updateOutgoingConnectionVisibility];
         [self.contentViewController updateTableViewHeaderView];
         [self updateInputBarVisibility];
+        [self updateObservedUsersForParticipantsInConversation:note.conversation];
     }
 
-    [self updateGuestsBarVisibilityAndShowIfNeeded:NO];
+    [self updateGuestsBarVisibility];
 
     if (note.nameChanged || note.securityLevelChanged || note.connectionStateChanged) {
         [self setupNavigatiomItem];
