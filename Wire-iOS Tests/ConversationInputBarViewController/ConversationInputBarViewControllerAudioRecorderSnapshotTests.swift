@@ -87,6 +87,7 @@ final class ConversationInputBarViewControllerAudioRecorderSnapshotTests: CoreDa
                                configuration: { _ in
                                 // WHEN
                                 self.sut.createAudioViewController(audioRecorder: MockAudioRecorder())
+                                self.sut.audioRecordViewController?.updateTimeLabel(1234)
                                 self.sut.showAudioRecordViewController(animated: false)
         })
     }

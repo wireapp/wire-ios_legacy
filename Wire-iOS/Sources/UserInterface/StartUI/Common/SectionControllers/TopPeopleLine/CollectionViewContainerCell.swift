@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2018 Wire Swiss GmbH
+// Copyright (C) 2019 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,18 +16,24 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
+final class CollectionViewContainerCell: UICollectionViewCell {
+    var collectionView: UICollectionView? {
+        didSet {
+            guard let collectionView = collectionView else { return }
 
-extension UIViewController {
-    @objc var isHorizontalSizeClassRegular: Bool {
-        return traitCollection.horizontalSizeClass == .regular
+            contentView.addSubview(collectionView)
+
+            collectionView.translatesAutoresizingMaskIntoConstraints = false
+            collectionView.fitInSuperview()
+        }
+    }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        accessibilityIdentifier = "topPeopleSection"
     }
 
-    func isIPadRegular(device: DeviceProtocol = UIDevice.current) -> Bool {
-        return device.userInterfaceIdiom == .pad && isHorizontalSizeClassRegular
-    }
-
-    func isIPadRegularPortrait(device: DeviceProtocol, application: ApplicationProtocol) -> Bool {
-        return isIPadRegular(device: device) && application.statusBarOrientation.isPortrait
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
