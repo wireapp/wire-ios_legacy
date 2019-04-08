@@ -32,7 +32,7 @@ extension ContactsViewController {
         self.searchHeaderViewController = searchHeaderViewController
     }
 
-    @objc func createTopContainerConstraints() {
+    func createTopContainerConstraints() {
         constrain(self.view, topContainerView!) {selfView, topContainerView in
             topContainerView.leading == selfView.leading
             topContainerView.trailing == selfView.trailing

@@ -77,7 +77,7 @@ extension ContactsViewController {
 
 //        separatorView.autoPinEdge(ALEdgeBottom, toEdge: ALEdgeTop, ofView: emptyResultsView)
 
-        constraints += tableView.fitInSuperview(exclude: [.top, .bottom], activate: false).values
+        constraints += tableView.fitInSuperview(exclude: [.top, .bottom], activate: false).values.map{$0}
 //        tableView.autoPinEdge(toSuperviewEdge: ALEdgeLeading)
 //        tableView.autoPinEdge(toSuperviewEdge: ALEdgeTrailing)
         constraints += [tableView.bottomAnchor.constraint(equalTo: bottomContainerView.topAnchor)]
