@@ -108,30 +108,35 @@ final class ProfileDetailsContentController: NSObject, UITableViewDataSource, UI
         }
     }
     
-    private var richProfileInfoWithEmail: [UserRichProfileField] {
-        guard let email = user.emailAddress else { return user.richProfile }
+    private var richProfileInfoWithEmail: ProfileDetailsContentController.Content? {
+        var richProfile = user.richProfile
+        
+        if (!viewerCanAccessRichProfile || richProfile.isEmpty) && user.emailAddress == nil {
+            return nil
+        }
+        
+        guard let email = user.emailAddress else { return .richProfile(richProfile) }
         
         // If viewer can't access rich profile information,
         // delete all rich profile info just for displaying purposes.
-        var richProfile = user.richProfile
+        
         if !viewerCanAccessRichProfile && richProfile.count > 0 {
             richProfile.removeAll()
         }
         
         richProfile.insert(UserRichProfileField(type: "email.placeholder".localized, value: email), at: 0)
         
-        return richProfile
+        return .richProfile(richProfile)
     }
     
     /// Updates the content for the current configuration.
     private func updateContent() {
-        let richProfile = richProfileInfoWithEmail
         
         switch conversation?.conversationType ?? .group {
         case .group:
-            if (viewerCanAccessRichProfile && !richProfile.isEmpty) || user.emailAddress != nil {
+            if let richProfile = richProfileInfoWithEmail {
                 // If there is rich profile data and the user is allowed to see it, display it.
-                contents = [.richProfile(richProfile)]
+                contents = [richProfile]
             } else {
                 // If there is no rich profile data, show nothing.
                 contents = []
@@ -139,9 +144,9 @@ final class ProfileDetailsContentController: NSObject, UITableViewDataSource, UI
 
         case .oneOnOne:
             let readReceiptsEnabled = viewer.readReceiptsEnabled
-            if (viewerCanAccessRichProfile && !richProfile.isEmpty) || user.emailAddress != nil  {
+            if let richProfile = richProfileInfoWithEmail {
                 // If there is rich profile data and the user is allowed to see it, display it and the read receipts status.
-                contents = [.richProfile(richProfile), .readReceiptsStatus(enabled: readReceiptsEnabled)]
+                contents = [richProfile, .readReceiptsStatus(enabled: readReceiptsEnabled)]
             } else {
                 // If there is no rich profile data, show the read receipts.
                 contents = [.readReceiptsStatus(enabled: readReceiptsEnabled)]
