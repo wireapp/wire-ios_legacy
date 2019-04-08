@@ -28,7 +28,7 @@ final class ContactsViewControllerSnapshotTests: ZMSnapshotTestCase {
         sut = ContactsViewController()
 
         /// TODO: remove this after snapshot is created
-        recordMode = true
+//        recordMode = true
     }
     
     override func tearDown() {

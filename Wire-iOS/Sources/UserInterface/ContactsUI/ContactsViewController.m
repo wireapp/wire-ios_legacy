@@ -18,7 +18,7 @@
 
 @import WireSyncEngine;
 
-@import PureLayout;
+//@import PureLayout;
 
 
 #import "ContactsViewController.h"
@@ -108,11 +108,11 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     self.view.backgroundColor = [colorScheme colorWithName:ColorSchemeColorBackground];
     
     // Top Views
-    self.topContainerView = [[UIView alloc] initForAutoLayout];
+    self.topContainerView = [[UIView alloc] init];
     self.topContainerView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:self.topContainerView];
     
-    self.titleLabel = [[TransformLabel alloc] initForAutoLayout];
+    self.titleLabel = [[TransformLabel alloc] init];
     self.titleLabel.numberOfLines = 1;
     self.titleLabel.text = self.title;
     self.titleLabel.textColor = [colorScheme colorWithName:ColorSchemeColorTextForeground];
@@ -120,18 +120,18 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
     [self createSearchHeader];
 
-    self.cancelButton = [[IconButton alloc] initForAutoLayout];
+    self.cancelButton = [[IconButton alloc] init];
     [self.cancelButton setIcon:ZetaIconTypeX withSize:ZetaIconSizeSearchBar forState:UIControlStateNormal];
     self.cancelButton.accessibilityIdentifier = @"ContactsViewCloseButton";
     [self.cancelButton addTarget:self action:@selector(cancelPressed:) forControlEvents:UIControlEventTouchUpInside];
     [self.topContainerView addSubview:self.cancelButton];
     
     // Separator
-    self.separatorView = [[UIView alloc] initForAutoLayout];
+    self.separatorView = [[UIView alloc] init];
     [self.view addSubview:self.separatorView];
     
     // Table View
-    self.tableView = [[UITableView alloc] initForAutoLayout];
+    self.tableView = [[UITableView alloc] init];
     self.tableView.dataSource = self.dataSource;
     self.tableView.delegate = self;
     self.tableView.allowsMultipleSelection = YES;
@@ -143,22 +143,22 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self.view addSubview:self.tableView];
 
     // Empty results view
-    self.emptyResultsView = [[ContactsEmptyResultView alloc] initForAutoLayout];
+    self.emptyResultsView = [[ContactsEmptyResultView alloc] init];
     self.emptyResultsView.messageLabel.text = NSLocalizedString(@"peoplepicker.no_matching_results_after_address_book_upload_title", @"");
     [self.emptyResultsView.actionButton setTitle:NSLocalizedString(@"peoplepicker.no_matching_results.action.send_invite", @"") forState:UIControlStateNormal];
     [self.emptyResultsView.actionButton addTarget:self action:@selector(sendIndirectInvite:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.emptyResultsView];
 
     // No contacts label
-    self.noContactsLabel = [[UILabel alloc] initForAutoLayout];
+    self.noContactsLabel = [[UILabel alloc] init];
     self.noContactsLabel.text = NSLocalizedString(@"peoplepicker.no_contacts_title", @"");
     [self.view addSubview:self.noContactsLabel];
     
     // Bottom Views
-    self.bottomContainerView = [[UIView alloc] initForAutoLayout];
+    self.bottomContainerView = [[UIView alloc] init];
     [self.view addSubview:self.bottomContainerView];
     
-    self.bottomContainerSeparatorView = [[UIView alloc] initForAutoLayout];
+    self.bottomContainerSeparatorView = [[UIView alloc] init];
     [self.bottomContainerView addSubview:self.bottomContainerSeparatorView];
     
     self.inviteOthersButton = [Button buttonWithStyle:ButtonStyleEmpty variant:self.colorSchemeVariant];
@@ -170,71 +170,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self updateEmptyResults];
 }
 
-- (void)setupLayout
-{
-    [self createTopContainerConstraints];
-
-    CGFloat standardOffset = 24.0f;
-
-    self.titleLabelTopConstraint = [self.titleLabel autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:UIScreen.safeArea.top];
-    [self.titleLabel autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:standardOffset];
-    [self.titleLabel autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:standardOffset];
-    self.titleLabelBottomConstraint = [self.titleLabel autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:standardOffset];
-
-    self.titleLabelHeightConstraint = [self.titleLabel autoSetDimension:ALDimensionHeight toSize:44.0f];
-    self.titleLabelHeightConstraint.active = (self.titleLabel.text.length > 0);
-
-    [self createSearchHeaderConstraints];
-
-    [self.separatorView autoPinEdgeToSuperviewEdge:ALEdgeLeading withInset:standardOffset];
-    [self.separatorView autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:standardOffset];
-    [self.separatorView autoSetDimension:ALDimensionHeight toSize:0.5f];
-    [self.separatorView autoPinEdge:ALEdgeBottom toEdge:ALEdgeTop ofView:self.tableView];
-
-    [self.separatorView autoPinEdge:ALEdgeBottom toEdge:ALEdgeTop ofView:self.emptyResultsView];
-
-    [self.tableView autoPinEdgeToSuperviewEdge:ALEdgeLeading];
-    [self.tableView autoPinEdgeToSuperviewEdge:ALEdgeTrailing];
-    [self.tableView autoPinEdge:ALEdgeBottom toEdge:ALEdgeTop ofView:self.bottomContainerView withOffset:0];
-
-    [self.emptyResultsView autoPinEdgeToSuperviewEdge:ALEdgeLeading];
-    [self.emptyResultsView autoPinEdgeToSuperviewEdge:ALEdgeTrailing];
-    self.emptyResultsBottomConstraint = [self.emptyResultsView autoPinEdgeToSuperviewEdge:ALEdgeBottom];
-
-    [self.noContactsLabel autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.searchHeaderViewController.view withOffset:standardOffset];
-    [self.noContactsLabel autoPinEdge:ALEdgeLeading toEdge:ALEdgeLeading ofView:self.view withOffset:standardOffset];
-    [self.noContactsLabel autoPinEdgeToSuperviewEdge:ALEdgeTrailing];
-
-    CGFloat bottomContainerHeight = 56.0f + UIScreen.safeArea.bottom;
-    [self.bottomContainerView autoPinEdgeToSuperviewEdge:ALEdgeLeading];
-    [self.bottomContainerView autoPinEdgeToSuperviewEdge:ALEdgeTrailing];
-    self.bottomContainerBottomConstraint = [self.bottomContainerView autoPinEdgeToSuperviewEdge:ALEdgeBottom];
-    
-    [self.bottomContainerSeparatorView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeBottom];
-    [self.bottomContainerSeparatorView autoSetDimension:ALDimensionHeight toSize:0.5];
-    
-    self.tableView.contentInset = UIEdgeInsetsMake(0, 0, bottomContainerHeight, 0);
-
-    self.closeButtonTopConstraint = [self.cancelButton autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:16 + UIScreen.safeArea.top];
-    self.closeButtonTopConstraint.active = (self.titleLabel.text.length > 0);
-    
-    [NSLayoutConstraint autoSetPriority:UILayoutPriorityDefaultLow forConstraints:^{
-        self.closeButtonBottomConstraint = [self.cancelButton autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:8];
-    }];
-
-    [self.cancelButton autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:16];
-    [self.cancelButton autoSetDimension:ALDimensionWidth toSize:16];
-    self.closeButtonHeightConstraint = [self.cancelButton autoSetDimension:ALDimensionHeight toSize:16];
-    
-    [self.inviteOthersButton autoPinEdgeToSuperviewEdge:ALEdgeLeading withInset:standardOffset];
-    [self.inviteOthersButton autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:standardOffset];
-    [self.inviteOthersButton autoSetDimension:ALDimensionHeight toSize:28];
-    [self.inviteOthersButton autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:standardOffset / 2.0];
-    self.bottomEdgeConstraint = [self.inviteOthersButton autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset: standardOffset / 2.0 + UIScreen.safeArea.bottom];
-
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardFrameDidChange:) name:UIKeyboardWillChangeFrameNotification object:nil];
-}
 
 #pragma mark - Properties
 

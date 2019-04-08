@@ -4835,12 +4835,12 @@
 				87DCF48A1D34E9BA00BB420F /* ContactsViewController.h */,
 				EF297DDC213209220002983A /* ContactsViewController+Internal.h */,
 				87DCF48B1D34E9BA00BB420F /* ContactsViewController.m */,
-				EF32AB0021C13C09002E4777 /* UIViewController+Present.swift */,
 				EFBCC91421551694006AAB70 /* ContactsViewController+ViewLifeCycle.swift */,
 				EF297DDB213209220002983A /* ContactsViewController+Style.swift */,
 				EF6DAD692150F2C400D9BA70 /* ContactsViewController+SearchHeader.swift */,
 				EF7E96ED214BB41800475C63 /* ContactsViewController+ContactsDataSourceDelegate.swift */,
 				EF7E96EF214BFBE100475C63 /* ContactsViewController+UITableViewDelegate.swift */,
+				EF32AB0021C13C09002E4777 /* UIViewController+Present.swift */,
 				87DCF48C1D34E9BA00BB420F /* ZMAddressBookContact+LocalInvitation.swift */,
 			);
 			path = ContactsUI;
