@@ -27,10 +27,6 @@ extension ZMConversationMessage {
         return (self.serverTimestamp?.timeIntervalSinceNow ?? -Double.infinity) >= -1.0
     }
     
-    var isFirstMessage: Bool {
-        return (self.conversation?.recentMessages.count ?? 0) == 1
-    }
-    
     var isSystemMessageWithSoundNotification: Bool {
         guard isSystem, let data = systemMessageData else {
             return false
@@ -111,7 +107,6 @@ extension SoundEventListener : ZMNewUnreadMessagesObserver, ZMNewUnreadKnocksObs
             guard (message.isNormal || message.isSystemMessageWithSoundNotification) &&
                   message.isRecentMessage &&
                   !message.isSentBySelfUser &&
-                  !message.isFirstMessage &&
                   !isSilenced else {
                 continue
             }
