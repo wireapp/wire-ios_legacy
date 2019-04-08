@@ -21,9 +21,6 @@
 #import "ConversationListViewController+Private.h"
 #import "ConversationListViewController+StartUI.h"
 
-@import PureLayout;
-
-
 #import "Settings.h"
 #import "UIScrollView+Zeta.h"
 
@@ -88,20 +85,12 @@
 @property (nonatomic) id initialSyncObserverToken;
 
 @property (nonatomic) ConversationListContentController *listContentController;
-@property (nonatomic) ConversationListBottomBarController *bottomBarController;
-
-@property (nonatomic) ConversationListTopBar *topBar;
 @property (nonatomic) NetworkStatusViewController *networkStatusViewController;
 
 /// for NetworkStatusViewDelegate
 @property (nonatomic) BOOL shouldAnimateNetworkStatusView;
 
 @property (nonatomic) UIView *contentContainer;
-@property (nonatomic) UIView *conversationListContainer;
-@property (nonatomic) ConversationListOnboardingHint *onboardingHint;
-
-@property (nonatomic) NSLayoutConstraint *bottomBarBottomOffset;
-@property (nonatomic) NSLayoutConstraint *bottomBarToolTipConstraint;
 
 @property (nonatomic) CGFloat contentControllerBottomInset;
 
@@ -143,7 +132,7 @@
     self.contentControllerBottomInset = 16;
     self.shouldAnimateNetworkStatusView = NO;
     
-    self.contentContainer = [[UIView alloc] initForAutoLayout];
+    self.contentContainer = [[UIView alloc] init];
     self.contentContainer.backgroundColor = [UIColor clearColor];
     [self.view addSubview:self.contentContainer];
 
@@ -156,7 +145,7 @@
     self.onboardingHint = [[ConversationListOnboardingHint alloc] init];
     [self.contentContainer addSubview:self.onboardingHint];
 
-    self.conversationListContainer = [[UIView alloc] initForAutoLayout];
+    self.conversationListContainer = [[UIView alloc] init];
     self.conversationListContainer.backgroundColor = [UIColor clearColor];
     [self.contentContainer addSubview:self.conversationListContainer];
 
@@ -253,7 +242,7 @@
 
 - (void)createNoConversationLabel;
 {
-    self.noConversationLabel = [[UILabel alloc] initForAutoLayout];
+    self.noConversationLabel = [[UILabel alloc] init];
     self.noConversationLabel.attributedText = self.attributedTextForNoConversationLabel;
     self.noConversationLabel.numberOfLines = 0;
     [self.contentContainer addSubview:self.noConversationLabel];
@@ -285,7 +274,6 @@
 - (void)createBottomBarController
 {
     self.bottomBarController = [[ConversationListBottomBarController alloc] initWithDelegate:self];
-    self.bottomBarController.view.translatesAutoresizingMaskIntoConstraints = NO;
     self.bottomBarController.showArchived = YES;
     [self addChildViewController:self.bottomBarController];
     [self.conversationListContainer addSubview:self.bottomBarController.view];
@@ -310,7 +298,6 @@
 {
     self.listContentController = [[ConversationListContentController alloc] init];
     self.listContentController.collectionView.contentInset = UIEdgeInsetsMake(0, 0, self.contentControllerBottomInset, 0);
-    self.listContentController.view.translatesAutoresizingMaskIntoConstraints = NO;
     self.listContentController.contentDelegate = self;
 
     [self addChildViewController:self.listContentController];
@@ -382,40 +369,6 @@
             completion();
         }
     }];
-}
-
-- (void)createViewConstraints
-{
-    [self.conversationListContainer autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeTop];
-    
-    [self.bottomBarController.view autoPinEdgeToSuperviewEdge:ALEdgeLeft];
-    [self.bottomBarController.view autoPinEdgeToSuperviewEdge:ALEdgeRight];
-    self.bottomBarBottomOffset = [self.bottomBarController.view autoPinEdgeToSuperviewEdge:ALEdgeBottom];
-
-    [self.networkStatusViewController createConstraintsInParentControllerWithBottomView:self.topBar controller:self];
-    
-    [self.topBar autoPinEdgeToSuperviewEdge:ALEdgeLeft];
-    [self.topBar autoPinEdgeToSuperviewEdge:ALEdgeRight];
-
-    [self.topBar autoPinEdge:ALEdgeBottom toEdge:ALEdgeTop ofView:self.conversationListContainer];
-    
-    [[self.contentContainer.bottomAnchor constraintEqualToAnchor:self.safeBottomAnchor] setActive:YES];
-    [[self.contentContainer.topAnchor constraintEqualToAnchor:self.safeTopAnchor] setActive:YES];
-    [[self.contentContainer.leadingAnchor constraintEqualToAnchor:self.view.safeLeadingAnchor] setActive:YES];
-    [[self.contentContainer.trailingAnchor constraintEqualToAnchor:self.view.safeTrailingAnchor] setActive:YES];
-    
-    [self.noConversationLabel autoCenterInSuperview];
-    [self.noConversationLabel autoSetDimension:ALDimensionHeight toSize:120.0f];
-    [self.noConversationLabel autoSetDimension:ALDimensionWidth toSize:240.0f];
-    
-    [self.onboardingHint autoPinEdge:ALEdgeBottom toEdge:ALEdgeTop ofView:self.bottomBarController.view];
-    [self.onboardingHint autoPinEdgeToSuperviewMargin:ALEdgeLeft];
-    [self.onboardingHint autoPinEdgeToSuperviewMargin:ALEdgeRight];
-
-    [self.listContentController.view autoPinEdgeToSuperviewEdge:ALEdgeTop];
-    [self.listContentController.view autoPinEdge:ALEdgeBottom toEdge:ALEdgeTop ofView:self.bottomBarController.view];
-    [self.listContentController.view autoPinEdgeToSuperviewEdge:ALEdgeLeading];
-    [self.listContentController.view autoPinEdgeToSuperviewEdge:ALEdgeTrailing];
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator

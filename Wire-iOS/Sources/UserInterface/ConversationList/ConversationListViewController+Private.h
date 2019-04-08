@@ -27,18 +27,26 @@
 @class ConversationListContentController;
 @class PermissionDeniedViewController;
 @class ConversationActionController;
+@class ConversationListTopBar;
+@class ConversationListOnboardingHint;
 
 @interface ConversationListViewController (Private)
 @property (nonatomic, nullable) SearchViewController *searchViewController;
 @property (nonatomic, nonnull) ConversationListContentController *listContentController;
 @property (nonatomic, weak, readonly, nullable) id<UserProfile> userProfile;
-@property (nonatomic, nonnull) ConversationListTopBar *topBar;
 @property (nonatomic, nonnull) NetworkStatusViewController *networkStatusViewController;
-@property (nonatomic, readonly, nonnull) ConversationListBottomBarController *bottomBarController;
 
 @property (nonatomic, nonnull) UILabel *noConversationLabel;
 @property (nonatomic, nullable) PermissionDeniedViewController *pushPermissionDeniedViewController;
 @property (nonatomic, nullable) ConversationActionController *actionsController;
+@property (nonatomic, null_unspecified) UIView *conversationListContainer;
+@property (nonatomic, null_unspecified) ConversationListBottomBarController *bottomBarController;
+
+@property (nonatomic, null_unspecified) ConversationListTopBar *topBar;
+@property (nonatomic, null_unspecified) ConversationListOnboardingHint *onboardingHint;
+
+@property (nonatomic, null_unspecified) NSLayoutConstraint *bottomBarBottomOffset;
+@property (nonatomic, null_unspecified) NSLayoutConstraint *bottomBarToolTipConstraint;
 
 /// for NetworkStatusViewDelegate
 @property (nonatomic) BOOL shouldAnimateNetworkStatusView;

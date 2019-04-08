@@ -110,7 +110,7 @@ class NetworkStatusViewController : UIViewController {
         }
     }
 
-    @objc public func createConstraintsInParentController(bottomView: UIView, controller: UIViewController) {
+    public func createConstraintsInParentController(bottomView: UIView, controller: UIViewController) {
         constrain(bottomView, controller.view, view) { bottomView, containerView, networkStatusViewControllerView in
             networkStatusViewControllerView.leading == containerView.leading
             networkStatusViewControllerView.trailing == containerView.trailing
