@@ -47,12 +47,18 @@ class TextFieldValidator {
             } else if !text.isEmail {
                 return .invalidEmail
             }
-        case .password:
-            if text.count > maxPasswordLength {
-                return .tooLong(kind: kind)
-            } else if text.count < minPasswordLength {
-                return .tooShort(kind: kind)
+        case .password(let isNew):
+            if isNew {
+                if text.count > maxPasswordLength {
+                    return .tooLong(kind: kind)
+                } else if text.count < minPasswordLength {
+                    return .tooShort(kind: kind)
+                }
+            } else {
+                // If the user is signing in, we do not require any format
+                return text.isEmpty ? .tooShort(kind: kind) : .none
             }
+
         case .name:
             /// We should ignore leading/trailing whitespace when counting the number of characters in the string
             let stringToValidate = text.trimmingCharacters(in: .whitespacesAndNewlines)
