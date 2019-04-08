@@ -51,15 +51,10 @@ extension ContactsViewController {
         let standardOffset: CGFloat = 24.0
         let titleLabelConstraints = titleLabel.fitInSuperview(with: EdgeInsets(top: UIScreen.safeArea.top, leading: standardOffset, bottom: standardOffset, trailing: standardOffset), activate: false)
 
-        var constraints = titleLabelConstraints.values.map{$0}
-
         titleLabelTopConstraint = titleLabelConstraints[.top]
         titleLabelBottomConstraint = titleLabelConstraints[.bottom]
 
-//        titleLabelTopConstraint = titleLabel?.autoPinEdge(toSuperviewEdge: ALEdgeTop, withInset: UIScreen.safeArea.top)
-//        titleLabel?.autoPinEdge(toSuperviewEdge: ALEdgeLeft, withInset: standardOffset)
-//        titleLabel?.autoPinEdge(toSuperviewEdge: ALEdgeRight, withInset: standardOffset)
-//        titleLabelBottomConstraint = titleLabel?.autoPinEdge(toSuperviewEdge: ALEdgeBottom, withInset: standardOffset)
+        var constraints: [NSLayoutConstraint] = titleLabelConstraints.values.map{$0}
 
         titleLabelHeightConstraint = titleLabel.heightAnchor.constraint(equalToConstant: 44)
         titleLabelHeightConstraint.isActive = (titleLabel.text?.count ?? 0) > 0
@@ -70,33 +65,19 @@ extension ContactsViewController {
         constraints += [separatorView.heightAnchor.constraint(equalToConstant: 0.5),
                         separatorView.bottomAnchor.constraint(equalTo: tableView.topAnchor),
                         separatorView.bottomAnchor.constraint(equalTo: emptyResultsView.topAnchor)]
-//        separatorView.autoPinEdge(toSuperviewEdge: ALEdgeLeading, withInset: standardOffset)
-//        separatorView.autoPinEdge(toSuperviewEdge: ALEdgeTrailing, withInset: standardOffset)
-//        separatorView.autoSetDimension(ALDimensionHeight, toSize: 0.5)
-//        separatorView.autoPinEdge(ALEdgeBottom, toEdge: ALEdgeTop, of: tableView)
-
-//        separatorView.autoPinEdge(ALEdgeBottom, toEdge: ALEdgeTop, ofView: emptyResultsView)
 
         constraints += tableView.fitInSuperview(exclude: [.top, .bottom], activate: false).values.map{$0}
-//        tableView.autoPinEdge(toSuperviewEdge: ALEdgeLeading)
-//        tableView.autoPinEdge(toSuperviewEdge: ALEdgeTrailing)
         constraints += [tableView.bottomAnchor.constraint(equalTo: bottomContainerView.topAnchor)]
-//        tableView.autoPinEdge(ALEdgeBottom, toEdge: ALEdgeTop, ofView: bottomContainerView, withOffset: 0)
 
         let emptyResultsViewConstraints = emptyResultsView.fitInSuperview(exclude: [.top], activate: false)
         emptyResultsBottomConstraint = emptyResultsViewConstraints[.bottom]
         constraints += emptyResultsViewConstraints.values.map{$0}
-//        emptyResultsView.autoPinEdge(toSuperviewEdge: ALEdgeLeading)
-//        emptyResultsView.autoPinEdge(toSuperviewEdge: ALEdgeTrailing)
-//        emptyResultsBottomConstraint = emptyResultsView.autoPinEdge(toSuperviewEdge: ALEdgeBottom)
 
         constraints += [noContactsLabel.topAnchor.constraint(equalTo: searchHeaderViewController.view.bottomAnchor, constant: standardOffset),
 
         noContactsLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: standardOffset),
         noContactsLabel.pinToSuperview(anchor: .trailing, activate: false)]
-//        noContactsLabel.autoPinEdge(ALEdgeTop, toEdge: ALEdgeBottom, ofView: searchHeaderViewController.view, withOffset: standardOffset)
-//        noContactsLabel.autoPinEdge(ALEdgeLeading, toEdge: ALEdgeLeading, ofView: view, withOffset: standardOffset)
-//        noContactsLabel.autoPinEdge(toSuperviewEdge: ALEdgeTrailing)
+        /*
 
         let bottomContainerHeight: CGFloat = 56.0 + UIScreen.safeArea.bottom
 
@@ -148,7 +129,7 @@ extension ContactsViewController {
 //        inviteOthersButton.autoPinEdge(toSuperviewEdge: ALEdgeTop, withInset: standardOffset / 2.0)
 //        bottomEdgeConstraint = inviteOthersButton.autoPinEdge(toSuperviewEdge: ALEdgeBottom, withInset: standardOffset / 2.0 + UIScreen.safeArea.bottom)
 
-
+*/
         NSLayoutConstraint.activate(constraints)
     }
 

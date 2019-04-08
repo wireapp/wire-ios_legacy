@@ -43,7 +43,7 @@ extension ContactsViewController {
         topContainerHeightConstraint?.isActive = false
     }
 
-    @objc func createSearchHeaderConstraints() {
+    func createSearchHeaderConstraints() {
         guard let searchHeaderViewControllerView = searchHeaderViewController?.view,
             let topContainerView = topContainerView,
             let separatorView = separatorView else { return }
