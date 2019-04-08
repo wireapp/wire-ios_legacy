@@ -38,67 +38,129 @@ extension ContactsViewController {
     func setupLayout() {
         createTopContainerConstraints()
 
+        [titleLabel,
+         separatorView,
+         tableView,
+         emptyResultsView,
+         inviteOthersButton,
+         noContactsLabel,
+         cancelButton,
+         bottomContainerSeparatorView,
+         bottomContainerView].forEach(){$0.translatesAutoresizingMaskIntoConstraints = false}
+
         let standardOffset: CGFloat = 24.0
+        let titleLabelConstraints = titleLabel.fitInSuperview(with: EdgeInsets(top: UIScreen.safeArea.top, leading: standardOffset, bottom: standardOffset, trailing: standardOffset), activate: false)
 
-        titleLabelTopConstraint = titleLabel?.autoPinEdge(toSuperviewEdge: ALEdgeTop, withInset: UIScreen.safeArea.top)
-        titleLabel?.autoPinEdge(toSuperviewEdge: ALEdgeLeft, withInset: standardOffset)
-        titleLabel?.autoPinEdge(toSuperviewEdge: ALEdgeRight, withInset: standardOffset)
-        titleLabelBottomConstraint = titleLabel?.autoPinEdge(toSuperviewEdge: ALEdgeBottom, withInset: standardOffset)
+        var constraints = titleLabelConstraints.values.map{$0}
 
-        titleLabelHeightConstraint = titleLabel?.autoSetDimension(ALDimensionHeight, toSize: 44.0)
-        titleLabelHeightConstraint.active = (titleLabel?.text?.count ?? 0) > 0
+        titleLabelTopConstraint = titleLabelConstraints[.top]
+        titleLabelBottomConstraint = titleLabelConstraints[.bottom]
+
+//        titleLabelTopConstraint = titleLabel?.autoPinEdge(toSuperviewEdge: ALEdgeTop, withInset: UIScreen.safeArea.top)
+//        titleLabel?.autoPinEdge(toSuperviewEdge: ALEdgeLeft, withInset: standardOffset)
+//        titleLabel?.autoPinEdge(toSuperviewEdge: ALEdgeRight, withInset: standardOffset)
+//        titleLabelBottomConstraint = titleLabel?.autoPinEdge(toSuperviewEdge: ALEdgeBottom, withInset: standardOffset)
+
+        titleLabelHeightConstraint = titleLabel.heightAnchor.constraint(equalToConstant: 44)
+        titleLabelHeightConstraint.isActive = (titleLabel.text?.count ?? 0) > 0
 
         createSearchHeaderConstraints()
 
-        separatorView.autoPinEdge(toSuperviewEdge: ALEdgeLeading, withInset: standardOffset)
-        separatorView.autoPinEdge(toSuperviewEdge: ALEdgeTrailing, withInset: standardOffset)
-        separatorView.autoSetDimension(ALDimensionHeight, toSize: 0.5)
-        separatorView.autoPinEdge(ALEdgeBottom, toEdge: ALEdgeTop, of: tableView)
+        constraints += separatorView.fitInSuperview(with: EdgeInsets(margin: standardOffset), exclude: [.top, .bottom], activate: false).values.map{$0}
+        constraints += [separatorView.heightAnchor.constraint(equalToConstant: 0.5),
+                        separatorView.bottomAnchor.constraint(equalTo: tableView.topAnchor),
+                        separatorView.bottomAnchor.constraint(equalTo: emptyResultsView.topAnchor)]
+//        separatorView.autoPinEdge(toSuperviewEdge: ALEdgeLeading, withInset: standardOffset)
+//        separatorView.autoPinEdge(toSuperviewEdge: ALEdgeTrailing, withInset: standardOffset)
+//        separatorView.autoSetDimension(ALDimensionHeight, toSize: 0.5)
+//        separatorView.autoPinEdge(ALEdgeBottom, toEdge: ALEdgeTop, of: tableView)
 
-        separatorView.autoPinEdge(ALEdgeBottom, toEdge: ALEdgeTop, ofView: emptyResultsView)
+//        separatorView.autoPinEdge(ALEdgeBottom, toEdge: ALEdgeTop, ofView: emptyResultsView)
 
-        tableView.autoPinEdge(toSuperviewEdge: ALEdgeLeading)
-        tableView.autoPinEdge(toSuperviewEdge: ALEdgeTrailing)
-        tableView.autoPinEdge(ALEdgeBottom, toEdge: ALEdgeTop, ofView: bottomContainerView, withOffset: 0)
+        constraints += tableView.fitInSuperview(exclude: [.top, .bottom], activate: false).values
+//        tableView.autoPinEdge(toSuperviewEdge: ALEdgeLeading)
+//        tableView.autoPinEdge(toSuperviewEdge: ALEdgeTrailing)
+        constraints += [tableView.bottomAnchor.constraint(equalTo: bottomContainerView.topAnchor)]
+//        tableView.autoPinEdge(ALEdgeBottom, toEdge: ALEdgeTop, ofView: bottomContainerView, withOffset: 0)
 
-        emptyResultsView.autoPinEdge(toSuperviewEdge: ALEdgeLeading)
-        emptyResultsView.autoPinEdge(toSuperviewEdge: ALEdgeTrailing)
-        emptyResultsBottomConstraint = emptyResultsView.autoPinEdge(toSuperviewEdge: ALEdgeBottom)
+        let emptyResultsViewConstraints = emptyResultsView.fitInSuperview(exclude: [.top], activate: false)
+        emptyResultsBottomConstraint = emptyResultsViewConstraints[.bottom]
+        constraints += emptyResultsViewConstraints.values.map{$0}
+//        emptyResultsView.autoPinEdge(toSuperviewEdge: ALEdgeLeading)
+//        emptyResultsView.autoPinEdge(toSuperviewEdge: ALEdgeTrailing)
+//        emptyResultsBottomConstraint = emptyResultsView.autoPinEdge(toSuperviewEdge: ALEdgeBottom)
 
-        noContactsLabel.autoPinEdge(ALEdgeTop, toEdge: ALEdgeBottom, ofView: searchHeaderViewController.view, withOffset: standardOffset)
-        noContactsLabel.autoPinEdge(ALEdgeLeading, toEdge: ALEdgeLeading, ofView: view, withOffset: standardOffset)
-        noContactsLabel.autoPinEdge(toSuperviewEdge: ALEdgeTrailing)
+        constraints += [noContactsLabel.topAnchor.constraint(equalTo: searchHeaderViewController.view.bottomAnchor, constant: standardOffset),
+
+        noContactsLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: standardOffset),
+        noContactsLabel.pinToSuperview(anchor: .trailing, activate: false)]
+//        noContactsLabel.autoPinEdge(ALEdgeTop, toEdge: ALEdgeBottom, ofView: searchHeaderViewController.view, withOffset: standardOffset)
+//        noContactsLabel.autoPinEdge(ALEdgeLeading, toEdge: ALEdgeLeading, ofView: view, withOffset: standardOffset)
+//        noContactsLabel.autoPinEdge(toSuperviewEdge: ALEdgeTrailing)
 
         let bottomContainerHeight: CGFloat = 56.0 + UIScreen.safeArea.bottom
-        bottomContainerView.autoPinEdge(toSuperviewEdge: ALEdgeLeading)
-        bottomContainerView.autoPinEdge(toSuperviewEdge: ALEdgeTrailing)
-        bottomContainerBottomConstraint = bottomContainerView.autoPinEdge(toSuperviewEdge: ALEdgeBottom)
 
-        bottomContainerSeparatorView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets.zero, excludingEdge: ALEdgeBottom)
-        bottomContainerSeparatorView.autoSetDimension(ALDimensionHeight, toSize: 0.5)
+        let bottomContainerViewConstraints = bottomContainerView.fitInSuperview(exclude: [.top], activate: false)
+        bottomContainerBottomConstraint = bottomContainerViewConstraints[.bottom]
+
+        constraints += bottomContainerViewConstraints.values.map{$0}
+
+//        bottomContainerView.autoPinEdge(toSuperviewEdge: ALEdgeLeading)
+//        bottomContainerView.autoPinEdge(toSuperviewEdge: ALEdgeTrailing)
+//        bottomContainerBottomConstraint = bottomContainerView.autoPinEdge(toSuperviewEdge: ALEdgeBottom)
+
+        constraints += bottomContainerSeparatorView.fitInSuperview(exclude: [.bottom], activate: false).values.map{$0}
+        constraints += [bottomContainerSeparatorView.heightAnchor.constraint(equalToConstant: 0.5)]
+//        bottomContainerSeparatorView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets.zero, excludingEdge: ALEdgeBottom)
+//        bottomContainerSeparatorView.autoSetDimension(ALDimensionHeight, toSize: 0.5)
 
         tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: bottomContainerHeight, right: 0)
 
-        closeButtonTopConstraint = cancelButton.autoPinEdge(toSuperviewEdge: ALEdgeTop, withInset: 16 + UIScreen.safeArea.top)
-        closeButtonTopConstraint.active = (titleLabel?.text?.count ?? 0) > 0
+        closeButtonTopConstraint = cancelButton.pinToSuperview(anchor: .top, inset: 16 + UIScreen.safeArea.top, activate: (titleLabel?.text?.count ?? 0) > 0)
+//        closeButtonTopConstraint.active =
 
-        NSLayoutConstraint.autoSetPriority(UILayoutPriority.defaultLow, forConstraints: {
-            self.closeButtonBottomConstraint = self.cancelButton.autoPinEdge(toSuperviewEdge: ALEdgeBottom, withInset: 8)
-        })
+        closeButtonBottomConstraint = cancelButton.pinToSuperview(anchor: .bottom, inset: 8, activate: false)
+        closeButtonBottomConstraint.priority = .defaultLow
+//        NSLayoutConstraint.autoSetPriority(UILayoutPriority.defaultLow, forConstraints: {
+//            self.closeButtonBottomConstraint = self.cancelButton.autoPinEdge(toSuperviewEdge: ALEdgeBottom, withInset: 8)
+//        })
 
-        cancelButton.autoPinEdge(toSuperviewEdge: ALEdgeTrailing, withInset: 16)
-        cancelButton.autoSetDimension(ALDimensionWidth, toSize: 16)
-        closeButtonHeightConstraint = cancelButton.autoSetDimension(ALDimensionHeight, toSize: 16)
+        closeButtonHeightConstraint = cancelButton.heightAnchor.constraint(equalToConstant: 16)
+            //cancelButton.autoSetDimension(ALDimensionHeight, toSize: 16)
 
-        inviteOthersButton.autoPinEdge(toSuperviewEdge: ALEdgeLeading, withInset: standardOffset)
-        inviteOthersButton.autoPinEdge(toSuperviewEdge: ALEdgeTrailing, withInset: standardOffset)
-        inviteOthersButton.autoSetDimension(ALDimensionHeight, toSize: 28)
-        inviteOthersButton.autoPinEdge(toSuperviewEdge: ALEdgeTop, withInset: standardOffset / 2.0)
-        bottomEdgeConstraint = inviteOthersButton.autoPinEdge(toSuperviewEdge: ALEdgeBottom, withInset: standardOffset / 2.0 + UIScreen.safeArea.bottom)
+        constraints += [closeButtonBottomConstraint,
+                        cancelButton.pinToSuperview(anchor: .trailing, inset: 16, activate: false),
+                        cancelButton.widthAnchor.constraint(equalToConstant: 16),
+                        closeButtonHeightConstraint]
+
+//        cancelButton.autoPinEdge(toSuperviewEdge: ALEdgeTrailing, withInset: 16)
+//        cancelButton.autoSetDimension(ALDimensionWidth, toSize: 16)
+
+        let inviteOthersButtonConstraints = inviteOthersButton.fitInSuperview(with: EdgeInsets(top: standardOffset / 2.0, leading: standardOffset, bottom: standardOffset / 2.0 + UIScreen.safeArea.bottom, trailing: standardOffset), exclude: [.bottom], activate: false)
+
+        constraints += inviteOthersButtonConstraints.values.map{$0}
+
+        constraints += [inviteOthersButton.heightAnchor.constraint(equalToConstant: 28)]
+
+//        inviteOthersButton.autoPinEdge(toSuperviewEdge: ALEdgeLeading, withInset: standardOffset)
+//        inviteOthersButton.autoPinEdge(toSuperviewEdge: ALEdgeTrailing, withInset: standardOffset)
+//        inviteOthersButton.autoSetDimension(ALDimensionHeight, toSize: 28)
+//        inviteOthersButton.autoPinEdge(toSuperviewEdge: ALEdgeTop, withInset: standardOffset / 2.0)
+//        bottomEdgeConstraint = inviteOthersButton.autoPinEdge(toSuperviewEdge: ALEdgeBottom, withInset: standardOffset / 2.0 + UIScreen.safeArea.bottom)
 
 
-        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardFrameDidChange(_:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+        NSLayoutConstraint.activate(constraints)
     }
+
+    @objc
+    func createBottomButtonConstraints() {
+        bottomButton.translatesAutoresizingMaskIntoConstraints = false
+        bottomButton.fitInSuperview(with: EdgeInsets(margin: 24), exclude:[.top, .bottom])
+        bottomButton.pinToSuperview(axisAnchor: .centerY)
+    }
+//    [bottomButton autoPinEdgeToSuperviewEdge:ALEdgeLeading withInset:24];
+//    [bottomButton autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:24];
+//    [bottomButton autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
 
 }
 
@@ -165,7 +227,5 @@ extension ContactsViewController {
  [self.inviteOthersButton autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:standardOffset / 2.0];
  self.bottomEdgeConstraint = [self.inviteOthersButton autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset: standardOffset / 2.0 + UIScreen.safeArea.bottom];
 
-
- [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardFrameDidChange:) name:UIKeyboardWillChangeFrameNotification object:nil];
  }
  */

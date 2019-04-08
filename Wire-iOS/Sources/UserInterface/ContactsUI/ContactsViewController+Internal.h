@@ -22,33 +22,41 @@ static NSString * const _Nonnull ContactsViewControllerSectionHeaderID = @"Conta
 @class IconButton;
 @class SearchHeaderViewController;
 @class TransformLabel;
+@class ContactsEmptyResultView;
 
 @interface ContactsViewController ()
 
 @property (nonatomic) BOOL searchResultsReceived;
 
-@property (nonatomic, nullable) TransformLabel *titleLabel;
-@property (nonatomic, nullable) UIView *bottomContainerView;
-@property (nonatomic, nullable) UIView *bottomContainerSeparatorView;
-@property (nonatomic, nullable) UILabel *noContactsLabel;
+@property (nonatomic, null_unspecified) TransformLabel *titleLabel;
+@property (nonatomic, null_unspecified) UIView *bottomContainerView;
+@property (nonatomic, null_unspecified) UIView *bottomContainerSeparatorView;
+@property (nonatomic, null_unspecified) UILabel *noContactsLabel;
 @property (nonatomic, nullable) NSArray *actionButtonTitles;
-@property (nonatomic, nullable) IconButton *cancelButton;
-@property (nonatomic, nullable) SearchHeaderViewController *searchHeaderViewController;
-@property (nonatomic, nullable) UIView *topContainerView;
-@property (nonatomic, nullable) UIView *separatorView;
-@property (nonatomic, readwrite, nullable) UITableView *tableView;
+@property (nonatomic, null_unspecified) IconButton *cancelButton;
+@property (nonatomic, null_unspecified) SearchHeaderViewController *searchHeaderViewController;
+@property (nonatomic, null_unspecified) UIView *topContainerView;
+@property (nonatomic, null_unspecified) UIView *separatorView;
+@property (nonatomic, readwrite, null_unspecified) UITableView *tableView;
 
-@property (nonatomic, nullable) NSLayoutConstraint *closeButtonHeightConstraint;
-@property (nonatomic, nullable) NSLayoutConstraint *titleLabelHeightConstraint;
-@property (nonatomic, nullable) NSLayoutConstraint *titleLabelTopConstraint;
-@property (nonatomic, nullable) NSLayoutConstraint *titleLabelBottomConstraint;
-@property (nonatomic, nullable) NSLayoutConstraint *closeButtonTopConstraint;
-@property (nonatomic, nullable) NSLayoutConstraint *closeButtonBottomConstraint;
-@property (nonatomic, nullable) NSLayoutConstraint *topContainerHeightConstraint;
-@property (nonatomic, nullable) NSLayoutConstraint *searchHeaderTopConstraint;
-@property (nonatomic, nullable) NSLayoutConstraint *searchHeaderWithNavigatorBarTopConstraint;
+@property (nonatomic, null_unspecified) Button *inviteOthersButton;
+@property (nonatomic, null_unspecified) ContactsEmptyResultView *emptyResultsView;
 
-@property (nonatomic, nullable) NSLayoutConstraint *bottomEdgeConstraint;
+@property (nonatomic, null_unspecified) NSLayoutConstraint *closeButtonHeightConstraint;
+@property (nonatomic, null_unspecified) NSLayoutConstraint *titleLabelHeightConstraint;
+@property (nonatomic, null_unspecified) NSLayoutConstraint *titleLabelTopConstraint;
+@property (nonatomic, null_unspecified) NSLayoutConstraint *titleLabelBottomConstraint;
+@property (nonatomic, null_unspecified) NSLayoutConstraint *closeButtonTopConstraint;
+@property (nonatomic, null_unspecified) NSLayoutConstraint *closeButtonBottomConstraint;
+@property (nonatomic, null_unspecified) NSLayoutConstraint *topContainerHeightConstraint;
+@property (nonatomic, null_unspecified) NSLayoutConstraint *searchHeaderTopConstraint;
+@property (nonatomic, null_unspecified) NSLayoutConstraint *searchHeaderWithNavigatorBarTopConstraint;
+
+@property (nonatomic, null_unspecified) NSLayoutConstraint *bottomEdgeConstraint;
+
+// Containers, ect.
+@property (nonatomic, null_unspecified) NSLayoutConstraint *bottomContainerBottomConstraint;
+@property (nonatomic, null_unspecified) NSLayoutConstraint *emptyResultsBottomConstraint;
 
 - (void)setEmptyResultsHidden:(BOOL)hidden animated:(BOOL)animated;
 

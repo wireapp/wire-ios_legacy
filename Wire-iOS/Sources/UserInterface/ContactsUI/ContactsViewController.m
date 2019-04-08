@@ -40,16 +40,6 @@
 static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 
-@interface ContactsViewController ()
-@property (nonatomic) Button *inviteOthersButton;
-@property (nonatomic) ContactsEmptyResultView *emptyResultsView;
-
-// Containers, ect.
-@property (nonatomic) NSLayoutConstraint *bottomContainerBottomConstraint;
-@property (nonatomic) NSLayoutConstraint *emptyResultsBottomConstraint;
-@end
-
-
 
 @implementation ContactsViewController
 
@@ -79,6 +69,8 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     
     [self setupViews];
     [self setupLayout];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardFrameDidChange:) name:UIKeyboardWillChangeFrameNotification object:nil];
 
     BOOL shouldSkip = AutomationHelper.sharedHelper.skipFirstLoginAlerts || ZMUser.selfUser.hasTeam;
     if (self.sharingContactsRequired && ! [[AddressBookHelper sharedHelper] isAddressBookAccessGranted] && !shouldSkip && self.shouldShowShareContactsViewController) {
@@ -162,7 +154,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self.bottomContainerView addSubview:self.bottomContainerSeparatorView];
     
     self.inviteOthersButton = [Button buttonWithStyle:ButtonStyleEmpty variant:self.colorSchemeVariant];
-    self.inviteOthersButton.translatesAutoresizingMaskIntoConstraints = NO;
     [self.inviteOthersButton addTarget:self action:@selector(sendIndirectInvite:) forControlEvents:UIControlEventTouchUpInside];
     [self.inviteOthersButton setTitle:NSLocalizedString(@"contacts_ui.invite_others", @"") forState:UIControlStateNormal];
     [self.bottomContainerView addSubview:self.inviteOthersButton];
@@ -198,9 +189,8 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     _bottomButton = bottomButton;
     
     [self.bottomContainerView addSubview:bottomButton];
-    [bottomButton autoPinEdgeToSuperviewEdge:ALEdgeLeading withInset:24];
-    [bottomButton autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:24];
-    [bottomButton autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
+
+    [self createBottomButtonConstraints];
 }
 
 - (void)setContentDelegate:(id<ContactsViewControllerContentDelegate>)contentDelegate
