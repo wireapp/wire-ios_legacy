@@ -25,7 +25,6 @@
 #import "ShareContactsViewController.h"
 #import "ZClientViewController.h"
 #import "TopPeopleCell.h"
-#import "StartUIInviteActionBar.h"
 #import "Button.h"
 #import "IconButton.h"
 
