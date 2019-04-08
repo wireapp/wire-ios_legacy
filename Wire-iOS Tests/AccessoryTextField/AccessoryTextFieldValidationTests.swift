@@ -84,8 +84,14 @@ final class AccessoryTextFieldValidateionTests: XCTestCase {
         sut.confirmButton.sendActions(for: .touchUpInside)
 
         // THEN
-        XCTAssertEqual(mockViewController.errorCounter, 1, "Should have an error", file: file, line: line)
-        XCTAssertEqual(mockViewController.successCounter, 0, "Should not have been success", file: file, line: line)
+        if case .none = expectedError {
+            XCTAssertEqual(mockViewController.errorCounter, 0, "Should have not have an error", file: file, line: line)
+            XCTAssertEqual(mockViewController.successCounter, 1, "Should have been a success", file: file, line: line)
+        } else {
+            XCTAssertEqual(mockViewController.errorCounter, 1, "Should have an error", file: file, line: line)
+            XCTAssertEqual(mockViewController.successCounter, 0, "Should not have been success", file: file, line: line)
+        }
+
         XCTAssertEqual(expectedError, mockViewController.lastError, "Error should be \(expectedError), was \(mockViewController.lastError)", file: file, line: line)
     }
 
@@ -184,18 +190,36 @@ final class AccessoryTextFieldValidateionTests: XCTestCase {
         checkError(textFieldType: type, text: text, expectedError: .tooLong(kind: type))
     }
 
-    func testThat7CharacterPasswordIsInvalid() {
+    func testThat7CharacterPasswordIsValid_Existing() {
         // GIVEN
         let type: AccessoryTextField.Kind = .password(isNew: false)
+        let text = String(repeating: "a", count: 7)
+
+        // WHEN & THEN
+        checkError(textFieldType: type, text: text, expectedError: .none)
+    }
+
+    func testThat129CharacterPasswordIsValid_Existing() {
+        // GIVEN
+        let type: AccessoryTextField.Kind = .password(isNew: false)
+        let text = String(repeating: "a", count: 129)
+
+        // WHEN & THEN
+        checkError(textFieldType: type, text: text, expectedError: .none)
+    }
+
+    func testThat7CharacterPasswordIsInvalid_New() {
+        // GIVEN
+        let type: AccessoryTextField.Kind = .password(isNew: true)
         let text = String(repeating: "a", count: 7)
 
         // WHEN & THEN
         checkError(textFieldType: type, text: text, expectedError: .tooShort(kind: type))
     }
 
-    func testThat129CharacterPasswordIsInvalid() {
+    func testThat129CharacterPasswordIsInvalid_New() {
         // GIVEN
-        let type: AccessoryTextField.Kind = .password(isNew: false)
+        let type: AccessoryTextField.Kind = .password(isNew: true)
         let text = String(repeating: "a", count: 129)
 
         // WHEN & THEN
