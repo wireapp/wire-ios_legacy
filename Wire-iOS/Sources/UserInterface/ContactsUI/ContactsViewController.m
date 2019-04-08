@@ -26,7 +26,6 @@
 #import "Constants.h"
 #import "ColorScheme.h"
 #import "UITableView+RowCount.h"
-#import "ContactsEmptyResultView.h"
 #import "Analytics.h"
 #import "WireSyncEngine+iOS.h"
 #import "UIViewController+WR_Invite.h"
