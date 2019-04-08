@@ -20,26 +20,31 @@
 #import "ConversationListViewController.h"
 @import WireSyncEngine;
 
-NS_ASSUME_NONNULL_BEGIN
-
 @class SearchViewController;
 @class ConversationListTopBar;
 @class NetworkStatusViewController;
 @class ConversationListBottomBarController;
 @class ConversationListContentController;
+@class PermissionDeniedViewController;
+@class ConversationActionController;
 
 @interface ConversationListViewController (Private)
 @property (nonatomic, nullable) SearchViewController *searchViewController;
-@property (nonatomic) ConversationListContentController *listContentController;
-@property (nonatomic, weak, readonly) id<UserProfile> userProfile;
-@property (nonatomic) ConversationListTopBar *topBar;
-@property (nonatomic) NetworkStatusViewController *networkStatusViewController;
-@property (nonatomic, readonly) ConversationListBottomBarController *bottomBarController;
+@property (nonatomic, nonnull) ConversationListContentController *listContentController;
+@property (nonatomic, weak, readonly, nullable) id<UserProfile> userProfile;
+@property (nonatomic, nonnull) ConversationListTopBar *topBar;
+@property (nonatomic, nonnull) NetworkStatusViewController *networkStatusViewController;
+@property (nonatomic, readonly, nonnull) ConversationListBottomBarController *bottomBarController;
+
+@property (nonatomic, nonnull) UILabel *noConversationLabel;
+@property (nonatomic, nullable) PermissionDeniedViewController *pushPermissionDeniedViewController;
+@property (nonatomic, nullable) ConversationActionController *actionsController;
+
 /// for NetworkStatusViewDelegate
 @property (nonatomic) BOOL shouldAnimateNetworkStatusView;
 @property (nonatomic) BOOL dataUsagePermissionDialogDisplayed;
 
+
 - (void)removeUserProfileObserver;
 @end
 
-NS_ASSUME_NONNULL_END
