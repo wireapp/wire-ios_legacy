@@ -28,9 +28,9 @@ final class AccessoryTextFieldValidateionTests: XCTestCase {
         var errorCounter = 0
         var successCounter = 0
 
-        var lastError: TextFieldValidator.ValidationError = .none
+        var lastError: TextFieldValidator.ValidationError? = nil
 
-        func validationUpdated(sender: UITextField, error: TextFieldValidator.ValidationError) {
+        func validationUpdated(sender: UITextField, error: TextFieldValidator.ValidationError?) {
 
             if error == .none {
                 successCounter += 1
@@ -74,7 +74,7 @@ final class AccessoryTextFieldValidateionTests: XCTestCase {
 
     fileprivate func checkError(textFieldType: AccessoryTextField.Kind,
                                 text: String?,
-                                expectedError: TextFieldValidator.ValidationError,
+                                expectedError: TextFieldValidator.ValidationError?,
                                 file: StaticString = #file,
                                 line: UInt = #line) {
 
@@ -92,7 +92,7 @@ final class AccessoryTextFieldValidateionTests: XCTestCase {
             XCTAssertEqual(mockViewController.successCounter, 0, "Should not have been success", file: file, line: line)
         }
 
-        XCTAssertEqual(expectedError, mockViewController.lastError, "Error should be \(expectedError), was \(mockViewController.lastError)", file: file, line: line)
+        XCTAssertEqual(expectedError, mockViewController.lastError, "Error should be \(String(describing: expectedError)), was \(String(describing: mockViewController.lastError))", file: file, line: line)
     }
 
     // MARK: - happy cases
