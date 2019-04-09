@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import WireUtilities
 
 class TextFieldValidator {
     
@@ -27,6 +28,7 @@ class TextFieldValidator {
         case tooLong(kind: AccessoryTextField.Kind)
         case invalidEmail
         case invalidPhoneNumber
+        case invalidPassword(PasswordValidationResult)
         case custom(String)
     }
 
@@ -48,11 +50,9 @@ class TextFieldValidator {
             }
         case .password(let isNew):
             if isNew {
-                if text.count > maxPasswordLength {
-                    return .tooLong(kind: kind)
-                } else if text.count < minPasswordLength {
-                    return .tooShort(kind: kind)
-                }
+                // If the user is signing in, we do not require any format
+                let result = PasswordRuleSet.shared.validatePassword(text)
+                return result != .valid ? .invalidPassword(result) : nil
             } else {
                 // If the user is signing in, we do not require any format
                 return text.isEmpty ? .tooShort(kind: kind) : nil
@@ -78,12 +78,9 @@ class TextFieldValidator {
 
 extension TextFieldValidator {
 
-    var minPasswordLength: Int { return 8 }
-    var maxPasswordLength: Int { return 120 }
-
     @available(iOS 12, *)
     var passwordRules: UITextInputPasswordRules {
-        return UITextInputPasswordRules(descriptor: "minlength: \(minPasswordLength); maxlength: \(maxPasswordLength)")
+        return UITextInputPasswordRules(descriptor: PasswordRuleSet.shared.encodeInKeychainFormat())
     }
 
 }
@@ -123,6 +120,8 @@ extension TextFieldValidator.ValidationError: LocalizedError {
             return "phone.guidance.invalid".localized
         case .custom(let description):
             return description
+        case .invalidPassword:
+            return PasswordRuleSet.shared.localizedDescription
         }
     }
 
