@@ -19,15 +19,18 @@
 import XCTest
 @testable import Wire
 
-class ChangePhoneViewControllerSnapshotTests: ZMSnapshotTestCase {
+final class ChangePhoneViewControllerSnapshotTests: CoreDataSnapshotTestCase {
 
     override func setUp() {
         super.setUp()
     }
 
     func testThatItShowsCurrentUserPhoneNumber() {
+        selfUser.phoneNumber = "+123456789"
+
         let sut = ChangePhoneViewController()
         sut.view.backgroundColor = .black
+
         verify(view: sut.view)
     }
 
