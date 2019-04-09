@@ -19,8 +19,6 @@
 
 #import "PermissionDeniedViewController.h"
 
-@import PureLayout;
-
 #import "UIColor+WAZExtensions.h"
 #import "Analytics.h"
 #import "Wire-Swift.h"
@@ -28,11 +26,6 @@
 
 
 @interface PermissionDeniedViewController ()
-@property (nonatomic) BOOL initialConstraintsCreated;
-@property (nonatomic) UILabel *heroLabel;
-@property (nonatomic) Button *settingsButton;
-@property (nonatomic) UIButton *laterButton;
-@property (nonatomic) UIVisualEffectView *backgroundBlurView;
 @property (nonatomic )BOOL monochromeStyle;
 @end
 
@@ -94,21 +87,20 @@
     
     UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
     self.backgroundBlurView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
-    self.backgroundBlurView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:self.backgroundBlurView];
-    [self.backgroundBlurView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
     self.backgroundBlurView.hidden = self.backgroundBlurDisabled;
 
     [self createHeroLabel];
     [self createSettingsButton];
     [self createLaterButton];
-    
+    [self createConstraints];
+
     [self updateViewConstraints];
 }
 
 - (void)createHeroLabel
 {    
-    self.heroLabel = [[UILabel alloc] initForAutoLayout];
+    self.heroLabel = [[UILabel alloc] init];
     self.heroLabel.textColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:ColorSchemeVariantDark];
     self.heroLabel.numberOfLines = 0;
    
@@ -126,34 +118,12 @@
 - (void)createLaterButton
 {
     self.laterButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.laterButton.translatesAutoresizingMaskIntoConstraints = NO;
     self.laterButton.titleLabel.font = UIFont.smallLightFont;
     [self.laterButton setTitleColor:[UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:ColorSchemeVariantDark] forState:UIControlStateNormal];
     [self.laterButton setTitleColor:[UIColor wr_colorFromColorScheme:ColorSchemeColorButtonFaded variant:ColorSchemeVariantDark] forState:UIControlStateHighlighted];
     [self.laterButton addTarget:self action:@selector(continueWithoutAccess:) forControlEvents:UIControlEventTouchUpInside];
     
     [self.view addSubview:self.laterButton];
-}
-
-- (void)updateViewConstraints
-{
-    [super updateViewConstraints];
-    
-    if (! self.initialConstraintsCreated) {
-        self.initialConstraintsCreated = YES;
-        
-        [self.heroLabel autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:28];
-        [self.heroLabel autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:28];
-        
-        [self.settingsButton autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.heroLabel withOffset:28];
-        [self.settingsButton autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:28];
-        [self.settingsButton autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:28];
-        [self.settingsButton autoSetDimension:ALDimensionHeight toSize:40];
-        
-        [self.laterButton autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.settingsButton withOffset:28];
-        [self.laterButton autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:28];
-        [self.laterButton autoAlignAxisToSuperviewAxis:ALAxisVertical];
-    }
 }
 
 - (void)setBackgroundBlurDisabled:(BOOL)backgroundBlurDisabled

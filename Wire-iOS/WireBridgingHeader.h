@@ -118,7 +118,10 @@
 #import "ContactsDataSource.h"
 #import "StartUIViewController.h"
 #import "Button.h"
+
 #import "PermissionDeniedViewController.h"
+#import "PermissionDeniedViewController+Internal.h"
+
 #import "ShareContactsViewController.h"
 
 // Helper objects
