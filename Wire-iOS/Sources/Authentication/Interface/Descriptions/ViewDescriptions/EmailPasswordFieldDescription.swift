@@ -57,7 +57,7 @@ extension EmailPasswordFieldDescription: ViewDescriptor, EmailPasswordTextFieldD
     func textField(_ textField: EmailPasswordTextField, didUpdateValidation isValid: Bool) {
         if usePasswordLiveValidation {
             if let passwordError = textField.passwordValidationError {
-                valueValidated?(.error(passwordError, showVisualFeedback: !textField.passwordField.input.isEmpty))
+                valueValidated?(.error(passwordError, showVisualFeedback: !textField.isPasswordEmpty))
             } else {
                 valueValidated?(nil)
             }
