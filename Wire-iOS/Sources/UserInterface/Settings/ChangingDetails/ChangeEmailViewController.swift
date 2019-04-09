@@ -75,7 +75,7 @@ struct ChangeEmailState {
         }
     }
     
-    init(currentEmail: String? = ZMUser.selfUser().emailAddress) {
+    init(currentEmail: String?) {
         self.currentEmail = currentEmail
         flowType = currentEmail != nil ? .changeExistingEmail : .setInitialEmail
         emailValidationError = currentEmail != nil ? nil : .tooShort(kind: .email)
@@ -87,13 +87,15 @@ struct ChangeEmailState {
 @objcMembers final class ChangeEmailViewController: SettingsBaseTableViewController {
 
     fileprivate weak var userProfile = ZMUserSession.shared()?.userProfile
-    var state = ChangeEmailState()
+    var state: ChangeEmailState
     private var observerToken: Any?
 
     let emailCell = AccessoryTextFieldCell(style: .default, reuseIdentifier: nil)
     let emailPasswordCell = EmailPasswordTextFieldCell(style: .default, reuseIdentifier: nil)
+    let validationCell = ValueValidationCell(initialValidation: .info("password.guidance.tooshort".localized))
 
-    init() {
+    init(user: UserType) {
+        state = ChangeEmailState(currentEmail: user.emailAddress)
         super.init(style: .grouped)
         setupViews()
     }
@@ -113,8 +115,6 @@ struct ChangeEmailState {
     }
     
     internal func setupViews() {
-        AccessoryTextFieldCell.register(in: tableView)
-
         title = "self.settings.account_section.email.change.title".localized(uppercased: true)
         view.backgroundColor = .clear
         tableView.isScrollEnabled = false
@@ -181,7 +181,13 @@ struct ChangeEmailState {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        switch state.flowType {
+        case .changeExistingEmail:
+            return 1
+
+        case .setInitialEmail:
+            return 2
+        }
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -191,16 +197,11 @@ struct ChangeEmailState {
             return emailCell
 
         case .setInitialEmail:
-            return emailPasswordCell
-        }
-    }
-
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        switch state.flowType {
-        case .changeExistingEmail:
-            return 56
-        case .setInitialEmail:
-            return (56 * 2) + CGFloat.hairline
+            if indexPath.row == 0 {
+                return emailPasswordCell
+            } else {
+                return validationCell
+            }
         }
     }
 
@@ -261,6 +262,13 @@ extension ChangeEmailViewController: EmailPasswordTextFieldDelegate {
 
     func textField(_ textField: EmailPasswordTextField, didUpdateValidation isValid: Bool) {
         state.isEmailPasswordInputValid = isValid
+
+        if let passwordError = textField.passwordValidationError {
+            validationCell.updateValidation(.error(passwordError, showVisualFeedback: !textField.isPasswordEmpty))
+        } else {
+            validationCell.updateValidation(nil)
+        }
+
         updateSaveButtonState()
     }
 

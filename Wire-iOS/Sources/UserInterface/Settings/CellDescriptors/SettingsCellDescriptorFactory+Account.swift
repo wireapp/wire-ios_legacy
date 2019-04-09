@@ -145,7 +145,7 @@ extension SettingsCellDescriptorFactory {
                 isDestructive: false,
                 presentationStyle: .navigation,
                 presentationAction: { () -> (UIViewController?) in
-                    return ChangeEmailViewController()
+                    return ChangeEmailViewController(user: ZMUser.selfUser())
                 },
                 previewGenerator: { _ in
                     if let email = ZMUser.selfUser().emailAddress, !email.isEmpty {
