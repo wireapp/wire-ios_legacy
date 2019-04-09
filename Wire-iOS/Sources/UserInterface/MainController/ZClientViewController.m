@@ -194,11 +194,6 @@
     }
 }
 
-- (UIInterfaceOrientationMask)supportedInterfaceOrientations
-{
-    return self.wr_supportedInterfaceOrientations;
-}
-
 - (UIStatusBarStyle)preferredStatusBarStyle
 {
     if (nil != self.topOverlayViewController) {

@@ -249,11 +249,6 @@
     return YES;
 }
 
-- (UIInterfaceOrientationMask)supportedInterfaceOrientations
-{
-    return self.wr_supportedInterfaceOrientations;
-}
-
 - (void)didReceiveMemoryWarning
 {
     ZMLogWarn(@"Received system memory warning.");
