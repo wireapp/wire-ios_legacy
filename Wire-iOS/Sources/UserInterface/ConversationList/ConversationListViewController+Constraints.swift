@@ -32,17 +32,17 @@ extension ConversationListViewController {
          onboardingHint,
          listContentController.view].forEach() { $0.translatesAutoresizingMaskIntoConstraints = false }
 
-        var constraints :[NSLayoutConstraint] = conversationListContainer.fitInSuperview(exclude: [.top], activate: false).values.map{$0}
+        var constraints :[NSLayoutConstraint] = conversationListContainer.fitInSuperview(exclude: [.top], activate: false).map{$0.value}
 
         let bottomBarControllerConstraints = bottomBarController.view.fitInSuperview(exclude: [.top], activate: false)
 
         bottomBarBottomOffset = bottomBarControllerConstraints[.bottom]
 
-        constraints += bottomBarControllerConstraints.values.map{$0}
+        constraints += bottomBarControllerConstraints.values
 
         networkStatusViewController.createConstraintsInParentController(bottomView: topBar, controller: self)
 
-        constraints += topBar.fitInSuperview(exclude: [.top, .bottom], activate: false).values.map{$0}
+        constraints += topBar.fitInSuperview(exclude: [.top, .bottom], activate: false).values
 
         constraints += [topBar.bottomAnchor.constraint(equalTo: conversationListContainer.topAnchor),
 
