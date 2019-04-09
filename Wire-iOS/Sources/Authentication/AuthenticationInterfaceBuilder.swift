@@ -226,13 +226,8 @@ class AuthenticationInterfaceBuilder {
             controller?.valueSubmitted(value)
         }
 
-        mainView.valueValidated = { [weak controller] (error: TextFieldValidator.ValidationError) in
-            switch error {
-            case .none:
-                controller?.clearError()
-            default:
-                controller?.displayError(error)
-            }
+        mainView.valueValidated = { [weak controller] validation in
+            controller?.valueValidated(validation)
         }
 
         return controller

@@ -53,7 +53,7 @@ extension EmailPasswordFieldDescription: ViewDescriptor, EmailPasswordTextFieldD
 
     func textFieldDidUpdateText(_ textField: EmailPasswordTextField) {
         // Reset the error message when the user changes the text
-        valueValidated?(.none)
+        valueValidated?(nil)
     }
 
     func textField(_ textField: EmailPasswordTextField, didConfirmCredentials credentials: (String, String)) {

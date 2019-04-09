@@ -28,12 +28,11 @@ class TextFieldValidator {
         case invalidEmail
         case invalidPhoneNumber
         case custom(String)
-        case none
     }
 
-    func validate(text: String?, kind: AccessoryTextField.Kind) -> TextFieldValidator.ValidationError {
+    func validate(text: String?, kind: AccessoryTextField.Kind) -> TextFieldValidator.ValidationError? {
         guard let text = text else {
-            return .none
+            return nil
         }
         
         if let customError = customValidator?(text) {
@@ -56,7 +55,7 @@ class TextFieldValidator {
                 }
             } else {
                 // If the user is signing in, we do not require any format
-                return text.isEmpty ? .tooShort(kind: kind) : .none
+                return text.isEmpty ? .tooShort(kind: kind) : nil
             }
 
         case .name:
@@ -124,8 +123,6 @@ extension TextFieldValidator.ValidationError: LocalizedError {
             return "phone.guidance.invalid".localized
         case .custom(let description):
             return description
-        case .none:
-            return ""
         }
     }
 

@@ -25,7 +25,7 @@ protocol TextFieldValidationDelegate: class {
     /// - Parameters:
     ///   - sender: the sender is the textfield needs to validate
     ///   - error: An error object that indicates why the request failed, or nil if the request was successful.
-    func validationUpdated(sender: UITextField, error: TextFieldValidator.ValidationError)
+    func validationUpdated(sender: UITextField, error: TextFieldValidator.ValidationError?)
 }
 
 class AccessoryTextField: UITextField, TextContainer {
@@ -44,7 +44,7 @@ class AccessoryTextField: UITextField, TextContainer {
 
     static let enteredTextFont = FontSpec(.normal, .regular, .inputText).font!
     static let placeholderFont = FontSpec(.small, .regular).font!
-    static private let ConfirmButtonWidth: CGFloat = 32
+    static let ConfirmButtonWidth: CGFloat = 32
 
     var isLoading = false {
         didSet {
