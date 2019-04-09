@@ -77,27 +77,20 @@
 @property (nonatomic) ZMConversation *selectedConversation;
 @property (nonatomic) ConversationListState state;
 
-@property (nonatomic, weak) id<UserProfile> userProfile;
 @property (nonatomic) NSObject *userProfileObserverToken;
 @property (nonatomic) id userObserverToken;
 @property (nonatomic) id allConversationsObserverToken;
 @property (nonatomic) id connectionRequestsObserverToken;
 @property (nonatomic) id initialSyncObserverToken;
 
-@property (nonatomic) ConversationListContentController *listContentController;
-@property (nonatomic) NetworkStatusViewController *networkStatusViewController;
-
-/// for NetworkStatusViewDelegate
-@property (nonatomic) BOOL shouldAnimateNetworkStatusView;
 
 @property (nonatomic) UIView *contentContainer;
+
 
 @property (nonatomic) CGFloat contentControllerBottomInset;
 
 /// for data usage dialog
 @property (nonatomic) BOOL viewDidAppearCalled;
-
-@property (nonatomic) BOOL dataUsagePermissionDialogDisplayed;
 
 - (void)setState:(ConversationListState)state animated:(BOOL)animated;
 

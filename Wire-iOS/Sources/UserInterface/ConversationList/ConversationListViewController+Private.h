@@ -30,10 +30,10 @@
 @class ConversationListTopBar;
 @class ConversationListOnboardingHint;
 
-@interface ConversationListViewController (Private)
+@interface ConversationListViewController ()
 @property (nonatomic, nullable) SearchViewController *searchViewController;
 @property (nonatomic, nonnull) ConversationListContentController *listContentController;
-@property (nonatomic, weak, readonly, nullable) id<UserProfile> userProfile;
+@property (nonatomic, weak, nullable) id<UserProfile> userProfile;
 @property (nonatomic, nonnull) NetworkStatusViewController *networkStatusViewController;
 
 @property (nonatomic, nonnull) UILabel *noConversationLabel;
