@@ -21,7 +21,7 @@
 
 #import "InviteContactsViewController.h"
 #import "InviteContactsViewController+Internal.h"
-#import "ContactsViewController+Private.h"
+#import "ContactsViewController+Internal.h"
 #import "ContactsDataSource.h"
 #import "ZClientViewController.h"
 #import "WireSyncEngine+iOS.h"

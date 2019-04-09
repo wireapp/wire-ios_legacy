@@ -57,7 +57,13 @@ static NSString * const ContactsViewControllerSectionHeaderID = @"ContactsSectio
 @property (nonatomic) NSLayoutConstraint *bottomContainerBottomConstraint;
 @property (nonatomic) NSLayoutConstraint *emptyResultsBottomConstraint;
 
+/// If sharingContactsRequired is true the user will be prompted to share his address book
+/// if he/she hasn't already done so. Override this property in subclasses to override
+/// the default behaviour which is false.
+@property (nonatomic, readonly) BOOL sharingContactsRequired;
+
 - (void)setEmptyResultsHidden:(BOOL)hidden animated:(BOOL)animated;
 - (NSArray *) actionButtonTitles;
+
 
 @end
