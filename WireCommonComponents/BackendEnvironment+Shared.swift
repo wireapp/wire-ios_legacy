@@ -20,10 +20,22 @@ import Foundation
 import WireTransport
 
 extension BackendEnvironment {
-    public static let shared: BackendEnvironment = {
-        let type = EnvironmentType(userDefaults: .standard)
-        let bundle = Bundle.backendBundle
-        guard let environment = BackendEnvironment.from(environmentType: type, configurationBundle: bundle) else { fatalError("Malformed data inside backend.bundle") }
-        return environment
+    public static var shared: BackendEnvironment = {
+        return loadEnvironment()
     }()
+    
+    public static func loadEnvironment() -> BackendEnvironment {
+        var environmentType = EnvironmentType(userDefaults: .standard)
+        if case let .custom(host: host) = environmentType {
+            if let environment = BackendEnvironment(host: host) {
+                return environment
+            } else {
+                environmentType = .production
+            }
+        }
+        
+        let bundle = Bundle.backendBundle
+        guard let environment = BackendEnvironment.from(environmentType: environmentType, configurationBundle: bundle) else { fatalError("Malformed data inside backend.bundle") }
+        return environment
+    }
 }
