@@ -36,18 +36,14 @@ extension PasswordRuleSet {
 
     /// The localized error message for the shared rule set.
     static let localizedErrorMessage: String = {
-        return PasswordRuleSet.shared.localizedDescription
-    }()
+        let ruleSet = PasswordRuleSet.shared
+        let minLengthRule = "registration.password.rules.min_length".localized(args: ruleSet.minimumLength)
 
-    /// The localized description for the rules.
-    var localizedDescription: String {
-        let minLengthRule = "registration.password.rules.min_length".localized(args: minimumLength)
-
-        if requiredCharacters.isEmpty {
+        if ruleSet.requiredCharacters.isEmpty {
             return "registration.password.rules.no_requirements".localized(args: minLengthRule)
         }
 
-        let ruleSegments: [String] = requiredCharacters.compactMap { requiredClass in
+        let localizedRules: [String] = ruleSet.requiredCharacters.compactMap { requiredClass in
             switch requiredClass {
             case .digits:
                 return "registration.password.rules.number".localized(args: 1)
@@ -62,8 +58,8 @@ extension PasswordRuleSet {
             }
         }
 
-        let formattedSegments = PasswordRuleSet.arrayFormatter.string(from: ruleSegments)!
-        return "registration.password.rules.with_requirements".localized(args: minLengthRule, formattedSegments)
-    }
+        let formattedRulesList = PasswordRuleSet.arrayFormatter.string(from: localizedRules)!
+        return "registration.password.rules.with_requirements".localized(args: minLengthRule, formattedRulesList)
+    }()
 
 }

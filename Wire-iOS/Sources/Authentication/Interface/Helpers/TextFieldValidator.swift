@@ -50,7 +50,7 @@ class TextFieldValidator {
             }
         case .password(let isNew):
             if isNew {
-                // If the user is signing in, we do not require any format
+                // If the user is registering, enforce the password rules
                 let result = PasswordRuleSet.shared.validatePassword(text)
                 return result != .valid ? .invalidPassword(result) : nil
             } else {
@@ -95,7 +95,7 @@ extension TextFieldValidator.ValidationError: LocalizedError {
             case .email:
                 return "email.guidance.tooshort".localized
             case .password:
-                return PasswordRuleSet.shared.localizedDescription
+                return PasswordRuleSet.localizedErrorMessage
             case .unknown:
                 return "unknown.guidance.tooshort".localized
             case .phoneNumber:
