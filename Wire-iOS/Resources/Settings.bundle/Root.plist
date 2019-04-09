@@ -74,11 +74,11 @@
 		</dict>
 		<dict>
 			<key>Type</key>
-			<string>PSChildPaneSpecifier</string>
+			<string>PSTextFieldSpecifier</string>
 			<key>Title</key>
-			<string>BUILD_INFO</string>
-			<key>File</key>
-			<string>BuildInfo</string>
+			<string>Custom backend host</string>
+			<key>Key</key>
+			<string>ZMBackendEnvironmentType</string>
 		</dict>
 		<dict>
 			<key>Title</key>
