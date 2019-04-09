@@ -151,7 +151,7 @@ class AuthenticationStepController: AuthenticationStepViewController {
             subtextLabel.textColor = UIColor.Team.subtitleColor
             subtextLabel.numberOfLines = 0
             subtextLabel.lineBreakMode = .byWordWrapping
-            subtextLabel.isHidden = stepDescription.subtext == nil
+            subtextLabelContainer.isHidden = stepDescription.subtext == nil
         }
 
         errorLabel = UILabel()
@@ -381,7 +381,7 @@ extension AuthenticationStepController {
             errorLabel.accessibilityIdentifier = "validation-rules"
             errorLabel.text = infoText
             errorLabel.textColor = UIColor.Team.placeholderColor
-            errorLabel.isHidden = false
+            errorLabelContainer.isHidden = false
             showSecondaryView(for: nil)
             
         case .error(let error, let showVisualFeedback)?:
@@ -394,7 +394,7 @@ extension AuthenticationStepController {
             errorLabel.accessibilityIdentifier = "validation-failure"
             errorLabel.text = error.errorDescription
             errorLabel.textColor = UIColor.Team.errorMessageColor
-            errorLabel.isHidden = false
+            errorLabelContainer.isHidden = false
             showSecondaryView(for: error)
 
         case nil:
@@ -408,7 +408,7 @@ extension AuthenticationStepController {
 extension AuthenticationStepController {
     func clearError() {
         errorLabel.text = nil
-        errorLabel.isHidden = true
+        errorLabelContainer.isHidden = true
         showSecondaryView(for: nil)
     }
 
