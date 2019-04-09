@@ -16,48 +16,48 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-static NSString * const _Nonnull ContactsViewControllerCellID = @"ContactsCell";
-static NSString * const _Nonnull ContactsViewControllerSectionHeaderID = @"ContactsSectionHeaderView";
-
 @class IconButton;
 @class SearchHeaderViewController;
 @class TransformLabel;
 @class ContactsEmptyResultView;
 
+static NSString * const ContactsViewControllerCellID = @"ContactsCell";
+static NSString * const ContactsViewControllerSectionHeaderID = @"ContactsSectionHeaderView";
+
 @interface ContactsViewController ()
 
 @property (nonatomic) BOOL searchResultsReceived;
 
-@property (nonatomic, null_unspecified) TransformLabel *titleLabel;
-@property (nonatomic, null_unspecified) UIView *bottomContainerView;
-@property (nonatomic, null_unspecified) UIView *bottomContainerSeparatorView;
-@property (nonatomic, null_unspecified) UILabel *noContactsLabel;
-@property (nonatomic, nullable) NSArray *actionButtonTitles;
-@property (nonatomic, null_unspecified) IconButton *cancelButton;
-@property (nonatomic, null_unspecified) SearchHeaderViewController *searchHeaderViewController;
-@property (nonatomic, null_unspecified) UIView *topContainerView;
-@property (nonatomic, null_unspecified) UIView *separatorView;
-@property (nonatomic, null_unspecified) UITableView *tableView;
+@property (nonatomic) TransformLabel *titleLabel;
+@property (nonatomic) UIView *bottomContainerView;
+@property (nonatomic) UIView *bottomContainerSeparatorView;
+@property (nonatomic) UILabel *noContactsLabel;
+@property (nonatomic) IconButton *cancelButton;
+@property (nonatomic) SearchHeaderViewController *searchHeaderViewController;
+@property (nonatomic) UIView *topContainerView;
+@property (nonatomic) UIView *separatorView;
+@property (nonatomic) UITableView *tableView;
 
-@property (nonatomic, null_unspecified) Button *inviteOthersButton;
-@property (nonatomic, null_unspecified) ContactsEmptyResultView *emptyResultsView;
+@property (nonatomic) Button *inviteOthersButton;
+@property (nonatomic) ContactsEmptyResultView *emptyResultsView;
 
-@property (nonatomic, null_unspecified) NSLayoutConstraint *closeButtonHeightConstraint;
-@property (nonatomic, null_unspecified) NSLayoutConstraint *titleLabelHeightConstraint;
-@property (nonatomic, null_unspecified) NSLayoutConstraint *titleLabelTopConstraint;
-@property (nonatomic, null_unspecified) NSLayoutConstraint *titleLabelBottomConstraint;
-@property (nonatomic, null_unspecified) NSLayoutConstraint *closeButtonTopConstraint;
-@property (nonatomic, null_unspecified) NSLayoutConstraint *closeButtonBottomConstraint;
-@property (nonatomic, null_unspecified) NSLayoutConstraint *topContainerHeightConstraint;
-@property (nonatomic, null_unspecified) NSLayoutConstraint *searchHeaderTopConstraint;
-@property (nonatomic, null_unspecified) NSLayoutConstraint *searchHeaderWithNavigatorBarTopConstraint;
+@property (nonatomic) NSLayoutConstraint *closeButtonHeightConstraint;
+@property (nonatomic) NSLayoutConstraint *titleLabelHeightConstraint;
+@property (nonatomic) NSLayoutConstraint *titleLabelTopConstraint;
+@property (nonatomic) NSLayoutConstraint *titleLabelBottomConstraint;
+@property (nonatomic) NSLayoutConstraint *closeButtonTopConstraint;
+@property (nonatomic) NSLayoutConstraint *closeButtonBottomConstraint;
+@property (nonatomic) NSLayoutConstraint *topContainerHeightConstraint;
+@property (nonatomic) NSLayoutConstraint *searchHeaderTopConstraint;
+@property (nonatomic) NSLayoutConstraint *searchHeaderWithNavigatorBarTopConstraint;
 
-@property (nonatomic, null_unspecified) NSLayoutConstraint *bottomEdgeConstraint;
+@property (nonatomic) NSLayoutConstraint *bottomEdgeConstraint;
 
 // Containers, ect.
-@property (nonatomic, null_unspecified) NSLayoutConstraint *bottomContainerBottomConstraint;
-@property (nonatomic, null_unspecified) NSLayoutConstraint *emptyResultsBottomConstraint;
+@property (nonatomic) NSLayoutConstraint *bottomContainerBottomConstraint;
+@property (nonatomic) NSLayoutConstraint *emptyResultsBottomConstraint;
 
 - (void)setEmptyResultsHidden:(BOOL)hidden animated:(BOOL)animated;
+- (NSArray *) actionButtonTitles;
 
 @end

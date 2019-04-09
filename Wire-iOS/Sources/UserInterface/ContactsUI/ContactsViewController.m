@@ -35,7 +35,9 @@
 
 static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
-
+@interface ContactsViewController ()
+@property (nonatomic, nullable) NSArray *actionButtonTitles;
+@end
 
 @implementation ContactsViewController
 
@@ -197,6 +199,10 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     if ([_contentDelegate respondsToSelector:@selector(actionButtonTitlesForContactsViewController:)]) {
         self.actionButtonTitles = [_contentDelegate actionButtonTitlesForContactsViewController:self];
     }
+}
+
+- (NSArray *) actionButtonTitles {
+    return _actionButtonTitles;
 }
 
 - (void)setTitle:(NSString *)title
