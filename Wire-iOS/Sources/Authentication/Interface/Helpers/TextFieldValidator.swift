@@ -95,7 +95,7 @@ extension TextFieldValidator.ValidationError: LocalizedError {
             case .email:
                 return "email.guidance.tooshort".localized
             case .password:
-                return "password.guidance.tooshort".localized
+                return PasswordRuleSet.shared.localizedDescription
             case .unknown:
                 return "unknown.guidance.tooshort".localized
             case .phoneNumber:
@@ -120,8 +120,14 @@ extension TextFieldValidator.ValidationError: LocalizedError {
             return "phone.guidance.invalid".localized
         case .custom(let description):
             return description
-        case .invalidPassword:
-            return PasswordRuleSet.shared.localizedDescription
+        case .invalidPassword(let error):
+            switch error {
+            case .tooLong:
+                return "password.guidance.toolong".localized
+            default:
+                return PasswordRuleSet.localizedErrorMessage
+            }
+
         }
     }
 

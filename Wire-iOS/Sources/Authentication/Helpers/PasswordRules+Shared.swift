@@ -32,38 +32,33 @@ extension PasswordRuleSet {
         return try! decoder.decode(PasswordRuleSet.self, from: fileData)
     }()
 
-    var sortedRequirements: [PasswordCharacterClass] {
-        return requiredCharacterSets.keys.sorted {
-            switch $0 {
-            case .lowercase: return true // lowercase always comes first
-            case .uppercase: return $1 != .lowercase // uppercase always comes after lowercase
-            case .digits: return $1 != .lowercase || $1 != .uppercase // digits always comes uppercase
-            case .special: return true // Always put special characters at the end
-            default: return true // Always put other cases at the end
-            }
-        }
-    }
+    // MARK: - Localized Description
+
+    /// The localized error message for the shared rule set.
+    static let localizedErrorMessage: String = {
+        return PasswordRuleSet.shared.localizedDescription
+    }()
 
     /// The localized description for the rules.
     var localizedDescription: String {
         let minLengthRule = "registration.password.rules.min_length".localized(args: minimumLength)
 
-        if sortedRequirements.isEmpty {
+        if requiredCharacters.isEmpty {
             return "registration.password.rules.no_requirements".localized(args: minLengthRule)
         }
 
-        let ruleSegments = sortedRequirements.reduce(into: [minLengthRule]) { segments, requiredClass in
+        let ruleSegments: [String] = requiredCharacters.compactMap { requiredClass in
             switch requiredClass {
             case .digits:
-                segments.append("registration.password.rules.number".localized(args: 1))
+                return "registration.password.rules.number".localized(args: 1)
             case .lowercase:
-                segments.append("registration.password.rules.lowercase".localized(args: 1))
+                return "registration.password.rules.lowercase".localized(args: 1)
             case .uppercase:
-                segments.append("registration.password.rules.uppercase".localized(args: 1))
+                return "registration.password.rules.uppercase".localized(args: 1)
             case .special:
-                segments.append("registration.password.rules.uppercase".localized(args: 1))
+                return "registration.password.rules.special".localized(args: 1)
             default:
-                return
+                return nil
             }
         }
 

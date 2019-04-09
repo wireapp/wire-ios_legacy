@@ -1119,7 +1119,6 @@
 "email.guidance.toolong" = "Too many characters";
 
 "password.placeholder" = "Password";
-"password.guidance.tooshort" = "At least 8 characters";
 "password.guidance.toolong" = "Too many characters";
 
 "phone.guidance.invalid" = "Invalid phone number";
@@ -1161,8 +1160,6 @@
 "team.full_name.textfield.accessibility" = "Set full name";
 
 "team.password.headline" = "Set password";
-"team.password.textfield.accessibility" = "Set password, at least 8 characters";
-
 
 "verification.code_label" = "Six-digit code. Text field.";
 "verification.code_hint" = "Double tap to enter the code.";
