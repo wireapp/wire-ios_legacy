@@ -119,7 +119,9 @@
 #import "StartUIViewController.h"
 #import "Button.h"
 #import "PermissionDeniedViewController.h"
+
 #import "ShareContactsViewController.h"
+#import "ShareContactsViewController+Internal.h"
 
 // Helper objects
 #import "PushTransition.h"
