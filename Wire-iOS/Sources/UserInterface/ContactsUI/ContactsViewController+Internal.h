@@ -37,7 +37,7 @@ static NSString * const _Nonnull ContactsViewControllerSectionHeaderID = @"Conta
 @property (nonatomic, null_unspecified) SearchHeaderViewController *searchHeaderViewController;
 @property (nonatomic, null_unspecified) UIView *topContainerView;
 @property (nonatomic, null_unspecified) UIView *separatorView;
-@property (nonatomic, readwrite, null_unspecified) UITableView *tableView;
+@property (nonatomic, null_unspecified) UITableView *tableView;
 
 @property (nonatomic, null_unspecified) Button *inviteOthersButton;
 @property (nonatomic, null_unspecified) ContactsEmptyResultView *emptyResultsView;

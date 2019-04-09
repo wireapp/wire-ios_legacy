@@ -40,24 +40,24 @@ extension ContactsViewController {
         titleLabelTopConstraint = titleLabelConstraints[.top]
         titleLabelBottomConstraint = titleLabelConstraints[.bottom]
 
-        var constraints: [NSLayoutConstraint] = titleLabelConstraints.values.map{$0}
+        var constraints: [NSLayoutConstraint] = titleLabelConstraints.map{$0.value}
 
         titleLabelHeightConstraint = titleLabel.heightAnchor.constraint(equalToConstant: 44)
         titleLabelHeightConstraint.isActive = (titleLabel.text?.count ?? 0) > 0
 
         createSearchHeaderConstraints()
 
-        constraints += separatorView.fitInSuperview(with: EdgeInsets(margin: standardOffset), exclude: [.top, .bottom], activate: false).values.map{$0}
+        constraints += separatorView.fitInSuperview(with: EdgeInsets(margin: standardOffset), exclude: [.top, .bottom], activate: false).values
         constraints += [separatorView.heightAnchor.constraint(equalToConstant: 0.5),
                         separatorView.bottomAnchor.constraint(equalTo: tableView.topAnchor),
                         separatorView.bottomAnchor.constraint(equalTo: emptyResultsView.topAnchor)]
 
-        constraints += tableView.fitInSuperview(exclude: [.top, .bottom], activate: false).values.map{$0}
+        constraints += tableView.fitInSuperview(exclude: [.top, .bottom], activate: false).values
         constraints += [tableView.bottomAnchor.constraint(equalTo: bottomContainerView.topAnchor)]
 
         let emptyResultsViewConstraints = emptyResultsView.fitInSuperview(exclude: [.top], activate: false)
         emptyResultsBottomConstraint = emptyResultsViewConstraints[.bottom]
-        constraints += emptyResultsViewConstraints.values.map{$0}
+        constraints += emptyResultsViewConstraints.values
 
         constraints += [noContactsLabel.topAnchor.constraint(equalTo: searchHeaderViewController.view.bottomAnchor, constant: standardOffset),
 
@@ -68,12 +68,13 @@ extension ContactsViewController {
         let bottomContainerViewConstraints = bottomContainerView.fitInSuperview(exclude: [.top], activate: false)
         bottomContainerBottomConstraint = bottomContainerViewConstraints[.bottom]
 
-        constraints += bottomContainerViewConstraints.values.map{$0}
+        constraints += bottomContainerViewConstraints.values
 
-        constraints += bottomContainerSeparatorView.fitInSuperview(exclude: [.bottom], activate: false).values.map{$0}
+        constraints += bottomContainerSeparatorView.fitInSuperview(exclude: [.bottom], activate: false).values
         constraints += [bottomContainerSeparatorView.heightAnchor.constraint(equalToConstant: 0.5)]
 
-        closeButtonTopConstraint = cancelButton.pinToSuperview(anchor: .top, inset: 16 + UIScreen.safeArea.top, activate: (titleLabel?.text?.count ?? 0) > 0)
+
+        closeButtonTopConstraint = cancelButton.pinToSuperview(anchor: .top, inset: 16 + UIScreen.safeArea.top, activate: (titleLabel.text?.count ?? 0) > 0)
 
         closeButtonBottomConstraint = cancelButton.pinToSuperview(anchor: .bottom, inset: 8, activate: false)
         closeButtonBottomConstraint.priority = .defaultLow
@@ -89,7 +90,7 @@ extension ContactsViewController {
 
         bottomEdgeConstraint = inviteOthersButtonConstraints[.bottom]
 
-        constraints += inviteOthersButtonConstraints.values.map{$0}
+        constraints += inviteOthersButtonConstraints.values
 
         constraints += [inviteOthersButton.heightAnchor.constraint(equalToConstant: 28)]
 
