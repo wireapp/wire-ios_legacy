@@ -25,11 +25,12 @@ final class TextFieldDescription: NSObject, ValueSubmission {
     var valueSubmitted: ValueSubmitted?
     var valueValidated: ValueValidated?
     var acceptsInput: Bool = true
-    var validationError: TextFieldValidator.ValidationError
+    var validationError: TextFieldValidator.ValidationError?
     let uppercasePlaceholder: Bool
     var showConfirmButton: Bool = true
     var canSubmit: (() -> Bool)?
     var textField: AccessoryTextField?
+    var useLiveValidation: Bool = false
 
     init(placeholder: String, actionDescription: String, kind: AccessoryTextField.Kind, uppercasePlaceholder: Bool = true) {
         self.placeholder = placeholder
@@ -40,7 +41,7 @@ final class TextFieldDescription: NSObject, ValueSubmission {
         super.init()
 
         canSubmit = { [weak self] in
-            return (self?.acceptsInput == true) && (self?.validationError == TextFieldValidator.ValidationError.none)
+            return (self?.acceptsInput == true) && (self?.validationError == nil)
         }
     }
 }
@@ -54,6 +55,7 @@ extension TextFieldDescription: ViewDescriptor {
         textField.delegate = self
         textField.textFieldValidationDelegate = self
         textField.confirmButton.addTarget(self, action: #selector(TextFieldDescription.confirmButtonTapped(_:)), for: .touchUpInside)
+        textField.addTarget(self, action: #selector(TextFieldDescription.editingChanged), for: .editingChanged)
         textField.confirmButton.accessibilityLabel = self.actionDescription
         textField.showConfirmButton = showConfirmButton
         textField.enableConfirmButton = canSubmit
@@ -68,6 +70,18 @@ extension TextFieldDescription: UITextFieldDelegate {
     @objc func confirmButtonTapped(_ sender: AnyObject) {
         guard let textField = self.textField, acceptsInput else { return }
         submitValue(with: textField.input)
+    }
+
+    @objc func editingChanged(sender: AccessoryTextField) {
+        guard useLiveValidation else { return }
+
+        sender.validateInput()
+
+        if let error = validationError {
+            self.valueValidated?(.error(error, showVisualFeedback: !sender.input.isEmpty))
+        } else {
+            self.valueValidated?(nil)
+        }
     }
 
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
@@ -88,18 +102,17 @@ extension TextFieldDescription: UITextFieldDelegate {
     }
 
     func submitValue(with text: String) {
-        switch validationError {
-        case .none:
-            self.valueValidated?(.none)
+        if let error = validationError {
+            self.valueValidated?(.error(error, showVisualFeedback: textField?.input.isEmpty == false))
+        } else {
+            self.valueValidated?(nil)
             self.valueSubmitted?(text)
-        default:
-            self.valueValidated?(validationError)
         }
     }
 }
 
 extension TextFieldDescription: TextFieldValidationDelegate {
-    func validationUpdated(sender: UITextField, error: TextFieldValidator.ValidationError) {
+    func validationUpdated(sender: UITextField, error: TextFieldValidator.ValidationError?) {
         self.validationError = error
     }
 }

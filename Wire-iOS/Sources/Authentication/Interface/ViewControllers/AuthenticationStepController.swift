@@ -41,7 +41,7 @@ class AuthenticationStepController: AuthenticationStepViewController {
     static let headlineFont         = UIFont.systemFont(ofSize: 40, weight: UIFont.Weight.light)
     static let headlineSmallFont    = UIFont.systemFont(ofSize: 32, weight: UIFont.Weight.light)
     static let subtextFont          = FontSpec(.normal, .regular).font!
-    static let errorFont            = FontSpec(.small, .semibold).font!
+    static let errorMessageFont     = FontSpec(.medium, .regular).font!
     static let textButtonFont       = FontSpec(.small, .semibold).font!
 
     // MARK: - Views
@@ -151,15 +151,16 @@ class AuthenticationStepController: AuthenticationStepViewController {
             subtextLabel.textColor = UIColor.Team.subtitleColor
             subtextLabel.numberOfLines = 0
             subtextLabel.lineBreakMode = .byWordWrapping
-            subtextLabel.isHidden = stepDescription.subtext == nil
+            subtextLabelContainer.isHidden = stepDescription.subtext == nil
         }
 
         errorLabel = UILabel()
-        errorLabelContainer = ContentInsetView(errorLabel, inset: textPadding)
-        errorLabel.textAlignment = .center
-        errorLabel.font = AuthenticationStepController.errorFont
-        errorLabel.textColor = UIColor.Team.errorMessageColor
+        let errorInsets = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 24 + AccessoryTextField.ConfirmButtonWidth)
+        errorLabelContainer = ContentInsetView(errorLabel, inset: errorInsets)
+        errorLabel.textAlignment = .left
+        errorLabel.font = AuthenticationStepController.errorMessageFont
         errorLabel.translatesAutoresizingMaskIntoConstraints = false
+        updateValidation(initialValidation)
 
         mainView = createMainView()
 
@@ -224,7 +225,7 @@ class AuthenticationStepController: AuthenticationStepViewController {
             contentStack.wr_addCustomSpacing(44, after: headlineLabelContainer)
         }
 
-        contentStack.wr_addCustomSpacing(8, after: mainView)
+        contentStack.wr_addCustomSpacing(16, after: mainView)
         contentStack.wr_addCustomSpacing(16, after: errorLabelContainer)
 
         // Fixed Constraints
@@ -365,6 +366,41 @@ extension AuthenticationStepController {
         dismissKeyboard()
         authenticationCoordinator?.handleUserInput(value)
     }
+
+    var initialValidation: ValueValidation? {
+        return (stepDescription as? DefaultValidatingStepDescription)?.initialValidation
+    }
+
+    func valueValidated(_ validation: ValueValidation?) {
+        updateValidation(validation ?? initialValidation)
+    }
+
+    func updateValidation(_ suggestedValidation: ValueValidation?) {
+        switch suggestedValidation {
+        case .info(let infoText)?:
+            errorLabel.accessibilityIdentifier = "validation-rules"
+            errorLabel.text = infoText
+            errorLabel.textColor = UIColor.Team.placeholderColor
+            errorLabelContainer.isHidden = false
+            showSecondaryView(for: nil)
+            
+        case .error(let error, let showVisualFeedback)?:
+            if !showVisualFeedback {
+                // If we do not want to show an error (eg if all the text was deleted,
+                // either use the initial info or clear the error
+                return updateValidation(initialValidation)
+            }
+
+            errorLabel.accessibilityIdentifier = "validation-failure"
+            errorLabel.text = error.errorDescription
+            errorLabel.textColor = UIColor.Team.errorMessageColor
+            errorLabelContainer.isHidden = false
+            showSecondaryView(for: error)
+
+        case nil:
+            clearError()
+        }
+    }
 }
 
 // MARK: - Error handling
@@ -372,12 +408,8 @@ extension AuthenticationStepController {
 extension AuthenticationStepController {
     func clearError() {
         errorLabel.text = nil
+        errorLabelContainer.isHidden = true
         showSecondaryView(for: nil)
-    }
-
-    func displayError(_ error: Error) {
-        errorLabel.text = error.localizedDescription.localizedUppercase
-        showSecondaryView(for: error)
     }
 
     func showSecondaryView(for error: Error?) {

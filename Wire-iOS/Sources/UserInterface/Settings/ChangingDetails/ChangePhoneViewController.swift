@@ -23,7 +23,7 @@ import WireSyncEngine
 struct ChangePhoneNumberState {
     let currentNumber: PhoneNumber?
     var updatedNumber: PhoneNumber?
-    var validationError: TextFieldValidator.ValidationError = .tooShort(kind: .phoneNumber)
+    var validationError: TextFieldValidator.ValidationError? = .tooShort(kind: .phoneNumber)
 
     var selectedCountry: Country {
         didSet {
@@ -208,7 +208,7 @@ extension ChangePhoneViewController: PhoneNumberInputViewDelegate {
         present(navigationController, animated: true, completion: nil)
     }
 
-    func phoneNumberInputView(_ inputView: PhoneNumberInputView, didValidatePhoneNumber phoneNumber: PhoneNumber, withResult validationError: TextFieldValidator.ValidationError) {
+    func phoneNumberInputView(_ inputView: PhoneNumberInputView, didValidatePhoneNumber phoneNumber: PhoneNumber, withResult validationError: TextFieldValidator.ValidationError?) {
         state.updatedNumber = phoneNumber
         state.validationError = validationError
         updateSaveButtonState()

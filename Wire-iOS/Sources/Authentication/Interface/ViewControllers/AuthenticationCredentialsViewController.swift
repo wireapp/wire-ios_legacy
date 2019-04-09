@@ -57,7 +57,7 @@ class AuthenticationCredentialsViewController: AuthenticationStepController, Cou
         }
     }
 
-    private var emailFieldValidationError: TextFieldValidator.ValidationError = .tooShort(kind: .email)
+    private var emailFieldValidationError: TextFieldValidator.ValidationError? = .tooShort(kind: .email)
 
     convenience init(flowType: FlowType) {
         switch flowType {
@@ -135,7 +135,7 @@ class AuthenticationCredentialsViewController: AuthenticationStepController, Cou
         emailInputField.confirmButton.addTarget(self, action: #selector(emailConfirmButtonTapped), for: .touchUpInside)
 
         emailInputField.enableConfirmButton = { [weak self] in
-            self?.emailFieldValidationError == TextFieldValidator.ValidationError.none
+            self?.emailFieldValidationError == nil
         }
 
         return contentStack
@@ -229,11 +229,11 @@ class AuthenticationCredentialsViewController: AuthenticationStepController, Cou
         }
     }
 
-    private func updateValidationError(_ error: TextFieldValidator.ValidationError) {
-        if case .none = error {
-            clearError()
+    private func updateValidationError(_ error: TextFieldValidator.ValidationError?) {
+        if let error = error {
+            self.valueValidated(.error(error, showVisualFeedback: false))
         } else {
-            displayError(error)
+            self.valueValidated(nil)
         }
     }
 
@@ -259,7 +259,7 @@ class AuthenticationCredentialsViewController: AuthenticationStepController, Cou
         sender.validateInput()
     }
 
-    func validationUpdated(sender: UITextField, error: TextFieldValidator.ValidationError) {
+    func validationUpdated(sender: UITextField, error: TextFieldValidator.ValidationError?) {
         emailFieldValidationError = error
     }
 
@@ -275,8 +275,7 @@ class AuthenticationCredentialsViewController: AuthenticationStepController, Cou
     // MARK: - Email / Password Input
 
     func textFieldDidUpdateText(_ textField: EmailPasswordTextField) {
-        // Reset the error message when the user changes the text
-        updateValidationError(.none)
+        // no-op: we do not update the UI depending on the validity of the input
     }
 
     func textField(_ textField: EmailPasswordTextField, didConfirmCredentials credentials: (String, String)) {
@@ -302,7 +301,7 @@ class AuthenticationCredentialsViewController: AuthenticationStepController, Cou
         valueSubmitted(phoneNumber)
     }
 
-    func phoneNumberInputView(_ inputView: PhoneNumberInputView, didValidatePhoneNumber phoneNumber: PhoneNumber, withResult validationError: TextFieldValidator.ValidationError) {
+    func phoneNumberInputView(_ inputView: PhoneNumberInputView, didValidatePhoneNumber phoneNumber: PhoneNumber, withResult validationError: TextFieldValidator.ValidationError?) {
         // no-op: handled by the input view directly
     }
 

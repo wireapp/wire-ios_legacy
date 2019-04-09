@@ -30,7 +30,7 @@ struct ChangeEmailState {
     var newEmail: String?
     var newPassword: String?
 
-    var emailValidationError: TextFieldValidator.ValidationError
+    var emailValidationError: TextFieldValidator.ValidationError?
     var isEmailPasswordInputValid: Bool
 
     var visibleEmail: String? {
@@ -78,7 +78,7 @@ struct ChangeEmailState {
     init(currentEmail: String? = ZMUser.selfUser().emailAddress) {
         self.currentEmail = currentEmail
         flowType = currentEmail != nil ? .changeExistingEmail : .setInitialEmail
-        emailValidationError = currentEmail != nil ? .none : .tooShort(kind: .email)
+        emailValidationError = currentEmail != nil ? nil : .tooShort(kind: .email)
         isEmailPasswordInputValid = false
     }
 
@@ -241,7 +241,7 @@ extension ChangeEmailViewController: TextFieldValidationDelegate {
         sender.validateInput()
     }
 
-    func validationUpdated(sender: UITextField, error: TextFieldValidator.ValidationError) {
+    func validationUpdated(sender: UITextField, error: TextFieldValidator.ValidationError?) {
         state.emailValidationError = error
         updateSaveButtonState()
     }

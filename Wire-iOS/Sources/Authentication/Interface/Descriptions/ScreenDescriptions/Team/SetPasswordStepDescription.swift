@@ -18,19 +18,23 @@
 
 import Foundation
 
-final class SetPasswordStepDescription: AuthenticationStepDescription {
+final class SetPasswordStepDescription: DefaultValidatingStepDescription {
 
     let backButton: BackButtonDescription?
     let mainView: ViewDescriptor & ValueSubmission
     let headline: String
     let subtext: String?
     let secondaryView: AuthenticationSecondaryViewDescription?
+    let initialValidation: ValueValidation
 
     init() {
         backButton = BackButtonDescription()
-        mainView = TextFieldDescription(placeholder: "team.password.textfield.placeholder".localized, actionDescription: "general.next".localized, kind: .password(isNew: true))
+        let textField = TextFieldDescription(placeholder: "password.placeholder".localized, actionDescription: "general.next".localized, kind: .password(isNew: true))
+        textField.useLiveValidation = true
+        mainView = textField
         headline = "team.password.headline".localized
         subtext = nil
         secondaryView = nil
+        initialValidation = .info("team.password.textfield.placeholder".localized)
     }
 }

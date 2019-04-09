@@ -45,7 +45,7 @@ final class TextFieldValidatorTests: XCTestCase {
         let error = sut.validate(text: text, kind: type)
 
         // THEN
-        XCTAssertEqual(expectedError, error, "Error should be \(expectedError), was \(error)")
+        XCTAssertEqual(expectedError, error, "Error should be \(expectedError), was \(String(describing: error))")
     }
 
     func testOneCharacterNameWithLeadingAndTrailingSpaceIsNotAccepted(){
@@ -58,7 +58,7 @@ final class TextFieldValidatorTests: XCTestCase {
         let error = sut.validate(text: text, kind: type)
 
         // THEN
-        XCTAssertEqual(expectedError, error, "Error should be \(expectedError), was \(error)")
+        XCTAssertEqual(expectedError, error, "Error should be \(expectedError), was \(String(describing: error))")
     }
 
     func testNameWithTenSpaceIsNotAccepted(){
@@ -71,19 +71,19 @@ final class TextFieldValidatorTests: XCTestCase {
         let error = sut.validate(text: text, kind: type)
 
         // THEN
-        XCTAssertEqual(expectedError, error, "Error should be \(expectedError), was \(error)")
+        XCTAssertEqual(expectedError, error, "Error should be \(expectedError), was \(String(describing: error))")
     }
 
     func testTwoCharacterNameIsAccepted(){
         // GIVEN
         let text = "aa"
         let type: AccessoryTextField.Kind = .name(isTeam: false)
-        let expectedError: TextFieldValidator.ValidationError = .none
+        let expectedError: TextFieldValidator.ValidationError? = .none
 
         // WHEN
         let error = sut.validate(text: text, kind: type)
 
         // THEN
-        XCTAssertEqual(expectedError, error, "Error should be \(expectedError), was \(error)")
+        XCTAssertEqual(expectedError, error, "Error should be nil, was \(String(describing: error))")
     }
 }

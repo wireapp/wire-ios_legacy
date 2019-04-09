@@ -35,8 +35,8 @@ class EmailPasswordTextField: UIView, MagicTappable {
 
     weak var delegate: EmailPasswordTextFieldDelegate?
 
-    private var emailValidationError: TextFieldValidator.ValidationError = .tooShort(kind: .email)
-    private var passwordValidationError: TextFieldValidator.ValidationError = .tooShort(kind: .email)
+    private(set) var emailValidationError: TextFieldValidator.ValidationError? = .tooShort(kind: .email)
+    private(set) var passwordValidationError: TextFieldValidator.ValidationError? = .tooShort(kind: .email)
 
     // MARK: - Initialization
 
@@ -72,7 +72,7 @@ class EmailPasswordTextField: UIView, MagicTappable {
         emailField.addTarget(self, action: #selector(textInputDidChange), for: .editingChanged)
 
         emailField.enableConfirmButton = { [weak self] in
-            self?.emailValidationError == TextFieldValidator.ValidationError.none
+            self?.emailValidationError == nil
         }
 
         contentStack.addArrangedSubview(emailField)
@@ -89,7 +89,7 @@ class EmailPasswordTextField: UIView, MagicTappable {
         passwordField.confirmButton.addTarget(self, action: #selector(confirmButtonTapped), for: .touchUpInside)
 
         passwordField.enableConfirmButton = { [weak self] in
-            self?.passwordValidationError == TextFieldValidator.ValidationError.none
+            self?.passwordValidationError == nil
         }
 
         contentStack.addArrangedSubview(passwordField)
@@ -214,7 +214,7 @@ extension EmailPasswordTextField: UITextFieldDelegate {
 }
 
 extension EmailPasswordTextField: TextFieldValidationDelegate {
-    func validationUpdated(sender: UITextField, error: TextFieldValidator.ValidationError) {
+    func validationUpdated(sender: UITextField, error: TextFieldValidator.ValidationError?) {
         if sender == emailField {
             emailValidationError = error
         } else {
