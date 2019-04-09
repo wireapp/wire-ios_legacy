@@ -383,12 +383,20 @@ extension AuthenticationStepController {
             errorLabel.textColor = UIColor.Team.placeholderColor
             errorLabel.isHidden = false
             showSecondaryView(for: nil)
-        case .error(let error)?:
+            
+        case .error(let error, let showVisualFeedback)?:
+            if !showVisualFeedback {
+                // If we do not want to show an error (eg if all the text was deleted,
+                // either use the initial info or clear the error
+                return updateValidation(initialValidation)
+            }
+
             errorLabel.accessibilityIdentifier = "validation-failure"
             errorLabel.text = error.errorDescription
             errorLabel.textColor = UIColor.Team.errorMessageColor
             errorLabel.isHidden = false
             showSecondaryView(for: error)
+
         case nil:
             clearError()
         }

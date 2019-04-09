@@ -231,7 +231,7 @@ class AuthenticationCredentialsViewController: AuthenticationStepController, Cou
 
     private func updateValidationError(_ error: TextFieldValidator.ValidationError?) {
         if let error = error {
-            self.valueValidated(.error(error))
+            self.valueValidated(.error(error, showVisualFeedback: false))
         } else {
             self.valueValidated(nil)
         }
@@ -275,8 +275,7 @@ class AuthenticationCredentialsViewController: AuthenticationStepController, Cou
     // MARK: - Email / Password Input
 
     func textFieldDidUpdateText(_ textField: EmailPasswordTextField) {
-        // Reset the error message when the user changes the text
-        updateValidationError(nil)
+        // no-op: we do not update the UI depending on the validity of the input
     }
 
     func textField(_ textField: EmailPasswordTextField, didConfirmCredentials credentials: (String, String)) {

@@ -35,8 +35,8 @@ class EmailPasswordTextField: UIView, MagicTappable {
 
     weak var delegate: EmailPasswordTextFieldDelegate?
 
-    private var emailValidationError: TextFieldValidator.ValidationError? = .tooShort(kind: .email)
-    private var passwordValidationError: TextFieldValidator.ValidationError? = .tooShort(kind: .email)
+    private(set) var emailValidationError: TextFieldValidator.ValidationError? = .tooShort(kind: .email)
+    private(set) var passwordValidationError: TextFieldValidator.ValidationError? = .tooShort(kind: .email)
 
     // MARK: - Initialization
 

@@ -25,7 +25,7 @@ typealias ValueValidated = (ValueValidation?) -> ()
 
 enum ValueValidation {
     case info(String)
-    case error(TextFieldValidator.ValidationError)
+    case error(TextFieldValidator.ValidationError, showVisualFeedback: Bool)
 }
 
 protocol ViewDescriptor: class {

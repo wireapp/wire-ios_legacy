@@ -78,7 +78,7 @@ extension TextFieldDescription: UITextFieldDelegate {
         sender.validateInput()
 
         if let error = validationError {
-            self.valueValidated?(.error(error))
+            self.valueValidated?(.error(error, showVisualFeedback: !sender.input.isEmpty))
         } else {
             self.valueValidated?(nil)
         }
@@ -103,7 +103,7 @@ extension TextFieldDescription: UITextFieldDelegate {
 
     func submitValue(with text: String) {
         if let error = validationError {
-            self.valueValidated?(.error(error))
+            self.valueValidated?(.error(error, showVisualFeedback: textField?.input.isEmpty == false))
         } else {
             self.valueValidated?(nil)
             self.valueSubmitted?(text)

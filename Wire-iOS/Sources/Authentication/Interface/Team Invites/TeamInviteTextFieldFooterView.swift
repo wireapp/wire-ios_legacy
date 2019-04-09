@@ -82,7 +82,7 @@ final class TeamInviteTextFieldFooterView: UIView {
         errorLabel.textColor = UIColor.Team.errorMessageColor
         textField.overrideButtonIcon = .send
         textFieldDescriptor.valueValidated = { [weak self] validation in
-            if case .error(let error)? = validation {
+            if case .error(let error, let showVisualFeedback)? = validation, showVisualFeedback {
                 self?.errorMessage = error.errorDescription?.localizedUppercase
             } else {
                 self?.errorButton.isHidden = true
