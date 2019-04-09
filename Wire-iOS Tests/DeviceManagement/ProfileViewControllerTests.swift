@@ -49,7 +49,7 @@ final class ProfileViewControllerTests: ZMSnapshotTestCase {
 
     func testForContextProfileViewer() {
         selfUser.teamRole = .member
-
+        mockUser.emailAddress = nil
         sut = ProfileViewController(user: mockUser,
                                     viewer: selfUser,
                                     context: .profileViewer)
@@ -59,7 +59,7 @@ final class ProfileViewControllerTests: ZMSnapshotTestCase {
 
     func testForContextProfileViewerForSelfUser() {
         selfUser.teamRole = .member
-
+        selfUser.emailAddress = nil
         sut = ProfileViewController(user: selfUser,
                                     viewer: selfUser,
                                     context: .profileViewer)
@@ -69,6 +69,7 @@ final class ProfileViewControllerTests: ZMSnapshotTestCase {
 
     func testForContextOneToOneConversation() {
         selfUser.teamRole = .member
+        mockUser.emailAddress = nil
 
         let conversation = MockConversation.oneOnOneConversation()
         conversation.activeParticipants = [selfUser, mockUser]
@@ -81,6 +82,7 @@ final class ProfileViewControllerTests: ZMSnapshotTestCase {
 
     func testForContextOneToOneConversationForPartnerRole() {
         selfUser.teamRole = .partner
+        mockUser.emailAddress = nil
 
         let conversation = MockConversation.oneOnOneConversation()
         conversation.activeParticipants = [selfUser, mockUser]
@@ -102,6 +104,7 @@ final class ProfileViewControllerTests: ZMSnapshotTestCase {
         mockUser.isConnected = false
         mockUser.canBeConnected = true
         mockUser.isPendingApprovalBySelfUser = true
+        mockUser.emailAddress = nil
 
         let conversation = MockConversation.groupConversation()
         conversation.activeParticipants = [selfUser, mockUser]

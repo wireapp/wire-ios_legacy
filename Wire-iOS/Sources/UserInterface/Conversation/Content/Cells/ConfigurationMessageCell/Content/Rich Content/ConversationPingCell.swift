@@ -114,12 +114,10 @@ class ConversationPingCell: ConversationIconBasedCell, ConversationMessageCell {
     func willDisplay() {
         
         if let conversation = self.configuration?.message?.conversation,
-           let lastMessage = conversation.recentMessages.last,
-           let message = self.configuration?.message {
+           let lastMessage = conversation.lastMessage,
+           let message = self.configuration?.message, lastMessage.isEqual(message){
             
-            let isLastMessage = lastMessage.isEqual(message)
-            
-            if isLastMessage && message.isKnock {
+            if message.isKnock {
                 startAnimation()
             }
         }
