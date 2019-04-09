@@ -205,6 +205,7 @@
 		5E35F78B2187069400D3F4FE /* ConversationCellSnapshotTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E35F7892187068500D3F4FE /* ConversationCellSnapshotTestCase.swift */; };
 		5E35F78D21870EDB00D3F4FE /* ConversationPingMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E35F78C21870EDB00D3F4FE /* ConversationPingMessageTests.swift */; };
 		5E39FC63225CCEFA00C682B8 /* ValueValidationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E39FC62225CCEFA00C682B8 /* ValueValidationCell.swift */; };
+		5E39FC65225CDA7800C682B8 /* ChangeEmailViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E39FC64225CDA7800C682B8 /* ChangeEmailViewControllerTests.swift */; };
 		5E3A6C22206A3AD500907484 /* ConversationActionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E3A6C21206A3AD500907484 /* ConversationActionController.swift */; };
 		5E3A6C25206A4E4A00907484 /* LocationPreviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E3A6C24206A4E4A00907484 /* LocationPreviewController.swift */; };
 		5E3CE6262253689100F9A113 /* WireStyleKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E3CE6252253689000F9A113 /* WireStyleKit.swift */; };
@@ -1717,6 +1718,7 @@
 		5E35F7892187068500D3F4FE /* ConversationCellSnapshotTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationCellSnapshotTestCase.swift; sourceTree = "<group>"; };
 		5E35F78C21870EDB00D3F4FE /* ConversationPingMessageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationPingMessageTests.swift; sourceTree = "<group>"; };
 		5E39FC62225CCEFA00C682B8 /* ValueValidationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValueValidationCell.swift; sourceTree = "<group>"; };
+		5E39FC64225CDA7800C682B8 /* ChangeEmailViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeEmailViewControllerTests.swift; sourceTree = "<group>"; };
 		5E3A6C21206A3AD500907484 /* ConversationActionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationActionController.swift; sourceTree = "<group>"; };
 		5E3A6C24206A4E4A00907484 /* LocationPreviewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationPreviewController.swift; sourceTree = "<group>"; };
 		5E3C0C65206B9EE900B0499C /* Tab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab.swift; sourceTree = "<group>"; };
@@ -5821,6 +5823,7 @@
 				EF37C3882256614300EA0C32 /* ConnectRequestsCellSnapshotTests.swift */,
 				EFBFABA92257948F005D83C0 /* TopPeopleCellSnapshotTests.swift */,
 				EFDC36D92257A63000F916F3 /* CollectionViewContainerCellSnapshotTests.swift */,
+				5E39FC64225CDA7800C682B8 /* ChangeEmailViewControllerTests.swift */,
 			);
 			path = "Wire-iOS Tests";
 			sourceTree = "<group>";
@@ -8038,6 +8041,7 @@
 				EF1FDC8221DE677600C9CEB1 /* XCTestCase+EmoticonSubstitutionConfiguration.swift in Sources */,
 				87BEB0DC1C734D710094BFE9 /* MockConversation.m in Sources */,
 				EE118C012031D1C300BC68D6 /* MarkdownTextViewTests.swift in Sources */,
+				5E39FC65225CDA7800C682B8 /* ChangeEmailViewControllerTests.swift in Sources */,
 				BFFE943E1E7839EB0025AD75 /* CoreDataSnapshotTestCase.swift in Sources */,
 				EF6EB1CE20A5C296002F720D /* AppStateControllerTests.swift in Sources */,
 				BFA13E161D4A5F7100F0A91B /* ConfirmAssetViewControllerTests.swift in Sources */,

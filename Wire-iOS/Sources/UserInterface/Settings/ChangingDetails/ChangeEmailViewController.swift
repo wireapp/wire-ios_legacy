@@ -75,7 +75,7 @@ struct ChangeEmailState {
         }
     }
     
-    init(currentEmail: String? = ZMUser.selfUser().emailAddress) {
+    init(currentEmail: String?) {
         self.currentEmail = currentEmail
         flowType = currentEmail != nil ? .changeExistingEmail : .setInitialEmail
         emailValidationError = currentEmail != nil ? nil : .tooShort(kind: .email)
@@ -87,14 +87,15 @@ struct ChangeEmailState {
 @objcMembers final class ChangeEmailViewController: SettingsBaseTableViewController {
 
     fileprivate weak var userProfile = ZMUserSession.shared()?.userProfile
-    var state = ChangeEmailState()
+    var state: ChangeEmailState
     private var observerToken: Any?
 
     let emailCell = AccessoryTextFieldCell(style: .default, reuseIdentifier: nil)
     let emailPasswordCell = EmailPasswordTextFieldCell(style: .default, reuseIdentifier: nil)
     let validationCell = ValueValidationCell(initialValidation: .info("password.guidance.tooshort".localized))
 
-    init() {
+    init(user: UserType) {
+        state = ChangeEmailState(currentEmail: user.emailAddress)
         super.init(style: .grouped)
         setupViews()
     }
