@@ -27,6 +27,8 @@ final class ChangePhoneViewControllerSnapshotTests: CoreDataSnapshotTestCase {
 
     func testThatItShowsCurrentUserPhoneNumber() {
         selfUser.phoneNumber = "+123456789"
+        ///shows remove button since email exists
+        selfUser.emailAddress = "foo@bar.com"
 
         let sut = ChangePhoneViewController()
         sut.view.backgroundColor = .black
