@@ -97,11 +97,6 @@ static id<UserType> mockSelfUser = nil;
     return self.isGuestInConversation;
 }
 
-- (NSString *)emailAddress
-{
-    return @"test@email.com";
-}
-
 - (NSString *)phoneNumber
 {
     return @"+123456789";
@@ -117,6 +112,7 @@ static id<UserType> mockSelfUser = nil;
 
 @synthesize name;
 @synthesize displayName;
+@synthesize emailAddress;
 @synthesize isSelfUser;
 @synthesize isConnected;
 @synthesize accentColorValue;

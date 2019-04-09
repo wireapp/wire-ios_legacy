@@ -19,7 +19,7 @@
 import XCTest
 @testable import Wire
 
-final class SettingsTableViewControllerSnapshotTests: ZMSnapshotTestCase {
+final class SettingsTableViewControllerSnapshotTests: CoreDataSnapshotTestCase {
     
     var sut: SettingsTableViewController!
 	var settingsCellDescriptorFactory: SettingsCellDescriptorFactory!

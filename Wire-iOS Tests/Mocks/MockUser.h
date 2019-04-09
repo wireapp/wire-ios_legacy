@@ -34,7 +34,7 @@
 
 @property (nonatomic, readwrite, copy) NSString *name;
 @property (nonatomic, readwrite, copy) NSString *initials;
-@property (nonatomic, readwrite) NSString *emailAddress;
+@property (nonatomic, readwrite, copy) NSString *emailAddress;
 @property (nonatomic, readwrite) NSString *phoneNumber;
 @property (nonatomic, readwrite, copy) NSString *handle;
 @property (nonatomic) ZMAccentColor accentColorValue;
