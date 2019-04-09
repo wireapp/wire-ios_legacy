@@ -41,6 +41,7 @@ class AuthenticationStepController: AuthenticationStepViewController {
     static let headlineFont         = UIFont.systemFont(ofSize: 40, weight: UIFont.Weight.light)
     static let headlineSmallFont    = UIFont.systemFont(ofSize: 32, weight: UIFont.Weight.light)
     static let subtextFont          = FontSpec(.normal, .regular).font!
+    static let errorMessageFont     = FontSpec(.medium, .regular).font!
     static let textButtonFont       = FontSpec(.small, .semibold).font!
 
     // MARK: - Views
@@ -157,7 +158,7 @@ class AuthenticationStepController: AuthenticationStepViewController {
         let errorInsets = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 24 + AccessoryTextField.ConfirmButtonWidth)
         errorLabelContainer = ContentInsetView(errorLabel, inset: errorInsets)
         errorLabel.textAlignment = .left
-        errorLabel.font = AuthenticationStepController.subtextFont
+        errorLabel.font = AuthenticationStepController.errorMessageFont
         errorLabel.translatesAutoresizingMaskIntoConstraints = false
         updateValidation(initialValidation)
 

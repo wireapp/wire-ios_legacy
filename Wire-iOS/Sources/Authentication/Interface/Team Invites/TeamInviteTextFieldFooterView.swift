@@ -78,7 +78,7 @@ final class TeamInviteTextFieldFooterView: UIView {
     private func setupViews() {
         errorButton.isHidden = true
         errorLabel.textAlignment = .center
-        errorLabel.font = AuthenticationStepController.subtextFont  
+        errorLabel.font = AuthenticationStepController.errorMessageFont
         errorLabel.textColor = UIColor.Team.errorMessageColor
         textField.overrideButtonIcon = .send
         textFieldDescriptor.valueValidated = { [weak self] validation in
