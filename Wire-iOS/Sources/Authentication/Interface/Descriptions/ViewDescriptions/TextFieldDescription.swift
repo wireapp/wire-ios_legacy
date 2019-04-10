@@ -62,7 +62,7 @@ extension TextFieldDescription: ViewDescriptor {
         textField.useLiveValidation = useLiveValidation
 
         textField.hasValidationIssues = { [weak self] in
-            self?.canSubmit?() != true
+            self?.canSubmit?() != true && !textField.input.isEmpty
         }
 
         self.textField = textField
