@@ -73,7 +73,7 @@ final class TeamMemberInviteTableViewCell: UITableViewCell {
         emailLabel.font = FontSpec(.normal, .regular).font!
         emailLabel.textColor = UIColor.Team.subtitleColor
         errorLabel.font = FontSpec(.small, .regular).font!
-        errorLabel.textColor = UIColor.Team.errorMessageColor
+        errorLabel.textColor = UIColor.from(scheme: .errorIndicator, variant: .light)
         backgroundColor = .clear
         contentView.addSubview(stackView)
         [emailLabel, errorLabel].forEach(stackView.addArrangedSubview)
