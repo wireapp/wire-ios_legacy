@@ -171,6 +171,8 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     }
     _dataSource = dataSource;
     self.dataSource.delegate = self;
+
+    self.tableView.dataSource = self.dataSource;
 }
 
 - (void)setBottomButton:(Button *)bottomButton
