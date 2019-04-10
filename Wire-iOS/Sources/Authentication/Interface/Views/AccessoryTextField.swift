@@ -45,7 +45,7 @@ class AccessoryTextField: UITextField, TextContainer, Themeable {
     static let enteredTextFont = FontSpec(.normal, .regular, .inputText).font!
     static let placeholderFont = FontSpec(.small, .regular).font!
     static let ConfirmButtonWidth: CGFloat = 32
-    static let LiveValidationIndicatorWidth: CGFloat = 8
+    static let GuidanceDotWidth: CGFloat = 8
 
     var isLoading = false {
         didSet {
@@ -97,9 +97,6 @@ class AccessoryTextField: UITextField, TextContainer, Themeable {
     }
 
     var enableConfirmButton: (() -> Bool)?
-    var hasValidationIssues: (() -> Bool)?
-
-    var useLiveValidation: Bool = false
 
     let confirmButton: IconButton = {
         let iconButton = IconButton(style: .circular, variant: .dark)
@@ -109,7 +106,7 @@ class AccessoryTextField: UITextField, TextContainer, Themeable {
         return iconButton
     }()
 
-    let liveValidationIndicator: RoundedView = {
+    let guidanceDot: RoundedView = {
         let indicator = RoundedView()
         indicator.shape = .circle
         indicator.isHidden = true
@@ -218,7 +215,7 @@ class AccessoryTextField: UITextField, TextContainer, Themeable {
     }
 
     func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
-        liveValidationIndicator.backgroundColor = UIColor.from(scheme: .errorIndicator, variant: colorSchemeVariant)
+        guidanceDot.backgroundColor = UIColor.from(scheme: .errorIndicator, variant: colorSchemeVariant)
     }
     
     private func updateLoadingState() {
@@ -260,7 +257,7 @@ class AccessoryTextField: UITextField, TextContainer, Themeable {
     }
 
     private func setup() {
-        accessoryStack.addArrangedSubview(liveValidationIndicator)
+        accessoryStack.addArrangedSubview(guidanceDot)
         accessoryStack.addArrangedSubview(confirmButton)
 
         self.confirmButton.addTarget(self, action: #selector(confirmButtonTapped(button:)), for: .touchUpInside)
@@ -274,8 +271,8 @@ class AccessoryTextField: UITextField, TextContainer, Themeable {
             // dimensions
             confirmButton.widthAnchor.constraint(equalToConstant: AccessoryTextField.ConfirmButtonWidth),
             confirmButton.heightAnchor.constraint(equalToConstant: AccessoryTextField.ConfirmButtonWidth),
-            liveValidationIndicator.widthAnchor.constraint(equalToConstant: AccessoryTextField.LiveValidationIndicatorWidth),
-            liveValidationIndicator.heightAnchor.constraint(equalToConstant: AccessoryTextField.LiveValidationIndicatorWidth),
+            guidanceDot.widthAnchor.constraint(equalToConstant: AccessoryTextField.GuidanceDotWidth),
+            guidanceDot.heightAnchor.constraint(equalToConstant: AccessoryTextField.GuidanceDotWidth),
 
             // spacing
             accessoryStack.topAnchor.constraint(equalTo: accessoryContainer.topAnchor),
@@ -321,10 +318,6 @@ class AccessoryTextField: UITextField, TextContainer, Themeable {
         }
     }
 
-    private func updateLiveValidationIndicator() {
-        liveValidationIndicator.isHidden = !useLiveValidation || hasValidationIssues?() != true
-    }
-
     // MARK: - text validation
 
     @objc func confirmButtonTapped(button: UIButton) {
@@ -335,7 +328,14 @@ class AccessoryTextField: UITextField, TextContainer, Themeable {
         let error = textFieldValidator.validate(text: text, kind: kind)
         textFieldValidationDelegate?.validationUpdated(sender: self, error: error)
         updateConfirmButton()
-        updateLiveValidationIndicator()
+    }
+
+    func showGuidanceDot() {
+        guidanceDot.isHidden = false
+    }
+
+    func hideGuidanceDot() {
+        guidanceDot.isHidden = true
     }
 
     // MARK: - placeholder
