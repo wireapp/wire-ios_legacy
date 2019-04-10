@@ -37,8 +37,8 @@ extension ContactsViewController {
         let standardOffset: CGFloat = 24.0
         let titleLabelConstraints = titleLabel.fitInSuperview(with: EdgeInsets(top: UIScreen.safeArea.top, leading: standardOffset, bottom: standardOffset, trailing: standardOffset), activate: false)
 
-        titleLabelTopConstraint = titleLabelConstraints[.top]
-        titleLabelBottomConstraint = titleLabelConstraints[.bottom]
+        titleLabelTopConstraint = titleLabelConstraints[.top]!
+        titleLabelBottomConstraint = titleLabelConstraints[.bottom]!
 
         var constraints: [NSLayoutConstraint] = titleLabelConstraints.map{$0.value}
 
@@ -56,7 +56,7 @@ extension ContactsViewController {
         constraints += [tableView.bottomAnchor.constraint(equalTo: bottomContainerView.topAnchor)]
 
         let emptyResultsViewConstraints = emptyResultsView.fitInSuperview(exclude: [.top], activate: false)
-        emptyResultsBottomConstraint = emptyResultsViewConstraints[.bottom]
+        emptyResultsBottomConstraint = emptyResultsViewConstraints[.bottom]!
         constraints += emptyResultsViewConstraints.values
 
         constraints += [noContactsLabel.topAnchor.constraint(equalTo: searchHeaderViewController.view.bottomAnchor, constant: standardOffset),
@@ -66,7 +66,7 @@ extension ContactsViewController {
 
 
         let bottomContainerViewConstraints = bottomContainerView.fitInSuperview(exclude: [.top], activate: false)
-        bottomContainerBottomConstraint = bottomContainerViewConstraints[.bottom]
+        bottomContainerBottomConstraint = bottomContainerViewConstraints[.bottom]!
 
         constraints += bottomContainerViewConstraints.values
 
@@ -88,7 +88,7 @@ extension ContactsViewController {
 
         let inviteOthersButtonConstraints = inviteOthersButton.fitInSuperview(with: EdgeInsets(top: standardOffset / 2.0, leading: standardOffset, bottom: standardOffset / 2.0 + UIScreen.safeArea.bottom, trailing: standardOffset), activate: false)
 
-        bottomEdgeConstraint = inviteOthersButtonConstraints[.bottom]
+        bottomEdgeConstraint = inviteOthersButtonConstraints[.bottom]!
 
         constraints += inviteOthersButtonConstraints.values
 

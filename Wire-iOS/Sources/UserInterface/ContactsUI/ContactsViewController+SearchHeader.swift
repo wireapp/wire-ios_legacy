@@ -33,20 +33,19 @@ extension ContactsViewController {
     }
 
     func createTopContainerConstraints() {
-        constrain(self.view, topContainerView!) {selfView, topContainerView in
+        constrain(self.view, topContainerView) {selfView, topContainerView in
             topContainerView.leading == selfView.leading
             topContainerView.trailing == selfView.trailing
             topContainerView.top == selfView.topMargin
             topContainerHeightConstraint = topContainerView.height == 0
         }
 
-        topContainerHeightConstraint?.isActive = false
+        topContainerHeightConstraint.isActive = false
     }
 
     func createSearchHeaderConstraints() {
-        guard let searchHeaderViewControllerView = searchHeaderViewController?.view,
-            let topContainerView = topContainerView,
-            let separatorView = separatorView else { return }
+        guard let searchHeaderViewControllerView = searchHeaderViewController.view
+            else { return }
 
         constrain(searchHeaderViewControllerView, self.view, topContainerView, separatorView) { searchHeader, selfView, topContainerView, separatorView in
             searchHeader.leading == selfView.leading
@@ -55,22 +54,18 @@ extension ContactsViewController {
             searchHeader.bottom == separatorView.top
         }
 
-        constrain(searchHeaderViewController!.view, self.view) {
+        constrain(searchHeaderViewController.view, self.view) {
             searchHeader, selfView in
             searchHeaderWithNavigatorBarTopConstraint = searchHeader.top == selfView.top
         }
 
-        searchHeaderTopConstraint?.isActive = false
-        searchHeaderWithNavigatorBarTopConstraint?.isActive = true
+        searchHeaderTopConstraint.isActive = false
+        searchHeaderWithNavigatorBarTopConstraint.isActive = true
     }
 
 
     var numTableRows: UInt {
-        if let tableView = tableView {
-            return tableView.numberOfTotalRows()
-        } else {
-            return 0
-        }
+        return tableView.numberOfTotalRows()
     }
 
     @objc func updateEmptyResults() {
@@ -83,16 +78,16 @@ extension ContactsViewController {
         }
 
         let showEmptyResults = searchResultsReceived && !(numTableRows != 0)
-        let showNoContactsLabel = !(numTableRows != 0) && (searchQueryCount == 0) && !(searchHeaderViewController?.tokenField.userDidConfirmInput ?? false)
-        noContactsLabel?.isHidden = !showNoContactsLabel
-        bottomContainerView?.isHidden = (searchQueryCount > 0) || showEmptyResults
+        let showNoContactsLabel = !(numTableRows != 0) && (searchQueryCount == 0) && !(searchHeaderViewController.tokenField.userDidConfirmInput)
+        noContactsLabel.isHidden = !showNoContactsLabel
+        bottomContainerView.isHidden = (searchQueryCount > 0) || showEmptyResults
 
         setEmptyResultsHidden(!showEmptyResults, animated: showEmptyResults)
     }
 
     func showKeyboardIfNeeded() {
         if numTableRows > Int(StartUIInitiallyShowsKeyboardConversationThreshold) {
-            searchHeaderViewController?.tokenField.becomeFirstResponder()
+            searchHeaderViewController.tokenField.becomeFirstResponder()
         }
     }
 }
