@@ -104,12 +104,12 @@ import Cartography
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        updateStatusBar(onlyFullScreen: !isIPadRegular())
+        updateStatusBar(onlyFullScreen: false)
     }
 
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        updateStatusBar(onlyFullScreen: !isIPadRegular())
+        updateStatusBar(onlyFullScreen: false)
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
