@@ -84,10 +84,13 @@ extension VerificationCodeFieldDescription: ViewDescriptor {
 
         let containerView = ResponderContainer(responder: inputField)
         containerView.translatesAutoresizingMaskIntoConstraints = false
-        
-        inputField.heightAnchor.constraint(equalTo: containerView.heightAnchor).isActive = true
-        inputField.centerXAnchor.constraint(equalTo: containerView.centerXAnchor).isActive = true
-        inputField.centerYAnchor.constraint(equalTo: containerView.centerYAnchor).isActive = true
+
+        NSLayoutConstraint.activate([
+            inputField.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
+            inputField.topAnchor.constraint(equalTo: containerView.topAnchor),
+            inputField.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
+            inputField.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
+        ])
         
         return containerView
     }

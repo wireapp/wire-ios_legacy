@@ -24,7 +24,7 @@ protocol EmailPasswordTextFieldDelegate: class {
     func textField(_ textField: EmailPasswordTextField, didConfirmCredentials credentials: (String, String))
 }
 
-class EmailPasswordTextField: UIView, MagicTappable, Themeable {
+class EmailPasswordTextField: UIView, MagicTappable {
 
     let emailField = AccessoryTextField(kind: .email)
     let passwordField = AccessoryTextField(kind: .password(isNew: false))
@@ -40,9 +40,10 @@ class EmailPasswordTextField: UIView, MagicTappable, Themeable {
 
     // MARK: - Helpers
 
-    @objc dynamic var colorSchemeVariant: ColorSchemeVariant = .light {
+    var colorSchemeVariant: ColorSchemeVariant = .light {
         didSet {
-            applyColorScheme(colorSchemeVariant)
+            passwordField.colorSchemeVariant = colorSchemeVariant
+            emailField.colorSchemeVariant = colorSchemeVariant
         }
     }
 
@@ -82,7 +83,7 @@ class EmailPasswordTextField: UIView, MagicTappable, Themeable {
         emailField.placeholder = "email.placeholder".localized(uppercased: true)
         emailField.showConfirmButton = false
         emailField.addTarget(self, action: #selector(textInputDidChange), for: .editingChanged)
-
+        emailField.colorSchemeVariant = colorSchemeVariant
         emailField.enableConfirmButton = { [weak self] in
             self?.emailValidationError == nil
         }
@@ -99,6 +100,7 @@ class EmailPasswordTextField: UIView, MagicTappable, Themeable {
         passwordField.bindConfirmationButton(to: emailField)
         passwordField.addTarget(self, action: #selector(textInputDidChange), for: .editingChanged)
         passwordField.confirmButton.addTarget(self, action: #selector(confirmButtonTapped), for: .touchUpInside)
+        passwordField.colorSchemeVariant = colorSchemeVariant
 
         passwordField.enableConfirmButton = { [weak self] in
             self?.passwordValidationError == nil
@@ -109,7 +111,6 @@ class EmailPasswordTextField: UIView, MagicTappable, Themeable {
         }
 
         contentStack.addArrangedSubview(passwordField)
-        applyColorScheme(colorSchemeVariant)
     }
 
     private func configureConstraints() {
