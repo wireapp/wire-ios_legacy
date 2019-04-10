@@ -61,7 +61,7 @@ class ValueValidationCell: UITableViewCell {
 
         NSLayoutConstraint.activate([
             label.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            label.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            label.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -(24 + AccessoryTextField.ConfirmButtonWidth)),
             label.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
             label.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
             contentView.heightAnchor.constraint(greaterThanOrEqualToConstant: 56),
@@ -87,7 +87,7 @@ class ValueValidationCell: UITableViewCell {
 
             label.accessibilityIdentifier = "validation-failure"
             label.text = error.errorDescription
-            label.textColor = UIColor.Team.errorMessageColor
+            label.textColor = UIColor(rgb: 0xfc3e37, alpha: 1)
 
         case nil:
             updateValidation(initialValidation)

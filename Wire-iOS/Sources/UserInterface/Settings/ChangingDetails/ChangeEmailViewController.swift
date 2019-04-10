@@ -92,7 +92,7 @@ struct ChangeEmailState {
 
     let emailCell = AccessoryTextFieldCell(style: .default, reuseIdentifier: nil)
     let emailPasswordCell = EmailPasswordTextFieldCell(style: .default, reuseIdentifier: nil)
-    let validationCell = ValueValidationCell(initialValidation: .info("password.guidance.tooshort".localized))
+    let validationCell = ValueValidationCell(initialValidation: .info(PasswordRuleSet.localizedErrorMessage))
 
     init(user: UserType) {
         state = ChangeEmailState(currentEmail: user.emailAddress)
