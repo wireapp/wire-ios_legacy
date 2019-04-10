@@ -23,6 +23,8 @@ class EmailPasswordTextFieldCell: UITableViewCell {
     let textField: EmailPasswordTextField = {
         let textField = EmailPasswordTextField()
         textField.passwordField.kind = .password(isNew: true)
+        textField.passwordField.useLiveValidation = true
+        textField.colorSchemeVariant = .dark
         return textField
     }()
 

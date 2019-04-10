@@ -29,7 +29,6 @@ extension UIColor {
         static let textColor            = UIColor(rgb: 0x33373A, alpha:1.0)
         static let subtitleColor        = UIColor(rgb: 0x272A2C, alpha:0.56)
         static let activeButtonColor    = UIColor(rgb: 0x2391D3)
-        static let errorMessageColor    = UIColor(rgb: 0xE60606)
         static let inactiveButtonColor  = UIColor(rgb: 0x33373A, alpha:0.16)
         static let textfieldColor       = UIColor.white
         static let placeholderColor     = UIColor(rgb: 0x8D989F)

@@ -24,7 +24,7 @@ protocol EmailPasswordTextFieldDelegate: class {
     func textField(_ textField: EmailPasswordTextField, didConfirmCredentials credentials: (String, String))
 }
 
-class EmailPasswordTextField: UIView, MagicTappable {
+class EmailPasswordTextField: UIView, MagicTappable, Themeable {
 
     let emailField = AccessoryTextField(kind: .email)
     let passwordField = AccessoryTextField(kind: .password(isNew: false))
@@ -39,6 +39,12 @@ class EmailPasswordTextField: UIView, MagicTappable {
     private(set) var passwordValidationError: TextFieldValidator.ValidationError? = .tooShort(kind: .email)
 
     // MARK: - Helpers
+
+    @objc dynamic var colorSchemeVariant: ColorSchemeVariant = .light {
+        didSet {
+            applyColorScheme(colorSchemeVariant)
+        }
+    }
 
     var isPasswordEmpty: Bool {
         return passwordField.input.isEmpty
@@ -98,7 +104,12 @@ class EmailPasswordTextField: UIView, MagicTappable {
             self?.passwordValidationError == nil
         }
 
+        passwordField.hasValidationIssues = { [weak self] in
+            self?.passwordValidationError != nil && self?.isPasswordEmpty == false
+        }
+
         contentStack.addArrangedSubview(passwordField)
+        applyColorScheme(colorSchemeVariant)
     }
 
     private func configureConstraints() {
@@ -138,6 +149,11 @@ class EmailPasswordTextField: UIView, MagicTappable {
 
     func setSeparatorColor(_ color: UIColor) {
         separatorContainer.view.backgroundColor = color
+    }
+
+    func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
+        emailField.colorSchemeVariant = colorSchemeVariant
+        passwordField.colorSchemeVariant = colorSchemeVariant
     }
 
     // MARK: - Responder

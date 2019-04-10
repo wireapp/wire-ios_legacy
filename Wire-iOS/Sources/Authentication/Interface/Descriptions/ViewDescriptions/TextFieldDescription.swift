@@ -59,6 +59,11 @@ extension TextFieldDescription: ViewDescriptor {
         textField.confirmButton.accessibilityLabel = self.actionDescription
         textField.showConfirmButton = showConfirmButton
         textField.enableConfirmButton = canSubmit
+        textField.useLiveValidation = useLiveValidation
+
+        textField.hasValidationIssues = { [weak self] in
+            self?.canSubmit?() != true
+        }
 
         self.textField = textField
         return textField

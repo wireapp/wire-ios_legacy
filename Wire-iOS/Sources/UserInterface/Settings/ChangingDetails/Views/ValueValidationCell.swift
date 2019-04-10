@@ -87,7 +87,7 @@ class ValueValidationCell: UITableViewCell {
 
             label.accessibilityIdentifier = "validation-failure"
             label.text = error.errorDescription
-            label.textColor = UIColor(rgb: 0xfc3e37, alpha: 1)
+            label.textColor = UIColor.from(scheme: .errorIndicator, variant: .dark)
 
         case nil:
             updateValidation(initialValidation)
