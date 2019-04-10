@@ -272,6 +272,13 @@ final internal class CallingMatcher: ConversationStatusMatcher {
     }
     
     func description(with status: ConversationStatus, conversation: ZMConversation) -> NSAttributedString? {
+        if conversation.voiceChannel?.state.canJoinCall == true {
+            if let callerDisplayName = conversation.voiceChannel?.initiator?.displayName {
+                return "conversation.status.incoming_call".localized(args: callerDisplayName) && type(of: self).regularStyle
+            } else {
+                return "conversation.status.incoming_call.someone".localized && type(of: self).regularStyle
+            }
+        }
         return .none
     }
     
@@ -285,7 +292,7 @@ final internal class CallingMatcher: ConversationStatusMatcher {
             return nil
         }
         
-        if case CallState.incoming(video: _, shouldRing: false, degraded: _) = state, state.canJoinCall {
+        if state.canJoinCall {
             return .activeCall(showJoin: true)
         } else if state.isCallOngoing {
             return .activeCall(showJoin: false)

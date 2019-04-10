@@ -206,6 +206,8 @@
 "conversation.status.silenced" = "Muted";
 "conversation.status.poor_connection" = "Poor connection";
 "conversation.status.blocked" = "Blocked";
+"conversation.status.incoming_call" = "%@ is calling…";
+"conversation.status.incoming_call.unknown" = "Someone is calling…";
 
 "conversation.status.message.text" = "%@";
 "conversation.status.message.link" = "Shared a link";
