@@ -83,11 +83,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     return NO;
 }
 
-- (void)dealloc
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillChangeFrameNotification object:nil];
-}
-
 #pragma mark - User Interface Setup
 
 - (void)setupViews

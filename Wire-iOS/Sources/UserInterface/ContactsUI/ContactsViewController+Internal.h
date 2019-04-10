@@ -21,6 +21,8 @@
 @class TransformLabel;
 @class ContactsEmptyResultView;
 
+NS_ASSUME_NONNULL_BEGIN
+
 static NSString * const ContactsViewControllerCellID = @"ContactsCell";
 static NSString * const ContactsViewControllerSectionHeaderID = @"ContactsSectionHeaderView";
 
@@ -67,3 +69,5 @@ static NSString * const ContactsViewControllerSectionHeaderID = @"ContactsSectio
 
 
 @end
+
+NS_ASSUME_NONNULL_END
