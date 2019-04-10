@@ -17,6 +17,7 @@
 //
 
 @class ButtonWithLargerHitArea;
+@class ImagePickerConfirmationController;
 
 @interface ProfileSelfPictureViewController ()
 
@@ -24,9 +25,9 @@
 @property (nonatomic) ButtonWithLargerHitArea *libraryButton;
 @property (nonatomic) ButtonWithLargerHitArea *closeButton;
 @property (nonatomic) UIImageView *selfUserImageView;
+@property (nonatomic) ImagePickerConfirmationController *imagePickerConfirmationController;
 
 - (void)cameraButtonTapped:(id)sender;
 - (void)closeButtonTapped:(id)sender;
-- (void)libraryButtonTapped:(id)sender;
 
 @end

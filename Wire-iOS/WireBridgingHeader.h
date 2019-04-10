@@ -123,6 +123,7 @@
 #import "PermissionDeniedViewController+Internal.h"
 
 #import "ShareContactsViewController.h"
+#import "ImagePickerConfirmationController.h"
 
 // Helper objects
 #import "PushTransition.h"
