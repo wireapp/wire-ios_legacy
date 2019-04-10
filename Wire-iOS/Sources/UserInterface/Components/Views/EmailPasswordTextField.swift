@@ -20,7 +20,7 @@ import UIKit
 
 protocol EmailPasswordTextFieldDelegate: class {
     func textFieldDidUpdateText(_ textField: EmailPasswordTextField)
-    func textField(_ textField: EmailPasswordTextField, didUpdateValidation isValid: Bool)
+    func textFieldDidSubmitWithValidationError(_ textField: EmailPasswordTextField)
     func textField(_ textField: EmailPasswordTextField, didConfirmCredentials credentials: (String, String))
 }
 
@@ -103,11 +103,7 @@ class EmailPasswordTextField: UIView, MagicTappable {
         passwordField.colorSchemeVariant = colorSchemeVariant
 
         passwordField.enableConfirmButton = { [weak self] in
-            self?.passwordValidationError == nil
-        }
-
-        passwordField.hasValidationIssues = { [weak self] in
-            self?.passwordValidationError != nil && self?.isPasswordEmpty == false
+            self?.isPasswordEmpty == false
         }
 
         contentStack.addArrangedSubview(passwordField)
@@ -198,6 +194,11 @@ class EmailPasswordTextField: UIView, MagicTappable {
     // MARK: - Submission
 
     @objc private func confirmButtonTapped() {
+        guard emailValidationError == nil && passwordValidationError == nil else {
+            delegate?.textFieldDidSubmitWithValidationError(self)
+            return
+        }
+        
         delegate?.textField(self, didConfirmCredentials: (emailField.input, passwordField.input))
     }
 
@@ -218,9 +219,6 @@ class EmailPasswordTextField: UIView, MagicTappable {
         }
 
         delegate?.textFieldDidUpdateText(self)
-
-        let isValid = emailField.isInputValid && passwordField.isInputValid
-        delegate?.textField(self, didUpdateValidation: isValid)
     }
 
 }
@@ -230,16 +228,10 @@ extension EmailPasswordTextField: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField == emailField {
             passwordField.becomeFirstResponder()
-            return true
         } else if textField == passwordField {
             emailField.validateInput()
             passwordField.validateInput()
-
-            if emailField.isInputValid && passwordField.isInputValid {
-                confirmButtonTapped()
-            } else {
-                return false
-            }
+            confirmButtonTapped()
         }
 
         return true

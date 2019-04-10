@@ -75,12 +75,10 @@ final class AccessoryTextFieldTests: ZMSnapshotTestCase {
         self.verify(view: sut.snapshotView())
     }
 
-    func testThatItShowsLiveValidationIndicator() {
+    func testThatItShowsGuidanceDot() {
         // GIVEN
         sut.kind = .password(isNew: false)
-        sut.useLiveValidation = true
-        sut.enableConfirmButton = { false }
-        sut.hasValidationIssues = { true }
+        sut.showGuidanceDot()
 
         // WHEN
         sut.text = "Password"

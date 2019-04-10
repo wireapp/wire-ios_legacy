@@ -23,15 +23,15 @@ final class EmailPasswordFieldDescription: ValueSubmission {
 
     var forRegistration: Bool
     var prefilledEmail: String?
-    var usePasswordLiveValidation: Bool
+    var usePasswordDeferredValidation: Bool
     var acceptsInput: Bool = true
 
     var valueSubmitted: ValueSubmitted?
     var valueValidated: ValueValidated?
 
-    init(forRegistration: Bool, prefilledEmail: String? = nil, usePasswordLiveValidation: Bool = false) {
+    init(forRegistration: Bool, prefilledEmail: String? = nil, usePasswordDeferredValidation: Bool = false) {
         self.forRegistration = forRegistration
-        self.usePasswordLiveValidation = usePasswordLiveValidation
+        self.usePasswordDeferredValidation = usePasswordDeferredValidation
     }
 
 }
@@ -46,21 +46,20 @@ extension EmailPasswordFieldDescription: ViewDescriptor, EmailPasswordTextFieldD
     }
 
     func textFieldDidUpdateText(_ textField: EmailPasswordTextField) {
-        // Reset the error message when the user changes the text
+        // Reset the error message when the user changes the text and we use deferred validation
+        guard usePasswordDeferredValidation else { return }
         valueValidated?(nil)
+        textField.passwordField.hideGuidanceDot()
     }
 
     func textField(_ textField: EmailPasswordTextField, didConfirmCredentials credentials: (String, String)) {
         valueSubmitted?(credentials)
     }
 
-    func textField(_ textField: EmailPasswordTextField, didUpdateValidation isValid: Bool) {
-        if usePasswordLiveValidation {
-            if let passwordError = textField.passwordValidationError {
-                valueValidated?(.error(passwordError, showVisualFeedback: !textField.isPasswordEmpty))
-            } else {
-                valueValidated?(nil)
-            }
+    func textFieldDidSubmitWithValidationError(_ textField: EmailPasswordTextField) {
+        if let passwordError = textField.passwordValidationError {
+            textField.passwordField.showGuidanceDot()
+            valueValidated?(.error(passwordError, showVisualFeedback: true))
         }
     }
 }
