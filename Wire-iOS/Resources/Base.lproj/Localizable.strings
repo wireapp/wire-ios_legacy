@@ -1539,6 +1539,10 @@
 "url_action.confirm" = "Confirm";
 "url_action.title" = "Confirm URL action";
 "url_action.connect_to_bot.message" = "Would you like to connect to the bot?";
+"url_action.switch_backend.message" = "You will be connecting to a custom backend %@, are you sure?";
+"url_action.switch_backend.error.logged_in" = "Switching backend is not allowed after you have logged in";
+"url_action.switch_backend.error.already_switched" = "Switching backend is not allowed after you have logged in";
+
 
 // Deep Link
 "url_action.invalid_user.title" = "Wire can't find this person.";

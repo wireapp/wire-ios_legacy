@@ -863,7 +863,6 @@
 		BFBB03061D5DF4CB0065AF4F /* InputBarButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBB03051D5DF4CB0065AF4F /* InputBarButtonsView.swift */; };
 		BFBB03081D61AF8D0065AF4F /* InputBarEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBB03071D61AF8D0065AF4F /* InputBarEditView.swift */; };
 		BFBBD1ED20D9238B00BFC4AD /* NotificationWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBBD1EC20D9238B00BFC4AD /* NotificationWindow.swift */; };
-		BFBC11E31ED84DB200502AF0 /* WireDataModel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFBC11E21ED84DB200502AF0 /* WireDataModel.framework */; };
 		BFBDDBC61DB0D51C00BEED02 /* ConversationInputBarButtonState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBDDBC51DB0D51C00BEED02 /* ConversationInputBarButtonState.swift */; };
 		BFBE45771E36205F009FBF60 /* Error+Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBE45761E36205F009FBF60 /* Error+Logging.swift */; };
 		BFC0673D2099DD7D00204179 /* CallInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC0673C2099DD7D00204179 /* CallInfoViewController.swift */; };
@@ -1370,6 +1369,9 @@
 		F16427041FCC5BB600D2ABFC /* VerifyEmailStepDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16427031FCC5BB600D2ABFC /* VerifyEmailStepDescription.swift */; };
 		F16427061FCC5BE400D2ABFC /* SetFullNameStepDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16427051FCC5BE400D2ABFC /* SetFullNameStepDescription.swift */; };
 		F16427081FCC5BF800D2ABFC /* SetPasswordStepDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16427071FCC5BF800D2ABFC /* SetPasswordStepDescription.swift */; };
+		F16558C5225DE81500EA2F2A /* WireSyncEngine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1655896225C8FFC00EA2F2A /* WireSyncEngine.framework */; };
+		F16558C6225DE81800EA2F2A /* WireDataModel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F16558A2225C900100EA2F2A /* WireDataModel.framework */; };
+		F16558C7225DE81B00EA2F2A /* WireTransport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F16558AE225C970000EA2F2A /* WireTransport.framework */; };
 		F16E8EA8214A910F005ED9E2 /* ConversationInputBarViewController+Mentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16E8EA7214A910F005ED9E2 /* ConversationInputBarViewController+Mentions.swift */; };
 		F17B0A9D219489DC005ECAD0 /* NetworkCondition+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F17B0A9C219489DB005ECAD0 /* NetworkCondition+Helper.swift */; };
 		F18993B62241356C00535A74 /* ConversationContentViewController+Scrolling.swift in Sources */ = {isa = PBXBuildFile; fileRef = F18993B52241356C00535A74 /* ConversationContentViewController+Scrolling.swift */; };
@@ -1417,6 +1419,90 @@
 			proxyType = 1;
 			remoteGlobalIDString = 8F42C537199244A700288E4D;
 			remoteInfo = "ZClient-iOS";
+		};
+		F1655895225C8FFC00EA2F2A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F165588F225C8FFB00EA2F2A /* WireSyncEngine.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 549815931A43232400A7CE2E;
+			remoteInfo = "WireSyncEngine-ios";
+		};
+		F1655897225C8FFC00EA2F2A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F165588F225C8FFB00EA2F2A /* WireSyncEngine.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3E1860C3191A649D000FE027;
+			remoteInfo = "WireSyncEngine-iOS-Tests";
+		};
+		F1655899225C8FFC00EA2F2A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F165588F225C8FFB00EA2F2A /* WireSyncEngine.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3E186088191A56F6000FE027;
+			remoteInfo = "WireSyncEngine Test Host";
+		};
+		F16558A1225C900100EA2F2A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F165589B225C900100EA2F2A /* WireDataModel.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F9C9A4FC1CAD5DF10039E10C;
+			remoteInfo = WireDataModel;
+		};
+		F16558A3225C900100EA2F2A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F165589B225C900100EA2F2A /* WireDataModel.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F9C9A5061CAD5DF10039E10C;
+			remoteInfo = WireDataModelTests;
+		};
+		F16558A5225C900100EA2F2A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F165589B225C900100EA2F2A /* WireDataModel.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F9C9A7F31CAED9510039E10C;
+			remoteInfo = WireDataModelTestHost;
+		};
+		F16558AD225C970000EA2F2A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F16558A7225C970000EA2F2A /* WireTransport.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3E88BCA71B1F35DF00232589;
+			remoteInfo = "WireTransport-ios";
+		};
+		F16558AF225C970000EA2F2A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F16558A7225C970000EA2F2A /* WireTransport.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3E88BCB21B1F35DF00232589;
+			remoteInfo = "WireTransport-ios-tests";
+		};
+		F16558B1225C970000EA2F2A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F16558A7225C970000EA2F2A /* WireTransport.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 09A218661B790D330076547A;
+			remoteInfo = "WireTransport-tests-host";
+		};
+		F16558BF225DE7F200EA2F2A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F16558A7225C970000EA2F2A /* WireTransport.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 3E88BCA61B1F35DF00232589;
+			remoteInfo = "WireTransport-ios";
+		};
+		F16558C1225DE7F200EA2F2A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F165589B225C900100EA2F2A /* WireDataModel.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = F9C9A4FB1CAD5DF10039E10C;
+			remoteInfo = WireDataModel;
+		};
+		F16558C3225DE7F200EA2F2A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F165588F225C8FFB00EA2F2A /* WireSyncEngine.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 549815921A43232400A7CE2E;
+			remoteInfo = "WireSyncEngine-ios";
 		};
 		F1FEA14F21DCEB1700790A54 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -3129,6 +3215,9 @@
 		F16427031FCC5BB600D2ABFC /* VerifyEmailStepDescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyEmailStepDescription.swift; sourceTree = "<group>"; };
 		F16427051FCC5BE400D2ABFC /* SetFullNameStepDescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetFullNameStepDescription.swift; sourceTree = "<group>"; };
 		F16427071FCC5BF800D2ABFC /* SetPasswordStepDescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetPasswordStepDescription.swift; sourceTree = "<group>"; };
+		F165588F225C8FFB00EA2F2A /* WireSyncEngine.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = WireSyncEngine.xcodeproj; path = "../wire-ios-sync-engine/WireSyncEngine.xcodeproj"; sourceTree = "<group>"; };
+		F165589B225C900100EA2F2A /* WireDataModel.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = WireDataModel.xcodeproj; path = "../wire-ios-data-model/WireDataModel.xcodeproj"; sourceTree = "<group>"; };
+		F16558A7225C970000EA2F2A /* WireTransport.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = WireTransport.xcodeproj; path = "../wire-ios-transport/WireTransport.xcodeproj"; sourceTree = "<group>"; };
 		F16E8EA7214A910F005ED9E2 /* ConversationInputBarViewController+Mentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationInputBarViewController+Mentions.swift"; sourceTree = "<group>"; };
 		F174AAAE218A0B1A00AFCC4D /* ColorScheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorScheme.swift; sourceTree = "<group>"; };
 		F174AAB0218B62D200AFCC4D /* UIColor+AccentColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+AccentColor.swift"; sourceTree = "<group>"; };
@@ -3184,9 +3273,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F16558C7225DE81B00EA2F2A /* WireTransport.framework in Frameworks */,
+				F16558C6225DE81800EA2F2A /* WireDataModel.framework in Frameworks */,
+				F16558C5225DE81500EA2F2A /* WireSyncEngine.framework in Frameworks */,
 				5EF4A6E820F497E300A9EF22 /* Ziphy.framework in Frameworks */,
 				F1CE2DF01EF0337F00631D8A /* PureLayout.framework in Frameworks */,
-				BFBC11E31ED84DB200502AF0 /* WireDataModel.framework in Frameworks */,
 				AF36C5A71E9F6F2000FADECC /* WireCanvas.framework in Frameworks */,
 				87AAE4291E43682E00E1D13A /* LocalAuthentication.framework in Frameworks */,
 				8714A9EC1E69E605006BBAE9 /* FLAnimatedImage.framework in Frameworks */,
@@ -5014,6 +5105,9 @@
 		8F42C52F199244A700288E4D = {
 			isa = PBXGroup;
 			children = (
+				F16558A7225C970000EA2F2A /* WireTransport.xcodeproj */,
+				F165589B225C900100EA2F2A /* WireDataModel.xcodeproj */,
+				F165588F225C8FFB00EA2F2A /* WireSyncEngine.xcodeproj */,
 				87C8D7FB1BA8261C00B0530B /* Entitlements-Dev.entitlements */,
 				87C8D7FC1BA8261C00B0530B /* Entitlements-Prod.entitlements */,
 				F12C48952199CBB600F49548 /* Configuration */,
@@ -6450,6 +6544,36 @@
 			path = ScreenDescriptions;
 			sourceTree = "<group>";
 		};
+		F1655890225C8FFB00EA2F2A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F1655896225C8FFC00EA2F2A /* WireSyncEngine.framework */,
+				F1655898225C8FFC00EA2F2A /* WireSyncEngine-iOS-Tests.xctest */,
+				F165589A225C8FFC00EA2F2A /* WireSyncEngine Test Host.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F165589C225C900100EA2F2A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F16558A2225C900100EA2F2A /* WireDataModel.framework */,
+				F16558A4225C900100EA2F2A /* WireDataModelTests.xctest */,
+				F16558A6225C900100EA2F2A /* WireDataModelTestHost.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F16558A8225C970000EA2F2A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F16558AE225C970000EA2F2A /* WireTransport.framework */,
+				F16558B0225C970000EA2F2A /* WireTransport-ios-tests.xctest */,
+				F16558B2225C970000EA2F2A /* WireTransport-tests-host.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		F1B2422E219B2C9B00F7035C /* Configuration */ = {
 			isa = PBXGroup;
 			children = (
@@ -6589,6 +6713,9 @@
 			buildRules = (
 			);
 			dependencies = (
+				F16558C0225DE7F200EA2F2A /* PBXTargetDependency */,
+				F16558C2225DE7F200EA2F2A /* PBXTargetDependency */,
+				F16558C4225DE7F200EA2F2A /* PBXTargetDependency */,
 				F1FEA15021DCEB1700790A54 /* PBXTargetDependency */,
 				168A16B21D9597C2005CFA6C /* PBXTargetDependency */,
 			);
@@ -6717,6 +6844,20 @@
 			mainGroup = 8F42C52F199244A700288E4D;
 			productRefGroup = 8F42C539199244A700288E4D /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = F165589C225C900100EA2F2A /* Products */;
+					ProjectRef = F165589B225C900100EA2F2A /* WireDataModel.xcodeproj */;
+				},
+				{
+					ProductGroup = F1655890225C8FFB00EA2F2A /* Products */;
+					ProjectRef = F165588F225C8FFB00EA2F2A /* WireSyncEngine.xcodeproj */;
+				},
+				{
+					ProductGroup = F16558A8225C970000EA2F2A /* Products */;
+					ProjectRef = F16558A7225C970000EA2F2A /* WireTransport.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				8F42C537199244A700288E4D /* Wire-iOS */,
@@ -6726,6 +6867,72 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		F1655896225C8FFC00EA2F2A /* WireSyncEngine.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = WireSyncEngine.framework;
+			remoteRef = F1655895225C8FFC00EA2F2A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		F1655898225C8FFC00EA2F2A /* WireSyncEngine-iOS-Tests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "WireSyncEngine-iOS-Tests.xctest";
+			remoteRef = F1655897225C8FFC00EA2F2A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		F165589A225C8FFC00EA2F2A /* WireSyncEngine Test Host.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = "WireSyncEngine Test Host.app";
+			remoteRef = F1655899225C8FFC00EA2F2A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		F16558A2225C900100EA2F2A /* WireDataModel.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = WireDataModel.framework;
+			remoteRef = F16558A1225C900100EA2F2A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		F16558A4225C900100EA2F2A /* WireDataModelTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = WireDataModelTests.xctest;
+			remoteRef = F16558A3225C900100EA2F2A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		F16558A6225C900100EA2F2A /* WireDataModelTestHost.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = WireDataModelTestHost.app;
+			remoteRef = F16558A5225C900100EA2F2A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		F16558AE225C970000EA2F2A /* WireTransport.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = WireTransport.framework;
+			remoteRef = F16558AD225C970000EA2F2A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		F16558B0225C970000EA2F2A /* WireTransport-ios-tests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "WireTransport-ios-tests.xctest";
+			remoteRef = F16558AF225C970000EA2F2A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		F16558B2225C970000EA2F2A /* WireTransport-tests-host.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = "WireTransport-tests-host.app";
+			remoteRef = F16558B1225C970000EA2F2A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		168A16A71D9597C2005CFA6C /* Resources */ = {
@@ -6907,11 +7114,11 @@
 			files = (
 			);
 			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/iOS/WireSyncEngine.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/WireDataModel.framework",
+				"$(BUILT_PRODUCTS_DIR)/WireSyncEngine.framework",
+				"$(BUILT_PRODUCTS_DIR)/WireDataModel.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/WireSystem.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/WireUtilities.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/WireTransport.framework",
+				"$(BUILT_PRODUCTS_DIR)/WireTransport.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/WireImages.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/WireCryptobox.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/WireProtos.framework",
@@ -6938,8 +7145,6 @@
 			);
 			name = "Copy Frameworks and DSYMs";
 			outputPaths = (
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/WireSyncEngine.framework/WireSyncEngine",
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/WireDataModel.framework/WireDataModel",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/WireSystem.framework/WireSystem",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/WireUtilities.framework/WireUtilities",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/WireTransport.framework/WireTransport",
@@ -8304,6 +8509,21 @@
 			isa = PBXTargetDependency;
 			target = 8F42C537199244A700288E4D /* Wire-iOS */;
 			targetProxy = BACB88571AF7C48900DDCDB0 /* PBXContainerItemProxy */;
+		};
+		F16558C0225DE7F200EA2F2A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "WireTransport-ios";
+			targetProxy = F16558BF225DE7F200EA2F2A /* PBXContainerItemProxy */;
+		};
+		F16558C2225DE7F200EA2F2A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = WireDataModel;
+			targetProxy = F16558C1225DE7F200EA2F2A /* PBXContainerItemProxy */;
+		};
+		F16558C4225DE7F200EA2F2A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "WireSyncEngine-ios";
+			targetProxy = F16558C3225DE7F200EA2F2A /* PBXContainerItemProxy */;
 		};
 		F1FEA15021DCEB1700790A54 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
