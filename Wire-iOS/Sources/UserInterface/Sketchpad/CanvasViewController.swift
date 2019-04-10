@@ -101,7 +101,17 @@ import Cartography
         updateButtonSelection()
         createConstraints()
     }
-    
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        updateStatusBar()
+    }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        updateStatusBar()
+    }
+
     func configureNavigationItems() {
         let undoImage = UIImage(for: .undo, iconSize: .tiny, color: .black)
         let closeImage = UIImage(for: .X, iconSize: .tiny, color: .black)
