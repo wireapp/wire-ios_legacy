@@ -35,6 +35,10 @@ extension ProfileViewController {
 
 // MARK: - init
 extension ProfileViewController {
+    override open var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return wr_supportedInterfaceOrientations
+    }
+
     convenience init(user: GenericUser, viewer: GenericUser, conversation: ZMConversation?, viewControllerDismisser: ViewControllerDismisser) {
         self.init(user: user, viewer: viewer, conversation: conversation)
         self.viewControllerDismisser = viewControllerDismisser

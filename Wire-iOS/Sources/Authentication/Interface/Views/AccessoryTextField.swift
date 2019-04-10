@@ -28,7 +28,7 @@ protocol TextFieldValidationDelegate: class {
     func validationUpdated(sender: UITextField, error: TextFieldValidator.ValidationError?)
 }
 
-class AccessoryTextField: UITextField, TextContainer {
+class AccessoryTextField: UITextField, TextContainer, Themeable {
     enum Kind: Equatable {
         case email
         case name(isTeam: Bool)
@@ -45,6 +45,7 @@ class AccessoryTextField: UITextField, TextContainer {
     static let enteredTextFont = FontSpec(.normal, .regular, .inputText).font!
     static let placeholderFont = FontSpec(.small, .regular).font!
     static let ConfirmButtonWidth: CGFloat = 32
+    static let LiveValidationIndicatorWidth: CGFloat = 8
 
     var isLoading = false {
         didSet {
@@ -75,6 +76,12 @@ class AccessoryTextField: UITextField, TextContainer {
         }
     }
 
+    @objc dynamic var colorSchemeVariant: ColorSchemeVariant = .light {
+        didSet {
+            applyColorScheme(colorSchemeVariant)
+        }
+    }
+
     /// The other text field that needs to be valid in order to enable the confirm button.
     private weak var boundTextField: AccessoryTextField?
 
@@ -90,6 +97,9 @@ class AccessoryTextField: UITextField, TextContainer {
     }
 
     var enableConfirmButton: (() -> Bool)?
+    var hasValidationIssues: (() -> Bool)?
+
+    var useLiveValidation: Bool = false
 
     let confirmButton: IconButton = {
         let iconButton = IconButton(style: .circular, variant: .dark)
@@ -99,7 +109,25 @@ class AccessoryTextField: UITextField, TextContainer {
         return iconButton
     }()
 
-    var textInsets: UIEdgeInsets = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 8)
+    let liveValidationIndicator: RoundedView = {
+        let indicator = RoundedView()
+        indicator.shape = .circle
+        indicator.isHidden = true
+        return indicator
+    }()
+
+    let accessoryStack: UIStackView = {
+        let stack = UIStackView()
+        stack.axis = .horizontal
+        stack.spacing = 16
+        stack.alignment = .center
+        stack.distribution = .fill
+        return stack
+    }()
+
+    let accessoryContainer = UIView()
+
+    var textInsets: UIEdgeInsets = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
     let placeholderInsets: UIEdgeInsets
 
     convenience override init(frame: CGRect) {
@@ -126,7 +154,7 @@ class AccessoryTextField: UITextField, TextContainer {
         super.init(frame: .zero)
         self.setupTextFieldProperties()
 
-        self.rightView = self.confirmButton
+        self.rightView = accessoryContainer
         self.rightViewMode = .always
 
         self.font = AccessoryTextField.enteredTextFont
@@ -146,15 +174,11 @@ class AccessoryTextField: UITextField, TextContainer {
         setup()
         setupTextFieldProperties()
         updateButtonIcon()
+        applyColorScheme(colorSchemeVariant)
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        confirmButton.setNeedsLayout()
     }
 
     override var intrinsicContentSize: CGSize {
@@ -174,12 +198,11 @@ class AccessoryTextField: UITextField, TextContainer {
         case .password(let isNew):
             isSecureTextEntry = true
             accessibilityIdentifier = "PasswordField"
+            autocapitalizationType = .none
             if #available(iOS 12, *) {
                 textContentType = isNew ? .newPassword : .password
                 passwordRules = textFieldValidator.passwordRules
             }
-            autocapitalizationType = .words
-            textContentType = .organizationName
         case .name(let isTeam):
             autocapitalizationType = .words
             accessibilityIdentifier = "NameField"
@@ -192,6 +215,10 @@ class AccessoryTextField: UITextField, TextContainer {
             keyboardType = .asciiCapable
             textContentType = nil
         }
+    }
+
+    func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
+        liveValidationIndicator.backgroundColor = UIColor.from(scheme: .errorIndicator, variant: colorSchemeVariant)
     }
     
     private func updateLoadingState() {
@@ -233,8 +260,29 @@ class AccessoryTextField: UITextField, TextContainer {
     }
 
     private func setup() {
+        accessoryStack.addArrangedSubview(liveValidationIndicator)
+        accessoryStack.addArrangedSubview(confirmButton)
+
         self.confirmButton.addTarget(self, action: #selector(confirmButtonTapped(button:)), for: .touchUpInside)
         self.addTarget(self, action: #selector(textFieldDidChange(textField:)), for: .editingChanged)
+
+        accessoryStack.translatesAutoresizingMaskIntoConstraints = false
+        accessoryContainer.translatesAutoresizingMaskIntoConstraints = false
+        accessoryContainer.addSubview(accessoryStack)
+
+        NSLayoutConstraint.activate([
+            // dimensions
+            confirmButton.widthAnchor.constraint(equalToConstant: AccessoryTextField.ConfirmButtonWidth),
+            confirmButton.heightAnchor.constraint(equalToConstant: AccessoryTextField.ConfirmButtonWidth),
+            liveValidationIndicator.widthAnchor.constraint(equalToConstant: AccessoryTextField.LiveValidationIndicatorWidth),
+            liveValidationIndicator.heightAnchor.constraint(equalToConstant: AccessoryTextField.LiveValidationIndicatorWidth),
+
+            // spacing
+            accessoryStack.topAnchor.constraint(equalTo: accessoryContainer.topAnchor),
+            accessoryStack.bottomAnchor.constraint(equalTo: accessoryContainer.bottomAnchor),
+            accessoryStack.leadingAnchor.constraint(equalTo: accessoryContainer.leadingAnchor, constant: 0),
+            accessoryStack.trailingAnchor.constraint(equalTo: accessoryContainer.trailingAnchor, constant: -16),
+        ])
     }
 
     // MARK: - custom edge insets
@@ -242,12 +290,12 @@ class AccessoryTextField: UITextField, TextContainer {
     override func textRect(forBounds bounds: CGRect) -> CGRect {
         let textRect = super.textRect(forBounds: bounds)
 
-        return textRect.inset(by: self.textInsets)
+        return textRect.inset(by: textInsets.directionAwareInsets)
     }
 
     override open func editingRect(forBounds bounds: CGRect) -> CGRect {
         let editingRect: CGRect = super.editingRect(forBounds: bounds)
-        return editingRect.inset(by: textInsets)
+        return editingRect.inset(by: textInsets.directionAwareInsets)
     }
 
     @objc func textFieldDidChange(textField: UITextField) {
@@ -273,6 +321,10 @@ class AccessoryTextField: UITextField, TextContainer {
         }
     }
 
+    private func updateLiveValidationIndicator() {
+        liveValidationIndicator.isHidden = !useLiveValidation || hasValidationIssues?() != true
+    }
+
     // MARK: - text validation
 
     @objc func confirmButtonTapped(button: UIButton) {
@@ -283,6 +335,7 @@ class AccessoryTextField: UITextField, TextContainer {
         let error = textFieldValidator.validate(text: text, kind: kind)
         textFieldValidationDelegate?.validationUpdated(sender: self, error: error)
         updateConfirmButton()
+        updateLiveValidationIndicator()
     }
 
     // MARK: - placeholder
@@ -305,20 +358,21 @@ class AccessoryTextField: UITextField, TextContainer {
     }
 
     override func drawPlaceholder(in rect: CGRect) {
-        super.drawPlaceholder(in: rect.inset(by: placeholderInsets))
+        super.drawPlaceholder(in: rect.inset(by: placeholderInsets.directionAwareInsets))
     }
 
     // MARK: - right and left accessory
 
     func rightAccessoryViewRect(forBounds bounds: CGRect, leftToRight: Bool) -> CGRect {
+        let contentSize = accessoryContainer.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
+
         var rightViewRect: CGRect
-        let newY = bounds.origin.y + (bounds.size.height -  AccessoryTextField.ConfirmButtonWidth) / 2
-        let xOffset: CGFloat = 16
+        let newY = bounds.origin.y + (bounds.size.height -  contentSize.height) / 2
 
         if leftToRight {
-            rightViewRect = CGRect(x: CGFloat(bounds.maxX - AccessoryTextField.ConfirmButtonWidth - xOffset), y: newY, width: AccessoryTextField.ConfirmButtonWidth, height: AccessoryTextField.ConfirmButtonWidth)
+            rightViewRect = CGRect(x: CGFloat(bounds.maxX - contentSize.width), y: newY, width: contentSize.width, height: contentSize.height)
         } else {
-            rightViewRect = CGRect(x: bounds.origin.x + xOffset, y: newY, width: AccessoryTextField.ConfirmButtonWidth, height: AccessoryTextField.ConfirmButtonWidth)
+            rightViewRect = CGRect(x: bounds.origin.x, y: newY, width: contentSize.width, height: contentSize.height)
         }
 
         return rightViewRect

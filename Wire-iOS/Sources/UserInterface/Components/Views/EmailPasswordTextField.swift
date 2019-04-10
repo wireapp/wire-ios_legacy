@@ -38,6 +38,19 @@ class EmailPasswordTextField: UIView, MagicTappable {
     private(set) var emailValidationError: TextFieldValidator.ValidationError? = .tooShort(kind: .email)
     private(set) var passwordValidationError: TextFieldValidator.ValidationError? = .tooShort(kind: .email)
 
+    // MARK: - Helpers
+
+    var colorSchemeVariant: ColorSchemeVariant = .light {
+        didSet {
+            passwordField.colorSchemeVariant = colorSchemeVariant
+            emailField.colorSchemeVariant = colorSchemeVariant
+        }
+    }
+
+    var isPasswordEmpty: Bool {
+        return passwordField.input.isEmpty
+    }
+
     // MARK: - Initialization
 
     override init(frame: CGRect) {
@@ -70,7 +83,7 @@ class EmailPasswordTextField: UIView, MagicTappable {
         emailField.placeholder = "email.placeholder".localized(uppercased: true)
         emailField.showConfirmButton = false
         emailField.addTarget(self, action: #selector(textInputDidChange), for: .editingChanged)
-
+        emailField.colorSchemeVariant = colorSchemeVariant
         emailField.enableConfirmButton = { [weak self] in
             self?.emailValidationError == nil
         }
@@ -87,9 +100,14 @@ class EmailPasswordTextField: UIView, MagicTappable {
         passwordField.bindConfirmationButton(to: emailField)
         passwordField.addTarget(self, action: #selector(textInputDidChange), for: .editingChanged)
         passwordField.confirmButton.addTarget(self, action: #selector(confirmButtonTapped), for: .touchUpInside)
+        passwordField.colorSchemeVariant = colorSchemeVariant
 
         passwordField.enableConfirmButton = { [weak self] in
             self?.passwordValidationError == nil
+        }
+
+        passwordField.hasValidationIssues = { [weak self] in
+            self?.passwordValidationError != nil && self?.isPasswordEmpty == false
         }
 
         contentStack.addArrangedSubview(passwordField)
@@ -97,8 +115,19 @@ class EmailPasswordTextField: UIView, MagicTappable {
 
     private func configureConstraints() {
         contentStack.translatesAutoresizingMaskIntoConstraints = false
-        contentStack.fitInSuperview()
-        separatorContainer.heightAnchor.constraint(equalToConstant: CGFloat.hairline).isActive = true
+
+        NSLayoutConstraint.activate([
+            // dimensions
+            passwordField.heightAnchor.constraint(equalToConstant: 56),
+            emailField.heightAnchor.constraint(equalToConstant: 56),
+            separatorContainer.heightAnchor.constraint(equalToConstant: CGFloat.hairline),
+
+            // contentStack
+            contentStack.leadingAnchor.constraint(equalTo: leadingAnchor),
+            contentStack.topAnchor.constraint(equalTo: topAnchor),
+            contentStack.trailingAnchor.constraint(equalTo: trailingAnchor),
+            contentStack.bottomAnchor.constraint(equalTo: bottomAnchor),
+        ])
     }
 
     /// Pre-fills the e-mail text field.
@@ -121,6 +150,11 @@ class EmailPasswordTextField: UIView, MagicTappable {
 
     func setSeparatorColor(_ color: UIColor) {
         separatorContainer.view.backgroundColor = color
+    }
+
+    func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
+        emailField.colorSchemeVariant = colorSchemeVariant
+        passwordField.colorSchemeVariant = colorSchemeVariant
     }
 
     // MARK: - Responder

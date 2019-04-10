@@ -20,6 +20,11 @@ import Foundation
 import AVKit
 
 extension ConfirmAssetViewController {
+
+    override open var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return wr_supportedInterfaceOrientations
+    }
+
     @objc func setupStyle() {
         view.backgroundColor = UIColor.from(scheme: .background)
         imageToolbarSeparatorView?.backgroundColor = UIColor.from(scheme: .separator)

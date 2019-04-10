@@ -74,6 +74,21 @@ final class AccessoryTextFieldTests: ZMSnapshotTestCase {
         // THEN
         self.verify(view: sut.snapshotView())
     }
+
+    func testThatItShowsLiveValidationIndicator() {
+        // GIVEN
+        sut.kind = .password(isNew: false)
+        sut.useLiveValidation = true
+        sut.enableConfirmButton = { false }
+        sut.hasValidationIssues = { true }
+
+        // WHEN
+        sut.text = "Password"
+        sut.textFieldDidChange(textField: sut)
+
+        // THEN
+        self.verify(view: sut.snapshotView())
+    }
 }
 
 fileprivate extension UIView {

@@ -75,12 +75,6 @@ static const CGFloat MarginInset = 24;
     [self setupStyle];
 }
 
-- (UIInterfaceOrientationMask)supportedInterfaceOrientations
-{
-    return self.wr_supportedInterfaceOrientations;
-}
-
-
 - (void)setPreviewTitle:(NSString *)previewTitle
 {
     _previewTitle = previewTitle;

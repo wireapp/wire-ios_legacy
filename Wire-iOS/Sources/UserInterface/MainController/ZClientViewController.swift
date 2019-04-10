@@ -21,6 +21,10 @@ import Foundation
 
 extension ZClientViewController {
 
+    override open var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return wr_supportedInterfaceOrientations
+    }
+
     @objc(transitionToListAnimated:completion:)
     func transitionToList(animated: Bool, completion: (() -> ())?) {
         transitionToList(animated: animated,

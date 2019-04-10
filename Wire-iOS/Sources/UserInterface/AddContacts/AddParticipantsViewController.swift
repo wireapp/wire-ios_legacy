@@ -85,7 +85,7 @@ extension AddParticipantsViewController.Context {
     }
 }
 
-public class AddParticipantsViewController: UIViewController {
+final public class AddParticipantsViewController: UIViewController {
     
     public enum CreateAction {
         case updatedUsers(Set<ZMUser>)
@@ -136,7 +136,11 @@ public class AddParticipantsViewController: UIViewController {
         super.viewWillDisappear(animated)
         searchHeaderViewController.tokenField.resignFirstResponder()
     }
-        
+
+    override public var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return wr_supportedInterfaceOrientations
+    }
+
     public init(context: Context, variant: ColorSchemeVariant = ColorScheme.default.variant) {
         self.variant = variant
         
