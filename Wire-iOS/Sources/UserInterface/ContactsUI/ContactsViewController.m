@@ -50,10 +50,15 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
         self.shouldShowShareContactsViewController = YES;
 
+        [self setupViews];
+        [self setupLayout];
+        [self setupStyle];
+
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(keyboardFrameWillChange:)
                                                      name:UIKeyboardWillChangeFrameNotification
                                                    object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardFrameDidChange:) name:UIKeyboardWillChangeFrameNotification object:nil];
     }
     
     return self;
@@ -65,17 +70,12 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 {
     [super viewDidLoad];
     
-    [self setupViews];
-    [self setupLayout];
-
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardFrameDidChange:) name:UIKeyboardWillChangeFrameNotification object:nil];
 
     BOOL shouldSkip = AutomationHelper.sharedHelper.skipFirstLoginAlerts || ZMUser.selfUser.hasTeam;
     if (self.sharingContactsRequired && ! [[AddressBookHelper sharedHelper] isAddressBookAccessGranted] && !shouldSkip && self.shouldShowShareContactsViewController) {
         [self presentShareContactsViewController];
     }
 
-    [self setupStyle];
 }
 
 - (BOOL)prefersStatusBarHidden
