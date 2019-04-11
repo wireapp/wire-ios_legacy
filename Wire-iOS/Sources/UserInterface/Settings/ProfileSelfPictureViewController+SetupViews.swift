@@ -197,6 +197,7 @@ extension ProfileSelfPictureViewController {
             popover?.backgroundColor = UIColor.white
         }
 
+        /// update status bar style for the top view controller (UIImagePickerController)
         present(imagePickerController, animated: true) { [weak self] in
             self?.updateStatusBar()
         }
