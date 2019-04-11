@@ -43,6 +43,7 @@
 		16345574200D01180009B5DB /* ConversationListOnboardHint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16345573200D01180009B5DB /* ConversationListOnboardHint.swift */; };
 		163495871F010F91004E80DB /* UnauthenticatedSession+Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 163495861F010F91004E80DB /* UnauthenticatedSession+Shared.swift */; };
 		163495891F015389004E80DB /* AppDelegate+Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 163495881F015389004E80DB /* AppDelegate+Network.swift */; };
+		1639A80D225F604100868AB9 /* Settings+Availability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1639A80C225F604100868AB9 /* Settings+Availability.swift */; };
 		163B5EF21B4C209C009B4629 /* MediaBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 163B5EF11B4C209C009B4629 /* MediaBarViewController.m */; };
 		163BB6141BEAA52A00606381 /* InviteContactsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 163BB6131BEAA52A00606381 /* InviteContactsViewController.m */; };
 		163BB8101EE1648100DF9384 /* ContactsDataSource+Searching.swift in Sources */ = {isa = PBXBuildFile; fileRef = 163BB80F1EE1648100DF9384 /* ContactsDataSource+Searching.swift */; };
@@ -1509,6 +1510,7 @@
 		16345573200D01180009B5DB /* ConversationListOnboardHint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationListOnboardHint.swift; sourceTree = "<group>"; };
 		163495861F010F91004E80DB /* UnauthenticatedSession+Shared.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UnauthenticatedSession+Shared.swift"; sourceTree = "<group>"; };
 		163495881F015389004E80DB /* AppDelegate+Network.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppDelegate+Network.swift"; sourceTree = "<group>"; };
+		1639A80C225F604100868AB9 /* Settings+Availability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Settings+Availability.swift"; sourceTree = "<group>"; };
 		163B5EF01B4C209C009B4629 /* MediaBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaBarViewController.h; sourceTree = "<group>"; };
 		163B5EF11B4C209C009B4629 /* MediaBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaBarViewController.m; sourceTree = "<group>"; };
 		163BB6121BEAA52A00606381 /* InviteContactsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InviteContactsViewController.h; sourceTree = "<group>"; };
@@ -4536,6 +4538,7 @@
 				871BC33D1D34F94200DF0793 /* Settings.m */,
 				549D55AB1DBE03990035EB66 /* Settings+Logging.swift */,
 				EEB8A2CF1F628D1100958881 /* Settings+Account.swift */,
+				1639A80C225F604100868AB9 /* Settings+Availability.swift */,
 				1EE9DCAA1B5F9A6D00E347DF /* TokenField */,
 				876113E51DD1DE70007F5969 /* ShareViewController */,
 				7C3083AB1FE15FBF0036AFCC /* CustomSpacingStackView.swift */,
@@ -7963,6 +7966,7 @@
 				EF1BEBCD21F5E8F5001128E0 /* StartUIViewController+Constraints.swift in Sources */,
 				160D691D212AC95A00096EAD /* ImageResourceView.swift in Sources */,
 				EFF6DCB4206BE94600437C71 /* SplitViewController+leftView.swift in Sources */,
+				1639A80D225F604100868AB9 /* Settings+Availability.swift in Sources */,
 				F10F46D420288CEB00261449 /* ConversationCreationController.swift in Sources */,
 				87E8D0BB2182179F00BD26AC /* ConversationInputBarViewController+Reply.swift in Sources */,
 				8FC853FF199245770008B66B /* AppDelegate.m in Sources */,

@@ -1521,6 +1521,17 @@
 "availability.away.placeholder" = "%@ is away";
 "availability.busy.placeholder" = "%@ is busy";
 
+"availability.reminder.away.title" = "You are now away";
+"availability.reminder.away.message" = "When you are away you won't be receving notification or calls";
+"availability.reminder.busy.title" = "You are now busy";
+"availability.reminder.busy.message" = "When you are busy you will only receive notification about mentions or replies";
+"availability.reminder.available.title" = "You are now available";
+"availability.reminder.available.message" = "When you are available you will receive notifications for in all non-muted conversations";
+"availability.reminder.none.title" = "You have cleared your status";
+"availability.reminder.none.message" = "When you cleared your notification status you will receive notifications in all non-muted conversations";
+"availability.reminder.action.dont_remind_me" = "Don't remind me again";
+"availability.reminder.action.ok" = "Ok";
+
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Call Quality Survey
 
