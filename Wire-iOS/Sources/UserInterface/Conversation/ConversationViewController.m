@@ -87,9 +87,8 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @property (nonatomic) NSLayoutConstraint *inputBarBottomMargin;
 @property (nonatomic) NSLayoutConstraint *inputBarZeroHeight;
-@property (nonatomic) InvisibleInputAccessoryView *invisibleInputAccessoryView;
-
-@property (nonatomic) GuestsBarController *guestsBarController;
+@property (nonatomic, readwrite) InvisibleInputAccessoryView *invisibleInputAccessoryView;
+@property (nonatomic, readwrite) GuestsBarController *guestsBarController;
 
 @property (nonatomic) id voiceChannelStateObserverToken;
 @property (nonatomic) id conversationObserverToken;
@@ -231,21 +230,16 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     self.guestsBarController = [[GuestsBarController alloc] init];
 }
 
-- (void)updateGuestsBarVisibility
-{
-    ZMConversationExternalParticipantsState state = self.conversation.externalParticipantsState;
-    if (state != ZMConversationExternalParticipantsStateNone) {
-        [self.conversationBarController presentBar:self.guestsBarController];
-        [self.guestsBarController setState:state animated:NO];
-    } else {
-        [self.conversationBarController dismissBar:self.guestsBarController];
-    }
-}
-
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     self.isAppearing = YES;
+    [self updateGuestsBarVisibility];
+}
+
+- (void)didMoveToParentViewController:(UIViewController *)parent
+{
+    [super didMoveToParentViewController:parent];
     [self updateGuestsBarVisibility];
 }
 
@@ -658,13 +652,14 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         self.contentViewController.searchQueries = @[];
         [self.contentViewController scrollToBottom];
     }
-    
-    [self.guestsBarController setState:ZMConversationExternalParticipantsStateNone animated:YES];
+
+    [self setGuestBarForceHidden:YES];
     return YES;
 }
 
 - (BOOL)conversationInputBarViewControllerShouldEndEditing:(ConversationInputBarViewController *)controller
 {
+    [self setGuestBarForceHidden:NO];
     return YES;
 }
 
