@@ -30,9 +30,9 @@ class GuestsBarController: UIViewController {
     private static let collapsedHeight: CGFloat = 2
     private static let expandedHeight: CGFloat = 20
     
-    private var _state: GuestBarState = .hidden
+    private var _state: ZMConversationExternalParticipantsState = .none
     
-    var state: GuestBarState {
+    var state: ZMConversationExternalParticipantsState {
         get {
             return _state
         }
@@ -76,12 +76,12 @@ class GuestsBarController: UIViewController {
     // MARK: - State Changes
     
     @objc(setState:animated:)
-    func setState(_ state: GuestBarState, animated: Bool) {
+    func setState(_ state: ZMConversationExternalParticipantsState, animated: Bool) {
         guard _state != state, isViewLoaded else { return }
         
         _state = state
         configureTitle(with: state)
-        let collapsed = state == .hidden
+        let collapsed = state == .none
         
         let change = {
             if (!collapsed) {
@@ -111,7 +111,7 @@ class GuestsBarController: UIViewController {
     }
     
     @objc(configureTitleWithState:)
-    func configureTitle(with state: GuestBarState) {
+    func configureTitle(with state: ZMConversationExternalParticipantsState) {
         label.accessibilityIdentifier = state.accessibilityIdentifier
         label.text = state.displayString
     }

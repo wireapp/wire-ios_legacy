@@ -233,8 +233,8 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 - (void)updateGuestsBarVisibility
 {
-    GuestBarState state = self.conversation.guestBarState;
-    if (state != GuestBarStateHidden) {
+    ZMConversationExternalParticipantsState state = self.conversation.externalParticipantsState;
+    if (state != ZMConversationExternalParticipantsStateNone) {
         [self.conversationBarController presentBar:self.guestsBarController];
         [self.guestsBarController setState:state animated:NO];
     } else {
@@ -356,7 +356,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         self.voiceChannelStateObserverToken = [self addCallStateObserver];
         self.conversationObserverToken = [ConversationChangeInfo addObserver:self forConversation:self.conversation];
         self.startCallController = [[ConversationCallController alloc] initWithConversation:self.conversation target: self];
-        [self updateObservedUsersForParticipantsInConversation:conversation];
     }
 }
 
@@ -660,7 +659,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         [self.contentViewController scrollToBottom];
     }
     
-    [self.guestsBarController setState:GuestBarStateHidden animated:YES];
+    [self.guestsBarController setState:ZMConversationExternalParticipantsStateNone animated:YES];
     return YES;
 }
 

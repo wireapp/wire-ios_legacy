@@ -16,33 +16,28 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-@objc enum GuestBarState: Int {
-    case hidden
-    case guestsPresent
-    case servicesPresent
-    case guestsAndServicesPresent
-}
+import WireDataModel
 
-extension GuestBarState {
+extension ZMConversationExternalParticipantsState {
     var displayString: String {
         return localizationKey.localized(uppercased: true)
     }
     
     private var localizationKey: String {
         switch self {
-        case .hidden: return ""
-        case .guestsPresent: return "conversation.guests_present"
-        case .servicesPresent: return "conversation.services_present"
-        case .guestsAndServicesPresent: return "conversation.guests_services_present"
+        case .none: return ""
+        case .onlyGuests: return "conversation.guests_present"
+        case .onlyServices: return "conversation.services_present"
+        case .guestsAndServices: return "conversation.guests_services_present"
         }
     }
     
     var accessibilityIdentifier: String? {
         switch self {
-        case .hidden: return nil
-        case .guestsPresent: return "label.conversationview.hasguests"
-        case .servicesPresent: return "label.conversationview.hasservices"
-        case .guestsAndServicesPresent: return "label.conversationview.hasguestsandservices"
+        case .none: return nil
+        case .onlyGuests: return "label.conversationview.hasguests"
+        case .onlyServices: return "label.conversationview.hasservices"
+        case .guestsAndServices: return "label.conversationview.hasguestsandservices"
         }
     }
 }
