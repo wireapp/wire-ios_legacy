@@ -18,7 +18,7 @@
 
 import Foundation
 
-class ConversationNotificationOptionsViewController: UIViewController {
+final class ConversationNotificationOptionsViewController: UIViewController {
     
     private var items: [MutedMessageTypes] = [.none, .regular, .all]
     
@@ -57,6 +57,10 @@ class ConversationNotificationOptionsViewController: UIViewController {
         
         configureSubviews()
         configureConstraints()
+    }
+
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return wr_supportedInterfaceOrientations
     }
     
     private func configureSubviews() {

@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2018 Wire Swiss GmbH
+// Copyright (C) 2019 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,18 +16,20 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
+@class BadgeUserImageView;
 
-extension UIViewController {
-    @objc var isHorizontalSizeClassRegular: Bool {
-        return traitCollection.horizontalSizeClass == .regular
-    }
+@interface TopPeopleCell ()
 
-    func isIPadRegular(device: DeviceProtocol = UIDevice.current) -> Bool {
-        return device.userInterfaceIdiom == .pad && isHorizontalSizeClassRegular
-    }
+@property (nonatomic, assign) BOOL initialConstraintsCreated;
 
-    func isIPadRegularPortrait(device: DeviceProtocol, application: ApplicationProtocol) -> Bool {
-        return isIPadRegular(device: device) && application.statusBarOrientation.isPortrait
-    }
-}
+@property (nonatomic, strong) BadgeUserImageView *badgeUserImageView;
+@property (nonatomic, strong) UIImageView *conversationImageView;
+@property (nonatomic, strong) UILabel *nameLabel;
+@property (nonatomic, strong) UIView *avatarContainer;
+
+@property (nonatomic, strong) NSLayoutConstraint *avatarViewSizeConstraint;
+@property (nonatomic, strong) NSLayoutConstraint *conversationImageViewSize;
+
+- (void)updateForContext;
+
+@end

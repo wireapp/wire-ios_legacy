@@ -57,9 +57,11 @@
 #import "ProfileViewController+internal.h"
 #import "StartUIViewController.h"
 #import "StartUIViewController+internal.h"
+
 #import "TopPeopleLineCollectionViewController.h"
 #import "TopPeopleCell.h"
-#import "CollectionViewContainerCell.h"
+#import "TopPeopleCell+Internal.h"
+
 #import "IconButton.h"
 #import "Button.h"
 #import "ButtonWithLargerHitArea.h"
@@ -116,7 +118,10 @@
 #import "ContactsDataSource.h"
 #import "StartUIViewController.h"
 #import "Button.h"
+
 #import "PermissionDeniedViewController.h"
+#import "PermissionDeniedViewController+Internal.h"
+
 #import "ShareContactsViewController.h"
 
 // Helper objects

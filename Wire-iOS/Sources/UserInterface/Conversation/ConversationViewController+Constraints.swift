@@ -30,21 +30,23 @@ extension ConversationViewController {
         contentViewController.tableView.isScrollEnabled = !outgoingConnection
 
 
-        guard let outgoingConnectionViewController = outgoingConnectionViewController else {
-            return
-        }
-
         if outgoingConnection {
+            if outgoingConnectionViewController != nil {
+                return
+            }
+            
             createOutgoingConnectionViewController()
-
-            addToSelf(outgoingConnectionViewController)
-
-            outgoingConnectionViewController.view.translatesAutoresizingMaskIntoConstraints = false
-            outgoingConnectionViewController.view.fitInSuperview(exclude: [.top])
+            
+            if let outgoingConnectionViewController = outgoingConnectionViewController {
+                outgoingConnectionViewController.willMove(toParent: self)
+                view.addSubview(outgoingConnectionViewController.view)
+                addChild(outgoingConnectionViewController)
+                outgoingConnectionViewController.view.fitInSuperview(exclude: [.top])
+            }
         } else {
-            outgoingConnectionViewController.willMove(toParent: nil)
-            outgoingConnectionViewController.view.removeFromSuperview()
-            outgoingConnectionViewController.removeFromParent()
+            outgoingConnectionViewController?.willMove(toParent: nil)
+            outgoingConnectionViewController?.view.removeFromSuperview()
+            outgoingConnectionViewController?.removeFromParent()
             self.outgoingConnectionViewController = nil
         }
     }

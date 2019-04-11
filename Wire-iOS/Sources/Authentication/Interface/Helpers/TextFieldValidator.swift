@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import WireUtilities
 
 class TextFieldValidator {
     
@@ -27,13 +28,13 @@ class TextFieldValidator {
         case tooLong(kind: AccessoryTextField.Kind)
         case invalidEmail
         case invalidPhoneNumber
+        case invalidPassword(PasswordValidationResult)
         case custom(String)
-        case none
     }
 
-    func validate(text: String?, kind: AccessoryTextField.Kind) -> TextFieldValidator.ValidationError {
+    func validate(text: String?, kind: AccessoryTextField.Kind) -> TextFieldValidator.ValidationError? {
         guard let text = text else {
-            return .none
+            return nil
         }
         
         if let customError = customValidator?(text) {
@@ -47,12 +48,16 @@ class TextFieldValidator {
             } else if !text.isEmail {
                 return .invalidEmail
             }
-        case .password:
-            if text.count > maxPasswordLength {
-                return .tooLong(kind: kind)
-            } else if text.count < minPasswordLength {
-                return .tooShort(kind: kind)
+        case .password(let isNew):
+            if isNew {
+                // If the user is registering, enforce the password rules
+                let result = PasswordRuleSet.shared.validatePassword(text)
+                return result != .valid ? .invalidPassword(result) : nil
+            } else {
+                // If the user is signing in, we do not require any format
+                return text.isEmpty ? .tooShort(kind: kind) : nil
             }
+
         case .name:
             /// We should ignore leading/trailing whitespace when counting the number of characters in the string
             let stringToValidate = text.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -73,12 +78,9 @@ class TextFieldValidator {
 
 extension TextFieldValidator {
 
-    var minPasswordLength: Int { return 8 }
-    var maxPasswordLength: Int { return 120 }
-
     @available(iOS 12, *)
     var passwordRules: UITextInputPasswordRules {
-        return UITextInputPasswordRules(descriptor: "minlength: \(minPasswordLength); maxlength: \(maxPasswordLength)")
+        return UITextInputPasswordRules(descriptor: PasswordRuleSet.shared.encodeInKeychainFormat())
     }
 
 }
@@ -93,7 +95,7 @@ extension TextFieldValidator.ValidationError: LocalizedError {
             case .email:
                 return "email.guidance.tooshort".localized
             case .password:
-                return "password.guidance.tooshort".localized
+                return PasswordRuleSet.localizedErrorMessage
             case .unknown:
                 return "unknown.guidance.tooshort".localized
             case .phoneNumber:
@@ -118,8 +120,14 @@ extension TextFieldValidator.ValidationError: LocalizedError {
             return "phone.guidance.invalid".localized
         case .custom(let description):
             return description
-        case .none:
-            return ""
+        case .invalidPassword(let error):
+            switch error {
+            case .tooLong:
+                return "password.guidance.toolong".localized
+            default:
+                return PasswordRuleSet.localizedErrorMessage
+            }
+
         }
     }
 

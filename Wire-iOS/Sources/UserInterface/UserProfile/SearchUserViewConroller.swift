@@ -25,6 +25,9 @@ final class SearchUserViewConroller: UIViewController {
     private let userId: UUID
     private var pendingSearchTask: SearchTask? = nil
 
+    /// flag for handleSearchResult. Only allow to display the result once
+    private var resultHandled = false
+
     public init(userId: UUID, profileViewControllerDelegate: ProfileViewControllerDelegate?) {
         self.userId = userId
         self.profileViewControllerDelegate = profileViewControllerDelegate
@@ -68,15 +71,27 @@ final class SearchUserViewConroller: UIViewController {
     }
 
     private func handleSearchResult(searchResult: SearchResult, isCompleted: Bool) {
-        showLoadingView = false
+        guard !resultHandled,
+              isCompleted
+            else { return }
 
-        if let user = searchResult.directory.first {
-            let profileViewController = ProfileViewController(user: user, viewer: ZMUser.selfUser(), context: .profileViewer)
+        let profileUser: GenericUser?
+        if let searchUser = searchResult.directory.first {
+            profileUser = searchUser
+        } else if let memberUser = searchResult.teamMembers.first?.user {
+            profileUser = memberUser
+        } else {
+            profileUser = nil
+        }
+
+
+        if let profileUser = profileUser {
+            let profileViewController = ProfileViewController(user: profileUser, viewer: ZMUser.selfUser(), context: .profileViewer) ///TODO: context
             profileViewController.delegate = profileViewControllerDelegate
 
             navigationController?.setViewControllers([profileViewController], animated: true)
-        } else {
-
+            resultHandled = true
+        } else if isCompleted {
             presentInvalidUserProfileLinkAlert(okActionHandler: { [weak self] (_) in
                 self?.dismiss(animated: true)
             })

@@ -36,7 +36,7 @@ class ConversationCreateErrorCell: UICollectionViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .center
         label.font = FontSpec(.small, .semibold).font!
-        label.textColor = UIColor.Team.errorMessageColor
+        label.textColor = UIColor.from(scheme: .errorIndicator, variant: .light)
         
         contentView.addSubview(label)
         label.fitInSuperview(with: EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))

@@ -20,7 +20,7 @@ import Foundation
 
 extension CoreDataSnapshotTestCase {
     func appendTextMessage(to conversation: ZMConversation) {
-        let message = conversation.append(text: "test \(conversation.recentMessages.count + 1)") as! ZMMessage
+        let message = conversation.append(text: "test \(conversation.allMessages.count + 1)") as! ZMMessage
         (message).sender = self.otherUser
 
         conversation.lastReadServerTimeStamp = Date.distantPast

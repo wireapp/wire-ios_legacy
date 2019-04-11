@@ -61,7 +61,7 @@ final class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
         // THEN
         verifyProfile(user: otherUser, viewer: selfUser, conversation: conversation, context: .oneToOneConversation)
         verifyContents(user: otherUser, viewer: selfUser, conversation: conversation, expectedContents: [
-            .richProfile(defaultRichProfile),
+            richProfileItemWithEmailAndDefaultData(for: otherUser),
             .readReceiptsStatus(enabled: true)
         ])
     }
@@ -80,10 +80,30 @@ final class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
         // THEN
         verifyProfile(user: otherUser, viewer: selfUser, conversation: conversation, context: .oneToOneConversation)
         verifyContents(user: otherUser, viewer: selfUser, conversation: conversation, expectedContents: [
+            .richProfile([richProfileFieldWithEmail(for: otherUser)]),
             .readReceiptsStatus(enabled: true)
         ])
     }
 
+    func test_OneToOne_OtherUser_NoSCIM_NoEmail() {
+        // GIVEN
+        let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
+        otherUser.availability = .busy
+        otherUser.richProfile = []
+        otherUser.emailAddress = nil
+        
+        selfUser.readReceiptsEnabled = true
+        
+        let conversation = MockConversation.oneOnOneConversation()
+        conversation.activeParticipants = [selfUser, otherUser]
+        
+        // THEN
+        verifyProfile(user: otherUser, viewer: selfUser, conversation: conversation, context: .oneToOneConversation)
+        verifyContents(user: otherUser, viewer: selfUser, conversation: conversation, expectedContents: [
+            .readReceiptsStatus(enabled: true)
+            ])
+    }
+    
     func test_OneToOne_OtherUserIsPartner_SCIM() {
         // GIVEN
         let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
@@ -99,7 +119,7 @@ final class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
         // THEN
         verifyProfile(user: otherUser, viewer: selfUser, conversation: conversation, context: .oneToOneConversation)
         verifyContents(user: otherUser, viewer: selfUser, conversation: conversation, expectedContents: [
-            .richProfile(defaultRichProfile),
+            richProfileItemWithEmailAndDefaultData(for: otherUser),
             .readReceiptsStatus(enabled: false)
         ])
     }
@@ -119,8 +139,29 @@ final class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
         // THEN
         verifyProfile(user: otherUser, viewer: selfUser, conversation: conversation, context: .oneToOneConversation)
         verifyContents(user: otherUser, viewer: selfUser, conversation: conversation, expectedContents: [
+            .richProfile([richProfileFieldWithEmail(for: otherUser)]),
             .readReceiptsStatus(enabled: false)
         ])
+    }
+    
+    func test_OneToOne_OtherUserIsPartner_NoSCIM_NoEmail() {
+        // GIVEN
+        let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
+        otherUser.availability = .busy
+        otherUser.richProfile = []
+        otherUser.teamRole = .partner
+        otherUser.emailAddress = nil
+        
+        selfUser.readReceiptsEnabled = false
+        
+        let conversation = MockConversation.oneOnOneConversation()
+        conversation.activeParticipants = [selfUser, otherUser]
+        
+        // THEN
+        verifyProfile(user: otherUser, viewer: selfUser, conversation: conversation, context: .oneToOneConversation)
+        verifyContents(user: otherUser, viewer: selfUser, conversation: conversation, expectedContents: [
+            .readReceiptsStatus(enabled: false)
+            ])
     }
 
     func test_OneToOne_SelfUser_SCIM() {
@@ -178,7 +219,7 @@ final class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
     // MARK: Viewer is a partner
 
     func test_OneToOne_OtherUserInTeam_ViewerIsPartner_SCIM() {
-        // GIVEM
+        // GIVEN
         selfUser.teamRole = .partner
         selfUser.readReceiptsEnabled = true
 
@@ -192,13 +233,34 @@ final class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
         // THEN
         verifyProfile(user: otherUser, viewer: selfUser, conversation: conversation, context: .oneToOneConversation)
         verifyContents(user: otherUser, viewer: selfUser, conversation: conversation, expectedContents: [
-            .richProfile(defaultRichProfile),
+            richProfileItemWithEmailAndDefaultData(for: otherUser),
             .readReceiptsStatus(enabled: true)
         ])
     }
+    
+    func test_OneToOne_OtherUserInTeam_ViewerIsPartner_SCIM_NoEmail() {
+        // GIVEN
+        selfUser.teamRole = .partner
+        selfUser.readReceiptsEnabled = true
+        
+        let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
+        otherUser.availability = .busy
+        otherUser.richProfile = defaultRichProfile
+        otherUser.emailAddress = nil
+        
+        let conversation = MockConversation.oneOnOneConversation()
+        conversation.activeParticipants = [selfUser, otherUser]
+        
+        // THEN
+        verifyProfile(user: otherUser, viewer: selfUser, conversation: conversation, context: .oneToOneConversation)
+        verifyContents(user: otherUser, viewer: selfUser, conversation: conversation, expectedContents: [
+            .richProfile(defaultRichProfile),
+            .readReceiptsStatus(enabled: true)
+            ])
+    }
 
     func test_OneToOne_OtherUserIsPartner_ViewerIsPartner_SCIM() {
-        // GIVEM
+        // GIVEN
         selfUser.teamRole = .partner
         selfUser.readReceiptsEnabled = true
 
@@ -213,13 +275,35 @@ final class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
         // THEN
         verifyProfile(user: otherUser, viewer: selfUser, conversation: conversation, context: .oneToOneConversation)
         verifyContents(user: otherUser, viewer: selfUser, conversation: conversation, expectedContents: [
-            .richProfile(defaultRichProfile),
+            richProfileItemWithEmailAndDefaultData(for: otherUser),
             .readReceiptsStatus(enabled: true)
         ])
     }
 
+    func test_OneToOne_OtherUserIsPartner_ViewerIsPartner_SCIM_NoEmail() {
+        // GIVEN
+        selfUser.teamRole = .partner
+        selfUser.readReceiptsEnabled = true
+        
+        let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
+        otherUser.availability = .busy
+        otherUser.richProfile = defaultRichProfile
+        otherUser.teamRole = .partner
+        otherUser.emailAddress = nil
+        
+        let conversation = MockConversation.oneOnOneConversation()
+        conversation.activeParticipants = [selfUser, otherUser]
+        
+        // THEN
+        verifyProfile(user: otherUser, viewer: selfUser, conversation: conversation, context: .oneToOneConversation)
+        verifyContents(user: otherUser, viewer: selfUser, conversation: conversation, expectedContents: [
+            .richProfile(defaultRichProfile),
+            .readReceiptsStatus(enabled: true)
+            ])
+    }
+    
     func test_OneToOne_OtherUserIsGuest_ViewerIsPartner_SCIM() {
-        // GIVEM
+        // GIVEN
         selfUser.teamRole = .partner
         selfUser.readReceiptsEnabled = true
 
@@ -257,8 +341,31 @@ final class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
         // THEN
         verifyProfile(user: otherUser, viewer: guest, conversation: conversation, context: .oneToOneConversation)
         verifyContents(user: otherUser, viewer: guest, conversation: conversation, expectedContents: [
+            .richProfile([richProfileFieldWithEmail(for: otherUser)]),
             .readReceiptsStatus(enabled: true)
         ])
+    }
+
+    func test_OneToOne_OtherUserInTeam_ViewerIsGuest_SCIM_NoEmail() {
+        // GIVEN
+        let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
+        otherUser.availability = .busy
+        otherUser.readReceiptsEnabled = true
+        otherUser.richProfile = defaultRichProfile
+        otherUser.emailAddress = nil
+        
+        let guest = MockUser.createConnectedUser(name: "Bob the Guest", inTeam: nil)
+        guest.isGuestInConversation = true
+        guest.readReceiptsEnabled = true
+        
+        let conversation = MockConversation.oneOnOneConversation()
+        conversation.activeParticipants = [otherUser, guest]
+        
+        // THEN
+        verifyProfile(user: otherUser, viewer: guest, conversation: conversation, context: .oneToOneConversation)
+        verifyContents(user: otherUser, viewer: guest, conversation: conversation, expectedContents: [
+            .readReceiptsStatus(enabled: true)
+            ])
     }
 
     func test_OneToOne_OtherUserIsPartner_ViewerIsGuest_SCIM() {
@@ -279,10 +386,34 @@ final class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
         // THEN
         verifyProfile(user: otherUser, viewer: guest, conversation: conversation, context: .oneToOneConversation)
         verifyContents(user: otherUser, viewer: guest, conversation: conversation, expectedContents: [
+            .richProfile([richProfileFieldWithEmail(for: otherUser)]),
             .readReceiptsStatus(enabled: true)
         ])
     }
 
+    func test_OneToOne_OtherUserIsPartner_ViewerIsGuest_SCIM_NoEmail() {
+        // GIVEN
+        let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
+        otherUser.availability = .busy
+        otherUser.readReceiptsEnabled = true
+        otherUser.richProfile = defaultRichProfile
+        otherUser.teamRole = .partner
+        otherUser.emailAddress = nil
+        
+        let guest = MockUser.createConnectedUser(name: "Bob the Guest", inTeam: nil)
+        guest.isGuestInConversation = true
+        guest.readReceiptsEnabled = true
+        
+        let conversation = MockConversation.oneOnOneConversation()
+        conversation.activeParticipants = [otherUser, guest]
+        
+        // THEN
+        verifyProfile(user: otherUser, viewer: guest, conversation: conversation, context: .oneToOneConversation)
+        verifyContents(user: otherUser, viewer: guest, conversation: conversation, expectedContents: [
+            .readReceiptsStatus(enabled: true)
+            ])
+    }
+    
     func test_OneToOne_OtherUserIsGuest_ViewerIsGuest_SCIM() {
         // GIVEN
         let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
@@ -301,10 +432,34 @@ final class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
         // THEN
         verifyProfile(user: otherUser, viewer: guest, conversation: conversation, context: .oneToOneConversation)
         verifyContents(user: otherUser, viewer: guest, conversation: conversation, expectedContents: [
+            .richProfile([richProfileFieldWithEmail(for: otherUser)]),
             .readReceiptsStatus(enabled: true)
         ])
     }
 
+    func test_OneToOne_OtherUserIsGuest_ViewerIsGuest_SCIM_NoEmail() {
+        // GIVEN
+        let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
+        otherUser.availability = .busy
+        otherUser.readReceiptsEnabled = true
+        otherUser.richProfile = defaultRichProfile
+        otherUser.isGuestInConversation = true
+        otherUser.emailAddress = nil
+        
+        let guest = MockUser.createConnectedUser(name: "Bob the Guest", inTeam: nil)
+        guest.isGuestInConversation = true
+        guest.readReceiptsEnabled = true
+        
+        let conversation = MockConversation.oneOnOneConversation()
+        conversation.activeParticipants = [otherUser, guest]
+        
+        // THEN
+        verifyProfile(user: otherUser, viewer: guest, conversation: conversation, context: .oneToOneConversation)
+        verifyContents(user: otherUser, viewer: guest, conversation: conversation, expectedContents: [
+            .readReceiptsStatus(enabled: true)
+            ])
+    }
+    
     // MARK: - Group Conversation
 
     // MARK: Viewer is a team member
@@ -323,7 +478,7 @@ final class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
         // THEN
         verifyProfile(user: otherUser, viewer: selfUser, conversation: group, context: .groupConversation)
         verifyContents(user: otherUser, viewer: selfUser, conversation: group, expectedContents: [
-            .richProfile(defaultRichProfile)
+            richProfileItemWithEmailAndDefaultData(for: otherUser)
         ])
     }
 
@@ -332,6 +487,25 @@ final class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
         let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
         otherUser.availability = .busy
         otherUser.richProfile = []
+        
+        selfUser.readReceiptsEnabled = true
+        
+        let group = MockConversation.groupConversation()
+        group.activeParticipants = [selfUser, otherUser]
+        
+        // THEN
+        verifyProfile(user: otherUser, viewer: selfUser, conversation: group, context: .groupConversation)
+        verifyContents(user: otherUser, viewer: selfUser, conversation: group, expectedContents: [
+            .richProfile([richProfileFieldWithEmail(for: otherUser)])
+            ])
+    }
+
+    func test_Group_OtherUser_NoSCIM_NoEmail() {
+        // GIVEN
+        let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
+        otherUser.availability = .busy
+        otherUser.richProfile = []
+        otherUser.emailAddress = nil
         
         selfUser.readReceiptsEnabled = true
         
@@ -358,7 +532,7 @@ final class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
         // THEN
         verifyProfile(user: otherUser, viewer: selfUser, conversation: group, context: .groupConversation)
         verifyContents(user: otherUser, viewer: selfUser, conversation: group, expectedContents: [
-            .richProfile(defaultRichProfile)
+            richProfileItemWithEmailAndDefaultData(for: otherUser)
         ])
     }
 
@@ -374,6 +548,26 @@ final class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
         let group = MockConversation.groupConversation()
         group.activeParticipants = [selfUser, otherUser]
 
+        // THEN
+        verifyProfile(user: otherUser, viewer: selfUser, conversation: group, context: .groupConversation)
+        verifyContents(user: otherUser, viewer: selfUser, conversation: group, expectedContents: [
+            .richProfile([richProfileFieldWithEmail(for: otherUser)])
+            ])
+    }
+
+    func test_Group_OtherUserIsPartner_NoSCIM_NoEmail() {
+        // GIVEN
+        let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
+        otherUser.availability = .busy
+        otherUser.richProfile = []
+        otherUser.teamRole = .partner
+        otherUser.emailAddress = nil
+        
+        selfUser.readReceiptsEnabled = true
+        
+        let group = MockConversation.groupConversation()
+        group.activeParticipants = [selfUser, otherUser]
+        
         // THEN
         verifyProfile(user: otherUser, viewer: selfUser, conversation: group, context: .groupConversation)
         verifyContents(user: otherUser, viewer: selfUser, conversation: group, expectedContents: [])
@@ -441,7 +635,7 @@ final class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
     // MARK: Viewer is a partner
 
     func test_Group_OtherUserInTeam_ViewerIsPartner_SCIM() {
-        // GIVEM
+        // GIVEN
         selfUser.teamRole = .partner
 
         let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
@@ -454,12 +648,31 @@ final class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
         // THEN
         verifyProfile(user: otherUser, viewer: selfUser, conversation: group, context: .groupConversation)
         verifyContents(user: otherUser, viewer: selfUser, conversation: group, expectedContents: [
-            .richProfile(defaultRichProfile)
+            richProfileItemWithEmailAndDefaultData(for: otherUser)
         ])
+    }
+    
+    func test_Group_OtherUserInTeam_ViewerIsPartner_SCIM_NoEmail() {
+        // GIVEN
+        selfUser.teamRole = .partner
+        
+        let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
+        otherUser.availability = .busy
+        otherUser.richProfile = defaultRichProfile
+        otherUser.emailAddress = nil
+        
+        let group = MockConversation.groupConversation()
+        group.activeParticipants = [selfUser, otherUser]
+        
+        // THEN
+        verifyProfile(user: otherUser, viewer: selfUser, conversation: group, context: .groupConversation)
+        verifyContents(user: otherUser, viewer: selfUser, conversation: group, expectedContents: [
+            .richProfile(defaultRichProfile)
+            ])
     }
 
     func test_Group_OtherUserIsPartner_ViewerIsPartner_SCIM() {
-        // GIVEM
+        // GIVEN
         selfUser.teamRole = .partner
 
         let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
@@ -473,12 +686,32 @@ final class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
         // THEN
         verifyProfile(user: otherUser, viewer: selfUser, conversation: group, context: .groupConversation)
         verifyContents(user: otherUser, viewer: selfUser, conversation: group, expectedContents: [
-            .richProfile(defaultRichProfile)
+            richProfileItemWithEmailAndDefaultData(for: otherUser)
         ])
     }
 
+    func test_Group_OtherUserIsPartner_ViewerIsPartner_SCIM_NoEmail() {
+        // GIVEN
+        selfUser.teamRole = .partner
+        
+        let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
+        otherUser.availability = .busy
+        otherUser.richProfile = defaultRichProfile
+        otherUser.teamRole = .partner
+        otherUser.emailAddress = nil
+        
+        let group = MockConversation.groupConversation()
+        group.activeParticipants = [selfUser, otherUser]
+        
+        // THEN
+        verifyProfile(user: otherUser, viewer: selfUser, conversation: group, context: .groupConversation)
+        verifyContents(user: otherUser, viewer: selfUser, conversation: group, expectedContents: [
+            .richProfile(defaultRichProfile)
+            ])
+    }
+    
     func test_Group_OtherUserIsGuest_ViewerIsPartner_SCIM() {
-        // GIVEM
+        // GIVEN
         selfUser.teamRole = .partner
 
         let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: nil)
@@ -511,9 +744,30 @@ final class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
         
         // THEN
         verifyProfile(user: otherUser, viewer: guest, conversation: group, context: .groupConversation)
-        verifyContents(user: otherUser, viewer: guest, conversation: group, expectedContents: [])
+        verifyContents(user: otherUser, viewer: guest, conversation: group, expectedContents: [
+            .richProfile([richProfileFieldWithEmail(for: otherUser)])
+        ])
     }
 
+    func test_Group_OtherUserInTeam_ViewerIsGuest_SCIM_NoEmail() {
+        // GIVEN
+        let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
+        otherUser.availability = .busy
+        otherUser.readReceiptsEnabled = true
+        otherUser.richProfile = defaultRichProfile
+        otherUser.emailAddress = nil
+        
+        let guest = MockUser.createConnectedUser(name: "Bob the Guest", inTeam: nil)
+        guest.isGuestInConversation = true
+        
+        let group = MockConversation.groupConversation()
+        group.activeParticipants = [otherUser, guest]
+        
+        // THEN
+        verifyProfile(user: otherUser, viewer: guest, conversation: group, context: .groupConversation)
+        verifyContents(user: otherUser, viewer: guest, conversation: group, expectedContents: [])
+    }
+    
     func test_Group_OtherUserIsPartner_ViewerIsGuest_SCIM() {
         // GIVEN
         let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
@@ -530,9 +784,31 @@ final class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
 
         // THEN
         verifyProfile(user: otherUser, viewer: guest, conversation: group, context: .groupConversation)
-        verifyContents(user: otherUser, viewer: guest, conversation: group, expectedContents: [])
+        verifyContents(user: otherUser, viewer: guest, conversation: group, expectedContents: [
+            .richProfile([richProfileFieldWithEmail(for: otherUser)])]
+        )
     }
 
+    func test_Group_OtherUserIsPartner_ViewerIsGuest_SCIM_NoEmail() {
+        // GIVEN
+        let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
+        otherUser.availability = .busy
+        otherUser.readReceiptsEnabled = true
+        otherUser.richProfile = defaultRichProfile
+        otherUser.teamRole = .partner
+        otherUser.emailAddress = nil
+        
+        let guest = MockUser.createConnectedUser(name: "Bob the Guest", inTeam: nil)
+        guest.isGuestInConversation = true
+        
+        let group = MockConversation.groupConversation()
+        group.activeParticipants = [otherUser, guest]
+        
+        // THEN
+        verifyProfile(user: otherUser, viewer: guest, conversation: group, context: .groupConversation)
+        verifyContents(user: otherUser, viewer: guest, conversation: group, expectedContents: [])
+    }
+    
     func test_Group_OtherUserIsGuest_ViewerIsGuest_SCIM() {
         // GIVEN
         let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: nil)
@@ -587,8 +863,30 @@ final class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
         // THEN
         verifyProfile(user: guest, viewer: otherUser, conversation: group, context: .groupConversation)
         verifyContents(user: guest, viewer: otherUser, conversation: group, expectedContents: [
-            .richProfile(defaultRichProfile)
+            richProfileItemWithEmailAndDefaultData(for: otherUser)
         ])
+    }
+
+    func test_Group_UserAndViewerAreGuestsFromSameTeam_SCIM_NoEmail() {
+        // GIVEN
+        let otherTeamID = UUID()
+        
+        let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: otherTeamID)
+        otherUser.isGuestInConversation = true
+        
+        let guest = MockUser.createConnectedUser(name: "Bob the Guest", inTeam: otherTeamID)
+        guest.isGuestInConversation = true
+        guest.richProfile = defaultRichProfile
+        guest.emailAddress = nil
+        
+        let group = MockConversation.groupConversation()
+        group.activeParticipants = [otherUser, guest]
+        
+        // THEN
+        verifyProfile(user: guest, viewer: otherUser, conversation: group, context: .groupConversation)
+        verifyContents(user: guest, viewer: otherUser, conversation: group, expectedContents: [
+            .richProfile(defaultRichProfile)
+            ])
     }
 
     // MARK: - Pending Connection
@@ -637,6 +935,16 @@ final class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
                                                    context: context)
 
         verify(view: details.view, file: file, line: line)
+    }
+    
+    private func richProfileFieldWithEmail(for user: UserType) -> UserRichProfileField {
+        return UserRichProfileField(type: "Email", value: user.emailAddress!)
+    }
+    
+    private func richProfileItemWithEmailAndDefaultData(for user: UserType) -> ProfileDetailsContentController.Content {
+        var items = [richProfileFieldWithEmail(for: user)]
+        items.append(contentsOf: defaultRichProfile)
+        return .richProfile(items)
     }
 
     private func verifyContents(user: GenericUser, viewer: GenericUser, conversation: MockConversation, expectedContents: [ProfileDetailsContentController.Content], file: StaticString = #file, line: UInt = #line) {
