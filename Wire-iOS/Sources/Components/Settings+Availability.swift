@@ -29,9 +29,7 @@ fileprivate extension Availability {
 extension Settings {
     
     func shouldRemindUserWhenChanging(_ availability: Availability) -> Bool {
-        guard let defaults = defaults() else { return true }
-        
-        return !defaults.bool(forKey: availability.dontRemindMeUserDefaultsKey)
+        return defaults()?.bool(forKey: availability.dontRemindMeUserDefaultsKey) != true
     }
     
     func dontRemindUserWhenChanging(_ availability: Availability) {
