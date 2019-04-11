@@ -70,9 +70,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 @interface ConversationViewController (ZMConversationObserver) <ZMConversationObserver>
 @end
 
-@interface ConversationViewController (ZMUserObserver) <ZMUserObserver>
-@end
-
 
 @interface ConversationViewController (ConversationListObserver) <ZMConversationListObserver>
 @end
@@ -96,7 +93,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @property (nonatomic) id voiceChannelStateObserverToken;
 @property (nonatomic) id conversationObserverToken;
-@property (nonatomic) NSMutableDictionary<NSUUID *, id> *userObserverTokens;
 
 @property (nonatomic) BOOL isAppearing;
 @property (nonatomic) ConversationTitleView *titleView;
@@ -390,33 +386,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self createAndPresentParticipantsPopoverControllerWithRect:sourceView.bounds
                                                        fromView:sourceView
                                           contentViewController:viewController];
-}
-
-- (void)updateObservedUsersForParticipantsInConversation:(ZMConversation *)conversation
-{
-    if (self.userObserverTokens == nil) {
-        self.userObserverTokens = [[NSMutableDictionary alloc] init];
-    }
-
-    if (conversation == nil) {
-        [self.userObserverTokens removeAllObjects];
-        return;
-    }
-
-    // Stop observing the removed users
-    for (NSUUID *observedUserID in self.userObserverTokens.allKeys) {
-        NSPredicate *matchingUserPredicate = [NSPredicate predicateWithFormat:@"remoteIdentifier.UUIDString == %@", observedUserID];
-        if (![conversation.activeParticipants containsObjectMatchingPredicate:matchingUserPredicate]) {
-            self.userObserverTokens[observedUserID] = nil;
-        }
-    }
-
-    // Observe the new users
-    for (ZMUser *participant in conversation.activeParticipants) {
-        if (![self.userObserverTokens.allKeys containsObject:participant.remoteIdentifier]) {
-            self.userObserverTokens[participant.remoteIdentifier] = [UserChangeInfo addObserver:self forUser:participant userSession:(ZMUserSession *)self.session];
-        }
-    }
 }
 
 - (void)updateInputBarVisibility
@@ -759,22 +728,13 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
             [self.zClientViewController selectConversation:newConversation focusOnView:YES animated:YES];
         }];
     };
-    
+
     if (nil != self.presentedViewController) {
         [self dismissViewControllerAnimated:YES completion:conversationCreation];
     }
     else {
         conversationCreation();
     }
-}
-
-@end
-
-@implementation ConversationViewController (ZMUserObserver)
-
-- (void)userDidChange:(UserChangeInfo *)changeInfo
-{
-    [self updateGuestsBarVisibility];
 }
 
 @end
@@ -793,10 +753,11 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         [self updateOutgoingConnectionVisibility];
         [self.contentViewController updateTableViewHeaderView];
         [self updateInputBarVisibility];
-        [self updateObservedUsersForParticipantsInConversation:note.conversation];
     }
 
-    [self updateGuestsBarVisibility];
+    if (note.participantsChanged || note.externalParticipantsStateChanged) {
+        [self updateGuestsBarVisibility];
+    }
 
     if (note.nameChanged || note.securityLevelChanged || note.connectionStateChanged) {
         [self setupNavigatiomItem];

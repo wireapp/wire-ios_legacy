@@ -204,7 +204,6 @@
 		5E35F786218340EB00D3F4FE /* ConversationLocationMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E35F785218340EB00D3F4FE /* ConversationLocationMessageCell.swift */; };
 		5E35F78B2187069400D3F4FE /* ConversationCellSnapshotTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E35F7892187068500D3F4FE /* ConversationCellSnapshotTestCase.swift */; };
 		5E35F78D21870EDB00D3F4FE /* ConversationPingMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E35F78C21870EDB00D3F4FE /* ConversationPingMessageTests.swift */; };
-		5E39FC4222574C3B00C682B8 /* NSSet+Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E39FC4122574C3B00C682B8 /* NSSet+Filter.swift */; };
 		5E3A6C22206A3AD500907484 /* ConversationActionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E3A6C21206A3AD500907484 /* ConversationActionController.swift */; };
 		5E3A6C25206A4E4A00907484 /* LocationPreviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E3A6C24206A4E4A00907484 /* LocationPreviewController.swift */; };
 		5E3CE6262253689100F9A113 /* WireStyleKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E3CE6252253689000F9A113 /* WireStyleKit.swift */; };
@@ -1712,7 +1711,6 @@
 		5E35F785218340EB00D3F4FE /* ConversationLocationMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationLocationMessageCell.swift; sourceTree = "<group>"; };
 		5E35F7892187068500D3F4FE /* ConversationCellSnapshotTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationCellSnapshotTestCase.swift; sourceTree = "<group>"; };
 		5E35F78C21870EDB00D3F4FE /* ConversationPingMessageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationPingMessageTests.swift; sourceTree = "<group>"; };
-		5E39FC4122574C3B00C682B8 /* NSSet+Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSSet+Filter.swift"; sourceTree = "<group>"; };
 		5E3A6C21206A3AD500907484 /* ConversationActionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationActionController.swift; sourceTree = "<group>"; };
 		5E3A6C24206A4E4A00907484 /* LocationPreviewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationPreviewController.swift; sourceTree = "<group>"; };
 		5E3C0C65206B9EE900B0499C /* Tab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab.swift; sourceTree = "<group>"; };
@@ -5228,7 +5226,6 @@
 				1677FD321BBC19A400491481 /* ColorScheme.m */,
 				F174AAAE218A0B1A00AFCC4D /* ColorScheme.swift */,
 				EF2B255E2209C542006712CA /* UIUserInterfaceSizeClass+Constraint.swift */,
-				5E39FC4122574C3B00C682B8 /* NSSet+Filter.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -6627,7 +6624,7 @@
 				TargetAttributes = {
 					168A16A81D9597C2005CFA6C = {
 						CreatedOnToolsVersion = 8.0;
-						DevelopmentTeam = W5KEQBF9B5;
+						DevelopmentTeam = EDF3JCE8BC;
 						LastSwiftMigration = 1000;
 						ProvisioningStyle = Manual;
 						SystemCapabilities = {
@@ -6638,7 +6635,7 @@
 					};
 					8F42C537199244A700288E4D = {
 						CreatedOnToolsVersion = 6.0;
-						DevelopmentTeam = W5KEQBF9B5;
+						DevelopmentTeam = EDF3JCE8BC;
 						LastSwiftMigration = 1000;
 						ProvisioningStyle = Manual;
 						SystemCapabilities = {
@@ -6659,7 +6656,7 @@
 					};
 					F1FEA14921DCEB1700790A54 = {
 						CreatedOnToolsVersion = 10.0;
-						DevelopmentTeam = W5KEQBF9B5;
+						DevelopmentTeam = EDF3JCE8BC;
 						LastSwiftMigration = 1000;
 						ProvisioningStyle = Manual;
 					};
@@ -7480,7 +7477,6 @@
 				F15650DB21DD10A100210504 /* UserImageView.swift in Sources */,
 				16A94AEB20932841008A5718 /* ShowAllParticipantsCell.swift in Sources */,
 				5EF5C54C209B33E600676405 /* CGSize+AspectRatio.swift in Sources */,
-				5E39FC4222574C3B00C682B8 /* NSSet+Filter.swift in Sources */,
 				EFC8E21D212D777A00BE7BBE /* UIColor+TeamCreation.swift in Sources */,
 				8F41CFC8199297C600E3B032 /* ZMConversation+Additions.m in Sources */,
 				F15650E021DD119D00210504 /* OverflowSeparatorView.swift in Sources */,
