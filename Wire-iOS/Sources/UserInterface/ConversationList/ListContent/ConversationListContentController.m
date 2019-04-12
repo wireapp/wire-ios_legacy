@@ -19,8 +19,6 @@
 
 #import "ConversationListContentController.h"
 
-@import PureLayout;
-
 #import "WireSyncEngine+iOS.h"
 #import "ZMUserSession+iOS.h"
 
@@ -32,8 +30,6 @@
 
 #import "ZClientViewController+Internal.h"
 
-
-#import "ConnectRequestsCell.h"
 #import "ConversationListCell.h"
 
 #import "ConversationContentViewController.h"

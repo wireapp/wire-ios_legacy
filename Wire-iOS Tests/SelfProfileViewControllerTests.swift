@@ -23,20 +23,26 @@ final class SelfProfileViewControllerTests: ZMSnapshotTestCase {
     
     var sut: SelfProfileViewController!
     
-    override func setUp() {
-        super.setUp()
-		
-        AvailabilityTitleView.appearance(whenContainedInInstancesOf: [SelfProfileViewController.self]).colorSchemeVariant = .dark
-        sut = SelfProfileViewController(userRightInterfaceType: MockUserRight.self)
-        sut.view.backgroundColor = .black
-    }
-    
     override func tearDown() {
         sut = nil
         super.tearDown()
     }
-
+  
     func testTestForAUserWithNoTeam() {
+        createSut(userName: "Tarja Turunen")
+
         verify(view: sut.view)
+    }
+
+    func testTestForAUserWithALongName() {
+        createSut(userName: "Johannes Chrysostomus Wolfgangus Theophilus Mozart")
+
+        verify(view: sut.view)
+    }
+
+    private func createSut(userName: String) {
+        MockUser.mockSelf()?.name = userName
+        sut = SelfProfileViewController(selfUser: MockUser.selfUser, userRightInterfaceType: MockUserRight.self)
+        sut.view.backgroundColor = .black
     }
 }

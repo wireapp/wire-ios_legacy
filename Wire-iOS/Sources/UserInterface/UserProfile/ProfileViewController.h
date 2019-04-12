@@ -50,8 +50,6 @@ typedef NS_ENUM(NSInteger, ProfileViewControllerContext) {
 
 @end
 
-
-
 @interface ProfileViewController : UIViewController
 
 - (instancetype)initWithUser:(id<UserType, AccentColorProvider>)user viewer:(id<UserType, AccentColorProvider>)viewer context:(ProfileViewControllerContext)context;

@@ -158,7 +158,10 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
             forName: UIApplication.didEnterBackgroundNotification,
             object: nil,
             queue: .main,
-            using: { _ in UIApplication.shared.isIdleTimerDisabled = false }
+            using: { _ in
+                self.stopRecording()
+                UIApplication.shared.isIdleTimerDisabled = false
+            }
         )
     }
     
@@ -202,7 +205,6 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
             
             if successfullyStarted {
                 self.state = .recording(start: audioRecorder.deviceCurrentTime)
-                self.setCommandCenter(recording: true)
             } else {
                 zmLog.error("Failed to start audio recording")
             }
@@ -211,37 +213,10 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
         }
     }
     
-    func setCommandCenter(recording: Bool) {
-        
-        let commandCenter = MPRemoteCommandCenter.shared()
-        
-        commandCenter.playCommand.isEnabled = false
-        commandCenter.stopCommand.isEnabled = false
-        commandCenter.nextTrackCommand.isEnabled = false
-        commandCenter.previousTrackCommand.isEnabled = false
-        
-        if recording {
-            commandCenter.pauseCommand.isEnabled = true
-            pauseButtonCallback = commandCenter.pauseCommand.addTarget { (event) -> MPRemoteCommandHandlerStatus in
-                if(self.audioRecorder?.isRecording == true) {
-                    self.stopRecording()
-                    return .success
-                } else {
-                    return .commandFailed
-                }
-            }
-        } else {
-            commandCenter.pauseCommand.isEnabled = false
-            commandCenter.pauseCommand.removeTarget(pauseButtonCallback)
-        }
-        
-    }
-    
     @discardableResult public func stopRecording() -> Bool {
         UIApplication.shared.isIdleTimerDisabled = false
         audioRecorder?.stop()
         state = .stopped
-        setCommandCenter(recording: false)
         return postRecordingProcessing()
     }
     

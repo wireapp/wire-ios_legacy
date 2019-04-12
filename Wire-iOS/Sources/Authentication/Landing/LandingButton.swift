@@ -49,7 +49,7 @@ class LandingButton: UIView {
 
         // contentStack
         contentStack.axis = .vertical
-        contentStack.spacing = 16
+        contentStack.spacing = 8
         contentStack.alignment = .center
         addSubview(contentStack)
 

@@ -16,21 +16,16 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
 @import UIKit;
-
-#import <Foundation/Foundation.h>
+@import Foundation;
 
 #import "MediaPlayer.h"
 
-
-
-@protocol AudioTrack, AudioPlaylist;
+@protocol AudioTrack;
 
 @interface AudioTrackPlayer : NSObject <MediaPlayer>
 
 - (void)loadTrack:(NSObject<AudioTrack> *)track sourceMessage:(id<ZMConversationMessage>)sourceMessage completionHandler:(void(^)(BOOL loaded, NSError *error))completionHandler;
-- (void)loadTrack:(NSObject<AudioTrack> *)track playlist:(id<AudioPlaylist>)playlist sourceMessage:(id<ZMConversationMessage>)sourceMessage completionHandler:(void(^)(BOOL loaded, NSError *error))completionHandler;
 
 @property (nonatomic, readonly) NSObject<AudioTrack> *audioTrack;
 @property (nonatomic, readonly) CGFloat progress;
@@ -44,11 +39,5 @@
 
 /// Pause the currently playing track.
 - (void)pause;
-
-/// Skip to the next track in the playlist. Returns YES if there was a next track.
-- (BOOL)skipToNextTrack;
-
-/// Skip to the previous track in the playlist. Returns YES if there was a previous track.
-- (BOOL)skipToPreviousTrack;
 
 @end

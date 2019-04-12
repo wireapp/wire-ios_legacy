@@ -20,8 +20,6 @@
 #import "ConversationViewController.h"
 #import "ConversationViewController+Private.h"
 
-@import PureLayout;
-
 #import "Settings.h"
 
 #import "AppDelegate.h"
@@ -61,8 +59,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @interface ConversationViewController (Keyboard) <InvisibleInputAccessoryViewDelegate>
 
-- (void)keyboardFrameWillChange:(NSNotification *)notification;
-
 @end
 
 @interface ConversationViewController (InputBar) <ConversationInputBarViewControllerDelegate>
@@ -73,6 +69,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @interface ConversationViewController (ZMConversationObserver) <ZMConversationObserver>
 @end
+
 
 @interface ConversationViewController (ConversationListObserver) <ZMConversationListObserver>
 @end
@@ -90,10 +87,9 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @property (nonatomic) NSLayoutConstraint *inputBarBottomMargin;
 @property (nonatomic) NSLayoutConstraint *inputBarZeroHeight;
-@property (nonatomic) InvisibleInputAccessoryView *invisibleInputAccessoryView;
+@property (nonatomic, readwrite) InvisibleInputAccessoryView *invisibleInputAccessoryView;
+@property (nonatomic, readwrite) GuestsBarController *guestsBarController;
 
-@property (nonatomic) GuestsBarController *guestsBarController;
-    
 @property (nonatomic) id voiceChannelStateObserverToken;
 @property (nonatomic) id conversationObserverToken;
 
@@ -102,7 +98,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 @property (nonatomic) CollectionsViewController *collectionController;
 @property (nonatomic) id conversationListObserverToken;
 @property (nonatomic, readwrite) ConversationCallController *startCallController;
-    
+
 @end
 
 
@@ -120,10 +116,12 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    self.conversationListObserverToken = [ConversationListChangeInfo addObserver:self
-                                                                         forList:[ZMConversationList conversationsInUserSession:[ZMUserSession sharedSession]]
-                                                                     userSession:[ZMUserSession sharedSession]];
+
+    if ([self.session isKindOfClass:[ZMUserSession class]]) {
+        self.conversationListObserverToken = [ConversationListChangeInfo addObserver:self
+                                                                             forList:[ZMConversationList conversationsInUserSession:(ZMUserSession *)self.session]
+                                                                         userSession:(ZMUserSession *)self.session];
+    }
 
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardFrameWillChange:)
@@ -186,7 +184,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     self.contentViewController = [[ConversationContentViewController alloc] initWithConversation:self.conversation
                                                                                          message:self.visibleMessage
                                                                             mediaPlaybackManager:self.zClientViewController.mediaPlaybackManager
-                                                                                         session: [ZMUserSession sharedSession]];
+                                                                                         session: self.session];
     self.contentViewController.delegate = self;
     self.contentViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
     self.contentViewController.bottomMargin = 16;
@@ -197,6 +195,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 - (void)createOutgoingConnectionViewController
 {
     self.outgoingConnectionViewController = [[OutgoingConnectionViewController alloc] init];
+    self.outgoingConnectionViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
     ZM_WEAK(self);
     self.outgoingConnectionViewController.buttonCallback = ^(OutgoingConnectionBottomBarAction action) {
         ZM_STRONG(self);
@@ -213,35 +212,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
         [self openConversationList];
     };
-
-    self.outgoingConnectionViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
-}
-
-- (void)updateOutgoingConnectionVisibility
-{
-    if (nil == self.conversation) {
-        return;
-    }
-
-    BOOL outgoingConnection = self.conversation.relatedConnectionState == ZMConnectionStatusSent;
-    self.contentViewController.tableView.scrollEnabled = !outgoingConnection;
-
-    if (outgoingConnection) {
-        if (nil != self.outgoingConnectionViewController) {
-            return;
-        }
-        [self createOutgoingConnectionViewController];
-        [self.outgoingConnectionViewController willMoveToParentViewController:self];
-        [self.view addSubview:self.outgoingConnectionViewController.view];
-        [self addChildViewController:self.outgoingConnectionViewController];
-        [self.outgoingConnectionViewController.view autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero
-                                                                             excludingEdge:ALEdgeTop];
-    } else {
-        [self.outgoingConnectionViewController willMoveToParentViewController:nil];
-        [self.outgoingConnectionViewController.view removeFromSuperview];
-        [self.outgoingConnectionViewController removeFromParentViewController];
-        self.outgoingConnectionViewController = nil;
-    }
 }
 
 - (void)createConversationBarController
@@ -260,41 +230,17 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     self.guestsBarController = [[GuestsBarController alloc] init];
 }
 
-- (void)updateGuestsBarVisibilityAndShowIfNeeded:(BOOL)showIfNeeded
-{
-    GuestBarState state = self.conversation.guestBarState;
-    if (state != GuestBarStateHidden) {
-        BOOL isPresented = nil != self.guestsBarController.parentViewController;
-        if (!isPresented || showIfNeeded) {
-            [self.conversationBarController presentBar:self.guestsBarController];
-            [self.guestsBarController setState:state animated:NO];
-        }
-    }
-    else {
-        [self.conversationBarController dismissBar:self.guestsBarController];
-    }
-}
-
-- (void)createConstraints
-{
-    [self.conversationBarController.view autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeBottom];
-    
-    [self.contentViewController.view autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeBottom];
-    [self.contentViewController.view autoPinEdge:ALEdgeBottom toEdge:ALEdgeTop ofView:self.inputBarController.view];
-    [self.inputBarController.view autoPinEdgeToSuperviewEdge:ALEdgeLeft];
-    [self.inputBarController.view autoPinEdgeToSuperviewEdge:ALEdgeRight];
-    self.inputBarBottomMargin = [self.inputBarController.view autoPinEdgeToSuperviewEdge:ALEdgeBottom];
-    
-    self.inputBarZeroHeight = [[NSLayoutConstraint autoCreateConstraintsWithoutInstalling:^{
-        [self.inputBarController.view autoSetDimension:ALDimensionHeight toSize:0];
-    }] firstObject];
-}
-
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     self.isAppearing = YES;
-    [self updateGuestsBarVisibilityAndShowIfNeeded:YES];
+    [self updateGuestsBarVisibility];
+}
+
+- (void)didMoveToParentViewController:(UIViewController *)parent
+{
+    [super didMoveToParentViewController:parent];
+    [self updateGuestsBarVisibility];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -651,27 +597,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @implementation ConversationViewController (Keyboard)
 
-- (void)keyboardFrameWillChange:(NSNotification *)notification
-{
-    // We only respond to keyboard will change frame if the first responder is not the input bar
-    if (self.invisibleInputAccessoryView.window == nil) {
-        [UIView animateWithKeyboardNotification:notification
-                                         inView:self.view
-                                     animations:^(CGRect keyboardFrameInView) {
-                                         self.inputBarBottomMargin.constant = -keyboardFrameInView.size.height;
-                                     }
-                                     completion:nil];
-    }
-    else {
-        CGRect screenRect = [[notification.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
-        UIResponder *currentFirstResponder = [UIResponder wr_currentFirstResponder];
-        if (currentFirstResponder != nil) {
-            CGSize keyboardSize = CGSizeMake(screenRect.size.width, currentFirstResponder.inputAccessoryView.bounds.size.height);
-            [UIView wr_setLastKeyboardSize:keyboardSize];
-        }
-    }
-}
-
 - (void)invisibleInputAccessoryView:(InvisibleInputAccessoryView *)view didMoveToWindow:(UIWindow *)window
 {
 }
@@ -727,13 +652,14 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         self.contentViewController.searchQueries = @[];
         [self.contentViewController scrollToBottom];
     }
-    
-    [self.guestsBarController setState:GuestBarStateHidden animated:YES];
+
+    [self setGuestBarForceHidden:YES];
     return YES;
 }
 
 - (BOOL)conversationInputBarViewControllerShouldEndEditing:(ConversationInputBarViewController *)controller
 {
+    [self setGuestBarForceHidden:NO];
     return YES;
 }
 
@@ -795,7 +721,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
             [self.zClientViewController selectConversation:newConversation focusOnView:YES animated:YES];
         }];
     };
-    
+
     if (nil != self.presentedViewController) {
         [self dismissViewControllerAnimated:YES completion:conversationCreation];
     }
@@ -805,7 +731,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 }
 
 @end
-
 
 @implementation ConversationViewController (ZMConversationObserver)
 
@@ -823,7 +748,9 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         [self updateInputBarVisibility];
     }
 
-    [self updateGuestsBarVisibilityAndShowIfNeeded:NO];
+    if (note.participantsChanged || note.externalParticipantsStateChanged) {
+        [self updateGuestsBarVisibility];
+    }
 
     if (note.nameChanged || note.securityLevelChanged || note.connectionStateChanged) {
         [self setupNavigatiomItem];

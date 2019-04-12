@@ -39,17 +39,17 @@ class AccessoryTextFieldCell: UITableViewCell {
     }
 
     private func setupViews() {
-        addSubview(textField)
+        contentView.addSubview(textField)
     }
 
     private func createConstraints() {
         textField.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            textField.leadingAnchor.constraint(equalTo: leadingAnchor),
-            textField.trailingAnchor.constraint(equalTo: trailingAnchor),
-            textField.topAnchor.constraint(equalTo: topAnchor, constant: 8),
-            textField.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 8)
+            textField.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            textField.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            textField.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
+            textField.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 8)
         ])
     }
 

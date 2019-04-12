@@ -24,8 +24,8 @@ class LaunchImageViewController: UIViewController {
     private var shouldShowLoadingScreenOnViewDidLoad = false
 
     private var contentView: UIView!
-    private var loadingScreenLabel: UILabel!
-    private var activityIndicator: ProgressSpinner!
+    private let loadingScreenLabel = UILabel()
+    private let activityIndicator = ProgressSpinner()
 
     /// Convenience method for showing the @c activityIndicator and @c loadingScreenLabel and start the spinning animation
     func showLoadingScreen() {
@@ -54,11 +54,9 @@ class LaunchImageViewController: UIViewController {
             contentView = nibView
         }
 
-        activityIndicator = ProgressSpinner()
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(activityIndicator)
 
-        loadingScreenLabel = UILabel()
         loadingScreenLabel.font = .systemFont(ofSize: 12)
         loadingScreenLabel.textColor = .white
 

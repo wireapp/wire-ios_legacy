@@ -33,7 +33,7 @@ protocol ProfileDetailsContentControllerDelegate: class {
  * An object that controls the content to display in the user details screen.
  */
 
-class ProfileDetailsContentController: NSObject, UITableViewDataSource, UITableViewDelegate, ZMUserObserver {
+final class ProfileDetailsContentController: NSObject, UITableViewDataSource, UITableViewDelegate, ZMUserObserver {
     
     /**
      * The type of content that can be displayed in the profile details.
@@ -55,7 +55,7 @@ class ProfileDetailsContentController: NSObject, UITableViewDataSource, UITableV
     
     /// The conversation where the profile details will be displayed.
     let conversation: ZMConversation?
-        
+
     // MARK: - Accessing the Content
     
     /// The contents to display for the current configuration.
@@ -79,10 +79,13 @@ class ProfileDetailsContentController: NSObject, UITableViewDataSource, UITableV
      * - parameter conversation: The conversation where the profile details will be displayed.
      */
     
-    init(user: GenericUser, viewer: GenericUser, conversation: ZMConversation?) {
+    init(user: GenericUser,
+         viewer: GenericUser,
+         conversation: ZMConversation?) {
         self.user = user
         self.viewer = viewer
         self.conversation = conversation
+
         super.init()
         configureObservers()
         updateContent()
@@ -105,25 +108,45 @@ class ProfileDetailsContentController: NSObject, UITableViewDataSource, UITableV
         }
     }
     
+    private var richProfileInfoWithEmail: ProfileDetailsContentController.Content? {
+        var richProfile = user.richProfile
+        
+        if (!viewerCanAccessRichProfile || richProfile.isEmpty) && user.emailAddress == nil {
+            return nil
+        }
+        
+        guard let email = user.emailAddress else { return .richProfile(richProfile) }
+        
+        // If viewer can't access rich profile information,
+        // delete all rich profile info just for displaying purposes.
+        
+        if !viewerCanAccessRichProfile && richProfile.count > 0 {
+            richProfile.removeAll()
+        }
+        
+        richProfile.insert(UserRichProfileField(type: "email.placeholder".localized, value: email), at: 0)
+        
+        return .richProfile(richProfile)
+    }
+    
     /// Updates the content for the current configuration.
     private func updateContent() {
-        switch conversation?.conversationType {
-        case .group?:
-            let richProfile = user.richProfile
-            if viewerCanAccessRichProfile, !richProfile.isEmpty {
+        
+        switch conversation?.conversationType ?? .group {
+        case .group:
+            if let richProfile = richProfileInfoWithEmail {
                 // If there is rich profile data and the user is allowed to see it, display it.
-                contents = [.richProfile(richProfile)]
+                contents = [richProfile]
             } else {
                 // If there is no rich profile data, show nothing.
                 contents = []
             }
 
-        case .oneOnOne?:
+        case .oneOnOne:
             let readReceiptsEnabled = viewer.readReceiptsEnabled
-            let richProfile = user.richProfile
-            if viewerCanAccessRichProfile, !richProfile.isEmpty {
+            if let richProfile = richProfileInfoWithEmail {
                 // If there is rich profile data and the user is allowed to see it, display it and the read receipts status.
-                contents = [.richProfile(richProfile), .readReceiptsStatus(enabled: readReceiptsEnabled)]
+                contents = [richProfile, .readReceiptsStatus(enabled: readReceiptsEnabled)]
             } else {
                 // If there is no rich profile data, show the read receipts.
                 contents = [.readReceiptsStatus(enabled: readReceiptsEnabled)]

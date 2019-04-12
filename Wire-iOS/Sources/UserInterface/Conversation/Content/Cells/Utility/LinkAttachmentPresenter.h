@@ -20,14 +20,12 @@
 #import <Foundation/Foundation.h>
 
 
-
-@class LinkAttachment;
-
+@class ZMLinkAttachment;
 
 
 @protocol LinkAttachmentPresenter <NSObject>
 
-@property (nonatomic) LinkAttachment *linkAttachment;
+@property (nonatomic) ZMLinkAttachment *linkAttachment;
 @property (nonatomic, readonly) UIView *touchableView;
 
 - (void)fetchAttachment;

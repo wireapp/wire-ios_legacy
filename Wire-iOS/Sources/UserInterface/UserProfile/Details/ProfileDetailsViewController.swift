@@ -33,6 +33,8 @@ final class ProfileDetailsViewController: UIViewController, Themeable {
     /// The conversation where the profile is displayed.
     let conversation: ZMConversation?
 
+    let context: ProfileViewControllerContext
+
     /**
      * The object that calculates and controls the content to display in the user
      * details screen. It is also responsible for reacting to user profile updates
@@ -62,14 +64,23 @@ final class ProfileDetailsViewController: UIViewController, Themeable {
      * - parameter user: The user whose profile is displayed.
      * - parameter viewer: The user that views the profile.
      * - parameter conversation: The conversation where the profile is displayed.
+     * - parameter context: The context of the profile screen.
      */
     
-    init(user: GenericUser, viewer: GenericUser, conversation: ZMConversation?) {
+    init(user: GenericUser,
+         viewer: GenericUser,
+         conversation: ZMConversation?,
+         context: ProfileViewControllerContext) {
         self.user = user
         self.viewer = viewer
         self.conversation = conversation
-        self.profileView = ProfileView(user: user, options: [.hideUsername, .hideHandle, .hideTeamName])
-        self.contentController = ProfileDetailsContentController(user: user, viewer: viewer, conversation: conversation)
+        self.context = context
+        self.profileView = ProfileView(user: user,
+                                       viewer: viewer,
+                                       options: [.hideUsername, .hideHandle, .hideTeamName])
+        self.contentController = ProfileDetailsContentController(user: user,
+                                                                 viewer: viewer,
+                                                                 conversation: conversation)
         super.init(nibName: nil, bundle: nil)
         self.contentController.delegate = self
     }
@@ -100,7 +111,7 @@ final class ProfileDetailsViewController: UIViewController, Themeable {
             profileView.options.insert(.hideAvailability)
         }
         
-        profileView.prepareForDisplay(in: conversation)
+        profileView.prepareForDisplay(in: conversation, context: context)
         profileView.availabilityView.options = .profileDetails
         profileView.imageView.isAccessibilityElement = false
         profileView.imageView.isUserInteractionEnabled = false

@@ -55,7 +55,7 @@ extension IndexSet {
  * the cells from the table or collection view and configuring them with a message.
  */
 
-@objc class ConversationMessageSectionController: NSObject, ZMMessageObserver {
+@objc class ConversationMessageSectionController: NSObject, ZMMessageObserver, ZMUserObserver {
 
     /// The view descriptor of the section.
     @objc var cellDescriptions: [AnyConversationMessageCellDescription] = []
@@ -151,7 +151,7 @@ extension IndexSet {
         }
         
         if let topContentCellDescription = contentCellDescriptions.first {
-            topContentCellDescription.showEphemeralTimer = message.isEphemeral
+            topContentCellDescription.showEphemeralTimer = message.isEphemeral && !message.isObfuscated
             
             if isSenderVisible && topContentCellDescription.baseType == ConversationTextMessageCellDescription.self {
                 topContentCellDescription.topMargin = 0 // We only do this for text content since the text label already contains the spacing
@@ -295,6 +295,18 @@ extension IndexSet {
         if let userSession = ZMUserSession.shared() {
             let observer = MessageChangeInfo.add(observer: self, for: message, userSession: userSession)
             changeObservers.append(observer)
+
+            if let sender = message.sender {
+                let observer = UserChangeInfo.add(observer: self, for: sender, userSession: userSession)!
+                changeObservers.append(observer)
+            }
+
+            if let users = message.systemMessageData?.users {
+                for user in users where user.remoteIdentifier != message.sender?.remoteIdentifier {
+                    let observer = UserChangeInfo.add(observer: self, for: user, userSession: userSession)!
+                    changeObservers.append(observer)
+                }
+            }
         }
     }
 
@@ -303,6 +315,10 @@ extension IndexSet {
             return // Deletions are handled by the window observer
         }
         
+        sectionDelegate?.messageSectionController(self, didRequestRefreshForMessage: self.message)
+    }
+
+    func userDidChange(_ changeInfo: UserChangeInfo) {
         sectionDelegate?.messageSectionController(self, didRequestRefreshForMessage: self.message)
     }
 

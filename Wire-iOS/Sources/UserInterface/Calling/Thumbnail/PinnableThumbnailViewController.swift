@@ -18,7 +18,7 @@
 
 import UIKit
 
-@objcMembers class PinnableThumbnailViewController: UIViewController {
+final class PinnableThumbnailViewController: UIViewController {
 
     private let thumbnailView = RoundedView()
     private let thumbnailContainerView = UIView()
@@ -51,7 +51,8 @@ import UIKit
     func setThumbnailContentView(_ contentView: UIView, contentSize: CGSize) {
         removeCurrentThumbnailContentView()
         thumbnailView.addSubview(contentView)
-        contentView.autoPinEdgesToSuperviewEdges()
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        contentView.fitInSuperview()
         self.contentView = contentView
 
         self.thumbnailContentSize = contentSize

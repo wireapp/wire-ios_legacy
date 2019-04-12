@@ -49,6 +49,11 @@ extension UIEdgeInsets {
         }
     }
 
+    /// Returns a copy of the insets that are adapted for the current layout.
+    var directionAwareInsets: UIEdgeInsets {
+        return UIEdgeInsets(top: top, left: leading, bottom: bottom, right: trailing)
+    }
+
 }
 
 // MARK: - String

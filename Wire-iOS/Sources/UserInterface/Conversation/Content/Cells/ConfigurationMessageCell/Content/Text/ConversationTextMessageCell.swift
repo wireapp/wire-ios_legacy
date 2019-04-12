@@ -71,6 +71,7 @@ class ConversationTextMessageCell: UIView, ConversationMessageCell, TextViewInte
         messageTextView.accessibilityIdentifier = "Message"
         messageTextView.accessibilityElementsHidden = false
         messageTextView.dataDetectorTypes = [.link, .address, .phoneNumber, .flightNumber, .calendarEvent, .shipmentTrackingNumber]
+        messageTextView.linkTextAttributes = [.foregroundColor : UIColor.accent()]
         messageTextView.setContentHuggingPriority(.required, for: .vertical)
         messageTextView.setContentCompressionResistancePriority(.required, for: .vertical)
         messageTextView.interactionDelegate = self
@@ -162,7 +163,6 @@ class ConversationTextMessageCellDescription: ConversationMessageCellDescription
         
         return configuration == otherDescription.configuration
     }
-    
 }
 
 // MARK: - Factory
@@ -176,13 +176,18 @@ extension ConversationTextMessageCellDescription {
 
         var cells: [AnyConversationMessageCellDescription] = []
 
-        // Text parsing
+        // Refetch the link attachments if needed
+        if Settings.shared()?.disableLinkPreviews != true {
+            ZMUserSession.shared()?.enqueueChanges {
+                message.refetchLinkAttachmentsIfNeeded()
+            }
+        }
 
-        var lastKnownLinkAttachment: LinkAttachment?
-        var messageText = NSAttributedString.format(message: textMessageData, isObfuscated: message.isObfuscated, linkAttachment: &lastKnownLinkAttachment)
+        // Text parsing
+        let attachments = message.linkAttachments ?? []
+        var messageText = NSAttributedString.format(message: textMessageData, isObfuscated: message.isObfuscated)
 
         // Search queries
-
         if !searchQueries.isEmpty {
             let highlightStyle: [NSAttributedString.Key: AnyObject] = [.backgroundColor: UIColor.accentDarken]
             messageText = messageText.highlightingAppearances(of: searchQueries, with: highlightStyle, upToWidth: 0, totalMatches: nil)
@@ -196,7 +201,7 @@ extension ConversationTextMessageCellDescription {
         }
 
         // Text
-        if messageText.length > 0 {
+        if !messageText.string.isEmpty {
             let textCell = ConversationTextMessageCellDescription(attributedString: messageText, isObfuscated: message.isObfuscated)
             cells.append(AnyConversationMessageCellDescription(textCell))
         }
@@ -205,21 +210,11 @@ extension ConversationTextMessageCellDescription {
             return cells
         }
 
-        // Link Attachment
-        if let attachment = lastKnownLinkAttachment, attachment.type != .none {
-            switch attachment.type {
-            case .youtubeVideo:
-                let youtubeCell = ConversationYouTubeAttachmentCellDescription(attachment: attachment)
-                cells.append(AnyConversationMessageCellDescription(youtubeCell))
-            case .soundcloudTrack:
-                let trackCell = ConversationSoundCloudCellDescription<AudioTrackViewController>(message: message, attachment: attachment)
-                cells.append(AnyConversationMessageCellDescription(trackCell))
-            case .soundcloudSet:
-                let playlistCell = ConversationSoundCloudCellDescription<AudioPlaylistViewController>(message: message, attachment: attachment)
-                cells.append(AnyConversationMessageCellDescription(playlistCell))
-            default:
-                break
-            }
+        // Links
+        if let attachment = attachments.first {
+            // Link Attachment
+            let attachmentCell = ConversationLinkAttachmentCellDescription(attachment: attachment, thumbnailResource: message.linkAttachmentImage)
+            cells.append(AnyConversationMessageCellDescription(attachmentCell))
         } else if textMessageData.linkPreview != nil {
             // Link Preview
             let linkPreviewCell = ConversationLinkPreviewArticleCellDescription(message: message, data: textMessageData)

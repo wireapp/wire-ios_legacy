@@ -62,7 +62,7 @@ final class ParticipantDeviceCell: UITableViewCell {
 
         var constraints: [NSLayoutConstraint] = []
 
-        constraints += trustLevelImageView.setDimensions(length: 16, activate: false)
+        constraints += trustLevelImageView.setDimensions(length: 16, activate: false).array
         constraints.append(trustLevelImageView.pinToSuperview(anchor: .leading, inset: 24, activate: false))
         constraints.append(trustLevelImageView.pin(to: nameLabel, axisAnchor: .centerY, activate: false))
 

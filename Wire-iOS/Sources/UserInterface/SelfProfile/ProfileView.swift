@@ -23,7 +23,7 @@ import UIKit
  */
 
 
-class ProfileView: UIView, Themeable {
+final class ProfileView: UIView, Themeable {
     
     /**
      * The options to customize the appearance and behavior of the view.
@@ -47,12 +47,18 @@ class ProfileView: UIView, Themeable {
 
         /// Whether to allow the user to change their availability.
         static let allowEditingAvailability = Options(rawValue: 1 << 4)
-        
+
+        /// Whether to allow the user to change their availability.
+        static let allowEditingProfilePicture = Options(rawValue: 1 << 5)
+
     }
     
     /// The user that is displayed.
     let user: GenericUser
-    
+
+    /// The user who is viewing this view
+    let viewer: GenericUser
+
     /// The view controller that displays the view.
     weak var source: UIViewController?
     
@@ -74,7 +80,24 @@ class ProfileView: UIView, Themeable {
     
     var stackView: CustomSpacingStackView!
     
-    let nameLabel = UILabel()
+    let nameLabel: UILabel = {
+        let label = UILabel()
+        label.accessibilityLabel = "profile_view.accessibility.name".localized
+        label.accessibilityIdentifier = "name"
+
+        label.setContentHuggingPriority(UILayoutPriority.required, for: .vertical)
+        label.setContentCompressionResistancePriority(UILayoutPriority.required, for: .vertical)
+
+        label.setContentHuggingPriority(.required, for: .horizontal)
+        label.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+
+        label.font = FontSpec(.large, .light).font!
+        label.accessibilityTraits.insert(.header)
+        label.lineBreakMode = .byTruncatingTail
+
+        return label
+    }()
+
     let handleLabel = UILabel()
     let teamNameLabel = UILabel()
     let imageView =  UserImageView(size: .big)
@@ -95,8 +118,11 @@ class ProfileView: UIView, Themeable {
      * - note: You can change the options later through the `options` property.
      */
     
-    init(user: GenericUser, options: Options) {
+    init(user: GenericUser,
+         viewer: GenericUser,
+         options: Options) {
         self.user = user
+        self.viewer = viewer
         self.options = options
         self.availabilityView = AvailabilityTitleView(user: user, options: [])
         super.init(frame: .zero)
@@ -111,15 +137,14 @@ class ProfileView: UIView, Themeable {
     
     private func configureSubviews() {
         let session = SessionManager.shared?.activeUserSession
-        
+
+        imageView.isAccessibilityElement = true
+        imageView.accessibilityElementsHidden = false
         imageView.accessibilityIdentifier = "user image"
         imageView.initialsFont = UIFont.systemFont(ofSize: 55, weight: .semibold).monospaced()
         imageView.userSession = session
         imageView.user = user
-        imageView.accessibilityLabel = "self.profile.change_user_image.accessibility".localized
-        imageView.accessibilityTraits = .button
-        imageView.accessibilityElementsHidden = false
-        
+
         availabilityView.tapHandler = { [weak self] button in
             guard let `self` = self else { return }
             guard self.options.contains(.allowEditingAvailability) else { return }
@@ -132,13 +157,7 @@ class ProfileView: UIView, Themeable {
         if let session = session {
             userObserverToken = UserChangeInfo.add(observer: self, for: user, userSession: session)
         }
-        
-        nameLabel.accessibilityLabel = "profile_view.accessibility.name".localized
-        nameLabel.accessibilityIdentifier = "name"
-        nameLabel.setContentHuggingPriority(UILayoutPriority.required, for: .vertical)
-        nameLabel.setContentCompressionResistancePriority(UILayoutPriority.required, for: .vertical)
-        nameLabel.font = FontSpec(.large, .light).font!
-        
+
         handleLabel.accessibilityLabel = "profile_view.accessibility.handle".localized
         handleLabel.accessibilityIdentifier = "username"
         handleLabel.setContentHuggingPriority(UILayoutPriority.required, for: .vertical)
@@ -187,25 +206,40 @@ class ProfileView: UIView, Themeable {
     private func configureConstraints() {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        
+
+        let leadingSpaceConstraint = stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 40)
+        let topSpaceConstraint = stackView.topAnchor.constraint(equalTo: topAnchor, constant: 20)
+        let trailingSpaceConstraint = stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -40)
+        let bottomSpaceConstraint = stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -20)
+
+        leadingSpaceConstraint.priority = .defaultLow
+        topSpaceConstraint.priority = .defaultLow
+        trailingSpaceConstraint.priority = .defaultLow
+        bottomSpaceConstraint.priority = .defaultLow
+
         NSLayoutConstraint.activate([
             // imageView
             imageView.widthAnchor.constraint(equalToConstant: 164),
             imageView.heightAnchor.constraint(equalToConstant: 164),
             
             // stackView
-            stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 40),
-            stackView.topAnchor.constraint(equalTo: topAnchor, constant: 20),
-            stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -40),
-            stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -20)
+            leadingSpaceConstraint, topSpaceConstraint, trailingSpaceConstraint, bottomSpaceConstraint
         ])
     }
     
     // MARK: - Content and Options
     
-    func prepareForDisplay(in conversation: ZMConversation?) {
-        guestIndicatorStack.isHidden = conversation.map(user.isGuest) != true
-        
+    func prepareForDisplay(in conversation: ZMConversation?, context: ProfileViewControllerContext) {
+        let guestIndicatorHidden: Bool
+        switch context {
+            case .profileViewer:
+                guestIndicatorHidden = !viewer.isTeamMember || viewer.canAccessCompanyInformation(of: user)
+            default:
+                guestIndicatorHidden = conversation.map(user.isGuest) != true
+        }
+
+        guestIndicatorStack.isHidden = guestIndicatorHidden
+
         let remainingTimeString = user.expirationDisplayString
         remainingTimeLabel.text = remainingTimeString
         remainingTimeLabel.isHidden = remainingTimeString == nil
@@ -235,26 +269,39 @@ class ProfileView: UIView, Themeable {
         if let teamName = user.teamName, !options.contains(.hideTeamName) {
             teamNameLabel.text = teamName.localizedUppercase
             teamNameLabel.accessibilityValue = teamNameLabel.text
+            teamNameLabel.isHidden = false
         } else {
             teamNameLabel.isHidden = true
         }
     }
     
     private func updateAvailabilityVisibility() {
+        if options.contains(.allowEditingAvailability) {
+            availabilityView.options.insert(.allowSettingStatus)
+        } else {
+            availabilityView.options.remove(.allowSettingStatus)
+        }
+
         availabilityView.isHidden = options.contains(.hideAvailability) || !user.canDisplayAvailability(with: availabilityView.options)
+    }
+
+    private func updateImageButton() {
+        if options.contains(.allowEditingProfilePicture) {
+            imageView.accessibilityLabel = "self.accessibility.profile_photo_edit_button".localized
+            imageView.accessibilityTraits = [.image, .button]
+            imageView.isUserInteractionEnabled = true
+        } else {
+            imageView.accessibilityLabel = "self.accessibility.profile_photo_image".localized
+            imageView.accessibilityTraits = [.image]
+            imageView.isUserInteractionEnabled = false
+        }
     }
     
     private func applyOptions() {
         nameLabel.isHidden = options.contains(.hideUsername)
         updateHandleLabel()
         updateTeamLabel()
-        
-        if options.contains(.allowEditingAvailability) {
-            availabilityView.options.insert(.allowSettingStatus)
-        } else {
-            availabilityView.options.remove(.allowSettingStatus)
-        }
-        
+        updateImageButton()
         updateAvailabilityVisibility()
     }
     

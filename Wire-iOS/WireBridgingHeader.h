@@ -57,9 +57,11 @@
 #import "ProfileViewController+internal.h"
 #import "StartUIViewController.h"
 #import "StartUIViewController+internal.h"
+
 #import "TopPeopleLineCollectionViewController.h"
 #import "TopPeopleCell.h"
-#import "CollectionViewContainerCell.h"
+#import "TopPeopleCell+Internal.h"
+
 #import "IconButton.h"
 #import "Button.h"
 #import "ButtonWithLargerHitArea.h"
@@ -80,9 +82,6 @@
 #import "ContactsViewController.h"
 #import "ContactsViewController+Internal.h"
 #import "ContactsViewController+Private.h"
-
-#import "MediaPreviewViewController.h"
-#import "MediaPreviewViewController+Internal.h"
 
 #import "ZClientViewController.h"
 #import "ZClientViewController+Internal.h"
@@ -119,7 +118,10 @@
 #import "ContactsDataSource.h"
 #import "StartUIViewController.h"
 #import "Button.h"
+
 #import "PermissionDeniedViewController.h"
+#import "PermissionDeniedViewController+Internal.h"
+
 #import "ShareContactsViewController.h"
 
 // Helper objects
@@ -149,7 +151,7 @@
 #import "UIView+Zeta.h"
 #import "AVAsset+VideoConvert.h"
 #import "DeviceOrientationObserver.h"
-#import "LinkAttachment.h"
+#import "LinkAttachmentPresenter.h"
 #import "UIImagePickerController+GetImage.h"
 #import "MessagePresenter.h"
 #import "MessagePresenter+Internal.h"
@@ -180,15 +182,3 @@
 #import "AudioTrack.h"
 #import "AudioTrackPlayer.h"
 #import "MediaPlaybackManager.h"
-#import "AudioTrackViewController.h"
-#import "AudioTrackViewController+Internal.h"
-#import "AudioPlaylistViewController.h"
-#import "AudioPlaylistViewController+Internal.h"
-#import "AudioHeaderView.h"
-#import "AudioHeaderView+Internal.h"
-#import "AudioTrackView.h"
-#import "AudioTrackView+Internal.h"
-
-// Media
-#import "MediaPreviewData.h"
-#import "MediaThumbnail.h"

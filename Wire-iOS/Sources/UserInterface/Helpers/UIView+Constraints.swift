@@ -54,6 +54,26 @@ enum AxisAnchor {
     case centerY
 }
 
+enum LengthAnchor {
+    case width
+    case height
+}
+
+struct LengthConstraints {
+    let constraints: [LengthAnchor: NSLayoutConstraint]
+
+    subscript(anchor: LengthAnchor) -> NSLayoutConstraint? {
+        return constraints[anchor]
+    }
+
+    var array: [NSLayoutConstraint] {
+        return constraints.values.map{ $0 }
+    }
+}
+
+
+
+
 extension UIView {
 
     // MARK: - center alignment
@@ -253,30 +273,32 @@ extension UIView {
 
     @discardableResult
     func setDimensions(length: CGFloat,
-                       activate: Bool = true) -> [NSLayoutConstraint] {
+                       activate: Bool = true) -> LengthConstraints {
         return setDimensions(width: length, height: length, activate: activate)
     }
 
     @discardableResult
     func setDimensions(width: CGFloat,
                        height: CGFloat,
-                       activate: Bool = true) -> [NSLayoutConstraint] {
+                       activate: Bool = true) -> LengthConstraints {
         return setDimensions(size: CGSize(width: width, height: height), activate: activate)
     }
 
     @discardableResult
     func setDimensions(size: CGSize,
-                       activate: Bool = true) -> [NSLayoutConstraint] {
-        let constraints: [NSLayoutConstraint] = [
-            widthAnchor.constraint(equalToConstant: size.width),
-            heightAnchor.constraint(equalToConstant: size.height)
+                       activate: Bool = true) -> LengthConstraints {
+        let constraints: [LengthAnchor: NSLayoutConstraint] = [
+            .width: widthAnchor.constraint(equalToConstant: size.width),
+            .height: heightAnchor.constraint(equalToConstant: size.height)
         ]
 
+        let lengthConstraints = LengthConstraints(constraints: constraints)
+
         if activate {
-            NSLayoutConstraint.activate(constraints)
+            NSLayoutConstraint.activate(lengthConstraints.array)
         }
 
-        return constraints
+        return lengthConstraints
     }
 
     @discardableResult

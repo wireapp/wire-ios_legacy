@@ -51,7 +51,6 @@ NSString * const UserDefaultDisableCallKit = @"UserDefaultDisableCallKit";
 
 NSString * const UserDefaultEnableBatchCollections = @"UserDefaultEnableBatchCollections";
 
-
 NSString * const UserDefaultCallingProtocolStrategy = @"CallingProtocolStrategy";
 
 NSString * const UserDefaultTwitterOpeningRawValue = @"TwitterOpeningRawValue";
@@ -106,7 +105,7 @@ NSString * const UserDefaultDisableLinkPreviews = @"DisableLinkPreviews";
              UserDefaultEnableBatchCollections,
              UserDefaultDidMigrateHockeySettingInitially,
              UserDefaultCallingConstantBitRate,
-             UserDefaultDisableLinkPreviews,
+             UserDefaultDisableLinkPreviews
              ];
 }
 

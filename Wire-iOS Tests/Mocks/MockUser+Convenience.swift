@@ -64,6 +64,7 @@ extension MockUser {
         user.teamIdentifier = teamID
         user.teamRole = teamID != nil ? .member : .none
         user.accentColorValue = .brightOrange
+        user.emailAddress = teamID != nil ? "test@email.com" : nil
         return user
     }
     

@@ -92,11 +92,6 @@ static id<UserType> mockSelfUser = nil;
     return self.isGuestInConversation;
 }
 
-- (NSString *)emailAddress
-{
-    return @"test@email.com";
-}
-
 - (NSString *)phoneNumber
 {
     return @"+123456789";
@@ -112,6 +107,7 @@ static id<UserType> mockSelfUser = nil;
 
 @synthesize name;
 @synthesize displayName;
+@synthesize emailAddress;
 @synthesize isSelfUser;
 @synthesize isConnected;
 @synthesize accentColorValue;
@@ -124,7 +120,6 @@ static id<UserType> mockSelfUser = nil;
 @synthesize isTeamMember;
 @synthesize teamRole;
 @synthesize readReceiptsEnabled;
-@synthesize teamName;
 @synthesize activeConversations;
 
 #pragma mark - ZMBareUserConnection

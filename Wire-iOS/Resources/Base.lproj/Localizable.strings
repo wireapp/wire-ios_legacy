@@ -386,6 +386,12 @@
 
 "content.system.services.warning" = "Services have access to the content of this conversation";
 
+// Link attachment messages
+
+"content.message.link_attachment.accessibility_label.youtube" = "YouTube video preview";
+"content.message.link_attachment.accessibility_label.soundcloud_song" = "SoundCloud song preview";
+"content.message.link_attachment.accessibility_label.soundcloud_set" = "SoundCloud playlist preview";
+
 // New conversation participants added / removed / started system message
 
 "content.system.conversation.other.started" = "%@ started a conversation with %@";
@@ -577,6 +583,9 @@
 "voice.cancel_button.title" = "Cancel";
 "voice.call_button.title" = "Call";
 "voice.end_call_button.title" = "End Call";
+"voice.call_error.unsupported_version.title" = "Please update Wire";
+"voice.call_error.unsupported_version.message" = "You received a call that isn't supported by this version of Wire.\nGet the latest version in the App Store.";
+"voice.call_error.unsupported_version.dismiss" = "Later";
 
 "voice.alert.call_in_progress.title" = "Call in progress";
 "voice.alert.call_in_progress.message" = "You can have only one active call at a time";
@@ -812,10 +821,11 @@
 "self.voiceover.hint" = "Open profile and settings";
 "self.new-device.voiceover.label" = "Profile, new devices added";
 
-"self.profile.change_user_image.accessibility" = "Tap to change profile picture";
-
 "self.add_phone_number" = "Add phone number";
 "self.add_email_password" = "Add email address and password";
+
+"self.accessibility.profile_photo_image" = "Profile picture";
+"self.accessibility.profile_photo_edit_button" = "Change profile picture";
 
 // About screen
 "about.tos.title"="Terms of Use";
@@ -1109,7 +1119,6 @@
 "email.guidance.toolong" = "Too many characters";
 
 "password.placeholder" = "Password";
-"password.guidance.tooshort" = "At least 8 characters";
 "password.guidance.toolong" = "Too many characters";
 
 "phone.guidance.invalid" = "Invalid phone number";
@@ -1120,9 +1129,9 @@
 
 "landing.header" = "Wire. Add your Account.";
 "landing.create_account.title" = "Personal";
-"landing.create_account.subtitle" = "Chat privately with groups of friends and family";
+"landing.create_account.subtitle" = "Chat privately with groups of friends\U00A0and\U00A0family";
 "landing.create_team.title" = "Pro";
-"landing.create_team.subtitle" = "Secure collaboration for businesses, institutions and professional organizations";
+"landing.create_team.subtitle" = "Secure collaboration for businesses, institutions and professional\U00A0organizations";
 "landing.login.hints" = "Already have an account?";
 "landing.login.button.title" = "Log in";
 
@@ -1151,9 +1160,6 @@
 "team.full_name.textfield.accessibility" = "Set full name";
 
 "team.password.headline" = "Set password";
-"team.password.textfield.placeholder" = "At least 8 characters";
-"team.password.textfield.accessibility" = "Set password, at least 8 characters";
-
 
 "verification.code_label" = "Six-digit code. Text field.";
 "verification.code_hint" = "Double tap to enter the code.";
@@ -1541,6 +1547,11 @@
 "url_action.invalid_conversation.title" = "Wire can't open this conversation.";
 "url_action.invalid_conversation.message" = "You may not have permission with this account or the person may not be on Wire.";
 
+"url_action.authorization_required.title" = "Authorization required.";
+"url_action.authorization_required.message" = "You need to log in to view this content.";
+
+"url_action.invalid_link.title" = "Invalid link.";
+"url_action.invalid_link.message" = "The link you opened is not valid.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // News and offers consent prompt
@@ -1564,3 +1575,9 @@
 "message_details.subtitle_label_voiceOver" = "Message Details";
 "message_details.user_handle_subtitle_label" = "Username";
 "message_details.user_read_timestamp_subtitle_label" = "Read at";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Password Rules
+"registration.password.rules.no_requirements" = "Use %@.";
+"registration.password.rules.with_requirements" = "Use %@, with %@.";
+
