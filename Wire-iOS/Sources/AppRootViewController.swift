@@ -681,42 +681,50 @@ extension AppRootViewController: SessionManagerURLHandlerDelegate {
             let context = DefaultCompanyControllerLinkResponseContext(sessionManager: SessionManager.shared!, appState: appStateController.appState, authenticationCoordinator: authenticationCoordinator)
             executeCompanyLoginLinkAction(context.actionForInvalidRequest(error: error), callback: callback)
             
-        case .switchBackend(host: let host):
-            guard sessionManager?.accountManager.accounts.isEmpty == true else {
+        case .accessBackend(host: let host):
+            
+            let makeSwitch = sessionManager?.switchBackend(to: host,
+                                                      onError: { error in
+                switch error {
+                case .alreadySwitched:
+                    let alert = UIAlertController(title: "url_action.title".localized,
+                                                  message: "url_action.switch_backend.error.already_switched".localized,
+                                                  preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "general.ok".localized, style: .default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
+                case .loggedInAccounts:
+                    let alert = UIAlertController(title: "url_action.title".localized,
+                                                  message: "url_action.switch_backend.error.logged_in".localized,
+                                                  preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "general.ok".localized, style: .default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
+                case .invalidBackend, .invalidHost:
+                    let alert = UIAlertController(title: "url_action.title".localized,
+                                                  message: "url_action.switch_backend.error.invalid_backend".localized,
+                                                  preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "general.ok".localized, style: .default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
+                }
+            }, completed: { success in
+                
+            })
+            
+            // If we have the handler then we are good to go and can ask the user to confirm
+            if let makeSwitch = makeSwitch {
                 let alert = UIAlertController(title: "url_action.title".localized,
-                                              message: "url_action.switch_backend.error.logged_in".localized,
+                                              message: "url_action.switch_backend.message".localized(args: host),
                                               preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "general.ok".localized, style: .default, handler: nil))
+                let agreeAction = UIAlertAction(title: "url_action.confirm".localized,
+                                                style: .default) { _ in makeSwitch() }
+                alert.addAction(agreeAction)
+                
+                let cancelAction = UIAlertAction(title: "general.cancel".localized, style: .cancel)
+                alert.addAction(cancelAction)
+                
                 self.present(alert, animated: true, completion: nil)
-                return
             }
-            let newBackend = EnvironmentType.custom(host: host)
-            guard BackendEnvironment.environmentType != newBackend else {
-                let alert = UIAlertController(title: "url_action.title".localized,
-                                              message: "url_action.switch_backend.message".localized,
-                                              preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "general.ok".localized, style: .default, handler: nil))
-                self.present(alert, animated: true4, completion: nil)
-                return
-            }
-            
-            let alert = UIAlertController(title: "url_action.title".localized,
-                                          message: "url_action.switch_backend.message".localized(args: host),
-                                          preferredStyle: .alert)
-            
-            let agreeAction = UIAlertAction(title: "url_action.confirm".localized,
-                                            style: .default) { _ in
-                                                BackendEnvironment.environmentType = .custom(host: host)
-            }
-            
-            alert.addAction(agreeAction)
-            
-            let cancelAction = UIAlertAction(title: "general.cancel".localized, style: .cancel)
-            
-            alert.addAction(cancelAction)
-            
-            self.present(alert, animated: true, completion: nil)
         }
+        
     }
 
     private func executeCompanyLoginLinkAction(_ action: CompanyLoginLinkResponseAction, callback: @escaping (Bool) -> Void) {
