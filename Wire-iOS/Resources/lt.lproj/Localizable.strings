@@ -386,6 +386,12 @@
 
 "content.system.services.warning" = "Paslaugos turi galimybę matyti šio susirašinėjimo turinį";
 
+// Link attachment messages
+
+"content.message.link_attachment.accessibility_label.youtube" = "YouTube video preview";
+"content.message.link_attachment.accessibility_label.soundcloud_song" = "SoundCloud song preview";
+"content.message.link_attachment.accessibility_label.soundcloud_set" = "SoundCloud playlist preview";
+
 // New conversation participants added / removed / started system message
 
 "content.system.conversation.other.started" = "%@ pradėjo susirašinėjimą su %@";
@@ -577,6 +583,9 @@
 "voice.cancel_button.title" = "Atsisakyti";
 "voice.call_button.title" = "Skambutis";
 "voice.end_call_button.title" = "Baigti pokalbį";
+"voice.call_error.unsupported_version.title" = "Please update Wire";
+"voice.call_error.unsupported_version.message" = "You received a call that isn't supported by this version of Wire.\nGet the latest version in the App Store.";
+"voice.call_error.unsupported_version.dismiss" = "Later";
 
 "voice.alert.call_in_progress.title" = "Vykstantis pokalbis";
 "voice.alert.call_in_progress.message" = "Vienu metu gali vykti tik vienas skambutis";
@@ -812,10 +821,11 @@
 "self.voiceover.hint" = "Atverti profilį ir nustatymus";
 "self.new-device.voiceover.label" = "Profilis, pridėtas naujas įrenginys";
 
-"self.profile.change_user_image.accessibility" = "Spustelėję galėsite pakeisti profilio nuotrauką";
-
 "self.add_phone_number" = "Pridėti telefono numerį";
 "self.add_email_password" = "Pridėkite el. pašto adresą ir slaptažodį";
+
+"self.accessibility.profile_photo_image" = "Profile picture";
+"self.accessibility.profile_photo_edit_button" = "Change profile picture";
 
 // About screen
 "about.tos.title" = "Naudojimosi sąlygos";
@@ -1109,7 +1119,6 @@
 "email.guidance.toolong" = "Per daug simbolių";
 
 "password.placeholder" = "Slaptažodis";
-"password.guidance.tooshort" = "Bent 8 simbolių";
 "password.guidance.toolong" = "Per daug simbolių";
 
 "phone.guidance.invalid" = "Neteisingas telefono numeris";
@@ -1151,9 +1160,6 @@
 "team.full_name.textfield.accessibility" = "Įrašykite vardą ir pavardę";
 
 "team.password.headline" = "Įrašykite slaptažodį";
-"team.password.textfield.placeholder" = "Bent 8 simbolių";
-"team.password.textfield.accessibility" = "Įrašykite slaptažodį, mažiausiai 8 simbolių";
-
 
 "verification.code_label" = "Šešių skaitmenų kodas. Teksto laukas.";
 "verification.code_hint" = "Du kart paspauskite kad įvesti kodą.";
@@ -1569,3 +1575,8 @@
 "message_details.subtitle_label_voiceOver" = "Žinutės duomenys";
 "message_details.user_handle_subtitle_label" = "Naudotojo vardas";
 "message_details.user_read_timestamp_subtitle_label" = "Perskaityta";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Password Rules
+"registration.password.rules.no_requirements" = "Use %@.";
+"registration.password.rules.with_requirements" = "Use %@, with %@.";

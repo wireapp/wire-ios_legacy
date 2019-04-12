@@ -204,7 +204,7 @@
 "conversation.status.typing" = "正在输入...";
 "conversation.status.typing.group" = "%@︰正在输入...";
 "conversation.status.silenced" = "静音";
-"conversation.status.poor_connection" = "Poor connection";
+"conversation.status.poor_connection" = "连接不良";
 "conversation.status.blocked" = "已拉黑";
 
 "conversation.status.message.text" = "%@";
@@ -310,7 +310,7 @@
 "conversation.input_bar.message_preview.location" = "Location";
 "conversation.input_bar.message_preview.video" = "视频";
 "conversation.input_bar.message_preview.audio" = "Audio Message";
-"conversation.input_bar.message_preview.file" = "File";
+"conversation.input_bar.message_preview.file" = "文件";
 "conversation.input_bar.close_reply" = "Cancel reply";
 
 "conversation.input_bar.message_preview.accessibility_description" = "Replying to message: %@";
@@ -385,6 +385,12 @@
 "content.system.you_removed_other" = "您移除了%@";
 
 "content.system.services.warning" = "服务有权访问此对话的内容";
+
+// Link attachment messages
+
+"content.message.link_attachment.accessibility_label.youtube" = "YouTube video preview";
+"content.message.link_attachment.accessibility_label.soundcloud_song" = "SoundCloud song preview";
+"content.message.link_attachment.accessibility_label.soundcloud_set" = "SoundCloud playlist preview";
 
 // New conversation participants added / removed / started system message
 
@@ -577,6 +583,9 @@
 "voice.cancel_button.title" = "取消";
 "voice.call_button.title" = "通话";
 "voice.end_call_button.title" = "结束通话";
+"voice.call_error.unsupported_version.title" = "Please update Wire";
+"voice.call_error.unsupported_version.message" = "You received a call that isn't supported by this version of Wire.\nGet the latest version in the App Store.";
+"voice.call_error.unsupported_version.dismiss" = "Later";
 
 "voice.alert.call_in_progress.title" = "通话中";
 "voice.alert.call_in_progress.message" = "仅限一条通话";
@@ -812,10 +821,11 @@
 "self.voiceover.hint" = "打开资料及设置";
 "self.new-device.voiceover.label" = "已添加资料及新设备";
 
-"self.profile.change_user_image.accessibility" = "Tap to change profile picture";
-
 "self.add_phone_number" = "新增手机号码";
 "self.add_email_password" = "新增邮箱地址和密码";
+
+"self.accessibility.profile_photo_image" = "Profile picture";
+"self.accessibility.profile_photo_edit_button" = "Change profile picture";
 
 // About screen
 "about.tos.title" = "使用条款";
@@ -1109,7 +1119,6 @@
 "email.guidance.toolong" = "超出字符限制";
 
 "password.placeholder" = "密码";
-"password.guidance.tooshort" = "至少8个字符";
 "password.guidance.toolong" = "超出字符限制";
 
 "phone.guidance.invalid" = "Invalid phone number";
@@ -1151,9 +1160,6 @@
 "team.full_name.textfield.accessibility" = "设定您的全名";
 
 "team.password.headline" = "设置密码";
-"team.password.textfield.placeholder" = "至少8个字符";
-"team.password.textfield.accessibility" = "设定密码，最少要有八个字元";
-
 
 "verification.code_label" = "六位数代码。文本字段。";
 "verification.code_hint" = "双击输入密码";
@@ -1569,3 +1575,8 @@
 "message_details.subtitle_label_voiceOver" = "Message Details";
 "message_details.user_handle_subtitle_label" = "用户名";
 "message_details.user_read_timestamp_subtitle_label" = "Read at";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Password Rules
+"registration.password.rules.no_requirements" = "Use %@.";
+"registration.password.rules.with_requirements" = "Use %@, with %@.";
