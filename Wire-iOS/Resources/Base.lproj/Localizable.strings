@@ -1003,7 +1003,7 @@
 "self.settings.link_options.maps.title" = "Locations";
 "self.settings.link_options.browser.title" = "Browser";
 
-"open_link.twitter.option.default" = "Safari / Twitter";
+"open_link.twitter.option.default" = "Browser / Twitter";
 "open_link.twitter.option.tweetbot" = "Tweetbot";
 "open_link.twitter.option.twitterrific" = "Twitterrific";
 
