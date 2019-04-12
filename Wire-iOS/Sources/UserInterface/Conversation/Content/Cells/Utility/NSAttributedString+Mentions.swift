@@ -17,7 +17,6 @@
 //
 
 import Foundation
-import Down
 
 
 private let log = ZMSLog(tag: "Mentions")
