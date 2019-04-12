@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import Down
 
 
 private let log = ZMSLog(tag: "Mentions")
@@ -88,10 +89,12 @@ extension NSMutableAttributedString {
         let suggestedFont = suggestedAttributes[.font] as? UIFont ?? UIFont.normalMediumFont
         let atFont: UIFont = suggestedFont.withSize(suggestedFont.pointSize - 2).withWeight(.light)
         let mentionFont = suggestedFont.isBold ? suggestedFont : suggestedFont.withWeight(.semibold)
+        let paragraphStyle = suggestedAttributes[.paragraphStyle] ?? NSParagraphStyle.default
 
         var atAttributes: [NSAttributedString.Key: Any] = [.font: atFont,
                                                            .foregroundColor: color,
-                                                           .backgroundColor: backgroundColor]
+                                                           .backgroundColor: backgroundColor,
+                                                           .paragraphStyle: paragraphStyle]
         
         if !user.isSelfUser {
             atAttributes[NSAttributedString.Key.link] = link as NSObject
@@ -101,7 +104,8 @@ extension NSMutableAttributedString {
         
         var mentionAttributes: [NSAttributedString.Key: Any] = [.font: mentionFont,
                                                                 .foregroundColor: color,
-                                                                .backgroundColor: backgroundColor]
+                                                                .backgroundColor: backgroundColor,
+                                                                .paragraphStyle: paragraphStyle]
         
         if !user.isSelfUser {
             mentionAttributes[NSAttributedString.Key.link] = link as NSObject
@@ -124,7 +128,8 @@ extension NSMutableAttributedString {
                 return
             }
             
-            let attributes = self.attributes(at: mentionRange.location, effectiveRange: nil)
+            var attributes = self.attributes(at: mentionRange.location, effectiveRange: nil)
+            attributes[.paragraphStyle] = NSAttributedString.paragraphStyle
             let replacementString = NSMutableAttributedString.mention(for: textObject.value.user,
                                                                       name: textObject.replacementText,
                                                                       link: textObject.value.link,
