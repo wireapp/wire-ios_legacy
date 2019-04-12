@@ -33,13 +33,6 @@ final class MarkDownSnapshotTests: ConversationCellSnapshotTestCase {
         verify(message: message, waitForTextViewToLoad: true)
     }
 
-    func testThatLineHeightOfListIsConsistent() {///TODO: rm
-        let messageText = "1. C is the most commonly used programming language for writing operating systems. The first operating system written in C is Unix.\n2. Later operating systems like GNU/Linux were all written in C. Not only is C the language of operating systems, it is the precursor and inspiration for almost all of the most popular high-level languages available today.\n3. In fact, Perl, PHP, Python and Ruby are all written in C."
-        let message = otherUserConversation.append(text: messageText, mentions: [], fetchLinkPreview: false)!
-
-        verify(message: message, waitForTextViewToLoad: true)
-    }
-
     func testMentionWithAtSign() {
         let messageText =
         """
@@ -49,6 +42,20 @@ The wretch often disguises himself, but you will know him at once by his rough v
 """
         let mention = Mention(range: NSRange(location: 0, length: 12), user: otherUser)
         let message = otherUserConversation.append(text: messageText, mentions: [mention], fetchLinkPreview: false)!
+
+
+        verify(message: message, waitForTextViewToLoad: true)
+    }
+
+    ///TODO: rm
+    func d_testMultipleParagraph() {
+        let messageText =
+        """
+There was an old goat who had seven little kids, and loved them with all the love of a mother for her children. One day she wanted to go into the forest and fetch some food.
+        So she called all seven to her and said: 'Dear children, I have to go into the forest, be on your guard against the wolf; if he comes in, he will devour you all, skin, hair, and everything.
+The wretch often disguises himself, but you will know him at once by his rough voice and his black feet.' The kids said: 'Dear mother, we will take good care of ourselves; you may go away without any anxiety.' Then the old one bleated, and went on her way with an easy mind.
+"""
+        let message = otherUserConversation.append(text: messageText, mentions: [], fetchLinkPreview: false)!
 
 
         verify(message: message, waitForTextViewToLoad: true)

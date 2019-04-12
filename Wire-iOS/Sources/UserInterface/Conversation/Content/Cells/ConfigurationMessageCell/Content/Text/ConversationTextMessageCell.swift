@@ -89,7 +89,10 @@ class ConversationTextMessageCell: UIView, ConversationMessageCell, TextViewInte
     }
 
     func configure(with object: Configuration, animated: Bool) {
-        messageTextView.attributedText = object.attributedText
+        let mutableString = NSMutableAttributedString(attributedString: object.attributedText)
+        mutableString.paragraphLineSpacing()
+
+        messageTextView.attributedText = mutableString
 
         if object.isObfuscated {
             messageTextView.accessibilityIdentifier = "Obfuscated message"
