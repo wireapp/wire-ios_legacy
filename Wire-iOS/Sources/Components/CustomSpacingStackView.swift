@@ -18,7 +18,7 @@
 
 import UIKit
 
-final class CustomSpacingStackView: UIView {
+@objcMembers class CustomSpacingStackView: UIView {
 
     private var stackView: UIStackView
     

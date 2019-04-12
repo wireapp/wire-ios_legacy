@@ -62,7 +62,7 @@ final class ProfileView: UIView, Themeable {
     /// The view controller that displays the view.
     weak var source: UIViewController?
     
-    var colorSchemeVariant: ColorSchemeVariant = ColorScheme.default.variant {
+    @objc dynamic var colorSchemeVariant: ColorSchemeVariant = ColorScheme.default.variant {
         didSet {
             guard colorSchemeVariant != oldValue else { return }
             applyColorScheme(colorSchemeVariant)
