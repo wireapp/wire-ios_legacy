@@ -386,6 +386,12 @@
 
 "content.system.services.warning" = "I servizi hanno accesso al contenuto di questa conversazione";
 
+// Link attachment messages
+
+"content.message.link_attachment.accessibility_label.youtube" = "YouTube video preview";
+"content.message.link_attachment.accessibility_label.soundcloud_song" = "SoundCloud song preview";
+"content.message.link_attachment.accessibility_label.soundcloud_set" = "SoundCloud playlist preview";
+
 // New conversation participants added / removed / started system message
 
 "content.system.conversation.other.started" = "%@ ha iniziato una conversazione con %@";
@@ -577,6 +583,9 @@
 "voice.cancel_button.title" = "Annulla";
 "voice.call_button.title" = "Chiama";
 "voice.end_call_button.title" = "Termina chiamata";
+"voice.call_error.unsupported_version.title" = "Please update Wire";
+"voice.call_error.unsupported_version.message" = "You received a call that isn't supported by this version of Wire.\nGet the latest version in the App Store.";
+"voice.call_error.unsupported_version.dismiss" = "Later";
 
 "voice.alert.call_in_progress.title" = "Chiamata in corso";
 "voice.alert.call_in_progress.message" = "Puoi avere solo una chiamata attiva alla volta";
@@ -812,10 +821,11 @@
 "self.voiceover.hint" = "Apri profilo e impostazioni";
 "self.new-device.voiceover.label" = "Profilo, nuovi dispositivi aggiunti";
 
-"self.profile.change_user_image.accessibility" = "Tocca per cambiare la tua foto profilo";
-
 "self.add_phone_number" = "Aggiungi un numero di telefono";
 "self.add_email_password" = "Aggiungi indirizzo email e password";
+
+"self.accessibility.profile_photo_image" = "Profile picture";
+"self.accessibility.profile_photo_edit_button" = "Change profile picture";
 
 // About screen
 "about.tos.title" = "Termini di utilizzo";
@@ -1109,7 +1119,6 @@
 "email.guidance.toolong" = "Troppi caratteri";
 
 "password.placeholder" = "Password";
-"password.guidance.tooshort" = "Almeno 8 caratteri";
 "password.guidance.toolong" = "Troppi caratteri";
 
 "phone.guidance.invalid" = "Numero di telefono non valido";
@@ -1151,9 +1160,6 @@
 "team.full_name.textfield.accessibility" = "Nome e cognome";
 
 "team.password.headline" = "Imposta una password";
-"team.password.textfield.placeholder" = "Almeno 8 caratteri";
-"team.password.textfield.accessibility" = "Password (almeno 8 caratteri)";
-
 
 "verification.code_label" = "Codice a sei cifre. Campo di testo.";
 "verification.code_hint" = "Tocca due volte per inserire il codice.";
@@ -1569,3 +1575,8 @@
 "message_details.subtitle_label_voiceOver" = "Dettagli messaggio";
 "message_details.user_handle_subtitle_label" = "Username";
 "message_details.user_read_timestamp_subtitle_label" = "Letto alle";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Password Rules
+"registration.password.rules.no_requirements" = "Use %@.";
+"registration.password.rules.with_requirements" = "Use %@, with %@.";

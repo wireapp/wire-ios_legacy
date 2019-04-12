@@ -386,6 +386,12 @@
 
 "content.system.services.warning" = "Services have access to the content of this conversation";
 
+// Link attachment messages
+
+"content.message.link_attachment.accessibility_label.youtube" = "YouTube video preview";
+"content.message.link_attachment.accessibility_label.soundcloud_song" = "SoundCloud song preview";
+"content.message.link_attachment.accessibility_label.soundcloud_set" = "SoundCloud playlist preview";
+
 // New conversation participants added / removed / started system message
 
 "content.system.conversation.other.started" = "%@ begon een gesprek met %@";
@@ -577,6 +583,9 @@
 "voice.cancel_button.title" = "Annuleer";
 "voice.call_button.title" = "Oproep";
 "voice.end_call_button.title" = "Gesprek beëindigen";
+"voice.call_error.unsupported_version.title" = "Please update Wire";
+"voice.call_error.unsupported_version.message" = "You received a call that isn't supported by this version of Wire.\nGet the latest version in the App Store.";
+"voice.call_error.unsupported_version.dismiss" = "Later";
 
 "voice.alert.call_in_progress.title" = "Bezig met bellen";
 "voice.alert.call_in_progress.message" = "Je kunt maximaal een gesprek tegelijk voeren";
@@ -812,10 +821,11 @@
 "self.voiceover.hint" = "Open profile en instellingen";
 "self.new-device.voiceover.label" = "Profiel, nieuwe apparaten toegevoegd";
 
-"self.profile.change_user_image.accessibility" = "Tap to change profile picture";
-
 "self.add_phone_number" = "Voeg telefoonnummer toe";
 "self.add_email_password" = "Voeg e-mailadres en wachtwoord toe";
+
+"self.accessibility.profile_photo_image" = "Profile picture";
+"self.accessibility.profile_photo_edit_button" = "Change profile picture";
 
 // About screen
 "about.tos.title" = "Gebruikersvoorwaarden";
@@ -1109,7 +1119,6 @@
 "email.guidance.toolong" = "Te veel tekens";
 
 "password.placeholder" = "Wachtwoord";
-"password.guidance.tooshort" = "Minimaal 8 tekens";
 "password.guidance.toolong" = "Te veel tekens";
 
 "phone.guidance.invalid" = "Invalid phone number";
@@ -1151,9 +1160,6 @@
 "team.full_name.textfield.accessibility" = "Je volledige naam";
 
 "team.password.headline" = "Wachtwoord instellen";
-"team.password.textfield.placeholder" = "Minimaal 8 tekens";
-"team.password.textfield.accessibility" = "Kies een wachtwoord van minimaal 8 tekens";
-
 
 "verification.code_label" = "Six-digit code. Text field.";
 "verification.code_hint" = "Double tap to enter the code.";
@@ -1569,3 +1575,8 @@
 "message_details.subtitle_label_voiceOver" = "Berichtdetails";
 "message_details.user_handle_subtitle_label" = "Gebruikersnaam";
 "message_details.user_read_timestamp_subtitle_label" = "Gelezen op";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Password Rules
+"registration.password.rules.no_requirements" = "Use %@.";
+"registration.password.rules.with_requirements" = "Use %@, with %@.";

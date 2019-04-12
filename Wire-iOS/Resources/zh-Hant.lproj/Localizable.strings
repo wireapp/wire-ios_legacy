@@ -386,6 +386,12 @@
 
 "content.system.services.warning" = "服務可以存取這個對話內容";
 
+// Link attachment messages
+
+"content.message.link_attachment.accessibility_label.youtube" = "YouTube視頻預覽";
+"content.message.link_attachment.accessibility_label.soundcloud_song" = "SoundCloud歌曲預覽";
+"content.message.link_attachment.accessibility_label.soundcloud_set" = "SoundCloud歌單預覽";
+
 // New conversation participants added / removed / started system message
 
 "content.system.conversation.other.started" = "%@和%@開始對話";
@@ -577,6 +583,9 @@
 "voice.cancel_button.title" = "取消";
 "voice.call_button.title" = "通話";
 "voice.end_call_button.title" = "結束通話";
+"voice.call_error.unsupported_version.title" = "請更新Wire";
+"voice.call_error.unsupported_version.message" = "您收到的來電不能使用此版本的Wire接聽。\n請在App Store中獲取最新版本。";
+"voice.call_error.unsupported_version.dismiss" = "稍後";
 
 "voice.alert.call_in_progress.title" = "通話中";
 "voice.alert.call_in_progress.message" = "您只可同時接撥一則通話";
@@ -812,10 +821,11 @@
 "self.voiceover.hint" = "打開用戶檔案和設定";
 "self.new-device.voiceover.label" = "已添加設定檔及新設備";
 
-"self.profile.change_user_image.accessibility" = "點擊以更改個人圖片";
-
 "self.add_phone_number" = "加入手機號碼";
 "self.add_email_password" = "新增電子郵件信箱和密碼";
+
+"self.accessibility.profile_photo_image" = "個人頭像";
+"self.accessibility.profile_photo_edit_button" = "更改個人頭像";
 
 // About screen
 "about.tos.title" = "使用條款";
@@ -1109,7 +1119,6 @@
 "email.guidance.toolong" = "字數過多";
 
 "password.placeholder" = "密碼";
-"password.guidance.tooshort" = "至少8個字元";
 "password.guidance.toolong" = "字數太多";
 
 "phone.guidance.invalid" = "無效的手機號碼";
@@ -1120,9 +1129,9 @@
 
 "landing.header" = "Wire。加入您的帳戶。";
 "landing.create_account.title" = "個人版";
-"landing.create_account.subtitle" = "與朋友\U00A0和\U00A0家人私密聊天";
+"landing.create_account.subtitle" = "與朋友和家人私密聊天";
 "landing.create_team.title" = "專業版";
-"landing.create_team.subtitle" = "保密企業、機構和l\U00A0專業組織的協作";
+"landing.create_team.subtitle" = "保密企業、機構和專業組織的協作";
 "landing.login.hints" = "已有帳號？";
 "landing.login.button.title" = "登入";
 
@@ -1151,9 +1160,6 @@
 "team.full_name.textfield.accessibility" = "設定您的全名";
 
 "team.password.headline" = "設定密碼";
-"team.password.textfield.placeholder" = "至少8個字元";
-"team.password.textfield.accessibility" = "設定密碼，最少要有八個字元";
-
 
 "verification.code_label" = "六位數的代碼。文字欄位。";
 "verification.code_hint" = "按兩下以輸入代碼。";
@@ -1351,10 +1357,10 @@
 "signin.confirm" = "登入";
 "signin.company_idp.button.title" = "供公司使用";
 
-"signin_logout.subheadline" = "您已離開太久，請重新登入。";
-"signin_logout.email.subheadline" = "您已離開太久。輸入您的電子郵件地址和密碼以繼續。";
-"signin_logout.phone.subheadline" = "您已離開太久。輸入您的電話號碼以繼續。";
-"signin_logout.sso.subheadline" = "您已離開太久。使用您的公司帳戶登錄以繼續。";
+"signin_logout.subheadline" = "您太久沒使用Wire。請重新登入。";
+"signin_logout.email.subheadline" = "您太久沒使用Wire。輸入您的電子郵件地址和密碼以繼續。";
+"signin_logout.phone.subheadline" = "您太久沒使用Wire。輸入您的電話號碼以繼續。";
+"signin_logout.sso.subheadline" = "您太久沒使用Wire。使用您的公司帳戶登錄以繼續。";
 "signin_logout.sso.buton" = "公司登錄";
 
 "signin.email.missing_password.subtitle" = "請輸入您的電郵地址及密碼以繼續。";
@@ -1569,3 +1575,8 @@
 "message_details.subtitle_label_voiceOver" = "訊息詳細資料";
 "message_details.user_handle_subtitle_label" = "使用者名稱";
 "message_details.user_read_timestamp_subtitle_label" = "閱於";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Password Rules
+"registration.password.rules.no_requirements" = "使用%@。";
+"registration.password.rules.with_requirements" = "使用%@，與%@。";
