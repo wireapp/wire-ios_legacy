@@ -386,6 +386,12 @@
 
 "content.system.services.warning" = "Serviços têm acesso ao conteúdo dessa conversa";
 
+// Link attachment messages
+
+"content.message.link_attachment.accessibility_label.youtube" = "Prévia de vídeo do YouTube";
+"content.message.link_attachment.accessibility_label.soundcloud_song" = "Prévia da música do SoundCloud";
+"content.message.link_attachment.accessibility_label.soundcloud_set" = "Prévia de playlist do SoundCloud";
+
 // New conversation participants added / removed / started system message
 
 "content.system.conversation.other.started" = "%@ iniciou uma conversa com %@";
@@ -577,6 +583,9 @@
 "voice.cancel_button.title" = "Cancelar";
 "voice.call_button.title" = "Chamada";
 "voice.end_call_button.title" = "Terminar Chamada";
+"voice.call_error.unsupported_version.title" = "Por favor, atualize o Wire";
+"voice.call_error.unsupported_version.message" = "Você recebeu uma chamada que não é suportada por esta versão do Wire.\nAtualize para a versão mais recente na App Store.";
+"voice.call_error.unsupported_version.dismiss" = "Mais tarde";
 
 "voice.alert.call_in_progress.title" = "Chamada em andamento";
 "voice.alert.call_in_progress.message" = "Você pode ter apenas uma chamada ativa de cada vez";
@@ -812,10 +821,11 @@
 "self.voiceover.hint" = "Abrir perfil e configurações";
 "self.new-device.voiceover.label" = "Perfil, novos dispositivos adicionados";
 
-"self.profile.change_user_image.accessibility" = "Toque para mudar foto do perfil";
-
 "self.add_phone_number" = "Adicionar número de telefone";
 "self.add_email_password" = "Adicionar o endereço de e-mail e senha";
+
+"self.accessibility.profile_photo_image" = "Profile picture";
+"self.accessibility.profile_photo_edit_button" = "Change profile picture";
 
 // About screen
 "about.tos.title" = "Termos de uso";
@@ -1032,9 +1042,9 @@
 
 "self.settings.privacy_security.lock_app.description" = "Desbloquear Wire";
 
-"self.settings.privacy_security.lock_cancelled.description_face_id" = "Unlock Wire with Face ID or Passcode";
-"self.settings.privacy_security.lock_cancelled.description_touch_id" = "Unlock Wire with Touch ID or Passcode";
-"self.settings.privacy_security.lock_cancelled.description_passcode" = "Unlock Wire with Passcode";
+"self.settings.privacy_security.lock_cancelled.description_face_id" = "Desbloqueie o Wire com o Face ID ou Código";
+"self.settings.privacy_security.lock_cancelled.description_touch_id" = "Desbloqueie o Wire com o Touch ID ou Código";
+"self.settings.privacy_security.lock_cancelled.description_passcode" = "Desbloquear Wire com senha";
 "self.settings.privacy_security.lock_cancelled.action" = "Desbloquear";
 
 "self.settings.privacy_security.disable_link_previews.title" = "Criar pré-visualizações de links";
@@ -1109,7 +1119,6 @@
 "email.guidance.toolong" = "Muitos caracteres";
 
 "password.placeholder" = "Senha";
-"password.guidance.tooshort" = "Pelo menos 8 caracteres";
 "password.guidance.toolong" = "Muitos caracteres";
 
 "phone.guidance.invalid" = "Número de telefone inválido";
@@ -1120,9 +1129,9 @@
 
 "landing.header" = "Wire. Adicione sua conta.";
 "landing.create_account.title" = "Pessoal";
-"landing.create_account.subtitle" = "Chat privately with groups of friends\U00A0and\U00A0family";
+"landing.create_account.subtitle" = "Converse em privado com grupos de amigos\U00A0e\U00A0família";
 "landing.create_team.title" = "Pro";
-"landing.create_team.subtitle" = "Secure collaboration for businesses, institutions and professional\U00A0organizations";
+"landing.create_team.subtitle" = "Colaboração segura para empresas, instituições e organizações profissionais\U00A0";
 "landing.login.hints" = "Já tem uma conta?";
 "landing.login.button.title" = "Iniciar sessão";
 
@@ -1151,9 +1160,6 @@
 "team.full_name.textfield.accessibility" = "Defina seu nome completo";
 
 "team.password.headline" = "Definir senha";
-"team.password.textfield.placeholder" = "Pelo menos 8 caracteres";
-"team.password.textfield.accessibility" = "Definir senha, pelo menos 8 caracteres";
-
 
 "verification.code_label" = "Código de seis dígitos. Campo de texto.";
 "verification.code_hint" = "Toque duplo para inserir o código.";
@@ -1541,11 +1547,11 @@
 "url_action.invalid_conversation.title" = "O Wire não pode abrir esta conversa.";
 "url_action.invalid_conversation.message" = "Você pode não ter permissão com esta conta ou a pessoa não pode estar no Wire.";
 
-"url_action.authorization_required.title" = "Authorization required.";
-"url_action.authorization_required.message" = "You need to log in to view this content.";
+"url_action.authorization_required.title" = "Autorização necessária.";
+"url_action.authorization_required.message" = "Você precisa fazer login para ver este conteúdo.";
 
-"url_action.invalid_link.title" = "Invalid link.";
-"url_action.invalid_link.message" = "The link you opened is not valid.";
+"url_action.invalid_link.title" = "Link inválido.";
+"url_action.invalid_link.message" = "O link que você abriu não é válido.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // News and offers consent prompt
@@ -1569,3 +1575,8 @@
 "message_details.subtitle_label_voiceOver" = "Detalhes da Mensagem";
 "message_details.user_handle_subtitle_label" = "Nome de usuário";
 "message_details.user_read_timestamp_subtitle_label" = "Lido em";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Password Rules
+"registration.password.rules.no_requirements" = "Use %@.";
+"registration.password.rules.with_requirements" = "Use %@, with %@.";

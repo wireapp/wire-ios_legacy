@@ -270,5 +270,85 @@
         <string>Appels manqués de %2$@</string>
       </dict>
     </dict>
+    <key>registration.password.rules.min_length</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>au moins %#@character_count@</string>
+      <key>character_count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>un caractère</string>
+        <key>other</key>
+        <string>%d caractères</string>
+      </dict>
+    </dict>
+    <key>registration.password.rules.lowercase</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@character_count@</string>
+      <key>character_count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>une lettre minuscule</string>
+        <key>other</key>
+        <string>%d lettres minuscules</string>
+      </dict>
+    </dict>
+    <key>registration.password.rules.uppercase</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@character_count@</string>
+      <key>character_count</key>
+      <dict>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>one</key>
+        <string>une lettre majuscule</string>
+        <key>other</key>
+        <string>%d lettres majuscules</string>
+      </dict>
+    </dict>
+    <key>registration.password.rules.number</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@character_count@</string>
+      <key>character_count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>un nombre</string>
+        <key>other</key>
+        <string>%d nombres</string>
+      </dict>
+    </dict>
+    <key>registration.password.rules.special</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@character_count@</string>
+      <key>character_count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>un caractère spécial</string>
+        <key>other</key>
+        <string>%d caractères spéciaux</string>
+      </dict>
+    </dict>
   </dict>
 </plist>

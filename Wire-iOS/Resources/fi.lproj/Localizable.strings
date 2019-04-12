@@ -386,6 +386,12 @@
 
 "content.system.services.warning" = "Services have access to the content of this conversation";
 
+// Link attachment messages
+
+"content.message.link_attachment.accessibility_label.youtube" = "YouTube video preview";
+"content.message.link_attachment.accessibility_label.soundcloud_song" = "SoundCloud song preview";
+"content.message.link_attachment.accessibility_label.soundcloud_set" = "SoundCloud playlist preview";
+
 // New conversation participants added / removed / started system message
 
 "content.system.conversation.other.started" = "%@ aloitti keskustelun %@ n kanssa";
@@ -577,6 +583,9 @@
 "voice.cancel_button.title" = "Peruuta";
 "voice.call_button.title" = "Puhelu";
 "voice.end_call_button.title" = "End Call";
+"voice.call_error.unsupported_version.title" = "Please update Wire";
+"voice.call_error.unsupported_version.message" = "You received a call that isn't supported by this version of Wire.\nGet the latest version in the App Store.";
+"voice.call_error.unsupported_version.dismiss" = "Later";
 
 "voice.alert.call_in_progress.title" = "Puhelu käynnissä";
 "voice.alert.call_in_progress.message" = "Sinulla voi olla vain yksi aktiivinen puhelu kerrallaan";
@@ -812,10 +821,11 @@
 "self.voiceover.hint" = "Avaa profiili ja asetukset";
 "self.new-device.voiceover.label" = "Profiili, uusia laitteita lisätty";
 
-"self.profile.change_user_image.accessibility" = "Tap to change profile picture";
-
 "self.add_phone_number" = "Lisää puhelinnumero";
 "self.add_email_password" = "Lisää sähköpostiosoite ja salasana";
+
+"self.accessibility.profile_photo_image" = "Profile picture";
+"self.accessibility.profile_photo_edit_button" = "Change profile picture";
 
 // About screen
 "about.tos.title" = "Käyttöehdot";
@@ -1109,7 +1119,6 @@
 "email.guidance.toolong" = "Liian monta merkkiä";
 
 "password.placeholder" = "Salasana";
-"password.guidance.tooshort" = "Vähintään 8 merkkiä";
 "password.guidance.toolong" = "Liian monta merkkiä";
 
 "phone.guidance.invalid" = "Invalid phone number";
@@ -1151,9 +1160,6 @@
 "team.full_name.textfield.accessibility" = "Set full name";
 
 "team.password.headline" = "Set password";
-"team.password.textfield.placeholder" = "Vähintään 8 merkkiä";
-"team.password.textfield.accessibility" = "Set password, at least 8 characters";
-
 
 "verification.code_label" = "Six-digit code. Text field.";
 "verification.code_hint" = "Double tap to enter the code.";
@@ -1569,3 +1575,8 @@
 "message_details.subtitle_label_voiceOver" = "Message Details";
 "message_details.user_handle_subtitle_label" = "Käyttäjänimi";
 "message_details.user_read_timestamp_subtitle_label" = "Read at";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Password Rules
+"registration.password.rules.no_requirements" = "Use %@.";
+"registration.password.rules.with_requirements" = "Use %@, with %@.";

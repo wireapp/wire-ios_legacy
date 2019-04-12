@@ -386,6 +386,12 @@
 
 "content.system.services.warning" = "Les services ont accès au contenu de la conversation";
 
+// Link attachment messages
+
+"content.message.link_attachment.accessibility_label.youtube" = "Aperçu d'une vidéo YouTube";
+"content.message.link_attachment.accessibility_label.soundcloud_song" = "Aperçu d'une chanson SoundCloud";
+"content.message.link_attachment.accessibility_label.soundcloud_set" = "Aperçu d'une playlist SoundCloud";
+
 // New conversation participants added / removed / started system message
 
 "content.system.conversation.other.started" = "%@ a commencé une conversation avec %@";
@@ -577,6 +583,9 @@
 "voice.cancel_button.title" = "Annuler";
 "voice.call_button.title" = "Appeler";
 "voice.end_call_button.title" = "Raccrocher";
+"voice.call_error.unsupported_version.title" = "Veuillez mettre à jour Wire";
+"voice.call_error.unsupported_version.message" = "Vous avez reçu un appel qui n’est pas pris en charge par cette version de Wire.\nTéléchargez la dernière version depuis l’App Store.";
+"voice.call_error.unsupported_version.dismiss" = "Plus tard";
 
 "voice.alert.call_in_progress.title" = "Appel en cours";
 "voice.alert.call_in_progress.message" = "Vous ne pouvez avoir qu’un seul appel actif à la fois";
@@ -812,10 +821,11 @@
 "self.voiceover.hint" = "Ouvrir le profil et les paramètres";
 "self.new-device.voiceover.label" = "Profil, de nouveaux appareils ont été ajoutés";
 
-"self.profile.change_user_image.accessibility" = "Cliquez pour changer la photo du profil";
-
 "self.add_phone_number" = "Ajouter un numéro de téléphone";
 "self.add_email_password" = "Ajouter une adresse e-mail et un mot de passe";
+
+"self.accessibility.profile_photo_image" = "Photo de profil";
+"self.accessibility.profile_photo_edit_button" = "Changez votre photo de profil";
 
 // About screen
 "about.tos.title" = "Conditions d'utilisation";
@@ -1109,7 +1119,6 @@
 "email.guidance.toolong" = "Trop de caractères";
 
 "password.placeholder" = "Mot de passe";
-"password.guidance.tooshort" = "Au moins 8 caractères";
 "password.guidance.toolong" = "Trop de caractères";
 
 "phone.guidance.invalid" = "Numéro de téléphone incorrect";
@@ -1151,9 +1160,6 @@
 "team.full_name.textfield.accessibility" = "Définir le nom complet";
 
 "team.password.headline" = "Définir le mot de passe";
-"team.password.textfield.placeholder" = "Au moins 8 caractères";
-"team.password.textfield.accessibility" = "Définir le mot de passe, au moins 8 caractères";
-
 
 "verification.code_label" = "Code à six chiffres. Champ de texte.";
 "verification.code_hint" = "Appuyez deux fois pour entrer le code.";
@@ -1569,3 +1575,8 @@
 "message_details.subtitle_label_voiceOver" = "Détails du Message";
 "message_details.user_handle_subtitle_label" = "Nom d'utilisateur";
 "message_details.user_read_timestamp_subtitle_label" = "Lu à";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Password Rules
+"registration.password.rules.no_requirements" = "Utilisez %@.";
+"registration.password.rules.with_requirements" = "Utilisez %@, avec %@.";

@@ -386,6 +386,12 @@
 
 "content.system.services.warning" = "Сервіси мають доступ до вмісту цієї розмови";
 
+// Link attachment messages
+
+"content.message.link_attachment.accessibility_label.youtube" = "Попередній перегляд відео з YouTube";
+"content.message.link_attachment.accessibility_label.soundcloud_song" = "Попередній перегляд пісні в SoundCloud";
+"content.message.link_attachment.accessibility_label.soundcloud_set" = "Попередній перегляд плейліста SoundCloud";
+
 // New conversation participants added / removed / started system message
 
 "content.system.conversation.other.started" = "%@ почав(-ла) розмову з %@";
@@ -577,6 +583,9 @@
 "voice.cancel_button.title" = "Скасувати";
 "voice.call_button.title" = "Аудіодзвінок";
 "voice.end_call_button.title" = "Завершити дзвінок";
+"voice.call_error.unsupported_version.title" = "Будь ласка, оновіть Wire";
+"voice.call_error.unsupported_version.message" = "Ви отримали дзвінок, який не підтримується цією версією Wire.\nОновіть вашу версію Wire з App Store.";
+"voice.call_error.unsupported_version.dismiss" = "Пізніше";
 
 "voice.alert.call_in_progress.title" = "Активний дзвінок";
 "voice.alert.call_in_progress.message" = "Ви можете одночасно мати тільки один активний дзвінок";
@@ -812,10 +821,11 @@
 "self.voiceover.hint" = "Відкрити профіль та налаштування";
 "self.new-device.voiceover.label" = "Профіль, нещодавно додані пристрої";
 
-"self.profile.change_user_image.accessibility" = "Торкніться, щоб змінити зображення в профілі";
-
 "self.add_phone_number" = "Додати номер телефону";
 "self.add_email_password" = "Додайте email та пароль";
+
+"self.accessibility.profile_photo_image" = "Profile picture";
+"self.accessibility.profile_photo_edit_button" = "Change profile picture";
 
 // About screen
 "about.tos.title" = "Умови використання";
@@ -1109,7 +1119,6 @@
 "email.guidance.toolong" = "Занадто багато символів";
 
 "password.placeholder" = "Пароль";
-"password.guidance.tooshort" = "Не менше 8 символів";
 "password.guidance.toolong" = "Занадто багато символів";
 
 "phone.guidance.invalid" = "Невірний номер телефону";
@@ -1151,9 +1160,6 @@
 "team.full_name.textfield.accessibility" = "Задати ім'я";
 
 "team.password.headline" = "Задати пароль";
-"team.password.textfield.placeholder" = "Не менше 8 символів";
-"team.password.textfield.accessibility" = "Задайте пароль, мінімум 8 символів";
-
 
 "verification.code_label" = "Шестизначний код. Текстове поле.";
 "verification.code_hint" = "Торкніться двічі, щоб ввести код.";
@@ -1569,3 +1575,8 @@
 "message_details.subtitle_label_voiceOver" = "Деталі повідомлення";
 "message_details.user_handle_subtitle_label" = "Нік";
 "message_details.user_read_timestamp_subtitle_label" = "Переглянуте о";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Password Rules
+"registration.password.rules.no_requirements" = "Use %@.";
+"registration.password.rules.with_requirements" = "Use %@, with %@.";
