@@ -209,9 +209,11 @@
 		5E39FC63225CCEFA00C682B8 /* ValueValidationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E39FC62225CCEFA00C682B8 /* ValueValidationCell.swift */; };
 		5E39FC65225CDA7800C682B8 /* ChangeEmailViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E39FC64225CDA7800C682B8 /* ChangeEmailViewControllerTests.swift */; };
 		5E39FC6B225F81FD00C682B8 /* ConversationViewController+GuestBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E39FC6A225F81FD00C682B8 /* ConversationViewController+GuestBar.swift */; };
+		5E39FC6F2260BAEC00C682B8 /* UIImage+StyleKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E39FC6E2260BAEC00C682B8 /* UIImage+StyleKit.swift */; };
 		5E3A6C22206A3AD500907484 /* ConversationActionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E3A6C21206A3AD500907484 /* ConversationActionController.swift */; };
 		5E3A6C25206A4E4A00907484 /* LocationPreviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E3A6C24206A4E4A00907484 /* LocationPreviewController.swift */; };
 		5E3CE6262253689100F9A113 /* WireStyleKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E3CE6252253689000F9A113 /* WireStyleKit.swift */; };
+		5E3E1B732260DA200053AC59 /* StyleKitIcons.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E3E1B722260DA200053AC59 /* StyleKitIcons.generated.swift */; };
 		5E3FB06C206BC7AC0075E910 /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16AACE731C0CAEBD00E62C43 /* TabBar.swift */; };
 		5E3FB06D206BC7AF0075E910 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1621AFDA1C0DEE1500FAE41A /* TabBarController.swift */; };
 		5E3FB06E206BC7B40075E910 /* Tab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E3C0C65206B9EE900B0499C /* Tab.swift */; };
@@ -317,6 +319,7 @@
 		5EA73D8C20D901E80001D106 /* ConversationTimeoutOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EA73D8B20D901E70001D106 /* ConversationTimeoutOptionsViewController.swift */; };
 		5EA73D9120D903B90001D106 /* GroupDetailsTimeoutOptionsCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EA73D8E20D903900001D106 /* GroupDetailsTimeoutOptionsCellTests.swift */; };
 		5EA73D9220D903BC0001D106 /* CheckmarkCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EA73D8D20D9038F0001D106 /* CheckmarkCellTests.swift */; };
+		5EA952C32260F90A00C83FDB /* StyleKitIconSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EA952C22260F90A00C83FDB /* StyleKitIconSize.swift */; };
 		5EAE50332099B424003DAAC6 /* PinnableThumbnailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EAE50322099B424003DAAC6 /* PinnableThumbnailViewController.swift */; };
 		5EB45761204EA75300BA217A /* CallQualityDismissalTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EB45760204EA75300BA217A /* CallQualityDismissalTransition.swift */; };
 		5EBBE96B21872060008BC1B7 /* MockCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EBBE96721871F70008BC1B7 /* MockCell.swift */; };
@@ -1051,9 +1054,9 @@
 		EF1A461C21AD955A0009B6B9 /* GroupDetailsDisclosureOptionsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1A461B21AD955A0009B6B9 /* GroupDetailsDisclosureOptionsCell.swift */; };
 		EF1A461E21ADACF50009B6B9 /* RightIconDetailsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1A461D21ADACF50009B6B9 /* RightIconDetailsCell.swift */; };
 		EF1BEBCD21F5E8F5001128E0 /* StartUIViewController+Constraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1BEBCC21F5E8F5001128E0 /* StartUIViewController+Constraints.swift */; };
-		EF1D80DD22275F8F00BCA8D3 /* MockUser+MockUserArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1D80DC22275F8F00BCA8D3 /* MockUser+MockUserArray.swift */; };
 		EF1C2E4D2254A1E2007E1CAC /* ConversationViewControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1C2E4C2254A1E2007E1CAC /* ConversationViewControllerSnapshotTests.swift */; };
 		EF1D80D92226D6B800BCA8D3 /* MockConversationFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF16FC4D1DAFCE9300FF4325 /* MockConversationFactory.swift */; };
+		EF1D80DD22275F8F00BCA8D3 /* MockUser+MockUserArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1D80DC22275F8F00BCA8D3 /* MockUser+MockUserArray.swift */; };
 		EF1D80E02228175800BCA8D3 /* CountryCodeTableViewController+StatusBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1D80DE2228175800BCA8D3 /* CountryCodeTableViewController+StatusBar.swift */; };
 		EF1D8BA821EE49550001A4CC /* TeamMemberInviteViewControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1D8BA721EE49550001A4CC /* TeamMemberInviteViewControllerSnapshotTests.swift */; };
 		EF1EA4631FB0937000B53063 /* MockUser+filename.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1EA4611FB0934D00B53063 /* MockUser+filename.swift */; };
@@ -1305,9 +1308,6 @@
 		F15650A221DCF60E00210504 /* FileMetaDataGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8E4FA91DF066750009F437 /* FileMetaDataGenerator.swift */; };
 		F15650A321DCF63300210504 /* FilePreviewGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8E4FAA1DF066750009F437 /* FilePreviewGenerator.swift */; };
 		F15650A421DCF66600210504 /* AudioProcessing.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8E4FB21DF066EE0009F437 /* AudioProcessing.swift */; };
-		F15650A521DCF81400210504 /* ZetaIconTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 1E5E0CED1B6B8EDB003B0CAC /* ZetaIconTypes.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		F15650A721DCF82400210504 /* UIImage+ZetaIconsNeue.h in Headers */ = {isa = PBXBuildFile; fileRef = 1E5E0CEB1B6B8EDB003B0CAC /* UIImage+ZetaIconsNeue.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		F15650A821DCF82E00210504 /* UIImage+ZetaIconsNeue.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E5E0CEC1B6B8EDB003B0CAC /* UIImage+ZetaIconsNeue.m */; };
 		F15650AC21DCFBC000210504 /* SharedConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCBE24C1FC72FE500CBD55D /* SharedConstants.swift */; };
 		F15650AD21DCFC8700210504 /* AppLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8778AAEC1F6BC6AD0022F53F /* AppLock.swift */; };
 		F15650AE21DCFCED00210504 /* SettingsPropertyName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C98DCFF1FC32F41005C0042 /* SettingsPropertyName.swift */; };
@@ -1631,9 +1631,6 @@
 		1E5E0CAD1B6B83C6003B0CAC /* ButtonWithLargerHitArea.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ButtonWithLargerHitArea.m; sourceTree = "<group>"; };
 		1E5E0CAE1B6B83C6003B0CAC /* IconButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IconButton.h; sourceTree = "<group>"; };
 		1E5E0CAF1B6B83C6003B0CAC /* IconButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IconButton.m; sourceTree = "<group>"; };
-		1E5E0CEB1B6B8EDB003B0CAC /* UIImage+ZetaIconsNeue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ZetaIconsNeue.h"; sourceTree = "<group>"; };
-		1E5E0CEC1B6B8EDB003B0CAC /* UIImage+ZetaIconsNeue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ZetaIconsNeue.m"; sourceTree = "<group>"; };
-		1E5E0CED1B6B8EDB003B0CAC /* ZetaIconTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZetaIconTypes.h; sourceTree = "<group>"; };
 		1E5E0CF31B6B8EDB003B0CAC /* UIColor+Mixing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Mixing.h"; sourceTree = "<group>"; };
 		1E5E0CF41B6B8EDB003B0CAC /* UIColor+Mixing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Mixing.m"; sourceTree = "<group>"; };
 		1E5E0CF51B6B8EDB003B0CAC /* UIControl+Wire.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIControl+Wire.h"; sourceTree = "<group>"; };
@@ -1725,10 +1722,13 @@
 		5E39FC62225CCEFA00C682B8 /* ValueValidationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValueValidationCell.swift; sourceTree = "<group>"; };
 		5E39FC64225CDA7800C682B8 /* ChangeEmailViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeEmailViewControllerTests.swift; sourceTree = "<group>"; };
 		5E39FC6A225F81FD00C682B8 /* ConversationViewController+GuestBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationViewController+GuestBar.swift"; sourceTree = "<group>"; };
+		5E39FC6E2260BAEC00C682B8 /* UIImage+StyleKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+StyleKit.swift"; sourceTree = "<group>"; };
+		5E39FC742260CAC900C682B8 /* StyleKitIcons.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = StyleKitIcons.json; sourceTree = "<group>"; };
 		5E3A6C21206A3AD500907484 /* ConversationActionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationActionController.swift; sourceTree = "<group>"; };
 		5E3A6C24206A4E4A00907484 /* LocationPreviewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationPreviewController.swift; sourceTree = "<group>"; };
 		5E3C0C65206B9EE900B0499C /* Tab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab.swift; sourceTree = "<group>"; };
 		5E3CE6252253689000F9A113 /* WireStyleKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WireStyleKit.swift; sourceTree = "<group>"; };
+		5E3E1B722260DA200053AC59 /* StyleKitIcons.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StyleKitIcons.generated.swift; sourceTree = "<group>"; };
 		5E4B1384204FE58D00ED5DF1 /* TimeInterval+Days.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimeInterval+Days.swift"; sourceTree = "<group>"; };
 		5E4B1386204FE7DA00ED5DF1 /* SystemAnimationCurves.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemAnimationCurves.swift; sourceTree = "<group>"; };
 		5E4B1388204FEFCD00ED5DF1 /* UIColor+CallQuality.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+CallQuality.swift"; sourceTree = "<group>"; };
@@ -1837,6 +1837,7 @@
 		5EA73D8B20D901E70001D106 /* ConversationTimeoutOptionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationTimeoutOptionsViewController.swift; sourceTree = "<group>"; };
 		5EA73D8D20D9038F0001D106 /* CheckmarkCellTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckmarkCellTests.swift; sourceTree = "<group>"; };
 		5EA73D8E20D903900001D106 /* GroupDetailsTimeoutOptionsCellTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupDetailsTimeoutOptionsCellTests.swift; sourceTree = "<group>"; };
+		5EA952C22260F90A00C83FDB /* StyleKitIconSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyleKitIconSize.swift; sourceTree = "<group>"; };
 		5EAE50322099B424003DAAC6 /* PinnableThumbnailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinnableThumbnailViewController.swift; sourceTree = "<group>"; };
 		5EB45760204EA75300BA217A /* CallQualityDismissalTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallQualityDismissalTransition.swift; sourceTree = "<group>"; };
 		5EBBE96721871F70008BC1B7 /* MockCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCell.swift; sourceTree = "<group>"; };
@@ -2836,8 +2837,8 @@
 		EF1A461B21AD955A0009B6B9 /* GroupDetailsDisclosureOptionsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDetailsDisclosureOptionsCell.swift; sourceTree = "<group>"; };
 		EF1A461D21ADACF50009B6B9 /* RightIconDetailsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RightIconDetailsCell.swift; sourceTree = "<group>"; };
 		EF1BEBCC21F5E8F5001128E0 /* StartUIViewController+Constraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StartUIViewController+Constraints.swift"; sourceTree = "<group>"; };
-		EF1D80DC22275F8F00BCA8D3 /* MockUser+MockUserArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MockUser+MockUserArray.swift"; sourceTree = "<group>"; };
 		EF1C2E4C2254A1E2007E1CAC /* ConversationViewControllerSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationViewControllerSnapshotTests.swift; sourceTree = "<group>"; };
+		EF1D80DC22275F8F00BCA8D3 /* MockUser+MockUserArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MockUser+MockUserArray.swift"; sourceTree = "<group>"; };
 		EF1D80DE2228175800BCA8D3 /* CountryCodeTableViewController+StatusBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CountryCodeTableViewController+StatusBar.swift"; sourceTree = "<group>"; };
 		EF1D8BA721EE49550001A4CC /* TeamMemberInviteViewControllerSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamMemberInviteViewControllerSnapshotTests.swift; sourceTree = "<group>"; };
 		EF1EA4611FB0934D00B53063 /* MockUser+filename.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MockUser+filename.swift"; sourceTree = "<group>"; };
@@ -3461,9 +3462,9 @@
 			isa = PBXGroup;
 			children = (
 				1E5E0CE81B6B8EDB003B0CAC /* Autogenerated */,
-				1E5E0CED1B6B8EDB003B0CAC /* ZetaIconTypes.h */,
-				1E5E0CEB1B6B8EDB003B0CAC /* UIImage+ZetaIconsNeue.h */,
-				1E5E0CEC1B6B8EDB003B0CAC /* UIImage+ZetaIconsNeue.m */,
+				5E39FC742260CAC900C682B8 /* StyleKitIcons.json */,
+				5EA952C22260F90A00C83FDB /* StyleKitIconSize.swift */,
+				5E39FC6E2260BAEC00C682B8 /* UIImage+StyleKit.swift */,
 			);
 			path = Icons;
 			sourceTree = "<group>";
@@ -3472,6 +3473,7 @@
 			isa = PBXGroup;
 			children = (
 				5E3CE6252253689000F9A113 /* WireStyleKit.swift */,
+				5E3E1B722260DA200053AC59 /* StyleKitIcons.generated.swift */,
 			);
 			path = Autogenerated;
 			sourceTree = "<group>";
@@ -6543,9 +6545,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F15650C021DD08F400210504 /* AVAsset+VideoConvert.h in Headers */,
-				F15650A521DCF81400210504 /* ZetaIconTypes.h in Headers */,
 				F1FEA14E21DCEB1700790A54 /* WireCommonComponents.h in Headers */,
-				F15650A721DCF82400210504 /* UIImage+ZetaIconsNeue.h in Headers */,
 				F15650A021DCF2BB00210504 /* NetworkStatus.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -6622,6 +6622,7 @@
 			buildConfigurationList = F1FEA15521DCEB1700790A54 /* Build configuration list for PBXNativeTarget "WireCommonComponents" */;
 			buildPhases = (
 				F1FEA14521DCEB1700790A54 /* Headers */,
+				5E39FC762260D5DB00C682B8 /* [CodeGen] Update StyleKit Icons */,
 				F1FEA14621DCEB1700790A54 /* Sources */,
 				F1FEA14721DCEB1700790A54 /* Frameworks */,
 				F1FEA14821DCEB1700790A54 /* Resources */,
@@ -6837,6 +6838,28 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "$SRCROOT/Scripts/copyExtraAudioNotifications\n\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"YES\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+		};
+		5E39FC762260D5DB00C682B8 /* [CodeGen] Update StyleKit Icons */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(PROJECT_DIR)/WireCommonComponents/Icons/StyleKitIcons.json",
+				"$(PROJECT_DIR)/WireCommonComponents/Icons/Autogenerated/WireStyleKit.swift",
+				"$(PROJECT_DIR)/Scripts/update_stylekit/",
+			);
+			name = "[CodeGen] Update StyleKit Icons";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(PROJECT_DIR)/WireCommonComponents/Icons/Autogenerated/StyleKitIcons.generated.swift",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the update_stylekit package\nswift run --package-path Scripts/update_stylekit/\n";
 		};
 		5EDD253F21400FD700C0E254 /* Update Licenses File */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -8279,11 +8302,13 @@
 				F15650A421DCF66600210504 /* AudioProcessing.swift in Sources */,
 				F15650C121DD09DB00210504 /* AttributedStringOperators.swift in Sources */,
 				F15650A121DCF3E700210504 /* ExtensionSettings.swift in Sources */,
-				F15650A821DCF82E00210504 /* UIImage+ZetaIconsNeue.m in Sources */,
+				5EA952C32260F90A00C83FDB /* StyleKitIconSize.swift in Sources */,
 				F15650AE21DCFCED00210504 /* SettingsPropertyName.swift in Sources */,
 				F15650AD21DCFC8700210504 /* AppLock.swift in Sources */,
+				5E3E1B732260DA200053AC59 /* StyleKitIcons.generated.swift in Sources */,
 				F15650C621DD0C5500210504 /* CGFloat+Hairline.swift in Sources */,
 				F15650A321DCF63300210504 /* FilePreviewGenerator.swift in Sources */,
+				5E39FC6F2260BAEC00C682B8 /* UIImage+StyleKit.swift in Sources */,
 				F15650BE21DD08F100210504 /* AVAsset+VideoConvert.m in Sources */,
 				F15650A221DCF60E00210504 /* FileMetaDataGenerator.swift in Sources */,
 				F15650B321DD025A00210504 /* URL+Backup.swift in Sources */,
