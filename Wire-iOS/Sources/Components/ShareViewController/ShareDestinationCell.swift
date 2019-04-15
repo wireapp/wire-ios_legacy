@@ -148,7 +148,7 @@ final class ShareDestinationCell<D: ShareDestination>: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         
-        self.checkImageView.image = selected ? StyleKitIcon.checkmark.makeImage(size: .smallBadge, color: .white) : nil
+        self.checkImageView.image = selected ? StyleKitIcon.checkmark.makeImage(size: 12, color: .white) : nil
         self.checkImageView.backgroundColor = selected ? .accent() : .clear
     }
 }

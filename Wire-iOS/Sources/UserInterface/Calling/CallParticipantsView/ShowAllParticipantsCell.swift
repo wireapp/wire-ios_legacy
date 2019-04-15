@@ -93,7 +93,7 @@ class ShowAllParticipantsCell: UICollectionViewCell {
         let sectionTextColor = UIColor.from(scheme: .sectionText, variant: variant)
         backgroundColor = .clear
         participantIconView.setIcon(.person, size: .tiny, color: UIColor.from(scheme: .textForeground, variant: variant))
-        accessoryIconView.setIcon(.disclosureIndicator, size: .smallBadge, color: sectionTextColor)
+        accessoryIconView.setIcon(.disclosureIndicator, size: 12, color: sectionTextColor)
         titleLabel.textColor = UIColor.from(scheme: .textForeground, variant: variant)
     }
     

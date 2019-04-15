@@ -411,8 +411,8 @@ final class MessageToolboxView: UIView {
 
         // Change State and Appearance
         likeButton.accessibilityLabel = message.liked ? "content.message.unlike".localized : "content.message.like".localized
-        likeButton.setIcon(message.liked ? .liked : .like, size: .smallBadge, for: .normal)
-        likeButton.setIcon(.liked, size: .smallBadge, for: .selected)
+        likeButton.setIcon(message.liked ? .liked : .like, size: 12, for: .normal)
+        likeButton.setIcon(.liked, size: 12, for: .selected)
         likeButton.setSelected(message.liked, animated: animated)
 
         // Animate Changes
