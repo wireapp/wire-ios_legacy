@@ -60,7 +60,8 @@ import UIKit
 * The list of icons that can be rendered from the style kit.
 */
 
-@objc public enum StyleKitIcon: Int {
+@objc(WRStyleKitIcon)
+public enum StyleKitIcon: Int {
 
     /// Represents the data necessary to render the icons.
     public typealias RenderingProperties = (renderingMethod: (UIColor) -> Void, originalSize: CGFloat)
