@@ -36,7 +36,7 @@ extension Availability {
         return "availability.\(canonicalName)".localized
     }
     
-    var iconType: ZetaIconType? {
+    var iconType: StyleKitIcon? {
         switch self {
             case .none:         return nil
             case .available:    return .availabilityAvailable

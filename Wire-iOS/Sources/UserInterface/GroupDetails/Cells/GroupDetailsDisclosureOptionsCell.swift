@@ -28,6 +28,6 @@ class DisclosureCell: RightIconDetailsCell {
     override func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
         super.applyColorScheme(colorSchemeVariant)
         let sectionTextColor = UIColor.from(scheme: .sectionText, variant: colorSchemeVariant)
-        accessory = UIImage(for: .disclosureIndicator, iconSize: .like, color: sectionTextColor)
+        accessory = UIImage(icon: .disclosureIndicator, size: .smallBadge, color: sectionTextColor)
     }
 }

@@ -36,7 +36,7 @@ extension String {
 
 extension AVSAudioEffectType: CustomStringConvertible {
 
-    public var icon: ZetaIconType {
+    public var icon: StyleKitIcon {
         get {
             switch self {
             case .none:

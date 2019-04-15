@@ -47,7 +47,7 @@ extension ProfileSelfPictureViewController {
 
         cameraButton.alignCenter(to: bottomOverlayView, with: CGPoint(x:0, y:bottomOffset))
 
-        cameraButton.setImage(UIImage(for: .cameraLens, iconSize: .camera, color: .white), for: .normal)
+        cameraButton.setImage(UIImage(icon: .cameraLens, size: 40, color: .white), for: .normal)
         cameraButton.addTarget(self, action: #selector(self.cameraButtonTapped(_:)), for: .touchUpInside)
         cameraButton.accessibilityLabel = "cameraButton"
     }
@@ -67,7 +67,7 @@ extension ProfileSelfPictureViewController {
             closeButton.rightAnchor.constraint(equalTo: bottomOverlayView.rightAnchor, constant: -18)
             ])
 
-        closeButton.setImage(UIImage(for: .X, iconSize: .small, color: .white), for: .normal)
+        closeButton.setImage(UIImage(icon: .cross, size: .small, color: .white), for: .normal)
 
         closeButton.addTarget(self, action: #selector(self.closeButtonTapped(_:)), for: .touchUpInside)
     }
@@ -90,7 +90,7 @@ extension ProfileSelfPictureViewController {
             libraryButton.leftAnchor.constraint(equalTo: bottomOverlayView.leftAnchor, constant: 24)
             ])
 
-        libraryButton.setImage(UIImage(for: .photo, iconSize: .small, color: .white), for: .normal)
+        libraryButton.setImage(UIImage(icon: .photo, size: .small, color: .white), for: .normal)
 
         if PHPhotoLibrary.authorizationStatus() == .authorized {
             let options = PHFetchOptions()

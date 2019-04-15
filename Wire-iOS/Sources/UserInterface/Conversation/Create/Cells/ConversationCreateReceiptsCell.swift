@@ -30,7 +30,7 @@ class ConversationCreateReceiptsCell: IconToggleCell {
     override func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
         super.applyColorScheme(colorSchemeVariant)
         let color = UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)
-        icon = UIImage(for: .eye, iconSize: .tiny, color: color)
+        icon = UIImage(icon: .eye, size: .tiny, color: color)
     }
 }
 

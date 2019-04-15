@@ -118,7 +118,7 @@ import Ziphy
         searchBar.barStyle = ColorScheme.default.variant == .dark ? .black : .default
         searchBar.searchBarStyle = .minimal
 
-        let closeImage = UIImage(for: .X, iconSize: .tiny, color: .black)
+        let closeImage = UIImage(icon: .cross, size: .tiny, color: .black)
 
         let closeItem = UIBarButtonItem(image: closeImage, style: .plain, target: self, action: #selector(onDismiss))
         closeItem.accessibilityLabel = "general.close".localized
@@ -132,9 +132,9 @@ import Ziphy
     @objc func wrapInsideNavigationController() -> UINavigationController {
         let navigationController = GiphyNavigationController(rootViewController: self)
 
-        var backButtonImage = UIImage(for: .backArrow, iconSize: .tiny, color: .black)
-        backButtonImage = backButtonImage?.withInsets(UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 0), backgroundColor: .clear)
-        backButtonImage = backButtonImage?.withAlignmentRectInsets(UIEdgeInsets(top: 0, left: 0, bottom: -4, right: 0))
+        var backButtonImage = UIImage(icon: .backArrow, size: .tiny, color: .black)
+        backButtonImage = backButtonImage.withInsets(UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 0), backgroundColor: .clear)
+        backButtonImage = backButtonImage.withAlignmentRectInsets(UIEdgeInsets(top: 0, left: 0, bottom: -4, right: 0))
         navigationController.navigationBar.backIndicatorImage = backButtonImage
         navigationController.navigationBar.backIndicatorTransitionMaskImage = backButtonImage
 

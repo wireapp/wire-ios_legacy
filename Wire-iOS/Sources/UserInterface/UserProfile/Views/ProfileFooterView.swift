@@ -81,7 +81,7 @@ final class ProfileFooterView: ConversationDetailFooterView {
 
         // Display or hide the right action ellipsis
         if rightActions.isEmpty {
-            rightIcon = .none
+            rightIcon = nil
             rightButton.isHidden = true
         } else {
             rightIcon = .ellipsis

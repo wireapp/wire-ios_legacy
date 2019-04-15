@@ -33,9 +33,9 @@ import Cartography
         }
     }
     
-    public var icon: ZetaIconType = .none {
+    public var icon: StyleKitIcon? = nil {
         didSet {
-            self.iconView.image = UIImage(for: icon, fontSize: 160, color: placeholderColor)
+            self.iconView.image = icon.map { UIImage(icon: $0, size: 160, color: placeholderColor) }
         }
     }
     

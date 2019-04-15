@@ -25,8 +25,6 @@
 
 #import "WireSyncEngine+iOS.h"
 
-#import "UIImage+ZetaIconsNeue.h"
-
 
 #import "ImagePickerConfirmationController.h"
 #import "Analytics.h"

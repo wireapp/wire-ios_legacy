@@ -188,10 +188,10 @@ class ListSkeletonView  : UIView {
         createConstraints()
     }
     
-    func disabledButtons(with iconTypes: [ZetaIconType]) -> [IconButton] {
+    func disabledButtons(with iconTypes: [StyleKitIcon]) -> [IconButton] {
         return iconTypes.map { (iconType) in
             let button = IconButton()
-            button.setIcon(iconType, with: .tiny, for: .normal)
+            button.setIcon(iconType, size: .tiny, for: .normal)
             button.setIconColor(UIColor.init(white: 1.0, alpha: 0.32), for: .disabled)
             button.isEnabled = false
             return button

@@ -154,7 +154,7 @@ open class CollectionCell: UICollectionViewCell {
         return view
     }()
 
-    var obfuscationIcon: ZetaIconType {
+    var obfuscationIcon: StyleKitIcon {
         return .exclamationMarkCircle
     }
 

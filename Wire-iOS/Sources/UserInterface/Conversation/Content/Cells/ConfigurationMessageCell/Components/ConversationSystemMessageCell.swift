@@ -234,7 +234,7 @@ class ConversationRenamedSystemMessageCell: ConversationIconBasedCell, Conversat
     override func configureSubviews() {
         super.configureSubviews()
         nameLabel.numberOfLines = 0
-        imageView.image = UIImage(for: .pencil, fontSize: 16, color: .from(scheme: .textForeground))
+        imageView.image = UIImage(icon: .pencil, size: 16, color: .from(scheme: .textForeground))
         bottomContentView.addSubview(nameLabel)
     }
 
@@ -455,7 +455,7 @@ class ConversationCallSystemMessageCellDescription: ConversationMessageCellDescr
 
     init(message: ZMConversationMessage, data: ZMSystemMessageData, missed: Bool) {
         let viewModel = CallCellViewModel(
-            icon: missed ? .endCall : .phone,
+            icon: missed ? .endCall : .audioCall,
             iconColor: UIColor(for: missed ? .vividRed : .strongLimeGreen),
             systemMessageType: data.systemMessageType,
             font: .mediumFont,
@@ -505,7 +505,7 @@ class ConversationMessageTimerCellDescription: ConversationMessageCellDescriptio
                 .adding(font: .mediumSemiboldFont, to: timerString)
         }
 
-        let icon = UIImage(for: .hourglass, fontSize: 16, color: UIColor.from(scheme: .textDimmed))
+        let icon = UIImage(icon: .hourglass, size: 16, color: UIColor.from(scheme: .textDimmed))
         configuration = View.Configuration(icon: icon, attributedText: updateText, showLine: false)
         actionController = nil
     }
@@ -594,7 +594,7 @@ class ConversationMissingMessagesSystemMessageCellDescription: ConversationMessa
     
     init(message: ZMConversationMessage, data: ZMSystemMessageData) {
         let title = ConversationMissingMessagesSystemMessageCellDescription.makeAttributedString(systemMessageData: data)
-        configuration =  View.Configuration(icon: UIImage(for: .exclamationMark, fontSize: 16, color: .vividRed), attributedText: title, showLine: true)
+        configuration =  View.Configuration(icon: UIImage(icon: .exclamationMark, size: .tiny, color: .vividRed), attributedText: title, showLine: true)
         actionController = nil
     }
     
@@ -702,7 +702,7 @@ class ConversationCannotDecryptSystemMessageCellDescription: ConversationMessage
 
     init(message: ZMConversationMessage, data: ZMSystemMessageData, sender: ZMUser, remoteIdentityChanged: Bool) {
         let exclamationColor = UIColor(for: .vividRed)
-        let icon = UIImage(for: .exclamationMark, fontSize: 16, color: exclamationColor)
+        let icon = UIImage(icon: .exclamationMark, size: 16, color: exclamationColor)
         let link: URL = remoteIdentityChanged ? .wr_cannotDecryptNewRemoteIDHelp : .wr_cannotDecryptHelp
 
         let title = ConversationCannotDecryptSystemMessageCellDescription
@@ -827,7 +827,7 @@ class ConversationNewDeviceSystemMessageCellDescription: ConversationMessageCell
     }
     
     private static var verifiedIcon = WireStyleKit.imageOfShieldnotverified
-    private static var exclamationMarkIcon = UIImage(for: .exclamationMark, fontSize: 16, color: .vividRed)
+    private static var exclamationMarkIcon = UIImage(icon: .exclamationMark, size: 16, color: .vividRed)
     
     private static func configureForReactivatedSelfClient(_ selfUser: ZMUser, attributes: TextAttributes) -> View.Configuration {
         let deviceString = NSLocalizedString("content.system.this_device", comment: "")

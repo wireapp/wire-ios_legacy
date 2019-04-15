@@ -74,25 +74,25 @@ import Cartography
     private func createViews() {
         separator.backgroundColor = UIColor.from(scheme: .separator, variant: .light)
         
-        archivedButton.setIcon(.archive, with: .tiny, for: [])
+        archivedButton.setIcon(.archive, size: .tiny, for: [])
         archivedButton.addTarget(self, action: #selector(archivedButtonTapped), for: .touchUpInside)
         archivedButton.accessibilityIdentifier = "bottomBarArchivedButton"
         archivedButton.accessibilityLabel = "conversation_list.voiceover.bottom_bar.archived_button.label".localized
         archivedButton.accessibilityHint = "conversation_list.voiceover.bottom_bar.archived_button.hint".localized
 
-        startUIButton.setIcon(.person, with: .tiny, for: .normal)
+        startUIButton.setIcon(.person, size: .tiny, for: .normal)
         startUIButton.addTarget(self, action: #selector(startUIButtonTapped), for: .touchUpInside)
         startUIButton.accessibilityIdentifier = "bottomBarPlusButton"
         startUIButton.accessibilityLabel = "conversation_list.voiceover.bottom_bar.contacts_button.label".localized
         startUIButton.accessibilityHint = "conversation_list.voiceover.bottom_bar.contacts_button.hint".localized
 
-        composeButton.setIcon(.compose, with: .tiny, for: .normal)
+        composeButton.setIcon(.compose, size: .tiny, for: .normal)
         composeButton.addTarget(self, action: #selector(composeButtonTapped), for: .touchUpInside)
         composeButton.accessibilityIdentifier = "bottomBarComposeButton"
         composeButton.accessibilityLabel = "conversation_list.voiceover.bottom_bar.compose_button.label".localized
         composeButton.accessibilityHint = "conversation_list.voiceover.bottom_bar.compose_button.hint".localized
 
-        cameraButton.setIcon(.cameraLens, with: .tiny, for: .normal)
+        cameraButton.setIcon(.cameraLens, size: .tiny, for: .normal)
         cameraButton.addTarget(self, action: #selector(cameraButtonTapped), for: .touchUpInside)
         cameraButton.accessibilityIdentifier = "bottomBarCameraButton"
         cameraButton.accessibilityLabel = "conversation_list.voiceover.bottom_bar.camera_button.label".localized

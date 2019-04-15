@@ -16,14 +16,13 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
+@import QuartzCore;
+@import WireCommonComponents;
 
 #import "ProgressSpinner.h"
 #import "ProgressSpinner+Internal.h"
-#import "UIImage+ZetaIconsNeue.h"
 #import "CABasicAnimation+Rotation.h"
 #import "Wire-Swift.h"
-@import QuartzCore;
-
 
 @interface ProgressSpinner () <CAAnimationDelegate>
 
@@ -54,7 +53,7 @@
 
 - (void)setup
 {
-    _iconSize = ZetaIconSizeRegistrationButton;
+    _iconSize = 32;
     _color = [UIColor whiteColor];
     
     [self createSpinner];
@@ -100,7 +99,7 @@
     [self updateSpinnerIcon];
 }
 
-- (void)setIconSize:(ZetaIconSize)iconSize
+- (void)setIconSize:(CGFloat)iconSize
 {
     _iconSize = iconSize;
     [self updateSpinnerIcon];
@@ -143,7 +142,7 @@
 
 - (void)updateSpinnerIcon
 {
-    self.spinner.image = [UIImage imageForIcon:ZetaIconTypeSpinner iconSize:self.iconSize color:self.color];
+    self.spinner.image = [UIImage imageForIcon:WRStyleKitIconSpinner size:self.iconSize color:self.color];
 }
 
 - (void)startAnimation:(id)sender

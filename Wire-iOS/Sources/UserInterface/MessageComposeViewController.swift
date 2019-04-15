@@ -138,7 +138,7 @@ final class MessageComposeViewController: UIViewController {
 
     private func updateRightNavigationItem() {
         let showItem = traitCollection.horizontalSizeClass == .compact
-        navigationItem.rightBarButtonItem = showItem ? UIBarButtonItem(icon: .X, target: self, action: #selector(dismissTapped)) : nil
+        navigationItem.rightBarButtonItem = showItem ? UIBarButtonItem(icon: .cross, target: self, action: #selector(dismissTapped)) : nil
         navigationItem.rightBarButtonItem?.accessibilityLabel = "closeButton"
     }
 
@@ -148,7 +148,7 @@ final class MessageComposeViewController: UIViewController {
             return
         }
 
-        draftsBackButton.setIcon(.compose, with: .tiny, for: .normal)
+        draftsBackButton.setIcon(.compose, size: .tiny, for: .normal)
         draftsBackButton.frame = CGRect(x: 0, y: 0, width: 40, height: 20)
         draftsBackButton.titleLabel?.font = FontSpec(.medium, .semibold).font
         draftsBackButton.setIconColor(UIColor.from(scheme: .textForeground), for: .normal)

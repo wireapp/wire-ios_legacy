@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2017 Wire Swiss GmbH
+// Copyright (C) 2019 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,16 +16,21 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+import UIKit
+import WireCommonComponents
 
-extension UIBarButtonItem {
+extension IconButton {
 
-    @objc convenience init(icon: ZetaIconType, style: UIBarButtonItem.Style = .plain, target: Any?, action: Selector?) {
-        self.init(
-            image: UIImage(for: icon, iconSize: .tiny, color: UIColor.from(scheme: .textForeground)),
-            style: style,
-            target: target,
-            action: action
-        )
+    func icon(for state: UIControl.State) -> StyleKitIcon? {
+        return iconDefinition(for: state)?.iconType
     }
-    
+
+    func setIcon(_ icon: StyleKitIcon?, size: StyleKitIconSize, for state: UIControl.State, renderingMode: UIImage.RenderingMode = .alwaysTemplate) {
+        if let icon = icon {
+            self.__setIcon(icon, withSize: size.rawValue, for: state, renderingMode: renderingMode)
+        } else {
+            self.removeIcon(for: state)
+        }
+    }
+
 }

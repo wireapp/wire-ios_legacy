@@ -96,7 +96,7 @@ import Cartography
 extension NSTextAttachment {
     static func downArrow(color: UIColor) -> NSTextAttachment {
         let attachment = NSTextAttachment()
-        attachment.image = UIImage(for: .downArrow, fontSize: 8, color: color)
+        attachment.image = UIImage(icon: .downArrow, size: 8, color: color)
         return attachment
     }
 }

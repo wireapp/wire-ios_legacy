@@ -53,10 +53,10 @@ enum ProfileAction: Equatable {
     }
 
     /// The icon of the button for this action.
-    var buttonIcon: ZetaIconType {
+    var buttonIcon: StyleKitIcon? {
         switch self {
         case .createGroup: return .createConversation
-        case .manageNotifications, .mute: return .bell
+        case .manageNotifications, .mute: return nil
         case .archive: return .archive
         case .deleteContents: return .delete
         case .block: return .block

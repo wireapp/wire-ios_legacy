@@ -19,10 +19,8 @@
 import Foundation
 
 extension NSTextAttachment {
-    static func textAttachment(for icon: ZetaIconType, with color: UIColor, iconSize: CGFloat = 10, verticalCorrection: CGFloat = 0) -> NSTextAttachment? {
-        guard let image = UIImage(for: icon, fontSize: iconSize, color: color)
-            else { return nil }
-
+    static func textAttachment(for icon: StyleKitIcon, with color: UIColor, iconSize: CGFloat = 10, verticalCorrection: CGFloat = 0) -> NSTextAttachment {
+        let image = UIImage(icon: icon, size: .custom(iconSize), color: color)
         let attachment = NSTextAttachment()
         attachment.image = image
         let ratio = image.size.width / image.size.height

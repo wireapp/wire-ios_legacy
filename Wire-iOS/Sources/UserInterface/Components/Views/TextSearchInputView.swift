@@ -59,7 +59,7 @@ public protocol TextSearchInputViewDelegate: class {
 
         backgroundColor = UIColor.from(scheme: .barBackground)
         
-        iconView.image = UIImage(for: .search, iconSize: .tiny, color: UIColor.from(scheme: .textForeground))
+        iconView.image = UIImage(icon: .search, size: .tiny, color: UIColor.from(scheme: .textForeground))
         iconView.contentMode = .center
         
         searchInput.delegate = self
@@ -78,13 +78,13 @@ public protocol TextSearchInputViewDelegate: class {
         placeholderLabel.font = .smallRegularFont
         placeholderLabel.textColor = .from(scheme: .textDimmed)
 
-        cancelButton.setIcon(.clearInput, with: .tiny, for: .normal)
+        cancelButton.setIcon(.clearInput, size: .tiny, for: .normal)
         cancelButton.addTarget(self, action: #selector(TextSearchInputView.onCancelButtonTouchUpInside(_:)), for: .touchUpInside)
         cancelButton.isHidden = true
         cancelButton.accessibilityIdentifier = "cancel search"
 
         spinner.color = UIColor.from(scheme: .textDimmed, variant: .light)
-        spinner.iconSize = .tiny
+        spinner.iconSize = StyleKitIconSize.tiny.rawValue
         [iconView, searchInput, cancelButton, placeholderLabel, spinner].forEach(self.addSubview)
 
         self.createConstraints()
@@ -111,12 +111,12 @@ public protocol TextSearchInputViewDelegate: class {
         constrain(self, searchInput, cancelButton, spinner) { view, searchInput, cancelButton, spinner in
             cancelButton.centerY == view.centerY
             cancelButton.trailing == searchInput.trailing - 8
-            cancelButton.width == UIImage.size(for: .tiny)
-            cancelButton.height == UIImage.size(for: .tiny)
+            cancelButton.width == StyleKitIconSize.tiny.rawValue
+            cancelButton.height == StyleKitIconSize.tiny.rawValue
 
             spinner.trailing == cancelButton.leading - 6
             spinner.centerY == cancelButton.centerY
-            spinner.width == UIImage.size(for: .tiny)
+            spinner.width == StyleKitIconSize.tiny.rawValue
         }
     }
     

@@ -20,7 +20,7 @@ import UIKit
 import Cartography
 
 fileprivate extension InviteResult {
-    var iconType: ZetaIconType {
+    var iconType: StyleKitIcon {
         switch self {
         case .success: return .checkmark
         case .failure: return .exclamationMarkCircle
@@ -50,8 +50,8 @@ final class TeamMemberInviteTableViewCell: UITableViewCell {
             
             content.apply {
                 iconImageView.image = UIImage(
-                    for: $0.iconType,
-                    iconSize: .tiny,
+                    icon: $0.iconType,
+                    size: .tiny,
                     color: UIColor.Team.inactiveButton
                 )
             }

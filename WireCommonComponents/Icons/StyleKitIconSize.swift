@@ -25,6 +25,9 @@ import CoreGraphics
 
 public enum StyleKitIconSize: ExpressibleByFloatLiteral, ExpressibleByIntegerLiteral {
 
+    /// 12pt.
+    case smallBadge
+
     /// 16pt.
     case tiny
 
@@ -55,6 +58,7 @@ public enum StyleKitIconSize: ExpressibleByFloatLiteral, ExpressibleByIntegerLit
     /// The value to use to generate the icon.
     public var rawValue: CGFloat {
         switch self {
+        case .smallBadge: return 12
         case .tiny: return 16
         case .small: return 20
         case .medium: return 24

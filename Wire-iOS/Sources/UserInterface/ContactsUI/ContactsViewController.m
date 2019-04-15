@@ -121,7 +121,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self createSearchHeader];
 
     self.cancelButton = [[IconButton alloc] initForAutoLayout];
-    [self.cancelButton setIcon:ZetaIconTypeX withSize:ZetaIconSizeSearchBar forState:UIControlStateNormal];
+    [self.cancelButton setIcon:WRStyleKitIconCross withSize:14 forState:UIControlStateNormal];
     self.cancelButton.accessibilityIdentifier = @"ContactsViewCloseButton";
     [self.cancelButton addTarget:self action:@selector(cancelPressed:) forControlEvents:UIControlEventTouchUpInside];
     [self.topContainerView addSubview:self.cancelButton];

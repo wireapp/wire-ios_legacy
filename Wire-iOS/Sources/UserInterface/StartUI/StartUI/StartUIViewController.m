@@ -130,7 +130,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self handleUploadAddressBookLogicIfNeeded];
     [self.searchResultsViewController searchContactList];
 
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithIcon:ZetaIconTypeX
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithIcon:WRStyleKitIconCross
                                                                              style:UIBarButtonItemStylePlain
                                                                             target:self
                                                                             action:@selector(onDismissPressed)];

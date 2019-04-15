@@ -42,7 +42,7 @@ protocol EmojiKeyboardViewControllerDelegate: class {
         button.circular = false
         button.borderWidth = 0
 
-        button.setIcon(.backspace, with: .small, for: .normal)
+        button.setIcon(.backspace, size: .small, for: .normal)
 
         return button
     }()

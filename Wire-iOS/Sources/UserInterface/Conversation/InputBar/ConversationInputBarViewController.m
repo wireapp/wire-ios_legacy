@@ -367,7 +367,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     self.hourglassButton = [[IconButton alloc] initWithStyle:IconButtonStyleDefault];
     self.hourglassButton.translatesAutoresizingMaskIntoConstraints = NO;
 
-    [self.hourglassButton setIcon:ZetaIconTypeHourglass withSize:ZetaIconSizeTiny forState:UIControlStateNormal];
+    [self.hourglassButton setIcon:WRStyleKitIconHourglass withSize:16 forState:UIControlStateNormal];
 
     self.hourglassButton.accessibilityIdentifier = @"ephemeralTimeSelectionButton";
     [self.inputBar.rightAccessoryStackView addArrangedSubview:self.hourglassButton];
@@ -444,44 +444,44 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 - (void)updateButtonIcons
 {
-    [self.audioButton setIcon:ZetaIconTypeMicrophone
-                     withSize:ZetaIconSizeTiny
+    [self.audioButton setIcon:WRStyleKitIconMicrophone
+                     withSize:16
                      forState:UIControlStateNormal];
     
-    [self.videoButton setIcon:ZetaIconTypeVideoMessage
-                     withSize:ZetaIconSizeTiny
+    [self.videoButton setIcon:WRStyleKitIconVideoMessage
+                     withSize:16
                      forState:UIControlStateNormal];
     
-    [self.photoButton setIcon:ZetaIconTypeCameraLens
-                     withSize:ZetaIconSizeTiny
+    [self.photoButton setIcon:WRStyleKitIconCameraLens
+                     withSize:16
                      forState:UIControlStateNormal];
     
-    [self.uploadFileButton setIcon:ZetaIconTypePaperclip
-                          withSize:ZetaIconSizeTiny
+    [self.uploadFileButton setIcon:WRStyleKitIconPaperclip
+                          withSize:16
                           forState:UIControlStateNormal];
     
-    [self.sketchButton setIcon:ZetaIconTypeBrush
-                      withSize:ZetaIconSizeTiny
+    [self.sketchButton setIcon:WRStyleKitIconBrush
+                      withSize:16
                       forState:UIControlStateNormal];
     
-    [self.pingButton setIcon:ZetaIconTypePing
-                    withSize:ZetaIconSizeTiny
+    [self.pingButton setIcon:WRStyleKitIconPing
+                    withSize:16
                     forState:UIControlStateNormal];
     
-    [self.locationButton setIcon:ZetaIconTypeLocationPin
-                        withSize:ZetaIconSizeTiny
+    [self.locationButton setIcon:WRStyleKitIconLocationPin
+                        withSize:16
                         forState:UIControlStateNormal];
     
-    [self.gifButton setIcon:ZetaIconTypeGif
-                   withSize:ZetaIconSizeTiny
+    [self.gifButton setIcon:WRStyleKitIconGif
+                   withSize:16
                    forState:UIControlStateNormal];
 
-    [self.mentionButton setIcon:ZetaIconTypeMention
-                   withSize:ZetaIconSizeTiny
+    [self.mentionButton setIcon:WRStyleKitIconMention
+                   withSize:16
                    forState:UIControlStateNormal];
 
-    [self.sendButton setIcon:ZetaIconTypeSend
-                    withSize:ZetaIconSizeTiny
+    [self.sendButton setIcon:WRStyleKitIconSend
+                    withSize:16
                     forState:UIControlStateNormal];
     
     [self updateEmojiButton:self.emojiButton];

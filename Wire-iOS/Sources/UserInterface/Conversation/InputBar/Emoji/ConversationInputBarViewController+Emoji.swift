@@ -40,18 +40,18 @@ extension ConversationInputBarViewController {
     }
     
     @objc public func updateEmojiButton(_ button: IconButton) {
-        let type: ZetaIconType
+        let icon: StyleKitIcon
         let color: UIColor
         if mode == .emojiInput {
-            type = ZetaIconType.text
+            icon = .text
             color = UIColor.from(scheme: .iconNormal)
         } else {
-            type = ZetaIconType.emoji
+            icon = .emoji
             color = UIColor.from(scheme: .iconNormal)
         }
 
         button.setIconColor(color, for: .normal)
-        button.setIcon(type, with: .tiny, for: .normal)
+        button.setIcon(icon, size: .tiny, for: .normal)
         
     }
 
