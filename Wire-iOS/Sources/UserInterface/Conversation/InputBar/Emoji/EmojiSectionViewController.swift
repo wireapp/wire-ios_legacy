@@ -29,7 +29,7 @@ final class EmojiSectionViewController: UIViewController {
     
     private var typesByButton = [IconButton: EmojiSectionType]()
     private var sectionButtons = [IconButton]()
-    private let iconSize = StyleKitIconSize.tiny.rawValue
+    private let iconSize = StyleKitIcon.Size.tiny.rawValue
     private var ignoreSelectionUpdates = false
     
     private var selectedType: EmojiSectionType? {

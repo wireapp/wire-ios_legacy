@@ -235,7 +235,7 @@ class AccessoryTextField: UITextField, TextContainer, Themeable {
         : overrideButtonIcon ?? (UIApplication.isLeftToRightLayout ? .forwardArrow : .backArrow)
     }
     
-    private var iconSize: StyleKitIconSize {
+    private var iconSize: StyleKitIcon.Size {
         return isLoading ? .medium : .tiny
     }
     

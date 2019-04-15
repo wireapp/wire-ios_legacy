@@ -84,7 +84,7 @@ public protocol TextSearchInputViewDelegate: class {
         cancelButton.accessibilityIdentifier = "cancel search"
 
         spinner.color = UIColor.from(scheme: .textDimmed, variant: .light)
-        spinner.iconSize = StyleKitIconSize.tiny.rawValue
+        spinner.iconSize = StyleKitIcon.Size.tiny.rawValue
         [iconView, searchInput, cancelButton, placeholderLabel, spinner].forEach(self.addSubview)
 
         self.createConstraints()
@@ -111,12 +111,12 @@ public protocol TextSearchInputViewDelegate: class {
         constrain(self, searchInput, cancelButton, spinner) { view, searchInput, cancelButton, spinner in
             cancelButton.centerY == view.centerY
             cancelButton.trailing == searchInput.trailing - 8
-            cancelButton.width == StyleKitIconSize.tiny.rawValue
-            cancelButton.height == StyleKitIconSize.tiny.rawValue
+            cancelButton.width == StyleKitIcon.Size.tiny.rawValue
+            cancelButton.height == StyleKitIcon.Size.tiny.rawValue
 
             spinner.trailing == cancelButton.leading - 6
             spinner.centerY == cancelButton.centerY
-            spinner.width == StyleKitIconSize.tiny.rawValue
+            spinner.width == StyleKitIcon.Size.tiny.rawValue
         }
     }
     

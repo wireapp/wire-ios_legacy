@@ -25,7 +25,7 @@ private struct InputBarRowConstants {
     let minimumButtonWidthIPhone5: CGFloat = 53
     let minimumButtonWidth: CGFloat = 56
     let buttonsBarHeight: CGFloat = 56
-    let iconSize = StyleKitIconSize.tiny.rawValue
+    let iconSize = StyleKitIcon.Size.tiny.rawValue
     
     fileprivate let screenWidthIPhone5: CGFloat = 320
     
@@ -124,7 +124,7 @@ public final class InputBarButtonsView: UIView {
     // MARK: - Button Layout
     
     fileprivate var buttonMargin: CGFloat {
-        return UIView.conversationLayoutMargins.left / 2 - StyleKitIconSize.tiny.rawValue / 2
+        return UIView.conversationLayoutMargins.left / 2 - StyleKitIcon.Size.tiny.rawValue / 2
     }
     
     fileprivate func layoutAndConstrainButtonRows() {

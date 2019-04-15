@@ -19,7 +19,7 @@
 import Foundation
 
 extension NSTextAttachment {
-    static func textAttachment(for icon: StyleKitIcon, with color: UIColor, iconSize: StyleKitIconSize = 10, verticalCorrection: CGFloat = 0) -> NSTextAttachment {
+    static func textAttachment(for icon: StyleKitIcon, with color: UIColor, iconSize: StyleKitIcon.Size = 10, verticalCorrection: CGFloat = 0) -> NSTextAttachment {
         let image = icon.makeImage(size: iconSize, color: color)
         let attachment = NSTextAttachment()
         attachment.image = image

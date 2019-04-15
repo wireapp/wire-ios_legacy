@@ -39,7 +39,7 @@ import Cartography
     let undoButton = InputBarEditView.iconButtonTemplate
     let confirmButton = InputBarEditView.iconButtonTemplate
     let cancelButton = InputBarEditView.iconButtonTemplate
-    let iconSize: CGFloat = StyleKitIconSize.tiny.rawValue
+    let iconSize: CGFloat = StyleKitIcon.Size.tiny.rawValue
     
     public weak var delegate: InputBarEditViewDelegate?
     

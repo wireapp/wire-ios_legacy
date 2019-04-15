@@ -30,7 +30,7 @@
     }
 
     /// The size of the badge icon.
-    var badgeIconSize: StyleKitIconSize = .tiny {
+    var badgeIconSize: StyleKitIcon.Size = .tiny {
         didSet {
             updateIconView(with: badgeIcon, animated: false)
         }

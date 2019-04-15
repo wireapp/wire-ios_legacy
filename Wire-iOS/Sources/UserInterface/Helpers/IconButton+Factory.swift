@@ -68,7 +68,7 @@ extension IconButton {
 
     fileprivate convenience init(
         icon: StyleKitIcon,
-        size: StyleKitIconSize = .tiny,
+        size: StyleKitIcon.Size = .tiny,
         accessibilityId: String,
         backgroundColor: [UIControl.State: UIColor],
         iconColor: [UIControl.State: UIColor],

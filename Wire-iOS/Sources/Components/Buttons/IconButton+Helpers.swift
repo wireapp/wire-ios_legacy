@@ -25,7 +25,7 @@ extension IconButton {
         return iconDefinition(for: state)?.iconType
     }
 
-    func setIcon(_ icon: StyleKitIcon?, size: StyleKitIconSize, for state: UIControl.State, renderingMode: UIImage.RenderingMode = .alwaysTemplate) {
+    func setIcon(_ icon: StyleKitIcon?, size: StyleKitIcon.Size, for state: UIControl.State, renderingMode: UIImage.RenderingMode = .alwaysTemplate) {
         if let icon = icon {
             self.__setIcon(icon, withSize: size.rawValue, for: state, renderingMode: renderingMode)
         } else {

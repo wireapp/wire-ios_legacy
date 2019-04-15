@@ -27,7 +27,7 @@ extension StyleKitIcon {
      * - returns: The image that represents the icon.
      */
 
-    public func makeImage(size: StyleKitIconSize, color: UIColor) -> UIImage {
+    public func makeImage(size: StyleKitIcon.Size, color: UIColor) -> UIImage {
         let imageProperties = self.renderingProperties
         let imageSize = size.rawValue
         let targetSize = CGSize(width: imageSize, height: imageSize)
@@ -68,7 +68,7 @@ extension UIImageView {
      * - returns: The image that represents the icon.
      */
 
-    public func setIcon(_ icon: StyleKitIcon, size: StyleKitIconSize, color: UIColor) {
+    public func setIcon(_ icon: StyleKitIcon, size: StyleKitIcon.Size, color: UIColor) {
         image = icon.makeImage(size: size, color: color)
     }
 
@@ -81,7 +81,7 @@ extension UIImageView {
      * - returns: The image that represents the icon.
      */
 
-    public func setTemplateIcon(_ icon: StyleKitIcon, size: StyleKitIconSize) {
+    public func setTemplateIcon(_ icon: StyleKitIcon, size: StyleKitIcon.Size) {
         image = icon.makeImage(size: size, color: .black).withRenderingMode(.alwaysTemplate)
     }
 

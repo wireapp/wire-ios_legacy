@@ -18,49 +18,53 @@
 
 import CoreGraphics
 
-/**
- * Represents the target size of an icon. You can either use standard values,
- * or use a raw CGFloat value, without needing to add another case.
- */
+extension StyleKitIcon {
 
-public enum StyleKitIconSize: ExpressibleByFloatLiteral, ExpressibleByIntegerLiteral {
+    /**
+     * Represents the target size of an icon. You can either use standard values,
+     * or use a raw CGFloat value, without needing to add another case.
+     */
 
-    /// 16pt.
-    case tiny
+    public enum Size: ExpressibleByFloatLiteral, ExpressibleByIntegerLiteral {
 
-    /// 20pt.
-    case small
+        /// 16pt.
+        case tiny
 
-    /// 24pt.
-    case medium
+        /// 20pt.
+        case small
 
-    /// 48pt.
-    case large
+        /// 24pt.
+        case medium
 
-    /// A custom size.
-    case custom(CGFloat)
+        /// 48pt.
+        case large
 
-    // MARK: - Literal Conversion
+        /// A custom size.
+        case custom(CGFloat)
 
-    public init(floatLiteral value: Double) {
-        self = .custom(CGFloat(value))
-    }
+        // MARK: - Literal Conversion
 
-    public init(integerLiteral value: Int) {
-        self = .custom(CGFloat(value))
-    }
-
-    // MARK: - CGFloat Conversion
-
-    /// The value to use to generate the icon.
-    public var rawValue: CGFloat {
-        switch self {
-        case .tiny: return 16
-        case .small: return 20
-        case .medium: return 24
-        case .large: return 48
-        case .custom(let value): return value
+        public init(floatLiteral value: Double) {
+            self = .custom(CGFloat(value))
         }
+
+        public init(integerLiteral value: Int) {
+            self = .custom(CGFloat(value))
+        }
+
+        // MARK: - CGFloat Conversion
+
+        /// The value to use to generate the icon.
+        public var rawValue: CGFloat {
+            switch self {
+            case .tiny: return 16
+            case .small: return 20
+            case .medium: return 24
+            case .large: return 48
+            case .custom(let value): return value
+            }
+        }
+
     }
 
 }

@@ -104,7 +104,7 @@ import UIKit
     }
     
     private var viewForState: UIView? {
-        let iconSize: StyleKitIconSize = 12
+        let iconSize: StyleKitIcon.Size = 12
         
         guard let icon = icon else { return nil }
         
