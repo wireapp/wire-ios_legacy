@@ -16,14 +16,9 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import UIKit
+import Foundation
 
-/**
- * A view that displays the overview of a profile for a user.
- */
-
-
-final class ProfileView: UIView, Themeable {
+class ProfileHeaderViewController: UIViewController, Themeable {
     
     /**
      * The options to customize the appearance and behavior of the view.
@@ -44,29 +39,13 @@ final class ProfileView: UIView, Themeable {
         
         /// Whether to hide the team name of the user.
         static let hideTeamName = Options(rawValue: 1 << 3)
-
+        
         /// Whether to allow the user to change their availability.
         static let allowEditingAvailability = Options(rawValue: 1 << 4)
-
+        
         /// Whether to allow the user to change their availability.
         static let allowEditingProfilePicture = Options(rawValue: 1 << 5)
-
-    }
-    
-    /// The user that is displayed.
-    let user: GenericUser
-
-    /// The user who is viewing this view
-    let viewer: GenericUser
-
-    /// The view controller that displays the view.
-    weak var source: UIViewController?
-    
-    @objc dynamic var colorSchemeVariant: ColorSchemeVariant = ColorScheme.default.variant {
-        didSet {
-            guard colorSchemeVariant != oldValue else { return }
-            applyColorScheme(colorSchemeVariant)
-        }
+        
     }
     
     /// The options to customize the appearance and behavior of the view.
@@ -76,7 +55,18 @@ final class ProfileView: UIView, Themeable {
         }
     }
     
-    // MARKL: - Properties
+    @objc dynamic var colorSchemeVariant: ColorSchemeVariant = ColorScheme.default.variant {
+        didSet {
+            guard colorSchemeVariant != oldValue else { return }
+            applyColorScheme(colorSchemeVariant)
+        }
+    }
+    
+    /// The user that is displayed.
+    let user: GenericUser
+    
+    /// The user who is viewing this view
+    let viewer: GenericUser
     
     var stackView: CustomSpacingStackView!
     
@@ -84,20 +74,19 @@ final class ProfileView: UIView, Themeable {
         let label = UILabel()
         label.accessibilityLabel = "profile_view.accessibility.name".localized
         label.accessibilityIdentifier = "name"
-
+        
         label.setContentHuggingPriority(UILayoutPriority.required, for: .vertical)
         label.setContentCompressionResistancePriority(UILayoutPriority.required, for: .vertical)
-
+        
         label.setContentHuggingPriority(.required, for: .horizontal)
         label.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
-
+        
         label.font = FontSpec(.large, .light).font!
         label.accessibilityTraits.insert(.header)
         label.lineBreakMode = .byTruncatingTail
-
+        
         return label
     }()
-
     let handleLabel = UILabel()
     let teamNameLabel = UILabel()
     let imageView =  UserImageView(size: .big)
@@ -107,57 +96,44 @@ final class ProfileView: UIView, Themeable {
     let guestIndicator = GuestLabelIndicator()
     let remainingTimeLabel = UILabel()
     
-    private var userObserverToken: NSObjectProtocol?
+    private var tokens: [Any?] = []
     
-    // MARK: - Initialization
-    
-    /**
-     * Creates a profile view for the specified user and options.
-     * - parameter user: The user to display the profile of.
-     * - parameter options: The options for the appearance and behavior of the view.
-     * - note: You can change the options later through the `options` property.
-     */
-    
-    init(user: GenericUser,
-         viewer: GenericUser,
-         options: Options) {
+    init(user: GenericUser, viewer: GenericUser = ZMUser.selfUser(), options: Options) {
         self.user = user
         self.viewer = viewer
         self.options = options
         self.availabilityView = AvailabilityTitleView(user: user, options: [])
-        super.init(frame: .zero)
-        configureSubviews()
-        configureConstraints()
-        applyOptions()
+        
+        super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func configureSubviews() {
+    override func viewDidLoad() {
         let session = SessionManager.shared?.activeUserSession
-
+        
         imageView.isAccessibilityElement = true
         imageView.accessibilityElementsHidden = false
         imageView.accessibilityIdentifier = "user image"
         imageView.initialsFont = UIFont.systemFont(ofSize: 55, weight: .semibold).monospaced()
         imageView.userSession = session
         imageView.user = user
-
+        
         availabilityView.tapHandler = { [weak self] button in
             guard let `self` = self, let presentingViewController = self.source else { return }
             guard self.options.contains(.allowEditingAvailability) else { return }
-            let alert = self.availabilityView.actionSheet(presentingViewController: presentingViewController)
-            alert.popoverPresentationController?.sourceView = self
+            let alert = self.availabilityView.actionSheet(presentingViewController: self)
+            alert.popoverPresentationController?.sourceView = self.availabilityView
             alert.popoverPresentationController?.sourceRect = self.availabilityView.frame
-            presentingViewController.present(alert, animated: true, completion: nil)
+            self.present(alert, animated: true, completion: nil)
         }
         
         if let session = session {
-            userObserverToken = UserChangeInfo.add(observer: self, for: user, userSession: session)
+            tokens.append(UserChangeInfo.add(observer: self, for: user, userSession: session))
         }
-
+        
         handleLabel.accessibilityLabel = "profile_view.accessibility.handle".localized
         handleLabel.accessibilityIdentifier = "username"
         handleLabel.setContentHuggingPriority(UILayoutPriority.required, for: .vertical)
@@ -198,25 +174,27 @@ final class ProfileView: UIView, Themeable {
         stackView.wr_addCustomSpacing(32, after: nameHandleStack)
         stackView.wr_addCustomSpacing(32, after: teamNameLabel)
         stackView.wr_addCustomSpacing(24, after: imageView)
-
-        addSubview(stackView)
+        
+        view.addSubview(stackView)
         applyColorScheme(colorSchemeVariant)
+        configureConstraints()
+        applyOptions()
     }
     
     private func configureConstraints() {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         stackView.translatesAutoresizingMaskIntoConstraints = false
-
-        let leadingSpaceConstraint = stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 40)
-        let topSpaceConstraint = stackView.topAnchor.constraint(equalTo: topAnchor, constant: 20)
-        let trailingSpaceConstraint = stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -40)
-        let bottomSpaceConstraint = stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -20)
-
+        
+        let leadingSpaceConstraint = stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40)
+        let topSpaceConstraint = stackView.topAnchor.constraint(equalTo: view.topAnchor, constant: 20)
+        let trailingSpaceConstraint = stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40)
+        let bottomSpaceConstraint = stackView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20)
+        
         leadingSpaceConstraint.priority = .defaultLow
         topSpaceConstraint.priority = .defaultLow
         trailingSpaceConstraint.priority = .defaultLow
         bottomSpaceConstraint.priority = .defaultLow
-
+        
         NSLayoutConstraint.activate([
             // imageView
             imageView.widthAnchor.constraint(equalToConstant: 164),
@@ -224,25 +202,7 @@ final class ProfileView: UIView, Themeable {
             
             // stackView
             leadingSpaceConstraint, topSpaceConstraint, trailingSpaceConstraint, bottomSpaceConstraint
-        ])
-    }
-    
-    // MARK: - Content and Options
-    
-    func prepareForDisplay(in conversation: ZMConversation?, context: ProfileViewControllerContext) {
-        let guestIndicatorHidden: Bool
-        switch context {
-            case .profileViewer:
-                guestIndicatorHidden = !viewer.isTeamMember || viewer.canAccessCompanyInformation(of: user)
-            default:
-                guestIndicatorHidden = conversation.map(user.isGuest) != true
-        }
-
-        guestIndicatorStack.isHidden = guestIndicatorHidden
-
-        let remainingTimeString = user.expirationDisplayString
-        remainingTimeLabel.text = remainingTimeString
-        remainingTimeLabel.isHidden = remainingTimeString == nil
+            ])
     }
     
     func applyColorScheme(_ variant: ColorSchemeVariant) {
@@ -253,6 +213,30 @@ final class ProfileView: UIView, Themeable {
         nameLabel.textColor = UIColor.from(scheme: .textForeground, variant: variant)
         teamNameLabel.textColor = UIColor.from(scheme: .textForeground, variant: variant)
         remainingTimeLabel.textColor = ColorScheme.default.color(named: .textForeground, variant: variant)
+    }
+    
+    func prepareForDisplay(in conversation: ZMConversation?, context: ProfileViewControllerContext) {
+        let guestIndicatorHidden: Bool
+        switch context {
+        case .profileViewer:
+            guestIndicatorHidden = !viewer.isTeamMember || viewer.canAccessCompanyInformation(of: user)
+        default:
+            guestIndicatorHidden = conversation.map(user.isGuest) != true
+        }
+        
+        guestIndicatorStack.isHidden = guestIndicatorHidden
+        
+        let remainingTimeString = user.expirationDisplayString
+        remainingTimeLabel.text = remainingTimeString
+        remainingTimeLabel.isHidden = remainingTimeString == nil
+    }
+    
+    private func applyOptions() {
+        nameLabel.isHidden = options.contains(.hideUsername)
+        updateHandleLabel()
+        updateTeamLabel()
+        updateImageButton()
+        updateAvailabilityVisibility()
     }
     
     private func updateHandleLabel() {
@@ -281,10 +265,10 @@ final class ProfileView: UIView, Themeable {
         } else {
             availabilityView.options.remove(.allowSettingStatus)
         }
-
+        
         availabilityView.isHidden = options.contains(.hideAvailability) || !user.canDisplayAvailability(with: availabilityView.options)
     }
-
+    
     private func updateImageButton() {
         if options.contains(.allowEditingProfilePicture) {
             imageView.accessibilityLabel = "self.accessibility.profile_photo_edit_button".localized
@@ -296,21 +280,14 @@ final class ProfileView: UIView, Themeable {
             imageView.isUserInteractionEnabled = false
         }
     }
-    
-    private func applyOptions() {
-        nameLabel.isHidden = options.contains(.hideUsername)
-        updateHandleLabel()
-        updateTeamLabel()
-        updateImageButton()
-        updateAvailabilityVisibility()
-    }
-    
 }
 
 // MARK: - ZMUserObserver
 
-extension ProfileView: ZMUserObserver {
+extension ProfileHeaderViewController: ZMUserObserver {
+    
     func userDidChange(_ changeInfo: UserChangeInfo) {
+        
         if changeInfo.nameChanged {
             nameLabel.text = changeInfo.user.name
         }
