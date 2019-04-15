@@ -101,7 +101,7 @@ class PopUpIconButtonView: UIView {
         if let imageView = button.imageView {
             // rect in window coordinates
             let imageRect = imageView.convert(button.imageView!.bounds, to: nil)
-            let image = UIImage(icon: button.icon(for: .normal)!, size: .tiny, color: UIColor.from(scheme: .iconNormal))
+            let image = button.icon(for: .normal)!.makeImage(size: .tiny, color: UIColor.from(scheme: .iconNormal))
             image.draw(in: imageRect)
         }
         
@@ -110,7 +110,7 @@ class PopUpIconButtonView: UIView {
             for (index, icon) in button.itemIcons.enumerated() {
                 let itemRect = rectForItem(icon)!
                 let iconColor = index == selectedIndex ? .accent() : UIColor.from(scheme: .iconNormal)
-                let image = UIImage(icon: icon, size: .medium, color: iconColor)
+                let image = icon.makeImage(size: .medium, color: iconColor)
                 // rect in window coordinates
                 var imageRect = buttonImageView.convert(buttonImageView.bounds, to: nil)
                 // center image in item rect

@@ -22,7 +22,7 @@ extension UIBarButtonItem {
 
     @objc convenience init(icon: StyleKitIcon, style: UIBarButtonItem.Style = .plain, target: Any?, action: Selector?) {
         self.init(
-            image: UIImage(icon: icon, size: .tiny, color: UIColor.from(scheme: .textForeground)),
+            image: icon.makeImage(size: .tiny, color: UIColor.from(scheme: .textForeground)),
             style: style,
             target: target,
             action: action

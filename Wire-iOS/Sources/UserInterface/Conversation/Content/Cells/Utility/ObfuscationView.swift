@@ -24,7 +24,7 @@ import Foundation
         backgroundColor = .accentDimmedFlat
         isOpaque = true
         contentMode = .center
-        image = UIImage.init(icon: icon, size: .tiny, color: UIColor.from(scheme: .background))
+        setIcon(icon, size: .tiny, color: UIColor.from(scheme: .background))
 
         switch icon {
         case .locationPin:

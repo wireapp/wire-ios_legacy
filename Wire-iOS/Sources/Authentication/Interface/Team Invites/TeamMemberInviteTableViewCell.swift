@@ -49,11 +49,7 @@ final class TeamMemberInviteTableViewCell: UITableViewCell {
             }
             
             content.apply {
-                iconImageView.image = UIImage(
-                    icon: $0.iconType,
-                    size: .tiny,
-                    color: UIColor.Team.inactiveButton
-                )
+                iconImageView.setIcon($0.iconType, size: .tiny, color: UIColor.Team.inactiveButton)
             }
         }
     }

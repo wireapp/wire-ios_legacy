@@ -27,7 +27,7 @@ struct ReadReceiptViewModel {
 
 
     func image() -> UIImage? {
-        return iconColor.map { UIImage(icon: icon, size: .tiny, color: $0) }
+        return iconColor.map { icon.makeImage(size: .tiny, color: $0) }
     }
 
     func createSystemMessage(template: String) -> NSAttributedString {

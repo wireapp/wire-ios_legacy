@@ -150,7 +150,7 @@ private let zmLog = ZMSLog(tag: "UI")
             let effects = AVSAudioEffectType.displayedEffects.filter { $0 != .none }
             let max = UInt32(effects.count)
             let effect = effects[Int(arc4random_uniform(max))]
-            let image = UIImage(icon: effect.icon, size: 14, color: color)
+            let image = effect.icon.makeImage(size: 14, color: color)
             
             let attachment = NSTextAttachment()
             attachment.image = image

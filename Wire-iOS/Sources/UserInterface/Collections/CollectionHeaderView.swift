@@ -41,7 +41,7 @@ import Cartography
             default: fatal("Unknown section")
             }
             
-            self.iconImageView.image = UIImage(icon: icon, size: .tiny, color: .lightGraphite)
+            self.iconImageView.setIcon(icon, size: .tiny, color: .lightGraphite)
         }
     }
     

@@ -62,7 +62,7 @@ public protocol SearchHeaderViewControllerDelegate : class {
 
         view.backgroundColor = UIColor.from(scheme: .barBackground, variant: colorSchemeVariant)
 
-        searchIcon.image = UIImage(icon: .search, size: .tiny, color: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant))
+        searchIcon.setIcon(.search, size: .tiny, color: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant))
         
         clearButton.accessibilityLabel = "clear"
         clearButton.setIcon(.clearInput, size: .tiny, for: .normal)

@@ -37,7 +37,7 @@ class GroupDetailsNotificationOptionsCell: GroupDetailsDisclosureOptionsCell {
     override func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
         super.applyColorScheme(colorSchemeVariant)
         
-        icon = UIImage(icon: .alerts, size: .tiny,
+        icon = StyleKitIcon.alerts.makeImage(size: .tiny,
                        color: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant))
     }
 

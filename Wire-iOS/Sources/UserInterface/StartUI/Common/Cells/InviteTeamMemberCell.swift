@@ -27,7 +27,7 @@ class StartUIIconCell: UICollectionViewCell {
     
     fileprivate var icon: StyleKitIcon? {
         didSet {
-            iconView.image = icon.map { UIImage(icon: $0, size: .tiny, color: .white) }
+            iconView.image = icon?.makeImage(size: .tiny, color: .white)
         }
     }
     
@@ -139,7 +139,7 @@ final class OpenServicesAdminCell: StartUIIconCell, Themeable  {
         backgroundColor = contentBackgroundColor(for: colorSchemeVariant)
         separator.backgroundColor = UIColor.from(scheme: .cellSeparator, variant: colorSchemeVariant)
         titleLabel.textColor = UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)
-        iconView.image = icon.map { UIImage(icon: $0, size: .tiny, color: UIColor.from(scheme: .iconNormal, variant: colorSchemeVariant)) }
+        iconView.image = icon?.makeImage(size: .tiny, color: UIColor.from(scheme: .iconNormal, variant: colorSchemeVariant))
     }
     
     func contentBackgroundColor(for colorSchemeVariant: ColorSchemeVariant) -> UIColor {

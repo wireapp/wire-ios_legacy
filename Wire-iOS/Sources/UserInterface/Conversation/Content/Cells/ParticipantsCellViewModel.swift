@@ -38,7 +38,7 @@ enum ConversationActionType {
         }
     }
 
-    func image(with color: UIColor) -> UIImage? {
+    func image(with color: UIColor) -> UIImage {
         let icon: StyleKitIcon
         switch self {
         case .started, .none:                   icon = .conversation
@@ -46,7 +46,7 @@ enum ConversationActionType {
         case .removed, .left, .teamMemberLeave: icon = .minus
         }
         
-        return UIImage(icon: icon, size: .tiny, color: color)
+        return icon.makeImage(size: .tiny, color: color)
     }
 }
 

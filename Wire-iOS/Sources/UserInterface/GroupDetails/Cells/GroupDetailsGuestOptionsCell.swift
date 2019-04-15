@@ -41,8 +41,8 @@ class GroupDetailsGuestOptionsCell: GroupDetailsDisclosureOptionsCell {
     override func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
         super.applyColorScheme(colorSchemeVariant)
 
-        icon = UIImage(icon: .guest, size: .tiny,
-                       color: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant))
+        icon = StyleKitIcon.guest.makeImage(size: .tiny,
+                                            color: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant))
     }
 
 }

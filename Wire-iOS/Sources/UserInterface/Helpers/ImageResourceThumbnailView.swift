@@ -85,7 +85,7 @@ class ImageResourceThumbnailView: RoundedView {
             DispatchQueue.main.async {
                 let needsVideoCoverView = isVideoPreview && self.imageView.mediaAsset != nil
                 self.coverView.isHidden = !needsVideoCoverView
-                self.assetTypeBadge.image = needsVideoCoverView ? UIImage(icon: .videoCall, size: .tiny, color: .white) : nil
+                self.assetTypeBadge.image = needsVideoCoverView ? StyleKitIcon.videoCall.makeImage(size: .tiny, color: .white) : nil
             }
         }
     }

@@ -18,6 +18,30 @@
 
 import UIKit
 
+extension StyleKitIcon {
+
+    /**
+     * Creates an image of the icon, with specified size and color.
+     * - parameter size: The desired size of the image.
+     * - parameter color: The color of the image.
+     * - returns: The image that represents the icon.
+     */
+
+    public func makeImage(size: StyleKitIconSize, color: UIColor) -> UIImage {
+        let imageProperties = self.renderingProperties
+        let imageSize = size.rawValue
+        let targetSize = CGSize(width: imageSize, height: imageSize)
+
+        let renderer = UIGraphicsImageRenderer(size: targetSize)
+
+        return renderer.image { context in
+            context.cgContext.scaleBy(x: 0.5 * (imageSize / imageProperties.originalSize), y: 0.5 * (imageSize / imageProperties.originalSize))
+            imageProperties.renderingMethod(color)
+        }
+    }
+
+}
+
 extension UIImage {
 
     /**
@@ -29,31 +53,36 @@ extension UIImage {
      */
 
     @objc public static func imageForIcon(_ icon: StyleKitIcon, size: CGFloat, color: UIColor) -> UIImage {
-        return UIImage(icon: icon, size: .custom(size), color: color)
+        return icon.makeImage(size: .custom(size), color: color)
     }
 
+}
+
+extension UIImageView {
+
     /**
-     * Creates an image with the specified icon, size and color.
+     * Sets the image of the image view to the given icon, size and color.
      * - parameter icon: The icon to display.
      * - parameter size: The desired size of the image.
      * - parameter color: The color of the image.
+     * - returns: The image that represents the icon.
      */
 
-    public convenience init(icon: StyleKitIcon, size: StyleKitIconSize, color: UIColor) {
-        let imageProperties = icon.renderingProperties
-        let imageSize = size.rawValue
-        let targetSize = CGSize(width: imageSize, height: imageSize)
-        let imageFormat = UIGraphicsImageRendererFormat()
-        imageFormat.scale = UIScreen.main.scale
+    public func setIcon(_ icon: StyleKitIcon, size: StyleKitIconSize, color: UIColor) {
+        image = icon.makeImage(size: size, color: color)
+    }
 
-        let renderer = UIGraphicsImageRenderer(size: targetSize, format: imageFormat)
+    /**
+     * Sets the image of the image view to the given icon, size and color and forces its
+     * to be always be a template.
+     * - parameter icon: The icon to display.
+     * - parameter size: The desired size of the image.
+     * - parameter color: The color of the image.
+     * - returns: The image that represents the icon.
+     */
 
-        let image = renderer.image { context in
-            context.cgContext.scaleBy(x: imageSize / imageProperties.originalSize, y: imageSize / imageProperties.originalSize)
-            imageProperties.renderingMethod(color)
-        }
-
-        self.init(cgImage: image.cgImage!)
+    public func setTemplateIcon(_ icon: StyleKitIcon, size: StyleKitIconSize) {
+        image = icon.makeImage(size: size, color: .black).withRenderingMode(.alwaysTemplate)
     }
 
 }

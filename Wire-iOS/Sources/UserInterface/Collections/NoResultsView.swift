@@ -35,7 +35,7 @@ import Cartography
     
     public var icon: StyleKitIcon? = nil {
         didSet {
-            self.iconView.image = icon.map { UIImage(icon: $0, size: 160, color: placeholderColor) }
+            self.iconView.image = icon?.makeImage(size: 160, color: placeholderColor)
         }
     }
     

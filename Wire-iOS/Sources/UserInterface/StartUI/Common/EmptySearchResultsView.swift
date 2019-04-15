@@ -148,7 +148,7 @@ extension EmptySearchResultsViewAction {
     private var icon: UIImage? {
         switch state {
         case .noServicesEnabled:
-            return UIImage(icon: .bot, size: .large, color: UIColor.from(scheme: .iconNormal, variant: self.variant))
+            return StyleKitIcon.bot.makeImage(size: .large, color: UIColor.from(scheme: .iconNormal, variant: self.variant))
         default:
             return nil
         }

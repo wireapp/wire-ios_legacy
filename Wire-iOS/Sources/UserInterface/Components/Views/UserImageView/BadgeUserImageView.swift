@@ -133,7 +133,7 @@
             }
 
             let changeImage = {
-                self.badgeImageView.image = UIImage(icon: icon,
+                self.badgeImageView.setIcon(icon,
                                                     size: self.badgeIconSize,
                                                     color: self.badgeColor)
             }

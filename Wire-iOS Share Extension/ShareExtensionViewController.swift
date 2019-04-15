@@ -301,10 +301,10 @@ class ShareExtensionViewController: SLComposeServiceViewController {
                     self.preview?.image = image
                     self.preview?.displayMode = displayMode
                 case .placeholder(let iconType):
-                    self.preview?.image = UIImage(icon: iconType, size: .medium, color: UIColor.black.withAlphaComponent(0.7))
+                    self.preview?.setIcon(iconType, size: .medium, color: UIColor.black.withAlphaComponent(0.7))
 
                 case .remoteURL(let url):
-                    self.preview?.image = UIImage(icon: .browser, size: .medium, color: UIColor.black.withAlphaComponent(0.7))
+                    self.preview?.setIcon(.browser, size: .medium, color: UIColor.black.withAlphaComponent(0.7))
                     self.fetchWebsitePreview(for: url)
                 }
 

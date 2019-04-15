@@ -48,14 +48,15 @@ import Cartography
             }
 
             let currentIcon = icon(for: prevState) ?? (prevState == .selected ? .liked : .like)
-            let fakeImageView = UIImageView(image: UIImage(icon: currentIcon, size: .large, color: self.iconColor(for: prevState) ?? LikeButton.normalColor))
+            let fakeImageView = UIImageView()
+            fakeImageView.setIcon(currentIcon, size: .large, color: self.iconColor(for: prevState) ?? LikeButton.normalColor)
             fakeImageView.frame = imageView.frame
             
             imageView.superview!.addSubview(fakeImageView)
 
             let selectedIcon = icon(for: prevState) ?? .liked
-            let image = UIImage(icon: selectedIcon, size: .large, color: LikeButton.selectedColor)
-            let animationImageView = UIImageView(image: image)
+            let animationImageView = UIImageView()
+            animationImageView.setIcon(selectedIcon, size: .large, color: LikeButton.selectedColor)
             animationImageView.frame = imageView.frame
             imageView.superview!.addSubview(animationImageView)
 

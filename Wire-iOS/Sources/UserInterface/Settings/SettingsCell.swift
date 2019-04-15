@@ -125,7 +125,7 @@ protocol SettingsCellType: class {
     var icon: StyleKitIcon? = nil {
         didSet {
             if let icon = icon {
-                iconImageView.image = UIImage(icon: icon, size: .tiny, color: UIColor.white)
+                iconImageView.setIcon(icon, size: .tiny, color: UIColor.white)
                 cellNameLabelToIconInset.isActive = true
             } else {
                 iconImageView.image = nil

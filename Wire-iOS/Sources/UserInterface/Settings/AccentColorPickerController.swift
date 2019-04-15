@@ -142,7 +142,7 @@ public protocol ColorPickerControllerDelegate {
                 checkmarkView.center == contentView.center
             }
             
-            self.checkmarkView.image = UIImage(icon: .checkmark, size: .small, color: UIColor.white)
+            self.checkmarkView.setIcon(.checkmark, size: .small, color: UIColor.white)
             self.checkmarkView.isHidden = true
         }
         

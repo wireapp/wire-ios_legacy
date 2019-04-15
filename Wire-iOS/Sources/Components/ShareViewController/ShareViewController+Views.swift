@@ -85,7 +85,7 @@ extension ShareViewController {
         self.sendButton.addTarget(self, action: #selector(ShareViewController.onSendButtonPressed(sender:)), for: .touchUpInside)
 
         if self.allowsMultipleSelection {
-            self.searchIcon.image = UIImage(icon: .search, size: .tiny, color: .white)
+            self.searchIcon.setIcon(.search, size: .tiny, color: .white)
         }
         else {
             self.searchIcon.isHidden = true

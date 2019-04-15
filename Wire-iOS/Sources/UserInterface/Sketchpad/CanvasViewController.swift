@@ -81,7 +81,7 @@ import Cartography
     
         toolbar = SketchToolbar(buttons: [photoButton, drawButton, emojiButton, sendButton])
         separatorLine.backgroundColor = UIColor.from(scheme: .separator)
-        hintImageView.image = UIImage(icon: .brush, size: 172, color: UIColor.from(scheme: .placeholderBackground, variant: .light))
+        hintImageView.setIcon(.brush, size: 172, color: UIColor.from(scheme: .placeholderBackground, variant: .light))
         hintLabel.text = "sketchpad.initial_hint".localized.uppercased(with: Locale.current)
         hintLabel.numberOfLines = 0
         hintLabel.font = FontSpec(.small, .regular).font!
@@ -103,8 +103,8 @@ import Cartography
     }
     
     func configureNavigationItems() {
-        let undoImage = UIImage(icon: .undo, size: .tiny, color: .black)
-        let closeImage = UIImage(icon: .cross, size: .tiny, color: .black)
+        let undoImage = StyleKitIcon.undo.makeImage(size: .tiny, color: .black)
+        let closeImage = StyleKitIcon.cross.makeImage(size: .tiny, color: .black)
         
         let closeButtonItem = UIBarButtonItem(image: closeImage, style: .plain, target: self, action: #selector(CanvasViewController.close))
         closeButtonItem.accessibilityIdentifier = "closeButton"

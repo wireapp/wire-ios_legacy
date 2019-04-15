@@ -59,7 +59,7 @@ public protocol TextSearchInputViewDelegate: class {
 
         backgroundColor = UIColor.from(scheme: .barBackground)
         
-        iconView.image = UIImage(icon: .search, size: .tiny, color: UIColor.from(scheme: .textForeground))
+        iconView.setIcon(.search, size: .tiny, color: UIColor.from(scheme: .textForeground))
         iconView.contentMode = .center
         
         searchInput.delegate = self

@@ -61,7 +61,7 @@ final public class FileTransferView: UIView, TransferView {
         
         self.fileTypeIconView.accessibilityIdentifier = "FileTransferFileTypeIcon"
         
-        self.fileEyeView.image = UIImage(icon: .eye, size: 8, color: UIColor.white).withRenderingMode(.alwaysTemplate)
+        self.fileEyeView.setTemplateIcon(.eye, size: 8)
         
         self.actionButton.contentMode = .scaleAspectFit
         actionButton.setIconColor(.white, for: .normal)
@@ -152,7 +152,7 @@ final public class FileTransferView: UIView, TransferView {
         let fileSizeAttributed = fileSize && labelFont && labelTextBlendedColor
         
         fileTypeIconView.contentMode = .center
-        fileTypeIconView.image = UIImage(icon: .document, size: .small, color: UIColor.white).withRenderingMode(.alwaysTemplate)
+        fileTypeIconView.setTemplateIcon(.document, size: .small)
         
         fileMessageData.thumbnailImage.fetchImage { [weak self] (image, _) in
             guard let image = image else { return }
