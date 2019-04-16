@@ -201,8 +201,8 @@
 
 "conversation.voiceover.verified" = "верифицировано";
 
-"conversation.status.typing" = "Набирает сообщение…";
-"conversation.status.typing.group" = "%@: набирает сообщение…";
+"conversation.status.typing" = "Печатает сообщение…";
+"conversation.status.typing.group" = "%@: печатает сообщение…";
 "conversation.status.silenced" = "Без звука";
 "conversation.status.poor_connection" = "Плохое подключение";
 "conversation.status.blocked" = "Заблокирован(а)";
@@ -385,6 +385,12 @@
 "content.system.you_removed_other" = "Вы удалили %@";
 
 "content.system.services.warning" = "Сервисы имеют доступ к содержимому этого разговора";
+
+// Link attachment messages
+
+"content.message.link_attachment.accessibility_label.youtube" = "Предварительный просмотр видео с YouTube";
+"content.message.link_attachment.accessibility_label.soundcloud_song" = "Предварительный просмотр песни c SoundCloud";
+"content.message.link_attachment.accessibility_label.soundcloud_set" = "Предварительный просмотр плейлиста c SoundCloud";
 
 // New conversation participants added / removed / started system message
 
@@ -577,6 +583,9 @@
 "voice.cancel_button.title" = "Отменить";
 "voice.call_button.title" = "Позвонить";
 "voice.end_call_button.title" = "Завершить звонок";
+"voice.call_error.unsupported_version.title" = "Пожалуйста, обновите Wire";
+"voice.call_error.unsupported_version.message" = "Вы приняли вызов, не поддерживаемый этой версией Wire. Получите последнюю версию в App Store.";
+"voice.call_error.unsupported_version.dismiss" = "Позже";
 
 "voice.alert.call_in_progress.title" = "Идет вызов";
 "voice.alert.call_in_progress.message" = "Одновременно вы можете совершать только один звонок";
@@ -812,10 +821,11 @@
 "self.voiceover.hint" = "Открыть профиль и настройки";
 "self.new-device.voiceover.label" = "Профиль, добавлены новые устройства";
 
-"self.profile.change_user_image.accessibility" = "Нажмите, чтобы изменить изображение профиля";
-
 "self.add_phone_number" = "Добавить номер телефона";
 "self.add_email_password" = "Добавить email и пароль";
+
+"self.accessibility.profile_photo_image" = "Изображение профиля";
+"self.accessibility.profile_photo_edit_button" = "Изменить изображение профиля";
 
 // About screen
 "about.tos.title" = "Условия использования";
@@ -1109,7 +1119,6 @@
 "email.guidance.toolong" = "Слишком много символов";
 
 "password.placeholder" = "Пароль";
-"password.guidance.tooshort" = "Не менее 8 символов";
 "password.guidance.toolong" = "Слишком много символов";
 
 "phone.guidance.invalid" = "Некорректный номер телефона";
@@ -1151,9 +1160,6 @@
 "team.full_name.textfield.accessibility" = "Укажите полное имя";
 
 "team.password.headline" = "Установить пароль";
-"team.password.textfield.placeholder" = "Не менее 8 символов";
-"team.password.textfield.accessibility" = "Задать пароль, не менее 8 символов";
-
 
 "verification.code_label" = "Шестизначный код. Текстовое поле.";
 "verification.code_hint" = "Нажмите дважды, чтобы ввести код.";
@@ -1569,3 +1575,8 @@
 "message_details.subtitle_label_voiceOver" = "Сведения о сообщении";
 "message_details.user_handle_subtitle_label" = "Имя пользователя";
 "message_details.user_read_timestamp_subtitle_label" = "Прочитано в";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Password Rules
+"registration.password.rules.no_requirements" = "Использовать %@.";
+"registration.password.rules.with_requirements" = "Использовать %@, с %@.";

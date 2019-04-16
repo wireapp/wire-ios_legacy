@@ -39,14 +39,14 @@ public final class UserConnectionView: UIView, Copyable {
     private let labelContainer = UIView()
     private let userImageView = UserImageView()
     
-    public var user: ZMUser {
+    public var user: UserType {
         didSet {
             self.updateLabels()
             self.userImageView.user = self.user
         }
     }
     
-    public init(user: ZMUser) {
+    public init(user: UserType) {
         self.user = user
         super.init(frame: .zero)
         self.userImageView.userSession = ZMUserSession.shared()

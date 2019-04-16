@@ -386,6 +386,12 @@
 
 "content.system.services.warning" = "サービスはこの会議のコンテンツにアクセスできます";
 
+// Link attachment messages
+
+"content.message.link_attachment.accessibility_label.youtube" = "YouTube video preview";
+"content.message.link_attachment.accessibility_label.soundcloud_song" = "SoundCloud song preview";
+"content.message.link_attachment.accessibility_label.soundcloud_set" = "SoundCloud playlist preview";
+
 // New conversation participants added / removed / started system message
 
 "content.system.conversation.other.started" = "%@と%@は会話を始めました";
@@ -577,6 +583,9 @@
 "voice.cancel_button.title" = "キャンセル";
 "voice.call_button.title" = "通話";
 "voice.end_call_button.title" = "通話を終了";
+"voice.call_error.unsupported_version.title" = "Please update Wire";
+"voice.call_error.unsupported_version.message" = "You received a call that isn't supported by this version of Wire.\nGet the latest version in the App Store.";
+"voice.call_error.unsupported_version.dismiss" = "Later";
 
 "voice.alert.call_in_progress.title" = "通話中です";
 "voice.alert.call_in_progress.message" = "同時にできる通話は一つのみです";
@@ -812,10 +821,11 @@
 "self.voiceover.hint" = "プロファイルと設定を開く";
 "self.new-device.voiceover.label" = "プロファイル, 新規デバイスの追加";
 
-"self.profile.change_user_image.accessibility" = "タップしてプロフィール画像を変更";
-
 "self.add_phone_number" = "電話番号を追加する";
 "self.add_email_password" = "メールアドレスとパスワードを追加";
+
+"self.accessibility.profile_photo_image" = "Profile picture";
+"self.accessibility.profile_photo_edit_button" = "Change profile picture";
 
 // About screen
 "about.tos.title" = "利用規約";
@@ -1109,7 +1119,6 @@
 "email.guidance.toolong" = "文字が多すぎます";
 
 "password.placeholder" = "パスワード";
-"password.guidance.tooshort" = "8 文字以上";
 "password.guidance.toolong" = "文字が多すぎます";
 
 "phone.guidance.invalid" = "無効な電話番号です";
@@ -1151,9 +1160,6 @@
 "team.full_name.textfield.accessibility" = "フルネーム設定";
 
 "team.password.headline" = "パスワード設定";
-"team.password.textfield.placeholder" = "8 文字以上";
-"team.password.textfield.accessibility" = "最低８文字以上でパスワードを入力してください";
-
 
 "verification.code_label" = "6 桁のコードです。テキスト フィールドです。";
 "verification.code_hint" = "ダブルタップすると、コードを入力します。";
@@ -1569,3 +1575,8 @@
 "message_details.subtitle_label_voiceOver" = "メッセージの詳細";
 "message_details.user_handle_subtitle_label" = "ユーザーネーム";
 "message_details.user_read_timestamp_subtitle_label" = "既読";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Password Rules
+"registration.password.rules.no_requirements" = "Use %@.";
+"registration.password.rules.with_requirements" = "Use %@, with %@.";

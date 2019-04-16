@@ -386,6 +386,12 @@
 
 "content.system.services.warning" = "Services have access to the content of this conversation";
 
+// Link attachment messages
+
+"content.message.link_attachment.accessibility_label.youtube" = "YouTube video preview";
+"content.message.link_attachment.accessibility_label.soundcloud_song" = "SoundCloud song preview";
+"content.message.link_attachment.accessibility_label.soundcloud_set" = "SoundCloud playlist preview";
+
 // New conversation participants added / removed / started system message
 
 "content.system.conversation.other.started" = "%@ je začel(-a) pogovor s/z %@";
@@ -577,6 +583,9 @@
 "voice.cancel_button.title" = "Prekliči";
 "voice.call_button.title" = "Klic";
 "voice.end_call_button.title" = "End Call";
+"voice.call_error.unsupported_version.title" = "Please update Wire";
+"voice.call_error.unsupported_version.message" = "You received a call that isn't supported by this version of Wire.\nGet the latest version in the App Store.";
+"voice.call_error.unsupported_version.dismiss" = "Later";
 
 "voice.alert.call_in_progress.title" = "Klic v teku";
 "voice.alert.call_in_progress.message" = "Lahko imate aktiven le en klic";
@@ -812,10 +821,11 @@
 "self.voiceover.hint" = "Open profile and settings";
 "self.new-device.voiceover.label" = "Profile, new devices added";
 
-"self.profile.change_user_image.accessibility" = "Tap to change profile picture";
-
 "self.add_phone_number" = "Dodaj telefonsko številko";
 "self.add_email_password" = "Dodajte e-poštni naslov in geslo";
+
+"self.accessibility.profile_photo_image" = "Profile picture";
+"self.accessibility.profile_photo_edit_button" = "Change profile picture";
 
 // About screen
 "about.tos.title" = "Pogoji uporabe";
@@ -1109,7 +1119,6 @@
 "email.guidance.toolong" = "Preveč znakov";
 
 "password.placeholder" = "Geslo";
-"password.guidance.tooshort" = "Vsaj 8 znakov";
 "password.guidance.toolong" = "Preveč znakov";
 
 "phone.guidance.invalid" = "Invalid phone number";
@@ -1151,9 +1160,6 @@
 "team.full_name.textfield.accessibility" = "Set full name";
 
 "team.password.headline" = "Set password";
-"team.password.textfield.placeholder" = "Vsaj 8 znakov";
-"team.password.textfield.accessibility" = "Set password, at least 8 characters";
-
 
 "verification.code_label" = "Six-digit code. Text field.";
 "verification.code_hint" = "Double tap to enter the code.";
@@ -1569,3 +1575,8 @@
 "message_details.subtitle_label_voiceOver" = "Message Details";
 "message_details.user_handle_subtitle_label" = "Uporabniško ime";
 "message_details.user_read_timestamp_subtitle_label" = "Read at";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Password Rules
+"registration.password.rules.no_requirements" = "Use %@.";
+"registration.password.rules.with_requirements" = "Use %@, with %@.";

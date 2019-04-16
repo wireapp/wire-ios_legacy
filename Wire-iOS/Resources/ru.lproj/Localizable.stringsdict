@@ -338,5 +338,105 @@
         <string>Пропущенных звонков от %2$@</string>
       </dict>
     </dict>
+    <key>registration.password.rules.min_length</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>не менее %#@character_count@</string>
+      <key>character_count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>один символ</string>
+        <key>few</key>
+        <string>%d символа</string>
+        <key>many</key>
+        <string>%d символов</string>
+        <key>other</key>
+        <string>%d символов</string>
+      </dict>
+    </dict>
+    <key>registration.password.rules.lowercase</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@character_count@</string>
+      <key>character_count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>одна строчная буква</string>
+        <key>few</key>
+        <string>%d строчных буквы</string>
+        <key>many</key>
+        <string>%d строчных букв</string>
+        <key>other</key>
+        <string>%d строчных букв</string>
+      </dict>
+    </dict>
+    <key>registration.password.rules.uppercase</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@character_count@</string>
+      <key>character_count</key>
+      <dict>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>one</key>
+        <string>одна заглавная буква</string>
+        <key>few</key>
+        <string>%d заглавные буквы</string>
+        <key>many</key>
+        <string>%d заглавных букв</string>
+        <key>other</key>
+        <string>%d заглавных букв</string>
+      </dict>
+    </dict>
+    <key>registration.password.rules.number</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@character_count@</string>
+      <key>character_count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>цифра</string>
+        <key>few</key>
+        <string>%d цифры</string>
+        <key>many</key>
+        <string>%d цифр</string>
+        <key>other</key>
+        <string>%d цифр</string>
+      </dict>
+    </dict>
+    <key>registration.password.rules.special</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@character_count@</string>
+      <key>character_count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>специальный символ</string>
+        <key>few</key>
+        <string>%d специальных символа</string>
+        <key>many</key>
+        <string>%d специальных символов</string>
+        <key>other</key>
+        <string>%d специальных символов</string>
+      </dict>
+    </dict>
   </dict>
 </plist>

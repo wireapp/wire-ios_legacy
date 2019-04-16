@@ -386,6 +386,12 @@
 
 "content.system.services.warning" = "Dienste haben Zugriff auf den Inhalt dieser Unterhaltung";
 
+// Link attachment messages
+
+"content.message.link_attachment.accessibility_label.youtube" = "YouTube Video-Vorschau";
+"content.message.link_attachment.accessibility_label.soundcloud_song" = "SoundCloud Lied-Vorschau";
+"content.message.link_attachment.accessibility_label.soundcloud_set" = "SoundCloud Playlist-Vorschau";
+
 // New conversation participants added / removed / started system message
 
 "content.system.conversation.other.started" = "%@ hat ein Gespräch mit %@ begonnen";
@@ -577,6 +583,9 @@
 "voice.cancel_button.title" = "Abbrechen";
 "voice.call_button.title" = "Anruf";
 "voice.end_call_button.title" = "Anruf beenden";
+"voice.call_error.unsupported_version.title" = "Bitte Wire aktualisieren";
+"voice.call_error.unsupported_version.message" = "Der erhaltene Anruf wird von dieser Version von Wire nicht unterstützt.\nBitte im App Store auf die neueste Version aktualisieren.";
+"voice.call_error.unsupported_version.dismiss" = "Später";
 
 "voice.alert.call_in_progress.title" = "Laufendes Gespräch";
 "voice.alert.call_in_progress.message" = "Du kannst nur einen aktiven Anruf zu einem Zeitpunkt haben";
@@ -812,10 +821,11 @@
 "self.voiceover.hint" = "Offenes Profil und Einstellungen";
 "self.new-device.voiceover.label" = "Profil, neue Geräte hinzugefügt";
 
-"self.profile.change_user_image.accessibility" = "Tippen, um das Profilbild zu ändern";
-
 "self.add_phone_number" = "Telefonnummer hinzufügen";
 "self.add_email_password" = "E-Mail und Passwort hinzufügen";
+
+"self.accessibility.profile_photo_image" = "Profilbild";
+"self.accessibility.profile_photo_edit_button" = "Profilbild ändern";
 
 // About screen
 "about.tos.title" = "Nutzungsbedingungen";
@@ -1109,7 +1119,6 @@
 "email.guidance.toolong" = "Zu viele Zeichen";
 
 "password.placeholder" = "Passwort";
-"password.guidance.tooshort" = "Mindestens 8 Zeichen";
 "password.guidance.toolong" = "Zu viele Zeichen";
 
 "phone.guidance.invalid" = "Ungültige Telefonnummer";
@@ -1151,9 +1160,6 @@
 "team.full_name.textfield.accessibility" = "Dein vollständiger Name";
 
 "team.password.headline" = "Passwort festlegen";
-"team.password.textfield.placeholder" = "Mindestens 8 Zeichen";
-"team.password.textfield.accessibility" = "Passwort (min. 8 Zeichen)";
-
 
 "verification.code_label" = "Sechsstelliger Code. Textfeld.";
 "verification.code_hint" = "Doppeltippen, um den Code einzugeben.";
@@ -1569,3 +1575,8 @@
 "message_details.subtitle_label_voiceOver" = "Nachrichtendetails";
 "message_details.user_handle_subtitle_label" = "Benutzername";
 "message_details.user_read_timestamp_subtitle_label" = "Gelesen am";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Password Rules
+"registration.password.rules.no_requirements" = "Bitte %@ verwenden.";
+"registration.password.rules.with_requirements" = "Bitte %@ verwenden, mit %@.";
