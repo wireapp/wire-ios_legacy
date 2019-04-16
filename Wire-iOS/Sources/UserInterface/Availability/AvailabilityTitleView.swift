@@ -176,7 +176,7 @@ class AvailabilityTitleView: TitleView, Themeable, ZMUserObserver {
                 self?.didSelectAvailability(availability)
                 
                 if Settings.shared()?.shouldRemindUserWhenChanging(availability) == true, let informationAlert = self?.reminderSheet(for: availability) {
-                    presentingViewController.show(informationAlert, sender: nil)
+                    presentingViewController.present(informationAlert, animated: true)
                 }
             }))
         }
@@ -191,9 +191,8 @@ class AvailabilityTitleView: TitleView, Themeable, ZMUserObserver {
         
         let title = "availability.reminder.\(availability.canonicalName).title".localized
         let message = "availability.reminder.\(availability.canonicalName).message".localized
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
-        alert.setValue(title && UIFont.normalRegularFont, forKey: "attributedTitle")
         alert.addAction(UIAlertAction(title: "availability.reminder.action.dont_remind_me".localized, style: .default, handler: { (_) in
             Settings.shared()?.dontRemindUserWhenChanging(availability)
         }))
