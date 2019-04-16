@@ -46,16 +46,6 @@ class ConversationListTopBarViewController: UIViewController {
         if ZMUser.selfUser().isTeamMember {
             let availabilityViewController = AvailabilityTitleViewController(user: ZMUser.selfUser(), options: .header)
             availabilityViewController.availabilityTitleView?.colorSchemeVariant = .dark
-            
-            availabilityViewController.availabilityTitleView?.tapHandler = { [weak availabilityViewController] button in
-                guard let availabilityView = availabilityViewController?.availabilityTitleView, let presentingViewController = UIApplication.shared.keyWindow?.rootViewController else { return }
-                
-                let alert = availabilityView.actionSheet(presentingViewController: presentingViewController)
-                alert.popoverPresentationController?.sourceView = button
-                alert.popoverPresentationController?.sourceRect = button.frame
-                presentingViewController.present(alert, animated: true, completion: nil)
-            }
-            
             addChild(availabilityViewController)
             self.availabilityViewController = availabilityViewController
             

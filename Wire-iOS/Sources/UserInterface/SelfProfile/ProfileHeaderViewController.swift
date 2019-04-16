@@ -120,16 +120,7 @@ class ProfileHeaderViewController: UIViewController, Themeable {
         imageView.initialsFont = UIFont.systemFont(ofSize: 55, weight: .semibold).monospaced()
         imageView.userSession = session
         imageView.user = user
-        
-        availabilityTitleViewController.availabilityTitleView?.tapHandler = { [weak self] button in
-            guard let `self` = self else { return }
-            guard self.options.contains(.allowEditingAvailability) else { return }
-            let alert = self.availabilityTitleViewController.availabilityTitleView!.actionSheet(presentingViewController: self)
-            alert.popoverPresentationController?.sourceView = self.availabilityTitleViewController.availabilityTitleView!
-            alert.popoverPresentationController?.sourceRect = self.availabilityTitleViewController.availabilityTitleView!.frame
-            self.present(alert, animated: true, completion: nil)
-        }
-        
+                
         if let session = session {
             tokens.append(UserChangeInfo.add(observer: self, for: user, userSession: session))
         }

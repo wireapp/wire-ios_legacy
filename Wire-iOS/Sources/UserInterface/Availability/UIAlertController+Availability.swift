@@ -33,4 +33,19 @@ extension UIAlertController {
         
         return alert
     }
+    
+    static func availabilityPicker(_ handler: @escaping (_ availability: Availability) -> Void) -> UIAlertController {
+        let alert = UIAlertController(title: "availability.message.set_status".localized, message: nil, preferredStyle: .actionSheet)
+        
+        for availability in Availability.allValues {
+            alert.addAction(UIAlertAction(title: availability.localizedName, style: .default, handler: { _ in
+                handler(availability)
+            }))
+        }
+        
+        alert.popoverPresentationController?.permittedArrowDirections = [ .up ]
+        alert.addAction(UIAlertAction(title: "availability.message.cancel".localized, style: .cancel, handler: nil))
+        
+        return alert
+    }
 }

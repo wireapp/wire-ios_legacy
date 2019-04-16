@@ -166,45 +166,6 @@ class AvailabilityTitleView: TitleView, Themeable, ZMUserObserver {
         updateConfiguration()
     }
     
-    // MARK: - Actions
-    
-    func actionSheet(presentingViewController: UIViewController) -> UIAlertController {
-        let alert = UIAlertController(title: "availability.message.set_status".localized, message: nil, preferredStyle: .actionSheet)
-        
-        for availability in Availability.allValues {
-            alert.addAction(UIAlertAction(title: availability.localizedName, style: .default, handler: { [weak self] (action) in
-                self?.didSelectAvailability(availability)
-                
-                if Settings.shared()?.shouldRemindUserWhenChanging(availability) == true {
-                    presentingViewController.present(UIAlertController.availabilityExplanation(availability), animated: true)
-                }
-            }))
-        }
-        
-        alert.popoverPresentationController?.permittedArrowDirections = [ .up ]
-        alert.addAction(UIAlertAction(title: "availability.message.cancel".localized, style: .cancel, handler: nil))
-        
-        return alert
-    }
-    
-    private func didSelectAvailability(_ availability: Availability) {
-        let changes = { [weak self] in
-            self?.user.availability = availability
-            self?.provideHapticFeedback()
-        }
-        
-        if let session = ZMUserSession.shared() {
-            session.performChanges(changes)
-        } else {
-            changes()
-        }
-    }
-    
-    private func provideHapticFeedback() {
-        feedbackGenerator.prepare()
-        feedbackGenerator.impactOccurred()
-    }
-    
 }
 
 extension UserType {
