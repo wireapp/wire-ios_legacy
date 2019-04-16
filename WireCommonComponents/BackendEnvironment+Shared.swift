@@ -21,22 +21,14 @@ import WireTransport
 
 extension BackendEnvironment {
     
-    public static private(set) var shared: BackendEnvironment = loadEnvironment(from: environmentType)
     
-    public static var environmentType: EnvironmentType = EnvironmentType(userDefaults: .standard) {
+    public static var shared: BackendEnvironment = {
+        let bundle = Bundle.backendBundle
+        guard let environment = BackendEnvironment(userDefaults: .standard, configurationBundle: .backendBundle) else { fatalError("Malformed backend configuration data") }
+        return environment
+        }() {
         didSet {
-            shared = loadEnvironment(from: environmentType)
-        }
-    }
-    
-    public static func loadEnvironment(from environmentType: EnvironmentType) -> BackendEnvironment {
-        switch environmentType {
-        case let .custom(host: host):
-            return BackendEnvironment(host: host) ?? loadEnvironment(from: .production)
-        default:
-            let bundle = Bundle.backendBundle
-            guard let environment = BackendEnvironment.from(environmentType: environmentType, configurationBundle: bundle) else { fatalError("Malformed data inside backend.bundle") }
-            return environment
+            shared.save(in: .standard)
         }
     }
 }
