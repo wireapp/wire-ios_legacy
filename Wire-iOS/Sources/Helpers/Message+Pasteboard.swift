@@ -18,14 +18,6 @@
 
 import Foundation
 
-extension Message {
-
-    @objc static func copy(_ message: ZMConversationMessage, in pasteboard: UIPasteboard) {
-        message.copy(in: pasteboard)
-    }
-
-}
-
 extension ZMConversationMessage {
 
     func copy(in pasteboard: UIPasteboard) {

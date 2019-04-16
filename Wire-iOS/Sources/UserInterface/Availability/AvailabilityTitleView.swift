@@ -171,7 +171,7 @@ class AvailabilityTitleView: TitleView, Themeable, ZMUserObserver {
     var actionSheet: UIAlertController {
         get {
             let alert = UIAlertController(title: "availability.message.set_status".localized, message: nil, preferredStyle: .actionSheet)
-            for type in Availability.allValues {
+            for type in Availability.allCases {
                 alert.addAction(UIAlertAction(title: type.localizedName, style: .default, handler: { [weak self] (action) in
                     self?.didSelectAvailability(type)
                 }))
