@@ -512,22 +512,6 @@
     [self setState:ConversationListStatePeoplePicker animated:animated];
 }
 
-- (void)presentSettings
-{
-    UIViewController *settingsViewController = [self createSettingsViewController];
-    KeyboardAvoidingViewController *keyboardAvoidingWrapperController = [[KeyboardAvoidingViewController alloc] initWithViewController:settingsViewController];
-    
-    if (self.wr_splitViewController.layoutSize == SplitViewControllerLayoutSizeCompact) {
-        keyboardAvoidingWrapperController.modalPresentationStyle = UIModalPresentationCurrentContext;
-        keyboardAvoidingWrapperController.transitioningDelegate = self;
-        [self presentViewController:keyboardAvoidingWrapperController animated:YES completion:nil];
-    } else {
-        keyboardAvoidingWrapperController.modalPresentationStyle = UIModalPresentationFormSheet;
-        keyboardAvoidingWrapperController.view.backgroundColor = [UIColor blackColor];
-        [self.parentViewController presentViewController:keyboardAvoidingWrapperController animated:YES completion:nil];
-    }
-}
-
 - (void)dismissPeoplePickerWithCompletionBlock:(dispatch_block_t)block
 {
     [self setState:ConversationListStateConversationList animated:YES completion:block];

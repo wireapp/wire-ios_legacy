@@ -47,30 +47,9 @@ extension ConversationListViewController {
     }
 
     @objc func createTopBar() {
-        let profileAccountView = self.currentAccountView()
-        profileAccountView.selected = false
-        profileAccountView.autoUpdateSelection = false
-        
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(presentSettings))
-        profileAccountView.addGestureRecognizer(tapGestureRecognizer)
-        
-        profileAccountView.accessibilityTraits = .button
-        profileAccountView.accessibilityIdentifier = "bottomBarSettingsButton"
-        profileAccountView.accessibilityLabel = "self.voiceover.label".localized
-        profileAccountView.accessibilityHint = "self.voiceover.hint".localized
-        
-        if let user = ZMUser.selfUser() {
-            if user.clientsRequiringUserAttention.count > 0 {
-                profileAccountView.accessibilityLabel = "self.new-device.voiceover.label".localized
-            }
-        }
-        
         self.topBarViewController = ConversationListTopBarViewController()
-        self.topBarViewController.view?.layoutMargins = UIEdgeInsets(top: 0, left: 9, bottom: 0, right: 16)
-        
         addChild(topBarViewController)
         self.contentContainer.addSubview(self.topBarViewController.view)
-        self.topBarViewController.topBar?.leftView = profileAccountView // TODO jacob move inside ConversationListTopBarViewController
     }
 
     @objc func createNetworkStatusBar() {
