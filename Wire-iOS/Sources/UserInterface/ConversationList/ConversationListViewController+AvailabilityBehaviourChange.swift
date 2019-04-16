@@ -22,20 +22,15 @@ extension ConversationListViewController {
     
     @objc func showAvailabilityBehaviourChangeAlertIfNeeded() {
         
-        guard var notify = ZMUser.selfUser()?.needsToNotifyAvailabilityBehaviourChange, notify.contains(.alert) else { return }
+        guard var notify = ZMUser.selfUser()?.needsToNotifyAvailabilityBehaviourChange, notify.contains(.alert),
+              let availability = ZMUser.selfUser()?.availability else { return }
+                
+        ZClientViewController.shared()?.present(UIAlertController.availabilityExplanation(availability), animated: true)
         
-        let alertController = UIAlertController(title: "availability.behaviour_change_alert.title".localized,
-                                                message: "availability.behaviour_change_alert.message".localized,
-                                                preferredStyle: .alert)
-        
-        alertController.addAction(UIAlertAction(title: "availability.behaviour_change_alert.ok".localized, style: .default, handler: { (_) in
-            ZMUserSession.shared()?.performChanges {
-                notify.remove(.alert)
-                ZMUser.selfUser()?.needsToNotifyAvailabilityBehaviourChange = notify
-            }
-        }))
-        
-        ZClientViewController.shared()?.present(alertController, animated: true)
+        ZMUserSession.shared()?.performChanges {
+            notify.remove(.alert)
+            ZMUser.selfUser()?.needsToNotifyAvailabilityBehaviourChange = notify
+        }
     }
     
 }

@@ -1513,10 +1513,6 @@
 "availability.message.cancel" = "Cancel";
 "availability.message.set_status" = "Set a status";
 
-"availability.behaviour_change_alert.title" = "Changes to the status feature";
-"availability.behaviour_change_alert.message" = "From now on the your status will also affect your notification setting across all conversations. ";
-"availability.behaviour_change_alert.ok" = "No";
-
 "availability.none" = "None";
 "availability.available" = "Available";
 "availability.away" = "Away";
