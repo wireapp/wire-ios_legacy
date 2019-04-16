@@ -47,6 +47,7 @@
 		1639A84922648BE400868AB9 /* ConversationListViewController+AvailabilityBehaviourChange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1639A84822648BE400868AB9 /* ConversationListViewController+AvailabilityBehaviourChange.swift */; };
 		1639A85D2265FC8800868AB9 /* UIAlertController+Availability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1639A85C2265FC8800868AB9 /* UIAlertController+Availability.swift */; };
 		1639A80F225F863000868AB9 /* ProfileHeaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1639A80E225F863000868AB9 /* ProfileHeaderViewController.swift */; };
+		1639A85B2264EAB800868AB9 /* AvailabilityTitleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1639A85A2264EAB800868AB9 /* AvailabilityTitleViewController.swift */; };
 		163B5EF21B4C209C009B4629 /* MediaBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 163B5EF11B4C209C009B4629 /* MediaBarViewController.m */; };
 		163BB6141BEAA52A00606381 /* InviteContactsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 163BB6131BEAA52A00606381 /* InviteContactsViewController.m */; };
 		163BB8101EE1648100DF9384 /* ContactsDataSource+Searching.swift in Sources */ = {isa = PBXBuildFile; fileRef = 163BB80F1EE1648100DF9384 /* ContactsDataSource+Searching.swift */; };
@@ -1516,6 +1517,7 @@
 		1639A84822648BE400868AB9 /* ConversationListViewController+AvailabilityBehaviourChange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationListViewController+AvailabilityBehaviourChange.swift"; sourceTree = "<group>"; };
 		1639A85C2265FC8800868AB9 /* UIAlertController+Availability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Availability.swift"; sourceTree = "<group>"; };
 		1639A80E225F863000868AB9 /* ProfileHeaderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderViewController.swift; sourceTree = "<group>"; };
+		1639A85A2264EAB800868AB9 /* AvailabilityTitleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvailabilityTitleViewController.swift; sourceTree = "<group>"; };
 		163B5EF01B4C209C009B4629 /* MediaBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaBarViewController.h; sourceTree = "<group>"; };
 		163B5EF11B4C209C009B4629 /* MediaBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaBarViewController.m; sourceTree = "<group>"; };
 		163BB6121BEAA52A00606381 /* InviteContactsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InviteContactsViewController.h; sourceTree = "<group>"; };
@@ -4132,6 +4134,7 @@
 			children = (
 				7C5836651FD5ABFE001CC843 /* TitleView.swift */,
 				7C5836631FD5ABE7001CC843 /* AvailabilityTitleView.swift */,
+				1639A85A2264EAB800868AB9 /* AvailabilityTitleViewController.swift */,
 				7C5DF2CB1FD7DEAD00B793B6 /* AvailabilityExtensions.swift */,
 				7CED30711FD97748009F0DAC /* IconStringsBuilder.swift */,
 				7CED307B1FD97895009F0DAC /* AvailabilityStringBuilder.swift */,
@@ -7954,6 +7957,7 @@
 				5EBF4A2B21B958F30021CFFC /* MessageToolboxDataSource.swift in Sources */,
 				F15650FA21DD20D900210504 /* NSDate+Format.swift in Sources */,
 				EF32AB0321C15B0E002E4777 /* String+MessageToolBox.swift in Sources */,
+				1639A85B2264EAB800868AB9 /* AvailabilityTitleViewController.swift in Sources */,
 				EEBE8C5C1F681694009D78C9 /* NSData+ImageType.swift in Sources */,
 				EEFF3E7C21B6D1FB000834A6 /* ConversationCreateSectionController.swift in Sources */,
 				F16427021FCC5B9E00D2ABFC /* SetEmailStepDescription.swift in Sources */,

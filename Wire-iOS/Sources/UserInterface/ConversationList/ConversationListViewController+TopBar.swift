@@ -65,10 +65,12 @@ extension ConversationListViewController {
             }
         }
         
-        self.topBar = ConversationListTopBar()
-        self.topBar.layoutMargins = UIEdgeInsets(top: 0, left: 9, bottom: 0, right: 16)
-        self.contentContainer.addSubview(self.topBar)
-        self.topBar.leftView = profileAccountView
+        self.topBarViewController = ConversationListTopBarViewController()
+        self.topBarViewController.view?.layoutMargins = UIEdgeInsets(top: 0, left: 9, bottom: 0, right: 16)
+        
+        addChild(topBarViewController)
+        self.contentContainer.addSubview(self.topBarViewController.view)
+        self.topBarViewController.topBar?.leftView = profileAccountView // TODO jacob move inside ConversationListTopBarViewController
     }
 
     @objc func createNetworkStatusBar() {

@@ -20,26 +20,34 @@ import UIKit
 import Cartography
 
 
-final class ConversationListTopBar: TopBar {
-   
-    internal var observerToken: Any?
+class ConversationListTopBarViewController: UIViewController {
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        
+    private var observerToken: Any?
+    
+    var topBar: TopBar? {
+        return view as? TopBar
+    }
+    
+    override func loadView() {
+        view = TopBar()
+    }
+    
+    override func viewDidLoad() {
         if ZMUser.selfUser().isTeamMember {
-            let availabilityView = AvailabilityTitleView(user: ZMUser.selfUser(), options: .header)
-            availabilityView.colorSchemeVariant = .dark
+            let availabilityView = AvailabilityTitleViewController(user: ZMUser.selfUser(), options: .header)
+            availabilityView.availabilityTitleView?.colorSchemeVariant = .dark
             
-            availabilityView.tapHandler = { [weak availabilityView] button in
-                guard let availabilityView = availabilityView, let presentingViewController = UIApplication.shared.keyWindow?.rootViewController else { return }
+            availabilityView.availabilityTitleView?.tapHandler = { [weak availabilityView] button in
+                guard let availabilityView = availabilityView?.availabilityTitleView, let presentingViewController = UIApplication.shared.keyWindow?.rootViewController else { return }
                 
                 let alert = availabilityView.actionSheet(presentingViewController: presentingViewController)
                 alert.popoverPresentationController?.sourceView = button
                 alert.popoverPresentationController?.sourceRect = button.frame
                 presentingViewController.present(alert, animated: true, completion: nil)
             }
-            self.middleView = availabilityView
+            addChild(availabilityView)
+            topBar?.middleView = availabilityView.view
+            availabilityView.didMove(toParent: self)
         } else {
             let titleLabel = UILabel()
             
@@ -50,30 +58,26 @@ final class ConversationListTopBar: TopBar {
             titleLabel.setContentCompressionResistancePriority(.required, for: .vertical)
             titleLabel.setContentHuggingPriority(.required, for: .horizontal)
             titleLabel.setContentHuggingPriority(.required, for: .vertical)
-            self.middleView = titleLabel
+            topBar?.middleView = titleLabel
             
             if let sharedSession = ZMUserSession.shared() {
-                self.observerToken = UserChangeInfo.add(observer: self, for: ZMUser.selfUser(), userSession: sharedSession)
+                observerToken = UserChangeInfo.add(observer: self, for: ZMUser.selfUser(), userSession: sharedSession)
             }
             
             updateMiddleViewTitle()
         }
         
-        self.splitSeparator = false
+        topBar?.splitSeparator = false
     }
     
     func updateMiddleViewTitle() {
-        guard let middleView = middleView as? UILabel else { return }
+        guard let middleView = topBar?.middleView as? UILabel else { return }
         middleView.text = ZMUser.selfUser().name
-    }
-    
-    required public init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
     
 }
 
-extension ConversationListTopBar: ZMUserObserver {
+extension ConversationListTopBarViewController: ZMUserObserver {
     
     public func userDidChange(_ changeInfo: UserChangeInfo) {
         guard changeInfo.nameChanged else { return }
@@ -81,11 +85,11 @@ extension ConversationListTopBar: ZMUserObserver {
     }
 }
 
-extension ConversationListTopBar {
+extension ConversationListTopBarViewController {
     @objc(scrollViewDidScroll:)
     public func scrollViewDidScroll(scrollView: UIScrollView!) {
-        self.leftSeparatorLineView.scrollViewDidScroll(scrollView: scrollView)
-        self.rightSeparatorLineView.scrollViewDidScroll(scrollView: scrollView)
+        topBar?.leftSeparatorLineView.scrollViewDidScroll(scrollView: scrollView)
+        topBar?.rightSeparatorLineView.scrollViewDidScroll(scrollView: scrollView)
     }
 }
 

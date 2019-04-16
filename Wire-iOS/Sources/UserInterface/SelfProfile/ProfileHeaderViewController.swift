@@ -90,7 +90,7 @@ class ProfileHeaderViewController: UIViewController, Themeable {
     let handleLabel = UILabel()
     let teamNameLabel = UILabel()
     let imageView =  UserImageView(size: .big)
-    let availabilityView: AvailabilityTitleView
+    let availabilityTitleViewController: AvailabilityTitleViewController
     
     let guestIndicatorStack = UIStackView()
     let guestIndicator = GuestLabelIndicator()
@@ -102,7 +102,7 @@ class ProfileHeaderViewController: UIViewController, Themeable {
         self.user = user
         self.viewer = viewer
         self.options = options
-        self.availabilityView = AvailabilityTitleView(user: user, options: [])
+        self.availabilityTitleViewController = AvailabilityTitleViewController(user: user, options: [])
         
         super.init(nibName: nil, bundle: nil)
     }
@@ -121,12 +121,12 @@ class ProfileHeaderViewController: UIViewController, Themeable {
         imageView.userSession = session
         imageView.user = user
         
-        availabilityView.tapHandler = { [weak self] button in
-            guard let `self` = self, let presentingViewController = self.source else { return }
+        availabilityTitleViewController.availabilityTitleView?.tapHandler = { [weak self] button in
+            guard let `self` = self else { return }
             guard self.options.contains(.allowEditingAvailability) else { return }
-            let alert = self.availabilityView.actionSheet(presentingViewController: self)
-            alert.popoverPresentationController?.sourceView = self.availabilityView
-            alert.popoverPresentationController?.sourceRect = self.availabilityView.frame
+            let alert = self.availabilityTitleViewController.availabilityTitleView!.actionSheet(presentingViewController: self)
+            alert.popoverPresentationController?.sourceView = self.availabilityTitleViewController.availabilityTitleView!
+            alert.popoverPresentationController?.sourceRect = self.availabilityTitleViewController.availabilityTitleView!.frame
             self.present(alert, animated: true, completion: nil)
         }
         
@@ -166,7 +166,9 @@ class ProfileHeaderViewController: UIViewController, Themeable {
         updateHandleLabel()
         updateTeamLabel()
         
-        stackView = CustomSpacingStackView(customSpacedArrangedSubviews: [nameHandleStack, teamNameLabel, imageView, availabilityView, guestIndicatorStack])
+        addChild(availabilityTitleViewController)
+        
+        stackView = CustomSpacingStackView(customSpacedArrangedSubviews: [nameHandleStack, teamNameLabel, imageView, availabilityTitleViewController.view, guestIndicatorStack])
         
         stackView.alignment = .center
         stackView.axis = .vertical
@@ -179,6 +181,8 @@ class ProfileHeaderViewController: UIViewController, Themeable {
         applyColorScheme(colorSchemeVariant)
         configureConstraints()
         applyOptions()
+        
+        availabilityTitleViewController.didMove(toParent: self)
     }
     
     private func configureConstraints() {
@@ -206,7 +210,7 @@ class ProfileHeaderViewController: UIViewController, Themeable {
     }
     
     func applyColorScheme(_ variant: ColorSchemeVariant) {
-        availabilityView.colorSchemeVariant = variant
+        availabilityTitleViewController.availabilityTitleView?.colorSchemeVariant = variant
         guestIndicator.colorSchemeVariant = variant
         
         handleLabel.textColor = UIColor.from(scheme: .textForeground, variant: variant)
@@ -261,12 +265,12 @@ class ProfileHeaderViewController: UIViewController, Themeable {
     
     private func updateAvailabilityVisibility() {
         if options.contains(.allowEditingAvailability) {
-            availabilityView.options.insert(.allowSettingStatus)
+            availabilityTitleViewController.availabilityTitleView?.options.insert(.allowSettingStatus)
         } else {
-            availabilityView.options.remove(.allowSettingStatus)
+            availabilityTitleViewController.availabilityTitleView?.options.remove(.allowSettingStatus)
         }
         
-        availabilityView.isHidden = options.contains(.hideAvailability) || !user.canDisplayAvailability(with: availabilityView.options)
+        availabilityTitleViewController.view?.isHidden = options.contains(.hideAvailability) || !user.canDisplayAvailability(with: availabilityTitleViewController.options)
     }
     
     private func updateImageButton() {

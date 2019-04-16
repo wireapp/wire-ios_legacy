@@ -23,7 +23,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @class SearchViewController;
-@class ConversationListTopBar;
+@class ConversationListTopBarViewController;
 @class NetworkStatusViewController;
 @class ConversationListBottomBarController;
 @class ConversationListContentController;
@@ -32,7 +32,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, nullable) SearchViewController *searchViewController;
 @property (nonatomic) ConversationListContentController *listContentController;
 @property (nonatomic, weak, readonly) id<UserProfile> userProfile;
-@property (nonatomic) ConversationListTopBar *topBar;
+@property (nonatomic) ConversationListTopBarViewController *topBarViewController;
 @property (nonatomic) NetworkStatusViewController *networkStatusViewController;
 @property (nonatomic, readonly) ConversationListBottomBarController *bottomBarController;
 /// for NetworkStatusViewDelegate

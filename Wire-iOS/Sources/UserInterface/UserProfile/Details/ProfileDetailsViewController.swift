@@ -111,7 +111,7 @@ final class ProfileDetailsViewController: UIViewController, Themeable {
         profileHeaderViewController.willMove(toParent: self)
         
         profileHeaderViewController.prepareForDisplay(in: conversation, context: context)
-        profileHeaderViewController.availabilityView.options = .profileDetails
+        profileHeaderViewController.availabilityTitleViewController.availabilityTitleView?.options = .profileDetails // TODO jacob do this inside the profileHeaderViewController
         profileHeaderViewController.imageView.isAccessibilityElement = false
         profileHeaderViewController.imageView.isUserInteractionEnabled = false
         profileHeaderViewController.view.sizeToFit()
