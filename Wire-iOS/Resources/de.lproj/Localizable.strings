@@ -1579,4 +1579,4 @@
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Password Rules
 "registration.password.rules.no_requirements" = "Bitte %@ verwenden.";
-"registration.password.rules.with_requirements" = "Bitte %@ verwenden, mit %@.";
+"registration.password.rules.with_requirements" = "Bitte %@ verwenden, %@.";
