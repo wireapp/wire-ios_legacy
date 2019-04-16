@@ -1240,7 +1240,7 @@
 "registration.alert.account_exists.title" = "Konto Vorhanden";
 "registration.alert.account_exists.message_phone" = "Die für die Registrierung verwendete Telefonnummer ist bereits mit einem Konto verknüpft.\n\nBitte andere Telefonnummer nutzen oder versuchen, sich mit dieser Telefonnummer einzuloggen.";
 "registration.alert.account_exists.message_email" = "Die für die Registrierung verwendete E-Mail-Adresse ist bereits mit einem Konto verknüpft.\n\nBitte andere E-Mail-Adresse nutzen oder versuchen, sich mit dieser E-Mail-Adresse einzuloggen.";
-"registration.alert.change_email_action" = "E-Mail-Adresse ändern";
+"registration.alert.change_email_action" = "Mit einer andern E-Mail registrieren";
 "registration.alert.change_phone_action" = "Bitte mit anderer Nummer registrieren";
 "registration.alert.change_signin_action" = "Einloggen";
 
@@ -1521,6 +1521,17 @@
 "availability.away.placeholder" = "%@ ist abwesend";
 "availability.busy.placeholder" = "%@ ist beschäftigt";
 
+"availability.reminder.away.title" = "Status: Abwesend";
+"availability.reminder.away.message" = "Andere sehen den Status als Abwesend. Es werden keine Benachrichtigungen über eingehende Anrufe oder Nachrichten zugestellt.";
+"availability.reminder.busy.title" = "Status: Beschäftigt";
+"availability.reminder.busy.message" = "Andere sehen den Status als Beschäftigt. Es werden nur Benachrichtigungen über Erwähnungen, Antworte und eingehende Anrufe zugestellt.";
+"availability.reminder.available.title" = "Status: Verfügbar";
+"availability.reminder.available.message" = "You will appear as Available to other people. You will receive notifications for incoming calls and for messages according to the Notifications setting in each conversation.";
+"availability.reminder.none.title" = "Kein Status gesetzt";
+"availability.reminder.none.message" = "You will receive notifications for incoming calls and for messages according to the Notifications setting in each conversation.";
+"availability.reminder.action.dont_remind_me" = "Do not display this information again";
+"availability.reminder.action.ok" = "Ok";
+
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Call Quality Survey
 
@@ -1579,4 +1590,4 @@
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Password Rules
 "registration.password.rules.no_requirements" = "Bitte %@ verwenden.";
-"registration.password.rules.with_requirements" = "Bitte %@ verwenden, mit %@.";
+"registration.password.rules.with_requirements" = "Bitte %@ verwenden, %@.";
