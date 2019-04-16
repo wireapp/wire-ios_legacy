@@ -154,6 +154,11 @@ class LandingViewController: AuthenticationStepViewController {
 
         return button
     }()
+    
+    let customBackendLabel: UILabel = {
+        let label = UILabel()
+        return label
+    }()
 
     // MARK: - Lifecycle
 
@@ -169,13 +174,18 @@ class LandingViewController: AuthenticationStepViewController {
         updateForCurrentSizeClass(isRegular: traitCollection.horizontalSizeClass == .regular)
         updateBarButtonItem()
         disableTrackingIfNeeded()
+        updateCustomBackendLabel()
 
         NotificationCenter.default.addObserver(
             forName: AccountManagerDidUpdateAccountsNotificationName,
             object: SessionManager.shared?.accountManager,
-            queue: nil) { _ in
+            queue: .main) { _ in
                 self.updateBarButtonItem()
                 self.disableTrackingIfNeeded()
+        }
+        
+        NotificationCenter.default.addObserver(forName: BackendEnvironment.backendSwitchNotification, object: nil, queue: .main) { _ in
+            self.updateCustomBackendLabel()
         }
     }
 
@@ -200,6 +210,7 @@ class LandingViewController: AuthenticationStepViewController {
         }
 
         contentStack.addArrangedSubview(logoView)
+        contentStack.addArrangedSubview(customBackendLabel)
 
         buttonStackView.addArrangedSubview(createAccountButton)
         buttonStackView.addArrangedSubview(createTeamButton)
@@ -283,6 +294,16 @@ class LandingViewController: AuthenticationStepViewController {
             cancelItem.accessibilityIdentifier = "CancelButton"
             cancelItem.accessibilityLabel = "general.cancel".localized
             navigationItem.rightBarButtonItem = cancelItem
+        }
+    }
+    
+    private func updateCustomBackendLabel() {
+        switch BackendEnvironment.shared.environmentType.value {
+        case .production, .staging:
+            customBackendLabel.isHidden = true
+        case .custom(url: let url):
+            customBackendLabel.text = "Custom: \(url.absoluteString)"
+            customBackendLabel.isHidden = false
         }
     }
     

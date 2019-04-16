@@ -21,6 +21,7 @@ import WireTransport
 
 extension BackendEnvironment {
     
+    public static let backendSwitchNotification = Notification.Name("backendEnvironmentSwitchNotification")
     
     public static var shared: BackendEnvironment = {
         let bundle = Bundle.backendBundle
@@ -29,6 +30,7 @@ extension BackendEnvironment {
         }() {
         didSet {
             shared.save(in: .standard)
+            NotificationCenter.default.post(name: backendSwitchNotification, object: shared)
         }
     }
 }
