@@ -681,40 +681,36 @@ extension AppRootViewController: SessionManagerURLHandlerDelegate {
             let context = DefaultCompanyControllerLinkResponseContext(sessionManager: SessionManager.shared!, appState: appStateController.appState, authenticationCoordinator: authenticationCoordinator)
             executeCompanyLoginLinkAction(context.actionForInvalidRequest(error: error), callback: callback)
             
-        case .accessBackend(host: let host):
+        case .accessBackend(configurationURL: let configurationURL):
             
-            let makeSwitch = sessionManager?.switchBackend(to: host,
+            let makeSwitch = sessionManager?.switchBackend(configuration: configurationURL,
                                                       onError: { error in
                 switch error {
-                case .alreadySwitched:
-                    let alert = UIAlertController(title: "url_action.title".localized,
-                                                  message: "url_action.switch_backend.error.already_switched".localized,
-                                                  preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: "general.ok".localized, style: .default, handler: nil))
-                    self.present(alert, animated: true, completion: nil)
                 case .loggedInAccounts:
-                    let alert = UIAlertController(title: "url_action.title".localized,
+                    let alert = UIAlertController(title: "url_action.switch_backend.error.logged_in.title".localized,
                                                   message: "url_action.switch_backend.error.logged_in".localized,
                                                   preferredStyle: .alert)
                     alert.addAction(UIAlertAction(title: "general.ok".localized, style: .default, handler: nil))
                     self.present(alert, animated: true, completion: nil)
-                case .invalidBackend, .invalidHost:
-                    let alert = UIAlertController(title: "url_action.title".localized,
+                case .invalidBackend:
+                    let alert = UIAlertController(title: "url_action.switch_backend.error.invalid_backend.title".localized,
                                                   message: "url_action.switch_backend.error.invalid_backend".localized,
                                                   preferredStyle: .alert)
                     alert.addAction(UIAlertAction(title: "general.ok".localized, style: .default, handler: nil))
                     self.present(alert, animated: true, completion: nil)
                 }
-            }, completed: { success in
-                
+            }, completed: { environment in
+                if let environment = environment {
+                    BackendEnvironment.shared = environment
+                }
             })
             
             // If we have the handler then we are good to go and can ask the user to confirm
             if let makeSwitch = makeSwitch {
-                let alert = UIAlertController(title: "url_action.title".localized,
-                                              message: "url_action.switch_backend.message".localized(args: host),
+                let alert = UIAlertController(title: "url_action.switch_backend.title".localized,
+                                              message: "url_action.switch_backend.message".localized(args: configurationURL.absoluteString),
                                               preferredStyle: .alert)
-                let agreeAction = UIAlertAction(title: "url_action.confirm".localized,
+                let agreeAction = UIAlertAction(title: "general.ok".localized,
                                                 style: .default) { _ in makeSwitch() }
                 alert.addAction(agreeAction)
                 
