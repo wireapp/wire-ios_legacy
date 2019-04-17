@@ -20,23 +20,16 @@ import UIKit
 
 extension UserType {
 
+    /// Returns the current accent color of the user.
     var accentColor: UIColor {
         return UIColor(fromZMAccentColor: accentColorValue)
     }
 
 }
 
-extension AccentColor {
-
-    /// Returns a random accent color.
-    static var random: AccentColor {
-        return AccentColor.allSelectable().randomElement()!
-    }
-
-}
-
 extension UnregisteredUser {
 
+    /// The accent color value of the unregistered user.
     var accentColor: AccentColor? {
         get {
             return accentColorValue.flatMap(AccentColor.init)
