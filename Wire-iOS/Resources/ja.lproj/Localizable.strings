@@ -824,8 +824,8 @@
 "self.add_phone_number" = "電話番号を追加する";
 "self.add_email_password" = "メールアドレスとパスワードを追加";
 
-"self.accessibility.profile_photo_image" = "Profile picture";
-"self.accessibility.profile_photo_edit_button" = "Change profile picture";
+"self.accessibility.profile_photo_image" = "プロフィール画像";
+"self.accessibility.profile_photo_edit_button" = "プロフィール画像を変更";
 
 // About screen
 "about.tos.title" = "利用規約";
@@ -1003,7 +1003,7 @@
 "self.settings.link_options.maps.title" = "ロケーション";
 "self.settings.link_options.browser.title" = "ブラウザ";
 
-"open_link.twitter.option.default" = "Safari / Twitter";
+"open_link.twitter.option.default" = "Browser / Twitter";
 "open_link.twitter.option.tweetbot" = "Tweetbot";
 "open_link.twitter.option.twitterrific" = "Twitterrific";
 
@@ -1240,7 +1240,7 @@
 "registration.alert.account_exists.title" = "アカウントが存在します";
 "registration.alert.account_exists.message_phone" = "登録に使用した電話番号は既にアカウントにリンクされています。\n\n別の電話番号を登録するか、このアカウントを持っている場合はログインしてみてください。";
 "registration.alert.account_exists.message_email" = "登録に使用したメールアドレスは既にアカウントにリンクされています。\n\n別のメールアドレスを登録するか、このアカウントを持っている場合はログインしてみてください。";
-"registration.alert.change_email_action" = "Eメールを変更";
+"registration.alert.change_email_action" = "Register with Another Email";
 "registration.alert.change_phone_action" = "別の番号で登録します。";
 "registration.alert.change_signin_action" = "ログイン";
 
@@ -1520,6 +1520,17 @@
 "availability.available.placeholder" = "%@ が利用可能です。";
 "availability.away.placeholder" = "%@ は退席しています";
 "availability.busy.placeholder" = "%@ は取り込み中です";
+
+"availability.reminder.away.title" = "You are set to Away";
+"availability.reminder.away.message" = "You will appear as Away to other people. You will not receive notifications about any incoming calls or messages.";
+"availability.reminder.busy.title" = "You are set to Busy";
+"availability.reminder.busy.message" = "You will appear as Busy to other people. You will receive only receive notifications for mentions, replies, and calls in conversations that are not muted.";
+"availability.reminder.available.title" = "You are set to Available";
+"availability.reminder.available.message" = "You will appear as Available to other people. You will receive notifications for incoming calls and for messages according to the Notifications setting in each conversation.";
+"availability.reminder.none.title" = "No status set";
+"availability.reminder.none.message" = "You will receive notifications for incoming calls and for messages according to the Notifications setting in each conversation.";
+"availability.reminder.action.dont_remind_me" = "Do not display this information again";
+"availability.reminder.action.ok" = "Ok";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Call Quality Survey

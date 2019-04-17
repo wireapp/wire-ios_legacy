@@ -222,6 +222,7 @@
         self.viewDidAppearCalled = YES;
 
         [self showDataUsagePermissionDialogIfNeeded];
+        [self showAvailabilityBehaviourChangeAlertIfNeeded];
     }
 }
 

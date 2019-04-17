@@ -365,7 +365,7 @@
 
 "content.system.continued_conversation" = "Начать разговор с %@";
 "content.system.started_conversation.truncated_people" = "и %@";
-"content.system.started_conversation.truncated_people.others" = "%@ остальных";
+"content.system.started_conversation.truncated_people.others" = "еще %@";
 "content.system.started_conversation.complete_team" = "все члены команды";
 "content.system.started_conversation.complete_team.guests" = "все члены команды и %@ гостей";
 
@@ -1003,7 +1003,7 @@
 "self.settings.link_options.maps.title" = "Местоположения";
 "self.settings.link_options.browser.title" = "Браузер";
 
-"open_link.twitter.option.default" = "Safari / Twitter";
+"open_link.twitter.option.default" = "Браузер / Твиттер";
 "open_link.twitter.option.tweetbot" = "Tweetbot";
 "open_link.twitter.option.twitterrific" = "Twitterrific";
 
@@ -1131,7 +1131,7 @@
 "landing.create_account.title" = "Personal";
 "landing.create_account.subtitle" = "Приватный чат с группами друзей\U00A0и\U00A0семьей";
 "landing.create_team.title" = "Pro";
-"landing.create_team.subtitle" = "Безопасное сотрудничество для предприятий, учреждений и профессиональных\U00A0организаций";
+"landing.create_team.subtitle" = "Безопасная совместная работа для предприятий, учреждений и профессиональных\U00A0организаций";
 "landing.login.hints" = "Уже зарегистрированы?";
 "landing.login.button.title" = "Войти";
 
@@ -1240,7 +1240,7 @@
 "registration.alert.account_exists.title" = "Учетная запись существует";
 "registration.alert.account_exists.message_phone" = "Номер телефона, который вы использовали для регистрации, уже связан с учетной записью. \n\nИспользуйте другой номер телефона или попробуйте войти, если это ваша учетная запись.";
 "registration.alert.account_exists.message_email" = "Адрес email, который вы использовали для регистрации, уже связан с учетной записью. \n\n Используйте другой email или попробуйте войти, если это ваша учетная запись.";
-"registration.alert.change_email_action" = "Изменить адрес email";
+"registration.alert.change_email_action" = "Зарегистрироваться с другим email";
 "registration.alert.change_phone_action" = "Зарегистрироваться с другим номером";
 "registration.alert.change_signin_action" = "Войти";
 
@@ -1520,6 +1520,17 @@
 "availability.available.placeholder" = "%@ доступен";
 "availability.away.placeholder" = "%@ отошел";
 "availability.busy.placeholder" = "%@ занят";
+
+"availability.reminder.away.title" = "Вы установили 'Отошел'";
+"availability.reminder.away.message" = "Для других пользователей будет отображаться статус 'Отошел'. Вы не будете получать уведомления о любых входящих звонках или сообщениях.";
+"availability.reminder.busy.title" = "Вы установили 'Занят'";
+"availability.reminder.busy.message" = "Для других пользователей будет отображаться статус 'Занят'. Вы будете получать уведомления только об упоминаниях, ответах и звонках в разговорах, уведомления для которых не отключены.";
+"availability.reminder.available.title" = "Вы установили 'Доступен'";
+"availability.reminder.available.message" = "Для других пользователей будет отображаться статус 'Доступен'. Вы будете получать уведомления о входящих вызовах и сообщениях в соответствии с настройками уведомлений в каждом разговоре.";
+"availability.reminder.none.title" = "Нет установленного статуса";
+"availability.reminder.none.message" = "Вы будете получать уведомления о входящих вызовах и сообщениях в соответствии с настройками уведомлений в каждом разговоре.";
+"availability.reminder.action.dont_remind_me" = "Не показывать это предупреждение в дальнейшем";
+"availability.reminder.action.ok" = "Ok";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Call Quality Survey

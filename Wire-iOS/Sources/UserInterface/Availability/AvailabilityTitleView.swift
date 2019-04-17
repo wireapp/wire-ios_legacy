@@ -168,18 +168,23 @@ class AvailabilityTitleView: TitleView, Themeable, ZMUserObserver {
     
     // MARK: - Actions
     
-    var actionSheet: UIAlertController {
-        get {
-            let alert = UIAlertController(title: "availability.message.set_status".localized, message: nil, preferredStyle: .actionSheet)
-            for type in Availability.allCases {
-                alert.addAction(UIAlertAction(title: type.localizedName, style: .default, handler: { [weak self] (action) in
-                    self?.didSelectAvailability(type)
-                }))
-            }
-            alert.popoverPresentationController?.permittedArrowDirections = [ .up ]
-            alert.addAction(UIAlertAction(title: "availability.message.cancel".localized, style: .cancel, handler: nil))
-            return alert
+    func actionSheet(presentingViewController: UIViewController) -> UIAlertController {
+        let alert = UIAlertController(title: "availability.message.set_status".localized, message: nil, preferredStyle: .actionSheet)
+        
+        for availability in Availability.allCases {
+            alert.addAction(UIAlertAction(title: availability.localizedName, style: .default, handler: { [weak self] (action) in
+                self?.didSelectAvailability(availability)
+                
+                if Settings.shared()?.shouldRemindUserWhenChanging(availability) == true {
+                    presentingViewController.present(UIAlertController.availabilityExplanation(availability), animated: true)
+                }
+            }))
         }
+        
+        alert.popoverPresentationController?.permittedArrowDirections = [ .up ]
+        alert.addAction(UIAlertAction(title: "availability.message.cancel".localized, style: .cancel, handler: nil))
+        
+        return alert
     }
     
     private func didSelectAvailability(_ availability: Availability) {
