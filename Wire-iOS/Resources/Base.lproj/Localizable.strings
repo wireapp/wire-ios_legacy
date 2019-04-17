@@ -1530,7 +1530,7 @@
 "availability.reminder.none.title" = "No status set";
 "availability.reminder.none.message" = "You will receive notifications for incoming calls and for messages according to the Notifications setting in each conversation.";
 "availability.reminder.action.dont_remind_me" = "Do not display this information again";
-"availability.reminder.action.ok" = "Ok";
+"availability.reminder.action.ok" = "OK";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Call Quality Survey
