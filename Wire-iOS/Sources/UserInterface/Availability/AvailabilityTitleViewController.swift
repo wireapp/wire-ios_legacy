@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2010 Wire Swiss GmbH
+// Copyright (C) 2019 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -21,9 +21,8 @@ import Foundation
 class AvailabilityTitleViewController: UIViewController {
     
     private let feedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
-    
-    let options: AvailabilityTitleView.Options
-    let user: GenericUser
+    private let options: AvailabilityTitleView.Options
+    private let user: GenericUser
     
     var availabilityTitleView: AvailabilityTitleView? {
         return view as? AvailabilityTitleView

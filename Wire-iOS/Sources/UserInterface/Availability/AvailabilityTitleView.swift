@@ -46,6 +46,7 @@ class AvailabilityTitleView: TitleView, Themeable, ZMUserObserver {
     
     private let user: GenericUser
     private var observerToken: Any?
+    private var options: Options
     
     private let feedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
     
@@ -53,13 +54,6 @@ class AvailabilityTitleView: TitleView, Themeable, ZMUserObserver {
         didSet {
             guard colorSchemeVariant != oldValue else { return }
             applyColorScheme(colorSchemeVariant)
-        }
-    }
-    
-    /// The options to apply to this view.
-    var options: Options {
-        didSet {
-            updateConfiguration()
         }
     }
     
