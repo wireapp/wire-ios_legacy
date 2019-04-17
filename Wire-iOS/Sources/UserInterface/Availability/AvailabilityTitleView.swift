@@ -89,6 +89,7 @@ class AvailabilityTitleView: TitleView, Themeable, ZMUserObserver {
     init(user: GenericUser, options: Options) {
         self.options = options
         self.user = user
+        
         super.init()
         
         if let sharedSession = ZMUserSession.shared() {
@@ -127,8 +128,6 @@ class AvailabilityTitleView: TitleView, Themeable, ZMUserObserver {
         
         if options.contains(.displayUserName) {
             title = user.name ?? ""
-            accessibilityLabel = title
-            accessibilityValue = title
         } else if availability == .none && options.contains(.allowSettingStatus) {
             title = "availability.message.set_status".localized(uppercased: true)
         } else if availability != .none {
@@ -137,6 +136,9 @@ class AvailabilityTitleView: TitleView, Themeable, ZMUserObserver {
         
         let showInteractiveIcon = isInteractive && !options.contains(.hideActionHint)
         super.configure(icon: icon, title: title, interactive: isInteractive, showInteractiveIcon: showInteractiveIcon)
+        
+        accessibilityLabel = options.contains(.allowSettingStatus) ? "availability.accessibility_label.change_status".localized : "availability.accessibility_label.status".localized
+        accessibilityValue = availability.localizedName
     }
     
     /// Refreshes the appearance of the view, based on the options.
@@ -155,10 +157,6 @@ class AvailabilityTitleView: TitleView, Themeable, ZMUserObserver {
     
     @objc private func applicationDidBecomeActive() {
         updateConfiguration()
-    }
-    
-    override func updateAccessibilityLabel() {
-        self.accessibilityLabel = "\(user.name ?? "")_is_\(user.availability.localizedName)".localized
     }
     
     func userDidChange(_ changeInfo: UserChangeInfo) {
