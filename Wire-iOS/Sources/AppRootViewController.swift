@@ -685,6 +685,7 @@ extension AppRootViewController: SessionManagerURLHandlerDelegate {
             
             let makeSwitch = sessionManager?.switchBackend(configuration: configurationURL,
                                                       onError: { error in
+                self.showLoadingView = false
                 switch error {
                 case .loggedInAccounts:
                     let alert = UIAlertController(title: "url_action.switch_backend.error.logged_in.title".localized,
@@ -700,6 +701,7 @@ extension AppRootViewController: SessionManagerURLHandlerDelegate {
                     self.present(alert, animated: true, completion: nil)
                 }
             }, completed: { environment in
+                self.showLoadingView = false
                 if let environment = environment {
                     BackendEnvironment.shared = environment
                 }
@@ -711,7 +713,10 @@ extension AppRootViewController: SessionManagerURLHandlerDelegate {
                                               message: "url_action.switch_backend.message".localized(args: configurationURL.absoluteString),
                                               preferredStyle: .alert)
                 let agreeAction = UIAlertAction(title: "general.ok".localized,
-                                                style: .default) { _ in makeSwitch() }
+                                                style: .default) { _ in
+                                                    self.showLoadingView = true
+                                                    makeSwitch()
+                }
                 alert.addAction(agreeAction)
                 
                 let cancelAction = UIAlertAction(title: "general.cancel".localized, style: .cancel)
