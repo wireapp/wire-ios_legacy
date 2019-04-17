@@ -54,6 +54,9 @@ class ProfileHeaderViewController: UIViewController, Themeable {
             applyOptions()
         }
     }
+    
+    /// Associated conversation, if displayed in the context of a conversation
+    let conversation: ZMConversation?
 
     /// The user that is displayed.
     let user: UserType
@@ -105,9 +108,10 @@ class ProfileHeaderViewController: UIViewController, Themeable {
      * - note: You can change the options later through the `options` property.
      */
     
-    init(user: UserType, viewer: UserType = ZMUser.selfUser(), options: Options) {
+    init(user: UserType, viewer: UserType = ZMUser.selfUser(), conversation: ZMConversation? = nil, options: Options) {
         self.user = user
         self.viewer = viewer
+        self.conversation = conversation
         self.options = options
         self.availabilityTitleViewController = AvailabilityTitleViewController(user: user, options: options.contains(.allowEditingAvailability) ? [.allowSettingStatus] : [.hideActionHint])
         
@@ -152,15 +156,18 @@ class ProfileHeaderViewController: UIViewController, Themeable {
         nameLabel.text = user.name
         nameLabel.accessibilityValue = nameLabel.text
         
+        let remainingTimeString = user.expirationDisplayString
         remainingTimeLabel.font = UIFont.mediumSemiboldFont
+        remainingTimeLabel.text = remainingTimeString
+        remainingTimeLabel.isHidden = remainingTimeString == nil
         
         guestIndicatorStack.addArrangedSubview(guestIndicator)
         guestIndicatorStack.addArrangedSubview(remainingTimeLabel)
         guestIndicatorStack.spacing = 12
         guestIndicatorStack.axis = .vertical
         guestIndicatorStack.alignment = .center
-        guestIndicatorStack.isHidden = true
         
+        updateGuestIndicator()
         updateHandleLabel()
         updateTeamLabel()
         
@@ -217,20 +224,12 @@ class ProfileHeaderViewController: UIViewController, Themeable {
         remainingTimeLabel.textColor = ColorScheme.default.color(named: .textForeground, variant: variant)
     }
     
-    func prepareForDisplay(in conversation: ZMConversation?, context: ProfileViewControllerContext) {
-        let guestIndicatorHidden: Bool
-        switch context {
-        case .profileViewer:
-            guestIndicatorHidden = !viewer.isTeamMember || viewer.canAccessCompanyInformation(of: user)
-        default:
-            guestIndicatorHidden = conversation.map(user.isGuest) != true
+    func updateGuestIndicator() {
+        if let conversation = conversation {
+            guestIndicatorStack.isHidden = !user.isGuest(in: conversation)
+        } else {
+            guestIndicatorStack.isHidden = !viewer.isTeamMember || viewer.canAccessCompanyInformation(of: user)
         }
-        
-        guestIndicatorStack.isHidden = guestIndicatorHidden
-        
-        let remainingTimeString = user.expirationDisplayString
-        remainingTimeLabel.text = remainingTimeString
-        remainingTimeLabel.isHidden = remainingTimeString == nil
     }
     
     private func applyOptions() {

@@ -81,7 +81,7 @@ final class ProfileDetailsViewController: UIViewController, Themeable {
         self.viewer = viewer
         self.conversation = conversation
         self.context = context
-        self.profileHeaderViewController = ProfileHeaderViewController(user: user, viewer: viewer, options: profileHeaderOptions)
+        self.profileHeaderViewController = ProfileHeaderViewController(user: user, viewer: viewer, conversation: conversation, options: profileHeaderOptions)
         self.contentController = ProfileDetailsContentController(user: user, viewer: viewer, conversation: conversation)
         
         super.init(nibName: nil, bundle: nil)
@@ -111,7 +111,6 @@ final class ProfileDetailsViewController: UIViewController, Themeable {
         view.addSubview(tableView)
         
         profileHeaderViewController.willMove(toParent: self)
-        profileHeaderViewController.prepareForDisplay(in: conversation, context: context)
         profileHeaderViewController.imageView.isAccessibilityElement = false
         profileHeaderViewController.imageView.isUserInteractionEnabled = false
         profileHeaderViewController.view.sizeToFit()
