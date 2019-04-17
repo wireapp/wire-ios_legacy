@@ -97,7 +97,7 @@ final class ProfileDetailsContentController: NSObject, UITableViewDataSource, UI
     // MARK: - Calculating the Content
     
     /// Whether the viewer can access the rich profile data of the displayed user.
-    var viewerCanAccessRichProfile: Bool {
+    private var viewerCanAccessRichProfile: Bool {
         return viewer.canAccessCompanyInformation(of: user)
     }
     

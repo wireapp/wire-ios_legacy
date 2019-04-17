@@ -70,11 +70,18 @@ final class ProfileDetailsViewController: UIViewController, Themeable {
          viewer: GenericUser,
          conversation: ZMConversation?,
          context: ProfileViewControllerContext) {
+        
+        var profileHeaderOptions: ProfileHeaderViewController.Options = [.hideUsername, .hideHandle, .hideTeamName]
+        
+        if user.isSelfUser || !viewer.canAccessCompanyInformation(of: user) {
+            profileHeaderOptions.insert(.hideAvailability)
+        }
+        
         self.user = user
         self.viewer = viewer
         self.conversation = conversation
         self.context = context
-        self.profileHeaderViewController = ProfileHeaderViewController(user: user, viewer: viewer, options: [.hideUsername, .hideHandle, .hideTeamName])
+        self.profileHeaderViewController = ProfileHeaderViewController(user: user, viewer: viewer, options: profileHeaderOptions)
         self.contentController = ProfileDetailsContentController(user: user, viewer: viewer, conversation: conversation)
         
         super.init(nibName: nil, bundle: nil)
@@ -103,15 +110,8 @@ final class ProfileDetailsViewController: UIViewController, Themeable {
         tableView.contentInset.bottom = 88
         view.addSubview(tableView)
         
-        // Create the profile header
-        if user.isSelfUser || !contentController.viewerCanAccessRichProfile {
-            profileHeaderViewController.options.insert(.hideAvailability)
-        }
-        
         profileHeaderViewController.willMove(toParent: self)
-        
         profileHeaderViewController.prepareForDisplay(in: conversation, context: context)
-        profileHeaderViewController.availabilityTitleViewController.availabilityTitleView?.options = .profileDetails // TODO jacob do this inside the profileHeaderViewController
         profileHeaderViewController.imageView.isAccessibilityElement = false
         profileHeaderViewController.imageView.isUserInteractionEnabled = false
         profileHeaderViewController.view.sizeToFit()

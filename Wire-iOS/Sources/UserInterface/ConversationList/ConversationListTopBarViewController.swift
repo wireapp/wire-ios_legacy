@@ -44,7 +44,7 @@ class ConversationListTopBarViewController: UIViewController {
     
     func createTitleView() -> UIView {
         if ZMUser.selfUser().isTeamMember {
-            let availabilityViewController = AvailabilityTitleViewController(user: ZMUser.selfUser(), options: .header)
+            let availabilityViewController = AvailabilityTitleViewController(user: ZMUser.selfUser(), options: [.allowSettingStatus, .hideActionHint, .displayUserName, .useLargeFont])
             availabilityViewController.availabilityTitleView?.colorSchemeVariant = .dark
             addChild(availabilityViewController)
             self.availabilityViewController = availabilityViewController

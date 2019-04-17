@@ -40,15 +40,6 @@ class AvailabilityTitleView: TitleView, Themeable, ZMUserObserver {
         /// Whether to use a large text font instead of the default small one.
         static let useLargeFont = Options(rawValue: 1 << 3)
         
-        /// The default options for using the view inside the header of the home page.
-        static var header: Options = [.allowSettingStatus, .hideActionHint, .displayUserName, .useLargeFont]
-        
-        /// The default option for using the view inside the profile screen of the settings.
-        static var selfProfile: Options = [.allowSettingStatus]
-        
-        /// The default option for using the view inside the profile details screen of a conversation.
-        static var profileDetails: Options = [.hideActionHint]
-        
     }
     
     // MARK: - Properties
@@ -73,11 +64,6 @@ class AvailabilityTitleView: TitleView, Themeable, ZMUserObserver {
     }
     
     // MARK: - Initialization
-    
-    @objc(profileDetailsAvailabilityTitleViewForUser:)
-    static func makeProfileDetailsAvailabilityTitleView(for user: ZMUser) -> AvailabilityTitleView {
-        return AvailabilityTitleView(user: user, options: .profileDetails)
-    }
     
     /**
      * Creates a view for the specific user and options.
