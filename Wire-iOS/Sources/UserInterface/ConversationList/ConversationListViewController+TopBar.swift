@@ -47,7 +47,7 @@ extension ConversationListViewController {
     }
 
     @objc func createTopBar() {
-        self.topBarViewController = ConversationListTopBarViewController()
+        self.topBarViewController = ConversationListTopBarViewController(account: account)
         addChild(topBarViewController)
         self.contentContainer.addSubview(self.topBarViewController.view)
     }

@@ -24,9 +24,21 @@ class ConversationListTopBarViewController: UIViewController {
     
     private var observerToken: Any?
     private var availabilityViewController: AvailabilityTitleViewController?
+    private var account: Account
     
     var topBar: TopBar? {
         return view as? TopBar
+    }
+    
+    
+    init(account: Account) {
+        self.account = account
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     override func loadView() {
@@ -44,7 +56,7 @@ class ConversationListTopBarViewController: UIViewController {
     
     func createTitleView() -> UIView {
         if ZMUser.selfUser().isTeamMember {
-            let availabilityViewController = AvailabilityTitleViewController(user: ZMUser.selfUser(), options: [.allowSettingStatus, .hideActionHint, .displayUserName, .useLargeFont])
+            let availabilityViewController = AvailabilityTitleViewController(user: ZMUser.selfUser(), options: .header)
             availabilityViewController.availabilityTitleView?.colorSchemeVariant = .dark
             addChild(availabilityViewController)
             self.availabilityViewController = availabilityViewController
@@ -71,33 +83,29 @@ class ConversationListTopBarViewController: UIViewController {
     }
         
     func createAccountView() -> BaseAccountView {
-        guard let currentAccount = SessionManager.shared?.accountManager.selectedAccount else { // TODO jacob inject
-            fatal("No account available")
-        }
-        
         let session = ZMUserSession.shared() ?? nil
         let user = session == nil ? nil : ZMUser.selfUser(inUserSession: session!)
-        let currentAccountView = AccountViewFactory.viewFor(account: currentAccount,
-                                                            user: user)
-        currentAccountView.unreadCountStyle = .others
+        let accountView = AccountViewFactory.viewFor(account: account, user: user)
         
-        currentAccountView.selected = false
-        currentAccountView.autoUpdateSelection = false
+        accountView.unreadCountStyle = .others
+        accountView.selected = false
+        accountView.autoUpdateSelection = false
         
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(presentSettings))
-        currentAccountView.addGestureRecognizer(tapGestureRecognizer)
+        accountView.addGestureRecognizer(tapGestureRecognizer)
         
-        currentAccountView.accessibilityTraits = .button
-        currentAccountView.accessibilityIdentifier = "bottomBarSettingsButton"
-        currentAccountView.accessibilityLabel = "self.voiceover.label".localized
-        currentAccountView.accessibilityHint = "self.voiceover.hint".localized
+        accountView.accessibilityTraits = .button
+        accountView.accessibilityIdentifier = "bottomBarSettingsButton"
+        accountView.accessibilityLabel = "self.voiceover.label".localized
+        accountView.accessibilityHint = "self.voiceover.hint".localized
         
         if let user = ZMUser.selfUser() {
             if user.clientsRequiringUserAttention.count > 0 {
-                currentAccountView.accessibilityLabel = "self.new-device.voiceover.label".localized
+                accountView.accessibilityLabel = "self.new-device.voiceover.label".localized
             }
         }
-        return currentAccountView
+        
+        return accountView
     }
     
     func updateTitle() {
