@@ -6905,11 +6905,11 @@
 			files = (
 			);
 			inputPaths = (
-				"$(BUILT_PRODUCTS_DIR)/WireSyncEngine.framework",
-				"$(BUILT_PRODUCTS_DIR)/WireDataModel.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/WireSyncEngine.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/WireDataModel.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/WireSystem.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/WireUtilities.framework",
-				"$(BUILT_PRODUCTS_DIR)/WireTransport.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/WireTransport.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/WireImages.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/WireCryptobox.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/WireProtos.framework",
