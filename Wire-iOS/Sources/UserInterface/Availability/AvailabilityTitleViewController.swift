@@ -22,13 +22,13 @@ class AvailabilityTitleViewController: UIViewController {
     
     private let feedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
     private let options: AvailabilityTitleView.Options
-    private let user: GenericUser
+    private let user: UserType
     
     var availabilityTitleView: AvailabilityTitleView? {
         return view as? AvailabilityTitleView
     }
     
-    init(user: GenericUser, options: AvailabilityTitleView.Options) {
+    init(user: UserType, options: AvailabilityTitleView.Options) {
         self.user = user
         self.options = options
         

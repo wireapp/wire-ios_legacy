@@ -105,7 +105,7 @@ class ProfileHeaderViewController: UIViewController, Themeable {
      * - note: You can change the options later through the `options` property.
      */
     
-    init(user: UserType, viewer: UserType, options: Options) {
+    init(user: UserType, viewer: UserType = ZMUser.selfUser(), options: Options) {
         self.user = user
         self.viewer = viewer
         self.options = options

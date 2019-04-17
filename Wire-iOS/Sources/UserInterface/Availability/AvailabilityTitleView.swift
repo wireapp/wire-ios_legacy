@@ -63,7 +63,6 @@ class AvailabilityTitleView: TitleView, Themeable, ZMUserObserver {
      * Creates a view for the specific user and options.
      * - parameter user: The user to display the availability of.
      * - parameter options: The options to display the availability.
-     * - note: You can change the options later, through the `options` property.
      */
     
     init(user: UserType, options: Options) {
