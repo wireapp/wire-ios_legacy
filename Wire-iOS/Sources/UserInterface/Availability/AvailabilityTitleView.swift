@@ -44,7 +44,7 @@ class AvailabilityTitleView: TitleView, Themeable, ZMUserObserver {
     
     // MARK: - Properties
     
-    private let user: GenericUser
+    private let user: UserType
     private var observerToken: Any?
     private var options: Options
     
@@ -66,7 +66,7 @@ class AvailabilityTitleView: TitleView, Themeable, ZMUserObserver {
      * - note: You can change the options later, through the `options` property.
      */
     
-    init(user: GenericUser, options: Options) {
+    init(user: UserType, options: Options) {
         self.options = options
         self.user = user
         

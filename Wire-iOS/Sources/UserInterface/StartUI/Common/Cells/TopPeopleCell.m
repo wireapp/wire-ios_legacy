@@ -99,7 +99,7 @@
 
 #pragma mark - Get, set
 
-- (void)setUser:(id<UserType, AccentColorProvider>)user
+- (void)setUser:(id<UserType>)user
 {
     _user = user;
     self.badgeUserImageView.user = user;

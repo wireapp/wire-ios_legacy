@@ -728,12 +728,16 @@ extension ConversationStatus {
 extension ZMConversation {
     
     var status: ConversationStatus {
-        
         let messagesRequiringAttention = estimatedUnreadCount > 0 ? unreadMessages : []
-        let messagesRequiringAttentionTypes = messagesRequiringAttention.compactMap { StatusMessageType(message: $0) }
-        var iterator = messagesRequiringAttentionTypes.makeIterator()
-        let messagesRequiringAttentionByType = iterator.histogram()
-                
+        
+        let messagesRequiringAttentionByType: [StatusMessageType: UInt] = messagesRequiringAttention.reduce(into: [:]) { histogram, element in
+            guard let messageType = StatusMessageType(message: element) else {
+                return
+            }
+
+            histogram[messageType, default: 0] += 1
+        }
+
         let isOngoingCall: Bool = {
             guard let state = voiceChannel?.state else { return false }
             switch state {

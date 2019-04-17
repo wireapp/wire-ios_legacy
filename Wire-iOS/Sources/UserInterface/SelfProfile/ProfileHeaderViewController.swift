@@ -54,19 +54,19 @@ class ProfileHeaderViewController: UIViewController, Themeable {
             applyOptions()
         }
     }
-    
+
+    /// The user that is displayed.
+    let user: UserType
+
+    /// The user who is viewing this view
+    let viewer: UserType
+
     @objc dynamic var colorSchemeVariant: ColorSchemeVariant = ColorScheme.default.variant {
         didSet {
             guard colorSchemeVariant != oldValue else { return }
             applyColorScheme(colorSchemeVariant)
         }
     }
-    
-    /// The user that is displayed.
-    let user: GenericUser
-    
-    /// The user who is viewing this view
-    let viewer: GenericUser
     
     var stackView: CustomSpacingStackView!
     
@@ -98,7 +98,14 @@ class ProfileHeaderViewController: UIViewController, Themeable {
     
     private var tokens: [Any?] = []
     
-    init(user: GenericUser, viewer: GenericUser = ZMUser.selfUser(), options: Options) {
+    /**
+     * Creates a profile view for the specified user and options.
+     * - parameter user: The user to display the profile of.
+     * - parameter options: The options for the appearance and behavior of the view.
+     * - note: You can change the options later through the `options` property.
+     */
+    
+    init(user: UserType, viewer: UserType, options: Options) {
         self.user = user
         self.viewer = viewer
         self.options = options

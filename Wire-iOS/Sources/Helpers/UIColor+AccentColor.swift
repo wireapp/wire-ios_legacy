@@ -27,6 +27,11 @@ public enum AccentColor: Int16, CaseIterable {
     case softPink
     case violet
 
+    /// Returns a random accent color.
+    static var random: AccentColor {
+        return AccentColor.allSelectable().randomElement()!
+    }
+
     public init?(ZMAccentColor zmAccentColor: ZMAccentColor) {
         self.init(rawValue: zmAccentColor.rawValue)
     }

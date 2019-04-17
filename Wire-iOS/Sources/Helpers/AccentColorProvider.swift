@@ -16,18 +16,27 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
+import UIKit
 
-public extension IteratorProtocol where Element: Hashable {
-    public mutating func histogram() -> [Element: UInt] {
-        var histogram = [Element : UInt]()
-        
-        while let element = self.next() {
-            var currentCount: UInt = histogram[element] ?? 0
-            currentCount = currentCount + 1
-            histogram[element] = currentCount
-        }
-        
-        return histogram
+extension UserType {
+
+    /// Returns the current accent color of the user.
+    var accentColor: UIColor {
+        return UIColor(fromZMAccentColor: accentColorValue)
     }
+
+}
+
+extension UnregisteredUser {
+
+    /// The accent color value of the unregistered user.
+    var accentColor: AccentColor? {
+        get {
+            return accentColorValue.flatMap(AccentColor.init)
+        }
+        set {
+            accentColorValue = newValue?.zmAccentColor
+        }
+    }
+
 }

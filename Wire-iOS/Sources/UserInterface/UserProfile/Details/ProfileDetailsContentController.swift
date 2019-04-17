@@ -48,10 +48,10 @@ final class ProfileDetailsContentController: NSObject, UITableViewDataSource, UI
     }
     
     /// The user to display the details of.
-    let user: GenericUser
+    let user: UserType
     
     /// The user that will see the details.
-    let viewer: GenericUser
+    let viewer: UserType
     
     /// The conversation where the profile details will be displayed.
     let conversation: ZMConversation?
@@ -79,8 +79,8 @@ final class ProfileDetailsContentController: NSObject, UITableViewDataSource, UI
      * - parameter conversation: The conversation where the profile details will be displayed.
      */
     
-    init(user: GenericUser,
-         viewer: GenericUser,
+    init(user: UserType,
+         viewer: UserType,
          conversation: ZMConversation?) {
         self.user = user
         self.viewer = viewer
