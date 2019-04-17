@@ -16,32 +16,57 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
 import Foundation
-import Cartography
 
-@objcMembers class PlaceholderConversationView : UIView {
+@objc class PlaceholderConversationView: UIView {
     
     var shieldImageView: UIImageView!
-    
+
+    // MARK: - Initialization
+
     override init(frame: CGRect) {
         super.init(frame: frame)
-
-        self.backgroundColor = UIColor.from(scheme: .background)
-        
-        let image = WireStyleKit.imageOfShield(color: UIColor(rgb: 0xbac8d1, alpha: 0.24))
-        shieldImageView = UIImageView(image: image)
-        self.addSubview(shieldImageView)
-        
-        constrain(self, shieldImageView) {
-            selfView, shieldImageView in
-            shieldImageView.centerX == selfView.centerX
-            shieldImageView.centerY == selfView.centerY
-        }
+        configureSubviews()
+        configureConstraints()
+        configureObservers()
+        applyColorScheme(ColorScheme.default.variant)
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+        configureSubviews()
+        configureConstraints()
+        configureObservers()
+        applyColorScheme(ColorScheme.default.variant)
     }
-    
+
+    private func configureSubviews() {
+        let image = WireStyleKit.imageOfShield(color: UIColor(rgb: 0xbac8d1, alpha: 0.24))
+        shieldImageView = UIImageView(image: image)
+        addSubview(shieldImageView)
+    }
+
+    private func configureObservers() {
+        NotificationCenter.default.addObserver(self, selector: #selector(updateForColorSchemeVariant), name: NSNotification.Name.SettingsColorSchemeChanged, object: nil)
+    }
+
+    private func configureConstraints() {
+        shieldImageView.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            shieldImageView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            shieldImageView.centerYAnchor.constraint(equalTo: centerYAnchor)
+        ])
+    }
+
+    // MARK: - Colors
+
+    @objc private func updateForColorSchemeVariant() {
+        applyColorScheme(ColorScheme.default.variant)
+    }
+
+    func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
+        backgroundColor = UIColor.from(scheme: .background, variant: colorSchemeVariant)
+    }
+
 }

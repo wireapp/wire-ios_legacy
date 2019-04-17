@@ -31,6 +31,7 @@ struct ChangeEmailState {
     var newPassword: String?
 
     var emailValidationError: TextFieldValidator.ValidationError?
+    var passwordValidationError: TextFieldValidator.ValidationError?
     var isEmailPasswordInputValid: Bool
 
     var visibleEmail: String? {
@@ -71,7 +72,7 @@ struct ChangeEmailState {
         case .changeExistingEmail:
             return validatedEmail != nil
         case .setInitialEmail:
-            return validatedCredentials != nil
+            return isEmailPasswordInputValid
         }
     }
     
@@ -154,6 +155,12 @@ struct ChangeEmailState {
     }
     
     @objc func saveButtonTapped(sender: UIBarButtonItem) {
+        if let passwordError = state.passwordValidationError {
+            validationCell.updateValidation(.error(passwordError, showVisualFeedback: true))
+            emailPasswordCell.textField.passwordField.showGuidanceDot()
+            return
+        }
+
         requestEmailUpdate(showLoadingView: true)
     }
 
@@ -252,24 +259,25 @@ extension ChangeEmailViewController: TextFieldValidationDelegate {
 extension ChangeEmailViewController: EmailPasswordTextFieldDelegate {
 
     func textField(_ textField: EmailPasswordTextField, didConfirmCredentials credentials: (String, String)) {
-        // no-op: never called, we disable the confirm button
+        // no-op: n
     }
 
     func textFieldDidUpdateText(_ textField: EmailPasswordTextField) {
+        // Update the state
         state.newEmail = textField.emailField.input.trimmingCharacters(in: .whitespacesAndNewlines)
         state.newPassword = textField.passwordField.input
+        state.emailValidationError = textField.emailValidationError
+        state.passwordValidationError = textField.passwordValidationError
+        state.isEmailPasswordInputValid = textField.emailField.isInputValid && !textField.isPasswordEmpty
+
+        // Re-enable the buttons if needed
+        updateSaveButtonState()
+        validationCell.updateValidation(nil)
+        textField.passwordField.hideGuidanceDot()
     }
 
-    func textField(_ textField: EmailPasswordTextField, didUpdateValidation isValid: Bool) {
-        state.isEmailPasswordInputValid = isValid
-
-        if let passwordError = textField.passwordValidationError {
-            validationCell.updateValidation(.error(passwordError, showVisualFeedback: !textField.isPasswordEmpty))
-        } else {
-            validationCell.updateValidation(nil)
-        }
-
-        updateSaveButtonState()
+    func textFieldDidSubmitWithValidationError(_ textField: EmailPasswordTextField) {
+        // no-op: ever called, we disable the confirm button
     }
 
 }

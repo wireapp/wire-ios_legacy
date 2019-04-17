@@ -29,8 +29,7 @@ final class ClientListViewControllerTests: ZMSnapshotTestCase {
     override func setUp() {
         super.setUp()
 
-        let user = MockUser.mockUsers()[0]
-        mockUser = MockUser(for: user)
+        mockUser = MockUser.firstMockUser()
 
         selfClient = mockUserClient()
         client = mockUserClient()

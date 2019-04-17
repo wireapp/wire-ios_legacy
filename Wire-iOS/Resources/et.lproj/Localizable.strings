@@ -386,6 +386,12 @@
 
 "content.system.services.warning" = "Teenustel on ligipääs selle vestluse sisule";
 
+// Link attachment messages
+
+"content.message.link_attachment.accessibility_label.youtube" = "YouTube video preview";
+"content.message.link_attachment.accessibility_label.soundcloud_song" = "SoundCloud song preview";
+"content.message.link_attachment.accessibility_label.soundcloud_set" = "SoundCloud playlist preview";
+
 // New conversation participants added / removed / started system message
 
 "content.system.conversation.other.started" = "%@ alustas vestlust kasutajaga %@";
@@ -577,6 +583,9 @@
 "voice.cancel_button.title" = "Tühista";
 "voice.call_button.title" = "Kõne";
 "voice.end_call_button.title" = "Lõpeta kõne";
+"voice.call_error.unsupported_version.title" = "Please update Wire";
+"voice.call_error.unsupported_version.message" = "You received a call that isn't supported by this version of Wire.\nGet the latest version in the App Store.";
+"voice.call_error.unsupported_version.dismiss" = "Later";
 
 "voice.alert.call_in_progress.title" = "Kõne käimas";
 "voice.alert.call_in_progress.message" = "Sul saab olla vaid üks aktiivne kõne korraga";
@@ -812,10 +821,11 @@
 "self.voiceover.hint" = "Ava profiil ja seaded";
 "self.new-device.voiceover.label" = "Profiil, lisatud uus seade";
 
-"self.profile.change_user_image.accessibility" = "Koputa, et muuta profiili pilti";
-
 "self.add_phone_number" = "Lisa mobiilinumber";
 "self.add_email_password" = "Lisa meiliaadress ja parool";
+
+"self.accessibility.profile_photo_image" = "Profile picture";
+"self.accessibility.profile_photo_edit_button" = "Change profile picture";
 
 // About screen
 "about.tos.title" = "Kasutustingimused";
@@ -993,7 +1003,7 @@
 "self.settings.link_options.maps.title" = "Kaardirakendus";
 "self.settings.link_options.browser.title" = "Veebilehitseja";
 
-"open_link.twitter.option.default" = "Safari / Twitter";
+"open_link.twitter.option.default" = "Browser / Twitter";
 "open_link.twitter.option.tweetbot" = "Tweetbot";
 "open_link.twitter.option.twitterrific" = "Twitterrific";
 
@@ -1109,7 +1119,6 @@
 "email.guidance.toolong" = "Liiga pikk nimi";
 
 "password.placeholder" = "Parool";
-"password.guidance.tooshort" = "Vähemalt 8 tähte";
 "password.guidance.toolong" = "Liiga pikk nimi";
 
 "phone.guidance.invalid" = "Invalid phone number";
@@ -1151,9 +1160,6 @@
 "team.full_name.textfield.accessibility" = "Sinu täisnimi";
 
 "team.password.headline" = "Määra parool";
-"team.password.textfield.placeholder" = "Vähemalt 8 tähte";
-"team.password.textfield.accessibility" = "Sisesta vähemalt 8-märgiline parool";
-
 
 "verification.code_label" = "Six-digit code. Text field.";
 "verification.code_hint" = "Double tap to enter the code.";
@@ -1234,7 +1240,7 @@
 "registration.alert.account_exists.title" = "Account Exists";
 "registration.alert.account_exists.message_phone" = "The phone number you used to register is already linked to an account.\n\nUse another phone number, or try to log in if you own this account.";
 "registration.alert.account_exists.message_email" = "The email address you used to register is already linked to an account.\n\n Use another email address, or try to log in if you own this account.";
-"registration.alert.change_email_action" = "Change Email";
+"registration.alert.change_email_action" = "Register with Another Email";
 "registration.alert.change_phone_action" = "Register with Another Number";
 "registration.alert.change_signin_action" = "Logi sisse";
 
@@ -1515,6 +1521,17 @@
 "availability.away.placeholder" = "%@ on eemal";
 "availability.busy.placeholder" = "%@ on hõivatud";
 
+"availability.reminder.away.title" = "You are set to Away";
+"availability.reminder.away.message" = "You will appear as Away to other people. You will not receive notifications about any incoming calls or messages.";
+"availability.reminder.busy.title" = "You are set to Busy";
+"availability.reminder.busy.message" = "You will appear as Busy to other people. You will receive only receive notifications for mentions, replies, and calls in conversations that are not muted.";
+"availability.reminder.available.title" = "You are set to Available";
+"availability.reminder.available.message" = "You will appear as Available to other people. You will receive notifications for incoming calls and for messages according to the Notifications setting in each conversation.";
+"availability.reminder.none.title" = "No status set";
+"availability.reminder.none.message" = "You will receive notifications for incoming calls and for messages according to the Notifications setting in each conversation.";
+"availability.reminder.action.dont_remind_me" = "Do not display this information again";
+"availability.reminder.action.ok" = "Ok";
+
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Call Quality Survey
 
@@ -1569,3 +1586,8 @@
 "message_details.subtitle_label_voiceOver" = "Message Details";
 "message_details.user_handle_subtitle_label" = "Kasutajanimi";
 "message_details.user_read_timestamp_subtitle_label" = "Read at";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Password Rules
+"registration.password.rules.no_requirements" = "Use %@.";
+"registration.password.rules.with_requirements" = "Use %@, with %@.";

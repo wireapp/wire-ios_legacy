@@ -22,7 +22,7 @@ import UIKit
 
 class ConversationSystemMessageCell: ConversationIconBasedCell, ConversationMessageCell {
 
-    struct Configuration {
+    struct Configuration: Equatable {
         let icon: UIImage?
         let attributedText: NSAttributedString?
         let showLine: Bool
@@ -87,7 +87,7 @@ extension ConversationStartedSystemMessageCell {
 
 class ParticipantsConversationSystemMessageCell: ConversationIconBasedCell, ConversationMessageCell {
     
-    struct Configuration {
+    struct Configuration: Equatable {
         let icon: UIImage?
         let attributedText: NSAttributedString?
         let showLine: Bool
@@ -393,7 +393,14 @@ class ConversationParticipantsChangedSystemMessageCellDescription: ConversationM
         configuration = View.Configuration(icon: model.image(), attributedText: model.attributedTitle(), showLine: true, warning: model.warning())
         actionController = nil
     }
-    
+
+    func isConfigurationEqual(with description: Any) -> Bool {
+        guard let otherSystemMessageDescription = description as? ConversationParticipantsChangedSystemMessageCellDescription else {
+            return false
+        }
+
+        return self.configuration == otherSystemMessageDescription.configuration
+    }
 }
 
 class ConversationRenamedSystemMessageCellDescription: ConversationMessageCellDescription {
@@ -459,6 +466,14 @@ class ConversationCallSystemMessageCellDescription: ConversationMessageCellDescr
 
         configuration = View.Configuration(icon: viewModel.image(), attributedText: viewModel.attributedTitle(), showLine: false)
         actionController = nil
+    }
+
+    func isConfigurationEqual(with other: Any) -> Bool {
+        guard let otherDescription = other as? ConversationCallSystemMessageCellDescription else {
+            return false
+        }
+
+        return self.configuration == otherDescription.configuration
     }
 }
 

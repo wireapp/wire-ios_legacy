@@ -44,7 +44,7 @@ extension ZMConversation {
     }
 
     public var ephemeralIndicatorButtonHidden: Bool {
-        return (conversationType != .oneOnOne && disableEphemeralSendingInGroups) || !ephemeral || disableEphemeralSending
+        return (conversationType != .oneOnOne && disableEphemeralSendingInGroups) || editing || !ephemeral || disableEphemeralSending
     }
 
     public var ephemeralIndicatorButtonEnabled: Bool {

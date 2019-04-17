@@ -49,12 +49,11 @@ class UserCellTests: ZMSnapshotTestCase {
     
     func testServiceUser() {
         MockUser.mockSelf().isTeamMember = true
-        let user = MockUser.mockUsers()[0]
-        let mockUser = MockUser(for: user)
-        mockUser?.isServiceUser = true
+        let mockUser = MockUser.firstMockUser()
+        mockUser.isServiceUser = true
         
         verifyInAllColorSchemes(view: cell({ (cell) in
-            cell.configure(with: user, conversation: conversation)
+            cell.configure(with: mockUser, conversation: conversation)
         }))
     }
     
@@ -67,50 +66,48 @@ class UserCellTests: ZMSnapshotTestCase {
     }
     
     func testTrustedNonTeamUser() {
-        let user = MockUser.mockUsers()[0]
-        let mockUser = MockUser(for: user)
-        mockUser?.trusted = true
-        _ = mockUser?.feature(withUserClients: 1)
+        let mockUser = MockUser.firstMockUser()
+
+        mockUser.trusted = true
+        _ = mockUser.feature(withUserClients: 1)
         
         verifyInAllColorSchemes(view: cell({ (cell) in
-            cell.configure(with: user, conversation: conversation)
+            cell.configure(with: mockUser, conversation: conversation)
         }))
     }
     
     func testGuestUser() {
         MockUser.mockSelf().isTeamMember = true
-        let user = MockUser.mockUsers()[0]
-        let mockUser = MockUser(for: user)
-        mockUser?.isGuestInConversation = true
+        let mockUser = MockUser.firstMockUser()
+
+        mockUser.isGuestInConversation = true
         
         verifyInAllColorSchemes(view: cell({ (cell) in
-            cell.configure(with: user, conversation: conversation)
+            cell.configure(with: mockUser, conversation: conversation)
         }))
     }
     
     func testGuestUser_Wireless() {
         MockUser.mockSelf().isTeamMember = true
-        let user = MockUser.mockUsers()[0]
-        let mockUser = MockUser(for: user)
-        mockUser?.isGuestInConversation = true
-        mockUser?.expiresAfter = 5_200
-        mockUser?.handle = nil
+        let mockUser = MockUser.firstMockUser()
+        mockUser.isGuestInConversation = true
+        mockUser.expiresAfter = 5_200
+        mockUser.handle = nil
 
         verifyInAllColorSchemes(view: cell {
-            $0.configure(with: user, conversation: conversation)
+            $0.configure(with: mockUser, conversation: conversation)
         })
     }
     
     func testTrustedGuestUser() {
         MockUser.mockSelf().isTeamMember = true
-        let user = MockUser.mockUsers()[0]
-        let mockUser = MockUser(for: user)
-        mockUser?.trusted = true
-        mockUser?.isGuestInConversation = true
-        _ = mockUser?.feature(withUserClients: 1)
+        let mockUser = MockUser.firstMockUser()
+        mockUser.trusted = true
+        mockUser.isGuestInConversation = true
+        _ = mockUser.feature(withUserClients: 1)
         
         verifyInAllColorSchemes(view: cell({ (cell) in
-            cell.configure(with: user, conversation: conversation)
+            cell.configure(with: mockUser, conversation: conversation)
         }))
     }
     

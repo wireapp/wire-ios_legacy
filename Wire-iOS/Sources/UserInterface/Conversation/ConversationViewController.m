@@ -70,6 +70,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 @interface ConversationViewController (ZMConversationObserver) <ZMConversationObserver>
 @end
 
+
 @interface ConversationViewController (ConversationListObserver) <ZMConversationListObserver>
 @end
 
@@ -86,9 +87,8 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @property (nonatomic) NSLayoutConstraint *inputBarBottomMargin;
 @property (nonatomic) NSLayoutConstraint *inputBarZeroHeight;
-@property (nonatomic) InvisibleInputAccessoryView *invisibleInputAccessoryView;
-
-@property (nonatomic) GuestsBarController *guestsBarController;
+@property (nonatomic, readwrite) InvisibleInputAccessoryView *invisibleInputAccessoryView;
+@property (nonatomic, readwrite) GuestsBarController *guestsBarController;
 
 @property (nonatomic) id voiceChannelStateObserverToken;
 @property (nonatomic) id conversationObserverToken;
@@ -230,26 +230,17 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     self.guestsBarController = [[GuestsBarController alloc] init];
 }
 
-- (void)updateGuestsBarVisibilityAndShowIfNeeded:(BOOL)showIfNeeded
-{
-    GuestBarState state = self.conversation.guestBarState;
-    if (state != GuestBarStateHidden) {
-        BOOL isPresented = nil != self.guestsBarController.parentViewController;
-        if (!isPresented || showIfNeeded) {
-            [self.conversationBarController presentBar:self.guestsBarController];
-            [self.guestsBarController setState:state animated:NO];
-        }
-    }
-    else {
-        [self.conversationBarController dismissBar:self.guestsBarController];
-    }
-}
-
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     self.isAppearing = YES;
-    [self updateGuestsBarVisibilityAndShowIfNeeded:YES];
+    [self updateGuestsBarVisibility];
+}
+
+- (void)didMoveToParentViewController:(UIViewController *)parent
+{
+    [super didMoveToParentViewController:parent];
+    [self updateGuestsBarVisibility];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -661,13 +652,14 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         self.contentViewController.searchQueries = @[];
         [self.contentViewController scrollToBottom];
     }
-    
-    [self.guestsBarController setState:GuestBarStateHidden animated:YES];
+
+    [self setGuestBarForceHidden:YES];
     return YES;
 }
 
 - (BOOL)conversationInputBarViewControllerShouldEndEditing:(ConversationInputBarViewController *)controller
 {
+    [self setGuestBarForceHidden:NO];
     return YES;
 }
 
@@ -729,7 +721,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
             [self.zClientViewController selectConversation:newConversation focusOnView:YES animated:YES];
         }];
     };
-    
+
     if (nil != self.presentedViewController) {
         [self dismissViewControllerAnimated:YES completion:conversationCreation];
     }
@@ -739,7 +731,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 }
 
 @end
-
 
 @implementation ConversationViewController (ZMConversationObserver)
 
@@ -757,7 +748,9 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         [self updateInputBarVisibility];
     }
 
-    [self updateGuestsBarVisibilityAndShowIfNeeded:NO];
+    if (note.participantsChanged || note.externalParticipantsStateChanged) {
+        [self updateGuestsBarVisibility];
+    }
 
     if (note.nameChanged || note.securityLevelChanged || note.connectionStateChanged) {
         [self setupNavigatiomItem];

@@ -20,29 +20,58 @@ import UIKit
 import Cartography
 
 
-final class ConversationListTopBar: TopBar {
-   
-    internal var observerToken: Any?
+class ConversationListTopBarViewController: UIViewController {
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    private var observerToken: Any?
+    private var availabilityViewController: AvailabilityTitleViewController?
+    private var account: Account
+    
+    var topBar: TopBar? {
+        return view as? TopBar
+    }
+    
+    
+    init(account: Account) {
+        self.account = account
         
+        super.init(nibName: nil, bundle: nil)
+        
+        if #available(iOS 11.0, *) {
+            self.viewRespectsSystemMinimumLayoutMargins = false
+        }
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func loadView() {
+        view = TopBar()
+    }
+    
+    override func viewDidLoad() {
+        
+        topBar?.layoutMargins = UIEdgeInsets(top: 0, left: 9, bottom: 0, right: 16)
+        topBar?.middleView = createTitleView()
+        topBar?.leftView = createAccountView()
+        topBar?.splitSeparator = false
+        
+        
+        availabilityViewController?.didMove(toParent: self)
+    }
+    
+    func createTitleView() -> UIView {
         if ZMUser.selfUser().isTeamMember {
-            let availabilityView = AvailabilityTitleView(user: ZMUser.selfUser(), options: .header)
-            availabilityView.colorSchemeVariant = .dark
+            let availabilityViewController = AvailabilityTitleViewController(user: ZMUser.selfUser(), options: .header)
+            availabilityViewController.availabilityTitleView?.colorSchemeVariant = .dark
+            addChild(availabilityViewController)
+            self.availabilityViewController = availabilityViewController
             
-            availabilityView.tapHandler = { [weak availabilityView] button in
-                guard let availabilityView = availabilityView else { return }
-                
-                let alert = availabilityView.actionSheet
-                alert.popoverPresentationController?.sourceView = button
-                alert.popoverPresentationController?.sourceRect = button.frame
-                UIApplication.shared.keyWindow?.rootViewController?.present(alert, animated: true, completion: nil)
-            }
-            self.middleView = availabilityView
+            return availabilityViewController.view
         } else {
             let titleLabel = UILabel()
             
+            titleLabel.text = ZMUser.selfUser().name
             titleLabel.font = FontSpec(.normal, .semibold).font
             titleLabel.textColor = UIColor.from(scheme: .textForeground, variant: .dark)
             titleLabel.accessibilityTraits = .header
@@ -50,42 +79,98 @@ final class ConversationListTopBar: TopBar {
             titleLabel.setContentCompressionResistancePriority(.required, for: .vertical)
             titleLabel.setContentHuggingPriority(.required, for: .horizontal)
             titleLabel.setContentHuggingPriority(.required, for: .vertical)
-            self.middleView = titleLabel
             
             if let sharedSession = ZMUserSession.shared() {
-                self.observerToken = UserChangeInfo.add(observer: self, for: ZMUser.selfUser(), userSession: sharedSession)
+                observerToken = UserChangeInfo.add(observer: self, for: ZMUser.selfUser(), userSession: sharedSession)
             }
             
-            updateMiddleViewTitle()
+            return titleLabel
+        }
+    }
+        
+    func createAccountView() -> BaseAccountView {
+        let session = ZMUserSession.shared() ?? nil
+        let user = session == nil ? nil : ZMUser.selfUser(inUserSession: session!)
+        let accountView = AccountViewFactory.viewFor(account: account, user: user)
+        
+        accountView.unreadCountStyle = .others
+        accountView.selected = false
+        accountView.autoUpdateSelection = false
+        
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(presentSettings))
+        accountView.addGestureRecognizer(tapGestureRecognizer)
+        
+        accountView.accessibilityTraits = .button
+        accountView.accessibilityIdentifier = "bottomBarSettingsButton"
+        accountView.accessibilityLabel = "self.voiceover.label".localized
+        accountView.accessibilityHint = "self.voiceover.hint".localized
+        
+        if let user = ZMUser.selfUser() {
+            if user.clientsRequiringUserAttention.count > 0 {
+                accountView.accessibilityLabel = "self.new-device.voiceover.label".localized
+            }
         }
         
-        self.splitSeparator = false
+        return accountView
     }
     
-    func updateMiddleViewTitle() {
-        guard let middleView = middleView as? UILabel else { return }
+    func updateTitle() {
+        guard let middleView = topBar?.middleView as? UILabel else { return }
         middleView.text = ZMUser.selfUser().name
     }
     
-    required public init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    @objc
+    func presentSettings() {
+        let settingsViewController = createSettingsViewController()
+        let keyboardAvoidingViewController = KeyboardAvoidingViewController(viewController: settingsViewController)
+        
+        if wr_splitViewController?.layoutSize == .compact {
+            keyboardAvoidingViewController.modalPresentationStyle = .currentContext
+            keyboardAvoidingViewController.transitioningDelegate = self
+            present(keyboardAvoidingViewController, animated: true)
+        } else {
+            keyboardAvoidingViewController.modalPresentationStyle = .formSheet
+            keyboardAvoidingViewController.view.backgroundColor = .black
+            present(keyboardAvoidingViewController, animated: true)
+        }
+    }
+
+    @objc
+    func createSettingsViewController() -> UIViewController {
+        let selfProfileViewController = SelfProfileViewController(selfUser: ZMUser.selfUser())
+        return selfProfileViewController.wrapInNavigationController(navigationControllerClass: ClearBackgroundNavigationController.self)
     }
     
 }
 
-extension ConversationListTopBar: ZMUserObserver {
+extension ConversationListTopBarViewController: UIViewControllerTransitioningDelegate {
+    
+    public func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        let transition = SwizzleTransition()
+        transition.direction = .vertical
+        return transition
+    }
+    
+    public func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        let transition = SwizzleTransition()
+        transition.direction = .vertical
+        return transition
+    }
+}
+
+extension ConversationListTopBarViewController: ZMUserObserver {
     
     public func userDidChange(_ changeInfo: UserChangeInfo) {
         guard changeInfo.nameChanged else { return }
-        updateMiddleViewTitle()
+        updateTitle()
     }
 }
 
-extension ConversationListTopBar {
+extension ConversationListTopBarViewController {
     @objc(scrollViewDidScroll:)
     public func scrollViewDidScroll(scrollView: UIScrollView!) {
-        self.leftSeparatorLineView.scrollViewDidScroll(scrollView: scrollView)
-        self.rightSeparatorLineView.scrollViewDidScroll(scrollView: scrollView)
+        topBar?.leftSeparatorLineView.scrollViewDidScroll(scrollView: scrollView)
+        topBar?.rightSeparatorLineView.scrollViewDidScroll(scrollView: scrollView)
     }
 }
 

@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2017 Wire Swiss GmbH
+// Copyright (C) 2019 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,24 +16,20 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-@import WireDataModel;
+import Foundation
+@testable import Wire
 
-NS_ASSUME_NONNULL_BEGIN
+extension MockUser {
 
-@protocol AccentColorProvider <NSObject>
-@property (nonatomic, readonly) UIColor *accentColor;
-@end
 
-@interface UIColor (DefaultAccentColor)
+    /// Get the first MockUser form the mockUsers array and cast to MockUser.
+    ///
+    /// Notice: actually mockUsers() returns [MockUser], not [ZMUser].
+    ///
+    /// - Returns: the first MockUser object in the mockUsers array
+    class func firstMockUser() -> MockUser {
+        let user = MockUser.mockUsers()[0]
+        return (user as Any as? MockUser)!
+    }
+}
 
-@property (class, readonly, strong) UIColor *defaultAccentColor;
-
-@end
-
-@interface ZMUser (AccentColorProvider) <AccentColorProvider>
-@end
-
-@interface ZMSearchUser (AccentColorProvider) <AccentColorProvider>
-@end
-
-NS_ASSUME_NONNULL_END

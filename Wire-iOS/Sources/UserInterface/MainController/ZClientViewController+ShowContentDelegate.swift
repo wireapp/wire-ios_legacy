@@ -36,8 +36,6 @@ extension ZClientViewController: ShowContentDelegate {
     }
 
     public func showUserProfile(user: UserType) {
-        guard let user = user as? UserType & AccentColorProvider else { return }
-
         let profileViewController = ProfileViewController(user: user, viewer: ZMUser.selfUser(), context: .profileViewer)
         profileViewController.delegate = self
 

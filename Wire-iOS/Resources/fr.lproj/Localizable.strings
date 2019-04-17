@@ -386,6 +386,12 @@
 
 "content.system.services.warning" = "Les services ont accès au contenu de la conversation";
 
+// Link attachment messages
+
+"content.message.link_attachment.accessibility_label.youtube" = "Aperçu d'une vidéo YouTube";
+"content.message.link_attachment.accessibility_label.soundcloud_song" = "Aperçu d'une chanson SoundCloud";
+"content.message.link_attachment.accessibility_label.soundcloud_set" = "Aperçu d'une playlist SoundCloud";
+
 // New conversation participants added / removed / started system message
 
 "content.system.conversation.other.started" = "%@ a commencé une conversation avec %@";
@@ -577,6 +583,9 @@
 "voice.cancel_button.title" = "Annuler";
 "voice.call_button.title" = "Appeler";
 "voice.end_call_button.title" = "Raccrocher";
+"voice.call_error.unsupported_version.title" = "Veuillez mettre à jour Wire";
+"voice.call_error.unsupported_version.message" = "Vous avez reçu un appel qui n’est pas pris en charge par cette version de Wire.\nTéléchargez la dernière version depuis l’App Store.";
+"voice.call_error.unsupported_version.dismiss" = "Plus tard";
 
 "voice.alert.call_in_progress.title" = "Appel en cours";
 "voice.alert.call_in_progress.message" = "Vous ne pouvez avoir qu’un seul appel actif à la fois";
@@ -812,10 +821,11 @@
 "self.voiceover.hint" = "Ouvrir le profil et les paramètres";
 "self.new-device.voiceover.label" = "Profil, de nouveaux appareils ont été ajoutés";
 
-"self.profile.change_user_image.accessibility" = "Cliquez pour changer la photo du profil";
-
 "self.add_phone_number" = "Ajouter un numéro de téléphone";
 "self.add_email_password" = "Ajouter une adresse e-mail et un mot de passe";
+
+"self.accessibility.profile_photo_image" = "Photo de profil";
+"self.accessibility.profile_photo_edit_button" = "Changez votre photo de profil";
 
 // About screen
 "about.tos.title" = "Conditions d'utilisation";
@@ -993,7 +1003,7 @@
 "self.settings.link_options.maps.title" = "Positions";
 "self.settings.link_options.browser.title" = "Navigateur";
 
-"open_link.twitter.option.default" = "Safari / Twitter";
+"open_link.twitter.option.default" = "Navigateur / Twitter";
 "open_link.twitter.option.tweetbot" = "Tweetbot";
 "open_link.twitter.option.twitterrific" = "Twitterrific";
 
@@ -1109,7 +1119,6 @@
 "email.guidance.toolong" = "Trop de caractères";
 
 "password.placeholder" = "Mot de passe";
-"password.guidance.tooshort" = "Au moins 8 caractères";
 "password.guidance.toolong" = "Trop de caractères";
 
 "phone.guidance.invalid" = "Numéro de téléphone incorrect";
@@ -1151,9 +1160,6 @@
 "team.full_name.textfield.accessibility" = "Définir le nom complet";
 
 "team.password.headline" = "Définir le mot de passe";
-"team.password.textfield.placeholder" = "Au moins 8 caractères";
-"team.password.textfield.accessibility" = "Définir le mot de passe, au moins 8 caractères";
-
 
 "verification.code_label" = "Code à six chiffres. Champ de texte.";
 "verification.code_hint" = "Appuyez deux fois pour entrer le code.";
@@ -1234,7 +1240,7 @@
 "registration.alert.account_exists.title" = "Le compte existe déjà";
 "registration.alert.account_exists.message_phone" = "Le numéro de téléphone que vous avez utilisé pour vous inscrire est lié à un compte déjà existant.\n\nUtilisez un autre numéro, ou essayez de vous connecter si ce compte vous appartient.";
 "registration.alert.account_exists.message_email" = "L'adresse email que vous avez utilisé pour vous inscrire est lié à un compte déjà existant.\n\n Utilisez une autre adresse, ou essayez de vous connecter si ce compte vous appartient.";
-"registration.alert.change_email_action" = "Modifier l'adresse mail";
+"registration.alert.change_email_action" = "Utiliser un autre email";
 "registration.alert.change_phone_action" = "Utiliser un autre numéro";
 "registration.alert.change_signin_action" = "Se connecter";
 
@@ -1515,6 +1521,17 @@
 "availability.away.placeholder" = "%@ est absent(e)";
 "availability.busy.placeholder" = "%@ est occupé(e)";
 
+"availability.reminder.away.title" = "You are set to Away";
+"availability.reminder.away.message" = "You will appear as Away to other people. You will not receive notifications about any incoming calls or messages.";
+"availability.reminder.busy.title" = "You are set to Busy";
+"availability.reminder.busy.message" = "You will appear as Busy to other people. You will receive only receive notifications for mentions, replies, and calls in conversations that are not muted.";
+"availability.reminder.available.title" = "You are set to Available";
+"availability.reminder.available.message" = "You will appear as Available to other people. You will receive notifications for incoming calls and for messages according to the Notifications setting in each conversation.";
+"availability.reminder.none.title" = "No status set";
+"availability.reminder.none.message" = "You will receive notifications for incoming calls and for messages according to the Notifications setting in each conversation.";
+"availability.reminder.action.dont_remind_me" = "Do not display this information again";
+"availability.reminder.action.ok" = "Ok";
+
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Call Quality Survey
 
@@ -1569,3 +1586,8 @@
 "message_details.subtitle_label_voiceOver" = "Détails du Message";
 "message_details.user_handle_subtitle_label" = "Nom d'utilisateur";
 "message_details.user_read_timestamp_subtitle_label" = "Lu à";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Password Rules
+"registration.password.rules.no_requirements" = "Utilisez %@.";
+"registration.password.rules.with_requirements" = "Utilisez %@, avec %@.";
