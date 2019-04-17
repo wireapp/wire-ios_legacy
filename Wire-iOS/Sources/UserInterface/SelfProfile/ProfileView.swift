@@ -146,12 +146,12 @@ final class ProfileView: UIView, Themeable {
         imageView.user = user
 
         availabilityView.tapHandler = { [weak self] button in
-            guard let `self` = self else { return }
+            guard let `self` = self, let presentingViewController = self.source else { return }
             guard self.options.contains(.allowEditingAvailability) else { return }
-            let alert = self.availabilityView.actionSheet
+            let alert = self.availabilityView.actionSheet(presentingViewController: presentingViewController)
             alert.popoverPresentationController?.sourceView = self
             alert.popoverPresentationController?.sourceRect = self.availabilityView.frame
-            self.source?.present(alert, animated: true, completion: nil)
+            presentingViewController.present(alert, animated: true, completion: nil)
         }
         
         if let session = session {

@@ -32,12 +32,12 @@ final class ConversationListTopBar: TopBar {
             availabilityView.colorSchemeVariant = .dark
             
             availabilityView.tapHandler = { [weak availabilityView] button in
-                guard let availabilityView = availabilityView else { return }
+                guard let availabilityView = availabilityView, let presentingViewController = UIApplication.shared.keyWindow?.rootViewController else { return }
                 
-                let alert = availabilityView.actionSheet
+                let alert = availabilityView.actionSheet(presentingViewController: presentingViewController)
                 alert.popoverPresentationController?.sourceView = button
                 alert.popoverPresentationController?.sourceRect = button.frame
-                UIApplication.shared.keyWindow?.rootViewController?.present(alert, animated: true, completion: nil)
+                presentingViewController.present(alert, animated: true, completion: nil)
             }
             self.middleView = availabilityView
         } else {
