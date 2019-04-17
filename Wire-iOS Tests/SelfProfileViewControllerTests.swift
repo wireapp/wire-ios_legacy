@@ -29,7 +29,7 @@ final class SelfProfileViewControllerTests: ZMSnapshotTestCase {
     }
   
     func testTestForAUserWithNoTeam() {
-        createSut(userName: "Tarja Turunen")
+        createSut(userName: "Tarja Turunen", teamMember: false)
 
         verify(view: sut.view)
     }
@@ -40,8 +40,10 @@ final class SelfProfileViewControllerTests: ZMSnapshotTestCase {
         verify(view: sut.view)
     }
 
-    private func createSut(userName: String) {
+    private func createSut(userName: String, teamMember: Bool = true) {
         MockUser.mockSelf()?.name = userName
+        MockUser.mockSelf()?.isTeamMember = teamMember
+        
         sut = SelfProfileViewController(selfUser: MockUser.selfUser, userRightInterfaceType: MockUserRight.self)
         sut.view.backgroundColor = .black
     }
