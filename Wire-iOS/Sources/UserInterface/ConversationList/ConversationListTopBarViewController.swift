@@ -35,6 +35,10 @@ class ConversationListTopBarViewController: UIViewController {
         self.account = account
         
         super.init(nibName: nil, bundle: nil)
+        
+        if #available(iOS 11.0, *) {
+            self.viewRespectsSystemMinimumLayoutMargins = false
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -46,10 +50,12 @@ class ConversationListTopBarViewController: UIViewController {
     }
     
     override func viewDidLoad() {
-        topBar?.leftView = createAccountView()
-        topBar?.middleView = createTitleView()
-        topBar?.splitSeparator = false
+        
         topBar?.layoutMargins = UIEdgeInsets(top: 0, left: 9, bottom: 0, right: 16)
+        topBar?.middleView = createTitleView()
+        topBar?.leftView = createAccountView()
+        topBar?.splitSeparator = false
+        
         
         availabilityViewController?.didMove(toParent: self)
     }
