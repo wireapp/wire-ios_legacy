@@ -39,7 +39,7 @@ extension ProfileViewController {
         return wr_supportedInterfaceOrientations
     }
 
-    convenience init(user: GenericUser, viewer: GenericUser, conversation: ZMConversation?, viewControllerDismisser: ViewControllerDismisser) {
+    convenience init(user: UserType, viewer: UserType, conversation: ZMConversation?, viewControllerDismisser: ViewControllerDismisser) {
         self.init(user: user, viewer: viewer, conversation: conversation)
         self.viewControllerDismisser = viewControllerDismisser
     }
@@ -360,4 +360,14 @@ extension ProfileViewController {
             incomingRequestFooter.trailingAnchor.constraint(equalTo: view.trailingAnchor)
             ])
     }
+}
+
+// MARK: - Factories
+
+extension ProfileViewController {
+
+    @objc func makeUserNameDetailViewModel() -> UserNameDetailViewModel {
+        return UserNameDetailViewModel(user: bareUser, fallbackName: bareUser.displayName, addressBookName: bareUser.zmUser?.addressBookEntry?.cachedName)
+    }
+
 }

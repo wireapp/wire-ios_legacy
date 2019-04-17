@@ -25,10 +25,10 @@ import UIKit
 final class ProfileDetailsViewController: UIViewController, Themeable {
 
     /// The user whose profile is displayed.
-    let user: GenericUser
+    let user: UserType
 
     /// The user that views the profile.
-    let viewer: GenericUser
+    let viewer: UserType
 
     /// The conversation where the profile is displayed.
     let conversation: ZMConversation?
@@ -67,8 +67,8 @@ final class ProfileDetailsViewController: UIViewController, Themeable {
      * - parameter context: The context of the profile screen.
      */
     
-    init(user: GenericUser,
-         viewer: GenericUser,
+    init(user: UserType,
+         viewer: UserType,
          conversation: ZMConversation?,
          context: ProfileViewControllerContext) {
         self.user = user

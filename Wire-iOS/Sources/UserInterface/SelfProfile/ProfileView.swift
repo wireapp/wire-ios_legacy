@@ -54,10 +54,10 @@ final class ProfileView: UIView, Themeable {
     }
     
     /// The user that is displayed.
-    let user: GenericUser
+    let user: UserType
 
     /// The user who is viewing this view
-    let viewer: GenericUser
+    let viewer: UserType
 
     /// The view controller that displays the view.
     weak var source: UIViewController?
@@ -118,8 +118,8 @@ final class ProfileView: UIView, Themeable {
      * - note: You can change the options later through the `options` property.
      */
     
-    init(user: GenericUser,
-         viewer: GenericUser,
+    init(user: UserType,
+         viewer: UserType,
          options: Options) {
         self.user = user
         self.viewer = viewer

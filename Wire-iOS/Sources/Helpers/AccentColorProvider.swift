@@ -16,24 +16,34 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-@import WireDataModel;
+import UIKit
 
-NS_ASSUME_NONNULL_BEGIN
+extension UserType {
 
-@protocol AccentColorProvider <NSObject>
-@property (nonatomic, readonly) UIColor *accentColor;
-@end
+    var accentColor: UIColor {
+        return UIColor(fromZMAccentColor: accentColorValue)
+    }
 
-@interface UIColor (DefaultAccentColor)
+}
 
-@property (class, readonly, strong) UIColor *defaultAccentColor;
+extension AccentColor {
 
-@end
+    /// Returns a random accent color.
+    static var random: AccentColor {
+        return AccentColor.allSelectable().randomElement()!
+    }
 
-@interface ZMUser (AccentColorProvider) <AccentColorProvider>
-@end
+}
 
-@interface ZMSearchUser (AccentColorProvider) <AccentColorProvider>
-@end
+extension UnregisteredUser {
 
-NS_ASSUME_NONNULL_END
+    var accentColor: AccentColor? {
+        get {
+            return accentColorValue.flatMap(AccentColor.init)
+        }
+        set {
+            accentColorValue = newValue?.zmAccentColor
+        }
+    }
+
+}
