@@ -102,7 +102,7 @@ class ProfileHeaderViewController: UIViewController, Themeable {
         self.user = user
         self.viewer = viewer
         self.options = options
-        self.availabilityTitleViewController = AvailabilityTitleViewController(user: user, options: [])
+        self.availabilityTitleViewController = AvailabilityTitleViewController(user: user, options: options.contains(.allowEditingAvailability) ? [.allowSettingStatus] : [])
         
         super.init(nibName: nil, bundle: nil)
     }
@@ -255,13 +255,7 @@ class ProfileHeaderViewController: UIViewController, Themeable {
     }
     
     private func updateAvailabilityVisibility() {
-        if options.contains(.allowEditingAvailability) {
-            availabilityTitleViewController.availabilityTitleView?.options.insert(.allowSettingStatus)
-        } else {
-            availabilityTitleViewController.availabilityTitleView?.options.remove(.allowSettingStatus)
-        }
-        
-        availabilityTitleViewController.view?.isHidden = options.contains(.hideAvailability) || !user.canDisplayAvailability(with: availabilityTitleViewController.options)
+        availabilityTitleViewController.view?.isHidden = options.contains(.hideAvailability) || !options.contains(.allowEditingAvailability) && user.availability == .none
     }
     
     private func updateImageButton() {

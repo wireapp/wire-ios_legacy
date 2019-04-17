@@ -165,14 +165,3 @@ class AvailabilityTitleView: TitleView, Themeable, ZMUserObserver {
     }
     
 }
-
-extension UserType {
-    
-    /// Returns if the user's availability can be displayed.
-    func canDisplayAvailability(with options: AvailabilityTitleView.Options) -> Bool {
-        return availability != .none
-            || options.contains(.displayUserName)
-            || availability == .none && options.contains(.allowSettingStatus)
-    }
-    
-}
