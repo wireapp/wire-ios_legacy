@@ -87,7 +87,7 @@ class LandingViewController: AuthenticationStepViewController {
     
     let buttonStackView: UIStackView = {
         let stackView = UIStackView()
-        stackView.distribution = .fillEqually
+        stackView.distribution = .fillProportionally    
         stackView.axis = .vertical
         stackView.setContentCompressionResistancePriority(.required, for: .vertical)
         stackView.setContentCompressionResistancePriority(.required, for: .horizontal)
@@ -358,12 +358,12 @@ class LandingViewController: AuthenticationStepViewController {
         switch BackendEnvironment.shared.environmentType.value {
         case .production, .staging:
             customBackendStack.isHidden = true
-            buttonStackView.isHidden = false
+            buttonStackView.alpha = 1
         case .custom(url: let url):
             customBackendTitleLabel.text = "Connected to \"\(BackendEnvironment.shared.title)\""
             customBackendSubtitleLabel.text = url.absoluteString.uppercased()
             customBackendStack.isHidden = false
-            buttonStackView.isHidden = true
+            buttonStackView.alpha = 0
         }
         updateLogoView()
     }
