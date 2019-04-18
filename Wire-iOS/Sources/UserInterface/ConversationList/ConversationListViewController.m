@@ -627,21 +627,11 @@
         case ConversationListButtonTypeStartUI:
             [self presentPeoplePicker];
             break;
-
-        case ConversationListButtonTypeCompose:
-            [self presentDraftsViewController];
-            break;
             
         case ConversationListButtonTypeCamera:
             [self showCameraPicker];
             break;
     }
-}
-
-- (void)presentDraftsViewController
-{
-    DraftsRootViewController *draftsController = [[DraftsRootViewController alloc] init];
-    [ZClientViewController.sharedZClientViewController presentViewController:draftsController animated:YES completion:nil];
 }
 
 - (void)presentPeoplePicker

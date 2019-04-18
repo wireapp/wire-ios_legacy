@@ -26,7 +26,7 @@ extension IconButton {
     
     static func acceptCall() -> IconButton {
         return .init(
-            icon: .audioCall,
+            icon: .phone,
             accessibilityId: "AcceptButton",
             backgroundColor: [.normal: UIColor.strongLimeGreen],
             iconColor: [.normal: .white],

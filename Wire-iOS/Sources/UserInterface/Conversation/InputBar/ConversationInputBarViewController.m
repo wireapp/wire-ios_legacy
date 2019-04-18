@@ -190,7 +190,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     }
 
     [self configureAudioButton:self.audioButton];
-    [self configureEmojiButton:self.emojiButton];
     [self configureMarkdownButton];
     [self configureMentionButton];
     [self configureEphemeralKeyboardButton:self.hourglassButton];
@@ -483,8 +482,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self.sendButton setIcon:WRStyleKitIconSend
                     withSize:16
                     forState:UIControlStateNormal];
-    
-    [self updateEmojiButton:self.emojiButton];
 }
 
 - (void)updateAccessoryViews
@@ -617,22 +614,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
             self.singleTapGestureRecognizer.enabled = YES;
             [self selectInputControllerButton:self.photoButton];
             break;
-            
-        case ConversationInputBarViewControllerModeEmojiInput:
-            [self clearTextInputAssistentItemIfNeeded];
-            
-            if (self.inputController == nil || self.inputController != self.emojiKeyboardViewController) {
-                if (self.emojiKeyboardViewController == nil) {
-                    [self createEmojiKeyboardViewController];
-                }
-                
-                self.inputController = self.emojiKeyboardViewController;
-            }
 
-            self.singleTapGestureRecognizer.enabled = NO;
-            [self selectInputControllerButton:self.emojiButton];
-            break;
-            
         case ConversationInputBarViewControllerModeTimeoutConfguration:
             [self clearTextInputAssistentItemIfNeeded];
 
@@ -659,8 +641,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     for (IconButton *otherButton in @[self.photoButton, self.audioButton, self.hourglassButton]) {
         otherButton.selected = [button isEqual:otherButton];
     }
-
-    [self updateEmojiButton:self.emojiButton];
 }
 
 - (void)clearTextInputAssistentItemIfNeeded
@@ -711,9 +691,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     }
     if (! [self.audioRecordKeyboardViewController isEqual:self.inputController]) {
         self.audioRecordKeyboardViewController = nil;
-    }
-    if (! [self.emojiKeyboardViewController isEqual:self.inputController]) {
-        self.emojiKeyboardViewController = nil;
     }
     if (! [self.ephemeralKeyboardViewController isEqual:self.inputController]) {
         self.ephemeralKeyboardViewController = nil;

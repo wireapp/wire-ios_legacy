@@ -36,7 +36,7 @@ public extension ConversationViewController {
     }
     
     var audioCallButton: UIBarButtonItem {
-        let button = UIBarButtonItem(icon: .audioCall, target: self, action: #selector(ConversationViewController.voiceCallItemTapped(_:)))
+        let button = UIBarButtonItem(icon: .phone, target: self, action: #selector(ConversationViewController.voiceCallItemTapped(_:)))
         button.accessibilityIdentifier = "audioCallBarButton"
         button.accessibilityTraits.insert(.startsMediaSession)
         button.accessibilityLabel = "call.actions.label.make_audio_call".localized
@@ -87,7 +87,7 @@ public extension ConversationViewController {
     @objc var collectionsBarButtonItem: UIBarButtonItem {
         let showingSearchResults = (self.collectionController?.isShowingSearchResults ?? false)
         let action = #selector(ConversationViewController.onCollectionButtonPressed(_:))
-        let button = UIBarButtonItem(icon: showingSearchResults ? .searchOngoing : .search, target: self, action: action)
+        let button = UIBarButtonItem(icon: showingSearchResults ? .activeSearch : .search, target: self, action: action)
         button.accessibilityIdentifier = "collection"
         button.accessibilityLabel = "conversation.action.search".localized
         

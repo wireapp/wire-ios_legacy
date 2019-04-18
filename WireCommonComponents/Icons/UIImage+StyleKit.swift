@@ -35,7 +35,7 @@ extension StyleKitIcon {
         let renderer = UIGraphicsImageRenderer(size: targetSize)
 
         return renderer.image { context in
-            context.cgContext.scaleBy(x: 0.5 * (imageSize / imageProperties.originalSize), y: 0.5 * (imageSize / imageProperties.originalSize))
+            context.cgContext.scaleBy(x: imageSize / imageProperties.originalSize, y: imageSize / imageProperties.originalSize)
             imageProperties.renderingMethod(color)
         }
     }

@@ -127,7 +127,7 @@ import Cartography
     }
     
     func updateWithPlayingState(_ state: PlayingState) {
-        let icon: StyleKitIcon = state == .idle ? .play : .stop
+        let icon: StyleKitIcon = state == .idle ? .play : .stopRecording
         playButton.setIcon(icon, size: .tiny, for: [])
         playButton.accessibilityValue = state.description
     }

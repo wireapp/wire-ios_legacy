@@ -42,7 +42,7 @@ extension AVSAudioEffectType: CustomStringConvertible {
             case .none:
                 return .person
             case .pitchupInsane:
-                return .effectBallon // Helium
+                return .effectBalloon // Helium
             case .pitchdownInsane:
                 return .effectJellyfish // Jellyfish
             case .paceupMed:
@@ -50,11 +50,11 @@ extension AVSAudioEffectType: CustomStringConvertible {
             case .reverbMax:
                 return .effectChurch // Cathedral
             case .chorusMax:
-                return .effectAlien // Alien
+                return .alien // Alien
             case .vocoderMed:
-                return .effectRobot // Robot
+                return .robot // Robot
             case .pitchUpDownMax:
-                return .effectRollerCoaster // Roller coaster
+                return .effectRollercoaster // Roller coaster
             default:
                 return .exclamationMark
             }

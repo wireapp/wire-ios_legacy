@@ -199,7 +199,7 @@ import UIKit
         case .activeCall(false):
             self.badgeView.isHidden = true
             self.transparentIconView.isHidden = false
-            self.transparentIconView.setIcon(.audioCall, size: 18, color: .white)
+            self.transparentIconView.setIcon(.phone, size: 18, color: .white)
             
             self.expandTransparentIconViewWidthConstraint.constant = activeCallWidth
             self.expandWidthConstraint.constant = activeCallWidth

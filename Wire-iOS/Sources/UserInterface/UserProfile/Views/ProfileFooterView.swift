@@ -76,7 +76,7 @@ final class ProfileFooterView: ConversationDetailFooterView {
         // Display the left action
         if let leftAction = leftAction {
             leftButton.setTitle(leftAction.buttonText.localizedUppercase, for: .normal)
-            leftIcon = leftAction.buttonIcon
+            leftIcon = leftAction.keyActionIcon
         }
 
         // Display or hide the right action ellipsis

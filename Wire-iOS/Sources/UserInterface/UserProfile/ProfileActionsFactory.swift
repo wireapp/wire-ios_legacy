@@ -52,36 +52,25 @@ enum ProfileAction: Equatable {
         }
     }
 
-    /// The icon of the button for this action.
-    var buttonIcon: StyleKitIcon? {
+    /// The icon of the button for this action, if it's eligible to be a key action.
+    var keyActionIcon: StyleKitIcon? {
         switch self {
         case .createGroup: return .createConversation
         case .manageNotifications, .mute: return nil
-        case .archive: return .archive
-        case .deleteContents: return .delete
-        case .block: return .block
+        case .archive: return nil
+        case .deleteContents: return nil
+        case .block: return nil
         case .openOneToOne: return .conversation
-        case .removeFromGroup: return .minus
+        case .removeFromGroup: return nil
         case .connect: return .plus
         case .cancelConnectionRequest: return .undo
-        case .openSelfProfile: return .selfProfile
+        case .openSelfProfile: return .personalProfile
         }
     }
 
     /// Whether the action can be used as a key action.
     var isEligibleForKeyAction: Bool {
-        switch self {
-        case .createGroup: return true
-        case .manageNotifications, .mute: return false
-        case .archive: return false
-        case .deleteContents: return false
-        case .block: return false
-        case .openOneToOne: return true
-        case .removeFromGroup: return false
-        case .connect: return true
-        case .cancelConnectionRequest: return true
-        case .openSelfProfile: return true
-        }
+        return keyActionIcon != nil
     }
 
 }

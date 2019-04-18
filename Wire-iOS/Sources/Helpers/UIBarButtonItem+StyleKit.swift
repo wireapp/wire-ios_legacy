@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2018 Wire Swiss GmbH
+// Copyright (C) 2017 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,26 +16,17 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import XCTest
-@testable import Wire
+import WireCommonComponents
 
-final class DraftSendInputAccessoryViewTests: ZMSnapshotTestCase {
-    
-    var sut: DraftSendInputAccessoryView!
-    
-    override func setUp() {
-        super.setUp()
-        sut = DraftSendInputAccessoryView()
-        sut.frame = CGRect(x: 0, y: 0, width: 375, height: 56)
-    }
-    
-    override func tearDown() {
-        sut = nil
-        super.tearDown()
+extension UIBarButtonItem {
+
+    @objc convenience init(icon: StyleKitIcon, style: UIBarButtonItem.Style = .plain, target: Any?, action: Selector?) {
+        self.init(
+            image: icon.makeImage(size: .tiny, color: UIColor.from(scheme: .textForeground)),
+            style: style,
+            target: target,
+            action: action
+        )
     }
 
-    func testForInitState(){
-        verify(view: sut)
-    }
 }
-

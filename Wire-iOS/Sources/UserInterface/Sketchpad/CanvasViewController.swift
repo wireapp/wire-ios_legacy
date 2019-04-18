@@ -77,7 +77,6 @@ import Cartography
         canvas.backgroundColor = UIColor.white
         
         emojiKeyboardViewController.delegate = self
-        emojiKeyboardViewController.backspaceHidden = true
     
         toolbar = SketchToolbar(buttons: [photoButton, drawButton, emojiButton, sendButton])
         separatorLine.backgroundColor = UIColor.from(scheme: .separator)

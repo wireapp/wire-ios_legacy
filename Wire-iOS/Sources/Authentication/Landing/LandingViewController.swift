@@ -95,7 +95,7 @@ class LandingViewController: AuthenticationStepViewController {
     }()
 
     let createAccountButton: LandingButton = {
-        let button = LandingButton(title: createAccountButtonTitle, icon: .selfProfile, iconBackgroundColor: UIColor.Team.createTeamGreen)
+        let button = LandingButton(title: createAccountButtonTitle, icon: .personalProfile, iconBackgroundColor: UIColor.Team.createTeamGreen)
         button.accessibilityIdentifier = "CreateAccountButton"
         button.addTapTarget(self, action: #selector(LandingViewController.createAccountButtonTapped(_:)))
         button.setContentCompressionResistancePriority(.required, for: .vertical)

@@ -269,7 +269,7 @@ class MessageToolboxDataSource {
             }
 
             let imageIcon = NSTextAttachment.textAttachment(for: .eye, with: statusTextColor, verticalCorrection: -1)
-            return NSAttributedString(attachment: imageIcon) + " " + Message.formattedDate(timeString) && attributes
+            return NSAttributedString(attachment: imageIcon) + " " + message.formattedDate(timestamp) && attributes
 
         default:
             return nil
