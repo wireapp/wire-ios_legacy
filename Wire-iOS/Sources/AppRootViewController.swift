@@ -683,49 +683,53 @@ extension AppRootViewController: SessionManagerURLHandlerDelegate {
             
         case .accessBackend(configurationURL: let configurationURL):
             
-            let makeSwitch = sessionManager?.switchBackend(configuration: configurationURL,
-                                                      onError: { error in
-                self.showLoadingView = false
-                switch error {
-                case .loggedInAccounts:
-                    let alert = UIAlertController(title: "url_action.switch_backend.error.logged_in.title".localized,
-                                                  message: "url_action.switch_backend.error.logged_in".localized,
-                                                  preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: "general.ok".localized, style: .default, handler: nil))
-                    self.present(alert, animated: true, completion: nil)
-                case .invalidBackend:
-                    let alert = UIAlertController(title: "url_action.switch_backend.error.invalid_backend.title".localized,
-                                                  message: "url_action.switch_backend.error.invalid_backend".localized,
-                                                  preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: "general.ok".localized, style: .default, handler: nil))
-                    self.present(alert, animated: true, completion: nil)
-                }
-            }, completed: { environment in
-                self.showLoadingView = false
-                if let environment = environment {
-                    BackendEnvironment.shared = environment
-                }
-            })
-            
-            // If we have the handler then we are good to go and can ask the user to confirm
-            if let makeSwitch = makeSwitch {
-                let alert = UIAlertController(title: "url_action.switch_backend.title".localized,
-                                              message: "url_action.switch_backend.message".localized(args: configurationURL.absoluteString),
-                                              preferredStyle: .alert)
-                let agreeAction = UIAlertAction(title: "general.ok".localized,
-                                                style: .default) { _ in
-                                                    self.showLoadingView = true
-                                                    makeSwitch()
-                }
-                alert.addAction(agreeAction)
-                
-                let cancelAction = UIAlertAction(title: "general.cancel".localized, style: .cancel)
-                alert.addAction(cancelAction)
-                
-                self.present(alert, animated: true, completion: nil)
+            if let error = sessionManager?.canSwitchBackend() {
+                self.showBackendSwitchError(error)
+                return
             }
+            
+            let alert = UIAlertController(title: "url_action.switch_backend.title".localized,
+                                          message: "url_action.switch_backend.message".localized(args: configurationURL.absoluteString),
+                                          preferredStyle: .alert)
+            let agreeAction = UIAlertAction(title: "general.ok".localized,
+                                            style: .default) { _ in
+                                                self.showLoadingView = true
+                                                self.sessionManager?.switchBackend(configuration: configurationURL) { result in
+                                                    self.showLoadingView = false
+                                                    switch result {
+                                                    case let .success(environment):
+                                                        BackendEnvironment.shared = environment
+                                                    case let .failure(error):
+                                                        if let error = error as? SessionManager.SwitchBackendError {
+                                                            self.showBackendSwitchError(error)
+                                                        }
+                                                    }
+                                                }
+            }
+            alert.addAction(agreeAction)
+            
+            let cancelAction = UIAlertAction(title: "general.cancel".localized, style: .cancel)
+            alert.addAction(cancelAction)
+            
+            self.present(alert, animated: true, completion: nil)
         }
-        
+    }
+    
+    private func showBackendSwitchError(_ error: SessionManager.SwitchBackendError) {
+        let alert: UIAlertController
+        switch error {
+        case .loggedInAccounts:
+            alert = UIAlertController(title: "url_action.switch_backend.error.logged_in.title".localized,
+                                          message: "url_action.switch_backend.error.logged_in".localized,
+                                          preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "general.ok".localized, style: .default, handler: nil))
+        case .invalidBackend:
+            alert = UIAlertController(title: "url_action.switch_backend.error.invalid_backend.title".localized,
+                                          message: "url_action.switch_backend.error.invalid_backend".localized,
+                                          preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "general.ok".localized, style: .default, handler: nil))
+        }
+        self.present(alert, animated: true, completion: nil)
     }
 
     private func executeCompanyLoginLinkAction(_ action: CompanyLoginLinkResponseAction, callback: @escaping (Bool) -> Void) {
