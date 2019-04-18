@@ -75,7 +75,7 @@ final class SearchUserViewConroller: UIViewController {
               isCompleted
             else { return }
 
-        let profileUser: GenericUser?
+        let profileUser: UserType?
         if let searchUser = searchResult.directory.first {
             profileUser = searchUser
         } else if let memberUser = searchResult.teamMembers.first?.user {

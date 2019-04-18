@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2017 Wire Swiss GmbH
+// Copyright (C) 2019 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -18,16 +18,22 @@
 
 import Foundation
 
-public extension IteratorProtocol where Element: Hashable {
-    public mutating func histogram() -> [Element: UInt] {
-        var histogram = [Element : UInt]()
-        
-        while let element = self.next() {
-            var currentCount: UInt = histogram[element] ?? 0
-            currentCount = currentCount + 1
-            histogram[element] = currentCount
-        }
-        
-        return histogram
+fileprivate extension Availability {
+    
+    var dontRemindMeUserDefaultsKey: String {
+        return "dont_remind_me_\(canonicalName)"
     }
+    
+}
+
+extension Settings {
+    
+    func shouldRemindUserWhenChanging(_ availability: Availability) -> Bool {
+        return defaults()?.bool(forKey: availability.dontRemindMeUserDefaultsKey) != true
+    }
+    
+    func dontRemindUserWhenChanging(_ availability: Availability) {
+        defaults()?.set(true, forKey: availability.dontRemindMeUserDefaultsKey)
+    }
+    
 }

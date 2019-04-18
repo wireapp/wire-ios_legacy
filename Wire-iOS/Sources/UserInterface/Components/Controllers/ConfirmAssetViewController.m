@@ -16,60 +16,36 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
+@import AVFoundation;
+@import AVKit;
+@import FLAnimatedImage;
 
 #import "ConfirmAssetViewController.h"
 #import "ConfirmAssetViewController+Internal.h"
-
-@import AVKit;
-@import AVFoundation;
-@import FLAnimatedImage;
-#import "Wire-Swift.h"
-
-#import "UIColor+WAZExtensions.h"
 #import "Constants.h"
-#import "AppDelegate.h"
-
+#import "UIColor+WAZExtensions.h"
 #import "UIImage+ImageUtilities.h"
-#import "MediaAsset.h"
-
-static const CGFloat TopBarHeight = 44;
-static const CGFloat BottomBarMinHeight = 88;
-static const CGFloat MarginInset = 24;
+#import "Wire-Swift.h"
 
 @interface ConfirmAssetViewController () <CanvasViewControllerDelegate>
 
 @end
 
-
 @implementation ConfirmAssetViewController
-
-+ (CGFloat) marginInset
-{
-    return MarginInset;
-}
-
-+ (CGFloat) topBarHeight
-{
-    return TopBarHeight;
-}
-
-+ (CGFloat) bottomBarMinHeight
-{
-    return BottomBarMinHeight;
-}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+
     if (self.image != nil) {
         [self createPreviewPanel];
-    }
-    else if (self.videoURL != nil) {
+    } else if (self.videoURL != nil) {
         [self createVideoPanel];
     }
+
     [self createTopPanel];
     [self createBottomPanel];
+    [self createContentLayoutGuide];
     [self createConstraints];
 
     [self setupStyle];
@@ -120,7 +96,7 @@ static const CGFloat MarginInset = 24;
     [self.view addSubview:self.imagePreviewView];
     
     [self.imagePreviewView setMediaAsset:self.image];
-    
+
     if ([self showEditingOptions] && [self imageToolbarFitsInsideImage]) {
         self.imageToolbarViewInsideImage = [[ImageToolbarView alloc] initWithConfiguraton:ImageToolbarConfigurationPreview];
         self.imageToolbarViewInsideImage.isPlacedOnImage = YES;
@@ -128,6 +104,12 @@ static const CGFloat MarginInset = 24;
         [self.imageToolbarViewInsideImage.emojiButton addTarget:self action:@selector(emojiEdit:) forControlEvents:UIControlEventTouchUpInside];
         [self.imagePreviewView addSubview:self.imageToolbarViewInsideImage];
     }
+}
+
+- (void)createContentLayoutGuide
+{
+    self.contentLayoutGuide = [[UILayoutGuide alloc] init];
+    [self.view addLayoutGuide:self.contentLayoutGuide];
 }
 
 - (void)createTopPanel
@@ -155,18 +137,23 @@ static const CGFloat MarginInset = 24;
         [self.imageToolbarView addSubview:self.imageToolbarSeparatorView];
     }
     
-    self.confirmButtonsContainer = [[UIView alloc] init];
-    [self.bottomPanel addSubview:self.confirmButtonsContainer];
-    
-    self.acceptImageButton = [Button buttonWithStyle:ButtonStyleFull];
-    [self.acceptImageButton addTarget:self action:@selector(acceptImage:) forControlEvents:UIControlEventTouchUpInside];
-    [self.acceptImageButton setTitle:NSLocalizedString(@"image_confirmer.confirm", @"") forState:UIControlStateNormal];
-    [self.confirmButtonsContainer addSubview:self.acceptImageButton];
-    
-    self.rejectImageButton = [Button buttonWithStyle:ButtonStyleEmpty];
+    self.confirmButtonsStack = [[UIStackView alloc] init];
+    self.confirmButtonsStack.spacing = 16;
+    self.confirmButtonsStack.axis = UILayoutConstraintAxisHorizontal;
+    self.confirmButtonsStack.distribution = UIStackViewDistributionFillEqually;
+    self.confirmButtonsStack.alignment = UIStackViewAlignmentFill;
+
+    [self.bottomPanel addSubview:self.confirmButtonsStack];
+
+    self.rejectImageButton = [[Button alloc] init];
     [self.rejectImageButton addTarget:self action:@selector(rejectImage:) forControlEvents:UIControlEventTouchUpInside];
     [self.rejectImageButton setTitle:NSLocalizedString(@"image_confirmer.cancel", @"") forState:UIControlStateNormal];
-    [self.confirmButtonsContainer addSubview:self.rejectImageButton];
+    [self.confirmButtonsStack addArrangedSubview:self.rejectImageButton];
+
+    self.acceptImageButton = [[Button alloc] init];
+    [self.acceptImageButton addTarget:self action:@selector(acceptImage:) forControlEvents:UIControlEventTouchUpInside];
+    [self.acceptImageButton setTitle:NSLocalizedString(@"image_confirmer.confirm", @"") forState:UIControlStateNormal];
+    [self.confirmButtonsStack addArrangedSubview:self.acceptImageButton];
 }
 
 

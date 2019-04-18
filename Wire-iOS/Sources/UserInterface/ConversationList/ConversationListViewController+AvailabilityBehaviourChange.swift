@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2018 Wire Swiss GmbH
+// Copyright (C) 2019 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -17,10 +17,20 @@
 //
 
 import Foundation
-@testable import Wire
 
-extension MockUser: AccentColorProvider {
-    @objc public var accentColor: UIColor {
-        return UIColor(fromZMAccentColor: accentColorValue)
+extension ConversationListViewController {
+    
+    @objc func showAvailabilityBehaviourChangeAlertIfNeeded() {
+        
+        guard var notify = ZMUser.selfUser()?.needsToNotifyAvailabilityBehaviourChange, notify.contains(.alert),
+              let availability = ZMUser.selfUser()?.availability else { return }
+                
+        ZClientViewController.shared()?.present(UIAlertController.availabilityExplanation(availability), animated: true)
+        
+        ZMUserSession.shared()?.performChanges {
+            notify.remove(.alert)
+            ZMUser.selfUser()?.needsToNotifyAvailabilityBehaviourChange = notify
+        }
     }
+    
 }

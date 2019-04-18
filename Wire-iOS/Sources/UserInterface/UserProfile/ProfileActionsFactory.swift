@@ -96,10 +96,10 @@ final class ProfileActionsFactory: NSObject {
     // MARK: - Environmemt
 
     /// The user that is displayed in the profile details.
-    let user: GenericUser
+    let user: UserType
 
     /// The user that wants to perform the actions.
-    let viewer: GenericUser
+    let viewer: UserType
 
     /// The conversation that the user wants to perform the actions in.
     let conversation: ZMConversation?
@@ -117,7 +117,7 @@ final class ProfileActionsFactory: NSObject {
      * perform the actions in.
      */
 
-    init(user: GenericUser, viewer: GenericUser, conversation: ZMConversation?, context: ProfileViewControllerContext) {
+    init(user: UserType, viewer: UserType, conversation: ZMConversation?, context: ProfileViewControllerContext) {
         self.user = user
         self.viewer = viewer
         self.conversation = conversation

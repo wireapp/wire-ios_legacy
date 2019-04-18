@@ -264,7 +264,7 @@ class MessageToolboxDataSource {
             return NSAttributedString(attachment: imageIcon) + " \(message.readReceipts.count)" && attributes
 
         case .oneOnOne:
-            guard let timeString = message.readReceipts.first?.serverTimestamp else {
+            guard let timestamp = message.readReceipts.first?.serverTimestamp else {
                 return nil
             }
 

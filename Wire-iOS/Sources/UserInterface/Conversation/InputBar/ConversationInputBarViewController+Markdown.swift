@@ -29,9 +29,9 @@ extension ConversationInputBarViewController {
     }
     
     @objc public func updateMarkdownButton() {
-    
         let color: UIColor
-        
+        markdownButton.isHidden = inputBar.isEditing
+
         if inputBar.isMarkingDown {
             color = .accent()
         } else {

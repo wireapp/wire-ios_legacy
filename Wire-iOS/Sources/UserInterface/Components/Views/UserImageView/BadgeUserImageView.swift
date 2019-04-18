@@ -108,7 +108,7 @@
 
         if user.isBlocked {
             badgeIcon = .block
-        } else if user.isPendingApproval() {
+        } else if user.isPendingApprovalBySelfUser || user.isPendingApprovalByOtherUser {
             badgeIcon = .clock
         } else {
             badgeIcon = .none

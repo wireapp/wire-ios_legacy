@@ -40,7 +40,7 @@ import FLAnimatedImage
         fatalError("init(coder:) has not been implemented")
     }
     
-    private var user: GenericUser? {
+    private var user: UserType? {
         didSet {
             if let user = self.user {
                 

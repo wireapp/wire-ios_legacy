@@ -22,7 +22,7 @@ import UIKit
 
 class ConversationSystemMessageCell: ConversationIconBasedCell, ConversationMessageCell {
 
-    struct Configuration {
+    struct Configuration: Equatable {
         let icon: UIImage?
         let attributedText: NSAttributedString?
         let showLine: Bool
@@ -466,6 +466,14 @@ class ConversationCallSystemMessageCellDescription: ConversationMessageCellDescr
 
         configuration = View.Configuration(icon: viewModel.image(), attributedText: viewModel.attributedTitle(), showLine: false)
         actionController = nil
+    }
+
+    func isConfigurationEqual(with other: Any) -> Bool {
+        guard let otherDescription = other as? ConversationCallSystemMessageCellDescription else {
+            return false
+        }
+
+        return self.configuration == otherDescription.configuration
     }
 }
 
