@@ -294,18 +294,13 @@ class LandingViewController: AuthenticationStepViewController {
 
     // MARK: - Adaptivity Events
     
-    private var logoHidden: Bool {
+    private func updateLogoView() {
         switch BackendEnvironment.shared.environmentType.value {
         case .production, .staging:
-            if view.frame.height <= 640 {
-                // Small-height devices
-                return true
-            } else {
-                // Normal-height devices
-                return false
-            }
+            // Hide it for small-height devices
+            logoView.isHidden = view.frame.height <= 640
         case .custom:
-            return true
+            logoView.isHidden = true
         }
     }
 
@@ -313,7 +308,6 @@ class LandingViewController: AuthenticationStepViewController {
         super.viewDidLayoutSubviews()
         if view.frame.height <= 640 {
             // Small-height devices
-            logoView.isHidden = logoHidden
             contentStack.spacing = 24
             buttonStackView.spacing = 24
 
@@ -323,7 +317,6 @@ class LandingViewController: AuthenticationStepViewController {
 
         } else {
             // Normal-height devices
-            logoView.isHidden = logoHidden
             contentStack.spacing = 32
             buttonStackView.spacing = 32
 
@@ -331,6 +324,7 @@ class LandingViewController: AuthenticationStepViewController {
                 contentStack.setCustomSpacing(40, after: logoView)
             }
         }
+        updateLogoView()
     }
 
     func updateForCurrentSizeClass(isRegular: Bool) {
@@ -371,7 +365,7 @@ class LandingViewController: AuthenticationStepViewController {
             customBackendStack.isHidden = false
             buttonStackView.isHidden = true
         }
-        logoView.isHidden = logoHidden
+        updateLogoView()
     }
     
     private func disableTrackingIfNeeded() {
