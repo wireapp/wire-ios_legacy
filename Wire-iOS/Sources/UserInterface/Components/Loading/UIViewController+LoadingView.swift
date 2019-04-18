@@ -19,11 +19,22 @@
 import Foundation
 
 extension UIViewController {
-    @objc
-    func createConstraints(loadingView: UIView, spinnerView: UIView) {
-        [loadingView, spinnerView].forEach(){ $0.translatesAutoresizingMaskIntoConstraints = false }
 
-        loadingView.fitInSuperview()
-        spinnerView.alignCenter(to: loadingView)
+    @objc func createConstraints(loadingView: UIView, spinnerView: UIView) {
+        loadingView.translatesAutoresizingMaskIntoConstraints = false
+        spinnerView.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            // loadingView
+            loadingView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            loadingView.topAnchor.constraint(equalTo: view.topAnchor),
+            loadingView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            loadingView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+
+            // spinnerView
+            spinnerView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            spinnerView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+        ])
     }
+
 }
