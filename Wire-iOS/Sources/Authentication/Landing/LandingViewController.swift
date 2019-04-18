@@ -87,7 +87,7 @@ class LandingViewController: AuthenticationStepViewController {
     
     let buttonStackView: UIStackView = {
         let stackView = UIStackView()
-        stackView.distribution = .fillProportionally    
+        stackView.distribution = .fillEqually
         stackView.axis = .vertical
         stackView.setContentCompressionResistancePriority(.required, for: .vertical)
         stackView.setContentCompressionResistancePriority(.required, for: .horizontal)
