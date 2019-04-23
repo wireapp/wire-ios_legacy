@@ -56,6 +56,27 @@ extension UIImage {
         return icon.makeImage(size: .custom(size), color: color)
     }
 
+    /**
+     * Resizes the image to the desired size.
+     * - parameter targetSize: The size you want to give to the image.
+     * - returns: The resized image.
+     * - warning: Passing a target size bigger than the size of the receiver is a
+     * programmer error and will cause an assertion failure.
+     */
+
+    @objc(imageByDownscalingToSize:)
+    public func downscaling(to targetSize: CGSize) -> UIImage {
+        assert(targetSize.width < size.width)
+        assert(targetSize.height < size.height)
+
+        let renderer = UIGraphicsImageRenderer(size: targetSize)
+
+        return renderer.image { context in
+            context.cgContext.scaleBy(x: targetSize.width / size.width, y: targetSize.height / size.height)
+            self.draw(at: .zero)
+        }
+    }
+
 }
 
 extension UIImageView {

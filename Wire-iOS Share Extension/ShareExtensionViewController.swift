@@ -132,10 +132,11 @@ class ShareExtensionViewController: SLComposeServiceViewController {
     }
 
     private func setupNavigationBar() {
+        let iconSize = CGSize(width: 32, height: 26.3)
         guard let item = navigationController?.navigationBar.items?.first else { return }
         item.rightBarButtonItem?.action = #selector(appendPostTapped)
         item.rightBarButtonItem?.title = "share_extension.send_button.title".localized
-        item.titleView = UIImageView(image: WireStyleKit.imageOfLogo(color: .black))
+        item.titleView = UIImageView(image: WireStyleKit.imageOfLogo(color: .black).downscaling(to: iconSize))
     }
 
     private var authenticatedAccounts: [Account] {
