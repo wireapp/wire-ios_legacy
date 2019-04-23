@@ -25,7 +25,7 @@ private struct InputBarRowConstants {
     let minimumButtonWidthIPhone5: CGFloat = 53
     let minimumButtonWidth: CGFloat = 56
     let buttonsBarHeight: CGFloat = 56
-    let iconSize = UIImage.size(for: .tiny)
+    let iconSize = StyleKitIcon.Size.tiny.rawValue
     
     fileprivate let screenWidthIPhone5: CGFloat = 320
     
@@ -79,7 +79,7 @@ public final class InputBarButtonsView: UIView {
         buttonInnerContainer.clipsToBounds = true
         expandRowButton.accessibilityIdentifier = "showOtherRowButton"
         expandRowButton.hitAreaPadding = .zero
-        expandRowButton.setIcon(.ellipsis, with: .tiny, for: [])
+        expandRowButton.setIcon(.ellipsis, size: .tiny, for: [])
         expandRowButton.addTarget(self, action: #selector(ellipsisButtonPressed), for: .touchUpInside)
         buttonOuterContainer.addSubview(buttonInnerContainer)
         buttonOuterContainer.clipsToBounds = true
@@ -124,7 +124,7 @@ public final class InputBarButtonsView: UIView {
     // MARK: - Button Layout
     
     fileprivate var buttonMargin: CGFloat {
-        return UIView.conversationLayoutMargins.left / 2 - UIImage.size(for: .tiny) / 2
+        return UIView.conversationLayoutMargins.left / 2 - StyleKitIcon.Size.tiny.rawValue / 2
     }
     
     fileprivate func layoutAndConstrainButtonRows() {

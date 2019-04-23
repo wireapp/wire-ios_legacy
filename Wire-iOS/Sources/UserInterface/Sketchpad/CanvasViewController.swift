@@ -77,11 +77,10 @@ import Cartography
         canvas.backgroundColor = UIColor.white
         
         emojiKeyboardViewController.delegate = self
-        emojiKeyboardViewController.backspaceHidden = true
     
         toolbar = SketchToolbar(buttons: [photoButton, drawButton, emojiButton, sendButton])
         separatorLine.backgroundColor = UIColor.from(scheme: .separator)
-        hintImageView.image = UIImage(for: .brush, fontSize: 172, color: UIColor.from(scheme: .placeholderBackground, variant: .light))
+        hintImageView.setIcon(.brush, size: 172, color: UIColor.from(scheme: .placeholderBackground, variant: .light))
         hintLabel.text = "sketchpad.initial_hint".localized.uppercased(with: Locale.current)
         hintLabel.numberOfLines = 0
         hintLabel.font = FontSpec(.small, .regular).font!
@@ -117,8 +116,8 @@ import Cartography
     }
 
     func configureNavigationItems() {
-        let undoImage = UIImage(for: .undo, iconSize: .tiny, color: .black)
-        let closeImage = UIImage(for: .X, iconSize: .tiny, color: .black)
+        let undoImage = StyleKitIcon.undo.makeImage(size: .tiny, color: .black)
+        let closeImage = StyleKitIcon.cross.makeImage(size: .tiny, color: .black)
         
         let closeButtonItem = UIBarButtonItem(image: closeImage, style: .plain, target: self, action: #selector(CanvasViewController.close))
         closeButtonItem.accessibilityIdentifier = "closeButton"
@@ -138,17 +137,17 @@ import Cartography
         sendButton.isEnabled = false
         sendButton.hitAreaPadding = hitAreaPadding
 
-        drawButton.setIcon(.brush, with: .tiny, for: .normal)
+        drawButton.setIcon(.brush, size: .tiny, for: .normal)
         drawButton.addTarget(self, action: #selector(toggleDrawTool), for: .touchUpInside)
         drawButton.hitAreaPadding = hitAreaPadding
         drawButton.accessibilityIdentifier = "drawButton"
         
-        photoButton.setIcon(.photo, with: .tiny, for: .normal)
+        photoButton.setIcon(.photo, size: .tiny, for: .normal)
         photoButton.addTarget(self, action: #selector(pickImage), for: .touchUpInside)
         photoButton.hitAreaPadding = hitAreaPadding
         photoButton.accessibilityIdentifier = "photoButton"
         
-        emojiButton.setIcon(.emoji, with: .tiny, for: .normal)
+        emojiButton.setIcon(.emoji, size: .tiny, for: .normal)
         emojiButton.addTarget(self, action: #selector(openEmojiKeyboard), for: .touchUpInside)
         emojiButton.hitAreaPadding = hitAreaPadding
         emojiButton.accessibilityIdentifier = "emojiButton"

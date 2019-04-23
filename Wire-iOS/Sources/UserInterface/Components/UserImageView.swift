@@ -147,7 +147,7 @@ import WireSyncEngine
             return user.isServiceUser ? .white : .clear
         case .text?:
             if user.isConnected || user.isSelfUser || user.isTeamMember || isWireless {
-                return user.indexedAccentColor
+                return user.accentColor
             } else {
                 return UIColor(white: 0.8, alpha: 1)
             }
@@ -237,7 +237,7 @@ import WireSyncEngine
 
     /// Updates the color of the badge indicator.
     private func updateIndicatorColor() {
-        self.badgeIndicator.backgroundColor = user?.indexedAccentColor
+        self.badgeIndicator.backgroundColor = user?.accentColor
     }
 
     /// Updates the interface to reflect if the user is a service user or not.

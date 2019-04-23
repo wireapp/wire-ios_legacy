@@ -32,6 +32,7 @@ static id<UserType> mockSelfUser = nil;
     if (self) {
         _clients = [NSSet set];
         self.isTeamMember = YES;
+        self.teamIdentifier = [NSUUID UUID];
         for (NSString *key in jsonObject.allKeys) {
             id value = jsonObject[key];
             if (value == NSNull.null) { continue; }
@@ -85,11 +86,6 @@ static id<UserType> mockSelfUser = nil;
 + (void)setMockSelfUser:(id<UserType>)newMockUser
 {
     mockSelfUser = newMockUser;
-}
-
-+ (MockUser *)mockUserFor:(ZMUser *)user
-{
-    return (MockUser *)user;
 }
 
 - (BOOL)isGuestInConversation:(ZMConversation *)conversation

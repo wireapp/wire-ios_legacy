@@ -24,8 +24,6 @@ class MockConversationListBottomBarDelegate: NSObject, ConversationListBottomBar
         switch (buttonType) {
         case .archive:
             self.archiveButtonTapCount += 1
-        case .compose:
-            self.composeButtonCallCount += 1
         case .camera:
             self.cameraButtonTapCount += 1
         case .startUI:
@@ -36,7 +34,6 @@ class MockConversationListBottomBarDelegate: NSObject, ConversationListBottomBar
     var startUIButtonCallCount: Int = 0
     var archiveButtonTapCount: Int = 0
     var cameraButtonTapCount: Int = 0
-    var composeButtonCallCount: Int = 0
 }
 
 final class ConversationListBottomBarControllerTests: ZMSnapshotTestCase {
@@ -112,7 +109,6 @@ final class ConversationListBottomBarControllerTests: ZMSnapshotTestCase {
         XCTAssertEqual(mockDelegate.startUIButtonCallCount, 1)
         XCTAssertEqual(mockDelegate.archiveButtonTapCount, 0)
         XCTAssertEqual(mockDelegate.cameraButtonTapCount, 0)
-        XCTAssertEqual(mockDelegate.composeButtonCallCount, 0)
     }
 
     func testThatItCallsTheDelegateWhenTheArchivedButtonIsTapped() {
@@ -123,7 +119,6 @@ final class ConversationListBottomBarControllerTests: ZMSnapshotTestCase {
         XCTAssertEqual(mockDelegate.startUIButtonCallCount, 0)
         XCTAssertEqual(mockDelegate.archiveButtonTapCount, 1)
         XCTAssertEqual(mockDelegate.cameraButtonTapCount, 0)
-        XCTAssertEqual(mockDelegate.composeButtonCallCount, 0)
     }
 
     func testThatItCallsTheDelegateWhenTheCameraButtonIsTapped() {
@@ -134,18 +129,6 @@ final class ConversationListBottomBarControllerTests: ZMSnapshotTestCase {
         XCTAssertEqual(mockDelegate.startUIButtonCallCount, 0)
         XCTAssertEqual(mockDelegate.archiveButtonTapCount, 0)
         XCTAssertEqual(mockDelegate.cameraButtonTapCount, 1)
-        XCTAssertEqual(mockDelegate.composeButtonCallCount, 0)
-    }
-
-    func testThatItCallsTheDelegateWhenTheComposeButtonIsTapped() {
-        // when
-        sut.composeButton.sendActions(for: .touchUpInside)
-
-        // then
-        XCTAssertEqual(mockDelegate.startUIButtonCallCount, 0)
-        XCTAssertEqual(mockDelegate.archiveButtonTapCount, 0)
-        XCTAssertEqual(mockDelegate.cameraButtonTapCount, 0)
-        XCTAssertEqual(mockDelegate.composeButtonCallCount, 1)
     }
 
 }

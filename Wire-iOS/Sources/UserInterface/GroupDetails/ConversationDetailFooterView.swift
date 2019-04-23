@@ -22,33 +22,33 @@ import UIKit
  * A footer view to use to display a bar of actions to perform for a conversation.
  */
 
-@objc class ConversationDetailFooterView: UIView {
+class ConversationDetailFooterView: UIView {
     
     private let variant: ColorSchemeVariant
-    @objc public let rightButton = IconButton()
-    @objc public var leftButton: IconButton
+    let rightButton = IconButton()
+    var leftButton: IconButton
     private let containerView = UIView()
 
-    @objc public var leftIcon: ZetaIconType {
+    var leftIcon: StyleKitIcon? {
         get {
-            return leftButton.iconType(for: .normal)
+            return leftButton.icon(for: .normal)
         }
         set {
             leftButton.isHidden = (newValue == .none)
             if newValue != .none {
-                leftButton.setIcon(newValue, with: .tiny, for: .normal)
+                leftButton.setIcon(newValue, size: .tiny, for: .normal)
             }
         }
     }
     
-    @objc public var rightIcon: ZetaIconType {
+    var rightIcon: StyleKitIcon? {
         get {
-            return rightButton.iconType(for: .normal)
+            return rightButton.icon(for: .normal)
         }
         set {
             rightButton.isHidden = (newValue == .none)
             if newValue != .none {
-                rightButton.setIcon(newValue, with: .tiny, for: .normal)
+                rightButton.setIcon(newValue, size: .tiny, for: .normal)
             }
         }
     }
@@ -122,7 +122,7 @@ import UIKit
 
     // MARK: - Events
     
-    @objc func setupButtons() {
+    func setupButtons() {
         fatal("Should be overridden in subclasses")
     }
     

@@ -40,14 +40,37 @@ extension ConfirmAssetViewController {
     }
 
     @objc func setupStyle() {
+        applyColorScheme(ColorScheme.default.variant)
+
+        titleLabel.font = UIFont.mediumSemiboldFont
+        titleLabel.numberOfLines = 0
+        titleLabel.textAlignment = .center
+
+        acceptImageButton.layer.cornerRadius = 8
+        acceptImageButton.titleLabel?.font = .smallSemiboldFont
+
+        rejectImageButton.layer.cornerRadius = 8
+        rejectImageButton.titleLabel?.font = .smallSemiboldFont
+    }
+
+    func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
         view.backgroundColor = UIColor.from(scheme: .background)
         imageToolbarSeparatorView?.backgroundColor = UIColor.from(scheme: .separator)
         topPanel.backgroundColor = UIColor.from(scheme: .background)
-        
-        titleLabel.font = UIFont.mediumSemiboldFont
+
         titleLabel.textColor = UIColor.from(scheme: .textForeground)
-        
+
+        acceptImageButton.setTitleColor(.white, for: .normal)
+        acceptImageButton.setTitleColor(.whiteAlpha40, for: .highlighted)
+        acceptImageButton.setBackgroundImageColor(UIColor.accent(), for: .normal)
+        acceptImageButton.setBackgroundImageColor(UIColor.accentDarken, for: .highlighted)
+
+        rejectImageButton.setTitleColor(UIColor.from(scheme: .textForeground, variant: colorSchemeVariant), for: .normal)
+        rejectImageButton.setTitleColor(UIColor.from(scheme: .textDimmed, variant: colorSchemeVariant), for: .highlighted)
+        rejectImageButton.setBackgroundImageColor(UIColor.from(scheme: .secondaryAction, variant: colorSchemeVariant), for: .normal)
+        rejectImageButton.setBackgroundImageColor(UIColor.from(scheme: .secondaryActionDimmed, variant: colorSchemeVariant), for: .highlighted)
     }
+
     
     @objc func createVideoPanel() {
         playerViewController = AVPlayerViewController()
@@ -86,5 +109,4 @@ extension ConfirmAssetViewController: CanvasViewControllerDelegate {
     func canvasViewController(_ canvasViewController: CanvasViewController, didExportImage image: UIImage) {
         onConfirm?(image)
     }
-
 }

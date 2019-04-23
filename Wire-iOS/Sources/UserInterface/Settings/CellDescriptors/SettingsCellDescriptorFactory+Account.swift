@@ -54,7 +54,7 @@ extension SettingsCellDescriptorFactory {
         
         sections.append(signOutSection())
 
-        return SettingsGroupCellDescriptor(items: sections, title: "self.settings.account_section".localized, icon: .settingsAccount)
+        return SettingsGroupCellDescriptor(items: sections, title: "self.settings.account_section".localized, icon: .personalProfile)
     }
 
     // MARK: - Sections

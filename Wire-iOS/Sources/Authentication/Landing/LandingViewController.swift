@@ -95,7 +95,7 @@ class LandingViewController: AuthenticationStepViewController {
     }()
 
     let createAccountButton: LandingButton = {
-        let button = LandingButton(title: createAccountButtonTitle, icon: .selfProfile, iconBackgroundColor: UIColor.Team.createTeamGreen)
+        let button = LandingButton(title: createAccountButtonTitle, icon: .personalProfile, iconBackgroundColor: UIColor.Team.createTeamGreen)
         button.accessibilityIdentifier = "CreateAccountButton"
         button.addTapTarget(self, action: #selector(LandingViewController.createAccountButtonTapped(_:)))
         button.setContentCompressionResistancePriority(.required, for: .vertical)
@@ -279,7 +279,7 @@ class LandingViewController: AuthenticationStepViewController {
         if SessionManager.shared?.firstAuthenticatedAccount == nil {
             navigationItem.rightBarButtonItem = nil
         } else {
-            let cancelItem = UIBarButtonItem(icon: .cancel, target: self, action: #selector(cancelButtonTapped))
+            let cancelItem = UIBarButtonItem(icon: .cross, target: self, action: #selector(cancelButtonTapped))
             cancelItem.accessibilityIdentifier = "CancelButton"
             cancelItem.accessibilityLabel = "general.cancel".localized
             navigationItem.rightBarButtonItem = cancelItem

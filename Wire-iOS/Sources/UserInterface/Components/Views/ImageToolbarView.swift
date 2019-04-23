@@ -157,19 +157,19 @@ import Cartography
     func setupButtons() {
         let hitAreaPadding = CGSize(width: 16, height: 16)
         
-        sketchButton.setIcon(.brush, with: .tiny, for: .normal)
+        sketchButton.setIcon(.brush, size: .tiny, for: .normal)
         sketchButton.hitAreaPadding = hitAreaPadding
         sketchButton.accessibilityIdentifier = "sketchButton"
         
-        emojiButton.setIcon(.emoji, with: .tiny, for: .normal)
+        emojiButton.setIcon(.emoji, size: .tiny, for: .normal)
         emojiButton.hitAreaPadding = hitAreaPadding
         emojiButton.accessibilityIdentifier = "emojiButton"
         
-        textButton.setIcon(.pencil, with: .tiny, for: .normal)
+        textButton.setIcon(.pencil, size: .tiny, for: .normal)
         textButton.hitAreaPadding = hitAreaPadding
         textButton.accessibilityIdentifier = "textButton"
         
-        expandButton.setIcon(.fullScreen, with: .tiny, for: .normal)
+        expandButton.setIcon(.fullScreen, size: .tiny, for: .normal)
         expandButton.hitAreaPadding = hitAreaPadding
         expandButton.accessibilityIdentifier = "expandButton"
     }

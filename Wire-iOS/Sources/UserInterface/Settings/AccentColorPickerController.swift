@@ -66,7 +66,7 @@ public protocol ColorPickerControllerDelegate {
         self.contentView.clipsToBounds = true
         self.contentView.backgroundColor = UIColor.white
         
-        self.closeButton.setIcon(.X, with: .tiny, for: [])
+        self.closeButton.setIcon(.cross, size: .tiny, for: [])
         self.closeButton.addTarget(self, action: #selector(ColorPickerController.didPressDismiss(_:)), for: .touchUpInside)
         self.closeButton.setIconColor(UIColor.darkGray, for: .normal)
         
@@ -142,7 +142,7 @@ public protocol ColorPickerControllerDelegate {
                 checkmarkView.center == contentView.center
             }
             
-            self.checkmarkView.image = UIImage(for: .checkmark, iconSize: .small, color: UIColor.white)
+            self.checkmarkView.setIcon(.checkmark, size: .small, color: UIColor.white)
             self.checkmarkView.isHidden = true
         }
         
@@ -236,7 +236,7 @@ extension AccentColorPickerController: ColorPickerControllerDelegate {
         }
         
         ZMUserSession.shared()?.performChanges {
-            (ZMUser.editableSelf() as ZMEditableUser).accentColorValue = self.allAccentColors[colorIndex].zmAccentColor
+            ZMUser.selfUser().accentColorValue = self.allAccentColors[colorIndex].zmAccentColor
         }
     }
 

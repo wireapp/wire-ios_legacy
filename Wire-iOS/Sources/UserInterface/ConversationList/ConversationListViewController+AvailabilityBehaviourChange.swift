@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2017 Wire Swiss GmbH
+// Copyright (C) 2019 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -18,16 +18,19 @@
 
 import Foundation
 
-public extension IteratorProtocol where Element: Hashable {
-    public mutating func histogram() -> [Element: UInt] {
-        var histogram = [Element : UInt]()
+extension ConversationListViewController {
+    
+    @objc func showAvailabilityBehaviourChangeAlertIfNeeded() {
         
-        while let element = self.next() {
-            var currentCount: UInt = histogram[element] ?? 0
-            currentCount = currentCount + 1
-            histogram[element] = currentCount
+        guard var notify = ZMUser.selfUser()?.needsToNotifyAvailabilityBehaviourChange, notify.contains(.alert),
+              let availability = ZMUser.selfUser()?.availability else { return }
+                
+        ZClientViewController.shared()?.present(UIAlertController.availabilityExplanation(availability), animated: true)
+        
+        ZMUserSession.shared()?.performChanges {
+            notify.remove(.alert)
+            ZMUser.selfUser()?.needsToNotifyAvailabilityBehaviourChange = notify
         }
-        
-        return histogram
     }
+    
 }

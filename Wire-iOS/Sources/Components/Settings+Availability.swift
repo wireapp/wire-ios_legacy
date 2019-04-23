@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2018 Wire Swiss GmbH
+// Copyright (C) 2019 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,26 +16,24 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import XCTest
-@testable import Wire
+import Foundation
 
-final class DraftSendInputAccessoryViewTests: ZMSnapshotTestCase {
+fileprivate extension Availability {
     
-    var sut: DraftSendInputAccessoryView!
-    
-    override func setUp() {
-        super.setUp()
-        sut = DraftSendInputAccessoryView()
-        sut.frame = CGRect(x: 0, y: 0, width: 375, height: 56)
+    var dontRemindMeUserDefaultsKey: String {
+        return "dont_remind_me_\(canonicalName)"
     }
     
-    override func tearDown() {
-        sut = nil
-        super.tearDown()
-    }
-
-    func testForInitState(){
-        verify(view: sut)
-    }
 }
 
+extension Settings {
+    
+    func shouldRemindUserWhenChanging(_ availability: Availability) -> Bool {
+        return defaults()?.bool(forKey: availability.dontRemindMeUserDefaultsKey) != true
+    }
+    
+    func dontRemindUserWhenChanging(_ availability: Availability) {
+        defaults()?.set(true, forKey: availability.dontRemindMeUserDefaultsKey)
+    }
+    
+}

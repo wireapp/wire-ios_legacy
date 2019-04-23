@@ -23,7 +23,7 @@ import Cartography
 
 struct CallCellViewModel {
 
-    let icon: ZetaIconType
+    let icon: StyleKitIcon
     let iconColor: UIColor?
     let systemMessageType: ZMSystemMessageType
     let font, boldFont: UIFont?
@@ -31,7 +31,7 @@ struct CallCellViewModel {
     let message: ZMConversationMessage
     
     func image() -> UIImage? {
-        return iconColor.map { UIImage(for: icon, iconSize: .tiny, color: $0) }
+        return iconColor.map { icon.makeImage(size: .tiny, color: $0) }
     }
 
     func attributedTitle() -> NSAttributedString? {

@@ -16,15 +16,17 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+import WireCommonComponents
 
-extension ColorScheme {
+extension UIBarButtonItem {
 
-    @objc var statusBarStyle: UIStatusBarStyle {
-        return variant == .light ? .default : .lightContent
-    }
-
-    @objc var indicatorStyle: UIScrollView.IndicatorStyle {
-        return variant == .light ? .default : .white
+    @objc convenience init(icon: StyleKitIcon, style: UIBarButtonItem.Style = .plain, target: Any?, action: Selector?) {
+        self.init(
+            image: icon.makeImage(size: .tiny, color: UIColor.from(scheme: .textForeground)),
+            style: style,
+            target: target,
+            action: action
+        )
     }
 
 }

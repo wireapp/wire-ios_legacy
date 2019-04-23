@@ -248,7 +248,7 @@ private let zmLog = ZMSLog(tag: "UI")
         }
         
         if let viewsState = state.viewsStateForAudio() {
-            self.playButton.setIcon(viewsState.playButtonIcon, with: .tiny, for: .normal)
+            self.playButton.setIcon(viewsState.playButtonIcon, size: .tiny, for: .normal)
             self.playButton.backgroundColor = viewsState.playButtonBackgroundColor
             self.playButton.accessibilityValue = viewsState.playButtonIcon == .play ? "play" : "pause"
         }
@@ -292,18 +292,18 @@ private let zmLog = ZMSLog(tag: "UI")
         self.playButton.backgroundColor = FileMessageViewState.normalColor
         
         if audioTrackPlayer.isPlaying {
-            self.playButton.setIcon(.pause, with: .tiny, for: [])
+            self.playButton.setIcon(.pause, size: .tiny, for: [])
             self.playButton.accessibilityValue = "pause"
         }
         else {
-            self.playButton.setIcon(.play, with: .tiny, for: [])
+            self.playButton.setIcon(.play, size: .tiny, for: [])
             self.playButton.accessibilityValue = "play"
         }
     }
     
     private func updateInactivePlayer() {
         self.playButton.backgroundColor = FileMessageViewState.normalColor
-        self.playButton.setIcon(.play, with: .tiny, for: [])
+        self.playButton.setIcon(.play, size: .tiny, for: [])
         self.playButton.accessibilityValue = "play"
         
         self.playerProgressView.setProgress(0, animated: false)

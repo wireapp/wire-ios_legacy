@@ -28,7 +28,7 @@ import WireCommonComponents
 enum PreviewItem {
     case image(UIImage)
     case remoteURL(URL)
-    case placeholder(ZetaIconType)
+    case placeholder(StyleKitIcon)
 }
 
 extension SLComposeServiceViewController {
@@ -140,7 +140,7 @@ extension SLComposeServiceViewController {
     }
 
     /// Returns the placeholder icon for the attachment of the specified type.
-    private func fallbackIcon(forAttachment item: NSItemProvider, ofType type: AttachmentType) -> ZetaIconType {
+    private func fallbackIcon(forAttachment item: NSItemProvider, ofType type: AttachmentType) -> StyleKitIcon {
         switch type {
         case .video:
             return .movie

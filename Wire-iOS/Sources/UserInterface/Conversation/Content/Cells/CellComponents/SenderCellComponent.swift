@@ -124,7 +124,7 @@ class SenderCellComponent: UIView {
         var attributedString: NSAttributedString
         if user.isServiceUser {
             let attachment = NSTextAttachment()
-            let botIcon = UIImage(for: .bot, iconSize: .like, color: UIColor.from(scheme: .iconGuest))!
+            let botIcon = StyleKitIcon.bot.makeImage(size: 12, color: UIColor.from(scheme: .iconGuest))
             attachment.image = botIcon
             attachment.bounds = CGRect(x: 0.0, y: -1.5, width: botIcon.size.width, height: botIcon.size.height)
             attachment.accessibilityLabel = "general.service".localized

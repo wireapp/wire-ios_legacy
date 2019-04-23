@@ -135,7 +135,7 @@ class ShareExtensionViewController: SLComposeServiceViewController {
         guard let item = navigationController?.navigationBar.items?.first else { return }
         item.rightBarButtonItem?.action = #selector(appendPostTapped)
         item.rightBarButtonItem?.title = "share_extension.send_button.title".localized
-        item.titleView = UIImageView(image: UIImage(forLogoWith: .black, iconSize: .small))
+        item.titleView = UIImageView(image: WireStyleKit.imageOfLogo(color: .black))
     }
 
     private var authenticatedAccounts: [Account] {
@@ -301,10 +301,10 @@ class ShareExtensionViewController: SLComposeServiceViewController {
                     self.preview?.image = image
                     self.preview?.displayMode = displayMode
                 case .placeholder(let iconType):
-                    self.preview?.image = UIImage(for: iconType, iconSize: .medium, color: UIColor.black.withAlphaComponent(0.7))
+                    self.preview?.setIcon(iconType, size: .medium, color: UIColor.black.withAlphaComponent(0.7))
 
                 case .remoteURL(let url):
-                    self.preview?.image = UIImage(for: .browser, iconSize: .medium, color: UIColor.black.withAlphaComponent(0.7))
+                    self.preview?.setIcon(.browser, size: .medium, color: UIColor.black.withAlphaComponent(0.7))
                     self.fetchWebsitePreview(for: url)
                 }
 

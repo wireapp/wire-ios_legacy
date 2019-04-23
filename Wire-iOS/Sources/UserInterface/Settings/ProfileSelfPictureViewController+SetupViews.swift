@@ -50,7 +50,7 @@ extension ProfileSelfPictureViewController {
     }
 
     func addCameraButton() {
-        cameraButton = ButtonWithLargerHitArea()
+        cameraButton = IconButton()
         cameraButton.translatesAutoresizingMaskIntoConstraints = false
 
         bottomOverlayView.addSubview(cameraButton)
@@ -62,13 +62,14 @@ extension ProfileSelfPictureViewController {
 
         cameraButton.alignCenter(to: bottomOverlayView, with: CGPoint(x:0, y:bottomOffset))
 
-        cameraButton.setImage(UIImage(for: .cameraLens, iconSize: .camera, color: .white), for: .normal)
+        cameraButton.setIconColor(.white, for: .normal)
+        cameraButton.setIcon(.cameraLens, size: 40, for: .normal)
         cameraButton.addTarget(self, action: #selector(self.cameraButtonTapped(_:)), for: .touchUpInside)
         cameraButton.accessibilityLabel = "cameraButton"
     }
 
     func addCloseButton() {
-        closeButton = ButtonWithLargerHitArea()
+        closeButton = IconButton()
         closeButton.accessibilityIdentifier = "CloseButton"
 
         bottomOverlayView.addSubview(closeButton)
@@ -81,7 +82,8 @@ extension ProfileSelfPictureViewController {
             closeButton.rightAnchor.constraint(equalTo: bottomOverlayView.rightAnchor, constant: -18)
             ])
 
-        closeButton.setImage(UIImage(for: .X, iconSize: .small, color: .white), for: .normal)
+        closeButton.setIconColor(.white, for: .normal)
+        closeButton.setIcon(.cross, size: .small, for: .normal)
 
         closeButton.addTarget(self, action: #selector(self.closeButtonTapped(_:)), for: .touchUpInside)
     }
@@ -90,7 +92,7 @@ extension ProfileSelfPictureViewController {
         let length: CGFloat = 32
         let libraryButtonSize = CGSize(width: length, height: length)
 
-        libraryButton = ButtonWithLargerHitArea()
+        libraryButton = IconButton()
         libraryButton.translatesAutoresizingMaskIntoConstraints = false
 
         libraryButton.accessibilityIdentifier = "CameraLibraryButton"
@@ -103,7 +105,8 @@ extension ProfileSelfPictureViewController {
             libraryButton.leftAnchor.constraint(equalTo: bottomOverlayView.leftAnchor, constant: 24)
             ])
 
-        libraryButton.setImage(UIImage(for: .photo, iconSize: .small, color: .white), for: .normal)
+        libraryButton.setIconColor(.white, for: .normal)
+        libraryButton.setIcon(.photo, size: .small, for: .normal)
 
         if PHPhotoLibrary.authorizationStatus() == .authorized {
             let options = PHFetchOptions()
