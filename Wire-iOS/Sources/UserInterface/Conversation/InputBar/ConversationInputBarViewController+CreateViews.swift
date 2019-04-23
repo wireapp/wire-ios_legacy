@@ -149,7 +149,7 @@ extension ConversationInputBarViewController {
             ephemeralIndicatorButton.heightAnchor.constraint(equalToConstant: InputBar.rightIconSize),
 
             markdownButton.centerXAnchor.constraint(equalTo: markdownButton.superview!.centerXAnchor),
-            markdownButton.bottomAnchor.constraint(equalTo: markdownButton.superview!.bottomAnchor, constant: 14),
+            markdownButton.bottomAnchor.constraint(equalTo: markdownButton.superview!.bottomAnchor, constant: -14),
             markdownButton.widthAnchor.constraint(equalToConstant: senderDiameter),
             markdownButton.heightAnchor.constraint(equalToConstant: senderDiameter),
 
