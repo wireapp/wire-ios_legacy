@@ -36,7 +36,6 @@
 @property (nonatomic, null_unspecified) IconButton *pingButton;
 @property (nonatomic, null_unspecified) IconButton *locationButton;
 @property (nonatomic, null_unspecified) IconButton *ephemeralIndicatorButton;
-@property (nonatomic, null_unspecified) IconButton *emojiButton;
 @property (nonatomic, null_unspecified) IconButton *markdownButton;
 @property (nonatomic, null_unspecified) IconButton *gifButton;
 @property (nonatomic, null_unspecified) IconButton *mentionButton;

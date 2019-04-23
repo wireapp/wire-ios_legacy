@@ -93,14 +93,6 @@ extension ConversationInputBarViewController {
     }
 
     @objc
-    func createEmojiButton() {
-        emojiButton = IconButton(style: .circular)
-        emojiButton.accessibilityIdentifier = "emojiButton"
-
-        inputBar.leftAccessoryView.addSubview(emojiButton)
-    }
-
-    @objc
     func createMarkdownButton() {
         markdownButton = IconButton(style: .circular)
         markdownButton.accessibilityIdentifier = "markdownButton"
@@ -138,7 +130,6 @@ extension ConversationInputBarViewController {
     @objc
     func createConstraints() {
         inputBar.translatesAutoresizingMaskIntoConstraints = false
-        emojiButton.translatesAutoresizingMaskIntoConstraints = false
         markdownButton.translatesAutoresizingMaskIntoConstraints = false
         hourglassButton.translatesAutoresizingMaskIntoConstraints = false
         typingIndicatorView.translatesAutoresizingMaskIntoConstraints = false
@@ -156,11 +147,6 @@ extension ConversationInputBarViewController {
 
             ephemeralIndicatorButton.widthAnchor.constraint(equalToConstant: InputBar.rightIconSize),
             ephemeralIndicatorButton.heightAnchor.constraint(equalToConstant: InputBar.rightIconSize),
-
-            emojiButton.centerXAnchor.constraint(equalTo: emojiButton.superview!.centerXAnchor),
-            emojiButton.bottomAnchor.constraint(equalTo: emojiButton.superview!.bottomAnchor, constant: 14),
-            emojiButton.widthAnchor.constraint(equalToConstant: senderDiameter),
-            emojiButton.heightAnchor.constraint(equalToConstant: senderDiameter),
 
             markdownButton.centerXAnchor.constraint(equalTo: markdownButton.superview!.centerXAnchor),
             markdownButton.bottomAnchor.constraint(equalTo: markdownButton.superview!.bottomAnchor, constant: 14),
