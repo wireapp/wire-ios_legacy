@@ -16,18 +16,27 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+import UIKit
 
-import Foundation
+extension UserType {
 
-
-final class RotatingKeyboardAvoidingViewController: KeyboardAvoidingViewController {
-
-    override var shouldAutorotate: Bool {
-        return true
+    /// Returns the current accent color of the user.
+    var accentColor: UIColor {
+        return UIColor(fromZMAccentColor: accentColorValue)
     }
 
-    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        return .allButUpsideDown
+}
+
+extension UnregisteredUser {
+
+    /// The accent color value of the unregistered user.
+    var accentColor: AccentColor? {
+        get {
+            return accentColorValue.flatMap(AccentColor.init)
+        }
+        set {
+            accentColorValue = newValue?.zmAccentColor
+        }
     }
 
 }

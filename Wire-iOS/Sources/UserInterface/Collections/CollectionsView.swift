@@ -82,7 +82,7 @@ public final class CollectionsView: UIView {
     
     public static func closeButton() -> IconButton {
         let button = IconButton(style: .default)
-        button.setIcon(.X, with: .tiny, for: .normal)
+        button.setIcon(.cross, size: .tiny, for: .normal)
         button.frame = CGRect(x: 0, y: 0, width: 48, height: 32)
         button.accessibilityIdentifier = "close"
         button.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: -24)
@@ -91,7 +91,7 @@ public final class CollectionsView: UIView {
     
     public static func backButton() -> IconButton {
         let button = IconButton(style: .default)
-        button.setIcon(.backArrow, with: .tiny, for: .normal)
+        button.setIcon(.backArrow, size: .tiny, for: .normal)
         button.frame = CGRect(x: 0, y: 0, width: 32, height: 20)
         button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -16, bottom: 0, right: 0)
         button.accessibilityIdentifier = "back"

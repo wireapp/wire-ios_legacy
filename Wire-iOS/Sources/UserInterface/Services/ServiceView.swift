@@ -81,7 +81,7 @@ final class ServiceView: UIView {
     private let logoView = UserImageView(size: .normal)
     private let nameLabel = UILabel()
     private let providerLabel = UILabel()
-    
+
     public let variant: ColorSchemeVariant
     
     public var service: Service {
@@ -116,20 +116,28 @@ final class ServiceView: UIView {
     }
 
     private func createConstraints() {
-        [self, logoView, nameLabel, providerLabel].forEach(){ $0.translatesAutoresizingMaskIntoConstraints = false }
-
-        logoView.fitInSuperview(exclude: [.trailing])
-
-        logoView.setDimensions(length: 80)
-
-        nameLabel.fitInSuperview(exclude: [.leading, .bottom])
+        self.translatesAutoresizingMaskIntoConstraints = false
+        logoView.translatesAutoresizingMaskIntoConstraints = false
+        nameLabel.translatesAutoresizingMaskIntoConstraints = false
+        providerLabel.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
+            // logoView
+            logoView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            logoView.topAnchor.constraint(equalTo: topAnchor),
+            logoView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            logoView.heightAnchor.constraint(equalToConstant: 80),
+
+            // nameLabel
             nameLabel.leadingAnchor.constraint(equalTo: logoView.trailingAnchor, constant: 16),
+            nameLabel.topAnchor.constraint(equalTo: topAnchor),
+            nameLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
+
+            // providerLabel
             providerLabel.leadingAnchor.constraint(equalTo: logoView.trailingAnchor, constant: 16),
             providerLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 8),
             providerLabel.trailingAnchor.constraint(equalTo: trailingAnchor)
-            ])
+        ])
     }
 
     private func updateForService() {

@@ -1003,7 +1003,7 @@
 "self.settings.link_options.maps.title" = "Vieta";
 "self.settings.link_options.browser.title" = "Naršyklė";
 
-"open_link.twitter.option.default" = "„Safari“ / „Twitter“";
+"open_link.twitter.option.default" = "Browser / Twitter";
 "open_link.twitter.option.tweetbot" = "„Tweetbot“";
 "open_link.twitter.option.twitterrific" = "„Twitterrific“";
 
@@ -1240,7 +1240,7 @@
 "registration.alert.account_exists.title" = "Paskyra jau yra";
 "registration.alert.account_exists.message_phone" = "Šis telefono numeris jau yra susietas su paskyra.\n\nNaudokite kitą telefono numerį arba bandykite prisijungti jei tai jūsų paskyra.";
 "registration.alert.account_exists.message_email" = "Šis el. pašto adresas jau yra susietas su paskyra.\n\nNaudokite kitą el. pašto adresą arba bandykite prisijungti jei tai jūsų paskyra.";
-"registration.alert.change_email_action" = "Keisti el. paštą";
+"registration.alert.change_email_action" = "Register with Another Email";
 "registration.alert.change_phone_action" = "Registruokitės su kitu numeriu";
 "registration.alert.change_signin_action" = "Prisijungti";
 
@@ -1520,6 +1520,17 @@
 "availability.available.placeholder" = "%@ yra prisijungęs";
 "availability.away.placeholder" = "%@ yra pasišalinęs";
 "availability.busy.placeholder" = "%@ yra užsiėmęs";
+
+"availability.reminder.away.title" = "You are set to Away";
+"availability.reminder.away.message" = "You will appear as Away to other people. You will not receive notifications about any incoming calls or messages.";
+"availability.reminder.busy.title" = "You are set to Busy";
+"availability.reminder.busy.message" = "You will appear as Busy to other people. You will receive only receive notifications for mentions, replies, and calls in conversations that are not muted.";
+"availability.reminder.available.title" = "You are set to Available";
+"availability.reminder.available.message" = "You will appear as Available to other people. You will receive notifications for incoming calls and for messages according to the Notifications setting in each conversation.";
+"availability.reminder.none.title" = "No status set";
+"availability.reminder.none.message" = "You will receive notifications for incoming calls and for messages according to the Notifications setting in each conversation.";
+"availability.reminder.action.dont_remind_me" = "Do not display this information again";
+"availability.reminder.action.ok" = "Ok";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Call Quality Survey

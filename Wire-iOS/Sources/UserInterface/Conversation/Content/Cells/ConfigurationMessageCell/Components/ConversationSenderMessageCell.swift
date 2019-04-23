@@ -110,9 +110,9 @@ class ConversationSenderMessageCellDescription: ConversationMessageCellDescripti
         let iconColor = UIColor.from(scheme: .iconNormal)
 
         if message.isDeletion {
-            icon = UIImage(for: .trash, iconSize: .messageStatus, color: iconColor)
+            icon = StyleKitIcon.trash.makeImage(size: 8, color: iconColor)
         } else if message.updatedAt != nil {
-            icon = UIImage(for: .pencil, iconSize: .messageStatus, color: iconColor)
+            icon = StyleKitIcon.pencil.makeImage(size: 8, color: iconColor)
         }
 
         self.configuration = View.Configuration(user: sender, message: message, indicatorIcon: icon)

@@ -781,7 +781,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
                             userClientController.showBackButton = NO;
                             UINavigationController *navigationController = userClientController.wrapInNavigationController;
                             navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
-                            userClientController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithIcon:ZetaIconTypeX style:UIBarButtonItemStylePlain target:self action:@selector(dismissProfileClientViewController:)];
+                            userClientController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithIcon:WRStyleKitIconCross style:UIBarButtonItemStylePlain target:self action:@selector(dismissProfileClientViewController:)];
                             [self presentViewController:navigationController animated:YES completion:nil];
                         } else {
                             ProfileViewController *profileViewController = [[ProfileViewController alloc] initWithUser:user viewer:[ZMUser selfUser] context:ProfileViewControllerContextDeviceList];

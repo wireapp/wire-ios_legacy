@@ -85,7 +85,7 @@ class PreviewImageView: UIImageView {
         displayMode = nil
 
         detailsContainer.backgroundColor = UIColor.black.withAlphaComponent(0.75)
-        videoBadgeImageView.image = UIImage(for: .movie, iconSize: .small, color: .white)
+        videoBadgeImageView.setIcon(.movie, size: .small, color: .white)
 
         countLabel.font = UIFont.systemFont(ofSize: 14)
         countLabel.textColor = .white

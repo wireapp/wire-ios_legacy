@@ -34,7 +34,7 @@ class ConversationPingCell: ConversationIconBasedCell, ConversationMessageCell {
     func configure(with object: Configuration, animated: Bool) {
         self.configuration = object
         attributedText = object.pingText
-        imageView.image = UIImage(for: .ping, fontSize: 20, color: object.pingColor)
+        imageView.setIcon(.ping, size: 20, color: object.pingColor)
         lineView.isHidden = true
     }
 

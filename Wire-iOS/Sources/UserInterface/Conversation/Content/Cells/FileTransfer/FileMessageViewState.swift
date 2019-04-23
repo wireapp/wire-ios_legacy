@@ -25,7 +25,7 @@ enum ProgressViewType {
     case infinite
 }
 
-typealias FileMessageViewViewsState = (progressViewType: ProgressViewType?, playButtonIcon: ZetaIconType, playButtonBackgroundColor: UIColor?)
+typealias FileMessageViewViewsState = (progressViewType: ProgressViewType?, playButtonIcon: StyleKitIcon?, playButtonBackgroundColor: UIColor?)
 
 public enum FileMessageViewState {
     
@@ -93,9 +93,9 @@ public enum FileMessageViewState {
     ///               ======>      |            #playButtonIcon
     ///               ======>      |            |        #playButtonBackgroundColor
     static let viewsStateForCellStateForVideoMessage: ViewsStateMapping =
-        [.uploading:               (.determ,   .cancel, normalColor),
+        [.uploading:               (.determ,   .cross,  normalColor),
          .uploaded:                (.none,     .play,   normalColor),
-         .downloading:             (.determ,   .cancel, normalColor),
+         .downloading:             (.determ,   .cross,  normalColor),
          .downloaded:              (.none,     .play,   normalColor),
          .failedUpload:            (.none,     .redo,   failureColor),
          .cancelledUpload:         (.none,     .redo,   normalColor),
@@ -106,9 +106,9 @@ public enum FileMessageViewState {
     ///               ======>      |            #playButtonIcon
     ///               ======>      |            |        #playButtonBackgroundColor
     static let viewsStateForCellStateForAudioMessage: ViewsStateMapping =
-        [.uploading:               (.determ,   .cancel, normalColor),
+        [.uploading:               (.determ,   .cross,  normalColor),
          .uploaded:                (.none,     .play,   normalColor),
-         .downloading:             (.determ,   .cancel, normalColor),
+         .downloading:             (.determ,   .cross,  normalColor),
          .downloaded:              (.none,     .play,   normalColor),
          .failedUpload:            (.none,     .redo,   failureColor),
          .cancelledUpload:         (.none,     .redo,   normalColor),
@@ -119,8 +119,8 @@ public enum FileMessageViewState {
     ///               ======>      |            #actionButtonIcon
     ///               ======>      |            |        #actionButtonBackgroundColor
     static let viewsStateForCellStateForFileMessage: ViewsStateMapping =
-        [.uploading:               (.determ,   .cancel, normalColor),
-         .downloading:             (.determ,   .cancel, normalColor),
+        [.uploading:               (.determ,   .cross,  normalColor),
+         .downloading:             (.determ,   .cross,  normalColor),
          .downloaded:              (.none,     .none,   clearColor),
          .uploaded:                (.none,     .none,   clearColor),
          .failedUpload:            (.none,     .redo,   failureColor),

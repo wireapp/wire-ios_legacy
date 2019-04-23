@@ -25,9 +25,9 @@ class StartUIIconCell: UICollectionViewCell {
     fileprivate let titleLabel = UILabel()
     fileprivate let separator = UIView()
     
-    fileprivate var icon: ZetaIconType? {
+    fileprivate var icon: StyleKitIcon? {
         didSet {
-            iconView.image = icon.map { UIImage.init(for: $0, iconSize: .tiny, color: .white) }
+            iconView.image = icon?.makeImage(size: .tiny, color: .white)
         }
     }
     
@@ -139,7 +139,7 @@ final class OpenServicesAdminCell: StartUIIconCell, Themeable  {
         backgroundColor = contentBackgroundColor(for: colorSchemeVariant)
         separator.backgroundColor = UIColor.from(scheme: .cellSeparator, variant: colorSchemeVariant)
         titleLabel.textColor = UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)
-        iconView.image = icon.map { UIImage.init(for: $0, iconSize: .tiny, color: UIColor.from(scheme: .iconNormal, variant: colorSchemeVariant)) }
+        iconView.image = icon?.makeImage(size: .tiny, color: UIColor.from(scheme: .iconNormal, variant: colorSchemeVariant))
     }
     
     func contentBackgroundColor(for colorSchemeVariant: ColorSchemeVariant) -> UIColor {

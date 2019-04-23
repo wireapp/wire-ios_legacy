@@ -123,6 +123,7 @@
 #import "PermissionDeniedViewController+Internal.h"
 
 #import "ShareContactsViewController.h"
+#import "ImagePickerConfirmationController.h"
 
 // Helper objects
 #import "PushTransition.h"
@@ -143,7 +144,6 @@
 #import "Application+runDuration.h"
 #import "DeveloperMenuState.h"
 #import "NSString+Fingerprint.h"
-#import "UIImage+ZetaIconsNeue.h"
 #import "UIColor+WAZExtensions.h"
 #import "AccentColorChangeHandler.h"
 #import "UIApplication+Permissions.h"

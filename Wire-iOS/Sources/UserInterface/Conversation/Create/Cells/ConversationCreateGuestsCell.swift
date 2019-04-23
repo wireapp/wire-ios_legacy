@@ -30,7 +30,7 @@ class ConversationCreateGuestsCell: IconToggleCell {
     override func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
         super.applyColorScheme(colorSchemeVariant)
         let color = UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)
-        icon = UIImage(for: .guest, iconSize: .tiny, color: color)
+        icon = StyleKitIcon.guest.makeImage(size: .tiny, color: color)
     }
 }
 

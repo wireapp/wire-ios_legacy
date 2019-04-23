@@ -33,33 +33,8 @@ protocol EmojiKeyboardViewControllerDelegate: class {
     fileprivate var emojiDataSource: EmojiDataSource!
     fileprivate let collectionView = EmojiCollectionView()
     let sectionViewController = EmojiSectionViewController(types: EmojiSectionType.all)
-    private let backspaceButton: IconButton = {
-        let button = IconButton(style: .default)
-        button.setIconColor(.from(scheme: .textForeground, variant: .dark), for: .normal)
-        button.setIconColor(.from(scheme: .iconHighlighted, variant: .dark), for: .highlighted)
-        button.setBackgroundImageColor(.clear, for: .selected)
-        button.setBorderColor(.clear, for: .normal)
-        button.circular = false
-        button.borderWidth = 0
-
-        button.setIcon(.backspace, with: .small, for: .normal)
-
-        return button
-    }()
 
     private var deleting = false
-
-    var backspaceEnabled = false {
-        didSet {
-            backspaceButton.isEnabled = backspaceEnabled
-        }
-    }
-    
-    var backspaceHidden = false {
-        didSet {
-            backspaceButton.isHidden = backspaceHidden
-        }
-    }
 
     init() {
         super.init(nibName: nil, bundle: nil)
@@ -95,25 +70,18 @@ protocol EmojiKeyboardViewControllerDelegate: class {
         addChild(sectionViewController)
         view.addSubview(sectionViewController.view)
         sectionViewController.didMove(toParent: self)
-
-        backspaceButton.addTarget(self, action: #selector(backspaceTapped), for: .touchUpInside)
-        backspaceButton.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(backspaceLongPressed)))
-        backspaceButton.isHidden = backspaceHidden
-        view.addSubview(backspaceButton)
     }
     
     func createConstraints() {
-        constrain(view, collectionView, sectionViewController.view, backspaceButton) { view, collectionView, sectionView, backButton in
+        constrain(view, collectionView, sectionViewController.view) { view, collectionView, sectionView in
             collectionView.top == view.top
             collectionView.leading == view.leading
             collectionView.trailing == view.trailing
             collectionView.bottom == sectionView.top
             sectionView.bottom == view.bottom - UIScreen.safeArea.bottom
             sectionView.leading == view.leading
-            sectionView.trailing == backButton.trailing - 32 ~ 750.0
+            sectionView.trailing == view.trailing - 32 ~ 750.0
             sectionView.width <= 400
-            backButton.trailing == view.trailing - 16
-            backButton.top == sectionView.top
         }
     }
     

@@ -36,7 +36,7 @@ extension ZMConversation {
 @objcMembers final public class ConversationInputBarButtonState: NSObject {
 
     public var sendButtonHidden: Bool {
-        return !hasText || editing || (Settings.shared().disableSendButton && mode != .emojiInput && !markingDown)
+        return !hasText || editing || (Settings.shared().disableSendButton && !markingDown)
     }
 
     public var hourglassButtonHidden: Bool {
@@ -44,7 +44,7 @@ extension ZMConversation {
     }
 
     public var ephemeralIndicatorButtonHidden: Bool {
-        return (conversationType != .oneOnOne && disableEphemeralSendingInGroups) || !ephemeral || disableEphemeralSending
+        return (conversationType != .oneOnOne && disableEphemeralSendingInGroups) || editing || !ephemeral || disableEphemeralSending
     }
 
     public var ephemeralIndicatorButtonEnabled: Bool {

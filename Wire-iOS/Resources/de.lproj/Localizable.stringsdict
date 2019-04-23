@@ -297,7 +297,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>einem Kleinbuchstaben</string>
+        <string>einen Kleinbuchstaben</string>
         <key>other</key>
         <string>%d Kleinbuchstaben</string>
       </dict>
@@ -313,7 +313,7 @@
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>one</key>
-        <string>einem Großbuchstaben</string>
+        <string>einen Großbuchstaben</string>
         <key>other</key>
         <string>%d Großbuchstaben</string>
       </dict>
@@ -329,7 +329,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>eine Zahl</string>
+        <string>eine Ziffer</string>
         <key>other</key>
         <string>%d Zahlen</string>
       </dict>

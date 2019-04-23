@@ -46,8 +46,8 @@ import UIKit
         configureBackground()
 
         let backIndicatorInsets = UIEdgeInsets(top: 0, left: 4, bottom: 2.5, right: 0)
-        backIndicatorImage = UIImage(for: .backArrow, iconSize: .tiny, color: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)).withInsets(backIndicatorInsets, backgroundColor: .clear)
-        backIndicatorTransitionMaskImage = UIImage(for: .backArrow, iconSize: .tiny, color: .black).withInsets(backIndicatorInsets, backgroundColor: .clear)
+        backIndicatorImage = StyleKitIcon.backArrow.makeImage(size: .tiny, color: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)).withInsets(backIndicatorInsets, backgroundColor: .clear)
+        backIndicatorTransitionMaskImage = StyleKitIcon.backArrow.makeImage(size: .tiny, color: .black).withInsets(backIndicatorInsets, backgroundColor: .clear)
     }
 
     func configureBackground() {

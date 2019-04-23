@@ -32,9 +32,11 @@ final class GroupDetailsReceiptOptionsCell: IconToggleCell {
 
     override func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
         super.applyColorScheme(colorSchemeVariant)
-        icon = UIImage(for: .eye,
-                       iconSize: .tiny,
-                       color: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant))
+        
+        icon = StyleKitIcon.eye.makeImage(
+            size: .tiny,
+            color: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)
+        )
     }
 }
 

@@ -71,12 +71,12 @@ extension ShareViewController {
         self.destinationsTableView.dataSource = self
 
         self.closeButton.accessibilityLabel = "close"
-        self.closeButton.setIcon(.X, with: .tiny, for: .normal)
+        self.closeButton.setIcon(.cross, size: .tiny, for: .normal)
         self.closeButton.addTarget(self, action: #selector(ShareViewController.onCloseButtonPressed(sender:)), for: .touchUpInside)
 
         self.sendButton.accessibilityLabel = "send"
         self.sendButton.isEnabled = false
-        self.sendButton.setIcon(.send, with: .tiny, for: .normal)
+        self.sendButton.setIcon(.send, size: .tiny, for: .normal)
         self.sendButton.setBackgroundImageColor(UIColor.white, for: .normal)
         self.sendButton.setBackgroundImageColor(UIColor(white: 0.64, alpha: 1), for: .disabled)
         self.sendButton.setBorderColor(.clear, for: .normal)
@@ -85,7 +85,7 @@ extension ShareViewController {
         self.sendButton.addTarget(self, action: #selector(ShareViewController.onSendButtonPressed(sender:)), for: .touchUpInside)
 
         if self.allowsMultipleSelection {
-            self.searchIcon.image = UIImage(for: .search, iconSize: .tiny, color: .white)
+            self.searchIcon.setIcon(.search, size: .tiny, color: .white)
         }
         else {
             self.searchIcon.isHidden = true

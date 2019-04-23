@@ -272,6 +272,13 @@ final internal class CallingMatcher: ConversationStatusMatcher {
     }
     
     func description(with status: ConversationStatus, conversation: ZMConversation) -> NSAttributedString? {
+        if conversation.voiceChannel?.state.canJoinCall == true {
+            if let callerDisplayName = conversation.voiceChannel?.initiator?.displayName {
+                return "conversation.status.incoming_call".localized(args: callerDisplayName) && type(of: self).regularStyle
+            } else {
+                return "conversation.status.incoming_call.someone".localized && type(of: self).regularStyle
+            }
+        }
         return .none
     }
     
@@ -285,7 +292,7 @@ final internal class CallingMatcher: ConversationStatusMatcher {
             return nil
         }
         
-        if case CallState.incoming(video: _, shouldRing: false, degraded: _) = state, state.canJoinCall {
+        if state.canJoinCall {
             return .activeCall(showJoin: true)
         } else if state.isCallOngoing {
             return .activeCall(showJoin: false)
@@ -728,12 +735,16 @@ extension ConversationStatus {
 extension ZMConversation {
     
     var status: ConversationStatus {
-        
         let messagesRequiringAttention = estimatedUnreadCount > 0 ? unreadMessages : []
-        let messagesRequiringAttentionTypes = messagesRequiringAttention.compactMap { StatusMessageType(message: $0) }
-        var iterator = messagesRequiringAttentionTypes.makeIterator()
-        let messagesRequiringAttentionByType = iterator.histogram()
-                
+        
+        let messagesRequiringAttentionByType: [StatusMessageType: UInt] = messagesRequiringAttention.reduce(into: [:]) { histogram, element in
+            guard let messageType = StatusMessageType(message: element) else {
+                return
+            }
+
+            histogram[messageType, default: 0] += 1
+        }
+
         let isOngoingCall: Bool = {
             guard let state = voiceChannel?.state else { return false }
             switch state {

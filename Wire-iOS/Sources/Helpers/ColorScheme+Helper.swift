@@ -18,10 +18,14 @@
 
 import Foundation
 
-extension ConversationListViewController {
-    @objc
-    func createSettingsViewController() -> UIViewController {
-        let selfProfileViewController = SelfProfileViewController(selfUser: ZMUser.selfUser())
-        return selfProfileViewController.wrapInNavigationController(navigationControllerClass: ClearBackgroundNavigationController.self)
+extension ColorScheme {
+
+    @objc var statusBarStyle: UIStatusBarStyle {
+        return variant == .light ? .default : .lightContent
     }
+
+    @objc var indicatorStyle: UIScrollView.IndicatorStyle {
+        return variant == .light ? .default : .white
+    }
+
 }

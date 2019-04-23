@@ -19,14 +19,12 @@
 import Foundation
 
 extension NSTextAttachment {
-    static func textAttachment(for icon: ZetaIconType, with color: UIColor, iconSize: CGFloat = 10, verticalCorrection: CGFloat = 0) -> NSTextAttachment? {
-        guard let image = UIImage(for: icon, fontSize: iconSize, color: color)
-            else { return nil }
-
+    static func textAttachment(for icon: StyleKitIcon, with color: UIColor, iconSize: StyleKitIcon.Size = 10, verticalCorrection: CGFloat = 0) -> NSTextAttachment {
+        let image = icon.makeImage(size: iconSize, color: color)
         let attachment = NSTextAttachment()
         attachment.image = image
         let ratio = image.size.width / image.size.height
-        attachment.bounds = CGRect(x: 0, y: verticalCorrection, width: iconSize * ratio, height: iconSize)
+        attachment.bounds = CGRect(x: 0, y: verticalCorrection, width: iconSize.rawValue * ratio, height: iconSize.rawValue)
         return attachment
     }
 }
