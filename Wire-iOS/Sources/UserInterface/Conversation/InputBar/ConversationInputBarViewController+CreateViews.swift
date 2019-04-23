@@ -66,20 +66,10 @@ extension ConversationInputBarViewController {
 
         inputBar = InputBar(buttons: buttons)
 
-        inputBar.translatesAutoresizingMaskIntoConstraints = false
         inputBar.textView.delegate = self
         registerForTextFieldSelectionChange()
 
         view.addSubview(inputBar)
-
-        var constraints: [NSLayoutConstraint] = inputBar.fitInSuperview(exclude: [.bottom], activate: false).map{$0.value}
-
-        let bottomConstraint = inputBar.pinToSuperview(anchor: .bottom, activate: false)
-        bottomConstraint.priority = .defaultLow
-
-        constraints.append(bottomConstraint)
-
-        NSLayoutConstraint.activate(constraints)
 
         inputBar.editingView.delegate = self
     }
@@ -95,7 +85,6 @@ extension ConversationInputBarViewController {
 
         inputBar.rightAccessoryStackView.insertArrangedSubview(ephemeralIndicatorButton, at: 0)
 
-        ephemeralIndicatorButton.setDimensions(length: InputBar.rightIconSize)
 
         ephemeralIndicatorButton.setTitleColor(UIColor.lightGraphite, for: .disabled)
         ephemeralIndicatorButton.setTitleColor(UIColor.accent(), for: .normal)
@@ -105,50 +94,34 @@ extension ConversationInputBarViewController {
 
     @objc
     func createEmojiButton() {
-        let senderDiameter: CGFloat = 28
-
         emojiButton = IconButton(style: .circular)
         emojiButton.accessibilityIdentifier = "emojiButton"
 
         inputBar.leftAccessoryView.addSubview(emojiButton)
-
-        emojiButton.translatesAutoresizingMaskIntoConstraints = false
-        emojiButton.pinToSuperview(axisAnchor: .centerX)
-        emojiButton.pinToSuperview(anchor: .bottom, inset: 14)
-        emojiButton.setDimensions(length: senderDiameter)
     }
 
     @objc
     func createMarkdownButton() {
-        let senderDiameter: CGFloat = 28
-
         markdownButton = IconButton(style: .circular)
         markdownButton.accessibilityIdentifier = "markdownButton"
         inputBar.leftAccessoryView.addSubview(markdownButton)
-
-        markdownButton.translatesAutoresizingMaskIntoConstraints = false
-        markdownButton.pinToSuperview(axisAnchor: .centerX)
-        markdownButton.pinToSuperview(anchor: .bottom, inset: 14)
-        markdownButton.setDimensions(length: senderDiameter)
     }
 
     @objc
     func createHourglassButton() {
         hourglassButton = IconButton(style: .default)
-        hourglassButton.translatesAutoresizingMaskIntoConstraints = false
 
-        hourglassButton.setIcon(.hourglass, with: .tiny, for: UIControl.State.normal)
+        hourglassButton.setIcon(.hourglass, size: .tiny, for: UIControl.State.normal)
 
         hourglassButton.accessibilityIdentifier = "ephemeralTimeSelectionButton"
         inputBar.rightAccessoryStackView.addArrangedSubview(hourglassButton)
 
-        hourglassButton.setDimensions(length: InputBar.rightIconSize)
+
     }
 
     @objc
     func createTypingIndicatorView() {
         typingIndicatorView = TypingIndicatorView()
-        typingIndicatorView.translatesAutoresizingMaskIntoConstraints = false
         typingIndicatorView.accessibilityIdentifier = "typingIndicator"
         if let typingUsers = typingUsers,
             let typingUsersArray = Array(typingUsers) as? [ZMUser] {
@@ -160,11 +133,48 @@ extension ConversationInputBarViewController {
 
         inputBar.addSubview(typingIndicatorView)
 
-        NSLayoutConstraint.activate([typingIndicatorView.centerYAnchor.constraint(equalTo: inputBar.topAnchor),
-                                     typingIndicatorView.pinToSuperview(axisAnchor: .centerX, activate: false),
-                                     typingIndicatorView.leftAnchor.constraint(greaterThanOrEqualTo: typingIndicatorView.superview!.leftAnchor, constant: 48),
-                                     typingIndicatorView.rightAnchor.constraint(greaterThanOrEqualTo: typingIndicatorView.superview!.rightAnchor, constant: 48)
-                                     ])
+    }
+
+    @objc
+    func createConstraints() {
+        inputBar.translatesAutoresizingMaskIntoConstraints = false
+        emojiButton.translatesAutoresizingMaskIntoConstraints = false
+        markdownButton.translatesAutoresizingMaskIntoConstraints = false
+        hourglassButton.translatesAutoresizingMaskIntoConstraints = false
+        typingIndicatorView.translatesAutoresizingMaskIntoConstraints = false
+
+        let bottomConstraint = inputBar.bottomAnchor.constraint(equalTo: inputBar.superview!.bottomAnchor)
+        bottomConstraint.priority = .defaultLow
+
+        let senderDiameter: CGFloat = 28
+
+        NSLayoutConstraint.activate([
+            inputBar.topAnchor.constraint(equalTo: inputBar.superview!.topAnchor),
+            inputBar.leadingAnchor.constraint(equalTo: inputBar.superview!.leadingAnchor),
+            inputBar.trailingAnchor.constraint(equalTo: inputBar.superview!.trailingAnchor),
+            bottomConstraint,
+
+            ephemeralIndicatorButton.widthAnchor.constraint(equalToConstant: InputBar.rightIconSize),
+            ephemeralIndicatorButton.heightAnchor.constraint(equalToConstant: InputBar.rightIconSize),
+
+            emojiButton.centerXAnchor.constraint(equalTo: emojiButton.superview!.centerXAnchor),
+            emojiButton.bottomAnchor.constraint(equalTo: emojiButton.superview!.bottomAnchor, constant: 14),
+            emojiButton.widthAnchor.constraint(equalToConstant: senderDiameter),
+            emojiButton.heightAnchor.constraint(equalToConstant: senderDiameter),
+
+            markdownButton.centerXAnchor.constraint(equalTo: markdownButton.superview!.centerXAnchor),
+            markdownButton.bottomAnchor.constraint(equalTo: markdownButton.superview!.bottomAnchor, constant: 14),
+            markdownButton.widthAnchor.constraint(equalToConstant: senderDiameter),
+            markdownButton.heightAnchor.constraint(equalToConstant: senderDiameter),
+
+            hourglassButton.widthAnchor.constraint(equalToConstant: InputBar.rightIconSize),
+            hourglassButton.heightAnchor.constraint(equalToConstant: InputBar.rightIconSize),
+
+            typingIndicatorView.centerYAnchor.constraint(equalTo: inputBar.topAnchor),
+            typingIndicatorView.centerXAnchor.constraint(equalTo: typingIndicatorView.superview!.centerXAnchor),
+            typingIndicatorView.leftAnchor.constraint(greaterThanOrEqualTo: typingIndicatorView.superview!.leftAnchor, constant: 48),
+            typingIndicatorView.rightAnchor.constraint(greaterThanOrEqualTo: typingIndicatorView.superview!.rightAnchor, constant: 48)
+            ])
     }
 
 }

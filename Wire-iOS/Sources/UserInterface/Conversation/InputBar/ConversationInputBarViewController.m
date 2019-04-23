@@ -180,7 +180,9 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
     [self createHourglassButton];
     [self createTypingIndicatorView];
-    
+
+    [self createConstraints];
+
     if (self.conversation.hasDraftMessage) {
         [self.inputBar.textView setDraftMessage:self.conversation.draftMessage];
     }
