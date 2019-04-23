@@ -149,7 +149,7 @@ class SettingsGroupCellDescriptor: SettingsInternalGroupCellDescriptorType, Sett
     let style: InternalScreenStyle
     let items: [SettingsSectionDescriptorType]
     let identifier: String?
-    let icon: ZetaIconType
+    let icon: StyleKitIcon?
     
     let previewGenerator: PreviewGeneratorType?
     
@@ -163,7 +163,7 @@ class SettingsGroupCellDescriptor: SettingsInternalGroupCellDescriptorType, Sett
     
     weak var viewController: UIViewController?
     
-    init(items: [SettingsSectionDescriptorType], title: String, style: InternalScreenStyle = .grouped, identifier: String? = .none, previewGenerator: PreviewGeneratorType? = .none, icon: ZetaIconType = .none) {
+    init(items: [SettingsSectionDescriptorType], title: String, style: InternalScreenStyle = .grouped, identifier: String? = .none, previewGenerator: PreviewGeneratorType? = .none, icon: StyleKitIcon? = nil) {
         self.items = items
         self.title = title
         self.style = style
@@ -245,8 +245,6 @@ extension SettingsPropertyName {
             return "Calling protocol"
         case .enableBatchCollections:
             return "Use AssetCollectionBatched"
-        case .enableNewAttachedLinkPreviews:
-            return "Use New SoundCloud Link Attachments"
         case .lockApp:
             return "self.settings.privacy_security.lock_app".localized
         case .lockAppLastDate:

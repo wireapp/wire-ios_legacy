@@ -19,7 +19,7 @@
 import XCTest
 @testable import Wire
 
-final class ProfileViewTests: CoreDataSnapshotTestCase {
+final class ProfileViewTests: ZMSnapshotTestCase {
     
     override func setUp() {
         super.setUp()
@@ -63,20 +63,18 @@ final class ProfileViewTests: CoreDataSnapshotTestCase {
     
     // MARK; - Helpers
     
-    func verifyProfile(options: ProfileView.Options, availability: Availability = .available, file: StaticString = #file, line: UInt = #line) {
-        teamTest {
-            selfUser.team?.name = "Stunning"
-            selfUser.setHandle("browncow")
-            selfUser.availability = availability
-            
-            let sut = ProfileView(user: selfUser,
-                                  viewer: selfUser,
-                                  options: options)
-            sut.colorSchemeVariant = .dark
-            sut.frame.size = sut.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
-            sut.backgroundColor = .black
-            verify(view: sut, file: file, line: line)
-        }
+    func verifyProfile(options: ProfileHeaderViewController.Options, availability: Availability = .available, file: StaticString = #file, line: UInt = #line) {
+        let selfUser = MockUser.createSelfUser(name: "selfUser", inTeam: UUID())
+        selfUser.teamName = "Stunning"
+        selfUser.handle = "browncow"
+        selfUser.availability = availability
+
+        let sut = ProfileHeaderViewController(user: selfUser, viewer: selfUser, options: options)
+        sut.colorSchemeVariant = .dark
+        sut.view.frame.size = sut.view.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
+        sut.view.backgroundColor = .black
+
+        verify(view: sut.view, file: file, line: line)
     }
         
 }

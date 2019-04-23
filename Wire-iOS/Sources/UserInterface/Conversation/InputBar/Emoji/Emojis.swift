@@ -93,7 +93,7 @@ enum EmojiSectionType: String {
 
     case recent, people, nature, food, travel, activities, objects, symbols, flags
 
-    var icon: ZetaIconType {
+    var icon: StyleKitIcon {
         switch self {
         case .recent: return .clock
         case .people: return .emoji

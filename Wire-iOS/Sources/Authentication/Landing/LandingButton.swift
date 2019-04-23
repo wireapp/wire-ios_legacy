@@ -35,11 +35,11 @@ class LandingButton: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    convenience init(title: NSAttributedString, icon: ZetaIconType, iconBackgroundColor: UIColor) {
+    convenience init(title: NSAttributedString, icon: StyleKitIcon, iconBackgroundColor: UIColor) {
         self.init(frame: .zero)
         accessibilityLabel = title.string
         subtitleLabel.attributedText = title
-        iconButton.setIcon(icon, with: .registrationButton, for: .normal)
+        iconButton.setIcon(icon, size: 32, for: .normal)
         iconButton.setBackgroundImageColor(iconBackgroundColor, for: .normal)
     }
 

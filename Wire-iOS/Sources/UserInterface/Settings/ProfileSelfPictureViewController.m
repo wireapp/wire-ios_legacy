@@ -25,8 +25,6 @@
 
 #import "WireSyncEngine+iOS.h"
 
-#import "UIImage+ZetaIconsNeue.h"
-
 
 #import "ImagePickerConfirmationController.h"
 #import "Analytics.h"
@@ -38,7 +36,6 @@
 @interface ProfileSelfPictureViewController ()
 
 
-@property (nonatomic) ImagePickerConfirmationController *imagePickerConfirmationController;
 @property (nonatomic) id userObserverToken;
 @end
 
@@ -80,24 +77,6 @@
 }
 
 #pragma mark - Button Handling
-
-- (void)libraryButtonTapped:(id)sender
-{
-    UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
-    imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-    imagePickerController.mediaTypes = @[(__bridge NSString *) kUTTypeImage];
-    imagePickerController.delegate = self.imagePickerConfirmationController;
-    
-    if (IS_IPAD_FULLSCREEN) {
-        imagePickerController.modalPresentationStyle = UIModalPresentationPopover;
-        UIPopoverPresentationController *popover = imagePickerController.popoverPresentationController;
-        popover.sourceRect = CGRectInset([sender bounds], 4, 4);
-        popover.sourceView = sender;
-        popover.backgroundColor = UIColor.whiteColor;
-    }
-    
-    [self presentViewController:imagePickerController animated:YES completion:nil];
-}
 
 - (void)cameraButtonTapped:(id)sender
 {

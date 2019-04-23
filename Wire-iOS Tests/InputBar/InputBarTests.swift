@@ -28,16 +28,16 @@ class InputBarTests: ZMSnapshotTestCase {
     
     let buttons = { () -> [UIButton] in
         let b1 = IconButton()
-        b1.setIcon(.paperclip, with: .tiny, for: [])
+        b1.setIcon(.paperclip, size: .tiny, for: [])
         
         let b2 = IconButton()
-        b2.setIcon(.photo, with: .tiny, for: [])
+        b2.setIcon(.photo, size: .tiny, for: [])
         
         let b3 = IconButton()
-        b3.setIcon(.brush, with: .tiny, for: [])
+        b3.setIcon(.brush, size: .tiny, for: [])
         
         let b4 = IconButton()
-        b4.setIcon(.ping, with: .tiny, for: [])
+        b4.setIcon(.ping, size: .tiny, for: [])
 
         return [b1, b2, b3, b4]
     }

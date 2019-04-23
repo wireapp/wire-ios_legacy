@@ -28,13 +28,12 @@
 + (NSArray <MockUser *> *)realMockUsers;
 + (MockUser *)mockSelfUser;
 + (MockUser *)mockServiceUser;
-+ (MockUser *)mockUserFor:(ZMUser *)user;
 
 + (void)setMockSelfUser:(id<UserType>)newMockUser;
 
 @property (nonatomic, readwrite, copy) NSString *name;
 @property (nonatomic, readwrite, copy) NSString *initials;
-@property (nonatomic, readwrite) NSString *emailAddress;
+@property (nonatomic, readwrite, copy) NSString *emailAddress;
 @property (nonatomic, readwrite) NSString *phoneNumber;
 @property (nonatomic, readwrite, copy) NSString *handle;
 @property (nonatomic) ZMAccentColor accentColorValue;
@@ -54,6 +53,7 @@
 @property (nonatomic, readwrite) BOOL isTeamMember;
 @property (nonatomic, readwrite) TeamRole teamRole;
 @property (nonatomic, assign) BOOL isGuestInConversation;
+@property (nonatomic, copy) NSString *teamName;
 @property (nonatomic, readwrite) BOOL canManageTeam;
 @property (nonatomic, readwrite) BOOL hasTeam;
 @property (nonatomic, readwrite) NSString *expirationDisplayString;

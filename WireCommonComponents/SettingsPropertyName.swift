@@ -76,7 +76,6 @@ public enum SettingsPropertyName: String, CustomStringConvertible {
     case disableCallKit = "DisableCallKit"
     case callingProtocolStrategy = "CallingProtcolStrategy"
     case enableBatchCollections = "EnableBatchCollections"
-    case enableNewAttachedLinkPreviews = "EnableNewAttachedLinkPreviews"
 
     case lockApp = "lockApp"
     case lockAppLastDate = "lockAppLastDate"

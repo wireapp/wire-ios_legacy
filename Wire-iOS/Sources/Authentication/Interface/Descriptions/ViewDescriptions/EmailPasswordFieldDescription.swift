@@ -19,32 +19,26 @@
 import UIKit
 
 final class EmailPasswordFieldDescription: ValueSubmission {
-    let emailField: TextFieldDescription
-    let passwordField: TextFieldDescription
-    var prefilledEmail: String?
+    let textField = EmailPasswordTextField()
 
-    var acceptsInput: Bool = true {
-        didSet {
-            emailField.acceptsInput = acceptsInput
-            passwordField.acceptsInput = acceptsInput
-        }
-    }
+    var forRegistration: Bool
+    var prefilledEmail: String?
+    var usePasswordDeferredValidation: Bool
+    var acceptsInput: Bool = true
 
     var valueSubmitted: ValueSubmitted?
     var valueValidated: ValueValidated?
 
-    init(forRegistration: Bool, prefilledEmail: String? = nil) {
-        self.prefilledEmail = prefilledEmail
-        emailField = TextFieldDescription(placeholder: "email.placeholder".localized, actionDescription: "", kind: .email)
-        emailField.showConfirmButton = false
-        passwordField = TextFieldDescription(placeholder: "password.placeholder".localized, actionDescription: "", kind: .password(isNew: forRegistration))
+    init(forRegistration: Bool, prefilledEmail: String? = nil, usePasswordDeferredValidation: Bool = false) {
+        self.forRegistration = forRegistration
+        self.usePasswordDeferredValidation = usePasswordDeferredValidation
     }
 
 }
 
 extension EmailPasswordFieldDescription: ViewDescriptor, EmailPasswordTextFieldDelegate {
     func create() -> UIView {
-        let textField = EmailPasswordTextField()
+        textField.passwordField.kind = .password(isNew: forRegistration)
         textField.delegate = self
         textField.prefill(email: prefilledEmail)
         textField.emailField.validateInput()
@@ -52,15 +46,20 @@ extension EmailPasswordFieldDescription: ViewDescriptor, EmailPasswordTextFieldD
     }
 
     func textFieldDidUpdateText(_ textField: EmailPasswordTextField) {
-        // Reset the error message when the user changes the text
-        valueValidated?(.none)
+        // Reset the error message when the user changes the text and we use deferred validation
+        guard usePasswordDeferredValidation else { return }
+        valueValidated?(nil)
+        textField.passwordField.hideGuidanceDot()
     }
 
     func textField(_ textField: EmailPasswordTextField, didConfirmCredentials credentials: (String, String)) {
         valueSubmitted?(credentials)
     }
 
-    func textField(_ textField: EmailPasswordTextField, didUpdateValidation isValid: Bool) {
-        // no-op: we do not observe the validity of the input here
+    func textFieldDidSubmitWithValidationError(_ textField: EmailPasswordTextField) {
+        if let passwordError = textField.passwordValidationError {
+            textField.passwordField.showGuidanceDot()
+            valueValidated?(.error(passwordError, showVisualFeedback: true))
+        }
     }
 }

@@ -54,11 +54,31 @@ enum AxisAnchor {
     case centerY
 }
 
+enum LengthAnchor {
+    case width
+    case height
+}
+
+struct LengthConstraints {
+    let constraints: [LengthAnchor: NSLayoutConstraint]
+
+    subscript(anchor: LengthAnchor) -> NSLayoutConstraint? {
+        return constraints[anchor]
+    }
+
+    var array: [NSLayoutConstraint] {
+        return constraints.values.map{ $0 }
+    }
+}
+
+
+
+
 extension UIView {
 
     // MARK: - center alignment
 
-    @discardableResult
+    @discardableResult @available(*, deprecated, message: "Use the anchors API instead")
     func centerInSuperview(activate: Bool = true) -> [NSLayoutConstraint] {
         guard let superview = superview else {
             fatal("Not in view hierarchy: self.superview = nil")
@@ -67,7 +87,7 @@ extension UIView {
         return alignCenter(to: superview, activate: activate)
     }
 
-    @discardableResult
+    @discardableResult @available(*, deprecated, message: "Use the anchors API instead")
     func alignCenter(to view: UIView,
                      with offset: CGPoint = .zero,
                      activate: Bool = true) -> [NSLayoutConstraint] {
@@ -84,7 +104,7 @@ extension UIView {
         return constraints
     }
 
-    @discardableResult
+    @discardableResult @available(*, deprecated, message: "Use the anchors API instead")
     func pinToSuperview(axisAnchor: AxisAnchor,
                         constant: CGFloat = 0,
                         activate: Bool = true) -> NSLayoutConstraint {
@@ -95,7 +115,7 @@ extension UIView {
         return pin(to: superview, axisAnchor: axisAnchor, constant: constant, activate: activate)
     }
 
-    @discardableResult
+    @discardableResult @available(*, deprecated, message: "Use the anchors API instead")
     func pin(to view: UIView,
              axisAnchor: AxisAnchor,
              constant: CGFloat = 0,
@@ -128,7 +148,7 @@ extension UIView {
     ///   - inset: the inset to the edge
     ///   - activate: true by default, set to false if do not activate the NSLayoutConstraint
     /// - Returns: the NSLayoutConstraint created
-    @discardableResult
+    @discardableResult @available(*, deprecated, message: "Use the anchors API instead")
     func pinToSuperview(safely: Bool = false,
                         anchor: Anchor,
                         inset: CGFloat = 0,
@@ -144,7 +164,7 @@ extension UIView {
                    activate: activate)
     }
 
-    @discardableResult
+    @discardableResult @available(*, deprecated, message: "Use the anchors API instead")
     func pin(to view: UIView,
              safely: Bool = false,
              anchor: Anchor,
@@ -184,7 +204,7 @@ extension UIView {
 
     // MARK: - all edges alignment
 
-    @discardableResult
+    @discardableResult @available(*, deprecated, message: "Use the anchors API instead")
     func fitInSuperview(safely: Bool = false,
                         with insets: EdgeInsets = .zero,
                         exclude excludedAnchors: [Anchor] = [],
@@ -201,7 +221,7 @@ extension UIView {
                    activate: activate)
     }
 
-    @discardableResult
+    @discardableResult @available(*, deprecated, message: "Use the anchors API instead")
     func pin(to view: UIView,
              safely: Bool = false,
              with insets: EdgeInsets = .zero,
@@ -252,35 +272,37 @@ extension UIView {
 
     // MARK: - dimensions
 
-    @discardableResult
+    @discardableResult @available(*, deprecated, message: "Use the anchors API instead")
     func setDimensions(length: CGFloat,
-                       activate: Bool = true) -> [NSLayoutConstraint] {
+                       activate: Bool = true) -> LengthConstraints {
         return setDimensions(width: length, height: length, activate: activate)
     }
 
-    @discardableResult
+    @discardableResult @available(*, deprecated, message: "Use the anchors API instead")
     func setDimensions(width: CGFloat,
                        height: CGFloat,
-                       activate: Bool = true) -> [NSLayoutConstraint] {
+                       activate: Bool = true) -> LengthConstraints {
         return setDimensions(size: CGSize(width: width, height: height), activate: activate)
     }
 
-    @discardableResult
+    @discardableResult @available(*, deprecated, message: "Use the anchors API instead")
     func setDimensions(size: CGSize,
-                       activate: Bool = true) -> [NSLayoutConstraint] {
-        let constraints: [NSLayoutConstraint] = [
-            widthAnchor.constraint(equalToConstant: size.width),
-            heightAnchor.constraint(equalToConstant: size.height)
+                       activate: Bool = true) -> LengthConstraints {
+        let constraints: [LengthAnchor: NSLayoutConstraint] = [
+            .width: widthAnchor.constraint(equalToConstant: size.width),
+            .height: heightAnchor.constraint(equalToConstant: size.height)
         ]
 
+        let lengthConstraints = LengthConstraints(constraints: constraints)
+
         if activate {
-            NSLayoutConstraint.activate(constraints)
+            NSLayoutConstraint.activate(lengthConstraints.array)
         }
 
-        return constraints
+        return lengthConstraints
     }
 
-    @discardableResult
+    @discardableResult @available(*, deprecated, message: "Use the anchors API instead")
     func topAndBottomEdgesToSuperviewEdges() -> [NSLayoutConstraint] {
         guard let superview = superview else { return [] }
 

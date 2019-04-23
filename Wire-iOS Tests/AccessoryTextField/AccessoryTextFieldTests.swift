@@ -74,6 +74,19 @@ final class AccessoryTextFieldTests: ZMSnapshotTestCase {
         // THEN
         self.verify(view: sut.snapshotView())
     }
+
+    func testThatItShowsGuidanceDot() {
+        // GIVEN
+        sut.kind = .password(isNew: false)
+        sut.showGuidanceDot()
+
+        // WHEN
+        sut.text = "Password"
+        sut.textFieldDidChange(textField: sut)
+
+        // THEN
+        self.verify(view: sut.snapshotView())
+    }
 }
 
 fileprivate extension UIView {

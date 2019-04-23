@@ -16,16 +16,12 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
-#import "AccentColorProvider.h"
-
 #import "StartUIViewController.h"
 #import "StartUIViewController+internal.h"
 #import "ProfilePresenter.h"
 #import "ShareContactsViewController.h"
 #import "ZClientViewController.h"
 #import "TopPeopleCell.h"
-#import "StartUIInviteActionBar.h"
 #import "Button.h"
 #import "IconButton.h"
 
@@ -131,7 +127,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self handleUploadAddressBookLogicIfNeeded];
     [self.searchResultsViewController searchContactList];
 
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithIcon:ZetaIconTypeX
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithIcon:WRStyleKitIconCross
                                                                              style:UIBarButtonItemStylePlain
                                                                             target:self
                                                                             action:@selector(onDismissPressed)];

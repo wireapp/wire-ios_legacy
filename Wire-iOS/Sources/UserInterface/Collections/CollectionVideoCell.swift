@@ -54,7 +54,7 @@ final public class CollectionVideoCell: CollectionCell {
         }
     }
 
-    override var obfuscationIcon: ZetaIconType {
+    override var obfuscationIcon: StyleKitIcon {
         return .movie
     }
 

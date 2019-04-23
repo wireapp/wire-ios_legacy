@@ -32,6 +32,7 @@ static id<UserType> mockSelfUser = nil;
     if (self) {
         _clients = [NSSet set];
         self.isTeamMember = YES;
+        self.teamIdentifier = [NSUUID UUID];
         for (NSString *key in jsonObject.allKeys) {
             id value = jsonObject[key];
             if (value == NSNull.null) { continue; }
@@ -87,19 +88,9 @@ static id<UserType> mockSelfUser = nil;
     mockSelfUser = newMockUser;
 }
 
-+ (MockUser *)mockUserFor:(ZMUser *)user
-{
-    return (MockUser *)user;
-}
-
 - (BOOL)isGuestInConversation:(ZMConversation *)conversation
 {
     return self.isGuestInConversation;
-}
-
-- (NSString *)emailAddress
-{
-    return @"test@email.com";
 }
 
 - (NSString *)phoneNumber
@@ -117,6 +108,7 @@ static id<UserType> mockSelfUser = nil;
 
 @synthesize name;
 @synthesize displayName;
+@synthesize emailAddress;
 @synthesize isSelfUser;
 @synthesize isConnected;
 @synthesize accentColorValue;
@@ -129,7 +121,6 @@ static id<UserType> mockSelfUser = nil;
 @synthesize isTeamMember;
 @synthesize teamRole;
 @synthesize readReceiptsEnabled;
-@synthesize teamName;
 @synthesize activeConversations;
 
 #pragma mark - ZMBareUserConnection

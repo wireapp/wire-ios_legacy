@@ -353,7 +353,7 @@ extension AuthenticationCoordinator {
 
     func makeUnregisteredUser() -> UnregisteredUser {
         let user = UnregisteredUser()
-        user.accentColorValue = ZMUser.pickRandomAccentColor()
+        user.accentColor = .random
         return user
     }
 

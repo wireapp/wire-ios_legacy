@@ -29,9 +29,9 @@ extension NSAttributedString {
         return defaultParagraphStyle()
     }()
     
-    static var previewParagraphStyle: NSParagraphStyle = {
+    static var previewParagraphStyle: NSParagraphStyle {
         return defaultPreviewParagraphStyle()
-    }()
+    }
     
     static var style: DownStyle = {
         return defaultMarkdownStyle()
@@ -49,7 +49,6 @@ extension NSAttributedString {
     @objc
     static func invalidateParagraphStyle() {
         paragraphStyle = defaultParagraphStyle()
-        previewParagraphStyle = defaultPreviewParagraphStyle()
     }
     
     /// This method needs to be called as soon as the text color configuration is changed.
@@ -114,7 +113,7 @@ extension NSAttributedString {
         let markdownText = NSMutableAttributedString.markdown(from: plainText, style: previewStyle)
         
         // Highlight mentions using previously inserted text markers
-        markdownText.highlight(mentions: mentionTextObjects)
+        markdownText.highlight(mentions: mentionTextObjects, paragraphStyle: nil)
         
         // Remove trailing link if we show a link preview
         let links = markdownText.links()
@@ -208,10 +207,9 @@ extension NSMutableAttributedString {
     
     func removeTrailingLink(for linkPreview: LinkMetadata) {
         let text = self.string
-        let linkPreviewStartIndex = text.index(text.startIndex, offsetBy: linkPreview.characterOffsetInText)
-
+        
         guard
-            let linkPreviewRange = text.range(of: linkPreview.originalURLString, range: linkPreviewStartIndex ..< text.endIndex),
+            let linkPreviewRange = text.range(of: linkPreview.originalURLString, options: .backwards, range: nil, locale: nil),
             linkPreviewRange.upperBound == text.endIndex
         else {
             return

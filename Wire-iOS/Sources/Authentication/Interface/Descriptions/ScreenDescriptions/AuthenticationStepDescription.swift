@@ -21,7 +21,12 @@ import Foundation
 typealias AuthenticationSecondaryViewDescription = SecondaryViewDescription & AuthenticationActionable
 
 typealias ValueSubmitted = (Any) -> ()
-typealias ValueValidated = (TextFieldValidator.ValidationError) -> ()
+typealias ValueValidated = (ValueValidation?) -> ()
+
+enum ValueValidation {
+    case info(String)
+    case error(TextFieldValidator.ValidationError, showVisualFeedback: Bool)
+}
 
 protocol ViewDescriptor: class {
     func create() -> UIView
@@ -45,6 +50,10 @@ protocol AuthenticationStepDescription {
     var subtext: String? { get }
     var secondaryView: AuthenticationSecondaryViewDescription? { get }
     func shouldSkipFromNavigation() -> Bool
+}
+
+protocol DefaultValidatingStepDescription: AuthenticationStepDescription {
+    var initialValidation: ValueValidation { get }
 }
 
 extension AuthenticationStepDescription {

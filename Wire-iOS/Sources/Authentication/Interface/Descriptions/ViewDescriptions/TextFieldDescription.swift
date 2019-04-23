@@ -25,11 +25,12 @@ final class TextFieldDescription: NSObject, ValueSubmission {
     var valueSubmitted: ValueSubmitted?
     var valueValidated: ValueValidated?
     var acceptsInput: Bool = true
-    var validationError: TextFieldValidator.ValidationError
+    var validationError: TextFieldValidator.ValidationError?
     let uppercasePlaceholder: Bool
     var showConfirmButton: Bool = true
     var canSubmit: (() -> Bool)?
     var textField: AccessoryTextField?
+    var useDeferredValidation: Bool = false
 
     init(placeholder: String, actionDescription: String, kind: AccessoryTextField.Kind, uppercasePlaceholder: Bool = true) {
         self.placeholder = placeholder
@@ -40,7 +41,7 @@ final class TextFieldDescription: NSObject, ValueSubmission {
         super.init()
 
         canSubmit = { [weak self] in
-            return (self?.acceptsInput == true) && (self?.validationError == TextFieldValidator.ValidationError.none)
+            return (self?.acceptsInput == true) && (self?.validationError == nil)
         }
     }
 }
@@ -54,9 +55,17 @@ extension TextFieldDescription: ViewDescriptor {
         textField.delegate = self
         textField.textFieldValidationDelegate = self
         textField.confirmButton.addTarget(self, action: #selector(TextFieldDescription.confirmButtonTapped(_:)), for: .touchUpInside)
+        textField.addTarget(self, action: #selector(TextFieldDescription.editingChanged), for: .editingChanged)
         textField.confirmButton.accessibilityLabel = self.actionDescription
         textField.showConfirmButton = showConfirmButton
-        textField.enableConfirmButton = canSubmit
+
+        textField.enableConfirmButton = { [weak self] in
+            if self?.useDeferredValidation == true {
+                return !textField.input.isEmpty
+            } else {
+                return self?.canSubmit?() == true
+            }
+        }
 
         self.textField = textField
         return textField
@@ -70,6 +79,13 @@ extension TextFieldDescription: UITextFieldDelegate {
         submitValue(with: textField.input)
     }
 
+    @objc func editingChanged(sender: AccessoryTextField) {
+        // If we use deferred validation, remove the error when the text changes
+        guard useDeferredValidation else { return }
+        self.valueValidated?(nil)
+        sender.hideGuidanceDot()
+    }
+
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         return acceptsInput
     }
@@ -79,27 +95,27 @@ extension TextFieldDescription: UITextFieldDelegate {
 
         textField.validateInput()
 
-        if validationError == .none {
+        if validationError == .none || useDeferredValidation {
             submitValue(with: textField.input)
             return true
         } else {
-            return false
+           return false
         }
     }
 
     func submitValue(with text: String) {
-        switch validationError {
-        case .none:
-            self.valueValidated?(.none)
+        if let error = validationError {
+            textField?.showGuidanceDot()
+            self.valueValidated?(.error(error, showVisualFeedback: textField?.input.isEmpty == false))
+        } else {
+            self.valueValidated?(nil)
             self.valueSubmitted?(text)
-        default:
-            self.valueValidated?(validationError)
         }
     }
 }
 
 extension TextFieldDescription: TextFieldValidationDelegate {
-    func validationUpdated(sender: UITextField, error: TextFieldValidator.ValidationError) {
+    func validationUpdated(sender: UITextField, error: TextFieldValidator.ValidationError?) {
         self.validationError = error
     }
 }

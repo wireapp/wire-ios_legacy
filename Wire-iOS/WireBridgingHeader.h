@@ -57,9 +57,11 @@
 #import "ProfileViewController+internal.h"
 #import "StartUIViewController.h"
 #import "StartUIViewController+internal.h"
+
 #import "TopPeopleLineCollectionViewController.h"
 #import "TopPeopleCell.h"
-#import "CollectionViewContainerCell.h"
+#import "TopPeopleCell+Internal.h"
+
 #import "IconButton.h"
 #import "Button.h"
 #import "ButtonWithLargerHitArea.h"
@@ -116,8 +118,12 @@
 #import "ContactsDataSource.h"
 #import "StartUIViewController.h"
 #import "Button.h"
+
 #import "PermissionDeniedViewController.h"
+#import "PermissionDeniedViewController+Internal.h"
+
 #import "ShareContactsViewController.h"
+#import "ImagePickerConfirmationController.h"
 
 // Helper objects
 #import "PushTransition.h"
@@ -138,7 +144,6 @@
 #import "Application+runDuration.h"
 #import "DeveloperMenuState.h"
 #import "NSString+Fingerprint.h"
-#import "UIImage+ZetaIconsNeue.h"
 #import "UIColor+WAZExtensions.h"
 #import "AccentColorChangeHandler.h"
 #import "UIApplication+Permissions.h"
@@ -177,11 +182,3 @@
 #import "AudioTrack.h"
 #import "AudioTrackPlayer.h"
 #import "MediaPlaybackManager.h"
-#import "AudioTrackViewController.h"
-#import "AudioTrackViewController+Internal.h"
-#import "AudioPlaylistViewController.h"
-#import "AudioPlaylistViewController+Internal.h"
-#import "AudioHeaderView.h"
-#import "AudioHeaderView+Internal.h"
-#import "AudioTrackView.h"
-#import "AudioTrackView+Internal.h"

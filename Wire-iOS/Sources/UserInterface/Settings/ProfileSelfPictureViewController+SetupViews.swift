@@ -18,6 +18,7 @@
 
 import Foundation
 import Photos
+import MobileCoreServices
 
 extension ProfileSelfPictureViewController {
     override open func viewDidLoad() {
@@ -29,13 +30,27 @@ extension ProfileSelfPictureViewController {
         setupTopView()
     }
 
+    override open func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        updateStatusBar()
+    }
+
+    override open func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        updateStatusBar()
+    }
+
+    override open var preferredStatusBarStyle: UIStatusBarStyle {
+        return ColorScheme.default.statusBarStyle
+    }
+
+
     override open var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return wr_supportedInterfaceOrientations
     }
 
-    @objc
     func addCameraButton() {
-        cameraButton = ButtonWithLargerHitArea()
+        cameraButton = IconButton()
         cameraButton.translatesAutoresizingMaskIntoConstraints = false
 
         bottomOverlayView.addSubview(cameraButton)
@@ -47,14 +62,14 @@ extension ProfileSelfPictureViewController {
 
         cameraButton.alignCenter(to: bottomOverlayView, with: CGPoint(x:0, y:bottomOffset))
 
-        cameraButton.setImage(UIImage(for: .cameraLens, iconSize: .camera, color: .white), for: .normal)
+        cameraButton.setIconColor(.white, for: .normal)
+        cameraButton.setIcon(.cameraLens, size: 40, for: .normal)
         cameraButton.addTarget(self, action: #selector(self.cameraButtonTapped(_:)), for: .touchUpInside)
         cameraButton.accessibilityLabel = "cameraButton"
     }
 
-    @objc
     func addCloseButton() {
-        closeButton = ButtonWithLargerHitArea()
+        closeButton = IconButton()
         closeButton.accessibilityIdentifier = "CloseButton"
 
         bottomOverlayView.addSubview(closeButton)
@@ -67,17 +82,17 @@ extension ProfileSelfPictureViewController {
             closeButton.rightAnchor.constraint(equalTo: bottomOverlayView.rightAnchor, constant: -18)
             ])
 
-        closeButton.setImage(UIImage(for: .X, iconSize: .small, color: .white), for: .normal)
+        closeButton.setIconColor(.white, for: .normal)
+        closeButton.setIcon(.cross, size: .small, for: .normal)
 
         closeButton.addTarget(self, action: #selector(self.closeButtonTapped(_:)), for: .touchUpInside)
     }
 
-    @objc
     func addLibraryButton() {
         let length: CGFloat = 32
         let libraryButtonSize = CGSize(width: length, height: length)
 
-        libraryButton = ButtonWithLargerHitArea()
+        libraryButton = IconButton()
         libraryButton.translatesAutoresizingMaskIntoConstraints = false
 
         libraryButton.accessibilityIdentifier = "CameraLibraryButton"
@@ -90,7 +105,8 @@ extension ProfileSelfPictureViewController {
             libraryButton.leftAnchor.constraint(equalTo: bottomOverlayView.leftAnchor, constant: 24)
             ])
 
-        libraryButton.setImage(UIImage(for: .photo, iconSize: .small, color: .white), for: .normal)
+        libraryButton.setIconColor(.white, for: .normal)
+        libraryButton.setIcon(.photo, size: .small, for: .normal)
 
         if PHPhotoLibrary.authorizationStatus() == .authorized {
             let options = PHFetchOptions()
@@ -166,5 +182,28 @@ extension ProfileSelfPictureViewController {
         addCloseButton()
     }
 
-}
+    @objc
+    func libraryButtonTapped(_ sender: Any?) {
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.sourceType = .photoLibrary
+        imagePickerController.mediaTypes = [kUTTypeImage as String]
+        imagePickerController.delegate = imagePickerConfirmationController
 
+        if isIPadRegular() {
+            imagePickerController.modalPresentationStyle = .popover
+            let popover: UIPopoverPresentationController? = imagePickerController.popoverPresentationController
+
+            if let view = sender as? UIView {
+                popover?.sourceRect = view.bounds.insetBy(dx: 4, dy: 4)
+                popover?.sourceView = view
+            }
+            popover?.backgroundColor = UIColor.white
+        }
+
+        /// update status bar style for the top view controller (UIImagePickerController)
+        present(imagePickerController, animated: true) { [weak self] in
+            self?.updateStatusBar()
+        }
+    }
+
+}

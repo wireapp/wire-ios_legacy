@@ -53,7 +53,6 @@
 
 @property (nonatomic, nullable) AudioRecordKeyboardViewController *audioRecordKeyboardViewController;
 @property (nonatomic, nullable) CameraKeyboardViewController *cameraKeyboardViewController;
-@property (nonatomic, nullable) EmojiKeyboardViewController *emojiKeyboardViewController;
 @property (nonatomic, nullable) EphemeralKeyboardViewController *ephemeralKeyboardViewController;
 @property (nonatomic, nonnull)  ConversationInputBarSendController *sendController;
 @property (nonatomic, nullable) id<ZMConversationMessage> editingMessage;

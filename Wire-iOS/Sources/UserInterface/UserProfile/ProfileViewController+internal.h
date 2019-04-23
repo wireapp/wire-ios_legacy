@@ -25,8 +25,10 @@
 @class TabBarController;
 
 @protocol ActionController;
+@protocol ProfileDevicesViewControllerDelegate;
 
-#import "AccentColorProvider.h"
+@import WireSyncEngine;
+
 #import "ProfileDevicesViewController.h"
 
 NS_ASSUME_NONNULL_BEGIN

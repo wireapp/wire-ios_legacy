@@ -27,10 +27,6 @@ extension ZMConversationMessage {
         return (self.serverTimestamp?.timeIntervalSinceNow ?? -Double.infinity) >= -1.0
     }
     
-    var isFirstMessage: Bool {
-        return (self.conversation?.recentMessages.count ?? 0) == 1
-    }
-    
     var isSystemMessageWithSoundNotification: Bool {
         guard isSystem, let data = systemMessageData else {
             return false
@@ -111,7 +107,6 @@ extension SoundEventListener : ZMNewUnreadMessagesObserver, ZMNewUnreadKnocksObs
             guard (message.isNormal || message.isSystemMessageWithSoundNotification) &&
                   message.isRecentMessage &&
                   !message.isSentBySelfUser &&
-                  !message.isFirstMessage &&
                   !isSilenced else {
                 continue
             }
@@ -160,7 +155,7 @@ extension SoundEventListener : WireCallCenterCallStateObserver {
         
         switch callState {
         case .incoming(video: _, shouldRing: true, degraded: _):
-            guard let sessionManager = SessionManager.shared, conversation.mutedMessageTypes == .none else { return }
+            guard let sessionManager = SessionManager.shared, conversation.mutedMessageTypesIncludingAvailability == .none else { return }
             
             let otherNonIdleCalls = callCenter.nonIdleCalls.filter({ (key: UUID, callState: CallState) -> Bool in
                 return key != conversationId

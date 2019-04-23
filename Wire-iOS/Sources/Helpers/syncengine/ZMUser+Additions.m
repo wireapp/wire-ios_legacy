@@ -24,35 +24,6 @@
 #import "ColorScheme.h"
 #import "Wire-Swift.h"
 
-ZMUser *BareUserToUser(id bareUser) {
-    ZMUser *user = nil;
-    if ([bareUser isKindOfClass:[ZMSearchUser class]]) {
-        user = ((ZMSearchUser *)bareUser).user;
-    } else if ([bareUser isKindOfClass:[ZMUser class]]) {
-        user = (ZMUser *)bareUser;
-    }
-    return user;
-}
-
-@implementation ZMSearchUser (AccentColorProvider)
-
-- (UIColor *)accentColor
-{
-    return [[UIColor alloc] initWithColorForZMAccentColor:self.accentColorValue];
-}
-
-@end
-
-
-@implementation ZMUser (AccentColorProvider)
-
-- (UIColor *)accentColor
-{
-    return [[UIColor alloc] initWithColorForZMAccentColor:self.accentColorValue];
-}
-
-@end
-
 @implementation ZMUser (Additions)
 
 - (void)toggleBlocked
@@ -69,11 +40,6 @@ ZMUser *BareUserToUser(id bareUser) {
     return [UIColor nameColorForZMAccentColor:self.accentColorValue variant:[[ColorScheme defaultColorScheme] variant]];
 }
 
-+ (ZMUser<ZMEditableUser> *)editableSelfUser
-{
-    return [ZMUser selfUserInUserSession:[ZMUserSession sharedSession]];
-}
-
 + (BOOL)isSelfUserActiveParticipantOfConversation:(ZMConversation *)conversation
 {
     ZMUser *selfUser = [self selfUser];
@@ -83,30 +49,6 @@ ZMUser *BareUserToUser(id bareUser) {
 - (BOOL)isPendingApproval
 {
     return (self.isPendingApprovalBySelfUser || self.isPendingApprovalByOtherUser);
-}
-
-+ (ZMAccentColor)pickRandomAcceptableAccentColor
-{
-    ZMAccentColor accentColorValue;
-
-    do {
-        accentColorValue = arc4random_uniform(ZMAccentColorMax) + 1;
-    }
-    while (accentColorValue == ZMAccentColorSoftPink ||
-           accentColorValue == ZMAccentColorStrongLimeGreen ||
-           accentColorValue == ZMAccentColorVividRed ||
-           accentColorValue == ZMAccentColorBrightYellow);
-
-    return accentColorValue;
-}
-
-+ (ZMAccentColor)pickRandomAccentColor
-{
-    ZMAccentColor accentColorValue;
-    
-    accentColorValue = arc4random_uniform(ZMAccentColorMax) + 1;
-
-    return accentColorValue;
 }
 
 @end

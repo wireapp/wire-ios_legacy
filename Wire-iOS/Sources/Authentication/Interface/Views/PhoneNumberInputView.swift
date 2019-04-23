@@ -21,7 +21,7 @@ import Foundation
 /// An object that receives notification about the phone number input view.
 protocol PhoneNumberInputViewDelegate: class {
     func phoneNumberInputView(_ inputView: PhoneNumberInputView, didPickPhoneNumber phoneNumber: PhoneNumber)
-    func phoneNumberInputView(_ inputView: PhoneNumberInputView, didValidatePhoneNumber phoneNumber: PhoneNumber, withResult validationError: TextFieldValidator.ValidationError)
+    func phoneNumberInputView(_ inputView: PhoneNumberInputView, didValidatePhoneNumber phoneNumber: PhoneNumber, withResult validationError: TextFieldValidator.ValidationError?)
     func phoneNumberInputViewDidRequestCountryPicker(_ inputView: PhoneNumberInputView)
 }
 
@@ -38,7 +38,7 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
     private(set) var country = Country.default
 
     /// The validation error for the current input.
-    private(set) var validationError: TextFieldValidator.ValidationError = .tooShort(kind: .phoneNumber)
+    private(set) var validationError: TextFieldValidator.ValidationError? = .tooShort(kind: .phoneNumber)
 
     /// Whether to show the confirm button.
     var showConfirmButton: Bool = true {
@@ -146,7 +146,7 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
 
     private func configureValidation() {
         textField.enableConfirmButton = { [weak self] in
-            self?.validationError == TextFieldValidator.ValidationError.none
+            self?.validationError == nil
         }
 
         textField.textFieldValidator.customValidator = { input in
@@ -332,7 +332,7 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
 
     // MARK: - Value Submission
 
-    func validationUpdated(sender: UITextField, error: TextFieldValidator.ValidationError) {
+    func validationUpdated(sender: UITextField, error: TextFieldValidator.ValidationError?) {
         self.validationError = error
         let phoneNumber = PhoneNumber(countryCode: country.e164.uintValue, numberWithoutCode: input)
         delegate?.phoneNumberInputView(self, didValidatePhoneNumber: phoneNumber, withResult: validationError)
@@ -351,13 +351,11 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
 
     func submitValue() {
         let phoneNumber = PhoneNumber(countryCode: country.e164.uintValue, numberWithoutCode: textField.input)
+        delegate?.phoneNumberInputView(self, didValidatePhoneNumber: phoneNumber, withResult: validationError)
 
-        switch validationError {
-        case .none:
-            delegate?.phoneNumberInputView(self, didValidatePhoneNumber: phoneNumber, withResult: .none)
+        if validationError == nil {
+            delegate?.phoneNumberInputView(self, didValidatePhoneNumber: phoneNumber, withResult: nil)
             delegate?.phoneNumberInputView(self, didPickPhoneNumber: phoneNumber)
-        default:
-            delegate?.phoneNumberInputView(self, didValidatePhoneNumber: phoneNumber, withResult: validationError)
         }
     }
 
