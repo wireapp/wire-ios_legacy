@@ -18,7 +18,6 @@
 
 
 @import MobileCoreServices;
-@import AVFoundation;
 
 #import "ConversationInputBarViewController.h"
 #import "ConversationInputBarViewController+Private.h"
