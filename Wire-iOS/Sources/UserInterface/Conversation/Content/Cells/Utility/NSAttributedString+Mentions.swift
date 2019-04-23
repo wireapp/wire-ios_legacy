@@ -115,7 +115,8 @@ extension NSMutableAttributedString {
         return atString + mentionText
     }
     
-    func highlight(mentions: [TextMarker<(Mention)>]) {
+    func highlight(mentions: [TextMarker<(Mention)>],
+                   paragraphStyle: NSParagraphStyle = NSAttributedString.paragraphStyle) {
         
         let mutableString = self.mutableString
         
@@ -128,7 +129,7 @@ extension NSMutableAttributedString {
             }
             
             var attributes = self.attributes(at: mentionRange.location, effectiveRange: nil)
-            attributes[.paragraphStyle] = NSAttributedString.paragraphStyle
+            attributes[.paragraphStyle] = paragraphStyle
             let replacementString = NSMutableAttributedString.mention(for: textObject.value.user,
                                                                       name: textObject.replacementText,
                                                                       link: textObject.value.link,

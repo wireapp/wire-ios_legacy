@@ -29,9 +29,9 @@ extension NSAttributedString {
         return defaultParagraphStyle()
     }()
     
-    static var previewParagraphStyle: NSParagraphStyle = {
+    static var previewParagraphStyle: NSParagraphStyle {
         return defaultPreviewParagraphStyle()
-    }()
+    }
     
     static var style: DownStyle = {
         return defaultMarkdownStyle()
@@ -49,7 +49,6 @@ extension NSAttributedString {
     @objc
     static func invalidateParagraphStyle() {
         paragraphStyle = defaultParagraphStyle()
-        previewParagraphStyle = defaultPreviewParagraphStyle()
     }
     
     /// This method needs to be called as soon as the text color configuration is changed.
