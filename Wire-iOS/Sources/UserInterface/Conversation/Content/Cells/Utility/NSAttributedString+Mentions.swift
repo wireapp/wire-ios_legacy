@@ -116,9 +116,7 @@ extension NSMutableAttributedString {
     }
     
     func highlight(mentions: [TextMarker<(Mention)>],
-                   paragraphStyle: NSParagraphStyle = NSAttributedString.paragraphStyle) {
-        
-        let mutableString = self.mutableString
+                   paragraphStyle: NSParagraphStyle? = NSAttributedString.paragraphStyle) {
         
         mentions.forEach { textObject in
             let mentionRange = mutableString.range(of: textObject.token)

@@ -113,7 +113,7 @@ extension NSAttributedString {
         let markdownText = NSMutableAttributedString.markdown(from: plainText, style: previewStyle)
         
         // Highlight mentions using previously inserted text markers
-        markdownText.highlight(mentions: mentionTextObjects)
+        markdownText.highlight(mentions: mentionTextObjects, paragraphStyle: nil)
         
         // Remove trailing link if we show a link preview
         let links = markdownText.links()
