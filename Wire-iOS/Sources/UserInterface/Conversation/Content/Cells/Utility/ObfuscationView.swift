@@ -19,12 +19,12 @@
 import Foundation
 
 @objcMembers final class ObfuscationView: UIImageView {
-    @objc init(icon: ZetaIconType) {
+    @objc init(icon: StyleKitIcon) {
         super.init(frame: .zero)
         backgroundColor = .accentDimmedFlat
         isOpaque = true
         contentMode = .center
-        image = UIImage.init(for: icon, iconSize: .tiny, color: UIColor.from(scheme: .background))
+        setIcon(icon, size: .tiny, color: UIColor.from(scheme: .background))
 
         switch icon {
         case .locationPin:

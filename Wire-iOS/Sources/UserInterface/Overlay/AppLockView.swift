@@ -90,39 +90,56 @@ final class AppLockView: UIView {
     }
 
     private func createConstraints(nibView: UIView) {
+        self.translatesAutoresizingMaskIntoConstraints = false
+        nibView.translatesAutoresizingMaskIntoConstraints = false
+        shieldViewContainer.translatesAutoresizingMaskIntoConstraints = false
+        blurView.translatesAutoresizingMaskIntoConstraints = false
+        contentContainerView.translatesAutoresizingMaskIntoConstraints = false
+        authenticateButton.translatesAutoresizingMaskIntoConstraints = false
+        authenticateLabel.translatesAutoresizingMaskIntoConstraints = false
 
-        [self,
-         nibView,
-         shieldViewContainer,
-         blurView,
-         contentContainerView,
-         authenticateButton,
-         authenticateLabel].forEach(){ $0.translatesAutoresizingMaskIntoConstraints = false }
+        // Compact
+        contentLeadingConstraint = contentContainerView.leadingAnchor.constraint(equalTo: leadingAnchor)
+        contentTrailingConstraint = contentContainerView.trailingAnchor.constraint(equalTo: trailingAnchor)
 
-        nibView.fitInSuperview()
-        shieldViewContainer.fitInSuperview()
-        blurView.fitInSuperview()
-
-        let constraints = contentContainerView.fitInSuperview()
-
-        ///for compact
-        contentLeadingConstraint = constraints[.leading]
-        contentTrailingConstraint = constraints[.trailing]
-
-        ///for regular
+        // Regular
         contentCenterConstraint = contentContainerView.centerXAnchor.constraint(equalTo: centerXAnchor)
         contentWidthConstraint = contentContainerView.widthAnchor.constraint(equalToConstant: 320)
 
-        authenticateLabel.fitInSuperview(with: EdgeInsets(margin: 24), exclude: [.top, .bottom])
-
-        authenticateButton.fitInSuperview(with: EdgeInsets(margin: 24), exclude: [.top])
-
-
         NSLayoutConstraint.activate([
-            authenticateButton.heightAnchor.constraint(equalToConstant: 40),
-            authenticateButton.topAnchor.constraint(equalTo: authenticateLabel.bottomAnchor, constant: 24)
-        ])
+            // nibView
+            nibView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            nibView.topAnchor.constraint(equalTo: topAnchor),
+            nibView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            nibView.bottomAnchor.constraint(equalTo: bottomAnchor),
 
+            // shieldViewContainer
+            shieldViewContainer.leadingAnchor.constraint(equalTo: leadingAnchor),
+            shieldViewContainer.topAnchor.constraint(equalTo: topAnchor),
+            shieldViewContainer.trailingAnchor.constraint(equalTo: trailingAnchor),
+            shieldViewContainer.bottomAnchor.constraint(equalTo: bottomAnchor),
+
+            // blurView
+            blurView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            blurView.topAnchor.constraint(equalTo: topAnchor),
+            blurView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            blurView.bottomAnchor.constraint(equalTo: bottomAnchor),
+
+            // contentContainerView
+            contentContainerView.topAnchor.constraint(equalTo: topAnchor),
+            contentContainerView.bottomAnchor.constraint(equalTo: bottomAnchor),
+
+            // authenticateLabel
+            authenticateLabel.leadingAnchor.constraint(equalTo: contentContainerView.leadingAnchor, constant: 24),
+            authenticateLabel.trailingAnchor.constraint(equalTo: contentContainerView.trailingAnchor, constant: -24),
+
+            // authenticateButton
+            authenticateButton.heightAnchor.constraint(equalToConstant: 40),
+            authenticateButton.leadingAnchor.constraint(equalTo: contentContainerView.leadingAnchor, constant: 24),
+            authenticateButton.topAnchor.constraint(equalTo: authenticateLabel.bottomAnchor, constant: 24),
+            authenticateButton.trailingAnchor.constraint(equalTo: contentContainerView.trailingAnchor, constant: -24),
+            authenticateButton.bottomAnchor.constraint(equalTo: contentContainerView.safeBottomAnchor, constant: -24),
+        ])
     }
     
     public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {

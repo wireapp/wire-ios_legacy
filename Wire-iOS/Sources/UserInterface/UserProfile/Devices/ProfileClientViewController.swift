@@ -120,7 +120,7 @@ import Cartography
     }
 
     private func setupBackButton() {
-        backButton.setIcon(.chevronLeft, with: .tiny, for: [])
+        backButton.setIcon(.backArrow, size: .tiny, for: [])
         backButton.accessibilityIdentifier = "back"
         backButton.addTarget(self, action: #selector(ProfileClientViewController.onBackTapped(_:)), for: .touchUpInside)
         backButton.isHidden = !self.showBackButton

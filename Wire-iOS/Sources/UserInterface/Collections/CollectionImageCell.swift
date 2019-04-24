@@ -72,7 +72,7 @@ final public class CollectionImageCell: CollectionCell {
         self.reuseToken = UUID()
     }
 
-    override var obfuscationIcon: ZetaIconType {
+    override var obfuscationIcon: StyleKitIcon {
         return .photo
     }
     

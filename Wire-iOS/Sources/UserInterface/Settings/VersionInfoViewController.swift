@@ -62,7 +62,7 @@ final class VersionInfoViewController: UIViewController {
         view.addSubview(closeButton)
 
         //Cosmetics
-        closeButton.setIcon(.X, with: .small, for: UIControl.State.normal)
+        closeButton.setIcon(.cross, size: .small, for: UIControl.State.normal)
         closeButton.setIconColor(UIColor.black, for: UIControl.State.normal)
 
         //Layout

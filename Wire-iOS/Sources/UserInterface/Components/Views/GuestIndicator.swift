@@ -29,7 +29,7 @@ public class GuestIndicator: UIImageView, Themeable {
     }
     
     func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
-        image = UIImage(for: .guest, iconSize: .tiny, color: UIColor.from(scheme: .iconGuest, variant: colorSchemeVariant))
+        setIcon(.guest, size: .tiny, color: UIColor.from(scheme: .iconGuest, variant: colorSchemeVariant))
     }
     
     init() {
@@ -60,7 +60,7 @@ public class GuestLabelIndicator: UIStackView, Themeable {
     
     func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
         label.textColor = UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)
-        guestIcon.image = UIImage(for: .guest, iconSize: .tiny, color: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant))
+        guestIcon.setIcon(.guest, size: .tiny, color: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant))
     }
     
     private let guestIcon = UIImageView()
@@ -72,7 +72,7 @@ public class GuestLabelIndicator: UIStackView, Themeable {
         guestIcon.setContentCompressionResistancePriority(UILayoutPriority.required, for: .horizontal)
         guestIcon.setContentHuggingPriority(UILayoutPriority.required, for: .vertical)
         guestIcon.setContentHuggingPriority(UILayoutPriority.required, for: .horizontal)
-        guestIcon.image = UIImage(for: .guest, iconSize: .tiny, color: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant))
+        guestIcon.setIcon(.guest, size: .tiny, color: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant))
         guestIcon.accessibilityIdentifier = "img.guest"
 
         label.numberOfLines = 0

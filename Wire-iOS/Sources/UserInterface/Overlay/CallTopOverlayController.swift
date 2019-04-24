@@ -163,9 +163,8 @@ final class CallTopOverlayController: UIViewController {
     private var displayMuteIcon: Bool = false {
         didSet {
             if displayMuteIcon {
-                let width: CGFloat = 12.0
-                muteIcon.image = UIImage(for: .microphoneWithStrikethrough, fontSize: width, color: .white)
-                muteIconWidth?.constant = width
+                muteIcon.setIcon(.microphoneWithStrikethrough, size: 12, color: .white)
+                muteIconWidth?.constant = 12
             } else {
                 muteIcon.image = nil
                 muteIconWidth?.constant = 0.0

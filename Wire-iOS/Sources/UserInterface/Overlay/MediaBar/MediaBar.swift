@@ -54,14 +54,14 @@ final class MediaBar: UIView {
 
     private func createPlayPauseButton() {
         playPauseButton = IconButton(style: .default)
-        playPauseButton.setIcon(.mediaBarPlay, with: .tiny, for: UIControl.State.normal)
+        playPauseButton.setIcon(.play, size: .tiny, for: UIControl.State.normal)
 
         contentView.addSubview(playPauseButton)
     }
 
     private func createCloseButton() {
         closeButton = IconButton(style: .default)
-        closeButton.setIcon(.cancel, with: .tiny, for: UIControl.State.normal)
+        closeButton.setIcon(.cross, size: .tiny, for: UIControl.State.normal)
         contentView.addSubview(closeButton)
         closeButton.accessibilityIdentifier = "mediabarCloseButton"
     }

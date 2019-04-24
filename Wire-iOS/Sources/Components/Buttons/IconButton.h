@@ -16,8 +16,9 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
+@import WireCommonComponents;
+
 #import "ButtonWithLargerHitArea.h"
-#import "ZetaIconTypes.h"
 #import "ColorScheme.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -27,6 +28,14 @@ typedef NS_ENUM(NSUInteger, IconButtonStyle) {
     IconButtonStyleCircular,
     IconButtonStyleNavigation
 };
+
+@interface IconDefinition : NSObject
+
+@property (nonatomic) WRStyleKitIcon iconType;
+@property (nonatomic) CGFloat iconSize;
+@property (nonatomic) UIImageRenderingMode renderingMode;
+
+@end
 
 @interface IconButton : ButtonWithLargerHitArea
 
@@ -43,11 +52,14 @@ typedef NS_ENUM(NSUInteger, IconButtonStyle) {
 - (instancetype)init;
 
 /// Default rendering mode is @c UIImageRenderingModeAlwaysTemplate
-- (void)setIcon:(ZetaIconType)icon withSize:(ZetaIconSize)iconSize forState:(UIControlState)state;
-- (void)setIcon:(ZetaIconType)icon withSize:(ZetaIconSize)iconSize forState:(UIControlState)state renderingMode:(UIImageRenderingMode)renderingMode;
-- (ZetaIconType)iconTypeForState:(UIControlState)state;
+- (void)setIcon:(WRStyleKitIcon)icon withSize:(CGFloat)iconSize forState:(UIControlState)state NS_REFINED_FOR_SWIFT;
+- (void)setIcon:(WRStyleKitIcon)icon withSize:(CGFloat)iconSize forState:(UIControlState)state renderingMode:(UIImageRenderingMode)renderingMode NS_REFINED_FOR_SWIFT;
+- (void)removeIconForState:(UIControlState)state;
+- (nullable IconDefinition *)iconDefinitionForState:(UIControlState)state;
+
 - (void)setIconColor:(UIColor *)color forState:(UIControlState)state;
 - (nullable UIColor *)iconColorForState:(UIControlState)state;
+
 - (void)setBackgroundImageColor:(UIColor *)color forState:(UIControlState)state;
 - (void)setBorderColor:(UIColor *)color forState:(UIControlState)state;
 - (void)setTitleImageSpacing:(CGFloat)titleImageSpacing horizontalMargin:(CGFloat)horizontalMargin;

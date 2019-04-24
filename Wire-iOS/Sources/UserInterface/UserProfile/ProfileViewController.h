@@ -24,7 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol UserType;
 @protocol ViewControllerDismisser;
-@protocol AccentColorProvider;
+
 @class ZMConversation;
 @class ZMUser;
 @class ProfileViewController;
@@ -52,12 +52,12 @@ typedef NS_ENUM(NSInteger, ProfileViewControllerContext) {
 
 @interface ProfileViewController : UIViewController
 
-- (instancetype)initWithUser:(id<UserType, AccentColorProvider>)user viewer:(id<UserType, AccentColorProvider>)viewer context:(ProfileViewControllerContext)context;
-- (instancetype)initWithUser:(id<UserType, AccentColorProvider>)user viewer:(id<UserType, AccentColorProvider>)viewer conversation:(nullable ZMConversation *)conversation;
-- (instancetype)initWithUser:(id<UserType, AccentColorProvider>)user viewer:(id<UserType, AccentColorProvider>)viewer conversation:(nullable ZMConversation *)conversation context:(ProfileViewControllerContext)context;
+- (instancetype)initWithUser:(id<UserType>)user viewer:(id<UserType>)viewer context:(ProfileViewControllerContext)context;
+- (instancetype)initWithUser:(id<UserType>)user viewer:(id<UserType>)viewer conversation:(nullable ZMConversation *)conversation;
+- (instancetype)initWithUser:(id<UserType>)user viewer:(id<UserType>)viewer conversation:(nullable ZMConversation *)conversation context:(ProfileViewControllerContext)context;
 
-@property (nonatomic, readonly) id<UserType, AccentColorProvider> bareUser;
-@property (nonatomic, readonly) id<UserType, AccentColorProvider> viewer;
+@property (nonatomic, readonly) id<UserType> bareUser;
+@property (nonatomic, readonly) id<UserType> viewer;
 @property (nonatomic, weak, nullable) id<ProfileViewControllerDelegate> delegate;
 @property (nonatomic, weak, nullable) id<ViewControllerDismisser> viewControllerDismisser;
 @property (nonatomic, nullable) id<UINavigationControllerDelegate> navigationControllerDelegate;

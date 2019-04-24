@@ -47,7 +47,7 @@ extension ZMConversation {
         }
 
         var areGuestOrServicePresent: Bool {
-            return conversation.areGuestPresent || conversation.areServicesPresent
+            return conversation.areGuestsPresent || conversation.areServicesPresent
         }
 
         func setAllowGuests(_ allowGuests: Bool, completion: @escaping (VoidResult) -> Void) {

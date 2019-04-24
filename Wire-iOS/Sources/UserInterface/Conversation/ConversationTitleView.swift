@@ -45,12 +45,11 @@ class ConversationTitleView: TitleView {
         if conversation.securityLevel == .secure {
             attachment = .verifiedShield()
         }
+        
         super.configure(icon: attachment,
                         title: conversation.displayName.localizedUppercase,
                         interactive: self.interactive && conversation.relatedConnectionState != .sent)
-    }
-
-    override func updateAccessibilityLabel() {
+        
         if conversation.securityLevel == .secure {
             self.accessibilityLabel = conversation.displayName.localizedUppercase + ", " + "conversation.voiceover.verified".localized
         } else {

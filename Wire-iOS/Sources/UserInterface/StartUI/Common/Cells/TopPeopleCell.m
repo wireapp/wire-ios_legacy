@@ -64,7 +64,7 @@
     self.badgeUserImageView.userSession = [ZMUserSession sharedSession];
     self.badgeUserImageView.size = UserImageViewSizeSmall;
     self.badgeUserImageView.userInteractionEnabled = NO;
-    self.badgeUserImageView.badgeIconSize = ZetaIconSizeTiny;
+    self.badgeUserImageView.wr_badgeIconSize = 16;
     self.badgeUserImageView.accessibilityIdentifier = @"TopPeopleAvatar";
 
     [self.avatarContainer addSubview:self.badgeUserImageView];
@@ -99,7 +99,7 @@
 
 #pragma mark - Get, set
 
-- (void)setUser:(id<UserType, AccentColorProvider>)user
+- (void)setUser:(id<UserType>)user
 {
     _user = user;
     self.badgeUserImageView.user = user;
@@ -131,9 +131,9 @@
     [super setSelected:selected];
 
     if (selected) {
-        [self.badgeUserImageView setBadgeIcon:ZetaIconTypeCheckmark];
+        [self.badgeUserImageView setBadgeIcon:WRStyleKitIconCheckmark];
     } else {
-        self.badgeUserImageView.badgeIcon = ZetaIconTypeNone;
+        [self.badgeUserImageView removeBadgeIcon];
     }
 }
 

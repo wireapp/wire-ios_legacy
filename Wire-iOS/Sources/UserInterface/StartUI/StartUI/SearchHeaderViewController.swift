@@ -62,10 +62,10 @@ public protocol SearchHeaderViewControllerDelegate : class {
 
         view.backgroundColor = UIColor.from(scheme: .barBackground, variant: colorSchemeVariant)
 
-        searchIcon.image = UIImage(for: .search, iconSize: .tiny, color: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant))
+        searchIcon.setIcon(.search, size: .tiny, color: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant))
         
         clearButton.accessibilityLabel = "clear"
-        clearButton.setIcon(.clearInput, with: .tiny, for: .normal)
+        clearButton.setIcon(.clearInput, size: .tiny, for: .normal)
         clearButton.addTarget(self, action: #selector(onClearButtonPressed), for: .touchUpInside)
         clearButton.alpha = 0.4
         clearButton.isHidden = true

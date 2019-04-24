@@ -110,7 +110,7 @@ final class ReplyComposingView: UIView {
         closeButton.isAccessibilityElement = true
         closeButton.accessibilityIdentifier = "cancelReply"
         closeButton.accessibilityLabel = "conversation.input_bar.close_reply".localized
-        closeButton.setIcon(.X, with: .tiny, for: .normal)
+        closeButton.setIcon(.cross, size: .tiny, for: .normal)
         closeButton.setIconColor(.from(scheme: .iconNormal), for: .normal)
         closeButton.addCallback(for: .touchUpInside) { [weak self] _ in
             self?.delegate?.composingViewDidCancel(composingView: self!)
