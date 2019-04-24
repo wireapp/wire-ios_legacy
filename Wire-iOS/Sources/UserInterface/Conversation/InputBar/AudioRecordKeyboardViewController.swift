@@ -150,7 +150,7 @@ private let zmLog = ZMSLog(tag: "UI")
             let effects = AVSAudioEffectType.displayedEffects.filter { $0 != .none }
             let max = UInt32(effects.count)
             let effect = effects[Int(arc4random_uniform(max))]
-            let image = UIImage(for: effect.icon, iconSize: .searchBar, color: color)
+            let image = effect.icon.makeImage(size: 14, color: color)
             
             let attachment = NSTextAttachment()
             attachment.image = image
@@ -170,33 +170,33 @@ private let zmLog = ZMSLog(tag: "UI")
     }
     
     private func createButtons() {
-        self.recordButton.setIcon(.recordDot, with: .tiny, for: [])
+        self.recordButton.setIcon(.recordDot, size: .tiny, for: [])
         self.recordButton.setIconColor(.white, for: [])
         self.recordButton.addTarget(self, action: #selector(recordButtonPressed), for: .touchUpInside)
         self.recordButton.setBackgroundImageColor(.vividRed, for: .normal)
         self.recordButton.layer.masksToBounds = true
         self.recordButton.accessibilityLabel = "record"
         
-        self.stopRecordButton.setIcon(.stopRecording, with: .tiny, for: [])
+        self.stopRecordButton.setIcon(.stopRecording, size: .tiny, for: [])
         self.stopRecordButton.setIconColor(.white, for: [])
         self.stopRecordButton.addTarget(self, action: #selector(stopRecordButtonPressed), for: .touchUpInside)
         self.stopRecordButton.setBackgroundImageColor(.vividRed, for: .normal)
         self.stopRecordButton.layer.masksToBounds = true
         self.stopRecordButton.accessibilityLabel = "stopRecording"
         
-        self.confirmButton.setIcon(.checkmark, with: .tiny, for: [])
+        self.confirmButton.setIcon(.checkmark, size: .tiny, for: [])
         self.confirmButton.setIconColor(.white, for: [])
         self.confirmButton.addTarget(self, action: #selector(confirmButtonPressed), for: .touchUpInside)
         self.confirmButton.setBackgroundImageColor(.strongLimeGreen, for: .normal)
         self.confirmButton.layer.masksToBounds = true
         self.confirmButton.accessibilityLabel = "confirmRecording"
         
-        self.redoButton.setIcon(.undo, with: .tiny, for: [])
+        self.redoButton.setIcon(.undo, size: .tiny, for: [])
         self.redoButton.setIconColor(.white, for: [])
         self.redoButton.addTarget(self, action: #selector(redoButtonPressed), for: .touchUpInside)
         self.redoButton.accessibilityLabel = "redoRecording"
         
-        self.cancelButton.setIcon(.cancel, with: .tiny, for: [])
+        self.cancelButton.setIcon(.cross, size: .tiny, for: [])
         self.cancelButton.setIconColor(.white, for: [])
         self.cancelButton.addTarget(self, action: #selector(cancelButtonPressed), for: .touchUpInside)
         self.cancelButton.accessibilityLabel = "cancelRecording"

@@ -104,13 +104,13 @@ import UIKit
     }
     
     private var viewForState: UIView? {
-        let iconSize: CGFloat = 12
+        let iconSize: StyleKitIcon.Size = 12
         
         guard let icon = icon else { return nil }
         
         switch icon {
         case .pendingConnection:
-            iconView.image = UIImage(for: .clock, fontSize: iconSize, color: .white)
+            iconView.setIcon(.clock, size: iconSize, color: .white)
             accessibilityValue = "conversation_list.voiceover.status.pending_connection".localized
             return iconView
         case .activeCall(false):
@@ -121,21 +121,21 @@ import UIKit
             accessibilityValue = textLabel.text
             return textLabel
         case .missedCall:
-            iconView.image = UIImage(for: .endCall, fontSize: iconSize, color: .black)
+            iconView.setIcon(.endCall, size: iconSize, color: .black)
             accessibilityValue = "conversation_list.voiceover.status.missed_call".localized
             return iconView
         case .playingMedia:
             if let mediaPlayer = self.mediaPlaybackManager.activeMediaPlayer, mediaPlayer.state == .playing {
-                iconView.image = UIImage(for: .pause, fontSize: iconSize, color: .white)
+                iconView.setIcon(.pause, size: iconSize, color: .white)
                 accessibilityValue = "conversation_list.voiceover.status.pause_media".localized
             }
             else {
-                iconView.image = UIImage(for: .play, fontSize: iconSize, color: .white)
+                iconView.setIcon(.play, size: iconSize, color: .white)
                 accessibilityValue = "conversation_list.voiceover.status.play_media".localized
             }
             return iconView
         case .silenced:
-            iconView.image = UIImage(for: .bellWithStrikethrough, fontSize: iconSize, color: .white)
+            iconView.setIcon(.bellWithStrikethrough, size: iconSize, color: .white)
             accessibilityValue = "conversation_list.voiceover.status.silenced".localized
             return iconView
         case .typing:
@@ -146,15 +146,15 @@ import UIKit
             accessibilityValue = textLabel.text
             return textLabel
         case .mention:
-            iconView.image = UIImage(for: .mention, fontSize: iconSize, color: .black)
+            iconView.setIcon(.mention, size: iconSize, color: .black)
             accessibilityValue = "conversation_list.voiceover.status.mention".localized
             return iconView
         case .reply:
-            iconView.image = UIImage(for: .reply, fontSize: iconSize, color: .black)
+            iconView.setIcon(.reply, size: iconSize, color: .black)
             accessibilityValue = "conversation_list.voiceover.status.reply".localized
             return iconView
         case .unreadPing:
-            iconView.image = UIImage(for: .ping, fontSize: iconSize, color: .black)
+            iconView.setIcon(.ping, size: iconSize, color: .black)
             accessibilityValue = "conversation_list.voiceover.status.ping".localized
             return iconView
         }
@@ -199,7 +199,7 @@ import UIKit
         case .activeCall(false):
             self.badgeView.isHidden = true
             self.transparentIconView.isHidden = false
-            self.transparentIconView.image = UIImage(for: .phone, fontSize: 18.0, color: .white)
+            self.transparentIconView.setIcon(.phone, size: 18, color: .white)
             
             self.expandTransparentIconViewWidthConstraint.constant = activeCallWidth
             self.expandWidthConstraint.constant = activeCallWidth
@@ -210,7 +210,7 @@ import UIKit
         case .typing:
             self.badgeView.isHidden = true
             self.transparentIconView.isHidden = false
-            self.transparentIconView.image = UIImage(for: .pencil, fontSize: 12.0, color: .white)
+            self.transparentIconView.setIcon(.pencil, size: 12, color: .white)
             
         case .unreadMessages(_), .mention:
             self.textLabel.textColor = UIColor.from(scheme: .textForeground, variant: .light)

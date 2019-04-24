@@ -40,7 +40,7 @@ open class CameraKeyboardPermissionsCell: UICollectionViewCell {
         super.init(frame: frame)
         self.backgroundColor = .graphite
         
-        cameraIcon.setIcon(.cameraLens, with: .tiny, for: .normal)
+        cameraIcon.setIcon(.cameraLens, size: .tiny, for: .normal)
         cameraIcon.setIconColor(.white, for: .normal)
         cameraIcon.isUserInteractionEnabled = false
         

@@ -30,7 +30,7 @@ final class TextFieldDescription: NSObject, ValueSubmission {
     var showConfirmButton: Bool = true
     var canSubmit: (() -> Bool)?
     var textField: AccessoryTextField?
-    var useLiveValidation: Bool = false
+    var useDeferredValidation: Bool = false
 
     init(placeholder: String, actionDescription: String, kind: AccessoryTextField.Kind, uppercasePlaceholder: Bool = true) {
         self.placeholder = placeholder
@@ -58,11 +58,13 @@ extension TextFieldDescription: ViewDescriptor {
         textField.addTarget(self, action: #selector(TextFieldDescription.editingChanged), for: .editingChanged)
         textField.confirmButton.accessibilityLabel = self.actionDescription
         textField.showConfirmButton = showConfirmButton
-        textField.enableConfirmButton = canSubmit
-        textField.useLiveValidation = useLiveValidation
 
-        textField.hasValidationIssues = { [weak self] in
-            self?.canSubmit?() != true
+        textField.enableConfirmButton = { [weak self] in
+            if self?.useDeferredValidation == true {
+                return !textField.input.isEmpty
+            } else {
+                return self?.canSubmit?() == true
+            }
         }
 
         self.textField = textField
@@ -78,15 +80,10 @@ extension TextFieldDescription: UITextFieldDelegate {
     }
 
     @objc func editingChanged(sender: AccessoryTextField) {
-        guard useLiveValidation else { return }
-
-        sender.validateInput()
-
-        if let error = validationError {
-            self.valueValidated?(.error(error, showVisualFeedback: !sender.input.isEmpty))
-        } else {
-            self.valueValidated?(nil)
-        }
+        // If we use deferred validation, remove the error when the text changes
+        guard useDeferredValidation else { return }
+        self.valueValidated?(nil)
+        sender.hideGuidanceDot()
     }
 
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
@@ -98,16 +95,17 @@ extension TextFieldDescription: UITextFieldDelegate {
 
         textField.validateInput()
 
-        if validationError == .none {
+        if validationError == .none || useDeferredValidation {
             submitValue(with: textField.input)
             return true
         } else {
-            return false
+           return false
         }
     }
 
     func submitValue(with text: String) {
         if let error = validationError {
+            textField?.showGuidanceDot()
             self.valueValidated?(.error(error, showVisualFeedback: textField?.input.isEmpty == false))
         } else {
             self.valueValidated?(nil)

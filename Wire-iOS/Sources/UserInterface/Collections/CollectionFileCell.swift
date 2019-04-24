@@ -67,7 +67,7 @@ final public class CollectionFileCell: CollectionCell {
         }
     }
 
-    override var obfuscationIcon: ZetaIconType {
+    override var obfuscationIcon: StyleKitIcon {
         return .document
     }
 

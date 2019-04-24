@@ -34,8 +34,7 @@ public extension UIApplication {
         if let topContoller = self.wr_topmostController(onlyFullScreen: onlyFullScreen) {
             statusBarHidden = topContoller.prefersStatusBarHidden
             statusBarStyle = topContoller.preferredStatusBarStyle
-        }
-        else {
+        } else {
             statusBarHidden = true
             statusBarStyle = .lightContent
         }
@@ -95,7 +94,8 @@ public extension UIApplication {
                 return .none
         }
         
-        while let presentedController = topController.presentedViewController, (!onlyFullScreen || presentedController.modalPresentationStyle == .fullScreen) {
+        while let presentedController = topController.presentedViewController,
+            (!onlyFullScreen || presentedController.modalPresentationStyle == .fullScreen) {
             topController = presentedController
         }
         

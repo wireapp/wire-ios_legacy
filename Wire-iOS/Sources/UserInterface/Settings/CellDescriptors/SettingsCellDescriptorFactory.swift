@@ -48,21 +48,7 @@ class SettingsCellDescriptorFactory {
         
         return SettingsGroupCellDescriptor(items: [topSection], title: "self.profile".localized, style: .plain)
     }
-    
-    func inviteButton() -> SettingsCellDescriptorType {
-        let inviteButtonDescriptor = InviteCellDescriptor(title: "self.settings.invite_friends.title".localized,
-                                                          isDestructive: false,
-                                                          presentationStyle: .modal,
-                                                          presentationAction: { () -> (UIViewController?) in
-                                                              return UIActivityViewController.shareInvite(completion: .none, logicalContext: .settings)
-                                                          },
-                                                          previewGenerator: .none,
-                                                          icon: .megaphone)
         
-        return inviteButtonDescriptor
-        
-    }
-    
     func manageTeamCell() -> SettingsCellDescriptorType {
         return SettingsExternalScreenCellDescriptor(title: "self.settings.manage_team.title".localized,
                                                     isDestructive: false,
@@ -133,7 +119,7 @@ class SettingsCellDescriptorFactory {
             previewGenerator: { _ -> SettingsCellPreview in
                 return SettingsCellPreview.badge(ZMUser.selfUser().clients.count)
             },
-           icon: .settingsDevices)
+           icon: .devices)
     }
 
     func soundGroupForSetting(_ settingsProperty: SettingsProperty, title: String, customSounds: [ZMSound], defaultSound: ZMSound) -> SettingsCellDescriptorType {
@@ -275,7 +261,7 @@ class SettingsCellDescriptorFactory {
 
         }
 
-        return SettingsGroupCellDescriptor(items: [SettingsSectionDescriptor(cellDescriptors:developerCellDescriptors)], title: title, icon: .effectRobot)
+        return SettingsGroupCellDescriptor(items: [SettingsSectionDescriptor(cellDescriptors:developerCellDescriptors)], title: title, icon: .robot)
     }
     
     func requestNumber(_ callback: @escaping (Int)->()) {
