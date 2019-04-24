@@ -85,9 +85,11 @@
 
 #import "ZClientViewController.h"
 #import "ZClientViewController+Internal.h"
+
 #import "ConversationInputBarViewController.h"
-#import "ConversationInputBarViewController+Files.h"
 #import "ConversationInputBarViewController+Private.h"
+#import "ConversationInputBarViewController+Files.h"
+
 #import "ConversationListContentController.h"
 #import "ConversationListViewModel.h"
 #import "ConversationListViewModel+Private.h"

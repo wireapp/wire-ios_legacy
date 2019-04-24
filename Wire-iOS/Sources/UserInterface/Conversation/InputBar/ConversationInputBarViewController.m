@@ -146,6 +146,16 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
         self.notificationFeedbackGenerator = [[UINotificationFeedbackGenerator alloc] init];
         self.impactFeedbackGenerator = [[UIImpactFeedbackGenerator alloc] initWithStyle:UIImpactFeedbackStyleLight];
+
+        [self createInputBar]; // Creates all input bar buttons
+        [self createSendButton];
+        [self createEphemeralIndicatorButton];
+        [self createMarkdownButton];
+
+        [self createHourglassButton];
+        [self createTypingIndicatorView];
+
+        [self createConstraints];
     }
     return self;
 }
@@ -171,16 +181,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self setupAppLockedObserver];
     
     [self createSingleTapGestureRecognizer];
-    
-    [self createInputBar]; // Creates all input bar buttons
-    [self createSendButton];
-    [self createEphemeralIndicatorButton];
-    [self createMarkdownButton];
-
-    [self createHourglassButton];
-    [self createTypingIndicatorView];
-
-    [self createConstraints];
 
     if (self.conversation.hasDraftMessage) {
         [self.inputBar.textView setDraftMessage:self.conversation.draftMessage];
