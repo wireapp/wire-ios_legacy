@@ -151,6 +151,9 @@ extension ConversationInputBarViewController {
             inputBar.trailingAnchor.constraint(equalTo: inputBar.superview!.trailingAnchor),
             bottomConstraint,
 
+            sendButton.widthAnchor.constraint(equalToConstant: InputBar.rightIconSize),
+            sendButton.heightAnchor.constraint(equalToConstant: InputBar.rightIconSize),
+
             ephemeralIndicatorButton.widthAnchor.constraint(equalToConstant: InputBar.rightIconSize),
             ephemeralIndicatorButton.heightAnchor.constraint(equalToConstant: InputBar.rightIconSize),
 
@@ -168,5 +171,4 @@ extension ConversationInputBarViewController {
             typingIndicatorView.rightAnchor.constraint(greaterThanOrEqualTo: typingIndicatorView.superview!.rightAnchor, constant: 48)
             ])
     }
-
 }

@@ -17,21 +17,12 @@
 //
 
 import Foundation
-import Cartography
 
 extension ConversationInputBarViewController {
-    func createSendButtonConstraints() {
-        constrain(sendButton, sendButton.superview!) { sendButton, superView in
-            sendButton.width == InputBar.rightIconSize
-            sendButton.height == sendButton.width
-        }
-    }
-
     func createSendButton() {
         sendButton = IconButton.sendButton()
         sendButton.hitAreaPadding = CGSize(width: 30, height: 30)
         inputBar.rightAccessoryStackView.addArrangedSubview(sendButton)
-        createSendButtonConstraints()
     }
         
     @objc func sendText() {
