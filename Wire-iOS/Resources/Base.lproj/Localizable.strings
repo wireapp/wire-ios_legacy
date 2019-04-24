@@ -1531,7 +1531,7 @@
 "availability.reminder.away.title" = "You are set to Away";
 "availability.reminder.away.message" = "You will appear as Away to other people. You will not receive notifications about any incoming calls or messages.";
 "availability.reminder.busy.title" = "You are set to Busy";
-"availability.reminder.busy.message" = "You will appear as Busy to other people. You will receive only receive notifications for mentions, replies, and calls in conversations that are not muted.";
+"availability.reminder.busy.message" = "You will appear as Busy to other people. You will only receive notifications for mentions, replies, and calls in conversations that are not muted.";
 "availability.reminder.available.title" = "You are set to Available";
 "availability.reminder.available.message" = "You will appear as Available to other people. You will receive notifications for incoming calls and for messages according to the Notifications setting in each conversation.";
 "availability.reminder.none.title" = "No status set";
