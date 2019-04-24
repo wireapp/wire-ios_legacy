@@ -29,23 +29,23 @@
 
 @interface ConversationInputBarViewController ()
 
-@property (nonatomic, null_unspecified) IconButton *audioButton;
-@property (nonatomic, null_unspecified) IconButton *photoButton;
-@property (nonatomic, null_unspecified) IconButton *uploadFileButton;
-@property (nonatomic, null_unspecified) IconButton *sketchButton;
-@property (nonatomic, null_unspecified) IconButton *pingButton;
-@property (nonatomic, null_unspecified) IconButton *locationButton;
-@property (nonatomic, null_unspecified) IconButton *ephemeralIndicatorButton;
-@property (nonatomic, null_unspecified) IconButton *markdownButton;
-@property (nonatomic, null_unspecified) IconButton *gifButton;
-@property (nonatomic, null_unspecified) IconButton *mentionButton;
-@property (nonatomic, null_unspecified) IconButton *sendButton;
-@property (nonatomic, null_unspecified) IconButton *hourglassButton;
-@property (nonatomic, null_unspecified) IconButton *videoButton;
+@property (nonatomic, nonnull) IconButton *audioButton;
+@property (nonatomic, nonnull) IconButton *photoButton;
+@property (nonatomic, nonnull) IconButton *uploadFileButton;
+@property (nonatomic, nonnull) IconButton *sketchButton;
+@property (nonatomic, nonnull) IconButton *pingButton;
+@property (nonatomic, nonnull) IconButton *locationButton;
+@property (nonatomic, nonnull) IconButton *ephemeralIndicatorButton;
+@property (nonatomic, nonnull) IconButton *markdownButton;
+@property (nonatomic, nonnull) IconButton *gifButton;
+@property (nonatomic, nonnull) IconButton *mentionButton;
+@property (nonatomic, nonnull) IconButton *sendButton;
+@property (nonatomic, nonnull) IconButton *hourglassButton;
+@property (nonatomic, nonnull) IconButton *videoButton;
 
-@property (nonatomic, null_unspecified) InputBar *inputBar;
+@property (nonatomic, nonnull) InputBar *inputBar;
 
-@property (nonatomic, null_unspecified) TypingIndicatorView *typingIndicatorView;
+@property (nonatomic, nonnull) TypingIndicatorView *typingIndicatorView;
 
 @property (nonatomic, nullable) AudioRecordViewController *audioRecordViewController;
 @property (nonatomic, nullable) UIView *audioRecordViewContainer;

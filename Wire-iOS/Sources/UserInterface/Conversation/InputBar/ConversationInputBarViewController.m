@@ -147,15 +147,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         self.notificationFeedbackGenerator = [[UINotificationFeedbackGenerator alloc] init];
         self.impactFeedbackGenerator = [[UIImpactFeedbackGenerator alloc] initWithStyle:UIImpactFeedbackStyleLight];
 
-        [self createInputBar]; // Creates all input bar buttons
-        [self createSendButton];
-        [self createEphemeralIndicatorButton];
-        [self createMarkdownButton];
-
-        [self createHourglassButton];
-        [self createTypingIndicatorView];
-
-        [self createConstraints];
+        [self setupViews];
     }
     return self;
 }

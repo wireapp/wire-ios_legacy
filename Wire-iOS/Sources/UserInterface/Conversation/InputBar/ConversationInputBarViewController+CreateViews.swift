@@ -19,9 +19,20 @@
 import Foundation
 
 extension ConversationInputBarViewController {
-
     @objc
-    func createInputBar() {
+    func setupViews() {
+        createInputBar() // Creates all input bar buttons
+        createSendButton()
+        createEphemeralIndicatorButton()
+        createMarkdownButton()
+
+        createHourglassButton()
+        createTypingIndicatorView()
+
+        createConstraints()
+    }
+
+    private func createInputBar() {
         audioButton = IconButton()
         audioButton.accessibilityIdentifier = "audioButton"
         audioButton.setIconColor(UIColor.accent(), for: UIControl.State.selected)
@@ -74,8 +85,7 @@ extension ConversationInputBarViewController {
         inputBar.editingView.delegate = self
     }
 
-    @objc
-    func createEphemeralIndicatorButton() {
+    private func createEphemeralIndicatorButton() {
         ephemeralIndicatorButton = IconButton()
         ephemeralIndicatorButton.layer.borderWidth = 0.5
 
@@ -92,15 +102,13 @@ extension ConversationInputBarViewController {
         updateEphemeralIndicatorButtonTitle(ephemeralIndicatorButton)
     }
 
-    @objc
-    func createMarkdownButton() {
+    private func createMarkdownButton() {
         markdownButton = IconButton(style: .circular)
         markdownButton.accessibilityIdentifier = "markdownButton"
         inputBar.leftAccessoryView.addSubview(markdownButton)
     }
 
-    @objc
-    func createHourglassButton() {
+    private func createHourglassButton() {
         hourglassButton = IconButton(style: .default)
 
         hourglassButton.setIcon(.hourglass, size: .tiny, for: UIControl.State.normal)
@@ -111,8 +119,7 @@ extension ConversationInputBarViewController {
 
     }
 
-    @objc
-    func createTypingIndicatorView() {
+    private func createTypingIndicatorView() {
         typingIndicatorView = TypingIndicatorView()
         typingIndicatorView.accessibilityIdentifier = "typingIndicator"
         if let typingUsers = typingUsers,
@@ -127,8 +134,7 @@ extension ConversationInputBarViewController {
 
     }
 
-    @objc
-    func createConstraints() {
+    private func createConstraints() {
         inputBar.translatesAutoresizingMaskIntoConstraints = false
         markdownButton.translatesAutoresizingMaskIntoConstraints = false
         hourglassButton.translatesAutoresizingMaskIntoConstraints = false
