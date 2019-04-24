@@ -267,6 +267,9 @@ class LandingViewController: AuthenticationStepViewController {
         loginButtonsStackView.addArrangedSubview(loginHintsLabel)
         loginButtonsStackView.addArrangedSubview(loginButton)
         contentStack.addArrangedSubview(loginButtonsStackView)
+        
+        // Hide team creation for now
+        createTeamButton.alpha = 0
 
         view.addSubview(contentStack)
     }
