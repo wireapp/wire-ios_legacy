@@ -146,6 +146,8 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
         self.notificationFeedbackGenerator = [[UINotificationFeedbackGenerator alloc] init];
         self.impactFeedbackGenerator = [[UIImpactFeedbackGenerator alloc] initWithStyle:UIImpactFeedbackStyleLight];
+
+        [self setupViews];
     }
     return self;
 }
@@ -172,7 +174,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     
     [self createSingleTapGestureRecognizer];
 
-    [self setupViews];
 
     if (self.conversation.hasDraftMessage) {
         [self.inputBar.textView setDraftMessage:self.conversation.draftMessage];
