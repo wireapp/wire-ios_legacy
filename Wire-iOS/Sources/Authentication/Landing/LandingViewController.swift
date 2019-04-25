@@ -269,7 +269,7 @@ class LandingViewController: AuthenticationStepViewController {
         contentStack.addArrangedSubview(loginButtonsStackView)
         
         // Hide team creation for now
-        createTeamButton.alpha = 0
+        createTeamButton.isHidden = true
 
         view.addSubview(contentStack)
     }
@@ -298,35 +298,29 @@ class LandingViewController: AuthenticationStepViewController {
     // MARK: - Adaptivity Events
     
     private func updateLogoView() {
+        logoView.isHidden = isCustomBackend
+    }
+    
+    var isCustomBackend: Bool {
         switch BackendEnvironment.shared.environmentType.value {
         case .production, .staging:
-            // Hide it for small-height devices
-            logoView.isHidden = view.frame.height <= 640
+            return false
         case .custom:
-            logoView.isHidden = true
+            return true
         }
     }
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        if view.frame.height <= 640 {
-            // Small-height devices
-            contentStack.spacing = 24
-            buttonStackView.spacing = 24
-
-            if #available(iOS 11, *) {
-                contentStack.setCustomSpacing(0, after: logoView)
-            }
-
-        } else {
-            // Normal-height devices
+        
+        if isIPadRegular() || isCustomBackend {
             contentStack.spacing = 32
-            buttonStackView.spacing = 32
-
-            if #available(iOS 11, *) {
-                contentStack.setCustomSpacing(40, after: logoView)
-            }
+        } else if view.frame.height <= 640 {
+            contentStack.spacing = view.frame.height / 5
+        } else {
+            contentStack.spacing = view.frame.height / 4.1
         }
+
         updateLogoView()
     }
 
@@ -363,10 +357,11 @@ class LandingViewController: AuthenticationStepViewController {
             customBackendStack.isHidden = true
             buttonStackView.alpha = 1
         case .custom(url: let url):
-            customBackendTitleLabel.text = "Connected to \"\(BackendEnvironment.shared.title)\""
+            customBackendTitleLabel.text = "landing.custom_backend.title".localized(args: BackendEnvironment.shared.title)
             customBackendSubtitleLabel.text = url.absoluteString.uppercased()
             customBackendStack.isHidden = false
             buttonStackView.alpha = 0
+            createTeamButton.isHidden = false
         }
         updateLogoView()
     }
