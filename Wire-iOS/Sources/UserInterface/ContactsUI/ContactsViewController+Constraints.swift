@@ -35,62 +35,79 @@ extension ContactsViewController {
          bottomContainerView].forEach(){$0.translatesAutoresizingMaskIntoConstraints = false}
 
         let standardOffset: CGFloat = 24.0
-        let titleLabelConstraints = titleLabel.fitInSuperview(with: EdgeInsets(top: UIScreen.safeArea.top, leading: standardOffset, bottom: standardOffset, trailing: standardOffset), activate: false)
 
-        titleLabelTopConstraint = titleLabelConstraints[.top]!
-        titleLabelBottomConstraint = titleLabelConstraints[.bottom]!
+        titleLabelTopConstraint = titleLabel.topAnchor.constraint(equalTo: titleLabel.superview!.topAnchor, constant: UIScreen.safeArea.top)
+        titleLabelBottomConstraint = titleLabel.bottomAnchor.constraint(equalTo: titleLabel.superview!.bottomAnchor, constant: -standardOffset)
 
-        var constraints: [NSLayoutConstraint] = titleLabelConstraints.map{$0.value}
+        var constraints: [NSLayoutConstraint] = [
+            titleLabelTopConstraint,
+            titleLabelBottomConstraint,
+            titleLabel.leadingAnchor.constraint(equalTo: titleLabel.superview!.leadingAnchor, constant: standardOffset),
+            titleLabel.trailingAnchor.constraint(equalTo: titleLabel.superview!.trailingAnchor, constant: -standardOffset),
+            ]
 
         titleLabelHeightConstraint = titleLabel.heightAnchor.constraint(equalToConstant: 44)
         titleLabelHeightConstraint.isActive = (titleLabel.text?.count ?? 0) > 0
 
         createSearchHeaderConstraints()
 
-        constraints += separatorView.fitInSuperview(with: EdgeInsets(margin: standardOffset), exclude: [.top, .bottom], activate: false).values
-        constraints += [separatorView.heightAnchor.constraint(equalToConstant: 0.5),
+        constraints += [separatorView.leadingAnchor.constraint(equalTo: separatorView.superview!.leadingAnchor, constant: standardOffset),
+                        separatorView.trailingAnchor.constraint(equalTo: separatorView.superview!.trailingAnchor, constant: -standardOffset),
+
+                        separatorView.heightAnchor.constraint(equalToConstant: 0.5),
                         separatorView.bottomAnchor.constraint(equalTo: tableView.topAnchor),
-                        separatorView.bottomAnchor.constraint(equalTo: emptyResultsView.topAnchor)]
+                        separatorView.bottomAnchor.constraint(equalTo: emptyResultsView.topAnchor),
 
-        constraints += tableView.fitInSuperview(exclude: [.top, .bottom], activate: false).values
-        constraints += [tableView.bottomAnchor.constraint(equalTo: bottomContainerView.topAnchor)]
+                        tableView.leadingAnchor.constraint(equalTo: tableView.superview!.leadingAnchor),
+                        tableView.trailingAnchor.constraint(equalTo: tableView.superview!.trailingAnchor),
+                        tableView.bottomAnchor.constraint(equalTo: bottomContainerView.topAnchor)]
 
-        let emptyResultsViewConstraints = emptyResultsView.fitInSuperview(exclude: [.top], activate: false)
-        emptyResultsBottomConstraint = emptyResultsViewConstraints[.bottom]!
-        constraints += emptyResultsViewConstraints.values
+        emptyResultsBottomConstraint = emptyResultsView.bottomAnchor.constraint(equalTo: emptyResultsView.superview!.bottomAnchor)
+
+        constraints += [
+            emptyResultsView.leadingAnchor.constraint(equalTo: emptyResultsView.superview!.leadingAnchor),
+            emptyResultsView.trailingAnchor.constraint(equalTo: emptyResultsView.superview!.trailingAnchor),
+            emptyResultsBottomConstraint]
 
         constraints += [noContactsLabel.topAnchor.constraint(equalTo: searchHeaderViewController.view.bottomAnchor, constant: standardOffset),
 
                         noContactsLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: standardOffset),
-                        noContactsLabel.pinToSuperview(anchor: .trailing, activate: false)]
+                        noContactsLabel.trailingAnchor.constraint(equalTo: noContactsLabel.superview!.trailingAnchor)]
 
 
-        let bottomContainerViewConstraints = bottomContainerView.fitInSuperview(exclude: [.top], activate: false)
-        bottomContainerBottomConstraint = bottomContainerViewConstraints[.bottom]!
+        bottomContainerBottomConstraint = bottomContainerView.bottomAnchor.constraint(equalTo: bottomContainerView.superview!.bottomAnchor)
 
-        constraints += bottomContainerViewConstraints.values
+        constraints += [bottomContainerBottomConstraint,
+                        bottomContainerView.leadingAnchor.constraint(equalTo: bottomContainerView.superview!.leadingAnchor),
+                        bottomContainerView.trailingAnchor.constraint(equalTo: bottomContainerView.superview!.trailingAnchor),
 
-        constraints += bottomContainerSeparatorView.fitInSuperview(exclude: [.bottom], activate: false).values
-        constraints += [bottomContainerSeparatorView.heightAnchor.constraint(equalToConstant: 0.5)]
+                        bottomContainerSeparatorView.topAnchor.constraint(equalTo: bottomContainerSeparatorView.superview!.topAnchor),
+                        bottomContainerSeparatorView.leadingAnchor.constraint(equalTo: bottomContainerSeparatorView.superview!.leadingAnchor),
+                        bottomContainerSeparatorView.trailingAnchor.constraint(equalTo: bottomContainerSeparatorView.superview!.trailingAnchor),
+
+                        bottomContainerSeparatorView.heightAnchor.constraint(equalToConstant: 0.5)]
 
 
-        closeButtonTopConstraint = cancelButton.pinToSuperview(anchor: .top, inset: 16 + UIScreen.safeArea.top, activate: (titleLabel.text?.count ?? 0) > 0)
+        closeButtonTopConstraint = cancelButton.topAnchor.constraint(equalTo: cancelButton.superview!.topAnchor, constant: 16 + UIScreen.safeArea.top)
+        closeButtonTopConstraint.isActive = (titleLabel.text?.count ?? 0) > 0
 
-        closeButtonBottomConstraint = cancelButton.pinToSuperview(anchor: .bottom, inset: 8, activate: false)
+        closeButtonBottomConstraint = cancelButton.bottomAnchor.constraint(equalTo: cancelButton.superview!.bottomAnchor, constant: -8)
         closeButtonBottomConstraint.priority = .defaultLow
 
         closeButtonHeightConstraint = cancelButton.heightAnchor.constraint(equalToConstant: 16)
 
         constraints += [closeButtonBottomConstraint,
-                        cancelButton.pinToSuperview(anchor: .trailing, inset: 16, activate: false),
+                        cancelButton.trailingAnchor.constraint(equalTo: cancelButton.superview!.trailingAnchor, constant: -16),
                         cancelButton.widthAnchor.constraint(equalToConstant: 16),
                         closeButtonHeightConstraint]
 
-        let inviteOthersButtonConstraints = inviteOthersButton.fitInSuperview(with: EdgeInsets(top: standardOffset / 2.0, leading: standardOffset, bottom: standardOffset / 2.0 + UIScreen.safeArea.bottom, trailing: standardOffset), activate: false)
 
-        bottomEdgeConstraint = inviteOthersButtonConstraints[.bottom]!
+        bottomEdgeConstraint = inviteOthersButton.bottomAnchor.constraint(equalTo: inviteOthersButton.superview!.bottomAnchor, constant: -(standardOffset / 2.0 + UIScreen.safeArea.bottom))
 
-        constraints += inviteOthersButtonConstraints.values
+        constraints += [bottomEdgeConstraint,
+                        inviteOthersButton.topAnchor.constraint(equalTo: inviteOthersButton.superview!.topAnchor, constant: standardOffset / CGFloat(2)),
+                        inviteOthersButton.leadingAnchor.constraint(equalTo: inviteOthersButton.superview!.leadingAnchor, constant: standardOffset),
+                        inviteOthersButton.trailingAnchor.constraint(equalTo: inviteOthersButton.superview!.trailingAnchor, constant: -standardOffset)]
 
         constraints += [inviteOthersButton.heightAnchor.constraint(equalToConstant: 28)]
 
@@ -100,8 +117,11 @@ extension ContactsViewController {
     @objc
     func createBottomButtonConstraints() {
         bottomButton.translatesAutoresizingMaskIntoConstraints = false
-        bottomButton.fitInSuperview(with: EdgeInsets(margin: 24), exclude:[.top, .bottom])
-        bottomButton.pinToSuperview(axisAnchor: .centerY)
+
+        NSLayoutConstraint.activate([
+            bottomButton.rightAnchor.constraint(equalTo: bottomButton.superview!.rightAnchor, constant: 24),
+            bottomButton.leftAnchor.constraint(equalTo: bottomButton.superview!.leftAnchor, constant: 24),
+            bottomButton.centerXAnchor.constraint(equalTo: bottomButton.superview!.centerXAnchor)])
     }
 
     @objc

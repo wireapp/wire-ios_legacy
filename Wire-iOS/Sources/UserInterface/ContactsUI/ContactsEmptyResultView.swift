@@ -54,14 +54,19 @@ final class ContactsEmptyResultView: UIView {
         containerView.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate(
+                                    [messageLabel.topAnchor.constraint(equalTo: messageLabel.superview!.topAnchor),
+                                     messageLabel.rightAnchor.constraint(equalTo: messageLabel.superview!.rightAnchor),
+                                     messageLabel.leftAnchor.constraint(equalTo: messageLabel.superview!.leftAnchor),
 
-                                    messageLabel.fitInSuperview(exclude:[.bottom]).values.map{ $0 } +
-                                    actionButton.fitInSuperview(exclude:[.top]).values.map{ $0 } +
+                                     actionButton.bottomAnchor.constraint(equalTo: actionButton.superview!.bottomAnchor),
+                                     actionButton.rightAnchor.constraint(equalTo: actionButton.superview!.rightAnchor),
+                                     actionButton.leftAnchor.constraint(equalTo: actionButton.superview!.leftAnchor),
 
-                                    [actionButton.topAnchor.constraint(equalTo: messageLabel.bottomAnchor, constant: 24),
-                                     actionButton.heightAnchor.constraint(equalToConstant: 28)] +
+                                     actionButton.topAnchor.constraint(equalTo: messageLabel.bottomAnchor, constant: 24),
+                                     actionButton.heightAnchor.constraint(equalToConstant: 28),
 
-                                    containerView.centerInSuperview())
+                                     containerView.centerXAnchor.constraint(equalTo: containerView.superview!.centerXAnchor),
+                                     containerView.centerYAnchor.constraint(equalTo: containerView.superview!.centerYAnchor)])
     }
 
 }
