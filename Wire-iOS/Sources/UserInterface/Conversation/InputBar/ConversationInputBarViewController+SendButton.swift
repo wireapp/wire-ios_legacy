@@ -22,7 +22,6 @@ extension ConversationInputBarViewController {
     func createSendButton() {
         sendButton = IconButton.sendButton()
         sendButton.hitAreaPadding = CGSize(width: 30, height: 30)
-        inputBar.rightAccessoryStackView.addArrangedSubview(sendButton)
     }
         
     @objc func sendText() {

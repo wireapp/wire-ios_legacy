@@ -21,13 +21,20 @@ import Foundation
 extension ConversationInputBarViewController {
     @objc
     func setupViews() {
-        createInputBar() // Creates all input bar buttons
         createSendButton()
         createEphemeralIndicatorButton()
         createMarkdownButton()
 
         createHourglassButton()
         createTypingIndicatorView()
+
+        createInputBar()
+
+        inputBar.rightAccessoryStackView.addArrangedSubview(sendButton)
+        inputBar.rightAccessoryStackView.insertArrangedSubview(ephemeralIndicatorButton, at: 0)
+        inputBar.leftAccessoryView.addSubview(markdownButton)
+        inputBar.rightAccessoryStackView.addArrangedSubview(hourglassButton)
+        inputBar.addSubview(typingIndicatorView)
 
         createConstraints()
     }
@@ -93,7 +100,6 @@ extension ConversationInputBarViewController {
         ephemeralIndicatorButton.adjustsTitleWhenHighlighted = true
         ephemeralIndicatorButton.adjustsBorderColorWhenHighlighted = true
 
-        inputBar.rightAccessoryStackView.insertArrangedSubview(ephemeralIndicatorButton, at: 0)
 
 
         ephemeralIndicatorButton.setTitleColor(UIColor.lightGraphite, for: .disabled)
@@ -105,7 +111,6 @@ extension ConversationInputBarViewController {
     private func createMarkdownButton() {
         markdownButton = IconButton(style: .circular)
         markdownButton.accessibilityIdentifier = "markdownButton"
-        inputBar.leftAccessoryView.addSubview(markdownButton)
     }
 
     private func createHourglassButton() {
@@ -114,9 +119,6 @@ extension ConversationInputBarViewController {
         hourglassButton.setIcon(.hourglass, size: .tiny, for: UIControl.State.normal)
 
         hourglassButton.accessibilityIdentifier = "ephemeralTimeSelectionButton"
-        inputBar.rightAccessoryStackView.addArrangedSubview(hourglassButton)
-
-
     }
 
     private func createTypingIndicatorView() {
@@ -129,9 +131,6 @@ extension ConversationInputBarViewController {
             typingIndicatorView.typingUsers = []
         }
         typingIndicatorView.setHidden(true, animated: false)
-
-        inputBar.addSubview(typingIndicatorView)
-
     }
 
     private func createConstraints() {
