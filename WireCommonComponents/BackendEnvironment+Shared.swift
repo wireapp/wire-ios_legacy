@@ -20,10 +20,17 @@ import Foundation
 import WireTransport
 
 extension BackendEnvironment {
-    public static let shared: BackendEnvironment = {
-        let type = EnvironmentType(userDefaults: .standard)
+    
+    public static let backendSwitchNotification = Notification.Name("backendEnvironmentSwitchNotification")
+    
+    public static var shared: BackendEnvironment = {
         let bundle = Bundle.backendBundle
-        guard let environment = BackendEnvironment.from(environmentType: type, configurationBundle: bundle) else { fatalError("Malformed data inside backend.bundle") }
+        guard let environment = BackendEnvironment(userDefaults: .standard, configurationBundle: .backendBundle) else { fatalError("Malformed backend configuration data") }
         return environment
-    }()
+        }() {
+        didSet {
+            shared.save(in: .standard)
+            NotificationCenter.default.post(name: backendSwitchNotification, object: shared)
+        }
+    }
 }
