@@ -824,8 +824,8 @@
 "self.add_phone_number" = "Додати номер телефону";
 "self.add_email_password" = "Додайте email та пароль";
 
-"self.accessibility.profile_photo_image" = "Profile picture";
-"self.accessibility.profile_photo_edit_button" = "Change profile picture";
+"self.accessibility.profile_photo_image" = "Картинка для профілю";
+"self.accessibility.profile_photo_edit_button" = "Змінити картинку для профілю";
 
 // About screen
 "about.tos.title" = "Умови використання";
@@ -855,7 +855,7 @@
 // Settings - top level
 "self.settings.create_team.title" = "Створити команду";
 "self.settings.manage_team.title" = "Керування командою";
-"self.settings.add_team_or_account.title" = "Нова команда або акаунт";
+"self.settings.add_team_or_account.title" = "Add Account";
 "self.settings.add_account.title" = "Додати акаунт";
 
 "self.settings.add_account.error.title" = "Три акаунти вже активні";
@@ -1003,7 +1003,7 @@
 "self.settings.link_options.maps.title" = "Місця";
 "self.settings.link_options.browser.title" = "Браузер";
 
-"open_link.twitter.option.default" = "Safari / Twitter";
+"open_link.twitter.option.default" = "Браузер / Твітер";
 "open_link.twitter.option.tweetbot" = "Tweetbot";
 "open_link.twitter.option.twitterrific" = "Twitterrific";
 
@@ -1135,6 +1135,10 @@
 "landing.login.hints" = "Вже зареєстровані?";
 "landing.login.button.title" = "Увійти";
 
+"landing.custom_backend.title" = "Connected to \"%@\"";
+"landing.custom_backend.more_info.button.title" = "Показати більше";
+"landing.custom_backend.more_info.alert.title" = " Ви підключені до серверу третьої сторони: %@";
+
 // Create team
 
 "team.name.headline" = "Назвіть свою команду";
@@ -1145,7 +1149,7 @@
 
 "team.email.headline" = "Ваш акаунт";
 "team.email.subheadline" = "Введіть робочу адресу електронної пошти.";
-"team.email.textfield.placeholder" = "Email вашої компанії";
+"team.email.textfield.placeholder" = "Електронна пошта вашої компанії";
 "team.email.button.learn_more" = "Дізнатися більше";
 
 "team.activation_code.headline" = "Ви отримали нового листа";
@@ -1240,7 +1244,7 @@
 "registration.alert.account_exists.title" = "Акаунт уже існує";
 "registration.alert.account_exists.message_phone" = "Номер телефону, який використовується для реєстрації, вже зв'язано з іншим акаунтом.\n\nСпробуйте використати інший номер телефону або залогіньтесь, якщо ви є власником цього акаунту.";
 "registration.alert.account_exists.message_email" = "Адреса електронної пошти, яка використовується для реєстрації, вже зв'язана з іншим акаунтом.\n\n Спробуйте використати іншу адресу або залогіньтесь, якщо ви є власником цього акаунту.";
-"registration.alert.change_email_action" = "Змінити email-адресу";
+"registration.alert.change_email_action" = "Зареєструватися з іншою адресою ел. пошти";
 "registration.alert.change_phone_action" = "Зареєструватися з іншим номером";
 "registration.alert.change_signin_action" = "Увійти";
 
@@ -1540,6 +1544,16 @@
 "url_action.title" = "Підтвердження дії з URL";
 "url_action.connect_to_bot.message" = "Чи Ви хотіли б підключитися до бота?";
 
+"url_action.switch_backend.title" = "Під'єднатися до сервера";
+"url_action.switch_backend.message" = "З цією конфігурацією ви підключите додаток до серверу третьої сторони:\n%@";
+
+"url_action.switch_backend.error.logged_in.title" = "Не вдалося переключити сервер";
+"url_action.switch_backend.error.logged_in" = "Ви вже увійшли. Вийдіть з усіх акаунтів та повторіть спробу, щоб переключитися на інший сервер.";
+
+"url_action.switch_backend.error.invalid_backend.title" = "Сервер не відповідає";
+"url_action.switch_backend.error.invalid_backend" = "Будь ласка, перевірте ваше підключення до інтернету та спробуйте ще раз.";
+
+
 // Deep Link
 "url_action.invalid_user.title" = "Wire не вдалося знайти такого користувача.";
 "url_action.invalid_user.message" = "У вас відсутні необхідні права доступу для цього акаунту або його було видалено.";
@@ -1578,5 +1592,5 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Password Rules
-"registration.password.rules.no_requirements" = "Use %@.";
-"registration.password.rules.with_requirements" = "Use %@, with %@.";
+"registration.password.rules.no_requirements" = "Використовувати %@.";
+"registration.password.rules.with_requirements" = "Використовувати %@, включно з %@.";

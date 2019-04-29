@@ -855,7 +855,7 @@
 // Settings - top level
 "self.settings.create_team.title" = "Créer une équipe";
 "self.settings.manage_team.title" = "Gérer l’équipe";
-"self.settings.add_team_or_account.title" = "Nouvelle équipe ou nouveau compte";
+"self.settings.add_team_or_account.title" = "Ajouter un compte";
 "self.settings.add_account.title" = "Ajouter un compte";
 
 "self.settings.add_account.error.title" = "Trois comptes actifs";
@@ -1134,6 +1134,10 @@
 "landing.create_team.subtitle" = "Collaboration sécurisée pour les entreprises, institutions et organisations\U00A0professionnelles";
 "landing.login.hints" = "Vous avez déjà un compte ?";
 "landing.login.button.title" = "Se connecter";
+
+"landing.custom_backend.title" = "Connected to \"%@\"";
+"landing.custom_backend.more_info.button.title" = "Montrer plus";
+"landing.custom_backend.more_info.alert.title" = " Vous êtes connecté au serveur tiers : %@";
 
 // Create team
 
@@ -1539,6 +1543,16 @@
 "url_action.confirm" = "Confirmer";
 "url_action.title" = "Confirmer";
 "url_action.connect_to_bot.message" = "Voulez-vous vous connecter à ce service ?";
+
+"url_action.switch_backend.title" = "Se connecter au serveur";
+"url_action.switch_backend.message" = "Cette configuration va connecter l’application au serveur tiers :\n%@";
+
+"url_action.switch_backend.error.logged_in.title" = "Impossible de changer de serveur";
+"url_action.switch_backend.error.logged_in" = "Vous êtes déjà connecté. Pour vous connecter à ce serveur, veuillez vous déconnecter de tous vos comptes et essayer à nouveau.";
+
+"url_action.switch_backend.error.invalid_backend.title" = "Le serveur ne répond pas";
+"url_action.switch_backend.error.invalid_backend" = "Veuillez vérifier votre connexion internet, vérifier le lien et essayer à nouveau.";
+
 
 // Deep Link
 "url_action.invalid_user.title" = "Wire ne peut pas trouver cette personne.";

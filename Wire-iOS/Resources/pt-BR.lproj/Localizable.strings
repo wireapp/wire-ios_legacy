@@ -824,8 +824,8 @@
 "self.add_phone_number" = "Adicionar número de telefone";
 "self.add_email_password" = "Adicionar o endereço de e-mail e senha";
 
-"self.accessibility.profile_photo_image" = "Profile picture";
-"self.accessibility.profile_photo_edit_button" = "Change profile picture";
+"self.accessibility.profile_photo_image" = "Foto do perfil";
+"self.accessibility.profile_photo_edit_button" = "Alterar foto de perfil";
 
 // About screen
 "about.tos.title" = "Termos de uso";
@@ -855,7 +855,7 @@
 // Settings - top level
 "self.settings.create_team.title" = "Criar uma equipe";
 "self.settings.manage_team.title" = "Gerenciar Equipe";
-"self.settings.add_team_or_account.title" = "Nova Equipe ou Conta";
+"self.settings.add_team_or_account.title" = "Add Account";
 "self.settings.add_account.title" = "Adicionar uma conta";
 
 "self.settings.add_account.error.title" = "Três contas de ativas";
@@ -1003,7 +1003,7 @@
 "self.settings.link_options.maps.title" = "Localidades";
 "self.settings.link_options.browser.title" = "Navegador";
 
-"open_link.twitter.option.default" = "Safari / Twitter";
+"open_link.twitter.option.default" = "Navegador / Twitter";
 "open_link.twitter.option.tweetbot" = "Tweetbot";
 "open_link.twitter.option.twitterrific" = "Twitterrific";
 
@@ -1135,6 +1135,10 @@
 "landing.login.hints" = "Já tem uma conta?";
 "landing.login.button.title" = "Iniciar sessão";
 
+"landing.custom_backend.title" = "Connected to \"%@\"";
+"landing.custom_backend.more_info.button.title" = "Show more";
+"landing.custom_backend.more_info.alert.title" = " You are connected to a third-party server: %@";
+
 // Create team
 
 "team.name.headline" = "Dê um nome à sua equipa";
@@ -1240,7 +1244,7 @@
 "registration.alert.account_exists.title" = "Conta Existe";
 "registration.alert.account_exists.message_phone" = "O número de telefone que você usou para se registrar já está vinculado a uma conta.\n\nUse outro número de telefone ou tente fazer login se você possui essa conta.";
 "registration.alert.account_exists.message_email" = "O endereço de e-mail que você usou para registrar já está vinculado a uma conta.\n\n  Use outro endereço de e-mail ou tente fazer login se você possui essa conta.";
-"registration.alert.change_email_action" = "Alterar E-mail";
+"registration.alert.change_email_action" = "Registrar com Outro E-Mail";
 "registration.alert.change_phone_action" = "Registrar com Outro Número";
 "registration.alert.change_signin_action" = "Entrar";
 
@@ -1540,6 +1544,16 @@
 "url_action.title" = "Confirmar a ação do URL";
 "url_action.connect_to_bot.message" = "Você gostaria de se conectar ao bot?";
 
+"url_action.switch_backend.title" = "Connect to server";
+"url_action.switch_backend.message" = "This configuration will connect the app to a third-party server:\n%@";
+
+"url_action.switch_backend.error.logged_in.title" = "Can’t switch servers";
+"url_action.switch_backend.error.logged_in" = "You are already logged in. To switch to this server, log out of all accounts and try again.";
+
+"url_action.switch_backend.error.invalid_backend.title" = "The server is not responding";
+"url_action.switch_backend.error.invalid_backend" = "Please check your internet connection, verify the link and try again.";
+
+
 // Deep Link
 "url_action.invalid_user.title" = "O Wire não pode encontrar esta pessoa.";
 "url_action.invalid_user.message" = "Talvez você não tenha permissão com essa conta, ou ela não existe mais.";
@@ -1578,5 +1592,5 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Password Rules
-"registration.password.rules.no_requirements" = "Use %@.";
-"registration.password.rules.with_requirements" = "Use %@, with %@.";
+"registration.password.rules.no_requirements" = "Usar %@.";
+"registration.password.rules.with_requirements" = "Usar %@, com %@.";

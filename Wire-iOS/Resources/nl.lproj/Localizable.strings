@@ -855,7 +855,7 @@
 // Settings - top level
 "self.settings.create_team.title" = "Creëer Team";
 "self.settings.manage_team.title" = "Beheer team";
-"self.settings.add_team_or_account.title" = "Nieuw Team of Account";
+"self.settings.add_team_or_account.title" = "Add Account";
 "self.settings.add_account.title" = "Voeg een account toe";
 
 "self.settings.add_account.error.title" = "Drie accounts zijn actief";
@@ -1134,6 +1134,10 @@
 "landing.create_team.subtitle" = "Secure collaboration for businesses, institutions and professional\U00A0organizations";
 "landing.login.hints" = "Heb je al een account?";
 "landing.login.button.title" = "Inloggen";
+
+"landing.custom_backend.title" = "Connected to \"%@\"";
+"landing.custom_backend.more_info.button.title" = "Show more";
+"landing.custom_backend.more_info.alert.title" = " You are connected to a third-party server: %@";
 
 // Create team
 
@@ -1539,6 +1543,16 @@
 "url_action.confirm" = "Bevestig";
 "url_action.title" = "Bevestig deze URL";
 "url_action.connect_to_bot.message" = "Wil je met deze bot connecten?";
+
+"url_action.switch_backend.title" = "Connect to server";
+"url_action.switch_backend.message" = "This configuration will connect the app to a third-party server:\n%@";
+
+"url_action.switch_backend.error.logged_in.title" = "Can’t switch servers";
+"url_action.switch_backend.error.logged_in" = "You are already logged in. To switch to this server, log out of all accounts and try again.";
+
+"url_action.switch_backend.error.invalid_backend.title" = "The server is not responding";
+"url_action.switch_backend.error.invalid_backend" = "Please check your internet connection, verify the link and try again.";
+
 
 // Deep Link
 "url_action.invalid_user.title" = "Wire can't find this person.";

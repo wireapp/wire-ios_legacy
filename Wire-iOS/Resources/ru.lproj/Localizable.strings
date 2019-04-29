@@ -855,7 +855,7 @@
 // Settings - top level
 "self.settings.create_team.title" = "Создать команду";
 "self.settings.manage_team.title" = "Управлять командой";
-"self.settings.add_team_or_account.title" = "Новая команда или аккаунт";
+"self.settings.add_team_or_account.title" = "Добавить аккаунт";
 "self.settings.add_account.title" = "Добавить аккаунт";
 
 "self.settings.add_account.error.title" = "Активны три аккаунта";
@@ -1134,6 +1134,10 @@
 "landing.create_team.subtitle" = "Безопасное сотрудничество для предприятий, учреждений и профессиональных\U00A0организаций";
 "landing.login.hints" = "Уже зарегистрированы?";
 "landing.login.button.title" = "Войти";
+
+"landing.custom_backend.title" = "Подключен к \"%@\"";
+"landing.custom_backend.more_info.button.title" = "Развернуть";
+"landing.custom_backend.more_info.alert.title" = " Вы подключены к стороннему серверу: %@";
 
 // Create team
 
@@ -1539,6 +1543,16 @@
 "url_action.confirm" = "Подтвердить";
 "url_action.title" = "Подтвердить действие по URL";
 "url_action.connect_to_bot.message" = "Вы хотите подключиться к боту?";
+
+"url_action.switch_backend.title" = "Подключиться к серверу";
+"url_action.switch_backend.message" = "Эта конфигурация подключит приложение к стороннему серверу:\n%@";
+
+"url_action.switch_backend.error.logged_in.title" = "Невозможно переключить серверы";
+"url_action.switch_backend.error.logged_in" = "Вы уже авторизованы. Чтобы переключиться на этот сервер, выйдите из всех учетных записей и повторите попытку.";
+
+"url_action.switch_backend.error.invalid_backend.title" = "Сервер не отвечает";
+"url_action.switch_backend.error.invalid_backend" = "Пожалуйста, убедитесь в наличии доступа к сети интернет, проверьте ссылку и попробуйте снова.";
+
 
 // Deep Link
 "url_action.invalid_user.title" = "Wire не может найти этого человека.";

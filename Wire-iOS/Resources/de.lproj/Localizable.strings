@@ -855,7 +855,7 @@
 // Settings - top level
 "self.settings.create_team.title" = "Team erstellen";
 "self.settings.manage_team.title" = "Team verwalten";
-"self.settings.add_team_or_account.title" = "Neues Team oder Konto";
+"self.settings.add_team_or_account.title" = "Benutzerkonto hinzufügen";
 "self.settings.add_account.title" = "Ein Konto hinzufügen";
 
 "self.settings.add_account.error.title" = "Drei Benutzerkonten sind aktiv";
@@ -1134,6 +1134,10 @@
 "landing.create_team.subtitle" = "Sichere Zusammenarbeit für Unternehmen, Institutionen und Organisationen";
 "landing.login.hints" = "Hast du bereits ein Benutzerkonto?";
 "landing.login.button.title" = "Login";
+
+"landing.custom_backend.title" = "Verbunden mit \"%@\"";
+"landing.custom_backend.more_info.button.title" = "Mehr anzeigen";
+"landing.custom_backend.more_info.alert.title" = " Mit dem Server eines Drittanbieters verbunden: %@";
 
 // Create team
 
@@ -1539,6 +1543,16 @@
 "url_action.confirm" = "Bestätigen";
 "url_action.title" = "URL-Aktion bestätigen";
 "url_action.connect_to_bot.message" = "Möchten Sie sich mit dem Bot verbinden?";
+
+"url_action.switch_backend.title" = "Mit Server verbinden";
+"url_action.switch_backend.message" = "Diese Konfiguration verbindet die App mit dem Server eines Drittanbieters:\n%@";
+
+"url_action.switch_backend.error.logged_in.title" = "Serverwechsel nicht möglich";
+"url_action.switch_backend.error.logged_in" = "Bereits eingeloggt: Um auf diesen Server zu wechseln, bitte aus allen Konten ausloggen und erneut versuchen.";
+
+"url_action.switch_backend.error.invalid_backend.title" = "Der Server antwortet nicht";
+"url_action.switch_backend.error.invalid_backend" = "Bitte Internetverbindung überprüfen, den Link bestätigen und nochmal versuchen.";
+
 
 // Deep Link
 "url_action.invalid_user.title" = "Wire kann diese Person nicht finden.";
