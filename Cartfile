@@ -4,7 +4,7 @@ github "wireapp/wire-ios-sync-engine" "feature/Swift5"
 github "wireapp/wire-ios-share-engine" "feature/Swift5"
 github "wireapp/FormatterKit" "1.8.1-swift3.0.2"
 github "wireapp/wire-ios-canvas" "feature/Swift5"
-github "wireapp/HockeySDK-iOS" ~> 5.0
+github "wireapp/HockeySDK-iOS" ~> 5.1.4
 github "wireapp/FLAnimatedImage" "1.0.12-wire"
 github "wireapp/PureLayout" "v3.0.0"
 github "iwasrobbed/Down" "v0.8.1"
