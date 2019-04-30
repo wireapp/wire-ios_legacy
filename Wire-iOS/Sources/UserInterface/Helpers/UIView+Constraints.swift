@@ -263,7 +263,8 @@ extension UIView {
         }
 
         if activate {
-            NSLayoutConstraint.activate(constraints.map({$0.value}))
+            let constraintArray: [NSLayoutConstraint] = constraints.map({$0.value})
+            NSLayoutConstraint.activate(constraintArray)
         }
 
         return constraints

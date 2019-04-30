@@ -17,9 +17,7 @@
 // 
 
 
-@import PureLayout;
 @import MobileCoreServices;
-@import AVFoundation;
 
 #import "ConversationInputBarViewController.h"
 #import "ConversationInputBarViewController+Private.h"
@@ -103,12 +101,9 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 @property (nonatomic) UIGestureRecognizer *singleTapGestureRecognizer;
 
 @property (nonatomic) UserImageView *authorImageView;
-@property (nonatomic) TypingIndicatorView *typingIndicatorView;
 
-@property (nonatomic) InputBar *inputBar;
 @property (nonatomic) ZMConversation *conversation;
 
-@property (nonatomic) NSSet *typingUsers;
 @property (nonatomic) id conversationObserverToken;
 @property (nonatomic) id userObserverToken;
 
@@ -151,6 +146,8 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
         self.notificationFeedbackGenerator = [[UINotificationFeedbackGenerator alloc] init];
         self.impactFeedbackGenerator = [[UIImpactFeedbackGenerator alloc] initWithStyle:UIImpactFeedbackStyleLight];
+
+        [self setupViews];
     }
     return self;
 }
@@ -176,15 +173,8 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self setupAppLockedObserver];
     
     [self createSingleTapGestureRecognizer];
-    
-    [self createInputBar]; // Creates all input bar buttons
-    [self createSendButton];
-    [self createEphemeralIndicatorButton];
-    [self createMarkdownButton];
 
-    [self createHourglassButton];
-    [self createTypingIndicatorView];
-    
+
     if (self.conversation.hasDraftMessage) {
         [self.inputBar.textView setDraftMessage:self.conversation.draftMessage];
     }
@@ -252,59 +242,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     self.ephemeralIndicatorButton.layer.cornerRadius = CGRectGetWidth(self.ephemeralIndicatorButton.bounds) / 2;
 }
 
-- (void)createInputBar
-{
-    self.audioButton = [[IconButton alloc] init];
-    self.audioButton.hitAreaPadding = CGSizeZero;
-    self.audioButton.accessibilityIdentifier = @"audioButton";
-    [self.audioButton setIconColor:[UIColor accentColor] forState:UIControlStateSelected];
-
-    self.videoButton = [[IconButton alloc] init];
-    self.videoButton.hitAreaPadding = CGSizeZero;
-    self.videoButton.accessibilityIdentifier = @"videoButton";
-    
-    self.photoButton = [[IconButton alloc] init];
-    self.photoButton.hitAreaPadding = CGSizeZero;
-    self.photoButton.accessibilityIdentifier = @"photoButton";
-    [self.photoButton setIconColor:[UIColor accentColor] forState:UIControlStateSelected];
-
-    self.uploadFileButton = [[IconButton alloc] init];
-    self.uploadFileButton.hitAreaPadding = CGSizeZero;
-    self.uploadFileButton.accessibilityIdentifier = @"uploadFileButton";
-    
-    self.sketchButton = [[IconButton alloc] init];
-    self.sketchButton.hitAreaPadding = CGSizeZero;
-    self.sketchButton.accessibilityIdentifier = @"sketchButton";
-    
-    self.pingButton = [[IconButton alloc] init];
-    self.pingButton.hitAreaPadding = CGSizeZero;
-    self.pingButton.accessibilityIdentifier = @"pingButton";
-    
-    self.locationButton = [[IconButton alloc] init];
-    self.locationButton.hitAreaPadding = CGSizeZero;
-    self.locationButton.accessibilityIdentifier = @"locationButton";
-    
-    self.gifButton = [[IconButton alloc] init];
-    self.gifButton.hitAreaPadding = CGSizeZero;
-    self.gifButton.accessibilityIdentifier = @"gifButton";
-
-    self.mentionButton = [[IconButton alloc] init];
-    self.mentionButton.hitAreaPadding = CGSizeZero;
-    self.mentionButton.accessibilityIdentifier = @"mentionButton";
-
-    self.inputBar = [[InputBar alloc] initWithButtons:@[self.photoButton, self.mentionButton, self.sketchButton, self.gifButton, self.audioButton, self.pingButton, self.uploadFileButton, self.locationButton, self.videoButton]];
-    self.inputBar.translatesAutoresizingMaskIntoConstraints = NO;
-    self.inputBar.textView.delegate = self;
-    [self registerForTextFieldSelectionChange];
-    
-    [self.view addSubview:self.inputBar];
-    [self.inputBar autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeBottom];
-    [NSLayoutConstraint autoSetPriority:UILayoutPriorityDefaultLow forConstraints:^{
-        [self.inputBar autoPinEdgeToSuperviewEdge:ALEdgeBottom];
-    }];
-    self.inputBar.editingView.delegate = self;
-}
-
 - (void)createSingleTapGestureRecognizer
 {
     self.singleTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onSingleTap:)];
@@ -312,81 +249,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     self.singleTapGestureRecognizer.delegate = self;
     self.singleTapGestureRecognizer.cancelsTouchesInView = YES;
     [self.view addGestureRecognizer:self.singleTapGestureRecognizer];
-}
-
-- (void)createEphemeralIndicatorButton
-{
-    self.ephemeralIndicatorButton = [[IconButton alloc] initForAutoLayout];
-    self.ephemeralIndicatorButton.layer.borderWidth = 0.5;
-
-    self.ephemeralIndicatorButton.accessibilityIdentifier = @"ephemeralTimeIndicatorButton";
-    self.ephemeralIndicatorButton.adjustsTitleWhenHighlighted = YES;
-    self.ephemeralIndicatorButton.adjustsBorderColorWhenHighlighted = YES;
-
-    [self.inputBar.rightAccessoryStackView insertArrangedSubview:self.ephemeralIndicatorButton atIndex:0];
-    [self.ephemeralIndicatorButton autoSetDimensionsToSize:CGSizeMake(InputBar.rightIconSize, InputBar.rightIconSize)];
-
-    [self.ephemeralIndicatorButton setTitleColor:[UIColor lightGraphite]
-                                        forState:UIControlStateDisabled];
-    [self.ephemeralIndicatorButton setTitleColor:[UIColor accentColor]
-                                        forState:UIControlStateNormal];
-
-    [self updateEphemeralIndicatorButtonTitle:self.ephemeralIndicatorButton];
-}
-
-- (void)createEmojiButton
-{
-    const CGFloat senderDiameter = 28;
-
-    self.emojiButton = [[IconButton alloc] initWithStyle:IconButtonStyleCircular];
-    self.emojiButton.translatesAutoresizingMaskIntoConstraints = NO;
-    self.emojiButton.accessibilityIdentifier = @"emojiButton";
-
-    [self.inputBar.leftAccessoryView addSubview:self.emojiButton];
-    [self.emojiButton autoAlignAxisToSuperviewAxis:ALAxisVertical];
-    [self.emojiButton autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:14];
-    [self.emojiButton autoSetDimensionsToSize:CGSizeMake(senderDiameter, senderDiameter)];
-}
-
-- (void)createMarkdownButton
-{
-    const CGFloat senderDiameter = 28;
-
-    self.markdownButton = [[IconButton alloc] initWithStyle:IconButtonStyleCircular];
-    self.markdownButton.translatesAutoresizingMaskIntoConstraints = NO;
-    self.markdownButton.accessibilityIdentifier = @"markdownButton";
-    [self.inputBar.leftAccessoryView addSubview:self.markdownButton];
-    [self.markdownButton autoAlignAxisToSuperviewAxis:ALAxisVertical];
-    [self.markdownButton autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:14];
-    [self.markdownButton autoSetDimensionsToSize:CGSizeMake(senderDiameter, senderDiameter)];
-}
-
-- (void)createHourglassButton
-{
-    self.hourglassButton = [[IconButton alloc] initWithStyle:IconButtonStyleDefault];
-    self.hourglassButton.translatesAutoresizingMaskIntoConstraints = NO;
-
-    [self.hourglassButton setIcon:WRStyleKitIconHourglass withSize:16 forState:UIControlStateNormal];
-
-    self.hourglassButton.accessibilityIdentifier = @"ephemeralTimeSelectionButton";
-    [self.inputBar.rightAccessoryStackView addArrangedSubview:self.hourglassButton];
-
-    [self.hourglassButton autoSetDimensionsToSize:CGSizeMake(InputBar.rightIconSize, InputBar.rightIconSize)];
-}
-
-- (void)createTypingIndicatorView
-{
-    self.typingIndicatorView = [[TypingIndicatorView alloc] init];
-    self.typingIndicatorView.translatesAutoresizingMaskIntoConstraints = NO;
-    self.typingIndicatorView.accessibilityIdentifier = @"typingIndicator";
-    self.typingIndicatorView.typingUsers = self.typingUsers.allObjects;
-    [self.typingIndicatorView setHidden:YES animated:NO];
-    
-    [self.inputBar  addSubview:self.typingIndicatorView];
-    [self.typingIndicatorView  autoConstrainAttribute:(ALAttribute)ALAxisHorizontal toAttribute:ALAttributeTop ofView:self.inputBar];
-    [self.typingIndicatorView autoAlignAxisToSuperviewAxis:ALAxisVertical];
-    [self.typingIndicatorView autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:48 relation:NSLayoutRelationGreaterThanOrEqual];
-    [self.typingIndicatorView autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:48 relation:NSLayoutRelationGreaterThanOrEqual];
 }
 
 - (void)updateAvailabilityPlaceholder

@@ -85,7 +85,16 @@ final class ConversationTableViewDataSource: NSObject {
     }
     
     @objc public var messages: [ZMConversationMessage] {
-        return fetchController.fetchedObjects ?? []
+        // NOTE: We limit the number of messages to the fetchLimit since it's a known issue that the
+        // NSFetchResultsController doesn't always respect the fetchLimit, which becomes a problem if
+        // the fetchOffset > 0 since we will get unwanted table view updates.
+        // http://www.openradar.appspot.com/30381905
+        
+        if fetchController.fetchRequest.fetchOffset > 0 {
+            return Array(fetchController.fetchedObjects?.suffix(fetchController.fetchRequest.fetchLimit) ?? [])
+        } else {
+            return fetchController.fetchedObjects ?? []
+        }
     }
     
     var previousSections: [ArraySection<String, AnyConversationMessageCellDescription>] = []

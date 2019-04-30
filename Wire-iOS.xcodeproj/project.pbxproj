@@ -1026,6 +1026,7 @@
 		EF17B0D0223A6692006252A8 /* MediaPreviewViewSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF17B0CF223A6692006252A8 /* MediaPreviewViewSnapshotTests.swift */; };
 		EF17B0D2223A6936006252A8 /* LaunchImageViewControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF17B0D1223A6936006252A8 /* LaunchImageViewControllerSnapshotTests.swift */; };
 		EF17B0D3223A6A36006252A8 /* LaunchImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8756CA121D2EBE1F002E7CB7 /* LaunchImageViewController.swift */; };
+		EF17B0D0223A6692006252A8 /* MediaPreviewViewSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF17B0CF223A6692006252A8 /* MediaPreviewViewSnapshotTests.swift */; };
 		EF17B0D6223A70D1006252A8 /* SketchColorPickerController+SetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF17B0D4223A70D1006252A8 /* SketchColorPickerController+SetupView.swift */; };
 		EF17B0D8223A7385006252A8 /* SketchColorPickerControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF17B0D7223A7385006252A8 /* SketchColorPickerControllerSnapshotTests.swift */; };
 		EF17B0D9223A8F7C006252A8 /* SketchColorCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA1F7E21B610D89002402B6 /* SketchColorCollectionViewCell.swift */; };
@@ -1238,6 +1239,7 @@
 		EFC7146F20DD476000FAA4B4 /* CountryCodeTableViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC7146D20DD471800FAA4B4 /* CountryCodeTableViewControllerTests.swift */; };
 		EFC8E21D212D777A00BE7BBE /* UIColor+TeamCreation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFFF9E841FBF335700491F9A /* UIColor+TeamCreation.swift */; };
 		EFD003542179CE3C008C20D3 /* SplitViewController+Constraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD003532179CE3C008C20D3 /* SplitViewController+Constraint.swift */; };
+		EFD1A61F224001AB00695792 /* ConversationInputBarViewController+CreateViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD1A61E224001AB00695792 /* ConversationInputBarViewController+CreateViews.swift */; };
 		EFD43FF821B82BC70050ABC5 /* XCTestCase+DeviceSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD43FF621B82BB00050ABC5 /* XCTestCase+DeviceSize.swift */; };
 		EFD43FFA21B82C500050ABC5 /* ChangePhoneViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD43FF921B82C500050ABC5 /* ChangePhoneViewControllerTests.swift */; };
 		EFD514AD21886CC600D7C7E0 /* ConversationListItemView+Constraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD514AC21886CC600D7C7E0 /* ConversationListItemView+Constraints.swift */; };
@@ -3013,6 +3015,7 @@
 		EFC6F89F213FCDE200B92D51 /* MenuConfigurationProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuConfigurationProperties.swift; sourceTree = "<group>"; };
 		EFC7146D20DD471800FAA4B4 /* CountryCodeTableViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryCodeTableViewControllerTests.swift; sourceTree = "<group>"; };
 		EFD003532179CE3C008C20D3 /* SplitViewController+Constraint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SplitViewController+Constraint.swift"; sourceTree = "<group>"; };
+		EFD1A61E224001AB00695792 /* ConversationInputBarViewController+CreateViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationInputBarViewController+CreateViews.swift"; sourceTree = "<group>"; };
 		EFD43FF621B82BB00050ABC5 /* XCTestCase+DeviceSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+DeviceSize.swift"; sourceTree = "<group>"; };
 		EFD43FF921B82C500050ABC5 /* ChangePhoneViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePhoneViewControllerTests.swift; sourceTree = "<group>"; };
 		EFD514AC21886CC600D7C7E0 /* ConversationListItemView+Constraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationListItemView+Constraints.swift"; sourceTree = "<group>"; };
@@ -5414,6 +5417,7 @@
 				8FC851B8199245760008B66B /* ConversationInputBarViewController.h */,
 				87DE06AF1D252B3D0009411F /* ConversationInputBarViewController+Private.h */,
 				8FC851B9199245760008B66B /* ConversationInputBarViewController.m */,
+				EFD1A61E224001AB00695792 /* ConversationInputBarViewController+CreateViews.swift */,
 				EF58B556218B463F00750A2B /* ConversationInputBarViewController+KeyCommand.swift */,
 				EF297DD92131FF310002983A /* ConversationInputBarViewController+Style.swift */,
 				EF3BA5D321075FC60093048F /* ConversationInputBarViewController+Language.swift */,
@@ -7700,6 +7704,7 @@
 				16FB2F6C20C0389800582137 /* Dictionary+Merge.swift in Sources */,
 				87A15FE11E08339500AED79B /* CollectionLinkCell.swift in Sources */,
 				D52F2C20205BE0A600E067C0 /* UIAlertController+ConversationDegraded.swift in Sources */,
+				EFD1A61F224001AB00695792 /* ConversationInputBarViewController+CreateViews.swift in Sources */,
 				5E3FB06C206BC7AC0075E910 /* TabBar.swift in Sources */,
 				87B8C3411DF9788B0015EC89 /* MapOpening.swift in Sources */,
 				F112C58620497860007C1E8F /* Analytics+Guests.swift in Sources */,

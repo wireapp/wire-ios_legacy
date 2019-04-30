@@ -17,8 +17,6 @@
 // 
 
 
-NS_ASSUME_NONNULL_BEGIN
-
 @class AudioRecordKeyboardViewController;
 @class CameraKeyboardViewController;
 @class ConversationInputBarSendController;
@@ -27,20 +25,27 @@ NS_ASSUME_NONNULL_BEGIN
 @class ConversationInputBarButtonState;
 @class ZMClientMessage;
 @class ReplyComposingView;
+@class TypingIndicatorView;
 
 @interface ConversationInputBarViewController ()
 
-@property (nonatomic, nullable) IconButton *audioButton;
-@property (nonatomic, nullable) IconButton *photoButton;
-@property (nonatomic, nullable) IconButton *uploadFileButton;
-@property (nonatomic, nullable) IconButton *sketchButton;
-@property (nonatomic, nullable) IconButton *pingButton;
-@property (nonatomic, nullable) IconButton *locationButton;
-@property (nonatomic, nullable) IconButton *ephemeralIndicatorButton;
-@property (nonatomic, nullable) IconButton *emojiButton;
-@property (nonatomic, nullable) IconButton *markdownButton;
-@property (nonatomic, nullable) IconButton *gifButton;
-@property (nonatomic, nullable) IconButton *mentionButton;
+@property (nonatomic, nonnull) IconButton *audioButton;
+@property (nonatomic, nonnull) IconButton *photoButton;
+@property (nonatomic, nonnull) IconButton *uploadFileButton;
+@property (nonatomic, nonnull) IconButton *sketchButton;
+@property (nonatomic, nonnull) IconButton *pingButton;
+@property (nonatomic, nonnull) IconButton *locationButton;
+@property (nonatomic, nonnull) IconButton *ephemeralIndicatorButton;
+@property (nonatomic, nonnull) IconButton *markdownButton;
+@property (nonatomic, nonnull) IconButton *gifButton;
+@property (nonatomic, nonnull) IconButton *mentionButton;
+@property (nonatomic, nonnull) IconButton *sendButton;
+@property (nonatomic, nonnull) IconButton *hourglassButton;
+@property (nonatomic, nonnull) IconButton *videoButton;
+
+@property (nonatomic, nonnull) InputBar *inputBar;
+
+@property (nonatomic, nonnull) TypingIndicatorView *typingIndicatorView;
 
 @property (nonatomic, nullable) AudioRecordViewController *audioRecordViewController;
 @property (nonatomic, nullable) UIView *audioRecordViewContainer;
@@ -53,26 +58,24 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, nullable) id<ZMConversationMessage> quotedMessage;
 @property (nonatomic, nullable) ReplyComposingView *replyComposingView;
 
-@property (nonatomic) UIImpactFeedbackGenerator *impactFeedbackGenerator;
+@property (nonatomic, nullable) UIImpactFeedbackGenerator *impactFeedbackGenerator;
 
 @property (nonatomic)           BOOL shouldRefocusKeyboardAfterImagePickerDismiss;
 
 // Counter keeping track of calls being made when the audio keyboard ewas visible before.
 @property (nonatomic)           NSInteger callCountWhileCameraKeyboardWasVisible;
-@property (nonatomic)           id callStateObserverToken;
+@property (nonatomic, nullable)           id callStateObserverToken;
 @property (nonatomic)           BOOL wasRecordingBeforeCall;
 
 @property (nonatomic, nonnull) ConversationInputBarButtonState *sendButtonState;
-
-@property (nonatomic) IconButton *sendButton;
-@property (nonatomic) IconButton *hourglassButton;
-@property (nonatomic) IconButton *videoButton;
 
 @property (nonatomic) BOOL inRotation;
 
 // PopoverPresenter
 @property (nonatomic, nullable, weak) UIPopoverPresentationController *presentedPopover;
 @property (nonatomic, nullable, weak) UIView *popoverPointToView;
+
+@property (nonatomic, nullable) NSSet *typingUsers;
 
 - (void)updateRightAccessoryView;
 - (void)updateButtonIcons;
@@ -86,5 +89,3 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)escapePressed;
 
 @end
-
-NS_ASSUME_NONNULL_END
