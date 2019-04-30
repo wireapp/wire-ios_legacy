@@ -206,6 +206,8 @@
 "conversation.status.silenced" = "Режим тиші увімк.";
 "conversation.status.poor_connection" = "Повільне з'єднання";
 "conversation.status.blocked" = "Заблокований(-на)";
+"conversation.status.incoming_call" = "%@ дзвонить…";
+"conversation.status.incoming_call.unknown" = "Хтось дзвонить…";
 
 "conversation.status.message.text" = "%@";
 "conversation.status.message.link" = "Поділився(-лась) посиланням";
@@ -824,8 +826,8 @@
 "self.add_phone_number" = "Додати номер телефону";
 "self.add_email_password" = "Додайте email та пароль";
 
-"self.accessibility.profile_photo_image" = "Profile picture";
-"self.accessibility.profile_photo_edit_button" = "Change profile picture";
+"self.accessibility.profile_photo_image" = "Картинка для профілю";
+"self.accessibility.profile_photo_edit_button" = "Змінити картинку для профілю";
 
 // About screen
 "about.tos.title" = "Умови використання";
@@ -855,7 +857,7 @@
 // Settings - top level
 "self.settings.create_team.title" = "Створити команду";
 "self.settings.manage_team.title" = "Керування командою";
-"self.settings.add_team_or_account.title" = "Нова команда або акаунт";
+"self.settings.add_team_or_account.title" = "Add Account";
 "self.settings.add_account.title" = "Додати акаунт";
 
 "self.settings.add_account.error.title" = "Три акаунти вже активні";
@@ -1003,7 +1005,7 @@
 "self.settings.link_options.maps.title" = "Місця";
 "self.settings.link_options.browser.title" = "Браузер";
 
-"open_link.twitter.option.default" = "Browser / Twitter";
+"open_link.twitter.option.default" = "Браузер / Твітер";
 "open_link.twitter.option.tweetbot" = "Tweetbot";
 "open_link.twitter.option.twitterrific" = "Twitterrific";
 
@@ -1135,6 +1137,10 @@
 "landing.login.hints" = "Вже зареєстровані?";
 "landing.login.button.title" = "Увійти";
 
+"landing.custom_backend.title" = "Connected to \"%@\"";
+"landing.custom_backend.more_info.button.title" = "Показати більше";
+"landing.custom_backend.more_info.alert.title" = " Ви підключені до серверу третьої сторони: %@";
+
 // Create team
 
 "team.name.headline" = "Назвіть свою команду";
@@ -1145,7 +1151,7 @@
 
 "team.email.headline" = "Ваш акаунт";
 "team.email.subheadline" = "Введіть робочу адресу електронної пошти.";
-"team.email.textfield.placeholder" = "Email вашої компанії";
+"team.email.textfield.placeholder" = "Електронна пошта вашої компанії";
 "team.email.button.learn_more" = "Дізнатися більше";
 
 "team.activation_code.headline" = "Ви отримали нового листа";
@@ -1240,7 +1246,7 @@
 "registration.alert.account_exists.title" = "Акаунт уже існує";
 "registration.alert.account_exists.message_phone" = "Номер телефону, який використовується для реєстрації, вже зв'язано з іншим акаунтом.\n\nСпробуйте використати інший номер телефону або залогіньтесь, якщо ви є власником цього акаунту.";
 "registration.alert.account_exists.message_email" = "Адреса електронної пошти, яка використовується для реєстрації, вже зв'язана з іншим акаунтом.\n\n Спробуйте використати іншу адресу або залогіньтесь, якщо ви є власником цього акаунту.";
-"registration.alert.change_email_action" = "Register with Another Email";
+"registration.alert.change_email_action" = "Зареєструватися з іншою адресою ел. пошти";
 "registration.alert.change_phone_action" = "Зареєструватися з іншим номером";
 "registration.alert.change_signin_action" = "Увійти";
 
@@ -1512,6 +1518,8 @@
 
 "availability.message.cancel" = "Скасувати";
 "availability.message.set_status" = "Встановити статус";
+"availability.accessibility_label.change_status" = "Змінити статус";
+"availability.accessibility_label.status" = "Статус";
 
 "availability.none" = "Недоступний(-а)";
 "availability.available" = "Онлайн";
@@ -1521,16 +1529,16 @@
 "availability.away.placeholder" = "%@: не на місці";
 "availability.busy.placeholder" = "%@: не турбувати";
 
-"availability.reminder.away.title" = "You are set to Away";
-"availability.reminder.away.message" = "You will appear as Away to other people. You will not receive notifications about any incoming calls or messages.";
-"availability.reminder.busy.title" = "You are set to Busy";
-"availability.reminder.busy.message" = "You will appear as Busy to other people. You will receive only receive notifications for mentions, replies, and calls in conversations that are not muted.";
-"availability.reminder.available.title" = "You are set to Available";
-"availability.reminder.available.message" = "You will appear as Available to other people. You will receive notifications for incoming calls and for messages according to the Notifications setting in each conversation.";
-"availability.reminder.none.title" = "No status set";
-"availability.reminder.none.message" = "You will receive notifications for incoming calls and for messages according to the Notifications setting in each conversation.";
-"availability.reminder.action.dont_remind_me" = "Do not display this information again";
-"availability.reminder.action.ok" = "Ok";
+"availability.reminder.away.title" = "Зараз ви відсутні";
+"availability.reminder.away.message" = "Ваш статус для інших людей буде встановлено як \"Відсутній(-я)\". Ви не будете отримувати сповіщень про вхідні дзвінки або повідомлення.";
+"availability.reminder.busy.title" = "Зараз ви зайняті";
+"availability.reminder.busy.message" = "Ваш статус для інших людей буде встановлено як \"Зайнятий(-а)\". Ви будете отримувати сповіщення тільки про згадки, відповіді та дзвінки в розмовах, для яких не увімкнений режим тиші.";
+"availability.reminder.available.title" = "Зараз ви присутні";
+"availability.reminder.available.message" = "Ваш статус для інших людей буде встановлено як \"Присутній(-я)\". Ви будете отримувати сповіщення про вхідні дзвінки та повідомлення згідно налаштувань для кожної розмови.";
+"availability.reminder.none.title" = "Статус поки що не встановлено";
+"availability.reminder.none.message" = "Ви будете отримувати сповіщення про вхідні дзвінки та повідомлення згідно налаштувань для кожної розмови.";
+"availability.reminder.action.dont_remind_me" = "Більше не відображати цю інформацію";
+"availability.reminder.action.ok" = "OK";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Call Quality Survey
@@ -1550,6 +1558,16 @@
 "url_action.confirm" = "Підтвердити";
 "url_action.title" = "Підтвердження дії з URL";
 "url_action.connect_to_bot.message" = "Чи Ви хотіли б підключитися до бота?";
+
+"url_action.switch_backend.title" = "Під'єднатися до сервера";
+"url_action.switch_backend.message" = "З цією конфігурацією ви підключите додаток до серверу третьої сторони:\n%@";
+
+"url_action.switch_backend.error.logged_in.title" = "Не вдалося переключити сервер";
+"url_action.switch_backend.error.logged_in" = "Ви вже увійшли. Вийдіть з усіх акаунтів та повторіть спробу, щоб переключитися на інший сервер.";
+
+"url_action.switch_backend.error.invalid_backend.title" = "Сервер не відповідає";
+"url_action.switch_backend.error.invalid_backend" = "Будь ласка, перевірте ваше підключення до інтернету та спробуйте ще раз.";
+
 
 // Deep Link
 "url_action.invalid_user.title" = "Wire не вдалося знайти такого користувача.";
@@ -1589,5 +1607,5 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Password Rules
-"registration.password.rules.no_requirements" = "Use %@.";
-"registration.password.rules.with_requirements" = "Use %@, with %@.";
+"registration.password.rules.no_requirements" = "Використовувати %@.";
+"registration.password.rules.with_requirements" = "Використовувати %@, включно з %@.";

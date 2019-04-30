@@ -1137,7 +1137,7 @@
 "landing.login.hints" = "Already have an account?";
 "landing.login.button.title" = "Log in";
 
-"landing.custom_backend.title" = "Connected to %@";
+"landing.custom_backend.title" = "Connected to \"%@\"";
 "landing.custom_backend.more_info.button.title" = "Show more";
 "landing.custom_backend.more_info.alert.title" = " You are connected to a third-party server: %@";
 
