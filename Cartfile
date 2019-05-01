@@ -7,5 +7,5 @@ github "wireapp/wire-ios-canvas" "feature/Swift5"
 github "wireapp/HockeySDK-iOS" ~> 5.1.4
 github "wireapp/FLAnimatedImage" "1.0.12-wire"
 github "wireapp/PureLayout" "v3.0.0"
-github "iwasrobbed/Down" "v0.8.1"
+github "wireapp/Down" "v2.1.1"
 github "ra1028/DifferenceKit" ~> 1.1.1
