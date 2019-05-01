@@ -1,5 +1,5 @@
 github "apple/swift-protobuf" "1.5.0"
-github "iwasrobbed/Down" "v0.8.1"
+github "wireapp/Down" "v2.1.1"
 github "ra1028/DifferenceKit" "1.1.1"
 github "wireapp/Cartography" "3.0.4"
 github "wireapp/FLAnimatedImage" "1.0.12-wire"
