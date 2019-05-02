@@ -321,12 +321,14 @@ protocol SettingsCellType: class {
         
         selectionStyle = .none
         shouldGroupAccessibilityChildren = false
-        switchView = UISwitch(frame: CGRect.zero)
+        let switchView = UISwitch(frame: CGRect.zero)
         switchView.addTarget(self, action: #selector(SettingsToggleCell.onSwitchChanged(_:)), for: .valueChanged)
         accessoryView = switchView
         switchView.isAccessibilityElement = true
         
         accessibilityElements = [cellNameLabel, switchView]
+
+        self.switchView = switchView
     }
     
     @objc func onSwitchChanged(_ sender: UIResponder) {

@@ -98,7 +98,7 @@ public extension ConversationViewController {
         return button
     }
 
-    @objc public func rightNavigationItems(forConversation conversation: ZMConversation) -> [UIBarButtonItem] {
+    @objc func rightNavigationItems(forConversation conversation: ZMConversation) -> [UIBarButtonItem] {
         guard !conversation.isReadOnly, conversation.activeParticipants.count != 0 else { return [] }
 
         if conversation.canJoinCall {
@@ -112,7 +112,7 @@ public extension ConversationViewController {
         }
     }
 
-    @objc public func leftNavigationItems(forConversation conversation: ZMConversation) -> [UIBarButtonItem] {
+    @objc func leftNavigationItems(forConversation conversation: ZMConversation) -> [UIBarButtonItem] {
         var items: [UIBarButtonItem] = []
 
         if self.parent?.wr_splitViewController?.layoutSize != .regularLandscape {

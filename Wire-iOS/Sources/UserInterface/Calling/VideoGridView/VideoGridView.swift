@@ -54,6 +54,8 @@ fileprivate extension CGSize {
         switch traitCollection.horizontalSizeClass {
         case .regular: return .floatingPreviewLarge
         case .compact, .unspecified: return .floatingPreviewSmall
+        @unknown default:
+            return .floatingPreviewSmall
         }
     }
 }

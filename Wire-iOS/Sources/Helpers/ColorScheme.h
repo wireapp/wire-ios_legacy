@@ -21,7 +21,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-typedef NS_ENUM(NSUInteger, ColorSchemeVariant) {
+typedef NS_CLOSED_ENUM(NSUInteger, ColorSchemeVariant) {
     ColorSchemeVariantLight,
     ColorSchemeVariantDark
 };
