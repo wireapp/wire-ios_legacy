@@ -273,19 +273,6 @@ final class ConversationTableViewDataSource: NSObject {
         loadMessages(offset: newOffset, limit: currentLimit)
     }
     
-    func scroll(toIndex indexToShow: Int, completion: ((UIView)->())? = .none) {
-        guard tableView.numberOfSections > 0 else { return }
-        
-        let rowIndex = tableView.numberOfCells(inSection: indexToShow) - 1
-        let cellIndexPath = IndexPath(row: rowIndex, section: indexToShow)
-        
-        self.tableView.scrollToRow(at: cellIndexPath, at: .top, animated: false)
-        if let cell = self.tableView.cellForRow(at: cellIndexPath) {
-            completion?(cell)
-        }
-    }
-
-    
     @objc func indexOfMessage(_ message: ZMConversationMessage) -> Int {
         guard let index = index(of: message) else {
             return NSNotFound
@@ -522,11 +509,4 @@ extension ConversationTableViewDataSource {
         return !Calendar.current.isDate(current, inSameDayAs: previous)
     }
     
-}
-
-extension ConversationTableViewDataSource {
-    func scrollToBottom() {
-        loadMessages(offset: 0, limit: ConversationTableViewDataSource.defaultBatchSize)
-        scroll(toIndex: 0, completion: nil)
-    }
 }

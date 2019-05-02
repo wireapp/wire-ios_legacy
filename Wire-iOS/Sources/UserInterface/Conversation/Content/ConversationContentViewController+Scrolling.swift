@@ -50,7 +50,7 @@ extension ConversationContentViewController {
         guard !isScrolledToBottom else { return }
         
         dataSource.loadMessages()
-        dataSource.scroll(toIndex: 0)
+        tableView.scroll(toIndex: 0)
         
         updateTableViewHeaderView()
     }

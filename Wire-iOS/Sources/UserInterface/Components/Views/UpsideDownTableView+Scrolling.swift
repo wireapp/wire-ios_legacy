@@ -19,11 +19,25 @@
 import Foundation
 
 extension UpsideDownTableView {
+    
     @objc(scrollToBottomAnimated:)
     func scrollToBottom(animated: Bool) {
         // upside-down tableview's bottom is rightside-up tableview's top
         super.scrollToTop(animated: animated)
     }
+    
+    func scroll(toIndex indexToShow: Int, completion: ((UIView)->())? = .none) {
+        guard numberOfSections > 0 else { return }
+        
+        let rowIndex = numberOfCells(inSection: indexToShow) - 1
+        let cellIndexPath = IndexPath(row: rowIndex, section: indexToShow)
+        
+        scrollToRow(at: cellIndexPath, at: .top, animated: false)
+        if let cell = cellForRow(at: cellIndexPath) {
+            completion?(cell)
+        }
+    }
+    
 }
 
 private extension UITableView {
