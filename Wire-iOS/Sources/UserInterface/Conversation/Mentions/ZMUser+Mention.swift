@@ -32,6 +32,10 @@ class HashBox<Type: NSObjectProtocol>: Hashable, Equatable {
     var hashValue: Int {
         return value.hash
     }
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(hashValue)
+    }
 }
 
 

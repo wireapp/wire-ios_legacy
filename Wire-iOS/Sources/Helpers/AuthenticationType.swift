@@ -30,6 +30,8 @@ enum AuthenticationType {
         case .none: return .none
         case .touchID: return .touchID
         case .faceID: return .faceID
+        @unknown default:
+            return .none
         }
     }
 }
