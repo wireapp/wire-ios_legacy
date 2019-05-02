@@ -31,7 +31,7 @@ private extension UITableView {
         // kill existing scrolling animation
         self.setContentOffset(self.contentOffset, animated: false)
         
-        // sroll completely to top
+        // scroll completely to top
         self.setContentOffset(CGPoint(x: 0, y: -self.contentInset.top), animated:animated)
     }
 }
