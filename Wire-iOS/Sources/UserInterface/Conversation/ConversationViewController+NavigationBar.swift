@@ -126,7 +126,7 @@ public extension ConversationViewController {
         return items
     }
 
-    @objc public func updateRightNavigationItemsButtons() {
+    @objc func updateRightNavigationItemsButtons() {
         if UIApplication.isLeftToRightLayout {
             navigationItem.rightBarButtonItems = rightNavigationItems(forConversation: conversation)
         } else {

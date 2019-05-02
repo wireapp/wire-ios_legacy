@@ -403,7 +403,9 @@ protocol SettingsCellType: class {
         super.setupAccessibiltyElements()
         
         var currentElements = accessibilityElements ?? []
-        currentElements.append(textInput)
+        if let textInput = textInput {
+            currentElements.append(textInput)
+        }
         accessibilityElements = currentElements
     }
     
