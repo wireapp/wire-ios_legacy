@@ -43,6 +43,10 @@ struct WritableKeyPathApplicator<Type>: Hashable {
     var hashValue: Int {
         return keyPath.hashValue
     }
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(keyPath)
+    }
 }
 
 func ==<T>(lhs: WritableKeyPathApplicator<T>, rhs: WritableKeyPathApplicator<T>) -> Bool {

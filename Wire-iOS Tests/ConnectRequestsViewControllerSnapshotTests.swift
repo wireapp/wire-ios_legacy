@@ -33,7 +33,7 @@ final class ConnectRequestsViewControllerSnapshotTests: CoreDataSnapshotTestCase
 
         mockConversation = otherUserConversation
 
-        sut.connectionRequests = [mockConversation]
+        sut.connectionRequests = [mockConversation!]
         sut.reload()
 
         sut.view.frame = CGRect(origin: .zero, size: CGSize.iPhoneSize.iPhone4_7)
