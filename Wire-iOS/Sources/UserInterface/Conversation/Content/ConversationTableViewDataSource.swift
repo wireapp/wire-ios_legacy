@@ -54,6 +54,7 @@ final class ConversationTableViewDataSource: NSObject {
     public static let defaultBatchSize = 30 // Magic number: amount of messages per screen (upper bound).
     
     private var fetchController: NSFetchedResultsController<ZMMessage>!
+    private var lastFetchedObjectCount: Int = 0
     
     public var registeredCells: [AnyClass] = []
     public var sectionControllers: [String: ConversationMessageSectionController] = [:]
@@ -85,13 +86,13 @@ final class ConversationTableViewDataSource: NSObject {
     }
     
     @objc public var messages: [ZMConversationMessage] {
-        // NOTE: We limit the number of messages to the fetchLimit since it's a known issue that the
-        // NSFetchResultsController doesn't always respect the fetchLimit, which becomes a problem if
-        // the fetchOffset > 0 since we will get unwanted table view updates.
-        // http://www.openradar.appspot.com/30381905
+        // NOTE: We limit the number of messages to the `lastFetchedObjectCount` since the
+        // NSFetchResultsController will add objects to `fetchObjects` if they are modified after
+        // the initial fetch, which results in unwanted table view updates. This is normally what
+        // we want when new message arrive but not when fetchOffset > 0.
         
         if fetchController.fetchRequest.fetchOffset > 0 {
-            return Array(fetchController.fetchedObjects?.suffix(fetchController.fetchRequest.fetchLimit) ?? [])
+            return Array(fetchController.fetchedObjects?.suffix(lastFetchedObjectCount) ?? [])
         } else {
             return fetchController.fetchedObjects ?? []
         }
@@ -248,6 +249,7 @@ final class ConversationTableViewDataSource: NSObject {
         self.fetchController.delegate = self
         try! fetchController.performFetch()
         
+        lastFetchedObjectCount = fetchController.fetchedObjects?.count ?? 0
         hasOlderMessagesToLoad = messages.count == fetchRequest.fetchLimit
         hasNewerMessagesToLoad = offset > 0
         firstUnreadMessage = conversation.firstUnreadMessage
