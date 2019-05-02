@@ -135,6 +135,9 @@ class NetworkStatusViewController : UIViewController {
             return .online
         case .onlineSynchronizing:
             return .onlineSynchronizing
+        @unknown default:
+            ///TODO: ZMNetworkState change to NS_CLOSED_ENUM 
+            fatalError()
         }
     }
 

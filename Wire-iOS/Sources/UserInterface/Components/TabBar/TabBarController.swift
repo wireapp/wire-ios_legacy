@@ -203,7 +203,7 @@ class TabBarController: UIViewController, UIPageViewControllerDelegate, UIPageVi
         transitionCompleted completed: Bool
         ) {
         guard let selected = pageViewController.viewControllers?.first else { return }
-        guard let index = viewControllers.index(of: selected) else { return }
+        guard let index = viewControllers.firstIndex(of: selected) else { return }
 
         if completed {
             isSwiping = false
