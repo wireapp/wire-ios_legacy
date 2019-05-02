@@ -40,10 +40,6 @@ struct WritableKeyPathApplicator<Type>: Hashable {
         return applicator(object, value)
     }
     
-    var hashValue: Int {
-        return keyPath.hashValue
-    }
-
     func hash(into hasher: inout Hasher) {
         hasher.combine(keyPath)
     }
