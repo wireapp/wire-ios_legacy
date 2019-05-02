@@ -23,9 +23,9 @@ extension ConversationContentViewController {
     @objc(scrollToMessage:completion:)
     public func scroll(to message: ZMConversationMessage?, completion: ((UIView)->())? = .none) {
         if let message = message {
-            dataSource.find(message) { index in
+            dataSource.loadMessages(near: message) { index in
                 
-                guard messageToShow.conversation == self.conversation else {
+                guard message.conversation == self.conversation else {
                     fatal("Message from the wrong conversation")
                 }
                 

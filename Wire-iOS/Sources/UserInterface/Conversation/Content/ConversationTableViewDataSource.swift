@@ -209,7 +209,7 @@ final class ConversationTableViewDataSource: NSObject {
         return cellDescription.supportsActions ? message : nil
     }
     
-    public func find(_ message: ZMConversationMessage, completion: ((IndexPath?)->())? = nil) {
+    public func loadMessages(near message: ZMConversationMessage, completion: ((IndexPath?)->())? = nil) {
         guard let moc = conversation.managedObjectContext, let serverTimestamp = message.serverTimestamp else {
             fatal("conversation.managedObjectContext == nil or serverTimestamp == nil")
         }
