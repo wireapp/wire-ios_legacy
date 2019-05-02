@@ -23,14 +23,14 @@ public typealias FileInDirectory = (FileManager.SearchPathDirectory, String)
 
 public extension URL {
 
-    public func wr_excludeFromBackup() throws {
+    func wr_excludeFromBackup() throws {
         var mutableCopy = self
         var resourceValues = URLResourceValues()
         resourceValues.isExcludedFromBackup = true
         try mutableCopy.setResourceValues(resourceValues)
     }
 
-    public static func wr_directory(for searchPathDirectory: FileManager.SearchPathDirectory) -> URL {
+    static func wr_directory(for searchPathDirectory: FileManager.SearchPathDirectory) -> URL {
         return URL(fileURLWithPath: NSSearchPathForDirectoriesInDomains(searchPathDirectory, .userDomainMask, true).first!)
     }
 
