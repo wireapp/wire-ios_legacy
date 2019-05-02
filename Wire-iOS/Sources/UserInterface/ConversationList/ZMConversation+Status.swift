@@ -178,7 +178,9 @@ final class ContentSizeCategoryUpdater {
     private var observer: NSObjectProtocol!
     
     deinit {
-        NotificationCenter.default.removeObserver(observer)
+        if let observer = observer {
+            NotificationCenter.default.removeObserver(observer)
+        }
     }
     
     init(callback: @escaping () -> ()) {
@@ -544,7 +546,7 @@ final internal class NewMessagesMatcher: TypedConversationStatusMatcher {
         case .missedCall:
             return .missedCall
         default:
-            return .unreadMessages(count: status.messagesRequiringAttention.compactMap { StatusMessageType(message: $0) }.filter { matchedTypes.index(of: $0) != .none }.count)
+            return .unreadMessages(count: status.messagesRequiringAttention.compactMap { StatusMessageType(message: $0) }.filter { matchedTypes.firstIndex(of: $0) != .none }.count)
         }
     }
     

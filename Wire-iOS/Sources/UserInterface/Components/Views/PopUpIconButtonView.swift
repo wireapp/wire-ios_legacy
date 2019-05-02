@@ -284,7 +284,7 @@ class PopUpIconButtonView: UIView {
         case .right:    icons = button.itemIcons
         }
         
-        guard let index = icons.index(of: item) else { return nil }
+        guard let index = icons.firstIndex(of: item) else { return nil }
         
         var rect = CGRect(origin: upperRect.origin, size: CGSize(width: itemWidth, height: upperRect.height))
         

@@ -214,7 +214,7 @@ public protocol CollectionsViewControllerDelegate: class {
             self.contentView.collectionView.performBatchUpdates({
                 for section in [CollectionsSectionSet.images, CollectionsSectionSet.videos] {
                     if self.numberOfElements(for: section) != 0 {
-                        self.contentView.collectionView.reloadSections(IndexSet(integer: (CollectionsSectionSet.visible.index(of: section))!))
+                        self.contentView.collectionView.reloadSections(IndexSet(integer: (CollectionsSectionSet.visible.firstIndex(of: section))!))
                     }
                 }
             }) { _ in

@@ -183,7 +183,7 @@ import Cartography
         colorPickerController.willMove(toParent: self)
         view.addSubview(colorPickerController.view)
         addChild(colorPickerController)
-        colorPickerController.selectedColorIndex = UInt(colorPickerController.sketchColors.index(of: UIColor.accent()) ?? 0)
+        colorPickerController.selectedColorIndex = UInt(colorPickerController.sketchColors.firstIndex(of: UIColor.accent()) ?? 0)
     }
     
     func createConstraints() {
