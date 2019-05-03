@@ -46,10 +46,11 @@ final class UserRight: UserRightInterface {
         #endif
         case .resetPassword:
             return isProfileEditable || !usesCompanyLogin
+        case .editProfilePicture:
+            return true // NOTE we always allow editing for now since settting profile picture is not yet supported by SCIM
         case .editName,
              .editHandle,
              .editPhone,
-             .editProfilePicture,
              .editAccentColor:
 			return isProfileEditable
         }
