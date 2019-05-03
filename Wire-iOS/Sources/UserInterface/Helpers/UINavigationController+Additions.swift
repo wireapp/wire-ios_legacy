@@ -20,7 +20,7 @@ import UIKit
 
 extension UINavigationController {
     func popToPrevious(of controller: UIViewController) -> [UIViewController]? {
-        if let currentIdx = viewControllers.index(of: controller) {
+        if let currentIdx = viewControllers.firstIndex(of: controller) {
             let previousIdx = currentIdx - 1
             if viewControllers.count > previousIdx {
                 let previousController = viewControllers[previousIdx]

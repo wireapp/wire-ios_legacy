@@ -113,6 +113,8 @@ final class EmojiSectionViewController: UIViewController {
             selectedType = type
         case .ended, .failed, .cancelled:
             ignoreSelectionUpdates = false
+        @unknown default:
+            break
         }
     }
     

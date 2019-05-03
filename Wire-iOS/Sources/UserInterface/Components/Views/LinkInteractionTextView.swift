@@ -118,6 +118,9 @@ extension LinkInteractionTextView: UITextViewDelegate {
             // do not allow peeking links, as it blocks showing the menu for replies
             interactionDelegate?.textViewDidLongPress(self)
             return false
+        @unknown default:
+            interactionDelegate?.textViewDidLongPress(self)
+            return false
         }
     }
 }

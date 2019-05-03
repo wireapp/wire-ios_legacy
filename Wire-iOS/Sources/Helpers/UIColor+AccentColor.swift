@@ -80,7 +80,7 @@ public extension UIColor {
         return UIColor(for: .violet)
     }
 
-    public convenience init(for accentColor: AccentColor) {
+    convenience init(for accentColor: AccentColor) {
         switch accentColor {
         case .strongBlue:
             self.init(red: 0.141, green: 0.552, blue: 0.827, alpha: 1)
@@ -100,7 +100,7 @@ public extension UIColor {
     }
 
     @objc(initWithColorForZMAccentColor:)
-    public convenience init(fromZMAccentColor accentColor: ZMAccentColor) {
+    convenience init(fromZMAccentColor accentColor: ZMAccentColor) {
         let safeAccentColor = AccentColor(ZMAccentColor: accentColor) ?? .strongBlue
         self.init(for: safeAccentColor)
     }

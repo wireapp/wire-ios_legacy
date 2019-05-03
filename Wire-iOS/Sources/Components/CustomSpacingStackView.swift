@@ -67,7 +67,7 @@ import UIKit
             return stackView.setCustomSpacing(customSpacing, after: view)
         }
 
-        guard let spacerIndex = stackView.subviews.index(of: view)?.advanced(by: 1),
+        guard let spacerIndex = stackView.subviews.firstIndex(of: view)?.advanced(by: 1),
             let spacer = stackView.subviews[spacerIndex] as? SpacingView else { return }
         
         if view.isHidden || customSpacing < (stackView.spacing * 2) {

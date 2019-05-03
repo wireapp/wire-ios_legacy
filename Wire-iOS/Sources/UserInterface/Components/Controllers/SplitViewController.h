@@ -24,7 +24,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-typedef NS_ENUM(NSInteger, SplitViewControllerLayoutSize) {
+typedef NS_CLOSED_ENUM(NSInteger, SplitViewControllerLayoutSize) {
     SplitViewControllerLayoutSizeCompact,
     SplitViewControllerLayoutSizeRegularPortrait,
     SplitViewControllerLayoutSizeRegularLandscape

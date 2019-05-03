@@ -29,7 +29,7 @@ import Foundation
 
     init?(text: String?, cursorPosition: Int) {
         guard let text = text else { return nil }
-        let wholeRange = NSRange(location: 0, length: text.endIndex.encodedOffset)
+        let wholeRange = NSRange(text.range(of: text)!, in: text)
         let matches = mentionRegex.matches(in: text, range: wholeRange)
         // Cursor is a separator between characters, we are interested in the character before the cursor
         let characterPosition = max(0, cursorPosition - 1)

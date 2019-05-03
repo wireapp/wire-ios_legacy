@@ -30,6 +30,8 @@ extension UIUserInterfaceSizeClass {
             compactConstraints.forEach(){$0.isActive = true}
         case .unspecified:
             break
+        @unknown default:
+            break
         }
     }
 }
