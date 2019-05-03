@@ -34,7 +34,7 @@ extension ConversationInputBarViewController {
         inputBar.rightAccessoryStackView.insertArrangedSubview(ephemeralIndicatorButton, at: 0)
         inputBar.leftAccessoryView.addSubview(markdownButton)
         inputBar.rightAccessoryStackView.addArrangedSubview(hourglassButton)
-        inputBar.addSubview(typingIndicatorView)
+        inputBar.addSubview(typingIndicatorView!)
 
         createConstraints()
     }
@@ -122,7 +122,7 @@ extension ConversationInputBarViewController {
     }
 
     private func createTypingIndicatorView() {
-        typingIndicatorView = TypingIndicatorView()
+        let typingIndicatorView = TypingIndicatorView()
         typingIndicatorView.accessibilityIdentifier = "typingIndicator"
         if let typingUsers = typingUsers,
             let typingUsersArray = Array(typingUsers) as? [ZMUser] {
@@ -131,9 +131,13 @@ extension ConversationInputBarViewController {
             typingIndicatorView.typingUsers = []
         }
         typingIndicatorView.setHidden(true, animated: false)
+
+        self.typingIndicatorView = typingIndicatorView
     }
 
     private func createConstraints() {
+        guard let typingIndicatorView = typingIndicatorView else { return }
+
         inputBar.translatesAutoresizingMaskIntoConstraints = false
         markdownButton.translatesAutoresizingMaskIntoConstraints = false
         hourglassButton.translatesAutoresizingMaskIntoConstraints = false
@@ -168,6 +172,6 @@ extension ConversationInputBarViewController {
             typingIndicatorView.centerXAnchor.constraint(equalTo: typingIndicatorView.superview!.centerXAnchor),
             typingIndicatorView.leftAnchor.constraint(greaterThanOrEqualTo: typingIndicatorView.superview!.leftAnchor, constant: 48),
             typingIndicatorView.rightAnchor.constraint(lessThanOrEqualTo: typingIndicatorView.superview!.rightAnchor, constant: 48)
-            ])
+        ])
     }
 }

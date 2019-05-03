@@ -137,6 +137,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
             self.typingObserverToken = [conversation addTypingObserver:self];
             self.typingUsers = conversation.typingUsers;
         }
+
         self.sendButtonState = [[ConversationInputBarButtonState alloc] init];
 
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardDidHideNotification object:nil];
@@ -206,7 +207,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     
     [self updateAccessoryViews];
     [self updateInputBarVisibility];
-    [self updateTypingIndicatorVisibility];
+    [self updateTypingIndicatorVisibilityWithAnimated:false];
     [self updateWritingStateAnimated:NO];
     [self updateButtonIcons];
     [self updateAvailabilityPlaceholder];
@@ -368,17 +369,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 {
     _typingUsers = typingUsers;
     
-    [self updateTypingIndicatorVisibility];
-}
-
-- (void)updateTypingIndicatorVisibility
-{
-    if (self.typingUsers.count > 0) {
-        self.typingIndicatorView.typingUsers = self.typingUsers.allObjects;
-        [self.typingIndicatorView layoutIfNeeded];
-    }
-    
-    [self.typingIndicatorView setHidden:self.typingUsers.count == 0 animated: true];
+    [self updateTypingIndicatorVisibilityWithAnimated:true];
 }
 
 - (void)updateInputBarVisibility

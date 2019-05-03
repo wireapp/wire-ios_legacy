@@ -45,7 +45,7 @@
 
 @property (nonatomic, nonnull) InputBar *inputBar;
 
-@property (nonatomic, nonnull) TypingIndicatorView *typingIndicatorView;
+@property (nonatomic, nullable) TypingIndicatorView *typingIndicatorView;
 
 @property (nonatomic, nullable) AudioRecordViewController *audioRecordViewController;
 @property (nonatomic, nullable) UIView *audioRecordViewContainer;
