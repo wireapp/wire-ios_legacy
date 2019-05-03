@@ -167,7 +167,7 @@ extension ConversationInputBarViewController {
             typingIndicatorView.centerYAnchor.constraint(equalTo: inputBar.topAnchor),
             typingIndicatorView.centerXAnchor.constraint(equalTo: typingIndicatorView.superview!.centerXAnchor),
             typingIndicatorView.leftAnchor.constraint(greaterThanOrEqualTo: typingIndicatorView.superview!.leftAnchor, constant: 48),
-            typingIndicatorView.rightAnchor.constraint(greaterThanOrEqualTo: typingIndicatorView.superview!.rightAnchor, constant: 48)
+            typingIndicatorView.rightAnchor.constraint(lessThanOrEqualTo: typingIndicatorView.superview!.rightAnchor, constant: 48)
             ])
     }
 }
