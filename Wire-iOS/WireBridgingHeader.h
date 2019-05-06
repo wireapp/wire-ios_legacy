@@ -79,9 +79,9 @@
 #import "ProfileDevicesViewController+Internal.h"
 #import "InviteContactsViewController.h"
 #import "InviteContactsViewController+Internal.h"
+
 #import "ContactsViewController.h"
 #import "ContactsViewController+Internal.h"
-#import "ContactsViewController+Private.h"
 
 #import "ZClientViewController.h"
 #import "ZClientViewController+Internal.h"
@@ -122,9 +122,12 @@
 #import "Button.h"
 
 #import "PermissionDeniedViewController.h"
-#import "PermissionDeniedViewController+Internal.h"
 
 #import "ShareContactsViewController.h"
+#import "ShareContactsViewController+Internal.h"
+
+#import "PermissionDeniedViewController+Internal.h"
+
 #import "ImagePickerConfirmationController.h"
 
 // Helper objects

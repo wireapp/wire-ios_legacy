@@ -62,7 +62,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) ColorSchemeVariant colorSchemeVariant;
 
 /// Button displayed at the bottom of the screen. If nil a default button is displayed.
-@property (nonatomic) Button *__nullable bottomButton;
+@property (nonatomic, nullable) Button * bottomButton;
 @property (nonatomic) BOOL shouldShowShareContactsViewController;
 
 - (UIAlertController * _Nullable)inviteContact:(ZMAddressBookContact *)contact fromView:(UIView *)view;

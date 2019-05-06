@@ -27,7 +27,11 @@ class AuthenticationClientRegistrationSuccessHandler: AuthenticationEventHandler
     weak var statusProvider: AuthenticationStatusProvider?
 
     func handleEvent(currentStep: AuthenticationFlowStep, context: Void) -> [AuthenticationCoordinatorAction]? {
-        return [.transition(.pendingInitialSync(next: nil), mode: .normal)]
+        if ZMUserSession.shared()?.hasCompletedInitialSync == true {
+            return [.hideLoadingView, .completeLoginFlow]
+        } else {
+            return [.transition(.pendingInitialSync(next: nil), mode: .normal)]
+        }
     }
 
 }

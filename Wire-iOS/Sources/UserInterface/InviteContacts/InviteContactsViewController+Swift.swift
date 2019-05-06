@@ -31,24 +31,24 @@ extension InviteContactsViewController {
         let subViewConstraints = [titleLabelHeightConstraint, titleLabelTopConstraint, titleLabelBottomConstraint, closeButtonTopConstraint, closeButtonBottomConstraint, searchHeaderTopConstraint]
 
         if navigationController != nil {
-            titleLabel?.isHidden = true
+            titleLabel.isHidden = true
 
-            cancelButton?.isHidden = true
-            closeButtonHeightConstraint?.constant = 0
-            subViewConstraints.forEach(){ $0?.isActive = false }
+            cancelButton.isHidden = true
+            closeButtonHeightConstraint.constant = 0
+            subViewConstraints.forEach(){ $0.isActive = false }
 
-            topContainerHeightConstraint?.isActive = true
-            searchHeaderWithNavigatorBarTopConstraint?.isActive = true
+            topContainerHeightConstraint.isActive = true
+            searchHeaderWithNavigatorBarTopConstraint.isActive = true
         } else {
-            titleLabel?.isHidden = false
+            titleLabel.isHidden = false
 
-            cancelButton?.isHidden = false
+            cancelButton.isHidden = false
 
-            closeButtonHeightConstraint?.constant = 16
-            topContainerHeightConstraint?.isActive = false
-            searchHeaderWithNavigatorBarTopConstraint?.isActive = false
+            closeButtonHeightConstraint.constant = 16
+            topContainerHeightConstraint.isActive = false
+            searchHeaderWithNavigatorBarTopConstraint.isActive = false
 
-            subViewConstraints.forEach(){ $0?.isActive = true }
+            subViewConstraints.forEach(){ $0.isActive = true }
         }
 
         view.layoutIfNeeded()
@@ -59,15 +59,15 @@ extension InviteContactsViewController {
 
         view.backgroundColor = .clear
 
-        tableView?.backgroundColor = .clear
-        tableView?.separatorStyle = .none
-        tableView?.sectionIndexBackgroundColor = .clear
-        tableView?.sectionIndexColor = .accent()
+        tableView.backgroundColor = .clear
+        tableView.separatorStyle = .none
+        tableView.sectionIndexBackgroundColor = .clear
+        tableView.sectionIndexColor = .accent()
 
-        bottomContainerSeparatorView?.backgroundColor = UIColor.from(scheme: .separator, variant: .dark)
-        bottomContainerView?.backgroundColor = UIColor.from(scheme: .searchBarBackground, variant: .dark)
+        bottomContainerSeparatorView.backgroundColor = UIColor.from(scheme: .separator, variant: .dark)
+        bottomContainerView.backgroundColor = UIColor.from(scheme: .searchBarBackground, variant: .dark)
 
-        titleLabel?.textColor = UIColor.from(scheme: .textForeground, variant: .dark)
+        titleLabel.textColor = UIColor.from(scheme: .textForeground, variant: .dark)
     }
 
     @objc(inviteUser:fromView:)

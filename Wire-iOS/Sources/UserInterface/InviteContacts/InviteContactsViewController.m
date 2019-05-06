@@ -21,7 +21,7 @@
 
 #import "InviteContactsViewController.h"
 #import "InviteContactsViewController+Internal.h"
-#import "ContactsViewController+Private.h"
+#import "ContactsViewController+Internal.h"
 #import "ContactsDataSource.h"
 #import "ZClientViewController.h"
 #import "WireSyncEngine+iOS.h"
@@ -44,15 +44,11 @@
         self.dataSource.searchQuery = @"";
         
         self.title = [NSLocalizedString(@"contacts_ui.title", @"") uppercaseString];
+
+        [self setupStyle];
     }
     
     return self;
-}
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    [self setupStyle];
 }
 
 - (BOOL)sharingContactsRequired

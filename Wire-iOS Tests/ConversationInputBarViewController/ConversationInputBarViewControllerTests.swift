@@ -40,6 +40,21 @@ final class ConversationInputBarViewControllerTests: CoreDataSnapshotTestCase {
     }
 }
 
+// MARK: - Typing indication
+extension ConversationInputBarViewControllerTests {
+    func testTypingIndicationIsShown(){
+        // GIVEN & WHEN
+        /// directly working with sut.typingIndicatorView to prevent triggering aniamtion
+        if let typingIndicatorView = sut.typingIndicatorView {
+            typingIndicatorView.typingUsers = [otherUser]
+            typingIndicatorView.setHidden(false, animated: false)
+        }
+
+        // THEN
+        verifyInAllPhoneWidths(view: sut.view)
+    }
+}
+
 // MARK: - Ephemeral indicator button
 extension ConversationInputBarViewControllerTests {
     func testEphemeralIndicatorButton(){
