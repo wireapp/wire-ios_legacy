@@ -21,29 +21,37 @@ import Foundation
 extension ConversationContentViewController {
     
     @objc(scrollToMessage:completion:)
-    public func scroll(to messageToShow: ZMConversationMessage, completion: ((UIView)->())? = .none) {
-        guard messageToShow.conversation == self.conversation else {
-            fatal("Message from the wrong conversation")
+    public func scroll(to message: ZMConversationMessage?, completion: ((UIView)->())? = .none) {
+        if let message = message {
+            dataSource.loadMessages(near: message) { index in
+                
+                guard message.conversation == self.conversation else {
+                    fatal("Message from the wrong conversation")
+                }
+                
+                guard let indexToShow = index else {
+                    return
+                }
+                
+                self.tableView.scrollToRow(at: indexToShow, at: .top, animated: false)
+                
+                if let cell = self.tableView.cellForRow(at: indexToShow) {
+                    completion?(cell)
+                }
+            }
+        } else {
+            dataSource.loadMessages()
         }
         
-        showLoadingView = true
-        
-        dataSource.find(messageToShow) { index in
-            self.showLoadingView = false
-            
-            guard let indexToShow = index else {
-                return
-            }
-            
-            self.tableView.scrollToRow(at: indexToShow, at: .top, animated: false)
-            if let cell = self.tableView.cellForRow(at: indexToShow) {
-                completion?(cell)
-            }
-        }
+        updateTableViewHeaderView()
     }
     
     @objc public func scrollToBottom() {
         guard !isScrolledToBottom else { return }
-        self.dataSource.scrollToBottom()
+        
+        dataSource.loadMessages()
+        tableView.scroll(toIndex: 0)
+        
+        updateTableViewHeaderView()
     }
 }
