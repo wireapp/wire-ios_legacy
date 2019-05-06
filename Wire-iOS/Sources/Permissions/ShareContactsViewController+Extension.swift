@@ -28,18 +28,31 @@ extension ShareContactsViewController {
          heroLabel,
          shareContactsButton].forEach(){ $0.translatesAutoresizingMaskIntoConstraints = false }
 
-        var constraints = shareContactsContainerView.fitInSuperview(activate: false).map{$0.value}
+        let constraints: [NSLayoutConstraint] = [shareContactsContainerView.topAnchor.constraint(equalTo: shareContactsContainerView.superview!.topAnchor),
+                                                 shareContactsContainerView.bottomAnchor.constraint(equalTo: shareContactsContainerView.superview!.bottomAnchor),
+                                                 shareContactsContainerView.leadingAnchor.constraint(equalTo: shareContactsContainerView.superview!.leadingAnchor),
+                                                 shareContactsContainerView.trailingAnchor.constraint(equalTo: shareContactsContainerView.superview!.trailingAnchor),
 
-        constraints += backgroundBlurView.fitInSuperview(activate: false).map{$0.value}
+                                                 backgroundBlurView.topAnchor.constraint(equalTo: backgroundBlurView.superview!.topAnchor),
+                                                 backgroundBlurView.bottomAnchor.constraint(equalTo: backgroundBlurView.superview!.bottomAnchor),
+                                                 backgroundBlurView.leadingAnchor.constraint(equalTo: backgroundBlurView.superview!.leadingAnchor),
+                                                 backgroundBlurView.trailingAnchor.constraint(equalTo: backgroundBlurView.superview!.trailingAnchor),
 
-        constraints += addressBookAccessDeniedViewController.view.fitInSuperview(activate: false).values
+                                                 addressBookAccessDeniedViewController.view.topAnchor.constraint(equalTo: addressBookAccessDeniedViewController.view.superview!.topAnchor),
+                                                 addressBookAccessDeniedViewController.view.bottomAnchor.constraint(equalTo: addressBookAccessDeniedViewController.view.superview!.bottomAnchor),
+                                                 addressBookAccessDeniedViewController.view.leadingAnchor.constraint(equalTo: addressBookAccessDeniedViewController.view.superview!.leadingAnchor),
+                                                 addressBookAccessDeniedViewController.view.trailingAnchor.constraint(equalTo: addressBookAccessDeniedViewController.view.superview!.trailingAnchor),
 
-        constraints += heroLabel.fitInSuperview(with: EdgeInsets(margin: 28), exclude: [.top, .bottom], activate: false).values
+                                                 heroLabel.leadingAnchor.constraint(equalTo: heroLabel.superview!.leadingAnchor, constant: 28),
+                                                 heroLabel.trailingAnchor.constraint(equalTo: heroLabel.superview!.trailingAnchor, constant: -28),
 
-        constraints += [shareContactsButton.topAnchor.constraint(equalTo: heroLabel.bottomAnchor, constant: 24),
-                        shareContactsButton.heightAnchor.constraint(equalToConstant: 40)]
+                                                 shareContactsButton.topAnchor.constraint(equalTo: heroLabel.bottomAnchor, constant: 24),
+                                                 shareContactsButton.heightAnchor.constraint(equalToConstant: 40),
 
-        constraints += shareContactsButton.fitInSuperview(with: EdgeInsets(top: 0, leading: 28, bottom: 28, trailing: 28), exclude: [.top], activate: false).values
+                                                 shareContactsButton.bottomAnchor.constraint(equalTo: shareContactsButton.superview!.bottomAnchor, constant: -28),
+                                                 shareContactsButton.leadingAnchor.constraint(equalTo: shareContactsButton.superview!.leadingAnchor, constant: 28),
+                                                 shareContactsButton.trailingAnchor.constraint(equalTo: shareContactsButton.superview!.trailingAnchor, constant: -28)
+        ]
 
         NSLayoutConstraint.activate(constraints)
     }
