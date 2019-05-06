@@ -20,39 +20,57 @@ import Foundation
 
 extension ConversationListViewController {
 
-@objc
-func createViewConstraints() {
-    /*
-    conversationListContainer.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets.zero, excludingEdge: ALEdgeTop)
+    @objc
+    func createViewConstraints() {
+        guard let conversationListContainer = conversationListContainer,
+            let onboardingHint = onboardingHint else { return }
 
-    bottomBarController.view.autoPinEdge(toSuperviewEdge: ALEdgeLeft)
-    bottomBarController.view.autoPinEdge(toSuperviewEdge: ALEdgeRight)
-    bottomBarBottomOffset = bottomBarController.view.autoPinEdge(toSuperviewEdge: ALEdgeBottom)
+        [conversationListContainer,
+         bottomBarController.view,
+         networkStatusViewController.view,
+         topBarViewController.view,
+         contentContainer,
+         noConversationLabel,
+         onboardingHint,
+         listContentController.view].forEach() { $0.translatesAutoresizingMaskIntoConstraints = false }
 
-    networkStatusViewController.createConstraintsInParentController(withBottomView: topBarViewController.view, controller: self)
+        bottomBarBottomOffset = bottomBarController.view.bottomAnchor.constraint(equalTo: bottomBarController.view.superview!.bottomAnchor)
 
+        let constraints: [NSLayoutConstraint] = [
+            conversationListContainer.bottomAnchor.constraint(equalTo: conversationListContainer.superview!.bottomAnchor),
+            conversationListContainer.leadingAnchor.constraint(equalTo: conversationListContainer.superview!.leadingAnchor),
+            conversationListContainer.trailingAnchor.constraint(equalTo: conversationListContainer.superview!.trailingAnchor),
 
-topBarViewController.view.autoPinEdge(toSuperviewEdge: ALEdgeLeft)
-topBarViewController.view.autoPinEdge(toSuperviewEdge: ALEdgeRight)
-topBarViewController.view.autoPinEdge(ALEdgeBottom, toEdge: ALEdgeTop, ofView: conversationListContainer)
+            bottomBarController.view.leftAnchor.constraint(equalTo: bottomBarController.view.superview!.leftAnchor),
+            bottomBarController.view.rightAnchor.constraint(equalTo: bottomBarController.view.superview!.rightAnchor),
+            bottomBarBottomOffset,
 
-contentContainer.bottomAnchor.constraint(equalTo: safeBottomAnchor).isActive = true
-contentContainer.topAnchor.constraint(equalTo: safeTopAnchor).isActive = true
-contentContainer.leadingAnchor.constraint(equalTo: view.safeLeadingAnchor).isActive = true
-contentContainer.trailingAnchor.constraint(equalTo: view.safeTrailingAnchor).isActive = true
+            topBarViewController.view.leftAnchor.constraint(equalTo: topBarViewController.view.superview!.leftAnchor),
+            topBarViewController.view.rightAnchor.constraint(equalTo: topBarViewController.view.superview!.rightAnchor),
+            topBarViewController.view.bottomAnchor.constraint(equalTo: conversationListContainer.topAnchor),
 
-noConversationLabel.autoCenterInSuperview()
-noConversationLabel.autoSetDimension(ALDimensionHeight, toSize: 120.0)
-noConversationLabel.autoSetDimension(ALDimensionWidth, toSize: 240.0)
+            contentContainer.bottomAnchor.constraint(equalTo: safeBottomAnchor),
+            contentContainer.topAnchor.constraint(equalTo: safeTopAnchor),
+            contentContainer.leadingAnchor.constraint(equalTo: view.safeLeadingAnchor),
+            contentContainer.trailingAnchor.constraint(equalTo: view.safeTrailingAnchor),
 
-onboardingHint.autoPinEdge(ALEdgeBottom, toEdge: ALEdgeTop, ofView: bottomBarController.view)
-onboardingHint.autoPinEdge(toSuperviewMargin: ALEdgeLeft)
-onboardingHint.autoPinEdge(toSuperviewMargin: ALEdgeRight)
+            noConversationLabel.centerXAnchor.constraint(equalTo: noConversationLabel.superview!.centerXAnchor),
+            noConversationLabel.centerYAnchor.constraint(equalTo: noConversationLabel.superview!.centerYAnchor),
+            noConversationLabel.heightAnchor.constraint(equalToConstant: 120),
+            noConversationLabel.widthAnchor.constraint(equalToConstant: 240),
 
-listContentController.view.autoPinEdge(toSuperviewEdge: ALEdgeTop)
-listContentController.view.autoPinEdge(ALEdgeBottom, toEdge: ALEdgeTop, ofView: bottomBarController.view)
-listContentController.view.autoPinEdge(toSuperviewEdge: ALEdgeLeading)
-listContentController.view.autoPinEdge(toSuperviewEdge: ALEdgeTrailing)
-*/
-}
+            onboardingHint.bottomAnchor.constraint(equalTo: bottomBarController.view.topAnchor),
+            onboardingHint.leftAnchor.constraint(equalTo: onboardingHint.superview!.leftAnchor),
+            onboardingHint.rightAnchor.constraint(equalTo: onboardingHint.superview!.rightAnchor),
+            
+            listContentController.view.topAnchor.constraint(equalTo: listContentController.view.superview!.topAnchor),
+            listContentController.view.leadingAnchor.constraint(equalTo: listContentController.view.superview!.leadingAnchor),
+            listContentController.view.trailingAnchor.constraint(equalTo: listContentController.view.superview!.trailingAnchor)
+        ]
+
+        ///TODO: merge
+        networkStatusViewController.createConstraintsInParentController(bottomView: topBarViewController.view, controller: self)
+
+        NSLayoutConstraint.activate(constraints)
+    }
 }

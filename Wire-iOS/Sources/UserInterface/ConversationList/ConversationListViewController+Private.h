@@ -27,6 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 @class NetworkStatusViewController;
 @class ConversationListBottomBarController;
 @class ConversationListContentController;
+@class ConversationListOnboardingHint;
 
 @interface ConversationListViewController (Private)
 @property (nonatomic, nullable) SearchViewController *searchViewController;
@@ -35,6 +36,12 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) ConversationListTopBarViewController *topBarViewController;
 @property (nonatomic) NetworkStatusViewController *networkStatusViewController;
 @property (nonatomic, readonly) ConversationListBottomBarController *bottomBarController;
+@property (nonatomic, nullable) UIView *conversationListContainer;
+@property (nonatomic, nullable) ConversationListOnboardingHint *onboardingHint;
+
+@property (nonatomic) NSLayoutConstraint *bottomBarBottomOffset;
+@property (nonatomic) NSLayoutConstraint *bottomBarToolTipConstraint;
+
 /// for NetworkStatusViewDelegate
 @property (nonatomic) BOOL shouldAnimateNetworkStatusView;
 @property (nonatomic) BOOL dataUsagePermissionDialogDisplayed;
