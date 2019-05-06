@@ -23,26 +23,31 @@ extension ConversationListViewController {
     @objc
     func createViewConstraints() {
         guard let conversationListContainer = conversationListContainer,
-            let onboardingHint = onboardingHint else { return }
+              let onboardingHint = onboardingHint,
+              let bottomBar = bottomBarController.view,
+              let listContent = listContentController.view else { return }
+
+
+
 
         [conversationListContainer,
-         bottomBarController.view,
+         bottomBar,
          networkStatusViewController.view,
          topBarViewController.view,
          contentContainer,
          noConversationLabel,
          onboardingHint,
-         listContentController.view].forEach() { $0.translatesAutoresizingMaskIntoConstraints = false }
+         listContent].forEach() { $0.translatesAutoresizingMaskIntoConstraints = false }
 
-        bottomBarBottomOffset = bottomBarController.view.bottomAnchor.constraint(equalTo: bottomBarController.view.superview!.bottomAnchor)
+        bottomBarBottomOffset = bottomBar.bottomAnchor.constraint(equalTo: bottomBar.superview!.bottomAnchor)
 
         let constraints: [NSLayoutConstraint] = [
             conversationListContainer.bottomAnchor.constraint(equalTo: conversationListContainer.superview!.bottomAnchor),
             conversationListContainer.leadingAnchor.constraint(equalTo: conversationListContainer.superview!.leadingAnchor),
             conversationListContainer.trailingAnchor.constraint(equalTo: conversationListContainer.superview!.trailingAnchor),
 
-            bottomBarController.view.leftAnchor.constraint(equalTo: bottomBarController.view.superview!.leftAnchor),
-            bottomBarController.view.rightAnchor.constraint(equalTo: bottomBarController.view.superview!.rightAnchor),
+            bottomBar.leftAnchor.constraint(equalTo: bottomBar.superview!.leftAnchor),
+            bottomBar.rightAnchor.constraint(equalTo: bottomBar.superview!.rightAnchor),
             bottomBarBottomOffset,
 
             topBarViewController.view.leftAnchor.constraint(equalTo: topBarViewController.view.superview!.leftAnchor),
@@ -59,13 +64,14 @@ extension ConversationListViewController {
             noConversationLabel.heightAnchor.constraint(equalToConstant: 120),
             noConversationLabel.widthAnchor.constraint(equalToConstant: 240),
 
-            onboardingHint.bottomAnchor.constraint(equalTo: bottomBarController.view.topAnchor),
+            onboardingHint.bottomAnchor.constraint(equalTo: bottomBar.topAnchor),
             onboardingHint.leftAnchor.constraint(equalTo: onboardingHint.superview!.leftAnchor),
             onboardingHint.rightAnchor.constraint(equalTo: onboardingHint.superview!.rightAnchor),
 
-            listContentController.view.topAnchor.constraint(equalTo: listContentController.view.superview!.topAnchor),
-            listContentController.view.leadingAnchor.constraint(equalTo: listContentController.view.superview!.leadingAnchor),
-            listContentController.view.trailingAnchor.constraint(equalTo: listContentController.view.superview!.trailingAnchor)
+            listContent.topAnchor.constraint(equalTo: listContent.superview!.topAnchor),
+            listContent.leadingAnchor.constraint(equalTo: listContent.superview!.leadingAnchor),
+            listContent.trailingAnchor.constraint(equalTo: listContent.superview!.trailingAnchor),
+            listContent.bottomAnchor.constraint(equalTo: bottomBar.topAnchor)
         ]
 
         ///TODO: merge this method and activate the constraints in a batch
