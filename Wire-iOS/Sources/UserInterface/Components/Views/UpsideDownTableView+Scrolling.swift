@@ -29,7 +29,7 @@ extension UpsideDownTableView {
     func scroll(toIndex indexToShow: Int, completion: ((UIView)->())? = .none) {
         guard numberOfSections > 0 else { return }
         
-        let rowIndex = numberOfCells(inSection: indexToShow) - 1
+        guard let rowIndex = numberOfCells(inSection: indexToShow) - 1,  rowIndex >= 0 else { return }
         let cellIndexPath = IndexPath(row: rowIndex, section: indexToShow)
         
         scrollToRow(at: cellIndexPath, at: .top, animated: false)
