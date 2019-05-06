@@ -62,13 +62,13 @@ extension ConversationListViewController {
             onboardingHint.bottomAnchor.constraint(equalTo: bottomBarController.view.topAnchor),
             onboardingHint.leftAnchor.constraint(equalTo: onboardingHint.superview!.leftAnchor),
             onboardingHint.rightAnchor.constraint(equalTo: onboardingHint.superview!.rightAnchor),
-            
+
             listContentController.view.topAnchor.constraint(equalTo: listContentController.view.superview!.topAnchor),
             listContentController.view.leadingAnchor.constraint(equalTo: listContentController.view.superview!.leadingAnchor),
             listContentController.view.trailingAnchor.constraint(equalTo: listContentController.view.superview!.trailingAnchor)
         ]
 
-        ///TODO: merge
+        ///TODO: merge this method and activate the constraints in a batch
         networkStatusViewController.createConstraintsInParentController(bottomView: topBarViewController.view, controller: self)
 
         NSLayoutConstraint.activate(constraints)
