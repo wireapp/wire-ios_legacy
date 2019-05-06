@@ -79,9 +79,9 @@
 #import "ProfileDevicesViewController+Internal.h"
 #import "InviteContactsViewController.h"
 #import "InviteContactsViewController+Internal.h"
+
 #import "ContactsViewController.h"
 #import "ContactsViewController+Internal.h"
-#import "ContactsViewController+Private.h"
 
 #import "ZClientViewController.h"
 #import "ZClientViewController+Internal.h"

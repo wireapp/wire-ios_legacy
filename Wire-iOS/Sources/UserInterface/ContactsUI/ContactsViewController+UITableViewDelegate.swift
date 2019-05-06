@@ -20,8 +20,6 @@ import Foundation
 
 extension ContactsViewController: UITableViewDelegate {
     func headerTitle(section: Int) -> String? {
-        guard let tableView = tableView else { return nil }
-
         return dataSource?.tableView(tableView, titleForHeaderInSection: section)
     }
 
