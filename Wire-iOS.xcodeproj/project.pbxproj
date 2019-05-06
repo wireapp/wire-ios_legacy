@@ -1133,6 +1133,7 @@
 		EF3976CE2114506E0030BE68 /* KeyboardAvoidingViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3976CD2114506E0030BE68 /* KeyboardAvoidingViewController+Extension.swift */; };
 		EF3BA5D421075FC60093048F /* ConversationInputBarViewController+Language.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3BA5D321075FC60093048F /* ConversationInputBarViewController+Language.swift */; };
 		EF3BA5D72107688D0093048F /* InputLanguageSettable.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3BA5D62107688D0093048F /* InputLanguageSettable.swift */; };
+		EF3BD6A0225CD4FE00ABB9B6 /* ShareContactsViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3BD69E225CD4FE00ABB9B6 /* ShareContactsViewController+Extension.swift */; };
 		EF3BD69D225CC53B00ABB9B6 /* PermissionDeniedViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3BD69B225CC53B00ABB9B6 /* PermissionDeniedViewController+Extension.swift */; };
 		EF3CB75321DD0F0C0030C3E8 /* ConversationViewController+ParticipantsPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3CB75221DD0F0B0030C3E8 /* ConversationViewController+ParticipantsPopover.swift */; };
 		EF3CB75521DD157B0030C3E8 /* ProfileViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3CB75421DD157B0030C3E8 /* ProfileViewController+Extension.swift */; };
@@ -2902,6 +2903,8 @@
 		EF3976CF21148A110030BE68 /* KeyboardAvoidingViewController+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "KeyboardAvoidingViewController+Internal.h"; sourceTree = "<group>"; };
 		EF3BA5D321075FC60093048F /* ConversationInputBarViewController+Language.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationInputBarViewController+Language.swift"; sourceTree = "<group>"; };
 		EF3BA5D62107688D0093048F /* InputLanguageSettable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputLanguageSettable.swift; sourceTree = "<group>"; };
+		EF3BD69E225CD4FE00ABB9B6 /* ShareContactsViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ShareContactsViewController+Extension.swift"; sourceTree = "<group>"; };
+		EF3BD69F225CD4FE00ABB9B6 /* ShareContactsViewController+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ShareContactsViewController+Internal.h"; sourceTree = "<group>"; };
 		EF3BD69B225CC53B00ABB9B6 /* PermissionDeniedViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PermissionDeniedViewController+Extension.swift"; sourceTree = "<group>"; };
 		EF3BD69C225CC53B00ABB9B6 /* PermissionDeniedViewController+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PermissionDeniedViewController+Internal.h"; sourceTree = "<group>"; };
 		EF3CB75221DD0F0B0030C3E8 /* ConversationViewController+ParticipantsPopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationViewController+ParticipantsPopover.swift"; sourceTree = "<group>"; };
@@ -4798,7 +4801,9 @@
 				87DCF4761D34E95B00BB420F /* PermissionDeniedViewController.m */,
 				EF3BD69B225CC53B00ABB9B6 /* PermissionDeniedViewController+Extension.swift */,
 				87DCF4771D34E95B00BB420F /* ShareContactsViewController.h */,
+				EF3BD69F225CD4FE00ABB9B6 /* ShareContactsViewController+Internal.h */,
 				87DCF4781D34E95B00BB420F /* ShareContactsViewController.m */,
+				EF3BD69E225CD4FE00ABB9B6 /* ShareContactsViewController+Extension.swift */,
 				EE1AFBFD2124330B003D1AE1 /* UNUserNotificationCenter+Permission.swift */,
 			);
 			path = Permissions;
@@ -7555,6 +7560,7 @@
 				F15650EF21DD1B4100210504 /* UIColor+Hex.swift in Sources */,
 				8F41CFC9199297C600E3B032 /* Message+UI.m in Sources */,
 				162917C91F8BB991000F3E92 /* NetworkStatusView.swift in Sources */,
+				EF3BD6A0225CD4FE00ABB9B6 /* ShareContactsViewController+Extension.swift in Sources */,
 				5E936E8F20B590530060E6AA /* UIDevice+Platform.swift in Sources */,
 				EF1A461A21AD60510009B6B9 /* ReceiptOptionsSectionController.swift in Sources */,
 				EEB8A2D01F628D1100958881 /* Settings+Account.swift in Sources */,
