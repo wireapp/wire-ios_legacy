@@ -282,7 +282,7 @@ class AuthenticationCredentialsViewController: AuthenticationStepController, Cou
         valueSubmitted(credentials)
     }
 
-    func textField(_ textField: EmailPasswordTextField, didUpdateValidation isValid: Bool) {
+    func textFieldDidSubmitWithValidationError(_ textField: EmailPasswordTextField) {
         // no-op: we do not update the UI depending on the validity of the input
     }
 

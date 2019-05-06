@@ -206,6 +206,8 @@
 "conversation.status.silenced" = "ミュート";
 "conversation.status.poor_connection" = "接続不良";
 "conversation.status.blocked" = "ブロック";
+"conversation.status.incoming_call" = "%@ を呼出中...";
+"conversation.status.incoming_call.unknown" = "Someone is calling…";
 
 "conversation.status.message.text" = "%@";
 "conversation.status.message.link" = "リンクを共有";
@@ -385,6 +387,12 @@
 "content.system.you_removed_other" = "あなたは%@を削除しました";
 
 "content.system.services.warning" = "サービスはこの会議のコンテンツにアクセスできます";
+
+// Link attachment messages
+
+"content.message.link_attachment.accessibility_label.youtube" = "YouTube video preview";
+"content.message.link_attachment.accessibility_label.soundcloud_song" = "SoundCloud song preview";
+"content.message.link_attachment.accessibility_label.soundcloud_set" = "SoundCloud playlist preview";
 
 // New conversation participants added / removed / started system message
 
@@ -577,6 +585,9 @@
 "voice.cancel_button.title" = "キャンセル";
 "voice.call_button.title" = "通話";
 "voice.end_call_button.title" = "通話を終了";
+"voice.call_error.unsupported_version.title" = "Please update Wire";
+"voice.call_error.unsupported_version.message" = "You received a call that isn't supported by this version of Wire.\nGet the latest version in the App Store.";
+"voice.call_error.unsupported_version.dismiss" = "Later";
 
 "voice.alert.call_in_progress.title" = "通話中です";
 "voice.alert.call_in_progress.message" = "同時にできる通話は一つのみです";
@@ -812,10 +823,11 @@
 "self.voiceover.hint" = "プロファイルと設定を開く";
 "self.new-device.voiceover.label" = "プロファイル, 新規デバイスの追加";
 
-"self.profile.change_user_image.accessibility" = "タップしてプロフィール画像を変更";
-
 "self.add_phone_number" = "電話番号を追加する";
 "self.add_email_password" = "メールアドレスとパスワードを追加";
+
+"self.accessibility.profile_photo_image" = "プロフィール画像";
+"self.accessibility.profile_photo_edit_button" = "プロフィール画像を変更";
 
 // About screen
 "about.tos.title" = "利用規約";
@@ -845,7 +857,7 @@
 // Settings - top level
 "self.settings.create_team.title" = "新しいチームを作成";
 "self.settings.manage_team.title" = "チームを管理する";
-"self.settings.add_team_or_account.title" = "新しいチームまたはアカウント";
+"self.settings.add_team_or_account.title" = "Add Account";
 "self.settings.add_account.title" = "アカウントを追加";
 
 "self.settings.add_account.error.title" = "3 つのアカウントがアクティブです";
@@ -993,7 +1005,7 @@
 "self.settings.link_options.maps.title" = "ロケーション";
 "self.settings.link_options.browser.title" = "ブラウザ";
 
-"open_link.twitter.option.default" = "Safari / Twitter";
+"open_link.twitter.option.default" = "Browser / Twitter";
 "open_link.twitter.option.tweetbot" = "Tweetbot";
 "open_link.twitter.option.twitterrific" = "Twitterrific";
 
@@ -1109,7 +1121,6 @@
 "email.guidance.toolong" = "文字が多すぎます";
 
 "password.placeholder" = "パスワード";
-"password.guidance.tooshort" = "8 文字以上";
 "password.guidance.toolong" = "文字が多すぎます";
 
 "phone.guidance.invalid" = "無効な電話番号です";
@@ -1125,6 +1136,10 @@
 "landing.create_team.subtitle" = "Secure collaboration for businesses, institutions and professional\U00A0organizations";
 "landing.login.hints" = "既にアカウントをお持ちですか？";
 "landing.login.button.title" = "ログイン";
+
+"landing.custom_backend.title" = "Connected to \"%@\"";
+"landing.custom_backend.more_info.button.title" = "Show more";
+"landing.custom_backend.more_info.alert.title" = " You are connected to a third-party server: %@";
 
 // Create team
 
@@ -1151,9 +1166,6 @@
 "team.full_name.textfield.accessibility" = "フルネーム設定";
 
 "team.password.headline" = "パスワード設定";
-"team.password.textfield.placeholder" = "8 文字以上";
-"team.password.textfield.accessibility" = "最低８文字以上でパスワードを入力してください";
-
 
 "verification.code_label" = "6 桁のコードです。テキスト フィールドです。";
 "verification.code_hint" = "ダブルタップすると、コードを入力します。";
@@ -1234,7 +1246,7 @@
 "registration.alert.account_exists.title" = "アカウントが存在します";
 "registration.alert.account_exists.message_phone" = "登録に使用した電話番号は既にアカウントにリンクされています。\n\n別の電話番号を登録するか、このアカウントを持っている場合はログインしてみてください。";
 "registration.alert.account_exists.message_email" = "登録に使用したメールアドレスは既にアカウントにリンクされています。\n\n別のメールアドレスを登録するか、このアカウントを持っている場合はログインしてみてください。";
-"registration.alert.change_email_action" = "Eメールを変更";
+"registration.alert.change_email_action" = "Register with Another Email";
 "registration.alert.change_phone_action" = "別の番号で登録します。";
 "registration.alert.change_signin_action" = "ログイン";
 
@@ -1506,6 +1518,8 @@
 
 "availability.message.cancel" = "キャンセル";
 "availability.message.set_status" = "ステータスを設定";
+"availability.accessibility_label.change_status" = "Change Status";
+"availability.accessibility_label.status" = "Status";
 
 "availability.none" = "なし";
 "availability.available" = "利用できます";
@@ -1514,6 +1528,17 @@
 "availability.available.placeholder" = "%@ が利用可能です。";
 "availability.away.placeholder" = "%@ は退席しています";
 "availability.busy.placeholder" = "%@ は取り込み中です";
+
+"availability.reminder.away.title" = "You are set to Away";
+"availability.reminder.away.message" = "You will appear as Away to other people. You will not receive notifications about any incoming calls or messages.";
+"availability.reminder.busy.title" = "You are set to Busy";
+"availability.reminder.busy.message" = "You will appear as Busy to other people. You will only receive notifications for mentions, replies, and calls in conversations that are not muted.";
+"availability.reminder.available.title" = "You are set to Available";
+"availability.reminder.available.message" = "You will appear as Available to other people. You will receive notifications for incoming calls and for messages according to the Notifications setting in each conversation.";
+"availability.reminder.none.title" = "No status set";
+"availability.reminder.none.message" = "You will receive notifications for incoming calls and for messages according to the Notifications setting in each conversation.";
+"availability.reminder.action.dont_remind_me" = "Do not display this information again";
+"availability.reminder.action.ok" = "OK";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Call Quality Survey
@@ -1533,6 +1558,16 @@
 "url_action.confirm" = "確認";
 "url_action.title" = "このURLを確認します";
 "url_action.connect_to_bot.message" = "Bot に接続しますか？";
+
+"url_action.switch_backend.title" = "Connect to server";
+"url_action.switch_backend.message" = "This configuration will connect the app to a third-party server:\n%@";
+
+"url_action.switch_backend.error.logged_in.title" = "Can’t switch servers";
+"url_action.switch_backend.error.logged_in" = "You are already logged in. To switch to this server, log out of all accounts and try again.";
+
+"url_action.switch_backend.error.invalid_backend.title" = "The server is not responding";
+"url_action.switch_backend.error.invalid_backend" = "Please check your internet connection, verify the link and try again.";
+
 
 // Deep Link
 "url_action.invalid_user.title" = "Wire can't find this person.";
@@ -1569,3 +1604,8 @@
 "message_details.subtitle_label_voiceOver" = "メッセージの詳細";
 "message_details.user_handle_subtitle_label" = "ユーザーネーム";
 "message_details.user_read_timestamp_subtitle_label" = "既読";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Password Rules
+"registration.password.rules.no_requirements" = "Use %@.";
+"registration.password.rules.with_requirements" = "Use %@, with %@.";

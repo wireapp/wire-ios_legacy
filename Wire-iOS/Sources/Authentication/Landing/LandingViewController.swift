@@ -77,6 +77,7 @@ class LandingViewController: AuthenticationStepViewController {
     let logoView: UIImageView = {
         let image = UIImage(named: "wire-logo-black")
         let imageView = UIImageView(image: image)
+        imageView.accessibilityIdentifier = "WireLogo"
         imageView.contentMode = .scaleAspectFit
         imageView.tintColor = UIColor.Team.textColor
         imageView.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
@@ -95,7 +96,7 @@ class LandingViewController: AuthenticationStepViewController {
     }()
 
     let createAccountButton: LandingButton = {
-        let button = LandingButton(title: createAccountButtonTitle, icon: .selfProfile, iconBackgroundColor: UIColor.Team.createTeamGreen)
+        let button = LandingButton(title: createAccountButtonTitle, icon: .personalProfile, iconBackgroundColor: UIColor.Team.createTeamGreen)
         button.accessibilityIdentifier = "CreateAccountButton"
         button.addTapTarget(self, action: #selector(LandingViewController.createAccountButtonTapped(_:)))
         button.setContentCompressionResistancePriority(.required, for: .vertical)
@@ -154,6 +155,52 @@ class LandingViewController: AuthenticationStepViewController {
 
         return button
     }()
+    
+    let customBackendTitleLabel: UILabel = {
+        let label = UILabel()
+        label.accessibilityIdentifier = "ConfigurationTitle"
+        label.textAlignment = .center
+        label.font = FontSpec(.normal, .bold).font!
+        label.textColor = UIColor.Team.textColor
+        label.setContentCompressionResistancePriority(.required, for: .horizontal)
+        return label
+    }()
+    
+    let customBackendSubtitleLabel: UILabel = {
+        let label = UILabel()
+        label.accessibilityIdentifier = "ConfigurationLink"
+        label.font = FontSpec(.small, .semibold).font!
+        label.textColor = UIColor.Team.placeholderColor
+        return label
+    }()
+    
+    let customBackendSubtitleButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("landing.custom_backend.more_info.button.title".localized.uppercased(), for: .normal)
+        button.accessibilityIdentifier = "ShowMoreButton"
+        button.setTitleColor(UIColor.Team.activeButton, for: .normal)
+        button.titleLabel?.font = FontSpec(.small, .semibold).font!
+        button.setContentHuggingPriority(.required, for: .horizontal)
+        button.setContentCompressionResistancePriority(.required, for: .horizontal)
+        button.addTarget(self, action: #selector(LandingViewController.showCustomBackendLink(_:)), for: .touchUpInside)
+        return button
+    }()
+    
+    let customBackendSubtitleStack: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.spacing = 4
+        stackView.setContentCompressionResistancePriority(.required, for: .vertical)
+        return stackView
+    }()
+    
+    let customBackendStack: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.setContentCompressionResistancePriority(.required, for: .vertical)
+        stackView.setContentCompressionResistancePriority(.required, for: .horizontal)
+        return stackView
+    }()
 
     // MARK: - Lifecycle
 
@@ -169,13 +216,18 @@ class LandingViewController: AuthenticationStepViewController {
         updateForCurrentSizeClass(isRegular: traitCollection.horizontalSizeClass == .regular)
         updateBarButtonItem()
         disableTrackingIfNeeded()
+        updateCustomBackendLabel()
 
         NotificationCenter.default.addObserver(
             forName: AccountManagerDidUpdateAccountsNotificationName,
             object: SessionManager.shared?.accountManager,
-            queue: nil) { _ in
+            queue: .main) { _ in
                 self.updateBarButtonItem()
                 self.disableTrackingIfNeeded()
+        }
+        
+        NotificationCenter.default.addObserver(forName: BackendEnvironment.backendSwitchNotification, object: nil, queue: .main) { _ in
+            self.updateCustomBackendLabel()
         }
     }
 
@@ -199,7 +251,14 @@ class LandingViewController: AuthenticationStepViewController {
             additionalSafeAreaInsets.top = -44
         }
 
+        customBackendSubtitleStack.addArrangedSubview(customBackendSubtitleLabel)
+        customBackendSubtitleStack.addArrangedSubview(customBackendSubtitleButton)
+
+        customBackendStack.addArrangedSubview(customBackendTitleLabel)
+        customBackendStack.addArrangedSubview(customBackendSubtitleStack)
+
         contentStack.addArrangedSubview(logoView)
+        contentStack.addArrangedSubview(customBackendStack)
 
         buttonStackView.addArrangedSubview(createAccountButton)
         buttonStackView.addArrangedSubview(createTeamButton)
@@ -208,6 +267,9 @@ class LandingViewController: AuthenticationStepViewController {
         loginButtonsStackView.addArrangedSubview(loginHintsLabel)
         loginButtonsStackView.addArrangedSubview(loginButton)
         contentStack.addArrangedSubview(loginButtonsStackView)
+        
+        // Hide team creation for now
+        createTeamButton.isHidden = true
 
         view.addSubview(contentStack)
     }
@@ -234,29 +296,32 @@ class LandingViewController: AuthenticationStepViewController {
     }
 
     // MARK: - Adaptivity Events
+    
+    private func updateLogoView() {
+        logoView.isHidden = isCustomBackend
+    }
+    
+    var isCustomBackend: Bool {
+        switch BackendEnvironment.shared.environmentType.value {
+        case .production, .staging:
+            return false
+        case .custom:
+            return true
+        }
+    }
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        if view.frame.height <= 640 {
-            // Small-height devices
-            logoView.isHidden = true
-            contentStack.spacing = 24
-            buttonStackView.spacing = 24
-
-            if #available(iOS 11, *) {
-                contentStack.setCustomSpacing(0, after: logoView)
-            }
-
-        } else {
-            // Normal-height devices
-            logoView.isHidden = false
+        
+        if isIPadRegular() || isCustomBackend {
             contentStack.spacing = 32
-            buttonStackView.spacing = 32
-
-            if #available(iOS 11, *) {
-                contentStack.setCustomSpacing(40, after: logoView)
-            }
+        } else if view.frame.height <= 640 {
+            contentStack.spacing = view.frame.height / 5
+        } else {
+            contentStack.spacing = view.frame.height / 4.1
         }
+
+        updateLogoView()
     }
 
     func updateForCurrentSizeClass(isRegular: Bool) {
@@ -279,11 +344,26 @@ class LandingViewController: AuthenticationStepViewController {
         if SessionManager.shared?.firstAuthenticatedAccount == nil {
             navigationItem.rightBarButtonItem = nil
         } else {
-            let cancelItem = UIBarButtonItem(icon: .cancel, target: self, action: #selector(cancelButtonTapped))
+            let cancelItem = UIBarButtonItem(icon: .cross, target: self, action: #selector(cancelButtonTapped))
             cancelItem.accessibilityIdentifier = "CancelButton"
             cancelItem.accessibilityLabel = "general.cancel".localized
             navigationItem.rightBarButtonItem = cancelItem
         }
+    }
+    
+    private func updateCustomBackendLabel() {
+        switch BackendEnvironment.shared.environmentType.value {
+        case .production, .staging:
+            customBackendStack.isHidden = true
+            buttonStackView.alpha = 1
+        case .custom(url: let url):
+            customBackendTitleLabel.text = "landing.custom_backend.title".localized(args: BackendEnvironment.shared.title)
+            customBackendSubtitleLabel.text = url.absoluteString.uppercased()
+            customBackendStack.isHidden = false
+            buttonStackView.alpha = 0
+            createTeamButton.isHidden = false
+        }
+        updateLogoView()
     }
     
     private func disableTrackingIfNeeded() {
@@ -324,6 +404,15 @@ class LandingViewController: AuthenticationStepViewController {
     }
 
     // MARK: - Button tapped target
+    
+    @objc public func showCustomBackendLink(_ sender: AnyObject!) {
+        let backendTitle = BackendEnvironment.shared.title
+        let jsonURL = customBackendSubtitleLabel.text?.lowercased() ?? ""
+        let alert = UIAlertController(title: "landing.custom_backend.more_info.alert.title".localized(args: backendTitle), message: "\(jsonURL)", preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "general.ok".localized, style: .cancel, handler: nil))
+        present(alert, animated: true, completion: nil)
+    }
 
     @objc public func createAccountButtonTapped(_ sender: AnyObject!) {
         Analytics.shared().tagOpenedUserRegistration(context: "email")

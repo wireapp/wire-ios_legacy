@@ -108,7 +108,7 @@ final class ShareDestinationCell<D: ShareDestination>: UITableViewCell {
             shieldView.height == self.shieldSize
         }
         
-        self.guestUserIcon = UIImageView(image: UIImage(for: .guest, iconSize: .tiny, color: UIColor(white: 1.0, alpha: 0.64)))
+        self.guestUserIcon = UIImageView(image: StyleKitIcon.guest.makeImage(size: .tiny, color: UIColor(white: 1.0, alpha: 0.64)))
         self.stackView.addArrangedSubview(self.guestUserIcon)
         
         constrain(self.guestUserIcon) { guestUserIcon in
@@ -148,7 +148,7 @@ final class ShareDestinationCell<D: ShareDestination>: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         
-        self.checkImageView.image = selected ? UIImage(for: .checkmark, iconSize: .like, color: .white) : nil
+        self.checkImageView.image = selected ? StyleKitIcon.checkmark.makeImage(size: 12, color: .white) : nil
         self.checkImageView.backgroundColor = selected ? .accent() : .clear
     }
 }

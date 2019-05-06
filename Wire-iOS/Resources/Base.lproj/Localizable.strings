@@ -206,6 +206,8 @@
 "conversation.status.silenced" = "Muted";
 "conversation.status.poor_connection" = "Poor connection";
 "conversation.status.blocked" = "Blocked";
+"conversation.status.incoming_call" = "%@ is calling…";
+"conversation.status.incoming_call.unknown" = "Someone is calling…";
 
 "conversation.status.message.text" = "%@";
 "conversation.status.message.link" = "Shared a link";
@@ -824,8 +826,8 @@
 "self.add_phone_number" = "Add phone number";
 "self.add_email_password" = "Add email address and password";
 
-"self.accessibility.profile_photo_image" = "Profile Photo";
-"self.accessibility.profile_photo_edit_button" = "Change Profile Photo";
+"self.accessibility.profile_photo_image" = "Profile picture";
+"self.accessibility.profile_photo_edit_button" = "Change profile picture";
 
 // About screen
 "about.tos.title"="Terms of Use";
@@ -855,7 +857,7 @@
 // Settings - top level
 "self.settings.create_team.title" = "Create a team";
 "self.settings.manage_team.title" = "Manage Team";
-"self.settings.add_team_or_account.title" = "New Team or Account";
+"self.settings.add_team_or_account.title" = "Add Account";
 "self.settings.add_account.title" = "Add an account";
 
 "self.settings.add_account.error.title" = "Three accounts active";
@@ -1003,7 +1005,7 @@
 "self.settings.link_options.maps.title" = "Locations";
 "self.settings.link_options.browser.title" = "Browser";
 
-"open_link.twitter.option.default" = "Safari / Twitter";
+"open_link.twitter.option.default" = "Browser / Twitter";
 "open_link.twitter.option.tweetbot" = "Tweetbot";
 "open_link.twitter.option.twitterrific" = "Twitterrific";
 
@@ -1119,7 +1121,6 @@
 "email.guidance.toolong" = "Too many characters";
 
 "password.placeholder" = "Password";
-"password.guidance.tooshort" = "At least 8 characters";
 "password.guidance.toolong" = "Too many characters";
 
 "phone.guidance.invalid" = "Invalid phone number";
@@ -1135,6 +1136,10 @@
 "landing.create_team.subtitle" = "Secure collaboration for businesses, institutions and professional\U00A0organizations";
 "landing.login.hints" = "Already have an account?";
 "landing.login.button.title" = "Log in";
+
+"landing.custom_backend.title" = "Connected to \"%@\"";
+"landing.custom_backend.more_info.button.title" = "Show more";
+"landing.custom_backend.more_info.alert.title" = " You are connected to a third-party server: %@";
 
 // Create team
 
@@ -1161,9 +1166,6 @@
 "team.full_name.textfield.accessibility" = "Set full name";
 
 "team.password.headline" = "Set password";
-"team.password.textfield.placeholder" = "At least 8 characters";
-"team.password.textfield.accessibility" = "Set password, at least 8 characters";
-
 
 "verification.code_label" = "Six-digit code. Text field.";
 "verification.code_hint" = "Double tap to enter the code.";
@@ -1244,7 +1246,7 @@
 "registration.alert.account_exists.title" = "Account Exists";
 "registration.alert.account_exists.message_phone" = "The phone number you used to register is already linked to an account.\n\nUse another phone number, or try to log in if you own this account.";
 "registration.alert.account_exists.message_email" = "The email address you used to register is already linked to an account.\n\n Use another email address, or try to log in if you own this account.";
-"registration.alert.change_email_action" = "Change Email";
+"registration.alert.change_email_action" = "Register with Another Email";
 "registration.alert.change_phone_action" = "Register with Another Number";
 "registration.alert.change_signin_action" = "Log In";
 
@@ -1516,6 +1518,8 @@
 
 "availability.message.cancel" = "Cancel";
 "availability.message.set_status" = "Set a status";
+"availability.accessibility_label.change_status" = "Change Status";
+"availability.accessibility_label.status" = "Status";
 
 "availability.none" = "None";
 "availability.available" = "Available";
@@ -1524,6 +1528,17 @@
 "availability.available.placeholder" = "%@ is available";
 "availability.away.placeholder" = "%@ is away";
 "availability.busy.placeholder" = "%@ is busy";
+
+"availability.reminder.away.title" = "You are set to Away";
+"availability.reminder.away.message" = "You will appear as Away to other people. You will not receive notifications about any incoming calls or messages.";
+"availability.reminder.busy.title" = "You are set to Busy";
+"availability.reminder.busy.message" = "You will appear as Busy to other people. You will only receive notifications for mentions, replies, and calls in conversations that are not muted.";
+"availability.reminder.available.title" = "You are set to Available";
+"availability.reminder.available.message" = "You will appear as Available to other people. You will receive notifications for incoming calls and for messages according to the Notifications setting in each conversation.";
+"availability.reminder.none.title" = "No status set";
+"availability.reminder.none.message" = "You will receive notifications for incoming calls and for messages according to the Notifications setting in each conversation.";
+"availability.reminder.action.dont_remind_me" = "Do not display this information again";
+"availability.reminder.action.ok" = "OK";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Call Quality Survey
@@ -1543,6 +1558,16 @@
 "url_action.confirm" = "Confirm";
 "url_action.title" = "Confirm URL action";
 "url_action.connect_to_bot.message" = "Would you like to connect to the bot?";
+
+"url_action.switch_backend.title" = "Connect to server";
+"url_action.switch_backend.message" = "This configuration will connect the app to a third-party server:\n%@";
+
+"url_action.switch_backend.error.logged_in.title" = "Can’t switch servers";
+"url_action.switch_backend.error.logged_in" = "You are already logged in. To switch to this server, log out of all accounts and try again.";
+
+"url_action.switch_backend.error.invalid_backend.title" = "The server is not responding";
+"url_action.switch_backend.error.invalid_backend" = "Please check your internet connection, verify the link and try again.";
+
 
 // Deep Link
 "url_action.invalid_user.title" = "Wire can't find this person.";
@@ -1579,3 +1604,9 @@
 "message_details.subtitle_label_voiceOver" = "Message Details";
 "message_details.user_handle_subtitle_label" = "Username";
 "message_details.user_read_timestamp_subtitle_label" = "Read at";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Password Rules
+"registration.password.rules.no_requirements" = "Use %@.";
+"registration.password.rules.with_requirements" = "Use %@, with %@.";
+

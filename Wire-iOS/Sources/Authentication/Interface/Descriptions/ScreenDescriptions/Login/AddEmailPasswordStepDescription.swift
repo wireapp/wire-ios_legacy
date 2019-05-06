@@ -29,10 +29,10 @@ class AddEmailPasswordStepDescription: DefaultValidatingStepDescription {
 
     init() {
         backButton = BackButtonDescription()
-        mainView = EmailPasswordFieldDescription(forRegistration: true, usePasswordLiveValidation: true)
+        mainView = EmailPasswordFieldDescription(forRegistration: true, usePasswordDeferredValidation: true)
         headline = "registration.add_email_password.hero.title".localized
         subtext = "registration.add_email_password.hero.paragraph".localized
-        initialValidation = .info("password.guidance.tooshort".localized)
+        initialValidation = .info(PasswordRuleSet.localizedErrorMessage)
         secondaryView = nil
     }
 

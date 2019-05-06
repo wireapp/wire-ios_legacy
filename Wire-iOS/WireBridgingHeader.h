@@ -85,9 +85,11 @@
 
 #import "ZClientViewController.h"
 #import "ZClientViewController+Internal.h"
+
 #import "ConversationInputBarViewController.h"
-#import "ConversationInputBarViewController+Files.h"
 #import "ConversationInputBarViewController+Private.h"
+#import "ConversationInputBarViewController+Files.h"
+
 #import "ConversationListContentController.h"
 #import "ConversationListViewModel.h"
 #import "ConversationListViewModel+Private.h"
@@ -118,10 +120,15 @@
 #import "ContactsDataSource.h"
 #import "StartUIViewController.h"
 #import "Button.h"
+
 #import "PermissionDeniedViewController.h"
 
 #import "ShareContactsViewController.h"
 #import "ShareContactsViewController+Internal.h"
+
+#import "PermissionDeniedViewController+Internal.h"
+
+#import "ImagePickerConfirmationController.h"
 
 // Helper objects
 #import "PushTransition.h"
@@ -142,7 +149,6 @@
 #import "Application+runDuration.h"
 #import "DeveloperMenuState.h"
 #import "NSString+Fingerprint.h"
-#import "UIImage+ZetaIconsNeue.h"
 #import "UIColor+WAZExtensions.h"
 #import "AccentColorChangeHandler.h"
 #import "UIApplication+Permissions.h"

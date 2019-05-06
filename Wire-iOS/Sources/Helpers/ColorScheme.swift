@@ -119,6 +119,8 @@ public extension UIColor {
 
     case secondaryAction
     case secondaryActionDimmed
+
+    case errorIndicator
 }
 
 extension UIColor {
@@ -242,6 +244,9 @@ extension ColorSchemeColor {
             return ColorPair(light: UIColor(rgb: 0xE8ECEE), dark: .backgroundLightGraphite)
         case .secondaryActionDimmed:
             return ColorPair(light: UIColor(rgb: 0xE8ECEE, alpha: 0.24), dark: UIColor.backgroundLightGraphite.withAlphaComponent(0.24))
+
+        case .errorIndicator:
+            return ColorPair(light: UIColor(rgb: 0xE60606), dark: UIColor(rgb: 0xFC3E37))
         }
     }
 }

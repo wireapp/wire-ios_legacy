@@ -30,7 +30,7 @@ extension ConversationViewController: UIPopoverPresentationControllerDelegate {
         present(controller, animated: true)
     }
 
-    @objc func didTap(onUserAvatar user: GenericUser, view: UIView?, frame: CGRect) {
+    @objc func didTap(onUserAvatar user: UserType, view: UIView?, frame: CGRect) {
         if view == nil {
             return
         }

@@ -101,7 +101,6 @@
         NSURL *accountContainerURL = [[sharedContainerURL URLByAppendingPathComponent:@"AccountData" isDirectory:YES]
                                       URLByAppendingPathComponent:ZMUser.selfUser.remoteIdentifier.UUIDString isDirectory:YES];
         self.analyticsEventPersistence = [[ShareExtensionAnalyticsPersistence alloc] initWithAccountContainer:accountContainerURL];
-        [MessageDraftStorage setupSharedStorageAtURL:accountContainerURL error:nil];
         
         self.networkAvailabilityObserverToken = [ZMNetworkAvailabilityChangeNotification addNetworkAvailabilityObserver:self userSession:[ZMUserSession sharedSession]];
         
@@ -192,11 +191,6 @@
     else {
         return YES;
     }
-}
-
-- (UIInterfaceOrientationMask)supportedInterfaceOrientations
-{
-    return self.wr_supportedInterfaceOrientations;
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle

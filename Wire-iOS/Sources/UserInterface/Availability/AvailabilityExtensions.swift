@@ -36,12 +36,12 @@ extension Availability {
         return "availability.\(canonicalName)".localized
     }
     
-    var iconType: ZetaIconType? {
+    var iconType: StyleKitIcon? {
         switch self {
             case .none:         return nil
-            case .available:    return .availabilityAvailable
-            case .away:         return .availabilityAway
-            case .busy:         return .availabilityBusy
+            case .available:    return .statusAvailable
+            case .away:         return .statusAway
+            case .busy:         return .statusBusy
         }
     }
 }

@@ -158,6 +158,7 @@ class AuthenticationStepController: AuthenticationStepViewController {
         let errorInsets = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 24 + AccessoryTextField.ConfirmButtonWidth)
         errorLabelContainer = ContentInsetView(errorLabel, inset: errorInsets)
         errorLabel.textAlignment = .left
+        errorLabel.numberOfLines = 0
         errorLabel.font = AuthenticationStepController.errorMessageFont
         errorLabel.translatesAutoresizingMaskIntoConstraints = false
         updateValidation(initialValidation)
@@ -393,7 +394,7 @@ extension AuthenticationStepController {
 
             errorLabel.accessibilityIdentifier = "validation-failure"
             errorLabel.text = error.errorDescription
-            errorLabel.textColor = UIColor.Team.errorMessageColor
+            errorLabel.textColor = UIColor.from(scheme: .errorIndicator, variant: .light)
             errorLabelContainer.isHidden = false
             showSecondaryView(for: error)
 

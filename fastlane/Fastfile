@@ -6,6 +6,8 @@ platform :ios do
     desc "Fetch dependencies"
     lane :prepare do |options|
         build_type = options[:build_type]
+        # Delete configurations in case we switch to different branch or repo
+        sh "rm -rf ../Configuration"
         if build_type.nil? 
             sh "cd .. && ./setup.sh"
         else

@@ -214,7 +214,7 @@ final class AccessoryTextFieldValidateionTests: XCTestCase {
         let text = String(repeating: "a", count: 7)
 
         // WHEN & THEN
-        checkError(textFieldType: type, text: text, expectedError: .tooShort(kind: type))
+        checkError(textFieldType: type, text: text, expectedError: .invalidPassword(.tooShort))
     }
 
     func testThat129CharacterPasswordIsInvalid_New() {
@@ -223,7 +223,7 @@ final class AccessoryTextFieldValidateionTests: XCTestCase {
         let text = String(repeating: "a", count: 129)
 
         // WHEN & THEN
-        checkError(textFieldType: type, text: text, expectedError: .tooLong(kind: type))
+        checkError(textFieldType: type, text: text, expectedError: .invalidPassword(.tooLong))
     }
 
     // MARK: - keyboard properties

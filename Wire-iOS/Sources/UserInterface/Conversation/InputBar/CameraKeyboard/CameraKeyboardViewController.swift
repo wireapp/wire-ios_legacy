@@ -113,7 +113,7 @@ open class CameraKeyboardViewController: UIViewController {
         self.goBackButton.translatesAutoresizingMaskIntoConstraints = false
         self.goBackButton.backgroundColor = UIColor(white: 0, alpha: 0.88)
         self.goBackButton.circular = true
-        self.goBackButton.setIcon(.backArrow, with: .tiny, for: [])
+        self.goBackButton.setIcon(.backArrow, size: .tiny, for: [])
         self.goBackButton.setIconColor(UIColor.white, for: [])
         self.goBackButton.accessibilityIdentifier = "goBackButton"
         self.goBackButton.addTarget(self, action: #selector(goBackPressed(_:)), for: .touchUpInside)
@@ -122,7 +122,7 @@ open class CameraKeyboardViewController: UIViewController {
         self.cameraRollButton.translatesAutoresizingMaskIntoConstraints = false
         self.cameraRollButton.backgroundColor = UIColor(white: 0, alpha: 0.88)
         self.cameraRollButton.circular = true
-        self.cameraRollButton.setIcon(.photo, with: .tiny, for: [])
+        self.cameraRollButton.setIcon(.photo, size: .tiny, for: [])
         self.cameraRollButton.setIconColor(UIColor.white, for: [])
         self.cameraRollButton.accessibilityIdentifier = "cameraRollButton"
         self.cameraRollButton.addTarget(self, action: #selector(openCameraRollPressed(_:)), for: .touchUpInside)

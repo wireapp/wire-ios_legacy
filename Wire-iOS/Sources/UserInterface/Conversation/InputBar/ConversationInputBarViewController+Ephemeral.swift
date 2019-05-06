@@ -65,7 +65,7 @@ extension ConversationInputBarViewController {
         createEphemeralKeyboardViewController()
         ephemeralKeyboardViewController?.modalPresentationStyle = .popover
         ephemeralKeyboardViewController?.preferredContentSize = CGSize.IPadPopover.pickerSize
-        let pointToView = ephemeralIndicatorButton.isHidden ? hourglassButton : ephemeralIndicatorButton
+        let pointToView: UIView = ephemeralIndicatorButton.isHidden ? hourglassButton : ephemeralIndicatorButton
 
         if let popover = ephemeralKeyboardViewController?.popoverPresentationController,
             let presentInView = self.parent?.view,

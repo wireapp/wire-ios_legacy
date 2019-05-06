@@ -42,7 +42,7 @@ extension ZMConversation {
     }
 }
 
-class ConversationTimeoutOptionsViewController: UIViewController {
+final class ConversationTimeoutOptionsViewController: UIViewController {
 
     fileprivate let conversation: ZMConversation
     fileprivate var items: [Item] = []
@@ -81,6 +81,10 @@ class ConversationTimeoutOptionsViewController: UIViewController {
 
         configureSubviews()
         configureConstraints()
+    }
+
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return wr_supportedInterfaceOrientations
     }
 
     private func configureSubviews() {

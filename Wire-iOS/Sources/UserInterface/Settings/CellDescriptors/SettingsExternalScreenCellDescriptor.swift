@@ -45,7 +45,7 @@ class SettingsExternalScreenCellDescriptor: SettingsExternalScreenCellDescriptor
     let destructive: Bool
     let presentationStyle: PresentationStyle
     let identifier: String?
-    let icon: ZetaIconType
+    let icon: StyleKitIcon?
 
     private let accessoryViewMode: AccessoryViewMode
 
@@ -68,7 +68,7 @@ class SettingsExternalScreenCellDescriptor: SettingsExternalScreenCellDescriptor
         )
     }
     
-    convenience init(title: String, isDestructive: Bool, presentationStyle: PresentationStyle, presentationAction: @escaping () -> (UIViewController?), previewGenerator: PreviewGeneratorType? = .none, icon: ZetaIconType = .none, accessoryViewMode: AccessoryViewMode = .default) {
+    convenience init(title: String, isDestructive: Bool, presentationStyle: PresentationStyle, presentationAction: @escaping () -> (UIViewController?), previewGenerator: PreviewGeneratorType? = .none, icon: StyleKitIcon? = nil, accessoryViewMode: AccessoryViewMode = .default) {
         self.init(
             title: title,
             isDestructive: isDestructive,
@@ -81,7 +81,7 @@ class SettingsExternalScreenCellDescriptor: SettingsExternalScreenCellDescriptor
         )
     }
     
-    init(title: String, isDestructive: Bool, presentationStyle: PresentationStyle, identifier: String?, presentationAction: @escaping () -> (UIViewController?), previewGenerator: PreviewGeneratorType? = .none, icon: ZetaIconType = .none, accessoryViewMode: AccessoryViewMode = .default) {
+    init(title: String, isDestructive: Bool, presentationStyle: PresentationStyle, identifier: String?, presentationAction: @escaping () -> (UIViewController?), previewGenerator: PreviewGeneratorType? = .none, icon: StyleKitIcon? = nil, accessoryViewMode: AccessoryViewMode = .default) {
         self.title = title
         self.destructive = isDestructive
         self.presentationStyle = presentationStyle

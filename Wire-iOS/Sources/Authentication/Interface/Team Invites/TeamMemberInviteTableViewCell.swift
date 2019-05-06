@@ -20,7 +20,7 @@ import UIKit
 import Cartography
 
 fileprivate extension InviteResult {
-    var iconType: ZetaIconType {
+    var iconType: StyleKitIcon {
         switch self {
         case .success: return .checkmark
         case .failure: return .exclamationMarkCircle
@@ -49,11 +49,7 @@ final class TeamMemberInviteTableViewCell: UITableViewCell {
             }
             
             content.apply {
-                iconImageView.image = UIImage(
-                    for: $0.iconType,
-                    iconSize: .tiny,
-                    color: UIColor.Team.inactiveButton
-                )
+                iconImageView.setIcon($0.iconType, size: .tiny, color: UIColor.Team.inactiveButton)
             }
         }
     }
@@ -73,7 +69,7 @@ final class TeamMemberInviteTableViewCell: UITableViewCell {
         emailLabel.font = FontSpec(.normal, .regular).font!
         emailLabel.textColor = UIColor.Team.subtitleColor
         errorLabel.font = FontSpec(.small, .regular).font!
-        errorLabel.textColor = UIColor.Team.errorMessageColor
+        errorLabel.textColor = UIColor.from(scheme: .errorIndicator, variant: .light)
         backgroundColor = .clear
         contentView.addSubview(stackView)
         [emailLabel, errorLabel].forEach(stackView.addArrangedSubview)

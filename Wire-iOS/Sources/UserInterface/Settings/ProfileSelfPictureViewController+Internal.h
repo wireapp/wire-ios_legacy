@@ -16,17 +16,18 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-@class ButtonWithLargerHitArea;
+@class IconButton;
+@class ImagePickerConfirmationController;
 
 @interface ProfileSelfPictureViewController ()
 
-@property (nonatomic) ButtonWithLargerHitArea *cameraButton;
-@property (nonatomic) ButtonWithLargerHitArea *libraryButton;
-@property (nonatomic) ButtonWithLargerHitArea *closeButton;
+@property (nonatomic) IconButton *cameraButton;
+@property (nonatomic) IconButton *libraryButton;
+@property (nonatomic) IconButton *closeButton;
 @property (nonatomic) UIImageView *selfUserImageView;
+@property (nonatomic) ImagePickerConfirmationController *imagePickerConfirmationController;
 
 - (void)cameraButtonTapped:(id)sender;
 - (void)closeButtonTapped:(id)sender;
-- (void)libraryButtonTapped:(id)sender;
 
 @end

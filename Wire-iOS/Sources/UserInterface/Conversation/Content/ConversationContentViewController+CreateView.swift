@@ -29,6 +29,10 @@ extension ConversationContentViewController {
 
         mentionsSearchResultsViewController.view.fitInSuperview()
     }
+
+    override open var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return wr_supportedInterfaceOrientations
+    }
 }
 
 

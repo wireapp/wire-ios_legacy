@@ -34,7 +34,7 @@ protocol SettingsCellType: class {
     var titleColor: UIColor {get set}
     var cellColor: UIColor? {get set}
     var descriptor: SettingsCellDescriptorType? {get set}
-    var icon: ZetaIconType {get set}
+    var icon: StyleKitIcon? {get set}
 }
 
 @objcMembers class SettingsTableCell: UITableViewCell, SettingsCellType {
@@ -122,15 +122,14 @@ protocol SettingsCellType: class {
         }
     }
     
-    var icon: ZetaIconType = .none {
+    var icon: StyleKitIcon? = nil {
         didSet {
-            if icon == .none {
-                iconImageView.image = .none
-                cellNameLabelToIconInset.isActive = false
-            }
-            else {
-                iconImageView.image = UIImage(for: icon, iconSize: .tiny, color: UIColor.white)
+            if let icon = icon {
+                iconImageView.setIcon(icon, size: .tiny, color: UIColor.white)
                 cellNameLabelToIconInset.isActive = true
+            } else {
+                iconImageView.image = nil
+                cellNameLabelToIconInset.isActive = false
             }
         }
     }

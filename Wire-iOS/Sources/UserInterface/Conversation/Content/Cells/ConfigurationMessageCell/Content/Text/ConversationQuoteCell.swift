@@ -116,7 +116,7 @@ class ConversationReplyContentView: UIView {
         timestampLabel.isHidden = !object.showDetails
 
         senderComponent.senderName = object.senderName
-        senderComponent.indicatorIcon = object.isEdited ? UIImage(for: .pencil, iconSize: .messageStatus, color: .from(scheme: .iconNormal)) : nil
+        senderComponent.indicatorIcon = object.isEdited ? StyleKitIcon.pencil.makeImage(size: 8, color: .from(scheme: .iconNormal)) : nil
         senderComponent.indicatorLabel = object.isEdited ? "content.message.reply.edited_message".localized : nil
         timestampLabel.text = object.timestamp
 
@@ -221,13 +221,13 @@ class ConversationReplyCellDescription: ConversationMessageCellDescription {
 
         case let message? where message.isLocation:
             let location = message.locationMessageData!
-            let imageIcon = NSTextAttachment.textAttachment(for: .locationPin, with: .from(scheme: .textForeground))!
+            let imageIcon = NSTextAttachment.textAttachment(for: .locationPin, with: .from(scheme: .textForeground))
             let initialString = NSAttributedString(attachment: imageIcon) + "  " + (location.name ?? "conversation.input_bar.message_preview.location".localized).localizedUppercase
             content = .text(initialString && attributes)
             contentType = "quote.type.location"
 
         case let message? where message.isAudio:
-            let imageIcon = NSTextAttachment.textAttachment(for: .microphone, with: .from(scheme: .textForeground))!
+            let imageIcon = NSTextAttachment.textAttachment(for: .microphone, with: .from(scheme: .textForeground))
             let initialString = NSAttributedString(attachment: imageIcon) + "  " + "conversation.input_bar.message_preview.audio".localized.localizedUppercase
             content = .text(initialString && attributes)
             contentType = "quote.type.audio"
@@ -242,7 +242,7 @@ class ConversationReplyCellDescription: ConversationMessageCellDescription {
 
         case let message? where message.isFile:
             let fileData = message.fileMessageData!
-            let imageIcon = NSTextAttachment.textAttachment(for: .document, with: .from(scheme: .textForeground))!
+            let imageIcon = NSTextAttachment.textAttachment(for: .document, with: .from(scheme: .textForeground))
             let initialString = NSAttributedString(attachment: imageIcon) + "  " + (fileData.filename ?? "conversation.input_bar.message_preview.file".localized).localizedUppercase
             content = .text(initialString && attributes)
             contentType = "quote.type.file"
