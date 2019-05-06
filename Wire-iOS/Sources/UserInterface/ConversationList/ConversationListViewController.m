@@ -95,6 +95,11 @@
 @property (nonatomic) BOOL shouldAnimateNetworkStatusView;
 
 @property (nonatomic) UIView *contentContainer;
+@property (nonatomic, nullable) UIView *conversationListContainer;
+@property (nonatomic) ConversationListOnboardingHint *onboardingHint;
+
+@property (nonatomic) NSLayoutConstraint *bottomBarBottomOffset;
+@property (nonatomic) NSLayoutConstraint *bottomBarToolTipConstraint;
 
 @property (nonatomic) CGFloat contentControllerBottomInset;
 
