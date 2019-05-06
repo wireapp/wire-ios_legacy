@@ -206,6 +206,8 @@
 "conversation.status.silenced" = "訊息通知已關閉";
 "conversation.status.poor_connection" = "連線品質不佳";
 "conversation.status.blocked" = "已封鎖";
+"conversation.status.incoming_call" = "%@呼叫中...";
+"conversation.status.incoming_call.unknown" = "Someone is calling…";
 
 "conversation.status.message.text" = "%@";
 "conversation.status.message.link" = "分享一條連結";
@@ -855,7 +857,7 @@
 // Settings - top level
 "self.settings.create_team.title" = "建立團隊";
 "self.settings.manage_team.title" = "管理團隊";
-"self.settings.add_team_or_account.title" = "新建團隊或帳號";
+"self.settings.add_team_or_account.title" = "Add Account";
 "self.settings.add_account.title" = "新增帳號";
 
 "self.settings.add_account.error.title" = "已啓動三個賬號";
@@ -1134,6 +1136,10 @@
 "landing.create_team.subtitle" = "保密企業、機構和專業組織的協作";
 "landing.login.hints" = "已有帳號？";
 "landing.login.button.title" = "登入";
+
+"landing.custom_backend.title" = "Connected to \"%@\"";
+"landing.custom_backend.more_info.button.title" = "Show more";
+"landing.custom_backend.more_info.alert.title" = " You are connected to a third-party server: %@";
 
 // Create team
 
@@ -1512,6 +1518,8 @@
 
 "availability.message.cancel" = "取消";
 "availability.message.set_status" = "設定狀態";
+"availability.accessibility_label.change_status" = "Change Status";
+"availability.accessibility_label.status" = "Status";
 
 "availability.none" = "沒有狀態";
 "availability.available" = "在線";
@@ -1524,13 +1532,13 @@
 "availability.reminder.away.title" = "You are set to Away";
 "availability.reminder.away.message" = "You will appear as Away to other people. You will not receive notifications about any incoming calls or messages.";
 "availability.reminder.busy.title" = "You are set to Busy";
-"availability.reminder.busy.message" = "You will appear as Busy to other people. You will receive only receive notifications for mentions, replies, and calls in conversations that are not muted.";
+"availability.reminder.busy.message" = "You will appear as Busy to other people. You will only receive notifications for mentions, replies, and calls in conversations that are not muted.";
 "availability.reminder.available.title" = "You are set to Available";
 "availability.reminder.available.message" = "You will appear as Available to other people. You will receive notifications for incoming calls and for messages according to the Notifications setting in each conversation.";
 "availability.reminder.none.title" = "No status set";
 "availability.reminder.none.message" = "You will receive notifications for incoming calls and for messages according to the Notifications setting in each conversation.";
 "availability.reminder.action.dont_remind_me" = "Do not display this information again";
-"availability.reminder.action.ok" = "Ok";
+"availability.reminder.action.ok" = "確認";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Call Quality Survey
@@ -1550,6 +1558,16 @@
 "url_action.confirm" = "確認";
 "url_action.title" = "確認 URL 動作";
 "url_action.connect_to_bot.message" = "你想要連接到Bot嗎？";
+
+"url_action.switch_backend.title" = "Connect to server";
+"url_action.switch_backend.message" = "This configuration will connect the app to a third-party server:\n%@";
+
+"url_action.switch_backend.error.logged_in.title" = "Can’t switch servers";
+"url_action.switch_backend.error.logged_in" = "You are already logged in. To switch to this server, log out of all accounts and try again.";
+
+"url_action.switch_backend.error.invalid_backend.title" = "The server is not responding";
+"url_action.switch_backend.error.invalid_backend" = "Please check your internet connection, verify the link and try again.";
+
 
 // Deep Link
 "url_action.invalid_user.title" = "Wire找不到這個人。";

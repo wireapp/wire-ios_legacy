@@ -136,11 +136,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>few</key>
-        <string>%d</string>
+        <string>%d іншими</string>
         <key>many</key>
         <string>%d іншими</string>
         <key>other</key>
-        <string>%d</string>
+        <string>%d іншими</string>
       </dict>
     </dict>
     <key>content.system.people_started_using</key>
@@ -173,7 +173,7 @@
         <key>few</key>
         <string>нові пристрої</string>
         <key>many</key>
-        <string>нові пристрої</string>
+        <string>нових пристроїв</string>
         <key>other</key>
         <string>нових пристроїв</string>
       </dict>
@@ -193,7 +193,7 @@
         <key>few</key>
         <string>нові пристрої</string>
         <key>many</key>
-        <string>нові пристрої</string>
+        <string>нових пристроїв</string>
         <key>other</key>
         <string>нових пристроїв</string>
       </dict>
@@ -341,7 +341,7 @@
     <key>registration.password.rules.min_length</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
-      <string>at least %#@character_count@</string>
+      <string>принаймні %#@character_count@</string>
       <key>character_count</key>
       <dict>
         <key>NSStringFormatSpecTypeKey</key>
@@ -349,13 +349,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>one character</string>
+        <string>один символ</string>
         <key>few</key>
-        <string>%d characters</string>
+        <string>%d символи</string>
         <key>many</key>
-        <string>%d characters</string>
+        <string>%d символів</string>
         <key>other</key>
-        <string>%d characters</string>
+        <string>%d символів</string>
       </dict>
     </dict>
     <key>registration.password.rules.lowercase</key>
@@ -369,13 +369,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>one lowercase letter</string>
+        <string>одна маленька буква</string>
         <key>few</key>
-        <string>%d lowercase letters</string>
+        <string>%d маленькі букви</string>
         <key>many</key>
-        <string>%d lowercase letters</string>
+        <string>%d маленьких букв</string>
         <key>other</key>
-        <string>%d lowercase letters</string>
+        <string>%d маленьких букв</string>
       </dict>
     </dict>
     <key>registration.password.rules.uppercase</key>
@@ -389,13 +389,13 @@
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>one</key>
-        <string>one capital letter</string>
+        <string>одна велика буква</string>
         <key>few</key>
-        <string>%d capital letters</string>
+        <string>%d великі букви</string>
         <key>many</key>
-        <string>%d capital letters</string>
+        <string>%d великих букв</string>
         <key>other</key>
-        <string>%d capital letters</string>
+        <string>%d великих букв</string>
       </dict>
     </dict>
     <key>registration.password.rules.number</key>
@@ -409,13 +409,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>a number</string>
+        <string>цифра</string>
         <key>few</key>
-        <string>%d numbers</string>
+        <string>%d цифри</string>
         <key>many</key>
-        <string>%d numbers</string>
+        <string>%d цифр</string>
         <key>other</key>
-        <string>%d numbers</string>
+        <string>%d цифр</string>
       </dict>
     </dict>
     <key>registration.password.rules.special</key>
@@ -429,13 +429,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>a special character</string>
+        <string>спеціальний символ</string>
         <key>few</key>
-        <string>%d special characters</string>
+        <string>%d спеціальні символи</string>
         <key>many</key>
-        <string>%d special characters</string>
+        <string>%d спеціальних символів</string>
         <key>other</key>
-        <string>%d special characters</string>
+        <string>%d спеціальних символів</string>
       </dict>
     </dict>
   </dict>
