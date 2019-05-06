@@ -122,9 +122,12 @@
 #import "Button.h"
 
 #import "PermissionDeniedViewController.h"
-#import "PermissionDeniedViewController+Internal.h"
 
 #import "ShareContactsViewController.h"
+#import "ShareContactsViewController+Internal.h"
+
+#import "PermissionDeniedViewController+Internal.h"
+
 #import "ImagePickerConfirmationController.h"
 
 // Helper objects

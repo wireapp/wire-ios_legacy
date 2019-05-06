@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2018 Wire Swiss GmbH
+// Copyright (C) 2019 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -18,20 +18,20 @@
 
 import Foundation
 
-/**
- * Handles the notification informing that the client has been registered after the client signed in.
- */
+extension ConversationInputBarViewController {
 
-class AuthenticationClientRegistrationSuccessHandler: AuthenticationEventHandler {
+    @objc
+    func updateTypingIndicatorVisibility(animated: Bool) {
+        guard let typingIndicatorView = typingIndicatorView else { return }
 
-    weak var statusProvider: AuthenticationStatusProvider?
+        let count = typingUsers?.count ?? 0
 
-    func handleEvent(currentStep: AuthenticationFlowStep, context: Void) -> [AuthenticationCoordinatorAction]? {
-        if ZMUserSession.shared()?.hasCompletedInitialSync == true {
-            return [.hideLoadingView, .completeLoginFlow]
-        } else {
-            return [.transition(.pendingInitialSync(next: nil), mode: .normal)]
+        if let typingUsers = typingUsers, count > 0 {
+            typingIndicatorView.typingUsers = Array(typingUsers)
+            typingIndicatorView.layoutIfNeeded()
         }
-    }
 
+        typingIndicatorView.setHidden(count == 0, animated: animated)
+    }
 }
+
