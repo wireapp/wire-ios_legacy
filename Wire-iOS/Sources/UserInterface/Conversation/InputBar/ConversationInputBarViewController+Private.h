@@ -26,6 +26,7 @@
 @class ZMClientMessage;
 @class ReplyComposingView;
 @class TypingIndicatorView;
+@class ZMUser;
 
 @interface ConversationInputBarViewController ()
 
@@ -45,7 +46,7 @@
 
 @property (nonatomic, nonnull) InputBar *inputBar;
 
-@property (nonatomic, nonnull) TypingIndicatorView *typingIndicatorView;
+@property (nonatomic, nullable) TypingIndicatorView *typingIndicatorView;
 
 @property (nonatomic, nullable) AudioRecordViewController *audioRecordViewController;
 @property (nonatomic, nullable) UIView *audioRecordViewContainer;
@@ -75,7 +76,7 @@
 @property (nonatomic, nullable, weak) UIPopoverPresentationController *presentedPopover;
 @property (nonatomic, nullable, weak) UIView *popoverPointToView;
 
-@property (nonatomic, nullable) NSSet *typingUsers;
+@property (nonatomic, nullable) NSSet<ZMUser *> *typingUsers;
 
 - (void)updateRightAccessoryView;
 - (void)updateButtonIcons;
