@@ -116,6 +116,8 @@ extension ContactsViewController {
 
     @objc
     func createBottomButtonConstraints() {
+        guard let bottomButton = bottomButton else { return }
+
         bottomButton.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
