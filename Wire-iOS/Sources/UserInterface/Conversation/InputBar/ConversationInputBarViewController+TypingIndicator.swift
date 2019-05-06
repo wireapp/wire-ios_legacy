@@ -26,7 +26,7 @@ extension ConversationInputBarViewController {
 
         let count = typingUsers?.count ?? 0
 
-        if let typingUsers = typingUsers as? Set<ZMUser>, count > 0 {
+        if let typingUsers = typingUsers, count > 0 {
             typingIndicatorView.typingUsers = Array(typingUsers)
             typingIndicatorView.layoutIfNeeded()
         }
