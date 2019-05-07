@@ -150,7 +150,7 @@ class SenderCellComponent: UIView {
         return NSAttributedString(string: string, attributes: [.foregroundColor : kind.color, .font : kind.font])
     }
 
-    //MARK: - tap on gesture
+    //MARK: - tap gesture of avatar
 
     @objc func tappedOnAvatar() {
         guard let user = avatar.user else { return }
