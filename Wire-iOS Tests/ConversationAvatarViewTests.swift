@@ -53,7 +53,7 @@ class ConversationAvatarViewTests: CoreDataSnapshotTestCase {
         // GIVEN
         let thirdUser = ZMUser.insertNewObject(in: uiMOC)
         thirdUser.name = "Anna"
-        let conversation = ZMConversation.insertGroupConversation(into: uiMOC, withParticipants: [otherUser, thirdUser])
+        let conversation = ZMConversation.insertGroupConversation(into: uiMOC, withParticipants: [otherUser!, thirdUser])
         conversation?.internalRemoveParticipants(Set([selfUser!, otherUser!, thirdUser]), sender: selfUser)
 
         // WHEN
@@ -79,7 +79,7 @@ class ConversationAvatarViewTests: CoreDataSnapshotTestCase {
         // AND WHEN
         let thirdUser = ZMUser.insertNewObject(in: uiMOC)
         thirdUser.name = "Anna"
-        let conversation = ZMConversation.insertGroupConversation(into: uiMOC, withParticipants: [otherUser, thirdUser])
+        let conversation = ZMConversation.insertGroupConversation(into: uiMOC, withParticipants: [otherUser!, thirdUser])
         conversation?.internalRemoveParticipants(Set([selfUser!, otherUser!, thirdUser]), sender: selfUser)
         
         sut.conversation = conversation
@@ -136,7 +136,7 @@ class ConversationAvatarViewTests: CoreDataSnapshotTestCase {
         // GIVEN
         let thirdUser = ZMUser.insertNewObject(in: uiMOC)
         thirdUser.name = "Anna"
-        let conversation = ZMConversation.insertGroupConversation(into: uiMOC, withParticipants: [otherUser, thirdUser])
+        let conversation = ZMConversation.insertGroupConversation(into: uiMOC, withParticipants: [otherUser!, thirdUser])
         
         conversation?.sortedActiveParticipants.assignSomeAccentColors()
         

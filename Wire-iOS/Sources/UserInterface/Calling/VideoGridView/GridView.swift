@@ -23,6 +23,8 @@ fileprivate extension NSLayoutConstraint.Axis{
         switch self {
         case .horizontal: return .vertical
         case .vertical: return .horizontal
+        @unknown default:
+            fatalError()
         }
     }
 }

@@ -101,6 +101,9 @@ extension SettingsCellDescriptorFactory {
                     return .text("self.settings.sound_menu.mute_while_talking.title".localized)
                 case .none:
                     return .text("self.settings.sound_menu.no_sounds.title".localized)
+                @unknown default:
+                    ///TODO: change AVSIntensityLevel to NS_CLOSED_ENUM
+                    return .text("")
                 }
 
             }

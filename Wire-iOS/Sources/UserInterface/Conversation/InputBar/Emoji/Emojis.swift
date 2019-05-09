@@ -65,7 +65,7 @@ class EmojiDataSource: NSObject, UICollectionViewDataSource {
     }
     
     func sectionIndex(for type: EmojiSectionType) -> Int? {
-        return sections.map { $0.type }.index(of: type)
+        return sections.map { $0.type }.firstIndex(of: type)
     }
 
     func register(used emoji: Emoji) -> Update? {

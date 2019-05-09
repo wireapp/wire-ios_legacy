@@ -135,6 +135,9 @@ class NetworkStatusViewController : UIViewController {
             return .online
         case .onlineSynchronizing:
             return .onlineSynchronizing
+        @unknown default:
+            ///TODO: ZMNetworkState change to NS_CLOSED_ENUM 
+            fatalError()
         }
     }
 
@@ -201,6 +204,8 @@ extension NetworkStatusViewController {
                 networkStatusView.update(state: .online, animated: false)
             }
         case .compact, .unspecified:
+            networkStatusView.update(state: state, animated: false)
+        @unknown default:
             networkStatusView.update(state: state, animated: false)
         }
     }

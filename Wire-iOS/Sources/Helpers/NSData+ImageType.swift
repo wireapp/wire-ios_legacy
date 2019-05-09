@@ -27,8 +27,8 @@ extension NSData {
 
 extension Data {
     var isJPEG: Bool {
-        let array = self.withUnsafeBytes {
-            [UInt8](UnsafeBufferPointer(start: $0, count: 3))
+        let array = self.withUnsafeBytes { (unsafeRawBufferPointer: UnsafeRawBufferPointer) in
+            [UInt8](UnsafeBufferPointer(start: unsafeRawBufferPointer.bindMemory(to: UInt8.self).baseAddress!, count: 3))
         }
         let JPEGHeader: [UInt8] = [0xFF, 0xD8, 0xFF]
         

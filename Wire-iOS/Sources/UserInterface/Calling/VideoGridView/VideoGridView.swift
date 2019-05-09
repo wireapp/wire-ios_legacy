@@ -54,6 +54,8 @@ fileprivate extension CGSize {
         switch traitCollection.horizontalSizeClass {
         case .regular: return .floatingPreviewLarge
         case .compact, .unspecified: return .floatingPreviewSmall
+        @unknown default:
+            return .floatingPreviewSmall
         }
     }
 }
@@ -291,7 +293,7 @@ final class VideoGridViewController: UIViewController {
             return Log.calling.debug("Failed to remove video stream \(streamId) since view was not found")
         }
         gridView.remove(view: videoView)
-        gridVideoStreams.index(of: streamId).apply { gridVideoStreams.remove(at: $0) }
+        gridVideoStreams.firstIndex(of: streamId).apply { gridVideoStreams.remove(at: $0) }
     }
 
     private func streamView(for streamId: UUID) -> UIView? {

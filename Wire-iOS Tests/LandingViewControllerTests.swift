@@ -25,6 +25,8 @@ extension NSLayoutConstraint.Axis : CustomStringConvertible {
         switch self {
         case .horizontal : return "horizontal"
         case .vertical : return "vertical"
+        @unknown default :
+            return "unknown"
         }
     }
 }
