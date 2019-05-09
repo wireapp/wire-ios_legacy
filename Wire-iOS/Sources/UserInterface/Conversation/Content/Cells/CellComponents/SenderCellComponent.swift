@@ -76,6 +76,8 @@ class SenderCellComponent: UIView {
         avatar.initialsFont = .avatarInitial
         avatar.size = .badge
         avatar.translatesAutoresizingMaskIntoConstraints = false
+        avatar.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tappedOnAvatar)))
+
         
         avatarSpacer.addSubview(avatar)
         avatarSpacer.translatesAutoresizingMaskIntoConstraints = false
@@ -147,6 +149,15 @@ class SenderCellComponent: UIView {
     private func attributedName(for kind: TextKind, string: String) -> NSAttributedString {
         return NSAttributedString(string: string, attributes: [.foregroundColor : kind.color, .font : kind.font])
     }
+
+    //MARK: - tap gesture of avatar
+
+    @objc func tappedOnAvatar() {
+        guard let user = avatar.user else { return }
+
+        SessionManager.shared?.showUserProfile(user: user)
+    }
+
     
 }
 
