@@ -34,7 +34,7 @@ extension String {
     let searchQueryMatchRange: NSRange
 
     init?(text: String?, cursorPosition: Int) {
-        guard let text = text, text.count > 0 else { return nil }
+        guard let text = text, !text.isEmpty else { return nil }
         
         let matches = mentionRegex.matches(in: text, range: text.wholeRangeInUTF8)
         // Cursor is a separator between characters, we are interested in the character before the cursor
