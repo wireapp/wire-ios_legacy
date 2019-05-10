@@ -35,12 +35,20 @@ private struct LegalholdParticipantsSectionViewModel {
     
 }
 
+protocol LegalholdParticipantsSectionControllerDelegate: class {
+    
+    func legalholdParticipantsSectionWantsToPresentUserProfile(for user: UserType)
+    
+}
+
 class LegalholdParticipantsSectionController: GroupDetailsSectionController {
     
     fileprivate weak var collectionView: UICollectionView?
     private let viewModel: LegalholdParticipantsSectionViewModel
     private let conversation: ZMConversation
     private var token: AnyObject?
+    
+    public weak var delegate: LegalholdParticipantsSectionControllerDelegate?
     
     init(participants: [UserType], conversation: ZMConversation) {
         viewModel = .init(participants: participants)
@@ -84,8 +92,9 @@ class LegalholdParticipantsSectionController: GroupDetailsSectionController {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        // let user = viewModel.participants[indexPath.row]
-        // present details for user
+        let user = viewModel.participants[indexPath.row]
+        
+        delegate?.legalholdParticipantsSectionWantsToPresentUserProfile(for: user)
     }
     
 }
