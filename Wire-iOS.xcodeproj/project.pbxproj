@@ -139,6 +139,7 @@
 		16DD6E982283102D0090A74C /* LegalholdParticipantsSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16DD6E972283102D0090A74C /* LegalholdParticipantsSectionController.swift */; };
 		16DD6EB8228431030090A74C /* LegalholdHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16DD6EB7228431030090A74C /* LegalholdHeaderView.swift */; };
 		16DD6EBA22844EC80090A74C /* SingleViewSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16DD6EB922844EC80090A74C /* SingleViewSectionController.swift */; };
+		16DF3B682289B92000D09365 /* LegalholdDetailsViewControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16DF3B632289B89E00D09365 /* LegalholdDetailsViewControllerSnapshotTests.swift */; };
 		16E256212108AF6E00919DB0 /* FontSpec+DynamicType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16E256202108AF6E00919DB0 /* FontSpec+DynamicType.swift */; };
 		16E2A09A1F6ADE75005F4DB1 /* ActiveCallViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16E2A0991F6ADE75005F4DB1 /* ActiveCallViewController.swift */; };
 		16E2A0A01F6BEDE7005F4DB1 /* ProximityMonitorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16E2A09F1F6BEDE7005F4DB1 /* ProximityMonitorManager.swift */; };
@@ -1629,6 +1630,7 @@
 		16DD6E972283102D0090A74C /* LegalholdParticipantsSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegalholdParticipantsSectionController.swift; sourceTree = "<group>"; };
 		16DD6EB7228431030090A74C /* LegalholdHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegalholdHeaderView.swift; sourceTree = "<group>"; };
 		16DD6EB922844EC80090A74C /* SingleViewSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleViewSectionController.swift; sourceTree = "<group>"; };
+		16DF3B632289B89E00D09365 /* LegalholdDetailsViewControllerSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegalholdDetailsViewControllerSnapshotTests.swift; sourceTree = "<group>"; };
 		16E256202108AF6E00919DB0 /* FontSpec+DynamicType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FontSpec+DynamicType.swift"; sourceTree = "<group>"; };
 		16E2A0991F6ADE75005F4DB1 /* ActiveCallViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActiveCallViewController.swift; sourceTree = "<group>"; };
 		16E2A09F1F6BEDE7005F4DB1 /* ProximityMonitorManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProximityMonitorManager.swift; sourceTree = "<group>"; };
@@ -5820,6 +5822,7 @@
 				EF883F892152476900B440CC /* ConversationCreationControllerSnapshotTests.swift */,
 				87240381215B92F00094363B /* ZMUserMentionsTest.swift */,
 				EF883F8B215250B000B440CC /* AddParticipantsViewControllerSnapshotTests.swift */,
+				16DF3B632289B89E00D09365 /* LegalholdDetailsViewControllerSnapshotTests.swift */,
 				EF5C844B21F2386A002481DE /* ConversationDetail */,
 				EFC0C7F021778FB000380C4B /* SettingsTextCellSnapshotTests.swift */,
 				873F91942189BB3C00E1DBB9 /* MessageReplyPreviewViewTests.swift */,
@@ -8036,6 +8039,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				16DF3B682289B92000D09365 /* LegalholdDetailsViewControllerSnapshotTests.swift in Sources */,
 				EFAFCA8D213433D7002B31A6 /* ConversationListViewControllerTests.swift in Sources */,
 				F1CB5D29215A3108001CCF5D /* MentionsHandlerTests.swift in Sources */,
 				BACB88561AF7C48900DDCDB0 /* AggregateArrayTests.m in Sources */,

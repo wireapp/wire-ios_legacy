@@ -122,6 +122,7 @@ static id<UserType> mockSelfUser = nil;
 @synthesize teamRole;
 @synthesize readReceiptsEnabled;
 @synthesize activeConversations;
+@synthesize isUnderLegalhold;
 
 #pragma mark - ZMBareUserConnection
 
