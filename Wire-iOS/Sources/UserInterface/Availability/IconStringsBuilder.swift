@@ -38,8 +38,8 @@ public class IconStringsBuilder {
         
         if icons.count > 0 {
             var iconString = "".attributedString
-            icons.forEach { iconString += NSAttributedString(attachment: $0) }
-            title = iconString + "  " + title
+            icons.forEach { iconString += NSAttributedString(attachment: $0) + "  " }
+            title = iconString + title
         }
         
         return title && color

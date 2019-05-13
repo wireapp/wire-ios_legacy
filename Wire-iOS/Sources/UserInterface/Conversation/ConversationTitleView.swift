@@ -43,23 +43,29 @@ class ConversationTitleView: TitleView {
         
         var attachments: [NSTextAttachment] = []
         
+        if conversation.isUnderLegalHold {
+            attachments.append(.legalHold())
+        }
+        
         if conversation.securityLevel == .secure {
             attachments.append(.verifiedShield())
         }
-        
-        //if conversation.isUnderLegalhold {
-            attachments.append(.legalHold())
-        //}
         
         super.configure(icons: attachments,
                         title: conversation.displayName.localizedUppercase,
                         interactive: self.interactive && conversation.relatedConnectionState != .sent)
         
+        var accessibilityLabel = conversation.displayName.localizedUppercase
+        
         if conversation.securityLevel == .secure {
-            self.accessibilityLabel = conversation.displayName.localizedUppercase + ", " + "conversation.voiceover.verified".localized
-        } else {
-            self.accessibilityLabel = conversation.displayName.localizedUppercase
+            accessibilityLabel += ", " + "conversation.voiceover.verified".localized
         }
+        
+        if conversation.isUnderLegalHold {
+            accessibilityLabel += ", conversation is under legal hold" //TODO localize
+        }
+        
+        self.accessibilityLabel = accessibilityLabel
     }
     
 }
