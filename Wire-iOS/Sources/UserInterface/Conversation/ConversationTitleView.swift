@@ -41,12 +41,17 @@ class ConversationTitleView: TitleView {
         titleFont = FontSpec(.medium, .semibold).font!
         accessibilityHint = "conversation_details.open_button.accessibility_hint".localized
         
-        var attachment : NSTextAttachment?
+        var attachments: [NSTextAttachment] = []
+        
         if conversation.securityLevel == .secure {
-            attachment = .verifiedShield()
+            attachments.append(.verifiedShield())
         }
         
-        super.configure(icon: attachment,
+        //if conversation.isUnderLegalhold {
+            attachments.append(.legalHold())
+        //}
+        
+        super.configure(icons: attachments,
                         title: conversation.displayName.localizedUppercase,
                         interactive: self.interactive && conversation.relatedConnectionState != .sent)
         
@@ -65,6 +70,16 @@ extension NSTextAttachment {
         let shield = WireStyleKit.imageOfShieldverified
         attachment.image = shield
         let ratio = shield.size.width / shield.size.height
+        let height: CGFloat = 12
+        attachment.bounds = CGRect(x: 0, y: -2, width: height * ratio, height: height)
+        return attachment
+    }
+    
+    static func legalHold() -> NSTextAttachment {
+        let attachment = NSTextAttachment()
+        let legalHold = StyleKitIcon.legalholdactive.makeImage(size: .tiny, color: .vividRed)
+        attachment.image = legalHold
+        let ratio = legalHold.size.width / legalHold.size.height
         let height: CGFloat = 12
         attachment.bounds = CGRect(x: 0, y: -2, width: height * ratio, height: height)
         return attachment

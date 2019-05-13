@@ -25,6 +25,10 @@ public class IconStringsBuilder {
     // - and, obviously, a color
     
     static func iconString(with icon: NSTextAttachment?, title: String, interactive: Bool, color: UIColor) -> NSAttributedString {
+        return iconString(with: icon == nil ? [] : [icon!], title: title, interactive: interactive, color: color)
+    }
+    
+    static func iconString(with icons: [NSTextAttachment], title: String, interactive: Bool, color: UIColor) -> NSAttributedString {
         
         var title = title.attributedString
         
@@ -32,8 +36,10 @@ public class IconStringsBuilder {
             title += "  " + NSAttributedString(attachment: .downArrow(color: color))
         }
         
-        if let icon = icon {
-            title = NSAttributedString(attachment: icon) + "  " + title
+        if icons.count > 0 {
+            var iconString = "".attributedString
+            icons.forEach { iconString += NSAttributedString(attachment: $0) }
+            title = iconString + "  " + title
         }
         
         return title && color
