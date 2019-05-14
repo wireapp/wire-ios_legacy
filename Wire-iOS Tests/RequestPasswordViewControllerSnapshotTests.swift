@@ -21,7 +21,6 @@ import XCTest
 
 final class RequestPasswordViewControllerSnapshotTests: ZMSnapshotTestCase {
     
-    var sut: RequestPasswordViewController!
     let callback = { (result: Result<String>) -> () in}
     var fingerprint: Data!
 
@@ -32,26 +31,25 @@ final class RequestPasswordViewControllerSnapshotTests: ZMSnapshotTestCase {
 
 
     override func tearDown() {
-        sut = nil
         fingerprint = nil
 
         super.tearDown()
     }
 
     func testForRemoveDeviceContext(){
-        sut = RequestPasswordViewController.requestPasswordController(context: .removeDevice, callback: callback)
+        let sut = RequestPasswordViewController.requestPasswordController(context: .removeDevice, callback: callback)
 
         verifyAlertController(sut)
     }
 
     func testForLegalHoldContext() {
-        sut = RequestPasswordViewController.requestPasswordController(context: .legalHold(fingerprint: fingerprint, hasPasswordInput: true), callback: callback)
+        let sut = RequestPasswordViewController.requestPasswordController(context: .legalHold(fingerprint: fingerprint, hasPasswordInput: true), callback: callback)
 
         verifyAlertController(sut)
     }
 
     func testForLegalHoldContextWithNoPasswordInput() {
-        sut = RequestPasswordViewController.requestPasswordController(context: .legalHold(fingerprint: fingerprint, hasPasswordInput: false), callback: callback)
+        let sut = RequestPasswordViewController.requestPasswordController(context: .legalHold(fingerprint: fingerprint, hasPasswordInput: false), callback: callback)
 
         verifyAlertController(sut)
     }
