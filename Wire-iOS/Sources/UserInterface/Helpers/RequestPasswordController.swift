@@ -26,9 +26,9 @@ enum RequestPasswordContext {
 
 final class RequestPasswordController {
     
-    let callback: ((Result<String>) -> ())?
-    var okAction: UIAlertAction? = .none
-    var alertController: UIAlertController
+    let callback: ((Result<String>) -> ())
+    var okAction: UIAlertAction!
+    let alertController: UIAlertController
     
     init(context: RequestPasswordContext,
          callback: @escaping (Result<String>) -> ()) {
@@ -79,17 +79,17 @@ final class RequestPasswordController {
             break
         }
 
-        let okAction = UIAlertAction(title: okTitle, style: .default) {
+        okAction = UIAlertAction(title: okTitle, style: .default) {
             [weak self, unowned alertController] (action: UIAlertAction) -> Void in
             if let passwordField = alertController.textFields?[0] {
                 let password = passwordField.text ?? ""
-                self?.callback?(.success(password))
+                self?.callback(.success(password))
             }
         }
         
         let cancelAction = UIAlertAction(title: cancelTitle, style: .cancel) {
             [weak self, unowned alertController] (action: UIAlertAction) -> Void in
-            self?.callback?(.failure(NSError(domain: "\(type(of: alertController))", code: 0, userInfo: [NSLocalizedDescriptionKey: "User cancelled input"])))
+            self?.callback(.failure(NSError(domain: "\(type(of: alertController))", code: 0, userInfo: [NSLocalizedDescriptionKey: "User cancelled input"])))
         }
 
         alertController.addAction(okAction)
@@ -100,6 +100,7 @@ final class RequestPasswordController {
     func passwordTextFieldChanged(_ textField: UITextField) {
         guard let passwordField = alertController.textFields?[0] else { return }
 
-        okAction?.isEnabled = (passwordField.text ?? "").count > 6;
+        ///TODO: update with password requirement
+        okAction.isEnabled = (passwordField.text ?? "").count > 6
     }
 }
