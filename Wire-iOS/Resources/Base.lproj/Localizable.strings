@@ -1610,3 +1610,6 @@
 "registration.password.rules.no_requirements" = "Use %@.";
 "registration.password.rules.with_requirements" = "Use %@, with %@.";
 
+// Legal Hold Deactivation
+"legal_hold.deactivated.title" = "Legal Hold Deactivated";
+"legal_hold.deactivated.message" = "Future messages will not be recorded.";

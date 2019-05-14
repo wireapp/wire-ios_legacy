@@ -21,7 +21,8 @@ import Foundation
 extension UIViewController {
     func presentAlertWithOKButton(title: String,
                                   message: String,
-                                  okActionHandler: ((UIAlertAction) -> Void)? = nil) {
+                                  animated: Bool = true,
+                                  okActionHandler: ((UIAlertAction) -> Void)? = nil) -> UIAlertController {
         let alert = UIAlertController(title: title,
                                       message: message,
                                       preferredStyle: .alert)
@@ -29,13 +30,27 @@ extension UIViewController {
         let okAction = UIAlertAction(title: "general.ok".localized, style: .cancel, handler: okActionHandler)
         alert.addAction(okAction)
 
-        present(alert, animated: true, completion: nil)
+        present(alert, animated: animated, completion: nil)
+
+        return alert
     }
-    
-    func presentInvalidUserProfileLinkAlert(okActionHandler: ((UIAlertAction) -> Void)? = nil) {
-        presentAlertWithOKButton(title: "url_action.invalid_user.title".localized,
-                                 message: "url_action.invalid_user.message".localized,
-                                 okActionHandler: okActionHandler)
+
+    //MARK: - legal hold
+    @discardableResult
+    func presentLegalHoldDeactivatedAlert(animated: Bool = true,
+                                          okActionHandler: ((UIAlertAction) -> Void)? = nil) -> UIAlertController {
+        return presentAlertWithOKButton(title: "legal_hold.deactivated.title".localized,
+                                        message: "legal_hold.deactivated.message".localized,
+                                        animated: animated,
+                                        okActionHandler: okActionHandler)
+    }
+
+    //MARK: - user profile deep link
+    @discardableResult
+    func presentInvalidUserProfileLinkAlert(okActionHandler: ((UIAlertAction) -> Void)? = nil) -> UIAlertController {
+        return presentAlertWithOKButton(title: "url_action.invalid_user.title".localized,
+                                        message: "url_action.invalid_user.message".localized,
+                                        okActionHandler: okActionHandler)
     }
     
 }
