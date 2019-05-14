@@ -70,23 +70,27 @@ final class RequestPasswordController {
         switch context {
         case .removeDevice,
              .legalHold(_, true):
-            alertController.addTextField { (textField: UITextField) -> Void in
+            alertController.addTextField {(textField: UITextField) -> Void in
                 textField.placeholder = "self.settings.account_details.remove_device.password".localized
                 textField.isSecureTextEntry = true
-                textField.addTarget(self, action: #selector(self.passwordTextFieldChanged(_:)), for: .editingChanged)
+                textField.addTarget(self,
+                                    action: #selector(RequestPasswordController.passwordTextFieldChanged(_:)),
+                                    for: .editingChanged)
             }
         case .legalHold(_, false):
             break
         }
 
-        let okAction = UIAlertAction(title: okTitle, style: .default) { [weak self, unowned alertController] (action: UIAlertAction) -> Void in
+        let okAction = UIAlertAction(title: okTitle, style: .default) {
+            [weak self, unowned alertController] (action: UIAlertAction) -> Void in
             if let passwordField = alertController.textFields?[0] {
                 let password = passwordField.text ?? ""
                 self?.callback?(.success(password))
             }
         }
         
-        let cancelAction = UIAlertAction(title: cancelTitle, style: .cancel) { [weak self, unowned alertController] (action: UIAlertAction) -> Void in
+        let cancelAction = UIAlertAction(title: cancelTitle, style: .cancel) {
+            [weak self, unowned alertController] (action: UIAlertAction) -> Void in
             self?.callback?(.failure(NSError(domain: "\(type(of: alertController))", code: 0, userInfo: [NSLocalizedDescriptionKey: "User cancelled input"])))
         }
 
