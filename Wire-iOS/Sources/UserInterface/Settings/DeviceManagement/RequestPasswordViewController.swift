@@ -25,7 +25,7 @@ class RequestPasswordViewController: UIAlertController {
     
     var okAction: UIAlertAction? = .none
     
-    static func requestPasswordController(_ callback: @escaping (Result<String>) -> ()) -> RequestPasswordViewController {
+    static func requestPasswordController(_ callback: @escaping (Result<String>) -> ()) -> RequestPasswordViewController {///TODO: reuse for legal hold
         
         let title = NSLocalizedString("self.settings.account_details.remove_device.title", comment: "")
         let message = NSLocalizedString("self.settings.account_details.remove_device.message", comment: "")
