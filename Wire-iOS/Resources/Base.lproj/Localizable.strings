@@ -812,6 +812,7 @@
 "legalhold.header.title" = "Legal Hold";
 "legalhold.header.other_description" = "Legal Hold has been activated for at least one person in this conversation.\nAll messages will be recorded, including deleted, edited, and timed messages.";
 "legalhold.header.self_description" = "Legal Hold has been activated for your account.\nAll messages will be recorded, including deleted, edited, and timed messages.\nYour conversation partners will be aware of the recording.";
+"legalhold.accessibility" = "Legal hold details";
 
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
