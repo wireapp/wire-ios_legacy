@@ -22,26 +22,21 @@ import XCTest
 final class UIViewController_LegalHoldAlertSnapshotTests: ZMSnapshotTestCase {
     
     var sut: UIAlertController!
-    var mockViewContoller: UIViewController!
-    
+
     override func setUp() {
         super.setUp()
-        mockViewContoller = UIViewController()
-        sut = mockViewContoller.presentLegalHoldDeactivatedAlert(animated: false)
+        sut = UIAlertController.legalHoldDeactivated()
 
-        addUIInterruptionMonitor(withDescription: "System Dialog") {
-            (alert) -> Bool in
-            let button = alert.buttons.element(boundBy: 1)
-            if button.exists {
-                button.tap()
-            }
-            return true
-        }
+//        let systemAlerts = XCUIApplication(bundleIdentifier: "com.apple.springboard").alerts
+//        if systemAlerts.buttons["Don't Allow"].exists {
+//            systemAlerts.buttons["Don't Allow"].tap()
+//        }
+
+        recordMode = true
     }
     
     override func tearDown() {
         sut = nil
-        mockViewContoller = nil
         super.tearDown()
     }
 
