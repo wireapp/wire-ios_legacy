@@ -762,11 +762,9 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     UIAlertController *controller = [UIAlertController controllerForUnknownClientsForUsers:users completion:^(ConversationDegradedResult result) {
         switch (result) {
             case ConversationDegradedResultCancel:
-                [self.conversation makeNotSecure];
                 [self.conversation doNotResendMessagesThatCausedDegradation];
                 break;
             case ConversationDegradedResultSendAnyway:
-                [self.conversation makeNotSecure];
                 [self.conversation resendMessagesThatCausedConversationSecurityDegradation];
                 break;
             case ConversationDegradedResultShowDetails:

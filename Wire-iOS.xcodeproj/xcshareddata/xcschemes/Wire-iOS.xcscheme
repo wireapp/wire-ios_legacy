@@ -120,7 +120,7 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-ZMBackendEnvironmentType staging"
-            isEnabled = "NO">
+            isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "--persist-backend-type"
