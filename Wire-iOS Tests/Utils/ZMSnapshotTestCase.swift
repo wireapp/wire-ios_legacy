@@ -519,6 +519,8 @@ extension ZMSnapshotTestCase {
     func verifyAlertController(_ controller: UIAlertController, file: StaticString = #file, line: UInt = #line) {
         presentViewController(controller, file: file, line: line)
         verify(view: controller.view, file: file, line: line)
+
+        dismissViewController(controller)
     }
 }
 
