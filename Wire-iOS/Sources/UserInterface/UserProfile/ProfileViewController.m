@@ -145,7 +145,7 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
         self.navigationItem.rightBarButtonItem = [self.navigationController closeItem];
     }
     
-    if (self.fullUser.isUnderLegalHold) {
+    if (self.fullUser != nil && self.fullUser.isUnderLegalHold) {
         self.navigationItem.leftBarButtonItem = [self.navigationController legalHoldItem];
     }
 }
