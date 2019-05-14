@@ -19,7 +19,7 @@
 import UIKit
 
 
-class LegalholdDetailsViewController: UIViewController {
+class LegalHoldDetailsViewController: UIViewController {
     
     fileprivate let collectionView = UICollectionView(forUserList: ())
     fileprivate let collectionViewController: SectionCollectionViewController
@@ -69,18 +69,18 @@ class LegalholdDetailsViewController: UIViewController {
     }
     
     fileprivate func computeVisibleSections() -> [CollectionViewSectionController] {
-        let headerSection = SingleViewSectionController(view: LegalholdHeaderView(frame: .zero))
-        let legalholdParticipantsSection = LegalholdParticipantsSectionController(participants: conversation.sortedActiveParticipants, conversation: conversation)
-        legalholdParticipantsSection.delegate = self
+        let headerSection = SingleViewSectionController(view: LegalHoldHeaderView(frame: .zero))
+        let legalHoldParticipantsSection = LegalHoldParticipantsSectionController(participants: conversation.sortedActiveParticipants, conversation: conversation)
+        legalHoldParticipantsSection.delegate = self
         
-        return [headerSection, legalholdParticipantsSection]
+        return [headerSection, legalHoldParticipantsSection]
     }
     
 }
 
-extension LegalholdDetailsViewController: LegalholdParticipantsSectionControllerDelegate {
+extension LegalHoldDetailsViewController: LegalHoldParticipantsSectionControllerDelegate {
     
-    func legalholdParticipantsSectionWantsToPresentUserProfile(for user: UserType) {
+    func legalHoldParticipantsSectionWantsToPresentUserProfile(for user: UserType) {
         let profileViewController = ProfileViewController(user: user, viewer: ZMUser.selfUser(), context: .deviceList)
         show(profileViewController, sender: nil)
     }

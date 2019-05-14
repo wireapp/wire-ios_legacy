@@ -19,31 +19,31 @@
 import Foundation
 @testable import Wire
 
-class LegalholdDetailsViewControllerSnapshotTests: ZMSnapshotTestCase {
+class LegalHoldDetailsViewControllerSnapshotTests: ZMSnapshotTestCase {
     
     
     override func setUp() {
         super.setUp()
     }
     
-    var sut: LegalholdDetailsViewController!
+    var sut: LegalHoldDetailsViewController!
     
-    func testSelfUserUnderLegalhold() {
+    func testSelfUserUnderLegalHold() {
         
         let conversation = MockConversation.groupConversation()
         let selfUser = MockUser.mockSelf()
         selfUser?.isUnderLegalhold = true
         
-        sut = LegalholdDetailsViewController(conversation: conversation.convertToRegularConversation())
+        sut = LegalHoldDetailsViewController(conversation: conversation.convertToRegularConversation())
     
         verify(view: sut.view)
     }
     
-    func testOtherUserUnderLegalhold() {
+    func testOtherUserUnderLegalHold() {
         
         let conversation = MockConversation.groupConversation()
         
-        sut = LegalholdDetailsViewController(conversation: conversation.convertToRegularConversation())
+        sut = LegalHoldDetailsViewController(conversation: conversation.convertToRegularConversation())
         
         verify(view: sut.view)
     }

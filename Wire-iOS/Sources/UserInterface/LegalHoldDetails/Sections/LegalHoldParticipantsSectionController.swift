@@ -19,7 +19,7 @@
 import Foundation
 
 
-private struct LegalholdParticipantsSectionViewModel {
+private struct LegalHoldParticipantsSectionViewModel {
 
     let participants: [UserType]
     
@@ -35,20 +35,20 @@ private struct LegalholdParticipantsSectionViewModel {
     
 }
 
-protocol LegalholdParticipantsSectionControllerDelegate: class {
+protocol LegalHoldParticipantsSectionControllerDelegate: class {
     
-    func legalholdParticipantsSectionWantsToPresentUserProfile(for user: UserType)
+    func legalHoldParticipantsSectionWantsToPresentUserProfile(for user: UserType)
     
 }
 
-class LegalholdParticipantsSectionController: GroupDetailsSectionController {
+class LegalHoldParticipantsSectionController: GroupDetailsSectionController {
     
     fileprivate weak var collectionView: UICollectionView?
-    private let viewModel: LegalholdParticipantsSectionViewModel
+    private let viewModel: LegalHoldParticipantsSectionViewModel
     private let conversation: ZMConversation
     private var token: AnyObject?
     
-    public weak var delegate: LegalholdParticipantsSectionControllerDelegate?
+    public weak var delegate: LegalHoldParticipantsSectionControllerDelegate?
     
     init(participants: [UserType], conversation: ZMConversation) {
         viewModel = .init(participants: participants)
@@ -94,12 +94,12 @@ class LegalholdParticipantsSectionController: GroupDetailsSectionController {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let user = viewModel.participants[indexPath.row]
         
-        delegate?.legalholdParticipantsSectionWantsToPresentUserProfile(for: user)
+        delegate?.legalHoldParticipantsSectionWantsToPresentUserProfile(for: user)
     }
     
 }
 
-extension LegalholdParticipantsSectionController: ZMUserObserver {
+extension LegalHoldParticipantsSectionController: ZMUserObserver {
     
     func userDidChange(_ changeInfo: UserChangeInfo) {
         guard changeInfo.connectionStateChanged || changeInfo.nameChanged else { return }

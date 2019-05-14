@@ -18,7 +18,7 @@
 
 import Foundation
 
-class LegalholdHeaderView: UIView {
+class LegalHoldHeaderView: UIView {
     
     let iconView: UIImageView = {
         let imageView = UIImageView(frame: .zero)
@@ -39,7 +39,7 @@ class LegalholdHeaderView: UIView {
     
     let descriptionLabel: UILabel = {
         let label = UILabel(frame: .zero)
-        let text = ZMUser.selfUser()?.isUnderLegalhold == true ? "legalhold.header.self_description" : "legalhold.header.other_description"
+        let text = ZMUser.selfUser()?.isUnderLegalHold == true ? "legalhold.header.self_description" : "legalhold.header.other_description"
         
         label.attributedText = text.localized && .paragraphSpacing(8)
         label.font = UIFont.normalFont

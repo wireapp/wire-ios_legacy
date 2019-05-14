@@ -181,15 +181,15 @@ import Cartography
 extension GroupDetailsViewController {
     
     fileprivate var legalholdItem: UIBarButtonItem {
-        let item = UIBarButtonItem(icon: .legalholdactive, target: self, action: #selector(presentLegalholdDetails))
+        let item = UIBarButtonItem(icon: .legalholdactive, target: self, action: #selector(presentLegalHoldDetails))
         item.accessibilityIdentifier = "legalhold"
         item.accessibilityLabel = "legal hold details" // TODO jacob localize
         item.tintColor = .vividRed
         return item
     }
     
-    func presentLegalholdDetails() {
-        let viewController = LegalholdDetailsViewController(conversation: conversation)
+    func presentLegalHoldDetails() {
+        let viewController = LegalHoldDetailsViewController(conversation: conversation)
         
         navigationController?.pushViewController(viewController, animated: true)
     }
