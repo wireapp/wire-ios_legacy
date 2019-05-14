@@ -27,9 +27,7 @@ enum RequestPasswordContext {
 final class RequestPasswordController {
     
     let callback: ((Result<String>) -> ())?
-    
     var okAction: UIAlertAction? = .none
-
     var alertController: UIAlertController
     
     init(context: RequestPasswordContext,
