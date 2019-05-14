@@ -21,7 +21,7 @@ import Foundation
 
 enum RequestPasswordContext {
     case removeDevice
-    case legalHold ///TODO: value for device ID
+    case legalHold(fingerprint: Data)
 }
 
 final class RequestPasswordViewController: UIAlertController {
@@ -45,9 +45,12 @@ final class RequestPasswordViewController: UIAlertController {
 
             okTitle = "general.ok".localized
             cancelTitle = "general.cancel".localized
-        case .legalHold:
+        case .legalHold(let fingerprint):
             title = "legalhold_request.alert.title".localized
-            message = "legalhold_request.alert.detail".localized
+
+            let fingerprintString = (fingerprint as NSData).fingerprintString
+
+            message = "legalhold_request.alert.detail".localized(args: fingerprintString)
 
             okTitle = "general.skip".localized
             cancelTitle = "general.accept".localized

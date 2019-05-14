@@ -22,6 +22,7 @@ import XCTest
 final class RequestPasswordViewControllerSnapshotTests: ZMSnapshotTestCase {
     
     var sut: RequestPasswordViewController!
+    let callback = { (result: Result<String>) -> () in}
     
     override func setUp() {
         super.setUp()
@@ -37,15 +38,15 @@ final class RequestPasswordViewControllerSnapshotTests: ZMSnapshotTestCase {
     }
 
     func testForRemoveDeviceContext(){
-        sut = RequestPasswordViewController.requestPasswordController(context: .removeDevice) { (result: Result<String>) -> () in
-        }
+        sut = RequestPasswordViewController.requestPasswordController(context: .removeDevice, callback: callback)
 
         verifyAlertController(sut)
     }
 
-    func testForLegalHoldContext(){
-        sut = RequestPasswordViewController.requestPasswordController(context: .legalHold) { (result: Result<String>) -> () in
-        }
+    func testForLegalHoldContext() {
+        let fingerprint = mockUserClient(fingerprintString: "102030405060708090a0b0c0d0e0f0708090102030405060708090").fingerprint!
+
+        sut = RequestPasswordViewController.requestPasswordController(context: .legalHold(fingerprint: fingerprint), callback: callback)
 
         verifyAlertController(sut)
     }
