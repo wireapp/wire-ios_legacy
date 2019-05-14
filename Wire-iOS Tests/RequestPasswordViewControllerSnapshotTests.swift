@@ -23,9 +23,20 @@ final class RequestPasswordViewControllerSnapshotTests: ZMSnapshotTestCase {
     
     var sut: RequestPasswordViewController!
     let callback = { (result: Result<String>) -> () in}
+    let fingerprint: Data!
+
+    override func setUp() {
+        super.setUp()
+        fingerprint = mockUserClient(fingerprintString: "102030405060708090a0b0c0d0e0f0708090102030405060708090").fingerprint!
+
+        recordMode = true
+    }
+
 
     override func tearDown() {
         sut = nil
+        fingerprint = nil
+        
         super.tearDown()
     }
 
@@ -36,9 +47,13 @@ final class RequestPasswordViewControllerSnapshotTests: ZMSnapshotTestCase {
     }
 
     func testForLegalHoldContext() {
-        let fingerprint = mockUserClient(fingerprintString: "102030405060708090a0b0c0d0e0f0708090102030405060708090").fingerprint!
+        sut = RequestPasswordViewController.requestPasswordController(context: .legalHold(fingerprint: fingerprint, hasPasswordInput: true), callback: callback)
 
-        sut = RequestPasswordViewController.requestPasswordController(context: .legalHold(fingerprint: fingerprint), callback: callback)
+        verifyAlertController(sut)
+    }
+
+    func testForLegalHoldContextWithNoPasswordInput() {
+        sut = RequestPasswordViewController.requestPasswordController(context: .legalHold(fingerprint: fingerprint, hasPasswordInput: false), callback: callback)
 
         verifyAlertController(sut)
     }
