@@ -19,8 +19,9 @@
 import XCTest
 @testable import Wire
 
-final class RequestPasswordViewControllerSnapshotTests: ZMSnapshotTestCase {
-    
+final class RequestPasswordControllerSnapshotTests: ZMSnapshotTestCase {
+
+    var sut: RequestPasswordController!
     let callback = { (result: Result<String>) -> () in}
     var fingerprint: Data!
 
@@ -32,25 +33,26 @@ final class RequestPasswordViewControllerSnapshotTests: ZMSnapshotTestCase {
 
     override func tearDown() {
         fingerprint = nil
+        sut = nil
 
         super.tearDown()
     }
 
     func testForRemoveDeviceContext(){
-        let sut = RequestPasswordViewController.requestPasswordController(context: .removeDevice, callback: callback)
+        sut = RequestPasswordController(context: .removeDevice, callback: callback)
 
-        verifyAlertController(sut)
+        verifyAlertController(sut.alertController)
     }
 
     func testForLegalHoldContext() {
-        let sut = RequestPasswordViewController.requestPasswordController(context: .legalHold(fingerprint: fingerprint, hasPasswordInput: true), callback: callback)
+        sut = RequestPasswordController(context: .legalHold(fingerprint: fingerprint, hasPasswordInput: true), callback: callback)
 
-        verifyAlertController(sut)
+        verifyAlertController(sut.alertController)
     }
 
     func testForLegalHoldContextWithNoPasswordInput() {
-        let sut = RequestPasswordViewController.requestPasswordController(context: .legalHold(fingerprint: fingerprint, hasPasswordInput: false), callback: callback)
+        sut = RequestPasswordController(context: .legalHold(fingerprint: fingerprint, hasPasswordInput: false), callback: callback)
 
-        verifyAlertController(sut)
+        verifyAlertController(sut.alertController)
     }
 }

@@ -24,14 +24,18 @@ enum RequestPasswordContext {
     case legalHold(fingerprint: Data, hasPasswordInput: Bool)
 }
 
-final class RequestPasswordViewController: UIAlertController {
+final class RequestPasswordController {
     
-    var callback: ((Result<String>) -> ())? = .none
+    let callback: ((Result<String>) -> ())?
     
     var okAction: UIAlertAction? = .none
+
+    var alertController: UIAlertController
     
-    static func requestPasswordController(context: RequestPasswordContext,
-                                          callback: @escaping (Result<String>) -> ()) -> RequestPasswordViewController {
+    init(context: RequestPasswordContext,
+         callback: @escaping (Result<String>) -> ()) {
+
+        self.callback = callback
 
         let title: String
         let message: String
@@ -61,42 +65,38 @@ final class RequestPasswordViewController: UIAlertController {
             cancelTitle = "general.accept".localized
         }
 
-        let controller = RequestPasswordViewController(title: title, message: message, preferredStyle: .alert)
-        controller.callback = callback
+        alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
 
         switch context {
         case .removeDevice,
              .legalHold(_, true):
-            controller.addTextField { (textField: UITextField) -> Void in
+            alertController.addTextField { (textField: UITextField) -> Void in
                 textField.placeholder = "self.settings.account_details.remove_device.password".localized
                 textField.isSecureTextEntry = true
-                textField.addTarget(controller, action: #selector(RequestPasswordViewController.passwordTextFieldChanged(_:)), for: .editingChanged)
+                textField.addTarget(self.alertController, action: #selector(RequestPasswordController.passwordTextFieldChanged(_:)), for: .editingChanged)
             }
         case .legalHold(_, false):
             break
         }
 
-        let okAction = UIAlertAction(title: okTitle, style: .default) { [unowned controller] (action: UIAlertAction) -> Void in
-            if let passwordField = controller.textFields?[0] {
+        let okAction = UIAlertAction(title: okTitle, style: .default) { [unowned alertController] (action: UIAlertAction) -> Void in
+            if let passwordField = alertController.textFields?[0] {
                 let password = passwordField.text ?? ""
-                controller.callback?(.success(password))
+                self.callback?(.success(password))
             }
         }
         
-        let cancelAction = UIAlertAction(title: cancelTitle, style: .cancel) { [unowned controller] (action: UIAlertAction) -> Void in
-            controller.callback?(.failure(NSError(domain: "\(type(of: controller))", code: 0, userInfo: [NSLocalizedDescriptionKey: "User cancelled input"])))
+        let cancelAction = UIAlertAction(title: cancelTitle, style: .cancel) { [unowned alertController] (action: UIAlertAction) -> Void in
+            callback(.failure(NSError(domain: "\(type(of: alertController))", code: 0, userInfo: [NSLocalizedDescriptionKey: "User cancelled input"])))
         }
-        
-        controller.okAction = okAction
-        
-        controller.addAction(okAction)
-        controller.addAction(cancelAction)
-        
-        return controller
+
+        alertController.addAction(okAction)
+        alertController.addAction(cancelAction)
     }
     
-    @objc func passwordTextFieldChanged(_ textField: UITextField) {
-        if let passwordField = self.textFields?[0] {
+    @objc
+    func passwordTextFieldChanged(_ textField: UITextField) {
+        if let passwordField = alertController.textFields?[0] {
             self.okAction?.isEnabled = (passwordField.text ?? "").count > 6;
         }
     }
