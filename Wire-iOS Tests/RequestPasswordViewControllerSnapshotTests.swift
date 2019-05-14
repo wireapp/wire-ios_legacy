@@ -23,15 +23,7 @@ final class RequestPasswordViewControllerSnapshotTests: ZMSnapshotTestCase {
     
     var sut: RequestPasswordViewController!
     let callback = { (result: Result<String>) -> () in}
-    
-    override func setUp() {
-        super.setUp()
 
-
-        /// TODO: remove this after snapshot is created
-        recordMode = true
-    }
-    
     override func tearDown() {
         sut = nil
         super.tearDown()
