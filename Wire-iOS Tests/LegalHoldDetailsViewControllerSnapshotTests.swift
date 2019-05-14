@@ -24,7 +24,6 @@ class LegalHoldDetailsViewControllerSnapshotTests: ZMSnapshotTestCase {
     
     override func setUp() {
         super.setUp()
-        recordMode = true
     }
     
     var sut: LegalHoldDetailsViewController!
@@ -35,18 +34,26 @@ class LegalHoldDetailsViewControllerSnapshotTests: ZMSnapshotTestCase {
         let selfUser = MockUser.mockSelf()
         selfUser?.isUnderLegalHold = true
         
+        ColorScheme.default.variant = .dark
         sut = LegalHoldDetailsViewController(conversation: conversation.convertToRegularConversation())
-    
-        verify(view: sut.view)
+        verify(view: sut.view, identifier: "DarkTheme")
+        
+        ColorScheme.default.variant = .light
+        sut = LegalHoldDetailsViewController(conversation: conversation.convertToRegularConversation())
+        verify(view: sut.view, identifier: "LightTheme")
     }
     
     func testOtherUserUnderLegalHold() {
         
         let conversation = MockConversation.groupConversation()
         
+        ColorScheme.default.variant = .dark
         sut = LegalHoldDetailsViewController(conversation: conversation.convertToRegularConversation())
-        
-        verify(view: sut.view)
+        verify(view: sut.view, identifier: "DarkTheme")
+     
+        ColorScheme.default.variant = .light
+        sut = LegalHoldDetailsViewController(conversation: conversation.convertToRegularConversation())
+        verify(view: sut.view, identifier: "LightTheme")
     }
     
 }

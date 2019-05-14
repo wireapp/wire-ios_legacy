@@ -33,6 +33,7 @@ class LegalHoldHeaderView: UIView {
         
         label.text = "legalhold.header.title".localized
         label.font = UIFont.largeSemiboldFont
+        label.textColor = UIColor.from(scheme: .textForeground)
         
         return label
     }()
@@ -44,6 +45,7 @@ class LegalHoldHeaderView: UIView {
         label.attributedText = text.localized && .paragraphSpacing(8)
         label.font = UIFont.normalFont
         label.numberOfLines = 0
+        label.textColor = UIColor.from(scheme: .textForeground)
         
         return label
     }()

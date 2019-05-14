@@ -42,6 +42,9 @@
 
 "general.guest-room-name" = "Guest room";
 
+// User Cell
+"user_cell.title.you_suffix" = " (You)";
+
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // People picker/start UI
