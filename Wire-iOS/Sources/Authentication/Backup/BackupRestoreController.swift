@@ -80,7 +80,7 @@ class BackupRestoreController: NSObject {
             switch result {
             case .failure(SessionManager.BackupError.decryptionError):
                 self.target.showLoadingView = false
-                self.showWrongPasswordAlert {
+                self.showWrongPasswordAlert { _ in
                     self.restore(with: url)
                 }
 
@@ -114,7 +114,7 @@ class BackupRestoreController: NSObject {
         target.present(controller, animated: true, completion: nil)
     }
 
-    fileprivate func showWrongPasswordAlert(completion: @escaping () -> Void) {
+    fileprivate func showWrongPasswordAlert(completion: @escaping (UIAlertAction) -> Void) {
         let controller = UIAlertController.importWrongPasswordError(completion: completion)
         target.present(controller, animated: true, completion: nil)
     }
