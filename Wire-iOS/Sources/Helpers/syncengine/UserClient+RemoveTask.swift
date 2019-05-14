@@ -31,7 +31,7 @@ extension UIViewController {
         self.present(alert, animated: true, completion: .none)
     }
     
-    func requestPassword(_ completion: @escaping (ZMEmailCredentials?)->()) {
+    func requestPassword(_ completion: @escaping (ZMEmailCredentials?)->()) -> RequestPasswordController {
         let passwordRequest = RequestPasswordController(context: .removeDevice) { (result: Result<String>) -> () in
             switch result {
             case .success(let passwordString):
@@ -51,6 +51,8 @@ extension UIViewController {
         }
 
         present(passwordRequest.alertController, animated: true, completion: .none)
+
+        return passwordRequest
     }
 }
 
@@ -63,6 +65,7 @@ private class ClientRemovalObserver: NSObject, ZMClientUpdateObserver {
     private var strongReference: ClientRemovalObserver? = nil
     let userClientToDelete: UserClient
     let controller: UIViewController
+    var requestPasswordController: RequestPasswordController?
     let completion: ((Error?)->())?
     var credentials: ZMEmailCredentials?
     private var passwordIsNecessaryForDelete: Bool = false
@@ -105,7 +108,7 @@ private class ClientRemovalObserver: NSObject, ZMClientUpdateObserver {
         controller.showLoadingView = false
 
         if !passwordIsNecessaryForDelete {
-            controller.requestPassword { newCredentials in
+            requestPasswordController = controller.requestPassword { newCredentials in
                 guard let emailCredentials = newCredentials,
                     emailCredentials.password?.isEmpty == false else {
                     self.endRemoval(result: ClientRemovalUIError.noPasswordProvided)

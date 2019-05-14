@@ -73,21 +73,21 @@ final class RequestPasswordController {
             alertController.addTextField { (textField: UITextField) -> Void in
                 textField.placeholder = "self.settings.account_details.remove_device.password".localized
                 textField.isSecureTextEntry = true
-                textField.addTarget(self.alertController, action: #selector(RequestPasswordController.passwordTextFieldChanged(_:)), for: .editingChanged)
+                textField.addTarget(self, action: #selector(self.passwordTextFieldChanged(_:)), for: .editingChanged)
             }
         case .legalHold(_, false):
             break
         }
 
-        let okAction = UIAlertAction(title: okTitle, style: .default) { [unowned alertController] (action: UIAlertAction) -> Void in
+        let okAction = UIAlertAction(title: okTitle, style: .default) { [weak self, unowned alertController] (action: UIAlertAction) -> Void in
             if let passwordField = alertController.textFields?[0] {
                 let password = passwordField.text ?? ""
-                self.callback?(.success(password))
+                self?.callback?(.success(password))
             }
         }
         
-        let cancelAction = UIAlertAction(title: cancelTitle, style: .cancel) { [unowned alertController] (action: UIAlertAction) -> Void in
-            callback(.failure(NSError(domain: "\(type(of: alertController))", code: 0, userInfo: [NSLocalizedDescriptionKey: "User cancelled input"])))
+        let cancelAction = UIAlertAction(title: cancelTitle, style: .cancel) { [weak self, unowned alertController] (action: UIAlertAction) -> Void in
+            self?.callback?(.failure(NSError(domain: "\(type(of: alertController))", code: 0, userInfo: [NSLocalizedDescriptionKey: "User cancelled input"])))
         }
 
         alertController.addAction(okAction)
@@ -96,8 +96,8 @@ final class RequestPasswordController {
     
     @objc
     func passwordTextFieldChanged(_ textField: UITextField) {
-        if let passwordField = alertController.textFields?[0] {
-            self.okAction?.isEnabled = (passwordField.text ?? "").count > 6;
-        }
+        guard let passwordField = alertController.textFields?[0] else { return }
+
+        okAction?.isEnabled = (passwordField.text ?? "").count > 6;
     }
 }
