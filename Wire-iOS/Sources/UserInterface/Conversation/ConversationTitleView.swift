@@ -62,7 +62,7 @@ class ConversationTitleView: TitleView {
         }
         
         if conversation.isUnderLegalHold {
-            accessibilityLabel += ", conversation is under legal hold" //TODO localize
+            accessibilityLabel += ", " + "conversation.voiceover.legalhold".localized
         }
         
         self.accessibilityLabel = accessibilityLabel
