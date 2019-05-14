@@ -28,6 +28,15 @@ final class UIViewController_LegalHoldAlertSnapshotTests: ZMSnapshotTestCase {
         super.setUp()
         mockViewContoller = UIViewController()
         sut = mockViewContoller.presentLegalHoldDeactivatedAlert(animated: false)
+
+        addUIInterruptionMonitor(withDescription: "System Dialog") {
+            (alert) -> Bool in
+            let button = alert.buttons.element(boundBy: 1)
+            if button.exists {
+                button.tap()
+            }
+            return true
+        }
     }
     
     override func tearDown() {
