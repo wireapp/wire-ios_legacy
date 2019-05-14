@@ -20,12 +20,13 @@
 import Foundation
 
 extension NSData {
-    public func attributedFingerprint(attributes: [NSAttributedString.Key : AnyObject], boldAttributes: [NSAttributedString.Key : AnyObject], uppercase: Bool = false) -> NSAttributedString? {
-        
+
+    /// return a lower case and space between every btye string of the given data
+    var fingerprintString: String {
         let strings: [String] = self.mapBytes { (char: UInt8) -> (String) in
             return String(UnicodeScalar(char))
         }
-        
+
         var fingerprintString = ""
         var even = true
         strings.forEach { (string: String) -> () in
@@ -36,12 +37,19 @@ extension NSData {
                 even = false
             }
             else {
-                
+
                 even = true
             }
             fingerprintString = fingerprintString + string
         }
-        
+
+        return fingerprintString
+    }
+
+    public func attributedFingerprint(attributes: [NSAttributedString.Key : AnyObject], boldAttributes: [NSAttributedString.Key : AnyObject], uppercase: Bool = false) -> NSAttributedString? {
+
+        var fingerprintString = self.fingerprintString
+
         if uppercase {
            fingerprintString = fingerprintString.uppercased()
         }

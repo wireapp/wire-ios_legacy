@@ -19,28 +19,63 @@
 
 import Foundation
 
-class RequestPasswordViewController: UIAlertController {
+enum RequestPasswordContext {
+    case removeDevice
+    case legalHold(fingerprint: Data, hasPasswordInput: Bool)
+}
+
+final class RequestPasswordViewController: UIAlertController {
     
     var callback: ((Result<String>) -> ())? = .none
     
     var okAction: UIAlertAction? = .none
     
-    static func requestPasswordController(_ callback: @escaping (Result<String>) -> ()) -> RequestPasswordViewController {
-        
-        let title = NSLocalizedString("self.settings.account_details.remove_device.title", comment: "")
-        let message = NSLocalizedString("self.settings.account_details.remove_device.message", comment: "")
-        
+    static func requestPasswordController(context: RequestPasswordContext,
+                                          callback: @escaping (Result<String>) -> ()) -> RequestPasswordViewController {
+
+        let title: String
+        let message: String
+        let okTitle: String
+        let cancelTitle: String
+
+        switch context {
+        case .removeDevice:
+            title = "self.settings.account_details.remove_device.title".localized
+            message = "self.settings.account_details.remove_device.message".localized
+
+            okTitle = "general.ok".localized
+            cancelTitle = "general.cancel".localized
+        case .legalHold(let fingerprint, let hasPasswordInput):
+            title = "legalhold_request.alert.title".localized
+
+            let fingerprintString = (fingerprint as NSData).fingerprintString
+
+            var legalHoldMessage = "legalhold_request.alert.detail".localized(args: fingerprintString)
+            if hasPasswordInput {
+                legalHoldMessage += "\n"
+                legalHoldMessage += "legalhold_request.alert.detail.enter_password".localized
+            }
+            message = legalHoldMessage
+
+            okTitle = "general.skip".localized
+            cancelTitle = "general.accept".localized
+        }
+
         let controller = RequestPasswordViewController(title: title, message: message, preferredStyle: .alert)
         controller.callback = callback
-        
-        controller.addTextField { (textField: UITextField) -> Void in
-            textField.placeholder = NSLocalizedString("self.settings.account_details.remove_device.password", comment: "")
-            textField.isSecureTextEntry = true
-            textField.addTarget(controller, action: #selector(RequestPasswordViewController.passwordTextFieldChanged(_:)), for: .editingChanged)
+
+        switch context {
+        case .removeDevice,
+             .legalHold(_, true):
+            controller.addTextField { (textField: UITextField) -> Void in
+                textField.placeholder = "self.settings.account_details.remove_device.password".localized
+                textField.isSecureTextEntry = true
+                textField.addTarget(controller, action: #selector(RequestPasswordViewController.passwordTextFieldChanged(_:)), for: .editingChanged)
+            }
+        case .legalHold(_, false):
+            break
         }
-        
-        let okTitle = NSLocalizedString("general.ok", comment: "")
-        let cancelTitle = NSLocalizedString("general.cancel", comment: "")
+
         let okAction = UIAlertAction(title: okTitle, style: .default) { [unowned controller] (action: UIAlertAction) -> Void in
             if let passwordField = controller.textFields?[0] {
                 let password = passwordField.text ?? ""

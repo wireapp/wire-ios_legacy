@@ -32,7 +32,7 @@ extension UIViewController {
     }
     
     func requestPassword(_ completion: @escaping (ZMEmailCredentials?)->()) {
-        let passwordRequest = RequestPasswordViewController.requestPasswordController() { (result: Result<String>) -> () in
+        let passwordRequest = RequestPasswordViewController.requestPasswordController(context: .removeDevice) { (result: Result<String>) -> () in
             switch result {
             case .success(let passwordString):
                 if let email = ZMUser.selfUser()?.emailAddress {
