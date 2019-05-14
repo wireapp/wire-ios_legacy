@@ -55,17 +55,22 @@ class ConversationTitleView: TitleView {
                         title: conversation.displayName.localizedUppercase,
                         interactive: self.interactive && conversation.relatedConnectionState != .sent)
         
-        var accessibilityLabel = conversation.displayName.localizedUppercase
+        var components: [String] = []
+        components.append(conversation.displayName.localizedUppercase)
         
         if conversation.securityLevel == .secure {
-            accessibilityLabel += ", " + "conversation.voiceover.verified".localized
+            components.append("conversation.voiceover.verified".localized)
         }
         
         if conversation.isUnderLegalHold {
-            accessibilityLabel += ", " + "conversation.voiceover.legalhold".localized
+            components.append("conversation.voiceover.legalhold".localized)
         }
         
-        self.accessibilityLabel = accessibilityLabel
+        if !UIApplication.isLeftToRightLayout {
+            components.reverse()
+        }
+        
+        self.accessibilityLabel = components.joined(separator: ", ")
     }
     
 }

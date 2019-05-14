@@ -30,19 +30,36 @@ public class IconStringsBuilder {
     
     static func iconString(with icons: [NSTextAttachment], title: String, interactive: Bool, color: UIColor) -> NSAttributedString {
         
-        var title = title.attributedString
+        var components: [NSAttributedString] = []
         
+        // Adds shield/legalhold/availability/etc. icons
+        icons.forEach { components.append(NSAttributedString(attachment: $0)) }
+
+        // Adds the title
+        components.append(title.attributedString)
+        
+        // Adds the down arrow if the view is interactive
         if interactive {
-            title += "  " + NSAttributedString(attachment: .downArrow(color: color))
+            components.append(NSAttributedString(attachment: .downArrow(color: color)))
         }
         
-        if icons.count > 0 {
-            var iconString = "".attributedString
-            icons.forEach { iconString += NSAttributedString(attachment: $0) + "  " }
-            title = iconString + title
+        // Mirror elements if in a RTL layout
+        if !UIApplication.isLeftToRightLayout {
+            components.reverse()
         }
+        
+        // Create a padding object and combine the final attributed string
+        let padding = NSAttributedString(attachment: .padding)
+        let title = components.joined(separator: padding)
         
         return title && color
     }
 }
 
+fileprivate extension NSTextAttachment {
+    static var padding: NSTextAttachment {
+        let attachment = NSTextAttachment()
+        attachment.bounds = CGRect(x: 0, y: 0, width: 7, height: 7)
+        return attachment
+    }
+}
