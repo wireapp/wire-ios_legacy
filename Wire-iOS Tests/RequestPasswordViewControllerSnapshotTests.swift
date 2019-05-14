@@ -25,8 +25,6 @@ final class RequestPasswordViewControllerSnapshotTests: ZMSnapshotTestCase {
     
     override func setUp() {
         super.setUp()
-        sut = RequestPasswordViewController.requestPasswordController() { (result: Result<String>) -> () in
-        }
 
 
         /// TODO: remove this after snapshot is created
@@ -38,7 +36,17 @@ final class RequestPasswordViewControllerSnapshotTests: ZMSnapshotTestCase {
         super.tearDown()
     }
 
-    func testForInitState(){
+    func testForRemoveDeviceContext(){
+        sut = RequestPasswordViewController.requestPasswordController(context: .removeDevice) { (result: Result<String>) -> () in
+        }
+
+        verifyAlertController(sut)
+    }
+
+    func testForLegalHoldContext(){
+        sut = RequestPasswordViewController.requestPasswordController(context: .legalHold) { (result: Result<String>) -> () in
+        }
+
         verifyAlertController(sut)
     }
 }

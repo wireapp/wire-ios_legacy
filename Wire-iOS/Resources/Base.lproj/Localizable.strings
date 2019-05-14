@@ -1610,3 +1610,7 @@
 "registration.password.rules.no_requirements" = "Use %@.";
 "registration.password.rules.with_requirements" = "Use %@, with %@.";
 
+
+// Legal hold - alert
+"legalhold_request.alert.title" = "Legal Hold Requested";
+"legalhold_request.alert.detail" = "All future messages will be recorded by the device with fingerprint:\n%@\nThis includes deleted, edited, and timed messages in all conversations. Enter your password to confirm.";

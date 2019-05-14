@@ -19,28 +19,49 @@
 
 import Foundation
 
-class RequestPasswordViewController: UIAlertController {
+enum RequestPasswordContext {
+    case removeDevice
+    case legalHold ///TODO: value for device ID
+}
+
+final class RequestPasswordViewController: UIAlertController {
     
     var callback: ((Result<String>) -> ())? = .none
     
     var okAction: UIAlertAction? = .none
     
-    static func requestPasswordController(_ callback: @escaping (Result<String>) -> ()) -> RequestPasswordViewController {///TODO: reuse for legal hold
-        
-        let title = NSLocalizedString("self.settings.account_details.remove_device.title", comment: "")
-        let message = NSLocalizedString("self.settings.account_details.remove_device.message", comment: "")
-        
+    static func requestPasswordController(context: RequestPasswordContext,
+                                          callback: @escaping (Result<String>) -> ()) -> RequestPasswordViewController {
+
+        let title: String
+        let message: String
+        let okTitle: String
+        let cancelTitle: String
+
+        switch context {
+        case .removeDevice:
+            title = "self.settings.account_details.remove_device.title".localized
+            message = "self.settings.account_details.remove_device.message".localized
+
+            okTitle = "general.ok".localized
+            cancelTitle = "general.cancel".localized
+        case .legalHold:
+            title = "legalhold_request.alert.title".localized
+            message = "legalhold_request.alert.detail".localized
+
+            okTitle = "general.skip".localized
+            cancelTitle = "general.accept".localized
+        }
+
         let controller = RequestPasswordViewController(title: title, message: message, preferredStyle: .alert)
         controller.callback = callback
         
         controller.addTextField { (textField: UITextField) -> Void in
-            textField.placeholder = NSLocalizedString("self.settings.account_details.remove_device.password", comment: "")
+            textField.placeholder = "self.settings.account_details.remove_device.password".localized
             textField.isSecureTextEntry = true
             textField.addTarget(controller, action: #selector(RequestPasswordViewController.passwordTextFieldChanged(_:)), for: .editingChanged)
         }
         
-        let okTitle = NSLocalizedString("general.ok", comment: "")
-        let cancelTitle = NSLocalizedString("general.cancel", comment: "")
         let okAction = UIAlertAction(title: okTitle, style: .default) { [unowned controller] (action: UIAlertAction) -> Void in
             if let passwordField = controller.textFields?[0] {
                 let password = passwordField.text ?? ""
