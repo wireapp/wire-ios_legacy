@@ -730,7 +730,6 @@
 		8F8914131A9F287E0056AB0C /* ConversationListItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F8913F61A9F287E0056AB0C /* ConversationListItemView.m */; };
 		8F89141D1A9F287E0056AB0C /* ConversationListViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F89140C1A9F287E0056AB0C /* ConversationListViewModel.m */; };
 		8FC853A5199245770008B66B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FC85082199245760008B66B /* main.m */; };
-		8FC853D7199245770008B66B /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8FC850BA199245760008B66B /* Settings.bundle */; };
 		8FC853FE199245770008B66B /* AppDelegate+Hockey.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FC850F4199245760008B66B /* AppDelegate+Hockey.m */; };
 		8FC853FF199245770008B66B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FC850F6199245760008B66B /* AppDelegate.m */; };
 		8FC8541F199245770008B66B /* ZMUserSession+iOS.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FC85133199245760008B66B /* ZMUserSession+iOS.m */; };
@@ -3510,6 +3509,14 @@
 			path = CallQualityController;
 			sourceTree = "<group>";
 		};
+		5E055B2722897C5A00E91314 /* Internal */ = {
+			isa = PBXGroup;
+			children = (
+				8FC850BA199245760008B66B /* Settings.bundle */,
+			);
+			path = Internal;
+			sourceTree = "<group>";
+		};
 		5E144FF9213E92A700B65E14 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
@@ -5072,6 +5079,7 @@
 		8FC85083199245760008B66B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				5E055B2722897C5A00E91314 /* Internal */,
 				F1B2422E219B2C9B00F7035C /* Configuration */,
 				8FC8564019924CBA0008B66B /* Localizable.strings */,
 				1EFB23DE1ACEDE5400244571 /* Localizable.stringsdict */,
@@ -5079,7 +5087,6 @@
 				876F99061D070F6700CA2788 /* Sounds */,
 				8FC85089199245760008B66B /* Images */,
 				BF0BDF701DA7A9D8003C61DE /* Fonts */,
-				8FC850BA199245760008B66B /* Settings.bundle */,
 				5EDD2539213FFD9700C0E254 /* Licenses.generated.plist */,
 			);
 			name = Resources;
@@ -6510,6 +6517,7 @@
 				160EABBA1D47BD7200F83CA7 /* Copy Extra Audio Notifications */,
 				DBB1CF591A88C15600912518 /* Copy Frameworks and DSYMs */,
 				1EE85C681B5F96FC008E084B /* Embed Frameworks */,
+				5E7ADD5C2289723800E048C3 /* Embed Internal Resources */,
 				873AA0501D05A74B0038343B /* Strip BitCode */,
 				1EE9DC6B1B5F983600E347DF /* Embed App Extensions */,
 				8795A5D21D34D1A50024101B /* EmbedBuildInfo */,
@@ -6672,7 +6680,6 @@
 			files = (
 				1658D2041D3E742A00249609 /* new_message.caf in Resources */,
 				BF732A761D9C14C7003077DB /* emoji_nature.plist in Resources */,
-				8FC853D7199245770008B66B /* Settings.bundle in Resources */,
 				BF732A781D9C14C7003077DB /* emoji_people.plist in Resources */,
 				1658D2031D3E742A00249609 /* new_message_apns.caf in Resources */,
 				87A4DA9D1D34FEF400105D44 /* audio-notifications in Resources */,
@@ -6787,6 +6794,26 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "# Run the update_stylekit package\nswift run --package-path Scripts/update_stylekit/\n";
+		};
+		5E7ADD5C2289723800E048C3 /* Embed Internal Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(PROJECT_DIR)/Wire-iOS/Resources/Internal/Settings.bundle/",
+			);
+			name = "Embed Internal Resources";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(BUILT_PRODUCTS_DIR)/$(PRODUCT_NAME).app/Settings.bundle/",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e\n\nif [ $IS_INTERNAL_BUILD == '1' ]; then\n    for(( i=0; i < $SCRIPT_INPUT_FILE_COUNT; i++ )); do\n        INPUT_FILE=\"SCRIPT_INPUT_FILE_$i\"\n        cp -Ra \"${!INPUT_FILE}\" \"$BUILT_PRODUCTS_DIR/$PRODUCT_NAME.app/\"\n    done\nelse\n    for(( i=0; i < $SCRIPT_OUTPUT_FILE_COUNT; i++ )); do\n        OUTPUT_FILE=\"SCRIPT_INPUT_FILE_$i\"\n        rm -rf \"${!OUTPUT_FILE}\"\n    done\nfi\n";
 		};
 		5EDD253F21400FD700C0E254 /* Update Licenses File */ = {
 			isa = PBXShellScriptBuildPhase;
