@@ -30,8 +30,6 @@ DEBUG_INFORMATION_FORMAT = dwarf-with-dsym
 OTHER_CFLAGS = ${inherited} -Wno-unused-variable -Wno-macro-redefined
 ENABLE_NS_ASSERTIONS = NO
 
-IS_INTERNAL_BUILD = 0
-
 // LLVM compiler - Preprocessing
 //
 
@@ -40,8 +38,7 @@ IS_INTERNAL_BUILD = 0
 //
 // ENABLE_DEVELOPER_MENU - Enabled developer menu from self profile -> settings
 // WIRESTAN - Enabled the fake country in the phone number selection
-FEATURE_FLAGS = ENABLE_DEVELOPER_MENU=$(IS_INTERNAL_BUILD) WIRESTAN=$(IS_INTERNAL_BUILD)
-
+FEATURE_FLAGS = ENABLE_DEVELOPER_MENU=0 WIRESTAN=0
 
 // Use analytics / Hockey for Release builds:
 ANALYTICS_FLAGS = USE_HOCKEY=1 USE_ANALYTICS=1

@@ -44,7 +44,6 @@ SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG
 GCC_OPTIMIZATION_LEVEL = 0
 SWIFT_OPTIMIZATION_LEVEL = -Onone
 
-IS_INTERNAL_BUILD = 1
 
 // LLVM compiler - Preprocessing
 //
@@ -54,7 +53,7 @@ IS_INTERNAL_BUILD = 1
 //
 // ENABLE_DEVELOPER_MENU - Enabled developer menu from self profile -> settings
 // WIRESTAN - Enabled the fake country in the phone number selection
-FEATURE_FLAGS = ENABLE_DEVELOPER_MENU=$(IS_INTERNAL_BUILD) WIRESTAN=$(IS_INTERNAL_BUILD)
+FEATURE_FLAGS = ENABLE_DEVELOPER_MENU=1 WIRESTAN=1
 
 // No analytics / Hockey for Debug builds:
 ANALYTICS_FLAGS = USE_HOCKEY=0 USE_ANALYTICS=0

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>PreferenceSpecifiers</key>
+	<array>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>Only register for VoIP notifications</string>
+			<key>Key</key>
+			<string>VoIPNotificationsOnly</string>
+			<key>DefaultValue</key>
+			<false/>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSMultiValueSpecifier</string>
+			<key>Title</key>
+			<string>Blacklist download interval</string>
+			<key>Key</key>
+			<string>ZMBlacklistDownloadInterval</string>
+			<key>Titles</key>
+			<array>
+				<string>30 second</string>
+				<string>5 minutes</string>
+				<string>30 minutes</string>
+				<string>2 hours</string>
+				<string>6 hours</string>
+			</array>
+			<key>Values</key>
+			<array>
+				<string>30</string>
+				<string>300</string>
+				<string>1800</string>
+				<string>7200</string>
+				<string>21600</string>
+			</array>
+			<key>DefaultValue</key>
+			<string>21600</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>USE_MARKDOWN</string>
+			<key>Key</key>
+			<string>UserDefaultDisableMarkdown</string>
+			<key>DefaultValue</key>
+			<false/>
+		</dict>
+		<dict>
+			<key>Titles</key>
+			<array>
+				<string>Production</string>
+				<string>Staging</string>
+				<string>Default (Depends on build)</string>
+			</array>
+			<key>Values</key>
+			<array>
+				<string>production</string>
+				<string>staging</string>
+				<string>default</string>
+			</array>
+			<key>Type</key>
+			<string>PSMultiValueSpecifier</string>
+			<key>Title</key>
+			<string>Backend (Logout before switching)</string>
+			<key>Key</key>
+			<string>ZMBackendEnvironmentType</string>
+			<key>DefaultValue</key>
+			<string>production</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+			<key>Title</key>
+			<string>BUILD_INFO</string>
+			<key>File</key>
+			<string>BuildInfo</string>
+		</dict>
+		<dict>
+			<key>Title</key>
+			<string>ENABLE_LOGGING</string>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Key</key>
+			<string>EnableAssertLogging</string>
+			<key>DefaultValue</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>USE_DEVELOPER_LOGIN_UI</string>
+			<key>Key</key>
+			<string>UseDeveloperLoginUi</string>
+			<key>DefaultValue</key>
+			<false/>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>Enable Debug Analytics Logs</string>
+			<key>Key</key>
+			<string>ZMEnableAnalyticsLog</string>
+			<key>DefaultValue</key>
+			<false/>
+		</dict>
+	</array>
+	<key>StringsTable</key>
+	<string>Root</string>
+</dict>
+</plist>
