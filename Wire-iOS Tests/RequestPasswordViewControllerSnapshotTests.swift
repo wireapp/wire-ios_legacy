@@ -23,20 +23,18 @@ final class RequestPasswordViewControllerSnapshotTests: ZMSnapshotTestCase {
     
     var sut: RequestPasswordViewController!
     let callback = { (result: Result<String>) -> () in}
-    let fingerprint: Data!
+    var fingerprint: Data!
 
     override func setUp() {
         super.setUp()
         fingerprint = mockUserClient(fingerprintString: "102030405060708090a0b0c0d0e0f0708090102030405060708090").fingerprint!
-
-        recordMode = true
     }
 
 
     override func tearDown() {
         sut = nil
         fingerprint = nil
-        
+
         super.tearDown()
     }
 
