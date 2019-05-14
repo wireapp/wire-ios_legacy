@@ -24,6 +24,7 @@ class LegalHoldDetailsViewControllerSnapshotTests: ZMSnapshotTestCase {
     
     override func setUp() {
         super.setUp()
+        recordMode = true
     }
     
     var sut: LegalHoldDetailsViewController!
@@ -32,7 +33,7 @@ class LegalHoldDetailsViewControllerSnapshotTests: ZMSnapshotTestCase {
         
         let conversation = MockConversation.groupConversation()
         let selfUser = MockUser.mockSelf()
-        selfUser?.isUnderLegalhold = true
+        selfUser?.isUnderLegalHold = true
         
         sut = LegalHoldDetailsViewController(conversation: conversation.convertToRegularConversation())
     
