@@ -60,5 +60,13 @@ extension ContactsViewController {
             self.view.layoutIfNeeded()
         }, completion: nil)
     }
+
+    func presentShareContactsViewController() {
+        let shareContactsViewController = ShareContactsViewController()
+        shareContactsViewController.delegate = self
+
+        addToSelf(shareContactsViewController)
+    }
+
 }
 
