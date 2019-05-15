@@ -36,21 +36,6 @@ extension UserClient: UserClientTypeAttributedString {
         return NSAttributedString(attributedString: identifierString)
     }
     
-    public func localizedDeviceClass() -> String? {
-        switch self.deviceClass {
-        case .some("desktop"):
-            return NSLocalizedString("device.class.desktop", comment: "")
-
-        case .some("phone"):
-            return NSLocalizedString("device.class.phone", comment: "")
-            
-        case .some("tablet"):
-            return NSLocalizedString("device.class.tablet", comment: "")
-            
-        default:
-            return .none
-        }
-    }
 }
 
 private let UserClientIdentifierMinimumLength = 16
@@ -72,4 +57,21 @@ extension UserClient {
         
         return paddedIdentifier
     }
+}
+
+extension DeviceClass {
+    
+    var localizedDescription: String {
+        switch self {
+        case .phone:
+            return "device.class.phone".localized
+        case .desktop:
+            return "device.class.desktop".localized
+        case .tablet:
+            return "device.class.tablet".localized
+        case .legalhold:
+            return "device.class.legalhold".localized
+        }
+    }
+    
 }

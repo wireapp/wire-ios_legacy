@@ -135,7 +135,7 @@
 {
     ParticipantDeviceCell *cell = [tableView dequeueReusableCellWithIdentifier:ParticipantDeviceCell.zm_reuseIdentifier forIndexPath:indexPath];
     UserClient *client = self.sortedClients[indexPath.row];
-    [cell configureForClient:client];
+    [cell objc_configureFor:client];
     return cell;
 }
 

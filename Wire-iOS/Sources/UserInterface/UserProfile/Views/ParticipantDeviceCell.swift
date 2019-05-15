@@ -82,14 +82,19 @@ final class ParticipantDeviceCell: UITableViewCell {
     }
 
     // MARK: - Configuration
+    
+    // TODO jacob remove later
+    @objc
+    func objc_configure(for client: UserClient) {
+        configure(for: client)
+    }
 
-    @objc(configureForClient:)
     func configure(for client: UserClientType & UserClientTypeAttributedString) {
         let attributes: [NSAttributedString.Key: AnyObject] = [NSAttributedString.Key.font: fingerprintFont.monospaced()]
         let boldAttributes: [NSAttributedString.Key: AnyObject] = [NSAttributedString.Key.font: boldFingerprintFont.monospaced()]
 
         identifierLabel.attributedText = client.attributedRemoteIdentifier(attributes, boldAttributes: boldAttributes, uppercase: true)
-        nameLabel.text = client.deviceClass?.uppercased() ?? client.type.uppercased()
+        nameLabel.text = client.deviceClass?.localizedDescription.localizedUppercase ?? client.type?.uppercased()
 
 
         trustLevelImageView.image = client.verified ? WireStyleKit.imageOfShieldverified : WireStyleKit.imageOfShieldnotverified

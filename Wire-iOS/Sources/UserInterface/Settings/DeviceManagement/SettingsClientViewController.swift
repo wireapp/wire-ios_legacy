@@ -82,7 +82,7 @@ class SettingsClientViewController: UIViewController,
                 userClient.fetchFingerprintOrPrekeys()
             })
         }
-        self.title = userClient.deviceClass?.localizedUppercase
+        self.title = userClient.deviceClass?.localizedDescription.localizedUppercase
         self.credentials = credentials
     }
     
