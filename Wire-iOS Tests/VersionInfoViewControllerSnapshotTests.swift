@@ -20,10 +20,21 @@ import XCTest
 import SnapshotTesting
 @testable import Wire
 
+extension XCTestCase {
+    var snapshotDirectory: String {
+        var path = ProcessInfo.processInfo.environment["SNAPSHOT_REFERENCE_DIR"]! + "/" + #file
+        if path.hasSuffix(".swift") {
+            path = String(path.dropLast(".swift".count))
+        }
+
+        return path
+    }
+}
+
 final class VersionInfoViewControllerSnapshotTests: XCTestCase {
     
     var sut: VersionInfoViewController!
-    
+
     override func setUp() {
         super.setUp()
         let path = Bundle(for: type(of: self)).path(forResource: "DummyComponentsVersions", ofType: "plist")!
@@ -37,19 +48,16 @@ final class VersionInfoViewControllerSnapshotTests: XCTestCase {
     }
 
     func testForInitState(){
-        ///TODO: move to extension
-        let snapshotDirectory = ProcessInfo.processInfo.environment["SNAPSHOT_REFERENCE_DIR"]! + "/" + #file
 
         let failure = verifySnapshot(matching: sut, as: .image, snapshotDirectory: snapshotDirectory)
 
-        XCTAssertNil(failure, failure ?? "Test passed")
+        XCTAssertNil(failure)
     }
 }
 
 
 final class UIAlertControllerCompanyLoginSnapshotTests: XCTestCase {
     var sut: UIAlertController!
-    let snapshotDirectory = ProcessInfo.processInfo.environment["SNAPSHOT_REFERENCE_DIR"]! + "/" + #file
 
     override func setUp() {
         super.setUp()
