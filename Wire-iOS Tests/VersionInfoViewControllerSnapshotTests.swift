@@ -37,6 +37,10 @@ final class VersionInfoViewControllerSnapshotTests: XCTestCase {
     }
 
     func testForInitState(){
-        assertSnapshot(matching: sut, as: .image)
+        let snapshotDirectory = ProcessInfo.processInfo.environment["SNAPSHOT_REFERENCE_DIR"]! + "/" + #file
+
+        let failure = verifySnapshot(matching: sut, as: .image, snapshotDirectory: snapshotDirectory)
+
+        XCTAssertNil(failure, failure ?? "Test passed")
     }
 }
