@@ -108,7 +108,7 @@ extension ProfileSelfPictureViewController {
         libraryButton.setIconColor(.white, for: .normal)
         libraryButton.setIcon(.photo, size: .small, for: .normal)
 
-        if PHPhotoLibrary.authorizationStatus() == .authorized {
+        if PHPhotoLibrary.authorizationStatus() == .authorized {//TODO: ProfileSelfPictureViewControllerSnapshotTests
             let options = PHFetchOptions()
             options.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
             options.fetchLimit = 1

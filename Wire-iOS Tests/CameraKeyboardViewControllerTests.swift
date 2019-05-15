@@ -72,7 +72,7 @@ final class CameraKeyboardViewControllerTests: CoreDataSnapshotTestCase {
     
     override func setUp() {
         super.setUp()
-        self.assetLibrary = MockAssetLibrary()
+        self.assetLibrary = MockAssetLibrary(photoLibrary: MockPhotoLibrary())
         self.splitView = SplitLayoutObservableMock()
         self.delegateMock = CameraKeyboardViewControllerDelegateMock()
     }
@@ -102,23 +102,33 @@ final class CameraKeyboardViewControllerTests: CoreDataSnapshotTestCase {
             sut.view.bottomAnchor.constraint(equalTo: container.bottomAnchor),
             sut.view.leadingAnchor.constraint(equalTo: container.leadingAnchor),
             sut.view.trailingAnchor.constraint(equalTo: container.trailingAnchor)
-        ])
+            ])
         
         container.setNeedsLayout()
         container.layoutIfNeeded()
         return container
     }
-    
+
+    private func setupSut(permissions: PhotoPermissionsController) {
+        sut = CameraKeyboardViewController(splitLayoutObservable: splitView,
+                                           assetLibrary: assetLibrary,
+//                                           photoLibrary: MockPhotoLibrary(),
+                                           permissions: permissions)
+    }
+
     func testWithCallingOverlay() {
         let permissions = MockPhotoPermissionsController(camera: true, library: true)
+//        setupSut(permissions: permissions)///TODO
         self.sut = CallingMockCameraKeyboardViewController(splitLayoutObservable: self.splitView, assetLibrary: assetLibrary, permissions: permissions)
+
         self.verify(view: self.prepareForSnapshot())
     }
     
     func testThatFirstSectionContainsCameraCellOnly() {
         // given
         let permissions = MockPhotoPermissionsController(camera: true, library: true)
-        self.sut = CameraKeyboardViewController(splitLayoutObservable: self.splitView, assetLibrary: assetLibrary, permissions: permissions)
+        setupSut(permissions: permissions)
+
         self.sut.delegate = self.delegateMock
         self.prepareForSnapshot()
         
@@ -133,7 +143,7 @@ final class CameraKeyboardViewControllerTests: CoreDataSnapshotTestCase {
     
     func testThatTableViewContainsPermissionsCellOnly_CameraAndLibraryAccessNotGranted() {
         let permissions = MockPhotoPermissionsController(camera: false, library: false)
-        self.sut = CameraKeyboardViewController(splitLayoutObservable: self.splitView, assetLibrary: assetLibrary, permissions: permissions)
+        setupSut(permissions: permissions)
         self.sut.delegate = self.delegateMock
         self.prepareForSnapshot()
         
@@ -149,7 +159,7 @@ final class CameraKeyboardViewControllerTests: CoreDataSnapshotTestCase {
     func testThatSecondSectionContainsCameraRollElements() {
         // given
         let permissions = MockPhotoPermissionsController(camera: true, library: true)
-        self.sut = CameraKeyboardViewController(splitLayoutObservable: self.splitView, assetLibrary: assetLibrary, permissions: permissions)
+        setupSut(permissions: permissions)
         self.sut.delegate = self.delegateMock
         self.prepareForSnapshot()
         
@@ -165,7 +175,7 @@ final class CameraKeyboardViewControllerTests: CoreDataSnapshotTestCase {
         // given
         self.splitView?.layoutSize = .compact
         // when
-        self.sut = CameraKeyboardViewController(splitLayoutObservable: self.splitView, assetLibrary: assetLibrary, permissions: permissions)
+        setupSut(permissions: permissions)
         // then
         self.verify(view: self.prepareForSnapshot())
     }
@@ -195,7 +205,7 @@ final class CameraKeyboardViewControllerTests: CoreDataSnapshotTestCase {
         self.splitView?.layoutSize = .regularPortrait
         self.splitView?.leftViewControllerWidth = 216
         // when
-        self.sut = CameraKeyboardViewController(splitLayoutObservable: self.splitView, assetLibrary: assetLibrary, permissions: permissions)
+        setupSut(permissions: permissions)
         // then
         self.verify(view: self.prepareForSnapshot(CGSize(width: 768, height: 264)))
     }
@@ -225,7 +235,7 @@ final class CameraKeyboardViewControllerTests: CoreDataSnapshotTestCase {
         self.splitView?.layoutSize = .regularLandscape
         self.splitView?.leftViewControllerWidth = 216
         // when
-        self.sut = CameraKeyboardViewController(splitLayoutObservable: self.splitView, assetLibrary: assetLibrary, permissions: permissions)
+        setupSut(permissions: permissions)
         // then
         self.verify(view: self.prepareForSnapshot(CGSize(width: 1024, height: 352)))
     }
@@ -253,7 +263,7 @@ final class CameraKeyboardViewControllerTests: CoreDataSnapshotTestCase {
     func cameraScrolledHorizontallySomePercent(with permissions: PhotoPermissionsController) {
         // given
         self.splitView?.layoutSize = .compact
-        self.sut = CameraKeyboardViewController(splitLayoutObservable: self.splitView, assetLibrary: assetLibrary, permissions: permissions)
+        setupSut(permissions: permissions)
         self.prepareForSnapshot()
         // when
         self.sut.collectionView.scrollRectToVisible(CGRect(x: 300, y: 0, width: 160, height: 10), animated: false)
@@ -283,7 +293,7 @@ final class CameraKeyboardViewControllerTests: CoreDataSnapshotTestCase {
     func cameraScrolledHorizontallyAwayPercent(with permissions: PhotoPermissionsController) {
         // given
         self.splitView?.layoutSize = .compact
-        self.sut = CameraKeyboardViewController(splitLayoutObservable: self.splitView, assetLibrary: assetLibrary, permissions: permissions)
+        setupSut(permissions: permissions)
         self.prepareForSnapshot()
         // when
         self.sut.collectionView.scrollRectToVisible(CGRect(x: 320, y: 0, width: 160, height: 10), animated: false)
@@ -314,7 +324,7 @@ final class CameraKeyboardViewControllerTests: CoreDataSnapshotTestCase {
     func testThatItCallsDelegateCameraRollWhenCameraRollButtonPressed() {
         // given
         let permissions = MockPhotoPermissionsController(camera: true, library: true)
-        self.sut = CameraKeyboardViewController(splitLayoutObservable: self.splitView, assetLibrary: assetLibrary, permissions: permissions)
+        setupSut(permissions: permissions)
         self.sut.delegate = self.delegateMock
         self.prepareForSnapshot()
         
@@ -331,7 +341,7 @@ final class CameraKeyboardViewControllerTests: CoreDataSnapshotTestCase {
     func testThatItCallsDelegateWhenWantsToOpenFullScreenCamera() {
         // given
         let permissions = MockPhotoPermissionsController(camera: true, library: true)
-        self.sut = CameraKeyboardViewController(splitLayoutObservable: self.splitView, assetLibrary: assetLibrary, permissions: permissions)
+        setupSut(permissions: permissions)
         self.sut.delegate = self.delegateMock
         self.prepareForSnapshot()
         

@@ -69,7 +69,9 @@ open class CameraKeyboardViewController: UIViewController {
         NotificationCenter.default.removeObserver(self)
     }
     
-    init(splitLayoutObservable: SplitLayoutObservable, assetLibrary: AssetLibrary = AssetLibrary(), permissions: PhotoPermissionsController = PhotoPermissionsControllerStrategy()) {
+    init(splitLayoutObservable: SplitLayoutObservable,
+         assetLibrary: AssetLibrary = AssetLibrary(),
+         permissions: PhotoPermissionsController = PhotoPermissionsControllerStrategy()) {
         self.splitLayoutObservable = splitLayoutObservable
         self.assetLibrary = assetLibrary
         self.permissions = permissions
