@@ -17,7 +17,6 @@
 //
 
 import XCTest
-import Photos
 import AVFoundation
 @testable import Wire
 
@@ -112,16 +111,17 @@ final class CameraKeyboardViewControllerTests: CoreDataSnapshotTestCase {
     private func setupSut(permissions: PhotoPermissionsController) {
         sut = CameraKeyboardViewController(splitLayoutObservable: splitView,
                                            assetLibrary: assetLibrary,
-//                                           photoLibrary: MockPhotoLibrary(),
                                            permissions: permissions)
     }
 
     func testWithCallingOverlay() {
         let permissions = MockPhotoPermissionsController(camera: true, library: true)
-//        setupSut(permissions: permissions)///TODO
-        self.sut = CallingMockCameraKeyboardViewController(splitLayoutObservable: self.splitView, assetLibrary: assetLibrary, permissions: permissions)
+        setupSut(permissions: permissions)
+        sut = CallingMockCameraKeyboardViewController(splitLayoutObservable: self.splitView, assetLibrary: assetLibrary, permissions: permissions)
 
-        self.verify(view: self.prepareForSnapshot())
+        prepareForSnapshot()
+
+        verify(view: prepareForSnapshot())
     }
     
     func testThatFirstSectionContainsCameraCellOnly() {
