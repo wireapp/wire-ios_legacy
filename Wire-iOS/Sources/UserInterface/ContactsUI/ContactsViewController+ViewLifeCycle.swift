@@ -61,7 +61,7 @@ extension ContactsViewController {
         }, completion: nil)
     }
 
-    func presentShareContactsViewController() {
+    private func presentShareContactsViewController() {
         let shareContactsViewController = ShareContactsViewController()
         shareContactsViewController.delegate = self
 
