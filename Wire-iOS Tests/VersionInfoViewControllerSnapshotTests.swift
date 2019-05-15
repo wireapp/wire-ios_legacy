@@ -17,9 +17,10 @@
 //
 
 import XCTest
+import SnapshotTesting
 @testable import Wire
 
-final class VersionInfoViewControllerSnapshotTests: ZMSnapshotTestCase {
+final class VersionInfoViewControllerSnapshotTests: XCTestCase {
     
     var sut: VersionInfoViewController!
     
@@ -36,6 +37,6 @@ final class VersionInfoViewControllerSnapshotTests: ZMSnapshotTestCase {
     }
 
     func testForInitState(){
-        verify(view: sut.view)
+        assertSnapshot(matching: sut, as: .image)
     }
 }
