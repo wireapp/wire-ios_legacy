@@ -163,6 +163,35 @@ class ConversationSystemMessageTests: ConversationCellSnapshotTestCase {
         verify(message: message)
     }
     
+    // MARK: - Legal Hold
+    
+    func testThatItRendersLegalHoldEnabled_ForSelfUser() {
+        let message = MockMessageFactory.systemMessage(with: .legalHoldEnabled)!
+        //set under legal hold = true
+        XCTFail()
+        verify(message: message)
+    }
+    
+    func testThatItRendersLegalHoldEnabled_ForOtherUser() {
+        let message = MockMessageFactory.systemMessage(with: .legalHoldEnabled)!
+        message.sender = MockUser.mockUsers()?.first
+        //set under legal hold = true
+        XCTFail()
+        verify(message: message)
+    }
+    
+    func testThatItRendersLegalHoldDisabled_ForSelfUser() {
+        let message = MockMessageFactory.systemMessage(with: .legalHoldDisabled)!
+        verify(message: message)
+    }
+    
+    func testThatItRendersLegalHoldDisabled_ForOtherUser() {
+        let message = MockMessageFactory.systemMessage(with: .legalHoldDisabled)!
+        message.sender = MockUser.mockUsers()?.first
+        verify(message: message)
+    }
+    
+    
     // MARK: - potential gap
     
     func testPotentialGap() {

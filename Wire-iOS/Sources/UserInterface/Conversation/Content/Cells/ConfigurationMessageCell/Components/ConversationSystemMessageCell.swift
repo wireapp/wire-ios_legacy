@@ -340,6 +340,12 @@ class ConversationSystemMessageCellDescription {
                                                                             systemMessageType: systemMessageData.systemMessageType)
             return [AnyConversationMessageCellDescription(cell)]
 
+        case .legalHoldEnabled,
+             .legalHoldDisabled:
+            let cell = ConversationLegalHoldCellDescription(sender: sender,
+                                                            systemMessageType: systemMessageData.systemMessageType)
+            return [AnyConversationMessageCellDescription(cell)]
+            
         case .newConversation:
             var cells: [AnyConversationMessageCellDescription] = []
             let startedConversationCell = ConversationStartedSystemMessageCellDescription(message: message, data: systemMessageData)
