@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2018 Wire Swiss GmbH
+// Copyright (C) 2019 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,18 +16,13 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-@class PermissionDeniedViewController;
-@class ConversationActionController;
+import Foundation
 
-@protocol StartUIDelegate;
-
-@interface ConversationListViewController ()
-
-@property (nonatomic, nonnull) UILabel *noConversationLabel;
-@property (nonatomic, nullable) PermissionDeniedViewController *pushPermissionDeniedViewController;
-@property (nonatomic, nullable) ConversationActionController *actionsController;
-
-@end
-
-@interface ConversationListViewController (StartUI) <StartUIDelegate>
-@end
+extension ConversationListViewController {
+    @objc
+    func createPeoplePickerController() -> StartUIViewController {
+        let startUIViewController = StartUIViewController()
+        startUIViewController.delegate = self
+        return startUIViewController
+    }
+}
