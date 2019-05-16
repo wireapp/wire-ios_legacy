@@ -91,6 +91,7 @@ final class CameraKeyboardViewControllerTests: CoreDataSnapshotTestCase {
 
     override func setUp() {
         super.setUp()
+
         mockAssetLibrary = MockAssetLibrary(photoLibrary: MockPhotoLibrary())
         mockImageManager = MockImageManager()
         splitView = SplitLayoutObservableMock()
@@ -99,9 +100,12 @@ final class CameraKeyboardViewControllerTests: CoreDataSnapshotTestCase {
 
     override func tearDown() {
         sut = nil
+
         splitView = nil
         delegateMock = nil
         mockAssetLibrary = nil
+        mockImageManager = nil
+
         super.tearDown()
     }
     
