@@ -18,6 +18,7 @@
 
 import XCTest
 import AVFoundation
+import Photos
 @testable import Wire
 
 class CameraKeyboardViewControllerDelegateMock: CameraKeyboardViewControllerDelegate {
@@ -57,6 +58,24 @@ private final class MockAssetLibrary: AssetLibrary {
     }
 }
 
+private final class MockImageManager: ImageManagerProtocol {
+    func cancelImageRequest(_ requestID: PHImageRequestID) {
+        // no op
+    }
+
+    func requestImage(for asset: PHAsset, targetSize: CGSize, contentMode: PHImageContentMode, options: PHImageRequestOptions?, resultHandler: @escaping (UIImage?, [AnyHashable : Any]?) -> Void) -> PHImageRequestID {
+        return 0
+    }
+
+    func requestImageData(for asset: PHAsset, options: PHImageRequestOptions?, resultHandler: @escaping (Data?, String?, UIImage.Orientation, [AnyHashable : Any]?) -> Void) -> PHImageRequestID {
+        return 0
+    }
+
+    func requestExportSession(forVideo asset: PHAsset, options: PHVideoRequestOptions?, exportPreset: String, resultHandler: @escaping (AVAssetExportSession?, [AnyHashable : Any]?) -> Void) -> PHImageRequestID {
+        return 0
+    }
+}
+
 fileprivate final class CallingMockCameraKeyboardViewController: CameraKeyboardViewController {
     @objc override var shouldBlockCallingRelatedActions: Bool {
         return true
@@ -68,10 +87,12 @@ final class CameraKeyboardViewControllerTests: CoreDataSnapshotTestCase {
     var splitView: SplitLayoutObservableMock!
     var delegateMock: CameraKeyboardViewControllerDelegateMock!
     fileprivate var assetLibrary: MockAssetLibrary!
-    
+    fileprivate var mockImageManager: MockImageManager!
+
     override func setUp() {
         super.setUp()
         assetLibrary = MockAssetLibrary(photoLibrary: MockPhotoLibrary())
+        mockImageManager = MockImageManager()
         splitView = SplitLayoutObservableMock()
         delegateMock = CameraKeyboardViewControllerDelegateMock()
     }
@@ -117,9 +138,10 @@ final class CameraKeyboardViewControllerTests: CoreDataSnapshotTestCase {
     func testWithCallingOverlay() {
         let permissions = MockPhotoPermissionsController(camera: true, library: true)
         setupSut(permissions: permissions)
-        sut = CallingMockCameraKeyboardViewController(splitLayoutObservable: self.splitView, assetLibrary: assetLibrary, permissions: permissions)
-
-        prepareForSnapshot()
+        sut = CallingMockCameraKeyboardViewController(splitLayoutObservable: splitView,
+                                                      assetLibrary: assetLibrary,
+                                                      imageManager: mockImageManager,
+                                                      permissions: permissions)
 
         verify(view: prepareForSnapshot())
     }
