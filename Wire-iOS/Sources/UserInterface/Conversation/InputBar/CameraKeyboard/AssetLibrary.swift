@@ -62,7 +62,7 @@ open class AssetLibrary: NSObject, PHPhotoLibraryChangeObserver {
         let syncOperation = {
             let options = PHFetchOptions()
             options.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
-            self.fetch = PHAsset.fetchAssets(with: options) ///TODO: mock
+            self.fetch = PHAsset.fetchAssets(with: options)
             self.notifyChangeToDelegate()
         }
         

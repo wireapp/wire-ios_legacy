@@ -28,7 +28,7 @@ open class AssetCell: UICollectionViewCell {
     
     var imageRequestTag: PHImageRequestID = PHInvalidImageRequestID
     var representedAssetIdentifier: String!
-    var manager: ImageManagerProtocol = PHImageManager.default()
+    var manager: ImageManagerProtocol!
 
     override init(frame: CGRect) {
         super.init(frame: frame)

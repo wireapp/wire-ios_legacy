@@ -86,12 +86,12 @@ final class CameraKeyboardViewControllerTests: CoreDataSnapshotTestCase {
     var sut: CameraKeyboardViewController!
     var splitView: SplitLayoutObservableMock!
     var delegateMock: CameraKeyboardViewControllerDelegateMock!
-    fileprivate var assetLibrary: MockAssetLibrary!
+    fileprivate var mockAssetLibrary: MockAssetLibrary!
     fileprivate var mockImageManager: MockImageManager!
 
     override func setUp() {
         super.setUp()
-        assetLibrary = MockAssetLibrary(photoLibrary: MockPhotoLibrary())
+        mockAssetLibrary = MockAssetLibrary(photoLibrary: MockPhotoLibrary())
         mockImageManager = MockImageManager()
         splitView = SplitLayoutObservableMock()
         delegateMock = CameraKeyboardViewControllerDelegateMock()
@@ -101,7 +101,7 @@ final class CameraKeyboardViewControllerTests: CoreDataSnapshotTestCase {
         sut = nil
         splitView = nil
         delegateMock = nil
-        assetLibrary = nil
+        mockAssetLibrary = nil
         super.tearDown()
     }
     
@@ -124,22 +124,21 @@ final class CameraKeyboardViewControllerTests: CoreDataSnapshotTestCase {
             sut.view.trailingAnchor.constraint(equalTo: container.trailingAnchor)
             ])
         
-        container.setNeedsLayout()
         container.layoutIfNeeded()
         return container
     }
 
     private func setupSut(permissions: PhotoPermissionsController) {
         sut = CameraKeyboardViewController(splitLayoutObservable: splitView,
-                                           assetLibrary: assetLibrary,
+                                           assetLibrary: mockAssetLibrary,
+                                           imageManager: mockImageManager,
                                            permissions: permissions)
     }
 
     func testWithCallingOverlay() {
         let permissions = MockPhotoPermissionsController(camera: true, library: true)
-        setupSut(permissions: permissions)
         sut = CallingMockCameraKeyboardViewController(splitLayoutObservable: splitView,
-                                                      assetLibrary: assetLibrary,
+                                                      assetLibrary: mockAssetLibrary,
                                                       imageManager: mockImageManager,
                                                       permissions: permissions)
 

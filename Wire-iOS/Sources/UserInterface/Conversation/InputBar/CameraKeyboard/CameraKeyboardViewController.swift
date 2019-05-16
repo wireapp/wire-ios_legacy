@@ -414,11 +414,13 @@ extension CameraKeyboardViewController: UICollectionViewDelegateFlowLayout, UICo
             }
             
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AssetCell.reuseIdentifier, for: indexPath) as! AssetCell
+
+            cell.manager = imageManager
+
             if let asset = try? assetLibrary.asset(atIndex: UInt((indexPath as NSIndexPath).row)) {
                 cell.asset = asset
             }
 
-            cell.manager = imageManager
 
             return cell
         }
