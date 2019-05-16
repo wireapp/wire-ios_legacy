@@ -75,7 +75,8 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate, C
     init(configuration: CallInfoViewControllerInput) {
         self.configuration = configuration        
         statusViewController = CallStatusViewController(configuration: configuration)
-        accessoryViewController = CallAccessoryViewController(configuration: configuration)
+        accessoryViewController = CallAccessoryViewController(configuration: configuration,
+                                                              userSession: ZMUserSession.shared())
         backgroundViewController = BackgroundViewController(user: ZMUser.selfUser(), userSession: ZMUserSession.shared())
         super.init(nibName: nil, bundle: nil)
         accessoryViewController.delegate = self
