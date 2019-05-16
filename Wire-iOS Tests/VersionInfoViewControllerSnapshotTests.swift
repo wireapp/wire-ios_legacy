@@ -51,37 +51,3 @@ final class VersionInfoViewControllerSnapshotTests: XCTestCase {
         XCTAssertNil(failure)
     }
 }
-
-
-final class UIAlertControllerCompanyLoginSnapshotTests: XCTestCase {
-    var sut: UIAlertController!
-
-    override func setUp() {
-        super.setUp()
-        sut = UIAlertController.companyLogin(prefilledCode: nil, validator: {_ -> Bool in
-            return true
-        }, completion: {_ in })
-
-        addUIInterruptionMonitor(withDescription: "System Dialog") {
-            (alert) -> Bool in
-            alert.buttons["OK"].tap()
-            return true
-        }
-    }
-
-    override func tearDown() {
-        sut = nil
-        super.tearDown()
-    }
-
-    ///TODO: find a solution to dismiss photo permission dialog first.
-    func disable_testForAlert(){
-        // notice: pass alert's view here othewise it is expand and fill the screen's size. We can create
-        // extension Snapshotting where Value == UIAlertController, Format == UIImage
-        // to fix it.
-        let failure = verifySnapshot(matching: sut.view, as: .image, snapshotDirectory: snapshotDirectory)
-
-        XCTAssertNil(failure)
-    }
-
-}
