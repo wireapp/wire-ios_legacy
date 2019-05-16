@@ -65,48 +65,48 @@ open class AssetCell: UICollectionViewCell {
         return options
     }()
     
-    var asset: PHAsset? {
+    var asset: PHAsset? {///TODO mock
         didSet {
-            self.imageView.image = nil
-
-            let manager = PHImageManager.default()
-            
-            if self.imageRequestTag != PHInvalidImageRequestID {
-                manager.cancelImageRequest(self.imageRequestTag)
-                self.imageRequestTag = PHInvalidImageRequestID
-            }
-            
-            guard let asset = self.asset else {
-                self.durationView.text = ""
-                self.durationView.isHidden = true
-                return
-            }
-            
-            let maxDimensionRetina = max(self.bounds.size.width, self.bounds.size.height) * (self.window ?? UIApplication.shared.keyWindow!).screen.scale
-
-            representedAssetIdentifier = asset.localIdentifier
-            imageRequestTag = manager.requestImage(for: asset,
-                                                   targetSize: CGSize(width: maxDimensionRetina, height: maxDimensionRetina),
-                                                   contentMode: .aspectFill,
-                                                   options: type(of: self).imageFetchOptions,
-                                                   resultHandler: { [weak self] result, info -> Void in
-                                                    guard let `self` = self,
-                                                        self.representedAssetIdentifier == asset.localIdentifier
-                                                        else { return }
-                                                    self.imageView.image = result
-            })
-            
-            if asset.mediaType == .video {
-                let duration = Int(ceil(asset.duration))
-                
-                let (seconds, minutes) = (duration % 60, duration / 60)
-                self.durationView.text = String(format: "%d:%02d", minutes, seconds)
-                self.durationView.isHidden = false
-            }
-            else {
-                self.durationView.text = ""
-                self.durationView.isHidden = true
-            }
+//            self.imageView.image = nil
+//
+//            let manager = PHImageManager.default()///TODO mock
+//
+//            if self.imageRequestTag != PHInvalidImageRequestID {
+//                manager.cancelImageRequest(self.imageRequestTag)
+//                self.imageRequestTag = PHInvalidImageRequestID
+//            }
+//
+//            guard let asset = self.asset else {
+//                self.durationView.text = ""
+//                self.durationView.isHidden = true
+//                return
+//            }
+//
+//            let maxDimensionRetina = max(self.bounds.size.width, self.bounds.size.height) * (self.window ?? UIApplication.shared.keyWindow!).screen.scale
+//
+//            representedAssetIdentifier = asset.localIdentifier
+////            imageRequestTag = manager.requestImage(for: asset,
+////                                                   targetSize: CGSize(width: maxDimensionRetina, height: maxDimensionRetina),
+////                                                   contentMode: .aspectFill,
+////                                                   options: type(of: self).imageFetchOptions,
+////                                                   resultHandler: { [weak self] result, info -> Void in
+////                                                    guard let `self` = self,
+////                                                        self.representedAssetIdentifier == asset.localIdentifier
+////                                                        else { return }
+////                                                    self.imageView.image = result
+////            })
+//
+//            if asset.mediaType == .video {
+//                let duration = Int(ceil(asset.duration))
+//
+//                let (seconds, minutes) = (duration % 60, duration / 60)
+//                self.durationView.text = String(format: "%d:%02d", minutes, seconds)
+//                self.durationView.isHidden = false
+//            }
+//            else {
+//                self.durationView.text = ""
+//                self.durationView.isHidden = true
+//            }
         }
     }
     

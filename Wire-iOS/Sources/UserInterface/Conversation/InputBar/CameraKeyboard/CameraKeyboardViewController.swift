@@ -35,7 +35,7 @@ public protocol CameraKeyboardViewControllerDelegate: class {
 
 open class CameraKeyboardViewController: UIViewController {
     
-    fileprivate var permissions: PhotoPermissionsController!
+    fileprivate var permissions: PhotoPermissionsController! ///TODO mock
     fileprivate var lastLayoutSize = CGSize.zero
     fileprivate let collectionViewLayout = UICollectionViewFlowLayout()
     fileprivate let sideMargin: CGFloat = 14
@@ -209,7 +209,7 @@ open class CameraKeyboardViewController: UIViewController {
     }
 
     fileprivate func forwardSelectedPhotoAsset(_ asset: PHAsset) {
-        let manager = PHImageManager.default()
+        let manager = PHImageManager.default()///TODO: mock?
 
         let completeBlock = { (data: Data?, uti: String?) in
             guard let data = data else { return }
@@ -415,7 +415,7 @@ extension CameraKeyboardViewController: UICollectionViewDelegateFlowLayout, UICo
             
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AssetCell.reuseIdentifier, for: indexPath) as! AssetCell
             if let asset = try? assetLibrary.asset(atIndex: UInt((indexPath as NSIndexPath).row)) {
-                cell.asset = asset
+                cell.asset = asset //TODO: inject mock PHImageManager
             }
             return cell
         }
