@@ -22,10 +22,7 @@ import SnapshotTesting
 
 extension XCTestCase {
     var snapshotDirectory: String {
-        var path = ProcessInfo.processInfo.environment["SNAPSHOT_REFERENCE_DIR"]! + "/" + #file
-        if path.hasSuffix(".swift") {
-            path = String(path.dropLast(".swift".count))
-        }
+        let path = ProcessInfo.processInfo.environment["SNAPSHOT_REFERENCE_DIR"]! + "/" + URL(fileURLWithPath: #file).deletingPathExtension().lastPathComponent
 
         return path
     }
