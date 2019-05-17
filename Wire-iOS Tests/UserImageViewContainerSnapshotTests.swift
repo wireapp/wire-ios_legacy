@@ -28,8 +28,8 @@ final class UserImageViewContainerSnapshotTests: ZMSnapshotTestCase {
     override func setUp() {
         super.setUp()
 
-        mockUser = MockUser.mockUsers()?.first as Any as! MockUser
-        mockUser.bundle = Bundle(for: type(of: self))
+        mockUser = (MockUser.mockUsers()?.first as Any as! MockUser)
+        mockUser.profileImage = image(inTestBundleNamed: "unsplash_matterhorn.jpg")
     }
     
     override func tearDown() {

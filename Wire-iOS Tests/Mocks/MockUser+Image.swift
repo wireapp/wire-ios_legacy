@@ -19,7 +19,6 @@
 import XCTest
 @testable import Wire
 
-//extension ProfileImageFetchable where Self: MockUser {
 extension MockUser: ProfileImageFetchable {
     public func fetchProfileImage(session: ZMUserSessionInterface,
                                   cache: ImageCache<UIImage> = defaultUserImageCache,
@@ -27,7 +26,6 @@ extension MockUser: ProfileImageFetchable {
                                   desaturate: Bool = false,
                                   completion: @escaping (_ image: UIImage?, _ cacheHit: Bool) -> Void ) -> Void {
 
-        let image = XCTestCase.image(inTestBundleNamed: "unsplash_matterhorn.jpg", bundle: bundle)
-        completion(image, false)
+        completion(profileImage, false)
     }
 }
