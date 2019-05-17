@@ -32,7 +32,7 @@ final class UserImageViewContainer: UIView {
     init(size: UserImageView.Size,
          maxSize: CGFloat,
          yOffset: CGFloat,
-         userSession: ZMUserSession? = ZMUserSession.shared()) {
+         userSession: ZMUserSessionInterface? = ZMUserSession.shared()) {
         userImageView = UserImageView(size: size)
         self.maxSize = maxSize
         self.yOffset = yOffset
