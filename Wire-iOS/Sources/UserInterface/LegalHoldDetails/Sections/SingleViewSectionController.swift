@@ -37,8 +37,8 @@ class CollectionViewCellAdapter: UICollectionViewCell {
             contentView.addSubview(wrappedView)
             
             NSLayoutConstraint.activate([
-                wrappedView.leftAnchor.constraint(equalTo: contentView.leftAnchor),
-                wrappedView.rightAnchor.constraint(equalTo: contentView.rightAnchor),
+                wrappedView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+                wrappedView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
                 wrappedView.topAnchor.constraint(equalTo: contentView.topAnchor),
                 wrappedView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
                 ])

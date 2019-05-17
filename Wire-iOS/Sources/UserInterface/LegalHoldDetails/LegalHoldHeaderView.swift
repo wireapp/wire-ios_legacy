@@ -63,8 +63,8 @@ class LegalHoldHeaderView: UIView {
         addSubview(stackView)
         
         NSLayoutConstraint.activate([
-            stackView.leftAnchor.constraint(equalTo: leftAnchor, constant: 16),
-            stackView.rightAnchor.constraint(equalTo: rightAnchor, constant: -16),
+            stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             stackView.topAnchor.constraint(equalTo: topAnchor),
             stackView.bottomAnchor.constraint(equalTo: bottomAnchor)
             ])
