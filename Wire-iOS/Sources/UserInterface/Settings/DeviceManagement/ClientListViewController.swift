@@ -126,7 +126,7 @@ final class ClientListViewController: UIViewController,
             self.variant = variant
         }
 
-        clientFilter = { $0 != selfClient && (showTemporary || !$0.isTemporary) }
+        clientFilter = { $0 != selfClient && (showTemporary || $0.type != .temporary) }
         clientSorter = {
             guard let leftDate = $0.activationDate, let rightDate = $1.activationDate else { return false }
             return leftDate.compare(rightDate) == .orderedDescending
@@ -442,13 +442,4 @@ extension ClientListViewController : ZMUserObserver {
         }
     }
     
-}
-
-fileprivate extension UserClient {
-
-    var isTemporary: Bool {
-        guard let type = type else { return false }
-        return type == "temporary"
-    }
-
 }

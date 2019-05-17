@@ -24,26 +24,40 @@ import Foundation
     @objc func attributedRemoteIdentifier(_ attributes: [NSAttributedString.Key : AnyObject], boldAttributes: [NSAttributedString.Key : AnyObject], uppercase: Bool) -> NSAttributedString
 }
 
-extension UserClient: UserClientTypeAttributedString {
+private let UserClientIdentifierMinimumLength = 16
+
+extension UserClient: Comparable {
     
-    @objc public func attributedRemoteIdentifier(_ attributes: [NSAttributedString.Key : AnyObject], boldAttributes: [NSAttributedString.Key : AnyObject], uppercase: Bool = false) -> NSAttributedString {
-        let identifierPrefixString = NSLocalizedString("registration.devices.id", comment: "") + " "
-        let identifierString = NSMutableAttributedString(string: identifierPrefixString, attributes: attributes)
-        let identifier = uppercase ? displayIdentifier.localizedUppercase : displayIdentifier
-        let attributedRemoteIdentifier = identifier.fingerprintStringWithSpaces().fingerprintString(attributes: attributes,
-            boldAttributes:boldAttributes)
-        identifierString.append(attributedRemoteIdentifier!)
-        return NSAttributedString(attributedString: identifierString)
+    public static func < (lhs: UserClient, rhs: UserClient) -> Bool {
+        if lhs.type == .legalHold {
+            return true
+        } else {
+           return lhs.remoteIdentifier < rhs.remoteIdentifier
+        }
+    }
+    
+    static func == (lhs: UserClient, rhs: UserClient) -> Bool {
+        return lhs.remoteIdentifier == rhs.remoteIdentifier
     }
     
 }
 
-private let UserClientIdentifierMinimumLength = 16
-
-extension UserClient {
+extension UserClientType {
+    
+    public func attributedRemoteIdentifier(_ attributes: [NSAttributedString.Key : AnyObject], boldAttributes: [NSAttributedString.Key : AnyObject], uppercase: Bool = false) -> NSAttributedString {
+        let identifierPrefixString = NSLocalizedString("registration.devices.id", comment: "") + " "
+        let identifierString = NSMutableAttributedString(string: identifierPrefixString, attributes: attributes)
+        let identifier = uppercase ? displayIdentifier.localizedUppercase : displayIdentifier
+        let attributedRemoteIdentifier = identifier.fingerprintStringWithSpaces().fingerprintString(attributes: attributes, boldAttributes: boldAttributes)
+        
+        identifierString.append(attributedRemoteIdentifier!)
+        
+        return NSAttributedString(attributedString: identifierString)
+    }
     
     /// This should be used when showing the identifier in the UI
     /// We manually add a padding if there was a leading zero
+    
     public var displayIdentifier: String {
         guard let remoteIdentifier = self.remoteIdentifier else {
             return ""
@@ -69,8 +83,10 @@ extension DeviceClass {
             return "device.class.desktop".localized
         case .tablet:
             return "device.class.tablet".localized
-        case .legalhold:
+        case .legalHold:
             return "device.class.legalhold".localized
+        default:
+            return "device.class.unknown".localized
         }
     }
     

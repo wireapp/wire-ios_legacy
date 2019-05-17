@@ -44,7 +44,7 @@ final class ParticipantDeviceCellTests: ZMSnapshotTestCase {
         let client = UserClient.insertNewObject(in: uiMOC)
         client.remoteIdentifier = "102030405060708090"
         client.user = user
-        client.deviceClass = "tablet"
+        client.deviceClass = .tablet
         sut.configure(for: client)
         verify(view: sut.wrapInTableView())
     }
@@ -53,7 +53,7 @@ final class ParticipantDeviceCellTests: ZMSnapshotTestCase {
         let client = UserClient.insertNewObject(in: uiMOC)
         client.remoteIdentifier = "807060504030201"
         client.user = user
-        client.deviceClass = "desktop"
+        client.deviceClass = .desktop
         sut.configure(for: client)
         verify(view: sut.wrapInTableView())
     }
@@ -62,7 +62,7 @@ final class ParticipantDeviceCellTests: ZMSnapshotTestCase {
         let client = UserClient.insertNewObject(in: uiMOC)
         client.remoteIdentifier = "7060504030201"
         client.user = user
-        client.deviceClass = "desktop"
+        client.deviceClass = .desktop
         sut.configure(for: client)
         verify(view: sut.wrapInTableView())
     }
@@ -71,7 +71,7 @@ final class ParticipantDeviceCellTests: ZMSnapshotTestCase {
         let client = UserClient.insertNewObject(in: uiMOC)
         client.remoteIdentifier = "e7b2u9d4s85h1gv0"
         client.user = user
-        client.deviceClass = "phone"
+        client.deviceClass = .phone
         trust(client)
         sut.configure(for: client)
         verify(view: sut.wrapInTableView())

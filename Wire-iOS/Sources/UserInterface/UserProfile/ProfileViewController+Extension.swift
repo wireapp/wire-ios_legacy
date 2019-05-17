@@ -64,10 +64,8 @@ extension ProfileViewController {
         }
 
         if let fullUser = self.fullUser(), context != .profileViewer, viewer.canSeeDevices(of: bareUser) {
-            let profileDevicesViewController = ProfileDevicesViewController(user: fullUser)
-            profileDevicesViewController.title = "profile.devices.title".localized
-            profileDevicesViewController.delegate = self
-            viewControllers.append(profileDevicesViewController)
+            let userClientListViewController = UserClientListViewController(user: fullUser)
+            viewControllers.append(userClientListViewController)
         }
 
         tabsController = TabBarController(viewControllers: viewControllers)

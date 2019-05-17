@@ -89,12 +89,12 @@ final class ParticipantDeviceCell: UITableViewCell {
         configure(for: client)
     }
 
-    func configure(for client: UserClientType & UserClientTypeAttributedString) {
+    func configure(for client: UserClientType) {
         let attributes: [NSAttributedString.Key: AnyObject] = [NSAttributedString.Key.font: fingerprintFont.monospaced()]
         let boldAttributes: [NSAttributedString.Key: AnyObject] = [NSAttributedString.Key.font: boldFingerprintFont.monospaced()]
 
         identifierLabel.attributedText = client.attributedRemoteIdentifier(attributes, boldAttributes: boldAttributes, uppercase: true)
-        nameLabel.text = client.deviceClass?.localizedDescription.localizedUppercase ?? client.type?.uppercased()
+        nameLabel.text = client.deviceClass?.localizedDescription.localizedUppercase ?? client.type.rawValue.uppercased() // TODO jacob create localizedDescription for `DeviceType`
 
 
         trustLevelImageView.image = client.verified ? WireStyleKit.imageOfShieldverified : WireStyleKit.imageOfShieldnotverified
