@@ -29,19 +29,18 @@ final class UserImageViewContainer: UIView {
         }
     }
 
-    var userSession: ZMUserSession? = ZMUserSession.shared() {
-        didSet {
-            userImageView.userSession = userSession
-        }
-    }
-
-    init(size: UserImageView.Size, maxSize: CGFloat, yOffset: CGFloat) {
+    init(size: UserImageView.Size,
+         maxSize: CGFloat,
+         yOffset: CGFloat,
+         userSession: ZMUserSession? = ZMUserSession.shared()) {
         userImageView = UserImageView(size: size)
         self.maxSize = maxSize
         self.yOffset = yOffset
         super.init(frame: .zero)
         setupViews()
         createConstraints()
+
+        userImageView.userSession = userSession
     }
     
     @available(*, unavailable)
