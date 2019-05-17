@@ -105,6 +105,4 @@ extension ProfileImageFetchable where Self: UserType {
     }
 }
 
-//extension ServiceUser: ProfileImageFetchable {}
-
 extension ZMUser: ProfileImageFetchable {}

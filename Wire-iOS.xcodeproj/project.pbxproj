@@ -1345,7 +1345,7 @@
 		F15650F021DD1B4100210504 /* FontScheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87AAE4161E422E2300E1D13A /* FontScheme.swift */; };
 		F15650F121DD1B4100210504 /* UIFont+DynamicType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87AAE41C1E42399E00E1D13A /* UIFont+DynamicType.swift */; };
 		F15650F221DD1B4100210504 /* UIFont+Weight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16A5FE24215CB64D00AEEBBD /* UIFont+Weight.swift */; };
-		F15650F321DD1B6D00210504 /* ZMUser+Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1687ABA920EBCED80007C240 /* ZMUser+Images.swift */; };
+		F15650F321DD1B6D00210504 /* ProfileImageFetchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1687ABA920EBCED80007C240 /* ProfileImageFetchable.swift */; };
 		F15650F421DD1C8B00210504 /* UIColor+Mixing.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E5E0CF41B6B8EDB003B0CAC /* UIColor+Mixing.m */; };
 		F15650F521DD1D8900210504 /* UIControl+Wire.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E5E0CF61B6B8EDB003B0CAC /* UIControl+Wire.m */; };
 		F15650F621DD1E0A00210504 /* UIImage+ImageUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E5E0CF81B6B8EDB003B0CAC /* UIImage+ImageUtilities.m */; };
@@ -1564,7 +1564,7 @@
 		1682AEC020483FA5003A052A /* GroupDetailsSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDetailsSectionController.swift; sourceTree = "<group>"; };
 		1682AEC2204840E7003A052A /* SectionCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionCollectionViewController.swift; sourceTree = "<group>"; };
 		1682AEC420484B9B003A052A /* Themeable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Themeable.swift; sourceTree = "<group>"; };
-		1687ABA920EBCED80007C240 /* ZMUser+Images.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ZMUser+Images.swift"; sourceTree = "<group>"; };
+		1687ABA920EBCED80007C240 /* ProfileImageFetchable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageFetchable.swift; sourceTree = "<group>"; };
 		1687C0FB2151435F003099DD /* ZClientViewController+ShowContentDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ZClientViewController+ShowContentDelegate.swift"; sourceTree = "<group>"; };
 		1689FD4A2195C8B800A656E2 /* EphemeralCountdownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EphemeralCountdownView.swift; sourceTree = "<group>"; };
 		168A16A31D95964B005CFA6C /* NSString+URL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSString+URL.swift"; sourceTree = "<group>"; };
@@ -5257,7 +5257,7 @@
 				161B75C720B6BCB50002B0F7 /* ZMUserSession+Calling.swift */,
 				87F18BD11E03F13900C69D9B /* ZMLocationMessageData+Coordinates.swift */,
 				164A55DB20F60A5700AE62A6 /* ImageResource.swift */,
-				1687ABA920EBCED80007C240 /* ZMUser+Images.swift */,
+				1687ABA920EBCED80007C240 /* ProfileImageFetchable.swift */,
 				8787D1831EA74F5B00254D02 /* ZMUser+Additions.swift */,
 				D50892FA2056BD51004D3AE2 /* ZMUser+ExpirationTimeFormatting.swift */,
 				871DD79C2080C4F6006B1C56 /* Conversation+Participants.swift */,
@@ -7285,7 +7285,7 @@
 				87F18BD21E03F13900C69D9B /* ZMLocationMessageData+Coordinates.swift in Sources */,
 				EF7D75A6201B6149003A8AF8 /* DeviceNativeBoundsSize.swift in Sources */,
 				EF18140C21B18846008F7DA8 /* IconToggleCell.swift in Sources */,
-				F15650F321DD1B6D00210504 /* ZMUser+Images.swift in Sources */,
+				F15650F321DD1B6D00210504 /* ProfileImageFetchable.swift in Sources */,
 				5E8DA74D211AEB9E00360979 /* AuthenticationEventHandler.swift in Sources */,
 				5E53534421B14A8A0060DB38 /* MessageDetailsCellDescription.swift in Sources */,
 				EF2A8DEB214A9AFD002C9058 /* ContactsCell.swift in Sources */,
