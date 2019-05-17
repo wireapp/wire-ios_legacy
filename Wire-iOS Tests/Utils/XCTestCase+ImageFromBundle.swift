@@ -37,3 +37,22 @@ extension XCTestCase {
         return url!
     }
 }
+
+extension XCTestCase {
+    static func image(inTestBundleNamed name: String, bundle: Bundle) -> UIImage {
+        return UIImage(contentsOfFile: urlForResource(inTestBundleNamed: name, bundle: bundle).path)!
+    }
+
+    static func urlForResource(inTestBundleNamed name: String, bundle: Bundle) -> URL {
+
+        let url = bundle.url(forResource: name, withExtension: "")
+
+        if let isFileURL = url?.isFileURL {
+            XCTAssert(isFileURL)
+        } else {
+            XCTFail("\(name) does not exist")
+        }
+
+        return url!
+    }
+}
