@@ -41,14 +41,11 @@ final class CallAccessoryViewController: UIViewController, CallParticipantsViewC
         }
     }
 
-    init(configuration: CallInfoViewControllerInput,
-         userSession: ZMUserSession?) {
+    init(configuration: CallInfoViewControllerInput) {
         self.configuration = configuration
         participantsViewController = CallParticipantsViewController(participants: configuration.accessoryType.participants, allowsScrolling: false)
         super.init(nibName: nil, bundle: nil)
         participantsViewController.delegate = self
-
-        avatarView.userSession = userSession
     }
 
     @available(*, unavailable)

@@ -29,7 +29,7 @@ final class UserImageViewContainer: UIView {
         }
     }
 
-    var userSession: ZMUserSession? {
+    var userSession: ZMUserSession? = ZMUserSession.shared() {
         didSet {
             userImageView.userSession = userSession
         }
