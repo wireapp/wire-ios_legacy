@@ -60,7 +60,7 @@ import WireSyncEngine
     // MARK: - Remote User
 
     /// The user session to use to download images.
-    @objc public var userSession: ZMUserSession? {
+    @objc public var userSession: ZMUserSessionInterface? {
         didSet {
             updateUser()
         }
