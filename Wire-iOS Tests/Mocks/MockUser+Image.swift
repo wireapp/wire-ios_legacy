@@ -27,16 +27,7 @@ extension MockUser: ProfileImageFetchable {
                                   desaturate: Bool = false,
                                   completion: @escaping (_ image: UIImage?, _ cacheHit: Bool) -> Void ) -> Void {
 
-//        let image = UIImage(inTestBundleNamed: "unsplash_matterhorn.jpg", bundle: bundle)
         let image = XCTestCase.image(inTestBundleNamed: "unsplash_matterhorn.jpg", bundle: bundle)
         completion(image, false)
     }
 }
-
-//extension MockUser {
-//    func fetchProfileImage(session: ZMUserSessionInterface, cache: ImageCache<UIImage> = defaultUserImageCache, sizeLimit: Int? = nil, desaturate: Bool = false, completion: @escaping (_ image: UIImage?, _ cacheHit: Bool) -> Void ) -> Void {
-//
-//        let image = UIImage(inTestBundleNamed: "unsplash_matterhorn.jpg")
-//        completion(image, false)
-//    }
-//}
