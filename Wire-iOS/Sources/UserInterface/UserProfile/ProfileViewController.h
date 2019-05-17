@@ -39,7 +39,7 @@ typedef NS_ENUM(NSInteger, ProfileViewControllerContext) {
     ProfileViewControllerContextGroupConversation,
     ProfileViewControllerContextOneToOneConversation,
     ProfileViewControllerContextDeviceList,
-    /// when open a URL scheme, not link to a specific conversation
+    /// when opening from a URL scheme, not linked to a specific conversation
     ProfileViewControllerContextProfileViewer
 };
 

@@ -72,7 +72,7 @@ class SingleViewSectionController: NSObject, CollectionViewSectionController {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         view.size(fittingWidth: collectionView.bounds.size.width)
         
-        return view.bounds.size // CGSize(width: collectionView.bounds.size.width, height: 56)
+        return view.bounds.size
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
