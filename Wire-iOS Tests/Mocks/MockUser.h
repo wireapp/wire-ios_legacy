@@ -58,6 +58,7 @@
 @property (nonatomic, readwrite) BOOL hasTeam;
 @property (nonatomic, readwrite) NSString *expirationDisplayString;
 @property (nonatomic, readwrite) BOOL isWirelessUser;
+@property (nonatomic, readwrite) BOOL isUnderLegalHold;
 @property (nonatomic, readwrite) BOOL usesCompanyLogin;
 @property (nonatomic, readwrite) BOOL readReceiptsEnabled;
 @property (nonatomic, readwrite) BOOL isAccountDeleted;

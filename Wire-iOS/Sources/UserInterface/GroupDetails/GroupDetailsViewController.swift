@@ -96,6 +96,8 @@ import Cartography
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        navigationItem.leftBarButtonItem = legalholdItem
         navigationItem.rightBarButtonItem = navigationController?.closeItem()
         collectionViewController.collectionView?.reloadData()
     }
@@ -172,6 +174,24 @@ import Cartography
     
     func dismissButtonTapped() {
         dismiss(animated: true)
+    }
+    
+}
+
+extension GroupDetailsViewController {
+    
+    fileprivate var legalholdItem: UIBarButtonItem {
+        let item = UIBarButtonItem(icon: .legalholdactive, target: self, action: #selector(presentLegalHoldDetails))
+        item.accessibilityIdentifier = "legalhold"
+        item.accessibilityLabel = "legalhold.accessibility".localized
+        item.tintColor = .vividRed
+        return item
+    }
+    
+    func presentLegalHoldDetails() {
+        let viewController = LegalHoldDetailsViewController(conversation: conversation)
+        
+        navigationController?.pushViewController(viewController, animated: true)
     }
     
 }
