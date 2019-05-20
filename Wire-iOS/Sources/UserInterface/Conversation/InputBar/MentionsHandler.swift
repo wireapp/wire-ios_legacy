@@ -19,8 +19,8 @@
 import Foundation
 
 extension String {
-    var wholeRangeInUTF8: NSRange {
-        return NSRange(location: 0, length: utf8.count)
+    var wholeRange: NSRange {
+        return NSRange(location: 0, length: endIndex.utf16Offset(in: self))
     }
 }
 
@@ -36,7 +36,7 @@ extension String {
     init?(text: String?, cursorPosition: Int) {
         guard let text = text, !text.isEmpty else { return nil }
         
-        let matches = mentionRegex.matches(in: text, range: text.wholeRangeInUTF8)
+        let matches = mentionRegex.matches(in: text, range: text.wholeRange)
         // Cursor is a separator between characters, we are interested in the character before the cursor
         let characterPosition = max(0, cursorPosition - 1)
         guard let match = matches.first(where: { result in result.range.contains(characterPosition) }) else { return nil }

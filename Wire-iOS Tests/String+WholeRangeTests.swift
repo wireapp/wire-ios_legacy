@@ -26,7 +26,7 @@ final class StringWholeRangeTests: XCTestCase {
         let string = "@Bill drinks coffee"
 
         // WHEN
-        let sut = string.wholeRangeInUTF8
+        let sut = string.wholeRange
 
         // THEN
         XCTAssertEqual(sut.location, 0)
@@ -38,11 +38,11 @@ final class StringWholeRangeTests: XCTestCase {
         let string = "👨‍👩‍👧‍👦 & @🏴󠁧󠁢󠁷󠁬󠁳󠁿🀄︎🧘🏿‍♀️"
 
         // WHEN
-        let sut = string.wholeRangeInUTF8
+        let sut = string.wholeRange
 
         // THEN
         XCTAssertEqual(sut.location, 0)
-        XCTAssertEqual(sut.length, 81)
+        XCTAssertEqual(sut.length, 39)
     }
 
     func testWholeRangeReturnsCorrectLengthForEmptyString(){
@@ -50,7 +50,7 @@ final class StringWholeRangeTests: XCTestCase {
         let string = ""
 
         // WHEN
-        let sut = string.wholeRangeInUTF8
+        let sut = string.wholeRange
 
         // THEN
         XCTAssertEqual(sut.location, 0)
