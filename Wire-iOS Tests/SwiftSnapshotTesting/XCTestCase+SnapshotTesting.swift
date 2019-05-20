@@ -20,26 +20,13 @@ import XCTest
 import SnapshotTesting
 @testable import Wire
 
-final class VersionInfoViewControllerSnapshotTests: XCTestCase {
-    
-    var sut: VersionInfoViewController!
+extension XCTestCase {
+    func snapshotDirectory(file: StaticString = #file,
+                           testName: String = #function,
+                           line: UInt = #line) -> String {
+        let fileName = "\(file)"
+        let path = ProcessInfo.processInfo.environment["SNAPSHOT_REFERENCE_DIR"]! + "/" + URL(fileURLWithPath: fileName).deletingPathExtension().lastPathComponent
 
-    override func setUp() {
-        super.setUp()
-        let path = Bundle(for: type(of: self)).path(forResource: "DummyComponentsVersions", ofType: "plist")!
-
-        sut = VersionInfoViewController(versionsPlist: path)
-    }
-    
-    override func tearDown() {
-        sut = nil
-        super.tearDown()
-    }
-
-    func testForInitState(){
-
-        let failure = verifySnapshot(matching: sut, as: .image, snapshotDirectory: snapshotDirectory())
-
-        XCTAssertNil(failure)
+        return path
     }
 }
