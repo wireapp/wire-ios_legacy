@@ -33,12 +33,6 @@
 
 @import WireSyncEngine;
 
-typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
-    ProfileViewControllerTabBarIndexDetails = 0,
-    ProfileViewControllerTabBarIndexDevices
-};
-
-
 
 @interface ProfileViewController (ProfileViewControllerDelegate) <ProfileViewControllerDelegate>
 @end
