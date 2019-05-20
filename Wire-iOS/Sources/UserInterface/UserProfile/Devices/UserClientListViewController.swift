@@ -18,38 +18,6 @@
 
 import Foundation
 
-class CollectionViewCellAdapter: UICollectionViewCell {
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-    }
-    
-    
-    var wrappedView: UIView? {
-        didSet {
-            guard wrappedView != oldValue else { return }
-            
-            contentView.subviews.forEach({ $0.removeFromSuperview() })
-            
-            guard let wrappedView = wrappedView else { return }
-            
-            wrappedView.translatesAutoresizingMaskIntoConstraints = false
-            contentView.addSubview(wrappedView)
-            
-            NSLayoutConstraint.activate([
-                wrappedView.leftAnchor.constraint(equalTo: contentView.leftAnchor),
-                wrappedView.rightAnchor.constraint(equalTo: contentView.rightAnchor),
-                wrappedView.topAnchor.constraint(equalTo: contentView.topAnchor),
-                wrappedView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
-            ])
-        }
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-}
 
 class UserClientListViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     

@@ -126,7 +126,7 @@ class UserClientCell: SeparatorCollectionViewCell {
     private func updateDeviceIcon() {
         switch client?.deviceClass {
         case .legalHold?:
-            deviceTypeIconView.image = StyleKitIcon.robot.makeImage(size: .tiny, color: .vividRed)
+            deviceTypeIconView.image = StyleKitIcon.legalholdactive.makeImage(size: .tiny, color: .vividRed)
         default:
             deviceTypeIconView.setIcon(.devices, size: .tiny, color: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant))
         }

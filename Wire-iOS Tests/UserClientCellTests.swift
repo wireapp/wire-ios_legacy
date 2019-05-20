@@ -76,7 +76,7 @@ class UserClientCellTests: ZMSnapshotTestCase {
     func testLegalHold() {
         let client = MockUserClient()
         client.remoteIdentifier = "7060504030201"
-        client.deviceClass = .legalhold
+        client.deviceClass = .legalHold
         client.verified = true
         
         verifyInAllColorSchemes(view: cell({ (cell) in
