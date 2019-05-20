@@ -26,6 +26,23 @@ extension ContactsViewController {
         showKeyboardIfNeeded()
     }
 
+    open override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        presentShareContactsViewControllerIfNeeded()
+    }
+
+    private func presentShareContactsViewControllerIfNeeded() {
+        let shouldSkip: Bool = AutomationHelper.sharedHelper.skipFirstLoginAlerts || ZMUser.selfUser().hasTeam
+        if sharingContactsRequired &&
+            !AddressBookHelper.sharedHelper.isAddressBookAccessGranted &&
+            !shouldSkip &&
+            shouldShowShareContactsViewController {
+            presentShareContactsViewController()
+        }
+    }
+    
+
     open override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         searchHeaderViewController.tokenField.resignFirstResponder()
@@ -43,5 +60,13 @@ extension ContactsViewController {
             self.view.layoutIfNeeded()
         }, completion: nil)
     }
+
+    private func presentShareContactsViewController() {
+        let shareContactsViewController = ShareContactsViewController()
+        shareContactsViewController.delegate = self
+
+        addToSelf(shareContactsViewController)
+    }
+
 }
 
