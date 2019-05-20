@@ -9,6 +9,7 @@ trigger:
 steps:
 - script: |
     sudo xcode-select -switch /Applications/Xcode_10.2.1.app
+    ls /Users/vsts/Library/Caches/org.carthage.CarthageKit/dependencies/
     pushd /Users/vsts/Library/Caches/org.carthage.CarthageKit/dependencies/Cartography
     /usr/bin/env git fetch --prune https://github.com/wireapp/Cartography.git refs/tags/*:refs/tags/* +refs/heads/*:refs/heads/*
     popd
