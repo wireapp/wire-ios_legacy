@@ -34,8 +34,19 @@ final class ShareDestinationCell<D: ShareDestination>: UITableViewCell {
     let checkImageView = UIImageView()
     let avatarViewContainer = UIView()
     var avatarView : UIView?
-    var shieldView: UIImageView!
-    var guestUserIcon: UIImageView!
+    private let shieldView: UIImageView = {
+        let imageView = UIImageView(image: verifiedShieldImage)
+        imageView.accessibilityIdentifier = "verifiedShield"
+
+        return imageView
+    }()
+
+    private let guestUserIcon: UIImageView = {
+        let imageView = UIImageView(image: StyleKitIcon.guest.makeImage(size: .tiny, color: UIColor(white: 1.0, alpha: 0.64)))
+        imageView.accessibilityIdentifier = "guestUserIcon"
+
+        return imageView
+    }()
 
     var allowsMultipleSelection: Bool = true {
         didSet {
@@ -100,7 +111,6 @@ final class ShareDestinationCell<D: ShareDestination>: UITableViewCell {
         
         self.stackView.addArrangedSubview(self.titleLabel)
         
-        self.shieldView = UIImageView(image: verifiedShieldImage)
         self.stackView.addArrangedSubview(self.shieldView)
         
         constrain(shieldView) { shieldView in
@@ -108,7 +118,6 @@ final class ShareDestinationCell<D: ShareDestination>: UITableViewCell {
             shieldView.height == self.shieldSize
         }
         
-        self.guestUserIcon = UIImageView(image: StyleKitIcon.guest.makeImage(size: .tiny, color: UIColor(white: 1.0, alpha: 0.64)))
         self.stackView.addArrangedSubview(self.guestUserIcon)
         
         constrain(self.guestUserIcon) { guestUserIcon in
