@@ -21,12 +21,24 @@ import SnapshotTesting
 @testable import Wire
 
 extension XCTestCase {
-    func snapshotDirectory(file: StaticString = #file,
-                           testName: String = #function,
-                           line: UInt = #line) -> String {
+    func snapshotDirectory(file: StaticString = #file) -> String {
         let fileName = "\(file)"
         let path = ProcessInfo.processInfo.environment["SNAPSHOT_REFERENCE_DIR"]! + "/" + URL(fileURLWithPath: fileName).deletingPathExtension().lastPathComponent
 
         return path
     }
+
+    func verify(matching value: UIViewController,
+                file: StaticString = #file,
+                testName: String = #function,
+                line: UInt = #line) {
+
+        let failure = verifySnapshot(matching: value,
+                                     as: .image,
+                                     snapshotDirectory: snapshotDirectory(file: file),
+                                     file: file, testName: testName, line: line)
+
+        XCTAssertNil(failure, file: file, line: line)
+    }
 }
+

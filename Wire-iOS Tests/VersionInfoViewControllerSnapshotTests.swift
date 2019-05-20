@@ -37,9 +37,6 @@ final class VersionInfoViewControllerSnapshotTests: XCTestCase {
     }
 
     func testForInitState(){
-
-        let failure = verifySnapshot(matching: sut, as: .image, snapshotDirectory: snapshotDirectory())
-
-        XCTAssertNil(failure)
+        verify(matching: sut)
     }
 }
