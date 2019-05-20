@@ -74,7 +74,7 @@ class DirectorySectionController: SearchSectionController {
         }
     }
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let user = suggestions[indexPath.row]
         delegate?.searchSectionController(self, didSelectUser: user, at: indexPath)
     }
