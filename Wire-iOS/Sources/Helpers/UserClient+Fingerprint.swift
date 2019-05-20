@@ -26,18 +26,16 @@ import Foundation
 
 private let UserClientIdentifierMinimumLength = 16
 
-extension UserClient: Comparable {
+extension Sequence where Element: UserClientType {
     
-    public static func < (lhs: UserClient, rhs: UserClient) -> Bool {
-        if lhs.type == .legalHold {
-            return true
-        } else {
-           return lhs.remoteIdentifier < rhs.remoteIdentifier
+    func sortedByRelevance() -> [UserClientType] {
+        return sorted { (lhs, rhs) -> Bool in
+            if lhs.type == .legalHold {
+                return true
+            } else {
+                return lhs.remoteIdentifier < rhs.remoteIdentifier
+            }
         }
-    }
-    
-    static func == (lhs: UserClient, rhs: UserClient) -> Bool {
-        return lhs.remoteIdentifier == rhs.remoteIdentifier
     }
     
 }
