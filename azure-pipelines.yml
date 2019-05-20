@@ -9,6 +9,7 @@ trigger:
 steps:
 - script: |
     sudo xcode-select -switch /Applications/Xcode_10.2.1.app
+    /usr/bin/env git fetch --prune https://github.com/wireapp/Cartography.git refs/tags/*:refs/tags/* +refs/heads/*:refs/heads/*
     fastlane prepare 
   env:
     GITHUB_ACCESS_TOKEN: $(GITHUB_ACCESS_TOKEN)   
