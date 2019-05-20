@@ -789,14 +789,20 @@
 "profile.devices.detail.verify_message" = "Verify that this matches the fingerprint shown on %@’s device.";
 "profile.devices.detail.verify_message.link" = "How do I do that?";
 "profile.devices.detail.show_my_device.title" = "Show my device fingerprint";
+"profile.devices.detail.reset_session.title" = "Reset Session";
 "device.verified" = "Verified";
 "device.not_verified" = "Not Verified";
+
 "device.class.legalhold" = "Legal Hold";
 "device.class.desktop" = "Desktop";
 "device.class.tablet" = "Tablet";
 "device.class.phone" = "Phone";
 "device.class.unknown" = "Unknown";
-"profile.devices.detail.reset_session.title" = "Reset Session";
+
+"device.type.permanent" = "Permanent";
+"device.type.temporary" = "Temporary";
+"device.type.legalhold" = "Legal Hold";
+"device.type.unknown" = "Unknown";
 
 // Bot
 "participants.services.remove_integration.button" = "remove integration";

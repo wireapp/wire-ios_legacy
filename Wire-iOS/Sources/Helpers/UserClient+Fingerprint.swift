@@ -73,6 +73,23 @@ extension UserClientType {
     }
 }
 
+extension DeviceType {
+    
+    var localizedDescription: String {
+        switch self {
+        case .permanent:
+            return "device.type.permanent".localized
+        case .temporary:
+            return "device.type.temporary".localized
+        case .legalHold:
+            return "device.type.legalhold".localized
+        default:
+            return "device.type.unknown".localized
+        }
+    }
+    
+}
+
 extension DeviceClass {
     
     var localizedDescription: String {

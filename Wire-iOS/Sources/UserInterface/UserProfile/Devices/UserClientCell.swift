@@ -117,7 +117,7 @@ class UserClientCell: SeparatorCollectionViewCell {
         let boldAttributes: [NSAttributedString.Key: AnyObject] = [NSAttributedString.Key.font: boldFingerprintFont.monospaced()]
         
         verifiedIconView.image = client.verified ? WireStyleKit.imageOfShieldverified : WireStyleKit.imageOfShieldnotverified
-        titleLabel.text = client.deviceClass?.localizedDescription.localizedUppercase ?? client.type.rawValue.uppercased() // TODO jacob create localizedDescription for `DeviceType`
+        titleLabel.text = client.deviceClass?.localizedDescription.localizedUppercase ?? client.type.localizedDescription.localizedUppercase
         subtitleLabel.attributedText = client.attributedRemoteIdentifier(attributes, boldAttributes: boldAttributes, uppercase: true)
         
         updateDeviceIcon()
