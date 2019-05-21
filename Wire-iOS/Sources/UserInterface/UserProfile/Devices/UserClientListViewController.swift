@@ -37,7 +37,7 @@ class UserClientListViewController: UIViewController, UICollectionViewDelegateFl
     
     init(user: ZMUser) {
         self.user = user
-        self.clients = user.clients.sortedByRelevance()
+        self.clients = user.allClients.sortedByRelevance()
         
         super.init(nibName: nil, bundle: nil)
         
@@ -134,7 +134,7 @@ extension UserClientListViewController: ZMUserObserver {
     func userDidChange(_ changeInfo: UserChangeInfo) {
         guard changeInfo.clientsChanged || changeInfo.trustLevelChanged else { return }
         
-        clients = user.clients.sortedByRelevance()
+        clients = user.allClients.sortedByRelevance()
         collectionView.reloadData()
     }
     

@@ -261,6 +261,11 @@ static id<UserType> mockSelfUser = nil;
     return [NSSet new];
 }
 
+- (NSArray<id<UserClientType>> *)allClients
+{
+    return self.clients.allObjects;
+}
+
 - (ZMUser *)user
 {
     return nil;

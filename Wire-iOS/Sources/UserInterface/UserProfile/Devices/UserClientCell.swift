@@ -102,10 +102,11 @@ class UserClientCell: SeparatorCollectionViewCell {
         super.applyColorScheme(colorSchemeVariant)
         
         let sectionTextColor = UIColor.from(scheme: .sectionText, variant: colorSchemeVariant)
+        let textForegroundColor = UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)
         backgroundColor = contentBackgroundColor(for: colorSchemeVariant)
         accessoryIconView.setIcon(.disclosureIndicator, size: 12, color: sectionTextColor)
-        titleLabel.textColor = UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)
-        subtitleLabel.textColor = sectionTextColor
+        titleLabel.textColor = textForegroundColor
+        subtitleLabel.textColor = textForegroundColor
         
         updateDeviceIcon()
     }
