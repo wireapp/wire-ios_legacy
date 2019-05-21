@@ -54,6 +54,12 @@ class ConversationListTopBarViewController: UIViewController {
         topBar?.layoutMargins = UIEdgeInsets(top: 0, left: 9, bottom: 0, right: 16)
         topBar?.middleView = createTitleView()
         topBar?.leftView = createAccountView()
+
+        ///TODO: mock
+        if ZMUser.selfUser()?.isUnderLegalHold == true {
+
+        }
+        ///TODO: rightview legal hold
         topBar?.splitSeparator = false
         
         

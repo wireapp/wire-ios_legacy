@@ -40,16 +40,27 @@ final class ConversationListViewControllerTests: CoreDataSnapshotTestCase {
         super.tearDown()
     }
 
+    //MARK: - View controller
+
+    ///TODO: legal hold
+
+    func testForLegalHoldIndicator() {
+        recordMode = true
+        verify(view: sut.view)
+    }
+
     func testForNoConversations() {
         verify(view: sut.view)
     }
 
+    //MARK: - PermissionDeniedViewController
     func testForPremissionDeniedViewController() {
         sut.showPermissionDeniedViewController()
 
         verify(view: sut.view)
     }
 
+    //MARK: - Action menu
     func testForActionMenu() {
         teamTest {
             sut.showActionMenu(for: otherUserConversation, from: sut.view)
