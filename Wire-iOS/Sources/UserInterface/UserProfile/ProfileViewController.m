@@ -29,7 +29,6 @@
 #import "Wire-Swift.h"
 
 #import "ContactsDataSource.h"
-#import "ProfileDevicesViewController.h"
 
 @import WireSyncEngine;
 
@@ -137,6 +136,10 @@
 {
     if (self.navigationController.viewControllers.count == 1) {
         self.navigationItem.rightBarButtonItem = [self.navigationController closeItem];
+    }
+    
+    if (self.fullUser != nil && self.fullUser.isUnderLegalHold) {
+        self.navigationItem.leftBarButtonItem = [self.navigationController legalHoldItem];
     }
 }
 
@@ -287,16 +290,3 @@
 }
 
 @end
-
-
-@implementation ProfileViewController (DevicesListDelegate)
-
-- (void)profileDevicesViewController:(ProfileDevicesViewController *)profileDevicesViewController didTapDetailForClient:(UserClient *)client
-{
-    ProfileClientViewController *userClientDetailController = [[ProfileClientViewController alloc] initWithClient:client fromConversation:YES];
-    userClientDetailController.showBackButton = NO;
-    [self.navigationController pushViewController:userClientDetailController animated:YES];
-}
-
-@end
-

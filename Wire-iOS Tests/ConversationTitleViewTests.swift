@@ -52,6 +52,25 @@ final class ConversationTitleViewTests: ZMSnapshotTestCase {
         // then
         verify(view: sut)
     }
+    
+    func testThatItUpdatesTheTitleViewAndRendersLegalHoldCorrectly() {
+        // when
+        conversation.isUnderLegalHold = true
+        sut = ConversationTitleView(conversation: conversation as Any as! ZMConversation, interactive: true)
+        
+        // then
+        verify(view: sut)
+    }
+    
+    func testThatItUpdatesTheTitleViewAndRendersLegalHoldAndVerifiedShieldCorrectly() {
+        // when
+        conversation.securityLevel = .secure
+        conversation.isUnderLegalHold = true
+        sut = ConversationTitleView(conversation: conversation as Any as! ZMConversation, interactive: true)
+        
+        // then
+        verify(view: sut)
+    }
 
     func testThatItDoesNotRenderTheDownArrowForOutgoingConnections() {
         // when
