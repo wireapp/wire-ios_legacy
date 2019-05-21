@@ -23,27 +23,38 @@ final class ConversationListTopBarViewControllerSnapshotTests: ZMSnapshotTestCas
     
     var sut: ConversationListTopBarViewController!
     var mockAccount: Account!
+    var mockSelfUser: MockUser!
 
     override func setUp() {
         super.setUp()
         mockAccount = Account.mockAccount(imageData: mockImageData)
-
-        ///TODO: inject mock user
-        sut = ConversationListTopBarViewController(account: mockAccount)
-        sut.view.frame = CGRect(x: 0, y: 0, width: 375, height: 48)
-
-        /// TODO: remove this after snapshot is created
-        recordMode = true
+        mockSelfUser = MockUser.firstMockUser()
     }
     
     override func tearDown() {
         sut = nil
         mockAccount = nil
+        mockSelfUser = nil
 
         super.tearDown()
     }
 
+    func setupSut() {
+        sut = ConversationListTopBarViewController(account: mockAccount, selfUser: mockSelfUser)
+        sut.view.frame = CGRect(x: 0, y: 0, width: 375, height: 48)
+    }
+
     func testForLegalHoldEnabled(){
+        mockSelfUser.isUnderLegalHold = true
+        setupSut()
+
+        verify(view: sut.view)
+    }
+
+    func testForLegalHoldDisabled(){
+        mockSelfUser.isUnderLegalHold = false
+        setupSut()
+
         verify(view: sut.view)
     }
 }

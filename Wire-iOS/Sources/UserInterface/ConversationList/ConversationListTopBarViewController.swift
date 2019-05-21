@@ -25,14 +25,16 @@ final class ConversationListTopBarViewController: UIViewController {
     private var observerToken: Any?
     private var availabilityViewController: AvailabilityTitleViewController?
     private var account: Account
+    private let selfUser: UserType
     
     var topBar: TopBar? {
         return view as? TopBar
     }
     
     
-    init(account: Account) {
+    init(account: Account, selfUser: UserType = ZMUser.selfUser()) {
         self.account = account
+        self.selfUser = selfUser
         
         super.init(nibName: nil, bundle: nil)
         
@@ -55,10 +57,9 @@ final class ConversationListTopBarViewController: UIViewController {
         topBar?.middleView = createTitleView()
         topBar?.leftView = createAccountView()
 
-        ///TODO: mock
-//        if ZMUser.selfUser()?.isUnderLegalHold == true {
+        if selfUser.isUnderLegalHold == true {
             topBar?.rightView = createLegalHoldView()
-//        }
+        }
         topBar?.splitSeparator = false
         
         
