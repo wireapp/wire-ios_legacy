@@ -50,10 +50,7 @@ final class UserImageViewContainerSnapshotTests: ZMSnapshotTestCase {
     }
 
     func testForWithUserImage(){
-        var mockZMUserSession: MockZMUserSession!
-        mockZMUserSession = MockZMUserSession()
-
-        setupSut(userSession: mockZMUserSession)
+        setupSut(userSession: MockZMUserSession())
 
         verify(view: sut)
     }
