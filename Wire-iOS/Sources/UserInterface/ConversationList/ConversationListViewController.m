@@ -57,9 +57,6 @@
 @interface ConversationListViewController (BottomBarDelegate) <ConversationListBottomBarControllerDelegate>
 @end
 
-@interface ConversationListViewController (StartUI) <StartUIDelegate>
-@end
-
 @interface ConversationListViewController (Archive) <ArchivedListViewControllerDelegate>
 @end
 
@@ -297,13 +294,6 @@
     ArchivedListViewController *archivedViewController = [ArchivedListViewController new];
     archivedViewController.delegate = self;
     return archivedViewController;
-}
-
-- (StartUIViewController *)createPeoplePickerController
-{
-    StartUIViewController *startUIViewController = [[StartUIViewController alloc] init];
-    startUIViewController.delegate = self;
-    return startUIViewController;
 }
 
 - (void)createListContentController

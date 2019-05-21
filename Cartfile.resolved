@@ -1,4 +1,4 @@
-github "wireapp/Cartography" "3.0.3"
+github "wireapp/Cartography" "4.0.0"
 github "wireapp/DifferenceKit" "1.1.1"
 github "wireapp/Down" "v2.1.2"
 github "wireapp/FLAnimatedImage" "1.0.12-wire"
