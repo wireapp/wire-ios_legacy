@@ -40,5 +40,20 @@ extension XCTestCase {
 
         XCTAssertNil(failure, file: file, line: line)
     }
+
+
+    func verify<Value, Format>(matching value: @autoclosure () throws -> Value,
+                               as snapshotting: SnapshotTesting.Snapshotting<Value, Format>,
+                               file: StaticString = #file,
+                               testName: String = #function,
+                               line: UInt = #line) {
+
+        let failure = verifySnapshot(matching: try! value(),
+                                     as: snapshotting,
+                                     snapshotDirectory: snapshotDirectory(file: file),
+                                     file: file, testName: testName, line: line)
+
+        XCTAssertNil(failure, file: file, line: line)
+    }
 }
 

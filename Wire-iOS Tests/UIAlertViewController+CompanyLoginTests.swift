@@ -39,9 +39,7 @@ final class UIAlertControllerCompanyLoginSnapshotTests: XCTestCase {
         // notice: pass alert's view here othewise it is expand and fill the screen's size. We can create
         // extension Snapshotting where Value == UIAlertController, Format == UIImage
         // to fix it.
-        let failure = verifySnapshot(matching: sut.view, as: .image, snapshotDirectory: snapshotDirectory())
-
-        XCTAssertNil(failure)
+        verify(matching: sut!.view, as: .image)
     }
 
 }
