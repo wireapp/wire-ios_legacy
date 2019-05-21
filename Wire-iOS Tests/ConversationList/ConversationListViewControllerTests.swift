@@ -41,10 +41,6 @@ final class ConversationListViewControllerTests: CoreDataSnapshotTestCase {
 
     //MARK: - View controller
 
-    func testForLegalHoldIndicator() {
-        verify(view: sut.view)
-    }
-
     func testForNoConversations() {
         verify(view: sut.view)
     }
