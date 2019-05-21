@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2018 Wire Swiss GmbH
+// Copyright (C) 2019 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,35 +16,34 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import UIKit
 import Foundation
-import XCTest
-@testable import Wire
+import Photos
 
-final class MockPhotoPermissionsController: PhotoPermissionsController {
-    
-    private var camera = false
-    private var library = false
-    
-    init(camera: Bool, library: Bool) {
-        self.camera = camera
-        self.library = library
-    }
-    
+
+final class PhotoPermissionsControllerStrategy: PhotoPermissionsController {
+
+    // `unauthorized` state happens the first time before opening the keyboard,
+    // so we don't need to check it for our purposes.
+
     var isCameraAuthorized: Bool {
-        return camera
-    }
-    
-    var isPhotoLibraryAuthorized: Bool {
-        return library
-    }
-    
-    var areCameraOrPhotoLibraryAuthorized: Bool {
-        return camera || library
-    }
-    
-    var areCameraAndPhotoLibraryAuthorized: Bool {
-        return camera && library
+        switch AVCaptureDevice.authorizationStatus(for: AVMediaType.video) {
+        case .authorized: return true
+        default: return false
+        }
     }
 
+    var isPhotoLibraryAuthorized: Bool {
+        switch PHPhotoLibrary.authorizationStatus() {
+        case .authorized: return true
+        default: return false
+        }
+    }
+
+    var areCameraOrPhotoLibraryAuthorized: Bool {
+        return isCameraAuthorized || isPhotoLibraryAuthorized
+    }
+
+    var areCameraAndPhotoLibraryAuthorized: Bool {
+        return isCameraAuthorized && isPhotoLibraryAuthorized
+    }
 }
