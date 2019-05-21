@@ -1254,6 +1254,7 @@
 		EFDB3135217F5E0300D2A7CE /* ConversationListCell+Constraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFDB3133217F5E0300D2A7CE /* ConversationListCell+Constraint.swift */; };
 		EFDB3138217F6BEF00D2A7CE /* SwipeMenuCollectionCell+Constraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFDB3136217F6BEF00D2A7CE /* SwipeMenuCollectionCell+Constraint.swift */; };
 		EFDBA23F229400F200874A15 /* ConversationListTopBarViewControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFDBA23E229400F200874A15 /* ConversationListTopBarViewControllerSnapshotTests.swift */; };
+		EFDBA242229414E100874A15 /* Account+Mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFDBA241229414E100874A15 /* Account+Mock.swift */; };
 		EFDC36DA2257A63000F916F3 /* CollectionViewContainerCellSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFDC36D92257A63000F916F3 /* CollectionViewContainerCellSnapshotTests.swift */; };
 		EFDC36DB2257A8F300F916F3 /* CollectionViewContainerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87DCF4C91D34EA4500BB420F /* CollectionViewContainerCell.swift */; };
 		EFDC36DC2257ACE800F916F3 /* StartUIInviteActionBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87DCF4D71D34EA4500BB420F /* StartUIInviteActionBar.swift */; };
@@ -3037,6 +3038,7 @@
 		EFDB3136217F6BEF00D2A7CE /* SwipeMenuCollectionCell+Constraint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SwipeMenuCollectionCell+Constraint.swift"; sourceTree = "<group>"; };
 		EFDB3137217F6BEF00D2A7CE /* SwipeMenuCollectionCell+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SwipeMenuCollectionCell+Internal.h"; sourceTree = "<group>"; };
 		EFDBA23E229400F200874A15 /* ConversationListTopBarViewControllerSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationListTopBarViewControllerSnapshotTests.swift; sourceTree = "<group>"; };
+		EFDBA241229414E100874A15 /* Account+Mock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Account+Mock.swift"; sourceTree = "<group>"; };
 		EFDC36D92257A63000F916F3 /* CollectionViewContainerCellSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewContainerCellSnapshotTests.swift; sourceTree = "<group>"; };
 		EFDE37F92139889B0095DCA4 /* MuteIndicatorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MuteIndicatorView.swift; sourceTree = "<group>"; };
 		EFDE37FB213994750095DCA4 /* ContactsSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsSectionHeaderView.swift; sourceTree = "<group>"; };
@@ -4781,6 +4783,7 @@
 				EF6251D321392FFE00943708 /* MockTapGestureRecognizer.swift */,
 				EF207B3A2208438700738E84 /* MockZMUserSession.swift */,
 				A97192B2221302DD00E72AD1 /* MockUserRight.swift */,
+				EFDBA241229414E100874A15 /* Account+Mock.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -8238,6 +8241,7 @@
 				EFF92B6721A855050090DA66 /* String+PhoneNumberTests.swift in Sources */,
 				8732670E1D2D0C5C005A62C1 /* AudioRecordKeyboardViewControllerTests.swift in Sources */,
 				EF36168A21E753310041F0CC /* SettingsTableViewControllerSnapshotTests.swift in Sources */,
+				EFDBA242229414E100874A15 /* Account+Mock.swift in Sources */,
 				EF84DF4E2130565B00033702 /* ConversationListBottomBarControllerTests.swift in Sources */,
 				876041551F5451EA003CB161 /* AccountViewTests.swift in Sources */,
 				EF3052452087388000613C45 /* ConfirmEmailViewControllerTests.swift in Sources */,

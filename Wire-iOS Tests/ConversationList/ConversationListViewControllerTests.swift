@@ -19,18 +19,6 @@
 import XCTest
 @testable import Wire
 
-extension Account {
-    static func mockAccount(imageData: Data) -> Account {
-        return Account(userName: "", userIdentifier: UUID(), teamName: nil, imageData: imageData)
-    }
-}
-
-extension XCTestCase {
-    var mockImageData: Data {
-        return image(inTestBundleNamed: "unsplash_matterhorn.jpg").jpegData(compressionQuality: 0.9)!
-    }
-}
-
 final class ConversationListViewControllerTests: CoreDataSnapshotTestCase {
     
     var sut: ConversationListViewController!
@@ -52,8 +40,6 @@ final class ConversationListViewControllerTests: CoreDataSnapshotTestCase {
     }
 
     //MARK: - View controller
-
-    ///TODO: legal hold
 
     func testForLegalHoldIndicator() {
         recordMode = true
