@@ -42,7 +42,6 @@ final class ConversationListViewControllerTests: CoreDataSnapshotTestCase {
     //MARK: - View controller
 
     func testForLegalHoldIndicator() {
-        recordMode = true
         verify(view: sut.view)
     }
 
