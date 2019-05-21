@@ -22,7 +22,6 @@ import XCTest
 final class UserImageViewContainerSnapshotTests: ZMSnapshotTestCase {
     
     var sut: UserImageViewContainer!
-    let maxSize = CGFloat(240)
     var mockUser: MockUser!
 
     override func setUp() {
@@ -37,10 +36,15 @@ final class UserImageViewContainerSnapshotTests: ZMSnapshotTestCase {
         super.tearDown()
     }
 
-    func testForNoUserImageWithoutSession(){
-        sut = UserImageViewContainer(size: .big, maxSize: maxSize, yOffset: -8, userSession:nil)
+    func setupSut(userSession: ZMUserSessionInterface?) {
+        let maxSize = CGFloat(240)
+        sut = UserImageViewContainer(size: .big, maxSize: maxSize, yOffset: 0, userSession: userSession)
         sut.frame = CGRect(origin: .zero, size: CGSize(width: maxSize, height: maxSize))
         sut.user = mockUser
+    }
+
+    func testForNoUserImageWithoutSession(){
+        setupSut(userSession: nil)
 
         verify(view: sut)
     }
@@ -49,9 +53,7 @@ final class UserImageViewContainerSnapshotTests: ZMSnapshotTestCase {
         var mockZMUserSession: MockZMUserSession!
         mockZMUserSession = MockZMUserSession()
 
-        sut = UserImageViewContainer(size: .big, maxSize: maxSize, yOffset: -8, userSession: mockZMUserSession)
-        sut.frame = CGRect(origin: .zero, size: CGSize(width: maxSize, height: maxSize))
-        sut.user = mockUser
+        setupSut(userSession: mockZMUserSession)
 
         verify(view: sut)
     }
