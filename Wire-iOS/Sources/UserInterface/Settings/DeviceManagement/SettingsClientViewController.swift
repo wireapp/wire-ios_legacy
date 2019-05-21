@@ -184,11 +184,10 @@ class SettingsClientViewController: UIViewController,
     
     func numberOfSections(in tableView: UITableView) -> Int {
         
-        if let userClient = ZMUserSession.shared()?.selfUserClient(),
-            self.userClient == userClient {
+        if let userClient = ZMUserSession.shared()?.selfUserClient(), self.userClient == userClient {
             return 2
         } else {
-            return 4
+            return userClient.type == .legalHold ? 3 : 4
         }
     }
 

@@ -383,7 +383,7 @@ final class ClientListViewController: UIViewController,
         case 0:
             return .none
         case 1:
-            return .delete
+            return sortedClients[indexPath.row].type == .legalHold ? .none : .delete
         default:
             return .none
         }
