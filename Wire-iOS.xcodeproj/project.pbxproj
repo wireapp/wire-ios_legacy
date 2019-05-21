@@ -1255,7 +1255,7 @@
 		EFDB3138217F6BEF00D2A7CE /* SwipeMenuCollectionCell+Constraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFDB3136217F6BEF00D2A7CE /* SwipeMenuCollectionCell+Constraint.swift */; };
 		EFDBA23F229400F200874A15 /* ConversationListTopBarViewControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFDBA23E229400F200874A15 /* ConversationListTopBarViewControllerSnapshotTests.swift */; };
 		EFDBA242229414E100874A15 /* Account+Mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFDBA241229414E100874A15 /* Account+Mock.swift */; };
-		EFDBA24422941D1800874A15 /* UIAccessibilityIdentification+LegalHold.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFDBA24322941D1800874A15 /* UIAccessibilityIdentification+LegalHold.swift */; };
+		EFDBA24522941FE800874A15 /* UIAccessibilityIdentification+LegalHold.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFDBA24322941D1800874A15 /* UIAccessibilityIdentification+LegalHold.swift */; };
 		EFDC36DA2257A63000F916F3 /* CollectionViewContainerCellSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFDC36D92257A63000F916F3 /* CollectionViewContainerCellSnapshotTests.swift */; };
 		EFDC36DB2257A8F300F916F3 /* CollectionViewContainerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87DCF4C91D34EA4500BB420F /* CollectionViewContainerCell.swift */; };
 		EFDC36DC2257ACE800F916F3 /* StartUIInviteActionBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87DCF4D71D34EA4500BB420F /* StartUIInviteActionBar.swift */; };
@@ -7063,6 +7063,7 @@
 				8750A00F21934F1A00DC8DB6 /* AnimatedListMenuView+Constraint.swift in Sources */,
 				8708C6831F50860100845C7D /* AccountView.swift in Sources */,
 				EF1A461C21AD955A0009B6B9 /* GroupDetailsDisclosureOptionsCell.swift in Sources */,
+				EFDBA24522941FE800874A15 /* UIAccessibilityIdentification+LegalHold.swift in Sources */,
 				87A6BD0F1F0D2A58006A3232 /* UIApplication+StatusBar.m in Sources */,
 				BFFA182B20FDE93400F64377 /* CompanyLoginController.swift in Sources */,
 				872E22221F600347007729D4 /* Cartography+Additions.swift in Sources */,
@@ -8083,7 +8084,6 @@
 				5E52376220E7E50F00649241 /* ColorTilesViewController.swift in Sources */,
 				EF1FCE5021B69381003E0BE2 /* ReadReceiptViewModelTests.swift in Sources */,
 				EF4478522090BF8700BD9827 /* FullscreenImageViewControllerTests.swift in Sources */,
-				EFDBA24422941D1800874A15 /* UIAccessibilityIdentification+LegalHold.swift in Sources */,
 				F127BD571E262E9F0093B2F1 /* CollectionsViewControllerTests.swift in Sources */,
 				EF4172AF210F5E9F00FF85C7 /* FullscreenImageViewControllerSnapshotTests.swift in Sources */,
 				1651F9C01D36789C00A9FAE8 /* Message+FormattingTests.swift in Sources */,
