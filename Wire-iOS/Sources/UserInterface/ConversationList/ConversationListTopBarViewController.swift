@@ -20,7 +20,7 @@ import UIKit
 import Cartography
 
 
-class ConversationListTopBarViewController: UIViewController {
+final class ConversationListTopBarViewController: UIViewController {
     
     private var observerToken: Any?
     private var availabilityViewController: AvailabilityTitleViewController?
@@ -56,10 +56,9 @@ class ConversationListTopBarViewController: UIViewController {
         topBar?.leftView = createAccountView()
 
         ///TODO: mock
-        if ZMUser.selfUser()?.isUnderLegalHold == true {
-
-        }
-        ///TODO: rightview legal hold
+//        if ZMUser.selfUser()?.isUnderLegalHold == true {
+            topBar?.rightView = createLegalHoldView()
+//        }
         topBar?.splitSeparator = false
         
         
@@ -93,7 +92,19 @@ class ConversationListTopBarViewController: UIViewController {
             return titleLabel
         }
     }
-        
+
+    func createLegalHoldView() -> UIView {
+        let imageView = UIImageView(frame: .zero)
+
+        imageView.setIcon(.legalholdactive, size: .tiny, color: .vividRed)
+        imageView.isUserInteractionEnabled = true
+
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(presentLegalHoldInfo))
+        imageView.addGestureRecognizer(tapGestureRecognizer)
+
+        return imageView
+    }
+
     func createAccountView() -> BaseAccountView {
         let session = ZMUserSession.shared() ?? nil
         let user = session == nil ? nil : ZMUser.selfUser(inUserSession: session!)
@@ -124,7 +135,12 @@ class ConversationListTopBarViewController: UIViewController {
         guard let middleView = topBar?.middleView as? UILabel else { return }
         middleView.text = ZMUser.selfUser().name
     }
-    
+
+    @objc
+    func presentLegalHoldInfo() {
+        ///TODO: present legalhold screen
+    }
+
     @objc
     func presentSettings() {
         let settingsViewController = createSettingsViewController()
