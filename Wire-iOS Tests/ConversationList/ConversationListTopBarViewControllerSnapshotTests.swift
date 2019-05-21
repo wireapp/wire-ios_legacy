@@ -22,15 +22,14 @@ import XCTest
 final class ConversationListTopBarViewControllerSnapshotTests: ZMSnapshotTestCase {
     
     var sut: ConversationListTopBarViewController!
-    var account: Account!
+    var mockAccount: Account!
 
     override func setUp() {
         super.setUp()
-        account = Account.mockAccount(imageData: mockImageData)
+        mockAccount = Account.mockAccount(imageData: mockImageData)
 
         ///TODO: inject mock user
-        sut = ConversationListTopBarViewController(account: account)
-//        sut.view.sizeToFit()
+        sut = ConversationListTopBarViewController(account: mockAccount)
         sut.view.frame = CGRect(x: 0, y: 0, width: 375, height: 48)
 
         /// TODO: remove this after snapshot is created
@@ -39,12 +38,12 @@ final class ConversationListTopBarViewControllerSnapshotTests: ZMSnapshotTestCas
     
     override func tearDown() {
         sut = nil
-        account = nil
+        mockAccount = nil
 
         super.tearDown()
     }
 
-    func testForInitState(){
+    func testForLegalHoldEnabled(){
         verify(view: sut.view)
     }
 }
