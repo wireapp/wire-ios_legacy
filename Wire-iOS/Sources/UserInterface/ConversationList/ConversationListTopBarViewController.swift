@@ -96,10 +96,11 @@ final class ConversationListTopBarViewController: UIViewController {
     }
 
     func createLegalHoldView() -> UIView {
-        let imageView = UIImageView(frame: .zero)
+        let imageView = UIImageView()
 
         imageView.setIcon(.legalholdactive, size: .tiny, color: .vividRed)
         imageView.isUserInteractionEnabled = true
+        imageView.setLegalHoldAccessibility()
 
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(presentLegalHoldInfo))
         imageView.addGestureRecognizer(tapGestureRecognizer)

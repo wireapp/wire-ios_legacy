@@ -182,8 +182,7 @@ extension GroupDetailsViewController {
     
     fileprivate var legalholdItem: UIBarButtonItem {
         let item = UIBarButtonItem(icon: .legalholdactive, target: self, action: #selector(presentLegalHoldDetails))
-        item.accessibilityIdentifier = "legalhold"
-        item.accessibilityLabel = "legalhold.accessibility".localized
+        item.setLegalHoldAccessibility()
         item.tintColor = .vividRed
         return item
     }

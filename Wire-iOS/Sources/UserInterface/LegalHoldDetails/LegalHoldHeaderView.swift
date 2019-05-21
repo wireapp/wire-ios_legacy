@@ -21,7 +21,7 @@ import Foundation
 class LegalHoldHeaderView: UIView {
     
     let iconView: UIImageView = {
-        let imageView = UIImageView(frame: .zero)
+        let imageView = UIImageView()
         
         imageView.setIcon(.legalholdactive, size: .large, color: .vividRed)
         
