@@ -137,6 +137,10 @@
     if (self.navigationController.viewControllers.count == 1) {
         self.navigationItem.rightBarButtonItem = [self.navigationController closeItem];
     }
+    
+    if (self.fullUser != nil && self.fullUser.isUnderLegalHold) {
+        self.navigationItem.leftBarButtonItem = [self.navigationController legalHoldItem];
+    }
 }
 
 #pragma mark - Header
