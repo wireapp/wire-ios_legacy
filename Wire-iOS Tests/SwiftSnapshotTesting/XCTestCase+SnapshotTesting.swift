@@ -37,7 +37,9 @@ extension XCTestCase {
         let failure = verifySnapshot(matching: value,
                                      as: snapshotting,
                                      snapshotDirectory: snapshotDirectory(file: file),
-                                     file: file, testName: testName, line: line)
+                                     file: file,
+                                     testName: testName,
+                                     line: line)
 
         XCTAssertNil(failure, file: file, line: line)
     }
