@@ -37,6 +37,8 @@ final class ShareDestinationCell<D: ShareDestination>: UITableViewCell {
     private let shieldView: UIImageView = {
         let imageView = UIImageView(image: verifiedShieldImage)
         imageView.accessibilityIdentifier = "verifiedShield"
+        imageView.isAccessibilityElement = true
+        imageView.accessibilityTraits.insert(.image)
 
         return imageView
     }()
@@ -44,6 +46,8 @@ final class ShareDestinationCell<D: ShareDestination>: UITableViewCell {
     private let guestUserIcon: UIImageView = {
         let imageView = UIImageView(image: StyleKitIcon.guest.makeImage(size: .tiny, color: UIColor(white: 1.0, alpha: 0.64)))
         imageView.accessibilityIdentifier = "guestUserIcon"
+        imageView.isAccessibilityElement = true
+        imageView.accessibilityTraits.insert(.image)
 
         return imageView
     }()
