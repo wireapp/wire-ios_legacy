@@ -78,6 +78,8 @@
 @property (nonatomic, readwrite) BOOL managedByWire;
 @property (nonatomic, readwrite, copy) NSArray<UserRichProfileField *> *richProfile;
 
+@property (nonatomic) UIImage * profileImage;
+
 - (NSString *)displayNameInConversation:(MockConversation *)conversation;
 - (void)fetchUserClients;
 
