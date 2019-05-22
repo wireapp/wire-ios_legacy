@@ -21,32 +21,37 @@ import WireSyncEngine
 
 @objcMembers
 final class MockUserClient: NSObject, UserClientType {
-    var type: String! = nil
 
-    var label: String! = nil
+    var type: DeviceType = .permanent
 
-    var remoteIdentifier: String! = nil
+    var label: String? = nil
 
-    var activationAddress: String! = nil
+    var remoteIdentifier: String? = nil
 
-    var activationDate: Date! = nil
+    var activationAddress: String? = nil
 
-    var model: String! = nil
+    var activationDate: Date? = nil
+
+    var model: String? = nil
 
     var activationLatitude: Double = 0
 
     var activationLongitude: Double = 0
 
-    var fingerprint: Data! = nil
+    var fingerprint: Data? = nil
 
     var verified: Bool = false
 
     var user: ZMUser? = nil
+    
+    var deviceClass: DeviceClass? = .phone
 
     func resetSession() {
         // No-op
     }
-
-    var deviceClass: String = "phone"
+    
+    func fetchFingerprintOrPrekeys() {
+        // No-op
+    }
 
 }

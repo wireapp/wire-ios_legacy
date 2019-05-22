@@ -361,7 +361,7 @@ extension CallViewController: CallInfoRootViewControllerDelegate {
         case .acceptCall: acceptCallIfPossible()
         case .acceptDegradedCall: acceptDegradedCall()
         case .terminateCall: voiceChannel.leave(userSession: userSession)
-        case .terminateDegradedCall: userSession.enqueueChanges { self.voiceChannel.leaveAndKeepDegradedConversationSecurity(userSession: userSession) }
+        case .terminateDegradedCall: userSession.enqueueChanges { self.voiceChannel.leaveAndDecreaseConversationSecurity(userSession: userSession) }
         case .toggleMuteState: voiceChannel.toggleMuteState(userSession: userSession)
         case .toggleSpeakerState: AVSMediaManager.sharedInstance().toggleSpeaker()
         case .minimizeOverlay: minimizeOverlay()

@@ -118,6 +118,7 @@ final class ClientListViewController: UIViewController,
                   credentials: ZMEmailCredentials? = .none,
                   detailedView: Bool = false,
                   showTemporary: Bool = true,
+                  showLegalHold: Bool = true,
                   variant: ColorSchemeVariant? = .none) {
         self.selfClient = selfClient
         self.detailedView = detailedView
@@ -126,7 +127,7 @@ final class ClientListViewController: UIViewController,
             self.variant = variant
         }
 
-        clientFilter = { $0 != selfClient && (showTemporary || !$0.isTemporary) }
+        clientFilter = { $0 != selfClient && (showTemporary || $0.type != .temporary && showLegalHold || $0.type != .legalHold) }
         clientSorter = {
             guard let leftDate = $0.activationDate, let rightDate = $1.activationDate else { return false }
             return leftDate.compare(rightDate) == .orderedDescending
@@ -382,7 +383,7 @@ final class ClientListViewController: UIViewController,
         case 0:
             return .none
         case 1:
-            return .delete
+            return sortedClients[indexPath.row].type == .legalHold ? .none : .delete
         default:
             return .none
         }
@@ -442,13 +443,4 @@ extension ClientListViewController : ZMUserObserver {
         }
     }
     
-}
-
-fileprivate extension UserClient {
-
-    var isTemporary: Bool {
-        guard let type = type else { return false }
-        return type == "temporary"
-    }
-
 }

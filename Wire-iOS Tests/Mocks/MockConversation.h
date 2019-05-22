@@ -37,6 +37,7 @@
 @property (nonatomic) BOOL isReadOnly;
 @property (nonatomic) BOOL isArchived;
 @property (nonatomic) NSUUID *teamRemoteIdentifier;
+@property (nonatomic) BOOL isUnderLegalHold;
 
 - (ZMConversation *)convertToRegularConversation;
 
