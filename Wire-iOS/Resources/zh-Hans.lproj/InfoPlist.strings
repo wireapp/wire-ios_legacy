@@ -16,7 +16,7 @@
  *  along with this program. If not, see http://www.gnu.org/licenses/.
  */
 
-"NSContactsUsageDescription" = "允许Wire读取您的通讯录从而帮助您找到更多的好友。 我们会将您的所有信息匿名处理并且不会泄漏给任何第三方。";
+"NSContactsUsageDescription" = "Allow Wire to access your contacts to connect you with others. We anonymize all information before uploading it to our server and do not share it with anyone else.";
 "NSMicrophoneUsageDescription" = "允许Wire访问您的麦克风，从而您可以与好友进行语音聊天并且发送语音细腻。";
 "NSLocationWhenInUseUsageDescription" = "允许Wire获取您的位置信息，这样你将可以发送你的地理位置给您的朋友。";
 "NSCameraUsageDescription" = "允许Wire访问您的摄像头，从而可以拨打视频电话并发送照片。";

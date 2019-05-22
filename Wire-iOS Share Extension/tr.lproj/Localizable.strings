@@ -34,8 +34,8 @@
 "share_extension.timeout.title" = "Bağlantı zaman aşımına uğradı.";
 "share_extension.timeout.message" = "İnternet bağlantınızı kontrol edin ve tekrar deneyin. Ekleriniz konuşmaya kaydedildi.";
 "share_extension.privacy_security.lock_app.description" = "Wire'ın kilidini aç";
-"share_extension.logged_out.title" = "You've been logged out from this account.";
-"share_extension.logged_out.message" = "Please choose another account.";
+"share_extension.logged_out.title" = "Bu hesaptan çıkış yaptınız.";
+"share_extension.logged_out.message" = "Lütfen başka bir hesap seçin.";
 
 "conversation.displayname.emptygroup" = "Boş grup konuşması";
 "meta.degraded.degradation_reason_message.singular" = "%@ yeni bir cihaz kullanmaya başladı.";

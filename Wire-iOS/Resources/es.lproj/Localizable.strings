@@ -997,6 +997,7 @@
 "self.settings.popular_demand.title" = "Por demanda popular";
 "self.settings.popular_demand.send_button.title" = "Botón de enviar";
 "self.settings.popular_demand.send_button.footer" = "Deshabilitar esta opción para enviar mensajes con la tecla 'Enviar' del teclado.";
+"self.settings.popular_demand.dark_mode.footer" = "Switch between dark and light theme.";
 
 // Open in
 "self.settings.external_apps.header" = "Abrir con";
