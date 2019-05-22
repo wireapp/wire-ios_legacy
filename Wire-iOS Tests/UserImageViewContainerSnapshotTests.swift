@@ -35,7 +35,7 @@ final class UserImageViewContainerSnapshotTests: XCTestCase {
     override func tearDown() {
         sut = nil
         mockUser = nil
-        
+
         super.tearDown()
     }
 
@@ -49,12 +49,12 @@ final class UserImageViewContainerSnapshotTests: XCTestCase {
     func testForNoUserImageWithoutSession(){
         setupSut(userSession: nil)
 
-        verify(matching: sut, as: .image)
+        verify(matching: sut)
     }
 
     func testForWithUserImage(){
         setupSut(userSession: MockZMUserSession())
 
-        verify(matching: sut, as: .image)
+        verify(matching: sut)
     }
 }
