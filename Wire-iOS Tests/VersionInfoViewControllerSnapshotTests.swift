@@ -37,6 +37,6 @@ final class VersionInfoViewControllerSnapshotTests: XCTestCase {
     }
 
     func testForInitState(){
-        verify(matching: sut)
+        verify(matching: sut, as: .image)
     }
 }
