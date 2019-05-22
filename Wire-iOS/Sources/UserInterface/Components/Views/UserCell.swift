@@ -195,7 +195,14 @@ class UserCell: SeparatorCollectionViewCell {
         guard let user = self.user else {
             return
         }
-        titleLabel.attributedText = user.nameIncludingAvailability(color: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant))
+        
+        var attributedTitle = user.nameIncludingAvailability(color: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant))
+        
+        if user.isSelfUser, let title = attributedTitle {
+            attributedTitle = title + "user_cell.title.you_suffix".localized
+        }
+        
+        titleLabel.attributedText = attributedTitle
     }
     
     public func configure(with user: UserType, conversation: ZMConversation? = nil) {

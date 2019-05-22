@@ -163,7 +163,7 @@ import Cartography
     }
     
     private func setupTypeLabel() {
-        typeLabel.text = self.userClient.deviceClass?.localizedUppercase
+        typeLabel.text = self.userClient.deviceClass?.localizedDescription.localizedUppercase
         typeLabel.numberOfLines = 1
         typeLabel.font = FontSpec(.small, .semibold).font!
         typeLabel.textColor = UIColor.from(scheme: .textForeground)
