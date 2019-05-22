@@ -16,14 +16,16 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
+import XCTest
+@testable import Wire
 
-@objc
-public protocol ZMUserSessionInterface: NSObjectProtocol {
-    func performChanges(_ block: @escaping () -> ())
-    func enqueueChanges(_ block: @escaping () -> ())
+extension MockUser: ProfileImageFetchable {
+    public func fetchProfileImage(session: ZMUserSessionInterface,
+                                  cache: ImageCache<UIImage> = defaultUserImageCache,
+                                  sizeLimit: Int? = nil,
+                                  desaturate: Bool = false,
+                                  completion: @escaping (_ image: UIImage?, _ cacheHit: Bool) -> Void ) -> Void {
 
-    var isNotificationContentHidden : Bool { get set }
+        completion(profileImage, false)
+    }
 }
-
-extension ZMUserSession: ZMUserSessionInterface {}
