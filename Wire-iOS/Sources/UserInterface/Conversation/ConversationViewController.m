@@ -737,7 +737,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 - (void)conversationDidChange:(ConversationChangeInfo *)note
 {
     if (note.causedByConversationPrivacyChange) {
-        [self presentPrivacyWarningAlert];
+        [self presentPrivacyWarningAlertForChange:note];
     }
     
     if (note.participantsChanged || note.connectionStateChanged) {
