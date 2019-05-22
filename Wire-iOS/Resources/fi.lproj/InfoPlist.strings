@@ -16,7 +16,7 @@
  *  along with this program. If not, see http://www.gnu.org/licenses/.
  */
 
-"NSContactsUsageDescription" = "Salli Wiren käyttää yhteystietojasi yhdistääkseen sinut muiden kanssa. Me anonymisoimme kaiken tiedon ja emme jaa sitä kenellekään muulle.";
+"NSContactsUsageDescription" = "Allow Wire to access your contacts to connect you with others. We anonymize all information before uploading it to our server and do not share it with anyone else.";
 "NSMicrophoneUsageDescription" = "Salli Wiren käyttää mikrofoniasi, jolloin voit puhua muiden käyttäjien kanssa ja lähettää ääniviestejä.";
 "NSLocationWhenInUseUsageDescription" = "Salli Wiren käyttää sijaintiasi, että voit lähettää sijaintisi muille.";
 "NSCameraUsageDescription" = "Salli Wiren käyttää kameraasi, jotta voit tehdä videopuheluja ja lähettää valokuvia.";
