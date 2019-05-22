@@ -24,7 +24,7 @@ extension ZMSnapshotTestCase {
         client.remoteIdentifier = "102030405060708090"
 
         client.user = ZMUser.insertNewObject(in: uiMOC)
-        client.deviceClass = "tablet"
+        client.deviceClass = .tablet
         client.model = "Simulator"
         client.label = "Bill's MacBook Pro"
 

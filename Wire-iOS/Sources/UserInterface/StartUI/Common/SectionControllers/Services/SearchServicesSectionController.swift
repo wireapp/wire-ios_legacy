@@ -87,7 +87,7 @@ class SearchServicesSectionController: SearchSectionController {
         }
     }
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if canSelfUserManageTeam && indexPath.row == 0 {
             delegate?.addServicesSectionDidRequestOpenServicesAdmin()
         }

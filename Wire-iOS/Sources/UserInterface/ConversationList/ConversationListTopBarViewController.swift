@@ -20,19 +20,25 @@ import UIKit
 import Cartography
 
 
-class ConversationListTopBarViewController: UIViewController {
+final class ConversationListTopBarViewController: UIViewController {
     
     private var observerToken: Any?
     private var availabilityViewController: AvailabilityTitleViewController?
     private var account: Account
+    private let selfUser: UserType
     
     var topBar: TopBar? {
         return view as? TopBar
     }
-    
-    
-    init(account: Account) {
+
+    /// init a ConversationListTopBarViewController
+    ///
+    /// - Parameters:
+    ///   - account: the Account of the user
+    ///   - selfUser: the self user object. Allow to inject a mock self user for testing
+    init(account: Account, selfUser: UserType = ZMUser.selfUser()) {
         self.account = account
+        self.selfUser = selfUser
         
         super.init(nibName: nil, bundle: nil)
         
@@ -54,6 +60,11 @@ class ConversationListTopBarViewController: UIViewController {
         topBar?.layoutMargins = UIEdgeInsets(top: 0, left: 9, bottom: 0, right: 16)
         topBar?.middleView = createTitleView()
         topBar?.leftView = createAccountView()
+
+        ///TODO: observe for LegalHold status update event
+        if selfUser.isUnderLegalHold {
+            topBar?.rightView = createLegalHoldView()
+        }
         topBar?.splitSeparator = false
         
         
@@ -87,7 +98,20 @@ class ConversationListTopBarViewController: UIViewController {
             return titleLabel
         }
     }
-        
+
+    func createLegalHoldView() -> UIView {
+        let imageView = UIImageView()
+
+        imageView.setIcon(.legalholdactive, size: .tiny, color: .vividRed)
+        imageView.isUserInteractionEnabled = true
+        imageView.setLegalHoldAccessibility()
+
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(presentLegalHoldInfo))
+        imageView.addGestureRecognizer(tapGestureRecognizer)
+
+        return imageView
+    }
+
     func createAccountView() -> BaseAccountView {
         let session = ZMUserSession.shared() ?? nil
         let user = session == nil ? nil : ZMUser.selfUser(inUserSession: session!)
@@ -118,7 +142,12 @@ class ConversationListTopBarViewController: UIViewController {
         guard let middleView = topBar?.middleView as? UILabel else { return }
         middleView.text = ZMUser.selfUser().name
     }
-    
+
+    @objc
+    func presentLegalHoldInfo() {
+        ///TODO: present legalhold screen
+    }
+
     @objc
     func presentSettings() {
         let settingsViewController = createSettingsViewController()

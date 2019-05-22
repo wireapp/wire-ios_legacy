@@ -54,7 +54,7 @@ class GroupConversationsSectionController: SearchSectionController {
         return cell
     }
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let conversation = groupConversations[indexPath.row]
         
         delegate?.searchSectionController(self, didSelectConversation: conversation, at: indexPath)
