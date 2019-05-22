@@ -997,6 +997,7 @@
 "self.settings.popular_demand.title" = "Publiku nõudmisel";
 "self.settings.popular_demand.send_button.title" = "\"Saada\" nupp vestluses";
 "self.settings.popular_demand.send_button.footer" = "Lülita välja, kui soovid sõnumi saatmiseks klaviatuuri \"return\" nuppu kasutada.";
+"self.settings.popular_demand.dark_mode.footer" = "Switch between dark and light theme.";
 
 // Open in
 "self.settings.external_apps.header" = "Ava rakendusega";
