@@ -145,8 +145,9 @@ final class ConversationListTopBarViewController: UIViewController {
 
     @objc
     func presentLegalHoldInfo() {
-        guard let legalHoldDetailsViewController = LegalHoldDetailsViewController(user: ZMUser.selfUser()) else { return }
-        present(legalHoldDetailsViewController.wrapInNavigationController(), animated: true, completion: nil)
+        guard let legalHoldDetailsViewController = LegalHoldDetailsViewController(user: ZMUser.selfUser())?.wrapInNavigationController() else { return }
+        legalHoldDetailsViewController.modalPresentationStyle = .formSheet
+        present(legalHoldDetailsViewController, animated: true, completion: nil)
     }
 
     @objc
