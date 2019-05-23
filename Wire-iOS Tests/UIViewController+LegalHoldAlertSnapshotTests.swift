@@ -27,13 +27,6 @@ final class UIViewController_LegalHoldAlertSnapshotTests: ZMSnapshotTestCase {
     override func setUp() {
         super.setUp()
         sut = UIAlertController.legalHoldDeactivated()
-
-//        let systemAlerts = XCUIApplication(bundleIdentifier: "com.apple.springboard").alerts
-//        if systemAlerts.buttons["Don't Allow"].exists {
-//            systemAlerts.buttons["Don't Allow"].tap()
-//        }
-
-        recordMode = true
     }
     
     override func tearDown() {
