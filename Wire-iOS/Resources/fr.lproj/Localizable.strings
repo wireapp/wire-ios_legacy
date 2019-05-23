@@ -857,7 +857,7 @@
 // Settings - top level
 "self.settings.create_team.title" = "Créer une équipe";
 "self.settings.manage_team.title" = "Gérer l’équipe";
-"self.settings.add_team_or_account.title" = "Ajouter un compte";
+"self.settings.add_team_or_account.title" = "Ajouter un Compte";
 "self.settings.add_account.title" = "Ajouter un compte";
 
 "self.settings.add_account.error.title" = "Trois comptes actifs";
@@ -997,7 +997,7 @@
 "self.settings.popular_demand.title" = "À la demande générale";
 "self.settings.popular_demand.send_button.title" = "Bouton d'envoi";
 "self.settings.popular_demand.send_button.footer" = "Désactiver pour envoyer en appuyant sur la touche entrée.";
-"self.settings.popular_demand.dark_mode.footer" = "Switch between dark and light theme.";
+"self.settings.popular_demand.dark_mode.footer" = "Basculer entre le thème sombre et clair.";
 
 // Open in
 "self.settings.external_apps.header" = "Ouvrir avec";
@@ -1138,7 +1138,7 @@
 "landing.login.hints" = "Vous avez déjà un compte ?";
 "landing.login.button.title" = "Se connecter";
 
-"landing.custom_backend.title" = "Connected to \"%@\"";
+"landing.custom_backend.title" = "Connecté à %@";
 "landing.custom_backend.more_info.button.title" = "Montrer plus";
 "landing.custom_backend.more_info.alert.title" = " Vous êtes connecté au serveur tiers : %@";
 
@@ -1533,7 +1533,7 @@
 "availability.reminder.away.title" = "Vous êtes Absent";
 "availability.reminder.away.message" = "Vos correspondants vous verront comme Absent. Vous ne recevrez de notification pour aucun appel ou message entrants.";
 "availability.reminder.busy.title" = "Vous êtes Occupé";
-"availability.reminder.busy.message" = "You will appear as Busy to other people. You will only receive notifications for mentions, replies, and calls in conversations that are not muted.";
+"availability.reminder.busy.message" = "Vos correspondants vous verront comme « Occupé ». Vous recevrez uniquement des notifications pour les mentions, les réponses et les appels dans les conversations qui ne sont pas mises en sourdine.";
 "availability.reminder.available.title" = "Vous êtes Disponible";
 "availability.reminder.available.message" = "Vos correspondants vous verront comme Disponible. Vous recevrez des notifications pour les appels entrants et pour les messages selon le paramètre Notifications dans chaque conversation.";
 "availability.reminder.none.title" = "Aucun statut";
