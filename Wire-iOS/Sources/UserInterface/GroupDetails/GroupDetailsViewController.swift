@@ -190,7 +190,7 @@ extension GroupDetailsViewController {
     func presentLegalHoldDetails() {
         let viewController = LegalHoldDetailsViewController(conversation: conversation)
         
-        navigationController?.pushViewController(viewController, animated: true)
+        present(viewController.wrapInNavigationController(), animated: true)
     }
     
 }
