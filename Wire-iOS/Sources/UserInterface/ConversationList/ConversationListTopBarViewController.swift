@@ -60,15 +60,11 @@ final class ConversationListTopBarViewController: UIViewController {
         topBar?.layoutMargins = UIEdgeInsets(top: 0, left: 9, bottom: 0, right: 16)
         topBar?.middleView = createTitleView()
         topBar?.leftView = createAccountView()
-
-        ///TODO: observe for LegalHold status update event
-        if selfUser.isUnderLegalHold {
-            topBar?.rightView = createLegalHoldView()
-        }
         topBar?.splitSeparator = false
         
-        
         availabilityViewController?.didMove(toParent: self)
+        
+        updateLegalHoldIndictor()
     }
     
     func createTitleView() -> UIView {
@@ -138,6 +134,10 @@ final class ConversationListTopBarViewController: UIViewController {
         return accountView
     }
     
+    func updateLegalHoldIndictor() {
+        topBar?.rightView = selfUser.isUnderLegalHold ? createLegalHoldView() : nil
+    }
+    
     func updateTitle() {
         guard let middleView = topBar?.middleView as? UILabel else { return }
         middleView.text = ZMUser.selfUser().name
@@ -145,7 +145,9 @@ final class ConversationListTopBarViewController: UIViewController {
 
     @objc
     func presentLegalHoldInfo() {
-        ///TODO: present legalhold screen
+        guard let legalHoldDetailsViewController = LegalHoldDetailsViewController(user: ZMUser.selfUser())?.wrapInNavigationController() else { return }
+        legalHoldDetailsViewController.modalPresentationStyle = .formSheet
+        present(legalHoldDetailsViewController, animated: true, completion: nil)
     }
 
     @objc
@@ -190,8 +192,13 @@ extension ConversationListTopBarViewController: UIViewControllerTransitioningDel
 extension ConversationListTopBarViewController: ZMUserObserver {
     
     public func userDidChange(_ changeInfo: UserChangeInfo) {
-        guard changeInfo.nameChanged else { return }
-        updateTitle()
+        if changeInfo.nameChanged {
+            updateTitle()
+        }
+        
+        if changeInfo.legalHoldStatusChanged {
+            updateLegalHoldIndictor()
+        }
     }
 }
 
