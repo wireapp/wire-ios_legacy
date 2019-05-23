@@ -469,11 +469,8 @@
 
 // legal hold
 
-"content.system.message_legal_hold.enabled.you" = "You are now subject to legal hold";
-"content.system.message_legal_hold.enabled.user" = "Legal hold activated for %@";
-
-"content.system.message_legal_hold.disabled.you" = "You are no longer subject to legal hold";
-"content.system.message_legal_hold.disabled.user" = "Legal hold deactivated for %@";
+"content.system.message_legal_hold.enabled" = "This conversation is under legal hold";
+"content.system.message_legal_hold.disabled" = "Legal hold deactivated for this conversation";
 
 "content.system.message_legal_hold.learn_more" = "Learn more";
 

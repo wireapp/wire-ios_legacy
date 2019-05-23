@@ -19,39 +19,27 @@
 import Foundation
 
 struct LegalHoldViewModel {
-    let user: ZMUser
+    var systemMessageType: ZMSystemMessageType
     let baseTemplate = "content.system.message_legal_hold"
-    let legalHoldURL: URL = URL(string: "settings://legal-hold")! // TODO replace with correct url + implementation
+    static let legalHoldURL: URL = URL(string: "settings://legal-hold")!
     
     func image() -> UIImage? {
         return StyleKitIcon.legalholdactive.makeImage(size: .tiny, color: .vividRed)
-    }
-    
-    func createSystemMessage(template: String) -> NSAttributedString {
-        var updateText: NSAttributedString! = .none
-        
-        if user.isSelfUser {
-            updateText = NSAttributedString(string: template.localized, attributes: ConversationSystemMessageCell.baseAttributes)
-        } else if let otherUserName = user.name {
-            updateText = NSAttributedString(string: template.localized(args: otherUserName), attributes: ConversationSystemMessageCell.baseAttributes)
-                .adding(font: .mediumSemiboldFont, to: otherUserName)
-        } else {
-            assertionFailure("invalid user name for LegalHoldViewModel")
-        }
-        
-        return updateText
     }
     
     func attributedTitle() -> NSAttributedString? {
         
         var template = baseTemplate
         
-        template += user.isUnderLegalHold ? ".enabled" : ".disabled"
-        template += user.isSelfUser ? ".you" : ".user"
+        if systemMessageType == .legalHoldEnabled {
+            template += ".enabled"
+        } else if systemMessageType == .legalHoldDisabled {
+            template += ".disabled"
+        }
         
-        var updateText = createSystemMessage(template: template)
+        var updateText = NSAttributedString(string: template.localized, attributes: ConversationSystemMessageCell.baseAttributes)
         
-        if user.isUnderLegalHold {
+        if systemMessageType == .legalHoldEnabled {
             let learnMore = NSAttributedString(string: (baseTemplate + ".learn_more").localized.uppercased(),
                                                attributes: [.font: UIFont.mediumSemiboldFont,
                                                             .link: legalHoldURL as AnyObject,
@@ -83,10 +71,8 @@ final class ConversationLegalHoldCellDescription: ConversationMessageCellDescrip
     let accessibilityIdentifier: String? = nil
     let accessibilityLabel: String? = nil
     
-    init(sender: ZMUser,
-        systemMessageType: ZMSystemMessageType) {
-        let viewModel = LegalHoldViewModel(user: sender)
-        
+    init(systemMessageType: ZMSystemMessageType) {
+        let viewModel = LegalHoldViewModel(systemMessageType: systemMessageType)
         configuration = View.Configuration(icon: viewModel.image(),
                                            attributedText: viewModel.attributedTitle(),
                                            showLine: false)
