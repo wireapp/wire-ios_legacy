@@ -232,13 +232,6 @@ extension ZMSnapshotTestCase {
         }
         return false
     }
-
-    func resetColorScheme() {
-        ColorScheme.default.variant = .light
-
-        NSAttributedString.invalidateMarkdownStyle()
-        NSAttributedString.invalidateParagraphStyle()
-    }
 }
 
 // MARK: - interfaces
