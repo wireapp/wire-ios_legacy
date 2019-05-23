@@ -64,7 +64,6 @@
 @property (nonatomic, readwrite) BOOL isAccountDeleted;
 @property (nonatomic, readwrite, copy) NSData *previewImageData;
 @property (nonatomic, readwrite, copy) NSData *completeImageData;
-@property (nonatomic, readwrite) BOOL isUnderLegalHold;
 @property (nonatomic) ZMUser * user;
 
 @property (nonatomic) NSSet <id<UserClientType>> * clients;

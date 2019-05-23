@@ -165,29 +165,17 @@ class ConversationSystemMessageTests: ConversationCellSnapshotTestCase {
     
     // MARK: - Legal Hold
     
-    func testThatItRendersLegalHoldEnabled_ForSelfUser() {
-        let message = MockMessageFactory.systemMessage(with: .legalHoldEnabled)!
-        //set under legal hold = true
-        XCTFail()
+    func testThatItRendersLegalHoldEnabledInConversation() {
+        let mockUser = MockUser.createSelfUser(name: "John Doe", inTeam: nil)
+        mockUser.isUnderLegalHold = true
+        let message = MockMessageFactory.systemMessage(with: .legalHoldEnabled, users: 2, clients: 2, sender: mockUser)!
+        XCTAssertTrue(message.sender?.isUnderLegalHold ?? false)
         verify(message: message)
     }
     
-    func testThatItRendersLegalHoldEnabled_ForOtherUser() {
-        let message = MockMessageFactory.systemMessage(with: .legalHoldEnabled)!
-        message.sender = MockUser.mockUsers()?.first
-        //set under legal hold = true
-        XCTFail()
-        verify(message: message)
-    }
-    
-    func testThatItRendersLegalHoldDisabled_ForSelfUser() {
+    func testThatItRendersLegalHoldDisabledInConversation() {
         let message = MockMessageFactory.systemMessage(with: .legalHoldDisabled)!
-        verify(message: message)
-    }
-    
-    func testThatItRendersLegalHoldDisabled_ForOtherUser() {
-        let message = MockMessageFactory.systemMessage(with: .legalHoldDisabled)!
-        message.sender = MockUser.mockUsers()?.first
+        XCTAssertFalse(message.sender?.isUnderLegalHold ?? false)
         verify(message: message)
     }
     

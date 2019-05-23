@@ -52,8 +52,8 @@ struct LegalHoldViewModel {
         var updateText = createSystemMessage(template: template)
         
         if user.isUnderLegalHold {
-            let learnMore = NSAttributedString(string: baseTemplate + ".learn_more",
-                                               attributes: [.font: UIFont.mediumFont,
+            let learnMore = NSAttributedString(string: (baseTemplate + ".learn_more").localized.uppercased(),
+                                               attributes: [.font: UIFont.mediumSemiboldFont,
                                                             .link: legalHoldURL as AnyObject,
                                                             .foregroundColor: UIColor.from(scheme: .textForeground)])
             

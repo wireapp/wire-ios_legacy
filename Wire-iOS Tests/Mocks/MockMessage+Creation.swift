@@ -26,14 +26,19 @@ final class MockMessageFactory: NSObject {
     /// Create a template MockMessage with conversation, serverTimestamp, sender and activeParticipants set.
     ///
     /// - Returns: a MockMessage with default values
-    class func messageTemplate() -> MockMessage {
+    class func messageTemplate(sender: UserType? = nil) -> MockMessage {
         let message = MockMessage()
 
         let conversation = MockLoader.mockObjects(of: MockConversation.self, fromFile: "conversations-01.json")[0] as? MockConversation
         message.conversation = (conversation as Any) as? ZMConversation
         message.serverTimestamp = Date(timeIntervalSince1970: 0)
-
-        message.sender = (MockUser.mockSelf() as Any) as? ZMUser
+        
+        if let sender = sender as? ZMUser {
+            message.sender = sender
+        } else {
+            message.sender = (MockUser.mockSelf() as Any) as? ZMUser
+        }
+        
         conversation?.activeParticipants = [message.sender!]
 
         return message
@@ -81,8 +86,9 @@ final class MockMessageFactory: NSObject {
 
     class func systemMessage(with systemMessageType: ZMSystemMessageType,
                              users numUsers: Int = 0,
-                             clients numClients: Int = 0) -> MockMessage? {
-        let message = MockMessageFactory.messageTemplate()
+                             clients numClients: Int = 0,
+                             sender: UserType? = nil) -> MockMessage? {
+        let message = MockMessageFactory.messageTemplate(sender: sender)
 
         let mockSystemMessageData = MockSystemMessageData(systemMessageType: systemMessageType)
 
