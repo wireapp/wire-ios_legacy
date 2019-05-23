@@ -83,5 +83,21 @@ class SearchSectionController: NSObject, CollectionViewSectionController {
         fatal("Must be overridden")
     }
     
+    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+        return true
+        // NOTE: workaround for regression in Swift 5
+        // https://bugs.swift.org/browse/SR-2919
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        // NOTE: workaround for regression in Swift 5
+        // https://bugs.swift.org/browse/SR-2919
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        // NOTE: workaround for regression in Swift 5
+        // https://bugs.swift.org/browse/SR-2919
+    }
+    
 }
 
