@@ -28,6 +28,19 @@ extension XCTestCase {
         return path
     }
 
+    func verify(matching value: UIAlertController,
+                file: StaticString = #file,
+                testName: String = #function,
+                line: UInt = #line) {
+
+        let failure = verifySnapshot(matching: value,
+                                     as: .image,
+                                     snapshotDirectory: snapshotDirectory(file: file),
+                                     file: file, testName: testName, line: line)
+
+        XCTAssertNil(failure, file: file, line: line)
+    }
+
     func verify(matching value: UIViewController,
                 file: StaticString = #file,
                 testName: String = #function,
@@ -72,3 +85,12 @@ extension XCTestCase {
     }
 }
 
+
+extension Snapshotting where Value == UIAlertController, Format == UIImage {
+
+    /// A snapshot strategy for comparing UIAlertController views based on pixel equality.
+    /// Compare UIAlertController.view to prevert the view is resized to fix the default UIViewController.view's size
+    public static var image: Snapshotting<UIAlertController, UIImage> {
+        return Snapshotting<UIView, UIImage>.image(precision: 1, size: nil).pullback { $0.view }
+    }
+}

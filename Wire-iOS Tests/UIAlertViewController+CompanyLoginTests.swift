@@ -36,10 +36,7 @@ final class UIAlertControllerCompanyLoginSnapshotTests: XCTestCase {
     }
 
     func testForAlert(){
-        // notice: pass alert's view here othewise it is expand and fill the screen's size. We can create
-        // extension Snapshotting where Value == UIAlertController, Format == UIImage
-        // to fix it.
-        verify(matching: sut!.view)
+        verify(matching: sut)
     }
 
 }
