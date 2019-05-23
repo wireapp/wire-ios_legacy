@@ -135,7 +135,7 @@ final class ConversationListTopBarViewController: UIViewController {
     }
     
     func updateLegalHoldIndictor() {
-        topBar?.rightView = ZMUser.selfUser().isUnderLegalHold ? createLegalHoldView() : nil
+        topBar?.rightView = selfUser.isUnderLegalHold ? createLegalHoldView() : nil
     }
     
     func updateTitle() {
