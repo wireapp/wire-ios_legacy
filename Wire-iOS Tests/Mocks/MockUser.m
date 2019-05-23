@@ -122,6 +122,7 @@ static id<UserType> mockSelfUser = nil;
 @synthesize teamRole;
 @synthesize readReceiptsEnabled;
 @synthesize activeConversations;
+@synthesize isUnderLegalHold;
 
 #pragma mark - ZMBareUserConnection
 
@@ -258,6 +259,11 @@ static id<UserType> mockSelfUser = nil;
 - (NSSet<UserClient *> *)clientsRequiringUserAttention
 {
     return [NSSet new];
+}
+
+- (NSArray<id<UserClientType>> *)allClients
+{
+    return self.clients.allObjects;
 }
 
 - (ZMUser *)user

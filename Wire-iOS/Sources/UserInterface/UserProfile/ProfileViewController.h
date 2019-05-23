@@ -29,13 +29,17 @@ NS_ASSUME_NONNULL_BEGIN
 @class ZMUser;
 @class ProfileViewController;
 
+typedef NS_ENUM(NSInteger, ProfileViewControllerTabBarIndex) {
+    ProfileViewControllerTabBarIndexDetails = 0,
+    ProfileViewControllerTabBarIndexDevices
+};
 
 typedef NS_ENUM(NSInteger, ProfileViewControllerContext) {
     ProfileViewControllerContextSearch,
     ProfileViewControllerContextGroupConversation,
     ProfileViewControllerContextOneToOneConversation,
     ProfileViewControllerContextDeviceList,
-    // when open a URL scheme, not link to a specific conversation
+    /// when opening from a URL scheme, not linked to a specific conversation
     ProfileViewControllerContextProfileViewer
 };
 

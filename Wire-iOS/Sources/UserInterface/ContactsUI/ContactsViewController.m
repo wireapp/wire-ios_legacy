@@ -66,18 +66,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 #pragma mark - UIViewController overrides
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    
-
-    BOOL shouldSkip = AutomationHelper.sharedHelper.skipFirstLoginAlerts || ZMUser.selfUser.hasTeam;
-    if (self.sharingContactsRequired && ! [[AddressBookHelper sharedHelper] isAddressBookAccessGranted] && !shouldSkip && self.shouldShowShareContactsViewController) {
-        [self presentShareContactsViewController];
-    }
-
-}
-
 - (BOOL)prefersStatusBarHidden
 {
     return NO;
