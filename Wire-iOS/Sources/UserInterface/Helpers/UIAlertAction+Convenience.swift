@@ -25,11 +25,15 @@ extension UIAlertAction {
         )
     }
     
-    @objc(okActionWithCompletion:) static func ok(_ completion:(() -> Void)? = nil) -> UIAlertAction {
+    @objc(okActionWithCompletion:) static func ok(_ completion:((UIAlertAction) -> Void)? = nil) -> UIAlertAction {
+        return UIAlertAction.ok(style: .default, handler: completion)
+    }
+
+    static func ok(style: Style = .default, handler:((UIAlertAction) -> Void)? = nil) -> UIAlertAction {
         return UIAlertAction(
             title: "general.ok".localized,
-            style: .default,
-            handler: { _ in completion?() }
+            style: style,
+            handler: handler
         )
     }
 }

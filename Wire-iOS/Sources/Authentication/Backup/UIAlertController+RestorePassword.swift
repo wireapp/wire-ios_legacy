@@ -53,7 +53,7 @@ extension UIAlertController {
         return controller
     }
     
-    static func importWrongPasswordError(completion: @escaping () -> Void) -> UIAlertController {
+    static func importWrongPasswordError(completion: @escaping (UIAlertAction) -> Void) -> UIAlertController {
         let controller = UIAlertController(
             title: "registration.no_history.restore_backup.password_error.title".localized,
             message: nil,
