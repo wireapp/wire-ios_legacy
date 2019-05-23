@@ -26,19 +26,8 @@ class LegalHoldDetailsViewController: UIViewController {
     fileprivate let conversation: ZMConversation
     
     convenience init?(user: ZMUser) {
-        if user.isSelfUser {
-            if let managedObjectContext = user.managedObjectContext {
-                self.init(conversation: ZMConversation.selfConversation(in: managedObjectContext)) // TODO jacob replace with UI friendly getter
-                return
-            }
-        } else {
-            if let conversation = user.oneToOneConversation {
-                self.init(conversation: conversation)
-                return
-            }
-        }
-        
-        return nil
+        guard let conversation = user.oneToOneConversation else { return nil }
+        self.init(conversation: conversation)
     }
         
     init(conversation: ZMConversation) {
