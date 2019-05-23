@@ -232,6 +232,7 @@
 		5E3FB06C206BC7AC0075E910 /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16AACE731C0CAEBD00E62C43 /* TabBar.swift */; };
 		5E3FB06D206BC7AF0075E910 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1621AFDA1C0DEE1500FAE41A /* TabBarController.swift */; };
 		5E3FB06E206BC7B40075E910 /* Tab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E3C0C65206B9EE900B0499C /* Tab.swift */; };
+		5E423CD92295674900A5DB3A /* ConversationViewController+PrivacyAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E423CD82295674900A5DB3A /* ConversationViewController+PrivacyAlert.swift */; };
 		5E4B1385204FE58D00ED5DF1 /* TimeInterval+Days.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E4B1384204FE58D00ED5DF1 /* TimeInterval+Days.swift */; };
 		5E4B1387204FE7DA00ED5DF1 /* SystemAnimationCurves.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E4B1386204FE7DA00ED5DF1 /* SystemAnimationCurves.swift */; };
 		5E4B1389204FEFCD00ED5DF1 /* UIColor+CallQuality.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E4B1388204FEFCD00ED5DF1 /* UIColor+CallQuality.swift */; };
@@ -930,7 +931,6 @@
 		D525426D209363AF001C04C1 /* IconLabelButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D525426C209363AF001C04C1 /* IconLabelButton.swift */; };
 		D525426F209363DC001C04C1 /* CallActionAppearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = D525426E209363DC001C04C1 /* CallActionAppearance.swift */; };
 		D52F2C1E205BCA1D00E067C0 /* UIAlertController+ConnectionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52F2C1D205BCA1D00E067C0 /* UIAlertController+ConnectionRequest.swift */; };
-		D52F2C20205BE0A600E067C0 /* UIAlertController+ConversationDegraded.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52F2C1F205BE0A600E067C0 /* UIAlertController+ConversationDegraded.swift */; };
 		D53D390C2057F8ED00B87DAD /* TintCorrectedActivityController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53D390B2057F8ED00B87DAD /* TintCorrectedActivityController.swift */; };
 		D53D390E20596ED300B87DAD /* ConversationActionController+Block.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53D390D20596ED300B87DAD /* ConversationActionController+Block.swift */; };
 		D53D39102059784900B87DAD /* ConversationActionController+CancelRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53D390F2059784900B87DAD /* ConversationActionController+CancelRequest.swift */; };
@@ -1737,6 +1737,7 @@
 		5E3A6C24206A4E4A00907484 /* LocationPreviewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationPreviewController.swift; sourceTree = "<group>"; };
 		5E3C0C65206B9EE900B0499C /* Tab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab.swift; sourceTree = "<group>"; };
 		5E3E1B722260DA200053AC59 /* StyleKitIcons.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StyleKitIcons.generated.swift; sourceTree = "<group>"; };
+		5E423CD82295674900A5DB3A /* ConversationViewController+PrivacyAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationViewController+PrivacyAlert.swift"; sourceTree = "<group>"; };
 		5E4B1384204FE58D00ED5DF1 /* TimeInterval+Days.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimeInterval+Days.swift"; sourceTree = "<group>"; };
 		5E4B1386204FE7DA00ED5DF1 /* SystemAnimationCurves.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemAnimationCurves.swift; sourceTree = "<group>"; };
 		5E4B1388204FEFCD00ED5DF1 /* UIColor+CallQuality.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+CallQuality.swift"; sourceTree = "<group>"; };
@@ -2697,7 +2698,6 @@
 		D525426C209363AF001C04C1 /* IconLabelButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconLabelButton.swift; sourceTree = "<group>"; };
 		D525426E209363DC001C04C1 /* CallActionAppearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallActionAppearance.swift; sourceTree = "<group>"; };
 		D52F2C1D205BCA1D00E067C0 /* UIAlertController+ConnectionRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+ConnectionRequest.swift"; sourceTree = "<group>"; };
-		D52F2C1F205BE0A600E067C0 /* UIAlertController+ConversationDegraded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+ConversationDegraded.swift"; sourceTree = "<group>"; };
 		D53D390B2057F8ED00B87DAD /* TintCorrectedActivityController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TintCorrectedActivityController.swift; sourceTree = "<group>"; };
 		D53D390D20596ED300B87DAD /* ConversationActionController+Block.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationActionController+Block.swift"; sourceTree = "<group>"; };
 		D53D390F2059784900B87DAD /* ConversationActionController+CancelRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationActionController+CancelRequest.swift"; sourceTree = "<group>"; };
@@ -5371,6 +5371,7 @@
 				8FC851B0199245760008B66B /* ConversationViewController.h */,
 				EA28157E1A0BA2C5001D6124 /* ConversationViewController+Private.h */,
 				8FC851B1199245760008B66B /* ConversationViewController.m */,
+				5E423CD82295674900A5DB3A /* ConversationViewController+PrivacyAlert.swift */,
 				EF1EE76E2253AE2800E7B6E3 /* ConversationViewController+Constraints.swift */,
 				BF1A81271C9848DB00A96CAA /* ConversationViewController+NavigationBar.swift */,
 				8FC851AE199245760008B66B /* ConversationViewController+ParticipantsPopover.h */,
@@ -6018,7 +6019,6 @@
 				BF5FAC0420B6C6E9004CEB45 /* ConversationCallController.swift */,
 				D5F22D4B2048052900879444 /* UIAlertController+RemoveAction.swift */,
 				D52F2C1D205BCA1D00E067C0 /* UIAlertController+ConnectionRequest.swift */,
-				D52F2C1F205BE0A600E067C0 /* UIAlertController+ConversationDegraded.swift */,
 				D550F56D204444EE009E09DD /* ConversationActionController+Leave.swift */,
 				D550F56F20444924009E09DD /* ConversationActionController+Delete.swift */,
 				EE2538842166151C00932606 /* ConversationActionController+Notifications.swift */,
@@ -7628,6 +7628,7 @@
 				EF3BD6A0225CD4FE00ABB9B6 /* ShareContactsViewController+Extension.swift in Sources */,
 				5E936E8F20B590530060E6AA /* UIDevice+Platform.swift in Sources */,
 				EF1A461A21AD60510009B6B9 /* ReceiptOptionsSectionController.swift in Sources */,
+				5E423CD92295674900A5DB3A /* ConversationViewController+PrivacyAlert.swift in Sources */,
 				EEB8A2D01F628D1100958881 /* Settings+Account.swift in Sources */,
 				BF5C37981C0E0D9C00EA11E3 /* ParticipantDeviceHeaderView.m in Sources */,
 				5E0EB1FB2100D80B00B5DC2B /* CompanyLoginFlowOpener.swift in Sources */,
@@ -7779,7 +7780,6 @@
 				167961AF20445FB400B72ACC /* ProfileTitleView.swift in Sources */,
 				16FB2F6C20C0389800582137 /* Dictionary+Merge.swift in Sources */,
 				87A15FE11E08339500AED79B /* CollectionLinkCell.swift in Sources */,
-				D52F2C20205BE0A600E067C0 /* UIAlertController+ConversationDegraded.swift in Sources */,
 				EFD1A61F224001AB00695792 /* ConversationInputBarViewController+CreateViews.swift in Sources */,
 				5E3FB06C206BC7AC0075E910 /* TabBar.swift in Sources */,
 				87B8C3411DF9788B0015EC89 /* MapOpening.swift in Sources */,

@@ -53,19 +53,28 @@ final class ConversationTitleViewTests: ZMSnapshotTestCase {
         verify(view: sut)
     }
     
-    func testThatItUpdatesTheTitleViewAndRendersLegalHoldCorrectly() {
+    func testThatItUpdatesTheTitleViewAndRendersLegalHoldCorrectly_PendingApproval() {
         // when
-        conversation.isUnderLegalHold = true
+        conversation.legalHoldStatus = .pendingApproval
         sut = ConversationTitleView(conversation: conversation as Any as! ZMConversation, interactive: true)
         
         // then
         verify(view: sut)
     }
-    
+
+    func testThatItUpdatesTheTitleViewAndRendersLegalHoldCorrectly_Enabled() {
+        // when
+        conversation.legalHoldStatus = .enabled
+        sut = ConversationTitleView(conversation: conversation as Any as! ZMConversation, interactive: true)
+
+        // then
+        verify(view: sut)
+    }
+
     func testThatItUpdatesTheTitleViewAndRendersLegalHoldAndVerifiedShieldCorrectly() {
         // when
         conversation.securityLevel = .secure
-        conversation.isUnderLegalHold = true
+        conversation.legalHoldStatus = .enabled
         sut = ConversationTitleView(conversation: conversation as Any as! ZMConversation, interactive: true)
         
         // then

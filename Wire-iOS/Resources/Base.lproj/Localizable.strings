@@ -728,10 +728,13 @@
 // Conversation Degraded (security level lowered)
 "meta.degraded.degradation_reason_message.singular" = "%@ started using a new device.";
 "meta.degraded.degradation_reason_message.plural" = "%@ started using new devices.";
+"meta.degraded.degradation_reason_message.someone" = "Someone started using a new device.";
 "meta.degraded.dialog_message" = "Do you still want to send your message?";
-"meta.degraded.show_device_button" = "Show device";
-"meta.degraded.send_anyway_button" = "Send anyway";
+"meta.degraded.verify_devices_button" = "Verify Devices…";
+"meta.degraded.send_anyway_button" = "Send Anyway";
 "meta.degraded.cancel_sending_button" = "Cancel";
+"meta.legalhold.info_button" = "What Is Legal Hold?";
+"meta.legalhold.send_alert_title" = "The conversation is now subject to legal hold.";
 
 // Remove from conversation dialogue
 "profile.remove_dialog_title" = "Remove?";
