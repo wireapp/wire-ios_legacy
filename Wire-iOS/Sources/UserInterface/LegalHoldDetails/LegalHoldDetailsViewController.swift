@@ -25,6 +25,22 @@ class LegalHoldDetailsViewController: UIViewController {
     fileprivate let collectionViewController: SectionCollectionViewController
     fileprivate let conversation: ZMConversation
     
+    convenience init?(user: ZMUser) {
+        if user.isSelfUser {
+            if let managedObjectContext = user.managedObjectContext {
+                self.init(conversation: ZMConversation.selfConversation(in: managedObjectContext)) // TODO jacob replace with UI friendly getter
+                return
+            }
+        } else {
+            if let conversation = user.oneToOneConversation {
+                self.init(conversation: conversation)
+                return
+            }
+        }
+        
+        return nil
+    }
+        
     init(conversation: ZMConversation) {
         self.conversation = conversation
         self.collectionViewController = SectionCollectionViewController()
@@ -46,6 +62,12 @@ class LegalHoldDetailsViewController: UIViewController {
         
         title = "legalhold.header.title".localized.localizedUppercase
         view.backgroundColor = UIColor.from(scheme: .contentBackground)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        navigationItem.rightBarButtonItem = navigationController?.closeItem()
     }
     
     fileprivate func setupViews() {

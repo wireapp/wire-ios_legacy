@@ -62,9 +62,9 @@ final class ConversationListTopBarViewController: UIViewController {
         topBar?.leftView = createAccountView()
 
         ///TODO: observe for LegalHold status update event
-        if selfUser.isUnderLegalHold {
+//        if selfUser.isUnderLegalHold {
             topBar?.rightView = createLegalHoldView()
-        }
+//        }
         topBar?.splitSeparator = false
         
         
@@ -145,7 +145,8 @@ final class ConversationListTopBarViewController: UIViewController {
 
     @objc
     func presentLegalHoldInfo() {
-        ///TODO: present legalhold screen
+        guard let legalHoldDetailsViewControllers = LegalHoldDetailsViewController(user: ZMUser.selfUser()) else { return }
+        present(legalHoldDetailsViewControllers.wrapInNavigationController(), animated: true, completion: nil)
     }
 
     @objc
