@@ -127,9 +127,9 @@ final class AppRootViewController: UIViewController {
     public override func viewDidLoad() {
         super.viewDidLoad()
 
-        if let session = ZMUserSession.shared() {
-            userObserverToken = UserChangeInfo.add(userObserver:self, for: ZMUser.selfUser(), userSession: session)
-        }
+//        if let session = ZMUserSession.shared() {
+//            userObserverToken = UserChangeInfo.add(userObserver:self, for: ZMUser.selfUser(), userSession: session)
+//        }
     }
 
     public override func viewWillAppear(_ animated: Bool) {
@@ -169,6 +169,15 @@ final class AppRootViewController: UIViewController {
                                                            application: UIApplication.shared)
                 
             sessionManager.urlHandler.delegate = self
+
+            /// setup UserChangeInfo observer after sessionManager is created since ZMUserSession.shared() depends on it.
+            self.setupUserChangeInfoObserver()
+        }
+    }
+
+    private func setupUserChangeInfoObserver() {
+        if let session = ZMUserSession.shared() {
+            userObserverToken = UserChangeInfo.add(userObserver:self, for: ZMUser.selfUser(), userSession: session)
         }
     }
 
