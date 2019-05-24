@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import SwiftyGif
 
 var defaultImageCache = ImageCache<MediaAsset>()
 
@@ -266,9 +267,19 @@ extension ImageResource {
             guard let imageData = imageData else { return }
             
             if isAnimatedGIF {
-                image = FLAnimatedImage(animatedGIFData: imageData)
+                let gifImage = UIImage()
+                do {
+
+                    ///TODO: lower levelOfIntegrity?
+                    try gifImage.setGifFromData(imageData, levelOfIntegrity: .default)
+
+                    image = gifImage
+                } catch {
+                    print(error)
+                    return
+                }
             } else {
-                switch sizeLimit {
+                switch sizeLimit { 
                 case .none:
                     image = UIImage(data: imageData)?.decoded
                 case .deviceOptimized:

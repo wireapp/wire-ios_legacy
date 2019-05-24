@@ -18,9 +18,11 @@
 
 import Foundation
 import Cartography
-import FLAnimatedImage
+//import FLAnimatedImage
+import SwiftyGif
 
-class ImageResourceView: FLAnimatedImageView {
+
+final class ImageResourceView: UIImageView {
     
     fileprivate var loadingView = ThreeDotsLoadingView()
     
@@ -59,6 +61,10 @@ class ImageResourceView: FLAnimatedImageView {
             let update = {
                 self.loadingView.isHidden = hideLoadingView || mediaAsset != nil
                 self.setMediaAsset(mediaAsset)
+
+                if let image = mediaAsset as? UIImage, image.framesCount() > 1 {
+                    self.setGifImage(image) /// TODO: SwiftyGifManager memory managment
+                }
                 completion?()
             }
             
