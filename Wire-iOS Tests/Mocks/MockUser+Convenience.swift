@@ -38,6 +38,7 @@ extension MockUser {
     @objc static func createSelfUser(name: String, inTeam teamID: UUID?) -> MockUser {
         let user = MockUser()
         user.name = name
+        user.displayName = name
         user.initials = PersonName.person(withName: name, schemeTagger: nil).initials
         user.isSelfUser = true
         user.isTeamMember = teamID != nil
@@ -58,6 +59,7 @@ extension MockUser {
     @objc static func createConnectedUser(name: String, inTeam teamID: UUID?) -> MockUser {
         let user = MockUser()
         user.name = name
+        user.displayName = name
         user.initials = PersonName.person(withName: name, schemeTagger: nil).initials
         user.isConnected = true
         user.isTeamMember = teamID != nil

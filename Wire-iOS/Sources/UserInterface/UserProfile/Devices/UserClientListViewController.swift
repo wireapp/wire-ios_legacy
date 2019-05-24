@@ -21,7 +21,7 @@ import Foundation
 
 class UserClientListViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     
-    fileprivate let headerView: ParticipantDeviceHeaderView = ParticipantDeviceHeaderView(userName: "Mumrik")
+    fileprivate let headerView: ParticipantDeviceHeaderView
     fileprivate let collectionView = UICollectionView(forUserList: ())
     fileprivate var clients: [UserClientType]
     fileprivate var tokens: [Any?] = []
@@ -38,6 +38,7 @@ class UserClientListViewController: UIViewController, UICollectionViewDelegateFl
     init(user: ZMUser) {
         self.user = user
         self.clients = user.allClients.sortedByRelevance()
+        self.headerView = ParticipantDeviceHeaderView(userName: user.displayName)
         
         super.init(nibName: nil, bundle: nil)
         
@@ -57,6 +58,12 @@ class UserClientListViewController: UIViewController, UICollectionViewDelegateFl
         super.viewDidLoad()
         setupViews()
         createConstraints()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        user.fetchUserClients()
     }
     
     private func setupViews() {
@@ -134,6 +141,7 @@ extension UserClientListViewController: ZMUserObserver {
     func userDidChange(_ changeInfo: UserChangeInfo) {
         guard changeInfo.clientsChanged || changeInfo.trustLevelChanged else { return }
         
+        headerView.showUnencryptedLabel = user.clients.count == 0
         clients = user.allClients.sortedByRelevance()
         collectionView.reloadData()
     }
