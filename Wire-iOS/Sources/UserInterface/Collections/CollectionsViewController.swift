@@ -21,8 +21,6 @@ import Foundation
 import Cartography
 import WireDataModel
 
-fileprivate let zmLog = ZMSLog(tag: "CollectionsViewController")
-
 public protocol CollectionsViewControllerDelegate: class {
     func collectionsViewController(_ viewController: CollectionsViewController, performAction: MessageAction, onMessage: ZMConversationMessage)
 }
