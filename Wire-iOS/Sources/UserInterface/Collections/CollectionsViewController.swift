@@ -604,12 +604,8 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
     // MARK: - Delegate
     
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard
-            let section = CollectionsSectionSet(index: UInt(indexPath.section)),
-            let cell = collectionView.cellForItem(at: indexPath) as? CollectionCell
-        else {
-            zmLog.error("Unknown section for indexPath = \(indexPath)")
-            return
+        guard let section = CollectionsSectionSet(index: UInt(indexPath.section)) else {
+            fatal("Unknown section for indexPath = \(indexPath)")
         }
         
         if section == .loading {
@@ -617,7 +613,8 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
         }
         
         let message = self.message(for: indexPath)
-        self.perform(.present, for: message, source: cell)
+
+        presentAction(for: message)
     }
     
 }
@@ -685,6 +682,29 @@ extension CollectionsViewController: CollectionCellDelegate {
         self.perform(action, for: message, source: cell)
     }
 
+    private func presentAction(for message: ZMConversationMessage) {
+        self.selectedMessage = message
+
+        if message.isImage {
+            let imagesController = ConversationImagesViewController(collection: self.collection, initialMessage: message)
+
+            let backButton = CollectionsView.backButton()
+            backButton.addTarget(self, action: #selector(CollectionsViewController.backButtonPressed(_:)), for: .touchUpInside)
+
+            let closeButton = CollectionsView.closeButton()
+            closeButton.addTarget(self, action: #selector(CollectionsViewController.closeButtonPressed(_:)), for: .touchUpInside)
+
+            imagesController.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
+            imagesController.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: closeButton)
+            imagesController.swipeToDismiss = false
+            imagesController.messageActionDelegate = self
+            navigationController?.pushViewController(imagesController, animated: true)
+        } else {
+            self.messagePresenter.open(message, targetView: view, actionResponder: self)
+        }
+
+    }
+
     func perform(_ action: MessageAction, for message: ZMConversationMessage, source: CollectionCell?) {
         switch action {
         case .copy:
@@ -702,25 +722,7 @@ extension CollectionsViewController: CollectionCellDelegate {
             }
 
         case .present:
-            self.selectedMessage = message
-
-            if message.isImage {
-                let imagesController = ConversationImagesViewController(collection: self.collection, initialMessage: message)
-
-                let backButton = CollectionsView.backButton()
-                backButton.addTarget(self, action: #selector(CollectionsViewController.backButtonPressed(_:)), for: .touchUpInside)
-
-                let closeButton = CollectionsView.closeButton()
-                closeButton.addTarget(self, action: #selector(CollectionsViewController.closeButtonPressed(_:)), for: .touchUpInside)
-
-                imagesController.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
-                imagesController.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: closeButton)
-                imagesController.swipeToDismiss = false
-                imagesController.messageActionDelegate = self
-                navigationController?.pushViewController(imagesController, animated: true)
-            } else {
-                self.messagePresenter.open(message, targetView: view, actionResponder: self)
-            }
+            presentAction(for: message)
 
         case .save:
             if message.isImage {
