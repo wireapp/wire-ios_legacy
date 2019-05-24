@@ -997,6 +997,7 @@
 "self.settings.popular_demand.title" = "Yleisön pyynnöstä";
 "self.settings.popular_demand.send_button.title" = "Lähetä Painike";
 "self.settings.popular_demand.send_button.footer" = "Poista käyöstä lähetys rivinvaihtonäppäimellä.";
+"self.settings.popular_demand.dark_mode.footer" = "Switch between dark and light theme.";
 
 // Open in
 "self.settings.external_apps.header" = "Avaa sovelluksessa";

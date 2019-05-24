@@ -28,7 +28,8 @@ open class AssetLibrary: NSObject, PHPhotoLibraryChangeObserver {
     open weak var delegate: AssetLibraryDelegate?
     fileprivate var fetchingAssets = false
     public let synchronous: Bool
-    
+    let photoLibrary: PhotoLibraryProtocol
+
     open var count: UInt {
         guard let fetch = self.fetch else {
             return 0
@@ -105,14 +106,17 @@ open class AssetLibrary: NSObject, PHPhotoLibraryChangeObserver {
 
     }
 
-    init(synchronous: Bool = false) {
+    init(synchronous: Bool = false, photoLibrary: PhotoLibraryProtocol = PHPhotoLibrary.shared()) {
         self.synchronous = synchronous
+        self.photoLibrary = photoLibrary
+
         super.init()
-        PHPhotoLibrary.shared().register(self)
+
+        self.photoLibrary.register(self)
         self.refetchAssets(synchronous: synchronous)
     }
 
     deinit {
-        PHPhotoLibrary.shared().unregisterChangeObserver(self)
+        photoLibrary.unregisterChangeObserver(self)
     }
 }

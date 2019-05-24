@@ -22,13 +22,23 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
 @class SearchGroupSelector;
 @class SearchResultsViewController;
 @protocol UserType;
+@protocol AddressBookHelperProtocol;
+
+
 
 @interface StartUIViewController ()
 
+NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) SearchHeaderViewController *searchHeaderViewController;
 @property (nonatomic) SearchGroupSelector *groupSelector;
 @property (nonatomic) SearchResultsViewController *searchResultsViewController;
+@property (nonatomic) BOOL addressBookUploadLogicHandled;
+@property (nonatomic, null_unspecified) id<AddressBookHelperProtocol> addressBookHelper;
+
+-(instancetype) init;
 
 - (void)presentProfileViewControllerForUser:(id<UserType>)bareUser atIndexPath:(NSIndexPath *)indexPath;
+NS_ASSUME_NONNULL_END
 
 @end
+
