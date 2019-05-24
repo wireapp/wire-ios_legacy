@@ -39,23 +39,23 @@
 
 
 
-@protocol MediaAssetView <NSObject>
-
-- (id<MediaAsset>)mediaAsset;
-- (void)setMediaAsset:(id<MediaAsset>)asset;
-
-@end
-
-
-
-@interface UIImageView(MediaAssetView) <MediaAssetView>
-
-+ (instancetype)imageViewWithMediaAsset:(id<MediaAsset>)image;
-
-@end
-
-
-
-@interface FLAnimatedImageView(MediaAssetView) <MediaAssetView>
-
-@end
+//@protocol MediaAssetView <NSObject>
+//
+//- (id<MediaAsset>)mediaAsset;
+//- (void)setMediaAsset:(id<MediaAsset>)asset;
+//
+//@end
+//
+//
+//
+//@interface UIImageView(MediaAssetView) <MediaAssetView>
+//
+//+ (instancetype)imageViewWithMediaAsset:(id<MediaAsset>)image;
+//
+//@end
+//
+//
+//
+//@interface FLAnimatedImageView(MediaAssetView) <MediaAssetView>
+//
+//@end

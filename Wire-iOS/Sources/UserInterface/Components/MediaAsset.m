@@ -39,7 +39,7 @@
 @end
 
 
-
+/*
 @implementation UIImageView(MediaAssetView)
 
 - (NSData *)imageData
@@ -81,29 +81,29 @@
 
 @end
 
+*/
 
-
-@implementation FLAnimatedImageView(MediaAssetView)
-
-- (id<MediaAsset>)mediaAsset
-{
-    return self.animatedImage ?: self.image;
-}
-
-- (void)setMediaAsset:(id<MediaAsset>)image
-{
-    if (image == nil) {
-        self.image = nil;
-        self.animatedImage = nil;
-    }
-    else {
-        if ([image isGIF]) {
-            self.animatedImage = image;
-        }
-        else {
-            self.image = [(UIImage *)image downsizedImage];
-        }
-    }
-}
-
-@end
+//@implementation FLAnimatedImageView(MediaAssetView)
+//
+//- (id<MediaAsset>)mediaAsset
+//{
+//    return self.animatedImage ?: self.image;
+//}
+//
+//- (void)setMediaAsset:(id<MediaAsset>)image
+//{
+//    if (image == nil) {
+//        self.image = nil;
+//        self.animatedImage = nil;
+//    }
+//    else {
+//        if ([image isGIF]) {
+//            self.animatedImage = image;
+//        }
+//        else {
+//            self.image = [(UIImage *)image downsizedImage];
+//        }
+//    }
+//}
+//
+//@end

@@ -42,7 +42,7 @@ final class ImageResourceView: UIImageView {
     
     public func setImageResource(_ imageResource: ImageResource?, hideLoadingView: Bool = false, completion: (() -> Void)? = nil) {
         let token = UUID()
-        setMediaAsset(nil)
+        mediaAsset = nil
 
         imageResourceInternal = imageResource
         reuseToken = token
@@ -59,7 +59,7 @@ final class ImageResourceView: UIImageView {
             
             let update = {
                 self.loadingView.isHidden = hideLoadingView || mediaAsset != nil
-                self.setMediaAsset(mediaAsset)
+                self.mediaAsset = mediaAsset
 
                 if let image = mediaAsset as? UIImage, image.framesCount() > 1 {
                     self.setGifImage(image) /// TODO: SwiftyGifManager memory managment

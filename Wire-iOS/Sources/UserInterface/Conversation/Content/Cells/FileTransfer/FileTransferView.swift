@@ -158,7 +158,7 @@ final public class FileTransferView: UIView, TransferView {
             guard let image = image else { return }
             
             self?.fileTypeIconView.contentMode = .scaleAspectFit
-            self?.fileTypeIconView.setMediaAsset(image) 
+            self?.fileTypeIconView.mediaAsset = image 
         }
         
         self.actionButton.isUserInteractionEnabled = true
