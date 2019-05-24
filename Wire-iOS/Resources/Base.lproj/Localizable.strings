@@ -467,6 +467,14 @@
 
 "content.system.message_read_receipt_on_add_to_group" = "Read receipts are on";
 
+// legal hold
+
+"content.system.message_legal_hold.enabled" = "This conversation is under legal hold";
+"content.system.message_legal_hold.disabled" = "Legal hold deactivated for this conversation";
+
+"content.system.message_legal_hold.learn_more" = "Learn more";
+
+//
 
 "content.system.reactivated_device" = "You started using %@ again. Messages sent in the meantime will not appear here.";
 
