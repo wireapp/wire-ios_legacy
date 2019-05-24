@@ -341,7 +341,7 @@ class ConversationSystemMessageCellDescription {
             return [AnyConversationMessageCellDescription(cell)]
 
         case .legalHoldEnabled, .legalHoldDisabled:
-            let cell = ConversationLegalHoldCellDescription(systemMessageType: systemMessageData.systemMessageType)
+            let cell = ConversationLegalHoldCellDescription(systemMessageType: systemMessageData.systemMessageType, conversation: conversation)
             return [AnyConversationMessageCellDescription(cell)]
             
         case .newConversation:

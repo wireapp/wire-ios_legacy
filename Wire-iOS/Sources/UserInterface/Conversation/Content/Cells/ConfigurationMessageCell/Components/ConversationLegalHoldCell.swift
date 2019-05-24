@@ -18,43 +18,41 @@
 
 import Foundation
 
-struct LegalHoldViewModel {
-    var systemMessageType: ZMSystemMessageType
-    let baseTemplate = "content.system.message_legal_hold"
-    static let legalHoldURL: URL = URL(string: "settings://legal-hold")!
+class ConversationLegalHoldSystemMessageCell: ConversationIconBasedCell, ConversationMessageCell {
     
-    func image() -> UIImage? {
-        return StyleKitIcon.legalholdactive.makeImage(size: .tiny, color: .vividRed)
+    static let legalHoldURL: URL = URL(string: "action://learn-more-legal-hold")!
+    var conversation: ZMConversation?
+    
+    struct Configuration {
+        let attributedText: NSAttributedString?
+        var icon: UIImage?
+        var conversation: ZMConversation?
     }
     
-    func attributedTitle() -> NSAttributedString? {
-        
-        var template = baseTemplate
-        
-        if systemMessageType == .legalHoldEnabled {
-            template += ".enabled"
-        } else if systemMessageType == .legalHoldDisabled {
-            template += ".disabled"
-        }
-        
-        var updateText = NSAttributedString(string: template.localized, attributes: ConversationSystemMessageCell.baseAttributes)
-        
-        if systemMessageType == .legalHoldEnabled {
-            let learnMore = NSAttributedString(string: (baseTemplate + ".learn_more").localized.uppercased(),
-                                               attributes: [.font: UIFont.mediumSemiboldFont,
-                                                            .link: legalHoldURL as AnyObject,
-                                                            .foregroundColor: UIColor.from(scheme: .textForeground)])
-            
-            updateText += " " + String.MessageToolbox.middleDot + " " + learnMore
-        }
-        
-        return updateText
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupView()
     }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        setupView()
+    }
+    
+    func setupView() {
+        lineView.isHidden = true
+    }
+    
+    func configure(with object: Configuration, animated: Bool) {
+        attributedText = object.attributedText
+        imageView.image = object.icon
+        conversation = object.conversation
+    }
+    
 }
 
-
 final class ConversationLegalHoldCellDescription: ConversationMessageCellDescription {
-    typealias View = ConversationSystemMessageCell
+    typealias View = ConversationLegalHoldSystemMessageCell
     let configuration: View.Configuration
     
     var message: ZMConversationMessage?
@@ -71,11 +69,51 @@ final class ConversationLegalHoldCellDescription: ConversationMessageCellDescrip
     let accessibilityIdentifier: String? = nil
     let accessibilityLabel: String? = nil
     
-    init(systemMessageType: ZMSystemMessageType) {
-        let viewModel = LegalHoldViewModel(systemMessageType: systemMessageType)
-        configuration = View.Configuration(icon: viewModel.image(),
-                                           attributedText: viewModel.attributedTitle(),
-                                           showLine: false)
-        actionController = nil
+    init(systemMessageType: ZMSystemMessageType, conversation: ZMConversation) {
+        configuration = ConversationLegalHoldCellDescription.configuration(for: systemMessageType, in: conversation)
     }
+    
+    private static func configuration(for systemMessageType: ZMSystemMessageType, in conversation: ZMConversation) -> View.Configuration {
+        
+        let baseTemplate = "content.system.message_legal_hold"
+        var template = baseTemplate
+        
+        if systemMessageType == .legalHoldEnabled {
+            template += ".enabled"
+        } else if systemMessageType == .legalHoldDisabled {
+            template += ".disabled"
+        }
+        
+        var attributedText = NSAttributedString(string: template.localized, attributes: ConversationSystemMessageCell.baseAttributes)
+        
+        if systemMessageType == .legalHoldEnabled {
+            let learnMore = NSAttributedString(string: (baseTemplate + ".learn_more").localized.uppercased(),
+                                               attributes: [.font: UIFont.mediumSemiboldFont,
+                                                            .link: ConversationLegalHoldSystemMessageCell.legalHoldURL as AnyObject,
+                                                            .foregroundColor: UIColor.from(scheme: .textForeground)])
+            
+            attributedText += " " + String.MessageToolbox.middleDot + " "
+            attributedText += learnMore
+        }
+        
+        let icon = StyleKitIcon.legalholdactive.makeImage(size: .tiny, color: .vividRed)
+        
+        return View.Configuration(attributedText: attributedText, icon: icon, conversation: conversation)
+    }
+}
+
+extension ConversationLegalHoldSystemMessageCell {
+    
+    public func textView(_ textView: UITextView, shouldInteractWith url: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+        
+        if url == ConversationLegalHoldSystemMessageCell.legalHoldURL, let conversation = conversation {
+            let legalHoldDetails = LegalHoldDetailsViewController(conversation: conversation)
+            legalHoldDetails.modalPresentationStyle = .formSheet
+            ZClientViewController.shared()?.present(legalHoldDetails, animated: true)
+            return true
+        }
+        
+        return false
+    }
+    
 }
