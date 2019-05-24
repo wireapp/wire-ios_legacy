@@ -997,6 +997,7 @@
 "self.settings.popular_demand.title" = "Po priljubljenih zahtevah";
 "self.settings.popular_demand.send_button.title" = "Gumb za pošiljanje";
 "self.settings.popular_demand.send_button.footer" = "Onemogoči za pošiljanje preko tipke enter.";
+"self.settings.popular_demand.dark_mode.footer" = "Switch between dark and light theme.";
 
 // Open in
 "self.settings.external_apps.header" = "Odpri s/z";

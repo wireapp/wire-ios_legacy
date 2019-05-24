@@ -164,22 +164,29 @@ extension SettingsCellDescriptorFactory {
         }
         
         let sendButtonDescriptor = SettingsPropertyToggleCellDescriptor(settingsProperty: settingsPropertyFactory.property(.disableSendButton), inverse: true)
-        let darkThemeDescriptor = SettingsPropertyToggleCellDescriptor(settingsProperty: settingsPropertyFactory.property(.darkMode))
 
-        let byPopularDemandSection = SettingsSectionDescriptor(
-            cellDescriptors: [sendButtonDescriptor, darkThemeDescriptor],
+        let byPopularDemandSendButtonSection = SettingsSectionDescriptor(
+            cellDescriptors: [sendButtonDescriptor],
             header: "self.settings.popular_demand.title".localized,
             footer: "self.settings.popular_demand.send_button.footer".localized
         )
+
+        cellDescriptors.append(byPopularDemandSendButtonSection)
+
+        let darkThemeDescriptor = SettingsPropertyToggleCellDescriptor(settingsProperty: settingsPropertyFactory.property(.darkMode))
+        let byPopularDemandDarkThemeSection = SettingsSectionDescriptor(
+            cellDescriptors: [darkThemeDescriptor],
+            footer: "self.settings.popular_demand.dark_mode.footer".localized
+        )
         
-        cellDescriptors.append(byPopularDemandSection)
+        cellDescriptors.append(byPopularDemandDarkThemeSection)
         
         let context: LAContext = LAContext()
         var error: NSError?
         
         if context.canEvaluatePolicy(LAPolicy.deviceOwnerAuthentication, error: &error) {
             let lockApp = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.lockApp))
-            let section = SettingsSectionDescriptor(cellDescriptors: [lockApp], header: .none, footer: appLockSectionSubtitle)
+            let section = SettingsSectionDescriptor(cellDescriptors: [lockApp], footer: appLockSectionSubtitle)
             cellDescriptors.append(section)
         }
         

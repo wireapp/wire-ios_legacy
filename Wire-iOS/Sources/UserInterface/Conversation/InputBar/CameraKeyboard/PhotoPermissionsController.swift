@@ -17,7 +17,6 @@
 //
 
 import Foundation
-import Photos
 
 // This protocol is used for UI (& testing) purposes only.
 // In case you'll create a class compliant with this protocol, that returns `true`
@@ -30,32 +29,4 @@ public protocol PhotoPermissionsController {
     var isPhotoLibraryAuthorized: Bool { get }
     var areCameraOrPhotoLibraryAuthorized: Bool { get }
     var areCameraAndPhotoLibraryAuthorized: Bool { get }
-}
-
-final class PhotoPermissionsControllerStrategy: PhotoPermissionsController {
-    
-    // `unauthorized` state happens the first time before opening the keyboard,
-    // so we don't need to check it for our purposes.
-    
-    var isCameraAuthorized: Bool {
-        switch AVCaptureDevice.authorizationStatus(for: AVMediaType.video) {
-        case .authorized: return true
-        default: return false
-        }
-    }
-    
-    var isPhotoLibraryAuthorized: Bool {
-        switch PHPhotoLibrary.authorizationStatus() {
-        case .authorized: return true
-        default: return false
-        }
-    }
-    
-    var areCameraOrPhotoLibraryAuthorized: Bool {
-        return isCameraAuthorized || isPhotoLibraryAuthorized
-    }
-    
-    var areCameraAndPhotoLibraryAuthorized: Bool {
-        return isCameraAuthorized && isPhotoLibraryAuthorized
-    }
 }

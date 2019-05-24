@@ -19,18 +19,44 @@
 import XCTest
 @testable import Wire
 
+final class MockAddressBookHelper: NSObject, AddressBookHelperProtocol {
+    var isAddressBookAccessGranted: Bool {
+        return false
+    }
+
+    var isAddressBookAccessUnknown: Bool {
+        return true
+    }
+
+    func startRemoteSearch(_ onlyIfEnoughTimeSinceLast: Bool) {
+        //no-op
+    }
+
+    func requestPermissions(_ callback: ((Bool) -> ())?) {
+        //no-op
+        callback?(false)
+    }
+}
+
 final class StartUIViewControllerSnapshotTests: CoreDataSnapshotTestCase {
     
     var sut: StartUIViewController!
+    var mockAddressBookHelper: MockAddressBookHelper!
 
+    override func setUp() {
+        super.setUp()
+
+        mockAddressBookHelper = MockAddressBookHelper()
+    }
 
     override func tearDown() {
         sut = nil
+        mockAddressBookHelper = nil
         super.tearDown()
     }
 
     func setupSut() {
-        sut = StartUIViewController()
+        sut = StartUIViewController(addressBookHelper: mockAddressBookHelper)
         sut.view.backgroundColor = .black
     }
 

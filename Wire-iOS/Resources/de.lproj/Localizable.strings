@@ -997,6 +997,7 @@
 "self.settings.popular_demand.title" = "Auf allgemeinen Wunsch";
 "self.settings.popular_demand.send_button.title" = "Senden Taste";
 "self.settings.popular_demand.send_button.footer" = "Deaktivieren, um Nachrichten mit der Enter-Taste zu senden.";
+"self.settings.popular_demand.dark_mode.footer" = "Zwischen dunklem und hellem Hintergrund wechseln.";
 
 // Open in
 "self.settings.external_apps.header" = "Öffnen mit";

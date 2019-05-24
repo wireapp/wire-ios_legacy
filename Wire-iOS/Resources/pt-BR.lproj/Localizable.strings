@@ -857,7 +857,7 @@
 // Settings - top level
 "self.settings.create_team.title" = "Criar uma equipe";
 "self.settings.manage_team.title" = "Gerenciar Equipe";
-"self.settings.add_team_or_account.title" = "Add Account";
+"self.settings.add_team_or_account.title" = "Adicionar Conta";
 "self.settings.add_account.title" = "Adicionar uma conta";
 
 "self.settings.add_account.error.title" = "Três contas de ativas";
@@ -997,6 +997,7 @@
 "self.settings.popular_demand.title" = "Por demanda popular";
 "self.settings.popular_demand.send_button.title" = "Botão Enviar";
 "self.settings.popular_demand.send_button.footer" = "Desabilite para enviar através da tecla return.";
+"self.settings.popular_demand.dark_mode.footer" = "Switch between dark and light theme.";
 
 // Open in
 "self.settings.external_apps.header" = "Abrir com";
@@ -1137,9 +1138,9 @@
 "landing.login.hints" = "Já tem uma conta?";
 "landing.login.button.title" = "Iniciar sessão";
 
-"landing.custom_backend.title" = "Connected to \"%@\"";
-"landing.custom_backend.more_info.button.title" = "Show more";
-"landing.custom_backend.more_info.alert.title" = " You are connected to a third-party server: %@";
+"landing.custom_backend.title" = "Conectado a \"%@\"";
+"landing.custom_backend.more_info.button.title" = "Exibir mais";
+"landing.custom_backend.more_info.alert.title" = " Você está conectado a um servidor de terceiros: %@";
 
 // Create team
 
@@ -1532,7 +1533,7 @@
 "availability.reminder.away.title" = "Você está definido como Ausente";
 "availability.reminder.away.message" = "Você aparecerá como Ausente para outras pessoas. Você não receberá notificações sobre quaisquer chamadas ou mensagens recebidas.";
 "availability.reminder.busy.title" = "Você está definido como Ocupado";
-"availability.reminder.busy.message" = "You will appear as Busy to other people. You will only receive notifications for mentions, replies, and calls in conversations that are not muted.";
+"availability.reminder.busy.message" = "Você aparecerá como Ocupado para outras pessoas. Você só receberá notificações para menções, respostas e chamadas em conversas que não estão silenciadas.";
 "availability.reminder.available.title" = "Você está definido como Disponível";
 "availability.reminder.available.message" = "Você aparecerá como Disponível para outras pessoas. Você receberá notificações para chamadas recebidas e mensagens de acordo com as configurações de notificações em cada conversa.";
 "availability.reminder.none.title" = "Nenhum status definido";
@@ -1559,14 +1560,14 @@
 "url_action.title" = "Confirmar a ação do URL";
 "url_action.connect_to_bot.message" = "Você gostaria de se conectar ao bot?";
 
-"url_action.switch_backend.title" = "Connect to server";
-"url_action.switch_backend.message" = "This configuration will connect the app to a third-party server:\n%@";
+"url_action.switch_backend.title" = "Conectar ao servidor";
+"url_action.switch_backend.message" = "Esta configuração conectará o aplicativo a um servidor de terceiros:\n%@";
 
-"url_action.switch_backend.error.logged_in.title" = "Can’t switch servers";
-"url_action.switch_backend.error.logged_in" = "You are already logged in. To switch to this server, log out of all accounts and try again.";
+"url_action.switch_backend.error.logged_in.title" = "Não é possível mudar os servidores";
+"url_action.switch_backend.error.logged_in" = "Você já está logado. Para mudar para este servidor, saia de todas as contas e tente novamente.";
 
-"url_action.switch_backend.error.invalid_backend.title" = "The server is not responding";
-"url_action.switch_backend.error.invalid_backend" = "Please check your internet connection, verify the link and try again.";
+"url_action.switch_backend.error.invalid_backend.title" = "O servidor não está respondendo";
+"url_action.switch_backend.error.invalid_backend" = "Por favor, verifique sua conexão com a internet, verifique o link e tente novamente.";
 
 
 // Deep Link
