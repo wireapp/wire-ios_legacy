@@ -25,6 +25,11 @@ class LegalHoldDetailsViewController: UIViewController {
     fileprivate let collectionViewController: SectionCollectionViewController
     fileprivate let conversation: ZMConversation
     
+    convenience init?(user: ZMUser) {
+        guard let conversation = user.oneToOneConversation else { return nil }
+        self.init(conversation: conversation)
+    }
+        
     init(conversation: ZMConversation) {
         self.conversation = conversation
         self.collectionViewController = SectionCollectionViewController()
@@ -46,6 +51,12 @@ class LegalHoldDetailsViewController: UIViewController {
         
         title = "legalhold.header.title".localized.localizedUppercase
         view.backgroundColor = UIColor.from(scheme: .contentBackground)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        navigationItem.rightBarButtonItem = navigationController?.closeItem()
     }
     
     fileprivate func setupViews() {
