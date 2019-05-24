@@ -27,7 +27,7 @@ extension UIImage: MediaAsset {
         }
     }
 
-    public func isGIF() -> Bool {
+    public func isGIF() -> Bool { ///TODO: UIImage can be GIF now
         return false
     }
 
