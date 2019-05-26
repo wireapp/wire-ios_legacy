@@ -19,6 +19,14 @@
 import Foundation
 
 extension UIAlertController {
+        
+    /// Create an alert with a OK button
+    ///
+    /// - Parameters:
+    ///   - title: title of the alert
+    ///   - message: message of the alert
+    ///   - okActionHandler: a nullable closure for the OK button
+    /// - Returns: the alert presented
     static func ok(title: String,
                    message: String,
                    okActionHandler: ((UIAlertAction) -> Void)? = nil) -> UIAlertController {
@@ -41,6 +49,15 @@ extension UIAlertController {
 }
 
 extension UIViewController {
+    
+    /// Present an alert with a OK button
+    ///
+    /// - Parameters:
+    ///   - title: title of the alert
+    ///   - message: message of the alert
+    ///   - animated: present the alert animated or not
+    ///   - okActionHandler: a nullable closure for the OK button
+    /// - Returns: the alert presented
     func presentAlertWithOKButton(title: String,
                                   message: String,
                                   animated: Bool = true,
