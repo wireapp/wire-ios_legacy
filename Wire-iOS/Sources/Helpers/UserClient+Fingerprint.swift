@@ -24,41 +24,38 @@ import Foundation
     @objc func attributedRemoteIdentifier(_ attributes: [NSAttributedString.Key : AnyObject], boldAttributes: [NSAttributedString.Key : AnyObject], uppercase: Bool) -> NSAttributedString
 }
 
-extension UserClient: UserClientTypeAttributedString {
+private let UserClientIdentifierMinimumLength = 16
+
+extension Sequence where Element: UserClientType {
     
-    @objc public func attributedRemoteIdentifier(_ attributes: [NSAttributedString.Key : AnyObject], boldAttributes: [NSAttributedString.Key : AnyObject], uppercase: Bool = false) -> NSAttributedString {
+    func sortedByRelevance() -> [UserClientType] {
+        return sorted { (lhs, rhs) -> Bool in
+            if lhs.type == .legalHold {
+                return true
+            } else {
+                return lhs.remoteIdentifier < rhs.remoteIdentifier
+            }
+        }
+    }
+    
+}
+
+extension UserClientType {
+    
+    public func attributedRemoteIdentifier(_ attributes: [NSAttributedString.Key : AnyObject], boldAttributes: [NSAttributedString.Key : AnyObject], uppercase: Bool = false) -> NSAttributedString {
         let identifierPrefixString = NSLocalizedString("registration.devices.id", comment: "") + " "
         let identifierString = NSMutableAttributedString(string: identifierPrefixString, attributes: attributes)
         let identifier = uppercase ? displayIdentifier.localizedUppercase : displayIdentifier
-        let attributedRemoteIdentifier = identifier.fingerprintStringWithSpaces().fingerprintString(attributes: attributes,
-            boldAttributes:boldAttributes)
+        let attributedRemoteIdentifier = identifier.fingerprintStringWithSpaces().fingerprintString(attributes: attributes, boldAttributes: boldAttributes)
+        
         identifierString.append(attributedRemoteIdentifier!)
+        
         return NSAttributedString(attributedString: identifierString)
     }
     
-    public func localizedDeviceClass() -> String? {
-        switch self.deviceClass {
-        case .some("desktop"):
-            return NSLocalizedString("device.class.desktop", comment: "")
-
-        case .some("phone"):
-            return NSLocalizedString("device.class.phone", comment: "")
-            
-        case .some("tablet"):
-            return NSLocalizedString("device.class.tablet", comment: "")
-            
-        default:
-            return .none
-        }
-    }
-}
-
-private let UserClientIdentifierMinimumLength = 16
-
-extension UserClient {
-    
     /// This should be used when showing the identifier in the UI
     /// We manually add a padding if there was a leading zero
+    
     public var displayIdentifier: String {
         guard let remoteIdentifier = self.remoteIdentifier else {
             return ""
@@ -72,4 +69,40 @@ extension UserClient {
         
         return paddedIdentifier
     }
+}
+
+extension DeviceType {
+    
+    var localizedDescription: String {
+        switch self {
+        case .permanent:
+            return "device.type.permanent".localized
+        case .temporary:
+            return "device.type.temporary".localized
+        case .legalHold:
+            return "device.type.legalhold".localized
+        default:
+            return "device.type.unknown".localized
+        }
+    }
+    
+}
+
+extension DeviceClass {
+    
+    var localizedDescription: String {
+        switch self {
+        case .phone:
+            return "device.class.phone".localized
+        case .desktop:
+            return "device.class.desktop".localized
+        case .tablet:
+            return "device.class.tablet".localized
+        case .legalHold:
+            return "device.class.legalhold".localized
+        default:
+            return "device.class.unknown".localized
+        }
+    }
+    
 }

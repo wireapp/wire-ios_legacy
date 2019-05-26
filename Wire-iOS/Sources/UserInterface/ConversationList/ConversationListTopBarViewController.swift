@@ -20,19 +20,25 @@ import UIKit
 import Cartography
 
 
-class ConversationListTopBarViewController: UIViewController {
+final class ConversationListTopBarViewController: UIViewController {
     
     private var observerToken: Any?
     private var availabilityViewController: AvailabilityTitleViewController?
     private var account: Account
+    private let selfUser: UserType
     
     var topBar: TopBar? {
         return view as? TopBar
     }
-    
-    
-    init(account: Account) {
+
+    /// init a ConversationListTopBarViewController
+    ///
+    /// - Parameters:
+    ///   - account: the Account of the user
+    ///   - selfUser: the self user object. Allow to inject a mock self user for testing
+    init(account: Account, selfUser: UserType = ZMUser.selfUser()) {
         self.account = account
+        self.selfUser = selfUser
         
         super.init(nibName: nil, bundle: nil)
         
@@ -56,8 +62,9 @@ class ConversationListTopBarViewController: UIViewController {
         topBar?.leftView = createAccountView()
         topBar?.splitSeparator = false
         
-        
         availabilityViewController?.didMove(toParent: self)
+        
+        updateLegalHoldIndictor()
     }
     
     func createTitleView() -> UIView {
@@ -87,7 +94,20 @@ class ConversationListTopBarViewController: UIViewController {
             return titleLabel
         }
     }
-        
+
+    func createLegalHoldView() -> UIView {
+        let imageView = UIImageView()
+
+        imageView.setIcon(.legalholdactive, size: .tiny, color: .vividRed)
+        imageView.isUserInteractionEnabled = true
+        imageView.setLegalHoldAccessibility()
+
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(presentLegalHoldInfo))
+        imageView.addGestureRecognizer(tapGestureRecognizer)
+
+        return imageView
+    }
+
     func createAccountView() -> BaseAccountView {
         let session = ZMUserSession.shared() ?? nil
         let user = session == nil ? nil : ZMUser.selfUser(inUserSession: session!)
@@ -114,11 +134,22 @@ class ConversationListTopBarViewController: UIViewController {
         return accountView
     }
     
+    func updateLegalHoldIndictor() {
+        topBar?.rightView = selfUser.isUnderLegalHold ? createLegalHoldView() : nil
+    }
+    
     func updateTitle() {
         guard let middleView = topBar?.middleView as? UILabel else { return }
         middleView.text = ZMUser.selfUser().name
     }
-    
+
+    @objc
+    func presentLegalHoldInfo() {
+        guard let legalHoldDetailsViewController = LegalHoldDetailsViewController(user: ZMUser.selfUser())?.wrapInNavigationController() else { return }
+        legalHoldDetailsViewController.modalPresentationStyle = .formSheet
+        present(legalHoldDetailsViewController, animated: true, completion: nil)
+    }
+
     @objc
     func presentSettings() {
         let settingsViewController = createSettingsViewController()
@@ -161,8 +192,13 @@ extension ConversationListTopBarViewController: UIViewControllerTransitioningDel
 extension ConversationListTopBarViewController: ZMUserObserver {
     
     public func userDidChange(_ changeInfo: UserChangeInfo) {
-        guard changeInfo.nameChanged else { return }
-        updateTitle()
+        if changeInfo.nameChanged {
+            updateTitle()
+        }
+        
+        if changeInfo.legalHoldStatusChanged {
+            updateLegalHoldIndictor()
+        }
     }
 }
 

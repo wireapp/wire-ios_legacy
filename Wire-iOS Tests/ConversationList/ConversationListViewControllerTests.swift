@@ -29,8 +29,7 @@ final class ConversationListViewControllerTests: CoreDataSnapshotTestCase {
         MockUser.mockSelf()?.name = "Johannes Chrysostomus Wolfgangus Theophilus Mozart"
 
         sut = ConversationListViewController()
-        let account = Account(userName: "", userIdentifier: UUID(), teamName: nil, imageData: self.image(inTestBundleNamed: "unsplash_matterhorn.jpg").jpegData(compressionQuality: 0.9))
-        sut.account = account
+        sut.account = Account.mockAccount(imageData: mockImageData)
 
         sut.view.backgroundColor = .black
     }
@@ -40,16 +39,20 @@ final class ConversationListViewControllerTests: CoreDataSnapshotTestCase {
         super.tearDown()
     }
 
+    //MARK: - View controller
+
     func testForNoConversations() {
         verify(view: sut.view)
     }
 
+    //MARK: - PermissionDeniedViewController
     func testForPremissionDeniedViewController() {
         sut.showPermissionDeniedViewController()
 
         verify(view: sut.view)
     }
 
+    //MARK: - Action menu
     func testForActionMenu() {
         teamTest {
             sut.showActionMenu(for: otherUserConversation, from: sut.view)
