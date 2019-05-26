@@ -612,7 +612,7 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
         
         let message = self.message(for: indexPath)
 
-        presentAction(for: message)
+        perform(.present, for: message, source: nil)
     }
     
 }
@@ -680,29 +680,6 @@ extension CollectionsViewController: CollectionCellDelegate {
         self.perform(action, for: message, source: cell)
     }
 
-    private func presentAction(for message: ZMConversationMessage) {
-        self.selectedMessage = message
-
-        if message.isImage {
-            let imagesController = ConversationImagesViewController(collection: self.collection, initialMessage: message)
-
-            let backButton = CollectionsView.backButton()
-            backButton.addTarget(self, action: #selector(CollectionsViewController.backButtonPressed(_:)), for: .touchUpInside)
-
-            let closeButton = CollectionsView.closeButton()
-            closeButton.addTarget(self, action: #selector(CollectionsViewController.closeButtonPressed(_:)), for: .touchUpInside)
-
-            imagesController.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
-            imagesController.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: closeButton)
-            imagesController.swipeToDismiss = false
-            imagesController.messageActionDelegate = self
-            navigationController?.pushViewController(imagesController, animated: true)
-        } else {
-            self.messagePresenter.open(message, targetView: view, actionResponder: self)
-        }
-
-    }
-
     func perform(_ action: MessageAction, for message: ZMConversationMessage, source: CollectionCell?) {
         switch action {
         case .copy:
@@ -720,7 +697,25 @@ extension CollectionsViewController: CollectionCellDelegate {
             }
 
         case .present:
-            presentAction(for: message)
+            self.selectedMessage = message
+            
+            if message.isImage {
+                let imagesController = ConversationImagesViewController(collection: self.collection, initialMessage: message)
+                
+                let backButton = CollectionsView.backButton()
+                backButton.addTarget(self, action: #selector(CollectionsViewController.backButtonPressed(_:)), for: .touchUpInside)
+                
+                let closeButton = CollectionsView.closeButton()
+                closeButton.addTarget(self, action: #selector(CollectionsViewController.closeButtonPressed(_:)), for: .touchUpInside)
+                
+                imagesController.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
+                imagesController.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: closeButton)
+                imagesController.swipeToDismiss = false
+                imagesController.messageActionDelegate = self
+                navigationController?.pushViewController(imagesController, animated: true)
+            } else {
+                self.messagePresenter.open(message, targetView: view, actionResponder: self)
+            }
 
         case .save:
             if message.isImage {
