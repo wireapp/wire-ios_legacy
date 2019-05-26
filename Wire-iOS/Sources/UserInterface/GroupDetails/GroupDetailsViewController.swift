@@ -97,12 +97,7 @@ import Cartography
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-<<<<<<< HEAD
-        navigationItem.leftBarButtonItem = legalholdItem
-=======
         updateLegalHoldIndicator()
-        
->>>>>>> develop
         navigationItem.rightBarButtonItem = navigationController?.closeItem()
         collectionViewController.collectionView?.reloadData()
     }
@@ -201,11 +196,7 @@ extension GroupDetailsViewController {
     func presentLegalHoldDetails() {
         let viewController = LegalHoldDetailsViewController(conversation: conversation)
         
-<<<<<<< HEAD
-        navigationController?.pushViewController(viewController, animated: true)
-=======
         present(viewController.wrapInNavigationController(), animated: true)
->>>>>>> develop
     }
     
 }

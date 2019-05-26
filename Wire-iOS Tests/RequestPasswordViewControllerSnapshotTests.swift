@@ -19,7 +19,6 @@
 import XCTest
 @testable import Wire
 
-///TODO: enable this test after develop brach is merged to feature branch
 final class RequestPasswordControllerSnapshotTests: ZMSnapshotTestCase {
 
     var sut: RequestPasswordController!
@@ -39,19 +38,19 @@ final class RequestPasswordControllerSnapshotTests: ZMSnapshotTestCase {
         super.tearDown()
     }
 
-    func DISABLE_testForRemoveDeviceContext(){
+    func testForRemoveDeviceContext(){
         sut = RequestPasswordController(context: .removeDevice, callback: callback)
 
         verifyAlertController(sut.alertController)
     }
 
-    func DISABLE_testForLegalHoldContext() {
+    func testForLegalHoldContext() {
         sut = RequestPasswordController(context: .legalHold(fingerprint: fingerprint, hasPasswordInput: true), callback: callback)
 
         verifyAlertController(sut.alertController)
     }
 
-    func DISABLE_testForLegalHoldContextWithNoPasswordInput() {
+    func testForLegalHoldContextWithNoPasswordInput() {
         sut = RequestPasswordController(context: .legalHold(fingerprint: fingerprint, hasPasswordInput: false), callback: callback)
 
         verifyAlertController(sut.alertController)
