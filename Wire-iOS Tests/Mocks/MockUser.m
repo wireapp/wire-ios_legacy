@@ -107,7 +107,6 @@ static id<UserType> mockSelfUser = nil;
 #pragma mark - ZMBareUser
 
 @synthesize name;
-@synthesize displayName;
 @synthesize emailAddress;
 @synthesize isSelfUser;
 @synthesize isConnected;

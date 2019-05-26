@@ -53,6 +53,7 @@
 @property (nonatomic, readwrite) BOOL isTeamMember;
 @property (nonatomic, readwrite) TeamRole teamRole;
 @property (nonatomic, assign) BOOL isGuestInConversation;
+@property (nonatomic, copy) NSString *displayName;
 @property (nonatomic, copy) NSString *teamName;
 @property (nonatomic, readwrite) BOOL canManageTeam;
 @property (nonatomic, readwrite) BOOL hasTeam;
@@ -78,6 +79,8 @@
 
 @property (nonatomic, readwrite) BOOL managedByWire;
 @property (nonatomic, readwrite, copy) NSArray<UserRichProfileField *> *richProfile;
+
+@property (nonatomic) UIImage * profileImage;
 
 - (NSString *)displayNameInConversation:(MockConversation *)conversation;
 - (void)fetchUserClients;

@@ -17,12 +17,20 @@
 //
 
 import Foundation
+import Photos
+@testable import Wire
 
-extension UIAccessibilityIdentification where Self: NSObject {
+final class MockPhotoLibrary: PhotoLibraryProtocol {
+    func register(_ observer: PHPhotoLibraryChangeObserver) {
+        // no-ops
+    }
 
-    /// set accessibility identifier and accessibility label to an interaction enabled UI widget.
-    func setLegalHoldAccessibility() {
-        accessibilityIdentifier = "legalhold"
-        accessibilityLabel = "legalhold.accessibility".localized
+    func unregisterChangeObserver(_ observer: PHPhotoLibraryChangeObserver) {
+        // no-ops
+    }
+
+    func performChanges(_ changeBlock: @escaping () -> Void, completionHandler: ((Bool, Error?) -> Void)?) {
+        changeBlock()
+        completionHandler?(true, nil)
     }
 }

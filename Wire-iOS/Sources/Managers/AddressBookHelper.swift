@@ -20,8 +20,19 @@
 import Foundation
 import Contacts
 
+@objc protocol AddressBookHelperProtocol: NSObjectProtocol {
+    var isAddressBookAccessGranted : Bool { get }
+    var isAddressBookAccessUnknown : Bool { get }
+
+
+    @objc(startRemoteSearchWithCheckingIfEnoughTimeSinceLast:)
+    func startRemoteSearch(_ onlyIfEnoughTimeSinceLast: Bool)
+
+    func requestPermissions(_ callback: ((Bool)->())?)
+}
+
 /// Allows access to address book for search
-@objcMembers open class AddressBookHelper : NSObject {
+@objcMembers open class AddressBookHelper : NSObject, AddressBookHelperProtocol {
     
     /// Time to wait between searches
     let searchTimeInterval : TimeInterval = 60 * 60 * 24 // 24h
@@ -120,7 +131,8 @@ extension AddressBookHelper {
 extension AddressBookHelper {
     
     /// Starts an address book search, if enough time has passed since last search
-    @objc(startRemoteSearchWithCheckingIfEnoughTimeSinceLast:) public func startRemoteSearch(_ onlyIfEnoughTimeSinceLast: Bool) {
+    @objc(startRemoteSearchWithCheckingIfEnoughTimeSinceLast:)
+    public func startRemoteSearch(_ onlyIfEnoughTimeSinceLast: Bool) {
         assert(!ZMUser.selfUser().hasTeam, "Trying to upload contacts for account with team is a forbidden operation")
 
         guard self.isAddressBookAccessGranted && !self.addressBookSearchWasPostponed && (!onlyIfEnoughTimeSinceLast || self.enoughTimeHasPassedForSearch) else {

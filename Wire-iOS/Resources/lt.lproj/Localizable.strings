@@ -997,6 +997,7 @@
 "self.settings.popular_demand.title" = "Pagal populiarius pageidavimus";
 "self.settings.popular_demand.send_button.title" = "Siuntimo mygtukas";
 "self.settings.popular_demand.send_button.footer" = "Išjungti siuntimą „Enter“ klavišu.";
+"self.settings.popular_demand.dark_mode.footer" = "Switch between dark and light theme.";
 
 // Open in
 "self.settings.external_apps.header" = "Atverti naudojant";

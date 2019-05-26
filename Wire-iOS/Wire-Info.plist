@@ -91,7 +91,7 @@
 	<key>NSCameraUsageDescription</key>
 	<string>In order to take and send pictures Wire needs access to your camera.</string>
 	<key>NSContactsUsageDescription</key>
-	<string>We’d like to access your Contacts so we can connect you with people you might know. Your data is safely stored with us and not shared with anyone else.</string>
+	<string>Allow Wire to access your contacts to connect you with others. We anonymize all information before uploading it to our server and do not share it with anyone else.</string>
 	<key>NSFaceIDUsageDescription</key>
 	<string>In order to authenticate in the app allow Wire to access the Face ID feature.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>

@@ -21,7 +21,7 @@ import Foundation
 import XCTest
 @testable import Wire
 
-class MockPhotoPermissionsController: PhotoPermissionsController {
+final class MockPhotoPermissionsController: PhotoPermissionsController {
     
     private var camera = false
     private var library = false

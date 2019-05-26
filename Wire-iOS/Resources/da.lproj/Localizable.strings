@@ -997,6 +997,7 @@
 "self.settings.popular_demand.title" = "Ved populær efterspørgsel";
 "self.settings.popular_demand.send_button.title" = "Send Knap";
 "self.settings.popular_demand.send_button.footer" = "Deaktiver for at sende via returtasten.";
+"self.settings.popular_demand.dark_mode.footer" = "Switch between dark and light theme.";
 
 // Open in
 "self.settings.external_apps.header" = "Åbn med";

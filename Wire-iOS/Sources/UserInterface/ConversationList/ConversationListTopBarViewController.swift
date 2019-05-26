@@ -67,8 +67,9 @@ final class ConversationListTopBarViewController: UIViewController {
         }
         topBar?.splitSeparator = false
         
-        
         availabilityViewController?.didMove(toParent: self)
+        
+        updateLegalHoldIndictor()
     }
     
     func createTitleView() -> UIView {
@@ -138,6 +139,10 @@ final class ConversationListTopBarViewController: UIViewController {
         return accountView
     }
     
+    func updateLegalHoldIndictor() {
+        topBar?.rightView = selfUser.isUnderLegalHold ? createLegalHoldView() : nil
+    }
+    
     func updateTitle() {
         guard let middleView = topBar?.middleView as? UILabel else { return }
         middleView.text = ZMUser.selfUser().name
@@ -145,7 +150,13 @@ final class ConversationListTopBarViewController: UIViewController {
 
     @objc
     func presentLegalHoldInfo() {
+<<<<<<< HEAD
         ///TODO: present legalhold screen
+=======
+        guard let legalHoldDetailsViewController = LegalHoldDetailsViewController(user: ZMUser.selfUser())?.wrapInNavigationController() else { return }
+        legalHoldDetailsViewController.modalPresentationStyle = .formSheet
+        present(legalHoldDetailsViewController, animated: true, completion: nil)
+>>>>>>> develop
     }
 
     @objc
@@ -190,8 +201,13 @@ extension ConversationListTopBarViewController: UIViewControllerTransitioningDel
 extension ConversationListTopBarViewController: ZMUserObserver {
     
     public func userDidChange(_ changeInfo: UserChangeInfo) {
-        guard changeInfo.nameChanged else { return }
-        updateTitle()
+        if changeInfo.nameChanged {
+            updateTitle()
+        }
+        
+        if changeInfo.legalHoldStatusChanged {
+            updateLegalHoldIndictor()
+        }
     }
 }
 
