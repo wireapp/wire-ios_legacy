@@ -124,14 +124,6 @@ final class AppRootViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    public override func viewDidLoad() {
-        super.viewDidLoad()
-
-//        if let session = ZMUserSession.shared() {
-//            userObserverToken = UserChangeInfo.add(userObserver:self, for: ZMUser.selfUser(), userSession: session)
-//        }
-    }
-
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
