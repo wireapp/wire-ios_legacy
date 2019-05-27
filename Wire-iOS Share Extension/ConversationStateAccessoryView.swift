@@ -77,9 +77,9 @@ class ConversationStateAccessoryView: UIView {
     }
 
     func configure(for conversation: Conversation) {
-        legalHoldImageView.isHidden = false // !conversation.legalHoldStatus.denotesEnabledComplianceDevice
+        legalHoldImageView.isHidden = !conversation.legalHoldStatus.denotesEnabledComplianceDevice
 
-        if let verificationImage = iconForVerificationLevel() {
+        if let verificationImage = iconForVerificationLevel(in: conversation) {
             verifiedImageView.image = verificationImage
             verifiedImageView.isHidden = false
         } else {
@@ -88,15 +88,15 @@ class ConversationStateAccessoryView: UIView {
         }
     }
 
-    private func iconForVerificationLevel() -> UIImage? {
-//        switch conversation.securityLevel {
-//        case .secure:
+    private func iconForVerificationLevel(in conversation: Conversation) -> UIImage? {
+        switch conversation.securityLevel {
+        case .secure:
             return WireStyleKit.imageOfShieldverified
-//        case .secureWithIgnored:
-//            return WireStyleKit.imageOfShieldnotverified
-//        case .notSecure:
-//            return nil
-//        }
+        case .secureWithIgnored:
+            return WireStyleKit.imageOfShieldnotverified
+        case .notSecure:
+            return nil
+        }
     }
 
 }

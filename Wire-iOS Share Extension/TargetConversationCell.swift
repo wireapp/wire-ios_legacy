@@ -39,6 +39,8 @@ final class TargetConversationCell: UITableViewCell {
     }
 
     private func configureSubviews() {
+        isAccessibilityElement = true
+        shouldGroupAccessibilityChildren = true
         contentView.addSubview(stateAccessoryView)
 
         conversationNameLabel.textColor = .black
@@ -79,7 +81,27 @@ final class TargetConversationCell: UITableViewCell {
         stateAccessoryView.configure(for: conversation)
 
         // Accessibility
-        #warning("TODO: Add accessibility label computing.")
+        updateAccessibility(for: conversation)
+    }
+
+    private func updateAccessibility(for conversation: Conversation) {
+        var details: [String] = []
+
+        if conversation.legalHoldStatus.denotesEnabledComplianceDevice {
+            details.append("share_extension.voiceover.conversation_under_legal_hold".localized)
+        }
+
+        switch conversation.securityLevel {
+        case .notSecure:
+            break
+        case .secureWithIgnored:
+            details.append("share_extension.voiceover.conversation_secure_with_ignored".localized)
+        case .secure:
+            details.append("share_extension.voiceover.conversation_secure".localized)
+        }
+
+        accessibilityLabel = conversation.name
+        accessibilityValue = details.joined(separator: ", ")
     }
 
 }

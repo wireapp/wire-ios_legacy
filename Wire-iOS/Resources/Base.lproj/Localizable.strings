@@ -1645,3 +1645,8 @@
 "registration.password.rules.no_requirements" = "Use %@.";
 "registration.password.rules.with_requirements" = "Use %@, with %@.";
 
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Share Extension
+"share_extension.voiceover.conversation_under_legal_hold" = "Under legal hold.";
+"share_extension.voiceover.conversation_secure" = "All clients verified.";
+"share_extension.voiceover.conversation_secure_with_ignored" = "Not all clients verified.";
