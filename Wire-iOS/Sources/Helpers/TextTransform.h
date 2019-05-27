@@ -16,7 +16,7 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-typedef NS_ENUM(NSUInteger, TextTransform) {
+typedef NS_CLOSED_ENUM(NSUInteger, TextTransform) {
     TextTransformNone = 0,
     TextTransformUpper,
     TextTransformLower,

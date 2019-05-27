@@ -264,7 +264,7 @@ import WireCommonComponents
     }
     
     fileprivate func selectCurrentFilter() {
-        if let index = self.effects.index(where: {
+        if let index = self.effects.firstIndex(where: {
             $0 == self.selectedAudioEffect
         }) {
             let indexPath = IndexPath(item:index, section:0)

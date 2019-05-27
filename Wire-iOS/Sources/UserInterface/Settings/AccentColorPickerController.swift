@@ -213,7 +213,7 @@ final class AccentColorPickerController: ColorPickerController {
         super.init(colors: self.allAccentColors.map { UIColor(for: $0) })
         self.title = "self.settings.account_picture_group.color".localized(uppercased: true)
         
-        if let accentColor = AccentColor(ZMAccentColor: ZMUser.selfUser().accentColorValue), let currentColorIndex = self.allAccentColors.index(of: accentColor) {
+        if let accentColor = AccentColor(ZMAccentColor: ZMUser.selfUser().accentColorValue), let currentColorIndex = self.allAccentColors.firstIndex(of: accentColor) {
             self.currentColor = self.colors[currentColorIndex]
         }
         self.delegate = self
@@ -231,7 +231,7 @@ final class AccentColorPickerController: ColorPickerController {
 
 extension AccentColorPickerController: ColorPickerControllerDelegate {
     public func colorPicker(_ colorPicker: ColorPickerController, didSelectColor color: UIColor) {
-        guard let colorIndex = self.colors.index(of: color) else {
+        guard let colorIndex = self.colors.firstIndex(of: color) else {
             return
         }
         

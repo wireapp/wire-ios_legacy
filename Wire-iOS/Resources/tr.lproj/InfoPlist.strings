@@ -16,7 +16,7 @@
  *  along with this program. If not, see http://www.gnu.org/licenses/.
  */
 
-"NSContactsUsageDescription" = "Kişilerinizi paylaşın ki sizi başkalarına bağlayabilelim. Tüm bilgilerinizi gizler ve kimseyle paylaşmayız.";
+"NSContactsUsageDescription" = "Wire'ın sizi başkalarına bağlamak için kişilerinize erişmesine izin verin. Sunucumuza yüklemeden önce tüm bilgileri anonimleştiririz ve başkalarıyla paylaşmayız.";
 "NSMicrophoneUsageDescription" = "Wire'ın mikrofonunuza erişmesine izin verin ki bu sayede insanlar sesli konuşabilir ve sesli mesaj gönderebilirsiniz.";
 "NSLocationWhenInUseUsageDescription" = "Wire'ın konumunuza erişmesine izin verin, bu sayede konumunuzu başkalarıyla paylaşabilirsiniz.";
 "NSCameraUsageDescription" = "Wire'ın kameranıza erişmesine izin verin bu sayede görüntülü görüşmeler yapabilir ve fotoğraf yollayabilirsiniz.";

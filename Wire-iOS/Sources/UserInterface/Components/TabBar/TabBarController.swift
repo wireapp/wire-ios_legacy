@@ -170,7 +170,7 @@ class TabBarController: UIViewController, UIPageViewControllerDelegate, UIPageVi
 
         guard toViewController != fromViewController else { return }
         
-        let forward = viewControllers.index(of: toViewController) > fromViewController.flatMap(viewControllers.index)
+        let forward = viewControllers.firstIndex(of: toViewController) > fromViewController.flatMap(viewControllers.firstIndex)
         let direction = forward ? UIPageViewController.NavigationDirection.forward : .reverse
         
         pageViewController.setViewControllers([toViewController], direction: direction, animated: isInteractive) { [delegate, tabBar] complete in
@@ -181,7 +181,7 @@ class TabBarController: UIViewController, UIPageViewControllerDelegate, UIPageVi
     }
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
-        return viewControllers.index(of: viewController).flatMap {
+        return viewControllers.firstIndex(of: viewController).flatMap {
             let index = $0 + 1
             guard index >= 0 && index < viewControllers.count else { return nil }
             return viewControllers[index]
@@ -189,7 +189,7 @@ class TabBarController: UIViewController, UIPageViewControllerDelegate, UIPageVi
     }
 
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
-        return viewControllers.index(of: viewController).flatMap {
+        return viewControllers.firstIndex(of: viewController).flatMap {
             let index = $0 - 1
             guard index >= 0 && index < viewControllers.count else { return nil }
             return viewControllers[index]
@@ -203,7 +203,7 @@ class TabBarController: UIViewController, UIPageViewControllerDelegate, UIPageVi
         transitionCompleted completed: Bool
         ) {
         guard let selected = pageViewController.viewControllers?.first else { return }
-        guard let index = viewControllers.index(of: selected) else { return }
+        guard let index = viewControllers.firstIndex(of: selected) else { return }
 
         if completed {
             isSwiping = false

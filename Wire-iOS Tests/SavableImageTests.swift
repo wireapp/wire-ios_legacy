@@ -20,13 +20,6 @@ import XCTest
 @testable import Wire
 import Photos
 
-final class MockPhotoLibrary: PhotoLibraryProtocol {
-    func performChanges(_ changeBlock: @escaping () -> Void, completionHandler: ((Bool, Error?) -> Void)?) {
-        changeBlock()
-        completionHandler?(true, nil)
-    }
-}
-
 final class MockAssetChangeRequest: AssetChangeRequestProtocol {
     static var url: URL?
     static var image: UIImage?

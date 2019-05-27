@@ -59,7 +59,7 @@ extension NSData {
         let stepCount = self.length / MemoryLayout<E>.size
         
         let array = (self as Data).withUnsafeBytes {
-            [E](UnsafeBufferPointer(start: $0, count: self.length))
+            [E](UnsafeBufferPointer(start: $0.baseAddress!.assumingMemoryBound(to: E.self), count: self.length))
         }
         for i in 0..<stepCount {
             result.append(callback(array[i]))

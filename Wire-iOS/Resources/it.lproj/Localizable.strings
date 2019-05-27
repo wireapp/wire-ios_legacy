@@ -997,6 +997,7 @@
 "self.settings.popular_demand.title" = "A grande richiesta";
 "self.settings.popular_demand.send_button.title" = "Pulsante Invia";
 "self.settings.popular_demand.send_button.footer" = "Disattiva per inviare tramite il tasto invio.";
+"self.settings.popular_demand.dark_mode.footer" = "Switch between dark and light theme.";
 
 // Open in
 "self.settings.external_apps.header" = "Apri con";

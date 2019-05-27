@@ -16,7 +16,7 @@
  *  along with this program. If not, see http://www.gnu.org/licenses/.
  */
 
-"NSContactsUsageDescription" = "Um deine Freunde schneller auf Wire zu finden, lade dein Adressbuch hoch. Deine Daten werden anonymisiert und niemals mit Dritten geteilt.";
+"NSContactsUsageDescription" = "Um sich mit anderen zu verbinden, den Zugriff auf Kontakte erlauben. Alle Daten werden vor dem Hochladen auf unseren Server anonymisiert und nicht mit Dritten geteilt.";
 "NSMicrophoneUsageDescription" = "Erlaube Wire den Zugriff auf dein Mikrofon. Dies is notwendig um mit deinen Freunden telefonieren, sowie ihnen Audio-Nachrichten senden zu können.";
 "NSLocationWhenInUseUsageDescription" = "Erlaube Wire Zugriff auf deinen Standort, damit du diesen mit anderen teilen kannst.";
 "NSCameraUsageDescription" = "Erlaube Wire den Zugriff auf deine Kamera. Dies ist notwendig um Fotos senden, sowie Audio- und Video-Telefonate durchführen zu können.";

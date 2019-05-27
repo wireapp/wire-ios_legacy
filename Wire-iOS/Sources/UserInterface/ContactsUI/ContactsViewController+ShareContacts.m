@@ -22,26 +22,8 @@
 #import "ContactsDataSource.h"
 #import "Wire-Swift.h"
 
-@interface ContactsViewController (ShareContactsDelegate)  <ShareContactsViewControllerDelegate>
-
-@end
-
 @implementation ContactsViewController (ShareContacts)
 
-- (void)presentShareContactsViewController
-{
-    ShareContactsViewController *shareContactsViewController = [[ShareContactsViewController alloc] init];
-    shareContactsViewController.delegate = self;
-
-    [self presentChildViewcontroller:shareContactsViewController];
-}
-
-- (void)presentChildViewcontroller:(UIViewController *)viewController
-{
-    [self addChildViewController:viewController];
-    [self.view addSubview:viewController.view];
-    [viewController didMoveToParentViewController:self];
-}
 
 - (void)dismissChildViewController:(UIViewController *)viewController
 {

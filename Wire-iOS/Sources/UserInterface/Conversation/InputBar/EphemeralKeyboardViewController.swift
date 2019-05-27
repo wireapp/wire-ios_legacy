@@ -147,7 +147,7 @@ extension UIAlertController {
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        guard let index = timeouts.index(of: MessageDestructionTimeoutValue(rawValue: conversation.messageDestructionTimeoutValue)) else { return }
+        guard let index = timeouts.firstIndex(of: MessageDestructionTimeoutValue(rawValue: conversation.messageDestructionTimeoutValue)) else { return }
         picker.selectRow(index, inComponent: 0, animated: false)
     }
 

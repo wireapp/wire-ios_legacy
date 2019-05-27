@@ -18,6 +18,12 @@
 
 import Foundation
 
+extension String {
+    var wholeRange: NSRange {
+        return NSRange(location: 0, length: endIndex.utf16Offset(in: self))
+    }
+}
+
 @objc public class MentionsHandler: NSObject {
 
     fileprivate var mentionRegex: NSRegularExpression = {
@@ -28,9 +34,9 @@ import Foundation
     let searchQueryMatchRange: NSRange
 
     init?(text: String?, cursorPosition: Int) {
-        guard let text = text else { return nil }
-        let wholeRange = NSRange(location: 0, length: text.endIndex.encodedOffset)
-        let matches = mentionRegex.matches(in: text, range: wholeRange)
+        guard let text = text, !text.isEmpty else { return nil }
+        
+        let matches = mentionRegex.matches(in: text, range: text.wholeRange)
         // Cursor is a separator between characters, we are interested in the character before the cursor
         let characterPosition = max(0, cursorPosition - 1)
         guard let match = matches.first(where: { result in result.range.contains(characterPosition) }) else { return nil }

@@ -16,7 +16,7 @@
  *  along with this program. If not, see http://www.gnu.org/licenses/.
  */
 
-"NSContactsUsageDescription" = "Permitir que o Wire acesse seus contatos para conectar você com outras pessoas. Nós tornamos anônimas todas as informações e não compartilhamos com mais ninguém.";
+"NSContactsUsageDescription" = "Allow Wire to access your contacts to connect you with others. We anonymize all information before uploading it to our server and do not share it with anyone else.";
 "NSMicrophoneUsageDescription" = "Permitir que o Wire acesse seu microfone para você enviar mensagens de áudio e falar com as pessoas.";
 "NSLocationWhenInUseUsageDescription" = "Permitir que o Wire acesse a sua localização, então você pode enviar sua localização para os outros.";
 "NSCameraUsageDescription" = "Permitir que o Wire acesse sua câmera, assim você pode fazer chamadas de vídeo e enviar fotos.";

@@ -997,6 +997,7 @@
 "self.settings.popular_demand.title" = "По многочисленным просьбам";
 "self.settings.popular_demand.send_button.title" = "Кнопка 'Отправить'";
 "self.settings.popular_demand.send_button.footer" = "Отключает отправку с помощью Enter.";
+"self.settings.popular_demand.dark_mode.footer" = "Переключение между темной и светлой темами.";
 
 // Open in
 "self.settings.external_apps.header" = "Открыть с помощью";

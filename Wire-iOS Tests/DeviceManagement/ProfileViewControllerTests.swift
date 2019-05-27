@@ -123,5 +123,45 @@ final class ProfileViewControllerTests: ZMSnapshotTestCase {
 
         self.verify(view: navWrapperController.view)
     }
+    
+    func testForContextProfileViewerUnderLegalHold() {
+        selfUser.teamRole = .member
+        mockUser.emailAddress = nil
+        mockUser.isUnderLegalHold = true
+        sut = ProfileViewController(user: mockUser,
+                                    viewer: selfUser,
+                                    context: .profileViewer)
+        let navWrapperController = sut.wrapInNavigationController()
+        
+        verify(view: navWrapperController.view)
+    }
+    
+    func testForContextProfileViewerUnderLegalHold_WithSelfUserOutsideTeam() {
+        let selfUserOutsideTeam = MockUser.createSelfUser(name: "John Johnson", inTeam: nil)
+        selfUserOutsideTeam.handle = "johnjohnson"
+        selfUserOutsideTeam.feature(withUserClients: 6)
+        
+        mockUser.emailAddress = nil
+        mockUser.isUnderLegalHold = true
+        sut = ProfileViewController(user: mockUser,
+                                    viewer: selfUserOutsideTeam,
+                                    context: .profileViewer)
+        let navWrapperController = sut.wrapInNavigationController()
+        
+        verify(view: navWrapperController.view)
+    }
+    
+    
+    func testForContextProfileViewerForSelfUserUnderLegalHold() {
+        selfUser.teamRole = .member
+        selfUser.emailAddress = nil
+        selfUser.isUnderLegalHold = true
+        sut = ProfileViewController(user: selfUser,
+                                    viewer: selfUser,
+                                    context: .profileViewer)
+        let navWrapperController = sut.wrapInNavigationController()
+        
+        verify(view: navWrapperController.view)
+    }
 
 }

@@ -253,12 +253,12 @@ extension ColorSchemeColor {
 
 public extension ColorScheme {
     @objc(colorWithName:)
-    public func color(named: ColorSchemeColor) -> UIColor {
+    func color(named: ColorSchemeColor) -> UIColor {
         return color(named: named, variant: variant)
     }
 
     @objc(colorWithName:variant:)
-    public func color(named: ColorSchemeColor, variant: ColorSchemeVariant) -> UIColor {
+    func color(named: ColorSchemeColor, variant: ColorSchemeVariant) -> UIColor {
         let colorPair = named.colorPair(accentColor: accentColor)
         switch variant {
         case .dark:
@@ -269,7 +269,7 @@ public extension ColorScheme {
     }
 
     @objc(nameAccentForColor:variant:)
-    public func nameAccent(for color: ZMAccentColor, variant: ColorSchemeVariant) -> UIColor {
+    func nameAccent(for color: ZMAccentColor, variant: ColorSchemeVariant) -> UIColor {
         return UIColor.nameColor(for: color, variant: variant)
     }
 

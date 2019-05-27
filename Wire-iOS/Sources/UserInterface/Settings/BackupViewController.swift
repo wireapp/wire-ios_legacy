@@ -196,7 +196,7 @@ extension BackupViewController: UITableViewDataSource, UITableViewDelegate {
 
 fileprivate extension BackupViewController {
 
-    fileprivate func backupActiveAccount(indexPath: IndexPath) {
+    func backupActiveAccount(indexPath: IndexPath) {
         requestBackupPassword { [weak self] result in
             guard let `self` = self, let password = result else { return }
             self.loadingHostController.showLoadingView = true
