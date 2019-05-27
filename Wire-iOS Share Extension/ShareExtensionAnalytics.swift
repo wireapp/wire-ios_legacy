@@ -56,7 +56,7 @@ class ExtensionActivity {
 
     public var conversation: Conversation? = nil {
         didSet {
-            verifiedConversation = conversation?.isTrusted == true
+            verifiedConversation = conversation?.securityLevel == .secure
         }
     }
 
