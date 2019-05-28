@@ -42,6 +42,9 @@
 
 "general.guest-room-name" = "Guest room";
 
+// User Cell
+"user_cell.title.you_suffix" = " (You)";
+
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // People picker/start UI
@@ -200,6 +203,9 @@
 "list.archived_conversations_close" = "Close archive";
 
 "conversation.voiceover.verified" = "verified";
+"conversation.voiceover.legalhold" = "legal hold";
+"conversation.voiceover.value.active" = "active";
+"conversation.voiceover.value.disabled" = "disabled";
 
 "conversation.status.typing" = "Typing a message…";
 "conversation.status.typing.group" = "%@: typing a message…";
@@ -461,6 +467,14 @@
 
 "content.system.message_read_receipt_on_add_to_group" = "Read receipts are on";
 
+// legal hold
+
+"content.system.message_legal_hold.enabled" = "This conversation is under legal hold";
+"content.system.message_legal_hold.disabled" = "Legal hold deactivated for this conversation";
+
+"content.system.message_legal_hold.learn_more" = "Learn more";
+
+//
 
 "content.system.reactivated_device" = "You started using %@ again. Messages sent in the meantime will not appear here.";
 
@@ -711,10 +725,13 @@
 // Conversation Degraded (security level lowered)
 "meta.degraded.degradation_reason_message.singular" = "%@ started using a new device.";
 "meta.degraded.degradation_reason_message.plural" = "%@ started using new devices.";
+"meta.degraded.degradation_reason_message.someone" = "Someone started using a new device.";
 "meta.degraded.dialog_message" = "Do you still want to send your message?";
-"meta.degraded.show_device_button" = "Show device";
-"meta.degraded.send_anyway_button" = "Send anyway";
+"meta.degraded.verify_devices_button" = "Verify Devices…";
+"meta.degraded.send_anyway_button" = "Send Anyway";
 "meta.degraded.cancel_sending_button" = "Cancel";
+"meta.legalhold.info_button" = "What Is Legal Hold?";
+"meta.legalhold.send_alert_title" = "The conversation is now subject to legal hold.";
 
 // Remove from conversation dialogue
 "profile.remove_dialog_title" = "Remove?";
@@ -786,12 +803,20 @@
 "profile.devices.detail.verify_message" = "Verify that this matches the fingerprint shown on %@’s device.";
 "profile.devices.detail.verify_message.link" = "How do I do that?";
 "profile.devices.detail.show_my_device.title" = "Show my device fingerprint";
+"profile.devices.detail.reset_session.title" = "Reset Session";
 "device.verified" = "Verified";
 "device.not_verified" = "Not Verified";
+
+"device.class.legalhold" = "Legal Hold";
 "device.class.desktop" = "Desktop";
 "device.class.tablet" = "Tablet";
 "device.class.phone" = "Phone";
-"profile.devices.detail.reset_session.title" = "Reset Session";
+"device.class.unknown" = "Unknown";
+
+"device.type.permanent" = "Permanent";
+"device.type.temporary" = "Temporary";
+"device.type.legalhold" = "Legal Hold";
+"device.type.unknown" = "Unknown";
 
 // Bot
 "participants.services.remove_integration.button" = "remove integration";
@@ -805,6 +830,15 @@
 "group_details.notification_options_cell.description" = "You can be notified about everything (including audio and video calls) or only when someone mentions you or replies to one of your messages.";
 "group_details.receipt_options_cell.title" = "Read receipts";
 "group_details.receipt_options_cell.description" = "When this is on, people can see when their messages in this conversation are read.";
+
+// Legal hold details
+
+"legalhold.participants.section.title" = "Legal hold subjects";
+"legalhold.header.title" = "Legal Hold";
+"legalhold.header.other_description" = "Legal Hold has been activated for at least one person in this conversation.\nAll messages will be preserved for future access, including deleted, edited, and timed messages.";
+"legalhold.header.self_description" = "Legal Hold has been activated for your account.\nAll messages will be preserved for future access, including deleted, edited, and timed messages.\nYour conversation partners will be aware of the recording.";
+"legalhold.accessibility" = "Legal hold details";
+
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile

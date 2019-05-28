@@ -75,8 +75,6 @@
 #import "ColorKnobView.h"
 
 // View Controllers
-#import "ProfileDevicesViewController.h"
-#import "ProfileDevicesViewController+Internal.h"
 #import "InviteContactsViewController.h"
 #import "InviteContactsViewController+Internal.h"
 
