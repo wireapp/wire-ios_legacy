@@ -109,4 +109,15 @@
     return (ZMConversation *)self;
 }
 
+- (BOOL)isUnderLegalHold
+{
+    switch (self.legalHoldStatus) {
+        case ZMConversationLegalHoldStatusEnabled:
+        case ZMConversationLegalHoldStatusPendingApproval:
+            return YES;
+        case ZMConversationLegalHoldStatusDisabled:
+            return NO;
+    }
+}
+
 @end

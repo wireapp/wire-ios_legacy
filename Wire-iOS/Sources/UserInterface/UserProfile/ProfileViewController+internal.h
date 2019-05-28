@@ -25,11 +25,8 @@
 @class TabBarController;
 
 @protocol ActionController;
-@protocol ProfileDevicesViewControllerDelegate;
 
 @import WireSyncEngine;
-
-#import "ProfileDevicesViewController.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -47,9 +44,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (ZMUser * _Nullable)fullUser;
 - (void)updateShowVerifiedShield;
 
-@end
-
-@interface ProfileViewController (DevicesListDelegate) <ProfileDevicesViewControllerDelegate>
 @end
 
 NS_ASSUME_NONNULL_END
