@@ -26,12 +26,6 @@
 #import "Wire-Swift.h"
 
 
-@interface ShareContactsViewController () <PermissionDeniedViewControllerDelegate>
-
-@property (nonatomic) BOOL showingAddressBookAccessDeniedViewController;
-
-@end
-
 @implementation ShareContactsViewController
 
 - (void)viewDidLoad
@@ -119,22 +113,6 @@
     [self.view addSubview:self.addressBookAccessDeniedViewController.view];
     [self.addressBookAccessDeniedViewController didMoveToParentViewController:self];
     self.addressBookAccessDeniedViewController.view.hidden = YES;
-}
-
-- (void)displayContactsAccessDeniedMessageAnimated:(BOOL)animated
-{
-    self.showingAddressBookAccessDeniedViewController = YES;
-
-    if (animated) {
-        [UIView transitionFromView:self.shareContactsContainerView
-                            toView:self.addressBookAccessDeniedViewController.view
-                          duration:0.35
-                           options:UIViewAnimationOptionShowHideTransitionViews | UIViewAnimationOptionTransitionCrossDissolve
-                        completion:nil];
-    } else {
-        self.shareContactsContainerView.hidden = YES;
-        self.addressBookAccessDeniedViewController.view.hidden = NO;
-    }
 }
 
 - (void)setBackgroundBlurDisabled:(BOOL)backgroundBlurDisabled
