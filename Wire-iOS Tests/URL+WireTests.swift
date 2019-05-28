@@ -20,41 +20,55 @@ import XCTest
 @testable import Wire
 
 class URL_WireTests: XCTestCase {
-
-    let be = BackendEnvironment.shared
+    
+    var be: BackendEnvironment!
+    
+    override func setUp() {
+        super.setUp()
+        let bundle = Bundle.backendBundle
+        EnvironmentType.production.save(in: .standard)
+        be = BackendEnvironment(userDefaults: .standard, configurationBundle: bundle)
+    }
+    
+    override func tearDown() {
+        be = nil
+        super.tearDown()
+    }
     
     func testThatWebsiteURLsAreLoadedCorrectly() {
-        XCTAssertNotEqual(be.websiteURL.absoluteString, "")
-        XCTAssertEqual(URL.wr_website, be.websiteURL)
-        XCTAssertEqual(URL.wr_usernameLearnMore, be.websiteURL.appendingPathComponent("support/username"))
-        XCTAssertEqual(URL.wr_fingerprintLearnMore, be.websiteURL.appendingPathComponent("privacy/why"))
-        XCTAssertEqual(URL.wr_fingerprintHowToVerify, be.websiteURL.appendingPathComponent("privacy/how"))
-        XCTAssertEqual(URL.wr_privacyPolicy, be.websiteURL.appendingPathComponent("legal/privacy/embed"))
-        XCTAssertEqual(URL.wr_licenseInformation, be.websiteURL.appendingPathComponent("legal/licenses/embed"))
-        XCTAssertEqual(URL.wr_reportAbuse, be.websiteURL.appendingPathComponent("support/misuse"))
-        XCTAssertEqual(URL.wr_cannotDecryptHelp, be.websiteURL.appendingPathComponent("privacy/error-1"))
-        XCTAssertEqual(URL.wr_cannotDecryptNewRemoteIDHelp, be.websiteURL.appendingPathComponent("privacy/error-2"))
-        XCTAssertEqual(URL.wr_createTeam, be.websiteURL.appendingPathComponent("create-team?pk_campaign=client&pk_kwd=ios"))
-        XCTAssertEqual(URL.wr_createTeamFeatures, be.websiteURL.appendingPathComponent("teams/learnmore"))
-        XCTAssertEqual(URL.wr_emailInUseLearnMore, be.websiteURL.appendingPathComponent("support/email-in-use"))
-        XCTAssertEqual(URL.wr_termsOfServicesURL(forTeamAccount: true), be.websiteURL.appendingPathComponent("legal/terms/teams"))
-        XCTAssertEqual(URL.wr_termsOfServicesURL(forTeamAccount: false), be.websiteURL.appendingPathComponent("legal/terms/personal"))
+        let websiteURL = URL(string: "https://wire.com")!
+        XCTAssertEqual(be.websiteURL, websiteURL)
+        XCTAssertEqual(URL.wr_usernameLearnMore, websiteURL.appendingPathComponent("support/username"))
+        XCTAssertEqual(URL.wr_fingerprintLearnMore, websiteURL.appendingPathComponent("privacy/why"))
+        XCTAssertEqual(URL.wr_fingerprintHowToVerify, websiteURL.appendingPathComponent("privacy/how"))
+        XCTAssertEqual(URL.wr_privacyPolicy, websiteURL.appendingPathComponent("legal/privacy/embed"))
+        XCTAssertEqual(URL.wr_licenseInformation, websiteURL.appendingPathComponent("legal/licenses/embed"))
+        XCTAssertEqual(URL.wr_reportAbuse, websiteURL.appendingPathComponent("support/misuse"))
+        XCTAssertEqual(URL.wr_cannotDecryptHelp, websiteURL.appendingPathComponent("privacy/error-1"))
+        XCTAssertEqual(URL.wr_cannotDecryptNewRemoteIDHelp, websiteURL.appendingPathComponent("privacy/error-2"))
+        XCTAssertEqual(URL.wr_createTeam, websiteURL.appendingPathComponent("create-team?pk_campaign=client&pk_kwd=ios"))
+        XCTAssertEqual(URL.wr_createTeamFeatures, websiteURL.appendingPathComponent("teams/learnmore"))
+        XCTAssertEqual(URL.wr_emailInUseLearnMore, websiteURL.appendingPathComponent("support/email-in-use"))
+        XCTAssertEqual(URL.wr_termsOfServicesURL(forTeamAccount: true), websiteURL.appendingPathComponent("legal/terms/teams"))
+        XCTAssertEqual(URL.wr_termsOfServicesURL(forTeamAccount: false), websiteURL.appendingPathComponent("legal/terms/personal"))
     }
     
     func testThatSupportURLsAreLoadedCorrectly() {
-        XCTAssertNotEqual(WireUrl.shared.support.absoluteString, "")
-        XCTAssertEqual(URL.wr_support, WireUrl.shared.support)
-        XCTAssertEqual(URL.wr_emailAlreadyInUseLearnMore, WireUrl.shared.support.appendingPathComponent("hc/en-us/articles/115004082129-My-email-address-is-already-in-use-and-I-cannot-create-an-account-What-can-I-do-"))
-        XCTAssertEqual(URL.wr_askSupport, WireUrl.shared.support.appendingPathComponent("hc/requests/new"))
+        let supportURL = URL(string: "https://support.wire.com")!
+        XCTAssertEqual(WireUrl.shared.support, supportURL)
+        XCTAssertEqual(URL.wr_emailAlreadyInUseLearnMore, supportURL.appendingPathComponent("hc/en-us/articles/115004082129-My-email-address-is-already-in-use-and-I-cannot-create-an-account-What-can-I-do-"))
+        XCTAssertEqual(URL.wr_askSupport, supportURL.appendingPathComponent("hc/requests/new"))
     }
     
     func testThatAccountURLsAreLoadedCorrectly() {
-        XCTAssertNotEqual(be.accountsURL.absoluteString, "")
-        XCTAssertEqual(URL.wr_passwordReset, be.accountsURL.appendingPathComponent("forgot"))
+        let accountsURL = URL(string: "https://account.wire.com")!
+        XCTAssertEqual(be.accountsURL, accountsURL)
+        XCTAssertEqual(URL.wr_passwordReset, accountsURL.appendingPathComponent("forgot"))
     }
     
     func testThatTeamURLsAreLoadedCorrectly() {
-        XCTAssertNotEqual(be.teamsURL.absoluteString, "")
-        XCTAssertEqual(URL.wr_manageTeam, be.teamsURL.appendingPathComponent("login?pk_campaign=client&pk_kwd=ios"))
+        let teamsURL = URL(string: "https://teams.wire.com")!
+        XCTAssertEqual(be.teamsURL, teamsURL)
+        XCTAssertEqual(URL.wr_manageTeam, teamsURL.appendingPathComponent("login?pk_campaign=client&pk_kwd=ios"))
     }
 }
