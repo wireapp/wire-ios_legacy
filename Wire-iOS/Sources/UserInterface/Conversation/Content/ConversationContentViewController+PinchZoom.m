@@ -18,7 +18,7 @@
 
 #import "ConversationContentViewController+PinchZoom.h"
 #import "ConversationContentViewController+Private.h"
-#import "MediaAsset.h"
+#import "UIImage.h"
 #import "UIView+WR_ExtendedBlockAnimations.h"
 #import "Wire-Swift.h"
 
@@ -68,7 +68,7 @@ NS_ASSUME_NONNULL_BEGIN
 //            self.pinchImageCell = imageCell;
 //            CGRect imageFrame = [self.view.window convertRect:imageCell.fullImageView.bounds fromView:imageCell.fullImageView];
 //
-//            id<MediaAsset> image = imageCell.fullImageView.mediaAsset;
+//            UIImage * image = imageCell.fullImageView.UIImage;
 //            self.initialPinchLocation = [pinchGestureRecognizer locationInView:self.view];
 //
 //            self.dimView = [[UIView alloc] initWithFrame:self.view.window.bounds];
@@ -77,8 +77,8 @@ NS_ASSUME_NONNULL_BEGIN
 //            self.dimView.alpha = 0.0f;
 //            [self.view.window addSubview:self.dimView];
 //
-//            self.pinchImageView = [[FLAnimatedImageView alloc] initWithFrame:imageFrame];
-//            [self.pinchImageView setMediaAsset:image];
+//            self.pinchImageView = [[UIImageView alloc] initWithFrame:imageFrame];
+//            [self.pinchImageView setUIImage:image];
 //            self.pinchImageView.contentMode = UIViewContentModeScaleAspectFit;
 //            self.pinchImageView.clipsToBounds = YES;
 //            self.pinchImageView.image = [UIImage imageWithData:message.imageMessageData.imageData];

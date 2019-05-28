@@ -17,16 +17,16 @@
 //
 
 import Foundation
-
+/*
 @objc
-protocol MediaAssetView: NSObjectProtocol { ///TODO: remove
-    var mediaAsset: MediaAsset? { get set }
+protocol UIImageView: NSObjectProtocol { ///TODO: remove
+    var UIImage: UIImage? { get set }
 }
 
 ///TODO: remove
-extension FLAnimatedImageView: MediaAssetView {
+extension UIImageView: UIImageView {
 
-    override var mediaAsset: MediaAsset? {
+    override var UIImage: UIImage? {
         get {
             return animatedImage ?? image
         }
@@ -49,9 +49,9 @@ extension FLAnimatedImageView: MediaAssetView {
 
 }
 
-extension UIImageView: MediaAssetView {
+extension UIImageView: UIImageView {
 
-    var mediaAsset: MediaAsset? {
+    var UIImage: UIImage? {
         get {
             return image
         }
@@ -70,15 +70,16 @@ extension UIImageView: MediaAssetView {
 }
 
 extension UIImageView {
-    convenience init(mediaAsset: MediaAsset) { ///TODO: retire MediaAsset
-        if mediaAsset.isGIF() {
+    convenience init(UIImage: UIImage) { ///TODO: retire UIImage
+        if UIImage.isGIF() {
             self.init()
-            if let image = mediaAsset as? UIImage {
+            if let image = UIImage as? UIImage {
                 self.setGifImage(image)
             }
         } else {
-            self.init(image: (mediaAsset as? UIImage)?.downsizedImage())
+            self.init(image: (UIImage as? UIImage)?.downsizedImage())
         }
     }
 
 }
+*/

@@ -27,7 +27,7 @@ extension ZMConversationMessage {
             }
         } else if self.isImage {
             if let imageData = imageMessageData?.imageData {
-                UIPasteboard.general.setMediaAsset(UIImage(data: imageData))
+                UIPasteboard.general.setUIImage(UIImage(data: imageData))
             }
         } else if self.isLocation {
             if let locationName = locationMessageData?.name {

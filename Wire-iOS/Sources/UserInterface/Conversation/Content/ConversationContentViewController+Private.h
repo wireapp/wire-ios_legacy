@@ -27,7 +27,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @class MessagePresenter;
-@class FLAnimatedImageView;
+@class UIImageView;
 @class ConversationTableViewDataSource;
 @class DeletionDialogPresenter;
 @protocol SelectableView;
@@ -44,7 +44,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy, nullable) void (^onMessageShown)(UIView *);
 @property (nonatomic, nullable, weak) UITableViewCell<SelectableView> *pinchImageCell;
 
-@property (nonatomic, nullable) FLAnimatedImageView *pinchImageView;
+@property (nonatomic, nullable) UIImageView *pinchImageView;
 @property (nonatomic, nullable) UIView *dimView;
 @property (nonatomic) CGPoint initialPinchLocation;
 

@@ -18,14 +18,10 @@
 
 @import UIKit;
 
-#import "MediaAsset.h"
-
-@protocol MediaAsset;
 
 @interface ConfirmAssetViewController : UIViewController
 
-/// Can either be UIImage or FLAnimatedImage
-@property (nonatomic, nullable) id<MediaAsset> image;
+@property (nonatomic, nullable) UIImage * image;
 @property (nonatomic, copy, nullable) void (^onConfirm)(UIImage * _Nullable editedImage);
 @property (nonatomic, copy, nullable) void (^onCancel)(void);
 

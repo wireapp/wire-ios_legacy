@@ -139,8 +139,8 @@ extension FullscreenImageViewController {
 
     // MARK: - Image view
 
-    @objc func setupImageView(image: MediaAsset, parentSize: CGSize) {
-        let imageView = UIImageView(mediaAsset: image)
+    @objc func setupImageView(image: UIImage, parentSize: CGSize) {
+        let imageView = UIImageView(image: image)
 
         imageView.clipsToBounds = true
         imageView.layer.allowsEdgeAntialiasing = true

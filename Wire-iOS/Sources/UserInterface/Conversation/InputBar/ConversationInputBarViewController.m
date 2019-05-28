@@ -38,7 +38,7 @@
 #import "Settings.h"
 #import "ConversationInputBarSendController.h"
 @import FLAnimatedImage;
-#import "MediaAsset.h"
+#import "UIImage.h"
 #import "UIView+WR_ExtendedBlockAnimations.h"
 
 static NSString* ZMLogTag ZM_UNUSED = @"UI";
@@ -581,7 +581,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 @implementation ConversationInputBarViewController(TextViewProtocol)
 #pragma mark - Informal TextView delegate methods
 
-- (void)textView:(UITextView *)textView hasImageToPaste:(id<MediaAsset>)image
+- (void)textView:(UITextView *)textView hasImageToPaste:(UIImage *)image
 {
     ConfirmAssetViewController *confirmImageViewController = [[ConfirmAssetViewController alloc] init];
     confirmImageViewController.image = image;
@@ -592,7 +592,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     confirmImageViewController.onConfirm = ^(UIImage *editedImage){
         ZM_STRONG(self);
         [self dismissViewControllerAnimated:NO completion:nil];
-        id<MediaAsset> finalImage = editedImage == nil ? image : editedImage;
+        UIImage * finalImage = editedImage == nil ? image : editedImage;
         [self postImage:finalImage];
     };
     
@@ -610,7 +610,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self updateNewButtonTitleLabel];
 }
 
-- (void)postImage:(id<MediaAsset>)image
+- (void)postImage:(UIImage *)image
 {
     [self.sendController sendMessageWithImageData:image.data completion:^() {}];
 }

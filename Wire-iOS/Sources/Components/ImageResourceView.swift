@@ -42,7 +42,7 @@ final class ImageResourceView: UIImageView {
     
     public func setImageResource(_ imageResource: ImageResource?, hideLoadingView: Bool = false, completion: (() -> Void)? = nil) {
         let token = UUID()
-        mediaAsset = nil
+        image = nil
 
         imageResourceInternal = imageResource
         reuseToken = token
@@ -54,14 +54,13 @@ final class ImageResourceView: UIImageView {
             return
         }
         
-        imageResource.fetchImage(sizeLimit: imageSizeLimit, completion: { [weak self] (mediaAsset, cacheHit) in
+        imageResource.fetchImage(sizeLimit: imageSizeLimit, completion: { [weak self] (UIImage, cacheHit) in
             guard token == self?.reuseToken, let `self` = self else { return }
             
             let update = {
-                self.loadingView.isHidden = hideLoadingView || mediaAsset != nil
-                self.mediaAsset = mediaAsset
+                self.loadingView.isHidden = hideLoadingView || self.image != nil
 
-                if let image = mediaAsset as? UIImage, image.framesCount() > 1 {
+                if let image = self.image, image.framesCount() > 1 { ///TODO: check is GIF?
                     self.setGifImage(image) /// TODO: SwiftyGifManager memory managment
                 }
                 completion?()

@@ -19,11 +19,10 @@
 import Foundation
 import Cartography
 import WireDataModel
-import FLAnimatedImage
 
 @objcMembers public class ImageMessageView: UIView {
     
-    private let imageView = FLAnimatedImageView()
+    private let imageView = UIImageView()
     private let userImageView = UserImageView(size: .tiny)
     private let userNameLabel = UILabel()
     private let userImageViewContainer = UIView()
@@ -71,9 +70,10 @@ import FLAnimatedImage
             self.dotsLoadingView.isHidden = true
             
             if (imageMessageData.isAnimatedGIF) {
-                let image = FLAnimatedImage(animatedGIFData: imageData)
-                self.imageSize = image?.size ?? .zero
-                self.imageView.animatedImage = image
+                if let image = UIImage(gifData: imageData) {
+                    imageSize = image.size ?? .zero
+                    imageView.setGifImage(image)
+                }
             }
             else {
                 let image = UIImage(data: imageData, scale: 2.0)

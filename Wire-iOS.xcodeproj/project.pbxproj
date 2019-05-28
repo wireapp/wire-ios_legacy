@@ -480,7 +480,6 @@
 		871BC22E1D34F8F800DF0793 /* SplitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1461D34F8F800DF0793 /* SplitViewController.m */; };
 		871BC2391D34F8F800DF0793 /* KeyboardAvoidingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC15F1D34F8F800DF0793 /* KeyboardAvoidingViewController.m */; };
 		871BC23B1D34F8F800DF0793 /* KeyboardFrameObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1631D34F8F800DF0793 /* KeyboardFrameObserver.m */; };
-		871BC2501D34F8F800DF0793 /* MediaAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC18E1D34F8F800DF0793 /* MediaAsset.m */; };
 		871BC2521D34F8F800DF0793 /* MediaPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1941D34F8F800DF0793 /* MediaPreviewView.swift */; };
 		871BC2551D34F8F800DF0793 /* CrossfadeTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC19B1D34F8F800DF0793 /* CrossfadeTransition.m */; };
 		871BC2561D34F8F800DF0793 /* PopTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC19D1D34F8F800DF0793 /* PopTransition.m */; };
@@ -2030,8 +2029,6 @@
 		871BC15F1D34F8F800DF0793 /* KeyboardAvoidingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeyboardAvoidingViewController.m; sourceTree = "<group>"; };
 		871BC1621D34F8F800DF0793 /* KeyboardFrameObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyboardFrameObserver.h; sourceTree = "<group>"; };
 		871BC1631D34F8F800DF0793 /* KeyboardFrameObserver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeyboardFrameObserver.m; sourceTree = "<group>"; };
-		871BC18D1D34F8F800DF0793 /* MediaAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaAsset.h; sourceTree = "<group>"; };
-		871BC18E1D34F8F800DF0793 /* MediaAsset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaAsset.m; sourceTree = "<group>"; };
 		871BC1901D34F8F800DF0793 /* MediaPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaPlayer.h; sourceTree = "<group>"; };
 		871BC1941D34F8F800DF0793 /* MediaPreviewView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaPreviewView.swift; sourceTree = "<group>"; };
 		871BC19A1D34F8F800DF0793 /* CrossfadeTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrossfadeTransition.h; sourceTree = "<group>"; };
@@ -4302,8 +4299,6 @@
 				871BC1621D34F8F800DF0793 /* KeyboardFrameObserver.h */,
 				871BC1631D34F8F800DF0793 /* KeyboardFrameObserver.m */,
 				871BC1901D34F8F800DF0793 /* MediaPlayer.h */,
-				871BC18D1D34F8F800DF0793 /* MediaAsset.h */,
-				871BC18E1D34F8F800DF0793 /* MediaAsset.m */,
 				EF59F73F2298419D00F923C6 /* MediaAssetView.swift */,
 				871BC1941D34F8F800DF0793 /* MediaPreviewView.swift */,
 				EFF3DA422097548A007A3358 /* UIImage+MediaAssert.swift */,
@@ -7471,7 +7466,6 @@
 				EF701A35223C00E0007165E4 /* ConversationContentViewController+CreateView.swift in Sources */,
 				EF834B862203600500E92F13 /* FullscreenImageViewController+MessageActionResponder.swift in Sources */,
 				EFDB3138217F6BEF00D2A7CE /* SwipeMenuCollectionCell+Constraint.swift in Sources */,
-				871BC2501D34F8F800DF0793 /* MediaAsset.m in Sources */,
 				871BC2581D34F8F800DF0793 /* SwizzleTransition.m in Sources */,
 				EF266C612003B75C00A8C136 /* BreathLoadingBar.swift in Sources */,
 				8FC853FE199245770008B66B /* AppDelegate+Hockey.m in Sources */,

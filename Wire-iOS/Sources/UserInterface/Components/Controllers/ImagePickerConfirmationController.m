@@ -28,7 +28,7 @@
 #import "UIImagePickerController+GetImage.h"
 @import FLAnimatedImage;
 
-#import "MediaAsset.h"
+#import "UIImage.h"
 
 #import "Wire-Swift.h"
 

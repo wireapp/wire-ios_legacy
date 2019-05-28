@@ -175,8 +175,8 @@ import Cartography
         return visibleViews
     }
     
-    private func updatePreviewImage(_ image: MediaAsset) {
-        previewImageView.mediaAsset = image 
+    private func updatePreviewImage(_ image: UIImage) {
+        previewImageView.image = image 
         timeLabel.textColor = UIColor.from(scheme: .textForeground, variant: .dark)
         updateVisibleViews()
     }

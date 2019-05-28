@@ -28,7 +28,7 @@
 // ui
 #import "IconButton.h"
 @import FLAnimatedImage;
-#import "MediaAsset.h"
+#import "UIImage.h"
 
 #import "AppDelegate.h"
 
@@ -186,7 +186,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         
         ZM_STRONG(self);
         
-        id<MediaAsset> image;
+        UIImage * image;
         
         if (imageIsAnimatedGIF) {
             image = [[FLAnimatedImage alloc] initWithAnimatedGIFData:imageData];

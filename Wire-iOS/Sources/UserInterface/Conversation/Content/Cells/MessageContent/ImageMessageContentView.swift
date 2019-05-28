@@ -25,8 +25,8 @@ class ImageContentView: UIView {
     var imageWidthConstraint: NSLayoutConstraint
     var imageHeightConstraint: NSLayoutConstraint
 
-    var mediaAsset: MediaAsset? {
-        return imageView.mediaAsset
+    var UIImage: UIImage? {
+        return imageView.image
     }
 
     init() {

@@ -18,7 +18,7 @@
 
 @class ImageToolbarView;
 @class Button;
-@class FLAnimatedImageView;
+@class UIImageView;
 
 @import AVKit;
 
@@ -37,7 +37,7 @@
 @property (nonatomic, nonnull) UILayoutGuide *contentLayoutGuide;
 
 // The preview view and image toolbar are optional
-@property (nonatomic, nullable) FLAnimatedImageView *imagePreviewView;
+@property (nonatomic, nullable) UIImageView *imagePreviewView;
 @property (nonatomic, nullable) UIView *imageToolbarSeparatorView;
 @property (nonatomic, nullable) ImageToolbarView *imageToolbarViewInsideImage;
 @property (nonatomic, nullable) ImageToolbarView *imageToolbarView;

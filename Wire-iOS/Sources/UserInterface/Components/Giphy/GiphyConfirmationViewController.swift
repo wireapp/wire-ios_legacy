@@ -27,7 +27,7 @@ protocol GiphyConfirmationViewControllerDelegate {
 
 class GiphyConfirmationViewController: UIViewController {
     
-    var imagePreview = FLAnimatedImageView()
+    var imagePreview = UIImageView()
     var acceptButton = Button(style: .full)
     var cancelButton = Button(style: .empty)
     var buttonContainer = UIView()
@@ -43,14 +43,14 @@ class GiphyConfirmationViewController: UIViewController {
     ///   - ziph: provide nil for testing only
     ///   - previewImage: image for preview
     ///   - searchResultController: provide nil for testing only
-    public init(withZiph ziph: Ziph?, previewImage: FLAnimatedImage?, searchResultController: ZiphySearchResultsController?) {
+    public init(withZiph ziph: Ziph?, previewImage: UIImage?, searchResultController: ZiphySearchResultsController?) {
         self.ziph = ziph
         self.searchResultController = searchResultController
         
         super.init(nibName: nil, bundle: nil)
         
         if let previewImage = previewImage {
-            imagePreview.animatedImage = previewImage
+            imagePreview.setGifImage(previewImage)
         }
         
         let closeImage = StyleKitIcon.cross.makeImage(size: .tiny, color: .black)
@@ -102,7 +102,8 @@ class GiphyConfirmationViewController: UIViewController {
                 return
             }
 
-            self?.imagePreview.animatedImage = FLAnimatedImage(animatedGIFData: imageData)
+            try? self?.imagePreview.setGifImage(UIImage(gifData: imageData))
+
             self?.imageData = imageData
             self?.acceptButton.isEnabled = true
         }

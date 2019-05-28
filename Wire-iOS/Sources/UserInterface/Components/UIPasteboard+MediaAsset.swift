@@ -21,20 +21,20 @@ import MobileCoreServices
 
 extension UIPasteboard {
 
-    func pasteboardType(forMediaAsset mediaAsset: MediaAsset) -> String {
-        if mediaAsset.isGIF() {
+    func pasteboardType(forUIImage image: UIImage) -> String {
+        if UIImage.isGIF() {
             return kUTTypeGIF as String
-        } else if mediaAsset.isTransparent() {
+        } else if UIImage.isTransparent() {
             return kUTTypePNG as String
         } else {
             return kUTTypeJPEG as String
         }
     }
 
-    @objc public func mediaAsset() -> MediaAsset? {
+    @objc public func imageAssert() -> UIImage? {
         if contains(pasteboardTypes: [kUTTypeGIF as String]) {
             let data: Data? = self.data(forPasteboardType: kUTTypeGIF as String)
-            return FLAnimatedImage(animatedGIFData: data)
+            return UIImage(gifData: data)
         } else if contains(pasteboardTypes: [kUTTypePNG as String]) {
             let data: Data? = self.data(forPasteboardType: kUTTypePNG as String)
             if let aData = data {
@@ -47,9 +47,10 @@ extension UIPasteboard {
         return nil
     }
 
-    @objc func setMediaAsset(_ image: MediaAsset?) {
-        guard let image = image else { return }
+    @objc func setUIImage(_ image: UIImage?) {
+        guard let image = image,
+            data = image.data() else { return }
 
-        UIPasteboard.general.setData(image.data(), forPasteboardType: pasteboardType(forMediaAsset: image))
+        UIPasteboard.general.setData(data, forPasteboardType: pasteboardType(forUIImage: image))
     }
 }

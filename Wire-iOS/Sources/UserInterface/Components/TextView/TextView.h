@@ -41,13 +41,13 @@
 
 @end
 
-@protocol MediaAsset;
+@protocol UIImage;
 //
 /// Informal protocol
 @protocol TextViewProtocol <NSObject>
 
 @required
-- (void)textView:(UITextView * _Nonnull)textView hasImageToPaste:(id<MediaAsset> _Nonnull)image;
+- (void)textView:(UITextView * _Nonnull)textView hasImageToPaste:(UIImage * _Nonnull)image;
 
 @optional
 - (void)textView:(UITextView * _Nonnull)textView firstResponderChanged:(NSNumber * _Nonnull)resigned;

@@ -19,7 +19,7 @@
 import Foundation
 import SwiftyGif
 
-var defaultImageCache = ImageCache<MediaAsset>()
+var defaultImageCache = ImageCache<UIImage>()
 
 extension ZMConversationMessage {
 
@@ -228,7 +228,7 @@ extension ImageSizeLimit {
 extension ImageResource {
     
     /// Fetch image data and calls the completion handler when it is available on the main queue.
-    func fetchImage(cache: ImageCache<MediaAsset> = defaultImageCache, sizeLimit: ImageSizeLimit = .deviceOptimized, completion: @escaping (_ image: MediaAsset?, _ cacheHit: Bool) -> Void) {
+    func fetchImage(cache: ImageCache<UIImage> = defaultImageCache, sizeLimit: ImageSizeLimit = .deviceOptimized, completion: @escaping (_ image: UIImage?, _ cacheHit: Bool) -> Void) {
         
         guard let cacheIdentifier = self.cacheIdentifier else {
             return completion(nil, false)
@@ -255,7 +255,7 @@ extension ImageResource {
         cache.dispatchGroup.enter()
         
         fetchImageData(queue: cache.processingQueue) { (imageData) in
-            var image: MediaAsset?
+            var image: UIImage?
             
             defer {
                 DispatchQueue.main.async {
@@ -267,17 +267,7 @@ extension ImageResource {
             guard let imageData = imageData else { return }
             
             if isAnimatedGIF {
-                let gifImage = UIImage()
-                do {
-
-                    ///TODO: lower levelOfIntegrity?
-                    try gifImage.setGifFromData(imageData, levelOfIntegrity: .default)
-
-                    image = gifImage
-                } catch {
-                    print(error)
-                    return
-                }
+                image = UIImage(gifData: imageData)
             } else {
                 switch sizeLimit { 
                 case .none:
@@ -297,4 +287,17 @@ extension ImageResource {
         }
     }
     
+}
+
+extension UIImage {
+    convenience init?(gifData: Data) {
+        self.init()
+
+        do {
+            ///TODO: lower levelOfIntegrity?
+            try setGifFromData(gifData, levelOfIntegrity: .default)
+        } catch {
+            return nil
+        }
+    }
 }

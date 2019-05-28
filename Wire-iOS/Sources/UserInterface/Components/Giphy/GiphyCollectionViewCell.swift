@@ -23,7 +23,7 @@ class GiphyCollectionViewCell: UICollectionViewCell {
 
     static let CellIdentifier = "GiphyCollectionViewCell"
 
-    let imageView = FLAnimatedImageView()
+    let imageView = UIImageView()
     var ziph: Ziph?
     var representation: ZiphyAnimatedImage?
 
@@ -44,7 +44,7 @@ class GiphyCollectionViewCell: UICollectionViewCell {
     }
 
     override func prepareForReuse() {
-        self.imageView.animatedImage = nil
+        imageView.setGifImage(nil)
         self.ziph = nil
         self.representation = nil
         self.backgroundColor = nil

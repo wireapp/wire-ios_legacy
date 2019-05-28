@@ -181,7 +181,7 @@ import Ziphy
                 return
             }
 
-            cell.imageView.animatedImage = FLAnimatedImage(animatedGIFData: imageData)
+            try? cell.imageView.setGifImage(UIImage(gifData: imageData))
         }
 
         return cell
@@ -200,10 +200,10 @@ import Ziphy
 
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let ziph = self.ziphs[indexPath.item]
-        var previewImage: FLAnimatedImage?
+        var previewImage: UIImage?
 
         if let cell = collectionView.cellForItem(at: indexPath) as? GiphyCollectionViewCell {
-            previewImage = cell.imageView.animatedImage
+            previewImage = cell.gifImage
         }
 
         pushConfirmationViewController(ziph: ziph, previewImage: previewImage)
@@ -287,7 +287,7 @@ extension GiphySearchViewController {
     }
 
     @discardableResult
-    func pushConfirmationViewController(ziph: Ziph?, previewImage: FLAnimatedImage?, animated: Bool = true) -> GiphyConfirmationViewController {
+    func pushConfirmationViewController(ziph: Ziph?, previewImage: UIImage?, animated: Bool = true) -> GiphyConfirmationViewController {
         let confirmationController = GiphyConfirmationViewController(withZiph: ziph, previewImage: previewImage, searchResultController: searchResultsController)
         confirmationController.title = conversation.displayName.localizedUppercase
         confirmationController.delegate = self

@@ -18,7 +18,7 @@
 
 import Foundation
 
-extension UIImage: MediaAsset {
+extension UIImage {
     public func data() -> Data? {
         if isTransparent() {
             return self.pngData()

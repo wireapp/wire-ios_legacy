@@ -87,12 +87,12 @@
 
 - (void)createPreviewPanel
 {
-    self.imagePreviewView = [[FLAnimatedImageView alloc] init];
+    self.imagePreviewView = [[UIImageView alloc] init];
     self.imagePreviewView.contentMode = UIViewContentModeScaleAspectFit;
     self.imagePreviewView.userInteractionEnabled = YES;
     [self.view addSubview:self.imagePreviewView];
     
-    [self.imagePreviewView setMediaAsset:self.image];
+    [self.imagePreviewView setUIImage:self.image];
 
     if ([self showEditingOptions] && [self imageToolbarFitsInsideImage]) {
         self.imageToolbarViewInsideImage = [[ImageToolbarView alloc] initWithConfiguraton:ImageToolbarConfigurationPreview];
