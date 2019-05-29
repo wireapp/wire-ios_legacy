@@ -31,6 +31,7 @@ final class FullscreenImageViewControllerSnapshotTests: ZMSnapshotTestCase {
 
     func testThatAnimatedGIFToImageView(){///TODO: failed
         sut = createFullscreenImageViewControllerForTest(imageFileName: "animated.gif")
+        sut.imageView?.showFrameAtIndex(0)
 
         verify(view: sut.view)
     }

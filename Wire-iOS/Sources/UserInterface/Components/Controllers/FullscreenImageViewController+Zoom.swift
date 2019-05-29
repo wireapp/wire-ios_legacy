@@ -143,7 +143,9 @@ extension FullscreenImageViewController {
 
         ///TODO: new init with gif data method
         let imageView: UIImageView
-        if image.isGIF() {
+        if image.isGIF(),
+            let imageCount = image.imageCount,
+            imageCount >= 1 { ///TODO only for animated
             imageView = UIImageView()
             imageView.setGifImage(image) ///TODO image is 0, 0 here
         } else {
