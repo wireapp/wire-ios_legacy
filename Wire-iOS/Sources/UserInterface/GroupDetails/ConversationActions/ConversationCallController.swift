@@ -32,7 +32,7 @@ import Foundation
     @objc public func startAudioCall(started: (() -> Void)?) {
         let startCall = { [weak self] in
             guard let `self` = self else { return }
-            self.confirmStartingCallIfNeeded {
+            self.conversation.confirmJoiningCallIfNeeded(alertPresenter: self.target) {
                 started?()
                 self.conversation.startAudioCall()
             }
@@ -49,7 +49,7 @@ import Foundation
     }
     
     @objc public func startVideoCall(started: (() -> Void)?) {
-        confirmStartingCallIfNeeded { [conversation] in
+        conversation.confirmJoiningCallIfNeeded(alertPresenter: target) { [conversation] in
             started?()
             conversation.startVideoCall()
         }
@@ -63,16 +63,6 @@ import Foundation
     }
     
     // MARK: - Helper
-    
-    private func confirmStartingCallIfNeeded(completion: @escaping () -> Void) {
-        guard true == ZMUserSession.shared()?.isCallOngoing else { return completion() }
-        let controller = UIAlertController.ongoingCallStartCallConfirmation { confirmed in
-            guard confirmed else { return }
-            ZMUserSession.shared()?.callCenter?.endAllCalls()
-            completion()
-        }
-        target.present(controller, animated: true)
-    }
 
     private func confirmGroupCall(completion: @escaping (_ completion: Bool) -> ()) {
         let controller = UIAlertController.confirmGroupCall(
