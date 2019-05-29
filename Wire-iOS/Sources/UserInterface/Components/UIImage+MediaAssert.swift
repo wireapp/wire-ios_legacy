@@ -27,8 +27,8 @@ extension UIImage {
         }
     }
 
-    public func isGIF() -> Bool { ///TODO: UIImage can be GIF now
-        return false
+    public func isGIF() -> Bool {
+        return self.framesCount() > 1
     }
 
     public func isTransparent() -> Bool {

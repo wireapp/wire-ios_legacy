@@ -1171,7 +1171,6 @@
 		EF5871662166802B00E47E73 /* GroupDetailsViewControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF5871652166802B00E47E73 /* GroupDetailsViewControllerSnapshotTests.swift */; };
 		EF58B557218B463F00750A2B /* ConversationInputBarViewController+KeyCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF58B556218B463F00750A2B /* ConversationInputBarViewController+KeyCommand.swift */; };
 		EF59F73E22982FD900F923C6 /* SwiftyGif.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF59F73D22982FD800F923C6 /* SwiftyGif.framework */; };
-		EF59F7402298419D00F923C6 /* MediaAssetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF59F73F2298419D00F923C6 /* MediaAssetView.swift */; };
 		EF5C844A21F2014E002481DE /* RestrictedIconButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF5C844921F2014E002481DE /* RestrictedIconButton.swift */; };
 		EF5EF40220B5B70A005453C1 /* ZMUserSession+MarketingConsent.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF5EF40120B5B70A005453C1 /* ZMUserSession+MarketingConsent.swift */; };
 		EF60FC412064FD400017D083 /* SplitViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF60FC402064FD400017D083 /* SplitViewControllerTests.swift */; };
@@ -2958,7 +2957,6 @@
 		EF5871652166802B00E47E73 /* GroupDetailsViewControllerSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDetailsViewControllerSnapshotTests.swift; sourceTree = "<group>"; };
 		EF58B556218B463F00750A2B /* ConversationInputBarViewController+KeyCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConversationInputBarViewController+KeyCommand.swift"; sourceTree = "<group>"; };
 		EF59F73D22982FD800F923C6 /* SwiftyGif.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyGif.framework; path = Carthage/Build/iOS/SwiftyGif.framework; sourceTree = "<group>"; };
-		EF59F73F2298419D00F923C6 /* MediaAssetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaAssetView.swift; sourceTree = "<group>"; };
 		EF5C844921F2014E002481DE /* RestrictedIconButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestrictedIconButton.swift; sourceTree = "<group>"; };
 		EF5EF40120B5B70A005453C1 /* ZMUserSession+MarketingConsent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ZMUserSession+MarketingConsent.swift"; sourceTree = "<group>"; };
 		EF60FC402064FD400017D083 /* SplitViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitViewControllerTests.swift; sourceTree = "<group>"; };
@@ -4301,7 +4299,6 @@
 				871BC1621D34F8F800DF0793 /* KeyboardFrameObserver.h */,
 				871BC1631D34F8F800DF0793 /* KeyboardFrameObserver.m */,
 				871BC1901D34F8F800DF0793 /* MediaPlayer.h */,
-				EF59F73F2298419D00F923C6 /* MediaAssetView.swift */,
 				871BC1941D34F8F800DF0793 /* MediaPreviewView.swift */,
 				EFF3DA422097548A007A3358 /* UIImage+MediaAssert.swift */,
 				EF66110E2121D00B00BDF57A /* UIImage+DownSize.swift */,
@@ -7573,7 +7570,6 @@
 				8710673D1C0DC5570035603B /* SettingsCellDescriptor.swift in Sources */,
 				EEA9A75F21B01F28001F7B5C /* ConversationCreateErrorCell.swift in Sources */,
 				EEF28EEF1F168039007642E2 /* ConversationInputBarViewController+Markdown.swift in Sources */,
-				EF59F7402298419D00F923C6 /* MediaAssetView.swift in Sources */,
 				EF297DEC213340CF0002983A /* ParticipantDeviceHeaderView+Style.swift in Sources */,
 				5E8FFC2021EF83FF0052DF03 /* AuthenticationAddEmailPasswordInputHandler.swift in Sources */,
 				EF218AC720A9DDEF004977BF /* ConversationListViewController+DataUsagePermissions.swift in Sources */,
