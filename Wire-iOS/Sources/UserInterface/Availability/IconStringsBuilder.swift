@@ -48,18 +48,9 @@ public class IconStringsBuilder {
             components.reverse()
         }
         
-        // Create a padding object and combine the final attributed string
-        let padding = NSAttributedString(attachment: .padding)
-        let title = components.joined(separator: padding)
+        // Add a padding and combine the final attributed string
+        let attributedTitle = components.joined(separator: "  ".attributedString)
         
-        return title && color
-    }
-}
-
-fileprivate extension NSTextAttachment {
-    static var padding: NSTextAttachment {
-        let attachment = NSTextAttachment()
-        attachment.bounds = CGRect(x: 0, y: 0, width: 7, height: 7)
-        return attachment
+        return attributedTitle && color
     }
 }

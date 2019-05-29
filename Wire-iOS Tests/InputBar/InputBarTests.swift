@@ -20,7 +20,7 @@
 import XCTest
 @testable import Wire
 
-class InputBarTests: ZMSnapshotTestCase {
+final class InputBarTests: ZMSnapshotTestCase {
 
     let shortText = "Lorem ipsum dolor"
     let longText = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est"
@@ -50,6 +50,8 @@ class InputBarTests: ZMSnapshotTestCase {
         sut = InputBar(buttons: buttons())
         sut.leftAccessoryView.isHidden = true
         sut.rightAccessoryStackView.isHidden = true
+
+        sut.textView.text = ""
     }
 
     override func tearDown() {
@@ -57,16 +59,24 @@ class InputBarTests: ZMSnapshotTestCase {
 
         super.tearDown()
     }
-    
+
+    //MARK: - placeholder
+
     func testNoText() {
-        sut.textView.text = ""
-        sut.leftAccessoryView.isHidden = true
-        sut.rightAccessoryStackView.isHidden = true
-        
-        
         verifyInAllPhoneWidths(view: sut)
     }
-    
+
+    func testUserIsAvailable() {
+        let mockUser = MockUser.mockUsers()!.first!
+        mockUser.availability = .available
+
+        sut.availabilityPlaceholder = AvailabilityStringBuilder.string(for: mockUser, with: .placeholder, color: sut.placeholderColor)
+
+        verifyInAllPhoneWidths(view: sut)
+    }
+
+    //MARK: - Text inputted
+
     func testShortText() {
         sut.textView.text = shortText
         
