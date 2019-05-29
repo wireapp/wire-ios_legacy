@@ -65,7 +65,7 @@ extension ZMConversation {
                     Analytics.shared().tagMediaActionCompleted(video ? .videoCall : .audioCall, inConversation: self)
                 }
             } else {
-                self.voiceChannel?.leave(userSession: userSession)
+                self.voiceChannel?.leave(userSession: userSession, completion: nil)
             }
         }
         
@@ -119,26 +119,17 @@ extension ZMConversation {
 
         let controller = UIAlertController.ongoingCallJoinCallConfirmation(forceAlertModal: forceAlertModal) { confirmed in
             guard confirmed else { return }
-            self.endAllCallsExceptIncoming()
-            completion()
+            self.endAllCallsExceptIncoming(completion: completion)
         }
 
         alertPresenter.present(controller, animated: true)
     }
-
+    
     /// Ends all the active calls, except the conversation's incoming call, if any.
-    private func endAllCallsExceptIncoming() {
-        switch voiceChannel?.state {
-        case .incoming?:
-            guard let sharedSession = ZMUserSession.shared() else { return }
-
-            sharedSession.callCenter?.activeCallConversations(in: sharedSession)
-                .filter { $0.remoteIdentifier != self.remoteIdentifier }
-                .forEach { $0.voiceChannel?.leave() }
-
-        default:
-            ZMUserSession.shared()?.callCenter?.endAllCalls()
-        }
+    func endAllCallsExceptIncoming(completion: @escaping () -> ()) {
+        guard let sharedSession = ZMUserSession.shared() else { return }
+        sharedSession.callCenter?.activeCallConversations(in: sharedSession)
+            .filter { $0.remoteIdentifier != self.remoteIdentifier }
+            .forEach { $0.voiceChannel?.leave(userSession: sharedSession, completion: completion) }
     }
-
 }
