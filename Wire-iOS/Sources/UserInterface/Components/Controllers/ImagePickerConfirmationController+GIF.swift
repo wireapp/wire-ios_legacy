@@ -34,7 +34,7 @@ extension ImagePickerConfirmationController {
         if (assetUTI == kUTTypeGIF as String) {
             UIImagePickerController.imageData(fromMediaInfo: info, resultBlock: { imageData in
                 if let imageData = imageData {
-                    resultBlock(UIImage(gifData: imageData))
+                    resultBlock(try? UIImage(gifData: imageData))
                 } else {
                     resultBlock(nil)
                 }

@@ -267,7 +267,7 @@ extension ImageResource {
             guard let imageData = imageData else { return }
             
             if isAnimatedGIF { ///TODO: or GIF?
-                image = UIImage(gifData: imageData)
+                image = try? UIImage(gifData: imageData)
             } else {
                 switch sizeLimit { 
                 case .none:
@@ -289,15 +289,15 @@ extension ImageResource {
     
 }
 
-extension UIImage {
-    convenience init?(gifData: Data) {
-        self.init()
-
-        do {
-            ///TODO: lower levelOfIntegrity?
-            try setGifFromData(gifData, levelOfIntegrity: .default)
-        } catch {
-            return nil
-        }
-    }
-}
+//extension UIImage {
+//    convenience init?(gifData: Data) {
+//        self.init()
+//
+//        do {
+//            ///TODO: lower levelOfIntegrity?
+//            try setGifFromData(gifData, levelOfIntegrity: .default)
+//        } catch {
+//            return nil
+//        }
+//    }
+//}

@@ -24,14 +24,22 @@ final class FullscreenImageViewControllerSnapshotTests: ZMSnapshotTestCase {
     
     var sut: FullscreenImageViewController!
 
-    override func setUp() {
-        super.setUp()
-    }
-    
-    
     override func tearDown() {
         sut = nil
         super.tearDown()
+    }
+
+    func testThatAnimatedGIFToImageView(){///TODO: failed
+        sut = createFullscreenImageViewControllerForTest(imageFileName: "animated.gif")
+
+        verify(view: sut.view)
+    }
+
+
+    func testThatGIFToImageView(){///TODO: failed
+        sut = createFullscreenImageViewControllerForTest(imageFileName: "not_animated.gif")
+
+        verify(view: sut.view)
     }
 
     func testThatVeryLargeImageIsLoadedToImageView(){///TODO: failed

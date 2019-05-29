@@ -70,8 +70,8 @@ import WireDataModel
             self.dotsLoadingView.isHidden = true
             
             if (imageMessageData.isAnimatedGIF) {
-                if let image = UIImage(gifData: imageData) {
-                    imageSize = image.size ?? .zero
+                if let image = try? UIImage(gifData: imageData) {
+                    imageSize = image.size
                     imageView.setGifImage(image)
                 }
             }

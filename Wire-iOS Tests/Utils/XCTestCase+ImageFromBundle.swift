@@ -20,20 +20,25 @@ import XCTest
 
 extension XCTestCase {
     func image(inTestBundleNamed name: String) -> UIImage {
-        if name.hasSuffix(".gif") {
-            if let data = try? Data(contentsOf: urlForResource(inTestBundleNamed: name)) {
+        let url = urlForResource(inTestBundleNamed: name)
+        if name.hasSuffix(".gif") { ///TODO: check is animated?
+            if let data = try? Data(contentsOf: url) {
+
                 do {
-                    let image = UIImage()
-                    try image.setGifFromData(data, levelOfIntegrity: .default)
+                    let image = try UIImage(gifData: data)
                     return image
                 } catch {
-                    fatal("invalid GIF data")
-                }
+//                    fatal("invalid GIF file, error is \(error)")
+                    return UIImage(contentsOfFile: url.path)!
+              }
+
+
             } else {
-                fatal("invalid GIF file")
+//                fatal("invalid GIF file")
+                return UIImage(contentsOfFile: url.path)!
             }
         } else {
-            return UIImage(contentsOfFile: urlForResource(inTestBundleNamed: name).path)!
+            return UIImage(contentsOfFile: url.path)!
         }
     }
 

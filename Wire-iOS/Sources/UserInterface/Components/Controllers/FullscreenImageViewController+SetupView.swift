@@ -66,7 +66,7 @@ extension FullscreenImageViewController {
         DispatchQueue.global(qos: .default).async(execute: {
             var image: UIImage?
             if imageMessageData.imageType == kUTTypeGIF as String {
-                image = UIImage(gifData: imageData)
+                image = try? UIImage(gifData: imageData)
             } else {
                 image = UIImage(data: imageData)
             }
