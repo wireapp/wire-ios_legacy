@@ -266,7 +266,7 @@ extension ImageResource {
             
             guard let imageData = imageData else { return }
             
-            if isAnimatedGIF {
+            if isAnimatedGIF { ///TODO: or GIF?
                 image = UIImage(gifData: imageData)
             } else {
                 switch sizeLimit { 

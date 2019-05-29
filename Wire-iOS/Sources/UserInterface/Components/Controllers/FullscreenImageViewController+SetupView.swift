@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import MobileCoreServices
 
 extension FullscreenImageViewController {
     @objc
@@ -60,17 +61,11 @@ extension FullscreenImageViewController {
     @objc
     func loadImageAndSetupImageView() {
         guard let imageMessageData = message.imageMessageData,
-            let imageData = imageMessageData.imageData else { return }
-
-        let imageIsAnimatedGIF = imageMessageData.isAnimatedGIF
-
+              let imageData = imageMessageData.imageData else { return }
 
         DispatchQueue.global(qos: .default).async(execute: {
-
-
             var image: UIImage?
-
-            if imageIsAnimatedGIF {
+            if imageMessageData.imageType == kUTTypeGIF as String {
                 image = UIImage(gifData: imageData)
             } else {
                 image = UIImage(data: imageData)

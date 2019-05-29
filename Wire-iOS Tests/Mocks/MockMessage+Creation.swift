@@ -19,6 +19,7 @@
 import Foundation
 @testable import Wire
 import WireLinkPreview
+import MobileCoreServices
 
 @objcMembers
 final class MockMessageFactory: NSObject {
@@ -53,10 +54,14 @@ final class MockMessageFactory: NSObject {
 
     class func imageMessage(with image: UIImage?) -> MockMessage? {
         let imageData = MockImageMessageData()
-        if let image = image, let data = image.data() {
+        if let image = image,
+           let data = image.data() {
             imageData.mockImageData = data
             imageData.mockOriginalSize = image.size
             imageData.isDownloaded = true
+            if image.isGIF() {
+                imageData.imageType = kUTTypeGIF as String
+            }
         } else {
             imageData.isDownloaded = false
         }

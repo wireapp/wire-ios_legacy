@@ -145,7 +145,7 @@ extension FullscreenImageViewController {
         let imageView: UIImageView
         if image.isGIF() {
             imageView = UIImageView()
-            imageView.setGifImage(image)
+            imageView.setGifImage(image) ///TODO image is 0, 0 here
         } else {
             imageView = UIImageView(image: image)
         }

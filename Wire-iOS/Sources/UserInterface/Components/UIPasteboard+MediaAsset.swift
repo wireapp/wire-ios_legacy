@@ -34,7 +34,7 @@ extension UIPasteboard {
     @objc
     public func imageAssert() -> UIImage? {
         if contains(pasteboardTypes: [kUTTypeGIF as String]) {
-            guard let data: Data = self.data(forPasteboardType: kUTTypeGIF as String) else { return nil }
+            guard let data: Data = data(forPasteboardType: kUTTypeGIF as String) else { return nil }
             return UIImage(gifData: data)
         } else if contains(pasteboardTypes: [kUTTypePNG as String]) {
             let data: Data? = self.data(forPasteboardType: kUTTypePNG as String)
