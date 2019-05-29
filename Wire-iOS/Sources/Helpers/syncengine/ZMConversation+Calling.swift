@@ -130,6 +130,8 @@ extension ZMConversation {
         guard let sharedSession = ZMUserSession.shared() else { return }
         sharedSession.callCenter?.activeCallConversations(in: sharedSession)
             .filter { $0.remoteIdentifier != self.remoteIdentifier }
+            // The completion handler could potentially be called multiple times
+            // This however should not happen because there can only be one active call at a time
             .forEach { $0.voiceChannel?.leave(userSession: sharedSession, completion: completion) }
     }
 }
