@@ -83,7 +83,7 @@ class ImageResourceThumbnailView: RoundedView {
     func setResource(_ resource: PreviewableImageResource, isVideoPreview: Bool) {
         imageView.configure(with: resource) {
             DispatchQueue.main.async {
-                let needsVideoCoverView = isVideoPreview && self.imageView.UIImage != nil
+                let needsVideoCoverView = isVideoPreview && self.imageView.image != nil
                 self.coverView.isHidden = !needsVideoCoverView
                 self.assetTypeBadge.image = needsVideoCoverView ? StyleKitIcon.videoCall.makeImage(size: .tiny, color: .white) : nil
             }

@@ -85,11 +85,3 @@ extension ConversationInputBarViewController {
     }
 
 }
-
-/*
-- (void)postImage:(UIImage *)image
-{
-    [self.sendController sendMessageWithImageData:[image data] completion:^() {}];
-}
-
-*/

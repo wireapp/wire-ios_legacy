@@ -20,7 +20,9 @@ import Foundation
 
 extension UIImage {
     public func data() -> Data? {
-        if isTransparent() {
+        if isGIF() {
+            return imageData
+        } else if isTransparent() {
             return self.pngData()
         } else {
             return self.jpegData(compressionQuality: 1.0)
@@ -28,7 +30,7 @@ extension UIImage {
     }
 
     public func isGIF() -> Bool {
-        return self.framesCount() > 1
+        return imageCount != nil
     }
 
     public func isTransparent() -> Bool {

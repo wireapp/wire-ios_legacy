@@ -18,7 +18,6 @@
 
 @class ImageToolbarView;
 @class Button;
-@class UIImageView;
 
 @import AVKit;
 

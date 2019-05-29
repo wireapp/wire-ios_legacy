@@ -27,7 +27,6 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @class MessagePresenter;
-@class UIImageView;
 @class ConversationTableViewDataSource;
 @class DeletionDialogPresenter;
 @protocol SelectableView;

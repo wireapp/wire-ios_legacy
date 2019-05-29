@@ -41,7 +41,6 @@
 
 @end
 
-@protocol UIImage;
 //
 /// Informal protocol
 @protocol TextViewProtocol <NSObject>

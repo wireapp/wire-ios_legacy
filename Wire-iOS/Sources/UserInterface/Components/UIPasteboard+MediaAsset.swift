@@ -21,7 +21,7 @@ import MobileCoreServices
 
 extension UIPasteboard {
 
-    func pasteboardType(forUIImage image: UIImage) -> String {
+    func pasteboardType(for image: UIImage) -> String {
         if image.isGIF() {
             return kUTTypeGIF as String
         } else if image.isTransparent() {
@@ -52,6 +52,6 @@ extension UIPasteboard {
         guard let image = image,
             let data = image.data() else { return }
 
-        UIPasteboard.general.setData(data, forPasteboardType: pasteboardType(forUIImage: image))
+        UIPasteboard.general.setData(data, forPasteboardType: pasteboardType(for: image))
     }
 }
