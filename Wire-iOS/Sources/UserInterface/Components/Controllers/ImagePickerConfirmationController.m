@@ -26,9 +26,6 @@
 #import "ConfirmAssetViewController.h"
 #import "UIView+PopoverBorder.h"
 #import "UIImagePickerController+GetImage.h"
-@import FLAnimatedImage;
-
-#import "UIImage.h"
 
 #import "Wire-Swift.h"
 
@@ -94,27 +91,6 @@
             setImageBlock();
         }
     }];
-}
-
-- (void)assetPreviewFromMediaInfo:(NSDictionary *)info resultBlock:(void (^)(id media))resultBlock
-{
-    NSString *assetUTI = [self UTIFromAssetURL:info[UIImagePickerControllerReferenceURL]];
-    
-    if ([assetUTI isEqualToString:(id)kUTTypeGIF]) {
-        [UIImagePickerController imageDataFromMediaInfo:info resultBlock:^(NSData *imageData) {
-            resultBlock([[FLAnimatedImage alloc] initWithAnimatedGIFData:imageData]);
-        }];
-    } else {
-        [UIImagePickerController imageFromMediaInfo:info resultBlock:^(UIImage *image) {
-            resultBlock(image);
-        }];
-    }
-}
-
-- (NSString *)UTIFromAssetURL:(NSURL *)assetURL
-{
-    NSString *extension = [assetURL pathExtension];
-    return (NSString *)CFBridgingRelease(UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension,(__bridge CFStringRef)extension , NULL));
 }
 
 

@@ -37,8 +37,6 @@
 #import "Constants.h"
 #import "Settings.h"
 #import "ConversationInputBarSendController.h"
-@import FLAnimatedImage;
-#import "UIImage.h"
 #import "UIView+WR_ExtendedBlockAnimations.h"
 
 static NSString* ZMLogTag ZM_UNUSED = @"UI";
@@ -608,11 +606,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 {
     [self updateAccessoryViews];
     [self updateNewButtonTitleLabel];
-}
-
-- (void)postImage:(UIImage *)image
-{
-    [self.sendController sendMessageWithImageData:image.data completion:^() {}];
 }
 
 @end

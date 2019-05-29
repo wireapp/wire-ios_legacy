@@ -22,7 +22,6 @@
 #import "TextView.h"
 #import "TextView+Internal.h"
 
-#import "UIImage.h"
 #import "Wire-Swift.h"
 
 static NSString* ZMLogTag ZM_UNUSED = @"UI";
@@ -162,7 +161,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
     if ((pasteboard.hasImages)
         && [self.delegate respondsToSelector:@selector(textView:hasImageToPaste:)]) {
-        UIImage * image = [[UIPasteboard generalPasteboard] UIImage];
+        UIImage * image = [[UIPasteboard generalPasteboard] imageAssert];
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
         [self.delegate performSelector:@selector(textView:hasImageToPaste:) withObject:self withObject:image];

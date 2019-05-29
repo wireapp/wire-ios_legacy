@@ -203,7 +203,7 @@ import Ziphy
         var previewImage: UIImage?
 
         if let cell = collectionView.cellForItem(at: indexPath) as? GiphyCollectionViewCell {
-            previewImage = cell.gifImage
+            previewImage = cell.imageView.gifImage
         }
 
         pushConfirmationViewController(ziph: ziph, previewImage: previewImage)

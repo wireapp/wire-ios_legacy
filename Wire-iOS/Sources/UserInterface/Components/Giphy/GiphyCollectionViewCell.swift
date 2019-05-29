@@ -44,7 +44,7 @@ class GiphyCollectionViewCell: UICollectionViewCell {
     }
 
     override func prepareForReuse() {
-        imageView.setGifImage(nil)
+        imageView.clear()
         self.ziph = nil
         self.representation = nil
         self.backgroundColor = nil

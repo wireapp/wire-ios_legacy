@@ -78,4 +78,18 @@ extension ConversationInputBarViewController {
             presentController()
         }
     }
+
+    @objc(postImage:)
+    func post(image: UIImage) {
+        sendController.sendMessage(withImageData: image.data()) {}
+    }
+
 }
+
+/*
+- (void)postImage:(UIImage *)image
+{
+    [self.sendController sendMessageWithImageData:[image data] completion:^() {}];
+}
+
+*/

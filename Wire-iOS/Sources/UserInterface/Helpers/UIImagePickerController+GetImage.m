@@ -21,7 +21,6 @@
 
 @import Photos;
 @import MobileCoreServices;
-@import FLAnimatedImage;
 
 @interface PHAsset (MediaInfo)
 + (nullable PHAsset *)loadFromMediaInfo:(nonnull NSDictionary *)mediaInfo;

@@ -57,5 +57,35 @@ extension FullscreenImageViewController {
         animator = UIDynamicAnimator(referenceView: scrollView)
     }
 
+    @objc
+    func loadImageAndSetupImageView() {
+        guard let imageMessageData = message.imageMessageData,
+            let imageData = imageMessageData.imageData else { return }
+
+        let imageIsAnimatedGIF = imageMessageData.isAnimatedGIF
+
+
+        DispatchQueue.global(qos: .default).async(execute: {
+
+
+            var image: UIImage?
+
+            if imageIsAnimatedGIF {
+                image = UIImage(gifData: imageData)
+            } else {
+                image = UIImage(data: imageData)
+            }
+
+            if let image = image {
+
+                DispatchQueue.main.async(execute: { [weak self] in
+
+                    if let parentSize = self?.parent?.view.bounds.size {
+                        self?.setupImageView(image: image, parentSize: parentSize)
+                    }
+                })
+            }
+        })
+    }
 }
 

@@ -18,7 +18,6 @@
 
 @import AVFoundation;
 @import AVKit;
-@import FLAnimatedImage;
 
 #import "ConfirmAssetViewController.h"
 #import "ConfirmAssetViewController+Internal.h"
@@ -92,7 +91,7 @@
     self.imagePreviewView.userInteractionEnabled = YES;
     [self.view addSubview:self.imagePreviewView];
     
-    [self.imagePreviewView setUIImage:self.image];
+    [self.imagePreviewView setImage:self.image];
 
     if ([self showEditingOptions] && [self imageToolbarFitsInsideImage]) {
         self.imageToolbarViewInsideImage = [[ImageToolbarView alloc] initWithConfiguraton:ImageToolbarConfigurationPreview];

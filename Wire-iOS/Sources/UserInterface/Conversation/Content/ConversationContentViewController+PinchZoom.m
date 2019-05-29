@@ -18,7 +18,6 @@
 
 #import "ConversationContentViewController+PinchZoom.h"
 #import "ConversationContentViewController+Private.h"
-#import "UIImage.h"
 #import "UIView+WR_ExtendedBlockAnimations.h"
 #import "Wire-Swift.h"
 

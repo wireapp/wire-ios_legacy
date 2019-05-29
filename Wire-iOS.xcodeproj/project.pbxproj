@@ -1140,6 +1140,7 @@
 		EF334B98229D789500099D80 /* StartUIViewController+ContactsViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF334B97229D789500099D80 /* StartUIViewController+ContactsViewControllerDelegate.swift */; };
 		EF3371C22216D9D9005ED048 /* ZMUser+Self.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3371C12216D9D9005ED048 /* ZMUser+Self.swift */; };
 		EF3371C52216F067005ED048 /* MockUser+SelfUserFromSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3371C32216EEE2005ED048 /* MockUser+SelfUserFromSession.swift */; };
+		EF35DC6C229E7D2000254552 /* ImagePickerConfirmationController+GIF.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF35DC6B229E7D2000254552 /* ImagePickerConfirmationController+GIF.swift */; };
 		EF36168A21E753310041F0CC /* SettingsTableViewControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF36168921E753300041F0CC /* SettingsTableViewControllerSnapshotTests.swift */; };
 		EF37C3892256614300EA0C32 /* ConnectRequestsCellSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF37C3882256614300EA0C32 /* ConnectRequestsCellSnapshotTests.swift */; };
 		EF3976CE2114506E0030BE68 /* KeyboardAvoidingViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3976CD2114506E0030BE68 /* KeyboardAvoidingViewController+Extension.swift */; };
@@ -2922,6 +2923,7 @@
 		EF334B97229D789500099D80 /* StartUIViewController+ContactsViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StartUIViewController+ContactsViewControllerDelegate.swift"; sourceTree = "<group>"; };
 		EF3371C12216D9D9005ED048 /* ZMUser+Self.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ZMUser+Self.swift"; sourceTree = "<group>"; };
 		EF3371C32216EEE2005ED048 /* MockUser+SelfUserFromSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MockUser+SelfUserFromSession.swift"; sourceTree = "<group>"; };
+		EF35DC6B229E7D2000254552 /* ImagePickerConfirmationController+GIF.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ImagePickerConfirmationController+GIF.swift"; sourceTree = "<group>"; };
 		EF36168921E753300041F0CC /* SettingsTableViewControllerSnapshotTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableViewControllerSnapshotTests.swift; sourceTree = "<group>"; };
 		EF37C3882256614300EA0C32 /* ConnectRequestsCellSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectRequestsCellSnapshotTests.swift; sourceTree = "<group>"; };
 		EF3976CD2114506E0030BE68 /* KeyboardAvoidingViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KeyboardAvoidingViewController+Extension.swift"; sourceTree = "<group>"; };
@@ -4341,6 +4343,7 @@
 				EF6ACA7E21318A640064047B /* FullscreenImageViewController+Style.swift */,
 				871BC1421D34F8F800DF0793 /* ImagePickerConfirmationController.h */,
 				871BC1431D34F8F800DF0793 /* ImagePickerConfirmationController.m */,
+				EF35DC6B229E7D2000254552 /* ImagePickerConfirmationController+GIF.swift */,
 				871BC1441D34F8F800DF0793 /* RotationAwareNavigationController.swift */,
 				871BC1451D34F8F800DF0793 /* SplitViewController.h */,
 				EF60FC4220652F9F0017D083 /* SplitViewController+internal.h */,
@@ -7228,6 +7231,7 @@
 				5EA73D8120D900A10001D106 /* GroupDetailsTimeoutOptionsCell.swift in Sources */,
 				8FC85455199245770008B66B /* ConversationViewController.m in Sources */,
 				5E65A7AF213450D2008BFCC0 /* TeamEmailVerificationErrorHandler.swift in Sources */,
+				EF35DC6C229E7D2000254552 /* ImagePickerConfirmationController+GIF.swift in Sources */,
 				BA8DC27C1B5FF5CF00103262 /* SketchColorPickerController.m in Sources */,
 				871BC2871D34F8F800DF0793 /* UIFont+MonoSpaced.swift in Sources */,
 				EF298BD1228D942A0078BE68 /* ImageManagerProtocol.swift in Sources */,
