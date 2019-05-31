@@ -74,7 +74,7 @@ final class ReceiptOptionsSectionController: NSObject,
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.bounds.size.width, height: 56)
+        return defaultSizeForItem(collectionView)
     }
 
 
@@ -131,7 +131,7 @@ final class ReceiptOptionsSectionController: NSObject,
     }
 
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        guard kind == UICollectionView.elementKindSectionFooter else { return sectionHeader(collectionView, viewForSupplementaryElementOfKind: kind, at: indexPath)}
+        guard kind == UICollectionView.elementKindSectionFooter else { return sectionHeader(collectionView, at: indexPath)}
 
         let view = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: "SectionFooter", for: indexPath)
         (view as? SectionFooter)?.titleLabel.text = "group_details.receipt_options_cell.description".localized

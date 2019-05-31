@@ -100,7 +100,20 @@ final class LegalHoldParticipantsSectionController:NSObject, GroupDetailsSection
         
         delegate?.legalHoldParticipantsSectionWantsToPresentUserProfile(for: user)
     }
-    
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return defaultReferenceSizeForHeaderInSection(collectionView)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return defaultSizeForItem(collectionView)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+
+        return sectionHeader(collectionView, at: indexPath)
+    }
+
 }
 
 extension LegalHoldParticipantsSectionController: ZMUserObserver {

@@ -106,7 +106,7 @@
 		1682AEB920483CC5003A052A /* RenameGroupSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1682AEB820483CC5003A052A /* RenameGroupSectionController.swift */; };
 		1682AEBD20483DA5003A052A /* ServicesSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1682AEBC20483DA5003A052A /* ServicesSectionController.swift */; };
 		1682AEBF20483F73003A052A /* ParticipantsSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1682AEBE20483F73003A052A /* ParticipantsSectionController.swift */; };
-		1682AEC120483FA5003A052A /* GroupDetailsSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1682AEC020483FA5003A052A /* GroupDetailsSectionController.swift */; };
+		1682AEC120483FA5003A052A /* GroupDetailsSectionControllerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1682AEC020483FA5003A052A /* GroupDetailsSectionControllerType.swift */; };
 		1682AEC3204840E7003A052A /* SectionCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1682AEC2204840E7003A052A /* SectionCollectionViewController.swift */; };
 		1682AEC520484B9B003A052A /* Themeable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1682AEC420484B9B003A052A /* Themeable.swift */; };
 		1687C0FC2151435F003099DD /* ZClientViewController+ShowContentDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1687C0FB2151435F003099DD /* ZClientViewController+ShowContentDelegate.swift */; };
@@ -1579,7 +1579,7 @@
 		1682AEB820483CC5003A052A /* RenameGroupSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenameGroupSectionController.swift; sourceTree = "<group>"; };
 		1682AEBC20483DA5003A052A /* ServicesSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicesSectionController.swift; sourceTree = "<group>"; };
 		1682AEBE20483F73003A052A /* ParticipantsSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantsSectionController.swift; sourceTree = "<group>"; };
-		1682AEC020483FA5003A052A /* GroupDetailsSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDetailsSectionController.swift; sourceTree = "<group>"; };
+		1682AEC020483FA5003A052A /* GroupDetailsSectionControllerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDetailsSectionControllerType.swift; sourceTree = "<group>"; };
 		1682AEC2204840E7003A052A /* SectionCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionCollectionViewController.swift; sourceTree = "<group>"; };
 		1682AEC420484B9B003A052A /* Themeable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Themeable.swift; sourceTree = "<group>"; };
 		1687ABA920EBCED80007C240 /* ProfileImageFetchable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageFetchable.swift; sourceTree = "<group>"; };
@@ -3313,7 +3313,7 @@
 				1682AEB820483CC5003A052A /* RenameGroupSectionController.swift */,
 				1682AEBC20483DA5003A052A /* ServicesSectionController.swift */,
 				1682AEBE20483F73003A052A /* ParticipantsSectionController.swift */,
-				1682AEC020483FA5003A052A /* GroupDetailsSectionController.swift */,
+				1682AEC020483FA5003A052A /* GroupDetailsSectionControllerType.swift */,
 			);
 			path = Sections;
 			sourceTree = "<group>";
@@ -7478,7 +7478,7 @@
 				871BC00D1D34F56300DF0793 /* Analytics+MediaActionEvents.swift in Sources */,
 				87D5E4421C3E79C600EB8289 /* NSData+Fingerprint.swift in Sources */,
 				871BC3511D34F94200DF0793 /* AccentColorChangeHandler.m in Sources */,
-				1682AEC120483FA5003A052A /* GroupDetailsSectionController.swift in Sources */,
+				1682AEC120483FA5003A052A /* GroupDetailsSectionControllerType.swift in Sources */,
 				F1CB5D3A215E1D2F001CCF5D /* UITextView+Replace.swift in Sources */,
 				CEEEAF071CB562BF00111759 /* PlaceholderConversationView.swift in Sources */,
 				EF701A33223BE3D5007165E4 /* VersionInfoViewController.swift in Sources */,

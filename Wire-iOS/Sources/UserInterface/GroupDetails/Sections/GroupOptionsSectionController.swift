@@ -116,7 +116,11 @@ final class GroupOptionsSectionController: NSObject, GroupDetailsSectionControll
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.bounds.size.width, height: 56)
+        return defaultSizeForItem(collectionView)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return CGSize(width: collectionView.bounds.size.width, height: 48)
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -142,6 +146,10 @@ final class GroupOptionsSectionController: NSObject, GroupDetailsSectionControll
             delegate?.presentNotificationsOptions(animated: true)
         }
 
+    }
+
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        return sectionHeader(collectionView, at: indexPath)
     }
 
 }

@@ -18,7 +18,7 @@
 
 import Foundation
 
-final class ServicesSectionController:NSObject, GroupDetailsSectionControllerType {
+final class ServicesSectionController: NSObject, GroupDetailsSectionControllerType {
 
     var isHidden: Bool {
         return false
@@ -68,5 +68,18 @@ final class ServicesSectionController:NSObject, GroupDetailsSectionControllerTyp
         guard let user = serviceUsers[indexPath.row] as? ZMUser else { return }
         delegate?.presentDetails(for: user)
     }
-    
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return CGSize(width: collectionView.bounds.size.width, height: 48)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return defaultSizeForItem(collectionView)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+
+        return sectionHeader(collectionView, at: indexPath)
+    }
+
 }

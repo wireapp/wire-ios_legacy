@@ -108,7 +108,15 @@ final class ParticipantsSectionController: NSObject, GroupDetailsSectionControll
     var sectionAccessibilityIdentifier: String {
         return viewModel.sectionAccesibilityIdentifier
     }
-    
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return CGSize(width: collectionView.bounds.size.width, height: 48)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return defaultSizeForItem(collectionView)
+    }
+
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModel.rows.count
     }
@@ -129,6 +137,10 @@ final class ParticipantsSectionController: NSObject, GroupDetailsSectionControll
         case .showAll:
             delegate?.presentFullParticipantsList(for: viewModel.participants, in: conversation)
         }
+    }
+
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        return sectionHeader(collectionView, at: indexPath)
     }
     
 }

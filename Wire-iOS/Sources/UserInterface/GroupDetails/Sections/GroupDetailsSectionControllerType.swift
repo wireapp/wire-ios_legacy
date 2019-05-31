@@ -37,7 +37,7 @@ extension GroupDetailsSectionControllerType {
         collectionView?.register(SectionHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "SectionHeader")
     }
 
-    func sectionHeader(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+    func sectionHeader(_ collectionView: UICollectionView, at indexPath: IndexPath) -> UICollectionReusableView {
         let supplementaryView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "SectionHeader", for: indexPath)
 
         if let sectionHeaderView = supplementaryView as? SectionHeader {
@@ -46,6 +46,14 @@ extension GroupDetailsSectionControllerType {
         }
 
         return supplementaryView
+    }
+
+    func defaultReferenceSizeForHeaderInSection(_ collectionView: UICollectionView) -> CGSize {
+        return CGSize(width: collectionView.bounds.size.width, height: 48)
+    }
+
+    func defaultSizeForItem(_ collectionView: UICollectionView) -> CGSize {
+        return CGSize(width: collectionView.bounds.size.width, height: 56)
     }
 }
 /*
