@@ -58,20 +58,21 @@ extension ProfileViewController {
     func setupTabsController() {
         var viewControllers = [UIViewController]()
 
-        if context != .deviceList {
-            let profileDetailsViewController = setupProfileDetailsViewController()
-            viewControllers.append(profileDetailsViewController)
-        }
+        let profileDetailsViewController = setupProfileDetailsViewController()
+        viewControllers.append(profileDetailsViewController)
 
         if let fullUser = self.fullUser(), context != .profileViewer, viewer.canSeeDevices(of: bareUser) {
-            let profileDevicesViewController = ProfileDevicesViewController(user: fullUser)
-            profileDevicesViewController.title = "profile.devices.title".localized
-            profileDevicesViewController.delegate = self
-            viewControllers.append(profileDevicesViewController)
+            let userClientListViewController = UserClientListViewController(user: fullUser)
+            viewControllers.append(userClientListViewController)
         }
 
         tabsController = TabBarController(viewControllers: viewControllers)
         tabsController.delegate = self
+        
+        if context == .deviceList, tabsController.viewControllers.count > 1 {
+            tabsController.selectIndex(ProfileViewControllerTabBarIndex.devices.rawValue, animated: false)
+        }
+        
         addToSelf(tabsController)
     }
 }
