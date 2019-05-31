@@ -18,8 +18,7 @@
 
 import Foundation
 
-final class ReceiptOptionsSectionController: NSObject,
-                                             GroupDetailsSectionControllerType,
+final class ReceiptOptionsSectionController: GroupDetailsSectionController,
                                              Restricted {
 
     var requiredPermissions: Permissions {

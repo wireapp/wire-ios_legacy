@@ -41,7 +41,7 @@ protocol LegalHoldParticipantsSectionControllerDelegate: class {
     
 }
 
-final class LegalHoldParticipantsSectionController:NSObject, GroupDetailsSectionControllerType {
+final class LegalHoldParticipantsSectionController: GroupDetailsSectionController {
     
     fileprivate weak var collectionView: UICollectionView?
     private let viewModel: LegalHoldParticipantsSectionViewModel

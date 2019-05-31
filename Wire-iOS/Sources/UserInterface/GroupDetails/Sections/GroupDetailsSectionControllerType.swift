@@ -32,6 +32,9 @@ protocol GroupDetailsSectionControllerType: CollectionViewSectionController {
     var sectionAccessibilityIdentifier: String { get }
 }
 
+// The class extends GroupDetailsSectionControllerType has to be a NSObject since CollectionViewSectionController's parents extend NSObjectProtocol
+typealias GroupDetailsSectionController = GroupDetailsSectionControllerType & NSObject
+
 // MARK: - default implementation
 extension GroupDetailsSectionControllerType {
     func registerSectionHeader(in collectionView : UICollectionView?) {

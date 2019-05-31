@@ -24,7 +24,7 @@ protocol GroupOptionsSectionControllerDelegate: class {
     func presentNotificationsOptions(animated: Bool)
 }
 
-final class GroupOptionsSectionController: NSObject, GroupDetailsSectionControllerType {
+final class GroupOptionsSectionController: GroupDetailsSectionController {
 
     private enum Option: Int, CaseIterable, Restricted {
 

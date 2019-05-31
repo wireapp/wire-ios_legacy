@@ -70,7 +70,7 @@ extension UserCell: ParticipantsCellConfigurable {
     }
 }
 
-final class ParticipantsSectionController: NSObject, GroupDetailsSectionControllerType {
+final class ParticipantsSectionController: GroupDetailsSectionController {
     
     fileprivate weak var collectionView: UICollectionView?
     private weak var delegate: GroupDetailsSectionControllerDelegate?

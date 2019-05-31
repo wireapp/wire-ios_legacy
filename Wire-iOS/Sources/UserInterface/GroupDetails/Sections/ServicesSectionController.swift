@@ -18,7 +18,7 @@
 
 import Foundation
 
-final class ServicesSectionController: NSObject, GroupDetailsSectionControllerType {
+final class ServicesSectionController: GroupDetailsSectionController {
 
     var isHidden: Bool {
         return false
