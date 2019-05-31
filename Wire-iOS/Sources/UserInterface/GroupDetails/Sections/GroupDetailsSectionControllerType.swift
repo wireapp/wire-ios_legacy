@@ -32,6 +32,7 @@ protocol GroupDetailsSectionControllerType: CollectionViewSectionController {
     var sectionAccessibilityIdentifier: String { get }
 }
 
+// MARK: - default implementation
 extension GroupDetailsSectionControllerType {
     func registerSectionHeader(in collectionView : UICollectionView?) {
         collectionView?.register(SectionHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "SectionHeader")
