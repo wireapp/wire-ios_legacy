@@ -52,7 +52,7 @@ final class GroupOptionsSectionController: GroupDetailsSectionController {
 
     // MARK: - Properties
 
-    private unowned let delegate: GroupOptionsSectionControllerDelegate
+    private weak var delegate: GroupOptionsSectionControllerDelegate?
     private let conversation: ZMConversation
     private let syncCompleted: Bool
     private let options: [Option]
@@ -127,11 +127,11 @@ final class GroupOptionsSectionController: GroupDetailsSectionController {
 
         switch options[indexPath.row] {
         case .guests:
-            delegate.presentGuestOptions(animated: true)
+            delegate?.presentGuestOptions(animated: true)
         case .timeout:
-            delegate.presentTimeoutOptions(animated: true)
+            delegate?.presentTimeoutOptions(animated: true)
         case .notifications:
-            delegate.presentNotificationsOptions(animated: true)
+            delegate?.presentNotificationsOptions(animated: true)
         }
 
     }
