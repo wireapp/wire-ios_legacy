@@ -59,7 +59,7 @@ class ServicesSectionController: GroupDetailsSectionController {
         return cell
     }
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let user = serviceUsers[indexPath.row] as? ZMUser else { return }
         delegate?.presentDetails(for: user)
     }

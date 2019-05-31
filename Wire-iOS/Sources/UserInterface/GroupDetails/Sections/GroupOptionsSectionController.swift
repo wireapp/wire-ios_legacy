@@ -24,7 +24,7 @@ protocol GroupOptionsSectionControllerDelegate: class {
     func presentNotificationsOptions(animated: Bool)
 }
 
-class GroupOptionsSectionController: GroupDetailsSectionController {
+final class GroupOptionsSectionController: GroupDetailsSectionController {
 
     private enum Option: Int, CaseIterable, Restricted {
 
@@ -52,7 +52,7 @@ class GroupOptionsSectionController: GroupDetailsSectionController {
 
     // MARK: - Properties
 
-    private weak var delegate: GroupOptionsSectionControllerDelegate?
+    private unowned let delegate: GroupOptionsSectionControllerDelegate
     private let conversation: ZMConversation
     private let syncCompleted: Bool
     private let options: [Option]
@@ -123,15 +123,15 @@ class GroupOptionsSectionController: GroupDetailsSectionController {
 
     }
 
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 
         switch options[indexPath.row] {
         case .guests:
-            delegate?.presentGuestOptions(animated: true)
+            delegate.presentGuestOptions(animated: true)
         case .timeout:
-            delegate?.presentTimeoutOptions(animated: true)
+            delegate.presentTimeoutOptions(animated: true)
         case .notifications:
-            delegate?.presentNotificationsOptions(animated: true)
+            delegate.presentNotificationsOptions(animated: true)
         }
 
     }

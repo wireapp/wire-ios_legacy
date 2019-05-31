@@ -71,4 +71,9 @@ class GroupDetailsSectionController: NSObject, CollectionViewSectionController {
         fatal("Must be overridden")
     }
 
+    //MARK: - UICollectionViewDelegate
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        fatal("Must be overridden")
+    }
 }

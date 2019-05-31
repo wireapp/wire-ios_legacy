@@ -91,7 +91,7 @@ class LegalHoldParticipantsSectionController: GroupDetailsSectionController {
         return cell
     }
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let user = viewModel.participants[indexPath.row]
         
         delegate?.legalHoldParticipantsSectionWantsToPresentUserProfile(for: user)
