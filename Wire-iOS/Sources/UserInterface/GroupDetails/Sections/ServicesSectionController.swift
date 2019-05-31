@@ -18,8 +18,12 @@
 
 import Foundation
 
-class ServicesSectionController: GroupDetailsSectionController {
-    
+final class ServicesSectionController:NSObject, GroupDetailsSectionControllerType {
+
+    var isHidden: Bool {
+        return false
+    }
+
     private weak var delegate: GroupDetailsSectionControllerDelegate?
     private let serviceUsers: [UserType]
     private let conversation: ZMConversation
@@ -28,27 +32,28 @@ class ServicesSectionController: GroupDetailsSectionController {
         self.serviceUsers = serviceUsers
         self.conversation = conversation
         self.delegate = delegate
+
     }
     
-    override func prepareForUse(in collectionView : UICollectionView?) {
-        super.prepareForUse(in: collectionView)
-        
+    func prepareForUse(in collectionView : UICollectionView?) {
+        registerSectionHeader(in: collectionView)
+
         collectionView?.register(UserCell.self, forCellWithReuseIdentifier: UserCell.zm_reuseIdentifier)
     }
     
-    override var sectionTitle: String {
+    var sectionTitle: String {
         return "participants.section.services".localized(uppercased: true, args: serviceUsers.count)
     }
     
-    override var sectionAccessibilityIdentifier: String {
+    var sectionAccessibilityIdentifier: String {
         return "label.groupdetails.services"
     }
     
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return serviceUsers.count
     }
     
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let user = serviceUsers[indexPath.row]
         let cell = collectionView.dequeueReusableCell(ofType: UserCell.self, for: indexPath)
         
@@ -59,7 +64,7 @@ class ServicesSectionController: GroupDetailsSectionController {
         return cell
     }
     
-    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let user = serviceUsers[indexPath.row] as? ZMUser else { return }
         delegate?.presentDetails(for: user)
     }

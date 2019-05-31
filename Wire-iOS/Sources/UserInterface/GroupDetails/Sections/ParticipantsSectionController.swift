@@ -70,14 +70,18 @@ extension UserCell: ParticipantsCellConfigurable {
     }
 }
 
-class ParticipantsSectionController: GroupDetailsSectionController {
+final class ParticipantsSectionController: NSObject, GroupDetailsSectionControllerType {
     
     fileprivate weak var collectionView: UICollectionView?
     private weak var delegate: GroupDetailsSectionControllerDelegate?
     private let viewModel: ParticipantsSectionViewModel
     private let conversation: ZMConversation
     private var token: AnyObject?
-    
+
+    var isHidden: Bool {
+        return false
+    }
+
     init(participants: [UserType], conversation: ZMConversation, delegate: GroupDetailsSectionControllerDelegate) {
         viewModel = .init(participants: participants)
         self.conversation = conversation
@@ -89,26 +93,27 @@ class ParticipantsSectionController: GroupDetailsSectionController {
         }
     }
     
-    override func prepareForUse(in collectionView : UICollectionView?) {
-        super.prepareForUse(in: collectionView)
+    func prepareForUse(in collectionView : UICollectionView?) {
+        registerSectionHeader(in: collectionView)
+
         collectionView?.register(UserCell.self, forCellWithReuseIdentifier: UserCell.reuseIdentifier)
         collectionView?.register(ShowAllParticipantsCell.self, forCellWithReuseIdentifier: ShowAllParticipantsCell.reuseIdentifier)
         self.collectionView = collectionView
     }
     
-    override var sectionTitle: String {
+    var sectionTitle: String {
         return viewModel.sectionTitle
     }
     
-    override var sectionAccessibilityIdentifier: String {
+    var sectionAccessibilityIdentifier: String {
         return viewModel.sectionAccesibilityIdentifier
     }
     
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModel.rows.count
     }
     
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let configuration = viewModel.rows[indexPath.row]
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: configuration.cellType.reuseIdentifier, for: indexPath) as! ParticipantsCellConfigurable & UICollectionViewCell
         let showSeparator = (viewModel.rows.count - 1) != indexPath.row
@@ -116,7 +121,7 @@ class ParticipantsSectionController: GroupDetailsSectionController {
         return cell
     }
     
-    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         switch viewModel.rows[indexPath.row] {
         case .user(let bareUser):
             guard let user = bareUser as? ZMUser else { return }

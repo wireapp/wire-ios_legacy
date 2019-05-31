@@ -24,7 +24,7 @@ protocol GroupOptionsSectionControllerDelegate: class {
     func presentNotificationsOptions(animated: Bool)
 }
 
-final class GroupOptionsSectionController: GroupDetailsSectionController {
+final class GroupOptionsSectionController: NSObject, GroupDetailsSectionControllerType {
 
     private enum Option: Int, CaseIterable, Restricted {
 
@@ -56,7 +56,15 @@ final class GroupOptionsSectionController: GroupDetailsSectionController {
     private let conversation: ZMConversation
     private let syncCompleted: Bool
     private let options: [Option]
-    
+
+    var isHidden: Bool {
+        return false
+    }
+
+    var sectionAccessibilityIdentifier: String {
+        return "section_header"
+    }
+
     var hasOptions: Bool {
         return !options.isEmpty
     }
@@ -92,26 +100,26 @@ final class GroupOptionsSectionController: GroupDetailsSectionController {
 
     // MARK: - Collection View
     
-    override var sectionTitle: String {
+    var sectionTitle: String {
         return "participants.section.settings".localized(uppercased: true)
     }
 
-    override func prepareForUse(in collectionView: UICollectionView?) {
-        super.prepareForUse(in: collectionView)
+    func prepareForUse(in collectionView: UICollectionView?) {
+        registerSectionHeader(in: collectionView)
         collectionView.flatMap(GroupDetailsGuestOptionsCell.register)
         collectionView.flatMap(GroupDetailsTimeoutOptionsCell.register)
         collectionView.flatMap(GroupDetailsNotificationOptionsCell.register)
     }
 
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return options.count
     }
 
-    override func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.bounds.size.width, height: 56)
     }
 
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let option = options[indexPath.row]
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: option.cellReuseIdentifier, for: indexPath) as! GroupDetailsDisclosureOptionsCell
 
@@ -123,7 +131,7 @@ final class GroupOptionsSectionController: GroupDetailsSectionController {
 
     }
 
-    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 
         switch options[indexPath.row] {
         case .guests:

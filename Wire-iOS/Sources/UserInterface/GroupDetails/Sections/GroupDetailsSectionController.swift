@@ -26,6 +26,29 @@ protocol GroupDetailsSectionControllerDelegate: GroupDetailsUserDetailPresenter 
     func presentFullParticipantsList(for users: [UserType], in conversation: ZMConversation)
 }
 
+
+protocol GroupDetailsSectionControllerType: CollectionViewSectionController {
+    var sectionTitle: String { get }
+    var sectionAccessibilityIdentifier: String { get }
+}
+
+extension GroupDetailsSectionControllerType {
+    func registerSectionHeader(in collectionView : UICollectionView?) {
+        collectionView?.register(SectionHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "SectionHeader")
+    }
+
+    func sectionHeader(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let supplementaryView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "SectionHeader", for: indexPath)
+
+        if let sectionHeaderView = supplementaryView as? SectionHeader {
+            sectionHeaderView.titleLabel.text = sectionTitle
+            sectionHeaderView.accessibilityIdentifier = sectionAccessibilityIdentifier
+        }
+
+        return supplementaryView
+    }
+}
+/*
 class GroupDetailsSectionController: NSObject, CollectionViewSectionController {
 
     var isHidden: Bool {
@@ -77,3 +100,4 @@ class GroupDetailsSectionController: NSObject, CollectionViewSectionController {
         fatal("Must be overridden")
     }
 }
+*/

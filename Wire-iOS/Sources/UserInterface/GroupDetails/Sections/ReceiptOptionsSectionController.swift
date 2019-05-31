@@ -18,7 +18,9 @@
 
 import Foundation
 
-class ReceiptOptionsSectionController: GroupDetailsSectionController, Restricted {
+final class ReceiptOptionsSectionController: NSObject,
+                                             GroupDetailsSectionControllerType,
+                                             Restricted {
 
     var requiredPermissions: Permissions {
         return .member
@@ -36,9 +38,14 @@ class ReceiptOptionsSectionController: GroupDetailsSectionController, Restricted
     private var footerView = SectionFooter(frame: .zero)
     private weak var presentingViewController: UIViewController?
     
-    override var isHidden: Bool {
+    var isHidden: Bool {
         return !selfUserIsAuthorized
     }
+
+    var sectionAccessibilityIdentifier: String {
+        return "section_header"
+    }
+
 
     init(conversation: ZMConversation,
         syncCompleted: Bool,
@@ -53,26 +60,25 @@ class ReceiptOptionsSectionController: GroupDetailsSectionController, Restricted
 
     // MARK: - Collection View
     
-    override var sectionTitle: String {
+    var sectionTitle: String {
         return ""
     }
 
-    override func prepareForUse(in collectionView: UICollectionView?) {
-        super.prepareForUse(in: collectionView)
-
+    func prepareForUse(in collectionView: UICollectionView?) {
+        registerSectionHeader(in: collectionView)
         collectionView.flatMap(GroupDetailsReceiptOptionsCell.register)
     }
 
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 1
     }
 
-    override func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.bounds.size.width, height: 56)
     }
 
 
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellReuseIdentifier, for: indexPath) as! GroupDetailsReceiptOptionsCell
         
         cell.configure(with: conversation)
@@ -111,7 +117,7 @@ class ReceiptOptionsSectionController: GroupDetailsSectionController, Restricted
 
     ///MARK: - header
 
-    override func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         return CGSize(width: collectionView.bounds.size.width, height: emptySectionHeaderHeight)
     }
 
@@ -124,8 +130,8 @@ class ReceiptOptionsSectionController: GroupDetailsSectionController, Restricted
         return footerView.bounds.size
     }
 
-    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        guard kind == UICollectionView.elementKindSectionFooter else { return super.collectionView(collectionView, viewForSupplementaryElementOfKind: kind, at: indexPath)}
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        guard kind == UICollectionView.elementKindSectionFooter else { return sectionHeader(collectionView, viewForSupplementaryElementOfKind: kind, at: indexPath)}
 
         let view = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: "SectionFooter", for: indexPath)
         (view as? SectionFooter)?.titleLabel.text = "group_details.receipt_options_cell.description".localized

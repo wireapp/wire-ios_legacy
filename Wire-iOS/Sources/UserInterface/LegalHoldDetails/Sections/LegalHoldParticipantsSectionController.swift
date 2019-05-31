@@ -41,7 +41,7 @@ protocol LegalHoldParticipantsSectionControllerDelegate: class {
     
 }
 
-class LegalHoldParticipantsSectionController: GroupDetailsSectionController {
+final class LegalHoldParticipantsSectionController:NSObject, GroupDetailsSectionControllerType {
     
     fileprivate weak var collectionView: UICollectionView?
     private let viewModel: LegalHoldParticipantsSectionViewModel
@@ -60,25 +60,29 @@ class LegalHoldParticipantsSectionController: GroupDetailsSectionController {
         }
     }
     
-    override func prepareForUse(in collectionView : UICollectionView?) {
-        super.prepareForUse(in: collectionView)
+    func prepareForUse(in collectionView : UICollectionView?) {
+        registerSectionHeader(in: collectionView)
         collectionView?.register(UserCell.self, forCellWithReuseIdentifier: UserCell.reuseIdentifier)
         self.collectionView = collectionView
     }
-    
-    override var sectionTitle: String {
+
+    var isHidden: Bool {
+        return false
+    }
+
+    var sectionTitle: String {
         return viewModel.sectionTitle
     }
     
-    override var sectionAccessibilityIdentifier: String {
+    var sectionAccessibilityIdentifier: String {
         return viewModel.sectionAccesibilityIdentifier
     }
     
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModel.participants.count
     }
     
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let participant = viewModel.participants[indexPath.row]
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UserCell.reuseIdentifier, for: indexPath) as! UserCell
         let showSeparator = (viewModel.participants.count - 1) != indexPath.row
@@ -91,7 +95,7 @@ class LegalHoldParticipantsSectionController: GroupDetailsSectionController {
         return cell
     }
     
-    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let user = viewModel.participants[indexPath.row]
         
         delegate?.legalHoldParticipantsSectionWantsToPresentUserProfile(for: user)
