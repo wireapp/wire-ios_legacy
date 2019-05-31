@@ -19,6 +19,8 @@
 @class Button;
 @class PermissionDeniedViewController;
 
+@protocol PermissionDeniedViewControllerDelegate;
+
 @interface ShareContactsViewController ()
 
 @property (nonatomic) UIButton *notNowButton;
@@ -27,5 +29,11 @@
 @property (nonatomic) UIView *shareContactsContainerView;
 @property (nonatomic) PermissionDeniedViewController *addressBookAccessDeniedViewController;
 @property (nonatomic) UIVisualEffectView *backgroundBlurView;
+
+@end
+
+@interface ShareContactsViewController () <PermissionDeniedViewControllerDelegate>
+
+@property (nonatomic) BOOL showingAddressBookAccessDeniedViewController;
 
 @end

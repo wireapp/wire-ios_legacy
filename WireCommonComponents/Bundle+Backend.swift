@@ -19,7 +19,7 @@
 import Foundation
 
 extension Bundle {
-    static var backendBundle: Bundle {
+    public static var backendBundle: Bundle {
         let mainBundle: Bundle
         if UIApplication.runningInExtension {
             let extensionBundleURL = Bundle.main.bundleURL

@@ -602,11 +602,8 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
     // MARK: - Delegate
     
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard
-            let section = CollectionsSectionSet(index: UInt(indexPath.section)),
-            let cell = collectionView.cellForItem(at: indexPath) as? CollectionCell
-        else {
-            fatal("Unknown section")
+        guard let section = CollectionsSectionSet(index: UInt(indexPath.section)) else {
+            fatal("Unknown section for indexPath = \(indexPath)")
         }
         
         if section == .loading {
@@ -614,7 +611,8 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
         }
         
         let message = self.message(for: indexPath)
-        self.perform(.present, for: message, source: cell)
+
+        perform(.present, for: message, source: nil)
     }
     
 }
@@ -700,16 +698,16 @@ extension CollectionsViewController: CollectionCellDelegate {
 
         case .present:
             self.selectedMessage = message
-
+            
             if message.isImage {
                 let imagesController = ConversationImagesViewController(collection: self.collection, initialMessage: message)
-
+                
                 let backButton = CollectionsView.backButton()
                 backButton.addTarget(self, action: #selector(CollectionsViewController.backButtonPressed(_:)), for: .touchUpInside)
-
+                
                 let closeButton = CollectionsView.closeButton()
                 closeButton.addTarget(self, action: #selector(CollectionsViewController.closeButtonPressed(_:)), for: .touchUpInside)
-
+                
                 imagesController.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
                 imagesController.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: closeButton)
                 imagesController.swipeToDismiss = false
