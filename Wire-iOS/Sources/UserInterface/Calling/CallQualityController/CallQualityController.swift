@@ -93,6 +93,7 @@ class CallQualityController: NSObject {
         switch reason {
         case .normal, .stillOngoing:
             handleCallSuccess(callStartDate: callStartDate, callEndDate: eventDate)
+        case .anweredElsewhere: break;
         default:
             handleCallFailure()
         }
