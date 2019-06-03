@@ -18,10 +18,11 @@
 
 import Foundation
 import Cartography
-import FLAnimatedImage
+import SwiftyGif
 
-class ImageResourceView: FLAnimatedImageView {
-    
+final class ImageResourceView: UIImageView {
+    private static let gifManager = SwiftyGifManager(memoryLimit:50)
+
     fileprivate var loadingView = ThreeDotsLoadingView()
     
     /// This token is changes everytime the cell is re-used. Useful when performing
@@ -41,7 +42,9 @@ class ImageResourceView: FLAnimatedImageView {
     
     public func setImageResource(_ imageResource: ImageResource?, hideLoadingView: Bool = false, completion: (() -> Void)? = nil) {
         let token = UUID()
-        setMediaAsset(nil)
+        clear()
+
+        image = nil
 
         imageResourceInternal = imageResource
         reuseToken = token
@@ -57,8 +60,14 @@ class ImageResourceView: FLAnimatedImageView {
             guard token == self?.reuseToken, let `self` = self else { return }
             
             let update = {
+
                 self.loadingView.isHidden = hideLoadingView || mediaAsset != nil
-                self.setMediaAsset(mediaAsset)
+
+                ///TODO: retire MediaAsset
+                if let image = mediaAsset {
+                    self.setImage(image, manager: ImageResourceView.gifManager)
+                }
+
                 completion?()
             }
             

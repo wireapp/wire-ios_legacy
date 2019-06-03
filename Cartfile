@@ -8,3 +8,4 @@ github "wireapp/HockeySDK-iOS" ~> 5.1.4
 github "wireapp/FLAnimatedImage" "1.0.12-wire"
 github "wireapp/Down" "v2.1.2"
 github "wireapp/DifferenceKit" "1.1.1"
+github "billypchan/SwiftyGif" "master"

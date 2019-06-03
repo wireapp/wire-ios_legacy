@@ -17,8 +17,9 @@
 //
 
 import Foundation
+import SwiftyGif
 
-var defaultImageCache = ImageCache<MediaAsset>()
+var defaultImageCache = ImageCache<UIImage>()
 
 extension ZMConversationMessage {
 
@@ -227,7 +228,7 @@ extension ImageSizeLimit {
 extension ImageResource {
     
     /// Fetch image data and calls the completion handler when it is available on the main queue.
-    func fetchImage(cache: ImageCache<MediaAsset> = defaultImageCache, sizeLimit: ImageSizeLimit = .deviceOptimized, completion: @escaping (_ image: MediaAsset?, _ cacheHit: Bool) -> Void) {
+    func fetchImage(cache: ImageCache<UIImage> = defaultImageCache, sizeLimit: ImageSizeLimit = .deviceOptimized, completion: @escaping (_ image: UIImage?, _ cacheHit: Bool) -> Void) {
         
         guard let cacheIdentifier = self.cacheIdentifier else {
             return completion(nil, false)
@@ -254,7 +255,7 @@ extension ImageResource {
         cache.dispatchGroup.enter()
         
         fetchImageData(queue: cache.processingQueue) { (imageData) in
-            var image: MediaAsset?
+            var image: UIImage?
             
             defer {
                 DispatchQueue.main.async {
@@ -265,8 +266,8 @@ extension ImageResource {
             
             guard let imageData = imageData else { return }
             
-            if isAnimatedGIF {
-                image = FLAnimatedImage(animatedGIFData: imageData)
+            if isAnimatedGIF { ///TODO: cache animated GIF, to prevent associated value not cached issue
+                image = try? UIImage(imageData: imageData, levelOfIntegrity: .default)
             } else {
                 switch sizeLimit {
                 case .none:
@@ -278,11 +279,12 @@ extension ImageResource {
                 case .maxDimensionForShortSide(let limit):
                     image = UIImage(from: imageData, withShorterSideLength: limit)
                 }
+
+                if let image = image {
+                    cache.cache.setObject(image, forKey: cacheKey)
+                }
             }
             
-            if let image = image {
-                cache.cache.setObject(image, forKey: cacheKey)
-            }
         }
     }
     
