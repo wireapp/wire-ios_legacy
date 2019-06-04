@@ -22,7 +22,7 @@
 #import "NSAttributedString+Wire.h"
 #import "Wire-Swift.h"
 
-@interface ParticipantDeviceHeaderView () <UITextViewDelegate>
+@interface ParticipantDeviceHeaderView ()
 @property (strong, nonatomic, readwrite) NSString *userName;
 @end
 
@@ -64,16 +64,6 @@
 - (void)setShowUnencryptedLabel:(BOOL)showUnencryptedLabel
 {
     self.textView.attributedText = [self attributedExplanationTextForUserName:self.userName showUnencryptedLabel:showUnencryptedLabel];
-}
-
-#pragma mark - UITextViewDelegate
-
-- (BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)URL inRange:(NSRange)characterRange interaction:(UITextItemInteraction)interaction
-{
-    if ([self.delegate respondsToSelector:@selector(participantsDeviceHeaderViewDidTapLearnMore:)]) {
-        [self.delegate participantsDeviceHeaderViewDidTapLearnMore:self];
-    }
-    return NO;
 }
 
 #pragma mark - Attributed Text

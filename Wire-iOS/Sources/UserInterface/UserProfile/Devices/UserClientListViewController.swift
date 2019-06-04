@@ -45,6 +45,8 @@ class UserClientListViewController: UIViewController, UICollectionViewDelegateFl
         if let userSession = ZMUserSession.shared() {
             tokens.append(UserChangeInfo.add(observer: self, for: user, userSession: userSession))
         }
+
+        self.headerView.delegate = self
         
         title = "profile.devices.title".localized
     }
@@ -146,4 +148,10 @@ extension UserClientListViewController: ZMUserObserver {
         collectionView.reloadData()
     }
     
+}
+
+extension UserClientListViewController: ParticipantDeviceHeaderViewDelegate {
+    func participantsDeviceHeaderViewDidTapLearnMore(_ headerView: ParticipantDeviceHeaderView!) {
+        URL.wr_fingerprintLearnMore.openInApp(above: self)
+    }
 }
