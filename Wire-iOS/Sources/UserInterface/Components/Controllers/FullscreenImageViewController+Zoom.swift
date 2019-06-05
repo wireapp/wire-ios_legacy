@@ -84,6 +84,12 @@ extension FullscreenImageViewController {
         guard let image = imageView?.image else { return }
 
         UIMenuController.shared.isMenuVisible = false
+
+        /// Notice: fix the case the the image is just fit on the screen and call scrollView.zoom causes images move outside the frame issue
+        guard scrollView.minimumZoomScale != scrollView.maximumZoomScale else {
+            return
+        }
+
         let scaleDiff: CGFloat = scrollView.zoomScale - scrollView.minimumZoomScale
 
         // image view in minimum zoom scale, zoom in to a 50 x 50 rect
