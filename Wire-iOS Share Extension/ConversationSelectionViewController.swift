@@ -76,7 +76,7 @@ class ConversationSelectionViewController : UITableViewController {
         
         cell.textLabel?.text = conversation.name
         cell.backgroundColor = .clear
-        cell.accessoryView = conversation.isTrusted ? UIImageView(image: verifiedShieldImage) : nil
+        cell.accessoryView = conversation.securityLevel == .secure ? UIImageView(image: verifiedShieldImage) : nil
         
         return cell
     }
