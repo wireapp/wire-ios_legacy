@@ -155,32 +155,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 #pragma mark - Copy/Pasting
 
-- (void)paste:(id)sender
-{
-    UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
-    ZMLogDebug(@"types available: %@", [pasteboard pasteboardTypes]);
-
-    if ((pasteboard.hasImages)
-        && [self.delegate respondsToSelector:@selector(textView:hasImageToPaste:)]) {
-        id<MediaAsset> image = [[UIPasteboard generalPasteboard] mediaAsset];
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-        [self.delegate performSelector:@selector(textView:hasImageToPaste:) withObject:self withObject:image];
-#pragma clang diagnostic pop
-    }
-    else if (pasteboard.hasStrings) {
-        [super paste:sender];
-    }
-    else if (pasteboard.hasURLs) {
-        if (pasteboard.string.length != 0) {
-            [super paste:sender];
-        }
-        else if (pasteboard.URL != nil) {
-            [super paste:sender];
-        }
-    }
-}
-
 - (BOOL)canPerformAction:(SEL)action withSender:(id)sender
 {
     if (action == @selector(paste:)) {
@@ -191,6 +165,9 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     return [super canPerformAction:action withSender:sender];
 }
 
+///TODO to swift
+
+/*
 - (BOOL)resignFirstResponder
 {
     BOOL resigned = [super resignFirstResponder];
@@ -202,7 +179,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     }
     return resigned;
 }
-
+*/
 #pragma mark Language
 
 - (UITextInputMode *) textInputMode {

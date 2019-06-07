@@ -28,6 +28,8 @@
 @class TypingIndicatorView;
 @class ZMUser;
 
+@protocol MediaAsset;
+
 @interface ConversationInputBarViewController ()
 
 @property (nonatomic, nonnull) IconButton *audioButton;
@@ -88,5 +90,7 @@
 - (void)commandReturnPressed;
 - (void)upArrowPressed;
 - (void)escapePressed;
+
+- (void)postImage:(id<MediaAsset>)image;
 
 @end

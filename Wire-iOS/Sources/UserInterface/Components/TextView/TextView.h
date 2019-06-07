@@ -20,11 +20,11 @@
 @import UIKit;
 #import "TextTransform.h"
 
-@protocol TextViewProtocol;
-
 /**
  Adds placeholder support to @c UITextView. The position of the placeholder is automatically set based on the text view container insets, which ensures correct vertical position. In some cases, it is desirable to horizontally offset the text, which can be done manually.
  */
+
+@protocol TextViewProtocol;
 
 @interface TextView : UITextView
 
@@ -37,19 +37,8 @@
 @property (nonatomic) NSTextAlignment placeholderTextAlignment;
 @property (nonatomic, copy, nullable) NSString *language;
 
+@property (nullable, weak) id<TextViewProtocol> textViewDelegate;
+
 - (void)showOrHidePlaceholder;
-
-@end
-
-@protocol MediaAsset;
-//
-/// Informal protocol
-@protocol TextViewProtocol <NSObject>
-
-@required
-- (void)textView:(UITextView * _Nonnull)textView hasImageToPaste:(id<MediaAsset> _Nonnull)image;
-
-@optional
-- (void)textView:(UITextView * _Nonnull)textView firstResponderChanged:(NSNumber * _Nonnull)resigned;
 
 @end
