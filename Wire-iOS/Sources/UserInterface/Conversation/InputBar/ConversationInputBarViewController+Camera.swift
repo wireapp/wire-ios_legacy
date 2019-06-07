@@ -120,8 +120,11 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
         }
     }
     
-    public func cameraKeyboardViewController(_ controller: CameraKeyboardViewController, didSelectImageData imageData: Data, isFromCamera: Bool) {
-        self.showConfirmationForImage(imageData as NSData, isFromCamera: isFromCamera)
+    public func cameraKeyboardViewController(_ controller: CameraKeyboardViewController,
+                                             didSelectImageData imageData: Data,
+                                             isFromCamera: Bool,
+                                             uti: String?) {
+        showConfirmationForImage(imageData, isFromCamera: isFromCamera, uti: uti)
     }
     
     @objc func image(_ image: UIImage?, didFinishSavingWithError error: NSError?, contextInfo: AnyObject) {
@@ -157,12 +160,22 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
         }
     }
     
-    @objc public func showConfirmationForImage(_ imageData: NSData, isFromCamera: Bool) {
-        let image = UIImage(data: imageData as Data)
-        
-        let confirmImageViewController = ConfirmAssetViewController()
+    @objc
+    public func showConfirmationForImage(_ imageData: Data,
+                                               isFromCamera: Bool,
+                                               uti: String?) {
+        let mediaAsset: MediaAsset?
+
+        if uti == kUTTypeGIF as String {
+            mediaAsset = FLAnimatedImage(animatedGIFData: imageData)
+        } else {
+            mediaAsset = UIImage(data: imageData as Data) ///TODO: GIF? unify with Giphy confirm workflow
+        }
+
+
+        let confirmImageViewController = ConfirmAssetViewController()///TODO: merge with GiphyConfirmationViewController
         confirmImageViewController.transitioningDelegate = FastTransitioningDelegate.sharedDelegate
-        confirmImageViewController.image = image
+        confirmImageViewController.image = mediaAsset
         confirmImageViewController.previewTitle = self.conversation.displayName.localizedUppercase
         confirmImageViewController.onConfirm = { [unowned self] (editedImage: UIImage?) in
             self.dismiss(animated: true) {

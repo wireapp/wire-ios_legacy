@@ -4323,14 +4323,10 @@
 		871BC1281D34F8F800DF0793 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				EF1E291222AA4BA700DE6BAC /* ConfirmAssetViewController */,
 				55DD5C321FA231000082170C /* CallQualityController */,
 				5EEFC16720BEBE56007E8A79 /* BrowserViewController.swift */,
 				16CB8DB81DC0F777000C5F47 /* DefaultNavigationBar.swift */,
-				871BC13C1D34F8F800DF0793 /* ConfirmAssetViewController.h */,
-				871BC13D1D34F8F800DF0793 /* ConfirmAssetViewController.m */,
-				EF6ACA7B21316A500064047B /* ConfirmAssetViewController+Internal.h */,
-				EF6ACA79213169540064047B /* ConfirmAssetViewController+Style.swift */,
-				EFF9A652223903B100CCEC85 /* ConfirmAssetViewController+Constraint.swift */,
 				871BC1401D34F8F800DF0793 /* FullscreenImageViewController.h */,
 				EF4478502090BC1800BD9827 /* FullscreenImageViewController+internal.h */,
 				871BC13E1D34F8F800DF0793 /* FullscreenImageViewController+PullToDismiss.h */,
@@ -6181,6 +6177,18 @@
 				EF18140821B17F94008F7DA8 /* GroupDetailsReceiptOptionsCellTests.swift */,
 			);
 			path = ConversationOption;
+			sourceTree = "<group>";
+		};
+		EF1E291222AA4BA700DE6BAC /* ConfirmAssetViewController */ = {
+			isa = PBXGroup;
+			children = (
+				871BC13C1D34F8F800DF0793 /* ConfirmAssetViewController.h */,
+				871BC13D1D34F8F800DF0793 /* ConfirmAssetViewController.m */,
+				EF6ACA7B21316A500064047B /* ConfirmAssetViewController+Internal.h */,
+				EF6ACA79213169540064047B /* ConfirmAssetViewController+Style.swift */,
+				EFF9A652223903B100CCEC85 /* ConfirmAssetViewController+Constraint.swift */,
+			);
+			path = ConfirmAssetViewController;
 			sourceTree = "<group>";
 		};
 		EF1FCE4D21B69353003E0BE2 /* ReadReceiptSystemMessage */ = {
