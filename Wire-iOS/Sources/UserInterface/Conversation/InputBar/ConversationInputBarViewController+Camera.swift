@@ -166,14 +166,15 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
                                                uti: String?) {
         let mediaAsset: MediaAsset?
 
-        if uti == kUTTypeGIF as String {
-            mediaAsset = FLAnimatedImage(animatedGIFData: imageData)
+        if uti == kUTTypeGIF as String,
+           let gifImage = FLAnimatedImage(animatedGIFData: imageData),
+           gifImage.frameCount > 1 {
+            mediaAsset = gifImage
         } else {
-            mediaAsset = UIImage(data: imageData as Data) ///TODO: GIF? unify with Giphy confirm workflow
+            mediaAsset = UIImage(data: imageData as Data)
         }
 
-
-        let confirmImageViewController = ConfirmAssetViewController()///TODO: merge with GiphyConfirmationViewController
+        let confirmImageViewController = ConfirmAssetViewController()
         confirmImageViewController.transitioningDelegate = FastTransitioningDelegate.sharedDelegate
         confirmImageViewController.image = mediaAsset
         confirmImageViewController.previewTitle = self.conversation.displayName.localizedUppercase
