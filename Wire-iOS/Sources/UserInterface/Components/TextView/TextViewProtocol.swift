@@ -20,7 +20,7 @@ import Foundation
 
 @objc
 protocol TextViewProtocol: NSObjectProtocol {
-    func textView(_ textView: UITextView, hasImageToPaste image: MediaAsset)
+    func textView(_ textView: UITextView, hasImagesToPaste mediaAssets: [MediaAsset])
 
     func textView(_ textView: UITextView, firstResponderChanged resigned: Bool)
 }

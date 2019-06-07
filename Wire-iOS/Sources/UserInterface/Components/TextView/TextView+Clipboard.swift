@@ -27,11 +27,7 @@ extension TextView {
         zmLog.debug("types available: \(pasteboard.types)")
 
         if pasteboard.hasImages {
-
-            if let image = UIPasteboard.general.mediaAssets().first {
-                textViewDelegate?.textView(self, hasImageToPaste: image)
-            }
-            ///TODO: more then 1?
+            textViewDelegate?.textView(self, hasImagesToPaste: UIPasteboard.general.mediaAssets())
         } else if pasteboard.hasStrings {
             super.paste(sender)
         } else if pasteboard.hasURLs {

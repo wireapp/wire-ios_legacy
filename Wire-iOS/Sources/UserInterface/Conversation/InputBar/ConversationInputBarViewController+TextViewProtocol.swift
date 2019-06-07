@@ -19,31 +19,43 @@
 import Foundation
 
 extension ConversationInputBarViewController: TextViewProtocol {
-    func textView(_ textView: UITextView, hasImageToPaste image: MediaAsset) {
-        let confirmImageViewController = ConfirmAssetViewController()
-        confirmImageViewController.image = image
-        confirmImageViewController.previewTitle = conversation.displayName.uppercasedWithCurrentLocale
 
 
-        confirmImageViewController.onConfirm = {[weak self] editedImage in
-            self?.dismiss(animated: false)
+    func textView(_ textView: UITextView, hasImagesToPaste mediaAssets: [MediaAsset]) {
 
-            let finalImage: MediaAsset
-            if let editedImage = editedImage {
-                finalImage = editedImage
-            } else {
-                finalImage = image
+        /// if there are only one image, show the ConfirmAssetViewController, else paste them all (show a confirm UI?)
+
+        if mediaAssets.count == 1,
+           let image = mediaAssets.first {
+
+            let confirmImageViewController = ConfirmAssetViewController()
+            confirmImageViewController.image = image
+            confirmImageViewController.previewTitle = conversation.displayName.uppercasedWithCurrentLocale
+
+
+            confirmImageViewController.onConfirm = {[weak self] editedImage in
+                self?.dismiss(animated: false)
+
+                let finalImage: MediaAsset
+                if let editedImage = editedImage {
+                    finalImage = editedImage
+                } else {
+                    finalImage = image
+                }
+
+                self?.postImage(finalImage)
             }
 
-            self?.postImage(finalImage)
+            confirmImageViewController.onCancel = { [weak self] in
+                self?.dismiss(animated: false)
+            }
+
+            present(confirmImageViewController, animated: false)
+        } else {
+            for image in mediaAssets {
+                postImage(image)
+            }
         }
-
-        confirmImageViewController.onCancel = { [weak self] in
-            self?.dismiss(animated: false)
-        }
-
-        present(confirmImageViewController, animated: false)
-
     }
 
     func textView(_ textView: UITextView,

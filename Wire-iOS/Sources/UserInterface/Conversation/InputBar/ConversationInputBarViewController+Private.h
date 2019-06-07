@@ -91,6 +91,6 @@
 - (void)upArrowPressed;
 - (void)escapePressed;
 
-- (void)postImage:(id<MediaAsset>)image;
+- (void)postImage:(id<MediaAsset> _Nonnull)image;
 
 @end
