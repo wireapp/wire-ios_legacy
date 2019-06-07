@@ -510,7 +510,7 @@ extension CameraKeyboardViewController: CameraCellDelegate {
     }
     
     public func cameraCell(_ cameraCell: CameraCell, didPickImageData imageData: Data) {
-        self.delegate?.cameraKeyboardViewController(self, didSelectImageData: imageData, isFromCamera: true, uti: nil)///TODO: imageData as a struct?
+        self.delegate?.cameraKeyboardViewController(self, didSelectImageData: imageData, isFromCamera: true, uti: nil)
     }
 }
 
