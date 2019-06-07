@@ -74,7 +74,6 @@ class ConversationSelectionViewController : UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let conversation = visibleConversations[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath) as! TargetConversationCell
-
         cell.configure(for: conversation)
         return cell
     }
