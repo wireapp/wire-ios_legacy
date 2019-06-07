@@ -1055,6 +1055,7 @@
 		EF1D80DD22275F8F00BCA8D3 /* MockUser+MockUserArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1D80DC22275F8F00BCA8D3 /* MockUser+MockUserArray.swift */; };
 		EF1D80E02228175800BCA8D3 /* CountryCodeTableViewController+StatusBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1D80DE2228175800BCA8D3 /* CountryCodeTableViewController+StatusBar.swift */; };
 		EF1D8BA821EE49550001A4CC /* TeamMemberInviteViewControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1D8BA721EE49550001A4CC /* TeamMemberInviteViewControllerSnapshotTests.swift */; };
+		EF1E291422AA58E500DE6BAC /* ConfirmAssetViewController+Editing.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1E291322AA58E500DE6BAC /* ConfirmAssetViewController+Editing.swift */; };
 		EF1EA4631FB0937000B53063 /* MockUser+filename.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1EA4611FB0934D00B53063 /* MockUser+filename.swift */; };
 		EF1EE76B225380AD00E7B6E3 /* FullscreenImageViewController+ViewLifeCycle.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1EE76A225380AD00E7B6E3 /* FullscreenImageViewController+ViewLifeCycle.swift */; };
 		EF1EE76D225385CA00E7B6E3 /* UIViewController+StatusBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1EE76C225385CA00E7B6E3 /* UIViewController+StatusBar.swift */; };
@@ -2833,6 +2834,7 @@
 		EF1D80DC22275F8F00BCA8D3 /* MockUser+MockUserArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MockUser+MockUserArray.swift"; sourceTree = "<group>"; };
 		EF1D80DE2228175800BCA8D3 /* CountryCodeTableViewController+StatusBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CountryCodeTableViewController+StatusBar.swift"; sourceTree = "<group>"; };
 		EF1D8BA721EE49550001A4CC /* TeamMemberInviteViewControllerSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamMemberInviteViewControllerSnapshotTests.swift; sourceTree = "<group>"; };
+		EF1E291322AA58E500DE6BAC /* ConfirmAssetViewController+Editing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConfirmAssetViewController+Editing.swift"; sourceTree = "<group>"; };
 		EF1EA4611FB0934D00B53063 /* MockUser+filename.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MockUser+filename.swift"; sourceTree = "<group>"; };
 		EF1EE76A225380AD00E7B6E3 /* FullscreenImageViewController+ViewLifeCycle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FullscreenImageViewController+ViewLifeCycle.swift"; sourceTree = "<group>"; };
 		EF1EE76C225385CA00E7B6E3 /* UIViewController+StatusBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+StatusBar.swift"; sourceTree = "<group>"; };
@@ -6187,6 +6189,7 @@
 				EF6ACA7B21316A500064047B /* ConfirmAssetViewController+Internal.h */,
 				EF6ACA79213169540064047B /* ConfirmAssetViewController+Style.swift */,
 				EFF9A652223903B100CCEC85 /* ConfirmAssetViewController+Constraint.swift */,
+				EF1E291322AA58E500DE6BAC /* ConfirmAssetViewController+Editing.swift */,
 			);
 			path = ConfirmAssetViewController;
 			sourceTree = "<group>";
@@ -7254,6 +7257,7 @@
 				871BC2391D34F8F800DF0793 /* KeyboardAvoidingViewController.m in Sources */,
 				EEAC0A1421AD898200BE5F5D /* ConversationCreateNameCell.swift in Sources */,
 				162836142016574D0027082D /* ProcessInfo+Tests.swift in Sources */,
+				EF1E291422AA58E500DE6BAC /* ConfirmAssetViewController+Editing.swift in Sources */,
 				160FD05221085BDA00C517B5 /* ProfileSelfPictureViewController+UserObserver.swift in Sources */,
 				8736F1C21E4DCEB8001CBA62 /* AppLockViewController.swift in Sources */,
 				EFA820AE2019075400FED370 /* UIViewController+addViewController.swift in Sources */,
