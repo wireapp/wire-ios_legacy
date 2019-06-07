@@ -31,20 +31,34 @@ extension UIPasteboard {
         }
     }
 
-    @objc public func mediaAsset() -> MediaAsset? {
-        if contains(pasteboardTypes: [kUTTypeGIF as String]) {
-            let data: Data? = self.data(forPasteboardType: kUTTypeGIF as String)
-            return FLAnimatedImage(animatedGIFData: data)
-        } else if contains(pasteboardTypes: [kUTTypePNG as String]) {
-            let data: Data? = self.data(forPasteboardType: kUTTypePNG as String)
-            if let aData = data {
-                return UIImage(data: aData)
+    @objc
+    public func mediaAssets() -> [MediaAsset] {
+
+        var mediaAssets = [MediaAsset]()
+
+        for i in 0..<numberOfItems {
+            let indexSet = IndexSet(integer: i)
+
+            if let types = types(forItemSet: indexSet)?.first {
+                for type in types {
+                    let data = self.data(forPasteboardType: type, inItemSet: indexSet)?.first
+
+                    if type == kUTTypeGIF as String, ///TODO: it is one frame GIF?
+                        let data = data {
+                        mediaAssets.append(FLAnimatedImage(animatedGIFData: data))
+                    } else if type == kUTTypePNG as String,
+                        let data = data,
+                        let image = UIImage(data: data) {
+                        mediaAssets.append(image)
+                    } else if hasImages,
+                        let data = data,
+                        let image = UIImage(data: data) {
+                        mediaAssets.append(image)
+                    }
+                }
             }
-            return nil
-        } else if hasImages {
-            return image
         }
-        return nil
+        return mediaAssets
     }
 
     @objc func setMediaAsset(_ image: MediaAsset?) {
