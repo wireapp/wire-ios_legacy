@@ -43,4 +43,12 @@ extension TextView {
         }
     }
 
+    override open func resignFirstResponder() -> Bool {
+        let resigned: Bool = super.resignFirstResponder()
+        
+        textViewDelegate?.textView(self, firstResponderChanged: resigned)
+
+        return resigned
+    }
+
 }

@@ -46,7 +46,8 @@ extension ConversationInputBarViewController: TextViewProtocol {
 
     }
 
-    func textView(_ textView: UITextView, firstResponderChanged resigned: NSNumber) {
+    func textView(_ textView: UITextView,
+                  firstResponderChanged resigned: Bool) {
         updateAccessoryViews()
         updateNewButtonTitleLabel()
     }

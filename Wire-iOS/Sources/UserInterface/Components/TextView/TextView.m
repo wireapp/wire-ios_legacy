@@ -165,21 +165,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     return [super canPerformAction:action withSender:sender];
 }
 
-///TODO to swift
-
-/*
-- (BOOL)resignFirstResponder
-{
-    BOOL resigned = [super resignFirstResponder];
-    if ([self.delegate respondsToSelector:@selector(textView:firstResponderChanged:)]) {
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-        [self.delegate performSelector:@selector(textView:firstResponderChanged:) withObject:self withObject:@(resigned)];
-#pragma clang diagnostic pop
-    }
-    return resigned;
-}
-*/
 #pragma mark Language
 
 - (UITextInputMode *) textInputMode {
