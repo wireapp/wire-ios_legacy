@@ -53,7 +53,8 @@ extension ConversationInputBarViewController: TextViewProtocol {
             present(confirmImageViewController, animated: false)
         } else {
             for image in mediaAssets {
-                postImage(image)
+                postImage(image) ///TODO: put in a queue to prevent blocking the UI, or wait after completion.
+                ///TODO: allow use to cancel when uploading
             }
         }
     }
