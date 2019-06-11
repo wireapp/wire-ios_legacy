@@ -20,16 +20,8 @@ import Foundation
 
 extension AppRootViewController: ZMUserObserver {
     public func userDidChange(_ changeInfo: UserChangeInfo) {
-        if changeInfo.legalHoldStatusChanged {
-            showLegalHoldAlert()
-        }
-    }
-
-    private func showLegalHoldAlert() {
-        if ZMUser.selfUser().isUnderLegalHold {
-            ///TODO: wait for another PR got merged
-            //            showLegalHoldActivatedAlert()
-        } else {
+        if changeInfo.legalHoldStatusChanged,
+           !ZMUser.selfUser().isUnderLegalHold {
             presentLegalHoldDeactivatedAlert()
         }
     }
