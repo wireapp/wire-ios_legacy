@@ -1650,3 +1650,8 @@
 "share_extension.voiceover.conversation_under_legal_hold" = "Under legal hold.";
 "share_extension.voiceover.conversation_secure" = "All clients verified.";
 "share_extension.voiceover.conversation_secure_with_ignored" = "Not all clients verified.";
+
+// Legal hold - alert
+"legalhold_request.alert.title" = "Legal Hold Requested";
+"legalhold_request.alert.detail" = "All future messages will be recorded by the device with fingerprint:\n%@\nThis includes deleted, edited, and timed messages in all conversations.";
+"legalhold_request.alert.detail.enter_password" = "Enter your password to confirm.";
