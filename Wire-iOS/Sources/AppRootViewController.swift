@@ -649,7 +649,9 @@ extension AppRootViewController: SessionManagerURLHandlerDelegate {
                                           message: message,
                                           preferredStyle: .alert)
 
-            alert.addAction(.ok { callback(false) })
+            alert.addAction(.ok(handler: { _ in
+                callback(false)
+            }))
 
             let presentAlert = {
                 self.present(alert, animated: true)
