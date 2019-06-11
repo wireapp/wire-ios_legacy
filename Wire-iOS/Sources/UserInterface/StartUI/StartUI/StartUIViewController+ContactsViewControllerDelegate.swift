@@ -1,4 +1,4 @@
-//
+
 // Wire
 // Copyright (C) 2019 Wire Swiss GmbH
 //
@@ -16,24 +16,19 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-@class Button;
-@class PermissionDeniedViewController;
+import Foundation
 
-@protocol PermissionDeniedViewControllerDelegate;
+extension StartUIViewController: ContactsViewControllerDelegate {
 
-@interface ShareContactsViewController ()
+    public func contactsViewControllerDidCancel(_ controller: ContactsViewController) {
+        dismiss(animated: true)
+    }
 
-@property (nonatomic) UIButton *notNowButton;
-@property (nonatomic) UILabel *heroLabel;
-@property (nonatomic) Button *shareContactsButton;
-@property (nonatomic) UIView *shareContactsContainerView;
-@property (nonatomic) PermissionDeniedViewController *addressBookAccessDeniedViewController;
-@property (nonatomic) UIVisualEffectView *backgroundBlurView;
+    public func contactsViewControllerDidNotShareContacts(_ controller: ContactsViewController) {
+        dismiss(animated: true) {
+            UIApplication.shared.wr_topmostController()?.wr_presentInviteActivityViewController(withSourceView: self.quickActionsBar,
+                                                                                                logicalContext: GenericInviteContext.startUIBanner)
+        }
+    }
 
-@end
-
-@interface ShareContactsViewController () <PermissionDeniedViewControllerDelegate>
-
-@property (nonatomic) BOOL showingAddressBookAccessDeniedViewController;
-
-@end
+}

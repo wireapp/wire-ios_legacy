@@ -1,4 +1,4 @@
-//
+
 // Wire
 // Copyright (C) 2019 Wire Swiss GmbH
 //
@@ -16,24 +16,13 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-@class Button;
-@class PermissionDeniedViewController;
+import Foundation
 
-@protocol PermissionDeniedViewControllerDelegate;
+extension ParticipantDeviceHeaderView: UITextViewDelegate {
 
-@interface ShareContactsViewController ()
+    public func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+        delegate.participantsDeviceHeaderViewDidTapLearnMore(self)
 
-@property (nonatomic) UIButton *notNowButton;
-@property (nonatomic) UILabel *heroLabel;
-@property (nonatomic) Button *shareContactsButton;
-@property (nonatomic) UIView *shareContactsContainerView;
-@property (nonatomic) PermissionDeniedViewController *addressBookAccessDeniedViewController;
-@property (nonatomic) UIVisualEffectView *backgroundBlurView;
-
-@end
-
-@interface ShareContactsViewController () <PermissionDeniedViewControllerDelegate>
-
-@property (nonatomic) BOOL showingAddressBookAccessDeniedViewController;
-
-@end
+        return false
+    }
+}

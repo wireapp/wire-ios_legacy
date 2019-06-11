@@ -76,7 +76,7 @@ class ConversationStartedSystemMessageCell: ConversationIconBasedCell, Conversat
 // MARK: - UITextViewDelegate
 extension ConversationStartedSystemMessageCell {
 
-    public func textView(_ textView: UITextView, shouldInteractWith url: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+    public override func textView(_ textView: UITextView, shouldInteractWith url: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
 
         delegate?.conversationMessageWantsToOpenParticipantsDetails(self, selectedUsers: selectedUsers, sourceView: self)
 
@@ -146,7 +146,7 @@ class LinkConversationSystemMessageCell: ConversationIconBasedCell, Conversation
 
 extension LinkConversationSystemMessageCell {
 
-    public func textView(_ textView: UITextView, shouldInteractWith url: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+    public override func textView(_ textView: UITextView, shouldInteractWith url: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
 
         if let itemURL = lastConfiguration?.url {
             UIApplication.shared.open(itemURL)
@@ -203,17 +203,17 @@ class NewDeviceSystemMessageCell: ConversationIconBasedCell, ConversationMessage
 
 extension NewDeviceSystemMessageCell {
 
-    public func textView(_ textView: UITextView, shouldInteractWith url: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+    public override func textView(_ textView: UITextView, shouldInteractWith url: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
 
-        guard let linkTarget = linkTarget  else { return false }
+        guard let linkTarget = linkTarget,
+              url == type(of: self).userClientURL,
+              let zClientViewController = ZClientViewController.shared() else { return false }
 
-        if url == type(of: self).userClientURL {
-            switch linkTarget {
-            case .user(let user):
-                ZClientViewController.shared()?.openClientListScreen(for: user)
-            case .conversation(let conversation):
-                ZClientViewController.shared()?.openDetailScreen(for: conversation)
-            }
+        switch linkTarget {
+        case .user(let user):
+            zClientViewController.openClientListScreen(for: user)
+        case .conversation(let conversation):
+            zClientViewController.openDetailScreen(for: conversation)
         }
 
         return false

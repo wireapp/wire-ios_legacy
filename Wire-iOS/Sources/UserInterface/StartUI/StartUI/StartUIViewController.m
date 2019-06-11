@@ -40,10 +40,9 @@
 static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 
-@interface StartUIViewController () <ContactsViewControllerDelegate, SearchHeaderViewControllerDelegate>
+@interface StartUIViewController () <SearchHeaderViewControllerDelegate>
 
 @property (nonatomic) ProfilePresenter *profilePresenter;
-@property (nonatomic) StartUIInviteActionBar *quickActionsBar;
 @property (nonatomic) EmptySearchResultsView *emptyResultView;
 
 @end
@@ -252,20 +251,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self.searchResultsViewController cancelPreviousSearch];
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(performSearch) object:nil];
     [self performSelector:@selector(performSearch) withObject:nil afterDelay:0.2f];
-}
-
-#pragma mark - ContactsViewControllerDelegate
-
-- (void)contactsViewControllerDidCancel:(ContactsViewController *)controller
-{
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-- (void)contactsViewControllerDidNotShareContacts:(ContactsViewController *)controller
-{
-    [self dismissViewControllerAnimated:YES completion:^{
-        [self wr_presentInviteActivityViewControllerWithSourceView:self.quickActionsBar logicalContext:GenericInviteContextStartUIBanner];
-    }];
 }
 
 @end

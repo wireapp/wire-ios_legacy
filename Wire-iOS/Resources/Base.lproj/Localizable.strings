@@ -1648,3 +1648,10 @@
 // Legal Hold Deactivation
 "legal_hold.deactivated.title" = "Legal Hold Deactivated";
 "legal_hold.deactivated.message" = "Future messages will not be recorded.";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Share Extension
+"share_extension.voiceover.conversation_under_legal_hold" = "Under legal hold.";
+"share_extension.voiceover.conversation_secure" = "All clients verified.";
+"share_extension.voiceover.conversation_secure_with_ignored" = "Not all clients verified.";
+
