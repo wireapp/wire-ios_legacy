@@ -24,7 +24,7 @@ protocol GroupOptionsSectionControllerDelegate: class {
     func presentNotificationsOptions(animated: Bool)
 }
 
-class GroupOptionsSectionController: GroupDetailsSectionController {
+final class GroupOptionsSectionController: GroupDetailsSectionController {
 
     private enum Option: Int, CaseIterable, Restricted {
 
@@ -123,7 +123,7 @@ class GroupOptionsSectionController: GroupDetailsSectionController {
 
     }
 
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 
         switch options[indexPath.row] {
         case .guests:

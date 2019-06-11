@@ -474,7 +474,7 @@ class ShareExtensionViewController: SLComposeServiceViewController {
     
     
     private func conversationDidDegrade(change: ConversationDegradationInfo, callback: @escaping DegradationStrategyChoice) {
-        let title = titleForMissingClients(users: change.users)
+        let title = titleForMissingClients(causedBy: change)
         let alert = UIAlertController(title: title, message: "meta.degraded.dialog_message".localized, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "meta.degraded.send_anyway_button".localized, style: .destructive, handler: { _ in
             callback(.sendAnyway)
@@ -484,12 +484,17 @@ class ShareExtensionViewController: SLComposeServiceViewController {
         }))
         self.present(alert, animated: true)
     }
-}
 
+    private func titleForMissingClients(causedBy change: ConversationDegradationInfo) -> String {
+        if change.conversation.legalHoldStatus == .pendingApproval {
+            return "meta.legalhold.send_alert_title".localized
+        }
 
-private func titleForMissingClients(users: Set<ZMUser>) -> String {
-    let template = users.count > 1 ? "meta.degraded.degradation_reason_message.plural" : "meta.degraded.degradation_reason_message.singular"
+        let users = change.users
+        let template = users.count > 1 ? "meta.degraded.degradation_reason_message.plural" : "meta.degraded.degradation_reason_message.singular"
     
-    let allUsers = (users.map(\.displayName) as NSArray).componentsJoined(by: ", ") as NSString
-    return NSString(format: template.localized as NSString, allUsers) as String
+        let allUsers = (users.map(\.displayName) as NSArray).componentsJoined(by: ", ") as NSString
+        return String.localizedStringWithFormat(template.localized, allUsers)
+    }
+
 }

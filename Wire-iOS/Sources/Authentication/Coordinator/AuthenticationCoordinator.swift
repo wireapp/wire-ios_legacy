@@ -399,11 +399,12 @@ extension AuthenticationCoordinator {
 
             presentAlert(for: alertModel)
         } else {
-            guard let selectedAccount = sessionManager.accountManager.selectedAccount else {
-                fatal("No session manager and selected account to log out from")
+            guard let accountId = unauthenticatedSession.accountId,
+                  let unauthenticatedAccount = sessionManager.accountManager.account(with: accountId) else {
+                fatal("No unauthenticated account to log out from")
             }
-
-            sessionManager.delete(account: selectedAccount)
+            
+            sessionManager.delete(account: unauthenticatedAccount)
         }
     }
 

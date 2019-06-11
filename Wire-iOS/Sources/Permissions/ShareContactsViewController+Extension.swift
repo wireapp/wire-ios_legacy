@@ -20,6 +20,7 @@ import Foundation
 
 extension ShareContactsViewController {
 
+    // MARK: - Constraints
     @objc
     func createConstraints() {
         [backgroundBlurView,
@@ -55,6 +56,25 @@ extension ShareContactsViewController {
         ]
 
         NSLayoutConstraint.activate(constraints)
+    }
+
+    // MARK: - AddressBook Access Denied ViewController
+
+    @objc(displayContactsAccessDeniedMessageAnimated:)
+    func displayContactsAccessDeniedMessage(animated: Bool) {
+        endEditing()
+
+        showingAddressBookAccessDeniedViewController = true
+
+        if animated {
+            UIView.transition(from: shareContactsContainerView,
+                              to: addressBookAccessDeniedViewController.view,
+                              duration: 0.35,
+                              options: [.showHideTransitionViews, .transitionCrossDissolve])
+        } else {
+            shareContactsContainerView.isHidden = true
+            addressBookAccessDeniedViewController.view.isHidden = false
+        }
     }
 }
 

@@ -28,8 +28,7 @@ class ConversationSelectionViewController : UITableViewController {
     
     fileprivate var allConversations : [Conversation]
     fileprivate var visibleConversations : [Conversation]
-    fileprivate let verifiedShieldImage = WireStyleKit.imageOfShieldverified
-    
+
     var selectionHandler : ((_ conversation: Conversation) -> Void)?
     
     fileprivate let searchController = UISearchController(searchResultsController: nil)
@@ -39,8 +38,10 @@ class ConversationSelectionViewController : UITableViewController {
         visibleConversations = conversations
         
         super.init(style: .plain)
-        
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
+
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 56
+        tableView.register(TargetConversationCell.self, forCellReuseIdentifier: cellReuseIdentifier)
         
         searchController.dimsBackgroundDuringPresentation = false
         searchController.hidesNavigationBarDuringPresentation = false
@@ -72,12 +73,8 @@ class ConversationSelectionViewController : UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let conversation = visibleConversations[indexPath.row]
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath)
-        
-        cell.textLabel?.text = conversation.name
-        cell.backgroundColor = .clear
-        cell.accessoryView = conversation.isTrusted ? UIImageView(image: verifiedShieldImage) : nil
-        
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath) as! TargetConversationCell
+        cell.configure(for: conversation)
         return cell
     }
     
