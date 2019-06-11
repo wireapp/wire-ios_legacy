@@ -49,8 +49,6 @@ final class AppRootViewController: UIViewController {
     weak var presentedPopover: UIPopoverPresentationController?
     weak var popoverPointToView: UIView?
 
-    var userObserverToken: Any?
-
     fileprivate weak var showContentDelegate: ShowContentDelegate? {
         didSet {
             if let delegate = showContentDelegate {
@@ -161,15 +159,6 @@ final class AppRootViewController: UIViewController {
                                                            application: UIApplication.shared)
                 
             sessionManager.urlHandler.delegate = self
-
-            /// setup UserChangeInfo observer after sessionManager is created since ZMUserSession.shared() depends on it.
-            self.setupUserChangeInfoObserver()
-        }
-    }
-
-    private func setupUserChangeInfoObserver() {
-        if let session = ZMUserSession.shared() {
-            userObserverToken = UserChangeInfo.add(userObserver:self, for: ZMUser.selfUser(), userSession: session)
         }
     }
 
@@ -660,10 +649,9 @@ extension AppRootViewController: SessionManagerURLHandlerDelegate {
                                           message: message,
                                           preferredStyle: .alert)
 
-            let okAction = UIAlertAction.ok(handler: { _ in
+            alert.addAction(.ok(handler: { _ in
                 callback(false)
-            })
-            alert.addAction(okAction)
+            }))
 
             let presentAlert = {
                 self.present(alert, animated: true)

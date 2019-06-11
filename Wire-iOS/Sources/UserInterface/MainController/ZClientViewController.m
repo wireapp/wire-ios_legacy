@@ -55,7 +55,7 @@
 @end
 
 
-@interface ZClientViewController () <ZMUserObserver>
+@interface ZClientViewController ()
 
 @property (nonatomic, readwrite) MediaPlaybackManager *mediaPlaybackManager;
 @property (nonatomic) ColorSchemeController *colorSchemeController;
@@ -70,7 +70,6 @@
 
 @property (nonatomic) BOOL pendingInitialStateRestore;
 @property (nonatomic) SplitViewController *splitViewController;
-@property (nonatomic) id userObserverToken;
 
 @end
 
@@ -165,8 +164,8 @@
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(requestLoopNotification:) name:ZMLoggingRequestLoopNotificationName object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(inconsistentStateNotification:) name:ZMLoggingInconsistentStateNotificationName object:nil];
     }
-    
-    self.userObserverToken = [UserChangeInfo addObserver:self forUser:[ZMUser selfUser] userSession:[ZMUserSession sharedSession]];
+
+    [self setupUserChangeInfoObserver];
 }
 
 - (void)createBackgroundViewController
@@ -258,17 +257,6 @@
 
     self.conversationListViewController.isComingFromRegistration = self.isComingFromRegistration;
     self.conversationListViewController.needToShowDataUsagePermissionDialog = NO;
-}
-
-#pragma mark - ZMUserObserver
-
-- (void)userDidChange:(UserChangeInfo *)change
-{
-    if (change.accentColorValueChanged) {
-        if ([[UIApplication sharedApplication].keyWindow respondsToSelector:@selector(setTintColor:)]) {
-            [UIApplication sharedApplication].keyWindow.tintColor = [UIColor accentColor];
-        }
-    }
 }
 
 #pragma mark - Public API

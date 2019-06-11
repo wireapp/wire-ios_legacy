@@ -1,4 +1,4 @@
-//
+
 // Wire
 // Copyright (C) 2019 Wire Swiss GmbH
 //
@@ -18,11 +18,22 @@
 
 import Foundation
 
-extension AppRootViewController: ZMUserObserver {
+extension ZClientViewController: ZMUserObserver {
     public func userDidChange(_ changeInfo: UserChangeInfo) {
         if changeInfo.legalHoldStatusChanged,
-           !ZMUser.selfUser().isUnderLegalHold {
+            !ZMUser.selfUser().isUnderLegalHold {
             presentLegalHoldDeactivatedAlert()
+        }
+
+        if changeInfo.accentColorValueChanged {
+            UIApplication.shared.keyWindow?.tintColor = UIColor.accent()
+        }
+    }
+
+    @objc
+    func setupUserChangeInfoObserver() {
+        if let session = ZMUserSession.shared() {
+            userObserverToken = UserChangeInfo.add(userObserver:self, for: ZMUser.selfUser(), userSession: session)
         }
     }
 }
