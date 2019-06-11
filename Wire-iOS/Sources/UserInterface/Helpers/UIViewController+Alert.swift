@@ -27,9 +27,9 @@ extension UIAlertController {
     ///   - message: message of the alert
     ///   - okActionHandler: a nullable closure for the OK button
     /// - Returns: the alert presented
-    static func ok(title: String,
-                   message: String,
-                   okActionHandler: ((UIAlertAction) -> Void)? = nil) -> UIAlertController {
+    static func alertWithOKButton(title: String,
+                                  message: String,
+                                  okActionHandler: ((UIAlertAction) -> Void)? = nil) -> UIAlertController {
         let alert = UIAlertController(title: title,
                                       message: message,
                                       preferredStyle: .alert)
@@ -41,10 +41,9 @@ extension UIAlertController {
     }
 
     //MARK: - legal hold
-    static func legalHoldDeactivated(okActionHandler: ((UIAlertAction) -> Void)? = nil) -> UIAlertController {
-        return UIAlertController.ok(title: "legal_hold.deactivated.title".localized,
-                                         message: "legal_hold.deactivated.message".localized,
-                                         okActionHandler: okActionHandler)
+    static func legalHoldDeactivated() -> UIAlertController {
+        return UIAlertController.alertWithOKButton(title: "legal_hold.deactivated.title".localized,
+                                    message: "legal_hold.deactivated.message".localized)
     }
 }
 
@@ -63,7 +62,7 @@ extension UIViewController {
                                   animated: Bool = true,
                                   okActionHandler: ((UIAlertAction) -> Void)? = nil) -> UIAlertController {
 
-        let alert = UIAlertController.ok(title: title,
+        let alert = UIAlertController.alertWithOKButton(title: title,
                                          message: message,
                                          okActionHandler: okActionHandler)
 
@@ -74,13 +73,11 @@ extension UIViewController {
 
     //MARK: - legal hold
     @discardableResult
-    func presentLegalHoldDeactivatedAlert(animated: Bool = true,
-                                          okActionHandler: ((UIAlertAction) -> Void)? = nil) -> UIAlertController {
+    func presentLegalHoldDeactivatedAlert(animated: Bool = true) -> UIAlertController {
 
-        let alert = UIAlertController.legalHoldDeactivated(okActionHandler: okActionHandler)
+        let alert = UIAlertController.legalHoldDeactivated()
 
-
-        present(alert, animated: animated, completion: nil)
+        present(alert, animated: animated)
 
         return alert
     }

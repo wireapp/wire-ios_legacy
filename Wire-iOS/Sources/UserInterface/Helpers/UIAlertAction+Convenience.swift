@@ -17,7 +17,8 @@
 //
 
 extension UIAlertAction {
-    @objc(cancelActionWithCompletion:) static func cancel(_ completion: (() -> Void)? = nil) -> UIAlertAction {
+    @objc(cancelActionWithCompletion:)
+    static func cancel(_ completion: (() -> Void)? = nil) -> UIAlertAction {
         return UIAlertAction(
             title: "general.cancel".localized,
             style: .cancel,
@@ -25,7 +26,8 @@ extension UIAlertAction {
         )
     }
     
-    @objc(okActionWithCompletion:) static func ok(_ completion:((UIAlertAction) -> Void)? = nil) -> UIAlertAction {
+    @objc(okActionWithCompletion:)
+    static func ok(_ completion:((UIAlertAction) -> Void)? = nil) -> UIAlertAction {
         return UIAlertAction.ok(style: .default, handler: completion)
     }
 
