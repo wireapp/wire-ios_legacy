@@ -1,6 +1,6 @@
 // 
 // Wire
-// Copyright (C) 2016 Wire Swiss GmbH
+// Copyright (C) 2019 Wire Swiss GmbH
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -19,17 +19,17 @@
 
 import Foundation
 
-enum RequestPasswordContext {
-    case removeDevice
-    case legalHold(fingerprint: Data, hasPasswordInput: Bool)
-}
 
 final class RequestPasswordController {
     
     let callback: ((Result<String>) -> ())
     var okAction: UIAlertAction!
     let alertController: UIAlertController
-    
+
+    enum RequestPasswordContext {
+        case removeDevice
+    }
+
     init(context: RequestPasswordContext,
          callback: @escaping (Result<String>) -> ()) {
 
@@ -47,27 +47,12 @@ final class RequestPasswordController {
 
             okTitle = "general.ok".localized
             cancelTitle = "general.cancel".localized
-        case .legalHold(let fingerprint, let hasPasswordInput):
-            title = "legalhold_request.alert.title".localized
-
-            let fingerprintString = (fingerprint as NSData).fingerprintString
-
-            var legalHoldMessage = "legalhold_request.alert.detail".localized(args: fingerprintString)
-            if hasPasswordInput {
-                legalHoldMessage += "\n"
-                legalHoldMessage += "legalhold_request.alert.detail.enter_password".localized
-            }
-            message = legalHoldMessage
-
-            okTitle = "general.skip".localized
-            cancelTitle = "general.accept".localized
         }
 
         alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
 
         switch context {
-        case .removeDevice,
-             .legalHold(_, true):
+        case .removeDevice:
             alertController.addTextField {(textField: UITextField) -> Void in
                 textField.placeholder = "self.settings.account_details.remove_device.password".localized
                 textField.isSecureTextEntry = true
@@ -75,8 +60,6 @@ final class RequestPasswordController {
                                     action: #selector(RequestPasswordController.passwordTextFieldChanged(_:)),
                                     for: .editingChanged)
             }
-        case .legalHold(_, false):
-            break
         }
 
         okAction = UIAlertAction(title: okTitle, style: .default) {

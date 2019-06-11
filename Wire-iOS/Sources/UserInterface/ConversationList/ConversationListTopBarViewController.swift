@@ -61,10 +61,6 @@ final class ConversationListTopBarViewController: UIViewController {
         topBar?.middleView = createTitleView()
         topBar?.leftView = createAccountView()
 
-        ///TODO: observe for LegalHold status update event
-        if selfUser.isUnderLegalHold {
-            topBar?.rightView = createLegalHoldView()
-        }
         topBar?.splitSeparator = false
         
         availabilityViewController?.didMove(toParent: self)
