@@ -43,16 +43,4 @@ final class RequestPasswordControllerSnapshotTests: ZMSnapshotTestCase {
 
         verifyAlertController(sut.alertController)
     }
-
-    func testForLegalHoldContext() {
-        sut = RequestPasswordController(context: .legalHold(fingerprint: fingerprint, hasPasswordInput: true), callback: callback)
-
-        verifyAlertController(sut.alertController)
-    }
-
-    func testForLegalHoldContextWithNoPasswordInput() {
-        sut = RequestPasswordController(context: .legalHold(fingerprint: fingerprint, hasPasswordInput: false), callback: callback)
-
-        verifyAlertController(sut.alertController)
-    }
 }
