@@ -28,6 +28,7 @@ final class RequestPasswordController {
 
     enum RequestPasswordContext {
         case removeDevice
+        case legalHold(fingerprint: Data?, hasPasswordInput: Bool)
     }
 
     init(context: RequestPasswordContext,
@@ -47,12 +48,33 @@ final class RequestPasswordController {
 
             okTitle = "general.ok".localized
             cancelTitle = "general.cancel".localized
+
+        case .legalHold(let fingerprint, let hasPasswordInput):
+            title = "legalhold_request.alert.title".localized
+
+            let fingerprintString: String
+            if let fingerprint = fingerprint {
+                fingerprintString = (fingerprint as NSData).fingerprintString
+            } else {
+                fingerprintString = ""
+            }
+
+            var legalHoldMessage = "legalhold_request.alert.detail".localized(args: fingerprintString)
+            if hasPasswordInput {
+                legalHoldMessage += "\n"
+                legalHoldMessage += "legalhold_request.alert.detail.enter_password".localized
+            }
+            message = legalHoldMessage
+
+            okTitle = "general.skip".localized
+            cancelTitle = "general.accept".localized
         }
 
         alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
 
         switch context {
-        case .removeDevice:
+        case .removeDevice,
+             .legalHold(_, true):
             alertController.addTextField {(textField: UITextField) -> Void in
                 textField.placeholder = "self.settings.account_details.remove_device.password".localized
                 textField.isSecureTextEntry = true
@@ -60,6 +82,8 @@ final class RequestPasswordController {
                                     action: #selector(RequestPasswordController.passwordTextFieldChanged(_:)),
                                     for: .editingChanged)
             }
+        case .legalHold(_, false):
+            break
         }
 
         okAction = UIAlertAction(title: okTitle, style: .default) {

@@ -82,6 +82,34 @@ extension UIViewController {
         return alert
     }
 
+    @discardableResult
+    func presentLegalHoldActivatedAlert(animated: Bool = true) -> UIAlertController {
+
+        ///TODO: no password input for SSO user
+        let passwordRequest = RequestPasswordController(context: .legalHold(fingerprint: nil, hasPasswordInput: true)) { (result: Result<String>) -> () in
+            switch result {
+            case .success(let passwordString):
+                if let email = ZMUser.selfUser()?.emailAddress {
+                    let newCredentials = ZMEmailCredentials(email: email, password: passwordString)
+                    completion(newCredentials)
+                } else {
+                    if DeveloperMenuState.developerMenuEnabled() {
+                        DebugAlert.showGeneric(message: "No email set!")
+                    }
+                    completion(nil)
+                }
+            case .failure(let error):
+                zmLog.error("Error: \(error)")
+                completion(nil)
+            }
+        }
+
+        ///TODO:  request when complete
+        present(passwordRequest.alertController, animated: animated, completion: .none)
+
+        return passwordRequest.alertController
+    }
+
     //MARK: - user profile deep link
     @discardableResult
     func presentInvalidUserProfileLinkAlert(okActionHandler: ((UIAlertAction) -> Void)? = nil) -> UIAlertController {
