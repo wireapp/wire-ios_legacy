@@ -22,7 +22,7 @@ import XCTest
 final class RequestPasswordControllerSnapshotTests: ZMSnapshotTestCase {
 
     var sut: RequestPasswordController!
-    let callback = { (result: Result<String>) -> () in}
+    let callback = { (result: Result<String?>) -> () in}
     var fingerprint: Data!
 
     override func setUp() {
