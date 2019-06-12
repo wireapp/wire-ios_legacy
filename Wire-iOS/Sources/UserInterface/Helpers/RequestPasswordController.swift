@@ -54,7 +54,7 @@ final class RequestPasswordController {
 
             let fingerprintString: String
             if let fingerprint = fingerprint {
-                fingerprintString = (fingerprint as NSData).fingerprintString
+                fingerprintString = fingerprint.fingerprintString
             } else {
                 fingerprintString = ""
             }
