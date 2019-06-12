@@ -97,6 +97,8 @@ final class RequestPasswordController {
                 self?.callback(.success(password))
             }
         }
+
+        okAction.isEnabled = false
         
         let cancelAction = UIAlertAction(title: cancelTitle, style: .cancel) {
             [weak self, unowned alertController] (action: UIAlertAction) -> Void in
