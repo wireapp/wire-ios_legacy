@@ -78,9 +78,6 @@ final class RequestPasswordController {
             alertController.addTextField {(textField: UITextField) -> Void in
                 textField.placeholder = "self.settings.account_details.remove_device.password".localized
                 textField.isSecureTextEntry = true
-                textField.addTarget(self,
-                                    action: #selector(RequestPasswordController.passwordTextFieldChanged(_:)),
-                                    for: .editingChanged)
             }
         case .legalHold(_, false):
             break
@@ -101,13 +98,5 @@ final class RequestPasswordController {
 
         alertController.addAction(okAction)
         alertController.addAction(cancelAction)
-    }
-    
-    @objc
-    func passwordTextFieldChanged(_ textField: UITextField) {
-        guard let passwordField = alertController.textFields?[0] else { return }
-
-        ///TODO: update with password requirement
-        okAction.isEnabled = (passwordField.text ?? "").count > 6
     }
 }
