@@ -17,6 +17,7 @@
 //
 
 import Foundation
+private let zmLog = ZMSLog(tag: "Alert")
 
 extension UIAlertController {
         
@@ -83,29 +84,20 @@ extension UIViewController {
     }
 
     @discardableResult
-    func presentLegalHoldActivatedAlert(animated: Bool = true) -> UIAlertController {
+    func presentLegalHoldActivatedAlert(animated: Bool = true, completion: @escaping (String?)->()) -> UIAlertController {
 
         ///TODO: no password input for SSO user
         let passwordRequest = RequestPasswordController(context: .legalHold(fingerprint: nil, hasPasswordInput: true)) { (result: Result<String>) -> () in
             switch result {
             case .success(let passwordString):
-                if let email = ZMUser.selfUser()?.emailAddress {
-                    let newCredentials = ZMEmailCredentials(email: email, password: passwordString)
-                    completion(newCredentials)
-                } else {
-                    if DeveloperMenuState.developerMenuEnabled() {
-                        DebugAlert.showGeneric(message: "No email set!")
-                    }
-                    completion(nil)
-                }
+                completion(passwordString)
             case .failure(let error):
                 zmLog.error("Error: \(error)")
                 completion(nil)
             }
         }
 
-        ///TODO:  request when complete
-        present(passwordRequest.alertController, animated: animated, completion: .none)
+        present(passwordRequest.alertController, animated: animated)
 
         return passwordRequest.alertController
     }

@@ -22,7 +22,9 @@ extension ZClientViewController: ZMUserObserver {
         if changeInfo.legalHoldStatusChanged {
 
             if ZMUser.selfUser().hasLegalHoldRequest {
-                presentLegalHoldActivatedAlert()
+                presentLegalHoldActivatedAlert(){ (password) in
+                    ///TODO: activation request
+                }
             } else if !ZMUser.selfUser().isUnderLegalHold {
                 presentLegalHoldDeactivatedAlert()
             }
