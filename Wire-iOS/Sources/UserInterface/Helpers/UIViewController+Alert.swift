@@ -87,8 +87,10 @@ extension UIViewController {
     @discardableResult
     func presentLegalHoldActivatedAlert(animated: Bool = true, completion: @escaping (String?)->()) -> UIAlertController {
 
-        ///TODO: no password input for SSO user
-        let passwordRequest = RequestPasswordController(context: .legalHold(fingerprint: nil, hasPasswordInput: true)) { (result: Result<String?>) -> () in
+        /// password input for SSO user
+        let hasPasswordInput = ZMUser.selfUser().usesCompanyLogin != true
+
+        let passwordRequest = RequestPasswordController(context: .legalHold(fingerprint: nil, hasPasswordInput: hasPasswordInput)) { (result: Result<String?>) -> () in
             switch result {
             case .success(let passwordString):
                 completion(passwordString)
