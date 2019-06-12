@@ -96,7 +96,7 @@ final class RequestPasswordController {
         
         let cancelAction = UIAlertAction(title: cancelTitle, style: .cancel) {
             [weak self, unowned alertController] (action: UIAlertAction) -> Void in
-            self?.callback(.failure(NSError(domain: "\(type(of: alertController))", code: 0, userInfo: [NSLocalizedDescriptionKey: "User cancelled input"])))
+            self?.callback(.failure(NSError(domain: "\(type(of: alertController))", code: NSUserCancelledError, userInfo: nil)))
         }
 
         alertController.addAction(okAction)
