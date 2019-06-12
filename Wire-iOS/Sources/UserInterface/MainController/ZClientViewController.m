@@ -70,6 +70,7 @@
 
 @property (nonatomic) BOOL pendingInitialStateRestore;
 @property (nonatomic) SplitViewController *splitViewController;
+@property (nonatomic) id userObserverToken;
 
 @end
 
