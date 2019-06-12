@@ -26,9 +26,7 @@ extension Data {
 
         return string?.fingerprintStringWithSpaces()
     }
-}
 
-extension Data {
     public func attributedFingerprint(attributes: [NSAttributedString.Key : AnyObject], boldAttributes: [NSAttributedString.Key : AnyObject], uppercase: Bool = false) -> NSAttributedString? {
 
         var fingerprintString: String
@@ -49,7 +47,9 @@ extension Data {
         paragraphStyle.lineSpacing = 10
         return attributedRemoteIdentifier! && [.paragraphStyle: paragraphStyle]
     }
+}
 
+extension NSData {
     public func mapBytes<T: Any, E: Any>(callback: (E) -> (T)) -> [T] {
         assert(self.length % MemoryLayout<E>.size == 0, "Data size is uneven to enumerated element size")
         var result: [T] = []
@@ -66,10 +66,6 @@ extension Data {
 }
 
 extension Data {
-    public func attributedFingerprint(attributes: [NSAttributedString.Key : AnyObject], boldAttributes: [NSAttributedString.Key : AnyObject], uppercase: Bool = false) -> NSAttributedString? {
-        return (self as NSData).attributedFingerprint(attributes: attributes, boldAttributes: boldAttributes, uppercase: uppercase);
-    }
-
     public func mapBytes<T: Any, E: Any>(callback: (E) -> (T)) -> [T] {
         return (self as NSData).mapBytes(callback: callback)
     }
