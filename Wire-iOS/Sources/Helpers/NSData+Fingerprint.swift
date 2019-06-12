@@ -21,21 +21,15 @@ import Foundation
 
 extension Data {
     /// return a lower case and space between every btye string of the given data
-    var fingerprintString: String? {
+    var fingerprintString: String {
         let string = String(decoding: self, as: UTF8.self)
 
-        return string?.fingerprintStringWithSpaces()
+        return string.fingerprintStringWithSpaces()
     }
 
     public func attributedFingerprint(attributes: [NSAttributedString.Key : AnyObject], boldAttributes: [NSAttributedString.Key : AnyObject], uppercase: Bool = false) -> NSAttributedString? {
 
-        var fingerprintString: String
-
-        if let convertedFingerprintString = self.fingerprintString {
-            fingerprintString = convertedFingerprintString
-        } else {
-            return nil
-        }
+        var fingerprintString = self.fingerprintString
 
         if uppercase {
             fingerprintString = fingerprintString.uppercased()
@@ -46,27 +40,5 @@ extension Data {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 10
         return attributedRemoteIdentifier! && [.paragraphStyle: paragraphStyle]
-    }
-}
-
-extension NSData {
-    public func mapBytes<T: Any, E: Any>(callback: (E) -> (T)) -> [T] {
-        assert(self.length % MemoryLayout<E>.size == 0, "Data size is uneven to enumerated element size")
-        var result: [T] = []
-        let stepCount = self.length / MemoryLayout<E>.size
-
-        let array = (self as Data).withUnsafeBytes {
-            [E](UnsafeBufferPointer(start: $0.baseAddress!.assumingMemoryBound(to: E.self), count: self.length))
-        }
-        for i in 0..<stepCount {
-            result.append(callback(array[i]))
-        }
-        return result
-    }
-}
-
-extension Data {
-    public func mapBytes<T: Any, E: Any>(callback: (E) -> (T)) -> [T] {
-        return (self as NSData).mapBytes(callback: callback)
     }
 }
