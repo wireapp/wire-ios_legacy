@@ -1645,6 +1645,12 @@
 "registration.password.rules.no_requirements" = "Use %@.";
 "registration.password.rules.with_requirements" = "Use %@, with %@.";
 
+// Legal Hold Activation
+"legal_hold.activation_requested.title" = "Legal Hold Requested";
+"legal_hold.activation_requested.message" = "All future messages will be recorded by the device with fingerprint:\n%@\nThis includes deleted, edited, and timed messages in all conversations.\nEnter your password to confirm.";
+"legal_hold.activation_requested.ignore_button" = "Not Now";
+"legal_hold.activation_requested.accept_button" = "Accept";
+
 // Legal Hold Deactivation
 "legal_hold.deactivated.title" = "Legal Hold Deactivated";
 "legal_hold.deactivated.message" = "Future messages will not be recorded.";

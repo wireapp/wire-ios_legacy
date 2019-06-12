@@ -176,6 +176,8 @@
 		54F7C2851D746F3F004D8087 /* AddressBookHelper+Automation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54F7C2841D746F3F004D8087 /* AddressBookHelper+Automation.swift */; };
 		54FF9E281E813BA500323D2E /* DebugAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54FF9E271E813BA500323D2E /* DebugAlert.swift */; };
 		55A42A701FC872600056752F /* CallQualityController+Budget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A42A6F1FC872600056752F /* CallQualityController+Budget.swift */; };
+		55C40BD022B0323900EFD8BD /* UIViewController+LegalHold.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55C40BCF22B0323900EFD8BD /* UIViewController+LegalHold.swift */; };
+		55C40BD222B0E48B00EFD8BD /* UITextField+Input.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55C40BD122B0E48B00EFD8BD /* UITextField+Input.swift */; };
 		55DD5C341FA236F60082170C /* CallQualityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55DD5C331FA236F60082170C /* CallQualityViewController.swift */; };
 		5E001FA7229813FA00F22CDD /* ConversationStateAccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E001FA32297FA0000F22CDD /* ConversationStateAccessoryView.swift */; };
 		5E001FA82298152200F22CDD /* UIColor+AccentColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F174AAB0218B62D200AFCC4D /* UIColor+AccentColor.swift */; };
@@ -1695,6 +1697,8 @@
 		54F7C2841D746F3F004D8087 /* AddressBookHelper+Automation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AddressBookHelper+Automation.swift"; sourceTree = "<group>"; };
 		54FF9E271E813BA500323D2E /* DebugAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DebugAlert.swift; sourceTree = "<group>"; };
 		55A42A6F1FC872600056752F /* CallQualityController+Budget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CallQualityController+Budget.swift"; sourceTree = "<group>"; };
+		55C40BCF22B0323900EFD8BD /* UIViewController+LegalHold.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+LegalHold.swift"; sourceTree = "<group>"; };
+		55C40BD122B0E48B00EFD8BD /* UITextField+Input.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Input.swift"; sourceTree = "<group>"; };
 		55DD5C331FA236F60082170C /* CallQualityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallQualityViewController.swift; sourceTree = "<group>"; };
 		5E001FA32297FA0000F22CDD /* ConversationStateAccessoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationStateAccessoryView.swift; sourceTree = "<group>"; };
 		5E001FC8229BD2F200F22CDD /* TargetConversationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TargetConversationCell.swift; sourceTree = "<group>"; };
@@ -4546,6 +4550,8 @@
 				5E35F78321833AF000D3F4FE /* ZMConversationMessage+Sender.swift */,
 				5EC7C879219038F6004662AC /* ImageResourceThumbnailView.swift */,
 				EFDBA24322941D1800874A15 /* UIAccessibilityIdentification+LegalHold.swift */,
+				55C40BCF22B0323900EFD8BD /* UIViewController+LegalHold.swift */,
+				55C40BD122B0E48B00EFD8BD /* UITextField+Input.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -7280,6 +7286,7 @@
 				EECDB2562029F5AB00D0D268 /* MarkdownTextStorage.swift in Sources */,
 				5EFD4526215A78E800BEE703 /* IndexedListView.swift in Sources */,
 				D54224C420513A9800526A57 /* TextCell.swift in Sources */,
+				55C40BD022B0323900EFD8BD /* UIViewController+LegalHold.swift in Sources */,
 				BFA25DCB1D9AB88A0086DEBD /* Emojis.swift in Sources */,
 				F15650F121DD1B4100210504 /* UIFont+DynamicType.swift in Sources */,
 				16D49328203DCC88008DDFFA /* GroupDetailsViewController.swift in Sources */,
@@ -7621,6 +7628,7 @@
 				87DCF4941D34E9BA00BB420F /* ZMAddressBookContact+LocalInvitation.swift in Sources */,
 				EF7E96F0214BFBE100475C63 /* ContactsViewController+UITableViewDelegate.swift in Sources */,
 				87AAE4231E43234A00E1D13A /* MessagePresenter+ConversationImages.swift in Sources */,
+				55C40BD222B0E48B00EFD8BD /* UITextField+Input.swift in Sources */,
 				5E65A7A5213048AB008BFCC0 /* UserEmailUpdateFailureErrorHandler.swift in Sources */,
 				16271BC61D9EB12E00689486 /* TypingIndicatorView.swift in Sources */,
 				5E8DA762211B286900360979 /* AuthenticationBackupReadyEventHandler.swift in Sources */,
