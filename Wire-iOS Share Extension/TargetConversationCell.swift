@@ -60,7 +60,6 @@ final class TargetConversationCell: UITableViewCell {
             // conversationNameLabel
             conversationNameLabel.leadingAnchor.constraint(equalTo: stateAccessoryView.trailingAnchor, constant: 8),
             conversationNameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
-            conversationNameLabel.trailingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.trailingAnchor),
             conversationNameLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
             conversationNameLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: 40),
         ])
