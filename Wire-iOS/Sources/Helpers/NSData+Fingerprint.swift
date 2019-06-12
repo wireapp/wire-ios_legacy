@@ -22,7 +22,7 @@ import Foundation
 extension Data {
     /// return a lower case and space between every btye string of the given data
     var fingerprintString: String? {
-        let string = String(data: self, encoding: .utf8)
+        let string = String(decoding: self, as: UTF8.self)
 
         return string?.fingerprintStringWithSpaces()
     }
