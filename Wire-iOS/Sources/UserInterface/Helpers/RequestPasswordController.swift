@@ -22,7 +22,7 @@ import Foundation
 
 final class RequestPasswordController {
     
-    let callback: ((Result<String>) -> ())
+    let callback: ((Result<String?>) -> ())
     var okAction: UIAlertAction!
     let alertController: UIAlertController
 
@@ -32,7 +32,7 @@ final class RequestPasswordController {
     }
 
     init(context: RequestPasswordContext,
-         callback: @escaping (Result<String>) -> ()) {
+         callback: @escaping (Result<String?>) -> ()) {
 
         self.callback = callback
 

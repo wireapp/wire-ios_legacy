@@ -58,6 +58,7 @@ extension UIViewController {
     ///   - animated: present the alert animated or not
     ///   - okActionHandler: a nullable closure for the OK button
     /// - Returns: the alert presented
+    @discardableResult
     func presentAlertWithOKButton(title: String,
                                   message: String,
                                   animated: Bool = true,
@@ -87,7 +88,7 @@ extension UIViewController {
     func presentLegalHoldActivatedAlert(animated: Bool = true, completion: @escaping (String?)->()) -> UIAlertController {
 
         ///TODO: no password input for SSO user
-        let passwordRequest = RequestPasswordController(context: .legalHold(fingerprint: nil, hasPasswordInput: true)) { (result: Result<String>) -> () in
+        let passwordRequest = RequestPasswordController(context: .legalHold(fingerprint: nil, hasPasswordInput: true)) { (result: Result<String?>) -> () in
             switch result {
             case .success(let passwordString):
                 completion(passwordString)

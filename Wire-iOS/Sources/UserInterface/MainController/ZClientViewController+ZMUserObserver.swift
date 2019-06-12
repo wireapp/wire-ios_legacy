@@ -19,15 +19,21 @@ import Foundation
 
 extension ZClientViewController: ZMUserObserver {
     public func userDidChange(_ changeInfo: UserChangeInfo) {
-        if changeInfo.legalHoldStatusChanged {
+        guard let userSession = ZMUserSession.shared() else { return }
 
-            if ZMUser.selfUser().hasLegalHoldRequest {
-                presentLegalHoldActivatedAlert(){ (password) in
-                    ///TODO: activation request
+        if changeInfo.legalHoldStatusChanged,
+            ZMUser.selfUser().hasLegalHoldRequest {
+            presentLegalHoldActivatedAlert(){ password in
+                userSession.acceptLegalHold(password: password){ [weak self] error in
+                    if error != nil {
+                        self?.presentAlertWithOKButton(title: "legalhold_request.alert.title".localized,
+                                                       message: "legalhold_request.alert.error".localized)
+                    }
                 }
-            } else if !ZMUser.selfUser().isUnderLegalHold {
-                presentLegalHoldDeactivatedAlert()
             }
+
+        } else if !ZMUser.selfUser().isUnderLegalHold {
+            presentLegalHoldDeactivatedAlert()
         }
 
         if changeInfo.accentColorValueChanged {
@@ -37,8 +43,7 @@ extension ZClientViewController: ZMUserObserver {
 
     @objc
     func setupUserChangeInfoObserver() {
-        if let session = ZMUserSession.shared() {
-            userObserverToken = UserChangeInfo.add(userObserver:self, for: ZMUser.selfUser(), userSession: session)
-        }
+        guard let userSession = ZMUserSession.shared() else { return }
+        userObserverToken = UserChangeInfo.add(userObserver:self, for: ZMUser.selfUser(), userSession: userSession)
     }
 }

@@ -32,12 +32,15 @@ extension UIViewController {
     }
     
     func requestPassword(_ completion: @escaping (ZMEmailCredentials?)->()) -> RequestPasswordController {
-        let passwordRequest = RequestPasswordController(context: .removeDevice) { (result: Result<String>) -> () in
+        let passwordRequest = RequestPasswordController(context: .removeDevice) { (result: Result<String?>) -> () in
             switch result {
             case .success(let passwordString):
                 if let email = ZMUser.selfUser()?.emailAddress {
-                    let newCredentials = ZMEmailCredentials(email: email, password: passwordString)
-                    completion(newCredentials)
+
+                    if let passwordString = passwordString {
+                        let newCredentials = ZMEmailCredentials(email: email, password: passwordString)
+                        completion(newCredentials)
+                    }
                 } else {
                     if DeveloperMenuState.developerMenuEnabled() {
                         DebugAlert.showGeneric(message: "No email set!")
