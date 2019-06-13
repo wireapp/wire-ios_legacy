@@ -1645,8 +1645,18 @@
 "registration.password.rules.no_requirements" = "Use %@.";
 "registration.password.rules.with_requirements" = "Use %@, with %@.";
 
+// Legal Hold Deactivation
+"legal_hold.deactivated.title" = "Legal Hold Deactivated";
+"legal_hold.deactivated.message" = "Future messages will not be recorded.";
+
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Share Extension
 "share_extension.voiceover.conversation_under_legal_hold" = "Under legal hold.";
 "share_extension.voiceover.conversation_secure" = "All clients verified.";
 "share_extension.voiceover.conversation_secure_with_ignored" = "Not all clients verified.";
+
+// Legal hold - alert
+"legalhold_request.alert.title" = "Legal Hold Requested";
+"legalhold_request.alert.detail" = "All future messages will be recorded by the device with fingerprint:\n\n%@\n\nThis includes deleted, edited, and timed messages in all conversations.";
+"legalhold_request.alert.detail.enter_password" = "Enter your password to confirm.";
+"legalhold_request.alert.error" = "Legal hold requested failed!";

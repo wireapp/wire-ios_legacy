@@ -142,6 +142,11 @@
             isEnabled = "NO">
          </EnvironmentVariable>
          <EnvironmentVariable
+            key = "RECORDING_SNAPSHOTS"
+            value = "NO"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+         <EnvironmentVariable
             key = "IMAGE_DIFF_DIR"
             value = "$(SOURCE_ROOT)/SnapshotResults"
             isEnabled = "YES">
@@ -149,6 +154,16 @@
          <EnvironmentVariable
             key = "FB_REFERENCE_IMAGE_DIR"
             value = "$(SOURCE_ROOT)/$(PROJECT_NAME) Tests/ReferenceImages"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+         <EnvironmentVariable
+            key = "SNAPSHOT_REFERENCE_DIR"
+            value = "$(SOURCE_ROOT)/$(PROJECT_NAME) Tests/ReferenceImages"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+         <EnvironmentVariable
+            key = "SNAPSHOT_ARTIFACTS"
+            value = "$(SOURCE_ROOT)/SnapshotResults"
             isEnabled = "YES">
          </EnvironmentVariable>
          <EnvironmentVariable
