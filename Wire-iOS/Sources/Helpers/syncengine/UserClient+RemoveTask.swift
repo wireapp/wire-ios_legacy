@@ -69,7 +69,6 @@ private class ClientRemovalObserver: NSObject, ZMClientUpdateObserver {
     private var strongReference: ClientRemovalObserver? = nil
     let userClientToDelete: UserClient
     let controller: UIViewController
-    private var requestPasswordController: RequestPasswordController?
     let completion: ((Error?)->())?
     var credentials: ZMEmailCredentials?
     private var passwordIsNecessaryForDelete: Bool = false
@@ -112,7 +111,7 @@ private class ClientRemovalObserver: NSObject, ZMClientUpdateObserver {
         controller.showLoadingView = false
 
         if !passwordIsNecessaryForDelete {
-            requestPasswordController = controller.requestPassword { newCredentials in
+            controller.requestPassword { newCredentials in
                 guard let emailCredentials = newCredentials,
                     emailCredentials.password?.isEmpty == false else {
                     self.endRemoval(result: ClientRemovalUIError.noPasswordProvided)
