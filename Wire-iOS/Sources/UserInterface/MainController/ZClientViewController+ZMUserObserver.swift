@@ -33,7 +33,7 @@ extension ZClientViewController: ZMUserObserver {
             }
 
         } else if !ZMUser.selfUser().isUnderLegalHold {
-            presentLegalHoldDeactivatedAlert()
+            // presentLegalHoldDeactivatedAlert()
         }
 
         if changeInfo.accentColorValueChanged {
