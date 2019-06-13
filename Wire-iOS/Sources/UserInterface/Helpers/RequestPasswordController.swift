@@ -23,9 +23,9 @@ import Foundation
 final class RequestPasswordController {
     
     let callback: ((Result<String?>) -> ())
-    var okAction: UIAlertAction!
+    private weak var okAction: UIAlertAction!
     var alertController: UIAlertController!
-    var textField: UITextField?
+    weak var passwordTextField: UITextField?
 
     enum RequestPasswordContext {
         case removeDevice
@@ -76,7 +76,7 @@ final class RequestPasswordController {
         switch context {
         case .removeDevice,
              .legalHold(_, true):
-            alertController.addTextField {[weak self] (textField: UITextField) -> Void in
+            alertController.addTextField { textField in
                 textField.placeholder = "self.settings.account_details.remove_device.password".localized
                 textField.isSecureTextEntry = true
                 if #available(iOS 11.0, *) {
@@ -87,29 +87,29 @@ final class RequestPasswordController {
                                     action: #selector(RequestPasswordController.passwordTextFieldChanged(_:)),
                                     for: .editingChanged)
 
-                self?.textField = textField
+                self.passwordTextField = textField
             }
         case .legalHold(_, false):
             break
         }
 
-        okAction = UIAlertAction(title: okTitle, style: .default) {
-            [weak self, weak alertController] (action: UIAlertAction) -> Void in
-            if let passwordField = alertController?.textFields?[0] {
+        let okAction = UIAlertAction(title: okTitle, style: .default) { action in
+            if let passwordField = self.alertController.textFields?[0] {
                 let password = passwordField.text ?? ""
-                self?.callback(.success(password))
+                self.callback(.success(password))
             }
         }
 
         okAction.isEnabled = false
         
-        let cancelAction = UIAlertAction(title: cancelTitle, style: .cancel) {
-            [weak self, weak alertController] (action: UIAlertAction) -> Void in
-            self?.callback(.failure(NSError(domain: "\(type(of: alertController))", code: NSUserCancelledError, userInfo: nil)))
+        let cancelAction = UIAlertAction(title: cancelTitle, style: .cancel) { action in
+            self.callback(.failure(NSError(domain: "\(type(of: self.alertController))", code: NSUserCancelledError, userInfo: nil)))
         }
 
         alertController.addAction(okAction)
         alertController.addAction(cancelAction)
+
+        self.okAction = okAction
     }
 
     @objc

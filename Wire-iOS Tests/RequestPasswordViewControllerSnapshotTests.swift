@@ -40,8 +40,8 @@ final class RequestPasswordControllerSnapshotTests: ZMSnapshotTestCase {
 
     func testForRemoveDeviceContextPasswordEntered(){
         sut = RequestPasswordController(context: .removeDevice, callback: callback)
-        sut.textField?.text = "12345678"
-        sut.passwordTextFieldChanged(sut.textField!)
+        sut.passwordTextField?.text = "12345678"
+        sut.passwordTextFieldChanged(sut.passwordTextField!)
 
         verifyAlertController(sut.alertController)
     }
