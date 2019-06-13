@@ -18,7 +18,7 @@
 
 import UIKit
 
-class ConversationIconBasedCell: UIView, UITextViewDelegate {
+class ConversationIconBasedCell: UIView {
 
     let imageContainer = UIView()
     let imageView = UIImageView()
@@ -165,4 +165,11 @@ class ConversationIconBasedCell: UIView, UITextViewDelegate {
         topContentViewTrailingConstraint.constant = trailingTextMargin
     }
 
+}
+
+extension ConversationIconBasedCell: UITextViewDelegate {
+    public func textView(_ textView: UITextView, shouldInteractWith url: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+        // Fixes Swift 5.0 release build child class overridden method not called bug
+        return false
+    }
 }

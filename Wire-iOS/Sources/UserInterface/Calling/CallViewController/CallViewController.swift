@@ -295,7 +295,7 @@ extension CallViewController {
 
         permissions.requestOrWarnAboutAudioPermission { audioGranted in
             guard audioGranted else {
-                return self.voiceChannel.leave(userSession: ZMUserSession.shared()!)
+                return self.voiceChannel.leave(userSession: ZMUserSession.shared()!, completion: nil)
             }
 
             conversation.confirmJoiningCallIfNeeded(alertPresenter: self, forceAlertModal: true) {
@@ -360,7 +360,7 @@ extension CallViewController: CallInfoRootViewControllerDelegate {
         case .continueDegradedCall: userSession.enqueueChanges { self.voiceChannel.continueByDecreasingConversationSecurity(userSession: userSession) }
         case .acceptCall: acceptCallIfPossible()
         case .acceptDegradedCall: acceptDegradedCall()
-        case .terminateCall: voiceChannel.leave(userSession: userSession)
+        case .terminateCall: voiceChannel.leave(userSession: userSession, completion: nil)
         case .terminateDegradedCall: userSession.enqueueChanges { self.voiceChannel.leaveAndDecreaseConversationSecurity(userSession: userSession) }
         case .toggleMuteState: voiceChannel.toggleMuteState(userSession: userSession)
         case .toggleSpeakerState: AVSMediaManager.sharedInstance().toggleSpeaker()

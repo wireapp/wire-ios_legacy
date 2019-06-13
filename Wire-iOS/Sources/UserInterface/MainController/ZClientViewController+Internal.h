@@ -30,6 +30,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ZClientViewController (Internal)
 
+@property (nonatomic) id userObserverToken;
+
 /**
  * Load and optionally show a conversation, but don't change the list selection.  This is the place to put 
  * stuff if you definitely need it to happen when a conversation is selected and/or presented

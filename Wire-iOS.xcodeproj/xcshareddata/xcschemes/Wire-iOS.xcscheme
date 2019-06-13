@@ -142,6 +142,11 @@
             isEnabled = "NO">
          </EnvironmentVariable>
          <EnvironmentVariable
+            key = "RECORDING_SNAPSHOTS"
+            value = "NO"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+         <EnvironmentVariable
             key = "IMAGE_DIFF_DIR"
             value = "$(SOURCE_ROOT)/SnapshotResults"
             isEnabled = "YES">

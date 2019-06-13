@@ -33,7 +33,7 @@
 
 
 @protocol ParticipantDeviceHeaderViewDelegate <NSObject>
-@optional
+
 - (void)participantsDeviceHeaderViewDidTapLearnMore:(ParticipantDeviceHeaderView *)headerView;
 
 @end

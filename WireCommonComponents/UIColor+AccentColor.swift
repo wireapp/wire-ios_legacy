@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import WireDataModel
 
 public enum AccentColor: Int16, CaseIterable {
     case strongBlue = 1
@@ -28,7 +29,7 @@ public enum AccentColor: Int16, CaseIterable {
     case violet
 
     /// Returns a random accent color.
-    static var random: AccentColor {
+    public static var random: AccentColor {
         return AccentColor.allSelectable().randomElement()!
     }
 
