@@ -157,6 +157,16 @@
             isEnabled = "YES">
          </EnvironmentVariable>
          <EnvironmentVariable
+            key = "SNAPSHOT_REFERENCE_DIR"
+            value = "$(SOURCE_ROOT)/$(PROJECT_NAME) Tests/ReferenceImages"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+         <EnvironmentVariable
+            key = "SNAPSHOT_ARTIFACTS"
+            value = "$(SOURCE_ROOT)/SnapshotResults"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+         <EnvironmentVariable
             key = "ZMLOG_TAGS"
             value = "Network,Authentication,Performance,event-processing"
             isEnabled = "YES">
