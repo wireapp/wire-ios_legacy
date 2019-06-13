@@ -19,13 +19,14 @@
 import UIKit
 import Cartography
 
+typealias SelfUserType = UserType & SelfLegalHoldSubject
 
 final class ConversationListTopBarViewController: UIViewController {
     
     private var observerToken: Any?
     private var availabilityViewController: AvailabilityTitleViewController?
     private var account: Account
-    private let selfUser: UserType
+    private let selfUser: SelfUserType
     
     var topBar: TopBar? {
         return view as? TopBar
@@ -36,7 +37,7 @@ final class ConversationListTopBarViewController: UIViewController {
     /// - Parameters:
     ///   - account: the Account of the user
     ///   - selfUser: the self user object. Allow to inject a mock self user for testing
-    init(account: Account, selfUser: UserType = ZMUser.selfUser()) {
+    init(account: Account, selfUser: SelfUserType = ZMUser.selfUser()) {
         self.account = account
         self.selfUser = selfUser
         
@@ -108,6 +109,19 @@ final class ConversationListTopBarViewController: UIViewController {
         return imageView
     }
 
+    func createPendingLegalHoldRequestView() -> UIView {
+        let button = IconButton(style: .circular)
+        button.setBackgroundImageColor(UIColor.vividRed.withAlphaComponent(0.5), for: .normal)
+
+        button.setIcon(.clock, size: 16, for: .normal)
+        button.setIconColor(.white, for: .normal)
+        button.setIconColor(UIColor.white.withAlphaComponent(0.5), for: .normal)
+        // TODO: Accessibility
+
+        button.addTarget(self, action: #selector(presentLegalHoldRequest), for: .touchUpInside)
+        return button
+    }
+
     func createAccountView() -> BaseAccountView {
         let session = ZMUserSession.shared() ?? nil
         let user = session == nil ? nil : ZMUser.selfUser(inUserSession: session!)
@@ -135,7 +149,14 @@ final class ConversationListTopBarViewController: UIViewController {
     }
     
     func updateLegalHoldIndictor() {
-        topBar?.rightView = selfUser.isUnderLegalHold ? createLegalHoldView() : nil
+        switch selfUser.legalHoldStatus {
+        case .disabled:
+            topBar?.rightView = nil
+        case .pending:
+            topBar?.rightView = createPendingLegalHoldRequestView()
+        case .enabled:
+            topBar?.rightView = createLegalHoldView()
+        }
     }
     
     func updateTitle() {
@@ -148,6 +169,10 @@ final class ConversationListTopBarViewController: UIViewController {
         guard let legalHoldDetailsViewController = LegalHoldDetailsViewController(user: ZMUser.selfUser())?.wrapInNavigationController() else { return }
         legalHoldDetailsViewController.modalPresentationStyle = .formSheet
         present(legalHoldDetailsViewController, animated: true, completion: nil)
+    }
+
+    @objc func presentLegalHoldRequest() {
+        // TODO: Depends on PR3463
     }
 
     @objc

@@ -45,6 +45,7 @@ extension UIAlertController {
         return UIAlertController.alertWithOKButton(title: "legal_hold.deactivated.title".localized,
                                     message: "legal_hold.deactivated.message".localized)
     }
+
 }
 
 extension UIViewController {
