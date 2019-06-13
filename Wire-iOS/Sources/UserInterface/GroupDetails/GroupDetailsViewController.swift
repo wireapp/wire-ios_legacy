@@ -98,7 +98,6 @@ import Cartography
         super.viewWillAppear(animated)
         
         updateLegalHoldIndicator()
-        
         navigationItem.rightBarButtonItem = navigationController?.closeItem()
         collectionViewController.collectionView?.reloadData()
     }

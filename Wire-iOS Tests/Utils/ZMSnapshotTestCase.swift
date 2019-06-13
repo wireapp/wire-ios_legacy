@@ -474,7 +474,7 @@ extension ZMSnapshotTestCase {
 }
 
 // MARK: - UIAlertController
-extension ZMSnapshotTestCase {
+extension XCTestCase {
     func presentViewController(_ controller: UIViewController, file: StaticString = #file, line: UInt = #line) {
         // Given
         let window = UIWindow(frame: CGRect(origin: .zero, size: XCTestCase.DeviceSizeIPhone6))
@@ -507,9 +507,14 @@ extension ZMSnapshotTestCase {
         waitForExpectations(timeout: 2, handler: nil)
     }
 
+}
+
+extension ZMSnapshotTestCase {
+    
     func verifyAlertController(_ controller: UIAlertController, file: StaticString = #file, line: UInt = #line) {
         presentViewController(controller, file: file, line: line)
         verify(view: controller.view, file: file, line: line)
+        dismissViewController(controller, file: file, line: line)
     }
 }
 

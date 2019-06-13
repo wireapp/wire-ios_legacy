@@ -49,8 +49,8 @@ extension ZClientViewController: ZMUserObserver {
     }
 
     @objc func setupUserChangeInfoObserver() {
-        if let session = ZMUserSession.shared() {
-            userObserverToken = UserChangeInfo.add(userObserver:self, for: ZMUser.selfUser(), userSession: session)
-        }
+        guard let userSession = ZMUserSession.shared() else { return }
+        userObserverToken = UserChangeInfo.add(userObserver:self, for: ZMUser.selfUser(), userSession: userSession)
     }
+
 }

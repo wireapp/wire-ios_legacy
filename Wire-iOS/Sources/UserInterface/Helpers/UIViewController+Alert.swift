@@ -17,6 +17,7 @@
 //
 
 import Foundation
+private let zmLog = ZMSLog(tag: "Alert")
 
 extension UIAlertController {
         
@@ -58,6 +59,7 @@ extension UIViewController {
     ///   - animated: present the alert animated or not
     ///   - okActionHandler: a nullable closure for the OK button
     /// - Returns: the alert presented
+    @discardableResult
     func presentAlertWithOKButton(title: String,
                                   message: String,
                                   animated: Bool = true,
@@ -81,6 +83,27 @@ extension UIViewController {
         present(alert, animated: animated)
 
         return alert
+    }
+
+    @discardableResult
+    func presentLegalHoldActivatedAlert(animated: Bool = true, completion: @escaping (String?)->()) -> UIAlertController {
+
+        /// password input for SSO user
+        let hasPasswordInput = ZMUser.selfUser().usesCompanyLogin != true
+
+        let passwordRequest = RequestPasswordController(context: .legalHold(fingerprint: nil, hasPasswordInput: hasPasswordInput)) { (result: Result<String?>) -> () in
+            switch result {
+            case .success(let passwordString):
+                completion(passwordString)
+            case .failure(let error):
+                zmLog.error("Error: \(error)")
+                completion(nil)
+            }
+        }
+
+        present(passwordRequest.alertController, animated: animated)
+
+        return passwordRequest.alertController
     }
 
     //MARK: - user profile deep link
