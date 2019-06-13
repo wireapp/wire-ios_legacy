@@ -24,7 +24,8 @@ final class RequestPasswordController {
     
     let callback: ((Result<String?>) -> ())
     var okAction: UIAlertAction!
-    let alertController: UIAlertController
+    var alertController: UIAlertController!
+    var textField: UITextField?
 
     enum RequestPasswordContext {
         case removeDevice
@@ -75,7 +76,7 @@ final class RequestPasswordController {
         switch context {
         case .removeDevice,
              .legalHold(_, true):
-            alertController.addTextField {(textField: UITextField) -> Void in
+            alertController.addTextField {[weak self] (textField: UITextField) -> Void in
                 textField.placeholder = "self.settings.account_details.remove_device.password".localized
                 textField.isSecureTextEntry = true
                 if #available(iOS 11.0, *) {
@@ -85,14 +86,16 @@ final class RequestPasswordController {
                 textField.addTarget(self,
                                     action: #selector(RequestPasswordController.passwordTextFieldChanged(_:)),
                                     for: .editingChanged)
+
+                self?.textField = textField
             }
         case .legalHold(_, false):
             break
         }
 
         okAction = UIAlertAction(title: okTitle, style: .default) {
-            [weak self, unowned alertController] (action: UIAlertAction) -> Void in
-            if let passwordField = alertController.textFields?[0] {
+            [weak self, weak alertController] (action: UIAlertAction) -> Void in
+            if let passwordField = alertController?.textFields?[0] {
                 let password = passwordField.text ?? ""
                 self?.callback(.success(password))
             }
@@ -101,7 +104,7 @@ final class RequestPasswordController {
         okAction.isEnabled = false
         
         let cancelAction = UIAlertAction(title: cancelTitle, style: .cancel) {
-            [weak self, unowned alertController] (action: UIAlertAction) -> Void in
+            [weak self, weak alertController] (action: UIAlertAction) -> Void in
             self?.callback(.failure(NSError(domain: "\(type(of: alertController))", code: NSUserCancelledError, userInfo: nil)))
         }
 
@@ -113,6 +116,6 @@ final class RequestPasswordController {
     func passwordTextFieldChanged(_ textField: UITextField) {
         guard let passwordField = alertController.textFields?[0] else { return }
 
-        okAction.isEnabled = passwordField.text?.count > 0
+        okAction.isEnabled = passwordField.text?.isEmpty == false
     }
 }

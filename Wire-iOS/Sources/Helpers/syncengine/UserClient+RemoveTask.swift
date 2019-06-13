@@ -30,7 +30,8 @@ extension UIViewController {
         alert.addAction(action)
         self.present(alert, animated: true, completion: .none)
     }
-    
+
+    @discardableResult
     func requestPassword(_ completion: @escaping (ZMEmailCredentials?)->()) -> RequestPasswordController {
         let passwordRequest = RequestPasswordController(context: .removeDevice) { (result: Result<String?>) -> () in
             switch result {
