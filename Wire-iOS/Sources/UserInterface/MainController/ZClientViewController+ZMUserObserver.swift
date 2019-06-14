@@ -39,7 +39,7 @@ extension ZClientViewController: ZMUserObserver {
             break
 
         case .disabled:
-            presentLegalHoldDeactivatedAlert()
+            // presentLegalHoldDeactivatedAlert()
 
         case .pending(let request):
             presentLegalHoldLegalHoldRequestAlert(for: user, request: request)
