@@ -6929,7 +6929,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Run the update_stylekit package\n# swift run --package-path Scripts/update_stylekit/\n";
+			shellScript = "# Run the update_stylekit package\nswift run --package-path Scripts/update_stylekit/\n";
 		};
 		5EDD253F21400FD700C0E254 /* Update Licenses File */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -6947,7 +6947,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Run the update_licenses package\n# swift run --package-path Scripts/update_licenses/\n";
+			shellScript = "# Run the update_licenses package\nswift run --package-path Scripts/update_licenses/\n";
 		};
 		873AA0501D05A74B0038343B /* Strip BitCode */ = {
 			isa = PBXShellScriptBuildPhase;
