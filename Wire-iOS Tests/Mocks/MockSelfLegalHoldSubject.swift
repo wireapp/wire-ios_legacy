@@ -19,19 +19,8 @@
 import Foundation
 import WireDataModel
 
-class MockSelfLegalHoldSubject: NSObject, UserType, SelfLegalHoldSubject {
+class MockSelfLegalHoldSubject: NSObject {
 
-    let user: MockUser
-
-    init(user: MockUser) {
-        self.user = user
-    }
-
-    // MARK: - Legal Hold
-
-    var legalHoldStatus: UserLegalHoldStatus = .disabled
-    var needsToAcknowledgeLegalHoldStatus: Bool
-
-
+    #warning("TODO: Implement container for legal hold on MockUser")
 
 }
