@@ -19,7 +19,8 @@
 import Foundation
 import WireDataModel
 
-@objc class MockLegalHoldDataSource: NSObject {
+@objc(MockLegalHoldDataSource)
+class MockLegalHoldDataSource: NSObject {
     var legalHoldRequest: LegalHoldRequest? = nil
     var needsToAcknowledgeLegalHoldStatus: Bool = false
 }
