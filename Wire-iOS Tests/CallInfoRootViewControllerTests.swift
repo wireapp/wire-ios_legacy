@@ -23,6 +23,8 @@ import SnapshotTesting
 final class CallInfoRootViewControllerSnapshotTests: XCTestCase {
     let mockCoreData = MockCoreData()
 
+    // MARK: - OneToOne Audio
+
     func testOneToOneIncomingAudioRinging() {
         // given
         let fixture = CallInfoTestFixture(otherUser: mockCoreData.otherUser)
@@ -31,9 +33,7 @@ final class CallInfoRootViewControllerSnapshotTests: XCTestCase {
         let sut = CallInfoRootViewController(configuration: fixture.oneToOneIncomingAudioRinging)
 
         // then
-        for(config, name) in XCTestCase.phoneConfigNames {
-            verify(matching: sut, as: .image(on: config), named: name)
-        }
+        verifyAllIPhoneSizes(matching: sut)
     }
 }
 
@@ -41,18 +41,6 @@ class CallInfoRootViewControllerTests: CoreDataSnapshotTestCase {
 
     // MARK: - OneToOne Audio
     
-//    func testOneToOneIncomingAudioRinging() {
-//        // given
-//        let fixture = CallInfoTestFixture(otherUser: otherUser)
-//
-//        // when
-//        let sut = CallInfoRootViewController(configuration: fixture.oneToOneIncomingAudioRinging)
-//
-//        // then
-////        verifyInAllIPhoneSizes(view: sut.view)
-//        verify(matching: sut)
-//    }
-
     func testOneToOneOutgoingAudioRinging() {
         // given
         let fixture = CallInfoTestFixture(otherUser: otherUser)

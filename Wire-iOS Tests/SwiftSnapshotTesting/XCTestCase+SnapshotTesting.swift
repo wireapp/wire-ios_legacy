@@ -35,14 +35,28 @@ extension ViewImageConfig: Hashable {
     }
 }
 
-/// MARK: - file name suffix
+/// MARK: - snapshoting all iPhone sizes
 extension XCTestCase {
-static let phoneConfigNames: [SnapshotTesting.ViewImageConfig:String] = [
-    .iPhoneSe: "iPhone-4_0_Inch",
-    .iPhone8: "iPhone-4_7_Inch",
-    .iPhone8Plus: "iPhone-5_5_Inch",
-    .iPhoneX: "iPhone-5_8_Inch",
-    .iPhoneXsMax: "iPhone-6_5_Inch"]
+    /// snapshot file name suffixs
+    static let phoneConfigNames: [SnapshotTesting.ViewImageConfig:String] = [
+        .iPhoneSe: "iPhone-4_0_Inch",
+        .iPhone8: "iPhone-4_7_Inch",
+        .iPhone8Plus: "iPhone-5_5_Inch",
+        .iPhoneX: "iPhone-5_8_Inch",
+        .iPhoneXsMax: "iPhone-6_5_Inch"]
+
+    func verifyAllIPhoneSizes(matching value: UIViewController,
+                              file: StaticString = #file,
+                              testName: String = #function,
+                              line: UInt = #line) {
+
+        for(config, name) in XCTestCase.phoneConfigNames {
+            verify(matching: value, as: .image(on: config), named: name,
+                   file: file,
+                   testName: testName,
+                   line: line)
+        }
+    }
 }
 
 extension XCTestCase {
