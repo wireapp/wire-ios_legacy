@@ -19,8 +19,38 @@
 import Foundation
 import WireDataModel
 
-class MockSelfLegalHoldSubject: NSObject {
+@objc class MockLegalHoldDataSource: NSObject {
+    var legalHoldRequest: LegalHoldRequest? = nil
+    var needsToAcknowledgeLegalHoldStatus: Bool = false
+}
 
-    #warning("TODO: Implement container for legal hold on MockUser")
+extension MockUser: SelfLegalHoldSubject {
+
+    public var needsToAcknowledgeLegalHoldStatus: Bool {
+        return legalHoldDataSource.needsToAcknowledgeLegalHoldStatus
+    }
+
+    public var legalHoldStatus: UserLegalHoldStatus {
+        if isUnderLegalHold {
+            return .enabled
+        } else if let request = legalHoldDataSource.legalHoldRequest {
+            return .pending(request)
+        } else {
+            return .disabled
+        }
+    }
+
+    public func acknowledgeLegalHoldStatus() {
+        legalHoldDataSource.needsToAcknowledgeLegalHoldStatus = false
+    }
+
+    public func userDidAcceptLegalHoldRequest(_ request: LegalHoldRequest) {
+        legalHoldDataSource.legalHoldRequest = nil
+        isUnderLegalHold = true
+    }
+
+    public func userDidReceiveLegalHoldRequest(_ request: LegalHoldRequest) {
+        legalHoldDataSource.legalHoldRequest = request
+    }
 
 }
