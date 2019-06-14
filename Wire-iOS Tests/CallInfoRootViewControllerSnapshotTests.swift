@@ -21,15 +21,15 @@ import XCTest
 @testable import Wire
 
 final class CallInfoRootViewControllerSnapshotTests: XCTestCase {
-    var mockCoreData: MockCoreData!
+    var coreDataFixture: CoreDataFixture!
 
     override func setUp() {
         super.setUp()
-        mockCoreData = MockCoreData()
+        coreDataFixture = CoreDataFixture()
     }
 
     override func tearDown() {
-        mockCoreData = nil
+        coreDataFixture = nil
         super.tearDown()
     }
 
@@ -37,7 +37,7 @@ final class CallInfoRootViewControllerSnapshotTests: XCTestCase {
 
     func testOneToOneIncomingAudioRinging() {
         // given
-        let fixture = CallInfoTestFixture(otherUser: mockCoreData.otherUser)
+        let fixture = CallInfoTestFixture(otherUser: coreDataFixture.otherUser)
 
         // when
         let sut = CallInfoRootViewController(configuration: fixture.oneToOneIncomingAudioRinging)

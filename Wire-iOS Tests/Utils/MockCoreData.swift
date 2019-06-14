@@ -23,7 +23,7 @@ import XCTest
 
 /// This class provides a `NSManagedObjectContext` in order to test views with real data instead
 /// of mock objects.
-final class MockCoreData {
+final class CoreDataFixture {
 
     var selfUserInTeam: Bool = false
     var selfUser: ZMUser!
@@ -233,7 +233,7 @@ final class MockCoreData {
 
 //MARK: - mock service user
 
-extension MockCoreData {
+extension CoreDataFixture {
     func createServiceUser() -> ZMUser {
         let serviceUser = ZMUser.insertNewObject(in: uiMOC)
         serviceUser.remoteIdentifier = UUID()
