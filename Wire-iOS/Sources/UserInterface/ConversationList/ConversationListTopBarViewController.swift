@@ -114,12 +114,20 @@ final class ConversationListTopBarViewController: UIViewController {
         let button = IconButton(style: .circular)
         button.setBackgroundImageColor(UIColor.vividRed.withAlphaComponent(0.5), for: .normal)
 
-        button.setIcon(.clock, size: 16, for: .normal)
+        button.setIcon(.clock, size: .tiny, for: .normal)
         button.setIconColor(.white, for: .normal)
         button.setIconColor(UIColor.white.withAlphaComponent(0.5), for: .normal)
-        // TODO: Accessibility
+
+        button.setLegalHoldAccessibility()
+        button.accessibilityValue = "legalhold_request.button.accessibility".localized
 
         button.addTarget(self, action: #selector(presentLegalHoldRequest), for: .touchUpInside)
+
+        NSLayoutConstraint.activate([
+            button.widthAnchor.constraint(equalToConstant: 32),
+            button.heightAnchor.constraint(equalToConstant: 32)
+        ])
+
         return button
     }
 
@@ -173,7 +181,11 @@ final class ConversationListTopBarViewController: UIViewController {
     }
 
     @objc func presentLegalHoldRequest() {
-        // TODO: Depends on PR3463
+        guard case let .pending(request) = selfUser.legalHoldStatus else {
+            return
+        }
+
+        presentLegalHoldActivationAlert(for: request, user: selfUser)
     }
 
     @objc

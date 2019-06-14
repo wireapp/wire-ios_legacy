@@ -35,7 +35,7 @@ extension UserType where Self: SelfLegalHoldSubject {
 
         if !usesCompanyLogin {
             inputConfiguration = UserInputRequest.InputConfiguration(
-                placeholder: "password.placeholder",
+                placeholder: "password.placeholder".localized,
                 prefilledText: nil,
                 isSecure: true,
                 textContentType: .passwordIfAvailable,

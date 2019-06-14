@@ -42,10 +42,13 @@ extension ZClientViewController: ZMUserObserver {
             presentLegalHoldDeactivatedAlert()
 
         case .pending(let request):
-            // present request alert
-            dump(request)
-            break
+            presentLegalHoldLegalHoldRequestAlert(for: user, request: request)
         }
+    }
+
+    private func presentLegalHoldLegalHoldRequestAlert(for user: ZMUser, request: LegalHoldRequest) {
+        presentLegalHoldActivationAlert(for: request, user: user)
+
     }
 
     @objc func setupUserChangeInfoObserver() {
