@@ -31,6 +31,7 @@ static id<UserType> mockSelfUser = nil;
     self = [super init];
     if (self) {
         _clients = [NSSet set];
+        _legalHoldDataSource = [[NSClassFromString(@"MockLegalHoldDataSource") alloc] init];
         self.isTeamMember = YES;
         self.teamIdentifier = [NSUUID UUID];
         for (NSString *key in jsonObject.allKeys) {
