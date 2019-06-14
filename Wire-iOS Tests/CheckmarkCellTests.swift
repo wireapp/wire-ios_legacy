@@ -16,10 +16,11 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import UIKit
+import XCTest
+import SnapshotTesting
 @testable import Wire
 
-class CheckmarkCellTests: ZMSnapshotTestCase {
+final class CheckmarkCellTests: XCTestCase {
 
     var cell: CheckmarkCell!
     var conversation: MockConversation!
@@ -42,21 +43,21 @@ class CheckmarkCellTests: ZMSnapshotTestCase {
         cell.title = "Option A"
         cell.showCheckmark = false
         cell.colorSchemeVariant = .light
-        verify(view: cell)
+        verify(matching: cell)
     }
 
     func testCheckmarkCell_NoCheckmark_Dark() {
         cell.title = "Option A"
         cell.showCheckmark = false
         cell.colorSchemeVariant = .dark
-        verify(view: cell)
+        verify(matching: cell)
     }
 
     func testCheckmarkCell_WithCheckmark_Light() {
         cell.title = "Option B"
         cell.showCheckmark = true
         cell.colorSchemeVariant = .light
-        verify(view: cell)
+        verify(matching: cell)
 
     }
 
@@ -64,7 +65,7 @@ class CheckmarkCellTests: ZMSnapshotTestCase {
         cell.title = "Option B"
         cell.showCheckmark = true
         cell.colorSchemeVariant = .dark
-        verify(view: cell)
+        verify(matching: cell)
     }
 
 }

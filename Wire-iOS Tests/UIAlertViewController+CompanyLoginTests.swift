@@ -20,23 +20,23 @@ import XCTest
 import SnapshotTesting
 @testable import Wire
 
-final class VersionInfoViewControllerSnapshotTests: XCTestCase {
-    
-    var sut: VersionInfoViewController!
+final class UIAlertControllerCompanyLoginSnapshotTests: XCTestCase {
+    var sut: UIAlertController!
 
     override func setUp() {
         super.setUp()
-        let path = Bundle(for: type(of: self)).path(forResource: "DummyComponentsVersions", ofType: "plist")!
-
-        sut = VersionInfoViewController(versionsPlist: path)
+        sut = UIAlertController.companyLogin(prefilledCode: nil, validator: {_ -> Bool in
+            return true
+        }, completion: {_ in })
     }
-    
+
     override func tearDown() {
         sut = nil
         super.tearDown()
     }
 
-    func testForInitState(){
+    func testForAlert(){
         verify(matching: sut)
     }
+
 }

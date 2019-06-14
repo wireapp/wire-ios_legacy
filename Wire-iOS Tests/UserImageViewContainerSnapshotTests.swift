@@ -17,9 +17,10 @@
 //
 
 import XCTest
+import SnapshotTesting
 @testable import Wire
 
-final class UserImageViewContainerSnapshotTests: ZMSnapshotTestCase {
+final class UserImageViewContainerSnapshotTests: XCTestCase {
     
     var sut: UserImageViewContainer!
     var mockUser: MockUser!
@@ -33,6 +34,8 @@ final class UserImageViewContainerSnapshotTests: ZMSnapshotTestCase {
     
     override func tearDown() {
         sut = nil
+        mockUser = nil
+
         super.tearDown()
     }
 
@@ -46,12 +49,12 @@ final class UserImageViewContainerSnapshotTests: ZMSnapshotTestCase {
     func testForNoUserImageWithoutSession(){
         setupSut(userSession: nil)
 
-        verify(view: sut)
+        verify(matching: sut)
     }
 
     func testForWithUserImage(){
         setupSut(userSession: MockZMUserSession())
 
-        verify(view: sut)
+        verify(matching: sut)
     }
 }

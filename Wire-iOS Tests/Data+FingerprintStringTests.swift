@@ -1,4 +1,4 @@
-//
+
 // Wire
 // Copyright (C) 2019 Wire Swiss GmbH
 //
@@ -17,26 +17,17 @@
 //
 
 import XCTest
-import SnapshotTesting
 @testable import Wire
 
-final class VersionInfoViewControllerSnapshotTests: XCTestCase {
-    
-    var sut: VersionInfoViewController!
+final class Data_FingerprintStringTestsTests: XCTestCase {
 
-    override func setUp() {
-        super.setUp()
-        let path = Bundle(for: type(of: self)).path(forResource: "DummyComponentsVersions", ofType: "plist")!
+    func testThatFingerPrintDataIsConvertedToSpacedString(){
+        // GIVEN
+        let fingerprintString = "102030405060708090a0b0c0d0e0f0708090102030405060708090"
+        let sut: Data? = fingerprintString.data(using: .utf8)
 
-        sut = VersionInfoViewController(versionsPlist: path)
-    }
-    
-    override func tearDown() {
-        sut = nil
-        super.tearDown()
-    }
+        // WHEN & THEN
 
-    func testForInitState(){
-        verify(matching: sut)
+        XCTAssertEqual(sut?.fingerprintString, "10 20 30 40 50 60 70 80 90 a0 b0 c0 d0 e0 f0 70 80 90 10 20 30 40 50 60 70 80 90")
     }
 }

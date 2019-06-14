@@ -17,18 +17,15 @@
 //
 
 import XCTest
-import SnapshotTesting
 @testable import Wire
 
-final class VersionInfoViewControllerSnapshotTests: XCTestCase {
+final class UIViewController_LegalHoldAlertSnapshotTests: ZMSnapshotTestCase {
     
-    var sut: VersionInfoViewController!
+    var sut: UIAlertController!
 
     override func setUp() {
         super.setUp()
-        let path = Bundle(for: type(of: self)).path(forResource: "DummyComponentsVersions", ofType: "plist")!
-
-        sut = VersionInfoViewController(versionsPlist: path)
+        sut = UIAlertController.legalHoldDeactivated()
     }
     
     override func tearDown() {
@@ -36,7 +33,7 @@ final class VersionInfoViewControllerSnapshotTests: XCTestCase {
         super.tearDown()
     }
 
-    func testForInitState(){
-        verify(matching: sut)
+    func testForLegalHoldAlert(){
+        verifyAlertController(sut)
     }
 }
