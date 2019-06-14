@@ -23,7 +23,7 @@ import XCTest
 
 /// This class provides a `NSManagedObjectContext` in order to test views with real data instead
 /// of mock objects.
-final class MockCoreData /*: ZMSnapshotTestCase*/ {
+final class MockCoreData {
 
     var selfUserInTeam: Bool = false
     var selfUser: ZMUser!
@@ -65,8 +65,7 @@ final class MockCoreData /*: ZMSnapshotTestCase*/ {
     var documentsDirectory: URL?
 
     init() {
-//        super.setUp()
-        ///From ZMSnapshot
+        ///From ZMSnapshotTestCase
 
         XCTAssertEqual(UIScreen.main.scale, 2, "Snapshot tests need to be run on a device with a 2x scale")
         if UIDevice.current.systemVersion.compare("10", options: .numeric, range: nil, locale: .current) == .orderedAscending {
@@ -76,12 +75,6 @@ final class MockCoreData /*: ZMSnapshotTestCase*/ {
         UIView.setAnimationsEnabled(false)
         accentColor = .vividRed
         snapshotBackgroundColor = UIColor.clear
-
-        // Enable when the design of the view has changed in order to update the reference snapshots
-//        recordMode = strcmp(getenv("RECORDING_SNAPSHOTS"), "YES") == 0
-
-//        usesDrawViewHierarchyInRect = true
-//        let contextExpectation: XCTestExpectation = expectation(description: "It should create a context")
 
         let group = DispatchGroup()
 
@@ -97,11 +90,9 @@ final class MockCoreData /*: ZMSnapshotTestCase*/ {
 
         StorageStack.shared.createManagedObjectContextDirectory(accountIdentifier: UUID(), applicationContainer: documentsDirectory!, dispatchGroup: nil, startedMigrationCallback: nil, completionHandler: { contextDirectory in
             self.uiMOC = contextDirectory.uiContext
-//            contextExpectation.fulfill()
             group.leave()
         })
 
-//        wait(for: [contextExpectation], timeout: 0.1)
         group.wait()
 
         if needsCaches {
@@ -125,8 +116,6 @@ final class MockCoreData /*: ZMSnapshotTestCase*/ {
         team = nil
 
         MockUser.setMockSelf(nil)
-
-//        super.tearDown()
     }
 
     func setUpCaches() {
