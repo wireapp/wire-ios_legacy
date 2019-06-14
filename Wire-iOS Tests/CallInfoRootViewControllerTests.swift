@@ -18,20 +18,49 @@
 
 import XCTest
 @testable import Wire
+import SnapshotTesting
+
+final class CallInfoRootViewControllerSnapshotTests: XCTestCase {
+    let mockCoreData = MockCoreData()
+
+    func testOneToOneIncomingAudioRinging() {
+        // given
+        let fixture = CallInfoTestFixture(otherUser: mockCoreData.otherUser)
+        //        let fixture = CallInfoTestFixture(otherUser: otherUser)
+
+        // when
+        let sut = CallInfoRootViewController(configuration: fixture.oneToOneIncomingAudioRinging)
+
+        // then
+        //        verifyInAllIPhoneSizes(view: sut.view)
+        verify(matching: sut)
+    }
+}
 
 class CallInfoRootViewControllerTests: CoreDataSnapshotTestCase {
+//final class CallInfoRootViewControllerTests: XCTestCase {
+    let mockCoreData = MockCoreData()
+
+//    override func setUp() {
+//        super.setUp()
+//
+//
+//
+//    }
 
     // MARK: - OneToOne Audio
     
     func testOneToOneIncomingAudioRinging() {
         // given
-        let fixture = CallInfoTestFixture(otherUser: otherUser)
-        
+        let fixture = CallInfoTestFixture(otherUser: mockCoreData.otherUser)
+//        let fixture = CallInfoTestFixture(otherUser: otherUser)
+
         // when
         let sut = CallInfoRootViewController(configuration: fixture.oneToOneIncomingAudioRinging)
         
         // then
-        verifyInAllIPhoneSizes(view: sut.view)
+//        verifyInAllIPhoneSizes(view: sut.view)
+        verify(matching: sut)
     }
     
     func testOneToOneOutgoingAudioRinging() {

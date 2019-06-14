@@ -18,11 +18,12 @@
 
 import WireTesting
 import XCTest
+@testable import Wire
 
 
 /// This class provides a `NSManagedObjectContext` in order to test views with real data instead
 /// of mock objects.
-open class CoreDataSnapshotTestCase: ZMSnapshotTestCase {
+final class MockCoreData /*: ZMSnapshotTestCase*/ {
 
     var selfUserInTeam: Bool = false
     var selfUser: ZMUser!
@@ -32,8 +33,83 @@ open class CoreDataSnapshotTestCase: ZMSnapshotTestCase {
     var teamMember: Member?
     let usernames = ["Anna", "Claire", "Dean", "Erik", "Frank", "Gregor", "Hanna", "Inge", "James", "Laura", "Klaus", "Lena", "Linea", "Lara", "Elliot", "Francois", "Felix", "Brian", "Brett", "Hannah", "Ana", "Paula"]
 
-    override open func setUp() {
-        super.setUp()
+
+    ///From ZMSnapshot
+
+    typealias ConfigurationWithDeviceType = (_ view: UIView, _ isPad: Bool) -> Void
+    typealias Configuration = (_ view: UIView) -> Void
+
+    var uiMOC: NSManagedObjectContext!
+
+    /// The color of the container view in which the view to
+    /// be snapshot will be placed, defaults to UIColor.lightGrayColor
+    var snapshotBackgroundColor: UIColor?
+
+    /// If YES the uiMOC will have image and file caches. Defaults to NO.
+    var needsCaches: Bool {
+        get {
+            return false
+        }
+    }
+
+    /// If this is set the accent color will be overriden for the tests
+    var accentColor: ZMAccentColor {
+        set {
+            UIColor.setAccentOverride(newValue)
+        }
+        get {
+            return UIColor.accentOverrideColor()
+        }
+    }
+
+    var documentsDirectory: URL?
+
+    init() {
+//        super.setUp()
+        ///From ZMSnapshot
+
+        XCTAssertEqual(UIScreen.main.scale, 2, "Snapshot tests need to be run on a device with a 2x scale")
+        if UIDevice.current.systemVersion.compare("10", options: .numeric, range: nil, locale: .current) == .orderedAscending {
+            XCTFail("Snapshot tests need to be run on a device running at least iOS 10")
+        }
+        AppRootViewController.configureAppearance()
+        UIView.setAnimationsEnabled(false)
+        accentColor = .vividRed
+        snapshotBackgroundColor = UIColor.clear
+
+        // Enable when the design of the view has changed in order to update the reference snapshots
+//        recordMode = strcmp(getenv("RECORDING_SNAPSHOTS"), "YES") == 0
+
+//        usesDrawViewHierarchyInRect = true
+//        let contextExpectation: XCTestExpectation = expectation(description: "It should create a context")
+
+        let group = DispatchGroup()
+
+        group.enter()
+
+        StorageStack.reset()
+        StorageStack.shared.createStorageAsInMemory = true
+        do {
+            documentsDirectory = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+        } catch {
+            XCTAssertNil(error, "Unexpected error \(error)")
+        }
+
+        StorageStack.shared.createManagedObjectContextDirectory(accountIdentifier: UUID(), applicationContainer: documentsDirectory!, dispatchGroup: nil, startedMigrationCallback: nil, completionHandler: { contextDirectory in
+            self.uiMOC = contextDirectory.uiContext
+//            contextExpectation.fulfill()
+            group.leave()
+        })
+
+//        wait(for: [contextExpectation], timeout: 0.1)
+        group.wait()
+
+        if needsCaches {
+            setUpCaches()
+        }
+
+        /////////////////////////
+
         snapshotBackgroundColor = .white
         setupTestObjects()
 
@@ -41,7 +117,7 @@ open class CoreDataSnapshotTestCase: ZMSnapshotTestCase {
 
     }
 
-    override open func tearDown() {
+    deinit {
         selfUser = nil
         otherUser = nil
         otherUserConversation = nil
@@ -50,7 +126,12 @@ open class CoreDataSnapshotTestCase: ZMSnapshotTestCase {
 
         MockUser.setMockSelf(nil)
 
-        super.tearDown()
+//        super.tearDown()
+    }
+
+    func setUpCaches() {
+        uiMOC.zm_userImageCache = UserImageLocalCache(location: nil)
+        uiMOC.zm_fileAssetCache = FileAssetCache(location: nil)
     }
 
     // MARK: – Setup
@@ -163,7 +244,7 @@ open class CoreDataSnapshotTestCase: ZMSnapshotTestCase {
 
 //MARK: - mock service user
 
-extension CoreDataSnapshotTestCase {
+extension MockCoreData {
     func createServiceUser() -> ZMUser {
         let serviceUser = ZMUser.insertNewObject(in: uiMOC)
         serviceUser.remoteIdentifier = UUID()
