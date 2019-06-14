@@ -17,6 +17,7 @@
 //
 
 import UIKit
+import WireCryptobox
 
 extension UserType where Self: SelfLegalHoldSubject {
 
@@ -28,7 +29,7 @@ extension UserType where Self: SelfLegalHoldSubject {
      */
 
     func makeLegalHoldInputRequest(for request: LegalHoldRequest, inputHandler: @escaping (String?) -> Void) -> UserInputRequest {
-        let fingerprintString: String = "<fingerprint unavailable>"
+        let fingerprintString = EncryptionSessionsDirectory.fingerprint(fromPrekey: request.lastPrekey.key)?.fingerprintString ?? "<fingerprint unavailable>"
         var legalHoldMessage = "legalhold_request.alert.detail".localized(args: fingerprintString)
 
         var inputConfiguration: UserInputRequest.InputConfiguration? = nil
