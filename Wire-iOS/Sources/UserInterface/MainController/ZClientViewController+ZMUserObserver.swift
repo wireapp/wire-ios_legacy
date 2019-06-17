@@ -19,9 +19,8 @@ import Foundation
 
 extension ZClientViewController: ZMUserObserver {
     public func userDidChange(_ changeInfo: UserChangeInfo) {
-        if changeInfo.legalHoldStatusChanged,
-            !ZMUser.selfUser().isUnderLegalHold {
-            // presentLegalHoldDeactivatedAlert()
+        if changeInfo.legalHoldStatusChanged  {
+            notifyAboutLegalHoldStatusIfNeeded(for: ZMUser.selfUser())
         }
 
         if changeInfo.accentColorValueChanged {
@@ -29,10 +28,32 @@ extension ZClientViewController: ZMUserObserver {
         }
     }
 
-    @objc
-    func setupUserChangeInfoObserver() {
-        if let session = ZMUserSession.shared() {
-            userObserverToken = UserChangeInfo.add(userObserver:self, for: ZMUser.selfUser(), userSession: session)
+    @objc func notifyAboutLegalHoldStatusIfNeeded(for user: ZMUser) {
+        guard user.needsToAcknowledgeLegalHoldStatus else {
+            return
+        }
+
+        switch user.legalHoldStatus {
+        case .enabled:
+            // show legal hold is now enabled
+            break
+
+        case .disabled:
+            // presentLegalHoldDeactivatedAlert()
+            break
+
+        case .pending(let request):
+            presentLegalHoldLegalHoldRequestAlert(for: user, request: request)
         }
     }
+
+    private func presentLegalHoldLegalHoldRequestAlert(for user: ZMUser, request: LegalHoldRequest) {
+        presentLegalHoldActivationAlert(for: request, user: user)
+    }
+
+    @objc func setupUserChangeInfoObserver() {
+        guard let userSession = ZMUserSession.shared() else { return }
+        userObserverToken = UserChangeInfo.add(userObserver:self, for: ZMUser.selfUser(), userSession: userSession)
+    }
+
 }

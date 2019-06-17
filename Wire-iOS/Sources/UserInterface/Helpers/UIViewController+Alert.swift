@@ -17,6 +17,7 @@
 //
 
 import Foundation
+private let zmLog = ZMSLog(tag: "Alert")
 
 extension UIAlertController {
         
@@ -45,6 +46,7 @@ extension UIAlertController {
         return UIAlertController.alertWithOKButton(title: "legal_hold.deactivated.title".localized,
                                     message: "legal_hold.deactivated.message".localized)
     }
+
 }
 
 extension UIViewController {
@@ -57,6 +59,7 @@ extension UIViewController {
     ///   - animated: present the alert animated or not
     ///   - okActionHandler: a nullable closure for the OK button
     /// - Returns: the alert presented
+    @discardableResult
     func presentAlertWithOKButton(title: String,
                                   message: String,
                                   animated: Bool = true,
@@ -71,18 +74,59 @@ extension UIViewController {
         return alert
     }
 
-    //MARK: - legal hold
-    @discardableResult
-    func presentLegalHoldDeactivatedAlert(animated: Bool = true) -> UIAlertController {
+    // MARK: - Legal Hold
 
+    func presentLegalHoldDeactivatedAlert() {
         let alert = UIAlertController.legalHoldDeactivated()
-
-        present(alert, animated: animated)
-
-        return alert
+        present(alert, animated: true)
     }
 
-    //MARK: - user profile deep link
+    func presentLegalHoldActivationAlert(for request: LegalHoldRequest, user: SelfUserType, animated: Bool = true) {
+        func handleLegalHoldActivationResult(_ error: LegalHoldActivationError?) {
+            UIApplication.shared.wr_topmostViewController()?.showLoadingView = false
+
+            switch error {
+            case .invalidPassword?:
+                user.handleLegalHoldActivationFailure()
+
+                let alert = UIAlertController.alertWithOKButton(
+                    title: "legalhold_request.alert.error_wrong_password".localized,
+                    message: "legalhold_request.alert.error_wrong_password".localized
+                )
+
+                present(alert, animated: true)
+
+            case .some:
+                user.handleLegalHoldActivationFailure()
+
+                let alert = UIAlertController.alertWithOKButton(
+                    title: "general.failure".localized,
+                    message: "general.failure.try_again".localized
+                )
+
+                present(alert, animated: true)
+
+            case .none:
+                user.handleLegalHoldActivationSuccess(for: request)
+            }
+        }
+
+        let request = user.makeLegalHoldInputRequest(for: request) { password in
+            UIApplication.shared.wr_topmostViewController()?.showLoadingView = true
+
+            ZMUserSession.shared()?.acceptLegalHold(password: password) { error in
+                DispatchQueue.main.async {
+                    handleLegalHoldActivationResult(error)
+                }
+            }
+        }
+
+        let alert = UIAlertController(inputRequest: request)
+        present(alert, animated: animated)
+    }
+
+    // MARK: - user profile deep link
+
     @discardableResult
     func presentInvalidUserProfileLinkAlert(okActionHandler: ((UIAlertAction) -> Void)? = nil) -> UIAlertController {
         return presentAlertWithOKButton(title: "url_action.invalid_user.title".localized,
@@ -92,3 +136,21 @@ extension UIViewController {
     
 }
 
+// MARK: - SelfLegalHoldSubject + Accepting Alert
+
+extension SelfLegalHoldSubject {
+
+    fileprivate func handleLegalHoldActivationFailure() {
+        ZMUserSession.shared()?.enqueueChanges {
+            self.acknowledgeLegalHoldStatus()
+        }
+    }
+
+    fileprivate func handleLegalHoldActivationSuccess(for request: LegalHoldRequest) {
+        ZMUserSession.shared()?.enqueueChanges {
+            self.acknowledgeLegalHoldStatus()
+            self.userDidAcceptLegalHoldRequest(request)
+        }
+    }
+
+}
