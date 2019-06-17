@@ -84,15 +84,13 @@ extension UIViewController {
     func presentLegalHoldActivatedAlert(for user: ZMUser) {
         let alert = UIAlertController(
             title: "legalhold_active.alert.title".localized,
-            message: "legalhold.header.self_description".localized,
+            message: "legalhold_active.alert.message".localized,
             preferredStyle: .alert
         )
 
         let okAction = UIAlertAction(title: "general.ok".localized, style: .default) { _ in
             user.acceptLegalHoldChangeAlert()
         }
-
-        alert.addAction(okAction)
 
         let detailsAction = UIAlertAction(title: "legalhold_active.alert.learn_more".localized, style: .default) { _ in
             user.acceptLegalHoldChangeAlert()
@@ -103,6 +101,7 @@ extension UIViewController {
         }
 
         alert.addAction(detailsAction)
+        alert.addAction(okAction)
         alert.preferredAction = okAction
 
         present(alert, animated: true)
