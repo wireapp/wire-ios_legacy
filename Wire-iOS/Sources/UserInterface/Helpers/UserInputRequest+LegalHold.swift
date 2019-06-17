@@ -60,7 +60,7 @@ extension UserType where Self: SelfLegalHoldSubject {
     }
 
     private func ignoreLegalHoldRequest() {
-        ZMUserSession.shared()?.enqueueChanges {
+        ZMUserSession.shared()?.performChanges {
             self.acknowledgeLegalHoldStatus()
         }
     }
