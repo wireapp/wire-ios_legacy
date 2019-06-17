@@ -41,12 +41,6 @@ extension UIAlertController {
         return alert
     }
 
-    //MARK: - legal hold
-    static func legalHoldDeactivated() -> UIAlertController {
-        return UIAlertController.alertWithOKButton(title: "legal_hold.deactivated.title".localized,
-                                    message: "legal_hold.deactivated.message".localized)
-    }
-
 }
 
 extension UIViewController {
@@ -76,8 +70,13 @@ extension UIViewController {
 
     // MARK: - Legal Hold
 
-    func presentLegalHoldDeactivatedAlert() {
-        let alert = UIAlertController.legalHoldDeactivated()
+    func presentLegalHoldDeactivatedAlert(for user: ZMUser) {
+        let alert = UIAlertController.alertWithOKButton(
+            title: "legal_hold.deactivated.title".localized,
+            message: "legal_hold.deactivated.message".localized,
+            okActionHandler: { _ in user.acceptLegalHoldChangeAlert() }
+        )
+
         present(alert, animated: true)
     }
 
