@@ -111,24 +111,10 @@ final class ClientRemovalObserver: NSObject, ZMClientUpdateObserver {
             }
             passwordIsNecessaryForDelete = true
         } else {
-            controller.presentAlertWithOKButton(title: "", message: "self.settings.account_details.remove_device.password.error".localized)
+            controller.presentAlertWithOKButton(message: "self.settings.account_details.remove_device.password.error".localized)
             endRemoval(result: error)
             
             passwordIsNecessaryForDelete = false
         }
     }
 }
-
-///TODO: remove
-extension UserClient {
-    func remove(over controller: UIViewController, credentials: ZMEmailCredentials?, _ completion: ((Error?)->())? = nil) -> ClientRemovalObserver {
-        let removalObserver = ClientRemovalObserver(userClientToDelete: self,
-                                                    controller: controller,
-                                                    credentials: credentials,
-                                                    completion: completion)
-        removalObserver.startRemoval()
-        
-        return removalObserver
-    }
-}
-
