@@ -21,15 +21,6 @@ import Foundation
 private let zmLog = ZMSLog(tag: "UI")
 
 extension UIViewController {
-    
-    func displayError(_ message: String) {
-        let alert = UIAlertController(title: "", message: message, preferredStyle: .alert)
-        let action = UIAlertAction(title: NSLocalizedString("general.ok", comment: ""), style: .default) { [unowned alert] (_) -> Void in
-            alert.dismiss(animated: true, completion: .none)
-        }
-        alert.addAction(action)
-        self.present(alert, animated: true, completion: .none)
-    }
 
     @discardableResult
     func requestPassword(_ completion: @escaping (ZMEmailCredentials?)->()) -> RequestPasswordController {
@@ -111,6 +102,8 @@ private class ClientRemovalObserver: NSObject, ZMClientUpdateObserver {
         controller.showLoadingView = false
 
         if !passwordIsNecessaryForDelete {
+            ///TODO: dismiss dialogs first
+
             controller.requestPassword { newCredentials in
                 guard let emailCredentials = newCredentials,
                     emailCredentials.password?.isEmpty == false else {
@@ -122,9 +115,8 @@ private class ClientRemovalObserver: NSObject, ZMClientUpdateObserver {
                 self.controller.showLoadingView = true
             }
             passwordIsNecessaryForDelete = true
-        }
-        else {
-            controller.displayError(NSLocalizedString("self.settings.account_details.remove_device.password.error", comment: ""))
+        } else {
+            controller.presentAlertWithOKButton(title: "", message: "self.settings.account_details.remove_device.password.error".localized)
             endRemoval(result: error)
         }
     }
