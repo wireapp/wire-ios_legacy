@@ -1057,7 +1057,7 @@
 		EF1A461E21ADACF50009B6B9 /* RightIconDetailsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1A461D21ADACF50009B6B9 /* RightIconDetailsCell.swift */; };
 		EF1BEBCD21F5E8F5001128E0 /* StartUIViewController+Constraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1BEBCC21F5E8F5001128E0 /* StartUIViewController+Constraints.swift */; };
 		EF1C2E4D2254A1E2007E1CAC /* ConversationViewControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1C2E4C2254A1E2007E1CAC /* ConversationViewControllerSnapshotTests.swift */; };
-		EF1CB6F522B39CC0004CB458 /* MockCoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1CB6F422B39CBF004CB458 /* MockCoreData.swift */; };
+		EF1CB6F522B39CC0004CB458 /* CoreDataFixture.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1CB6F422B39CBF004CB458 /* CoreDataFixture.swift */; };
 		EF1CB6F722B3C430004CB458 /* CallInfoRootViewControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1CB6F622B3C430004CB458 /* CallInfoRootViewControllerSnapshotTests.swift */; };
 		EF1D80D92226D6B800BCA8D3 /* MockConversationFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF16FC4D1DAFCE9300FF4325 /* MockConversationFactory.swift */; };
 		EF1D80DD22275F8F00BCA8D3 /* MockUser+MockUserArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1D80DC22275F8F00BCA8D3 /* MockUser+MockUserArray.swift */; };
@@ -2851,7 +2851,7 @@
 		EF1A461D21ADACF50009B6B9 /* RightIconDetailsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RightIconDetailsCell.swift; sourceTree = "<group>"; };
 		EF1BEBCC21F5E8F5001128E0 /* StartUIViewController+Constraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StartUIViewController+Constraints.swift"; sourceTree = "<group>"; };
 		EF1C2E4C2254A1E2007E1CAC /* ConversationViewControllerSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationViewControllerSnapshotTests.swift; sourceTree = "<group>"; };
-		EF1CB6F422B39CBF004CB458 /* MockCoreData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MockCoreData.swift; path = "Wire-iOS Tests/Utils/MockCoreData.swift"; sourceTree = SOURCE_ROOT; };
+		EF1CB6F422B39CBF004CB458 /* CoreDataFixture.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CoreDataFixture.swift; path = "Wire-iOS Tests/SwiftSnapshotTesting/CoreDataFixture.swift"; sourceTree = SOURCE_ROOT; };
 		EF1CB6F622B3C430004CB458 /* CallInfoRootViewControllerSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallInfoRootViewControllerSnapshotTests.swift; sourceTree = "<group>"; };
 		EF1D80DC22275F8F00BCA8D3 /* MockUser+MockUserArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MockUser+MockUserArray.swift"; sourceTree = "<group>"; };
 		EF1D80DE2228175800BCA8D3 /* CountryCodeTableViewController+StatusBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CountryCodeTableViewController+StatusBar.swift"; sourceTree = "<group>"; };
@@ -5716,7 +5716,6 @@
 		BACB88521AF7C48900DDCDB0 /* Wire-iOS Tests */ = {
 			isa = PBXGroup;
 			children = (
-				EF1CB6F322B39CA8004CB458 /* MockCoreData */,
 				EF2121982292EEA4006C4293 /* SwiftSnapshotTesting */,
 				EFDBA2402294016400874A15 /* ConversationList */,
 				EFC57A1121BABD4F0008DBE6 /* ConversationInputBarViewController */,
@@ -6227,14 +6226,6 @@
 			path = ConversationOption;
 			sourceTree = "<group>";
 		};
-		EF1CB6F322B39CA8004CB458 /* MockCoreData */ = {
-			isa = PBXGroup;
-			children = (
-				EF1CB6F422B39CBF004CB458 /* MockCoreData.swift */,
-			);
-			path = MockCoreData;
-			sourceTree = "<group>";
-		};
 		EF1FCE4D21B69353003E0BE2 /* ReadReceiptSystemMessage */ = {
 			isa = PBXGroup;
 			children = (
@@ -6246,6 +6237,7 @@
 		EF2121982292EEA4006C4293 /* SwiftSnapshotTesting */ = {
 			isa = PBXGroup;
 			children = (
+				EF1CB6F422B39CBF004CB458 /* CoreDataFixture.swift */,
 				EF2121992292EEF3006C4293 /* XCTestCase+SnapshotTesting.swift */,
 			);
 			path = SwiftSnapshotTesting;
@@ -8339,7 +8331,7 @@
 				EF21A06B21305C4000B9120C /* ConversationTitleViewTests.swift in Sources */,
 				5EBBE9732187A844008BC1B7 /* MessageToolboxViewTests.swift in Sources */,
 				162AE748219B26AF00581D98 /* ConversationSystemMessageTests.swift in Sources */,
-				EF1CB6F522B39CC0004CB458 /* MockCoreData.swift in Sources */,
+				EF1CB6F522B39CC0004CB458 /* CoreDataFixture.swift in Sources */,
 				EF01D28022B136A9009754B2 /* Data+FingerprintStringTests.swift in Sources */,
 				EF91A0561FF3A05A00FE2F53 /* GiphySearchViewControllerTests.swift in Sources */,
 				EF2D6D38228C1FB300D8DBF4 /* MockPhotoLibrary.swift in Sources */,
