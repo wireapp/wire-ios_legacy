@@ -279,15 +279,15 @@ class SettingsClientViewController: UIViewController,
         tableView.deselectRow(at: indexPath, animated: true)
         
         guard let clientSection = ClientSection(rawValue: (indexPath as NSIndexPath).section) else { return }
+
         switch clientSection {
-       
         case .resetSession:
             self.userClient.resetSession()
             self.resetSessionPending = true
             break
             
         case .removeDevice:
-            self.userClient.remove(over: self, credentials: self.credentials) { error in
+            userClient.remove(over: self, credentials: self.credentials) { error in
                 if error == nil {
                     self.navigationController?.popViewController(animated: true)
                 }
