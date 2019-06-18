@@ -55,10 +55,8 @@ enum ClientRemovalUIError: Error {
     case noPasswordProvided
 }
 
-private class ClientRemovalObserver: NSObject, ZMClientUpdateObserver {
-
-    private var strongReference: ClientRemovalObserver? = nil
-    let userClientToDelete: UserClient
+final class ClientRemovalObserver: NSObject, ZMClientUpdateObserver {
+    var userClientToDelete: UserClient
     let controller: UIViewController
     let completion: ((Error?)->())?
     var credentials: ZMEmailCredentials?
@@ -77,12 +75,10 @@ private class ClientRemovalObserver: NSObject, ZMClientUpdateObserver {
     func startRemoval() {
         controller.showLoadingView = true
         ZMUserSession.shared()?.delete(userClientToDelete, with: credentials)
-        strongReference = self
     }
     
     private func endRemoval(result: Error?) {
         completion?(result)
-        strongReference = nil
     }
     
     func finishedFetching(_ userClients: [UserClient]) {
@@ -102,8 +98,6 @@ private class ClientRemovalObserver: NSObject, ZMClientUpdateObserver {
         controller.showLoadingView = false
 
         if !passwordIsNecessaryForDelete {
-            ///TODO: dismiss dialogs first
-
             controller.requestPassword { newCredentials in
                 guard let emailCredentials = newCredentials,
                     emailCredentials.password?.isEmpty == false else {
@@ -111,23 +105,30 @@ private class ClientRemovalObserver: NSObject, ZMClientUpdateObserver {
                     return
                 }
                 self.credentials = emailCredentials
-                ZMUserSession.shared()?.delete(self.userClientToDelete, with: self.credentials)
+                ZMUserSession.shared()?.delete(self.userClientToDelete,
+                                               with: self.credentials)
                 self.controller.showLoadingView = true
             }
             passwordIsNecessaryForDelete = true
         } else {
             controller.presentAlertWithOKButton(title: "", message: "self.settings.account_details.remove_device.password.error".localized)
             endRemoval(result: error)
+            
+            passwordIsNecessaryForDelete = false
         }
     }
 }
 
+///TODO: remove
 extension UserClient {
-    func remove(over controller: UIViewController, credentials: ZMEmailCredentials?, _ completion: ((Error?)->())? = nil) {
+    func remove(over controller: UIViewController, credentials: ZMEmailCredentials?, _ completion: ((Error?)->())? = nil) -> ClientRemovalObserver {
         let removalObserver = ClientRemovalObserver(userClientToDelete: self,
                                                     controller: controller,
                                                     credentials: credentials,
                                                     completion: completion)
         removalObserver.startRemoval()
+        
+        return removalObserver
     }
 }
+

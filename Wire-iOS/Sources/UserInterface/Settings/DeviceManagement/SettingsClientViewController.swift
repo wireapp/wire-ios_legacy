@@ -56,6 +56,8 @@ class SettingsClientViewController: UIViewController,
             setColor(for: variant)
         }
     }
+    
+    var removalObserver: ClientRemovalObserver?
 
     convenience init(userClient: UserClient,
                      fromConversation: Bool,
@@ -287,12 +289,22 @@ class SettingsClientViewController: UIViewController,
             break
             
         case .removeDevice:
-            userClient.remove(over: self, credentials: self.credentials) { error in
-                if error == nil {
-                    self.navigationController?.popViewController(animated: true)
-                }
-            }
+            if removalObserver == nil {
             
+                let completion: ((Error?)->()) = { error in
+                    if error == nil {
+                        self.navigationController?.popViewController(animated: true)
+                    }
+                }
+                
+                removalObserver = ClientRemovalObserver(userClientToDelete: userClient,
+                                                            controller: self,
+                                                            credentials: credentials, completion: completion)
+                
+
+            }
+            removalObserver?.startRemoval()
+
         default:
             break
         }
