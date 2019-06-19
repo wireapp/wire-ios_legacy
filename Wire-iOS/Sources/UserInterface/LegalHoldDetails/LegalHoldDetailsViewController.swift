@@ -25,7 +25,7 @@ class LegalHoldDetailsViewController: UIViewController {
     fileprivate let collectionViewController: SectionCollectionViewController
     fileprivate let conversation: ZMConversation
     
-    convenience init?(user: ZMUser) {
+    convenience init?(user: UserType) {
         guard let conversation = user.oneToOneConversation else { return nil }
         self.init(conversation: conversation)
     }
