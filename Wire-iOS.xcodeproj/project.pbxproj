@@ -656,7 +656,7 @@
 		87AAE4251E4347F000E1D13A /* ConversationContentViewController+PeekPop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87AAE4241E4347F000E1D13A /* ConversationContentViewController+PeekPop.swift */; };
 		87AAE4291E43682E00E1D13A /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87AAE4281E43682E00E1D13A /* LocalAuthentication.framework */; };
 		87AB6DB61D9AB47400ADAD38 /* SettingsStyleNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87AB6DB51D9AB47400ADAD38 /* SettingsStyleNavigationController.swift */; };
-		87AC33CB2181C6FB00069C79 /* UserClient+RemoveTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87AC33CA2181C6FB00069C79 /* UserClient+RemoveTask.swift */; };
+		87AC33CB2181C6FB00069C79 /* ClientRemovalObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87AC33CA2181C6FB00069C79 /* ClientRemovalObserver.swift */; };
 		87AC33CD2182064F00069C79 /* ReplyComposingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87AC33CC2182064F00069C79 /* ReplyComposingView.swift */; };
 		87AC77DB1DE48C01009F6D56 /* Copyable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87AC77DA1DE48C01009F6D56 /* Copyable.swift */; };
 		87AC9F561C0749FB00E1ED6F /* TailEditingTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87AC9F551C0749FB00E1ED6F /* TailEditingTextField.swift */; };
@@ -2294,7 +2294,7 @@
 		87AAE4281E43682E00E1D13A /* LocalAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LocalAuthentication.framework; path = System/Library/Frameworks/LocalAuthentication.framework; sourceTree = SDKROOT; };
 		87AB6DB51D9AB47400ADAD38 /* SettingsStyleNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsStyleNavigationController.swift; sourceTree = "<group>"; };
 		87AC33AD217F4FE400069C79 /* BackendEnvironment+Shared.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "BackendEnvironment+Shared.swift"; sourceTree = "<group>"; };
-		87AC33CA2181C6FB00069C79 /* UserClient+RemoveTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserClient+RemoveTask.swift"; sourceTree = "<group>"; };
+		87AC33CA2181C6FB00069C79 /* ClientRemovalObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientRemovalObserver.swift; sourceTree = "<group>"; };
 		87AC33CC2182064F00069C79 /* ReplyComposingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplyComposingView.swift; sourceTree = "<group>"; };
 		87AC77DA1DE48C01009F6D56 /* Copyable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Copyable.swift; sourceTree = "<group>"; };
 		87AC9F551C0749FB00E1ED6F /* TailEditingTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TailEditingTextField.swift; sourceTree = "<group>"; };
@@ -5353,7 +5353,7 @@
 				8787D1831EA74F5B00254D02 /* ZMUser+Additions.swift */,
 				D50892FA2056BD51004D3AE2 /* ZMUser+ExpirationTimeFormatting.swift */,
 				871DD79C2080C4F6006B1C56 /* Conversation+Participants.swift */,
-				87AC33CA2181C6FB00069C79 /* UserClient+RemoveTask.swift */,
+				87AC33CA2181C6FB00069C79 /* ClientRemovalObserver.swift */,
 				1661674F223A81CB00779AE3 /* MessageKeyPathObserver.swift */,
 			);
 			path = syncengine;
@@ -7579,7 +7579,7 @@
 				D550F56E204444EE009E09DD /* ConversationActionController+Leave.swift in Sources */,
 				F15650E621DD14B300210504 /* TransformLabel.swift in Sources */,
 				87F61D1A1CD36F0900670794 /* GradientView.swift in Sources */,
-				87AC33CB2181C6FB00069C79 /* UserClient+RemoveTask.swift in Sources */,
+				87AC33CB2181C6FB00069C79 /* ClientRemovalObserver.swift in Sources */,
 				5E4B1387204FE7DA00ED5DF1 /* SystemAnimationCurves.swift in Sources */,
 				D550F5772044532D009E09DD /* ConversationAction.swift in Sources */,
 				D5F8BFF42007AC84008F8C3D /* UIView+TableViewHeaderFooterSizing.swift in Sources */,

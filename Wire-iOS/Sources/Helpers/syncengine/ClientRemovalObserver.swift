@@ -57,7 +57,7 @@ enum ClientRemovalUIError: Error {
 
 final class ClientRemovalObserver: NSObject, ZMClientUpdateObserver {
     var userClientToDelete: UserClient
-    let controller: UIViewController
+    unowned let controller: UIViewController
     let completion: ((Error?)->())?
     var credentials: ZMEmailCredentials?
     private var passwordIsNecessaryForDelete: Bool = false
@@ -70,6 +70,10 @@ final class ClientRemovalObserver: NSObject, ZMClientUpdateObserver {
         self.completion = completion
         super.init()
         observerToken = ZMUserSession.shared()?.add(self)
+    }
+
+    deinit {
+        observerToken = nil
     }
     
     func startRemoval() {
@@ -98,16 +102,17 @@ final class ClientRemovalObserver: NSObject, ZMClientUpdateObserver {
         controller.showLoadingView = false
 
         if !passwordIsNecessaryForDelete {
-            controller.requestPassword { newCredentials in
+            controller.requestPassword { [weak self] newCredentials in
                 guard let emailCredentials = newCredentials,
-                    emailCredentials.password?.isEmpty == false else {
-                    self.endRemoval(result: ClientRemovalUIError.noPasswordProvided)
+                    emailCredentials.password?.isEmpty == false,
+                    let weakSelf = self else {
+                    self?.endRemoval(result: ClientRemovalUIError.noPasswordProvided)
                     return
                 }
-                self.credentials = emailCredentials
-                ZMUserSession.shared()?.delete(self.userClientToDelete,
-                                               with: self.credentials)
-                self.controller.showLoadingView = true
+                weakSelf.credentials = emailCredentials
+                ZMUserSession.shared()?.delete(weakSelf.userClientToDelete,
+                                               with: weakSelf.credentials)
+                weakSelf.controller.showLoadingView = true
             }
             passwordIsNecessaryForDelete = true
         } else {
