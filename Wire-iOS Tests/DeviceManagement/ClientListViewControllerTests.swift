@@ -19,16 +19,14 @@
 import XCTest
 @testable import Wire
 
-final class ClientListViewControllerRetainTests: XCTestCase {
-    var sut: ClientListViewController!
-}
-
 final class ClientListViewControllerTests: ZMSnapshotTestCase {
 
     var sut: ClientListViewController!
     var mockUser: MockUser!
     var client: UserClient!
     var selfClient: UserClient!
+
+    weak var clientRemovalObserver: ClientRemovalObserver!
 
     override func setUp() {
         super.setUp()
@@ -77,6 +75,15 @@ final class ClientListViewControllerTests: ZMSnapshotTestCase {
 
     func testThatObserverIsNonRetained(){
         prepareSut(variant: nil)
+
+        let emailCredentials = ZMEmailCredentials(email: "foo@bar.com", password: "12345678")
+        sut.deleteUserClient(client, credentials: emailCredentials)
+
+        clientRemovalObserver = sut.removalObserver
+        XCTAssertNotNil(clientRemovalObserver)
+
+        sut.viewDidDisappear(false)
+        XCTAssertNil(clientRemovalObserver)
     }
 
     func testForTransparentBackground(){
