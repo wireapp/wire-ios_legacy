@@ -66,6 +66,8 @@ class ClientTableViewCell: UITableViewCell {
             guard let userClient = self.userClient else { return }
             if let userClientModel = userClient.model {
                 nameLabel.text = userClientModel
+            } else if userClient.isLegalHoldDevice {
+                nameLabel.text = "device.class.legalhold".localized
             }
             
             self.updateLabel()
