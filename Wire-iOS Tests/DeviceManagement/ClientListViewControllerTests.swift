@@ -19,6 +19,10 @@
 import XCTest
 @testable import Wire
 
+final class ClientListViewControllerRetainTests: XCTestCase {
+    var sut: ClientListViewController!
+}
+
 final class ClientListViewControllerTests: ZMSnapshotTestCase {
 
     var sut: ClientListViewController!
@@ -69,6 +73,10 @@ final class ClientListViewControllerTests: ZMSnapshotTestCase {
                                        variant: variant)
 
         sut.showLoadingView = false
+    }
+
+    func testThatObserverIsNonRetained(){
+        prepareSut(variant: nil)
     }
 
     func testForTransparentBackground(){
