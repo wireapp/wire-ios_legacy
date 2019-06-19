@@ -22,6 +22,7 @@
 #import "MockLoader.h"
 
 @class MockConversation;
+@class MockLegalHoldDataSource;
 
 @interface MockUser : NSObject<UserType, Mockable>
 + (NSArray <ZMUser *> *)mockUsers;
@@ -67,6 +68,8 @@
 @property (nonatomic, readwrite, copy) NSData *completeImageData;
 @property (nonatomic) ZMUser * user;
 
+@property (nonatomic, readonly) MockLegalHoldDataSource *legalHoldDataSource;
+
 @property (nonatomic) NSSet <id<UserClientType>> * clients;
 @property (nonatomic) ZMConnection *connection;
 @property (nonatomic) ZMAddressBookContact *contact;
@@ -81,6 +84,7 @@
 @property (nonatomic, readwrite, copy) NSArray<UserRichProfileField *> *richProfile;
 
 @property (nonatomic) UIImage * profileImage;
+
 
 - (NSString *)displayNameInConversation:(MockConversation *)conversation;
 - (void)fetchUserClients;

@@ -20,6 +20,45 @@ import XCTest
 import SnapshotTesting
 @testable import Wire
 
+extension ViewImageConfig: Hashable {
+    public static func == (lhs: ViewImageConfig, rhs: ViewImageConfig) -> Bool {
+        return lhs.size == rhs.size && lhs.traits == rhs.traits
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        if let size = size {
+            hasher.combine(size.width)
+            hasher.combine(size.height)
+        }
+
+        hasher.combine(traits)
+    }
+}
+
+/// MARK: - snapshoting all iPhone sizes
+extension XCTestCase {
+    /// snapshot file name suffixs
+    static let phoneConfigNames: [SnapshotTesting.ViewImageConfig:String] = [
+        .iPhoneSe: "iPhone-4_0_Inch",
+        .iPhone8: "iPhone-4_7_Inch",
+        .iPhone8Plus: "iPhone-5_5_Inch",
+        .iPhoneX: "iPhone-5_8_Inch",
+        .iPhoneXsMax: "iPhone-6_5_Inch"]
+
+    func verifyAllIPhoneSizes(matching value: UIViewController,
+                              file: StaticString = #file,
+                              testName: String = #function,
+                              line: UInt = #line) {
+
+        for(config, name) in XCTestCase.phoneConfigNames {
+            verify(matching: value, as: .image(on: config), named: name,
+                   file: file,
+                   testName: testName,
+                   line: line)
+        }
+    }
+}
+
 extension XCTestCase {
     func snapshotDirectory(file: StaticString = #file) -> String {
         let fileName = "\(file)"
@@ -70,12 +109,14 @@ extension XCTestCase {
 
     func verify<Value, Format>(matching value: Value,
                                as snapshotting: Snapshotting<Value, Format>,
+                               named name: String? = nil,
                                file: StaticString = #file,
                                testName: String = #function,
                                line: UInt = #line) {
 
         let failure = verifySnapshot(matching: value,
                                      as: snapshotting,
+                                     named: name,
                                      snapshotDirectory: snapshotDirectory(file: file),
                                      file: file,
                                      testName: testName,

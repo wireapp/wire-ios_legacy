@@ -16,9 +16,7 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
-import Foundation
-
+import UIKit
 
 final class RequestPasswordController {
     
@@ -29,7 +27,6 @@ final class RequestPasswordController {
 
     enum RequestPasswordContext {
         case removeDevice
-        case legalHold(fingerprint: Data?, hasPasswordInput: Bool)
     }
 
     init(context: RequestPasswordContext,
@@ -49,33 +46,12 @@ final class RequestPasswordController {
 
             okTitle = "general.ok".localized
             cancelTitle = "general.cancel".localized
-
-        case .legalHold(let fingerprint, let hasPasswordInput):
-            title = "legalhold_request.alert.title".localized
-
-            let fingerprintString: String
-            if let fingerprint = fingerprint {
-                fingerprintString = fingerprint.fingerprintString
-            } else {
-                fingerprintString = ""
-            }
-
-            var legalHoldMessage = "legalhold_request.alert.detail".localized(args: fingerprintString)
-            if hasPasswordInput {
-                legalHoldMessage += "\n"
-                legalHoldMessage += "legalhold_request.alert.detail.enter_password".localized
-            }
-            message = legalHoldMessage
-
-            okTitle = "general.skip".localized
-            cancelTitle = "general.accept".localized
         }
 
         alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
 
         switch context {
-        case .removeDevice,
-             .legalHold(_, true):
+        case .removeDevice:
             alertController.addTextField { textField in
                 textField.placeholder = "self.settings.account_details.remove_device.password".localized
                 textField.isSecureTextEntry = true
@@ -89,8 +65,6 @@ final class RequestPasswordController {
 
                 self.passwordTextField = textField
             }
-        case .legalHold(_, false):
-            break
         }
 
         let okAction = UIAlertAction(title: okTitle, style: .default) { action in
@@ -106,8 +80,9 @@ final class RequestPasswordController {
             self.callback(.failure(NSError(domain: "\(type(of: self.alertController))", code: NSUserCancelledError, userInfo: nil)))
         }
 
-        alertController.addAction(okAction)
         alertController.addAction(cancelAction)
+        alertController.addAction(okAction)
+        alertController.preferredAction = okAction
 
         self.okAction = okAction
     }

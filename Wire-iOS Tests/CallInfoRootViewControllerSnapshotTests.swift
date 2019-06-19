@@ -1,4 +1,4 @@
-//
+
 // Wire
 // Copyright (C) 2019 Wire Swiss GmbH
 //
@@ -16,39 +16,33 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+import SnapshotTesting
 import XCTest
 @testable import Wire
 
-final class RequestPasswordControllerSnapshotTests: ZMSnapshotTestCase {
-
-    var sut: RequestPasswordController!
-    let callback = { (result: Result<String?>) -> () in}
-    var fingerprint: Data!
+final class CallInfoRootViewControllerSnapshotTests: XCTestCase {
+    var coreDataFixture: CoreDataFixture!
 
     override func setUp() {
         super.setUp()
-        fingerprint = mockUserClient(fingerprintString: "102030405060708090a0b0c0d0e0f0708090102030405060708090").fingerprint!
+        coreDataFixture = CoreDataFixture()
     }
 
-
     override func tearDown() {
-        fingerprint = nil
-        sut = nil
-
+        coreDataFixture = nil
         super.tearDown()
     }
 
-    func testForRemoveDeviceContextPasswordEntered(){
-        sut = RequestPasswordController(context: .removeDevice, callback: callback)
-        sut.passwordTextField?.text = "12345678"
-        sut.passwordTextFieldChanged(sut.passwordTextField!)
+    // MARK: - OneToOne Audio
 
-        verifyAlertController(sut.alertController)
-    }
+    func testOneToOneIncomingAudioRinging() {
+        // given
+        let fixture = CallInfoTestFixture(otherUser: coreDataFixture.otherUser)
 
-    func testForRemoveDeviceContext(){
-        sut = RequestPasswordController(context: .removeDevice, callback: callback)
+        // when
+        let sut = CallInfoRootViewController(configuration: fixture.oneToOneIncomingAudioRinging)
 
-        verifyAlertController(sut.alertController)
+        // then
+        verifyAllIPhoneSizes(matching: sut)
     }
 }
