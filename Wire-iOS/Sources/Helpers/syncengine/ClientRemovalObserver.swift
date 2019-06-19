@@ -112,7 +112,7 @@ final class ClientRemovalObserver: NSObject, ZMClientUpdateObserver {
 
                 weakSelf.passwordIsNecessaryForDelete = true
             }
-        } else {///TODO: not showing if self is not top VC?
+        } else {
             controller.presentAlertWithOKButton(message: "self.settings.account_details.remove_device.password.error".localized)
             endRemoval(result: error)
 
