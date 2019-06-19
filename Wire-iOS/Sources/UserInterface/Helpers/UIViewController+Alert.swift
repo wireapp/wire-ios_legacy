@@ -24,11 +24,11 @@ extension UIAlertController {
     /// Create an alert with a OK button
     ///
     /// - Parameters:
-    ///   - title: title of the alert
+    ///   - title: optional title of the alert
     ///   - message: message of the alert
     ///   - okActionHandler: a nullable closure for the OK button
     /// - Returns: the alert presented
-    static func alertWithOKButton(title: String,
+    static func alertWithOKButton(title: String? = nil,
                                   message: String,
                                   okActionHandler: ((UIAlertAction) -> Void)? = nil) -> UIAlertController {
         let alert = UIAlertController(title: title,
@@ -54,13 +54,13 @@ extension UIViewController {
     /// Present an alert with a OK button
     ///
     /// - Parameters:
-    ///   - title: title of the alert
+    ///   - title: optional title of the alert
     ///   - message: message of the alert
     ///   - animated: present the alert animated or not
-    ///   - okActionHandler: a nullable closure for the OK button
+    ///   - okActionHandler: optional closure for the OK button
     /// - Returns: the alert presented
     @discardableResult
-    func presentAlertWithOKButton(title: String,
+    func presentAlertWithOKButton(title: String? = nil,
                                   message: String,
                                   animated: Bool = true,
                                   okActionHandler: ((UIAlertAction) -> Void)? = nil) -> UIAlertController {
