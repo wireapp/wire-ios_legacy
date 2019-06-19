@@ -580,6 +580,9 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self.sendController sendMessageWithImageData:image.data completion:^() {}];
 }
 
+- (ConfirmAssetViewController *)confirmAssetViewController {
+    return _confirmAssetViewController;
+}
 @end
 
 

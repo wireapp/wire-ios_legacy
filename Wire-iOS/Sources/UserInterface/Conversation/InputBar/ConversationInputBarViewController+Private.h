@@ -80,6 +80,8 @@
 
 @property (nonatomic, nullable) NSSet<ZMUser *> *typingUsers;
 
+@property (weak, nonatomic, nullable) ConfirmAssetViewController *confirmAssetViewController;
+
 - (void)updateRightAccessoryView;
 - (void)updateButtonIcons;
 - (void)updateAccessoryViews;

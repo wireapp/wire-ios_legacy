@@ -50,6 +50,7 @@ extension ConversationInputBarViewController: TextViewProtocol {
                 self?.dismiss(animated: false)
             }
 
+            self.confirmAssetViewController = confirmImageViewController
             present(confirmImageViewController, animated: false)
         } else {
             for image in mediaAssets {

@@ -105,9 +105,16 @@ extension ConfirmAssetViewController {
         if let imagePreviewView = imagePreviewView {
             let imageSize: CGSize = image?.size ?? CGSize(width: 1, height: 1)
 
+            let multiplier: CGFloat
+            if imageSize.width > 0 {
+                multiplier = imageSize.height / imageSize.width
+            } else {
+                multiplier = 0
+            }
+
             constraints += [
                 // dimension
-                imagePreviewView.heightAnchor.constraint(equalTo: imagePreviewView.widthAnchor, multiplier: imageSize.height / imageSize.width),
+                imagePreviewView.heightAnchor.constraint(equalTo: imagePreviewView.widthAnchor, multiplier: multiplier),
 
                 // centering
                 imagePreviewView.centerXAnchor.constraint(equalTo: contentLayoutGuide.centerXAnchor),

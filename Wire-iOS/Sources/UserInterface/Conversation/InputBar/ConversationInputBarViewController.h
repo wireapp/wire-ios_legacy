@@ -28,6 +28,7 @@ NS_ASSUME_NONNULL_BEGIN
 @class ConversationInputBarViewController;
 @class AudioRecordViewController;
 @class MentionsHandler;
+@class ConfirmAssetViewController;
 @protocol ZMConversationMessage;
 @protocol Dismissable;
 @protocol UserList;
@@ -76,6 +77,8 @@ typedef NS_ENUM(NSUInteger, ConversationInputBarViewControllerMode) {
 @property (nonatomic, weak, nullable) id<Dismissable, UserList, KeyboardCollapseObserver> mentionsView;
 @property (nonatomic, strong, nullable) id textfieldObserverToken;
 @property (nonatomic, nonnull) id<AVAudioSessionType> audioSession;
+
+- (ConfirmAssetViewController *)confirmAssetViewController;
 
 - (instancetype)initWithConversation:(ZMConversation *)conversation;
 - (void)bounceCameraIcon;

@@ -16,6 +16,7 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+import XCTest
 @testable import Wire
 
 
@@ -37,6 +38,33 @@ final class ConversationInputBarViewControllerTests: CoreDataSnapshotTestCase {
     func testNormalState(){
         verifyInAllPhoneWidths(view: sut.view)
         verifyInAllTabletWidths(view: sut.view)
+    }
+}
+
+// MARK: - multiple image pasting
+extension ConversationInputBarViewControllerTests {
+    func testThatConfirmScreenshowsWhenPastingOneImage() {
+        /// GIVEN
+        let mediaAsset = UIImage()
+
+        /// WHEN
+        sut.textView(sut.inputBar.textView, hasImagesToPaste: [mediaAsset])
+
+        ///THEN
+        XCTAssertNotNil(sut.confirmAssetViewController)
+    }
+
+    func testThatConfirmScreenWouldNotShowWhenPastingThreeImages() {
+        /// GIVEN
+        let mediaAsset = UIImage()
+
+        /// WHEN
+        sut.textView(sut.inputBar.textView, hasImagesToPaste: [mediaAsset, mediaAsset, mediaAsset])
+
+        ///THEN
+        XCTAssertNil(sut.confirmAssetViewController)
+
+        ///TODO: check postImage is called 3 times
     }
 }
 
