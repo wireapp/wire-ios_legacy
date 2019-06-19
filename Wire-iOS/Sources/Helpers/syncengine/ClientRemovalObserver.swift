@@ -106,9 +106,7 @@ final class ClientRemovalObserver: NSObject, ZMClientUpdateObserver {
                     return
                 }
                 weakSelf.credentials = emailCredentials
-                ZMUserSession.shared()?.delete(weakSelf.userClientToDelete,
-                                               with: weakSelf.credentials)
-                weakSelf.controller.showLoadingView = true
+                weakSelf.startRemoval()
 
                 weakSelf.passwordIsNecessaryForDelete = true
             }
