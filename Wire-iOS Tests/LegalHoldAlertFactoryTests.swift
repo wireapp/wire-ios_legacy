@@ -19,21 +19,23 @@
 import XCTest
 @testable import Wire
 
-final class UIViewController_LegalHoldAlertSnapshotTests: ZMSnapshotTestCase {
-    
-    var sut: UIAlertController!
+final class LegalHoldAlertFactoryTests: ZMSnapshotTestCase {
+
+    var user: SelfUserType!
 
     override func setUp() {
         super.setUp()
-        sut = UIAlertController.legalHoldDeactivated()
+        recordMode = true
+        user = MockUser.firstMockUser()
     }
     
     override func tearDown() {
-        sut = nil
+        user = nil
         super.tearDown()
     }
 
-    func testForLegalHoldAlert(){
-        verifyAlertController(sut)
+    func testThatItCanCreateLegalHoldDeactivatedAlert() {
+        let alert = LegalHoldAlertFactory.makeLegalHoldDeactivatedAlert(for: user)
     }
+
 }

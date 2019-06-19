@@ -19,29 +19,8 @@ import Foundation
 
 extension ZClientViewController: ZMUserObserver {
     public func userDidChange(_ changeInfo: UserChangeInfo) {
-        if changeInfo.legalHoldStatusChanged  {
-            notifyAboutLegalHoldStatusIfNeeded(for: ZMUser.selfUser())
-        }
-
         if changeInfo.accentColorValueChanged {
             UIApplication.shared.keyWindow?.tintColor = UIColor.accent()
-        }
-    }
-
-    @objc func notifyAboutLegalHoldStatusIfNeeded(for user: ZMUser) {
-        guard user.needsToAcknowledgeLegalHoldStatus else {
-            return
-        }
-
-        switch user.legalHoldStatus {
-        case .enabled:
-            presentLegalHoldActivatedAlert(for: user)
-
-        case .disabled:
-            presentLegalHoldDeactivatedAlert(for: user)
-
-        case .pending(let request):
-            presentLegalHoldActivationAlert(for: request, user: user)
         }
     }
 

@@ -190,11 +190,11 @@ final class ConversationListTopBarViewController: UIViewController {
     }
 
     @objc func presentLegalHoldRequest() {
-        guard case let .pending(request) = selfUser.legalHoldStatus else {
+        guard case .pending = selfUser.legalHoldStatus else {
             return
         }
 
-        presentLegalHoldActivationAlert(for: request, user: selfUser)
+        AppDelegate.shared().rootViewController.legalHoldDisclosureController?.discloseCurrentState(cause: .userAction)
     }
 
     @objc
