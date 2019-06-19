@@ -100,15 +100,14 @@ final class ClientRemovalObserver: NSObject, ZMClientUpdateObserver {
         if !passwordIsNecessaryForDelete {
             controller.requestPassword { [weak self] newCredentials in
                 guard let emailCredentials = newCredentials,
-                    emailCredentials.password?.isEmpty == false,
-                    let weakSelf = self else {
+                    emailCredentials.password?.isEmpty == false else {
                     self?.endRemoval(result: ClientRemovalUIError.noPasswordProvided)
                     return
                 }
-                weakSelf.credentials = emailCredentials
-                weakSelf.startRemoval()
+                self?.credentials = emailCredentials
+                self?.startRemoval()
 
-                weakSelf.passwordIsNecessaryForDelete = true
+                self?.passwordIsNecessaryForDelete = true
             }
         } else {
             controller.presentAlertWithOKButton(message: "self.settings.account_details.remove_device.password.error".localized)
