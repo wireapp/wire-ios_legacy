@@ -21,12 +21,11 @@ import XCTest
 
 final class LegalHoldAlertFactoryTests: ZMSnapshotTestCase {
 
-    var user: SelfUserType!
+    var user: MockUser!
 
     override func setUp() {
         super.setUp()
-        recordMode = true
-        user = MockUser.firstMockUser()
+        user = MockUser.createSelfUser(name: "Bob the Builder", inTeam: UUID())
     }
     
     override func tearDown() {
@@ -34,8 +33,26 @@ final class LegalHoldAlertFactoryTests: ZMSnapshotTestCase {
         super.tearDown()
     }
 
+    func testThatItCanCreateLegalHoldActivatedAlert() {
+        let alert = LegalHoldAlertFactory.makeLegalHoldActivatedAlert(for: user, suggestedStateChangeHandler: nil)
+        verifyAlertController(alert)
+    }
+
     func testThatItCanCreateLegalHoldDeactivatedAlert() {
-        let alert = LegalHoldAlertFactory.makeLegalHoldDeactivatedAlert(for: user)
+        let alert = LegalHoldAlertFactory.makeLegalHoldDeactivatedAlert(for: user, suggestedStateChangeHandler: nil)
+        verifyAlertController(alert)
+    }
+
+    func testThatItCanCreateLegalHoldPendingAlert() {
+        let prekey = LegalHoldRequest.Prekey(id: 65535, key: Data(base64Encoded: "pQABARn//wKhAFggHsa0CszLXYLFcOzg8AA//E1+Dl1rDHQ5iuk44X0/PNYDoQChAFgg309rkhG6SglemG6kWae81P1HtQPx9lyb6wExTovhU4cE9g==")!)
+        let request = LegalHoldRequest(requesterIdentifier: UUID(), targetUserIdentifier: user.remoteIdentifier!, clientIdentifier: "eca3c87cfe28be49", lastPrekey: prekey)
+
+        let alert = LegalHoldAlertFactory.makeLegalHoldActivationAlert(for: request, user: user, presenter: ignorePresentation, suggestedStateChangeHandler: nil)
+        verifyAlertController(alert)
+    }
+
+    private func ignorePresentation(_ viewController: UIViewController, animated: Bool, completionHandler: (() -> Void)?) {
+        // no-op
     }
 
 }
