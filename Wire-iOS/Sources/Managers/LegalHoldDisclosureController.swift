@@ -31,16 +31,19 @@ class LegalHoldDisclosureController: NSObject, ZMUserObserver {
         /// The user is being warned about a pending legal hold alert.
         case warningAboutPendingRequest(UIAlertController)
 
-        ///
+        /// The user is waiting for the response on the legal hold acceptation.
         case acceptingRequest
+
+        /// The user is being warned about the result of accepting legal hold.
         case warningAboutAcceptationResult(UIAlertController)
 
-        // Disabled
+        /// The user is being warned about the deactivation of legal hold.
         case warningAboutDisabled(UIAlertController)
 
-        // Enabled
+        /// The user is being warned about the activation of legal hold.
         case warningAboutEnabled(UIAlertController)
 
+        /// The alert associated with the state, if any.
         var alert: UIAlertController? {
             switch self {
             case .warningAboutEnabled(let alert), .warningAboutDisabled(let alert), .warningAboutPendingRequest(let alert), .warningAboutAcceptationResult(let alert):

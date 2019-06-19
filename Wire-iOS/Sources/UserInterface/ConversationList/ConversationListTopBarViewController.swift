@@ -243,8 +243,6 @@ extension ConversationListTopBarViewController: ZMUserObserver {
             updateTitle()
         }
 
-
-
         if changeInfo.teamsChanged {
             updateAccountView()
         }
