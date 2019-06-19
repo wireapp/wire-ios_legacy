@@ -289,20 +289,19 @@ class SettingsClientViewController: UIViewController,
             break
             
         case .removeDevice:
-            if removalObserver == nil {
-            
-                let completion: ((Error?)->()) = { error in
-                    if error == nil {
-                        self.navigationController?.popViewController(animated: true)
-                    }
+            removalObserver = nil
+
+            let completion: ((Error?)->()) = { error in
+                if error == nil {
+                    self.navigationController?.popViewController(animated: true)
                 }
-                
-                removalObserver = ClientRemovalObserver(userClientToDelete: userClient,
-                                                            controller: self,
-                                                            credentials: credentials, completion: completion)
+            }
+
+            removalObserver = ClientRemovalObserver(userClientToDelete: userClient,
+                                                        controller: self,
+                                                        credentials: credentials, completion: completion)
                 
 
-            }
             removalObserver?.startRemoval()
 
         default:

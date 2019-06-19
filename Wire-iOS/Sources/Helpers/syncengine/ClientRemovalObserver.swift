@@ -72,10 +72,6 @@ final class ClientRemovalObserver: NSObject, ZMClientUpdateObserver {
         observerToken = ZMUserSession.shared()?.add(self)
     }
 
-    deinit {
-        observerToken = nil
-    }
-    
     func startRemoval() {
         controller.showLoadingView = true
         ZMUserSession.shared()?.delete(userClientToDelete, with: credentials)
@@ -113,12 +109,14 @@ final class ClientRemovalObserver: NSObject, ZMClientUpdateObserver {
                 ZMUserSession.shared()?.delete(weakSelf.userClientToDelete,
                                                with: weakSelf.credentials)
                 weakSelf.controller.showLoadingView = true
+
+                weakSelf.passwordIsNecessaryForDelete = true
             }
-            passwordIsNecessaryForDelete = true
-        } else {
+        } else {///TODO: not showing if self is not top VC?
             controller.presentAlertWithOKButton(message: "self.settings.account_details.remove_device.password.error".localized)
             endRemoval(result: error)
-            
+
+            /// allow password input alert can be show next time
             passwordIsNecessaryForDelete = false
         }
     }

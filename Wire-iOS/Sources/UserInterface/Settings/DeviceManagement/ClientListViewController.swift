@@ -249,13 +249,14 @@ final class ClientListViewController: UIViewController,
     }
 
     func deleteUserClient(_ userClient: UserClient, credentials: ZMEmailCredentials?) {
-        if removalObserver == nil {
-            removalObserver = ClientRemovalObserver(userClientToDelete: userClient,
+        removalObserver = nil
+
+        removalObserver = ClientRemovalObserver(userClientToDelete: userClient,
                                                     controller: self,
                                                     credentials: credentials)
 
-        }
         removalObserver?.userClientToDelete = userClient
+        removalObserver?.credentials = credentials
         removalObserver?.startRemoval()
 
         delegate?.finishedDeleting(self)
