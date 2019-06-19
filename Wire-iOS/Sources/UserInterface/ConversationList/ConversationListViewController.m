@@ -22,9 +22,6 @@
 #import "ConversationListViewController+Internal.h"
 #import "ConversationListViewController+StartUI.h"
 
-@import PureLayout;
-
-
 #import "Settings.h"
 #import "UIScrollView+Zeta.h"
 
@@ -60,9 +57,6 @@
 @interface ConversationListViewController (BottomBarDelegate) <ConversationListBottomBarControllerDelegate>
 @end
 
-@interface ConversationListViewController (StartUI) <StartUIDelegate>
-@end
-
 @interface ConversationListViewController (Archive) <ArchivedListViewControllerDelegate>
 @end
 
@@ -91,14 +85,14 @@
 @property (nonatomic) ConversationListContentController *listContentController;
 @property (nonatomic) ConversationListBottomBarController *bottomBarController;
 
-@property (nonatomic) ConversationListTopBar *topBar;
+@property (nonatomic) ConversationListTopBarViewController *topBarViewController;
 @property (nonatomic) NetworkStatusViewController *networkStatusViewController;
 
 /// for NetworkStatusViewDelegate
 @property (nonatomic) BOOL shouldAnimateNetworkStatusView;
 
 @property (nonatomic) UIView *contentContainer;
-@property (nonatomic) UIView *conversationListContainer;
+@property (nonatomic, nullable) UIView *conversationListContainer;
 @property (nonatomic) ConversationListOnboardingHint *onboardingHint;
 
 @property (nonatomic) NSLayoutConstraint *bottomBarBottomOffset;
@@ -144,7 +138,7 @@
     self.contentControllerBottomInset = 16;
     self.shouldAnimateNetworkStatusView = NO;
     
-    self.contentContainer = [[UIView alloc] initForAutoLayout];
+    self.contentContainer = [[UIView alloc] init];
     self.contentContainer.backgroundColor = [UIColor clearColor];
     [self.view addSubview:self.contentContainer];
 
@@ -157,7 +151,7 @@
     self.onboardingHint = [[ConversationListOnboardingHint alloc] init];
     [self.contentContainer addSubview:self.onboardingHint];
 
-    self.conversationListContainer = [[UIView alloc] initForAutoLayout];
+    self.conversationListContainer = [[UIView alloc] init];
     self.conversationListContainer.backgroundColor = [UIColor clearColor];
     [self.contentContainer addSubview:self.conversationListContainer];
 
@@ -169,6 +163,8 @@
 
     [self createViewConstraints];
     [self.listContentController.collectionView scrollRectToVisible:CGRectMake(0, 0, self.view.bounds.size.width, 1) animated:NO];
+    
+    [self.topBarViewController didMoveToParentViewController:self];
     
     [self hideNoContactLabelAnimated:NO];
     [self updateNoConversationVisibility];
@@ -222,6 +218,7 @@
         self.viewDidAppearCalled = YES;
 
         [self showDataUsagePermissionDialogIfNeeded];
+        [self showAvailabilityBehaviourChangeAlertIfNeeded];
     }
 }
 
@@ -254,7 +251,7 @@
 
 - (void)createNoConversationLabel;
 {
-    self.noConversationLabel = [[UILabel alloc] initForAutoLayout];
+    self.noConversationLabel = [[UILabel alloc] init];
     self.noConversationLabel.attributedText = self.attributedTextForNoConversationLabel;
     self.noConversationLabel.numberOfLines = 0;
     [self.contentContainer addSubview:self.noConversationLabel];
@@ -286,7 +283,6 @@
 - (void)createBottomBarController
 {
     self.bottomBarController = [[ConversationListBottomBarController alloc] initWithDelegate:self];
-    self.bottomBarController.view.translatesAutoresizingMaskIntoConstraints = NO;
     self.bottomBarController.showArchived = YES;
     [self addChildViewController:self.bottomBarController];
     [self.conversationListContainer addSubview:self.bottomBarController.view];
@@ -300,18 +296,10 @@
     return archivedViewController;
 }
 
-- (StartUIViewController *)createPeoplePickerController
-{
-    StartUIViewController *startUIViewController = [[StartUIViewController alloc] init];
-    startUIViewController.delegate = self;
-    return startUIViewController;
-}
-
 - (void)createListContentController
 {
     self.listContentController = [[ConversationListContentController alloc] init];
     self.listContentController.collectionView.contentInset = UIEdgeInsetsMake(0, 0, self.contentControllerBottomInset, 0);
-    self.listContentController.view.translatesAutoresizingMaskIntoConstraints = NO;
     self.listContentController.contentDelegate = self;
 
     [self addChildViewController:self.listContentController];
@@ -383,40 +371,6 @@
             completion();
         }
     }];
-}
-
-- (void)createViewConstraints
-{
-    [self.conversationListContainer autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeTop];
-    
-    [self.bottomBarController.view autoPinEdgeToSuperviewEdge:ALEdgeLeft];
-    [self.bottomBarController.view autoPinEdgeToSuperviewEdge:ALEdgeRight];
-    self.bottomBarBottomOffset = [self.bottomBarController.view autoPinEdgeToSuperviewEdge:ALEdgeBottom];
-
-    [self.networkStatusViewController createConstraintsInParentControllerWithBottomView:self.topBar controller:self];
-    
-    [self.topBar autoPinEdgeToSuperviewEdge:ALEdgeLeft];
-    [self.topBar autoPinEdgeToSuperviewEdge:ALEdgeRight];
-
-    [self.topBar autoPinEdge:ALEdgeBottom toEdge:ALEdgeTop ofView:self.conversationListContainer];
-    
-    [[self.contentContainer.bottomAnchor constraintEqualToAnchor:self.safeBottomAnchor] setActive:YES];
-    [[self.contentContainer.topAnchor constraintEqualToAnchor:self.safeTopAnchor] setActive:YES];
-    [[self.contentContainer.leadingAnchor constraintEqualToAnchor:self.view.safeLeadingAnchor] setActive:YES];
-    [[self.contentContainer.trailingAnchor constraintEqualToAnchor:self.view.safeTrailingAnchor] setActive:YES];
-    
-    [self.noConversationLabel autoCenterInSuperview];
-    [self.noConversationLabel autoSetDimension:ALDimensionHeight toSize:120.0f];
-    [self.noConversationLabel autoSetDimension:ALDimensionWidth toSize:240.0f];
-    
-    [self.onboardingHint autoPinEdge:ALEdgeBottom toEdge:ALEdgeTop ofView:self.bottomBarController.view];
-    [self.onboardingHint autoPinEdgeToSuperviewMargin:ALEdgeLeft];
-    [self.onboardingHint autoPinEdgeToSuperviewMargin:ALEdgeRight];
-
-    [self.listContentController.view autoPinEdgeToSuperviewEdge:ALEdgeTop];
-    [self.listContentController.view autoPinEdge:ALEdgeBottom toEdge:ALEdgeTop ofView:self.bottomBarController.view];
-    [self.listContentController.view autoPinEdgeToSuperviewEdge:ALEdgeLeading];
-    [self.listContentController.view autoPinEdgeToSuperviewEdge:ALEdgeTrailing];
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
@@ -510,22 +464,6 @@
     [self setState:ConversationListStatePeoplePicker animated:animated];
 }
 
-- (void)presentSettings
-{
-    UIViewController *settingsViewController = [self createSettingsViewController];
-    KeyboardAvoidingViewController *keyboardAvoidingWrapperController = [[KeyboardAvoidingViewController alloc] initWithViewController:settingsViewController];
-    
-    if (self.wr_splitViewController.layoutSize == SplitViewControllerLayoutSizeCompact) {
-        keyboardAvoidingWrapperController.modalPresentationStyle = UIModalPresentationCurrentContext;
-        keyboardAvoidingWrapperController.transitioningDelegate = self;
-        [self presentViewController:keyboardAvoidingWrapperController animated:YES completion:nil];
-    } else {
-        keyboardAvoidingWrapperController.modalPresentationStyle = UIModalPresentationFormSheet;
-        keyboardAvoidingWrapperController.view.backgroundColor = [UIColor blackColor];
-        [self.parentViewController presentViewController:keyboardAvoidingWrapperController animated:YES completion:nil];
-    }
-}
-
 - (void)dismissPeoplePickerWithCompletionBlock:(dispatch_block_t)block
 {
     [self setState:ConversationListStateConversationList animated:YES completion:block];
@@ -595,7 +533,7 @@
 {
     [self updateBottomBarSeparatorVisibilityWithContentController:controller];
     
-    [self.topBar scrollViewDidScroll:controller.collectionView];
+    [self.topBarViewController scrollViewDidScroll:controller.collectionView];
 }
 
 - (void)conversationList:(ConversationListViewController *)controller didSelectConversation:(ZMConversation *)conversation focusOnView:(BOOL)focus
@@ -641,21 +579,11 @@
         case ConversationListButtonTypeStartUI:
             [self presentPeoplePicker];
             break;
-
-        case ConversationListButtonTypeCompose:
-            [self presentDraftsViewController];
-            break;
             
         case ConversationListButtonTypeCamera:
             [self showCameraPicker];
             break;
     }
-}
-
-- (void)presentDraftsViewController
-{
-    DraftsRootViewController *draftsController = [[DraftsRootViewController alloc] init];
-    [ZClientViewController.sharedZClientViewController presentViewController:draftsController animated:YES completion:nil];
 }
 
 - (void)presentPeoplePicker

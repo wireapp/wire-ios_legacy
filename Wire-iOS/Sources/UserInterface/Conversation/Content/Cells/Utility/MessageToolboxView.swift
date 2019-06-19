@@ -150,8 +150,8 @@ final class MessageToolboxView: UIView {
     private func setupViews() {
         likeButton.accessibilityIdentifier = "likeButton"
         likeButton.addTarget(self, action: #selector(requestLike), for: .touchUpInside)
-        likeButton.setIconColor(UIColor.from(scheme: .textDimmed), for: .normal)
-        likeButton.setIconColor(UIColor(for: .vividRed), for: .selected)
+        likeButton.setIconColor(LikeButton.normalColor, for: .normal)
+        likeButton.setIconColor(LikeButton.selectedColor, for: .selected)
         likeButton.hitAreaPadding = CGSize(width: 20, height: 20)
 
         resendButton.addTarget(self, action: #selector(resendMessage), for: .touchUpInside)
@@ -411,8 +411,8 @@ final class MessageToolboxView: UIView {
 
         // Change State and Appearance
         likeButton.accessibilityLabel = message.liked ? "content.message.unlike".localized : "content.message.like".localized
-        likeButton.setIcon(message.liked ? .liked : .like, with: .like, for: .normal)
-        likeButton.setIcon(.liked, with: .like, for: .selected)
+        likeButton.setIcon(message.liked ? .liked : .like, size: 12, for: .normal)
+        likeButton.setIcon(.liked, size: 12, for: .selected)
         likeButton.setSelected(message.liked, animated: animated)
 
         // Animate Changes

@@ -43,8 +43,8 @@ class AnimatedPenView : UIView {
         let iconColor = UIColor.from(scheme: .textForeground)
         let backgroundColor = UIColor.from(scheme: .background)
         
-        dots.image = UIImage(for: .typingDots, fontSize: 8, color: iconColor)
-        pen.image = UIImage(for: .pencil, fontSize: 8, color: iconColor)
+        dots.setIcon(.typingDots, size: 8, color: iconColor)
+        pen.setIcon(.pencil, size: 8, color: iconColor)
         pen.backgroundColor = backgroundColor
         pen.contentMode = .center
 

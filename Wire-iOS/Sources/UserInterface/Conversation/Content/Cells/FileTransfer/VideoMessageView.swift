@@ -139,7 +139,7 @@ import Cartography
         }
         
         if let viewsState = state.viewsStateForVideo() {
-            self.playButton.setIcon(viewsState.playButtonIcon, with: .actionButton, for: .normal)
+            self.playButton.setIcon(viewsState.playButtonIcon, size: 28, for: .normal)
             self.playButton.backgroundColor = viewsState.playButtonBackgroundColor
         }
         

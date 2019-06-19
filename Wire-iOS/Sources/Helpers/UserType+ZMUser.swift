@@ -21,7 +21,7 @@ import WireSyncEngine
 extension UserType {
 
     /// Return the ZMUser associated with the generic user, if available.
-    public var zmUser: ZMUser? {
+    var zmUser: ZMUser? {
         if let searchUser = self as? ZMSearchUser {
             return searchUser.user
         } else if let zmUser = self as? ZMUser {
@@ -29,11 +29,6 @@ extension UserType {
         } else {
             return nil
         }
-    }
-
-    /// The accent color of the user, if one is available.
-    public var indexedAccentColor: UIColor {
-        return (self as? AccentColorProvider)?.accentColor ?? .defaultAccent
     }
 
 }

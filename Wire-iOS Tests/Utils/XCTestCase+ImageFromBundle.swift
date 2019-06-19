@@ -36,4 +36,8 @@ extension XCTestCase {
 
         return url!
     }
+
+    var mockImageData: Data {
+        return image(inTestBundleNamed: "unsplash_matterhorn.jpg").jpegData(compressionQuality: 0.9)!
+    }
 }

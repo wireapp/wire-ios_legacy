@@ -45,7 +45,7 @@ class GroupParticipantsDetailViewModel: NSObject, SearchHeaderViewControllerDele
 
     var indexOfFirstSelectedParticipant: Int? {
         guard let first = selectedParticipants.first as? ZMUser else { return nil }
-        return internalParticipants.index {
+        return internalParticipants.firstIndex {
             ($0 as? ZMUser)?.remoteIdentifier == first.remoteIdentifier
         }
     }

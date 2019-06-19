@@ -32,11 +32,11 @@ class IconLabelButton: ButtonWithLargerHitArea {
         }
     }
     
-    init(icon: ZetaIconType, label: String, accessibilityIdentifier: String) {
+    init(icon: StyleKitIcon, label: String, accessibilityIdentifier: String) {
         super.init(frame: .zero)
         setupViews()
         createConstraints()
-        iconButton.setIcon(icon, with: .tiny, for: .normal)
+        iconButton.setIcon(icon, size: .tiny, for: .normal)
         subtitleLabel.text = label
         self.accessibilityIdentifier = accessibilityIdentifier
     }

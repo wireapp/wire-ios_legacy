@@ -80,18 +80,18 @@ class ContactsSectionController : SearchSectionController {
         return cell
     }
     
-    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+    override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
         return !(selection?.hasReachedLimit ?? false)
     }
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let user = contacts[indexPath.row]
         selection?.add(user)
         
         delegate?.searchSectionController(self, didSelectUser: user, at: indexPath)
     }
     
-    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+    override func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         let user = contacts[indexPath.row]
         selection?.remove(user)
     }

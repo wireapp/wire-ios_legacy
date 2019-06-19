@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import XCTest
 @testable import Wire
 
 
@@ -38,6 +37,21 @@ final class ConversationInputBarViewControllerTests: CoreDataSnapshotTestCase {
     func testNormalState(){
         verifyInAllPhoneWidths(view: sut.view)
         verifyInAllTabletWidths(view: sut.view)
+    }
+}
+
+// MARK: - Typing indication
+extension ConversationInputBarViewControllerTests {
+    func testTypingIndicationIsShown(){
+        // GIVEN & WHEN
+        /// directly working with sut.typingIndicatorView to prevent triggering aniamtion
+        if let typingIndicatorView = sut.typingIndicatorView {
+            typingIndicatorView.typingUsers = [otherUser]
+            typingIndicatorView.setHidden(false, animated: false)
+        }
+
+        // THEN
+        verifyInAllPhoneWidths(view: sut.view)
     }
 }
 

@@ -122,7 +122,7 @@ import Cartography
         dismissButton.accessibilityIdentifier = "Close"
         dismissButton.accessibilityLabel = "general.close".localized
 
-        dismissButton.setIcon(.cancel, with: .tiny, for: [])
+        dismissButton.setIcon(.cross, size: .tiny, for: [])
         dismissButton.setIconColor(.from(scheme: .iconNormal), for: .normal)
         dismissButton.addTarget(self, action: #selector(dismissButtonTapped), for: .touchUpInside)
         dismissButton.hitAreaPadding = CGSize(width: 20, height: 20)

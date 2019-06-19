@@ -16,7 +16,7 @@
  *  along with this program. If not, see http://www.gnu.org/licenses/.
  */
 
-"NSContactsUsageDescription" = "Luba Wire’le ligipääs oma kontaktidele, et teistega ühenduda. Me muudame kõik info anonüümseks ja ei jaga seda kellegi teisega.";
+"NSContactsUsageDescription" = "Allow Wire to access your contacts to connect you with others. We anonymize all information before uploading it to our server and do not share it with anyone else.";
 "NSMicrophoneUsageDescription" = "Luba Wire’le ligipääs oma mikrofonile, et saaksid teistega rääkida ja häälsõnumeid saata.";
 "NSLocationWhenInUseUsageDescription" = "Luba Wire’le ligipääs oma asukohale, et saaksid oma asukohta teistele saata.";
 "NSCameraUsageDescription" = "Luba Wire’le ligipääs oma kaamerale, et saaksid teha videokõnesid ja saata fotosid.";

@@ -206,6 +206,8 @@
 "conversation.status.silenced" = "Silenciado";
 "conversation.status.poor_connection" = "Conexão fraca";
 "conversation.status.blocked" = "Bloqueado";
+"conversation.status.incoming_call" = "%@ está chamando…";
+"conversation.status.incoming_call.unknown" = "Alguém está chamando…";
 
 "conversation.status.message.text" = "%@";
 "conversation.status.message.link" = "Compartilhou um link";
@@ -824,8 +826,8 @@
 "self.add_phone_number" = "Adicionar número de telefone";
 "self.add_email_password" = "Adicionar o endereço de e-mail e senha";
 
-"self.accessibility.profile_photo_image" = "Profile picture";
-"self.accessibility.profile_photo_edit_button" = "Change profile picture";
+"self.accessibility.profile_photo_image" = "Foto do perfil";
+"self.accessibility.profile_photo_edit_button" = "Alterar foto de perfil";
 
 // About screen
 "about.tos.title" = "Termos de uso";
@@ -855,7 +857,7 @@
 // Settings - top level
 "self.settings.create_team.title" = "Criar uma equipe";
 "self.settings.manage_team.title" = "Gerenciar Equipe";
-"self.settings.add_team_or_account.title" = "Nova Equipe ou Conta";
+"self.settings.add_team_or_account.title" = "Adicionar Conta";
 "self.settings.add_account.title" = "Adicionar uma conta";
 
 "self.settings.add_account.error.title" = "Três contas de ativas";
@@ -995,6 +997,7 @@
 "self.settings.popular_demand.title" = "Por demanda popular";
 "self.settings.popular_demand.send_button.title" = "Botão Enviar";
 "self.settings.popular_demand.send_button.footer" = "Desabilite para enviar através da tecla return.";
+"self.settings.popular_demand.dark_mode.footer" = "Switch between dark and light theme.";
 
 // Open in
 "self.settings.external_apps.header" = "Abrir com";
@@ -1003,7 +1006,7 @@
 "self.settings.link_options.maps.title" = "Localidades";
 "self.settings.link_options.browser.title" = "Navegador";
 
-"open_link.twitter.option.default" = "Safari / Twitter";
+"open_link.twitter.option.default" = "Navegador / Twitter";
 "open_link.twitter.option.tweetbot" = "Tweetbot";
 "open_link.twitter.option.twitterrific" = "Twitterrific";
 
@@ -1135,6 +1138,10 @@
 "landing.login.hints" = "Já tem uma conta?";
 "landing.login.button.title" = "Iniciar sessão";
 
+"landing.custom_backend.title" = "Conectado a \"%@\"";
+"landing.custom_backend.more_info.button.title" = "Exibir mais";
+"landing.custom_backend.more_info.alert.title" = " Você está conectado a um servidor de terceiros: %@";
+
 // Create team
 
 "team.name.headline" = "Dê um nome à sua equipa";
@@ -1240,7 +1247,7 @@
 "registration.alert.account_exists.title" = "Conta Existe";
 "registration.alert.account_exists.message_phone" = "O número de telefone que você usou para se registrar já está vinculado a uma conta.\n\nUse outro número de telefone ou tente fazer login se você possui essa conta.";
 "registration.alert.account_exists.message_email" = "O endereço de e-mail que você usou para registrar já está vinculado a uma conta.\n\n  Use outro endereço de e-mail ou tente fazer login se você possui essa conta.";
-"registration.alert.change_email_action" = "Alterar E-mail";
+"registration.alert.change_email_action" = "Registrar com Outro E-Mail";
 "registration.alert.change_phone_action" = "Registrar com Outro Número";
 "registration.alert.change_signin_action" = "Entrar";
 
@@ -1512,6 +1519,8 @@
 
 "availability.message.cancel" = "Cancelar";
 "availability.message.set_status" = "Definir status";
+"availability.accessibility_label.change_status" = "Mudar Status";
+"availability.accessibility_label.status" = "Status";
 
 "availability.none" = "Nenhum";
 "availability.available" = "Disponível";
@@ -1520,6 +1529,17 @@
 "availability.available.placeholder" = "%@ está disponível";
 "availability.away.placeholder" = "%@ está ausente";
 "availability.busy.placeholder" = "%@ está ocupado";
+
+"availability.reminder.away.title" = "Você está definido como Ausente";
+"availability.reminder.away.message" = "Você aparecerá como Ausente para outras pessoas. Você não receberá notificações sobre quaisquer chamadas ou mensagens recebidas.";
+"availability.reminder.busy.title" = "Você está definido como Ocupado";
+"availability.reminder.busy.message" = "Você aparecerá como Ocupado para outras pessoas. Você só receberá notificações para menções, respostas e chamadas em conversas que não estão silenciadas.";
+"availability.reminder.available.title" = "Você está definido como Disponível";
+"availability.reminder.available.message" = "Você aparecerá como Disponível para outras pessoas. Você receberá notificações para chamadas recebidas e mensagens de acordo com as configurações de notificações em cada conversa.";
+"availability.reminder.none.title" = "Nenhum status definido";
+"availability.reminder.none.message" = "Você receberá notificações para chamadas recebidas e mensagens de acordo com as configurações de notificações em cada conversa.";
+"availability.reminder.action.dont_remind_me" = "Não mostrar essa informação novamente";
+"availability.reminder.action.ok" = "OK";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Call Quality Survey
@@ -1539,6 +1559,16 @@
 "url_action.confirm" = "Confirmar";
 "url_action.title" = "Confirmar a ação do URL";
 "url_action.connect_to_bot.message" = "Você gostaria de se conectar ao bot?";
+
+"url_action.switch_backend.title" = "Conectar ao servidor";
+"url_action.switch_backend.message" = "Esta configuração conectará o aplicativo a um servidor de terceiros:\n%@";
+
+"url_action.switch_backend.error.logged_in.title" = "Não é possível mudar os servidores";
+"url_action.switch_backend.error.logged_in" = "Você já está logado. Para mudar para este servidor, saia de todas as contas e tente novamente.";
+
+"url_action.switch_backend.error.invalid_backend.title" = "O servidor não está respondendo";
+"url_action.switch_backend.error.invalid_backend" = "Por favor, verifique sua conexão com a internet, verifique o link e tente novamente.";
+
 
 // Deep Link
 "url_action.invalid_user.title" = "O Wire não pode encontrar esta pessoa.";
@@ -1578,5 +1608,5 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Password Rules
-"registration.password.rules.no_requirements" = "Use %@.";
-"registration.password.rules.with_requirements" = "Use %@, with %@.";
+"registration.password.rules.no_requirements" = "Usar %@.";
+"registration.password.rules.with_requirements" = "Usar %@, com %@.";

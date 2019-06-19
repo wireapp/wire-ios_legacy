@@ -20,14 +20,14 @@ import Foundation
 
 extension ContactsViewController {
     @objc func setupStyle() {
-        titleLabel?.textAlignment = .center
-        titleLabel?.font = .smallLightFont
-        titleLabel?.textTransform = .upper
+        titleLabel.textAlignment = .center
+        titleLabel.font = .smallLightFont
+        titleLabel.textTransform = .upper
 
-        bottomContainerView?.backgroundColor = .from(scheme: .background)
+        bottomContainerView.backgroundColor = .from(scheme: .background)
 
-        noContactsLabel?.font = .normalLightFont
-        noContactsLabel?.textColor = UIColor.from(scheme: .textForeground, variant: .dark)
+        noContactsLabel.font = .normalLightFont
+        noContactsLabel.textColor = UIColor.from(scheme: .textForeground, variant: .dark)
     }
 
     override open var preferredStatusBarStyle: UIStatusBarStyle {

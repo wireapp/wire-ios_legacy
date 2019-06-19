@@ -66,7 +66,7 @@ final public class CollectionAudioCell: CollectionCell {
         }
     }
 
-    override var obfuscationIcon: ZetaIconType {
+    override var obfuscationIcon: StyleKitIcon {
         return .microphone
     }
 

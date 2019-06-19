@@ -38,15 +38,15 @@ enum ConversationActionType {
         }
     }
 
-    func image(with color: UIColor?) -> UIImage? {
-        let icon: ZetaIconType
+    func image(with color: UIColor) -> UIImage {
+        let icon: StyleKitIcon
         switch self {
         case .started, .none:                   icon = .conversation
         case .added:                            icon = .plus
         case .removed, .left, .teamMemberLeave: icon = .minus
         }
         
-        return UIImage(for: icon, iconSize: .tiny, color: color)
+        return icon.makeImage(size: .tiny, color: color)
     }
 }
 
@@ -69,7 +69,7 @@ class ParticipantsCellViewModel {
     static let showMoreLinkURL = NSURL(string: "action://show-all")!
     
     let font, boldFont, largeFont: UIFont?
-    let textColor, iconColor: UIColor?
+    let textColor, iconColor: UIColor
     let message: ZMConversationMessage
     
     private var action: ConversationActionType {
@@ -138,8 +138,8 @@ class ParticipantsCellViewModel {
         font: UIFont?,
         boldFont: UIFont?,
         largeFont: UIFont?,
-        textColor: UIColor?,
-        iconColor: UIColor?,
+        textColor: UIColor,
+        iconColor: UIColor,
         message: ZMConversationMessage
         ) {
         self.font = font
@@ -216,9 +216,7 @@ class ParticipantsCellViewModel {
     }
     
     private func formatter(for message: ZMConversationMessage) -> ParticipantsStringFormatter? {
-        guard let font = font, let boldFont = boldFont,
-            let largeFont = largeFont, let textColor = textColor
-            else { return nil }
+        guard let font = font, let boldFont = boldFont, let largeFont = largeFont else { return nil }
         
         return ParticipantsStringFormatter(
             message: message, font: font, boldFont: boldFont,

@@ -21,6 +21,4 @@
 
 @interface ContactsViewController (ShareContacts)
 
-- (void)presentShareContactsViewController;
-
 @end

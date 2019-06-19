@@ -27,10 +27,11 @@
 "general.edit" = "Edit";
 "general.done" = "Done";
 "general.confirm" = "OK";
-"general.skip" = "Not now";
+"general.skip" = "Not Now";
 "general.accept" = "Accept";
 "general.decline" = "No, thanks";
 "general.failure" = "Something went wrong";
+"general.failure.try_again" = "Please try again.";
 "general.service" = "Service";
 "general.off" = "Off";
 "general.on" = "On";
@@ -41,6 +42,9 @@
 "general.space_between_words" = " ";
 
 "general.guest-room-name" = "Guest room";
+
+// User Cell
+"user_cell.title.you_suffix" = " (You)";
 
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -200,12 +204,17 @@
 "list.archived_conversations_close" = "Close archive";
 
 "conversation.voiceover.verified" = "verified";
+"conversation.voiceover.legalhold" = "legal hold";
+"conversation.voiceover.value.active" = "active";
+"conversation.voiceover.value.disabled" = "disabled";
 
 "conversation.status.typing" = "Typing a message…";
 "conversation.status.typing.group" = "%@: typing a message…";
 "conversation.status.silenced" = "Muted";
 "conversation.status.poor_connection" = "Poor connection";
 "conversation.status.blocked" = "Blocked";
+"conversation.status.incoming_call" = "%@ is calling…";
+"conversation.status.incoming_call.unknown" = "Someone is calling…";
 
 "conversation.status.message.text" = "%@";
 "conversation.status.message.link" = "Shared a link";
@@ -459,6 +468,14 @@
 
 "content.system.message_read_receipt_on_add_to_group" = "Read receipts are on";
 
+// legal hold
+
+"content.system.message_legal_hold.enabled" = "This conversation is under legal hold";
+"content.system.message_legal_hold.disabled" = "Legal hold deactivated for this conversation";
+
+"content.system.message_legal_hold.learn_more" = "Learn more";
+
+//
 
 "content.system.reactivated_device" = "You started using %@ again. Messages sent in the meantime will not appear here.";
 
@@ -709,10 +726,13 @@
 // Conversation Degraded (security level lowered)
 "meta.degraded.degradation_reason_message.singular" = "%@ started using a new device.";
 "meta.degraded.degradation_reason_message.plural" = "%@ started using new devices.";
+"meta.degraded.degradation_reason_message.someone" = "Someone started using a new device.";
 "meta.degraded.dialog_message" = "Do you still want to send your message?";
-"meta.degraded.show_device_button" = "Show device";
-"meta.degraded.send_anyway_button" = "Send anyway";
+"meta.degraded.verify_devices_button" = "Verify Devices…";
+"meta.degraded.send_anyway_button" = "Send Anyway";
 "meta.degraded.cancel_sending_button" = "Cancel";
+"meta.legalhold.info_button" = "What Is Legal Hold?";
+"meta.legalhold.send_alert_title" = "The conversation is now subject to legal hold.";
 
 // Remove from conversation dialogue
 "profile.remove_dialog_title" = "Remove?";
@@ -784,12 +804,20 @@
 "profile.devices.detail.verify_message" = "Verify that this matches the fingerprint shown on %@’s device.";
 "profile.devices.detail.verify_message.link" = "How do I do that?";
 "profile.devices.detail.show_my_device.title" = "Show my device fingerprint";
+"profile.devices.detail.reset_session.title" = "Reset Session";
 "device.verified" = "Verified";
 "device.not_verified" = "Not Verified";
+
+"device.class.legalhold" = "Legal Hold";
 "device.class.desktop" = "Desktop";
 "device.class.tablet" = "Tablet";
 "device.class.phone" = "Phone";
-"profile.devices.detail.reset_session.title" = "Reset Session";
+"device.class.unknown" = "Unknown";
+
+"device.type.permanent" = "Permanent";
+"device.type.temporary" = "Temporary";
+"device.type.legalhold" = "Legal Hold";
+"device.type.unknown" = "Unknown";
 
 // Bot
 "participants.services.remove_integration.button" = "remove integration";
@@ -803,6 +831,15 @@
 "group_details.notification_options_cell.description" = "You can be notified about everything (including audio and video calls) or only when someone mentions you or replies to one of your messages.";
 "group_details.receipt_options_cell.title" = "Read receipts";
 "group_details.receipt_options_cell.description" = "When this is on, people can see when their messages in this conversation are read.";
+
+// Legal hold details
+
+"legalhold.participants.section.title" = "Legal hold subjects";
+"legalhold.header.title" = "Legal Hold";
+"legalhold.header.other_description" = "Legal Hold has been activated for at least one person in this conversation.\nAll messages will be preserved for future access, including deleted, edited, and timed messages.";
+"legalhold.header.self_description" = "Legal Hold has been activated for your account.\nAll messages will be preserved for future access, including deleted, edited, and timed messages.\nYour conversation partners will be aware of the recording.";
+"legalhold.accessibility" = "Legal hold details";
+
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile
@@ -855,7 +892,7 @@
 // Settings - top level
 "self.settings.create_team.title" = "Create a team";
 "self.settings.manage_team.title" = "Manage Team";
-"self.settings.add_team_or_account.title" = "New Team or Account";
+"self.settings.add_team_or_account.title" = "Add Account";
 "self.settings.add_account.title" = "Add an account";
 
 "self.settings.add_account.error.title" = "Three accounts active";
@@ -995,6 +1032,7 @@
 "self.settings.popular_demand.title" = "By popular demand";
 "self.settings.popular_demand.send_button.title" = "Send Button";
 "self.settings.popular_demand.send_button.footer" = "Disable to send via the return key.";
+"self.settings.popular_demand.dark_mode.footer" = "Switch between dark and light theme.";
 
 // Open in
 "self.settings.external_apps.header" = "Open With";
@@ -1003,7 +1041,7 @@
 "self.settings.link_options.maps.title" = "Locations";
 "self.settings.link_options.browser.title" = "Browser";
 
-"open_link.twitter.option.default" = "Safari / Twitter";
+"open_link.twitter.option.default" = "Browser / Twitter";
 "open_link.twitter.option.tweetbot" = "Tweetbot";
 "open_link.twitter.option.twitterrific" = "Twitterrific";
 
@@ -1135,6 +1173,10 @@
 "landing.login.hints" = "Already have an account?";
 "landing.login.button.title" = "Log in";
 
+"landing.custom_backend.title" = "Connected to \"%@\"";
+"landing.custom_backend.more_info.button.title" = "Show more";
+"landing.custom_backend.more_info.alert.title" = " You are connected to a third-party server: %@";
+
 // Create team
 
 "team.name.headline" = "Name your team";
@@ -1240,7 +1282,7 @@
 "registration.alert.account_exists.title" = "Account Exists";
 "registration.alert.account_exists.message_phone" = "The phone number you used to register is already linked to an account.\n\nUse another phone number, or try to log in if you own this account.";
 "registration.alert.account_exists.message_email" = "The email address you used to register is already linked to an account.\n\n Use another email address, or try to log in if you own this account.";
-"registration.alert.change_email_action" = "Change Email";
+"registration.alert.change_email_action" = "Register with Another Email";
 "registration.alert.change_phone_action" = "Register with Another Number";
 "registration.alert.change_signin_action" = "Log In";
 
@@ -1512,6 +1554,8 @@
 
 "availability.message.cancel" = "Cancel";
 "availability.message.set_status" = "Set a status";
+"availability.accessibility_label.change_status" = "Change Status";
+"availability.accessibility_label.status" = "Status";
 
 "availability.none" = "None";
 "availability.available" = "Available";
@@ -1520,6 +1564,17 @@
 "availability.available.placeholder" = "%@ is available";
 "availability.away.placeholder" = "%@ is away";
 "availability.busy.placeholder" = "%@ is busy";
+
+"availability.reminder.away.title" = "You are set to Away";
+"availability.reminder.away.message" = "You will appear as Away to other people. You will not receive notifications about any incoming calls or messages.";
+"availability.reminder.busy.title" = "You are set to Busy";
+"availability.reminder.busy.message" = "You will appear as Busy to other people. You will only receive notifications for mentions, replies, and calls in conversations that are not muted.";
+"availability.reminder.available.title" = "You are set to Available";
+"availability.reminder.available.message" = "You will appear as Available to other people. You will receive notifications for incoming calls and for messages according to the Notifications setting in each conversation.";
+"availability.reminder.none.title" = "No status set";
+"availability.reminder.none.message" = "You will receive notifications for incoming calls and for messages according to the Notifications setting in each conversation.";
+"availability.reminder.action.dont_remind_me" = "Do not display this information again";
+"availability.reminder.action.ok" = "OK";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Call Quality Survey
@@ -1539,6 +1594,16 @@
 "url_action.confirm" = "Confirm";
 "url_action.title" = "Confirm URL action";
 "url_action.connect_to_bot.message" = "Would you like to connect to the bot?";
+
+"url_action.switch_backend.title" = "Connect to server";
+"url_action.switch_backend.message" = "This configuration will connect the app to a third-party server:\n%@";
+
+"url_action.switch_backend.error.logged_in.title" = "Can’t switch servers";
+"url_action.switch_backend.error.logged_in" = "You are already logged in. To switch to this server, log out of all accounts and try again.";
+
+"url_action.switch_backend.error.invalid_backend.title" = "The server is not responding";
+"url_action.switch_backend.error.invalid_backend" = "Please check your internet connection, verify the link and try again.";
+
 
 // Deep Link
 "url_action.invalid_user.title" = "Wire can't find this person.";
@@ -1581,3 +1646,19 @@
 "registration.password.rules.no_requirements" = "Use %@.";
 "registration.password.rules.with_requirements" = "Use %@, with %@.";
 
+// Legal Hold Deactivation
+"legal_hold.deactivated.title" = "Legal Hold Deactivated";
+"legal_hold.deactivated.message" = "Future messages will not be recorded.";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Share Extension
+"share_extension.voiceover.conversation_under_legal_hold" = "Under legal hold.";
+"share_extension.voiceover.conversation_secure" = "All clients verified.";
+"share_extension.voiceover.conversation_secure_with_ignored" = "Not all clients verified.";
+
+// Legal hold - alert
+"legalhold_request.button.accessibility" = "Pending approval.";
+"legalhold_request.alert.title" = "Legal Hold Requested";
+"legalhold_request.alert.detail" = "All future messages will be recorded by the device with fingerprint:\n\n%@\n\nThis includes deleted, edited, and timed messages in all conversations.";
+"legalhold_request.alert.detail.enter_password" = "Enter your password to confirm.";
+"legalhold_request.alert.error_wrong_password" = "Wrong Password";

@@ -18,6 +18,7 @@
 
 
 import UIKit
+import WireCommonComponents
 import Cartography
 
 protocol EphemeralKeyboardViewControllerDelegate: class {
@@ -53,12 +54,12 @@ public extension ZMConversation {
     }
     
     private func timeoutImage(for timeout: MessageDestructionTimeoutValue, withColor color: UIColor = UIColor.accent()) -> UIImage? {
-        if timeout.isYears    { return WireStyleKit.imageOfYear(color: color) }
-        if timeout.isWeeks    { return WireStyleKit.imageOfWeek(color: color) }
-        if timeout.isDays     { return WireStyleKit.imageOfDay(color: color) }
-        if timeout.isHours    { return WireStyleKit.imageOfHour(color: color) }
-        if timeout.isMinutes  { return WireStyleKit.imageOfMinute(color: color) }
-        if timeout.isSeconds  { return WireStyleKit.imageOfSecond(color: color) }
+        if timeout.isYears    { return StyleKitIcon.timeoutYear.makeImage(size: 64, color: color) }
+        if timeout.isWeeks    { return StyleKitIcon.timeoutWeek.makeImage(size: 64, color: color) }
+        if timeout.isDays     { return StyleKitIcon.timeoutDay.makeImage(size: 64, color: color) }
+        if timeout.isHours    { return StyleKitIcon.timeoutHour.makeImage(size: 64, color: color) }
+        if timeout.isMinutes  { return StyleKitIcon.timeoutMinute.makeImage(size: 64, color: color) }
+        if timeout.isSeconds  { return StyleKitIcon.timeoutSecond.makeImage(size: 64, color: color) }
         return nil
     }
 }
@@ -146,7 +147,7 @@ extension UIAlertController {
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        guard let index = timeouts.index(of: MessageDestructionTimeoutValue(rawValue: conversation.messageDestructionTimeoutValue)) else { return }
+        guard let index = timeouts.firstIndex(of: MessageDestructionTimeoutValue(rawValue: conversation.messageDestructionTimeoutValue)) else { return }
         picker.selectRow(index, inComponent: 0, animated: false)
     }
 

@@ -16,7 +16,7 @@
  *  along with this program. If not, see http://www.gnu.org/licenses/.
  */
 
-"NSContactsUsageDescription" = "Ми використовуємо дані про ваші контакти, щоб ви могли знайти людей, яких ви знаєте. Ми анонімізуємо всю інформацію та не передаємо її третім особам.";
+"NSContactsUsageDescription" = "Allow Wire to access your contacts to connect you with others. We anonymize all information before uploading it to our server and do not share it with anyone else.";
 "NSMicrophoneUsageDescription" = "Дозволити Wire доступ до вашого мікрофону для здійснення дзвінків та надсилання аудіоповідомлень.";
 "NSLocationWhenInUseUsageDescription" = "Дозволити Wire доступ до визначення вашого розташування, щоб можна було поділитися ним з іншими користувачами.";
 "NSCameraUsageDescription" = "Дозволити Wire доступ до вашої камери для здійснення відеодзвінків та надсилання фотографій.";

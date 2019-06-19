@@ -19,10 +19,15 @@
 @class PermissionDeniedViewController;
 @class ConversationActionController;
 
+@protocol StartUIDelegate;
+
 @interface ConversationListViewController ()
 
 @property (nonatomic, nonnull) UILabel *noConversationLabel;
 @property (nonatomic, nullable) PermissionDeniedViewController *pushPermissionDeniedViewController;
 @property (nonatomic, nullable) ConversationActionController *actionsController;
 
+@end
+
+@interface ConversationListViewController (StartUI) <StartUIDelegate>
 @end

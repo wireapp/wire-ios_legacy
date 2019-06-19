@@ -33,7 +33,7 @@ final class ProfileClientViewControllerTests: ZMSnapshotTestCase {
         client = UserClient.insertNewObject(in: uiMOC)
         client.remoteIdentifier = "102030405060708090"
         client.user = user
-        client.deviceClass = "tablet"
+        client.deviceClass = .tablet
     }
     
     override func tearDown() {

@@ -23,7 +23,7 @@ import Cartography
     
     public var section: CollectionsSectionSet = .none {
         didSet {
-            let icon: ZetaIconType
+            let icon: StyleKitIcon
             
             switch(section) {
             case CollectionsSectionSet.images:
@@ -41,7 +41,7 @@ import Cartography
             default: fatal("Unknown section")
             }
             
-            self.iconImageView.image = UIImage(for: icon, iconSize: .tiny, color: .lightGraphite)
+            self.iconImageView.setIcon(icon, size: .tiny, color: .lightGraphite)
         }
     }
     

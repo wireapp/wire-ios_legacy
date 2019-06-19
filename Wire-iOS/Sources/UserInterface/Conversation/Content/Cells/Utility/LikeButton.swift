@@ -20,6 +20,14 @@ import Foundation
 import Cartography
 
 @objcMembers open class LikeButton: IconButton {
+    static var normalColor: UIColor {
+        return UIColor.from(scheme: .textDimmed)
+    }
+
+    static var selectedColor: UIColor {
+        return UIColor(for: .vividRed)
+    }
+
     open func setSelected(_ selected: Bool, animated: Bool) {
         // Do not animate changes if the state does not change
         guard selected != self.isSelected else {
@@ -39,13 +47,16 @@ import Cartography
                 prevState = []
             }
 
-            let fakeImageView = UIImageView(image: UIImage.init(for: self.iconType(for: prevState), iconSize: .large, color: self.iconColor(for: prevState)))
+            let currentIcon = icon(for: prevState) ?? (prevState == .selected ? .liked : .like)
+            let fakeImageView = UIImageView()
+            fakeImageView.setIcon(currentIcon, size: .large, color: self.iconColor(for: prevState) ?? LikeButton.normalColor)
             fakeImageView.frame = imageView.frame
             
             imageView.superview!.addSubview(fakeImageView)
 
-            let image = UIImage.init(for: self.iconType(for: .selected), iconSize: .large, color: self.iconColor(for: .selected))
-            let animationImageView = UIImageView(image: image)
+            let selectedIcon = icon(for: prevState) ?? .liked
+            let animationImageView = UIImageView()
+            animationImageView.setIcon(selectedIcon, size: .large, color: LikeButton.selectedColor)
             animationImageView.frame = imageView.frame
             imageView.superview!.addSubview(animationImageView)
 

@@ -21,6 +21,9 @@ import Photos
 
 protocol PhotoLibraryProtocol {
     func performChanges(_ changeBlock: @escaping () -> Swift.Void, completionHandler: ((Bool, Error?) -> Swift.Void)?)
+
+    func register(_ observer: PHPhotoLibraryChangeObserver)
+    func unregisterChangeObserver(_ observer: PHPhotoLibraryChangeObserver)
 }
 
 extension PHPhotoLibrary: PhotoLibraryProtocol {}

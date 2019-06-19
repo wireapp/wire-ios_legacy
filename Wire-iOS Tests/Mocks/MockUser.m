@@ -31,7 +31,9 @@ static id<UserType> mockSelfUser = nil;
     self = [super init];
     if (self) {
         _clients = [NSSet set];
+        _legalHoldDataSource = [[NSClassFromString(@"MockLegalHoldDataSource") alloc] init];
         self.isTeamMember = YES;
+        self.teamIdentifier = [NSUUID UUID];
         for (NSString *key in jsonObject.allKeys) {
             id value = jsonObject[key];
             if (value == NSNull.null) { continue; }
@@ -106,7 +108,6 @@ static id<UserType> mockSelfUser = nil;
 #pragma mark - ZMBareUser
 
 @synthesize name;
-@synthesize displayName;
 @synthesize emailAddress;
 @synthesize isSelfUser;
 @synthesize isConnected;
@@ -121,6 +122,7 @@ static id<UserType> mockSelfUser = nil;
 @synthesize teamRole;
 @synthesize readReceiptsEnabled;
 @synthesize activeConversations;
+@synthesize isUnderLegalHold;
 
 #pragma mark - ZMBareUserConnection
 
@@ -257,6 +259,11 @@ static id<UserType> mockSelfUser = nil;
 - (NSSet<UserClient *> *)clientsRequiringUserAttention
 {
     return [NSSet new];
+}
+
+- (NSArray<id<UserClientType>> *)allClients
+{
+    return self.clients.allObjects;
 }
 
 - (ZMUser *)user

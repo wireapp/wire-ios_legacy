@@ -55,7 +55,7 @@
 @end
 
 
-@interface ZClientViewController () <ZMUserObserver>
+@interface ZClientViewController ()
 
 @property (nonatomic, readwrite) MediaPlaybackManager *mediaPlaybackManager;
 @property (nonatomic) ColorSchemeController *colorSchemeController;
@@ -101,7 +101,6 @@
         NSURL *accountContainerURL = [[sharedContainerURL URLByAppendingPathComponent:@"AccountData" isDirectory:YES]
                                       URLByAppendingPathComponent:ZMUser.selfUser.remoteIdentifier.UUIDString isDirectory:YES];
         self.analyticsEventPersistence = [[ShareExtensionAnalyticsPersistence alloc] initWithAccountContainer:accountContainerURL];
-        [MessageDraftStorage setupSharedStorageAtURL:accountContainerURL error:nil];
         
         self.networkAvailabilityObserverToken = [ZMNetworkAvailabilityChangeNotification addNetworkAvailabilityObserver:self userSession:[ZMUserSession sharedSession]];
         
@@ -166,8 +165,8 @@
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(requestLoopNotification:) name:ZMLoggingRequestLoopNotificationName object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(inconsistentStateNotification:) name:ZMLoggingInconsistentStateNotificationName object:nil];
     }
-    
-    self.userObserverToken = [UserChangeInfo addObserver:self forUser:[ZMUser selfUser] userSession:[ZMUserSession sharedSession]];
+
+    [self setupUserChangeInfoObserver];
 }
 
 - (void)createBackgroundViewController
@@ -259,17 +258,6 @@
 
     self.conversationListViewController.isComingFromRegistration = self.isComingFromRegistration;
     self.conversationListViewController.needToShowDataUsagePermissionDialog = NO;
-}
-
-#pragma mark - ZMUserObserver
-
-- (void)userDidChange:(UserChangeInfo *)change
-{
-    if (change.accentColorValueChanged) {
-        if ([[UIApplication sharedApplication].keyWindow respondsToSelector:@selector(setTintColor:)]) {
-            [UIApplication sharedApplication].keyWindow.tintColor = [UIColor accentColor];
-        }
-    }
 }
 
 #pragma mark - Public API

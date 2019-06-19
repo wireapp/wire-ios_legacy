@@ -25,15 +25,19 @@ final class InviteContactsViewControllerSnapshotTests: ZMSnapshotTestCase {
 
     override func setUp() {
         super.setUp()
+        ColorScheme.default.variant = .dark
+
         sut = InviteContactsViewController()
-        sut.shouldShowShareContactsViewController = false
         sut.view.backgroundColor = .black
+
+        sut.shouldShowShareContactsViewController = false
     }
 
     override func tearDown() {
         sut = nil
         super.tearDown()
     }
+
     fileprivate func wrapInNavigationControllerWithDummyPerviousViewController() {
 
         let navigationController = UIViewController().wrapInNavigationController(ClearBackgroundNavigationController.self)
@@ -42,14 +46,14 @@ final class InviteContactsViewControllerSnapshotTests: ZMSnapshotTestCase {
 
         sut.viewWillAppear(false)
 
-        sut.tableView?.reloadData()
         sut.updateEmptyResults()
+        sut.tableView.reloadData()
     }
 
     fileprivate func snapshotWithNavigationBarWithBackButton(file: StaticString = #file, line: UInt = #line) {
         wrapInNavigationControllerWithDummyPerviousViewController()
 
-        verify(view: sut.view)
+        verify(view: sut.view, file: file, line: line)
     }
 
     func testForNoContacts() {

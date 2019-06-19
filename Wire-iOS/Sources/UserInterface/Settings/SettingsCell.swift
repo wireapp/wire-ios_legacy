@@ -34,7 +34,7 @@ protocol SettingsCellType: class {
     var titleColor: UIColor {get set}
     var cellColor: UIColor? {get set}
     var descriptor: SettingsCellDescriptorType? {get set}
-    var icon: ZetaIconType {get set}
+    var icon: StyleKitIcon? {get set}
 }
 
 @objcMembers class SettingsTableCell: UITableViewCell, SettingsCellType {
@@ -122,15 +122,14 @@ protocol SettingsCellType: class {
         }
     }
     
-    var icon: ZetaIconType = .none {
+    var icon: StyleKitIcon? = nil {
         didSet {
-            if icon == .none {
-                iconImageView.image = .none
-                cellNameLabelToIconInset.isActive = false
-            }
-            else {
-                iconImageView.image = UIImage(for: icon, iconSize: .tiny, color: UIColor.white)
+            if let icon = icon {
+                iconImageView.setIcon(icon, size: .tiny, color: UIColor.white)
                 cellNameLabelToIconInset.isActive = true
+            } else {
+                iconImageView.image = nil
+                cellNameLabelToIconInset.isActive = false
             }
         }
     }
@@ -322,12 +321,14 @@ protocol SettingsCellType: class {
         
         selectionStyle = .none
         shouldGroupAccessibilityChildren = false
-        switchView = UISwitch(frame: CGRect.zero)
+        let switchView = UISwitch(frame: CGRect.zero)
         switchView.addTarget(self, action: #selector(SettingsToggleCell.onSwitchChanged(_:)), for: .valueChanged)
         accessoryView = switchView
         switchView.isAccessibilityElement = true
         
         accessibilityElements = [cellNameLabel, switchView]
+
+        self.switchView = switchView
     }
     
     @objc func onSwitchChanged(_ sender: UIResponder) {
@@ -402,7 +403,9 @@ protocol SettingsCellType: class {
         super.setupAccessibiltyElements()
         
         var currentElements = accessibilityElements ?? []
-        currentElements.append(textInput)
+        if let textInput = textInput {
+            currentElements.append(textInput)
+        }
         accessibilityElements = currentElements
     }
     

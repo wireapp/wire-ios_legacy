@@ -116,7 +116,7 @@ public func &&(left: NSAttributedString, right: [NSAttributedString.Key: Any]) -
 
 public extension String {
     
-    public var attributedString: NSAttributedString {
+    var attributedString: NSAttributedString {
         return NSAttributedString(string: self)
     }
 }
@@ -187,25 +187,25 @@ extension PointOfView: CustomStringConvertible {
 public extension String {
     
     /// Returns the NSLocalizedString version of self
-    public var localized: String {
+    var localized: String {
         return NSLocalizedString(self, comment: "")
     }
 
     /// Returns the text and uppercases it if needed.
-    public func localized(uppercased: Bool) -> String {
+    func localized(uppercased: Bool) -> String {
         let text = NSLocalizedString(self, comment: "")
         return uppercased ? text.localizedUppercase : text
     }
    
     /// Used to generate localized strings with plural rules from the stringdict
-    public func localized(uppercased: Bool = false, pov pointOfView: PointOfView = .none, args: CVarArg...) -> String {
+    func localized(uppercased: Bool = false, pov pointOfView: PointOfView = .none, args: CVarArg...) -> String {
         return withVaList(args) {
             let text = NSString(format: self.localized(pov: pointOfView), arguments: $0) as String
             return uppercased ? text.localizedUppercase : text
         }
     }
     
-    public func localized(pov pointOfView: PointOfView) -> String {
+    func localized(pov pointOfView: PointOfView) -> String {
         let povPath = self + "-" + pointOfView.suffix
         let povVersion = povPath.localized
         
@@ -221,13 +221,13 @@ public extension String {
 public extension NSAttributedString {
     
     // Adds the attribtues to the given substring in self and returns the resulting String
-    @objc public func addAttributes(_ attributes: [NSAttributedString.Key: AnyObject], toSubstring substring: String) -> NSAttributedString {
+    @objc func addAttributes(_ attributes: [NSAttributedString.Key: AnyObject], toSubstring substring: String) -> NSAttributedString {
         let mutableSelf = NSMutableAttributedString(attributedString: self)
         mutableSelf.addAttributes(attributes, to: substring)
         return NSAttributedString(attributedString: mutableSelf)
     }
     
-    @objc public func setAttributes(_ attributes: [NSAttributedString.Key: AnyObject], toSubstring substring: String) -> NSAttributedString {
+    @objc func setAttributes(_ attributes: [NSAttributedString.Key: AnyObject], toSubstring substring: String) -> NSAttributedString {
         let substringRange = (string as NSString).range(of: substring)
         guard substringRange.location != NSNotFound else { return self }
         
@@ -268,7 +268,7 @@ extension Sequence where Iterator.Element == NSAttributedString {
 
 public extension NSMutableAttributedString {
 
-    @objc public func addAttributes(_ attributes: [NSAttributedString.Key: AnyObject], to substring: String) {
+    @objc func addAttributes(_ attributes: [NSAttributedString.Key: AnyObject], to substring: String) {
         let substringRange = (string as NSString).range(of: substring)
         
         guard substringRange.location != NSNotFound else { return }

@@ -18,7 +18,6 @@
 
 import Foundation
 
-typealias GenericUser = UserType & AccentColorProvider
 typealias EditableUser = ZMUser & ZMEditableUser
 
 protocol SelfUserProvider {
@@ -30,8 +29,7 @@ extension ZMUser {
     /// Return self's User object
     ///
     /// - Returns: a ZMUser<ZMEditableUser> object for app target, or a MockUser object for test.
-    @objc
-    static func selfUser() -> EditableUser! {
+    @objc static func selfUser() -> EditableUser! {
 
         if let mockUserClass = NSClassFromString("MockUser") as? SelfUserProvider.Type {
             return mockUserClass.selfUser

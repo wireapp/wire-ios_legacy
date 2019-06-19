@@ -16,7 +16,7 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-GCC_TREAT_WARNINGS_AS_ERRORS[config=Debug] = YES
+GCC_TREAT_WARNINGS_AS_ERRORS[config=Debug] = NO
 GCC_WARN_ABOUT_RETURN_TYPE = YES
 GCC_WARN_SIGN_COMPARE = YES
 GCC_WARN_UNINITIALIZED_AUTOS = YES

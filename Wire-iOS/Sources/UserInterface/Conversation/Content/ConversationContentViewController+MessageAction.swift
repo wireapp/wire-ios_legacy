@@ -137,7 +137,7 @@ extension ConversationContentViewController {
                 self.dataSource?.highlight(message: message)
             }
         case .copy:
-            Message.copy(message, in: UIPasteboard.general)
+            message.copy(in: .general)
         case .download:
             session.enqueueChanges({
                 message.fileMessageData?.requestFileDownload()

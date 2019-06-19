@@ -38,7 +38,6 @@ typedef NS_ENUM(NSUInteger, ConversationInputBarViewControllerMode) {
     ConversationInputBarViewControllerModeTextInput,
     ConversationInputBarViewControllerModeAudioRecord,
     ConversationInputBarViewControllerModeCamera,
-    ConversationInputBarViewControllerModeEmojiInput,
     ConversationInputBarViewControllerModeTimeoutConfguration
 };
 
@@ -63,11 +62,12 @@ typedef NS_ENUM(NSUInteger, ConversationInputBarViewControllerMode) {
 
 @interface ConversationInputBarViewController : UIViewController <UIPopoverPresentationControllerDelegate>
 
-@property (nonatomic, readonly) IconButton *photoButton;
-@property (nonatomic, readonly) IconButton *ephemeralIndicatorButton;
-@property (nonatomic, readonly) IconButton *markdownButton;
-@property (nonatomic, readonly) IconButton *mentionButton;
-@property (nonatomic, readonly) InputBar *inputBar;
+@property (nonatomic, readonly, nonnull) IconButton *photoButton;
+@property (nonatomic, readonly, nonnull) IconButton *ephemeralIndicatorButton;
+@property (nonatomic, readonly, nonnull) IconButton *markdownButton;
+@property (nonatomic, readonly, nonnull) IconButton *mentionButton;
+
+@property (nonatomic, readonly, nonnull) InputBar *inputBar;
 @property (nonatomic, readonly) ZMConversation *conversation;
 @property (nonatomic, weak, nullable) id <ConversationInputBarViewControllerDelegate> delegate;
 @property (nonatomic) ConversationInputBarViewControllerMode mode;

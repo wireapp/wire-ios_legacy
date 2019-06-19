@@ -21,21 +21,20 @@ import UIKit
 
 public extension UIApplication {
     
-    public static let wr_statusBarStyleChangeNotification: Notification.Name = Notification.Name("wr_statusBarStyleChangeNotification")
+    static let wr_statusBarStyleChangeNotification: Notification.Name = Notification.Name("wr_statusBarStyleChangeNotification")
 
-    @objc public func wr_updateStatusBarForCurrentControllerAnimated(_ animated: Bool) {
+    @objc func wr_updateStatusBarForCurrentControllerAnimated(_ animated: Bool) {
         wr_updateStatusBarForCurrentControllerAnimated(animated, onlyFullScreen: true)
     }
 
-    @objc public func wr_updateStatusBarForCurrentControllerAnimated(_ animated: Bool, onlyFullScreen: Bool) {
+    @objc func wr_updateStatusBarForCurrentControllerAnimated(_ animated: Bool, onlyFullScreen: Bool) {
         let statusBarHidden: Bool
         let statusBarStyle: UIStatusBarStyle
         
         if let topContoller = self.wr_topmostController(onlyFullScreen: onlyFullScreen) {
             statusBarHidden = topContoller.prefersStatusBarHidden
             statusBarStyle = topContoller.preferredStatusBarStyle
-        }
-        else {
+        } else {
             statusBarHidden = true
             statusBarStyle = .lightContent
         }
@@ -66,7 +65,7 @@ public extension UIApplication {
     /// 1. the windows has rootViewController
     /// 2. CallWindowRootViewController is in use and voice channel controller is active
     /// 3. the window's rootViewController is AppRootViewController
-    public var topMostVisibleWindow: UIWindow? {
+    var topMostVisibleWindow: UIWindow? {
         let orderedWindows = self.windows.sorted { win1, win2 in
             win1.windowLevel < win2.windowLevel
         }
@@ -88,14 +87,15 @@ public extension UIApplication {
         return visibleWindow.last
     }
     
-    public func wr_topmostController(onlyFullScreen: Bool = true) -> UIViewController? {
+    func wr_topmostController(onlyFullScreen: Bool = true) -> UIViewController? {
 
         guard let window = topMostVisibleWindow,
             var topController = window.rootViewController else {
                 return .none
         }
         
-        while let presentedController = topController.presentedViewController, (!onlyFullScreen || presentedController.modalPresentationStyle == .fullScreen) {
+        while let presentedController = topController.presentedViewController,
+            (!onlyFullScreen || presentedController.modalPresentationStyle == .fullScreen) {
             topController = presentedController
         }
         

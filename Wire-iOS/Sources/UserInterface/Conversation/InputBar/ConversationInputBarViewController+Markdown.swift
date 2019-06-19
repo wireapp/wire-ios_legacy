@@ -24,14 +24,14 @@ extension ConversationInputBarViewController {
     @objc func configureMarkdownButton() {
         
         markdownButton.addTarget(self, action: #selector(markdownButtonTapped), for: .touchUpInside)
-        markdownButton.setIcon(.markdownToggle, with: .tiny, for: .normal)
+        markdownButton.setIcon(.markdownToggle, size: .tiny, for: .normal)
         markdownButton.setIconColor(UIColor.from(scheme: .iconNormal), for: .normal)
     }
     
     @objc public func updateMarkdownButton() {
-    
         let color: UIColor
-        
+        markdownButton.isHidden = inputBar.isEditing
+
         if inputBar.isMarkingDown {
             color = .accent()
         } else {

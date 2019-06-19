@@ -71,9 +71,9 @@ extension PostContent {
                 let degradationStrategy: DegradationStrategyChoice = {
                     switch $0 {
                     case .sendAnyway:
-                        conversation.resendMessagesThatCausedConversationSecurityDegradation()
+                        conversation.acknowledgePrivacyWarning(withResendIntent: true)
                     case .cancelSending:
-                        conversation.doNotResendMessagesThatCausedDegradation()
+                        conversation.acknowledgePrivacyWarning(withResendIntent: false)
                         stateCallback(.done)
                     }
                 }

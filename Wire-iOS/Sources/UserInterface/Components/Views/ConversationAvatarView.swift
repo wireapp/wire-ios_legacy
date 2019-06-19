@@ -36,8 +36,8 @@ final class RandomGeneratorFromData: RandomGenerator {
     
     public func rand<ContentType>() -> ContentType {
         let currentStep = self.step
-        let result = source.withUnsafeBytes { (pointer: UnsafePointer<ContentType>) -> ContentType in
-            return pointer.advanced(by: currentStep % (source.count - MemoryLayout<ContentType>.size)).pointee
+        let result = source.withUnsafeBytes { (pointer: UnsafeRawBufferPointer) -> ContentType in
+            return pointer.baseAddress!.assumingMemoryBound(to: ContentType.self).advanced(by: currentStep % (source.count - MemoryLayout<ContentType>.size)).pointee
         }
         step = step + MemoryLayout<ContentType>.size
         

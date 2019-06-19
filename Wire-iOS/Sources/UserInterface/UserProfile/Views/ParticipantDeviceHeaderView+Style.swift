@@ -27,7 +27,7 @@ extension ParticipantDeviceHeaderView {
 
     @objc func setupConstraints() {
         textView.translatesAutoresizingMaskIntoConstraints = false
-        textView.fitInSuperview(with: EdgeInsets(top: 40, leading: 24, bottom: 16, trailing: 24))
+        textView.fitInSuperview(with: EdgeInsets(top: 16, leading: 24, bottom: 16, trailing: 24))
     }
 }
 

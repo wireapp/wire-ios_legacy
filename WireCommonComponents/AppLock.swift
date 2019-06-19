@@ -45,8 +45,8 @@ public class AppLock {
                     return 0
             }
             
-            let intBits = data.withUnsafeBytes({(bytePointer: UnsafePointer<UInt8>) -> UInt32 in
-                bytePointer.withMemoryRebound(to: UInt32.self, capacity: 4) { pointer in
+            let intBits = data.withUnsafeBytes({(bytePointer: UnsafeRawBufferPointer) -> UInt32 in
+                bytePointer.bindMemory(to: UInt8.self).baseAddress!.withMemoryRebound(to: UInt32.self, capacity: 4) { pointer in
                     return pointer.pointee
                 }
             })

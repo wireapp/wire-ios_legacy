@@ -239,7 +239,7 @@
     <key>registration.password.rules.min_length</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
-      <string>at least %#@character_count@</string>
+      <string>最低 %#@character_count@ 文字</string>
       <key>character_count</key>
       <dict>
         <key>NSStringFormatSpecTypeKey</key>
@@ -247,7 +247,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d characters</string>
+        <string>1 文字</string>
       </dict>
     </dict>
     <key>registration.password.rules.lowercase</key>
@@ -261,7 +261,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d lowercase letters</string>
+        <string>小文字 1 文字</string>
       </dict>
     </dict>
     <key>registration.password.rules.uppercase</key>
@@ -275,7 +275,7 @@
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>other</key>
-        <string>%d capital letters</string>
+        <string>大文字 1 文字</string>
       </dict>
     </dict>
     <key>registration.password.rules.number</key>
@@ -289,7 +289,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d numbers</string>
+        <string>数字</string>
       </dict>
     </dict>
     <key>registration.password.rules.special</key>
@@ -303,7 +303,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d special characters</string>
+        <string>記号</string>
       </dict>
     </dict>
   </dict>

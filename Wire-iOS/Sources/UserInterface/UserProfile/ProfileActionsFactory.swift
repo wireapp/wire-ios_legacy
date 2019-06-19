@@ -52,36 +52,25 @@ enum ProfileAction: Equatable {
         }
     }
 
-    /// The icon of the button for this action.
-    var buttonIcon: ZetaIconType {
+    /// The icon of the button for this action, if it's eligible to be a key action.
+    var keyActionIcon: StyleKitIcon? {
         switch self {
         case .createGroup: return .createConversation
-        case .manageNotifications, .mute: return .bell
-        case .archive: return .archive
-        case .deleteContents: return .delete
-        case .block: return .block
+        case .manageNotifications, .mute: return nil
+        case .archive: return nil
+        case .deleteContents: return nil
+        case .block: return nil
         case .openOneToOne: return .conversation
-        case .removeFromGroup: return .minus
+        case .removeFromGroup: return nil
         case .connect: return .plus
         case .cancelConnectionRequest: return .undo
-        case .openSelfProfile: return .selfProfile
+        case .openSelfProfile: return .personalProfile
         }
     }
 
     /// Whether the action can be used as a key action.
     var isEligibleForKeyAction: Bool {
-        switch self {
-        case .createGroup: return true
-        case .manageNotifications, .mute: return false
-        case .archive: return false
-        case .deleteContents: return false
-        case .block: return false
-        case .openOneToOne: return true
-        case .removeFromGroup: return false
-        case .connect: return true
-        case .cancelConnectionRequest: return true
-        case .openSelfProfile: return true
-        }
+        return keyActionIcon != nil
     }
 
 }
@@ -96,10 +85,10 @@ final class ProfileActionsFactory: NSObject {
     // MARK: - Environmemt
 
     /// The user that is displayed in the profile details.
-    let user: GenericUser
+    let user: UserType
 
     /// The user that wants to perform the actions.
-    let viewer: GenericUser
+    let viewer: UserType
 
     /// The conversation that the user wants to perform the actions in.
     let conversation: ZMConversation?
@@ -117,7 +106,7 @@ final class ProfileActionsFactory: NSObject {
      * perform the actions in.
      */
 
-    init(user: GenericUser, viewer: GenericUser, conversation: ZMConversation?, context: ProfileViewControllerContext) {
+    init(user: UserType, viewer: UserType, conversation: ZMConversation?, context: ProfileViewControllerContext) {
         self.user = user
         self.viewer = viewer
         self.conversation = conversation

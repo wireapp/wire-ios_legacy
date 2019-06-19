@@ -215,7 +215,6 @@
         [self registerForPreviewingWithDelegate:self sourceView:self.view];
     }
 
-    [self scrollToFirstUnreadMessageIfNeeded];
     UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, nil);
 }
 
@@ -229,6 +228,7 @@
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
 
+    [self scrollToFirstUnreadMessageIfNeeded];
     [self updatePopover];
 }
 
@@ -236,11 +236,7 @@
 {
     if (! self.hasDoneInitialLayout) {
         self.hasDoneInitialLayout = YES;
-        [self updateTableViewHeaderView];
-
-        if (self.messageVisibleOnLoad != nil) {
-            [self scrollToMessage:self.messageVisibleOnLoad completion:nil];
-        }
+        [self scrollToMessage:self.messageVisibleOnLoad completion:nil];
     }
 }
 

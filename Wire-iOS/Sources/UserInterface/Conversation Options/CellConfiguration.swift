@@ -29,7 +29,7 @@ enum CellConfiguration {
     case leadingButton(title: String, identifier: String, action: () -> Void)
     case loading
     case text(String)
-    case iconAction(title: String, icon: ZetaIconType, color: UIColor?, action: () -> Void)
+    case iconAction(title: String, icon: StyleKitIcon, color: UIColor?, action: () -> Void)
     
     var cellType: CellConfigurationConfigurable.Type {
         switch self {

@@ -66,7 +66,7 @@ public protocol ColorPickerControllerDelegate {
         self.contentView.clipsToBounds = true
         self.contentView.backgroundColor = UIColor.white
         
-        self.closeButton.setIcon(.X, with: .tiny, for: [])
+        self.closeButton.setIcon(.cross, size: .tiny, for: [])
         self.closeButton.addTarget(self, action: #selector(ColorPickerController.didPressDismiss(_:)), for: .touchUpInside)
         self.closeButton.setIconColor(UIColor.darkGray, for: .normal)
         
@@ -142,7 +142,7 @@ public protocol ColorPickerControllerDelegate {
                 checkmarkView.center == contentView.center
             }
             
-            self.checkmarkView.image = UIImage(for: .checkmark, iconSize: .small, color: UIColor.white)
+            self.checkmarkView.setIcon(.checkmark, size: .small, color: UIColor.white)
             self.checkmarkView.isHidden = true
         }
         
@@ -213,7 +213,7 @@ final class AccentColorPickerController: ColorPickerController {
         super.init(colors: self.allAccentColors.map { UIColor(for: $0) })
         self.title = "self.settings.account_picture_group.color".localized(uppercased: true)
         
-        if let accentColor = AccentColor(ZMAccentColor: ZMUser.selfUser().accentColorValue), let currentColorIndex = self.allAccentColors.index(of: accentColor) {
+        if let accentColor = AccentColor(ZMAccentColor: ZMUser.selfUser().accentColorValue), let currentColorIndex = self.allAccentColors.firstIndex(of: accentColor) {
             self.currentColor = self.colors[currentColorIndex]
         }
         self.delegate = self
@@ -231,12 +231,12 @@ final class AccentColorPickerController: ColorPickerController {
 
 extension AccentColorPickerController: ColorPickerControllerDelegate {
     public func colorPicker(_ colorPicker: ColorPickerController, didSelectColor color: UIColor) {
-        guard let colorIndex = self.colors.index(of: color) else {
+        guard let colorIndex = self.colors.firstIndex(of: color) else {
             return
         }
         
         ZMUserSession.shared()?.performChanges {
-            (ZMUser.editableSelf() as ZMEditableUser).accentColorValue = self.allAccentColors[colorIndex].zmAccentColor
+            ZMUser.selfUser().accentColorValue = self.allAccentColors[colorIndex].zmAccentColor
         }
     }
 

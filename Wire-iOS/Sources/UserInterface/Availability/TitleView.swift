@@ -32,7 +32,6 @@ import Cartography
         super.init(frame: CGRect.zero)
         self.isAccessibilityElement = true
         self.accessibilityIdentifier = "Name"
-        self.updateAccessibilityLabel()
         
         if let color = color, let selectedColor = selectedColor, let font = font {
             self.titleColor = color
@@ -63,11 +62,15 @@ import Cartography
     /// - parameter interactive: Whether the view should react to user interaction events
     /// - return: Whether the view contains any `NSTextAttachments`
     internal func configure(icon: NSTextAttachment?, title: String, interactive: Bool, showInteractiveIcon: Bool = true) {
+        configure(icons: icon == nil ? [] : [icon!], title: title, interactive: interactive, showInteractiveIcon: showInteractiveIcon)
+    }
+    
+    internal func configure(icons: [NSTextAttachment], title: String, interactive: Bool, showInteractiveIcon: Bool = true) {
     
         guard let font = titleFont, let color = titleColor, let selectedColor = titleColorSelected else { return }
         let shouldShowInteractiveIcon = interactive && showInteractiveIcon
-        let normalLabel = IconStringsBuilder.iconString(with: icon, title: title, interactive: shouldShowInteractiveIcon, color: color)
-        let selectedLabel = IconStringsBuilder.iconString(with: icon, title: title, interactive: shouldShowInteractiveIcon, color: selectedColor)
+        let normalLabel = IconStringsBuilder.iconString(with: icons, title: title, interactive: shouldShowInteractiveIcon, color: color)
+        let selectedLabel = IconStringsBuilder.iconString(with: icons, title: title, interactive: shouldShowInteractiveIcon, color: selectedColor)
         
         titleButton.titleLabel!.font = font
         titleButton.setAttributedTitle(normalLabel, for: [])
@@ -75,7 +78,7 @@ import Cartography
         titleButton.sizeToFit()
         titleButton.isEnabled = interactive
         titleButton.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 1000), for: .vertical)
-        updateAccessibilityLabel()
+        accessibilityLabel = titleButton.titleLabel?.text
         frame = CGRect(origin: frame.origin, size: titleButton.bounds.size)
         createConstraints()
         setNeedsLayout()
@@ -86,17 +89,12 @@ import Cartography
         fatalError("init(coder:) has not been implemented")
     }
     
-    /// Default behaviour
-    func updateAccessibilityLabel() {
-        self.accessibilityLabel = titleButton.titleLabel?.text
-    }
-    
 }
 
 extension NSTextAttachment {
     static func downArrow(color: UIColor) -> NSTextAttachment {
         let attachment = NSTextAttachment()
-        attachment.image = UIImage(for: .downArrow, fontSize: 8, color: color)
+        attachment.image = StyleKitIcon.downArrow.makeImage(size: 8, color: color)
         return attachment
     }
 }

@@ -78,7 +78,7 @@ struct AddParticipantsViewModel {
     func rightNavigationItem(target: AnyObject, action: Selector) -> UIBarButtonItem {
         switch context {
         case .add:
-            let item = UIBarButtonItem(icon: .X, target: target, action: action)
+            let item = UIBarButtonItem(icon: .cross, target: target, action: action)
             item.accessibilityIdentifier = "close"
             return item
         case .create(let values):

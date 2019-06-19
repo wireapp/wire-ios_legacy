@@ -25,10 +25,10 @@ import UIKit
 final class ProfileDetailsViewController: UIViewController, Themeable {
 
     /// The user whose profile is displayed.
-    let user: GenericUser
+    let user: UserType
 
     /// The user that views the profile.
-    let viewer: GenericUser
+    let viewer: UserType
 
     /// The conversation where the profile is displayed.
     let conversation: ZMConversation?
@@ -46,8 +46,7 @@ final class ProfileDetailsViewController: UIViewController, Themeable {
 
     // MARK: - UI Properties
 
-    private let profileView: ProfileView
-    private let profileViewContainer = UIView()
+    private let profileHeaderViewController: ProfileHeaderViewController
     private let tableView = UITableView(frame: .zero, style: .grouped)
 
     @objc dynamic var colorSchemeVariant: ColorSchemeVariant = ColorScheme.default.variant {
@@ -67,21 +66,26 @@ final class ProfileDetailsViewController: UIViewController, Themeable {
      * - parameter context: The context of the profile screen.
      */
     
-    init(user: GenericUser,
-         viewer: GenericUser,
+    init(user: UserType,
+         viewer: UserType,
          conversation: ZMConversation?,
          context: ProfileViewControllerContext) {
+        
+        var profileHeaderOptions: ProfileHeaderViewController.Options = [.hideUsername, .hideHandle, .hideTeamName]
+        
+        if user.isSelfUser || !viewer.canAccessCompanyInformation(of: user) {
+            profileHeaderOptions.insert(.hideAvailability)
+        }
+        
         self.user = user
         self.viewer = viewer
         self.conversation = conversation
         self.context = context
-        self.profileView = ProfileView(user: user,
-                                       viewer: viewer,
-                                       options: [.hideUsername, .hideHandle, .hideTeamName])
-        self.contentController = ProfileDetailsContentController(user: user,
-                                                                 viewer: viewer,
-                                                                 conversation: conversation)
+        self.profileHeaderViewController = ProfileHeaderViewController(user: user, viewer: viewer, conversation: conversation, options: profileHeaderOptions)
+        self.contentController = ProfileDetailsContentController(user: user, viewer: viewer, conversation: conversation)
+        
         super.init(nibName: nil, bundle: nil)
+        
         self.contentController.delegate = self
     }
     
@@ -106,17 +110,12 @@ final class ProfileDetailsViewController: UIViewController, Themeable {
         tableView.contentInset.bottom = 88
         view.addSubview(tableView)
         
-        // Create the profile header
-        if user.isSelfUser || !contentController.viewerCanAccessRichProfile {
-            profileView.options.insert(.hideAvailability)
-        }
-        
-        profileView.prepareForDisplay(in: conversation, context: context)
-        profileView.availabilityView.options = .profileDetails
-        profileView.imageView.isAccessibilityElement = false
-        profileView.imageView.isUserInteractionEnabled = false
-        profileViewContainer.addSubview(profileView)
-        tableView.tableHeaderView = profileViewContainer
+        profileHeaderViewController.willMove(toParent: self)
+        profileHeaderViewController.imageView.isAccessibilityElement = false
+        profileHeaderViewController.imageView.isUserInteractionEnabled = false
+        profileHeaderViewController.view.sizeToFit()
+        tableView.tableHeaderView = profileHeaderViewController.view
+        addChild(profileHeaderViewController)
         
         tableView.backgroundColor = .clear
         applyColorScheme(colorSchemeVariant)
@@ -124,8 +123,6 @@ final class ProfileDetailsViewController: UIViewController, Themeable {
     
     private func configureConstraints() {
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        profileView.translatesAutoresizingMaskIntoConstraints = false
-        profileViewContainer.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
             // tableView
@@ -133,13 +130,6 @@ final class ProfileDetailsViewController: UIViewController, Themeable {
             tableView.topAnchor.constraint(equalTo: view.topAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            
-            // profileView
-            profileViewContainer.widthAnchor.constraint(equalTo: tableView.widthAnchor),
-            profileView.leadingAnchor.constraint(equalTo: profileViewContainer.leadingAnchor),
-            profileView.topAnchor.constraint(equalTo: profileViewContainer.topAnchor),
-            profileView.trailingAnchor.constraint(equalTo: profileViewContainer.trailingAnchor),
-            profileView.bottomAnchor.constraint(equalTo: profileViewContainer.bottomAnchor)
         ])
     }
     

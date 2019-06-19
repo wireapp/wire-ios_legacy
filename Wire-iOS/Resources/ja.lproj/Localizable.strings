@@ -206,6 +206,8 @@
 "conversation.status.silenced" = "ミュート";
 "conversation.status.poor_connection" = "接続不良";
 "conversation.status.blocked" = "ブロック";
+"conversation.status.incoming_call" = "%@ を呼出中...";
+"conversation.status.incoming_call.unknown" = "着信中...";
 
 "conversation.status.message.text" = "%@";
 "conversation.status.message.link" = "リンクを共有";
@@ -388,9 +390,9 @@
 
 // Link attachment messages
 
-"content.message.link_attachment.accessibility_label.youtube" = "YouTube video preview";
-"content.message.link_attachment.accessibility_label.soundcloud_song" = "SoundCloud song preview";
-"content.message.link_attachment.accessibility_label.soundcloud_set" = "SoundCloud playlist preview";
+"content.message.link_attachment.accessibility_label.youtube" = "YouTube動画 プレビュー";
+"content.message.link_attachment.accessibility_label.soundcloud_song" = "SoundCloud 楽曲 プレビュー";
+"content.message.link_attachment.accessibility_label.soundcloud_set" = "SoundCloud プレイリスト プレビュー";
 
 // New conversation participants added / removed / started system message
 
@@ -583,9 +585,9 @@
 "voice.cancel_button.title" = "キャンセル";
 "voice.call_button.title" = "通話";
 "voice.end_call_button.title" = "通話を終了";
-"voice.call_error.unsupported_version.title" = "Please update Wire";
+"voice.call_error.unsupported_version.title" = "Wire を更新してください";
 "voice.call_error.unsupported_version.message" = "You received a call that isn't supported by this version of Wire.\nGet the latest version in the App Store.";
-"voice.call_error.unsupported_version.dismiss" = "Later";
+"voice.call_error.unsupported_version.dismiss" = "後で";
 
 "voice.alert.call_in_progress.title" = "通話中です";
 "voice.alert.call_in_progress.message" = "同時にできる通話は一つのみです";
@@ -681,7 +683,7 @@
 "meta.menu.mark_read" = "既読にする";
 "shortcut.mark_all_as_read.title" = "すべて既読にする";
 "meta.menu.configure_notifications" = "通知…";
-"meta.menu.open_self_profile" = "Open Profile";
+"meta.menu.open_self_profile" = "プロファイルを開く";
 
 // Delete conversation
 "meta.menu.delete_content.dialog_title" = "コンテンツを削除しますか?";
@@ -824,8 +826,8 @@
 "self.add_phone_number" = "電話番号を追加する";
 "self.add_email_password" = "メールアドレスとパスワードを追加";
 
-"self.accessibility.profile_photo_image" = "Profile picture";
-"self.accessibility.profile_photo_edit_button" = "Change profile picture";
+"self.accessibility.profile_photo_image" = "プロフィール画像";
+"self.accessibility.profile_photo_edit_button" = "プロフィール画像を変更";
 
 // About screen
 "about.tos.title" = "利用規約";
@@ -855,7 +857,7 @@
 // Settings - top level
 "self.settings.create_team.title" = "新しいチームを作成";
 "self.settings.manage_team.title" = "チームを管理する";
-"self.settings.add_team_or_account.title" = "新しいチームまたはアカウント";
+"self.settings.add_team_or_account.title" = "アカウントを追加";
 "self.settings.add_account.title" = "アカウントを追加";
 
 "self.settings.add_account.error.title" = "3 つのアカウントがアクティブです";
@@ -995,6 +997,7 @@
 "self.settings.popular_demand.title" = "人気の高い順";
 "self.settings.popular_demand.send_button.title" = "送信ボタン";
 "self.settings.popular_demand.send_button.footer" = "キーボードからの送信を無効にします。";
+"self.settings.popular_demand.dark_mode.footer" = "Switch between dark and light theme.";
 
 // Open in
 "self.settings.external_apps.header" = "リンクを開く";
@@ -1003,7 +1006,7 @@
 "self.settings.link_options.maps.title" = "ロケーション";
 "self.settings.link_options.browser.title" = "ブラウザ";
 
-"open_link.twitter.option.default" = "Safari / Twitter";
+"open_link.twitter.option.default" = "ブラウザ / Twitter";
 "open_link.twitter.option.tweetbot" = "Tweetbot";
 "open_link.twitter.option.twitterrific" = "Twitterrific";
 
@@ -1135,6 +1138,10 @@
 "landing.login.hints" = "既にアカウントをお持ちですか？";
 "landing.login.button.title" = "ログイン";
 
+"landing.custom_backend.title" = "%@ に接続しました";
+"landing.custom_backend.more_info.button.title" = "さらに表示";
+"landing.custom_backend.more_info.alert.title" = " サードパーティのサーバに接続中: %@";
+
 // Create team
 
 "team.name.headline" = "チーム名";
@@ -1240,7 +1247,7 @@
 "registration.alert.account_exists.title" = "アカウントが存在します";
 "registration.alert.account_exists.message_phone" = "登録に使用した電話番号は既にアカウントにリンクされています。\n\n別の電話番号を登録するか、このアカウントを持っている場合はログインしてみてください。";
 "registration.alert.account_exists.message_email" = "登録に使用したメールアドレスは既にアカウントにリンクされています。\n\n別のメールアドレスを登録するか、このアカウントを持っている場合はログインしてみてください。";
-"registration.alert.change_email_action" = "Eメールを変更";
+"registration.alert.change_email_action" = "別のメールアドレスで登録します。";
 "registration.alert.change_phone_action" = "別の番号で登録します。";
 "registration.alert.change_signin_action" = "ログイン";
 
@@ -1512,6 +1519,8 @@
 
 "availability.message.cancel" = "キャンセル";
 "availability.message.set_status" = "ステータスを設定";
+"availability.accessibility_label.change_status" = "ステータス変更";
+"availability.accessibility_label.status" = "ステータス";
 
 "availability.none" = "なし";
 "availability.available" = "利用できます";
@@ -1520,6 +1529,17 @@
 "availability.available.placeholder" = "%@ が利用可能です。";
 "availability.away.placeholder" = "%@ は退席しています";
 "availability.busy.placeholder" = "%@ は取り込み中です";
+
+"availability.reminder.away.title" = "不在に設定しました";
+"availability.reminder.away.message" = "他の人によってあなたが不在に設定されました。通話着信やメッセージに関する通知は受信されません。";
+"availability.reminder.busy.title" = "取り込み中に設定しました";
+"availability.reminder.busy.message" = "他の人によってあなたが取り込み中に設定されました。\nミュートされていない会話のメンション、返信、および通話着信についてのみ通知を受信します。";
+"availability.reminder.available.title" = "利用可能に設定しました";
+"availability.reminder.available.message" = "他の人によってあなたが利用可能に設定されました。各会話の通知設定に従って、通話着信およびメッセージの通知を受信します。";
+"availability.reminder.none.title" = "ステータスが設定されていません";
+"availability.reminder.none.message" = "各会話の通知設定に従って、音声通話着信およびメッセージ通知を受信します。";
+"availability.reminder.action.dont_remind_me" = "この情報を二度と表示しない";
+"availability.reminder.action.ok" = "OK";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Call Quality Survey
@@ -1540,18 +1560,28 @@
 "url_action.title" = "このURLを確認します";
 "url_action.connect_to_bot.message" = "Bot に接続しますか？";
 
-// Deep Link
-"url_action.invalid_user.title" = "Wire can't find this person.";
-"url_action.invalid_user.message" = "You may not have permission with this account or it no longer exists.";
+"url_action.switch_backend.title" = "サーバーに接続";
+"url_action.switch_backend.message" = "この構成でアプリケーションがサードパーティサーバに接続します: %@";
 
-"url_action.invalid_conversation.title" = "Wire can't open this conversation.";
+"url_action.switch_backend.error.logged_in.title" = "サーバを変更することができません";
+"url_action.switch_backend.error.logged_in" = "あなたはすでにログインしています。サーバを変更するには、すべてのアカウントでログアウトして、もう一度やり直してください";
+
+"url_action.switch_backend.error.invalid_backend.title" = "サーバーが応答しません。";
+"url_action.switch_backend.error.invalid_backend" = "インターネット接続を確認し、リンクを確認してもう一度やり直してください";
+
+
+// Deep Link
+"url_action.invalid_user.title" = "Wire は この人物を見つけられませんでした。";
+"url_action.invalid_user.message" = "このアカウントへの権限が無いか、アカウントは存在していません。";
+
+"url_action.invalid_conversation.title" = "Wire はこの会話を開けませんでした";
 "url_action.invalid_conversation.message" = "You may not have permission with this account or the person may not be on Wire.";
 
-"url_action.authorization_required.title" = "Authorization required.";
-"url_action.authorization_required.message" = "You need to log in to view this content.";
+"url_action.authorization_required.title" = "承認が必要です";
+"url_action.authorization_required.message" = "この内容を見るにはサインインする必要があります。";
 
-"url_action.invalid_link.title" = "Invalid link.";
-"url_action.invalid_link.message" = "The link you opened is not valid.";
+"url_action.invalid_link.title" = "リンクが無効です";
+"url_action.invalid_link.message" = "あなたが開いたリンクは有効ではありません。";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // News and offers consent prompt
@@ -1578,5 +1608,5 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Password Rules
-"registration.password.rules.no_requirements" = "Use %@.";
+"registration.password.rules.no_requirements" = "%@ を使う";
 "registration.password.rules.with_requirements" = "Use %@, with %@.";

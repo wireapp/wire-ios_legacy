@@ -736,8 +736,8 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 - (void)conversationDidChange:(ConversationChangeInfo *)note
 {
-    if (note.didNotSendMessagesBecauseOfConversationSecurityLevel) {
-        [self presentConversationDegradedActionSheetControllerForUsers:note.usersThatCausedConversationToDegrade];
+    if (note.causedByConversationPrivacyChange) {
+        [self presentPrivacyWarningAlertForChange:note];
     }
     
     if (note.participantsChanged || note.connectionStateChanged) {
@@ -755,53 +755,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     if (note.nameChanged || note.securityLevelChanged || note.connectionStateChanged) {
         [self setupNavigatiomItem];
     }
-}
-
-- (void)presentConversationDegradedActionSheetControllerForUsers:(NSSet<ZMUser *> *)users
-{
-    UIAlertController *controller = [UIAlertController controllerForUnknownClientsForUsers:users completion:^(ConversationDegradedResult result) {
-        switch (result) {
-            case ConversationDegradedResultCancel:
-                [self.conversation doNotResendMessagesThatCausedDegradation];
-                break;
-            case ConversationDegradedResultSendAnyway:
-                [self.conversation resendMessagesThatCausedConversationSecurityDegradation];
-                break;
-            case ConversationDegradedResultShowDetails:
-                [self.conversation doNotResendMessagesThatCausedDegradation];
-
-                if ([[ZMUser selfUser] hasUntrustedClients]) {
-                    [[ZClientViewController sharedZClientViewController] openClientListScreenForUser:[ZMUser selfUser]];
-                }
-                else {
-                    if (self.conversation.conversationType == ZMConversationTypeOneOnOne) {
-                        ZMUser *user = self.conversation.connectedUser;
-                        if (user.clients.count == 1) {
-                            ProfileClientViewController *userClientController = [[ProfileClientViewController alloc] initWithClient:user.clients.anyObject fromConversation:YES];
-                            userClientController.showBackButton = NO;
-                            UINavigationController *navigationController = userClientController.wrapInNavigationController;
-                            navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
-                            userClientController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithIcon:ZetaIconTypeX style:UIBarButtonItemStylePlain target:self action:@selector(dismissProfileClientViewController:)];
-                            [self presentViewController:navigationController animated:YES completion:nil];
-                        } else {
-                            ProfileViewController *profileViewController = [[ProfileViewController alloc] initWithUser:user viewer:[ZMUser selfUser] context:ProfileViewControllerContextDeviceList];
-                            profileViewController.delegate = self;
-                            profileViewController.viewControllerDismisser = self;
-                            UINavigationController *navigationController = profileViewController.wrapInNavigationController;
-                            navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
-                            [self presentViewController:navigationController animated:YES completion:nil];
-                        }
-                    } else if (self.conversation.conversationType == ZMConversationTypeGroup) {
-                        UIViewController *participantsController = [self participantsController];
-                        [self presentViewController:participantsController animated:YES completion:nil];
-                    }
-                }
-                
-                break;
-        }
-    }];
-
-    [self presentViewController:controller animated:YES completion:nil];
 }
 
 - (void)dismissProfileClientViewController:(UIBarButtonItem *)sender

@@ -36,7 +36,7 @@ final class SelfProfileViewController: UIViewController {
     private let settingsController: SettingsTableViewController
     private let accountSelectorController = AccountSelectorController()
     private let profileContainerView = UIView()
-    private let profileView: ProfileView
+    private let profileHeaderViewController: ProfileHeaderViewController
 
     // MARK: - Configuration
 
@@ -68,7 +68,7 @@ final class SelfProfileViewController: UIViewController {
 		let settingsCellDescriptorFactory = SettingsCellDescriptorFactory(settingsPropertyFactory: settingsPropertyFactory, userRightInterfaceType: userRightInterfaceType)
 		let rootGroup = settingsCellDescriptorFactory.rootGroup()
         settingsController = rootGroup.generateViewController()! as! SettingsTableViewController
-        profileView = ProfileView(user: selfUser, viewer: selfUser, options: selfUser.isTeamMember ? [.allowEditingAvailability] : [.hideAvailability])
+        profileHeaderViewController = ProfileHeaderViewController(user: selfUser, options: selfUser.isTeamMember ? [.allowEditingAvailability] : [.hideAvailability])
 
 		self.userRightInterfaceType = userRightInterfaceType
 		self.settingsCellDescriptorFactory = settingsCellDescriptorFactory
@@ -88,18 +88,18 @@ final class SelfProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        profileView.colorSchemeVariant = .dark
-        profileView.source = self
-        profileView.imageView.addTarget(self, action: #selector(userDidTapProfileImage), for: .touchUpInside)
-
-        profileContainerView.addSubview(profileView)
+        profileHeaderViewController.colorSchemeVariant = .dark
+        profileHeaderViewController.imageView.addTarget(self, action: #selector(userDidTapProfileImage), for: .touchUpInside)
+        
+        addChild(profileHeaderViewController)
+        profileContainerView.addSubview(profileHeaderViewController.view)
         view.addSubview(profileContainerView)
+        profileHeaderViewController.didMove(toParent: self)
 
         if userCanSetProfilePicture {
-            profileView.options.insert(.allowEditingProfilePicture)
+            profileHeaderViewController.options.insert(.allowEditingProfilePicture)
         }
 
-        settingsController.willMove(toParent: self)
         addChild(settingsController)
         view.addSubview(settingsController.view)
         settingsController.didMove(toParent: self)
@@ -128,7 +128,7 @@ final class SelfProfileViewController: UIViewController {
     }
     
     private func createConstraints() {
-        profileView.translatesAutoresizingMaskIntoConstraints = false
+        profileHeaderViewController.view.translatesAutoresizingMaskIntoConstraints = false
         profileContainerView.translatesAutoresizingMaskIntoConstraints = false
         settingsController.view.translatesAutoresizingMaskIntoConstraints = false
         accountSelectorController.view.translatesAutoresizingMaskIntoConstraints = false
@@ -143,11 +143,11 @@ final class SelfProfileViewController: UIViewController {
             profileContainerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
 
             // profileView
-            profileView.leadingAnchor.constraint(equalTo: profileContainerView.leadingAnchor),
-            profileView.topAnchor.constraint(greaterThanOrEqualTo: profileContainerView.topAnchor),
-            profileView.trailingAnchor.constraint(equalTo: profileContainerView.trailingAnchor),
-            profileView.bottomAnchor.constraint(lessThanOrEqualTo: profileContainerView.bottomAnchor),
-            profileView.centerYAnchor.constraint(equalTo: profileContainerView.centerYAnchor),
+            profileHeaderViewController.view.leadingAnchor.constraint(equalTo: profileContainerView.leadingAnchor),
+            profileHeaderViewController.view.topAnchor.constraint(greaterThanOrEqualTo: profileContainerView.topAnchor),
+            profileHeaderViewController.view.trailingAnchor.constraint(equalTo: profileContainerView.trailingAnchor),
+            profileHeaderViewController.view.bottomAnchor.constraint(lessThanOrEqualTo: profileContainerView.bottomAnchor),
+            profileHeaderViewController.view.centerYAnchor.constraint(equalTo: profileContainerView.centerYAnchor),
 
             // settingsControllerView
             settingsController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),

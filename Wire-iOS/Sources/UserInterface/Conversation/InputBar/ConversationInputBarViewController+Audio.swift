@@ -130,8 +130,6 @@ extension ConversationInputBarViewController {
     }
     
     internal func createAudioViewController(audioRecorder: AudioRecorderType? = nil) {
-        guard let audioButton = audioButton else { return }
-        
         removeAudioViewController()
         
         let audioRecordViewController = AudioRecordViewController(audioRecorder: audioRecorder)

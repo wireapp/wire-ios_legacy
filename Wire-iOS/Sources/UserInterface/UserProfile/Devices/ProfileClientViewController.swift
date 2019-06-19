@@ -120,7 +120,7 @@ import Cartography
     }
 
     private func setupBackButton() {
-        backButton.setIcon(.chevronLeft, with: .tiny, for: [])
+        backButton.setIcon(.backArrow, size: .tiny, for: [])
         backButton.accessibilityIdentifier = "back"
         backButton.addTarget(self, action: #selector(ProfileClientViewController.onBackTapped(_:)), for: .touchUpInside)
         backButton.isHidden = !self.showBackButton
@@ -163,7 +163,7 @@ import Cartography
     }
     
     private func setupTypeLabel() {
-        typeLabel.text = self.userClient.deviceClass?.localizedUppercase
+        typeLabel.text = self.userClient.deviceClass?.localizedDescription.localizedUppercase
         typeLabel.numberOfLines = 1
         typeLabel.font = FontSpec(.small, .semibold).font!
         typeLabel.textColor = UIColor.from(scheme: .textForeground)

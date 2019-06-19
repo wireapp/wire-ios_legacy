@@ -28,6 +28,7 @@ open class AssetCell: UICollectionViewCell {
     
     var imageRequestTag: PHImageRequestID = PHInvalidImageRequestID
     var representedAssetIdentifier: String!
+    var manager: ImageManagerProtocol!
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -69,19 +70,17 @@ open class AssetCell: UICollectionViewCell {
         didSet {
             self.imageView.image = nil
 
-            let manager = PHImageManager.default()
-            
             if self.imageRequestTag != PHInvalidImageRequestID {
                 manager.cancelImageRequest(self.imageRequestTag)
                 self.imageRequestTag = PHInvalidImageRequestID
             }
-            
+
             guard let asset = self.asset else {
                 self.durationView.text = ""
                 self.durationView.isHidden = true
                 return
             }
-            
+
             let maxDimensionRetina = max(self.bounds.size.width, self.bounds.size.height) * (self.window ?? UIApplication.shared.keyWindow!).screen.scale
 
             representedAssetIdentifier = asset.localIdentifier
@@ -95,10 +94,10 @@ open class AssetCell: UICollectionViewCell {
                                                         else { return }
                                                     self.imageView.image = result
             })
-            
+
             if asset.mediaType == .video {
                 let duration = Int(ceil(asset.duration))
-                
+
                 let (seconds, minutes) = (duration % 60, duration / 60)
                 self.durationView.text = String(format: "%d:%02d", minutes, seconds)
                 self.durationView.isHidden = false

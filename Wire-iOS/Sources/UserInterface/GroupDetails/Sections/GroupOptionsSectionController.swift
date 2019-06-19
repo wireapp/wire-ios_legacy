@@ -24,10 +24,12 @@ protocol GroupOptionsSectionControllerDelegate: class {
     func presentNotificationsOptions(animated: Bool)
 }
 
-class GroupOptionsSectionController: GroupDetailsSectionController {
+final class GroupOptionsSectionController: GroupDetailsSectionController {
 
-    private enum Option: Int, Restricted {
-        
+    private enum Option: Int, CaseIterable, Restricted {
+
+        fileprivate static let count = Option.allCases.count
+
         case notifications = 0, guests, timeout
         
         var requiredPermissions: Permissions {
@@ -45,8 +47,6 @@ class GroupOptionsSectionController: GroupDetailsSectionController {
             case .notifications: return GroupDetailsNotificationOptionsCell.zm_reuseIdentifier
             }
         }
-
-        fileprivate static let count = Option.allValues.count
 
     }
 
@@ -123,7 +123,7 @@ class GroupOptionsSectionController: GroupDetailsSectionController {
 
     }
 
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 
         switch options[indexPath.row] {
         case .guests:

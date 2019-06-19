@@ -149,7 +149,7 @@ class SettingsGroupCellDescriptor: SettingsInternalGroupCellDescriptorType, Sett
     let style: InternalScreenStyle
     let items: [SettingsSectionDescriptorType]
     let identifier: String?
-    let icon: ZetaIconType
+    let icon: StyleKitIcon?
     
     let previewGenerator: PreviewGeneratorType?
     
@@ -163,7 +163,7 @@ class SettingsGroupCellDescriptor: SettingsInternalGroupCellDescriptorType, Sett
     
     weak var viewController: UIViewController?
     
-    init(items: [SettingsSectionDescriptorType], title: String, style: InternalScreenStyle = .grouped, identifier: String? = .none, previewGenerator: PreviewGeneratorType? = .none, icon: ZetaIconType = .none) {
+    init(items: [SettingsSectionDescriptorType], title: String, style: InternalScreenStyle = .grouped, identifier: String? = .none, previewGenerator: PreviewGeneratorType? = .none, icon: StyleKitIcon? = nil) {
         self.items = items
         self.title = title
         self.style = style

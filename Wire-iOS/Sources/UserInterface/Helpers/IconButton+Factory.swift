@@ -67,8 +67,8 @@ extension IconButton {
     }
 
     fileprivate convenience init(
-        icon: ZetaIconType,
-        size: ZetaIconSize = .tiny,
+        icon: StyleKitIcon,
+        size: StyleKitIcon.Size = .tiny,
         accessibilityId: String,
         backgroundColor: [UIControl.State: UIColor],
         iconColor: [UIControl.State: UIColor],
@@ -76,7 +76,7 @@ extension IconButton {
         ) {
         self.init()
         circular = true
-        setIcon(icon, with: size, for: .normal)
+        setIcon(icon, size: size, for: .normal)
         titleLabel?.font = FontSpec(.small, .light).font!
         accessibilityIdentifier = accessibilityId
         translatesAutoresizingMaskIntoConstraints = false

@@ -130,17 +130,17 @@
       <key>d_number_of_others</key>
       <dict>
         <key>one</key>
-        <string>%d еще</string>
+        <string>еще %d</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>few</key>
-        <string>%d еще</string>
+        <string>еще %d</string>
         <key>many</key>
-        <string>%d остальных</string>
+        <string>еще %d</string>
         <key>other</key>
-        <string>%d остальных</string>
+        <string>еще %d</string>
       </dict>
     </dict>
     <key>content.system.people_started_using</key>
@@ -154,13 +154,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string> и %d остальных</string>
+        <string> и еще %d</string>
         <key>few</key>
-        <string> и %d еще</string>
+        <string> и еще %d</string>
         <key>many</key>
-        <string> и %d еще</string>
+        <string> и еще %d</string>
         <key>other</key>
-        <string> и %d остальных</string>
+        <string> и еще %d</string>
       </dict>
       <key>d_new_devices</key>
       <dict>

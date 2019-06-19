@@ -33,30 +33,8 @@ private let zmLog = ZMSLog(tag: "URL")
 
 struct WireUrl: Codable {
     let wireAppOnItunes: URL
-
-    let emailAlreadyInUseLearnMore: URL
-    let usernameLearnMore: URL
-    let fingerprintLearnMore: URL
-    let fingerprintHowToVerify: URL
-    let privacyPolicy: URL
-    let licenseInformation: URL
-    let website: URL
-    let passwordReset: URL
     let support: URL
-    let askSupport: URL
-    let reportAbuse: URL
-    let cannotDecryptHelp: URL
-    let cannotDecryptNewRemoteIDHelp: URL
-    let createTeam: URL
-    let createTeamFeatures: URL
-    let manageTeam: URL
-    let emailInUseLearnMore: URL
     let randomProfilePictureSource: URL
-
-    let termsOfServicesTeams: URL
-    let termsOfServicesPersonal: URL
-
-    let manageTeamBase: URL
 
     static var shared: WireUrl! = {
         guard let filePath = Bundle.main.url(forResource: "url", withExtension: "json") else {
@@ -105,7 +83,7 @@ extension URL {
     }
 
     static func manageTeam(source: TeamSource) -> URL {
-        let baseURL = WireUrl.shared.manageTeamBase
+        let baseURL = BackendEnvironment.shared.teamsURL
 
         let queryItems = [URLQueryItem(name: "utm_source", value: source.parameterValue),
                           URLQueryItem(name: "utm_term", value: "ios")]
@@ -120,89 +98,106 @@ extension URL {
 
 // MARK: - Standard URLS
 
+extension BackendEnvironment {
+    fileprivate static func websiteLink(path: String) -> URL {
+        return shared.websiteURL.appendingPathComponent(path)
+    }
+    
+    fileprivate static func accountsLink(path: String) -> URL {
+        return shared.accountsURL.appendingPathComponent(path)
+    }
+    
+    fileprivate static func teamsLink(path: String) -> URL {
+        return shared.teamsURL.appendingPathComponent(path)
+    }
+
+}
+
+
 extension URL {
 
     static var wr_wireAppOnItunes: URL {
         return WireUrl.shared.wireAppOnItunes
     }
-
-    static var wr_emailAlreadyInUseLearnMore: URL {
-        return WireUrl.shared.emailAlreadyInUseLearnMore
-    }
-
-    static var wr_usernameLearnMore: URL {
-        return WireUrl.shared.usernameLearnMore
-    }
-
-    static var wr_fingerprintLearnMore: URL {
-        return WireUrl.shared.fingerprintLearnMore
-    }
-
-    static var wr_fingerprintHowToVerify: URL {
-        return WireUrl.shared.fingerprintHowToVerify
-    }
-
-    static var wr_privacyPolicy: URL {
-        return WireUrl.shared.privacyPolicy
-    }
-
-    static var wr_licenseInformation: URL {
-        return WireUrl.shared.licenseInformation
-    }
-
-    static var wr_website: URL {
-        return WireUrl.shared.website
-    }
-
-    static var wr_passwordReset: URL {
-        return WireUrl.shared.passwordReset
-    }
-
-    static var wr_support: URL {
-        return WireUrl.shared.support
-    }
-
-    static var wr_askSupport: URL {
-        return WireUrl.shared.askSupport
-    }
-
-    static var wr_reportAbuse: URL {
-        return WireUrl.shared.reportAbuse
-    }
-
-    static var wr_cannotDecryptHelp: URL {
-        return WireUrl.shared.cannotDecryptHelp
-    }
-
-    static var wr_cannotDecryptNewRemoteIDHelp: URL {
-        return WireUrl.shared.cannotDecryptNewRemoteIDHelp
-    }
-
-    static var wr_createTeam: URL {
-        return WireUrl.shared.createTeam
-    }
-
-    static var wr_createTeamFeatures: URL {
-        return WireUrl.shared.createTeamFeatures
-    }
-
-    static var wr_manageTeam: URL {
-        return WireUrl.shared.manageTeam
-    }
-
-    static var wr_emailInUseLearnMore: URL {
-        return WireUrl.shared.emailInUseLearnMore
-    }
-
+    
     static var wr_randomProfilePictureSource: URL {
         return WireUrl.shared.randomProfilePictureSource
     }
 
+    static var wr_emailAlreadyInUseLearnMore: URL {
+        return wr_support.appendingPathComponent("hc/en-us/articles/115004082129-My-email-address-is-already-in-use-and-I-cannot-create-an-account-What-can-I-do-")
+    }
+    
+    static var wr_support: URL {
+        return WireUrl.shared.support
+    }
+
+    static var wr_usernameLearnMore: URL {
+        return BackendEnvironment.websiteLink(path: "support/username")
+    }
+
+    static var wr_fingerprintLearnMore: URL {
+        return BackendEnvironment.websiteLink(path: "privacy/why")
+    }
+
+    static var wr_fingerprintHowToVerify: URL {
+        return BackendEnvironment.websiteLink(path: "privacy/how")
+    }
+
+    static var wr_privacyPolicy: URL {
+        return BackendEnvironment.websiteLink(path: "legal/privacy/embed")
+    }
+
+    static var wr_licenseInformation: URL {
+        return BackendEnvironment.websiteLink(path: "legal/licenses/embed")
+    }
+
+    static var wr_website: URL {
+        return BackendEnvironment.shared.websiteURL
+    }
+
+    static var wr_passwordReset: URL {
+        return BackendEnvironment.accountsLink(path: "forgot")
+    }
+
+    static var wr_askSupport: URL {
+        return wr_support.appendingPathComponent("hc/requests/new")
+    }
+
+    static var wr_reportAbuse: URL {
+        return BackendEnvironment.websiteLink(path: "support/misuse")
+    }
+
+    static var wr_cannotDecryptHelp: URL {
+        return BackendEnvironment.websiteLink(path: "privacy/error-1")
+    }
+
+    static var wr_cannotDecryptNewRemoteIDHelp: URL {
+        return BackendEnvironment.websiteLink(path: "privacy/error-2")
+    }
+
+    static var wr_createTeam: URL {
+        return BackendEnvironment.websiteLink(path: "create-team?pk_campaign=client&pk_kwd=ios")
+    }
+
+    static var wr_createTeamFeatures: URL {
+        return BackendEnvironment.websiteLink(path: "teams/learnmore")
+    }
+
+    static var wr_manageTeam: URL {
+        return BackendEnvironment.teamsLink(path: "login?pk_campaign=client&pk_kwd=ios")
+    }
+
+    static var wr_emailInUseLearnMore: URL {
+        return BackendEnvironment.websiteLink(path: "support/email-in-use")
+    }
+
+
     static func wr_termsOfServicesURL(forTeamAccount isTeamAccount: Bool) -> URL {
         if isTeamAccount {
-            return WireUrl.shared.termsOfServicesTeams
+            return BackendEnvironment.websiteLink(path: "legal/terms/teams")
         } else {
-            return WireUrl.shared.termsOfServicesPersonal
+            return BackendEnvironment.websiteLink(path: "legal/terms/personal")
         }
     }
 

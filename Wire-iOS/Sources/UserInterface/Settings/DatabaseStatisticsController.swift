@@ -73,7 +73,7 @@ import WireDataModel
 
     func addRow(title: String, contents: String) {
         DispatchQueue.main.async {
-            let spinnerIndex = self.stackView.arrangedSubviews.index(of: self.spinner)!
+            let spinnerIndex = self.stackView.arrangedSubviews.firstIndex(of: self.spinner)!
             self.stackView.insertArrangedSubview(self.rowWith(title:title, contents: contents), at: spinnerIndex)
         }
     }

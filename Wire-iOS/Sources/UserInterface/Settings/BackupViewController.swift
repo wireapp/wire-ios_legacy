@@ -33,7 +33,7 @@ final class BackupStatusCell: UITableViewCell {
         
         let color = UIColor.from(scheme: .textForeground, variant: .dark)
         
-        iconView.image = .imageForRestore(with: color, size: .large)
+        iconView.setIcon(.restore, size: .large, color: color)
         iconView.contentMode = .center
         iconView.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(iconView)
@@ -196,7 +196,7 @@ extension BackupViewController: UITableViewDataSource, UITableViewDelegate {
 
 fileprivate extension BackupViewController {
 
-    fileprivate func backupActiveAccount(indexPath: IndexPath) {
+    func backupActiveAccount(indexPath: IndexPath) {
         requestBackupPassword { [weak self] result in
             guard let `self` = self, let password = result else { return }
             self.loadingHostController.showLoadingView = true

@@ -29,6 +29,7 @@ extension MockUser {
         var newClients: [AnyHashable] = []
         for _ in 0..<numClients {
             let mockClient = MockUserClient()
+            mockClient.remoteIdentifier = "0011223344556677"
             mockClient.user = (self as Any as! ZMUser)
             newClients.append(mockClient)
         }

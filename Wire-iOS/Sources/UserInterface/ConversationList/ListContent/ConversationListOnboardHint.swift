@@ -29,7 +29,7 @@ class ConversationListOnboardingHint : UIView {
         
         super.init(frame: frame)
         
-        arrowView.image = UIImage(for: .longDownArrow, iconSize: .large, color: UIColor.white.withAlphaComponent(0.4))
+        arrowView.setIcon(.longDownArrow, size: .large, color: UIColor.white.withAlphaComponent(0.4))
         messageLabel.numberOfLines = 0
         messageLabel.textColor = .white
         messageLabel.textAlignment = .center

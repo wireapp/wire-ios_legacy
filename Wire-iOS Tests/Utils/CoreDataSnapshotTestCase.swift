@@ -168,7 +168,7 @@ extension CoreDataSnapshotTestCase {
         let serviceUser = ZMUser.insertNewObject(in: uiMOC)
         serviceUser.remoteIdentifier = UUID()
         serviceUser.name = "ServiceUser"
-        serviceUser.setHandle(name.lowercased())
+        serviceUser.setHandle(serviceUser.name!.lowercased())
         serviceUser.accentColorValue = .brightOrange
         serviceUser.serviceIdentifier = UUID.create().transportString()
         serviceUser.providerIdentifier = UUID.create().transportString()

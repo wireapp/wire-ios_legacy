@@ -36,9 +36,9 @@ extension CGFloat {
 
 final class MuteIndicatorView: UIView {
     let mutedIconImageView: UIImageView = {
-        let image = UIImage(for: .microphoneWithStrikethrough, iconSize: .like, color: .white)
-
-        return UIImageView(image: image)
+        let imageView = UIImageView()
+        imageView.setIcon(.microphoneWithStrikethrough, size: 12, color: .white)
+        return imageView
     }()
 
     let mutedLabel: TransformLabel = {

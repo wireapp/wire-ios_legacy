@@ -692,8 +692,8 @@ final class ProfileActionsFactoryTests: XCTestCase {
 
     // MARK: - Helpers
 
-    func verifyActions(user: GenericUser,
-                       viewer: GenericUser,
+    func verifyActions(user: UserType,
+                       viewer: UserType,
                        conversation: MockConversation,
                        expectedActions: [ProfileAction],
                        context: ProfileViewControllerContext = .oneToOneConversation,

@@ -18,31 +18,18 @@
 
 
 #import <WireSyncEngine/WireSyncEngine.h>
-#import "AccentColorProvider.h"
 
 @class ZMConversation;
 @class ZMUser;
 @class ZMSearchUser;
 
-
-
-FOUNDATION_EXPORT ZMUser *BareUserToUser(id bareUser);
-
 @interface ZMUser (Additions)
 
 @property (nonatomic, readonly) UIColor *nameAccentColor;
 
-+ (ZMUser<ZMEditableUser> *)editableSelfUser;
-
 + (BOOL)isSelfUserActiveParticipantOfConversation:(ZMConversation *)conversation;
-
-/// Just checks if any approval is pending from any side (SelfUser or OtherUser)
-- (BOOL)isPendingApproval;
 
 /// Blocks user if not already blocked and vice versa.
 - (void)toggleBlocked;
 
-/// Randomly select the accent color that can be used for a new user
-+ (ZMAccentColor)pickRandomAcceptableAccentColor;
-+ (ZMAccentColor)pickRandomAccentColor;
 @end

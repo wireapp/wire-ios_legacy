@@ -16,25 +16,15 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
-
 #import "IconButton.h"
-#import "UIImage+ZetaIconsNeue.h"
 #import "UIImage+ImageUtilities.h"
 #import "UIColor+Mixing.h"
 #import "UIControl+Wire.h"
 #import "Wire-Swift.h"
 
-@interface IconDefinition : NSObject
-
-@property (nonatomic) ZetaIconType iconType;
-@property (nonatomic) ZetaIconSize iconSize;
-@property (nonatomic) UIImageRenderingMode renderingMode;
-@end
-
 @implementation IconDefinition
 
-+ (instancetype)iconDefinitionForType:(ZetaIconType)type size:(ZetaIconSize)size renderingMode:(UIImageRenderingMode)renderingMode
++ (instancetype)iconDefinitionForType:(WRStyleKitIcon)type size:(CGFloat)size renderingMode:(UIImageRenderingMode)renderingMode
 {
     IconDefinition *result = self.class.new;
     
@@ -209,17 +199,17 @@
     }
 }
 
-- (void)setIcon:(ZetaIconType)icon withSize:(ZetaIconSize)iconSize forState:(UIControlState)state
+- (void)setIcon:(WRStyleKitIcon)icon withSize:(CGFloat)iconSize forState:(UIControlState)state
 {
     [self setIcon:icon withSize:iconSize forState:state renderingMode:UIImageRenderingModeAlwaysTemplate];
 }
 
-- (void)setIcon:(ZetaIconType)iconType withSize:(ZetaIconSize)iconSize forState:(UIControlState)state renderingMode:(UIImageRenderingMode)renderingMode
+- (void)setIcon:(WRStyleKitIcon)iconType withSize:(CGFloat)iconSize forState:(UIControlState)state renderingMode:(UIImageRenderingMode)renderingMode
 {
     [self setIcon:iconType withSize:iconSize forState:state renderingMode:renderingMode force:NO];
 }
 
-- (void)setIcon:(ZetaIconType)iconType withSize:(ZetaIconSize)iconSize forState:(UIControlState)state renderingMode:(UIImageRenderingMode)renderingMode force:(BOOL)force
+- (void)setIcon:(WRStyleKitIcon)iconType withSize:(CGFloat)iconSize forState:(UIControlState)state renderingMode:(UIImageRenderingMode)renderingMode force:(BOOL)force
 {
     IconDefinition *newIcon = [IconDefinition iconDefinitionForType:iconType size:iconSize renderingMode:renderingMode];
     
@@ -234,10 +224,16 @@
     UIColor *color = (renderingMode == UIImageRenderingModeAlwaysOriginal) ? [self iconColorForState:UIControlStateNormal] : UIColor.blackColor;
     
     UIImage *image = [UIImage imageForIcon:iconType
-                                  iconSize:iconSize
+                                      size:iconSize
                                      color:color];
     
     [self setImage:[image imageWithRenderingMode:renderingMode] forState:state];
+}
+
+- (void)removeIconForState:(UIControlState)state
+{
+    self.iconDefinitionsByState[@(state)] = nil;
+    [self setImage:nil forState:state];
 }
 
 - (void)setIconColor:(UIColor *)color forState:(UIControlState)state
@@ -258,16 +254,9 @@
     [self updateTintColor];
 }
 
-- (ZetaIconType)iconTypeForState:(UIControlState)state
+- (IconDefinition *)iconDefinitionForState:(UIControlState)state
 {
-    IconDefinition *definition = self.iconDefinitionsByState[@(state)];
-    
-    if (nil != definition) {
-        return definition.iconType;
-    }
-    else {
-        return ZetaIconTypeNone;
-    }
+    return self.iconDefinitionsByState[@(state)];
 }
 
 - (UIColor *)iconColorForState:(UIControlState)state

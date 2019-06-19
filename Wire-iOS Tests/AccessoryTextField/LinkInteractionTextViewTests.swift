@@ -20,7 +20,7 @@ import XCTest
 @testable import Wire
 import Down
 
-class LinkInteractionTextViewTests: XCTestCase {
+final class LinkInteractionTextViewTests: XCTestCase {
     
     var sut: LinkInteractionTextView!
     

@@ -22,14 +22,18 @@ import XCTest
 final class SelfProfileViewControllerTests: ZMSnapshotTestCase {
     
     var sut: SelfProfileViewController!
-    
+
+    override func setUp() {
+        super.setUp()
+    }
+
     override func tearDown() {
         sut = nil
         super.tearDown()
     }
   
     func testTestForAUserWithNoTeam() {
-        createSut(userName: "Tarja Turunen")
+        createSut(userName: "Tarja Turunen", teamMember: false)
 
         verify(view: sut.view)
     }
@@ -40,8 +44,10 @@ final class SelfProfileViewControllerTests: ZMSnapshotTestCase {
         verify(view: sut.view)
     }
 
-    private func createSut(userName: String) {
+    private func createSut(userName: String, teamMember: Bool = true) {
         MockUser.mockSelf()?.name = userName
+        MockUser.mockSelf()?.isTeamMember = teamMember
+        
         sut = SelfProfileViewController(selfUser: MockUser.selfUser, userRightInterfaceType: MockUserRight.self)
         sut.view.backgroundColor = .black
     }

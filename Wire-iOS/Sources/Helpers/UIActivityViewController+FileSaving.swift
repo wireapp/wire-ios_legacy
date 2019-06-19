@@ -19,7 +19,7 @@
 
 public extension UIActivityViewController {
 
-    @objc public convenience init?(message: ZMConversationMessage, from view: UIView) {
+    @objc convenience init?(message: ZMConversationMessage, from view: UIView) {
         guard let fileMessageData = message.fileMessageData, message.isFileDownloaded() == true, let fileURL = fileMessageData.fileURL else { return nil }
         self.init(
             activityItems: [fileURL],

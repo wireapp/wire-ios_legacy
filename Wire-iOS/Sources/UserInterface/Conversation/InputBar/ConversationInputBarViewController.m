@@ -17,9 +17,7 @@
 // 
 
 
-@import PureLayout;
 @import MobileCoreServices;
-@import AVFoundation;
 
 #import "ConversationInputBarViewController.h"
 #import "ConversationInputBarViewController+Private.h"
@@ -103,12 +101,9 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 @property (nonatomic) UIGestureRecognizer *singleTapGestureRecognizer;
 
 @property (nonatomic) UserImageView *authorImageView;
-@property (nonatomic) TypingIndicatorView *typingIndicatorView;
 
-@property (nonatomic) InputBar *inputBar;
 @property (nonatomic) ZMConversation *conversation;
 
-@property (nonatomic) NSSet *typingUsers;
 @property (nonatomic) id conversationObserverToken;
 @property (nonatomic) id userObserverToken;
 
@@ -142,6 +137,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
             self.typingObserverToken = [conversation addTypingObserver:self];
             self.typingUsers = conversation.typingUsers;
         }
+
         self.sendButtonState = [[ConversationInputBarButtonState alloc] init];
 
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardDidHideNotification object:nil];
@@ -151,6 +147,8 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
         self.notificationFeedbackGenerator = [[UINotificationFeedbackGenerator alloc] init];
         self.impactFeedbackGenerator = [[UIImpactFeedbackGenerator alloc] initWithStyle:UIImpactFeedbackStyleLight];
+
+        [self setupViews];
     }
     return self;
 }
@@ -176,21 +174,13 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self setupAppLockedObserver];
     
     [self createSingleTapGestureRecognizer];
-    
-    [self createInputBar]; // Creates all input bar buttons
-    [self createSendButton];
-    [self createEphemeralIndicatorButton];
-    [self createMarkdownButton];
 
-    [self createHourglassButton];
-    [self createTypingIndicatorView];
-    
+
     if (self.conversation.hasDraftMessage) {
         [self.inputBar.textView setDraftMessage:self.conversation.draftMessage];
     }
 
     [self configureAudioButton:self.audioButton];
-    [self configureEmojiButton:self.emojiButton];
     [self configureMarkdownButton];
     [self configureMentionButton];
     [self configureEphemeralKeyboardButton:self.hourglassButton];
@@ -217,7 +207,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     
     [self updateAccessoryViews];
     [self updateInputBarVisibility];
-    [self updateTypingIndicatorVisibility];
+    [self updateTypingIndicatorVisibilityWithAnimated:false];
     [self updateWritingStateAnimated:NO];
     [self updateButtonIcons];
     [self updateAvailabilityPlaceholder];
@@ -253,59 +243,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     self.ephemeralIndicatorButton.layer.cornerRadius = CGRectGetWidth(self.ephemeralIndicatorButton.bounds) / 2;
 }
 
-- (void)createInputBar
-{
-    self.audioButton = [[IconButton alloc] init];
-    self.audioButton.hitAreaPadding = CGSizeZero;
-    self.audioButton.accessibilityIdentifier = @"audioButton";
-    [self.audioButton setIconColor:[UIColor accentColor] forState:UIControlStateSelected];
-
-    self.videoButton = [[IconButton alloc] init];
-    self.videoButton.hitAreaPadding = CGSizeZero;
-    self.videoButton.accessibilityIdentifier = @"videoButton";
-    
-    self.photoButton = [[IconButton alloc] init];
-    self.photoButton.hitAreaPadding = CGSizeZero;
-    self.photoButton.accessibilityIdentifier = @"photoButton";
-    [self.photoButton setIconColor:[UIColor accentColor] forState:UIControlStateSelected];
-
-    self.uploadFileButton = [[IconButton alloc] init];
-    self.uploadFileButton.hitAreaPadding = CGSizeZero;
-    self.uploadFileButton.accessibilityIdentifier = @"uploadFileButton";
-    
-    self.sketchButton = [[IconButton alloc] init];
-    self.sketchButton.hitAreaPadding = CGSizeZero;
-    self.sketchButton.accessibilityIdentifier = @"sketchButton";
-    
-    self.pingButton = [[IconButton alloc] init];
-    self.pingButton.hitAreaPadding = CGSizeZero;
-    self.pingButton.accessibilityIdentifier = @"pingButton";
-    
-    self.locationButton = [[IconButton alloc] init];
-    self.locationButton.hitAreaPadding = CGSizeZero;
-    self.locationButton.accessibilityIdentifier = @"locationButton";
-    
-    self.gifButton = [[IconButton alloc] init];
-    self.gifButton.hitAreaPadding = CGSizeZero;
-    self.gifButton.accessibilityIdentifier = @"gifButton";
-
-    self.mentionButton = [[IconButton alloc] init];
-    self.mentionButton.hitAreaPadding = CGSizeZero;
-    self.mentionButton.accessibilityIdentifier = @"mentionButton";
-
-    self.inputBar = [[InputBar alloc] initWithButtons:@[self.photoButton, self.mentionButton, self.sketchButton, self.gifButton, self.audioButton, self.pingButton, self.uploadFileButton, self.locationButton, self.videoButton]];
-    self.inputBar.translatesAutoresizingMaskIntoConstraints = NO;
-    self.inputBar.textView.delegate = self;
-    [self registerForTextFieldSelectionChange];
-    
-    [self.view addSubview:self.inputBar];
-    [self.inputBar autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeBottom];
-    [NSLayoutConstraint autoSetPriority:UILayoutPriorityDefaultLow forConstraints:^{
-        [self.inputBar autoPinEdgeToSuperviewEdge:ALEdgeBottom];
-    }];
-    self.inputBar.editingView.delegate = self;
-}
-
 - (void)createSingleTapGestureRecognizer
 {
     self.singleTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onSingleTap:)];
@@ -313,81 +250,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     self.singleTapGestureRecognizer.delegate = self;
     self.singleTapGestureRecognizer.cancelsTouchesInView = YES;
     [self.view addGestureRecognizer:self.singleTapGestureRecognizer];
-}
-
-- (void)createEphemeralIndicatorButton
-{
-    self.ephemeralIndicatorButton = [[IconButton alloc] initForAutoLayout];
-    self.ephemeralIndicatorButton.layer.borderWidth = 0.5;
-
-    self.ephemeralIndicatorButton.accessibilityIdentifier = @"ephemeralTimeIndicatorButton";
-    self.ephemeralIndicatorButton.adjustsTitleWhenHighlighted = YES;
-    self.ephemeralIndicatorButton.adjustsBorderColorWhenHighlighted = YES;
-
-    [self.inputBar.rightAccessoryStackView insertArrangedSubview:self.ephemeralIndicatorButton atIndex:0];
-    [self.ephemeralIndicatorButton autoSetDimensionsToSize:CGSizeMake(InputBar.rightIconSize, InputBar.rightIconSize)];
-
-    [self.ephemeralIndicatorButton setTitleColor:[UIColor lightGraphite]
-                                        forState:UIControlStateDisabled];
-    [self.ephemeralIndicatorButton setTitleColor:[UIColor accentColor]
-                                        forState:UIControlStateNormal];
-
-    [self updateEphemeralIndicatorButtonTitle:self.ephemeralIndicatorButton];
-}
-
-- (void)createEmojiButton
-{
-    const CGFloat senderDiameter = 28;
-
-    self.emojiButton = [[IconButton alloc] initWithStyle:IconButtonStyleCircular];
-    self.emojiButton.translatesAutoresizingMaskIntoConstraints = NO;
-    self.emojiButton.accessibilityIdentifier = @"emojiButton";
-
-    [self.inputBar.leftAccessoryView addSubview:self.emojiButton];
-    [self.emojiButton autoAlignAxisToSuperviewAxis:ALAxisVertical];
-    [self.emojiButton autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:14];
-    [self.emojiButton autoSetDimensionsToSize:CGSizeMake(senderDiameter, senderDiameter)];
-}
-
-- (void)createMarkdownButton
-{
-    const CGFloat senderDiameter = 28;
-
-    self.markdownButton = [[IconButton alloc] initWithStyle:IconButtonStyleCircular];
-    self.markdownButton.translatesAutoresizingMaskIntoConstraints = NO;
-    self.markdownButton.accessibilityIdentifier = @"markdownButton";
-    [self.inputBar.leftAccessoryView addSubview:self.markdownButton];
-    [self.markdownButton autoAlignAxisToSuperviewAxis:ALAxisVertical];
-    [self.markdownButton autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:14];
-    [self.markdownButton autoSetDimensionsToSize:CGSizeMake(senderDiameter, senderDiameter)];
-}
-
-- (void)createHourglassButton
-{
-    self.hourglassButton = [[IconButton alloc] initWithStyle:IconButtonStyleDefault];
-    self.hourglassButton.translatesAutoresizingMaskIntoConstraints = NO;
-
-    [self.hourglassButton setIcon:ZetaIconTypeHourglass withSize:ZetaIconSizeTiny forState:UIControlStateNormal];
-
-    self.hourglassButton.accessibilityIdentifier = @"ephemeralTimeSelectionButton";
-    [self.inputBar.rightAccessoryStackView addArrangedSubview:self.hourglassButton];
-
-    [self.hourglassButton autoSetDimensionsToSize:CGSizeMake(InputBar.rightIconSize, InputBar.rightIconSize)];
-}
-
-- (void)createTypingIndicatorView
-{
-    self.typingIndicatorView = [[TypingIndicatorView alloc] init];
-    self.typingIndicatorView.translatesAutoresizingMaskIntoConstraints = NO;
-    self.typingIndicatorView.accessibilityIdentifier = @"typingIndicator";
-    self.typingIndicatorView.typingUsers = self.typingUsers.allObjects;
-    [self.typingIndicatorView setHidden:YES animated:NO];
-    
-    [self.inputBar  addSubview:self.typingIndicatorView];
-    [self.typingIndicatorView  autoConstrainAttribute:(ALAttribute)ALAxisHorizontal toAttribute:ALAttributeTop ofView:self.inputBar];
-    [self.typingIndicatorView autoAlignAxisToSuperviewAxis:ALAxisVertical];
-    [self.typingIndicatorView autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:48 relation:NSLayoutRelationGreaterThanOrEqual];
-    [self.typingIndicatorView autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:48 relation:NSLayoutRelationGreaterThanOrEqual];
 }
 
 - (void)updateAvailabilityPlaceholder
@@ -444,47 +306,45 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 - (void)updateButtonIcons
 {
-    [self.audioButton setIcon:ZetaIconTypeMicrophone
-                     withSize:ZetaIconSizeTiny
+    [self.audioButton setIcon:WRStyleKitIconMicrophone
+                     withSize:16
                      forState:UIControlStateNormal];
     
-    [self.videoButton setIcon:ZetaIconTypeVideoMessage
-                     withSize:ZetaIconSizeTiny
+    [self.videoButton setIcon:WRStyleKitIconVideoMessage
+                     withSize:16
                      forState:UIControlStateNormal];
     
-    [self.photoButton setIcon:ZetaIconTypeCameraLens
-                     withSize:ZetaIconSizeTiny
+    [self.photoButton setIcon:WRStyleKitIconCameraLens
+                     withSize:16
                      forState:UIControlStateNormal];
     
-    [self.uploadFileButton setIcon:ZetaIconTypePaperclip
-                          withSize:ZetaIconSizeTiny
+    [self.uploadFileButton setIcon:WRStyleKitIconPaperclip
+                          withSize:16
                           forState:UIControlStateNormal];
     
-    [self.sketchButton setIcon:ZetaIconTypeBrush
-                      withSize:ZetaIconSizeTiny
+    [self.sketchButton setIcon:WRStyleKitIconBrush
+                      withSize:16
                       forState:UIControlStateNormal];
     
-    [self.pingButton setIcon:ZetaIconTypePing
-                    withSize:ZetaIconSizeTiny
+    [self.pingButton setIcon:WRStyleKitIconPing
+                    withSize:16
                     forState:UIControlStateNormal];
     
-    [self.locationButton setIcon:ZetaIconTypeLocationPin
-                        withSize:ZetaIconSizeTiny
+    [self.locationButton setIcon:WRStyleKitIconLocationPin
+                        withSize:16
                         forState:UIControlStateNormal];
     
-    [self.gifButton setIcon:ZetaIconTypeGif
-                   withSize:ZetaIconSizeTiny
+    [self.gifButton setIcon:WRStyleKitIconGif
+                   withSize:16
                    forState:UIControlStateNormal];
 
-    [self.mentionButton setIcon:ZetaIconTypeMention
-                   withSize:ZetaIconSizeTiny
+    [self.mentionButton setIcon:WRStyleKitIconMention
+                   withSize:16
                    forState:UIControlStateNormal];
 
-    [self.sendButton setIcon:ZetaIconTypeSend
-                    withSize:ZetaIconSizeTiny
+    [self.sendButton setIcon:WRStyleKitIconSend
+                    withSize:16
                     forState:UIControlStateNormal];
-    
-    [self updateEmojiButton:self.emojiButton];
 }
 
 - (void)updateAccessoryViews
@@ -509,17 +369,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 {
     _typingUsers = typingUsers;
     
-    [self updateTypingIndicatorVisibility];
-}
-
-- (void)updateTypingIndicatorVisibility
-{
-    if (self.typingUsers.count > 0) {
-        self.typingIndicatorView.typingUsers = self.typingUsers.allObjects;
-        [self.typingIndicatorView layoutIfNeeded];
-    }
-    
-    [self.typingIndicatorView setHidden:self.typingUsers.count == 0 animated: true];
+    [self updateTypingIndicatorVisibilityWithAnimated:true];
 }
 
 - (void)updateInputBarVisibility
@@ -617,22 +467,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
             self.singleTapGestureRecognizer.enabled = YES;
             [self selectInputControllerButton:self.photoButton];
             break;
-            
-        case ConversationInputBarViewControllerModeEmojiInput:
-            [self clearTextInputAssistentItemIfNeeded];
-            
-            if (self.inputController == nil || self.inputController != self.emojiKeyboardViewController) {
-                if (self.emojiKeyboardViewController == nil) {
-                    [self createEmojiKeyboardViewController];
-                }
-                
-                self.inputController = self.emojiKeyboardViewController;
-            }
 
-            self.singleTapGestureRecognizer.enabled = NO;
-            [self selectInputControllerButton:self.emojiButton];
-            break;
-            
         case ConversationInputBarViewControllerModeTimeoutConfguration:
             [self clearTextInputAssistentItemIfNeeded];
 
@@ -659,8 +494,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     for (IconButton *otherButton in @[self.photoButton, self.audioButton, self.hourglassButton]) {
         otherButton.selected = [button isEqual:otherButton];
     }
-
-    [self updateEmojiButton:self.emojiButton];
 }
 
 - (void)clearTextInputAssistentItemIfNeeded
@@ -711,9 +544,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     }
     if (! [self.audioRecordKeyboardViewController isEqual:self.inputController]) {
         self.audioRecordKeyboardViewController = nil;
-    }
-    if (! [self.emojiKeyboardViewController isEqual:self.inputController]) {
-        self.emojiKeyboardViewController = nil;
     }
     if (! [self.ephemeralKeyboardViewController isEqual:self.inputController]) {
         self.ephemeralKeyboardViewController = nil;

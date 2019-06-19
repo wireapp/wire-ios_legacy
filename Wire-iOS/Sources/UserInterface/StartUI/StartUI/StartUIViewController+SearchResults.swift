@@ -28,7 +28,7 @@ extension StartUIViewController: SearchResultsViewControllerDelegate {
         
         if !user.isConnected && !user.isTeamMember {
             self.presentProfileViewController(for: user, at: indexPath)
-        } else if let unboxed = BareUserToUser(user) {
+        } else if let unboxed = user.zmUser {
             delegate.startUI(self, didSelect: [unboxed])
         }
     }
@@ -37,7 +37,7 @@ extension StartUIViewController: SearchResultsViewControllerDelegate {
                                             didDoubleTapOnUser user: UserType,
                                             indexPath: IndexPath) {
     
-        guard let unboxedUser = BareUserToUser(user), unboxedUser.isConnected, !unboxedUser.isBlocked else {
+        guard let unboxedUser = user.zmUser, unboxedUser.isConnected, !unboxedUser.isBlocked else {
             return
         }
         

@@ -16,40 +16,64 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-static NSString * const _Nonnull ContactsViewControllerCellID = @"ContactsCell";
-static NSString * const _Nonnull ContactsViewControllerSectionHeaderID = @"ContactsSectionHeaderView";
-
 @class IconButton;
 @class SearchHeaderViewController;
 @class TransformLabel;
+@class ContactsEmptyResultView;
+
+@protocol ShareContactsViewControllerDelegate;
+
+NS_ASSUME_NONNULL_BEGIN
+
+static NSString * const ContactsViewControllerCellID = @"ContactsCell";
+static NSString * const ContactsViewControllerSectionHeaderID = @"ContactsSectionHeaderView";
 
 @interface ContactsViewController ()
 
 @property (nonatomic) BOOL searchResultsReceived;
 
-@property (nonatomic, nullable) TransformLabel *titleLabel;
-@property (nonatomic, nullable) UIView *bottomContainerView;
-@property (nonatomic, nullable) UIView *bottomContainerSeparatorView;
-@property (nonatomic, nullable) UILabel *noContactsLabel;
-@property (nonatomic, nullable) NSArray *actionButtonTitles;
-@property (nonatomic, nullable) IconButton *cancelButton;
-@property (nonatomic, nullable) SearchHeaderViewController *searchHeaderViewController;
-@property (nonatomic, nullable) UIView *topContainerView;
-@property (nonatomic, nullable) UIView *separatorView;
-@property (nonatomic, readwrite, nullable) UITableView *tableView;
+@property (nonatomic) TransformLabel *titleLabel;
+@property (nonatomic) UIView *bottomContainerView;
+@property (nonatomic) UIView *bottomContainerSeparatorView;
+@property (nonatomic) UILabel *noContactsLabel;
+@property (nonatomic) IconButton *cancelButton;
+@property (nonatomic) SearchHeaderViewController *searchHeaderViewController;
+@property (nonatomic) UIView *topContainerView;
+@property (nonatomic) UIView *separatorView;
+@property (nonatomic) UITableView *tableView;
 
-@property (nonatomic, nullable) NSLayoutConstraint *closeButtonHeightConstraint;
-@property (nonatomic, nullable) NSLayoutConstraint *titleLabelHeightConstraint;
-@property (nonatomic, nullable) NSLayoutConstraint *titleLabelTopConstraint;
-@property (nonatomic, nullable) NSLayoutConstraint *titleLabelBottomConstraint;
-@property (nonatomic, nullable) NSLayoutConstraint *closeButtonTopConstraint;
-@property (nonatomic, nullable) NSLayoutConstraint *closeButtonBottomConstraint;
-@property (nonatomic, nullable) NSLayoutConstraint *topContainerHeightConstraint;
-@property (nonatomic, nullable) NSLayoutConstraint *searchHeaderTopConstraint;
-@property (nonatomic, nullable) NSLayoutConstraint *searchHeaderWithNavigatorBarTopConstraint;
+@property (nonatomic) Button *inviteOthersButton;
+@property (nonatomic) ContactsEmptyResultView *emptyResultsView;
 
-@property (nonatomic, nullable) NSLayoutConstraint *bottomEdgeConstraint;
+@property (nonatomic) NSLayoutConstraint *closeButtonHeightConstraint;
+@property (nonatomic) NSLayoutConstraint *titleLabelHeightConstraint;
+@property (nonatomic) NSLayoutConstraint *titleLabelTopConstraint;
+@property (nonatomic) NSLayoutConstraint *titleLabelBottomConstraint;
+@property (nonatomic) NSLayoutConstraint *closeButtonTopConstraint;
+@property (nonatomic) NSLayoutConstraint *closeButtonBottomConstraint;
+@property (nonatomic) NSLayoutConstraint *topContainerHeightConstraint;
+@property (nonatomic) NSLayoutConstraint *searchHeaderTopConstraint;
+@property (nonatomic) NSLayoutConstraint *searchHeaderWithNavigatorBarTopConstraint;
+
+@property (nonatomic) NSLayoutConstraint *bottomEdgeConstraint;
+
+// Containers, ect.
+@property (nonatomic) NSLayoutConstraint *bottomContainerBottomConstraint;
+@property (nonatomic) NSLayoutConstraint *emptyResultsBottomConstraint;
+
+/// If sharingContactsRequired is true the user will be prompted to share his address book
+/// if he/she hasn't already done so. Override this property in subclasses to override
+/// the default behaviour which is false.
+@property (nonatomic, readonly) BOOL sharingContactsRequired;
 
 - (void)setEmptyResultsHidden:(BOOL)hidden animated:(BOOL)animated;
+- (NSArray *) actionButtonTitles;
+
+
+@end
+
+NS_ASSUME_NONNULL_END
+
+@interface ContactsViewController (ShareContactsDelegate)  <ShareContactsViewControllerDelegate>
 
 @end

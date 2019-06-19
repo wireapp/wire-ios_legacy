@@ -32,14 +32,14 @@ static ZMAccentColor overridenAccentColor = ZMAccentColorUndefined;
 
 + (void)setAccentColor:(ZMAccentColor)accentColor
 {
-    id<ZMEditableUser> editableSelf = [ZMUser editableSelfUser];
+    id<ZMEditableUser> editableSelf = [ZMUser selfUser];
     [[ZMUserSession sharedSession] enqueueChanges:^{
         editableSelf.accentColorValue = accentColor;
     }];
 }
 
 + (ZMAccentColor)accentOverrideColor {
-    id<ZMEditableUser> editableSelf = [ZMUser editableSelfUser];
+    id<ZMEditableUser> editableSelf = [ZMUser selfUser];
 
     return editableSelf.accentColorValue;
 }

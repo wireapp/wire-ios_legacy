@@ -25,7 +25,7 @@
 
 
 
-typedef NS_ENUM(NSInteger, ServerReachability) {
+typedef NS_CLOSED_ENUM(NSInteger, ServerReachability) {
     
     /// Backend can be reached.
     ServerReachabilityOK,

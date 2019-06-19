@@ -26,9 +26,26 @@ extension ContactsViewController {
         showKeyboardIfNeeded()
     }
 
+    open override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        presentShareContactsViewControllerIfNeeded()
+    }
+
+    private func presentShareContactsViewControllerIfNeeded() {
+        let shouldSkip: Bool = AutomationHelper.sharedHelper.skipFirstLoginAlerts || ZMUser.selfUser().hasTeam
+        if sharingContactsRequired &&
+            !AddressBookHelper.sharedHelper.isAddressBookAccessGranted &&
+            !shouldSkip &&
+            shouldShowShareContactsViewController {
+            presentShareContactsViewController()
+        }
+    }
+    
+
     open override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        searchHeaderViewController?.tokenField.resignFirstResponder()
+        searchHeaderViewController.tokenField.resignFirstResponder()
     }
 
     @objc func keyboardFrameWillChange(_ notification: Notification) {
@@ -39,9 +56,17 @@ extension ContactsViewController {
         let padding: CGFloat = 12
 
         UIView.animate(withKeyboardNotification: notification, in: self.view, animations: { (keyboardFrame) in
-            self.bottomEdgeConstraint?.constant = -padding - (diff > 0 ? 0 : UIScreen.safeArea.bottom)
+            self.bottomEdgeConstraint.constant = -padding - (diff > 0 ? 0 : UIScreen.safeArea.bottom)
             self.view.layoutIfNeeded()
         }, completion: nil)
     }
+
+    private func presentShareContactsViewController() {
+        let shareContactsViewController = ShareContactsViewController()
+        shareContactsViewController.delegate = self
+
+        addToSelf(shareContactsViewController)
+    }
+
 }
 

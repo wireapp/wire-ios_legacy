@@ -144,7 +144,7 @@ final class MessageThumbnailPreviewView: UIView, Themeable {
 
     private func editIcon() -> NSAttributedString {
         if message.updatedAt != nil {
-            return "  " + NSAttributedString(attachment: NSTextAttachment.textAttachment(for: .pencil, with: .from(scheme: .textForeground, variant: colorSchemeVariant), iconSize: 8)!)
+            return "  " + NSAttributedString(attachment: NSTextAttachment.textAttachment(for: .pencil, with: .from(scheme: .textForeground, variant: colorSchemeVariant), iconSize: 8))
         }
         else {
             return NSAttributedString()
@@ -160,7 +160,7 @@ final class MessageThumbnailPreviewView: UIView, Themeable {
         if message.isImage {
             let attributes: [NSAttributedString.Key: Any] = [.font: UIFont.smallSemiboldFont,
                                                              .foregroundColor: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)]
-            let imageIcon = NSTextAttachment.textAttachment(for: .photo, with: .from(scheme: .textForeground, variant: colorSchemeVariant), verticalCorrection: -1)!
+            let imageIcon = NSTextAttachment.textAttachment(for: .photo, with: .from(scheme: .textForeground, variant: colorSchemeVariant), verticalCorrection: -1)
             let initialString = NSAttributedString(attachment: imageIcon) + "  " + "conversation.input_bar.message_preview.image".localized.localizedUppercase
             contentTextView.attributedText = initialString && attributes
             
@@ -169,7 +169,7 @@ final class MessageThumbnailPreviewView: UIView, Themeable {
             }
         }
         else if message.isVideo, let fileMessageData = message.fileMessageData {
-            let imageIcon = NSTextAttachment.textAttachment(for: .videoCall, with: .from(scheme: .textForeground, variant: colorSchemeVariant), verticalCorrection: -1)!
+            let imageIcon = NSTextAttachment.textAttachment(for: .videoCall, with: .from(scheme: .textForeground, variant: colorSchemeVariant), verticalCorrection: -1)
             let initialString = NSAttributedString(attachment: imageIcon) + "  " + "conversation.input_bar.message_preview.video".localized.localizedUppercase
             contentTextView.attributedText = initialString && attributes
             
@@ -272,7 +272,7 @@ final class MessagePreviewView: UIView, Themeable {
     
     private func editIcon() -> NSAttributedString {
         if message.updatedAt != nil {
-            return "  " + NSAttributedString(attachment: NSTextAttachment.textAttachment(for: .pencil, with: .from(scheme: .textForeground, variant: colorSchemeVariant), iconSize: 8)!)
+            return "  " + NSAttributedString(attachment: NSTextAttachment.textAttachment(for: .pencil, with: .from(scheme: .textForeground, variant: colorSchemeVariant), iconSize: 8))
         }
         else {
             return NSAttributedString()
@@ -290,17 +290,17 @@ final class MessagePreviewView: UIView, Themeable {
         }
         else if let location = message.locationMessageData {
             
-            let imageIcon = NSTextAttachment.textAttachment(for: .locationPin, with: .from(scheme: .textForeground, variant: colorSchemeVariant), verticalCorrection: -1)!
+            let imageIcon = NSTextAttachment.textAttachment(for: .locationPin, with: .from(scheme: .textForeground, variant: colorSchemeVariant), verticalCorrection: -1)
             let initialString = NSAttributedString(attachment: imageIcon) + "  " + (location.name ?? "conversation.input_bar.message_preview.location".localized).localizedUppercase
             contentTextView.attributedText = initialString && attributes
         }
         else if message.isAudio {
-            let imageIcon = NSTextAttachment.textAttachment(for: .microphone, with: .from(scheme: .textForeground, variant: colorSchemeVariant), verticalCorrection: -1)!
+            let imageIcon = NSTextAttachment.textAttachment(for: .microphone, with: .from(scheme: .textForeground, variant: colorSchemeVariant), verticalCorrection: -1)
             let initialString = NSAttributedString(attachment: imageIcon) + "  " + "conversation.input_bar.message_preview.audio".localized.localizedUppercase
             contentTextView.attributedText = initialString && attributes
         }
         else if let fileData = message.fileMessageData {
-            let imageIcon = NSTextAttachment.textAttachment(for: .document, with: .from(scheme: .textForeground, variant: colorSchemeVariant), verticalCorrection: -1)!
+            let imageIcon = NSTextAttachment.textAttachment(for: .document, with: .from(scheme: .textForeground, variant: colorSchemeVariant), verticalCorrection: -1)
             let initialString = NSAttributedString(attachment: imageIcon) + "  " + (fileData.filename ?? "conversation.input_bar.message_preview.file".localized).localizedUppercase
             contentTextView.attributedText = initialString && attributes
         }

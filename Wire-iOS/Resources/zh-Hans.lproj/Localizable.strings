@@ -206,6 +206,8 @@
 "conversation.status.silenced" = "静音";
 "conversation.status.poor_connection" = "连接不良";
 "conversation.status.blocked" = "已拉黑";
+"conversation.status.incoming_call" = "%@ 正在呼叫…";
+"conversation.status.incoming_call.unknown" = "Someone is calling…";
 
 "conversation.status.message.text" = "%@";
 "conversation.status.message.link" = "分享链接";
@@ -855,7 +857,7 @@
 // Settings - top level
 "self.settings.create_team.title" = "创建团队";
 "self.settings.manage_team.title" = "管理团队";
-"self.settings.add_team_or_account.title" = "新团队或帐户";
+"self.settings.add_team_or_account.title" = "Add Account";
 "self.settings.add_account.title" = "添加帐户";
 
 "self.settings.add_account.error.title" = "已啓動三個帐户";
@@ -995,6 +997,7 @@
 "self.settings.popular_demand.title" = "推荐选项";
 "self.settings.popular_demand.send_button.title" = "发送按钮";
 "self.settings.popular_demand.send_button.footer" = "关闭系统键盘回车发送信息功能。";
+"self.settings.popular_demand.dark_mode.footer" = "Switch between dark and light theme.";
 
 // Open in
 "self.settings.external_apps.header" = "打开";
@@ -1003,7 +1006,7 @@
 "self.settings.link_options.maps.title" = "位置";
 "self.settings.link_options.browser.title" = "浏览器";
 
-"open_link.twitter.option.default" = "Safari / Twitter";
+"open_link.twitter.option.default" = "Browser / Twitter";
 "open_link.twitter.option.tweetbot" = "Tweetbot";
 "open_link.twitter.option.twitterrific" = "Twitterrific";
 
@@ -1135,6 +1138,10 @@
 "landing.login.hints" = "已有帐户？";
 "landing.login.button.title" = "登录";
 
+"landing.custom_backend.title" = "Connected to \"%@\"";
+"landing.custom_backend.more_info.button.title" = "Show more";
+"landing.custom_backend.more_info.alert.title" = " You are connected to a third-party server: %@";
+
 // Create team
 
 "team.name.headline" = "为你的团队命名";
@@ -1240,7 +1247,7 @@
 "registration.alert.account_exists.title" = "帐户已存在";
 "registration.alert.account_exists.message_phone" = "这个用于注册的电话号码已经关联了一个帐户。\n\n使用另一个电话号码，或者如果您拥有此帐户，请尝试登录。";
 "registration.alert.account_exists.message_email" = "这个用于注册的电子邮箱地址已经关联了一个帐户。\n\n使用另一个电子邮箱地址，或者如果您拥有此帐户，请尝试登录。";
-"registration.alert.change_email_action" = "更改电子邮箱";
+"registration.alert.change_email_action" = "Register with Another Email";
 "registration.alert.change_phone_action" = "用另一个号码注册";
 "registration.alert.change_signin_action" = "登录";
 
@@ -1512,6 +1519,8 @@
 
 "availability.message.cancel" = "取消";
 "availability.message.set_status" = "设置状态";
+"availability.accessibility_label.change_status" = "Change Status";
+"availability.accessibility_label.status" = "Status";
 
 "availability.none" = "无";
 "availability.available" = "在线";
@@ -1520,6 +1529,17 @@
 "availability.available.placeholder" = "%@ 在线";
 "availability.away.placeholder" = "%@ 离开";
 "availability.busy.placeholder" = "%@ 正忙";
+
+"availability.reminder.away.title" = "You are set to Away";
+"availability.reminder.away.message" = "You will appear as Away to other people. You will not receive notifications about any incoming calls or messages.";
+"availability.reminder.busy.title" = "You are set to Busy";
+"availability.reminder.busy.message" = "You will appear as Busy to other people. You will only receive notifications for mentions, replies, and calls in conversations that are not muted.";
+"availability.reminder.available.title" = "You are set to Available";
+"availability.reminder.available.message" = "You will appear as Available to other people. You will receive notifications for incoming calls and for messages according to the Notifications setting in each conversation.";
+"availability.reminder.none.title" = "No status set";
+"availability.reminder.none.message" = "You will receive notifications for incoming calls and for messages according to the Notifications setting in each conversation.";
+"availability.reminder.action.dont_remind_me" = "Do not display this information again";
+"availability.reminder.action.ok" = "好";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Call Quality Survey
@@ -1539,6 +1559,16 @@
 "url_action.confirm" = "确认";
 "url_action.title" = "Confirm URL action";
 "url_action.connect_to_bot.message" = "Would you like to connect to the bot?";
+
+"url_action.switch_backend.title" = "Connect to server";
+"url_action.switch_backend.message" = "This configuration will connect the app to a third-party server:\n%@";
+
+"url_action.switch_backend.error.logged_in.title" = "Can’t switch servers";
+"url_action.switch_backend.error.logged_in" = "You are already logged in. To switch to this server, log out of all accounts and try again.";
+
+"url_action.switch_backend.error.invalid_backend.title" = "The server is not responding";
+"url_action.switch_backend.error.invalid_backend" = "Please check your internet connection, verify the link and try again.";
+
 
 // Deep Link
 "url_action.invalid_user.title" = "Wire can't find this person.";

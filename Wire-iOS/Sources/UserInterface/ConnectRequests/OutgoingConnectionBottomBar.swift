@@ -51,7 +51,7 @@ import Cartography
 
     private func setupCancelButton() {
         cancelButton.accessibilityLabel = "cancel connection"
-        cancelButton.setIcon(.undo, with: .tiny, for: .normal)
+        cancelButton.setIcon(.undo, size: .tiny, for: .normal)
         cancelButton.setTitle("profile.cancel_connection_button_title".localized(uppercased: true), for: .normal)
         cancelButton.titleLabel?.font = FontSpec(.small, .light).font!
         cancelButton.setTitleColor(UIColor.from(scheme: .textForeground), for: .normal)
@@ -61,7 +61,7 @@ import Cartography
 
     private func setupArchiveButton() {
         archiveButton.accessibilityLabel = "archive connection"
-        archiveButton.setIcon(.archive, with: .tiny, for: .normal)
+        archiveButton.setIcon(.archive, size: .tiny, for: .normal)
         archiveButton.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
     }
 

@@ -206,6 +206,8 @@
 "conversation.status.silenced" = "Išjungtas garsas";
 "conversation.status.poor_connection" = "Prastas ryšys";
 "conversation.status.blocked" = "Užblokuotas(-a)";
+"conversation.status.incoming_call" = "%@ skambina…";
+"conversation.status.incoming_call.unknown" = "Someone is calling…";
 
 "conversation.status.message.text" = "%@";
 "conversation.status.message.link" = "Pasidalino nuoroda";
@@ -855,7 +857,7 @@
 // Settings - top level
 "self.settings.create_team.title" = "Sukurti komandą";
 "self.settings.manage_team.title" = "Valdyti komandą";
-"self.settings.add_team_or_account.title" = "Nauja komanda ar paskyra";
+"self.settings.add_team_or_account.title" = "Add Account";
 "self.settings.add_account.title" = "Pridėti paskyrą";
 
 "self.settings.add_account.error.title" = "Aktyvios trys paskyros";
@@ -995,6 +997,7 @@
 "self.settings.popular_demand.title" = "Pagal populiarius pageidavimus";
 "self.settings.popular_demand.send_button.title" = "Siuntimo mygtukas";
 "self.settings.popular_demand.send_button.footer" = "Išjungti siuntimą „Enter“ klavišu.";
+"self.settings.popular_demand.dark_mode.footer" = "Switch between dark and light theme.";
 
 // Open in
 "self.settings.external_apps.header" = "Atverti naudojant";
@@ -1003,7 +1006,7 @@
 "self.settings.link_options.maps.title" = "Vieta";
 "self.settings.link_options.browser.title" = "Naršyklė";
 
-"open_link.twitter.option.default" = "„Safari“ / „Twitter“";
+"open_link.twitter.option.default" = "Browser / Twitter";
 "open_link.twitter.option.tweetbot" = "„Tweetbot“";
 "open_link.twitter.option.twitterrific" = "„Twitterrific“";
 
@@ -1135,6 +1138,10 @@
 "landing.login.hints" = "Jau turite paskyrą?";
 "landing.login.button.title" = "Prisijungti";
 
+"landing.custom_backend.title" = "Connected to \"%@\"";
+"landing.custom_backend.more_info.button.title" = "Show more";
+"landing.custom_backend.more_info.alert.title" = " You are connected to a third-party server: %@";
+
 // Create team
 
 "team.name.headline" = "Pavadinkite komandą";
@@ -1240,7 +1247,7 @@
 "registration.alert.account_exists.title" = "Paskyra jau yra";
 "registration.alert.account_exists.message_phone" = "Šis telefono numeris jau yra susietas su paskyra.\n\nNaudokite kitą telefono numerį arba bandykite prisijungti jei tai jūsų paskyra.";
 "registration.alert.account_exists.message_email" = "Šis el. pašto adresas jau yra susietas su paskyra.\n\nNaudokite kitą el. pašto adresą arba bandykite prisijungti jei tai jūsų paskyra.";
-"registration.alert.change_email_action" = "Keisti el. paštą";
+"registration.alert.change_email_action" = "Register with Another Email";
 "registration.alert.change_phone_action" = "Registruokitės su kitu numeriu";
 "registration.alert.change_signin_action" = "Prisijungti";
 
@@ -1512,6 +1519,8 @@
 
 "availability.message.cancel" = "Atsisakyti";
 "availability.message.set_status" = "Nurodykite būseną";
+"availability.accessibility_label.change_status" = "Change Status";
+"availability.accessibility_label.status" = "Status";
 
 "availability.none" = "Jokių";
 "availability.available" = "Prisijungęs";
@@ -1520,6 +1529,17 @@
 "availability.available.placeholder" = "%@ yra prisijungęs";
 "availability.away.placeholder" = "%@ yra pasišalinęs";
 "availability.busy.placeholder" = "%@ yra užsiėmęs";
+
+"availability.reminder.away.title" = "You are set to Away";
+"availability.reminder.away.message" = "You will appear as Away to other people. You will not receive notifications about any incoming calls or messages.";
+"availability.reminder.busy.title" = "You are set to Busy";
+"availability.reminder.busy.message" = "You will appear as Busy to other people. You will only receive notifications for mentions, replies, and calls in conversations that are not muted.";
+"availability.reminder.available.title" = "You are set to Available";
+"availability.reminder.available.message" = "You will appear as Available to other people. You will receive notifications for incoming calls and for messages according to the Notifications setting in each conversation.";
+"availability.reminder.none.title" = "No status set";
+"availability.reminder.none.message" = "You will receive notifications for incoming calls and for messages according to the Notifications setting in each conversation.";
+"availability.reminder.action.dont_remind_me" = "Do not display this information again";
+"availability.reminder.action.ok" = "GERAI";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Call Quality Survey
@@ -1539,6 +1559,16 @@
 "url_action.confirm" = "Patvirtinti";
 "url_action.title" = "Patvirtinti URL adresą";
 "url_action.connect_to_bot.message" = "Ar norite prisijungti prie roboto?";
+
+"url_action.switch_backend.title" = "Connect to server";
+"url_action.switch_backend.message" = "This configuration will connect the app to a third-party server:\n%@";
+
+"url_action.switch_backend.error.logged_in.title" = "Can’t switch servers";
+"url_action.switch_backend.error.logged_in" = "You are already logged in. To switch to this server, log out of all accounts and try again.";
+
+"url_action.switch_backend.error.invalid_backend.title" = "The server is not responding";
+"url_action.switch_backend.error.invalid_backend" = "Please check your internet connection, verify the link and try again.";
+
 
 // Deep Link
 "url_action.invalid_user.title" = "Wire can't find this person.";

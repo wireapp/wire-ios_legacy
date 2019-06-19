@@ -22,6 +22,7 @@
 #import "MockLoader.h"
 
 @class MockConversation;
+@class MockLegalHoldDataSource;
 
 @interface MockUser : NSObject<UserType, Mockable>
 + (NSArray <ZMUser *> *)mockUsers;
@@ -53,17 +54,21 @@
 @property (nonatomic, readwrite) BOOL isTeamMember;
 @property (nonatomic, readwrite) TeamRole teamRole;
 @property (nonatomic, assign) BOOL isGuestInConversation;
+@property (nonatomic, copy) NSString *displayName;
 @property (nonatomic, copy) NSString *teamName;
 @property (nonatomic, readwrite) BOOL canManageTeam;
 @property (nonatomic, readwrite) BOOL hasTeam;
 @property (nonatomic, readwrite) NSString *expirationDisplayString;
 @property (nonatomic, readwrite) BOOL isWirelessUser;
+@property (nonatomic, readwrite) BOOL isUnderLegalHold;
 @property (nonatomic, readwrite) BOOL usesCompanyLogin;
 @property (nonatomic, readwrite) BOOL readReceiptsEnabled;
 @property (nonatomic, readwrite) BOOL isAccountDeleted;
 @property (nonatomic, readwrite, copy) NSData *previewImageData;
 @property (nonatomic, readwrite, copy) NSData *completeImageData;
 @property (nonatomic) ZMUser * user;
+
+@property (nonatomic, readonly) MockLegalHoldDataSource *legalHoldDataSource;
 
 @property (nonatomic) NSSet <id<UserClientType>> * clients;
 @property (nonatomic) ZMConnection *connection;
@@ -77,6 +82,9 @@
 
 @property (nonatomic, readwrite) BOOL managedByWire;
 @property (nonatomic, readwrite, copy) NSArray<UserRichProfileField *> *richProfile;
+
+@property (nonatomic) UIImage * profileImage;
+
 
 - (NSString *)displayNameInConversation:(MockConversation *)conversation;
 - (void)fetchUserClients;

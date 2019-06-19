@@ -76,15 +76,15 @@
 
 - (void)updatePlayPauseButton
 {
-    ZetaIconType playPauseIcon = ZetaIconTypeMediaBarPlay;
+    WRStyleKitIcon playPauseIcon = WRStyleKitIconPlay;
     NSString *accessibilityIdentifier = @"mediaBarPlayButton";
     
     if (self.mediaPlaybackManager.activeMediaPlayer.state == MediaPlayerStatePlaying) {
-        playPauseIcon = ZetaIconTypeMediaBarPause;
+        playPauseIcon = WRStyleKitIconPause;
         accessibilityIdentifier = @"mediaBarPauseButton";
     }
     
-    [self.mediaBarView.playPauseButton setIcon:playPauseIcon withSize:ZetaIconSizeTiny forState:UIControlStateNormal];
+    [self.mediaBarView.playPauseButton setIcon:playPauseIcon withSize:16 forState:UIControlStateNormal];
     self.mediaBarView.playPauseButton.accessibilityIdentifier = accessibilityIdentifier;
 }
 

@@ -45,7 +45,11 @@ extension ZMConversationMessage {
     }
 
     func formattedDate(_ date: Date) -> String {
-        return Message.formattedDate(date)
+        if Calendar.current.isDateInToday(date) {
+            return Message.shortTimeFormatter.string(from: date)
+        } else {
+            return Message.shortDateTimeFormatter.string(from: date)
+        }
     }
 
     func formattedAccessibleMessageDetails() -> String? {
@@ -69,21 +73,11 @@ extension ZMConversationMessage {
 
 }
 
-extension Message {
-    static func formattedDate(_ date: Date) -> String {
-        if Calendar.current.isDateInToday(date) {
-            return Message.shortTimeFormatter.string(from: date)
-        } else {
-            return Message.shortDateTimeFormatter.string(from: date)
-        }
-    }
-
-}
-
 extension ZMSystemMessageData {
 
     func callDurationString() -> String? {
         guard systemMessageType == .performedCall, duration > 0 else { return nil }
         return Message.callDurationFormatter.string(from: duration)
     }
+
 }

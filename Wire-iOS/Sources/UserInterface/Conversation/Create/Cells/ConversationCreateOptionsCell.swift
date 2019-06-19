@@ -38,13 +38,13 @@ class ConversationCreateOptionsCell: RightIconDetailsCell {
         backgroundColor = .from(scheme: .sectionBackgroundHighlighted, variant: colorSchemeVariant)
         
         let color = UIColor.from(scheme: .sectionText, variant: colorSchemeVariant)
-        let image = UIImage(for: .downArrow, iconSize: .tiny, color: color)
+        let image = StyleKitIcon.downArrow.makeImage(size: .tiny, color: color)
         
         // flip upside down if necessary
-        if let cgImage = image?.cgImage, let scale = image?.scale, expanded {
-            accessory = UIImage(cgImage: cgImage, scale: scale, orientation: .downMirrored)
+        if let cgImage = image.cgImage, expanded {
+            accessory = UIImage(cgImage: cgImage, scale: image.scale, orientation: .downMirrored)
         } else {
-            accessory = UIImage(for: .downArrow, iconSize: .tiny, color: color)
+            accessory = StyleKitIcon.downArrow.makeImage(size: .tiny, color: color)
         }
     }
 }

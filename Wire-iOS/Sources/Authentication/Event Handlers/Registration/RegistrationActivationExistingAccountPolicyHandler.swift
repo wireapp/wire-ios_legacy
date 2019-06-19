@@ -29,11 +29,6 @@ class RegistrationActivationExistingAccountPolicyHandler: AuthenticationEventHan
     func handleEvent(currentStep: AuthenticationFlowStep, context: NSError) -> [AuthenticationCoordinatorAction]? {
         let error = context
 
-        // Only handle errors during activation requests
-        guard case let .sendActivationCode(_, user, _) = currentStep else {
-            return nil
-        }
-
         // Only handle phoneNumberIsAlreadyRegistered and emailIsAlreadyRegistered errors
         switch error.userSessionErrorCode {
         case .phoneNumberIsAlreadyRegistered, .emailIsAlreadyRegistered:
@@ -42,10 +37,22 @@ class RegistrationActivationExistingAccountPolicyHandler: AuthenticationEventHan
             return nil
         }
 
+        // Only handle errors during activation requests
+        let credentials: UnverifiedCredentials
+
+        switch currentStep {
+        case let .sendActivationCode(userCredentials, _, _):
+            credentials = userCredentials
+        case let .teamCreation(TeamCreationState.sendEmailCode(_, email, _)):
+            credentials = .email(email)
+        default:
+            return nil
+        }
+
         // Create the actions
         var actions: [AuthenticationCoordinatorAction] = [.hideLoadingView]
 
-        switch user.credentials! {
+        switch credentials {
         case .email(let email):
             let prefilledCredentials = AuthenticationPrefilledCredentials(
                 primaryCredentialsType: .email, credentials:

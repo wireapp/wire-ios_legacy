@@ -52,7 +52,7 @@ final class SearchUserViewConroller: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let cancelItem = UIBarButtonItem(icon: .cancel, target: self, action: #selector(cancelButtonTapped))
+        let cancelItem = UIBarButtonItem(icon: .cross, target: self, action: #selector(cancelButtonTapped))
         cancelItem.accessibilityIdentifier = "CancelButton"
         cancelItem.accessibilityLabel = "general.cancel".localized
         navigationItem.rightBarButtonItem = cancelItem
@@ -75,7 +75,7 @@ final class SearchUserViewConroller: UIViewController {
               isCompleted
             else { return }
 
-        let profileUser: GenericUser?
+        let profileUser: UserType?
         if let searchUser = searchResult.directory.first {
             profileUser = searchUser
         } else if let memberUser = searchResult.teamMembers.first?.user {

@@ -260,16 +260,16 @@ class MessageToolboxDataSource {
                 .foregroundColor: statusTextColor
             ]
 
-            let imageIcon = NSTextAttachment.textAttachment(for: .eye, with: statusTextColor, verticalCorrection: -1)!
+            let imageIcon = NSTextAttachment.textAttachment(for: .eye, with: statusTextColor, verticalCorrection: -1)
             return NSAttributedString(attachment: imageIcon) + " \(message.readReceipts.count)" && attributes
 
         case .oneOnOne:
-            guard let timeString = message.readReceipts.first?.serverTimestamp else {
+            guard let timestamp = message.readReceipts.first?.serverTimestamp else {
                 return nil
             }
 
-            let imageIcon = NSTextAttachment.textAttachment(for: .eye, with: statusTextColor, verticalCorrection: -1)!
-            return NSAttributedString(attachment: imageIcon) + " " + Message.formattedDate(timeString) && attributes
+            let imageIcon = NSTextAttachment.textAttachment(for: .eye, with: statusTextColor, verticalCorrection: -1)
+            return NSAttributedString(attachment: imageIcon) + " " + message.formattedDate(timestamp) && attributes
 
         default:
             return nil

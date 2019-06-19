@@ -21,6 +21,10 @@ import XCTest
 
 final class ChangePhoneViewControllerSnapshotTests: CoreDataSnapshotTestCase {
 
+    override func setUp() {
+        super.setUp()
+    }
+
     func testThatItShowsCurrentUserPhoneNumber() {
         let sut = ChangePhoneViewController()
         sut.view.backgroundColor = .black

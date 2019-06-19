@@ -156,7 +156,7 @@ final class ServiceDetailViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(icon: .X,
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(icon: .cross,
                                                                  target: self,
                                                                  action: #selector(ServiceDetailViewController.dismissButtonTapped(_:)))
         self.navigationItem.rightBarButtonItem?.accessibilityIdentifier = "close"

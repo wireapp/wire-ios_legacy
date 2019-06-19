@@ -67,7 +67,7 @@ extension CellConfiguration {
     static func revokeLink(action: @escaping () -> Void) -> CellConfiguration {
         return .iconAction(
             title: "guest_room.actions.revoke_link".localized,
-            icon: .X,
+            icon: .cross,
             color: nil,
             action: action
         )

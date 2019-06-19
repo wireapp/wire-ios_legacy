@@ -22,13 +22,6 @@
 
 @objc class BadgeUserImageView: UserImageView {
 
-    /// The size of the badge icon.
-    @objc var badgeIconSize: ZetaIconSize = .tiny {
-        didSet {
-            updateIconView(with: badgeIcon, animated: false)
-        }
-    }
-
     /// The color of the badge.
     @objc var badgeColor: UIColor = .white {
         didSet {
@@ -36,8 +29,15 @@
         }
     }
 
+    /// The size of the badge icon.
+    var badgeIconSize: StyleKitIcon.Size = .tiny {
+        didSet {
+            updateIconView(with: badgeIcon, animated: false)
+        }
+    }
+
     /// The badge icon.
-    @objc var badgeIcon: ZetaIconType = .none {
+    var badgeIcon: StyleKitIcon? = nil {
         didSet {
             updateIconView(with: badgeIcon, animated: false)
         }
@@ -108,7 +108,7 @@
 
         if user.isBlocked {
             badgeIcon = .block
-        } else if user.isPendingApproval() {
+        } else if user.isPendingApprovalBySelfUser || user.isPendingApprovalByOtherUser {
             badgeIcon = .clock
         } else {
             badgeIcon = .none
@@ -123,18 +123,18 @@
      * - parameter animated: Whether to animate the change.
      */
 
-    func updateIconView(with icon: ZetaIconType, animated: Bool) {
+    func updateIconView(with icon: StyleKitIcon?, animated: Bool) {
         badgeImageView.image = nil
 
-        if badgeIcon != .none {
+        if let icon = icon {
             let hideBadge = {
                 self.badgeImageView.transform = CGAffineTransform(scaleX: 1.8, y: 1.8)
                 self.badgeImageView.alpha = 0
             }
 
             let changeImage = {
-                self.badgeImageView.image = UIImage(for: self.badgeIcon,
-                                                    iconSize: self.badgeIconSize,
+                self.badgeImageView.setIcon(icon,
+                                                    size: self.badgeIconSize,
                                                     color: self.badgeColor)
             }
 
@@ -160,6 +160,29 @@
         } else {
             badgeShadow.backgroundColor = .clear
         }
+    }
+
+}
+
+// MARK: - Compatibility
+
+extension BadgeUserImageView {
+
+    @objc var wr_badgeIconSize: CGFloat {
+        get {
+            return badgeIconSize.rawValue
+        }
+        set {
+            badgeIconSize = .custom(newValue)
+        }
+    }
+
+    @objc func setBadgeIcon(_ newValue: StyleKitIcon) {
+        badgeIcon = newValue
+    }
+
+    @objc func removeBadgeIcon() {
+        badgeIcon = nil
     }
 
 }

@@ -36,7 +36,7 @@ extension AuthenticationNavigationBar {
 
     static func makeBackButton() -> IconButton {
         let button = IconButton(style: .default)
-        button.setIcon(UIApplication.isLeftToRightLayout ? .backArrow : .forwardArrow, with: .tiny, for: .normal)
+        button.setIcon(UIApplication.isLeftToRightLayout ? .backArrow : .forwardArrow, size: .tiny, for: .normal)
         button.setIconColor(.graphite, for: .normal)
         button.setIconColor(.graphiteAlpha40, for: .highlighted)
         button.contentHorizontalAlignment = UIApplication.isLeftToRightLayout ? .left : .right

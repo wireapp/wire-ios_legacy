@@ -206,6 +206,8 @@
 "conversation.status.silenced" = "Lautlos";
 "conversation.status.poor_connection" = "Schlechte Verbindung";
 "conversation.status.blocked" = "Blockiert";
+"conversation.status.incoming_call" = "%@ ruft an…";
+"conversation.status.incoming_call.unknown" = "Jemand ruft an…";
 
 "conversation.status.message.text" = "%@";
 "conversation.status.message.link" = "Einen Link geteilt";
@@ -855,7 +857,7 @@
 // Settings - top level
 "self.settings.create_team.title" = "Team erstellen";
 "self.settings.manage_team.title" = "Team verwalten";
-"self.settings.add_team_or_account.title" = "Neues Team oder Konto";
+"self.settings.add_team_or_account.title" = "Benutzerkonto hinzufügen";
 "self.settings.add_account.title" = "Ein Konto hinzufügen";
 
 "self.settings.add_account.error.title" = "Drei Benutzerkonten sind aktiv";
@@ -995,6 +997,7 @@
 "self.settings.popular_demand.title" = "Auf allgemeinen Wunsch";
 "self.settings.popular_demand.send_button.title" = "Senden Taste";
 "self.settings.popular_demand.send_button.footer" = "Deaktivieren, um Nachrichten mit der Enter-Taste zu senden.";
+"self.settings.popular_demand.dark_mode.footer" = "Zwischen dunklem und hellem Hintergrund wechseln.";
 
 // Open in
 "self.settings.external_apps.header" = "Öffnen mit";
@@ -1135,6 +1138,10 @@
 "landing.login.hints" = "Hast du bereits ein Benutzerkonto?";
 "landing.login.button.title" = "Login";
 
+"landing.custom_backend.title" = "Verbunden mit \"%@\"";
+"landing.custom_backend.more_info.button.title" = "Mehr anzeigen";
+"landing.custom_backend.more_info.alert.title" = " Mit dem Server eines Drittanbieters verbunden: %@";
+
 // Create team
 
 "team.name.headline" = "Benenne dein Team";
@@ -1240,7 +1247,7 @@
 "registration.alert.account_exists.title" = "Konto Vorhanden";
 "registration.alert.account_exists.message_phone" = "Die für die Registrierung verwendete Telefonnummer ist bereits mit einem Konto verknüpft.\n\nBitte andere Telefonnummer nutzen oder versuchen, sich mit dieser Telefonnummer einzuloggen.";
 "registration.alert.account_exists.message_email" = "Die für die Registrierung verwendete E-Mail-Adresse ist bereits mit einem Konto verknüpft.\n\nBitte andere E-Mail-Adresse nutzen oder versuchen, sich mit dieser E-Mail-Adresse einzuloggen.";
-"registration.alert.change_email_action" = "E-Mail-Adresse ändern";
+"registration.alert.change_email_action" = "Mit einer andern E-Mail registrieren";
 "registration.alert.change_phone_action" = "Bitte mit anderer Nummer registrieren";
 "registration.alert.change_signin_action" = "Einloggen";
 
@@ -1512,6 +1519,8 @@
 
 "availability.message.cancel" = "Abbrechen";
 "availability.message.set_status" = "Wähle einen Status";
+"availability.accessibility_label.change_status" = "Status Ändern";
+"availability.accessibility_label.status" = "Status";
 
 "availability.none" = "Kein Status";
 "availability.available" = "Verfügbar";
@@ -1520,6 +1529,17 @@
 "availability.available.placeholder" = "%@ ist verfügbar";
 "availability.away.placeholder" = "%@ ist abwesend";
 "availability.busy.placeholder" = "%@ ist beschäftigt";
+
+"availability.reminder.away.title" = "Status: Abwesend";
+"availability.reminder.away.message" = "Andere sehen den Status als Abwesend. Benachrichtigungen über eingehende Anrufe oder Nachrichten werden nicht angezeigt.";
+"availability.reminder.busy.title" = "Status: Beschäftigt";
+"availability.reminder.busy.message" = "Andere sehen den Status als Beschäftigt. Benachrichtigungen über Erwähnungen, Antworten und eingehende Anrufe werden in Unterhaltungen angezeigt, die nicht stummgeschaltet sind.";
+"availability.reminder.available.title" = "Status: Verfügbar";
+"availability.reminder.available.message" = "Andere sehen den Status als Verfügbar. Benachrichtigungen über eingehende Anrufe und Nachrichten werden anhand der Einstellungen in jeder Unterhaltung angezeigt.";
+"availability.reminder.none.title" = "Kein Status gesetzt";
+"availability.reminder.none.message" = "Benachrichtigungen über eingehende Anrufe und Nachrichten werden anhand der Einstellungen in jeder Unterhaltung angezeigt.";
+"availability.reminder.action.dont_remind_me" = "Diesen Hinweis nicht nochmal zeigen";
+"availability.reminder.action.ok" = "OK";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Call Quality Survey
@@ -1539,6 +1559,16 @@
 "url_action.confirm" = "Bestätigen";
 "url_action.title" = "URL-Aktion bestätigen";
 "url_action.connect_to_bot.message" = "Möchten Sie sich mit dem Bot verbinden?";
+
+"url_action.switch_backend.title" = "Mit Server verbinden";
+"url_action.switch_backend.message" = "Diese Konfiguration verbindet die App mit dem Server eines Drittanbieters:\n%@";
+
+"url_action.switch_backend.error.logged_in.title" = "Serverwechsel nicht möglich";
+"url_action.switch_backend.error.logged_in" = "Bereits eingeloggt: Um auf diesen Server zu wechseln, bitte aus allen Konten ausloggen und erneut versuchen.";
+
+"url_action.switch_backend.error.invalid_backend.title" = "Der Server antwortet nicht";
+"url_action.switch_backend.error.invalid_backend" = "Bitte Internetverbindung überprüfen, den Link bestätigen und nochmal versuchen.";
+
 
 // Deep Link
 "url_action.invalid_user.title" = "Wire kann diese Person nicht finden.";
@@ -1579,4 +1609,4 @@
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Password Rules
 "registration.password.rules.no_requirements" = "Bitte %@ verwenden.";
-"registration.password.rules.with_requirements" = "Bitte %@ verwenden, mit %@.";
+"registration.password.rules.with_requirements" = "Bitte %@ verwenden, %@.";

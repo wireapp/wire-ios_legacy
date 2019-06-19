@@ -17,12 +17,13 @@
 //
 
 import XCTest
+import SnapshotTesting
 @testable import Wire
 
-final class VersionInfoViewControllerSnapshotTests: ZMSnapshotTestCase {
+final class VersionInfoViewControllerSnapshotTests: XCTestCase {
     
     var sut: VersionInfoViewController!
-    
+
     override func setUp() {
         super.setUp()
         let path = Bundle(for: type(of: self)).path(forResource: "DummyComponentsVersions", ofType: "plist")!
@@ -36,6 +37,6 @@ final class VersionInfoViewControllerSnapshotTests: ZMSnapshotTestCase {
     }
 
     func testForInitState(){
-        verify(view: sut.view)
+        verify(matching: sut)
     }
 }

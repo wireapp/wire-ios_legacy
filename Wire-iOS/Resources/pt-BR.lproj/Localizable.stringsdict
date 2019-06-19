@@ -273,7 +273,7 @@
     <key>registration.password.rules.min_length</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
-      <string>at least %#@character_count@</string>
+      <string>pelo menos %#@character_count@</string>
       <key>character_count</key>
       <dict>
         <key>NSStringFormatSpecTypeKey</key>
@@ -281,9 +281,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>one character</string>
+        <string>um caractere</string>
         <key>other</key>
-        <string>%d characters</string>
+        <string>%d caracteres</string>
       </dict>
     </dict>
     <key>registration.password.rules.lowercase</key>
@@ -297,9 +297,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>one lowercase letter</string>
+        <string>uma letra minúscula</string>
         <key>other</key>
-        <string>%d lowercase letters</string>
+        <string>%d letras minúsculas</string>
       </dict>
     </dict>
     <key>registration.password.rules.uppercase</key>
@@ -313,9 +313,9 @@
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>one</key>
-        <string>one capital letter</string>
+        <string>uma letra maiúscula</string>
         <key>other</key>
-        <string>%d capital letters</string>
+        <string>%d letras maiúsculas</string>
       </dict>
     </dict>
     <key>registration.password.rules.number</key>
@@ -329,9 +329,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>a number</string>
+        <string>um número</string>
         <key>other</key>
-        <string>%d numbers</string>
+        <string>%d números</string>
       </dict>
     </dict>
     <key>registration.password.rules.special</key>
@@ -345,9 +345,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>a special character</string>
+        <string>um caractere especial</string>
         <key>other</key>
-        <string>%d special characters</string>
+        <string>%d caracteres especiais</string>
       </dict>
     </dict>
   </dict>

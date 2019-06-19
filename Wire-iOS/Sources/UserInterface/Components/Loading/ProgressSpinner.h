@@ -24,7 +24,7 @@
 @interface ProgressSpinner : UIView
 
 @property (nonatomic, strong) UIColor *color;
-@property (nonatomic, assign) ZetaIconSize iconSize;
+@property (nonatomic, assign) CGFloat iconSize;
 @property (nonatomic, assign) BOOL hidesWhenStopped;
 @property (nonatomic, assign, getter=isAnimating) BOOL animating;
 

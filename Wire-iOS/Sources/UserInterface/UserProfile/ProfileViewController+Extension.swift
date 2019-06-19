@@ -39,7 +39,7 @@ extension ProfileViewController {
         return wr_supportedInterfaceOrientations
     }
 
-    convenience init(user: GenericUser, viewer: GenericUser, conversation: ZMConversation?, viewControllerDismisser: ViewControllerDismisser) {
+    convenience init(user: UserType, viewer: UserType, conversation: ZMConversation?, viewControllerDismisser: ViewControllerDismisser) {
         self.init(user: user, viewer: viewer, conversation: conversation)
         self.viewControllerDismisser = viewControllerDismisser
     }
@@ -58,20 +58,21 @@ extension ProfileViewController {
     func setupTabsController() {
         var viewControllers = [UIViewController]()
 
-        if context != .deviceList {
-            let profileDetailsViewController = setupProfileDetailsViewController()
-            viewControllers.append(profileDetailsViewController)
-        }
+        let profileDetailsViewController = setupProfileDetailsViewController()
+        viewControllers.append(profileDetailsViewController)
 
         if let fullUser = self.fullUser(), context != .profileViewer, viewer.canSeeDevices(of: bareUser) {
-            let profileDevicesViewController = ProfileDevicesViewController(user: fullUser)
-            profileDevicesViewController.title = "profile.devices.title".localized
-            profileDevicesViewController.delegate = self
-            viewControllers.append(profileDevicesViewController)
+            let userClientListViewController = UserClientListViewController(user: fullUser)
+            viewControllers.append(userClientListViewController)
         }
 
         tabsController = TabBarController(viewControllers: viewControllers)
         tabsController.delegate = self
+        
+        if context == .deviceList, tabsController.viewControllers.count > 1 {
+            tabsController.selectIndex(ProfileViewControllerTabBarIndex.devices.rawValue, animated: false)
+        }
+        
         addToSelf(tabsController)
     }
 }
@@ -170,7 +171,7 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
 
         dismiss(animated: true){ [weak self] in
             self?.transitionToListAndEnqueue(leftViewControllerRevealed: leftViewControllerRevealed) {
-                ZClientViewController.shared()?.conversationListViewController.presentSettings()
+                ZClientViewController.shared()?.conversationListViewController.topBarViewController.presentSettings()
             }
         }
     }
@@ -360,4 +361,14 @@ extension ProfileViewController {
             incomingRequestFooter.trailingAnchor.constraint(equalTo: view.trailingAnchor)
             ])
     }
+}
+
+// MARK: - Factories
+
+extension ProfileViewController {
+
+    @objc func makeUserNameDetailViewModel() -> UserNameDetailViewModel {
+        return UserNameDetailViewModel(user: bareUser, fallbackName: bareUser.displayName, addressBookName: bareUser.zmUser?.addressBookEntry?.cachedName)
+    }
+
 }

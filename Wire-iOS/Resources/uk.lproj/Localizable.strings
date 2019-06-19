@@ -206,6 +206,8 @@
 "conversation.status.silenced" = "Режим тиші увімк.";
 "conversation.status.poor_connection" = "Повільне з'єднання";
 "conversation.status.blocked" = "Заблокований(-на)";
+"conversation.status.incoming_call" = "%@ дзвонить…";
+"conversation.status.incoming_call.unknown" = "Хтось дзвонить…";
 
 "conversation.status.message.text" = "%@";
 "conversation.status.message.link" = "Поділився(-лась) посиланням";
@@ -568,7 +570,7 @@
 "voice.status.low_connection" = "Поганий зв'язок";
 "voice.network_error.title" = "Немає з'єднання з Інтернетом";
 "voice.status.cbr" = "Стала швидкість передачі даних";
-"voice.network_error.body" = "Ви повинні бути онлайн, щоб подзвонити. Перевірте підключення та спробуйте ще раз.";
+"voice.network_error.body" = "Ви повинні бути онлайн, щоб подзвонити. Перевірте з'єднання та спробуйте ще раз.";
 "voice.degradation.new_self_device" = "Ви почали використовувати новий пристрій.";
 "voice.degradation.new_user_device" = "%@ почав(-ла) використовувати новий пристрій.";
 "voice.degradation_outgoing.prompt" = "Ви все ще хочете здійснити дзвінок?";
@@ -602,12 +604,12 @@
 
 // Voice New
 
-"call.status.connecting" = "Підключення…";
+"call.status.connecting" = "З'єднання…";
 "call.status.incoming.user" = "%@ дзвонить…";
 "call.status.incoming" = "Дзвінок…";
 "call.status.outgoing" = "Дзвінок…";
 "call.status.outgoing.user" = "%@ дзвонить…";
-"call.status.reconnecting" = "Повторне підключення…";
+"call.status.reconnecting" = "Повторне під'єднання…";
 "call.status.terminating" = "Роз'єднання…";
 "call.status.constant_bitrate" = "Стала швидкість передачі даних";
 
@@ -824,8 +826,8 @@
 "self.add_phone_number" = "Додати номер телефону";
 "self.add_email_password" = "Додайте email та пароль";
 
-"self.accessibility.profile_photo_image" = "Profile picture";
-"self.accessibility.profile_photo_edit_button" = "Change profile picture";
+"self.accessibility.profile_photo_image" = "Картинка для профілю";
+"self.accessibility.profile_photo_edit_button" = "Змінити картинку для профілю";
 
 // About screen
 "about.tos.title" = "Умови використання";
@@ -855,7 +857,7 @@
 // Settings - top level
 "self.settings.create_team.title" = "Створити команду";
 "self.settings.manage_team.title" = "Керування командою";
-"self.settings.add_team_or_account.title" = "Нова команда або акаунт";
+"self.settings.add_team_or_account.title" = "Додати акаунт";
 "self.settings.add_account.title" = "Додати акаунт";
 
 "self.settings.add_account.error.title" = "Три акаунти вже активні";
@@ -995,6 +997,7 @@
 "self.settings.popular_demand.title" = "У відповідь на численні прохання";
 "self.settings.popular_demand.send_button.title" = "Кнопка \"Надіслати\"";
 "self.settings.popular_demand.send_button.footer" = "Вимкнути надсилання через клавішу \"Ввід\".";
+"self.settings.popular_demand.dark_mode.footer" = "Переключитися між темною та світлою темами.";
 
 // Open in
 "self.settings.external_apps.header" = "Відкрити за допомогою";
@@ -1003,7 +1006,7 @@
 "self.settings.link_options.maps.title" = "Місця";
 "self.settings.link_options.browser.title" = "Браузер";
 
-"open_link.twitter.option.default" = "Safari / Twitter";
+"open_link.twitter.option.default" = "Браузер / Твітер";
 "open_link.twitter.option.tweetbot" = "Tweetbot";
 "open_link.twitter.option.twitterrific" = "Twitterrific";
 
@@ -1032,7 +1035,7 @@
 
 "self.settings.privacy_contacts_section.title" = "Контакти";
 "self.settings.privacy_contacts_menu.settings_button.title" = "Відкрити налаштування контактів";
-"self.settings.privacy_contacts_menu.description_disabled.title" = "Це допоможе вам установити зв'язки з іншими людьми. Ми анонімізуємо всю інформацію та не поширюємо її. Дозвольте доступ через Налаштування > Приватність > Контакти.";
+"self.settings.privacy_contacts_menu.description_disabled.title" = "Це допоможе вам встановити зв'язки з іншими людьми. Ми анонімізуємо всю інформацію та не поширюємо її. Дозвольте доступ через Налаштування > Приватність > Контакти.";
 
 "self.settings.privacy_security.lock_app" = "Заблокувати кодом допуску";
 "self.settings.privacy_security.lock_app.subtitle.lock_description" = "Блокувати Wire після 10 секунд в згорнотому стані.";
@@ -1104,9 +1107,9 @@
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // System status
 "system_status_bar.no_internet.title" = "Немає Інтернету";
-"system_status_bar.no_internet.explanation" = "Схоже, що є проблема з підключенням до інтернету. Будь ласка, переконайтесь, що із з'єднанням все в порядку.";
+"system_status_bar.no_internet.explanation" = "Схоже, що є проблема із інтернет-з'єднанням. Будь ласка, переконайтесь, що з ним все в порядку.";
 "system_status_bar.poor_connectivity.title" = "Повільний інтернет, не вдається додзвонитись";
-"system_status_bar.poor_connectivity.explanation" = "Ми не в змозі гарантувати якість передачі голосу. Спробуйте підключитись до мережі Wi-Fi або змінити ваше місце розташування.";
+"system_status_bar.poor_connectivity.explanation" = "Ми не в змозі гарантувати якість передачі голосу. Спробуйте під'єднатись до мережі Wi-Fi або змінити ваше місце розташування.";
 
 // View user profile and options menu & text field validation
 "name.placeholder" = "Ваше повне ім'я";
@@ -1135,6 +1138,10 @@
 "landing.login.hints" = "Вже зареєстровані?";
 "landing.login.button.title" = "Увійти";
 
+"landing.custom_backend.title" = "З'єднано з \"%@\"";
+"landing.custom_backend.more_info.button.title" = "Показати більше";
+"landing.custom_backend.more_info.alert.title" = " Ви з'єднані з сервером третьої сторони: %@";
+
 // Create team
 
 "team.name.headline" = "Назвіть свою команду";
@@ -1145,7 +1152,7 @@
 
 "team.email.headline" = "Ваш акаунт";
 "team.email.subheadline" = "Введіть робочу адресу електронної пошти.";
-"team.email.textfield.placeholder" = "Email вашої компанії";
+"team.email.textfield.placeholder" = "Електронна пошта вашої компанії";
 "team.email.button.learn_more" = "Дізнатися більше";
 
 "team.activation_code.headline" = "Ви отримали нового листа";
@@ -1240,7 +1247,7 @@
 "registration.alert.account_exists.title" = "Акаунт уже існує";
 "registration.alert.account_exists.message_phone" = "Номер телефону, який використовується для реєстрації, вже зв'язано з іншим акаунтом.\n\nСпробуйте використати інший номер телефону або залогіньтесь, якщо ви є власником цього акаунту.";
 "registration.alert.account_exists.message_email" = "Адреса електронної пошти, яка використовується для реєстрації, вже зв'язана з іншим акаунтом.\n\n Спробуйте використати іншу адресу або залогіньтесь, якщо ви є власником цього акаунту.";
-"registration.alert.change_email_action" = "Змінити email-адресу";
+"registration.alert.change_email_action" = "Зареєструватися з іншою адресою ел. пошти";
 "registration.alert.change_phone_action" = "Зареєструватися з іншим номером";
 "registration.alert.change_signin_action" = "Увійти";
 
@@ -1276,7 +1283,7 @@
 "login.sso.error.alert.title" = "Щось пішло не так";
 "login.sso.error.alert.invalid_code.title" = "Невірний код.";
 "login.sso.error.alert.invalid_code.message" = "Будь ласка, упевніться, що це вірний SSO-код вашої команди, та повторіть спробу.";
-"login.sso.error.offline.alert.message" = "Перевірте підключення до Інтернету та спробуйте ще раз.";
+"login.sso.error.offline.alert.message" = "Перевірте з'єднання з інтернетом та спробуйте ще раз.";
 "login.sso.error.alert.message" = "Будь ласка, зверніться до адміністратора команди, щоб отримати детальну інформацію, (помилка %@).";
 "login.sso.error.alert.unknown.message" = "Будь ласка, спробуйте ще раз пізніше.";
 "login.sso.error.alert.invalid_status.message" = "Будь ласка, спробуйте ще раз пізніше (помилка %@).";
@@ -1447,7 +1454,7 @@
 "error.conversation.cannot_add" = "Не вдалося додати учасника(-цю)";
 "error.conversation.cannot_remove" = "Не вдалося видалити учасника(-цю)";
 "error.conversation.too_many_members" = "Розмова переповнена";
-"error.conversation.offline" = "Схоже, що є проблема з підключенням до інтернету. Будь ласка, переконайтесь, що із з'єднанням все в порядку.";
+"error.conversation.offline" = "Схоже, що є проблема із інтернет-з'єднанням. Будь ласка, переконайтесь, що з ним все в порядку.";
 
 "sketchpad.initial_hint" = "Торкніться кольору, щоб змінити розмір пензля";
 
@@ -1512,6 +1519,8 @@
 
 "availability.message.cancel" = "Скасувати";
 "availability.message.set_status" = "Встановити статус";
+"availability.accessibility_label.change_status" = "Змінити статус";
+"availability.accessibility_label.status" = "Статус";
 
 "availability.none" = "Недоступний(-а)";
 "availability.available" = "Онлайн";
@@ -1520,6 +1529,17 @@
 "availability.available.placeholder" = "%@: онлайн";
 "availability.away.placeholder" = "%@: не на місці";
 "availability.busy.placeholder" = "%@: не турбувати";
+
+"availability.reminder.away.title" = "Зараз ви відсутні";
+"availability.reminder.away.message" = "Ваш статус для інших людей буде встановлено як \"Відсутній(-я)\". Ви не будете отримувати сповіщень про вхідні дзвінки або повідомлення.";
+"availability.reminder.busy.title" = "Зараз ви зайняті";
+"availability.reminder.busy.message" = "Ваш статус для інших людей буде встановлено як \"Зайнятий(-а)\". Ви будете отримувати сповіщення тільки про згадки, відповіді та дзвінки в розмовах, для яких не увімкнений режим тиші.";
+"availability.reminder.available.title" = "Зараз ви присутні";
+"availability.reminder.available.message" = "Ваш статус для інших людей буде встановлено як \"Присутній(-я)\". Ви будете отримувати сповіщення про вхідні дзвінки та повідомлення згідно налаштувань для кожної розмови.";
+"availability.reminder.none.title" = "Статус поки що не встановлено";
+"availability.reminder.none.message" = "Ви будете отримувати сповіщення про вхідні дзвінки та повідомлення згідно налаштувань для кожної розмови.";
+"availability.reminder.action.dont_remind_me" = "Більше не відображати цю інформацію";
+"availability.reminder.action.ok" = "OK";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Call Quality Survey
@@ -1538,7 +1558,17 @@
 
 "url_action.confirm" = "Підтвердити";
 "url_action.title" = "Підтвердження дії з URL";
-"url_action.connect_to_bot.message" = "Чи Ви хотіли б підключитися до бота?";
+"url_action.connect_to_bot.message" = "Чи Ви хотіли б ви додати бота до контактів?";
+
+"url_action.switch_backend.title" = "Під'єднатися до сервера";
+"url_action.switch_backend.message" = "З цією конфігурацією ви під'єднаєте додаток до серверу третьої сторони:\n%@";
+
+"url_action.switch_backend.error.logged_in.title" = "Не вдалося переключити сервер";
+"url_action.switch_backend.error.logged_in" = "Ви вже увійшли. Вийдіть з усіх акаунтів та повторіть спробу, щоб переключитися на інший сервер.";
+
+"url_action.switch_backend.error.invalid_backend.title" = "Сервер не відповідає";
+"url_action.switch_backend.error.invalid_backend" = "Будь ласка, перевірте ваше інтернет-з'єднання та спробуйте ще раз.";
+
 
 // Deep Link
 "url_action.invalid_user.title" = "Wire не вдалося знайти такого користувача.";
@@ -1578,5 +1608,5 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Password Rules
-"registration.password.rules.no_requirements" = "Use %@.";
-"registration.password.rules.with_requirements" = "Use %@, with %@.";
+"registration.password.rules.no_requirements" = "Використовувати %@.";
+"registration.password.rules.with_requirements" = "Використовувати %@, включно з %@.";

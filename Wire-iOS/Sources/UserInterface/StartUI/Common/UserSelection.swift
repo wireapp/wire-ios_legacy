@@ -58,7 +58,7 @@ public class UserSelection : NSObject {
     
     @objc(removeObserver:)
     public func remove(observer: UserSelectionObserver) {
-        guard let index = observers.index(where: { $0.unbox === observer}) else { return }
+        guard let index = observers.firstIndex(where: { $0.unbox === observer}) else { return }
         
         observers.remove(at: index)
     }

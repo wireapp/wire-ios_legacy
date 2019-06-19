@@ -28,14 +28,19 @@ final class UserImageViewContainer: UIView {
             userImageView.user = user
         }
     }
-    
-    init(size: UserImageView.Size, maxSize: CGFloat, yOffset: CGFloat) {
+
+    init(size: UserImageView.Size,
+         maxSize: CGFloat,
+         yOffset: CGFloat,
+         userSession: ZMUserSessionInterface? = ZMUserSession.shared()) {
         userImageView = UserImageView(size: size)
         self.maxSize = maxSize
         self.yOffset = yOffset
         super.init(frame: .zero)
         setupViews()
         createConstraints()
+
+        userImageView.userSession = userSession
     }
     
     @available(*, unavailable)

@@ -68,4 +68,25 @@ final class SettingsTableViewControllerSnapshotTests: CoreDataSnapshotTestCase {
 
         verify(view: sut.view)
     }
+
+    //MARK: - options
+    func testForOptionsGroup() {
+        let group = settingsCellDescriptorFactory.optionsGroup()
+        sut = SettingsTableViewController(group: group as! SettingsInternalGroupCellDescriptorType)
+
+        sut.view.backgroundColor = .black
+
+        verify(view: sut.view)
+    }
+
+    func testForOptionsGroupScrollToBottom() {
+        let group = settingsCellDescriptorFactory.optionsGroup()
+        sut = SettingsTableViewController(group: group as! SettingsInternalGroupCellDescriptorType)
+
+        sut.view.backgroundColor = .black
+
+        sut.tableView.setContentOffset(CGPoint(x:0, y:CGFloat.greatestFiniteMagnitude), animated: false)
+
+        verify(view: sut.view)
+    }
 }

@@ -16,9 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
-#import "AccentColorProvider.h"
-
 #import "StartUIViewController.h"
 #import "StartUIViewController+internal.h"
 #import "ProfilePresenter.h"
@@ -43,13 +40,11 @@
 static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 
-@interface StartUIViewController () <ContactsViewControllerDelegate, SearchHeaderViewControllerDelegate>
+@interface StartUIViewController () <SearchHeaderViewControllerDelegate>
 
 @property (nonatomic) ProfilePresenter *profilePresenter;
-@property (nonatomic) StartUIInviteActionBar *quickActionsBar;
 @property (nonatomic) EmptySearchResultsView *emptyResultView;
 
-@property (nonatomic) BOOL addressBookUploadLogicHandled;
 @end
 
 @implementation StartUIViewController
@@ -64,6 +59,8 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 -(instancetype) init
 {
     self = [super init];
+
+    self.addressBookHelper = [AddressBookHelper sharedHelper];
 
     [self setupViews];
 
@@ -127,10 +124,9 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
     [self createConstraints];
     [self updateActionBar];
-    [self handleUploadAddressBookLogicIfNeeded];
     [self.searchResultsViewController searchContactList];
 
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithIcon:ZetaIconTypeX
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithIcon:WRStyleKitIconCross
                                                                              style:UIBarButtonItemStylePlain
                                                                             target:self
                                                                             action:@selector(onDismissPressed)];
@@ -141,6 +137,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 {
     [super viewWillAppear:animated];
     [UIApplication.sharedApplication wr_updateStatusBarForCurrentControllerAnimated:animated];
+    [self handleUploadAddressBookLogicIfNeeded];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -158,34 +155,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 - (UIStatusBarStyle)preferredStatusBarStyle
 {
     return UIStatusBarStyleLightContent;
-}
-
-- (void)handleUploadAddressBookLogicIfNeeded
-{
-    if (self.addressBookUploadLogicHandled) {
-        return;
-    }
-    
-    self.addressBookUploadLogicHandled = YES;
-    
-    // We should not even try to access address book when in a team
-    if (ZMUser.selfUser.hasTeam) {
-        return;
-    }
-    
-    if ([[AddressBookHelper sharedHelper] isAddressBookAccessGranted]) {
-        // Re-check if we need to start AB search
-        [[AddressBookHelper sharedHelper] startRemoteSearchWithCheckingIfEnoughTimeSinceLast:YES];
-    }
-    else if ([[AddressBookHelper sharedHelper] isAddressBookAccessUnknown]) {
-        [[AddressBookHelper sharedHelper] requestPermissions:^(BOOL success) {
-            if (success) {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [[AddressBookHelper sharedHelper] startRemoteSearchWithCheckingIfEnoughTimeSinceLast:YES];
-                });
-            }
-        }];
-    }
 }
 
 - (void)showKeyboardIfNeeded
@@ -282,20 +251,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self.searchResultsViewController cancelPreviousSearch];
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(performSearch) object:nil];
     [self performSelector:@selector(performSearch) withObject:nil afterDelay:0.2f];
-}
-
-#pragma mark - ContactsViewControllerDelegate
-
-- (void)contactsViewControllerDidCancel:(ContactsViewController *)controller
-{
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-- (void)contactsViewControllerDidNotShareContacts:(ContactsViewController *)controller
-{
-    [self dismissViewControllerAnimated:YES completion:^{
-        [self wr_presentInviteActivityViewControllerWithSourceView:self.quickActionsBar logicalContext:GenericInviteContextStartUIBanner];
-    }];
 }
 
 @end

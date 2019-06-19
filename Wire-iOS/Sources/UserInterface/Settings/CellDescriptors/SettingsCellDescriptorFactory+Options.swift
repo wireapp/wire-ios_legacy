@@ -101,6 +101,9 @@ extension SettingsCellDescriptorFactory {
                     return .text("self.settings.sound_menu.mute_while_talking.title".localized)
                 case .none:
                     return .text("self.settings.sound_menu.no_sounds.title".localized)
+                @unknown default:
+                    ///TODO: change AVSIntensityLevel to NS_CLOSED_ENUM
+                    return .text("")
                 }
 
             }
@@ -162,27 +165,28 @@ extension SettingsCellDescriptorFactory {
         
         let sendButtonDescriptor = SettingsPropertyToggleCellDescriptor(settingsProperty: settingsPropertyFactory.property(.disableSendButton), inverse: true)
 
-        var popularDemandDescriptors: [SettingsCellDescriptorType] = [sendButtonDescriptor]
-        
-        if UIDevice.current.userInterfaceIdiom != .pad {
-            let darkThemeElement = SettingsPropertyToggleCellDescriptor(settingsProperty: settingsPropertyFactory.property(.darkMode))
-            popularDemandDescriptors.insert(darkThemeElement, at: 0)
-        }
-        
-        let byPopularDemandSection = SettingsSectionDescriptor(
-            cellDescriptors: popularDemandDescriptors,
+        let byPopularDemandSendButtonSection = SettingsSectionDescriptor(
+            cellDescriptors: [sendButtonDescriptor],
             header: "self.settings.popular_demand.title".localized,
             footer: "self.settings.popular_demand.send_button.footer".localized
         )
+
+        cellDescriptors.append(byPopularDemandSendButtonSection)
+
+        let darkThemeDescriptor = SettingsPropertyToggleCellDescriptor(settingsProperty: settingsPropertyFactory.property(.darkMode))
+        let byPopularDemandDarkThemeSection = SettingsSectionDescriptor(
+            cellDescriptors: [darkThemeDescriptor],
+            footer: "self.settings.popular_demand.dark_mode.footer".localized
+        )
         
-        cellDescriptors.append(byPopularDemandSection)
+        cellDescriptors.append(byPopularDemandDarkThemeSection)
         
         let context: LAContext = LAContext()
         var error: NSError?
         
         if context.canEvaluatePolicy(LAPolicy.deviceOwnerAuthentication, error: &error) {
             let lockApp = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.lockApp))
-            let section = SettingsSectionDescriptor(cellDescriptors: [lockApp], header: .none, footer: appLockSectionSubtitle)
+            let section = SettingsSectionDescriptor(cellDescriptors: [lockApp], footer: appLockSectionSubtitle)
             cellDescriptors.append(section)
         }
         

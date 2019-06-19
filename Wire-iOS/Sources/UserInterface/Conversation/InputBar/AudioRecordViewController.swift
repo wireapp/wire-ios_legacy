@@ -159,7 +159,7 @@ final class AudioRecordViewController: UIViewController, AudioRecordBaseViewCont
         topTooltipLabel.font = FontSpec(.small, .none).font!
         topTooltipLabel.textColor = UIColor.from(scheme: .textDimmed)
         
-        cancelButton.setIcon(.cancel, with: .tiny, for: [])
+        cancelButton.setIcon(.cross, size: .tiny, for: [])
         cancelButton.setIconColor(UIColor.from(scheme: .textForeground), for: .normal)
         cancelButton.addTarget(self, action: #selector(cancelButtonPressed(_:)), for: .touchUpInside)
         cancelButton.accessibilityLabel = "audioRecorderCancel"
@@ -181,7 +181,7 @@ final class AudioRecordViewController: UIViewController, AudioRecordBaseViewCont
 
     private func createConstraints() {
         let button = buttonOverlay.audioButton
-        let margin: CGFloat = (UIView.conversationLayoutMargins.left / 2) - (UIImage.size(for: .tiny) / 2)
+        let margin: CGFloat = (UIView.conversationLayoutMargins.left / 2) - (StyleKitIcon.Size.tiny.rawValue / 2)
 
         [bottomContainerView,
          topContainerView,

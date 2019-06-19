@@ -42,7 +42,7 @@ enum BlockResult {
         return .init(title: title, style: style) { _ in handler(self) }
     }
     
-    static func title(for user: GenericUser) -> String? {
+    static func title(for user: UserType) -> String? {
         // Do not show the title if the user is already blocked and we want to unblock them.
         if user.isBlocked {
             return nil

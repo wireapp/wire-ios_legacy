@@ -45,7 +45,7 @@ public final class MarkdownBarView: UIView {
     public var activeModes = [Markdown]()
 
     private var buttonMargin: CGFloat {
-        return UIView.conversationLayoutMargins.left / 2 - UIImage.size(for: .tiny) / 2
+        return UIView.conversationLayoutMargins.left / 2 - StyleKitIcon.Size.tiny.rawValue / 2
     }
     
     required public init() {
@@ -71,12 +71,12 @@ public final class MarkdownBarView: UIView {
         stackView.isLayoutMarginsRelativeArrangement = true
         
         
-        headerButton.setIcon(.markdownH1, with: .tiny, for: .normal)
-        boldButton.setIcon(.markdownBold, with: .tiny, for: .normal)
-        italicButton.setIcon(.markdownItalic, with: .tiny, for: .normal)
-        numberListButton.setIcon(.markdownNumberList, with: .tiny, for: .normal)
-        bulletListButton.setIcon(.markdownBulletList, with: .tiny, for: .normal)
-        codeButton.setIcon(.markdownCode, with: .tiny, for: .normal)
+        headerButton.setIcon(.markdownH1, size: .tiny, for: .normal)
+        boldButton.setIcon(.markdownBold, size: .tiny, for: .normal)
+        italicButton.setIcon(.markdownItalic, size: .tiny, for: .normal)
+        numberListButton.setIcon(.markdownNumberList, size: .tiny, for: .normal)
+        bulletListButton.setIcon(.markdownBulletList, size: .tiny, for: .normal)
+        codeButton.setIcon(.markdownCode, size: .tiny, for: .normal)
         
         for button in buttons {
             button.setIconColor(normalColor, for: .normal)
@@ -117,7 +117,7 @@ public final class MarkdownBarView: UIView {
         
     fileprivate func markdown(for button: IconButton) -> Markdown? {
         switch button {
-        case headerButton:      return headerButton.iconType(for: .normal).headerMarkdown ?? .h1
+        case headerButton:      return headerButton.icon(for: .normal)?.headerMarkdown ?? .h1
         case boldButton:        return .bold
         case italicButton:      return .italic
         case codeButton:        return .code
@@ -130,7 +130,7 @@ public final class MarkdownBarView: UIView {
     public func updateIcons(for markdown: Markdown) {
         // change header icon if necessary
         if let headerIcon = markdown.headerValue?.headerIcon {
-            headerButton.setIcon(headerIcon, with: .tiny, for: .normal)
+            headerButton.setIcon(headerIcon, size: .tiny, for: .normal)
         }
         
         for button in buttons {
@@ -147,7 +147,7 @@ public final class MarkdownBarView: UIView {
 
 extension MarkdownBarView: PopUpIconButtonDelegate {
     
-    func popUpIconButton(_ button: PopUpIconButton, didSelectIcon icon: ZetaIconType) {
+    func popUpIconButton(_ button: PopUpIconButton, didSelectIcon icon: StyleKitIcon) {
         
         if button === headerButton {
             let markdown = icon.headerMarkdown ?? .h1
@@ -156,7 +156,7 @@ extension MarkdownBarView: PopUpIconButtonDelegate {
     }
 }
 
-private extension ZetaIconType {
+private extension StyleKitIcon {
     var headerMarkdown: Markdown? {
         switch self {
         case .markdownH1: return .h1
@@ -168,7 +168,7 @@ private extension ZetaIconType {
 }
 
 private extension Markdown {
-    var headerIcon: ZetaIconType? {
+    var headerIcon: StyleKitIcon? {
         switch self {
         case .h1: return .markdownH1
         case .h2: return .markdownH2

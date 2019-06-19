@@ -30,14 +30,18 @@ extension UIViewController {
         alert.addAction(action)
         self.present(alert, animated: true, completion: .none)
     }
-    
-    func requestPassword(_ completion: @escaping (ZMEmailCredentials?)->()) {
-        let passwordRequest = RequestPasswordViewController.requestPasswordController() { (result: Result<String>) -> () in
+
+    @discardableResult
+    func requestPassword(_ completion: @escaping (ZMEmailCredentials?)->()) -> RequestPasswordController {
+        let passwordRequest = RequestPasswordController(context: .removeDevice) { (result: Result<String?>) -> () in
             switch result {
             case .success(let passwordString):
                 if let email = ZMUser.selfUser()?.emailAddress {
-                    let newCredentials = ZMEmailCredentials(email: email, password: passwordString)
-                    completion(newCredentials)
+
+                    if let passwordString = passwordString {
+                        let newCredentials = ZMEmailCredentials(email: email, password: passwordString)
+                        completion(newCredentials)
+                    }
                 } else {
                     if DeveloperMenuState.developerMenuEnabled() {
                         DebugAlert.showGeneric(message: "No email set!")
@@ -49,7 +53,10 @@ extension UIViewController {
                 completion(nil)
             }
         }
-        self.present(passwordRequest, animated: true, completion: .none)
+
+        present(passwordRequest.alertController, animated: true)
+
+        return passwordRequest
     }
 }
 

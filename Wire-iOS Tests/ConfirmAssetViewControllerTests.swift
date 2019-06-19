@@ -21,7 +21,11 @@
 final class ConfirmAssetViewControllerTests: ZMSnapshotTestCase {
 
     var sut: ConfirmAssetViewController!
-    
+
+    override func setUp() {
+        super.setUp()
+    }
+
     override func tearDown() {
         sut = nil
         super.tearDown()
@@ -52,19 +56,6 @@ final class ConfirmAssetViewControllerTests: ZMSnapshotTestCase {
         sut.image = image(inTestBundleNamed: "unsplash_small.jpg").imageScaled(withFactor: 0.5);
         sut.previewTitle = "Sea Food"
         verifyInAllIPhoneSizes(view: sut.view)
-    }
-
-    func testThatItRendersTheAssetViewControllerWithVideo() {
-
-        let videoURL = urlForResource(inTestBundleNamed: "video.mp4")
-
-        verifyInIPhoneSize(initialization: {
-            sut = ConfirmAssetViewController()
-            sut.videoURL = videoURL
-            sut.previewTitle = "Video: A hand and three cables on an office white table."
-            return self.sut.view
-        },
-                          colorSchemes: [.light, .dark])
     }
 
 }

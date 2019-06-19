@@ -23,18 +23,25 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @class SearchViewController;
-@class ConversationListTopBar;
+@class ConversationListTopBarViewController;
 @class NetworkStatusViewController;
 @class ConversationListBottomBarController;
 @class ConversationListContentController;
+@class ConversationListOnboardingHint;
 
 @interface ConversationListViewController (Private)
 @property (nonatomic, nullable) SearchViewController *searchViewController;
 @property (nonatomic) ConversationListContentController *listContentController;
 @property (nonatomic, weak, readonly) id<UserProfile> userProfile;
-@property (nonatomic) ConversationListTopBar *topBar;
+@property (nonatomic) ConversationListTopBarViewController *topBarViewController;
 @property (nonatomic) NetworkStatusViewController *networkStatusViewController;
 @property (nonatomic, readonly) ConversationListBottomBarController *bottomBarController;
+@property (nonatomic, nullable) UIView *conversationListContainer;
+@property (nonatomic, nullable) ConversationListOnboardingHint *onboardingHint;
+
+@property (nonatomic) NSLayoutConstraint *bottomBarBottomOffset;
+@property (nonatomic) NSLayoutConstraint *bottomBarToolTipConstraint;
+
 /// for NetworkStatusViewDelegate
 @property (nonatomic) BOOL shouldAnimateNetworkStatusView;
 @property (nonatomic) BOOL dataUsagePermissionDialogDisplayed;

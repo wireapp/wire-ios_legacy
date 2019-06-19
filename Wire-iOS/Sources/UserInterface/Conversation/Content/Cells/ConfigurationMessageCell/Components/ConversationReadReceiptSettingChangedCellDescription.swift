@@ -20,14 +20,14 @@ import Foundation
 
 
 struct ReadReceiptViewModel {
-    let icon: ZetaIconType
+    let icon: StyleKitIcon
     let iconColor: UIColor?
     let systemMessageType: ZMSystemMessageType
     let sender: ZMUser
 
 
     func image() -> UIImage? {
-        return iconColor.map { UIImage(for: icon, iconSize: .tiny, color: $0) }
+        return iconColor.map { icon.makeImage(size: .tiny, color: $0) }
     }
 
     func createSystemMessage(template: String) -> NSAttributedString {

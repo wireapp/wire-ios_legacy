@@ -169,9 +169,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>1 message</string>
+        <string>1 mesaj</string>
         <key>other</key>
-        <string>%d messages</string>
+        <string>%d mesaj</string>
       </dict>
     </dict>
     <key>conversation.silenced.status.message.mention</key>
@@ -185,9 +185,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>1 mention</string>
+        <string>1 bahsedildi</string>
         <key>other</key>
-        <string>%d mentions</string>
+        <string>%d bahsedildi</string>
       </dict>
     </dict>
     <key>conversation.silenced.status.message.reply</key>
@@ -201,9 +201,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>1 reply</string>
+        <string>1 yanıt</string>
         <key>other</key>
-        <string>%d replies</string>
+        <string>%d yanıt</string>
       </dict>
     </dict>
     <key>conversation.silenced.status.message.knock</key>
@@ -219,7 +219,7 @@
         <key>one</key>
         <string>1 ping</string>
         <key>other</key>
-        <string>%d pings</string>
+        <string>%d ping</string>
       </dict>
     </dict>
     <key>conversation.silenced.status.message.missedcall</key>
@@ -233,9 +233,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>1 missed call</string>
+        <string>1 cevapsız çağrı</string>
         <key>other</key>
-        <string>%d cevapsız arama</string>
+        <string>%d cevapsız çağrı</string>
       </dict>
     </dict>
     <key>content.system.call.missed-call</key>
@@ -249,9 +249,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Missed call</string>
+        <string>Cevapsız arama</string>
         <key>other</key>
-        <string>Missed calls</string>
+        <string>Cevapsız aramalar</string>
       </dict>
     </dict>
     <key>content.system.call.missed-call.groups</key>
@@ -265,15 +265,15 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Missed call from %2$@</string>
+        <string>%2$@ kişisinden cevapsız çağrı</string>
         <key>other</key>
-        <string>Missed calls from %2$@</string>
+        <string>%2$@ kişisinden cevapsız çağrılar</string>
       </dict>
     </dict>
     <key>registration.password.rules.min_length</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
-      <string>at least %#@character_count@</string>
+      <string>en az %#@character_count@</string>
       <key>character_count</key>
       <dict>
         <key>NSStringFormatSpecTypeKey</key>
@@ -281,9 +281,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>one character</string>
+        <string>bir karakter</string>
         <key>other</key>
-        <string>%d characters</string>
+        <string>%d karakter</string>
       </dict>
     </dict>
     <key>registration.password.rules.lowercase</key>
@@ -297,9 +297,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>one lowercase letter</string>
+        <string>bir küçük harf</string>
         <key>other</key>
-        <string>%d lowercase letters</string>
+        <string>%d küçük harf</string>
       </dict>
     </dict>
     <key>registration.password.rules.uppercase</key>
@@ -313,9 +313,9 @@
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>one</key>
-        <string>one capital letter</string>
+        <string>bir büyük harf</string>
         <key>other</key>
-        <string>%d capital letters</string>
+        <string>%d büyük harf</string>
       </dict>
     </dict>
     <key>registration.password.rules.number</key>
@@ -329,9 +329,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>a number</string>
+        <string>bir sayı</string>
         <key>other</key>
-        <string>%d numbers</string>
+        <string>%d sayı</string>
       </dict>
     </dict>
     <key>registration.password.rules.special</key>
@@ -345,9 +345,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>a special character</string>
+        <string>bir özel karakter</string>
         <key>other</key>
-        <string>%d special characters</string>
+        <string>%d özel karakter</string>
       </dict>
     </dict>
   </dict>

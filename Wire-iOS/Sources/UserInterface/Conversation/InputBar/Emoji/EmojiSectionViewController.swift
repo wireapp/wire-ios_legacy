@@ -29,7 +29,7 @@ final class EmojiSectionViewController: UIViewController {
     
     private var typesByButton = [IconButton: EmojiSectionType]()
     private var sectionButtons = [IconButton]()
-    private let iconSize = UIImage.size(for: .tiny)
+    private let iconSize = StyleKitIcon.Size.tiny.rawValue
     private var ignoreSelectionUpdates = false
     
     private var selectedType: EmojiSectionType? {
@@ -80,7 +80,7 @@ final class EmojiSectionViewController: UIViewController {
             button.circular = false
             button.borderWidth = 0
             
-            button.setIcon(type.icon, with: .tiny, for: .normal)
+            button.setIcon(type.icon, size: .tiny, for: .normal)
             
             return button
         }()
@@ -113,6 +113,8 @@ final class EmojiSectionViewController: UIViewController {
             selectedType = type
         case .ended, .failed, .cancelled:
             ignoreSelectionUpdates = false
+        @unknown default:
+            break
         }
     }
     

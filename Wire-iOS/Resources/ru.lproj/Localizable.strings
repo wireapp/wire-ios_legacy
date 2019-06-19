@@ -206,6 +206,8 @@
 "conversation.status.silenced" = "Без звука";
 "conversation.status.poor_connection" = "Плохое подключение";
 "conversation.status.blocked" = "Заблокирован(а)";
+"conversation.status.incoming_call" = "%@ вызывает…";
+"conversation.status.incoming_call.unknown" = "Вызов…";
 
 "conversation.status.message.text" = "%@";
 "conversation.status.message.link" = "Поделился(лась) ссылкой";
@@ -365,7 +367,7 @@
 
 "content.system.continued_conversation" = "Начать разговор с %@";
 "content.system.started_conversation.truncated_people" = "и %@";
-"content.system.started_conversation.truncated_people.others" = "%@ остальных";
+"content.system.started_conversation.truncated_people.others" = "еще %@";
 "content.system.started_conversation.complete_team" = "все члены команды";
 "content.system.started_conversation.complete_team.guests" = "все члены команды и %@ гостей";
 
@@ -855,7 +857,7 @@
 // Settings - top level
 "self.settings.create_team.title" = "Создать команду";
 "self.settings.manage_team.title" = "Управлять командой";
-"self.settings.add_team_or_account.title" = "Новая команда или аккаунт";
+"self.settings.add_team_or_account.title" = "Добавить аккаунт";
 "self.settings.add_account.title" = "Добавить аккаунт";
 
 "self.settings.add_account.error.title" = "Активны три аккаунта";
@@ -995,6 +997,7 @@
 "self.settings.popular_demand.title" = "По многочисленным просьбам";
 "self.settings.popular_demand.send_button.title" = "Кнопка 'Отправить'";
 "self.settings.popular_demand.send_button.footer" = "Отключает отправку с помощью Enter.";
+"self.settings.popular_demand.dark_mode.footer" = "Переключение между темной и светлой темами.";
 
 // Open in
 "self.settings.external_apps.header" = "Открыть с помощью";
@@ -1003,7 +1006,7 @@
 "self.settings.link_options.maps.title" = "Местоположения";
 "self.settings.link_options.browser.title" = "Браузер";
 
-"open_link.twitter.option.default" = "Safari / Twitter";
+"open_link.twitter.option.default" = "Браузер / Твиттер";
 "open_link.twitter.option.tweetbot" = "Tweetbot";
 "open_link.twitter.option.twitterrific" = "Twitterrific";
 
@@ -1131,9 +1134,13 @@
 "landing.create_account.title" = "Personal";
 "landing.create_account.subtitle" = "Приватный чат с группами друзей\U00A0и\U00A0семьей";
 "landing.create_team.title" = "Pro";
-"landing.create_team.subtitle" = "Безопасное сотрудничество для предприятий, учреждений и профессиональных\U00A0организаций";
+"landing.create_team.subtitle" = "Безопасная совместная работа для предприятий, учреждений и профессиональных\U00A0организаций";
 "landing.login.hints" = "Уже зарегистрированы?";
 "landing.login.button.title" = "Войти";
+
+"landing.custom_backend.title" = "Подключен к \"%@\"";
+"landing.custom_backend.more_info.button.title" = "Развернуть";
+"landing.custom_backend.more_info.alert.title" = " Вы подключены к стороннему серверу: %@";
 
 // Create team
 
@@ -1240,7 +1247,7 @@
 "registration.alert.account_exists.title" = "Учетная запись существует";
 "registration.alert.account_exists.message_phone" = "Номер телефона, который вы использовали для регистрации, уже связан с учетной записью. \n\nИспользуйте другой номер телефона или попробуйте войти, если это ваша учетная запись.";
 "registration.alert.account_exists.message_email" = "Адрес email, который вы использовали для регистрации, уже связан с учетной записью. \n\n Используйте другой email или попробуйте войти, если это ваша учетная запись.";
-"registration.alert.change_email_action" = "Изменить адрес email";
+"registration.alert.change_email_action" = "Зарегистрироваться с другим email";
 "registration.alert.change_phone_action" = "Зарегистрироваться с другим номером";
 "registration.alert.change_signin_action" = "Войти";
 
@@ -1512,6 +1519,8 @@
 
 "availability.message.cancel" = "Отмена";
 "availability.message.set_status" = "Установить статус";
+"availability.accessibility_label.change_status" = "Изменить статус";
+"availability.accessibility_label.status" = "Статус";
 
 "availability.none" = "Отключены";
 "availability.available" = "Доступен";
@@ -1520,6 +1529,17 @@
 "availability.available.placeholder" = "%@ доступен";
 "availability.away.placeholder" = "%@ отошел";
 "availability.busy.placeholder" = "%@ занят";
+
+"availability.reminder.away.title" = "Вы установили 'Отошел'";
+"availability.reminder.away.message" = "Для других пользователей будет отображаться статус 'Отошел'. Вы не будете получать уведомления о любых входящих звонках или сообщениях.";
+"availability.reminder.busy.title" = "Вы установили 'Занят'";
+"availability.reminder.busy.message" = "Для других пользователей будет отображаться статус 'Занят'. Вы будете получать уведомления только об упоминаниях, ответах и звонках в разговорах, уведомления для которых не отключены.";
+"availability.reminder.available.title" = "Вы установили 'Доступен'";
+"availability.reminder.available.message" = "Для других пользователей будет отображаться статус 'Доступен'. Вы будете получать уведомления о входящих вызовах и сообщениях в соответствии с настройками уведомлений в каждом разговоре.";
+"availability.reminder.none.title" = "Нет установленного статуса";
+"availability.reminder.none.message" = "Вы будете получать уведомления о входящих вызовах и сообщениях в соответствии с настройками уведомлений в каждом разговоре.";
+"availability.reminder.action.dont_remind_me" = "Не показывать это предупреждение в дальнейшем";
+"availability.reminder.action.ok" = "OK";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Call Quality Survey
@@ -1539,6 +1559,16 @@
 "url_action.confirm" = "Подтвердить";
 "url_action.title" = "Подтвердить действие по URL";
 "url_action.connect_to_bot.message" = "Вы хотите подключиться к боту?";
+
+"url_action.switch_backend.title" = "Подключиться к серверу";
+"url_action.switch_backend.message" = "Эта конфигурация подключит приложение к стороннему серверу:\n%@";
+
+"url_action.switch_backend.error.logged_in.title" = "Невозможно переключить серверы";
+"url_action.switch_backend.error.logged_in" = "Вы уже авторизованы. Чтобы переключиться на этот сервер, выйдите из всех учетных записей и повторите попытку.";
+
+"url_action.switch_backend.error.invalid_backend.title" = "Сервер не отвечает";
+"url_action.switch_backend.error.invalid_backend" = "Пожалуйста, убедитесь в наличии доступа к сети интернет, проверьте ссылку и попробуйте снова.";
+
 
 // Deep Link
 "url_action.invalid_user.title" = "Wire не может найти этого человека.";

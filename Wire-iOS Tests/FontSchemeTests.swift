@@ -86,7 +86,8 @@ class FontSchemeTests: XCTestCase {
         fixedFontNames[FontSpec(.normal, .regular)]   = "System-Regular 16.0"
         fixedFontNames[FontSpec(.normal, .medium)]    = "System-Medium 16.0"
         fixedFontNames[FontSpec(.normal, .semibold)]  = "System-Semibold 16.0"
-        
+        fixedFontNames[FontSpec(.normal, .bold)]      = "System-Bold 16.0"
+
         fixedFontNames[FontSpec(.medium, .none)]      = "System-Light 12.0"
         fixedFontNames[FontSpec(.medium, .medium)]    = "System-Medium 12.0"
         fixedFontNames[FontSpec(.medium, .semibold)]  = "System-Semibold 12.0"
@@ -130,6 +131,7 @@ class FontSchemeTests: XCTestCase {
         fixedFontNames[FontSpec(.normal, .regular)]  = "System-Regular 22.0"
         fixedFontNames[FontSpec(.normal, .medium)]   = "System-Medium 22.0"
         fixedFontNames[FontSpec(.normal, .semibold)] = "System-Semibold 22.0"
+        fixedFontNames[FontSpec(.normal, .bold)]      = "System-Bold 22.0"
 
         fixedFontNames[FontSpec(.medium, .none)]     = "System-Light 17.0"
         fixedFontNames[FontSpec(.medium, .medium)]   = "System-Medium 17.0"
@@ -174,7 +176,8 @@ class FontSchemeTests: XCTestCase {
         fixedFontNames[FontSpec(.normal, .regular)]   = "System-Regular 13.0"
         fixedFontNames[FontSpec(.normal, .medium)]    = "System-Medium 13.0"
         fixedFontNames[FontSpec(.normal, .semibold)]  = "System-Semibold 13.0"
-        
+        fixedFontNames[FontSpec(.normal, .bold)]      = "System-Bold 13.0"
+
         fixedFontNames[FontSpec(.medium, .none)]      = "System-Light 10.0"
         fixedFontNames[FontSpec(.medium, .medium)]    = "System-Medium 10.0"
         fixedFontNames[FontSpec(.medium, .semibold)]  = "System-Semibold 10.0"

@@ -71,14 +71,14 @@ import Cartography
     func configureViews() {
         translatesAutoresizingMaskIntoConstraints = false
         audioButton.isUserInteractionEnabled = false
-        audioButton.setIcon(.microphone, with: .tiny, for: [])
+        audioButton.setIcon(.microphone, size: .tiny, for: [])
         audioButton.accessibilityIdentifier = "audioRecorderRecord"
         
-        playButton.setIcon(.play, with: .tiny, for: [])
+        playButton.setIcon(.play, size: .tiny, for: [])
         playButton.accessibilityIdentifier = "audioRecorderPlay"
         playButton.accessibilityValue = PlayingState.idle.description
 
-        sendButton.setIcon(.checkmark, with: .tiny, for: [])
+        sendButton.setIcon(.checkmark, size: .tiny, for: [])
         sendButton.accessibilityIdentifier = "audioRecorderSend"
         
         [backgroundView, audioButton, sendButton, playButton].forEach(addSubview)
@@ -127,8 +127,8 @@ import Cartography
     }
     
     func updateWithPlayingState(_ state: PlayingState) {
-        let icon: ZetaIconType = state == .idle ? .play : .stop
-        playButton.setIcon(icon, with: .tiny, for: [])
+        let icon: StyleKitIcon = state == .idle ? .play : .stopRecording
+        playButton.setIcon(icon, size: .tiny, for: [])
         playButton.accessibilityValue = state.description
     }
     

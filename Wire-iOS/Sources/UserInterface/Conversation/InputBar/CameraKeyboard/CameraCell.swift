@@ -60,21 +60,21 @@ open class CameraCell: UICollectionViewCell {
         UIDevice.current.beginGeneratingDeviceOrientationNotifications()
         NotificationCenter.default.addObserver(self, selector: #selector(deviceOrientationDidChange(_:)), name: UIDevice.orientationDidChangeNotification, object: .none)
         
-        self.expandButton.setIcon(.fullScreen, with: .tiny, for: [])
+        self.expandButton.setIcon(.fullScreen, size: .tiny, for: [])
         self.expandButton.setIconColor(UIColor.white, for: [])
         self.expandButton.translatesAutoresizingMaskIntoConstraints = false
         self.expandButton.addTarget(self, action: #selector(expandButtonPressed(_:)), for: .touchUpInside)
         self.expandButton.accessibilityIdentifier = "fullscreenCameraButton"
         self.contentView.addSubview(self.expandButton)
         
-        self.takePictureButton.setIcon(.cameraShutter, with: .cameraKeyboardButton, for: [])
+        self.takePictureButton.setIcon(.cameraShutter, size: 36, for: [])
         self.takePictureButton.setIconColor(UIColor.white, for: [])
         self.takePictureButton.translatesAutoresizingMaskIntoConstraints = false
         self.takePictureButton.addTarget(self, action: #selector(shutterButtonPressed(_:)), for: .touchUpInside)
         self.takePictureButton.accessibilityIdentifier = "takePictureButton"
         self.contentView.addSubview(self.takePictureButton)
         
-        self.changeCameraButton.setIcon(.cameraSwitch, with: .tiny, for: [])
+        self.changeCameraButton.setIcon(.cameraSwitch, size: .tiny, for: [])
         self.changeCameraButton.setIconColor(UIColor.white, for: [])
         self.changeCameraButton.translatesAutoresizingMaskIntoConstraints = false
         self.changeCameraButton.addTarget(self, action: #selector(changeCameraPressed(_:)), for: .touchUpInside)

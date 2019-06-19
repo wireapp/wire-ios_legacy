@@ -22,7 +22,7 @@ import UIKit
 
 class ConversationSystemMessageCell: ConversationIconBasedCell, ConversationMessageCell {
 
-    struct Configuration {
+    struct Configuration: Equatable {
         let icon: UIImage?
         let attributedText: NSAttributedString?
         let showLine: Bool
@@ -76,7 +76,7 @@ class ConversationStartedSystemMessageCell: ConversationIconBasedCell, Conversat
 // MARK: - UITextViewDelegate
 extension ConversationStartedSystemMessageCell {
 
-    public func textView(_ textView: UITextView, shouldInteractWith url: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+    public override func textView(_ textView: UITextView, shouldInteractWith url: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
 
         delegate?.conversationMessageWantsToOpenParticipantsDetails(self, selectedUsers: selectedUsers, sourceView: self)
 
@@ -146,7 +146,7 @@ class LinkConversationSystemMessageCell: ConversationIconBasedCell, Conversation
 
 extension LinkConversationSystemMessageCell {
 
-    public func textView(_ textView: UITextView, shouldInteractWith url: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+    public override func textView(_ textView: UITextView, shouldInteractWith url: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
 
         if let itemURL = lastConfiguration?.url {
             UIApplication.shared.open(itemURL)
@@ -203,17 +203,17 @@ class NewDeviceSystemMessageCell: ConversationIconBasedCell, ConversationMessage
 
 extension NewDeviceSystemMessageCell {
 
-    public func textView(_ textView: UITextView, shouldInteractWith url: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+    public override func textView(_ textView: UITextView, shouldInteractWith url: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
 
-        guard let linkTarget = linkTarget  else { return false }
+        guard let linkTarget = linkTarget,
+              url == type(of: self).userClientURL,
+              let zClientViewController = ZClientViewController.shared() else { return false }
 
-        if url == type(of: self).userClientURL {
-            switch linkTarget {
-            case .user(let user):
-                ZClientViewController.shared()?.openClientListScreen(for: user)
-            case .conversation(let conversation):
-                ZClientViewController.shared()?.openDetailScreen(for: conversation)
-            }
+        switch linkTarget {
+        case .user(let user):
+            zClientViewController.openClientListScreen(for: user)
+        case .conversation(let conversation):
+            zClientViewController.openDetailScreen(for: conversation)
         }
 
         return false
@@ -234,7 +234,7 @@ class ConversationRenamedSystemMessageCell: ConversationIconBasedCell, Conversat
     override func configureSubviews() {
         super.configureSubviews()
         nameLabel.numberOfLines = 0
-        imageView.image = UIImage(for: .pencil, fontSize: 16, color: .from(scheme: .textForeground))
+        imageView.setIcon(.pencil, size: 16, color: .from(scheme: .textForeground))
         bottomContentView.addSubview(nameLabel)
     }
 
@@ -340,6 +340,10 @@ class ConversationSystemMessageCellDescription {
                                                                             systemMessageType: systemMessageData.systemMessageType)
             return [AnyConversationMessageCellDescription(cell)]
 
+        case .legalHoldEnabled, .legalHoldDisabled:
+            let cell = ConversationLegalHoldCellDescription(systemMessageType: systemMessageData.systemMessageType, conversation: conversation)
+            return [AnyConversationMessageCellDescription(cell)]
+            
         case .newConversation:
             var cells: [AnyConversationMessageCellDescription] = []
             let startedConversationCell = ConversationStartedSystemMessageCellDescription(message: message, data: systemMessageData)
@@ -467,6 +471,14 @@ class ConversationCallSystemMessageCellDescription: ConversationMessageCellDescr
         configuration = View.Configuration(icon: viewModel.image(), attributedText: viewModel.attributedTitle(), showLine: false)
         actionController = nil
     }
+
+    func isConfigurationEqual(with other: Any) -> Bool {
+        guard let otherDescription = other as? ConversationCallSystemMessageCellDescription else {
+            return false
+        }
+
+        return self.configuration == otherDescription.configuration
+    }
 }
 
 class ConversationMessageTimerCellDescription: ConversationMessageCellDescription {
@@ -505,7 +517,7 @@ class ConversationMessageTimerCellDescription: ConversationMessageCellDescriptio
                 .adding(font: .mediumSemiboldFont, to: timerString)
         }
 
-        let icon = UIImage(for: .hourglass, fontSize: 16, color: UIColor.from(scheme: .textDimmed))
+        let icon = StyleKitIcon.hourglass.makeImage(size: 16, color: UIColor.from(scheme: .textDimmed))
         configuration = View.Configuration(icon: icon, attributedText: updateText, showLine: false)
         actionController = nil
     }
@@ -594,7 +606,7 @@ class ConversationMissingMessagesSystemMessageCellDescription: ConversationMessa
     
     init(message: ZMConversationMessage, data: ZMSystemMessageData) {
         let title = ConversationMissingMessagesSystemMessageCellDescription.makeAttributedString(systemMessageData: data)
-        configuration =  View.Configuration(icon: UIImage(for: .exclamationMark, fontSize: 16, color: .vividRed), attributedText: title, showLine: true)
+        configuration =  View.Configuration(icon: StyleKitIcon.exclamationMark.makeImage(size: .tiny, color: .vividRed), attributedText: title, showLine: true)
         actionController = nil
     }
     
@@ -702,7 +714,7 @@ class ConversationCannotDecryptSystemMessageCellDescription: ConversationMessage
 
     init(message: ZMConversationMessage, data: ZMSystemMessageData, sender: ZMUser, remoteIdentityChanged: Bool) {
         let exclamationColor = UIColor(for: .vividRed)
-        let icon = UIImage(for: .exclamationMark, fontSize: 16, color: exclamationColor)
+        let icon = StyleKitIcon.exclamationMark.makeImage(size: 16, color: exclamationColor)
         let link: URL = remoteIdentityChanged ? .wr_cannotDecryptNewRemoteIDHelp : .wr_cannotDecryptHelp
 
         let title = ConversationCannotDecryptSystemMessageCellDescription
@@ -826,8 +838,13 @@ class ConversationNewDeviceSystemMessageCellDescription: ConversationMessageCell
         }
     }
     
-    private static var verifiedIcon = WireStyleKit.imageOfShieldnotverified
-    private static var exclamationMarkIcon = UIImage(for: .exclamationMark, fontSize: 16, color: .vividRed)
+    private static var verifiedIcon: UIImage {
+        return WireStyleKit.imageOfShieldnotverified
+    }
+
+    private static var exclamationMarkIcon: UIImage {
+        return StyleKitIcon.exclamationMark.makeImage(size: 16, color: .vividRed)
+    }
     
     private static func configureForReactivatedSelfClient(_ selfUser: ZMUser, attributes: TextAttributes) -> View.Configuration {
         let deviceString = NSLocalizedString("content.system.this_device", comment: "")

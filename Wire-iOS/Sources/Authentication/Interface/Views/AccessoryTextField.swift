@@ -59,7 +59,7 @@ class AccessoryTextField: UITextField, TextContainer, Themeable {
         }
     }
     
-    var overrideButtonIcon: ZetaIconType? {
+    var overrideButtonIcon: StyleKitIcon? {
         didSet {
             updateButtonIcon()
         }
@@ -229,18 +229,18 @@ class AccessoryTextField: UITextField, TextContainer, Themeable {
         }
     }
     
-    private var buttonIcon: ZetaIconType {
+    private var buttonIcon: StyleKitIcon {
         return isLoading
         ? .spinner
-        : overrideButtonIcon ?? (UIApplication.isLeftToRightLayout ? .chevronRight : .chevronLeft)
+        : overrideButtonIcon ?? (UIApplication.isLeftToRightLayout ? .forwardArrow : .backArrow)
     }
     
-    private var iconSize: ZetaIconSize {
+    private var iconSize: StyleKitIcon.Size {
         return isLoading ? .medium : .tiny
     }
     
     private func updateButtonIcon() {
-        confirmButton.setIcon(buttonIcon, with: iconSize, for: .normal)
+        confirmButton.setIcon(buttonIcon, size: iconSize, for: .normal)
         
         if isLoading {
             confirmButton.setIconColor(UIColor.Team.inactiveButtonColor, for: .normal)

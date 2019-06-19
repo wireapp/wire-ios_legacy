@@ -64,7 +64,7 @@ class UserCell: SeparatorCollectionViewCell {
             let foregroundColor = UIColor.from(scheme: .background, variant: colorSchemeVariant)
             let backgroundColor = UIColor.from(scheme: .iconNormal, variant: colorSchemeVariant)
             let borderColor = isSelected ? backgroundColor : backgroundColor.withAlphaComponent(0.64)
-            checkmarkIconView.image = isSelected ? UIImage(for: .checkmark, iconSize: .like, color: foregroundColor) : nil
+            checkmarkIconView.image = isSelected ? StyleKitIcon.checkmark.makeImage(size: 12, color: foregroundColor) : nil
             checkmarkIconView.backgroundColor = isSelected ? backgroundColor : .clear
             checkmarkIconView.layer.borderColor = borderColor.cgColor
         }
@@ -104,7 +104,7 @@ class UserCell: SeparatorCollectionViewCell {
         verifiedIconView.accessibilityIdentifier = "img.shield"
         verifiedIconView.isHidden = true
         
-        connectButton.setIcon(.plusCircled, with: .tiny, for: .normal)
+        connectButton.setIcon(.plusCircled, size: .tiny, for: .normal)
         connectButton.imageView?.contentMode = .center
         connectButton.isHidden = true
         
@@ -181,9 +181,9 @@ class UserCell: SeparatorCollectionViewCell {
         super.applyColorScheme(colorSchemeVariant)
         let sectionTextColor = UIColor.from(scheme: .sectionText, variant: colorSchemeVariant)
         backgroundColor = contentBackgroundColor(for: colorSchemeVariant)
-        videoIconView.image = UIImage(for: .videoCall, iconSize: .tiny, color: UIColor.from(scheme: .iconGuest, variant: colorSchemeVariant))
-        guestIconView.image = UIImage(for: .guest, iconSize: .tiny, color: UIColor.from(scheme: .iconGuest, variant: colorSchemeVariant))
-        accessoryIconView.image = UIImage(for: .disclosureIndicator, iconSize: .like, color: sectionTextColor)
+        videoIconView.setIcon(.videoCall, size: .tiny, color: UIColor.from(scheme: .iconGuest, variant: colorSchemeVariant))
+        guestIconView.setIcon(.guest, size: .tiny, color: UIColor.from(scheme: .iconGuest, variant: colorSchemeVariant))
+        accessoryIconView.setIcon(.disclosureIndicator, size: 12, color: sectionTextColor)
         connectButton.setIconColor(sectionTextColor, for: .normal)
         checkmarkIconView.layer.borderColor = UIColor.from(scheme: .iconNormal, variant: colorSchemeVariant).cgColor
         titleLabel.textColor = UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)
@@ -195,7 +195,14 @@ class UserCell: SeparatorCollectionViewCell {
         guard let user = self.user else {
             return
         }
-        titleLabel.attributedText = user.nameIncludingAvailability(color: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant))
+        
+        var attributedTitle = user.nameIncludingAvailability(color: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant))
+        
+        if user.isSelfUser, let title = attributedTitle {
+            attributedTitle = title + "user_cell.title.you_suffix".localized
+        }
+        
+        titleLabel.attributedText = attributedTitle
     }
     
     public func configure(with user: UserType, conversation: ZMConversation? = nil) {

@@ -56,7 +56,7 @@ final class MediaPreviewView: RoundedView {
         addSubview(titleLabel)
 
         playButton.isUserInteractionEnabled = false
-        playButton.setIcon(.externalLink, with: .medium, for: .normal)
+        playButton.setIcon(.externalLink, size: .medium, for: .normal)
         playButton.setIconColor(UIColor.white, for: UIControl.State.normal)
         addSubview(playButton)
 

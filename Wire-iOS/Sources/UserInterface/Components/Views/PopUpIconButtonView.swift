@@ -101,7 +101,7 @@ class PopUpIconButtonView: UIView {
         if let imageView = button.imageView {
             // rect in window coordinates
             let imageRect = imageView.convert(button.imageView!.bounds, to: nil)
-            let image = UIImage(for: button.iconType(for: .normal), iconSize: .tiny, color: UIColor.from(scheme: .iconNormal))!
+            let image = button.icon(for: .normal)!.makeImage(size: .tiny, color: UIColor.from(scheme: .iconNormal))
             image.draw(in: imageRect)
         }
         
@@ -110,7 +110,7 @@ class PopUpIconButtonView: UIView {
             for (index, icon) in button.itemIcons.enumerated() {
                 let itemRect = rectForItem(icon)!
                 let iconColor = index == selectedIndex ? .accent() : UIColor.from(scheme: .iconNormal)
-                let image = UIImage(for: icon, iconSize: .medium, color: iconColor)!
+                let image = icon.makeImage(size: .medium, color: iconColor)
                 // rect in window coordinates
                 var imageRect = buttonImageView.convert(buttonImageView.bounds, to: nil)
                 // center image in item rect
@@ -276,15 +276,15 @@ class PopUpIconButtonView: UIView {
         }
     }
  
-    private func rectForItem(_ item: ZetaIconType) -> CGRect? {
+    private func rectForItem(_ item: StyleKitIcon) -> CGRect? {
         
-        let icons: [ZetaIconType]
+        let icons: [StyleKitIcon]
         switch expandDirection {
         case .left:     icons = button.itemIcons.reversed()
         case .right:    icons = button.itemIcons
         }
         
-        guard let index = icons.index(of: item) else { return nil }
+        guard let index = icons.firstIndex(of: item) else { return nil }
         
         var rect = CGRect(origin: upperRect.origin, size: CGSize(width: itemWidth, height: upperRect.height))
         

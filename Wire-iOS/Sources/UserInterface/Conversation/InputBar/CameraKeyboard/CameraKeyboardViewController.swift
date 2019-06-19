@@ -57,7 +57,8 @@ open class CameraKeyboardViewController: UIViewController {
         case camera = 0, photos = 1
     }
     
-    internal let assetLibrary: AssetLibrary
+    let assetLibrary: AssetLibrary
+    let imageManager: ImageManagerProtocol
     internal var collectionView: UICollectionView!
     internal let goBackButton = IconButton()
     internal let cameraRollButton = IconButton()
@@ -69,9 +70,13 @@ open class CameraKeyboardViewController: UIViewController {
         NotificationCenter.default.removeObserver(self)
     }
     
-    init(splitLayoutObservable: SplitLayoutObservable, assetLibrary: AssetLibrary = AssetLibrary(), permissions: PhotoPermissionsController = PhotoPermissionsControllerStrategy()) {
+    init(splitLayoutObservable: SplitLayoutObservable,
+         assetLibrary: AssetLibrary = AssetLibrary(),
+         imageManager: ImageManagerProtocol = PHImageManager.default(),
+         permissions: PhotoPermissionsController = PhotoPermissionsControllerStrategy()) {
         self.splitLayoutObservable = splitLayoutObservable
         self.assetLibrary = assetLibrary
+        self.imageManager = imageManager
         self.permissions = permissions
         super.init(nibName: nil, bundle: nil)
         self.assetLibrary.delegate = self
@@ -113,7 +118,7 @@ open class CameraKeyboardViewController: UIViewController {
         self.goBackButton.translatesAutoresizingMaskIntoConstraints = false
         self.goBackButton.backgroundColor = UIColor(white: 0, alpha: 0.88)
         self.goBackButton.circular = true
-        self.goBackButton.setIcon(.backArrow, with: .tiny, for: [])
+        self.goBackButton.setIcon(.backArrow, size: .tiny, for: [])
         self.goBackButton.setIconColor(UIColor.white, for: [])
         self.goBackButton.accessibilityIdentifier = "goBackButton"
         self.goBackButton.addTarget(self, action: #selector(goBackPressed(_:)), for: .touchUpInside)
@@ -122,7 +127,7 @@ open class CameraKeyboardViewController: UIViewController {
         self.cameraRollButton.translatesAutoresizingMaskIntoConstraints = false
         self.cameraRollButton.backgroundColor = UIColor(white: 0, alpha: 0.88)
         self.cameraRollButton.circular = true
-        self.cameraRollButton.setIcon(.photo, with: .tiny, for: [])
+        self.cameraRollButton.setIcon(.photo, size: .tiny, for: [])
         self.cameraRollButton.setIconColor(UIColor.white, for: [])
         self.cameraRollButton.accessibilityIdentifier = "cameraRollButton"
         self.cameraRollButton.addTarget(self, action: #selector(openCameraRollPressed(_:)), for: .touchUpInside)
@@ -207,8 +212,6 @@ open class CameraKeyboardViewController: UIViewController {
     }
 
     fileprivate func forwardSelectedPhotoAsset(_ asset: PHAsset) {
-        let manager = PHImageManager.default()
-
         let completeBlock = { (data: Data?, uti: String?) in
             guard let data = data else { return }
 
@@ -235,7 +238,7 @@ open class CameraKeyboardViewController: UIViewController {
             options.resizeMode = .exact
             options.isSynchronous = false
 
-            manager.requestImage(for: asset, targetSize: CGSize(width:limit, height:limit), contentMode: .aspectFit, options: options, resultHandler: { image, info in
+            imageManager.requestImage(for: asset, targetSize: CGSize(width:limit, height:limit), contentMode: .aspectFit, options: options, resultHandler: { image, info in
                 if let image = image {
                     let data = image.jpegData(compressionQuality: 0.9)
                     completeBlock(data, info?["PHImageFileUTIKey"] as? String)
@@ -245,7 +248,7 @@ open class CameraKeyboardViewController: UIViewController {
                         self.showLoadingView = true
                     })
 
-                    manager.requestImage(for: asset, targetSize: CGSize(width:limit, height:limit), contentMode: .aspectFit, options: options, resultHandler: { image, info in
+                    self.imageManager.requestImage(for: asset, targetSize: CGSize(width:limit, height:limit), contentMode: .aspectFit, options: options, resultHandler: { image, info in
                         DispatchQueue.main.async(execute: {
                             self.showLoadingView = false
                         })
@@ -266,7 +269,7 @@ open class CameraKeyboardViewController: UIViewController {
             options.isNetworkAccessAllowed = false
             options.isSynchronous = false
 
-            manager.requestImageData(for: asset, options: options, resultHandler: { data, uti, orientation, info in
+            imageManager.requestImageData(for: asset, options: options, resultHandler: { data, uti, orientation, info in
 
                 guard let data = data else {
                     options.isNetworkAccessAllowed = true
@@ -274,7 +277,7 @@ open class CameraKeyboardViewController: UIViewController {
                         self.showLoadingView = true
                     })
 
-                    manager.requestImageData(for: asset, options: options, resultHandler: { data, uti, orientation, info in
+                    self.imageManager.requestImageData(for: asset, options: options, resultHandler: { data, uti, orientation, info in
                         DispatchQueue.main.async(execute: {
                             self.showLoadingView = false
                         })
@@ -295,15 +298,14 @@ open class CameraKeyboardViewController: UIViewController {
     }
     
     fileprivate func forwardSelectedVideoAsset(_ asset: PHAsset) {
-        let manager = PHImageManager.default()
-
         let options = PHVideoRequestOptions()
         options.deliveryMode = .highQualityFormat
         options.isNetworkAccessAllowed = true
         options.version = .current
 
         self.showLoadingView = true
-        manager.requestExportSession(forVideo: asset, options: options, exportPreset: AVAssetExportPresetMediumQuality) { exportSession, info in
+
+        imageManager.requestExportSession(forVideo: asset, options: options, exportPreset: AVAssetExportPresetMediumQuality) { exportSession, info in
             
             DispatchQueue.main.async(execute: {
             
@@ -412,9 +414,14 @@ extension CameraKeyboardViewController: UICollectionViewDelegateFlowLayout, UICo
             }
             
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AssetCell.reuseIdentifier, for: indexPath) as! AssetCell
+
+            cell.manager = imageManager
+
             if let asset = try? assetLibrary.asset(atIndex: UInt((indexPath as NSIndexPath).row)) {
                 cell.asset = asset
             }
+
+
             return cell
         }
     }

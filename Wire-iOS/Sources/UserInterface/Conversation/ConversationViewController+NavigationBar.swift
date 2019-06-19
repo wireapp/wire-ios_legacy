@@ -36,7 +36,7 @@ public extension ConversationViewController {
     }
     
     var audioCallButton: UIBarButtonItem {
-        let button = UIBarButtonItem(icon: .callAudio, target: self, action: #selector(ConversationViewController.voiceCallItemTapped(_:)))
+        let button = UIBarButtonItem(icon: .phone, target: self, action: #selector(ConversationViewController.voiceCallItemTapped(_:)))
         button.accessibilityIdentifier = "audioCallBarButton"
         button.accessibilityTraits.insert(.startsMediaSession)
         button.accessibilityLabel = "call.actions.label.make_audio_call".localized
@@ -44,7 +44,7 @@ public extension ConversationViewController {
     }
 
     var videoCallButton: UIBarButtonItem {
-        let button = UIBarButtonItem(icon: .callVideo, target: self, action: #selector(ConversationViewController.videoCallItemTapped(_:)))
+        let button = UIBarButtonItem(icon: .videoCall, target: self, action: #selector(ConversationViewController.videoCallItemTapped(_:)))
         button.accessibilityIdentifier = "videoCallBarButton"
         button.accessibilityTraits.insert(.startsMediaSession)
         button.accessibilityLabel = "call.actions.label.make_video_call".localized
@@ -69,8 +69,8 @@ public extension ConversationViewController {
 
     var backButton: UIBarButtonItem {
         let hasUnreadInOtherConversations = self.conversation.hasUnreadMessagesInOtherConversations
-        let arrowIcon: ZetaIconType = hasUnreadInOtherConversations ? .backArrowWithDot : .backArrow
-        let icon: ZetaIconType = (self.parent?.wr_splitViewController?.layoutSize == .compact) ? arrowIcon : .hamburger
+        let arrowIcon: StyleKitIcon = hasUnreadInOtherConversations ? .backArrowWithDot : .backArrow
+        let icon: StyleKitIcon = (self.parent?.wr_splitViewController?.layoutSize == .compact) ? arrowIcon : .hamburger
         let action = #selector(ConversationViewController.onBackButtonPressed(_:))
         let button = UIBarButtonItem(icon: icon, target: self, action: action)
         button.accessibilityIdentifier = "ConversationBackButton"
@@ -87,7 +87,7 @@ public extension ConversationViewController {
     @objc var collectionsBarButtonItem: UIBarButtonItem {
         let showingSearchResults = (self.collectionController?.isShowingSearchResults ?? false)
         let action = #selector(ConversationViewController.onCollectionButtonPressed(_:))
-        let button = UIBarButtonItem(icon: showingSearchResults ? .searchOngoing : .search, target: self, action: action)
+        let button = UIBarButtonItem(icon: showingSearchResults ? .activeSearch : .search, target: self, action: action)
         button.accessibilityIdentifier = "collection"
         button.accessibilityLabel = "conversation.action.search".localized
         
@@ -98,7 +98,7 @@ public extension ConversationViewController {
         return button
     }
 
-    @objc public func rightNavigationItems(forConversation conversation: ZMConversation) -> [UIBarButtonItem] {
+    @objc func rightNavigationItems(forConversation conversation: ZMConversation) -> [UIBarButtonItem] {
         guard !conversation.isReadOnly, conversation.activeParticipants.count != 0 else { return [] }
 
         if conversation.canJoinCall {
@@ -112,7 +112,7 @@ public extension ConversationViewController {
         }
     }
 
-    @objc public func leftNavigationItems(forConversation conversation: ZMConversation) -> [UIBarButtonItem] {
+    @objc func leftNavigationItems(forConversation conversation: ZMConversation) -> [UIBarButtonItem] {
         var items: [UIBarButtonItem] = []
 
         if self.parent?.wr_splitViewController?.layoutSize != .regularLandscape {
@@ -126,7 +126,7 @@ public extension ConversationViewController {
         return items
     }
 
-    @objc public func updateRightNavigationItemsButtons() {
+    @objc func updateRightNavigationItemsButtons() {
         if UIApplication.isLeftToRightLayout {
             navigationItem.rightBarButtonItems = rightNavigationItems(forConversation: conversation)
         } else {

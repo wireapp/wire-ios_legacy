@@ -22,7 +22,7 @@ import Cartography
 
 
 @objc enum ConversationListButtonType: UInt {
-    case archive, compose, camera, startUI
+    case archive, camera, startUI
 }
 
 @objc protocol ConversationListBottomBarControllerDelegate: class {
@@ -37,7 +37,6 @@ import Cartography
     let startUIButton  = IconButton()
     let archivedButton = IconButton()
     let cameraButton   = IconButton()
-    let composeButton  = IconButton()
 
     let separator = UIView()
     private let heightConstant: CGFloat = 56
@@ -74,31 +73,25 @@ import Cartography
     private func createViews() {
         separator.backgroundColor = UIColor.from(scheme: .separator, variant: .light)
         
-        archivedButton.setIcon(.archive, with: .tiny, for: [])
+        archivedButton.setIcon(.archive, size: .tiny, for: [])
         archivedButton.addTarget(self, action: #selector(archivedButtonTapped), for: .touchUpInside)
         archivedButton.accessibilityIdentifier = "bottomBarArchivedButton"
         archivedButton.accessibilityLabel = "conversation_list.voiceover.bottom_bar.archived_button.label".localized
         archivedButton.accessibilityHint = "conversation_list.voiceover.bottom_bar.archived_button.hint".localized
 
-        startUIButton.setIcon(.person, with: .tiny, for: .normal)
+        startUIButton.setIcon(.person, size: .tiny, for: .normal)
         startUIButton.addTarget(self, action: #selector(startUIButtonTapped), for: .touchUpInside)
         startUIButton.accessibilityIdentifier = "bottomBarPlusButton"
         startUIButton.accessibilityLabel = "conversation_list.voiceover.bottom_bar.contacts_button.label".localized
         startUIButton.accessibilityHint = "conversation_list.voiceover.bottom_bar.contacts_button.hint".localized
 
-        composeButton.setIcon(.compose, with: .tiny, for: .normal)
-        composeButton.addTarget(self, action: #selector(composeButtonTapped), for: .touchUpInside)
-        composeButton.accessibilityIdentifier = "bottomBarComposeButton"
-        composeButton.accessibilityLabel = "conversation_list.voiceover.bottom_bar.compose_button.label".localized
-        composeButton.accessibilityHint = "conversation_list.voiceover.bottom_bar.compose_button.hint".localized
-
-        cameraButton.setIcon(.cameraLens, with: .tiny, for: .normal)
+        cameraButton.setIcon(.cameraLens, size: .tiny, for: .normal)
         cameraButton.addTarget(self, action: #selector(cameraButtonTapped), for: .touchUpInside)
         cameraButton.accessibilityIdentifier = "bottomBarCameraButton"
         cameraButton.accessibilityLabel = "conversation_list.voiceover.bottom_bar.camera_button.label".localized
         cameraButton.accessibilityHint = "conversation_list.voiceover.bottom_bar.camera_button.hint".localized
 
-        [archivedButton, startUIButton, composeButton, cameraButton].forEach { button in
+        [archivedButton, startUIButton, cameraButton].forEach { button in
             button.setIconColor(UIColor.from(scheme: .textForeground, variant: .dark), for: .normal)
         }
 
@@ -111,11 +104,7 @@ import Cartography
     }
 
     private func addSubviews() {
-        if showComposeButtons {
-            [cameraButton, composeButton, archivedButton, startUIButton, separator].forEach(view.addSubview)
-        } else {
-            [archivedButton, startUIButton, separator].forEach(view.addSubview)
-        }
+        [archivedButton, startUIButton, separator].forEach(view.addSubview)
     }
 
     private func createConstraints() {
@@ -127,10 +116,16 @@ import Cartography
             separator.top == view.top
         }
 
-        if showComposeButtons {
-            createConstraintsWithComposeButtons()
-        } else {
-            createConstraintsWithoutComposeButtons()
+        constrain(view, cameraButton, startUIButton, archivedButton) { view, cameraButton, startUIButton, archivedButton in
+            startUIButton.centerY == view.centerY
+            archivedButton.centerY == view.centerY
+            archivedButton.trailing == view.trailing - xInset
+
+            if showArchived {
+                startUIButton.leading == view.leading + xInset
+            } else {
+                startUIButton.centerX == view.centerX
+            }
         }
     }
 
@@ -140,50 +135,9 @@ import Cartography
         didLayout = true
     }
 
-    private func createConstraintsWithoutComposeButtons() {
-        constrain(view, cameraButton, startUIButton, archivedButton, composeButton) { view, cameraButton, startUIButton, archivedButton, composeButton in
-            startUIButton.centerY == view.centerY
-            archivedButton.centerY == view.centerY
-            archivedButton.trailing == view.trailing - xInset
-            
-            if showArchived {
-                startUIButton.leading == view.leading + xInset
-            } else {
-                startUIButton.centerX == view.centerX
-            }
-        }
-    }
-
-    private func createConstraintsWithComposeButtons() {
-        let containerWidth = composeButton.frame.midX - cameraButton.frame.midX
-
-        constrain(view, cameraButton, startUIButton, archivedButton, composeButton) { view, cameraButton, startUIButton, archivedButton, composeButton in
-            startUIButton.centerY == view.centerY
-            archivedButton.centerY == view.centerY
-
-            cameraButton.centerY == view.centerY
-            composeButton.centerY == view.centerY
-            cameraButton.leading == view.leading + xInset
-            composeButton.trailing == view.trailing - xInset
-
-            if showArchived {
-                let spacingX = containerWidth / 3
-                startUIButton.centerX == cameraButton.centerX + spacingX
-                archivedButton.centerX == startUIButton.centerX + spacingX
-            } else {
-                startUIButton.center == view.center
-            }
-        }
-    }
-
     func updateViews() {
         archivedButton.isHidden = !showArchived
-
-        if showComposeButtons {
-            [cameraButton, composeButton, archivedButton, startUIButton, separator].forEach { $0.removeFromSuperview() }
-        } else {
-            [archivedButton, startUIButton, separator].forEach { $0.removeFromSuperview() }
-        }
+        [archivedButton, startUIButton, separator].forEach { $0.removeFromSuperview() }
         
         addSubviews()
         createConstraints()
@@ -203,9 +157,6 @@ import Cartography
         delegate?.conversationListBottomBar(self, didTapButtonWithType: .camera)
     }
 
-    @objc private dynamic func composeButtonTapped(_ sender: IconButton) {
-        delegate?.conversationListBottomBar(self, didTapButtonWithType: .compose)
-    }
 }
 
 // MARK: - Helper

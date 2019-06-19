@@ -26,7 +26,7 @@
 @class ZMConversation;
 @class ZMEmailCredentials;
 
-typedef NS_ENUM(NSUInteger, SettingsColorScheme) {
+typedef NS_CLOSED_ENUM(NSUInteger, SettingsColorScheme) {
     SettingsColorSchemeLight,
     SettingsColorSchemeDark
 };
@@ -37,7 +37,7 @@ typedef NS_ENUM (NSUInteger, SettingsLastScreen) {
     SettingsLastScreenConversation
 };
 
-typedef NS_ENUM (NSUInteger, SettingsCamera) {
+typedef NS_CLOSED_ENUM (NSUInteger, SettingsCamera) {
     SettingsCameraFront,
     SettingsCameraBack
 };

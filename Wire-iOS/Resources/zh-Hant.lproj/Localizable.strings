@@ -206,6 +206,8 @@
 "conversation.status.silenced" = "訊息通知已關閉";
 "conversation.status.poor_connection" = "連線品質不佳";
 "conversation.status.blocked" = "已封鎖";
+"conversation.status.incoming_call" = "%@呼叫中...";
+"conversation.status.incoming_call.unknown" = "Someone is calling…";
 
 "conversation.status.message.text" = "%@";
 "conversation.status.message.link" = "分享一條連結";
@@ -855,7 +857,7 @@
 // Settings - top level
 "self.settings.create_team.title" = "建立團隊";
 "self.settings.manage_team.title" = "管理團隊";
-"self.settings.add_team_or_account.title" = "新建團隊或帳號";
+"self.settings.add_team_or_account.title" = "Add Account";
 "self.settings.add_account.title" = "新增帳號";
 
 "self.settings.add_account.error.title" = "已啓動三個賬號";
@@ -995,6 +997,7 @@
 "self.settings.popular_demand.title" = "推薦選項";
 "self.settings.popular_demand.send_button.title" = "發送按鍵";
 "self.settings.popular_demand.send_button.footer" = "停用按輸入鍵發送信息功能。";
+"self.settings.popular_demand.dark_mode.footer" = "Switch between dark and light theme.";
 
 // Open in
 "self.settings.external_apps.header" = "開啟";
@@ -1003,7 +1006,7 @@
 "self.settings.link_options.maps.title" = "位置";
 "self.settings.link_options.browser.title" = "瀏覽器";
 
-"open_link.twitter.option.default" = "Safari / Twitter";
+"open_link.twitter.option.default" = "Browser / Twitter";
 "open_link.twitter.option.tweetbot" = "Tweetbot";
 "open_link.twitter.option.twitterrific" = "Twitterrific";
 
@@ -1135,6 +1138,10 @@
 "landing.login.hints" = "已有帳號？";
 "landing.login.button.title" = "登入";
 
+"landing.custom_backend.title" = "Connected to \"%@\"";
+"landing.custom_backend.more_info.button.title" = "Show more";
+"landing.custom_backend.more_info.alert.title" = " You are connected to a third-party server: %@";
+
 // Create team
 
 "team.name.headline" = "為您的團隊命名";
@@ -1240,7 +1247,7 @@
 "registration.alert.account_exists.title" = "帳戶已存在";
 "registration.alert.account_exists.message_phone" = "您註冊的電話號碼已連結到帳戶。\n\n請使用其他電話號碼，或者如果您擁有此帳戶，請嘗試登錄。";
 "registration.alert.account_exists.message_email" = "您註冊的電郵地址已連結到帳戶。\n\n請使用其他電郵地址，或者如果您擁有此帳戶，請嘗試登錄。";
-"registration.alert.change_email_action" = "更改電子郵箱";
+"registration.alert.change_email_action" = "Register with Another Email";
 "registration.alert.change_phone_action" = "使用另一手機號碼註冊";
 "registration.alert.change_signin_action" = "登入";
 
@@ -1512,6 +1519,8 @@
 
 "availability.message.cancel" = "取消";
 "availability.message.set_status" = "設定狀態";
+"availability.accessibility_label.change_status" = "Change Status";
+"availability.accessibility_label.status" = "Status";
 
 "availability.none" = "沒有狀態";
 "availability.available" = "在線";
@@ -1520,6 +1529,17 @@
 "availability.available.placeholder" = "%@在線";
 "availability.away.placeholder" = "%@已離開";
 "availability.busy.placeholder" = "%@忙碌中";
+
+"availability.reminder.away.title" = "You are set to Away";
+"availability.reminder.away.message" = "You will appear as Away to other people. You will not receive notifications about any incoming calls or messages.";
+"availability.reminder.busy.title" = "You are set to Busy";
+"availability.reminder.busy.message" = "You will appear as Busy to other people. You will only receive notifications for mentions, replies, and calls in conversations that are not muted.";
+"availability.reminder.available.title" = "You are set to Available";
+"availability.reminder.available.message" = "You will appear as Available to other people. You will receive notifications for incoming calls and for messages according to the Notifications setting in each conversation.";
+"availability.reminder.none.title" = "No status set";
+"availability.reminder.none.message" = "You will receive notifications for incoming calls and for messages according to the Notifications setting in each conversation.";
+"availability.reminder.action.dont_remind_me" = "Do not display this information again";
+"availability.reminder.action.ok" = "確認";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Call Quality Survey
@@ -1539,6 +1559,16 @@
 "url_action.confirm" = "確認";
 "url_action.title" = "確認 URL 動作";
 "url_action.connect_to_bot.message" = "你想要連接到Bot嗎？";
+
+"url_action.switch_backend.title" = "Connect to server";
+"url_action.switch_backend.message" = "This configuration will connect the app to a third-party server:\n%@";
+
+"url_action.switch_backend.error.logged_in.title" = "Can’t switch servers";
+"url_action.switch_backend.error.logged_in" = "You are already logged in. To switch to this server, log out of all accounts and try again.";
+
+"url_action.switch_backend.error.invalid_backend.title" = "The server is not responding";
+"url_action.switch_backend.error.invalid_backend" = "Please check your internet connection, verify the link and try again.";
+
 
 // Deep Link
 "url_action.invalid_user.title" = "Wire找不到這個人。";

@@ -26,7 +26,7 @@ extension MockConversation {
     }
 
     @objc var timeoutImage: UIImage? {
-        return WireStyleKit.imageOfWeek(color: .accent())
+        return StyleKitIcon.timeoutWeek.makeImage(size: 64, color: .accent())
     }
 
 }

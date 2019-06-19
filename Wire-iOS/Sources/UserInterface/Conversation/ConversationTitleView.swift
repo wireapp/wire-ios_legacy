@@ -41,21 +41,36 @@ class ConversationTitleView: TitleView {
         titleFont = FontSpec(.medium, .semibold).font!
         accessibilityHint = "conversation_details.open_button.accessibility_hint".localized
         
-        var attachment : NSTextAttachment?
-        if conversation.securityLevel == .secure {
-            attachment = .verifiedShield()
+        var attachments: [NSTextAttachment] = []
+        
+        if conversation.isUnderLegalHold {
+            attachments.append(.legalHold())
         }
-        super.configure(icon: attachment,
+        
+        if conversation.securityLevel == .secure {
+            attachments.append(.verifiedShield())
+        }
+        
+        super.configure(icons: attachments,
                         title: conversation.displayName.localizedUppercase,
                         interactive: self.interactive && conversation.relatedConnectionState != .sent)
-    }
-
-    override func updateAccessibilityLabel() {
+        
+        var components: [String] = []
+        components.append(conversation.displayName.localizedUppercase)
+        
         if conversation.securityLevel == .secure {
-            self.accessibilityLabel = conversation.displayName.localizedUppercase + ", " + "conversation.voiceover.verified".localized
-        } else {
-            self.accessibilityLabel = conversation.displayName.localizedUppercase
+            components.append("conversation.voiceover.verified".localized)
         }
+        
+        if conversation.isUnderLegalHold {
+            components.append("conversation.voiceover.legalhold".localized)
+        }
+        
+        if !UIApplication.isLeftToRightLayout {
+            components.reverse()
+        }
+        
+        self.accessibilityLabel = components.joined(separator: ", ")
     }
     
 }
@@ -66,6 +81,16 @@ extension NSTextAttachment {
         let shield = WireStyleKit.imageOfShieldverified
         attachment.image = shield
         let ratio = shield.size.width / shield.size.height
+        let height: CGFloat = 12
+        attachment.bounds = CGRect(x: 0, y: -2, width: height * ratio, height: height)
+        return attachment
+    }
+    
+    static func legalHold() -> NSTextAttachment {
+        let attachment = NSTextAttachment()
+        let legalHold = StyleKitIcon.legalholdactive.makeImage(size: .tiny, color: .vividRed)
+        attachment.image = legalHold
+        let ratio = legalHold.size.width / legalHold.size.height
         let height: CGFloat = 12
         attachment.bounds = CGRect(x: 0, y: -2, width: height * ratio, height: height)
         return attachment

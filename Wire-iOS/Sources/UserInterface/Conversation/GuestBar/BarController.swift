@@ -55,7 +55,7 @@ final class BarController: UIViewController {
     
     @objc(dismissBar:)
     public func dismiss(bar: UIViewController) {
-        guard let index = bars.index(of: bar) else {
+        guard let index = bars.firstIndex(of: bar) else {
             return
         }
         bar.willMove(toParent: nil)

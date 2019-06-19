@@ -32,7 +32,7 @@ import CoreLocation
     weak var delegate: LocationSelectionViewControllerDelegate?
     public let locationButton: IconButton = {
         let button = IconButton()
-        button.setIcon(.location, with: .tiny, for: [])
+        button.setIcon(.location, size: .tiny, for: [])
         button.borderWidth = 0.5
         button.setBorderColor(.from(scheme: .separator), for: .normal)
         button.circular = true

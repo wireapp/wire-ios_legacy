@@ -62,7 +62,7 @@ import Cartography
     
     func createViews() {
         separatorView.isHidden = true
-        dismissButton.setIcon(.cancel, with: .tiny, for: [])
+        dismissButton.setIcon(.cross, size: .tiny, for: [])
         dismissButton.addTarget(self, action: #selector(ArchivedNavigationBar.dismissButtonTapped(_:)), for: .touchUpInside)
         dismissButton.accessibilityIdentifier = "archiveCloseButton"
         dismissButton.setIconColor(.from(scheme: .textForeground, variant: .dark), for: .normal)

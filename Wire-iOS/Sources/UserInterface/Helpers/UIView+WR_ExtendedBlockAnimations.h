@@ -26,7 +26,7 @@ typedef NS_OPTIONS(NSUInteger, WRExtendedBlockAnimationsOptions) {
 };
 
 
-typedef NS_ENUM(NSInteger, WREasingFunction) {
+typedef NS_CLOSED_ENUM(NSInteger, WREasingFunction) {
     WREasingFunctionLinear,
     WREasingFunctionEaseInSine,
     WREasingFunctionEaseOutSine,

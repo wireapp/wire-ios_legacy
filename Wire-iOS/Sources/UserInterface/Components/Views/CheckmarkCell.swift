@@ -63,7 +63,7 @@ class CheckmarkCell: RightIconDetailsCell {
             color = UIColor.from(scheme: .textPlaceholder, variant: colorSchemeVariant)
         }
     
-        accessory = UIImage(for: .checkmark, iconSize: .tiny, color: color)
+        accessory = StyleKitIcon.checkmark.makeImage(size: .tiny, color: color)
     }
 
 }

@@ -18,25 +18,13 @@
 
 
 #import "ShareContactsViewController.h"
+#import "ShareContactsViewController+Internal.h"
+
 #import "PermissionDeniedViewController.h"
 #import "Button.h"
 #import "UIColor+WAZExtensions.h"
 #import "Wire-Swift.h"
 
-
-@import PureLayout;
-
-@interface ShareContactsViewController () <PermissionDeniedViewControllerDelegate>
-
-@property (nonatomic) UIButton *notNowButton;
-@property (nonatomic) UILabel *heroLabel;
-@property (nonatomic) Button *shareContactsButton;
-@property (nonatomic) UIView *shareContactsContainerView;
-@property (nonatomic) PermissionDeniedViewController *addressBookAccessDeniedViewController;
-@property (nonatomic) UIVisualEffectView *backgroundBlurView;
-@property (nonatomic) BOOL showingAddressBookAccessDeniedViewController;
-
-@end
 
 @implementation ShareContactsViewController
 
@@ -45,12 +33,10 @@
     [super viewDidLoad];
     UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
     self.backgroundBlurView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
-    self.backgroundBlurView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:self.backgroundBlurView];
-    [self.backgroundBlurView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
     self.backgroundBlurView.hidden = self.backgroundBlurDisabled;
     
-    self.shareContactsContainerView = [[UIView alloc] initForAutoLayout];
+    self.shareContactsContainerView = [[UIView alloc] init];
     [self.view addSubview:self.shareContactsContainerView];
     
     [self createHeroLabel];
@@ -68,7 +54,7 @@
 
 - (void)createHeroLabel
 {
-    self.heroLabel = [[UILabel alloc] initForAutoLayout];
+    self.heroLabel = [[UILabel alloc] init];
     self.heroLabel.font = UIFont.largeSemiboldFont;
     self.heroLabel.textColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:ColorSchemeVariantDark];
     self.heroLabel.attributedText = [self attributedHeroText];
@@ -127,35 +113,6 @@
     [self.view addSubview:self.addressBookAccessDeniedViewController.view];
     [self.addressBookAccessDeniedViewController didMoveToParentViewController:self];
     self.addressBookAccessDeniedViewController.view.hidden = YES;
-}
-
-- (void)createConstraints
-{
-    [self.shareContactsContainerView autoPinEdgesToSuperviewEdges];
-    [self.addressBookAccessDeniedViewController.view autoPinEdgesToSuperviewEdges];
-    
-    [self.heroLabel autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:28];
-    [self.heroLabel autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:28];
-    
-    [self.shareContactsButton autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.heroLabel withOffset:24];
-    [self.shareContactsButton autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsMake(0, 28, 28, 28) excludingEdge:ALEdgeTop];
-    [self.shareContactsButton autoSetDimension:ALDimensionHeight toSize:40];
-}
-
-- (void)displayContactsAccessDeniedMessageAnimated:(BOOL)animated
-{
-    self.showingAddressBookAccessDeniedViewController = YES;
-
-    if (animated) {
-        [UIView transitionFromView:self.shareContactsContainerView
-                            toView:self.addressBookAccessDeniedViewController.view
-                          duration:0.35
-                           options:UIViewAnimationOptionShowHideTransitionViews | UIViewAnimationOptionTransitionCrossDissolve
-                        completion:nil];
-    } else {
-        self.shareContactsContainerView.hidden = YES;
-        self.addressBookAccessDeniedViewController.view.hidden = NO;
-    }
 }
 
 - (void)setBackgroundBlurDisabled:(BOOL)backgroundBlurDisabled

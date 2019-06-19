@@ -26,7 +26,6 @@
 #import "UIViewController+Errors.h"
 #import "Analytics.h"
 #import "Analytics.h"
-#import "UIImage+ZetaIconsNeue.h"
 #import "AVAsset+VideoConvert.h"
 #import "Wire-Swift.h"
 
@@ -76,14 +75,14 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 #endif
     
     [docController addOptionWithTitle:NSLocalizedString(@"content.file.upload_video", @"")
-                                image:[UIImage imageForIcon:ZetaIconTypeMovie iconSize:ZetaIconSizeMedium color:[UIColor darkGrayColor]]
+                                image:[UIImage imageForIcon:WRStyleKitIconMovie size:24 color:[UIColor darkGrayColor]]
                                 order:UIDocumentMenuOrderFirst
                               handler:^{
                                   [self presentImagePickerWithSourceType:UIImagePickerControllerSourceTypePhotoLibrary mediaTypes:@[(id)kUTTypeMovie] allowsEditing:true pointToView:self.videoButton.imageView];
                               }];
     
     [docController addOptionWithTitle:NSLocalizedString(@"content.file.take_video", @"")
-                                image:[UIImage imageForIcon:ZetaIconTypeCameraShutter iconSize:ZetaIconSizeMedium color:[UIColor darkGrayColor]]
+                                image:[UIImage imageForIcon:WRStyleKitIconCameraShutter size:24 color:[UIColor darkGrayColor]]
                                 order:UIDocumentMenuOrderFirst
                               handler:^{
                                   [self presentImagePickerWithSourceType:UIImagePickerControllerSourceTypeCamera mediaTypes:@[(id)kUTTypeMovie] allowsEditing:false pointToView:self.videoButton.imageView];

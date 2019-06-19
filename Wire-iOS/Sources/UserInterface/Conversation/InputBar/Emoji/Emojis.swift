@@ -65,7 +65,7 @@ class EmojiDataSource: NSObject, UICollectionViewDataSource {
     }
     
     func sectionIndex(for type: EmojiSectionType) -> Int? {
-        return sections.map { $0.type }.index(of: type)
+        return sections.map { $0.type }.firstIndex(of: type)
     }
 
     func register(used emoji: Emoji) -> Update? {
@@ -93,7 +93,7 @@ enum EmojiSectionType: String {
 
     case recent, people, nature, food, travel, activities, objects, symbols, flags
 
-    var icon: ZetaIconType {
+    var icon: StyleKitIcon {
         switch self {
         case .recent: return .clock
         case .people: return .emoji

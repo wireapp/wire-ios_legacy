@@ -60,7 +60,7 @@ import WireSyncEngine
     // MARK: - Remote User
 
     /// The user session to use to download images.
-    @objc public var userSession: ZMUserSession? {
+    @objc public var userSession: ZMUserSessionInterface? {
         didSet {
             updateUser()
         }
@@ -147,7 +147,7 @@ import WireSyncEngine
             return user.isServiceUser ? .white : .clear
         case .text?:
             if user.isConnected || user.isSelfUser || user.isTeamMember || isWireless {
-                return user.indexedAccentColor
+                return user.accentColor
             } else {
                 return UIColor(white: 0.8, alpha: 1)
             }
@@ -183,14 +183,19 @@ import WireSyncEngine
 
     /// Updates the image for the user.
     fileprivate func updateUserImage() {
-        guard let user = user, let userSession = userSession else { return }
+        guard let user = user as? ProfileImageFetchableUser,
+              let userSession = userSession else { return }
 
         var desaturate = false
         if shouldDesaturate {
             desaturate = !user.isConnected && !user.isSelfUser && !user.isTeamMember && !user.isServiceUser
         }
 
-        user.fetchProfileImage(session: userSession, sizeLimit: size.rawValue, desaturate: desaturate, completion: { [weak self] (image, cacheHit) in
+        user.fetchProfileImage(session: userSession,
+                               cache: defaultUserImageCache,
+                               sizeLimit: size.rawValue,
+                               desaturate: desaturate,
+                               completion: { [weak self] (image, cacheHit) in
             // Don't set image if nil or if user has changed during fetch
             guard let image = image, user.isEqual(self?.user) else { return }
             self?.setAvatar(.image(image), user: user, animated: !cacheHit)
@@ -226,7 +231,7 @@ import WireSyncEngine
         let defaultAvatar = Avatar.text(initials.localizedUppercase)
         setAvatar(defaultAvatar, user: user, animated: false)
 
-        if let userSession = self.userSession {
+        if let userSession = userSession as? ZMUserSession {
             userObserverToken = UserChangeInfo.add(observer: self, for: user, userSession: userSession)
         }
 
@@ -237,7 +242,7 @@ import WireSyncEngine
 
     /// Updates the color of the badge indicator.
     private func updateIndicatorColor() {
-        self.badgeIndicator.backgroundColor = user?.indexedAccentColor
+        self.badgeIndicator.backgroundColor = user?.accentColor
     }
 
     /// Updates the interface to reflect if the user is a service user or not.

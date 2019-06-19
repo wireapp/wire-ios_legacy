@@ -132,10 +132,11 @@ class ShareExtensionViewController: SLComposeServiceViewController {
     }
 
     private func setupNavigationBar() {
+        let iconSize = CGSize(width: 32, height: 26.3)
         guard let item = navigationController?.navigationBar.items?.first else { return }
         item.rightBarButtonItem?.action = #selector(appendPostTapped)
         item.rightBarButtonItem?.title = "share_extension.send_button.title".localized
-        item.titleView = UIImageView(image: UIImage(forLogoWith: .black, iconSize: .small))
+        item.titleView = UIImageView(image: WireStyleKit.imageOfLogo(color: .black).downscaling(to: iconSize))
     }
 
     private var authenticatedAccounts: [Account] {
@@ -301,10 +302,10 @@ class ShareExtensionViewController: SLComposeServiceViewController {
                     self.preview?.image = image
                     self.preview?.displayMode = displayMode
                 case .placeholder(let iconType):
-                    self.preview?.image = UIImage(for: iconType, iconSize: .medium, color: UIColor.black.withAlphaComponent(0.7))
+                    self.preview?.setIcon(iconType, size: .medium, color: UIColor.black.withAlphaComponent(0.7))
 
                 case .remoteURL(let url):
-                    self.preview?.image = UIImage(for: .browser, iconSize: .medium, color: UIColor.black.withAlphaComponent(0.7))
+                    self.preview?.setIcon(.browser, size: .medium, color: UIColor.black.withAlphaComponent(0.7))
                     self.fetchWebsitePreview(for: url)
                 }
 
@@ -473,7 +474,7 @@ class ShareExtensionViewController: SLComposeServiceViewController {
     
     
     private func conversationDidDegrade(change: ConversationDegradationInfo, callback: @escaping DegradationStrategyChoice) {
-        let title = titleForMissingClients(users: change.users)
+        let title = titleForMissingClients(causedBy: change)
         let alert = UIAlertController(title: title, message: "meta.degraded.dialog_message".localized, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "meta.degraded.send_anyway_button".localized, style: .destructive, handler: { _ in
             callback(.sendAnyway)
@@ -483,12 +484,17 @@ class ShareExtensionViewController: SLComposeServiceViewController {
         }))
         self.present(alert, animated: true)
     }
-}
 
+    private func titleForMissingClients(causedBy change: ConversationDegradationInfo) -> String {
+        if change.conversation.legalHoldStatus == .pendingApproval {
+            return "meta.legalhold.send_alert_title".localized
+        }
 
-private func titleForMissingClients(users: Set<ZMUser>) -> String {
-    let template = users.count > 1 ? "meta.degraded.degradation_reason_message.plural" : "meta.degraded.degradation_reason_message.singular"
+        let users = change.users
+        let template = users.count > 1 ? "meta.degraded.degradation_reason_message.plural" : "meta.degraded.degradation_reason_message.singular"
     
-    let allUsers = (users.map(\.displayName) as NSArray).componentsJoined(by: ", ") as NSString
-    return NSString(format: template.localized as NSString, allUsers) as String
+        let allUsers = (users.map(\.displayName) as NSArray).componentsJoined(by: ", ") as NSString
+        return String.localizedStringWithFormat(template.localized, allUsers)
+    }
+
 }

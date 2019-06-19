@@ -77,11 +77,14 @@ import Foundation
         let callbackScheme = wr_companyLoginURLScheme()
         requireInternal(nil != callbackScheme, "no valid callback scheme")
 
-        let requester = CompanyLoginRequester(
-            backendHost: BackendEnvironment.shared.backendURL.host!,
-            callbackScheme: callbackScheme ?? CompanyLoginController.fallbackURLScheme
-        )
+        let requester = CompanyLoginController.createRequester(with: callbackScheme)
         self.init(detector: .shared, requester: requester)
+    }
+    
+    static private func createRequester(with scheme: String?) -> CompanyLoginRequester {
+        return CompanyLoginRequester(
+            callbackScheme: scheme ?? CompanyLoginController.fallbackURLScheme
+        )
     }
 
     /// Create a new `CompanyLoginController` instance using the specified requester.
@@ -182,11 +185,12 @@ import Foundation
         guard !presentOfflineAlertIfNeeded() else { return }
 
         delegate?.controller(self, showLoadingView: true)
-
-        requester.validate(token: code) {
+        
+        let host = BackendEnvironment.shared.backendURL.host!
+        requester.validate(host: host, token: code) {
             self.delegate?.controller(self, showLoadingView: false)
             guard !self.handleValidationErrorIfNeeded($0) else { return }
-            self.requester.requestIdentity(for: code)
+            self.requester.requestIdentity(host: host, token: code)
         }
     }
 

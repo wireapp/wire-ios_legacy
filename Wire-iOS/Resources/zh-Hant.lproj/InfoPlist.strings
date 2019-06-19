@@ -16,7 +16,7 @@
  *  along with this program. If not, see http://www.gnu.org/licenses/.
  */
 
-"NSContactsUsageDescription" = "分享您的通訊錄來找尋其他連絡人。我們將您的資料匿名處理並且不與任何人分享。";
+"NSContactsUsageDescription" = "Allow Wire to access your contacts to connect you with others. We anonymize all information before uploading it to our server and do not share it with anyone else.";
 "NSMicrophoneUsageDescription" = "請允許Wire使用麥克風來使用通話和語音訊息功能。";
 "NSLocationWhenInUseUsageDescription" = "請允許 Wire 獲得您的位置資料，這樣您將可以發送你的位置給您的朋友。";
 "NSCameraUsageDescription" = "請允許Wire使用相機權限來使用視訊通話和發送照片。";

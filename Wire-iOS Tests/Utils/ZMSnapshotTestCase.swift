@@ -109,9 +109,7 @@ open class ZMSnapshotTestCase: FBSnapshotTestCase {
         snapshotBackgroundColor = UIColor.clear
 
         // Enable when the design of the view has changed in order to update the reference snapshots
-        #if RECORDING_SNAPSHOTS
-        recordMode = true
-        #endif
+        recordMode = strcmp(getenv("RECORDING_SNAPSHOTS"), "YES") == 0
 
         usesDrawViewHierarchyInRect = true
         let contextExpectation: XCTestExpectation = expectation(description: "It should create a context")
@@ -231,13 +229,6 @@ extension ZMSnapshotTestCase {
             return true
         }
         return false
-    }
-
-    func resetColorScheme() {
-        ColorScheme.default.variant = .light
-
-        NSAttributedString.invalidateMarkdownStyle()
-        NSAttributedString.invalidateParagraphStyle()
     }
 }
 
@@ -483,7 +474,7 @@ extension ZMSnapshotTestCase {
 }
 
 // MARK: - UIAlertController
-extension ZMSnapshotTestCase {
+extension XCTestCase {
     func presentViewController(_ controller: UIViewController, file: StaticString = #file, line: UInt = #line) {
         // Given
         let window = UIWindow(frame: CGRect(origin: .zero, size: XCTestCase.DeviceSizeIPhone6))
@@ -516,9 +507,14 @@ extension ZMSnapshotTestCase {
         waitForExpectations(timeout: 2, handler: nil)
     }
 
+}
+
+extension ZMSnapshotTestCase {
+    
     func verifyAlertController(_ controller: UIAlertController, file: StaticString = #file, line: UInt = #line) {
         presentViewController(controller, file: file, line: line)
         verify(view: controller.view, file: file, line: line)
+        dismissViewController(controller, file: file, line: line)
     }
 }
 

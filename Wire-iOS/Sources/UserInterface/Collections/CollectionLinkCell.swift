@@ -54,7 +54,7 @@ final public class CollectionLinkCell: CollectionCell {
         self.articleView = articleView
     }
 
-    override var obfuscationIcon: ZetaIconType {
+    override var obfuscationIcon: StyleKitIcon {
         return .link
     }
 

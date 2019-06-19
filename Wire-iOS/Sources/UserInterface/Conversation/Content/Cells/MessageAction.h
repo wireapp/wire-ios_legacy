@@ -19,7 +19,7 @@
 
 @protocol ZMConversationMessage;
 
-typedef NS_ENUM(NSUInteger, MessageAction) {
+typedef NS_CLOSED_ENUM(NSUInteger, MessageAction) {
     MessageActionCancel,
     MessageActionResend,
     MessageActionDelete,

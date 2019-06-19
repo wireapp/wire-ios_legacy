@@ -923,8 +923,8 @@ final class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
 
     // MARK: - Helpers
     
-    private func verifyProfile(user: GenericUser,
-                               viewer: GenericUser,
+    private func verifyProfile(user: UserType,
+                               viewer: UserType,
                                conversation: MockConversation?,
                                context: ProfileViewControllerContext,
                                file: StaticString = #file,
@@ -947,7 +947,7 @@ final class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
         return .richProfile(items)
     }
 
-    private func verifyContents(user: GenericUser, viewer: GenericUser, conversation: MockConversation, expectedContents: [ProfileDetailsContentController.Content], file: StaticString = #file, line: UInt = #line) {
+    private func verifyContents(user: UserType, viewer: UserType, conversation: MockConversation, expectedContents: [ProfileDetailsContentController.Content], file: StaticString = #file, line: UInt = #line) {
         let controller = ProfileDetailsContentController(user: user, viewer: viewer,
                                                          conversation: conversation.convertToRegularConversation())
 

@@ -22,7 +22,6 @@
 
 #import "WireSyncEngine+iOS.h"
 #import "avs+iOS.h"
-#import "AccentColorProvider.h"
 
 
 #import "Constants.h"
@@ -30,14 +29,8 @@
 #import "Wire-Swift.h"
 
 #import "ContactsDataSource.h"
-#import "ProfileDevicesViewController.h"
 
-
-typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
-    ProfileViewControllerTabBarIndexDetails = 0,
-    ProfileViewControllerTabBarIndexDevices
-};
-
+@import WireSyncEngine;
 
 
 @interface ProfileViewController (ProfileViewControllerDelegate) <ProfileViewControllerDelegate>
@@ -57,12 +50,12 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
 
 @implementation ProfileViewController
 
-- (id)initWithUser:(id<UserType, AccentColorProvider>)user viewer:(id<UserType, AccentColorProvider>)viewer context:(ProfileViewControllerContext)context
+- (id)initWithUser:(id<UserType>)user viewer:(id<UserType>)viewer context:(ProfileViewControllerContext)context
 {
     return [self initWithUser:user viewer:viewer conversation:nil context:context];
 }
 
-- (id)initWithUser:(id<UserType, AccentColorProvider>)user viewer:(id<UserType, AccentColorProvider>)viewer conversation:(ZMConversation *)conversation
+- (id)initWithUser:(id<UserType>)user viewer:(id<UserType>)viewer conversation:(ZMConversation *)conversation
 {
     if (conversation.conversationType == ZMConversationTypeGroup) {
         return [self initWithUser:user viewer:viewer conversation:conversation context:ProfileViewControllerContextGroupConversation];
@@ -72,7 +65,7 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
     }
 }
 
-- (id)initWithUser:(id<UserType, AccentColorProvider>)user viewer:(id<UserType, AccentColorProvider>)viewer conversation:(ZMConversation *)conversation context:(ProfileViewControllerContext)context
+- (id)initWithUser:(id<UserType>)user viewer:(id<UserType>)viewer conversation:(ZMConversation *)conversation context:(ProfileViewControllerContext)context
 {
     if (self = [super init]) {
         _bareUser = user;
@@ -144,15 +137,17 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
     if (self.navigationController.viewControllers.count == 1) {
         self.navigationItem.rightBarButtonItem = [self.navigationController closeItem];
     }
+    
+    if (self.fullUser != nil && self.fullUser.isUnderLegalHold) {
+        self.navigationItem.leftBarButtonItem = [self.navigationController legalHoldItem];
+    }
 }
 
 #pragma mark - Header
 
 - (void)setupHeader
 {
-    id<UserType> user = self.bareUser;
-    
-    UserNameDetailViewModel *viewModel = [[UserNameDetailViewModel alloc] initWithUser:user fallbackName:user.displayName addressBookName:BareUserToUser(user).addressBookEntry.cachedName];
+    UserNameDetailViewModel *viewModel = [self makeUserNameDetailViewModel];
     UserNameDetailView *usernameDetailsView = [[UserNameDetailView alloc] init];
     [usernameDetailsView configureWith:viewModel];
     [self.view addSubview:usernameDetailsView];
@@ -295,16 +290,3 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
 }
 
 @end
-
-
-@implementation ProfileViewController (DevicesListDelegate)
-
-- (void)profileDevicesViewController:(ProfileDevicesViewController *)profileDevicesViewController didTapDetailForClient:(UserClient *)client
-{
-    ProfileClientViewController *userClientDetailController = [[ProfileClientViewController alloc] initWithClient:client fromConversation:YES];
-    userClientDetailController.showBackButton = NO;
-    [self.navigationController pushViewController:userClientDetailController animated:YES];
-}
-
-@end
-

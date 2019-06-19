@@ -96,8 +96,14 @@ import Cartography
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        updateLegalHoldIndicator()
         navigationItem.rightBarButtonItem = navigationController?.closeItem()
         collectionViewController.collectionView?.reloadData()
+    }
+    
+    func updateLegalHoldIndicator() {
+        navigationItem.leftBarButtonItem = conversation.isUnderLegalHold ? legalholdItem : nil
     }
 
     func computeVisibleSections() -> [CollectionViewSectionController] {
@@ -138,9 +144,11 @@ import Cartography
             changeInfo.nameChanged ||
             changeInfo.allowGuestsChanged ||
             changeInfo.destructionTimeoutChanged ||
-            changeInfo.mutedMessageTypesChanged
+            changeInfo.mutedMessageTypesChanged ||
+            changeInfo.legalHoldStatusChanged
             else { return }
         
+        updateLegalHoldIndicator()
         collectionViewController.sections = computeVisibleSections()
         footerView.update(for: conversation)
     }
@@ -172,6 +180,23 @@ import Cartography
     
     func dismissButtonTapped() {
         dismiss(animated: true)
+    }
+    
+}
+
+extension GroupDetailsViewController {
+    
+    fileprivate var legalholdItem: UIBarButtonItem {
+        let item = UIBarButtonItem(icon: .legalholdactive, target: self, action: #selector(presentLegalHoldDetails))
+        item.setLegalHoldAccessibility()
+        item.tintColor = .vividRed
+        return item
+    }
+    
+    func presentLegalHoldDetails() {
+        let viewController = LegalHoldDetailsViewController(conversation: conversation)
+        
+        present(viewController.wrapInNavigationController(), animated: true)
     }
     
 }

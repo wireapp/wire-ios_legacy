@@ -40,19 +40,19 @@ class AvailabilityTitleViewTests: ZMSnapshotTestCase {
     // MARK: - Self Profile
     
     func testThatItRendersCorrectly_SelfProfile_NoneAvailability() {
-        createTest(for: .selfProfile, with: .none, on: selfUser)
+        createTest(for: [.allowSettingStatus], with: .none, on: selfUser)
     }
     
     func testThatItRendersCorrectly_SelfProfile_AvailableAvailability() {
-        createTest(for: .selfProfile, with: .available, on: selfUser)
+        createTest(for: [.allowSettingStatus], with: .available, on: selfUser)
     }
     
     func testThatItRendersCorrectly_SelfProfile_AwayAvailability() {
-        createTest(for: .selfProfile, with: .away, on: selfUser)
+        createTest(for: [.allowSettingStatus], with: .away, on: selfUser)
     }
     
     func testThatItRendersCorrectly_SelfProfile_BusyAvailability() {
-        createTest(for: .selfProfile, with: .busy, on: selfUser)
+        createTest(for: [.allowSettingStatus], with: .busy, on: selfUser)
     }
     
     // MARK: - Headers profile
@@ -76,19 +76,19 @@ class AvailabilityTitleViewTests: ZMSnapshotTestCase {
     // MARK: - Other profile
     
     func testThatItRendersCorrectly_OtherProfile_NoneAvailability() {
-        createTest(for: .profileDetails, with: .none, on: otherUser!, colorSchemeVariant: .light)
+        createTest(for: [.hideActionHint], with: .none, on: otherUser!, colorSchemeVariant: .light)
     }
     
     func testThatItRendersCorrectly_OtherProfile_AvailableAvailability() {
-        createTest(for: .profileDetails, with: .available, on: otherUser!, colorSchemeVariant: .light)
+        createTest(for: [.hideActionHint], with: .available, on: otherUser!, colorSchemeVariant: .light)
     }
     
     func testThatItRendersCorrectly_OtherProfile_AwayAvailability() {
-        createTest(for: .profileDetails, with: .away, on: otherUser!, colorSchemeVariant: .light)
+        createTest(for: [.hideActionHint], with: .away, on: otherUser!, colorSchemeVariant: .light)
     }
     
     func testThatItRendersCorrectly_OtherProfile_BusyAvailability() {
-        createTest(for: .profileDetails, with: .busy, on: otherUser!, colorSchemeVariant: .light)
+        createTest(for: [.hideActionHint], with: .busy, on: otherUser!, colorSchemeVariant: .light)
     }
     
     // MARK: - Common methods
