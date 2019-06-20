@@ -98,33 +98,27 @@ class ConversationTextMessageCell: UIView, ConversationMessageCell, TextViewInte
 
         let mutableAttributedString = NSMutableAttributedString(attributedString: object.attributedText)
 
+        var fontAttritube: Any?
         mutableAttributedString.enumerateAttributes(in: NSRange(0..<mutableAttributedString.length), options: []) { (attributes, range, _) -> Void in
 
-            /// remove no font attritube
+            /// remove attritube set without font
             if attributes[NSAttributedString.Key.font] == nil {
-                for (attribute, val) in attributes {
+                for (attribute, _) in attributes {
                     mutableAttributedString.removeAttribute(attribute, range: range)
                 }
             }
 
-//            var isNumber = false
-//            let substring = mutableAttributedString.string.substring(with: range)
-//            if substring == "1." {
-//                for (attribute, _) in attributes {
-////                mutableAttributedString.removeAttribute(attribute, range: range)
-////                if let string = val as? String, string == "1." {
-////                    isNumber = true
-////                    break
-//                    if attribute == NSAttributedString.Key.paragraphStyle {
-//                        mutableAttributedString.removeAttribute(attribute, range: range)
-//                    }
-////              }
-//                }
-//            }
+            for (attribute, value) in attributes {
+                if attribute == NSAttributedString.Key.font {
+                    mutableAttributedString.removeAttribute(attribute, range: range)
 
-//            for (attribute, val) in attributes {
-//                mutableAttributedString.removeAttribute(attribute, range: range)
-//            }
+                    fontAttritube = value
+                }
+            }
+        }
+
+        if let fontAttritube = fontAttritube {
+            mutableAttributedString.addAttributes([NSAttributedString.Key.font:fontAttritube], range: mutableAttributedString.wholeRange)
         }
 
         messageTextView.attributedText = mutableAttributedString
