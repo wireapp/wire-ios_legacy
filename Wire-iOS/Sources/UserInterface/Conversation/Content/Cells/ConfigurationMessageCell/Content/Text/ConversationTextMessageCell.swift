@@ -89,7 +89,13 @@ class ConversationTextMessageCell: UIView, ConversationMessageCell, TextViewInte
     }
 
     func configure(with object: Configuration, animated: Bool) {
-        messageTextView.attributedText = object.attributedText
+
+        ///TODO: fix line spacing for chinese??
+        let mutableAttributedString = NSMutableAttributedString(attributedString: object.attributedText)
+//        mutableAttributedString.paragraphMinimumLineHeight()
+
+        mutableAttributedString.removeAttribute(NSAttributedString.Key.font, range: mutableAttributedString.wholeRange)
+        messageTextView.attributedText = mutableAttributedString
 
         if object.isObfuscated {
             messageTextView.accessibilityIdentifier = "Obfuscated message"
