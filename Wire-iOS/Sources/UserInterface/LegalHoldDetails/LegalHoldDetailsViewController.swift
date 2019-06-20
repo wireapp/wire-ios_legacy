@@ -81,7 +81,7 @@ class LegalHoldDetailsViewController: UIViewController {
     
     fileprivate func computeVisibleSections() -> [CollectionViewSectionController] {
         let headerSection = SingleViewSectionController(view: LegalHoldHeaderView(frame: .zero))
-        let legalHoldParticipantsSection = LegalHoldParticipantsSectionController(participants: conversation.sortedActiveParticipants, conversation: conversation)
+        let legalHoldParticipantsSection = LegalHoldParticipantsSectionController(participants: conversation.sortedActiveParticipants.filter(\.isUnderLegalHold), conversation: conversation)
         legalHoldParticipantsSection.delegate = self
         
         return [headerSection, legalHoldParticipantsSection]
