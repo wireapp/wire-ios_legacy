@@ -201,7 +201,24 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
         alert.popoverPresentationController?.permittedArrowDirections = .down
         present(alert, animated: true)
     }
-
+    
+    
+    // MARK: Legal Hold
+    
+    @objc
+    var legalholdItem: UIBarButtonItem {
+        let item = UIBarButtonItem(icon: .legalholdactive, target: self, action: #selector(presentLegalHoldDetails))
+        item.setLegalHoldAccessibility()
+        item.tintColor = .vividRed
+        return item
+    }
+    
+    @objc
+    func presentLegalHoldDetails() {
+        guard let user = fullUser(), let viewController = LegalHoldDetailsViewController(user: user) else { return }
+        present(viewController.wrapInNavigationController(), animated: true)
+    }
+    
     // MARK: - Action Handlers
 
     private func archiveConversation() {
