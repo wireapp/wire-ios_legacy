@@ -42,7 +42,6 @@ final class ConversationListTopBarViewController: UIViewController {
         self.selfUser = selfUser
         
         super.init(nibName: nil, bundle: nil)
-        topBar?.middleView = createTitleView()
 
         if let sharedSession = ZMUserSession.shared() {
             observerToken = UserChangeInfo.add(observer: self, for: ZMUser.selfUser(), userSession: sharedSession)
@@ -74,7 +73,7 @@ final class ConversationListTopBarViewController: UIViewController {
 
     // MARK: - Title View
 
-    func updateTitleView () {
+    func updateTitleView() {
         topBar?.middleView = createTitleView()
     }
     
@@ -176,11 +175,6 @@ final class ConversationListTopBarViewController: UIViewController {
             topBar?.rightView = createLegalHoldView()
         }
     }
-    
-    func updateTitle() {
-        guard let middleView = topBar?.middleView as? UILabel else { return }
-        middleView.text = selfUser.name
-    }
 
     @objc
     func presentLegalHoldInfo() {
@@ -240,7 +234,7 @@ extension ConversationListTopBarViewController: ZMUserObserver {
     
     public func userDidChange(_ changeInfo: UserChangeInfo) {
         if changeInfo.nameChanged {
-            updateTitle()
+            updateTitleView()
         }
 
         if changeInfo.teamsChanged {

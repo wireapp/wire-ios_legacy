@@ -28,7 +28,7 @@ final class ConversationListTopBarViewControllerSnapshotTests: ZMSnapshotTestCas
     override func setUp() {
         super.setUp()
         mockAccount = Account.mockAccount(imageData: mockImageData)
-        mockSelfUser = MockUser.firstMockUser()
+        mockSelfUser = MockUser.createSelfUser(name: "James Hetfield", inTeam: nil)
     }
     
     override func tearDown() {
@@ -46,14 +46,21 @@ final class ConversationListTopBarViewControllerSnapshotTests: ZMSnapshotTestCas
         sut.view.backgroundColor = .black
     }
 
-    func testForLegalHoldEnabled(){
+    func testForLegalHoldEnabled() {
         mockSelfUser.isUnderLegalHold = true
         setupSut()
 
         verify(view: sut.view)
     }
 
-    func testForLegalHoldDisabled(){
+    func testForLegalHoldPending() {
+        mockSelfUser.requestLegalHold()
+        setupSut()
+
+        verify(view: sut.view)
+    }
+
+    func testForLegalHoldDisabled() {
         mockSelfUser.isUnderLegalHold = false
         setupSut()
 
