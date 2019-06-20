@@ -134,12 +134,16 @@
 
 - (void)setupNavigationItems
 {
-    if (self.navigationController.viewControllers.count == 1) {
-        self.navigationItem.rightBarButtonItem = [self.navigationController closeItem];
+    UIBarButtonItem *legalHoldItem = nil;
+    if (self.fullUser != nil && self.fullUser.isUnderLegalHold) {
+        legalHoldItem = [self.navigationController legalHoldItem];
     }
     
-    if (self.fullUser != nil && self.fullUser.isUnderLegalHold) {
-        self.navigationItem.leftBarButtonItem = [self.navigationController legalHoldItem];
+    if (self.navigationController.viewControllers.count == 1) {
+        self.navigationItem.rightBarButtonItem = [self.navigationController closeItem];
+        self.navigationItem.leftBarButtonItem = legalHoldItem;
+    } else {
+        self.navigationItem.rightBarButtonItem = legalHoldItem;
     }
 }
 
