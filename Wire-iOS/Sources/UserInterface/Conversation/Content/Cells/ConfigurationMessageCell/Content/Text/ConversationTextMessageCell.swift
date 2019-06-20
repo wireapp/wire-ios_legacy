@@ -92,15 +92,15 @@ class ConversationTextMessageCell: UIView, ConversationMessageCell, TextViewInte
 
         let mutableAttributedString = NSMutableAttributedString(attributedString: object.attributedText)
 
-        var fontAttritube: Any?
+        var fontAttribute: Any?
         mutableAttributedString.enumerateAttributes(in: NSRange(0..<mutableAttributedString.length), options: []) { (attributes, range, _) -> Void in
 
-            /// replace attritube set without font attritube with last font attritube
+            /// replace attribute set without font attribute with last component's font attribute
             if attributes[NSAttributedString.Key.font] == nil,
-               let fontAttritube = fontAttritube {
+               let fontAttritube = fontAttribute {
                 mutableAttributedString.addAttributes([NSAttributedString.Key.font: fontAttritube], range: range)
             } else {
-                fontAttritube = attributes[NSAttributedString.Key.font]
+                fontAttribute = attributes[NSAttributedString.Key.font]
             }
 
         }
