@@ -101,22 +101,14 @@ class ConversationTextMessageCell: UIView, ConversationMessageCell, TextViewInte
         var fontAttritube: Any?
         mutableAttributedString.enumerateAttributes(in: NSRange(0..<mutableAttributedString.length), options: []) { (attributes, range, _) -> Void in
 
-            /// remove attritube set without font
-            if attributes[NSAttributedString.Key.font] == nil {
-                mutableAttributedString.setAttributes([:], range: range)
+            /// replace attritube set without font attritube with last font attritube
+            if attributes[NSAttributedString.Key.font] == nil,
+               let fontAttritube = fontAttritube {
+                mutableAttributedString.addAttributes([NSAttributedString.Key.font: fontAttritube], range: range)
+            } else {
+                fontAttritube = attributes[NSAttributedString.Key.font]
             }
 
-            for (attribute, value) in attributes {
-                if attribute == NSAttributedString.Key.font {
-                    mutableAttributedString.removeAttribute(attribute, range: range)
-
-                    fontAttritube = value
-                }
-            }
-        }
-
-        if let fontAttritube = fontAttritube {
-            mutableAttributedString.addAttributes([NSAttributedString.Key.font:fontAttritube], range: mutableAttributedString.wholeRange)
         }
 
         messageTextView.attributedText = mutableAttributedString
