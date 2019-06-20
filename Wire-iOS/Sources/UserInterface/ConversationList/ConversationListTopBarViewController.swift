@@ -194,7 +194,7 @@ final class ConversationListTopBarViewController: UIViewController {
             return
         }
 
-        AppDelegate.shared().rootViewController.legalHoldDisclosureController?.discloseCurrentState(cause: .userAction)
+        ZClientViewController.shared()?.legalHoldDisclosureController?.discloseCurrentState(cause: .userAction)
     }
 
     @objc

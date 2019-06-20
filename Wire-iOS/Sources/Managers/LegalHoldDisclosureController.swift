@@ -22,7 +22,7 @@ import UIKit
  * An object that coordinates disclosing the legal hold state to the user.
  */
 
-class LegalHoldDisclosureController: NSObject, ZMUserObserver {
+@objc class LegalHoldDisclosureController: NSObject, ZMUserObserver {
 
     enum DisclosureState {
         /// No legal hold status is being disclosed.

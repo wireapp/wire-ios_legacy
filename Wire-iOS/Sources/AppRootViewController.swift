@@ -45,7 +45,6 @@ final class AppRootViewController: UIViewController {
     fileprivate let mediaManagerLoader = MediaManagerLoader()
 
     var authenticationCoordinator: AuthenticationCoordinator?
-    var legalHoldDisclosureController: LegalHoldDisclosureController?
 
     weak var presentedPopover: UIPopoverPresentationController?
     weak var popoverPointToView: UIView?
@@ -200,7 +199,6 @@ final class AppRootViewController: UIViewController {
         showContentDelegate = nil
 
         resetAuthenticationCoordinatorIfNeeded(for: appState)
-        resetLegalHoldDisclosureControllerIfNeeded(for: appState)
 
         switch appState {
         case .blacklisted:
@@ -237,10 +235,6 @@ final class AppRootViewController: UIViewController {
             let clientViewController = ZClientViewController()
             clientViewController.isComingFromRegistration = completedRegistration
 
-            if let selfUser = ZMUser.selfUser(), let userSession = ZMUserSession.shared() {
-                legalHoldDisclosureController = LegalHoldDisclosureController(selfUser: selfUser, userSession: userSession, presenter: clientViewController.present)
-            }
-
             /// show the dialog only when lastAppState is .unauthenticated, i.e. the user login to a new device
             clientViewController.needToShowDataUsagePermissionDialog = false
             if case .unauthenticated(_) = appStateController.lastAppState {
@@ -273,15 +267,6 @@ final class AppRootViewController: UIViewController {
             break // do not reset the authentication coordinator for unauthenticated state
         default:
             authenticationCoordinator = nil // reset the authentication coordinator when we no longer need it
-        }
-    }
-
-    private func resetLegalHoldDisclosureControllerIfNeeded(for state: AppState) {
-        switch state {
-        case .authenticated:
-            break
-        default:
-            legalHoldDisclosureController = nil
         }
     }
 
@@ -346,7 +331,7 @@ final class AppRootViewController: UIViewController {
     func applicationDidTransition(to appState: AppState) {
         if case .authenticated = appState {
             callWindow.callController.presentCallCurrentlyInProgress()
-            legalHoldDisclosureController?.discloseCurrentState(cause: .appOpen)
+            ZClientViewController.shared()?.legalHoldDisclosureController?.discloseCurrentState(cause: .appOpen)
         }
     }
 
