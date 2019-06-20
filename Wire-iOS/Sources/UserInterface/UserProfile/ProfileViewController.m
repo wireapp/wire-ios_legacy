@@ -135,8 +135,8 @@
 - (void)setupNavigationItems
 {
     UIBarButtonItem *legalHoldItem = nil;
-    if (self.fullUser != nil && self.fullUser.isUnderLegalHold) {
-        legalHoldItem = [self.navigationController legalHoldItem];
+    if (self.bareUser.isUnderLegalHold || self.conversation.isUnderLegalHold) {
+        legalHoldItem = self.legalholdItem;
     }
     
     if (self.navigationController.viewControllers.count == 1) {
