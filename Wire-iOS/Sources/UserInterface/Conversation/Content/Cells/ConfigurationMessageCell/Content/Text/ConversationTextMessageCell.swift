@@ -103,9 +103,7 @@ class ConversationTextMessageCell: UIView, ConversationMessageCell, TextViewInte
 
             /// remove attritube set without font
             if attributes[NSAttributedString.Key.font] == nil {
-                for (attribute, _) in attributes {
-                    mutableAttributedString.removeAttribute(attribute, range: range)
-                }
+                mutableAttributedString.setAttributes([:], range: range)
             }
 
             for (attribute, value) in attributes {
