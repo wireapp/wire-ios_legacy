@@ -18,6 +18,12 @@
 
 import Foundation
 
+extension String {
+    func substring(with nsrange: NSRange) -> Substring? {
+        guard let range = Range(nsrange, in: self) else { return nil }
+        return self[range]
+    }
+}
 class ConversationTextMessageCell: UIView, ConversationMessageCell, TextViewInteractionDelegate {
 
     struct Configuration: Equatable {
@@ -90,11 +96,37 @@ class ConversationTextMessageCell: UIView, ConversationMessageCell, TextViewInte
 
     func configure(with object: Configuration, animated: Bool) {
 
-        ///TODO: fix line spacing for chinese??
         let mutableAttributedString = NSMutableAttributedString(attributedString: object.attributedText)
-//        mutableAttributedString.paragraphMinimumLineHeight()
 
-        mutableAttributedString.removeAttribute(NSAttributedString.Key.font, range: mutableAttributedString.wholeRange)
+        mutableAttributedString.enumerateAttributes(in: NSRange(0..<mutableAttributedString.length), options: []) { (attributes, range, _) -> Void in
+
+            /// remove no font attritube
+            if attributes[NSAttributedString.Key.font] == nil {
+                for (attribute, val) in attributes {
+                    mutableAttributedString.removeAttribute(attribute, range: range)
+                }
+            }
+
+//            var isNumber = false
+//            let substring = mutableAttributedString.string.substring(with: range)
+//            if substring == "1." {
+//                for (attribute, _) in attributes {
+////                mutableAttributedString.removeAttribute(attribute, range: range)
+////                if let string = val as? String, string == "1." {
+////                    isNumber = true
+////                    break
+//                    if attribute == NSAttributedString.Key.paragraphStyle {
+//                        mutableAttributedString.removeAttribute(attribute, range: range)
+//                    }
+////              }
+//                }
+//            }
+
+//            for (attribute, val) in attributes {
+//                mutableAttributedString.removeAttribute(attribute, range: range)
+//            }
+        }
+
         messageTextView.attributedText = mutableAttributedString
 
         if object.isObfuscated {
