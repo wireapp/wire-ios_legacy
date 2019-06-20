@@ -198,6 +198,10 @@
     if (note.trustLevelChanged) {
         [self updateShowVerifiedShield];
     }
+
+    if (note.legalHoldStatusChanged) {
+        [self setupNavigationItems];
+    }
 }
 
 #pragma mark - Actions
