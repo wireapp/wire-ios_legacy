@@ -107,7 +107,7 @@ extension ConversationLegalHoldSystemMessageCell {
     public override func textView(_ textView: UITextView, shouldInteractWith url: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
         
         if url == ConversationLegalHoldSystemMessageCell.legalHoldURL, let conversation = conversation {
-            let legalHoldDetails = LegalHoldDetailsViewController(conversation: conversation)
+            let legalHoldDetails = LegalHoldDetailsViewController(conversation: conversation).wrapInNavigationController()
             legalHoldDetails.modalPresentationStyle = .formSheet
             ZClientViewController.shared()?.present(legalHoldDetails, animated: true)
             return true
