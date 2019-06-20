@@ -18,12 +18,6 @@
 
 import Foundation
 
-extension String {
-    func substring(with nsrange: NSRange) -> Substring? {
-        guard let range = Range(nsrange, in: self) else { return nil }
-        return self[range]
-    }
-}
 class ConversationTextMessageCell: UIView, ConversationMessageCell, TextViewInteractionDelegate {
 
     struct Configuration: Equatable {
