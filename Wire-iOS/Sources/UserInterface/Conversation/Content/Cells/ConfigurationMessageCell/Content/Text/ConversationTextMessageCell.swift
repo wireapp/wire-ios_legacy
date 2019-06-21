@@ -89,23 +89,7 @@ class ConversationTextMessageCell: UIView, ConversationMessageCell, TextViewInte
     }
 
     func configure(with object: Configuration, animated: Bool) {
-
-        let mutableAttributedString = NSMutableAttributedString(attributedString: object.attributedText)
-
-        var fontAttribute: Any?
-        mutableAttributedString.enumerateAttributes(in: NSRange(0..<mutableAttributedString.length), options: []) { (attributes, range, _) -> Void in
-
-            /// replace attribute set without font attribute with last component's font attribute
-            if attributes[NSAttributedString.Key.font] == nil,
-               let fontAttritube = fontAttribute {
-                mutableAttributedString.addAttributes([NSAttributedString.Key.font: fontAttritube], range: range)
-            } else {
-                fontAttribute = attributes[NSAttributedString.Key.font]
-            }
-
-        }
-
-        messageTextView.attributedText = mutableAttributedString
+        messageTextView.attributedText = object.attributedText
 
         if object.isObfuscated {
             messageTextView.accessibilityIdentifier = "Obfuscated message"
