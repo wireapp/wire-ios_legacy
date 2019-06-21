@@ -496,6 +496,8 @@ extension CameraKeyboardViewController: UICollectionViewDelegateFlowLayout, UICo
     public func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if cell is CameraCell || cell is CameraKeyboardPermissionsCell  {
             self.goBackButtonRevealed = false
+
+            (cell as? CameraCell)?.updateVideoOrientation()
         }
     }
 }
