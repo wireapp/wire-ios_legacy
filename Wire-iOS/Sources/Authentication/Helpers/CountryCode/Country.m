@@ -118,10 +118,11 @@ NS_ASSUME_NONNULL_BEGIN
         return countryFromDevice;
     }
 
+    // List to prioritize main countries with shared prefixes (e.g., USA with "+1")
+    NSArray *priorityList = @[@"us", @"it", @"fi", @"tz", @"uk", @"no", @"ru"];
 
-    // Many countries have e164 == "1", but user with phone number "+1..." is most probably from USA
     for (Country *country in matches) {
-        if ([country.ISO isEqualToString:@"us"]) {
+        if([priorityList containsObject:country.ISO]) {
             return country;
         }
     }
