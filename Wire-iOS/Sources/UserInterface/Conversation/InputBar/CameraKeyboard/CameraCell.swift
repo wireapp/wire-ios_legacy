@@ -123,7 +123,7 @@ open class CameraCell: UICollectionViewCell {
         self.updateVideoOrientation()
     }
 
-    fileprivate func updateVideoOrientation() {
+    func updateVideoOrientation() {
         guard UIDevice.current.userInterfaceIdiom == .pad else { return }
         cameraController?.updatePreviewOrientation()
     }

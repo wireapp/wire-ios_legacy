@@ -42,7 +42,7 @@ class AvailabilityTitleView: TitleView, Themeable, ZMUserObserver {
         
         /// The default options for using the view in a title bar.
         static var header: Options = [.allowSettingStatus, .hideActionHint, .displayUserName, .useLargeFont]
-        
+
     }
     
     // MARK: - Properties

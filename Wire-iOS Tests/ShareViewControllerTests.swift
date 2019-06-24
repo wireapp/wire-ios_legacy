@@ -81,7 +81,7 @@ class ShareViewControllerTests: CoreDataSnapshotTestCase {
         let img = image(inTestBundleNamed: "unsplash_matterhorn.jpg")
         self.groupConversation.append(imageFromData: img.data()!)
         
-        groupConversation.internalAddParticipants(Set([self.createUser(name: "John Appleseed")]))
+        groupConversation.internalAddParticipants([self.createUser(name: "John Appleseed")])
         let oneToOneConversation = self.createGroupConversation()
         
         guard let message = groupConversation.lastMessage else {
@@ -113,7 +113,7 @@ class ShareViewControllerTests: CoreDataSnapshotTestCase {
         let img = urlForResource(inTestBundleNamed: "unsplash_matterhorn.jpg")
         self.groupConversation.append(imageAtURL: img)
 
-        groupConversation.internalAddParticipants(Set([self.createUser(name: "John Appleseed")]))
+        groupConversation.internalAddParticipants([self.createUser(name: "John Appleseed")])
         let oneToOneConversation = self.createGroupConversation()
 
         guard let message = groupConversation.lastMessage else {
@@ -140,7 +140,7 @@ class ShareViewControllerTests: CoreDataSnapshotTestCase {
         let file = ZMFileMetadata(fileURL: videoURL, thumbnail: thumbnail)
         self.groupConversation.append(file: file)
 
-        groupConversation.internalAddParticipants(Set([self.createUser(name: "John Appleseed")]))
+        groupConversation.internalAddParticipants([self.createUser(name: "John Appleseed")])
         let oneToOneConversation = self.createGroupConversation()
 
         guard let message = groupConversation.lastMessage else {
@@ -176,7 +176,7 @@ class ShareViewControllerTests: CoreDataSnapshotTestCase {
     
     func makeTestForShareViewController() {
         
-        groupConversation.internalAddParticipants(Set([self.createUser(name: "John Appleseed")]))
+        groupConversation.internalAddParticipants([self.createUser(name: "John Appleseed")])
         
         let oneToOneConversation = self.createGroupConversation()
         

@@ -42,6 +42,10 @@ final class ConversationListTopBarViewController: UIViewController {
         self.selfUser = selfUser
         
         super.init(nibName: nil, bundle: nil)
+
+        if let sharedSession = ZMUserSession.shared() {
+            observerToken = UserChangeInfo.add(observer: self, for: ZMUser.selfUser(), userSession: sharedSession)
+        }
         
         if #available(iOS 11.0, *) {
             self.viewRespectsSystemMinimumLayoutMargins = false
@@ -57,21 +61,25 @@ final class ConversationListTopBarViewController: UIViewController {
     }
     
     override func viewDidLoad() {
-        
         topBar?.layoutMargins = UIEdgeInsets(top: 0, left: 9, bottom: 0, right: 16)
-        topBar?.middleView = createTitleView()
-        topBar?.leftView = createAccountView()
-
         topBar?.splitSeparator = false
         
         availabilityViewController?.didMove(toParent: self)
-        
+
+        updateTitleView()
+        updateAccountView()
         updateLegalHoldIndictor()
+    }
+
+    // MARK: - Title View
+
+    func updateTitleView() {
+        topBar?.middleView = createTitleView()
     }
     
     func createTitleView() -> UIView {
-        if ZMUser.selfUser().isTeamMember {
-            let availabilityViewController = AvailabilityTitleViewController(user: ZMUser.selfUser(), options: .header)
+        if selfUser.isTeamMember {
+            let availabilityViewController = AvailabilityTitleViewController(user: selfUser, options: .header)
             availabilityViewController.availabilityTitleView?.colorSchemeVariant = .dark
             addChild(availabilityViewController)
             self.availabilityViewController = availabilityViewController
@@ -80,7 +88,7 @@ final class ConversationListTopBarViewController: UIViewController {
         } else {
             let titleLabel = UILabel()
             
-            titleLabel.text = ZMUser.selfUser().name
+            titleLabel.text = selfUser.name
             titleLabel.font = FontSpec(.normal, .semibold).font
             titleLabel.textColor = UIColor.from(scheme: .textForeground, variant: .dark)
             titleLabel.accessibilityTraits = .header
@@ -88,11 +96,7 @@ final class ConversationListTopBarViewController: UIViewController {
             titleLabel.setContentCompressionResistancePriority(.required, for: .vertical)
             titleLabel.setContentHuggingPriority(.required, for: .horizontal)
             titleLabel.setContentHuggingPriority(.required, for: .vertical)
-            
-            if let sharedSession = ZMUserSession.shared() {
-                observerToken = UserChangeInfo.add(observer: self, for: ZMUser.selfUser(), userSession: sharedSession)
-            }
-            
+
             return titleLabel
         }
     }
@@ -114,9 +118,9 @@ final class ConversationListTopBarViewController: UIViewController {
         let button = IconButton(style: .circular)
         button.setBackgroundImageColor(UIColor.vividRed.withAlphaComponent(0.5), for: .normal)
 
-        button.setIcon(.clock, size: .tiny, for: .normal)
+        button.setIcon(.clock, size: 12, for: .normal)
         button.setIconColor(.white, for: .normal)
-        button.setIconColor(UIColor.white.withAlphaComponent(0.5), for: .normal)
+        button.setIconColor(UIColor.white.withAlphaComponent(0.5), for: .highlighted)
 
         button.setLegalHoldAccessibility()
         button.accessibilityValue = "legalhold_request.button.accessibility".localized
@@ -124,11 +128,15 @@ final class ConversationListTopBarViewController: UIViewController {
         button.addTarget(self, action: #selector(presentLegalHoldRequest), for: .touchUpInside)
 
         NSLayoutConstraint.activate([
-            button.widthAnchor.constraint(equalToConstant: 32),
-            button.heightAnchor.constraint(equalToConstant: 32)
+            button.widthAnchor.constraint(equalToConstant: 24),
+            button.heightAnchor.constraint(equalToConstant: 24)
         ])
 
         return button
+    }
+
+    func updateAccountView() {
+        topBar?.leftView = createAccountView()
     }
 
     func createAccountView() -> BaseAccountView {
@@ -167,11 +175,6 @@ final class ConversationListTopBarViewController: UIViewController {
             topBar?.rightView = createLegalHoldView()
         }
     }
-    
-    func updateTitle() {
-        guard let middleView = topBar?.middleView as? UILabel else { return }
-        middleView.text = ZMUser.selfUser().name
-    }
 
     @objc
     func presentLegalHoldInfo() {
@@ -181,11 +184,11 @@ final class ConversationListTopBarViewController: UIViewController {
     }
 
     @objc func presentLegalHoldRequest() {
-        guard case let .pending(request) = selfUser.legalHoldStatus else {
+        guard case .pending = selfUser.legalHoldStatus else {
             return
         }
 
-        presentLegalHoldActivationAlert(for: request, user: selfUser)
+        ZClientViewController.shared()?.legalHoldDisclosureController?.discloseCurrentState(cause: .userAction)
     }
 
     @objc
@@ -231,7 +234,11 @@ extension ConversationListTopBarViewController: ZMUserObserver {
     
     public func userDidChange(_ changeInfo: UserChangeInfo) {
         if changeInfo.nameChanged {
-            updateTitle()
+            updateTitleView()
+        }
+
+        if changeInfo.teamsChanged {
+            updateAccountView()
         }
         
         if changeInfo.legalHoldStatusChanged {

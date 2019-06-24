@@ -25,10 +25,17 @@ extension ZMConversationMessage {
             if let text = textMessageData?.messageText, !text.isEmpty {
                 pasteboard.string = text
             }
-        } else if self.isImage {
-            if let imageData = imageMessageData?.imageData {
-                UIPasteboard.general.setMediaAsset(UIImage(data: imageData))
+        } else if isImage,
+                  let imageData = imageMessageData?.imageData {
+
+            let mediaAsset: MediaAsset?
+            if imageMessageData?.isAnimatedGIF == true {
+                mediaAsset = FLAnimatedImage(animatedGIFData: imageData)
+            } else {
+                mediaAsset = UIImage(data: imageData)
             }
+
+            UIPasteboard.general.setMediaAsset(mediaAsset)
         } else if self.isLocation {
             if let locationName = locationMessageData?.name {
                 pasteboard.string = locationName

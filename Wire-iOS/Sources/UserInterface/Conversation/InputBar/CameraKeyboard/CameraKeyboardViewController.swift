@@ -27,7 +27,10 @@ private let zmLog = ZMSLog(tag: "UI")
 
 public protocol CameraKeyboardViewControllerDelegate: class {
     func cameraKeyboardViewController(_ controller: CameraKeyboardViewController, didSelectVideo: URL, duration: TimeInterval)
-    func cameraKeyboardViewController(_ controller: CameraKeyboardViewController, didSelectImageData: Data, isFromCamera: Bool)
+    func cameraKeyboardViewController(_ controller: CameraKeyboardViewController,
+                                      didSelectImageData: Data,
+                                      isFromCamera: Bool,
+                                      uti: String?)
     func cameraKeyboardViewControllerWantsToOpenFullScreenCamera(_ controller: CameraKeyboardViewController)
     func cameraKeyboardViewControllerWantsToOpenCameraRoll(_ controller: CameraKeyboardViewController)
 }
@@ -225,7 +228,7 @@ open class CameraKeyboardViewController: UIViewController {
             }
 
             DispatchQueue.main.async(execute: {
-                self.delegate?.cameraKeyboardViewController(self, didSelectImageData: returnData, isFromCamera: false)
+                self.delegate?.cameraKeyboardViewController(self, didSelectImageData: returnData, isFromCamera: false, uti: uti)
             })
         }
 
@@ -496,6 +499,8 @@ extension CameraKeyboardViewController: UICollectionViewDelegateFlowLayout, UICo
     public func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if cell is CameraCell || cell is CameraKeyboardPermissionsCell  {
             self.goBackButtonRevealed = false
+
+            (cell as? CameraCell)?.updateVideoOrientation()
         }
     }
 }
@@ -507,7 +512,7 @@ extension CameraKeyboardViewController: CameraCellDelegate {
     }
     
     public func cameraCell(_ cameraCell: CameraCell, didPickImageData imageData: Data) {
-        self.delegate?.cameraKeyboardViewController(self, didSelectImageData: imageData, isFromCamera: true)
+        self.delegate?.cameraKeyboardViewController(self, didSelectImageData: imageData, isFromCamera: true, uti: nil)
     }
 }
 

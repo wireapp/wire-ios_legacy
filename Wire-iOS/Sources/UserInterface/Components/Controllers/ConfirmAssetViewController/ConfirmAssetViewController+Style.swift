@@ -86,6 +86,7 @@ extension ConfirmAssetViewController {
         view.addSubview(playerViewController.view)
     }
 
+    /// open canvas screen if the image is sketchable(e.g. not an animated GIF)
     @objc(openSketchInEditMode:)
     func openSketch(in editMode: CanvasViewControllerEditMode) {
         guard let image = image as? UIImage else {

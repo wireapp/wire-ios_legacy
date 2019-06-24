@@ -25,7 +25,7 @@ class LegalHoldDetailsViewController: UIViewController {
     fileprivate let collectionViewController: SectionCollectionViewController
     fileprivate let conversation: ZMConversation
     
-    convenience init?(user: ZMUser) {
+    convenience init?(user: UserType) {
         guard let conversation = user.oneToOneConversation else { return nil }
         self.init(conversation: conversation)
     }
@@ -81,7 +81,7 @@ class LegalHoldDetailsViewController: UIViewController {
     
     fileprivate func computeVisibleSections() -> [CollectionViewSectionController] {
         let headerSection = SingleViewSectionController(view: LegalHoldHeaderView(frame: .zero))
-        let legalHoldParticipantsSection = LegalHoldParticipantsSectionController(participants: conversation.sortedActiveParticipants, conversation: conversation)
+        let legalHoldParticipantsSection = LegalHoldParticipantsSectionController(participants: conversation.sortedActiveParticipants.filter(\.isUnderLegalHold), conversation: conversation)
         legalHoldParticipantsSection.delegate = self
         
         return [headerSection, legalHoldParticipantsSection]

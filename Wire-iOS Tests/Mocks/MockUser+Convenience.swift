@@ -45,6 +45,7 @@ extension MockUser {
         user.teamIdentifier = teamID
         user.teamRole = teamID != nil ? .member : .none
         user.accentColorValue = .vividRed
+        user.remoteIdentifier = UUID()
         return user
     }
 
@@ -67,6 +68,7 @@ extension MockUser {
         user.teamRole = teamID != nil ? .member : .none
         user.accentColorValue = .brightOrange
         user.emailAddress = teamID != nil ? "test@email.com" : nil
+        user.remoteIdentifier = UUID()
         return user
     }
     

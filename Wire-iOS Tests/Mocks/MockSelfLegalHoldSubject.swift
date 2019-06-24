@@ -54,4 +54,9 @@ extension MockUser: SelfLegalHoldSubject {
         legalHoldDataSource.legalHoldRequest = request
     }
 
+    func requestLegalHold() {
+        let prekey = LegalHoldRequest.Prekey(id: 65535, key: Data(base64Encoded: "pQABARn//wKhAFggHsa0CszLXYLFcOzg8AA//E1+Dl1rDHQ5iuk44X0/PNYDoQChAFgg309rkhG6SglemG6kWae81P1HtQPx9lyb6wExTovhU4cE9g==")!)
+        legalHoldDataSource.legalHoldRequest = LegalHoldRequest(requesterIdentifier: UUID(), targetUserIdentifier: remoteIdentifier, clientIdentifier: "eca3c87cfe28be49", lastPrekey: prekey)
+    }
+
 }

@@ -231,6 +231,7 @@ final class AppRootViewController: UIViewController {
             UIColor.setAccentOverride(.undefined)
             mainWindow.tintColor = UIColor.accent()
             executeAuthenticatedBlocks()
+
             let clientViewController = ZClientViewController()
             clientViewController.isComingFromRegistration = completedRegistration
 
@@ -330,6 +331,7 @@ final class AppRootViewController: UIViewController {
     func applicationDidTransition(to appState: AppState) {
         if case .authenticated = appState {
             callWindow.callController.presentCallCurrentlyInProgress()
+            ZClientViewController.shared()?.legalHoldDisclosureController?.discloseCurrentState(cause: .appOpen)
         }
     }
 
