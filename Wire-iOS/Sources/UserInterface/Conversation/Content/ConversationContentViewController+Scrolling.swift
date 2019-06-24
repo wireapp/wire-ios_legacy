@@ -22,7 +22,8 @@ extension ConversationContentViewController {
     
     @objc(scrollToMessage:completion:)
     public func scroll(to message: ZMConversationMessage?, completion: ((UIView)->())? = .none) {
-        if let message = message {
+        if let message = message,
+           !message.hasBeenDeleted {
             dataSource.loadMessages(near: message) { index in
                 
                 guard message.conversation == self.conversation else {
