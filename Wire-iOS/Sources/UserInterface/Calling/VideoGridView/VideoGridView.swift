@@ -139,6 +139,8 @@ final class VideoGridViewController: UIViewController {
 
         view.addSubview(muteIndicatorView)
         view.addSubview(networkConditionView)
+
+        networkConditionView.accessibilityIdentifier = "network-conditions-indicator"
     }
 
     func createConstraints() {
