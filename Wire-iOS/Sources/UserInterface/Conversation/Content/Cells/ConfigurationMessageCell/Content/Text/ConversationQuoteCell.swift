@@ -19,8 +19,7 @@
 import UIKit
 import Down
 
-
-class ConversationReplyContentView: UIView {
+final class ConversationReplyContentView: UIView {
     let numberOfLinesLimit: Int = 4
 
     struct Configuration {
