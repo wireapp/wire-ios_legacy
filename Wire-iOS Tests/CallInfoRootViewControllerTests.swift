@@ -19,20 +19,9 @@
 import XCTest
 @testable import Wire
 
-class CallInfoRootViewControllerTests: CoreDataSnapshotTestCase {
+final class CallInfoRootViewControllerTests: CoreDataSnapshotTestCase {
 
     // MARK: - OneToOne Audio
-    
-    func testOneToOneIncomingAudioRinging() {
-        // given
-        let fixture = CallInfoTestFixture(otherUser: otherUser)
-        
-        // when
-        let sut = CallInfoRootViewController(configuration: fixture.oneToOneIncomingAudioRinging)
-        
-        // then
-        verifyInAllIPhoneSizes(view: sut.view)
-    }
     
     func testOneToOneOutgoingAudioRinging() {
         // given

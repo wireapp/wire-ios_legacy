@@ -26,11 +26,22 @@ static id<UserType> mockSelfUser = nil;
 
 #pragma mark - Mockable
 
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        _clients = [NSSet set];
+        _legalHoldDataSource = [[NSClassFromString(@"MockLegalHoldDataSource") alloc] init];
+    }
+    return self;
+}
+
 - (instancetype)initWithJSONObject:(NSDictionary *)jsonObject
 {
     self = [super init];
     if (self) {
         _clients = [NSSet set];
+        _legalHoldDataSource = [[NSClassFromString(@"MockLegalHoldDataSource") alloc] init];
         self.isTeamMember = YES;
         self.teamIdentifier = [NSUUID UUID];
         for (NSString *key in jsonObject.allKeys) {

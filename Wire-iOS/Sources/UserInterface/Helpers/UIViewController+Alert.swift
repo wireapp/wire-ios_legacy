@@ -24,11 +24,11 @@ extension UIAlertController {
     /// Create an alert with a OK button
     ///
     /// - Parameters:
-    ///   - title: title of the alert
+    ///   - title: optional title of the alert
     ///   - message: message of the alert
     ///   - okActionHandler: a nullable closure for the OK button
     /// - Returns: the alert presented
-    static func alertWithOKButton(title: String,
+    static func alertWithOKButton(title: String? = nil,
                                   message: String,
                                   okActionHandler: ((UIAlertAction) -> Void)? = nil) -> UIAlertController {
         let alert = UIAlertController(title: title,
@@ -41,11 +41,6 @@ extension UIAlertController {
         return alert
     }
 
-    //MARK: - legal hold
-    static func legalHoldDeactivated() -> UIAlertController {
-        return UIAlertController.alertWithOKButton(title: "legal_hold.deactivated.title".localized,
-                                    message: "legal_hold.deactivated.message".localized)
-    }
 }
 
 extension UIViewController {
@@ -53,13 +48,13 @@ extension UIViewController {
     /// Present an alert with a OK button
     ///
     /// - Parameters:
-    ///   - title: title of the alert
+    ///   - title: optional title of the alert
     ///   - message: message of the alert
     ///   - animated: present the alert animated or not
-    ///   - okActionHandler: a nullable closure for the OK button
+    ///   - okActionHandler: optional closure for the OK button
     /// - Returns: the alert presented
     @discardableResult
-    func presentAlertWithOKButton(title: String,
+    func presentAlertWithOKButton(title: String? = nil,
                                   message: String,
                                   animated: Bool = true,
                                   okActionHandler: ((UIAlertAction) -> Void)? = nil) -> UIAlertController {
@@ -73,39 +68,8 @@ extension UIViewController {
         return alert
     }
 
-    //MARK: - legal hold
-    @discardableResult
-    func presentLegalHoldDeactivatedAlert(animated: Bool = true) -> UIAlertController {
+    // MARK: - user profile deep link
 
-        let alert = UIAlertController.legalHoldDeactivated()
-
-        present(alert, animated: animated)
-
-        return alert
-    }
-
-    @discardableResult
-    func presentLegalHoldActivatedAlert(animated: Bool = true, completion: @escaping (String?)->()) -> UIAlertController {
-
-        /// password input for SSO user
-        let hasPasswordInput = ZMUser.selfUser().usesCompanyLogin != true
-
-        let passwordRequest = RequestPasswordController(context: .legalHold(fingerprint: nil, hasPasswordInput: hasPasswordInput)) { (result: Result<String?>) -> () in
-            switch result {
-            case .success(let passwordString):
-                completion(passwordString)
-            case .failure(let error):
-                zmLog.error("Error: \(error)")
-                completion(nil)
-            }
-        }
-
-        present(passwordRequest.alertController, animated: animated)
-
-        return passwordRequest.alertController
-    }
-
-    //MARK: - user profile deep link
     @discardableResult
     func presentInvalidUserProfileLinkAlert(okActionHandler: ((UIAlertAction) -> Void)? = nil) -> UIAlertController {
         return presentAlertWithOKButton(title: "url_action.invalid_user.title".localized,
@@ -114,4 +78,3 @@ extension UIViewController {
     }
     
 }
-

@@ -65,10 +65,9 @@ public protocol AccountViewType {
     var account: Account { get }
 }
 
-public final class AccountViewFactory {
+public enum AccountViewFactory {
     public static func viewFor(account: Account, user: ZMUser? = nil) -> BaseAccountView {
-        return account.teamName == nil ? PersonalAccountView(account: account, user: user)
-            : TeamAccountView(account: account, user: user)
+        return TeamAccountView(account: account, user: user) ?? PersonalAccountView(account: account, user: user)!
     }
 }
 
@@ -136,7 +135,7 @@ public class BaseAccountView: UIView, AccountViewType {
                 (self.hasUnreadMessages ? (" " + "conversation_list.header.self_team.accessibility_value.has_new_messages".localized) : "")
     }
     
-    init(account: Account, user: ZMUser? = nil) {
+    init?(account: Account, user: ZMUser? = nil) {
         self.account = account
         
         dotView = DotView(user: user)
@@ -249,7 +248,7 @@ extension BaseAccountView: ZMUserObserver {
         }
     }
     
-    override init(account: Account, user: ZMUser? = nil) {
+    override init?(account: Account, user: ZMUser? = nil) {
         super.init(account: account, user: user)
         
         
@@ -306,9 +305,14 @@ extension PersonalAccountView {
         case small
         case big
     }
+
+    public enum Content {
+        case teamImage(Data)
+        case teamName(String)
+    }
     
-    private let account: Account
-    
+    private let content: Content
+
     private var lastLayoutBounds: CGRect = .zero
     private let maskLayer = CALayer()
     internal let initialLabel = UILabel()
@@ -329,8 +333,8 @@ extension PersonalAccountView {
         backgroundColor = .from(scheme: .background, variant: .light)
     }
     
-    init(account: Account) {
-        self.account = account
+    init(content: Content) {
+        self.content = content
         super.init(frame: .zero)
         layer.mask = maskLayer
         
@@ -381,13 +385,13 @@ extension PersonalAccountView {
     }
     
     fileprivate func updateImage() {
-        if let teamImageData = self.account.teamImageData {
-            self.image = UIImage(data: teamImageData)
-            self.initialLabel.text = ""
-        }
-        else if let name = self.account.teamName {
-            self.image = nil
-            self.initialLabel.text = String(name[..<name.index(after: name.startIndex)])
+        switch content {
+        case .teamImage(let data):
+            image = UIImage(data: data)
+            initialLabel.text = ""
+        case .teamName(let name):
+            image = nil
+            initialLabel.text = name.first.map(String.init)
         }
     }
 }
@@ -406,10 +410,15 @@ extension PersonalAccountView {
     private var teamObserver: NSObjectProtocol!
     private var conversationListObserver: NSObjectProtocol!
     
-    override init(account: Account, user: ZMUser? = nil) {
-        
-        imageView = TeamImageView(account: account)
-        
+    override init?(account: Account, user: ZMUser? = nil) {
+        if let teamImageData = account.teamImageData {
+            imageView = TeamImageView(content: .teamImage(teamImageData))
+        } else if let teamName = account.teamName ?? user?.teamName, !teamName.isEmpty {
+            imageView = TeamImageView(content: .teamName(teamName))
+        } else {
+            return nil
+        }
+
         super.init(account: account, user: user)
         
         isAccessibilityElement = true

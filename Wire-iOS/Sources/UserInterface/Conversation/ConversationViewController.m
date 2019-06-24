@@ -752,7 +752,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         [self updateGuestsBarVisibility];
     }
 
-    if (note.nameChanged || note.securityLevelChanged || note.connectionStateChanged) {
+    if (note.nameChanged || note.securityLevelChanged || note.connectionStateChanged || note.legalHoldStatusChanged) {
         [self setupNavigatiomItem];
     }
 }

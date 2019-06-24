@@ -46,6 +46,13 @@ class LegalHoldDetailsViewControllerSnapshotTests: ZMSnapshotTestCase {
     func testOtherUserUnderLegalHold() {
         
         let conversation = MockConversation.groupConversation()
+        conversation.sortedActiveParticipants.forEach({ user in
+            let mockUser = user as? MockUser
+            
+            if mockUser?.isSelfUser == false {
+                mockUser?.isUnderLegalHold = true
+            }
+        })
         
         ColorScheme.default.variant = .dark
         sut = LegalHoldDetailsViewController(conversation: conversation.convertToRegularConversation())

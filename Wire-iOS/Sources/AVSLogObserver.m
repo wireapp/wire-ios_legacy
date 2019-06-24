@@ -44,7 +44,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"AVS";
 
 - (void)logMessage:(NSString *)message
 {
-    ZMLogDebug(@"%@", message);
+    ZMLogPublic(@"%@", message);
 }
 
 @end

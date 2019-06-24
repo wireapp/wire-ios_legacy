@@ -111,6 +111,7 @@
                 
         [self setupAppearance];
 
+        [self createLegalHoldDisclosureController];
         [self setupConversationListViewController];
     }
     return self;

@@ -1,4 +1,4 @@
-//
+
 // Wire
 // Copyright (C) 2019 Wire Swiss GmbH
 //
@@ -16,24 +16,33 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+import SnapshotTesting
 import XCTest
 @testable import Wire
 
-final class UIViewController_LegalHoldAlertSnapshotTests: ZMSnapshotTestCase {
-    
-    var sut: UIAlertController!
+final class CallInfoRootViewControllerSnapshotTests: XCTestCase {
+    var coreDataFixture: CoreDataFixture!
 
     override func setUp() {
         super.setUp()
-        sut = UIAlertController.legalHoldDeactivated()
+        coreDataFixture = CoreDataFixture()
     }
-    
+
     override func tearDown() {
-        sut = nil
+        coreDataFixture = nil
         super.tearDown()
     }
 
-    func testForLegalHoldAlert(){
-        verifyAlertController(sut)
+    // MARK: - OneToOne Audio
+
+    func testOneToOneIncomingAudioRinging() {
+        // given
+        let fixture = CallInfoTestFixture(otherUser: coreDataFixture.otherUser)
+
+        // when
+        let sut = CallInfoRootViewController(configuration: fixture.oneToOneIncomingAudioRinging)
+
+        // then
+        verifyAllIPhoneSizes(matching: sut)
     }
 }
