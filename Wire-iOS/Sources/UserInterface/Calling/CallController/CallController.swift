@@ -173,7 +173,7 @@ extension CallController: CallQualityControllerDelegate {
     
     func callQualityControllerDidScheduleDebugAlert() {
         let presentDebugAlertAction: () -> Void = {
-            DebugAlert.showSendLogsMessage(message: "The call failed. Sending the debug logs can help us troubleshoot the issue.")
+            DebugAlert.showSendLogsMessage(message: "The call failed. Sending the debug logs can help us troubleshoot the issue and improve the overall app experience.")
         }
         
         if self.activeCallViewController == nil {

@@ -129,7 +129,7 @@ class CallQualityController: NSObject {
 
     /// Presents the debug log prompt after a user quality rejection.
     private func handleCallQualityRejection() {
-        DebugAlert.showSendLogsMessage(message: "Sending the debug logs can help us improve the quality of calls.")
+        DebugAlert.showSendLogsMessage(message: "Sending the debug logs can help us improve the quality of calls and the overall app experience.")
     }
 
 }
