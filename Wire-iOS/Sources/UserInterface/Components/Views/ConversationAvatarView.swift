@@ -102,27 +102,23 @@ fileprivate enum Mode: Equatable {
 }
 
 extension Mode {
-    fileprivate init(conversation: ZMConversation?) {
-        guard let conversation = conversation else {
-            self = .none
-            return
-        }
-
-        let users = conversation.lastServerSyncedActiveParticipants.array as! [ZMUser]
-
-        switch conversation.conversationType {
+    fileprivate init(conversationType: ZMConversationType, users: [UserType]) {
+        switch conversationType {
         case .group:
             self = .four
         default:
-            switch (users.count) {
-            case 0: self = .none
-            case 1: self = .one(serviceUser: users[0].isServiceUser) ///TODO: check conv has name?
-            default: self = .four
-            }
+            self.init(users: users)
         }
-
     }
-    
+
+    fileprivate init(users: [UserType]) {
+        switch (users.count) {
+        case 0: self = .none
+        case 1: self = .one(serviceUser: users[0].isServiceUser)
+        default: self = .four
+        }
+    }
+
     var showInitials: Bool {
         if case .one = self {
             return true
@@ -143,6 +139,8 @@ final public class ConversationAvatarView: UIView {
 
     public var users: [ZMUser] = [] {
         didSet {
+            self.mode = Mode(users: users)
+
             var index: Int = 0
             self.userImages().forEach {
                 $0.userSession = ZMUserSession.shared()
@@ -168,17 +166,19 @@ final public class ConversationAvatarView: UIView {
     
     public var conversation: ZMConversation? = .none {
         didSet {
-            mode = Mode(conversation: conversation)
 
             guard let conversation = self.conversation else {
                 self.clippingView.subviews.forEach { $0.isHidden = true }
                 return
             }
-            
+
             let stableRandomParticipants = conversation.stableRandomParticipants.filter { !$0.isSelfUser }
 
             self.accessibilityLabel = "Avatar for \(self.conversation?.displayName ?? "")"
             self.users = stableRandomParticipants
+
+            ///override the mode
+            mode = Mode(conversationType: conversation.conversationType, users: users)
         }
     }
     

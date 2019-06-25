@@ -28,7 +28,14 @@ extension ConversationListItemView {
         self.subtitleAttributedText = subtitle
         self.accessibilityContentsDidChange()
     }
-    
+
+
+    /// configure without a conversation, i.e. when displaying a pending user
+    ///
+    /// - Parameters:
+    ///   - title: title of the cell
+    ///   - subtitle: subtitle of the cell
+    ///   - users: the pending user(s)
     @objc func configure(with title: NSAttributedString?, subtitle: NSAttributedString?, users: [ZMUser]) {
         self.titleText = title
         self.subtitleAttributedText = subtitle
