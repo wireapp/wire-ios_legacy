@@ -102,22 +102,16 @@ fileprivate enum Mode: Equatable {
 }
 
 extension Mode {
-    fileprivate init(conversationType: ZMConversationType, users: [UserType]) {
+    fileprivate init(conversationType: ZMConversationType? = nil, users: [UserType]) {
         switch (conversationType, users.count) {
-        case (.group, 0):
-            self = .none
-        case (.group, 1...):
+        case (.group?, 1...):
             self = .four
+        case (_, 0):
+            self = .none
+        case (_, 1):
+            self = .one(serviceUser: users[0].isServiceUser)
         default:
-            self.init(users: users)
-        }
-    }
-
-    fileprivate init(users: [UserType]) {
-        switch (users.count) {
-        case 0: self = .none
-        case 1: self = .one(serviceUser: users[0].isServiceUser)
-        default: self = .four
+            self = .four
         }
     }
 
