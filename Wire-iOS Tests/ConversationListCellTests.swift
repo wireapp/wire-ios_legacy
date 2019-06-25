@@ -20,7 +20,7 @@ import UIKit
 @testable import Wire
 import XCTest
 
-class ConversationListCellTests: CoreDataSnapshotTestCase {
+final class ConversationListCellTests: CoreDataSnapshotTestCase {
 
     // MARK: - Setup
     

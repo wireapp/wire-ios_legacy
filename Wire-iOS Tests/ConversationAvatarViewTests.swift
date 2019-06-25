@@ -35,7 +35,7 @@ extension Array where Element: ZMUser {
     }
 }
 
-class ConversationAvatarViewTests: CoreDataSnapshotTestCase {
+final class ConversationAvatarViewTests: CoreDataSnapshotTestCase {
 
     var sut: ConversationAvatarView!
 

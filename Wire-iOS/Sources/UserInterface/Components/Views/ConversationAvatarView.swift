@@ -103,8 +103,10 @@ fileprivate enum Mode: Equatable {
 
 extension Mode {
     fileprivate init(conversationType: ZMConversationType, users: [UserType]) {
-        switch conversationType {
-        case .group:
+        switch (conversationType, users.count) {
+        case (.group, 0):
+            self = .none
+        case (.group, 1...):
             self = .four
         default:
             self.init(users: users)
