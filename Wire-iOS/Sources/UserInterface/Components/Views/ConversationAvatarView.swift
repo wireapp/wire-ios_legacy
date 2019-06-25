@@ -139,28 +139,7 @@ final public class ConversationAvatarView: UIView {
 
     public var users: [ZMUser] = [] {
         didSet {
-            self.mode = Mode(users: users)
-
-            var index: Int = 0
-            self.userImages().forEach {
-                $0.userSession = ZMUserSession.shared()
-                $0.shouldDesaturate = false
-                $0.size = mode == .four ? .tiny : .small
-                if index < users.count {
-                    $0.user = users[index]
-                }
-                else {
-                    $0.user = nil
-                    $0.container.isOpaque = false
-                    $0.container.backgroundColor = UIColor(white: 0, alpha: 0.24)
-                    $0.avatar = .none
-                }
-
-                $0.allowsInitials = mode.showInitials
-                $0.shape = mode.shape
-                index = index + 1
-            }
-            self.setNeedsLayout()
+            mode = Mode(users: users)
         }
     }
     
@@ -196,8 +175,28 @@ final public class ConversationAvatarView: UIView {
                 layer.borderColor = UIColor(white: 1, alpha: 0.24).cgColor
                 backgroundColor = UIColor(white: 0, alpha: 0.16)
             }
-            
-            self.setNeedsLayout()
+
+            var index: Int = 0
+            self.userImages().forEach {
+                $0.userSession = ZMUserSession.shared()
+                $0.shouldDesaturate = false
+                $0.size = mode == .four ? .tiny : .small
+                if index < users.count {
+                    $0.user = users[index]
+                }
+                else {
+                    $0.user = nil
+                    $0.container.isOpaque = false
+                    $0.container.backgroundColor = UIColor(white: 0, alpha: 0.24)
+                    $0.avatar = .none
+                }
+
+                $0.allowsInitials = mode.showInitials
+                $0.shape = mode.shape
+                index = index + 1
+            }
+
+            setNeedsLayout()
         }
     }
 
