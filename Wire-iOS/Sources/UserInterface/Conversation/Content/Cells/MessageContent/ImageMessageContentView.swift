@@ -18,12 +18,11 @@
 
 import Foundation
 
-class ImageContentView: UIView {
+final class ImageContentView: UIView {
     
     var imageView = ImageResourceView()
     var imageAspectConstraint: NSLayoutConstraint?
     var imageWidthConstraint: NSLayoutConstraint
-    var imageHeightConstraint: NSLayoutConstraint
 
     var mediaAsset: MediaAsset? {
         return imageView.mediaAsset()
@@ -31,20 +30,17 @@ class ImageContentView: UIView {
 
     init() {
         imageWidthConstraint = imageView.widthAnchor.constraint(equalToConstant: 140)
-        imageHeightConstraint = imageView.heightAnchor.constraint(equalToConstant: 140)
-        
+
         super.init(frame: .zero)
         
         imageView.clipsToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageWidthConstraint.priority = .defaultLow
-        imageHeightConstraint.priority = .defaultLow
-        
+
         addSubview(imageView)
         
         NSLayoutConstraint.activate([
             imageWidthConstraint,
-            imageHeightConstraint,
             imageView.leadingAnchor.constraint(equalTo: leadingAnchor),
             imageView.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor),
             imageView.topAnchor.constraint(equalTo: topAnchor),
@@ -63,10 +59,10 @@ class ImageContentView: UIView {
     private func updateAspectRatio(for resource: PreviewableImageResource) {
         let contentSize = resource.contentSize
         imageAspectConstraint.apply(imageView.removeConstraint)
-        imageAspectConstraint = imageView.heightAnchor.constraint(equalTo: imageView.widthAnchor, multiplier: contentSize.height / contentSize.width)
+        imageAspectConstraint = imageView.heightAnchor.constraint(equalTo: imageView.widthAnchor, multiplier: contentSize.width == 0 ? 1 : (contentSize.height / contentSize.width))
         imageAspectConstraint?.isActive = true
+
         imageWidthConstraint.constant = contentSize.width
-        imageHeightConstraint.constant = contentSize.height
         imageView.contentMode = resource.contentMode
     }
 
