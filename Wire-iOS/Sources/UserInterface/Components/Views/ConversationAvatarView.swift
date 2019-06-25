@@ -143,8 +143,6 @@ final public class ConversationAvatarView: UIView {
 
     public var users: [ZMUser] = [] {
         didSet {
-            //            self.mode = Mode(users: users) ///TODO: conv
-
             var index: Int = 0
             self.userImages().forEach {
                 $0.userSession = ZMUserSession.shared()
