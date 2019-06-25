@@ -61,7 +61,7 @@ extension Array {
 
         self.forEach { _ in
             let rand: UInt = generator.rand() % UInt(workingCopy.count)
-        
+
             result.append(workingCopy[Int(rand)])
             workingCopy.remove(at: Int(rand))
         }
@@ -102,16 +102,25 @@ fileprivate enum Mode: Equatable {
 }
 
 extension Mode {
-    fileprivate init(conversation: ZMConversation) {
-        self.init(users: conversation.lastServerSyncedActiveParticipants.array as! [ZMUser])
-    }
-    
-    fileprivate init(users: [UserType]) {
-        switch (users.count) {
-        case 0: self = .none
-        case 1: self = .one(serviceUser: users[0].isServiceUser)
-        default: self = .four
+    fileprivate init(conversation: ZMConversation?) {
+        guard let conversation = conversation else {
+            self = .none
+            return
         }
+
+        let users = conversation.lastServerSyncedActiveParticipants.array as! [ZMUser]
+
+        switch conversation.conversationType {
+        case .group:
+            self = .four
+        default:
+            switch (users.count) {
+            case 0: self = .none
+            case 1: self = .one(serviceUser: users[0].isServiceUser) ///TODO: check conv has name?
+            default: self = .four
+            }
+        }
+
     }
     
     var showInitials: Bool {
@@ -134,7 +143,7 @@ final public class ConversationAvatarView: UIView {
 
     public var users: [ZMUser] = [] {
         didSet {
-            self.mode = Mode(users: users)
+            //            self.mode = Mode(users: users) ///TODO: conv
 
             var index: Int = 0
             self.userImages().forEach {
@@ -160,6 +169,8 @@ final public class ConversationAvatarView: UIView {
     
     public var conversation: ZMConversation? = .none {
         didSet {
+            mode = Mode(conversation: conversation)
+
             guard let conversation = self.conversation else {
                 self.clippingView.subviews.forEach { $0.isHidden = true }
                 return
