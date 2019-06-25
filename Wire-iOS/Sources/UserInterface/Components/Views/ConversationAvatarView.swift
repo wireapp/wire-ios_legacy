@@ -143,6 +143,12 @@ final public class ConversationAvatarView: UIView {
 
     public var users: [ZMUser] = [] {
         didSet {
+//            if oldValue.count > users.count {
+//                userImageViews.forEach {
+//                    $0.avatar = .none
+//                }
+//            }
+
             var index: Int = 0
             self.userImages().forEach {
                 $0.userSession = ZMUserSession.shared()
@@ -155,6 +161,7 @@ final public class ConversationAvatarView: UIView {
                     $0.user = nil
                     $0.container.isOpaque = false
                     $0.container.backgroundColor = UIColor(white: 0, alpha: 0.24)
+                    $0.avatar = .none
                 }
 
                 $0.allowsInitials = mode.showInitials
@@ -199,7 +206,11 @@ final public class ConversationAvatarView: UIView {
             self.setNeedsLayout()
         }
     }
-    
+
+    private var userImageViews: [UserImageView] {
+        return [imageViewLeftTop, imageViewRightTop, imageViewLeftBottom, imageViewRightBottom]
+    }
+
     func userImages() -> [UserImageView] {
         switch mode {
         case .none:
@@ -209,7 +220,7 @@ final public class ConversationAvatarView: UIView {
             return [imageViewLeftTop]
             
         case .four:
-            return [imageViewLeftTop, imageViewRightTop, imageViewLeftBottom, imageViewRightBottom]
+            return userImageViews
         }
     }
     
@@ -238,7 +249,7 @@ final public class ConversationAvatarView: UIView {
     
     init() {
         super.init(frame: .zero)
-        [imageViewLeftTop, imageViewRightTop, imageViewLeftBottom, imageViewRightBottom].forEach(self.clippingView.addSubview)
+        userImageViews.forEach(self.clippingView.addSubview)
         updateCornerRadius()
         autoresizesSubviews = false
         layer.masksToBounds = true
