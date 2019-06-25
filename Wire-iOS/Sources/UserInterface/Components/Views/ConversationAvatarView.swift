@@ -152,7 +152,7 @@ final public class ConversationAvatarView: UIView {
             self.accessibilityLabel = "Avatar for \(self.conversation?.displayName ?? "")"
             self.users = stableRandomParticipants
 
-            ///override the mode
+            // override the mode
             mode = Mode(conversationType: conversation.conversationType, users: users)
         }
     }
