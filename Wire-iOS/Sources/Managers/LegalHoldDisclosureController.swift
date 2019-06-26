@@ -122,29 +122,13 @@ import UIKit
     func discloseCurrentState(cause: DisclosureCause) {
         switch selfUser.legalHoldStatus {
         case .enabled:
-            // Do not show the alert for a remote change unless it requires attention
-            if selfUser.needsToAcknowledgeLegalHoldStatus {
-                discloseEnabledStateIfPossible()
-            }
+            discloseEnabledStateIfPossible()
 
         case .pending(let request):
-            switch cause {
-            case .appOpen, .userAction:
-                // Always show the alert when coming into the foreground or when the user requests it
-                disclosePendingRequestIfPossible(request)
-
-            case .remoteUserChange:
-                // Do not show the alert for a remote change unless it requires attention
-                if selfUser.needsToAcknowledgeLegalHoldStatus {
-                    disclosePendingRequestIfPossible(request)
-                }
-            }
+            disclosePendingRequestIfPossible(request)
 
         case .disabled:
-            // Do not show the alert for a remote change unless it requires attention
-            if selfUser.needsToAcknowledgeLegalHoldStatus {
-                discloseDisabledStateIfPossible()
-            }
+            discloseDisabledStateIfPossible()
         }
     }
 
@@ -166,7 +150,9 @@ import UIKit
             return
         default:
             // If there is a current alert, replace it with the latest disclosure
-            dismissAlertIfNeeded(currentState.alert, dismissalHandler: presentEnabledAlert)
+            if selfUser.needsToAcknowledgeLegalHoldStatus {
+                dismissAlertIfNeeded(currentState.alert, dismissalHandler: presentEnabledAlert)
+            }
         }
     }
 
@@ -183,7 +169,10 @@ import UIKit
             currentState = .warningAboutPendingRequest(alert)
             presenter(alert, true, nil)
         }
-
+        
+        // Do not present alert if we already in process of accepting the request
+        if case .acceptingRequest = currentState { return }
+        
         // If there is a current alert, replace it with the latest disclosure
         dismissAlertIfNeeded(currentState.alert, dismissalHandler: presentPendingRequestAlert)
     }
@@ -198,14 +187,28 @@ import UIKit
             currentState = .warningAboutDisabled(alert)
             presenter(alert, true, nil)
         }
-
-        // If we are already warning about disabled, do nothing
-        if case .warningAboutDisabled = currentState {
+        
+        switch currentState {
+        case .warningAboutPendingRequest(let alert):
+            // If we are warning about the pending request, dismiss it
+            dismissAlertIfNeeded(alert, dismissalHandler: {})
             return
+        case .warningAboutAcceptationResult(let alert):
+            // If we are warning about the pending request result (error alert), dismiss it
+            dismissAlertIfNeeded(alert, dismissalHandler: {})
+            return
+        case .warningAboutDisabled:
+            // If we are already warning about disabled, do nothing
+            return
+        default:
+            break
         }
 
-        // If there is a current alert, replace it with the latest disclosure
-        dismissAlertIfNeeded(currentState.alert, dismissalHandler: presentDisabledAlert)
+        // Do not show the alert for a remote change unless it requires attention
+        if selfUser.needsToAcknowledgeLegalHoldStatus {
+            // If there is a current alert, replace it with the latest disclosure
+            dismissAlertIfNeeded(currentState.alert, dismissalHandler: presentDisabledAlert)
+        }
     }
 
     // MARK: - Helpers
