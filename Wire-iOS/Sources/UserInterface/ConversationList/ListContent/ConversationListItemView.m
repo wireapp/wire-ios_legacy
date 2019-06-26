@@ -64,30 +64,22 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
 
 - (void)setupConversationListItemView
 {
-    self.labelsContainer = [[UIView alloc] init];
-    [self addSubview:self.labelsContainer];
-    self.labelsContainer.isAccessibilityElement = YES;
-    self.labelsContainer.accessibilityTraits = UIAccessibilityTraitButton;
-    
-    self.titleField = [[UILabel alloc] init];
-    self.titleField.numberOfLines = 1;
-    self.titleField.lineBreakMode = NSLineBreakByTruncatingTail;
-    [self.labelsContainer addSubview:self.titleField];
-    
+    [self createContentStack];
+    [self createLabelsStack];
+    [self createTitleField];
+    [self createSubtitleField];
+
     [self configureFont];
 
-    self.avatarContainer = [[UIView alloc] init];
-    [self addSubview:self.avatarContainer];
-
     self.avatarView = [[ConversationAvatarView alloc] init];
-    [self.avatarContainer addSubview:self.avatarView];
 
     self.rightAccessory = [[ConversationListAccessoryView alloc] initWithMediaPlaybackManager:[AppDelegate sharedAppDelegate].mediaPlaybackManager];
     self.rightAccessory.accessibilityIdentifier = @"status";
-    [self addSubview:self.rightAccessory];
 
-    [self createSubtitleField];
-    
+    [self.contentStack addArrangedSubview:self.avatarView];
+    [self.contentStack addArrangedSubview:self.labelsStack];
+    [self.contentStack addArrangedSubview:self.rightAccessory];
+
     self.lineView = [[UIView alloc] init];
     self.lineView.backgroundColor = [UIColor colorWithWhite:1.0f alpha:0.08f];
     [self addSubview:self.lineView];
@@ -113,13 +105,39 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
     self.isAccessibilityElement = NO;
 }
 
+- (void)createLabelsStack
+{
+    self.labelsStack = [[UIStackView alloc] init];
+    self.labelsStack.axis = UILayoutConstraintAxisVertical;
+    self.labelsStack.alignment = UIStackViewAlignmentLeading;
+    self.labelsStack.distribution = UIStackViewDistributionFill;
+}
+
+- (void)createContentStack
+{
+    self.contentStack = [[UIStackView alloc] init];
+    self.contentStack.spacing = 16;
+    self.contentStack.axis = UILayoutConstraintAxisHorizontal;
+    self.contentStack.alignment = UIStackViewAlignmentCenter;
+    self.contentStack.distribution = UIStackViewDistributionFill;
+    [self addSubview:self.contentStack];
+}
+
+- (void)createTitleField
+{
+    self.titleField = [[UILabel alloc] init];
+    self.titleField.numberOfLines = 1;
+    self.titleField.lineBreakMode = NSLineBreakByTruncatingTail;
+    [self.labelsStack addArrangedSubview:self.titleField];
+}
+
 - (void)createSubtitleField
 {
     self.subtitleField = [[UILabel alloc] init];
     self.subtitleField.textColor = [UIColor colorWithWhite:1.0f alpha:0.64f];
     self.subtitleField.accessibilityIdentifier = @"Conversation status";
     self.subtitleField.numberOfLines = 1;
-    [self.labelsContainer addSubview:self.subtitleField];
+    [self.labelsStack addArrangedSubview:self.subtitleField];
 }
 
 - (void)setTitleText:(NSAttributedString *)titleText
@@ -133,14 +151,6 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
     _subtitleAttributedText = subtitleAttributedText;
     self.subtitleField.attributedText = subtitleAttributedText;
     self.subtitleField.accessibilityValue = subtitleAttributedText.string;
-    if (subtitleAttributedText.string.length == 0) {
-        self.titleTwoLineConstraint.active = NO;
-        self.titleOneLineConstraint.active = YES;
-    }
-    else {
-        self.titleOneLineConstraint.active = NO;
-        self.titleTwoLineConstraint.active = YES;
-    }
 }
 
 - (void)setSelected:(BOOL)selected
@@ -168,13 +178,6 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
 - (void)updateAppearance
 {
     self.titleField.attributedText = self.titleText;
-}
-
-- (void)accessibilityContentsDidChange
-{
-    self.labelsContainer.accessibilityLabel = self.titleField.text;
-    self.labelsContainer.accessibilityHint = NSLocalizedString(@"conversation_list.voiceover.open_conversation.hint", nil);
-    self.labelsContainer.accessibilityValue = self.subtitleField.text;
 }
 
 #pragma mark - Observer

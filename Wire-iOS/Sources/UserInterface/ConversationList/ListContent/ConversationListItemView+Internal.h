@@ -16,15 +16,15 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+@import UIKit;
+
 @interface ConversationListItemView ()
 
+@property (nonatomic) UIStackView *labelsStack;
+@property (nonatomic) UIStackView *contentStack;
+
 @property (nonatomic) UILabel *titleField;
-@property (nonatomic) UIView *avatarContainer;
-@property (nonatomic) UIView *labelsContainer;
 @property (nonatomic) UILabel *subtitleField;
 @property (nonatomic) UIView *lineView;
-
-@property (nonatomic) NSLayoutConstraint *titleTwoLineConstraint;
-@property (nonatomic) NSLayoutConstraint *titleOneLineConstraint;
 
 @end
