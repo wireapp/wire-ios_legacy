@@ -102,7 +102,8 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
                                                  name:ConversationListItemDidScrollNotification
                                                object:nil];
     
-    self.isAccessibilityElement = NO;
+    self.isAccessibilityElement = YES;
+    self.shouldGroupAccessibilityChildren = YES;
 }
 
 - (void)createLabelsStack
