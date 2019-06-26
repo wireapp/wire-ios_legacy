@@ -61,6 +61,7 @@ import Cartography
     }
     
     func createViews() {
+        titleLabel.accessibilityTraits.insert(.header)
         separatorView.isHidden = true
         dismissButton.setIcon(.cross, size: .tiny, for: [])
         dismissButton.addTarget(self, action: #selector(ArchivedNavigationBar.dismissButtonTapped(_:)), for: .touchUpInside)

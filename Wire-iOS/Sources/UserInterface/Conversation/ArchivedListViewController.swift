@@ -57,10 +57,6 @@ import Cartography
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        if UIApplication.shared.keyWindow?.traitCollection.forceTouchCapability == .available {
-            registerForPreviewing(with: self, sourceView: collectionView)
-        }
-
         view.accessibilityViewIsModal = true
     }
 
@@ -186,31 +182,6 @@ extension ArchivedListViewController: ConversationListCellDelegate {
     func conversationListCellOverscrolled(_ cell: ConversationListCell!) {
         actionController = ConversationActionController(conversation: cell.conversation, target: self)
         actionController?.presentMenu(from: cell)
-    }
-
-}
-
-// MARK: - Previewing
-
-extension ArchivedListViewController: UIViewControllerPreviewingDelegate {
-
-    func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
-        guard let indexPath = collectionView.indexPathForItem(at: location) else {
-            return nil
-        }
-
-        guard let conversation = viewModel[indexPath.row] else {
-            return nil
-        }
-
-        return ConversationPreviewViewController.init(conversation: conversation, presentingViewController: self)
-    }
-
-    func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
-        guard let conversation = (viewControllerToCommit as? ConversationPreviewViewController)?.conversation else {
-            return
-        }
-        delegate?.archivedListViewController(self, didSelectConversation: conversation)
     }
 
 }
