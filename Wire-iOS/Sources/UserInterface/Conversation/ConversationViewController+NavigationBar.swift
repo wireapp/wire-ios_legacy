@@ -158,10 +158,12 @@ public extension ConversationViewController {
     }
 
     @objc func voiceCallItemTapped(_ sender: UIBarButtonItem) {
+        endEditing()
         startCallController.startAudioCall(started: ConversationInputBarViewController.endEditingMessage)
     }
 
     @objc func videoCallItemTapped(_ sender: UIBarButtonItem) {
+        endEditing()
         startCallController.startVideoCall(started: ConversationInputBarViewController.endEditingMessage)
     }
 
