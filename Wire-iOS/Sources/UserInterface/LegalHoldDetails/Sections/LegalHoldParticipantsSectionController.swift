@@ -44,14 +44,14 @@ protocol LegalHoldParticipantsSectionControllerDelegate: class {
 class LegalHoldParticipantsSectionController: GroupDetailsSectionController {
     
     fileprivate weak var collectionView: UICollectionView?
-    private let viewModel: LegalHoldParticipantsSectionViewModel
+    private var viewModel: LegalHoldParticipantsSectionViewModel
     private let conversation: ZMConversation
     private var token: AnyObject?
     
     public weak var delegate: LegalHoldParticipantsSectionControllerDelegate?
     
-    init(participants: [UserType], conversation: ZMConversation) {
-        viewModel = .init(participants: participants)
+    init(conversation: ZMConversation) {
+        viewModel = .init(participants: conversation.sortedActiveParticipants.filter(\.isUnderLegalHold))
         self.conversation = conversation
         super.init()
         
@@ -102,7 +102,9 @@ class LegalHoldParticipantsSectionController: GroupDetailsSectionController {
 extension LegalHoldParticipantsSectionController: ZMUserObserver {
     
     func userDidChange(_ changeInfo: UserChangeInfo) {
-        guard changeInfo.connectionStateChanged || changeInfo.nameChanged else { return }
+        guard changeInfo.connectionStateChanged || changeInfo.nameChanged || changeInfo.isUnderLegalHoldChanged else { return }
+        
+        viewModel = .init(participants: conversation.sortedActiveParticipants.filter(\.isUnderLegalHold))
         collectionView?.reloadData()
     }
     

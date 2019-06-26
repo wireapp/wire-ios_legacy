@@ -59,6 +59,12 @@ class LegalHoldDetailsViewController: UIViewController {
         navigationItem.rightBarButtonItem = navigationController?.closeItem()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        conversation.verifyLegalHoldSubjects()
+    }
+    
     fileprivate func setupViews() {
         
         view.addSubview(collectionView)
@@ -81,7 +87,7 @@ class LegalHoldDetailsViewController: UIViewController {
     
     fileprivate func computeVisibleSections() -> [CollectionViewSectionController] {
         let headerSection = SingleViewSectionController(view: LegalHoldHeaderView(frame: .zero))
-        let legalHoldParticipantsSection = LegalHoldParticipantsSectionController(participants: conversation.sortedActiveParticipants.filter(\.isUnderLegalHold), conversation: conversation)
+        let legalHoldParticipantsSection = LegalHoldParticipantsSectionController(conversation: conversation)
         legalHoldParticipantsSection.delegate = self
         
         return [headerSection, legalHoldParticipantsSection]

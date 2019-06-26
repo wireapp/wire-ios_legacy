@@ -45,7 +45,7 @@ final class LegalHoldAlertFactoryTests: ZMSnapshotTestCase {
 
     func testThatItCanCreateLegalHoldPendingAlert() {
         let prekey = LegalHoldRequest.Prekey(id: 65535, key: Data(base64Encoded: "pQABARn//wKhAFggHsa0CszLXYLFcOzg8AA//E1+Dl1rDHQ5iuk44X0/PNYDoQChAFgg309rkhG6SglemG6kWae81P1HtQPx9lyb6wExTovhU4cE9g==")!)
-        let request = LegalHoldRequest(requesterIdentifier: UUID(), targetUserIdentifier: user.remoteIdentifier!, clientIdentifier: "eca3c87cfe28be49", lastPrekey: prekey)
+        let request = LegalHoldRequest(clientIdentifier: "eca3c87cfe28be49", lastPrekey: prekey)
 
         let alert = LegalHoldAlertFactory.makeLegalHoldActivationAlert(for: request, user: user, presenter: ignorePresentation, suggestedStateChangeHandler: nil)
         verifyAlertController(alert)
