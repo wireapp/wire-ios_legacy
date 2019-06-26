@@ -126,11 +126,16 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self updateActionBar];
     [self.searchResultsViewController searchContactList];
 
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithIcon:WRStyleKitIconCross
-                                                                             style:UIBarButtonItemStylePlain
-                                                                            target:self
-                                                                            action:@selector(onDismissPressed)];
-    self.navigationItem.rightBarButtonItem.accessibilityIdentifier = @"close";
+    UIBarButtonItem *closeButton = [[UIBarButtonItem alloc] initWithIcon:WRStyleKitIconCross
+                                                                   style:UIBarButtonItemStylePlain
+                                                                  target:self
+                                                                  action:@selector(onDismissPressed)];
+
+    closeButton.accessibilityLabel = NSLocalizedString(@"general.close", @"");
+    closeButton.accessibilityIdentifier = @"close";
+
+    self.navigationItem.rightBarButtonItem = closeButton;
+    self.view.accessibilityViewIsModal = YES;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -181,6 +186,12 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 {
     [self.searchHeaderViewController.tokenField resignFirstResponder];
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (BOOL)accessibilityPerformEscape
+{
+    [self onDismissPressed];
+    return YES;
 }
 
 #pragma mark - Instance methods
