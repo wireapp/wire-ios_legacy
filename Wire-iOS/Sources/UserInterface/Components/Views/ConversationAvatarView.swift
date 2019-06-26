@@ -100,6 +100,12 @@ fileprivate enum Mode: Equatable {
 }
 
 extension Mode {
+    
+    /// create a Mode for different cases
+    ///
+    /// - Parameters:
+    ///   - conversationType: when conversationType is nil, it is a incoming connection request
+    ///   - users: number of users involved in the conversation
     fileprivate init(conversationType: ZMConversationType? = nil, users: [UserType]) {
         switch (conversationType, users.count) {
         case (.group?, 1...):
@@ -131,7 +137,9 @@ extension Mode {
 
 final public class ConversationAvatarView: UIView {
     enum Context {
+        // one or more users requesting connection to self user
         case connect(users: [ZMUser])
+        // an established conversation or self user has a pending request to other users
         case conversation(conversation: ZMConversation)
     }
 
