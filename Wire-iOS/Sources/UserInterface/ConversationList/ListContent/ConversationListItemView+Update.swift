@@ -40,8 +40,7 @@ extension ConversationListItemView {
         self.titleText = title
         self.subtitleAttributedText = subtitle
         self.rightAccessory.icon = .pendingConnection
-        self.avatarView.conversation = .none
-        self.avatarView.users = users
+        avatarView.configure(context: .connect(users: users))
         self.accessibilityContentsDidChange()
     }
     
@@ -62,7 +61,7 @@ extension ConversationListItemView {
             title = conversation.displayName.attributedString
         }
         
-        self.avatarView.conversation = conversation
+        avatarView.configure(context: .converse(conversation: conversation))
         
         let status = conversation.status
         let statusIcon: ConversationStatusIcon?

@@ -126,7 +126,8 @@ class GroupConversationCell: UICollectionViewCell, Themeable {
     }
     
     public func configure(conversation: ZMConversation) {
-        avatarView.conversation  = conversation
+        avatarView.configure(context: .converse(conversation: conversation))
+
         titleLabel.text = conversation.displayName
         
         if conversation.conversationType == .oneOnOne, let handle = conversation.connectedUser?.handle {
