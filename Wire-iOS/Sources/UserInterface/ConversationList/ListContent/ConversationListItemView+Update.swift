@@ -61,7 +61,7 @@ extension ConversationListItemView {
             title = conversation.displayName.attributedString
         }
         
-        avatarView.configure(context: .converse(conversation: conversation))
+        avatarView.configure(context: .conversation(conversation: conversation))
         
         let status = conversation.status
         let statusIcon: ConversationStatusIcon?

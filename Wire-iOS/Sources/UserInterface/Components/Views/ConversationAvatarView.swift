@@ -132,7 +132,7 @@ extension Mode {
 final public class ConversationAvatarView: UIView {
     enum Context {
         case connect(users: [ZMUser])
-        case converse(conversation: ZMConversation)
+        case conversation(conversation: ZMConversation)
     }
 
     func configure(context: Context) {
@@ -140,7 +140,7 @@ final public class ConversationAvatarView: UIView {
         case .connect(let users):
             self.users = users
             mode = Mode(users: users)
-        case .converse(let conversation):
+        case .conversation(let conversation):
             self.conversation = conversation
             mode = Mode(conversationType: conversation.conversationType, users: users)
         }

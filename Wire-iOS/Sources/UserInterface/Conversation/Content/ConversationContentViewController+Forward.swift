@@ -32,7 +32,7 @@ extension ZMConversation: ShareDestination {
     
     public var avatarView: UIView? {
         let avatarView = ConversationAvatarView()
-        avatarView.configure(context: .converse(conversation: self))
+        avatarView.configure(context: .conversation(conversation: self))
         return avatarView
     }
 }
