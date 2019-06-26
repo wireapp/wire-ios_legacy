@@ -114,7 +114,7 @@ class SectionTableHeader: UITableViewHeaderFooterView, Themeable {
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        addSubview(headerView)
+        contentView.addSubview(headerView)
         createConstraints()
     }
 
@@ -122,10 +122,10 @@ class SectionTableHeader: UITableViewHeaderFooterView, Themeable {
         headerView.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            headerView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            headerView.topAnchor.constraint(equalTo: topAnchor),
-            headerView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            headerView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            headerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            headerView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            headerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            headerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
         ])
     }
 

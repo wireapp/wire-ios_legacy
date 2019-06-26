@@ -62,8 +62,8 @@ import Foundation
     
     func createConstraints() {
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        accessoryContainer.translatesAutoresizingMaskIntoConstraints = false
         emptyResultContainer.translatesAutoresizingMaskIntoConstraints = false
+        accessoryContainer.translatesAutoresizingMaskIntoConstraints = false
 
         accessoryContainerHeightConstraint = accessoryContainer.heightAnchor.constraint(equalToConstant: 0)
         accessoryViewBottomOffsetConstraint = accessoryContainer.bottomAnchor.constraint(equalTo: bottomAnchor)
@@ -83,6 +83,7 @@ import Foundation
 
             accessoryContainer.leadingAnchor.constraint(equalTo: leadingAnchor),
             accessoryContainer.trailingAnchor.constraint(equalTo: trailingAnchor),
+            accessoryContainer.bottomAnchor.constraint(equalTo: bottomAnchor),
             accessoryContainerHeightConstraint!,
             accessoryViewBottomOffsetConstraint!,
         ])
@@ -106,6 +107,7 @@ import Foundation
             
             if let accessoryView = accessoryView {
                 accessoryContainer.addSubview(accessoryView)
+                accessoryView.translatesAutoresizingMaskIntoConstraints = false
                 accessoryContainerHeightConstraint?.isActive = false
 
                 NSLayoutConstraint.activate([
