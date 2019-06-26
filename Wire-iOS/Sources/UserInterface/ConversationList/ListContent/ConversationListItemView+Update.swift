@@ -35,8 +35,8 @@ extension ConversationListItemView {
     /// - Parameters:
     ///   - title: title of the cell
     ///   - subtitle: subtitle of the cell
-    ///   - users: the pending user(s) waiting
-    @objc func configure(with title: NSAttributedString?, subtitle: NSAttributedString?, users: [ZMUser]) {
+    ///   - users: the pending user(s) waiting for self user to accept connection request
+    func configure(with title: NSAttributedString?, subtitle: NSAttributedString?, users: [ZMUser]) {
         self.titleText = title
         self.subtitleAttributedText = subtitle
         self.rightAccessory.icon = .pendingConnection
