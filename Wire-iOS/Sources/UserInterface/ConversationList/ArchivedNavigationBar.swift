@@ -65,6 +65,7 @@ import Cartography
         dismissButton.setIcon(.cross, size: .tiny, for: [])
         dismissButton.addTarget(self, action: #selector(ArchivedNavigationBar.dismissButtonTapped(_:)), for: .touchUpInside)
         dismissButton.accessibilityIdentifier = "archiveCloseButton"
+        dismissButton.accessibilityLabel = "general.close".localized
         dismissButton.setIconColor(.from(scheme: .textForeground, variant: .dark), for: .normal)
         [titleLabel, dismissButton, separatorView].forEach(addSubview)
     }

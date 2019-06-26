@@ -60,6 +60,8 @@ import Cartography
         if UIApplication.shared.keyWindow?.traitCollection.forceTouchCapability == .available {
             registerForPreviewing(with: self, sourceView: collectionView)
         }
+
+        view.accessibilityViewIsModal = true
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -100,6 +102,13 @@ import Cartography
             collectionView.bottom == view.bottom
             collectionView.right == view.right
         }
+    }
+
+    // MARK: - Accessibility
+
+    override func accessibilityPerformEscape() -> Bool {
+        self.delegate?.archivedListViewControllerWantsToDismiss(self)
+        return true
     }
     
 }
