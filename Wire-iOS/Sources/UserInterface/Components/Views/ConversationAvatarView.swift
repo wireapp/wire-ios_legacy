@@ -133,11 +133,7 @@ extension Mode {
 
 final public class ConversationAvatarView: UIView {
 
-    public var users: [ZMUser] = [] {
-        didSet {
-            mode = Mode(users: users)
-        }
-    }
+    private var users: [ZMUser] = []
     
     public var conversation: ZMConversation? = .none {
         didSet {
@@ -149,8 +145,8 @@ final public class ConversationAvatarView: UIView {
 
             let stableRandomParticipants = conversation.stableRandomParticipants.filter { !$0.isSelfUser }
 
-            self.accessibilityLabel = "Avatar for \(self.conversation?.displayName ?? "")"
-            self.users = stableRandomParticipants
+            accessibilityLabel = "Avatar for \(self.conversation?.displayName ?? "")"
+            users = stableRandomParticipants
 
             // override the mode
             mode = Mode(conversationType: conversation.conversationType, users: users)
