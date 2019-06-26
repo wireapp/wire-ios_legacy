@@ -30,7 +30,7 @@ enum FormattedText {
 
     private static let legacayArrayFormatter: TTTArrayFormatter = {
         let formatter = TTTArrayFormatter()
-        formatter.conjuction = ""
+        formatter.conjunction = ""
         return formatter
     }()
 
