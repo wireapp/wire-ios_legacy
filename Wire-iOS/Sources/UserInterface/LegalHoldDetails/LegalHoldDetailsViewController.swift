@@ -40,6 +40,7 @@ class LegalHoldDetailsViewController: UIViewController {
         setupViews()
         createConstraints()
         collectionViewController.sections = computeVisibleSections()
+        collectionView.accessibilityIdentifier = "list.legalhold"
     }
     
     required init?(coder aDecoder: NSCoder) {
