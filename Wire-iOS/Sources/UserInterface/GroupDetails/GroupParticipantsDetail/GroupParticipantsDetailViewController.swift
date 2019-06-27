@@ -20,7 +20,7 @@ import UIKit
 
 final class GroupParticipantsDetailViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
 
-    private let collectionView = UICollectionView(forUserList: ())
+    private let collectionView = UICollectionView(forGroupedSections: ())
     private let searchViewController = SearchHeaderViewController(userSelection: .init(), variant: ColorScheme.default.variant)
     private let viewModel: GroupParticipantsDetailViewModel
     
@@ -83,6 +83,7 @@ final class GroupParticipantsDetailViewController: UIViewController, UICollectio
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(SelectedUserCell.self, forCellWithReuseIdentifier: SelectedUserCell.reuseIdentifier)
+        collectionView.accessibilityIdentifier = "group_details.full_list"
         title = "participants.all.title".localized(uppercased: true)
         view.backgroundColor = UIColor.from(scheme: .contentBackground)
         navigationItem.rightBarButtonItem = navigationController?.closeItem()

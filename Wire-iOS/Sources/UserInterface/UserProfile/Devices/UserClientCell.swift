@@ -43,7 +43,6 @@ class UserClientCell: SeparatorCollectionViewCell {
         deviceTypeIconView.image = StyleKitIcon.devices.makeImage(size: .tiny, color: .white)
         deviceTypeIconView.translatesAutoresizingMaskIntoConstraints = false
         deviceTypeIconView.contentMode = .center
-        deviceTypeIconView.accessibilityIdentifier = "img.device_class"
         
         verifiedIconView.image = WireStyleKit.imageOfShieldverified
         verifiedIconView.translatesAutoresizingMaskIntoConstraints = false
@@ -128,8 +127,10 @@ class UserClientCell: SeparatorCollectionViewCell {
         switch client?.deviceClass {
         case .legalHold?:
             deviceTypeIconView.image = StyleKitIcon.legalholdactive.makeImage(size: .tiny, color: .vividRed)
+            deviceTypeIconView.accessibilityIdentifier = "img.device_class.legalhold"
         default:
             deviceTypeIconView.setIcon(.devices, size: .tiny, color: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant))
+            deviceTypeIconView.accessibilityIdentifier = client?.deviceClass == .desktop ? "img.device_class.desktop" : "img.device_class.phone"
         }
     }
     

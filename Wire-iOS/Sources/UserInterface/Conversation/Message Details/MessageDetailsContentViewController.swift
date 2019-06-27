@@ -98,7 +98,7 @@ class MessageDetailsContentViewController: UIViewController {
     private func configureSubviews() {
         view.backgroundColor = .from(scheme: .contentBackground)
 
-        collectionView = UICollectionView(forUserList: ())
+        collectionView = UICollectionView(forGroupedSections: ())
         collectionView.contentInset.bottom = 64
         collectionView.allowsMultipleSelection = false
         collectionView.allowsSelection = true

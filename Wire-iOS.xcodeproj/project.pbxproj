@@ -179,10 +179,10 @@
 		5501FFC922B398B30050D8FC /* UserInputRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5501FFC822B398B20050D8FC /* UserInputRequest.swift */; };
 		5501FFCB22B399CE0050D8FC /* UITextContentType+Availability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5501FFCA22B399CD0050D8FC /* UITextContentType+Availability.swift */; };
 		5501FFCD22B399F30050D8FC /* UserInputRequest+LegalHold.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5501FFCC22B399F30050D8FC /* UserInputRequest+LegalHold.swift */; };
-		551CD27822BA288B00EE9AE5 /* LegalHoldDisclosureController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 551CD27722BA288B00EE9AE5 /* LegalHoldDisclosureController.swift */; };
 		5502C6E222B7B729000684B7 /* LegalHoldAlertFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5502C6E122B7B729000684B7 /* LegalHoldAlertFactory.swift */; };
 		5502C6E522B7B800000684B7 /* LegalHoldAlertFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5502C6E322B7B7FC000684B7 /* LegalHoldAlertFactoryTests.swift */; };
 		550C63B422C36985005CE9FC /* FormattedText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 550C63B322C36985005CE9FC /* FormattedText.swift */; };
+		551CD27822BA288B00EE9AE5 /* LegalHoldDisclosureController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 551CD27722BA288B00EE9AE5 /* LegalHoldDisclosureController.swift */; };
 		55A42A701FC872600056752F /* CallQualityController+Budget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A42A6F1FC872600056752F /* CallQualityController+Budget.swift */; };
 		55DD5C341FA236F60082170C /* CallQualityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55DD5C331FA236F60082170C /* CallQualityViewController.swift */; };
 		5E001FA7229813FA00F22CDD /* ConversationStateAccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E001FA32297FA0000F22CDD /* ConversationStateAccessoryView.swift */; };
@@ -805,7 +805,7 @@
 		BF58ABEF1D23F3CD00D5FF14 /* ModalTopBarTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF58ABEE1D23F3CD00D5FF14 /* ModalTopBarTests.swift */; };
 		BF5C37981C0E0D9C00EA11E3 /* ParticipantDeviceHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF5C37971C0E0D9C00EA11E3 /* ParticipantDeviceHeaderView.m */; };
 		BF5DF5C320F4A51F002BCB67 /* GroupParticipantsDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5DF5C220F4A51F002BCB67 /* GroupParticipantsDetailViewController.swift */; };
-		BF5DF5C520F4B0B8002BCB67 /* UICollectionView+UserList.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5DF5C420F4B0B8002BCB67 /* UICollectionView+UserList.swift */; };
+		BF5DF5C520F4B0B8002BCB67 /* UICollectionView+GroupedSections.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5DF5C420F4B0B8002BCB67 /* UICollectionView+GroupedSections.swift */; };
 		BF5DF5C720F4C1C5002BCB67 /* GroupParticipantsDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5DF5C620F4C1C5002BCB67 /* GroupParticipantsDetailViewModel.swift */; };
 		BF5DF5CA20F4C7C2002BCB67 /* GroupParticipantsDetailViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5DF5C920F4C7C2002BCB67 /* GroupParticipantsDetailViewControllerTests.swift */; };
 		BF5FAC0120B6B738004CEB45 /* UIAlertController+OngoingCall.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5FAC0020B6B738004CEB45 /* UIAlertController+OngoingCall.swift */; };
@@ -1714,10 +1714,10 @@
 		5501FFC822B398B20050D8FC /* UserInputRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInputRequest.swift; sourceTree = "<group>"; };
 		5501FFCA22B399CD0050D8FC /* UITextContentType+Availability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextContentType+Availability.swift"; sourceTree = "<group>"; };
 		5501FFCC22B399F30050D8FC /* UserInputRequest+LegalHold.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserInputRequest+LegalHold.swift"; sourceTree = "<group>"; };
-		551CD27722BA288B00EE9AE5 /* LegalHoldDisclosureController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegalHoldDisclosureController.swift; sourceTree = "<group>"; };
 		5502C6E122B7B729000684B7 /* LegalHoldAlertFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegalHoldAlertFactory.swift; sourceTree = "<group>"; };
 		5502C6E322B7B7FC000684B7 /* LegalHoldAlertFactoryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LegalHoldAlertFactoryTests.swift; sourceTree = "<group>"; };
 		550C63B322C36985005CE9FC /* FormattedText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormattedText.swift; sourceTree = "<group>"; };
+		551CD27722BA288B00EE9AE5 /* LegalHoldDisclosureController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegalHoldDisclosureController.swift; sourceTree = "<group>"; };
 		55A42A6F1FC872600056752F /* CallQualityController+Budget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CallQualityController+Budget.swift"; sourceTree = "<group>"; };
 		55DD5C331FA236F60082170C /* CallQualityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallQualityViewController.swift; sourceTree = "<group>"; };
 		5E001FA32297FA0000F22CDD /* ConversationStateAccessoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationStateAccessoryView.swift; sourceTree = "<group>"; };
@@ -2593,7 +2593,7 @@
 		BF5C37961C0E0D9C00EA11E3 /* ParticipantDeviceHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParticipantDeviceHeaderView.h; sourceTree = "<group>"; };
 		BF5C37971C0E0D9C00EA11E3 /* ParticipantDeviceHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParticipantDeviceHeaderView.m; sourceTree = "<group>"; };
 		BF5DF5C220F4A51F002BCB67 /* GroupParticipantsDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupParticipantsDetailViewController.swift; sourceTree = "<group>"; };
-		BF5DF5C420F4B0B8002BCB67 /* UICollectionView+UserList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+UserList.swift"; sourceTree = "<group>"; };
+		BF5DF5C420F4B0B8002BCB67 /* UICollectionView+GroupedSections.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+GroupedSections.swift"; sourceTree = "<group>"; };
 		BF5DF5C620F4C1C5002BCB67 /* GroupParticipantsDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupParticipantsDetailViewModel.swift; sourceTree = "<group>"; };
 		BF5DF5C920F4C7C2002BCB67 /* GroupParticipantsDetailViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupParticipantsDetailViewControllerTests.swift; sourceTree = "<group>"; };
 		BF5FAC0020B6B738004CEB45 /* UIAlertController+OngoingCall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+OngoingCall.swift"; sourceTree = "<group>"; };
@@ -3434,7 +3434,7 @@
 				1682AEB720483C9D003A052A /* Sections */,
 				D550F57320444BE8009E09DD /* ConversationActions */,
 				16D49327203DCC88008DDFFA /* GroupDetailsViewController.swift */,
-				BF5DF5C420F4B0B8002BCB67 /* UICollectionView+UserList.swift */,
+				BF5DF5C420F4B0B8002BCB67 /* UICollectionView+GroupedSections.swift */,
 				EF5C844921F2014E002481DE /* RestrictedIconButton.swift */,
 				BF5DF5C820F4C1FB002BCB67 /* GroupParticipantsDetail */,
 				7CCA7CC1221AEC7B00A7CA2A /* ConversationDetailFooterView.swift */,
@@ -7758,7 +7758,7 @@
 				D58191FD2091CAE8003BA7EC /* CallActionsView.swift in Sources */,
 				5EB45761204EA75300BA217A /* CallQualityDismissalTransition.swift in Sources */,
 				5EDD253C2140044D00C0E254 /* SettingsLicenseItem.swift in Sources */,
-				BF5DF5C520F4B0B8002BCB67 /* UICollectionView+UserList.swift in Sources */,
+				BF5DF5C520F4B0B8002BCB67 /* UICollectionView+GroupedSections.swift in Sources */,
 				8742C2E21E51BD7900329FB6 /* TextSearchInputView.swift in Sources */,
 				8711A5A21E0D395A00043ACF /* CollectionCellHeader.swift in Sources */,
 				5E0F75BE2268A0B6006C991E /* ColorScheme+Helper.swift in Sources */,

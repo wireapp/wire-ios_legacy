@@ -21,7 +21,7 @@ import UIKit
 
 class LegalHoldDetailsViewController: UIViewController {
     
-    fileprivate let collectionView = UICollectionView(forUserList: ())
+    fileprivate let collectionView = UICollectionView(forGroupedSections: ())
     fileprivate let collectionViewController: SectionCollectionViewController
     fileprivate let conversation: ZMConversation
     
@@ -40,6 +40,7 @@ class LegalHoldDetailsViewController: UIViewController {
         setupViews()
         createConstraints()
         collectionViewController.sections = computeVisibleSections()
+        collectionView.accessibilityIdentifier = "list.legalhold"
     }
     
     required init?(coder aDecoder: NSCoder) {
