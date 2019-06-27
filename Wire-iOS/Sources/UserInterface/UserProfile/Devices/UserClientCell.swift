@@ -32,6 +32,7 @@ class UserClientCell: SeparatorCollectionViewCell {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .center
         imageView.isAccessibilityElement = true
+        imageView.accessibilityIdentifier = "device_cell.verifiedShield"
 
         return imageView
     }()
@@ -120,7 +121,6 @@ class UserClientCell: SeparatorCollectionViewCell {
         let boldAttributes: [NSAttributedString.Key: AnyObject] = [NSAttributedString.Key.font: boldFingerprintFont.monospaced()]
         
         verifiedIconView.image = client.verified ? WireStyleKit.imageOfShieldverified : WireStyleKit.imageOfShieldnotverified
-        verifiedIconView.accessibilityIdentifier = client.verified ? "verified" : "unverified"
         verifiedIconView.accessibilityLabel = client.verified ? "device.verified".localized : "device.not_verified".localized
 
         titleLabel.text = client.deviceClass?.localizedDescription.localizedUppercase ?? client.type.localizedDescription.localizedUppercase
