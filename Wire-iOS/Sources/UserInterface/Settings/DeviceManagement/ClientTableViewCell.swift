@@ -28,12 +28,8 @@ class ClientTableViewCell: UITableViewCell {
     let labelLabel = UILabel(frame: CGRect.zero)
     let activationLabel = UILabel(frame: CGRect.zero)
     let fingerprintLabel = UILabel(frame: CGRect.zero)
-    let verifiedLabel: UILabel = {
-        let label = UILabel(frame: CGRect.zero)
-        label.isAccessibilityElement = true
-        return label
-    }()
-    
+    let verifiedLabel = UILabel(frame: CGRect.zero)
+
     private let activationLabelFont = UIFont.smallLightFont
     private let activationLabelDateFont = UIFont.smallSemiboldFont
     
@@ -120,7 +116,8 @@ class ClientTableViewCell: UITableViewCell {
         activationLabel.accessibilityIdentifier = "device activation date"
         fingerprintLabel.accessibilityIdentifier = "device fingerprint"
         verifiedLabel.accessibilityIdentifier = "device verification status"
-        
+        verifiedLabel.isAccessibilityElement = true
+
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         [self.nameLabel, self.labelLabel, self.activationLabel, self.fingerprintLabel, self.verifiedLabel].forEach(self.contentView.addSubview)

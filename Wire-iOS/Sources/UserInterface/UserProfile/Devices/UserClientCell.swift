@@ -25,17 +25,7 @@ class UserClientCell: SeparatorCollectionViewCell {
     
     private let deviceTypeIconView = UIImageView()
     private let accessoryIconView = UIImageView()
-    private let verifiedIconView: UIImageView = {
-        let imageView = UIImageView()
-
-        imageView.image = WireStyleKit.imageOfShieldverified
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.contentMode = .center
-        imageView.isAccessibilityElement = true
-        imageView.accessibilityIdentifier = "device_cell.verifiedShield"
-
-        return imageView
-    }()
+    private let verifiedIconView = UIImageView()
 
     private var contentStackView : UIStackView!
     private var titleStackView : UIStackView!
@@ -53,9 +43,15 @@ class UserClientCell: SeparatorCollectionViewCell {
         deviceTypeIconView.translatesAutoresizingMaskIntoConstraints = false
         deviceTypeIconView.contentMode = .center
 
+        verifiedIconView.image = WireStyleKit.imageOfShieldverified
+        verifiedIconView.translatesAutoresizingMaskIntoConstraints = false
+        verifiedIconView.contentMode = .center
+        verifiedIconView.isAccessibilityElement = true
+        verifiedIconView.accessibilityIdentifier = "device_cell.verifiedShield"
+
         accessoryIconView.translatesAutoresizingMaskIntoConstraints = false
         accessoryIconView.contentMode = .center
-        
+
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.font = .smallSemiboldFont
         titleLabel.accessibilityIdentifier = "device_cell.name"
