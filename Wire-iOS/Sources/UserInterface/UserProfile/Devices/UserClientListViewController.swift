@@ -22,7 +22,7 @@ import Foundation
 class UserClientListViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     
     fileprivate let headerView: ParticipantDeviceHeaderView
-    fileprivate let collectionView = UICollectionView(forUserList: ())
+    fileprivate let collectionView = UICollectionView(forGroupedSections: ())
     fileprivate var clients: [UserClientType]
     fileprivate var tokens: [Any?] = []
     fileprivate var user: ZMUser

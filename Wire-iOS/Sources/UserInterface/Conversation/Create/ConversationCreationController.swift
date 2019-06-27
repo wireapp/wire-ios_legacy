@@ -171,7 +171,7 @@ final public class ConversationCreationValues {
     
     private func setupViews() {
         // TODO: if keyboard is open, it should scroll.
-        let collectionView = UICollectionView(forUserList: ())
+        let collectionView = UICollectionView(forGroupedSections: ())
         
         if #available(iOS 11.0, *) {
             collectionView.contentInsetAdjustmentBehavior = .never

@@ -21,7 +21,7 @@ import UIKit
 
 class LegalHoldDetailsViewController: UIViewController {
     
-    fileprivate let collectionView = UICollectionView(forUserList: ())
+    fileprivate let collectionView = UICollectionView(forGroupedSections: ())
     fileprivate let collectionViewController: SectionCollectionViewController
     fileprivate let conversation: ZMConversation
     

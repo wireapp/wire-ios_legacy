@@ -63,7 +63,8 @@ import Cartography
     }
 
     func createSubviews() {
-        let collectionView = UICollectionView(forUserList: ())
+        let collectionView = UICollectionView(forGroupedSections: ())
+        collectionView.accessibilityIdentifier = "group_details.list"
 
         if #available(iOS 11.0, *) {
             collectionView.contentInsetAdjustmentBehavior = .never
