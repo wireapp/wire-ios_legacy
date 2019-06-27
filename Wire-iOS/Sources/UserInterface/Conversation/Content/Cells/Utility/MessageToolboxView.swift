@@ -70,6 +70,7 @@ final class MessageToolboxView: UIView {
         label.lineBreakMode = .byTruncatingMiddle
         label.numberOfLines = 1
         label.accessibilityIdentifier = "Details"
+        label.isAccessibilityElement = true
         label.setContentHuggingPriority(.required, for: .horizontal)
         label.setContentCompressionResistancePriority(.required, for: .horizontal)
         return label
@@ -111,6 +112,7 @@ final class MessageToolboxView: UIView {
         label.lineBreakMode = .byTruncatingMiddle
         label.numberOfLines = 1
         label.accessibilityIdentifier = "DeliveryStatus"
+        label.isAccessibilityElement = true
         label.setContentHuggingPriority(.required, for: .horizontal)
         label.setContentCompressionResistancePriority(.required, for: .horizontal)
         return label
@@ -299,6 +301,10 @@ final class MessageToolboxView: UIView {
                 self.detailsLabel.isHidden = timestamp == nil
                 self.detailsLabel.numberOfLines = 1
                 self.statusLabel.attributedText = status
+                //override accessibilityLabel if the attributed string has customized accessibilityLabel
+                if let accessibilityLabel = status?.accessibilityLabel {
+                    self.statusLabel.accessibilityLabel = accessibilityLabel
+                }
                 self.statusLabel.isHidden = status == nil
                 self.timestampSeparatorLabel.isHidden = timestamp == nil || status == nil
                 self.deleteButton.isHidden = true
