@@ -25,9 +25,18 @@ class UserClientCell: SeparatorCollectionViewCell {
     
     private let deviceTypeIconView = UIImageView()
     private let accessoryIconView = UIImageView()
-    private let verifiedIconView = UIImageView()
-    private let unverifiedIconView = UIImageView()
-    
+    private let verifiedIconView: UIImageView = {
+        let imageView = UIImageView()
+
+        imageView.image = WireStyleKit.imageOfShieldverified
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.contentMode = .center
+        imageView.accessibilityIdentifier = "img.shield"
+        imageView.isAccessibilityElement = true
+
+        return imageView
+    }()
+
     private var contentStackView : UIStackView!
     private var titleStackView : UIStackView!
     private var iconStackView : UIStackView!
@@ -43,12 +52,7 @@ class UserClientCell: SeparatorCollectionViewCell {
         deviceTypeIconView.image = StyleKitIcon.devices.makeImage(size: .tiny, color: .white)
         deviceTypeIconView.translatesAutoresizingMaskIntoConstraints = false
         deviceTypeIconView.contentMode = .center
-        
-        verifiedIconView.image = WireStyleKit.imageOfShieldverified
-        verifiedIconView.translatesAutoresizingMaskIntoConstraints = false
-        verifiedIconView.contentMode = .center
-        verifiedIconView.accessibilityIdentifier = "img.shield"
-        
+
         accessoryIconView.translatesAutoresizingMaskIntoConstraints = false
         accessoryIconView.contentMode = .center
         
@@ -117,6 +121,8 @@ class UserClientCell: SeparatorCollectionViewCell {
         let boldAttributes: [NSAttributedString.Key: AnyObject] = [NSAttributedString.Key.font: boldFingerprintFont.monospaced()]
         
         verifiedIconView.image = client.verified ? WireStyleKit.imageOfShieldverified : WireStyleKit.imageOfShieldnotverified
+        verifiedIconView.accessibilityLabel = client.verified ? "verified": "unverified"
+
         titleLabel.text = client.deviceClass?.localizedDescription.localizedUppercase ?? client.type.localizedDescription.localizedUppercase
         subtitleLabel.attributedText = client.attributedRemoteIdentifier(attributes, boldAttributes: boldAttributes, uppercase: true)
         
