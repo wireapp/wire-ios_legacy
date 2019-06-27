@@ -17,8 +17,6 @@
 //
 
 
-import Cartography
-
 /// Source of random values.
 public protocol RandomGenerator {
     func rand<ContentType>() -> ContentType
@@ -61,7 +59,7 @@ extension Array {
 
         self.forEach { _ in
             let rand: UInt = generator.rand() % UInt(workingCopy.count)
-        
+
             result.append(workingCopy[Int(rand)])
             workingCopy.remove(at: Int(rand))
         }
@@ -102,18 +100,25 @@ fileprivate enum Mode: Equatable {
 }
 
 extension Mode {
-    fileprivate init(conversation: ZMConversation) {
-        self.init(users: conversation.lastServerSyncedActiveParticipants.array as! [ZMUser])
-    }
     
-    fileprivate init(users: [UserType]) {
-        switch (users.count) {
-        case 0: self = .none
-        case 1: self = .one(serviceUser: users[0].isServiceUser)
-        default: self = .four
+    /// create a Mode for different cases
+    ///
+    /// - Parameters:
+    ///   - conversationType: when conversationType is nil, it is a incoming connection request
+    ///   - users: number of users involved in the conversation
+    fileprivate init(conversationType: ZMConversationType? = nil, users: [UserType]) {
+        switch (conversationType, users.count) {
+        case (.group?, 1...):
+            self = .four
+        case (_, 0):
+            self = .none
+        case (_, 1):
+            self = .one(serviceUser: users[0].isServiceUser)
+        default:
+            self = .four
         }
     }
-    
+
     var showInitials: Bool {
         if case .one = self {
             return true
@@ -131,44 +136,38 @@ extension Mode {
 }
 
 final public class ConversationAvatarView: UIView {
+    enum Context {
+        // one or more users requesting connection to self user
+        case connect(users: [ZMUser])
+        // an established conversation or self user has a pending request to other users
+        case conversation(conversation: ZMConversation)
+    }
 
-    public var users: [ZMUser] = [] {
-        didSet {
-            self.mode = Mode(users: users)
-
-            var index: Int = 0
-            self.userImages().forEach {
-                $0.userSession = ZMUserSession.shared()
-                $0.shouldDesaturate = false
-                $0.size = mode == .four ? .tiny : .small
-                if index < users.count {
-                    $0.user = users[index]
-                }
-                else {
-                    $0.user = nil
-                    $0.container.isOpaque = false
-                    $0.container.backgroundColor = UIColor(white: 0, alpha: 0.24)
-                }
-
-                $0.allowsInitials = mode.showInitials
-                $0.shape = mode.shape
-                index = index + 1
-            }
-            self.setNeedsLayout()
+    func configure(context: Context) {
+        switch context {
+        case .connect(let users):
+            self.users = users
+            mode = Mode(users: users)
+        case .conversation(let conversation):
+            self.conversation = conversation
+            mode = Mode(conversationType: conversation.conversationType, users: users)
         }
     }
+
+    private var users: [ZMUser] = []
     
-    public var conversation: ZMConversation? = .none {
+    private var conversation: ZMConversation? = .none {
         didSet {
+
             guard let conversation = self.conversation else {
                 self.clippingView.subviews.forEach { $0.isHidden = true }
                 return
             }
-            
+
             let stableRandomParticipants = conversation.stableRandomParticipants.filter { !$0.isSelfUser }
 
-            self.accessibilityLabel = "Avatar for \(self.conversation?.displayName ?? "")"
-            self.users = stableRandomParticipants
+            accessibilityLabel = "Avatar for \(self.conversation?.displayName ?? "")"
+            users = stableRandomParticipants
         }
     }
     
@@ -186,11 +185,35 @@ final public class ConversationAvatarView: UIView {
                 layer.borderColor = UIColor(white: 1, alpha: 0.24).cgColor
                 backgroundColor = UIColor(white: 0, alpha: 0.16)
             }
-            
-            self.setNeedsLayout()
+
+            var index: Int = 0
+            self.userImages().forEach {
+                $0.userSession = ZMUserSession.shared()
+                $0.shouldDesaturate = false
+                $0.size = mode == .four ? .tiny : .small
+                if index < users.count {
+                    $0.user = users[index]
+                }
+                else {
+                    $0.user = nil
+                    $0.container.isOpaque = false
+                    $0.container.backgroundColor = UIColor(white: 0, alpha: 0.24)
+                    $0.avatar = .none
+                }
+
+                $0.allowsInitials = mode.showInitials
+                $0.shape = mode.shape
+                index = index + 1
+            }
+
+            setNeedsLayout()
         }
     }
-    
+
+    private var userImageViews: [UserImageView] {
+        return [imageViewLeftTop, imageViewRightTop, imageViewLeftBottom, imageViewRightBottom]
+    }
+
     func userImages() -> [UserImageView] {
         switch mode {
         case .none:
@@ -200,7 +223,7 @@ final public class ConversationAvatarView: UIView {
             return [imageViewLeftTop]
             
         case .four:
-            return [imageViewLeftTop, imageViewRightTop, imageViewLeftBottom, imageViewRightBottom]
+            return userImageViews
         }
     }
     
@@ -229,7 +252,7 @@ final public class ConversationAvatarView: UIView {
     
     init() {
         super.init(frame: .zero)
-        [imageViewLeftTop, imageViewRightTop, imageViewLeftBottom, imageViewRightBottom].forEach(self.clippingView.addSubview)
+        userImageViews.forEach(self.clippingView.addSubview)
         updateCornerRadius()
         autoresizesSubviews = false
         layer.masksToBounds = true

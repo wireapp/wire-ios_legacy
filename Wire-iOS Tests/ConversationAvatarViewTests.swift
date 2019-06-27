@@ -35,7 +35,7 @@ extension Array where Element: ZMUser {
     }
 }
 
-class ConversationAvatarViewTests: CoreDataSnapshotTestCase {
+final class ConversationAvatarViewTests: CoreDataSnapshotTestCase {
 
     var sut: ConversationAvatarView!
 
@@ -57,7 +57,7 @@ class ConversationAvatarViewTests: CoreDataSnapshotTestCase {
         conversation?.internalRemoveParticipants([selfUser!, otherUser!, thirdUser], sender: selfUser)
 
         // WHEN
-        sut.conversation = conversation
+        sut.configure(context: .conversation(conversation: conversation!))
         
         // THEN
         verify(view: sut.prepareForSnapshots())
@@ -71,8 +71,8 @@ class ConversationAvatarViewTests: CoreDataSnapshotTestCase {
         uiMOC.saveOrRollback()
         
         // WHEN
-        sut.conversation = otherUserConversation
-        
+        sut.configure(context: .conversation(conversation: otherUserConversation!))
+
         // AND WHEN
         _ = sut.prepareForSnapshots()
         
@@ -82,8 +82,8 @@ class ConversationAvatarViewTests: CoreDataSnapshotTestCase {
         let conversation = ZMConversation.insertGroupConversation(into: uiMOC, withParticipants: [otherUser!, thirdUser])
         conversation?.internalRemoveParticipants([selfUser!, otherUser!, thirdUser], sender: selfUser)
         
-        sut.conversation = conversation
-        
+        sut.configure(context: .conversation(conversation: conversation!))
+
         // THEN
         verify(view: sut.prepareForSnapshots())
     }
@@ -95,7 +95,7 @@ class ConversationAvatarViewTests: CoreDataSnapshotTestCase {
         uiMOC.saveOrRollback()
         
         // WHEN
-        sut.conversation = otherUserConversation
+        sut.configure(context: .conversation(conversation: otherUserConversation!))
 
         // THEN
         verify(view: sut.prepareForSnapshots())
@@ -109,8 +109,8 @@ class ConversationAvatarViewTests: CoreDataSnapshotTestCase {
         uiMOC.saveOrRollback()
         
         // WHEN
-        sut.conversation = otherUserConversation
-        
+        sut.configure(context: .conversation(conversation: otherUserConversation!))
+
         // THEN
         verify(view: sut.prepareForSnapshots())
     }
@@ -126,8 +126,8 @@ class ConversationAvatarViewTests: CoreDataSnapshotTestCase {
         uiMOC.saveOrRollback()
         
         // WHEN
-        sut.conversation = otherUserConversation
-        
+        sut.configure(context: .conversation(conversation: otherUserConversation!))
+
         // THEN
         verify(view: sut.prepareForSnapshots())
     }
@@ -141,8 +141,8 @@ class ConversationAvatarViewTests: CoreDataSnapshotTestCase {
         conversation?.sortedActiveParticipants.assignSomeAccentColors()
         
         // WHEN
-        sut.conversation = conversation
-        
+        sut.configure(context: .conversation(conversation: conversation!))
+
         // THEN
         verify(view: sut.prepareForSnapshots())
     }
@@ -154,8 +154,8 @@ class ConversationAvatarViewTests: CoreDataSnapshotTestCase {
         conversation?.sortedActiveParticipants.assignSomeAccentColors()
 
         // WHEN
-        sut.conversation = conversation
-        
+        sut.configure(context: .conversation(conversation: conversation!))
+
         // THEN
         verify(view: sut.prepareForSnapshots())
     }
