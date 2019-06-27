@@ -28,7 +28,11 @@ class ClientTableViewCell: UITableViewCell {
     let labelLabel = UILabel(frame: CGRect.zero)
     let activationLabel = UILabel(frame: CGRect.zero)
     let fingerprintLabel = UILabel(frame: CGRect.zero)
-    let verifiedLabel = UILabel(frame: CGRect.zero)
+    let verifiedLabel: UILabel = {
+        let label = UILabel(frame: CGRect.zero)
+        label.isAccessibilityElement = true
+        return label
+    }()
     
     private let activationLabelFont = UIFont.smallLightFont
     private let activationLabelDateFont = UIFont.smallSemiboldFont
