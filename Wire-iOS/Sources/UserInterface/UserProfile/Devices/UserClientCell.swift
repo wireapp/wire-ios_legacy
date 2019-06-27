@@ -31,7 +31,6 @@ class UserClientCell: SeparatorCollectionViewCell {
         imageView.image = WireStyleKit.imageOfShieldverified
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .center
-        imageView.accessibilityIdentifier = "img.shield"
         imageView.isAccessibilityElement = true
 
         return imageView
