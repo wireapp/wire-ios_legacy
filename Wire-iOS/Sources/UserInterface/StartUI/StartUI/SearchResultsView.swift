@@ -44,9 +44,10 @@ import Foundation
         collectionView.alwaysBounceVertical = true
         
         super.init(frame: CGRect.zero)
-        
-        [collectionView, accessoryContainer, emptyResultContainer].forEach(addSubview)
-        
+
+        addSubview(collectionView)
+        addSubview(accessoryContainer)
+        addSubview(emptyResultContainer)        
         createConstraints()
         
         NotificationCenter.default.addObserver(self,
@@ -60,26 +61,32 @@ import Foundation
     }
     
     func createConstraints() {
-
-        [collectionView, accessoryContainer, emptyResultContainer].forEach { view in
-            view.translatesAutoresizingMaskIntoConstraints = false
-        }
-
-        collectionView.fitInSuperview(exclude: [.bottom])
-        emptyResultContainer.fitInSuperview(exclude: [.bottom])
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        emptyResultContainer.translatesAutoresizingMaskIntoConstraints = false
+        accessoryContainer.translatesAutoresizingMaskIntoConstraints = false
 
         accessoryContainerHeightConstraint = accessoryContainer.heightAnchor.constraint(equalToConstant: 0)
         accessoryViewBottomOffsetConstraint = accessoryContainer.bottomAnchor.constraint(equalTo: bottomAnchor)
 
         NSLayoutConstraint.activate([
+            // collectionView
+            collectionView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            collectionView.topAnchor.constraint(equalTo: topAnchor),
+            collectionView.trailingAnchor.constraint(equalTo: trailingAnchor),
             collectionView.bottomAnchor.constraint(equalTo: accessoryContainer.topAnchor),
+
+            // emptyResultContainer
+            emptyResultContainer.leadingAnchor.constraint(equalTo: leadingAnchor),
+            emptyResultContainer.topAnchor.constraint(equalTo: topAnchor),
+            emptyResultContainer.trailingAnchor.constraint(equalTo: trailingAnchor),
             emptyResultContainer.bottomAnchor.constraint(equalTo: accessoryContainer.topAnchor),
 
             accessoryContainer.leadingAnchor.constraint(equalTo: leadingAnchor),
             accessoryContainer.trailingAnchor.constraint(equalTo: trailingAnchor),
+            accessoryContainer.bottomAnchor.constraint(equalTo: bottomAnchor),
             accessoryContainerHeightConstraint!,
             accessoryViewBottomOffsetConstraint!,
-            ])
+        ])
     }
     
     override func layoutSubviews() {
@@ -100,10 +107,15 @@ import Foundation
             
             if let accessoryView = accessoryView {
                 accessoryContainer.addSubview(accessoryView)
+                accessoryView.translatesAutoresizingMaskIntoConstraints = false
                 accessoryContainerHeightConstraint?.isActive = false
 
-                accessoryView.translatesAutoresizingMaskIntoConstraints = false
-                accessoryView.fitInSuperview()
+                NSLayoutConstraint.activate([
+                    accessoryView.leadingAnchor.constraint(equalTo: accessoryContainer.leadingAnchor),
+                    accessoryView.topAnchor.constraint(equalTo: accessoryContainer.topAnchor),
+                    accessoryView.trailingAnchor.constraint(equalTo: accessoryContainer.trailingAnchor),
+                    accessoryView.bottomAnchor.constraint(equalTo: accessoryContainer.bottomAnchor)
+                ])
             }
             else {
                 accessoryContainerHeightConstraint?.isActive = true
@@ -121,9 +133,14 @@ import Foundation
             
             if let emptyResultView = emptyResultView {
                 emptyResultContainer.addSubview(emptyResultView)
-
                 emptyResultView.translatesAutoresizingMaskIntoConstraints = false
-                emptyResultView.fitInSuperview()
+
+                NSLayoutConstraint.activate([
+                    emptyResultView.leadingAnchor.constraint(equalTo: emptyResultContainer.leadingAnchor),
+                    emptyResultView.topAnchor.constraint(equalTo: emptyResultContainer.topAnchor),
+                    emptyResultView.trailingAnchor.constraint(equalTo: emptyResultContainer.trailingAnchor),
+                    emptyResultView.bottomAnchor.constraint(equalTo: emptyResultContainer.bottomAnchor)
+                ])
             }
 
             emptyResultContainer.setNeedsLayout()

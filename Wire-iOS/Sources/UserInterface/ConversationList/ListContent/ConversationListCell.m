@@ -79,7 +79,7 @@ static const NSTimeInterval OverscrollRatio = 2.5;
     self.overscrollFraction = CGFLOAT_MAX; // Never overscroll
     self.canOpenDrawer = NO;
     self.clipsToBounds = YES;
-    
+
     self.itemView = [[ConversationListItemView alloc] init];
     
     UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
@@ -91,10 +91,8 @@ static const NSTimeInterval OverscrollRatio = 2.5;
     [self.menuView addSubview:self.menuDotsView];
     
     [self setNeedsUpdateConstraints];
-    
+     
     [AVSMediaManagerClientChangeNotification addObserver:self];
-    
-    self.isAccessibilityElement = NO;
 }
 
 - (void)setVisualDrawerOffset:(CGFloat)visualDrawerOffset updateUI:(BOOL)doUpdate

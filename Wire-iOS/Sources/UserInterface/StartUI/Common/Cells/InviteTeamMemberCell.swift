@@ -90,6 +90,10 @@ final class InviteTeamMemberCell: StartUIIconCell  {
         super.setupViews()
         icon = .envelope
         title = "peoplepicker.invite_team_members".localized
+        isAccessibilityElement = true
+        accessibilityLabel = title
+        accessibilityTraits.insert(.button)
+        accessibilityIdentifier = "button.searchui.invite_team"
     }
     
 }
@@ -102,6 +106,7 @@ final class CreateGroupCell: StartUIIconCell  {
         title = "peoplepicker.quick-action.create-conversation".localized
         isAccessibilityElement = true
         accessibilityLabel = title
+        accessibilityTraits.insert(.button)
         accessibilityIdentifier = "button.searchui.creategroup"
     }
     
@@ -115,6 +120,7 @@ final class CreateGuestRoomCell: StartUIIconCell  {
         title = "peoplepicker.quick-action.create-guest-room".localized
         isAccessibilityElement = true
         accessibilityLabel = title
+        accessibilityTraits.insert(.button)
         accessibilityIdentifier = "button.searchui.createguestroom"
     }
     

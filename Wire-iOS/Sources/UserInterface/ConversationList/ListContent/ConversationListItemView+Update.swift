@@ -17,6 +17,7 @@
 //
 
 import UIKit
+import FormatterKit
 
 extension ConversationListItemView {
     @objc public func configureFont() {
@@ -26,7 +27,6 @@ extension ConversationListItemView {
     @objc func configure(with title: NSAttributedString?, subtitle: NSAttributedString?) {
         self.titleText = title
         self.subtitleAttributedText = subtitle
-        self.accessibilityContentsDidChange()
     }
 
 
@@ -41,7 +41,6 @@ extension ConversationListItemView {
         self.subtitleAttributedText = subtitle
         self.rightAccessory.icon = .pendingConnection
         avatarView.configure(context: .connect(users: users))
-        self.accessibilityContentsDidChange()
     }
     
     @objc(updateForConversation:)
@@ -52,18 +51,36 @@ extension ConversationListItemView {
             self.configure(with: nil, subtitle: nil)
             return
         }
-        
+
+        let status = conversation.status
+
+        // Configure the subtitle
+        var statusComponents: [String] = []
+        let subtitle = status.description(for: conversation)
+        let subtitleString = subtitle.string
+
+        if !subtitleString.isEmpty {
+            statusComponents.append(subtitleString)
+        }
+
+        // Configure the title and status
         let title: NSAttributedString?
-        
+
         if ZMUser.selfUser().isTeamMember, let connectedUser = conversation.connectedUser {
             title = AvailabilityStringBuilder.string(for: connectedUser, with: .list)
+
+            if connectedUser.availability != .none {
+                statusComponents.append(connectedUser.availability.localizedName)
+            }
         } else {
             title = conversation.displayName.attributedString
+            accessibilityLabel = conversation.displayName
         }
-        
+
+        // Configure the avatar
         avatarView.configure(context: .conversation(conversation: conversation))
-        
-        let status = conversation.status
+
+        // Configure the accessory
         let statusIcon: ConversationStatusIcon?
         if let player = AppDelegate.shared().mediaPlaybackManager?.activeMediaPlayer,
             let message = player.sourceMessage,
@@ -75,6 +92,11 @@ extension ConversationListItemView {
         }
         self.rightAccessory.icon = statusIcon
 
+        if case .silenced? = statusIcon {
+            statusComponents.append("conversation.status.silenced".localized)
+        }
+
+        accessibilityValue = FormattedText.list(from: statusComponents)
         self.configure(with: title, subtitle: status.description(for: conversation))
     }
 }
