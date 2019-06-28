@@ -161,6 +161,10 @@
     }
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(colorSchemeControllerDidApplyChanges:) name:NSNotification.colorSchemeControllerDidApplyColorSchemeChange object:nil];
+
+//    [self setupSendButtonEnablingObserver];
+
+    ///TODO: listen for send button
     
     if ([DeveloperMenuState developerMenuEnabled]) { //better way of dealing with this?
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(requestLoopNotification:) name:ZMLoggingRequestLoopNotificationName object:nil];
@@ -520,7 +524,7 @@
     }
 }
 
-- (void)colorSchemeControllerDidApplyChanges:(NSNotification *)notification
+- (void)colorSchemeControllerDidApplyChanges:(NSNotification *)notification///TODO: similar for toggle send key
 {
     [self reloadCurrentConversation];
 }

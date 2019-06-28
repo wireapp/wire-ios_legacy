@@ -69,4 +69,13 @@ extension Settings {
         self.setValue(conversationURI.absoluteString, for: UserDefaultLastViewedConversation, in: account)
         self.defaults().synchronize()
     }
+
+    @objc
+    func notifySendButtonEnabling() {
+        NotificationCenter.default.post(name: .sendButtonEnabling, object: self, userInfo: nil)
+    }
+}
+
+extension Notification.Name {
+    static let sendButtonEnabling = Notification.Name("SendButtonEnabling")
 }

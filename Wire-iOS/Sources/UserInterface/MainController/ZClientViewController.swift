@@ -21,6 +21,16 @@ import Foundation
 
 extension ZClientViewController {
 
+//    @objc
+//    private func sendButtonEnablingDidApplyChanges(_ notification : Notification?) {
+//        reloadCurrentConversation()
+//    }
+//
+//    @objc
+//    func setupSendButtonEnablingObserver() {
+//        NotificationCenter.default.addObserver(self, selector: #selector(self.sendButtonEnablingDidApplyChanges(_:)), name: NSNotification.name.sendButtonEnabling, object: nil)
+//    }
+
     override open var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return wr_supportedInterfaceOrientations
     }
