@@ -228,16 +228,15 @@ private struct InputBarConstants {
         notificationCenter.addObserver(self, selector: #selector(textViewTextDidChange), name: UITextView.textDidChangeNotification, object: textView)
         notificationCenter.addObserver(self, selector: #selector(textViewDidBeginEditing), name: UITextView.textDidBeginEditingNotification, object: nil)
         notificationCenter.addObserver(self, selector: #selector(textViewDidEndEditing), name: UITextView.textDidEndEditingNotification, object: nil)
-
-        ///TODO
-
-        notificationCenter.addObserver(self, selector: #selector(self.sendButtonEnablingDidApplyChanges(_:)), name: NSNotification.Name.sendButtonEnabling, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(sendButtonEnablingDidApplyChanges), name: NSNotification.Name.sendButtonEnabling, object: nil)
     }
 
+
+    /// Update return key type when receiving a notification (from setting->toggle send key option)
     @objc
-        private func sendButtonEnablingDidApplyChanges(_ notification : Notification?) {
-            updateReturnKey()
-        }
+    private func sendButtonEnablingDidApplyChanges() {
+        updateReturnKey()
+    }
 
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

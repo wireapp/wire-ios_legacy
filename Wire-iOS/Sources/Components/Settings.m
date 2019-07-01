@@ -311,7 +311,7 @@ NSString * const UserDefaultDisableLinkPreviews = @"DisableLinkPreviews";
 
 - (BOOL)disableSendButton
 {
-    return [self.defaults boolForKey:UserDefaultSendButtonDisabled]; ///TODO: not work for iPad??
+    return [self.defaults boolForKey:UserDefaultSendButtonDisabled];
 }
 
 - (void)setDisableSendButton:(BOOL)disableSendButton
