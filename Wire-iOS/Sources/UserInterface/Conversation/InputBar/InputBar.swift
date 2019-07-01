@@ -228,7 +228,7 @@ private struct InputBarConstants {
         notificationCenter.addObserver(self, selector: #selector(textViewTextDidChange), name: UITextView.textDidChangeNotification, object: textView)
         notificationCenter.addObserver(self, selector: #selector(textViewDidBeginEditing), name: UITextView.textDidBeginEditingNotification, object: nil)
         notificationCenter.addObserver(self, selector: #selector(textViewDidEndEditing), name: UITextView.textDidEndEditingNotification, object: nil)
-        notificationCenter.addObserver(self, selector: #selector(sendButtonEnablingDidApplyChanges), name: NSNotification.Name.sendButtonEnabling, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(sendButtonEnablingDidApplyChanges), name: NSNotification.Name.disableSendButtonChanged, object: nil)
     }
 
 

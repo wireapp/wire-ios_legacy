@@ -72,10 +72,10 @@ extension Settings {
 
     @objc
     func notifySendButtonEnabling() {
-        NotificationCenter.default.post(name: .sendButtonEnabling, object: self, userInfo: nil)
+        NotificationCenter.default.post(name: .disableSendButtonChanged, object: self, userInfo: nil)
     }
 }
 
 extension Notification.Name {
-    static let sendButtonEnabling = Notification.Name("SendButtonEnabling")
+    static let disableSendButtonChanged = Notification.Name("DisableSendButtonChanged")
 }
