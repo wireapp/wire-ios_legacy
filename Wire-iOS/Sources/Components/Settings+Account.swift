@@ -69,4 +69,13 @@ extension Settings {
         self.setValue(conversationURI.absoluteString, for: UserDefaultLastViewedConversation, in: account)
         self.defaults().synchronize()
     }
+
+    @objc
+    func notifyDisableSendButtonChanged() {
+        NotificationCenter.default.post(name: .disableSendButtonChanged, object: self, userInfo: nil)
+    }
+}
+
+extension Notification.Name {
+    static let disableSendButtonChanged = Notification.Name("DisableSendButtonChanged")
 }
