@@ -71,7 +71,7 @@ extension Settings {
     }
 
     @objc
-    func notifySendButtonEnabling() {
+    func notifyDisableSendButtonChanged() {
         NotificationCenter.default.post(name: .disableSendButtonChanged, object: self, userInfo: nil)
     }
 }

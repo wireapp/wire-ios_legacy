@@ -317,7 +317,7 @@ NSString * const UserDefaultDisableLinkPreviews = @"DisableLinkPreviews";
 - (void)setDisableSendButton:(BOOL)disableSendButton
 {
     [self.defaults setBool:disableSendButton forKey:UserDefaultSendButtonDisabled];
-    [self notifySendButtonEnabling];
+    [self notifyDisableSendButtonChanged];
 }
 
 - (BOOL)disableCallKit
