@@ -32,6 +32,8 @@
 @property (nonatomic) NSLayoutConstraint *sideBySideConstraint;
 @property (nonatomic) NSLayoutConstraint *pinLeftViewOffsetConstraint;
 
+@property (nonatomic) SplitViewControllerLayoutSize layoutSize;
+
 - (void)onHorizontalPan:(UIPanGestureRecognizer *)gestureRecognizer;
 - (void)resetOpenPercentage;
 

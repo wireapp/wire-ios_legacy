@@ -156,8 +156,6 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
 
 @property (nonatomic) UITraitCollection *futureTraitCollection;
 
-@property (nonatomic) SplitViewControllerLayoutSize layoutSize;
-
 @end
 
 @implementation SplitViewController
@@ -236,6 +234,7 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
     [self updateRightAndLeftEdgeConstraints: self.openPercentage];
 }
 
+/*
 - (void)updateLayoutSizeForTraitCollection:(UITraitCollection *)traitCollection size:(CGSize)size
 {
     if (traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassCompact) {
@@ -248,6 +247,7 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
         self.layoutSize = SplitViewControllerLayoutSizeRegularLandscape;
     }
 }
+*/
 
 - (void)updateConstraintsForSize:(CGSize)size {
     [self updateConstraintsForSize:size willMoveToEmptyView:NO];
