@@ -31,7 +31,7 @@ public extension UIApplication {
         let statusBarHidden: Bool
         let statusBarStyle: UIStatusBarStyle
         
-        if let topContoller = self.wr_topmostController(onlyFullScreen: onlyFullScreen) {
+        if let topContoller = self.topmostViewController(onlyFullScreen: onlyFullScreen) {
             statusBarHidden = topContoller.prefersStatusBarHidden
             statusBarStyle = topContoller.preferredStatusBarStyle
         } else {
@@ -87,7 +87,7 @@ public extension UIApplication {
     ///
     /// - Parameter onlyFullScreen: if false, also search for all kinds of presented view controller
     /// - Returns: the top most view controller 
-    func wr_topmostController(onlyFullScreen: Bool = true) -> UIViewController? {
+    func topmostViewController(onlyFullScreen: Bool = true) -> UIViewController? {
 
         guard let window = topMostVisibleWindow,
             var topController = window.rootViewController else {

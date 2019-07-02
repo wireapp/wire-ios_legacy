@@ -71,9 +71,9 @@ class SettingsPropertyTextValueCellDescriptor: SettingsPropertyCellDescriptorTyp
                 // specific error message for name string is too short
                 if error.domain == ZMObjectValidationErrorDomain &&
                     error.code == ZMManagedObjectValidationErrorCode.objectValidationErrorCodeStringTooShort.rawValue {
-                    UIApplication.shared.wr_topmostController(onlyFullScreen: false)?.showAlert(forMessage: "name.guidance.tooshort".localized)
+                    UIApplication.shared.topmostViewController(onlyFullScreen: false)?.showAlert(forMessage: "name.guidance.tooshort".localized)
                 } else {
-                    UIApplication.shared.wr_topmostController(onlyFullScreen: false)?.showAlert(forError: error)
+                    UIApplication.shared.topmostViewController(onlyFullScreen: false)?.showAlert(forError: error)
                 }
 
             }

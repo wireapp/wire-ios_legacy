@@ -21,7 +21,7 @@ import Foundation
 extension UIViewController {
     func presentTopmost(animated flag: Bool = true,
                         completion: (() -> Void)? = nil) {
-        UIApplication.shared.wr_topmostController(onlyFullScreen: false)?.present(self, animated: flag, completion: completion)
+        UIApplication.shared.topmostViewController(onlyFullScreen: false)?.present(self, animated: flag, completion: completion)
     }
 
     @objc
