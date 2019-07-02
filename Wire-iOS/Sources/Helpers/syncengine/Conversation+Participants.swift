@@ -26,7 +26,7 @@ extension ZMConversation {
     
     @objc static let maxVideoCallParticipants: Int = 4
     
-    @objc static let maxParticipants: Int = 300
+    @objc static let maxParticipants: Int = 500
     
     @objc static var maxParticipantsExcludingSelf: Int {
         return maxParticipants - 1
