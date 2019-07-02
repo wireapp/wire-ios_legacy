@@ -56,11 +56,6 @@ public extension UIApplication {
         }
     }
 
-    @objc func wr_topmostViewController() -> UIViewController? {
-        return wr_topmostController()
-    }
-
-
     /// return the visible window on the top most which fulfills these conditions:
     /// 1. the windows has rootViewController
     /// 2. CallWindowRootViewController is in use and voice channel controller is active

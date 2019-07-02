@@ -67,7 +67,7 @@ final class CallWindowRootViewController: UIViewController {
     }
     
     private func topmostViewController() -> UIViewController? {
-        guard let topmost = UIApplication.shared.wr_topmostViewController() else { return nil }
+        guard let topmost = UIApplication.shared.wr_topmostController() else { return nil }
         guard topmost != self, !topmost.isKind(of: CallWindowRootViewController.self) else { return nil }
         return topmost
     }
