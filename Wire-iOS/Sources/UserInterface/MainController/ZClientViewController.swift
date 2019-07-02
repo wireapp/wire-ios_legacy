@@ -137,7 +137,7 @@ extension ZClientViewController {
     @objc
     func createLegalHoldDisclosureController() {
         legalHoldDisclosureController = LegalHoldDisclosureController(selfUser: ZMUser.selfUser(), userSession: ZMUserSession.shared(), presenter: { viewController, animated, completion in
-            UIApplication.shared.wr_topmostController()?.present(viewController, animated: animated, completion: completion)
+            UIApplication.shared.wr_topmostController(onlyFullScreen: false)?.present(viewController, animated: animated, completion: completion)
         })
     }
     
