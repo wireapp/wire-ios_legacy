@@ -23,6 +23,4 @@
 
 + (UIAlertController * _Nonnull)alertControllerWithTitle:(NSString * _Nullable)title message:(NSString * _Nullable)message cancelButtonTitle:(NSString * _Nullable)cancelTitle;
 
-- (void)presentTopmost;
-
 @end

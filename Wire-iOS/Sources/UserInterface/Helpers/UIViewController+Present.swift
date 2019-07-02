@@ -1,6 +1,6 @@
-//
+
 // Wire
-// Copyright (C) 2018 Wire Swiss GmbH
+// Copyright (C) 2019 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,9 +16,13 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import UIKit
+import Foundation
 
 extension UIViewController {
+    func presentTopmost(animated flag: Bool = true,
+                        completion: (() -> Void)? = nil) {
+        UIApplication.shared.wr_topmostController(onlyFullScreen: false)?.present(self, animated: flag, completion: completion)
+    }
 
     @objc
     func presentInNotificationsWindow() {

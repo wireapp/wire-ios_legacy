@@ -1082,6 +1082,7 @@
 		EF207B3922083E8000738E84 /* ZMUserSessionInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF207B3822083E8000738E84 /* ZMUserSessionInterface.swift */; };
 		EF207B3B2208438700738E84 /* MockZMUserSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF207B3A2208438700738E84 /* MockZMUserSession.swift */; };
 		EF20B59221E3C3A800BE86F8 /* WebLinkTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF20B59121E3C3A800BE86F8 /* WebLinkTextView.swift */; };
+		EF20BE4322CB57B1004F8910 /* UIViewController+Present.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF20BE4222CB57B1004F8910 /* UIViewController+Present.swift */; };
 		EF21219A2292EEF3006C4293 /* XCTestCase+SnapshotTesting.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2121992292EEF3006C4293 /* XCTestCase+SnapshotTesting.swift */; };
 		EF21270B1FB9DFE300625A9B /* CountryCodes.plist in Resources */ = {isa = PBXBuildFile; fileRef = EF2126C81FB9DFE300625A9B /* CountryCodes.plist */; };
 		EF21270C1FB9DFE300625A9B /* Country.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126C91FB9DFE300625A9B /* Country.m */; };
@@ -1154,7 +1155,6 @@
 		EF305247208742F300613C45 /* ConfirmPhoneViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF305246208742F300613C45 /* ConfirmPhoneViewControllerTests.swift */; };
 		EF30524B2088927D00613C45 /* transparent.png in Resources */ = {isa = PBXBuildFile; fileRef = EF30524A2088927D00613C45 /* transparent.png */; };
 		EF31DC7C2092020300A4F09F /* UIViewController+iPhoneSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF31DC792092008100A4F09F /* UIViewController+iPhoneSize.swift */; };
-		EF32AB0121C13C09002E4777 /* UIViewController+Present.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF32AB0021C13C09002E4777 /* UIViewController+Present.swift */; };
 		EF32AB0321C15B0E002E4777 /* String+MessageToolBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF32AB0221C15B0E002E4777 /* String+MessageToolBox.swift */; };
 		EF33204C21496A0D0079E832 /* AVPlayerViewController+StatusBarAndNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF33204B21496A0D0079E832 /* AVPlayerViewController+StatusBarAndNotification.swift */; };
 		EF334B98229D789500099D80 /* StartUIViewController+ContactsViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF334B97229D789500099D80 /* StartUIViewController+ContactsViewControllerDelegate.swift */; };
@@ -2879,6 +2879,7 @@
 		EF207B3822083E8000738E84 /* ZMUserSessionInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZMUserSessionInterface.swift; sourceTree = "<group>"; };
 		EF207B3A2208438700738E84 /* MockZMUserSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockZMUserSession.swift; sourceTree = "<group>"; };
 		EF20B59121E3C3A800BE86F8 /* WebLinkTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebLinkTextView.swift; sourceTree = "<group>"; };
+		EF20BE4222CB57B1004F8910 /* UIViewController+Present.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Present.swift"; sourceTree = "<group>"; };
 		EF2121992292EEF3006C4293 /* XCTestCase+SnapshotTesting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+SnapshotTesting.swift"; sourceTree = "<group>"; };
 		EF2126C81FB9DFE300625A9B /* CountryCodes.plist */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = CountryCodes.plist; sourceTree = "<group>"; };
 		EF2126C91FB9DFE300625A9B /* Country.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Country.m; sourceTree = "<group>"; };
@@ -2956,7 +2957,6 @@
 		EF305246208742F300613C45 /* ConfirmPhoneViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmPhoneViewControllerTests.swift; sourceTree = "<group>"; };
 		EF30524A2088927D00613C45 /* transparent.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = transparent.png; sourceTree = "<group>"; };
 		EF31DC792092008100A4F09F /* UIViewController+iPhoneSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+iPhoneSize.swift"; sourceTree = "<group>"; };
-		EF32AB0021C13C09002E4777 /* UIViewController+Present.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Present.swift"; sourceTree = "<group>"; };
 		EF32AB0221C15B0E002E4777 /* String+MessageToolBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+MessageToolBox.swift"; sourceTree = "<group>"; };
 		EF33204B21496A0D0079E832 /* AVPlayerViewController+StatusBarAndNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVPlayerViewController+StatusBarAndNotification.swift"; sourceTree = "<group>"; };
 		EF334B97229D789500099D80 /* StartUIViewController+ContactsViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StartUIViewController+ContactsViewControllerDelegate.swift"; sourceTree = "<group>"; };
@@ -4511,6 +4511,7 @@
 				871BC1F71D34F8F800DF0793 /* NSString+Fingerprint.m */,
 				871BC1F81D34F8F800DF0793 /* UIAlertController+Wire.h */,
 				871BC1F91D34F8F800DF0793 /* UIAlertController+Wire.m */,
+				EF20BE4222CB57B1004F8910 /* UIViewController+Present.swift */,
 				871BC1FC1D34F8F800DF0793 /* UIApplication+StatusBar.swift */,
 				87A6BD0D1F0D2A36006A3232 /* UIApplication+StatusBar.h */,
 				87A6BD0E1F0D2A58006A3232 /* UIApplication+StatusBar.m */,
@@ -4927,7 +4928,6 @@
 				EF0154B6225B922200A77FB6 /* ContactsViewController+Constraints.swift */,
 				EF7E96ED214BB41800475C63 /* ContactsViewController+ContactsDataSourceDelegate.swift */,
 				EF7E96EF214BFBE100475C63 /* ContactsViewController+UITableViewDelegate.swift */,
-				EF32AB0021C13C09002E4777 /* UIViewController+Present.swift */,
 				87DCF48C1D34E9BA00BB420F /* ZMAddressBookContact+LocalInvitation.swift */,
 			);
 			path = ContactsUI;
@@ -7337,6 +7337,7 @@
 				D58192002091CEBF003BA7EC /* UIStackView+Helper.swift in Sources */,
 				871BC2851D34F8F800DF0793 /* UIColor+WAZExtensions.m in Sources */,
 				870C926F1E8D1C7300A10995 /* ConversationListViewModel+Teams.swift in Sources */,
+				EF20BE4322CB57B1004F8910 /* UIViewController+Present.swift in Sources */,
 				EF2A8DED214AA36E002C9058 /* SeparatorViewProtocol.swift in Sources */,
 				1610367120617BEC008AFDD0 /* AppRootViewController+Appearance.swift in Sources */,
 				F15650F721DD1ED600210504 /* KeyValueObserver.m in Sources */,
@@ -7356,7 +7357,6 @@
 				7C17ECA81F7508980056600C /* PreviewHeightCalculator.swift in Sources */,
 				5E769C5C21AEA3CB00785EB7 /* MessageDetailsContentViewController.swift in Sources */,
 				EF33204C21496A0D0079E832 /* AVPlayerViewController+StatusBarAndNotification.swift in Sources */,
-				EF32AB0121C13C09002E4777 /* UIViewController+Present.swift in Sources */,
 				EF834B8422035AD400E92F13 /* ConversationContentViewController+MessageAction.swift in Sources */,
 				8712134B1FA37882008B6767 /* TrackingManager.swift in Sources */,
 				F1199D371FC8490A0070FAC3 /* AuthenticationStepController.swift in Sources */,
