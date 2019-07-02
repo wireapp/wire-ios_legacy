@@ -234,21 +234,6 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
     [self updateRightAndLeftEdgeConstraints: self.openPercentage];
 }
 
-/*
-- (void)updateLayoutSizeForTraitCollection:(UITraitCollection *)traitCollection size:(CGSize)size
-{
-    if (traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassCompact) {
-        self.layoutSize = SplitViewControllerLayoutSizeCompact;
-    }
-    else if (IS_IPAD_PORTRAIT_LAYOUT) {
-        self.layoutSize = SplitViewControllerLayoutSizeRegularPortrait;
-    }
-    else {
-        self.layoutSize = SplitViewControllerLayoutSizeRegularLandscape;
-    }
-}
-*/
-
 - (void)updateConstraintsForSize:(CGSize)size {
     [self updateConstraintsForSize:size willMoveToEmptyView:NO];
 }
