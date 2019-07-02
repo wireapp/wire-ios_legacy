@@ -72,6 +72,7 @@ extension ConversationListItemView {
             if connectedUser.availability != .none {
                 statusComponents.append(connectedUser.availability.localizedName)
             }
+            accessibilityLabel = title?.string
         } else {
             title = conversation.displayName.attributedString
             accessibilityLabel = conversation.displayName
