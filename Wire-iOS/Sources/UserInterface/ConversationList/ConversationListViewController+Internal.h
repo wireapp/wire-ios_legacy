@@ -16,10 +16,10 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+#import "StartUIViewController.h"
+
 @class PermissionDeniedViewController;
 @class ConversationActionController;
-
-@protocol StartUIDelegate;
 
 @interface ConversationListViewController ()
 
