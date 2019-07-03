@@ -175,10 +175,8 @@ import UIKit
     /// Dismisses the alert if it's presented, and calls the dismissal handler.
     private func dismissAlertIfNeeded(_ alert: UIAlertController?, dismissalHandler: @escaping () -> Void) {
         if let currentAlert = alert, currentAlert.presentingViewController != nil {
-            presentedAlertController = nil
             currentAlert.dismiss(animated: true, completion: dismissalHandler)
         } else {
-            presentedAlertController = nil
             dismissalHandler()
         }
     }
@@ -208,6 +206,8 @@ import UIKit
             if let alertController = alertController {
                 self.presentedAlertController = alertController
                 self.presenter(alertController, true, nil)
+            } else {
+                self.presentedAlertController = nil
             }
         }
     }
