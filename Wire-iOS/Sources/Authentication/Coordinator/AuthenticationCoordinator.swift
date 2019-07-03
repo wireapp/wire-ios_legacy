@@ -391,7 +391,8 @@ extension AuthenticationCoordinator {
     /// Signs the current user out with a warning.
     private func signOut(warn: Bool) {
         if warn {
-            let signOutAction = AuthenticationCoordinatorAlertAction(title: "general.ok".localized, coordinatorActions: [.showLoadingView, .signOut(warn: false)], style: .destructive)
+            let signOutAction = AuthenticationCoordinatorAlertAction(title: "general.ok".localized, coordinatorActions: [.showLoadingView,
+                .signOut(warn: false)], style: .destructive)
 
             let alertModel = AuthenticationCoordinatorAlert(title: "self.settings.account_details.log_out.alert.title".localized,
                                                             message: "self.settings.account_details.log_out.alert.message".localized,
@@ -399,8 +400,15 @@ extension AuthenticationCoordinator {
 
             presentAlert(for: alertModel)
         } else {
+            
             guard let accountId = unauthenticatedSession.accountId,
                   let unauthenticatedAccount = sessionManager.accountManager.account(with: accountId) else {
+                    
+                if sessionManager.accountManager.accounts.count == 1 {
+                    sessionManager.delete(account: sessionManager.accountManager.accounts.first!)
+                    return
+                }
+                    
                 fatal("No unauthenticated account to log out from")
             }
             
