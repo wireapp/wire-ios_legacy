@@ -18,8 +18,7 @@
 
 import UIKit
 
-
-class LegalHoldDetailsViewController: UIViewController {
+final class LegalHoldDetailsViewController: UIViewController {
     
     fileprivate let collectionView = UICollectionView(forGroupedSections: ())
     fileprivate let collectionViewController: SectionCollectionViewController
@@ -45,6 +44,15 @@ class LegalHoldDetailsViewController: UIViewController {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    @discardableResult
+    static func present(in parentViewControler: UIViewController, conversation: ZMConversation) -> UINavigationController {
+        let legalHoldDetails = LegalHoldDetailsViewController(conversation: conversation).wrapInNavigationController()
+        legalHoldDetails.modalPresentationStyle = .formSheet
+        parentViewControler.present(legalHoldDetails, animated: true)
+
+        return legalHoldDetails
     }
     
     override func viewDidLoad() {
