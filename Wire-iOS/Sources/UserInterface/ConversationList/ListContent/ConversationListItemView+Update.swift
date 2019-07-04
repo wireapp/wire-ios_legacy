@@ -93,8 +93,8 @@ extension ConversationListItemView {
         }
         self.rightAccessory.icon = statusIcon
 
-        if case .silenced? = statusIcon {
-            statusComponents.append("conversation.status.silenced".localized)
+        if let statusIconAccessibilityValue = rightAccessory.accessibilityValue {
+            statusComponents.append(statusIconAccessibilityValue)
         }
 
         accessibilityValue = FormattedText.list(from: statusComponents)
