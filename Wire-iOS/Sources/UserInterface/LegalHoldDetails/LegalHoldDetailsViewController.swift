@@ -46,26 +46,19 @@ final class LegalHoldDetailsViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private static func present(in parentViewControler: UIViewController, viewController: UIViewController) -> UINavigationController {
-        let navigationController = viewController.wrapInNavigationController()
-        navigationController.modalPresentationStyle = .formSheet
-        parentViewControler.present(navigationController, animated: true)
-
-        return navigationController
-    }
 
     @discardableResult
     static func present(in parentViewControler: UIViewController, user: ZMUser) -> UINavigationController? {
         guard let legalHoldDetailsViewController = LegalHoldDetailsViewController(user: user) else { return nil }
 
-        return LegalHoldDetailsViewController.present(in: parentViewControler, viewController: legalHoldDetailsViewController)
+        return legalHoldDetailsViewController.wrapInNavigationControllerAndPresent(from: parentViewControler)
     }
 
     @discardableResult
     static func present(in parentViewControler: UIViewController, conversation: ZMConversation) -> UINavigationController {
         let legalHoldDetailsViewController = LegalHoldDetailsViewController(conversation: conversation)
 
-        return LegalHoldDetailsViewController.present(in: parentViewControler, viewController: legalHoldDetailsViewController)
+        return legalHoldDetailsViewController.wrapInNavigationControllerAndPresent(from: parentViewControler)
     }
     
     override func viewDidLoad() {
