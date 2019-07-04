@@ -24,7 +24,7 @@ import UIKit
 
 @objc class LegalHoldDisclosureController: NSObject, ZMUserObserver {
 
-    enum DisclosureState {
+    enum DisclosureState: Equatable {
         /// No legal hold status is being disclosed.
         case none
 
@@ -72,6 +72,7 @@ import UIKit
     /// The current state of legal hold disclosure. Defaults to none.
     var currentState: DisclosureState = .none {
         didSet {
+            guard currentState != oldValue else { return }
             presentAlertController(for: currentState)
         }
     }
