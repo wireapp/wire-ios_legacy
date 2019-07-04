@@ -48,17 +48,17 @@ final class LegalHoldDetailsViewController: UIViewController {
 
 
     @discardableResult
-    static func present(in parentViewControler: UIViewController, user: ZMUser) -> UINavigationController? {
+    static func present(in parentViewController: UIViewController, user: ZMUser) -> UINavigationController? {
         guard let legalHoldDetailsViewController = LegalHoldDetailsViewController(user: user) else { return nil }
 
-        return legalHoldDetailsViewController.wrapInNavigationControllerAndPresent(from: parentViewControler)
+        return legalHoldDetailsViewController.wrapInNavigationControllerAndPresent(from: parentViewController)
     }
 
     @discardableResult
-    static func present(in parentViewControler: UIViewController, conversation: ZMConversation) -> UINavigationController {
+    static func present(in parentViewController: UIViewController, conversation: ZMConversation) -> UINavigationController {
         let legalHoldDetailsViewController = LegalHoldDetailsViewController(conversation: conversation)
 
-        return legalHoldDetailsViewController.wrapInNavigationControllerAndPresent(from: parentViewControler)
+        return legalHoldDetailsViewController.wrapInNavigationControllerAndPresent(from: parentViewController)
     }
     
     override func viewDidLoad() {
