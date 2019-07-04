@@ -28,6 +28,3 @@
 @property (nonatomic, nullable) ConversationActionController *actionsController;
 
 @end
-
-@interface ConversationListViewController (StartUI) <StartUIDelegate>
-@end

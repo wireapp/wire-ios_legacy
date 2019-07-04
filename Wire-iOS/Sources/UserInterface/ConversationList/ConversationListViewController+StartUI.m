@@ -27,7 +27,6 @@
 
 @import MobileCoreServices;
 
-
 typedef void (^ConversationCreatedBlock)(ZMConversation *);
 
 @implementation ConversationListViewController (StartUI)
