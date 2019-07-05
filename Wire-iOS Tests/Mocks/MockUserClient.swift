@@ -45,6 +45,10 @@ final class MockUserClient: NSObject, UserClientType {
     var user: ZMUser? = nil
     
     var deviceClass: DeviceClass? = .phone
+    
+    func isSelfClient() -> Bool {
+        return false
+    }
 
     func resetSession() {
         // No-op
