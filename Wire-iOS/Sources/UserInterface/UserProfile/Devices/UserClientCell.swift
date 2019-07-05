@@ -48,8 +48,8 @@ final class UserClientCell: SeparatorCollectionViewCell {
 
         verifiedIconView.image = WireStyleKit.imageOfShieldverified
         verifiedIconView.translatesAutoresizingMaskIntoConstraints = false
-        verifiedIconView.isAccessibilityElement = true
         verifiedIconView.contentMode = .center
+        verifiedIconView.isAccessibilityElement = true
         verifiedIconView.accessibilityIdentifier = "device_cell.verifiedShield"
 
         accessoryIconView.translatesAutoresizingMaskIntoConstraints = false
