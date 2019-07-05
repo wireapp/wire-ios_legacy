@@ -61,11 +61,11 @@ extension ProfileViewController {
         let profileDetailsViewController = setupProfileDetailsViewController()
         viewControllers.append(profileDetailsViewController)
 
-        if let fullUser = self.fullUser(), context != .profileViewer, viewer.canSeeDevices(of: bareUser) {
+        if let fullUser = self.fullUser(), context != .search && context != .profileViewer {
             let userClientListViewController = UserClientListViewController(user: fullUser)
             viewControllers.append(userClientListViewController)
         }
-
+        
         tabsController = TabBarController(viewControllers: viewControllers)
         tabsController.delegate = self
         
@@ -215,8 +215,8 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
     
     @objc
     func presentLegalHoldDetails() {
-        guard let user = fullUser(), let viewController = LegalHoldDetailsViewController(user: user) else { return }
-        present(viewController.wrapInNavigationController(), animated: true)
+        guard let user = fullUser() else { return }
+        LegalHoldDetailsViewController.present(in: self, user: user)
     }
     
     // MARK: - Action Handlers

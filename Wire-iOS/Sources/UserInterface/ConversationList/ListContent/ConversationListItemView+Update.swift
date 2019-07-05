@@ -72,6 +72,7 @@ extension ConversationListItemView {
             if connectedUser.availability != .none {
                 statusComponents.append(connectedUser.availability.localizedName)
             }
+            accessibilityLabel = title?.string
         } else {
             title = conversation.displayName.attributedString
             accessibilityLabel = conversation.displayName
@@ -92,8 +93,8 @@ extension ConversationListItemView {
         }
         self.rightAccessory.icon = statusIcon
 
-        if case .silenced? = statusIcon {
-            statusComponents.append("conversation.status.silenced".localized)
+        if let statusIconAccessibilityValue = rightAccessory.accessibilityValue {
+            statusComponents.append(statusIconAccessibilityValue)
         }
 
         accessibilityValue = FormattedText.list(from: statusComponents)

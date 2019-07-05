@@ -21,6 +21,9 @@ import XCTest
 @testable import Wire
 
 class MockDestination: NSObject, ShareDestination {
+    
+    var isUnderLegalHold: Bool
+    
     var showsGuestIcon: Bool
     
     var displayName: String
@@ -29,11 +32,12 @@ class MockDestination: NSObject, ShareDestination {
     
     var avatarView: UIView?
     
-    init(displayName: String, avatarView: UIView? = nil, securityLevel: ZMConversationSecurityLevel = .notSecure, showsGuestIcon: Bool = false) {
+    init(displayName: String, avatarView: UIView? = nil, securityLevel: ZMConversationSecurityLevel = .notSecure, showsGuestIcon: Bool = false, isUnderLegalHold: Bool = false) {
         self.displayName = displayName
         self.securityLevel = securityLevel
         self.avatarView = avatarView
         self.showsGuestIcon = showsGuestIcon
+        self.isUnderLegalHold = isUnderLegalHold
     }
 }
 
@@ -79,6 +83,18 @@ class ShareDestinationCellTests: ZMSnapshotTestCase {
                                           avatarView: mockAvatarView,
                                           securityLevel: .notSecure,
                                           showsGuestIcon: true)
+        // when
+        sut.destination = destination
+        // then
+        verify(view: sut.prepareForSnapshots())
+    }
+    
+    func testThatItRendersCorrectly_CellWithPersonalNameAndPicture_NotSecure_Unchecked_LegalHold() {
+        // given
+        let destination = MockDestination(displayName: "John Burger",
+                                          avatarView: mockAvatarView,
+                                          securityLevel: .notSecure,
+                                          isUnderLegalHold: true)
         // when
         sut.destination = destination
         // then
@@ -171,6 +187,19 @@ class ShareDestinationCellTests: ZMSnapshotTestCase {
                                           avatarView: mockAvatarView,
                                           securityLevel: .secure,
                                           showsGuestIcon: true)
+        // when
+        sut.destination = destination
+        // then
+        verify(view: sut.prepareForSnapshots())
+    }
+    
+    func testThatItRendersCorrectly_CellWithPersonalNameAndPicture_Secure_Unchecked_Guest_LegalHold() {
+        // given
+        let destination = MockDestination(displayName: "John Burger",
+                                          avatarView: mockAvatarView,
+                                          securityLevel: .secure,
+                                          showsGuestIcon: true,
+                                          isUnderLegalHold: true)
         // when
         sut.destination = destination
         // then

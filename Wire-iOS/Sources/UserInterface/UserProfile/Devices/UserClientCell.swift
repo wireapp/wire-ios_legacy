@@ -38,7 +38,10 @@ final class UserClientCell: SeparatorCollectionViewCell {
     
     override func setUp() {
         super.setUp()
-        
+
+        accessibilityIdentifier = "device_cell"
+        shouldGroupAccessibilityChildren = true
+
         deviceTypeIconView.image = StyleKitIcon.devices.makeImage(size: .tiny, color: .white)
         deviceTypeIconView.translatesAutoresizingMaskIntoConstraints = false
         deviceTypeIconView.contentMode = .center

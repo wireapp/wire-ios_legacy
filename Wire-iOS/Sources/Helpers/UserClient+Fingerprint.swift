@@ -30,7 +30,8 @@ extension Sequence where Element: UserClientType {
     
     func sortedByRelevance() -> [UserClientType] {
         return sorted { (lhs, rhs) -> Bool in
-            if lhs.type == .legalHold {
+            
+            if lhs.deviceClass == .legalHold {
                 return true
             } else {
                 return lhs.remoteIdentifier < rhs.remoteIdentifier

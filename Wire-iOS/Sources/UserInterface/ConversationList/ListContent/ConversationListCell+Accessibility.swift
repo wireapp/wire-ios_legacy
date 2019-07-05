@@ -25,7 +25,7 @@ extension ConversationListCell {
         }
 
         set {
-            itemView.accessibilityValue = newValue;
+            // no op
         }
     }
 
@@ -35,7 +35,7 @@ extension ConversationListCell {
         }
 
         set {
-            itemView.accessibilityLabel = newValue;
+            // no op
         }
     }
 }
