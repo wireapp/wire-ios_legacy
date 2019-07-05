@@ -22,6 +22,7 @@ public protocol ShareDestination: Hashable {
     var displayName: String { get }
     var securityLevel: ZMConversationSecurityLevel { get }
     var showsGuestIcon: Bool { get }
+    var isUnderLegalHold: Bool { get }
     var avatarView: UIView? { get }
 }
 
