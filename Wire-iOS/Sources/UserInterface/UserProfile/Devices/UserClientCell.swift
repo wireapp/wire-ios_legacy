@@ -86,8 +86,6 @@ final class UserClientCell: SeparatorCollectionViewCell {
         contentView.addSubview(contentStackView)
         
         createConstraints()
-
-        setupAccessbility(accessibilityIdentifier: "device_cell")
     }
     
     private func createConstraints() {
@@ -137,28 +135,6 @@ final class UserClientCell: SeparatorCollectionViewCell {
         default:
             deviceTypeIconView.setIcon(.devices, size: .tiny, color: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant))
             deviceTypeIconView.accessibilityIdentifier = client?.deviceClass == .desktop ? "img.device_class.desktop" : "img.device_class.phone"
-        }
-    }
-
-    // MARK: - accessibility
-    override var accessibilityValue: String? {
-        get {
-            return verifiedIconView.accessibilityLabel
-        }
-
-        set {
-            //no-op
-        }
-    }
-
-    override var accessibilityLabel: String? {
-        get {
-            // e.g. PHONE - ID: AA BB CC DD AA BB CC DD
-            return "\(titleLabel.accessibilityLabel ?? "") - \(subtitleLabel.accessibilityLabel ?? "")"
-        }
-
-        set {
-            //no-op
         }
     }
 }
