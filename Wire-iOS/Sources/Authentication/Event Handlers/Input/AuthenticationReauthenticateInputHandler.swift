@@ -39,7 +39,8 @@ class AuthenticationReauthenticateInputHandler: AuthenticationEventHandler {
             // If we get `(String, String)`, start the email flow
             let request = AuthenticationLoginRequest.email(address: email, password: password)
             return [.startLoginFlow(request)]
-        } else if let phoneInput = context as? String {
+        } else if let phoneNumber = context as? PhoneNumber {
+            let phoneInput = phoneNumber.fullNumber
             // If we get `String`, start the phone login flow
             let request = AuthenticationLoginRequest.phoneNumber(phoneInput)
             return [.startLoginFlow(request)]
