@@ -61,11 +61,11 @@ extension ProfileViewController {
         let profileDetailsViewController = setupProfileDetailsViewController()
         viewControllers.append(profileDetailsViewController)
 
-        if let fullUser = self.fullUser(), context != .profileViewer, viewer.canSeeDevices(of: bareUser) {
+        if let fullUser = self.fullUser(), context != .search && context != .profileViewer {
             let userClientListViewController = UserClientListViewController(user: fullUser)
             viewControllers.append(userClientListViewController)
         }
-
+        
         tabsController = TabBarController(viewControllers: viewControllers)
         tabsController.delegate = self
         
