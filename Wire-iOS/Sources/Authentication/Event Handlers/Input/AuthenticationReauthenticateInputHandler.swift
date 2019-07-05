@@ -18,11 +18,13 @@
 
 import Foundation
 
+private let zmLog = ZMSLog(tag: "AuthenticationReauthenticateInputHandler")
+
 /**
  * Handles input in the reauthentication phase.
  */
 
-class AuthenticationReauthenticateInputHandler: AuthenticationEventHandler {
+final class AuthenticationReauthenticateInputHandler: AuthenticationEventHandler {
 
     weak var statusProvider: AuthenticationStatusProvider?
 
@@ -44,6 +46,8 @@ class AuthenticationReauthenticateInputHandler: AuthenticationEventHandler {
             // If we get `String`, start the phone login flow
             let request = AuthenticationLoginRequest.phoneNumber(phoneInput)
             return [.startLoginFlow(request)]
+        } else {
+            zmLog.safePublic("Unable to handle context: \(context)")
         }
 
         // Do not handle other cases.
