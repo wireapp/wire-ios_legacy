@@ -47,7 +47,7 @@ final class AuthenticationReauthenticateInputHandler: AuthenticationEventHandler
             let request = AuthenticationLoginRequest.phoneNumber(phoneInput)
             return [.startLoginFlow(request)]
         } else {
-            zmLog.safePublic("Unable to handle context: \(context)")
+            zmLog.error("Unable to handle context: \(type(of: context))")
         }
 
         // Do not handle other cases.
