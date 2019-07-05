@@ -41,13 +41,12 @@ final class AuthenticationReauthenticateInputHandler: AuthenticationEventHandler
             // If we get `(String, String)`, start the email flow
             let request = AuthenticationLoginRequest.email(address: email, password: password)
             return [.startLoginFlow(request)]
-        } else if let phoneNumber = context as? PhoneNumber {
-            let phoneInput = phoneNumber.fullNumber
-            // If we get `String`, start the phone login flow
-            let request = AuthenticationLoginRequest.phoneNumber(phoneInput)
+        } else if let fullNumber = (context as? PhoneNumber)?.fullNumber {
+            // If we get `PhoneNumber`, start the phone login flow
+            let request = AuthenticationLoginRequest.phoneNumber(fullNumber)
             return [.startLoginFlow(request)]
         } else {
-            zmLog.error("Unable to handle context: \(type(of: context))")
+            zmLog.error("Unable to handle context type: \(type(of: context))")
         }
 
         // Do not handle other cases.
