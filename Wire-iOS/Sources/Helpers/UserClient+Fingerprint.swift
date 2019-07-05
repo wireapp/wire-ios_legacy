@@ -33,6 +33,8 @@ extension Sequence where Element: UserClientType {
             
             if lhs.deviceClass == .legalHold {
                 return true
+            } else if rhs.deviceClass == .legalHold {
+                return false
             } else {
                 return lhs.remoteIdentifier < rhs.remoteIdentifier
             }
