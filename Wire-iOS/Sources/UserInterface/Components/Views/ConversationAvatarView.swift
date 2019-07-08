@@ -116,7 +116,9 @@ extension Mode {
 
         switch (conversationType, users.count, isServiceUser) {
         case (.group?, 1, true),
-             (.oneOnOne?, _, _):
+             (.oneOnOne?, _, _),
+             (.connection?, 1, _),
+             (.none, 1, _):
             self = .one(serviceUser: users[0].isServiceUser)
         case (.group?, 1, false),
              (.group?, 2..., _):
