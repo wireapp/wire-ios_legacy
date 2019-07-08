@@ -27,4 +27,7 @@
 @property (nonatomic, nullable) PermissionDeniedViewController *pushPermissionDeniedViewController;
 @property (nonatomic, nullable) ConversationActionController *actionsController;
 
+- (void)updateBottomBarSeparatorVisibilityWithContentController:(ConversationListContentController * _Nonnull)controller;
+- (void)setSelectedConversation:(ZMConversation *)conversation;
+
 @end
