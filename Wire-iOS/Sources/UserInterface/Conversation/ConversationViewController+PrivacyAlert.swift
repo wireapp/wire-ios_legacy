@@ -131,9 +131,7 @@ extension ConversationViewController {
     }
 
     private func presentLegalHoldDetails() {
-        let legalHoldDetailsVC = LegalHoldDetailsViewController(conversation: conversation)
-        legalHoldDetailsVC.modalPresentationStyle = .formSheet
-        present(legalHoldDetailsVC, animated: true)
+        LegalHoldDetailsViewController.present(in: self, conversation: conversation)
     }
 
 }

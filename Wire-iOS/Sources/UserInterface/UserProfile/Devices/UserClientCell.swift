@@ -18,7 +18,7 @@
 
 import Foundation
 
-class UserClientCell: SeparatorCollectionViewCell {
+final class UserClientCell: SeparatorCollectionViewCell {
     
     private let titleLabel = UILabel()
     private let subtitleLabel = UILabel()
@@ -38,7 +38,10 @@ class UserClientCell: SeparatorCollectionViewCell {
     
     override func setUp() {
         super.setUp()
-        
+
+        accessibilityIdentifier = "device_cell"
+        shouldGroupAccessibilityChildren = true
+
         deviceTypeIconView.image = StyleKitIcon.devices.makeImage(size: .tiny, color: .white)
         deviceTypeIconView.translatesAutoresizingMaskIntoConstraints = false
         deviceTypeIconView.contentMode = .center
@@ -135,5 +138,4 @@ class UserClientCell: SeparatorCollectionViewCell {
             deviceTypeIconView.accessibilityIdentifier = client?.deviceClass == .desktop ? "img.device_class.desktop" : "img.device_class.phone"
         }
     }
-    
 }

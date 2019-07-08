@@ -16,10 +16,10 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+#import "PermissionDeniedViewController.h"
+
 @class Button;
 @class PermissionDeniedViewController;
-
-@protocol PermissionDeniedViewControllerDelegate;
 
 @interface ShareContactsViewController ()
 

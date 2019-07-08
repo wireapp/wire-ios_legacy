@@ -48,7 +48,7 @@ final class NotificationWindowRootViewController: UIViewController {
     // MARK: - Rotation handling (should match up with root)
 
     private func topmostViewController() -> UIViewController? {
-        guard let topmostViewController = UIApplication.shared.wr_topmostViewController() else { return nil}
+        guard let topmostViewController = UIApplication.shared.topmostViewController() else { return nil}
 
         if topmostViewController != self && !(topmostViewController is NotificationWindowRootViewController) {
             return topmostViewController

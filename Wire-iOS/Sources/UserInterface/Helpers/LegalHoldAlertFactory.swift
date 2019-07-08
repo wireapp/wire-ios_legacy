@@ -48,9 +48,9 @@ enum LegalHoldAlertFactory {
         return alert
     }
 
-    static func makeLegalHoldActivationAlert(for legalHoldRequest: LegalHoldRequest, user: SelfUserType, presenter: @escaping ViewControllerPresenter, suggestedStateChangeHandler: SuggestedStateChangeHandler?) -> UIAlertController {
+    static func makeLegalHoldActivationAlert(for legalHoldRequest: LegalHoldRequest, user: SelfUserType, suggestedStateChangeHandler: SuggestedStateChangeHandler?) -> UIAlertController {
         func handleLegalHoldActivationResult(_ error: LegalHoldActivationError?) {
-            UIApplication.shared.wr_topmostViewController()?.showLoadingView = false
+            UIApplication.shared.topmostViewController()?.showLoadingView = false
 
             switch error {
             case .invalidPassword?:
@@ -59,10 +59,9 @@ enum LegalHoldAlertFactory {
                 let alert = UIAlertController.alertWithOKButton(
                     title: "legalhold_request.alert.error_wrong_password".localized,
                     message: "legalhold_request.alert.error_wrong_password".localized,
-                    okActionHandler: { _ in suggestedStateChangeHandler?(.none) }
+                    okActionHandler: { _ in suggestedStateChangeHandler?(.warningAboutPendingRequest(legalHoldRequest)) }
                 )
 
-                presenter(alert, true, nil)
                 suggestedStateChangeHandler?(.warningAboutAcceptationResult(alert))
 
             case .some:
@@ -71,10 +70,9 @@ enum LegalHoldAlertFactory {
                 let alert = UIAlertController.alertWithOKButton(
                     title: "general.failure".localized,
                     message: "general.failure.try_again".localized,
-                    okActionHandler: { _ in suggestedStateChangeHandler?(.none) }
+                    okActionHandler: { _ in suggestedStateChangeHandler?(.warningAboutPendingRequest(legalHoldRequest)) }
                 )
 
-                presenter(alert, true, nil)
                 suggestedStateChangeHandler?(.warningAboutAcceptationResult(alert))
 
             case .none:
@@ -89,13 +87,11 @@ enum LegalHoldAlertFactory {
         }
 
         let request = user.makeLegalHoldInputRequest(for: legalHoldRequest, cancellationHandler: cancellationHandler) { password in
-            UIApplication.shared.wr_topmostViewController()?.showLoadingView = true
+            UIApplication.shared.topmostViewController()?.showLoadingView = true
             suggestedStateChangeHandler?(.acceptingRequest)
 
             ZMUserSession.shared()?.accept(legalHoldRequest: legalHoldRequest, password: password) { error in
-                DispatchQueue.main.async {
-                    handleLegalHoldActivationResult(error)
-                }
+                handleLegalHoldActivationResult(error)
             }
         }
 

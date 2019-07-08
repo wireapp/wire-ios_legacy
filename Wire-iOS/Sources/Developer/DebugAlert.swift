@@ -62,7 +62,7 @@ import MessageUI
         ) {
 
         guard DeveloperMenuState.developerMenuEnabled() else { return }
-        guard let controller = UIApplication.shared.wr_topmostController(onlyFullScreen: false), !isShown else { return }
+        guard let controller = UIApplication.shared.topmostViewController(onlyFullScreen: false), !isShown else { return }
         isShown = true
         
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
@@ -107,7 +107,7 @@ import MessageUI
 
     /// Sends recorded logs by email
     static func sendLogsByEmail(message: String, shareWithAVS: Bool = false) {
-        guard let controller = UIApplication.shared.wr_topmostController(onlyFullScreen: false) else { return }
+        guard let controller = UIApplication.shared.topmostViewController(onlyFullScreen: false) else { return }
         guard self.senderInstance == nil else { return }
         
         let currentLog = ZMSLog.currentLog

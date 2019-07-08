@@ -18,6 +18,7 @@
 
 
 #import "ConversationListViewController.h"
+#import "StartUIViewController.h"
 
-@interface ConversationListViewController ()
+@interface ConversationListViewController (StartUI) <StartUIDelegate>
 @end

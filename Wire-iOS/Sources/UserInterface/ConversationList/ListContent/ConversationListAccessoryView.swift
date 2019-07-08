@@ -42,9 +42,7 @@ import UIKit
     @objc init(mediaPlaybackManager: MediaPlaybackManager) {
         self.mediaPlaybackManager = mediaPlaybackManager
         super.init(frame: .zero)
-        
-        self.isAccessibilityElement = true
-        
+                
         textLabel.setContentCompressionResistancePriority(UILayoutPriority.defaultHigh, for: .horizontal)
         textLabel.setContentCompressionResistancePriority(UILayoutPriority.defaultHigh, for: .vertical)
         textLabel.setContentHuggingPriority(UILayoutPriority.defaultHigh, for: .horizontal)

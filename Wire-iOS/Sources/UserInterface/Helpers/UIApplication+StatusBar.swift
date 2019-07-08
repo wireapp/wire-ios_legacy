@@ -31,7 +31,7 @@ public extension UIApplication {
         let statusBarHidden: Bool
         let statusBarStyle: UIStatusBarStyle
         
-        if let topContoller = self.wr_topmostController(onlyFullScreen: onlyFullScreen) {
+        if let topContoller = self.topmostViewController(onlyFullScreen: onlyFullScreen) {
             statusBarHidden = topContoller.prefersStatusBarHidden
             statusBarStyle = topContoller.preferredStatusBarStyle
         } else {
@@ -55,11 +55,6 @@ public extension UIApplication {
             NotificationCenter.default.post(name: type(of: self).wr_statusBarStyleChangeNotification, object: self)
         }
     }
-
-    @objc func wr_topmostViewController() -> UIViewController? {
-        return wr_topmostController()
-    }
-
 
     /// return the visible window on the top most which fulfills these conditions:
     /// 1. the windows has rootViewController
@@ -86,8 +81,13 @@ public extension UIApplication {
 
         return visibleWindow.last
     }
-    
-    func wr_topmostController(onlyFullScreen: Bool = true) -> UIViewController? {
+
+
+    /// Get the top most view controller
+    ///
+    /// - Parameter onlyFullScreen: if false, also search for all kinds of presented view controller
+    /// - Returns: the top most view controller 
+    func topmostViewController(onlyFullScreen: Bool = true) -> UIViewController? {
 
         guard let window = topMostVisibleWindow,
             var topController = window.rootViewController else {

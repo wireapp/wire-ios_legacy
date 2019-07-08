@@ -134,9 +134,10 @@ extension ZClientViewController {
         }
     }
 
-    @objc func createLegalHoldDisclosureController() {
-        legalHoldDisclosureController = LegalHoldDisclosureController(selfUser: ZMUser.selfUser(), userSession: ZMUserSession.shared(), presenter: { [weak self] viewController, animated, completion in
-            self?.present(viewController, animated: animated, completion: completion)
+    @objc
+    func createLegalHoldDisclosureController() {
+        legalHoldDisclosureController = LegalHoldDisclosureController(selfUser: ZMUser.selfUser(), userSession: ZMUserSession.shared(), presenter: { viewController, animated, completion in
+            viewController.presentTopmost(animated: animated, completion: completion)
         })
     }
     

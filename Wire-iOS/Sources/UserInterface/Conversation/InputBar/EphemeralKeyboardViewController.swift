@@ -189,7 +189,7 @@ extension UIAlertController {
     fileprivate func displayCustomPicker() {
         delegate?.ephemeralKeyboardWantsToBeDismissed(self)
         
-        UIAlertController.requestCustomTimeInterval(over: UIApplication.shared.wr_topmostController(onlyFullScreen: true)!) { [weak self] result in
+        UIAlertController.requestCustomTimeInterval(over: UIApplication.shared.topmostViewController(onlyFullScreen: true)!) { [weak self] result in
             
             guard let `self` = self else {
                 return

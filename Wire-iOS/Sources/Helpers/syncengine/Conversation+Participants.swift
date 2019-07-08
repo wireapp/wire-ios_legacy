@@ -91,7 +91,7 @@ extension ZMConversation {
                                                 message: message,
                                                 cancelButtonTitle: "general.ok".localized)
         
-        UIApplication.shared.wr_topmostController(onlyFullScreen: false)?.present(alertController, animated: true)
+        UIApplication.shared.topmostViewController(onlyFullScreen: false)?.present(alertController, animated: true)
     }
     
     private func showAlertForAdding(for error: Error) {

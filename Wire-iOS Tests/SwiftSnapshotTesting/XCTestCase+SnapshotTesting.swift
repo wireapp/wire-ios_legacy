@@ -81,12 +81,14 @@ extension XCTestCase {
     }
 
     func verify(matching value: UIViewController,
+                named name: String? = nil,
                 file: StaticString = #file,
                 testName: String = #function,
                 line: UInt = #line) {
 
         let failure = verifySnapshot(matching: value,
                                      as: .image,
+                                     named: name,
                                      snapshotDirectory: snapshotDirectory(file: file),
                                      file: file, testName: testName, line: line)
 

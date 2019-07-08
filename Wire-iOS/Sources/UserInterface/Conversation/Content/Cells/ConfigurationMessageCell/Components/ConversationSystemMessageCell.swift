@@ -684,7 +684,7 @@ class ConversationIgnoredDeviceSystemMessageCellDescription: ConversationMessage
         let attributedString = NSMutableAttributedString(string: endResult)
         attributedString.addAttributes([.font: UIFont.mediumFont, .foregroundColor: UIColor.from(scheme: .textForeground)], range:NSRange(location: 0, length: endResult.count))
         attributedString.addAttributes([.font: UIFont.mediumSemiboldFont, .foregroundColor: UIColor.from(scheme: .textForeground)], range: youRange)
-        attributedString.addAttributes([.font: UIFont.mediumFont, .link: link], range: deviceRange)
+        attributedString.addAttributes([.font: UIFont.mediumFont, .link: View.userClientURL], range: deviceRange)
         
         return  NSAttributedString(attributedString: attributedString)
     }

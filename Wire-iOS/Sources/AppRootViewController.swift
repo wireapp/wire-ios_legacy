@@ -528,7 +528,7 @@ extension AppRootViewController: SessionManagerSwitchingDelegate {
     func confirmSwitchingAccount(completion: @escaping (Bool) -> Void) {
         
         guard let session = ZMUserSession.shared(), session.isCallOngoing else { return completion(true) }
-        guard let topmostController = UIApplication.shared.wr_topmostController() else { return completion(false) }
+        guard let topmostController = UIApplication.shared.topmostViewController() else { return completion(false) }
         
         let alert = UIAlertController(title: "call.alert.ongoing.alert_title".localized,
                                       message: "self.settings.switch_account.message".localized,
@@ -659,7 +659,7 @@ extension AppRootViewController: SessionManagerURLHandlerDelegate {
                 self.present(alert, animated: true)
             }
 
-            if let topmostViewController = UIApplication.shared.wr_topmostController() as? SFSafariViewController {
+            if let topmostViewController = UIApplication.shared.topmostViewController() as? SFSafariViewController {
                 topmostViewController.dismiss(animated: true, completion: presentAlert)
             } else {
                 presentAlert()
@@ -745,7 +745,7 @@ extension AppRootViewController: SessionManagerURLHandlerDelegate {
             callback(false)
 
         case .showDismissableAlert(let title, let message, let allowStartingFlow):
-            if let controller = UIApplication.shared.wr_topmostController(onlyFullScreen: false) {
+            if let controller = UIApplication.shared.topmostViewController(onlyFullScreen: false) {
                 let alert = UIAlertController(title: title, message: message, preferredStyle: .alert )
                 let okAction = UIAlertAction(title: "general.ok".localized, style: .cancel) { _ in callback(allowStartingFlow) }
                 alert.addAction(okAction)
