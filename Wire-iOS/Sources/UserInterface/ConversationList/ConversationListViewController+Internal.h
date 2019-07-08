@@ -28,6 +28,6 @@
 @property (nonatomic, nullable) ConversationActionController *actionsController;
 
 - (void)updateBottomBarSeparatorVisibilityWithContentController:(ConversationListContentController * _Nonnull)controller;
-- (void)setSelectedConversation:(ZMConversation *)conversation;
+- (void)setSelectedConversation:(ZMConversation * _Nonnull)conversation;
 
 @end
