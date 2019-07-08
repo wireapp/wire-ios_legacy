@@ -35,6 +35,56 @@ extension Array where Element: ZMUser {
     }
 }
 
+protocol CoreDataFixed {
+    var coreDataFixture: CoreDataFixture! { get }
+    var otherUser: ZMUser! { get }
+
+    func createGroupConversation() -> ZMConversation
+}
+
+extension CoreDataFixed {
+    var otherUser: ZMUser! {
+        return coreDataFixture.otherUser
+    }
+
+    func createGroupConversation() -> ZMConversation {
+        return coreDataFixture.createGroupConversation()
+    }
+}
+
+final class ConversationAvatarViewModeTests: XCTestCase, CoreDataFixed {
+    var sut: ConversationAvatarView!
+
+    var coreDataFixture: CoreDataFixture!
+
+    override func setUp() {
+        super.setUp()
+        coreDataFixture = CoreDataFixture()
+        sut = ConversationAvatarView()
+    }
+
+    override func tearDown() {
+        sut = nil
+        coreDataFixture = nil
+        super.tearDown()
+    }
+
+    func testThatModeIsOneWhenGroupConversationWithOneServiceUser() {
+        // GIVEN
+        otherUser.serviceIdentifier = "serviceIdentifier"
+        otherUser.providerIdentifier = "providerIdentifier"
+        XCTAssert(otherUser.isServiceUser)
+
+        let conversation = createGroupConversation()
+
+        // WHEN
+        sut.configure(context: .conversation(conversation: conversation))
+
+        // THEN
+        XCTAssertEqual(sut.mode, .one(serviceUser: true))
+    }
+}
+
 final class ConversationAvatarViewTests: CoreDataSnapshotTestCase {
 
     var sut: ConversationAvatarView!
@@ -47,28 +97,6 @@ final class ConversationAvatarViewTests: CoreDataSnapshotTestCase {
     override func tearDown() {
         sut = nil
         super.tearDown()
-    }
-
-
-    //
-
-    func testThatMode() {
-        // GIVEN
-        otherUser.serviceIdentifier = "serviceIdentifier"
-        otherUser.providerIdentifier = "providerIdentifier"
-        XCTAssert(otherUser.isServiceUser)
-
-//        otherUserConversation.conversationType = .group
-//        uiMOC.saveOrRollback()
-
-        let conversation = createGroupConversation()
-
-        // WHEN
-        sut.configure(context: .conversation(conversation: conversation))
-
-        // THEN
-        XCTAssertEqual(sut.mode, .one(serviceUser: true))
-
     }
 
     func testThatItRendersNoUserImages() {
