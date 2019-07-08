@@ -38,6 +38,7 @@ extension Array where Element: ZMUser {
 protocol CoreDataFixed {
     var coreDataFixture: CoreDataFixture! { get }
     var otherUser: ZMUser! { get }
+    var selfUser: ZMUser! { get }
 
     func createGroupConversation() -> ZMConversation
 }
@@ -45,6 +46,10 @@ protocol CoreDataFixed {
 extension CoreDataFixed {
     var otherUser: ZMUser! {
         return coreDataFixture.otherUser
+    }
+
+    var selfUser: ZMUser! {
+        return coreDataFixture.selfUser
     }
 
     func createGroupConversation() -> ZMConversation {
@@ -82,6 +87,29 @@ final class ConversationAvatarViewModeTests: XCTestCase, CoreDataFixed {
 
         // THEN
         XCTAssertEqual(sut.mode, .one(serviceUser: true))
+    }
+
+    func testThatModeIsFourWhenGroupConversationWithOneUser() {
+        // GIVEN
+        let conversation = createGroupConversation()
+
+        // WHEN
+        sut.configure(context: .conversation(conversation: conversation))
+
+        // THEN
+        XCTAssertEqual(sut.mode, .four)
+    }
+
+    func testThatModeIsNoneWhenGroupConversationIsEmpty() {
+        // GIVEN
+        let conversation = createGroupConversation()
+        conversation.internalRemoveParticipants([otherUser!], sender: selfUser)
+
+        // WHEN
+        sut.configure(context: .conversation(conversation: conversation))
+
+        // THEN
+        XCTAssertEqual(sut.mode, .none)
     }
 }
 
