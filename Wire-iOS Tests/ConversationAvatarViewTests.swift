@@ -49,6 +49,28 @@ final class ConversationAvatarViewTests: CoreDataSnapshotTestCase {
         super.tearDown()
     }
 
+
+    //
+
+    func testThatMode() {
+        // GIVEN
+        otherUser.serviceIdentifier = "serviceIdentifier"
+        otherUser.providerIdentifier = "providerIdentifier"
+        XCTAssert(otherUser.isServiceUser)
+
+//        otherUserConversation.conversationType = .group
+//        uiMOC.saveOrRollback()
+
+        let conversation = createGroupConversation()
+
+        // WHEN
+        sut.configure(context: .conversation(conversation: conversation))
+
+        // THEN
+        XCTAssertEqual(sut.mode, .one(serviceUser: true))
+
+    }
+
     func testThatItRendersNoUserImages() {
         // GIVEN
         let thirdUser = ZMUser.insertNewObject(in: uiMOC)

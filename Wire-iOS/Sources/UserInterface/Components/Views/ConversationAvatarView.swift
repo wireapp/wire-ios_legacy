@@ -84,7 +84,7 @@ extension ZMConversation {
 }
 
 
-fileprivate enum Mode: Equatable {
+enum Mode: Equatable {
     /// 0 participants in conversation:
     /// /    \
     /// \    /
@@ -180,7 +180,7 @@ final public class ConversationAvatarView: UIView {
         }
     }
     
-    private var mode: Mode = .one(serviceUser: false) {
+    var mode: Mode = .one(serviceUser: false) {
         didSet {
             self.clippingView.subviews.forEach { $0.isHidden = true }
             self.userImages().forEach { $0.isHidden = false }
