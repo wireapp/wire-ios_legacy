@@ -107,13 +107,22 @@ extension Mode {
     ///   - conversationType: when conversationType is nil, it is a incoming connection request
     ///   - users: number of users involved in the conversation
     fileprivate init(conversationType: ZMConversationType? = nil, users: [UserType]) {
-        switch (conversationType, users.count) {
-        case (.group?, 1...):
-            self = .four
-        case (_, 0):
-            self = .none
-        case (_, 1):
+        let isServiceUser: Bool
+        if users.count > 0 {
+            isServiceUser = users[0].isServiceUser
+        } else {
+            isServiceUser = false
+        }
+
+        switch (conversationType, users.count, isServiceUser) {
+        case (.group?, 1, true),
+             (.oneOnOne?, _, _):
             self = .one(serviceUser: users[0].isServiceUser)
+        case (.group?, 1, false),
+             (.group?, 2..., _):
+            self = .four
+        case (_, 0, _):
+            self = .none
         default:
             self = .four
         }
