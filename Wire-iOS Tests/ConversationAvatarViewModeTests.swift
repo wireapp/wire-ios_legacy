@@ -19,28 +19,6 @@
 import XCTest
 @testable import Wire
 
-protocol CoreDataFixed {
-    var coreDataFixture: CoreDataFixture! { get }
-    var otherUser: ZMUser! { get }
-    var selfUser: ZMUser! { get }
-
-    func createGroupConversation() -> ZMConversation
-}
-
-extension CoreDataFixed {
-    var otherUser: ZMUser! {
-        return coreDataFixture.otherUser
-    }
-
-    var selfUser: ZMUser! {
-        return coreDataFixture.selfUser
-    }
-
-    func createGroupConversation() -> ZMConversation {
-        return coreDataFixture.createGroupConversation()
-    }
-}
-
 final class ConversationAvatarViewModeTests: XCTestCase, CoreDataFixed {
     var sut: ConversationAvatarView!
 
