@@ -19,7 +19,7 @@
 import XCTest
 @testable import Wire
 
-final class ConversationAvatarViewModeTests: XCTestCase, CoreDataFixed {
+final class ConversationAvatarViewModeTests: XCTestCase, CoreDataFixtureTestHelper {
     var sut: ConversationAvatarView!
 
     var coreDataFixture: CoreDataFixture!

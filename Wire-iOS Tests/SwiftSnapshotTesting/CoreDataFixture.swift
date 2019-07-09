@@ -249,7 +249,7 @@ extension CoreDataFixture {
 }
 
 
-protocol CoreDataFixed {
+protocol CoreDataFixtureTestHelper {
     var coreDataFixture: CoreDataFixture! { get }
     var otherUser: ZMUser! { get }
     var selfUser: ZMUser! { get }
@@ -259,7 +259,7 @@ protocol CoreDataFixed {
 
 
 // MARK: - default implementation for migrating CoreDataSnapshotTestCase to XCTestCase
-extension CoreDataFixed {
+extension CoreDataFixtureTestHelper {
     var otherUser: ZMUser! {
         return coreDataFixture.otherUser
     }

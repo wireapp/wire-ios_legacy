@@ -20,7 +20,7 @@ import SnapshotTesting
 import XCTest
 @testable import Wire
 
-final class CallInfoRootViewControllerSnapshotTests: XCTestCase, CoreDataFixed {
+final class CallInfoRootViewControllerSnapshotTests: XCTestCase, CoreDataFixtureTestHelper {
     var coreDataFixture: CoreDataFixture!
 
     override func setUp() {
