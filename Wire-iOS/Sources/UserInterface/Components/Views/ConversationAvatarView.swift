@@ -172,7 +172,7 @@ final public class ConversationAvatarView: UIView {
         }
     }
     
-    var mode: Mode = .one(serviceUser: false) {
+    private(set) var mode: Mode = .one(serviceUser: false) {
         didSet {
             self.clippingView.subviews.forEach { $0.isHidden = true }
             self.userImages().forEach { $0.isHidden = false }
