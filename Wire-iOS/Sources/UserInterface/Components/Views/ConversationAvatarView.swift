@@ -84,7 +84,7 @@ extension ZMConversation {
 }
 
 
-fileprivate enum Mode: Equatable {
+enum Mode: Equatable {
     /// 0 participants in conversation:
     /// /    \
     /// \    /
@@ -107,12 +107,13 @@ extension Mode {
     ///   - conversationType: when conversationType is nil, it is a incoming connection request
     ///   - users: number of users involved in the conversation
     fileprivate init(conversationType: ZMConversationType? = nil, users: [UserType]) {
-        switch (conversationType, users.count) {
-        case (.group?, 1...):
-            self = .four
-        case (_, 0):
+        switch (users.count, conversationType) {
+        case (0, _):
             self = .none
-        case (_, 1):
+        case (1, .group?):
+            let isServiceUser = users[0].isServiceUser
+            self = isServiceUser ? .one(serviceUser: isServiceUser) : .four
+        case (1, _):
             self = .one(serviceUser: users[0].isServiceUser)
         default:
             self = .four
@@ -171,7 +172,7 @@ final public class ConversationAvatarView: UIView {
         }
     }
     
-    private var mode: Mode = .one(serviceUser: false) {
+    private(set) var mode: Mode = .one(serviceUser: false) {
         didSet {
             self.clippingView.subviews.forEach { $0.isHidden = true }
             self.userImages().forEach { $0.isHidden = false }
