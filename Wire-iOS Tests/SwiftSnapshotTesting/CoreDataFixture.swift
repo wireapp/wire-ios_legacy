@@ -255,6 +255,7 @@ protocol CoreDataFixtureTestHelper {
     var selfUser: ZMUser! { get }
 
     func createGroupConversation() -> ZMConversation
+    func createTeamGroupConversation() -> ZMConversation
 }
 
 
@@ -270,5 +271,9 @@ extension CoreDataFixtureTestHelper {
 
     func createGroupConversation() -> ZMConversation {
         return coreDataFixture.createGroupConversation()
+    }
+
+    func createTeamGroupConversation() -> ZMConversation {
+        return coreDataFixture.createTeamGroupConversation()
     }
 }
