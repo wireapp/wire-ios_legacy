@@ -58,7 +58,7 @@ enum LegalHoldAlertFactory {
 
                 let alert = UIAlertController.alertWithOKButton(
                     title: "legalhold_request.alert.error_wrong_password".localized,
-                    message: "legalhold_request.alert.error_wrong_password".localized,
+                    message: "general.failure.try_again".localized,
                     okActionHandler: { _ in suggestedStateChangeHandler?(.warningAboutPendingRequest(legalHoldRequest)) }
                 )
 
