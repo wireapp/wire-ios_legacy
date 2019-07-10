@@ -186,6 +186,7 @@ extension SettingsCellDescriptorFactory {
         
         if context.canEvaluatePolicy(LAPolicy.deviceOwnerAuthentication, error: &error) {
             let lockApp = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.lockApp))
+            lockApp.settingsProperty.enabled = !AppLockRules.shared.forceAppLock
             let section = SettingsSectionDescriptor(cellDescriptors: [lockApp], footer: appLockSectionSubtitle)
             cellDescriptors.append(section)
         }
@@ -203,7 +204,9 @@ extension SettingsCellDescriptorFactory {
     }
     
     private var appLockSectionSubtitle: String {
-        let lockDescription = "self.settings.privacy_security.lock_app.subtitle.lock_description".localized
+        let timeout = TimeInterval(AppLockRules.shared.timeout)
+        guard let amount = SettingsCellDescriptorFactory.appLockFormatter.string(from: timeout) else { return "" }
+        let lockDescription = "self.settings.privacy_security.lock_app.subtitle.lock_description".localized(args: amount)
         let typeKey: String = {
             switch AuthenticationType.current {
             case .none: return "self.settings.privacy_security.lock_app.subtitle.none"
@@ -272,5 +275,11 @@ extension SettingsCellDescriptorFactory {
         return SettingsGroupCellDescriptor(items: [section], title: property.propertyName.settingsPropertyLabelText, identifier: nil, previewGenerator: preview)
     }
     
-
+    static var appLockFormatter: DateComponentsFormatter {
+        let formatter = DateComponentsFormatter()
+        formatter.unitsStyle = .full
+        formatter.allowedUnits = [.day, .hour, .minute, .second]
+        formatter.zeroFormattingBehavior = .dropAll
+        return formatter
+    }
 }
