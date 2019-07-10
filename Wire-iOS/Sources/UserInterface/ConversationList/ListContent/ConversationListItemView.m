@@ -109,6 +109,7 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
     self.labelsStack.axis = UILayoutConstraintAxisVertical;
     self.labelsStack.alignment = UIStackViewAlignmentLeading;
     self.labelsStack.distribution = UIStackViewDistributionFill;
+    self.labelsStack.isAccessibilityElement = true;
 }
 
 - (void)createContentStack

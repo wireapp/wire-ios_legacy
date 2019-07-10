@@ -43,7 +43,7 @@ final class ConnectRequestsCell : UICollectionViewCell {
         }
 
         setNeedsUpdateConstraints()
-        setupAccessbility(accessibilityIdentifier: "conversation_name")
+        accessibilityIdentifier = "conversation_name"
     }
 
     override func updateConstraints() {
@@ -109,28 +109,5 @@ final class ConnectRequestsCell : UICollectionViewCell {
 extension ConnectRequestsCell: ZMConversationListObserver {
     func conversationListDidChange(_ changeInfo: ConversationListChangeInfo) {
         updateAppearance()
-    }
-}
-
-////MARK: - accessibility
-extension ConnectRequestsCell {
-    override var accessibilityValue: String? {
-        get {
-            return itemView.rightAccessory.accessibilityValue
-        }
-
-        set {
-            itemView.rightAccessory.accessibilityValue = newValue;
-        }
-    }
-
-    override var accessibilityLabel: String? {
-        get {
-            return itemView.titleField.accessibilityLabel
-        }
-
-        set {
-            itemView.titleField.accessibilityLabel = newValue;
-        }
     }
 }
