@@ -102,7 +102,7 @@ public struct AppLockRules: Decodable {
     public let timeout: UInt
     
     /// The shared rule set.
-    public static let shared: AppLockRules = {
+    public static var shared: AppLockRules = {
         let fileURL = Bundle.main.url(forResource: "applock", withExtension: "json")!
         let fileData = try! Data(contentsOf: fileURL)
         let decoder = JSONDecoder()
