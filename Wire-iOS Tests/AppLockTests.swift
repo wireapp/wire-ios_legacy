@@ -27,12 +27,11 @@ class AppLockTests: XCTestCase {
     func testThatForcedAppLockDoesntAffectSettings() {
 
         //given
-        let fileData = "{\"forceAppLock\":true,\"timeout\":900}".data(using: .utf8)!
-        AppLockRules.shared = try! decoder.decode(AppLockRules.self, from: fileData)
+        AppLock.rules = AppLockRules(forceAppLock: true, timeout: 900)
         
         //when
-        XCTAssertTrue(AppLockRules.shared.forceAppLock)
-        XCTAssertEqual(AppLockRules.shared.timeout, 900)
+        XCTAssertTrue(AppLock.rules.forceAppLock)
+        XCTAssertEqual(AppLock.rules.timeout, 900)
         
         //then
         XCTAssertTrue(AppLock.isActive)
@@ -45,12 +44,11 @@ class AppLockTests: XCTestCase {
     func testThatAppLockAffectsSettings() {
         
         //given
-        let fileData = "{\"forceAppLock\":false,\"timeout\":10}".data(using: .utf8)!
-        AppLockRules.shared = try! decoder.decode(AppLockRules.self, from: fileData)
+        AppLock.rules = AppLockRules(forceAppLock: false, timeout: 10)
         
         //when
-        XCTAssertFalse(AppLockRules.shared.forceAppLock)
-        XCTAssertEqual(AppLockRules.shared.timeout, 10)
+        XCTAssertFalse(AppLock.rules.forceAppLock)
+        XCTAssertEqual(AppLock.rules.timeout, 10)
         
         //then
         AppLock.isActive = false
@@ -63,10 +61,9 @@ class AppLockTests: XCTestCase {
     func testThatCustomTimeoutRequiresAuthenticationAfterExpiration() {
         
         //given
-        let fileData = "{\"forceAppLock\":false,\"timeout\":900}".data(using: .utf8)!
-        AppLockRules.shared = try! decoder.decode(AppLockRules.self, from: fileData)
+        AppLock.rules = AppLockRules(forceAppLock: false, timeout: 900)
         AppLock.isActive = true
-        AppLock.lastUnlockedDate = Date(timeIntervalSinceNow: -Double(AppLockRules.shared.timeout)-100)
+        AppLock.lastUnlockedDate = Date(timeIntervalSinceNow: -Double(AppLock.rules.timeout)-100)
         
         let appLockVC = AppLockViewController.shared
         
@@ -88,8 +85,7 @@ class AppLockTests: XCTestCase {
     func testThatCustomTimeoutDoesntRequireAuthenticationBeforeExpiration() {
         
         //given
-        let fileData = "{\"forceAppLock\":false,\"timeout\":900}".data(using: .utf8)!
-        AppLockRules.shared = try! decoder.decode(AppLockRules.self, from: fileData)
+        AppLock.rules = AppLockRules(forceAppLock: false, timeout: 900)
         AppLock.isActive = true
         AppLock.lastUnlockedDate = Date(timeIntervalSinceNow: -10)
         
@@ -107,4 +103,14 @@ class AppLockTests: XCTestCase {
         waitForExpectations(timeout: 2.0, handler: nil)
     }
     
+    func testThatAppLockRulesObjectIsDecodedCorrectly() {
+        //given
+        let json = "{\"forceAppLock\":true,\"timeout\":900}"
+        //when
+        let sut = AppLockRules.fromData(json.data(using: .utf8)!)
+        //then
+        XCTAssertTrue(sut.forceAppLock)
+        XCTAssertEqual(sut.timeout, 900)
+    }
+
 }

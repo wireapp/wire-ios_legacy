@@ -133,7 +133,7 @@ extension Notification.Name {
         
         // The app was authenticated at least N seconds ago
         let timeSinceAuth = -lastAuthDate.timeIntervalSinceNow
-        if timeSinceAuth >= 0 && timeSinceAuth < Double(AppLockRules.shared.timeout) {
+        if timeSinceAuth >= 0 && timeSinceAuth < Double(AppLock.rules.timeout) {
             callback(true)
             return
         }

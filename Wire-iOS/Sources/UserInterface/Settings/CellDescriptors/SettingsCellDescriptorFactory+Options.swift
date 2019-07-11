@@ -186,7 +186,7 @@ extension SettingsCellDescriptorFactory {
         
         if context.canEvaluatePolicy(LAPolicy.deviceOwnerAuthentication, error: &error) {
             let lockApp = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.lockApp))
-            lockApp.settingsProperty.enabled = !AppLockRules.shared.forceAppLock
+            lockApp.settingsProperty.enabled = !AppLock.rules.forceAppLock
             let section = SettingsSectionDescriptor(cellDescriptors: [lockApp], footer: appLockSectionSubtitle)
             cellDescriptors.append(section)
         }
@@ -204,7 +204,7 @@ extension SettingsCellDescriptorFactory {
     }
     
     private var appLockSectionSubtitle: String {
-        let timeout = TimeInterval(AppLockRules.shared.timeout)
+        let timeout = TimeInterval(AppLock.rules.timeout)
         guard let amount = SettingsCellDescriptorFactory.appLockFormatter.string(from: timeout) else { return "" }
         let lockDescription = "self.settings.privacy_security.lock_app.subtitle.lock_description".localized(args: amount)
         let typeKey: String = {

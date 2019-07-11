@@ -22,9 +22,12 @@ import LocalAuthentication
 
 public class AppLock {
     // Returns true if user enabled the app lock feature.
+    
+    public static var rules = AppLockRules.fromBundle()
+    
     public static var isActive: Bool {
         get {
-            guard !AppLockRules.shared.forceAppLock else { return true }
+            guard !rules.forceAppLock else { return true }
             guard let data = ZMKeychain.data(forAccount: SettingsPropertyName.lockApp.rawValue),
                 data.count != 0 else {
                     return false
@@ -33,7 +36,7 @@ public class AppLock {
             return String(data: data, encoding: .utf8) == "YES"
         }
         set {
-            guard !AppLockRules.shared.forceAppLock else { return }
+            guard !rules.forceAppLock else { return }
             let data = (newValue ? "YES" : "NO").data(using: .utf8)!
             ZMKeychain.setData(data, forAccount: SettingsPropertyName.lockApp.rawValue)
         }
@@ -101,11 +104,14 @@ public struct AppLockRules: Decodable {
     public let forceAppLock: Bool
     public let timeout: UInt
     
-    /// The shared rule set.
-    public static var shared: AppLockRules = {
+    public static func fromBundle() -> AppLockRules {
         let fileURL = Bundle.main.url(forResource: "applock", withExtension: "json")!
         let fileData = try! Data(contentsOf: fileURL)
+        return fromData(fileData)
+    }
+    
+    public static func fromData(_ data: Data) -> AppLockRules {
         let decoder = JSONDecoder()
-        return try! decoder.decode(AppLockRules.self, from: fileData)
-    }()
+        return try! decoder.decode(AppLockRules.self, from: data)
+    }
 }
