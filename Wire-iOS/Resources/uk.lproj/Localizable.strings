@@ -27,10 +27,11 @@
 "general.edit" = "Редагувати";
 "general.done" = "Готово";
 "general.confirm" = "OK";
-"general.skip" = "Не зараз";
+"general.skip" = "Not Now";
 "general.accept" = "Прийняти";
 "general.decline" = "Ні, дякую";
 "general.failure" = "Щось пішло не так";
+"general.failure.try_again" = "Please try again.";
 "general.service" = "Сервіс";
 "general.off" = "Вимкнений";
 "general.on" = "Увімк.";
@@ -41,6 +42,9 @@
 "general.space_between_words" = " ";
 
 "general.guest-room-name" = "Гостьова кімната";
+
+// User Cell
+"user_cell.title.you_suffix" = " (Ви)";
 
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -200,6 +204,9 @@
 "list.archived_conversations_close" = "Закрити архів";
 
 "conversation.voiceover.verified" = "верифіковано";
+"conversation.voiceover.legalhold" = "правовий захист";
+"conversation.voiceover.value.active" = "активне";
+"conversation.voiceover.value.disabled" = "вимкнене";
 
 "conversation.status.typing" = "Набирається повідомлення…";
 "conversation.status.typing.group" = "%@: набирає повідомлення…";
@@ -301,6 +308,8 @@
 "conversation.input_bar.ongoing_call_alert.audio.message" = "Ви не можете записувати аудіо під час дзвінка.";
 "conversation.input_bar.ongoing_call_alert.video.message" = "Ви не можете записувати відео під час дзвінка.";
 "conversation.input_bar.ongoing_call_alert.photo.message" = "Ви не можете фотографувати під час дзвінка.";
+
+"conversation.alert.message_deleted" = "The message is deleted.";
 
 "conversation.guests_present" = "Присутні гості";
 "conversation.services_present" = "Сервіси активовані";
@@ -461,6 +470,14 @@
 
 "content.system.message_read_receipt_on_add_to_group" = "Звіти про перегляд увімкнені";
 
+// legal hold
+
+"content.system.message_legal_hold.enabled" = "Дана розмова знаходиться під правовим захистом";
+"content.system.message_legal_hold.disabled" = "Для даної розмови правовий захист деактивовано";
+
+"content.system.message_legal_hold.learn_more" = "Дізнатися більше";
+
+//
 
 "content.system.reactivated_device" = "Ви почали використовувати %@ знову. Повідомлення, надіслані поки ви не користувалися ним, не з'являться тут.";
 
@@ -711,10 +728,13 @@
 // Conversation Degraded (security level lowered)
 "meta.degraded.degradation_reason_message.singular" = "%@ почав(-ла) використовувати новий пристрій.";
 "meta.degraded.degradation_reason_message.plural" = "%@ почав(-ла) використовувати нові пристрої.";
+"meta.degraded.degradation_reason_message.someone" = "Хтось почав використовувати новий пристрій.";
 "meta.degraded.dialog_message" = "Усе одно надіслати ваше повідомлення?";
-"meta.degraded.show_device_button" = "Показати пристрій";
+"meta.degraded.verify_devices_button" = "Верифікуйте пристрої…";
 "meta.degraded.send_anyway_button" = "Все одно надіслати";
 "meta.degraded.cancel_sending_button" = "Скасувати";
+"meta.legalhold.info_button" = "Що таке правовий захист?";
+"meta.legalhold.send_alert_title" = "Дана розмова тепер знаходиться під правовим захистом.";
 
 // Remove from conversation dialogue
 "profile.remove_dialog_title" = "Видалити?";
@@ -786,12 +806,20 @@
 "profile.devices.detail.verify_message" = "Переконайтеся, що цей ідентифікатор співпадає з ідентифікатором на пристрої користувача %@.";
 "profile.devices.detail.verify_message.link" = "Як це зробити?";
 "profile.devices.detail.show_my_device.title" = "Показати ідентиф. мого пристрою";
+"profile.devices.detail.reset_session.title" = "Скидання сесії";
 "device.verified" = "Верифікований";
 "device.not_verified" = "Не верифікований";
+
+"device.class.legalhold" = "Правовий захист";
 "device.class.desktop" = "Настільний ПК";
 "device.class.tablet" = "Планшет";
 "device.class.phone" = "Телефон";
-"profile.devices.detail.reset_session.title" = "Скидання сесії";
+"device.class.unknown" = "Невідомо";
+
+"device.type.permanent" = "Постійний";
+"device.type.temporary" = "Тимчасовий";
+"device.type.legalhold" = "Правовий захист";
+"device.type.unknown" = "Невідомо";
 
 // Bot
 "participants.services.remove_integration.button" = "видалити інтеграцію";
@@ -805,6 +833,15 @@
 "group_details.notification_options_cell.description" = "Ви можете отримувати нотифікації про всі події (включаючи аудіо- і відеодзвінки), або тільки тоді, коли хтось згадує вас або відповідає на одне з ваших повідомлень.";
 "group_details.receipt_options_cell.title" = "Звіти про перегляд";
 "group_details.receipt_options_cell.description" = "Якщо ця опція увімкнена, учасники розмови можуть бачити, коли їхні повідомлення в цій розмові були переглянуті.";
+
+// Legal hold details
+
+"legalhold.participants.section.title" = "Суб'єкти правового захисту";
+"legalhold.header.title" = "Правовий захист";
+"legalhold.header.other_description" = "В даній розмові правовий захист активовано, як мінімум, для одного учасника.\nВсі повідомлення будуть збережені для доступу в майбутньому, включно з видаленими та тимчасованими повідомленнями.";
+"legalhold.header.self_description" = "Правовий захист було активовано для вашого акаунту.\nВсі повідомлення будуть збережені для доступу в майбутньому, включно з видаленими та тимчасованими повідомленнями.\nВаші співрозмовники будуть повідомлені про це.";
+"legalhold.accessibility" = "Подробиці правового захисту";
+
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile
@@ -1060,8 +1097,8 @@
 
 "self.settings.advanced.title" = "Розширені налаштування";
 "self.settings.advanced.troubleshooting.title" = "Усунення неполадок";
-"self.settings.advanced.troubleshooting.submit_debug.title" = "Звіт для налагодження дзвінків";
-"self.settings.advanced.troubleshooting.submit_debug.subtitle" = "Ця інформація допомагає відділу підтримки Wire діагностувати проблеми, пов'язані з дзвінками.";
+"self.settings.advanced.troubleshooting.submit_debug.title" = "Debug Report";
+"self.settings.advanced.troubleshooting.submit_debug.subtitle" = "This information helps Wire Support diagnose calling problems and improve the overall app experience.";
 "self.settings.advanced.reset_push_token.title" = "Оновити Push-токен для сповіщень";
 "self.settings.advanced.reset_push_token.subtitle" = "Якщо у вас виникли проблеми з push-сповіщеннями, команда підтримки Wire може попросити вас виконати скидання цього токену.";
 "self.settings.advanced.reset_push_token_alert.title" = "Push-токен був оновлений";
@@ -1074,7 +1111,7 @@
 // Technical Report
 "self.settings.technical_report_section.title" = "Технічний звіт";
 "self.settings.technical_report.send_report" = "Надіслати звіт до Wire";
-"self.settings.technical_report.mail.subject" = "Wire звіт про дзвінок";
+"self.settings.technical_report.mail.subject" = "Wire Debug Report";
 "self.settings.technical_report.include_log" = "Включити детальний журнал логів";
 "self.settings.technical_report.privacy_warning" = "Детальні логи можуть містити персональні дані";
 "self.settings.technical_report.no_mail_alert" = "Не виявлено жодного поштового клієнту. Натисніть \"ОК\" та надішліть логи вручну на: ";
@@ -1610,3 +1647,25 @@
 // Password Rules
 "registration.password.rules.no_requirements" = "Використовувати %@.";
 "registration.password.rules.with_requirements" = "Використовувати %@, включно з %@.";
+
+// Legal Hold Deactivation
+"legal_hold.deactivated.title" = "Legal Hold Deactivated";
+"legal_hold.deactivated.message" = "Future messages will not be recorded.";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Share Extension
+"share_extension.voiceover.conversation_under_legal_hold" = "Під правовим захистом.";
+"share_extension.voiceover.conversation_secure" = "Всі учасники верифіковані.";
+"share_extension.voiceover.conversation_secure_with_ignored" = "Не всі учасники були верифіковані.";
+
+// Legal hold - alert
+"legalhold_request.button.accessibility" = "Pending approval.";
+"legalhold_request.alert.title" = "Legal Hold Requested";
+"legalhold_request.alert.detail" = "All future messages will be recorded by the device with fingerprint:\n\n%@\n\nThis includes deleted, edited, and timed messages in all conversations.";
+"legalhold_request.alert.detail.enter_password" = "Enter your password to confirm.";
+"legalhold_request.alert.error_wrong_password" = "Невірний пароль";
+
+// Legal hold activated
+"legalhold_active.alert.title" = "Legal Hold is Active";
+"legalhold_active.alert.learn_more" = "Дізнатися більше";
+"legalhold_active.alert.message" = "Legal Hold has been activated for your account. All messages will be preserved for future access, including deleted, edited, and timed messages.\n\nYour conversation partners will be aware of the recording.";

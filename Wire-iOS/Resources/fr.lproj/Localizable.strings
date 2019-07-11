@@ -27,10 +27,11 @@
 "general.edit" = "Modifier";
 "general.done" = "Terminé";
 "general.confirm" = "OK";
-"general.skip" = "Pas maintenant";
+"general.skip" = "Pas Maintenant";
 "general.accept" = "Accepter";
 "general.decline" = "Non merci";
 "general.failure" = "Une erreur est survenue";
+"general.failure.try_again" = "Veuillez réessayer.";
 "general.service" = "Service";
 "general.off" = "Désactivé";
 "general.on" = "Activé";
@@ -41,6 +42,9 @@
 "general.space_between_words" = " ";
 
 "general.guest-room-name" = "Espace invité";
+
+// User Cell
+"user_cell.title.you_suffix" = " (Vous)";
 
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -200,6 +204,9 @@
 "list.archived_conversations_close" = "Fermer les archives";
 
 "conversation.voiceover.verified" = "vérifié";
+"conversation.voiceover.legalhold" = "legal hold";
+"conversation.voiceover.value.active" = "active";
+"conversation.voiceover.value.disabled" = "disabled";
 
 "conversation.status.typing" = "Écrit un message…";
 "conversation.status.typing.group" = "%@ : tape un message…";
@@ -301,6 +308,8 @@
 "conversation.input_bar.ongoing_call_alert.audio.message" = "Vous ne pouvez pas enregistrer de message audio pendant un appel.";
 "conversation.input_bar.ongoing_call_alert.video.message" = "Vous ne pouvez pas enregistrer de vidéo pendant un appel.";
 "conversation.input_bar.ongoing_call_alert.photo.message" = "Vous ne pouvez pas prendre de photos pendant un appel.";
+
+"conversation.alert.message_deleted" = "The message is deleted.";
 
 "conversation.guests_present" = "Des invités sont présents";
 "conversation.services_present" = "Les services sont actifs";
@@ -461,6 +470,14 @@
 
 "content.system.message_read_receipt_on_add_to_group" = "Les accusés de lecture son activés";
 
+// legal hold
+
+"content.system.message_legal_hold.enabled" = "This conversation is under legal hold";
+"content.system.message_legal_hold.disabled" = "Legal hold deactivated for this conversation";
+
+"content.system.message_legal_hold.learn_more" = "En savoir plus";
+
+//
 
 "content.system.reactivated_device" = "Vous avez recommencé à utiliser %@. Les messages envoyés entre-temps n’apparaîtront pas ici.";
 
@@ -711,10 +728,13 @@
 // Conversation Degraded (security level lowered)
 "meta.degraded.degradation_reason_message.singular" = "%@ utilise un nouvel appareil.";
 "meta.degraded.degradation_reason_message.plural" = "%@ utilisent de nouveaux appareils.";
+"meta.degraded.degradation_reason_message.someone" = "Quelqu'un utilise un nouvel appareil.";
 "meta.degraded.dialog_message" = "Voulez-vous quand même envoyer votre message ?";
-"meta.degraded.show_device_button" = "Afficher l'appareil";
-"meta.degraded.send_anyway_button" = "Envoyer quand même";
+"meta.degraded.verify_devices_button" = "Verify Devices…";
+"meta.degraded.send_anyway_button" = "Send Anyway";
 "meta.degraded.cancel_sending_button" = "Annuler";
+"meta.legalhold.info_button" = "What Is Legal Hold?";
+"meta.legalhold.send_alert_title" = "The conversation is now subject to legal hold.";
 
 // Remove from conversation dialogue
 "profile.remove_dialog_title" = "Supprimer ?";
@@ -786,12 +806,20 @@
 "profile.devices.detail.verify_message" = "Vérifiez que cela correspond à l'empreinte affichée sur l'appareil de %@.";
 "profile.devices.detail.verify_message.link" = "Comment faire ?";
 "profile.devices.detail.show_my_device.title" = "Afficher l'empreinte de mon appareil";
+"profile.devices.detail.reset_session.title" = "Réinitialiser la session";
 "device.verified" = "Vérifié";
 "device.not_verified" = "Non vérifié";
+
+"device.class.legalhold" = "Legal Hold";
 "device.class.desktop" = "Ordinateur";
 "device.class.tablet" = "Tablette";
 "device.class.phone" = "Téléphone";
-"profile.devices.detail.reset_session.title" = "Réinitialiser la session";
+"device.class.unknown" = "Unknown";
+
+"device.type.permanent" = "Permanent";
+"device.type.temporary" = "Temporary";
+"device.type.legalhold" = "Legal Hold";
+"device.type.unknown" = "Unknown";
 
 // Bot
 "participants.services.remove_integration.button" = "supprimer le service";
@@ -805,6 +833,15 @@
 "group_details.notification_options_cell.description" = "Vous pouvez être notifié pour tout (y compris les appels audio et vidéo) ou seulement quand quelqu'un vous mentionne ou répond à un de vos messages.";
 "group_details.receipt_options_cell.title" = "Accusés de lecture";
 "group_details.receipt_options_cell.description" = "Quand cette option est activée, les participants peuvent voir quand leurs messages ont été lus dans cette conversation.";
+
+// Legal hold details
+
+"legalhold.participants.section.title" = "Legal hold subjects";
+"legalhold.header.title" = "Legal Hold";
+"legalhold.header.other_description" = "Legal Hold has been activated for at least one person in this conversation.\nAll messages will be preserved for future access, including deleted, edited, and timed messages.";
+"legalhold.header.self_description" = "Legal Hold has been activated for your account.\nAll messages will be preserved for future access, including deleted, edited, and timed messages.\nYour conversation partners will be aware of the recording.";
+"legalhold.accessibility" = "Legal hold details";
+
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile
@@ -1060,8 +1097,8 @@
 
 "self.settings.advanced.title" = "Avancé";
 "self.settings.advanced.troubleshooting.title" = "Dépannage";
-"self.settings.advanced.troubleshooting.submit_debug.title" = "Rapports de débogage pour les appels";
-"self.settings.advanced.troubleshooting.submit_debug.subtitle" = "Cette information aide l'assistance de Wire à diagnostiquer les problèmes d'appel.";
+"self.settings.advanced.troubleshooting.submit_debug.title" = "Debug Report";
+"self.settings.advanced.troubleshooting.submit_debug.subtitle" = "This information helps Wire Support diagnose calling problems and improve the overall app experience.";
 "self.settings.advanced.reset_push_token.title" = "Réinitialiser le jeton des notifications Push";
 "self.settings.advanced.reset_push_token.subtitle" = "Si vous rencontrez des problèmes avec les notifications push, l'assistance de Wire peut vous demander de réinitialiser ce jeton.";
 "self.settings.advanced.reset_push_token_alert.title" = "Le jeton pour les notifications Push a été réinitialisé";
@@ -1074,7 +1111,7 @@
 // Technical Report
 "self.settings.technical_report_section.title" = "Rapport technique";
 "self.settings.technical_report.send_report" = "Envoyer le rapport à Wire";
-"self.settings.technical_report.mail.subject" = "Rapport d'appel de Wire";
+"self.settings.technical_report.mail.subject" = "Wire Debug Report";
 "self.settings.technical_report.include_log" = "Inclure le rapport détaillé";
 "self.settings.technical_report.privacy_warning" = "Les rapports détaillés pourraient contenir des données personnelles";
 "self.settings.technical_report.no_mail_alert" = "Aucun client de messagerie détecté. Appuyez sur \"OK\" et envoyer les enregistrements manuellement à : ";
@@ -1610,3 +1647,25 @@
 // Password Rules
 "registration.password.rules.no_requirements" = "Utilisez %@.";
 "registration.password.rules.with_requirements" = "Utilisez %@, avec %@.";
+
+// Legal Hold Deactivation
+"legal_hold.deactivated.title" = "Legal Hold Deactivated";
+"legal_hold.deactivated.message" = "Future messages will not be recorded.";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Share Extension
+"share_extension.voiceover.conversation_under_legal_hold" = "Under legal hold.";
+"share_extension.voiceover.conversation_secure" = "All clients verified.";
+"share_extension.voiceover.conversation_secure_with_ignored" = "Not all clients verified.";
+
+// Legal hold - alert
+"legalhold_request.button.accessibility" = "Pending approval.";
+"legalhold_request.alert.title" = "Legal Hold Requested";
+"legalhold_request.alert.detail" = "All future messages will be recorded by the device with fingerprint:\n\n%@\n\nThis includes deleted, edited, and timed messages in all conversations.";
+"legalhold_request.alert.detail.enter_password" = "Enter your password to confirm.";
+"legalhold_request.alert.error_wrong_password" = "Mot de passe incorrect";
+
+// Legal hold activated
+"legalhold_active.alert.title" = "Legal Hold is Active";
+"legalhold_active.alert.learn_more" = "En savoir plus";
+"legalhold_active.alert.message" = "Legal Hold has been activated for your account. All messages will be preserved for future access, including deleted, edited, and timed messages.\n\nYour conversation partners will be aware of the recording.";

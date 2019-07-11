@@ -27,10 +27,11 @@
 "general.edit" = "Taisa";
 "general.done" = "Baigta";
 "general.confirm" = "GERAI";
-"general.skip" = "Vėliau";
+"general.skip" = "Not Now";
 "general.accept" = "Priimti";
 "general.decline" = "Ne, dėkui";
 "general.failure" = "Kažkas atsitiko";
+"general.failure.try_again" = "Please try again.";
 "general.service" = "Paslauga";
 "general.off" = "Išjungta";
 "general.on" = "Įjungta";
@@ -41,6 +42,9 @@
 "general.space_between_words" = " ";
 
 "general.guest-room-name" = "Svečių kambarys";
+
+// User Cell
+"user_cell.title.you_suffix" = " (jūs)";
 
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -200,6 +204,9 @@
 "list.archived_conversations_close" = "Uždaryti archyvą";
 
 "conversation.voiceover.verified" = "patvirtintas";
+"conversation.voiceover.legalhold" = "sulaikyta teisiškai";
+"conversation.voiceover.value.active" = "aktyvus";
+"conversation.voiceover.value.disabled" = "išjungtas";
 
 "conversation.status.typing" = "Rašo žinutę…";
 "conversation.status.typing.group" = "%@: rašo žinutę…";
@@ -207,7 +214,7 @@
 "conversation.status.poor_connection" = "Prastas ryšys";
 "conversation.status.blocked" = "Užblokuotas(-a)";
 "conversation.status.incoming_call" = "%@ skambina…";
-"conversation.status.incoming_call.unknown" = "Someone is calling…";
+"conversation.status.incoming_call.unknown" = "Kažkas skambina…";
 
 "conversation.status.message.text" = "%@";
 "conversation.status.message.link" = "Pasidalino nuoroda";
@@ -302,6 +309,8 @@
 "conversation.input_bar.ongoing_call_alert.video.message" = "Kol kalbate, vaizdo pranešimo įrašyti negalite.";
 "conversation.input_bar.ongoing_call_alert.photo.message" = "Kol kalbate, fotografuoti negalite.";
 
+"conversation.alert.message_deleted" = "The message is deleted.";
+
 "conversation.guests_present" = "Yra svečių";
 "conversation.services_present" = "Tarnybos aktyvios";
 "conversation.guests_services_present" = "Yra svečių ir paslaugų";
@@ -390,9 +399,9 @@
 
 // Link attachment messages
 
-"content.message.link_attachment.accessibility_label.youtube" = "YouTube video preview";
-"content.message.link_attachment.accessibility_label.soundcloud_song" = "SoundCloud song preview";
-"content.message.link_attachment.accessibility_label.soundcloud_set" = "SoundCloud playlist preview";
+"content.message.link_attachment.accessibility_label.youtube" = "„YouTube“ vaizdo peržiūra";
+"content.message.link_attachment.accessibility_label.soundcloud_song" = "„SoundCloud“ dainos perklausa";
+"content.message.link_attachment.accessibility_label.soundcloud_set" = "„SoundCloud“ grojaraščio perklausa";
 
 // New conversation participants added / removed / started system message
 
@@ -461,6 +470,14 @@
 
 "content.system.message_read_receipt_on_add_to_group" = "Perskaitymo patvirtinimai įjungti";
 
+// legal hold
+
+"content.system.message_legal_hold.enabled" = "Šis susirašinėjimas yra teisiškai sulaikytas";
+"content.system.message_legal_hold.disabled" = "Šio susirašinėjimo teisinis sulaikymas atšauktas";
+
+"content.system.message_legal_hold.learn_more" = "Sužinoti daugiau";
+
+//
 
 "content.system.reactivated_device" = "Vėl pradėjote naudotis „%@“. Žinutės parašytos įrenginio nenaudojimo laikotarpiu čia neatsiras.";
 
@@ -585,9 +602,9 @@
 "voice.cancel_button.title" = "Atsisakyti";
 "voice.call_button.title" = "Skambutis";
 "voice.end_call_button.title" = "Baigti pokalbį";
-"voice.call_error.unsupported_version.title" = "Please update Wire";
-"voice.call_error.unsupported_version.message" = "You received a call that isn't supported by this version of Wire.\nGet the latest version in the App Store.";
-"voice.call_error.unsupported_version.dismiss" = "Later";
+"voice.call_error.unsupported_version.title" = "Atnaujinkite „Wire“";
+"voice.call_error.unsupported_version.message" = "Jums skambina, bet ši „Wire“ versija skambinimo nepalaiko.\nNaujausią versiją gaukite „App Store“.";
+"voice.call_error.unsupported_version.dismiss" = "Vėliau";
 
 "voice.alert.call_in_progress.title" = "Vykstantis pokalbis";
 "voice.alert.call_in_progress.message" = "Vienu metu gali vykti tik vienas skambutis";
@@ -683,7 +700,7 @@
 "meta.menu.mark_read" = "Žymėti kaip skaitytą";
 "shortcut.mark_all_as_read.title" = "Žymėti visus kaip skaitytus";
 "meta.menu.configure_notifications" = "Pranešimai…";
-"meta.menu.open_self_profile" = "Open Profile";
+"meta.menu.open_self_profile" = "Atverti profilį";
 
 // Delete conversation
 "meta.menu.delete_content.dialog_title" = "Ištrinti turinį?";
@@ -711,10 +728,13 @@
 // Conversation Degraded (security level lowered)
 "meta.degraded.degradation_reason_message.singular" = "%@ pradėjo naudotis nauju įrenginiu.";
 "meta.degraded.degradation_reason_message.plural" = "%@ pradėjo naudotis naujais įrenginiais.";
+"meta.degraded.degradation_reason_message.someone" = "Kažkas pradėjo naudotis nauju įrenginiu.";
 "meta.degraded.dialog_message" = "Ar vis dar norite išsiųsti savo žinutę?";
-"meta.degraded.show_device_button" = "Rodyti įrenginį";
+"meta.degraded.verify_devices_button" = "Patvirtinti įrenginius…";
 "meta.degraded.send_anyway_button" = "Vis tiek siųsti";
 "meta.degraded.cancel_sending_button" = "Atsisakyti";
+"meta.legalhold.info_button" = "Kas yra teisinis sulaikymas?";
+"meta.legalhold.send_alert_title" = "Susirašinėjimas gali būti teisiškai sulaikytas.";
 
 // Remove from conversation dialogue
 "profile.remove_dialog_title" = "Šalinti?";
@@ -786,12 +806,20 @@
 "profile.devices.detail.verify_message" = "Įsitikinkite, kad šis kontrolinis kodas yra toks pats, kaip ir įrenginyje, kurį naudoja %@.";
 "profile.devices.detail.verify_message.link" = "Kaip tai padaryti?";
 "profile.devices.detail.show_my_device.title" = "Rodyti mano įrenginio kontrolinį kodą";
+"profile.devices.detail.reset_session.title" = "Sukurti seansą iš naujo";
 "device.verified" = "Patvirtintas";
 "device.not_verified" = "Nepatvirtinta";
+
+"device.class.legalhold" = "Teisinis sulaikymas";
 "device.class.desktop" = "Kompiuteris";
 "device.class.tablet" = "Planšetinis kompiuteris";
 "device.class.phone" = "Telefonas";
-"profile.devices.detail.reset_session.title" = "Sukurti seansą iš naujo";
+"device.class.unknown" = "Nežinoma";
+
+"device.type.permanent" = "Nuolatinis";
+"device.type.temporary" = "Laikinas";
+"device.type.legalhold" = "Teisinis sulaikymas";
+"device.type.unknown" = "Nežinoma";
 
 // Bot
 "participants.services.remove_integration.button" = "pašalinti integraciją";
@@ -805,6 +833,15 @@
 "group_details.notification_options_cell.description" = "Jūms bus pranešta apie viską (įskaitant garso ir vaizdo skambučius) arba tik kai kažkas jus pamini arba atsako į jūsų žinutę.";
 "group_details.receipt_options_cell.title" = "Perskaitymo patvirtinimai";
 "group_details.receipt_options_cell.description" = "Įjungus, žmonės gali matyti ar jų žinutės buvo perskaitytos.";
+
+// Legal hold details
+
+"legalhold.participants.section.title" = "Teisinio sulaikymo subjektai";
+"legalhold.header.title" = "Teisinis sulaikymas";
+"legalhold.header.other_description" = "Susirašinėjime yra bent vienas žmogus teisiškai sulaikytas.\nVisos žinutės bus išsaugotos, įskaitant ištrintas, pakeistas ir laikinas žinutes.";
+"legalhold.header.self_description" = "Jūs buvote teisiškai sulaikytas.\nVisos žinutės bus išsaugotos, įskaitant ištrintas, pakeistas ir laikinas žinutes.\nJūsų pašnekovai bus apie tai informuoti.";
+"legalhold.accessibility" = "Teisinio sulaikymo duomenys";
+
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile
@@ -826,8 +863,8 @@
 "self.add_phone_number" = "Pridėti telefono numerį";
 "self.add_email_password" = "Pridėkite el. pašto adresą ir slaptažodį";
 
-"self.accessibility.profile_photo_image" = "Profile picture";
-"self.accessibility.profile_photo_edit_button" = "Change profile picture";
+"self.accessibility.profile_photo_image" = "Profilio nuotrauka";
+"self.accessibility.profile_photo_edit_button" = "Keisti profilio nuotrauką";
 
 // About screen
 "about.tos.title" = "Naudojimosi sąlygos";
@@ -857,7 +894,7 @@
 // Settings - top level
 "self.settings.create_team.title" = "Sukurti komandą";
 "self.settings.manage_team.title" = "Valdyti komandą";
-"self.settings.add_team_or_account.title" = "Add Account";
+"self.settings.add_team_or_account.title" = "Pridėti paskyrą";
 "self.settings.add_account.title" = "Pridėti paskyrą";
 
 "self.settings.add_account.error.title" = "Aktyvios trys paskyros";
@@ -997,7 +1034,7 @@
 "self.settings.popular_demand.title" = "Pagal populiarius pageidavimus";
 "self.settings.popular_demand.send_button.title" = "Siuntimo mygtukas";
 "self.settings.popular_demand.send_button.footer" = "Išjungti siuntimą „Enter“ klavišu.";
-"self.settings.popular_demand.dark_mode.footer" = "Switch between dark and light theme.";
+"self.settings.popular_demand.dark_mode.footer" = "Perjungti tarp tamsios ir šviesios temų.";
 
 // Open in
 "self.settings.external_apps.header" = "Atverti naudojant";
@@ -1006,7 +1043,7 @@
 "self.settings.link_options.maps.title" = "Vieta";
 "self.settings.link_options.browser.title" = "Naršyklė";
 
-"open_link.twitter.option.default" = "Browser / Twitter";
+"open_link.twitter.option.default" = "Naršyklė / „Twitter“";
 "open_link.twitter.option.tweetbot" = "„Tweetbot“";
 "open_link.twitter.option.twitterrific" = "„Twitterrific“";
 
@@ -1060,8 +1097,8 @@
 
 "self.settings.advanced.title" = "Papildomi";
 "self.settings.advanced.troubleshooting.title" = "Nesklandumų sprendimas";
-"self.settings.advanced.troubleshooting.submit_debug.title" = "Skambinimo derinimo ataskaita";
-"self.settings.advanced.troubleshooting.submit_debug.subtitle" = "Ši informacija padeda „Wire“ pagalbos centrui aptikti nesklandumus, susijusius su skambinimu.";
+"self.settings.advanced.troubleshooting.submit_debug.title" = "Debug Report";
+"self.settings.advanced.troubleshooting.submit_debug.subtitle" = "This information helps Wire Support diagnose calling problems and improve the overall app experience.";
 "self.settings.advanced.reset_push_token.title" = "Sukurti naują pranešimų atpažinimo ženklą";
 "self.settings.advanced.reset_push_token.subtitle" = "Jei susiduriate su naujienų pranešimo tarnybos nesklandumais, „Wire“ pagalbos centras gali paprašyti nustatyti atpažinimo ženklą iš naujo.";
 "self.settings.advanced.reset_push_token_alert.title" = "Naujienų pranešimų tarnybos atpažinimo ženklas nustatytas iš naujo";
@@ -1074,7 +1111,7 @@
 // Technical Report
 "self.settings.technical_report_section.title" = "Techninė ataskaita";
 "self.settings.technical_report.send_report" = "Siųsti ataskaitą į „Wire“";
-"self.settings.technical_report.mail.subject" = "„Wire“ skambinimo ataskaita";
+"self.settings.technical_report.mail.subject" = "Wire Debug Report";
 "self.settings.technical_report.include_log" = "Pridėti išsamų žurnalą";
 "self.settings.technical_report.privacy_warning" = "Išsamiuose žurnaluose gali būti asmeninių duomenų";
 "self.settings.technical_report.no_mail_alert" = "El. pašto klientų nėra. Spustelėlę \"Gerai\" galėsite išsiųsti žurnalą rankiniu būdu: ";
@@ -1132,15 +1169,15 @@
 
 "landing.header" = "„Wire“. Pridėkite paskyrą.";
 "landing.create_account.title" = "Asmeninis";
-"landing.create_account.subtitle" = "Chat privately with groups of friends\U00A0and\U00A0family";
+"landing.create_account.subtitle" = "Saugiai bendraukite su draugų grupėmis\U00A0ir\U00A0šeima";
 "landing.create_team.title" = "Pro";
-"landing.create_team.subtitle" = "Secure collaboration for businesses, institutions and professional\U00A0organizations";
+"landing.create_team.subtitle" = "Saugus bendradarbiavimas verslui, institucijoms ir profesionalioms\U00A0organizacijoms";
 "landing.login.hints" = "Jau turite paskyrą?";
 "landing.login.button.title" = "Prisijungti";
 
-"landing.custom_backend.title" = "Connected to \"%@\"";
-"landing.custom_backend.more_info.button.title" = "Show more";
-"landing.custom_backend.more_info.alert.title" = " You are connected to a third-party server: %@";
+"landing.custom_backend.title" = "Prisijungta prie „%@“";
+"landing.custom_backend.more_info.button.title" = "Rodyti daugiau";
+"landing.custom_backend.more_info.alert.title" = " Prisijungėte prie trečiosios šalies serverio: %@";
 
 // Create team
 
@@ -1247,7 +1284,7 @@
 "registration.alert.account_exists.title" = "Paskyra jau yra";
 "registration.alert.account_exists.message_phone" = "Šis telefono numeris jau yra susietas su paskyra.\n\nNaudokite kitą telefono numerį arba bandykite prisijungti jei tai jūsų paskyra.";
 "registration.alert.account_exists.message_email" = "Šis el. pašto adresas jau yra susietas su paskyra.\n\nNaudokite kitą el. pašto adresą arba bandykite prisijungti jei tai jūsų paskyra.";
-"registration.alert.change_email_action" = "Register with Another Email";
+"registration.alert.change_email_action" = "Registruokitės kitu el. pašto adresu";
 "registration.alert.change_phone_action" = "Registruokitės su kitu numeriu";
 "registration.alert.change_signin_action" = "Prisijungti";
 
@@ -1519,8 +1556,8 @@
 
 "availability.message.cancel" = "Atsisakyti";
 "availability.message.set_status" = "Nurodykite būseną";
-"availability.accessibility_label.change_status" = "Change Status";
-"availability.accessibility_label.status" = "Status";
+"availability.accessibility_label.change_status" = "Keisti būseną";
+"availability.accessibility_label.status" = "Būsena";
 
 "availability.none" = "Jokių";
 "availability.available" = "Prisijungęs";
@@ -1530,15 +1567,15 @@
 "availability.away.placeholder" = "%@ yra pasišalinęs";
 "availability.busy.placeholder" = "%@ yra užsiėmęs";
 
-"availability.reminder.away.title" = "You are set to Away";
-"availability.reminder.away.message" = "You will appear as Away to other people. You will not receive notifications about any incoming calls or messages.";
-"availability.reminder.busy.title" = "You are set to Busy";
-"availability.reminder.busy.message" = "You will appear as Busy to other people. You will only receive notifications for mentions, replies, and calls in conversations that are not muted.";
-"availability.reminder.available.title" = "You are set to Available";
-"availability.reminder.available.message" = "You will appear as Available to other people. You will receive notifications for incoming calls and for messages according to the Notifications setting in each conversation.";
-"availability.reminder.none.title" = "No status set";
-"availability.reminder.none.message" = "You will receive notifications for incoming calls and for messages according to the Notifications setting in each conversation.";
-"availability.reminder.action.dont_remind_me" = "Do not display this information again";
+"availability.reminder.away.title" = "Pasišalinote";
+"availability.reminder.away.message" = "Kiti žmonės matys jus kaip pasišalinusį. Negausite perspėjimų apie skambučius ir žinutes.";
+"availability.reminder.busy.title" = "Užsiėmęs";
+"availability.reminder.busy.message" = "Kiti žmonės matys jus kaip užsiėmusį. Gausite perspėjimų apie paminėjimus, atsakymus ir skambučius susirašinėjimuose kurie nėra nutildyti.";
+"availability.reminder.available.title" = "Pasiekiamas";
+"availability.reminder.available.message" = "Kiti žmonės matys jus kaip pasiekiamą. Gausite pranešimus apie gaunamus skambučius ir žinutes pagal kiekviename susirašinėjime nustatytą pranešimų nustatymą.";
+"availability.reminder.none.title" = "Būsenos nėra";
+"availability.reminder.none.message" = "Gausite pranešimus apie gaunamus skambučius ir žinutes pagal kiekviename pokalbyje nustatytą pranešimų nustatymą.";
+"availability.reminder.action.dont_remind_me" = "Daugiau šios informacijos neberodyti";
 "availability.reminder.action.ok" = "GERAI";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -1560,28 +1597,28 @@
 "url_action.title" = "Patvirtinti URL adresą";
 "url_action.connect_to_bot.message" = "Ar norite prisijungti prie roboto?";
 
-"url_action.switch_backend.title" = "Connect to server";
-"url_action.switch_backend.message" = "This configuration will connect the app to a third-party server:\n%@";
+"url_action.switch_backend.title" = "Prisijungti prie serverio";
+"url_action.switch_backend.message" = "Ši konfigūracija prijungs programėlę prie trečiosios šalies serverio: \n%@";
 
-"url_action.switch_backend.error.logged_in.title" = "Can’t switch servers";
-"url_action.switch_backend.error.logged_in" = "You are already logged in. To switch to this server, log out of all accounts and try again.";
+"url_action.switch_backend.error.logged_in.title" = "Nepavyko perjungti serverių";
+"url_action.switch_backend.error.logged_in" = "Esate prisijungę. Norėdami perjungti serverį, atsijunkite nuo visų paskyrų ir bandykite dar kartą.";
 
-"url_action.switch_backend.error.invalid_backend.title" = "The server is not responding";
-"url_action.switch_backend.error.invalid_backend" = "Please check your internet connection, verify the link and try again.";
+"url_action.switch_backend.error.invalid_backend.title" = "Serveris neatsako";
+"url_action.switch_backend.error.invalid_backend" = "Patikrinkite savo interneto ryšį bei nuorodą ir bandykite dar kartą.";
 
 
 // Deep Link
-"url_action.invalid_user.title" = "Wire can't find this person.";
-"url_action.invalid_user.message" = "You may not have permission with this account or it no longer exists.";
+"url_action.invalid_user.title" = "„Wire“ nepavyksta rasti šio žmogaus.";
+"url_action.invalid_user.message" = "Gali būti, kad šiai paskyrai neturite teisių arba jos nebėra.";
 
-"url_action.invalid_conversation.title" = "Wire can't open this conversation.";
-"url_action.invalid_conversation.message" = "You may not have permission with this account or the person may not be on Wire.";
+"url_action.invalid_conversation.title" = "„Wire“ negali atverti šio pokalbio.";
+"url_action.invalid_conversation.message" = "Gali būti, kad neturite šiai paskyrai teisių arba žmogus nesinaudoja „Wire“.";
 
-"url_action.authorization_required.title" = "Authorization required.";
-"url_action.authorization_required.message" = "You need to log in to view this content.";
+"url_action.authorization_required.title" = "Būtina autorizuotis.";
+"url_action.authorization_required.message" = "Norint peržiūrėti turinį būtina prisijungti.";
 
-"url_action.invalid_link.title" = "Invalid link.";
-"url_action.invalid_link.message" = "The link you opened is not valid.";
+"url_action.invalid_link.title" = "Neteisinga nuoroda.";
+"url_action.invalid_link.message" = "Atverta nuoroda neteisinga.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // News and offers consent prompt
@@ -1608,5 +1645,27 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Password Rules
-"registration.password.rules.no_requirements" = "Use %@.";
-"registration.password.rules.with_requirements" = "Use %@, with %@.";
+"registration.password.rules.no_requirements" = "Naudoti %@.";
+"registration.password.rules.with_requirements" = "Naudoti %@ su %@.";
+
+// Legal Hold Deactivation
+"legal_hold.deactivated.title" = "Legal Hold Deactivated";
+"legal_hold.deactivated.message" = "Future messages will not be recorded.";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Share Extension
+"share_extension.voiceover.conversation_under_legal_hold" = "Teisiškai sulaikytas.";
+"share_extension.voiceover.conversation_secure" = "Visi klientai patikrinti.";
+"share_extension.voiceover.conversation_secure_with_ignored" = "Ne visi klientai patvirtinti.";
+
+// Legal hold - alert
+"legalhold_request.button.accessibility" = "Pending approval.";
+"legalhold_request.alert.title" = "Legal Hold Requested";
+"legalhold_request.alert.detail" = "All future messages will be recorded by the device with fingerprint:\n\n%@\n\nThis includes deleted, edited, and timed messages in all conversations.";
+"legalhold_request.alert.detail.enter_password" = "Enter your password to confirm.";
+"legalhold_request.alert.error_wrong_password" = "Neteisingas slaptažodis";
+
+// Legal hold activated
+"legalhold_active.alert.title" = "Legal Hold is Active";
+"legalhold_active.alert.learn_more" = "Sužinokite daugiau";
+"legalhold_active.alert.message" = "Legal Hold has been activated for your account. All messages will be preserved for future access, including deleted, edited, and timed messages.\n\nYour conversation partners will be aware of the recording.";

@@ -16,7 +16,7 @@
  *  along with this program. If not, see http://www.gnu.org/licenses/.
  */
 
-"NSContactsUsageDescription" = "Allow Wire to access your contacts to connect you with others. We anonymize all information before uploading it to our server and do not share it with anyone else.";
+"NSContactsUsageDescription" = "Leiskite „Wire“ prisijungti prie jūsų kontaktų, kad galėtume sujungti jus su kitais. Prieš įkeliant į mūsų serverį visą informaciją nuasmeniname ir nesidaliname ja su trečiomis šalimis.";
 "NSMicrophoneUsageDescription" = "Leiskite Wire gauti prieigą prie jūsų mikrofono, kad galėtumėte kalbėti su kitais žmonėmis ir siųsti garso žinutes.";
 "NSLocationWhenInUseUsageDescription" = "Leiskite Wire gauti prieigą prie jūsų buvimo vietos, kad galėtumėte ją siųsti kitiems.";
 "NSCameraUsageDescription" = "Leiskite Wire gauti prieigą prie jūsų kameros, kad galėtumėte skambinti su vaizdu ir siųsti nuotraukas.";

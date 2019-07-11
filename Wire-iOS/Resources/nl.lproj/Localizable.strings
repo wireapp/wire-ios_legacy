@@ -27,10 +27,11 @@
 "general.edit" = "Bewerken";
 "general.done" = "Klaar";
 "general.confirm" = "OK";
-"general.skip" = "Niet nu";
+"general.skip" = "Not Now";
 "general.accept" = "Neem op";
 "general.decline" = "Nee, bedankt";
 "general.failure" = "Er is iets mis gegaan";
+"general.failure.try_again" = "Please try again.";
 "general.service" = "Dienst";
 "general.off" = "Uit";
 "general.on" = "Aan";
@@ -41,6 +42,9 @@
 "general.space_between_words" = " ";
 
 "general.guest-room-name" = "Gast gesprek";
+
+// User Cell
+"user_cell.title.you_suffix" = " (You)";
 
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -200,6 +204,9 @@
 "list.archived_conversations_close" = "Archief sluiten";
 
 "conversation.voiceover.verified" = "geverifieerd";
+"conversation.voiceover.legalhold" = "legal hold";
+"conversation.voiceover.value.active" = "active";
+"conversation.voiceover.value.disabled" = "disabled";
 
 "conversation.status.typing" = "Typt een bericht…";
 "conversation.status.typing.group" = "%@: Typt een bericht…";
@@ -301,6 +308,8 @@
 "conversation.input_bar.ongoing_call_alert.audio.message" = "Je kan geen bericht opnemen tijdens een telefoongesprek.";
 "conversation.input_bar.ongoing_call_alert.video.message" = "Je kan geen video maken tijdens een telefoongesprek.";
 "conversation.input_bar.ongoing_call_alert.photo.message" = "Je kan geen foto maken tijdens een telefoongesprek.";
+
+"conversation.alert.message_deleted" = "The message is deleted.";
 
 "conversation.guests_present" = "Er zijn gasten in dit geprek";
 "conversation.services_present" = "Diensten zijn actief";
@@ -461,6 +470,14 @@
 
 "content.system.message_read_receipt_on_add_to_group" = "Read receipts are on";
 
+// legal hold
+
+"content.system.message_legal_hold.enabled" = "This conversation is under legal hold";
+"content.system.message_legal_hold.disabled" = "Legal hold deactivated for this conversation";
+
+"content.system.message_legal_hold.learn_more" = "Leer meer";
+
+//
 
 "content.system.reactivated_device" = "Je bent %@ weer gaan gebruiken. Berichten die in de tussentijd verzonden zijn worden hier niet getoond.";
 
@@ -711,10 +728,13 @@
 // Conversation Degraded (security level lowered)
 "meta.degraded.degradation_reason_message.singular" = "%@ is een ander apparaat gaan gebruiken.";
 "meta.degraded.degradation_reason_message.plural" = "%@ zijn nieuwe apparaten gaan gebruiken.";
+"meta.degraded.degradation_reason_message.someone" = "Iemand begon met een nieuw apparaat.";
 "meta.degraded.dialog_message" = "Wil je het bericht nog steeds versturen?";
-"meta.degraded.show_device_button" = "Toon apparaat";
-"meta.degraded.send_anyway_button" = "Toch verzenden";
+"meta.degraded.verify_devices_button" = "Verify Devices…";
+"meta.degraded.send_anyway_button" = "Send Anyway";
 "meta.degraded.cancel_sending_button" = "Annuleer";
+"meta.legalhold.info_button" = "What Is Legal Hold?";
+"meta.legalhold.send_alert_title" = "The conversation is now subject to legal hold.";
 
 // Remove from conversation dialogue
 "profile.remove_dialog_title" = "Verwijder?";
@@ -786,12 +806,20 @@
 "profile.devices.detail.verify_message" = "Verifieer dat deze digitale vingerafdruk overeenkomt met %@’s zijn apparaat.";
 "profile.devices.detail.verify_message.link" = "Hoe doe ik dat?";
 "profile.devices.detail.show_my_device.title" = "Toon mijn apparaat vingerafdruk";
+"profile.devices.detail.reset_session.title" = "Sessie herstarten";
 "device.verified" = "Geverifieerd";
 "device.not_verified" = "Niet geverifieerd";
+
+"device.class.legalhold" = "Legal Hold";
 "device.class.desktop" = "Desktop";
 "device.class.tablet" = "Tablet";
 "device.class.phone" = "Telefoonnummer";
-"profile.devices.detail.reset_session.title" = "Sessie herstarten";
+"device.class.unknown" = "Unknown";
+
+"device.type.permanent" = "Permanent";
+"device.type.temporary" = "Temporary";
+"device.type.legalhold" = "Legal Hold";
+"device.type.unknown" = "Unknown";
 
 // Bot
 "participants.services.remove_integration.button" = "verwijder integratie";
@@ -805,6 +833,15 @@
 "group_details.notification_options_cell.description" = "You can be notified about everything (including audio and video calls) or only when someone mentions you or replies to one of your messages.";
 "group_details.receipt_options_cell.title" = "Read receipts";
 "group_details.receipt_options_cell.description" = "When this is on, people can see when their messages in this conversation are read.";
+
+// Legal hold details
+
+"legalhold.participants.section.title" = "Legal hold subjects";
+"legalhold.header.title" = "Legal Hold";
+"legalhold.header.other_description" = "Legal Hold has been activated for at least one person in this conversation.\nAll messages will be preserved for future access, including deleted, edited, and timed messages.";
+"legalhold.header.self_description" = "Legal Hold has been activated for your account.\nAll messages will be preserved for future access, including deleted, edited, and timed messages.\nYour conversation partners will be aware of the recording.";
+"legalhold.accessibility" = "Legal hold details";
+
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile
@@ -1060,8 +1097,8 @@
 
 "self.settings.advanced.title" = "Geavanceerd";
 "self.settings.advanced.troubleshooting.title" = "Probleemoplossing";
-"self.settings.advanced.troubleshooting.submit_debug.title" = "Foutrapport verzenden";
-"self.settings.advanced.troubleshooting.submit_debug.subtitle" = "Deze informatie helpt Wire om belproblemen op te lossen.";
+"self.settings.advanced.troubleshooting.submit_debug.title" = "Debug Report";
+"self.settings.advanced.troubleshooting.submit_debug.subtitle" = "This information helps Wire Support diagnose calling problems and improve the overall app experience.";
 "self.settings.advanced.reset_push_token.title" = "Herstel de Push Notifications Token";
 "self.settings.advanced.reset_push_token.subtitle" = "Als je problemen ondervindt met push-notificaties, kan Wire je vragen om deze token te herstellen.";
 "self.settings.advanced.reset_push_token_alert.title" = "Push token is gereset";
@@ -1074,7 +1111,7 @@
 // Technical Report
 "self.settings.technical_report_section.title" = "Technisch rapport";
 "self.settings.technical_report.send_report" = "Stuur rapport naar Wire";
-"self.settings.technical_report.mail.subject" = "Rapport over bellen met Wire";
+"self.settings.technical_report.mail.subject" = "Wire Debug Report";
 "self.settings.technical_report.include_log" = "Voeg gedetailleerd log toe";
 "self.settings.technical_report.privacy_warning" = "Gedetailleerde logs kunnen persoonlijke gegevens bevatten";
 "self.settings.technical_report.no_mail_alert" = "Er is geen mail app gedetecteerd. Klik op 'OK' om de logs handmatig te versturen naar: ";
@@ -1610,3 +1647,25 @@
 // Password Rules
 "registration.password.rules.no_requirements" = "Use %@.";
 "registration.password.rules.with_requirements" = "Use %@, with %@.";
+
+// Legal Hold Deactivation
+"legal_hold.deactivated.title" = "Legal Hold Deactivated";
+"legal_hold.deactivated.message" = "Future messages will not be recorded.";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Share Extension
+"share_extension.voiceover.conversation_under_legal_hold" = "Under legal hold.";
+"share_extension.voiceover.conversation_secure" = "All clients verified.";
+"share_extension.voiceover.conversation_secure_with_ignored" = "Not all clients verified.";
+
+// Legal hold - alert
+"legalhold_request.button.accessibility" = "Pending approval.";
+"legalhold_request.alert.title" = "Legal Hold Requested";
+"legalhold_request.alert.detail" = "All future messages will be recorded by the device with fingerprint:\n\n%@\n\nThis includes deleted, edited, and timed messages in all conversations.";
+"legalhold_request.alert.detail.enter_password" = "Enter your password to confirm.";
+"legalhold_request.alert.error_wrong_password" = "Onjuist wachtwoord";
+
+// Legal hold activated
+"legalhold_active.alert.title" = "Legal Hold is Active";
+"legalhold_active.alert.learn_more" = "Leer meer";
+"legalhold_active.alert.message" = "Legal Hold has been activated for your account. All messages will be preserved for future access, including deleted, edited, and timed messages.\n\nYour conversation partners will be aware of the recording.";
