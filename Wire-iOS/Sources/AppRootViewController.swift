@@ -134,6 +134,9 @@ final class AppRootViewController: UIViewController {
         let appVersion = bundle.infoDictionary?[kCFBundleVersionKey as String] as? String
         let mediaManager = AVSMediaManager.sharedInstance()
         let analytics = Analytics.shared()
+        let url = Bundle.main.url(forResource: "session_manager", withExtension: "json")!
+        let configuration = SessionManagerConfiguration.load(from: url)!
+        configuration.blacklistDownloadInterval = Settings.shared().blacklistDownloadInterval
 
         SessionManager.clearPreviousBackups()
 
@@ -144,7 +147,7 @@ final class AppRootViewController: UIViewController {
             delegate: appStateController,
             application: UIApplication.shared,
             environment: BackendEnvironment.shared,
-            blacklistDownloadInterval: Settings.shared().blacklistDownloadInterval) { sessionManager in
+            configuration: configuration) { sessionManager in
             self.sessionManager = sessionManager
             self.sessionManagerCreatedSessionObserverToken = sessionManager.addSessionManagerCreatedSessionObserver(self)
             self.sessionManagerDestroyedSessionObserverToken = sessionManager.addSessionManagerDestroyedSessionObserver(self)
