@@ -85,11 +85,11 @@ final class AppStateController : NSObject {
         }
         
         if isBlacklisted {
-            return .blacklisted
+            return .blacklisted(jailbroken: false)
         }
         
         if isJailbroken {
-            return .jailbroken
+            return .blacklisted(jailbroken: true)
         }
         
         if let account = loadingAccount {
@@ -165,6 +165,11 @@ extension AppStateController : SessionManagerDelegate {
         updateAppState()
     }
     
+    func sessionManagerDidBlacklistJailbrokenDevice() {
+        isJailbroken = true
+        updateAppState()
+    }
+    
     func sessionManagerWillMigrateLegacyAccount() {
         isMigrating = true
         updateAppState()
@@ -196,12 +201,6 @@ extension AppStateController : SessionManagerDelegate {
             self?.isMigrating = false
             self?.updateAppState()
         }
-    }
-    
-    func sessionManagerDidBlacklistJailbrokenDevice() {
-        guard !UIDevice.isSimulator else { return }
-        isJailbroken = true
-        updateAppState()
     }
     
 }

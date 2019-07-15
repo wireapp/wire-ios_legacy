@@ -204,8 +204,8 @@ final class AppRootViewController: UIViewController {
         resetAuthenticationCoordinatorIfNeeded(for: appState)
 
         switch appState {
-        case .blacklisted:
-            viewController = BlacklistViewController()
+        case .blacklisted(jailbroken: let jailbroken):
+            viewController = jailbroken ? JailbrokenDeviceViewController() : BlacklistViewController()
         case .migrating:
             let launchImageViewController = LaunchImageViewController()
             launchImageViewController.showLoadingScreen()
@@ -251,8 +251,6 @@ final class AppRootViewController: UIViewController {
             viewController = LaunchImageViewController()
         case .loading(account: let toAccount, from: let fromAccount):
             viewController = SkeletonViewController(from: fromAccount, to: toAccount)
-        case .jailbroken:
-            viewController = JailbrokenDeviceViewController()
         }
 
         if let viewController = viewController {
