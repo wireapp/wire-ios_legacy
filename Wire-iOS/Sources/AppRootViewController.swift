@@ -252,7 +252,7 @@ final class AppRootViewController: UIViewController {
         case .loading(account: let toAccount, from: let fromAccount):
             viewController = SkeletonViewController(from: fromAccount, to: toAccount)
         case .jailbroken:
-            viewController = BlacklistViewController()
+            viewController = JailbrokenDeviceViewController()
         }
 
         if let viewController = viewController {

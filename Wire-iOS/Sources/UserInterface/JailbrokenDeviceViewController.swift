@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2017 Wire Swiss GmbH
+// Copyright (C) 2019 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,17 +16,13 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
+import UIKit
 
-class BlacklistViewController : BlockerViewController {
-    
+class JailbrokenDeviceViewController: BlockerViewController {
+
     override func showAlert() {
-        let alertController = UIAlertController(title: "force.update.title".localized, message: "force.update.message".localized, preferredStyle: .alert)
-        let alertAction = UIAlertAction(title: "force.update.ok_button".localized, style: .default) { (_) in
-            UIApplication.shared.open(URL.wr_wireAppOnItunes)
-        }
+        let alertController = UIAlertController(title: "jailbrokendevice.alert.title".localized, message: "jailbrokendevice.alert.message".localized, preferredStyle: .alert)
         
-        alertController.addAction(alertAction)
         present(alertController, animated: true, completion: nil)
     }
     

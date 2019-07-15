@@ -199,6 +199,7 @@ extension AppStateController : SessionManagerDelegate {
     }
     
     func sessionManagerDidBlacklistJailbrokenDevice() {
+        guard !UIDevice.isSimulator else { return }
         isJailbroken = true
         updateAppState()
     }
