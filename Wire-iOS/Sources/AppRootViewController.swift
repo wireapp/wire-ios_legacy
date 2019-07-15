@@ -248,6 +248,8 @@ final class AppRootViewController: UIViewController {
             viewController = LaunchImageViewController()
         case .loading(account: let toAccount, from: let fromAccount):
             viewController = SkeletonViewController(from: fromAccount, to: toAccount)
+        case .jailbroken:
+            viewController = BlacklistViewController()
         }
 
         if let viewController = viewController {

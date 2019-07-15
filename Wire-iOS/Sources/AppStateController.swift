@@ -51,6 +51,7 @@ final class AppStateController : NSObject {
     public weak var delegate : AppStateControllerDelegate? = nil
     
     fileprivate var isBlacklisted = false
+    fileprivate var isJailbroken = false
     fileprivate var hasEnteredForeground = false
     fileprivate var isMigrating = false
     fileprivate var loadingAccount : Account?
@@ -85,6 +86,10 @@ final class AppStateController : NSObject {
         
         if isBlacklisted {
             return .blacklisted
+        }
+        
+        if isJailbroken {
+            return .jailbroken
         }
         
         if let account = loadingAccount {
@@ -191,6 +196,11 @@ extension AppStateController : SessionManagerDelegate {
             self?.isMigrating = false
             self?.updateAppState()
         }
+    }
+    
+    func sessionManagerDidBlacklistJailbrokenDevice() {
+        isJailbroken = true
+        updateAppState()
     }
     
 }
