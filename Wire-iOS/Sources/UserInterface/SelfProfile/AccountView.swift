@@ -228,7 +228,7 @@ extension BaseAccountView: ZMUserObserver {
     }
 }
 
-@objcMembers public final class PersonalAccountView: BaseAccountView {
+public final class PersonalAccountView: BaseAccountView {
     internal let userImageView: AvatarImageView = {
         let avatarImageView = AvatarImageView(frame: .zero)
         avatarImageView.container.backgroundColor = .from(scheme: .background, variant: .light)
@@ -300,13 +300,13 @@ extension PersonalAccountView {
     }
 }
 
-extension TeamImageView: RoundedViewProtocol {
-
-    public override class var layerClass: AnyClass {
-        return ContinuousMaskLayer.self
-    }
-
-}
+//extension TeamImageView: RoundedViewProtocol {
+//
+//    public override class var layerClass: AnyClass {
+//        return ContinuousMaskLayer.self
+//    }
+//
+//}
 
 public final class TeamImageView: UIImageView {
 
@@ -346,11 +346,14 @@ public final class TeamImageView: UIImageView {
         backgroundColor = .from(scheme: .background, variant: .light)
     }
 
+    private func updateRoundCorner() {
+        layer.cornerRadius = 4
+        clipsToBounds = true
+    }
+
     init(content: Content) {
         self.content = content
         super.init(frame: .zero)
-
-        shape = .rounded(radius: 4) ///TODO: mv to constant
 
         initialLabel.textAlignment = .center
         self.addSubview(self.initialLabel)
@@ -366,6 +369,8 @@ public final class TeamImageView: UIImageView {
         self.updateImage()
 
         applySmallStyle()
+
+        updateRoundCorner()
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -377,6 +382,7 @@ public final class TeamImageView: UIImageView {
         
         if !bounds.equalTo(lastLayoutBounds) {
             lastLayoutBounds = self.bounds
+            updateRoundCorner()
         }
     }
     
@@ -392,7 +398,7 @@ public final class TeamImageView: UIImageView {
     }
 }
 
-@objcMembers internal class TeamAccountView: BaseAccountView {
+final class TeamAccountView: BaseAccountView {
     
     public override var collapsed: Bool {
         didSet {
