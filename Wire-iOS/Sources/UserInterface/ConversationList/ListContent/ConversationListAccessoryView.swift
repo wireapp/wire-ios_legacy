@@ -22,7 +22,11 @@ import UIKit
     var icon: ConversationStatusIcon? = nil {
         didSet {
             if icon != oldValue {
-                self.updateForIcon()
+                updateForIcon()
+            }
+
+            if icon == nil {
+                accessibilityValue = nil
             }
         }
     }
@@ -189,8 +193,6 @@ import UIKit
             self.transparentIconView.isHidden = true
             
             updateCollapseConstraints(isCollapsed: true)
-
-            accessibilityValue = nil
             return
         }
         
