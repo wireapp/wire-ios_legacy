@@ -300,8 +300,21 @@ extension PersonalAccountView {
     }
 }
 
-@objcMembers
-public final class TeamImageView: UIImageView {
+//extension TeamImageView: RoundedViewProtocol {
+//
+//    public override class var layerClass: AnyClass {
+//        return ContinuousMaskLayer.self
+//    }
+//
+//}
+
+public final class TeamImageView: UIImageView, RoundedViewProtocol {
+//    public var layer: CALayer
+
+    public override class var layerClass: AnyClass {
+        return ContinuousMaskLayer.self
+    }
+
     public enum TeamImageViewStyle {
         case small
         case big
@@ -337,11 +350,14 @@ public final class TeamImageView: UIImageView {
         initialLabel.textColor = .from(scheme: .textForeground, variant: .light)
         backgroundColor = .from(scheme: .background, variant: .light)
     }
-    
+
     init(content: Content) {
         self.content = content
         super.init(frame: .zero)
-        layer.mask = maskLayer
+//        layer.mask = maskLayer
+
+        shape = .rounded(radius: 4) ///TODO: mv to constant
+
         
         initialLabel.textAlignment = .center
         self.addSubview(self.initialLabel)
@@ -354,7 +370,7 @@ public final class TeamImageView: UIImageView {
         
         maskLayer.contentsScale = UIScreen.main.scale
         maskLayer.contentsGravity = .center
-        self.updateClippingLayer()
+//        self.updateClippingLayer()
         self.updateImage()
 
         applySmallStyle()
@@ -364,27 +380,27 @@ public final class TeamImageView: UIImageView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func updateClippingLayer() {
-        guard bounds.size.height != 0 && bounds.size.width != 0 else {
-            return
-        }
-        
-        UIGraphicsBeginImageContextWithOptions(bounds.size, false, maskLayer.contentsScale)
-        WireStyleKit.drawSpace(frame: bounds, resizing: .aspectFit, color: .black) ///TODO: simpler clipping method
-        
-        if let image = UIGraphicsGetImageFromCurrentImageContext() {
-            UIGraphicsEndImageContext()
-            
-            maskLayer.frame = layer.bounds
-            maskLayer.contents = image.cgImage
-        }
-    }
-    
+//    func updateClippingLayer() {
+//        guard bounds.size.height != 0 && bounds.size.width != 0 else {
+//            return
+//        }
+//        
+//        UIGraphicsBeginImageContextWithOptions(bounds.size, false, maskLayer.contentsScale)
+//        WireStyleKit.drawSpace(frame: bounds, resizing: .aspectFit, color: .black) ///TODO: simpler clipping method
+//        
+//        if let image = UIGraphicsGetImageFromCurrentImageContext() {
+//            UIGraphicsEndImageContext()
+//            
+//            maskLayer.frame = layer.bounds
+//            maskLayer.contents = image.cgImage
+//        }
+//    }
+
     override public func layoutSubviews() {
         super.layoutSubviews()
         
         if !bounds.equalTo(lastLayoutBounds) {
-            updateClippingLayer()
+//            updateClippingLayer()
             lastLayoutBounds = self.bounds
         }
     }
