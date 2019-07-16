@@ -29,7 +29,7 @@ open class LayerHostView<LayerType: CALayer>: UIView {
 }
 
 
-class ShapeView: LayerHostView<CAShapeLayer> {
+final class ShapeView: LayerHostView<CAShapeLayer> {
     public var pathGenerator: ((CGSize) -> (UIBezierPath))? {
         didSet {
             self.updatePath()
@@ -300,7 +300,8 @@ extension PersonalAccountView {
     }
 }
 
-@objcMembers public final class TeamImageView: UIImageView {
+@objcMembers
+public final class TeamImageView: UIImageView {
     public enum TeamImageViewStyle {
         case small
         case big
@@ -369,7 +370,7 @@ extension PersonalAccountView {
         }
         
         UIGraphicsBeginImageContextWithOptions(bounds.size, false, maskLayer.contentsScale)
-        WireStyleKit.drawSpace(frame: bounds, resizing: .aspectFit, color: .black)
+        WireStyleKit.drawSpace(frame: bounds, resizing: .aspectFit, color: .black) ///TODO: simpler clipping method
         
         if let image = UIGraphicsGetImageFromCurrentImageContext() {
             UIGraphicsEndImageContext()
@@ -395,7 +396,7 @@ extension PersonalAccountView {
             initialLabel.text = ""
         case .teamName(let name):
             image = nil
-            initialLabel.text = name.first.map(String.init)
+            initialLabel.text = name.first.map(String.init) ///TODO: font
         }
     }
 }
