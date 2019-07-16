@@ -431,8 +431,12 @@ extension PersonalAccountView {
         imageViewContainer.addSubview(imageView)
         
         self.selectionView.pathGenerator = { size in
-            
-            let path = WireStyleKit.pathForTeamSelection()!
+            let radius = 4
+            let radii = CGSize(width: radius, height: radius)
+            let path = UIBezierPath(roundedRect: CGRect(origin: .zero, size: size),
+                                    byRoundingCorners: UIRectCorner.allCorners,
+                                    cornerRadii: radii)
+
             let scale = (size.width - 3) / path.bounds.width
             path.apply(CGAffineTransform(scaleX: scale, y: scale))
             return path
