@@ -38,7 +38,7 @@ public final class TeamImageView: UIImageView {
     }
 
     private var lastLayoutBounds: CGRect = .zero
-    private let maskLayer = CALayer()
+//    private let maskLayer = CALayer()
     internal let initialLabel = UILabel()
     public var style: TeamImageViewStyle = .small {
         didSet {
@@ -75,8 +75,8 @@ public final class TeamImageView: UIImageView {
             initialLabel.centerX == selfView.centerX
         }
 
-        maskLayer.contentsScale = UIScreen.main.scale
-        maskLayer.contentsGravity = .center
+//        maskLayer.contentsScale = UIScreen.main.scale
+//        maskLayer.contentsGravity = .center
         self.updateImage()
 
         applySmallStyle()
