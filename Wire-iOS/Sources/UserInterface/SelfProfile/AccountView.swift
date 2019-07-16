@@ -300,20 +300,15 @@ extension PersonalAccountView {
     }
 }
 
-//extension TeamImageView: RoundedViewProtocol {
-//
-//    public override class var layerClass: AnyClass {
-//        return ContinuousMaskLayer.self
-//    }
-//
-//}
-
-public final class TeamImageView: UIImageView, RoundedViewProtocol {
-//    public var layer: CALayer
+extension TeamImageView: RoundedViewProtocol {
 
     public override class var layerClass: AnyClass {
         return ContinuousMaskLayer.self
     }
+
+}
+
+public final class TeamImageView: UIImageView {
 
     public enum TeamImageViewStyle {
         case small
@@ -354,11 +349,9 @@ public final class TeamImageView: UIImageView, RoundedViewProtocol {
     init(content: Content) {
         self.content = content
         super.init(frame: .zero)
-//        layer.mask = maskLayer
 
         shape = .rounded(radius: 4) ///TODO: mv to constant
 
-        
         initialLabel.textAlignment = .center
         self.addSubview(self.initialLabel)
         self.accessibilityElements = [initialLabel]
@@ -370,7 +363,6 @@ public final class TeamImageView: UIImageView, RoundedViewProtocol {
         
         maskLayer.contentsScale = UIScreen.main.scale
         maskLayer.contentsGravity = .center
-//        self.updateClippingLayer()
         self.updateImage()
 
         applySmallStyle()
@@ -380,27 +372,10 @@ public final class TeamImageView: UIImageView, RoundedViewProtocol {
         fatalError("init(coder:) has not been implemented")
     }
     
-//    func updateClippingLayer() {
-//        guard bounds.size.height != 0 && bounds.size.width != 0 else {
-//            return
-//        }
-//        
-//        UIGraphicsBeginImageContextWithOptions(bounds.size, false, maskLayer.contentsScale)
-//        WireStyleKit.drawSpace(frame: bounds, resizing: .aspectFit, color: .black) ///TODO: simpler clipping method
-//        
-//        if let image = UIGraphicsGetImageFromCurrentImageContext() {
-//            UIGraphicsEndImageContext()
-//            
-//            maskLayer.frame = layer.bounds
-//            maskLayer.contents = image.cgImage
-//        }
-//    }
-
     override public func layoutSubviews() {
         super.layoutSubviews()
         
         if !bounds.equalTo(lastLayoutBounds) {
-//            updateClippingLayer()
             lastLayoutBounds = self.bounds
         }
     }
