@@ -311,7 +311,11 @@ extension PersonalAccountView {
         case teamName(String)
     }
     
-    private let content: Content
+    var content: Content {
+        didSet {
+            updateImage()
+        }
+    }
 
     private var lastLayoutBounds: CGRect = .zero
     private let maskLayer = CALayer()
@@ -384,7 +388,7 @@ extension PersonalAccountView {
         }
     }
     
-    fileprivate func updateImage() {
+    private func updateImage() {
         switch content {
         case .teamImage(let data):
             image = UIImage(data: data)
@@ -404,21 +408,18 @@ extension PersonalAccountView {
         }
     }
     
-    
     private let imageView: TeamImageView
-    
     private var teamObserver: NSObjectProtocol!
     private var conversationListObserver: NSObjectProtocol!
     
     override init?(account: Account, user: ZMUser? = nil) {
-        if let teamImageData = account.teamImageData {
-            imageView = TeamImageView(content: .teamImage(teamImageData))
-        } else if let teamName = account.teamName ?? user?.teamName, !teamName.isEmpty {
-            imageView = TeamImageView(content: .teamName(teamName))
+        
+        if let content = user?.team?.teamImageViewContent ?? account.teamImageViewContent {
+            imageView = TeamImageView(content: content)
         } else {
             return nil
         }
-
+        
         super.init(account: account, user: user)
         
         isAccessibilityElement = true
@@ -445,6 +446,11 @@ extension PersonalAccountView {
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTap(_:)))
         addGestureRecognizer(tapGesture)
+        
+        if let team = user?.team {
+            teamObserver = TeamChangeInfo.add(observer: self, for: team)
+            team.requestImage()
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -453,19 +459,44 @@ extension PersonalAccountView {
     
     public override func update() {
         super.update()
-        imageView.updateImage()
         accessibilityValue = String(format: "conversation_list.header.self_team.accessibility_value".localized, self.account.teamName ?? "") + " " + accessibilityState
         accessibilityIdentifier = "\(self.account.teamName ?? "") team"
     }
     
-    
-    static let ciContext: CIContext = {
-        return CIContext()
-    }()
 }
 
 extension TeamAccountView: TeamObserver {
     func teamDidChange(_ changeInfo: TeamChangeInfo) {
-        self.update()
+        guard let content = changeInfo.team.teamImageViewContent else { return }
+        
+        imageView.content = content
     }
+}
+
+fileprivate extension TeamType {
+    
+    var teamImageViewContent: TeamImageView.Content? {
+        if let imageData = imageData {
+            return .teamImage(imageData)
+        } else if let name = name, !name.isEmpty {
+            return .teamName(name)
+        } else {
+            return nil
+        }
+    }
+    
+}
+
+fileprivate extension Account {
+    
+    var teamImageViewContent: TeamImageView.Content? {
+        if let imageData = teamImageData {
+            return .teamImage(imageData)
+        } else if let name = teamName, !name.isEmpty {
+            return .teamName(name)
+        } else {
+            return nil
+        }
+    }
+    
 }
