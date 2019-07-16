@@ -189,7 +189,8 @@ import UIKit
             self.transparentIconView.isHidden = true
             
             updateCollapseConstraints(isCollapsed: true)
-            
+
+            accessibilityValue = nil
             return
         }
         
