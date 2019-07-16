@@ -22,7 +22,11 @@ import UIKit
     var icon: ConversationStatusIcon? = nil {
         didSet {
             if icon != oldValue {
-                self.updateForIcon()
+                updateForIcon()
+            }
+
+            if icon == nil {
+                accessibilityValue = nil
             }
         }
     }
@@ -43,7 +47,7 @@ import UIKit
         self.mediaPlaybackManager = mediaPlaybackManager
         super.init(frame: .zero)
                 
-        textLabel.setContentCompressionResistancePriority(UILayoutPriority.defaultHigh, for: .horizontal)
+        textLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
         textLabel.setContentCompressionResistancePriority(UILayoutPriority.defaultHigh, for: .vertical)
         textLabel.setContentHuggingPriority(UILayoutPriority.defaultHigh, for: .horizontal)
         textLabel.setContentHuggingPriority(UILayoutPriority.defaultHigh, for: .vertical)
@@ -189,7 +193,6 @@ import UIKit
             self.transparentIconView.isHidden = true
             
             updateCollapseConstraints(isCollapsed: true)
-            
             return
         }
         
