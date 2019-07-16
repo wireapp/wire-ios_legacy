@@ -43,7 +43,7 @@ import UIKit
         self.mediaPlaybackManager = mediaPlaybackManager
         super.init(frame: .zero)
                 
-        textLabel.setContentCompressionResistancePriority(UILayoutPriority.defaultHigh, for: .horizontal)
+        textLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
         textLabel.setContentCompressionResistancePriority(UILayoutPriority.defaultHigh, for: .vertical)
         textLabel.setContentHuggingPriority(UILayoutPriority.defaultHigh, for: .horizontal)
         textLabel.setContentHuggingPriority(UILayoutPriority.defaultHigh, for: .vertical)
