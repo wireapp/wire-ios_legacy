@@ -255,6 +255,9 @@ final class MessageToolboxView: UIView {
             return
         }
 
+        /// clean the accessibilityLabel to nil before animation starts
+        statusLabel.accessibilityLabel = nil
+
         switch dataSource.content {
             
         case .callList(let callListString):
