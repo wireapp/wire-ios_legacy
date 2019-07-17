@@ -18,23 +18,6 @@
 
 import UIKit
 
-extension TeamAccountView: DotViewContainer {
-    func createDotConstraints() {
-        let dotSize: CGFloat = 9
-
-        ///TODO: another position for team
-        [dotView, imageViewContainer].forEach() {
-            $0.translatesAutoresizingMaskIntoConstraints = false
-        }
-
-        NSLayoutConstraint.activate([ dotView.centerXAnchor.constraint(equalTo: imageViewContainer.trailingAnchor, constant: -3),
-                                      dotView.centerYAnchor.constraint(equalTo: imageViewContainer.centerYAnchor, constant: -6),
-                                      dotView.widthAnchor.constraint(equalTo: dotView.heightAnchor),
-                                      dotView.widthAnchor.constraint(equalToConstant: dotSize)
-            ])
-    }
-}
-
 final class TeamAccountView: BaseAccountView {
 
     public override var collapsed: Bool {
@@ -111,6 +94,23 @@ final class TeamAccountView: BaseAccountView {
         accessibilityIdentifier = "\(self.account.teamName ?? "") team"
     }
 
+}
+
+extension TeamAccountView: DotViewContainer {
+    func createDotConstraints() {
+        let dotSize: CGFloat = 9
+        let dotInset: CGFloat = 2
+
+        [dotView, imageViewContainer].forEach() {
+            $0.translatesAutoresizingMaskIntoConstraints = false
+        }
+
+        NSLayoutConstraint.activate([ dotView.centerXAnchor.constraint(equalTo: imageViewContainer.trailingAnchor, constant: -dotInset),
+                                      dotView.centerYAnchor.constraint(equalTo: imageViewContainer.topAnchor, constant: dotInset),
+                                      dotView.widthAnchor.constraint(equalTo: dotView.heightAnchor),
+                                      dotView.widthAnchor.constraint(equalToConstant: dotSize)
+            ])
+    }
 }
 
 extension TeamAccountView: TeamObserver {
