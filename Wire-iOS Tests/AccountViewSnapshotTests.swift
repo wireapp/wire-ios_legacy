@@ -22,25 +22,6 @@ import SnapshotTesting
 
 @testable import Wire
 
-extension UIImage {
-    public convenience init?(inTestBundleNamed name: String,
-                             for aClass: AnyClass) {
-
-        let bundle = Bundle(for: aClass)
-
-        let url = bundle.url(forResource: name, withExtension: "")
-
-        if let isFileURL = url?.isFileURL {
-            XCTAssert(isFileURL)
-        } else {
-            XCTFail("\(name) does not exist")
-        }
-
-        self.init(contentsOfFile: url!.path)!
-    }
-
-}
-
 final class AccountViewSnapshotTests: XCTestCase {
     static var imageData: Data!
 
@@ -48,7 +29,6 @@ final class AccountViewSnapshotTests: XCTestCase {
         super.setUp()
 
         imageData = UIImage(inTestBundleNamed: "unsplash_matterhorn.jpg", for: AccountViewSnapshotTests.self)!.jpegData(compressionQuality: 0.9)
-        
         accentColor = .violet
     }
 
@@ -157,6 +137,32 @@ final class AccountViewSnapshotTests: XCTestCase {
         sut.selected = true
 
         // THEN
+        verify(matching: sut)
+    }
+
+    func testThatItShowsBasicAccountSelected_Personal_withUnreadDot() {
+        // GIVEN
+        let account = Account(userName: "Iggy Pop", userIdentifier: UUID(), teamName: nil, imageData: nil)
+        account.unreadConversationCount = 100
+        let sut = PersonalAccountView(account: account)!
+        sut.unreadCountStyle = .current
+
+        // WHEN
+        sut.selected = true
+
+        // THEN
+        verify(matching: sut)
+    }
+
+    func testThatItShowsBasicAccountSelected_Team_withUnreadDot() {
+        // GIVEN
+        let account = Account(userName: "Iggy Pop", userIdentifier: UUID(), teamName: "Wire", imageData: nil)
+        account.unreadConversationCount = 100
+        let sut = TeamAccountView(account: account)!
+        sut.unreadCountStyle = .current
+        sut.selected = true
+
+        // WHEN && THEN
         verify(matching: sut)
     }
 }

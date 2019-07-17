@@ -49,7 +49,7 @@ final class TeamAccountView: BaseAccountView {
         imageViewContainer.addSubview(imageView)
 
         selectionView.pathGenerator = { size in
-            let radius = 4
+            let radius = 6
             let radii = CGSize(width: radius, height: radius)
             let path = UIBezierPath(roundedRect: CGRect(origin: .zero, size: size),
                                     byRoundingCorners: UIRectCorner.allCorners,
@@ -77,10 +77,10 @@ final class TeamAccountView: BaseAccountView {
         }
 
         NSLayoutConstraint.activate([
-        imageView.leadingAnchor.constraint(equalTo: imageViewContainer.leadingAnchor, constant: inset),
-        imageView.topAnchor.constraint(equalTo: imageViewContainer.topAnchor, constant: inset),
-        imageView.trailingAnchor.constraint(equalTo: imageViewContainer.trailingAnchor, constant: -inset),
-        imageView.bottomAnchor.constraint(equalTo: imageViewContainer.bottomAnchor, constant: -inset)
+            imageView.leadingAnchor.constraint(equalTo: imageViewContainer.leadingAnchor, constant: inset),
+            imageView.topAnchor.constraint(equalTo: imageViewContainer.topAnchor, constant: inset),
+            imageView.trailingAnchor.constraint(equalTo: imageViewContainer.trailingAnchor, constant: -inset),
+            imageView.bottomAnchor.constraint(equalTo: imageViewContainer.bottomAnchor, constant: -inset)
             ])
     }
 
@@ -107,6 +107,7 @@ extension TeamAccountView: DotViewContainer {
 
         NSLayoutConstraint.activate([ dotView.centerXAnchor.constraint(equalTo: imageViewContainer.trailingAnchor, constant: -dotInset),
                                       dotView.centerYAnchor.constraint(equalTo: imageViewContainer.topAnchor, constant: dotInset),
+                                      
                                       dotView.widthAnchor.constraint(equalTo: dotView.heightAnchor),
                                       dotView.widthAnchor.constraint(equalToConstant: dotSize)
             ])
