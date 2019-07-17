@@ -80,12 +80,16 @@ public enum AccountUnreadCountStyle {
     case others
 }
 
+protocol DotViewContainer {
+    func createDotConstraints()
+}
+
 class BaseAccountView: UIView, AccountViewType {
     public var autoUpdateSelection: Bool = true
     
-    internal let imageViewContainer = UIView()
+    let imageViewContainer = UIView()
     fileprivate let outlineView = UIView()
-    fileprivate let dotView : DotView
+    let dotView : DotView
     let selectionView = ShapeView()
     fileprivate var unreadCountToken : Any?
     fileprivate var selfUserObserver: NSObjectProtocol!
@@ -157,7 +161,9 @@ class BaseAccountView: UIView, AccountViewType {
             selectionView.edges == inset(imageViewContainer.edges, -1, -1)
         }
 
-        createConstraints()
+        if let dotViewContainer = self as? DotViewContainer {
+            dotViewContainer.createDotConstraints()
+        }
 
         let containerInset: CGFloat = 6
         
@@ -187,21 +193,6 @@ class BaseAccountView: UIView, AccountViewType {
         updateAppearance()
     }
 
-    private func createConstraints() {
-        let dotSize: CGFloat = 9
-
-        ///TODO: another position for team
-        [dotView, imageViewContainer].forEach() {
-            $0.translatesAutoresizingMaskIntoConstraints = false
-        }
-
-        NSLayoutConstraint.activate([ dotView.centerXAnchor.constraint(equalTo: imageViewContainer.trailingAnchor, constant: -3),
-                                      dotView.centerYAnchor.constraint(equalTo: imageViewContainer.centerYAnchor, constant: -6),
-                                      dotView.widthAnchor.constraint(equalTo: dotView.heightAnchor),
-                                      dotView.widthAnchor.constraint(equalToConstant: dotSize)
-            ])
-    }
-    
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -295,6 +286,22 @@ final class PersonalAccountView: BaseAccountView {
             let personName = PersonName.person(withName: self.account.userName, schemeTagger: nil)
             userImageView.avatar = .text(personName.initials)
         }
+    }
+}
+
+extension PersonalAccountView: DotViewContainer {
+    func createDotConstraints() {
+        let dotSize: CGFloat = 9
+
+        [dotView, imageViewContainer].forEach() {
+            $0.translatesAutoresizingMaskIntoConstraints = false
+        }
+
+        NSLayoutConstraint.activate([ dotView.centerXAnchor.constraint(equalTo: imageViewContainer.trailingAnchor, constant: -3),
+                                      dotView.centerYAnchor.constraint(equalTo: imageViewContainer.centerYAnchor, constant: -6),
+                                      dotView.widthAnchor.constraint(equalTo: dotView.heightAnchor),
+                                      dotView.widthAnchor.constraint(equalToConstant: dotSize)
+            ])
     }
 }
 

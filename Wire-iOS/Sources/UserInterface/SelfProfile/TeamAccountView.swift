@@ -17,7 +17,23 @@
 //
 
 import UIKit
-import Cartography
+
+extension TeamAccountView: DotViewContainer {
+    func createDotConstraints() {
+        let dotSize: CGFloat = 9
+
+        ///TODO: another position for team
+        [dotView, imageViewContainer].forEach() {
+            $0.translatesAutoresizingMaskIntoConstraints = false
+        }
+
+        NSLayoutConstraint.activate([ dotView.centerXAnchor.constraint(equalTo: imageViewContainer.trailingAnchor, constant: -3),
+                                      dotView.centerYAnchor.constraint(equalTo: imageViewContainer.centerYAnchor, constant: -6),
+                                      dotView.widthAnchor.constraint(equalTo: dotView.heightAnchor),
+                                      dotView.widthAnchor.constraint(equalToConstant: dotSize)
+            ])
+    }
+}
 
 final class TeamAccountView: BaseAccountView {
 
@@ -58,9 +74,7 @@ final class TeamAccountView: BaseAccountView {
             return path
         }
 
-        constrain(imageViewContainer, imageView) { imageViewContainer, imageView in
-            imageView.edges == inset(imageViewContainer.edges, 2, 2)
-        }
+        createConstraints()
 
         update()
 
@@ -71,6 +85,20 @@ final class TeamAccountView: BaseAccountView {
             teamObserver = TeamChangeInfo.add(observer: self, for: team)
             team.requestImage()
         }
+    }
+
+    private func createConstraints() {
+        let inset: CGFloat = 2
+        [imageView, imageViewContainer].forEach(){
+            $0.translatesAutoresizingMaskIntoConstraints = false
+        }
+
+        NSLayoutConstraint.activate([
+        imageView.leadingAnchor.constraint(equalTo: imageViewContainer.leadingAnchor, constant: inset),
+        imageView.topAnchor.constraint(equalTo: imageViewContainer.topAnchor, constant: inset),
+        imageView.trailingAnchor.constraint(equalTo: imageViewContainer.trailingAnchor, constant: -inset),
+        imageView.bottomAnchor.constraint(equalTo: imageViewContainer.bottomAnchor, constant: -inset)
+            ])
     }
 
     required init?(coder aDecoder: NSCoder) {
