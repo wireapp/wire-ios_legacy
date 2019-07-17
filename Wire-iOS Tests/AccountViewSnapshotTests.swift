@@ -47,6 +47,8 @@ final class AccountViewSnapshotTests: XCTestCase {
         super.setUp()
 
         imageData = UIImage(inTestBundleNamed: "unsplash_matterhorn.jpg", for: AccountViewSnapshotTests.self)!.jpegData(compressionQuality: 0.9)
+        
+        accentColor = .violet
     }
 
     override class func tearDown() {
@@ -55,11 +57,6 @@ final class AccountViewSnapshotTests: XCTestCase {
         super.tearDown()
     }
 
-    override func setUp() {
-        super.setUp()
-        accentColor = .violet
-    }
-    
     func testThatItShowsBasicAccount_Personal() {
         // GIVEN
         let account = Account(userName: "Iggy Pop", userIdentifier: UUID(), teamName: nil, imageData: nil)
