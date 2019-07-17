@@ -16,11 +16,45 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
+
 import XCTest
+import SnapshotTesting
+
 @testable import Wire
 
-class AccountViewTests: ZMSnapshotTestCase {
+extension UIImage {
+    public convenience init?(inTestBundleNamed name: String) {
+
+        let bundle = Bundle(for: type(of: self))
+
+        let url = bundle.url(forResource: name, withExtension: "")
+
+        if let isFileURL = url?.isFileURL {
+            XCTAssert(isFileURL)
+        } else {
+            XCTFail("\(name) does not exist")
+        }
+
+        self.init(contentsOfFile: url!.path)!
+    }
+
+}
+
+final class AccountViewSnapshotTests: XCTestCase {
+    static var imageData: Data!
+
+    override class func setUp() {
+        super.setUp()
+
+        imageData = UIImage(inTestBundleNamed: "unsplash_matterhorn.jpg")!.jpegData(compressionQuality: 0.9)
+    }
+
+    override class func tearDown() {
+        imageData = nil
+
+        super.tearDown()
+    }
+
     override func setUp() {
         super.setUp()
         accentColor = .violet
@@ -31,7 +65,7 @@ class AccountViewTests: ZMSnapshotTestCase {
         let account = Account(userName: "Iggy Pop", userIdentifier: UUID(), teamName: nil, imageData: nil)
         let sut = PersonalAccountView(account: account)!
         // WHEN && THEN
-        self.verify(view: sut.snapshotView())
+        verify(matching: sut)
     }
 
     func testThatItShowsBasicAccountSelected_Personal() {
@@ -41,15 +75,15 @@ class AccountViewTests: ZMSnapshotTestCase {
         // WHEN 
         sut.selected = true
         // THEN
-        self.verify(view: sut.snapshotView())
+        verify(matching: sut)
     }
     
     func testThatItShowsBasicAccountWithPicture_Personal() {
         // GIVEN
-        let account = Account(userName: "Iggy Pop", userIdentifier: UUID(), teamName: nil, imageData: self.image(inTestBundleNamed: "unsplash_matterhorn.jpg").jpegData(compressionQuality: 0.9))
+        let account = Account(userName: "Iggy Pop", userIdentifier: UUID(), teamName: nil, imageData: AccountViewSnapshotTests.imageData)
         let sut = PersonalAccountView(account: account)!
         // WHEN && THEN
-        self.verify(view: sut.snapshotView())
+        verify(matching: sut)
     }
     
     func testThatItShowsBasicAccountWithPictureSelected_Personal() {
@@ -59,7 +93,7 @@ class AccountViewTests: ZMSnapshotTestCase {
         // WHEN 
         sut.selected = true
         // THEN
-        self.verify(view: sut.snapshotView())
+        verify(matching: sut)
     }
     
     func testThatItShowsBasicAccount_Team() {
@@ -67,7 +101,7 @@ class AccountViewTests: ZMSnapshotTestCase {
         let account = Account(userName: "Iggy Pop", userIdentifier: UUID(), teamName: "Wire", imageData: nil)
         let sut = TeamAccountView(account: account)!
         // WHEN && THEN
-        self.verify(view: sut.snapshotView())
+        verify(matching: sut)
     }
     
     func testThatItShowsBasicAccountSelected_Team() {
@@ -77,7 +111,7 @@ class AccountViewTests: ZMSnapshotTestCase {
         // WHEN
         sut.selected = true
         // THEN
-        self.verify(view: sut.snapshotView())
+        verify(matching: sut)
     }
     
     func testThatItShowsBasicAccountWithPicture_Team() {
@@ -85,7 +119,7 @@ class AccountViewTests: ZMSnapshotTestCase {
         let account = Account(userName: "Iggy Pop", userIdentifier: UUID(), teamName: "Wire", imageData: nil, teamImageData: self.image(inTestBundleNamed: "unsplash_matterhorn.jpg").jpegData(compressionQuality: 0.9))
         let sut = TeamAccountView(account: account)!
         // WHEN && THEN
-        self.verify(view: sut.snapshotView())
+        verify(matching: sut)
     }
     
     func testThatItShowsBasicAccountWithPictureSelected_Team() {
@@ -95,15 +129,6 @@ class AccountViewTests: ZMSnapshotTestCase {
         // WHEN
         sut.selected = true
         // THEN
-        self.verify(view: sut.snapshotView())
-    }
-}
-
-fileprivate extension UIView {
-    func snapshotView() -> UIView {
-        self.layer.speed = 0
-        self.setNeedsLayout()
-        self.layoutIfNeeded()
-        return self
+        verify(matching: sut)
     }
 }
