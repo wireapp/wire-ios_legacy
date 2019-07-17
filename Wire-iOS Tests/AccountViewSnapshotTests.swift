@@ -129,4 +129,34 @@ final class AccountViewSnapshotTests: XCTestCase {
         // THEN
         verify(matching: sut)
     }
+
+    //MARK: - unread dot
+
+    func testThatItShowsBasicAccountWithPictureSelected_Team_withUnreadDot() {
+        // GIVEN
+        let account = Account(userName: "Iggy Pop", userIdentifier: UUID(), teamName: "Wire", imageData: nil, teamImageData: AccountViewSnapshotTests.imageData)
+        account.unreadConversationCount = 100
+        let sut = TeamAccountView(account: account)!
+        sut.unreadCountStyle = .current
+
+        // WHEN
+        sut.selected = true
+
+        // THEN
+        verify(matching: sut)
+    }
+
+    func testThatItShowsBasicAccountWithPictureSelected_Personal_withUnreadDot() {
+        // GIVEN
+        let account = Account(userName: "Iggy Pop", userIdentifier: UUID(), teamName: nil, imageData: AccountViewSnapshotTests.imageData)
+        account.unreadConversationCount = 100
+        let sut = PersonalAccountView(account: account)!
+        sut.unreadCountStyle = .current
+
+        // WHEN
+        sut.selected = true
+
+        // THEN
+        verify(matching: sut)
+    }
 }
