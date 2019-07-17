@@ -29,6 +29,16 @@ final class TeamImageView: UIImageView {
     public enum Content {
         case teamImage(Data)
         case teamName(String)
+
+        init?(imageData: Data?, name: String?) {
+            if let imageData = imageData {
+                self = .teamImage(imageData)
+            } else if let name = name, !name.isEmpty {
+                self = .teamName(name)
+            } else {
+                return nil
+            }
+        }
     }
 
     var content: Content {

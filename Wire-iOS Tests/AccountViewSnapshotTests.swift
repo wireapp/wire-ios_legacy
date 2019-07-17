@@ -23,7 +23,8 @@ import SnapshotTesting
 @testable import Wire
 
 extension UIImage {
-    public convenience init?(inTestBundleNamed name: String, for aClass: AnyClass) {
+    public convenience init?(inTestBundleNamed name: String,
+                             for aClass: AnyClass) {
 
         let bundle = Bundle(for: aClass)
 

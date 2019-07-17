@@ -65,8 +65,8 @@ public protocol AccountViewType {
     var account: Account { get }
 }
 
-public enum AccountViewFactory {
-    public static func viewFor(account: Account, user: ZMUser? = nil) -> BaseAccountView {
+enum AccountViewFactory {
+    static func viewFor(account: Account, user: ZMUser? = nil) -> BaseAccountView {
         return TeamAccountView(account: account, user: user) ?? PersonalAccountView(account: account, user: user)!
     }
 }
@@ -80,13 +80,13 @@ public enum AccountUnreadCountStyle {
     case others
 }
 
-public class BaseAccountView: UIView, AccountViewType {
+class BaseAccountView: UIView, AccountViewType {
     public var autoUpdateSelection: Bool = true
     
     internal let imageViewContainer = UIView()
     fileprivate let outlineView = UIView()
     fileprivate let dotView : DotView
-    fileprivate let selectionView = ShapeView()
+    let selectionView = ShapeView()
     fileprivate var unreadCountToken : Any?
     fileprivate var selfUserObserver: NSObjectProtocol!
     public let account: Account
@@ -228,7 +228,7 @@ extension BaseAccountView: ZMUserObserver {
     }
 }
 
-public final class PersonalAccountView: BaseAccountView {
+final class PersonalAccountView: BaseAccountView {
     internal let userImageView: AvatarImageView = {
         let avatarImageView = AvatarImageView(frame: .zero)
         avatarImageView.container.backgroundColor = .from(scheme: .background, variant: .light)
@@ -300,107 +300,18 @@ extension PersonalAccountView {
     }
 }
 
-final class TeamAccountView: BaseAccountView {
-    
-    public override var collapsed: Bool {
-        didSet {
-            self.imageView.isHidden = collapsed
-        }
-    }
-    
-    private let imageView: TeamImageView
-    private var teamObserver: NSObjectProtocol!
-    private var conversationListObserver: NSObjectProtocol!
-    
-    override init?(account: Account, user: ZMUser? = nil) {
-        
-        if let content = user?.team?.teamImageViewContent ?? account.teamImageViewContent {
-            imageView = TeamImageView(content: content)
-        } else {
-            return nil
-        }
-        
-        super.init(account: account, user: user)
-        
-        isAccessibilityElement = true
-        accessibilityTraits = .button
-        shouldGroupAccessibilityChildren = true
-        
-        imageView.contentMode = .scaleAspectFill
-        
-        imageViewContainer.addSubview(imageView)
-        
-        self.selectionView.pathGenerator = { size in
-            let radius = 4
-            let radii = CGSize(width: radius, height: radius)
-            let path = UIBezierPath(roundedRect: CGRect(origin: .zero, size: size),
-                                    byRoundingCorners: UIRectCorner.allCorners,
-                                    cornerRadii: radii)
-
-            let scale = (size.width - 3) / path.bounds.width
-            path.apply(CGAffineTransform(scaleX: scale, y: scale))
-            return path
-        }
-        
-        constrain(imageViewContainer, imageView) { imageViewContainer, imageView in
-            imageView.edges == inset(imageViewContainer.edges, 2, 2)
-        }
-
-        update()
-        
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTap(_:)))
-        addGestureRecognizer(tapGesture)
-        
-        if let team = user?.team {
-            teamObserver = TeamChangeInfo.add(observer: self, for: team)
-            team.requestImage()
-        }
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    public override func update() {
-        super.update()
-        accessibilityValue = String(format: "conversation_list.header.self_team.accessibility_value".localized, self.account.teamName ?? "") + " " + accessibilityState
-        accessibilityIdentifier = "\(self.account.teamName ?? "") team"
-    }
-    
-}
-
-extension TeamAccountView: TeamObserver {
-    func teamDidChange(_ changeInfo: TeamChangeInfo) {
-        guard let content = changeInfo.team.teamImageViewContent else { return }
-        
-        imageView.content = content
-    }
-}
-
-fileprivate extension TeamType {
+extension TeamType {
     
     var teamImageViewContent: TeamImageView.Content? {
-        if let imageData = imageData {
-            return .teamImage(imageData)
-        } else if let name = name, !name.isEmpty {
-            return .teamName(name)
-        } else {
-            return nil
-        }
+        return TeamImageView.Content(imageData: imageData, name: name)
     }
     
 }
 
-fileprivate extension Account {
+extension Account {
     
     var teamImageViewContent: TeamImageView.Content? {
-        if let imageData = teamImageData {
-            return .teamImage(imageData)
-        } else if let name = teamName, !name.isEmpty {
-            return .teamName(name)
-        } else {
-            return nil
-        }
+        return TeamImageView.Content(imageData: imageData, name: teamName)
     }
     
 }

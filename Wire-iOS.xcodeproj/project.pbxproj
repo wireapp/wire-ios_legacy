@@ -1029,6 +1029,7 @@
 		EF0154B8225B939200A77FB6 /* ContactsEmptyResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87DCF4811D34E9BA00BB420F /* ContactsEmptyResultView.swift */; };
 		EF01D28022B136A9009754B2 /* Data+FingerprintStringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF01D27F22B136A9009754B2 /* Data+FingerprintStringTests.swift */; };
 		EF05948422DF07240079B8E1 /* XCTestCase+AccentColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF05948322DF07240079B8E1 /* XCTestCase+AccentColor.swift */; };
+		EF05948622DF18290079B8E1 /* TeamAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF05948522DF18290079B8E1 /* TeamAccountView.swift */; };
 		EF066E1621EF938C00D56CAD /* MessageActionResponder.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF066E1521EF938C00D56CAD /* MessageActionResponder.swift */; };
 		EF066E1821EF997D00D56CAD /* ConversationContentViewController+ConversationMessageCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF066E1721EF997D00D56CAD /* ConversationContentViewController+ConversationMessageCellDelegate.swift */; };
 		EF0D9972205BC74F002D488E /* NetworkStatusViewControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF0D9971205BC74F002D488E /* NetworkStatusViewControllerSnapshotTests.swift */; };
@@ -2831,6 +2832,7 @@
 		EF0154B6225B922200A77FB6 /* ContactsViewController+Constraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContactsViewController+Constraints.swift"; sourceTree = "<group>"; };
 		EF01D27F22B136A9009754B2 /* Data+FingerprintStringTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+FingerprintStringTests.swift"; sourceTree = "<group>"; };
 		EF05948322DF07240079B8E1 /* XCTestCase+AccentColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+AccentColor.swift"; sourceTree = "<group>"; };
+		EF05948522DF18290079B8E1 /* TeamAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamAccountView.swift; sourceTree = "<group>"; };
 		EF066E1521EF938C00D56CAD /* MessageActionResponder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageActionResponder.swift; sourceTree = "<group>"; };
 		EF066E1721EF997D00D56CAD /* ConversationContentViewController+ConversationMessageCellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationContentViewController+ConversationMessageCellDelegate.swift"; sourceTree = "<group>"; };
 		EF0D9971205BC74F002D488E /* NetworkStatusViewControllerSnapshotTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkStatusViewControllerSnapshotTests.swift; sourceTree = "<group>"; };
@@ -4709,6 +4711,7 @@
 			isa = PBXGroup;
 			children = (
 				8708C6811F50860100845C7D /* AccountView.swift */,
+				EF05948522DF18290079B8E1 /* TeamAccountView.swift */,
 				EFDAC64622DE2AD100D63025 /* TeamImageView.swift */,
 				8745476A1E9E54E600C206E5 /* SelfProfileViewController.swift */,
 				1610366E20616EBC008AFDD0 /* SelfProfileViewController+NewDeviceAlert.swift */,
@@ -7553,6 +7556,7 @@
 				BA79B0A51B6284D900F23AFB /* SoundEventRulesWatchDog.m in Sources */,
 				EF701A35223C00E0007165E4 /* ConversationContentViewController+CreateView.swift in Sources */,
 				EF834B862203600500E92F13 /* FullscreenImageViewController+MessageActionResponder.swift in Sources */,
+				EF05948622DF18290079B8E1 /* TeamAccountView.swift in Sources */,
 				EFDB3138217F6BEF00D2A7CE /* SwipeMenuCollectionCell+Constraint.swift in Sources */,
 				871BC2501D34F8F800DF0793 /* MediaAsset.m in Sources */,
 				871BC2581D34F8F800DF0793 /* SwizzleTransition.m in Sources */,
