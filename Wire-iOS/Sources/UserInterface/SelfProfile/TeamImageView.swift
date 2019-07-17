@@ -51,17 +51,20 @@ final class TeamImageView: UIImageView {
     internal let initialLabel = UILabel()
     public var style: TeamImageViewStyle = .small {
         didSet {
-            switch (self.style) {
-            case .big:
-                initialLabel.font = .largeThinFont
-            case .small:
-                applySmallStyle()
-            }
+            applyStyle(style: style)
         }
     }
 
-    func applySmallStyle() {
-        initialLabel.font = .smallSemiboldFont
+    func applyStyle(style: TeamImageViewStyle ) {
+        switch style {
+        case .small:
+            initialLabel.font = .smallSemiboldFont
+        case .big:
+            initialLabel.font = .largeThinFont
+        case .team:
+            initialLabel.font = .largeThinFont
+        }
+
         initialLabel.textColor = .from(scheme: .textForeground, variant: .light)
         backgroundColor = .from(scheme: .background, variant: .light)
     }
@@ -71,7 +74,7 @@ final class TeamImageView: UIImageView {
         clipsToBounds = true
     }
 
-    init(content: Content) {
+    init(content: Content, style: TeamImageViewStyle = .small) {
         self.content = content
         super.init(frame: .zero)
 
@@ -86,9 +89,11 @@ final class TeamImageView: UIImageView {
 
         self.updateImage()
 
-        applySmallStyle()
-
         updateRoundCorner()
+
+        self.style = style
+
+        applyStyle(style: style)
     }
 
     required public init?(coder aDecoder: NSCoder) {
@@ -111,7 +116,7 @@ final class TeamImageView: UIImageView {
             initialLabel.text = ""
         case .teamName(let name):
             image = nil
-            initialLabel.text = name.first.map(String.init) ///TODO: font
+            initialLabel.text = name.first.map(String.init)
         }
     }
 }

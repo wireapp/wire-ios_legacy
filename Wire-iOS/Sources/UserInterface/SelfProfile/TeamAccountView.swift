@@ -33,7 +33,7 @@ final class TeamAccountView: BaseAccountView {
     override init?(account: Account, user: ZMUser? = nil) {
 
         if let content = user?.team?.teamImageViewContent ?? account.teamImageViewContent {
-            imageView = TeamImageView(content: content)
+            imageView = TeamImageView(content: content, style: .big)
         } else {
             return nil
         }

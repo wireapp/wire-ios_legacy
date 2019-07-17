@@ -125,7 +125,6 @@ class BaseAccountView: UIView, AccountViewType {
     }
     
     func updateAppearance() {
-        
         selectionView.isHidden = !selected || collapsed
         dotView.hasUnreadMessages = hasUnreadMessages
         selectionView.hostedLayer.strokeColor = UIColor.accent().cgColor
@@ -161,9 +160,7 @@ class BaseAccountView: UIView, AccountViewType {
             selectionView.edges == inset(imageViewContainer.edges, -1, -1)
         }
 
-        if let dotViewContainer = self as? DotViewContainer {
-            dotViewContainer.createDotConstraints()
-        }
+        (self as? DotViewContainer)?.createDotConstraints()
 
         let containerInset: CGFloat = 6
         
