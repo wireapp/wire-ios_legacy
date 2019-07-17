@@ -75,6 +75,10 @@ extension UIFont {
         return FontSpec(.normal, .semibold).font!
     }
 
+    class var normalTeamIniitialFont: UIFont {
+        return FontSpec(.normal, .light, .largeTitle).font!
+    }
+
     // MARK: - Medium
 
     class var mediumFont: UIFont {
@@ -106,5 +110,6 @@ extension UIFont {
     class var largeSemiboldFont: UIFont {
         return FontSpec(.large, .semibold).font!
     }
+
     
 }
