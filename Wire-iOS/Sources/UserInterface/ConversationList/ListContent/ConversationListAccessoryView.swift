@@ -46,6 +46,8 @@ import UIKit
     @objc init(mediaPlaybackManager: MediaPlaybackManager) {
         self.mediaPlaybackManager = mediaPlaybackManager
         super.init(frame: .zero)
+        
+        badgeView.accessibilityIdentifier = "action_button"
                 
         textLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
         textLabel.setContentCompressionResistancePriority(UILayoutPriority.defaultHigh, for: .vertical)
