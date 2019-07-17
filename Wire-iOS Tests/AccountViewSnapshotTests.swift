@@ -23,9 +23,9 @@ import SnapshotTesting
 @testable import Wire
 
 extension UIImage {
-    public convenience init?(inTestBundleNamed name: String) {
+    public convenience init?(inTestBundleNamed name: String, for aClass: AnyClass) {
 
-        let bundle = Bundle(for: type(of: self))
+        let bundle = Bundle(for: aClass)
 
         let url = bundle.url(forResource: name, withExtension: "")
 
@@ -46,7 +46,7 @@ final class AccountViewSnapshotTests: XCTestCase {
     override class func setUp() {
         super.setUp()
 
-        imageData = UIImage(inTestBundleNamed: "unsplash_matterhorn.jpg")!.jpegData(compressionQuality: 0.9)
+        imageData = UIImage(inTestBundleNamed: "unsplash_matterhorn.jpg", for: AccountViewSnapshotTests.self)!.jpegData(compressionQuality: 0.9)
     }
 
     override class func tearDown() {
@@ -88,7 +88,7 @@ final class AccountViewSnapshotTests: XCTestCase {
     
     func testThatItShowsBasicAccountWithPictureSelected_Personal() {
         // GIVEN
-        let account = Account(userName: "Iggy Pop", userIdentifier: UUID(), teamName: nil, imageData: self.image(inTestBundleNamed: "unsplash_matterhorn.jpg").jpegData(compressionQuality: 0.9))
+        let account = Account(userName: "Iggy Pop", userIdentifier: UUID(), teamName: nil, imageData: AccountViewSnapshotTests.imageData)
         let sut = PersonalAccountView(account: account)!
         // WHEN 
         sut.selected = true
@@ -116,7 +116,7 @@ final class AccountViewSnapshotTests: XCTestCase {
     
     func testThatItShowsBasicAccountWithPicture_Team() {
         // GIVEN
-        let account = Account(userName: "Iggy Pop", userIdentifier: UUID(), teamName: "Wire", imageData: nil, teamImageData: self.image(inTestBundleNamed: "unsplash_matterhorn.jpg").jpegData(compressionQuality: 0.9))
+        let account = Account(userName: "Iggy Pop", userIdentifier: UUID(), teamName: "Wire", imageData: nil, teamImageData: AccountViewSnapshotTests.imageData)
         let sut = TeamAccountView(account: account)!
         // WHEN && THEN
         verify(matching: sut)
@@ -124,7 +124,7 @@ final class AccountViewSnapshotTests: XCTestCase {
     
     func testThatItShowsBasicAccountWithPictureSelected_Team() {
         // GIVEN
-        let account = Account(userName: "Iggy Pop", userIdentifier: UUID(), teamName: "Wire", imageData: nil, teamImageData: self.image(inTestBundleNamed: "unsplash_matterhorn.jpg").jpegData(compressionQuality: 0.9))
+        let account = Account(userName: "Iggy Pop", userIdentifier: UUID(), teamName: "Wire", imageData: nil, teamImageData: AccountViewSnapshotTests.imageData)
         let sut = TeamAccountView(account: account)!
         // WHEN
         sut.selected = true
