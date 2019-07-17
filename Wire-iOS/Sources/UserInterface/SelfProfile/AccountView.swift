@@ -157,16 +157,8 @@ class BaseAccountView: UIView, AccountViewType {
             selectionView.edges == inset(imageViewContainer.edges, -1, -1)
         }
 
-        let dotSize: CGFloat = 9
+        createConstraints()
 
-        constrain(imageViewContainer, dotView) { imageViewContainer, dotView in
-            dotView.centerX == imageViewContainer.trailing - 3
-            dotView.centerY == imageViewContainer.centerY - 6
-            
-            dotView.width == dotView.height
-            dotView.height == dotSize
-        }
-        
         let containerInset: CGFloat = 6
         
         constrain(self, imageViewContainer, dotView) { selfView, imageViewContainer, dotView in
@@ -193,6 +185,21 @@ class BaseAccountView: UIView, AccountViewType {
         }
         
         updateAppearance()
+    }
+
+    private func createConstraints() {
+        let dotSize: CGFloat = 9
+
+        ///TODO: another position for team
+        [dotView, imageViewContainer].forEach() {
+            $0.translatesAutoresizingMaskIntoConstraints = false
+        }
+
+        NSLayoutConstraint.activate([ dotView.centerXAnchor.constraint(equalTo: imageViewContainer.trailingAnchor, constant: -3),
+                                      dotView.centerYAnchor.constraint(equalTo: imageViewContainer.centerYAnchor, constant: -6),
+                                      dotView.widthAnchor.constraint(equalTo: dotView.heightAnchor),
+                                      dotView.widthAnchor.constraint(equalToConstant: dotSize)
+            ])
     }
     
     required public init?(coder aDecoder: NSCoder) {
