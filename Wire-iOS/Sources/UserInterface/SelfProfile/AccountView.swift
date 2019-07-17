@@ -311,7 +311,7 @@ extension TeamType {
 extension Account {
     
     var teamImageViewContent: TeamImageView.Content? {
-        return TeamImageView.Content(imageData: imageData, name: teamName)
+        return TeamImageView.Content(imageData: teamImageData, name: teamName)
     }
     
 }
