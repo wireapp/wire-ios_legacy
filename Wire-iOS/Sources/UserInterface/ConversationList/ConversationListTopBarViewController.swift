@@ -178,7 +178,7 @@ final class ConversationListTopBarViewController: UIViewController {
 
     @objc
     func presentLegalHoldInfo() {
-        LegalHoldDetailsViewController.present(in: self, user: ZMUser.selfUser())
+        LegalHoldDetailsViewController.present(in: self, user: ZMUser.selfUser(), from: nil)
     }
 
     @objc func presentLegalHoldRequest() {

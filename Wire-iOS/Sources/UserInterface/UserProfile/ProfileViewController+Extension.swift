@@ -216,7 +216,7 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
     @objc
     func presentLegalHoldDetails() {
         guard let user = fullUser() else { return }
-        LegalHoldDetailsViewController.present(in: self, user: user)
+        LegalHoldDetailsViewController.present(in: self, user: user, from: conversation)
     }
     
     // MARK: - Action Handlers

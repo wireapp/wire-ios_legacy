@@ -24,9 +24,9 @@ final class LegalHoldDetailsViewController: UIViewController {
     fileprivate let collectionViewController: SectionCollectionViewController
     fileprivate let conversation: ZMConversation
     
-    convenience init?(user: UserType) {
-        guard let conversation = user.oneToOneConversation else { return nil }
-        self.init(conversation: conversation)
+    convenience init?(user: UserType, from conversation: ZMConversation?) {
+        guard let subjectConversation = user.oneToOneConversation ?? conversation else { return nil }
+        self.init(conversation: subjectConversation)
     }
         
     init(conversation: ZMConversation) {
@@ -48,8 +48,8 @@ final class LegalHoldDetailsViewController: UIViewController {
 
 
     @discardableResult
-    static func present(in parentViewController: UIViewController, user: ZMUser) -> UINavigationController? {
-        guard let legalHoldDetailsViewController = LegalHoldDetailsViewController(user: user) else { return nil }
+    static func present(in parentViewController: UIViewController, user: ZMUser, from conversation: ZMConversation?) -> UINavigationController? {
+        guard let legalHoldDetailsViewController = LegalHoldDetailsViewController(user: user, from: conversation) else { return nil }
 
         return legalHoldDetailsViewController.wrapInNavigationControllerAndPresent(from: parentViewController)
     }
