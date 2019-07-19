@@ -86,7 +86,7 @@ class SettingsTechnicalReportViewController: UITableViewController, MFMailCompos
                 mailComposeViewController.addAttachmentData(previousLog, mimeType: "text/plain", fileName: previousPath.lastPathComponent)
             }
         }
-        mailComposeViewController.setMessageBody("Calling report", isHTML: false)
+        mailComposeViewController.setMessageBody("Debug report", isHTML: false)
         self.present(mailComposeViewController, animated: true, completion: nil)
     }
     

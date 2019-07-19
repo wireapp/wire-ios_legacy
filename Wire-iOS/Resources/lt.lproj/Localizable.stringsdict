@@ -341,7 +341,7 @@
     <key>registration.password.rules.min_length</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
-      <string>at least %#@character_count@</string>
+      <string>mažiausiai %#@character_count@</string>
       <key>character_count</key>
       <dict>
         <key>NSStringFormatSpecTypeKey</key>
@@ -349,13 +349,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>one character</string>
+        <string>vienas simbolis</string>
         <key>few</key>
-        <string>%d characters</string>
+        <string>%d simboliai</string>
         <key>many</key>
-        <string>%d characters</string>
+        <string>%d simbolių</string>
         <key>other</key>
-        <string>%d characters</string>
+        <string>%d simbolių</string>
       </dict>
     </dict>
     <key>registration.password.rules.lowercase</key>
@@ -369,13 +369,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>one lowercase letter</string>
+        <string>viena mažoji raidė</string>
         <key>few</key>
-        <string>%d lowercase letters</string>
+        <string>%d mažosios raidės</string>
         <key>many</key>
-        <string>%d lowercase letters</string>
+        <string>%d mažųjų raidžių</string>
         <key>other</key>
-        <string>%d lowercase letters</string>
+        <string>%d mažųjų raidžių</string>
       </dict>
     </dict>
     <key>registration.password.rules.uppercase</key>
@@ -389,13 +389,13 @@
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>one</key>
-        <string>one capital letter</string>
+        <string>viena didžioji raidė</string>
         <key>few</key>
-        <string>%d capital letters</string>
+        <string>%d didžiosios raidės</string>
         <key>many</key>
-        <string>%d capital letters</string>
+        <string>%d didžiųjų raidžių</string>
         <key>other</key>
-        <string>%d capital letters</string>
+        <string>%d didžiųjų raidžių</string>
       </dict>
     </dict>
     <key>registration.password.rules.number</key>
@@ -409,13 +409,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>a number</string>
+        <string>vienas skaitmuo</string>
         <key>few</key>
-        <string>%d numbers</string>
+        <string>%d skaitmenys</string>
         <key>many</key>
-        <string>%d numbers</string>
+        <string>%d skaitmens</string>
         <key>other</key>
-        <string>%d numbers</string>
+        <string>%d skaitmenų</string>
       </dict>
     </dict>
     <key>registration.password.rules.special</key>
@@ -429,13 +429,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>a special character</string>
+        <string>vienas specialusis simbolis</string>
         <key>few</key>
-        <string>%d special characters</string>
+        <string>%d specialieji simboliai</string>
         <key>many</key>
-        <string>%d special characters</string>
+        <string>%d specialiųjų simbolių</string>
         <key>other</key>
-        <string>%d special characters</string>
+        <string>%d specialiųjų simbolių</string>
       </dict>
     </dict>
   </dict>

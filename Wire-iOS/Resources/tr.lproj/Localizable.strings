@@ -27,10 +27,11 @@
 "general.edit" = "Düzenle";
 "general.done" = "Yapıldı";
 "general.confirm" = "TAMAM";
-"general.skip" = "Şimdi değil";
+"general.skip" = "Henüz değil";
 "general.accept" = "Kabul et";
 "general.decline" = "Hayır, Teşekkürler";
 "general.failure" = "Bir şeyler yanlış gitti";
+"general.failure.try_again" = "Lütfen tekrar deneyin.";
 "general.service" = "Hizmet";
 "general.off" = "Kapalı";
 "general.on" = "Açık";
@@ -41,6 +42,9 @@
 "general.space_between_words" = " ";
 
 "general.guest-room-name" = "Misafir odası";
+
+// User Cell
+"user_cell.title.you_suffix" = " (Siz)";
 
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -200,6 +204,9 @@
 "list.archived_conversations_close" = "Arşivi kapat";
 
 "conversation.voiceover.verified" = "onaylanmış";
+"conversation.voiceover.legalhold" = "kanuni durdurma";
+"conversation.voiceover.value.active" = "etkin";
+"conversation.voiceover.value.disabled" = "devre dışı";
 
 "conversation.status.typing" = "Bir mesaj yazıyor…";
 "conversation.status.typing.group" = "%@: bir mesaj yazıyor…";
@@ -301,6 +308,8 @@
 "conversation.input_bar.ongoing_call_alert.audio.message" = "Görüşme sırasında sesli mesaj kaydedemezsiniz.";
 "conversation.input_bar.ongoing_call_alert.video.message" = "Bir arama sırasında video kaydedemezsiniz.";
 "conversation.input_bar.ongoing_call_alert.photo.message" = "Bir arama sırasında fotoğraf çekemezsiniz.";
+
+"conversation.alert.message_deleted" = "İleti silindi.";
 
 "conversation.guests_present" = "Misafirler mevcut";
 "conversation.services_present" = "Servisler aktif";
@@ -461,6 +470,14 @@
 
 "content.system.message_read_receipt_on_add_to_group" = "Okundu bilgisi açık";
 
+// legal hold
+
+"content.system.message_legal_hold.enabled" = "Bu konuşma yasal tutuluyor";
+"content.system.message_legal_hold.disabled" = "Bu konuşma için yasal bekletme özelliği devre dışı bırakıldı";
+
+"content.system.message_legal_hold.learn_more" = "Daha fazla bilgi";
+
+//
 
 "content.system.reactivated_device" = "Tekrar %@ kullanmaya başladın. Bu sırada gönderilmiş mesajlar burada gözükmeyecek.";
 
@@ -711,10 +728,13 @@
 // Conversation Degraded (security level lowered)
 "meta.degraded.degradation_reason_message.singular" = "%@ yeni bir cihaz kullanmaya başladı.";
 "meta.degraded.degradation_reason_message.plural" = "%@ yeni cihazlar kullanmaya başladı.";
+"meta.degraded.degradation_reason_message.someone" = "Birisi yeni bir cihaz kullanmaya başladı.";
 "meta.degraded.dialog_message" = "Hâlâ mesajınızı göndermek istiyor musunuz?";
-"meta.degraded.show_device_button" = "Cihazı göster";
-"meta.degraded.send_anyway_button" = "Yine de gönder";
+"meta.degraded.verify_devices_button" = "Cihazları doğrula…";
+"meta.degraded.send_anyway_button" = "Yine de Gönder";
 "meta.degraded.cancel_sending_button" = "İptal";
+"meta.legalhold.info_button" = "Yasal Tutma Nedir?";
+"meta.legalhold.send_alert_title" = "Konuşma şimdi yasal düzenlemeye tabidir.";
 
 // Remove from conversation dialogue
 "profile.remove_dialog_title" = "Sil?";
@@ -786,12 +806,20 @@
 "profile.devices.detail.verify_message" = "Bunun %@'ın aygıtında gösterilen parmak iziyle eşleştiğini doğrulayın.";
 "profile.devices.detail.verify_message.link" = "Bunu nasıl yaparım?";
 "profile.devices.detail.show_my_device.title" = "Cihazımın parmak izini göster";
+"profile.devices.detail.reset_session.title" = "Oturumu sıfırla";
 "device.verified" = "Doğrulanmış";
 "device.not_verified" = "Doğrulanmadı";
+
+"device.class.legalhold" = "Kanuni Durdurma";
 "device.class.desktop" = "Masaüstü";
 "device.class.tablet" = "Tablet";
 "device.class.phone" = "Telefon";
-"profile.devices.detail.reset_session.title" = "Oturumu sıfırla";
+"device.class.unknown" = "Bilinmiyor";
+
+"device.type.permanent" = "Kalıcı";
+"device.type.temporary" = "Geçici";
+"device.type.legalhold" = "Kanuni Durdurma";
+"device.type.unknown" = "Bilinmiyor";
 
 // Bot
 "participants.services.remove_integration.button" = "entegrasyonu kaldır";
@@ -805,6 +833,15 @@
 "group_details.notification_options_cell.description" = "Her şeyden (sesli ve görüntülü aramalar dahil) veya yalnızca biri sizden bahsettiğinde veya mesajlarınızdan birini yanıtladığında size bildirim gelebilir.";
 "group_details.receipt_options_cell.title" = "Okundu bilgisi";
 "group_details.receipt_options_cell.description" = "Bu açıkken, insanlar bu görüşmedeki mesajlarının ne zaman okunduğunu görebilir.";
+
+// Legal hold details
+
+"legalhold.participants.section.title" = "Yasal tutma konuları";
+"legalhold.header.title" = "Kanuni Durdurma";
+"legalhold.header.other_description" = "Yasal tutma bu konuşmada en az bir kişi için aktive edildi.\nSilinen, düzenlenmiş ve zamanlanmış mesajlar dahil olmak üzere tüm mesajlar ileride erişilebilecek şekilde korunur.";
+"legalhold.header.self_description" = "Hesabınız için Yasal Tutma etkinleştirildi.\nSilinen, düzenlenmiş ve zamanlanmış mesajlar dahil olmak üzere tüm mesajlar ileride erişilebilecek şekilde korunur.\nKonuşma ortaklarınız kaydın farkında olacak.";
+"legalhold.accessibility" = "Yasal bekletme detayları";
+
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile
@@ -1060,8 +1097,8 @@
 
 "self.settings.advanced.title" = "Gelişmiş";
 "self.settings.advanced.troubleshooting.title" = "Sorun giderme";
-"self.settings.advanced.troubleshooting.submit_debug.title" = "Rapor çağırılıyor";
-"self.settings.advanced.troubleshooting.submit_debug.subtitle" = "Bu bilgiler Wire Destek Ekibi'nin, arama sorunlarınızı teşhis etmesine yardımcı olur.";
+"self.settings.advanced.troubleshooting.submit_debug.title" = "Hata Ayıklama Raporu";
+"self.settings.advanced.troubleshooting.submit_debug.subtitle" = "Bu bilgi, Wire Desteği arama sorunlarını tanılamanıza ve genel uygulama deneyimini geliştirmenize yardımcı olur.";
 "self.settings.advanced.reset_push_token.title" = "Bildirim Sıfırlama Belirteci";
 "self.settings.advanced.reset_push_token.subtitle" = "Eğer anlık bildirimler ile sorun yaşıyorsanız, Wire Destek sizden jetonu sıfırlamanızı isteyebilir.";
 "self.settings.advanced.reset_push_token_alert.title" = "Anlık Belirteş sıfırlandı";
@@ -1074,7 +1111,7 @@
 // Technical Report
 "self.settings.technical_report_section.title" = "Teknik Destek";
 "self.settings.technical_report.send_report" = "Raporu Wire'a gönder";
-"self.settings.technical_report.mail.subject" = "Wire Çağrı Rapor";
+"self.settings.technical_report.mail.subject" = "Wire Hata Ayıklama Raporu";
 "self.settings.technical_report.include_log" = "Detaylı günlüğü ekle";
 "self.settings.technical_report.privacy_warning" = "Detaylı günlükler kişisel verilerinizi içerebilir";
 "self.settings.technical_report.no_mail_alert" = "Posta istemcisi algılanmadı. \"Tamam\" düğmesine dokunun ve günlükleri aşağıdakilere manuel olarak gönderin: ";
@@ -1610,3 +1647,25 @@
 // Password Rules
 "registration.password.rules.no_requirements" = "%@ kullanın.";
 "registration.password.rules.with_requirements" = "%@ İle %@ kullanın.";
+
+// Legal Hold Deactivation
+"legal_hold.deactivated.title" = "Yasal Bekletme Devre Dışı Bırakıldı";
+"legal_hold.deactivated.message" = "Gelecekteki mesajlar kaydedilmeyecektir.";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Share Extension
+"share_extension.voiceover.conversation_under_legal_hold" = "Yasal bekletme altında.";
+"share_extension.voiceover.conversation_secure" = "Tüm müşteriler doğrulandı.";
+"share_extension.voiceover.conversation_secure_with_ignored" = "Tüm müşteriler doğrulanmadı.";
+
+// Legal hold - alert
+"legalhold_request.button.accessibility" = "Onay bekliyor.";
+"legalhold_request.alert.title" = "Kanuni Durdurma istendi";
+"legalhold_request.alert.detail" = "Gelecekteki tüm mesajlar parmak izi ile cihaz tarafından kaydedilecektir:\n\n%@\n\nBu, tüm sohbetlerden silinmiş, düzenlenmiş ve süreli mesajları içerir.";
+"legalhold_request.alert.detail.enter_password" = "Onaylamak için şifrenizi girin.";
+"legalhold_request.alert.error_wrong_password" = "Yanlış Şifre";
+
+// Legal hold activated
+"legalhold_active.alert.title" = "Kanuni Durdurma Etkin";
+"legalhold_active.alert.learn_more" = "Daha Fazla";
+"legalhold_active.alert.message" = "Hesabınız için Yasal Tutma etkinleştirildi.\nSilinen, düzenlenmiş ve zamanlanmış mesajlar dahil olmak üzere tüm mesajlar ileride erişilebilecek şekilde korunur.\nKonuşma ortaklarınız kaydın farkında olacak.";
