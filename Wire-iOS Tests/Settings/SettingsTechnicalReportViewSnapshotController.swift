@@ -25,7 +25,6 @@ final class SettingsTechnicalReportViewSnapshotController: XCTestCase {
 
     override func setUp() {
         super.setUp()
-
         sut = SettingsTechnicalReportViewController()
     }
 

@@ -18,7 +18,6 @@
 
 import UIKit
 import MessageUI
-import Cartography
 import WireSystem
 
 typealias TechnicalReport = [String: String]
@@ -77,7 +76,7 @@ final class SettingsTechnicalReportViewController: UITableViewController, MFMail
             DebugAlert.displayFallbackActivityController(logPaths: ZMSLog.pathsForExistingLogs, email: mailRecipient, from: self)
             return
         }
-    
+
         let mailComposeViewController = MFMailComposeViewController()
         mailComposeViewController.mailComposeDelegate = self
         mailComposeViewController.setToRecipients([mailRecipient])
@@ -127,11 +126,14 @@ final class SettingsTechnicalReportViewController: UITableViewController, MFMail
         let container = UIView()
         container.addSubview(label)
         container.layoutMargins = UIEdgeInsets(top: 0, left: 18, bottom: 0, right: 18)
-        
-        constrain(label, container) { label, container in
-            label.edges == container.edgesWithinMargins
+
+        [label, container].forEach() {
+            $0.translatesAutoresizingMaskIntoConstraints = false
         }
-        
+        NSLayoutConstraint.activate([label.topAnchor.constraint(equalTo: container.layoutMarginsGuide.topAnchor),
+                                     label.bottomAnchor.constraint(equalTo: container.layoutMarginsGuide.bottomAnchor),
+                                     label.leadingAnchor.constraint(equalTo: container.layoutMarginsGuide.leadingAnchor),
+                                     label.trailingAnchor.constraint(equalTo: container.layoutMarginsGuide.trailingAnchor)])
         return container
     }
     
