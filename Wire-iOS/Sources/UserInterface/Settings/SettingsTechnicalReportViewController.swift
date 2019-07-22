@@ -23,7 +23,7 @@ import WireSystem
 
 typealias TechnicalReport = [String: String]
 
-class SettingsTechnicalReportViewController: UITableViewController, MFMailComposeViewControllerDelegate {
+final class SettingsTechnicalReportViewController: UITableViewController, MFMailComposeViewControllerDelegate {
     
     static private let technicalReportTitle = "TechnicalReportTitleKey"
     static private let technicalReportData = "TechnicalReportDataKey"
@@ -63,7 +63,12 @@ class SettingsTechnicalReportViewController: UITableViewController, MFMailCompos
         tableView.isScrollEnabled = false
         tableView.separatorColor = UIColor(white: 1, alpha: 0.1)
     }
-    
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        updateStatusBar()
+    }
     
     func sendReport() {
         let mailRecipient = "calling-ios@wire.com"
@@ -147,5 +152,9 @@ class SettingsTechnicalReportViewController: UITableViewController, MFMailCompos
     // MARK: Mail Delegate
     func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
         controller.presentingViewController?.dismiss(animated: true, completion: nil)
+    }
+
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
 }
