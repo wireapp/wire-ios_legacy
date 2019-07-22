@@ -20,7 +20,7 @@ import XCTest
 import SnapshotTesting
 @testable import Wire
 
-final class SettingsTechnicalReportViewSnapshotController: XCTestCase {
+final class SettingsTechnicalReportViewControllerSnapshotTests: XCTestCase {
     var sut: SettingsTechnicalReportViewController!
 
     override func setUp() {

@@ -126,8 +126,9 @@ final class SettingsTechnicalReportViewController: UITableViewController, MFMail
         let container = UIView()
         container.addSubview(label)
         container.layoutMargins = UIEdgeInsets(top: 0, left: 18, bottom: 0, right: 18)
+        container.backgroundColor = .clear
 
-        [label, container].forEach() {
+        [label].forEach() {
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
         NSLayoutConstraint.activate([label.topAnchor.constraint(equalTo: container.layoutMarginsGuide.topAnchor),
