@@ -31,6 +31,7 @@
 "general.accept" = "Принять";
 "general.decline" = "Нет, спасибо";
 "general.failure" = "Что-то пошло не так";
+"general.failure.try_again" = "Пожалуйста, попробуйте еще раз.";
 "general.service" = "Сервис";
 "general.off" = "Откл.";
 "general.on" = "Вкл.";
@@ -41,6 +42,9 @@
 "general.space_between_words" = " ";
 
 "general.guest-room-name" = "Гостевая комната";
+
+// User Cell
+"user_cell.title.you_suffix" = " (Вы)";
 
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -200,6 +204,9 @@
 "list.archived_conversations_close" = "Закрыть архив";
 
 "conversation.voiceover.verified" = "верифицировано";
+"conversation.voiceover.legalhold" = "правовая защита";
+"conversation.voiceover.value.active" = "активно";
+"conversation.voiceover.value.disabled" = "отключено";
 
 "conversation.status.typing" = "Печатает сообщение…";
 "conversation.status.typing.group" = "%@: печатает сообщение…";
@@ -301,6 +308,8 @@
 "conversation.input_bar.ongoing_call_alert.audio.message" = "Во время разговора вы не можете записать аудиосообщение.";
 "conversation.input_bar.ongoing_call_alert.video.message" = "Во время разговора вы не можете записать видео.";
 "conversation.input_bar.ongoing_call_alert.photo.message" = "Во время разговора вы не можете сделать снимок.";
+
+"conversation.alert.message_deleted" = "Сообщение удалено.";
 
 "conversation.guests_present" = "Присутствуют гости";
 "conversation.services_present" = "Сервисы активны";
@@ -461,6 +470,14 @@
 
 "content.system.message_read_receipt_on_add_to_group" = "Отчеты о прочтении включены";
 
+// legal hold
+
+"content.system.message_legal_hold.enabled" = "Этот разговор находится под правовой защитой";
+"content.system.message_legal_hold.disabled" = "Для этого разговора деактивирована правовая защита";
+
+"content.system.message_legal_hold.learn_more" = "Подробнее";
+
+//
 
 "content.system.reactivated_device" = "Вы снова начали использовать %@. Сообщения, отправленные ранее, не будут отображаться здесь.";
 
@@ -711,10 +728,13 @@
 // Conversation Degraded (security level lowered)
 "meta.degraded.degradation_reason_message.singular" = "%@ начал(а) использовать новое устройство.";
 "meta.degraded.degradation_reason_message.plural" = "%@ начал(а) использовать новые устройства.";
+"meta.degraded.degradation_reason_message.someone" = "Кто-то начал(а) использовать новое устройство.";
 "meta.degraded.dialog_message" = "Вы все еще хотите отправить свое сообщение?";
-"meta.degraded.show_device_button" = "Показать устройство";
+"meta.degraded.verify_devices_button" = "Верифицируйте устройства…";
 "meta.degraded.send_anyway_button" = "Отправить в любом случае";
 "meta.degraded.cancel_sending_button" = "Отмена";
+"meta.legalhold.info_button" = "Что такое правовая защита?";
+"meta.legalhold.send_alert_title" = "Этот разговор теперь является предметом правовой защиты.";
 
 // Remove from conversation dialogue
 "profile.remove_dialog_title" = "Удалить?";
@@ -786,12 +806,20 @@
 "profile.devices.detail.verify_message" = "Убедитесь, что этот отпечаток совпадает с отпечатком, показанном на устройстве %@.";
 "profile.devices.detail.verify_message.link" = "Как это сделать?";
 "profile.devices.detail.show_my_device.title" = "Показать отпечаток моего устройства";
+"profile.devices.detail.reset_session.title" = "Сбросить сессию";
 "device.verified" = "Верифицировано";
 "device.not_verified" = "Не верифицировано";
+
+"device.class.legalhold" = "Правовая защита";
 "device.class.desktop" = "Компьютер";
 "device.class.tablet" = "Планшет";
 "device.class.phone" = "Телефон";
-"profile.devices.detail.reset_session.title" = "Сбросить сессию";
+"device.class.unknown" = "Неизвестное";
+
+"device.type.permanent" = "Постоянное";
+"device.type.temporary" = "Временное";
+"device.type.legalhold" = "Правовая защита";
+"device.type.unknown" = "Неизвестное";
 
 // Bot
 "participants.services.remove_integration.button" = "удалить интеграцию";
@@ -805,6 +833,15 @@
 "group_details.notification_options_cell.description" = "Вы можете получать уведомления обо всем (включая аудио- и видеовызовы) или только когда кто-то упоминает вас или отвечает на одно из ваших сообщений.";
 "group_details.receipt_options_cell.title" = "Отчеты о прочтении";
 "group_details.receipt_options_cell.description" = "При включении ваши собеседники смогут видеть когда было прочитано их сообщение.";
+
+// Legal hold details
+
+"legalhold.participants.section.title" = "Субъекты правовой защиты";
+"legalhold.header.title" = "Правовая защита";
+"legalhold.header.other_description" = "В этом разговоре активирована правовая защита как минимум для одного человека.\nВсе сообщения будут сохранены для последующего доступа, включая удаленные, отредактированные и просроченные.";
+"legalhold.header.self_description" = "Для вашей учетной записи активирована правовая защита.\nВсе сообщения будут сохранены для последующего доступа, включая удаленные, отредактированные и просроченные.\nВаши собеседники будут уведомлены об этом.";
+"legalhold.accessibility" = "Подробности о правовой защите";
+
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile
@@ -1060,8 +1097,8 @@
 
 "self.settings.advanced.title" = "Дополнительные настройки";
 "self.settings.advanced.troubleshooting.title" = "Устранение неполадок";
-"self.settings.advanced.troubleshooting.submit_debug.title" = "Отладочный отчет о вызовах";
-"self.settings.advanced.troubleshooting.submit_debug.subtitle" = "Эта информация помогает службе поддержки Wire диагностировать проблемы, связанные с вызовами.";
+"self.settings.advanced.troubleshooting.submit_debug.title" = "Отладочный отчет";
+"self.settings.advanced.troubleshooting.submit_debug.subtitle" = "Эта информация помогает поддержке Wire диагностировать проблемы с вызовами и улучшать опыт использования приложения.";
 "self.settings.advanced.reset_push_token.title" = "Обновить токен push-уведомлений";
 "self.settings.advanced.reset_push_token.subtitle" = "При возникновении проблем с push-уведомлениями, служба поддержки Wire может попросить вас обновить токен.";
 "self.settings.advanced.reset_push_token_alert.title" = "Токен Push-уведомлений был обновлен";
@@ -1074,7 +1111,7 @@
 // Technical Report
 "self.settings.technical_report_section.title" = "Технический отчет";
 "self.settings.technical_report.send_report" = "Отправить отчет в Wire";
-"self.settings.technical_report.mail.subject" = "Отчет о звонках Wire";
+"self.settings.technical_report.mail.subject" = "Отладочный отчет Wire";
 "self.settings.technical_report.include_log" = "Включить подробный журнал";
 "self.settings.technical_report.privacy_warning" = "Подробные журналы могут содержать личные данные";
 "self.settings.technical_report.no_mail_alert" = "Почтовый клиент не обнаружен. Нажмите \"OK\" и отправьте журналы вручную: ";
@@ -1610,3 +1647,25 @@
 // Password Rules
 "registration.password.rules.no_requirements" = "Использовать %@.";
 "registration.password.rules.with_requirements" = "Использовать %@, с %@.";
+
+// Legal Hold Deactivation
+"legal_hold.deactivated.title" = "Правовая защита деактивирована";
+"legal_hold.deactivated.message" = "Будущие сообщения не будут сохраняться.";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Share Extension
+"share_extension.voiceover.conversation_under_legal_hold" = "Под правовой защитой.";
+"share_extension.voiceover.conversation_secure" = "Все клиенты верифицированы.";
+"share_extension.voiceover.conversation_secure_with_ignored" = "Не все клиенты верифицированы.";
+
+// Legal hold - alert
+"legalhold_request.button.accessibility" = "В ожидании принятия.";
+"legalhold_request.alert.title" = "Запрошена правовая защита";
+"legalhold_request.alert.detail" = "Все будущие сообщения будут записываться устройством с отпечатком:\n\n%@\n\nЭто включает удаленные, отредактированные и синхронизированные сообщения во всех беседах.";
+"legalhold_request.alert.detail.enter_password" = "Введите пароль для подтверждения.";
+"legalhold_request.alert.error_wrong_password" = "Неверный пароль";
+
+// Legal hold activated
+"legalhold_active.alert.title" = "Правовая защита активна";
+"legalhold_active.alert.learn_more" = "Подробнее";
+"legalhold_active.alert.message" = "Для вашей учетной записи активирована правовая защита.\nВсе сообщения будут сохранены для последующего доступа, включая удаленные, отредактированные и просроченные.\n\nВаши собеседники будут уведомлены об этом.";

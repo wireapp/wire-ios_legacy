@@ -27,10 +27,11 @@
 "general.edit" = "Uredi";
 "general.done" = "Done";
 "general.confirm" = "V redu";
-"general.skip" = "Ne zdaj";
+"general.skip" = "Not Now";
 "general.accept" = "Sprejmi";
 "general.decline" = "No, thanks";
 "general.failure" = "Nekaj je šlo narobe";
+"general.failure.try_again" = "Please try again.";
 "general.service" = "Service";
 "general.off" = "Izklopljeno";
 "general.on" = "On";
@@ -41,6 +42,9 @@
 "general.space_between_words" = " ";
 
 "general.guest-room-name" = "Guest room";
+
+// User Cell
+"user_cell.title.you_suffix" = " (You)";
 
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -200,6 +204,9 @@
 "list.archived_conversations_close" = "Zapri arhiv";
 
 "conversation.voiceover.verified" = "verified";
+"conversation.voiceover.legalhold" = "legal hold";
+"conversation.voiceover.value.active" = "active";
+"conversation.voiceover.value.disabled" = "disabled";
 
 "conversation.status.typing" = "Tipka sporočilo…";
 "conversation.status.typing.group" = "%@: tipka sporočilo…";
@@ -301,6 +308,8 @@
 "conversation.input_bar.ongoing_call_alert.audio.message" = "You can’t record an audio message during a call.";
 "conversation.input_bar.ongoing_call_alert.video.message" = "You can’t record a video during a call.";
 "conversation.input_bar.ongoing_call_alert.photo.message" = "You can’t take a picture during a call.";
+
+"conversation.alert.message_deleted" = "The message is deleted.";
 
 "conversation.guests_present" = "Guests are present";
 "conversation.services_present" = "Services are active";
@@ -461,6 +470,14 @@
 
 "content.system.message_read_receipt_on_add_to_group" = "Read receipts are on";
 
+// legal hold
+
+"content.system.message_legal_hold.enabled" = "This conversation is under legal hold";
+"content.system.message_legal_hold.disabled" = "Legal hold deactivated for this conversation";
+
+"content.system.message_legal_hold.learn_more" = "Nauči se več";
+
+//
 
 "content.system.reactivated_device" = "Spet ste začeli z uporabo %@. Sporočila poslana medtem ne bodo prikazana tukaj.";
 
@@ -711,10 +728,13 @@
 // Conversation Degraded (security level lowered)
 "meta.degraded.degradation_reason_message.singular" = "%@ je začel(-a) z uporabo nove naprave.";
 "meta.degraded.degradation_reason_message.plural" = "%@je začel(-a) z uporabo novih naprav.";
+"meta.degraded.degradation_reason_message.someone" = "Nekdo je začel(-a) z uporabo nove naprave.";
 "meta.degraded.dialog_message" = "Ali še vedno želite poslati vaše sporočilo?";
-"meta.degraded.show_device_button" = "Pokaži napravo";
-"meta.degraded.send_anyway_button" = "Pošlji vseeno";
+"meta.degraded.verify_devices_button" = "Verify Devices…";
+"meta.degraded.send_anyway_button" = "Send Anyway";
 "meta.degraded.cancel_sending_button" = "Prekliči";
+"meta.legalhold.info_button" = "What Is Legal Hold?";
+"meta.legalhold.send_alert_title" = "The conversation is now subject to legal hold.";
 
 // Remove from conversation dialogue
 "profile.remove_dialog_title" = "Odstrani?";
@@ -786,12 +806,20 @@
 "profile.devices.detail.verify_message" = "Preverite, da se to ujema s prstnim odtisom na napravi od %@.";
 "profile.devices.detail.verify_message.link" = "Kako to storim?";
 "profile.devices.detail.show_my_device.title" = "Prikaži prstni odtis moje naprave";
+"profile.devices.detail.reset_session.title" = "Ponastavi sejo";
 "device.verified" = "Preverjena";
 "device.not_verified" = "Ni preverjena";
+
+"device.class.legalhold" = "Legal Hold";
 "device.class.desktop" = "Osebni računalnik";
 "device.class.tablet" = "Tablica";
 "device.class.phone" = "Telefon";
-"profile.devices.detail.reset_session.title" = "Ponastavi sejo";
+"device.class.unknown" = "Unknown";
+
+"device.type.permanent" = "Permanent";
+"device.type.temporary" = "Temporary";
+"device.type.legalhold" = "Legal Hold";
+"device.type.unknown" = "Unknown";
 
 // Bot
 "participants.services.remove_integration.button" = "remove integration";
@@ -805,6 +833,15 @@
 "group_details.notification_options_cell.description" = "You can be notified about everything (including audio and video calls) or only when someone mentions you or replies to one of your messages.";
 "group_details.receipt_options_cell.title" = "Read receipts";
 "group_details.receipt_options_cell.description" = "When this is on, people can see when their messages in this conversation are read.";
+
+// Legal hold details
+
+"legalhold.participants.section.title" = "Legal hold subjects";
+"legalhold.header.title" = "Legal Hold";
+"legalhold.header.other_description" = "Legal Hold has been activated for at least one person in this conversation.\nAll messages will be preserved for future access, including deleted, edited, and timed messages.";
+"legalhold.header.self_description" = "Legal Hold has been activated for your account.\nAll messages will be preserved for future access, including deleted, edited, and timed messages.\nYour conversation partners will be aware of the recording.";
+"legalhold.accessibility" = "Legal hold details";
+
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile
@@ -1060,8 +1097,8 @@
 
 "self.settings.advanced.title" = "Napredno";
 "self.settings.advanced.troubleshooting.title" = "Odpravljanje napak";
-"self.settings.advanced.troubleshooting.submit_debug.title" = "Razhroščevalno poročilo o klicih";
-"self.settings.advanced.troubleshooting.submit_debug.subtitle" = "Te informacije pomagajo podpori Wire za diagnozo težav pri klicih.";
+"self.settings.advanced.troubleshooting.submit_debug.title" = "Debug Report";
+"self.settings.advanced.troubleshooting.submit_debug.subtitle" = "This information helps Wire Support diagnose calling problems and improve the overall app experience.";
 "self.settings.advanced.reset_push_token.title" = "Ponastavitev žetona za push obvestila";
 "self.settings.advanced.reset_push_token.subtitle" = "Če imate težave s push obvestili, vas bo podpora Wire morda zaprosila za ponastavitev tega žetona.";
 "self.settings.advanced.reset_push_token_alert.title" = "Push žeton je bil ponastavljen";
@@ -1074,7 +1111,7 @@
 // Technical Report
 "self.settings.technical_report_section.title" = "Tehnično poročilo";
 "self.settings.technical_report.send_report" = "Pošlji poročilo na Wire";
-"self.settings.technical_report.mail.subject" = "Wire poročilo o klicih";
+"self.settings.technical_report.mail.subject" = "Wire Debug Report";
 "self.settings.technical_report.include_log" = "Vključi podroben dnevnik";
 "self.settings.technical_report.privacy_warning" = "Podrobni dnevniki lahko vsebujejo osebne podatke";
 "self.settings.technical_report.no_mail_alert" = "No mail client detected. Tap \"OK\" and send logs manually to: ";
@@ -1610,3 +1647,25 @@
 // Password Rules
 "registration.password.rules.no_requirements" = "Use %@.";
 "registration.password.rules.with_requirements" = "Use %@, with %@.";
+
+// Legal Hold Deactivation
+"legal_hold.deactivated.title" = "Legal Hold Deactivated";
+"legal_hold.deactivated.message" = "Future messages will not be recorded.";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Share Extension
+"share_extension.voiceover.conversation_under_legal_hold" = "Under legal hold.";
+"share_extension.voiceover.conversation_secure" = "All clients verified.";
+"share_extension.voiceover.conversation_secure_with_ignored" = "Not all clients verified.";
+
+// Legal hold - alert
+"legalhold_request.button.accessibility" = "Pending approval.";
+"legalhold_request.alert.title" = "Legal Hold Requested";
+"legalhold_request.alert.detail" = "All future messages will be recorded by the device with fingerprint:\n\n%@\n\nThis includes deleted, edited, and timed messages in all conversations.";
+"legalhold_request.alert.detail.enter_password" = "Enter your password to confirm.";
+"legalhold_request.alert.error_wrong_password" = "Wrong Password";
+
+// Legal hold activated
+"legalhold_active.alert.title" = "Legal Hold is Active";
+"legalhold_active.alert.learn_more" = "Nauči se več";
+"legalhold_active.alert.message" = "Legal Hold has been activated for your account. All messages will be preserved for future access, including deleted, edited, and timed messages.\n\nYour conversation partners will be aware of the recording.";

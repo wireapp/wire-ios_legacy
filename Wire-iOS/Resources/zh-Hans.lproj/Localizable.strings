@@ -27,10 +27,11 @@
 "general.edit" = "修改";
 "general.done" = "完成";
 "general.confirm" = "好";
-"general.skip" = "先跳过";
+"general.skip" = "Not Now";
 "general.accept" = "接听";
 "general.decline" = "不用了，谢谢";
 "general.failure" = "好像出了点问题。";
+"general.failure.try_again" = "Please try again.";
 "general.service" = "服务";
 "general.off" = "关闭";
 "general.on" = "开启";
@@ -41,6 +42,9 @@
 "general.space_between_words" = "\U200B";
 
 "general.guest-room-name" = "访客聊天室";
+
+// User Cell
+"user_cell.title.you_suffix" = " (You)";
 
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -200,6 +204,9 @@
 "list.archived_conversations_close" = "关闭归档";
 
 "conversation.voiceover.verified" = "已验证";
+"conversation.voiceover.legalhold" = "legal hold";
+"conversation.voiceover.value.active" = "active";
+"conversation.voiceover.value.disabled" = "disabled";
 
 "conversation.status.typing" = "正在输入...";
 "conversation.status.typing.group" = "%@︰正在输入...";
@@ -301,6 +308,8 @@
 "conversation.input_bar.ongoing_call_alert.audio.message" = "在通话时不能录制语音讯息。";
 "conversation.input_bar.ongoing_call_alert.video.message" = "You can’t record a video during a call.";
 "conversation.input_bar.ongoing_call_alert.photo.message" = "You can’t take a picture during a call.";
+
+"conversation.alert.message_deleted" = "The message is deleted.";
 
 "conversation.guests_present" = "访客在对话中";
 "conversation.services_present" = "Services are active";
@@ -461,6 +470,14 @@
 
 "content.system.message_read_receipt_on_add_to_group" = "已读提示已打开";
 
+// legal hold
+
+"content.system.message_legal_hold.enabled" = "This conversation is under legal hold";
+"content.system.message_legal_hold.disabled" = "Legal hold deactivated for this conversation";
+
+"content.system.message_legal_hold.learn_more" = "更多信息";
+
+//
 
 "content.system.reactivated_device" = "您再次开始使用%@。在此期间发送的信息将不会在这里显示。";
 
@@ -711,10 +728,13 @@
 // Conversation Degraded (security level lowered)
 "meta.degraded.degradation_reason_message.singular" = "%@ 开始使用新的设备。";
 "meta.degraded.degradation_reason_message.plural" = "%@ 开始使用新的设备。";
+"meta.degraded.degradation_reason_message.someone" = "有人开始使用新的设备。";
 "meta.degraded.dialog_message" = "您仍然要发送您的信息吗？";
-"meta.degraded.show_device_button" = "显示设备";
-"meta.degraded.send_anyway_button" = "确定发送";
+"meta.degraded.verify_devices_button" = "Verify Devices…";
+"meta.degraded.send_anyway_button" = "Send Anyway";
 "meta.degraded.cancel_sending_button" = "取消";
+"meta.legalhold.info_button" = "What Is Legal Hold?";
+"meta.legalhold.send_alert_title" = "The conversation is now subject to legal hold.";
 
 // Remove from conversation dialogue
 "profile.remove_dialog_title" = "移除？";
@@ -786,12 +806,20 @@
 "profile.devices.detail.verify_message" = "验证在%@设备上的设备指纹。";
 "profile.devices.detail.verify_message.link" = "我该怎么办？";
 "profile.devices.detail.show_my_device.title" = "显示我的设备指纹";
+"profile.devices.detail.reset_session.title" = "重置Session";
 "device.verified" = "验证";
 "device.not_verified" = "未验证";
+
+"device.class.legalhold" = "Legal Hold";
 "device.class.desktop" = "桌面";
 "device.class.tablet" = "平板电脑";
 "device.class.phone" = "电话";
-"profile.devices.detail.reset_session.title" = "重置Session";
+"device.class.unknown" = "Unknown";
+
+"device.type.permanent" = "Permanent";
+"device.type.temporary" = "Temporary";
+"device.type.legalhold" = "Legal Hold";
+"device.type.unknown" = "Unknown";
 
 // Bot
 "participants.services.remove_integration.button" = "移除服务";
@@ -805,6 +833,15 @@
 "group_details.notification_options_cell.description" = "You can be notified about everything (including audio and video calls) or only when someone mentions you or replies to one of your messages.";
 "group_details.receipt_options_cell.title" = "Read receipts";
 "group_details.receipt_options_cell.description" = "When this is on, people can see when their messages in this conversation are read.";
+
+// Legal hold details
+
+"legalhold.participants.section.title" = "Legal hold subjects";
+"legalhold.header.title" = "Legal Hold";
+"legalhold.header.other_description" = "Legal Hold has been activated for at least one person in this conversation.\nAll messages will be preserved for future access, including deleted, edited, and timed messages.";
+"legalhold.header.self_description" = "Legal Hold has been activated for your account.\nAll messages will be preserved for future access, including deleted, edited, and timed messages.\nYour conversation partners will be aware of the recording.";
+"legalhold.accessibility" = "Legal hold details";
+
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile
@@ -1060,8 +1097,8 @@
 
 "self.settings.advanced.title" = "高级";
 "self.settings.advanced.troubleshooting.title" = "疑难排解";
-"self.settings.advanced.troubleshooting.submit_debug.title" = "通话调试报告";
-"self.settings.advanced.troubleshooting.submit_debug.subtitle" = "该信息帮助Wire确定您在通话过程中遇到的问题。";
+"self.settings.advanced.troubleshooting.submit_debug.title" = "Debug Report";
+"self.settings.advanced.troubleshooting.submit_debug.subtitle" = "This information helps Wire Support diagnose calling problems and improve the overall app experience.";
 "self.settings.advanced.reset_push_token.title" = "重置信息推送通知的Token";
 "self.settings.advanced.reset_push_token.subtitle" = "当您遇到信息推送相关问题，Wire 建议您重置该Token。";
 "self.settings.advanced.reset_push_token_alert.title" = "信息推送Token已被重置";
@@ -1074,7 +1111,7 @@
 // Technical Report
 "self.settings.technical_report_section.title" = "技术报告";
 "self.settings.technical_report.send_report" = "发送报告给Wire";
-"self.settings.technical_report.mail.subject" = "Wire通话报告";
+"self.settings.technical_report.mail.subject" = "Wire Debug Report";
 "self.settings.technical_report.include_log" = "包括详细的日志";
 "self.settings.technical_report.privacy_warning" = "详细的日志将包含个人数据";
 "self.settings.technical_report.no_mail_alert" = "没有电邮程式。点击“确定”并手动将日志发送到：";
@@ -1610,3 +1647,25 @@
 // Password Rules
 "registration.password.rules.no_requirements" = "Use %@.";
 "registration.password.rules.with_requirements" = "Use %@, with %@.";
+
+// Legal Hold Deactivation
+"legal_hold.deactivated.title" = "Legal Hold Deactivated";
+"legal_hold.deactivated.message" = "Future messages will not be recorded.";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Share Extension
+"share_extension.voiceover.conversation_under_legal_hold" = "Under legal hold.";
+"share_extension.voiceover.conversation_secure" = "All clients verified.";
+"share_extension.voiceover.conversation_secure_with_ignored" = "Not all clients verified.";
+
+// Legal hold - alert
+"legalhold_request.button.accessibility" = "Pending approval.";
+"legalhold_request.alert.title" = "Legal Hold Requested";
+"legalhold_request.alert.detail" = "All future messages will be recorded by the device with fingerprint:\n\n%@\n\nThis includes deleted, edited, and timed messages in all conversations.";
+"legalhold_request.alert.detail.enter_password" = "Enter your password to confirm.";
+"legalhold_request.alert.error_wrong_password" = "Wrong Password";
+
+// Legal hold activated
+"legalhold_active.alert.title" = "Legal Hold is Active";
+"legalhold_active.alert.learn_more" = "了解更多信息";
+"legalhold_active.alert.message" = "Legal Hold has been activated for your account. All messages will be preserved for future access, including deleted, edited, and timed messages.\n\nYour conversation partners will be aware of the recording.";

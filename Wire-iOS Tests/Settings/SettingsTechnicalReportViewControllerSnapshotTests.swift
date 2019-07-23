@@ -1,4 +1,3 @@
-
 // Wire
 // Copyright (C) 2019 Wire Swiss GmbH
 //
@@ -16,26 +15,26 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
+import XCTest
+import SnapshotTesting
+@testable import Wire
 
-extension ConversationListCell {
-    override open var accessibilityValue: String? {
-        get {
-            return itemView.accessibilityValue
-        }
+final class SettingsTechnicalReportViewControllerSnapshotTests: XCTestCase {
+    var sut: SettingsTechnicalReportViewController!
 
-        set {
-            // no op
-        }
+    override func setUp() {
+        super.setUp()
+        sut = SettingsTechnicalReportViewController()
     }
 
-    override open var accessibilityLabel: String? {
-        get {
-            return itemView.accessibilityLabel
-        }
+    override func tearDown() {
+        sut = nil
+        super.tearDown()
+    }
 
-        set {
-            // no op
-        }
+    func testForInitState() {
+        let naviViewController = sut.wrapInNavigationController(SettingsStyleNavigationController.self)
+        naviViewController.view.backgroundColor = .black
+        verify(matching: naviViewController)
     }
 }
