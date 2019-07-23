@@ -83,7 +83,7 @@ public enum AccountUnreadCountStyle {
 public class BaseAccountView: UIView, AccountViewType {
     public var autoUpdateSelection: Bool = true
     
-    internal let imageViewContainer = UIView()
+    let imageViewContainer = UIView()
     fileprivate let outlineView = UIView()
     fileprivate let dotView : DotView
     fileprivate let selectionView = ShapeView()
@@ -175,7 +175,7 @@ public class BaseAccountView: UIView, AccountViewType {
             selfView.width >= imageViewContainer.width
             selfView.trailing >= dotView.trailing
             
-            imageViewContainer.width == 32
+            imageViewContainer.width == CGFloat.ConversationListHeader.iconWidth
             imageViewContainer.height == imageViewContainer.width
             
             imageViewContainer.bottom == selfView.bottom - containerInset
