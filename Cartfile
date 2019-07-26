@@ -1,6 +1,6 @@
 github "wireapp/wire-ios-ziphy" ~> 13.0
 github "wireapp/Cartography" "4.0.0"
-github "wireapp/wire-ios-sync-engine" ~> 269.0
+github "wireapp/wire-ios-sync-engine" "feature/teamlogo"
 github "wireapp/wire-ios-share-engine" ~> 152.0
 github "wireapp/FormatterKit" "1.8.1-swift3.0.2"
 github "wireapp/wire-ios-canvas" ~> 10.0
