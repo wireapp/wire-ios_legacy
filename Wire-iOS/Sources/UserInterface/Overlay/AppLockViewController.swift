@@ -28,6 +28,7 @@ extension Notification.Name {
 
 @objcMembers final class AppLockViewController: UIViewController {
     fileprivate var lockView: AppLockView!
+    fileprivate static let authenticationPersistancePeriod: TimeInterval = 10
     fileprivate var localAuthenticationCancelled: Bool = false
     fileprivate var localAuthenticationNeeded: Bool = true
 
@@ -133,7 +134,7 @@ extension Notification.Name {
         
         // The app was authenticated at least N seconds ago
         let timeSinceAuth = -lastAuthDate.timeIntervalSinceNow
-        if timeSinceAuth >= 0 && timeSinceAuth < Double(AppLock.rules.timeout) {
+        if timeSinceAuth >= 0 && timeSinceAuth < type(of: self).authenticationPersistancePeriod {
             callback(true)
             return
         }
