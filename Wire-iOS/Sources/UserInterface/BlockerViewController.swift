@@ -18,22 +18,22 @@
 
 import Foundation
 
+enum BlockerViewControllerContext {
+    case blacklist
+    case jailbroken
+}
+
 class BlockerViewController : LaunchImageViewController {
     
-    var applicationDidBecomeActiveToken : NSObjectProtocol? = nil
+    private var context: BlockerViewControllerContext = .blacklist
     
-    deinit {
-        if let token = applicationDidBecomeActiveToken {
-            NotificationCenter.default.removeObserver(token)
-        }
+    init(context: BlockerViewControllerContext) {
+        self.context = context
+        super.init(nibName: nil, bundle: nil)
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        applicationDidBecomeActiveToken = NotificationCenter.default.addObserver(forName: UIApplication.didBecomeActiveNotification, object: nil, queue: nil) { [weak self](_) in
-            self?.showAlert()
-        }
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -41,7 +41,28 @@ class BlockerViewController : LaunchImageViewController {
     }
     
     func showAlert() {
-        //no-op
+        switch context {
+        case .blacklist:
+            showBlacklistMessage()
+        case .jailbroken:
+            showJailbrokenMessage()
+        }
+    }
+    
+    func showBlacklistMessage() {
+        let alertController = UIAlertController(title: "force.update.title".localized, message: "force.update.message".localized, preferredStyle: .alert)
+        let alertAction = UIAlertAction(title: "force.update.ok_button".localized, style: .default) { (_) in
+            UIApplication.shared.open(URL.wr_wireAppOnItunes)
+        }
+        
+        alertController.addAction(alertAction)
+        present(alertController, animated: true, completion: nil)
+    }
+    
+    func showJailbrokenMessage() {
+        let alertController = UIAlertController(title: "jailbrokendevice.alert.title".localized, message: "jailbrokendevice.alert.message".localized, preferredStyle: .alert)
+        
+        present(alertController, animated: true, completion: nil)
     }
     
 }
