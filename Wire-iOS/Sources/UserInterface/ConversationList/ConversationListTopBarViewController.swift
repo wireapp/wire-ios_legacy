@@ -101,17 +101,31 @@ final class ConversationListTopBarViewController: UIViewController {
         }
     }
 
-    func createLegalHoldView() -> UIView {
+    private func createLegalHoldView() -> UIView {
         let imageView = UIImageView()
 
         imageView.setIcon(.legalholdactive, size: .tiny, color: .vividRed)
         imageView.isUserInteractionEnabled = true
-        imageView.setLegalHoldAccessibility()
+
+        let imageViewContainer = UIView()
+        imageViewContainer.setLegalHoldAccessibility()
+
+        imageViewContainer.addSubview(imageView)
+
+        imageViewContainer.translatesAutoresizingMaskIntoConstraints = false
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            imageViewContainer.widthAnchor.constraint(equalToConstant: CGFloat.ConversationListHeader.iconWidth),
+            imageViewContainer.widthAnchor.constraint(equalTo: imageViewContainer.heightAnchor),
+
+            imageView.centerXAnchor.constraint(equalTo: imageViewContainer.centerXAnchor),
+            imageView.centerYAnchor.constraint(equalTo: imageViewContainer.centerYAnchor)])
 
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(presentLegalHoldInfo))
-        imageView.addGestureRecognizer(tapGestureRecognizer)
+        imageViewContainer.addGestureRecognizer(tapGestureRecognizer)
 
-        return imageView
+        return imageViewContainer
     }
 
     func createPendingLegalHoldRequestView() -> UIView {

@@ -133,6 +133,10 @@ final class AppStateController : NSObject {
 }
 
 extension AppStateController : SessionManagerDelegate {
+    func sessionManagerDidBlacklistJailbrokenDevice() {
+        ///TODO: Nicola, merge this after related PR is merged.
+    }
+
     
     func sessionManagerWillLogout(error: Error?, userSessionCanBeTornDown: (() -> Void)?) {
         authenticationError = error as NSError?

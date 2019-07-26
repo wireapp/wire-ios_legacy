@@ -58,3 +58,10 @@ extension ConversationListViewController {
         self.addToSelf(networkStatusViewController)
     }
 }
+
+extension CGFloat {
+    enum ConversationListHeader {
+        static let iconWidth: CGFloat = 32
+    }
+}
+
