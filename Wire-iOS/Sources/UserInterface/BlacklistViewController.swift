@@ -24,8 +24,9 @@ enum BlockerViewControllerContext {
     case wipedFromJailbreak
 }
 
-class BlockerViewController : LaunchImageViewController { changes:Wire-iOS/Sources/UserInterface/BlockerViewController.swift
+class BlockerViewController : LaunchImageViewController {
     
+    var context: BlockerViewControllerContext!
     var applicationDidBecomeActiveToken : NSObjectProtocol? = nil
     
     deinit {
