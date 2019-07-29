@@ -19,8 +19,8 @@
 import Foundation
 
 extension UIImage {
-    @objc
-    func imageScaled(withFactor scaleFactor: CGFloat) -> UIImage? {
+    @objc(imageScaledWithFactor:)
+    func imageScaled(with scaleFactor: CGFloat) -> UIImage? {
         let size = self.size.applying(CGAffineTransform(scaleX: scaleFactor, y: scaleFactor))
         let scale: CGFloat = 0 // Automatically use scale factor of main screens
         let hasAlpha = false

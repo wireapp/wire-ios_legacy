@@ -43,7 +43,7 @@ extension UIImage {
         guard longestLength > maxImageLength else { return self }
 
         let ratio = (maxImageLength / UIScreen.main.scale) / longestLength
-        return imageScaled(withFactor: ratio)
+        return imageScaled(with: ratio)
     }
 
 
