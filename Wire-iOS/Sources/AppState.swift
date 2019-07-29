@@ -23,7 +23,8 @@ enum AppState : Equatable {
     case headless
     case authenticated(completedRegistration: Bool)
     case unauthenticated(error : NSError?)
-    case blacklisted
+    case blacklisted(jailbroken: Bool)
+    case wipedFromJailbreak
     case migrating
     case loading(account: Account, from: Account?)
 }
