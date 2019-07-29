@@ -24,6 +24,10 @@ extension CGSize {
     var longestLength: CGFloat {
         return width > height ? width : height
     }
+
+    var shortestLength: CGFloat {
+        return width > height ? height : width
+    }
 }
 
 extension CGFloat {
