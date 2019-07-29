@@ -19,15 +19,23 @@
 import Foundation
 
 
+extension CGSize {
+    /// returns the longest length among width and height
+    var longestLength: CGFloat {
+        return width > height ? width : height
+    }
+}
+
 extension CGFloat {
-    enum Image {
+    enum Image {///TODO: limit of ext 
         static public let maxSupportedLength: CGFloat = 5000
     }
 }
 
 extension UIImage {
-    @objc func downsizedImage() -> UIImage {
-        let longestLength = self.size.longestLength
+    @objc
+    func downsizedImage() -> UIImage? { ///TODO: max width
+        let longestLength = size.longestLength
 
         /// Maximum image size that would show in a UIImageView.
         /// Tested on iPhone 5s and found that the image size limitation is ~5000px
@@ -36,5 +44,11 @@ extension UIImage {
 
         let ratio = (maxImageLength / UIScreen.main.scale) / longestLength
         return imageScaled(withFactor: ratio)
+    }
+
+
+    func downsizedImage(maxLength: CGFloat = CGFloat.Image.maxSupportedLength) -> UIImage {
+
+        return UIImage()
     }
 }

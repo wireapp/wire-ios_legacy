@@ -322,7 +322,7 @@ class ShareExtensionViewController: SLComposeServiceViewController {
                 let image = UIImage(data: imageData)
                 DispatchQueue.main.async {
                     self.preview?.displayMode = .link
-                    self.preview?.image = image
+                    self.preview?.image = image ///TODO: app crash for <UIImage: 0x111767470> size {5760, 3840} orientation 0 scale 1.000000
                 }
             }
         }
