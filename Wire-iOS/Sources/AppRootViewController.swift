@@ -136,6 +136,7 @@ final class AppRootViewController: UIViewController {
         let analytics = Analytics.shared()
         let url = Bundle.main.url(forResource: "session_manager", withExtension: "json")!
         let configuration = SessionManagerConfiguration.load(from: url)!
+        let jailbreakDetector = JailbreakDetector()
         configuration.blacklistDownloadInterval = Settings.shared().blacklistDownloadInterval
 
         SessionManager.clearPreviousBackups()
@@ -147,7 +148,8 @@ final class AppRootViewController: UIViewController {
             delegate: appStateController,
             application: UIApplication.shared,
             environment: BackendEnvironment.shared,
-            configuration: configuration) { sessionManager in
+            configuration: configuration,
+            detector: jailbreakDetector) { sessionManager in
             self.sessionManager = sessionManager
             self.sessionManagerCreatedSessionObserverToken = sessionManager.addSessionManagerCreatedSessionObserver(self)
             self.sessionManagerDestroyedSessionObserverToken = sessionManager.addSessionManagerDestroyedSessionObserver(self)

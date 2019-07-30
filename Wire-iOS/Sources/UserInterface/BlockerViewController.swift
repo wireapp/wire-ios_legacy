@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2017 Wire Swiss GmbH
+// Copyright (C) 2019 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -26,21 +26,16 @@ enum BlockerViewControllerContext {
 
 class BlockerViewController : LaunchImageViewController {
     
-    var context: BlockerViewControllerContext!
+    private var context: BlockerViewControllerContext = .blacklist
     var applicationDidBecomeActiveToken : NSObjectProtocol? = nil
     
-    deinit {
-        if let token = applicationDidBecomeActiveToken {
-            NotificationCenter.default.removeObserver(token)
-        }
+    init(context: BlockerViewControllerContext) {
+        self.context = context
+        super.init(nibName: nil, bundle: nil)
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        applicationDidBecomeActiveToken = NotificationCenter.default.addObserver(forName: UIApplication.didBecomeActiveNotification, object: nil, queue: nil) { [weak self](_) in
-            self?.showAlert()
-        }
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
     }
     
     override func viewDidAppear(_ animated: Bool) {
