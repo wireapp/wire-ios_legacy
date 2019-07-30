@@ -33,7 +33,6 @@
 		162936BB1F470A9300D4F386 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162936BA1F470A9300D4F386 /* AppState.swift */; };
 		162936BD1F470B4800D4F386 /* AppStateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162936BC1F470B4800D4F386 /* AppStateController.swift */; };
 		162936BF1F4714D200D4F386 /* AppRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162936BE1F4714D200D4F386 /* AppRootViewController.swift */; };
-		162936C31F4AD9B800D4F386 /* BlacklistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162936C21F4AD9B800D4F386 /* BlacklistViewController.swift */; };
 		162AE73A219AC4C100581D98 /* ConversationTextMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162AE739219AC4C100581D98 /* ConversationTextMessageTests.swift */; };
 		162AE748219B26AF00581D98 /* ConversationSystemMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162AE747219B26AF00581D98 /* ConversationSystemMessageTests.swift */; };
 		162AE74A219D854100581D98 /* ConversationImageMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162AE749219D854100581D98 /* ConversationImageMessageCell.swift */; };
@@ -430,6 +429,7 @@
 		7C52F723200CBE61009F85FB /* CameraKeyboardPermissionsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C52F722200CBE61009F85FB /* CameraKeyboardPermissionsCell.swift */; };
 		7C5836641FD5ABE7001CC843 /* AvailabilityTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C5836631FD5ABE7001CC843 /* AvailabilityTitleView.swift */; };
 		7C5836661FD5ABFE001CC843 /* TitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C5836651FD5ABFE001CC843 /* TitleView.swift */; };
+		7C5B94FA22DCAF3700A6F8BB /* BlockerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C5B94F922DCAF3700A6F8BB /* BlockerViewController.swift */; };
 		7C5DF2CC1FD7DEAD00B793B6 /* AvailabilityExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C5DF2CB1FD7DEAD00B793B6 /* AvailabilityExtensions.swift */; };
 		7C6878DB201B3785003A0C7A /* StartUIViewController+SearchResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C6878D7201B3785003A0C7A /* StartUIViewController+SearchResults.swift */; };
 		7C6A69051FDFD80E007EBE41 /* AvailabilityLabelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C6A69041FDFD80E007EBE41 /* AvailabilityLabelTests.swift */; };
@@ -1528,7 +1528,6 @@
 		162936BA1F470A9300D4F386 /* AppState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		162936BC1F470B4800D4F386 /* AppStateController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppStateController.swift; sourceTree = "<group>"; };
 		162936BE1F4714D200D4F386 /* AppRootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppRootViewController.swift; sourceTree = "<group>"; };
-		162936C21F4AD9B800D4F386 /* BlacklistViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlacklistViewController.swift; sourceTree = "<group>"; };
 		162AE739219AC4C100581D98 /* ConversationTextMessageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationTextMessageTests.swift; sourceTree = "<group>"; };
 		162AE747219B26AF00581D98 /* ConversationSystemMessageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationSystemMessageTests.swift; sourceTree = "<group>"; };
 		162AE749219D854100581D98 /* ConversationImageMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationImageMessageCell.swift; sourceTree = "<group>"; };
@@ -1983,6 +1982,7 @@
 		7C52F722200CBE61009F85FB /* CameraKeyboardPermissionsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraKeyboardPermissionsCell.swift; sourceTree = "<group>"; };
 		7C5836631FD5ABE7001CC843 /* AvailabilityTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvailabilityTitleView.swift; sourceTree = "<group>"; };
 		7C5836651FD5ABFE001CC843 /* TitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleView.swift; sourceTree = "<group>"; };
+		7C5B94F922DCAF3700A6F8BB /* BlockerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockerViewController.swift; sourceTree = "<group>"; };
 		7C5DF2CB1FD7DEAD00B793B6 /* AvailabilityExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvailabilityExtensions.swift; sourceTree = "<group>"; };
 		7C6878D7201B3785003A0C7A /* StartUIViewController+SearchResults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "StartUIViewController+SearchResults.swift"; sourceTree = "<group>"; };
 		7C6A69041FDFD80E007EBE41 /* AvailabilityLabelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvailabilityLabelTests.swift; sourceTree = "<group>"; };
@@ -3313,7 +3313,7 @@
 		162936C11F4AD99C00D4F386 /* Blacklist */ = {
 			isa = PBXGroup;
 			children = (
-				162936C21F4AD9B800D4F386 /* BlacklistViewController.swift */,
+				7C5B94F922DCAF3700A6F8BB /* BlockerViewController.swift */,
 			);
 			name = Blacklist;
 			sourceTree = "<group>";
@@ -7429,6 +7429,7 @@
 				1661C71D21A71853003DCE1C /* ConversationVideoMessageCell.swift in Sources */,
 				162936BD1F470B4800D4F386 /* AppStateController.swift in Sources */,
 				BF02CDC31D79A98000C87D38 /* SavableImage.swift in Sources */,
+				7C5B94FA22DCAF3700A6F8BB /* BlockerViewController.swift in Sources */,
 				877ABB471E8118E300CBCF2B /* BackgroundViewController.swift in Sources */,
 				F19F066E21ECC24F00426BD1 /* EasingFunction.swift in Sources */,
 				870815861BF4E76A00D321BC /* SettingsCell.swift in Sources */,
@@ -7439,7 +7440,6 @@
 				EF82E1C020EE79EC001B5196 /* ZMConversationMessage+CountDown.swift in Sources */,
 				D5CA8E572045718900D2F16E /* UINavigationController+CloseButton.swift in Sources */,
 				8FC853A5199245770008B66B /* main.m in Sources */,
-				162936C31F4AD9B800D4F386 /* BlacklistViewController.swift in Sources */,
 				87934E121C451C1100186A85 /* FingerprintTableViewCell.swift in Sources */,
 				162AE74A219D854100581D98 /* ConversationImageMessageCell.swift in Sources */,
 				BFE41865209B1C1F00503C7C /* CallStatusViewController.swift in Sources */,
