@@ -322,16 +322,9 @@ class ShareExtensionViewController: SLComposeServiceViewController {
 
             /// size the image to fill the image view
             if let imageData = previews.first?.imageData.first,
-                let image = UIImage(data: imageData),
-                let requiredSize = self.preview?.frame.size.shortestLength {
-
-                if image.size.shortestLength > requiredSize {
-
-                    let ratio = requiredSize * UIScreen.main.scale / image.size.shortestLength
-                    previewImage = image.imageScaled(with: ratio)
-                } else {
-                    previewImage = image
-                }
+               let image = UIImage(data: imageData),
+               let requiredSize = self.preview?.frame.size.shortestLength {
+                previewImage = image.downsized(shorterSizeLength: requiredSize)
             } else {
                 previewImage = nil
             }
