@@ -50,11 +50,8 @@ final class AppStateController : NSObject {
     private var authenticationObserverToken : ZMAuthenticationStatusObserver?
     public weak var delegate : AppStateControllerDelegate? = nil
     
-    fileprivate var isBlacklisted = false
-    fileprivate var isBlacklistedFromJailbreak = false
-    fileprivate var isWipedFromJailbreak = false
+    fileprivate var expectedAppState: AppState?
     fileprivate var hasEnteredForeground = false
-    fileprivate var isMigrating = false
     fileprivate var loadingAccount : Account?
     fileprivate var authenticationError : NSError?
     fileprivate var isRunningTests = ProcessInfo.processInfo.isRunningTests
@@ -81,20 +78,9 @@ final class AppStateController : NSObject {
             return .headless
         }
         
-        if isMigrating {
-            return .migrating
-        }
-        
-        if isBlacklisted {
-            return .blacklisted(jailbroken: false)
-        }
-        
-        if isBlacklistedFromJailbreak {
-            return .blacklisted(jailbroken: true)
-        }
-        
-        if isWipedFromJailbreak {
-            return .wipedFromJailbreak
+        if let appState = expectedAppState {
+            expectedAppState = nil
+            return appState
         }
         
         if let account = loadingAccount {
@@ -166,29 +152,29 @@ extension AppStateController : SessionManagerDelegate {
     }
         
     func sessionManagerDidBlacklistCurrentVersion() {
-        isBlacklisted = true
+        expectedAppState = .blacklisted(jailbroken: false)
         updateAppState()
     }
     
     func sessionManagerDidBlacklistJailbrokenDevice() {
-        isBlacklistedFromJailbreak = true
+        expectedAppState = .blacklisted(jailbroken: true)
         updateAppState()
     }
     
-    func sessionManagerDidWipeDatabaseOnJailbreak() {
-        isWipedFromJailbreak = true
+    func sessionManagerDidWipeJailbrokenDevice() {
+        expectedAppState = .wipedByJailbreak
         updateAppState()
     }
     
     func sessionManagerWillMigrateLegacyAccount() {
-        isMigrating = true
+        expectedAppState = .migrating
         updateAppState()
     }
     
     func sessionManagerWillMigrateAccount(_ account: Account) {
         guard account == loadingAccount else { return }
         
-        isMigrating = true
+        expectedAppState = .migrating
         updateAppState()
     }
     
@@ -208,7 +194,7 @@ extension AppStateController : SessionManagerDelegate {
 
             self?.authenticationState = .loggedIn(addedAccount: false)
             self?.loadingAccount = nil
-            self?.isMigrating = false
+            self?.expectedAppState = nil
             self?.updateAppState()
         }
     }

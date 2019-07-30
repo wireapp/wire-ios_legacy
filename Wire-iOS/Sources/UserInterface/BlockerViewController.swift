@@ -21,13 +21,12 @@ import Foundation
 enum BlockerViewControllerContext {
     case blacklist
     case jailbroken
-    case wipedFromJailbreak
+    case wipedByJailbreak
 }
 
 class BlockerViewController : LaunchImageViewController {
     
     private var context: BlockerViewControllerContext = .blacklist
-    var applicationDidBecomeActiveToken : NSObjectProtocol? = nil
     
     init(context: BlockerViewControllerContext) {
         self.context = context
@@ -48,8 +47,8 @@ class BlockerViewController : LaunchImageViewController {
             showBlacklistMessage()
         case .jailbroken:
             showJailbrokenMessage()
-        case .wipedFromJailbreak:
-            showWipedFromJailbreakMessage()
+        case .wipedByJailbreak:
+            showWipedByJailbreakMessage()
         }
     }
     
@@ -70,7 +69,7 @@ class BlockerViewController : LaunchImageViewController {
         present(alertController, animated: true, completion: nil)
     }
     
-    func showWipedFromJailbreakMessage() {
+    func showWipedByJailbreakMessage() {
         // TODO change copy
         let alertController = UIAlertController(title: "Jailbroken device", message: "Wiped database", preferredStyle: .alert)
         

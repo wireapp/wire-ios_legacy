@@ -208,8 +208,8 @@ final class AppRootViewController: UIViewController {
         switch appState {
         case .blacklisted(jailbroken: let jailbroken):
             viewController = BlockerViewController(context: jailbroken ? .jailbroken : .blacklist)
-        case .wipedFromJailbreak:
-            viewController = BlockerViewController(context: .wipedFromJailbreak)
+        case .wipedByJailbreak:
+            viewController = BlockerViewController(context: .wipedByJailbreak)
         case .migrating:
             let launchImageViewController = LaunchImageViewController()
             launchImageViewController.showLoadingScreen()
